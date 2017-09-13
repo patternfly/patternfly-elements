@@ -1,6 +1,6 @@
 {
   "name": "cp-sass",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Sass variables and mixins for cp-elements",
   "repository": {
     "type": "git",

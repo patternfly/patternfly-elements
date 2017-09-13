@@ -1,0 +1,35 @@
+{
+  "name": "cp-styles",
+  "version": "0.0.1",
+  "description": "cp-styles for RHElements",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RHElements/cp-styles.git"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/gulp",
+    "dev": "./node_modules/.bin/gulp dev"
+  },
+  "author": {
+    "name": "Kyle Buchanan",
+    "email": "kylebuch8@gmail.com",
+    "url": "https://github.com/kylebuch8"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "cp-sass": "0.0.2",
+    "rh-overpass": "*"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "del": "^3.0.0",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-babel": "^7.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.6.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sequence": "^0.4.6",
+    "gulp-uglify": "^3.0.0"
+  }
+}

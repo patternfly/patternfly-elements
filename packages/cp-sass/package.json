@@ -1,6 +1,6 @@
 {
   "name": "cp-sass",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Sass variables and mixins for cp-elements",
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
     "url": "https://github.com/kylebuch8"
   },
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "breakpoint-sass": "^2.7.1"
   }
 }

@@ -4,7 +4,7 @@
   "description": "Overpass element for RHElements",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/RHElements/rh-overpass.git"
   },
   "main": "index.js",
   "scripts": {

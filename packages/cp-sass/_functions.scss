@@ -1,0 +1,64 @@
+@function strip-unit($num) {
+    @return $num / ($num * 0 + 1);
+}
+
+/*doc
+---
+title: pem
+category: Global - Function
+---
+
+-   __$pxval:__ pixel value to return as em
+-   __$base:__ defaults to 18px, but optional context can be passed in
+
+```inline
+.class-name {
+    font-size: pem(36); // Returns 2em (or 36px)
+    padding: pem(18, 36) // pass in current font-size context to return 18px/1em padding
+}
+```
+
+*/
+
+@function pem($pxval, $base: $base-font-px) {
+    @return strip-unit($pxval) / $base * 1em;
+}
+
+/*doc
+---
+title: color
+category: Global - Function
+---
+@function color($name, $opacity: 1, $lighten, $darken)
+
+-   __$name:__ name of color to pull from color map
+-   __$opacity:__ optional opacity value. If default is used rgba() will return the hex value
+-   __$lighten:__ pass in a percentage value to this parameter to lighten outputed value
+-   __$darken:__ pass in a percentage value to this parameter to darken outputed value
+
+```inline
+.class-name {
+    color: color(brand-primary, .7, $lighten: 10%);
+}
+```
+*/
+
+@function color($name, $opacity: 1, $lighten: 0, $darken: 0) {
+    $color: map-get($site-colors, $name);
+    @if $color != null {
+        @if $darken > 0 {
+            @return darken($color, $darken);
+        } @else if $lighten > 0 {
+            @return lighten($color, $lighten);
+        } @else {
+            @return rgba($color, $opacity);
+        }
+    } @else {
+        @error "#{$name} is not a valid color";
+    }
+}
+
+// Get the last item in a list
+@function last($list) {
+    @return nth($list, length($list));
+}

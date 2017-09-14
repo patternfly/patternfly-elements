@@ -1,1 +1,73 @@
-$red-color: red;
+// Repository class prefix
+$repo: rh !default;
+
+// Base Font Size
+$base-font-px: 16;
+
+// Base Font Family
+$base-font-family: "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif;
+
+// Colors
+$site-colors: (
+    white: #ffffff,
+    brand-primary: #c00,
+    black: #252527,
+    rich-black: #1a1a1a,
+    copy: #646464,
+    link: #08c0fc,
+    transparent: transparent,
+    gray1: #d2d3d5, // disabled button gray
+    gray2: #f0f0f0, // band background gray
+    gray3: #8a8a8a, // light gray for text on black
+);
+
+// Product line colors
+$product-line-colors: (
+    default: #252527,
+    linux-platforms: #4a90e2,
+    management: #46b8e5,
+    mobile: #3f9c35,
+    jboss-middleware: #479b2e,
+    virtualization: #0088ce,
+    cloud-computing: #0088ce,
+    storage: #ec7a08,
+    services-and-support: #007a87
+);
+
+$site-colors: map-merge($site-colors, $product-line-colors);
+
+// $fixed-header-offset: 90px;
+
+// Spacing Variables
+$box-padding: 30px;
+$vertical-gutter: 30px;
+$band-padding: 60px;
+$mobile-edge: 9px;
+
+
+// ---
+// title: Breakpoints
+// category: Global - Breakpoints
+// ---
+// |Variable Name | Value
+// |---------|-------|
+// |$breakpoint-xs-min | 480px |
+// |$breakpoint-sm-min | 768px |
+// |$breakpoint-md-min | 992px |
+// |$breakpoint-lg-min | 1200px |
+// |---------|-------|
+// |$breakpoint-xxs-max | 479px |
+// |$breakpoint-xs-max | 767px |
+// |$breakpoint-sm-max | 991px |
+// |$breakpoint-md-max | 1199px |
+
+$breakpoint-zero: 0;
+$breakpoint-xs-min: 480px;
+$breakpoint-sm-min: 768px;
+$breakpoint-md-min: 992px;
+$breakpoint-lg-min: 1200px;
+
+$breakpoint-xxs-max: $breakpoint-xs-min - 1;
+$breakpoint-xs-max: $breakpoint-sm-min - 1;
+$breakpoint-sm-max: $breakpoint-md-min - 1;
+$breakpoint-md-max: $breakpoint-lg-min - 1;

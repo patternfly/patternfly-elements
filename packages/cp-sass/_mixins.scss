@@ -1,0 +1,254 @@
+@mixin rh-transition($properties...) {
+    $return: null;
+    @each $property in $properties {
+        @if length($property) == 1 {
+            $return: append($return, #{$property} 200ms ease, comma);
+        } @else if length($property) == 2 {
+            $return: append($return, nth($property, 1) nth($property, 2), comma);
+        }
+    }
+    transition: $return;
+}
+
+@mixin data($attr, $values...) {
+    $uniqueId: unique-id();
+    @at-root %#{$uniqueId} {
+        @content
+    }
+    @if length($values) > 0 {
+        @each $value in $values {
+            &[data-#{$repo}-#{$attr}~="#{$value}"] {
+                @extend %#{$uniqueId};
+            }
+        }
+    } @else {
+        &[data-#{$repo}-#{$attr}] {
+            @extend %#{$uniqueId};
+        }
+    }
+}
+@mixin data-context($attr,$values...) {
+    $uniqueId: unique-id();
+    @at-root %#{$uniqueId} {
+        @content
+    }
+    @if length($values) > 0 {
+        @each $value in $values {
+            [data-#{$repo}-#{$attr}~="#{$value}"] & {
+                @extend %#{$uniqueId};
+            }
+        }
+    } @else {
+        [data-#{$repo}-#{$attr}] & {
+            @extend %#{$uniqueId};
+        }
+    }
+}
+@mixin data-pseudo($attr, $pseudo, $values...) {
+    $uniqueId: unique-id();
+    @at-root %#{$uniqueId} {
+        @content
+    }
+    @if length($values) > 0 {
+        @each $value in $values {
+            [data-#{$repo}-#{$attr}~="#{$value}"] &:#{$pseudo} {
+                @extend %#{$uniqueId};
+            }
+        }
+    } @else {
+        [data-#{$repo}-#{$attr}] &:#{$pseudo} {
+            @extend %#{$uniqueId};
+        }
+    }
+}
+@mixin data-layout($prefix: "", $values...) {
+    $uniqueId: unique-id();
+    @at-root %#{$uniqueId} {
+        @content
+    }
+    @each $value in $values {
+        [data-#{$repo}-layout#{$prefix}="#{$value}"] {
+            @extend %#{$uniqueId};
+        }
+    }
+}
+
+/*doc
+---
+title: make-button()
+category: Global - Mixins
+---
+
+@mixin make-button($btn-color, $btn-text-color: white, $disabled: false)
+
+-    __$btn-color__ - sets background color
+-    __$btn-text-color: white__ - sets text color
+-    __$border: 0__ - sets border styles, i.e. 1px solid color("rh-white")
+-    __$disabled: false__ - if set to "true" removes hover effect and sets pointer to default
+
+```inline
+.class_name {
+    @include make-button(
+        color("brand-primary"),
+        color("white")
+    );
+}
+```
+*/
+
+@mixin make-button(
+    $btn-color,
+    $btn-text-color: #fff,
+    $border: 0,
+    $disabled: false,
+    $btn-color-hover: null,
+    $btn-text-color-hover: null,
+    $padding: pem(9) pem(40)) {
+
+    background-color: $btn-color;
+    color: $btn-text-color;
+    display: inline-block;
+    font-family: $base-font-family;
+    border: $border; // this fixes buttons elements with this style
+    font-size: pem(16);
+    padding: $padding;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    @if $disabled != disabled {
+        transition: background .2s ease-in 0s;
+        cursor: pointer;
+        &:hover {
+            text-decoration: none;
+            @if $btn-color-hover != null {
+                background-color: $btn-color-hover;
+                @if $border != 0 and type-of(last($border)) == color {
+                    border-color: $btn-color-hover;
+                }
+            }
+            @else {
+                background-color: darken($btn-color, 6%);
+            }
+            @if $btn-text-color-hover != null {
+                color: $btn-text-color-hover;
+            }
+            @else {
+                color: $btn-text-color;
+            }
+        }
+    }
+    @if $disabled == true {
+        cursor: default;
+        &:hover {
+            background-color: $btn-color;
+            color: $btn-text-color;
+            text-decoration: none;
+        }
+    }
+}
+
+@mixin clearfix {
+    &::after {
+        clear: both;
+        content: "";
+        display: table;
+    }
+}
+
+// apply to anchor tags containing images to fix IE blue border issue
+@mixin ie-image-link-fix {
+    border-width: 0;
+    img {
+        border-width: 0;
+    }
+}
+
+// Loop through our standard colors and use them for a property color inside of a given data attribute
+@mixin make-backgrounds($attr, $context, $property: background-color) {
+    $colors: (
+        "black": black,
+        "rich-black": rich-black,
+        "white": white,
+        "gray": gray2,
+        "red": brand-primary
+    );
+    @each $key, $color in $colors {
+        @if $context {
+            [data-rh-#{$attr}~="#{$key}"] & {
+                #{$property}: color($color);
+                @content;
+            }
+        } @else {
+            &[data-rh-#{$attr}~="#{$key}"] {
+                #{$property}: color($color);
+                @content;
+            }
+        }
+    }
+}
+
+@mixin product-theme($property, $level: post, $product: all) {
+    @if (all in $product) {
+        @each $name, $color in $product-line-colors {
+            @if $level == post {
+                [data-rh-theme~="#{$name}"] & {
+                    #{$property}: $color;
+                    @content;
+                }
+            } @else {
+                &[data-rh-theme~="#{$name}"] {
+                    #{$property}: $color;
+                    @content;
+                }
+            }
+        }
+    } @else {
+        @each $p in $product {
+            @if (map-has-key($product-line-colors, $p)) {
+                @if $level == post {
+                    [data-rh-theme~="#{$product}"] & {
+                        #{$property}: color($product);
+                        @content;
+                    }
+                } @else {
+                    &[data-rh-theme~="#{$product}"] {
+                        #{$property}: color($product);
+                        @content;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Make a CSS arrow
+@mixin arrow($type, $color, $width: 8px, $height: 5px, $pseudo: false) {
+    $direction: (
+        up: 180deg,
+        down: 0deg,
+        right: -90deg,
+        left: 90deg,
+    );
+    border-style: solid;
+    border-width: $width $height 0;
+    border-color: transparent;
+    border-top-color: $color;
+    transform: rotate(map-get($direction, $type));
+    @if $pseudo {
+        content: " ";
+        position: absolute;
+        @content;
+    }
+}
+
+// Copy Mixins
+@mixin accessibility-focus($color: link) {
+    outline-offset: 1px;
+    outline-style: dotted;
+    outline-width: 1px;
+    outline-color: color($color);
+}
+
+@mixin underline($color: color(gray3)) {
+    border-bottom: 1px solid $color;
+}

@@ -11,5 +11,8 @@
     "email": "kylebuch8@gmail.com",
     "url": "https://github.com/kylebuch8"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "breakpoint-sass": "^2.7.1"
+  }
 }

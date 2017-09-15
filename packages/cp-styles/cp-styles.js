@@ -1,8 +1,16 @@
 import '../rh-overpass/rh-overpass.js';
 
 (function () {
+  const templateId = 'cp-styles-head';
+
+  if (document.getElementById(templateId)) {
+    return;
+  }
+
   const cpstylesTemplate = document.createElement('div');
+
   cpstylesTemplate.setAttribute('style', 'display: none;');
+  cpstylesTemplate.setAttribute('id', templateId);
 
   cpstylesTemplate.innerHTML = `
     <style>

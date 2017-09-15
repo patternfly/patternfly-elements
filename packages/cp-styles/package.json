@@ -1,6 +1,6 @@
 {
   "name": "cp-styles",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "cp-styles for RHElements",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "cp-sass": "0.0.2",
+    "cp-sass": "*",
     "rh-overpass": "*"
   },
   "devDependencies": {

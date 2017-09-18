@@ -1,6 +1,6 @@
 {
-  "name": "rh-overpass",
-  "version": "0.1.1",
+  "name": "@rhelements/rh-overpass",
+  "version": "0.1.2",
   "description": "Overpass element for RHElements",
   "repository": {
     "type": "git",

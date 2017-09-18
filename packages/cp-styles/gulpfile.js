@@ -18,12 +18,6 @@ gulp.task('sass', () => {
     .pipe(gulp.dest('./'));
 });
 
-gulp.task('replaceStyles', () => {
-  return gulp.src('./cp-styles.js')
-    .pipe(replace(/<style>[\s\S]*<\/style>/g, '<style>' + fs.readFileSync('./cp-styles.css') + '</style>'))
-    .pipe(gulp.dest('./'));
-});
-
 gulp.task('compile', () => {
   return gulp.src(['./*.js', '!./gulpfile.js'])
     .pipe(replace(/(import ["'].*).(js["'];?)/g, '$1.compiled.$2'))
@@ -41,13 +35,11 @@ gulp.task('stopwatch', done => {
 });
 
 gulp.task('watch', () => {
-  // watcher = gulp.watch(['./cp-styles.js', './*.scss'], gulp.series('stopwatch', 'sass', 'replaceStyles', 'clean', 'compile', 'watch'));
   watcher = gulp.watch(['./cp-styles.js', './*.scss'], gulp.series('stopwatch', 'sass', 'clean', 'compile', 'watch'));
   return watcher;
 });
 
 gulp.task('default',
-  // gulp.series('clean', 'sass', 'replaceStyles', 'compile')
   gulp.series('clean', 'sass', 'compile')
 );
 

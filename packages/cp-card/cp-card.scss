@@ -1,0 +1,22 @@
+@import "node_modules/@rhelements/cp-sass/cp-sass";
+:host {
+  display: block;
+  padding: $box-padding;
+  background: color(black);
+  color: color(white);
+  border: 1px solid color(black);
+}
+:host(.light) {
+  background: #f0f0f0;
+  color: #252525;
+  border-color: #f0f0f0;
+}
+:host(.accent) {
+  background: #08c0fc;
+  border-color: #08c0fc;
+}
+:host(.bordered) {
+  background: none;
+  border-color: #d1d1d1;
+  color: #252525;
+}

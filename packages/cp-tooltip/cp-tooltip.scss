@@ -1,0 +1,83 @@
+@import "node_modules/@rhelements/cp-sass/cp-sass";
+:host {
+  display: inline-block;
+  position: absolute;
+  background: color(rich-black);
+  color: color(white);
+  padding: 4px 6px;
+  border-radius: 2px;
+  max-width: 200px;
+  font-size: 0.9em;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:host::after {
+  display: block;
+  content: '';
+  width: 0;
+  height: 0;
+  border: 4px solid black;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-bottom: 0;
+  position: absolute;
+  top: auto;
+  right: auto;
+  bottom: -4px;
+  left: 50%;
+  margin-left: -2px;
+}
+
+:host([data-position="left"])::after {
+  display: block;
+  content: '';
+  width: 0;
+  height: 0;
+  border: 4px solid black;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-right: 0;
+  position: absolute;
+  top: 50%;
+  right: -4px;
+  bottom: auto;
+  left: auto;
+  margin-top: -2px;
+}
+
+:host([data-position="right"])::after {
+  display: block;
+  content: '';
+  width: 0;
+  height: 0;
+  border: 4px solid black;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left: 0;
+  position: absolute;
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  left: -4px;
+  margin-top: -2px;
+}
+
+:host([data-position="bottom"])::after {
+  display: block;
+  content: '';
+  width: 0;
+  height: 0;
+  border: 4px solid black;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-top: 0;
+  position: absolute;
+  top: -4px;
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  margin-left: -2px;
+}

@@ -1,0 +1,45 @@
+%iframe-embed-container {
+    padding: 0 0 56.25%;
+    height: 0;
+    position: relative;
+    // Note: Added img support here for visual regression test support which uses static img of youtube
+    iframe,
+    img {
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+    }
+}
+
+%default-media { // constrains media to container,
+    max-width: 100%;
+    height: auto;
+}
+
+%default-logo {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+}
+
+%responsive-media { // used for assets that fill the width of their container
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+%menu-logo-container {
+    margin: 0 $box-padding / 2 0 0;
+    @include breakpoint($breakpoint-sm-min) {
+        margin: 0 $box-padding 0 0;
+    }
+    @include breakpoint($breakpoint-md-min) {
+        margin: 0 $box-padding * 2 0 0;
+    }
+    @include breakpoint($breakpoint-lg-min) {
+        margin: 0 $box-padding * 4 0 0;
+    }
+}

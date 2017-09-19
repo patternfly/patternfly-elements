@@ -1,0 +1,167 @@
+/*doc
+---
+title: Global
+category: Global - Variables
+
+*/
+// Repository class prefix
+$repo: rh !default;
+
+// Base Font Size
+$base-font-px: 16;
+$base-line-height: 1.5em;
+
+// Base Font Family
+$base-font-family: "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif;
+
+/*doc
+---
+title: Colors
+category: Global - Colors
+
+Name that color tool: http://chir.ag/projects/name-that-color/#F0F0F0
+Use this tool to determine the name of your new color!
+*/
+
+// CRAYOLA COLORS
+$white: #fff;
+$black: #252527;
+$rich-black: #1a1a1a;
+$brand-primary: #c00;  // "Red Hat red"
+$red: $brand-primary;  // not to be used as a background color except in site footer
+$orange: #ff6c35;  // RSS icon
+$teal: #004153;     // action band
+$charcoal: #2f3541;
+$green: #479b2e;
+$turquoise: #69a8b1;
+$brick-red: #a30000;
+
+// GRAY: lightest to darkest
+$gallery: #f0f0f0; // mainly used as band background
+$cloud: #eee;      // mainly used for colorful backgrounds where white has too much contrast
+$mercury: #e2e2e2; // dark gray card background
+$iron: #d2d3d5;    // mainly used as disabled buttons
+$misty: #ccc;       // WAS #dcdcdc; suggested update in styleguide for link underlines
+$silver: #aaa;     // visible against white, black, & mercury, used for icon hover
+$fog: #8a8a8a;     // mainly used as lighter gray on dark bg
+$stone: #646464;   // mainly used as copy
+
+// NEW BLUES
+// link on Light background:
+$denim-blue: #06c;
+// Link Hover state on Light background:
+$steel-blue: #004080;
+// link on Dark background:
+$midnight-blue: #73bcf7;
+// link hover on Dark background:
+$unc-blue: #2b9af3;
+
+// DEPRECATED
+//$blue: #08c0fc;
+$blue: $denim-blue;
+
+// Product line colors
+$product-line-colors: (
+    default: #252527,
+    linux-platforms: #4a90e2,
+    management: #46b8e5,
+    mobile: #3f9c35,
+    jboss-middleware: #479b2e,
+    virtualization: #0088ce,
+    cloud-computing: #0088ce,
+    storage: #ec7a08,
+    services-and-support: #007a87
+);
+
+// DEPRECATED
+// $site-colors: (
+//     white: #ffffff,
+//     brand-primary: #C00  -> $red
+//     black: #252527,
+//     rich-black: #1a1a1a,
+//     copy: #646464 -> $stone
+//     link: #08C0FC  -> $blue
+//     link-hover: #08C0FC -> $blue
+//     link-dark: #08C0FC -> $blue
+//     link-hover-dark: #08C0FC -> $blue
+//     new-link: #0066CC -> $denim-blue
+//     new-link-hover: #004080 -> $steel-blue
+//     new-link-dark: #2B9AF3 -> $midnight-blue
+//     new-link-hover-dark: #73BCF7 -> $unc-blue
+//     transparent: transparent,
+//     gray1: #d2d3d5, -> $iron
+//     gray2: #f0f0f0, -> $mercury
+//     gray3: #8a8a8a, -> $fog
+//     orange: #ff6c35, //orange used for rss icon etc.
+// );
+
+
+/*doc
+---
+title: Spacing
+category: Global - Spacing
+--- */
+
+$fixed-header-offset: 90px;
+
+$box-padding: 30px;
+$box-padding-thin: 15px;
+$box-padding-xsmall: 10px;
+
+$vertical-gutter: 30px;
+$band-padding: 60px;
+$mobile-edge: 9px;
+$accordion-indicator-indent: 30px;
+
+
+// push - pull layout:
+$pull-hero-bottom-padding: 0;
+$min-aside-height: 130px;
+$aside-bottom-padding: ($vertical-gutter / 2);
+$pull-margin: $min-aside-height + $aside-bottom-padding + $pull-hero-bottom-padding;
+$push-margin: $min-aside-height + $aside-bottom-padding;
+
+// typography:
+$heading-bottom-margin: 10px;
+
+
+/*doc
+---
+title: Borders
+category: Global - Borders
+--- */
+$border-thin: 1px;
+
+/*doc
+---
+title: Breakpoints
+category: Global - Breakpoints
+---
+|Variable Name | Value
+|---------|-------|
+|$breakpoint-xs-min | 480px |
+|$breakpoint-sm-min | 768px |
+|$breakpoint-md-min | 992px |
+|$breakpoint-lg-min | 1200px |
+|---------|-------|
+|$breakpoint-xxs-max | 479px |
+|$breakpoint-xs-max | 767px |
+|$breakpoint-sm-max | 991px |
+|$breakpoint-md-max | 1199px |
+*/
+
+$breakpoint-zero: 0;
+$breakpoint-xs-min: 480px;
+$breakpoint-sm-min: 768px;
+$breakpoint-md-min: 992px;
+$breakpoint-lg-min: 1200px;
+
+$breakpoint-xxs-max: $breakpoint-xs-min - 1;
+$breakpoint-xs-max: $breakpoint-sm-min - 1;
+$breakpoint-sm-max: $breakpoint-md-min - 1;
+$breakpoint-md-max: $breakpoint-lg-min - 1;
+
+/* SOLP variables */
+$hero-min-height: 205px;
+$aside-wide: 340px;
+

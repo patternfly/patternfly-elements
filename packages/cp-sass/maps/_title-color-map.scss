@@ -1,0 +1,132 @@
+$title-color-map: (
+    teaser-headline: (
+        dark: $white,
+        light: $black,
+    ),
+    section-title: (
+        subtle: $black,
+        dark: $white,
+        light: $brand-primary,
+        light-subtle: $black,
+        dark-subtle: $white,
+        dark-desaturated: $white,
+    ),
+    solp-section-title: (
+        subtle: $black,
+        dark: $white,
+        light: $brand-primary,
+        light-subtle: $black,
+        dark-subtle: $white,
+        dark-desaturated: $gallery,
+    ),
+    results-listing-title: (
+        dark: $white,
+        light: $black,
+        subtle: $fog,
+        dark-subtle: $fog
+    ),
+    small-standard-title: (
+        dark: $white,
+        light: $black,
+    ),
+    medium-standard-title: (
+        dark: $white,
+        light: $black,
+    ),
+    card-title: (
+        dark: $white,
+        light: $black,
+    ),
+    mini-title: (
+        dark: $white,
+        light: $black,
+    ),
+    tooltip-title: (
+        dark: $white,
+        light: $brand-primary,
+    ),
+    sub-title: (
+        dark: $white,
+        light: $black,
+    ),
+    featured-title: (
+        dark: $white,
+        light: $black
+    ),
+    section-headline: (
+        dark: $white,
+        light: $black,
+    ),
+    hero-headline: (
+        dark: $white,
+        light: $black,
+    ),
+    card-headline: (
+        dark: $white,
+        light: $black,
+    ),
+    promo-headline: (
+        dark: $white,
+        light: $stone,
+    ),
+    tooltip-headline: (
+        dark: $white,
+        light: $black,
+    ),
+    hero-summary: (
+        dark: $white,
+        light: $stone,
+    ),
+    hero-detail-summary: (
+        dark: $white,
+        light: $stone,
+    ),
+    hero-subheadline: (
+        dark: $white,
+        light: $stone,
+    ),
+    section-summary: (
+        dark: $white,
+        light: $stone,
+    ),
+    content-level1: (
+        dark: $white,
+        light: $stone,
+    ),
+    content-level2: (
+        dark: $white,
+        light: $brand-primary,
+    ),
+    content-level3: (
+        dark: $white,
+        light: $stone,
+    ),
+    content-level4: (
+        dark: $white,
+        light: $fog,
+    ),
+    default-level1: (
+        dark: $white,
+        light: $black,
+    ),
+    default-level2: (
+        dark: $white,
+        light: $black,
+    ),
+    default-level3: (
+        dark: $white,
+        light: $black,
+    ),
+    default-level4: (
+        dark: $white,
+        light: $black,
+    ),
+    default-level5: (
+        light: $black,
+        dark: $white,
+    ),
+    default-level6: (
+        dark: $white,
+        light: $black,
+    ),
+);

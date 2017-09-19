@@ -1,0 +1,390 @@
+%default-reset {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    border: 0;
+}
+
+%default-strong {
+    strong,
+    b {
+        font-weight: 600;
+    }
+}
+
+%default-emphasis {
+    em,
+    i {
+        font-style: italic;
+    }
+}
+
+%base {
+    font-family: $base-font-family;
+    line-height: $base-line-height;
+}
+
+%fine {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 100;
+}
+
+%default-paragraph {
+    @extend %base;
+    font-weight: 100;
+    font-size: pem(18);
+    @include themes( $map: default-paragraph );
+    a {
+        @extend %default-link;
+    }
+}
+
+%weak-paragraph {
+    @extend %base;
+    font-weight: 100;
+    font-size: pem(14);
+    @include themes( $map: weak-paragraph );
+    a {
+        @extend %basic-link;
+    }
+}
+
+%weaker-paragraph {
+    @extend %base;
+    font-weight: 100;
+    font-style: italic;
+    font-size: pem(14);
+    @include themes( $map: weaker-paragraph );
+    a {
+        @extend %basic-link;
+    }
+}
+
+%small-paragraph {
+    @extend %base;
+    font-weight: 100;
+    font-size: pem(14);
+    @include themes( $map: small-paragraph );
+    a {
+        @extend %default-link;
+    }
+}
+
+%hero-metadata {
+    @extend %base;
+    font-weight: 100;
+    font-size: pem(18);
+    @include themes( $map: hero-metadata );
+    a {
+        @extend %basic-link;
+    }
+}
+
+%hero-em-metadata {
+    @extend %base;
+    font-weight: 100;
+    font-style: italic;
+    font-size: pem(18);
+    @include themes( $map: hero-em-metadata );
+    a {
+        @extend %basic-link;
+    }
+}
+
+%strong-paragraph {
+    @extend %base;
+    font-weight: bold;
+    font-size: pem(18);
+    @include themes( $map: strong-paragraph );
+    a {
+        @extend %default-link;
+    }
+}
+
+%description-paragraph {
+    @extend %default-strong;
+    @extend %default-emphasis;
+    font-family: $base-font-family;
+    font-weight: normal;
+    font-size: pem(16);
+    line-height: 1.4; // @TODO delete me and redo baselines
+    @include themes( $map: description-paragraph );
+    @include eq-context(link-tile-small) {
+        font-size: pem(14);
+    }
+    a {
+        @extend %default-link;
+    }
+}
+
+%default-li {
+    @extend %base;
+    font-weight: 100;
+    font-size: pem(18);
+    @include themes( $map: default-li );
+    a {
+        @extend %default-link;
+    }
+}
+
+%default-dt {
+    font-family: $base-font-family;
+    line-height: 1.2;
+    font-size: pem(18);
+    font-weight: 600;
+    @include themes( $map: default-dt );
+    a {
+        @extend %default-link;
+    }
+}
+
+%default-dd {
+    font-family: $base-font-family;
+    line-height: 1.2;
+    font-size: pem(18);
+    @include themes( $map: default-dd );
+    a {
+        @extend %default-link;
+    }
+}
+
+// Quote
+%quote {
+    font-family: $base-font-family;
+    line-height: 1.2;
+    font-style: italic;
+    font-size: pem(16);
+    @include themes( $map: quote-copy );
+    @include eq-context(medium-box, large-box, large) {
+        font-size: pem(25);
+    }
+    @include get-web-icon(open-quote) {
+        @include themes( $map: quote-icon );
+        float: left;
+        margin-right: 1px;
+    }
+}
+
+%quote-footer {
+    font-family: $base-font-family;
+    font-size: pem(14);
+    line-height: 1.142;
+    text-transform: uppercase;
+    @include themes( $map: quote-footer );
+    &:before {
+        display: none;
+    }
+}
+
+%detail-text {
+    @extend %base;
+    font-weight: 100;
+    font-size: pem(16.2); //.9em;
+    @include themes( $map: detail-text, $props: color border-bottom-color );
+    a {
+        @extend %default-link;
+    }
+}
+
+
+%footnote-item {
+    @extend %base;
+    font-weight: 100;
+    font-size: pem(12);  // .8em
+    list-style: none;
+    @include themes( $map: footnote-item );
+    @include data-context(list-symbol) {
+        counter-increment: step-counter;
+        position: relative;
+        margin-left: 1.2em;
+        &:before {
+            vertical-align: super;
+            position: absolute;
+            @include data-context(align, center, right) {
+                position: relative;
+            }
+        }
+    }
+    @include data-pseudo(list-symbol, before, numbered) {
+        font-size: pem(12.6); // .7em
+        left: -15px;
+        content: "[" counter(step-counter) "] ";
+        @include data-context(align, center right) {
+            left: 0;
+        }
+    }
+    @include data-pseudo(list-symbol, before, asterisk) {
+        font-size: pem(14.4);  // .8em
+        left: -10px;
+        content: "*";
+        @include data-context(align, center right) {
+            left: 0;
+        }
+    }
+    a {
+        color: inherit;
+        text-decoration: none;
+        @include underline( $color: rule-border );
+        &:hover {
+            cursor: pointer;
+            @include themes( $map: footnote-item-hover );
+            @include underline( $color: rule-border );
+        }
+        &:focus {
+            border-bottom: 0;
+            @include accessibility-focus( $color: headline-link-hover );
+        }
+    }
+}
+
+
+%site-footer-text {
+    @extend %base;
+    font-weight: 100;
+    font-size: pem(12.6); // .7em
+    @include themes( $map: site-footer-text );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%card-summary {
+    display: block;
+    font-family: $base-font-family;
+    font-size: pem(18);
+    font-weight: normal;
+    line-height: 1.44;
+    @include themes( $map: card-summary );
+    a {
+        @extend %default-link;
+    }
+}
+
+%pagination-count {
+    font-family: $base-font-family;
+    font-weight: bold;
+    font-size: pem(18);
+    line-height: pem(25);
+    @include themes( $map: pagination-count );
+    @include data(state, inactive) {
+        color: color(pagination-count, inactive);
+    }
+    a {
+        @extend %inline-headline-link;
+    }
+}
+%store-paragraph {
+    @extend %base;
+    font-weight: 100;
+    font-size: pem(16);
+    @include themes( $map: default-paragraph );
+    a {
+        @extend %default-link;
+    }
+}
+
+%store-strong-paragraph {
+    @extend %base;
+    font-weight: bold;
+    font-size: pem(16);
+    @include themes( $map: store-strong-paragraph );
+    a {
+        @extend %default-link;
+    }
+}
+
+%tooltip-paragraph {
+    @extend %base;
+    @extend %default-strong;
+    @extend %default-emphasis;
+    font-size: pem(14);
+    font-weight: 100;
+    @include themes( $map: tooltip-text );
+    a {
+        @extend %default-link;
+    }
+}
+
+%tooltip-li {
+    @extend %base;
+    font-size: pem(14);
+    font-weight: 100;
+    @include themes( $map: tooltip-text );
+    a {
+        @extend %default-link;
+    }
+}
+
+%social-label {
+    font-family: $base-font-family;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: color(social-label);
+    font-size: .75em;
+    @include themes( $map: social-label );
+    &:focus {
+        @include accessibility-focus;
+    }
+}
+
+%social-handle {
+    font-family: $base-font-family;
+    font-weight: 600;
+    font-size: pem(18);
+    @include themes( $map: social-handle );
+    @include data-context(icon-size, xsmall) {
+        font-size: .8em;
+    }
+    @include data-context(icon-size, small) {
+        font-size: .9em;
+    }
+    @include data-context(icon-size, medium) {
+        font-size: 1em;  // .8em
+    }
+    @include data-context(icon-size, large) {
+        font-size: 1.2em;
+    }
+    @include data-context(position, below) {
+        display: block;
+    }
+    a:hover & {
+        @include themes( $map: social-handle-hover );
+    }
+}
+
+// accomodate for long URLs in a small space
+%social-post {
+    @extend %base;
+    font-weight: 100;
+    font-size: pem(18);
+    @include themes( $map: default-paragraph );
+    a {
+        @extend %default-link;
+    }
+}
+
+%band-metadata {
+    @extend %base;
+    @extend %fine;
+    font-size: pem(16);
+    @include themes( $map: default-paragraph );
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+%tags-label {
+    @extend %base;
+    font-weight: 100;
+    font-size: pem(14);
+    @include themes( $map: weaker-paragraph );
+}
+
+%icon-embed-text {
+    font-family: $base-font-family;
+    font-weight: 400;
+    text-decoration: none;
+    line-height: 1.2;
+    color: inherit;
+}

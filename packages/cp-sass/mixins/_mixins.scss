@@ -1,0 +1,443 @@
+@mixin rh-transition($properties...) {
+    $return: null;
+    @each $property in $properties {
+        @if length($property) == 1 {
+            $return: append($return, #{$property} .3s ease, comma);
+        }
+        @else if length($property) == 2 {
+            $return: append($return, nth($property, 1) nth($property, 2), comma);
+        }
+    }
+    transition: $return;
+}
+
+@mixin data($attr, $values...) {
+    $uniqueId: unique-id();
+    @at-root %#{$uniqueId} {
+        @content
+    }
+    @if length($values) > 0 {
+        @each $value in $values {
+            &[data-#{$repo}-#{$attr}="#{$value}"] {
+                @extend %#{$uniqueId};
+            }
+        }
+    }
+    @else {
+        &[data-#{$repo}-#{$attr}] {
+            @extend %#{$uniqueId};
+        }
+    }
+}
+@mixin data-context( $attr, $values...) {
+    $uniqueId: unique-id();
+    @at-root %#{$uniqueId} {
+        @content
+    }
+    @if length($values) > 0 {
+        @each $value in $values {
+            [data-#{$repo}-#{$attr}="#{$value}"] & {
+                @extend %#{$uniqueId};
+            }
+        }
+    }
+    @else {
+        [data-#{$repo}-#{$attr}] & {
+            @extend %#{$uniqueId};
+        }
+    }
+}
+@mixin data-pseudo($attr, $pseudo, $values...) {
+    $uniqueId: unique-id();
+    @at-root %#{$uniqueId} {
+        @content
+    }
+    @if length($values) > 0 {
+        @each $value in $values {
+            [data-#{$repo}-#{$attr}="#{$value}"] &:#{$pseudo} {
+                @extend %#{$uniqueId};
+            }
+        }
+    }
+    @else {
+        [data-#{$repo}-#{$attr}] &:#{$pseudo} {
+            @extend %#{$uniqueId};
+        }
+    }
+}
+@mixin data-layout($selector: "", $values...) {
+    $uniqueId: unique-id();
+    @at-root %#{$uniqueId} {
+        @content
+    }
+    @each $value in $values {
+        [data-#{$repo}-layout#{$selector}="#{$value}"] {
+            @extend %#{$uniqueId};
+        }
+    }
+}
+
+/*doc
+---
+title: make-button()
+category: Global - Mixins
+---
+
+@mixin make-button($btn-color, $btn-text-color: white, $disabled: false)
+
+-    __$btn-color__ - sets background color
+-    __$btn-text-color: white__ - sets text color
+-    __$border: 0__ - sets border styles, i.e. 1px solid color("rh-white")
+-    __$disabled: false__ - if set to "true" removes hover effect and sets pointer to default
+
+```inline
+.class_name {
+    @include make-button(
+        color(button, red),
+        color(button, white)
+    );
+}
+```
+*/
+
+@mixin make-button(
+    $btn-color,
+    $btn-text-color: $white,
+    $border-color: $btn-color,
+    $disabled: false,
+    $btn-color-hover: null,
+    $btn-text-color-hover: null,
+    $border-color-hover: null,
+    $padding: pem(8) pem(40)) {
+
+    display: inline-block;
+    font-family: $base-font-family;
+    border-width: 1px;
+    border-style: solid;
+    font-size: pem(16);
+    line-height: 1.44;
+    padding: $padding;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    // Set background color for the button
+    @if $btn-color == transparent or type-of( $btn-color ) == color {
+        background-color: $btn-color;
+    }
+    @else {
+        @include themes( $map: $btn-color, $props: background-color );
+    }
+    // Set border color for the button
+    @if type-of( $border-color ) == color {
+        border-color: $border-color;
+    }
+    @else {
+        @include themes( $map: $border-color, $props: border-color );
+    }
+    // Set text color for the button
+    @if type-of( $btn-text-color ) == color {
+        color: $btn-text-color;
+    }
+    @else {
+        @include themes( $map: $btn-text-color );
+    }
+    @if $disabled {
+        cursor: default;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    @else {
+        @include rh-transition( background .3s ease-in );
+        cursor: pointer;
+        &:hover {
+            text-decoration: none;
+            // Set hover background color for the button
+            @if $btn-color-hover == null {
+                @if type-of( $btn-color ) == color {
+                    background-color: darken( $btn-color, 6% );
+                }
+                @else {
+                    background-color: darken( color( $btn-color ), 6% );
+                }
+            }
+            @elseif type-of( $btn-color-hover ) == color {
+                background-color: $btn-color-hover;
+            }
+            @else {
+                @include themes( $map: $btn-color-hover, $props: background-color );
+            }
+            // Set hover border color for the button
+            @if $border-color-hover != null {
+                @if type-of( $border-color-hover ) == color {
+                    border-color: $border-color-hover;
+                }
+                @else {
+                    @include themes( $map: $border-color-hover, $props: border-color );
+                }
+            }
+            // Set hover text color for the button
+            @if $btn-text-color-hover != null {
+                @if type-of( $btn-text-color-hover ) == color {
+                    color: $btn-text-color-hover;
+                }
+                @else {
+                    @include themes( $map: $btn-text-color-hover );
+                }
+            }
+            @else {
+                @if type-of( $btn-text-color ) == color {
+                    color: $btn-text-color;
+                }
+                @else {
+                    @include themes( $map: $btn-text-color );
+                }
+
+            }
+        }
+    }
+}
+
+@mixin clearfix {
+    &::after {
+        clear: both;
+        content: "";
+        display: table;
+    }
+}
+
+// apply to anchor tags containing images to fix IE blue border issue
+@mixin ie-image-link-fix {
+    border-width: 0;
+    img {
+        border-width: 0;
+    }
+}
+
+// Loop through our standard colors and use them for a property color inside of a given data attribute
+@mixin make-backgrounds($attr, $context, $property: background-color, $map: band-background) {
+    @each $key, $color in map-get($color-map, $map) {
+        @if $context {
+            @include data-context(#{$attr}, #{$key}) {
+                #{$property}: #{$color};
+                @content;
+            }
+        }
+        @else {
+            @include data(#{$attr}, #{$key}) {
+                #{$property}: #{$color};
+                @content;
+            }
+        }
+    }
+}
+
+@mixin icon-background-colors() {
+    $icon-bg-colors: (
+        white: light,
+        orange: dark,
+        black: dark
+    );
+    $text-fill: (
+        light: black,
+        dark: white
+    );
+    $bg-hover: (
+        light: blue,
+        dark: gray
+    );
+    @each $color, $theme in $icon-bg-colors {
+        @include data-context(icon-background, $color ) {
+            background-color: color(icon-background, $color);
+            path {
+                fill: color(icon-fill, map-get($text-fill, $theme));
+            }
+        }
+        a:hover & {
+            @include data-context(icon-background) {
+                background-color: color(icon-background-hover, map-get($bg-hover, $theme));
+            }
+        }
+    }
+}
+
+@mixin background-colors($type: band, $opacity: 1) {
+    @include data(background, transparent) {
+        background-color: transparent;
+        @content;
+    }
+    @each $key, $color in map-get($block-color-map, #{$type}-background) {
+        @include data("background", #{$key}) {
+            @content;
+            background-color: color(#{$type}-background, $key, $opacity: $opacity);
+        }
+    }
+}
+
+@mixin background-with-svg( $supported: ( light: (white), dark: (orange, black) ), $bg-map: icon-background, $fill-map: icon-fill, $path: true ) {
+    // Fallback theme color if not background is set
+    @if $path {
+        path {
+            @include themes( $map: $fill-map, $props: fill );
+        }
+    }
+    @each $theme, $colors in $supported {
+        @each $i in $colors {
+            @include data-context($bg-map, $i) {
+                background-color: color($bg-map, $i);
+                @if $path {
+                    path {
+                        fill: color($fill-map, if( $theme == "light", black, white ));
+                    }
+                }
+            }
+            a:hover & {
+                @include data-context($bg-map, $i) {
+                    background-color: color(#{$bg-map}-hover, gray);
+                }
+            }
+            @if $path {
+                a:hover & path {
+                    // Add support for hover states if no background added
+                    @include themes( $map: #{$fill-map}-hover, $props: fill );
+                    @include data-context($bg-map, $i) {
+                        fill: color($fill-map, if( $theme == "light", black, white ));
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin overlay-colors($type: band) {
+    /* Not setting transparent overlay settings at this time, potentially add later
+    $overlay-colors: (
+        "transparent-90": color(band-background, black, .9),
+        "transparent-70": color(band-background, black, .7),
+        "transparent-50": color(band-background, black, .5),
+        "transparent-30": color(band-background, black, .3)
+    );
+    */
+    $overlay-colors: ();
+    @each $key, $color in map-get($block-color-map, #{$type}-background) {
+        $red: red($color);
+        $green: green($color);
+        $blue: blue($color);
+        $overlay-colors: map-merge( $overlay-colors, (
+            "#{$key}-90": rgba($red, $green, $blue, .9),
+            "#{$key}-70": rgba($red, $green, $blue, .7),
+            "#{$key}-50": rgba($red, $green, $blue, .5),
+            "#{$key}-30": rgba($red, $green, $blue, .3)
+        ) );
+    }
+
+    @each $name, $color in $overlay-colors {
+        @include data(overlay, #{$name}) {
+            &:before {
+                @extend %overlay;
+                background-color: #{$color};
+            }
+        }
+    }
+    // Allow content to sit on top of overlays
+    > * {
+        position: relative;
+    }
+}
+
+@mixin product-theme($property, $level: post, $product: all) {
+    @if (all in $product) {
+        @each $name, $color in $product-line-colors {
+            @if $level == post {
+                @include data-context("theme~", "#{$name}") {
+                    #{$property}: $color;
+                    @content;
+                }
+            }
+            @else {
+                @include data("theme~", "#{$name}") {
+                    #{$property}: $color;
+                    @content;
+                }
+            }
+        }
+    }
+    @else {
+        @each $p in $product {
+            @if (map-has-key($product-line-colors, $p)) {
+                @if $level == post {
+                    @include data-context("theme~", "#{$product}") {
+                        #{$property}: color($product);
+                        @content;
+                    }
+                }
+                @else {
+                    @include data("theme~", "#{$product}") {
+                        #{$property}: color($product);
+                        @content;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Make a CSS arrow
+@mixin arrow($type, $color, $width: 8px, $height: 5px, $pseudo: false) {
+    $direction: (
+        up: 180deg,
+        down: 0deg,
+        right: -90deg,
+        left: 90deg,
+    );
+    border-style: solid;
+    border-width: $width $height 0;
+    border-color: transparent;
+    border-top-color: $color;
+    transform: rotate(map-get($direction, $type));
+    @if $pseudo {
+        content: " ";
+        position: absolute;
+        @content;
+    }
+}
+
+@mixin print-media {
+    @media print {
+        @content;
+    }
+}
+
+@mixin print-background {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+}
+// scss-lint:disable ImportantRule
+@mixin no-print-background {
+    @include print-media {
+        background-color: white !important;
+        background-image: none !important;
+        box-shadow: none !important;
+    }
+}
+// scss-lint:enable ImportantRule
+
+@mixin pipe( $position: right, $padding: 0, $margin: 0 ) {
+    border: 1px solid transparent;
+    @include themes( $map: rule-border, $props: border-#{$position}-color);
+    @if $position == right {
+        padding-left: $padding;
+        margin-right: $margin;
+    }
+    @else if $position == left {
+        padding-right: $padding;
+        margin-left: $margin;
+    }
+}
+
+@mixin retina {
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        @content;
+    }
+}

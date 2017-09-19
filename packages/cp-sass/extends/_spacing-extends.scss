@@ -1,0 +1,161 @@
+/*
+    This file contains reusable sets for margin and padding to be applied on components
+    Yes, they are named after animals. Naming is hard; just go with it.
+*/
+
+%margin-none {
+    margin: 0;
+}
+
+%margin-clear-last-child {
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// Domestic animals are sized using ems
+%margin-bottom-hamster {
+    margin: 0 0 5px;  //4.4px
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+%margin-right-hamster {
+    margin: 0 5px 0 0;
+    &:last-child {
+        margin-right: 0;
+    }
+}
+%margin-sides-hamster {
+    margin: 0 5px;
+    &:first-child {
+        margin-left: 0;
+    }
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+%margin-bottom-gerbil {
+    margin: 0 0 7px; //6.1px
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// "Wild" animals are sized in px
+%margin-bottom-gopher {
+    margin: 0 0 10px; //8.8px
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+%margin-right-gopher {
+    margin: 0 10px 0 0;
+    &:last-child {
+        margin-right: 0;
+    }
+}
+%margin-left-gopher {
+    margin: 0 0 0 10px;
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+%margin-bottom-cat {
+    margin: 0 0 11px; //9.68px
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+%margin-bottom-wolverine {
+    margin: 0 0 15px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+%margin-bottom-wolf {
+    margin: 0 0 16px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// the dog & pony show; pony is the same as dog, but with EQ support
+%margin-bottom-dog {
+    margin: 0 0 18px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+%margin-right-dog {
+    margin: 0 18px 0 0;
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+%margin-bottom-pony {
+    margin: 0 0 18px;
+    @include eq-context(medium, large) {
+        margin-bottom: 27px;
+    }
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+
+%margin-bottom-koala {
+    margin: 0 0 20px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+%margin-bottom-kangaroo {
+    margin: 0 0 24px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+%margin-bottom-bear {
+    margin: 0 0 26px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+%margin-bottom-rhino {
+    margin: 0 0 28px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// Section of more complex margins with breakpoints and eq-sizes
+// These should all be underwater creatures
+%margin-bottom-octopus {
+    margin: 0 0 20px;
+    @include eq-context(medium, large) {
+        margin-bottom: 22px;
+    }
+    @include breakpoint($breakpoint-lg-min) {
+        margin-bottom: 22px;
+    }
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+%margin-bottom-stingray {
+    margin: 0 0 16px;
+    @include eq-context(large) {
+        margin: 0 0 18px;
+    }
+    &:last-child {
+        margin-bottom: 0;
+    }
+}

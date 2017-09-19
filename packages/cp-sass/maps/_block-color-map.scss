@@ -1,0 +1,104 @@
+$block-color-map: (
+    table-background: (
+        white: $white,
+        gray: $gallery
+    ),
+    band-background: (
+        white: $white,
+        black: $black,
+        rich-black: $rich-black,
+        red: $brick-red,
+        gray: $gallery,
+        teal: $teal,
+        blue: $denim-blue,
+        green: $green
+    ),
+    card-background: (
+        white: $white,
+        light: $white,
+        black: $black,
+        dark: $black,
+        rich-black: $rich-black,
+        red: $brick-red,
+        gray: $gallery,
+        dark-gray: $mercury,
+        teal: $teal,
+        blue: $denim-blue,
+        green: $green,
+        brick-red: $brick-red,
+        charcoal: $charcoal,
+        turquoise: $turquoise,
+    ),
+    card-absolute-background: (
+        white: $white,
+        black: $black,
+    ),
+    image-border: (
+        white: $white,
+        black: $black,
+        rich-black: $rich-black,
+        red: $red,
+        gray: $gallery,
+        teal: $teal,
+        blue: $denim-blue
+    ),
+    accordion-background: (
+        white: $white,
+        black: $black
+    ),
+    accordion-border: (
+        white: $iron,
+        black: $fog
+    ),
+    accordion-indicator: (
+        dark: $white,
+        light: $black,
+    ),
+    rule-border: (
+        dark: rgba($white, .6),
+        light: $iron,
+        polar: rgba($gallery, .3),
+    ),
+    card-border: (
+        gray: $iron,
+    ),
+    menu-background: (
+        desktop: $black,
+        mobile: $white,
+        mobile-top: $rich-black,
+        utility-xs: $black,
+        utility-sm: $white
+    ),
+    box-shadow: (
+        light: $black,
+    ),
+    tooltip-background: (
+        dark: $black,
+        light: $white,
+    ),
+    tooltip-border: (
+        dark: $black,
+        light: $fog,
+    ),
+    tooltip-icon-text: (
+        light: $white,
+        help: $white,
+        warning: $rich-black,
+        error: $white,
+        info: $white,
+    ),
+    tooltip-icon-background: (
+        light: $black,
+        help: $black,
+        warning: $iron,
+        error: $brand-primary,
+        info: $denim-blue,
+    ),
+    list-item-markers: (
+        dark: $white,
+        light: $fog
+    ),
+    tag-box: (
+        white: $white
+    )
+);

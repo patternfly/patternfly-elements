@@ -1,0 +1,176 @@
+@function strip-unit($num) {
+    @return $num / ($num * 0 + 1);
+}
+
+/*doc
+---
+title: pem
+category: Global - Function
+---
+
+-   __$pxval:__ pixel value to return as em
+-   __$base:__ defaults to 18px, but optional context can be passed in
+
+```inline
+.class-name {
+    font-size: pem(36); // Returns 2em (or 36px)
+    padding: pem(18, 36) // pass in current font-size context to return 18px/1em padding
+}
+```
+
+*/
+
+@function pem($pxval, $base: $base-font-px) {
+    @return strip-unit($pxval) / $base * 1em;
+}
+
+/// Map deep get
+/// @author Hugo Giraudel
+/// @access public
+/// @param {Map} $map - Map
+/// @param {Arglist} $keys - Key chain
+/// @return {*} - Desired value
+@function map-deep-get($map, $keys...) {
+    @each $key in $keys {
+        @if type-of($map) == "map" {
+            $map: map-get($map, $key);
+        }
+        @else {
+            @warn "Map provided is not a map."
+        }
+    }
+    @return $map;
+}
+
+// Collect all maps and merge them together
+@function map-collect($maps...) {
+    $collection: ();
+    @each $map in $maps {
+        $collection: map-merge($collection, $map);
+    }
+    @return $collection;
+}
+
+// Use function 'map-collect' to merge all maps
+// This needs to be located here in order to avoid
+// variable issues.
+$color-map: map-collect(
+    $block-color-map,
+    $copy-color-map,
+    $form-color-map,
+    $icon-color-map,
+    $link-color-map,
+    $table-color-map,
+    $title-color-map
+);
+
+/*doc
+---
+title: color
+category: Global - Function
+---
+@function color($map-key, $theme)
+
+-   __$map-key:__ name of color map's sub map (component type)
+-   __$theme:__ optional value. Choose the theme (ie: 'dark') to grab that color version.
+
+```inline
+.class-name {
+    color: color(base-headline); // Uses the default color for base-headline
+}
+.dark-class-name {
+    color: color(base-headline, dark); // Uses the dark theme color for base-headline
+}
+```
+*/
+
+// New color function to only return theme colors
+@function color( $name, $theme: "light", $opacity: 1 ) {
+    $map: map-get($color-map, $name);
+    $error: false;
+    $color: null;
+    @if $map != null {
+        $color: map-get($map, $theme);
+    }
+    @else {
+        $error: true;
+    }
+    @if type-of($color) == color {
+        @if $opacity == 1 {
+            @return $color;
+        }
+        @if $opacity < 1 {
+            @return rgba( $color, $opacity );
+        }
+    }
+    @else {
+        $error: true;
+    }
+    @if $error {
+        @warn "#{$name} is not a valid color";
+    }
+}
+
+// https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+// Get the first item in a list
+@function first($list) {
+    @return nth($list, 1);
+}
+
+// Get the last item in a list
+@function last($list) {
+    @return nth($list, length($list));
+}
+
+@function str-replace($string, $search, $replace: "") {
+    @if type-of($string) == "string" && type-of($search) == "string" {
+        $index: str-index($string, $search);
+        @if $index {
+            @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+        }
+    }
+    @return $string;
+}
+
+@function str-split($string, $separator) {
+    // empty array/list
+    $split-arr: ();
+    // first index of separator in string
+    $index: str-index("#{$string}", $separator);
+    // loop through string
+    @while $index != null {
+        // get the substring from the first character to the separator
+        $item: str-slice($string, 1, $index - 1);
+        // push item to array
+        $split-arr: append($split-arr, $item);
+        // remove item and separator from string
+        $string: str-slice($string, $index + 1);
+        // find new index of separator
+        $index: str-index($string, $separator);
+    }
+    // add the remaining string to list (the last item) and return
+    @return append($split-arr, $string);
+}
+
+// https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
+/// Check whether `$string` stars with `$needle`.
+/// @param {String} $string - string to check
+/// @param {String} $needle - substring to check
+/// @return {Bool}
+@function str-starts-with($string, $needle) {
+    @return str-slice($string, 1, str-length($needle)) == $needle;
+}
+
+// https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/#removing-values-from-list
+@function remove($list, $value, $recursive: false) {
+    $result: ();
+    @for $i from 1 through length($list) {
+        @if type-of(nth($list, $i)) == list and $recursive {
+            $result: append($result, remove(nth($list, $i), $value, $recursive));
+        }
+        @else if nth($list, $i) != $value {
+            $result: append($result, nth($list, $i));
+        }
+    }
+    @return $result;
+}

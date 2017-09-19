@@ -1,0 +1,154 @@
+/*
+    DOC: Themes mixin helps control the default order of theme styles;
+               it's important to have the dark theme first and then light because
+               it prevents a light card contained on a dark background from rendering the wrong
+               theme's color.
+    EXAMPLE: @include themes( $map: social-handle );
+*/
+@mixin themes( $map, $props: color, $opacity: 1 ) {
+    // Print the default color value first
+    @each $prop in $props {
+        #{$prop}: color($map);
+    }
+    // This will get a list of every theme available in the map
+    $themes: map-keys(map-get($color-map, $map));
+    //$themes: remove( $themes, "");
+    // Build the dark and light theme lists
+    $dark_subthemes: ();
+    $light_subthemes: ();
+    @each $theme in $themes {
+        // If the theme contains a dash separator and the first value is dark:
+        @if str-index( quote( $theme ), "-" ) != null and str-starts-with( $theme, "dark" ) {
+            $dark_subthemes: append( $dark_subthemes, $theme );
+        }
+        // Else if the string does not contain a dash separator but it is not dark or light:
+        @else if str-index( quote( $theme ), "-" ) == null and index( (dark light), quote( $theme ) ) == null {
+            $light_subthemes: append( $light_subthemes, $theme );
+        }
+    }
+
+    // Print each theme individually
+    @each $theme in $themes {
+        $pseudo: "^";
+        @if index( $light_subthemes, $theme ) != null {
+            $pseudo: "$";
+        }
+        // @else if index( $dark_subthemes, $theme ) != null {
+        //    $pseudo: "^";
+        // }
+        @include data-context("theme#{$pseudo}", str-replace("#{$theme}", "-", " ")) {
+            @each $prop in $props {
+                #{$prop}: color($map, $theme, $opacity: $opacity );
+            }
+        }
+    }
+}
+
+@mixin accessibility-focus( $color: default-link ) {
+    outline-offset: 1px;
+    outline-style: dotted;
+    outline-width: 1px;
+    //scss-lint:disable ImportantRule
+    text-decoration: none !important;
+    @if type-of( $color ) == color {
+        outline-color: $color;
+    }
+    @else {
+        @include themes( $map: $color, $props: outline-color );
+    }
+}
+
+@mixin underline( $color: default-link-hover-line, $opacity: 1 ) {
+    text-decoration: underline;
+    text-decoration-skip: ink;
+    // @todo: re-evaluate later; using default underline color for now
+    //@if type-of( $color ) == color {
+    //    text-decoration-color: $color;
+    //}
+    //@else {
+    //    @include themes( $map: $color, $props: text-decoration-color, $opacity: $opacity );
+    //}
+}
+
+// Build an input field
+@mixin custom-input($type, $color: color(custom-input), $size: 18px, $rounded: 50%, $weight: "normal") {
+    $valid-types: radio, checkbox;
+    @if index($valid-types, $type) > 0 {
+        $border: if(strip-unit($size) < 16, 1px, round($size / 10));
+        $ratio: $size;
+        $margin: 0;
+        @if $type == radio and strip-unit( $size ) > 15 {
+            $margin: ( $border * 2 ) - 1;
+            $ratio: $size - ( $margin * 2 );
+        }
+        visibility: hidden;
+        -webkit-appearance: none;
+        cursor: pointer;
+        position: absolute;
+        top: 6px;
+        left: 0;
+        width: $size;
+        height: $size;
+        &::-ms-check {
+            display: none;
+        }
+        + label {
+            display: block;
+            position: relative;
+            top: 0;
+            left: 0;
+            padding-left: $size + 5;
+            font-family: $base-font-family;
+            font-weight: if( $weight == "light", 400, 600 );
+            font-size: $size;
+            color: color(custom-input);
+            &:not(:last-child) {
+                margin-right: 5px;
+            }
+            &:before,
+            &:after {
+                position: absolute;
+                content: "";
+                left: 0;
+                top: 4px;
+                border-radius: $rounded;
+            }
+            &:before {
+                width: $size;
+                height: $size;
+                border: $border solid $color;
+            }
+            &:after {
+                content: " ";
+                background: transparent;
+                width: $ratio;
+                height: $ratio;
+                margin: $margin;
+            }
+        }
+        &:checked + label:after {
+            $fontColor: if( lightness($color) < 50%, $white, $black);
+            background-color: $color;
+            @if $type == checkbox {
+                @include flex(
+                    $align: center,
+                    $justify: center
+                );
+                content: "\2713";
+                font-size: $size;
+                color: $fontColor;
+                text-align: center;
+            }
+        }
+        &:disabled + label {
+            color: color(cta-disabled);
+            &:before,
+            &:after {
+                border-color: color(cta-disabled);
+            }
+            &:after {
+                content: "";
+            }
+        }
+    }
+}

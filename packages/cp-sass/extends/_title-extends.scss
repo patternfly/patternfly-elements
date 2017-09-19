@@ -1,0 +1,415 @@
+// TITLES
+%base-headline {
+    font-family: $base-font-family;
+    line-height: 1.18;
+}
+
+%section-title {
+    @extend %base;
+    text-transform: uppercase;
+    font-weight: 800;
+    //max-width: calc(100% - 25px); not sure why this was added but it doesnt work with flexbox layouts
+    font-size: pem(22);
+    @include themes( $map: section-title );
+    @include product-theme( $property: color );
+    a {
+        text-decoration: none;
+        color: inherit;
+        &:active,
+        &:hover {
+            text-decoration: none;
+            cursor: pointer;
+            @include themes( $map: section-title-link-hover);
+        }
+        &:active,
+        &:focus {
+            @include accessibility-focus( $color: default-link-hover );
+        }
+    }
+}
+
+%card-title {
+    @extend %base-headline;
+    font-size: pem(22);
+    font-weight: 800;
+    text-transform: uppercase;
+    @include themes( $map: card-title );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%card-title-small {
+    @extend %base-headline;
+    font-size: pem(14);
+    font-weight: 400;
+    text-transform: uppercase;
+    @include themes( $map: card-title );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%mini-title {
+    font-family: $base-font-family;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: .9em;
+    @include themes( $map: mini-title );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%small-standard-title {
+    font-family: $base-font-family;
+    text-transform: uppercase;
+    font-size: 1em;
+    font-weight: 600;
+    line-height: 1.38;
+    @include themes( $map: small-standard-title );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%medium-standard-title {
+    font-family: $base-font-family;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.38;
+    @include themes( $map: medium-standard-title );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%tooltip-title {
+    font-family: $base-font-family;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.1em;
+    line-height: 1.38;
+    @include themes( $map: tooltip-title );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%sub-title {
+    @extend %base-headline;
+    font-size: pem(28);
+    text-transform: uppercase;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 100;
+    @include themes( $map: sub-title );
+    @include eq-context(small, medium) {
+        font-size: pem(24);
+    }
+    a {
+        @extend %inline-headline-link-muted;
+    }
+}
+
+
+%large-featured-title {
+    @extend %base-headline;
+    font-size: pem(22);
+    font-weight: 600;
+    @include eq-context(large-box) {
+        font-size: pem(34);
+    }
+    @include themes( $map: featured-title );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%small-featured-title {
+    @extend %base-headline;
+    font-size: pem(22);
+    font-weight: 600;
+    @include themes( $map: featured-title );
+    @include eq-context(small-teaser) {
+        font-size: pem(20);
+    }
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+/* HEADLINE STYLES */
+%section-headline {
+    font-family: $base-font-family;
+    text-transform: none;
+    line-height: 1.1;
+    font-weight: 800;
+    font-size: pem(32);
+    @include themes( $map: section-headline );
+    @include breakpoint($breakpoint-md-min) {
+        font-size: pem(36);
+    }
+    @include breakpoint($breakpoint-lg-min) {
+        font-size: pem(38);
+    }
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%hero-headline {
+    font-family: $base-font-family;
+    text-transform: none;
+    line-height: 1.1;
+    font-weight: 800;
+    font-size: pem(32);
+    @include themes( $map: hero-headline );
+    @include breakpoint($breakpoint-md-min) {
+        font-size: pem(39);
+    }
+    @include breakpoint($breakpoint-lg-min) {
+        font-size: pem(42);
+    }
+    @include eq-context(small) {
+        font-size: pem(32);
+    }
+    a {
+        @extend %inline-headline-link;
+    }
+    em {
+        font-weight: 600;
+        font-style: italic;
+    }
+}
+
+%teaser-headline {
+    font-family: $base-font-family;
+    text-transform: none;
+    line-height: 1.3;
+    font-weight: 600;
+    font-size: pem(24);
+    @include themes( $map: teaser-headline );
+    a {
+        @extend %inline-headline-link-with-link-color;
+    }
+}
+
+
+%teaser-headline-thin {
+    @extend %base;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 100;
+    font-size: pem(20);
+    @include themes( $map: default-paragraph );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%teaser-headline-medium {
+    @extend %base;
+    font-weight: 600;
+    font-size: pem(20);
+    @include themes( $map: default-paragraph );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%card-headline {
+    @extend %base-headline;
+    font-size: pem(28);
+    font-weight: 800;
+    @include themes( $map: card-headline );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%hero-subheadline {
+    font-family: $base-font-family;
+    font-size: pem(28);
+    font-weight: 600;
+    line-height: 1.38;
+    @include themes( $map: hero-subheadline );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+%tooltip-headline {
+    font-family: $base-font-family;
+    font-size: pem(22);
+    font-weight: 800;
+    text-transform: none;
+    line-height: 1.18;
+    @include themes( $map: tooltip-headline );
+}
+
+// SUMMARIES
+%section-summary {
+    font-family: $base-font-family;
+    text-transform: none;
+    line-height: 1.38;
+    font-size: pem(24);
+    font-weight: 100;
+    @include themes( $map: section-summary );
+    a {
+        @extend %default-link;
+    }
+}
+
+%featured-title {
+    font-family: $base-font-family;
+    text-transform: none;
+    line-height: 1.38;
+    font-size: pem(24);
+    font-weight: 400;
+    color: color(featured-title);
+    @include themes( $map: featured-title );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%hero-summary {
+    font-family: $base-font-family;
+    text-transform: none;
+    line-height: 1.38;
+    font-size: pem(24);
+    font-weight: 400;
+    @include themes( $map: hero-summary );
+    a {
+        @extend %default-link;
+    }
+}
+
+%hero-detail-summary {
+    font-family: $base-font-family;
+    text-transform: none;
+    line-height: 1.38;
+    font-size: pem(18);
+    font-weight: 400;
+    @include themes( $map: hero-detail-summary );
+    a {
+        @extend %default-link;
+    }
+}
+
+// CONTENT LEVELS
+%content-level1 {
+    @extend %base-headline;
+    text-transform: none;
+    font-size: pem(28);
+    font-weight: 400;
+    @include themes( $map: content-level1 );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%content-level2 {
+    font-family: $base-font-family;
+    text-transform: uppercase;
+    line-height: 1.38;
+    font-weight: 600;
+    font-size: 1.1em;
+    @include themes( $map: content-level2 );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%content-level3 {
+    font-family: $base-font-family;
+    text-transform: uppercase;
+    line-height: 1.38;
+    font-weight: 600;
+    font-size: 1em;
+    @include themes( $map: content-level3 );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%content-level4 {
+    font-family: $base-font-family;
+    text-transform: uppercase;
+    line-height: 1.38;
+    font-weight: 600;
+    font-size: .7em;
+    @include themes( $map: content-level4 );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+// DEFAULT LEVELS
+%default-level1 {
+    @extend %base-headline;
+    text-transform: none;
+    font-size: pem(38);
+    font-weight: 800;
+    @include themes( $map: default-level1 );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%default-level2 {
+    @extend %base-headline;
+    text-transform: none;
+    font-size: pem(32);
+    font-weight: 800;
+    @include themes( $map: default-level2 );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%default-level3 {
+    @extend %base-headline;
+    text-transform: none;
+    font-size: pem(22);
+    font-weight: 800;
+    @include themes( $map: default-level3 );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%default-level4 {
+    @extend %base-headline;
+    text-transform: none;
+    font-size: pem(20);
+    font-weight: 600;
+    @include themes( $map: default-level4 );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%default-level5 {
+    @extend %base-headline;
+    text-transform: none;
+    font-size: pem(18);
+    font-weight: 600;
+    @include themes( $map: default-level5 );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+
+%default-level6 {
+    @extend %base-headline;
+    text-transform: none;
+    font-size: pem(16);
+    font-weight: 600;
+    @include themes( $map: default-level6 );
+    a {
+        @extend %inline-headline-link;
+    }
+}
+

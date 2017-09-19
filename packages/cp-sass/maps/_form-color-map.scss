@@ -1,0 +1,32 @@
+$form-color-map: (
+    input-text: (
+        dark: $white,
+        light: $black,
+    ),
+    field-border: (
+        dark: $fog,
+        light: $iron,
+    ),
+    custom-input: (
+        dark: $white,
+        light: $black,
+    ),
+    custom-input-label: (
+        light: $rich-black
+    ),
+    select-container: (
+        dark: $white,
+        light: $white,
+    ),
+    select-container-background: (
+        dark: $brand-primary,
+        light: $brand-primary,
+    ),
+    select-arrow: (
+        dark: $white,
+        light: $white,
+    ),
+    input-border: (
+        light: $iron,
+    )
+);

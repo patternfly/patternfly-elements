@@ -1,0 +1,48 @@
+%select-container {
+    display: inline-block;
+    position: relative;
+    @include get-web-icon(caret-down) {
+        position: absolute;
+        right: 2px;
+        bottom: 7px;
+        color: color(select-container);
+    }
+    select {
+        font-size: pem(14);
+        border: 0;
+        font-family: $base-font-family;
+        background: color(select-container-background);
+        color: color(select-container);
+        border-radius: 0;
+        padding: 8px 8px 8px 12px;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+}
+
+%text-input {
+    font-family: $base-font-family;
+    border: 1px solid color(field-border);
+    padding: 5px 10px;
+    font-size: 1em;
+    &:focus {
+        outline: none;
+    }
+}
+
+%number-input {
+    font-family: $base-font-family;
+    font-size: 1em;
+    line-height: 1.55;
+    height: 2em;
+    font-weight: 600;
+    border: 1px solid color(field-border);
+    padding: .3em;
+    max-width: pem(50);
+    @include themes( $map: input-text );
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        opacity: 1;
+    }
+}

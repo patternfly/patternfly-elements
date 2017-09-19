@@ -1,5 +1,5 @@
 {
-  "name": "cp-card",
+  "name": "@rhelements/cp-card",
   "version": "0.0.1",
   "description": "Card element for RHElements",
   "repository": {

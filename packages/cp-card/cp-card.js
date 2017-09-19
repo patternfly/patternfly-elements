@@ -4,24 +4,37 @@ const cardTemplate = document.createElement('template');
 cardTemplate.innerHTML = `
   <style>:host {
   display: block;
-  padding: 30px;
-  background: #252527;
-  color: white;
-  border: 1px solid #252527; }
+  padding: 29px;
+  border: 1px solid transparent; }
+  :host > h3 {
+    margin: 0 0 10px; }
 
-:host(.light) {
+:host([data-theme="dark"]) {
+  background: #252527;
+  border-color: #252527;
+  color: #fff; }
+
+:host([data-theme="red"]) {
+  background: #a30000;
+  border-color: #a30000;
+  color: #fff; }
+
+:host([data-theme="white"]) {
+  background: #fff;
+  border-color: #fff; }
+
+:host([data-theme="light"]) {
   background: #f0f0f0;
-  color: #252525;
   border-color: #f0f0f0; }
 
-:host(.accent) {
-  background: #08c0fc;
-  border-color: #08c0fc; }
+:host([data-border="dark"]) {
+  border-color: #252527; }
 
-:host(.bordered) {
-  background: none;
-  border-color: #d1d1d1;
-  color: #252525; }</style>
+:host([data-border="light"]) {
+  border-color: #ccc; }
+
+:host([data-border="gray"]) {
+  border-color: #d2d3d5; }</style>
 
   <h3></h3>
   <slot></slot>

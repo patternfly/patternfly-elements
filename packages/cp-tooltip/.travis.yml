@@ -1,10 +1,10 @@
 language: node_js
-
+node_js:
+  - "7"
 before_script:
   - npm install -g web-component-tester
-
 addons:
- firefox: '46.0'
+ firefox: latest
  apt:
   sources:
     - google-chrome

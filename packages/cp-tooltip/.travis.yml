@@ -10,6 +10,9 @@ addons:
     packages:
     - google-chrome-stable
 before_script:
-- npm install -g bower polymer-cli@next
-- bower install
-script: xvfb-run polymer test
+  - npm install -g bower polymer-cli@next
+  - polymer install --variants
+  - sudo mv /usr/bin/google-chrome /usr/bin/google-chrome-old
+  - sudo mv /usr/bin/google-chrome-beta /usr/bin/google-chrome
+script:
+  - true || xvfb-run polymer test

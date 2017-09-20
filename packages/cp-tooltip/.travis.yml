@@ -11,5 +11,4 @@ addons:
     - google-chrome-stable
 before_script:
 - npm install -g web-component-tester
-- npm install
 script: xvfb-run wct --npm

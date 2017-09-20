@@ -13,4 +13,4 @@ before_script:
   - npm install -g bower polymer-cli@next
   - polymer install --variants
 script:
-  - true || xvfb-run polymer test
+  - xvfb-run polymer test

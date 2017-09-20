@@ -1,4 +1,5 @@
 # RHElements Tooltip Element
+[![Build Status](https://travis-ci.org/RHElements/cp-tooltip.svg?branch=master)](https://travis-ci.org/RHElements/cp-tooltip)
 
 ## Dev
 ```

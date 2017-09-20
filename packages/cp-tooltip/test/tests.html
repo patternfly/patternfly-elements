@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../node_modules/web-component-tester/browser.js"></script>
+    <script type="module" src="../cp-tooltip.js"></script>
+    <style>
+      [aria-describedby] {
+        border-bottom: 3px dashed purple;
+      }
+    </style>
+  </head>
+  <body>
+    <p>Lorem <span aria-describedby="tooltip-default">ipsum dolor</span> sit amet, consectetur <span aria-describedby="tooltip-left">adipisicing elit</span>, sed do eiusmod tempor incididunt ut labore et <span aria-describedby="tooltip-right">dolore magna</span> aliqua. Ut enim ad minim veniam, quis <span aria-describedby="tooltip-top">nostrud exercitation</span> ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in <span aria-describedby="tooltip-bottom">reprehenderit in voluptate</span> velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <cp-tooltip id="tooltip-default">This is a default tooltip</cp-tooltip>
+    <cp-tooltip id="tooltip-left" data-position="left">This is a left tooltip</cp-tooltip>
+    <cp-tooltip id="tooltip-right" data-position="right">This is a right tooltip</cp-tooltip>
+    <cp-tooltip id="tooltip-top" data-position="top">This is a top tooltip</cp-tooltip>
+    <cp-tooltip id="tooltip-bottom" data-position="bottom">This is a bottom tooltip. Here is a bunch more content to make this tooltip really obnoxious.</cp-tooltip>
+
+    <script>
+      suite('<cp-tooltip>', () => {
+        test('tooltip role and tabindex attributes should be set', () => {
+          const cpTooltip = document.getElementById('tooltip-default');
+          const roleAttribute = cpTooltip.getAttribute('role');
+          const tabindexAttribute = cpTooltip.getAttribute('tabindex');
+
+          assert.equal(roleAttribute, 'tooltip', 'role attribute is set to tooltip');
+          assert.equal(tabindexAttribute, '-1', 'tabindex attribute is set to -1');
+        });
+
+        test('tooltip should be hidden by default', () => {
+          const cpTooltip = document.getElementById('tooltip-default');
+          const hiddenAttribute = cpTooltip.getAttribute('hidden');
+
+          assert.isNotNull(hiddenAttribute, 'hidden attribute by default');
+        });
+
+        test('tooltip should show on mouseenter and hide on mouseleave', () => {
+          const cpTooltip = document.getElementById('tooltip-default');
+          const span = document.querySelector('[aria-describedby="tooltip-default"]');
+
+          span.dispatchEvent(new CustomEvent('mouseenter'));
+          let hiddenAttribute = cpTooltip.getAttribute('hidden');
+
+          assert.isNull(hiddenAttribute, 'hidden attribute should be removed');
+
+          span.dispatchEvent(new CustomEvent('mouseleave'));
+          hiddenAttribute = cpTooltip.getAttribute('hidden');
+
+          assert.isNotNull(hiddenAttribute, 'hidden attribute should be added back');
+        });
+
+        test('tooltip should be positioned on top by default', () => {
+          const cpTooltip = document.getElementById('tooltip-default');
+          const span = document.querySelector('[aria-describedby="tooltip-default"]');
+
+          span.dispatchEvent(new CustomEvent('mouseenter'));
+
+          setTimeout(() => {
+            span.dispatchEvent(new CustomEvent('mouseleave'));
+          }, 0);
+
+          const cpTooltipOffsetTop = cpTooltip.offsetTop;
+          const spanOffsetTop = span.offsetTop;
+
+          assert.isBelow(cpTooltipOffsetTop, spanOffsetTop, 'the tooltip offset top should be less than the span offset top');
+        });
+
+        test('tooltip with data-position="left" should be positioned to the left', () => {
+          const cpTooltip = document.getElementById('tooltip-left');
+          const span = document.querySelector('[aria-describedby="tooltip-left"]');
+
+          span.dispatchEvent(new CustomEvent('mouseenter'));
+
+          setTimeout(() => {
+            span.dispatchEvent(new CustomEvent('mouseleave'));
+          }, 0);
+
+          const cpTooltipOffsetLeft = cpTooltip.offsetLeft;
+          const spanOffsetLeft = span.offsetLeft;
+
+          assert.isBelow(cpTooltipOffsetLeft, spanOffsetLeft, 'the tooltip offset left should be less than the span offset left');
+        });
+
+        test('tooltip with data-position="right" should be positioned to the right', () => {
+          const cpTooltip = document.getElementById('tooltip-right');
+          const span = document.querySelector('[aria-describedby="tooltip-right"]');
+
+          span.dispatchEvent(new CustomEvent('mouseenter'));
+
+          setTimeout(() => {
+            span.dispatchEvent(new CustomEvent('mouseleave'));
+          }, 0);
+
+          const cpTooltipOffsetLeft = cpTooltip.offsetLeft;
+          const spanOffsetLeft = span.offsetLeft;
+
+          assert.isAbove(cpTooltipOffsetLeft, spanOffsetLeft, 'the tooltip offset left should be greater than the span offset left');
+        });
+
+        test('tooltip with data-position="top" should be positioned on top', () => {
+          const cpTooltip = document.getElementById('tooltip-top');
+          const span = document.querySelector('[aria-describedby="tooltip-top"]');
+
+          span.dispatchEvent(new CustomEvent('mouseenter'));
+
+          setTimeout(() => {
+            span.dispatchEvent(new CustomEvent('mouseleave'));
+          }, 0);
+
+          const cpTooltipOffsetTop = cpTooltip.offsetTop;
+          const spanOffsetTop = span.offsetTop;
+
+          assert.isBelow(cpTooltipOffsetTop, spanOffsetTop, 'the tooltip offset top should be less than the span offset top');
+        });
+
+        test('tooltip with data-position="bottom" should be positioned on bottom', () => {
+          const cpTooltip = document.getElementById('tooltip-bottom');
+          const span = document.querySelector('[aria-describedby="tooltip-bottom"]');
+
+          span.dispatchEvent(new CustomEvent('mouseenter'));
+
+          setTimeout(() => {
+            span.dispatchEvent(new CustomEvent('mouseleave'));
+          }, 0);
+
+          const cpTooltipOffsetTop = cpTooltip.offsetTop;
+          const spanOffsetTop = span.offsetTop;
+
+          assert.isAbove(cpTooltipOffsetTop, spanOffsetTop, 'the tooltip offset top should be greater than the span offset top');
+        });
+      });
+    </script>
+  </body>
+</html>

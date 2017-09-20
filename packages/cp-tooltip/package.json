@@ -9,7 +9,7 @@
   "scripts": {
     "build": "./node_modules/.bin/gulp",
     "dev": "./node_modules/.bin/gulp dev",
-    "test": "polymer test"
+    "test": "wct --npm"
   },
   "author": {
     "name": "Kyle Buchanan",
@@ -22,6 +22,7 @@
     "@rhelements/cp-styles": "*"
   },
   "devDependencies": {
+    "@webcomponents/webcomponentsjs": "^1.0.12",
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "del": "^3.0.0",
@@ -33,7 +34,8 @@
     "gulp-sequence": "^0.4.6",
     "gulp-strip-css-comments": "^1.2.0",
     "gulp-trim": "^1.0.2",
-    "gulp-uglify": "^3.0.0"
+    "gulp-uglify": "^3.0.0",
+    "web-component-tester": "^6.2.0"
   },
   "generator-rhelement-version": "0.2.5"
 }

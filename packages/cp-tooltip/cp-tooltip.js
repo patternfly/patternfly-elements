@@ -1,4 +1,4 @@
-// import "../cp-styles/cp-styles.js";
+import "../cp-styles/cp-styles.js";
 
 const tooltipTemplate = document.createElement('template');
 tooltipTemplate.innerHTML = `

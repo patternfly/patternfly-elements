@@ -1,17 +1,15 @@
 language: node_js
-node_js: stable
 dist: trusty
 sudo: required
 addons:
-  firefox: latest
+  firefox: "latest"
   apt:
     sources:
-    - google-chrome
+      - google-chrome
     packages:
-    - google-chrome-stable
-before_script:
-  - npm install -g web-component-tester bower polymer-cli
-  - bower install
-  - export PATH=$PWD/node_modules/.bin:$PATH
+      - google-chrome-stable
+node_js: stable
+install:
+  - npm install -g web-component-tester
 script:
-  - xvfb-run polymer test
+  - xvfb-run npm run test

@@ -1,5 +1,4 @@
 addons:
-  firefox: latest
   chrome: latest
 language: node_js
 node_js:

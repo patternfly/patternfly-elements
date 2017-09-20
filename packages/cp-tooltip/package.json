@@ -9,7 +9,7 @@
   "scripts": {
     "build": "./node_modules/.bin/gulp",
     "dev": "./node_modules/.bin/gulp dev",
-    "test": "wct --npm -p"
+    "test": "wct --npm"
   },
   "author": {
     "name": "Kyle Buchanan",

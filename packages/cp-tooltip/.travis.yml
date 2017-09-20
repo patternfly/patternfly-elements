@@ -10,5 +10,5 @@ addons:
     packages:
     - google-chrome-stable
 before_script:
-- npm install -g web-component-tester
-script: xvfb-run wct --npm
+- npm install -g bower polymer-cli@next
+script: xvfb-run polymer test

@@ -11,5 +11,7 @@ addons:
 node_js: stable
 install:
   - npm install -g web-component-tester
+  - npm install
+before_script:
 script:
   - xvfb-run npm run test

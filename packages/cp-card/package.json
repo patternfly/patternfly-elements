@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-card",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Card element for RHElements",
   "repository": {
     "type": "git",
@@ -9,7 +9,8 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/gulp",
-    "dev": "./node_modules/.bin/gulp dev"
+    "dev": "./node_modules/.bin/gulp dev",
+    "test": "wct --npm"
   },
   "author": {
     "name": "Kyle Buchanan",
@@ -22,6 +23,7 @@
     "@rhelements/cp-styles": "0.0.5"
   },
   "devDependencies": {
+    "@webcomponents/webcomponentsjs": "^1.0.12",
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "del": "^3.0.0",
@@ -30,10 +32,11 @@
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.6.1",
     "gulp-sass": "^3.1.0",
-    "gulp-strip-css-comments": "^1.2.0",
     "gulp-sequence": "^0.4.6",
+    "gulp-strip-css-comments": "^1.2.0",
     "gulp-trim": "^1.0.2",
-    "gulp-uglify": "^3.0.0"
+    "gulp-uglify": "^3.0.0",
+    "web-component-tester": "^6.2.0"
   },
   "generator-rhelement-version": "0.2.5"
 }

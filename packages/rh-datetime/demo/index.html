@@ -3,28 +3,71 @@
   <head>
     <meta charset="utf-8">
     <title>RHElements: rh-datetime Demo</title>
-
-    <!-- uncomment the es5-adapter if you're using the compiled version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.10/custom-elements-es5-adapter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.10/webcomponents-lite.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require(['../rh-datetime.compiled.js'])</script>
+    <script>
+      window.addEventListener('WebComponentsReady', function () {
+        document.body.removeAttribute('unresolved');
+
+        var realtime = document.getElementById('realtime');
+
+        function timer() {
+          realtime.setAttribute('datetime', new Date());
+          window.requestAnimationFrame(timer);
+        }
+
+        window.requestAnimationFrame(timer);
+      });
+    </script>
   </head>
-  <body>
-    <ul>
-      <li>
-        <rh-datetime></rh-datetime>
-      </li>
-      <li>
-        <rh-datetime datetime="Mon Jan 2 15:04:05 MST 2006"></rh-datetime>
-      </li>
-      <li>
-        <rh-datetime>April 1, 2017</rh-datetime>
-      </li>
-      <li>
-        <rh-datetime datetime="Fri Mar 31 2017 20:00:00 GMT-0400 (EDT)">April 1, 2018</rh-datetime>
-      </li>
-    </ul>
-    
+  <body unresolved>
+    <div>
+      <h3>Unformatted</h3>
+      <rh-datetime datetime="Mon Jan 2 15:04:05 MST 2006">
+        Mon Jan 2 15:04:05 MST 2006
+      </rh-datetime>
+    </div>
+    <div>
+      <h3>Local</h3>
+      <p>
+        <strong>Just date:</strong>
+        <rh-datetime
+          datetime="Mon Jan 2 15:04:05 MST 2006"
+          type="local"
+          day="numeric"
+          month="long"
+          year="numeric">
+          Mon Jan 2 15:04:05 MST 2006
+        </rh-datetime>
+      </p>
+      <p>
+        <strong>With time: </strong>
+        <rh-datetime
+          datetime="Mon Jan 2 15:04:05 MST 2006"
+          type="local"
+          weekday="long"
+          month="short"
+          day="2-digit"
+          year="numeric"
+          hour="2-digit"
+          minute="2-digit"
+          second="2-digit">
+          Mon Jan 2 15:04:05 MST 2006
+        </rh-datetime>
+      </p>
+    </div>
+    <div>
+      <h3>Real-time updates</h3>
+      <rh-datetime
+        id="realtime"
+        type="local"
+        hour="2-digit"
+        minute="2-digit"
+        second="2-digit">
+        Mon Jan 2 15:04:05 MST 2006
+      </rh-datetime>
+    </div>
   </body>
 </html>

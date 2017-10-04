@@ -5,14 +5,16 @@ category: Global - Variables
 
 */
 // Repository class prefix
-$repo: rh !default;
+$repo: cp !default;
 
-// Base Font Size
+// ========================================================================
+// Typography
+// ========================================================================
+
 $base-font-px: 16;
 $base-line-height: 1.5em;
-
-// Base Font Family
 $base-font-family: "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif;
+$base-font-size: #{$base-font}px;
 
 /*doc
 ---
@@ -23,77 +25,105 @@ Name that color tool: http://chir.ag/projects/name-that-color/#F0F0F0
 Use this tool to determine the name of your new color!
 */
 
-// CRAYOLA COLORS
+// ========================================================================
+// CORPORATE COLORS
+// ========================================================================
 $white: #fff;
-$black: #252527;
-$rich-black: #1a1a1a;
-$brand-primary: #c00;  // "Red Hat red"
-$red: $brand-primary;  // not to be used as a background color except in site footer
-$orange: #ff6c35;  // RSS icon
-$teal: #004153;     // action band
-$charcoal: #2f3541;
-$green: #479b2e;
-$turquoise: #69a8b1;
-$brick-red: #a30000;
+$black: #1a1a1a;   // We don't use true black on the web.
+$brand-primary: #c00;   // "Red Hat red"
+$red: $brand-primary;   // Not to be used as a background color (except in site footer)
+                        // Or as an error color.
+$light-gray: #dcdcdc;
+$dark-gray: #4c4c4c;
 
-// GRAY: lightest to darkest
-$gallery: #f0f0f0; // mainly used as band background
-$cloud: #eee;      // mainly used for colorful backgrounds where white has too much contrast
-$mercury: #e2e2e2; // dark gray card background
-$iron: #d2d3d5;    // mainly used as disabled buttons
-$misty: #ccc;       // WAS #dcdcdc; suggested update in styleguide for link underlines
-$silver: #aaa;     // visible against white, black, & mercury, used for icon hover
-$fog: #8a8a8a;     // mainly used as lighter gray on dark bg
-$stone: #646464;   // mainly used as copy
+// ========================================================================
+// SECONDARY & ACCENT COLORS
+// ========================================================================
+$sky-blue: #a3dbe8;
+$navy: #004153;        // Brand as "Dark Blue"
+$gold: #f0ab00;
+$light-blue: #00b9e4;
+$green: #92d400;
+$purple: #3b0083;
+$teal: #007a87;
 
-// NEW BLUES
-// link on Light background:
-$denim-blue: #06c;
-// Link Hover state on Light background:
-$steel-blue: #004080;
-// link on Dark background:
-$midnight-blue: #73bcf7;
-// link hover on Dark background:
-$unc-blue: #2b9af3;
-
-// DEPRECATED
-//$blue: #08c0fc;
-$blue: $denim-blue;
-
-// Product line colors
+// ========================================================================
+// PRODUCT COLORS
+// ========================================================================
 $product-line-colors: (
     default: #252527,
-    linux-platforms: #4a90e2,
-    management: #46b8e5,
-    mobile: #3f9c35,
-    jboss-middleware: #479b2e,
-    virtualization: #0088ce,
-    cloud-computing: #0088ce,
-    storage: #ec7a08,
-    services-and-support: #007a87
+    storage1: #ec7a08,
+    storage2: $gold,
+    infrastructure1: #0088ce,    // Used to be linux-platforms
+    infrastructure2: $light-blue,
+    app-dev1: #3f9c35,
+    app-dev2: $green,
+    support1: #37424a,
+    support2: #7a858b
 );
 
-// DEPRECATED
-// $site-colors: (
-//     white: #ffffff,
-//     brand-primary: #C00  -> $red
-//     black: #252527,
-//     rich-black: #1a1a1a,
-//     copy: #646464 -> $stone
-//     link: #08C0FC  -> $blue
-//     link-hover: #08C0FC -> $blue
-//     link-dark: #08C0FC -> $blue
-//     link-hover-dark: #08C0FC -> $blue
-//     new-link: #0066CC -> $denim-blue
-//     new-link-hover: #004080 -> $steel-blue
-//     new-link-dark: #2B9AF3 -> $midnight-blue
-//     new-link-hover-dark: #73BCF7 -> $unc-blue
-//     transparent: transparent,
-//     gray1: #d2d3d5, -> $iron
-//     gray2: #f0f0f0, -> $mercury
-//     gray3: #8a8a8a, -> $fog
-//     orange: #ff6c35, //orange used for rss icon etc.
-// );
+// ========================================================================
+// UI BLUES
+// ========================================================================
+
+// Text links on _white_ or _light_ backgrounds
+$link-blue: #06c;             // Link
+$link-blue-hover: #004080;    // Hover
+
+// Text links on _dark grey_ or _black_ backgrounds
+$link-blue-light: #73bcf7;    // Link
+$link-blue-light-hover: #2b9af3; // Hover
+
+// UI elements
+$ui-blue: #0076e0;   // Smaller elements, like solid buttons
+$ui-blue-hover: $link-blue;
+
+// Larger elements
+$rain-blue:  #264a60;
+
+
+// PALETTE REDS
+$dark-red1: #a30000;
+$dark-red2: #820000;
+$dark-red3: #6e0000;
+$dark-red4: #fa0000;
+$dark-red5: #460000;
+$dark-red6: #320000;
+
+// PALETTE GRAYS: lightest to darkest
+$gray1: #f0f0f0;   // Used as band alternate background
+$gray2: #e6e6e6;   // Better band alternate background color? Replacing $cloud: #eee;
+$gray3: #d2d2d2;   // Better than $iron: #d2d3d5;
+$gray4: #bebebe;
+$gray5: #aaa;      // Visible on white, black, & mercury; used for icon hover; replacing $silver;
+$gray6: #969696;
+$gray7: #828282;
+$gray8: #6e6e6e;
+$gray9: #5a5a5a;
+$gray10: #464646;
+$gray11: #323232;
+$gray12: #1e1e1e;
+
+
+
+
+
+
+// ADDITIONAL GRAYS
+$mercury: #e2e2e2; // Better band alternate background or card color?
+$misty: #ccc;        // WAS #dcdcdc; suggested update in styleguide for link underlines
+$fog: #8a8a8a;       // mainly used as lighter gray on dark bg
+$stone: #646464;     // mainly used as copy
+$soft-black: #252527;
+$charcoal: #2f3541;
+
+
+
+
+// WebRH COLORS
+$rh-orange: #ff6c35;      // RSS icon
+$rh-green: #479b2e;
+$rh-turquoise: #69a8b1;
 
 
 /*doc
@@ -164,4 +194,3 @@ $breakpoint-md-max: $breakpoint-lg-min - 1;
 /* SOLP variables */
 $hero-min-height: 205px;
 $aside-wide: 340px;
-

@@ -4,12 +4,12 @@
 
 ## Dev
 ```
-npm run dev
+yarn run dev
 ```
 
 ## Build
 ```
-npm run build
+yarn run build
 ```
 
 ## Demo

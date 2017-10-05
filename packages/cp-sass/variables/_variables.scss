@@ -14,7 +14,7 @@ $repo: cp !default;
 $base-font-px: 16;
 $base-line-height: 1.5em;
 $base-font-family: "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif;
-$base-font-size: #{$base-font}px;
+$base-font-size: #{$base-font-px}px;
 
 /*doc
 ---
@@ -86,7 +86,7 @@ $rain-blue:  #264a60;
 $dark-red1: #a30000;
 $dark-red2: #820000;
 $dark-red3: #6e0000;
-$dark-red4: #fa0000;
+$dark-red4: #5a0000;
 $dark-red5: #460000;
 $dark-red6: #320000;
 
@@ -105,25 +105,31 @@ $gray11: #323232;
 $gray12: #1e1e1e;
 
 
-
-
-
-
-// ADDITIONAL GRAYS
+// ADDITIONAL GRAYS from WebRH
 $mercury: #e2e2e2; // Better band alternate background or card color?
-$misty: #ccc;        // WAS #dcdcdc; suggested update in styleguide for link underlines
+$misty: #ccc;      // WAS #dcdcdc; suggested update in styleguide for link underlines
 $fog: #8a8a8a;       // mainly used as lighter gray on dark bg
 $stone: #646464;     // mainly used as copy
 $soft-black: #252527;
 $charcoal: #2f3541;
+$iron: #d2d3d5;
+$cloud: #eee;
+$gallery: $gray1;
+$silver: $gray5;
+$rich-black: $black;
 
-
-
+// DEPRECATED
+$brick-red: $dark-red1;
+$denim-blue: $link-blue;
+$blue: $light-blue;
+$midnight-blue: $link-blue-hover;
+$unc-blue: $link-blue-light;
+$steel-blue: $link-blue-light-hover;
 
 // WebRH COLORS
-$rh-orange: #ff6c35;      // RSS icon
+$orange: #ff6c35;      // RSS icon
 $rh-green: #479b2e;
-$rh-turquoise: #69a8b1;
+$turquoise: #69a8b1;
 
 
 /*doc

@@ -9,7 +9,8 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/gulp",
-    "dev": "./node_modules/.bin/gulp dev"
+    "dev": "./node_modules/.bin/gulp dev",
+    "test": "echo \"rh-overpass has no tests; components using it will be tested\" && exit 0"
   },
   "author": "CPFED",
   "license": "ISC",

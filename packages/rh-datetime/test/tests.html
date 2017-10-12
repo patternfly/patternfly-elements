@@ -7,23 +7,23 @@
     <script type="module" src="../rh-datetime.js"></script>
   </head>
   <body>
-    <rh-datetime id="simple" datetime="Mon Jan 2 15:04:05 MST 2006">
-      Mon Jan 2 15:04:05 MST 2006
+    <rh-datetime id="simple" datetime="Mon Jan 2 15:04:05 EST 2006">
+      Mon Jan 2 15:04:05 EST 2006
     </rh-datetime>
 
     <rh-datetime
       id="justdate"
-      datetime="Mon Jan 2 15:04:05 MST 2006"
+      datetime="Mon Jan 2 15:04:05 EST 2006"
       type="local"
       day="numeric"
       month="long"
       year="numeric">
-      Mon Jan 2 15:04:05 MST 2006
+      Mon Jan 2 15:04:05 EST 2006
     </rh-datetime>
 
     <rh-datetime
       id="withtime"
-      datetime="Mon Jan 2 15:04:05 MST 2006"
+      datetime="Mon Jan 2 15:04:05 EST 2006"
       type="local"
       weekday="long"
       month="short"
@@ -32,12 +32,12 @@
       hour="2-digit"
       minute="2-digit"
       second="2-digit">
-      Mon Jan 2 15:04:05 MST 2006
+      Mon Jan 2 15:04:05 EST 2006
     </rh-datetime>
 
     <rh-datetime
       id="engbLocale"
-      datetime="Mon Jan 2 15:04:05 MST 2006"
+      datetime="Mon Jan 2 15:04:05 EST 2006"
       type="local"
       weekday="long"
       month="short"
@@ -47,12 +47,12 @@
       minute="2-digit"
       second="2-digit"
       locale="en-GB">
-      Mon Jan 2 15:04:05 MST 2006
+      Mon Jan 2 15:04:05 EST 2006
     </rh-datetime>
 
     <rh-datetime
       id="esLocale"
-      datetime="Mon Jan 2 15:04:05 MST 2006"
+      datetime="Mon Jan 2 15:04:05 EST 2006"
       type="local"
       weekday="long"
       month="short"
@@ -62,7 +62,7 @@
       minute="2-digit"
       second="2-digit"
       locale="es">
-      Mon Jan 2 15:04:05 MST 2006
+      Mon Jan 2 15:04:05 EST 2006
     </rh-datetime>
 
     <rh-datetime
@@ -71,7 +71,7 @@
       hour="2-digit"
       minute="2-digit"
       second="2-digit">
-      Mon Jan 2 15:04:05 MST 2006
+      Mon Jan 2 15:04:05 EST 2006
     </rh-datetime>
 
     <script>
@@ -94,7 +94,7 @@
           const element = document.getElementById('withtime');
           const text = element.shadowRoot.querySelector('span').textContent;
 
-          assert.equal(text, "Monday, Jan 02, 2006, 5:04:05 PM", "should show a formatted date with time");
+          assert.equal(text, "Monday, Jan 02, 2006, 3:04:05 PM", "should show a formatted date with time");
         });
 
         test('it should show a formatted date with time for a different locale', () => {

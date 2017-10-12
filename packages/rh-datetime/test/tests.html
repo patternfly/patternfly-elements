@@ -17,7 +17,8 @@
       type="local"
       day="numeric"
       month="long"
-      year="numeric">
+      year="numeric"
+      locale="en-US">
       Mon Jan 2 15:04:05 EST 2006
     </rh-datetime>
 
@@ -71,7 +72,8 @@
       type="local"
       hour="2-digit"
       minute="2-digit"
-      second="2-digit">
+      second="2-digit"
+      locale="en-US">
       Mon Jan 2 15:04:05 EST 2006
     </rh-datetime>
 
@@ -94,8 +96,9 @@
         test('it should show a formatted date with time', () => {
           const element = document.getElementById('withtime');
           const text = element.shadowRoot.querySelector('span').textContent;
+          const regex = /.*?, .*?, \d{4}, \d+:\d+:\d+ .{2}/;
 
-          assert.equal(text, "Monday, Jan 02, 2006, 3:04:05 PM", "should show a formatted date with time");
+          assert.isTrue(regex.test(text), "should show a formatted date with time");
         });
 
         test('it should show a formatted date with time for a different locale', () => {

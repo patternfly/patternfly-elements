@@ -1,5 +1,7 @@
 # RHElements Datetime Element
 
+[![Build Status](https://travis-ci.org/RHElements/rh-datetime.svg?branch=master)](https://travis-ci.org/RHElements/rh-datetime)
+
 ## Dev
 ```
 yarn run dev

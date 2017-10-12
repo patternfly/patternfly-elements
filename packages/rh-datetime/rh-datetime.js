@@ -16,8 +16,6 @@ class RHDatetime extends HTMLElement {
   constructor() {
     super();
 
-    this._type = this.getAttribute('type');
-
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(datetimeTemplate.content.cloneNode(true));
   }
@@ -38,9 +36,10 @@ class RHDatetime extends HTMLElement {
     }
 
     const options = this._getOptions();
+    const locale = this.getAttribute('locale') || navigator.language;
 
     this._datetime = Date.parse(val);
-    this._datetimeFormatted = new Intl.DateTimeFormat(navigator.language, options).format(this._datetime);
+    this._datetimeFormatted = new Intl.DateTimeFormat(locale, options).format(this._datetime);
     this.shadowRoot.querySelector('span').innerText = this._datetimeFormatted;
   }
 

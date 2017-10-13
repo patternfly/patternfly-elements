@@ -33,6 +33,10 @@ class RHDatetime extends HTMLElement {
   }
 
   set datetime(val) {
+    if (!Date.parse(val)) {
+      return;
+    }
+
     if (Date.parse(val) && this._datetime === Date.parse(val)) {
       return;
     }

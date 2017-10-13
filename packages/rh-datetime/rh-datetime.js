@@ -18,6 +18,8 @@ class RHDatetime extends HTMLElement {
 
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(datetimeTemplate.content.cloneNode(true));
+
+    this.type = this.getAttribute('type') || 'local';
   }
 
   connectedCallback() {
@@ -35,20 +37,21 @@ class RHDatetime extends HTMLElement {
       return;
     }
 
-    const options = this._getOptions();
-    const locale = this.getAttribute('locale') || navigator.language;
-
     this._datetime = Date.parse(val);
-    this._datetimeFormatted = new Intl.DateTimeFormat(locale, options).format(this._datetime);
-    this.shadowRoot.querySelector('span').innerText = this._datetimeFormatted;
+
+    this.shadowRoot.querySelector('span').innerText = this._getTypeString();
   }
 
   get type() {
     return this._type;
   }
 
-  get datetimeFormatted() {
-    return this._datetimeFormatted;
+  set type(val) {
+    if (this._type === val) {
+      return;
+    }
+
+    this._type = val;
   }
 
   static get observedAttributes() {
@@ -56,9 +59,7 @@ class RHDatetime extends HTMLElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
-    if (attr === 'datetime') {
-      this.datetime = newVal;
-    }
+    this[attr] = newVal;
   }
 
   _getOptions() {
@@ -107,6 +108,60 @@ class RHDatetime extends HTMLElement {
     }
 
     return options;
+  }
+
+  _getTypeString() {
+    const options = this._getOptions();
+    const locale = this.getAttribute('locale') || navigator.language;
+    let dt = '';
+    switch (this.type) {
+      case 'local':
+        dt = new Intl.DateTimeFormat(locale, options).format(this._datetime);
+        break;
+      case 'relative':
+        dt = this._getTimeRelative(this._datetime - Date.now());
+        break;
+      default:
+        dt = this._datetime;
+    }
+    return dt;
+  }
+
+  _getTimeRelative(ms) {
+    const tense = ms > 0 ? 'until' : 'ago';
+    let str = 'just now';
+    // Based off of Github Relative Time
+    // https://github.com/github/time-elements/blob/master/src/relative-time.js
+    const s = Math.round(Math.abs(ms) / 1000)
+    const min = Math.round(s / 60)
+    const h = Math.round(min / 60)
+    const d = Math.round(h / 24)
+    const m = Math.round(d / 30)
+    const y = Math.round(m / 12)
+    if (m >= 18) {
+      str = y + ' years'
+    } else if (m >= 12) {
+      str = 'a year'
+    } else if (d >= 45) {
+      str = m + ' months'
+    } else if (d >= 30) {
+      str = 'a month'
+    } else if (h >= 36) {
+      str = d + ' days'
+    } else if (h >= 24) {
+      str = 'a day'
+    } else if (min >= 90) {
+      str = h + ' hours'
+    } else if (min >= 45) {
+      str = 'an hour'
+    } else if (s >= 90) {
+      str = min + ' minutes'
+    } else if (s >= 45) {
+      str = 'a minute'
+    } else if (s >= 10) {
+      str = s + ' seconds'
+    }
+    return str !== 'just now' ? `${str} ${tense}` : str;
   }
 }
 

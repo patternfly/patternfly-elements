@@ -68,6 +68,13 @@
     </rh-datetime>
 
     <rh-datetime
+      id="yearsago"
+      type="relative"
+      datetime="Mon Jan 2 15:04:05 EST 2006">
+      Mon Jan 2 15:04:05 EST 2006
+    </rh-datetime>
+
+    <rh-datetime
       id="realtime"
       type="local"
       hour="2-digit"
@@ -100,6 +107,13 @@
 
           assert.isTrue(regex.test(text), "should show a formatted date with time");
         });
+
+        test('it should show a relative time since the date', () => {
+          const element = document.getElementById('yearsago');
+          const text = element.shadowRoot.querySelector('span').textContent;
+
+          assert.equal(text, "12 years ago", "should show a relative time since the date");
+        })
 
         test('it should show a formatted date with time for a different locale', () => {
 

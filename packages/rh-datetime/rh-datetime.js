@@ -42,8 +42,7 @@ class RHDatetime extends HTMLElement {
     }
 
     this._datetime = Date.parse(val);
-
-    this.shadowRoot.querySelector('span').innerText = this._getTypeString();
+    this.shadowRoot.querySelector('span').innerText = window.Intl ? this._getTypeString() : val;
   }
 
   get type() {

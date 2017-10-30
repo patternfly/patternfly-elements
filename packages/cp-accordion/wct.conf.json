@@ -1,0 +1,9 @@
+{
+  "verbose": false,
+  "npm": true,
+  "plugins": {
+    "local": {
+      "browsers": ["chrome"]
+    }
+  }
+}

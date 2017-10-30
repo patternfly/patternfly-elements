@@ -1,0 +1,42 @@
+{
+  "name": "cp-accordion",
+  "version": "0.0.1",
+  "description": "Accordion element for RHElements",
+  "main": "cp-accordion.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RHElements/cp-accordion"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/gulp",
+    "dev": "./node_modules/.bin/gulp dev",
+    "test": "wct"
+  },
+  "author": {
+    "name": "Tyler Martin"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@rhelements/cp-accordion-heading": "*",
+    "@rhelements/cp-accordion-panel": "*",
+    "@rhelements/cp-sass": "*"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "del": "^3.0.0",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-babel": "^7.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.6.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sequence": "^0.4.6",
+    "gulp-strip-css-comments": "^1.2.0",
+    "gulp-trim": "^1.0.2",
+    "gulp-uglify": "^3.0.0",
+    "wct-browser-legacy": "0.0.1-pre.10"
+  }
+}

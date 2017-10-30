@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>test-element test</title>
+
+    <script src="../../@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../wct-browser-legacy/browser.js"></script>
+
+    <script type="module" src="../cp-accordion.js"></script>
+  </head>
+  <body>
+
+    <test-fixture id="BasicTestFixture">
+      <template>
+        <cp-accordion></cp-accordion>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="ChangedPropertyTestFixture">
+      <template>
+        <cp-accordion prop1="new-prop1"></cp-accordion>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('cp-accordion', () => {
+        test('instantiating the element with default properties works', () => {
+          assert.equal(true, true);
+        });
+      });
+    </script>
+
+  </body>
+</html>

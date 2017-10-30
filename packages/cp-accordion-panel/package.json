@@ -1,0 +1,36 @@
+{
+  "name": "@rhelements/cp-accordion-panel",
+  "version": "0.0.1",
+  "description": "Accordion panel element for RHElements",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/gulp",
+    "dev": "./node_modules/.bin/gulp dev"
+  },
+  "author": {
+    "name": "Kyle Buchanan"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@rhelements/cp-sass": "*"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "del": "^3.0.0",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-babel": "^7.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.6.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-strip-css-comments": "^1.2.0",
+    "gulp-sequence": "^0.4.6",
+    "gulp-trim": "^1.0.2",
+    "gulp-uglify": "^3.0.0"
+  },
+  "generator-rhelement-version": "0.2.8"
+}

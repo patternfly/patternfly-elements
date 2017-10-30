@@ -4,7 +4,7 @@
   "description": "Accordion panel element for RHElements",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/RHElements/cp-accordion-panel"
   },
   "main": "index.js",
   "scripts": {

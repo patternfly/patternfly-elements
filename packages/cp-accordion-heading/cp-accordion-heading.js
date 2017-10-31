@@ -3,10 +3,13 @@ accordionHeadingTemplate.innerHTML = `
   <style>:host {
   display: block; }
 
+:host(.animating) {
+  transition: transform 0.3s ease-in-out; }
+
 h2 {
   margin: 0;
   padding: 0;
-  border: 1px solid transparent; }
+  border: 1px solid white; }
 
 button {
   margin: 0;
@@ -40,15 +43,15 @@ button:focus {
   display: block;
   width: 0;
   height: 0;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 5px solid #000;
+  border-style: solid;
+  border-width: 0.15em 0.15em 0 0;
+  height: 0.35em;
+  width: 0.35em;
+  transform: rotate(45deg);
   margin-left: 1em;
   line-height: 3;
   text-align: center;
-  -webkit-transition: all 0.125s;
-  -o-transition: all 0.125s;
-  transition: all 0.125s; }
+  transition: transform 0.15s; }
 
 [aria-expanded="true"]::before {
   content: "";
@@ -56,18 +59,15 @@ button:focus {
   left: 0;
   top: 40%;
   display: block;
-  width: 0;
-  height: 0;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 5px solid #000;
+  width: 0.35em;
+  height: 0.35em;
+  border-style: solid;
+  border-width: 0.15em 0.15em 0 0;
   margin-left: 1em;
   line-height: 3;
   text-align: center;
-  -webkit-transition: all 0.125s;
-  -o-transition: all 0.125s;
-  transition: all 0.125s;
-  transform: rotate(90deg); }</style>
+  transition: all 0.15s;
+  transform: rotate(135deg); }</style>
 
   <h2>
     <button aria-expanded="false" role="tab">

@@ -7,19 +7,13 @@ accordionPanelTemplate.innerHTML = `
   padding-top: 5px;
   border: 2px solid #f7f7f7;
   border-top: none;
-  animation: slideout 0.75s; }
+  background: white; }
 
 :host([expanded]) {
   display: block; }
 
-@keyframes slideout {
-  0% {
-    opacity: 0;
-    max-height: 0; }
-  1% {
-    opacity: 1; }
-  100% {
-    max-height: 40em; } }</style>
+:host(.animating) {
+  transition: transform 0.3s ease-in-out; }</style>
 
   <div tabindex="-1" role="tabpanel">
     <slot></slot>

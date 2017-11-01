@@ -1,5 +1,5 @@
 (function () {
-  const templateId = 'cp-styles-head';
+  const templateId = 'cp-typography-head';
 
   if (document.getElementById(templateId)) {
     return;

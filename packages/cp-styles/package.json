@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-styles",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "cp-styles for RHElements",
   "repository": {
     "type": "git",
@@ -31,6 +31,8 @@
     "gulp-replace": "^0.6.1",
     "gulp-sass": "^3.1.0",
     "gulp-sequence": "^0.4.6",
+    "gulp-strip-css-comments": "^1.2.0",
+    "gulp-trim": "^1.0.2",
     "gulp-uglify": "^3.0.0"
   }
 }

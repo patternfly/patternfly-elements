@@ -4,6 +4,8 @@ const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const replace = require('gulp-replace');
 const sass = require('gulp-sass');
+const stripCssComments = require('gulp-strip-css-comments');
+const trim = require('gulp-trim');
 const del = require('del');
 const fs = require('fs');
 let watcher;
@@ -15,6 +17,14 @@ gulp.task('clean', () => {
 gulp.task('sass', () => {
   return gulp.src(['./*.scss'])
     .pipe(sass())
+    .pipe(stripCssComments())
+    .pipe(trim())
+    .pipe(gulp.dest('./'));
+});
+
+gulp.task('replaceStyles', () => {
+  return gulp.src('./cp-vars.js')
+    .pipe(replace(/<style class="document-style">[\s\S]*<\/style>/g, '<style class="document-style">' + fs.readFileSync('./cp-vars.css') + '</style>'))
     .pipe(gulp.dest('./'));
 });
 
@@ -35,12 +45,12 @@ gulp.task('stopwatch', done => {
 });
 
 gulp.task('watch', () => {
-  watcher = gulp.watch(['./cp-styles.js', './*.scss'], gulp.series('stopwatch', 'sass', 'clean', 'compile', 'watch'));
+  watcher = gulp.watch(['./cp-styles.js', './cp-vars.js', './cp-typography.js', './*.scss'], gulp.series('stopwatch', 'sass', 'replaceStyles', 'clean', 'compile', 'watch'));
   return watcher;
 });
 
 gulp.task('default',
-  gulp.series('clean', 'sass', 'compile')
+  gulp.series('clean', 'sass', 'replaceStyles', 'compile')
 );
 
 gulp.task('dev',

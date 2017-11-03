@@ -9,7 +9,11 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/gulp",
-    "dev": "./node_modules/.bin/gulp dev"
+    "dev": "./node_modules/.bin/gulp dev",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json}": ["prettier --write", "git add"]
   },
   "author": {
     "name": "Michael Clayton"
@@ -28,7 +32,10 @@
     "gulp-replace": "^0.6.1",
     "gulp-sequence": "^0.4.6",
     "gulp-trim": "^1.0.2",
-    "gulp-uglify": "^3.0.0"
+    "gulp-uglify": "^3.0.0",
+    "prettier": "1.7.4",
+    "lint-staged": "^4.3.0",
+    "husky": "^0.14.3"
   },
   "generator-rhelement-version": "0.2.8"
 }

@@ -9,7 +9,11 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/gulp",
-    "dev": "./node_modules/.bin/gulp dev"
+    "dev": "./node_modules/.bin/gulp dev",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json}": ["prettier --write", "git add"]
   },
   "author": {
     "name": "Kyle Buchanan"
@@ -19,6 +23,9 @@
     "@rhelements/cp-sass": "*"
   },
   "devDependencies": {
+    "prettier": "1.7.4",
+    "lint-staged": "^4.3.0",
+    "husky": "^0.14.3",
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "del": "^3.0.0",

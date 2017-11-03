@@ -10,7 +10,11 @@
   "scripts": {
     "build": "./node_modules/.bin/gulp",
     "dev": "./node_modules/.bin/gulp dev",
-    "test": "echo \"rh-overpass has no tests; components using it will be tested\" && exit 0"
+    "test": "echo \"rh-overpass has no tests; components using it will be tested\" && exit 0",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json}": ["prettier --write", "git add"]
   },
   "author": "CPFED",
   "license": "ISC",
@@ -18,6 +22,9 @@
     "rhelement-sass": "*"
   },
   "devDependencies": {
+    "prettier": "1.7.4",
+    "lint-staged": "^4.3.0",
+    "husky": "^0.14.3",
     "babel-cli": "^6.24.1",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-es2015": "^6.24.1",

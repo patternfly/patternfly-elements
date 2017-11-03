@@ -1,0 +1,32 @@
+body {
+    font-family: sans-serif;
+    font-size: 1.4em;
+}
+
+ul, li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.legend {
+    font-weight: bold;
+}
+
+.legend, li {
+    display: grid;
+    grid-template: 1fr / 1fr 1fr 1fr 1fr;
+    text-align: center;
+}
+
+.legend *, li * {
+    margin: 12px;
+}
+
+.sample-markup {
+    font-size: 1rem;
+}
+
+input[type=number] {
+    width: 10vw;
+}

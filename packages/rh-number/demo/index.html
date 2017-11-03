@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>RHElements: rh-number Demo</title>
+        <link rel="icon" type="image/png" href="favicon.png">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
+
+        <!-- uncomment the es5-adapter if you're using the compiled version -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.10/custom-elements-es5-adapter.js"></script>
+
+        <script src="../node_modules/numeral/min/numeral.min.js"></script>
+        <!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.10/webcomponents-lite.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+        <!-- <script type=module src=../rh-number.js></script> -->
+        <script>require(['../rh-number.compiled.js'])</script>
+        <link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="utf-8">
+    </head>
+    <body>
+        <div id="app">
+            <h1>&lt;rh-number&gt;</h1>
+            <p>This is a live demo of formatting numbers with the <kbd>&lt;rh-number&gt;</kbd> element.</p>
+            <div class="legend">
+                <span>
+                    Type
+                </span>
+                <span>
+                    Number
+                </span>
+                <span>
+                    Formatted number
+                </span>
+                <span>
+                    Sample markup
+                </span>
+            </div>
+            <ul class="number-list">
+                <li v-for="number in numbers">
+
+                    <!-- display the format string for reference -->
+                    <span>{{ number.type }}</span>
+
+                    <!-- a plain decimal display of the current number -->
+                    <input
+                        type="number"
+                        v-model:value="number.number"
+                        v-bind:step="number.step">
+
+                    <!-- the star of the show, rh-number! -->
+                    <rh-number
+                        v-bind:number="number.number"
+                        v-bind:type="number.type">
+                        {{ number.number }}
+                    </rh-number>
+
+                    <kbd class="sample-markup">&lt;rh-number type="{{ number.type }}"&gt;{{ number.number }}&lt;/rh-number&gt;</kbd>
+
+                </li>
+            </ul>
+        </div>
+        <script src="demo.js"></script>
+    </body>
+</html>

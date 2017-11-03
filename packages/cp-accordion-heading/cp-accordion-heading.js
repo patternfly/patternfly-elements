@@ -29,11 +29,11 @@ button:focus {
 [aria-expanded] {
   position: relative;
   display: block;
-  background: #ededed;
   margin-bottom: 0;
   line-height: 3;
   font-weight: normal;
-  padding-left: 2.125em; }
+  padding-left: 2.125em;
+  background: #ededed; }
 
 [aria-expanded="false"]::before {
   content: "";

@@ -37,5 +37,5 @@
     "lint-staged": "^4.3.0",
     "husky": "^0.14.3"
   },
-  "generator-rhelement-version": "0.2.8"
+  "generator-rhelement-version": "0.2.9"
 }

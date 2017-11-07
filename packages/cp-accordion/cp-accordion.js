@@ -144,11 +144,15 @@ class CpAccordion extends HTMLElement {
     const headings = this._allHeadings();
     const panels = this._allPanels();
 
-    headings.forEach(heading => heading.expanded = false);
-    panels.forEach(panel => panel.expanded = false);
+    headings.forEach(heading => this._collapseHeading(heading));
+    panels.forEach(panel => this._collapsePanel(panel));
   }
 
   _changeHandler(evt) {
+    if (this.classList.contains('animating')) {
+      return;
+    }
+
     const heading = evt.target;
     const panel = evt.target.nextElementSibling;
 
@@ -170,10 +174,14 @@ class CpAccordion extends HTMLElement {
   }
 
   _expandPanel(panel) {
+    if (panel.expanded) {
+      return;
+    }
+
     panel.expanded = true;
 
     const height = panel.getBoundingClientRect().height;
-    this._animate(panel, -height, 0)
+    this._animate(panel, 0, height);
   }
 
   _collapseHeading(heading) {
@@ -181,81 +189,27 @@ class CpAccordion extends HTMLElement {
   }
 
   _collapsePanel(panel) {
+    if (!panel.expanded) {
+      return;
+    }
+
     const height = panel.getBoundingClientRect().height;
-    this._animate(panel, 0, -height)
-      .then(() => {
-        panel.expanded = false;
-      });
+    panel.expanded = false;
+
+    this._animate(panel, height, 0);
   }
 
   _animate(panel, start, end) {
-    const children = [...this.children];
-    const index = children.findIndex(child => child === panel);
-    const animatedChildren = children.slice(index);
+    panel.classList.add('animating');
+    panel.style.height = `${start}px`;
 
-    this.classList.add('animating');
-
-    children.forEach(child => {
-      child.style.position = 'relative';
-      child.style.zIndex = 2;
-    });
-
-    animatedChildren.forEach(child => {
-      child.style.position = 'relative';
-      child.style.zIndex = 1;
-      child.style.transform = `translateY(${start}px)`;
-    });
-
-    return requestAnimationFramePromise()
-      .then(_ => requestAnimationFramePromise())
-      .then(_ => {
-        animatedChildren.forEach(child => {
-          child.style.transform = `translateY(${end}px)`;
-          child.classList.add('animating');
-        })
-
-        return transitionEndPromise(panel);
-      })
-      .then(_ => {
-        animatedChildren.forEach(child => {
-          child.style.transform = '';
-          child.classList.remove('animating');
-        })
-
-        children.forEach(child => {
-          child.style.position = '';
-          child.style.zIndex = '';
-        });
-
-        this.classList.remove('animating');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        panel.style.height = `${end}px`;
+        panel.classList.add('animating');
+        panel.addEventListener('transitionend', this._transitionEndHandler);
       });
-
-    // window.requestAnimationFrame(() => {
-    //   window.requestAnimationFrame(() => {
-    //     animatedChildren.forEach(child => {
-    //       child.classList.add('animating');
-    //       child.style.transform = `translateY(${end}px)`;
-    //
-    //       child.addEventListener('transitionend', function transitionEnd() {
-    //         child.classList.remove('animating');
-    //         child.style.cssText = '';
-    //         child.removeEventListener('transitionend', transitionEnd);
-    //
-    //         children.forEach(child => {
-    //           child.classList.remove('animating');
-    //           child.style.cssText = '';
-    //         });
-    //
-    //         this.classList.remove('animating');
-    //
-    //         if (cb) {
-    //           cb();
-    //         }
-    //
-    //       }.bind(this));
-    //     });
-    //   });
-    // });
+    });
   }
 
   _keydownHandler(evt) {
@@ -291,6 +245,12 @@ class CpAccordion extends HTMLElement {
     }
 
     newHeading.shadowRoot.querySelector('button').focus();
+  }
+
+  _transitionEndHandler(evt) {
+    evt.target.style.height = '';
+    evt.target.classList.remove('animating');
+    evt.target.removeEventListener('transitionend', this._transitionEndHandler);
   }
 
   _allHeadings() {
@@ -329,16 +289,3 @@ class CpAccordion extends HTMLElement {
 }
 
 window.customElements.define('cp-accordion', CpAccordion);
-
-function transitionEndPromise(element) {
-  return new Promise(resolve => {
-    element.addEventListener('transitionend', function f() {
-      element.removeEventListener('transitionend', f);
-      resolve();
-    });
-  });
-}
-
-function requestAnimationFramePromise() {
-  return new Promise(resolve => requestAnimationFrame(resolve));
-}

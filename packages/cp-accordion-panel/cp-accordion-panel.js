@@ -3,20 +3,26 @@ accordionPanelTemplate.innerHTML = `
   <style>:host {
   display: none;
   overflow: hidden;
-  padding: 20px;
-  padding-top: 5px;
-  border: 2px solid #f7f7f7;
-  border-top: none;
-  background: white; }
+  background: white;
+  will-change: height; }
 
 :host([expanded]) {
   display: block; }
 
 :host(.animating) {
-  transition: transform 0.3s ease-in-out; }</style>
+  display: block;
+  transition: height 0.3s ease-in-out; }
+
+.container {
+  border: 2px solid #f7f7f7;
+  border-top: none;
+  padding: 20px;
+  padding-top: 5px; }</style>
 
   <div tabindex="-1" role="tabpanel">
-    <slot></slot>
+    <div class="container">
+      <slot></slot>
+    </div>
   </div>
 `;
 

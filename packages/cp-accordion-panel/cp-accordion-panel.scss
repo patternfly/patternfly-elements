@@ -2,11 +2,8 @@
 :host {
   display: none;
   overflow: hidden;
-  padding: 20px;
-  padding-top: 5px;
-  border: 2px solid #f7f7f7;
-  border-top: none;
   background: white;
+  will-change: height;
 }
 
 :host([expanded]) {
@@ -14,5 +11,13 @@
 }
 
 :host(.animating) {
-  transition: transform 0.3s ease-in-out;
+  display: block;
+  transition: height 0.3s ease-in-out;
+}
+
+.container {
+  border: 2px solid #f7f7f7;
+  border-top: none;
+  padding: 20px;
+  padding-top: 5px;
 }

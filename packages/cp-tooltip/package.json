@@ -27,7 +27,7 @@
     "@rhelements/cp-styles": "*"
   },
   "devDependencies": {
-    "prettier": "1.7.4",
+    "prettier": "1.8.0",
     "lint-staged": "^4.3.0",
     "husky": "^0.14.3",
     "@webcomponents/webcomponentsjs": "^1.0.12",

@@ -124,11 +124,9 @@ class CpAccordionHeading extends HTMLElement {
   }
 
   _clickHandler(event) {
-    this.expanded = !this.expanded;
-
     this.dispatchEvent(
       new CustomEvent('cp-accordion-change', {
-        detail: { expanded: this.expanded },
+        detail: { expanded: !this.expanded },
         bubbles: true
       })
     );

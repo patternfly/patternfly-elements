@@ -1,5 +1,5 @@
 {
-  "name": "rh-number",
+  "name": "@rhelements/rh-number",
   "version": "0.0.1",
   "description": "Number element for RHElements",
   "repository": {

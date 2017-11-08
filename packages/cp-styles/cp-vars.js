@@ -15,30 +15,10 @@ import './custom-style-interface.min.js';
   cpvarsTemplate.innerHTML = `
     <style class="document-style">:root {
   
-  --font-size: 16px;
-  --line-height: 1.5em;
-  --font-family: "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif;
-  --code-font-family: Consolas, Monaco, "Andale Mono", monospace;
-  --font-weight: 400;
-  --h1-font-size: 24px;
-  --h2-font-size: 21px;
-  --h3-font-size: 18px;
-  --h4-font-size: 16px;
-  --h5-font-size: 16px;
-  --h6-font-size: 14px;
-  --alt-h1-font-size: 30px;
-  --alt-h2-font-size: 26px;
-  --alt-h3-font-size: 20px;
-  --alt-h4-font-size: 18px;
-  --alt-h5-font-size: 16px;
-  --alt-h6-font-size: 14px;
-  
   --gutter-size: 32px;
   --box-padding: 32px;
   --box-padding-sm: 16px;
   --box-padding-xs: 8px;
-  --paragraph-margin-bottom: var(--font-size, 16px);
-  --heading-margin-bottom: 10px;
   
   --breakpoint-xs-min: 480px;
   --breakpoint-sm-min: 768px;

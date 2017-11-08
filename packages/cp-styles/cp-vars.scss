@@ -6,33 +6,11 @@
 // Please reference CP-SASS variables.
 // ============================================================================
 :root {
-  /* Typography */
-  --font-size:         $base-font-size;
-  --line-height:       $base-line-height;
-  --font-family:       $base-font-family;
-  --code-font-family:  $code-font-family;
-  --font-weight:       $base-font-weight;
-  // Heading sizes
-  --h1-font-size:			 $h1-font-size;
-  --h2-font-size:			 $h2-font-size;
-  --h3-font-size:			 $h3-font-size;
-  --h4-font-size:			 $h4-font-size;
-  --h5-font-size:		   $h5-font-size;
-  --h6-font-size:			 $h6-font-size;
-  --alt-h1-font-size:  $alt-h1-font-size;
-  --alt-h2-font-size:	 $alt-h2-font-size;
-  --alt-h3-font-size:	 $alt-h3-font-size;
-  --alt-h4-font-size:	 $alt-h4-font-size;
-  --alt-h5-font-size:	 $alt-h5-font-size;
-  --alt-h6-font-size:	 $alt-h6-font-size;
-
   /* Rhythm, spacing & padding */
   --gutter-size:       $base-gutter;
   --box-padding:       $box-padding;
   --box-padding-sm:    $box-padding-sm;
   --box-padding-xs:    $box-padding-xs;
-  --paragraph-margin-bottom: var(--font-size, $base-font-size);
-  --heading-margin-bottom: $heading-bottom-margin;
 
   /* Breakpoints */
   --breakpoint-xs-min: $breakpoint-xs-min;

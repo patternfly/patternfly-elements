@@ -1,6 +1,45 @@
 import "../cp-styles/cp-styles.js";
 
-const cardTemplate = document.createElement('template');
+const cardHeadingTemplate = document.createElement("template");
+cardHeadingTemplate.innerHTML = `
+  <h3><slot></slot></h3>
+`;
+
+class CpCardHeading extends HTMLElement {
+  static get observedAttributes() {
+    return ["data-level"];
+  }
+
+  constructor() {
+    super();
+
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.appendChild(cardHeadingTemplate.content.cloneNode(true));
+  }
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    if (attr === "data-level") {
+      const obj = {
+        "1": true,
+        "2": true,
+        "3": true,
+        "4": true,
+        "5": true,
+        "6": true
+      };
+
+      if (!obj[newValue]) {
+        newValue = "3";
+      }
+
+      this.shadowRoot.innerHTML = `<h${newValue}><slot></slot></h${newValue}>`;
+    }
+  }
+}
+
+window.customElements.define("cp-card-heading", CpCardHeading);
+
+const cardTemplate = document.createElement("template");
 cardTemplate.innerHTML = `
   <style>:host {
   display: block;
@@ -64,14 +103,14 @@ cardTemplate.innerHTML = `
 `;
 
 if (window.ShadyCSS) {
-  ShadyCSS.prepareTemplate(cardTemplate, 'cp-card');
+  ShadyCSS.prepareTemplate(cardTemplate, "cp-card");
 }
 
 class CpCard extends HTMLElement {
   constructor() {
     super();
 
-    this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: "open" });
     this.shadowRoot.appendChild(cardTemplate.content.cloneNode(true));
   }
 
@@ -82,4 +121,4 @@ class CpCard extends HTMLElement {
   }
 }
 
-window.customElements.define('cp-card', CpCard);
+window.customElements.define("cp-card", CpCard);

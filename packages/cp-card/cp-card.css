@@ -1,33 +1,57 @@
 :host {
   display: block;
-  padding: 29px;
-  border: 1px solid transparent; }
-  :host > h3 {
-    margin: 0 0 10px; }
+  padding: 31px;
+  border: 1px solid transparent;
+  color: var(--text-color, #333);
+  fill: var(--text-color, #333); }
 
-:host([data-theme="dark"]) {
-  background: #252527;
-  border-color: #252527;
-  color: #fff; }
-
-:host([data-theme="red"]) {
-  background: #a30000;
-  border-color: #a30000;
-  color: #fff; }
+::slotted(h1:first-child),
+::slotted(h2:first-child),
+::slotted(h3:first-child),
+::slotted(h4:first-child),
+::slotted(h5:first-child),
+::slotted(h6:first-child) {
+  --heading-margin-top: 0; }
 
 :host([data-theme="white"]) {
-  background: #fff;
-  border-color: #fff; }
+  background: var(--white, #fff);
+  border-color: var(--white, #fff);
+  --text-color: var(--gray-night, #333);
+  fill: var(--gray-night, #333); }
+
+:host([data-theme="black"]) {
+  background: var(--black, #1a1a1a);
+  border-color: var(--black, #1a1a1a);
+  --text-color: var(--white, #fff);
+  fill: var(--white, #fff); }
+
+:host([data-theme="dark"]) {
+  background: var(--gray-space, #4c4c4c);
+  border-color: var(--gray-space, #4c4c4c);
+  --text-color: var(--white, #fff);
+  fill: var(--white, #fff); }
 
 :host([data-theme="light"]) {
-  background: #f0f0f0;
-  border-color: #f0f0f0; }
+  background: var(--gray-platinum, #e7e7e7);
+  border-color: var(--gray-platinum, #e7e7e7);
+  --text-color: var(--gray-night, #333);
+  fill: var(--gray-night, #333); }
 
-:host([data-border="dark"]) {
-  border-color: #252527; }
+:host([data-border="white"]) {
+  border-color: var(--white, #fff); }
 
-:host([data-border="light"]) {
-  border-color: #ccc; }
+:host([data-border="black"]) {
+  border-color: var(--black, #1a1a1a); }
 
 :host([data-border="gray"]) {
-  border-color: #d2d3d5; }
+  border-color: var(--border-color, #ededed); }
+
+:host([data-border="dark"]) {
+  border-color: var(--gray-space, #4c4c4c); }
+
+:host([data-border="light"]) {
+  border-color: var(--gray-platinum, #e7e7e7); }
+
+:host([data-border="transparent"]),
+:host([data-border="none"]) {
+  border-color: transparent; }

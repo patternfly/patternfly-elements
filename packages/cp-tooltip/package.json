@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-tooltip",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Tooltip element for RHElements",
   "repository": {
     "type": "git",
@@ -13,8 +13,10 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,json}": ["prettier --write", "git add"]
-
+    "*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "author": {
     "name": "Kyle Buchanan",

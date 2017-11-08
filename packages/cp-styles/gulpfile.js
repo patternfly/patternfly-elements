@@ -22,11 +22,21 @@ gulp.task('sass', () => {
     .pipe(gulp.dest('./'));
 });
 
-gulp.task('replaceStyles', () => {
+gulp.task('replaceVarsStyles', () => {
   return gulp.src('./cp-vars.js')
     .pipe(replace(/<style class="document-style">[\s\S]*<\/style>/g, '<style class="document-style">' + fs.readFileSync('./cp-vars.css') + '</style>'))
     .pipe(gulp.dest('./'));
 });
+
+gulp.task('replaceTypographyStyles', () => {
+  return gulp.src('./cp-typography.js')
+    .pipe(replace(/<style class="document-style">[\s\S]*<\/style>/g, '<style class="document-style">' + fs.readFileSync('./cp-typography.css') + '</style>'))
+    .pipe(gulp.dest('./'));
+});
+
+gulp.task('replaceStyles',
+  gulp.series('replaceTypographyStyles', 'replaceVarsStyles')
+);
 
 gulp.task('compile', () => {
   return gulp.src(['./*.js', '!./gulpfile.js'])

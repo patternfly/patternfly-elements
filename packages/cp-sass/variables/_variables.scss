@@ -11,10 +11,13 @@ $repo: cp !default;
 // Typography
 // ========================================================================
 
-$base-font-px: 16;
+$base-font-px:     16;
 $base-line-height: 1.5em;
 $base-font-family: "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif;
-$base-font-size: #{$base-font-px}px;
+$code-font-family: Consolas, Monaco, 'Andale Mono', monospace;
+$base-font-size:   #{$base-font-px}px;
+$base-font-weight: 400;
+$heading-font-weight: 600;
 
 /*doc
 ---
@@ -28,108 +31,134 @@ Use this tool to determine the name of your new color!
 // ========================================================================
 // CORPORATE COLORS
 // ========================================================================
-$white: #fff;
-$black: #1a1a1a;   // We don't use true black on the web.
-$brand-primary: #c00;   // "Red Hat red"
-$red: $brand-primary;   // Not to be used as a background color (except in site footer)
-                        // Or as an error color.
-$light-gray: #dcdcdc;
-$dark-gray: #4c4c4c;
+$white:             #fff;
+$black:             #1a1a1a;        // We don't use true black on the web.
+$red:               #c00;           // Not to be used as a background color (except in site footer) or as an error color.
+$brand-primary:     $red;           // "Red Hat red"
+
+$gray-gainsboro:    #dcdcdc;        // Official color name
+$gray-space:        #4c4c4c;        // Official color name Outer Space.
 
 // ========================================================================
-// SECONDARY & ACCENT COLORS
+// SECONDARY, ACCENT & CRAYOLA COLORS
 // ========================================================================
-$sky-blue: #a3dbe8;
-$navy: #004153;        // Brand as "Dark Blue"
-$gold: #f0ab00;
-$light-blue: #00b9e4;
-$green: #92d400;
-$purple: #3b0083;
-$teal: #007a87;
+$blue-sky:          #a3dbe8;
+$blue-sky-deep:     #00b9e4;
+$gold:              #f0ab00;
+$green:             #92d400;
+$purple:            #7551A6;
+$teal:              #007a87;
+$teal-dark:         #004153;        // Brand as "Dark Blue"
+
+// RH-specific Accents
+$blue-peacock:      #0088ce;
+$orange:            #ec7a08;     // Near match to "Tangerine"
+$green-verde:       #3f9c35;
+$gray-charcoal:     #37424a;     // Or Big Stone
+$gray-nickel:       #7a858b;     // Or Regent Gray
+$black-soft:        #252527;     // Or Jaguar?
+
+// RH Reds
+$red-brick:         #a30000;     // Or Bright Blood Red
+$red-maroon:        #820000;     // Or Burgundy, or Dark Red
+$red-garnet:        #6e0000;     // Or Rosewood or Blood or Currant
+$red-morello:       #5a0000;     // Near match to Chocolate Cosmos
+$red-red-wine:      #460000;
+$red-daredevil:     #320000;
+
+// RH Grays
+$gray-moon:         #f0f0f0;      // Made up name.
+$gray-platinum:     #e7e7e7;      // Personal choice, close to Gainsboro. Was #e6e6e6, but fails contrast ratio w/ link colors.
+$gray-mercury:      #d2d2d2;      // Official name: Light Gray
+$gray-storm:        #bebebe;
+$gray-stone:        #aaa;
+$gray-fog:          #969696;      // Near official name: Spanish Gray
+$gray-battleship:   #828282;      // Near official name: Battleship Gray
+$gray-batman:       #6e6e6e;      // Official name: Dim Gray
+$gray-umbra:        #5a5a5a;      // Near official name: Davy's Gray Or Mortar
+$gray-iron:         #464646;      // Near Sherwin Williams.
+$gray-night:        #333;         // Used to be #323232. Simplified to match text-color.
+$black-nero:        #1e1e1e;      // Vader?
+
+// CP Grays
+$gray-nimbus:       #ededed;      // Border-color!
+$gray-silver:       #ccc;         // Used to be called $misty
+
+// CP-specific
+$blue-rain:         #264a60;
+$blue-denim:        #06c;         // Or navy-bright?
+$blue-navy:         #004080;
+$blue-azure:        #0076e0;
+
+$blue-maya:         #73bcf7;      // Link
+$blue-dodger:       #2b9af3;      // Hover
+$purple-amethyst:   #967abd;
+$purple-rain:       #3b0083;      // Old RH purple.
+
 
 // ========================================================================
 // PRODUCT COLORS
 // ========================================================================
 $product-line-colors: (
-    default: #252527,
-    storage1: #ec7a08,
-    storage2: $gold,
-    infrastructure1: #0088ce,    // Used to be linux-platforms
-    infrastructure2: $light-blue,
-    app-dev1: #3f9c35,
-    app-dev2: $green,
-    support1: #37424a,
-    support2: #7a858b
+    default:        $black-soft,
+    storage1:       $orange,
+    storage2:       $gold,
+    infrastructure1:$blue-peacock, // Used to be linux-platforms
+    infrastructure2:$blue-sky-deep,
+    app-dev1:       $green-verde,
+    app-dev2:       $green,
+    support1:       $gray-charcoal,
+    support2:       $gray-nickel
 );
 
 // ========================================================================
-// UI BLUES
+//  PALETTES
 // ========================================================================
 
-// Text links on _white_ or _light_ backgrounds
-$link-blue: #06c;             // Link
-$link-blue-hover: #004080;    // Hover
-
-// Text links on _dark grey_ or _black_ backgrounds
-$link-blue-light: #73bcf7;    // Link
-$link-blue-light-hover: #2b9af3; // Hover
-
-// UI elements
-$ui-blue: #0076e0;   // Smaller elements, like solid buttons
-$ui-blue-hover: $link-blue;
-
-// Larger elements
-$rain-blue:  #264a60;
-
-
 // PALETTE REDS
-$dark-red1: #a30000;
-$dark-red2: #820000;
-$dark-red3: #6e0000;
-$dark-red4: #5a0000;
-$dark-red5: #460000;
-$dark-red6: #320000;
+$red-dark1:         $red-brick;
+$red-dark2:         $red-maroon;
+$red-dark3:         $red-garnet;
+$red-dark4:         $red-morello;
+$red-dark5:         $red-red-wine;
+$red-dark6:         $red-daredevil;
 
 // PALETTE GRAYS: lightest to darkest
-$gray1: #f0f0f0;   // Used as band alternate background
-$gray2: #e6e6e6;   // Better band alternate background color? Replacing $cloud: #eee;
-$gray3: #d2d2d2;   // Better than $iron: #d2d3d5;
-$gray4: #bebebe;
-$gray5: #aaa;      // Visible on white, black, & mercury; used for icon hover; replacing $silver;
-$gray6: #969696;
-$gray7: #828282;
-$gray8: #6e6e6e;
-$gray9: #5a5a5a;
-$gray10: #464646;
-$gray11: #323232;
-$gray12: #1e1e1e;
+$gray1:             $gray-moon;
+$gray2:             $gray-platinum;
+$gray3:             $gray-mercury;
+$gray4:             $gray-storm;
+$gray5:             $gray-stone;
+$gray6:             $gray-fog;
+$gray7:             $gray-battleship;
+$gray8:             $gray-batman;
+$gray9:             $gray-umbra;
+$gray10:            $gray-iron;
+$gray11:            $gray-night;
+$gray12:            $black-nero;
 
 
-// ADDITIONAL GRAYS from WebRH
-$mercury: #e2e2e2; // Better band alternate background or card color?
-$misty: #ccc;      // WAS #dcdcdc; suggested update in styleguide for link underlines
-$fog: #8a8a8a;       // mainly used as lighter gray on dark bg
-$stone: #646464;     // mainly used as copy
-$soft-black: #252527;
-$charcoal: #2f3541;
-$iron: #d2d3d5;
-$cloud: #eee;
-$gallery: $gray1;
-$silver: $gray5;
-$rich-black: $black;
+// ========================================================================
+// UI Colors
+// ========================================================================
 
-// DEPRECATED
-$brick-red: $dark-red1;
-$denim-blue: $link-blue;
-$blue: $light-blue;
-$midnight-blue: $link-blue-hover;
-$unc-blue: $link-blue-light;
-$steel-blue: $link-blue-light-hover;
+$text-color:          $gray-night;    // #333
+$inverted-text-color: $white;
 
-// WebRH COLORS
-$orange: #ff6c35;      // RSS icon
-$rh-green: #479b2e;
-$turquoise: #69a8b1;
+// Text links on _white_ or _light_ backgrounds
+$link-color:         $blue-denim;    // Link
+$link-color-hover:   $blue-navy;     // Hover
+$link-color-visited: $purple;        // :Visited
+
+// Text links on _dark grey_ or _black_ backgrounds
+$inverted-link-color:         $blue-maya; // Link
+$inverted-link-color-hover:   $blue-dodger; // Hover
+$inverted-link-color-visited: $purple-amethyst;
+
+// UI elements
+$ui-element:           $blue-azure;   // Smaller elements, like solid buttons
+$ui-element-hover:     $blue-navy;
+
 
 
 /*doc
@@ -138,27 +167,42 @@ title: Spacing
 category: Global - Spacing
 --- */
 
-$fixed-header-offset: 90px;
+// Factors of 1em or 16px;
+$base-gutter:         32px;
 
-$box-padding: 30px;
-$box-padding-thin: 15px;
-$box-padding-xsmall: 10px;
+$box-padding:         $base-gutter;
+$box-padding-sm:      ($box-padding / 2);
+$box-padding-xs:      ($box-padding-sm / 2);
 
-$vertical-gutter: 30px;
-$band-padding: 60px;
-$mobile-edge: 9px;
-$accordion-indicator-indent: 30px;
+$band-padding:        $box-padding;
+$mobile-edge:         $box-padding-xs;
+$accordion-indicator-indent: $base-gutter;
 
 
 // push - pull layout:
 $pull-hero-bottom-padding: 0;
 $min-aside-height: 130px;
-$aside-bottom-padding: ($vertical-gutter / 2);
+$aside-bottom-padding: ($base-gutter / 2);
 $pull-margin: $min-aside-height + $aside-bottom-padding + $pull-hero-bottom-padding;
 $push-margin: $min-aside-height + $aside-bottom-padding;
 
 // typography:
-$heading-bottom-margin: 10px;
+$heading-margin-bottom: 10px;
+$heading-margin-top: 1em;
+
+$h1-font-size:						24px;
+$h2-font-size:						21px;
+$h3-font-size:						18px;
+$h4-font-size:						$base-font-size;
+$h5-font-size:						$base-font-size;
+$h6-font-size:						14px;
+
+$alt-h1-font-size:			30px; // was 42px
+$alt-h2-font-size:			26px; // was 22px
+$alt-h3-font-size:			20px; // was 22px
+$alt-h4-font-size:			18px;
+$alt-h5-font-size:			$base-font-size;
+$alt-h6-font-size:			14px; // was 16px
 
 
 /*doc
@@ -166,7 +210,11 @@ $heading-bottom-margin: 10px;
 title: Borders
 category: Global - Borders
 --- */
-$border-thin: 1px;
+$border-width: 1px;
+$border-thin: $border-width; // Deprecate? Poorly named.
+
+$border-style: solid;
+$border-color: $gray-nimbus;
 
 /*doc
 ---
@@ -186,7 +234,7 @@ category: Global - Breakpoints
 |$breakpoint-md-max | 1199px |
 */
 
-$breakpoint-zero: 0;
+$breakpoint-zero:   0;
 $breakpoint-xs-min: 480px;
 $breakpoint-sm-min: 768px;
 $breakpoint-md-min: 992px;
@@ -198,5 +246,10 @@ $breakpoint-sm-max: $breakpoint-md-min - 1;
 $breakpoint-md-max: $breakpoint-lg-min - 1;
 
 /* SOLP variables */
-$hero-min-height: 205px;
-$aside-wide: 340px;
+$hero-min-height:  205px;
+$aside-wide:       340px;
+
+
+
+
+$cubic-bezier:    cubic-bezier(0.465, 0.183, 0.153, 0.946);

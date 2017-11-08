@@ -1,139 +1,138 @@
 $copy-color-map: (
     default-paragraph: (
         dark: $white,
-        dark-subtle: $iron,
-        dark-desaturated: $cloud,
-        light: $stone,
-        subtle: $fog,
-        light-subtle: $fog,
-    ),
-    weak-paragraph: (
-        dark: $iron,
-        light: $stone,
-    ),
-    weaker-paragraph: (
-        dark: $iron,
-        light: $stone,
-    ),
-    small-paragraph: (
-        dark: $white,
         dark-subtle: $white,
-        light: $stone,
-        subtle: $fog,
-        light-subtle: $fog
+        dark-desaturated: $white,
+        light: $gray-night,
+        subtle: $gray-night,
+        light-subtle: $gray-night,
     ),
-    description-paragraph: (
-        dark: $white,
-        light: $stone,
-        //subtle: $fog,
-    ),
-    hero-metadata: (
-        dark: $white,
-        light: $stone,
-    ),
-    hero-em-metadata: (
-        dark: $white,
-        light: $stone,
-    ),
-    strong-paragraph: (
-        dark: $fog,
-        light: $rich-black,
-    ),
-    default-headline: (
-        dark: $white,
-        light: $black,
-    ),
-    default-li: (
-        dark: $white,
-        light: $stone,
-    ),
-    default-dl: (
-        dark: $white,
-        light: $stone,
-    ),
-    default-dt: (
-        light: $stone,
-        dark: $white,
-    ),
-    default-dd: (
-        dark: $white,
-        light: $stone,
-    ),
-    quote-copy: (
-        dark: $white,
-        light: $black,
-    ),
-    quote-icon: (
-        dark: $brand-primary,
-        dark-desaturated: $iron,
-        light: $brand-primary,
-    ),
-    quote-footer: (
-        dark: $iron,
-        light: $stone,
-    ),
-    detail-text: (
-        dark: $iron,
-        light: $stone,
-    ),
-    footnote-item: (
-        dark: $fog,
-        light: $stone,
-    ),
-    site-footer-text: (
-        dark: $fog,
-        light: $stone,
-    ),
-    card-summary: (
-        dark: $white,
-        light: $stone,
-    ),
-    pagination-count: (
-        dark: $fog,
-        light: $rich-black,
-        inactive: $white
-    ),
-    pagination-count-background: (
-        inactive: $rich-black
-    ),
-    store-strong-paragraph: (
-        dark: $white,
-        light: $rich-black,
-    ),
-    price-teaser: (
-        dark: $iron,
-        light: $fog,
-    ),
-    price-sku: (
-        dark: $iron,
-        light: $fog,
-    ),
-    price-main: (
-        dark: $white,
-        light: $black,
-    ),
-    social-label: (
-        dark: $iron,
-        light: $fog,
-    ),
-    social-handle: (
-        dark: $white,
-        light: $black,
-        subtle: $fog,
-        dark-subtle: $iron,
-    ),
-    social-handle-hover: (
-        dark: $iron,
-        light: $fog,
-        subtle: $black,
-        dark-subtle: $white
-    ),
-    text-shadow: (
-        dark: $iron,
-        light: $stone,
-    ),
-    tooltip-text: (
-        dark: $white,
-        light: $stone,
-    ),
+    // weak-paragraph: (
+    //     dark: $white,
+    //     light: $gray-night,
+    // ),
+    // weaker-paragraph: (
+    //     dark: $white,
+    //     light: $gray-night,
+    // ),
+    // small-paragraph: (
+    //     dark: $white,
+    //     dark-subtle: $white,
+    //     light: $gray-night,
+    //     subtle: $gray-night,
+    //     light-subtle: $gray-night
+    // ),
+    // description-paragraph: (
+    //     dark: $white,
+    //     light: $gray-night
+    // ),
+    // hero-metadata: (
+    //     dark: $white,
+    //     light: $gray-night,
+    // ),
+    // hero-em-metadata: (
+    //     dark: $white,
+    //     light: $gray-night,
+    // ),
+    // strong-paragraph: (
+    //     dark: $white,
+    //     light: $black-soft,
+    // ),
+    // default-headline: (
+    //     dark: $white,
+    //     light: $gray-night,
+    // ),
+    // default-li: (
+    //     dark: $white,
+    //     light: $gray-night,
+    // ),
+    // default-dl: (
+    //     dark: $white,
+    //     light: $gray-night,
+    // ),
+    // default-dt: (
+    //     light: $gray-night,
+    //     dark: $white,
+    // ),
+    // default-dd: (
+    //     dark: $white,
+    //     light: $gray-night,
+    // ),
+    // quote-copy: (
+    //     dark: $white,
+    //     light: $gray-night,
+    // ),
+    // quote-icon: (
+    //     dark: $brand-primary,
+    //     dark-desaturated: $gray-night,
+    //     light: $brand-primary,
+    // ),
+    // quote-footer: (
+    //     dark: $gray-night,
+    //     light: $gray-night,
+    // ),
+    // detail-text: (
+    //     dark: $gray-night,
+    //     light: $gray-night,
+    // ),
+    // footnote-item: (
+    //     dark: $gray-night,
+    //     light: $gray-night,
+    // ),
+    // site-footer-text: (
+    //     dark: $gray-night,
+    //     light: $gray-night,
+    // ),
+    // card-summary: (
+    //     dark: $white,
+    //     light: $gray-night,
+    // ),
+    // pagination-count: (
+    //     dark: $fog,
+    //     light: $black-soft,
+    //     inactive: $white
+    // ),
+    // pagination-count-background: (
+    //     inactive: $rich-black
+    // ),
+    // store-strong-paragraph: (
+    //     dark: $white,
+    //     light: $rich-black,
+    // ),
+    // price-teaser: (
+    //     dark: $iron,
+    //     light: $fog,
+    // ),
+    // price-sku: (
+    //     dark: $iron,
+    //     light: $fog,
+    // ),
+    // price-main: (
+    //     dark: $white,
+    //     light: $black,
+    // ),
+    // social-label: (
+    //     dark: $iron,
+    //     light: $fog,
+    // ),
+    // social-handle: (
+    //     dark: $white,
+    //     light: $black,
+    //     subtle: $fog,
+    //     dark-subtle: $iron,
+    // ),
+    // social-handle-hover: (
+    //     dark: $iron,
+    //     light: $fog,
+    //     subtle: $black,
+    //     dark-subtle: $white
+    // ),
+    // text-shadow: (
+    //     dark: $iron,
+    //     light: $stone,
+    // ),
+    // tooltip-text: (
+    //     dark: $white,
+    //     light: $stone,
+    // ),
 );

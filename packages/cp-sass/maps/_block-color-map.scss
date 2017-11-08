@@ -1,71 +1,99 @@
 $block-color-map: (
     table-background: (
         white: $white,
-        gray: $gallery
+        gray: $gray-platinum
     ),
     band-background: (
         white: $white,
         black: $black,
-        rich-black: $rich-black,
-        red: $brick-red,
-        gray: $gallery,
-        navy: $navy,
-        blue: $denim-blue,
-        green: $green
+        black-soft: $black-soft,
+        rich-soft: $black-soft,
+        red: $red-brick,
+        gray: $gray-platinum,
+        light: $gray-platinum,
+        navy: $blue-navy,
+        blue: $blue-peacock,
+        blue-dark: $blue-rain,
+        green: $green,
+        charcoal: $gray-charcoal
     ),
     card-background: (
         white: $white,
-        light: $white,
         black: $black,
-        dark: $black,
-        rich-black: $rich-black,
-        red: $brick-red,
-        gray: $gallery,
-        dark-gray: $mercury,
-        navy: $navy,
-        blue: $denim-blue,
+        black-soft: $black-soft,
+        rich-soft: $black-soft,
+        red: $red-brick,
+        gray: $gray-platinum,
+        light: $gray-platinum,
+        dark-gray: $gray-night,
+        navy: $blue-navy,
+        blue: $blue-peacock,
+        blue-dark: $blue-rain,
         green: $green,
-        brick-red: $brick-red,
-        charcoal: $charcoal,
-        turquoise: $turquoise,
+        charcoal: $gray-charcoal
     ),
     card-absolute-background: (
         white: $white,
         black: $black,
     ),
     image-border: (
+        default: $border-color,
         white: $white,
         black: $black,
-        rich-black: $rich-black,
+        black-soft: $black-soft,
+        rich-soft: $black-soft,
         red: $red,
-        gray: $gallery,
+        gray: $gray-platinum,
+        light: $gray-platinum,
+        gray-dark: $gray-night,
+        dark-gray: $gray-night,
         teal: $teal,
-        blue: $denim-blue
+        blue: $blue-denim,
     ),
     accordion-background: (
         white: $white,
-        black: $black
+        black: $black,
+        gray: $gray-platinum,
+        light: $gray-platinum,
+        dark-gray: $gray-night
     ),
     accordion-border: (
-        white: $iron,
-        black: $fog
+        default: $border-color,
+        white: $white,
+        black: $black,
+        gray: $gray-platinum,
+        light: $gray-platinum,
+        dark-gray: $gray-night
     ),
     accordion-indicator: (
         dark: $white,
-        light: $black,
+        light: $gray-night
     ),
     rule-border: (
-        dark: rgba($white, .6),
-        light: $iron,
-        polar: rgba($gallery, .3),
+        default: $border-color,
+        dark: $gray-umbra,
+        light: $gray-platinum
     ),
     card-border: (
-        gray: $iron,
+        default: $gray-night,
+        white: $white,
+        black: $black,
+        black-soft: $black-soft,
+        rich-soft: $black-soft,
+        red: $red-brick,
+        gray: $gray-platinum,
+        light: $gray-platinum,
+        dark-gray: $gray-night,
+        navy: $blue-navy,
+        blue: $blue-peacock,
+        blue-dark: $blue-rain,
+        green: $green,
+        charcoal: $gray-charcoal
     ),
     menu-background: (
         desktop: $black,
         mobile: $white,
-        mobile-top: $rich-black,
+        mobile-top: $black-soft,
         utility-xs: $black,
         utility-sm: $white
     ),
@@ -78,25 +106,25 @@ $block-color-map: (
     ),
     tooltip-border: (
         dark: $black,
-        light: $fog,
+        light: $gray-platinum,
     ),
     tooltip-icon-text: (
         light: $white,
         help: $white,
-        warning: $rich-black,
+        warning: $black-soft,
         error: $white,
         info: $white,
     ),
     tooltip-icon-background: (
         light: $black,
         help: $black,
-        warning: $iron,
+        warning: $gray-night,
         error: $brand-primary,
-        info: $denim-blue,
+        info: $blue-peacock,
     ),
     list-item-markers: (
         dark: $white,
-        light: $fog
+        light: $gray-night
     ),
     tag-box: (
         white: $white

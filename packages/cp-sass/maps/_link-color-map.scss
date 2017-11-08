@@ -1,228 +1,228 @@
 // @TODO light desaturated themes are TBD, no use-case for them yet
 $link-color-map: (
     default-link: (
-        dark: $midnight-blue,
+        dark: $inverted-link-color,
         dark-desaturated: $white,
-        light: $denim-blue
+        light: $link-color
     ),
     default-link-hover: (
-        dark: $unc-blue,
-        dark-desaturated: $iron,
-        light: $steel-blue
+        dark: $inverted-link-color,
+        dark-desaturated: $gray-platinum,
+        light: $link-color-hover
     ),
-    default-link-hover-line: (
-        dark: $fog,
-        dark-desaturated: $iron,
-        light: $misty,
-    ),
-    section-title-link-hover: (
-        dark: darken($brand-primary, 10%),
-        dark-desaturated: $iron,
-        light: darken($brand-primary, 10%),
-    ),
-    headline-link: (
-        dark: $iron,
-        light: $black
-    ),
-    headline-link-hover: (
-        dark: $iron,
-        light: $denim-blue // deviates from styleguide
-    ),
-    headline-link-hover-line: (
-        dark: $iron,
-        light: $misty,
-        subtle: $misty,
-    ),
-    demphasized-link: (
-        dark: $iron,
-        light: $fog,
-    ),
-    demphasized-link-hover: (
-        dark: $white,
-        light: $rich-black,
-    ),
-    cta-primary: (
-        dark: $brand-primary,
-        dark-desaturated: $brand-primary,
-        light: $brand-primary,
-    ),
-    cta-primary-text: (
-        dark: $white,
-        dark-desaturated: $white,
-        light: $white,
-    ),
-    cta-primary-border: (
-        dark: $brand-primary,
-        dark-desaturated: $brand-primary,
-        light: $brand-primary,
-    ),
-    cta-primary-hover: (
-        dark: darken( $brand-primary, 6% ),
-        dark-desaturated: transparent,
-        light: darken( $brand-primary, 6% ),
-    ),
-    cta-primary-text-hover: (
-        dark: $white,
-        dark-desaturated: $white,
-        light: $white,
-    ),
-    cta-primary-border-hover: (
-        dark: darken( $brand-primary, 6% ),
-        dark-desaturated: $white,
-        light: darken( $brand-primary, 6% ),
-    ),
-    cta-primary-disabled: (
-        light: $iron,
-    ),
-    cta-secondary-link: (
-        dark: $white,
-        dark-desaturated: $white,
-        light: $denim-blue,
-    ),
-    cta-secondary-link-hover: (
-        dark: $iron,
-        dark-desaturated: $iron,
-        light: $steel-blue
-    ),
-    cta-tertiary-link: (
-        dark: $white,
-        dark-desaturated: $white,
-        light: $black,
-    ),
-    cta-tertiary-link-hover: (
-        dark: $unc-blue,
-        dark-desaturated: $iron,
-        light: $denim-blue,
-    ),
-    cta-disabled: (
-        light: $iron,
-    ),
-    cta-medium-button: (
-        light: $fog,
-    ),
-    cta-ghost-hover: (
-        dark: $white,
-        light: $black,
-    ),
-    cta-ghost-text: (
-        dark: $white,
-        light: $black,
-    ),
-    cta-ghost-text-hover: (
-        dark: $black,
-        light: $white,
-    ),
-    jump-link: (
-        dark: $white,
-        light: $black,
-    ),
-    jump-link-hover: (
-        dark: $iron,
-        light: $iron,
-    ),
-    footer-link: (
-        dark: $white,
-        light: $stone,
-    ),
-    footer-link-hover: (
-        dark: $white,
-        light: $stone,
-    ),
-    hash-link: (
-        icon: $iron,
-    ),
-    hash-link-hover: (
-        dark: $unc-blue,
-        light: $denim-blue,
-    ),
-    nav-menu-link: (
-        dark: $white,
-        light: $black,
-    ),
-    nav-menu-link-hover: (
-        dark: $white,
-        light: $brand-primary,
-    ),
-    nav-utility-link: (
-        mobile: $stone,
-        light: $iron,
-    ),
-    nav-utility-link-hover: (
-        mobile: $black,
-        light: $denim-blue,
-    ),
-    nav-utility-icon: (
-        dark: $iron,
-        light: $iron,
-    ),
-    nav-utility-icon-hover: (
-        dark: $white,
-        light: $black,
-    ),
-    nav-utility-icon-text: (
-        light: $stone,
-    ),
-    nav-utility-icon-text-hover: (
-        light: $black,
-    ),
-    skip-navigation: (
-        light: $blue,
-    ),
-    pagination-button: (
-        light: $white,
-    ),
-    preview-link: (
-        dark: $iron,
-        light: $fog,
-    ),
-    preview-link-hover: (
-        dark: $iron,
-        light: $rich-black,
-    ),
-    interaction-title-hover: (
-        dark: $iron,
-        light: $stone,
-    ),
-    interaction-icon-hover: (
-        dark: $unc-blue,
-        light: $steel-blue
-    ),
-    tag-link: (
-        dark: $midnight-blue,
-        light: $denim-blue,
-    ),
-    tag-link-hover: (
-        dark: $unc-blue,
-        light: $steel-blue
-    ),
-    tag-box-link: (
-        dark: $denim-blue,
-        light: $denim-blue
-    ),
-    tag-box-link-hover: (
-        dark: $steel-blue,
-        light: $steel-blue
-    ),
-    social-label: (
-        dark: $iron,
-        light: $fog,
-    ),
-    social-handle: (
-        subtle: $fog,
-        dark: $white,
-        dark-subtle: $iron,
-        light: $black,
-        light-subtle: $fog,
-    ),
-    social-handle-hover: (
-        subtle: $black,
-        dark: $iron,
-        dark-subtle: $white,
-        light: $fog,
-        light-subtle: $black,
-    ),
-    footnote-item-hover: (
-        dark: $iron,
-        light: $fog,
-    ),
+    // default-link-hover-line: (
+    //     dark: $fog,
+    //     dark-desaturated: $iron,
+    //     light: $misty,
+    // ),
+    // section-title-link-hover: (
+    //     dark: darken($brand-primary, 10%),
+    //     dark-desaturated: $iron,
+    //     light: darken($brand-primary, 10%),
+    // ),
+    // headline-link: (
+    //     dark: $iron,
+    //     light: $black
+    // ),
+    // headline-link-hover: (
+    //     dark: $iron,
+    //     light: $denim-blue // deviates from styleguide
+    // ),
+    // headline-link-hover-line: (
+    //     dark: $iron,
+    //     light: $misty,
+    //     subtle: $misty,
+    // ),
+    // demphasized-link: (
+    //     dark: $iron,
+    //     light: $fog,
+    // ),
+    // demphasized-link-hover: (
+    //     dark: $white,
+    //     light: $rich-black,
+    // ),
+    // cta-primary: (
+    //     dark: $brand-primary,
+    //     dark-desaturated: $brand-primary,
+    //     light: $brand-primary,
+    // ),
+    // cta-primary-text: (
+    //     dark: $white,
+    //     dark-desaturated: $white,
+    //     light: $white,
+    // ),
+    // cta-primary-border: (
+    //     dark: $brand-primary,
+    //     dark-desaturated: $brand-primary,
+    //     light: $brand-primary,
+    // ),
+    // cta-primary-hover: (
+    //     dark: darken( $brand-primary, 6% ),
+    //     dark-desaturated: transparent,
+    //     light: darken( $brand-primary, 6% ),
+    // ),
+    // cta-primary-text-hover: (
+    //     dark: $white,
+    //     dark-desaturated: $white,
+    //     light: $white,
+    // ),
+    // cta-primary-border-hover: (
+    //     dark: darken( $brand-primary, 6% ),
+    //     dark-desaturated: $white,
+    //     light: darken( $brand-primary, 6% ),
+    // ),
+    // cta-primary-disabled: (
+    //     light: $iron,
+    // ),
+    // cta-secondary-link: (
+    //     dark: $white,
+    //     dark-desaturated: $white,
+    //     light: $denim-blue,
+    // ),
+    // cta-secondary-link-hover: (
+    //     dark: $iron,
+    //     dark-desaturated: $iron,
+    //     light: $steel-blue
+    // ),
+    // cta-tertiary-link: (
+    //     dark: $white,
+    //     dark-desaturated: $white,
+    //     light: $black,
+    // ),
+    // cta-tertiary-link-hover: (
+    //     dark: $unc-blue,
+    //     dark-desaturated: $iron,
+    //     light: $denim-blue,
+    // ),
+    // cta-disabled: (
+    //     light: $iron,
+    // ),
+    // cta-medium-button: (
+    //     light: $fog,
+    // ),
+    // cta-ghost-hover: (
+    //     dark: $white,
+    //     light: $black,
+    // ),
+    // cta-ghost-text: (
+    //     dark: $white,
+    //     light: $black,
+    // ),
+    // cta-ghost-text-hover: (
+    //     dark: $black,
+    //     light: $white,
+    // ),
+    // jump-link: (
+    //     dark: $white,
+    //     light: $black,
+    // ),
+    // jump-link-hover: (
+    //     dark: $iron,
+    //     light: $iron,
+    // ),
+    // footer-link: (
+    //     dark: $white,
+    //     light: $stone,
+    // ),
+    // footer-link-hover: (
+    //     dark: $white,
+    //     light: $stone,
+    // ),
+    // hash-link: (
+    //     icon: $iron,
+    // ),
+    // hash-link-hover: (
+    //     dark: $unc-blue,
+    //     light: $denim-blue,
+    // ),
+    // nav-menu-link: (
+    //     dark: $white,
+    //     light: $black,
+    // ),
+    // nav-menu-link-hover: (
+    //     dark: $white,
+    //     light: $brand-primary,
+    // ),
+    // nav-utility-link: (
+    //     mobile: $stone,
+    //     light: $iron,
+    // ),
+    // nav-utility-link-hover: (
+    //     mobile: $black,
+    //     light: $denim-blue,
+    // ),
+    // nav-utility-icon: (
+    //     dark: $iron,
+    //     light: $iron,
+    // ),
+    // nav-utility-icon-hover: (
+    //     dark: $white,
+    //     light: $black,
+    // ),
+    // nav-utility-icon-text: (
+    //     light: $stone,
+    // ),
+    // nav-utility-icon-text-hover: (
+    //     light: $black,
+    // ),
+    // skip-navigation: (
+    //     light: $blue,
+    // ),
+    // pagination-button: (
+    //     light: $white,
+    // ),
+    // preview-link: (
+    //     dark: $iron,
+    //     light: $fog,
+    // ),
+    // preview-link-hover: (
+    //     dark: $iron,
+    //     light: $rich-black,
+    // ),
+    // interaction-title-hover: (
+    //     dark: $iron,
+    //     light: $stone,
+    // ),
+    // interaction-icon-hover: (
+    //     dark: $unc-blue,
+    //     light: $steel-blue
+    // ),
+    // tag-link: (
+    //     dark: $midnight-blue,
+    //     light: $denim-blue,
+    // ),
+    // tag-link-hover: (
+    //     dark: $unc-blue,
+    //     light: $steel-blue
+    // ),
+    // tag-box-link: (
+    //     dark: $denim-blue,
+    //     light: $denim-blue
+    // ),
+    // tag-box-link-hover: (
+    //     dark: $steel-blue,
+    //     light: $steel-blue
+    // ),
+    // social-label: (
+    //     dark: $iron,
+    //     light: $fog,
+    // ),
+    // social-handle: (
+    //     subtle: $fog,
+    //     dark: $white,
+    //     dark-subtle: $iron,
+    //     light: $black,
+    //     light-subtle: $fog,
+    // ),
+    // social-handle-hover: (
+    //     subtle: $black,
+    //     dark: $iron,
+    //     dark-subtle: $white,
+    //     light: $fog,
+    //     light-subtle: $black,
+    // ),
+    // footnote-item-hover: (
+    //     dark: $iron,
+    //     light: $fog,
+    // ),
 );

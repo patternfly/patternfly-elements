@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-card",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Card element for RHElements",
   "repository": {
     "type": "git",
@@ -14,7 +14,10 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,json}": ["prettier --write", "git add"]
+    "*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "contributors": [
     {

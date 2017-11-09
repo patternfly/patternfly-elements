@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="../../../@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="../../../@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../wct-browser-legacy/browser.js"></script>
+    <script src="../../../requirejs/require.js"></script>
+    <script>require(['../rh-number.compiled.js'])</script>
+  </head>
+  <body>
+
+    <div>
+      <rh-number type="ordinal">1</rh-number>
+    </div>
+    <div>
+      <rh-number type="bytes">2017</rh-number>
+    </div>
+
+    <div>
+      <rh-number type="abbrev">12345</rh-number>
+    </div>
+
+    <div>
+      <rh-number type="percent">0.5678</rh-number>
+    </div>
+
+    <div>
+      <rh-number type="e">2000000</rh-number>
+    </div>
+
+    <script>
+      suite('<rh-number>', () => {
+        suiteSetup(done => {
+          setTimeout(() => {
+            done();
+          }, 100);
+        });
+
+        test('it should show an ordinal number', () => {
+          const rhNumber = document.querySelector('rh-number[type="ordinal"]');
+          let content = rhNumber.shadowRoot.querySelector('span').textContent;
+
+          assert.equal(content, '1st');
+        });
+
+        test('it should show bytes', () => {
+          const rhNumber = document.querySelector('rh-number[type="bytes"]');
+          const content = rhNumber.shadowRoot.querySelector('span').textContent;
+
+          assert.equal(content, '1.97 KiB');
+        });
+
+        test('it should show an abbreviated number', () => {
+          const rhNumber = document.querySelector('rh-number[type="abbrev"]');
+          const content = rhNumber.shadowRoot.querySelector('span').textContent;
+
+          assert.equal(content, '12k');
+        });
+
+        test('it should show a percentage', () => {
+          const rhNumber = document.querySelector('rh-number[type="percent"]');
+          const content = rhNumber.shadowRoot.querySelector('span').textContent;
+
+          assert.equal(content, '57%');
+        });
+
+        test('it should show an exponential number', () => {
+          const rhNumber = document.querySelector('rh-number[type="e"]');
+          const content = rhNumber.shadowRoot.querySelector('span').textContent;
+
+          assert.equal(content, '2.000e+6');
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -10,6 +10,7 @@
   "scripts": {
     "build": "./node_modules/.bin/gulp",
     "dev": "./node_modules/.bin/gulp dev",
+    "test": "wct --npm",
     "precommit": "lint-staged"
   },
   "lint-staged": {
@@ -33,9 +34,13 @@
     "gulp-sequence": "^0.4.6",
     "gulp-trim": "^1.0.2",
     "gulp-uglify": "^3.0.0",
-    "prettier": "1.7.4",
+    "husky": "^0.14.3",
     "lint-staged": "^4.3.0",
-    "husky": "^0.14.3"
+    "lodash": "^3.10.1",
+    "lodash.clonedeep": "^4.5.0",
+    "prettier": "1.7.4",
+    "requirejs": "^2.3.5",
+    "wct-browser-legacy": "0.0.1-pre.10"
   },
   "generator-rhelement-version": "0.2.9"
 }

@@ -6,11 +6,18 @@
     "type": "git",
     "url": "https://github.com/RHElements/cp-sass.git"
   },
-  "author": {
-    "name": "Kyle Buchanan",
-    "email": "kylebuch8@gmail.com",
-    "url": "https://github.com/kylebuch8"
-  },
+  "contributors": [
+    {
+      "name": "Kyle Buchanan",
+      "email": "kylebuch8@gmail.com",
+      "url": "https://github.com/kylebuch8"
+    },
+    {
+      "name": "Mark Caron",
+      "email": "mark@redhat.com",
+      "url": "https://github.com/markcaron"
+    }
+  ],
   "scripts": {
     "test": "echo \"cp-sass has no tests; components using it will be tested\" && exit 0"
   },

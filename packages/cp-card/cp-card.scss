@@ -29,7 +29,8 @@ $border-colors: (
 ::slotted(h3:first-child),
 ::slotted(h4:first-child),
 ::slotted(h5:first-child),
-::slotted(h6:first-child) {
+::slotted(h6:first-child),
+::slotted(cp-card-heading) {
   // margin: 0 0 $heading-bottom-margin;
   --heading-margin-top: 0;
 }

@@ -2,6 +2,16 @@ import "../cp-styles/cp-styles.js";
 
 const cardHeadingTemplate = document.createElement("template");
 cardHeadingTemplate.innerHTML = `
+  <style id="cp-card-heading">
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin-top: var(--heading-margin-top, 0);
+    }
+  </style>
   <h3><slot></slot></h3>
 `;
 
@@ -53,7 +63,8 @@ cardTemplate.innerHTML = `
 ::slotted(h3:first-child),
 ::slotted(h4:first-child),
 ::slotted(h5:first-child),
-::slotted(h6:first-child) {
+::slotted(h6:first-child),
+::slotted(cp-card-heading) {
   --heading-margin-top: 0; }
 
 :host([data-theme="white"]) {

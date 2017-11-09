@@ -10,7 +10,8 @@
 ::slotted(h3:first-child),
 ::slotted(h4:first-child),
 ::slotted(h5:first-child),
-::slotted(h6:first-child) {
+::slotted(h6:first-child),
+::slotted(cp-card-heading) {
   --heading-margin-top: 0; }
 
 :host([data-theme="white"]) {

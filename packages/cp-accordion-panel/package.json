@@ -9,12 +9,16 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/gulp",
-    "dev": "./node_modules/.bin/gulp dev",
+    "start": "./node_modules/.bin/gulp dev & npm run serve",
+    "serve": "polyserve --npm -o --open-path=components/@rhelements/cp-accordion-panel/demo",
+    "test": "wct --npm",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,json}": ["prettier --write", "git add"]
-
+    "*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "author": {
     "name": "Kyle Buchanan"
@@ -38,7 +42,10 @@
     "gulp-strip-css-comments": "^1.2.0",
     "gulp-sequence": "^0.4.6",
     "gulp-trim": "^1.0.2",
-    "gulp-uglify": "^3.0.0"
+    "gulp-uglify": "^3.0.0",
+    "lodash": "^3.10.1",
+    "lodash.clonedeep": "^4.5.0",
+    "wct-browser-legacy": "0.0.1-pre.10"
   },
   "generator-rhelement-version": "0.2.8"
 }

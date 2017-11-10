@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="../../../@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../wct-browser-legacy/browser.js"></script>
+    <script type="module" src="../cp-accordion-panel.js"></script>
+  </head>
+  <body>
+
+    <cp-accordion-panel>Panel content</cp-accordion-panel>
+
+    <script>
+      const cpAccordionPanel = document.querySelector('cp-accordion-panel');
+
+      suite('<cp-accordion-panel>', () => {
+        suiteSetup(() => {
+          cpAccordionPanel.removeAttribute('expanded');
+        });
+
+        test('it should display the content of the panel', () => {
+          const textContent = cpAccordionPanel.innerText;
+          assert.equal(textContent, 'Panel content', 'cp-accordion-panel should show content');
+        });
+
+        test('it should expand and collapsed when the expanded attribute is changed', () => {
+          let display = getComputedStyle(cpAccordionPanel).display;
+          assert.equal(display, 'none');
+
+          cpAccordionPanel.expanded = true;
+          display = getComputedStyle(cpAccordionPanel).display;
+          assert.isNotNull(cpAccordionPanel.getAttribute('expanded'));
+          assert.equal(display, 'block');
+
+          cpAccordionPanel.expanded = false;
+          display = getComputedStyle(cpAccordionPanel).display;
+          assert.isNull(cpAccordionPanel.getAttribute('expanded'));
+          assert.equal(display, 'none');
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="../../../@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../wct-browser-legacy/browser.js"></script>
+    <script type="module" src="../cp-accordion-heading.js"></script>
+  </head>
+  <body>
+
+    <cp-accordion-heading>Heading</cp-accordion-heading>
+
+    <script>
+      const cpAccordionHeading = document.querySelector('cp-accordion-heading');
+
+      suite('<cp-accordion-heading>', () => {
+        suiteSetup(() => {
+          cpAccordionHeading.setAttribute('aria-expanded', '');
+        });
+
+        test('it should display the content of the heading', () => {
+          const textContent = cpAccordionHeading.innerText;
+          assert.equal(textContent, 'Heading', 'cp-accordion-heading should do something');
+        });
+
+        test('it should "expand" when the expanded property is set', () => {
+          cpAccordionHeading.expanded = true;
+          assert.equal(cpAccordionHeading.getAttribute('aria-expanded'), 'true');
+
+          cpAccordionHeading.expanded = false;
+          assert.equal(cpAccordionHeading.getAttribute('aria-expanded'), null);
+        });
+
+        test('it should fire an event saying the heading should expand when the heading is clicked', done => {
+          let eventEmitted = false;
+
+          document.addEventListener('cp-accordion-change', function handler(evt) {
+            assert.equal(evt.type, 'cp-accordion-change');
+            assert.isTrue(evt.detail.expanded);
+
+            eventEmitted = true;
+            document.removeEventListener('cp-accordion-change', handler);
+            done();
+          });
+
+          cpAccordionHeading.click();
+          eventEmitted.should.be.true;
+        });
+
+        test('it should fire an event saying the heading should collapse when the heading is clicked and the heading has already been expanded', done => {
+          let eventEmitted = false;
+
+          document.addEventListener('cp-accordion-change', function handler(evt) {
+            assert.equal(evt.type, 'cp-accordion-change');
+            assert.isNotTrue(evt.detail.expanded);
+
+            eventEmitted = true;
+            document.removeEventListener('cp-accordion-change', handler);
+            done();
+          });
+
+          cpAccordionHeading.expanded = true;
+          cpAccordionHeading.click();
+          eventEmitted.should.be.true;
+        });
+      });
+    </script>
+  </body>
+</html>

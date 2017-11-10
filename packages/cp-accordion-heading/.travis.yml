@@ -9,6 +9,8 @@ addons:
     packages:
       - google-chrome-stable
 node_js: stable
+before_install:
+  - npm install -g polymer-cli
 install:
   - npm install
 before_script:

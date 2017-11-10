@@ -21,7 +21,7 @@
 
         test('it should display the content of the panel', () => {
           const textContent = cpAccordionPanel.innerText;
-          assert.equal(textContent, 'Panel content', 'cp-accordion-panel should show content');
+          assert.include(textContent, 'Panel content', 'cp-accordion-panel should show content');
         });
 
         test('it should expand and collapsed when the expanded attribute is changed', () => {

@@ -1,5 +1,7 @@
 # RHElements Accordion Heading Element
 
+[![Build Status][travis-ci]
+
 ## Dependencies
 
 Make sure you have the [Polymer CLI][polymer-cli] installed.
@@ -45,3 +47,4 @@ Accordion (and all RHElements) use [Prettier][prettier] to auto-format JS and JS
 [prettier]: https://github.com/prettier/prettier/
 [prettier-ed]: https://github.com/prettier/prettier/#editor-integration
 [polymer-cli]: https://github.com/Polymer/polymer-cli
+[travis-ci]: https://travis-ci.org/RHElements/cp-accordion-heading.svg?branch=master)](https://travis-ci.org/RHElements/cp-accordion-heading

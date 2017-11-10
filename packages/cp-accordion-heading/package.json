@@ -11,7 +11,7 @@
     "build": "./node_modules/.bin/gulp",
     "start": "./node_modules/.bin/gulp dev & npm run serve",
     "serve":
-      "polymer serve --npm -o --open-path=\"components/@rhelements/cp-accordion-heading/demo\"",
+      "polyserve serve --npm -o --open-path=\"components/@rhelements/cp-accordion-heading/demo\"",
     "test": "wct --npm",
     "precommit": "lint-staged"
   },

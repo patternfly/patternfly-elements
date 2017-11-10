@@ -1,6 +1,6 @@
 # RHElements Accordion Heading Element
 
-[![Build Status][travis-ci]
+[![Build Status](https://travis-ci.org/RHElements/cp-accordion-heading.svg?branch=master)](https://travis-ci.org/RHElements/cp-accordion-heading)
 
 ## Dependencies
 
@@ -48,4 +48,3 @@ Accordion (and all RHElements) use [Prettier][prettier] to auto-format JS and JS
 [prettier-ed]: https://github.com/prettier/prettier/#editor-integration
 [polyserve]: https://github.com/Polymer/polyserve
 [web-component-tester]: https://github.com/Polymer/web-component-tester
-[travis-ci]: https://travis-ci.org/RHElements/cp-accordion-heading.svg?branch=master)](https://travis-ci.org/RHElements/cp-accordion-heading

@@ -4,9 +4,9 @@
 
 ## Dependencies
 
-Make sure you have the [Polymer CLI][polymer-cli] installed.
+Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
 
-    npm install -g polymer-cli
+    npm install -g polyserve web-component-tester
 
 ## Dev
 
@@ -46,5 +46,6 @@ Accordion (and all RHElements) use [Prettier][prettier] to auto-format JS and JS
 
 [prettier]: https://github.com/prettier/prettier/
 [prettier-ed]: https://github.com/prettier/prettier/#editor-integration
-[polymer-cli]: https://github.com/Polymer/polymer-cli
+[polyserve]: https://github.com/Polymer/polyserve
+[web-component-tester]: https://github.com/Polymer/web-component-tester
 [travis-ci]: https://travis-ci.org/RHElements/cp-accordion-heading.svg?branch=master)](https://travis-ci.org/RHElements/cp-accordion-heading

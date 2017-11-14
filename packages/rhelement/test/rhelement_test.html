@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="../../../@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../wct-browser-legacy/browser.js"></script>
+    <script type="module" src="../rhelement.js"></script>
+  </head>
+  <body>
+
+    <rhelement>
+      This is the element content.
+    </rhelement>
+
+    <script>
+      suite('<rhelement>', () => {
+        test('it should do something RHElementy', () => {
+          // you need to write tests!!!
+          const rhelement = document.querySelector('rhelement');
+          const textContent = rhelement.innerText;
+          assert.equal(textContent, 'This is the element content.', 'rhelement should do something');
+        });
+      });
+    </script>
+  </body>
+</html>

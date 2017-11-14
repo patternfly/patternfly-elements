@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-accordion",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Accordion element for RHElements",
   "main": "cp-accordion.js",
   "repository": {
@@ -17,7 +17,10 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,json}": ["prettier --write", "git add"]
+    "*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "author": {
     "name": "Tyler Martin"

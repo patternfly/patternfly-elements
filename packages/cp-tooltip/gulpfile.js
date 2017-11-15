@@ -30,7 +30,7 @@ gulp.task('replaceStyles', () => {
 
 gulp.task('compile', () => {
   return gulp.src(['./*.js', '!./gulpfile.js'])
-    .pipe(replace(/(import ["'].*).(js["'];?)/g, '$1.compiled.$2'))
+    .pipe(replace(/^(import .*?)(['"]\.\.\/(?!\.\.\/).*)(\.js['"];)$/gm, '$1$2.compiled$3'))
     .pipe(babel())
     .pipe(uglify())
     .pipe(rename({

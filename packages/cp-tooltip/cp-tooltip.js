@@ -1,3 +1,4 @@
+import Rhelement from "../rhelement/rhelement.js";
 import "../cp-styles/cp-styles.js";
 
 const tooltipTemplate = document.createElement('template');
@@ -82,25 +83,16 @@ tooltipTemplate.innerHTML = `
   <slot></slot>
 `;
 
-if (window.ShadyCSS) {
-  ShadyCSS.prepareTemplate(tooltipTemplate, 'cp-tooltip');
-}
-
-class CpTooltip extends HTMLElement {
+class CpTooltip extends Rhelement {
   constructor() {
-    super();
-
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot.appendChild(tooltipTemplate.content.cloneNode(true));
+    super('cp-tooltip', tooltipTemplate);
 
     this._show = this._show.bind(this);
     this._hide = this._hide.bind(this);
   }
 
   connectedCallback() {
-    if (window.ShadyCSS) {
-      ShadyCSS.styleElement(this);
-    }
+    super.connectedCallback();
 
     if (!this.hasAttribute('role')) {
       this.setAttribute('role', 'tooltip');

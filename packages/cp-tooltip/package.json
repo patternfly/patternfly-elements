@@ -27,7 +27,8 @@
   "license": "ISC",
   "dependencies": {
     "@rhelements/cp-sass": "*",
-    "@rhelements/cp-styles": "*"
+    "@rhelements/cp-styles": "*",
+    "@rhelements/rhelement": "*"
   },
   "devDependencies": {
     "prettier": "1.8.0",

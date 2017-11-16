@@ -25,26 +25,27 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@rhelements/cp-sass": "*"
+    "@rhelements/cp-sass": "0.0.9",
+    "@rhelements/cp-styles": "0.0.9"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
+    "babel-preset-env": "^1.6.1",
     "del": "^3.0.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-babel": "^7.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.6.1",
     "gulp-sass": "^3.1.0",
-    "gulp-strip-css-comments": "^1.2.0",
     "gulp-sequence": "^0.4.6",
+    "gulp-strip-css-comments": "^1.2.0",
     "gulp-trim": "^1.0.2",
     "gulp-uglify": "^3.0.0",
-    "prettier": "1.7.4",
-    "lint-staged": "^4.3.0",
     "husky": "^0.14.3",
+    "lint-staged": "^4.3.0",
     "lodash": "^3.10.1",
     "lodash.clonedeep": "^4.5.0",
+    "prettier": "1.7.4",
     "wct-browser-legacy": "0.0.1-pre.10"
   },
   "generator-rhelement-version": "0.3.0"

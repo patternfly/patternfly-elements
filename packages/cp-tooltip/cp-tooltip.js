@@ -104,7 +104,7 @@ class CpTooltip extends Rhelement {
 
     this._hide();
 
-    this._target = document.querySelector(`[aria-describedby=${this.id}]`);
+    this._target = this.getRootNode().querySelector(`[aria-describedby=${this.id}]`);
     if (!this._target) {
       return;
     }

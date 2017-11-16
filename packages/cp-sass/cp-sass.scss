@@ -4,3 +4,8 @@
 @import "_functions";
 @import "_mixins";
 @import "_extends";
+
+// Give everyone the right box-sizing.
+*, *::before, *:after {
+  box-sizing: var(--box-sizing, border-box);
+}

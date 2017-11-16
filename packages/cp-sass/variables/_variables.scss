@@ -70,9 +70,9 @@ $red-daredevil:     #320000;
 $gray-moon:         #f0f0f0;      // Made up name.
 $gray-platinum:     #e7e7e7;      // Personal choice, close to Gainsboro. Was #e6e6e6, but fails contrast ratio w/ link colors.
 $gray-mercury:      #d2d2d2;      // Official name: Light Gray
-$gray-storm:        #bebebe;
+$gray-fog:          #bebebe;
 $gray-stone:        #aaa;
-$gray-fog:          #969696;      // Near official name: Spanish Gray
+$gray-storm:        #969696;      // Near official name: Spanish Gray
 $gray-battleship:   #828282;      // Near official name: Battleship Gray
 $gray-batman:       #6e6e6e;      // Official name: Dim Gray
 $gray-umbra:        #5a5a5a;      // Near official name: Davy's Gray Or Mortar
@@ -127,9 +127,9 @@ $red-dark6:         $red-daredevil;
 $gray1:             $gray-moon;
 $gray2:             $gray-platinum;
 $gray3:             $gray-mercury;
-$gray4:             $gray-storm;
+$gray4:             $gray-fog;
 $gray5:             $gray-stone;
-$gray6:             $gray-fog;
+$gray6:             $gray-storm;
 $gray7:             $gray-battleship;
 $gray8:             $gray-batman;
 $gray9:             $gray-umbra;
@@ -213,8 +213,9 @@ category: Global - Borders
 $border-width: 1px;
 $border-thin: $border-width; // Deprecate? Poorly named.
 
-$border-style: solid;
-$border-color: $gray-nimbus;
+$border-style:       solid;
+$border-color-light: $gray-platinum;
+$border-color:       $gray-silver;
 
 /*doc
 ---

@@ -5,3 +5,7 @@
   overflow: hidden;
   margin: 0;
 }
+
+:host([data-theme="striped"]) ::slotted(cp-accordion-heading:nth-of-type(even)) {
+  background-color: #fff;
+}

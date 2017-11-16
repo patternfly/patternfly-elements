@@ -1,11 +1,12 @@
-import '../cp-accordion-heading/cp-accordion-heading.js';
-import '../cp-accordion-panel/cp-accordion-panel.js';
+import "../cp-styles/cp-styles.js";
+import "../cp-accordion-heading/cp-accordion-heading.js";
+import "../cp-accordion-panel/cp-accordion-panel.js";
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
-  Object.defineProperty(Array.prototype, 'findIndex', {
+  Object.defineProperty(Array.prototype, "findIndex", {
     value: function(predicate) {
-     // 1. Let O be ? ToObject(this value).
+      // 1. Let O be ? ToObject(this value).
       if (this == null) {
         throw new TypeError('"this" is null or not defined');
       }
@@ -16,8 +17,8 @@ if (!Array.prototype.findIndex) {
       var len = o.length >>> 0;
 
       // 3. If IsCallable(predicate) is false, throw a TypeError exception.
-      if (typeof predicate !== 'function') {
-        throw new TypeError('predicate must be a function');
+      if (typeof predicate !== "function") {
+        throw new TypeError("predicate must be a function");
       }
 
       // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
@@ -46,25 +47,28 @@ if (!Array.prototype.findIndex) {
   });
 }
 
-const accordionTemplate = document.createElement('template');
+const accordionTemplate = document.createElement("template");
 accordionTemplate.innerHTML = `
   <style>:host {
   display: block;
   position: relative;
   overflow: hidden;
-  margin: 0; }</style>
+  margin: 0; }
+
+:host([data-theme="striped"]) ::slotted(cp-accordion-heading:nth-of-type(even)) {
+  background-color: #fff; }</style>
   <slot></slot>
 `;
 
 if (window.ShadyCSS) {
-  ShadyCSS.prepareTemplate(accordionTemplate, 'cp-accordion');
+  ShadyCSS.prepareTemplate(accordionTemplate, "cp-accordion");
 }
 
 class CpAccordion extends HTMLElement {
   constructor() {
     super();
 
-    this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: "open" });
     this.shadowRoot.appendChild(accordionTemplate.content.cloneNode(true));
   }
 
@@ -73,16 +77,16 @@ class CpAccordion extends HTMLElement {
       ShadyCSS.styleElement(this);
     }
 
-    this.setAttribute('role', 'tablist');
-    this.setAttribute('defined', '');
+    this.setAttribute("role", "tablist");
+    this.setAttribute("defined", "");
 
-    this.addEventListener('cp-accordion-change', this._changeHandler);
-    this.addEventListener('keydown', this._keydownHandler);
+    this.addEventListener("cp-accordion-change", this._changeHandler);
+    this.addEventListener("keydown", this._keydownHandler);
   }
 
   disconnectedCallback() {
-    this.removeEventListener('cp-accordion-change', this._changeHandler);
-    this.removeEventListener('keydown', this._keydownHandler);
+    this.removeEventListener("cp-accordion-change", this._changeHandler);
+    this.removeEventListener("keydown", this._keydownHandler);
   }
 
   toggle(index) {
@@ -149,7 +153,7 @@ class CpAccordion extends HTMLElement {
   }
 
   _changeHandler(evt) {
-    if (this.classList.contains('animating')) {
+    if (this.classList.contains("animating")) {
       return;
     }
 
@@ -165,9 +169,7 @@ class CpAccordion extends HTMLElement {
     }
   }
 
-  _toggle(heading, panel) {
-
-  }
+  _toggle(heading, panel) {}
 
   _expandHeading(heading) {
     heading.expanded = true;
@@ -200,14 +202,14 @@ class CpAccordion extends HTMLElement {
   }
 
   _animate(panel, start, end) {
-    panel.classList.add('animating');
+    panel.classList.add("animating");
     panel.style.height = `${start}px`;
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         panel.style.height = `${end}px`;
-        panel.classList.add('animating');
-        panel.addEventListener('transitionend', this._transitionEndHandler);
+        panel.classList.add("animating");
+        panel.addEventListener("transitionend", this._transitionEndHandler);
       });
     });
   }
@@ -222,54 +224,56 @@ class CpAccordion extends HTMLElement {
     let newHeading;
 
     switch (evt.key) {
-      case 'ArrowDown':
-      case 'Down':
-      case 'ArrowRight':
-      case 'Right':
+      case "ArrowDown":
+      case "Down":
+      case "ArrowRight":
+      case "Right":
         newHeading = this._nextHeading();
         break;
-      case 'ArrowUp':
-      case 'Up':
-      case 'ArrowLeft':
-      case 'Left':
+      case "ArrowUp":
+      case "Up":
+      case "ArrowLeft":
+      case "Left":
         newHeading = this._previousHeading();
         break;
-      case 'Home':
+      case "Home":
         newHeading = this._firstHeading();
         break;
-      case 'End':
+      case "End":
         newHeading = this._lastHeading();
         break;
       default:
         return;
     }
 
-    newHeading.shadowRoot.querySelector('button').focus();
+    newHeading.shadowRoot.querySelector("button").focus();
   }
 
   _transitionEndHandler(evt) {
-    evt.target.style.height = '';
-    evt.target.classList.remove('animating');
-    evt.target.removeEventListener('transitionend', this._transitionEndHandler);
+    evt.target.style.height = "";
+    evt.target.classList.remove("animating");
+    evt.target.removeEventListener("transitionend", this._transitionEndHandler);
   }
 
   _allHeadings() {
-    return [...this.querySelectorAll('cp-accordion-heading')];
+    return [...this.querySelectorAll("cp-accordion-heading")];
   }
 
   _allPanels() {
-    return [...this.querySelectorAll('cp-accordion-panel')];
+    return [...this.querySelectorAll("cp-accordion-panel")];
   }
 
   _previousHeading() {
     const headings = this._allHeadings();
-    let newIndex = headings.findIndex(heading => heading === document.activeElement) - 1;
+    let newIndex =
+      headings.findIndex(heading => heading === document.activeElement) - 1;
     return headings[(newIndex + headings.length) % headings.length];
   }
 
   _nextHeading() {
     const headings = this._allHeadings();
-    let newIndex = headings.findIndex(heading => heading === document.activeElement) + 1;
+    let newIndex =
+      headings.findIndex(heading => heading === document.activeElement) + 1;
     return headings[newIndex % headings.length];
   }
 
@@ -284,8 +288,8 @@ class CpAccordion extends HTMLElement {
   }
 
   _isHeading(element) {
-    return element.tagName.toLowerCase() === 'cp-accordion-heading';
+    return element.tagName.toLowerCase() === "cp-accordion-heading";
   }
 }
 
-window.customElements.define('cp-accordion', CpAccordion);
+window.customElements.define("cp-accordion", CpAccordion);

@@ -13,13 +13,13 @@ import './custom-style-interface.min.js';
   cpvarsTemplate.setAttribute('id', templateId);
 
   cpvarsTemplate.innerHTML = `
-    <style class="document-style">:root {
-  
+    <style id="${templateId}-style">:root {
+
   --gutter-size: 32px;
   --box-padding: 32px;
   --box-padding-sm: 16px;
   --box-padding-xs: 8px;
-  
+
   --breakpoint-xs-min: 480px;
   --breakpoint-sm-min: 768px;
   --breakpoint-md-min: 992px;
@@ -28,7 +28,7 @@ import './custom-style-interface.min.js';
   --breakpoint-xs-max: 767px;
   --breakpoint-sm-max: 991px;
   --breakpoint-md-max: 1199px;
-  
+
   --white: #fff;
   --black: #1a1a1a;
   --red: #c00;
@@ -76,7 +76,7 @@ import './custom-style-interface.min.js';
   --blue-dodger: #2b9af3;
   --purple-amethyst: #967abd;
   --purple-rain: #3b0083;
-  
+
   --product-default: #252527;
   --storage1: #ec7a08;
   --storage2: #f0ab00;
@@ -86,7 +86,7 @@ import './custom-style-interface.min.js';
   --app-dev2: #92d400;
   --support1: #37424a;
   --support2: #7a858b;
-  
+
   --red-dark1: #a30000;
   --red-dark2: #820000;
   --red-dark3: #6e0000;
@@ -105,7 +105,7 @@ import './custom-style-interface.min.js';
   --gray10: #464646;
   --gray11: #333;
   --gray12: #1e1e1e;
-  
+
   --text-color: #333;
   --link-color: #06c;
   --link-color-hover: #004080;
@@ -122,17 +122,17 @@ import './custom-style-interface.min.js';
   --bg-color4: #bebebe;
   --bg-color5: #aaa;
   --bg-color6: #969696;
-  
+
   --border-width: 1px;
   --border-style: solid;
   --border-color: #ededed;
-  
+
   --cubic-bezier: cubic-bezier(0.465, 0.183, 0.153, 0.946); }</style>
   `;
 
   document.head.appendChild(cpvarsTemplate);
 
   if (window.ShadyCSS) {
-    window.ShadyCSS.CustomStyleInterface.addCustomStyle(document.querySelector('style.document-style'));
+    window.ShadyCSS.CustomStyleInterface.addCustomStyle(document.querySelector(`#${templateId}-style`));
   }
 }());

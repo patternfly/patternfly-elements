@@ -1,3 +1,5 @@
+import './custom-style-interface.min.js';
+
 (function () {
   const templateId = 'cp-typography-head';
 
@@ -11,8 +13,8 @@
   cpstylesTemplate.setAttribute('id', templateId);
 
   cpstylesTemplate.innerHTML = `
-    <style class="document-style">:root {
-  
+    <style id="${templateId}-style">:root {
+
   --font-size: 16px;
   --line-height: 1.5em;
   --font-family: "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif;
@@ -77,4 +79,8 @@ h6 {
   `;
 
   document.head.appendChild(cpstylesTemplate);
+
+  if (window.ShadyCSS) {
+    window.ShadyCSS.CustomStyleInterface.addCustomStyle(document.querySelector(`#${templateId}-style`));
+  }
 }());

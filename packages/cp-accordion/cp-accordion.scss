@@ -6,6 +6,6 @@
   margin: 0;
 }
 
-:host([data-theme="striped"]) ::slotted(cp-accordion-heading:nth-of-type(even)) {
-  background-color: #fff;
+:host(cp-accordion[data-theme="striped"]) ::slotted(cp-accordion-heading.even) {
+  background-color: var(--white, white);
 }

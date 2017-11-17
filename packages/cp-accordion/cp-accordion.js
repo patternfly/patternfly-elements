@@ -55,8 +55,8 @@ accordionTemplate.innerHTML = `
   overflow: hidden;
   margin: 0; }
 
-:host([data-theme="striped"]) ::slotted(cp-accordion-heading:nth-of-type(even)) {
-  background-color: #fff; }</style>
+:host(cp-accordion[data-theme="striped"]) ::slotted(cp-accordion-heading.even) {
+  background-color: var(--white); }</style>
   <slot></slot>
 `;
 
@@ -65,6 +65,10 @@ if (window.ShadyCSS) {
 }
 
 class CpAccordion extends HTMLElement {
+  static get observedAttributes() {
+    return ["data-theme"];
+  }
+
   constructor() {
     super();
 
@@ -87,6 +91,23 @@ class CpAccordion extends HTMLElement {
   disconnectedCallback() {
     this.removeEventListener("cp-accordion-change", this._changeHandler);
     this.removeEventListener("keydown", this._keydownHandler);
+  }
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    if (attr === "data-theme") {
+      const headings = this.querySelectorAll("cp-accordion-heading");
+
+      if (newVal === "striped") {
+        [...headings].forEach((heading, index) => {
+          const headingClass = index % 2 ? "even" : "odd";
+          heading.classList.add(headingClass);
+        });
+      } else {
+        [...headings].forEach((heading, index) => {
+          heading.classList.remove("even", "odd");
+        });
+      }
+    }
   }
 
   toggle(index) {

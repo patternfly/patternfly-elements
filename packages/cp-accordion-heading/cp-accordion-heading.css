@@ -1,6 +1,6 @@
 :host {
   display: block;
-  background: var(--gray-nimbus); }
+  background: var(--gray-nimbus, #ededed); }
 
 :host(.animating) {
   transition: transform 0.3s ease-in-out; }

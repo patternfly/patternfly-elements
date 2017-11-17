@@ -1,7 +1,7 @@
 @import "node_modules/@rhelements/cp-sass/cp-sass";
 :host {
   display: block;
-  background: var(--gray-nimbus);
+  background: var(--gray-nimbus, #ededed);
 }
 
 :host(.animating) {

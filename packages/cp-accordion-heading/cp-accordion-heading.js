@@ -4,7 +4,7 @@ const accordionHeadingTemplate = document.createElement("template");
 accordionHeadingTemplate.innerHTML = `
   <style>:host {
   display: block;
-  background: var(--gray-nimbus); }
+  background: var(--gray-nimbus, #ededed); }
 
 :host(.animating) {
   transition: transform 0.3s ease-in-out; }
@@ -96,6 +96,10 @@ class CpAccordionHeading extends HTMLElement {
   connectedCallback() {
     if (window.ShadyCSS) {
       ShadyCSS.styleElement(this);
+    }
+
+    if (!this.classList.contains("cp-accordion-heading")) {
+      this.classList.add("cp-accordion-heading");
     }
 
     this.button = this.shadowRoot.querySelector("button");

@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-styles",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "cp-styles for RHElements",
   "repository": {
     "type": "git",
@@ -13,8 +13,10 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,json}": ["prettier --write", "git add"]
-
+    "*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "author": {
     "name": "Kyle Buchanan",

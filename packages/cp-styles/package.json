@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-styles",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "cp-styles for RHElements",
   "repository": {
     "type": "git",
@@ -18,11 +18,18 @@
       "git add"
     ]
   },
-  "author": {
-    "name": "Kyle Buchanan",
-    "email": "kylebuch8@gmail.com",
-    "url": "https://github.com/kylebuch8"
-  },
+  "contributors": [
+    {
+      "name": "Kyle Buchanan",
+      "email": "kylebuch8@gmail.com",
+      "url": "https://github.com/kylebuch8"
+    },
+    {
+      "name": "Mark Caron",
+      "email": "mark@redhat.com",
+      "url": "https://github.com/markcaron"
+    }
+  ],
   "license": "ISC",
   "dependencies": {
     "@rhelements/cp-sass": "*",

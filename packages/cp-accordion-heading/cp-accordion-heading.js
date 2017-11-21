@@ -98,10 +98,6 @@ class CpAccordionHeading extends HTMLElement {
       ShadyCSS.styleElement(this);
     }
 
-    if (!this.classList.contains("cp-accordion-heading")) {
-      this.classList.add("cp-accordion-heading");
-    }
-
     this.button = this.shadowRoot.querySelector("button");
     this.addEventListener("click", this._clickHandler);
   }

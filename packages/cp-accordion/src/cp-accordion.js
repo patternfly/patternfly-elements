@@ -54,17 +54,7 @@ if (!Array.prototype.findIndex) {
  * rhcc-freshnessgrade.css
  */
 const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
-  display: block;
-  position: relative;
-  overflow: hidden;
-  margin: 0; }
-
-:host(cp-accordion[data-theme="striped"]) ::slotted(cp-accordion-heading.even) {
-  background-color: var(--white, white); }</style>
-<slot></slot>
-`;
+template.innerHTML = ``;
 /* end DO NOT EDIT */
 
 class CpAccordion extends Rhelement {

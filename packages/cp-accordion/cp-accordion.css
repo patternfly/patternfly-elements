@@ -1,8 +1,0 @@
-:host {
-  display: block;
-  position: relative;
-  overflow: hidden;
-  margin: 0; }
-
-:host(cp-accordion[data-theme="striped"]) ::slotted(cp-accordion-heading.even) {
-  background-color: var(--white); }

@@ -6,31 +6,7 @@ import Rhelement from "../rhelement/rhelement.js";
  * rhcc-freshnessgrade.css
  */
 const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
-  display: none;
-  overflow: hidden;
-  background: white;
-  will-change: height; }
-
-:host([expanded]) {
-  display: block; }
-
-:host(.animating) {
-  display: block;
-  transition: height 0.3s ease-in-out; }
-
-.container {
-  border: 2px solid #f7f7f7;
-  border-top: none;
-  padding: 20px;
-  padding-top: 5px; }</style>
-<div tabindex="-1" role="tabpanel">
-  <div class="container">
-    <slot></slot>
-  </div>
-</div>
-`;
+template.innerHTML = ``;
 /* end DO NOT EDIT */
 
 class CpAccordionPanel extends Rhelement {

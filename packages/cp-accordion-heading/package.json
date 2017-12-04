@@ -49,5 +49,10 @@
     "trim": "0.0.1",
     "wct-browser-legacy": "0.0.1-pre.10"
   },
+  "greenkeeper": {
+    "ignore": [
+      "lodash"
+    ]
+  },
   "generator-rhelement-version": "0.4.0"
 }

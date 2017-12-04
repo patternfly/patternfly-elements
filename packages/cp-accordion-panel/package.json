@@ -25,8 +25,8 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@rhelements/cp-sass": "*",
-    "@rhelements/rhelement": "*"
+    "@rhelements/cp-sass": "^0.0.9",
+    "@rhelements/rhelement": "^0.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -47,6 +47,11 @@
     "lodash.clonedeep": "^4.5.0",
     "trim": "0.0.1",
     "wct-browser-legacy": "0.0.1-pre.10"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "lodash"
+    ]
   },
   "generator-rhelement-version": "0.4.0"
 }

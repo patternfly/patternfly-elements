@@ -1,5 +1,7 @@
 # RHElements Accordion Element
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/RHElements/cp-accordion.svg)](https://greenkeeper.io/)
+
 ## Dev
 ```
 npm run dev

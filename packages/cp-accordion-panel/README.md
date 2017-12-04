@@ -1,5 +1,7 @@
 # RHElements Accordion Panel Element
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/RHElements/cp-accordion-panel.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/RHElements/cp-accordion-panel.svg?branch=master)](https://travis-ci.org/RHElements/cp-accordion-panel)
 
 ## Dependencies

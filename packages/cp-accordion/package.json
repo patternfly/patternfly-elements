@@ -28,11 +28,11 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@rhelements/cp-accordion-heading": "0.0.8",
-    "@rhelements/cp-accordion-panel": "*",
-    "@rhelements/cp-sass": "*",
-    "@rhelements/cp-styles": "0.0.10",
-    "@rhelements/rhelement": "*"
+    "@rhelements/cp-accordion-heading": "^0.0.11",
+    "@rhelements/cp-accordion-panel": "^0.0.5",
+    "@rhelements/cp-sass": "^0.0.9",
+    "@rhelements/cp-styles": "^0.0.10",
+    "@rhelements/rhelement": "^0.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

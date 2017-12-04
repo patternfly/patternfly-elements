@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-accordion-panel",
-  "version": "0.0.7",
+  "version": "0.0.6",
   "description": "Accordion panel element for RHElements",
   "repository": {
     "type": "git",
@@ -25,8 +25,8 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@rhelements/cp-sass": "^0.0.9",
-    "@rhelements/rhelement": "~0.0.3"
+    "@rhelements/cp-sass": "0.0.x",
+    "@rhelements/rhelement": "0.0.x"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-accordion",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Accordion element for RHElements",
   "main": "cp-accordion.js",
   "repository": {
@@ -49,10 +49,15 @@
     "prettier": "1.7.4",
     "lint-staged": "^4.3.0",
     "husky": "^0.14.3",
-    "lodash": "^3.10.1",
+    "lodash": "3.10.1",
     "lodash.clonedeep": "^4.5.0",
     "trim": "0.0.1",
     "wct-browser-legacy": "0.0.1-pre.10"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "lodash"
+    ]
   },
   "generator-rhelement-version": "0.4.0"
 }

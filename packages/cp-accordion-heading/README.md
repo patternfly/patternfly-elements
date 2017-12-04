@@ -1,5 +1,7 @@
 # RHElements Accordion Heading Element
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/RHElements/cp-accordion-heading.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/RHElements/cp-accordion-heading.svg?branch=master)](https://travis-ci.org/RHElements/cp-accordion-heading)
 
 ## Dependencies

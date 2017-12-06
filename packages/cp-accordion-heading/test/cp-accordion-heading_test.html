@@ -9,10 +9,21 @@
   </head>
   <body>
 
-    <cp-accordion-heading>Heading</cp-accordion-heading>
+    <cp-accordion-heading>
+      <h1>Heading</h1>
+    </cp-accordion-heading>
+
+    <cp-accordion-heading id="badHeading">
+      <p>Paragraph</p>
+      <h1>Bad Heading</h1>
+    </cp-accordion-heading>
+
+    <cp-accordion-heading id="noHeading">fdskjla</cp-accordion-heading>
 
     <script>
       const cpAccordionHeading = document.querySelector('cp-accordion-heading');
+      const badCpAccordionHeading = document.querySelector('#badHeading');
+      const noHeadingCpAccordionHeading = document.querySelector('#noHeading');
 
       suite('<cp-accordion-heading>', () => {
         suiteSetup(() => {
@@ -20,8 +31,69 @@
         });
 
         test('it should display the content of the heading', () => {
-          const textContent = cpAccordionHeading.innerText;
+          const textContent = cpAccordionHeading.textContent.trim();
           assert.equal(textContent, 'Heading', 'cp-accordion-heading should do something');
+        });
+
+        test('it should add a button to the shadow DOM', () => {
+          const shadowRoot = cpAccordionHeading.shadowRoot;
+          const button = shadowRoot.querySelector('button');
+          assert.isNotNull(button);
+        });
+
+        test('the text of the button should equal the text from the light DOM', () => {
+          const lightDomText = cpAccordionHeading.textContent.trim();
+          const shadowRoot = cpAccordionHeading.shadowRoot;
+          const button = shadowRoot.querySelector('button');
+
+          assert.equal(button.textContent, lightDomText);
+        });
+
+        test('the text of the button should only use the text from the first child in the cp-accordion-heading', () => {
+          const shadowRoot = badCpAccordionHeading.shadowRoot;
+          const button = shadowRoot.querySelector('button');
+
+          assert.equal(button.textContent, 'Paragraph');
+        });
+
+        test('the shadow root button should be wrapped by the type of element that is the first child in cp-accordion-heading', () => {
+          // if there is a true shadow root, the first child should be a style tag
+          let index = 1;
+
+          // check to see if we're using shady css. if we are, there will NOT
+          // be a style tag as the first child
+          if (cpAccordionHeading.shadowRoot.__shady) {
+            index = 0;
+          }
+
+          const shadowRootFirstChild = cpAccordionHeading.shadowRoot.children[index];
+          const badShadowRootFirstChild = badCpAccordionHeading.shadowRoot.children[index];
+
+          assert.equal(shadowRootFirstChild.tagName, 'H1');
+          assert.equal(badShadowRootFirstChild.tagName, 'P');
+        });
+
+        test('if there is no light DOM children, the text of the button should equal the light DOM text', () => {
+          const noHeadingCpAccordionHeading = document.querySelector('#noHeading');
+          const shadowRoot = noHeadingCpAccordionHeading.shadowRoot;
+          const button = shadowRoot.querySelector('button');
+
+          assert.equal(noHeadingCpAccordionHeading.textContent, button.textContent);
+        });
+
+        test('if there is no light DOM children, the first child of the shadow root should be a button', () => {
+          // if there is a true shadow root, the first child should be a style tag
+          let index = 1;
+
+          // check to see if we're using shady css. if we are, there will NOT
+          // be a style tag as the first child
+          if (noHeadingCpAccordionHeading.shadowRoot.__shady) {
+            index = 0;
+          }
+
+          const shadowRootFirstChild = noHeadingCpAccordionHeading.shadowRoot.children[index];
+
+          assert.equal(shadowRootFirstChild.tagName, 'BUTTON');
         });
 
         test('it should "expand" when the expanded property is set', () => {

@@ -36,7 +36,7 @@
     "gulp-babel": "^7.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.6.1",
-    "gulp-sequence": "^0.4.6",
+    "gulp-sequence": "^1.0.0",
     "gulp-uglify": "^3.0.0",
     "node-sass": "^4.6.1",
     "strip-css-comments": "^3.0.0",

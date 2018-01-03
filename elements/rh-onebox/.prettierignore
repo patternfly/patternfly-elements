@@ -1,0 +1,3 @@
+test
+*.compiled.js
+package.json

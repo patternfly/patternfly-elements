@@ -27,7 +27,7 @@
   "dependencies": {
     "@rhelements/cp-sass": "^0.0.9",
     "@rhelements/cp-styles": "^0.0.10",
-    "@rhelements/rhelement": "^0.0.3"
+    "@rhelements/rhelement": "^0.0.4"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

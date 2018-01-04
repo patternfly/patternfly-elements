@@ -11,12 +11,6 @@
     "dev": "./node_modules/.bin/gulp dev",
     "test": "echo \"cp-styles NEEDS TESTS, WRITE SOME!\" && exit 1"
   },
-  "lint-staged": {
-    "*.{js,json}": [
-      "prettier --write",
-      "git add"
-    ]
-  },
   "contributors": [
     {
       "name": "Kyle Buchanan",
@@ -35,9 +29,6 @@
     "@rhelements/rh-overpass": "*"
   },
   "devDependencies": {
-    "prettier": "1.7.4",
-    "lint-staged": "^4.3.0",
-    "husky": "^0.14.3",
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "del": "^3.0.0",
@@ -49,6 +40,7 @@
     "gulp-sequence": "^0.4.6",
     "gulp-strip-css-comments": "^1.2.0",
     "gulp-trim": "^1.0.2",
-    "gulp-uglify": "^3.0.0"
+    "gulp-uglify": "^3.0.0",
+    "prettier": "1.7.4"
   }
 }

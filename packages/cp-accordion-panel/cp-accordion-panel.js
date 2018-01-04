@@ -7,7 +7,10 @@ import Rhelement from "../rhelement/rhelement.js";
  */
 const template = document.createElement("template");
 template.innerHTML = `
-<style>:host {
+<style>*, *::before, *:after {
+  box-sizing: var(--box-sizing, border-box); }
+
+:host {
   display: none;
   overflow: hidden;
   background: white;

@@ -12,9 +12,6 @@
     "dev": "./node_modules/.bin/gulp dev",
     "test": "wct --npm"
   },
-  "lint-staged": {
-    "*.{js,json}": ["prettier --write", "git add"]
-  },
   "author": {
     "name": "Michael Clayton"
   },
@@ -33,8 +30,6 @@
     "gulp-sequence": "^0.4.6",
     "gulp-trim": "^1.0.2",
     "gulp-uglify": "^3.0.0",
-    "husky": "^0.14.3",
-    "lint-staged": "^4.3.0",
     "lodash": "^3.10.1",
     "lodash.clonedeep": "^4.5.0",
     "prettier": "1.7.4",

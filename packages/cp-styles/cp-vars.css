@@ -1,3 +1,6 @@
+*, *::before, *:after {
+  box-sizing: var(--box-sizing, border-box); }
+
 html {
   
   --gutter-size: 32px;
@@ -42,9 +45,9 @@ html {
   --gray-moon: #f0f0f0;
   --gray-platinum: #e7e7e7;
   --gray-mercury: #d2d2d2;
-  --gray-storm: #bebebe;
+  --gray-storm: #969696;
   --gray-stone: #aaa;
-  --gray-fog: #969696;
+  --gray-fog: #bebebe;
   --gray-battleship: #828282;
   --gray-batman: #6e6e6e;
   --gray-umbra: #5a5a5a;
@@ -110,6 +113,6 @@ html {
   
   --border-width: 1px;
   --border-style: solid;
-  --border-color: #ededed;
+  --border-color: #ccc;
   
   --cubic-bezier: cubic-bezier(0.465, 0.183, 0.153, 0.946); }

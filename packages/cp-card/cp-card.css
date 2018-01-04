@@ -1,3 +1,6 @@
+*, *::before, *:after {
+  box-sizing: var(--box-sizing, border-box); }
+
 :host {
   display: block;
   padding: 31px;
@@ -45,7 +48,7 @@
   border-color: var(--black, #1a1a1a); }
 
 :host([data-border="gray"]) {
-  border-color: var(--border-color, #ededed); }
+  border-color: var(--border-color, #ccc); }
 
 :host([data-border="dark"]) {
   border-color: var(--gray-space, #4c4c4c); }

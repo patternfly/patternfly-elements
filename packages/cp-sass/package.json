@@ -24,5 +24,6 @@
   "license": "ISC",
   "dependencies": {
     "breakpoint-sass": "^2.7.1"
-  }
+  },
+  "devDependencies": {}
 }

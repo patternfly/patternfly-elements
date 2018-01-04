@@ -11,14 +11,7 @@
     "build": "./node_modules/.bin/gulp",
     "start": "./node_modules/.bin/gulp dev & npm run serve",
     "serve": "polyserve --npm -o --open-path=\"components/@rhelements/rhelement/demo\"",
-    "test": "wct --npm",
-    "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,json}": [
-      "prettier --write",
-      "git add"
-    ]
+    "test": "wct --npm"
   },
   "author": {
     "name": "Kyle Buchanan",
@@ -38,11 +31,9 @@
     "gulp-sequence": "^0.4.6",
     "gulp-trim": "^1.0.2",
     "gulp-uglify": "^3.0.0",
-    "prettier": "1.7.4",
-    "lint-staged": "^4.3.0",
-    "husky": "^0.14.3",
     "lodash": "^3.10.1",
     "lodash.clonedeep": "^4.5.0",
+    "prettier": "1.7.4",
     "wct-browser-legacy": "0.0.1-pre.10"
   },
   "generator-rhelement-version": "0.3.4"

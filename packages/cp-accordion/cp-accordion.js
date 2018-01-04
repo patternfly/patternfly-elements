@@ -1,5 +1,5 @@
 import Rhelement from "../rhelement/rhelement.js";
-import "cp-styles";
+import "../cp-styles/cp-styles.js";
 import "../cp-accordion-heading/cp-accordion-heading.js";
 import "../cp-accordion-panel/cp-accordion-panel.js";
 
@@ -55,7 +55,10 @@ if (!Array.prototype.findIndex) {
  */
 const template = document.createElement("template");
 template.innerHTML = `
-<style>:host {
+<style>*, *::before, *:after {
+  box-sizing: var(--box-sizing, border-box); }
+
+:host {
   display: block;
   position: relative;
   overflow: hidden;

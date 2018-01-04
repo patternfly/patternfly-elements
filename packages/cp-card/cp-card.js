@@ -51,7 +51,10 @@ window.customElements.define("cp-card-heading", CpCardHeading);
 
 const cardTemplate = document.createElement("template");
 cardTemplate.innerHTML = `
-  <style>:host {
+  <style>*, *::before, *:after {
+  box-sizing: var(--box-sizing, border-box); }
+
+:host {
   display: block;
   padding: 31px;
   border: 1px solid transparent;
@@ -98,7 +101,7 @@ cardTemplate.innerHTML = `
   border-color: var(--black, #1a1a1a); }
 
 :host([data-border="gray"]) {
-  border-color: var(--border-color, #ededed); }
+  border-color: var(--border-color, #ccc); }
 
 :host([data-border="dark"]) {
   border-color: var(--gray-space, #4c4c4c); }

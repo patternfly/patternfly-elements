@@ -8,7 +8,10 @@ import "../cp-styles/cp-styles.js";
  */
 const template = document.createElement("template");
 template.innerHTML = `
-<style>:host {
+<style>*, *::before, *:after {
+  box-sizing: var(--box-sizing, border-box); }
+
+:host {
   display: block;
   background: var(--gray-nimbus, #ededed); }
 

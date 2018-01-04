@@ -5,17 +5,17 @@
     <title>RHElements: rh-onebox Demo</title>
 
     <!-- uncomment the es5-adapter if you're using the compiled version -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.10/custom-elements-es5-adapter.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.10/webcomponents-lite.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script> -->
-    <!-- <script>require(['../rh-onebox.compiled.js'])</script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.10/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.10/webcomponents-lite.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../rh-onebox.compiled.js'])</script>
     <!-- <script type="module" src="../rh-onebox.js"></script> -->
-    <script type="module" src="cp-onebox.js"></script>
+    <!-- <script type="module" src="cp-onebox.js"></script> -->
   </head>
   <body>
-    <cp-onebox
+    <rh-onebox
       term="rhel"
       source="https://cors-anywhere.herokuapp.com/https://access.redhat.com/webassets/avalon/j/search/one-box.json">
-    </cp-onebox>
+    </rh-onebox>
   </body>
 </html>

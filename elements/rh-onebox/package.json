@@ -26,7 +26,7 @@
   "license": "ISC",
   "dependencies": {
     "@rhelements/rhelement": "0.0.4",
-    "lit-html": "^0.7.1",
+    "hyperhtml": "^2.4.3",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {

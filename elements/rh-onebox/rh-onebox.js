@@ -1,6 +1,6 @@
 import Rhelement from '../rhelement/rhelement.js';
 import '../../whatwg-fetch/fetch.js';
-import { render } from '../../lit-html/lit-html.js';
+import '../../hyperhtml/min.js';
 
 class RhOnebox extends Rhelement {
   static get observedAttributes() {
@@ -11,7 +11,7 @@ class RhOnebox extends Rhelement {
     super(elementName);
 
     if (!config.template) {
-      console.warn('A lit-html template needs to be provided in the constructor');
+      console.warn('A hyperHTML template needs to be provided in the constructor');
     }
 
     this.config = config;
@@ -73,8 +73,8 @@ class RhOnebox extends Rhelement {
   }
 
   render(data) {
-    const dataObj = this.findMatch()
-    render(this.htmlTemplate(dataObj), this.shadowRoot);
+    const dataObj = this.findMatch();
+    hyperHTML.bind(this.shadowRoot)`${this.htmlTemplate(dataObj)}`;
   }
 }
 

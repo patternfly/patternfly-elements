@@ -9,8 +9,7 @@
   "scripts": {
     "build": "./node_modules/.bin/gulp",
     "dev": "./node_modules/.bin/gulp dev",
-    "test": "echo \"cp-styles NEEDS TESTS, WRITE SOME!\" && exit 1",
-    "precommit": "lint-staged"
+    "test": "echo \"cp-styles NEEDS TESTS, WRITE SOME!\" && exit 1"
   },
   "lint-staged": {
     "*.{js,json}": [

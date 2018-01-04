@@ -10,8 +10,7 @@
   "scripts": {
     "build": "./node_modules/.bin/gulp",
     "dev": "./node_modules/.bin/gulp dev",
-    "test": "wct --npm",
-    "precommit": "lint-staged"
+    "test": "wct --npm"
   },
   "lint-staged": {
     "*.{js,json}": ["prettier --write", "git add"]

@@ -10,8 +10,7 @@
   "scripts": {
     "build": "./node_modules/.bin/gulp",
     "dev": "./node_modules/.bin/gulp dev",
-    "test": "echo \"rh-overpass has no tests; components using it will be tested\" && exit 0",
-    "precommit": "lint-staged"
+    "test": "echo \"rh-overpass has no tests; components using it will be tested\" && exit 0"
   },
   "lint-staged": {
     "*.{js,json}": [

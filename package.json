@@ -5,7 +5,7 @@
     },
     "dependencies": {},
     "scripts": {
-        "start": "browser-sync start --server --serveStatic ./packages/ --files ./packages/**/* --directory",
+        "start": "browser-sync start --startPath packages --server packages --files 'packages/**/*' --serveStatic .",
         "lerna": "lerna",
         "test": "lerna run test",
         "build": "lerna run build",

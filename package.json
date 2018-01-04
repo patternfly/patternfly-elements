@@ -1,6 +1,15 @@
 {
-	"devDependencies": {
-		"lerna": "^2.5.1"
-	},
-	"dependencies": {}
+    "devDependencies": {
+        "browser-sync": "^2.23.2",
+        "lerna": "^2.5.1"
+    },
+    "dependencies": {},
+    "scripts": {
+        "start": "browser-sync start --server --serveStatic ./packages/ --files ./packages/**/* --directory",
+        "lerna": "lerna",
+        "test": "lerna run test",
+        "build": "lerna run build",
+        "bootstrap": "lerna bootstrap",
+        "postinstall": "npm run bootstrap"
+    }
 }

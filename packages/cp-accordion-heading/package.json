@@ -10,7 +10,8 @@
   "scripts": {
     "build": "./node_modules/.bin/gulp",
     "start": "./node_modules/.bin/gulp dev & npm run serve",
-    "serve": "polyserve --npm -o --open-path=\"components/@rhelements/cp-accordion-heading/demo\"",
+    "serve":
+      "polyserve --npm -o --open-path=\"components/@rhelements/cp-accordion-heading/demo\"",
     "test": "wct --npm"
   },
   "author": {
@@ -35,15 +36,12 @@
     "lodash": "^3.10.1",
     "lodash.clonedeep": "^4.5.0",
     "node-sass": "^4.6.1",
-    "prettier": "1.9.2",
     "strip-css-comments": "^3.0.0",
     "trim": "0.0.1",
     "wct-browser-legacy": "0.0.1-pre.10"
   },
   "greenkeeper": {
-    "ignore": [
-      "lodash"
-    ]
+    "ignore": ["lodash"]
   },
   "generator-rhelement-version": "0.4.0"
 }

@@ -10,7 +10,8 @@
   "scripts": {
     "build": "./node_modules/.bin/gulp",
     "start": "./node_modules/.bin/gulp dev & npm run serve",
-    "serve": "polyserve --npm -o --open-path=\"components/@rhelements/rhelement/demo\"",
+    "serve":
+      "polyserve --npm -o --open-path=\"components/@rhelements/rhelement/demo\"",
     "test": "wct --npm"
   },
   "author": {
@@ -33,7 +34,6 @@
     "gulp-uglify": "^3.0.0",
     "lodash": "^3.10.1",
     "lodash.clonedeep": "^4.5.0",
-    "prettier": "1.9.2",
     "wct-browser-legacy": "0.0.1-pre.10"
   },
   "generator-rhelement-version": "0.3.4"

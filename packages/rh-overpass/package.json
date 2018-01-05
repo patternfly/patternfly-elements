@@ -10,7 +10,8 @@
   "scripts": {
     "build": "./node_modules/.bin/gulp",
     "dev": "./node_modules/.bin/gulp dev",
-    "test": "echo \"rh-overpass has no tests; components using it will be tested\" && exit 0"
+    "test":
+      "echo \"rh-overpass has no tests; components using it will be tested\" && exit 0"
   },
   "author": "CPFED",
   "license": "ISC",
@@ -27,7 +28,6 @@
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.6.1",
     "gulp-sass": "^3.1.0",
-    "gulp-uglify": "^3.0.0",
-    "prettier": "1.9.2"
+    "gulp-uglify": "^3.0.0"
   }
 }

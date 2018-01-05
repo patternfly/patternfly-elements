@@ -1,15 +1,23 @@
 {
-    "devDependencies": {
-        "browser-sync": "^2.23.2",
-        "lerna": "^2.5.1"
-    },
-    "dependencies": {},
-    "scripts": {
-        "start": "browser-sync start --startPath packages --server packages --files 'packages/**/*' --serveStatic .",
-        "lerna": "lerna",
-        "test": "lerna run test",
-        "build": "lerna run build",
-        "bootstrap": "lerna bootstrap",
-        "postinstall": "npm run bootstrap"
-    }
+  "devDependencies": {
+    "browser-sync": "^2.23.2",
+    "husky": "^0.14.3",
+    "lerna": "^2.5.1",
+    "lint-staged": "^6.0.0",
+    "prettier": "^1.9.2"
+  },
+  "dependencies": {},
+  "scripts": {
+    "start":
+      "browser-sync start --startPath packages --server packages --files 'packages/**/*' --serveStatic .",
+    "lerna": "lerna",
+    "test": "lerna run test",
+    "build": "lerna run build",
+    "bootstrap": "lerna bootstrap",
+    "postinstall": "npm run bootstrap",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json}": ["prettier --write", "git add"]
+  }
 }

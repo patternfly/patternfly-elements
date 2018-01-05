@@ -32,7 +32,7 @@
     "gulp-uglify": "^3.0.0",
     "lodash": "^3.10.1",
     "lodash.clonedeep": "^4.5.0",
-    "prettier": "1.7.4",
+    "prettier": "1.9.2",
     "requirejs": "^2.3.5",
     "wct-browser-legacy": "0.0.1-pre.10"
   },

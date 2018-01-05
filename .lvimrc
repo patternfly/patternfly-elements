@@ -1,8 +1,10 @@
 let g:ale_linters = {
             \ 'javascript': ['prettier'],
+            \ 'json': ['prettier'],
             \}
 
 let g:ale_fixers = {}
 let g:ale_fixers['javascript'] = ['prettier']
+let g:ale_fixers['json'] = ['prettier']
 
 let g:ale_fix_on_save = 1

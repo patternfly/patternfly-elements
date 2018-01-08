@@ -1,3 +1,4 @@
 test
 *.compiled.js
 package.json
+package-lock.json

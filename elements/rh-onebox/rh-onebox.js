@@ -13,6 +13,7 @@ class RhOnebox extends Rhelement {
       console.warn('A template needs to be provided in the constructor');
     }
 
+    this.elementName = elementName;
     this.config = config;
     this.htmlTemplate = config.template;
     this.loading = false;
@@ -74,7 +75,7 @@ class RhOnebox extends Rhelement {
     const template = this.htmlTemplate(dataObj);
 
     if (window.ShadyCSS) {
-      ShadyCSS.prepareTemplate(template, 'rh-onebox');
+      ShadyCSS.prepareTemplate(template, this.elementName);
     }
 
     this.shadowRoot.appendChild(template.content.cloneNode(true));

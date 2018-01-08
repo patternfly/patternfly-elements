@@ -9,7 +9,7 @@
   "dependencies": {},
   "scripts": {
     "start":
-      "browser-sync start --startPath packages --server packages --files 'packages/**/*' --serveStatic .",
+      "browser-sync start --startPath elements --server elements --files 'elements/**/*' --serveStatic .",
     "lerna": "lerna",
     "test": "lerna run test",
     "build": "lerna run build",

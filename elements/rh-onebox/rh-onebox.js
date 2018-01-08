@@ -1,6 +1,5 @@
 import Rhelement from '../rhelement/rhelement.js';
 import '../../whatwg-fetch/fetch.js';
-import '../../hyperhtml/min.js';
 
 class RhOnebox extends Rhelement {
   static get observedAttributes() {
@@ -11,13 +10,12 @@ class RhOnebox extends Rhelement {
     super(elementName);
 
     if (!config.template) {
-      console.warn('A hyperHTML template needs to be provided in the constructor');
+      console.warn('A template needs to be provided in the constructor');
     }
 
     this.config = config;
     this.htmlTemplate = config.template;
     this.loading = false;
-
     this.successHandler = this.successHandler.bind(this);
     this.errorHandler = this.errorHandler.bind(this);
   }
@@ -43,10 +41,9 @@ class RhOnebox extends Rhelement {
     this.loading = true;
 
     return fetch(source)
-      .then(res => res.json())
-      .then(this.loading = false)
+      .then(res => res.json(), error => this.errorHandler)
       .then(this.successHandler)
-      .catch(this.errorHandler);
+      .then(() => this.loading = false);
   }
 
   successHandler(data) {
@@ -74,7 +71,17 @@ class RhOnebox extends Rhelement {
 
   render(data) {
     const dataObj = this.findMatch();
-    hyperHTML.bind(this.shadowRoot)`${this.htmlTemplate(dataObj)}`;
+    const template = this.htmlTemplate(dataObj);
+
+    if (window.ShadyCSS) {
+      ShadyCSS.prepareTemplate(template, 'rh-onebox');
+    }
+
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+    if (window.ShadyCSS) {
+      ShadyCSS.styleElement(this);
+    }
   }
 }
 

@@ -1,5 +1,7 @@
 # RHElements Onebox Element
 
+[![Build Status](https://travis-ci.org/RHElements/rh-onebox.svg?branch=master)](https://travis-ci.org/RHElements/rh-onebox)
+
 ## Dependencies
 
 Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.

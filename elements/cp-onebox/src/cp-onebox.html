@@ -1,0 +1,34 @@
+<h2 class="content">${data.product}</h2>
+<p class="description content">${data.description}</p>
+${data.links.info && `
+  <div class="content">
+    <ul class="info_links">
+      ${data.links.info.map(link => `
+        <li>
+          <a href="${link.link}">
+            <div>
+              <div class="icon"></div>
+              ${link.text}
+            </div>
+          </a>
+        </li>
+      `).join('\n')}
+    </ul>
+  </div>
+`}
+<div class="expander content">
+  <button id="expandButton">
+    <span class="caret"></span>
+  </button>
+  About ${data.product}
+</div>
+${data.links.knowledgebase && `
+  <div class="product_links content">
+    <h4>Browse Product Knowledge</h4>
+    <ul>
+    ${data.links.knowledgebase.map(link => `
+      <li><a href="${link.link}">${link.text}</a></li>
+    `).join('\n')}
+    </ul>
+  </div>
+`}

@@ -1,148 +1,131 @@
 import RhOnebox from '../rh-onebox/rh-onebox.js';
+
+/*
+ * DO NOT EDIT. This will be autopopulated with the
+ * html from cp-onebox.html and css from
+ * cp-onebox.scss
+ */
 const template = document.createElement('template');
 const bindTemplate = data => {
   template.innerHTML = `
-    <style>
-      :host {
-        display: flex;
-        flex-direction: column;
-        border: 1px solid #ececec;
-        background-color: #f7f7f7;
-      }
+<style>:host {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ececec;
+  background-color: #f7f7f7; }
 
-      :host([expanded]) .description,
-      :host([expanded]) .product_links {
-        display: block;
-      }
+:host([expanded]) .description,
+:host([expanded]) .product_links {
+  display: block; }
 
-      .content {
-        padding: 0 16px;
-      }
+.content {
+  padding: 0 16px; }
 
-      .info_links {
-        display: flex;
-        flex-wrap: wrap;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
+.info_links {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
 
-      .info_links li {
-        width: 50%;
-      }
+.info_links li {
+  width: 50%; }
 
-      .info_links li a {
-        padding: 16px;
-      }
+.info_links li a {
+  padding: 16px; }
 
-      .description {
-        display: none;
-        order: 1;
-      }
+.description {
+  display: none;
+  order: 1; }
 
-      .product_links {
-        display: none;
-        order: 2;
-      }
+.product_links {
+  display: none;
+  order: 2; }
 
-      .expander {
-        position: relative;
-        text-align: center;
-        border-top: 1px solid #ececec;
-        padding-top: 16px;
-        padding-bottom: 16px;
-      }
+.expander {
+  position: relative;
+  text-align: center;
+  border-top: 1px solid #ececec;
+  padding-top: 16px;
+  padding-bottom: 16px; }
 
-      :host([expanded]) .expander {
-        border-bottom: 1px solid #ececec;
-      }
+:host([expanded]) .expander {
+  border-bottom: 1px solid #ececec; }
 
-      #expandButton {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        width: 30px;
-        height: 30px;
-        top: -15px;
-        left: calc(50% - 15px);
-        background: white;
-        border: 1px solid #ececec;
-        border-radius: 50%;
-      }
+#expandButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: -15px;
+  left: calc(50% - 15px);
+  background: white;
+  border: 1px solid #ececec;
+  border-radius: 50%; }
 
-      .caret {
-        width: 0;
-        height: 0;
-        margin-bottom: -2px;
-        border-top: 5px solid #333;
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-      }
+.caret {
+  width: 0;
+  height: 0;
+  margin-bottom: -2px;
+  border-top: 5px solid #333;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent; }
 
-      :host([expanded]) .caret {
-        margin-bottom: 0;
-        border-top: none;
-        border-bottom: 5px solid #333;
-      }
+:host([expanded]) .caret {
+  margin-bottom: 0;
+  border-top: none;
+  border-bottom: 5px solid #333; }
 
-      @media (min-width: 768px) {
-        :host {
-          background-color: transparent;
-        }
-
-        .expander {
-          display: none;
-        }
-
-        .description,
-        .product_links {
-          display: block;
-        }
-
-        .description {
-          order: 0;
-        }
-      }
-    </style>
-    <h2 class="content">${data.product}</h2>
-    <p class="description content">${data.description}</p>
-    ${data.links.info && `
-      <div class="content">
-        <ul class="info_links">
-          ${data.links.info.map(link => `
-            <li>
-              <a href="${link.link}">
-                <div>
-                  <div class="icon"></div>
-                  ${link.text}
-                </div>
-              </a>
-            </li>
-          `).join('\n')}
-        </ul>
-      </div>
-    `}
-    <div class="expander content">
-      <button id="expandButton">
-        <span class="caret"></span>
-      </button>
-      About ${data.product}
-    </div>
-    ${data.links.knowledgebase && `
-      <div class="product_links content">
-        <h4>Browse Product Knowledge</h4>
-        <ul>
-        ${data.links.knowledgebase.map(link => `
-          <li><a href="${link.link}">${link.text}</a></li>
-        `).join('\n')}
-        </ul>
-      </div>
-    `}
-  `;
-
+@media (min-width: 768px) {
+  :host {
+    background-color: transparent; }
+  .expander {
+    display: none; }
+  .description,
+  .product_links {
+    display: block; }
+  .description {
+    order: 0; } }</style>
+<h2 class="content">${data.product}</h2>
+<p class="description content">${data.description}</p>
+${data.links.info && `
+  <div class="content">
+    <ul class="info_links">
+      ${data.links.info.map(link => `
+        <li>
+          <a href="${link.link}">
+            <div>
+              <div class="icon"></div>
+              ${link.text}
+            </div>
+          </a>
+        </li>
+      `).join('\n')}
+    </ul>
+  </div>
+`}
+<div class="expander content">
+  <button id="expandButton">
+    <span class="caret"></span>
+  </button>
+  About ${data.product}
+</div>
+${data.links.knowledgebase && `
+  <div class="product_links content">
+    <h4>Browse Product Knowledge</h4>
+    <ul>
+    ${data.links.knowledgebase.map(link => `
+      <li><a href="${link.link}">${link.text}</a></li>
+    `).join('\n')}
+    </ul>
+  </div>
+`}
+`;
   return template;
 }
+/* end DO NOT EDIT */
 
 class CpOnebox extends RhOnebox {
   constructor() {
@@ -162,10 +145,6 @@ class CpOnebox extends RhOnebox {
 
     this.expandButton = this.shadowRoot.querySelector('#expandButton');
     this.expandButton.addEventListener('click', this.expandButtonHandler);
-
-    if (window.ShadyCSS) {
-      ShadyCSS.styleSubtree(this);
-    }
   }
 
   expandButtonHandler() {

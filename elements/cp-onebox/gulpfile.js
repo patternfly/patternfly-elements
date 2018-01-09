@@ -25,19 +25,19 @@ gulp.task('watch', () => {
 
 gulp.task('merge', () => {
   return gulp.src('./src/cp-onebox.js')
-//     .pipe(replace(/(template\.innerHTML = `)(`;)/, (match, p1, p2) => {
-//       const html = fs.readFileSync('./src/cp-onebox.html').toString().trim();
-//
-//       const cssResult = sass.renderSync({
-//         file: './src/cp-onebox.scss'
-//       }).css;
-//
-//
-//       return `${p1}
-// <style>${stripCssComments(cssResult).trim()}</style>
-// ${html}
-// ${p2}`;
-//     }))
+    .pipe(replace(/(template\.innerHTML = `)(`;)/, (match, p1, p2) => {
+      const html = fs.readFileSync('./src/cp-onebox.html').toString().trim();
+
+      const cssResult = sass.renderSync({
+        file: './src/cp-onebox.scss'
+      }).css;
+
+
+      return `${p1}
+<style>${stripCssComments(cssResult).trim()}</style>
+${html}
+${p2}`;
+    }))
     .pipe(gulp.dest('./'));
 });
 

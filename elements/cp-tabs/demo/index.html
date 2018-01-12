@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>RHElements: cp-tabs Demo</title>
+
+    <!-- uncomment the es5-adapter if you're using the compiled version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.10/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.10/webcomponents-lite.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../cp-tabs.compiled.js'])</script>
+    <style>
+      cp-tab[selected] {
+        background-color: bisque;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- OPTION 1 -->
+    <cp-tabs role="tablist" aria-label="Tabs List">
+      <!-- Tabs -->
+      <!-- Tabs' IDs are not necessary -->
+      <cp-tab id="tab-1" slot="tab" aria-controls="panel-1">Tab 1 </cp-tab>
+      <cp-tab id="tab-2" slot="tab" aria-controls="panel-2">Tab 2 </cp-tab>
+      <cp-tab id="tab-3" slot="tab" aria-controls="panel-3">Tab 3 </cp-tab>
+      <!-- Panels -->
+      <!-- Panels have to have IDs -->
+      <cp-panel id="panel-1" slot="panel">Content 1</cp-panel>
+      <cp-panel id="panel-2" slot="panel">Content 2</cp-panel>
+      <cp-panel id="panel-3" slot="panel">Content 3</cp-panel>
+    </cp-tabs>
+    
+  </body>
+</html>

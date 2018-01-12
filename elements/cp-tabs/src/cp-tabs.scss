@@ -1,0 +1,29 @@
+@import "node_modules/@rhelements/cp-sass/cp-sass";
+:host {
+  display: flex;
+  flex-wrap: wrap;
+}
+::slotted([slot=tab]) { 
+  border: 1px solid black;
+  padding: 20px;
+}
+
+::slotted([slot=panel]) { 
+  flex-basis: 100%;
+  padding: 20px;
+  background-color: lightgray;
+}
+
+// TODO : This selector does not working. 
+// I copied this part in demo/index.html as a style. 
+// ::slotted([slot=tab])[selected] { 
+//   background-color: rgb(252, 224, 191);
+// }
+
+/**
+ * If JavaScript does not run, the element will not match `:defined`.
+ * In that case this style adds spacing between tabs and previous panel.
+ */
+:host:not(:defined), ::slotted([slot=tab]):not(:defined), ::slotted([slot=panel]):not(:defined) {
+  display: block;
+}

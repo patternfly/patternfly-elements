@@ -1,83 +1,122 @@
-import Rhelement from '../rhelement/rhelement.js';
-import '../../whatwg-fetch/fetch.js';
+import Rhelement from "../rhelement/rhelement.js";
+import "../../whatwg-fetch/fetch.js";
 
 class RhOnebox extends Rhelement {
-  static get observedAttributes() {
-    return ['source', 'term'];
+  get source() {
+    return this._source;
+  }
+  set source(val) {
+    if (this._source === val) return;
+    this._source = val;
+    this.setAttribute("source", this._source);
+    this.getData();
+  }
+
+  get term() {
+    return this._term;
+  }
+  set term(val) {
+    if (this._term === val) return;
+    this._term = val;
+    this.setAttribute("term", this._term);
+    this.getData();
+  }
+
+  get match() {
+    return this._match;
+  }
+  set match(val) {
+    if (this._match === val) return;
+    this._match = val;
+  }
+
+  get data() {
+    return this._data;
+  }
+  set data(val) {
+    this._data = val;
+    this._sources[this.source] = this._data;
+    this.findMatch(this._data);
   }
 
   constructor(elementName, config) {
     super(elementName);
 
     if (!config.template) {
-      console.warn('A template needs to be provided in the constructor');
+      console.warn("A template needs to be provided in the constructor");
     }
 
     this.elementName = elementName;
     this.config = config;
     this.htmlTemplate = config.template;
     this.loading = false;
+    this._sources = {};
+    this.getData = this.getData.bind(this);
+    this.findMatch = this.findMatch.bind(this);
     this.successHandler = this.successHandler.bind(this);
     this.errorHandler = this.errorHandler.bind(this);
   }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
-    switch (attr) {
-      case 'source':
-        this.source = newValue;
-        this.getData(this.source);
-        break;
-
-      case 'term':
-        this.term = newValue;
-        break;
-    }
+  static get observedAttributes() {
+    return ["source", "term"];
   }
 
-  getData(source) {
-    if (!this.htmlTemplate) {
+  attributeChangedCallback(attr, oldValue, newValue) {
+    this[attr] = newValue;
+  }
+
+  getData() {
+    if (!this.htmlTemplate || !this.source || this.loading) {
       return;
     }
 
-    this.loading = true;
+    if (this._sources[this.source]) {
+      this.data = this._sources[this.source];
+      this.successHandler();
+    } else {
+      this.loading = true;
 
-    return fetch(source)
-      .then(res => res.json(), error => this.errorHandler)
-      .then(this.successHandler)
-      .then(() => this.loading = false);
+      return fetch(this.source)
+        .then(res => res.json(), error => this.errorHandler)
+        .then(json => {
+          this.data = json;
+        })
+        .then(this.successHandler)
+        .then(() => (this.loading = false));
+    }
   }
 
-  successHandler(data) {
-    this.data = data;
-    this.render()
+  successHandler() {
+    this.render();
   }
 
   errorHandler(error) {
     console.log(error);
   }
 
-  findMatch() {
-    let match;
-
-    this.data[this.config.arrayName].forEach(obj => {
+  findMatch(data) {
+    data[this.config.arrayName].forEach(obj => {
       obj[this.config.matchArrayName].forEach(keyword => {
-          if (keyword.toLowerCase() === this.term.toLowerCase().trim()) {
-            match = obj;
-          }
+        if (keyword.toLowerCase() === this.term.toLowerCase().trim()) {
+          this.match = obj;
+          return;
+        }
       });
     });
-
-    return match;
   }
 
   render(data) {
-    const dataObj = this.findMatch();
-    const template = this.htmlTemplate(dataObj);
+    const template = this.match
+      ? this.htmlTemplate(Object.assign({}, this.match, data))
+      : "";
 
     if (window.ShadyCSS) {
       ShadyCSS.prepareTemplate(template, this.elementName);
     }
 
+    while (this.shadowRoot.firstChild) {
+      this.shadowRoot.removeChild(this.shadowRoot.firstChild);
+    }
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     if (window.ShadyCSS) {

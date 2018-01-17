@@ -5,6 +5,7 @@ class RhOnebox extends Rhelement {
   get source() {
     return this._source;
   }
+
   set source(val) {
     if (this._source === val) return;
     this._source = val;
@@ -15,6 +16,7 @@ class RhOnebox extends Rhelement {
   get term() {
     return this._term;
   }
+
   set term(val) {
     if (this._term === val) return;
     this._term = val;
@@ -25,6 +27,7 @@ class RhOnebox extends Rhelement {
   get match() {
     return this._match;
   }
+
   set match(val) {
     if (this._match === val) return;
     this._match = val;
@@ -33,6 +36,7 @@ class RhOnebox extends Rhelement {
   get data() {
     return this._data;
   }
+
   set data(val) {
     this._data = val;
     this._sources[this.source] = this._data;
@@ -117,6 +121,7 @@ class RhOnebox extends Rhelement {
     while (this.shadowRoot.firstChild) {
       this.shadowRoot.removeChild(this.shadowRoot.firstChild);
     }
+
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     if (window.ShadyCSS) {

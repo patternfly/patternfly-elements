@@ -22,6 +22,12 @@
             keywords: [
               'rhel'
             ]
+          },
+          {
+            product: 'Red Hat JBoss EAP',
+            keywords: [
+              'jboss'
+            ]
           }
         ]};
 
@@ -95,6 +101,21 @@
             const productText = testOnebox.shadowRoot.querySelector('h1').innerText;
 
             assert.equal(productText, dataReturn.rules[0].product);
+            done();
+          });
+        });
+
+        test('if the term is changed, it should update the onebox with new data', done => {
+          const testOnebox = document.querySelector('test-onebox');
+
+          flush(() => {
+            const productText = testOnebox.shadowRoot.querySelector('h1').innerText;
+            assert.equal(productText, dataReturn.rules[0].product);
+
+            testOnebox.setAttribute('term', dataReturn.rules[1].keywords[0]);
+            const newProductText = testOnebox.shadowRoot.querySelector('h1').innerText;
+            assert.equal(newProductText, dataReturn.rules[1].product);
+
             done();
           });
         });

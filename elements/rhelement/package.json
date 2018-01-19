@@ -8,11 +8,11 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/.bin/gulp",
-    "start": "./node_modules/.bin/gulp dev & npm run serve",
+    "build": "../../node_modules/.bin/gulp",
+    "start": "../../node_modules/.bin/gulp dev & npm run serve",
     "serve":
-      "polyserve --npm -o --open-path=\"components/@rhelements/rhelement/demo\"",
-    "test": "wct --npm"
+      "../../node_modules/.bin/polyserve --npm -o --open-path=\"components/@rhelements/rhelement/demo\"",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json --npm elements/rhelement/test/"
   },
   "author": {
     "name": "Kyle Buchanan",

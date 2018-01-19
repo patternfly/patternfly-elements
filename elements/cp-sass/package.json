@@ -18,10 +18,6 @@
       "url": "https://github.com/markcaron"
     }
   ],
-  "scripts": {
-    "test":
-      "echo \"cp-sass has no tests; components using it will be tested\" && exit 0"
-  },
   "license": "ISC",
   "dependencies": {
     "breakpoint-sass": "^2.7.1"

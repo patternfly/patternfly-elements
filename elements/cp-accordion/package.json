@@ -11,11 +11,11 @@
     "test": "test"
   },
   "scripts": {
-    "build": "./node_modules/.bin/gulp",
-    "start": "./node_modules/.bin/gulp dev & npm run serve",
+    "build": "../../node_modules/.bin/gulp",
+    "start": "../../node_modules/.bin/gulp dev & npm run serve",
     "serve":
-      "polyserve --npm -o --open-path=\"components/@rhelements/cp-accordion/demo\"",
-    "test": "wct --npm"
+      "../../node_modules/.bin/polyserve --npm -o --open-path=\"components/@rhelements/cp-accordion/demo\"",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json --npm elements/cp-accordion/test/"
   },
   "author": {
     "name": "Tyler Martin"

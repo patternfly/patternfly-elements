@@ -7,9 +7,8 @@
     "url": "https://github.com/RHElements/cp-styles.git"
   },
   "scripts": {
-    "build": "./node_modules/.bin/gulp",
-    "dev": "./node_modules/.bin/gulp dev",
-    "test": "echo \"cp-styles NEEDS TESTS, WRITE SOME!\" && exit 1"
+    "build": "../../node_modules/.bin/gulp",
+    "dev": "../../node_modules/.bin/gulp dev"
   },
   "contributors": [
     {

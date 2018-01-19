@@ -7,11 +7,11 @@
     "url": "https://github.com/RHElements/cp-tooltip"
   },
   "scripts": {
-    "build": "./node_modules/.bin/gulp",
-    "start": "./node_modules/.bin/gulp dev & npm run serve",
+    "build": "../../node_modules/.bin/gulp",
+    "start": "../../node_modules/.bin/gulp dev & npm run serve",
     "serve":
-      "polyserve --npm -o --open-path=components/@rhelements/cp-tooltip/demo",
-    "test": "wct --npm"
+      "../../node_modules/.bin/polyserve --npm -o --open-path=components/@rhelements/cp-tooltip/demo",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json --npm elements/cp-tooltip/test/"
   },
   "author": {
     "name": "Kyle Buchanan",

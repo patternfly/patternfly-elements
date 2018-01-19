@@ -1,4 +1,5 @@
 {
+  "name": "@rhelements/lerna-test",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.26.0",
@@ -25,7 +26,8 @@
     "requirejs": "^2.3.5",
     "strip-css-comments": "^3.0.0",
     "trim": "0.0.1",
-    "wct-browser-legacy": "0.0.1-pre.10"
+    "wct-browser-legacy": "0.0.1-pre.10",
+    "web-component-tester": "^6.5.0"
   },
   "dependencies": {},
   "scripts": {

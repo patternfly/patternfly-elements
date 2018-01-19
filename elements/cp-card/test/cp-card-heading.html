@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <script src="../../../@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../../wct-browser-legacy/browser.js"></script>
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
     <script type="module" src="../cp-card.js"></script>
   </head>
   <body>
@@ -40,7 +40,7 @@
         test('it should use the default heading of h3 if the data-level attribute is a bogus value', () => {
           const cpCardHeading = document.querySelector('#badlevel cp-card-heading');
           const headingTag = cpCardHeading.shadowRoot.querySelector('h3').tagName.toLowerCase();
-          assert.equal(headingTag, 'h3', 'heading should equal h3 if data-level is a bogus value'); 
+          assert.equal(headingTag, 'h3', 'heading should equal h3 if data-level is a bogus value');
         });
       });
     </script>

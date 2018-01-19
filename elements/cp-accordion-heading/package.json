@@ -23,23 +23,6 @@
     "@rhelements/cp-styles": "^0.0.10",
     "@rhelements/rhelement": "^0.0.4"
   },
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "del": "^3.0.0",
-    "gulp": "github:gulpjs/gulp#4.0",
-    "gulp-babel": "^7.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.6.1",
-    "gulp-sequence": "^1.0.0",
-    "gulp-uglify": "^3.0.0",
-    "lodash": "^3.10.1",
-    "lodash.clonedeep": "^4.5.0",
-    "node-sass": "^4.6.1",
-    "strip-css-comments": "^3.0.0",
-    "trim": "0.0.1",
-    "wct-browser-legacy": "0.0.1-pre.10"
-  },
   "greenkeeper": {
     "ignore": ["lodash"]
   },

@@ -1,30 +1,35 @@
 {
   "devDependencies": {
-    "browser-sync": "^2.23.2",
-    "husky": "^0.14.3",
-    "lerna": "^2.5.1",
-    "lint-staged": "^6.0.0",
-    "prettier": "^1.9.2",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.0",
+    "browser-sync": "^2.23.2",
     "del": "^3.0.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-babel": "^7.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.6.1",
+    "gulp-sass": "^3.1.0",
     "gulp-sequence": "^1.0.0",
+    "gulp-strip-css-comments": "^1.2.0",
+    "gulp-trim": "^1.0.2",
     "gulp-uglify": "^3.0.0",
-    "lodash": "3.10.1",
+    "husky": "^0.14.3",
+    "lerna": "^2.5.1",
+    "lint-staged": "^6.0.0",
+    "lodash": "^3.10.1",
     "lodash.clonedeep": "^4.5.0",
     "node-sass": "^4.6.1",
+    "prettier": "^1.9.2",
+    "requirejs": "^2.3.5",
     "strip-css-comments": "^3.0.0",
     "trim": "0.0.1",
     "wct-browser-legacy": "0.0.1-pre.10"
   },
   "dependencies": {},
   "scripts": {
-    "start":
-      "browser-sync start --startPath elements --server elements --files 'elements/**/*' --serveStatic .",
+    "start": "browser-sync start --startPath elements --server elements --files 'elements/**/*' --serveStatic .",
     "lerna": "lerna",
     "test": "lerna run test",
     "build": "lerna run build",
@@ -33,6 +38,9 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,json}": ["prettier --write", "git add"]
+    "*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

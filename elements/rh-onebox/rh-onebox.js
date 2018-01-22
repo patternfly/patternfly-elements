@@ -1,5 +1,5 @@
 import Rhelement from "../rhelement/rhelement.js";
-import "../../whatwg-fetch/fetch.js";
+import "../../node_modules/whatwg-fetch/fetch.js";
 
 class RhOnebox extends Rhelement {
   get source() {

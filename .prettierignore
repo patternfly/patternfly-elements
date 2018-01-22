@@ -1,4 +1,5 @@
 test
 *.compiled.js
+*.min.js
 package.json
 package-lock.json

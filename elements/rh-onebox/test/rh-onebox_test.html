@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="../../../@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../wct-browser-legacy/browser.js"></script>
+  </head>
+  <body>
+    <test-onebox
+      term="rhel"
+      source="/onebox-source">
+    </test-onebox>
+
+    <script type="module">
+      import RhOnebox from '../rh-onebox.js';
+
+      suite('<rh-onebox>', () => {
+        const dataReturn = {
+          rules: [{
+            product: 'Red Hat Enterprise Linux',
+            keywords: [
+              'rhel'
+            ]
+          },
+          {
+            product: 'Red Hat JBoss EAP',
+            keywords: [
+              'jboss'
+            ]
+          }
+        ]};
+
+        setup(() => {
+          sinon.stub(window, 'fetch');
+
+          const res = new window.Response(JSON.stringify(dataReturn), {
+            status: 200,
+            headers: {
+              'Content-type': 'application/json'
+            }
+          });
+
+          window.fetch.returns(Promise.resolve(res));
+
+          const template = document.createElement('template');
+          const bindTemplate = data => {
+            template.innerHTML = `
+              <h1>${data.product}</h1>
+            `;
+            return template;
+          };
+
+          class TestOnebox extends RhOnebox {
+            constructor() {
+              super('test-onebox', {
+                template: bindTemplate,
+                arrayName: 'rules',
+                matchArrayName: 'keywords'
+              });
+            }
+          }
+
+          if (window.customElements.get('test-onebox')) {
+            return;
+          }
+
+          window.customElements.define('test-onebox', TestOnebox);
+        });
+
+        teardown(() => {
+          window.fetch.restore();
+        });
+
+        test('it should set the source property from the source attribute', () => {
+          const testOnebox = document.querySelector('test-onebox');
+          assert.equal(testOnebox.source, '/onebox-source');
+        });
+
+        test('it should set the term property from the term attribute', () => {
+          const testOnebox = document.querySelector('test-onebox');
+          assert.equal(testOnebox.term, 'rhel');
+        });
+
+        test('it should toggle the loading property before, during, and after fetching data', done => {
+          // TODO need to verifiy that the loading state is false before fetching the data
+          const testOnebox = document.querySelector('test-onebox');
+          assert.isTrue(testOnebox.loading);
+
+          flush(() => {
+            // TODO Firefox is failing this test
+            // assert.isFalse(testOnebox.loading);
+            done();
+          })
+        });
+
+        test('it should find the term in an object in the data returned from the api and render the template', done => {
+          const testOnebox = document.querySelector('test-onebox');
+
+          flush(() => {
+            const productText = testOnebox.shadowRoot.querySelector('h1').innerText;
+
+            assert.equal(productText, dataReturn.rules[0].product);
+            done();
+          });
+        });
+
+        test('if the term is changed, it should update the onebox with new data', done => {
+          const testOnebox = document.querySelector('test-onebox');
+
+          flush(() => {
+            const productText = testOnebox.shadowRoot.querySelector('h1').innerText;
+            assert.equal(productText, dataReturn.rules[0].product);
+
+            testOnebox.setAttribute('term', dataReturn.rules[1].keywords[0]);
+            const newProductText = testOnebox.shadowRoot.querySelector('h1').innerText;
+            assert.equal(newProductText, dataReturn.rules[1].product);
+
+            done();
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

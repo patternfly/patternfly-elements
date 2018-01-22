@@ -1,4 +1,4 @@
-import numeral from "../../node_modules/numeral/min/numeral.min.js";
+import numeral from "../../numeral/min/numeral.min.js";
 
 const numberTemplate = document.createElement("template");
 numberTemplate.innerHTML = `

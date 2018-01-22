@@ -8,10 +8,13 @@ import "../cp-styles/cp-styles.js";
  */
 const template = document.createElement("template");
 template.innerHTML = `
-<style>:host {
+<style>*, *::before, *:after {
+  box-sizing: var(--box-sizing, border-box); }
+
+:host {
   display: inline-block;
   position: absolute;
-  background: #1a1a1a;
+  background: black;
   color: white;
   padding: 4px 6px;
   border-radius: 2px;

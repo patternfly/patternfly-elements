@@ -1,9 +1,11 @@
-@import "node_modules/@rhelements/cp-sass/cp-sass";
+@import "../cp-sass/cp-sass";
 :host {
   display: inline-block;
   position: absolute;
-  background: color(rich-black);
-  color: color(white);
+  // background: color(rich-black); // this fails because rich-black is not a valid color
+  // color: color(white); // this fails because white is not a valid color
+  background: black;
+  color: white;
   padding: 4px 6px;
   border-radius: 2px;
   max-width: 200px;

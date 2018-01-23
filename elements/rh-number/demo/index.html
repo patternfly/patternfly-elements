@@ -20,43 +20,43 @@
         <div id="app">
             <h1>&lt;rh-number&gt;</h1>
             <p>This is a live demo of formatting numbers with the <kbd>&lt;rh-number&gt;</kbd> element.</p>
-            <div class="legend">
-                <span>
-                    Type
-                </span>
-                <span>
-                    Number
-                </span>
-                <span>
-                    Formatted number
-                </span>
-                <span>
-                    Sample markup
-                </span>
-            </div>
-            <ul class="number-list">
-                <li v-for="number in numbers">
+            <table class="number-list">
+                <tr class="legend">
+                    <th>Type</th>
+                    <th>Number</th>
+                    <th>Formatted number</th>
+                    <th>Sample markup</th>
+                </tr>
+                <tr v-for="number in numbers">
 
                     <!-- display the format string for reference -->
-                    <span>{{ number.type }}</span>
+                    <td>
+                      <span>{{ number.type }}</span>
+                    </td>
 
                     <!-- a plain decimal display of the current number -->
-                    <input
-                        type="number"
-                        v-model:value="number.number"
-                        v-bind:step="number.step">
+                    <td>
+                      <input
+                          type="number"
+                          v-model:value="number.number"
+                          v-bind:step="number.step">
+                    </td>
 
                     <!-- the star of the show, rh-number! -->
-                    <rh-number
-                        v-bind:number="number.number"
-                        v-bind:type="number.type">
-                        {{ number.number }}
-                    </rh-number>
+                    <td>
+                      <rh-number
+                          v-bind:number="number.number"
+                          v-bind:type="number.type">
+                          {{ number.number }}
+                      </rh-number>
+                    </td>
 
-                    <kbd class="sample-markup">&lt;rh-number type="{{ number.type }}"&gt;{{ number.number }}&lt;/rh-number&gt;</kbd>
+                    <td>
+                      <kbd class="sample-markup">&lt;rh-number type="{{ number.type }}"&gt;{{ number.number }}&lt;/rh-number&gt;</kbd>
+                    </td>
 
-                </li>
-            </ul>
+                </tr>
+            </table>
         </div>
         <script src="demo.js"></script>
     </body>

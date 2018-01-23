@@ -22,8 +22,12 @@ const types = {
   ordinal: "0o",
   percent: "0%",
   bytes: "0[.][00] ib",
-  e: "0[.00]e+0"
+  e: "0[.00]e+0",
+  thousands: "0,0[.00]"
 };
+
+// use thin spaces to separate thousands chunks
+numeral.locales.en.delimiters.thousands = " ";
 
 class RhNumber extends HTMLElement {
   static get observedAttributes() {

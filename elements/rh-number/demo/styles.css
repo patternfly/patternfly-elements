@@ -9,14 +9,13 @@ ul, li {
     list-style: none;
 }
 
-.legend {
-    font-weight: bold;
+table th,
+table td {
+    padding: 8px;
 }
 
-.legend, li {
-    display: grid;
-    grid-template: 1fr / 1fr 1fr 1fr 1fr;
-    text-align: center;
+.legend {
+    font-weight: bold;
 }
 
 .legend *, li * {

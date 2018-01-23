@@ -1,6 +1,6 @@
-# lerna-test
+# RHElements
 
-This is a test to see if we like [lerna][lerna] for managing RHElements packages instead of submodules.
+These are all the RHElements.
 
 ## Quick-start
 

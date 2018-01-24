@@ -4,8 +4,8 @@ These are all the RHElements.
 
 ## Quick-start
 
-    git clone git@github.com:RHElements/lerna-test.git
-    cd lerna-test
+    git clone git@github.com:RHElements/rhelements.git
+    cd rhelements
     npm install # this will take a while due to lerna bootstrap
     npm start
 

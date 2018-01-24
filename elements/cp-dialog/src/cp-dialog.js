@@ -20,11 +20,11 @@ class CpDialog extends Rhelement {
 
     const dialog = this.shadowRoot.querySelector("dialog");
     dialogPolyfill.registerDialog(dialog);
-    console.log(dialogPolyfill);
 
     const openButton = document.querySelector(
       this.getAttribute("data-trigger")
     );
+
     const cancelButton = document.querySelector("#cancel");
 
     openButton.addEventListener("click", function() {

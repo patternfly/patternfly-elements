@@ -6,11 +6,7 @@ import Rhelement from "../rhelement/rhelement.js";
  * rhcc-freshnessgrade.css
  */
 const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
-  display: inline; }</style>
-<span></span>
-`;
+template.innerHTML = ``;
 /* end DO NOT EDIT */
 
 class RhDatetime extends Rhelement {

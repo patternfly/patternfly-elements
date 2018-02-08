@@ -10,14 +10,15 @@
   "scripts": {
     "build": "../../node_modules/.bin/gulp",
     "start": "../../node_modules/.bin/gulp dev & npm run serve",
-    "serve":
-      "../../node_modules/.bin/polyserve --npm -o --open-path=components/@rhelements/rh-datetime/demo",
+    "serve": "../../node_modules/.bin/polyserve --npm -o --open-path=components/@rhelements/rh-datetime/demo",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json --npm elements/rh-datetime/test/"
   },
   "author": {
     "name": "Luke Dary"
   },
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "@rhelements/rhelement": "0.0.x"
+  },
   "generator-rhelement-version": "0.2.8"
 }

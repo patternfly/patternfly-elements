@@ -3,32 +3,21 @@ const babel = require("gulp-babel");
 const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
 const replace = require("gulp-replace");
-
-const trim = require("gulp-trim");
-const del = require("del");
+const stripCssComments = require("strip-css-comments");
+const trim = require("trim");
 const fs = require("fs");
-let watcher;
-
-gulp.task("clean", () => {
-  return del(["./*.compiled.*", "./*.min.js"]);
-});
+const sass = require("node-sass");
 
 gulp.task("compile", () => {
   return gulp
-    .src(["./*.js", "!./*.compiled.js", "!./*.min.js", "!./gulpfile.js"])
-    .pipe(replace(/(import ["'].*).(js["'];?)/g, "$1.compiled.$2"))
+    .src("./rh-datetime.js")
     .pipe(
-      babel({
-        presets: [
-          [
-            "env",
-            {
-              modules: "umd"
-            }
-          ]
-        ]
-      })
+      replace(
+        /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)(\.js['"];)$/gm,
+        "$1$2.compiled$3"
+      )
     )
+    .pipe(babel())
     .pipe(uglify())
     .pipe(
       rename({
@@ -38,39 +27,33 @@ gulp.task("compile", () => {
     .pipe(gulp.dest("./"));
 });
 
-gulp.task("transpile", () => {
+gulp.task("watch", () => {
+  return gulp.watch("./src/*", gulp.series("merge", "compile"));
+});
+
+gulp.task("merge", () => {
   return gulp
-    .src(["./*.js", "!./*.compiled.js", "!./*.min.js", "!./gulpfile.js"])
+    .src("./src/rh-datetime.js")
     .pipe(
-      babel({
-        presets: [
-          [
-            "env",
-            {
-              modules: false,
-              targets: { uglify: true }
-            }
-          ]
-        ]
-      })
-    )
-    .pipe(uglify())
-    .pipe(
-      rename({
-        suffix: ".min"
+      replace(/(template\.innerHTML = `)(`;)/, (match, p1, p2) => {
+        const html = fs
+          .readFileSync("./src/rh-datetime.html")
+          .toString()
+          .trim();
+
+        const cssResult = sass.renderSync({
+          file: "./src/rh-datetime.scss"
+        }).css;
+
+        return `${p1}
+<style>${stripCssComments(cssResult).trim()}</style>
+${html}
+${p2}`;
       })
     )
     .pipe(gulp.dest("./"));
 });
 
-gulp.task("watch", () => {
-  watcher = gulp.watch(
-    ["./rh-datetime.js"],
-    gulp.series("clean", "compile", "transpile")
-  );
-  return watcher;
-});
+gulp.task("default", gulp.series("merge", "compile"));
 
-gulp.task("default", gulp.series("clean", "compile", "transpile"));
-
-gulp.task("dev", gulp.series("default", "watch"));
+gulp.task("dev", gulp.series("merge", "compile", "watch"));

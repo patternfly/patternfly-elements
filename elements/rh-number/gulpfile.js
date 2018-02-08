@@ -3,20 +3,20 @@ const babel = require("gulp-babel");
 const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
 const replace = require("gulp-replace");
-
-const trim = require("gulp-trim");
-const del = require("del");
+const stripCssComments = require("strip-css-comments");
+const trim = require("trim");
 const fs = require("fs");
-let watcher;
-
-gulp.task("clean", () => {
-  return del(["./*.compiled.*"]);
-});
+const sass = require("node-sass");
 
 gulp.task("compile", () => {
   return gulp
-    .src(["./*.js", "!./gulpfile.js"])
-    .pipe(replace(/(import ["'].*).(js["'];?)/g, "$1.compiled.$2"))
+    .src("./rh-number.js")
+    .pipe(
+      replace(
+        /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)(\.js['"];)$/gm,
+        "$1$2.compiled$3"
+      )
+    )
     .pipe(babel())
     .pipe(uglify())
     .pipe(
@@ -28,10 +28,32 @@ gulp.task("compile", () => {
 });
 
 gulp.task("watch", () => {
-  watcher = gulp.watch(["./rh-number.js"], gulp.series("clean", "compile"));
-  return watcher;
+  return gulp.watch("./src/*", gulp.series("merge", "compile"));
 });
 
-gulp.task("default", gulp.series("clean", "compile"));
+gulp.task("merge", () => {
+  return gulp
+    .src("./src/rh-number.js")
+    .pipe(
+      replace(/(template\.innerHTML = `)(`;)/, (match, p1, p2) => {
+        const html = fs
+          .readFileSync("./src/rh-number.html")
+          .toString()
+          .trim();
 
-gulp.task("dev", gulp.series("default", "watch"));
+        const cssResult = sass.renderSync({
+          file: "./src/rh-number.scss"
+        }).css;
+
+        return `${p1}
+<style>${stripCssComments(cssResult).trim()}</style>
+${html}
+${p2}`;
+      })
+    )
+    .pipe(gulp.dest("./"));
+});
+
+gulp.task("default", gulp.series("merge", "compile"));
+
+gulp.task("dev", gulp.series("merge", "compile", "watch"));

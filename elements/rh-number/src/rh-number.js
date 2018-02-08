@@ -7,12 +7,7 @@ import numeral from "../../numeral/min/numeral.min.js";
  * rhcc-freshnessgrade.css
  */
 const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
-  display: inline;
-  white-space: nowrap; }</style>
-<span></span>
-`;
+template.innerHTML = ``;
 /* end DO NOT EDIT */
 
 // easy aliases for common format strings

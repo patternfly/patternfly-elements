@@ -1,0 +1,42 @@
+@import "node_modules/@rhelements/cp-sass/cp-sass";
+
+:host {
+  display: block;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: $gray-platinum;
+  padding: $box-padding-sm;
+  margin-bottom: 32px;
+
+  p {
+    margin-top: 0;
+    flex: 1 1 auto;
+  }
+
+  a {
+    color: $link-color;
+    text-decoration: none;
+  }
+}
+
+@media(min-width: 767px) {
+  .card-container {
+    display: flex;
+
+    .card {
+      width: 33%;
+      margin: 16px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<h3>People who viewed this ${data.contentType} also viewed</h3>
+<div class="card-container">
+  ${data.results.map(result => `
+    <div class="card">
+      <p><a href="${result.view_uri}">${result.allTitle}</a></p>
+      <small>
+        ${result.documentKind} - <rh-datetime
+          datetime="${result.lastModifiedDate}"
+          type="local"
+          day="numeric"
+          month="short"
+          year="numeric">
+          ${result.lastModifiedDate}
+        </rh-datetime>
+      </small>
+    </div>
+  `).join('\n')}
+</div>

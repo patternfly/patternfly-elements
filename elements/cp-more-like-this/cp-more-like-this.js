@@ -27,14 +27,19 @@ const bindTemplate = data => {
     flex: 1 1 auto; }
   .card a {
     color: #06c;
-    text-decoration: none; }
+    text-decoration: none;
+    font-weight: 700; }
+  .card span {
+    font-size: .9rem;
+    font-weight: 400; }
 
-@media (min-width: 767px) {
+@media (min-width: 768px) {
   .card-container {
     display: flex; }
     .card-container .card {
       width: 33%;
-      margin: 16px; }
+      margin: 16px;
+      margin-top: 8px; }
       .card-container .card:first-child {
         margin-left: 0; }
       .card-container .card:last-child {
@@ -46,7 +51,7 @@ const bindTemplate = data => {
       result => `
     <div class="card">
       <p><a href="${result.view_uri}">${result.allTitle}</a></p>
-      <small>
+      <span>
         ${result.documentKind} - <rh-datetime
           datetime="${result.lastModifiedDate}"
           type="local"
@@ -55,7 +60,7 @@ const bindTemplate = data => {
           year="numeric">
           ${result.lastModifiedDate}
         </rh-datetime>
-      </small>
+      </span>
     </div>
   `
     )

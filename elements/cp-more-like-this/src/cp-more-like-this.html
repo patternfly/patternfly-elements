@@ -3,7 +3,7 @@
   ${data.results.map(result => `
     <div class="card">
       <p><a href="${result.view_uri}">${result.allTitle}</a></p>
-      <small>
+      <span>
         ${result.documentKind} - <rh-datetime
           datetime="${result.lastModifiedDate}"
           type="local"
@@ -12,7 +12,7 @@
           year="numeric">
           ${result.lastModifiedDate}
         </rh-datetime>
-      </small>
+      </span>
     </div>
   `).join('\n')}
 </div>

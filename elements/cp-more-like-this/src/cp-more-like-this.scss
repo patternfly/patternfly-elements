@@ -9,7 +9,7 @@
   flex-direction: column;
   background: $gray-platinum;
   padding: $box-padding-sm;
-  margin-bottom: 32px;
+  margin-bottom: $box-padding;
 
   p {
     margin-top: 0;
@@ -19,16 +19,23 @@
   a {
     color: $link-color;
     text-decoration: none;
+    font-weight: 700;
+  }
+
+  span {
+    font-size: .9rem;
+    font-weight: 400;
   }
 }
 
-@media(min-width: 767px) {
+@media(min-width: $breakpoint-sm-min) {
   .card-container {
     display: flex;
 
     .card {
       width: 33%;
-      margin: 16px;
+      margin: $box-padding-sm;
+      margin-top: $box-padding-xs;
 
       &:first-child {
         margin-left: 0;

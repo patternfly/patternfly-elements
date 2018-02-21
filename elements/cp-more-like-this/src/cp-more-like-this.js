@@ -18,17 +18,19 @@ const bindTemplate = data => {
 /* end DO NOT EDIT */
 
 class CpMoreLikeThis extends Rhelement {
+  static get observedAttributes() {
+    return ["q", "content-type"];
+  }
+
   constructor() {
     super(elementName);
-
     this.handleResponse = this.handleResponse.bind(this);
-    this.q = this.getAttribute("q");
-    this.contentType = this.getAttribute("content-type");
+  }
 
-    if (!this.q || !this.contentType) {
-      console.warn(
-        "Both a q attribute and content-type attribute need to be provided"
-      );
+  attributeChangedCallback(name, oldValue, newValue) {
+    this[name] = newValue;
+
+    if (!this.q || !this["content-type"]) {
       return;
     }
 

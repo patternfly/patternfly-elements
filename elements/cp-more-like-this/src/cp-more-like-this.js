@@ -49,7 +49,7 @@ class CpMoreLikeThis extends Rhelement {
     this.loading = false;
 
     this.data = {
-      contentType: this.contentType,
+      contentType: this["content-type"],
       results: data.response.docs
     };
 

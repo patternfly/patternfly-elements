@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-more-like-this",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "More Like This element for RHElements",
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "@rhelements/cp-sass": "*",
+    "@rhelements/cp-styles": "0.0.10",
     "@rhelements/rh-datetime": "0.0.5",
     "@rhelements/rhelement": "*",
     "cp-styles": "0.0.3",

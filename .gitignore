@@ -1,2 +1,4 @@
 node_modules
 lerna-debug.log
+*.local.compiled.js
+*.local.js

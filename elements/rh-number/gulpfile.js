@@ -10,7 +10,7 @@ const sass = require("node-sass");
 
 gulp.task("compile", () => {
   return gulp
-    .src("./rh-number.js")
+    .src(["./rh-number.js", "./rh-number.local.js"])
     .pipe(
       replace(
         /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)(\.js['"];)$/gm,

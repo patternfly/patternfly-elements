@@ -100,10 +100,10 @@ const bindTemplate = data => {
 <p class="description content">${data.description}</p>
 
 <!-- Subtitle is only for Product type of rule -->
-${data.subtitle ? `<p class="subtitle">${data.subtitle}</p>` : ""}
+${(data.subtitle || "") && `<p class="subtitle">${data.subtitle}</p>`}
 
 <!-- Page Link and Produc list are only for Product Suite type of rule -->
-${data.page_link ? `<p class="page-link">${data.page_link}</p>` : ""}
+${(data.page_link || "") && `<p class="page-link">${data.page_link}</p>`}
 
 ${
     data.products
@@ -127,9 +127,9 @@ ${
   }
 
 <!-- CVE, Common Name, Severity are only for Vulnerability type of rule -->
-${data.cve ? `<p class="cve">${data.cve}</p>` : ""}
-${data.common_name ? `<p class="common-name">${data.common_name}</p>` : ""}
-${data.severity ? `<p class="severity">${data.severity}</p>` : ""}
+${(data.cve || "") && `<p class="cve">${data.cve}</p>`}
+${(data.common_name || "") && `<p class="common-name">${data.common_name}</p>`}
+${(data.severity || "") && `<p class="severity">${data.severity}</p>`}
 
 <!-- Info and Knowledgebase Links for every type of rule (Every Rule has a description) -->
 ${data.links.info &&

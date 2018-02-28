@@ -46,6 +46,14 @@ npm run storybook
 
 This will start a web server on port 9001. Navigate in your browser to `http://localhost:9001` to see Storybook in action. Storybook will watch for file changes and reload the browser automatically for you. This is a little slow at the moment, but we'll look into speeding this up.
 
+To export the storybook static site
+
+```
+npm run build-storybook
+```
+
+This places a build of the storybook site in the .storybook_out directory.
+
 ### Known Issues with Storybook
 
 Any component that has a third-party dependency will not work in our current setup. We are looking into what we need to do to resolve the issue.

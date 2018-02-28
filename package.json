@@ -1,12 +1,13 @@
 {
   "name": "@rhelements/lerna-test",
   "devDependencies": {
-    "@storybook/addon-actions": "^3.4.0-alpha.6",
-    "@storybook/addon-knobs": "^3.4.0-alpha.6",
-    "@storybook/addon-notes": "^3.4.0-alpha.6",
-    "@storybook/addon-viewport": "^3.4.0-alpha.6",
-    "@storybook/addon-options": "^3.4.0-alpha.6",
-    "@storybook/polymer": "^3.4.0-alpha.6",
+    "@storybook/addon-actions": "^3.4.0-alpha.9",
+    "@storybook/addon-knobs": "^3.4.0-alpha.9",
+    "@storybook/addon-notes": "^3.4.0-alpha.9",
+    "@storybook/addon-options": "^3.4.0-alpha.9",
+    "@storybook/addon-viewport": "^3.4.0-alpha.9",
+    "@storybook/cli": "^3.4.0-alpha.9",
+    "@storybook/polymer": "^3.4.0-alpha.9",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.26.0",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -25,14 +26,14 @@
     "gulp-trim": "^1.0.2",
     "gulp-uglify": "^3.0.0",
     "husky": "^0.14.3",
-    "lerna": "^2.5.1",
-    "lint-staged": "^6.0.0",
+    "lerna": "^2.9.0",
+    "lint-staged": "^6.1.1",
     "lodash": "^3.10.1",
     "lodash.clonedeep": "^4.5.0",
     "node-sass": "^4.6.1",
-    "prettier": "^1.9.2",
+    "prettier": "^1.11.0",
     "requirejs": "^2.3.5",
-    "spandx": "^0.2.0",
+    "spandx": "^0.2.1",
     "strip-css-comments": "^3.0.0",
     "trim": "0.0.1",
     "wct-browser-legacy": "0.0.1-pre.10",
@@ -47,7 +48,8 @@
     "bootstrap": "lerna bootstrap --hoist",
     "postinstall": "npm run bootstrap",
     "precommit": "lint-staged",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "storybook": "start-storybook -c .storybook -p 9001",
+    "build-storybook": "build-storybook -c .storybook -o .storybook_out"
   },
   "lint-staged": {
     "*.{js,json}": [

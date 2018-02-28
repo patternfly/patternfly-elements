@@ -2,3 +2,4 @@ node_modules
 lerna-debug.log
 *.local.compiled.js
 *.local.js
+.storybook_out

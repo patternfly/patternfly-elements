@@ -13,6 +13,7 @@ template.innerHTML = `
 
 :host ul {
   position: absolute;
+  left: 0;
   margin: 0;
   padding: 0;
   list-style: none;

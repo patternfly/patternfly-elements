@@ -73,6 +73,7 @@ class RhDropdown extends Rhelement {
     super.connectedCallback();
 
     this.setAttribute("defined", "");
+    this.setAttribute("role", "presentation");
 
     const thisButton = this._thisButton();
     const thisMenu = this._thisMenu();

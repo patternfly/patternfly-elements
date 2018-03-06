@@ -86,11 +86,13 @@ class RhDropdown extends Rhelement {
 
     this.addEventListener("rh-dropdown-change", this._changeHandler);
     this.addEventListener("keydown", this._keydownHandler);
+    this.addEventListener("click", this._clickHandler);
   }
 
   disconnectedCallback() {
     this.removeEventListener("rh-dropdown-change", this._changeHandler);
     this.removeEventListener("keydown", this._keydownHandler);
+    this.removeEventListener("click", this._clickHandler);
   }
 
   _changeHandler(evt) {
@@ -100,6 +102,17 @@ class RhDropdown extends Rhelement {
     if (evt.detail.expanded) {
       this._expandMenu(rhDropdownButton, rhDropdownMenu);
     } else {
+      this._collapseMenu(rhDropdownButton, rhDropdownMenu);
+      this._focusOnButton(rhDropdownButton);
+    }
+  }
+
+  _clickHandler(evt) {
+    const rhDropdownButton = this._thisButton();
+    const rhDropdownMenu = this._thisMenu();
+    const link = evt.composedPath()[0];
+
+    if (link.nodeName == "A") {
       this._collapseMenu(rhDropdownButton, rhDropdownMenu);
     }
   }
@@ -112,12 +125,15 @@ class RhDropdown extends Rhelement {
   }
 
   _collapseMenu(rhDropdownButton, rhDropdownMenu) {
-    let button = rhDropdownButton.shadowRoot.querySelector("button");
     rhDropdownButton.expanded = false;
-    button.focus();
     rhDropdownMenu.shadowRoot
       .querySelector("ul")
       .setAttribute("hidden", "hidden");
+  }
+
+  _focusOnButton(rhDropdownButton) {
+    let button = rhDropdownButton.shadowRoot.querySelector("button");
+    button.focus();
   }
 
   _thisButton() {

@@ -153,9 +153,11 @@ class RhDropdown extends Rhelement {
   }
 
   _keydownHandler(evt) {
+    const thisButton = this._thisButton();
     let newItem,
       flaggedKey = false,
-      pressedKey = evt.key;
+      pressedKey = evt.key,
+      onBtn = thisButton.shadowRoot.activeElement;
 
     if (evt.shiftKey) {
       if (this._isPrintableCharacter(pressedKey)) {
@@ -186,7 +188,9 @@ class RhDropdown extends Rhelement {
           flaggedKey = true;
           break;
         case " ":
-          flaggedKey = true;
+          if (!onBtn) {
+            flaggedKey = true;
+          }
           break;
         case "Tab":
           this.dispatchEvent(

@@ -89,12 +89,14 @@ class RhDropdown extends Rhelement {
     });
 
     this.addEventListener("rh-dropdown-change", this._changeHandler);
+    this.addEventListener("rh-dropdown-close", this._closeHandler);
     this.addEventListener("keydown", this._keydownHandler);
     this.addEventListener("click", this._clickHandler);
   }
 
   disconnectedCallback() {
     this.removeEventListener("rh-dropdown-change", this._changeHandler);
+    this.removeEventListener("rh-dropdown-close", this._closeHandler);
     this.removeEventListener("keydown", this._keydownHandler);
     this.removeEventListener("click", this._clickHandler);
   }
@@ -109,6 +111,12 @@ class RhDropdown extends Rhelement {
       this._collapseMenu(rhDropdownButton, rhDropdownMenu);
       this._focusOnButton(rhDropdownButton);
     }
+  }
+
+  _closeHandler(evt) {
+    const rhDropdownButton = this._thisButton();
+    const rhDropdownMenu = this._thisMenu();
+    this._collapseMenu(rhDropdownButton, rhDropdownMenu);
   }
 
   _clickHandler(evt) {
@@ -149,33 +157,64 @@ class RhDropdown extends Rhelement {
   }
 
   _keydownHandler(evt) {
-    let newItem;
+    let newItem,
+      flaggedKey = false,
+      pressedKey = evt.key;
 
-    switch (evt.key) {
-      case "ArrowDown":
-      case "Down":
-        newItem = this._nextLink();
-        break;
-      case "ArrowUp":
-      case "Up":
-        newItem = this._previousLink();
-        break;
-      case "Home":
-        newItem = this._firstLink();
-        break;
-      case "End":
-        newItem = this._lastLink();
-        break;
-      case "Escape":
-      case "Esc":
-        this.dispatchEvent(
-          new CustomEvent("rh-dropdown-change", {
-            detail: { expanded: false }
-          })
-        );
-        return;
-      default:
-        return;
+    if (evt.shiftKey) {
+      if (this._isPrintableCharacter(pressedKey)) {
+        newItem = this._getLinkByFirstCharacter(pressedKey);
+      }
+    } else if (this._isPrintableCharacter(pressedKey)) {
+      newItem = this._getLinkByFirstCharacter(pressedKey);
+    } else {
+      switch (pressedKey) {
+        case "ArrowDown":
+        case "Down":
+          newItem = this._nextLink();
+          flaggedKey = true;
+          break;
+        case "ArrowUp":
+        case "Up":
+          newItem = this._previousLink();
+          flaggedKey = true;
+          break;
+        case "Home":
+        case "PageUp":
+          newItem = this._firstLink();
+          flaggedKey = true;
+          break;
+        case "End":
+        case "PageDown":
+          newItem = this._lastLink();
+          flaggedKey = true;
+          break;
+        case " ":
+          flaggedKey = true;
+          break;
+        case "Tab":
+          this.dispatchEvent(
+            new CustomEvent("rh-dropdown-close", {
+              detail: { expanded: false }
+            })
+          );
+          break;
+        case "Escape":
+          flaggedKey = true;
+          this.dispatchEvent(
+            new CustomEvent("rh-dropdown-change", {
+              detail: { expanded: false }
+            })
+          );
+          return;
+        default:
+          return;
+      }
+
+      if (flaggedKey) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
     }
 
     if (newItem) {
@@ -186,6 +225,58 @@ class RhDropdown extends Rhelement {
   _allLinks() {
     const thisMenu = this._thisMenu();
     return [...thisMenu.shadowRoot.querySelectorAll("li")];
+  }
+
+  _isPrintableCharacter(str) {
+    return str.length === 1 && str.match(/\S/);
+  }
+
+  _getIndexFirstChars(startIndex, char) {
+    const links = this._allLinks();
+    for (var i = startIndex; i < links.length; i++) {
+      let thisChar = links[i]
+        .querySelector("a")
+        .innerText.charAt(0)
+        .toLowerCase();
+      if (char === thisChar) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  _getLinkByFirstCharacter(pressedKey) {
+    const thisButton = this._thisButton();
+    let wasBtn = thisButton.shadowRoot.activeElement;
+    if (wasBtn) {
+      return;
+    }
+
+    const char = pressedKey.toLowerCase();
+    const links = this._allLinks();
+    const thisMenu = this._thisMenu();
+    let focused = thisMenu.shadowRoot.activeElement;
+    let start = links.findIndex(link => link === focused.parentElement) + 1;
+    let newIndex;
+
+    if (start === links.length) {
+      start = 0;
+    }
+
+    // Check remaining slots in the menu
+    newIndex = this._getIndexFirstChars(start, char);
+
+    // If not found in remaining slots, check from beginning
+    if (newIndex === -1) {
+      newIndex = this._getIndexFirstChars(0, char);
+    }
+
+    // If match was found...
+    if (newIndex > -1) {
+      return links[newIndex];
+    } else {
+      return -1;
+    }
   }
 
   _previousLink() {

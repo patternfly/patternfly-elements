@@ -1,0 +1,41 @@
+@import "../cp-sass/cp-sass";
+
+:host {
+  @include box-sizing();
+
+  button {
+    padding: $box-padding-xs $box-padding-sm;
+    border: $border-width $border-style $border-color;
+    background: transparent;
+    font-size: $base-font-size;
+    line-height: $base-line-height;
+    color: $text-color;
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      display: inline-block;
+      margin-left: $box-padding-xs;
+      border-top: 5px solid $text-color;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      vertical-align: middle;
+    }
+
+    &:hover,
+    &:focus {
+      background: $gray-platinum;
+    }
+
+    &[aria-expanded="true"] {
+      color: $white;
+      background: $link-color-hover;
+      border-color: $link-color-hover;
+
+      &::after {
+        border-bottom: 5px solid $white;
+        border-top: 0;
+      }
+    }
+  }
+}

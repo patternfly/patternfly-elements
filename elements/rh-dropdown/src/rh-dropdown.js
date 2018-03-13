@@ -217,7 +217,7 @@ class RhDropdown extends Rhelement {
       }
     }
 
-    if (newItem) {
+    if (newItem && newItem != -1) {
       newItem.querySelector("a").focus();
     }
   }

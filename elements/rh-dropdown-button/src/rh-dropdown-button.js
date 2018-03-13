@@ -17,13 +17,11 @@ class RhDropdownButton extends Rhelement {
 
   constructor() {
     super("rh-dropdown-button", template);
-
+    this.button = this.shadowRoot.querySelector("button");
     this._clickHandler = this._clickHandler.bind(this);
   }
 
   connectedCallback() {
-    this.button = this.shadowRoot.querySelector("button");
-
     const child = this.children[0];
     let isHeadingTag = false;
 

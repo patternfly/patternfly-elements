@@ -42,7 +42,7 @@ template.innerHTML = `
 
 class RhDropdownButton extends Rhelement {
   static get observedAttributes() {
-    return ["data-expanded"];
+    return ["no-aria-haspopup"];
   }
 
   constructor() {
@@ -79,7 +79,10 @@ class RhDropdownButton extends Rhelement {
       );
     }
 
-    this.button.setAttribute("aria-haspopup", "true");
+    if (!this.getAttribute("no-aria-haspopup")) {
+      this.button.setAttribute("aria-haspopup", "true");
+    }
+
     this.button.setAttribute("aria-expanded", "false");
     this.button.setAttribute("role", "presentation");
 
@@ -88,6 +91,14 @@ class RhDropdownButton extends Rhelement {
 
   disconnectedCallback() {
     this.button.removeEventListener("click", this._clickHandler);
+  }
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    if (attr === "no-aria-haspopup" && newVal === "true") {
+      this.button.removeAttribute("aria-haspopup");
+    } else {
+      this.button.setAttribute("aria-haspopup", "true");
+    }
   }
 
   get expanded() {

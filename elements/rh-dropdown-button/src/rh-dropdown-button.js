@@ -54,7 +54,6 @@ class RhDropdownButton extends Rhelement {
     }
 
     this.button.setAttribute("aria-expanded", "false");
-    this.button.setAttribute("role", "presentation");
 
     this.button.addEventListener("click", this._clickHandler);
   }

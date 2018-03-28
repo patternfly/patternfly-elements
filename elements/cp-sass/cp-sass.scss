@@ -6,6 +6,6 @@
 @import "_extends";
 
 // Give everyone the right box-sizing.
-*, *::before, *:after {
-  box-sizing: var(--box-sizing, border-box);
-}
+// *, *::before, *::after {
+//   box-sizing: border-box;
+// }

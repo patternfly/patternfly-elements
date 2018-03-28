@@ -1,3 +1,9 @@
+@mixin box-sizing() {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+}
+
 @mixin rh-transition($properties...) {
     $return: null;
     @each $property in $properties {

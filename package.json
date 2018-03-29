@@ -15,6 +15,7 @@
     "babel-preset-es2015": "^6.24.1",
     "browser-sync": "^2.23.2",
     "del": "^3.0.0",
+    "generator-rhelement": "0.5.0",
     "global": "^4.3.2",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-babel": "^7.0.0",
@@ -49,7 +50,8 @@
     "postinstall": "npm run bootstrap",
     "precommit": "lint-staged",
     "storybook": "start-storybook -c .storybook -p 9001",
-    "build-storybook": "build-storybook -c .storybook -o .storybook_out"
+    "build-storybook": "build-storybook -c .storybook -o .storybook_out",
+    "new": "cd elements && yo rhelement"
   },
   "lint-staged": {
     "*.{js,json}": [

@@ -1,0 +1,26 @@
+{
+  "name": "@rhelements/cp-styles",
+  "version": "0.0.10",
+  "description": "cp-themeset for Red Hat's Customer Portal and RHElements",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RHElements/cp-themeset.git"
+  },
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json --npm elements/rh-dropdown/test/"
+  },
+  "contributors": [
+    {
+      "name": "Mark Caron",
+      "email": "mark@redhat.com",
+      "url": "https://github.com/markcaron"
+    }
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "@rhelements/cp-sass": "*",
+    "@rhelements/rh-overpass": "*"
+  }
+}

@@ -1,132 +1,29 @@
-$block-color-map: (
-    table-background: (
-        white: $white,
-        gray: $gray-platinum
-    ),
+//
+// Global vars are named:
+// `$rh-global--concept--PropertyTitleCase--modifier--state`
+// For example:
+// * $rh-global--color--primary
+// * $rh-global--FontSize
+// * --rh-global--FontSize--heading--xs
+
+// Component/Element vars are named:
+// `$rh-c-block__element--modifier--state--PropertyTitleCase`
+// For example:
+// * --rh-dropdown--heading--FontSize
+// * --cp-accordion--heading--FontSize
+
+$rh-global--color-map--block: (
     band-background: (
-        white: $white,
-        black: $black,
-        black-soft: $black-soft,
-        rich-soft: $black-soft,
-        red: $red-brick,
-        gray: $gray-platinum,
-        light: $gray-platinum,
-        navy: $blue-navy,
-        blue: $blue-peacock,
-        blue-dark: $blue-rain,
-        green: $green,
-        charcoal: $gray-charcoal
-    ),
-    card-background: (
-        white: $white,
-        black: $black,
-        black-soft: $black-soft,
-        rich-soft: $black-soft,
-        red: $red-brick,
-        gray: $gray-platinum,
-        light: $gray-platinum,
-        dark-gray: $gray-night,
-        navy: $blue-navy,
-        blue: $blue-peacock,
-        blue-dark: $blue-rain,
-        green: $green,
-        charcoal: $gray-charcoal
-    ),
-    card-absolute-background: (
-        white: $white,
-        black: $black,
-    ),
-    image-border: (
-        default: $border-color,
-        white: $white,
-        black: $black,
-        black-soft: $black-soft,
-        rich-soft: $black-soft,
-        red: $red,
-        gray: $gray-platinum,
-        light: $gray-platinum,
-        gray-dark: $gray-night,
-        dark-gray: $gray-night,
-        teal: $teal,
-        blue: $blue-denim,
-    ),
-    accordion-background: (
-        white: $white,
-        black: $black,
-        gray: $gray-platinum,
-        light: $gray-platinum,
-        dark-gray: $gray-night
-    ),
-    accordion-border: (
-        default: $border-color,
-        white: $white,
-        black: $black,
-        gray: $gray-platinum,
-        light: $gray-platinum,
-        dark-gray: $gray-night
-    ),
-    accordion-indicator: (
-        dark: $white,
-        light: $gray-night
-    ),
-    rule-border: (
-        default: $border-color,
-        dark: $gray-umbra,
-        light: $gray-platinum
-    ),
-    card-border: (
-        default: $gray-night,
-        white: $white,
-        black: $black,
-        black-soft: $black-soft,
-        rich-soft: $black-soft,
-        red: $red-brick,
-        gray: $gray-platinum,
-        light: $gray-platinum,
-        dark-gray: $gray-night,
-        navy: $blue-navy,
-        blue: $blue-peacock,
-        blue-dark: $blue-rain,
-        green: $green,
-        charcoal: $gray-charcoal
-    ),
-    menu-background: (
-        desktop: $black,
-        mobile: $white,
-        mobile-top: $black-soft,
-        utility-xs: $black,
-        utility-sm: $white
-    ),
-    box-shadow: (
-        light: $black,
-    ),
-    tooltip-background: (
-        dark: $black,
-        light: $white,
-    ),
-    tooltip-border: (
-        dark: $black,
-        light: $gray-platinum,
-    ),
-    tooltip-icon-text: (
-        light: $white,
-        help: $white,
-        warning: $black-soft,
-        error: $white,
-        info: $white,
-    ),
-    tooltip-icon-background: (
-        light: $black,
-        help: $black,
-        warning: $gray-night,
-        error: $brand-primary,
-        info: $blue-peacock,
-    ),
-    list-item-markers: (
-        dark: $white,
-        light: $gray-night
-    ),
-    tag-box: (
-        white: $white
+        white: $rh-global--color--white,
+        black: $rh-global--color--black,
+        black-soft: $rh-global--color--black-soft,
+        red: $rh-global--color--red,
+        red-dark: $rh-global--color--red-brick,
+        gray: $rh-global--color--gray-platinum,
+        light: $rh-global--color--gray-platinum,
+        navy: $rh-global--color--blue-navy,
+        blue: $rh-global--color--blue-peacock,
+        blue-dark: $rh-global--color--blue-rain,
+        charcoal: $rh-global--color--gray-charcoal
     )
 );

@@ -1,11 +1,23 @@
-@import "../../node_modules/breakpoint-sass/stylesheets/_breakpoint";
-@import "_variables";
-@import "_maps";
-@import "_functions";
-@import "_mixins";
-@import "_extends";
+//
+// Global vars are named:
+// `$rh-global--concept--PropertyTitleCase--modifier--state`
+// For example:
+// * $rh-global--color--primary
+// * $rh-global--FontSize
+// * --rh-global--FontSize--heading--xs
 
-// Give everyone the right box-sizing.
-// *, *::before, *::after {
-//   box-sizing: border-box;
-// }
+// Component/Element vars are named:
+// `$rh-c-block__element--modifier--state--PropertyTitleCase`
+// For example:
+// * --rh-dropdown--heading--FontSize
+// * --cp-accordion--heading--FontSize
+
+@import "../../node_modules/breakpoint-sass/stylesheets/_breakpoint";
+
+$repo: rh !default;
+$rh-global--font-size-root:  16 !default; // root for fonts and everything else
+
+@import "_variables";
+@import "_functions";
+@import "_maps";
+@import "_mixins";

@@ -1,138 +1,24 @@
-$copy-color-map: (
+//
+// Global vars are named:
+// `$rh-global--concept--PropertyTitleCase--modifier--state`
+// For example:
+// * $rh-global--color--primary
+// * $rh-global--FontSize
+// * --rh-global--FontSize--heading--xs
+
+// Component/Element vars are named:
+// `$rh-c-block__element--modifier--state--PropertyTitleCase`
+// For example:
+// * --rh-dropdown--heading--FontSize
+// * --cp-accordion--heading--FontSize
+
+$rh-global--color-map--copy: (
     default-paragraph: (
-        dark: $white,
-        dark-subtle: $white,
-        dark-desaturated: $white,
-        light: $gray-night,
-        subtle: $gray-night,
-        light-subtle: $gray-night,
-    ),
-    // weak-paragraph: (
-    //     dark: $white,
-    //     light: $gray-night,
-    // ),
-    // weaker-paragraph: (
-    //     dark: $white,
-    //     light: $gray-night,
-    // ),
-    // small-paragraph: (
-    //     dark: $white,
-    //     dark-subtle: $white,
-    //     light: $gray-night,
-    //     subtle: $gray-night,
-    //     light-subtle: $gray-night
-    // ),
-    // description-paragraph: (
-    //     dark: $white,
-    //     light: $gray-night
-    // ),
-    // hero-metadata: (
-    //     dark: $white,
-    //     light: $gray-night,
-    // ),
-    // hero-em-metadata: (
-    //     dark: $white,
-    //     light: $gray-night,
-    // ),
-    // strong-paragraph: (
-    //     dark: $white,
-    //     light: $black-soft,
-    // ),
-    // default-headline: (
-    //     dark: $white,
-    //     light: $gray-night,
-    // ),
-    // default-li: (
-    //     dark: $white,
-    //     light: $gray-night,
-    // ),
-    // default-dl: (
-    //     dark: $white,
-    //     light: $gray-night,
-    // ),
-    // default-dt: (
-    //     light: $gray-night,
-    //     dark: $white,
-    // ),
-    // default-dd: (
-    //     dark: $white,
-    //     light: $gray-night,
-    // ),
-    // quote-copy: (
-    //     dark: $white,
-    //     light: $gray-night,
-    // ),
-    // quote-icon: (
-    //     dark: $brand-primary,
-    //     dark-desaturated: $gray-night,
-    //     light: $brand-primary,
-    // ),
-    // quote-footer: (
-    //     dark: $gray-night,
-    //     light: $gray-night,
-    // ),
-    // detail-text: (
-    //     dark: $gray-night,
-    //     light: $gray-night,
-    // ),
-    // footnote-item: (
-    //     dark: $gray-night,
-    //     light: $gray-night,
-    // ),
-    // site-footer-text: (
-    //     dark: $gray-night,
-    //     light: $gray-night,
-    // ),
-    // card-summary: (
-    //     dark: $white,
-    //     light: $gray-night,
-    // ),
-    // pagination-count: (
-    //     dark: $fog,
-    //     light: $black-soft,
-    //     inactive: $white
-    // ),
-    // pagination-count-background: (
-    //     inactive: $rich-black
-    // ),
-    // store-strong-paragraph: (
-    //     dark: $white,
-    //     light: $rich-black,
-    // ),
-    // price-teaser: (
-    //     dark: $iron,
-    //     light: $fog,
-    // ),
-    // price-sku: (
-    //     dark: $iron,
-    //     light: $fog,
-    // ),
-    // price-main: (
-    //     dark: $white,
-    //     light: $black,
-    // ),
-    // social-label: (
-    //     dark: $iron,
-    //     light: $fog,
-    // ),
-    // social-handle: (
-    //     dark: $white,
-    //     light: $black,
-    //     subtle: $fog,
-    //     dark-subtle: $iron,
-    // ),
-    // social-handle-hover: (
-    //     dark: $iron,
-    //     light: $fog,
-    //     subtle: $black,
-    //     dark-subtle: $white
-    // ),
-    // text-shadow: (
-    //     dark: $iron,
-    //     light: $stone,
-    // ),
-    // tooltip-text: (
-    //     dark: $white,
-    //     light: $stone,
-    // ),
+        dark: $rh-global--text-color--inverted,
+        dark-subtle: $rh-global--text-color--inverted,
+        dark-desaturated: $rh-global--text-color--inverted,
+        light: $rh-global--text-color,
+        subtle: $rh-global--text-color,
+        light-subtle: $rh-global--text-color,
+    )
 );

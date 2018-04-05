@@ -1,14 +1,21 @@
-$table-color-map: (
+//
+// Global vars are named:
+// `$rh-global--concept--PropertyTitleCase--modifier--state`
+// For example:
+// * $rh-global--color--primary
+// * $rh-global--FontSize
+// * --rh-global--FontSize--heading--xs
+
+// Component/Element vars are named:
+// `$rh-c-block__element--modifier--state--PropertyTitleCase`
+// For example:
+// * --rh-dropdown--heading--FontSize
+// * --cp-accordion--heading--FontSize
+
+$rh-global--color-map--table: (
     table-border: (
-        light: $gray-platinum,
-    ),
-    // table-label: (
-    //     light: $stone,
-    // ),
-    // table-strong-label: (
-    //     light: $rich-black,
-    // ),
-    // table-data: (
-    //     light: $rich-black,
-    // ),
+        default: $rh-global--BorderColor,
+        light: $rh-global--BorderColor--light,
+        dark: $rh-global--BorderColor--dark
+    )
 );

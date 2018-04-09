@@ -21,7 +21,7 @@ $rh-global--color-map--link: (
     default-link-hover: (
         dark: $rh-global--link-color--inverted--hover,
         dark-desaturated: $rh-global--color--gray-mercury,
-        light: $rh-global--color--link--hover
+        light: $rh-global--link-color--hover
     ),
     default-link-visited: (
         dark: $rh-global--link-color--inverted--visited,
@@ -31,11 +31,11 @@ $rh-global--color-map--link: (
     default-link-active: (
         dark: $rh-global--link-color--inverted--hover,
         dark-desaturated: $rh-global--color--gray-mercury,
-        light: $rh-global--color--link--hover
+        light: $rh-global--link-color--hover
     ),
     default-link-focus: (
         dark: $rh-global--link-color--inverted--hover,
         dark-desaturated: $rh-global--color--gray-mercury,
-        light: $rh-global--color--link--hover
+        light: $rh-global--link-color--hover
     )
 );

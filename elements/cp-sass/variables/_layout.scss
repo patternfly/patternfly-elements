@@ -30,10 +30,10 @@ $rh-global--grid-breakpoints: (
   xl: $rh-global--grid-breakpoint--xl
 ) !default;
 
-$rh-global--grid-breakpoint--xs--max: $rh-global--grid-breakpoint--sm--max - 1 !default;
-$rh-global--grid-breakpoint--sm--max: $rh-global--grid-breakpoint--md--max - 1 !default;
-$rh-global--grid-breakpoint--md--max: $rh-global--grid-breakpoint--lg--max - 1 !default;
-$rh-global--grid-breakpoint--lg--max: $rh-global--grid-breakpoint--xl--max - 1 !default;
+$rh-global--grid-breakpoint--xs--max: $rh-global--grid-breakpoint--sm - 1 !default;
+$rh-global--grid-breakpoint--sm--max: $rh-global--grid-breakpoint--md - 1 !default;
+$rh-global--grid-breakpoint--md--max: $rh-global--grid-breakpoint--lg - 1 !default;
+$rh-global--grid-breakpoint--lg--max: $rh-global--grid-breakpoint--xl - 1 !default;
 
 
 // ========================================================================

@@ -5,16 +5,28 @@
     <title>RHElements: cp-more-like-this Demo</title>
 
     <!-- uncomment the es5-adapter if you're using the compiled version -->
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.10/custom-elements-es5-adapter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.10/webcomponents-lite.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require(['../cp-more-like-this.compiled.js'])</script>
-
+    <script>
+      document.addEventListener('cp-more-like-this:no-data', function() {
+        console.warn('No data from the API URL');
+        document.querySelector('.container').classList.add('hidden');
+      });
+    </script>
   </head>
   <body>
-    <cp-more-like-this
-      q="https://api.access.redhat.com/rs/solutions/1336663"
-      content-type="Solution">
-    </cp-more-like-this>
+    <div class="container">
+      <cp-more-like-this
+        api-url="https://api.access.redhat.com/rs/search?q=id:1336663&mltDocSearch=true&limit=3"
+        content-type="Solution">
+      </cp-more-like-this>
+    </div>
   </body>
 </html>

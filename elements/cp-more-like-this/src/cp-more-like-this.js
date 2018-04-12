@@ -19,34 +19,37 @@ const bindTemplate = data => {
 
 class CpMoreLikeThis extends Rhelement {
   static get observedAttributes() {
-    return ["q", "content-type"];
+    return ["api-url", "content-type"];
   }
 
   constructor() {
     super(elementName);
+
     this.handleResponse = this.handleResponse.bind(this);
+    this.handleError = this.handleError.bind(this);
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
     this[name] = newValue;
 
-    if (!this.q || !this["content-type"]) {
+    if (!this["api-url"] || !this["content-type"]) {
       return;
     }
 
-    const apiUrl = `https://api.access.redhat.com/rs/search?start=0&rows=3&q=${
-      this.q
-    }&fl=uri,allTitle,score,documentKind,lastModifiedDate,view_uri&mltDocSearch=true`;
-
     this.loading = true;
 
-    fetch(apiUrl)
+    fetch(this["api-url"])
       .then(res => res.json())
-      .then(this.handleResponse);
+      .then(this.handleResponse, this.handleError);
   }
 
   handleResponse(data) {
     this.loading = false;
+
+    if (!data.response.docs.length) {
+      console.warn("No docs found");
+      this.dispatchNoDataEvent();
+    }
 
     this.data = {
       contentType: this["content-type"],
@@ -54,6 +57,19 @@ class CpMoreLikeThis extends Rhelement {
     };
 
     this.render();
+  }
+
+  handleError(err) {
+    console.warn("Error in retrieving data", err);
+    this.dispatchNoDataEvent();
+  }
+
+  dispatchNoDataEvent() {
+    this.dispatchEvent(
+      new CustomEvent("cp-more-like-this:no-data", {
+        bubbles: true
+      })
+    );
   }
 
   render() {

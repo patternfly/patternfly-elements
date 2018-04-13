@@ -24,7 +24,7 @@
   "dependencies": {
     "@rhelements/cp-accordion-heading": "0.0.x",
     "@rhelements/cp-accordion-panel": "0.0.x",
-    "@rhelements/cp-sass": "0.0.x",
+    "@rhelements/cp-sass": "*",
     "@rhelements/cp-styles": "0.0.x",
     "@rhelements/rhelement": "0.0.x"
   },

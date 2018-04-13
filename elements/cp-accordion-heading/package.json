@@ -19,7 +19,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@rhelements/cp-sass": "^0.0.9",
+    "@rhelements/cp-sass": "*",
     "@rhelements/cp-styles": "^0.0.10",
     "@rhelements/rhelement": "^0.0.4"
   },

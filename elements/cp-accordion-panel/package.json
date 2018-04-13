@@ -19,7 +19,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@rhelements/cp-sass": "0.0.x",
+    "@rhelements/cp-sass": "*",
     "@rhelements/rhelement": "0.0.x"
   },
   "greenkeeper": {

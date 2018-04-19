@@ -1,1 +1,28 @@
-@import "node_modules/@rhelements/cp-sass/cp-sass";
+// @import "node_modules/@rhelements/cp-sass/cp-sass";
+@import "../../cp-sass/cp-sass";
+
+:host {
+  display: block;
+  padding: var(--rh-global--spacer, $rh-global--spacer);
+  border: var(--rh-global--BorderWidth, $rh-global--BorderWidth)
+          var(--rh-global--BorderStyle, $rh-global--BorderStyle)
+          transparent;
+}
+
+// :host ::slotted(h2[slot="header"]) {
+//   color: #c00;
+// }
+
+:host([theme="dark"]) {
+  background: var(--rh-card--theme-dark--Background, $rh-global--color--black);
+  color: var(--rh-card--theme-dark--Color, $rh-global--color--white);
+}
+
+:host([theme="light"]) {
+  background: var(--rh-card--theme-light--Background, $rh-global--color--gray2);
+  color: var(--rh-card--theme-light--Color, $rh-global--text-color);
+}
+
+:host ::slotted(h2:first-child) {
+  margin-top: 0;
+}

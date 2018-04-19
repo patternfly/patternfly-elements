@@ -3,11 +3,11 @@
 }
 
 @function rh-size-pem($pxval, $base: $rh-global--font-size-root) {
-    @return strip-unit($pxval) / $base * 1em;
+    @return rh-strip-unit($pxval) / $base * 1em;
 }
 
 @function rh-size-prem($pxval, $base: $rh-global--font-size-root) {
-    @return strip-unit($pxval) / $base * 1rem;
+    @return rh-strip-unit($pxval) / $base * 1rem;
 }
 
 /// Map deep get

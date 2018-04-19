@@ -1,0 +1,102 @@
+@import "node_modules/@rhelements/cp-sass/cp-sass";
+:host {
+  display: block;
+}
+
+$icon-colors: (
+  white: ('--rh-global--color--white', $rh-global--color--white), // name: (CSS Var, SASS var),
+  black: ('--rh-global--color--black', $rh-global--color--black)
+);
+
+$icon-bg-colors: (
+  white: ('--rh-global--color--white', $rh-global--color--white, '--rh-global--text-color', $rh-global--text-color), // name: (BG CSS Var, BG SASS var, fill CSS Var, fill SASS var),
+  red: ('--rh-global--color--red', $rh-global--color--red, '--rh-global--color--white', $rh-global--color--white),
+  light: ('--rh-global--color--gray2', $rh-global--color--gray2, '--rh-global--text-color', $rh-global--text-color),
+  dark: ('--rh-global--color--gray10', $rh-global--color--gray10, '--rh-global--color--white', $rh-global--color--white)
+);
+
+@mixin set-svg-size($size: 1em) {
+  &,
+  & svg {
+    width: $size;
+    height: $size;
+  }
+}
+
+rh-icon {
+  display: inline-block;
+  vertical-align: middle;
+  @include set-svg-size(1em);
+
+  svg {
+    fill: var(--rh-global--text-color, $rh-global--text-color);
+  }
+
+  &[data-block] {
+    display: block;
+    margin-bottom: var(--rh-global--spacer, $rh-global--spacer);
+    margin-top: var(--rh-global--spacer, $rh-global--spacer);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  @each $color, $value in $icon-colors {
+    $cssvar: nth($value, 1);
+    $sass: nth($value, 2);
+
+    &[data-color="#{$color}"] svg {
+      fill: var(#{$cssvar}, #{$sass});
+    }
+  }
+
+  &[data-bg] {
+    border-radius: 50%;
+  }
+
+  &[data-bg="transparent"] {
+    background: transparent;
+    border: var(--rh-global--BorderWidth, $rh-global--BorderWidth) var(--rh-global--BorderStyle, $rh-global--BorderStyle) var(--rh-global--BorderColor, $rh-global--BorderColor);
+  }
+
+  @each $color, $value in $icon-bg-colors {
+    $cssvar: nth($value, 1);
+    $sass: nth($value, 2);
+    $fill-cssvar: nth($value, 3);
+    $fill-sass: nth($value, 4);
+
+    &[data-bg="#{$color}"] {
+      background: var(#{$cssvar}, #{$sass});
+      fill: var(#{$fill-cssvar}, #{$fill-sass});
+
+      svg {
+        fill: var(#{$fill-cssvar}, #{$fill-sass});
+      }
+    }
+  }
+
+  &[data-size="2x"] {
+    @include set-svg-size(2em);
+  }
+
+  &[data-size="3x"] {
+    @include set-svg-size(3em);
+  }
+
+  &[data-size="4x"] {
+    @include set-svg-size(4em);
+  }
+
+  &[data-size="large"] {
+    @include set-svg-size(100px);
+  }
+
+  &[data-size="medium"] {
+    @include set-svg-size(70px);
+  }
+
+  &[data-size="small"] {
+    @include set-svg-size(48px);
+  }
+}

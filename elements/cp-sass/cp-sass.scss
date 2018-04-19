@@ -17,7 +17,7 @@
 $repo: rh !default;
 $rh-global--font-size-root:  16 !default; // root for fonts and everything else
 
-@import "_variables";
 @import "_functions";
+@import "_variables";
 @import "_maps";
 @import "_mixins";

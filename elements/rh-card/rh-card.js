@@ -2,66 +2,84 @@ import Rhelement from "../rhelement/rhelement.js";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the
- * html from cp-dialog.html and css from
- * cp-dialog.scss
+ * html from rh-card.html and css from
+ * rh-card.scss
  */
 const template = document.createElement("template");
 template.innerHTML = `
 <style>:host {
-  display: block; }
+  display: block;
+  padding: var(--rh-global--spacer, 1rem);
+  border: var(--rh-global--BorderWidth, 1px) var(--rh-global--BorderStyle, solid) transparent; }
 
-.card {
-  display: flex;
-  flex-direction: column;
-  background: #e7e7e7;
-  padding: 16px;
-  margin-bottom: 32px; }
-  .card p {
-    margin-top: 0;
-    flex: 1 1 auto; }
-  .card a {
-    color: #06c;
-    text-decoration: none;
-    font-weight: 700; }
-  .card span {
-    font-size: .9rem;
-    font-weight: 400; }
+:host([theme="dark"]) {
+  background: var(--rh-card--theme-dark--Background, #1a1a1a);
+  color: var(--rh-card--theme-dark--Color, #fff); }
 
-@media (min-width: 768px) {
-  .card-container {
-    display: flex; }
-    .card-container .card {
-      width: 33%;
-      margin: 16px;
-      margin-top: 8px; }
-      .card-container .card:first-child {
-        margin-left: 0; }
-      .card-container .card:last-child {
-        margin-right: 0; } }</style>
-<h3>People who viewed this ${data.contentType} also viewed</h3>
-<div class="card-container">
-  ${data.results.map(result => `
-    <div class="card">
-      <p><a href="${result.view_uri}">${result.allTitle}</a></p>
-      <span>
-        ${result.documentKind} - <rh-datetime
-          datetime="${result.lastModifiedDate}"
-          type="local"
-          day="numeric"
-          month="short"
-          year="numeric">
-          ${result.lastModifiedDate}
-        </rh-datetime>
-      </span>
-    </div>
-  `).join('\n')}
-</div>
+:host([theme="light"]) {
+  background: var(--rh-card--theme-light--Background, #e7e7e7);
+  color: var(--rh-card--theme-light--Color, #333); }
+
+:host ::slotted(h2:first-child) {
+  margin-top: 0; }</style>
+<slot name="header"></slot>
+<slot></slot>
+<slot name="footer"></slot>
 `;
 /* end DO NOT EDIT */
 
 class RhCard extends Rhelement {
+  static get observedAttributes() {
+    return ["theme"];
+  }
+
   constructor() {
     super("rh-card", template);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    console.log(this);
+
+    // this.button = this.shadowRoot.querySelector("button");
+    //
+    // const child = this.children[0];
+    // let isHeadingTag = false;
+    //
+    // if (child) {
+    //   switch (child.tagName) {
+    //     case "H1":
+    //     case "H2":
+    //     case "H3":
+    //     case "H4":
+    //     case "H5":
+    //     case "H6":
+    //       isHeadingTag = true;
+    //       break;
+    //   }
+    //
+    //   const wrapperTag = document.createElement(child.tagName);
+    //   this.button.innerText = child.innerText;
+    //
+    //   wrapperTag.appendChild(this.button);
+    //   this.shadowRoot.appendChild(wrapperTag);
+    // } else {
+    //   this.button.innerText = this.textContent.trim();
+    // }
+    //
+    // if (!isHeadingTag) {
+    //   console.warn(
+    //     "The first child in the light DOM must be a heading level tag (h1, h2, h3, h4, h5, or h6)"
+    //   );
+    // }
+  }
+
+  disconnectedCallback() {}
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    if (attr === "theme") {
+    }
   }
 }
 

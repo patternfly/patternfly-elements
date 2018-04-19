@@ -10,12 +10,44 @@ const del = require("del");
 const fs = require("fs");
 let watcher;
 
+gulp.task("clean", () => {
+  return del(["./*.compiled.*"]);
+});
+
 gulp.task("sass", () => {
   return gulp
     .src(["./*.scss"])
     .pipe(sass())
     .pipe(stripCssComments())
     .pipe(trim())
+    .pipe(gulp.dest("./"));
+});
+
+gulp.task("replaceStyles", () => {
+  return gulp
+    .src("./cp-themeset.js")
+    .pipe(
+      replace(
+        /<style class="themeset-style">[\s\S]*<\/style>/g,
+        '<style class="themeset-style">' +
+          fs.readFileSync("./cp-themeset.css") +
+          "</style>"
+      )
+    )
+    .pipe(gulp.dest("./"));
+});
+
+gulp.task("compile", () => {
+  return gulp
+    .src(["./*.js", "!./gulpfile.js"])
+    .pipe(replace(/(import ["'].*).(js["'];?)/g, "$1.compiled.$2"))
+    .pipe(babel())
+    .pipe(uglify())
+    .pipe(
+      rename({
+        suffix: ".compiled"
+      })
+    )
     .pipe(gulp.dest("./"));
 });
 
@@ -29,6 +61,6 @@ gulp.task("watch", () => {
   return watcher;
 });
 
-gulp.task("default", gulp.series("sass"));
+gulp.task("default", gulp.series("clean", "sass", "replaceStyles", "compile"));
 
 gulp.task("dev", gulp.series("default", "watch"));

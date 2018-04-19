@@ -2,7 +2,7 @@
 import "./custom-style-interface.min.js"; // this doesn't exist in this directory
 
 (function() {
-  const templateId = "cp-themeset";
+  const templateId = "unc-themeset";
 
   if (document.getElementById(templateId)) {
     return;
@@ -245,7 +245,13 @@ h5 {
 
 h6 {
   font-size: var(--rh-global--FontSize--heading--xxs, 0.875rem);
-  line-height: var(--rh-global--LineHeight, 1.5); }</style>
+  line-height: var(--rh-global--LineHeight, 1.5); }
+
+:root {
+  --rh-global--text-color: #151515;
+  --rh-card--theme-dark--Background: #13294B;
+  --rh-card--theme-light--Background: #4B9CD3;
+  --rh-card--theme-light--Color: #151515; }</style>
   `;
 
   document.head.appendChild(cpthemesetTemplate);

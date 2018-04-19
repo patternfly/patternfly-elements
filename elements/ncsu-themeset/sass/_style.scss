@@ -1,0 +1,51 @@
+// ============================================================================
+// Note: There should be no direct HEX or other values in this file.
+// Please reference CP-SASS variables.
+// ============================================================================
+//
+// Global vars are named:
+// `$rh-global--concept--PropertyTitleCase--modifier--state`
+// For example:
+// * $rh-global--color--primary
+// * $rh-global--FontSize
+// * --rh-global--FontSize--heading--xs
+
+// Component/Element vars are named:
+// `$rh-c-block__element--modifier--state--PropertyTitleCase`
+// For example:
+// * --rh-dropdown--heading--FontSize
+// * --cp-accordion--heading--FontSize
+
+:root {
+  /* ANIMATION */
+  --rh-global--animation-timing:             cubic-bezier(0.465, 0.183, 0.153, 0.946);
+
+  /* BORDERS */
+  --rh-global--BorderWidth:                  $rh-global--BorderWidth;
+  --rh-global--BorderWidth--thin:            $rh-global--BorderWidth--thin;
+
+  --rh-global--BorderStyle:                  $rh-global--BorderStyle;
+  --rh-global--BorderColor:                  $rh-global--BorderColor;
+  --rh-global--BorderColor--light:           $rh-global--BorderColor--light;
+  --rh-global--BorderColor--dark:            $rh-global--BorderColor--dark;
+
+  /* SHADOWS */
+  --rh-global--shadow--BoxShadow--sm:        $rh-global--shadow--BoxShadow--sm;
+  --rh-global--shadow--BoxShadow--md:        $rh-global--shadow--BoxShadow--md;
+  --rh-global--shadow--BoxShadow--lg:        $rh-global--shadow--BoxShadow--lg;
+
+  --rh-global--shadow--BoxShadow--sm-right:  $rh-global--shadow--BoxShadow--sm-right;
+  --rh-global--shadow--BoxShadow--sm-left:   $rh-global--shadow--BoxShadow--sm-left;
+  --rh-global--shadow--BoxShadow--sm-bottom: $rh-global--shadow--BoxShadow--sm-bottom;
+  --rh-global--shadow--BoxShadow--sm-top:    $rh-global--shadow--BoxShadow--sm-top;
+  --rh-global--shadow--BoxShadow--md-right:  $rh-global--shadow--BoxShadow--md-right;
+  --rh-global--shadow--BoxShadow--md-left:   $rh-global--shadow--BoxShadow--md-left;
+  --rh-global--shadow--BoxShadow--md-bottom: $rh-global--shadow--BoxShadow--md-bottom;
+  --rh-global--shadow--BoxShadow--md-top:    $rh-global--shadow--BoxShadow--md-top;
+  --rh-global--shadow--BoxShadow--lg-right:  $rh-global--shadow--BoxShadow--lg-right;
+  --rh-global--shadow--BoxShadow--lg-left:   $rh-global--shadow--BoxShadow--lg-left;
+  --rh-global--shadow--BoxShadow--lg-bottom: $rh-global--shadow--BoxShadow--lg-bottom;
+  --rh-global--shadow--BoxShadow--lg-top:    $rh-global--shadow--BoxShadow--lg-top;
+
+  --rh-global--shadow--BoxShadow--inset:     $rh-global--shadow--BoxShadow--inset;
+}

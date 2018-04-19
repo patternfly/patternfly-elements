@@ -2,7 +2,7 @@
 import "./custom-style-interface.min.js"; // this doesn't exist in this directory
 
 (function() {
-  const templateId = "cp-themeset";
+  const templateId = "ncsu-themeset";
 
   if (document.getElementById(templateId)) {
     return;
@@ -245,7 +245,12 @@ h5 {
 
 h6 {
   font-size: var(--rh-global--FontSize--heading--xxs, 0.875rem);
-  line-height: var(--rh-global--LineHeight, 1.5); }</style>
+  line-height: var(--rh-global--LineHeight, 1.5); }
+
+:root {
+  --rh-global--text-color: #000;
+  --rh-card--theme-dark--Background: #c00;
+  --rh-card--theme-light--Background: #ccc; }</style>
   `;
 
   document.head.appendChild(cpthemesetTemplate);

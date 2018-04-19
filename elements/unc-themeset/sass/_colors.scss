@@ -1,0 +1,158 @@
+// ============================================================================
+// Note: There should be no direct HEX or other values in this file.
+// Please reference CP-SASS variables.
+// ============================================================================
+//
+// Global vars are named:
+// `$rh-global--concept--PropertyTitleCase--modifier--state`
+// For example:
+// * $rh-global--color--primary
+// * $rh-global--FontSize
+// * --rh-global--FontSize--heading--xs
+
+// Component/Element vars are named:
+// `$rh-c-block__element--modifier--state--PropertyTitleCase`
+// For example:
+// * --rh-dropdown--heading--FontSize
+// * --cp-accordion--heading--FontSize
+
+:root {
+  /* CORPORATE COLORS */
+  --rh-global--color--white:             $rh-global--color--white;
+  --rh-global--color--black:             $rh-global--color--black;
+  --rh-global--color--red:               $rh-global--color--red;
+
+  --rh-global--color--gray-gainsboro:    $rh-global--color--gray-gainsboro;
+  --rh-global--color--gray-space:        $rh-global--color--gray-space;
+
+  /* SECONDARY, ACCENT & CRAYOLA COLORS */
+  --rh-global--color--blue-sky:          $rh-global--color--blue-sky;
+  --rh-global--color--blue-sky-deep:     $rh-global--color--blue-sky-deep;
+  --rh-global--color--gold:              $rh-global--color--gold;
+  --rh-global--color--green:             $rh-global--color--green;
+  --rh-global--color--purple:            $rh-global--color--purple;
+  --rh-global--color--teal:              $rh-global--color--teal;
+  --rh-global--color--teal-dark:         $rh-global--color--teal-dark;
+  // RH-specific Accents
+  --rh-global--color--blue-peacock:      $rh-global--color--blue-peacock;
+  --rh-global--color--orange:            $rh-global--color--orange;
+  --rh-global--color--green-verde:       $rh-global--color--green-verde;
+  --rh-global--color--gray-charcoal:     $rh-global--color--gray-charcoal;
+  --rh-global--color--gray-nickel:       $rh-global--color--gray-nickel;
+  --rh-global--color--black-soft:        $rh-global--color--black-soft;
+  // RH Reds
+  --rh-global--color--red-brick:         $rh-global--color--red-brick;
+  --rh-global--color--red-maroon:        $rh-global--color--red-maroon;
+  --rh-global--color--red-garnet:        $rh-global--color--red-garnet;
+  --rh-global--color--red-morello:       $rh-global--color--red-morello;
+  --rh-global--color--red-red-wine:      $rh-global--color--red-red-wine;
+  --rh-global--color--red-daredevil:     $rh-global--color--red-daredevil;
+  // RH Grays
+  --rh-global--color--gray-moon:         $rh-global--color--gray-moon;
+  --rh-global--color--gray-platinum:     $rh-global--color--gray-platinum;
+  --rh-global--color--gray-mercury:      $rh-global--color--gray-mercury;
+  --rh-global--color--gray-fog:          $rh-global--color--gray-fog;
+  --rh-global--color--gray-stone:        $rh-global--color--gray-stone;
+  --rh-global--color--gray-storm:        $rh-global--color--gray-storm;
+  --rh-global--color--gray-battleship:   $rh-global--color--gray-battleship;
+  --rh-global--color--gray-batman:       $rh-global--color--gray-batman;
+  --rh-global--color--gray-umbra:        $rh-global--color--gray-umbra;
+  --rh-global--color--gray-iron:         $rh-global--color--gray-iron;
+  --rh-global--color--gray-night:        $rh-global--color--gray-night;
+  --rh-global--color--black-nero:        $rh-global--color--black-nero;
+  // CP Grays
+  --rh-global--color--gray-nimbus:       $rh-global--color--gray-nimbus;
+  --rh-global--color--gray-silver:       $rh-global--color--gray-silver;
+  // CP-specific
+  --rh-global--color--blue-rain:         $rh-global--color--blue-rain;
+  --rh-global--color--blue-denim:        $rh-global--color--blue-denim;
+  --rh-global--color--blue-navy:         $rh-global--color--blue-navy;
+  --rh-global--color--blue-azure:        $rh-global--color--blue-azure;
+
+  --rh-global--color--blue-maya:         $rh-global--color--blue-maya;
+  --rh-global--color--blue-dodger:       $rh-global--color--blue-dodger;
+  --rh-global--color--purple-amethyst:   $rh-global--color--purple-amethyst;
+  --rh-global--color--purple-rain:       $rh-global--color--purple-rain;
+
+  /* PRODUCT COLORS */
+  --rh-global--color--product-lines--default:              map-get($rh-global--color--product-lines, default);
+  --rh-global--color--product-lines--storage:              map-get($rh-global--color--product-lines, storage);
+  --rh-global--color--product-lines--storage--dark:        map-get($rh-global--color--product-lines, storage--dark);
+  --rh-global--color--product-lines--infrastructure:       map-get($rh-global--color--product-lines, infrastructure);
+  --rh-global--color--product-lines--infrastructure--dark: map-get($rh-global--color--product-lines, infrastructure--dark);
+  --rh-global--color--product-lines--app-dev:              map-get($rh-global--color--product-lines, app-dev);
+  --rh-global--color--product-lines--app-dev--dark:        map-get($rh-global--color--product-lines, app-dev--dark);
+  --rh-global--color--product-lines--support:              map-get($rh-global--color--product-lines, support);
+  --rh-global--color--product-lines--support--dark:        map-get($rh-global--color--product-lines, support--dark);
+
+
+  /* PALETTES */
+  // PALETTE REDS
+  --rh-global--color--red-dark1:         $rh-global--color--red-brick;
+  --rh-global--color--red-dark2:         $rh-global--color--red-maroon;
+  --rh-global--color--red-dark3:         $rh-global--color--red-garnet;
+  --rh-global--color--red-dark4:         $rh-global--color--red-morello;
+  --rh-global--color--red-dark5:         $rh-global--color--red-red-wine;
+  --rh-global--color--red-dark6:         $rh-global--color--red-daredevil;
+  // PALETTE GRAYS: lightest to darkest
+  --rh-global--color--gray1:             $rh-global--color--gray-moon;
+  --rh-global--color--gray2:             $rh-global--color--gray-platinum;
+  --rh-global--color--gray3:             $rh-global--color--gray-mercury;
+  --rh-global--color--gray4:             $rh-global--color--gray-fog;
+  --rh-global--color--gray5:             $rh-global--color--gray-stone;
+  --rh-global--color--gray6:             $rh-global--color--gray-storm;
+  --rh-global--color--gray7:             $rh-global--color--gray-battleship;
+  --rh-global--color--gray8:             $rh-global--color--gray-batman;
+  --rh-global--color--gray9:             $rh-global--color--gray-umbra;
+  --rh-global--color--gray10:            $rh-global--color--gray-iron;
+  --rh-global--color--gray11:            $rh-global--color--gray-night;
+  --rh-global--color--gray12:            $rh-global--color--black-nero;
+
+  /* UI COLORS */
+  --rh-global--text-color:               $rh-global--color--gray-night;
+  --rh-global--text-color--inverted:     $rh-global--color--white;
+  // Text links on _white_ or _light_ backgrounds
+  --rh-global--link-color:               $rh-global--color--blue-denim;
+  --rh-global--link-color--hover:        $rh-global--color--blue-navy;
+  --rh-global--link-color--focus:        $rh-global--color--blue-navy;
+  --rh-global--link-color--active:       $rh-global--color--blue-navy;
+  --rh-global--link-color--visited:      $rh-global--color--purple;
+  // Text links on _dark grey_ or _black_ backgrounds
+  --rh-global--link-color--inverted:          $rh-global--color--blue-maya;
+  --rh-global--link-color--inverted--hover:   $rh-global--color--blue-dodger;
+  --rh-global--link-color--inverted--focus:   $rh-global--color--blue-dodger;
+  --rh-global--link-color--inverted--active:  $rh-global--color--blue-dodger;
+  --rh-global--link-color--inverted--visited: $rh-global--color--purple-amethyst;
+  // UI elements, like buttons
+  --rh-global--ui-element-color:         $rh-global--color--blue-azure;
+  --rh-global--ui-element-color--hover:  $rh-global--color--blue-navy;
+  --rh-global--ui-element-color--focus:  $rh-global--color--blue-navy;
+  --rh-global--ui-element-color--active: $rh-global--color--blue-navy;
+  // States, e.g. Filter button on search.
+  --rh-global--hover-state--Color:            $rh-global--color--red;
+  --rh-global--hover-state--BackgroundColor:  $pf-color-red-300;
+  --rh-global--hover-state--BorderColor:      $pf-color-red-300;
+
+  --rh-global--active-state--Color:           $rh-global--color--blue-navy;
+  --rh-global--active-state--BackgroundColor: $pf-color-blue-100;
+  --rh-global--active-state--BorderColor:     $pf-color-blue-100;
+
+  --rh-global--disabled-state--Color:           $rh-global--color--gray-stone;
+  --rh-global--disabled-state--BackgroundColor: $rh-global--color--gray-mercury;
+  --rh-global--disabled-state--BorderColor:     $rh-global--color--gray-mercury;
+
+  /* THEME COLORS */
+  --rh-global--primary-color:           $rh-global--color--red;
+  --rh-global--secondary-color:         $pf-color-black-600;
+  --rh-global--success-color:           $pf-color-green-100;
+  --rh-global--success-color--dark:     $rh-global--color--green;
+  --rh-global--info-color:              $pf-color-cyan-100;
+  --rh-global--info-color--dark:        $rh-global--color--teal;
+  --rh-global--warning-color:           $pf-color-orange-100;
+  --rh-global--warning-color--dark:     $rh-global--color--orange;
+  --rh-global--danger-color:            $rh-global--color--red;
+  --rh-global--danger-color--dark:      $pf-color-red-300;
+
+  --rh-global--light-color:             $pf-color-black-100;
+  --rh-global--dark-color:              $pf-color-black-800;
+}

@@ -1,20 +1,4 @@
-//elements/cp-themeset/custom-style-interface.min.js
-import "./custom-style-interface.min.js"; // this doesn't exist in this directory
-
-(function() {
-  const templateId = "cp-themeset";
-
-  if (document.getElementById(templateId)) {
-    return;
-  }
-
-  const cpthemesetTemplate = document.createElement("div");
-
-  cpthemesetTemplate.setAttribute("style", "display: none;");
-  cpthemesetTemplate.setAttribute("id", templateId);
-
-  cpthemesetTemplate.innerHTML = `
-    <style class="themeset-style">:root {
+:root {
   
   --rh-global--color--white: #fff;
   --rh-global--color--black: #1a1a1a;
@@ -245,14 +229,10 @@ h5 {
 
 h6 {
   font-size: var(--rh-global--FontSize--heading--xxs, 0.875rem);
-  line-height: var(--rh-global--LineHeight, 1.5); }</style>
-  `;
+  line-height: var(--rh-global--LineHeight, 1.5); }
 
-  document.head.appendChild(cpthemesetTemplate);
-
-  if (window.ShadyCSS) {
-    window.ShadyCSS.CustomStyleInterface.addCustomStyle(
-      document.querySelector(`#${templateId}-style`)
-    );
-  }
-})();
+:root {
+  --rh-global--text-color: #151515;
+  --rh-card--theme-dark--Background: #13294B;
+  --rh-card--theme-light--Background: #4B9CD3;
+  --rh-card--theme-light--Color: #151515; }

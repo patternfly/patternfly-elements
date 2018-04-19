@@ -1,0 +1,99 @@
+// ============================================================================
+// Note: There should be no direct HEX or other values in this file.
+// Please reference CP-SASS variables.
+// ============================================================================
+//
+// Global vars are named:
+// `$rh-global--concept--PropertyTitleCase--modifier--state`
+// For example:
+// * $rh-global--color--primary
+// * $rh-global--FontSize
+// * --rh-global--FontSize--heading--xs
+
+// Component/Element vars are named:
+// `$rh-c-block__element--modifier--state--PropertyTitleCase`
+// For example:
+// * --rh-dropdown--heading--FontSize
+// * --cp-accordion--heading--FontSize
+
+:root {
+  /* TYPOGRAPHY */
+  --rh-global--FontSize:                    $rh-global--FontSize;
+
+  --rh-global--LineHeight:                  $rh-global--LineHeight;
+  --rh-global--LineHeight--sm:              $rh-global--LineHeight--sm;
+  --rh-global--LineHeight--lg:              $rh-global--LineHeight--lg;
+
+  --rh-global--FontWeight--light:           $rh-global--FontWeight--light;
+  --rh-global--FontWeight--normal:          $rh-global--FontWeight--normal;
+  --rh-global--FontWeight--semi-bold:       $rh-global--FontWeight--semi-bold;
+  --rh-global--FontWeight--bold:            $rh-global--FontWeight--bold;
+
+  --rh-global--FontFamily--sans-serif:      $rh-global--FontFamily--sans-serif;
+  --rh-global--FontFamily--monospace:       $rh-global--FontFamily--monospace;
+  // Headings
+  --rh-global--FontSize--heading--xxl:      $rh-global--FontSize--heading--xxl;
+  --rh-global--FontSize--heading--xl:       $rh-global--FontSize--heading--xl;
+  --rh-global--FontSize--heading--lg:       $rh-global--FontSize--heading--lg;
+  --rh-global--FontSize--heading--md:       $rh-global--FontSize--heading--md;
+  --rh-global--FontSize--heading--sm:       $rh-global--FontSize--heading--sm;
+  --rh-global--FontSize--heading--xs:       $rh-global--FontSize--heading--xs;
+  --rh-global--FontSize--heading--xxs:      $rh-global--FontSize--heading--xxs;
+}
+
+body {
+  font-family: var(--rh-global--FontFamily--sans-serif, $rh-global--FontFamily--sans-serif);
+  font-size: var(--rh-global--FontSize, $rh-global--FontSize);
+  line-height: var(--rh-global--LineHeight, $rh-global--LineHeight);
+  font-weight: var(--rh-global--FontWeight--normal, --rh-global--FontWeight--normal);
+  color: var(--rh-global--text-color, $rh-global--text-color);
+
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+p {
+  margin-top: 0; // Thinking about whether this should be 0 or not.
+  margin-bottom: var(--rh-global--spacer, $rh-global--spacer);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: var(--rh-global--spacer, $rh-global--spacer); // Thinking about whether this should be 0 or not.
+  margin-bottom: var(--rh-global--spacer, $rh-global--spacer);
+  font-weight: var(--rh-global--FontWeight--bold, $rh-global--FontWeight--bold);
+  text-rendering: auto;
+}
+
+h1 {
+  font-size: var(--rh-global--FontSize--heading--xl, $rh-global--FontSize--heading--xl);
+  line-height: var(--rh-global--LineHeight--sm, $rh-global--LineHeight--sm);
+  font-weight: var(--rh-global--FontWeight--normal, $rh-global--FontWeight--normal);
+}
+
+h2 {
+  font-size: var(--rh-global--FontSize--heading--lg, $rh-global--FontSize--heading--lg);
+  line-height: var(--rh-global--LineHeight--sm, $rh-global--LineHeight--sm);
+  font-weight: var(--rh-global--FontWeight--normal, $rh-global--FontWeight--normal);
+}
+
+h3 {
+  font-size: var(--rh-global--FontSize--heading--md, $rh-global--FontSize--heading--md);
+  line-height: var(--rh-global--LineHeight--sm, $rh-global--LineHeight--sm);
+}
+
+h4 {
+  font-size: var(--rh-global--FontSize--heading--sm, $rh-global--FontSize--heading--sm);
+  line-height: var(--rh-global--LineHeight--sm, $rh-global--LineHeight--sm);
+}
+
+h5 {
+  font-size: var(--rh-global--FontSize--heading--xs, $rh-global--FontSize--heading--xs);
+  line-height: var(--rh-global--LineHeight, $rh-global--LineHeight);
+}
+
+h6 {
+  font-size: var(--rh-global--FontSize--heading--xxs, $rh-global--FontSize--heading--xxs);
+  line-height: var(--rh-global--LineHeight, $rh-global--LineHeight);
+}

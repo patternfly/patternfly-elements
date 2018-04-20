@@ -1,0 +1,32 @@
+@import "node_modules/@rhelements/cp-sass/cp-sass";
+
+:host {
+  display: inline-block;
+}
+
+:host button {
+  padding: 0 var(--rh-global--spacer, $rh-global--spacer);
+  font-size: var(--rh-global--FontSize, $rh-global--FontSize);
+  line-height: var(--rh-global--spacer--lg, $rh-global--spacer--lg);
+  border: 0;
+  cursor: pointer;
+
+  border-radius: var(--rh-global--button-border--BorderRadius, $rh-global--button-border--BorderRadius);
+  background: var(--rh-button--theme--default-color--Background, $rh-global--color--gray2);
+  color: var(--rh-button--theme--default-color--Color, $rh-global--text-color);
+}
+
+:host button:hover {
+  background: var(--rh-button--theme--default-color--hover--Background, $rh-global--color--gray4);
+  color: var(--rh-button--theme--default-color--hover--Color, $rh-global--text-color);
+}
+
+:host(.primary) button {
+  background: var(--rh-button--theme--primary-color--Background, $rh-global--ui-element-color);
+  color: var(--rh-button--theme--primary-color--Color, $rh-global--color--white);
+}
+
+:host(.primary) button:hover {
+  background: var(--rh-button--theme--primary-color--hover--Background, $rh-global--ui-element-color--hover);
+  color: var(--rh-button--theme--primary-color--hover--Color, $rh-global--color--white);
+}

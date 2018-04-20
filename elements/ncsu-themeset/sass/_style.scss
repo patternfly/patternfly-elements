@@ -21,13 +21,16 @@
   --rh-global--animation-timing:             cubic-bezier(0.465, 0.183, 0.153, 0.946);
 
   /* BORDERS */
-  --rh-global--BorderWidth:                  $rh-global--BorderWidth;
-  --rh-global--BorderWidth--thin:            $rh-global--BorderWidth--thin;
+  --rh-global--border--BorderWidth:                  $rh-global--border--BorderWidth;
+  --rh-global--border--BorderWidth--thin:            $rh-global--border--BorderWidth--thin;
 
-  --rh-global--BorderStyle:                  $rh-global--BorderStyle;
-  --rh-global--BorderColor:                  $rh-global--BorderColor;
-  --rh-global--BorderColor--light:           $rh-global--BorderColor--light;
-  --rh-global--BorderColor--dark:            $rh-global--BorderColor--dark;
+  --rh-global--border--BorderStyle:                  $rh-global--border--BorderStyle;
+  --rh-global--border--BorderColor:                  $rh-global--border--BorderColor;
+  --rh-global--border--BorderColor--light:           $rh-global--border--BorderColor--light;
+  --rh-global--border--BorderColor--dark:            $rh-global--border--BorderColor--dark;
+
+  --rh-global--border--BorderRadius:                 $rh-global--border--BorderRadius;
+  --rh-global--button-border--BorderRadius:          $rh-global--button-border--BorderRadius;
 
   /* SHADOWS */
   --rh-global--shadow--BoxShadow--sm:        $rh-global--shadow--BoxShadow--sm;

@@ -23,13 +23,16 @@ $rh-global--animation-timing:    cubic-bezier(0.465, 0.183, 0.153, 0.946);
 // Borders
 // ========================================================================
 
-$rh-global--BorderWidth:         1px;
-$rh-global--BorderWidth--thin:   $rh-global--BorderWidth;
+$rh-global--border--BorderWidth:         1px !default;
+$rh-global--border--BorderWidth--thin:   $rh-global--border--BorderWidth !default;
 
-$rh-global--BorderStyle:         solid;
-$rh-global--BorderColor:         $rh-global--color--gray-silver;
-$rh-global--BorderColor--light:  $rh-global--color--gray-platinum;
-$rh-global--BorderColor--dark:   $rh-global--text-color;
+$rh-global--border--BorderStyle:         solid !default;
+$rh-global--border--BorderColor:         $rh-global--color--gray-silver !default;
+$rh-global--border--BorderColor--light:  $rh-global--color--gray-platinum !default;
+$rh-global--border--BorderColor--dark:   $rh-global--text-color;
+
+$rh-global--border--BorderRadius:         0 !default;
+$rh-global--button-border--BorderRadius:  2px !default;
 
 
 // ========================================================================

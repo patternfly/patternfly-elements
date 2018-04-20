@@ -57,7 +57,7 @@ rh-icon {
 
   &[data-bg="transparent"] {
     background: transparent;
-    border: var(--rh-global--BorderWidth, $rh-global--BorderWidth) var(--rh-global--BorderStyle, $rh-global--BorderStyle) var(--rh-global--BorderColor, $rh-global--BorderColor);
+    border: var(--rh-global--border--BorderWidth, $rh-global--border--BorderWidth) var(--rh-global--border--BorderStyle, $rh-global--border--BorderStyle) var(--rh-global--border--BorderColor, $rh-global--border--BorderColor);
   }
 
   @each $color, $value in $icon-bg-colors {

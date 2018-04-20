@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-themeset",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "cp-themeset for Red Hat's Customer Portal and RHElements",
   "repository": {
     "type": "git",

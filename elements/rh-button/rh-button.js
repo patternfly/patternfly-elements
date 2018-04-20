@@ -16,6 +16,7 @@ template.innerHTML = `
   line-height: var(--rh-global--spacer--lg, 2rem);
   border: 0;
   cursor: pointer;
+  border-radius: var(--rh-global--button-border--BorderRadius, 2px);
   background: var(--rh-button--theme--default-color--Background, #e7e7e7);
   color: var(--rh-button--theme--default-color--Color, #333); }
 

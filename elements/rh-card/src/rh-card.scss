@@ -4,14 +4,10 @@
 :host {
   display: block;
   padding: var(--rhe-theme--spacer, $rh-global--spacer);
-  border: var(--rhe-theme--BorderWidth, $rh-global--BorderWidth)
-          var(--rhe-theme--BorderStyle, $rh-global--BorderStyle)
+  border: var(--rhe-theme--border--BorderWidth, $rh-global--border--BorderWidth)
+          var(--rhe-theme--border--BorderStyle, $rh-global--border--BorderStyle)
           transparent;
 }
-
-// :host ::slotted(h2[slot="header"]) {
-//   color: #c00;
-// }
 
 :host([theme="dark"]) {
   background: var(--rhe-theme--bg-color--shade7, $rh-global--color--black-soft);
@@ -23,6 +19,11 @@
   color: var(--rhe-theme--text-color--shade2, $rh-global--text-color);
 }
 
-:host ::slotted(h2:first-child) {
-  margin-top: 0;
+:host .rh-card__header::slotted(h1:first-child),
+:host .rh-card__header::slotted(h2:first-child),
+:host .rh-card__header::slotted(h3:first-child),
+:host .rh-card__header::slotted(h4:first-child),
+:host .rh-card__header::slotted(h5:first-child),
+:host .rh-card__header::slotted(h6:first-child) {
+  margin-top: 0 !important; // Specificity issue. Why?!
 }

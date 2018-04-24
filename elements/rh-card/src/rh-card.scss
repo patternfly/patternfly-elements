@@ -3,9 +3,9 @@
 
 :host {
   display: block;
-  padding: var(--rh-global--spacer, $rh-global--spacer);
-  border: var(--rh-global--BorderWidth, $rh-global--BorderWidth)
-          var(--rh-global--BorderStyle, $rh-global--BorderStyle)
+  padding: var(--rhe-theme--spacer, $rh-global--spacer);
+  border: var(--rhe-theme--BorderWidth, $rh-global--BorderWidth)
+          var(--rhe-theme--BorderStyle, $rh-global--BorderStyle)
           transparent;
 }
 
@@ -14,13 +14,13 @@
 // }
 
 :host([theme="dark"]) {
-  background: var(--rh-card--theme-dark--Background, $rh-global--color--black);
-  color: var(--rh-card--theme-dark--Color, $rh-global--color--white);
+  background: var(--rhe-theme--bg-color--shade7, $rh-global--color--black-soft);
+  color: var(--rhe-theme--text-color--shade7, $rh-global--text-color--inverted);
 }
 
 :host([theme="light"]) {
-  background: var(--rh-card--theme-light--Background, $rh-global--color--gray2);
-  color: var(--rh-card--theme-light--Color, $rh-global--text-color);
+  background: var(--rhe-theme--bg-color--shade2, $rh-global--color--gray-platinum);
+  color: var(--rhe-theme--text-color--shade2, $rh-global--text-color);
 }
 
 :host ::slotted(h2:first-child) {

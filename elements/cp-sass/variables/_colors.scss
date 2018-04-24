@@ -14,7 +14,7 @@
 
 
 // ========================================================================
-// CORPORATE COLORS
+// CORPORATE "CRAYOLA" COLORS
 // ========================================================================
 $rh-global--color--white:             $pf-color-white !default;
 $rh-global--color--black:             #1a1a1a !default; // We don't use true black on the web.
@@ -25,7 +25,7 @@ $rh-global--color--gray-space:        #4c4c4c !default;  // Official color name 
 
 
 // ========================================================================
-// SECONDARY, ACCENT & CRAYOLA COLORS
+// SECONDARY, ACCENT & "CRAYOLA" COLORS
 // ========================================================================
 $rh-global--color--blue-sky:          #a3dbe8 !default;
 $rh-global--color--blue-sky-deep:     $pf-color-light-blue-400 !default;
@@ -86,14 +86,14 @@ $rh-global--color--purple-rain:       #3b0083 !default;      // Old RH purple.
 // ========================================================================
 $rh-global--color--product-lines: (
   default:             $rh-global--color--black-soft,
-  storage:             $rh-global--color--orange,
-  storage--dark:       $rh-global--color--gold,
-  infrastructure:      $rh-global--color--blue-peacock, // Used to be linux-platforms
-  infrastructure--dark:$rh-global--color--blue-sky-deep,
-  app-dev:             $rh-global--color--green-verde,
-  app-dev--dark:       $rh-global--color--green,
-  support:             $rh-global--color--gray-charcoal,
-  support--dark:       $rh-global--color--gray-nickel
+  storage:             $rh-global--color--gold,
+  storage--dark:       $rh-global--color--orange,
+  infrastructure:      $rh-global--color--blue-sky-deep, // Used to be linux-platforms
+  infrastructure--dark:$rh-global--color--blue-peacock,
+  app-dev:             $rh-global--color--green,
+  app-dev--dark:       $rh-global--color--green-verde,
+  support:             $rh-global--color--gray-nickel,
+  support--dark:       $rh-global--color--gray-charcoal
 ) !default;
 
 
@@ -155,8 +155,8 @@ $rh-global--ui-element-color--active:   $rh-global--color--blue-navy !default;
 // States, e.g. Filter button on search.
 // Questions here...
 $rh-global--hover-state--Color:               $rh-global--color--red !default;
-$rh-global--hover-state--BackgroundColor:     $pf-color-red-300 !default;
-$rh-global--hover-state--BorderColor:         $pf-color-red-300 !default;
+$rh-global--hover-state--BackgroundColor:     $rh-global--color--red-maroon !default;
+$rh-global--hover-state--BorderColor:         $rh-global--color--red-maroon !default;
 // Questions here...
 $rh-global--active-state--Color:              $rh-global--color--blue-navy !default;
 $rh-global--active-state--BackgroundColor:    $pf-color-blue-100 !default;
@@ -171,16 +171,18 @@ $rh-global--disabled-state--BorderColor:        $rh-global--color--gray-mercury 
 // Theme colors
 // ========================================================================
 
-$rh-global--primary-color:       $rh-global--color--red !default;
-$rh-global--secondary-color:     $pf-color-black-600 !default;
-$rh-global--success-color:       $pf-color-green-100 !default;
-$rh-global--success-color--dark: $rh-global--color--green !default;
-$rh-global--info-color:          $pf-color-cyan-100 !default;
-$rh-global--info-color--dark:    $rh-global--color--teal !default;
-$rh-global--warning-color:       $pf-color-orange-100 !default;
-$rh-global--warning-color--dark: $rh-global--color--orange !default;
-$rh-global--danger-color:        $rh-global--color--red !default;
-$rh-global--danger-color--dark:  $pf-color-red-300 !default;
-// Questions here...
-$rh-global--light-color:         $pf-color-black-100 !default;
-$rh-global--dark-color:          $pf-color-black-800 !default;
+// I think these are misplaced. Should be in cp-themeset instead.
+// $rh-global--primary-color:         $rh-global--color--red !default;
+// $rh-global--secondary-color:       $pf-color-black-600 !default;
+//
+// $rh-global--light-color:         $pf-color-black-100 !default;
+// $rh-global--dark-color:          $pf-color-black-800 !default;
+
+$rh-global--success-color:         $pf-color-green-100 !default;
+$rh-global--success-color--dark:   $rh-global--color--green !default;
+$rh-global--info-color:            $pf-color-cyan-100 !default;
+$rh-global--info-color--dark:      $rh-global--color--teal !default;
+$rh-global--warning-color:         $pf-color-orange-100 !default;
+$rh-global--warning-color--dark:   $rh-global--color--orange !default;
+$rh-global--danger-color:          $rh-global--color--red !default;
+$rh-global--danger-color--dark:    $rh-global--color--red-maroon !default;

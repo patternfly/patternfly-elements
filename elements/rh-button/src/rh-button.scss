@@ -6,13 +6,13 @@
 }
 
 :host button {
-  padding: 0 var(--rh-global--spacer, $rh-global--spacer);
-  font-size: var(--rh-global--FontSize, $rh-global--FontSize);
-  line-height: var(--rh-global--spacer--lg, $rh-global--spacer--lg);
-  border: 0;
+  padding: 0 var(--rhe-theme--spacer, $rh-global--spacer);
+  font-size: var(--rhe-theme--FontSize, $rh-global--FontSize);
+  line-height: var(--rhe-theme--spacer--lg, $rh-global--spacer--lg);
+  border: 1px solid transparent;
   cursor: pointer;
 
-  border-radius: var(--rh-global--button-border--BorderRadius, $rh-global--button-border--BorderRadius);
+  border-radius: var(--rhe-theme--button-border--BorderRadius, $rh-global--button-border--BorderRadius);
   background: var(--rh-button--theme--default-color--Background, $rh-global--color--gray2);
   color: var(--rh-button--theme--default-color--Color, $rh-global--text-color);
 }

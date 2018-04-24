@@ -11,12 +11,12 @@ template.innerHTML = `
   display: inline-block; }
 
 :host button {
-  padding: 0 var(--rh-global--spacer, 1rem);
-  font-size: var(--rh-global--FontSize, 16px);
-  line-height: var(--rh-global--spacer--lg, 2rem);
-  border: 0;
+  padding: 0 var(--rhe-theme--spacer, 1rem);
+  font-size: var(--rhe-theme--FontSize, 16px);
+  line-height: var(--rhe-theme--spacer--lg, 2rem);
+  border: 1px solid transparent;
   cursor: pointer;
-  border-radius: var(--rh-global--button-border--BorderRadius, 2px);
+  border-radius: var(--rhe-theme--button-border--BorderRadius, 2px);
   background: var(--rh-button--theme--default-color--Background, #e7e7e7);
   color: var(--rh-button--theme--default-color--Color, #333); }
 

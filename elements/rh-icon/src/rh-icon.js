@@ -1,21 +1,33 @@
-import Rhelement from "../rhelement/rhelement.js";
+// import "../cp-styles/cp-styles.js";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the
  * html from rh-icon.html and css from
  * rh-icon.scss
  */
-const template = document.createElement("template");
-template.innerHTML = ``;
+
+const elementName = "rh-icon";
+
+const iconTemplate = document.createElement("template");
+iconTemplate.innerHTML = `
+  <svg><use href="" /></svg>
+`;
 /* end DO NOT EDIT */
 
-class RhIcon extends Rhelement {
+class RhIcon extends HTMLElement {
   static get observedAttributes() {
     return ["icon"];
   }
 
   constructor() {
-    super("rh-icon", template);
+    super();
+    this.appendChild(iconTemplate.content.cloneNode(true));
+  }
+
+  connectedCallback() {
+    if (window.ShadyCSS) {
+      ShadyCSS.styleElement(this);
+    }
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -24,7 +36,7 @@ class RhIcon extends Rhelement {
   }
 }
 
-window.customElements.define("rh-icon", RhIcon);
+window.customElements.define(elementName, RhIcon);
 
 const templateId = "rh-icon-head";
 if (!document.getElementById(templateId)) {
@@ -33,6 +45,6 @@ if (!document.getElementById(templateId)) {
   cpRHIconTemplate.setAttribute("style", "display: none;");
   cpRHIconTemplate.setAttribute("id", templateId);
 
-  cpRHIconTemplate.innerHTML = `<svg><use href="" /></svg>`;
+  cpRHIconTemplate.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg"></svg>`;
   document.head.appendChild(cpRHIconTemplate);
 }

@@ -5,7 +5,8 @@ const rename = require("gulp-rename");
 const replace = require("gulp-replace");
 const sass = require("gulp-sass");
 const nodesass = require("node-sass");
-const stripCssComments = require("gulp-strip-css-comments");
+const stripCssComments = require("strip-css-comments");
+const gulpStripCssComments = require("gulp-strip-css-comments");
 const trim = require("gulp-trim");
 const del = require("del");
 const fs = require("fs");
@@ -23,38 +24,33 @@ gulp.task("sass", () => {
   return gulp
     .src(["./*.scss"])
     .pipe(sass())
-    .pipe(stripCssComments())
+    .pipe(gulpStripCssComments())
     .pipe(trim())
     .pipe(sass.sync().on("error", sass.logError))
     .pipe(gulp.dest("./"));
 });
 
 gulp.task("replaceStyles", () => {
-  return (
-    gulp
-      .src("./src/rh-icon.js")
-      .pipe(
-        replace(/(iconTemplate\.innerHTML = `)(`;)/, (match, p1, p2) => {
-          const html = fs
-            .readFileSync("./src/rh-icon.html")
-            .toString()
-            .trim();
+  return gulp
+    .src("./rh-icon.js")
+    .pipe(
+      replace(/(iconTemplate\.innerHTML = `)(`;)/, (match, p1, p2) => {
+        const html = fs
+          .readFileSync("./src/rh-icon.html")
+          .toString()
+          .trim();
 
-          const cssResult = sass.renderSync({
-            file: "./src/rh-icon.scss"
-          }).css;
+        const cssResult = nodesass.renderSync({
+          file: "./src/rh-icon.scss"
+        }).css;
 
-          return `${p1}
-  <style>${stripCssComments(cssResult)}</style>
-  ${html}
-  ${p2}`;
-        })
-      )
-      // .pipe(
-      //   replace(/<style>*?<\/style>/g, '<style>' + fs.readFileSync('./src/rh-icon.scss') + '</style>')
-      // )
-      .pipe(gulp.dest("./"))
-  );
+        return `${p1}
+<style>${stripCssComments(cssResult).trim()}</style>
+${html}
+${p2}`;
+      })
+    )
+    .pipe(gulp.dest("./"));
 });
 
 gulp.task("svgSprite", function() {
@@ -133,7 +129,7 @@ gulp.task("svgs", gulp.series("svgSprite", "stuffSprite"));
 
 gulp.task(
   "default",
-  gulp.series("clean", "sass", "replaceStyles", "svgs", "compile")
+  gulp.series("clean", "sass", "svgs", "replaceStyles", "compile")
 );
 
 gulp.task("dev", gulp.series("default", "watch"));

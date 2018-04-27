@@ -1,4 +1,4 @@
-// import "../cp-styles/cp-styles.js";
+const elementName = "rh-icon";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the
@@ -6,12 +6,8 @@
  * rh-icon.scss
  */
 
-const elementName = "rh-icon";
-
 const iconTemplate = document.createElement("template");
-iconTemplate.innerHTML = `
-  <svg><use href="" /></svg>
-`;
+iconTemplate.innerHTML = ``;
 /* end DO NOT EDIT */
 
 class RhIcon extends HTMLElement {

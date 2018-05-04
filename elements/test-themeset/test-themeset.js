@@ -1,8 +1,9 @@
-//elements/cp-themeset/custom-style-interface.min.js
-import "./custom-style-interface.min.js"; // this doesn't exist in this directory
+import "./scoping-shim.min.js";
+import "./apply-shim.min.js";
+import "./custom-style-interface.min.js";
 
 (function() {
-  const templateId = "cp-themeset";
+  const templateId = "test-themeset";
 
   if (document.getElementById(templateId)) {
     return;
@@ -12,9 +13,7 @@ import "./custom-style-interface.min.js"; // this doesn't exist in this director
 
   cpthemesetTemplate.setAttribute("style", "display: none;");
   cpthemesetTemplate.setAttribute("id", templateId);
-
-  cpthemesetTemplate.innerHTML = `
-    <style class="themeset-style">:root {
+  cpthemesetTemplate.innerHTML = `<style id="${templateId}-style">:root {
   
   --rhe-theme--color--white: #fff;
   --rhe-theme--color--black: #1a1a1a;
@@ -309,8 +308,7 @@ h5 {
 
 h6 {
   font-size: var(--rhe-theme--FontSize--heading--xxs, 0.875rem);
-  line-height: var(--rhe-theme--LineHeight, 1.5); }</style>
-  `;
+  line-height: var(--rhe-theme--LineHeight, 1.5); }</style>`;
 
   document.head.appendChild(cpthemesetTemplate);
 

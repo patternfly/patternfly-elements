@@ -6,15 +6,35 @@
 
     <!-- needed for CP-Themeset -->
     <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+    <!--
+      if support for IE11 IS NOT needed, just include the stylesheet
+      than contains all of the variables for your themeset
+    -->
+    <!-- use cp-themeset -->
     <!-- <link rel="stylesheet" type="text/css" href="../../cp-themeset/cp-themeset.css"> -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"> -->
+
+    <!-- use another themeset -->
+    <!-- <link rel="stylesheet" type="text/css" href="../../test-themeset/test-themeset.css"> -->
 
     <!-- uncomment the es5-adapter if you're using the compiled version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.1.1/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.1.1/webcomponents-lite.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-lite.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <!-- Change themeset from test-themset and cp-themeset -->
-    <script>require(['../../cp-themeset/cp-themeset.compiled.js','../rh-card.compiled.js'])</script>
+
+    <!--
+      if support for IE11 IS NOT needed, just include the web components
+      that you want
+    -->
+    <!-- <script>require(['../rh-card.compiled.js'])</script> -->
+
+    <!--
+      if support IS needed for IE11
+    -->
+    <!-- use cp-themeset with support for IE11 -->
+    <!-- <script>require(['../../cp-themeset/cp-themeset.compiled.js','../rh-card.compiled.js'])</script> -->
+
+    <!-- use another themeset with support for IE11 -->
+    <!-- <script>require(['../../test-themeset/test-themeset.compiled.js','../rh-card.compiled.js'])</script> -->
 
   </head>
   <body>

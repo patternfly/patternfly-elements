@@ -25,11 +25,11 @@ gulp.task("sass", () => {
 
 gulp.task("replaceStyles", () => {
   return gulp
-    .src("./cp-themeset.js")
+    .src("./src/cp-themeset.js")
     .pipe(
       replace(
-        /<style class="themeset-style">[\s\S]*<\/style>/g,
-        '<style class="themeset-style">' +
+        /<style id="\${templateId}-style"><\/style>/g,
+        '<style id="${templateId}-style">' +
           fs.readFileSync("./cp-themeset.css") +
           "</style>"
       )
@@ -39,8 +39,7 @@ gulp.task("replaceStyles", () => {
 
 gulp.task("compile", () => {
   return gulp
-    .src(["./*.js", "!./gulpfile.js"])
-    .pipe(replace(/(import ["'].*).(js["'];?)/g, "$1.compiled.$2"))
+    .src(["./cp-themeset.js"])
     .pipe(babel())
     .pipe(uglify())
     .pipe(

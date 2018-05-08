@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>RHElements: rh-cta Demo</title>
+
+    <!-- uncomment the es5-adapter if you're using the compiled version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.1.1/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.1.1/webcomponents-lite.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../../cp-themeset/cp-themeset.compiled.js','../rh-cta.compiled.js'])</script>
+
+    <style>
+      p {
+        margin-bottom: 60px !important;
+      }
+      rh-cta + rh-cta {
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>RH-CTAs</h1>
+    <p>
+      <rh-cta class="solid"><a href="#">Become a Member</a></rh-cta>
+      <rh-cta class="outlined"><a href="#">Sign Up</a></rh-cta>
+      <rh-cta class="ghost"><a href="#">More info</a></rh-cta>
+    </p>
+
+    <p>
+      <rh-cta><a href="#">Learn more</a></rh-cta>
+    </p>
+
+    <p>
+      <rh-cta class="ghost"><a href="#">More info</a></rh-cta><rh-cta class="solid"><a href="#">Become a Member</a></rh-cta>
+    </p>
+  </body>
+</html>

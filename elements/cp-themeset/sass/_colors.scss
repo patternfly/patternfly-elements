@@ -189,6 +189,12 @@
   --rhe-theme--link-color--desaturated--focus:   $rh-global--color--black;
   --rhe-theme--link-color--desaturated--active:  $rh-global--color--black;
   --rhe-theme--link-color--desaturated--visited: $rh-global--color--black;
+  /* Desaturate text links */
+  --rhe-theme--link-color--desaturated--inverted:          $rh-global--color--white;
+  --rhe-theme--link-color--desaturated--inverted--hover:   $rh-global--color--gray-moon;
+  --rhe-theme--link-color--desaturated--inverted--focus:   $rh-global--color--gray-moon;
+  --rhe-theme--link-color--desaturated--inverted--active:  $rh-global--color--gray-moon;
+  --rhe-theme--link-color--desaturated--inverted--visited: $rh-global--color--gray-moon;
   /* UI elements, like buttons */
   --rhe-theme--ui-element-color--Color:          $rh-global--color--white;
   --rhe-theme--ui-element-color:                 $rh-global--color--blue-azure;

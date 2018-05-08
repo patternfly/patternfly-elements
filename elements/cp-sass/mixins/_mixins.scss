@@ -62,8 +62,8 @@
   border-top-color: $color;
   transform: rotate(map-get($direction, $type));
   @if $pseudo {
-    content: " ";
-    position: absolute;
+    display: inline-block;
+    content: "";
     @content;
   }
 }

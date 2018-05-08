@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>RHElements: rh-icon-panel Demo</title>
+
+    <!-- uncomment the es5-adapter if you're using the compiled version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.1.1/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.1.1/webcomponents-lite.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../../cp-themeset/cp-themeset.compiled.js','../../rh-cta/rh-cta.compiled.js','../rh-icon-panel.compiled.js'])</script>
+  </head>
+  <body>
+    <rh-icon-panel icon="rh-icon-server">
+      <h2 slot="header">This is rh-icon-panel</h2>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      <rh-cta slot="footer"><a href="#">Learn more</a></rh-cta>
+    </rh-icon-panel>
+  </body>
+</html>

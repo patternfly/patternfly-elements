@@ -24,7 +24,7 @@ class RhIconPanel extends Rhelement {
       console.warn("You must provide an icon attribute on rh-icon-panel");
     } else {
       let iconElem = this.shadowRoot.querySelector("rh-icon");
-      iconElem.setAttribute("icon", attrs.getNamedItem("icon").value);
+      // iconElem.setAttribute("icon", attrs.getNamedItem("icon").value);
     }
   }
 

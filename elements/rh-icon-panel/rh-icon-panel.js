@@ -10,7 +10,7 @@ const template = document.createElement("template");
 template.innerHTML = `
 <style>:host {
   display: block; }</style>
-<rh-icon size="2x"></rh-icon>
+<rh-icon data-size="2x" icon="rh-icon-server"></rh-icon>
 <slot class="rh-icon-panel__header" name="header"></slot>
 <slot class="rh-icon-panel__body"></slot>
 <slot class="rh-icon-panel__footer" name="footer"></slot>
@@ -31,7 +31,7 @@ class RhIconPanel extends Rhelement {
       console.warn("You must provide an icon attribute on rh-icon-panel");
     } else {
       let iconElem = this.shadowRoot.querySelector("rh-icon");
-      iconElem.setAttribute("icon", attrs.getNamedItem("icon").value);
+      // iconElem.setAttribute("icon", attrs.getNamedItem("icon").value);
     }
   }
 

@@ -196,10 +196,6 @@ template.innerHTML = `
 /* end DO NOT EDIT */
 
 class RhCta extends Rhelement {
-  static get observedAttributes() {
-    return ["is"];
-  }
-
   constructor() {
     super("rh-cta", template);
   }
@@ -219,16 +215,10 @@ class RhCta extends Rhelement {
       );
     } else {
       this.link = this.querySelector("a");
-      console.log(this.link);
     }
   }
 
   disconnectedCallback() {}
-
-  attributeChangedCallback(attr, oldVal, newVal) {
-    if (attr === "is") {
-    }
-  }
 }
 
 window.customElements.define("rh-cta", RhCta);

@@ -8,6 +8,7 @@
     "@storybook/addon-viewport": "^3.4.0-alpha.9",
     "@storybook/cli": "^3.4.0-alpha.9",
     "@storybook/polymer": "^3.4.0-alpha.9",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.26.0",
     "babel-plugin-external-helpers": "^6.22.0",

@@ -79,7 +79,7 @@ rh-icon {
   rh-icon[data-size="small"] svg {
     width: 48px;
     height: 48px; }</style>
-<svg><use href="" /></svg>
+<svg><use href="" xlink:href="" /></svg>
 `;
 /* end DO NOT EDIT */
 

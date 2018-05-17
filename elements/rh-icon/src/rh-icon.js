@@ -28,6 +28,7 @@ class RhIcon extends HTMLElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     const use = this.querySelector("use");
+    use.setAttribute("xlink:href", `#${newValue}`);
     use.setAttribute("href", `#${newValue}`);
   }
 }

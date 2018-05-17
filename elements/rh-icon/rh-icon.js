@@ -1,4 +1,4 @@
-// import "../cp-styles/cp-styles.js";
+const elementName = "rh-icon";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the
@@ -6,11 +6,80 @@
  * rh-icon.scss
  */
 
-const elementName = "rh-icon";
-
 const iconTemplate = document.createElement("template");
 iconTemplate.innerHTML = `
-  <svg><use href="" /></svg>
+<style>:host {
+  display: block; }
+
+rh-icon {
+  display: inline-block;
+  vertical-align: middle; }
+  rh-icon,
+  rh-icon svg {
+    width: 1em;
+    height: 1em; }
+  rh-icon svg {
+    fill: var(--rh-global--text-color, #333); }
+  rh-icon[data-block] {
+    display: block;
+    margin-bottom: var(--rh-global--spacer, 1rem);
+    margin-top: var(--rh-global--spacer, 1rem); }
+    rh-icon[data-block]:first-child {
+      margin-top: 0; }
+  rh-icon[data-color="white"] svg {
+    fill: var(--rh-global--color--white, #fff); }
+  rh-icon[data-color="black"] svg {
+    fill: var(--rh-global--color--black, #1a1a1a); }
+  rh-icon[data-bg] {
+    border-radius: 50%; }
+  rh-icon[data-bg="transparent"] {
+    background: transparent;
+    border: var(--rh-global--border--BorderWidth, 1px) var(--rh-global--border--BorderStyle, solid) var(--rh-global--border--BorderColor, #ccc); }
+  rh-icon[data-bg="white"] {
+    background: var(--rh-global--color--white, #fff);
+    fill: var(--rh-global--text-color, #333); }
+    rh-icon[data-bg="white"] svg {
+      fill: var(--rh-global--text-color, #333); }
+  rh-icon[data-bg="red"] {
+    background: var(--rh-global--color--red, #c00);
+    fill: var(--rh-global--color--white, #fff); }
+    rh-icon[data-bg="red"] svg {
+      fill: var(--rh-global--color--white, #fff); }
+  rh-icon[data-bg="light"] {
+    background: var(--rh-global--color--gray2, #e7e7e7);
+    fill: var(--rh-global--text-color, #333); }
+    rh-icon[data-bg="light"] svg {
+      fill: var(--rh-global--text-color, #333); }
+  rh-icon[data-bg="dark"] {
+    background: var(--rh-global--color--gray10, #464646);
+    fill: var(--rh-global--color--white, #fff); }
+    rh-icon[data-bg="dark"] svg {
+      fill: var(--rh-global--color--white, #fff); }
+  rh-icon[data-size="2x"],
+  rh-icon[data-size="2x"] svg {
+    width: 2em;
+    height: 2em; }
+  rh-icon[data-size="3x"],
+  rh-icon[data-size="3x"] svg {
+    width: 3em;
+    height: 3em; }
+  rh-icon[data-size="4x"],
+  rh-icon[data-size="4x"] svg {
+    width: 4em;
+    height: 4em; }
+  rh-icon[data-size="large"],
+  rh-icon[data-size="large"] svg {
+    width: 100px;
+    height: 100px; }
+  rh-icon[data-size="medium"],
+  rh-icon[data-size="medium"] svg {
+    width: 70px;
+    height: 70px; }
+  rh-icon[data-size="small"],
+  rh-icon[data-size="small"] svg {
+    width: 48px;
+    height: 48px; }</style>
+<svg><use href="" /></svg>
 `;
 /* end DO NOT EDIT */
 
@@ -32,6 +101,7 @@ class RhIcon extends HTMLElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     const use = this.querySelector("use");
+    use.setAttribute("xlink:href", `#${newValue}`);
     use.setAttribute("href", `#${newValue}`);
   }
 }

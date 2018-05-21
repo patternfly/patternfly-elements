@@ -9,19 +9,16 @@
   "main": "index.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp",
-    "start": "../../node_modules/.bin/gulp dev & npm run serve",
-    "serve":
-      "../../node_modules/.bin/polyserve --npm -o --open-path=\"components/@rhelements/cp-accordion-heading/demo\"",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json --npm elements/cp-accordion-heading/test/"
+    "dev": "../../node_modules/.bin/gulp dev",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json --npm elements/cp-accordion/test/ -p"
   },
   "author": {
     "name": "Kyle Buchanan"
   },
   "license": "ISC",
   "dependencies": {
-    "@rhelements/cp-sass": "*",
-    "@rhelements/cp-styles": "^0.0.10",
-    "@rhelements/rhelement": "^0.0.4"
+    "@rhelements/rh-sass": "*",
+    "@rhelements/rhelement": "*"
   },
   "greenkeeper": {
     "ignore": ["lodash"]

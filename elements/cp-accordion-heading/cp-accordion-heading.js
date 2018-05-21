@@ -1,5 +1,4 @@
 import Rhelement from "../rhelement/rhelement.js";
-import "../cp-styles/cp-styles.js";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the
@@ -8,24 +7,20 @@ import "../cp-styles/cp-styles.js";
  */
 const template = document.createElement("template");
 template.innerHTML = `
-<style>*, *::before, *:after {
-  box-sizing: var(--box-sizing, border-box); }
-
-:host {
+<style>:host {
   display: block;
   background: var(--gray-nimbus, #ededed); }
 
 :host(.animating) {
   transition: transform 0.3s ease-in-out; }
 
-h2 {
-  margin: 0;
-  padding: 0;
-  border: 1px solid white; }
+h1, h2, h3, h4, h5, h6 {
+  margin: 1px; }
 
 button {
+  padding: 10px;
   margin: 0;
-  border: none;
+  border: 1px solid transparent;
   font-family: inherit;
   font-size: 16px;
   line-height: 1.5;
@@ -39,6 +34,9 @@ button {
 button:focus {
   outline: 1px solid blue; }
 
+button::-moz-focus-inner {
+  border: 0; }
+
 [aria-expanded] {
   position: relative;
   display: block;
@@ -49,7 +47,7 @@ button:focus {
   content: "";
   position: absolute;
   left: 0;
-  top: 40%;
+  top: calc(10px + 0.5em);
   display: block;
   border-style: solid;
   border-width: 0.15em 0.15em 0 0;
@@ -64,7 +62,7 @@ button:focus {
   content: "";
   position: absolute;
   left: 0;
-  top: 40%;
+  top: calc(10px + 0.5em);
   display: block;
   width: 0.35em;
   height: 0.35em;

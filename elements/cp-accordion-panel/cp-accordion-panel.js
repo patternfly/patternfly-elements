@@ -7,10 +7,7 @@ import Rhelement from "../rhelement/rhelement.js";
  */
 const template = document.createElement("template");
 template.innerHTML = `
-<style>*, *::before, *:after {
-  box-sizing: var(--box-sizing, border-box); }
-
-:host {
+<style>:host {
   display: none;
   overflow: hidden;
   background: white;
@@ -26,8 +23,7 @@ template.innerHTML = `
 .container {
   border: 2px solid #f7f7f7;
   border-top: none;
-  padding: 20px;
-  padding-top: 5px; }</style>
+  padding: 20px; }</style>
 <div tabindex="-1" role="tabpanel">
   <div class="container">
     <slot></slot>

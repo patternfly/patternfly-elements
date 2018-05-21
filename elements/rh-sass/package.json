@@ -1,0 +1,21 @@
+{
+  "name": "@rhelements/rh-sass",
+  "version": "0.0.1",
+  "description": "Sass variables and mixins for rh-elements",
+  "contributors": [
+    {
+      "name": "Kyle Buchanan",
+      "email": "kylebuch8@gmail.com",
+      "url": "https://github.com/kylebuch8"
+    },
+    {
+      "name": "Mark Caron",
+      "email": "mark@redhat.com",
+      "url": "https://github.com/markcaron"
+    }
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "breakpoint-sass": "^2.7.1"
+  }
+}

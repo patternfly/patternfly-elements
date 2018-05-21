@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-accordion",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Accordion element for RHElements",
   "main": "cp-accordion.js",
   "repository": {
@@ -12,21 +12,18 @@
   },
   "scripts": {
     "build": "../../node_modules/.bin/gulp",
-    "start": "../../node_modules/.bin/gulp dev & npm run serve",
-    "serve":
-      "../../node_modules/.bin/polyserve --npm -o --open-path=\"components/@rhelements/cp-accordion/demo\"",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json --npm elements/cp-accordion/test/"
+    "dev": "../../node_modules/.bin/gulp dev",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json --npm elements/cp-accordion/test/ -p"
   },
   "author": {
     "name": "Tyler Martin"
   },
   "license": "ISC",
   "dependencies": {
-    "@rhelements/cp-accordion-heading": "0.0.x",
-    "@rhelements/cp-accordion-panel": "0.0.x",
-    "@rhelements/cp-sass": "*",
-    "@rhelements/cp-styles": "0.0.x",
-    "@rhelements/rhelement": "0.0.x"
+    "@rhelements/cp-accordion-heading": "*",
+    "@rhelements/cp-accordion-panel": "*",
+    "@rhelements/rh-sass": "*",
+    "@rhelements/rhelement": "*"
   },
   "greenkeeper": {
     "ignore": ["lodash"]

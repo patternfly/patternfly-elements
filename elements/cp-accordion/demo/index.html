@@ -2,14 +2,18 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>RHElements: cp-accordion Demo</title>
+
+    <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../../cp-themeset/cp-themeset.css"> -->
 
     <!-- uncomment the es5-adapter if you're using the compiled version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../cp-accordion.compiled.js'])</script>
-    <!-- <script type="module" src="../cp-accordion.js"></script> -->
+    <script>require(['../../cp-themeset/cp-themeset.compiled.js', '../cp-accordion.compiled.js'])</script>
+
     <style>
       cp-accordion:not([defined]) {
         display: block;
@@ -29,12 +33,16 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     <cp-accordion>
-      <cp-accordion-heading>What is the Red Hat Amplifier program?</cp-accordion-heading>
+      <cp-accordion-heading>
+        <h1>What is the Red Hat Amplifier program?</h1>
+      </cp-accordion-heading>
       <cp-accordion-panel>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         <a href="#">Test</a>
       </cp-accordion-panel>
-      <cp-accordion-heading>What are the benefits of becoming a Red Hat Amp member?</cp-accordion-heading>
+      <cp-accordion-heading>
+        <h1>What are the benefits of becoming a Red Hat Amp member?</h1>
+      </cp-accordion-heading>
       <cp-accordion-panel>
         <h3>Member Benefits:</h3>
         <p>Becoming a Red Hat Amp member means being publicly recognized for their valuable contributions and achievements. As a part of this exclusive community group, Red Hat Amp members will have an opportunity to network with industry peers, gain valuable knowledge and insights, participate in product, service and technology discussions and represent the voice of the customer back into Red Hat.</p>
@@ -48,12 +56,16 @@
           <li><strong>Receive</strong> cool branded gear</li>
         </ul>
       </cp-accordion-panel>
-      <cp-accordion-heading>What is the Red Hat Amplifier program?</cp-accordion-heading>
+      <cp-accordion-heading>
+        <h1>What is the Red Hat Amplifier program?</h1>
+      </cp-accordion-heading>
       <cp-accordion-panel>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         <a href="#">Test</a>
       </cp-accordion-panel>
-      <cp-accordion-heading>What are the benefits of becoming a Red Hat Amp member?</cp-accordion-heading>
+      <cp-accordion-heading>
+        <h1>What are the benefits of becoming a Red Hat Amp member?</h1>
+      </cp-accordion-heading>
       <cp-accordion-panel>
         <h3>Member Benefits:</h3>
         <p>Becoming a Red Hat Amp member means being publicly recognized for their valuable contributions and achievements. As a part of this exclusive community group, Red Hat Amp members will have an opportunity to network with industry peers, gain valuable knowledge and insights, participate in product, service and technology discussions and represent the voice of the customer back into Red Hat.</p>
@@ -67,12 +79,16 @@
           <li><strong>Receive</strong> cool branded gear</li>
         </ul>
       </cp-accordion-panel>
-      <cp-accordion-heading>What is the Red Hat Amplifier program?</cp-accordion-heading>
+      <cp-accordion-heading>
+        <h1>What is the Red Hat Amplifier program?</h1>
+      </cp-accordion-heading>
       <cp-accordion-panel>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         <a href="#">Test</a>
       </cp-accordion-panel>
-      <cp-accordion-heading>What are the benefits of becoming a Red Hat Amp member?</cp-accordion-heading>
+      <cp-accordion-heading>
+        <h1>What are the benefits of becoming a Red Hat Amp member?</h1>
+      </cp-accordion-heading>
       <cp-accordion-panel>
         <h3>Member Benefits:</h3>
         <p>Becoming a Red Hat Amp member means being publicly recognized for their valuable contributions and achievements. As a part of this exclusive community group, Red Hat Amp members will have an opportunity to network with industry peers, gain valuable knowledge and insights, participate in product, service and technology discussions and represent the voice of the customer back into Red Hat.</p>
@@ -86,12 +102,16 @@
           <li><strong>Receive</strong> cool branded gear</li>
         </ul>
       </cp-accordion-panel>
-      <cp-accordion-heading>What is the Red Hat Amplifier program?</cp-accordion-heading>
+      <cp-accordion-heading>
+        <h1>What is the Red Hat Amplifier program?</h1>
+      </cp-accordion-heading>
       <cp-accordion-panel>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         <a href="#">Test</a>
       </cp-accordion-panel>
-      <cp-accordion-heading>What are the benefits of becoming a Red Hat Amp member?</cp-accordion-heading>
+      <cp-accordion-heading>
+        <h1>What are the benefits of becoming a Red Hat Amp member?</h1>
+      </cp-accordion-heading>
       <cp-accordion-panel>
         <h3>Member Benefits:</h3>
         <p>Becoming a Red Hat Amp member means being publicly recognized for their valuable contributions and achievements. As a part of this exclusive community group, Red Hat Amp members will have an opportunity to network with industry peers, gain valuable knowledge and insights, participate in product, service and technology discussions and represent the voice of the customer back into Red Hat.</p>
@@ -105,12 +125,16 @@
           <li><strong>Receive</strong> cool branded gear</li>
         </ul>
       </cp-accordion-panel>
-      <cp-accordion-heading>What is the Red Hat Amplifier program?</cp-accordion-heading>
+      <cp-accordion-heading>
+        <h1>What is the Red Hat Amplifier program?</h1>
+      </cp-accordion-heading>
       <cp-accordion-panel>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         <a href="#">Test</a>
       </cp-accordion-panel>
-      <cp-accordion-heading>What are the benefits of becoming a Red Hat Amp member?</cp-accordion-heading>
+      <cp-accordion-heading>
+        <h1>What are the benefits of becoming a Red Hat Amp member?</h1>
+      </cp-accordion-heading>
       <cp-accordion-panel>
         <h3>Member Benefits:</h3>
         <p>Becoming a Red Hat Amp member means being publicly recognized for their valuable contributions and achievements. As a part of this exclusive community group, Red Hat Amp members will have an opportunity to network with industry peers, gain valuable knowledge and insights, participate in product, service and technology discussions and represent the voice of the customer back into Red Hat.</p>

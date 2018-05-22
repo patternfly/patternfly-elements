@@ -1,6 +1,6 @@
 import { configure } from "@storybook/polymer";
 import { setOptions } from "@storybook/addon-options";
-const req = require.context("../", true, /\.story\.js$/);
+const req = require.context("../elements", true, /\.story\.js$/);
 
 setOptions({
   name: "RHElements"

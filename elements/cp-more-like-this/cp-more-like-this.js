@@ -1,6 +1,6 @@
 import Rhelement from "../rhelement/rhelement.js";
+import "../rh-card/rh-card.js";
 import "../rh-datetime/rh-datetime.js";
-import "../cp-styles/cp-styles.js";
 import "../../whatwg-fetch/fetch.js";
 
 const elementName = "cp-more-like-this";
@@ -16,41 +16,37 @@ const bindTemplate = data => {
 <style>:host {
   display: block; }
 
-.card {
+rh-card {
   display: flex;
   flex-direction: column;
-  background: #e7e7e7;
-  padding: 16px;
   margin-bottom: 32px; }
-  .card p {
+  rh-card h4 {
     margin-top: 0;
     flex: 1 1 auto; }
-  .card a {
+  rh-card a {
     color: #06c;
     text-decoration: none;
     font-weight: 700; }
-  .card span {
+  rh-card span {
     font-size: .9rem;
     font-weight: 400; }
 
 @media (min-width: 768px) {
   .card-container {
     display: flex; }
-    .card-container .card {
+    .card-container rh-card {
       width: 33%;
       margin: 16px;
       margin-top: 8px; }
-      .card-container .card:first-child {
+      .card-container rh-card:first-child {
         margin-left: 0; }
-      .card-container .card:last-child {
+      .card-container rh-card:last-child {
         margin-right: 0; } }</style>
 <h3>People who viewed this ${data.contentType} also viewed</h3>
 <div class="card-container">
-  ${data.results
-    .map(
-      result => `
-    <div class="card">
-      <p><a href="${result.view_uri}">${result.allTitle}</a></p>
+  ${data.results.map(result => `
+    <rh-card theme="light">
+      <h4 slot="header"><a href="${result.view_uri}">${result.allTitle}</a></h4>
       <span>
         ${result.documentKind} - <rh-datetime
           datetime="${result.lastModifiedDate}"
@@ -61,10 +57,8 @@ const bindTemplate = data => {
           ${result.lastModifiedDate}
         </rh-datetime>
       </span>
-    </div>
-  `
-    )
-    .join("\n")}
+    </rh-card>
+  `).join('\n')}
 </div>
 `;
   return template;

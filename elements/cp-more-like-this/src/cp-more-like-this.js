@@ -1,6 +1,6 @@
 import Rhelement from "../rhelement/rhelement.js";
+import "../rh-card/rh-card.js";
 import "../rh-datetime/rh-datetime.js";
-import "../cp-styles/cp-styles.js";
 import "../../whatwg-fetch/fetch.js";
 
 const elementName = "cp-more-like-this";

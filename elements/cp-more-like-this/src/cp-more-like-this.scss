@@ -2,14 +2,12 @@
   display: block;
 }
 
-.card {
+rh-card {
   display: flex;
   flex-direction: column;
-  background: #e7e7e7;
-  padding: 16px;
   margin-bottom: 32px;
 
-  p {
+  h4 {
     margin-top: 0;
     flex: 1 1 auto;
   }
@@ -30,7 +28,7 @@
   .card-container {
     display: flex;
 
-    .card {
+    rh-card {
       width: 33%;
       margin: 16px;
       margin-top: 8px;

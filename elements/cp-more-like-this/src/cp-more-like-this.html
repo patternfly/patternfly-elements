@@ -1,8 +1,8 @@
 <h3>People who viewed this ${data.contentType} also viewed</h3>
 <div class="card-container">
   ${data.results.map(result => `
-    <div class="card">
-      <p><a href="${result.view_uri}">${result.allTitle}</a></p>
+    <rh-card theme="light">
+      <h4 slot="header"><a href="${result.view_uri}">${result.allTitle}</a></h4>
       <span>
         ${result.documentKind} - <rh-datetime
           datetime="${result.lastModifiedDate}"
@@ -13,6 +13,6 @@
           ${result.lastModifiedDate}
         </rh-datetime>
       </span>
-    </div>
+    </rh-card>
   `).join('\n')}
 </div>

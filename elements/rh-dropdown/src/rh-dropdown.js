@@ -1,5 +1,4 @@
 import Rhelement from "../rhelement/rhelement.js";
-import "../cp-styles/cp-styles.js";
 import "../rh-dropdown-button/rh-dropdown-button.js";
 import "../rh-dropdown-menu/rh-dropdown-menu.js";
 

@@ -1,5 +1,4 @@
 import Rhelement from "../rhelement/rhelement.js";
-import "../cp-styles/cp-styles.js";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the

@@ -1,7 +1,7 @@
-@import "../cp-sass/cp-sass";
+@import "../rh-sass/rh-sass";
 
 :host {
-  @include box-sizing();
+  @include rh-box-sizing();
 
   ul {
     position: absolute;
@@ -11,8 +11,8 @@
     padding: 0;
     list-style: none;
     box-shadow: 0 0 3px rgba(0, 0, 0, .25);
-    border: $border-width $border-style $border-color;
-    background: $white;
+    border: $rh-global--border--BorderWidth $rh-global--border--BorderStyle $rh-global--border--BorderColor;
+    background: $rh-global--color--white;
     width: 100%;
     min-width: 10em;
 
@@ -23,19 +23,19 @@
 
     a {
       display: block;
-      padding: $box-padding-xs $box-padding-sm;
+      padding: $rh-global--spacer--sm $rh-global--spacer;
       text-decoration: none;
-      color: $text-color;
-      line-height: $base-line-height;
+      color: $rh-global--text-color;
+      line-height: $rh-global--LineHeight;
 
       &:hover,
       &:focus {
-        background: $gray-platinum;
+        background: $rh-global--color--gray-platinum;
       }
 
       &:active {
-        background: $link-color;
-        color: $white;
+        background: $rh-global--link-color;
+        color: $rh-global--color--white;
       }
     }
   }

@@ -1,5 +1,4 @@
 import Rhelement from "../rhelement/rhelement.js";
-import "../cp-styles/cp-styles.js";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the
@@ -27,10 +26,10 @@ template.innerHTML = `
     padding: 0; }
   :host ul a {
     display: block;
-    padding: 8px 16px;
+    padding: 0.5rem 1rem;
     text-decoration: none;
     color: #333;
-    line-height: 1.5em; }
+    line-height: 1.5; }
     :host ul a:hover, :host ul a:focus {
       background: #e7e7e7; }
     :host ul a:active {

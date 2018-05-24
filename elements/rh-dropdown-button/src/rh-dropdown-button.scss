@@ -1,22 +1,22 @@
-@import "../cp-sass/cp-sass";
+@import "../rh-sass/rh-sass";
 
 :host {
-  @include box-sizing();
+  @include rh-box-sizing();
 
   button {
-    padding: $box-padding-xs $box-padding-sm;
-    border: $border-width $border-style $border-color;
+    padding: $rh-global--spacer--sm $rh-global--spacer;
+    border: $rh-global--border--BorderWidth $rh-global--border--BorderStyle $rh-global--border--BorderColor;
     background: transparent;
-    font-size: $base-font-size;
-    line-height: $base-line-height;
-    color: $text-color;
+    font-size: $rh-global--FontSize;
+    line-height: $rh-global--LineHeight;
+    color: $rh-global--text-color;
     cursor: pointer;
 
     &::after {
       content: '';
       display: inline-block;
-      margin-left: $box-padding-xs;
-      border-top: 5px solid $text-color;
+      margin-left: $rh-global--spacer--sm;
+      border-top: 5px solid $rh-global--text-color;
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
       vertical-align: middle;
@@ -24,16 +24,16 @@
 
     &:hover,
     &:focus {
-      background: $gray-platinum;
+      background: $rh-global--color--gray-platinum;
     }
 
     &[aria-expanded="true"] {
-      color: $white;
-      background: $link-color-hover;
-      border-color: $link-color-hover;
+      color: $rh-global--color--white;
+      background: $rh-global--link-color--hover;
+      border-color: $rh-global--link-color--hover;
 
       &::after {
-        border-bottom: 5px solid $white;
+        border-bottom: 5px solid $rh-global--color--white;
         border-top: 0;
       }
     }

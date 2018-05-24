@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/rh-dropdown-button",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Dropdown button element for RHElements",
   "repository": {
     "type": "git",
@@ -18,8 +18,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@rhelements/cp-sass": "*",
-    "@rhelements/cp-styles": "*",
+    "@rhelements/rh-sass": "*",
     "@rhelements/rhelement": "*"
   },
   "generator-rhelement-version": "0.4.0"

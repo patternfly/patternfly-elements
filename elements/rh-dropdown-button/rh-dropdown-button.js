@@ -1,5 +1,4 @@
 import Rhelement from "../rhelement/rhelement.js";
-import "../cp-styles/cp-styles.js";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the
@@ -12,17 +11,17 @@ template.innerHTML = `
   box-sizing: border-box; }
 
 :host button {
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
   border: 1px solid #ccc;
   background: transparent;
   font-size: 16px;
-  line-height: 1.5em;
+  line-height: 1.5;
   color: #333;
   cursor: pointer; }
   :host button::after {
     content: '';
     display: inline-block;
-    margin-left: 8px;
+    margin-left: 0.5rem;
     border-top: 5px solid #333;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;

@@ -14,6 +14,7 @@
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
+    "breakpoint-sass": "^2.7.1",
     "browser-sync": "^2.24.4",
     "css-scss": "^0.1.1",
     "del": "^3.0.0",

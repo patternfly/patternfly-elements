@@ -1,5 +1,5 @@
 {
-  "name": "@rhelements/cp-dialog",
+  "name": "@rhelements/rh-dialog",
   "version": "0.0.1",
   "description": "Dialog element for RHElements",
   "repository": {
@@ -10,14 +10,14 @@
   "scripts": {
     "build": "../../node_modules/.bin/gulp",
     "dev": "../../node_modules/.bin/gulp dev",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json --npm elements/cp-dialog/test/"
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json --npm elements/rh-dialog/test/"
   },
   "author": {
     "name": "Tyler Martin"
   },
   "license": "ISC",
   "dependencies": {
-    "@rhelements/cp-sass": "*",
+    "@rhelements/rh-sass": "*",
     "@rhelements/rhelement": "*",
     "dialog-polyfill": "^0.4.9"
   },

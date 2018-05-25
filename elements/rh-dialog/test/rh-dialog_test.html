@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../cp-dialog.js"></script>
+    <script type="module" src="../rh-dialog.js"></script>
   </head>
   <body>
 
-    <cp-dialog>
+    <rh-dialog>
       This is the element content.
-    </cp-dialog>
+    </rh-dialog>
 
     <script>
-      suite('<cp-dialog>', () => {
+      suite('<rh-dialog>', () => {
         test('it should do something RHElementy', () => {
           // you need to write tests!!!
-          const cpDialog = document.querySelector('cp-dialog');
-          const textContent = cpDialog.innerText;
-          assert.equal(textContent, 'This is the element content.', 'cp-dialog should do something');
+          const rhDialog = document.querySelector('rh-dialog');
+          const textContent = rhDialog.innerText;
+          assert.equal(textContent, 'This is the element content.', 'rh-dialog should do something');
         });
       });
     </script>

@@ -8,10 +8,7 @@ import dialogPolyfill from "../../dialog-polyfill/dialog-polyfill.js";
  */
 const template = document.createElement("template");
 template.innerHTML = `
-<style>*, *::before, *:after {
-  box-sizing: var(--box-sizing, border-box); }
-
-dialog {
+<style>dialog {
   position: absolute;
   left: 0;
   right: 0;
@@ -56,9 +53,9 @@ dialog.fixed {
 `;
 /* end DO NOT EDIT */
 
-class CpDialog extends Rhelement {
+class RhDialog extends Rhelement {
   constructor() {
-    super("cp-dialog", template);
+    super("rh-dialog", template);
   }
 
   connectedCallback() {
@@ -85,4 +82,4 @@ class CpDialog extends Rhelement {
   disconnectedCallback() {}
 }
 
-window.customElements.define("cp-dialog", CpDialog);
+window.customElements.define("rh-dialog", RhDialog);

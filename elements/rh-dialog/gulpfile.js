@@ -10,7 +10,7 @@ const sass = require("node-sass");
 
 gulp.task("compile", () => {
   return gulp
-    .src("./cp-dialog.js")
+    .src("./rh-dialog.js")
     .pipe(
       replace(
         /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)(\.js['"];)$/gm,
@@ -33,16 +33,16 @@ gulp.task("watch", () => {
 
 gulp.task("merge", () => {
   return gulp
-    .src("./src/cp-dialog.js")
+    .src("./src/rh-dialog.js")
     .pipe(
       replace(/(template\.innerHTML = `)(`;)/, (match, p1, p2) => {
         const html = fs
-          .readFileSync("./src/cp-dialog.html")
+          .readFileSync("./src/rh-dialog.html")
           .toString()
           .trim();
 
         const cssResult = sass.renderSync({
-          file: "./src/cp-dialog.scss"
+          file: "./src/rh-dialog.scss"
         }).css;
 
         return `${p1}

@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-onebox",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Onebox element for RHElements",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@rhelements/cp-sass": "*",
+    "@rhelements/rh-sass": "*",
     "@rhelements/rh-onebox": "0.0.4",
     "@rhelements/rhelement": "0.0.4"
   },

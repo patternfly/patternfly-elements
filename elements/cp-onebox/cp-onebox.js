@@ -8,10 +8,7 @@ import RhOnebox from "../rh-onebox/rh-onebox.js";
 const template = document.createElement("template");
 const bindTemplate = data => {
   template.innerHTML = `
-<style>*, *::before, *:after {
-  box-sizing: var(--box-sizing, border-box); }
-
-:host {
+<style>:host {
   display: flex;
   flex-direction: column;
   border: 1px solid #ececec;

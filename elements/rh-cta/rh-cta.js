@@ -23,8 +23,8 @@ template.innerHTML = `
       border-color: transparent;
       border-top-color: var(--rhe-theme--link-color, #06c);
       transform: rotate(-90deg);
-      content: " ";
-      position: absolute;
+      display: inline-block;
+      content: "";
       position: relative;
       display: inline-block; }
   :host ::slotted(a:visited) {
@@ -41,8 +41,8 @@ template.innerHTML = `
       border-color: transparent;
       border-top-color: var(--rhe-theme--link-color--visited, #7551a6);
       transform: rotate(-90deg);
-      content: " ";
-      position: absolute;
+      display: inline-block;
+      content: "";
       position: relative;
       display: inline-block; }
   :host ::slotted(a:hover) {
@@ -59,8 +59,8 @@ template.innerHTML = `
       border-color: transparent;
       border-top-color: var(--rhe-theme--link-color--hover, #004080);
       transform: rotate(-90deg);
-      content: " ";
-      position: absolute;
+      display: inline-block;
+      content: "";
       position: relative;
       display: inline-block; }
   :host ::slotted(a:focus) {
@@ -77,8 +77,8 @@ template.innerHTML = `
       border-color: transparent;
       border-top-color: var(--rhe-theme--link-color--focus, #004080);
       transform: rotate(-90deg);
-      content: " ";
-      position: absolute;
+      display: inline-block;
+      content: "";
       position: relative;
       display: inline-block; }
   :host(.white) ::slotted(a) {
@@ -95,8 +95,8 @@ template.innerHTML = `
       border-color: transparent;
       border-top-color: var(--rhe-theme--link-color--desaturated--inverted, #fff);
       transform: rotate(-90deg);
-      content: " ";
-      position: absolute;
+      display: inline-block;
+      content: "";
       position: relative;
       display: inline-block; }
   :host(.black) ::slotted(a) {
@@ -113,8 +113,8 @@ template.innerHTML = `
       border-color: transparent;
       border-top-color: var(--rhe-theme--link-color--desaturated, #1a1a1a);
       transform: rotate(-90deg);
-      content: " ";
-      position: absolute;
+      display: inline-block;
+      content: "";
       position: relative;
       display: inline-block; }
 

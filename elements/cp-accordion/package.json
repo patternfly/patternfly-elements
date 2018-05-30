@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/cp-accordion",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Accordion element for RHElements",
   "main": "cp-accordion.js",
   "repository": {

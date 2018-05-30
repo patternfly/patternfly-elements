@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/rh-icon-panel",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Icon element for RHElements",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@rhelements/cp-sass": "*",
+    "@rhelements/rh-sass": "*",
     "@rhelements/rhelement": "*"
   },
   "generator-rhelement-version": "0.5.0"

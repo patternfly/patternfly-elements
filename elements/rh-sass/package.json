@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/rh-sass",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Sass variables and mixins for rh-elements",
   "contributors": [
     {

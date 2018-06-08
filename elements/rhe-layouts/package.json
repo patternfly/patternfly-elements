@@ -1,10 +1,10 @@
 {
-  "name": "@rhelements/cp-themeset",
-  "version": "0.3.2",
-  "description": "cp-themeset for Red Hat's Customer Portal and RHElements",
+  "name": "@rhelements/rhe-layouts",
+  "version": "0.0.2",
+  "description": "rhe-layouts for Red Hat's Customer Portal and RHElements",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RHElements/cp-themeset.git"
+    "url": "https://github.com/RHElements/rhe-layouts.git"
   },
   "scripts": {
     "build": "../../node_modules/.bin/gulp",

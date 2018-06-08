@@ -17,12 +17,23 @@
 // Base Typography
 // ========================================================================
 
-$rh-global--FontSize:        #{$rh-global--font-size-root}px !default;
+$rh-global--FontSize--xxxxl:    rh-font-prem(36px) !default;
+$rh-global--FontSize--xxxl:     rh-font-prem(28px) !default;
+$rh-global--FontSize--xxl:      rh-font-prem(24px) !default;
+$rh-global--FontSize--xl:       rh-font-prem(21px) !default;
+$rh-global--FontSize--lg:       rh-font-prem(18px) !default;
+
+$rh-global--FontSize--md:       rh-font-prem(16px) !default;
+$rh-global--FontSize:           rh-font-prem(16px) !default;
+
+$rh-global--FontSize--sm:       rh-font-prem(14px) !default;
+$rh-global--FontSize--xs:       rh-font-prem(12px) !default;
+
 
 // Line heights
-$rh-global--LineHeight--sm:  1.2 !default;
-$rh-global--LineHeight:      1.5 !default; // base
-$rh-global--LineHeight--lg:  1.8 !default;
+$rh-global--LineHeight--sm:     1.3 !default;
+$rh-global--LineHeight:         1.5 !default; // base
+$rh-global--LineHeight--lg:     1.8 !default;
 
 // Font weights
 $rh-global--FontWeight--light:      300;

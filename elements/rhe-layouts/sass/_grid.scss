@@ -1,0 +1,126 @@
+// ============================================================================
+// Note: There should be no direct HEX or other values in this file.
+// Please reference CP-SASS variables.
+// ============================================================================
+//
+// Global vars are named:
+// `$rh-global--concept--PropertyTitleCase--modifier--state`
+// For example:
+// * $rh-global--color--primary
+// * $rh-global--FontSize
+// * --rhe-theme--FontSize--heading--xs
+
+// Component/Element vars are named:
+// `$rh-c-block__element--modifier--state--PropertyTitleCase`
+// For example:
+// * --rh-dropdown--heading--FontSize
+// * --cp-accordion--heading--FontSize
+
+:root {
+  --rhe-l-grid--m-gutter--GridGap: var(--rhe--global--gutter, $rh-global--gutter);
+}
+
+/// Media query used to create responsive grid items
+/// @group mixins
+/// @moduleType mixin
+/// @parameter {Point} xs, sm, md, lg, xl, null
+@mixin GridMediaQuery($point) {
+  @if $point == "xs" {
+    @media screen and (max-width: $rh-global--grid-breakpoint--sm) {
+      @content;
+    }
+  }
+  @else if $point == "sm" or $point == "" or $point == null {
+    @media screen and (min-width: $rh-global--grid-breakpoint--sm) {
+      @content;
+    }
+  }
+  @else if $point == "md" {
+    @media screen and (min-width: $rh-global--grid-breakpoint--md) {
+      @content;
+    }
+  }
+  @else if $point == "lg" {
+    @media screen and (min-width: $rh-global--grid-breakpoint--lg) {
+      @content;
+    }
+  }
+  @else if $point == "xl" {
+    @media screen and (min-width: $rh-global--grid-breakpoint--xl) {
+      @content;
+    }
+  }
+}
+
+/// Creates grid item
+/// @group mixins
+/// @moduleType mixin
+/// @parameter {Suffix} xs, sm, md, lg, xl, null
+@mixin GridItemModifiers($suffix: null) {
+  // generate column span modifiers
+  @for $col-num from 1 through 12 {
+    > .rhe-m-#{$col-num}-col#{$suffix} {
+      grid-column-start: auto;
+      grid-column-end: span $col-num;
+    }
+  }
+
+  // // generate column offset modfiers
+  // @for $col-num from 1 through 12 {
+  //   > .rhe-m-offset-#{$col-num}-col#{$suffix} {
+  //     grid-column-start: col-start ($col-num + 1);
+  //   }
+  // }
+
+  // generate column startat modfiers
+  @for $col-num from 1 through 12 {
+    > .rhe-m-startat-#{$col-num}-col#{$suffix} {
+      grid-column-start: col-start ($col-num); // removed +1 so it's value is literal.
+    }
+  }
+
+  // generate row span modfiers
+  @for $row-num from 1 through 12 {
+    > .rhe-m-#{$row-num}-row#{$suffix} {
+      grid-row: span $row-num;
+    }
+  }
+}
+
+@mixin GridAllModifiers($suffix: null) {
+  @for $col-num from 1 through 12 {
+    &.rhe-m-all-#{$col-num}-col#{$suffix} {
+      > * {
+        grid-column-start: auto;
+        grid-column-end: span $col-num;
+      }
+    }
+  }
+}
+
+/// Grid base
+.rhe-l-grid {
+  display: grid;
+  grid-template-columns: repeat(12, [col-start] 1fr);
+
+  > *,
+  &__item {
+    grid-column-start: auto;
+    grid-column-end: span 12;
+  }
+
+  // Generate default modifier classes
+  $breakpoints: ("": null, "xs": "-on-xs", "sm": "-on-sm", "md": "-on-md", "lg": "-on-lg", "xl": "-on-xl");
+
+  // Loop through $breakpoints map to generate responsive classes
+  @each $breakpoint, $value in $breakpoints {
+    @include GridMediaQuery($breakpoint) {
+      @include GridAllModifiers($value);
+      @include GridItemModifiers($value);
+    }
+  }
+
+  &.rhe-m-gutters {
+    grid-gap: var(--rhe-l-grid--m-gutter--GridGap);
+  }
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>RHE Layouts Demo</title>
+
+    <!-- needed for CP-Themeset -->
+    <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+    <link rel="stylesheet" type="text/css" href="../rhe-layouts.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.min.css">
+    <!--
+      if support for IE11 IS NOT needed, just include the stylesheet
+      than contains all of the variables for your themeset
+    -->
+    <!-- use cp-themeset -->
+    <!-- <link rel="stylesheet" type="text/css" href="../../cp-themeset/cp-themeset.css"> -->
+
+    <!-- use another themeset -->
+    <!-- <link rel="stylesheet" type="text/css" href="../../test-themeset/test-themeset.css"> -->
+
+    <!-- uncomment the es5-adapter if you're using the compiled version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-markup.min.js"></script>
+
+    <!--
+      if support for IE11 IS NOT needed, just include the web components
+      that you want
+    -->
+    <!-- <script>require(['../rh-card.compiled.js'])</script> -->
+
+    <!--
+      if support IS needed for IE11
+    -->
+    <!-- use cp-themeset with support for IE11 -->
+    <script>require(['../../cp-themeset/cp-themeset.compiled.js'])</script>
+
+    <!-- use another themeset with support for IE11 -->
+    <!-- <script>require(['../../test-themeset/test-themeset.compiled.js'])</script> -->
+
+    <style>
+    body {
+      padding: 32px;
+      background: #e7e7e7;
+    }
+
+    header h1 {
+      margin-top: 0;
+    }
+
+    section {
+      margin: 32px 0;
+    }
+
+    section section {
+      padding: 32px;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    }
+
+    section section > h3 {
+      margin-top: 0;
+    }
+
+    section section > h4 {
+      margin-top: 32px;
+    }
+
+    pre {
+      padding: 8px;
+      /* border: 1px solid #dedede; */
+    }
+
+    .rhe-l-grid > * {
+      background: #e0d7ee;
+      padding: 8px;
+    }
+
+    :not(pre)>code[class*=language-], pre[class*=language-] {
+      background: #f2f2f2;
+    }
+    </style>
+
+  </head>
+  <body>
+
+    <article>
+      <header>
+        <h1>RHE Layouts</h1>
+      </header>
+      <section>
+        <h2>Grid</h2>
+
+        <section>
+          <h3>Pure Grid</h3>
+          <div class="rhe-l-grid rhe-m-gutters rhe-m-all-6-col rhe-m-all-4-col-on-md rhe-m-all-3-col-on-lg">
+            <div>Item</div>
+            <div>Item</div>
+            <div>Item</div>
+            <div>Item</div>
+            <div>Item</div>
+          </div>
+
+          <h4>Code</h4>
+          <pre><code class="lang-markup">&lt;div class="rhe-l-grid rhe-m-gutters rhe-m-all-6-col rhe-m-all-4-col-on-md rhe-m-all-3-col-on-lg"&gt;
+  &lt;div&gt;Item&lt;/div&gt;
+  &lt;div&gt;Item&lt;/div&gt;
+  &lt;div&gt;Item&lt;/div&gt;
+  &lt;div&gt;Item&lt;/div&gt;
+  &lt;div&gt;Item&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section>
+          <h3>Bootstrap-style Columns</h3>
+          <div class="rhe-l-grid rhe-m-gutters">
+            <div class="rhe-l-grid__item">Default Item</div>
+            <div class="rhe-l-grid__item rhe-m-2-col"><code>rhe-m-2-col</code></div>
+            <div class="rhe-l-grid__item rhe-m-10-col"><code>rhe-m-10-col</code></div>
+            <div class="rhe-l-grid__item rhe-m-4-col"><code>rhe-m-4-col</code></div>
+            <div class="rhe-l-grid__item rhe-m-4-col"><code>rhe-m-4-col</code></div>
+            <div class="rhe-l-grid__item rhe-m-4-col"><code>rhe-m-4-col</code></div>
+            <div class="rhe-l-grid__item rhe-m-6-col rhe-m-3-col-on-md"><code>rhe-m-6-col rhe-m-3-col-on-md</code></div>
+            <div class="rhe-l-grid__item rhe-m-6-col rhe-m-3-col-on-md rhe-m-startat-7-col-on-md"><code>rhe-m-6-col rhe-m-3-col-on-md rhe-m-startat-7-col-on-md</code></div>
+            <div class="rhe-l-grid__item rhe-m-6-col rhe-m-3-col-on-md"><code>rhe-m-6-col rhe-m-3-col-on-md</code></div>
+          </div>
+
+          <h4>Code</h4>
+          <pre><code class="lang-markup">&lt;div class="rhe-l-grid rhe-m-gutters"&gt;
+  &lt;div class="rhe-l-grid__item"&gt;Default Item&lt;/div&gt;
+  &lt;div class="rhe-l-grid__item rhe-m-2-col"&gt;&lt;code&gt;rhe-m-2-col&lt;/code&gt;&lt;/div&gt;
+  &lt;div class="rhe-l-grid__item rhe-m-10-col"&gt;&lt;code&gt;rhe-m-10-col&lt;/code&gt;&lt;/div&gt;
+  &lt;div class="rhe-l-grid__item rhe-m-4-col"&gt;&lt;code&gt;rhe-m-4-col&lt;/code&gt;&lt;/div&gt;
+  &lt;div class="rhe-l-grid__item rhe-m-4-col"&gt;&lt;code&gt;rhe-m-4-col&lt;/code&gt;&lt;/div&gt;
+  &lt;div class="rhe-l-grid__item rhe-m-4-col"&gt;&lt;code&gt;rhe-m-4-col&lt;/code&gt;&lt;/div&gt;
+  &lt;div class="rhe-l-grid__item rhe-m-6-col rhe-m-3-col-on-md"&gt;&lt;code&gt;rhe-m-6-col rhe-m-3-col-on-md&lt;/code&gt;&lt;/div&gt;
+  &lt;div class="rhe-l-grid__item rhe-m-6-col rhe-m-3-col-on-md rhe-m-startat-7-col-on-md"&gt;&lt;code&gt;rhe-m-6-col rhe-m-3-col-on-md rhe-m-startat-7-col-on-md&lt;/code&gt;&lt;/div&gt;
+  &lt;div class="rhe-l-grid__item rhe-m-6-col rhe-m-3-col-on-md"&gt;&lt;code&gt;rhe-m-6-col rhe-m-3-col-on-md&lt;/code&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+        </section>
+
+      </section>
+    </article>
+
+  </body>
+</html>

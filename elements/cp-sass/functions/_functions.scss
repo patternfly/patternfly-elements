@@ -2,12 +2,20 @@
     @return $num / ($num * 0 + 1);
 }
 
-@function rh-size-pem($pxval, $base: $rh-global--font-size-root) {
+@function rh-size-pem($pxval, $base: $rh-global--space-size-root) {
     @return rh-strip-unit($pxval) / $base * 1em;
 }
 
-@function rh-size-prem($pxval, $base: $rh-global--font-size-root) {
+@function rh-size-prem($pxval, $base: $rh-global--space-size-root) {
     @return rh-strip-unit($pxval) / $base * 1rem;
+}
+
+@function rh-font-pem($pxval, $base: $rh-global--font-size-root) {
+  @return rh-strip-unit($pxval) / $base * 1em;
+}
+
+@function rh-font-prem($pxval, $base: $rh-global--font-size-root) {
+  @return rh-strip-unit($pxval) / $base * 1rem;
 }
 
 /// Map deep get

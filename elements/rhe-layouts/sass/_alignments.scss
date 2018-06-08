@@ -1,0 +1,29 @@
+// ============================================================================
+// Note: There should be no direct HEX or other values in this file.
+// Please reference CP-SASS variables.
+// ============================================================================
+//
+// Global vars are named:
+// `$rh-global--concept--PropertyTitleCase--modifier--state`
+// For example:
+// * $rh-global--color--primary
+// * $rh-global--FontSize
+// * --rhe-theme--FontSize--heading--xs
+
+// Component/Element vars are named:
+// `$rh-c-block__element--modifier--state--PropertyTitleCase`
+// For example:
+// * --rh-dropdown--heading--FontSize
+// * --cp-accordion--heading--FontSize
+
+.rhe-l--text-align--left {
+  text-align: left;
+}
+
+.rhe-l--text-align--center {
+  text-align: center;
+}
+
+.rhe-l--text-align--right {
+  text-align: right;
+}

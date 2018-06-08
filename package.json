@@ -1,5 +1,5 @@
 {
-  "name": "@rhelements/lerna-test",
+  "name": "@rhelements/rhelements",
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.6",
     "@storybook/addon-knobs": "^3.4.6",
@@ -66,5 +66,6 @@
       "prettier --write",
       "git add"
     ]
-  }
+  },
+  "private": true
 }

@@ -121,13 +121,13 @@
 }
 
 // "Button" styles
-:host(.solid),
-:host(.outlined),
-:host(.ghost) {
+:host([class*="--solid"]),
+:host([class*="--outlined"]),
+:host([class*="--ghost"]) {
   @include make-button-cta();
 }
 
-:host(.solid) {
+:host([class*="--solid"]) {
   @include make-button-cta-color(
     var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
     var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
@@ -136,7 +136,7 @@
   );
 }
 
-:host(.outlined) {
+:host([class*="--outlined"]) {
   @include make-button-cta-color(
     transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
     transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
@@ -145,7 +145,7 @@
   );
 }
 
-:host(.ghost) {
+:host([class*="--ghost"]) {
   @include make-button-cta-color(
     transparent, var(--rhe-theme--link-color, $rh-global--link-color), transparent,
     transparent, var(--rhe-theme--link-color--visited, $rh-global--link-color--visited), transparent,

@@ -10,8 +10,6 @@
 // $rh-dropdown--heading--FontSize
 // $cp-accordion--heading--FontSize
 
-$rh-global--space-size-root: $rh-global--font-size-root !default; // for spaces
-
 // ========================================================================
 // Grid Breakpoints
 // ========================================================================
@@ -48,3 +46,6 @@ $rh-global--spacer--md:     rh-size-prem(24px) !default;
 $rh-global--spacer--lg:     rh-size-prem(32px) !default;
 $rh-global--spacer--xl:     rh-size-prem(48px) !default;
 $rh-global--spacer--xxl:    rh-size-prem(64px) !default;
+
+// Gutter
+$rh-global--gutter:   $rh-global--spacer--lg !default;

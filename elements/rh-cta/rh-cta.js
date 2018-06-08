@@ -118,76 +118,76 @@ template.innerHTML = `
       position: relative;
       display: inline-block; }
 
-:host(.solid) ::slotted(a),
-:host(.outlined) ::slotted(a),
-:host(.ghost) ::slotted(a) {
+:host([class*="--solid"]) ::slotted(a),
+:host([class*="--outlined"]) ::slotted(a),
+:host([class*="--ghost"]) ::slotted(a) {
   padding: var(--rhe-theme--spacer--sm, 0.5rem) var(--rhe-theme--spacer--md, 1.5rem);
   text-decoration: none;
   text-transform: uppercase;
   font-weight: var(--rhe-theme--FontWeight--semi-bold, 600);
   font-size: 0.875em; }
-  :host(.solid) ::slotted(a)::after,
-  :host(.outlined) ::slotted(a)::after,
-  :host(.ghost) ::slotted(a)::after {
+  :host([class*="--solid"]) ::slotted(a)::after,
+  :host([class*="--outlined"]) ::slotted(a)::after,
+  :host([class*="--ghost"]) ::slotted(a)::after {
     content: none;
     display: none; }
 
-:host(.solid) ::slotted(a) {
+:host([class*="--solid"]) ::slotted(a) {
   background: var(--rhe-theme--bg-color--shade3, #d2d2d2);
   color: var(--rhe-theme--text-color--shade3, #1a1a1a);
   border: 1px solid transparent; }
 
-:host(.solid) ::slotted(a:visited) {
+:host([class*="--solid"]) ::slotted(a:visited) {
   background: var(--rhe-theme--bg-color--shade3, #d2d2d2);
   color: var(--rhe-theme--text-color--shade3, #1a1a1a);
   border-color: transparent; }
 
-:host(.solid) ::slotted(a:hover) {
+:host([class*="--solid"]) ::slotted(a:hover) {
   background: var(--rhe-theme--bg-color--shade3, #d2d2d2);
   color: var(--rhe-theme--text-color--shade3, #1a1a1a);
   border-color: transparent; }
 
-:host(.solid) ::slotted(a:focus) {
+:host([class*="--solid"]) ::slotted(a:focus) {
   background: var(--rhe-theme--bg-color--shade3, #d2d2d2);
   color: var(--rhe-theme--text-color--shade3, #1a1a1a);
   border-color: transparent; }
 
-:host(.outlined) ::slotted(a) {
+:host([class*="--outlined"]) ::slotted(a) {
   background: transparent !important;
   color: var(--rhe-theme--text-color--shade3, #1a1a1a);
   border: 1px solid var(--rhe-theme--border--BorderColor, #ccc); }
 
-:host(.outlined) ::slotted(a:visited) {
+:host([class*="--outlined"]) ::slotted(a:visited) {
   background: transparent !important;
   color: var(--rhe-theme--text-color--shade3, #1a1a1a);
   border-color: var(--rhe-theme--border--BorderColor, #ccc); }
 
-:host(.outlined) ::slotted(a:hover) {
+:host([class*="--outlined"]) ::slotted(a:hover) {
   background: transparent !important;
   color: var(--rhe-theme--text-color--shade3, #1a1a1a);
   border-color: var(--rhe-theme--border--BorderColor, #ccc); }
 
-:host(.outlined) ::slotted(a:focus) {
+:host([class*="--outlined"]) ::slotted(a:focus) {
   background: transparent !important;
   color: var(--rhe-theme--text-color--shade3, #1a1a1a);
   border-color: var(--rhe-theme--border--BorderColor, #ccc); }
 
-:host(.ghost) ::slotted(a) {
+:host([class*="--ghost"]) ::slotted(a) {
   background: transparent;
   color: var(--rhe-theme--link-color, #06c);
   border: 1px solid transparent; }
 
-:host(.ghost) ::slotted(a:visited) {
+:host([class*="--ghost"]) ::slotted(a:visited) {
   background: transparent;
   color: var(--rhe-theme--link-color--visited, #7551a6);
   border-color: transparent; }
 
-:host(.ghost) ::slotted(a:hover) {
+:host([class*="--ghost"]) ::slotted(a:hover) {
   background: var(--rhe-theme--bg-color--shade2, #e7e7e7);
   color: var(--rhe-theme--link-color--hover, #004080);
   border-color: transparent; }
 
-:host(.ghost) ::slotted(a:focus) {
+:host([class*="--ghost"]) ::slotted(a:focus) {
   background: var(--rhe-theme--bg-color--shade2, #e7e7e7);
   color: var(--rhe-theme--link-color--focus, #004080);
   border-color: transparent; }</style>

@@ -3,7 +3,7 @@
   "scripts": {
     "start": "spandx",
     "lerna": "lerna",
-    "test": "lerna run test --concurrency 2",
+    "test": "lerna run test --concurrency 2 --since",
     "build": "lerna run build",
     "bootstrap": "lerna bootstrap --hoist",
     "postinstall": "npm run bootstrap",

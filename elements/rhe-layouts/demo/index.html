@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>RHE Layouts Demo</title>
+
+    <!-- needed for CP-Themeset -->
+    <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+    <link rel="stylesheet" type="text/css" href="../rhe-layouts.css">
+    <!--
+      if support for IE11 IS NOT needed, just include the stylesheet
+      than contains all of the variables for your themeset
+    -->
+    <!-- use cp-themeset -->
+    <!-- <link rel="stylesheet" type="text/css" href="../../cp-themeset/cp-themeset.css"> -->
+
+    <!-- use another themeset -->
+    <!-- <link rel="stylesheet" type="text/css" href="../../test-themeset/test-themeset.css"> -->
+
+    <!-- uncomment the es5-adapter if you're using the compiled version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+    <!--
+      if support for IE11 IS NOT needed, just include the web components
+      that you want
+    -->
+    <!-- <script>require(['../rh-card.compiled.js'])</script> -->
+
+    <!--
+      if support IS needed for IE11
+    -->
+    <!-- use cp-themeset with support for IE11 -->
+    <script>require(['../../cp-themeset/cp-themeset.compiled.js'])</script>
+
+    <!-- use another themeset with support for IE11 -->
+    <!-- <script>require(['../../test-themeset/test-themeset.compiled.js'])</script> -->
+
+    <style>
+    body {
+      padding: 60px;
+    }
+    .rhe-l-grid__item {
+      background: #dedede;
+    }
+    </style>
+
+  </head>
+  <body>
+    <div class="rhe-l-grid rhe-m-gutters">
+      <div class="rhe-l-grid__item">Me</div>
+      <div class="rhe-l-grid__item rhe-m-2-col">Me</div>
+      <div class="rhe-l-grid__item rhe-m-10-col">Me</div>
+      <div class="rhe-l-grid__item rhe-m-4-col">Me</div>
+      <div class="rhe-l-grid__item rhe-m-4-col">Me</div>
+      <div class="rhe-l-grid__item rhe-m-4-col">Me</div>
+      <div class="rhe-l-grid__item rhe-m-6-col rhe-m-3-col-on-md">Me</div>
+      <div class="rhe-l-grid__item rhe-m-6-col rhe-m-3-col-on-md">Me</div>
+      <div class="rhe-l-grid__item rhe-m-6-col rhe-m-3-col-on-md">Me</div>
+      <div class="rhe-l-grid__item rhe-m-6-col rhe-m-3-col-on-md">Me</div>
+    </div>
+
+
+    <h2>Test All-Col</h2>
+    <div class="rhe-l-grid rhe-m-gutters rhe-m-all-6-col rhe-m-all-4-col-on-md rhe-m-all-3-col-on-lg">
+      <div>Me</div>
+      <div>Me</div>
+      <div>Me</div>
+      <div>Me</div>
+      <div>Me</div>
+    </div>
+  </body>
+</html>

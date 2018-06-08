@@ -1,5 +1,17 @@
 {
   "name": "@rhelements/rhelements",
+  "scripts": {
+    "start": "spandx",
+    "lerna": "lerna",
+    "test": "lerna run test",
+    "build": "lerna run build",
+    "bootstrap": "lerna bootstrap --hoist",
+    "postinstall": "npm run bootstrap",
+    "precommit": "lint-staged",
+    "storybook": "start-storybook -c .storybook -p 9001",
+    "build-storybook": "build-storybook -c .storybook -o .storybook_out",
+    "new": "cd elements && yo rhelement"
+  },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.6",
     "@storybook/addon-knobs": "^3.4.6",
@@ -49,18 +61,6 @@
     "whatwg-fetch": "^2.0.3"
   },
   "dependencies": {},
-  "scripts": {
-    "start": "spandx",
-    "lerna": "lerna",
-    "test": "lerna run test",
-    "build": "lerna run build",
-    "bootstrap": "lerna bootstrap --hoist",
-    "postinstall": "npm run bootstrap",
-    "precommit": "lint-staged",
-    "storybook": "start-storybook -c .storybook -p 9001",
-    "build-storybook": "build-storybook -c .storybook -o .storybook_out",
-    "new": "cd elements && yo rhelement"
-  },
   "lint-staged": {
     "*.{js,json}": [
       "prettier --write",

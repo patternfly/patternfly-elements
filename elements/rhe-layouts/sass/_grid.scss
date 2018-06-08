@@ -65,10 +65,17 @@
     }
   }
 
-  // generate column offset modfiers
+  // // generate column offset modfiers
+  // @for $col-num from 1 through 12 {
+  //   > .rhe-m-offset-#{$col-num}-col#{$suffix} {
+  //     grid-column-start: col-start ($col-num + 1);
+  //   }
+  // }
+
+  // generate column startat modfiers
   @for $col-num from 1 through 12 {
-    > .rhe-m-offset-#{$col-num}-col#{$suffix} {
-      grid-column-start: col-start ($col-num + 1);
+    > .rhe-m-startat-#{$col-num}-col#{$suffix} {
+      grid-column-start: col-start ($col-num); // removed +1 so it's value is literal.
     }
   }
 

@@ -34,6 +34,17 @@ Make any changes you need and the gulpfile will handle transpiling the element d
 
 If you started the dev server at the root of RHElements, then you should be able to navigate to the demo page for the component, refresh the page, and see your changes.
 
+To test all RHElements, run `npm test` from the root of the repo.  If you only want to test the component you're working on:
+
+    cd elements/cp-accordion
+    npm test
+
+Also, if your tests are failing and you want access to a live browser to investigate why, the following flag will keep the browser open.
+
+    npm test -- -p
+
+Then open the URL that will be printed in the terminal.  It looks something like this: `http://localhost:8081/components/@rhelements/rhelements/generated-index.html?cli_browser_id=0`.
+
 ## Storybook
 
 We've added [Storybook](https://storybook.js.org/) to RHElements as a way to preview our components as they are being developed. We'll also use Storybook to export a static site that will be the demo site for RHElements.

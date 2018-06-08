@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>RHElements: rh-search-result Demo</title>
+    <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
 
     <!-- uncomment the es5-adapter if you're using the compiled version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
@@ -10,6 +11,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require(['../rh-search-result.compiled.js', '../../rh-datetime/rh-datetime.compiled.js'])</script>
     <style>
+      body {
+        font-family: Overpass;
+        font-weight: 400;
+        color: #252525;
+      }
+
       rh-search-result {
         margin-bottom: 1.8em;
       }

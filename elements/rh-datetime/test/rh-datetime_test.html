@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
     <script type="module" src="../rh-datetime.js"></script>
   </head>
@@ -112,7 +112,7 @@
           const element = document.getElementById('yearsago');
           const text = element.shadowRoot.querySelector('span').textContent;
 
-          assert.equal(text, "12 years ago", "should show a relative time since the date");
+          assert.match(text, /\d+ years ago/, "should show a relative time since the date");
         })
 
         test('it should show a formatted date with time for a different locale', () => {

@@ -10,11 +10,11 @@
     @return rh-strip-unit($pxval) / $base * 1rem;
 }
 
-@function rh-font-pem($pxval, $base: $pf-global--font-size-root) {
+@function rh-font-pem($pxval, $base: $rh-global--font-size-root) {
   @return rh-strip-unit($pxval) / $base * 1em;
 }
 
-@function rh-font-prem($pxval, $base: $pf-global--font-size-root) {
+@function rh-font-prem($pxval, $base: $rh-global--font-size-root) {
   @return rh-strip-unit($pxval) / $base * 1rem;
 }
 

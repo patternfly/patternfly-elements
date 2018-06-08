@@ -16,6 +16,7 @@
 
 $repo: rh !default;
 $rh-global--font-size-root:  16 !default; // root for fonts and everything else
+$rh-global--space-size-root: $rh-global--font-size-root !default; // for spaces
 
 @import "_functions";
 @import "_variables";

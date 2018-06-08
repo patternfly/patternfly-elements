@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+    - "9"
+os:
+    - linux
+    - osx
+cache:
+    directories:
+        - node_modules
+# matrix:
+#     exclude:
+#         - os: osx # skip this because on Travis, node.js segfaults on osx+node 9
+#           node_js: "9"

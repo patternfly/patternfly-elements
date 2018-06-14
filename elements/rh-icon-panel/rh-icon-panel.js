@@ -25,14 +25,14 @@ class RhIconPanel extends Rhelement {
   connectedCallback() {
     super.connectedCallback();
 
-    // const attrs = this.attributes;
-    //
-    // if (attrs.getNamedItem("icon") == null) {
-    //   console.warn("You must provide an icon attribute on rh-icon-panel");
-    // } else {
-    //   let iconElem = this.shadowRoot.querySelector("rh-icon");
-    //   iconElem.setAttribute("icon", attrs.getNamedItem("icon").value);
-    // }
+    const attrs = this.attributes;
+
+    if (attrs.getNamedItem("icon") == null) {
+      console.warn("You must provide an icon attribute on rh-icon-panel");
+    } else {
+      let iconElem = this.shadowRoot.querySelector("rh-icon");
+      // iconElem.setAttribute("icon", attrs.getNamedItem("icon").value);
+    }
   }
 
   disconnectedCallback() {}

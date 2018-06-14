@@ -8,11 +8,54 @@
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../rh-icon.compiled.js'])</script>
+    <script>
+      require([
+        '../../rh-button/rh-button.compiled.js',
+        '../../rh-card/rh-card.compiled.js',
+        '../rh-icon.compiled.js'
+      ])
+    </script>
+
+    <style>
+      rh-card {
+        margin-bottom: 16px;
+        width: 320px;
+      }
+
+      rh-card.bordered {
+        --rhe-theme--border--BorderWidth: 1px;
+        --rhe-theme--border--BorderStyle: solid;
+        border-color: #efefef;
+      }
+    </style>
   </head>
   <body>
-    <h2><rh-icon icon="rh-icon-server" data-size="2x"></rh-icon> Content beside it.</h2>
-    <p><rh-icon icon="rh-icon-server-alt1" data-color="black" data-size="2x"></rh-icon> More content</p>
+    <h1>&lt;rh-icon&gt;</h1>
+
+    <!-- rh-icon within another component -->
+    <h2>rh-icon inside rh-card</h2>
+    <rh-card theme="dark">
+      <h2><rh-icon icon="rh-icon-server" data-size="2x" data-color="white"></rh-icon> Content beside it.</h2>
+    </rh-card>
+
+    <h2>rh-icon inside rh-button</h2>
+    <rh-button>
+      <rh-icon icon="rh-icon-server" data-size="2x"></rh-icon> jfklsda
+    </rh-button>
+
+    <h2>rh-icon inside rh-button inside rh-card</h2>
+    <rh-card class="bordered">
+      <h2 slot="header">Lorem ipsum dolor</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, veritatis vel quo impedit explicabo libero dolore fugiat, deleniti perspiciatis, reiciendis aperiam dolor vitae nobis aliquid! Velit vel dolorum deleniti ducimus?</p>
+      <rh-button slot="footer">
+        <rh-icon icon="rh-icon-server-vintage" data-size="2x"></rh-icon> Lorem ipsum dolor
+      </rh-button>
+    </rh-card>
+    <p><rh-icon icon="rh-icon-server-alt1" data-size="4x"></rh-icon> More content</p>
     <div><rh-icon icon="rh-icon-server-stack" data-bg data-size="large"></rh-icon> Feature-ish?</div>
+
+    <rh-icon icon="fjkldsa"></rh-icon>
+
+
   </body>
 </html>

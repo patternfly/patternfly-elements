@@ -1,7 +1,4 @@
 @import "../../rh-sass/rh-sass";
-:host {
-  display: block;
-}
 
 $icon-colors: (
   white: ('--rh-global--color--white', $rh-global--color--white), // name: (CSS Var, SASS var),
@@ -23,7 +20,7 @@ $icon-bg-colors: (
   }
 }
 
-rh-icon {
+:host {
   display: inline-block;
   vertical-align: middle;
   @include set-svg-size(1em);
@@ -32,7 +29,7 @@ rh-icon {
     fill: var(--rh-global--text-color, $rh-global--text-color);
   }
 
-  &[data-block] {
+  @at-root #{&}([data-block]) {
     display: block;
     margin-bottom: var(--rh-global--spacer, $rh-global--spacer);
     margin-top: var(--rh-global--spacer, $rh-global--spacer);
@@ -46,16 +43,16 @@ rh-icon {
     $cssvar: nth($value, 1);
     $sass: nth($value, 2);
 
-    &[data-color="#{$color}"] svg {
+    @at-root #{&}([data-color="#{$color}"]) svg {
       fill: var(#{$cssvar}, #{$sass});
     }
   }
 
-  &[data-bg] {
+  @at-root #{&}([data-bg]) {
     border-radius: 50%;
   }
 
-  &[data-bg="transparent"] {
+  @at-root #{&}([data-bg="transparent"]) {
     background: transparent;
     border: var(--rh-global--border--BorderWidth, $rh-global--border--BorderWidth) var(--rh-global--border--BorderStyle, $rh-global--border--BorderStyle) var(--rh-global--border--BorderColor, $rh-global--border--BorderColor);
   }
@@ -66,7 +63,7 @@ rh-icon {
     $fill-cssvar: nth($value, 3);
     $fill-sass: nth($value, 4);
 
-    &[data-bg="#{$color}"] {
+    @at-root #{&}([data-bg="#{$color}"]) {
       background: var(#{$cssvar}, #{$sass});
       fill: var(#{$fill-cssvar}, #{$fill-sass});
 
@@ -76,27 +73,27 @@ rh-icon {
     }
   }
 
-  &[data-size="2x"] {
+  @at-root #{&}([data-size="2x"]) {
     @include set-svg-size(2em);
   }
 
-  &[data-size="3x"] {
+  @at-root #{&}([data-size="3x"]) {
     @include set-svg-size(3em);
   }
 
-  &[data-size="4x"] {
+  @at-root #{&}([data-size="4x"]) {
     @include set-svg-size(4em);
   }
 
-  &[data-size="large"] {
+  @at-root #{&}([data-size="large"]) {
     @include set-svg-size(100px);
   }
 
-  &[data-size="medium"] {
+  @at-root #{&}([data-size="medium"]) {
     @include set-svg-size(70px);
   }
 
-  &[data-size="small"] {
+  @at-root #{&}([data-size="small"]) {
     @include set-svg-size(48px);
   }
 }

@@ -18,7 +18,7 @@
         test('it should do something RHElementy', () => {
           // you need to write tests!!!
           const cpTabs = document.querySelector('cp-tabs');
-          const textContent = cpTabs.innerText;
+          const textContent = cpTabs.textContent.trim();
           assert.equal(textContent, 'This is the element content.', 'cp-tabs should do something');
         });
       });

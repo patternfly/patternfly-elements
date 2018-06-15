@@ -58,7 +58,8 @@
     "trim": "0.0.1",
     "wct-browser-legacy": "0.0.1-pre.10",
     "web-component-tester": "^6.6.0",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3",
+    "yo": "^2.0.2"
   },
   "dependencies": {},
   "lint-staged": {

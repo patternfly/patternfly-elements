@@ -31,7 +31,7 @@
     "css-scss": "^0.1.1",
     "del": "^3.0.0",
     "dialog-polyfill": "^0.4.9",
-    "generator-rhelement": "^0.5.2",
+    "generator-rhelement": "^0.5.3",
     "global": "^4.3.2",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-babel": "^7.0.0",

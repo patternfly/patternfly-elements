@@ -3,14 +3,15 @@
   "scripts": {
     "start": "spandx",
     "lerna": "lerna",
-    "test": "lerna run test --concurrency 2",
+    "test": "wct --configFile wct.conf.json --npm test/index.html",
     "build": "lerna run build",
     "bootstrap": "lerna bootstrap --hoist",
     "postinstall": "npm run bootstrap",
-    "precommit": "lint-staged",
+    "precommit": "npm run update-test-suite > /dev/null && lint-staged",
+    "update-test-suite": "node scripts/test-suite-inject.js",
     "storybook": "start-storybook -c .storybook -p 9001",
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
-    "new": "cd elements && yo rhelement"
+    "new": "cd elements && yo rhelement && npm run update-test-suite"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.6",
@@ -28,6 +29,7 @@
     "babel-preset-es2015": "^6.24.1",
     "breakpoint-sass": "^2.7.1",
     "browser-sync": "^2.24.4",
+    "chalk": "^2.4.1",
     "css-scss": "^0.1.1",
     "del": "^3.0.0",
     "dialog-polyfill": "^0.4.9",

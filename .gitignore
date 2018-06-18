@@ -4,3 +4,4 @@ lerna-debug.log
 *.local.js
 .storybook_out
 npm-debug.log
+test/.wct-kludge

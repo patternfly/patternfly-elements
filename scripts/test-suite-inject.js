@@ -18,7 +18,15 @@ function testPathAbs(element) {
 }
 
 function testPathRel(element) {
-  return path.join("..", "elements", element, "test", "index.html");
+  return path.join(
+    "./",
+    "test",
+    ".wct-kludge",
+    "elements",
+    element,
+    "test",
+    "index.html"
+  );
 }
 
 function formatPaths(paths) {

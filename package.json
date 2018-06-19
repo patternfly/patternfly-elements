@@ -3,7 +3,7 @@
   "scripts": {
     "start": "spandx",
     "lerna": "lerna",
-    "test": "wct --configFile wct.conf.json --npm test/index.html",
+    "test": "wct --configFile wct.conf.json test/index.html",
     "build": "lerna run build",
     "bootstrap": "lerna bootstrap --hoist",
     "postinstall": "npm run bootstrap",

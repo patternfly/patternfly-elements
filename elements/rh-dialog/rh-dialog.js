@@ -1,5 +1,5 @@
 import Rhelement from "../rhelement/rhelement.js";
-import dialogPolyfill from "../../dialog-polyfill/dialog-polyfill.js";
+import "../../dialog-polyfill/dialog-polyfill.js";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the

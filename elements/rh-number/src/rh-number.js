@@ -1,10 +1,10 @@
 import Rhelement from "../rhelement/rhelement.js";
-import numeral from "../../numeral/min/numeral.min.js";
+import "../../numeral/numeral.js";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the
- * html from rhcc-freshnessgrade.html and css from
- * rhcc-freshnessgrade.css
+ * html from rh-number.html and css from
+ * rh-number.css
  */
 const template = document.createElement("template");
 template.innerHTML = ``;
@@ -21,6 +21,7 @@ const types = {
 };
 
 // use thin spaces to separate thousands chunks
+// debugger;
 numeral.locales.en.delimiters.thousands = " ";
 
 class RhNumber extends Rhelement {

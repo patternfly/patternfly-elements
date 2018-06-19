@@ -10,8 +10,8 @@
     "build": "../../node_modules/.bin/gulp",
     "start": "../../node_modules/.bin/gulp dev & npm run serve",
     "serve":
-      "../../node_modules/.bin/polyserve --npm -o --open-path=components/@rhelements/cp-tooltip/demo",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json --npm elements/cp-tooltip/test/"
+      "../../node_modules/.bin/polyserve -o --open-path=components/@rhelements/cp-tooltip/demo",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json --npm test/.wct-kludge/elements/cp-tooltip/test/"
   },
   "author": {
     "name": "Kyle Buchanan",

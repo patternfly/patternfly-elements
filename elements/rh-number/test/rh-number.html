@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <!-- <script src="/components/requirejs/require.js"></script> -->
-    <script src="/components/@polymer/esm-amd-loader/lib/esm-amd-loader.min.js"></script>
+    <script type="module" src="../rh-number.js"></script>
   </head>
   <body>
 
@@ -17,45 +16,36 @@
     <rh-number type="e">2000000</rh-number>
 
     <script>
-      // suite('<rh-number>', () => {
-      //   test('it should show an ordinal number', done => {
-      //     define(['../rh-number.compiled.js'], () => {
-      //       const rhNumber = document.querySelector('rh-number[type="ordinal"]');
-      //       let content = rhNumber.shadowRoot.querySelector('span').textContent;
+      suite('<rh-number>', () => {
 
-      //       assert.equal(content, '1st');
-      //       done();
-      //     });
-      //   });
+        test('it should show an ordinal number', () => {
+          const rhNumber = document.querySelector('rh-number[type="ordinal"]');
+          let content = rhNumber.shadowRoot.querySelector('span').textContent;
 
-      //   test('it should show bytes', () => {
-      //     const rhNumber = document.querySelector('rh-number[type="bytes"]');
-      //     const content = rhNumber.shadowRoot.querySelector('span').textContent;
+          assert.equal(content, '1st');
+        });
 
-      //     assert.equal(content, '1.97 KiB');
-      //   });
+        test('it should show bytes', () => {
+          const rhNumber = document.querySelector('rh-number[type="bytes"]');
+          const content = rhNumber.shadowRoot.querySelector('span').textContent;
 
-      //   test('it should show an abbreviated number', () => {
-      //     const rhNumber = document.querySelector('rh-number[type="abbrev"]');
-      //     const content = rhNumber.shadowRoot.querySelector('span').textContent;
+          assert.equal(content, '1.97 KiB');
+        });
 
-      //     assert.equal(content, '12k');
-      //   });
+        test('it should show a percentage', () => {
+          const rhNumber = document.querySelector('rh-number[type="percent"]');
+          const content = rhNumber.shadowRoot.querySelector('span').textContent;
 
-      //   test('it should show a percentage', () => {
-      //     const rhNumber = document.querySelector('rh-number[type="percent"]');
-      //     const content = rhNumber.shadowRoot.querySelector('span').textContent;
+          assert.equal(content, '57%');
+        });
 
-      //     assert.equal(content, '57%');
-      //   });
+        test('it should show an exponential number', () => {
+          const rhNumber = document.querySelector('rh-number[type="e"]');
+          const content = rhNumber.shadowRoot.querySelector('span').textContent;
 
-      //   test('it should show an exponential number', () => {
-      //     const rhNumber = document.querySelector('rh-number[type="e"]');
-      //     const content = rhNumber.shadowRoot.querySelector('span').textContent;
-
-      //     assert.equal(content, '2.000e+6');
-      //   });
-      // });
+          assert.equal(content, '2.000e+6');
+        });
+      });
     </script>
   </body>
 </html>

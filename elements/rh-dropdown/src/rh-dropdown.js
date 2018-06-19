@@ -49,8 +49,8 @@ if (!Array.prototype.findIndex) {
 
 /*
  * DO NOT EDIT. This will be autopopulated with the
- * html from rhcc-freshnessgrade.html and css from
- * rhcc-freshnessgrade.css
+ * html from rh-dropdown.html and css from
+ * rh-dropdown.css
  */
 const template = document.createElement("template");
 template.innerHTML = ``;

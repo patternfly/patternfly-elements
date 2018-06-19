@@ -2,8 +2,8 @@ import Rhelement from "../rhelement/rhelement.js";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the
- * html from rhcc-freshnessgrade.html and css from
- * rhcc-freshnessgrade.css
+ * html from rh-dropdown-button.html and css from
+ * rh-dropdown-button.css
  */
 const template = document.createElement("template");
 template.innerHTML = ``;

@@ -2,8 +2,8 @@ import Rhelement from "../rhelement/rhelement.js";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the
- * html from rhcc-freshnessgrade.html and css from
- * rhcc-freshnessgrade.css
+ * html from cp-accordion-heading.html and css from
+ * cp-accordion-heading.css
  */
 const template = document.createElement("template");
 template.innerHTML = ``;

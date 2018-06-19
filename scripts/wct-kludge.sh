@@ -74,4 +74,4 @@ link_all
 
 echo "Done."
 
-# point each element's npm test scripts at test/.wct-kludge
+# run this on postinstall and postuninstall

@@ -52,7 +52,6 @@
     "lodash": "^3.10.1",
     "lodash.clonedeep": "^4.5.0",
     "node-sass": "^4.9.0",
-    "numeral": "^2.0.6",
     "polymer-webpack-loader": "^2.0.2",
     "prettier": "^1.13.4",
     "requirejs": "^2.3.5",

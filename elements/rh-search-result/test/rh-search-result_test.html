@@ -8,18 +8,43 @@
     <script type="module" src="../rh-search-result.js"></script>
   </head>
   <body>
-
     <rh-search-result>
-      This is the element content.
+      <h3 slot="heading">
+        <a href="https://access.redhat.com/products/red-hat-enterprise-linux">Red Hat Enterprise Linux</a>
+      </h3>
+      <div slot="meta">
+        <span class="recommended">Recommended:</span> Product Hub
+      </div>
+      The Red Hat Enterprise Linux product page on the Customer Portal has the latest downloads, curated knowledge, support information and implementation guides.
     </rh-search-result>
 
     <script>
       suite('<rh-search-result>', () => {
-        test('it should do something RHElementy', () => {
-          // you need to write tests!!!
+        test('it should show a search result', () => {
           const rhSearchResult = document.querySelector('rh-search-result');
-          const textContent = rhSearchResult.innerText;
-          assert.equal(textContent, 'This is the element content.', 'rh-search-result should do something');
+          const shadowRoot = rhSearchResult.shadowRoot;
+          const article = shadowRoot.querySelector('article');
+          const heading = article.querySelector('#heading').textContent.trim();
+          const meta = article.querySelector('slot[name="meta"]').assignedNodes()[0].textContent.trim();
+          const body = article.querySelector('slot:nth-of-type(2)').assignedNodes()[2].textContent.trim();
+
+          assert.isNotNull(article, 'it should be wrapped in an article');
+          assert.equal(heading, 'Red Hat Enterprise Linux', 'it should show the correct heading');
+          assert.equal(meta, 'Recommended: Product Hub');
+          assert.equal(body, 'The Red Hat Enterprise Linux product page on the Customer Portal has the latest downloads, curated knowledge, support information and implementation guides.', 'it should show the correct body');
+        });
+
+        test('it should move the heading slot in the light dom to the header tag in the shadow dom', () => {
+          const rhSearchResult = document.querySelector('rh-search-result');
+          const originalHeading = rhSearchResult.querySelector('[slot="heading"]');
+          const originalHeadingText = originalHeading.textContent.trim();
+          const shadowRoot = rhSearchResult.shadowRoot;
+          const article = shadowRoot.querySelector('article');
+          const heading = article.querySelector('#heading');
+          const headingText = heading.textContent.trim();
+
+          assert.equal(originalHeading.tagName, heading.querySelector(`${originalHeading.tagName}`).tagName);
+          assert.equal(originalHeadingText, headingText);
         });
       });
     </script>

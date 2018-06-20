@@ -67,4 +67,13 @@ This places a build of the storybook site in the .storybook_out directory.
 
 ### Known Issues with Storybook
 
-Any component that has a third-party dependency will not work in our current setup. We are looking into what we need to do to resolve the issue.
+For any component that has a third-party dependency you will need to update the `/.storybook/webpack.config.js` file. You will need to create an alias for your depedency.
+
+For example:
+
+```
+"../../whatwg-fetch/fetch.js": path.join( // this is the third-party dependency in the rhelement
+  __dirname,
+  "../node_modules/whatwg-fetch/fetch.js" // this is where it lives in node_modules
+)
+```

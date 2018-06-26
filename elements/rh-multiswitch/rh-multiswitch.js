@@ -42,6 +42,8 @@ template.innerHTML = `
       box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25); }
     .rh-multiswitch__container input:not(:first-child):checked ~ a {
       box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2), -1px 0 0 rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+    .rh-multiswitch__container input:focus ~ a {
+      outline: 2px solid #0088ce; }
   .rh-multiswitch__container label {
     width: 50%;
     text-align: center;
@@ -112,8 +114,6 @@ template.innerHTML = `
     box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     background: #0088ce;
     border: 1px solid #005f90; }
-    .rh-multiswitch__container .rh-multiswitch__slide:focus ~ a {
-      outline: 2px solid #0088ce; }
 
 
 .multiswitch[data-theme="stoplight"] .slide-container > a {

@@ -59,6 +59,11 @@
                   -1px 0 0 rgba(0, 0, 0, 0.2),
                   inset 0 1px 0 rgba(255, 255, 255, 0.25);
     }
+
+    // Because a11y
+    &:focus ~ a {
+      outline: 2px solid #0088ce;
+    }
   }
 
   label {
@@ -180,11 +185,6 @@
     transition: left 0.1s ease-out;
     box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.15);
-
-    // Because a11y
-    &:focus ~ a {
-      outline: 2px solid #0088ce;
-    }
 
     // Default theme
     background: #0088ce;

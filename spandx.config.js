@@ -7,6 +7,7 @@ module.exports = {
   routes: {
     "/elements": "./elements",
     "/doc": "./doc",
+    "/favicon.ico": "./favicon.ico",
     "/": "./node_modules/"
   }
 };

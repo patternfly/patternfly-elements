@@ -105,16 +105,23 @@ class RhIcon extends Rhelement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
-    const svgPath = this.ownerDocument.head.querySelector(`#${newVal} path`);
+    if (attr === "icon") {
+      if (!newVal) {
+        console.warn(`rh-icon: no icon name provided`);
+        return;
+      }
 
-    if (!svgPath) {
-      console.warn(`rh-icon: unable to find svg path for ${newVal}`);
-      return;
+      const svgPath = this.ownerDocument.head.querySelector(`#${newVal} path`);
+
+      if (!svgPath) {
+        console.warn(`rh-icon: unable to find svg path for ${newVal}`);
+        return;
+      }
+
+      this.shadowRoot
+        .querySelector("svg g path")
+        .setAttribute("d", svgPath.getAttribute("d"));
     }
-
-    this.shadowRoot
-      .querySelector("svg g path")
-      .setAttribute("d", svgPath.getAttribute("d"));
   }
 }
 

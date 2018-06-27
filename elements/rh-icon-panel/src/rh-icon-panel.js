@@ -11,6 +11,10 @@ template.innerHTML = ``;
 /* end DO NOT EDIT */
 
 class RhIconPanel extends Rhelement {
+  static get observedAttributes() {
+    return ["icon"];
+  }
+
   constructor() {
     super("rh-icon-panel", template);
   }
@@ -29,6 +33,15 @@ class RhIconPanel extends Rhelement {
   }
 
   disconnectedCallback() {}
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    if (attr === "icon") {
+      if (newVal) {
+        let iconElem = this.shadowRoot.querySelector("rh-icon");
+        iconElem.setAttribute("icon", newVal);
+      }
+    }
+  }
 }
 
 window.customElements.define("rh-icon-panel", RhIconPanel);

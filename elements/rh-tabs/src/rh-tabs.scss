@@ -1,0 +1,64 @@
+@import "../../rh-sass/rh-sass";
+
+:host {
+  display: block;
+}
+
+.tabs {
+  display: flex;
+}
+
+:host([vertical]) .tabs {
+  flex-direction: column;
+}
+
+.tabs ::slotted(rh-tab) {
+  background-color: var(
+    --rhe-c-rh-tab-BackgroundColor,
+    $rh-global--color--black
+  );
+  text-transform: uppercase;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  width: 25%;
+  padding: 16px;
+  position: relative;
+  border-right: 1px solid #8d8d8d;
+  white-space: nowrap;
+}
+
+.tabs ::slotted(rh-tab[selected]) {
+  background-color: var(
+    --rhe-c-rh-tab-selected-BackgroundColor,
+    $rh-global--color--white
+  );
+  color: var(--rhe-c-rh-tab-selected-Color, $rh-global--color--black-soft);
+  border-right-color: transparent;
+}
+
+:host([vertical]) {
+  display: flex;
+}
+
+:host([vertical]) .tabs {
+  margin-right: 16px;
+}
+
+:host([vertical]) .tabs ::slotted(rh-tab) {
+  width: 256px;
+}
+
+:host([vertical]) .tabs ::slotted(rh-tab) {
+  text-transform: none;
+  background: none;
+  font-weight: normal;
+  border: none;
+  color: #8d8d8d;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+:host([vertical]) .tabs ::slotted(rh-tab[selected]) {
+  color: var(--rhe-c-rh-tab-selected-Color, $rh-global--color--black-soft);
+}

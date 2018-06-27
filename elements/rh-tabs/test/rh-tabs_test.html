@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../rh-tabs.js"></script>
+  </head>
+  <body>
+
+    <rh-tabs>
+      This is the element content.
+    </rh-tabs>
+
+    <script>
+      suite('<rh-tabs>', () => {
+        test('it should do something RHElementy', () => {
+          // you need to write tests!!!
+          const rhTabs = document.querySelector('rh-tabs');
+          const textContent = rhTabs.textContent.trim();
+          assert.equal(textContent, 'This is the element content.', 'rh-tabs should do something');
+        });
+      });
+    </script>
+  </body>
+</html>

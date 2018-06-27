@@ -1,0 +1,42 @@
+@import "../../rh-sass/rh-sass";
+
+:host {
+  display: block;
+}
+
+.indicator {
+  height: 4px;
+  width: 24px;
+  background-color: #8d8d8d;
+  position: absolute;
+  bottom: 8px;
+}
+
+:host(:hover) .indicator,
+:host([selected]:hover) .indicator {
+  background-color: var(
+    --rhe-c-tab__indicator--hover--BackgroundColor,
+    $rh-global--link-color--inverted--hover
+  );
+}
+
+:host([selected]) .indicator {
+  background-color: var(
+    --rhe-c-tab__indicator--selected--BackgroundColor,
+    $rh-global--link-color
+  );
+}
+
+:host([vertical]) .indicator {
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  background-color: #ededed;
+}
+
+:host([selected][vertical]) .indicator {
+  background-color: var(
+    --rhe-c-tab__indicator--selected--BackgroundColor,
+    $rh-global--link-color
+  );
+}

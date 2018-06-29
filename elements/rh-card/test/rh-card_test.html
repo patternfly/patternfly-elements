@@ -33,6 +33,15 @@
     </rh-card>
 
     <script>
+      function luminance(r, g, b) {
+        return (0.2126*r/255 + 0.7152*g/255 + 0.0722*b/255);
+      }
+      function getColor(el, prop) {
+        const [, r, g, b] = getComputedStyle(el, null)
+          [prop].match(/rgba?\((\d+),\s+(\d+),\s+(\d+)\)/)
+          .map(n => +n);
+        return [r, g, b];
+      }
       suite("<rh-card>", () => {
         const card1 = document.querySelector("#card1");
         const card2 = document.querySelector("#card2");
@@ -52,16 +61,13 @@
           assert.match( styles.color, /rgb\(0,\s+0,\s+0\)/);
         });
         test("light theme works", () => {
-          assert.match(
-            getComputedStyle(card3, null).background,
-            /rgb\(231,\s+231,\s+231\)/
-          );
+          const [r, g, b] = getColor(card3, 'background');
+          console.log(r, g, b);
+          assert.isAbove(luminance(r, g, b), 0.5);
         });
         test("dark theme works", () => {
-          assert.match(
-            getComputedStyle(card4, null).background,
-            /rgb\(37,\s+37,\s+39\)/
-          );
+          const [r, g, b] = getColor(card4, 'background');
+          assert.isBelow(luminance(r, g, b), 0.5);
         });
         test("header, body, and footer are placed into correct slot", () => {
           // header wound up in the header slot

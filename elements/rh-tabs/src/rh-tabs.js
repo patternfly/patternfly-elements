@@ -119,8 +119,20 @@ function generateId() {
 }
 
 class RhTabs extends Rhelement {
+  static get is() {
+    return "rh-tabs";
+  }
+
+  static get selected() {
+    return this.selected;
+  }
+
+  static get selectedIndex() {
+    return this.selectedIndex;
+  }
+
   constructor() {
-    super("rh-tabs", template);
+    super(RhTabs.is, template);
 
     this._onSlotChange = this._onSlotChange.bind(this);
 
@@ -152,6 +164,36 @@ class RhTabs extends Rhelement {
     this.removeEventListener("click", this._onClick);
   }
 
+  select(newTab) {
+    if (!newTab) {
+      return;
+    }
+
+    if (newTab.tagName.toLowerCase() !== "rh-tab") {
+      console.warn(`${RhTabs.is}: the tab must be a rh-tab element`);
+      return;
+    }
+
+    this._selectTab(newTab);
+  }
+
+  selectIndex(_index) {
+    if (_index === null) {
+      return;
+    }
+
+    const index = parseInt(_index, 10);
+    const tabs = this._allTabs();
+    const tab = tabs[index];
+
+    if (!tab) {
+      console.warn(`${RhTabs.is}: tab ${_index} does not exist`);
+      return;
+    }
+
+    this._selectTab(tab);
+  }
+
   _onSlotChange() {
     this._linkPanels();
   }
@@ -162,7 +204,9 @@ class RhTabs extends Rhelement {
     tabs.forEach(tab => {
       const panel = tab.nextElementSibling;
       if (panel.tagName.toLowerCase() !== "rh-tab-panel") {
-        console.error(`Tab #${tab.id} is not a sibling of a <rh-tab-panel>`);
+        console.warn(
+          `${RhTabs.is}: tab #${tab.id} is not a sibling of a <rh-tab-panel>`
+        );
         return;
       }
 
@@ -222,18 +266,45 @@ class RhTabs extends Rhelement {
     this.reset();
 
     const newPanel = this._panelForTab(newTab);
+    let newTabSelected = false;
 
     if (!newPanel) {
-      throw new Error(`No panel with id ${newPanelId}`);
+      throw new Error(`No panel with id ${newPanel.id}`);
+    }
+
+    if (this.selected && this.selected !== newTab) {
+      newTabSelected = true;
+
+      this.dispatchEvent(
+        new CustomEvent(`${RhTabs.is}:hidden-tab`, {
+          bubbles: true,
+          detail: {
+            tab: this.selected
+          }
+        })
+      );
     }
 
     newTab.selected = true;
     newPanel.hidden = false;
     newTab.focus();
 
-    const scrollmem = window.scrollY;
-    window.location.href = `#${newTab.id}`;
-    window.scrollTo(0, scrollmem);
+    const tabs = this._allTabs();
+    const newIdx = tabs.findIndex(tab => tab.selected);
+
+    this.selected = newTab;
+    this.selectedIndex = newIdx;
+
+    if (newTabSelected) {
+      this.dispatchEvent(
+        new CustomEvent(`${RhTabs.is}:shown-tab`, {
+          bubbles: true,
+          detail: {
+            tab: this.selected
+          }
+        })
+      );
+    }
   }
 
   _onKeyDown(event) {
@@ -283,7 +354,7 @@ class RhTabs extends Rhelement {
   }
 }
 
-window.customElements.define("rh-tabs", RhTabs);
+window.customElements.define(RhTabs.is, RhTabs);
 
 const tabTemplate = document.createElement("template");
 tabTemplate.innerHTML = `
@@ -294,19 +365,23 @@ tabTemplate.innerHTML = `
 `;
 
 class RhTab extends Rhelement {
+  static get is() {
+    return "rh-tab";
+  }
+
   static get observedAttributes() {
     return ["selected"];
   }
 
   constructor() {
-    super("rh-tab", tabTemplate);
+    super(RhTab.is, tabTemplate);
   }
 
   connectedCallback() {
     this.setAttribute("role", "tab");
 
     if (!this.id) {
-      this.id = `rh-tab-${generateId()}`;
+      this.id = `${RhTab.is}-${generateId()}`;
     }
 
     this.setAttribute("aria-selected", "false");
@@ -342,16 +417,20 @@ class RhTab extends Rhelement {
   }
 }
 
-window.customElements.define("rh-tab", RhTab);
+window.customElements.define(RhTab.is, RhTab);
 
 class RhTabPanel extends HTMLElement {
+  static get is() {
+    return "rh-tab-panel";
+  }
+
   connectedCallback() {
     this.setAttribute("role", "tabpanel");
 
     if (!this.id) {
-      this.id = `rh-tab-panel-${generateId()}`;
+      this.id = `${RhTabPanel.is}-${generateId()}`;
     }
   }
 }
 
-window.customElements.define("rh-tab-panel", RhTabPanel);
+window.customElements.define(RhTabPanel.is, RhTabPanel);

@@ -111,7 +111,7 @@ template.innerHTML = `
   flex-direction: column; }
 
 .tabs ::slotted(rh-tab) {
-  background-color: var(--rhe-c-rh-tab-BackgroundColor, #1a1a1a);
+  background-color: var(--rhe-c-tab-BackgroundColor, #1a1a1a);
   text-transform: uppercase;
   font-weight: 700;
   color: white;
@@ -123,8 +123,8 @@ template.innerHTML = `
   white-space: nowrap; }
 
 .tabs ::slotted(rh-tab[selected]) {
-  background-color: var(--rhe-c-rh-tab-selected-BackgroundColor, #fff);
-  color: var(--rhe-c-rh-tab-selected-Color, #252527);
+  background-color: var(--rhe-c-tab-selected-BackgroundColor, #fff);
+  color: var(--rhe-c-tab-selected-Color, #252527);
   border-right-color: transparent; }
 
 :host([vertical]) {
@@ -146,7 +146,7 @@ template.innerHTML = `
   padding-right: 0; }
 
 :host([vertical]) .tabs ::slotted(rh-tab[selected]) {
-  color: var(--rhe-c-rh-tab-selected-Color, #252527); }</style>
+  color: var(--rhe-c-tab-selected-Color, #252527); }</style>
 <div class="tabs">
   <slot name="tab"></slot>
 </div>

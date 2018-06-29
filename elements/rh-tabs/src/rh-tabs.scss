@@ -13,10 +13,7 @@
 }
 
 .tabs ::slotted(rh-tab) {
-  background-color: var(
-    --rhe-c-rh-tab-BackgroundColor,
-    $rh-global--color--black
-  );
+  background-color: var(--rhe-c-tab-BackgroundColor, $rh-global--color--black);
   text-transform: uppercase;
   font-weight: 700;
   color: white;
@@ -30,10 +27,10 @@
 
 .tabs ::slotted(rh-tab[selected]) {
   background-color: var(
-    --rhe-c-rh-tab-selected-BackgroundColor,
+    --rhe-c-tab-selected-BackgroundColor,
     $rh-global--color--white
   );
-  color: var(--rhe-c-rh-tab-selected-Color, $rh-global--color--black-soft);
+  color: var(--rhe-c-tab-selected-Color, $rh-global--color--black-soft);
   border-right-color: transparent;
 }
 
@@ -60,5 +57,5 @@
 }
 
 :host([vertical]) .tabs ::slotted(rh-tab[selected]) {
-  color: var(--rhe-c-rh-tab-selected-Color, $rh-global--color--black-soft);
+  color: var(--rhe-c-tab-selected-Color, $rh-global--color--black-soft);
 }

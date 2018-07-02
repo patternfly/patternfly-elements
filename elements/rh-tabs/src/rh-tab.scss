@@ -2,12 +2,14 @@
 
 :host {
   display: block;
+  padding: 10px 0 10px 45px;
 }
 
 .indicator {
+  display: var(--rhe-c-tab__indicator--Display, block);
   height: 4px;
   width: 24px;
-  background-color: #8d8d8d;
+  background-color: var(----rhe-c-tab__indicator--BackgroundColor, #8d8d8d);
   position: absolute;
   bottom: 8px;
 }

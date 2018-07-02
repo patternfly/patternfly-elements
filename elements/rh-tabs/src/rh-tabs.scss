@@ -6,6 +6,7 @@
 
 .tabs {
   display: flex;
+  background-color: var(--rhe-c-tabs-BackgroundColor, transparent);
 }
 
 :host([vertical]) .tabs {
@@ -47,15 +48,18 @@
 }
 
 :host([vertical]) .tabs ::slotted(rh-tab) {
+  background-color: var(--rhe-c-tab-BackgroundColor, transparent);
   text-transform: none;
-  background: none;
   font-weight: normal;
   border: none;
-  color: #8d8d8d;
+  color: var(--rhe-c-tab-Color, #8d8d8d);
   padding-left: 0;
   padding-right: 0;
+  padding: 10px 0 10px 45px;
+  margin-right: -10px;
 }
 
 :host([vertical]) .tabs ::slotted(rh-tab[selected]) {
+  background-color: var(--rhe-c-tab-selected-BackgroundColor, transparent);
   color: var(--rhe-c-tab-selected-Color, $rh-global--color--black-soft);
 }

@@ -105,7 +105,8 @@ template.innerHTML = `
   display: block; }
 
 .tabs {
-  display: flex; }
+  display: flex;
+  background-color: var(--rhe-c-tabs-BackgroundColor, transparent); }
 
 :host([vertical]) .tabs {
   flex-direction: column; }
@@ -137,15 +138,18 @@ template.innerHTML = `
   width: 256px; }
 
 :host([vertical]) .tabs ::slotted(rh-tab) {
+  background-color: var(--rhe-c-tab-BackgroundColor, transparent);
   text-transform: none;
-  background: none;
   font-weight: normal;
   border: none;
-  color: #8d8d8d;
+  color: var(--rhe-c-tab-Color, #8d8d8d);
   padding-left: 0;
-  padding-right: 0; }
+  padding-right: 0;
+  padding: 10px 0 10px 45px;
+  margin-right: -10px; }
 
 :host([vertical]) .tabs ::slotted(rh-tab[selected]) {
+  background-color: var(--rhe-c-tab-selected-BackgroundColor, transparent);
   color: var(--rhe-c-tab-selected-Color, #252527); }</style>
 <div class="tabs">
   <slot name="tab"></slot>
@@ -174,14 +178,6 @@ function generateId() {
 class RhTabs extends Rhelement {
   static get is() {
     return "rh-tabs";
-  }
-
-  static get selected() {
-    return this.selected;
-  }
-
-  static get selectedIndex() {
-    return this.selectedIndex;
   }
 
   constructor() {
@@ -413,12 +409,14 @@ const tabTemplate = document.createElement("template");
 tabTemplate.innerHTML = `
   <style>
     :host {
-  display: block; }
+  display: block;
+  padding: 10px 0 10px 45px; }
 
 .indicator {
+  display: var(--rhe-c-tab__indicator--Display, block);
   height: 4px;
   width: 24px;
-  background-color: #8d8d8d;
+  background-color: var(----rhe-c-tab__indicator--BackgroundColor, #8d8d8d);
   position: absolute;
   bottom: 8px; }
 
@@ -457,6 +455,8 @@ class RhTab extends Rhelement {
   }
 
   connectedCallback() {
+    super.connectedCallback();
+
     this.setAttribute("role", "tab");
 
     if (!this.id) {

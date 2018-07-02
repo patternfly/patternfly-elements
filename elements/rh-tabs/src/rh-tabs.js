@@ -123,14 +123,6 @@ class RhTabs extends Rhelement {
     return "rh-tabs";
   }
 
-  static get selected() {
-    return this.selected;
-  }
-
-  static get selectedIndex() {
-    return this.selectedIndex;
-  }
-
   constructor() {
     super(RhTabs.is, template);
 
@@ -378,6 +370,8 @@ class RhTab extends Rhelement {
   }
 
   connectedCallback() {
+    super.connectedCallback();
+
     this.setAttribute("role", "tab");
 
     if (!this.id) {

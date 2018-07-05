@@ -26,11 +26,12 @@ Run `npm start` and Polyserve will start a server and open your default browser 
 
 Icon (and all RHElements) use [Prettier][prettier] to auto-format JS and JSON.  The style rules get applied when you commit a change.  If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
 
+## License
+
+RH-Icon icons are licensed under a [Creative Commons Attribution 2.0 Generic License][license].
+
 [prettier]: https://github.com/prettier/prettier/
 [prettier-ed]: https://github.com/prettier/prettier/#editor-integration
 [polyserve]: https://github.com/Polymer/polyserve
 [web-component-tester]: https://github.com/Polymer/web-component-tester
-
-## License
-
-RH-Icon icons are licensed under a [Creative Commons Attribution 2.0 Generic License][http://creativecommons.org/licenses/by/2.0/].
+[license]: http://creativecommons.org/licenses/by/2.0/

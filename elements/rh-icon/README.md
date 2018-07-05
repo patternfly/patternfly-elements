@@ -30,3 +30,7 @@ Icon (and all RHElements) use [Prettier][prettier] to auto-format JS and JSON.  
 [prettier-ed]: https://github.com/prettier/prettier/#editor-integration
 [polyserve]: https://github.com/Polymer/polyserve
 [web-component-tester]: https://github.com/Polymer/web-component-tester
+
+## License
+
+RH-Icon icons are licensed under a [Creative Commons Attribution 2.0 Generic License][http://creativecommons.org/licenses/by/2.0/].

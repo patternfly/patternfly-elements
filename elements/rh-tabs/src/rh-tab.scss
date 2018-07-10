@@ -28,9 +28,12 @@
   cursor: pointer;
 }
 
-:host([selected]) {
+:host([aria-selected="true"]) {
   // Padding
-  padding-top: var(--rhe-c-tabs__tab--selected--PaddingTop, 14px); //13px 54px 24px 14px
+  padding-top: var(
+    --rhe-c-tabs__tab--selected--PaddingTop,
+    14px
+  ); //13px 54px 24px 14px
   padding-right: var(--rhe-c-tabs__tab--selected--PaddingTop, 54px);
   padding-bottom: var(--rhe-c-tabs__tab--selected--PaddingTop, 25px); // +1
   padding-left: var(--rhe-c-tabs__tab--selected--PaddingTop, 15px);
@@ -40,19 +43,34 @@
   margin-bottom: var(--rhe-c-tabs__tab--selected--MarginBottom, -1px);
   margin-left: var(--rhe-c-tabs__tab--selected--MarginLeft, 0);
   // Borderss
-  border-top: var(--rhe-c-tabs__tab--selected--BorderTop, 1px solid $rh-global--border--BorderColor);
-  border-right: var(--rhe-c-tabs__tab--selected--BorderRight, 1px solid $rh-global--border--BorderColor);
+  border-top: var(
+    --rhe-c-tabs__tab--selected--BorderTop,
+    1px solid $rh-global--border--BorderColor
+  );
+  border-right: var(
+    --rhe-c-tabs__tab--selected--BorderRight,
+    1px solid $rh-global--border--BorderColor
+  );
   border-bottom: var(--rhe-c-tabs__tab--selected--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__tab--selected--BorderLeft, 1px solid $rh-global--border--BorderColor);
+  border-left: var(
+    --rhe-c-tabs__tab--selected--BorderLeft,
+    1px solid $rh-global--border--BorderColor
+  );
   // Inner style
-  background-color: var(--rhe-c-tabs__tab--selected--BackgroundColor, $rh-global--color--white);
+  background-color: var(
+    --rhe-c-tabs__tab--selected--BackgroundColor,
+    $rh-global--color--white
+  );
   text-transform: var(--rhe-c-tabs__tab--selected--TextTransform, none);
   font-weight: var(--rhe-c-tabs__tab--selected--FontWeight, normal);
   color: var(--rhe-c-tabs__tab--selected--Color, $rh-global--text-color);
 }
 
 .indicator {
-  display: var(--rhe-c-tabs__indicator--Display, block); // Use none to not show at all
+  display: var(
+    --rhe-c-tabs__indicator--Display,
+    block
+  ); // Use none to not show at all
   // Positioning
   position: absolute;
   top: var(--rhe-c-tabs__indicator--Top, auto);
@@ -63,7 +81,10 @@
   height: var(--rhe-c-tabs__indicator--Height, 4px);
   width: var(--rhe-c-tabs__indicator--Width, 22px);
   // Style & borders
-  background-color: var(----rhe-c-tabs__indicator--BackgroundColor, $rh-global--color--gray-battleship);
+  background-color: var(
+    ----rhe-c-tabs__indicator--BackgroundColor,
+    $rh-global--color--gray-battleship
+  );
   border-top: var(--rhe-c-tabs__indicator--BorderTop, 0);
   border-right: var(--rhe-c-tabs__indicator--BorderRight, 0);
   border-bottom: var(--rhe-c-tabs__indicator--BorderBottom, 0);
@@ -71,7 +92,10 @@
 }
 
 :host(:hover) .indicator {
-  display: var(--rhe-c-tabs__indicator--hover--Display, block); // Use none to not show at all
+  display: var(
+    --rhe-c-tabs__indicator--hover--Display,
+    block
+  ); // Use none to not show at all
   // Positioning
   top: var(--rhe-c-tabs__indicator--hover--Top, auto);
   right: var(--rhe-c-tabs__indicator--hover--Right, auto);
@@ -81,7 +105,10 @@
   height: var(--rhe-c-tabs__indicator--hover--Height, 4px);
   width: var(--rhe-c-tabs__indicator--hover--Width, 22px);
   // Style & borders
-  background-color: var(--rhe-c-tabs__indicator--hover--BackgroundColor, $rh-global--link-color--inverted--hover);
+  background-color: var(
+    --rhe-c-tabs__indicator--hover--BackgroundColor,
+    $rh-global--link-color--inverted--hover
+  );
   border-top: var(--rhe-c-tabs__indicator--hover--BorderTop, 0);
   border-right: var(--rhe-c-tabs__indicator--hover--BorderRight, 0);
   border-bottom: var(--rhe-c-tabs__indicator--hover--BorderBottom, 0);
@@ -89,12 +116,18 @@
 }
 
 :host(:focus) {
-  outline: var(--rhe-c-tabs__tab--focus--Outline, 2px solid $rh-global--link-color--inverted--hover);
+  outline: var(
+    --rhe-c-tabs__tab--focus--Outline,
+    2px solid $rh-global--link-color--inverted--hover
+  );
 }
 
-:host([selected]) .indicator,
-:host([selected]:hover) .indicator {
-  display: var(--rhe-c-tabs__indicator--selected--Display, block); // Use none to not show at all
+:host([aria-selected="true"]) .indicator,
+:host([aria-selected="true"]:hover) .indicator {
+  display: var(
+    --rhe-c-tabs__indicator--selected--Display,
+    block
+  ); // Use none to not show at all
   // Positioning
   top: var(--rhe-c-tabs__indicator--selected--Top, auto);
   right: var(--rhe-c-tabs__indicator--selected--Right, auto);
@@ -104,11 +137,23 @@
   height: var(--rhe-c-tabs__indicator--selected--Height, 4px);
   width: var(--rhe-c-tabs__indicator--selected--Width, 22px);
   // Style & borders
-  background-color: var(--rhe-c-tabs__indicator--selected--BackgroundColor, $rh-global--link-color);
-  border-top: var(--rhe-c-tabs__indicator--selected--BorderTop, $rh-global--color--gray-battleship);
-  border-right: var(--rhe-c-tabs__indicator--selected--BorderRight, $rh-global--color--gray-battleship);
+  background-color: var(
+    --rhe-c-tabs__indicator--selected--BackgroundColor,
+    $rh-global--link-color
+  );
+  border-top: var(
+    --rhe-c-tabs__indicator--selected--BorderTop,
+    $rh-global--color--gray-battleship
+  );
+  border-right: var(
+    --rhe-c-tabs__indicator--selected--BorderRight,
+    $rh-global--color--gray-battleship
+  );
   border-bottom: var(--rhe-c-tabs__indicator--selected--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__indicator--selected--BorderLeft, $rh-global--color--gray-battleship);
+  border-left: var(
+    --rhe-c-tabs__indicator--selected--BorderLeft,
+    $rh-global--color--gray-battleship
+  );
 }
 
 // Default Vertical
@@ -120,17 +165,26 @@
   left: var(--rhe-c-tabs__indicator--vertical--Left, auto);
   // Size
   height: var(--rhe-c-tabs__indicator--vertical--Height, 4px);
-  width: var(--rhe-c-tabs__indicator--vertical--Width, 22px); // Was 100% for subtabs
+  width: var(
+    --rhe-c-tabs__indicator--vertical--Width,
+    22px
+  ); // Was 100% for subtabs
   // Style & borders
-  background-color: var(----rhe-c-tabs__indicator--vertical--BackgroundColor, $rh-global--color--gray-battleship);
+  background-color: var(
+    ----rhe-c-tabs__indicator--vertical--BackgroundColor,
+    $rh-global--color--gray-battleship
+  );
   border-top: var(--rhe-c-tabs__indicator--vertical--BorderTop, 0);
   border-right: var(--rhe-c-tabs__indicator--vertical--BorderRight, 0);
   border-bottom: var(--rhe-c-tabs__indicator--vertical--BorderBottom, 0);
   border-left: var(--rhe-c-tabs__indicator--vertical--BorderLeft, 0);
 }
 
-:host([selected][vertical]) .indicator {
-  display: var(--rhe-c-tabs__indicator--vertical--selected--Display, block); // Use none to not show at all
+:host([aria-selected="true"][vertical]) .indicator {
+  display: var(
+    --rhe-c-tabs__indicator--vertical--selected--Display,
+    block
+  ); // Use none to not show at all
   // Positioning
   top: var(--rhe-c-tabs__indicator--vertical--selected--Top, auto);
   right: var(--rhe-c-tabs__indicator--vertical--selected--Right, auto);
@@ -140,9 +194,18 @@
   height: var(--rhe-c-tabs__indicator--vertical--selected--Height, 4px);
   width: var(--rhe-c-tabs__indicator--vertical--selected--Width, 22px);
   // Style & borders
-  background-color: var(--rhe-c-tabs__indicator--vertical--selected--BackgroundColor, $rh-global--link-color);
+  background-color: var(
+    --rhe-c-tabs__indicator--vertical--selected--BackgroundColor,
+    $rh-global--link-color
+  );
   border-top: var(--rhe-c-tabs__indicator--vertical--selected--BorderTop, 0);
-  border-right: var(--rhe-c-tabs__indicator--vertical--selected--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__indicator--vertical--selected--BorderBottom, 0);
+  border-right: var(
+    --rhe-c-tabs__indicator--vertical--selected--BorderRight,
+    0
+  );
+  border-bottom: var(
+    --rhe-c-tabs__indicator--vertical--selected--BorderBottom,
+    0
+  );
   border-left: var(--rhe-c-tabs__indicator--vertical--selected--BorderLeft, 0);
 }

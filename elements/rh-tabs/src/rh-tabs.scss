@@ -4,7 +4,6 @@
   display: block;
 }
 
-
 // Default
 .tabs {
   display: flex;
@@ -12,7 +11,10 @@
   // Borders
   border-top: var(--rhe-c-tabs__tabs--BorderTop, 0);
   border-right: var(--rhe-c-tabs__tabs--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__tabs--BorderBottom, 1px solid $rh-global--border--BorderColor);
+  border-bottom: var(
+    --rhe-c-tabs__tabs--BorderBottom,
+    1px solid $rh-global--border--BorderColor
+  );
   border-left: var(--rhe-c-tabs__tabs--BorderLeft, 0);
 }
 
@@ -32,24 +34,42 @@
 :host([vertical]) .tabs {
   flex-direction: column;
   width: var(--rhe-c-tabs__tabs--vertical--Width, 25%);
-  background-color: var(--rhe-c-tabs__tabs--vertical--BackgroundColor, transparent);
+  background-color: var(
+    --rhe-c-tabs__tabs--vertical--BackgroundColor,
+    transparent
+  );
   // Borders
   border-top: var(--rhe-c-tabs__tabs--vertical--BorderTop, 0);
-  border-right: var(--rhe-c-tabs__tabs--vertical--BorderRight, 1px solid $rh-global--border--BorderColor);
+  border-right: var(
+    --rhe-c-tabs__tabs--vertical--BorderRight,
+    1px solid $rh-global--border--BorderColor
+  );
   border-bottom: var(--rhe-c-tabs__tabs--vertical--BorderBottom, 0);
   border-left: var(--rhe-c-tabs__tabs--vertical--BorderLeft, 0);
 }
 
 :host([vertical]) .tabs ::slotted(rh-tab) {
-  border-top: var(--rhe-c-tabs__tab--selected--BorderTop, 1px solid transparent);
+  border-top: var(
+    --rhe-c-tabs__tab--selected--BorderTop,
+    1px solid transparent
+  );
   border-right: var(--rhe-c-tabs__tab--selected--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__tab--selected--BorderBottom, 1px solid transparent);
-  border-left: var(--rhe-c-tabs__tab--selected--BorderLeft, 1px solid transparent);
+  border-bottom: var(
+    --rhe-c-tabs__tab--selected--BorderBottom,
+    1px solid transparent
+  );
+  border-left: var(
+    --rhe-c-tabs__tab--selected--BorderLeft,
+    1px solid transparent
+  );
 }
 
-:host([vertical]) .tabs ::slotted(rh-tab[selected]) {
+:host([vertical]) .tabs ::slotted(rh-tab[aria-selected="true"]) {
   // Padding
-  padding-top: var(--rhe-c-tabs__tab--selected--PaddingTop, 14px); //13px 54px 24px 14px
+  padding-top: var(
+    --rhe-c-tabs__tab--selected--PaddingTop,
+    14px
+  ); //13px 54px 24px 14px
   padding-right: var(--rhe-c-tabs__tab--selected--PaddingTop, 55px);
   padding-bottom: var(--rhe-c-tabs__tab--selected--PaddingTop, 24px);
   padding-left: var(--rhe-c-tabs__tab--selected--PaddingTop, 15px);
@@ -59,18 +79,33 @@
   margin-bottom: var(--rhe-c-tabs__tab--selected--MarginBottom, 0);
   margin-left: var(--rhe-c-tabs__tab--selected--MarginLeft, 0);
   // Borders
-  border-top: var(--rhe-c-tabs__tab--selected--BorderTop, 1px solid $rh-global--border--BorderColor);
+  border-top: var(
+    --rhe-c-tabs__tab--selected--BorderTop,
+    1px solid $rh-global--border--BorderColor
+  );
   border-right: var(--rhe-c-tabs__tab--selected--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__tab--selected--BorderBottom, 1px solid $rh-global--border--BorderColor);
-  border-left: var(--rhe-c-tabs__tab--selected--BorderLeft, 1px solid $rh-global--border--BorderColor);
+  border-bottom: var(
+    --rhe-c-tabs__tab--selected--BorderBottom,
+    1px solid $rh-global--border--BorderColor
+  );
+  border-left: var(
+    --rhe-c-tabs__tab--selected--BorderLeft,
+    1px solid $rh-global--border--BorderColor
+  );
 }
 
 :host([vertical]) .panels {
   // Padding
   padding-top: var(--rhe-c-tabs__panel-vertical--PaddingTop, 0);
-  padding-right: var(--rhe-c-tabs__panel-vertical--PaddingTop, $rh-global--spacer);
+  padding-right: var(
+    --rhe-c-tabs__panel-vertical--PaddingTop,
+    $rh-global--spacer
+  );
   padding-bottom: var(--rhe-c-tabs__panel-vertical--PaddingTop, 0);
-  padding-left: var(--rhe-c-tabs__panel-vertical--PaddingTop, $rh-global--spacer * 2);
+  padding-left: var(
+    --rhe-c-tabs__panel-vertical--PaddingTop,
+    $rh-global--spacer * 2
+  );
 }
 
 // Sub Tabs
@@ -87,8 +122,7 @@
   border: 0;
 }
 
-:host([type="subtabs"]) .tabs ::slotted(rh-tab[selected]) {
-
+:host([type="subtabs"]) .tabs ::slotted(rh-tab[aria-selected="true"]) {
 }
 
 :host([type="subtabs"]) rh-tab .indicator {
@@ -98,10 +132,8 @@
 // Sub Tabs Vertical
 // type="subtabs" vertical
 
-
 // Card Tabs
 // type="cards"
-
 
 // Card Tabs Vertical
 // type="cards" vertical

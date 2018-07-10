@@ -20,6 +20,13 @@
 
     <script>
       suite('<rh-search-result>', () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('rh-search-result'),
+            customElements.get('rh-search-result'),
+            'the <rh-search-result> should be an instance of RhSearchResult'
+          );
+        });
         test('it should show a search result', () => {
           const rhSearchResult = document.querySelector('rh-search-result');
           const shadowRoot = rhSearchResult.shadowRoot;

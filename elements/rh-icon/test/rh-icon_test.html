@@ -39,6 +39,13 @@
           console.warn.restore();
         });
 
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('rh-icon'),
+            customElements.get('rh-icon'),
+            'the <rh-icon> should be an instance of RhPanel'
+          );
+        });
         test('it should show the correct icon', () => {
           const rhIcon = document.querySelector('rh-icon#correct-icon');
           const d = rhIcon.shadowRoot.querySelector('svg g path').getAttribute('d');

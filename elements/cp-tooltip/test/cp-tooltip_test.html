@@ -21,6 +21,13 @@
 
     <script>
       suite('<cp-tooltip>', () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('cp-tooltip'),
+            customElements.get('cp-tooltip'),
+            'the <cp-tooltip> should be an instance of CpTooltip'
+          );
+        });
         test('tooltip role and tabindex attributes should be set', () => {
           const cpTooltip = document.getElementById('tooltip-default');
           const roleAttribute = cpTooltip.getAttribute('role');

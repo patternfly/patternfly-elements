@@ -48,13 +48,13 @@
         const card3 = document.querySelector("#card3");
         const card4 = document.querySelector("#card4");
 
-        // test('it should do something RHElementy', () => {
-        // you need to write tests!!!
-        // const rhCard = document.querySelector('rh-card');
-        // const textContent = rhCard.innerText;
-        // assert.equal(textContent, 'This is the element content.', 'rh-card should do something');
-        // assert.equal(true, true);
-        // });
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('rh-card'),
+            customElements.get('rh-card'),
+            'the <rh-card> should be an instance of RhCard'
+          );
+        });
         test("default theme is plain", () => {
           const styles = getComputedStyle(card2, null);
           assert.match( styles.background, /rgba\(0,\s+0,\s+0,\s+0\)/);

@@ -18,6 +18,14 @@
     <script>
       suite('<rh-number>', () => {
 
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('rh-number'),
+            customElements.get('rh-number'),
+            'the <rh-number> should be an instance of RhNumber'
+          );
+        });
+
         test('it should show an ordinal number', () => {
           const rhNumber = document.querySelector('rh-number[type="ordinal"]');
           let content = rhNumber.shadowRoot.querySelector('span').textContent;

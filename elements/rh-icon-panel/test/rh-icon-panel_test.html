@@ -25,6 +25,13 @@
         const panel1 = document.querySelector("#panel1");
         const panel2 = document.querySelector("#panel2");
 
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('rh-icon-panel'),
+            customElements.get('rh-icon-panel'),
+            'the <rh-icon-panel> should be an instance of RhIconPanel'
+          );
+        });
         test('it should show an icon', () => {
           const svgD = panel1.shadowRoot.querySelector("rh-icon").shadowRoot.querySelector('svg g path').getAttribute('d');
           assert.isOk(svgD, "the panel's internal rh-icon has an svg with a path");

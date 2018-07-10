@@ -30,6 +30,13 @@
           cpAccordionHeading.setAttribute('aria-expanded', '');
         });
 
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('cp-accordion-heading'),
+            customElements.get('cp-accordion-heading'),
+            'the <cp-accordion-heading> should be an instance of CpAccordionHeading'
+          );
+        });
         test('it should display the content of the heading', () => {
           const textContent = cpAccordionHeading.textContent.trim();
           assert.equal(textContent, 'Heading', 'cp-accordion-heading should do something');

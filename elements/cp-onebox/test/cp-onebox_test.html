@@ -40,6 +40,13 @@
           window.fetch.restore();
         });
 
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('cp-onebox'),
+            customElements.get('cp-onebox'),
+            'the <cp-onebox> should be an instance of CpOneBox'
+          );
+        });
         test('it should show onebox product results', done => {
           const cpOnebox = document.querySelector(`#${elementId}`);
 

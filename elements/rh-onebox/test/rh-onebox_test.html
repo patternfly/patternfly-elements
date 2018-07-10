@@ -72,14 +72,6 @@
           window.fetch.restore();
         });
 
-        test('it should upgrade', () => {
-          assert.instanceOf(
-            document.querySelector('test-onebox'),
-            customElements.get('test-onebox'),
-            'the <test-onebox> should be an instance of RhOneBox'
-          );
-        });
-
         test('it should set the source property from the source attribute', () => {
           const testOnebox = document.querySelector('test-onebox');
           assert.equal(testOnebox.source, '/onebox-source');

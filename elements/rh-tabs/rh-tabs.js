@@ -136,7 +136,7 @@ template.innerHTML = `
   border-bottom: var(--rhe-c-tabs__tab--selected--BorderBottom, 1px solid transparent);
   border-left: var(--rhe-c-tabs__tab--selected--BorderLeft, 1px solid transparent); }
 
-:host([vertical]) .tabs ::slotted(rh-tab[selected]) {
+:host([vertical]) .tabs ::slotted(rh-tab[aria-selected="true"]) {
   padding-top: var(--rhe-c-tabs__tab--selected--PaddingTop, 14px);
   padding-right: var(--rhe-c-tabs__tab--selected--PaddingTop, 55px);
   padding-bottom: var(--rhe-c-tabs__tab--selected--PaddingTop, 24px);
@@ -195,6 +195,10 @@ class RhTabs extends Rhelement {
     return "rh-tabs";
   }
 
+  static get observedAttributes() {
+    return ["vertical"];
+  }
+
   constructor() {
     super(RhTabs.is, template);
 
@@ -226,6 +230,14 @@ class RhTabs extends Rhelement {
   disconnectedCallback() {
     this.removeEventListener("keydown", this._onKeyDown);
     this.removeEventListener("click", this._onClick);
+  }
+
+  attributeChangedCallback() {
+    if (this.hasAttribute("vertical")) {
+      this.setAttribute("aria-orientation", "vertical");
+    } else {
+      this.removeAttribute("aria-orientation");
+    }
   }
 
   select(newTab) {
@@ -326,7 +338,7 @@ class RhTabs extends Rhelement {
     panels.forEach(panel => (panel.hidden = true));
   }
 
-  _selectTab(newTab) {
+  _selectTab(newTab, setFocus = false) {
     this.reset();
 
     const newPanel = this._panelForTab(newTab);
@@ -351,7 +363,10 @@ class RhTabs extends Rhelement {
 
     newTab.selected = true;
     newPanel.hidden = false;
-    newTab.focus();
+
+    if (setFocus) {
+      newTab.focus();
+    }
 
     const tabs = this._allTabs();
     const newIdx = tabs.findIndex(tab => tab.selected);
@@ -406,7 +421,7 @@ class RhTabs extends Rhelement {
     }
 
     event.preventDefault();
-    this._selectTab(newTab);
+    this._selectTab(newTab, true);
   }
 
   _onClick(event) {
@@ -445,7 +460,7 @@ tabTemplate.innerHTML = `
   white-space: nowrap;
   cursor: pointer; }
 
-:host([selected]) {
+:host([aria-selected="true"]) {
   padding-top: var(--rhe-c-tabs__tab--selected--PaddingTop, 14px);
   padding-right: var(--rhe-c-tabs__tab--selected--PaddingTop, 54px);
   padding-bottom: var(--rhe-c-tabs__tab--selected--PaddingTop, 25px);
@@ -495,8 +510,8 @@ tabTemplate.innerHTML = `
 :host(:focus) {
   outline: var(--rhe-c-tabs__tab--focus--Outline, 2px solid #2b9af3); }
 
-:host([selected]) .indicator,
-:host([selected]:hover) .indicator {
+:host([aria-selected="true"]) .indicator,
+:host([aria-selected="true"]:hover) .indicator {
   display: var(--rhe-c-tabs__indicator--selected--Display, block);
   top: var(--rhe-c-tabs__indicator--selected--Top, auto);
   right: var(--rhe-c-tabs__indicator--selected--Right, auto);
@@ -523,7 +538,7 @@ tabTemplate.innerHTML = `
   border-bottom: var(--rhe-c-tabs__indicator--vertical--BorderBottom, 0);
   border-left: var(--rhe-c-tabs__indicator--vertical--BorderLeft, 0); }
 
-:host([selected][vertical]) .indicator {
+:host([aria-selected="true"][vertical]) .indicator {
   display: var(--rhe-c-tabs__indicator--vertical--selected--Display, block);
   top: var(--rhe-c-tabs__indicator--vertical--selected--Top, auto);
   right: var(--rhe-c-tabs__indicator--vertical--selected--Right, auto);
@@ -548,7 +563,7 @@ class RhTab extends Rhelement {
   }
 
   static get observedAttributes() {
-    return ["selected"];
+    return ["aria-selected"];
   }
 
   constructor() {
@@ -573,23 +588,17 @@ class RhTab extends Rhelement {
   }
 
   attributeChangedCallback() {
-    const value = this.hasAttribute("selected");
-    this.setAttribute("aria-selected", value);
+    const value = Boolean(this.selected);
     this.setAttribute("tabindex", value ? 0 : -1);
   }
 
   set selected(value) {
     value = Boolean(value);
-
-    if (value) {
-      this.setAttribute("selected", "");
-    } else {
-      this.removeAttribute("selected");
-    }
+    this.setAttribute("aria-selected", value);
   }
 
   get selected() {
-    return this.hasAttribute("selected");
+    return this.getAttribute("aria-selected") === "true" ? true : false;
   }
 
   show() {
@@ -599,13 +608,33 @@ class RhTab extends Rhelement {
 
 window.customElements.define(RhTab.is, RhTab);
 
-class RhTabPanel extends HTMLElement {
+const tabPanelTemplate = document.createElement("template");
+tabPanelTemplate.innerHTML = `
+  <style>
+    :host {
+  display: block; }
+
+:host([hidden]) {
+  display: none; }
+
+  </style>
+  <slot></slot>
+`;
+
+class RhTabPanel extends Rhelement {
   static get is() {
     return "rh-tab-panel";
   }
 
+  constructor() {
+    super(RhTabPanel.is, tabPanelTemplate);
+  }
+
   connectedCallback() {
+    super.connectedCallback();
+
     this.setAttribute("role", "tabpanel");
+    this.setAttribute("tabindex", 0);
 
     if (!this.id) {
       this.id = `${RhTabPanel.is}-${generateId()}`;

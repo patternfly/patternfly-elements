@@ -123,6 +123,10 @@ class RhTabs extends Rhelement {
     return "rh-tabs";
   }
 
+  static get observedAttributes() {
+    return ["vertical"];
+  }
+
   constructor() {
     super(RhTabs.is, template);
 
@@ -154,6 +158,14 @@ class RhTabs extends Rhelement {
   disconnectedCallback() {
     this.removeEventListener("keydown", this._onKeyDown);
     this.removeEventListener("click", this._onClick);
+  }
+
+  attributeChangedCallback() {
+    if (this.hasAttribute("vertical")) {
+      this.setAttribute("aria-orientation", "vertical");
+    } else {
+      this.removeAttribute("aria-orientation");
+    }
   }
 
   select(newTab) {
@@ -254,7 +266,7 @@ class RhTabs extends Rhelement {
     panels.forEach(panel => (panel.hidden = true));
   }
 
-  _selectTab(newTab) {
+  _selectTab(newTab, setFocus = false) {
     this.reset();
 
     const newPanel = this._panelForTab(newTab);
@@ -279,7 +291,10 @@ class RhTabs extends Rhelement {
 
     newTab.selected = true;
     newPanel.hidden = false;
-    newTab.focus();
+
+    if (setFocus) {
+      newTab.focus();
+    }
 
     const tabs = this._allTabs();
     const newIdx = tabs.findIndex(tab => tab.selected);
@@ -334,7 +349,7 @@ class RhTabs extends Rhelement {
     }
 
     event.preventDefault();
-    this._selectTab(newTab);
+    this._selectTab(newTab, true);
   }
 
   _onClick(event) {
@@ -362,7 +377,7 @@ class RhTab extends Rhelement {
   }
 
   static get observedAttributes() {
-    return ["selected"];
+    return ["aria-selected"];
   }
 
   constructor() {
@@ -387,23 +402,17 @@ class RhTab extends Rhelement {
   }
 
   attributeChangedCallback() {
-    const value = this.hasAttribute("selected");
-    this.setAttribute("aria-selected", value);
+    const value = Boolean(this.selected);
     this.setAttribute("tabindex", value ? 0 : -1);
   }
 
   set selected(value) {
     value = Boolean(value);
-
-    if (value) {
-      this.setAttribute("selected", "");
-    } else {
-      this.removeAttribute("selected");
-    }
+    this.setAttribute("aria-selected", value);
   }
 
   get selected() {
-    return this.hasAttribute("selected");
+    return this.getAttribute("aria-selected") === "true" ? true : false;
   }
 
   show() {
@@ -413,13 +422,28 @@ class RhTab extends Rhelement {
 
 window.customElements.define(RhTab.is, RhTab);
 
-class RhTabPanel extends HTMLElement {
+const tabPanelTemplate = document.createElement("template");
+tabPanelTemplate.innerHTML = `
+  <style>
+    {{{rh-tab-panel.scss}}}
+  </style>
+  {{{rh-tab-panel.html}}}
+`;
+
+class RhTabPanel extends Rhelement {
   static get is() {
     return "rh-tab-panel";
   }
 
+  constructor() {
+    super(RhTabPanel.is, tabPanelTemplate);
+  }
+
   connectedCallback() {
+    super.connectedCallback();
+
     this.setAttribute("role", "tabpanel");
+    this.setAttribute("tabindex", 0);
 
     if (!this.id) {
       this.id = `${RhTabPanel.is}-${generateId()}`;

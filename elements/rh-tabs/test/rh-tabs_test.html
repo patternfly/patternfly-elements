@@ -106,7 +106,7 @@
 
           secondTab.click();
 
-          assert.isTrue(secondTab.hasAttribute('selected'));
+          assert.equal(secondTab.getAttribute('aria-selected'), 'true');
           assert.isTrue(!secondPanel.hasAttribute('hidden'));
         });
 
@@ -117,7 +117,7 @@
 
           rhTabs.select(secondTab);
 
-          assert.isTrue(secondTab.hasAttribute('selected'));
+          assert.equal(secondTab.getAttribute('aria-selected'), 'true');
           assert.isTrue(!secondPanel.hasAttribute('hidden'));
         });
 
@@ -130,7 +130,7 @@
 
           rhTabs.selectIndex(1);
 
-          assert.isTrue(secondTab.hasAttribute('selected'));
+          assert.equal(secondTab.getAttribute('aria-selected'), 'true');
           assert.isTrue(!secondPanel.hasAttribute('hidden'));
 
           rhTabs.selectIndex(badIndex);

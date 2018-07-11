@@ -13,22 +13,16 @@
   </head>
   <body>
 
-    <test-fixture id="BasicTestFixture">
-      <template>
-        <cp-accordion></cp-accordion>
-      </template>
-    </test-fixture>
-
-    <test-fixture id="ChangedPropertyTestFixture">
-      <template>
-        <cp-accordion prop1="new-prop1"></cp-accordion>
-      </template>
-    </test-fixture>
+    <cp-accordion>Just a plain ol' accordion.</cp-accordion>
 
     <script>
       suite('cp-accordion', () => {
-        test('instantiating the element with default properties works', () => {
-          assert.equal(true, true);
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('cp-accordion'),
+            customElements.get('cp-accordion'),
+            'the <cp-accordion> should be an instance of CpAccordion'
+          );
         });
       });
     </script>

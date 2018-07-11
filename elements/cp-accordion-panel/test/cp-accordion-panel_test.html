@@ -19,6 +19,13 @@
           cpAccordionPanel.removeAttribute('expanded');
         });
 
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('cp-accordion-panel'),
+            customElements.get('cp-accordion-panel'),
+            'the <cp-accordion-panel> should be an instance of CpAccordionPanel'
+          );
+        });
         test('it should display the content of the panel', () => {
           const textContent = cpAccordionPanel.innerText;
           assert.include(textContent, 'Panel content', 'cp-accordion-panel should show content');

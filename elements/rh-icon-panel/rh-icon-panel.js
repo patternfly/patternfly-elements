@@ -41,21 +41,6 @@ class RhIconPanel extends Rhelement {
     super("rh-icon-panel", template);
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-
-    // const attrs = this.attributes;
-    //
-    // if (attrs.getNamedItem("icon") == null) {
-    //   console.warn("You must provide an icon attribute on rh-icon-panel");
-    // } else {
-    //   let iconElem = this.shadowRoot.querySelector("rh-icon");
-    //   iconElem.setAttribute("icon", attrs.getNamedItem("icon").value);
-    // }
-  }
-
-  disconnectedCallback() {}
-
   attributeChangedCallback(attr, oldVal, newVal) {
     if (attr === "icon") {
       if (newVal) {

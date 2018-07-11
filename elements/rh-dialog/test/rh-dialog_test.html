@@ -17,11 +17,12 @@
 
     <script>
       suite('<rh-dialog>', () => {
-        test('it should do something RHElementy', () => {
-          // you need to write tests!!!
-          const rhDialog = document.querySelector('rh-dialog');
-          const textContent = rhDialog.textContent.trim();
-          assert.equal(textContent, 'Hello!\n      Cancel', 'rh-dialog should do something');
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('rh-dialog'),
+            customElements.get('rh-dialog'),
+            'the <rh-dialog> should be an instance of RhDialog'
+          );
         });
       });
     </script>

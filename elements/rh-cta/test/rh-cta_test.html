@@ -15,11 +15,12 @@
 
     <script>
       suite('<rh-cta>', () => {
-        test('it should do something RHElementy', () => {
-          // you need to write tests!!!
-          const rhCta = document.querySelector('rh-cta');
-          const textContent = rhCta.innerText;
-          assert.equal(textContent, 'This is the element content.', 'rh-cta should do something');
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('rh-cta'),
+            customElements.get('rh-cta'),
+            'the <rh-cta> should be an instance of RhCta'
+          );
         });
       });
     </script>

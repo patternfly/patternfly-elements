@@ -15,11 +15,12 @@
 
     <script>
       suite('<rh-multiswitch>', () => {
-        test('it should do something RHElementy', () => {
-          // you need to write tests!!!
-          const rhMultiswitch = document.querySelector('rh-multiswitch');
-          const textContent = rhMultiswitch.textContent.trim();
-          assert.equal(textContent, 'This is the element content.', 'rh-multiswitch should do something');
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('rh-multiswitch'),
+            customElements.get('rh-multiswitch'),
+            'the <rh-multiswitch> should be an instance of RhMultiSwitch'
+          );
         });
       });
     </script>

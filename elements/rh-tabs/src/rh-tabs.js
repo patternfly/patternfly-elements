@@ -163,8 +163,12 @@ class RhTabs extends Rhelement {
   attributeChangedCallback() {
     if (this.hasAttribute("vertical")) {
       this.setAttribute("aria-orientation", "vertical");
+      this._allPanels().forEach(panel => panel.setAttribute("vertical", ""));
+      this._allTabs().forEach(tab => tab.setAttribute("vertical", ""));
     } else {
       this.removeAttribute("aria-orientation");
+      this._allPanels().forEach(panel => panel.removeAttribute("vertical"));
+      this._allTabs().forEach(tab => tab.removeAttribute("vertical"));
     }
   }
 

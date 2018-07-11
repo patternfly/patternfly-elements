@@ -10,7 +10,7 @@
     "postinstall": "npm run bootstrap && npm run wct-kludge",
     "precommit": "npm run update-test-suite > /dev/null && lint-staged",
     "update-test-suite": "node scripts/test-suite-inject.js",
-    "storybook": "start-storybook -c .storybook -p 9001",
+    "storybook": "start-storybook -c .storybook -p 9001 -s ./elements",
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
     "new": "cd elements && yo rhelement && npm run update-test-suite"
   },

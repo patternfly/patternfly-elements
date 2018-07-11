@@ -7,9 +7,6 @@
 .rhe-l--text-align--right {
   text-align: right; }
 
-:root {
-  --rhe-l-grid--m-gutter--GridGap: var(--rhe--global--gutter, 2rem); }
-
 .rhe-l-grid {
   display: grid;
   grid-template-columns: repeat(12, [col-start] 1fr); }
@@ -743,4 +740,12 @@
     .rhe-l-grid > .rhe-m-12-row-on-xl {
       grid-row: span 12; } }
   .rhe-l-grid.rhe-m-gutters {
-    grid-gap: var(--rhe-l-grid--m-gutter--GridGap); }
+    grid-gap: var(--rhe-l-grid--m-gutter--GridGap, 1rem); }
+
+.rhe-l-bullseye {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--rhe-l-bullseye--Padding);
+  margin: 0; }

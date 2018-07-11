@@ -16,9 +16,11 @@
 // * --rh-dropdown--heading--FontSize
 // * --cp-accordion--heading--FontSize
 
-:root {
-  --rhe-l-grid--m-gutter--GridGap: var(--rhe--global--gutter, $rh-global--gutter);
-}
+// $rh-global--gutter: $rh-global--spacer;
+//
+// :root {
+//   --rhe-l-grid--m-gutter--GridGap: var(--rhe--global--gutter, $rh-global--gutter);
+// }
 
 /// Media query used to create responsive grid items
 /// @group mixins
@@ -121,6 +123,6 @@
   }
 
   &.rhe-m-gutters {
-    grid-gap: var(--rhe-l-grid--m-gutter--GridGap);
+    grid-gap: var(--rhe-l-grid--m-gutter--GridGap, $rh-global--spacer);
   }
 }

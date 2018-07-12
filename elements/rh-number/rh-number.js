@@ -3,8 +3,8 @@ import "../../numeral/numeral.js";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the
- * html from rhcc-freshnessgrade.html and css from
- * rhcc-freshnessgrade.css
+ * html from rh-number.html and css from
+ * rh-number.css
  */
 const template = document.createElement("template");
 template.innerHTML = `

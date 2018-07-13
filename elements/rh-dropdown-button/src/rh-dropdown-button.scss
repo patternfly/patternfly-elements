@@ -5,7 +5,8 @@
 
   button {
     padding: $rh-global--spacer--sm $rh-global--spacer;
-    border: $rh-global--border--BorderWidth $rh-global--border--BorderStyle $rh-global--border--BorderColor;
+    border: $rh-global--border--BorderWidth $rh-global--border--BorderStyle
+      $rh-global--border--BorderColor;
     background: transparent;
     font-size: $rh-global--FontSize;
     line-height: $rh-global--LineHeight;
@@ -13,7 +14,7 @@
     cursor: pointer;
 
     &::after {
-      content: '';
+      content: "";
       display: inline-block;
       margin-left: $rh-global--spacer--sm;
       border-top: 5px solid $rh-global--text-color;

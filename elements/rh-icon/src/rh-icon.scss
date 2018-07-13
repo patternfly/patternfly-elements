@@ -1,15 +1,52 @@
 @import "../../rh-sass/rh-sass";
 
 $icon-colors: (
-  white: ('--rh-global--color--white', $rh-global--color--white), // name: (CSS Var, SASS var),
-  black: ('--rh-global--color--black', $rh-global--color--black)
+  white: (
+    "--rh-global--color--white",
+    $rh-global--color--white
+  ),
+  /* name: (
+      CSS Var,
+      SASS var
+    ), */ black:
+    (
+      "--rh-global--color--black",
+      $rh-global--color--black
+    )
 );
 
 $icon-bg-colors: (
-  white: ('--rh-global--color--white', $rh-global--color--white, '--rh-global--text-color', $rh-global--text-color), // name: (BG CSS Var, BG SASS var, fill CSS Var, fill SASS var),
-  red: ('--rh-global--color--red', $rh-global--color--red, '--rh-global--color--white', $rh-global--color--white),
-  light: ('--rh-global--color--gray2', $rh-global--color--gray2, '--rh-global--text-color', $rh-global--text-color),
-  dark: ('--rh-global--color--gray10', $rh-global--color--gray10, '--rh-global--color--white', $rh-global--color--white)
+  white: (
+    "--rh-global--color--white",
+    $rh-global--color--white,
+    "--rh-global--text-color",
+    $rh-global--text-color
+  ),
+  /* name: (
+      BG CSS Var,
+      BG SASS var,
+      fill CSS Var,
+      fill SASS var
+    ), */
+    red:
+    (
+      "--rh-global--color--red",
+      $rh-global--color--red,
+      "--rh-global--color--white",
+      $rh-global--color--white
+    ),
+  light: (
+    "--rh-global--color--gray2",
+    $rh-global--color--gray2,
+    "--rh-global--text-color",
+    $rh-global--text-color
+  ),
+  dark: (
+    "--rh-global--color--gray10",
+    $rh-global--color--gray10,
+    "--rh-global--color--white",
+    $rh-global--color--white
+  )
 );
 
 @mixin set-svg-size($size: 1em) {
@@ -54,7 +91,12 @@ $icon-bg-colors: (
 
   @at-root #{&}([data-bg="transparent"]) {
     background: transparent;
-    border: var(--rh-global--border--BorderWidth, $rh-global--border--BorderWidth) var(--rh-global--border--BorderStyle, $rh-global--border--BorderStyle) var(--rh-global--border--BorderColor, $rh-global--border--BorderColor);
+    border: var(
+        --rh-global--border--BorderWidth,
+        $rh-global--border--BorderWidth
+      )
+      var(--rh-global--border--BorderStyle, $rh-global--border--BorderStyle)
+      var(--rh-global--border--BorderColor, $rh-global--border--BorderColor);
   }
 
   @each $color, $value in $icon-bg-colors {

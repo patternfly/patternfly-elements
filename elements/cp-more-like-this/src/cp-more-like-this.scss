@@ -19,12 +19,12 @@ rh-card {
   }
 
   span {
-    font-size: .9rem;
+    font-size: 0.9rem;
     font-weight: 400;
   }
 }
 
-@media(min-width: 768px) {
+@media (min-width: 768px) {
   .card-container {
     display: flex;
 

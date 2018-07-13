@@ -13,8 +13,8 @@
 // * --cp-accordion--heading--FontSize
 
 $rh-global--color-map--form: (
-    input-text: (
-        dark: $rh-global--text-color--inverted,
-        light: $rh-global--text-color,
-    )
+  input-text: (
+    dark: $rh-global--text-color--inverted,
+    light: $rh-global--text-color
+  )
 );

@@ -24,11 +24,11 @@
 // This needs to be located here in order to avoid
 // variable issues.
 $rh-global--color-map: map-collect(
-    $rh-global--color-map--block,
-    $rh-global--color-map--copy,
-    $rh-global--color-map--form,
-    $rh-global--color-map--icon,
-    $rh-global--color-map--link,
-    $rh-global--color-map--table,
-    $rh-global--color-map--title
+  $rh-global--color-map--block,
+  $rh-global--color-map--copy,
+  $rh-global--color-map--form,
+  $rh-global--color-map--icon,
+  $rh-global--color-map--link,
+  $rh-global--color-map--table,
+  $rh-global--color-map--title
 );

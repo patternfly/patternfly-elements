@@ -44,7 +44,9 @@ rh-card {
         margin-right: 0; } }</style>
 <h3>People who viewed this ${data.contentType} also viewed</h3>
 <div class="card-container">
-  ${data.results.map(result => `
+  ${data.results
+    .map(
+      result => `
     <rh-card theme="light">
       <h4 slot="header"><a href="${result.view_uri}">${result.allTitle}</a></h4>
       <span>
@@ -58,7 +60,9 @@ rh-card {
         </rh-datetime>
       </span>
     </rh-card>
-  `).join('\n')}
+  `
+    )
+    .join("\n")}
 </div>
 `;
   return template;

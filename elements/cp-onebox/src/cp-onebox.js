@@ -1,23 +1,23 @@
-import RhOnebox from '../rh-onebox/rh-onebox.js';
+import RhOnebox from "../rh-onebox/rh-onebox.js";
 
 /*
  * DO NOT EDIT. This will be autopopulated with the
  * html from cp-onebox.html and css from
  * cp-onebox.scss
  */
-const template = document.createElement('template');
+const template = document.createElement("template");
 const bindTemplate = data => {
   template.innerHTML = ``;
   return template;
-}
+};
 /* end DO NOT EDIT */
 
 class CpOnebox extends RhOnebox {
   constructor() {
-    super('cp-onebox', {
+    super("cp-onebox", {
       template: bindTemplate,
-      arrayName: 'rules',
-      matchArrayName: 'keywords'
+      arrayName: "rules",
+      matchArrayName: "keywords"
     });
 
     this.expandButton = null;
@@ -28,19 +28,19 @@ class CpOnebox extends RhOnebox {
   render() {
     super.render();
 
-    this.expandButton = this.shadowRoot.querySelector('#expandButton');
-    this.expandButton.addEventListener('click', this.expandButtonHandler);
+    this.expandButton = this.shadowRoot.querySelector("#expandButton");
+    this.expandButton.addEventListener("click", this.expandButtonHandler);
   }
 
   expandButtonHandler() {
     this.expanded = !this.expanded;
 
     if (this.expanded) {
-      this.setAttribute('expanded', '');
+      this.setAttribute("expanded", "");
     } else {
-      this.removeAttribute('expanded');
+      this.removeAttribute("expanded");
     }
   }
 }
 
-window.customElements.define('cp-onebox', CpOnebox);
+window.customElements.define("cp-onebox", CpOnebox);

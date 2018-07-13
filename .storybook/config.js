@@ -8,10 +8,10 @@ setOptions({
 
 function loadStories() {
   req.keys().forEach(filename => {
-    if (filename.includes('node_modules')) {
+    if (filename.includes("node_modules")) {
       return;
     }
-    
+
     return req(filename);
   });
 }

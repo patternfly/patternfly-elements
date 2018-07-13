@@ -17,8 +17,5 @@
       "url": "https://github.com/markcaron"
     }
   ],
-  "license": "ISC",
-  "dependencies": {
-    "@rhelements/cp-sass": "*"
-  }
+  "license": "ISC"
 }

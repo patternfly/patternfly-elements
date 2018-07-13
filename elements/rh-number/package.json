@@ -18,7 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "@rhelements/rhelement": "*",
-    "numeral": "RHElements/Numeral-js#2.0.7"
+    "numeral": "RHElements/Numeral-js#2.0.10"
   },
   "generator-rhelement-version": "0.2.9"
 }

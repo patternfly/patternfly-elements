@@ -50,14 +50,13 @@
     &:checked ~ a {
       left: 0;
       box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
     }
 
     // Slider shadows
     &:not(:first-child):checked ~ a {
-      box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2),
-                  -1px 0 0 rgba(0, 0, 0, 0.2),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2), -1px 0 0 rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
     }
 
     // Because a11y
@@ -76,7 +75,7 @@
 
     // Initial theme styling
     cursor: pointer;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
 
     // Auto adjusting widths
     &:nth-last-child(6),
@@ -172,7 +171,7 @@
     &:nth-last-child(10) ~ input:nth-child(9):checked ~ a,
     &:nth-last-child(12) ~ input:nth-child(11):checked ~ a {
       box-shadow: -1px 0 0 rgba(0, 0, 0, 0.2),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
     }
   }
 
@@ -184,7 +183,7 @@
     width: 50%;
     transition: left 0.1s ease-out;
     box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
 
     // Default theme
     background: #0088ce;
@@ -204,11 +203,26 @@
   border-color: #bc6106;
 }
 
-.multiswitch[data-theme="stoplight"] label:nth-last-child(4) ~ input:nth-child(3):checked ~ a,
-.multiswitch[data-theme="stoplight"] label:nth-last-child(6) ~ input:nth-child(5):checked ~ a,
-.multiswitch[data-theme="stoplight"] label:nth-last-child(8) ~ input:nth-child(7):checked ~ a,
-.multiswitch[data-theme="stoplight"] label:nth-last-child(10) ~ input:nth-child(9):checked ~ a,
-.multiswitch[data-theme="stoplight"] label:nth-last-child(12) ~ input:nth-child(11):checked ~ a {
+.multiswitch[data-theme="stoplight"]
+  label:nth-last-child(4)
+  ~ input:nth-child(3):checked
+  ~ a,
+.multiswitch[data-theme="stoplight"]
+  label:nth-last-child(6)
+  ~ input:nth-child(5):checked
+  ~ a,
+.multiswitch[data-theme="stoplight"]
+  label:nth-last-child(8)
+  ~ input:nth-child(7):checked
+  ~ a,
+.multiswitch[data-theme="stoplight"]
+  label:nth-last-child(10)
+  ~ input:nth-child(9):checked
+  ~ a,
+.multiswitch[data-theme="stoplight"]
+  label:nth-last-child(12)
+  ~ input:nth-child(11):checked
+  ~ a {
   background: #3f9c35;
   border-color: #307628;
 }

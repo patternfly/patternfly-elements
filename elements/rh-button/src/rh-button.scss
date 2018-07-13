@@ -11,22 +11,46 @@
   border: 1px solid transparent;
   cursor: pointer;
 
-  border-radius: var(--rhe-theme--button-border--BorderRadius, $rh-global--button-border--BorderRadius);
-  background: var(--rh-button--theme--default-color--Background, $rh-global--color--gray2);
+  border-radius: var(
+    --rhe-theme--button-border--BorderRadius,
+    $rh-global--button-border--BorderRadius
+  );
+  background: var(
+    --rh-button--theme--default-color--Background,
+    $rh-global--color--gray2
+  );
   color: var(--rh-button--theme--default-color--Color, $rh-global--text-color);
 }
 
 :host button:hover {
-  background: var(--rh-button--theme--default-color--hover--Background, $rh-global--color--gray4);
-  color: var(--rh-button--theme--default-color--hover--Color, $rh-global--text-color);
+  background: var(
+    --rh-button--theme--default-color--hover--Background,
+    $rh-global--color--gray4
+  );
+  color: var(
+    --rh-button--theme--default-color--hover--Color,
+    $rh-global--text-color
+  );
 }
 
 :host(.primary) button {
-  background: var(--rh-button--theme--primary-color--Background, $rh-global--ui-element-color);
-  color: var(--rh-button--theme--primary-color--Color, $rh-global--color--white);
+  background: var(
+    --rh-button--theme--primary-color--Background,
+    $rh-global--ui-element-color
+  );
+  color: var(
+    --rh-button--theme--primary-color--Color,
+    $rh-global--color--white
+  );
 }
 
 :host(.primary) button:hover {
-  background: var(--rh-button--theme--primary-color--hover--Background, $rh-global--ui-element-color--hover);
-  color: var(--rh-button--theme--primary-color--hover--Color, $rh-global--color--white);
+  background: var(
+    --rh-button--theme--primary-color--hover--Background,
+    $rh-global--ui-element-color--hover
+  );
+  color: var(
+    --rh-button--theme--primary-color--hover--Color,
+    $rh-global--color--white
+  );
 }

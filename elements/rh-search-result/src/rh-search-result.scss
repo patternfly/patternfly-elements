@@ -10,9 +10,9 @@
 
 article ::slotted([slot="meta"]) {
   display: block;
-  font-size: var(--rhe-c-search-result_meta--FontSize, .875rem);
+  font-size: var(--rhe-c-search-result_meta--FontSize, 0.875rem);
   line-height: var(--rhe-c-search-result_meta--LineHeight, 1.3125rem);
-  margin: var(--rhe-c-search-result_meta--Margin, 0 0 .375rem);
+  margin: var(--rhe-c-search-result_meta--Margin, 0 0 0.375rem);
   color: var(--rhe-c-search-result_meta--Color, $rh-global--color--gray-batman);
   text-decoration: var(--rhe-c-search-result_meta--TextDecoration, none);
 }
@@ -42,6 +42,9 @@ header {
   a:hover,
   a:focus {
     color: var(--rhe-c-search-result_heading--FontColorHover, #004080);
-    text-decoration: var(--rhe-c-search-result_heading--TextDecorationHover, underline);
+    text-decoration: var(
+      --rhe-c-search-result_heading--TextDecorationHover,
+      underline
+    );
   }
 }

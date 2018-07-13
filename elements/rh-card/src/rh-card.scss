@@ -4,8 +4,8 @@
   display: block;
   padding: var(--rhe-theme--spacer, $rh-global--spacer);
   border: var(--rhe-theme--border--BorderWidth, $rh-global--border--BorderWidth)
-          var(--rhe-theme--border--BorderStyle, $rh-global--border--BorderStyle)
-          transparent;
+    var(--rhe-theme--border--BorderStyle, $rh-global--border--BorderStyle)
+    transparent;
 }
 
 :host([theme="dark"]) {
@@ -14,7 +14,10 @@
 }
 
 :host([theme="light"]) {
-  background: var(--rhe-theme--bg-color--shade2, $rh-global--color--gray-platinum);
+  background: var(
+    --rhe-theme--bg-color--shade2,
+    $rh-global--color--gray-platinum
+  );
   color: var(--rhe-theme--text-color--shade2, $rh-global--text-color);
 }
 

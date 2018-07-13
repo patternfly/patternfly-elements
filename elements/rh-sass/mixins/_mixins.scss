@@ -1,6 +1,8 @@
 // $boxSize = any box-sizing property, default is border-box
 @mixin rh-box-sizing($boxSize: border-box) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     box-sizing: $boxSize;
   }
 }
@@ -27,7 +29,7 @@
 @mixin rh-sr-only() {
   position: absolute;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   height: 1px;
   width: 1px;
   margin: -1px;
@@ -39,9 +41,12 @@
   $return: null;
   @each $property in $properties {
     @if length($property) == 1 {
-      $return: append($return, #{$property} 250ms $rh-global--animation-timing, comma);
-    }
-    @else if length($property) == 2 {
+      $return: append(
+        $return,
+        #{$property} 250ms $rh-global--animation-timing,
+        comma
+      );
+    } @else if length($property) == 2 {
       $return: append($return, nth($property, 1) nth($property, 2), comma);
     }
   }
@@ -54,7 +59,7 @@
     up: 180deg,
     down: 0deg,
     right: -90deg,
-    left: 90deg,
+    left: 90deg
   );
   border-style: solid;
   border-width: $width $height 0;
@@ -88,14 +93,18 @@
 }
 // scss-lint:enable ImportantRule
 
-@mixin rh-pipe( $position: right, $padding: 0, $margin: 0, $color: $border-color) {
+@mixin rh-pipe(
+  $position: right,
+  $padding: 0,
+  $margin: 0,
+  $color: $border-color
+) {
   border: 1px solid transparent;
   border-#{$position}-color: $color;
   @if $position == right {
     padding-left: $padding;
     margin-right: $margin;
-  }
-  @else if $position == left {
+  } @else if $position == left {
     padding-right: $padding;
     margin-left: $margin;
   }

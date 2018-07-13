@@ -1,3 +1,4 @@
+node_modules
 test
 *.compiled.js
 *.min.js

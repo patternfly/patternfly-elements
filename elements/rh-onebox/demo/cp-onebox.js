@@ -1,6 +1,6 @@
-import RhOnebox from '../rh-onebox.js';
+import RhOnebox from "../rh-onebox.js";
 
-const template = document.createElement('template');
+const template = document.createElement("template");
 const bindTemplate = data => {
   template.innerHTML = `
     <style>
@@ -108,10 +108,13 @@ const bindTemplate = data => {
     </style>
     <h2 class="content">${data.product}</h2>
     <p class="description content">${data.description}</p>
-    ${data.links.info && `
+    ${data.links.info &&
+      `
       <div class="content">
         <ul class="info_links">
-          ${data.links.info.map(link => `
+          ${data.links.info
+            .map(
+              link => `
             <li>
               <a href="${link.link}">
                 <div>
@@ -120,7 +123,9 @@ const bindTemplate = data => {
                 </div>
               </a>
             </li>
-          `).join('\n')}
+          `
+            )
+            .join("\n")}
         </ul>
       </div>
     `}
@@ -130,27 +135,32 @@ const bindTemplate = data => {
       </button>
       About ${data.product}
     </div>
-    ${data.links.knowledgebase && `
+    ${data.links.knowledgebase &&
+      `
       <div class="product_links content">
         <h4>Browse Product Knowledge</h4>
         <ul>
-        ${data.links.knowledgebase.map(link => `
+        ${data.links.knowledgebase
+          .map(
+            link => `
           <li><a href="${link.link}">${link.text}</a></li>
-        `).join('\n')}
+        `
+          )
+          .join("\n")}
         </ul>
       </div>
     `}
   `;
 
   return template;
-}
+};
 
 class CpOnebox extends RhOnebox {
   constructor() {
-    super('cp-onebox', {
+    super("cp-onebox", {
       template: bindTemplate,
-      arrayName: 'rules',
-      matchArrayName: 'keywords'
+      arrayName: "rules",
+      matchArrayName: "keywords"
     });
 
     this.expandButton = null;
@@ -161,19 +171,19 @@ class CpOnebox extends RhOnebox {
   render() {
     super.render();
 
-    this.expandButton = this.shadowRoot.querySelector('#expandButton');
-    this.expandButton.addEventListener('click', this.expandButtonHandler);
+    this.expandButton = this.shadowRoot.querySelector("#expandButton");
+    this.expandButton.addEventListener("click", this.expandButtonHandler);
   }
 
   expandButtonHandler() {
     this.expanded = !this.expanded;
 
     if (this.expanded) {
-      this.setAttribute('expanded', '');
+      this.setAttribute("expanded", "");
     } else {
-      this.removeAttribute('expanded');
+      this.removeAttribute("expanded");
     }
   }
 }
 
-window.customElements.define('cp-onebox', CpOnebox);
+window.customElements.define("cp-onebox", CpOnebox);

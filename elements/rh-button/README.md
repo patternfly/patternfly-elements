@@ -1,4 +1,4 @@
-# RHElements Button Element
+# WIP 🐣: RHElements Button Element
 
 ## Dependencies
 
@@ -24,7 +24,7 @@ Run `npm start` and Polyserve will start a server and open your default browser 
 
 ## Code style
 
-Button (and all RHElements) use [Prettier][prettier] to auto-format JS and JSON.  The style rules get applied when you commit a change.  If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
+Button (and all RHElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
 
 [prettier]: https://github.com/prettier/prettier/
 [prettier-ed]: https://github.com/prettier/prettier/#editor-integration

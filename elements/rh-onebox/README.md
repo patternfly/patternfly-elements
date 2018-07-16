@@ -1,4 +1,4 @@
-# RHElements Onebox Element
+# WIP 🐣: RHElements Onebox Element
 
 [![Build Status](https://travis-ci.org/RHElements/rh-onebox.svg?branch=master)](https://travis-ci.org/RHElements/rh-onebox)
 
@@ -26,7 +26,7 @@ Run `npm start` and Polyserve will start a server and open your default browser 
 
 ## Code style
 
-Onebox (and all RHElements) use [Prettier][prettier] to auto-format JS and JSON.  The style rules get applied when you commit a change.  If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
+Onebox (and all RHElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
 
 [prettier]: https://github.com/prettier/prettier/
 [prettier-ed]: https://github.com/prettier/prettier/#editor-integration

@@ -20,7 +20,7 @@ class RhCard extends Rhelement {
 
   connectedCallback() {
     super.connectedCallback();
-    
+
     // this.button = this.shadowRoot.querySelector("button");
     //
     // const child = this.children[0];

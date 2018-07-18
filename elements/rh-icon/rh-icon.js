@@ -28,21 +28,21 @@ iconTemplate.innerHTML = `
     height: 1em; }
   :host svg {
     fill: var(--rh-global--text-color, #333); }
-  :host([data-block]) {
+  :host([block]) {
     display: block;
     margin-bottom: var(--rh-global--spacer, 1rem);
     margin-top: var(--rh-global--spacer, 1rem); }
-    :host([data-block]):first-child {
+    :host([block]):first-child {
       margin-top: 0; }
-  :host([data-color="white"]) svg {
+  :host([color="white"]) svg {
     fill: var(--rh-global--color--white, #fff); }
-  :host([data-color="black"]) svg {
+  :host([color="black"]) svg {
     fill: var(--rh-global--color--black, #1a1a1a); }
-  :host([data-bg]) {
-    border-radius: 50%; }
-  :host([data-bg="transparent"]) {
-    background: transparent;
-    border: var(--rh-global--border--BorderWidth, 1px) var(--rh-global--border--BorderStyle, solid) var(--rh-global--border--BorderColor, #ccc); }
+  :host([circled]) {
+    border-radius: 50%;
+    background: #d2d2d2; }
+  :host([circled][bordered]) {
+    background: transparent; }
   :host([data-bg="white"]) {
     background: var(--rh-global--color--white, #fff);
     fill: var(--rh-global--text-color, #333); }
@@ -63,28 +63,28 @@ iconTemplate.innerHTML = `
     fill: var(--rh-global--color--white, #fff); }
     :host([data-bg="dark"]) svg {
       fill: var(--rh-global--color--white, #fff); }
-  :host([data-size="2x"]),
-  :host([data-size="2x"]) svg {
+  :host([size="2x"]),
+  :host([size="2x"]) svg {
     width: 2em;
     height: 2em; }
-  :host([data-size="3x"]),
-  :host([data-size="3x"]) svg {
+  :host([size="3x"]),
+  :host([size="3x"]) svg {
     width: 3em;
     height: 3em; }
-  :host([data-size="4x"]),
-  :host([data-size="4x"]) svg {
+  :host([size="4x"]),
+  :host([size="4x"]) svg {
     width: 4em;
     height: 4em; }
-  :host([data-size="large"]),
-  :host([data-size="large"]) svg {
+  :host([size="large"]),
+  :host([size="large"]) svg {
     width: 100px;
     height: 100px; }
-  :host([data-size="medium"]),
-  :host([data-size="medium"]) svg {
+  :host([size="medium"]),
+  :host([size="medium"]) svg {
     width: 70px;
     height: 70px; }
-  :host([data-size="small"]),
-  :host([data-size="small"]) svg {
+  :host([size="small"]),
+  :host([size="small"]) svg {
     width: 48px;
     height: 48px; }</style>
 <svg viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" focusable="false" style="pointer-events: none; display: block; width: 100%; height: 100%">

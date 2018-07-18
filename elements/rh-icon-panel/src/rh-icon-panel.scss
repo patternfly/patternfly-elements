@@ -14,6 +14,7 @@
   margin-right: var(--rh-icon-panel__icon--MarginRight, $rh-global--spacer);
   font-size: var(--rh-icon-panel__icon--size, $rh-global--icon-size--xl);
   line-height: var(--rh-icon-panel__icon--size, $rh-global--icon-size--xl);
+  // restrict size
   min-width: 1em;
   max-width: 1em;
 }
@@ -35,24 +36,4 @@
 :host([stacked][centered]) {
   align-items: center;
   text-align: center;
-}
-
-// Colors and Styles
-:host([circled]) rh-icon {
-  border-radius: 50%;
-  background: $rh-global--color--gray-mercury;
-  border: 1px solid $rh-global--color--gray-mercury;
-}
-
-:host([circled="darkgray"]) rh-icon {
-  background: $rh-global--color--gray-night;
-  border-color: $rh-global--color--gray-night;
-
-  svg {
-    fill: $rh-global--color--white;
-  }
-}
-
-:host([circled][bordered]) rh-icon {
-  background: none;
 }

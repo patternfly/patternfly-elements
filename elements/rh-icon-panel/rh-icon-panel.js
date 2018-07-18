@@ -35,21 +35,7 @@ template.innerHTML = `
 
 :host([stacked][centered]) {
   align-items: center;
-  text-align: center; }
-
-:host([circled]) rh-icon {
-  border-radius: 50%;
-  background: #d2d2d2;
-  border: 1px solid #d2d2d2; }
-
-:host([circled="darkgray"]) rh-icon {
-  background: #333;
-  border-color: #333; }
-  :host([circled="darkgray"]) rh-icon svg {
-    fill: #fff; }
-
-:host([circled][bordered]) rh-icon {
-  background: none; }</style>
+  text-align: center; }</style>
 <rh-icon></rh-icon>
 <div class="content">
   <slot class="header" name="header"></slot>

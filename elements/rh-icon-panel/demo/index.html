@@ -9,15 +9,37 @@
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require(['../../cp-themeset/cp-themeset.compiled.js','../../rh-cta/rh-cta.compiled.js','../rh-icon-panel.compiled.js'])</script>
+
+    <style>
+      rh-icon-panel {
+        margin-bottom: 30px;
+      }
+    </style>
   </head>
   <body>
     <rh-icon-panel icon="rh-icon-server">
-      <h3 slot="header">This is rh-icon-panel</h3>
+      <h3 slot="header">Default</h3>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       <rh-cta slot="footer"><a href="#">Learn more</a></rh-cta>
     </rh-icon-panel>
-    <rh-icon-panel icon="rh-icon-server-deploy">
-      <h3 slot="header">This is rh-icon-panel</h3>
+    <rh-icon-panel icon="rh-icon-server-stack" stacked>
+      <h3 slot="header">Stacked</h3>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </rh-icon-panel>
+    <rh-icon-panel icon="rh-icon-server-stack-alt1" stacked centered>
+      <h3 slot="header">Stacked &amp; Centered</h3>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </rh-icon-panel>
+    <rh-icon-panel icon="rh-icon-server-alt1" circled>
+      <h3 slot="header">Circled Default</h3>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </rh-icon-panel>
+    <rh-icon-panel icon="rh-icon-server-alt2" circled="darkgray">
+      <h3 slot="header">Circled Default</h3>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </rh-icon-panel>
+    <rh-icon-panel icon="rh-icon-server-deploy" circled="darkgray" bordered>
+      <h3 slot="header">Circled Default</h3>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </rh-icon-panel>
   </body>

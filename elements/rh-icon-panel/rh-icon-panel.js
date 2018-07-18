@@ -10,19 +10,46 @@ const template = document.createElement("template");
 template.innerHTML = `
 <style>:host {
   display: flex;
-  align-content: flex-start; }
+  align-content: flex-start;
+  flex-direction: column; }
+  @media (min-width: 576px) {
+    :host {
+      flex-direction: row; } }
 
 :host rh-icon {
-  margin-right: var(--rhe-c-icon-panel__icon--MarginRight, 1rem);
-  font-size: var(--rhe-c-icon-panel__icon--size, 4rem);
-  line-height: var(--rhe-c-icon-panel__icon--size, 4rem); }
+  margin-right: var(--rh-icon-panel__icon--MarginRight, 1rem);
+  font-size: var(--rh-icon-panel__icon--size, 4rem);
+  line-height: var(--rh-icon-panel__icon--size, 4rem);
+  min-width: 1em;
+  max-width: 1em; }
 
 :host ::slotted([slot="header"]),
 :host ::slotted([slot="footer"]) {
   display: block; }
 
 :host ::slotted([slot="footer"]) {
-  margin-top: var(--rhe-c-icon-panel__footer--MarginTop, 16px); }</style>
+  margin-top: var(--rhe-icon-panel__footer--MarginTop, 16px); }
+
+:host([stacked]) {
+  flex-direction: column !important; }
+
+:host([stacked][centered]) {
+  align-items: center;
+  text-align: center; }
+
+:host([circled]) rh-icon {
+  border-radius: 50%;
+  background: #d2d2d2;
+  border: 1px solid #d2d2d2; }
+
+:host([circled="darkgray"]) rh-icon {
+  background: #333;
+  border-color: #333; }
+  :host([circled="darkgray"]) rh-icon svg {
+    fill: #fff; }
+
+:host([circled][bordered]) rh-icon {
+  background: none; }</style>
 <rh-icon></rh-icon>
 <div class="content">
   <slot class="header" name="header"></slot>
@@ -40,21 +67,6 @@ class RhIconPanel extends Rhelement {
   constructor() {
     super("rh-icon-panel", template);
   }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    // const attrs = this.attributes;
-    //
-    // if (attrs.getNamedItem("icon") == null) {
-    //   console.warn("You must provide an icon attribute on rh-icon-panel");
-    // } else {
-    //   let iconElem = this.shadowRoot.querySelector("rh-icon");
-    //   iconElem.setAttribute("icon", attrs.getNamedItem("icon").value);
-    // }
-  }
-
-  disconnectedCallback() {}
 
   attributeChangedCallback(attr, oldVal, newVal) {
     if (attr === "icon") {

@@ -29,7 +29,7 @@ $icon-bg-colors: (
     fill: var(--rh-global--text-color, $rh-global--text-color);
   }
 
-  @at-root #{&}([data-block]) {
+  @at-root #{&}([block]) {
     display: block;
     margin-bottom: var(--rh-global--spacer, $rh-global--spacer);
     margin-top: var(--rh-global--spacer, $rh-global--spacer);
@@ -43,18 +43,20 @@ $icon-bg-colors: (
     $cssvar: nth($value, 1);
     $sass: nth($value, 2);
 
-    @at-root #{&}([data-color="#{$color}"]) svg {
+    @at-root #{&}([color="#{$color}"]) svg {
       fill: var(#{$cssvar}, #{$sass});
     }
   }
 
-  @at-root #{&}([data-bg]) {
+  @at-root #{&}([circled]) {
     border-radius: 50%;
+    // border: var(--rh-global--border--BorderWidth, $rh-global--border--BorderWidth) var(--rh-global--border--BorderStyle, $rh-global--border--BorderStyle) var(--rh-global--border--BorderColor, $rh-global--border--BorderColor);
+    background: $rh-global--color--gray-mercury;
+    border: 1px solid $rh-global--color--gray-mercury;
   }
 
-  @at-root #{&}([data-bg="transparent"]) {
+  @at-root #{&}([circled][bordered]) {
     background: transparent;
-    border: var(--rh-global--border--BorderWidth, $rh-global--border--BorderWidth) var(--rh-global--border--BorderStyle, $rh-global--border--BorderStyle) var(--rh-global--border--BorderColor, $rh-global--border--BorderColor);
   }
 
   @each $color, $value in $icon-bg-colors {
@@ -73,27 +75,27 @@ $icon-bg-colors: (
     }
   }
 
-  @at-root #{&}([data-size="2x"]) {
+  @at-root #{&}([size="2x"]) {
     @include set-svg-size(2em);
   }
 
-  @at-root #{&}([data-size="3x"]) {
+  @at-root #{&}([size="3x"]) {
     @include set-svg-size(3em);
   }
 
-  @at-root #{&}([data-size="4x"]) {
+  @at-root #{&}([size="4x"]) {
     @include set-svg-size(4em);
   }
 
-  @at-root #{&}([data-size="large"]) {
+  @at-root #{&}([size="large"]) {
     @include set-svg-size(100px);
   }
 
-  @at-root #{&}([data-size="medium"]) {
+  @at-root #{&}([size="medium"]) {
     @include set-svg-size(70px);
   }
 
-  @at-root #{&}([data-size="small"]) {
+  @at-root #{&}([size="small"]) {
     @include set-svg-size(48px);
   }
 }

@@ -1,14 +1,11 @@
 import Rhelement from "../rhelement/rhelement.js";
 import "../rh-icon/rh-icon.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-icon-panel.html and css from
- * rh-icon-panel.scss
- */
-const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
+class RhIconPanel extends Rhelement {
+  get html() {
+    return `
+<style>
+:host {
   display: flex;
   align-content: flex-start; }
 
@@ -22,23 +19,35 @@ template.innerHTML = `
   display: block; }
 
 :host ::slotted([slot="footer"]) {
-  margin-top: var(--rhe-c-icon-panel__footer--MarginTop, 16px); }</style>
+  margin-top: var(--rhe-c-icon-panel__footer--MarginTop, 16px); }
+</style>
+
 <rh-icon></rh-icon>
 <div class="content">
   <slot class="header" name="header"></slot>
   <slot class="body"></slot>
   <slot class="footer" name="footer"></slot>
-</div>
-`;
-/* end DO NOT EDIT */
+</div>`;
+  }
 
-class RhIconPanel extends Rhelement {
+  static get tag() {
+    return "rh-icon-panel";
+  }
+
+  get styleUrl() {
+    return "rh-icon-panel.scss";
+  }
+
+  get templateUrl() {
+    return "rh-icon-panel.html";
+  }
+
   static get observedAttributes() {
     return ["icon"];
   }
 
   constructor() {
-    super("rh-icon-panel", template);
+    super(RhIconPanel.tag);
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
@@ -51,4 +60,4 @@ class RhIconPanel extends Rhelement {
   }
 }
 
-window.customElements.define("rh-icon-panel", RhIconPanel);
+Rhelement.create(RhIconPanel);

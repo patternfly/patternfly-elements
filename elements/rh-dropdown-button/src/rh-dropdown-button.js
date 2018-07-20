@@ -1,21 +1,24 @@
 import Rhelement from "../rhelement/rhelement.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-dropdown-button.html and css from
- * rh-dropdown-button.css
- */
-const template = document.createElement("template");
-template.innerHTML = ``;
-/* end DO NOT EDIT */
-
 class RhDropdownButton extends Rhelement {
+  static get tag() {
+    return "rh-dropdown-button";
+  }
+
+  get styleUrl() {
+    return "rh-dropdown-button.scss";
+  }
+
+  get templateUrl() {
+    return "rh-dropdown-button.html";
+  }
+
   static get observedAttributes() {
     return ["no-aria-haspopup"];
   }
 
   constructor() {
-    super("rh-dropdown-button", template);
+    super(RhDropdownButton.tag);
     this.button = this.shadowRoot.querySelector("button");
     this._clickHandler = this._clickHandler.bind(this);
   }
@@ -93,4 +96,4 @@ class RhDropdownButton extends Rhelement {
   }
 }
 
-window.customElements.define("rh-dropdown-button", RhDropdownButton);
+Rhelement.create(RhDropdownButton);

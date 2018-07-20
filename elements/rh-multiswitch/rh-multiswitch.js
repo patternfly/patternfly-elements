@@ -1,13 +1,10 @@
 import Rhelement from "../rhelement/rhelement.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-multiswitch.html and css from
- * rh-multiswitch.scss
- */
-const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
+class RhMultiswitch extends Rhelement {
+  get html() {
+    return `
+<style>
+:host {
   display: block; }
 
 ::slotted(*) {
@@ -130,14 +127,26 @@ template.innerHTML = `
 .multiswitch[data-theme="stoplight"] label:nth-last-child(10) ~ input:nth-child(9):checked ~ a,
 .multiswitch[data-theme="stoplight"] label:nth-last-child(12) ~ input:nth-child(11):checked ~ a {
   background: #3f9c35;
-  border-color: #307628; }</style>
-<slot></slot>
-`;
-/* end DO NOT EDIT */
+  border-color: #307628; }
+</style>
 
-class RhMultiswitch extends Rhelement {
+<slot></slot>`;
+  }
+
+  static get tag() {
+    return "rh-multiswitch";
+  }
+
+  get styleUrl() {
+    return "rh-multiswitch.scss";
+  }
+
+  get templateUrl() {
+    return "rh-multiswitch.html";
+  }
+
   constructor() {
-    super("rh-multiswitch", template);
+    super(RhMultiswitch.tag);
 
     this._slotChange = this._slotChange.bind(this);
   }
@@ -191,4 +200,4 @@ class RhMultiswitch extends Rhelement {
   }
 }
 
-window.customElements.define("rh-multiswitch", RhMultiswitch);
+Rhelement.create(RhMultiswitch);

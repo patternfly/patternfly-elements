@@ -1,17 +1,20 @@
 import Rhelement from "../rhelement/rhelement.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-dropdown-menu.html and css from
- * rh-dropdown-menu.css
- */
-const template = document.createElement("template");
-template.innerHTML = ``;
-/* end DO NOT EDIT */
-
 class RhDropdownMenu extends Rhelement {
+  static get tag() {
+    return "rh-dropdown-menu";
+  }
+
+  get styleUrl() {
+    return "rh-dropdown-menu.scss";
+  }
+
+  get templateUrl() {
+    return "rh-dropdown-menu.html";
+  }
+
   constructor() {
-    super("rh-dropdown-menu", template);
+    super(RhDropdownMenu.tag);
   }
 
   connectedCallback() {
@@ -48,4 +51,4 @@ class RhDropdownMenu extends Rhelement {
   }
 }
 
-window.customElements.define("rh-dropdown-menu", RhDropdownMenu);
+Rhelement.create(RhDropdownMenu);

@@ -1,17 +1,20 @@
 import Rhelement from "../rhelement/rhelement.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-multiswitch.html and css from
- * rh-multiswitch.scss
- */
-const template = document.createElement("template");
-template.innerHTML = ``;
-/* end DO NOT EDIT */
-
 class RhMultiswitch extends Rhelement {
+  static get tag() {
+    return "rh-multiswitch";
+  }
+
+  get styleUrl() {
+    return "rh-multiswitch.scss";
+  }
+
+  get templateUrl() {
+    return "rh-multiswitch.html";
+  }
+
   constructor() {
-    super("rh-multiswitch", template);
+    super(RhMultiswitch.tag);
 
     this._slotChange = this._slotChange.bind(this);
   }
@@ -65,4 +68,4 @@ class RhMultiswitch extends Rhelement {
   }
 }
 
-window.customElements.define("rh-multiswitch", RhMultiswitch);
+Rhelement.create(RhMultiswitch);

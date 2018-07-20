@@ -7,7 +7,6 @@ const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
 const replace = require("gulp-replace");
 const sass = require("node-sass");
-const nodesass = require("node-sass");
 const stripCssComments = require("strip-css-comments");
 const gulpStripCssComments = require("gulp-strip-css-comments");
 const trim = require("gulp-trim");
@@ -62,9 +61,6 @@ ${stripCssComments(cssResult).trim()}
 ${html}\`;
   }
 `;
-
-        // return `<style>${stripCssComments(cssResult).trim()}</style>
-        // ${html}`;
       })
     )
     .pipe(gulp.dest("./"));

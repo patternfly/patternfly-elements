@@ -74,9 +74,6 @@ ${stripCssComments(cssResult).trim()}
 ${html}\`;
   }
 `;
-
-        // return `<style>${stripCssComments(cssResult).trim()}</style>
-        // ${html}`;
       })
     )
     .pipe(gulp.dest("./"));

@@ -191,7 +191,7 @@ function generateId() {
 }
 
 class RhTabs extends Rhelement {
-  static get is() {
+  static get tag() {
     return "rh-tabs";
   }
 
@@ -200,7 +200,7 @@ class RhTabs extends Rhelement {
   }
 
   constructor() {
-    super(RhTabs.is, template);
+    super(RhTabs.tag, template);
 
     this._onSlotChange = this._onSlotChange.bind(this);
 
@@ -250,7 +250,7 @@ class RhTabs extends Rhelement {
     }
 
     if (newTab.tagName.toLowerCase() !== "rh-tab") {
-      console.warn(`${RhTabs.is}: the tab must be a rh-tab element`);
+      console.warn(`${RhTabs.tag}: the tab must be a rh-tab element`);
       return;
     }
 
@@ -267,7 +267,7 @@ class RhTabs extends Rhelement {
     const tab = tabs[index];
 
     if (!tab) {
-      console.warn(`${RhTabs.is}: tab ${_index} does not exist`);
+      console.warn(`${RhTabs.tag}: tab ${_index} does not exist`);
       return;
     }
 
@@ -285,7 +285,7 @@ class RhTabs extends Rhelement {
       const panel = tab.nextElementSibling;
       if (panel.tagName.toLowerCase() !== "rh-tab-panel") {
         console.warn(
-          `${RhTabs.is}: tab #${tab.id} is not a sibling of a <rh-tab-panel>`
+          `${RhTabs.tag}: tab #${tab.id} is not a sibling of a <rh-tab-panel>`
         );
         return;
       }
@@ -356,7 +356,7 @@ class RhTabs extends Rhelement {
       newTabSelected = true;
 
       this.dispatchEvent(
-        new CustomEvent(`${RhTabs.is}:hidden-tab`, {
+        new CustomEvent(`${RhTabs.tag}:hidden-tab`, {
           bubbles: true,
           detail: {
             tab: this.selected
@@ -380,7 +380,7 @@ class RhTabs extends Rhelement {
 
     if (newTabSelected) {
       this.dispatchEvent(
-        new CustomEvent(`${RhTabs.is}:shown-tab`, {
+        new CustomEvent(`${RhTabs.tag}:shown-tab`, {
           bubbles: true,
           detail: {
             tab: this.selected
@@ -437,7 +437,7 @@ class RhTabs extends Rhelement {
   }
 }
 
-window.customElements.define(RhTabs.is, RhTabs);
+window.customElements.define(RhTabs.tag, RhTabs);
 
 const tabTemplate = document.createElement("template");
 tabTemplate.innerHTML = `
@@ -562,7 +562,7 @@ tabTemplate.innerHTML = `
 `;
 
 class RhTab extends Rhelement {
-  static get is() {
+  static get tag() {
     return "rh-tab";
   }
 
@@ -571,7 +571,7 @@ class RhTab extends Rhelement {
   }
 
   constructor() {
-    super(RhTab.is, tabTemplate);
+    super(RhTab.tag, tabTemplate);
   }
 
   connectedCallback() {
@@ -580,7 +580,7 @@ class RhTab extends Rhelement {
     this.setAttribute("role", "tab");
 
     if (!this.id) {
-      this.id = `${RhTab.is}-${generateId()}`;
+      this.id = `${RhTab.tag}-${generateId()}`;
     }
 
     this.setAttribute("aria-selected", "false");
@@ -610,7 +610,7 @@ class RhTab extends Rhelement {
   }
 }
 
-window.customElements.define(RhTab.is, RhTab);
+window.customElements.define(RhTab.tag, RhTab);
 
 const tabPanelTemplate = document.createElement("template");
 tabPanelTemplate.innerHTML = `
@@ -626,12 +626,12 @@ tabPanelTemplate.innerHTML = `
 `;
 
 class RhTabPanel extends Rhelement {
-  static get is() {
+  static get tag() {
     return "rh-tab-panel";
   }
 
   constructor() {
-    super(RhTabPanel.is, tabPanelTemplate);
+    super(RhTabPanel.tag, tabPanelTemplate);
   }
 
   connectedCallback() {
@@ -641,9 +641,9 @@ class RhTabPanel extends Rhelement {
     this.setAttribute("tabindex", 0);
 
     if (!this.id) {
-      this.id = `${RhTabPanel.is}-${generateId()}`;
+      this.id = `${RhTabPanel.tag}-${generateId()}`;
     }
   }
 }
 
-window.customElements.define(RhTabPanel.is, RhTabPanel);
+window.customElements.define(RhTabPanel.tag, RhTabPanel);

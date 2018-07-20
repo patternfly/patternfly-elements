@@ -1,3 +1,6 @@
+const path = require("path");
+const fs = require("fs");
+
 const gulp = require("gulp");
 const babel = require("gulp-babel");
 const uglify = require("gulp-uglify");
@@ -6,7 +9,6 @@ const replace = require("gulp-replace");
 
 const trim = require("gulp-trim");
 const del = require("del");
-const fs = require("fs");
 let watcher;
 
 gulp.task("clean", () => {

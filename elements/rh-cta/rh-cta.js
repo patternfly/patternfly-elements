@@ -1,13 +1,10 @@
 import Rhelement from "../rhelement/rhelement.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-cta.html and css from
- * rh-cta.scss
- */
-const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
+class RhCta extends Rhelement {
+  get html() {
+    return `
+<style>
+:host {
   display: inline-block; }
   :host ::slotted(a) {
     padding: 0;
@@ -190,14 +187,26 @@ template.innerHTML = `
 :host([class*="--ghost"]) ::slotted(a:focus) {
   background: var(--rhe-theme--bg-color--shade2, #e7e7e7);
   color: var(--rhe-theme--link-color--focus, #004080);
-  border-color: transparent; }</style>
-<slot></slot>
-`;
-/* end DO NOT EDIT */
+  border-color: transparent; }
+</style>
 
-class RhCta extends Rhelement {
+<slot></slot>`;
+  }
+
+  static get tag() {
+    return "rh-cta";
+  }
+
+  get styleUrl() {
+    return "rh-cta.scss";
+  }
+
+  get templateUrl() {
+    return "rh-cta.html";
+  }
+
   constructor() {
-    super("rh-cta", template);
+    super(RhCta.tag);
   }
 
   connectedCallback() {
@@ -221,4 +230,4 @@ class RhCta extends Rhelement {
   disconnectedCallback() {}
 }
 
-window.customElements.define("rh-cta", RhCta);
+Rhelement.create(RhCta);

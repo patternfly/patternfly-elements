@@ -1,18 +1,21 @@
 import Rhelement from "../rhelement/rhelement.js";
 import "../../dialog-polyfill/dialog-polyfill.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from cp-dialog.html and css from
- * cp-dialog.scss
- */
-const template = document.createElement("template");
-template.innerHTML = ``;
-/* end DO NOT EDIT */
-
 class RhDialog extends Rhelement {
+  static get tag() {
+    return "rh-dialog";
+  }
+
+  get styleUrl() {
+    return "rh-dialog.scss";
+  }
+
+  get templateUrl() {
+    return "rh-dialog.html";
+  }
+
   constructor() {
-    super("rh-dialog", template);
+    super(RhDialog.tag);
   }
 
   connectedCallback() {
@@ -39,4 +42,4 @@ class RhDialog extends Rhelement {
   disconnectedCallback() {}
 }
 
-window.customElements.define("rh-dialog", RhDialog);
+Rhelement.create(RhDialog);

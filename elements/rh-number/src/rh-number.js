@@ -1,15 +1,6 @@
 import Rhelement from "../rhelement/rhelement.js";
 import "../../numeral/numeral.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-number.html and css from
- * rh-number.css
- */
-const template = document.createElement("template");
-template.innerHTML = ``;
-/* end DO NOT EDIT */
-
 // easy aliases for common format strings
 const types = {
   abbrev: "0a", // or 'approx'?
@@ -25,12 +16,24 @@ const types = {
 numeral.locales.en.delimiters.thousands = " ";
 
 class RhNumber extends Rhelement {
+  static get tag() {
+    return "rh-number";
+  }
+
+  get styleUrl() {
+    return "rh-number.scss";
+  }
+
+  get templateUrl() {
+    return "rh-number.html";
+  }
+
   static get observedAttributes() {
     return ["number"];
   }
 
   constructor() {
-    super("rh-number", template);
+    super(RhNumber.tag);
   }
 
   connectedCallback() {
@@ -70,4 +73,4 @@ class RhNumber extends Rhelement {
   }
 }
 
-window.customElements.define("rh-number", RhNumber);
+Rhelement.create(RhNumber);

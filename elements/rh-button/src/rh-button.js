@@ -1,18 +1,21 @@
 import Rhelement from "../rhelement/rhelement.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-button.html and css from
- * rh-button.scss
- */
-const template = document.createElement("template");
-template.innerHTML = ``;
-/* end DO NOT EDIT */
-
 class RhButton extends Rhelement {
+  static get tag() {
+    return "rh-button";
+  }
+
+  get styleUrl() {
+    return "rh-button.scss";
+  }
+
+  get templateUrl() {
+    return "rh-button.html";
+  }
+
   constructor() {
-    super("rh-button", template);
+    super(RhButton.tag);
   }
 }
 
-window.customElements.define("rh-button", RhButton);
+Rhelement.create(RhButton);

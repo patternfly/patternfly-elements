@@ -94,15 +94,6 @@ if (!Array.prototype.findIndex) {
   });
 }
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-tabs.html and css from
- * rh-tabs.scss
- */
-const template = document.createElement("template");
-template.innerHTML = ``;
-/* end DO NOT EDIT */
-
 const KEYCODE = {
   DOWN: 40,
   LEFT: 37,
@@ -123,12 +114,20 @@ class RhTabs extends Rhelement {
     return "rh-tabs";
   }
 
+  get styleUrl() {
+    return "rh-tabs.scss";
+  }
+
+  get templateUrl() {
+    return "rh-tabs.html";
+  }
+
   static get observedAttributes() {
     return ["vertical"];
   }
 
   constructor() {
-    super(RhTabs.tag, template);
+    super(RhTabs.tag);
 
     this._onSlotChange = this._onSlotChange.bind(this);
 
@@ -365,19 +364,19 @@ class RhTabs extends Rhelement {
   }
 }
 
-window.customElements.define(RhTabs.tag, RhTabs);
-
-const tabTemplate = document.createElement("template");
-tabTemplate.innerHTML = `
-  <style>
-    {{{rh-tab.scss}}}
-  </style>
-  {{{rh-tab.html}}}
-`;
+Rhelement.create(RhTabs);
 
 class RhTab extends Rhelement {
   static get tag() {
     return "rh-tab";
+  }
+
+  get styleUrl() {
+    return "rh-tab.scss";
+  }
+
+  get templateUrl() {
+    return "rh-tab.html";
   }
 
   static get observedAttributes() {
@@ -385,7 +384,7 @@ class RhTab extends Rhelement {
   }
 
   constructor() {
-    super(RhTab.tag, tabTemplate);
+    super(RhTab.tag);
   }
 
   connectedCallback() {
@@ -424,23 +423,23 @@ class RhTab extends Rhelement {
   }
 }
 
-window.customElements.define(RhTab.tag, RhTab);
-
-const tabPanelTemplate = document.createElement("template");
-tabPanelTemplate.innerHTML = `
-  <style>
-    {{{rh-tab-panel.scss}}}
-  </style>
-  {{{rh-tab-panel.html}}}
-`;
+Rhelement.create(RhTab);
 
 class RhTabPanel extends Rhelement {
   static get tag() {
     return "rh-tab-panel";
   }
 
+  get styleUrl() {
+    return "rh-tab-panel.scss";
+  }
+
+  get templateUrl() {
+    return "rh-tab-panel.html";
+  }
+
   constructor() {
-    super(RhTabPanel.tag, tabPanelTemplate);
+    super(RhTabPanel.tag);
   }
 
   connectedCallback() {
@@ -455,4 +454,4 @@ class RhTabPanel extends Rhelement {
   }
 }
 
-window.customElements.define(RhTabPanel.tag, RhTabPanel);
+Rhelement.create(RhTabPanel);

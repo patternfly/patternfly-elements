@@ -94,14 +94,26 @@ if (!Array.prototype.findIndex) {
   });
 }
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-tabs.html and css from
- * rh-tabs.scss
- */
-const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
+const KEYCODE = {
+  DOWN: 40,
+  LEFT: 37,
+  RIGHT: 39,
+  UP: 38,
+  HOME: 36,
+  END: 35
+};
+
+function generateId() {
+  return Math.random()
+    .toString(36)
+    .substr(2, 9);
+}
+
+class RhTabs extends Rhelement {
+  get html() {
+    return `
+<style>
+:host {
   display: block; }
 
 .tabs {
@@ -165,34 +177,27 @@ template.innerHTML = `
   border: 0; }
 
 :host([type="subtabs"]) rh-tab .indicator {
-  bottom: var(--rhe-c-tabs__indicator--hover--Bottom, 12px); }</style>
+  bottom: var(--rhe-c-tabs__indicator--hover--Bottom, 12px); }
+</style>
+
 <div class="tabs">
   <slot name="tab"></slot>
 </div>
 <div class="panels">
   <slot name="panel"></slot>
-</div>
-`;
-/* end DO NOT EDIT */
+</div>`;
+  }
 
-const KEYCODE = {
-  DOWN: 40,
-  LEFT: 37,
-  RIGHT: 39,
-  UP: 38,
-  HOME: 36,
-  END: 35
-};
-
-function generateId() {
-  return Math.random()
-    .toString(36)
-    .substr(2, 9);
-}
-
-class RhTabs extends Rhelement {
   static get tag() {
     return "rh-tabs";
+  }
+
+  get styleUrl() {
+    return "rh-tabs.scss";
+  }
+
+  get templateUrl() {
+    return "rh-tabs.html";
   }
 
   static get observedAttributes() {
@@ -200,7 +205,7 @@ class RhTabs extends Rhelement {
   }
 
   constructor() {
-    super(RhTabs.tag, template);
+    super(RhTabs.tag);
 
     this._onSlotChange = this._onSlotChange.bind(this);
 
@@ -437,12 +442,13 @@ class RhTabs extends Rhelement {
   }
 }
 
-window.customElements.define(RhTabs.tag, RhTabs);
+Rhelement.create(RhTabs);
 
-const tabTemplate = document.createElement("template");
-tabTemplate.innerHTML = `
-  <style>
-    :host {
+class RhTab extends Rhelement {
+  get html() {
+    return `
+<style>
+:host {
   position: relative;
   display: block;
   padding-top: var(--rhe-c-tabs__tab--PaddingTop, 14px);
@@ -555,15 +561,22 @@ tabTemplate.innerHTML = `
   border-right: var(--rhe-c-tabs__indicator--vertical--selected--BorderRight, 0);
   border-bottom: var(--rhe-c-tabs__indicator--vertical--selected--BorderBottom, 0);
   border-left: var(--rhe-c-tabs__indicator--vertical--selected--BorderLeft, 0); }
+</style>
 
-  </style>
-  <slot></slot>
-<div class="indicator"></div>
-`;
+<slot></slot>
+<div class="indicator"></div>`;
+  }
 
-class RhTab extends Rhelement {
   static get tag() {
     return "rh-tab";
+  }
+
+  get styleUrl() {
+    return "rh-tab.scss";
+  }
+
+  get templateUrl() {
+    return "rh-tab.html";
   }
 
   static get observedAttributes() {
@@ -571,7 +584,7 @@ class RhTab extends Rhelement {
   }
 
   constructor() {
-    super(RhTab.tag, tabTemplate);
+    super(RhTab.tag);
   }
 
   connectedCallback() {
@@ -610,28 +623,36 @@ class RhTab extends Rhelement {
   }
 }
 
-window.customElements.define(RhTab.tag, RhTab);
+Rhelement.create(RhTab);
 
-const tabPanelTemplate = document.createElement("template");
-tabPanelTemplate.innerHTML = `
-  <style>
-    :host {
+class RhTabPanel extends Rhelement {
+  get html() {
+    return `
+<style>
+:host {
   display: block; }
 
 :host([hidden]) {
   display: none; }
+</style>
 
-  </style>
-  <slot></slot>
-`;
+<slot></slot>`;
+  }
 
-class RhTabPanel extends Rhelement {
   static get tag() {
     return "rh-tab-panel";
   }
 
+  get styleUrl() {
+    return "rh-tab-panel.scss";
+  }
+
+  get templateUrl() {
+    return "rh-tab-panel.html";
+  }
+
   constructor() {
-    super(RhTabPanel.tag, tabPanelTemplate);
+    super(RhTabPanel.tag);
   }
 
   connectedCallback() {
@@ -646,4 +667,4 @@ class RhTabPanel extends Rhelement {
   }
 }
 
-window.customElements.define(RhTabPanel.tag, RhTabPanel);
+Rhelement.create(RhTabPanel);

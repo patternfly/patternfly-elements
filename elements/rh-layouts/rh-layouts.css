@@ -7,9 +7,6 @@
 .rh-l--text-align--right {
   text-align: right; }
 
-:root {
-  --rh-l-grid--m-gutter--GridGap: var(--rh--global--gutter, $rh-global--gutter); }
-
 .rh-l-grid {
   display: grid;
   grid-template-columns: repeat(12, [col-start] 1fr); }
@@ -743,4 +740,12 @@
     .rh-l-grid > .rh-m-12-row-on-xl {
       grid-row: span 12; } }
   .rh-l-grid.rh-m-gutters {
-    grid-gap: var(--rh-l-grid--m-gutter--GridGap); }
+    grid-gap: var(--rh-l-grid--m-gutter--GridGap, 1rem); }
+
+.rh-l-bullseye {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--rh-l-bullseye--Padding, 1rem);
+  margin: 0; }

@@ -1,6 +1,6 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
-class RhSearchResult extends Rhelement {
+class RhSearchResult extends RHElement {
   static get tag() {
     return "rh-search-result";
   }
@@ -37,4 +37,4 @@ class RhSearchResult extends Rhelement {
   }
 }
 
-Rhelement.create(RhSearchResult);
+RHElement.create(RhSearchResult);

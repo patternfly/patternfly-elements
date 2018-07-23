@@ -1,6 +1,6 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
-class RhMultiswitch extends Rhelement {
+class RhMultiswitch extends RHElement {
   get html() {
     return `
 <style>
@@ -200,4 +200,4 @@ class RhMultiswitch extends Rhelement {
   }
 }
 
-Rhelement.create(RhMultiswitch);
+RHElement.create(RhMultiswitch);

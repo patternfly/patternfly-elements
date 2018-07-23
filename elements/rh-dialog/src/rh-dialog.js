@@ -1,7 +1,7 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 import "../../dialog-polyfill/dialog-polyfill.js";
 
-class RhDialog extends Rhelement {
+class RhDialog extends RHElement {
   static get tag() {
     return "rh-dialog";
   }
@@ -42,4 +42,4 @@ class RhDialog extends Rhelement {
   disconnectedCallback() {}
 }
 
-Rhelement.create(RhDialog);
+RHElement.create(RhDialog);

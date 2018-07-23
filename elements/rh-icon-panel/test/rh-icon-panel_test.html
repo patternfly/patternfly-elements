@@ -9,17 +9,54 @@
   </head>
   <body>
 
-    <rh-icon-panel>
-      This is the element content.
+    <rh-icon-panel id="panel1" icon="rh-icon-server">
+      <h3 slot="header">This is rh-icon-panel</h3>
+      Lorem ipsum dolor sit amet.
+      <rh-cta slot="footer"><a href="#">Learn more</a></rh-cta>
+    </rh-icon-panel>
+
+    <rh-icon-panel id="panel2" icon="rh-icon-server-deploy">
+      <h3 slot="header">This is rh-icon-panel</h3>
+      Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </rh-icon-panel>
 
     <script>
       suite('<rh-icon-panel>', () => {
-        test('it should do something RHElementy', () => {
-          // you need to write tests!!!
-          const rhIconPanel = document.querySelector('rh-icon-panel');
-          const textContent = rhIconPanel.innerText;
-          assert.equal(textContent, 'This is the element content.', 'rh-icon-panel should do something');
+        const panel1 = document.querySelector("#panel1");
+        const panel2 = document.querySelector("#panel2");
+
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('rh-icon-panel'),
+            customElements.get('rh-icon-panel'),
+            'the <rh-icon-panel> should be an instance of RhIconPanel'
+          );
+        });
+        test('it should show an icon', () => {
+          const svgD = panel1.shadowRoot.querySelector("rh-icon").shadowRoot.querySelector('svg g path').getAttribute('d');
+          assert.isOk(svgD, "the panel's internal rh-icon has an svg with a path");
+        });
+
+        test("header, body, and footer are placed into correct slot", () => {
+          // header wound up in the header slot
+          assert.equal(
+            panel1.querySelector("[slot=header]").assignedSlot,
+            panel1.shadowRoot.querySelector(".content .header")
+          );
+
+          const bodyText = panel1.shadowRoot
+            .querySelector(".content .body")
+            .assignedNodes()
+            .map(n => n.textContent)
+            .join("")
+            .trim();
+          assert.equal(bodyText, "Lorem ipsum dolor sit amet.");
+
+          // footer wound up in the footer slot
+          assert.equal(
+            panel1.querySelector("[slot=footer]").assignedSlot,
+            panel1.shadowRoot.querySelector(".content .footer")
+          );
         });
       });
     </script>

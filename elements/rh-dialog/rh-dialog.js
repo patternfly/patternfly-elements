@@ -1,14 +1,11 @@
 import Rhelement from "../rhelement/rhelement.js";
 import "../../dialog-polyfill/dialog-polyfill.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from cp-dialog.html and css from
- * cp-dialog.scss
- */
-const template = document.createElement("template");
-template.innerHTML = `
-<style>dialog {
+class RhDialog extends Rhelement {
+  get html() {
+    return `
+<style>
+dialog {
   position: absolute;
   left: 0;
   right: 0;
@@ -46,16 +43,28 @@ dialog + .backdrop {
 dialog.fixed {
   position: fixed;
   top: 50%;
-  transform: translate(0, -50%); }</style>
+  transform: translate(0, -50%); }
+</style>
+
 <dialog>
     <slot></slot>
-  </dialog>
-`;
-/* end DO NOT EDIT */
+  </dialog>`;
+  }
 
-class RhDialog extends Rhelement {
+  static get tag() {
+    return "rh-dialog";
+  }
+
+  get styleUrl() {
+    return "rh-dialog.scss";
+  }
+
+  get templateUrl() {
+    return "rh-dialog.html";
+  }
+
   constructor() {
-    super("rh-dialog", template);
+    super(RhDialog.tag);
   }
 
   connectedCallback() {
@@ -82,4 +91,4 @@ class RhDialog extends Rhelement {
   disconnectedCallback() {}
 }
 
-window.customElements.define("rh-dialog", RhDialog);
+Rhelement.create(RhDialog);

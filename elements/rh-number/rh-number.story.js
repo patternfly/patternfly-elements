@@ -5,7 +5,7 @@ import "./rh-number";
 const stories = storiesOf("Number", module);
 stories.addDecorator(withKnobs);
 
-stories.add("rh-number",() => {
+stories.add("rh-number", () => {
   const ordinal = text("Ordinal", "1");
   const bytes = text("Bytes", "2017");
   const abbreviation = text("Abbreviation", "12345");

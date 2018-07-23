@@ -1,17 +1,20 @@
 import Rhelement from "../rhelement/rhelement.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-cta.html and css from
- * rh-cta.scss
- */
-const template = document.createElement("template");
-template.innerHTML = ``;
-/* end DO NOT EDIT */
-
 class RhCta extends Rhelement {
+  static get tag() {
+    return "rh-cta";
+  }
+
+  get styleUrl() {
+    return "rh-cta.scss";
+  }
+
+  get templateUrl() {
+    return "rh-cta.html";
+  }
+
   constructor() {
-    super("rh-cta", template);
+    super(RhCta.tag);
   }
 
   connectedCallback() {
@@ -35,4 +38,4 @@ class RhCta extends Rhelement {
   disconnectedCallback() {}
 }
 
-window.customElements.define("rh-cta", RhCta);
+Rhelement.create(RhCta);

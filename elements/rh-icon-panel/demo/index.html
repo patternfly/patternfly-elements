@@ -8,13 +8,17 @@
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../../cp-themeset/cp-themeset.compiled.js','../../rh-cta/rh-cta.compiled.js','../rh-icon-panel.compiled.js'])</script>
+    <script>require(['../../rh-cta/rh-cta.compiled.js','../rh-icon-panel.compiled.js'])</script>
   </head>
   <body>
     <rh-icon-panel icon="rh-icon-server">
-      <h2 slot="header">This is rh-icon-panel</h2>
+      <h3 slot="header">This is rh-icon-panel</h3>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       <rh-cta slot="footer"><a href="#">Learn more</a></rh-cta>
+    </rh-icon-panel>
+    <rh-icon-panel icon="rh-icon-server-deploy">
+      <h3 slot="header">This is rh-icon-panel</h3>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </rh-icon-panel>
   </body>
 </html>

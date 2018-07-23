@@ -8,7 +8,7 @@
   text-align: right; }
 
 :root {
-  --rhe-l-grid--m-gutter--GridGap: var(--rhe--global--gutter, 2rem); }
+  --rhe-l-grid--m-gutter--GridGap: var(--rhe--global--gutter, $rh-global--gutter); }
 
 .rhe-l-grid {
   display: grid;

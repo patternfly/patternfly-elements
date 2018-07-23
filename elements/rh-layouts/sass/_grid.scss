@@ -8,7 +8,7 @@
 // For example:
 // * $rh-global--color--primary
 // * $rh-global--FontSize
-// * --rhe-theme--FontSize--heading--xs
+// * --rh-theme--FontSize--heading--xs
 
 // Component/Element vars are named:
 // `$rh-c-block__element--modifier--state--PropertyTitleCase`
@@ -17,7 +17,7 @@
 // * --cp-accordion--heading--FontSize
 
 :root {
-  --rhe-l-grid--m-gutter--GridGap: var(--rhe--global--gutter, $rh-global--gutter);
+  --rh-l-grid--m-gutter--GridGap: var(--rh--global--gutter, $rh-global--gutter);
 }
 
 /// Media query used to create responsive grid items
@@ -29,23 +29,19 @@
     @media screen and (max-width: $rh-global--grid-breakpoint--sm) {
       @content;
     }
-  }
-  @else if $point == "sm" or $point == "" or $point == null {
+  } @else if $point == "sm" or $point == "" or $point == null {
     @media screen and (min-width: $rh-global--grid-breakpoint--sm) {
       @content;
     }
-  }
-  @else if $point == "md" {
+  } @else if $point == "md" {
     @media screen and (min-width: $rh-global--grid-breakpoint--md) {
       @content;
     }
-  }
-  @else if $point == "lg" {
+  } @else if $point == "lg" {
     @media screen and (min-width: $rh-global--grid-breakpoint--lg) {
       @content;
     }
-  }
-  @else if $point == "xl" {
+  } @else if $point == "xl" {
     @media screen and (min-width: $rh-global--grid-breakpoint--xl) {
       @content;
     }
@@ -59,7 +55,7 @@
 @mixin GridItemModifiers($suffix: null) {
   // generate column span modifiers
   @for $col-num from 1 through 12 {
-    > .rhe-m-#{$col-num}-col#{$suffix} {
+    > .rh-m-#{$col-num}-col#{$suffix} {
       grid-column-start: auto;
       grid-column-end: span $col-num;
     }
@@ -67,21 +63,22 @@
 
   // // generate column offset modfiers
   // @for $col-num from 1 through 12 {
-  //   > .rhe-m-offset-#{$col-num}-col#{$suffix} {
+  //   > .rh-m-offset-#{$col-num}-col#{$suffix} {
   //     grid-column-start: col-start ($col-num + 1);
   //   }
   // }
 
   // generate column startat modfiers
   @for $col-num from 1 through 12 {
-    > .rhe-m-startat-#{$col-num}-col#{$suffix} {
-      grid-column-start: col-start ($col-num); // removed +1 so it's value is literal.
+    > .rh-m-startat-#{$col-num}-col#{$suffix} {
+      grid-column-start: col-start
+        ($col-num); // removed +1 so it's value is literal.
     }
   }
 
   // generate row span modfiers
   @for $row-num from 1 through 12 {
-    > .rhe-m-#{$row-num}-row#{$suffix} {
+    > .rh-m-#{$row-num}-row#{$suffix} {
       grid-row: span $row-num;
     }
   }
@@ -89,7 +86,7 @@
 
 @mixin GridAllModifiers($suffix: null) {
   @for $col-num from 1 through 12 {
-    &.rhe-m-all-#{$col-num}-col#{$suffix} {
+    &.rh-m-all-#{$col-num}-col#{$suffix} {
       > * {
         grid-column-start: auto;
         grid-column-end: span $col-num;
@@ -99,7 +96,7 @@
 }
 
 /// Grid base
-.rhe-l-grid {
+.rh-l-grid {
   display: grid;
   grid-template-columns: repeat(12, [col-start] 1fr);
 
@@ -110,7 +107,14 @@
   }
 
   // Generate default modifier classes
-  $breakpoints: ("": null, "xs": "-on-xs", "sm": "-on-sm", "md": "-on-md", "lg": "-on-lg", "xl": "-on-xl");
+  $breakpoints: (
+    "": null,
+    "xs": "-on-xs",
+    "sm": "-on-sm",
+    "md": "-on-md",
+    "lg": "-on-lg",
+    "xl": "-on-xl"
+  );
 
   // Loop through $breakpoints map to generate responsive classes
   @each $breakpoint, $value in $breakpoints {
@@ -120,7 +124,7 @@
     }
   }
 
-  &.rhe-m-gutters {
-    grid-gap: var(--rhe-l-grid--m-gutter--GridGap);
+  &.rh-m-gutters {
+    grid-gap: var(--rh-l-grid--m-gutter--GridGap);
   }
 }

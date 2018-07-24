@@ -1,6 +1,6 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
-class RhDatetime extends Rhelement {
+class RhDatetime extends RHElement {
   static get tag() {
     return "rh-datetime";
   }
@@ -161,4 +161,4 @@ class RhDatetime extends Rhelement {
   }
 }
 
-Rhelement.create(RhDatetime);
+RHElement.create(RhDatetime);

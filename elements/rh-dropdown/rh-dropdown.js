@@ -1,4 +1,4 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 import "../rh-dropdown-button/rh-dropdown-button.js";
 import "../rh-dropdown-menu/rh-dropdown-menu.js";
 
@@ -50,7 +50,7 @@ if (!Array.prototype.findIndex) {
 // Set up a unique ID
 const baseID = Date.now();
 
-class RhDropdown extends Rhelement {
+class RhDropdown extends RHElement {
   get html() {
     return `
 <style>
@@ -340,4 +340,4 @@ class RhDropdown extends Rhelement {
   }
 }
 
-Rhelement.create(RhDropdown);
+RHElement.create(RhDropdown);

@@ -1,6 +1,6 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
-class RhCard extends Rhelement {
+class RhCard extends RHElement {
   get html() {
     return `
 <style>
@@ -48,4 +48,4 @@ class RhCard extends Rhelement {
   }
 }
 
-Rhelement.create(RhCard);
+RHElement.create(RhCard);

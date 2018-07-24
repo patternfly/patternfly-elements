@@ -1,7 +1,7 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 import "../rh-icon/rh-icon.js";
 
-class RhIconPanel extends Rhelement {
+class RhIconPanel extends RHElement {
   get html() {
     return `
 <style>
@@ -60,4 +60,4 @@ class RhIconPanel extends Rhelement {
   }
 }
 
-Rhelement.create(RhIconPanel);
+RHElement.create(RhIconPanel);

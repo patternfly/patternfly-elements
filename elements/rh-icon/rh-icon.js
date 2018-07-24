@@ -1,4 +1,4 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
 const templateId = "rh-icon-head";
 if (!document.getElementById(templateId)) {
@@ -11,7 +11,7 @@ if (!document.getElementById(templateId)) {
   document.head.appendChild(cpRHIconTemplate);
 }
 
-class RhIcon extends Rhelement {
+class RhIcon extends RHElement {
   get html() {
     return `
 <style>
@@ -133,4 +133,4 @@ class RhIcon extends Rhelement {
   }
 }
 
-Rhelement.create(RhIcon);
+RHElement.create(RhIcon);

@@ -1,6 +1,6 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
-class RhDropdownButton extends Rhelement {
+class RhDropdownButton extends RHElement {
   static get tag() {
     return "rh-dropdown-button";
   }
@@ -96,4 +96,4 @@ class RhDropdownButton extends Rhelement {
   }
 }
 
-Rhelement.create(RhDropdownButton);
+RHElement.create(RhDropdownButton);

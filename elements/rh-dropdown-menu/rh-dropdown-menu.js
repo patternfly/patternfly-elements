@@ -1,6 +1,6 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
-class RhDropdownMenu extends Rhelement {
+class RhDropdownMenu extends RHElement {
   get html() {
     return `
 <style>
@@ -87,4 +87,4 @@ class RhDropdownMenu extends Rhelement {
   }
 }
 
-Rhelement.create(RhDropdownMenu);
+RHElement.create(RhDropdownMenu);

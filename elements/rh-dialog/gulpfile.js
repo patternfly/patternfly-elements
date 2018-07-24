@@ -37,7 +37,7 @@ gulp.task("merge", () => {
   return gulp
     .src("./src/rh-dialog.js")
     .pipe(
-      replace(/extends\s+Rhelement\s+{/, (classStatement, line, jsFile) => {
+      replace(/extends\s+RHElement\s+{/, (classStatement, line, jsFile) => {
         // extract the templateUrl and styleUrl with regex.  Would prefer to do
         // this by require'ing rh-card.js and asking it directly, but without
         // node.js support for ES modules, we're stuck with this.

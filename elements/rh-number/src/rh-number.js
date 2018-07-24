@@ -1,4 +1,4 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 import "../../numeral/numeral.js";
 
 // easy aliases for common format strings
@@ -15,7 +15,7 @@ const types = {
 // debugger;
 numeral.locales.en.delimiters.thousands = " ";
 
-class RhNumber extends Rhelement {
+class RhNumber extends RHElement {
   static get tag() {
     return "rh-number";
   }
@@ -73,4 +73,4 @@ class RhNumber extends Rhelement {
   }
 }
 
-Rhelement.create(RhNumber);
+RHElement.create(RhNumber);

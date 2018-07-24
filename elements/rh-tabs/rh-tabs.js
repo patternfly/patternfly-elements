@@ -1,4 +1,4 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.find
 if (!Array.prototype.find) {
@@ -109,7 +109,7 @@ function generateId() {
     .substr(2, 9);
 }
 
-class RhTabs extends Rhelement {
+class RhTabs extends RHElement {
   get html() {
     return `
 <style>
@@ -442,9 +442,9 @@ class RhTabs extends Rhelement {
   }
 }
 
-Rhelement.create(RhTabs);
+RHElement.create(RhTabs);
 
-class RhTab extends Rhelement {
+class RhTab extends RHElement {
   get html() {
     return `
 <style>
@@ -623,9 +623,9 @@ class RhTab extends Rhelement {
   }
 }
 
-Rhelement.create(RhTab);
+RHElement.create(RhTab);
 
-class RhTabPanel extends Rhelement {
+class RhTabPanel extends RHElement {
   get html() {
     return `
 <style>
@@ -667,4 +667,4 @@ class RhTabPanel extends Rhelement {
   }
 }
 
-Rhelement.create(RhTabPanel);
+RHElement.create(RhTabPanel);

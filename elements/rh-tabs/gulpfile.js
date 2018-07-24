@@ -37,7 +37,7 @@ gulp.task("merge", () => {
     .src("./src/rh-tabs.js")
     .pipe(
       replace(
-        /extends\s+Rhelement\s+{/g,
+        /extends\s+RHElement\s+{/g,
         (classStatement, character, jsFile) => {
           // extract the templateUrl and styleUrl with regex.  Would prefer to do
           // this by require'ing rh-card.js and asking it directly, but without

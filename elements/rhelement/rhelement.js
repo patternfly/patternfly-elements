@@ -1,4 +1,4 @@
-class Rhelement extends HTMLElement {
+class RHElement extends HTMLElement {
   static create(rhe) {
     window.customElements.define(rhe.tag, rhe);
   }
@@ -29,4 +29,4 @@ class Rhelement extends HTMLElement {
   }
 }
 
-export default Rhelement;
+export default RHElement;

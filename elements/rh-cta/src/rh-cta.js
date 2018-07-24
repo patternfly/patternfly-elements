@@ -1,6 +1,6 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
-class RhCta extends Rhelement {
+class RhCta extends RHElement {
   static get tag() {
     return "rh-cta";
   }
@@ -38,4 +38,4 @@ class RhCta extends Rhelement {
   disconnectedCallback() {}
 }
 
-Rhelement.create(RhCta);
+RHElement.create(RhCta);

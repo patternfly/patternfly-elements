@@ -9,7 +9,7 @@
     "postinstall": "npm run bootstrap",
     "precommit": "npm run test-suite-inject > /dev/null && lint-staged",
     "test-suite-inject": "node scripts/test-suite-inject.js",
-    "storybook": "start-storybook -c .storybook -p 9001",
+    "storybook": "start-storybook -c .storybook -p 9001 -s ./elements",
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
     "new": "cd elements && yo rhelement && npm run test-suite-inject"
   },

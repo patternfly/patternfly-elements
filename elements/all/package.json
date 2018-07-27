@@ -8,7 +8,6 @@
     "@rhelements/rh-card": "file:elements/rh-card",
     "@rhelements/rh-cta": "file:elements/rh-cta",
     "@rhelements/rh-datetime": "file:elements/rh-datetime",
-    "@rhelements/rh-dialog": "file:elements/rh-dialog",
     "@rhelements/rh-dropdown": "file:elements/rh-dropdown",
     "@rhelements/rh-dropdown-button": "file:elements/rh-dropdown-button",
     "@rhelements/rh-dropdown-menu": "file:elements/rh-dropdown-menu",

@@ -201,11 +201,21 @@ class RhTabs extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["vertical"];
+    return ["vertical", "selected-index"];
+  }
+
+  get selectedIndex() {
+    return this.getAttribute("selected-index");
+  }
+
+  set selectedIndex(value) {
+    this.setAttribute("selected-index", value);
   }
 
   constructor() {
     super(RhTabs.tag);
+
+    this._linked = false;
 
     this._onSlotChange = this._onSlotChange.bind(this);
 
@@ -226,9 +236,13 @@ class RhTabs extends RHElement {
       this.setAttribute("role", "tablist");
     }
 
+    if (!this.hasAttribute("selected-index")) {
+      this.selectedIndex = 0;
+    }
+
     Promise.all([
-      customElements.whenDefined("rh-tab"),
-      customElements.whenDefined("rh-tab-panel")
+      customElements.whenDefined(RhTab.tag),
+      customElements.whenDefined(RhTabPanel.tag)
     ]).then(() => this._linkPanels());
   }
 
@@ -237,15 +251,30 @@ class RhTabs extends RHElement {
     this.removeEventListener("click", this._onClick);
   }
 
-  attributeChangedCallback() {
-    if (this.hasAttribute("vertical")) {
-      this.setAttribute("aria-orientation", "vertical");
-      this._allPanels().forEach(panel => panel.setAttribute("vertical", ""));
-      this._allTabs().forEach(tab => tab.setAttribute("vertical", ""));
-    } else {
-      this.removeAttribute("aria-orientation");
-      this._allPanels().forEach(panel => panel.removeAttribute("vertical"));
-      this._allTabs().forEach(tab => tab.removeAttribute("vertical"));
+  attributeChangedCallback(attr, oldValue, newValue) {
+    switch (attr) {
+      case "vertical":
+        if (this.hasAttribute("vertical")) {
+          this.setAttribute("aria-orientation", "vertical");
+          this._allPanels().forEach(panel =>
+            panel.setAttribute("vertical", "")
+          );
+          this._allTabs().forEach(tab => tab.setAttribute("vertical", ""));
+        } else {
+          this.removeAttribute("aria-orientation");
+          this._allPanels().forEach(panel => panel.removeAttribute("vertical"));
+          this._allTabs().forEach(tab => tab.removeAttribute("vertical"));
+        }
+        break;
+
+      case "selected-index":
+        Promise.all([
+          customElements.whenDefined(RhTab.tag),
+          customElements.whenDefined(RhTabPanel.tag)
+        ]).then(() => {
+          this._linkPanels();
+          this.selectIndex(newValue);
+        });
     }
   }
 
@@ -259,11 +288,11 @@ class RhTabs extends RHElement {
       return;
     }
 
-    this._selectTab(newTab);
+    this.selectedIndex = this._getTabIndex(newTab);
   }
 
   selectIndex(_index) {
-    if (_index === null) {
+    if (_index === undefined) {
       return;
     }
 
@@ -280,10 +309,15 @@ class RhTabs extends RHElement {
   }
 
   _onSlotChange() {
+    this._linked = false;
     this._linkPanels();
   }
 
   _linkPanels() {
+    if (this._linked) {
+      return;
+    }
+
     const tabs = this._allTabs();
 
     tabs.forEach(tab => {
@@ -299,9 +333,7 @@ class RhTabs extends RHElement {
       panel.setAttribute("aria-labelledby", tab.id);
     });
 
-    const selectedTab = tabs.find(tab => tab.selected) || tabs[0];
-
-    this._selectTab(selectedTab);
+    this._linked = true;
   }
 
   _allPanels() {
@@ -339,6 +371,12 @@ class RhTabs extends RHElement {
     return tabs[newIdx % tabs.length];
   }
 
+  _getTabIndex(_tab) {
+    const tabs = this._allTabs();
+    const index = tabs.findIndex(tab => tab.id === _tab.id);
+    return index;
+  }
+
   reset() {
     const tabs = this._allTabs();
     const panels = this._allPanels();
@@ -347,7 +385,7 @@ class RhTabs extends RHElement {
     panels.forEach(panel => (panel.hidden = true));
   }
 
-  _selectTab(newTab, setFocus = false) {
+  _selectTab(newTab) {
     this.reset();
 
     const newPanel = this._panelForTab(newTab);
@@ -373,15 +411,15 @@ class RhTabs extends RHElement {
     newTab.selected = true;
     newPanel.hidden = false;
 
-    if (setFocus) {
+    if (this._setFocus) {
       newTab.focus();
+      this._setFocus = false;
     }
 
     const tabs = this._allTabs();
     const newIdx = tabs.findIndex(tab => tab.selected);
 
     this.selected = newTab;
-    this.selectedIndex = newIdx;
 
     if (newTabSelected) {
       this.dispatchEvent(
@@ -430,7 +468,9 @@ class RhTabs extends RHElement {
     }
 
     event.preventDefault();
-    this._selectTab(newTab, true);
+
+    this.selectedIndex = this._getTabIndex(newTab);
+    this._setFocus = true;
   }
 
   _onClick(event) {
@@ -438,11 +478,9 @@ class RhTabs extends RHElement {
       return;
     }
 
-    this._selectTab(event.target);
+    this.selectedIndex = this._getTabIndex(event.target);
   }
 }
-
-RHElement.create(RhTabs);
 
 class RhTab extends RHElement {
   get html() {
@@ -585,17 +623,16 @@ class RhTab extends RHElement {
 
   constructor() {
     super(RhTab.tag);
+
+    if (!this.id) {
+      this.id = `${RhTab.tag}-${generateId()}`;
+    }
   }
 
   connectedCallback() {
     super.connectedCallback();
 
     this.setAttribute("role", "tab");
-
-    if (!this.id) {
-      this.id = `${RhTab.tag}-${generateId()}`;
-    }
-
     this.setAttribute("aria-selected", "false");
     this.setAttribute("tabindex", -1);
 
@@ -617,13 +654,7 @@ class RhTab extends RHElement {
   get selected() {
     return this.getAttribute("aria-selected") === "true" ? true : false;
   }
-
-  show() {
-    this.parentNode._selectTab(this);
-  }
 }
-
-RHElement.create(RhTab);
 
 class RhTabPanel extends RHElement {
   get html() {
@@ -653,6 +684,10 @@ class RhTabPanel extends RHElement {
 
   constructor() {
     super(RhTabPanel.tag);
+
+    if (!this.id) {
+      this.id = `${RhTabPanel.tag}-${generateId()}`;
+    }
   }
 
   connectedCallback() {
@@ -660,11 +695,9 @@ class RhTabPanel extends RHElement {
 
     this.setAttribute("role", "tabpanel");
     this.setAttribute("tabindex", 0);
-
-    if (!this.id) {
-      this.id = `${RhTabPanel.tag}-${generateId()}`;
-    }
   }
 }
 
+RHElement.create(RhTab);
 RHElement.create(RhTabPanel);
+RHElement.create(RhTabs);

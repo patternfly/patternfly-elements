@@ -7,6 +7,6 @@
   margin: 0;
 }
 
-:host(cp-accordion[data-theme="striped"]) ::slotted(cp-accordion-heading.even) {
+:host(rh-accordion[theme="striped"]) ::slotted(rh-accordion-header.even) {
   background-color: var(--white, white);
 }

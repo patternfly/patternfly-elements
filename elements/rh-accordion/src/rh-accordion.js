@@ -1,4 +1,4 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
@@ -51,18 +51,17 @@ function generateId() {
     .substr(2, 9);
 }
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-accordion.html and css from
- * rh-accordion.scss
- */
-const template = document.createElement("template");
-template.innerHTML = ``;
-/* end DO NOT EDIT */
-
-class RhAccordion extends Rhelement {
+class RhAccordion extends RHElement {
   static get tag() {
     return "rh-accordion";
+  }
+
+  get styleUrl() {
+    return "rh-accordion.scss";
+  }
+
+  get templateUrl() {
+    return "rh-accordion.html";
   }
 
   static get observedAttributes() {
@@ -70,7 +69,7 @@ class RhAccordion extends Rhelement {
   }
 
   constructor() {
-    super(RhAccordion.tag, template);
+    super(RhAccordion.tag);
   }
 
   connectedCallback() {
@@ -83,17 +82,9 @@ class RhAccordion extends Rhelement {
     this.addEventListener("keydown", this._keydownHandler);
 
     Promise.all([
-      customElements.whenDefined("rh-accordion-header"),
-      customElements.whenDefined("rh-accordion-panel")
-    ]).then(() => {
-      const headers = this._allHeaders();
-      headers.forEach(header => {
-        const panel = this._panelForHeader(header);
-
-        header.setAttribute("aria-controls", panel.id);
-        panel.setAttribute("aria-labelledby", header.id);
-      });
-    });
+      customElements.whenDefined(RhAccordionHeader.tag),
+      customElements.whenDefined(RhAccordionPanel.tag)
+    ]).then(this._linkPanels());
   }
 
   disconnectedCallback() {
@@ -103,7 +94,7 @@ class RhAccordion extends Rhelement {
 
   attributeChangedCallback(attr, oldVal, newVal) {
     if (attr === "theme") {
-      const headers = this.querySelectorAll("rh-accordion-header");
+      const headers = this.querySelectorAll(RhAccordionHeader.tag);
 
       if (newVal === "striped") {
         [...headers].forEach((header, index) => {
@@ -179,6 +170,16 @@ class RhAccordion extends Rhelement {
 
     headers.forEach(header => this._collapseHeader(header));
     panels.forEach(panel => this._collapsePanel(panel));
+  }
+
+  _linkPanels() {
+    const headers = this._allHeaders();
+    headers.forEach(header => {
+      const panel = this._panelForHeader(header);
+
+      header.setAttribute("aria-controls", panel.id);
+      panel.setAttribute("aria-labelledby", header.id);
+    });
   }
 
   _changeHandler(evt) {
@@ -296,7 +297,9 @@ class RhAccordion extends Rhelement {
     const next = header.nextElementSibling;
 
     if (next.tagName.toLowerCase() !== RhAccordionPanel.tag) {
-      console.error("Sibling element to a header needs to be a panel");
+      console.error(
+        `${RhAccordion.tag}: Sibling element to a header needs to be a panel`
+      );
       return;
     }
 
@@ -328,23 +331,21 @@ class RhAccordion extends Rhelement {
   }
 
   _isHeader(element) {
-    return element.tagName.toLowerCase() === "rh-accordion-header";
+    return element.tagName.toLowerCase() === RhAccordionHeader.tag;
   }
 }
 
-window.customElements.define(RhAccordion.tag, RhAccordion);
-
-const accordionHeaderTemplate = document.createElement("template");
-accordionHeaderTemplate.innerHTML = `
-  <style>
-    {{{rh-accordion-header.scss}}}
-  </style>
-  {{{rh-accordion-header.html}}}
-`;
-
-class RhAccordionHeader extends Rhelement {
+class RhAccordionHeader extends RHElement {
   static get tag() {
     return "rh-accordion-header";
+  }
+
+  get styleUrl() {
+    return "rh-accordion-header.scss";
+  }
+
+  get templateUrl() {
+    return "rh-accordion-header.html";
   }
 
   static get observedAttributes() {
@@ -352,8 +353,7 @@ class RhAccordionHeader extends Rhelement {
   }
 
   constructor() {
-    super(RhAccordionHeader.tag, accordionHeaderTemplate);
-
+    super(RhAccordionHeader.tag);
     this._clickHandler = this._clickHandler.bind(this);
   }
 
@@ -435,23 +435,21 @@ class RhAccordionHeader extends Rhelement {
   }
 }
 
-window.customElements.define(RhAccordionHeader.tag, RhAccordionHeader);
-
-const accordionPanelTemplate = document.createElement("template");
-accordionPanelTemplate.innerHTML = `
-  <style>
-    {{{rh-accordion-panel.scss}}}
-  </style>
-  {{{rh-accordion-panel.html}}}
-`;
-
-class RhAccordionPanel extends Rhelement {
+class RhAccordionPanel extends RHElement {
   static get tag() {
     return "rh-accordion-panel";
   }
 
+  get styleUrl() {
+    return "rh-accordion-panel.scss";
+  }
+
+  get templateUrl() {
+    return "rh-accordion-panel.html";
+  }
+
   constructor() {
-    super(RhAccordionPanel.tag, accordionPanelTemplate);
+    super(RhAccordionPanel.tag);
   }
 
   connectedCallback() {
@@ -481,4 +479,6 @@ class RhAccordionPanel extends Rhelement {
   }
 }
 
-window.customElements.define(RhAccordionPanel.tag, RhAccordionPanel);
+RHElement.create(RhAccordionHeader);
+RHElement.create(RhAccordionPanel);
+RHElement.create(RhAccordion);

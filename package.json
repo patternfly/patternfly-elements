@@ -11,7 +11,7 @@
     "test-suite-inject": "node scripts/test-suite-inject.js",
     "storybook": "start-storybook -c .storybook -p 9001 -s ./elements",
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
-    "new": "cd elements && yo rhelement && npm run test-suite-inject"
+    "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.8",
@@ -60,7 +60,7 @@
     "wct-browser-legacy": "^1.0.1",
     "web-component-tester": "^6.7.1",
     "whatwg-fetch": "^2.0.3",
-    "yo": "^2.0.2"
+    "yo": "^1.8.5"
   },
   "dependencies": {},
   "lint-staged": {

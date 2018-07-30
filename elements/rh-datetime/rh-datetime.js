@@ -1,21 +1,30 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rhcc-freshnessgrade.html and css from
- * rhcc-freshnessgrade.css
- */
-const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
-  display: inline; }</style>
-<span></span>
-`;
-/* end DO NOT EDIT */
+class RhDatetime extends RHElement {
+  get html() {
+    return `
+<style>
+:host {
+  display: inline; }
+</style>
 
-class RhDatetime extends Rhelement {
+<span></span>`;
+  }
+
+  static get tag() {
+    return "rh-datetime";
+  }
+
+  get styleUrl() {
+    return "rh-datetime.scss";
+  }
+
+  get templateUrl() {
+    return "rh-datetime.html";
+  }
+
   constructor() {
-    super("rh-datetime", template);
+    super(RhDatetime.tag);
 
     this.type = this.getAttribute("type") || "local";
   }
@@ -162,4 +171,4 @@ class RhDatetime extends Rhelement {
   }
 }
 
-window.customElements.define("rh-datetime", RhDatetime);
+RHElement.create(RhDatetime);

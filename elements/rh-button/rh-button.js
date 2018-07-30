@@ -1,13 +1,10 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-button.html and css from
- * rh-button.scss
- */
-const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
+class RhButton extends RHElement {
+  get html() {
+    return `
+<style>
+:host {
   display: inline-block; }
 
 :host button {
@@ -30,15 +27,27 @@ template.innerHTML = `
 
 :host(.primary) button:hover {
   background: var(--rh-button--theme--primary-color--hover--Background, #004080);
-  color: var(--rh-button--theme--primary-color--hover--Color, #fff); }</style>
-<button><slot></slot></button>
-`;
-/* end DO NOT EDIT */
+  color: var(--rh-button--theme--primary-color--hover--Color, #fff); }
+</style>
 
-class RhButton extends Rhelement {
+<button><slot></slot></button>`;
+  }
+
+  static get tag() {
+    return "rh-button";
+  }
+
+  get styleUrl() {
+    return "rh-button.scss";
+  }
+
+  get templateUrl() {
+    return "rh-button.html";
+  }
+
   constructor() {
-    super("rh-button", template);
+    super(RhButton.tag);
   }
 }
 
-window.customElements.define("rh-button", RhButton);
+RHElement.create(RhButton);

@@ -1,17 +1,20 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-search-result.html and css from
- * rh-search-result.scss
- */
-const template = document.createElement("template");
-template.innerHTML = ``;
-/* end DO NOT EDIT */
+class RhSearchResult extends RHElement {
+  static get tag() {
+    return "rh-search-result";
+  }
 
-class RhSearchResult extends Rhelement {
+  get styleUrl() {
+    return "rh-search-result.scss";
+  }
+
+  get templateUrl() {
+    return "rh-search-result.html";
+  }
+
   constructor() {
-    super("rh-search-result", template);
+    super(RhSearchResult.tag);
 
     this._headingId = "#heading";
 
@@ -34,4 +37,4 @@ class RhSearchResult extends Rhelement {
   }
 }
 
-window.customElements.define("rh-search-result", RhSearchResult);
+RHElement.create(RhSearchResult);

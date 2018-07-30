@@ -1,4 +1,4 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
 const templateId = "rh-icon-head";
 if (!document.getElementById(templateId)) {
@@ -11,15 +11,11 @@ if (!document.getElementById(templateId)) {
   document.head.appendChild(cpRHIconTemplate);
 }
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-icon.html and css from
- * rh-icon.scss
- */
-
-const iconTemplate = document.createElement("template");
-iconTemplate.innerHTML = `
-<style>:host {
+class RhIcon extends RHElement {
+  get html() {
+    return `
+<style>
+:host {
   display: inline-block;
   vertical-align: middle; }
   :host,
@@ -86,22 +82,34 @@ iconTemplate.innerHTML = `
   :host([data-size="small"]),
   :host([data-size="small"]) svg {
     width: 48px;
-    height: 48px; }</style>
+    height: 48px; }
+</style>
+
 <svg viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" focusable="false" style="pointer-events: none; display: block; width: 100%; height: 100%">
   <g>
     <path d=""></path>
   </g>
-</svg>
-`;
-/* end DO NOT EDIT */
+</svg>`;
+  }
 
-class RhIcon extends Rhelement {
+  static get tag() {
+    return "rh-icon";
+  }
+
+  get styleUrl() {
+    return "rh-icon.scss";
+  }
+
+  get templateUrl() {
+    return "rh-icon.html";
+  }
+
   static get observedAttributes() {
     return ["icon"];
   }
 
   constructor() {
-    super("rh-icon", iconTemplate);
+    super(RhIcon.tag);
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
@@ -125,4 +133,4 @@ class RhIcon extends Rhelement {
   }
 }
 
-window.customElements.define("rh-icon", RhIcon);
+RHElement.create(RhIcon);

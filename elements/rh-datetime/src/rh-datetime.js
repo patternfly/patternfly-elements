@@ -1,17 +1,20 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-datetime.html and css from
- * rh-datetime.css
- */
-const template = document.createElement("template");
-template.innerHTML = ``;
-/* end DO NOT EDIT */
+class RhDatetime extends RHElement {
+  static get tag() {
+    return "rh-datetime";
+  }
 
-class RhDatetime extends Rhelement {
+  get styleUrl() {
+    return "rh-datetime.scss";
+  }
+
+  get templateUrl() {
+    return "rh-datetime.html";
+  }
+
   constructor() {
-    super("rh-datetime", template);
+    super(RhDatetime.tag);
 
     this.type = this.getAttribute("type") || "local";
   }
@@ -158,4 +161,4 @@ class RhDatetime extends Rhelement {
   }
 }
 
-window.customElements.define("rh-datetime", RhDatetime);
+RHElement.create(RhDatetime);

@@ -1,4 +1,4 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
 const templateId = "rh-icon-head";
 if (!document.getElementById(templateId)) {
@@ -11,23 +11,25 @@ if (!document.getElementById(templateId)) {
   document.head.appendChild(cpRHIconTemplate);
 }
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-icon.html and css from
- * rh-icon.scss
- */
+class RhIcon extends RHElement {
+  static get tag() {
+    return "rh-icon";
+  }
 
-const iconTemplate = document.createElement("template");
-iconTemplate.innerHTML = ``;
-/* end DO NOT EDIT */
+  get styleUrl() {
+    return "rh-icon.scss";
+  }
 
-class RhIcon extends Rhelement {
+  get templateUrl() {
+    return "rh-icon.html";
+  }
+
   static get observedAttributes() {
     return ["icon"];
   }
 
   constructor() {
-    super("rh-icon", iconTemplate);
+    super(RhIcon.tag);
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
@@ -51,4 +53,4 @@ class RhIcon extends Rhelement {
   }
 }
 
-window.customElements.define("rh-icon", RhIcon);
+RHElement.create(RhIcon);

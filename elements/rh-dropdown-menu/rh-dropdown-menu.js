@@ -1,13 +1,10 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rhcc-freshnessgrade.html and css from
- * rhcc-freshnessgrade.css
- */
-const template = document.createElement("template");
-template.innerHTML = `
-<style>:host *, :host *::before, :host *::after {
+class RhDropdownMenu extends RHElement {
+  get html() {
+    return `
+<style>
+:host *, :host *::before, :host *::after {
   box-sizing: border-box; }
 
 :host ul {
@@ -34,14 +31,26 @@ template.innerHTML = `
       background: #e7e7e7; }
     :host ul a:active {
       background: #06c;
-      color: #fff; }</style>
+      color: #fff; }
+</style>
 
 `;
-/* end DO NOT EDIT */
+  }
 
-class RhDropdownMenu extends Rhelement {
+  static get tag() {
+    return "rh-dropdown-menu";
+  }
+
+  get styleUrl() {
+    return "rh-dropdown-menu.scss";
+  }
+
+  get templateUrl() {
+    return "rh-dropdown-menu.html";
+  }
+
   constructor() {
-    super("rh-dropdown-menu", template);
+    super(RhDropdownMenu.tag);
   }
 
   connectedCallback() {
@@ -78,4 +87,4 @@ class RhDropdownMenu extends Rhelement {
   }
 }
 
-window.customElements.define("rh-dropdown-menu", RhDropdownMenu);
+RHElement.create(RhDropdownMenu);

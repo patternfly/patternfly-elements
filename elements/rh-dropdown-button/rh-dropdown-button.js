@@ -1,13 +1,10 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rhcc-freshnessgrade.html and css from
- * rhcc-freshnessgrade.css
- */
-const template = document.createElement("template");
-template.innerHTML = `
-<style>:host *, :host *::before, :host *::after {
+class RhDropdownButton extends RHElement {
+  get html() {
+    return `
+<style>
+:host *, :host *::before, :host *::after {
   box-sizing: border-box; }
 
 :host button {
@@ -34,18 +31,30 @@ template.innerHTML = `
     border-color: #004080; }
     :host button[aria-expanded="true"]::after {
       border-bottom: 5px solid #fff;
-      border-top: 0; }</style>
-<button></button>
-`;
-/* end DO NOT EDIT */
+      border-top: 0; }
+</style>
 
-class RhDropdownButton extends Rhelement {
+<button></button>`;
+  }
+
+  static get tag() {
+    return "rh-dropdown-button";
+  }
+
+  get styleUrl() {
+    return "rh-dropdown-button.scss";
+  }
+
+  get templateUrl() {
+    return "rh-dropdown-button.html";
+  }
+
   static get observedAttributes() {
     return ["no-aria-haspopup"];
   }
 
   constructor() {
-    super("rh-dropdown-button", template);
+    super(RhDropdownButton.tag);
     this.button = this.shadowRoot.querySelector("button");
     this._clickHandler = this._clickHandler.bind(this);
   }
@@ -123,4 +132,4 @@ class RhDropdownButton extends Rhelement {
   }
 }
 
-window.customElements.define("rh-dropdown-button", RhDropdownButton);
+RHElement.create(RhDropdownButton);

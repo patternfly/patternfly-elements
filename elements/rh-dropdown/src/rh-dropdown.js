@@ -1,4 +1,4 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 import "../rh-dropdown-button/rh-dropdown-button.js";
 import "../rh-dropdown-menu/rh-dropdown-menu.js";
 
@@ -47,21 +47,24 @@ if (!Array.prototype.findIndex) {
   });
 }
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-dropdown.html and css from
- * rh-dropdown.css
- */
-const template = document.createElement("template");
-template.innerHTML = ``;
-/* end DO NOT EDIT */
-
 // Set up a unique ID
 const baseID = Date.now();
 
-class RhDropdown extends Rhelement {
+class RhDropdown extends RHElement {
+  static get tag() {
+    return "rh-dropdown";
+  }
+
+  get styleUrl() {
+    return "rh-dropdown.scss";
+  }
+
+  get templateUrl() {
+    return "rh-dropdown.html";
+  }
+
   constructor() {
-    super("rh-dropdown", template);
+    super(RhDropdown.tag);
   }
 
   connectedCallback() {
@@ -327,4 +330,4 @@ class RhDropdown extends Rhelement {
   }
 }
 
-window.customElements.define("rh-dropdown", RhDropdown);
+RHElement.create(RhDropdown);

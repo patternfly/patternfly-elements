@@ -1,15 +1,24 @@
-class Rhelement extends HTMLElement {
-  constructor(id, template) {
+class RHElement extends HTMLElement {
+  static create(rhe) {
+    window.customElements.define(rhe.tag, rhe);
+  }
+
+  constructor(tag) {
     super();
 
-    if (window.ShadyCSS && template) {
-      ShadyCSS.prepareTemplate(template, id);
+    this.tag = tag;
+
+    this.template = document.createElement("template");
+    this.template.innerHTML = this.html;
+
+    if (window.ShadyCSS && this.html) {
+      ShadyCSS.prepareTemplate(this.template, this.tag);
     }
 
     this.attachShadow({ mode: "open" });
 
-    if (template) {
-      this.shadowRoot.appendChild(template.content.cloneNode(true));
+    if (this.html) {
+      this.shadowRoot.appendChild(this.template.content.cloneNode(true));
     }
   }
 
@@ -20,4 +29,4 @@ class Rhelement extends HTMLElement {
   }
 }
 
-export default Rhelement;
+export default RHElement;

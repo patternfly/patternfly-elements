@@ -1,0 +1,23 @@
+//
+// Although these aren't used quite yet, we'll leave them here so they're stubbed out.
+//
+@import "maps/block-color-map";
+@import "maps/copy-color-map";
+@import "maps/form-color-map";
+@import "maps/icon-color-map";
+@import "maps/link-color-map";
+@import "maps/table-color-map";
+@import "maps/title-color-map";
+
+// Use function 'map-collect' to merge all maps
+// This needs to be located here in order to avoid
+// variable issues.
+$rh-global--color-map: map-collect(
+    $rh-global--color-map--block,
+    $rh-global--color-map--copy,
+    $rh-global--color-map--form,
+    $rh-global--color-map--icon,
+    $rh-global--color-map--link,
+    $rh-global--color-map--table,
+    $rh-global--color-map--title
+);

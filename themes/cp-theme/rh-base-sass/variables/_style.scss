@@ -1,0 +1,51 @@
+//
+// Style vars
+//
+
+// ========================================================================
+// Animations
+// ========================================================================
+
+$rh-global--animation-timing:    cubic-bezier(0.465, 0.183, 0.153, 0.946);
+
+$rh-global--link--TextDecoration: underline;
+$rh-global--link--TextDecoration--hover: underline;
+
+// ========================================================================
+// Borders
+// ========================================================================
+
+$rh-global--border--BorderWidth:         1px !default;
+$rh-global--border--BorderWidth--thin:   $rh-global--border--BorderWidth !default;
+
+$rh-global--border--BorderStyle:         solid !default;
+$rh-global--border--BorderColor:         $rh-global--color--gray-silver !default;
+$rh-global--border--BorderColor--light:  $rh-global--color--gray-platinum !default;
+$rh-global--border--BorderColor--dark:   $rh-global--text-color;
+
+$rh-global--border--BorderRadius:         0 !default;
+$rh-global--button-border--BorderRadius:  2px !default;
+
+
+// ========================================================================
+// Shadows
+// ========================================================================
+
+$rh-global--shadow--BoxShadow--sm:  0  rh-size-prem(1)  rh-size-prem(2) 0 rgba($pf-color-black-1000, .2) !default;
+$rh-global--shadow--BoxShadow--md:  0  rh-size-prem(2)  rh-size-prem(1) rh-size-prem(1) rgba($pf-color-black-1000, .12), 0  rh-size-prem(4)  rh-size-prem(11) rh-size-prem(6) rgba($pf-color-black-1000, .05) !default;
+$rh-global--shadow--BoxShadow--lg:  0  rh-size-prem(3)  rh-size-prem(7) rh-size-prem(3) rgba($pf-color-black-1000, .13), 0  rh-size-prem(11)  rh-size-prem(24) rh-size-prem(16) rgba($pf-color-black-1000, .12) !default;
+
+$rh-global--shadow--BoxShadow--sm-right:  rh-size-prem(4)  0  rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
+$rh-global--shadow--BoxShadow--sm-left:   rh-size-prem(-4) 0 rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
+$rh-global--shadow--BoxShadow--sm-bottom: 0 rh-size-prem(4) 0 rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
+$rh-global--shadow--BoxShadow--sm-top:    0 rh-size-prem(-4) 0 rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
+$rh-global--shadow--BoxShadow--md-right:  rh-size-prem(5) 0 rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .25) !default;
+$rh-global--shadow--BoxShadow--md-left:   rh-size-prem(-5) 0 rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .25) !default;
+$rh-global--shadow--BoxShadow--md-bottom: 0 rh-size-prem(5) rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .25) !default;
+$rh-global--shadow--BoxShadow--md-top:    0 rh-size-prem(-5) rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .25) !default;
+$rh-global--shadow--BoxShadow--lg-right:  rh-size-prem(12) 0 rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
+$rh-global--shadow--BoxShadow--lg-left:   rh-size-prem(-12) 0 rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
+$rh-global--shadow--BoxShadow--lg-bottom: 0 rh-size-prem(12) rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
+$rh-global--shadow--BoxShadow--lg-top:    0 rh-size-prem(-12) rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
+
+$rh-global--shadow--BoxShadow--inset:     inset 0 0 rh-size-prem(10) 0 rgba($pf-color-black-1000, .25) !default;

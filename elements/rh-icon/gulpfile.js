@@ -10,6 +10,7 @@ const sass = require("node-sass");
 const stripCssComments = require("strip-css-comments");
 const gulpStripCssComments = require("gulp-strip-css-comments");
 const trim = require("gulp-trim");
+const decomment = require("decomment");
 const del = require("del");
 
 const svgSprite = require("gulp-svg-sprite");
@@ -42,20 +43,24 @@ gulp.task("replaceStyles", () => {
           oneLineFile
         );
 
-        const html = fs
+        let html = fs
           .readFileSync(path.join("./src", templateUrl))
           .toString()
           .trim();
 
-        const cssResult = sass.renderSync({
+        html = decomment(html);
+
+        let cssResult = sass.renderSync({
           file: path.join("./src", styleUrl)
         }).css;
+
+        cssResult = stripCssComments(cssResult).trim();
 
         return `${classStatement}
   get html() {
     return \`
 <style>
-${stripCssComments(cssResult).trim()}
+${cssResult}
 </style>
 
 ${html}\`;

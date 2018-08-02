@@ -8,6 +8,7 @@ const rename = require("gulp-rename");
 const replace = require("gulp-replace");
 const stripCssComments = require("strip-css-comments");
 const trim = require("trim");
+const decomment = require("decomment");
 const sass = require("node-sass");
 
 gulp.task("compile", () => {
@@ -37,44 +38,56 @@ gulp.task("merge", () => {
   return gulp
     .src("./src/rh-dropdown-menu.js")
     .pipe(
-      replace(/extends\s+RHElement\s+{/, (classStatement, line, jsFile) => {
-        // extract the templateUrl and styleUrl with regex.  Would prefer to do
-        // this by require'ing rh-card.js and asking it directly, but without
-        // node.js support for ES modules, we're stuck with this.
-        const oneLineFile = jsFile.split("\n").join(" ");
-        const [
-          ,
-          templateUrl
-        ] = /get\s+templateUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
-          oneLineFile
-        );
-        const [
-          ,
-          styleUrl
-        ] = /get\s+styleUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
-          oneLineFile
-        );
+      replace(
+        /extends\s+RHElement\s+{/g,
+        (classStatement, character, jsFile) => {
+          // extract the templateUrl and styleUrl with regex.  Would prefer to do
+          // this by require'ing rh-something.js and asking it directly, but without
+          // node.js support for ES modules, we're stuck with this.
+          const oneLineFile = jsFile
+            .slice(character)
+            .split("\n")
+            .join(" ");
+          const [
+            ,
+            templateUrl
+          ] = /get\s+templateUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
+            oneLineFile
+          );
 
-        const html = fs
-          .readFileSync(path.join("./src", templateUrl))
-          .toString()
-          .trim();
+          let html = fs
+            .readFileSync(path.join("./src", templateUrl))
+            .toString()
+            .trim();
 
-        const cssResult = sass.renderSync({
-          file: path.join("./src", styleUrl)
-        }).css;
+          html = decomment(html);
 
-        return `${classStatement}
+          const [
+            ,
+            styleUrl
+          ] = /get\s+styleUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
+            oneLineFile
+          );
+
+          const styleFilePath = path.join("./src", styleUrl);
+
+          let cssResult = sass.renderSync({
+            file: styleFilePath
+          }).css;
+
+          cssResult = stripCssComments(cssResult).trim();
+
+          return `${classStatement}
   get html() {
     return \`
 <style>
-${stripCssComments(cssResult).trim()}
+${cssResult}
 </style>
-
 ${html}\`;
   }
 `;
-      })
+        }
+      )
     )
     .pipe(gulp.dest("./"));
 });

@@ -9,6 +9,7 @@ const replace = require("gulp-replace");
 const sass = require("gulp-sass");
 const stripCssComments = require("gulp-strip-css-comments");
 const trim = require("gulp-trim");
+const decomment = require("decomment");
 const del = require("del");
 let watcher;
 

@@ -1,0 +1,10 @@
+$rh-global--color-map--copy: (
+    default-paragraph: (
+        dark: $rh-global--text-color--inverted,
+        dark-subtle: $rh-global--text-color--inverted,
+        dark-desaturated: $rh-global--text-color--inverted,
+        light: $rh-global--text-color,
+        subtle: $rh-global--text-color,
+        light-subtle: $rh-global--text-color,
+    )
+);

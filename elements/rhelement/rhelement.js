@@ -1,3 +1,5 @@
+import * as reveal from "./reveal.js";
+
 class RHElement extends HTMLElement {
   static create(rhe) {
     window.customElements.define(rhe.tag, rhe);
@@ -28,5 +30,7 @@ class RHElement extends HTMLElement {
     }
   }
 }
+
+reveal.startTimer();
 
 export default RHElement;

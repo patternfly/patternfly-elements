@@ -1,0 +1,6 @@
+body {
+    transition: opacity 0.18s ease-in-out;
+}
+body[unresolved] {
+    opacity: 0;
+}

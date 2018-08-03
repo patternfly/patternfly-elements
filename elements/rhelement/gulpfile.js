@@ -16,17 +16,25 @@ gulp.task("clean", () => {
 });
 
 gulp.task("compile", () => {
-  return gulp
-    .src(["./*.js", "!./gulpfile.js", "!./*.story.js"])
-    .pipe(replace(/(import ["'].*).(js["'];?)/g, "$1.compiled.$2"))
-    .pipe(babel())
-    .pipe(uglify())
-    .pipe(
-      rename({
-        suffix: ".compiled"
-      })
-    )
-    .pipe(gulp.dest("./"));
+  return (
+    gulp
+      .src(["./*.js", "!./gulpfile.js", "!./*.story.js"])
+      .pipe(
+        replace(
+          /^(import .*?)(['"]\.\.?\/(?!\.\.\/).*)(\.js['"];)$/gm,
+          "$1$2.compiled$3"
+        )
+      )
+      // .pipe(replace(/(import ["'].*).(js["'];?)/g, "$1.compiled.$2"))
+      .pipe(babel())
+      .pipe(uglify())
+      .pipe(
+        rename({
+          suffix: ".compiled"
+        })
+      )
+      .pipe(gulp.dest("./"))
+  );
 });
 
 gulp.task("watch", () => {

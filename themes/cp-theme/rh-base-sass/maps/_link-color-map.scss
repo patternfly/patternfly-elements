@@ -1,0 +1,27 @@
+$rh-global--color-map--link: (
+    default-link: (
+        dark: $rh-global--link-color--inverted,
+        dark-desaturated: $rh-global--text-color--inverted,
+        light: $rh-global--link-color
+    ),
+    default-link-hover: (
+        dark: $rh-global--link-color--inverted--hover,
+        dark-desaturated: $rh-global--color--gray-mercury,
+        light: $rh-global--link-color--hover
+    ),
+    default-link-visited: (
+        dark: $rh-global--link-color--inverted--visited,
+        dark-desaturated: $rh-global--color--gray-stone,
+        light: $rh-global--link-color--visited
+    ),
+    default-link-active: (
+        dark: $rh-global--link-color--inverted--hover,
+        dark-desaturated: $rh-global--color--gray-mercury,
+        light: $rh-global--link-color--hover
+    ),
+    default-link-focus: (
+        dark: $rh-global--link-color--inverted--hover,
+        dark-desaturated: $rh-global--color--gray-mercury,
+        light: $rh-global--link-color--hover
+    )
+);

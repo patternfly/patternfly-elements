@@ -9,11 +9,12 @@ const replace = require("gulp-replace");
 const sass = require("gulp-sass");
 const stripCssComments = require("gulp-strip-css-comments");
 const trim = require("gulp-trim");
+const decomment = require("decomment");
 const del = require("del");
 let watcher;
 
 gulp.task("clean", () => {
-  return del(["./*.compiled.*"]);
+  return del(["./*.umd.*"]);
 });
 
 gulp.task("sass", () => {
@@ -46,7 +47,7 @@ gulp.task("compile", () => {
     .pipe(uglify())
     .pipe(
       rename({
-        suffix: ".compiled"
+        suffix: ".umd"
       })
     )
     .pipe(gulp.dest("./"));

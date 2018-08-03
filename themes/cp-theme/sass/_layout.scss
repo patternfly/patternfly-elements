@@ -1,0 +1,40 @@
+// ============================================================================
+// Note: There should be no direct HEX or other values in this file.
+// Please reference CP-SASS variables.
+// ============================================================================
+//
+// Global vars are named:
+// `$rh-global--concept--PropertyTitleCase--modifier--state`
+// For example:
+// * $rh-global--color--primary
+// * $rh-global--FontSize
+// * --rhe-theme--FontSize--heading--xs
+
+// Component/Element vars are named:
+// `$rh-c-block__element--modifier--state--PropertyTitleCase`
+// For example:
+// * --rh-dropdown--heading--FontSize
+// * --cp-accordion--heading--FontSize
+
+:root {
+  /* GRID BREAKPOINTS */
+  --rhe-theme--grid-breakpoint--xs:       $rh-global--grid-breakpoint--xs;
+  --rhe-theme--grid-breakpoint--sm:       $rh-global--grid-breakpoint--sm;
+  --rhe-theme--grid-breakpoint--md:       $rh-global--grid-breakpoint--md;
+  --rhe-theme--grid-breakpoint--lg:       $rh-global--grid-breakpoint--lg;
+  --rhe-theme--grid-breakpoint--xl:       $rh-global--grid-breakpoint--xl;
+
+  --rhe-theme--grid-breakpoint--xs--max:  $rh-global--grid-breakpoint--xs--max;
+  --rhe-theme--grid-breakpoint--sm--max:  $rh-global--grid-breakpoint--sm--max;
+  --rhe-theme--grid-breakpoint--md--max:  $rh-global--grid-breakpoint--md--max;
+  --rhe-theme--grid-breakpoint--lg--max:  $rh-global--grid-breakpoint--lg--max;
+
+  /* SPACERS / GUTTERS */
+  --rhe-theme--spacer--xs:                $rh-global--spacer--xs;
+  --rhe-theme--spacer--sm:                $rh-global--spacer--sm;
+  --rhe-theme--spacer:                    $rh-global--spacer; // base
+  --rhe-theme--spacer--md:                $rh-global--spacer--md;
+  --rhe-theme--spacer--lg:                $rh-global--spacer--lg;
+  --rhe-theme--spacer--xl:                $rh-global--spacer--xl;
+  --rhe-theme--spacer--xxl:               $rh-global--spacer--xxl;
+}

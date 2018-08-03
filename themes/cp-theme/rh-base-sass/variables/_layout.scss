@@ -1,0 +1,42 @@
+//
+// Layout-based vars
+//
+
+$rh-global--space-size-root: $rh-global--font-size-root !default; // for spaces
+
+// ========================================================================
+// Grid Breakpoints
+// ========================================================================
+
+$rh-global--grid-breakpoint--xs: 0 !default;
+$rh-global--grid-breakpoint--sm: 576px !default;
+$rh-global--grid-breakpoint--md: 768px !default;
+$rh-global--grid-breakpoint--lg: 992px !default;
+$rh-global--grid-breakpoint--xl: 1200px !default;
+
+$rh-global--grid-breakpoints: (
+  xs: $rh-global--grid-breakpoint--xs,
+  sm: $rh-global--grid-breakpoint--sm,
+  md: $rh-global--grid-breakpoint--md,
+  lg: $rh-global--grid-breakpoint--lg,
+  xl: $rh-global--grid-breakpoint--xl
+) !default;
+
+$rh-global--grid-breakpoint--xs--max: $rh-global--grid-breakpoint--sm - 1 !default;
+$rh-global--grid-breakpoint--sm--max: $rh-global--grid-breakpoint--md - 1 !default;
+$rh-global--grid-breakpoint--md--max: $rh-global--grid-breakpoint--lg - 1 !default;
+$rh-global--grid-breakpoint--lg--max: $rh-global--grid-breakpoint--xl - 1 !default;
+
+
+// ========================================================================
+// Spacers / Gutters
+// ========================================================================
+
+// Factors of 1em or 16px;
+$rh-global--spacer--xs:     rh-size-prem(4px) !default;
+$rh-global--spacer--sm:     rh-size-prem(8px) !default;
+$rh-global--spacer:         rh-size-prem(16px) !default; // base
+$rh-global--spacer--md:     rh-size-prem(24px) !default;
+$rh-global--spacer--lg:     rh-size-prem(32px) !default;
+$rh-global--spacer--xl:     rh-size-prem(48px) !default;
+$rh-global--spacer--xxl:    rh-size-prem(64px) !default;

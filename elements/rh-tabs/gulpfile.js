@@ -7,6 +7,7 @@ const rename = require("gulp-rename");
 const replace = require("gulp-replace");
 const stripCssComments = require("strip-css-comments");
 const trim = require("trim");
+const decomment = require("decomment");
 const sass = require("node-sass");
 
 gulp.task("compile", () => {
@@ -15,14 +16,14 @@ gulp.task("compile", () => {
     .pipe(
       replace(
         /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)(\.js['"];)$/gm,
-        "$1$2.compiled$3"
+        "$1$2.umd$3"
       )
     )
     .pipe(babel())
     .pipe(uglify())
     .pipe(
       rename({
-        suffix: ".compiled"
+        suffix: ".umd"
       })
     )
     .pipe(gulp.dest("./"));
@@ -59,20 +60,24 @@ gulp.task("merge", () => {
             oneLineFile
           );
 
-          const html = fs
+          let html = fs
             .readFileSync(path.join("./src", templateUrl))
             .toString()
             .trim();
 
-          const cssResult = sass.renderSync({
+          html = decomment(html);
+
+          let cssResult = sass.renderSync({
             file: path.join("./src", styleUrl)
           }).css;
+
+          cssResult = stripCssComments(cssResult).trim();
 
           return `${classStatement}
   get html() {
     return \`
 <style>
-${stripCssComments(cssResult).trim()}
+${cssResult}
 </style>
 
 ${html}\`;

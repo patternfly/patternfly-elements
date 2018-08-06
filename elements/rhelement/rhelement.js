@@ -25,10 +25,27 @@ class RHElement extends HTMLElement {
     window.customElements.define(rhe.tag, rhe);
   }
 
-  constructor(tag) {
+  static get RhTypes() {
+    return {
+      Container: "container",
+      Content: "content",
+      Pattern: "pattern"
+    };
+  }
+
+  get rhType() {
+    return this.getAttribute("rh-type");
+  }
+
+  set rhType(value) {
+    this.setAttribute("rh-type", value);
+  }
+
+  constructor(tag, type) {
     super();
 
     this.tag = tag;
+    this._queue = [];
 
     this.template = document.createElement("template");
     this.template.innerHTML = this.html;
@@ -42,12 +59,42 @@ class RHElement extends HTMLElement {
     if (this.html) {
       this.shadowRoot.appendChild(this.template.content.cloneNode(true));
     }
+
+    if (type) {
+      this._queueAction({
+        type: "setProperty",
+        data: {
+          name: "rhType",
+          value: type
+        }
+      });
+    }
   }
 
   connectedCallback() {
     if (window.ShadyCSS) {
       ShadyCSS.styleElement(this);
     }
+
+    if (this._queue.length) {
+      this._processQueue();
+    }
+  }
+
+  _queueAction(action) {
+    this._queue.push(action);
+  }
+
+  _processQueue() {
+    this._queue.forEach(action => {
+      this[`_${action.type}`](action.data);
+    });
+
+    this._queue = [];
+  }
+
+  _setProperty({ name, value }) {
+    this[name] = value;
   }
 }
 

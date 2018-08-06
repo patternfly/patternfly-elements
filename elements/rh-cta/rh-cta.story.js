@@ -13,7 +13,6 @@ stories.add("rh-cta", () => {
     ghost: "Ghost"
   };
 
-  const groupId = "number1";
   const defaultValue = "Solid";
 
   const value = select(type, options, defaultValue);

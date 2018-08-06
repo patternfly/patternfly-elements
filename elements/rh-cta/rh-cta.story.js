@@ -1,21 +1,30 @@
 import { storiesOf } from "@storybook/polymer";
+import { withKnobs, text, select } from "@storybook/addon-knobs/polymer";
 import "./rh-cta";
 
-storiesOf("Call To Action", module).add(
-  "rh-cta",
-  () => `
-    <p>
-      <rh-cta class="solid"><a href="#">Become a Member</a></rh-cta>
-      <rh-cta class="outlined"><a href="#">Sign Up</a></rh-cta>
-      <rh-cta class="ghost"><a href="#">More info</a></rh-cta>
-    </p>
+const stories = storiesOf("Call To Action", module);
+stories.addDecorator(withKnobs);
 
-    <p>
-      <rh-cta><a href="#">Learn more</a></rh-cta>
-    </p>
+stories.add("rh-cta", () => {
+  const type = "Type";
+  const options = {
+    solid: "Solid",
+    outlined: "Outlined",
+    ghost: "Ghost"
+  };
 
-    <p>
-      <rh-cta class="ghost"><a href="#">More info</a></rh-cta><rh-cta class="solid"><a href="#">Become a Member</a></rh-cta>
-    </p>
-  `
-);
+  const groupId = "number1";
+  const defaultValue = "Solid";
+
+  const value = select(type, options, defaultValue);
+
+  return `
+  <p>
+    <rh-cta><a href="#">Become a Member</a></rh-cta>
+  </p>
+  <p>
+    <rh-cta class="rh--${value}"><a href="#">Become a Member</a></rh-cta>
+  </p>
+
+  `;
+});

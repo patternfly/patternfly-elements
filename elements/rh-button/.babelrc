@@ -1,5 +1,14 @@
 {
-  "presets": [
-    ["env", { "modules": "umd" }]
-  ]
+  "presets": [["env", { "modules": "umd" }]],
+  "plugins": [
+    [
+      "transform-es2015-modules-umd",
+      {
+        "globals": {
+          "rhelement.compiled": "rhelementRRRRRRR"
+        }
+      }
+    ]
+  ],
+  "moduleId": "rhelements/rh-button"
 }

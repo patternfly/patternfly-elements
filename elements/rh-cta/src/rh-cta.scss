@@ -1,155 +1,268 @@
 @import "../../rh-sass/rh-sass";
 
-// Mixins / helpers
-@mixin make-default-cta($color: $rh-global--link-color) {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: $color;
-  text-decoration: underline;
-}
+// Shim for theme changes
+$rh-global--cta--BorderRadius: 5em !default; //$rh-global--border--BorderRadius !default;
 
-@mixin make-cta-arrow($arrow-color: $rh-global--link-color) {
-  margin-left: var(--rhe-theme--spacer--xs, $rh-global--spacer--xs);
-  vertical-align: middle;
-  @include rh-arrow(right, $arrow-color, 0.313em, 0.313em, true);
-  position: relative; // temp
-  display: inline-block; // temp
-}
+// Specific SASS vars that won't be themeable (at least for now)
+$rh-cta__arrow-size: 0.313em; // Was ~5px at 16px
 
-@mixin make-default-cta-color($color-name: white, $color: $rh-global-color--white) {
-  @at-root :host(.#{$color-name}) {
-    & ::slotted(a) {
-      @include make-default-cta($color);
-
-      &::after {
-        @include make-cta-arrow($color);
-      }
-    }
-  }
-}
-
-@mixin make-button-cta() {
-  & ::slotted(a) {
-    padding: var(--rhe-theme--spacer--sm, $rh-global--spacer--sm) var(--rhe-theme--spacer--md, $rh-global--spacer--md);
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: var(--rhe-theme--FontWeight--semi-bold, $rh-global--FontWeight--semi-bold);
-    font-size: 0.875em;
+@mixin make-default-cta-state($this-name: "hover", $this-color: var(--rh-cta--link-color--hover)) {
+  & ::slotted(a:#{$this-name}) {
+    color: $this-color;
 
     &::after {
-      content: none;
-      display: none;
+      @include rh-arrow-color($this-color);
     }
   }
 }
-
-@mixin make-button-cta-color(
-        $bg-color: $rh-global--color--gray-mercury, $color: $rh-global--color--black, $border-color: transparent,
-        $bg-color-visited: $rh-global--color--gray-mercury, $color-visited: $rh-global--color--black, $border-color-visited: transparent,
-        $bg-color-hover: $rh-global--color--gray-mercury, $color-hover: $rh-global--color--black, $border-color-hover: transparent,
-        $bg-color-focus: $rh-global--color--gray-mercury, $color-focus: $rh-global--color--black, $border-color-focus: transparent
-      ) {
-
-  & ::slotted(a) {
-    background: $bg-color;
-    color: $color;
-    border: 1px solid $border-color;
-  }
-
-  & ::slotted(a:visited) {
-    background: $bg-color-visited;
-    color: $color-visited;
-    border-color: $border-color-visited;
-  }
-
-  & ::slotted(a:hover) {
-    background: $bg-color-hover;
-    color: $color-hover;
-    border-color: $border-color-hover;
-  }
-
-  & ::slotted(a:focus) {
-    background: $bg-color-focus;
-    color: $color-focus;
-    border-color: $border-color-focus;
-  }
-}
-
 
 :host {
   display: inline-block;
 
-  // Default, "link" style
+  --rh-cta__arrow--spacing: var(--rh-theme--cta__arrow--spacing, var(--rh-theme--spacing--xxs, #{$rh-global--spacer--xxs}));
+  --rh-cta--link-color: var(--rh-theme--cta--link-color, var(--rh-theme--link-color, #{$rh-global--link-color}));
+  --rh-cta--link-color--visited: var(--rh-theme--cta--link-color--visited, var(--rh-theme--link-color--visited, #{$rh-global--link-color--visited}));
+  --rh-cta--link-color--hover: var(--rh-theme--cta--link-color--hover, var(--rh-theme--link-color--hover, #{$rh-global--link-color--hover}));
+  --rh-cta--link-color--focus: var(--rh-theme--cta--link-color--focus, var(--rh-theme--link-color--focus, #{$rh-global--link-color--focus}));
+
+  // CTA Default
   & ::slotted(a) {
-    @include make-default-cta(var(--rhe-theme--link-color, $rh-global--link-color));
+    color: var(--rh-cta--link-color);
 
     &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color, $rh-global--link-color));
+      margin-left: var(--rh-cta__arrow--spacing);
+      vertical-align: middle;
+      @include rh-arrow(right, var(--rh-cta--link-color), $rh-cta__arrow-size, $rh-cta__arrow-size, true);
     }
   }
 
-  & ::slotted(a:visited) {
-    @include make-default-cta(var(--rhe-theme--link-color--visited, $rh-global--link-color--visited));
+  // CTA Default Visited
+  @include make-default-cta-state("visited", var(--rh-cta--link-color--visited));
+  // CTA Default Hover
+  @include make-default-cta-state("hover", var(--rh-cta--link-color--hover));
+  // CTA Default Focus
+  @include make-default-cta-state("focus", var(--rh-cta--link-color--focus));
+}
+
+:host([inverted]) {
+  --rh-cta--link-color--inverted: var(--rh-theme--cta--link-color--inverted, var(--rh-theme--link-color--inverted, #{$rh-global--link-color--inverted}));
+  --rh-cta--link-color--inverted--visited: var(--rh-theme--cta--link-color--inverted--visited, var(--rh-theme--link-color--inverted--visited, #{$rh-global--link-color--inverted--visited}));
+  --rh-cta--link-color--inverted--hover: var(--rh-theme--cta--link-color--inverted--hover, var(--rh-theme--link-color--inverted--hover, #{$rh-global--link-color--inverted--hover}));
+  --rh-cta--link-color--inverted--focus: var(--rh-theme--cta--link-color--inverted--focus, var(--rh-theme--link-color--inverted--focus, #{$rh-global--link-color--inverted--focus}));
+
+  // CTA Default Inverted
+  & ::slotted(a) {
+    color: var(--rh-cta--link-color--inverted);
 
     &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color--visited, $rh-global--link-color--visited));
+      @include rh-arrow(right, var(--rh-cta--link-color--inverted), $rh-cta__arrow-size, $rh-cta__arrow-size, true);
     }
   }
 
-  & ::slotted(a:hover) {
-    @include make-default-cta(var(--rhe-theme--link-color--hover, $rh-global--link-color--hover));
+  // CTA Default Visited
+  @include make-default-cta-state("visited", var(--rh-cta--link-color--inverted--visited));
+  // CTA Default Hover
+  @include make-default-cta-state("hover", var(--rh-cta--link-color--inverted--hover));
+  // CTA Default Focus
+  @include make-default-cta-state("focus", var(--rh-cta--link-color--inverted--focus));
+}
+
+// CTA Default Color Mixin
+@mixin make-default-cta-variation(
+    $this-selector: ".primary",
+    $this-name: "--primary",
+    $this-color: $rh-global--link-color,
+    $this-color-hover: $rh-global--link-color--hover,
+    $this-color-focus: $rh-global--link-color--focus,
+    $this-color-visited: $rh-global--link-color--visited,
+    $this-modifier: ""
+  ) {
+
+  :host(#{$this-selector}) {
+
+    --rh-cta#{$this-name}-link-color#{$this-modifier}: var(--rh-theme--cta#{$this-name}-link-color#{$this-modifier}, var(--rh-theme#{$this-name}-link-color#{$this-modifier}, #{$this-color}));
+    --rh-cta#{$this-name}-link-color#{$this-modifier}--visited: var(--rh-theme--cta#{$this-name}-link-color#{$this-modifier}--visited, var(--rh-theme#{$this-name}-link-color#{$this-modifier}--visited, #{$this-color-visited}));
+    --rh-cta#{$this-name}-link-color#{$this-modifier}--hover: var(--rh-theme--cta#{$this-name}-link-color#{$this-modifier}--hover, var(--rh-theme#{$this-name}-link-color#{$this-modifier}--hover, #{$this-color-hover}));
+    --rh-cta#{$this-name}-link-color#{$this-modifier}--focus: var(--rh-theme--cta#{$this-name}-link-color#{$this-modifier}--focus, var(--rh-theme#{$this-name}-link-color#{$this-modifier}--focus, #{$this-color-focus}));
+
+    & ::slotted(a) {
+      color: var(--rh-cta#{$this-name}-link-color#{$this-modifier});
+
+      &::after {
+        @include rh-arrow-color(var(--rh-cta#{$this-name}-link-color#{$this-modifier}));
+      }
+    }
+
+    & ::slotted(a[color]) {
+      color: $this-color-visited;
+    }
+
+    // CTA Default Visited
+    @include make-default-cta-state("visited", var(--rh-cta#{$this-name}-link-color#{$this-modifier}--visited));
+    // CTA Default Hover
+    @include make-default-cta-state("hover", var(--rh-cta#{$this-name}-link-color#{$this-modifier}--hover));
+    // CTA Default Focus
+    @include make-default-cta-state("focus", var(--rh-cta#{$this-name}-link-color#{$this-modifier}--focus));
+  }
+}
+
+// CTA Default Primary = Default
+// CTA Default Secondary
+@include make-default-cta-variation(".secondary", "--secondary", $rh-global--color--gray-iron, darken($rh-global--color--gray-iron, 10%), darken($rh-global--color--gray-iron, 10%), $rh-global--color--gray-iron);
+// CTA Default Accent
+@include make-default-cta-variation(".accent", "--accent", $rh-global--color--red, darken($rh-global--color--red, 10%), darken($rh-global--color--red, 10%), $rh-global--color--red);
+
+// CTA Default Inverted Primary = Default
+@include make-default-cta-variation("[inverted]", "", $rh-global--link-color--inverted, $rh-global--link-color--inverted--hover, $rh-global--link-color--inverted--focus, $rh-global--link-color--inverted--visited, "--inverted");
+// CTA Default Inverted Secondary
+@include make-default-cta-variation("[inverted].secondary", "--secondary", $rh-global--color--white, darken($rh-global--color--white, 10%), darken($rh-global--color--white, 10%), $rh-global--color--white, "--inverted");
+// CTA Default Inverted Accent
+@include make-default-cta-variation("[inverted].accent", "--accent", lighten($rh-global--color--red, 10%), $rh-global--color--red, $rh-global--color--red, lighten($rh-global--color--red, 10%), "--inverted");
+
+
+
+
+// CTA Solid Default Mixin
+@mixin make-solid-cta-default(
+    $this-bg-color: var(--rh-cta--default-color--solid),
+    $this-text-color: var(--rh-cta--default-text-color--solid),
+    $this-flag: ""
+  ) {
+
+  background: $this-bg-color#{$this-flag};
+  color: $this-text-color#{$this-flag};
+}
+
+// CTA Solid
+:host([solid]) {
+
+  --rh-cta--solid--padding-y: var(--rh-theme--cta--solid--padding-y, var(--rh-theme--spacing--xs, #{$rh-global--spacer--xs}));
+  --rh-cta--solid--padding-x: var(--rh-theme--cta--solid--padding-x, var(--rh-theme--spacing--lg, #{$rh-global--spacer--lg}));
+  --rh-cta--solid--BorderRadius: var(--rh-theme--cta--solid--BorderRadius, var(--rh-theme--cta--BorderRadius, #{$rh-global--cta--BorderRadius}));
+  --rh-cta--solid--BorderWidth: var(--rh-theme--cta--solid--BorderWidth, var(--rh-theme--cta--BorderWidth, #{$rh-global--border--BorderWidth}));
+
+  --rh-cta--default-color--solid: var(--rh-theme--cta--default-color--solid, var(--rh-theme--default-color, #{$rh-global--color--gray-batman}));
+  --rh-cta--default-text-color--solid: var(--rh-theme--cta--default-text-color--solid, var(--rh-theme--default-text-color, #{$rh-global--color--white}));
+  --rh-cta--default-color--solid--hover: var(--rh-theme--cta--default-color--solid--hover, var(--rh-theme--default-color--hover, #{darken($rh-global--color--gray-batman, 10%)}));
+  --rh-cta--default-text-color--solid--hover: var(--rh-theme--cta--default-text-color--solid--hover, var(--rh-theme--default-text-color--hover, #{$rh-global--color--white}));
+
+  & ::slotted(a) {
+
+    display: inline-block;
+    padding: var(--rh-cta--solid--padding-y) var(--rh-cta--solid--padding-x);
+    text-decoration: none;
+    border: var(--rh-cta--solid--BorderWidth) solid transparent;
+    border-radius: var(--rh-cta--solid--BorderRadius);
+    transition: all 250ms $rh-global--animation-timing;
+    @include make-solid-cta-default();
 
     &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color--hover, $rh-global--link-color--hover));
+      display: none;
     }
   }
 
+  & ::slotted(a:hover),
   & ::slotted(a:focus) {
-    @include make-default-cta(var(--rhe-theme--link-color--focus, $rh-global--link-color--focus));
+    @include make-solid-cta-default(var(--rh-cta--default-color--solid--hover), var(--rh-cta--default-text-color--solid--hover), " !important");
+  }
+}
 
-    &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color--focus, $rh-global--link-color--focus));
+// CTA Solid Color Mixin
+@mixin make-solid-cta-variation(
+    $this-selector: ".primary",
+    $this-name: "--primary",
+    $this-bg-color: $rh-global--color--blue-azure,
+    $this-text-color: $rh-global--color--white,
+    $this-bg-color-hover: darken($rh-global--color--blue-azure, 10%),
+    $this-text-color-hover: $rh-global--color--white,
+    $this-modifier: ""
+  ) {
+
+  :host([solid]#{$this-selector}) {
+
+    @if $this-modifier == '--inverted' {
+      --rh-cta#{$this-name}-color#{$this-modifier}--solid: var(--rh-theme--cta#{$this-name}-text-color#{$this-modifier}--solid, var(--rh-theme#{$this-name}-text-color, #{$this-text-color}));
+      --rh-cta#{$this-name}-text-color#{$this-modifier}--solid: var(--rh-theme--cta#{$this-name}-color#{$this-modifier}--solid, var(--rh-theme#{$this-name}-color, #{$this-bg-color}));
+      --rh-cta#{$this-name}-color#{$this-modifier}--solid--hover: var(--rh-theme--cta#{$this-name}-text-color#{$this-modifier}--solid--hover, var(--rh-theme#{$this-name}-text-color--hover, #{$this-text-color-hover}));
+      --rh-cta#{$this-name}-text-color#{$this-modifier}--solid--hover: var(--rh-theme--cta#{$this-name}-color#{$this-modifier}--solid--hover, var(--rh-theme#{$this-name}-color--hover, #{$this-bg-color-hover}));
+    } @else {
+      --rh-cta#{$this-name}-color#{$this-modifier}--solid: var(--rh-theme--cta#{$this-name}-color#{$this-modifier}--solid, var(--rh-theme#{$this-name}-color, #{$this-bg-color}));
+      --rh-cta#{$this-name}-text-color#{$this-modifier}--solid: var(--rh-theme--cta#{$this-name}-text-color#{$this-modifier}--solid, var(--rh-theme#{$this-name}-text-color, #{$this-text-color}));
+      --rh-cta#{$this-name}-color#{$this-modifier}--solid--hover: var(--rh-theme--cta#{$this-name}-color#{$this-modifier}--solid--hover, var(--rh-theme#{$this-name}-color--hover, #{$this-bg-color-hover}));
+      --rh-cta#{$this-name}-text-color#{$this-modifier}--solid--hover: var(--rh-theme--cta#{$this-name}-text-color#{$this-modifier}--solid--hover, var(--rh-theme#{$this-name}-text-color--hover, #{$this-text-color-hover}));
+    }
+
+    & ::slotted(a) {
+      @include make-solid-cta-default(var(--rh-cta#{$this-name}-color#{$this-modifier}--solid), var(--rh-cta#{$this-name}-text-color#{$this-modifier}--solid));
+    }
+
+    & ::slotted(a:hover),
+    & ::slotted(a:focus) {
+      @include make-solid-cta-default(var(--rh-cta#{$this-name}-color#{$this-modifier}--solid--hover), var(--rh-cta#{$this-name}-text-color#{$this-modifier}--solid--hover), " !important");
     }
   }
-
-  // Default, "link" style colors
-  @include make-default-cta-color(white, var(--rhe-theme--link-color--desaturated--inverted, $rh-global--color--white));
-  @include make-default-cta-color(black, var(--rhe-theme--link-color--desaturated, $rh-global--color--black));
-
-
 }
 
-// "Button" styles
-:host([class*="--solid"]),
-:host([class*="--outlined"]),
-:host([class*="--ghost"]) {
-  @include make-button-cta();
+// CTA Solid Primary
+@include make-solid-cta-variation();
+// CTA Solid Secondary
+@include make-solid-cta-variation(".secondary", "--secondary", $rh-global--color--gray-iron, $rh-global--color--white, darken($rh-global--color--gray-iron, 10%), $rh-global--color--white);
+// CTA Solid Accent
+@include make-solid-cta-variation(".accent", "--accent", $rh-global--color--red, $rh-global--color--white, darken($rh-global--color--red, 10%), $rh-global--color--white);
+
+// CTA Solid Default Inverted
+@include make-solid-cta-variation("[inverted]", "", $rh-global--color--gray-iron, $rh-global--color--white, darken($rh-global--color--gray-iron, 10%), darken($rh-global--color--white, 5%), "--inverted");
+// CTA Solid Primary Inverted
+@include make-solid-cta-variation("[inverted].primary", "--primary", $rh-global--color--blue-azure, $rh-global--color--white, darken($rh-global--color--blue-azure, 10%), darken($rh-global--color--white, 5%), "--inverted");
+// CTA Solid Secondary Inverted
+@include make-solid-cta-variation("[inverted].secondary", "--secondary", $rh-global--color--gray-iron, $rh-global--color--white, darken($rh-global--color--gray-iron, 10%), darken($rh-global--color--white, 5%), "--inverted");
+// CTA Solid Accent Inverted
+@include make-solid-cta-variation("[inverted].accent", "--accent", $rh-global--color--red, $rh-global--color--white, darken($rh-global--color--red, 10%), darken($rh-global--color--white, 5%), "--inverted");
+
+
+// CTA Bordered Mixin
+@mixin make-bordered-cta-variation(
+    $this-selector: "",
+    $this-name: "",
+    $this-color: $rh-global--color--gray-batman,
+    $this-color-hover: darken($rh-global--color--gray-batman, 10%)
+  ) {
+
+  :host([bordered][solid]#{$this-selector}) {
+
+    --rh-cta#{$this-name}-border-color: var(--rh-theme--cta#{$this-name}-border-color, var(--rh-theme#{$this-name}-color, #{$this-color}));
+    --rh-cta#{$this-name}-border-color--hover: var(--rh-theme--cta#{$this-name}-border-color--hover, var(--rh-theme#{$this-name}-color--hover, #{$this-color-hover}));
+
+    & ::slotted(a) {
+      border-color: var(--rh-cta#{$this-name}-border-color);
+    }
+
+    & ::slotted(a:hover),
+    & ::slotted(a:focus) {
+      border-color: var(--rh-cta#{$this-name}-border-color--hover);
+    }
+  }
 }
 
-:host([class*="--solid"]) {
-  @include make-button-cta-color(
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent
-  );
-}
+// CTA Solid Default Bordered
+@include make-bordered-cta-variation();
+// CTA Solid Primary Bordered
+@include make-bordered-cta-variation('.primary', '--primary', $rh-global--color--blue-azure, darken($rh-global--color--blue-azure, 10%));
+// CTA Solid Secondary Bordered
+@include make-bordered-cta-variation('.secondary', '--secondary', $rh-global--color--gray-iron, darken($rh-global--color--gray-iron, 10%));
+// CTA Solid Accent Bordered
+@include make-bordered-cta-variation('.accent', '--accent', $rh-global--color--red, darken($rh-global--color--red, 10%));
 
-:host([class*="--outlined"]) {
-  @include make-button-cta-color(
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor)
-  );
-}
 
-:host([class*="--ghost"]) {
-  @include make-button-cta-color(
-    transparent, var(--rhe-theme--link-color, $rh-global--link-color), transparent,
-    transparent, var(--rhe-theme--link-color--visited, $rh-global--link-color--visited), transparent,
-    var(--rhe-theme--bg-color--shade2, $rh-global--color--gray-platinum), var(--rhe-theme--link-color--hover, $rh-global--link-color--hover), transparent,
-    var(--rhe-theme--bg-color--shade2, $rh-global--color--gray-platinum), var(--rhe-theme--link-color--focus, $rh-global--link-color--focus), transparent
-  );
+
+// CTA Unfilled
+:host([unfilled]) {
+  & ::slotted(a) {
+    background: transparent !important;
+  }
+
+  & ::slotted(a:hover),
+  & ::slotted(a:focus) {
+    // background: transparent !important;
+  }
 }

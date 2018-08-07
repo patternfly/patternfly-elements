@@ -68,6 +68,10 @@
   }
 }
 
+@mixin rh-arrow-color($color) {
+  border-top-color: $color;
+}
+
 @mixin rh-print-media {
   @media print {
     @content;

@@ -1,0 +1,228 @@
+
+// ============================================================================
+// Note: There should be no direct HEX or other values in this file.
+// Please reference CP-SASS variables.
+// ============================================================================
+
+
+:root {
+  /*
+  // ========================================================================
+  //  THEME BASE PALETTE COLORS
+  // ========================================================================
+  */
+  --rhe-theme--color--white:                $rh-global--color--white;
+  --rhe-theme--color--black:                $rh-global--color--black;
+
+  /* PRIMARY SHADES */
+  --rhe-theme--color--primary:              $rh-global--color--red;
+  --rhe-theme--color--primary-shade2:       $rh-global--color--red-brick;
+  --rhe-theme--color--primary-shade3:       $rh-global--color--red-maroon;
+  --rhe-theme--color--primary-shade4:       $rh-global--color--red-garnet;
+  --rhe-theme--color--primary-shade5:       $rh-global--color--red-morello;
+  --rhe-theme--color--primary-shade6:       $rh-global--color--red-red-wine;
+  --rhe-theme--color--primary-shade7:       $rh-global--color--red-daredevil;
+  /* SECONDARY SHADES */
+  --rhe-theme--color--secondary:            $rh-global--color--gray-platinum;
+  --rhe-theme--color--secondary-shade2:     $rh-global--color--gray-gainsboro;
+  --rhe-theme--color--secondary-shade3:     $rh-global--color--gray-silver;
+  --rhe-theme--color--secondary-shade4:     $rh-global--color--gray-battleship;
+  --rhe-theme--color--secondary-shade5:     $rh-global--color--gray-batman;
+  --rhe-theme--color--secondary-shade6:     $rh-global--color--gray-umbra;
+  --rhe-theme--color--secondary-shade7:     $rh-global--color--gray-space;
+
+
+  /* PALETTE GRAYS */ // 50s account for slight variants that are off gradient, if necessary.
+  --rhe-theme--color--gray-100:             $rh-global--color--gray-moon;
+  --rhe-theme--color--gray-150:             $rh-global--color--gray-nimbus;
+  --rhe-theme--color--gray-200:             $rh-global--color--gray-platinum;
+  // missing, consider dulplicating previous for half-step.
+  --rhe-theme--color--gray-250:             $rh-global--color--gray-gainsboro;
+  --rhe-theme--color--gray-300:             $rh-global--color--gray-mercury;
+  // missing, consider dulplicating previous for half-step.
+  --rhe-theme--color--gray-400:             $rh-global--color--gray-fog;
+  --rhe-theme--color--gray-450:             $rh-global--color--gray-silver;
+  --rhe-theme--color--gray-500:             $rh-global--color--gray-stone;
+  // missing, consider dulplicating previous for half-step.
+  --rhe-theme--color--gray-600:             $rh-global--color--gray-storm;
+  // missing, consider dulplicating previous for half-step.
+  --rhe-theme--color--gray-700:             $rh-global--color--gray-battleship;
+  --rhe-theme--color--gray-750:             $rh-global--color--gray-nickel; // $rh-global--color--product-lines--support
+  --rhe-theme--color--gray-800:             $rh-global--color--gray-batman;
+  // missing, consider dulplicating previous for half-step.
+  --rhe-theme--color--gray-900:             $rh-global--color--gray-umbra;
+  --rhe-theme--color--gray-950:             $rh-global--color--gray-space;
+  --rhe-theme--color--gray-1000:            $rh-global--color--gray-iron;
+  --rhe-theme--color--gray-1050:            $rh-global--color--gray-charcoal; // $rh-global--color--product-lines--support--dark
+  --rhe-theme--color--gray-1100:            $rh-global--color--gray-night;
+  --rhe-theme--color--gray-1150:            $rh-global--color--black-soft; // $rh-global--color--product-lines--default
+  --rhe-theme--color--gray-1200:            $rh-global--color--black-nero;
+
+  /*
+  // ========================================================================
+  //  THEME RAINBOW PALETTE COLORS
+  // ========================================================================
+  */
+  /* PALETTE REDS */
+  --rhe-theme--color--red-100:              $rh-global--color--red;
+  --rhe-theme--color--red-200:              $rh-global--color--red-brick;
+  --rhe-theme--color--red-300:              $rh-global--color--red-maroon;
+  --rhe-theme--color--red-400:              $rh-global--color--red-garnet;
+  --rhe-theme--color--red-500:              $rh-global--color--red-morello;
+  --rhe-theme--color--red-600:              $rh-global--color--red-red-wine;
+  --rhe-theme--color--red-700:              $rh-global--color--red-daredevil;
+  /* PALETTE ORANGES */
+  --rhe-theme--color--orange-100:           $pf-color-orange-100;
+  --rhe-theme--color--orange-200:           $pf-color-orange-200;
+  --rhe-theme--color--orange-300:           $pf-color-orange-300;
+  --rhe-theme--color--orange-400:           $rh-global--color--orange;     // Brand. + $rh-global--color--product-lines--storage--dark
+  --rhe-theme--color--orange-500:           $pf-color-orange-500;
+  --rhe-theme--color--orange-600:           $pf-color-orange-600;
+  --rhe-theme--color--orange-700:           $pf-color-orange-700;
+  /* PALETTE GOLDS */
+  --rhe-theme--color--gold-100:             $pf-color-gold-100;
+  --rhe-theme--color--gold-200:             $pf-color-gold-200;
+  --rhe-theme--color--gold-300:             $pf-color-gold-300;
+  --rhe-theme--color--gold-400:             $rh-global--color--gold;       // Brand. + $rh-global--color--product-lines--storage
+  --rhe-theme--color--gold-500:             $pf-color-gold-500;
+  --rhe-theme--color--gold-600:             $pf-color-gold-600;
+  --rhe-theme--color--gold-700:             $pf-color-gold-700;
+  /* PALETTE LIGHT GREENS */
+  --rhe-theme--color--light-green-100:      $pf-color-light-green-100;
+  --rhe-theme--color--light-green-200:      $pf-color-light-green-200;
+  --rhe-theme--color--light-green-300:      $pf-color-light-green-300;
+  --rhe-theme--color--light-green-400:      $rh-global--color--green;      // Brand. + $rh-global--color--product-lines--app-dev
+  --rhe-theme--color--light-green-500:      $pf-color-light-green-500;
+  --rhe-theme--color--light-green-600:      $pf-color-light-green-600;
+  --rhe-theme--color--light-green-700:      $pf-color-light-green-700;
+  /* PALETTE GREENS */
+  --rhe-theme--color--green-100:            $pf-color-green-100;
+  --rhe-theme--color--green-200:            $pf-color-green-200;
+  --rhe-theme--color--green-300:            $pf-color-green-300;
+  --rhe-theme--color--green-400:            $rh-global--color--green-verde; // Brand. + $rh-global--color--product-lines--app-dev--dark
+  --rhe-theme--color--green-500:            $pf-color-green-500;
+  --rhe-theme--color--green-600:            $pf-color-green-600;
+  --rhe-theme--color--green-700:            $pf-color-green-700;
+  /* PALETTE TEALS */
+  --rhe-theme--color--teal-100:             $pf-color-cyan-100;
+  --rhe-theme--color--teal-200:             $pf-color-cyan-200;
+  --rhe-theme--color--teal-300:             $pf-color-cyan-300;
+  --rhe-theme--color--teal-400:             $rh-global--color--teal;         // Brand
+  --rhe-theme--color--teal-500:             $pf-color-cyan-500;
+  --rhe-theme--color--teal-600:             $rh-global--color--teal-dark;    // Brand, but consider changing to $pf-color-blue-600?
+  --rhe-theme--color--teal-700:             $rh-global--color--blue-rain;
+  /* PALETTE LIGHT BLUES */
+  --rhe-theme--color--light-blue-100:       $rh-global--color--blue-sky;
+  --rhe-theme--color--light-blue-200:       $pf-color-light-blue-200;
+  --rhe-theme--color--light-blue-300:       $pf-color-light-blue-300;
+  --rhe-theme--color--light-blue-400:       $rh-global--color--blue-sky-deep; // Brand. + $rh-global--color--product-lines--infrastructure
+  --rhe-theme--color--light-blue-500:       $pf-color-light-blue-500;
+  --rhe-theme--color--light-blue-600:       $pf-color-light-blue-600;
+  --rhe-theme--color--light-blue-700:       $pf-color-light-blue-700;
+  /* PALETTE BLUES */
+  --rhe-theme--color--blue-100:             $pf-color-blue-100;
+  --rhe-theme--color--blue-200:             $rh-global--color--blue-maya;
+  --rhe-theme--color--blue-300:             $rh-global--color--blue-dodger;
+  --rhe-theme--color--blue-350:             $rh-global--color--blue-sky-deep;
+  --rhe-theme--color--blue-400:             $rh-global--color--blue-peacock; // Brand. + $rh-global--color--product-lines--infrastructure--dark
+  --rhe-theme--color--blue-500:             $rh-global--color--blue-azure;
+  --rhe-theme--color--blue-600:             $rh-global--color--blue-denim;   // RHUXWG, but consider changing to $pf-color-blue-500?
+  --rhe-theme--color--blue-700:             $rh-global--color--blue-navy;
+  /* PALETTE PURPLES */
+  --rhe-theme--color--purple-100:            $pf-color-purple-100;
+  --rhe-theme--color--purple-200:            $pf-color-purple-200;
+  --rhe-theme--color--purple-300:            $rh-global--color--purple-amethyst;
+  --rhe-theme--color--purple-400:            $rh-global--color--purple;
+  --rhe-theme--color--purple-500:            $pf-color-purple-500;
+  --rhe-theme--color--purple-600:            $rh-global--color--purple-rain; // CP & Old Brand, but consider changing to $pf-color-purple-600;
+  --rhe-theme--color--purple-700:            $pf-color-purple-700;
+
+  /*
+  // ========================================================================
+  //  UI COLORS
+  // ========================================================================
+  */
+  /* BACKGROUND SHADES */
+  --rhe-theme--bg-color:                         $rh-global--color--white;
+  --rhe-theme--bg-color--shade2:                 $rh-global--color--gray-platinum;
+  --rhe-theme--bg-color--shade3:                 $rh-global--color--gray-mercury;
+  --rhe-theme--bg-color--shade4:                 $rh-global--color--gray-silver;
+  --rhe-theme--bg-color--shade5:                 $rh-global--color--gray-storm;
+  --rhe-theme--bg-color--shade6:                 $rh-global--color--gray-night;
+  --rhe-theme--bg-color--shade7:                 $rh-global--color--black-soft;
+  /* TEXT COLOR FOR EACH BG SHADE */
+  --rhe-theme--text-color:                       $rh-global--color--gray-night;
+  --rhe-theme--text-color--shade2:               $rh-global--color--gray-night;
+  --rhe-theme--text-color--shade3:               $rh-global--color--black;
+  --rhe-theme--text-color--shade4:               $rh-global--color--black;
+  --rhe-theme--text-color--shade5:               $rh-global--color--white;
+  --rhe-theme--text-color--shade6:               $rh-global--color--white;
+  --rhe-theme--text-color--shade7:               $rh-global--color--white;
+  --rhe-theme--text-color--inverted:             $rh-global--color--white; // Purely "inverted"
+
+  /* Text links on _white_ or _light_ backgrounds */
+  --rhe-theme--link-color:                       $rh-global--color--blue-denim;
+  --rhe-theme--link-color--hover:                $rh-global--color--blue-navy;
+  --rhe-theme--link-color--focus:                $rh-global--color--blue-navy;
+  --rhe-theme--link-color--active:               $rh-global--color--blue-navy;
+  --rhe-theme--link-color--visited:              $rh-global--color--purple;
+  /* Text links on _dark grey_ or _black_ backgrounds */
+  --rhe-theme--link-color--inverted:             $rh-global--color--blue-maya;
+  --rhe-theme--link-color--inverted--hover:      $rh-global--color--blue-dodger;
+  --rhe-theme--link-color--inverted--focus:      $rh-global--color--blue-dodger;
+  --rhe-theme--link-color--inverted--active:     $rh-global--color--blue-dodger;
+  --rhe-theme--link-color--inverted--visited:    $rh-global--color--purple-amethyst;
+  /* Desaturate text links */
+  --rhe-theme--link-color--desaturated:          $rh-global--color--gray-night;
+  --rhe-theme--link-color--desaturated--hover:   $rh-global--color--black;
+  --rhe-theme--link-color--desaturated--focus:   $rh-global--color--black;
+  --rhe-theme--link-color--desaturated--active:  $rh-global--color--black;
+  --rhe-theme--link-color--desaturated--visited: $rh-global--color--black;
+  /* Desaturate text links */
+  --rhe-theme--link-color--desaturated--inverted:          $rh-global--color--white;
+  --rhe-theme--link-color--desaturated--inverted--hover:   $rh-global--color--gray-moon;
+  --rhe-theme--link-color--desaturated--inverted--focus:   $rh-global--color--gray-moon;
+  --rhe-theme--link-color--desaturated--inverted--active:  $rh-global--color--gray-moon;
+  --rhe-theme--link-color--desaturated--inverted--visited: $rh-global--color--gray-moon;
+  /* UI elements, like buttons */
+  --rhe-theme--ui-element-color--Color:          $rh-global--color--white;
+  --rhe-theme--ui-element-color:                 $rh-global--color--blue-azure;
+  --rhe-theme--ui-element-color--hover:          $rh-global--color--blue-navy;
+  --rhe-theme--ui-element-color--focus:          $rh-global--color--blue-navy;
+  --rhe-theme--ui-element-color--active:         $rh-global--color--blue-navy;
+  // No "visited" since these aren't hyperlinks
+  /* Darker UI elements, like buttons */
+  --rhe-theme--ui-element-color-dark--Color:     $rh-global--color--white;
+  --rhe-theme--ui-element-color-dark:            $rh-global--color--blue-rain;
+  --rhe-theme--ui-element-color-dark--hover:     $rh-global--color--blue-navy;
+  --rhe-theme--ui-element-color-dark--focus:     $rh-global--color--blue-navy;
+  --rhe-theme--ui-element-color-dark--active:    $rh-global--color--blue-navy;
+  // No "visited" since these aren't hyperlinks
+
+
+
+
+  // States, e.g. Filter button on search.
+  --rhe-theme--hover-state--Color:            $rh-global--color--white;
+  --rhe-theme--hover-state--BackgroundColor:  $rh-global--color--blue-navy;
+  --rhe-theme--hover-state--BorderColor:      $rh-global--color--blue-navy;
+
+  --rhe-theme--active-state--Color:           $rh-global--color--white;
+  --rhe-theme--active-state--BackgroundColor: $rh-global--color--blue-navy;
+  --rhe-theme--active-state--BorderColor:     $rh-global--color--blue-navy;
+
+  --rhe-theme--disabled-state--Color:           $rh-global--color--gray-battleship;
+  --rhe-theme--disabled-state--BackgroundColor: $rh-global--color--gray-mercury;
+  --rhe-theme--disabled-state--BorderColor:     $rh-global--color--gray-mercury;
+
+
+
+  --rh-theme--success-color:           $pf-color-green-100;
+  --rh-theme--success-color--dark:     $rh-global--color--green;
+  --rh-theme--info-color:              $pf-color-cyan-100;
+  --rh-theme--info-color--dark:        $rh-global--color--teal;
+  --rh-theme--warning-color:           $pf-color-orange-100;
+  --rh-theme--warning-color--dark:     $rh-global--color--orange;
+  --rh-theme--danger-color:            $rh-global--color--red;
+  --rh-theme--danger-color--dark:      $pf-color-red-300;
+}

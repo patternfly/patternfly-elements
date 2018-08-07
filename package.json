@@ -30,6 +30,7 @@
     "browser-sync": "^2.24.6",
     "chalk": "^2.4.1",
     "css-scss": "^0.1.1",
+    "decomment": "^0.9.1",
     "del": "^3.0.0",
     "dialog-polyfill": "^0.4.10",
     "generator-rhelement": "^0.6.2",

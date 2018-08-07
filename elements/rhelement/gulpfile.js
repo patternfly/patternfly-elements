@@ -12,29 +12,26 @@ const del = require("del");
 let watcher;
 
 gulp.task("clean", () => {
-  return del(["./*.compiled.*"]);
+  return del(["./*.umd.*"]);
 });
 
 gulp.task("compile", () => {
-  return (
-    gulp
-      .src(["./*.js", "!./gulpfile.js", "!./*.story.js"])
-      .pipe(
-        replace(
-          /^(import .*?)(['"]\.\.?\/(?!\.\.\/).*)(\.js['"];)$/gm,
-          "$1$2.compiled$3"
-        )
+  return gulp
+    .src(["./*.js", "!./gulpfile.js", "!./*.story.js"])
+    .pipe(
+      replace(
+        /^(import .*?)(['"]\.\.?\/(?!\.\.\/).*)(\.js['"];)$/gm,
+        "$1$2.compiled$3"
       )
-      // .pipe(replace(/(import ["'].*).(js["'];?)/g, "$1.compiled.$2"))
-      .pipe(babel())
-      .pipe(uglify())
-      .pipe(
-        rename({
-          suffix: ".compiled"
-        })
-      )
-      .pipe(gulp.dest("./"))
-  );
+    )
+    .pipe(babel())
+    .pipe(uglify())
+    .pipe(
+      rename({
+        suffix: ".umd"
+      })
+    )
+    .pipe(gulp.dest("./"));
 });
 
 gulp.task("watch", () => {

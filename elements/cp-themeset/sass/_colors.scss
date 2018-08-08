@@ -22,6 +22,7 @@
   //  THEME BASE PALETTE COLORS
   // ========================================================================
   */
+    // Why are these prefixed with rhe instead of rh ?
   --rhe-theme--color--white:                $rh-global--color--white;
   --rhe-theme--color--black:                $rh-global--color--black;
 
@@ -42,7 +43,7 @@
   --rhe-theme--color--secondary-shade6:     $rh-global--color--gray-umbra;
   --rhe-theme--color--secondary-shade7:     $rh-global--color--gray-space;
 
-
+  // Can we simplify 100 - 900?
   /* PALETTE GRAYS */ // 50s account for slight variants that are off gradient, if necessary.
   --rhe-theme--color--gray-100:             $rh-global--color--gray-moon;
   --rhe-theme--color--gray-150:             $rh-global--color--gray-nimbus;
@@ -68,6 +69,12 @@
   --rhe-theme--color--gray-1100:            $rh-global--color--gray-night;
   --rhe-theme--color--gray-1150:            $rh-global--color--black-soft; // $rh-global--color--product-lines--default
   --rhe-theme--color--gray-1200:            $rh-global--color--black-nero;
+
+  /*  I'd remove everything from here down until it says END DELETE 
+  /*  A "theme" means a limited color palette of choices, not the whole rainbow 
+  /*  I'd say if you need a certain color for a component, create it there. 
+  /*  i.e., when might I override  --rhe-theme--color--gold-300? 
+  /*  It's like handing someone a set of magic markers to color a room
 
   /*
   // ========================================================================
@@ -148,12 +155,26 @@
   --rhe-theme--color--purple-600:            $rh-global--color--purple-rain; // CP & Old Brand, but consider changing to $pf-color-purple-600;
   --rhe-theme--color--purple-700:            $pf-color-purple-700;
 
+  ///********** END DELETE   **/
+
+
   /*
   // ========================================================================
   //  UI COLORS
   // ========================================================================
   */
   /* BACKGROUND SHADES */
+
+//* Re: BG colors  - if these are arbitrary names, like shade5, you can never evolve them. You can't change shade5 because you don't know where its being used.
+//* Suggested:
+// --rh-theme-bg--surface:            white;     // generic background
+// --rh-theme-bg--surface--alt:       lightgray; // alternative generic background
+//
+// --rh-theme-bg--surface--inverted:  black;     // generic opposite color for things like menus and trays
+// --rh-theme-bg--surface--alt:       #444;      
+// 
+// --rh-theme-bg--popout:             PaleGreen;   // like a card
+// --rh-theme-bg--popout--alt:        SpringGreen; // lighter card
   --rhe-theme--bg-color:                         $rh-global--color--white;
   --rhe-theme--bg-color--shade2:                 $rh-global--color--gray-platinum;
   --rhe-theme--bg-color--shade3:                 $rh-global--color--gray-mercury;
@@ -162,6 +183,9 @@
   --rhe-theme--bg-color--shade6:                 $rh-global--color--gray-night;
   --rhe-theme--bg-color--shade7:                 $rh-global--color--black-soft;
   /* TEXT COLOR FOR EACH BG SHADE */
+// Remove shades, go with basic:
+//  --rhe-theme--text-color:                       $rh-global--color--gray-night;
+//  --rhe-theme--text-color--inverted:             $rh-global--color--white;
   --rhe-theme--text-color:                       $rh-global--color--gray-night;
   --rhe-theme--text-color--shade2:               $rh-global--color--gray-night;
   --rhe-theme--text-color--shade3:               $rh-global--color--black;
@@ -174,8 +198,8 @@
   /* Text links on _white_ or _light_ backgrounds */
   --rhe-theme--link-color:                       $rh-global--color--blue-denim;
   --rhe-theme--link-color--hover:                $rh-global--color--blue-navy;
-  --rhe-theme--link-color--focus:                $rh-global--color--blue-navy;
-  --rhe-theme--link-color--active:               $rh-global--color--blue-navy;
+  --rhe-theme--link-color--focus:                $rh-global--color--blue-navy; // focus uses outline or border, does it need its own color in the theme palette?
+  --rhe-theme--link-color--active:               $rh-global--color--blue-navy; // can hover & active share a color?
   --rhe-theme--link-color--visited:              $rh-global--color--purple;
   /* Text links on _dark grey_ or _black_ backgrounds */
   --rhe-theme--link-color--inverted:             $rh-global--color--blue-maya;
@@ -190,12 +214,15 @@
   --rhe-theme--link-color--desaturated--active:  $rh-global--color--black;
   --rhe-theme--link-color--desaturated--visited: $rh-global--color--black;
   /* Desaturate text links */
+  //*  9 times out of 10, desaturated is going to be dark too. so we dont really need a set for desaturated and desaturated inverted. 
+  //*  so we could delete this set /
   --rhe-theme--link-color--desaturated--inverted:          $rh-global--color--white;
   --rhe-theme--link-color--desaturated--inverted--hover:   $rh-global--color--gray-moon;
   --rhe-theme--link-color--desaturated--inverted--focus:   $rh-global--color--gray-moon;
   --rhe-theme--link-color--desaturated--inverted--active:  $rh-global--color--gray-moon;
   --rhe-theme--link-color--desaturated--inverted--visited: $rh-global--color--gray-moon;
-  /* UI elements, like buttons */
+  /* UI elements, like buttons */  
+  // can we call it button? ui element could be anything
   --rhe-theme--ui-element-color--Color:          $rh-global--color--white;
   --rhe-theme--ui-element-color:                 $rh-global--color--blue-azure;
   --rhe-theme--ui-element-color--hover:          $rh-global--color--blue-navy;
@@ -214,7 +241,7 @@
 
 
   // States, e.g. Filter button on search.
-  --rhe-theme--hover-state--Color:            $rh-global--color--white;
+  --rhe-theme--hover-state--Color:            $rh-global--color--white; //* hover state of what? i.e. the hover state for a link is usually different than a header */
   --rhe-theme--hover-state--BackgroundColor:  $rh-global--color--blue-navy;
   --rhe-theme--hover-state--BorderColor:      $rh-global--color--blue-navy;
 

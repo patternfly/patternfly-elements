@@ -33,6 +33,10 @@
   --rhe-theme--button-border--BorderRadius:          $rh-global--button-border--BorderRadius;
 
   /* SHADOWS */
+  // This feels like a lot of overkill. How about one or two variables for boxshadow, 
+  // and if you dont like it, override it. Remember they have vars for everything on each component. :)
+  // --rhe-theme--shadow--BoxShadow--sm:  $rh-global--shadow--BoxShadow--sm;
+  // --rhe-theme--shadow--BoxShadow--lg:  $rh-global--shadow--BoxShadow--lg;
   --rhe-theme--shadow--BoxShadow--sm:        $rh-global--shadow--BoxShadow--sm;
   --rhe-theme--shadow--BoxShadow--md:        $rh-global--shadow--BoxShadow--md;
   --rhe-theme--shadow--BoxShadow--lg:        $rh-global--shadow--BoxShadow--lg;

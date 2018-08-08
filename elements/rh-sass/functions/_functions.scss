@@ -127,3 +127,7 @@
     }
     @return $result;
 }
+
+@function rh-var($this-local-var) {
+  @return var(--rh-local-#{$this-local-var});
+}

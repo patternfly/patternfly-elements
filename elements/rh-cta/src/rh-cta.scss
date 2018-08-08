@@ -5,6 +5,7 @@ $rh-global--cta--BorderRadius: 5em !default; //$rh-global--border--BorderRadius 
 
 // Specific SASS vars that won't be themeable (at least for now)
 $rh-cta__arrow-size: 0.313em; // Was ~5px at 16px
+$rh-cta__context-color: pink;
 
 @mixin make-default-cta-state($this-name: "hover", $this-color: var(--rh-cta--link-color--hover)) {
   & ::slotted(a:#{$this-name}) {
@@ -19,29 +20,29 @@ $rh-cta__arrow-size: 0.313em; // Was ~5px at 16px
 :host {
   display: inline-block;
 
-  --rh-cta__arrow--spacing: var(--rh-theme--cta__arrow--spacing, var(--rh-theme--spacing--xxs, #{$rh-global--spacer--xxs}));
-  --rh-cta--link-color: var(--rh-theme--cta--link-color, var(--rh-theme--link-color, #{$rh-global--link-color}));
-  --rh-cta--link-color--visited: var(--rh-theme--cta--link-color--visited, var(--rh-theme--link-color--visited, #{$rh-global--link-color--visited}));
-  --rh-cta--link-color--hover: var(--rh-theme--cta--link-color--hover, var(--rh-theme--link-color--hover, #{$rh-global--link-color--hover}));
-  --rh-cta--link-color--focus: var(--rh-theme--cta--link-color--focus, var(--rh-theme--link-color--focus, #{$rh-global--link-color--focus}));
+  @include rh-define-vars("cta__arrow--spacing", "spacing--xxs", $rh-global--spacer--xxs);
+  @include rh-define-vars("cta--link-color", "link-color", $rh-global--link-color);
+  @include rh-define-vars("cta--link-color--visited", "link-color--visited", green);
+  @include rh-define-vars("cta--link-color--hover", "link-color--hover", $rh-global--link-color--hover);
+  @include rh-define-vars("cta--link-color--focus", "link-color--focus", $rh-global--link-color--focus);
 
   // CTA Default
   & ::slotted(a) {
-    color: var(--rh-cta--link-color);
+    color: rh-var("cta--link-color");
 
     &::after {
-      margin-left: var(--rh-cta__arrow--spacing);
+      margin-left: rh-var("cta__arrow--spacing");
       vertical-align: middle;
-      @include rh-arrow(right, var(--rh-cta--link-color), $rh-cta__arrow-size, $rh-cta__arrow-size, true);
+      @include rh-arrow(right, rh-var("cta--link-color"), $rh-cta__arrow-size, $rh-cta__arrow-size, true);
     }
   }
 
   // CTA Default Visited
-  @include make-default-cta-state("visited", var(--rh-cta--link-color--visited));
+  @include make-default-cta-state("visited", rh-var("cta--link-color--visited"));
   // CTA Default Hover
-  @include make-default-cta-state("hover", var(--rh-cta--link-color--hover));
+  @include make-default-cta-state("hover", rh-var("cta--link-color--hover"));
   // CTA Default Focus
-  @include make-default-cta-state("focus", var(--rh-cta--link-color--focus));
+  @include make-default-cta-state("focus", rh-var("cta--link-color--focus"));
 }
 
 :host([inverted]) {

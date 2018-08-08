@@ -6,35 +6,35 @@ class RhCta extends RHElement {
 <style>
 :host {
   display: inline-block;
-  --rh-cta__arrow--spacing: var(--rh-theme--cta__arrow--spacing, var(--rh-theme--spacing--xxs, 0.25rem));
-  --rh-cta--link-color: var(--rh-theme--cta--link-color, var(--rh-theme--link-color, #06c));
-  --rh-cta--link-color--visited: var(--rh-theme--cta--link-color--visited, var(--rh-theme--link-color--visited, #7551a6));
-  --rh-cta--link-color--hover: var(--rh-theme--cta--link-color--hover, var(--rh-theme--link-color--hover, #004080));
-  --rh-cta--link-color--focus: var(--rh-theme--cta--link-color--focus, var(--rh-theme--link-color--focus, #004080)); }
+  --rh-local-cta__arrow--spacing: var(--rh-cta__arrow--spacing, var(--rh-theme--spacing--xxs, 0.25rem));
+  --rh-local-cta--link-color: var(--rh-cta--link-color, var(--rh-theme--link-color, #06c));
+  --rh-local-cta--link-color--visited: var(--rh-cta--link-color--visited, var(--rh-theme--link-color--visited, green));
+  --rh-local-cta--link-color--hover: var(--rh-cta--link-color--hover, var(--rh-theme--link-color--hover, #004080));
+  --rh-local-cta--link-color--focus: var(--rh-cta--link-color--focus, var(--rh-theme--link-color--focus, #004080)); }
   :host ::slotted(a) {
-    color: var(--rh-cta--link-color); }
+    color: var(--rh-local-cta--link-color); }
     :host ::slotted(a)::after {
-      margin-left: var(--rh-cta__arrow--spacing);
+      margin-left: var(--rh-local-cta__arrow--spacing);
       vertical-align: middle;
       border-style: solid;
       border-width: 0.313em 0.313em 0;
       border-color: transparent;
-      border-top-color: var(--rh-cta--link-color);
+      border-top-color: var(--rh-local-cta--link-color);
       transform: rotate(-90deg);
       display: inline-block;
       content: ""; }
   :host ::slotted(a:visited) {
-    color: var(--rh-cta--link-color--visited); }
+    color: var(--rh-local-cta--link-color--visited); }
     :host ::slotted(a:visited)::after {
-      border-top-color: var(--rh-cta--link-color--visited); }
+      border-top-color: var(--rh-local-cta--link-color--visited); }
   :host ::slotted(a:hover) {
-    color: var(--rh-cta--link-color--hover); }
+    color: var(--rh-local-cta--link-color--hover); }
     :host ::slotted(a:hover)::after {
-      border-top-color: var(--rh-cta--link-color--hover); }
+      border-top-color: var(--rh-local-cta--link-color--hover); }
   :host ::slotted(a:focus) {
-    color: var(--rh-cta--link-color--focus); }
+    color: var(--rh-local-cta--link-color--focus); }
     :host ::slotted(a:focus)::after {
-      border-top-color: var(--rh-cta--link-color--focus); }
+      border-top-color: var(--rh-local-cta--link-color--focus); }
 
 :host([inverted]) {
   --rh-cta--link-color--inverted: var(--rh-theme--cta--link-color--inverted, var(--rh-theme--link-color--inverted, #73bcf7));

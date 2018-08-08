@@ -21,7 +21,7 @@ gulp.task("compile", () => {
     .pipe(
       replace(
         /^(import .*?)(['"]\.\.?\/(?!\.\.\/).*)(\.js['"];)$/gm,
-        "$1$2.compiled$3"
+        "$1$2.umd$3"
       )
     )
     .pipe(babel())

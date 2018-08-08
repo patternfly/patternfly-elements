@@ -54,7 +54,21 @@ export function stopTimer() {
   }
 }
 
-window.addEventListener("WebComponentsReady", () => {
+export function autoReveal() {
+  // If Web Components are already ready, run the handler right away.  If they
+  // are not yet ready, wait.
+  //
+  // see https://github.com/github/webcomponentsjs#webcomponents-loaderjs for
+  // info about web component readiness events
+  if (window.WebComponents.ready) {
+    handleWebComponentsReady();
+  } else {
+    window.addEventListener("WebComponentsReady", handleWebComponentsReady);
+  }
+}
+
+function handleWebComponentsReady() {
   console.log("[reveal] web components ready");
   reveal(false);
-});
+  stopTimer();
+}

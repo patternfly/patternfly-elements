@@ -1,9 +1,13 @@
 {
   "name": "@rhelements/all",
   "description": "All the RHElements.",
+  "scripts": {
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/all/test/"
+  },
   "private": true,
   "license": "ISC",
   "dependencies": {
+    "@rhelements/all": "file:elements/all",
     "@rhelements/rh-button": "file:elements/rh-button",
     "@rhelements/rh-card": "file:elements/rh-card",
     "@rhelements/rh-cta": "file:elements/rh-cta",

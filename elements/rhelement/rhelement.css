@@ -1,5 +1,5 @@
 body {
-    transition: opacity 0.18s ease-in-out;
+    transition: opacity 0.1618s ease-in-out;
 }
 body[unresolved] {
     opacity: 0;

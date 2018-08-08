@@ -9,11 +9,6 @@
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require(['../rh-dropdown.umd.js'])</script>
-    <script>
-    window.addEventListener("WebComponentsReady", function() {
-  document.body.removeAttribute("unresolved");
-});
-</script>
     <style>
       rh-dropdown:not(:defined) {
         position: absolute;
@@ -26,6 +21,11 @@
         border: 0;
       }
     </style>
+    <noscript>
+      <link href="../../rhelement/rhelement-noscript.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../rhelement/rhelement.css" rel="stylesheet">
   </head>
   <body unresolved>
     <h1>Tacos</h1>

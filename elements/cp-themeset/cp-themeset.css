@@ -1,19 +1,4 @@
-import "./scoping-shim.min.js";
-import "./apply-shim.min.js";
-import "./custom-style-interface.min.js";
-
-(function() {
-  const templateId = "cp-theme";
-
-  if (document.getElementById(templateId)) {
-    return;
-  }
-
-  const cpthemeTemplate = document.createElement("div");
-
-  cpthemeTemplate.setAttribute("style", "display: none;");
-  cpthemeTemplate.setAttribute("id", templateId);
-  cpthemeTemplate.innerHTML = `<style id="${templateId}-style">:root {
+:root {
   
   --rhe-theme--color--white:                $rh-global--color--white;
   --rhe-theme--color--black:                $rh-global--color--black;
@@ -314,13 +299,4 @@ h5 {
 
 h6 {
   font-size: var(--rhe-theme--FontSize--heading--xxs, 0.875rem);
-  line-height: var(--rhe-theme--LineHeight, 1.5); }</style>`;
-
-  document.head.appendChild(cpthemeTemplate);
-
-  if (window.ShadyCSS) {
-    window.ShadyCSS.CustomStyleInterface.addCustomStyle(
-      document.querySelector(`#${templateId}-style`)
-    );
-  }
-})();
+  line-height: var(--rhe-theme--LineHeight, 1.5); }

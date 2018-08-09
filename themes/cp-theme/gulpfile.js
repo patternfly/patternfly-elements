@@ -13,7 +13,7 @@ const del = require("del");
 let watcher;
 
 gulp.task("clean", () => {
-  return del(["./*.compiled.*"]);
+  return del(["./*.umd.*"]);
 });
 
 gulp.task("sass", () => {
@@ -46,7 +46,7 @@ gulp.task("compile", () => {
     .pipe(uglify())
     .pipe(
       rename({
-        suffix: ".compiled"
+        suffix: ".umd"
       })
     )
     .pipe(gulp.dest("./"));

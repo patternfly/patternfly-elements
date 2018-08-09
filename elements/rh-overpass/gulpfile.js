@@ -9,7 +9,7 @@ const replace = require("gulp-replace");
 const del = require("del");
 
 gulp.task("clean", () => {
-  return del(["./*.compiled.*"]);
+  return del(["./*.umd.*"]);
 });
 
 gulp.task("compile", () => {
@@ -19,7 +19,7 @@ gulp.task("compile", () => {
     .pipe(uglify())
     .pipe(
       rename({
-        suffix: ".compiled"
+        suffix: ".umd"
       })
     )
     .pipe(gulp.dest("./"));

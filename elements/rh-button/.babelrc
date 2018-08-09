@@ -1,14 +1,17 @@
 {
-  "presets": [["env", { "modules": "umd" }]],
+  "presets": [["env"]],
   "plugins": [
     [
       "transform-es2015-modules-umd",
       {
         "globals": {
-          "rhelement.compiled": "rhelementRRRRRRR"
-        }
+          "../rhelement/rhelement.umd.js": "RHElement",
+          "./rh-button.js": "RHElement.Rhbutton",
+          "RhButton": "RHElement.RhButton"
+        },
+        "exactGlobals": true
       }
     ]
   ],
-  "moduleId": "rhelements/rh-button"
+  "moduleId": "RhButton"
 }

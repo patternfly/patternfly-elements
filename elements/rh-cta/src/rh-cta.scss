@@ -4,44 +4,79 @@
 /// Component Specific SASS Vars
 /// ===========================================================================
 
-$rh-cta__arrow-size:                  0.313em; // Was ~5px at 16px
-$rh-cta__arrow--spacer:               $rh-global--spacer--xxs;
-$rh--cta--solid--BorderRadius:        5em !default; //$rh-global--border--BorderRadius !default;
-$rh-cta--solid--BorderWidth:          $rh-global--border--BorderWidth;
-$rh-cta--solid--padding-y:            $rh-global--spacer--xs;
-$rh-cta--solid--padding-x:            $rh-global--spacer--lg;
-$rh-cta--animation-timing:            $rh-global--animation-timing;
+$rh-cta__arrow-size:                        0.313em; // Was ~5px at 16px
+$rh-cta__arrow--spacer:                     $rh-global--spacer--xxs;
+$rh--cta--solid--BorderRadius:              5em !default; //$rh-global--border--BorderRadius !default;
+$rh-cta--solid--BorderWidth:                $rh-global--border--BorderWidth;
+$rh-cta--solid--padding-y:                  $rh-global--spacer--xs;
+$rh-cta--solid--padding-x:                  $rh-global--spacer--lg;
+$rh-cta--animation-timing:                  $rh-global--animation-timing;
 
 // Reassigning SASS vars to component specific SASS vars for ease of use below
-$rh-cta--default-color:                 $rh-global--link-color;
-$rh-cta--default-color--hover:          $rh-global--link-color--hover;
-$rh-cta--default-color--focus:          $rh-global--link-color--focus;
-$rh-cta--default-color--visited:        $rh-global--link-color--visited;
 
-$rh-cta--default-color--inverted:       $rh-global--link-color--inverted;
-$rh-cta--default-color--inverted--hover:$rh-global--link-color--inverted--hover;
-$rh-cta--default-color--inverted--focus:$rh-global--link-color--inverted--focus;
-$rh-cta--default-color--inverted--visited:$rh-global--link-color--inverted--visited;
+// Default CTA colors
+$rh-cta--default-color:                     $rh-global--link-color;
+$rh-cta--default-color--hover:              $rh-global--link-color--hover;
+$rh-cta--default-color--focus:              $rh-global--link-color--focus;
+$rh-cta--default-color--visited:            $rh-global--link-color--visited;
 
-$rh-cta--default-bg-color--solid:         $rh-global--color--gray-batman;
-$rh-cta--default-text-color--solid:       $rh-global--color--white;
-$rh-cta--default-bg-color--solid--hover:  darken($rh-global--color--gray-batman, 10%);
-$rh-cta--default-text-color--solid--hover:$rh-global--color--white;
+$rh-cta--primary-color:                     $rh-global--link-color;
+$rh-cta--primary-color--hover:              $rh-global--link-color--hover;
+$rh-cta--primary-color--focus:              $rh-global--link-color--focus;
+$rh-cta--primary-color--visited:            $rh-global--link-color--visited;
 
-$rh-cta--primary-bg-color--solid:         $rh-global--color--blue-azure;
-$rh-cta--primary-text-color--solid:       $rh-global--color--white;
-$rh-cta--primary-bg-color--solid--hover:  darken($rh-global--color--blue-azure, 10%);
-$rh-cta--primary-text-color--solid--hover:$rh-global--color--white;
+$rh-cta--secondary-color:                   $rh-global--color--gray-iron;
+$rh-cta--secondary-color--hover:            darken($rh-global--color--gray-iron, 10%);
+$rh-cta--secondary-color--focus:            darken($rh-global--color--gray-iron, 10%);
+$rh-cta--secondary-color--visited:          $rh-global--link-color--visited;
 
-$rh-cta--secondary-bg-color--solid:       $rh-global--color--gray-iron;
-$rh-cta--secondary-text-color--solid:     $rh-global--color--white;
-$rh-cta--secondary-bg-color--solid--hover:darken($rh-global--color--gray-iron, 10%);
+$rh-cta--accent-color:                      $rh-global--color--red;
+$rh-cta--accent-color--hover:               darken($rh-global--color--red, 10%);
+$rh-cta--accent-color--focus:               darken($rh-global--color--red, 10%);
+$rh-cta--accent-color--visited:             $rh-global--link-color--visited;
+
+// Inverted Default CTA colors
+$rh-cta--default-color--inverted:           $rh-global--link-color--inverted;
+$rh-cta--default-color--inverted--hover:    $rh-global--link-color--inverted--hover;
+$rh-cta--default-color--inverted--focus:    $rh-global--link-color--inverted--focus;
+$rh-cta--default-color--inverted--visited:  $rh-global--link-color--inverted--visited;
+
+$rh-cta--primary-color--inverted:           $rh-global--link-color--inverted;
+$rh-cta--primary-color--inverted--hover:    $rh-global--link-color--inverted--hover;
+$rh-cta--primary-color--inverted--focus:    $rh-global--link-color--inverted--focus;
+$rh-cta--primary-color--inverted--visited:  $rh-global--link-color--inverted--visited;
+
+$rh-cta--secondary-color--inverted:         $rh-global--color--white;
+$rh-cta--secondary-color--inverted--hover:  darken($rh-global--color--white, 10%);
+$rh-cta--secondary-color--inverted--focus:  darken($rh-global--color--white, 10%);
+$rh-cta--secondary-color--inverted--visited:$rh-global--link-color--inverted--visited;
+
+$rh-cta--accent-color--inverted:            lighten($rh-global--color--red, 10%);
+$rh-cta--accent-color--inverted--hover:     lighten($rh-global--color--red, 20%);
+$rh-cta--accent-color--inverted--focus:     lighten($rh-global--color--red, 20%);
+$rh-cta--accent-color--inverted--visited:   $rh-global--link-color--inverted--visited;
+
+
+// Solid CTA colors
+$rh-cta--default-bg-color--solid:           $rh-global--color--gray-batman;
+$rh-cta--default-text-color--solid:         $rh-global--color--white;
+$rh-cta--default-bg-color--solid--hover:    darken($rh-global--color--gray-batman, 10%);
+$rh-cta--default-text-color--solid--hover:  $rh-global--color--white;
+
+$rh-cta--primary-bg-color--solid:           $rh-global--color--blue-azure;
+$rh-cta--primary-text-color--solid:         $rh-global--color--white;
+$rh-cta--primary-bg-color--solid--hover:    darken($rh-global--color--blue-azure, 10%);
+$rh-cta--primary-text-color--solid--hover:  $rh-global--color--white;
+
+$rh-cta--secondary-bg-color--solid:         $rh-global--color--gray-iron;
+$rh-cta--secondary-text-color--solid:       $rh-global--color--white;
+$rh-cta--secondary-bg-color--solid--hover:  darken($rh-global--color--gray-iron, 10%);
 $rh-cta--secondary-text-color--solid--hover:$rh-global--color--white;
 
-$rh-cta--accent-bg-color--solid:          $rh-global--color--red;
-$rh-cta--accent-text-color--solid:        $rh-global--color--white;
-$rh-cta--accent-bg-color--solid--hover:   darken($rh-global--color--red, 10%);
-$rh-cta--accent-text-color--solid--hover: $rh-global--color--white;
+$rh-cta--accent-bg-color--solid:            $rh-global--color--red;
+$rh-cta--accent-text-color--solid:          $rh-global--color--white;
+$rh-cta--accent-bg-color--solid--hover:     darken($rh-global--color--red, 10%);
+$rh-cta--accent-text-color--solid--hover:   $rh-global--color--white;
 
 
 
@@ -100,10 +135,6 @@ $rh-cta--accent-text-color--solid--hover: $rh-global--color--white;
       &::after {
         @include rh-arrow-color(rh-var("cta#{$this-name}-link-color#{$this-modifier}"));
       }
-    }
-
-    & ::slotted(a[color]) {
-      color: $this-color-visited;
     }
 
     // CTA Default Visited
@@ -227,9 +258,9 @@ $rh-cta--accent-text-color--solid--hover: $rh-global--color--white;
   // Define CSS Vars
   @include rh-define-vars("cta__arrow--spacing", "spacing--xxs", $rh-cta__arrow--spacer);
   @include rh-define-vars("cta--link-color", "link-color", $rh-cta--default-color);
-  @include rh-define-vars("cta--link-color--visited", "link-color--visited", $rh-cta--default-color--hover);
-  @include rh-define-vars("cta--link-color--hover", "link-color--hover", $rh-cta--default-color--focus);
-  @include rh-define-vars("cta--link-color--focus", "link-color--focus", $rh-cta--default-color--visited);
+  @include rh-define-vars("cta--link-color--visited", "link-color--visited", $rh-cta--default-color--visited);
+  @include rh-define-vars("cta--link-color--hover", "link-color--hover", $rh-cta--default-color--hover);
+  @include rh-define-vars("cta--link-color--focus", "link-color--focus", $rh-cta--default-color--focus);
 
   & ::slotted(a) {
     color: rh-var("cta--link-color");
@@ -275,18 +306,20 @@ $rh-cta--accent-text-color--solid--hover: $rh-global--color--white;
 }
 
 
-// CTA Default Primary = Default
+// CTA Default Primary
+@include make-default-cta-variation(".primary", "primary", $rh-cta--primary-color, $rh-cta--primary-color--hover, $rh-cta--primary-color--focus, $rh-cta--primary-color--visited);
 // CTA Default Secondary
-@include make-default-cta-variation(".secondary", "secondary", $rh-global--color--gray-iron, darken($rh-global--color--gray-iron, 10%), darken($rh-global--color--gray-iron, 10%), $rh-global--color--gray-iron);
+@include make-default-cta-variation(".secondary", "secondary", $rh-cta--secondary-color, $rh-cta--secondary-color--hover, $rh-cta--secondary-color--focus, $rh-cta--secondary-color--visited);
 // CTA Default Accent
-@include make-default-cta-variation(".accent", "accent", $rh-global--color--red, darken($rh-global--color--red, 10%), darken($rh-global--color--red, 10%), $rh-global--color--red);
-// CTA Default Inverted Primary = Default
-@include make-default-cta-variation("[inverted]", "", $rh-cta--default-color--inverted, $rh-global--link-color--inverted--hover, $rh-global--link-color--inverted--focus, $rh-global--link-color--inverted--visited, "inverted");
+@include make-default-cta-variation(".accent", "accent", $rh-cta--accent-color, $rh-cta--accent-color--hover, $rh-cta--accent-color--focus, $rh-cta--accent-color--visited);
+// CTA Default Inverted Default
+@include make-default-cta-variation("[inverted]", "", $rh-cta--default-color--inverted, $rh-cta--default-color--inverted--hover, $rh-cta--default-color--inverted--focus, $rh-cta--default-color--inverted--visited, "inverted");
+// CTA Default Inverted Primary
+@include make-default-cta-variation("[inverted].primary", "primary", $rh-cta--primary-color--inverted, $rh-cta--primary-color--inverted--hover, $rh-cta--primary-color--inverted--focus, $rh-cta--primary-color--inverted--visited, "inverted");
 // CTA Default Inverted Secondary
-@include make-default-cta-variation("[inverted].secondary", "secondary", $rh-global--color--white, darken($rh-global--color--white, 10%), darken($rh-global--color--white, 10%), $rh-global--color--white, "inverted");
+@include make-default-cta-variation("[inverted].secondary", "secondary", $rh-cta--secondary-color--inverted, $rh-cta--secondary-color--inverted--hover, $rh-cta--secondary-color--inverted--focus, $rh-cta--secondary-color--inverted--visited, "inverted");
 // CTA Default Inverted Accent
-@include make-default-cta-variation("[inverted].accent", "accent", lighten($rh-global--color--red, 10%), $rh-global--color--red, $rh-global--color--red, lighten($rh-global--color--red, 10%), "inverted");
-
+@include make-default-cta-variation("[inverted].accent", "accent", $rh-cta--accent-color--inverted, $rh-cta--accent-color--inverted--hover, $rh-cta--accent-color--inverted--focus, $rh-cta--accent-color--inverted--visited, "inverted");
 
 
 // CTA Solid

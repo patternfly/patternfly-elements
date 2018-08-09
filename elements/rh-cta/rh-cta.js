@@ -8,9 +8,9 @@ class RhCta extends RHElement {
   display: inline-block;
   --rh-local-cta__arrow--spacing: var(--rh-cta__arrow--spacing, var(--rh-theme--spacing--xxs, 0.25rem));
   --rh-local-cta--link-color: var(--rh-cta--link-color, var(--rh-theme--link-color, #06c));
-  --rh-local-cta--link-color--visited: var(--rh-cta--link-color--visited, var(--rh-theme--link-color--visited, #004080));
+  --rh-local-cta--link-color--visited: var(--rh-cta--link-color--visited, var(--rh-theme--link-color--visited, #7551a6));
   --rh-local-cta--link-color--hover: var(--rh-cta--link-color--hover, var(--rh-theme--link-color--hover, #004080));
-  --rh-local-cta--link-color--focus: var(--rh-cta--link-color--focus, var(--rh-theme--link-color--focus, #7551a6)); }
+  --rh-local-cta--link-color--focus: var(--rh-cta--link-color--focus, var(--rh-theme--link-color--focus, #004080)); }
   :host ::slotted(a) {
     color: var(--rh-local-cta--link-color); }
     :host ::slotted(a)::after {
@@ -64,17 +64,37 @@ class RhCta extends RHElement {
     :host([inverted]) ::slotted(a:focus)::after {
       border-top-color: var(--rh-local-cta--link-color--inverted--focus); }
 
+:host(.primary) {
+  --rh-local-cta--primary-link-color--: var(--rh-cta--primary-link-color--, var(--rh-theme----primary-link-color--, #06c));
+  --rh-local-cta--primary-link-color----visited: var(--rh-cta--primary-link-color----visited, var(--rh-theme----primary-link-color----visited, #7551a6));
+  --rh-local-cta--primary-link-color----hover: var(--rh-cta--primary-link-color----hover, var(--rh-theme----primary-link-color----hover, #004080));
+  --rh-local-cta--primary-link-color----focus: var(--rh-cta--primary-link-color----focus, var(--rh-theme----primary-link-color----focus, #004080)); }
+  :host(.primary) ::slotted(a) {
+    color: var(--rh-local-cta--primary-link-color--); }
+    :host(.primary) ::slotted(a)::after {
+      border-top-color: var(--rh-local-cta--primary-link-color--); }
+  :host(.primary) ::slotted(a:visited) {
+    color: var(--rh-local-cta--primary-link-color----visited); }
+    :host(.primary) ::slotted(a:visited)::after {
+      border-top-color: var(--rh-local-cta--primary-link-color----visited); }
+  :host(.primary) ::slotted(a:hover) {
+    color: var(--rh-local-cta--primary-link-color----hover); }
+    :host(.primary) ::slotted(a:hover)::after {
+      border-top-color: var(--rh-local-cta--primary-link-color----hover); }
+  :host(.primary) ::slotted(a:focus) {
+    color: var(--rh-local-cta--primary-link-color----focus); }
+    :host(.primary) ::slotted(a:focus)::after {
+      border-top-color: var(--rh-local-cta--primary-link-color----focus); }
+
 :host(.secondary) {
   --rh-local-cta--secondary-link-color--: var(--rh-cta--secondary-link-color--, var(--rh-theme----secondary-link-color--, #464646));
-  --rh-local-cta--secondary-link-color----visited: var(--rh-cta--secondary-link-color----visited, var(--rh-theme----secondary-link-color----visited, #464646));
+  --rh-local-cta--secondary-link-color----visited: var(--rh-cta--secondary-link-color----visited, var(--rh-theme----secondary-link-color----visited, #7551a6));
   --rh-local-cta--secondary-link-color----hover: var(--rh-cta--secondary-link-color----hover, var(--rh-theme----secondary-link-color----hover, #2d2d2d));
   --rh-local-cta--secondary-link-color----focus: var(--rh-cta--secondary-link-color----focus, var(--rh-theme----secondary-link-color----focus, #2d2d2d)); }
   :host(.secondary) ::slotted(a) {
     color: var(--rh-local-cta--secondary-link-color--); }
     :host(.secondary) ::slotted(a)::after {
       border-top-color: var(--rh-local-cta--secondary-link-color--); }
-  :host(.secondary) ::slotted(a[color]) {
-    color: #464646; }
   :host(.secondary) ::slotted(a:visited) {
     color: var(--rh-local-cta--secondary-link-color----visited); }
     :host(.secondary) ::slotted(a:visited)::after {
@@ -90,15 +110,13 @@ class RhCta extends RHElement {
 
 :host(.accent) {
   --rh-local-cta--accent-link-color--: var(--rh-cta--accent-link-color--, var(--rh-theme----accent-link-color--, #c00));
-  --rh-local-cta--accent-link-color----visited: var(--rh-cta--accent-link-color----visited, var(--rh-theme----accent-link-color----visited, #c00));
+  --rh-local-cta--accent-link-color----visited: var(--rh-cta--accent-link-color----visited, var(--rh-theme----accent-link-color----visited, #7551a6));
   --rh-local-cta--accent-link-color----hover: var(--rh-cta--accent-link-color----hover, var(--rh-theme----accent-link-color----hover, #990000));
   --rh-local-cta--accent-link-color----focus: var(--rh-cta--accent-link-color----focus, var(--rh-theme----accent-link-color----focus, #990000)); }
   :host(.accent) ::slotted(a) {
     color: var(--rh-local-cta--accent-link-color--); }
     :host(.accent) ::slotted(a)::after {
       border-top-color: var(--rh-local-cta--accent-link-color--); }
-  :host(.accent) ::slotted(a[color]) {
-    color: #c00; }
   :host(.accent) ::slotted(a:visited) {
     color: var(--rh-local-cta--accent-link-color----visited); }
     :host(.accent) ::slotted(a:visited)::after {
@@ -121,8 +139,6 @@ class RhCta extends RHElement {
     color: var(--rh-local-cta---link-color--inverted); }
     :host([inverted]) ::slotted(a)::after {
       border-top-color: var(--rh-local-cta---link-color--inverted); }
-  :host([inverted]) ::slotted(a[color]) {
-    color: #967abd; }
   :host([inverted]) ::slotted(a:visited) {
     color: var(--rh-local-cta---link-color--inverted--visited); }
     :host([inverted]) ::slotted(a:visited)::after {
@@ -136,17 +152,37 @@ class RhCta extends RHElement {
     :host([inverted]) ::slotted(a:focus)::after {
       border-top-color: var(--rh-local-cta---link-color--inverted--focus); }
 
+:host([inverted].primary) {
+  --rh-local-cta--primary-link-color--inverted: var(--rh-cta--primary-link-color--inverted, var(--rh-theme----primary-link-color--inverted, #73bcf7));
+  --rh-local-cta--primary-link-color--inverted--visited: var(--rh-cta--primary-link-color--inverted--visited, var(--rh-theme----primary-link-color--inverted--visited, #967abd));
+  --rh-local-cta--primary-link-color--inverted--hover: var(--rh-cta--primary-link-color--inverted--hover, var(--rh-theme----primary-link-color--inverted--hover, #2b9af3));
+  --rh-local-cta--primary-link-color--inverted--focus: var(--rh-cta--primary-link-color--inverted--focus, var(--rh-theme----primary-link-color--inverted--focus, #2b9af3)); }
+  :host([inverted].primary) ::slotted(a) {
+    color: var(--rh-local-cta--primary-link-color--inverted); }
+    :host([inverted].primary) ::slotted(a)::after {
+      border-top-color: var(--rh-local-cta--primary-link-color--inverted); }
+  :host([inverted].primary) ::slotted(a:visited) {
+    color: var(--rh-local-cta--primary-link-color--inverted--visited); }
+    :host([inverted].primary) ::slotted(a:visited)::after {
+      border-top-color: var(--rh-local-cta--primary-link-color--inverted--visited); }
+  :host([inverted].primary) ::slotted(a:hover) {
+    color: var(--rh-local-cta--primary-link-color--inverted--hover); }
+    :host([inverted].primary) ::slotted(a:hover)::after {
+      border-top-color: var(--rh-local-cta--primary-link-color--inverted--hover); }
+  :host([inverted].primary) ::slotted(a:focus) {
+    color: var(--rh-local-cta--primary-link-color--inverted--focus); }
+    :host([inverted].primary) ::slotted(a:focus)::after {
+      border-top-color: var(--rh-local-cta--primary-link-color--inverted--focus); }
+
 :host([inverted].secondary) {
   --rh-local-cta--secondary-link-color--inverted: var(--rh-cta--secondary-link-color--inverted, var(--rh-theme----secondary-link-color--inverted, #fff));
-  --rh-local-cta--secondary-link-color--inverted--visited: var(--rh-cta--secondary-link-color--inverted--visited, var(--rh-theme----secondary-link-color--inverted--visited, #fff));
+  --rh-local-cta--secondary-link-color--inverted--visited: var(--rh-cta--secondary-link-color--inverted--visited, var(--rh-theme----secondary-link-color--inverted--visited, #967abd));
   --rh-local-cta--secondary-link-color--inverted--hover: var(--rh-cta--secondary-link-color--inverted--hover, var(--rh-theme----secondary-link-color--inverted--hover, #e6e6e6));
   --rh-local-cta--secondary-link-color--inverted--focus: var(--rh-cta--secondary-link-color--inverted--focus, var(--rh-theme----secondary-link-color--inverted--focus, #e6e6e6)); }
   :host([inverted].secondary) ::slotted(a) {
     color: var(--rh-local-cta--secondary-link-color--inverted); }
     :host([inverted].secondary) ::slotted(a)::after {
       border-top-color: var(--rh-local-cta--secondary-link-color--inverted); }
-  :host([inverted].secondary) ::slotted(a[color]) {
-    color: #fff; }
   :host([inverted].secondary) ::slotted(a:visited) {
     color: var(--rh-local-cta--secondary-link-color--inverted--visited); }
     :host([inverted].secondary) ::slotted(a:visited)::after {
@@ -162,15 +198,13 @@ class RhCta extends RHElement {
 
 :host([inverted].accent) {
   --rh-local-cta--accent-link-color--inverted: var(--rh-cta--accent-link-color--inverted, var(--rh-theme----accent-link-color--inverted, red));
-  --rh-local-cta--accent-link-color--inverted--visited: var(--rh-cta--accent-link-color--inverted--visited, var(--rh-theme----accent-link-color--inverted--visited, red));
-  --rh-local-cta--accent-link-color--inverted--hover: var(--rh-cta--accent-link-color--inverted--hover, var(--rh-theme----accent-link-color--inverted--hover, #c00));
-  --rh-local-cta--accent-link-color--inverted--focus: var(--rh-cta--accent-link-color--inverted--focus, var(--rh-theme----accent-link-color--inverted--focus, #c00)); }
+  --rh-local-cta--accent-link-color--inverted--visited: var(--rh-cta--accent-link-color--inverted--visited, var(--rh-theme----accent-link-color--inverted--visited, #967abd));
+  --rh-local-cta--accent-link-color--inverted--hover: var(--rh-cta--accent-link-color--inverted--hover, var(--rh-theme----accent-link-color--inverted--hover, #ff3333));
+  --rh-local-cta--accent-link-color--inverted--focus: var(--rh-cta--accent-link-color--inverted--focus, var(--rh-theme----accent-link-color--inverted--focus, #ff3333)); }
   :host([inverted].accent) ::slotted(a) {
     color: var(--rh-local-cta--accent-link-color--inverted); }
     :host([inverted].accent) ::slotted(a)::after {
       border-top-color: var(--rh-local-cta--accent-link-color--inverted); }
-  :host([inverted].accent) ::slotted(a[color]) {
-    color: red; }
   :host([inverted].accent) ::slotted(a:visited) {
     color: var(--rh-local-cta--accent-link-color--inverted--visited); }
     :host([inverted].accent) ::slotted(a:visited)::after {

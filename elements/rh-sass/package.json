@@ -14,8 +14,5 @@
       "url": "https://github.com/markcaron"
     }
   ],
-  "license": "ISC",
-  "dependencies": {
-    "breakpoint-sass": "^2.7.1"
-  }
+  "license": "ISC"
 }

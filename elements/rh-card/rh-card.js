@@ -70,3 +70,5 @@ class RhCard extends RHElement {
 }
 
 RHElement.create(RhCard);
+
+export default RhCard;

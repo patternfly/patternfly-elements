@@ -17,19 +17,12 @@ gulp.task("clean", () => {
 
 gulp.task("compile", () => {
   return gulp
-    .src(["./*.js", "!./gulpfile.js", "!./*.story.js"])
+    .src(["./rhelement.js"])
     .pipe(
       replace(
-        /^(import .*?)(['"]\.\.?\/(?!\.\.\/).*)(\.js['"];)$/gm,
+        /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)(\.js['"];)$/gm,
         "$1$2.umd$3"
       )
-    )
-    .pipe(babel())
-    .pipe(uglify())
-    .pipe(
-      rename({
-        suffix: ".umd"
-      })
     )
     .pipe(gulp.dest("./"));
 });

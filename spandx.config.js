@@ -3,7 +3,7 @@ module.exports = {
   port: 1234,
   open: true,
   startPath: "/doc",
-  verbose: false,
+  verbose: !false,
   routes: {
     "/elements": "./elements",
     "/doc": "./doc",

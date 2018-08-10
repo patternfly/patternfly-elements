@@ -1,6 +1,10 @@
 {
   "presets": [
-    ["env", { "modules": "umd" }]
-  ],
-  "moduleId": "RHElement"
+    [
+      "env",
+      {
+        "modules": false
+      }
+    ]
+  ]
 }

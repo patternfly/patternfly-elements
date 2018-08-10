@@ -1,5 +1,15 @@
 {
-  "presets": [
-    ["env", { "modules": "umd" }]
+  "presets": [["env"]],
+  "plugins": [
+    [
+      "transform-es2015-modules-umd",
+      {
+        "globals": {
+          "../rhelement/rhelement.umd.js": "RHElement",
+          "rh-icon": "RHElement.RhIcon"
+        },
+        "exactGlobals": true
+      }
+    ]
   ]
 }

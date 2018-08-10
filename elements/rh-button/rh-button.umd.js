@@ -1,6 +1,6 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define("RhButton", ["exports", "../rhelement/rhelement.umd.js"], factory);
+    define(["exports", "../rhelement/rhelement.umd.js"], factory);
   } else if (typeof exports !== "undefined") {
     factory(exports, require("../rhelement/rhelement.umd.js"));
   } else {

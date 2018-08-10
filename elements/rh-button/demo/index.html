@@ -25,7 +25,14 @@
       <link href="../../rhelement/rhelement-noscript.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../rhelement/rhelement.css" rel="stylesheet">
+    <style type="text/css" media="all">
+body {
+    transition: opacity 0.1618s ease-in-out;
+}
+body[unresolved] {
+    opacity: 0;
+}
+    </style>
 
   </head>
   <body unresolved>

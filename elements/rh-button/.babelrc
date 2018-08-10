@@ -6,12 +6,10 @@
       {
         "globals": {
           "../rhelement/rhelement.umd.js": "RHElement",
-          "./rh-button.js": "RHElement.Rhbutton",
-          "RhButton": "RHElement.RhButton"
+          "rh-button": "RHElement.RhButton"
         },
         "exactGlobals": true
       }
     ]
-  ],
-  "moduleId": "RhButton"
+  ]
 }

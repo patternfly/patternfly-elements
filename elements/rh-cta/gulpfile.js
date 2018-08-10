@@ -12,22 +12,24 @@ const decomment = require("decomment");
 const sass = require("node-sass");
 
 gulp.task("compile", () => {
-  return gulp
-    .src("./rh-cta.js")
-    .pipe(
-      replace(
-        /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)(\.js['"];)$/gm,
-        "$1$2.umd$3"
+  return (
+    gulp
+      .src("./rh-cta.js")
+      .pipe(
+        replace(
+          /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)(\.js['"];)$/gm,
+          "$1$2.umd$3"
+        )
       )
-    )
-    .pipe(babel())
-    .pipe(uglify())
-    .pipe(
-      rename({
-        suffix: ".umd"
-      })
-    )
-    .pipe(gulp.dest("./"));
+      .pipe(babel())
+      // .pipe(uglify())
+      .pipe(
+        rename({
+          suffix: ".umd"
+        })
+      )
+      .pipe(gulp.dest("./"))
+  );
 });
 
 gulp.task("watch", () => {

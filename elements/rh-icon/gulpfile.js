@@ -10,6 +10,7 @@ const sass = require("node-sass");
 const stripCssComments = require("strip-css-comments");
 const gulpStripCssComments = require("gulp-strip-css-comments");
 const trim = require("gulp-trim");
+const decomment = require("decomment");
 const del = require("del");
 
 const svgSprite = require("gulp-svg-sprite");
@@ -17,7 +18,7 @@ const svgSprite = require("gulp-svg-sprite");
 let watcher;
 
 gulp.task("clean", () => {
-  return del(["./*.compiled.*"]);
+  return del(["./*.umd.*"]);
 });
 
 gulp.task("replaceStyles", () => {
@@ -42,20 +43,24 @@ gulp.task("replaceStyles", () => {
           oneLineFile
         );
 
-        const html = fs
+        let html = fs
           .readFileSync(path.join("./src", templateUrl))
           .toString()
           .trim();
 
-        const cssResult = sass.renderSync({
+        html = decomment(html);
+
+        let cssResult = sass.renderSync({
           file: path.join("./src", styleUrl)
         }).css;
+
+        cssResult = stripCssComments(cssResult).trim();
 
         return `${classStatement}
   get html() {
     return \`
 <style>
-${stripCssComments(cssResult).trim()}
+${cssResult}
 </style>
 
 ${html}\`;
@@ -105,14 +110,14 @@ gulp.task("compile", () => {
     .pipe(
       replace(
         /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)(\.js['"];)$/gm,
-        "$1$2.compiled$3"
+        "$1$2.umd$3"
       )
     )
     .pipe(babel())
     .pipe(uglify())
     .pipe(
       rename({
-        suffix: ".compiled"
+        suffix: ".umd"
       })
     )
     .pipe(gulp.dest("./"));

@@ -1,6 +1,6 @@
 node_modules
 lerna-debug.log
-*.local.compiled.js
+*.local.umd.js
 *.local.js
 .storybook_out
 npm-debug.log

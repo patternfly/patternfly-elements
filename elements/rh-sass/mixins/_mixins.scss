@@ -49,7 +49,7 @@
 }
 
 // Make a CSS arrow
-@mixin rh-arrow($type, $color, $width: 8px, $height: 5px, $pseudo: false) {
+@mixin rh-arrow($type, $width: 8px, $height: 5px, $pseudo: false, $color: inherit) {
   $direction: (
     up: 180deg,
     down: 0deg,
@@ -136,9 +136,10 @@
 /// --rh-local-[component-block][__element][--context][--state][--PropertyCamelCase]
 /// --rh-local-cta--link-color--inverted
 ///
+/// Use with @function rh-var
 /// ---------------------------------------------------------------------------
 ///
 ///                     ↓ component,         ↓ theme,         ↓ fallback
 @mixin rh-define-vars($this-component-var, $this-theme-var, $this-fallback) {
-  --rh-local-#{$this-component-var}: var(--rh-#{$this-component-var}, var(--rh-theme--#{$this-theme-var}, #{$this-fallback}));
+  --rhe-local-#{$this-component-var}: var(--rhe-#{$this-component-var}, var(--rhe-theme--#{$this-theme-var}, #{$this-fallback}));
 }

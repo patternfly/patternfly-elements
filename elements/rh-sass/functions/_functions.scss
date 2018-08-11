@@ -133,5 +133,5 @@
 /// @requires: @mixin rh-define-vars()
 /// @param {String} $this-local-var - Variable name to be used
 @function rh-var($this-local-var) {
-  @return var(--rh-local-#{$this-local-var});
+  @return var(--rhe-local-#{$this-local-var});
 }

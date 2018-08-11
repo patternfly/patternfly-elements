@@ -73,18 +73,22 @@
 
   // Define CSS Vars
   @include rh-define-vars("cta--secondary-BorderRadius",                  "global--border--BorderRadius", 5em);
+  
   // Normal
   @include rh-define-vars("cta--secondary-bg-color",                      "color--transparent",    transparent);
   @include rh-define-vars("cta--secondary-text-color",                    "color--black",          black);
   @include rh-define-vars("cta--secondary-border-color",                  "color--black",          black);
+  
   // Normal hover
   @include rh-define-vars("cta--secondary-bg-color--hover",               "color--black",          black);
   @include rh-define-vars("cta--secondary-text-color--hover",             "color--white",          white);
   @include rh-define-vars("cta--secondary-border-color--hover",           "color--black",          black);
+ 
   // Inverted
   @include rh-define-vars("cta--secondary-bg-color--inverted",            "color--transparent",    transparent);
   @include rh-define-vars("cta--secondary-text-color--inverted",          "color--white",          white);
   @include rh-define-vars("cta--secondary-border-color--inverted",        "color--white",          white);
+ 
   // Inverted hover
   @include rh-define-vars("cta--secondary-bg-color--inverted--hover",     "color--white",          white);
   @include rh-define-vars("cta--secondary-text-color--inverted--hover",   "color--black",          black);
@@ -97,6 +101,7 @@
     padding: $rh-global--spacer--xs $rh-global--spacer--lg;
     border-radius: rh-var("cta--secondary-BorderRadius");
     border: solid $rh-global--border--BorderWidth;
+    
     // Colors:
     border-color: rh-var("cta--secondary-border-color");
     background: rh-var("cta--secondary-bg-color");
@@ -139,6 +144,7 @@
   // normal
   @include rh-define-vars("cta--tertiary-text-color",                  "link-color",         green);
   @include rh-define-vars("cta--tertiary-text-color--hover",           "link-color--hover",  navyBlue);
+  
   // inverted
   @include rh-define-vars("cta--tertiary-text-color--inverted",        "link-color--inverted",             white);
   @include rh-define-vars("cta--tertiary-text-color--inverted--hover", "link-color--inverted--hover",      lightGray);

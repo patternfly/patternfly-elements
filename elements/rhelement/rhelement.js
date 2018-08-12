@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-import * as reveal from "./reveal.js";
+import * as reveal from "./utilities/reveal.js";
 
 class RHElement extends HTMLElement {
   static create(rhe) {

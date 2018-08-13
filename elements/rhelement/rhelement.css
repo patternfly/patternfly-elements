@@ -1,12 +1,12 @@
 body {
-    --rhe-reveal-duration: 0.1618s;
-    --rhe-reveal-delay: 2s;
+    --rh-reveal-duration: 0.1618s;
+    --rh-reveal-delay: 2s;
 
-    transition: opacity var(--rhe-reveal-duration) ease-in-out;
+    transition: opacity var(--rh-reveal-duration) ease-in-out;
 }
 body[unresolved] {
     opacity: 0;
-    animation: reveal var(--rhe-reveal-duration) var(--rhe-reveal-delay) 1 forwards;
+    animation: reveal var(--rh-reveal-duration) var(--rh-reveal-delay) 1 forwards;
 }
 
 @keyframes reveal {

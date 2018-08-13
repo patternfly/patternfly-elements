@@ -20,8 +20,5 @@
   },
   "license": "ISC",
   "dependencies": {},
-  "generator-rhelement-version": "0.3.4",
-  "devDependencies": {
-    "gulp-clean-css": "^3.10.0"
-  }
+  "generator-rhelement-version": "0.3.4"
 }

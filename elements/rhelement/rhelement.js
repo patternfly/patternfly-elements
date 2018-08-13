@@ -100,7 +100,7 @@ class RHElement extends HTMLElement {
   }
 }
 
-reveal.startTimer();
+// reveal.startTimer();
 reveal.autoReveal();
 
 export default RHElement;

@@ -24,6 +24,11 @@ gulp.task("compile", () => {
         "$1$2.umd$3"
       )
     )
+    .pipe(
+      rename({
+        suffix: ".umd"
+      })
+    )
     .pipe(gulp.dest("./"));
 });
 

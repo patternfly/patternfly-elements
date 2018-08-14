@@ -20,8 +20,6 @@ gulp.task("compile", () => {
         "$1$2.umd$3"
       )
     )
-    .pipe(babel())
-    .pipe(uglify())
     .pipe(
       rename({
         suffix: ".umd"

@@ -1,15 +1,4 @@
 {
-  "presets": [["env"]],
-  "plugins": [
-    [
-      "transform-es2015-modules-umd",
-      {
-        "globals": {
-          "../rhelement/rhelement.umd.js": "RHElement",
-          "rh-number": "RHElement.RhNumber"
-        },
-        "exactGlobals": true
-      }
-    ]
-  ]
+  "presets": [["env", { "modules": false }]],
+  "plugins": ["external-helpers"]
 }

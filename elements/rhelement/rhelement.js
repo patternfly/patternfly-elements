@@ -1,3 +1,5 @@
+import { startTimer, autoReveal } from "./reveal.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -19,8 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import * as reveal from "./reveal.js";
 
 class RHElement extends HTMLElement {
   static create(rhe) {
@@ -100,7 +100,8 @@ class RHElement extends HTMLElement {
   }
 }
 
-reveal.startTimer();
-reveal.autoReveal();
+startTimer();
+autoReveal();
 
 export default RHElement;
+//# sourceMappingURL=rhelement.js.map

@@ -5,9 +5,9 @@ import commonjs from "rollup-plugin-commonjs";
 import { uglify } from "rollup-plugin-uglify";
 
 const ESM_config = {
-  input: "rhelement.js",
+  input: "rh-number.js",
   output: {
-    file: "rhelement.js",
+    file: "rh-number.js",
     format: "esm",
     sourcemap: true
   },
@@ -16,12 +16,14 @@ const ESM_config = {
 };
 
 const UMD_config = {
-  input: "rhelement.umd.js",
+  input: "rh-number.umd.js",
   output: {
-    file: "rhelement.umd.js",
+    file: "rh-number.umd.js",
     format: "umd",
     sourcemap: true,
-    name: "RHElement"
+    name: "RhNumber",
+    globals: id => (id.endsWith("rhelement.js") ? "RHElement" : undefined)
+    // "../../rhelement/rhelement.umd.js": "RHElement"
   },
   plugins: [
     resolve(),
@@ -30,7 +32,8 @@ const UMD_config = {
       // exclude: "node_modules/**" // only transpile our source code
     }),
     uglify()
-  ]
+  ],
+  external: id => /^\.\.?\/[^.]/.test(id)
 };
 
 export default [ESM_config, UMD_config];

@@ -21,7 +21,7 @@
  */
 
 import RHElement from "../rhelement/rhelement.js";
-import "../../numeral/numeral.js";
+import numeral from "numeral";
 
 // easy aliases for common format strings
 const types = {

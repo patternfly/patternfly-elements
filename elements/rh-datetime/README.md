@@ -2,16 +2,6 @@
 
 [![Build Status](https://travis-ci.org/RHElements/rh-datetime.svg?branch=master)](https://travis-ci.org/RHElements/rh-datetime)
 
-## Dependencies
-
-Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
-
-    npm install -g polyserve web-component-tester
-
-## Dev
-
-    npm start
-
 ## Test
 
     npm run test
@@ -22,7 +12,9 @@ Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-compone
 
 ## Demo
 
-Run `npm start` and the Polymer CLI will start a server and open your default browser to the demo page of the element.
+From the RHElements root directory, run:
+
+    npm start
 
 ## Code style
 
@@ -30,5 +22,4 @@ Accordion (and all RHElements) use [Prettier][prettier] to auto-format JS and JS
 
 [prettier]: https://github.com/prettier/prettier/
 [prettier-ed]: https://github.com/prettier/prettier/#editor-integration
-[polyserve]: https://github.com/Polymer/polyserve
 [web-component-tester]: https://github.com/Polymer/web-component-tester

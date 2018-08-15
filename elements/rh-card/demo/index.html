@@ -19,19 +19,21 @@
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 
     <!--
       if support for IE11 IS NOT needed, just include the web components
       that you want
     -->
-    <script src='../../rhelement/rhelement.umd.js'></script>
-    <script src='../rh-card.umd.js'></script>
+    <script>
+        require(['../rh-card.umd.js']);
+    </script>
 
     <noscript>
-      <link href="../../rhelement/rhelement-noscript.css" rel="stylesheet">
+      <link href="../../rhelement/rhelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../rhelement/rhelement.css" rel="stylesheet">
+    <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
 
     <!--
       if support IS needed for IE11

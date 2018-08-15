@@ -9,9 +9,8 @@
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-
-    <script src="../../rhelement/rhelement.umd.js"></script>
-    <script src="../rh-button.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../rh-button.umd.js'])</script>
 
     <style>
     input {
@@ -22,17 +21,10 @@
     </style>
 
     <noscript>
-      <link href="../../rhelement/rhelement-noscript.css" rel="stylesheet">
+      <link href="../../rhelement/rhelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <style type="text/css" media="all">
-body {
-    transition: opacity 0.1618s ease-in-out;
-}
-body[unresolved] {
-    opacity: 0;
-}
-    </style>
+    <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
 
   </head>
   <body unresolved>

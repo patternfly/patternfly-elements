@@ -1,16 +1,14 @@
 # RHElements Number Element
 
-## Dev
-
-    npm run dev
-
 ## Build
 
     npm run build
 
 ## Demo
 
-Run http-server or python SimpleHTTPServer in the root directory of the component
+From the RHElements root directory, run:
+
+    npm start
 
 ## Code style
 

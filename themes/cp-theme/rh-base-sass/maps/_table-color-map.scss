@@ -1,0 +1,7 @@
+$rh-global--color-map--table: (
+    table-border: (
+        default: $rh-global--border--BorderColor,
+        light: $rh-global--border--BorderColor--light,
+        dark: $rh-global--border--BorderColor--dark
+    )
+);

@@ -1,0 +1,177 @@
+//
+// Color vars
+//
+
+// ========================================================================
+// CORPORATE "CRAYOLA" COLORS
+// ========================================================================
+$rh-global--color--white:             $pf-color-white !default;
+$rh-global--color--black:             #1a1a1a !default; // We don't use true black on the web.
+$rh-global--color--red:               $pf-color-red-100 !default; // Not to be used as a background color (except in site footer) or as an error color.
+
+$rh-global--color--gray-gainsboro:    #dcdcdc !default;  // Official color name
+$rh-global--color--gray-space:        #4c4c4c !default;  // Official color name Outer Space.
+
+
+// ========================================================================
+// SECONDARY, ACCENT & "CRAYOLA" COLORS
+// ========================================================================
+$rh-global--color--blue-sky:          #a3dbe8 !default;
+$rh-global--color--blue-sky-deep:     $pf-color-light-blue-400 !default;
+$rh-global--color--gold:              $pf-color-gold-400 !default;
+$rh-global--color--green:             $pf-color-light-green-400 !default;
+$rh-global--color--purple:            #7551a6 !default;
+$rh-global--color--teal:              $pf-color-cyan-400 !default;
+$rh-global--color--teal-dark:         #004153 !default;     // Brand as "Dark Blue"
+
+// RH-specific Accents
+$rh-global--color--blue-peacock:      $pf-color-blue-400 !default;
+$rh-global--color--orange:            $pf-color-orange-400 !default; // Near match to "Tangerine"
+$rh-global--color--green-verde:       $pf-color-green-400 !default;
+$rh-global--color--gray-charcoal:     #37424a !default;     // Or Big Stone
+$rh-global--color--gray-nickel:       #7a858b !default;     // Or Regent Gray
+$rh-global--color--black-soft:        #252527 !default;     // Or Jaguar?
+
+// RH Reds
+$rh-global--color--red-brick:         $pf-color-red-200 !default; // Or Bright Blood Red
+$rh-global--color--red-maroon:        #820000 !default;     // Or Burgundy, or Dark Red
+$rh-global--color--red-garnet:        #6e0000 !default;     // Or Rosewood or Blood or Currant
+$rh-global--color--red-morello:       #5a0000 !default;     // Near match to Chocolate Cosmos
+$rh-global--color--red-red-wine:      #460000 !default;
+$rh-global--color--red-daredevil:     #320000 !default;
+
+// RH Grays
+$rh-global--color--gray-moon:         #f0f0f0 !default;      // Made up name.
+$rh-global--color--gray-platinum:     #e7e7e7 !default;      // Personal choice, close to Gainsboro. Was #e6e6e6, but fails contrast ratio w/ link colors.
+$rh-global--color--gray-mercury:      #d2d2d2 !default;      // Official name: Light Gray
+$rh-global--color--gray-fog:          #bebebe !default;
+$rh-global--color--gray-stone:        #aaa !default;
+$rh-global--color--gray-storm:        #969696 !default;      // Near official name: Spanish Gray
+$rh-global--color--gray-battleship:   #828282 !default;      // Near official name: Battleship Gray
+$rh-global--color--gray-batman:       #6e6e6e !default;      // Official name: Dim Gray
+$rh-global--color--gray-umbra:        #5a5a5a !default;      // Near official name: Davy's Gray Or Mortar
+$rh-global--color--gray-iron:         #464646 !default;      // Near Sherwin Williams.
+$rh-global--color--gray-night:        #333 !default;         // Used to be #323232. Simplified to match text-color.
+$rh-global--color--black-nero:        #1e1e1e !default;      // Vader?
+
+// CP Grays
+$rh-global--color--gray-nimbus:       $pf-color-black-200 !default; // Border-color!
+$rh-global--color--gray-silver:       #ccc !default;         // Used to be called $misty
+
+// CP-specific
+$rh-global--color--blue-rain:         #264a60 !default;
+$rh-global--color--blue-denim:        #06c !default;         // Or navy-bright?
+$rh-global--color--blue-navy:         #004080 !default;
+$rh-global--color--blue-azure:        #0076e0 !default;
+
+$rh-global--color--blue-maya:         #73bcf7 !default;      // Link
+$rh-global--color--blue-dodger:       #2b9af3 !default;      // Hover
+$rh-global--color--purple-amethyst:   #967abd !default;
+$rh-global--color--purple-rain:       #3b0083 !default;      // Old RH purple.
+
+
+// ========================================================================
+// PRODUCT COLORS
+// ========================================================================
+$rh-global--color--product-lines: (
+  default:             $rh-global--color--black-soft,
+  storage:             $rh-global--color--gold,
+  storage--dark:       $rh-global--color--orange,
+  infrastructure:      $rh-global--color--blue-sky-deep, // Used to be linux-platforms
+  infrastructure--dark:$rh-global--color--blue-peacock,
+  app-dev:             $rh-global--color--green,
+  app-dev--dark:       $rh-global--color--green-verde,
+  support:             $rh-global--color--gray-nickel,
+  support--dark:       $rh-global--color--gray-charcoal
+) !default;
+
+
+// ========================================================================
+//  PALETTES
+// ========================================================================
+
+// PALETTE REDS
+$rh-global--color--red-dark1:         $rh-global--color--red-brick !default;
+$rh-global--color--red-dark2:         $rh-global--color--red-maroon !default;
+$rh-global--color--red-dark3:         $rh-global--color--red-garnet !default;
+$rh-global--color--red-dark4:         $rh-global--color--red-morello !default;
+$rh-global--color--red-dark5:         $rh-global--color--red-red-wine !default;
+$rh-global--color--red-dark6:         $rh-global--color--red-daredevil !default;
+
+// PALETTE GRAYS: lightest to darkest
+$rh-global--color--gray1:             $rh-global--color--gray-moon !default;
+$rh-global--color--gray2:             $rh-global--color--gray-platinum !default;
+$rh-global--color--gray3:             $rh-global--color--gray-mercury !default;
+$rh-global--color--gray4:             $rh-global--color--gray-fog !default;
+$rh-global--color--gray5:             $rh-global--color--gray-stone !default;
+$rh-global--color--gray6:             $rh-global--color--gray-storm !default;
+$rh-global--color--gray7:             $rh-global--color--gray-battleship !default;
+$rh-global--color--gray8:             $rh-global--color--gray-batman !default;
+$rh-global--color--gray9:             $rh-global--color--gray-umbra !default;
+$rh-global--color--gray10:            $rh-global--color--gray-iron !default;
+$rh-global--color--gray11:            $rh-global--color--gray-night !default;
+$rh-global--color--gray12:            $rh-global--color--black-nero !default;
+
+
+// ========================================================================
+// UI Colors
+// Where context switches...
+// ========================================================================
+
+$rh-global--text-color:           $rh-global--color--gray-night !default; // #333
+$rh-global--text-color--inverted: $rh-global--color--white !default;
+
+// Text links on _white_ or _light_ backgrounds
+$rh-global--link-color:           $rh-global--color--blue-denim !default;    // Link
+$rh-global--link-color--hover:    $rh-global--color--blue-navy !default;     // Hover
+$rh-global--link-color--focus:    $rh-global--color--blue-navy !default;     // Focus
+$rh-global--link-color--active:   $rh-global--color--blue-navy !default;     // Active
+$rh-global--link-color--visited:  $rh-global--color--purple !default;        // :Visited
+
+// Text links on _dark grey_ or _black_ backgrounds
+$rh-global--link-color--inverted:          $rh-global--color--blue-maya !default; // Link
+$rh-global--link-color--inverted--hover:   $rh-global--color--blue-dodger !default; // Hover
+$rh-global--link-color--inverted--focus:   $rh-global--color--blue-dodger !default; // Focus
+$rh-global--link-color--inverted--active:  $rh-global--color--blue-dodger !default; // Active
+$rh-global--link-color--inverted--visited: $rh-global--color--purple-amethyst !default;
+
+// UI elements, like buttons
+$rh-global--ui-element-color:           $rh-global--color--blue-azure !default;   // Smaller elements, like solid buttons
+$rh-global--ui-element-color--hover:    $rh-global--color--blue-navy !default;
+$rh-global--ui-element-color--focus:    $rh-global--color--blue-navy !default;
+$rh-global--ui-element-color--active:   $rh-global--color--blue-navy !default;
+
+// States, e.g. Filter button on search.
+// Questions here...
+$rh-global--hover-state--Color:               $rh-global--color--red !default;
+$rh-global--hover-state--BackgroundColor:     $rh-global--color--red-maroon !default;
+$rh-global--hover-state--BorderColor:         $rh-global--color--red-maroon !default;
+// Questions here...
+$rh-global--active-state--Color:              $rh-global--color--blue-navy !default;
+$rh-global--active-state--BackgroundColor:    $pf-color-blue-100 !default;
+$rh-global--active-state--BorderColor:        $pf-color-blue-100 !default;
+// Questions here...
+$rh-global--disabled-state--Color:              $rh-global--color--gray-stone !default;
+$rh-global--disabled-state--BackgroundColor:    $rh-global--color--gray-mercury !default;
+$rh-global--disabled-state--BorderColor:        $rh-global--color--gray-mercury !default;
+
+
+// ========================================================================
+// Theme colors
+// ========================================================================
+
+// I think these are misplaced. Should be in cp-theme instead.
+// $rh-global--primary-color:         $rh-global--color--red !default;
+// $rh-global--secondary-color:       $pf-color-black-600 !default;
+//
+// $rh-global--light-color:         $pf-color-black-100 !default;
+// $rh-global--dark-color:          $pf-color-black-800 !default;
+
+$rh-global--success-color:         $pf-color-green-100 !default;
+$rh-global--success-color--dark:   $rh-global--color--green !default;
+$rh-global--info-color:            $pf-color-cyan-100 !default;
+$rh-global--info-color--dark:      $rh-global--color--teal !default;
+$rh-global--warning-color:         $pf-color-orange-100 !default;
+$rh-global--warning-color--dark:   $rh-global--color--orange !default;
+$rh-global--danger-color:          $rh-global--color--red !default;
+$rh-global--danger-color--dark:    $rh-global--color--red-maroon !default;

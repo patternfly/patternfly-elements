@@ -14,6 +14,10 @@ function hasTests(element) {
   return fs.existsSync(path);
 }
 
+function notAll(element) {
+  return element !== "all";
+}
+
 function testPathAbs(element) {
   return path.join(elementsDir, element, "test", "index.html");
 }
@@ -35,7 +39,9 @@ function formatPaths(paths) {
   return paths.map(path => `        "${path}"`).join(",\n");
 }
 
-const withTests = _(elementNames).filter(hasTests);
+const withTests = _(elementNames)
+  .filter(hasTests)
+  .filter(notAll);
 
 const testRelPaths = withTests.map(testPathRel("..")).value();
 

@@ -20,6 +20,8 @@
  * SOFTWARE.
  */
 
+import * as reveal from "./utilities/reveal.js";
+
 class RHElement extends HTMLElement {
   static create(rhe) {
     window.customElements.define(rhe.tag, rhe);
@@ -102,5 +104,8 @@ class RHElement extends HTMLElement {
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));
   }
 }
+
+// reveal.startTimer();
+reveal.autoReveal();
 
 export default RHElement;

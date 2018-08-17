@@ -65,16 +65,16 @@
       RHElement.create(TestElementDelayRender);
 
       suite('<rhelement>', () => {
-        test("it should set the rh-type attribute if passed an type in the constructor", () => {
+        test("it should set the rh-type attribute if passed a type in the constructor", () => {
           const testElementEl = document.createElement("test-element");
           testElementEl.id = "test-element";
           document.body.appendChild(testElementEl);
 
           const testElement = document.querySelector("test-element");
           assert.isTrue(testElement.hasAttribute("rh-type"));
-          assert.equal(testElement.getAttribute("rh-type"), "content");
+          assert.equal(testElement.getAttribute("rh-type"), RHElement.RhTypes.Content);
 
-          document.body.removeChild(document.querySelector("#test-element"));
+          document.body.removeChild(testElementEl);
         });
 
         test("it should append the template to the shadow root in the constructor", () => {
@@ -96,8 +96,8 @@
 
           assert.isNull(testElementDelayRenderShadowRoot.querySelector("div"));
 
-          document.body.removeChild(document.querySelector("#test-element"));
-          document.body.removeChild(document.querySelector("#test-element-delay-render"));
+          document.body.removeChild(testElementEl);
+          document.body.removeChild(testElementDelayRenderEl);
         });
 
         test("it should append the template to the shadow root when the render method is called", done => {
@@ -110,13 +110,13 @@
             const testElementDelayRenderShadowRoot = testElementDelayRender.shadowRoot;
             const divs = testElementDelayRenderShadowRoot.querySelectorAll("div");
 
-            assert.equal(divs.length, 3);
+            assert.lengthOf(divs, 3);
 
             [...divs].forEach((div, index) => {
               assert.equal(div.textContent, colors[index]);
             });
 
-            document.body.removeChild(document.querySelector("#test-element-delay-render"));
+            document.body.removeChild(testElementDelayRenderEl);
             done();
           });
         });

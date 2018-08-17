@@ -17,9 +17,18 @@ gulp.task("clean", () => {
 
 gulp.task("compile", () => {
   return gulp
-    .src(["./*.js", "./utilities/*.js", "!./gulpfile.js", "!./*.story.js"], {
-      base: "."
-    })
+    .src(
+      [
+        "./*.js",
+        "./utilities/*.js",
+        "!./gulpfile.js",
+        "!./*.story.js",
+        "!./rollup.config.js"
+      ],
+      {
+        base: "."
+      }
+    )
     .pipe(
       replace(
         /^(import .*?)(['"]\.\.?\/(?!\.\.\/).*)(\.js['"];)$/gm,

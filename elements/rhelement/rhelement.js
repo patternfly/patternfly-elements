@@ -1,3 +1,5 @@
+import { autoReveal } from "./utilities/reveal.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -97,6 +99,8 @@ class RHElement extends HTMLElement {
     this[name] = value;
   }
 }
+
+autoReveal();
 
 export default RHElement;
 //# sourceMappingURL=rhelement.js.map

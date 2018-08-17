@@ -1,1 +1,44 @@
-!function(e,n){if("function"==typeof define&&define.amd)define(["exports"],n);else if("undefined"!=typeof exports)n(exports);else{var o={};n(o),e.reveal=o}}(this,function(e){"use strict";function n(){console.log("[reveal] elements ready, revealing the body"),window.document.body.removeAttribute("unresolved")}function o(){console.log("[reveal] web components ready"),n()}Object.defineProperty(e,"__esModule",{value:!0}),e.reveal=n,e.autoReveal=function(){window.WebComponents.ready?o():window.addEventListener("WebComponentsReady",o)}});
+/*
+ * Copyright 2018 Red Hat, Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+export function reveal() {
+  console.log(`[reveal] elements ready, revealing the body`);
+  window.document.body.removeAttribute("unresolved");
+}
+
+export function autoReveal() {
+  // If Web Components are already ready, run the handler right away.  If they
+  // are not yet ready, wait.
+  //
+  // see https://github.com/github/webcomponentsjs#webcomponents-loaderjs for
+  // info about web component readiness events
+  if (window.WebComponents.ready) {
+    handleWebComponentsReady();
+  } else {
+    window.addEventListener("WebComponentsReady", handleWebComponentsReady);
+  }
+}
+
+function handleWebComponentsReady() {
+  console.log("[reveal] web components ready");
+  reveal();
+}

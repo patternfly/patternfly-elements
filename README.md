@@ -58,7 +58,7 @@ To test all RHElements, run `npm test` from the root of the repo. If you only wa
 
 ```
 $ cd elements/rh-card
-$ npm test               # DOESN'T WORK
+$ npm test
 ```
 
 Also, if your tests are failing and you want access to a live browser to investigate why, the following flag will keep the browser open.

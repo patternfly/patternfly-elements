@@ -12,7 +12,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/rollup -c",
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/rollup -c && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "start": "../../node_modules/.bin/gulp dev & npm run serve",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json node_modules/@rhelements/rhelement/test/"
   },

@@ -60,11 +60,21 @@ p {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  // I think margin top & bottom should vary based on font size for better vertical rhythm.
+  // if we set sass variables for header margins, math can handle the vertical rhythm: 
+  // https://www.sassmeister.com/gist/084c2e3d7b99f4241f0030ada27c12de
   margin-top: var(--rhe-theme--spacer, $rh-global--spacer); // Thinking about whether this should be 0 or not.
   margin-bottom: var(--rhe-theme--spacer, $rh-global--spacer);
-  font-weight: var(--rhe-theme--FontWeight--bold, $rh-global--FontWeight--bold);
+  font-weight: var(--rhe-theme--FontWeight--bold, $rh-global--FontWeight--bold); // remove and define on individual items to avoid overrides
   text-rendering: auto;
 }
+
+// can we simplify so the items below only have size & weight:
+// h1, h2, h3, h4 {
+//   line-height: var(--rhe-theme--LineHeight--sm, 1.2);  }
+// 
+// h5, h6 {
+//   line-height: var(--rhe-theme--LineHeight, 1.5); }
 
 h1 {
   font-size: var(--rhe-theme--FontSize--heading--xl, $rh-global--FontSize--heading--xl);

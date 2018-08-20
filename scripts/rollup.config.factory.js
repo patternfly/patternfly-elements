@@ -36,7 +36,8 @@ function umdConfig({ elementName, className } = {}) {
         // exclude: "node_modules/**" // only transpile our source code
       }),
       uglify()
-    ]
+    ],
+    external: id => id.startsWith("..")
   };
 }
 

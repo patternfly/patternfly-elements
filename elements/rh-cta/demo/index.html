@@ -13,9 +13,12 @@
     <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
 
     <style>
-      /* DEMO STYLES */
       body {
         font: 16px/1.5 Overpass, Arial, sans-sans-serif;
+      }
+
+      p {
+        margin-bottom: 60px !important;
       }
 
       rh-cta + rh-cta {
@@ -27,33 +30,68 @@
         background: #333;
       }
 
-      :root {
-        --rhe-theme--global--border--BorderRadius: 0;
-        --rhe-theme--color--primary: #C00;   /* Shouldnt this come from cp-themeset? */
-        --rhe-theme--link-color: #06c;   /* Shouldnt this come from cp-themeset? */
+      .unfilled-demo {
+        padding: 16px;
+        background: #d2d2d2;
       }
-
+    </style>
+    <style>
+    :root {
+      /* --rh-theme--link-color: orange;
+      --rh-theme--primary-color: green;
+      --rh-theme--cta--primary-color--solid: pink; */
+    }
     </style>
   </head>
-
   <body>
     <h1>&lt;rh-cta&gt;</h1>
 
-    <h2>CTA Styles</h2>
+    <h2>Defaults</h2>
     <p>
-      <rh-cta><a href="#">Default link</a></rh-cta>
+      <rh-cta><a href="#">Default</a></rh-cta>
       <rh-cta class="primary"><a href="#">Primary</a></rh-cta>
       <rh-cta class="secondary"><a href="#">Secondary</a></rh-cta>
-      <rh-cta class="tertiary"><a href="#">Tertiary</a></rh-cta>
+      <rh-cta class="accent"><a href="#">Accent</a></rh-cta>
     </p>
 
-    <h2>CTA Styles - Inverted</h2>
+    <h2>Defaults Inverted</h2>
     <p class="inverted-demo">
-      <rh-cta inverted><a href="#">Default link</a></rh-cta>
+      <rh-cta inverted><a href="#">Default</a></rh-cta>
       <rh-cta class="primary" inverted><a href="#">Primary</a></rh-cta>
       <rh-cta class="secondary" inverted><a href="#">Secondary</a></rh-cta>
-      <rh-cta class="tertiary" inverted><a href="#">Tertiary</a></rh-cta>
+      <rh-cta class="accent" inverted><a href="#">Accent</a></rh-cta>
     </p>
 
+    <h2>Solids</h2>
+    <p>
+      <rh-cta solid><a href="#">Default</a></rh-cta>
+      <rh-cta class="primary" solid><a href="#">Primary</a></rh-cta>
+      <rh-cta class="secondary" solid><a href="#">Secondary</a></rh-cta>
+      <rh-cta class="accent" solid><a href="#">Accent</a></rh-cta>
+    </p>
+
+    <h2>Solids Inverted</h2>
+    <p class="inverted-demo">
+      <rh-cta solid inverted><a href="#">Default</a></rh-cta>
+      <rh-cta class="primary" solid inverted><a href="#">Primary</a></rh-cta>
+      <rh-cta class="secondary" solid inverted><a href="#">Secondary</a></rh-cta>
+      <rh-cta class="accent" solid inverted><a href="#">Accent</a></rh-cta>
+    </p>
+
+    <h2>Bordered</h2>
+    <p>
+      <rh-cta solid inverted bordered><a href="#">Default</a></rh-cta>
+      <rh-cta class="primary" solid inverted bordered><a href="#">Primary</a></rh-cta>
+      <rh-cta class="secondary" solid inverted bordered><a href="#">Secondary</a></rh-cta>
+      <rh-cta class="accent" solid inverted bordered><a href="#">Accent</a></rh-cta>
+    </p>
+
+    <h2>Unfilled</h2>
+    <p class="unfilled-demo">
+      <rh-cta solid inverted unfilled><a href="#">Default</a></rh-cta>
+      <rh-cta class="primary" solid inverted unfilled><a href="#">Primary</a></rh-cta>
+      <rh-cta class="secondary" solid inverted unfilled><a href="#">Secondary</a></rh-cta>
+      <rh-cta class="accent" solid inverted unfilled><a href="#">Accent</a></rh-cta>
+    </p>
   </body>
 </html>

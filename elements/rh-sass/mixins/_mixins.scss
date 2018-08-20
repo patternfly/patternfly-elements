@@ -49,7 +49,7 @@
 }
 
 // Make a CSS arrow
-@mixin rh-arrow($type, $width: 8px, $height: 5px, $pseudo: false, $color: inherit) {
+@mixin rh-arrow($type, $color, $width: 8px, $height: 5px, $pseudo: false) {
   $direction: (
     up: 180deg,
     down: 0deg,
@@ -111,12 +111,13 @@
   }
 }
 
-
 /// RH Define Vars
 /// Helps define the CSS Var madness, making it easier for devs!
-/// @param {String} $this-component-var - Component specific variable name
-/// @param {String} $this-theme-var - Theme variable name
-/// @param {String} $this-fallback - Fallback color
+/// @param {Map} $map - A map containing the variable description as key and all fallbacks
+/// @param {String} $variable-name - Component specific variable name, default is blank
+/// @param {String} $prefix - The component's associated prefix, this typically identifies where it is used, defaults to rhe
+/// @param {String} $namespace - The namespace for the local component's variable, defaults to local
+/// @param {Boolean} $use-theme - Use the default theme syntax as the first fallback option, defaults to true
 ///
 /// ---------------------------------------------------------------------------
 ///
@@ -139,7 +140,37 @@
 /// Use with @function rh-var
 /// ---------------------------------------------------------------------------
 ///
-///                     ↓ component,         ↓ theme,         ↓ fallback
-@mixin rh-define-vars($this-component-var, $this-theme-var, $this-fallback) {
-  --rhe-local-#{$this-component-var}: var(--rhe-#{$this-component-var}, var(--rhe-theme--#{$this-theme-var}, #{$this-fallback}));
+@mixin rh-define-vars($map, $variable-name: "", $prefix: rh, $namespace: local, $use-theme: true) {
+  // If the variable name was provided, postfix it with --
+  @if $variable-name != "" {
+    $variable-name: "#{$variable-name}--";
+  }
+  
+  // Iterate over the provided style map
+  @each $label, $fallbacks in $map {
+    // Initialize the fallback value
+    $fallback: "";
+    // Iterate over fallbacks in reverse
+    @for $i from length($fallbacks)*-1 through -1 {
+      // Count is the absolute value of the loop
+      $c: abs($i);
+      // Get the item in the list by count
+      $item: nth($fallbacks, $c);
+      // If the count is the same as the length of the list, no special styles
+      @if $c == length($fallbacks) {
+        $fallback: "#{$item}#{$fallback}";
+      } @else {
+        // Otherwise wrap them in a var
+        $fallback: "var(#{$item}, #{$fallback})";
+      }
+    }
+
+    // If we want to use the default theme label, add that to the fallback string
+    @if $use-theme {
+      $fallback: var(--#{$prefix}-theme--#{$variable-name}#{$label}, #{$fallback});
+    }
+    
+    // Finally print the CSS variable in all it's glory
+    --#{$prefix}-#{$namespace}-#{$variable-name}#{$label}: var(--#{$prefix}-#{$variable-name}#{$label}, #{$fallback});
+  }
 }

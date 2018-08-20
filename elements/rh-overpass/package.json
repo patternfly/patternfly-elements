@@ -1,5 +1,9 @@
 {
   "name": "@rhelements/rh-overpass",
+  "rhelement": {
+    "className": "RhOverpass",
+    "elementName": "rh-overpass"
+  },
   "version": "0.1.4",
   "description": "Overpass element for RHElements",
   "repository": {
@@ -8,7 +12,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "../../node_modules/.bin/gulp",
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/rollup -c",
     "dev": "../../node_modules/.bin/gulp dev"
   },
   "author": "CPFED",

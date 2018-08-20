@@ -1,5 +1,9 @@
 {
   "name": "@rhelements/cp-themeset",
+  "rhelement": {
+    "className": "CpThemeset",
+    "elementName": "cp-themeset"
+  },
   "version": "0.3.2",
   "description": "cp-themeset for Red Hat's Customer Portal and RHElements",
   "repository": {
@@ -7,7 +11,7 @@
     "url": "https://github.com/RHElements/cp-themeset.git"
   },
   "scripts": {
-    "build": "../../node_modules/.bin/gulp",
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/rollup -c",
     "dev": "../../node_modules/.bin/gulp dev"
   },
   "contributors": [

@@ -1,0 +1,48 @@
+import resolve from "rollup-plugin-node-resolve";
+import babel from "rollup-plugin-babel";
+import commonjs from "rollup-plugin-commonjs";
+import { uglify } from "rollup-plugin-uglify";
+
+function esmConfig({ elementName, className } = {}) {
+  const esmFilename = `${elementName}.js`;
+
+  return {
+    input: esmFilename,
+    output: {
+      file: esmFilename,
+      format: "esm",
+      sourcemap: true
+    },
+    plugins: [resolve(), commonjs()],
+    external: id => id.startsWith(".")
+  };
+}
+
+function umdConfig({ elementName, className } = {}) {
+  const umdFilename = `${elementName}.umd.js`;
+
+  return {
+    input: umdFilename,
+    output: {
+      file: umdFilename,
+      format: "umd",
+      sourcemap: true,
+      name: className
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      babel({
+        // exclude: "node_modules/**" // only transpile our source code
+      }),
+      uglify()
+    ]
+  };
+}
+
+export default function factory({ elementName, className } = {}) {
+  return [
+    esmConfig({ elementName, className }),
+    umdConfig({ elementName, className })
+  ];
+}

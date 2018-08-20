@@ -1,5 +1,9 @@
 {
   "name": "@rhelements/rhelement",
+  "rhelement": {
+    "className": "RHElement",
+    "elementName": "rhelement"
+  },
   "version": "0.0.4",
   "description": " element for RHElements",
   "repository": {

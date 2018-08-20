@@ -4,7 +4,7 @@
     "start": "spandx",
     "lerna": "lerna",
     "test": "npm run build && wct --configFile wct.conf.json test/index.html",
-    "build": "lerna run build --stream",
+    "build": "lerna run build",
     "bootstrap": "lerna bootstrap --hoist",
     "postinstall": "npm run bootstrap",
     "precommit": "npm run test-suite-inject > /dev/null && lint-staged",

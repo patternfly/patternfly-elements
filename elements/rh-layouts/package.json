@@ -11,7 +11,7 @@
     "url": ""
   },
   "scripts": {
-    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/rollup -c",
+    "build": "../../node_modules/.bin/gulp",
     "dev": "../../node_modules/.bin/gulp dev"
   },
   "contributors": [

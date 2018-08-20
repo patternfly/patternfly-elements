@@ -13,8 +13,6 @@ gulp.task("clean", () => {
 gulp.task("compile", () => {
   return gulp
     .src(["./*.js", "!./gulpfile.js"])
-    .pipe(babel())
-    .pipe(uglify())
     .pipe(
       rename({
         suffix: ".umd"

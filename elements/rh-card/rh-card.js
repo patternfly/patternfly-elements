@@ -1,3 +1,5 @@
+import RHElement from "../rhelement/rhelement.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -19,8 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import RHElement from "../rhelement/rhelement.js";
 
 class RhCard extends RHElement {
   get html() {
@@ -72,3 +72,4 @@ class RhCard extends RHElement {
 RHElement.create(RhCard);
 
 export default RhCard;
+//# sourceMappingURL=rh-card.js.map

@@ -1,3 +1,5 @@
+import RHElement from "../rhelement/rhelement.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -19,8 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import RHElement from "../rhelement/rhelement.js";
 
 class RhCta extends RHElement {
   get html() {
@@ -254,3 +254,4 @@ class RhCta extends RHElement {
 RHElement.create(RhCta);
 
 export default RhCta;
+//# sourceMappingURL=rh-cta.js.map

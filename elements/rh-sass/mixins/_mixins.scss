@@ -140,7 +140,7 @@
 /// Use with @function rh-var
 /// ---------------------------------------------------------------------------
 ///
-@mixin rh-define-vars($map, $variable-name: $component, $prefix: rh, $namespace: local, $custom-theme: true) {
+@mixin rh-define-vars($map, $variable-name: $component, $prefix: "rh", $namespace: "local", $custom-theme: true) {
   // If the variable name was provided, postfix it with --
   @if $variable-name != "" {
     $variable-name: "#{$variable-name}--";

@@ -88,11 +88,11 @@ $rh-cta--accent-text-color--solid--hover:   $rh-global--color--white;
   display: inline-block;
 
   // Define CSS Vars
-  $cta-spacing: (
+  $cta-defaults-custom: (
     "spacing": --rh-theme--spacing--xxs $rh-cta__arrow--spacer
   );
 
-  @include rh-define-vars($cta-spacing, $variable-name: "cta__arrow", $use-theme: false);
+  @include rh-define-vars($cta-defaults-custom, $variable-name: "cta__arrow", $custom-theme: true);
 
   $cta-defaults: (
     "link-color": $rh-cta--default-color,
@@ -186,7 +186,7 @@ $rh-cta--accent-text-color--solid--hover:   $rh-global--color--white;
 
 // CTA Solid
 :host([solid]) {
-  $cta-solid-styles: (
+  $cta-solid: (
     "solid--padding-y": --rh-theme--spacing--xs $rh-cta--solid--padding-y,
     "solid--padding-x": --rh-theme--spacing--lg $rh-cta--solid--padding-x,
     "solid--BorderRadius": --rh-theme--cta--BorderRadius $rh--cta--solid--BorderRadius,
@@ -197,7 +197,7 @@ $rh-cta--accent-text-color--solid--hover:   $rh-global--color--white;
     "default-text-color--solid--hover": --rh-theme--default-text-color--hover $rh-cta--default-text-color--solid--hover,
   );
 
-  @include rh-define-vars($cta-solid-styles);
+  @include rh-define-vars($cta-solid, $custom-theme: true);
 
   &::slotted(a) {
     display: inline-block;
@@ -262,163 +262,154 @@ $rh-cta--accent-text-color--solid--hover:   $rh-global--color--white;
 
 
 // CTA Default: Primary, secondary, and accent
-$supported-types: "" primary secondary accent;
+$supported-types: primary secondary accent;
 
 // Loop over the supported types to create default styles and inverted set
 @each $type in $supported-types {
-  @if $type != "" {
-    $class: ".#{$type}";
-    $label: "#{$type}-";
-  } @else {
-    $class: "";
-    $type: default;
-  }
-
-  :host(#{$class}) {
+  :host(.#{$type}) {
     // Define CSS Vars
     $cta-styles: (
-      "#{$label}link-color": $rh-cta--#{$type}-color,
-      "#{$label}link-color--visited": $rh-cta--#{$type}-color--visited,
-      "#{$label}link-color--hover": $rh-cta--#{$type}-color--hover,
-      "#{$label}link-color--focus": $rh-cta--#{$type}-color--focus,
+      "#{$type}-link-color": $rh-cta--#{$type}-color,
+      "#{$type}-link-color--visited": $rh-cta--#{$type}-color--visited,
+      "#{$type}-link-color--hover": $rh-cta--#{$type}-color--hover,
+      "#{$type}-link-color--focus": $rh-cta--#{$type}-color--focus,
     );
 
     @include rh-define-vars($cta-styles);
 
     & ::slotted(a) {
-      color: rh-var("cta--#{$label}link-color");
+      color: rh-var("cta--#{$type}-link-color");
 
       &::after {
-        @include rh-arrow-color($color: rh-var("cta--#{$label}link-color"));
+        @include rh-arrow-color($color: rh-var("cta--#{$type}-link-color"));
       }
     }
     & ::slotted(a:visited) {
-      color: rh-var("cta--#{$label}link-color--visited");
+      color: rh-var("cta--#{$type}-link-color--visited");
 
       &::after {
-        @include rh-arrow-color($color: rh-var("cta--#{$label}link-color--visited"));
+        @include rh-arrow-color($color: rh-var("cta--#{$type}-link-color--visited"));
       }
     }
     // CTA Default Hover
     & ::slotted(a:hover) {
-      color: rh-var("cta--#{$label}link-color--hover");
+      color: rh-var("cta--#{$type}-link-color--hover");
 
       &::after {
-        @include rh-arrow-color($color: rh-var("cta--#{$label}link-color--hover"));
+        @include rh-arrow-color($color: rh-var("cta--#{$type}-link-color--hover"));
       }
     }
     // CTA Default Focus
     & ::slotted(a:focus) {
-      color: rh-var("cta--#{$label}link-color--focus");
+      color: rh-var("cta--#{$type}-link-color--focus");
 
       &::after {
-        @include rh-arrow-color(rh-var("cta--#{$label}link-color--focus"));
+        @include rh-arrow-color(rh-var("cta--#{$type}-link-color--focus"));
       }
     }
   }
 
   // CTA Default Inverted Default
-  :host([inverted]#{$class}) {
+  :host([inverted].#{$type}) {
     // Define CSS Vars
     $cta-styles-inverted: (
-      "#{$label}link-color--inverted": $rh-cta--#{$type}-color--inverted,
-      "#{$label}link-color--inverted--visited": $rh-cta--#{$type}-color--inverted--visited,
-      "#{$label}link-color--inverted--hover": $rh-cta--#{$type}-color--inverted--hover,
-      "#{$label}link-color--inverted--focus": $rh-cta--#{$type}-color--inverted--focus,
+      "#{$type}-link-color--inverted": $rh-cta--#{$type}-color--inverted,
+      "#{$type}-link-color--inverted--visited": $rh-cta--#{$type}-color--inverted--visited,
+      "#{$type}-link-color--inverted--hover": $rh-cta--#{$type}-color--inverted--hover,
+      "#{$type}-link-color--inverted--focus": $rh-cta--#{$type}-color--inverted--focus,
     );
 
     @include rh-define-vars($cta-styles-inverted);
 
     & ::slotted(a) {
-      color: rh-var("cta--#{$label}link-color--inverted");
+      color: rh-var("cta--#{$type}-link-color--inverted");
 
       &::after {
-        @include rh-arrow-color($color: rh-var("cta--#{$label}link-color--inverted"));
+        @include rh-arrow-color($color: rh-var("cta--#{$type}-link-color--inverted"));
       }
     }
     & ::slotted(a:visited) {
-      color: rh-var("cta--#{$label}link-color--inverted--visited");
+      color: rh-var("cta--#{$type}-link-color--inverted--visited");
 
       &::after {
-        @include rh-arrow-color($color: rh-var("cta--#{$label}link-color--inverted--visited"));
+        @include rh-arrow-color($color: rh-var("cta--#{$type}-link-color--inverted--visited"));
       }
     }
     // CTA Default Hover
     & ::slotted(a:hover) {
-      color: rh-var("cta--#{$label}link-color--inverted--hover");
+      color: rh-var("cta--#{$type}-link-color--inverted--hover");
 
       &::after {
-        @include rh-arrow-color($color: rh-var("cta--#{$label}link-color--inverted--hover"));
+        @include rh-arrow-color($color: rh-var("cta--#{$type}-link-color--inverted--hover"));
       }
     }
     // CTA Default Focus
     & ::slotted(a:focus) {
-      color: rh-var("cta--#{$label}link-color--inverted--focus");
+      color: rh-var("cta--#{$type}-link-color--inverted--focus");
 
       &::after {
-        @include rh-arrow-color(rh-var("cta--#{$label}link-color--inverted--focus"));
+        @include rh-arrow-color(rh-var("cta--#{$type}-link-color--inverted--focus"));
       }
     }
   }
 
-  :host([solid]#{$class}) {
+  :host([solid].#{$type}) {
     $cta-styles: (
-      "#{$label}color--solid": $rh-cta--#{$type}-bg-color--solid,
-      "#{$label}text-color--solid": $rh-cta--#{$type}-text-color--solid,
-      "#{$label}color--solid--hover": $rh-cta--#{$type}-bg-color--solid--hover,
-      "#{$label}text-color--solid--hover": $rh-cta--#{$type}-text-color--solid--hover,
+      "#{$type}-color--solid": $rh-cta--#{$type}-bg-color--solid,
+      "#{$type}-text-color--solid": $rh-cta--#{$type}-text-color--solid,
+      "#{$type}-color--solid--hover": $rh-cta--#{$type}-bg-color--solid--hover,
+      "#{$type}-text-color--solid--hover": $rh-cta--#{$type}-text-color--solid--hover,
     );
 
     @include rh-define-vars($map: $cta-styles);
 
     & ::slotted(a) {
-      background: rh-var("cta--#{$label}color--solid");
-      color: rh-var("cta--#{$label}text-color--solid");
+      background: rh-var("cta--#{$type}-color--solid");
+      color: rh-var("cta--#{$type}-text-color--solid");
     }
 
     & ::slotted(a:hover),
     & ::slotted(a:focus) {
-      background: rh-var("cta--#{$label}color--solid--hover") !important;
-      color: rh-var("cta--#{$label}text-color--solid--hover") !important;
+      background: rh-var("cta--#{$type}-color--solid--hover") !important;
+      color: rh-var("cta--#{$type}-text-color--solid--hover") !important;
     }
   }
 
-  :host([solid][inverted]#{$class}) {
-      $cta-styles: (
-        "#{$label}color--inverted--solid": --rh-cta--#{$label}bg-color--inverted--solid --rh-theme--#{$label}bg-color--inverted,
-        "#{$label}text-color--inverted--solid": --rh-cta--#{$label}text-color--inverted--solid --rh-theme--#{$label}text-color--inverted,
-        "#{$label}color--inverted--solid--hover": --rh-cta--#{$label}bg-color--inverted--solid--hover --rh-theme--#{$label}bg-color--inverted--hover,
-        "#{$label}text-color--inverted--solid--hover": --rh-cta--#{$label}text-color--inverted--solid--hover --rh-theme--#{$label}text-color--inverted--hover,
-      );
-    }
+  :host([solid][inverted].#{$type}) {
+    $cta-styles: (
+      "#{$type}-color--inverted--solid": --rh-cta--#{$type}-bg-color--inverted--solid --rh-theme--#{$type}-bg-color--inverted,
+      "#{$type}-text-color--inverted--solid": --rh-cta--#{$type}-text-color--inverted--solid --rh-theme--#{$type}-text-color--inverted,
+      "#{$type}-color--inverted--solid--hover": --rh-cta--#{$type}-bg-color--inverted--solid--hover --rh-theme--#{$type}-bg-color--inverted--hover,
+      "#{$type}-text-color--inverted--solid--hover": --rh-cta--#{$type}-text-color--inverted--solid--hover --rh-theme--#{$type}-text-color--inverted--hover,
+    );
 
-    @include rh-define-vars($map: $cta-styles, $use-theme: false);
+    @include rh-define-vars($map: $cta-styles, $custom-theme: true);
 
     & ::slotted(a) {
-      background: rh-var("cta--#{$label}color--inverted--solid");
-      color: rh-var("cta--#{$label}text-color--inverted--solid");
+      background: rh-var("cta--#{$type}-color--inverted--solid");
+      color: rh-var("cta--#{$type}-text-color--inverted--solid");
     }
 
     & ::slotted(a:hover),
     & ::slotted(a:focus) {
-      background: rh-var("cta--#{$label}color--inverted--solid--hover") !important;
-      color: rh-var("cta--#{$label}text-color--inverted--solid--hover") !important;
+      background: rh-var("cta--#{$type}-color--inverted--solid--hover") !important;
+      color: rh-var("cta--#{$type}-text-color--inverted--solid--hover") !important;
     }
   }
 
-  :host([bordered][solid]#{$class}) {
+  :host([bordered][solid].#{$type}) {
 
     // Define CSS Vars
-    @include rh-define-vars("cta#{$this-name}border-color", "#{$this-name}color", $this-color);
-    @include rh-define-vars("cta#{$this-name}border-color--hover", "#{$this-name}color--hover", $this-color-hover);
+    @include rh-define-vars("cta--#{$type}-border-color", "--#{$type}-color", $this-color);
+    @include rh-define-vars("cta--#{$type}-border-color--hover", "--#{$type}-color--hover", $this-color-hover);
 
     & ::slotted(a) {
-      border-color: rh-var(cta#{$this-name}-border-color);
+      border-color: rh-var("cta--#{$type}--border-color");
     }
 
     & ::slotted(a:hover),
     & ::slotted(a:focus) {
-      border-color: rh-var(cta#{$this-name}-border-color--hover);
+      border-color: rh-var("cta--#{$type}--border-color--hover");
     }
   }
 }

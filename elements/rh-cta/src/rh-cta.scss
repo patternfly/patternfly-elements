@@ -1,3 +1,4 @@
+$component: "cta";
 @import "../../rh-sass/rh-sass";
 
 /// ===========================================================================
@@ -100,7 +101,7 @@ $rh-cta--accent-text-color--solid--hover:   $rh-global--color--white;
     "link-color--focus": $rh-cta--default-color--focus
   );
 
-  @include rh-define-vars($cta-defaults, $variable-name: "cta");
+  @include rh-define-vars($cta-defaults);
 
   & ::slotted(a) {
     color: rh-var("cta--link-color");
@@ -147,7 +148,7 @@ $rh-cta--accent-text-color--solid--hover:   $rh-global--color--white;
     "link-color--inverted--focus": $rh-cta--default-color--inverted--focus
   );
 
-  @include rh-define-vars($cta-inverted, $variable-name: "cta");
+  @include rh-define-vars($cta-inverted);
 
   & ::slotted(a) {
     color: rh-var("cta--link-color--inverted");
@@ -186,22 +187,19 @@ $rh-cta--accent-text-color--solid--hover:   $rh-global--color--white;
 // CTA Solid
 :host([solid]) {
   $cta-solid-styles: (
-    "solid--padding-y": --rh-theme--spacing--xs $rh-cta--solid--padding-y
+    "solid--padding-y": --rh-theme--spacing--xs $rh-cta--solid--padding-y,
+    "solid--padding-x": --rh-theme--spacing--lg $rh-cta--solid--padding-x,
+    "solid--BorderRadius": --rh-theme--cta--BorderRadius $rh--cta--solid--BorderRadius,
+    "solid--BorderWidth": --rh-theme--cta--BorderWidth $rh-cta--solid--BorderWidth,
+    "default-color--solid": --rh-theme--default-color $rh-cta--default-bg-color--solid,
+    "default-text-color--solid": --rh-theme--default-text-color $rh-cta--default-text-color--solid,
+    "default-color--solid--hover": --rh-theme--default-color--hover $rh-cta--default-bg-color--solid--hover,
+    "default-text-color--solid--hover": --rh-theme--default-text-color--hover $rh-cta--default-text-color--solid--hover,
   );
 
-  // Define CSS Vars
-  @include rh-define-vars("cta--solid--padding-y", "spacing--xs", $rh-cta--solid--padding-y);
-  
-  @include rh-define-vars("cta--solid--padding-x", "spacing--lg", $rh-cta--solid--padding-x);
-  @include rh-define-vars("cta--solid--BorderRadius", "cta--BorderRadius", $rh--cta--solid--BorderRadius);
-  @include rh-define-vars("cta--solid--BorderWidth", "cta--BorderWidth", $rh-cta--solid--BorderWidth);
+  @include rh-define-vars($cta-solid-styles);
 
-  @include rh-define-vars("cta--default-color--solid", "default-color", $rh-cta--default-bg-color--solid);
-  @include rh-define-vars("cta--default-text-color--solid", "default-text-color", $rh-cta--default-text-color--solid);
-  @include rh-define-vars("cta--default-color--solid--hover", "default-color--hover", $rh-cta--default-bg-color--solid--hover);
-  @include rh-define-vars("cta--default-text-color--solid--hover", "default-text-color--hover", $rh-cta--default-text-color--solid--hover);
-
-  & ::slotted(a) {
+  &::slotted(a) {
     display: inline-block;
     padding: rh-var("cta--solid--padding-y") rh-var("cta--solid--padding-x");
     text-decoration: none;
@@ -232,13 +230,13 @@ $rh-cta--accent-text-color--solid--hover:   $rh-global--color--white;
     "solid--BorderRadius": --rh-theme--cta--BorderRadius $rh-cta--solid--BorderRadius,
     "solid--BorderWidth": --rh-theme--cta--BorderWidth $rh-cta--solid--BorderWidth,
     "default-color--solid": --rh-theme--cta--default-color $rh-cta-solid--default-bg-color--solid,
-    "default-text-color--solid": --rh-theme--default-text-color $rh-cta--default-text-color--solid,
-    "default-color--solid--hover": --rh-theme--default-color--hover $rh-cta--default-bg-color--solid--hover,
-    "default-text-color--solid--hover": --rh-theme--default-text-color--hover $rh-cta--default-text-color--solid--hover,
+    "default-text-color--solid": --rh-theme--cta--default-text-color $rh-cta--default-text-color--solid,
+    "default-color--solid--hover": --rh-theme--cta--default-color--hover $rh-cta--default-bg-color--solid--hover,
+    "default-text-color--solid--hover": --rh-theme--cta--default-text-color--hover $rh-cta--default-text-color--solid--hover,
   );
 
   // Define CSS Vars
-  @include rh-define-vars($cta-solid-styles, $variable-name: "cta");
+  @include rh-define-vars($cta-solid-styles);
 
   & ::slotted(a) {
     display: inline-block;
@@ -285,7 +283,7 @@ $supported-types: "" primary secondary accent;
       "#{$label}link-color--focus": $rh-cta--#{$type}-color--focus,
     );
 
-    @include rh-define-vars($cta-styles, $variable-name: "cta");
+    @include rh-define-vars($cta-styles);
 
     & ::slotted(a) {
       color: rh-var("cta--#{$label}link-color");
@@ -329,7 +327,7 @@ $supported-types: "" primary secondary accent;
       "#{$label}link-color--inverted--focus": $rh-cta--#{$type}-color--inverted--focus,
     );
 
-    @include rh-define-vars($cta-styles-inverted, $variable-name: "cta");
+    @include rh-define-vars($cta-styles-inverted);
 
     & ::slotted(a) {
       color: rh-var("cta--#{$label}link-color--inverted");
@@ -371,7 +369,7 @@ $supported-types: "" primary secondary accent;
       "#{$label}text-color--solid--hover": $rh-cta--#{$type}-text-color--solid--hover,
     );
 
-    @include rh-define-vars($map: $cta-styles, $variable-name: "cta");
+    @include rh-define-vars($map: $cta-styles);
 
     & ::slotted(a) {
       background: rh-var("cta--#{$label}color--solid");
@@ -394,7 +392,7 @@ $supported-types: "" primary secondary accent;
       );
     }
 
-    @include rh-define-vars($map: $cta-styles, $variable-name: "cta", $use-theme: false);
+    @include rh-define-vars($map: $cta-styles, $use-theme: false);
 
     & ::slotted(a) {
       background: rh-var("cta--#{$label}color--inverted--solid");

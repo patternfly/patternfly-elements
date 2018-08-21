@@ -140,7 +140,7 @@
 /// Use with @function rh-var
 /// ---------------------------------------------------------------------------
 ///
-@mixin rh-define-vars($map, $variable-name: "", $prefix: rh, $namespace: local, $use-theme: true) {
+@mixin rh-define-vars($map, $variable-name: $component, $prefix: rh, $namespace: local, $custom-theme: true) {
   // If the variable name was provided, postfix it with --
   @if $variable-name != "" {
     $variable-name: "#{$variable-name}--";
@@ -166,7 +166,7 @@
     }
 
     // If we want to use the default theme label, add that to the fallback string
-    @if $use-theme {
+    @if not $custom-theme {
       $fallback: var(--#{$prefix}-theme--#{$variable-name}#{$label}, #{$fallback});
     }
     

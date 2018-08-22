@@ -27,7 +27,6 @@
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
     "babel-preset-env": "^1.7.0",
-    "breakpoint-sass": "^2.7.1",
     "browser-sync": "^2.24.6",
     "chalk": "^2.4.1",
     "css-scss": "^0.1.1",

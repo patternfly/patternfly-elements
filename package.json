@@ -11,7 +11,7 @@
     "test-suite-inject": "node scripts/test-suite-inject.js",
     "storybook": "start-storybook -c .storybook -p 9001 -s ./elements",
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
-    "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject"
+    "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject && npm run bootstrap"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.8",

@@ -15,11 +15,12 @@
 
     <script>
       suite('<rh-button>', () => {
-        test('it should pass TESTS', () => {
-          assert.equal(true, true, 'it passes tests');
-          // const rhButton = document.querySelector('rh-button');
-          // const textContent = rhButton.innerText;
-          // assert.equal(textContent, 'This is the element content.', 'rh-button should do something');
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('rh-button'),
+            customElements.get('rh-button'),
+            'the <rh-button> should be an instance of RhButton'
+          );
         });
       });
     </script>

@@ -1,5 +1,21 @@
 @import "../../rh-sass/rh-sass";
 
 :host {
+  display: flex;
+  align-content: flex-start;
+}
+
+:host rh-icon {
+  margin-right: var(--rhe-c-icon-panel__icon--MarginRight, $rh-global--spacer);
+  font-size: var(--rhe-c-icon-panel__icon--size, $rh-global--icon-size--xl);
+  line-height: var(--rhe-c-icon-panel__icon--size, $rh-global--icon-size--xl);
+}
+
+:host ::slotted([slot="header"]),
+:host ::slotted([slot="footer"]) {
   display: block;
+}
+
+:host ::slotted([slot="footer"]) {
+  margin-top: var(--rhe-c-icon-panel__footer--MarginTop, $rh-global--FontSize);
 }

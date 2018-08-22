@@ -9,18 +9,85 @@
   </head>
   <body>
 
-    <rh-card>
-      This is the element content.
+    <rh-card id="card1">
+      <h2 slot="header">Card 1</h2>This is rh-card.
+      <div slot="footer">Text in footer</div>
+    </rh-card>
+
+    <rh-card id="card2">
+      <h2 slot="header">Card 2</h2>
+      This is rh-card with default theme.
+      <div slot="footer">Text in footer</div>
+    </rh-card>
+
+    <rh-card id="card3" theme="light">
+      <h2 slot="header">Card 3</h2>
+      This is rh-card with a light theme.
+      <div slot="footer">Text in footer</div>
+    </rh-card>
+
+    <rh-card id="card4" theme="dark">
+      <h2 slot="header">Card 4</h2>
+      This is rh-card with a dark theme.
+      <div slot="footer">Text in footer</div>
     </rh-card>
 
     <script>
-      suite('<rh-card>', () => {
-        test('it should do something RHElementy', () => {
-          // you need to write tests!!!
-          // const rhCard = document.querySelector('rh-card');
-          // const textContent = rhCard.innerText;
-          // assert.equal(textContent, 'This is the element content.', 'rh-card should do something');
-          assert.equal(true, true);
+      function luminance(r, g, b) {
+        return (0.2126*r/255 + 0.7152*g/255 + 0.0722*b/255);
+      }
+      function getColor(el, prop) {
+        const [, r, g, b] = getComputedStyle(el, null)
+          [prop].match(/rgba?\((\d+),\s+(\d+),\s+(\d+)\)/)
+          .map(n => +n);
+        return [r, g, b];
+      }
+      suite("<rh-card>", () => {
+        const card1 = document.querySelector("#card1");
+        const card2 = document.querySelector("#card2");
+        const card3 = document.querySelector("#card3");
+        const card4 = document.querySelector("#card4");
+
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('rh-card'),
+            customElements.get('rh-card'),
+            'the <rh-card> should be an instance of RhCard'
+          );
+        });
+        test("default theme is plain", () => {
+          const styles = getComputedStyle(card2, null);
+          assert.match( styles.background, /rgba\(0,\s+0,\s+0,\s+0\)/);
+          assert.match( styles.color, /rgb\(0,\s+0,\s+0\)/);
+        });
+        test("light theme works", () => {
+          const [r, g, b] = getColor(card3, 'background');
+          console.log(r, g, b);
+          assert.isAbove(luminance(r, g, b), 0.5);
+        });
+        test("dark theme works", () => {
+          const [r, g, b] = getColor(card4, 'background');
+          assert.isBelow(luminance(r, g, b), 0.5);
+        });
+        test("header, body, and footer are placed into correct slot", () => {
+          // header wound up in the header slot
+          assert.equal(
+            card1.querySelector("h2[slot=header]").assignedSlot,
+            card1.shadowRoot.querySelector(".rh-card__header")
+          );
+
+          const bodyText = card1.shadowRoot
+            .querySelector(".rh-card__body")
+            .assignedNodes()
+            .map(n => n.textContent)
+            .join("")
+            .trim();
+          assert.equal(bodyText, "This is rh-card.");
+          // footer wound up in the footer slot
+          assert.equal(
+            card1.querySelector("div[slot=footer]").assignedSlot,
+            card1.shadowRoot.querySelector(".rh-card__footer")
+          );
         });
       });
     </script>

@@ -16,7 +16,7 @@
     <!-- use another themeset -->
     <!-- <link rel="stylesheet" type="text/css" href="../../test-themeset/test-themeset.css"> -->
 
-    <!-- uncomment the es5-adapter if you're using the compiled version -->
+    <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
@@ -25,19 +25,27 @@
       if support for IE11 IS NOT needed, just include the web components
       that you want
     -->
-    <!-- <script>require(['../rh-card.compiled.js'])</script> -->
+    <script>
+        require(['../rh-card.umd.js']);
+    </script>
+
+    <noscript>
+      <link href="../../rhelement/rhelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
 
     <!--
       if support IS needed for IE11
     -->
     <!-- use cp-themeset with support for IE11 -->
-    <script>require(['../../cp-themeset/cp-themeset.compiled.js','../rh-card.compiled.js'])</script>
+    <!-- <script>require(['../../cp-themeset/cp-themeset.umd.js','../rh-card.umd.js'])</script> -->
 
     <!-- use another themeset with support for IE11 -->
-    <!-- <script>require(['../../test-themeset/test-themeset.compiled.js','../rh-card.compiled.js'])</script> -->
+    <!-- <script>require(['../../test-themeset/test-themeset.umd.js','../rh-card.umd.js'])</script> -->
 
   </head>
-  <body>
+  <body unresolved>
     <h1>&lt;rh-card&gt;</h1>
     <rh-card theme="dark">
       <h2 slot="header">Dark Theme</h2>

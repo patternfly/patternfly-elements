@@ -1,5 +1,9 @@
 {
   "name": "@rhelements/rhelement",
+  "rhelement": {
+    "className": "RHElement",
+    "elementName": "rhelement"
+  },
   "version": "0.0.4",
   "description": " element for RHElements",
   "repository": {
@@ -8,11 +12,9 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "../../node_modules/.bin/gulp",
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/rollup -c && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "start": "../../node_modules/.bin/gulp dev & npm run serve",
-    "serve":
-      "../../node_modules/.bin/polyserve --npm -o --open-path=\"components/@rhelements/rhelement/demo\"",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json test/.wct-kludge/elements/rhelement/test/"
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json node_modules/@rhelements/rhelement/test/"
   },
   "author": {
     "name": "Kyle Buchanan",

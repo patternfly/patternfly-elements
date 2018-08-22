@@ -2,7 +2,7 @@ const app = new Vue({
   el: "#app",
   data: {
     numbers: [
-      { number: 1, type: "ordinal" },
+      { number: 4, type: "ordinal" },
       { number: 2017, type: "bytes", step: 0.2 },
       { number: 12345, type: "abbrev", step: 1000 },
       { number: 0.5678, type: "percent", step: 0.01 },

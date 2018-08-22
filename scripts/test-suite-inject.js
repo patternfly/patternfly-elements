@@ -1,6 +1,7 @@
-const _ = require("lodash");
 const fs = require("fs");
 const path = require("path");
+
+const _ = require("lodash");
 const chalk = require("chalk");
 
 const elementsDir = path.join(__dirname, "../elements");
@@ -13,26 +14,38 @@ function hasTests(element) {
   return fs.existsSync(path);
 }
 
+function notAll(element) {
+  return element !== "all";
+}
+
 function testPathAbs(element) {
   return path.join(elementsDir, element, "test", "index.html");
 }
 
-function testPathRel(element) {
-  return path.join(".wct-kludge", "elements", element, "test", "index.html");
+function testPathRel(prefix) {
+  return function(element) {
+    return path.join(
+      prefix,
+      "node_modules",
+      "@rhelements",
+      element,
+      "test",
+      "index.html"
+    );
+  };
 }
 
 function formatPaths(paths) {
   return paths.map(path => `        "${path}"`).join(",\n");
 }
 
-const suitePaths = _(elementNames)
+const withTests = _(elementNames)
   .filter(hasTests)
-  .map(testPathRel)
-  .value();
+  .filter(notAll);
 
-console.log(
-  `Injecting the following elements into ${chalk.bold("test/index.html")}`
-);
+const testRelPaths = withTests.map(testPathRel("..")).value();
+
+console.log(`Injecting the following elements into the test suite:`);
 console.log(
   elementNames
     .filter(hasTests)
@@ -41,13 +54,30 @@ console.log(
 );
 console.log();
 
+// write test/index.html
+
 const template = fs.readFileSync(templateFile).toString();
 
 const withPaths = template.replace(
   /\/\*\s+inject:elements\s+\*\//,
-  formatPaths(suitePaths)
+  formatPaths(testRelPaths)
 );
 
 fs.writeFileSync(outFile, withPaths);
+
+// write elements/all/package.json
+
+const packagePath = "../elements/all/package.json";
+const allPackage = require(packagePath);
+allPackage.dependencies = withTests
+  .keyBy()
+  .mapKeys(e => `@rhelements/${e}`)
+  .mapValues(e => `file:elements/${e}`)
+  .value();
+
+fs.writeFileSync(
+  path.join(__dirname, packagePath),
+  JSON.stringify(allPackage, null, 2)
+);
 
 console.log(chalk.green(`Complete!`));

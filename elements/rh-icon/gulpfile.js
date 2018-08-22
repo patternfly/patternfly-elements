@@ -1,53 +1,69 @@
+const path = require("path");
+const fs = require("fs");
+
 const gulp = require("gulp");
-const babel = require("gulp-babel");
-const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
 const replace = require("gulp-replace");
-const sass = require("gulp-sass");
-const nodesass = require("node-sass");
+const sass = require("node-sass");
 const stripCssComments = require("strip-css-comments");
 const gulpStripCssComments = require("gulp-strip-css-comments");
 const trim = require("gulp-trim");
+const decomment = require("decomment");
 const del = require("del");
-const fs = require("fs");
 
-const path = require("path");
 const svgSprite = require("gulp-svg-sprite");
 
 let watcher;
 
 gulp.task("clean", () => {
-  return del(["./*.compiled.*"]);
-});
-
-gulp.task("sass", () => {
-  return gulp
-    .src(["./*.scss"])
-    .pipe(sass())
-    .pipe(gulpStripCssComments())
-    .pipe(trim())
-    .pipe(sass.sync().on("error", sass.logError))
-    .pipe(gulp.dest("./"));
+  return del(["./*.umd.*"]);
 });
 
 gulp.task("replaceStyles", () => {
   return gulp
     .src("./rh-icon.js")
     .pipe(
-      replace(/(iconTemplate\.innerHTML = `)(`;)/, (match, p1, p2) => {
-        const html = fs
-          .readFileSync("./src/rh-icon.html")
+      replace(/extends\s+RHElement\s+{/, (classStatement, line, jsFile) => {
+        // extract the templateUrl and styleUrl with regex.  Would prefer to do
+        // this by require'ing rh-card.js and asking it directly, but without
+        // node.js support for ES modules, we're stuck with this.
+        const oneLineFile = jsFile.split("\n").join(" ");
+        const [
+          ,
+          templateUrl
+        ] = /get\s+templateUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
+          oneLineFile
+        );
+        const [
+          ,
+          styleUrl
+        ] = /get\s+styleUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
+          oneLineFile
+        );
+
+        let html = fs
+          .readFileSync(path.join("./src", templateUrl))
           .toString()
           .trim();
 
-        const cssResult = nodesass.renderSync({
-          file: "./src/rh-icon.scss"
+        html = decomment(html);
+
+        let cssResult = sass.renderSync({
+          file: path.join("./src", styleUrl)
         }).css;
 
-        return `${p1}
-<style>${stripCssComments(cssResult).trim()}</style>
-${html}
-${p2}`;
+        cssResult = stripCssComments(cssResult).trim();
+
+        return `${classStatement}
+  get html() {
+    return \`
+<style>
+${cssResult}
+</style>
+
+${html}\`;
+  }
+`;
       })
     )
     .pipe(gulp.dest("./"));
@@ -92,14 +108,12 @@ gulp.task("compile", () => {
     .pipe(
       replace(
         /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)(\.js['"];)$/gm,
-        "$1$2.compiled$3"
+        "$1$2.umd$3"
       )
     )
-    .pipe(babel())
-    .pipe(uglify())
     .pipe(
       rename({
-        suffix: ".compiled"
+        suffix: ".umd"
       })
     )
     .pipe(gulp.dest("./"));
@@ -113,23 +127,13 @@ gulp.task("stopwatch", done => {
 gulp.task("watch", () => {
   watcher = gulp.watch(
     ["./rh-icon.js", "./*.scss"],
-    gulp.series(
-      "stopwatch",
-      "sass",
-      "replaceStyles",
-      "clean",
-      "compile",
-      "watch"
-    )
+    gulp.series("stopwatch", "replaceStyles", "clean", "compile", "watch")
   );
   return watcher;
 });
 
 gulp.task("svgs", gulp.series("svgSprite", "stuffSprite"));
 
-gulp.task(
-  "default",
-  gulp.series("clean", "sass", "svgs", "replaceStyles", "compile")
-);
+gulp.task("default", gulp.series("clean", "svgs", "replaceStyles", "compile"));
 
 gulp.task("dev", gulp.series("default", "watch"));

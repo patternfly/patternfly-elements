@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../rh-multiswitch.js"></script>
+  </head>
+  <body>
+
+    <rh-multiswitch>
+      This is the element content.
+    </rh-multiswitch>
+
+    <script>
+      suite('<rh-multiswitch>', () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('rh-multiswitch'),
+            customElements.get('rh-multiswitch'),
+            'the <rh-multiswitch> should be an instance of RhMultiSwitch'
+          );
+        });
+      });
+    </script>
+  </body>
+</html>

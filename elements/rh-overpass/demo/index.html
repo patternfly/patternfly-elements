@@ -4,12 +4,17 @@
     <meta charset="utf-8">
     <title>RHElements: rh-overpass Demo</title>
 
-    <!-- uncomment the es5-adapter if you're using the compiled version -->
+    <!-- uncomment the es5-adapter if you're using the umd version -->
     <!-- <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script> -->
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../rh-overpass.js"></script>
+    <noscript>
+      <link href="../../rhelement/rhelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
   </head>
-  <body>
+  <body unresolved>
     <!-- Including <rh-overpass> isn't necessary because rh-overpass is not a web component. -->
     <!-- <rh-overpass></rh-overpass> -->
 

@@ -1,13 +1,32 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
 /*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-button.html and css from
- * rh-button.scss
+ * Copyright 2018 Red Hat, Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
-const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
+
+class RhButton extends RHElement {
+  get html() {
+    return `
+<style>
+:host {
   display: inline-block; }
 
 :host button {
@@ -30,15 +49,30 @@ template.innerHTML = `
 
 :host(.primary) button:hover {
   background: var(--rh-button--theme--primary-color--hover--Background, #004080);
-  color: var(--rh-button--theme--primary-color--hover--Color, #fff); }</style>
-<button><slot></slot></button>
-`;
-/* end DO NOT EDIT */
+  color: var(--rh-button--theme--primary-color--hover--Color, #fff); }
+</style>
+<button><slot></slot></button>`;
+  }
 
-class RhButton extends Rhelement {
+  static get tag() {
+    return "rh-button";
+  }
+
+  get styleUrl() {
+    return "rh-button.scss";
+  }
+
+  get templateUrl() {
+    return "rh-button.html";
+  }
+
   constructor() {
-    super("rh-button", template);
+    super(RhButton.tag);
+    console.log("creating rh-button");
   }
 }
 
-window.customElements.define("rh-button", RhButton);
+RHElement.create(RhButton);
+
+export default RhButton;
+//# sourceMappingURL=rh-button.js.map

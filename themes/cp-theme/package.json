@@ -1,0 +1,25 @@
+{
+  "name": "@rhelements/cp-theme",
+  "rhelement": {
+    "className": "CpTheme",
+    "elementName": "cp-theme"
+  },
+  "version": "0.3.2",
+  "description": "cp-theme for Red Hat's Customer Portal and RHElements",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RHElements/rhelements/themes/cp-theme.git"
+  },
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/rollup -c && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev"
+  },
+  "contributors": [
+    {
+      "name": "Mark Caron",
+      "email": "mark@redhat.com",
+      "url": "https://github.com/markcaron"
+    }
+  ],
+  "license": "ISC"
+}

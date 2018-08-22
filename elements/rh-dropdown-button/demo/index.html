@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <title>RHElements: rh-dropdown-button Demo</title>
 
-    <!-- uncomment the es5-adapter if you're using the compiled version -->
+    <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../rh-dropdown-button.compiled.js'])</script>
+    <script>require(['../rh-dropdown-button.umd.js'])</script>
     <!-- <script type="module" src="../rh-dropdown-button.js"></script> -->
-    <script>
-      window.addEventListener('WebComponentsReady', function () {
-        document.body.removeAttribute('unresolved');
-      });
-    </script>
     <style>
 
     </style>
+    <noscript>
+      <link href="../../rhelement/rhelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
   </head>
   <body unresolved>
     <rh-dropdown-button>

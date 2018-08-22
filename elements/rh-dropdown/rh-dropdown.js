@@ -1,7 +1,28 @@
-import Rhelement from "../rhelement/rhelement.js";
-import "../cp-styles/cp-styles.js";
+import RHElement from "../rhelement/rhelement.js";
 import "../rh-dropdown-button/rh-dropdown-button.js";
 import "../rh-dropdown-menu/rh-dropdown-menu.js";
+
+/*
+ * Copyright 2018 Red Hat, Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
@@ -48,25 +69,33 @@ if (!Array.prototype.findIndex) {
   });
 }
 
-/*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rhcc-freshnessgrade.html and css from
- * rhcc-freshnessgrade.css
- */
-const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
-  position: relative; }</style>
-<slot></slot>
-`;
-/* end DO NOT EDIT */
-
 // Set up a unique ID
 const baseID = Date.now();
 
-class RhDropdown extends Rhelement {
+class RhDropdown extends RHElement {
+  get html() {
+    return `
+<style>
+:host {
+  position: relative; }
+</style>
+<slot></slot>`;
+  }
+
+  static get tag() {
+    return "rh-dropdown";
+  }
+
+  get styleUrl() {
+    return "rh-dropdown.scss";
+  }
+
+  get templateUrl() {
+    return "rh-dropdown.html";
+  }
+
   constructor() {
-    super("rh-dropdown", template);
+    super(RhDropdown.tag);
   }
 
   connectedCallback() {
@@ -332,4 +361,5 @@ class RhDropdown extends Rhelement {
   }
 }
 
-window.customElements.define("rh-dropdown", RhDropdown);
+RHElement.create(RhDropdown);
+//# sourceMappingURL=rh-dropdown.js.map

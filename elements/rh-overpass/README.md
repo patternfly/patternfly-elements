@@ -1,14 +1,5 @@
-# RHElements Overpass Element
-
-## Dev
-```
-yarn run dev
-```
+# WIP 🐣: RHElements Overpass Element
 
 ## Build
-```
-yarn run build
-```
 
-## Demo
-Run http-server or python SimpleHTTPServer in the demo directory
+    npm run build

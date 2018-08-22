@@ -1,13 +1,32 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 
 /*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-search-result.html and css from
- * rh-search-result.scss
+ * Copyright 2018 Red Hat, Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
-const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
+
+class RhSearchResult extends RHElement {
+  get html() {
+    return `
+<style>
+:host {
   display: block; }
 
 ::slotted([slot="heading"]) {
@@ -42,19 +61,30 @@ header a {
 header a:hover,
 header a:focus {
   color: var(--rhe-c-search-result_heading--FontColorHover, #004080);
-  text-decoration: var(--rhe-c-search-result_heading--TextDecorationHover, underline); }</style>
+  text-decoration: var(--rhe-c-search-result_heading--TextDecorationHover, underline); }
+</style>
 <slot name="heading"></slot>
 <article>
   <header id="heading"></header>
   <slot name="meta"></slot>
   <slot></slot>
-</article>
-`;
-/* end DO NOT EDIT */
+</article>`;
+  }
 
-class RhSearchResult extends Rhelement {
+  static get tag() {
+    return "rh-search-result";
+  }
+
+  get styleUrl() {
+    return "rh-search-result.scss";
+  }
+
+  get templateUrl() {
+    return "rh-search-result.html";
+  }
+
   constructor() {
-    super("rh-search-result", template);
+    super(RhSearchResult.tag);
 
     this._headingId = "#heading";
 
@@ -77,4 +107,5 @@ class RhSearchResult extends Rhelement {
   }
 }
 
-window.customElements.define("rh-search-result", RhSearchResult);
+RHElement.create(RhSearchResult);
+//# sourceMappingURL=rh-search-result.js.map

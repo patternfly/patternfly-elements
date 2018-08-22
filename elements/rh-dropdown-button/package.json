@@ -1,5 +1,9 @@
 {
   "name": "@rhelements/rh-dropdown-button",
+  "rhelement": {
+    "className": "RhDropdownButton",
+    "elementName": "rh-dropdown-button"
+  },
   "version": "0.1.5",
   "description": "Dropdown button element for RHElements",
   "repository": {
@@ -7,9 +11,9 @@
     "url": "https://github.com/RHElements/rh-dropdown-button"
   },
   "scripts": {
-    "build": "../../node_modules/.bin/gulp",
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/rollup -c && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json test/.wct-kludge/elements/rh-dropdown-button/test/"
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json node_modules/@rhelements/rh-dropdown-button/test/"
   },
   "author": {
     "name": "Mark Caron",

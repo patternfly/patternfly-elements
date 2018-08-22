@@ -7,6 +7,13 @@ module.exports = {
   routes: {
     "/elements": "./elements",
     "/doc": "./doc",
-    "/": "./node_modules/"
+    "/favicon.ico": "./favicon.ico",
+    "/": "./node_modules"
+  },
+  bs: {
+    watchOptions: {
+      ignoreInitial: true,
+      ignored: ["node_modules"]
+    }
   }
 };

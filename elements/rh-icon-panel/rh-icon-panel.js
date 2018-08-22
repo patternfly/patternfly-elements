@@ -1,41 +1,85 @@
-import Rhelement from "../rhelement/rhelement.js";
+import RHElement from "../rhelement/rhelement.js";
 import "../rh-icon/rh-icon.js";
 
 /*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-icon-panel.html and css from
- * rh-icon-panel.scss
+ * Copyright 2018 Red Hat, Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
-const template = document.createElement("template");
-template.innerHTML = `
-<style>:host {
-  display: block; }</style>
-<rh-icon data-size="2x" icon="rh-icon-server"></rh-icon>
-<slot class="rh-icon-panel__header" name="header"></slot>
-<slot class="rh-icon-panel__body"></slot>
-<slot class="rh-icon-panel__footer" name="footer"></slot>
-`;
-/* end DO NOT EDIT */
 
-class RhIconPanel extends Rhelement {
-  constructor() {
-    super("rh-icon-panel", template);
+class RhIconPanel extends RHElement {
+  get html() {
+    return `
+<style>
+:host {
+  display: flex;
+  align-content: flex-start; }
+
+:host rh-icon {
+  margin-right: var(--rhe-c-icon-panel__icon--MarginRight, 1rem);
+  font-size: var(--rhe-c-icon-panel__icon--size, 4rem);
+  line-height: var(--rhe-c-icon-panel__icon--size, 4rem); }
+
+:host ::slotted([slot="header"]),
+:host ::slotted([slot="footer"]) {
+  display: block; }
+
+:host ::slotted([slot="footer"]) {
+  margin-top: var(--rhe-c-icon-panel__footer--MarginTop, 16px); }
+</style>
+<rh-icon></rh-icon>
+<div class="content">
+  <slot class="header" name="header"></slot>
+  <slot class="body"></slot>
+  <slot class="footer" name="footer"></slot>
+</div>`;
   }
 
-  connectedCallback() {
-    super.connectedCallback();
+  static get tag() {
+    return "rh-icon-panel";
+  }
 
-    const attrs = this.attributes;
+  get styleUrl() {
+    return "rh-icon-panel.scss";
+  }
 
-    if (attrs.getNamedItem("icon") == null) {
-      console.warn("You must provide an icon attribute on rh-icon-panel");
-    } else {
-      let iconElem = this.shadowRoot.querySelector("rh-icon");
-      // iconElem.setAttribute("icon", attrs.getNamedItem("icon").value);
+  get templateUrl() {
+    return "rh-icon-panel.html";
+  }
+
+  static get observedAttributes() {
+    return ["icon"];
+  }
+
+  constructor() {
+    super(RhIconPanel.tag);
+  }
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    if (attr === "icon") {
+      if (newVal) {
+        let iconElem = this.shadowRoot.querySelector("rh-icon");
+        iconElem.setAttribute("icon", newVal);
+      }
     }
   }
-
-  disconnectedCallback() {}
 }
 
-window.customElements.define("rh-icon-panel", RhIconPanel);
+RHElement.create(RhIconPanel);
+//# sourceMappingURL=rh-icon-panel.js.map

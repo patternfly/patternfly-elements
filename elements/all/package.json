@@ -1,0 +1,24 @@
+{
+  "name": "@rhelements/all",
+  "description": "All the RHElements.",
+  "scripts": {
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/all/test/"
+  },
+  "private": true,
+  "license": "ISC",
+  "dependencies": {
+    "@rhelements/rh-button": "file:elements/rh-button",
+    "@rhelements/rh-card": "file:elements/rh-card",
+    "@rhelements/rh-cta": "file:elements/rh-cta",
+    "@rhelements/rh-datetime": "file:elements/rh-datetime",
+    "@rhelements/rh-dropdown": "file:elements/rh-dropdown",
+    "@rhelements/rh-dropdown-button": "file:elements/rh-dropdown-button",
+    "@rhelements/rh-dropdown-menu": "file:elements/rh-dropdown-menu",
+    "@rhelements/rh-icon": "file:elements/rh-icon",
+    "@rhelements/rh-icon-panel": "file:elements/rh-icon-panel",
+    "@rhelements/rh-multiswitch": "file:elements/rh-multiswitch",
+    "@rhelements/rh-number": "file:elements/rh-number",
+    "@rhelements/rh-search-result": "file:elements/rh-search-result",
+    "@rhelements/rhelement": "file:elements/rhelement"
+  }
+}

@@ -1,3 +1,5 @@
+import RHElement from "../rhelement/rhelement.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -20,142 +22,176 @@
  * SOFTWARE.
  */
 
-import RHElement from "../rhelement/rhelement.js";
-
 class RhCta extends RHElement {
   get html() {
     return `
 <style>
 :host {
-  display: inline-block;
+  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #06c);
+  --rh-local-cta--emphasis-color--visited: var(--rh-cta--emphasis-color--visited, #7551a6);
+  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #004080);
+  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #004080);
+  --rh-local-cta--complement-color: var(--rh-cta--complement-color, transparent);
+  --rh-local-cta--complement-color--visited: var(--rh-cta--complement-color--visited, transparent);
+  --rh-local-cta--complement-color--hover: var(--rh-cta--complement-color--hover, transparent);
+  --rh-local-cta--complement-color--focus: var(--rh-cta--complement-color--focus, transparent);
   --rh-local-cta--arrow--spacing: var(--rh-cta--arrow--spacing, var(--rh-theme--spacing--xxs, 0.25rem));
   --rh-local-cta--padding-y: var(--rh-cta--padding-y, 0);
   --rh-local-cta--padding-x: var(--rh-cta--padding-x, 0);
-  --rh-local-cta--borderRadius: var(--rh-cta--borderRadius, 0);
-  --rh-local-cta--borderWidth: var(--rh-cta--borderWidth, 0);
-  --rh-local-cta--textDecoration: var(--rh-cta--textDecoration, underline);
-  --rh-local-cta--link-color: var(--rh-cta--link-color, #06c);
-  --rh-local-cta--link-color--visited: var(--rh-cta--link-color--visited, #7551a6);
-  --rh-local-cta--link-color--hover: var(--rh-cta--link-color--hover, #004080);
-  --rh-local-cta--link-color--focus: var(--rh-cta--link-color--focus, #004080); }
+  --rh-local-cta--BorderRadius: var(--rh-cta--BorderRadius, 0);
+  --rh-local-cta--BorderWidth: var(--rh-cta--BorderWidth, 0);
+  --rh-local-cta--TextDecoration: var(--rh-cta--TextDecoration, underline);
+  --rh-local-cta--arrow--display: var(--rh-cta--arrow--display, inline-block); }
   :host ::slotted(a) {
-    color: var(--rh-local-cta--link-color);
+    display: inline-block;
     padding: var(--rh-local-cta--padding-y) var(--rh-local-cta--padding-x);
-    text-decoration: var(--rh-local-cta--textDecoration);
+    text-decoration: var(--rh-local-cta--TextDecoration);
     border: var(--rh-local-cta--BorderWidth) solid transparent;
     border-radius: var(--rh-local-cta--BorderRadius);
     transition: all 250ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
-    background: var(--rh-local-cta--color);
-    color: var(--rh-local-cta--text-color); }
+    background-color: var(--rh-local-cta--complement-color);
+    color: var(--rh-local-cta--emphasis-color); }
     :host ::slotted(a)::after {
       margin-left: var(--rh-local-cta--arrow--spacing);
       vertical-align: middle;
       border-style: solid;
       border-width: 0.313em 0.313em 0;
       border-color: transparent;
-      border-top-color: var(--rh-local-cta--link-color);
+      border-top-color: var(--rh-local-cta--emphasis-color);
       transform: rotate(-90deg);
       display: inline-block;
       content: ""; }
-  :host ::slotted(a:visited) {
-    color: var(--rh-local-cta--link-color--visited); }
-    :host ::slotted(a:visited)::after {
-      border-top-color: var(--rh-local-cta--link-color--visited); }
   :host ::slotted(a:hover) {
-    color: var(--rh-local-cta--link-color--hover); }
+    color: var(--rh-local-cta--emphasis-color--hover);
+    background-color: var(--rh-local-cta--complement-color--hover);
+    border-color: var(--rh-local-cta--complement-color--hover); }
     :host ::slotted(a:hover)::after {
-      border-top-color: var(--rh-local-cta--link-color--hover); }
+      border-top-color: var(--rh-local-cta--emphasis-color--hover); }
   :host ::slotted(a:focus) {
-    color: var(--rh-local-cta--link-color--focus); }
+    color: var(--rh-local-cta--emphasis-color--focus);
+    background-color: var(--rh-local-cta--complement-color--focus);
+    border-color: var(--rh-local-cta--complement-color--focus); }
     :host ::slotted(a:focus)::after {
-      border-top-color: var(--rh-local-cta--link-color--focus); }
+      border-top-color: var(--rh-local-cta--emphasis-color--focus); }
+  :host ::slotted(a:visited) {
+    color: var(--rh-local-cta--emphasis-color--visited);
+    background-color: var(--rh-local-cta--complement-color--visited);
+    border-color: var(--rh-local-cta--complement-color--visited); }
+    :host ::slotted(a:visited)::after {
+      border-top-color: var(--rh-local-cta--emphasis-color--visited); }
 
 :host(.primary) {
-  --rh-cta--color: $rh-global--link-color;
-  --rh-cta--color--hover: $rh-global--link-color--hover;
-  --rh-cta--color--focus: $rh-global--link-color--focus;
-  --rh-cta--color--visited: $rh-global--link-color--visited; }
+  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #06c);
+  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #004080);
+  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #004080);
+  --rh-local-cta--emphasis-color--visited: var(--rh-cta--emphasis-color--visited, #7551a6); }
 
 :host(.secondary) {
-  --rh-cta--color: $rh-global--color--gray-iron;
-  --rh-cta--color--hover: darken($rh-global--color--gray-iron, 10%);
-  --rh-cta--color--focus: darken($rh-global--color--gray-iron, 10%);
-  --rh-cta--color--visited: $rh-global--link-color--visited; }
+  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #464646);
+  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #2d2d2d);
+  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #2d2d2d); }
 
 :host(.accent) {
-  --rh-cta--color: $rh-global--color--red;
-  --rh-cta--color--hover: darken($rh-global--color--red, 10%);
-  --rh-cta--color--focus: darken($rh-global--color--red, 10%);
-  --rh-cta--color--visited: $rh-global--link-color--visited; }
+  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #c00);
+  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #990000);
+  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #990000); }
 
 :host([inverted]) {
-  --rh-cta--color: $rh-global--link-color--inverted;
-  --rh-cta--color--hover: $rh-global--link-color--inverted--hover;
-  --rh-cta--color--focus: $rh-global--link-color--inverted--focus;
-  --rh-cta--color--visited: $rh-global--link-color--inverted--visited; }
-
-:host([inverted].primary) {
-  --rh-cta--color: $rh-global--link-color--inverted;
-  --rh-cta--color--hover: $rh-global--link-color--inverted--hover;
-  --rh-cta--color--focus: $rh-global--link-color--inverted--focus;
-  --rh-cta--color--visited: $rh-global--link-color--inverted--visited; }
+  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #73bcf7);
+  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #2b9af3);
+  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #2b9af3);
+  --rh-local-cta--emphasis-color--visited: var(--rh-cta--emphasis-color--visited, #967abd); }
 
 :host([inverted].secondary) {
-  --rh-cta--color: $rh-global--color--white;
-  --rh-cta--color--hover: darken($rh-global--color--white, 10%);
-  --rh-cta--color--focus: darken($rh-global--color--white, 10%);
-  --rh-cta--color--visited: $rh-global--link-color--inverted--visited; }
+  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #fff);
+  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #e6e6e6);
+  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #e6e6e6); }
 
 :host([inverted].accent) {
-  --rh-cta--color: lighten($rh-global--color--red, 10%);
-  --rh-cta--color--hover: lighten($rh-global--color--red, 20%);
-  --rh-cta--color--focus: lighten($rh-global--color--red, 20%);
-  --rh-cta--color--visited: $rh-global--link-color--inverted--visited; }
+  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #c00);
+  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #ff3333);
+  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #ff3333); }
 
 :host([solid]) {
-  --rh-local-cta--padding-y: var(--rh-cta--padding-y, var(--rh-theme--spacing--xs, 0.5rem));
+  --rh-local-cta--BorderRadius: var(--rh-cta--BorderRadius, 5em);
+  --rh-local-cta--BorderWidth: var(--rh-cta--BorderWidth, 1px);
+  --rh-local-cta--TextDecoration: var(--rh-cta--TextDecoration, none);
+  --rh-local-cta--arrow--display: var(--rh-cta--arrow--display, none);
   --rh-local-cta--padding-x: var(--rh-cta--padding-x, var(--rh-theme--spacing--lg, 2rem));
-  --rh-local-cta--BorderRadius: var(--rh-cta--BorderRadius, var(--rh-theme--cta--BorderRadius, 5em !default));
-  --rh-local-cta--BorderWidth: var(--rh-cta--BorderWidth, var(--rh-theme--cta--BorderWidth, 1px));
-  --rh-local-cta--color: var(--rh-cta--color, var(--rh-theme--color, #6e6e6e));
-  --rh-local-cta--text-color: var(--rh-cta--text-color, var(--rh-theme--text-color, #fff));
-  --rh-local-cta--color--hover: var(--rh-cta--color--hover, var(--rh-theme--color--hover, #555555));
-  --rh-local-cta--text-color--hover: var(--rh-cta--text-color--hover, var(--rh-theme--text-color--hover, #fff)); }
-  :host([solid])::slotted(a) {
-    display: inline-block; }
-    :host([solid])::slotted(a)::after {
+  --rh-local-cta--padding-y: var(--rh-cta--padding-y, var(--rh-theme--spacing--xs, 0.5rem));
+  --rh-local-cta--complement-color: var(--rh-cta--complement-color, #fff);
+  --rh-local-cta--complement-color--hover: var(--rh-cta--complement-color--hover, #fff);
+  --rh-local-cta--complement-color--focus: var(--rh-cta--complement-color--focus, #fff);
+  --rh-local-cta--complement-color--visited: var(--rh-cta--complement-color--visited, #fff);
+  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #464646);
+  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #2d2d2d); }
+  :host([solid]) ::slotted(a) {
+    color: var(--rh-local-cta--complement-color);
+    background-color: var(--rh-local-cta--emphasis-color);
+    border-color: var(--rh-local-cta--emphasis-color); }
+    :host([solid]) ::slotted(a)::after {
       display: none; }
-  :host([solid]) ::slotted(a:hover),
+  :host([solid]) ::slotted(a:hover) {
+    color: var(--rh-local-cta--complement-color--hover);
+    background-color: var(--rh-local-cta--emphasis-color--hover);
+    border-color: var(--rh-local-cta--emphasis-color--hover); }
   :host([solid]) ::slotted(a:focus) {
-    background: var(--rh-local-cta--color--hover) !important;
-    color: var(--rh-local-cta--text-color--hover) !important; }
+    color: var(--rh-local-cta--complement-color--focus);
+    background-color: var(--rh-local-cta--emphasis-color--focus);
+    border-color: var(--rh-local-cta--emphasis-color--focus); }
+  :host([solid]) ::slotted(a:visited) {
+    color: var(--rh-local-cta--complement-color--visited);
+    background-color: var(--rh-local-cta--emphasis-color--visited);
+    border-color: var(--rh-local-cta--emphasis-color--visited); }
 
 :host([solid].primary) {
-  --rh-cta--color: $rh-global--color--blue-azure;
-  --rh-cta--text-color: $rh-global--color--white;
-  --rh-cta--color--hover: darken($rh-global--color--blue-azure, 10%);
-  --rh-cta--text-color--hover: $rh-global--color--white; }
+  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #0076e0);
+  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #005bad); }
 
 :host([solid].secondary) {
-  --rh-cta--color: $rh-global--color--gray-iron;
-  --rh-cta--text-color: $rh-global--color--white;
-  --rh-cta--color--hover: darken($rh-global--color--gray-iron, 10%);
-  --rh-cta--text-color--hover: $rh-global--color--white; }
+  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #464646);
+  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #2d2d2d); }
 
 :host([solid].accent) {
-  --rh-cta--color: $rh-global--color--red;
-  --rh-cta--text-color: $rh-global--color--white;
-  --rh-cta--color--hover: darken($rh-global--color--red, 10%);
-  --rh-cta--text-color--hover: $rh-global--color--white; }
+  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #c00);
+  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #990000); }
 
-:host([solid][inverted]) {
-  --rh-cta--color: $rh-global--color--red;
-  --rh-cta--text-color: $rh-global--color--white;
-  --rh-cta--color--hover: darken($rh-global--color--red, 10%);
-  --rh-cta--text-color--hover: $rh-global--color--white; }
+:host([solid][inverted]) ::slotted(a) {
+  color: var(--rh-local-cta--emphasis-color);
+  background-color: var(--rh-local-cta--complement-color);
+  border-color: var(--rh-local-cta--complement-color); }
 
-:host([unfilled])::slotted(a) {
-  background: transparent !important; }
+:host([solid][inverted]) ::slotted(a:hover) {
+  color: var(--rh-local-cta--emphasis-color--hover);
+  background-color: var(--rh-local-cta--complement-color--hover);
+  border-color: var(--rh-local-cta--complement-color--hover); }
+
+:host([solid][inverted]) ::slotted(a:focus) {
+  color: var(--rh-local-cta--emphasis-color--focus);
+  background-color: var(--rh-local-cta--complement-color--focus);
+  border-color: var(--rh-local-cta--complement-color--focus); }
+
+:host([solid][inverted]) ::slotted(a:visited) {
+  color: var(--rh-local-cta--emphasis-color--visited);
+  background-color: var(--rh-local-cta--complement-color--visited);
+  border-color: var(--rh-local-cta--complement-color--visited); }
+
+:host([bordered]) ::slotted(a) {
+  border-color: var(--rh-local-cta--emphasis-color); }
+
+:host([bordered]) ::slotted(a:hover) {
+  border-color: var(--rh-local-cta--emphasis-color--hover); }
+
+:host([bordered]) ::slotted(a:focus) {
+  color: var(--rh-local-cta--emphasis-color--focus);
+  background-color: var(--rh-local-cta--complement-color--focus);
+  border-color: var(--rh-local-cta--emphasis-color--focus); }
+
+:host([bordered]) ::slotted(a:visited) {
+  border-color: var(--rh-local-cta--emphasis-color--visited); }
+
+:host([unfilled]) ::slotted(a) {
+  background-color: transparent !important; }
 </style>
 <slot></slot>`;
   }
@@ -200,3 +236,4 @@ class RhCta extends RHElement {
 RHElement.create(RhCta);
 
 export default RhCta;
+//# sourceMappingURL=rh-cta.js.map

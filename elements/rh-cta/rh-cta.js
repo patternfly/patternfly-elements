@@ -31,10 +31,6 @@ class RhCta extends RHElement {
   --rh-local-cta--emphasis-color--visited: var(--rh-cta--emphasis-color--visited, #7551a6);
   --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #004080);
   --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #004080);
-  --rh-local-cta--complement-color: var(--rh-cta--complement-color, transparent);
-  --rh-local-cta--complement-color--visited: var(--rh-cta--complement-color--visited, transparent);
-  --rh-local-cta--complement-color--hover: var(--rh-cta--complement-color--hover, transparent);
-  --rh-local-cta--complement-color--focus: var(--rh-cta--complement-color--focus, transparent);
   --rh-local-cta--arrow--spacing: var(--rh-cta--arrow--spacing, var(--rh-theme--spacing--xxs, 0.25rem));
   --rh-local-cta--padding-y: var(--rh-cta--padding-y, 0);
   --rh-local-cta--padding-x: var(--rh-cta--padding-x, 0);
@@ -49,7 +45,6 @@ class RhCta extends RHElement {
     border: var(--rh-local-cta--BorderWidth) solid transparent;
     border-radius: var(--rh-local-cta--BorderRadius);
     transition: all 250ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
-    background-color: var(--rh-local-cta--complement-color);
     color: var(--rh-local-cta--emphasis-color); }
     :host ::slotted(a)::after {
       margin-left: var(--rh-local-cta--arrow--spacing);
@@ -62,21 +57,15 @@ class RhCta extends RHElement {
       display: inline-block;
       content: ""; }
   :host ::slotted(a:hover) {
-    color: var(--rh-local-cta--emphasis-color--hover);
-    background-color: var(--rh-local-cta--complement-color--hover);
-    border-color: var(--rh-local-cta--complement-color--hover); }
+    color: var(--rh-local-cta--emphasis-color--hover); }
     :host ::slotted(a:hover)::after {
       border-top-color: var(--rh-local-cta--emphasis-color--hover); }
   :host ::slotted(a:focus) {
-    color: var(--rh-local-cta--emphasis-color--focus);
-    background-color: var(--rh-local-cta--complement-color--focus);
-    border-color: var(--rh-local-cta--complement-color--focus); }
+    color: var(--rh-local-cta--emphasis-color--focus); }
     :host ::slotted(a:focus)::after {
       border-top-color: var(--rh-local-cta--emphasis-color--focus); }
   :host ::slotted(a:visited) {
-    color: var(--rh-local-cta--emphasis-color--visited);
-    background-color: var(--rh-local-cta--complement-color--visited);
-    border-color: var(--rh-local-cta--complement-color--visited); }
+    color: var(--rh-local-cta--emphasis-color--visited); }
     :host ::slotted(a:visited)::after {
       border-top-color: var(--rh-local-cta--emphasis-color--visited); }
 
@@ -123,8 +112,9 @@ class RhCta extends RHElement {
   --rh-local-cta--complement-color--hover: var(--rh-cta--complement-color--hover, #fff);
   --rh-local-cta--complement-color--focus: var(--rh-cta--complement-color--focus, #fff);
   --rh-local-cta--complement-color--visited: var(--rh-cta--complement-color--visited, #fff);
-  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #464646);
-  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #2d2d2d); }
+  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #6e6e6e);
+  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #555555);
+  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #555555); }
   :host([solid]) ::slotted(a) {
     color: var(--rh-local-cta--complement-color);
     background-color: var(--rh-local-cta--emphasis-color);
@@ -139,10 +129,6 @@ class RhCta extends RHElement {
     color: var(--rh-local-cta--complement-color--focus);
     background-color: var(--rh-local-cta--emphasis-color--focus);
     border-color: var(--rh-local-cta--emphasis-color--focus); }
-  :host([solid]) ::slotted(a:visited) {
-    color: var(--rh-local-cta--complement-color--visited);
-    background-color: var(--rh-local-cta--emphasis-color--visited);
-    border-color: var(--rh-local-cta--emphasis-color--visited); }
 
 :host([solid].primary) {
   --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #0076e0);
@@ -171,27 +157,24 @@ class RhCta extends RHElement {
   background-color: var(--rh-local-cta--complement-color--focus);
   border-color: var(--rh-local-cta--complement-color--focus); }
 
-:host([solid][inverted]) ::slotted(a:visited) {
-  color: var(--rh-local-cta--emphasis-color--visited);
-  background-color: var(--rh-local-cta--complement-color--visited);
-  border-color: var(--rh-local-cta--complement-color--visited); }
-
-:host([bordered]) ::slotted(a) {
+:host([solid][bordered]) ::slotted(a) {
+  color: var(--rh-local-cta--emphasis-color);
+  background-color: var(--rh-local-cta--complement-color);
   border-color: var(--rh-local-cta--emphasis-color); }
 
-:host([bordered]) ::slotted(a:hover) {
+:host([solid][bordered]) ::slotted(a:hover) {
+  color: var(--rh-local-cta--emphasis-color--hover);
+  background-color: var(--rh-local-cta--complement-color--hover);
   border-color: var(--rh-local-cta--emphasis-color--hover); }
 
-:host([bordered]) ::slotted(a:focus) {
+:host([solid][bordered]) ::slotted(a:focus) {
   color: var(--rh-local-cta--emphasis-color--focus);
   background-color: var(--rh-local-cta--complement-color--focus);
   border-color: var(--rh-local-cta--emphasis-color--focus); }
 
-:host([bordered]) ::slotted(a:visited) {
-  border-color: var(--rh-local-cta--emphasis-color--visited); }
-
 :host([unfilled]) ::slotted(a) {
-  background-color: transparent !important; }
+  background-color: transparent !important;
+  border-color: transparent !important; }
 </style>
 <slot></slot>`;
   }

@@ -19,10 +19,6 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
     "emphasis-color--visited": #{$rh-global--link-color--visited},
     "emphasis-color--hover": #{$rh-global--link-color--hover},
     "emphasis-color--focus": #{$rh-global--link-color--focus},
-    "complement-color": transparent,
-    "complement-color--visited": transparent,
-    "complement-color--hover": transparent,
-    "complement-color--focus": transparent
   );
   @include rh-define-vars($cta-defaults);
 
@@ -45,7 +41,6 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
     border-radius: rh-var("BorderRadius");
     transition: all 250ms $rh-cta--animation-timing;
     // These will be the most updated values based on user selections
-    background-color: rh-var("complement-color");
     color: rh-var("emphasis-color");
 
     &::after {
@@ -57,8 +52,6 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
   // Setup Default CTA Hover
   & ::slotted(a:hover) {
     color: rh-var("emphasis-color--hover");
-    background-color: rh-var("complement-color--hover");
-    border-color: rh-var("complement-color--hover");
 
     &::after {
       @include rh-arrow-color($color: rh-var("emphasis-color--hover"));
@@ -67,8 +60,6 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
   // Setup Default CTA Focus
   & ::slotted(a:focus) {
     color: rh-var("emphasis-color--focus");
-    background-color: rh-var("complement-color--focus");
-    border-color: rh-var("complement-color--focus");
 
     &::after {
       @include rh-arrow-color($color: rh-var("emphasis-color--focus"));
@@ -78,8 +69,6 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
   // Setup Default CTA Visited
   & ::slotted(a:visited) {
     color: rh-var("emphasis-color--visited");
-    background-color: rh-var("complement-color--visited");
-    border-color: rh-var("complement-color--visited");
 
     &::after {
       @include rh-arrow-color($color: rh-var("emphasis-color--visited"));
@@ -179,12 +168,13 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 
   @include rh-define-vars($cta-solid-custom, $custom-theme: true);
 
-    $cta-solid-default: (
-      "emphasis-color": #{$rh-global--color--gray-iron},
-      "emphasis-color--hover": #{darken($rh-global--color--gray-iron, 10%)}
-    );
-    
-    @include rh-define-vars($cta-solid-default, $custom-theme: true);
+  $cta-solid-default: (
+    "emphasis-color": #{$rh-global--color--gray-batman},
+    "emphasis-color--hover": #{darken($rh-global--color--gray-batman, 10%)},
+    "emphasis-color--focus": #{darken($rh-global--color--gray-batman, 10%)}
+  );
+  
+  @include rh-define-vars($cta-solid-default, $custom-theme: true);
 
   & ::slotted(a) {
     // display: inline-block;
@@ -206,13 +196,6 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
     color: rh-var("complement-color--focus");
     background-color: rh-var("emphasis-color--focus");
     border-color: rh-var("emphasis-color--focus");
-  }
-
-  // Setup Default CTA Visited
-  & ::slotted(a:visited) {
-    color: rh-var("complement-color--visited");
-    background-color: rh-var("emphasis-color--visited");
-    border-color: rh-var("emphasis-color--visited");
   }
 }
 
@@ -262,26 +245,19 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
     background-color: rh-var("complement-color--focus");
     border-color: rh-var("complement-color--focus");
   }
-
-  // Setup Default CTA Visited
-  & ::slotted(a:visited) {
-    color: rh-var("emphasis-color--visited");
-    background-color: rh-var("complement-color--visited");
-    border-color: rh-var("complement-color--visited");
-  }
 }
 
 // CTA Bordered
-:host([bordered]) {
+:host([solid][bordered]) {
   & ::slotted(a) {
-    // color: rh-var("emphasis-color");
-    // background-color: rh-var("complement-color");
+    color: rh-var("emphasis-color");
+    background-color: rh-var("complement-color");
     border-color: rh-var("emphasis-color");
   }
   // Setup Default CTA Hover
   & ::slotted(a:hover) {
-    // color: rh-var("emphasis-color--hover");
-    // background-color: rh-var("complement-color--hover");
+    color: rh-var("emphasis-color--hover");
+    background-color: rh-var("complement-color--hover");
     border-color: rh-var("emphasis-color--hover");
   }
   // Setup Default CTA Focus
@@ -290,19 +266,13 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
     background-color: rh-var("complement-color--focus");
     border-color: rh-var("emphasis-color--focus");
   }
-
-  // Setup Default CTA Visited
-  & ::slotted(a:visited) {
-    // color: rh-var("emphasis-color--visited");
-    // background-color: rh-var("complement-color--visited");
-    border-color: rh-var("emphasis-color--visited");
-  }
 }
 
 // CTA Unfilled
 :host([unfilled]) {
   & ::slotted(a) {
     background-color: transparent !important;
+    border-color: transparent !important;
   }
 
   // &::slotted(a:hover),

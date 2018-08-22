@@ -1,84 +1,105 @@
+![RHElements logo](./brand/logo/png/rhelements-logo-blue.png)
 
-## Repository structure
+This is the contribution guide for [RHElements](README.md), a collection of flexible and lightweight [Web Components][wc].
 
-This is a [Lerna][lerna]-powered monorepo.
+## Ways to contribute
 
-```
-├── elements/
-│   ├── cp-accordion
-│   ├── cp-card
-│   ├── rh-button
-│   ├── rh-card
-│   └── # many more
-├── test/
-│   └── index.html
-└── scripts/
-    └── # shell scripts
-```
+STUB
 
-The `elements` dir stores all the elements.  Each element is published independently to npm under the [@rhelements][npmorg] org.
+## Developing new RHElements
 
-The `test` dir contains a suite which runs all components' tests in one batch.  Components can also be tested [individually][#testing].
+There are two types of development commands, root commands which you run from the root directory of the project, and element commands, which you run from an element directory.
 
-The `scripts` dir contains various build- or workflow-related scripts which are too large to fit into package.json as an [npm script][npmscripts].
+### Root commands
 
+These commands can be run from the root directory of RHElements and operate on all the elements.
 
-## Workflow
+| command | description |
+|---|---|
+| `npm start` | Launch a demo server. This should be continuously running as you work. |
+| `npm test` | Test ALL RHElements. |
+| `npm run build` | Build ALL RHElements. |
+| `npm run bootstrap` | Update ALL rhelements' dependencies and interlink them with [lerna bootstrap][lerna-bs]. |
+| `npm run storybook` | Run storybook  |
 
- - **npm start** <br> launch a demo server
- - **npm test** <br> run tests on ALL rhelements
- - **npm run build** <br> run build on ALL rhelements
- - **npm run bootstrap** <br> update ALL rhelements' dependencies and interlink them with [lerna bootstrap][lerna-bs]
+### Element commands
 
-## Component Development
+If you're working on a specific element, you can work more efficiently by going into the element's directory.  There, you'll get access to the following commands which act only on the element you care about.
 
-Each component that you work on will need to be built for you to see the changes. Every component has a gulpfile and an npm script, `npm run dev`, that you can run on each component that you're working on. The `npm run dev` command will watch the files in the component's directory and will run the build command when you make changes to the component.
+| command | description |
+|---|---|
+| `npm test` | Test this element. |
+| `npm run dev` | Start a watcher that builds when source files change. |
+| `npm run build` | Build this element. |
 
-### Example Development on a component
+Even when you're focused on a specific element, it's still useful to have the root command `npm start` running, so you can view the demo page of your element.
 
-```
-cd elements/cp-accordion
-npm run dev
-```
+## Element development
 
-Make any changes you need and the gulpfile will handle transpiling the element down to ES5 and will bring in the HTML template and Sass file into the template in the component.
+Because this is a monorepo, each element will need to be independently built in order to actively work on and preview the changes. Every element has its own Gulp file and NPM script. 
 
-If you started the dev server at the root of RHElements, then you should be able to navigate to the demo page for the component, refresh the page, and see your changes.
+While still running `npm start` in one terminal window (which runs the local server), you will need to open another terminal window, drill into the directory of the element you'd like to work on, and execute the `npm run dev` command. This command will use gulp tasks to watch the files within that element directory and will automatically re-run the build command and refresh the browser when you make changes to the element.
 
-To test all RHElements, run `npm test` from the root of the repo.  If you only want to test the component you're working on:
+### Example development on an element
 
-    cd elements/cp-accordion
+In one terminal, start the demo server.
+
+    cd /Sites/rhelement
+    npm start
+
+In another terminal:
+
+    cd elements/rh-card  # or any other element
+    npm run dev
+
+Make a change to the element and save. The gulpfile will handle transpiling the element down to ES5 and will bring in the HTML and Sass into the template in the element.
+
+## Test
+
+To test all RHElements, run `npm test` from the root of the repo. If you only want to test the element you're working on:
+
+    cd elements/rh-card
     npm test
 
 Also, if your tests are failing and you want access to a live browser to investigate why, the following flag will keep the browser open.
 
     npm test -- -p
 
-Then open the URL that will be printed in the terminal.  It looks something like this: `http://localhost:8081/components/@rhelements/rhelements/generated-index.html?cli_browser_id=0`.
+The URL to the tests will be printed in the terminal.  It looks something like this: `http://localhost:8081/components/@rhelements/rhelements/generated-index.html?cli_browser_id=0`.
 
 ## Storybook
 
-We've added [Storybook](https://storybook.js.org/) to RHElements as a way to preview our components as they are being developed. We'll also use Storybook to export a static site that will be the demo site for RHElements.
+We've added [Storybook](https://storybook.js.org/) to RHElements as a way to preview our elements as they are being developed. We'll also use Storybook to export a static site that will be the demo site for RHElements.
 
 To run storybook
 
-```
-npm run storybook
-```
+    npm run storybook
 
 This will start a web server on port 9001. Navigate in your browser to `http://localhost:9001` to see Storybook in action. Storybook will watch for file changes and reload the browser automatically for you. This is a little slow at the moment, but we'll look into speeding this up.
 
 To export the storybook static site
 
-```
-npm run build-storybook
-```
+    npm run build-storybook
 
 This places a build of the storybook site in the .storybook_out directory.
 
 ### Known Issues with Storybook
 
-Any component that has a third-party dependency will not work in our current setup. We are looking into what we need to do to resolve the issue.
+For any element that has a third-party dependency you will need to update the `/.storybook/webpack.config.js` file. You will need to create an alias for your dependency.
+
+For example:
+
+    "../../whatwg-fetch/fetch.js": path.join( // this is the third-party dependency in the rhelement
+      __dirname,
+      "../node_modules/whatwg-fetch/fetch.js" // this is where it lives in node_modules
+    )
+
+[lerna]: https://lernajs.io/
+[lerna-bs]: https://github.com/lerna/lerna#bootstrap
+[npmorg]: https://www.npmjs.com/org/rhelements
+[npmscripts]: https://docs.npmjs.com/misc/scripts
+[wc]: https://developer.mozilla.org/en-US/docs/Web/Web_Components
+[contrib]: CONTRIBUTING.md
 
 ## Testing
 

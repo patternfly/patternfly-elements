@@ -1,2 +1,202 @@
-!function(o,r){"object"==typeof exports&&"undefined"!=typeof module?module.exports=r(require("../rhelement/rhelement.umd.js")):"function"==typeof define&&define.amd?define(["../rhelement/rhelement.umd.js"],r):o.RhCta=r(o.RHElement)}(this,function(l){"use strict";l=l&&l.hasOwnProperty("default")?l.default:l;var t=function(){function t(o,r){for(var l=0;l<r.length;l++){var t=r[l];t.enumerable=t.enumerable||!1,t.configurable=!0,"value"in t&&(t.writable=!0),Object.defineProperty(o,t.key,t)}}return function(o,r,l){return r&&t(o.prototype,r),l&&t(o,l),o}}(),o=function(o){function r(){return function(o,r){if(!(o instanceof r))throw new TypeError("Cannot call a class as a function")}(this,r),function(o,r){if(!o)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!r||"object"!=typeof r&&"function"!=typeof r?o:r}(this,(r.__proto__||Object.getPrototypeOf(r)).call(this,r.tag))}return function(o,r){if("function"!=typeof r&&null!==r)throw new TypeError("Super expression must either be null or a function, not "+typeof r);o.prototype=Object.create(r&&r.prototype,{constructor:{value:o,enumerable:!1,writable:!0,configurable:!0}}),r&&(Object.setPrototypeOf?Object.setPrototypeOf(o,r):o.__proto__=r)}(r,l),t(r,[{key:"html",get:function(){return'\n<style>\n:host {\n  display: inline-block;\n  --rh-local-cta--arrow--spacing: var(--rh-cta--arrow--spacing, var(--rh-theme--spacing--xxs, 0.25rem));\n  --rh-local-cta--link-color: var(--rh-cta--link-color, #06c);\n  --rh-local-cta--link-color--visited: var(--rh-cta--link-color--visited, #7551a6);\n  --rh-local-cta--link-color--hover: var(--rh-cta--link-color--hover, #004080);\n  --rh-local-cta--link-color--focus: var(--rh-cta--link-color--focus, #004080); }\n  :host ::slotted(a) {\n    color: var(--rh-local-cta--link-color); }\n    :host ::slotted(a)::after {\n      margin-left: var(--rh-local-cta--arrow--spacing);\n      vertical-align: middle;\n      border-style: solid;\n      border-width: 0.313em 0.313em 0;\n      border-color: transparent;\n      border-top-color: var(--rh-local-cta--link-color);\n      transform: rotate(-90deg);\n      display: inline-block;\n      content: ""; }\n  :host ::slotted(a:visited) {\n    color: var(--rh-local-cta--link-color--visited); }\n    :host ::slotted(a:visited)::after {\n      border-top-color: var(--rh-local-cta--link-color--visited); }\n  :host ::slotted(a:hover) {\n    color: var(--rh-local-cta--link-color--hover); }\n    :host ::slotted(a:hover)::after {\n      border-top-color: var(--rh-local-cta--link-color--hover); }\n  :host ::slotted(a:focus) {\n    color: var(--rh-local-cta--link-color--focus); }\n    :host ::slotted(a:focus)::after {\n      border-top-color: var(--rh-local-cta--link-color--focus); }\n\n:host(.primary) {\n  --rh-cta--color: $rh-global--link-color;\n  --rh-cta--color--hover: $rh-global--link-color--hover;\n  --rh-cta--color--focus: $rh-global--link-color--focus;\n  --rh-cta--color--visited: $rh-global--link-color--visited; }\n\n:host(.secondary) {\n  --rh-cta--color: $rh-global--color--gray-iron;\n  --rh-cta--color--hover: darken($rh-global--color--gray-iron, 10%);\n  --rh-cta--color--focus: darken($rh-global--color--gray-iron, 10%);\n  --rh-cta--color--visited: $rh-global--link-color--visited; }\n\n:host(.accent) {\n  --rh-cta--color: $rh-global--color--red;\n  --rh-cta--color--hover: darken($rh-global--color--red, 10%);\n  --rh-cta--color--focus: darken($rh-global--color--red, 10%);\n  --rh-cta--color--visited: $rh-global--link-color--visited; }\n\n:host([inverted]) {\n  --rh-cta--color: $rh-global--link-color--inverted;\n  --rh-cta--color--hover: $rh-global--link-color--inverted--hover;\n  --rh-cta--color--focus: $rh-global--link-color--inverted--focus;\n  --rh-cta--color--visited: $rh-global--link-color--inverted--visited; }\n\n:host([inverted].primary) {\n  --rh-cta--color: $rh-global--link-color--inverted;\n  --rh-cta--color--hover: $rh-global--link-color--inverted--hover;\n  --rh-cta--color--focus: $rh-global--link-color--inverted--focus;\n  --rh-cta--color--visited: $rh-global--link-color--inverted--visited; }\n\n:host([inverted].secondary) {\n  --rh-cta--color: $rh-global--color--white;\n  --rh-cta--color--hover: darken($rh-global--color--white, 10%);\n  --rh-cta--color--focus: darken($rh-global--color--white, 10%);\n  --rh-cta--color--visited: $rh-global--link-color--inverted--visited; }\n\n:host([inverted].accent) {\n  --rh-cta--color: lighten($rh-global--color--red, 10%);\n  --rh-cta--color--hover: lighten($rh-global--color--red, 20%);\n  --rh-cta--color--focus: lighten($rh-global--color--red, 20%);\n  --rh-cta--color--visited: $rh-global--link-color--inverted--visited; }\n\n:host([solid]) {\n  --rh-local-cta--solid--padding-y: var(--rh-cta--solid--padding-y, var(--rh-theme--spacing--xs, 0.5rem));\n  --rh-local-cta--solid--padding-x: var(--rh-cta--solid--padding-x, var(--rh-theme--spacing--lg, 2rem));\n  --rh-local-cta--solid--BorderRadius: var(--rh-cta--solid--BorderRadius, var(--rh-theme--cta--BorderRadius, 5em));\n  --rh-local-cta--solid--BorderWidth: var(--rh-cta--solid--BorderWidth, var(--rh-theme--cta--BorderWidth, 1px));\n  --rh-local-cta--color--solid: var(--rh-cta--color--solid, var(--rh-theme--color, #6e6e6e));\n  --rh-local-cta--text-color--solid: var(--rh-cta--text-color--solid, var(--rh-theme--text-color, #fff));\n  --rh-local-cta--color--solid--hover: var(--rh-cta--color--solid--hover, var(--rh-theme--color--hover, #555555));\n  --rh-local-cta--text-color--solid--hover: var(--rh-cta--text-color--solid--hover, var(--rh-theme--text-color--hover, #fff)); }\n  :host([solid])::slotted(a) {\n    display: inline-block;\n    padding: var(--rh-local-cta--solid--padding-y) var(--rh-local-cta--solid--padding-x);\n    text-decoration: none;\n    border: var(--rh-local-cta--solid--BorderWidth) solid transparent;\n    border-radius: var(--rh-local-cta--solid--BorderRadius);\n    transition: all 250ms cubic-bezier(0.465, 0.183, 0.153, 0.946);\n    background: var(--rh-local-cta--color--solid);\n    color: var(--rh-local-cta--text-color--solid); }\n    :host([solid])::slotted(a)::after {\n      display: none; }\n  :host([solid]) ::slotted(a:hover),\n  :host([solid]) ::slotted(a:focus) {\n    background: var(--rh-local-cta--color--solid--hover) !important;\n    color: var(--rh-local-cta--text-color--solid--hover) !important; }\n\n:host([solid].primary) {\n  --rh-cta--color--solid: $rh-global--color--blue-azure;\n  --rh-cta--text-color--solid: $rh-global--color--white;\n  --rh-cta--color--solid--hover: darken($rh-global--color--blue-azure, 10%);\n  --rh-cta--text-color--solid--hover: $rh-global--color--white; }\n\n:host([solid].secondary) {\n  --rh-cta--color--solid: $rh-global--color--gray-iron;\n  --rh-cta--text-color--solid: $rh-global--color--white;\n  --rh-cta--color--solid--hover: darken($rh-global--color--gray-iron, 10%);\n  --rh-cta--text-color--solid--hover: $rh-global--color--white; }\n\n:host([solid].accent) {\n  --rh-cta--color--solid: $rh-global--color--red;\n  --rh-cta--text-color--solid: $rh-global--color--white;\n  --rh-cta--color--solid--hover: darken($rh-global--color--red, 10%);\n  --rh-cta--text-color--solid--hover: $rh-global--color--white; }\n\n:host([solid][inverted]) {\n  --rh-cta--color--solid: $rh-global--color--red;\n  --rh-cta--text-color--solid: $rh-global--color--white;\n  --rh-cta--color--solid--hover: darken($rh-global--color--red, 10%);\n  --rh-cta--text-color--solid--hover: $rh-global--color--white; }\n\n:host([unfilled])::slotted(a) {\n  background: transparent !important; }\n</style>\n<slot></slot>'}},{key:"styleUrl",get:function(){return"rh-cta.scss"}},{key:"templateUrl",get:function(){return"rh-cta.html"}}],[{key:"tag",get:function(){return"rh-cta"}}]),t(r,[{key:"connectedCallback",value:function(){(function o(r,l,t){null===r&&(r=Function.prototype);var e=Object.getOwnPropertyDescriptor(r,l);if(void 0===e){var c=Object.getPrototypeOf(r);return null===c?void 0:o(c,l,t)}if("value"in e)return e.value;var a=e.get;return void 0!==a?a.call(t):void 0})(r.prototype.__proto__||Object.getPrototypeOf(r.prototype),"connectedCallback",this).call(this);var o=this.children[0];o?o&&"a"!==o.tagName.toLowerCase()?console.warn("The first child in the light DOM must be an anchor tag (<a>)"):this.link=this.querySelector("a"):console.warn("The first child in the light DOM must be an anchor tag (<a>)")}},{key:"disconnectedCallback",value:function(){}}]),r}();return l.create(o),o});
-//# sourceMappingURL=rh-cta.umd.js.map
+/*
+ * Copyright 2018 Red Hat, Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+import RHElement from "../rhelement/rhelement.umd.js";
+
+class RhCta extends RHElement {
+  get html() {
+    return `
+<style>
+:host {
+  display: inline-block;
+  --rh-local-cta--arrow--spacing: var(--rh-cta--arrow--spacing, var(--rh-theme--spacing--xxs, 0.25rem));
+  --rh-local-cta--padding-y: var(--rh-cta--padding-y, 0);
+  --rh-local-cta--padding-x: var(--rh-cta--padding-x, 0);
+  --rh-local-cta--borderRadius: var(--rh-cta--borderRadius, 0);
+  --rh-local-cta--borderWidth: var(--rh-cta--borderWidth, 0);
+  --rh-local-cta--textDecoration: var(--rh-cta--textDecoration, underline);
+  --rh-local-cta--link-color: var(--rh-cta--link-color, #06c);
+  --rh-local-cta--link-color--visited: var(--rh-cta--link-color--visited, #7551a6);
+  --rh-local-cta--link-color--hover: var(--rh-cta--link-color--hover, #004080);
+  --rh-local-cta--link-color--focus: var(--rh-cta--link-color--focus, #004080); }
+  :host ::slotted(a) {
+    color: var(--rh-local-cta--link-color);
+    padding: var(--rh-local-cta--padding-y) var(--rh-local-cta--padding-x);
+    text-decoration: var(--rh-local-cta--textDecoration);
+    border: var(--rh-local-cta--BorderWidth) solid transparent;
+    border-radius: var(--rh-local-cta--BorderRadius);
+    transition: all 250ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
+    background: var(--rh-local-cta--color);
+    color: var(--rh-local-cta--text-color); }
+    :host ::slotted(a)::after {
+      margin-left: var(--rh-local-cta--arrow--spacing);
+      vertical-align: middle;
+      border-style: solid;
+      border-width: 0.313em 0.313em 0;
+      border-color: transparent;
+      border-top-color: var(--rh-local-cta--link-color);
+      transform: rotate(-90deg);
+      display: inline-block;
+      content: ""; }
+  :host ::slotted(a:visited) {
+    color: var(--rh-local-cta--link-color--visited); }
+    :host ::slotted(a:visited)::after {
+      border-top-color: var(--rh-local-cta--link-color--visited); }
+  :host ::slotted(a:hover) {
+    color: var(--rh-local-cta--link-color--hover); }
+    :host ::slotted(a:hover)::after {
+      border-top-color: var(--rh-local-cta--link-color--hover); }
+  :host ::slotted(a:focus) {
+    color: var(--rh-local-cta--link-color--focus); }
+    :host ::slotted(a:focus)::after {
+      border-top-color: var(--rh-local-cta--link-color--focus); }
+
+:host(.primary) {
+  --rh-cta--color: $rh-global--link-color;
+  --rh-cta--color--hover: $rh-global--link-color--hover;
+  --rh-cta--color--focus: $rh-global--link-color--focus;
+  --rh-cta--color--visited: $rh-global--link-color--visited; }
+
+:host(.secondary) {
+  --rh-cta--color: $rh-global--color--gray-iron;
+  --rh-cta--color--hover: darken($rh-global--color--gray-iron, 10%);
+  --rh-cta--color--focus: darken($rh-global--color--gray-iron, 10%);
+  --rh-cta--color--visited: $rh-global--link-color--visited; }
+
+:host(.accent) {
+  --rh-cta--color: $rh-global--color--red;
+  --rh-cta--color--hover: darken($rh-global--color--red, 10%);
+  --rh-cta--color--focus: darken($rh-global--color--red, 10%);
+  --rh-cta--color--visited: $rh-global--link-color--visited; }
+
+:host([inverted]) {
+  --rh-cta--color: $rh-global--link-color--inverted;
+  --rh-cta--color--hover: $rh-global--link-color--inverted--hover;
+  --rh-cta--color--focus: $rh-global--link-color--inverted--focus;
+  --rh-cta--color--visited: $rh-global--link-color--inverted--visited; }
+
+:host([inverted].primary) {
+  --rh-cta--color: $rh-global--link-color--inverted;
+  --rh-cta--color--hover: $rh-global--link-color--inverted--hover;
+  --rh-cta--color--focus: $rh-global--link-color--inverted--focus;
+  --rh-cta--color--visited: $rh-global--link-color--inverted--visited; }
+
+:host([inverted].secondary) {
+  --rh-cta--color: $rh-global--color--white;
+  --rh-cta--color--hover: darken($rh-global--color--white, 10%);
+  --rh-cta--color--focus: darken($rh-global--color--white, 10%);
+  --rh-cta--color--visited: $rh-global--link-color--inverted--visited; }
+
+:host([inverted].accent) {
+  --rh-cta--color: lighten($rh-global--color--red, 10%);
+  --rh-cta--color--hover: lighten($rh-global--color--red, 20%);
+  --rh-cta--color--focus: lighten($rh-global--color--red, 20%);
+  --rh-cta--color--visited: $rh-global--link-color--inverted--visited; }
+
+:host([solid]) {
+  --rh-local-cta--padding-y: var(--rh-cta--padding-y, var(--rh-theme--spacing--xs, 0.5rem));
+  --rh-local-cta--padding-x: var(--rh-cta--padding-x, var(--rh-theme--spacing--lg, 2rem));
+  --rh-local-cta--BorderRadius: var(--rh-cta--BorderRadius, var(--rh-theme--cta--BorderRadius, 5em !default));
+  --rh-local-cta--BorderWidth: var(--rh-cta--BorderWidth, var(--rh-theme--cta--BorderWidth, 1px));
+  --rh-local-cta--color: var(--rh-cta--color, var(--rh-theme--color, #6e6e6e));
+  --rh-local-cta--text-color: var(--rh-cta--text-color, var(--rh-theme--text-color, #fff));
+  --rh-local-cta--color--hover: var(--rh-cta--color--hover, var(--rh-theme--color--hover, #555555));
+  --rh-local-cta--text-color--hover: var(--rh-cta--text-color--hover, var(--rh-theme--text-color--hover, #fff)); }
+  :host([solid])::slotted(a) {
+    display: inline-block; }
+    :host([solid])::slotted(a)::after {
+      display: none; }
+  :host([solid]) ::slotted(a:hover),
+  :host([solid]) ::slotted(a:focus) {
+    background: var(--rh-local-cta--color--hover) !important;
+    color: var(--rh-local-cta--text-color--hover) !important; }
+
+:host([solid].primary) {
+  --rh-cta--color: $rh-global--color--blue-azure;
+  --rh-cta--text-color: $rh-global--color--white;
+  --rh-cta--color--hover: darken($rh-global--color--blue-azure, 10%);
+  --rh-cta--text-color--hover: $rh-global--color--white; }
+
+:host([solid].secondary) {
+  --rh-cta--color: $rh-global--color--gray-iron;
+  --rh-cta--text-color: $rh-global--color--white;
+  --rh-cta--color--hover: darken($rh-global--color--gray-iron, 10%);
+  --rh-cta--text-color--hover: $rh-global--color--white; }
+
+:host([solid].accent) {
+  --rh-cta--color: $rh-global--color--red;
+  --rh-cta--text-color: $rh-global--color--white;
+  --rh-cta--color--hover: darken($rh-global--color--red, 10%);
+  --rh-cta--text-color--hover: $rh-global--color--white; }
+
+:host([solid][inverted]) {
+  --rh-cta--color: $rh-global--color--red;
+  --rh-cta--text-color: $rh-global--color--white;
+  --rh-cta--color--hover: darken($rh-global--color--red, 10%);
+  --rh-cta--text-color--hover: $rh-global--color--white; }
+
+:host([unfilled])::slotted(a) {
+  background: transparent !important; }
+</style>
+<slot></slot>`;
+  }
+
+  static get tag() {
+    return "rh-cta";
+  }
+
+  get styleUrl() {
+    return "rh-cta.scss";
+  }
+
+  get templateUrl() {
+    return "rh-cta.html";
+  }
+
+  constructor() {
+    super(RhCta.tag);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    const firstChild = this.children[0];
+
+    if (!firstChild) {
+      console.warn(
+        "The first child in the light DOM must be an anchor tag (<a>)"
+      );
+    } else if (firstChild && firstChild.tagName.toLowerCase() !== "a") {
+      console.warn(
+        "The first child in the light DOM must be an anchor tag (<a>)"
+      );
+    } else {
+      this.link = this.querySelector("a");
+    }
+  }
+
+  disconnectedCallback() {}
+}
+
+RHElement.create(RhCta);
+
+export default RhCta;

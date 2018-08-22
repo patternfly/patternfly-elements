@@ -6,26 +6,24 @@ $component: "cta";
 /// ===========================================================================
 
 $rh-cta--arrow-size:                        0.313em; // Was ~5px at 16px
-$rh-cta--arrow--spacer:                     $rh-global--spacer--xxs;
-$rh-cta--solid--BorderRadius:               5em !default; //$rh-global--border--BorderRadius !default;
-$rh-cta--solid--BorderWidth:                $rh-global--border--BorderWidth;
-$rh-cta--solid--padding-y:                  $rh-global--spacer--xs;
-$rh-cta--solid--padding-x:                  $rh-global--spacer--lg;
 $rh-cta--animation-timing:                  $rh-global--animation-timing;
 
-// Reassigning SASS vars to component specific SASS vars for ease of use below
+// Define CSS Vars
+$cta-defaults-custom: (
+  "arrow--spacing": --rh-theme--spacing--xxs $rh-global--spacer--xxs,
+  "padding-y": 0,
+  "padding-x": 0,
+  "borderRadius": 0,
+  "borderWidth": 0,
+  "textDecoration": underline
+);
 
-// Default CTA colors
-$rh-cta--color:                     $rh-global--link-color;
-$rh-cta--color--hover:              $rh-global--link-color--hover;
-$rh-cta--color--focus:              $rh-global--link-color--focus;
-$rh-cta--color--visited:            $rh-global--link-color--visited;
-
-// Solid CTA colors
-$rh-cta--bg-color--solid:           $rh-global--color--gray-batman;
-$rh-cta--text-color--solid:         $rh-global--color--white;
-$rh-cta--bg-color--solid--hover:    darken($rh-global--color--gray-batman, 10%);
-$rh-cta--text-color--solid--hover:  $rh-global--color--white;
+$cta-defaults: (
+  "link-color": $rh-global--link-color,
+  "link-color--visited": $rh-global--link-color--visited,
+  "link-color--hover": $rh-global--link-color--hover,
+  "link-color--focus": $rh-global--link-color--focus
+);
 
 /// ===========================================================================
 /// Styles
@@ -35,24 +33,20 @@ $rh-cta--text-color--solid--hover:  $rh-global--color--white;
 :host {
   display: inline-block;
 
-  // Define CSS Vars
-  $cta-defaults-custom: (
-    "arrow--spacing": --rh-theme--spacing--xxs $rh-cta--arrow--spacer
-  );
-
   @include rh-define-vars($cta-defaults-custom, $custom-theme: true);
-
-  $cta-defaults: (
-    "link-color": $rh-cta--color,
-    "link-color--visited": $rh-cta--color--visited,
-    "link-color--hover": $rh-cta--color--hover,
-    "link-color--focus": $rh-cta--color--focus
-  );
 
   @include rh-define-vars($cta-defaults);
 
   & ::slotted(a) {
     color: rh-var("link-color");
+
+    padding: rh-var("padding-y") rh-var("padding-x");
+    text-decoration: rh-var("textDecoration");
+    border: rh-var("BorderWidth") solid transparent;
+    border-radius: rh-var("BorderRadius");
+    transition: all 250ms $rh-cta--animation-timing;
+    background: rh-var("color");
+    color: rh-var("text-color");
 
     &::after {
       margin-left: rh-var("arrow--spacing");
@@ -140,27 +134,27 @@ $rh-cta--text-color--solid--hover:  $rh-global--color--white;
 // CTA Solid
 :host([solid]) {
   $cta-solid: (
-    "solid--padding-y": --rh-theme--spacing--xs $rh-cta--solid--padding-y,
-    "solid--padding-x": --rh-theme--spacing--lg $rh-cta--solid--padding-x,
-    "solid--BorderRadius": --rh-theme--cta--BorderRadius $rh-cta--solid--BorderRadius,
-    "solid--BorderWidth": --rh-theme--cta--BorderWidth $rh-cta--solid--BorderWidth,
-    "color--solid": --rh-theme--color $rh-cta--bg-color--solid,
-    "text-color--solid": --rh-theme--text-color $rh-cta--text-color--solid,
-    "color--solid--hover": --rh-theme--color--hover $rh-cta--bg-color--solid--hover,
-    "text-color--solid--hover": --rh-theme--text-color--hover $rh-cta--text-color--solid--hover,
+    "padding-y": --rh-theme--spacing--xs $rh-global--spacer--xs,
+    "padding-x": --rh-theme--spacing--lg $rh-global--spacer--lg,
+    "BorderRadius": --rh-theme--cta--BorderRadius "5em !default",
+    "BorderWidth": --rh-theme--cta--BorderWidth $rh-global--border--BorderWidth,
+    "color": --rh-theme--color $rh-global--color--gray-batman,
+    "text-color": --rh-theme--text-color $rh-global--color--white,
+    "color--hover": --rh-theme--color--hover #{darken($rh-global--color--gray-batman, 10%)},
+    "text-color--hover": --rh-theme--text-color--hover $rh-global--color--white,
   );
 
   @include rh-define-vars($cta-solid, $custom-theme: true);
 
   &::slotted(a) {
     display: inline-block;
-    padding: rh-var("solid--padding-y") rh-var("solid--padding-x");
-    text-decoration: none;
-    border: rh-var("solid--BorderWidth") solid transparent;
-    border-radius: rh-var("solid--BorderRadius");
-    transition: all 250ms $rh-cta--animation-timing;
-    background: rh-var("color--solid");
-    color: rh-var("text-color--solid");
+    // padding: rh-var("solid--padding-y") rh-var("solid--padding-x");
+    // text-decoration: none;
+    // border: rh-var("solid--BorderWidth") solid transparent;
+    // border-radius: rh-var("solid--BorderRadius");
+    // transition: all 250ms $rh-cta--animation-timing;
+    // background: rh-var("color");
+    // color: rh-var("text-color");
 
     &::after {
       display: none;
@@ -169,38 +163,38 @@ $rh-cta--text-color--solid--hover:  $rh-global--color--white;
 
   & ::slotted(a:hover),
   & ::slotted(a:focus) {
-    background: rh-var("color--solid--hover") !important;
-    color: rh-var("text-color--solid--hover") !important;
+    background: rh-var("color--hover") !important;
+    color: rh-var("text-color--hover") !important;
   }
 }
 
 :host([solid].primary) {
-  --rh-cta--color--solid: $rh-global--color--blue-azure;
-  --rh-cta--text-color--solid: $rh-global--color--white;
-  --rh-cta--color--solid--hover: darken($rh-global--color--blue-azure, 10%);
-  --rh-cta--text-color--solid--hover: $rh-global--color--white;
+  --rh-cta--color: $rh-global--color--blue-azure;
+  --rh-cta--text-color: $rh-global--color--white;
+  --rh-cta--color--hover: darken($rh-global--color--blue-azure, 10%);
+  --rh-cta--text-color--hover: $rh-global--color--white;
 }
 
 :host([solid].secondary) {
-  --rh-cta--color--solid: $rh-global--color--gray-iron;
-  --rh-cta--text-color--solid: $rh-global--color--white;
-  --rh-cta--color--solid--hover: darken($rh-global--color--gray-iron, 10%);
-  --rh-cta--text-color--solid--hover: $rh-global--color--white;
+  --rh-cta--color: $rh-global--color--gray-iron;
+  --rh-cta--text-color: $rh-global--color--white;
+  --rh-cta--color--hover: darken($rh-global--color--gray-iron, 10%);
+  --rh-cta--text-color--hover: $rh-global--color--white;
 }
 
 :host([solid].accent) {
-  --rh-cta--color--solid: $rh-global--color--red;
-  --rh-cta--text-color--solid: $rh-global--color--white;
-  --rh-cta--color--solid--hover: darken($rh-global--color--red, 10%);
-  --rh-cta--text-color--solid--hover: $rh-global--color--white;
+  --rh-cta--color: $rh-global--color--red;
+  --rh-cta--text-color: $rh-global--color--white;
+  --rh-cta--color--hover: darken($rh-global--color--red, 10%);
+  --rh-cta--text-color--hover: $rh-global--color--white;
 }
 
 // CTA Solid
 :host([solid][inverted]) {
-  --rh-cta--color--solid: $rh-global--color--red;
-  --rh-cta--text-color--solid: $rh-global--color--white;
-  --rh-cta--color--solid--hover: darken($rh-global--color--red, 10%);
-  --rh-cta--text-color--solid--hover: $rh-global--color--white;
+  --rh-cta--color: $rh-global--color--red;
+  --rh-cta--text-color: $rh-global--color--white;
+  --rh-cta--color--hover: darken($rh-global--color--red, 10%);
+  --rh-cta--text-color--hover: $rh-global--color--white;
 }
 
 // CTA Unfilled

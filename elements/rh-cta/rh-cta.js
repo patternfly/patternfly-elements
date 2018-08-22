@@ -1,5 +1,3 @@
-import RHElement from "../rhelement/rhelement.js";
-
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -22,6 +20,8 @@ import RHElement from "../rhelement/rhelement.js";
  * SOFTWARE.
  */
 
+import RHElement from "../rhelement/rhelement.js";
+
 class RhCta extends RHElement {
   get html() {
     return `
@@ -29,12 +29,24 @@ class RhCta extends RHElement {
 :host {
   display: inline-block;
   --rh-local-cta--arrow--spacing: var(--rh-cta--arrow--spacing, var(--rh-theme--spacing--xxs, 0.25rem));
+  --rh-local-cta--padding-y: var(--rh-cta--padding-y, 0);
+  --rh-local-cta--padding-x: var(--rh-cta--padding-x, 0);
+  --rh-local-cta--borderRadius: var(--rh-cta--borderRadius, 0);
+  --rh-local-cta--borderWidth: var(--rh-cta--borderWidth, 0);
+  --rh-local-cta--textDecoration: var(--rh-cta--textDecoration, underline);
   --rh-local-cta--link-color: var(--rh-cta--link-color, #06c);
   --rh-local-cta--link-color--visited: var(--rh-cta--link-color--visited, #7551a6);
   --rh-local-cta--link-color--hover: var(--rh-cta--link-color--hover, #004080);
   --rh-local-cta--link-color--focus: var(--rh-cta--link-color--focus, #004080); }
   :host ::slotted(a) {
-    color: var(--rh-local-cta--link-color); }
+    color: var(--rh-local-cta--link-color);
+    padding: var(--rh-local-cta--padding-y) var(--rh-local-cta--padding-x);
+    text-decoration: var(--rh-local-cta--textDecoration);
+    border: var(--rh-local-cta--BorderWidth) solid transparent;
+    border-radius: var(--rh-local-cta--BorderRadius);
+    transition: all 250ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
+    background: var(--rh-local-cta--color);
+    color: var(--rh-local-cta--text-color); }
     :host ::slotted(a)::after {
       margin-left: var(--rh-local-cta--arrow--spacing);
       vertical-align: middle;
@@ -101,53 +113,46 @@ class RhCta extends RHElement {
   --rh-cta--color--visited: $rh-global--link-color--inverted--visited; }
 
 :host([solid]) {
-  --rh-local-cta--solid--padding-y: var(--rh-cta--solid--padding-y, var(--rh-theme--spacing--xs, 0.5rem));
-  --rh-local-cta--solid--padding-x: var(--rh-cta--solid--padding-x, var(--rh-theme--spacing--lg, 2rem));
-  --rh-local-cta--solid--BorderRadius: var(--rh-cta--solid--BorderRadius, var(--rh-theme--cta--BorderRadius, 5em));
-  --rh-local-cta--solid--BorderWidth: var(--rh-cta--solid--BorderWidth, var(--rh-theme--cta--BorderWidth, 1px));
-  --rh-local-cta--color--solid: var(--rh-cta--color--solid, var(--rh-theme--color, #6e6e6e));
-  --rh-local-cta--text-color--solid: var(--rh-cta--text-color--solid, var(--rh-theme--text-color, #fff));
-  --rh-local-cta--color--solid--hover: var(--rh-cta--color--solid--hover, var(--rh-theme--color--hover, #555555));
-  --rh-local-cta--text-color--solid--hover: var(--rh-cta--text-color--solid--hover, var(--rh-theme--text-color--hover, #fff)); }
+  --rh-local-cta--padding-y: var(--rh-cta--padding-y, var(--rh-theme--spacing--xs, 0.5rem));
+  --rh-local-cta--padding-x: var(--rh-cta--padding-x, var(--rh-theme--spacing--lg, 2rem));
+  --rh-local-cta--BorderRadius: var(--rh-cta--BorderRadius, var(--rh-theme--cta--BorderRadius, 5em !default));
+  --rh-local-cta--BorderWidth: var(--rh-cta--BorderWidth, var(--rh-theme--cta--BorderWidth, 1px));
+  --rh-local-cta--color: var(--rh-cta--color, var(--rh-theme--color, #6e6e6e));
+  --rh-local-cta--text-color: var(--rh-cta--text-color, var(--rh-theme--text-color, #fff));
+  --rh-local-cta--color--hover: var(--rh-cta--color--hover, var(--rh-theme--color--hover, #555555));
+  --rh-local-cta--text-color--hover: var(--rh-cta--text-color--hover, var(--rh-theme--text-color--hover, #fff)); }
   :host([solid])::slotted(a) {
-    display: inline-block;
-    padding: var(--rh-local-cta--solid--padding-y) var(--rh-local-cta--solid--padding-x);
-    text-decoration: none;
-    border: var(--rh-local-cta--solid--BorderWidth) solid transparent;
-    border-radius: var(--rh-local-cta--solid--BorderRadius);
-    transition: all 250ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
-    background: var(--rh-local-cta--color--solid);
-    color: var(--rh-local-cta--text-color--solid); }
+    display: inline-block; }
     :host([solid])::slotted(a)::after {
       display: none; }
   :host([solid]) ::slotted(a:hover),
   :host([solid]) ::slotted(a:focus) {
-    background: var(--rh-local-cta--color--solid--hover) !important;
-    color: var(--rh-local-cta--text-color--solid--hover) !important; }
+    background: var(--rh-local-cta--color--hover) !important;
+    color: var(--rh-local-cta--text-color--hover) !important; }
 
 :host([solid].primary) {
-  --rh-cta--color--solid: $rh-global--color--blue-azure;
-  --rh-cta--text-color--solid: $rh-global--color--white;
-  --rh-cta--color--solid--hover: darken($rh-global--color--blue-azure, 10%);
-  --rh-cta--text-color--solid--hover: $rh-global--color--white; }
+  --rh-cta--color: $rh-global--color--blue-azure;
+  --rh-cta--text-color: $rh-global--color--white;
+  --rh-cta--color--hover: darken($rh-global--color--blue-azure, 10%);
+  --rh-cta--text-color--hover: $rh-global--color--white; }
 
 :host([solid].secondary) {
-  --rh-cta--color--solid: $rh-global--color--gray-iron;
-  --rh-cta--text-color--solid: $rh-global--color--white;
-  --rh-cta--color--solid--hover: darken($rh-global--color--gray-iron, 10%);
-  --rh-cta--text-color--solid--hover: $rh-global--color--white; }
+  --rh-cta--color: $rh-global--color--gray-iron;
+  --rh-cta--text-color: $rh-global--color--white;
+  --rh-cta--color--hover: darken($rh-global--color--gray-iron, 10%);
+  --rh-cta--text-color--hover: $rh-global--color--white; }
 
 :host([solid].accent) {
-  --rh-cta--color--solid: $rh-global--color--red;
-  --rh-cta--text-color--solid: $rh-global--color--white;
-  --rh-cta--color--solid--hover: darken($rh-global--color--red, 10%);
-  --rh-cta--text-color--solid--hover: $rh-global--color--white; }
+  --rh-cta--color: $rh-global--color--red;
+  --rh-cta--text-color: $rh-global--color--white;
+  --rh-cta--color--hover: darken($rh-global--color--red, 10%);
+  --rh-cta--text-color--hover: $rh-global--color--white; }
 
 :host([solid][inverted]) {
-  --rh-cta--color--solid: $rh-global--color--red;
-  --rh-cta--text-color--solid: $rh-global--color--white;
-  --rh-cta--color--solid--hover: darken($rh-global--color--red, 10%);
-  --rh-cta--text-color--solid--hover: $rh-global--color--white; }
+  --rh-cta--color: $rh-global--color--red;
+  --rh-cta--text-color: $rh-global--color--white;
+  --rh-cta--color--hover: darken($rh-global--color--red, 10%);
+  --rh-cta--text-color--hover: $rh-global--color--white; }
 
 :host([unfilled])::slotted(a) {
   background: transparent !important; }
@@ -195,4 +200,3 @@ class RhCta extends RHElement {
 RHElement.create(RhCta);
 
 export default RhCta;
-//# sourceMappingURL=rh-cta.js.map

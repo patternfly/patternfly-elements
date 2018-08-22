@@ -30,7 +30,7 @@ class RhDropdownButton extends RHElement {
   box-sizing: border-box; }
 
 :host button {
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   border: 1px solid #ccc;
   background: transparent;
   font-size: 16px;
@@ -40,7 +40,7 @@ class RhDropdownButton extends RHElement {
   :host button::after {
     content: '';
     display: inline-block;
-    margin-left: 0.75rem;
+    margin-left: 0.5rem;
     border-top: 5px solid #333;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;

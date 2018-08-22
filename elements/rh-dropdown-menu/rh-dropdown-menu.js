@@ -45,7 +45,7 @@ class RhDropdownMenu extends RHElement {
     padding: 0; }
   :host ul a {
     display: block;
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 1rem;
     text-decoration: none;
     color: #333;
     line-height: 1.5; }

@@ -14,6 +14,7 @@
     <rh-number type="abbrev">12345</rh-number>
     <rh-number type="percent">0.5678</rh-number>
     <rh-number type="e">2000000</rh-number>
+    <rh-number number="10" id="test-change"></rh-number>
 
     <script>
       suite('<rh-number>', () => {
@@ -52,6 +53,16 @@
           const content = rhNumber.shadowRoot.querySelector('span').textContent;
 
           assert.equal(content, '2.000e+6');
+        });
+
+        test('it should react to the number changing', () => {
+          const rhNumber = document.querySelector('#test-change');
+          const before = rhNumber.shadowRoot.querySelector('span').textContent;
+
+          rhNumber.setAttribute("number", 20);
+          const after = rhNumber.shadowRoot.querySelector('span').textContent;
+
+          assert.equal(after, '20');
         });
       });
     </script>

@@ -1,3 +1,6 @@
+import RHElement from "../rhelement/rhelement.js";
+import "../rh-icon/rh-icon.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -19,9 +22,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import RHElement from "../rhelement/rhelement.js";
-import "../rh-icon/rh-icon.js";
 
 class RhIconPanel extends RHElement {
   get html() {
@@ -82,3 +82,4 @@ class RhIconPanel extends RHElement {
 }
 
 RHElement.create(RhIconPanel);
+//# sourceMappingURL=rh-icon-panel.js.map

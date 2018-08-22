@@ -1,5 +1,9 @@
 {
   "name": "@rhelements/rh-layouts",
+  "rhelement": {
+    "className": "RhLayouts",
+    "elementName": "rh-layouts"
+  },
   "version": "0.0.2",
   "description": "rh-layouts for Red Hat's Customer Portal and RHElements",
   "repository": {

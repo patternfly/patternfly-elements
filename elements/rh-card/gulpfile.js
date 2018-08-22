@@ -2,8 +2,6 @@ const fs = require("fs");
 const path = require("path");
 
 const gulp = require("gulp");
-const babel = require("gulp-babel");
-const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
 const replace = require("gulp-replace");
 const stripCssComments = require("strip-css-comments");
@@ -20,8 +18,6 @@ gulp.task("compile", () => {
         "$1$2.umd$3"
       )
     )
-    .pipe(babel())
-    .pipe(uglify())
     .pipe(
       rename({
         suffix: ".umd"

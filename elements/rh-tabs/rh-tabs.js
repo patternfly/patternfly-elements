@@ -1,3 +1,5 @@
+import RHElement from "../rhelement/rhelement.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -19,8 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import RHElement from "../rhelement/rhelement.js";
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.find
 if (!Array.prototype.find) {
@@ -201,7 +201,6 @@ class RhTabs extends RHElement {
 :host([type="subtabs"]) rh-tab .indicator {
   bottom: var(--rhe-c-tabs__indicator--hover--Bottom, 12px); }
 </style>
-
 <div class="tabs">
   <slot name="tab"></slot>
 </div>
@@ -622,7 +621,6 @@ class RhTab extends RHElement {
   border-bottom: var(--rhe-c-tabs__indicator--vertical--selected--BorderBottom, 0);
   border-left: var(--rhe-c-tabs__indicator--vertical--selected--BorderLeft, 0); }
 </style>
-
 <slot></slot>
 <div class="indicator"></div>`;
   }
@@ -688,7 +686,6 @@ class RhTabPanel extends RHElement {
 :host([hidden]) {
   display: none; }
 </style>
-
 <slot></slot>`;
   }
 
@@ -723,3 +720,4 @@ class RhTabPanel extends RHElement {
 RHElement.create(RhTab);
 RHElement.create(RhTabPanel);
 RHElement.create(RhTabs);
+//# sourceMappingURL=rh-tabs.js.map

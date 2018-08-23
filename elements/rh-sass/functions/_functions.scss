@@ -158,6 +158,6 @@
 /// Uses the name created by rh-define-vars() to retrieve the local var
 /// @requires: @mixin rh-define-vars()
 /// @param {String} $this-local-var - Variable name to be used
-@function rh-var($this-local-var, $prefix: "rh", $namespace: "local", $variable-name: $component) {
+@function rh-var($this-local-var, $prefix: "rh", $namespace: "", $variable-name: $component) {
   @return var(--#{$prefix}-#{$namespace}-#{$variable-name}--#{$this-local-var});
 }

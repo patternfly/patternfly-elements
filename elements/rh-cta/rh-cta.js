@@ -27,150 +27,160 @@ class RhCta extends RHElement {
     return `
 <style>
 :host {
-  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #06c);
-  --rh-local-cta--emphasis-color--visited: var(--rh-cta--emphasis-color--visited, #7551a6);
-  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #004080);
-  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #004080);
-  --rh-local-cta--arrow--spacing: var(--rh-cta--arrow--spacing, var(--rh-theme--spacing--xxs, 0.25rem));
-  --rh-local-cta--padding-y: var(--rh-cta--padding-y, 0);
-  --rh-local-cta--padding-x: var(--rh-cta--padding-x, 0);
-  --rh-local-cta--BorderRadius: var(--rh-cta--BorderRadius, 0);
-  --rh-local-cta--BorderWidth: var(--rh-cta--BorderWidth, 0);
-  --rh-local-cta--TextDecoration: var(--rh-cta--TextDecoration, underline);
-  --rh-local-cta--arrow--display: var(--rh-cta--arrow--display, inline-block); }
+  --rh--cta--emphasis-color: #06c;
+  --rh--cta--emphasis-color--hover: #004080;
+  --rh--cta--emphasis-color--focus: #004080;
+  --rh--cta--emphasis-color--visited: #7551a6;
+  --rh--cta--complement-color: transparent;
+  --rh--cta--complement-color--hover: transparent;
+  --rh--cta--complement-color--focus: transparent;
+  --rh--cta--complement-color--visited: transparent;
+  --rh--cta--color: var(--rh--cta--emphasis-color);
+  --rh--cta--color--hover: var(--rh--cta--emphasis-color--hover);
+  --rh--cta--color--focus: var(--rh--cta--emphasis-color--focus);
+  --rh--cta--color--visited: var(--rh--cta--emphasis-color--visited);
+  --rh--cta--background-color: var(--rh--cta--complement-color);
+  --rh--cta--background-color--hover: var(--rh--cta--complement-color--hover);
+  --rh--cta--background-color--focus: var(--rh--cta--complement-color--focus);
+  --rh--cta--background-color--visited: var(--rh--cta--complement-color--visited);
+  --rh--cta--border-color: var(--rh--cta--complement-color);
+  --rh--cta--border--hover: var(--rh--cta--complement-color--hover);
+  --rh--cta--border--focus: var(--rh--cta--complement-color--focus);
+  --rh--cta--border--visited: var(--rh--cta--complement-color--visited);
+  --rh--cta--arrow--spacing: var(--rh-theme--spacing--xxs, 0.25rem);
+  --rh--cta--padding-y: 0;
+  --rh--cta--padding-x: 0;
+  --rh--cta--BorderRadius: 0;
+  --rh--cta--BorderWidth: 0;
+  --rh--cta--TextDecoration: underline;
+  --rh--cta--arrow--display: inline-block; }
   :host ::slotted(a) {
     display: inline-block;
-    padding: var(--rh-local-cta--padding-y) var(--rh-local-cta--padding-x);
-    text-decoration: var(--rh-local-cta--TextDecoration);
-    border: var(--rh-local-cta--BorderWidth) solid transparent;
-    border-radius: var(--rh-local-cta--BorderRadius);
+    padding: var(--rh--cta--padding-y) var(--rh--cta--padding-x);
+    text-decoration: var(--rh--cta--TextDecoration);
+    border: var(--rh--cta--BorderWidth) solid transparent;
+    border-radius: var(--rh--cta--BorderRadius);
     transition: all 250ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
-    color: var(--rh-local-cta--emphasis-color); }
+    color: var(--rh--cta--color);
+    background-color: var(--rh--cta--background-color);
+    border-color: var(--rh--cta--border-color); }
     :host ::slotted(a)::after {
-      margin-left: var(--rh-local-cta--arrow--spacing);
+      margin-left: var(--rh--cta--arrow--spacing);
       vertical-align: middle;
       border-style: solid;
       border-width: 0.313em 0.313em 0;
       border-color: transparent;
-      border-top-color: var(--rh-local-cta--emphasis-color);
+      border-top-color: var(--rh--cta--color);
       transform: rotate(-90deg);
       display: inline-block;
       content: ""; }
   :host ::slotted(a:hover) {
-    color: var(--rh-local-cta--emphasis-color--hover); }
+    color: var(--rh--cta--color--hover);
+    background-color: var(--rh--cta--background-color--hover);
+    border-color: var(--rh--cta--border-color--hover); }
     :host ::slotted(a:hover)::after {
-      border-top-color: var(--rh-local-cta--emphasis-color--hover); }
+      border-top-color: var(--rh--cta--color--hover); }
   :host ::slotted(a:focus) {
-    color: var(--rh-local-cta--emphasis-color--focus); }
+    color: var(--rh--cta--color--focus);
+    background-color: var(--rh--cta--background-color--focus);
+    border-color: var(--rh--cta--border-color--focus); }
     :host ::slotted(a:focus)::after {
-      border-top-color: var(--rh-local-cta--emphasis-color--focus); }
+      border-top-color: var(--rh--cta--color--focus); }
   :host ::slotted(a:visited) {
-    color: var(--rh-local-cta--emphasis-color--visited); }
+    color: var(--rh--cta--color--visited);
+    background-color: var(--rh--cta--background-color--visited);
+    border-color: var(--rh--cta--border-color--visited); }
     :host ::slotted(a:visited)::after {
-      border-top-color: var(--rh-local-cta--emphasis-color--visited); }
-
-:host(.primary) {
-  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #06c);
-  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #004080);
-  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #004080);
-  --rh-local-cta--emphasis-color--visited: var(--rh-cta--emphasis-color--visited, #7551a6); }
+      border-top-color: var(--rh--cta--color--visited); }
 
 :host(.secondary) {
-  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #464646);
-  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #2d2d2d);
-  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #2d2d2d); }
+  --rh--cta--emphasis-color: #464646;
+  --rh--cta--emphasis-color--hover: #2d2d2d;
+  --rh--cta--emphasis-color--focus: #2d2d2d; }
 
-:host(.accent) {
-  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #c00);
-  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #990000);
-  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #990000); }
+:host([solid].secondary, [solid][inverted].secondary) {
+  --rh--cta--emphasis-color: #0076e0;
+  --rh--cta--emphasis-color--hover: #005bad;
+  --rh--cta--emphasis-color--focus: #005bad; }
+
+:host(.accent, [solid].accent) {
+  --rh--cta--emphasis-color: #c00;
+  --rh--cta--emphasis-color--hover: #990000;
+  --rh--cta--emphasis-color--focus: #990000; }
 
 :host([inverted]) {
-  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #73bcf7);
-  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #2b9af3);
-  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #2b9af3);
-  --rh-local-cta--emphasis-color--visited: var(--rh-cta--emphasis-color--visited, #967abd); }
+  --rh--cta--emphasis-color: #73bcf7;
+  --rh--cta--emphasis-color--hover: #2b9af3;
+  --rh--cta--emphasis-color--focus: #2b9af3;
+  --rh--cta--emphasis-color--visited: #967abd; }
 
 :host([inverted].secondary) {
-  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #fff);
-  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #e6e6e6);
-  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #e6e6e6); }
+  --rh--cta--emphasis-color: #fff;
+  --rh--cta--emphasis-color--hover: #e6e6e6;
+  --rh--cta--emphasis-color--focus: #e6e6e6; }
 
 :host([inverted].accent) {
-  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #c00);
-  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #ff3333);
-  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #ff3333); }
+  --rh--cta--emphasis-color: #c00;
+  --rh--cta--emphasis-color--hover: #ff3333;
+  --rh--cta--emphasis-color--focus: #ff3333; }
 
 :host([solid]) {
-  --rh-local-cta--BorderRadius: var(--rh-cta--BorderRadius, 5em);
-  --rh-local-cta--BorderWidth: var(--rh-cta--BorderWidth, 1px);
-  --rh-local-cta--TextDecoration: var(--rh-cta--TextDecoration, none);
-  --rh-local-cta--arrow--display: var(--rh-cta--arrow--display, none);
-  --rh-local-cta--padding-x: var(--rh-cta--padding-x, var(--rh-theme--spacing--lg, 2rem));
-  --rh-local-cta--padding-y: var(--rh-cta--padding-y, var(--rh-theme--spacing--xs, 0.5rem));
-  --rh-local-cta--complement-color: var(--rh-cta--complement-color, #fff);
-  --rh-local-cta--complement-color--hover: var(--rh-cta--complement-color--hover, #fff);
-  --rh-local-cta--complement-color--focus: var(--rh-cta--complement-color--focus, #fff);
-  --rh-local-cta--complement-color--visited: var(--rh-cta--complement-color--visited, #fff);
-  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #6e6e6e);
-  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #555555);
-  --rh-local-cta--emphasis-color--focus: var(--rh-cta--emphasis-color--focus, #555555); }
-  :host([solid]) ::slotted(a) {
-    color: var(--rh-local-cta--complement-color);
-    background-color: var(--rh-local-cta--emphasis-color);
-    border-color: var(--rh-local-cta--emphasis-color); }
-    :host([solid]) ::slotted(a)::after {
-      display: none; }
-  :host([solid]) ::slotted(a:hover) {
-    color: var(--rh-local-cta--complement-color--hover);
-    background-color: var(--rh-local-cta--emphasis-color--hover);
-    border-color: var(--rh-local-cta--emphasis-color--hover); }
-  :host([solid]) ::slotted(a:focus) {
-    color: var(--rh-local-cta--complement-color--focus);
-    background-color: var(--rh-local-cta--emphasis-color--focus);
-    border-color: var(--rh-local-cta--emphasis-color--focus); }
+  --rh--cta--BorderRadius: 5em;
+  --rh--cta--BorderWidth: 1px;
+  --rh--cta--TextDecoration: none;
+  --rh--cta--arrow--display: none;
+  --rh--cta--padding-x: var(--rh-theme--spacing--lg, 2rem);
+  --rh--cta--padding-y: var(--rh-theme--spacing--xs, 0.5rem);
+  --rh--cta--emphasis-color: #6e6e6e;
+  --rh--cta--emphasis-color--hover: #555555;
+  --rh--cta--emphasis-color--focus: #555555;
+  --rh--cta--emphasis-color--visited: #6e6e6e;
+  --rh--cta--complement-color: #fff;
+  --rh--cta--complement-color--hover: #fff;
+  --rh--cta--complement-color--focus: #fff;
+  --rh--cta--complement-color--visited: #fff;
+  --rh--cta--color: var(--rh--cta--complement-color);
+  --rh--cta--color--hover: var(--rh--cta--complement-color--hover);
+  --rh--cta--color--focus: var(--rh--cta--complement-color--focus);
+  --rh--cta--color--visited: var(--rh--cta--complement-color--visited);
+  --rh--cta--background-color: var(--rh--cta--emphasis-color);
+  --rh--cta--background-color--hover: var(--rh--cta--emphasis-color--hover);
+  --rh--cta--background-color--focus: var(--rh--cta--emphasis-color--focus);
+  --rh--cta--background-color--visited: var(--rh--cta--emphasis-color--visited);
+  --rh--cta--border-color: var(--rh--cta--emphasis-color);
+  --rh--cta--border--hover: var(--rh--cta--emphasis-color--hover);
+  --rh--cta--border--focus: var(--rh--cta--emphasis-color--focus);
+  --rh--cta--border--visited: var(--rh--cta--emphasis-color--visited); }
+  :host([solid]) ::slotted(a)::after {
+    display: none; }
 
-:host([solid].primary) {
-  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #0076e0);
-  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #005bad); }
+:host([solid][inverted]) {
+  --rh--cta--color: var(--rh--cta--emphasis-color);
+  --rh--cta--color--hover: var(--rh--cta--emphasis-color--hover);
+  --rh--cta--color--focus: var(--rh--cta--emphasis-color--focus);
+  --rh--cta--color--visited: var(--rh--cta--emphasis-color--visited);
+  --rh--cta--background-color: var(--rh--cta--complement-color);
+  --rh--cta--background-color--hover: var(--rh--cta--complement-color--hover);
+  --rh--cta--background-color--focus: var(--rh--cta--complement-color--focus);
+  --rh--cta--background-color--visited: var(--rh--cta--complement-color--visited);
+  --rh--cta--border-color: var(--rh--cta--complement-color);
+  --rh--cta--border--hover: var(--rh--cta--complement-color--hover);
+  --rh--cta--border--focus: var(--rh--cta--complement-color--focus);
+  --rh--cta--border--visited: var(--rh--cta--complement-color--visited); }
 
-:host([solid].secondary) {
-  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #464646);
-  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #2d2d2d); }
-
-:host([solid].accent) {
-  --rh-local-cta--emphasis-color: var(--rh-cta--emphasis-color, #c00);
-  --rh-local-cta--emphasis-color--hover: var(--rh-cta--emphasis-color--hover, #990000); }
-
-:host([solid][inverted]) ::slotted(a) {
-  color: var(--rh-local-cta--emphasis-color);
-  background-color: var(--rh-local-cta--complement-color);
-  border-color: var(--rh-local-cta--complement-color); }
-
-:host([solid][inverted]) ::slotted(a:hover) {
-  color: var(--rh-local-cta--emphasis-color--hover);
-  background-color: var(--rh-local-cta--complement-color--hover);
-  border-color: var(--rh-local-cta--complement-color--hover); }
-
-:host([solid][inverted]) ::slotted(a:focus) {
-  color: var(--rh-local-cta--emphasis-color--focus);
-  background-color: var(--rh-local-cta--complement-color--focus);
-  border-color: var(--rh-local-cta--complement-color--focus); }
-
-:host([solid][bordered]) ::slotted(a) {
-  color: var(--rh-local-cta--emphasis-color);
-  background-color: var(--rh-local-cta--complement-color);
-  border-color: var(--rh-local-cta--emphasis-color); }
-
-:host([solid][bordered]) ::slotted(a:hover) {
-  color: var(--rh-local-cta--emphasis-color--hover);
-  background-color: var(--rh-local-cta--complement-color--hover);
-  border-color: var(--rh-local-cta--emphasis-color--hover); }
-
-:host([solid][bordered]) ::slotted(a:focus) {
-  color: var(--rh-local-cta--emphasis-color--focus);
-  background-color: var(--rh-local-cta--complement-color--focus);
-  border-color: var(--rh-local-cta--emphasis-color--focus); }
+:host([solid][bordered]) {
+  --rh--cta--color: var(--rh--cta--emphasis-color);
+  --rh--cta--color--hover: var(--rh--cta--emphasis-color--hover);
+  --rh--cta--color--focus: var(--rh--cta--emphasis-color--focus);
+  --rh--cta--color--visited: var(--rh--cta--emphasis-color--visited);
+  --rh--cta--background-color: var(--rh--cta--complement-color);
+  --rh--cta--background-color--hover: var(--rh--cta--complement-color--hover);
+  --rh--cta--background-color--focus: var(--rh--cta--complement-color--focus);
+  --rh--cta--background-color--visited: var(--rh--cta--complement-color--visited);
+  --rh--cta--border-color: var(--rh--cta--emphasis-color);
+  --rh--cta--border--hover: var(--rh--cta--emphasis-color--hover);
+  --rh--cta--border--focus: var(--rh--cta--emphasis-color--focus);
+  --rh--cta--border--visited: var(--rh--cta--emphasis-color--visited); }
 
 :host([unfilled]) ::slotted(a) {
   background-color: transparent !important;

@@ -8,6 +8,7 @@ const stripCssComments = require("strip-css-comments");
 const trim = require("trim");
 const decomment = require("decomment");
 const sass = require("node-sass");
+const shell = require("gulp-shell");
 
 gulp.task("compile", () => {
   return gulp
@@ -27,7 +28,7 @@ gulp.task("compile", () => {
 });
 
 gulp.task("watch", () => {
-  return gulp.watch("./src/*", gulp.series("merge", "compile"));
+  return gulp.watch("./src/*", gulp.series("merge", "compile", "bundle"));
 });
 
 gulp.task("merge", () => {
@@ -67,9 +68,19 @@ gulp.task("merge", () => {
 
           const styleFilePath = path.join("./src", styleUrl);
 
-          let cssResult = sass.renderSync({
-            file: styleFilePath
-          }).css;
+          let cssResult = sass.renderSync(
+            {
+              file: styleFilePath
+            },
+            (err, callback) => {
+              if (error) {
+                console.log(error.status); // used to be "code" in v2x and below
+                console.log(error.column);
+                console.log(error.message);
+                console.log(error.line);
+              }
+            }
+          ).css;
 
           cssResult = stripCssComments(cssResult).trim();
 
@@ -88,6 +99,8 @@ ${html}\`;
     .pipe(gulp.dest("./"));
 });
 
+gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
+
 gulp.task("default", gulp.series("merge", "compile"));
 
-gulp.task("dev", gulp.series("merge", "compile", "watch"));
+gulp.task("dev", gulp.series("merge", "compile", "bundle", "watch"));

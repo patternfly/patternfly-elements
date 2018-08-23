@@ -1,5 +1,5 @@
-const fs = require("fs");
 const path = require("path");
+const fs = require("fs");
 
 const gulp = require("gulp");
 const rename = require("gulp-rename");
@@ -25,10 +25,6 @@ gulp.task("compile", () => {
       })
     )
     .pipe(gulp.dest("./"));
-});
-
-gulp.task("watch", () => {
-  return gulp.watch("./src/*", gulp.series("merge", "compile", "bundle"));
 });
 
 gulp.task("merge", () => {
@@ -68,19 +64,9 @@ gulp.task("merge", () => {
 
           const styleFilePath = path.join("./src", styleUrl);
 
-          let cssResult = sass.renderSync(
-            {
-              file: styleFilePath
-            },
-            (err, callback) => {
-              if (error) {
-                console.log(error.status); // used to be "code" in v2x and below
-                console.log(error.column);
-                console.log(error.message);
-                console.log(error.line);
-              }
-            }
-          ).css;
+          let cssResult = sass.renderSync({
+            file: styleFilePath
+          }).css;
 
           cssResult = stripCssComments(cssResult).trim();
 
@@ -99,8 +85,14 @@ ${html}\`;
     .pipe(gulp.dest("./"));
 });
 
+gulp.task("watch", () => {
+  return gulp.watch("./src/*", ["build"]);
+});
+
 gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-gulp.task("default", gulp.series("merge", "compile"));
+gulp.task("build", gulp.series("merge", "compile", "bundle"));
 
-gulp.task("dev", gulp.series("merge", "compile", "bundle", "watch"));
+gulp.task("default", ["build"]);
+
+gulp.task("dev", gulp.series("build", "watch"));

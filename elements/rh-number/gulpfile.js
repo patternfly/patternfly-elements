@@ -8,6 +8,7 @@ const stripCssComments = require("strip-css-comments");
 const trim = require("trim");
 const decomment = require("decomment");
 const sass = require("node-sass");
+const shell = require("gulp-shell");
 
 gulp.task("compile", () => {
   return gulp
@@ -24,10 +25,6 @@ gulp.task("compile", () => {
       })
     )
     .pipe(gulp.dest("./"));
-});
-
-gulp.task("watch", () => {
-  return gulp.watch("./src/*", gulp.series("merge", "compile"));
 });
 
 gulp.task("merge", () => {
@@ -88,6 +85,14 @@ ${html}\`;
     .pipe(gulp.dest("./"));
 });
 
-gulp.task("default", gulp.series("merge", "compile"));
+gulp.task("watch", () => {
+  return gulp.watch("./src/*", ["build"]);
+});
 
-gulp.task("dev", gulp.series("merge", "compile", "watch"));
+gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
+
+gulp.task("build", gulp.series("merge", "compile", "bundle"));
+
+gulp.task("default", ["build"]);
+
+gulp.task("dev", gulp.series("build", "watch"));

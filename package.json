@@ -11,7 +11,7 @@
     "test-suite-inject": "node scripts/test-suite-inject.js",
     "storybook": "start-storybook -c .storybook -p 9001 -s ./elements",
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
-    "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject"
+    "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject && npm run bootstrap"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.8",
@@ -27,7 +27,6 @@
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
     "babel-preset-env": "^1.7.0",
-    "breakpoint-sass": "^2.7.1",
     "browser-sync": "^2.24.6",
     "chalk": "^2.4.1",
     "css-scss": "^0.1.1",
@@ -43,6 +42,7 @@
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.1",
     "gulp-sequence": "^1.0.0",
+    "gulp-shell": "^0.6.5",
     "gulp-strip-css-comments": "^2.0.0",
     "gulp-svg-sprite": "^1.4.0",
     "gulp-trim": "^1.0.2",

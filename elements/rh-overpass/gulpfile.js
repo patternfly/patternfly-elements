@@ -4,6 +4,7 @@ const fs = require("fs");
 const gulp = require("gulp");
 const rename = require("gulp-rename");
 const replace = require("gulp-replace");
+const shell = require("gulp-shell");
 const del = require("del");
 
 gulp.task("clean", () => {
@@ -21,6 +22,10 @@ gulp.task("compile", () => {
     .pipe(gulp.dest("./"));
 });
 
-gulp.task("default", gulp.series("clean", "compile"));
+gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-gulp.task("dev", gulp.series("default"));
+gulp.task("build", gulp.series("clean", "compile", "bundle"));
+
+gulp.task("default", ["build"]);
+
+gulp.task("dev", ["build"]);

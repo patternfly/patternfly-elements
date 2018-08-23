@@ -4,6 +4,7 @@ const fs = require("fs");
 const gulp = require("gulp");
 const rename = require("gulp-rename");
 const replace = require("gulp-replace");
+const shell = require("gulp-shell");
 const del = require("del");
 
 gulp.task("clean", () => {

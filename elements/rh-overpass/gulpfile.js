@@ -26,6 +26,6 @@ gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
 gulp.task("build", gulp.series("clean", "compile", "bundle"));
 
-gulp.task("default", ["build"]);
+gulp.task("default", gulp.series("build"));
 
-gulp.task("dev", ["build"]);
+gulp.task("dev", gulp.series("build"));

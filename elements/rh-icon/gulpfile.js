@@ -141,7 +141,7 @@ gulp.task("compile", () => {
 });
 
 gulp.task("watch", () => {
-  return gulp.watch("./src/*", ["build"]);
+  return gulp.watch("./src/*", gulp.series("build"));
 });
 
 gulp.task("svgs", gulp.series("svgSprite", "stuffSprite"));
@@ -150,6 +150,6 @@ gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
 gulp.task("build", gulp.series("merge", "svgs", "compile", "bundle"));
 
-gulp.task("default", ["build"]);
+gulp.task("default", gulp.series("build"));
 
 gulp.task("dev", gulp.series("build", "watch"));

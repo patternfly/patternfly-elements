@@ -86,13 +86,13 @@ ${html}\`;
 });
 
 gulp.task("watch", () => {
-  return gulp.watch("./src/*", ["build"]);
+  return gulp.watch("./src/*", gulp.series("build"));
 });
 
 gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
 gulp.task("build", gulp.series("merge", "compile", "bundle"));
 
-gulp.task("default", ["build"]);
+gulp.task("default", gulp.series("build"));
 
 gulp.task("dev", gulp.series("build", "watch"));

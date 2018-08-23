@@ -75,6 +75,18 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
       @include rh-arrow($type: right, $color: rh-var("color"), $width: $rh-cta--arrow-size, $height: $rh-cta--arrow-size, $pseudo: true);
     }
   }
+
+  // Setup Default CTA Visited
+  & ::slotted(a:visited) {
+    color: rh-var("color--visited");
+    background-color: rh-var("background-color--visited");
+    border-color: rh-var("border-color--visited");
+
+    &::after {
+      @include rh-arrow-color($color: rh-var("color--visited"));
+    }
+  }
+
   // Setup Default CTA Hover
   & ::slotted(a:hover) {
     color: rh-var("color--hover");
@@ -95,17 +107,17 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
       @include rh-arrow-color($color: rh-var("color--focus"));
     }
   }
+}
 
-  // Setup Default CTA Visited
-  & ::slotted(a:visited) {
-    color: rh-var("color--visited");
-    background-color: rh-var("background-color--visited");
-    border-color: rh-var("border-color--visited");
-
-    &::after {
-      @include rh-arrow-color($color: rh-var("color--visited"));
-    }
-  }
+:host([solid].primary) {
+  $cta-secondary: (
+    "emphasis-color": #{$rh-global--color--blue-azure},
+    "emphasis-color--hover": #{darken($rh-global--color--blue-azure, 10%)},
+    "emphasis-color--focus": #{darken($rh-global--color--blue-azure, 10%)},
+    "emphasis-color--visited": #{$rh-global--color--blue-azure}
+  );
+  
+  @include rh-define-vars($cta-secondary);
 }
 
 :host(.secondary) {
@@ -113,7 +125,7 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
     "emphasis-color": #{$rh-global--color--gray-iron},
     "emphasis-color--hover": #{darken($rh-global--color--gray-iron, 10%)},
     "emphasis-color--focus": #{darken($rh-global--color--gray-iron, 10%)},
-    // "emphasis-color--visited": #{$rh-global--link-color--visited} // Don't need to overwrite if it's the same,
+    "emphasis-color--visited": #{$rh-global--link-color--visited} // Don't need to overwrite if it's the same,
   );
   
   @include rh-define-vars($cta-secondary);
@@ -121,10 +133,10 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 
 :host([solid].secondary, [solid][inverted].secondary) {
   $cta-secondary: (
-    "emphasis-color": #{$rh-global--color--blue-azure},
-    "emphasis-color--hover": #{darken($rh-global--color--blue-azure, 10%)},
-    "emphasis-color--focus": #{darken($rh-global--color--blue-azure, 10%)},
-    // "emphasis-color--visited": #{$rh-global--link-color--visited} // Don't need to overwrite if it's the same,
+    "emphasis-color": #{$rh-global--color--gray-iron},
+    "emphasis-color--hover": #{darken($rh-global--color--gray-iron, 10%)},
+    "emphasis-color--focus": #{darken($rh-global--color--gray-iron, 10%)},
+    "emphasis-color--visited": #{$rh-global--color--gray-iron}
   );
   
   @include rh-define-vars($cta-secondary);
@@ -134,11 +146,18 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
   $cta-accent: (
     "emphasis-color": #{$rh-global--color--red},
     "emphasis-color--hover": #{darken($rh-global--color--red, 10%)},
-    "emphasis-color--focus": #{darken($rh-global--color--red, 10%)},
-    // "emphasis-color--visited": #{$rh-global--link-color--visited} // Don't need to overwrite if it's the same,
+    "emphasis-color--focus": #{darken($rh-global--color--red, 10%)}
   );
   
   @include rh-define-vars($cta-accent);
+}
+
+:host([solid].accent) {
+  $cta-solid-accent: (
+    "emphasis-color--visited": #{$rh-global--color--red}
+  );
+  
+  @include rh-define-vars($cta-solid-accent);
 }
 
 // Setup Inverted Default CTA
@@ -161,7 +180,7 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
     "emphasis-color": #{$rh-global--color--white},
     "emphasis-color--hover": #{darken($rh-global--color--white, 10%)},
     "emphasis-color--focus": #{darken($rh-global--color--white, 10%)},
-    // "emphasis-color--visited": #{$rh-global--link-color--inverted--visited}
+    "emphasis-color--visited": #{$rh-global--link-color--inverted--visited}
   );
   
   @include rh-define-vars($cta-inverted-secondary);
@@ -172,7 +191,7 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
     "emphasis-color": #{$rh-global--color--red},
     "emphasis-color--hover": #{lighten($rh-global--color--red, 20%)},
     "emphasis-color--focus": #{lighten($rh-global--color--red, 20%)},
-    // "emphasis-color--visited": #{$rh-global--link-color--inverted--visited}
+    "emphasis-color--visited": #{$rh-global--link-color--inverted--visited}
   );
   
   @include rh-define-vars($cta-inverted-accent);
@@ -242,19 +261,19 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 :host([solid][inverted]) {
   $cta-solid-inverted: (
     "color": rh-var("emphasis-color"),
-    "color--hover": rh-var("emphasis-color--hover"),
-    "color--focus": rh-var("emphasis-color--focus"),
-    "color--visited": rh-var("emphasis-color--visited"),
+    "color--hover": rh-var("emphasis-color"),
+    "color--focus": rh-var("emphasis-color"),
+    "color--visited": rh-var("emphasis-color"),
 
     "background-color": rh-var("complement-color"),
-    "background-color--hover": rh-var("complement-color--hover"),
-    "background-color--focus": rh-var("complement-color--focus"),
-    "background-color--visited": rh-var("complement-color--visited"),
+    "background-color--hover": #{$rh-global--color--gray-platinum},
+    "background-color--focus": #{$rh-global--color--gray-platinum},
+    "background-color--visited": rh-var("complement-color"),
 
     "border-color": rh-var("complement-color"),
-    "border--hover": rh-var("complement-color--hover"),
-    "border--focus": rh-var("complement-color--focus"),
-    "border--visited": rh-var("complement-color--visited"),
+    "border--hover": rh-var("complement-color"),
+    "border--focus": rh-var("complement-color"),
+    "border--visited": rh-var("complement-color"),
   );
   
   @include rh-define-vars($cta-solid-inverted);
@@ -264,33 +283,42 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 :host([solid][bordered]) {
   $cta-solid-bordered: (
     "color": rh-var("emphasis-color"),
-    "color--hover": rh-var("emphasis-color--hover"),
-    "color--focus": rh-var("emphasis-color--focus"),
-    "color--visited": rh-var("emphasis-color--visited"),
+    "color--hover": rh-var("complement-color"),
+    "color--focus": rh-var("complement-color"),
+    "color--visited": rh-var("emphasis-color"),
 
     "background-color": rh-var("complement-color"),
-    "background-color--hover": rh-var("complement-color--hover"),
-    "background-color--focus": rh-var("complement-color--focus"),
-    "background-color--visited": rh-var("complement-color--visited"),
+    "background-color--hover": rh-var("emphasis-color"),
+    "background-color--focus": rh-var("emphasis-color"),
+    "background-color--visited": rh-var("complement-color"),
 
     "border-color": rh-var("emphasis-color"),
-    "border--hover": rh-var("emphasis-color--hover"),
-    "border--focus": rh-var("emphasis-color--focus"),
-    "border--visited": rh-var("emphasis-color--visited"),
+    "border--hover": rh-var("emphasis-color"),
+    "border--focus": rh-var("emphasis-color"),
+    "border--visited": rh-var("emphasis-color"),
   );
   
   @include rh-define-vars($cta-solid-bordered);
 }
 
 // CTA Unfilled
-:host([unfilled]) {
-  & ::slotted(a) {
-    background-color: transparent !important;
-    border-color: transparent !important;
-  }
+:host([solid][unfilled]) {
+  $cta-unfilled: (
+    "color": rh-var("emphasis-color"),
+    "color--hover": rh-var("emphasis-color"),
+    "color--focus": rh-var("emphasis-color"),
+    "color--visited": rh-var("emphasis-color"),
 
-  // &::slotted(a:hover),
-  // &::slotted(a:focus) {
-  //   background-color: transparent !important;
-  // }
+    "background-color": transparent,
+    "background-color--hover": rh-var("complement-color"),
+    "background-color--focus": rh-var("complement-color"),
+    "background-color--visited": transparent,
+
+    "border-color": transparent,
+    "border--hover": transparent,
+    "border--focus": transparent,
+    "border--visited": transparent,
+  );
+  
+  @include rh-define-vars($cta-unfilled);
 }

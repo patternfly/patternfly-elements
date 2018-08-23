@@ -74,6 +74,12 @@ class RhCta extends RHElement {
       transform: rotate(-90deg);
       display: inline-block;
       content: ""; }
+  :host ::slotted(a:visited) {
+    color: var(--rh--cta--color--visited);
+    background-color: var(--rh--cta--background-color--visited);
+    border-color: var(--rh--cta--border-color--visited); }
+    :host ::slotted(a:visited)::after {
+      border-top-color: var(--rh--cta--color--visited); }
   :host ::slotted(a:hover) {
     color: var(--rh--cta--color--hover);
     background-color: var(--rh--cta--background-color--hover);
@@ -86,27 +92,32 @@ class RhCta extends RHElement {
     border-color: var(--rh--cta--border-color--focus); }
     :host ::slotted(a:focus)::after {
       border-top-color: var(--rh--cta--color--focus); }
-  :host ::slotted(a:visited) {
-    color: var(--rh--cta--color--visited);
-    background-color: var(--rh--cta--background-color--visited);
-    border-color: var(--rh--cta--border-color--visited); }
-    :host ::slotted(a:visited)::after {
-      border-top-color: var(--rh--cta--color--visited); }
+
+:host([solid].primary) {
+  --rh--cta--emphasis-color: #0076e0;
+  --rh--cta--emphasis-color--hover: #005bad;
+  --rh--cta--emphasis-color--focus: #005bad;
+  --rh--cta--emphasis-color--visited: #0076e0; }
 
 :host(.secondary) {
   --rh--cta--emphasis-color: #464646;
   --rh--cta--emphasis-color--hover: #2d2d2d;
-  --rh--cta--emphasis-color--focus: #2d2d2d; }
+  --rh--cta--emphasis-color--focus: #2d2d2d;
+  --rh--cta--emphasis-color--visited: #7551a6; }
 
 :host([solid].secondary, [solid][inverted].secondary) {
-  --rh--cta--emphasis-color: #0076e0;
-  --rh--cta--emphasis-color--hover: #005bad;
-  --rh--cta--emphasis-color--focus: #005bad; }
+  --rh--cta--emphasis-color: #464646;
+  --rh--cta--emphasis-color--hover: #2d2d2d;
+  --rh--cta--emphasis-color--focus: #2d2d2d;
+  --rh--cta--emphasis-color--visited: #464646; }
 
 :host(.accent, [solid].accent) {
   --rh--cta--emphasis-color: #c00;
   --rh--cta--emphasis-color--hover: #990000;
   --rh--cta--emphasis-color--focus: #990000; }
+
+:host([solid].accent) {
+  --rh--cta--emphasis-color--visited: #c00; }
 
 :host([inverted]) {
   --rh--cta--emphasis-color: #73bcf7;
@@ -117,12 +128,14 @@ class RhCta extends RHElement {
 :host([inverted].secondary) {
   --rh--cta--emphasis-color: #fff;
   --rh--cta--emphasis-color--hover: #e6e6e6;
-  --rh--cta--emphasis-color--focus: #e6e6e6; }
+  --rh--cta--emphasis-color--focus: #e6e6e6;
+  --rh--cta--emphasis-color--visited: #967abd; }
 
 :host([inverted].accent) {
   --rh--cta--emphasis-color: #c00;
   --rh--cta--emphasis-color--hover: #ff3333;
-  --rh--cta--emphasis-color--focus: #ff3333; }
+  --rh--cta--emphasis-color--focus: #ff3333;
+  --rh--cta--emphasis-color--visited: #967abd; }
 
 :host([solid]) {
   --rh--cta--BorderRadius: 5em;
@@ -156,35 +169,45 @@ class RhCta extends RHElement {
 
 :host([solid][inverted]) {
   --rh--cta--color: var(--rh--cta--emphasis-color);
-  --rh--cta--color--hover: var(--rh--cta--emphasis-color--hover);
-  --rh--cta--color--focus: var(--rh--cta--emphasis-color--focus);
-  --rh--cta--color--visited: var(--rh--cta--emphasis-color--visited);
+  --rh--cta--color--hover: var(--rh--cta--emphasis-color);
+  --rh--cta--color--focus: var(--rh--cta--emphasis-color);
+  --rh--cta--color--visited: var(--rh--cta--emphasis-color);
   --rh--cta--background-color: var(--rh--cta--complement-color);
-  --rh--cta--background-color--hover: var(--rh--cta--complement-color--hover);
-  --rh--cta--background-color--focus: var(--rh--cta--complement-color--focus);
-  --rh--cta--background-color--visited: var(--rh--cta--complement-color--visited);
+  --rh--cta--background-color--hover: #e7e7e7;
+  --rh--cta--background-color--focus: #e7e7e7;
+  --rh--cta--background-color--visited: var(--rh--cta--complement-color);
   --rh--cta--border-color: var(--rh--cta--complement-color);
-  --rh--cta--border--hover: var(--rh--cta--complement-color--hover);
-  --rh--cta--border--focus: var(--rh--cta--complement-color--focus);
-  --rh--cta--border--visited: var(--rh--cta--complement-color--visited); }
+  --rh--cta--border--hover: var(--rh--cta--complement-color);
+  --rh--cta--border--focus: var(--rh--cta--complement-color);
+  --rh--cta--border--visited: var(--rh--cta--complement-color); }
 
 :host([solid][bordered]) {
   --rh--cta--color: var(--rh--cta--emphasis-color);
-  --rh--cta--color--hover: var(--rh--cta--emphasis-color--hover);
-  --rh--cta--color--focus: var(--rh--cta--emphasis-color--focus);
-  --rh--cta--color--visited: var(--rh--cta--emphasis-color--visited);
+  --rh--cta--color--hover: var(--rh--cta--complement-color);
+  --rh--cta--color--focus: var(--rh--cta--complement-color);
+  --rh--cta--color--visited: var(--rh--cta--emphasis-color);
   --rh--cta--background-color: var(--rh--cta--complement-color);
-  --rh--cta--background-color--hover: var(--rh--cta--complement-color--hover);
-  --rh--cta--background-color--focus: var(--rh--cta--complement-color--focus);
-  --rh--cta--background-color--visited: var(--rh--cta--complement-color--visited);
+  --rh--cta--background-color--hover: var(--rh--cta--emphasis-color);
+  --rh--cta--background-color--focus: var(--rh--cta--emphasis-color);
+  --rh--cta--background-color--visited: var(--rh--cta--complement-color);
   --rh--cta--border-color: var(--rh--cta--emphasis-color);
-  --rh--cta--border--hover: var(--rh--cta--emphasis-color--hover);
-  --rh--cta--border--focus: var(--rh--cta--emphasis-color--focus);
-  --rh--cta--border--visited: var(--rh--cta--emphasis-color--visited); }
+  --rh--cta--border--hover: var(--rh--cta--emphasis-color);
+  --rh--cta--border--focus: var(--rh--cta--emphasis-color);
+  --rh--cta--border--visited: var(--rh--cta--emphasis-color); }
 
-:host([unfilled]) ::slotted(a) {
-  background-color: transparent !important;
-  border-color: transparent !important; }
+:host([solid][unfilled]) {
+  --rh--cta--color: var(--rh--cta--emphasis-color);
+  --rh--cta--color--hover: var(--rh--cta--emphasis-color);
+  --rh--cta--color--focus: var(--rh--cta--emphasis-color);
+  --rh--cta--color--visited: var(--rh--cta--emphasis-color);
+  --rh--cta--background-color: transparent;
+  --rh--cta--background-color--hover: var(--rh--cta--complement-color);
+  --rh--cta--background-color--focus: var(--rh--cta--complement-color);
+  --rh--cta--background-color--visited: transparent;
+  --rh--cta--border-color: transparent;
+  --rh--cta--border--hover: transparent;
+  --rh--cta--border--focus: transparent;
+  --rh--cta--border--visited: transparent; }
 </style>
 <slot></slot>`;
   }

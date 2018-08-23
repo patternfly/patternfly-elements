@@ -1,3 +1,5 @@
+import RHElement from "../rhelement/rhelement.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -19,8 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import RHElement from "../rhelement/rhelement.js";
 
 const templateId = "rh-icon-head";
 if (!document.getElementById(templateId)) {
@@ -156,3 +156,4 @@ class RhIcon extends RHElement {
 }
 
 RHElement.create(RhIcon);
+//# sourceMappingURL=rh-icon.js.map

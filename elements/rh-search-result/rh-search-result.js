@@ -1,3 +1,5 @@
+import RHElement from "../rhelement/rhelement.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -19,8 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import RHElement from "../rhelement/rhelement.js";
 
 class RhSearchResult extends RHElement {
   get html() {
@@ -108,3 +108,4 @@ header a:focus {
 }
 
 RHElement.create(RhSearchResult);
+//# sourceMappingURL=rh-search-result.js.map

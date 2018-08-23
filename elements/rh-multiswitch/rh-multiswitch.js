@@ -1,3 +1,5 @@
+import RHElement from "../rhelement/rhelement.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -19,8 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import RHElement from "../rhelement/rhelement.js";
 
 class RhMultiswitch extends RHElement {
   get html() {
@@ -222,3 +222,4 @@ class RhMultiswitch extends RHElement {
 }
 
 RHElement.create(RhMultiswitch);
+//# sourceMappingURL=rh-multiswitch.js.map

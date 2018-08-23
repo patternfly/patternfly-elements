@@ -1,5 +1,4 @@
 {
-  "presets": [
-    ["env", { "modules": "umd" }]
-  ]
+  "presets": [["env", { "modules": false }]],
+  "plugins": ["external-helpers"]
 }

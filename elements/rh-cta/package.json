@@ -22,7 +22,8 @@
   "license": "ISC",
   "dependencies": {
     "@rhelements/rh-sass": "*",
-    "@rhelements/rhelement": "*"
+    "@rhelements/rhelement": "*",
+    "gulp-shell": "^0.6.5"
   },
   "generator-rhelement-version": "0.5.0"
 }

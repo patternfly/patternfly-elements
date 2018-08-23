@@ -1,155 +1,324 @@
+$component: "cta";
 @import "../../rh-sass/rh-sass";
 
-// Mixins / helpers
-@mixin make-default-cta($color: $rh-global--link-color) {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: $color;
-  text-decoration: underline;
-}
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
 
-@mixin make-cta-arrow($arrow-color: $rh-global--link-color) {
-  margin-left: var(--rhe-theme--spacer--xs, $rh-global--spacer--xs);
-  vertical-align: middle;
-  @include rh-arrow(right, $arrow-color, 0.313em, 0.313em, true);
-  position: relative; // temp
-  display: inline-block; // temp
-}
+$rh-cta--arrow-size:                        0.313em; // Was ~5px at 16px
+$rh-cta--animation-timing:                  $rh-global--animation-timing;
 
-@mixin make-default-cta-color($color-name: white, $color: $rh-global-color--white) {
-  @at-root :host(.#{$color-name}) {
-    & ::slotted(a) {
-      @include make-default-cta($color);
+/// ===========================================================================
+/// Styles
+/// ===========================================================================
 
-      &::after {
-        @include make-cta-arrow($color);
-      }
+// Setup Default CTA
+:host {
+  $cta-colors: (
+    "emphasis-color": #{$rh-global--link-color},
+    "emphasis-color--hover": #{$rh-global--link-color--hover},
+    "emphasis-color--focus": #{$rh-global--link-color--focus},
+    "emphasis-color--visited": #{$rh-global--link-color--visited},
+
+    "complement-color": transparent,
+    "complement-color--hover": transparent,
+    "complement-color--focus": transparent,
+    "complement-color--visited": transparent,
+  );
+  @include rh-define-vars($cta-colors);
+
+  $cta-defaults: (
+    "color": rh-var("emphasis-color"),
+    "color--hover": rh-var("emphasis-color--hover"),
+    "color--focus": rh-var("emphasis-color--focus"),
+    "color--visited": rh-var("emphasis-color--visited"),
+
+    "background-color": rh-var("complement-color"),
+    "background-color--hover": rh-var("complement-color--hover"),
+    "background-color--focus": rh-var("complement-color--focus"),
+    "background-color--visited": rh-var("complement-color--visited"),
+
+    "border-color": rh-var("complement-color"),
+    "border--hover": rh-var("complement-color--hover"),
+    "border--focus": rh-var("complement-color--focus"),
+    "border--visited": rh-var("complement-color--visited"),
+  );
+
+  @include rh-define-vars($cta-defaults);
+
+  $cta-defaults-custom: (
+    "arrow--spacing": --rh-theme--spacing--xxs #{$rh-global--spacer--xxs},
+    "padding-y": 0,
+    "padding-x": 0,
+    "BorderRadius": 0,
+    "BorderWidth": 0,
+    "TextDecoration": underline,
+    "arrow--display": inline-block
+  );
+  @include rh-define-vars($cta-defaults-custom);
+
+  & ::slotted(a) {
+    display: inline-block;
+    padding: rh-var("padding-y") rh-var("padding-x");
+    text-decoration: rh-var("TextDecoration");
+    border: rh-var("BorderWidth") solid transparent;
+    border-radius: rh-var("BorderRadius");
+    transition: all 250ms $rh-cta--animation-timing;
+    // These will be the most updated values based on user selections
+    color: rh-var("color");
+    background-color: rh-var("background-color");
+    border-color: rh-var("border-color");
+
+    &::after {
+      margin-left: rh-var("arrow--spacing");
+      vertical-align: middle;
+      @include rh-arrow($type: right, $color: rh-var("color"), $width: $rh-cta--arrow-size, $height: $rh-cta--arrow-size, $pseudo: true);
+    }
+  }
+
+  // Setup Default CTA Visited
+  & ::slotted(a:visited) {
+    color: rh-var("color--visited");
+    background-color: rh-var("background-color--visited");
+    border-color: rh-var("border-color--visited");
+
+    &::after {
+      @include rh-arrow-color($color: rh-var("color--visited"));
+    }
+  }
+
+  // Setup Default CTA Hover
+  & ::slotted(a:hover) {
+    color: rh-var("color--hover");
+    background-color: rh-var("background-color--hover");
+    border-color: rh-var("border-color--hover");
+
+    &::after {
+      @include rh-arrow-color($color: rh-var("color--hover"));
+    }
+  }
+  // Setup Default CTA Focus
+  & ::slotted(a:focus) {
+    color: rh-var("color--focus");
+    background-color: rh-var("background-color--focus");
+    border-color: rh-var("border-color--focus");
+
+    &::after {
+      @include rh-arrow-color($color: rh-var("color--focus"));
     }
   }
 }
 
-@mixin make-button-cta() {
-  & ::slotted(a) {
-    padding: var(--rhe-theme--spacer--sm, $rh-global--spacer--sm) var(--rhe-theme--spacer--md, $rh-global--spacer--md);
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: var(--rhe-theme--FontWeight--semi-bold, $rh-global--FontWeight--semi-bold);
-    font-size: 0.875em;
+:host([solid].primary) {
+  $cta-secondary: (
+    "emphasis-color": #{$rh-global--color--blue-azure},
+    "emphasis-color--hover": #{darken($rh-global--color--blue-azure, 10%)},
+    "emphasis-color--focus": #{darken($rh-global--color--blue-azure, 10%)},
+    "emphasis-color--visited": #{$rh-global--color--blue-azure}
+  );
+  
+  @include rh-define-vars($cta-secondary);
+}
 
+:host(.secondary) {
+  $cta-secondary: (
+    "emphasis-color": #{$rh-global--color--gray-iron},
+    "emphasis-color--hover": #{darken($rh-global--color--gray-iron, 10%)},
+    "emphasis-color--focus": #{darken($rh-global--color--gray-iron, 10%)},
+    "emphasis-color--visited": #{$rh-global--link-color--visited} // Don't need to overwrite if it's the same,
+  );
+  
+  @include rh-define-vars($cta-secondary);
+}
+
+:host([solid].secondary, [solid][inverted].secondary) {
+  $cta-secondary: (
+    "emphasis-color": #{$rh-global--color--gray-iron},
+    "emphasis-color--hover": #{darken($rh-global--color--gray-iron, 10%)},
+    "emphasis-color--focus": #{darken($rh-global--color--gray-iron, 10%)},
+    "emphasis-color--visited": #{$rh-global--color--gray-iron}
+  );
+  
+  @include rh-define-vars($cta-secondary);
+}
+
+:host(.accent, [solid].accent) {
+  $cta-accent: (
+    "emphasis-color": #{$rh-global--color--red},
+    "emphasis-color--hover": #{darken($rh-global--color--red, 10%)},
+    "emphasis-color--focus": #{darken($rh-global--color--red, 10%)}
+  );
+  
+  @include rh-define-vars($cta-accent);
+}
+
+:host([solid].accent) {
+  $cta-solid-accent: (
+    "emphasis-color--visited": #{$rh-global--color--red}
+  );
+  
+  @include rh-define-vars($cta-solid-accent);
+}
+
+// Setup Inverted Default CTA
+:host([inverted]) {
+  $cta-inverted: (
+    "emphasis-color": #{$rh-global--link-color--inverted},
+    "emphasis-color--hover": #{$rh-global--link-color--inverted--hover},
+    "emphasis-color--focus": #{$rh-global--link-color--inverted--focus},
+    "emphasis-color--visited": #{$rh-global--link-color--inverted--visited},
+  );
+  
+  @include rh-define-vars($cta-inverted);
+}
+
+// Primary matches the default in this situation
+// :host([inverted].primary) {}
+
+:host([inverted].secondary) {
+  $cta-inverted-secondary: (
+    "emphasis-color": #{$rh-global--color--white},
+    "emphasis-color--hover": #{darken($rh-global--color--white, 10%)},
+    "emphasis-color--focus": #{darken($rh-global--color--white, 10%)},
+    "emphasis-color--visited": #{$rh-global--link-color--inverted--visited}
+  );
+  
+  @include rh-define-vars($cta-inverted-secondary);
+}
+
+:host([inverted].accent) {
+  $cta-inverted-accent: (
+    "emphasis-color": #{$rh-global--color--red},
+    "emphasis-color--hover": #{lighten($rh-global--color--red, 20%)},
+    "emphasis-color--focus": #{lighten($rh-global--color--red, 20%)},
+    "emphasis-color--visited": #{$rh-global--link-color--inverted--visited}
+  );
+  
+  @include rh-define-vars($cta-inverted-accent);
+}
+
+// CTA Solid
+:host([solid]) {
+  $cta-solid-styles: (
+    "BorderRadius": 5em,
+    "BorderWidth": #{$rh-global--border--BorderWidth}
+  );
+  
+  @include rh-define-vars($cta-solid-styles);
+
+  $cta-solid-custom: (
+    "TextDecoration": none,
+    "arrow--display": none,
+    "padding-x": --rh-theme--spacing--lg #{$rh-global--spacer--lg},
+    "padding-y": --rh-theme--spacing--xs #{$rh-global--spacer--xs},
+  );
+
+  @include rh-define-vars($cta-solid-custom);
+
+  // Update the default colors for solid buttons
+  $cta-solid-color-default: (
+    "emphasis-color": #{$rh-global--color--gray-batman},
+    "emphasis-color--hover": #{darken($rh-global--color--gray-batman, 10%)},
+    "emphasis-color--focus": #{darken($rh-global--color--gray-batman, 10%)},
+    "emphasis-color--visited": #{$rh-global--color--gray-batman},
+    
+    "complement-color": #{$rh-global--color--white},
+    "complement-color--hover": #{$rh-global--color--white},
+    "complement-color--focus": #{$rh-global--color--white},
+    "complement-color--visited": #{$rh-global--color--white}
+  );
+  
+  @include rh-define-vars($cta-solid-color-default);
+
+  // Set the colors for solid buttons
+  $cta-solid-colors: (
+    "color": rh-var("complement-color"),
+    "color--hover": rh-var("complement-color--hover"),
+    "color--focus": rh-var("complement-color--focus"),
+    "color--visited": rh-var("complement-color--visited"),
+
+    "background-color": rh-var("emphasis-color"),
+    "background-color--hover": rh-var("emphasis-color--hover"),
+    "background-color--focus": rh-var("emphasis-color--focus"),
+    "background-color--visited": rh-var("emphasis-color--visited"),
+
+    "border-color": rh-var("emphasis-color"),
+    "border--hover": rh-var("emphasis-color--hover"),
+    "border--focus": rh-var("emphasis-color--focus"),
+    "border--visited": rh-var("emphasis-color--visited"),
+  );
+  
+  @include rh-define-vars($cta-solid-colors);
+
+  & ::slotted(a) {
     &::after {
-      content: none;
       display: none;
     }
   }
 }
 
-@mixin make-button-cta-color(
-        $bg-color: $rh-global--color--gray-mercury, $color: $rh-global--color--black, $border-color: transparent,
-        $bg-color-visited: $rh-global--color--gray-mercury, $color-visited: $rh-global--color--black, $border-color-visited: transparent,
-        $bg-color-hover: $rh-global--color--gray-mercury, $color-hover: $rh-global--color--black, $border-color-hover: transparent,
-        $bg-color-focus: $rh-global--color--gray-mercury, $color-focus: $rh-global--color--black, $border-color-focus: transparent
-      ) {
+// CTA Solid
+:host([solid][inverted]) {
+  $cta-solid-inverted: (
+    "color": rh-var("emphasis-color"),
+    "color--hover": rh-var("emphasis-color"),
+    "color--focus": rh-var("emphasis-color"),
+    "color--visited": rh-var("emphasis-color"),
 
-  & ::slotted(a) {
-    background: $bg-color;
-    color: $color;
-    border: 1px solid $border-color;
-  }
+    "background-color": rh-var("complement-color"),
+    "background-color--hover": #{$rh-global--color--gray-platinum},
+    "background-color--focus": #{$rh-global--color--gray-platinum},
+    "background-color--visited": rh-var("complement-color"),
 
-  & ::slotted(a:visited) {
-    background: $bg-color-visited;
-    color: $color-visited;
-    border-color: $border-color-visited;
-  }
-
-  & ::slotted(a:hover) {
-    background: $bg-color-hover;
-    color: $color-hover;
-    border-color: $border-color-hover;
-  }
-
-  & ::slotted(a:focus) {
-    background: $bg-color-focus;
-    color: $color-focus;
-    border-color: $border-color-focus;
-  }
-}
-
-
-:host {
-  display: inline-block;
-
-  // Default, "link" style
-  & ::slotted(a) {
-    @include make-default-cta(var(--rhe-theme--link-color, $rh-global--link-color));
-
-    &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color, $rh-global--link-color));
-    }
-  }
-
-  & ::slotted(a:visited) {
-    @include make-default-cta(var(--rhe-theme--link-color--visited, $rh-global--link-color--visited));
-
-    &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color--visited, $rh-global--link-color--visited));
-    }
-  }
-
-  & ::slotted(a:hover) {
-    @include make-default-cta(var(--rhe-theme--link-color--hover, $rh-global--link-color--hover));
-
-    &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color--hover, $rh-global--link-color--hover));
-    }
-  }
-
-  & ::slotted(a:focus) {
-    @include make-default-cta(var(--rhe-theme--link-color--focus, $rh-global--link-color--focus));
-
-    &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color--focus, $rh-global--link-color--focus));
-    }
-  }
-
-  // Default, "link" style colors
-  @include make-default-cta-color(white, var(--rhe-theme--link-color--desaturated--inverted, $rh-global--color--white));
-  @include make-default-cta-color(black, var(--rhe-theme--link-color--desaturated, $rh-global--color--black));
-
-
-}
-
-// "Button" styles
-:host([class*="--solid"]),
-:host([class*="--outlined"]),
-:host([class*="--ghost"]) {
-  @include make-button-cta();
-}
-
-:host([class*="--solid"]) {
-  @include make-button-cta-color(
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent
+    "border-color": rh-var("complement-color"),
+    "border--hover": rh-var("complement-color"),
+    "border--focus": rh-var("complement-color"),
+    "border--visited": rh-var("complement-color"),
   );
+  
+  @include rh-define-vars($cta-solid-inverted);
 }
 
-:host([class*="--outlined"]) {
-  @include make-button-cta-color(
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor)
+// CTA Bordered
+:host([solid][bordered]) {
+  $cta-solid-bordered: (
+    "color": rh-var("emphasis-color"),
+    "color--hover": rh-var("complement-color"),
+    "color--focus": rh-var("complement-color"),
+    "color--visited": rh-var("emphasis-color"),
+
+    "background-color": rh-var("complement-color"),
+    "background-color--hover": rh-var("emphasis-color"),
+    "background-color--focus": rh-var("emphasis-color"),
+    "background-color--visited": rh-var("complement-color"),
+
+    "border-color": rh-var("emphasis-color"),
+    "border--hover": rh-var("emphasis-color"),
+    "border--focus": rh-var("emphasis-color"),
+    "border--visited": rh-var("emphasis-color"),
   );
+  
+  @include rh-define-vars($cta-solid-bordered);
 }
 
-:host([class*="--ghost"]) {
-  @include make-button-cta-color(
-    transparent, var(--rhe-theme--link-color, $rh-global--link-color), transparent,
-    transparent, var(--rhe-theme--link-color--visited, $rh-global--link-color--visited), transparent,
-    var(--rhe-theme--bg-color--shade2, $rh-global--color--gray-platinum), var(--rhe-theme--link-color--hover, $rh-global--link-color--hover), transparent,
-    var(--rhe-theme--bg-color--shade2, $rh-global--color--gray-platinum), var(--rhe-theme--link-color--focus, $rh-global--link-color--focus), transparent
+// CTA Unfilled
+:host([solid][unfilled]) {
+  $cta-unfilled: (
+    "color": rh-var("emphasis-color"),
+    "color--hover": rh-var("emphasis-color"),
+    "color--focus": rh-var("emphasis-color"),
+    "color--visited": rh-var("emphasis-color"),
+
+    "background-color": transparent,
+    "background-color--hover": rh-var("complement-color"),
+    "background-color--focus": rh-var("complement-color"),
+    "background-color--visited": transparent,
+
+    "border-color": transparent,
+    "border--hover": transparent,
+    "border--focus": transparent,
+    "border--visited": transparent,
   );
+  
+  @include rh-define-vars($cta-unfilled);
 }

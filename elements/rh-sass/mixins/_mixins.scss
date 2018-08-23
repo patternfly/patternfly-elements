@@ -68,6 +68,10 @@
   }
 }
 
+@mixin rh-arrow-color($color) {
+  border-top-color: $color;
+}
+
 @mixin rh-print-media {
   @media print {
     @content;
@@ -104,5 +108,70 @@
 @mixin rh-retina {
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     @content;
+  }
+}
+
+/// RH Define Vars
+/// Helps define the CSS Var madness, making it easier for devs!
+/// @param {Map} $map - A map containing the variable description as key and all fallbacks
+/// @param {String} $variable-name - Component specific variable name, default is blank
+/// @param {String} $prefix - The component's associated prefix, this typically identifies where it is used, defaults to rhe
+/// @param {String} $namespace - The namespace for the local component's variable, defaults to local
+/// @param {Boolean} $use-theme - Use the default theme syntax as the first fallback option, defaults to true
+///
+/// ---------------------------------------------------------------------------
+///
+/// SASS fallback based on RHElements style
+/// $rh-global[--context][--state][--PropertyCamelCase]
+
+/// Theme level Var
+/// --rh-theme[--context][--state][--PropertyCamelCase]
+/// --rh-theme--heading--hover--BackgroundColor
+
+/// Component Var for theming specific cases
+/// --rh-[component-block][__element][--context][--state][--PropertyCamelCase]
+/// --rh-teaser__title--link-color--visited
+/// --rh-teaser__subtitle--link-color--visited
+
+/// Defined locally for sanity
+/// --rh-local-[component-block][__element][--context][--state][--PropertyCamelCase]
+/// --rh-local-cta--link-color--inverted
+///
+/// Use with @function rh-var
+/// ---------------------------------------------------------------------------
+///
+@mixin rh-define-vars($map, $variable-name: $component, $prefix: "rh", $namespace: "", $custom-theme: true) {
+  // If the variable name was provided, postfix it with --
+  @if $variable-name != "" {
+    $variable-name: "#{$variable-name}--";
+  }
+  
+  // Iterate over the provided style map
+  @each $label, $fallbacks in $map {
+    // Initialize the fallback value
+    $fallback: "";
+    // Iterate over fallbacks in reverse
+    @for $i from length($fallbacks)*-1 through -1 {
+      // Count is the absolute value of the loop
+      $c: abs($i);
+      // Get the item in the list by count
+      $item: nth($fallbacks, $c);
+      // If the count is the same as the length of the list, no special styles
+      @if $c == length($fallbacks) {
+        $fallback: "#{$item}#{$fallback}";
+      } @else {
+        // Otherwise wrap them in a var
+        $fallback: "var(#{$item}, #{$fallback})";
+      }
+    }
+
+    // If we want to use the default theme label, add that to the fallback string
+    @if not $custom-theme {
+      $fallback: var(--#{$prefix}-theme--#{$variable-name}#{$label}, #{$fallback});
+    }
+    
+    // Finally print the CSS variable in all it's glory
+    //--#{$prefix}-#{$namespace}-#{$variable-name}#{$label}: var(--#{$prefix}-#{$variable-name}#{$label}, #{$fallback});
+    --#{$prefix}-#{$namespace}-#{$variable-name}#{$label}: #{$fallback};
   }
 }

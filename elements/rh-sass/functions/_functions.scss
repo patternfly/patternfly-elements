@@ -127,3 +127,37 @@
     }
     @return $result;
 }
+
+/// Convert to string
+/// @author Hugo Giraudel
+/// @access public
+/// @param {List} $list - List
+/// @param {String} $glue - String to combine items
+/// @return {*} - Desired value
+@function to-string($list, $glue: '', $is-nested: false) {
+    $result: null;
+
+    @for $i from 1 through length($list) {
+        $e: nth($list, $i);
+
+        @if type-of($e) == list {
+        $result: $result#{to-string($e, $glue, true)};
+        } @else {
+        $result: if(
+            $i != length($list) or $is-nested,
+            $result#{$e}#{$glue},
+            $result#{$e}
+        );
+        }
+    }
+
+    @return $result;
+}
+
+/// RH Var
+/// Uses the name created by rh-define-vars() to retrieve the local var
+/// @requires: @mixin rh-define-vars()
+/// @param {String} $this-local-var - Variable name to be used
+@function rh-var($this-local-var, $prefix: "rh", $namespace: "", $variable-name: $component) {
+  @return var(--#{$prefix}-#{$namespace}-#{$variable-name}--#{$this-local-var});
+}

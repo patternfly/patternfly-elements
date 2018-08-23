@@ -41,8 +41,9 @@ $rh-global--grid-breakpoint--lg--max: $rh-global--grid-breakpoint--xl - 1 !defau
 // ========================================================================
 
 // Factors of 1em or 16px;
-$rh-global--spacer--xs:     rh-size-prem(4px) !default;
-$rh-global--spacer--sm:     rh-size-prem(8px) !default;
+$rh-global--spacer--xxs:    rh-size-prem(4px) !default;
+$rh-global--spacer--xs:     rh-size-prem(8px) !default;
+$rh-global--spacer--sm:     rh-size-prem(12px) !default; // NEW. Not in PF
 $rh-global--spacer:         rh-size-prem(16px) !default; // base
 $rh-global--spacer--md:     rh-size-prem(24px) !default;
 $rh-global--spacer--lg:     rh-size-prem(32px) !default;

@@ -33,7 +33,7 @@ gulp.task("compile", () => {
 
 gulp.task("merge", () => {
   return gulp
-    .src("./src/rh-button.js")
+    .src("./src/rh-icon.js")
     .pipe(
       replace(
         /extends\s+RHElement\s+{/g,
@@ -113,7 +113,7 @@ gulp.task("svgSprite", function() {
 
 gulp.task("stuffSprite", () => {
   return gulp
-    .src("./src/rh-icon.js")
+    .src("./rh-icon.js")
     .pipe(
       replace(
         /<svg xmlns[\s\S]*?<\/svg>/g,

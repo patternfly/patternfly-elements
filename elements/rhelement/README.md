@@ -8,24 +8,27 @@ Here is an example of how RHElement should be extended
 ```
 import RHElement from "../rhelement/rhelement.js";
 
-const template = document.createElement("template");
-template.innerHTML = `
-  <style></style> // any styles if you need them
-  <slot></slot> // any html can go in here
-`;
-
 class MyElement extends RHElement {
+  static get tag() {
+    return "my-element";
+  }
+
+  get styleUrl() {
+    return "my-element.scss";
+  }
+
+  get templateUrl() {
+    return "my-element.html";
+  }
+
   constructor() {
     /*
-     * the call to super should be first and should contain two
-     * parameters.
-     *
-     * the first parameter should be the string that you'll use
-     * to define your custom element in the custom element definition
-     *
-     * the second parameter should be the template that you create
+     * the call to super should be first and should contain the tag
+     * of the element you're creating. This will be the string that
+     * RHElement will use to define your custom element in the
+     * custom element definition.
      */
-    super("my-element", template);
+    super(MyElement.tag);
   }
 
   /*
@@ -40,7 +43,7 @@ class MyElement extends RHElement {
   }
 }
 
-window.customElements.define('my-element', MyElement);
+RHElement.create(MyElement);
 ```
 
 ## Test

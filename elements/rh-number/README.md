@@ -1,5 +1,33 @@
 # RHElements Number Element
 
+## Usage
+
+```
+<rh-number type="ordinal">4</rh-number>
+```
+
+## Attributes
+
+### number (observed)
+
+Reflects the number that is in the light DOM.
+
+### format (observed)
+
+Reflects the format that is being used to display the number.
+
+### type (observed)
+
+The type of display you want to show.
+
+The options for type are:
+- `ordinal`: (1st, 2nd, 3rd, 4th)
+- `bytes`: (2 KiB, 9.54 Mib, 93 Gib)
+- `abbrev`: (1k, 1m, 1b)
+- `percent`: (10%, 50%, 100%)
+- `e`: (2.000e+6)
+- `thousands`: (321.123)
+
 ## Build
 
     npm run build

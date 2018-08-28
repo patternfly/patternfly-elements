@@ -1,5 +1,26 @@
 # WIP 🐣: RHElements Card Element
 
+## Usage
+
+```
+<rh-card>
+  <h2 slot="header">RH Card</h2>
+  This is the rh-card body.
+  <div slot="footer">Text in footer</div>
+</rh-card>
+```
+
+### Slots
+#### header
+If this slot is used, we expect a heading level tag (h1, h2, h3, h4, h5, h6) to
+be used here.
+
+#### Default slot (body)
+Any content that is not designated for the header or footer slot, will go to this slot.
+
+### footer
+Use this slot for anything that you want in the footer of the card.
+
 ## Test
 
     npm run test

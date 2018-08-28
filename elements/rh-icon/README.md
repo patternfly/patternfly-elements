@@ -1,5 +1,53 @@
 # WIP 🐣: RHElements Icon Element
 
+## Usage
+
+```
+<rh-icon icon="rh-icon-server"></rh-icon>
+```
+
+## Attributes
+
+### icon (observed)
+
+The name of the icon that you want to use. If the value of this attribute changes, the new icon will show up in the UI.
+
+### data-size
+
+Controls the size of the icon. The options for size are:
+- 2x
+- 3x
+- 4x
+- small
+- medium
+- large
+
+```
+<rh-icon icon="rh-icon-server" data-size="2x"></rh-icon>
+```
+
+### data-block
+
+By default, `rh-icon` is set to `display: inline-block`. The `data-block` attribute sets this element to `display: block`.
+
+```
+<rh-icon icon="rh-icon-server" data-block></rh-icon>
+```
+
+### data-bg
+
+Sets the border radius of the element to a circle (`border-radius: 50%`).
+
+```
+<rh-icon icon="rh-icon-server" data-bg></rh-icon>
+```
+
+Another option for `data-bg` is to set the attribute equal to `transparent`. This makes the background transparent.
+
+```
+<rh-icon icon="rh-icon-server" data-bg="transparent"></rh-icon>
+```
+
 ## Test
 
     npm run test

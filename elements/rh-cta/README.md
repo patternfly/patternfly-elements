@@ -1,5 +1,18 @@
 # WIP 🐣: RHElements Cta Element
 
+## Usage
+```
+<rh-cta>
+  <a href="https://rhelements.github.io/">Learn more about RHElements</a>
+</rh-cta>
+```
+
+### Slots
+
+#### Default slot
+
+We expect an anchor tag, `<a>`, to be the first child inside rh-cta element.
+
 ## Test
 
     npm run test

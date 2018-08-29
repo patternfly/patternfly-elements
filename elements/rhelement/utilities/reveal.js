@@ -35,6 +35,9 @@ export function autoReveal() {
     handleWebComponentsReady();
   } else {
     window.addEventListener("WebComponentsReady", handleWebComponentsReady);
+    console.warn(
+      "You don't have Web Components polyfill loaded. See https://github.com/github/webcomponentsjs for more information"
+    );
   }
 }
 

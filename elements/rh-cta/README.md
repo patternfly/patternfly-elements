@@ -7,9 +7,9 @@
 </rh-cta>
 ```
 
-### Slots
+## Slots
 
-#### Default slot
+### Default slot
 
 We expect an anchor tag, `<a>`, to be the first child inside rh-cta element.
 

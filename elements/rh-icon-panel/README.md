@@ -20,10 +20,10 @@ The name of the icon that you want to use. If the value of this attribute change
 
 ## Slots
 
-#### header
+### header
 The header of the icon panel
 
-#### Default slot (body)
+### Default slot (body)
 Any content that is not designated for the header or footer slot, will go to this slot.
 
 ### footer

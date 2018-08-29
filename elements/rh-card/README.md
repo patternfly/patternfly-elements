@@ -10,12 +10,13 @@
 </rh-card>
 ```
 
-### Slots
-#### header
+## Slots
+
+### header
 If this slot is used, we expect a heading level tag (h1, h2, h3, h4, h5, h6) to
 be used here.
 
-#### Default slot (body)
+### Default slot (body)
 Any content that is not designated for the header or footer slot, will go to this slot.
 
 ### footer

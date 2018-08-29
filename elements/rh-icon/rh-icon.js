@@ -106,7 +106,6 @@ class RhIcon extends RHElement {
     width: 48px;
     height: 48px; }
 </style>
-
 <svg viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" focusable="false" style="pointer-events: none; display: block; width: 100%; height: 100%">
   <g>
     <path d=""></path>

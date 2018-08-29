@@ -1,10 +1,51 @@
 # RHElements Tabs Element
 
+## Usage
+
+```
+<rh-tabs>
+  <rh-tab role="heading" slot="tab">Tab 1</rh-tab>
+  <rh-tab-panel role="region" slot="panel">
+    <h2>Content 1</h2>
+    <p>Tab 1 panel content.</p>
+  </rh-tab-panel>
+  <rh-tab role="heading" slot="tab">Tab 2</rh-tab>
+  <rh-tab-panel role="region" slot="panel">
+    <h2>Content 2</h2>
+    <p>Tab 2 panel content.</p>
+  </rh-tab-panel>
+</rh-tabs>
+```
+
+For each `rh-tab`, you are responsible for setting the `role="heading"`and
+`slot="tab"`.
+
+For each `rh-tab-panel`, you are responsible for setting `role="region"` and
+`slot="panel"`.
+
+## Slots
+
+### Default slot in rh-tabs
+
+Place the `rh-tab` and `rh-tab-panel` elements here.
+
+### Default slot in rh-tab
+
+Add the text for your tab here.
+
+### Default slot in rh-tab-panel
+
+Add the content for your tab panel here.
+
 ## Attributes
 
-### vertical
+### vertical (observed)
 
 Orients the tabs vertically on the left and pushes the content panes to the right.
+
+### selected-index (observed)
+
+Sets and reflects the currently selected tab index .
 
 ## Events
 
@@ -26,16 +67,6 @@ Fires when a selected tab is no longer the selected tab. The `event.detail.tab` 
 | --rhe-c-tab\_\_indicator--hover--BackgroundColor    | Background color of the indicator                   | $rh-global--link-color--inverted--hover |
 | --rhe-c-tab\_\_indicator--selected--BackgroundColor | Background color of the indicator of a selected tab | $rh-global--link-color                  |
 
-## Dependencies
-
-Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
-
-    npm install -g polyserve web-component-tester
-
-## Dev
-
-    npm start
-
 ## Test
 
     npm run test
@@ -46,7 +77,9 @@ Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-compone
 
 ## Demo
 
-Run `npm start` and Polyserve will start a server and open your default browser to the demo page of the element.
+From the RHElements root directory, run:
+
+    npm start
 
 ## Code style
 
@@ -54,5 +87,4 @@ Tabs (and all RHElements) use [Prettier][prettier] to auto-format JS and JSON. T
 
 [prettier]: https://github.com/prettier/prettier/
 [prettier-ed]: https://github.com/prettier/prettier/#editor-integration
-[polyserve]: https://github.com/Polymer/polyserve
 [web-component-tester]: https://github.com/Polymer/web-component-tester

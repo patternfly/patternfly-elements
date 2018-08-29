@@ -22,10 +22,10 @@
 ## Slots
 
 ### Default slot in rh-accordion
-Place the rh-accordion-header and rh-accordion-panel elements here.
+Place the `rh-accordion-header` and `rh-accordion-panel` elements here.
 
 ### Default slot in rh-accordion-header
-We expect the light DOM of the rh-accordion-header to be a heading level tag
+We expect the light DOM of the `rh-accordion-header` to be a heading level tag
 (h1, h2, h3, h4, h5, h6)
 
 ### Default slot in rh-accordion-panel

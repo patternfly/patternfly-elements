@@ -69,7 +69,7 @@ class RHElement extends HTMLElement {
 
   connectedCallback() {
     if (window.ShadyCSS) {
-      ShadyCSS.styleElement(this);
+      window.ShadyCSS.styleElement(this);
     }
 
     if (this._queue.length) {
@@ -98,7 +98,7 @@ class RHElement extends HTMLElement {
     this.template.innerHTML = this.html;
 
     if (window.ShadyCSS) {
-      ShadyCSS.prepareTemplate(this.template, this.tag);
+      window.ShadyCSS.prepareTemplate(this.template, this.tag);
     }
 
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));

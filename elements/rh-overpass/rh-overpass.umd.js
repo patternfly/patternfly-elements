@@ -1,2 +1,0 @@
-!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?t():"function"==typeof define&&define.amd?define(t):t()}(0,function(){"use strict";var e;(e=document.createElement("div")).setAttribute("style","display: none;"),e.innerHTML='\n    <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">\n  ',document.head.appendChild(e)});
-//# sourceMappingURL=rh-overpass.umd.js.map

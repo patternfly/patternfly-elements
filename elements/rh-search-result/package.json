@@ -19,7 +19,7 @@
   "author": {
     "name": "Kyle Buchanan"
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@rhelements/rh-sass": "*",
     "@rhelements/rhelement": "*"

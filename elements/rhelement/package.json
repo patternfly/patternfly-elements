@@ -21,7 +21,7 @@
     "email": "kylebuch8@gmail.com",
     "url": "https://github.com/kylebuch8"
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {},
   "generator-rhelement-version": "0.3.4"
 }

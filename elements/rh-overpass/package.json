@@ -16,7 +16,7 @@
     "dev": "../../node_modules/.bin/gulp dev"
   },
   "author": "CPFED",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "rhelement-sass": "*"
   }

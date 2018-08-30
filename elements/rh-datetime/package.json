@@ -19,7 +19,7 @@
   "author": {
     "name": "Luke Dary"
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@rhelements/rhelement": "0.0.x"
   },

@@ -1,13 +1,13 @@
 const path = require("path");
 const fs = require("fs");
+const del = require("del");
 
 const gulp = require("gulp");
+const shell = require("gulp-shell");
 const rename = require("gulp-rename");
 const replace = require("gulp-replace");
 const cleanCSS = require("gulp-clean-css");
 const trim = require("gulp-trim");
-const del = require("del");
-let watcher;
 
 gulp.task("clean", () => {
   return del(["./**/*.umd.*", "./*.min.css"]);
@@ -54,13 +54,13 @@ gulp.task("minify-css", () => {
 });
 
 gulp.task("watch", () => {
-  watcher = gulp.watch(
-    ["./rhelement.js"],
-    gulp.series("clean", "compile", "minify-css")
-  );
-  return watcher;
+  return gulp.watch("./src/*", gulp.series("build"));
 });
 
-gulp.task("default", gulp.series("clean", "compile", "minify-css"));
+gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-gulp.task("dev", gulp.series("default", "watch"));
+gulp.task("build", gulp.series("clean", "compile", "minify-css", "bundle"));
+
+gulp.task("default", gulp.series("build"));
+
+gulp.task("dev", gulp.series("build", "watch"));

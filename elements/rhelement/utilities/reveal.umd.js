@@ -31,10 +31,11 @@ export function autoReveal() {
   //
   // see https://github.com/github/webcomponentsjs#webcomponents-loaderjs for
   // info about web component readiness events
-  if (window.WebComponents &&  window.WebComponents.ready) {
+  if (window.WebComponents && window.WebComponents.ready) {
     handleWebComponentsReady();
   } else {
     window.addEventListener("WebComponentsReady", handleWebComponentsReady);
+    console.warn('You don\'t have Web Components polyfill loaded. See https://github.com/github/webcomponentsjs for more information');
   }
 }
 

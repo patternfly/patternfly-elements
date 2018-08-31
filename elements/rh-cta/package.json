@@ -19,7 +19,7 @@
   "author": {
     "name": "Mark Caron"
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@rhelements/rh-sass": "*",
     "@rhelements/rhelement": "*"

@@ -26,7 +26,7 @@ The options for type are:
 - `abbrev`: (1k, 1m, 1b)
 - `percent`: (10%, 50%, 100%)
 - `e`: (2.000e+6)
-- `thousands`: (321.123)
+- `thousands`: (97 654 321.123)
 
 ## Build
 

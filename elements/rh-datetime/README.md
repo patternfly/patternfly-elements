@@ -99,10 +99,6 @@ Possible values: `numeric`, `2-digit`
 
 Possible values: `numeric`, `2-digit`
 
-Options are:
-- local
-- relative
-
 ## Test
 
     npm run test

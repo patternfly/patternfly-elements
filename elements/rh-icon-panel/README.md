@@ -12,12 +12,6 @@
 </rh-icon-panel>
 ```
 
-## Attributes
-
-### icon (observed)
-
-The name of the icon that you want to use. If the value of this attribute changes, the new icon will show up in the UI.
-
 ## Slots
 
 ### header
@@ -28,6 +22,12 @@ Any content that is not designated for the header or footer slot, will go to thi
 
 ### footer
 Use this slot for anything that you want in the footer of the icon panel.
+
+## Attributes
+
+### icon (observed)
+
+The name of the icon that you want to use. If the value of this attribute changes, the new icon will show up in the UI.
 
 ## Test
 

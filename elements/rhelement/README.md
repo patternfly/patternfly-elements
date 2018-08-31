@@ -4,7 +4,10 @@ This is the base element that all other RHElements should extend. It handles set
 
 When extending RHElement, make sure you call `super` in the constructor with the string that your element will be registered with and the template element that is cloned into the shadow root. If you need to run code in the `connectedCallback`, be sure to call `super.connectedCallback()` first before adding any additional code to that method.
 
-Here is an example of how RHElement should be extended
+To create a new RHElement, use `npm run new` from the root of the RHElements
+repo.
+
+Here is an example of how rhelement.js is extended.
 ```
 import RHElement from "../rhelement/rhelement.js";
 

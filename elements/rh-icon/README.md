@@ -15,12 +15,12 @@ The name of the icon that you want to use. If the value of this attribute change
 ### data-size
 
 Controls the size of the icon. The options for size are:
-- 2x
-- 3x
-- 4x
-- small
-- medium
-- large
+- `2x`
+- `3x`
+- `4x`
+- `small`
+- `medium`
+- `large`
 
 ```
 <rh-icon icon="rh-icon-server" data-size="2x"></rh-icon>

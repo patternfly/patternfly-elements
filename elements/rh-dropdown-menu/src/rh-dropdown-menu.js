@@ -36,7 +36,7 @@ class RhDropdownMenu extends RHElement {
   }
 
   constructor() {
-    super(RhDropdownMenu.tag);
+    super(RhDropdownMenu);
   }
 
   connectedCallback() {

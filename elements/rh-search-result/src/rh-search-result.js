@@ -36,7 +36,7 @@ class RhSearchResult extends RHElement {
   }
 
   constructor() {
-    super(RhSearchResult.tag);
+    super(RhSearchResult);
 
     this._headingId = "#heading";
 

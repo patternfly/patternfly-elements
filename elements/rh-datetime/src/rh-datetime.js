@@ -36,7 +36,7 @@ class RhDatetime extends RHElement {
   }
 
   constructor() {
-    super(RhDatetime.tag);
+    super(RhDatetime);
 
     this.type = this.getAttribute("type") || "local";
   }

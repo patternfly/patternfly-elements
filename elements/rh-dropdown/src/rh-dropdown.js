@@ -86,7 +86,7 @@ class RhDropdown extends RHElement {
   }
 
   constructor() {
-    super(RhDropdown.tag);
+    super(RhDropdown);
   }
 
   connectedCallback() {

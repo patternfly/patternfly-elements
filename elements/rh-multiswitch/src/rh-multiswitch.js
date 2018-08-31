@@ -36,7 +36,7 @@ class RhMultiswitch extends RHElement {
   }
 
   constructor() {
-    super(RhMultiswitch.tag);
+    super(RhMultiswitch);
 
     this._slotChange = this._slotChange.bind(this);
   }

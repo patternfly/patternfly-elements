@@ -40,7 +40,7 @@ class RhDropdownButton extends RHElement {
   }
 
   constructor() {
-    super(RhDropdownButton.tag);
+    super(RhDropdownButton);
     this.button = this.shadowRoot.querySelector("button");
     this._clickHandler = this._clickHandler.bind(this);
   }

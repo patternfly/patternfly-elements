@@ -36,7 +36,7 @@ class RhButton extends RHElement {
   }
 
   constructor() {
-    super(RhButton.tag);
+    super(RhButton);
   }
 }
 

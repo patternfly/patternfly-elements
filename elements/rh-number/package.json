@@ -19,7 +19,7 @@
   "author": {
     "name": "Michael Clayton"
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@rhelements/rhelement": "*",
     "numeral": "^2.0.6"

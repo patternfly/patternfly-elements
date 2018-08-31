@@ -5,7 +5,7 @@
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/all/test/"
   },
   "private": true,
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@rhelements/rh-card": "file:elements/rh-card",
     "@rhelements/rh-cta": "file:elements/rh-cta",

@@ -87,7 +87,7 @@
           assert.equal(attrVal, child1.getAttribute(testAttrName));
           assert.equal(attrVal, child2.getAttribute(testAttrName));
         });
-        test("it should cascade values of cascadingAttributes to unspecified elements ", () => {
+        test("it should _not_ cascade values of cascadingAttributes to unspecified elements ", () => {
           const parent = document.querySelector("rh-parent");
 
           const child = parent.shadowRoot.querySelector('#no-cascade');

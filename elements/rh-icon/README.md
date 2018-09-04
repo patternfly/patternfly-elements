@@ -2,7 +2,7 @@
 
 ## Usage
 
-```
+```html
 <rh-icon icon="rh-icon-server"></rh-icon>
 ```
 
@@ -22,7 +22,7 @@ Controls the size of the icon. The options for size are:
 - `medium`
 - `large`
 
-```
+```html
 <rh-icon icon="rh-icon-server" data-size="2x"></rh-icon>
 ```
 
@@ -30,7 +30,7 @@ Controls the size of the icon. The options for size are:
 
 By default, `rh-icon` is set to `display: inline-block`. The `data-block` attribute sets this element to `display: block`.
 
-```
+```html
 <rh-icon icon="rh-icon-server" data-block></rh-icon>
 ```
 
@@ -38,13 +38,13 @@ By default, `rh-icon` is set to `display: inline-block`. The `data-block` attrib
 
 Sets the border radius of the element to a circle (`border-radius: 50%`).
 
-```
+```html
 <rh-icon icon="rh-icon-server" data-bg></rh-icon>
 ```
 
 Another option for `data-bg` is to set the attribute equal to `transparent`. This makes the background transparent.
 
-```
+```html
 <rh-icon icon="rh-icon-server" data-bg="transparent"></rh-icon>
 ```
 

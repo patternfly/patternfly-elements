@@ -5,7 +5,7 @@ This RHElement enables developers to get a lot of the features from the [Intl Ob
 ## Usage
 
 ### Just the date: January 2, 2006
-```
+```html
 <rh-datetime
   datetime="Mon Jan 2 15:04:05 EST 2006"
   type="local"
@@ -17,7 +17,7 @@ This RHElement enables developers to get a lot of the features from the [Intl Ob
 ```
 
 ### With time: Monday, Jan 02, 2006, 3:04:05 PM
-```
+```html
 <rh-datetime
   datetime="Mon Jan 2 15:04:05 EST 2006"
   type="local"
@@ -34,7 +34,7 @@ This RHElement enables developers to get a lot of the features from the [Intl Ob
 
 ### With an en-GB locale: Monday, 02 Jan 2006, 15:04:05
 You can use any locale here.
-```
+```html
 <rh-datetime
   datetime="Mon Jan 2 15:04:05 EST 2006"
   type="local"
@@ -51,7 +51,7 @@ You can use any locale here.
 ```
 
 ### Time adverbial: 13 years ago
-```
+```html
 <rh-datetime
   type="relative"
   datetime="Mon Jan 2 15:04:05 EST 2006">

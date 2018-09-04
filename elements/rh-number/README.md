@@ -2,7 +2,7 @@
 
 ## Usage
 
-```
+```html
 <rh-number type="ordinal">4</rh-number>
 ```
 

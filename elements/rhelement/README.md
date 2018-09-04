@@ -2,47 +2,46 @@
 
 This is the base element that all other RHElements should extend. It handles setting up a shadow root and applies Shady CSS if it is needed.
 
-When extending RHElement, make sure you call `super` in the constructor with the string that your element will be registered with and the template element that is cloned into the shadow root. If you need to run code in the `connectedCallback`, be sure to call `super.connectedCallback()` first before adding any additional code to that method.
+To create a new RHElement, use `npm run new` from the root of the RHElements repo.  After answering a few questions, a new element will be generated for you by [generator-rhelement][generator].
 
-To create a new RHElement, use `npm run new` from the root of the RHElements
-repo.
+Here is an example of a new element and how it extends the base RHElement.
 
-Here is an example of how rhelement.js is extended.
-```
+```javascript
 import RHElement from "../rhelement/rhelement.js";
 
 class MyElement extends RHElement {
+
+  // The HTML tag name for this element.  This will be passed into `customElements.define()`.
   static get tag() {
     return "my-element";
   }
 
+  // The path to the element's SCSS file.  It is compiled to CSS at build time.
   get styleUrl() {
     return "my-element.scss";
   }
 
+  // The path to the element's template.  This used at build time.
   get templateUrl() {
     return "my-element.html";
   }
 
   constructor() {
-    /*
-     * the call to super should be first and should contain the tag
-     * of the element you're creating. This will be the string that
-     * RHElement will use to define your custom element in the
-     * custom element definition.
-     */
-    super(MyElement.tag);
+    // The call to super is first and contains a reference to the class itself.
+    // This allows the base class to see any of MyElement's static properties.
+    super(MyElement);
+
+    // any other work to do during the constructor goes here
   }
 
-  /*
-   * if you need to use the connectedCallback method, make sure you
-   * call super.connectedCallback() first before doing the work that you
-   * need to do
-   */
+  // connectedCallback runs when the element is placed into the DOM.  Note that
+  // in dynamic apps, this _can_ happen more than once, for instance if an
+  // element is moved from one part of the DOM tree to another.
   connectedCallback() {
+    // super's connectedCallback goes first
     super.connectedCallback();
 
-    // any other work that you need to do should go here
+    // any other work to do during connectedCallback goes here
   }
 }
 
@@ -70,3 +69,4 @@ From the RHElements root directory, run:
 [prettier]: https://github.com/prettier/prettier/
 [prettier-ed]: https://prettier.io/docs/en/editors.html
 [web-component-tester]: https://github.com/Polymer/web-component-tester
+[generator]: https://github.com/RHElements/generator-rhelement

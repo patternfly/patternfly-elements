@@ -1,7 +1,7 @@
 # WIP 🐣: RHElements Cta Element
 
 ## Usage
-```
+```html
 <rh-cta>
   <a href="https://rhelements.github.io/">Learn more about RHElements</a>
 </rh-cta>

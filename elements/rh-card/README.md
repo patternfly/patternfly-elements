@@ -2,7 +2,7 @@
 
 ## Usage
 
-```
+```html
 <rh-card>
   <h2 slot="header">RH Card</h2>
   This is the rh-card body.

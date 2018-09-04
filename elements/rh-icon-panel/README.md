@@ -2,7 +2,7 @@
 
 ## Usage
 
-```
+```html
 <rh-icon-panel icon="rh-icon-server">
   <h3 slot="header">This is rh-icon-panel</h3>
   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

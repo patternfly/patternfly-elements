@@ -14,29 +14,31 @@ $ npm rebuild node-sass  # this may be necessary
 $ npm start
 ```
 
-## Workflow
+## Scripts
 
-- `$ npm start` 
+- `$ npm start`
     - Launch a demo server. This should be continuously running as you develop.
-- `$ npm run new` 
-    -  Build a component.
-- `$ npm test` 
-    -  Run tests on ALL rhelements.
-- `$ npm run build` 
-    -  Run build on ALL rhelements.
-- `$ npm run bootstrap` 
+- `$ npm run new`
+    -  Create a new component.
+- `$ npm test`
+    -  Run tests on ALL RHElements.
+- `$ npm run build`
+    -  Run build on ALL RHElements.
+- `$ npm run bootstrap`
     - Update ALL rhelements' dependencies and interlink them with [lerna bootstrap][lerna-bs].
 - `$ npm run storybook`
-    - Run storybook 
+    - Run storybook
+- `$ npm run build-storybook`
+    - Build storybook for deployment
 
 [lerna]: https://github.com/lerna/lerna
 [lerna-bs]: https://github.com/lerna/lerna#bootstrap
 
 ## Component development
 
-Because this is a monorepo, each component will need to be independently built in order to actively work on and preview the changes. Every component has its own Gulp file and NPM script. 
+Because this is a monorepo, each component will need to be independently built in order to actively work on and preview the changes. Every component has its own Gulp file and NPM script.
 
-While still running `npm start` in one terminal window (which runs the local server), you will need to open another terminal window, drill into the directory of the component you'd like to work on, and execute the `npm run new` command. This command will use gulp tasks to watch the files within that component directory and will automatically re-run the build command and refresh the browser when you make changes to the component.
+While still running `npm start` in one terminal window (which runs the local server), you will need to open another terminal window, drill into the directory of the component you'd like to work on, and execute the `npm run dev` command. This command will use gulp tasks to watch the files within that component directory and will automatically re-run the build command and refresh the browser when you make changes to the component.
 
 ### Example development on a component
 

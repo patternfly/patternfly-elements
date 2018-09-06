@@ -130,7 +130,7 @@ class RhIcon extends RHElement {
   }
 
   constructor() {
-    super(RhIcon.tag);
+    super(RhIcon);
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {

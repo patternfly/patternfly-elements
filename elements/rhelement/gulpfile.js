@@ -54,7 +54,7 @@ gulp.task("minify-css", () => {
 });
 
 gulp.task("watch", () => {
-  return gulp.watch("./src/*", gulp.series("build"));
+  return gulp.watch("./rhelement.js", gulp.series("build"));
 });
 
 gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));

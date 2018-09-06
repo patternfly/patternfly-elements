@@ -36,7 +36,7 @@ class RhCard extends RHElement {
   }
 
   constructor() {
-    super(RhCard.tag);
+    super(RhCard);
   }
 }
 

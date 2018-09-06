@@ -29,7 +29,7 @@
         }
 
         constructor() {
-          super(TestElement.tag, RHElement.RhTypes.Content);
+          super(TestElement.tag, { type: RHElement.RhTypes.Content });
         }
       }
 
@@ -49,7 +49,7 @@
         }
 
         constructor() {
-          super(TestElementDelayRender.tag, null, true);
+          super(TestElementDelayRender.tag, { delayRender: true });
         }
 
         connectedCallback() {

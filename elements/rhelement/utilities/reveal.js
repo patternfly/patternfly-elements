@@ -36,7 +36,7 @@ export function autoReveal() {
   } else {
     window.addEventListener("WebComponentsReady", handleWebComponentsReady);
     console.warn(
-      "You don't have Web Components polyfill loaded. See https://github.com/github/webcomponentsjs for more information"
+      "RHElements requires the Web Components polyfill, but it was not found. See https://github.com/github/webcomponentsjs for more information."
     );
   }
 }

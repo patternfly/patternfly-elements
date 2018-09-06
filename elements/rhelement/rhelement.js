@@ -43,10 +43,11 @@ class RHElement extends HTMLElement {
     this.setAttribute("rh-type", value);
   }
 
-  constructor(tag, type, delayRender = false) {
+  constructor(rhClass, type, delayRender = false) {
     super();
 
-    this.tag = tag;
+    this._rhClass = rhClass;
+    this.tag = rhClass.tag;
     this._queue = [];
     this.template = document.createElement("template");
 
@@ -74,6 +75,22 @@ class RHElement extends HTMLElement {
 
     if (this._queue.length) {
       this._processQueue();
+    }
+  }
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    const cascadeTo = this._rhClass.cascadingAttributes[attr];
+    if (cascadeTo) {
+      this._copyAttribute(attr, cascadeTo);
+    }
+  }
+
+  _copyAttribute(name, to) {
+    const recipients = this.shadowRoot.querySelectorAll(to);
+    const value = this.getAttribute(name);
+    const fname = value == null ? "removeAttribute" : "setAttribute";
+    for (const node of recipients) {
+      node[fname](name, value);
     }
   }
 

@@ -1245,7 +1245,7 @@ class RhNumber extends RHElement {
   }
 
   constructor() {
-    super(RhNumber.tag);
+    super(RhNumber);
   }
 
   connectedCallback() {

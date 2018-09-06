@@ -8,8 +8,8 @@ $rh-cta__arrow-size:                        0.313em; // Was ~5px at 16px
 $rh-cta__arrow--spacer:                     $rh-global--spacer--xxs;
 $rh--cta--solid--BorderRadius:              5em !default; //$rh-global--border--BorderRadius !default;
 $rh-cta--solid--BorderWidth:                $rh-global--border--BorderWidth;
-$rh-cta--solid--padding-y:                  $rh-global--spacer--xs;
-$rh-cta--solid--padding-x:                  $rh-global--spacer--lg;
+$rh-cta--solid--padding-y:                  8px; //$rh-global--spacer--xs;
+$rh-cta--solid--padding-x:                  32px; //$rh-global--spacer--lg;
 $rh-cta--animation-timing:                  $rh-global--animation-timing;
 
 // Reassigning SASS vars to component specific SASS vars for ease of use below
@@ -21,10 +21,10 @@ $rh-cta--default--main--focus:              $rh-global--link-color--focus;
 $rh-cta--default--main--visited:            $rh-global--link-color--visited;
 $rh-cta--default--aux:                      transparent;
 
-$rh-cta--base--main:                        $rh-global--link-color;
-$rh-cta--base--main--hover:                 $rh-global--link-color--hover;
-$rh-cta--base--main--focus:                 $rh-global--link-color--focus;
-$rh-cta--base--main--visited:               $rh-global--link-color--visited;
+$rh-cta--base--main:                        $rh-global--ui-element-color;
+$rh-cta--base--main--hover:                 $rh-global--ui-element-color--hover;
+$rh-cta--base--main--focus:                 $rh-global--ui-element-color--focus;
+$rh-cta--base--main--visited:               $rh-global--ui-element-color--active;
 $rh-cta--base--aux:                         $rh-global--color--white;
 
 $rh-cta--complement--main:                  $rh-global--color--gray-iron;
@@ -52,367 +52,264 @@ $rh-cta--default--aux--on-dark:             transparent;
 :host {
   display: inline-block;
 
+  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-link, #{$rh-cta--default--main}));
+  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-link--visited, #{$rh-cta--default--main--visited}));
+  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-link--hover, #{$rh-cta--default--main--hover}));
+  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-link--focus, #{$rh-cta--default--main--focus}));
+
+
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--visited: var(--rh-cta--main--visited);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--text-color--focus: var(--rh-cta--main--focus);
+
+
   & ::slotted(a) {
-    color: var(--rh-theme--color--ui-link, $rh-cta--default--main);
+    line-height: inherit;
+    color: var(--rh-cta--text-color);
 
     &::after {
+      display: block;
       margin-left: $rh-cta__arrow--spacer; // not themeable for now
       vertical-align: middle;
-      @include rh-arrow(right, var(--rh-theme--color--ui-link, $rh-cta--default--main), $rh-cta__arrow-size, $rh-cta__arrow-size, true);
+      @include rh-arrow(right, var(--rh-cta--text-color), $rh-cta__arrow-size, $rh-cta__arrow-size, true);
     }
   }
 
   & ::slotted(a:visited) {
-    color: var(--rh-theme--color--ui-link--visited, $rh-cta--default--main--visited);
+    color: var(--rh-cta--text-color--visited);
 
     &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-link--visited, $rh-cta--default--main--visited));
+      @include rh-arrow-color(var(--rh-cta--text-color--visited));
     }
   }
 
   & ::slotted(a:hover) {
-    color: var(--rh-theme--color--ui-link--hover, $rh-cta--default--main--hover);
+    color: var(--rh-cta--text-color--hover);
 
     &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-link--hover, $rh-cta--default--main--hover));
+      @include rh-arrow-color(var(--rh-cta--text-color--hover));
     }
   }
 
   & ::slotted(a:focus) {
-    color: var(--rh-theme--color--ui-link--focus, $rh-cta--default--main--focus);
+    color: var(--rh-cta--text-color--focus);
 
     &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-link--focus, $rh-cta--default--main--focus));
+      @include rh-arrow-color(var(--rh-cta--text-color--focus));
     }
   }
 }
 
-// Giving shape to primary & secondary
+:host([palette="base"]) {
+  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-accent, #{$rh-cta--base--main}));
+  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-accent--visited, #{$rh-cta--base--main--visited}));
+  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-accent--hover, #{$rh-cta--base--main--hover}));
+  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-accent--focus, #{$rh-cta--base--main--focus}));
+}
+
+:host([palette="complement"]) {
+  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main}));
+  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-complement--visited, #{$rh-cta--complement--main--visited}));
+  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover}));
+  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-complement--focus, #{$rh-cta--complement--main--focus}));
+}
+
+:host([palette="accent"]) {
+  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main}));
+  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-accent--visited, #{$rh-cta--accent--main--visited}));
+  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover}));
+  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-accent--focus, #{$rh-cta--accent--main--focus}));
+}
+
+:host([on-saturated]) {
+  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-link--on-dark, #{$rh-cta--default--main--on-dark}));
+  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-link--on-dark--visited, #{$rh-cta--default--main--on-dark--visited}));
+  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-link--on-dark--hover, #{$rh-cta--default--main--on-dark--hover}));
+  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-link--on-dark--focus, #{$rh-cta--default--main--on-dark--focus}));
+}
+
+
+
+/// ===========================================================================
+/// DEFAULT "SOLID" CTAs
+/// ===========================================================================
 :host([priority="primary"]),
 :host([priority="secondary"]) {
+
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--aux);
+  --rh-cta--bg-color: var(--rh-cta--main);
+  --rh-cta--bg-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
+
   & ::slotted(a) {
+    display: inline-block;
     padding: $rh-cta--solid--padding-y $rh-cta--solid--padding-x; // not themeable for now
     border-radius: $rh--cta--solid--BorderRadius; // not themeable for now
     border: $rh-cta--solid--BorderWidth solid transparent; // not themeable for now
     text-decoration: none;
+    line-height: 1.2;
+
+    border-color: var(--rh-cta--border-color);
+    background: var(--rh-cta--bg-color);
+    color: var(--rh-cta--text-color);
 
     &::after {
       display: none;
     }
   }
+
+  & ::slotted(a:visited),
+  & ::slotted(a:hover),
+  & ::slotted(a:focus) {
+    border-color: var(--rh-cta--border--hover);
+    background: var(--rh-cta--bg-color--hover);
+    color: var(--rh-cta--text-color--hover);
+  }
 }
 
 :host([priority="primary"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-accent, $rh-cta--accent--main);
-    background: var(--rh-theme--color--ui-accent, $rh-cta--accent--main);
-    color: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-  }
-
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-accent--hover, $rh-cta--accent--main--hover);
-    background: var(--rh-theme--color--ui-accent--hover, $rh-cta--accent--main--hover);
-    color: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-  }
+  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--visited: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
+  --rh-cta--main--focus: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
 }
 
 :host([priority="secondary"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-base, $rh-cta--base--main);
-    background: var(--rh-theme--color--ui-accent--text, $rh-cta--base--aux);
-    color: var(--rh-theme--color--ui-base, $rh-cta--base--main);
-  }
+  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-base--hover, $rh-cta--base--main--hover);
-    background: var(--rh-theme--color--ui-accent--text, $rh-cta--base--aux);
-    color: var(--rh-theme--color--ui-base--hover, $rh-cta--base--main--hover);
-  }
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
 }
 
 
 /// ===========================================================================
 /// PALETTE: BASE
 /// ===========================================================================
-:host([palette="base"]) {
-  // Not the same, technically, but looks very similar...
-  & ::slotted(a) {
-    color: var(--rh-theme--color--ui-base, $rh-cta--base--main);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-base, $rh-cta--base--main));
-    }
-  }
-
-  & ::slotted(a:visited) {
-    color: var(--rh-theme--color--ui-base--visited, $rh-cta--base--main--visited);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-base--visited, $rh-cta--base--main--visited));
-    }
-  }
-
-  & ::slotted(a:hover) {
-    color: var(--rh-theme--color--ui-base--hover, $rh-cta--base--main--hover);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-base--hover, $rh-cta--base--main--hover));
-    }
-  }
-
-  & ::slotted(a:focus) {
-    color: var(--rh-theme--color--ui-base--focus, $rh-cta--base--main--focus);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-base--focus, $rh-cta--base--main--focus));
-    }
-  }
-}
-
 :host([priority="primary"][palette="base"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-base, $rh-cta--base--main);
-    background: var(--rh-theme--color--ui-base, $rh-cta--base--main);
-    color: var(--rh-theme--color--ui-base--text, $rh-cta--base--aux);
-  }
+  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-baset--hover, #{$rh-cta--base--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-base--hover, $rh-cta--base--main--hover);
-    background: var(--rh-theme--color--ui-base--hover, $rh-cta--base--main--hover);
-    color: var(--rh-theme--color--ui-base--text, $rh-cta--base--aux);
-  }
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--aux);
+  --rh-cta--bg-color: var(--rh-cta--main);
+  --rh-cta--bg-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
 }
 
 :host([priority="secondary"][palette="base"]) {
-  // Essentially the same?
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-base, $rh-cta--base--main);
-    background: var(--rh-theme--color--ui-base--text, $rh-cta--base--aux);
-    color: var(--rh-theme--color--ui-base, $rh-cta--base--main);
-  }
+  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-base--hover, $rh-cta--base--main--hover);
-    background: var(--rh-theme--color--ui-base--text, $rh-cta--base--aux);
-    color: var(--rh-theme--color--ui-base--hover, $rh-cta--base--main--hover);
-  }
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
 }
 
 
 /// ===========================================================================
 /// PALETTE: COMPLEMENT
 /// ===========================================================================
-:host([palette="complement"]) {
-  & ::slotted(a) {
-    color: var(--rh-theme--color--ui-complement, $rh-cta--complement--main);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-complement, $rh-cta--complement--main));
-    }
-  }
-
-  & ::slotted(a:visited) {
-    color: var(--rh-theme--color--ui-complement--visited, $rh-cta--complement--main--visited);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-complement--visited, $rh-cta--complement--main--visited));
-    }
-  }
-
-  & ::slotted(a:hover) {
-    color: var(--rh-theme--color--ui-complement--hover, $rh-cta--complement--main--hover);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-complement--hover, $rh-cta--complement--main--hover));
-    }
-  }
-
-  & ::slotted(a:focus) {
-    color: var(--rh-theme--color--ui-complement--focus, $rh-cta--complement--main--focus);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-complement--focus, $rh-cta--complement--main--focus));
-    }
-  }
-}
-
 :host([priority="primary"][palette="complement"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-complement, $rh-cta--complement--main);
-    background: var(--rh-theme--color--ui-complement, $rh-cta--complement--main);
-    color: var(--rh-theme--color--ui-complement--text, $rh-cta--complement--aux);
-  }
+  --rh-cta--main: var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-complement--text, #{$rh-cta--complement--aux});
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-complement--hover, $rh-cta--complement--main--hover);
-    background: var(--rh-theme--color--ui-complement--hover, $rh-cta--complement--main--hover);
-    color: var(--rh-theme--color--ui-complement--text, $rh-cta--complement--aux);
-  }
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--aux);
+  --rh-cta--bg-color: var(--rh-cta--main);
+  --rh-cta--bg-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
 }
 
 :host([priority="secondary"][palette="complement"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-complement, $rh-cta--complement--main);
-    background: var(--rh-theme--color--ui-complement--text, $rh-cta--complement--aux);
-    color: var(--rh-theme--color--ui-complement, $rh-cta--complement--main);
-  }
+  --rh-cta--main: var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-complement--text, #{$rh-cta--complement--aux});
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-complement--hover, $rh-cta--complement--main--hover);
-    background: var(--rh-theme--color--ui-complement--text, $rh-cta--complement--aux);
-    color: var(--rh-theme--color--ui-complement--hover, $rh-cta--complement--main--hover);
-  }
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
 }
 
 
 /// ===========================================================================
 /// PALETTE: ACCENT
 /// ===========================================================================
-:host([palette="accent"]) {
-  // Not the same, technically, but looks very similar...
-  & ::slotted(a) {
-    color: var(--rh-theme--color--ui-accent, $rh-cta--accent--main);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-accent, $rh-cta--accent--main));
-    }
-  }
-
-  & ::slotted(a:visited) {
-    color: var(--rh-theme--color--ui-accent--visited, $rh-cta--accent--main--visited);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-accent--visited, $rh-cta--accent--main--visited));
-    }
-  }
-
-  & ::slotted(a:hover) {
-    color: var(--rh-theme--color--ui-accent--hover, $rh-cta--accent--main--hover);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-accent--hover, $rh-cta--accent--main--hover));
-    }
-  }
-
-  & ::slotted(a:focus) {
-    color: var(--rh-theme--color--ui-accent--focus, $rh-cta--accent--main--focus);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-accent--focus, $rh-cta--accent--main--focus));
-    }
-  }
-}
-
 :host([priority="primary"][palette="accent"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-accent, $rh-cta--accent--main);
-    background: var(--rh-theme--color--ui-accent, $rh-cta--accent--main);
-    color: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-  }
+  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-accent--hover, $rh-cta--accent--main--hover);
-    background: var(--rh-theme--color--ui-accent--hover, $rh-cta--accent--main--hover);
-    color: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-  }
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--aux);
+  --rh-cta--bg-color: var(--rh-cta--main);
+  --rh-cta--bg-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
 }
 
 :host([priority="secondary"][palette="accent"]) {
-  // Essentially the same?
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-accent, $rh-cta--accent--main);
-    background: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-    color: var(--rh-theme--color--ui-accent, $rh-cta--accent--main);
-  }
+  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-accent--hover, $rh-cta--accent--main--hover);
-    background: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-    color: var(--rh-theme--color--ui-accent--hover, $rh-cta--accent--main--hover);
-  }
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
 }
-
-
-
 
 /// ===========================================================================
 /// ON SATURATED
-/// DEFAULT
 /// ===========================================================================
-:host([on-saturated]),
-:host([on-saturated][palette="base"]),
-:host([on-saturated][palette="complement"]),
-:host([on-saturated][palette="accent"]) {
-  // For the default priority, we don't care about palettes
-  & ::slotted(a) {
-    color: var(--rh-theme--color--ui-link--on-dark, $rh-cta--default--main--on-dark);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-link--on-dark, $rh-cta--default--main--on-dark));
-    }
-  }
-
-  & ::slotted(a:visited) {
-    color: var(--rh-theme--color--ui-link--on-dark--visited, $rh-cta--default--main--on-dark--visited);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-link--on-dark--visited, $rh-cta--default--main--on-dark--visited));
-    }
-  }
-
-  & ::slotted(a:hover) {
-    color: var(--rh-theme--color--ui-link--on-dark--hover, $rh-cta--default--main--on-dark--hover);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-link--on-dark--hover, $rh-cta--default--main--on-dark--hover));
-    }
-  }
-
-  & ::slotted(a:focus) {
-    color: var(--rh-theme--color--ui-link--on-dark--focus, $rh-cta--default--main--on-dark--focus);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-theme--color--ui-link--on-dark--focus, $rh-cta--default--main--on-dark--focus));
-    }
-  }
-}
-
 :host([on-saturated][priority="primary"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-    background: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-    color: var(--rh-theme--color--ui-accent, $rh-cta--accent--main);
-  }
+  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover}); // NEED A HOVER STATE HERE
+  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-accent--text--hover, #{$rh-cta--accent--aux}); // NEW?
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux); // NEED A HOVER STATE HERE
-    background: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux); // NEED A HOVER STATE HERE
-    color: var(--rh-theme--color--ui-accent--hover, $rh-cta--accent--main--hover);
-  }
+  --rh-cta--text-color: var(--rh-theme--color--ui-accent);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
 }
 
 :host([on-saturated][priority="secondary"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-accent--text, $rh-cta--base--aux); // Change border-color is all.
-    background: transparent;
-    color: var(--rh-theme--color--ui-accent--text, $rh-cta--base--aux);
-  }
+  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover}); // NEED A HOVER STATE HERE
+  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-base--text--hover, #{$rh-cta--base--aux}); // NEW?
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-accent--text, $rh-cta--base--aux); // Change border-color is all.
-    background: var(--rh-theme--color--ui-accent--text, $rh-cta--base--aux);
-    color: var(--rh-theme--color--ui-base--hover, $rh-cta--base--main--hover);
-  }
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: transparent;
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
 }
 
 /// ===========================================================================
@@ -420,33 +317,32 @@ $rh-cta--default--aux--on-dark:             transparent;
 /// PALETTE: BASE
 /// ===========================================================================
 :host([on-saturated][priority="primary"][palette="base"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-base--text, $rh-cta--base--aux);
-    background: var(--rh-theme--color--ui-base--text, $rh-cta--base--aux);
-    color: var(--rh-theme--color--ui-base, $rh-cta--base--main);
-  }
+  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover}); // NEED A HOVER STATE HERE
+  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-base--text--hover, #{$rh-cta--base--aux}); // NEW?
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-base--text, $rh-cta--base--aux);
-    background: var(--rh-theme--color--ui-base--text, $rh-cta--base--aux);
-    color: var(--rh-theme--color--ui-base--hover, $rh-cta--base--main--hover);
-  }
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
 }
 
 :host([on-saturated][priority="secondary"][palette="base"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-base--text, $rh-cta--base--aux);
-    background: transparent;
-    color: var(--rh-theme--color--ui-base--text, $rh-cta--base--aux);
-  }
+  // Same as :host([on-saturated][priority="secondary"])
+  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover}); // NEED A HOVER STATE HERE
+  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-base--text--hover, #{$rh-cta--base--aux}); // NEW?
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-base--text, $rh-cta--base--aux);
-    background: var(--rh-theme--color--ui-base--text, $rh-cta--base--aux);
-    color: var(--rh-theme--color--ui-base--hover, $rh-cta--base--main--hover);
-  }
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: transparent;
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
 }
 
 
@@ -455,33 +351,32 @@ $rh-cta--default--aux--on-dark:             transparent;
 /// PALETTE: COMPLEMENT
 /// ===========================================================================
 :host([on-saturated][priority="primary"][palette="complement"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-complement--text, $rh-cta--complement--aux);
-    background: var(--rh-theme--color--ui-complement--text, $rh-cta--complement--aux);
-    color: var(--rh-theme--color--ui-complement, $rh-cta--complement--main);
-  }
+  --rh-cta--main: var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover}); // NEED A HOVER STATE HERE
+  --rh-cta--aux: var(--rh-theme--color--ui-complement--text, #{$rh-cta--complement--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-complement--text--hover, #{$rh-cta--complement--aux}); // NEW?
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-complement--text, $rh-cta--complement--aux);
-    background: var(--rh-theme--color--ui-complement--text, $rh-cta--complement--aux);
-    color: var(--rh-theme--color--ui-complement--hover, $rh-cta--complement--main--hover);
-  }
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
 }
 
 :host([on-saturated][priority="secondary"][palette="complement"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-complement--text, $rh-cta--complement--aux);
-    background: transparent;
-    color: var(--rh-theme--color--ui-complement--text, $rh-cta--complement--aux);
-  }
+  // Same as :host([on-saturated][priority="secondary"])
+  --rh-cta--main: var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover}); // NEED A HOVER STATE HERE
+  --rh-cta--aux: var(--rh-theme--color--ui-complement--text, #{$rh-cta--complement--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-complement--text--hover, #{$rh-cta--complement--aux}); // NEW?
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-complement--text, $rh-cta--complement--aux);
-    background: var(--rh-theme--color--ui-complement--text, $rh-cta--complement--aux);
-    color: var(--rh-theme--color--ui-complement--hover, $rh-cta--complement--main--hover);
-  }
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: transparent;
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
 }
 
 
@@ -490,31 +385,30 @@ $rh-cta--default--aux--on-dark:             transparent;
 /// PALETTE: ACCENT
 /// ===========================================================================
 :host([on-saturated][priority="primary"][palette="accent"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-    background: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-    color: var(--rh-theme--color--ui-accent, $rh-cta--accent--main);
-  }
+  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover}); // NEED A HOVER STATE HERE
+  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-accent--text--hover, #{$rh-cta--accent--aux}); // NEW?
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-    background: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-    color: var(--rh-theme--color--ui-accent--hover, $rh-cta--accent--main--hover);
-  }
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
 }
 
 :host([on-saturated][priority="secondary"][palette="accent"]) {
-  & ::slotted(a) {
-    border-color: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-    background: transparent;
-    color: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-  }
+  // Same as :host([on-saturated][priority="secondary"])
+  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover}); // NEED A HOVER STATE HERE
+  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-accent--text--hover, #{$rh-cta--accent--aux}); // NEW?
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-    background: var(--rh-theme--color--ui-accent--text, $rh-cta--accent--aux);
-    color: var(--rh-theme--color--ui-accent--hover, $rh-cta--accent--main--hover);
-  }
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: transparent;
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
 }

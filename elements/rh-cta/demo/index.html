@@ -37,7 +37,11 @@
     </style>
     <style>
     :root {
-
+      /* --rh-theme--color--ui-accent: green;
+      --rh-theme--color--ui-accent--hover: darkgreen;
+      --rh-theme--color--ui-accent--visited: darkgreen;
+      --rh-theme--color--ui-accent--focus: darkgreen;
+      --rh-theme--color--ui-accent--text: white; */
     }
     </style>
   </head>
@@ -72,8 +76,6 @@
       <rh-cta priority="secondary" palette="accent"><a href="#">Secondary</a></rh-cta>
     </p>
 
-
-
     <h2>"On Saturated" Defaults</h2>
     <p class="inverted-demo">
       <rh-cta on-saturated><a href="#">Default</a></rh-cta>
@@ -100,6 +102,16 @@
       <rh-cta palette="accent" on-saturated><a href="#">Default</a></rh-cta>
       <rh-cta priority="primary" palette="accent" on-saturated><a href="#">Primary</a></rh-cta>
       <rh-cta priority="secondary" palette="accent" on-saturated><a href="#">Secondary</a></rh-cta>
+    </p>
+
+
+
+    <h2>"Broadcasted" Default CTA Theory</h2>
+    <em>This may be different or not work when inside :host</em>. Also doesn't seem to work in IE11.
+    <p class="inverted-demo">
+      <span style="--rh-broadcasted--color--ui-link: green; --rh-broadcasted--color--ui-link--visited: green;">
+        <rh-cta><a href="#">Default</a></rh-cta>
+      </span>
     </p>
   </body>
 </html>

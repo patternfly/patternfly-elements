@@ -10,13 +10,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require(['../rh-cta.umd.js'])</script>
 
+    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
+
     <style>
+      body {
+        font: 16px/1.5 Overpass, Arial, sans-sans-serif;
+      }
+
       p {
         margin-bottom: 60px !important;
       }
+
       rh-cta + rh-cta {
         margin-left: 10px;
       }
+
+      .inverted-demo {
+        padding: 16px;
+        background: #464646;
+      }
+
+      .unfilled-demo {
+        padding: 16px;
+        background: #d2d2d2;
+      }
+    </style>
+    <style>
+    :root {
+      /* --rh-theme--color--ui-accent: green;
+      --rh-theme--color--ui-accent--hover: darkgreen;
+      --rh-theme--color--ui-accent--visited: darkgreen;
+      --rh-theme--color--ui-accent--focus: darkgreen;
+      --rh-theme--color--ui-accent--text: white; */
+    }
     </style>
     <noscript>
       <link href="../../rhelement/rhelement-noscript.min.css" rel="stylesheet">
@@ -26,18 +52,71 @@
   </head>
   <body unresolved>
     <h1>&lt;rh-cta&gt;</h1>
+
+    <h2>Defaults</h2>
     <p>
-      <rh-cta class="rh--solid"><a href="#">Become a Member</a></rh-cta>
-      <rh-cta class="rh--outlined"><a href="#">Sign Up</a></rh-cta>
-      <rh-cta class="rh--ghost"><a href="#">More info</a></rh-cta>
+      <rh-cta><a href="#">Default</a></rh-cta>
+      <rh-cta priority="primary"><a href="#">Primary</a></rh-cta>
+      <rh-cta priority="secondary"><a href="#">Secondary</a></rh-cta>
     </p>
 
+    <h2>Color: Base</h2>
     <p>
-      <rh-cta><a href="#">Learn more</a></rh-cta>
+      <rh-cta color="base"><a href="#">Default</a></rh-cta>
+      <rh-cta priority="primary" color="base"><a href="#">Primary</a></rh-cta>
+      <rh-cta priority="secondary" color="base"><a href="#">Secondary</a></rh-cta>
     </p>
 
+    <h2>Color: Complement</h2>
     <p>
-      <rh-cta class="rh--ghost"><a href="#">More info</a></rh-cta><rh-cta class="rh--solid"><a href="#">Become a Member</a></rh-cta>
+      <rh-cta color="complement"><a href="#">Default</a></rh-cta>
+      <rh-cta priority="primary" color="complement"><a href="#">Primary</a></rh-cta>
+      <rh-cta priority="secondary" color="complement"><a href="#">Secondary</a></rh-cta>
+    </p>
+
+    <h2>Color: Accent</h2>
+    <p>
+      <rh-cta color="accent"><a href="#">Default</a></rh-cta>
+      <rh-cta priority="primary" color="accent"><a href="#">Primary</a></rh-cta>
+      <rh-cta priority="secondary" color="accent"><a href="#">Secondary</a></rh-cta>
+    </p>
+
+    <h2>Defaults; On: Dark</h2>
+    <p class="inverted-demo">
+      <rh-cta on="dark"><a href="#">Default</a></rh-cta>
+      <rh-cta priority="primary" on="dark"><a href="#">Primary</a></rh-cta>
+      <rh-cta priority="secondary" on="dark"><a href="#">Secondary</a></rh-cta>
+    </p>
+
+    <h2>Color: Base; On: Dark</h2>
+    <p class="inverted-demo">
+      <rh-cta color="base" on="dark"><a href="#">Default</a></rh-cta>
+      <rh-cta priority="primary" color="base" on="dark"><a href="#">Primary</a></rh-cta>
+      <rh-cta priority="secondary" color="base" on="dark"><a href="#">Secondary</a></rh-cta>
+    </p>
+
+    <h2>Color: Complement; On: Dark</h2>
+    <p class="inverted-demo">
+      <rh-cta color="complement" on="dark"><a href="#">Default</a></rh-cta>
+      <rh-cta priority="primary" color="complement" on="dark"><a href="#">Primary</a></rh-cta>
+      <rh-cta priority="secondary" color="complement" on="dark"><a href="#">Secondary</a></rh-cta>
+    </p>
+
+    <h2>Color: Accent; On: Dark</h2>
+    <p class="inverted-demo">
+      <rh-cta color="accent" on="dark"><a href="#">Default</a></rh-cta>
+      <rh-cta priority="primary" color="accent" on="dark"><a href="#">Primary</a></rh-cta>
+      <rh-cta priority="secondary" color="accent" on="dark"><a href="#">Secondary</a></rh-cta>
+    </p>
+
+
+
+    <h2>"Broadcasted" Default CTA Theory</h2>
+    <em>This may be different or not work when inside :host</em>. Also doesn't seem to work in IE11.
+    <p class="inverted-demo">
+      <span style="--rh-broadcasted--color--ui-link: green; --rh-broadcasted--color--ui-link--visited: green;">
+        <rh-cta><a href="#">Default</a></rh-cta>
+      </span>
     </p>
   </body>
 </html>

@@ -1,155 +1,419 @@
 @import "../../rh-sass/rh-sass";
 
-// Mixins / helpers
-@mixin make-default-cta($color: $rh-global--link-color) {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: $color;
-  text-decoration: underline;
-}
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
 
-@mixin make-cta-arrow($arrow-color: $rh-global--link-color) {
-  margin-left: var(--rhe-theme--spacer--xs, $rh-global--spacer--xs);
-  vertical-align: middle;
-  @include rh-arrow(right, $arrow-color, 0.313em, 0.313em, true);
-  position: relative; // temp
-  display: inline-block; // temp
-}
+$rh-cta__arrow-size:                        0.313em; // Was ~5px at 16px
+$rh-cta__arrow--spacer:                     $rh-global--spacer--xxs;
+$rh--cta--solid--BorderRadius:              5em !default; //$rh-global--border--BorderRadius !default;
+$rh-cta--solid--BorderWidth:                $rh-global--border--BorderWidth;
+$rh-cta--solid--padding-y:                  8px; //$rh-global--spacer--xs;
+$rh-cta--solid--padding-x:                  32px; //$rh-global--spacer--lg;
+$rh-cta--animation-timing:                  $rh-global--animation-timing;
 
-@mixin make-default-cta-color($color-name: white, $color: $rh-global-color--white) {
-  @at-root :host(.#{$color-name}) {
-    & ::slotted(a) {
-      @include make-default-cta($color);
+// Reassigning SASS vars to component specific SASS vars for ease of use below
 
-      &::after {
-        @include make-cta-arrow($color);
-      }
-    }
-  }
-}
+// Default CTA colors
+$rh-cta--default--main:                     $rh-global--link-color;
+$rh-cta--default--main--hover:              $rh-global--link-color--hover;
+$rh-cta--default--main--focus:              $rh-global--link-color--focus;
+$rh-cta--default--main--visited:            $rh-global--link-color--visited;
+$rh-cta--default--aux:                      transparent;
+$rh-cta--default--aux--hover:               transparent;
 
-@mixin make-button-cta() {
-  & ::slotted(a) {
-    padding: var(--rhe-theme--spacer--sm, $rh-global--spacer--sm) var(--rhe-theme--spacer--md, $rh-global--spacer--md);
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: var(--rhe-theme--FontWeight--semi-bold, $rh-global--FontWeight--semi-bold);
-    font-size: 0.875em;
+$rh-cta--base--main:                        $rh-global--ui-element-color;
+$rh-cta--base--main--hover:                 $rh-global--ui-element-color--hover;
+$rh-cta--base--main--focus:                 $rh-global--ui-element-color--focus;
+$rh-cta--base--main--visited:               $rh-global--ui-element-color--active;
+$rh-cta--base--aux:                         $rh-global--color--white;
+$rh-cta--base--aux--hover:                  darken($rh-global--color--white, 10%);
 
-    &::after {
-      content: none;
-      display: none;
-    }
-  }
-}
+$rh-cta--complement--main:                  $rh-global--color--gray-iron;
+$rh-cta--complement--main--hover:           darken($rh-global--color--gray-iron, 10%);
+$rh-cta--complement--main--focus:           darken($rh-global--color--gray-iron, 10%);
+$rh-cta--complement--main--visited:         $rh-global--link-color--visited;
+$rh-cta--complement--aux:                   $rh-global--color--white;
+$rh-cta--complement--aux--hover:            darken($rh-global--color--white, 10%);;
 
-@mixin make-button-cta-color(
-        $bg-color: $rh-global--color--gray-mercury, $color: $rh-global--color--black, $border-color: transparent,
-        $bg-color-visited: $rh-global--color--gray-mercury, $color-visited: $rh-global--color--black, $border-color-visited: transparent,
-        $bg-color-hover: $rh-global--color--gray-mercury, $color-hover: $rh-global--color--black, $border-color-hover: transparent,
-        $bg-color-focus: $rh-global--color--gray-mercury, $color-focus: $rh-global--color--black, $border-color-focus: transparent
-      ) {
+$rh-cta--accent--main:                      $rh-global--color--red;
+$rh-cta--accent--main--hover:               darken($rh-global--color--red, 10%);
+$rh-cta--accent--main--focus:               darken($rh-global--color--red, 10%);
+$rh-cta--accent--main--visited:             $rh-global--link-color--visited;
+$rh-cta--accent--aux:                       $rh-global--color--white;
+$rh-cta--accent--aux--hover:                darken($rh-global--color--white, 10%);;
 
-  & ::slotted(a) {
-    background: $bg-color;
-    color: $color;
-    border: 1px solid $border-color;
-  }
-
-  & ::slotted(a:visited) {
-    background: $bg-color-visited;
-    color: $color-visited;
-    border-color: $border-color-visited;
-  }
-
-  & ::slotted(a:hover) {
-    background: $bg-color-hover;
-    color: $color-hover;
-    border-color: $border-color-hover;
-  }
-
-  & ::slotted(a:focus) {
-    background: $bg-color-focus;
-    color: $color-focus;
-    border-color: $border-color-focus;
-  }
-}
+$rh-cta--default--main--on-dark:            $rh-global--color--white;
+$rh-cta--default--main--on-dark--hover:     darken($rh-global--color--white, 10%);
+$rh-cta--default--main--on-dark--focus:     darken($rh-global--color--white, 10%);
+$rh-cta--default--main--on-dark--visited:   $rh-global--color--white;
+$rh-cta--default--aux--on-dark:             transparent;
+$rh-cta--default--aux--on-dark--hover:      transparent;
 
 
+/// ===========================================================================
+/// DEFUALT CTAs
+/// ===========================================================================
 :host {
   display: inline-block;
 
-  // Default, "link" style
+  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-link, #{$rh-cta--default--main}));
+  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-link--visited, #{$rh-cta--default--main--visited}));
+  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-link--hover, #{$rh-cta--default--main--hover}));
+  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-link--focus, #{$rh-cta--default--main--focus}));
+
+
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--visited: var(--rh-cta--main--visited);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--text-color--focus: var(--rh-cta--main--focus);
+
+
   & ::slotted(a) {
-    @include make-default-cta(var(--rhe-theme--link-color, $rh-global--link-color));
+    line-height: inherit;
+    color: var(--rh-cta--text-color);
 
     &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color, $rh-global--link-color));
+      display: block;
+      margin-left: $rh-cta__arrow--spacer; // not themeable for now
+      vertical-align: middle;
+      @include rh-arrow(right, var(--rh-cta--text-color), $rh-cta__arrow-size, $rh-cta__arrow-size, true);
     }
   }
 
   & ::slotted(a:visited) {
-    @include make-default-cta(var(--rhe-theme--link-color--visited, $rh-global--link-color--visited));
+    color: var(--rh-cta--text-color--visited);
 
     &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color--visited, $rh-global--link-color--visited));
+      @include rh-arrow-color(var(--rh-cta--text-color--visited));
     }
   }
 
   & ::slotted(a:hover) {
-    @include make-default-cta(var(--rhe-theme--link-color--hover, $rh-global--link-color--hover));
+    color: var(--rh-cta--text-color--hover);
 
     &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color--hover, $rh-global--link-color--hover));
+      @include rh-arrow-color(var(--rh-cta--text-color--hover));
     }
   }
 
   & ::slotted(a:focus) {
-    @include make-default-cta(var(--rhe-theme--link-color--focus, $rh-global--link-color--focus));
+    color: var(--rh-cta--text-color--focus);
 
     &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color--focus, $rh-global--link-color--focus));
+      @include rh-arrow-color(var(--rh-cta--text-color--focus));
+    }
+  }
+}
+
+:host([color="base"]) {
+  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-accent, #{$rh-cta--base--main}));
+  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-accent--visited, #{$rh-cta--base--main--visited}));
+  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-accent--hover, #{$rh-cta--base--main--hover}));
+  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-accent--focus, #{$rh-cta--base--main--focus}));
+}
+
+:host([color="complement"]) {
+  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main}));
+  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-complement--visited, #{$rh-cta--complement--main--visited}));
+  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover}));
+  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-complement--focus, #{$rh-cta--complement--main--focus}));
+}
+
+:host([color="accent"]) {
+  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main}));
+  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-accent--visited, #{$rh-cta--accent--main--visited}));
+  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover}));
+  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-accent--focus, #{$rh-cta--accent--main--focus}));
+}
+
+:host([on="dark"]) {
+  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-link--on-dark, #{$rh-cta--default--main--on-dark}));
+  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-link--on-dark--visited, #{$rh-cta--default--main--on-dark--visited}));
+  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-link--on-dark--hover, #{$rh-cta--default--main--on-dark--hover}));
+  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-link--on-dark--focus, #{$rh-cta--default--main--on-dark--focus}));
+}
+
+
+
+/// ===========================================================================
+/// DEFAULT "SOLID" CTAs
+/// ===========================================================================
+:host([priority="primary"]),
+:host([priority="secondary"]) {
+
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--aux);
+  --rh-cta--bg-color: var(--rh-cta--main);
+  --rh-cta--bg-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
+
+  & ::slotted(a) {
+    display: inline-block;
+    padding: $rh-cta--solid--padding-y $rh-cta--solid--padding-x; // not themeable for now
+    border-radius: $rh--cta--solid--BorderRadius; // not themeable for now
+    border: $rh-cta--solid--BorderWidth solid transparent; // not themeable for now
+    text-decoration: none;
+    line-height: 1.2;
+
+    border-color: var(--rh-cta--border-color);
+    background: var(--rh-cta--bg-color);
+    color: var(--rh-cta--text-color);
+
+    &::after {
+      display: none;
     }
   }
 
-  // Default, "link" style colors
-  @include make-default-cta-color(white, var(--rhe-theme--link-color--desaturated--inverted, $rh-global--color--white));
-  @include make-default-cta-color(black, var(--rhe-theme--link-color--desaturated, $rh-global--color--black));
-
-
+  & ::slotted(a:visited),
+  & ::slotted(a:hover),
+  & ::slotted(a:focus) {
+    border-color: var(--rh-cta--border--hover);
+    background: var(--rh-cta--bg-color--hover);
+    color: var(--rh-cta--text-color--hover);
+  }
 }
 
-// "Button" styles
-:host([class*="--solid"]),
-:host([class*="--outlined"]),
-:host([class*="--ghost"]) {
-  @include make-button-cta();
+:host([priority="primary"]) {
+  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--visited: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
+  --rh-cta--main--focus: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
 }
 
-:host([class*="--solid"]) {
-  @include make-button-cta-color(
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent
-  );
+:host([priority="secondary"]) {
+  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
+
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
 }
 
-:host([class*="--outlined"]) {
-  @include make-button-cta-color(
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor)
-  );
+
+/// ===========================================================================
+/// PALETTE: BASE
+/// ===========================================================================
+:host([priority="primary"][color="base"]) {
+  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-baset--hover, #{$rh-cta--base--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
+
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--aux);
+  --rh-cta--bg-color: var(--rh-cta--main);
+  --rh-cta--bg-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
 }
 
-:host([class*="--ghost"]) {
-  @include make-button-cta-color(
-    transparent, var(--rhe-theme--link-color, $rh-global--link-color), transparent,
-    transparent, var(--rhe-theme--link-color--visited, $rh-global--link-color--visited), transparent,
-    var(--rhe-theme--bg-color--shade2, $rh-global--color--gray-platinum), var(--rhe-theme--link-color--hover, $rh-global--link-color--hover), transparent,
-    var(--rhe-theme--bg-color--shade2, $rh-global--color--gray-platinum), var(--rhe-theme--link-color--focus, $rh-global--link-color--focus), transparent
-  );
+:host([priority="secondary"][color="base"]) {
+  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
+
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
+}
+
+
+/// ===========================================================================
+/// PALETTE: COMPLEMENT
+/// ===========================================================================
+:host([priority="primary"][color="complement"]) {
+  --rh-cta--main: var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-complement--text, #{$rh-cta--complement--aux});
+
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--aux);
+  --rh-cta--bg-color: var(--rh-cta--main);
+  --rh-cta--bg-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
+}
+
+:host([priority="secondary"][color="complement"]) {
+  --rh-cta--main: var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-complement--text, #{$rh-cta--complement--aux});
+
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
+}
+
+
+/// ===========================================================================
+/// PALETTE: ACCENT
+/// ===========================================================================
+:host([priority="primary"][color="accent"]) {
+  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
+
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--aux);
+  --rh-cta--bg-color: var(--rh-cta--main);
+  --rh-cta--bg-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
+}
+
+:host([priority="secondary"][color="accent"]) {
+  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
+
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux);
+  --rh-cta--border-color: var(--rh-cta--main);
+  --rh-cta--border--hover: var(--rh-cta--main--hover);
+}
+
+/// ===========================================================================
+/// ON DARK
+/// ===========================================================================
+:host([on="dark"][priority="primary"]) {
+  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-accent--text--hover, #{$rh-cta--accent--aux--hover});
+
+  --rh-cta--text-color: var(--rh-theme--color--ui-accent);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
+}
+
+:host([on="dark"][priority="secondary"]) {
+  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-base--text--hover, #{$rh-cta--base--aux--hover});
+
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: transparent;
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
+}
+
+/// ===========================================================================
+/// ON SATURATED
+/// PALETTE: BASE
+/// ===========================================================================
+:host([on="dark"][priority="primary"][color="base"]) {
+  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-base--text--hover, #{$rh-cta--base--aux--hover});
+
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
+}
+
+:host([on="dark"][priority="secondary"][color="base"]) {
+  // Same as :host([on="dark"][priority="secondary"])
+  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-base--text--hover, #{$rh-cta--base--aux--hover});
+
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: transparent;
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
+}
+
+
+/// ===========================================================================
+/// ON SATURATED
+/// PALETTE: COMPLEMENT
+/// ===========================================================================
+:host([on="dark"][priority="primary"][color="complement"]) {
+  --rh-cta--main: var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-complement--text, #{$rh-cta--complement--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-complement--text--hover, #{$rh-cta--complement--aux--hover});
+
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
+}
+
+:host([on="dark"][priority="secondary"][color="complement"]) {
+  // Same as :host([on="dark"][priority="secondary"])
+  --rh-cta--main: var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover});
+  --rh-cta--aux: var(--rh-theme--color--ui-complement--text, #{$rh-cta--complement--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-complement--text--hover, #{$rh-cta--complement--aux--hover});
+
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: transparent;
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
+}
+
+
+/// ===========================================================================
+/// ON SATURATED
+/// PALETTE: ACCENT
+/// ===========================================================================
+:host([on="dark"][priority="primary"][color="accent"]) {
+  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover}); // NEED A HOVER STATE HERE
+  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-accent--text--hover, #{$rh-cta--accent--aux--hover}); // NEW?
+
+  --rh-cta--text-color: var(--rh-cta--main);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: var(--rh-cta--aux);
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
+}
+
+:host([on="dark"][priority="secondary"][color="accent"]) {
+  // Same as :host([on-saturated][priority="secondary"])
+  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
+  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover}); // NEED A HOVER STATE HERE
+  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
+  --rh-cta--aux--hover: var(--rh-theme--color--ui-accent--text--hover, #{$rh-cta--accent--aux--hover}); // NEW?
+
+  --rh-cta--text-color: var(--rh-cta--aux);
+  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
+  --rh-cta--bg-color: transparent;
+  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
+  --rh-cta--border-color: var(--rh-cta--aux);
+  --rh-cta--border--hover: var(--rh-cta--aux--hover);
 }

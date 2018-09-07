@@ -43,7 +43,7 @@ class RHElement extends HTMLElement {
     this.setAttribute("rh-type", value);
   }
 
-  constructor(rhClass, type, delayRender = false) {
+  constructor(rhClass, { type = null, delayRender = false } = {}) {
     super();
 
     this._rhClass = rhClass;

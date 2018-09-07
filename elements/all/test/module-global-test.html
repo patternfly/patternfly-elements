@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+
+    <script src="../../rhelement/rhelement.umd.js"></script>
+    <script src="../../rh-card/rh-card.umd.js"></script>
+
+    <noscript>
+      <link href="../../rhelement/rhelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
+
+  </head>
+  <body unresolved>
+
+    <rh-card>
+      <h2 slot="header">Card 1</h2>This is rh-card.
+      <div slot="footer">Text in footer</div>
+    </rh-card>
+
+    <script>
+      suite("using RHElements as Global modules", () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('rh-card'),
+            customElements.get('rh-card'),
+            'the <rh-card> should be an instance of RhCard'
+          );
+        });
+      });
+    </script>
+  </body>
+</html>
+
+

@@ -1,3 +1,7 @@
+import RHElement from "../rhelement/rhelement.js";
+import "../rh-dropdown-button/rh-dropdown-button.js";
+import "../rh-dropdown-menu/rh-dropdown-menu.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -19,10 +23,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import RHElement from "../rhelement/rhelement.js";
-import "../rh-dropdown-button/rh-dropdown-button.js";
-import "../rh-dropdown-menu/rh-dropdown-menu.js";
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
@@ -362,3 +362,4 @@ class RhDropdown extends RHElement {
 }
 
 RHElement.create(RhDropdown);
+//# sourceMappingURL=rh-dropdown.js.map

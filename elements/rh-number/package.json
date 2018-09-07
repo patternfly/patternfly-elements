@@ -1,5 +1,9 @@
 {
   "name": "@rhelements/rh-number",
+  "rhelement": {
+    "className": "RhNumber",
+    "elementName": "rh-number"
+  },
   "version": "0.0.3",
   "description": "Number element for RHElements",
   "repository": {
@@ -8,7 +12,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "../../node_modules/.bin/gulp",
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json node_modules/@rhelements/rh-number/test/"
   },
@@ -18,7 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "@rhelements/rhelement": "*",
-    "numeral": "RHElements/Numeral-js#2.0.10"
+    "numeral": "^2.0.6"
   },
   "generator-rhelement-version": "0.2.9"
 }

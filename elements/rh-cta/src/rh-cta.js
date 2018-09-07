@@ -61,3 +61,5 @@ class RhCta extends RHElement {
 }
 
 RHElement.create(RhCta);
+
+export default RhCta;

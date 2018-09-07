@@ -1,3 +1,5 @@
+import RHElement from "../rhelement/rhelement.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -19,8 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import RHElement from "../rhelement/rhelement.js";
 
 class RhButton extends RHElement {
   get html() {
@@ -72,3 +72,6 @@ class RhButton extends RHElement {
 }
 
 RHElement.create(RhButton);
+
+export default RhButton;
+//# sourceMappingURL=rh-button.js.map

@@ -1,26 +1,38 @@
 const path = require("path");
 const fs = require("fs");
+const del = require("del");
 
 const gulp = require("gulp");
-const babel = require("gulp-babel");
-const uglify = require("gulp-uglify");
+const shell = require("gulp-shell");
 const rename = require("gulp-rename");
 const replace = require("gulp-replace");
-
+const cleanCSS = require("gulp-clean-css");
 const trim = require("gulp-trim");
-const del = require("del");
-let watcher;
 
 gulp.task("clean", () => {
-  return del(["./*.umd.*"]);
+  return del(["./**/*.umd.*", "./*.min.css"]);
 });
 
 gulp.task("compile", () => {
   return gulp
-    .src(["./*.js", "!./gulpfile.js", "!./*.story.js"])
-    .pipe(replace(/(import ["'].*).(js["'];?)/g, "$1.compiled.$2"))
-    .pipe(babel())
-    .pipe(uglify())
+    .src(
+      [
+        "./*.js",
+        "./utilities/*.js",
+        "!./gulpfile.js",
+        "!./*.story.js",
+        "!./rollup.config.js"
+      ],
+      {
+        base: "."
+      }
+    )
+    .pipe(
+      replace(
+        /^(import .*?)(['"]\.\.?\/(?!\.\.\/).*)(\.js['"];)$/gm,
+        "$1$2.umd$3"
+      )
+    )
     .pipe(
       rename({
         suffix: ".umd"
@@ -29,11 +41,26 @@ gulp.task("compile", () => {
     .pipe(gulp.dest("./"));
 });
 
-gulp.task("watch", () => {
-  watcher = gulp.watch(["./rhelement.js"], gulp.series("clean", "compile"));
-  return watcher;
+gulp.task("minify-css", () => {
+  return gulp
+    .src("./*.css")
+    .pipe(cleanCSS())
+    .pipe(
+      rename({
+        suffix: ".min"
+      })
+    )
+    .pipe(gulp.dest("./"));
 });
 
-gulp.task("default", gulp.series("clean", "compile"));
+gulp.task("watch", () => {
+  return gulp.watch("./src/*", gulp.series("build"));
+});
 
-gulp.task("dev", gulp.series("default", "watch"));
+gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
+
+gulp.task("build", gulp.series("clean", "compile", "minify-css", "bundle"));
+
+gulp.task("default", gulp.series("build"));
+
+gulp.task("dev", gulp.series("build", "watch"));

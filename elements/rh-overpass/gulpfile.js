@@ -2,10 +2,9 @@ const path = require("path");
 const fs = require("fs");
 
 const gulp = require("gulp");
-const babel = require("gulp-babel");
-const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
 const replace = require("gulp-replace");
+const shell = require("gulp-shell");
 const del = require("del");
 
 gulp.task("clean", () => {
@@ -15,8 +14,6 @@ gulp.task("clean", () => {
 gulp.task("compile", () => {
   return gulp
     .src(["./*.js", "!./gulpfile.js"])
-    .pipe(babel())
-    .pipe(uglify())
     .pipe(
       rename({
         suffix: ".umd"
@@ -25,6 +22,10 @@ gulp.task("compile", () => {
     .pipe(gulp.dest("./"));
 });
 
-gulp.task("default", gulp.series("clean", "compile"));
+gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-gulp.task("dev", gulp.series("default"));
+gulp.task("build", gulp.series("clean", "compile", "bundle"));
+
+gulp.task("default", gulp.series("build"));
+
+gulp.task("dev", gulp.series("build"));

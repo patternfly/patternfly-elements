@@ -41,3 +41,5 @@ class RhButton extends RHElement {
 }
 
 RHElement.create(RhButton);
+
+export default RhButton;

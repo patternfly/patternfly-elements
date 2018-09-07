@@ -25,7 +25,15 @@
       if support for IE11 IS NOT needed, just include the web components
       that you want
     -->
-    <script>require(['../rh-card.umd.js'])</script>
+    <script>
+        require(['../rh-card.umd.js']);
+    </script>
+
+    <noscript>
+      <link href="../../rhelement/rhelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
 
     <!--
       if support IS needed for IE11
@@ -37,7 +45,7 @@
     <!-- <script>require(['../../test-themeset/test-themeset.umd.js','../rh-card.umd.js'])</script> -->
 
   </head>
-  <body>
+  <body unresolved>
     <h1>&lt;rh-card&gt;</h1>
     <rh-card theme="dark">
       <h2 slot="header">Dark Theme</h2>

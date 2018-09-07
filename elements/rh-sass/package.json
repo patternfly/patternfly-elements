@@ -1,5 +1,9 @@
 {
   "name": "@rhelements/rh-sass",
+  "rhelement": {
+    "className": "RhSass",
+    "elementName": "rh-sass"
+  },
   "version": "0.0.2",
   "description": "Sass variables and mixins for rh-elements",
   "contributors": [

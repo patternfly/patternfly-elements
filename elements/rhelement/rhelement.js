@@ -1,3 +1,5 @@
+import { autoReveal } from "./utilities/reveal.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -41,24 +43,14 @@ class RHElement extends HTMLElement {
     this.setAttribute("rh-type", value);
   }
 
-  constructor(tag, type) {
+  constructor(tag, type, delayRender = false) {
     super();
 
     this.tag = tag;
     this._queue = [];
-
     this.template = document.createElement("template");
-    this.template.innerHTML = this.html;
-
-    if (window.ShadyCSS && this.html) {
-      ShadyCSS.prepareTemplate(this.template, this.tag);
-    }
 
     this.attachShadow({ mode: "open" });
-
-    if (this.html) {
-      this.shadowRoot.appendChild(this.template.content.cloneNode(true));
-    }
 
     if (type) {
       this._queueAction({
@@ -69,11 +61,15 @@ class RHElement extends HTMLElement {
         }
       });
     }
+
+    if (!delayRender) {
+      this.render();
+    }
   }
 
   connectedCallback() {
     if (window.ShadyCSS) {
-      ShadyCSS.styleElement(this);
+      window.ShadyCSS.styleElement(this);
     }
 
     if (this._queue.length) {
@@ -96,6 +92,20 @@ class RHElement extends HTMLElement {
   _setProperty({ name, value }) {
     this[name] = value;
   }
+
+  render() {
+    this.shadowRoot.innerHTML = null;
+    this.template.innerHTML = this.html;
+
+    if (window.ShadyCSS) {
+      window.ShadyCSS.prepareTemplate(this.template, this.tag);
+    }
+
+    this.shadowRoot.appendChild(this.template.content.cloneNode(true));
+  }
 }
 
+autoReveal();
+
 export default RHElement;
+//# sourceMappingURL=rhelement.js.map

@@ -1,6 +1,9 @@
 {
   "name": "@rhelements/all",
-  "version": "1.0.0-0",
+  "version": "1.0.0-prerelease.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "All the RHElements.",
   "scripts": {
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/all/test/"

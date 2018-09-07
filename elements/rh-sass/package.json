@@ -4,7 +4,10 @@
     "className": "RhSass",
     "elementName": "rh-sass"
   },
-  "version": "1.0.0-1",
+  "version": "1.0.0-prerelease.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Sass variables and mixins for rh-elements",
   "contributors": [
     {
@@ -19,5 +22,5 @@
     }
   ],
   "license": "MIT",
-  "gitHead": "8a5a5593c740a5718f75af7b8e030b692621df96"
+  "gitHead": "1035d989bf8fc80ded1415610d25da01307059cd"
 }

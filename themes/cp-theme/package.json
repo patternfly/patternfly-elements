@@ -4,7 +4,10 @@
     "className": "CpTheme",
     "elementName": "cp-theme"
   },
-  "version": "1.0.0-1",
+  "version": "1.0.0-prerelease.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "cp-theme for Red Hat's Customer Portal and RHElements",
   "repository": {
     "type": "git",
@@ -22,5 +25,5 @@
     }
   ],
   "license": "ISC",
-  "gitHead": "8a5a5593c740a5718f75af7b8e030b692621df96"
+  "gitHead": "1035d989bf8fc80ded1415610d25da01307059cd"
 }

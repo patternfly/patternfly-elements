@@ -1,0 +1,10 @@
+@import "../red-hat-sass/red-hat";
+@import "./cp-maps";
+
+
+:root {
+  @each $cssvar, $varstack in $cp-colors {
+
+    --rh-theme--color--#{$cssvar}: #{$varstack};
+  }
+}

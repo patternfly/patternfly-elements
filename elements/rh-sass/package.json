@@ -4,7 +4,7 @@
     "className": "RhSass",
     "elementName": "rh-sass"
   },
-  "version": "1.0.0-0",
+  "version": "1.0.0-1",
   "description": "Sass variables and mixins for rh-elements",
   "contributors": [
     {
@@ -18,5 +18,6 @@
       "url": "https://github.com/markcaron"
     }
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "8a5a5593c740a5718f75af7b8e030b692621df96"
 }

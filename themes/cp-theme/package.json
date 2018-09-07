@@ -4,7 +4,7 @@
     "className": "CpTheme",
     "elementName": "cp-theme"
   },
-  "version": "1.0.0-0",
+  "version": "1.0.0-1",
   "description": "cp-theme for Red Hat's Customer Portal and RHElements",
   "repository": {
     "type": "git",
@@ -21,5 +21,6 @@
       "url": "https://github.com/markcaron"
     }
   ],
-  "license": "ISC"
+  "license": "ISC",
+  "gitHead": "8a5a5593c740a5718f75af7b8e030b692621df96"
 }

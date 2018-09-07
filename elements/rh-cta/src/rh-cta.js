@@ -36,7 +36,7 @@ class RhCta extends RHElement {
   }
 
   constructor() {
-    super(RhCta.tag);
+    super(RhCta);
   }
 
   connectedCallback() {
@@ -61,3 +61,5 @@ class RhCta extends RHElement {
 }
 
 RHElement.create(RhCta);
+
+export default RhCta;

@@ -12,8 +12,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/rollup -c && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
-    "start": "../../node_modules/.bin/gulp dev & npm run serve",
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json node_modules/@rhelements/rhelement/test/"
   },
   "author": {
@@ -21,7 +21,7 @@
     "email": "kylebuch8@gmail.com",
     "url": "https://github.com/kylebuch8"
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {},
   "generator-rhelement-version": "0.3.4"
 }

@@ -227,7 +227,7 @@ class RhCta extends RHElement {
   }
 
   constructor() {
-    super(RhCta.tag);
+    super(RhCta);
   }
 
   connectedCallback() {

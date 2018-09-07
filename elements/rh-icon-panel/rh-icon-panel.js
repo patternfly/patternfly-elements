@@ -67,17 +67,14 @@ class RhIconPanel extends RHElement {
     return ["icon"];
   }
 
-  constructor() {
-    super(RhIconPanel.tag);
+  static get cascadingAttributes() {
+    return {
+      icon: "rh-icon"
+    };
   }
 
-  attributeChangedCallback(attr, oldVal, newVal) {
-    if (attr === "icon") {
-      if (newVal) {
-        let iconElem = this.shadowRoot.querySelector("rh-icon");
-        iconElem.setAttribute("icon", newVal);
-      }
-    }
+  constructor() {
+    super(RhIconPanel);
   }
 }
 

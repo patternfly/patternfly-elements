@@ -36,12 +36,12 @@
       }
     </style>
     <style>
+    /* For demoing theme styles... */
     :root {
-      /* --rh-theme--color--ui-accent: green;
+      --rh-theme--color--ui-accent: green;
       --rh-theme--color--ui-accent--hover: darkgreen;
-      --rh-theme--color--ui-accent--visited: darkgreen;
-      --rh-theme--color--ui-accent--focus: darkgreen;
-      --rh-theme--color--ui-accent--text: white; */
+      --rh-theme--color--ui-accent--text: white;
+      --rh-theme--color--ui-accent--text--hover: white;
     }
     </style>
     <noscript>
@@ -88,6 +88,10 @@
       <rh-cta priority="secondary" on="dark"><a href="#">Secondary</a></rh-cta>
     </p>
 
+    <p>
+      General rule of thumb: If you add <code>color="..."</code> it'll override <code>on="dark"</code>. See below.
+    </p>
+
     <h2>Color: Base; On: Dark</h2>
     <p class="inverted-demo">
       <rh-cta color="base" on="dark"><a href="#">Default</a></rh-cta>
@@ -107,16 +111,6 @@
       <rh-cta color="accent" on="dark"><a href="#">Default</a></rh-cta>
       <rh-cta priority="primary" color="accent" on="dark"><a href="#">Primary</a></rh-cta>
       <rh-cta priority="secondary" color="accent" on="dark"><a href="#">Secondary</a></rh-cta>
-    </p>
-
-
-
-    <h2>"Broadcasted" Default CTA Theory</h2>
-    <em>This may be different or not work when inside :host</em>. Also doesn't seem to work in IE11.
-    <p class="inverted-demo">
-      <span style="--rh-broadcasted--color--ui-link: green; --rh-broadcasted--color--ui-link--visited: green;">
-        <rh-cta><a href="#">Default</a></rh-cta>
-      </span>
     </p>
   </body>
 </html>

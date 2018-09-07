@@ -4,416 +4,193 @@
 /// Component Specific SASS Vars
 /// ===========================================================================
 
+// Todo: convert these also
 $rh-cta__arrow-size:                        0.313em; // Was ~5px at 16px
 $rh-cta__arrow--spacer:                     $rh-global--spacer--xxs;
-$rh--cta--solid--BorderRadius:              5em !default; //$rh-global--border--BorderRadius !default;
+$rh-cta--solid--BorderRadius:               5em !default; //$rh-global--border--BorderRadius !default;
 $rh-cta--solid--BorderWidth:                $rh-global--border--BorderWidth;
 $rh-cta--solid--padding-y:                  8px; //$rh-global--spacer--xs;
 $rh-cta--solid--padding-x:                  32px; //$rh-global--spacer--lg;
 $rh-cta--animation-timing:                  $rh-global--animation-timing;
 
-// Reassigning SASS vars to component specific SASS vars for ease of use below
-
-// Default CTA colors
-$rh-cta--default--main:                     $rh-global--link-color;
-$rh-cta--default--main--hover:              $rh-global--link-color--hover;
-$rh-cta--default--main--focus:              $rh-global--link-color--focus;
-$rh-cta--default--main--visited:            $rh-global--link-color--visited;
-$rh-cta--default--aux:                      transparent;
-$rh-cta--default--aux--hover:               transparent;
-
-$rh-cta--base--main:                        $rh-global--ui-element-color;
-$rh-cta--base--main--hover:                 $rh-global--ui-element-color--hover;
-$rh-cta--base--main--focus:                 $rh-global--ui-element-color--focus;
-$rh-cta--base--main--visited:               $rh-global--ui-element-color--active;
-$rh-cta--base--aux:                         $rh-global--color--white;
-$rh-cta--base--aux--hover:                  darken($rh-global--color--white, 10%);
-
-$rh-cta--complement--main:                  $rh-global--color--gray-iron;
-$rh-cta--complement--main--hover:           darken($rh-global--color--gray-iron, 10%);
-$rh-cta--complement--main--focus:           darken($rh-global--color--gray-iron, 10%);
-$rh-cta--complement--main--visited:         $rh-global--link-color--visited;
-$rh-cta--complement--aux:                   $rh-global--color--white;
-$rh-cta--complement--aux--hover:            darken($rh-global--color--white, 10%);;
-
-$rh-cta--accent--main:                      $rh-global--color--red;
-$rh-cta--accent--main--hover:               darken($rh-global--color--red, 10%);
-$rh-cta--accent--main--focus:               darken($rh-global--color--red, 10%);
-$rh-cta--accent--main--visited:             $rh-global--link-color--visited;
-$rh-cta--accent--aux:                       $rh-global--color--white;
-$rh-cta--accent--aux--hover:                darken($rh-global--color--white, 10%);;
-
-$rh-cta--default--main--on-dark:            $rh-global--color--white;
-$rh-cta--default--main--on-dark--hover:     darken($rh-global--color--white, 10%);
-$rh-cta--default--main--on-dark--focus:     darken($rh-global--color--white, 10%);
-$rh-cta--default--main--on-dark--visited:   $rh-global--color--white;
-$rh-cta--default--aux--on-dark:             transparent;
-$rh-cta--default--aux--on-dark--hover:      transparent;
-
 
 /// ===========================================================================
-/// DEFUALT CTAs
+/// DEFUALT CTA
 /// ===========================================================================
 :host {
+  --rh-cta--main:                     #{rh-var(ui-link)};
+  --rh-cta--main--hover:              #{rh-var(ui-link--hover)};
+  --rh-cta--main--focus:              #{rh-var(ui-link--focus)};
+  --rh-cta--main--visited:            #{rh-var(ui-link--visited)};
+  --rh-cta--aux:                      transparent;
+  --rh-cta--aux--hover:               transparent;
+
   display: inline-block;
-
-  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-link, #{$rh-cta--default--main}));
-  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-link--visited, #{$rh-cta--default--main--visited}));
-  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-link--hover, #{$rh-cta--default--main--hover}));
-  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-link--focus, #{$rh-cta--default--main--focus}));
-
-
-  --rh-cta--text-color: var(--rh-cta--main);
-  --rh-cta--text-color--visited: var(--rh-cta--main--visited);
-  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--text-color--focus: var(--rh-cta--main--focus);
-
+  font-weight: bold;
 
   & ::slotted(a) {
     line-height: inherit;
-    color: var(--rh-cta--text-color);
+    color: var(--rh-cta--main);
 
     &::after {
       display: block;
       margin-left: $rh-cta__arrow--spacer; // not themeable for now
       vertical-align: middle;
-      @include rh-arrow(right, var(--rh-cta--text-color), $rh-cta__arrow-size, $rh-cta__arrow-size, true);
+      @include rh-arrow(right, var(--rh-cta--main), $rh-cta__arrow-size, $rh-cta__arrow-size, true);
     }
   }
 
-  & ::slotted(a:visited) {
-    color: var(--rh-cta--text-color--visited);
-
-    &::after {
-      @include rh-arrow-color(var(--rh-cta--text-color--visited));
-    }
-  }
+  // & ::slotted(a:visited) {
+  //  color: var(--rh-cta--main--visited);
+  //  &::after {
+  //    @include rh-arrow-color(var(--rh-cta--main--visited));
+  //  }
+  // }
 
   & ::slotted(a:hover) {
-    color: var(--rh-cta--text-color--hover);
+    color: var(--rh-cta--main--hover);
 
     &::after {
-      @include rh-arrow-color(var(--rh-cta--text-color--hover));
+      @include rh-arrow-color(var(--rh-cta--main--hover));
     }
   }
 
   & ::slotted(a:focus) {
-    color: var(--rh-cta--text-color--focus);
+    color: var(--rh-cta--main--focus);
 
     &::after {
-      @include rh-arrow-color(var(--rh-cta--text-color--focus));
+      @include rh-arrow-color(var(--rh-cta--main--focus));
     }
   }
 }
 
-:host([color="base"]) {
-  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-accent, #{$rh-cta--base--main}));
-  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-accent--visited, #{$rh-cta--base--main--visited}));
-  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-accent--hover, #{$rh-cta--base--main--hover}));
-  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-accent--focus, #{$rh-cta--base--main--focus}));
-}
-
-:host([color="complement"]) {
-  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main}));
-  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-complement--visited, #{$rh-cta--complement--main--visited}));
-  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover}));
-  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-complement--focus, #{$rh-cta--complement--main--focus}));
-}
-
-:host([color="accent"]) {
-  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main}));
-  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-accent--visited, #{$rh-cta--accent--main--visited}));
-  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover}));
-  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-accent--focus, #{$rh-cta--accent--main--focus}));
-}
-
-:host([on="dark"]) {
-  --rh-cta--main: var(--rh-broadcasted--color--ui-link, var(--rh-theme--color--ui-link--on-dark, #{$rh-cta--default--main--on-dark}));
-  --rh-cta--main--visited: var(--rh-broadcasted--color--ui-link--visited, var(--rh-theme--color--ui-link--on-dark--visited, #{$rh-cta--default--main--on-dark--visited}));
-  --rh-cta--main--hover: var(--rh-broadcasted--color--ui-link--hover, var(--rh-theme--color--ui-link--on-dark--hover, #{$rh-cta--default--main--on-dark--hover}));
-  --rh-cta--main--focus: var(--rh-broadcasted--color--ui-link--focus, var(--rh-theme--color--ui-link--on-dark--focus, #{$rh-cta--default--main--on-dark--focus}));
-}
-
-
 
 /// ===========================================================================
-/// DEFAULT "SOLID" CTAs
+/// Styles for "Button" CTAs
 /// ===========================================================================
-:host([priority="primary"]),
-:host([priority="secondary"]) {
-
-  --rh-cta--text-color: var(--rh-cta--aux);
-  --rh-cta--text-color--hover: var(--rh-cta--aux);
-  --rh-cta--bg-color: var(--rh-cta--main);
-  --rh-cta--bg-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--border-color: var(--rh-cta--main);
-  --rh-cta--border--hover: var(--rh-cta--main--hover);
+:host([priority="primary"]) {
+  --rh-cta--main:          #{rh-var(ui-accent)};
+  --rh-cta--main--hover:   #{rh-var(ui-accent--hover)};
+  --rh-cta--aux:           #{rh-var(ui-accent--text)};
+  --rh-cta--aux--hover:    #{rh-var(ui-accent--text--hover)};
 
   & ::slotted(a) {
     display: inline-block;
     padding: $rh-cta--solid--padding-y $rh-cta--solid--padding-x; // not themeable for now
-    border-radius: $rh--cta--solid--BorderRadius; // not themeable for now
+    border-radius: $rh-cta--solid--BorderRadius; // not themeable for now
     border: $rh-cta--solid--BorderWidth solid transparent; // not themeable for now
     text-decoration: none;
     line-height: 1.2;
 
-    border-color: var(--rh-cta--border-color);
-    background: var(--rh-cta--bg-color);
-    color: var(--rh-cta--text-color);
+    border-color: var(--rh-cta--main);
+    background:   var(--rh-cta--main);
+    color:        var(--rh-cta--aux);
 
     &::after {
       display: none;
     }
   }
 
-  & ::slotted(a:visited),
   & ::slotted(a:hover),
-  & ::slotted(a:focus) {
-    border-color: var(--rh-cta--border--hover);
-    background: var(--rh-cta--bg-color--hover);
-    color: var(--rh-cta--text-color--hover);
+  & ::slotted(a:focus) { // Not sure we can lump these together
+    border-color: var(--rh-cta--main--hover);
+    background:   var(--rh-cta--main--hover);
+    color:        var(--rh-cta--aux--hover);
   }
-}
 
-:host([priority="primary"]) {
-  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
-  --rh-cta--main--visited: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
-  --rh-cta--main--focus: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
+  // & ::slotted(a:visited),   TBD
+
 }
 
 :host([priority="secondary"]) {
-  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
+  --rh-cta--main:          #{rh-var(ui-base)};
+  --rh-cta--main--hover:   #{rh-var(ui-base--hover)};
+  --rh-cta--aux:           #{rh-var(ui-base--text)};
+  --rh-cta--aux--hover:    #{rh-var(ui-base--text--hover)};
 
-  --rh-cta--text-color: var(--rh-cta--main);
-  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--bg-color: var(--rh-cta--aux);
-  --rh-cta--bg-color--hover: var(--rh-cta--aux);
-  --rh-cta--border-color: var(--rh-cta--main);
-  --rh-cta--border--hover: var(--rh-cta--main--hover);
+  & ::slotted(a) {
+    display: inline-block;
+    padding: $rh-cta--solid--padding-y $rh-cta--solid--padding-x; // not themeable for now
+    border-radius: $rh-cta--solid--BorderRadius; // not themeable for now
+    border: $rh-cta--solid--BorderWidth solid var(--rh-cta--main); // not themeable for now
+    text-decoration: none;
+    line-height: 1.2;
+
+    border-color: var(--rh-cta--main);
+    background:   var(--rh-cta--aux);
+    color:        var(--rh-cta--main);
+
+    &::after {
+      display: none;
+    }
+  }
+
+  & ::slotted(a:hover), // Not sure we can lump these together
+  & ::slotted(a:focus) {
+    border-color: var(--rh-cta--main--hover);
+    background:   var(--rh-cta--main--hover);
+    color:        var(--rh-cta--aux--hover);
+  }
+
+  // & ::slotted(a:visited),   TBD
 }
 
-
-/// ===========================================================================
-/// PALETTE: BASE
-/// ===========================================================================
-:host([priority="primary"][color="base"]) {
-  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-baset--hover, #{$rh-cta--base--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
-
-  --rh-cta--text-color: var(--rh-cta--aux);
-  --rh-cta--text-color--hover: var(--rh-cta--aux);
-  --rh-cta--bg-color: var(--rh-cta--main);
-  --rh-cta--bg-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--border-color: var(--rh-cta--main);
-  --rh-cta--border--hover: var(--rh-cta--main--hover);
-}
-
-:host([priority="secondary"][color="base"]) {
-  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
-
-  --rh-cta--text-color: var(--rh-cta--main);
-  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--bg-color: var(--rh-cta--aux);
-  --rh-cta--bg-color--hover: var(--rh-cta--aux);
-  --rh-cta--border-color: var(--rh-cta--main);
-  --rh-cta--border--hover: var(--rh-cta--main--hover);
-}
-
-
-/// ===========================================================================
-/// PALETTE: COMPLEMENT
-/// ===========================================================================
-:host([priority="primary"][color="complement"]) {
-  --rh-cta--main: var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-complement--text, #{$rh-cta--complement--aux});
-
-  --rh-cta--text-color: var(--rh-cta--aux);
-  --rh-cta--text-color--hover: var(--rh-cta--aux);
-  --rh-cta--bg-color: var(--rh-cta--main);
-  --rh-cta--bg-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--border-color: var(--rh-cta--main);
-  --rh-cta--border--hover: var(--rh-cta--main--hover);
-}
-
-:host([priority="secondary"][color="complement"]) {
-  --rh-cta--main: var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-complement--text, #{$rh-cta--complement--aux});
-
-  --rh-cta--text-color: var(--rh-cta--main);
-  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--bg-color: var(--rh-cta--aux);
-  --rh-cta--bg-color--hover: var(--rh-cta--aux);
-  --rh-cta--border-color: var(--rh-cta--main);
-  --rh-cta--border--hover: var(--rh-cta--main--hover);
-}
-
-
-/// ===========================================================================
-/// PALETTE: ACCENT
-/// ===========================================================================
-:host([priority="primary"][color="accent"]) {
-  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
-
-  --rh-cta--text-color: var(--rh-cta--aux);
-  --rh-cta--text-color--hover: var(--rh-cta--aux);
-  --rh-cta--bg-color: var(--rh-cta--main);
-  --rh-cta--bg-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--border-color: var(--rh-cta--main);
-  --rh-cta--border--hover: var(--rh-cta--main--hover);
-}
-
-:host([priority="secondary"][color="accent"]) {
-  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
-
-  --rh-cta--text-color: var(--rh-cta--main);
-  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--bg-color: var(--rh-cta--aux);
-  --rh-cta--bg-color--hover: var(--rh-cta--aux);
-  --rh-cta--border-color: var(--rh-cta--main);
-  --rh-cta--border--hover: var(--rh-cta--main--hover);
-}
 
 /// ===========================================================================
 /// ON DARK
 /// ===========================================================================
-:host([on="dark"][priority="primary"]) {
-  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
-  --rh-cta--aux--hover: var(--rh-theme--color--ui-accent--text--hover, #{$rh-cta--accent--aux--hover});
+:host([on="dark"]) {
+  --rh-cta--main:        #{rh-var(ui-accent--text)};
+  --rh-cta--main--hover: #{rh-var(ui-link--on-dark--hover)};
+  --rh-cta--aux:         #{rh-var(ui-link--on-dark)};
+  --rh-cta--aux--hover:  #{rh-var(ui-accent--text--hover)};
+}
 
-  --rh-cta--text-color: var(--rh-theme--color--ui-accent);
-  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--bg-color: var(--rh-cta--aux);
-  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
-  --rh-cta--border-color: var(--rh-cta--aux);
-  --rh-cta--border--hover: var(--rh-cta--aux--hover);
+:host([on="dark"][priority="primary"]) {
+  --rh-cta--main:        #{rh-var(ui-accent--text)};
+  --rh-cta--main--hover: #{rh-var(ui-accent--text--hover)};
+  --rh-cta--aux:         #{rh-var(ui-accent)};
+  --rh-cta--aux--hover:  #{rh-var(ui-accent--hover)};
 }
 
 :host([on="dark"][priority="secondary"]) {
-  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
-  --rh-cta--aux--hover: var(--rh-theme--color--ui-base--text--hover, #{$rh-cta--base--aux--hover});
-
-  --rh-cta--text-color: var(--rh-cta--aux);
-  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--bg-color: transparent;
-  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
-  --rh-cta--border-color: var(--rh-cta--aux);
-  --rh-cta--border--hover: var(--rh-cta--aux--hover);
-}
-
-/// ===========================================================================
-/// ON SATURATED
-/// PALETTE: BASE
-/// ===========================================================================
-:host([on="dark"][priority="primary"][color="base"]) {
-  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
-  --rh-cta--aux--hover: var(--rh-theme--color--ui-base--text--hover, #{$rh-cta--base--aux--hover});
-
-  --rh-cta--text-color: var(--rh-cta--main);
-  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--bg-color: var(--rh-cta--aux);
-  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
-  --rh-cta--border-color: var(--rh-cta--aux);
-  --rh-cta--border--hover: var(--rh-cta--aux--hover);
-}
-
-:host([on="dark"][priority="secondary"][color="base"]) {
-  // Same as :host([on="dark"][priority="secondary"])
-  --rh-cta--main: var(--rh-theme--color--ui-base, #{$rh-cta--base--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-base--hover, #{$rh-cta--base--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-base--text, #{$rh-cta--base--aux});
-  --rh-cta--aux--hover: var(--rh-theme--color--ui-base--text--hover, #{$rh-cta--base--aux--hover});
-
-  --rh-cta--text-color: var(--rh-cta--aux);
-  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--bg-color: transparent;
-  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
-  --rh-cta--border-color: var(--rh-cta--aux);
-  --rh-cta--border--hover: var(--rh-cta--aux--hover);
+  --rh-cta--main:        #{rh-var(ui-base--text)};
+  --rh-cta--main--hover: #{rh-var(ui-base--text--hover)};
+  --rh-cta--aux:         transparent;
+  --rh-cta--aux--hover:  #{rh-var(ui-base--hover)};
 }
 
 
 /// ===========================================================================
-/// ON SATURATED
-/// PALETTE: COMPLEMENT
+/// COLOR OVERRIDE: BASE
 /// ===========================================================================
-:host([on="dark"][priority="primary"][color="complement"]) {
-  --rh-cta--main: var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-complement--text, #{$rh-cta--complement--aux});
-  --rh-cta--aux--hover: var(--rh-theme--color--ui-complement--text--hover, #{$rh-cta--complement--aux--hover});
 
-  --rh-cta--text-color: var(--rh-cta--main);
-  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--bg-color: var(--rh-cta--aux);
-  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
-  --rh-cta--border-color: var(--rh-cta--aux);
-  --rh-cta--border--hover: var(--rh-cta--aux--hover);
-}
-
-:host([on="dark"][priority="secondary"][color="complement"]) {
-  // Same as :host([on="dark"][priority="secondary"])
-  --rh-cta--main: var(--rh-theme--color--ui-complement, #{$rh-cta--complement--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-complement--hover, #{$rh-cta--complement--main--hover});
-  --rh-cta--aux: var(--rh-theme--color--ui-complement--text, #{$rh-cta--complement--aux});
-  --rh-cta--aux--hover: var(--rh-theme--color--ui-complement--text--hover, #{$rh-cta--complement--aux--hover});
-
-  --rh-cta--text-color: var(--rh-cta--aux);
-  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--bg-color: transparent;
-  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
-  --rh-cta--border-color: var(--rh-cta--aux);
-  --rh-cta--border--hover: var(--rh-cta--aux--hover);
+:host([color="base"]) {
+  --rh-cta--main:        #{rh-var(ui-base)} !important;
+  --rh-cta--main--hover: #{rh-var(ui-base--hover)} !important;
+  --rh-cta--aux:         #{rh-var(ui-base--text)} !important;
+  --rh-cta--aux--hover:  #{rh-var(ui-base--text--hover)} !important;
 }
 
 
 /// ===========================================================================
-/// ON SATURATED
-/// PALETTE: ACCENT
+/// COLOR OVERRIDE: COMPLEMENT
 /// ===========================================================================
-:host([on="dark"][priority="primary"][color="accent"]) {
-  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover}); // NEED A HOVER STATE HERE
-  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
-  --rh-cta--aux--hover: var(--rh-theme--color--ui-accent--text--hover, #{$rh-cta--accent--aux--hover}); // NEW?
 
-  --rh-cta--text-color: var(--rh-cta--main);
-  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--bg-color: var(--rh-cta--aux);
-  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
-  --rh-cta--border-color: var(--rh-cta--aux);
-  --rh-cta--border--hover: var(--rh-cta--aux--hover);
+:host([color="complement"]) {
+  --rh-cta--main:        #{rh-var(ui-complement)} !important;
+  --rh-cta--main--hover: #{rh-var(ui-complement--hover)} !important;
+  --rh-cta--aux:         #{rh-var(ui-complement--text)} !important;
+  --rh-cta--aux--hover:  #{rh-var(ui-complement--text--hover)} !important;
 }
 
-:host([on="dark"][priority="secondary"][color="accent"]) {
-  // Same as :host([on-saturated][priority="secondary"])
-  --rh-cta--main: var(--rh-theme--color--ui-accent, #{$rh-cta--accent--main});
-  --rh-cta--main--hover: var(--rh-theme--color--ui-accent--hover, #{$rh-cta--accent--main--hover}); // NEED A HOVER STATE HERE
-  --rh-cta--aux: var(--rh-theme--color--ui-accent--text, #{$rh-cta--accent--aux});
-  --rh-cta--aux--hover: var(--rh-theme--color--ui-accent--text--hover, #{$rh-cta--accent--aux--hover}); // NEW?
 
-  --rh-cta--text-color: var(--rh-cta--aux);
-  --rh-cta--text-color--hover: var(--rh-cta--main--hover);
-  --rh-cta--bg-color: transparent;
-  --rh-cta--bg-color--hover: var(--rh-cta--aux--hover);
-  --rh-cta--border-color: var(--rh-cta--aux);
-  --rh-cta--border--hover: var(--rh-cta--aux--hover);
+/// ===========================================================================
+/// COLOR OVERRIDE: ACCENT
+/// ===========================================================================
+:host([color="accent"]) {
+  --rh-cta--main:        #{rh-var(ui-accent)} !important;
+  --rh-cta--main--hover: #{rh-var(ui-accent--hover)} !important;
+  --rh-cta--aux:         #{rh-var(ui-accent--text)} !important;
+  --rh-cta--aux--hover:  #{rh-var(ui-accent--text--hover)} !important;
 }

@@ -5,3 +5,4 @@ lerna-debug.log
 .storybook_out
 npm-debug.log
 test/.wct-kludge
+.sass-cache

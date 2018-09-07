@@ -129,9 +129,12 @@
 }
 
 /// RH Var
-/// Uses the name created by rh-define-vars() to retrieve the local var
-/// @requires: @mixin rh-define-vars()
-/// @param {String} $this-local-var - Variable name to be used
-@function rh-var($this-local-var) {
-  @return var(--rh-local-#{$this-local-var});
+/// @param {String} $cssvar - Variable name to be used and prepended with --rh-theme
+/// @requires {String} $repo - Name of repo, which is "rh"
+@function rh-var($cssvar, $category: 'color') {
+    @if $category != "" {
+      $category: "#{$category}--";
+    }
+
+    @return var( --#{$repo}-theme--#{$category}#{$cssvar}, #{map-get($rh-palette, $cssvar)});
 }

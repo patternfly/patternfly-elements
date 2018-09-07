@@ -1,19 +1,8 @@
-//
-// Global vars are named:
-// `$rh-global--concept--PropertyTitleCase--modifier--state`
-// For example:
-// * $rh-global--color--primary
-// * $rh-global--FontSize
-// * --rh-global--FontSize--heading--xs
 
-// Component/Element vars are named:
-// `$rh-c-block__element--modifier--state--PropertyTitleCase`
-// For example:
-// * --rh-dropdown--heading--FontSize
-// * --cp-accordion--heading--FontSize
-
-@import "variables/pf-colors";
+@import "variables/crayola";
+@import "variables/pf-colors";  // to be removed
 @import "variables/colors";
+@import "variables/maps";
 @import "variables/typography";
 @import "variables/layout";
 @import "variables/style";

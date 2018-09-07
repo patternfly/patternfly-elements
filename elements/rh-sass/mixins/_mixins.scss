@@ -68,6 +68,10 @@
   }
 }
 
+@mixin rh-arrow-color($color) {
+  border-top-color: $color;
+}
+
 @mixin rh-print-media {
   @media print {
     @content;
@@ -105,4 +109,36 @@
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     @content;
   }
+}
+
+
+/// RH Define Vars
+/// Helps define the CSS Var madness, making it easier for devs!
+/// @param {String} $this-component-var - Component specific variable name
+/// @param {String} $this-theme-var - Theme variable name
+/// @param {String} $this-fallback - Fallback color
+///
+/// ---------------------------------------------------------------------------
+///
+/// SASS fallback based on RHElements style
+/// $rh-global[--context][--state][--PropertyCamelCase]
+
+/// Theme level Var
+/// --rh-theme[--context][--state][--PropertyCamelCase]
+/// --rh-theme--heading--hover--BackgroundColor
+
+/// Component Var for theming specific cases
+/// --rh-[component-block][__element][--context][--state][--PropertyCamelCase]
+/// --rh-teaser__title--link-color--visited
+/// --rh-teaser__subtitle--link-color--visited
+
+/// Defined locally for sanity
+/// --rh-local-[component-block][__element][--context][--state][--PropertyCamelCase]
+/// --rh-local-cta--link-color--inverted
+///
+/// ---------------------------------------------------------------------------
+///
+///                     ↓ component,         ↓ theme,         ↓ fallback
+@mixin rh-define-vars($this-component-var, $this-theme-var, $this-fallback) {
+  --rh-local-#{$this-component-var}: var(--rh-#{$this-component-var}, var(--rh-theme--#{$this-theme-var}, #{$this-fallback}));
 }

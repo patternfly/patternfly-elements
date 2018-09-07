@@ -1,155 +1,196 @@
 @import "../../rh-sass/rh-sass";
 
-// Mixins / helpers
-@mixin make-default-cta($color: $rh-global--link-color) {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: $color;
-  text-decoration: underline;
-}
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
 
-@mixin make-cta-arrow($arrow-color: $rh-global--link-color) {
-  margin-left: var(--rhe-theme--spacer--xs, $rh-global--spacer--xs);
-  vertical-align: middle;
-  @include rh-arrow(right, $arrow-color, 0.313em, 0.313em, true);
-  position: relative; // temp
-  display: inline-block; // temp
-}
+// Todo: convert these also
+$rh-cta__arrow-size:                        0.313em; // Was ~5px at 16px
+$rh-cta__arrow--spacer:                     $rh-global--spacer--xxs;
+$rh-cta--solid--BorderRadius:               5em !default; //$rh-global--border--BorderRadius !default;
+$rh-cta--solid--BorderWidth:                $rh-global--border--BorderWidth;
+$rh-cta--solid--padding-y:                  8px; //$rh-global--spacer--xs;
+$rh-cta--solid--padding-x:                  32px; //$rh-global--spacer--lg;
+$rh-cta--animation-timing:                  $rh-global--animation-timing;
 
-@mixin make-default-cta-color($color-name: white, $color: $rh-global-color--white) {
-  @at-root :host(.#{$color-name}) {
-    & ::slotted(a) {
-      @include make-default-cta($color);
 
-      &::after {
-        @include make-cta-arrow($color);
-      }
+/// ===========================================================================
+/// DEFUALT CTA
+/// ===========================================================================
+:host {
+  --rh-cta--main:                     #{rh-var(ui-link)};
+  --rh-cta--main--hover:              #{rh-var(ui-link--hover)};
+  --rh-cta--main--focus:              #{rh-var(ui-link--focus)};
+  --rh-cta--main--visited:            #{rh-var(ui-link--visited)};
+  --rh-cta--aux:                      transparent;
+  --rh-cta--aux--hover:               transparent;
+
+  display: inline-block;
+  font-weight: bold;
+
+  & ::slotted(a) {
+    line-height: inherit;
+    color: var(--rh-cta--main);
+
+    &::after {
+      display: block;
+      margin-left: $rh-cta__arrow--spacer; // not themeable for now
+      vertical-align: middle;
+      @include rh-arrow(right, var(--rh-cta--main), $rh-cta__arrow-size, $rh-cta__arrow-size, true);
+    }
+  }
+
+  // & ::slotted(a:visited) {
+  //  color: var(--rh-cta--main--visited);
+  //  &::after {
+  //    @include rh-arrow-color(var(--rh-cta--main--visited));
+  //  }
+  // }
+
+  & ::slotted(a:hover) {
+    color: var(--rh-cta--main--hover);
+
+    &::after {
+      @include rh-arrow-color(var(--rh-cta--main--hover));
+    }
+  }
+
+  & ::slotted(a:focus) {
+    color: var(--rh-cta--main--focus);
+
+    &::after {
+      @include rh-arrow-color(var(--rh-cta--main--focus));
     }
   }
 }
 
-@mixin make-button-cta() {
+
+/// ===========================================================================
+/// Styles for "Button" CTAs
+/// ===========================================================================
+:host([priority="primary"]) {
+  --rh-cta--main:          #{rh-var(ui-accent)};
+  --rh-cta--main--hover:   #{rh-var(ui-accent--hover)};
+  --rh-cta--aux:           #{rh-var(ui-accent--text)};
+  --rh-cta--aux--hover:    #{rh-var(ui-accent--text--hover)};
+
   & ::slotted(a) {
-    padding: var(--rhe-theme--spacer--sm, $rh-global--spacer--sm) var(--rhe-theme--spacer--md, $rh-global--spacer--md);
+    display: inline-block;
+    padding: $rh-cta--solid--padding-y $rh-cta--solid--padding-x; // not themeable for now
+    border-radius: $rh-cta--solid--BorderRadius; // not themeable for now
+    border: $rh-cta--solid--BorderWidth solid transparent; // not themeable for now
     text-decoration: none;
-    text-transform: uppercase;
-    font-weight: var(--rhe-theme--FontWeight--semi-bold, $rh-global--FontWeight--semi-bold);
-    font-size: 0.875em;
+    line-height: 1.2;
+
+    border-color: var(--rh-cta--main);
+    background:   var(--rh-cta--main);
+    color:        var(--rh-cta--aux);
 
     &::after {
-      content: none;
       display: none;
     }
   }
+
+  & ::slotted(a:hover),
+  & ::slotted(a:focus) { // Not sure we can lump these together
+    border-color: var(--rh-cta--main--hover);
+    background:   var(--rh-cta--main--hover);
+    color:        var(--rh-cta--aux--hover);
+  }
+
+  // & ::slotted(a:visited),   TBD
+
 }
 
-@mixin make-button-cta-color(
-        $bg-color: $rh-global--color--gray-mercury, $color: $rh-global--color--black, $border-color: transparent,
-        $bg-color-visited: $rh-global--color--gray-mercury, $color-visited: $rh-global--color--black, $border-color-visited: transparent,
-        $bg-color-hover: $rh-global--color--gray-mercury, $color-hover: $rh-global--color--black, $border-color-hover: transparent,
-        $bg-color-focus: $rh-global--color--gray-mercury, $color-focus: $rh-global--color--black, $border-color-focus: transparent
-      ) {
+:host([priority="secondary"]) {
+  --rh-cta--main:          #{rh-var(ui-base)};
+  --rh-cta--main--hover:   #{rh-var(ui-base--hover)};
+  --rh-cta--aux:           #{rh-var(ui-base--text)};
+  --rh-cta--aux--hover:    #{rh-var(ui-base--text--hover)};
 
   & ::slotted(a) {
-    background: $bg-color;
-    color: $color;
-    border: 1px solid $border-color;
+    display: inline-block;
+    padding: $rh-cta--solid--padding-y $rh-cta--solid--padding-x; // not themeable for now
+    border-radius: $rh-cta--solid--BorderRadius; // not themeable for now
+    border: $rh-cta--solid--BorderWidth solid var(--rh-cta--main); // not themeable for now
+    text-decoration: none;
+    line-height: 1.2;
+
+    border-color: var(--rh-cta--main);
+    background:   var(--rh-cta--aux);
+    color:        var(--rh-cta--main);
+
+    &::after {
+      display: none;
+    }
   }
 
-  & ::slotted(a:visited) {
-    background: $bg-color-visited;
-    color: $color-visited;
-    border-color: $border-color-visited;
-  }
-
-  & ::slotted(a:hover) {
-    background: $bg-color-hover;
-    color: $color-hover;
-    border-color: $border-color-hover;
-  }
-
+  & ::slotted(a:hover), // Not sure we can lump these together
   & ::slotted(a:focus) {
-    background: $bg-color-focus;
-    color: $color-focus;
-    border-color: $border-color-focus;
+    border-color: var(--rh-cta--main--hover);
+    background:   var(--rh-cta--main--hover);
+    color:        var(--rh-cta--aux--hover);
   }
+
+  // & ::slotted(a:visited),   TBD
 }
 
 
-:host {
-  display: inline-block;
-
-  // Default, "link" style
-  & ::slotted(a) {
-    @include make-default-cta(var(--rhe-theme--link-color, $rh-global--link-color));
-
-    &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color, $rh-global--link-color));
-    }
-  }
-
-  & ::slotted(a:visited) {
-    @include make-default-cta(var(--rhe-theme--link-color--visited, $rh-global--link-color--visited));
-
-    &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color--visited, $rh-global--link-color--visited));
-    }
-  }
-
-  & ::slotted(a:hover) {
-    @include make-default-cta(var(--rhe-theme--link-color--hover, $rh-global--link-color--hover));
-
-    &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color--hover, $rh-global--link-color--hover));
-    }
-  }
-
-  & ::slotted(a:focus) {
-    @include make-default-cta(var(--rhe-theme--link-color--focus, $rh-global--link-color--focus));
-
-    &::after {
-      @include make-cta-arrow(var(--rhe-theme--link-color--focus, $rh-global--link-color--focus));
-    }
-  }
-
-  // Default, "link" style colors
-  @include make-default-cta-color(white, var(--rhe-theme--link-color--desaturated--inverted, $rh-global--color--white));
-  @include make-default-cta-color(black, var(--rhe-theme--link-color--desaturated, $rh-global--color--black));
-
-
+/// ===========================================================================
+/// ON DARK
+/// ===========================================================================
+:host([on="dark"]) {
+  --rh-cta--main:        #{rh-var(ui-accent--text)};
+  --rh-cta--main--hover: #{rh-var(ui-link--on-dark--hover)};
+  --rh-cta--aux:         #{rh-var(ui-link--on-dark)};
+  --rh-cta--aux--hover:  #{rh-var(ui-accent--text--hover)};
 }
 
-// "Button" styles
-:host([class*="--solid"]),
-:host([class*="--outlined"]),
-:host([class*="--ghost"]) {
-  @include make-button-cta();
+:host([on="dark"][priority="primary"]) {
+  --rh-cta--main:        #{rh-var(ui-accent--text)};
+  --rh-cta--main--hover: #{rh-var(ui-accent--text--hover)};
+  --rh-cta--aux:         #{rh-var(ui-accent)};
+  --rh-cta--aux--hover:  #{rh-var(ui-accent--hover)};
 }
 
-:host([class*="--solid"]) {
-  @include make-button-cta-color(
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent,
-    var(--rhe-theme--bg-color--shade3, $rh-global--color--gray-mercury), var(--rhe-theme--text-color--shade3, $rh-global--color--black), transparent
-  );
+:host([on="dark"][priority="secondary"]) {
+  --rh-cta--main:        #{rh-var(ui-base--text)};
+  --rh-cta--main--hover: #{rh-var(ui-base--text--hover)};
+  --rh-cta--aux:         transparent;
+  --rh-cta--aux--hover:  #{rh-var(ui-base--hover)};
 }
 
-:host([class*="--outlined"]) {
-  @include make-button-cta-color(
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor),
-    transparent !important, var(--rhe-theme--text-color--shade3, $rh-global--color--black), var(--rhe-theme--border--BorderColor, $rh-global--border--BorderColor)
-  );
+
+/// ===========================================================================
+/// COLOR OVERRIDE: BASE
+/// ===========================================================================
+
+:host([color="base"]) {
+  --rh-cta--main:        #{rh-var(ui-base)} !important;
+  --rh-cta--main--hover: #{rh-var(ui-base--hover)} !important;
+  --rh-cta--aux:         #{rh-var(ui-base--text)} !important;
+  --rh-cta--aux--hover:  #{rh-var(ui-base--text--hover)} !important;
 }
 
-:host([class*="--ghost"]) {
-  @include make-button-cta-color(
-    transparent, var(--rhe-theme--link-color, $rh-global--link-color), transparent,
-    transparent, var(--rhe-theme--link-color--visited, $rh-global--link-color--visited), transparent,
-    var(--rhe-theme--bg-color--shade2, $rh-global--color--gray-platinum), var(--rhe-theme--link-color--hover, $rh-global--link-color--hover), transparent,
-    var(--rhe-theme--bg-color--shade2, $rh-global--color--gray-platinum), var(--rhe-theme--link-color--focus, $rh-global--link-color--focus), transparent
-  );
+
+/// ===========================================================================
+/// COLOR OVERRIDE: COMPLEMENT
+/// ===========================================================================
+
+:host([color="complement"]) {
+  --rh-cta--main:        #{rh-var(ui-complement)} !important;
+  --rh-cta--main--hover: #{rh-var(ui-complement--hover)} !important;
+  --rh-cta--aux:         #{rh-var(ui-complement--text)} !important;
+  --rh-cta--aux--hover:  #{rh-var(ui-complement--text--hover)} !important;
+}
+
+
+/// ===========================================================================
+/// COLOR OVERRIDE: ACCENT
+/// ===========================================================================
+:host([color="accent"]) {
+  --rh-cta--main:        #{rh-var(ui-accent)} !important;
+  --rh-cta--main--hover: #{rh-var(ui-accent--hover)} !important;
+  --rh-cta--aux:         #{rh-var(ui-accent--text)} !important;
+  --rh-cta--aux--hover:  #{rh-var(ui-accent--text--hover)} !important;
 }

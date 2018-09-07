@@ -4,7 +4,7 @@
     "className": "RhIcon",
     "elementName": "rh-icon"
   },
-  "version": "0.0.4",
+  "version": "1.0.0-0",
   "description": "Icon element for RHElements",
   "repository": {
     "type": "git",
@@ -21,8 +21,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rhelements/rh-sass": "*",
-    "@rhelements/rhelement": "*"
+    "@rhelements/rh-sass": "^1.0.0-0",
+    "@rhelements/rhelement": "^1.0.0-0"
   },
   "generator-rhelement-version": "0.5.0"
 }

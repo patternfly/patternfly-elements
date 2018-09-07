@@ -4,7 +4,7 @@
     "className": "RhNumber",
     "elementName": "rh-number"
   },
-  "version": "0.0.3",
+  "version": "1.0.0-0",
   "description": "Number element for RHElements",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rhelements/rhelement": "*",
+    "@rhelements/rhelement": "^1.0.0-0",
     "numeral": "^2.0.6"
   },
   "generator-rhelement-version": "0.2.9"

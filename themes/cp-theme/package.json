@@ -4,7 +4,7 @@
     "className": "CpTheme",
     "elementName": "cp-theme"
   },
-  "version": "0.3.2",
+  "version": "1.0.0-0",
   "description": "cp-theme for Red Hat's Customer Portal and RHElements",
   "repository": {
     "type": "git",

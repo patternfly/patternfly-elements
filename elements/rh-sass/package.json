@@ -4,7 +4,7 @@
     "className": "RhSass",
     "elementName": "rh-sass"
   },
-  "version": "0.0.2",
+  "version": "1.0.0-0",
   "description": "Sass variables and mixins for rh-elements",
   "contributors": [
     {

@@ -4,7 +4,7 @@
     "className": "RhDatetime",
     "elementName": "rh-datetime"
   },
-  "version": "0.0.8",
+  "version": "1.0.0-0",
   "description": "Datetime element for RHElements",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rhelements/rhelement": "0.0.x"
+    "@rhelements/rhelement": "^1.0.0-0"
   },
   "generator-rhelement-version": "0.2.8"
 }

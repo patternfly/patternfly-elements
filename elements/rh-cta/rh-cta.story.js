@@ -6,11 +6,11 @@ const stories = storiesOf("Call To Action", module);
 stories.addDecorator(withKnobs);
 
 stories.add("rh-cta", () => {
-  const type = "Type";
+  const type = "Priority";
   const options = {
-    solid: "Solid",
-    outlined: "Outlined",
-    ghost: "Ghost"
+    default: "default",
+    primary: "primary",
+    secondary: "secondary"
   };
 
   const defaultValue = "Solid";
@@ -22,7 +22,7 @@ stories.add("rh-cta", () => {
     <rh-cta><a href="#">Become a Member</a></rh-cta>
   </p>
   <p>
-    <rh-cta class="rh--${value}"><a href="#">Become a Member</a></rh-cta>
+    <rh-cta priority="${value}"><a href="#">Become a Member</a></rh-cta>
   </p>
 
   `;

@@ -36,7 +36,7 @@ $rhelements--gray-dark:         #333 !default;
 $rhelements--red:               #c00 !default;
 $rhelements--yellow:            #f0ab00 !default;
 $rhelements--cyan:              #007a87 !default;
-$rhelements--purple:            #703fec !default;
+$rhelements--purple:            rebeccapurple !default; // Was #703fec
 
 // ========================================================================
 // B&W, Gray Values
@@ -101,6 +101,7 @@ $rh-color--green-600:           darken($rhelements--green, 20%) !default;
 $rh-color--green-700:           darken($rhelements--green, 30%) !default;
 $rh-color--green-800:           darken($rhelements--green, 40%) !default;
 
+$rh-color--cyan-50:             lighten($rhelements--cyan, 60%) !default;
 $rh-color--cyan-100:            lighten($rhelements--cyan, 50%) !default;
 $rh-color--cyan-200:            lighten($rhelements--cyan, 40%) !default;
 $rh-color--cyan-300:            lighten($rhelements--cyan, 30%) !default;
@@ -120,6 +121,7 @@ $rh-color--blue-600:            $rhelements--blue !default;              // Alia
 $rh-color--blue-700:            darken($rhelements--blue, 10%) !default;
 $rh-color--blue-800:            darken($rhelements--blue, 20%) !default;
 
+$rh-color--purple-50:           lighten($rhelements--purple, 40%) !default;
 $rh-color--purple-100:          lighten($rhelements--purple, 30%) !default;
 $rh-color--purple-200:          lighten($rhelements--purple, 20%) !default;
 $rh-color--purple-300:          lighten($rhelements--purple, 10%) !default;

@@ -8,7 +8,8 @@ module.exports = {
     "/elements": "./elements",
     "/doc": "./doc",
     "/favicon.ico": "./favicon.ico",
-    "/": "./node_modules"
+    "/": "./node_modules",
+    "/themes": "./themes"
   },
   bs: {
     watchOptions: {

@@ -8,6 +8,8 @@ const sass = require("gulp-sass");
 const stripCssComments = require("gulp-strip-css-comments");
 const trim = require("gulp-trim");
 const del = require("del");
+const shell = require("gulp-shell");
+
 let watcher;
 
 gulp.task("clean", () => {
@@ -16,7 +18,7 @@ gulp.task("clean", () => {
 
 gulp.task("sass", () => {
   return gulp
-    .src(["./*.scss"])
+    .src(["./src/*.scss"])
     .pipe(sass())
     .pipe(stripCssComments())
     .pipe(trim())
@@ -54,10 +56,17 @@ gulp.task("stopwatch", done => {
 });
 
 gulp.task("watch", () => {
-  watcher = gulp.watch(["./*.scss"], gulp.series("stopwatch", "sass", "watch"));
+  watcher = gulp.watch(["./src/*"], gulp.series("stopwatch", "build", "watch"));
   return watcher;
 });
 
-gulp.task("default", gulp.series("clean", "sass", "replaceStyles", "compile"));
+gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
+
+gulp.task(
+  "build",
+  gulp.series("clean", "sass", "replaceStyles", "compile", "bundle")
+);
+
+gulp.task("default", gulp.series("build"));
 
 gulp.task("dev", gulp.series("default", "watch"));

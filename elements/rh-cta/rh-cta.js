@@ -30,7 +30,7 @@ class RhCta extends RHElement {
   --rh-cta--main:                     var(--rh-theme--color--ui-link, #06c);
   --rh-cta--main--hover:              var(--rh-theme--color--ui-link--hover, #003366);
   --rh-cta--main--focus:              var(--rh-theme--color--ui-link--focus, #003366);
-  --rh-cta--main--visited:            var(--rh-theme--color--ui-link--visited, #703fec);
+  --rh-cta--main--visited:            var(--rh-theme--color--ui-link--visited, rebeccapurple);
   --rh-cta--aux:                      transparent;
   --rh-cta--aux--hover:               transparent;
   display: inline-block;
@@ -105,10 +105,10 @@ class RhCta extends RHElement {
     color: var(--rh-cta--aux--hover); }
 
 :host([on="dark"]) {
-  --rh-cta--main:        var(--rh-theme--color--ui-accent--text, #fff);
+  --rh-cta--main:        var(--rh-theme--color--text--on-dark, #fff);
   --rh-cta--main--hover: var(--rh-theme--color--ui-link--on-dark--hover, #cce6ff);
-  --rh-cta--aux:         var(--rh-theme--color--ui-link--on-dark, #99ccff);
-  --rh-cta--aux--hover:  var(--rh-theme--color--ui-accent--text--hover, #fff); }
+  --rh-cta--aux:         transparent;
+  --rh-cta--aux--hover:  transparent; }
 
 :host([on="dark"][priority="primary"]) {
   --rh-cta--main:        var(--rh-theme--color--ui-accent--text, #fff);

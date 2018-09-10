@@ -140,10 +140,10 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 /// ON DARK
 /// ===========================================================================
 :host([on="dark"]) {
-  --rh-cta--main:        #{rh-var(ui-accent--text)};
+  --rh-cta--main:        #{rh-var(text--on-dark)};
   --rh-cta--main--hover: #{rh-var(ui-link--on-dark--hover)};
-  --rh-cta--aux:         #{rh-var(ui-link--on-dark)};
-  --rh-cta--aux--hover:  #{rh-var(ui-accent--text--hover)};
+  --rh-cta--aux:         transparent;
+  --rh-cta--aux--hover:  transparent;
 }
 
 :host([on="dark"][priority="primary"]) {

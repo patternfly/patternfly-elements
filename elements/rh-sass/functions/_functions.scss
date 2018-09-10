@@ -131,10 +131,21 @@
 /// RH Var
 /// @param {String} $cssvar - Variable name to be used and prepended with --rh-theme
 /// @requires {String} $repo - Name of repo, which is "rh"
-@function rh-var($cssvar, $category: 'color') {
+@function rh-var($cssvar, $category: '', $map: $rh-var) {
     @if $category != "" {
       $category: "#{$category}--";
     }
 
-    @return var( --#{$repo}-theme--#{$category}#{$cssvar}, #{map-get($rh-palette, $cssvar)});
+    @return var( --#{$repo}-theme--#{$category}#{$cssvar}, #{map-get($map, $cssvar)});
+}
+
+/// RH Color
+/// @param {String} $cssvar - Variable name to be used and prepended with --rh-theme
+/// @requires {String} $repo - Name of repo, which is "rh"
+@function rh-color($cssvar, $category: 'color', $map: $rh-palette) {
+    @if $category != "" {
+      $category: "#{$category}--";
+    }
+
+    @return var( --#{$repo}-theme--#{$category}#{$cssvar}, #{map-get($map, $cssvar)});
 }

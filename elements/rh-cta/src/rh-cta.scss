@@ -18,10 +18,10 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 /// DEFUALT CTA
 /// ===========================================================================
 :host {
-  --rh-cta--main:                     #{rh-var(ui-link)};
-  --rh-cta--main--hover:              #{rh-var(ui-link--hover)};
-  --rh-cta--main--focus:              #{rh-var(ui-link--focus)};
-  --rh-cta--main--visited:            #{rh-var(ui-link--visited)};
+  --rh-cta--main:                     #{rh-color(ui-link)};
+  --rh-cta--main--hover:              #{rh-color(ui-link--hover)};
+  --rh-cta--main--focus:              #{rh-color(ui-link--focus)};
+  --rh-cta--main--visited:            #{rh-color(ui-link--visited)};
   --rh-cta--aux:                      transparent;
   --rh-cta--aux--hover:               transparent;
 
@@ -69,10 +69,10 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 /// Styles for "Button" CTAs
 /// ===========================================================================
 :host([priority="primary"]) {
-  --rh-cta--main:          #{rh-var(ui-accent)};
-  --rh-cta--main--hover:   #{rh-var(ui-accent--hover)};
-  --rh-cta--aux:           #{rh-var(ui-accent--text)};
-  --rh-cta--aux--hover:    #{rh-var(ui-accent--text--hover)};
+  --rh-cta--main:          #{rh-color(ui-accent)};
+  --rh-cta--main--hover:   #{rh-color(ui-accent--hover)};
+  --rh-cta--aux:           #{rh-color(ui-accent--text)};
+  --rh-cta--aux--hover:    #{rh-color(ui-accent--text--hover)};
 
   & ::slotted(a) {
     display: inline-block;
@@ -103,10 +103,10 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 }
 
 :host([priority="secondary"]) {
-  --rh-cta--main:          #{rh-var(ui-base)};
-  --rh-cta--main--hover:   #{rh-var(ui-base--hover)};
-  --rh-cta--aux:           #{rh-var(ui-base--text)};
-  --rh-cta--aux--hover:    #{rh-var(ui-base--text--hover)};
+  --rh-cta--main:          #{rh-color(ui-base)};
+  --rh-cta--main--hover:   #{rh-color(ui-base--hover)};
+  --rh-cta--aux:           #{rh-color(ui-base--text)};
+  --rh-cta--aux--hover:    #{rh-color(ui-base--text--hover)};
 
   & ::slotted(a) {
     display: inline-block;
@@ -140,24 +140,24 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 /// ON DARK
 /// ===========================================================================
 :host([on="dark"]) {
-  --rh-cta--main:        #{rh-var(text--on-dark)};
-  --rh-cta--main--hover: #{rh-var(ui-link--on-dark--hover)};
+  --rh-cta--main:        #{rh-color(text--on-dark)};
+  --rh-cta--main--hover: #{rh-color(ui-link--on-dark--hover)};
   --rh-cta--aux:         transparent;
   --rh-cta--aux--hover:  transparent;
 }
 
 :host([on="dark"][priority="primary"]) {
-  --rh-cta--main:        #{rh-var(ui-accent--text)};
-  --rh-cta--main--hover: #{rh-var(ui-accent--text--hover)};
-  --rh-cta--aux:         #{rh-var(ui-accent)};
-  --rh-cta--aux--hover:  #{rh-var(ui-accent--hover)};
+  --rh-cta--main:        #{rh-color(ui-accent--text)};
+  --rh-cta--main--hover: #{rh-color(ui-accent--text--hover)};
+  --rh-cta--aux:         #{rh-color(ui-accent)};
+  --rh-cta--aux--hover:  #{rh-color(ui-accent--hover)};
 }
 
 :host([on="dark"][priority="secondary"]) {
-  --rh-cta--main:        #{rh-var(ui-base--text)};
-  --rh-cta--main--hover: #{rh-var(ui-base--text--hover)};
+  --rh-cta--main:        #{rh-color(ui-base--text)};
+  --rh-cta--main--hover: #{rh-color(ui-base--text--hover)};
   --rh-cta--aux:         transparent;
-  --rh-cta--aux--hover:  #{rh-var(ui-base--hover)};
+  --rh-cta--aux--hover:  #{rh-color(ui-base--hover)};
 }
 
 
@@ -166,10 +166,10 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 /// ===========================================================================
 
 :host([color="base"]) {
-  --rh-cta--main:        #{rh-var(ui-base)} !important;
-  --rh-cta--main--hover: #{rh-var(ui-base--hover)} !important;
-  --rh-cta--aux:         #{rh-var(ui-base--text)} !important;
-  --rh-cta--aux--hover:  #{rh-var(ui-base--text--hover)} !important;
+  --rh-cta--main:        #{rh-color(ui-base)} !important;
+  --rh-cta--main--hover: #{rh-color(ui-base--hover)} !important;
+  --rh-cta--aux:         #{rh-color(ui-base--text)} !important;
+  --rh-cta--aux--hover:  #{rh-color(ui-base--text--hover)} !important;
 }
 
 
@@ -178,10 +178,10 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 /// ===========================================================================
 
 :host([color="complement"]) {
-  --rh-cta--main:        #{rh-var(ui-complement)} !important;
-  --rh-cta--main--hover: #{rh-var(ui-complement--hover)} !important;
-  --rh-cta--aux:         #{rh-var(ui-complement--text)} !important;
-  --rh-cta--aux--hover:  #{rh-var(ui-complement--text--hover)} !important;
+  --rh-cta--main:        #{rh-color(ui-complement)} !important;
+  --rh-cta--main--hover: #{rh-color(ui-complement--hover)} !important;
+  --rh-cta--aux:         #{rh-color(ui-complement--text)} !important;
+  --rh-cta--aux--hover:  #{rh-color(ui-complement--text--hover)} !important;
 }
 
 
@@ -189,8 +189,8 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 /// COLOR OVERRIDE: ACCENT
 /// ===========================================================================
 :host([color="accent"]) {
-  --rh-cta--main:        #{rh-var(ui-accent)} !important;
-  --rh-cta--main--hover: #{rh-var(ui-accent--hover)} !important;
-  --rh-cta--aux:         #{rh-var(ui-accent--text)} !important;
-  --rh-cta--aux--hover:  #{rh-var(ui-accent--text--hover)} !important;
+  --rh-cta--main:        #{rh-color(ui-accent)} !important;
+  --rh-cta--main--hover: #{rh-color(ui-accent--hover)} !important;
+  --rh-cta--aux:         #{rh-color(ui-accent--text)} !important;
+  --rh-cta--aux--hover:  #{rh-color(ui-accent--text--hover)} !important;
 }

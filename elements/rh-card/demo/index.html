@@ -4,17 +4,14 @@
     <meta charset="utf-8">
     <title>RHElements: rh-card Demo</title>
 
-    <!-- needed for CP-Themeset -->
-    <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+    <!-- needed for CP-Theme -->
+    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
     <!--
       if support for IE11 IS NOT needed, just include the stylesheet
       than contains all of the variables for your themeset
     -->
-    <!-- use cp-themeset -->
-    <!-- <link rel="stylesheet" type="text/css" href="../../cp-themeset/cp-themeset.css"> -->
-
-    <!-- use another themeset -->
-    <!-- <link rel="stylesheet" type="text/css" href="../../test-themeset/test-themeset.css"> -->
+    <!-- use cp-theme -->
+    <!-- <link rel="stylesheet" href="../../../themes/cp-theme/cp-theme.css" /> -->
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
@@ -26,7 +23,10 @@
       that you want
     -->
     <script>
-        require(['../rh-card.umd.js']);
+        require([
+          '../../../themes/cp-theme/cp-theme.umd.js',
+          '../rh-card.umd.js'
+        ]);
     </script>
 
     <noscript>
@@ -34,15 +34,6 @@
     </noscript>
 
     <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
-
-    <!--
-      if support IS needed for IE11
-    -->
-    <!-- use cp-themeset with support for IE11 -->
-    <!-- <script>require(['../../cp-themeset/cp-themeset.umd.js','../rh-card.umd.js'])</script> -->
-
-    <!-- use another themeset with support for IE11 -->
-    <!-- <script>require(['../../test-themeset/test-themeset.umd.js','../rh-card.umd.js'])</script> -->
 
   </head>
   <body unresolved>

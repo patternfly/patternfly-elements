@@ -105,10 +105,10 @@ class RhCta extends RHElement {
     color: var(--rh-cta--aux--hover); }
 
 :host([on="dark"]) {
-  --rh-cta--main:        var(--rh-theme--color--ui-accent--text, #fff);
+  --rh-cta--main:        var(--rh-theme--color--text--on-dark, #fff);
   --rh-cta--main--hover: var(--rh-theme--color--ui-link--on-dark--hover, #cce6ff);
-  --rh-cta--aux:         var(--rh-theme--color--ui-link--on-dark, #99ccff);
-  --rh-cta--aux--hover:  var(--rh-theme--color--ui-accent--text--hover, #fff); }
+  --rh-cta--aux:         transparent;
+  --rh-cta--aux--hover:  transparent; }
 
 :host([on="dark"][priority="primary"]) {
   --rh-cta--main:        var(--rh-theme--color--ui-accent--text, #fff);

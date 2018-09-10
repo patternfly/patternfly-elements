@@ -25,6 +25,7 @@
     <script>
         require([
           '../../../themes/cp-theme/cp-theme.umd.js',
+          '../../rh-cta/rh-cta.umd.js',
           '../rh-card.umd.js'
         ]);
     </script>
@@ -35,18 +36,59 @@
 
     <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
 
+    <style>
+    /* For demo only */
+    .demo-cards {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .demo-cards > * {
+      margin: 0 16px 32px;
+      width: calc(25% - 32px);
+    }
+    </style>
+
   </head>
   <body unresolved>
     <h1>&lt;rh-card&gt;</h1>
-    <rh-card theme="dark">
-      <h2 slot="header">Dark Theme</h2>
-      This is rh-card with a dark theme.
-      <div slot="footer">Text in footer</div>
-    </rh-card>
-    <rh-card theme="light">
-      <h2 slot="header">Light Theme</h2>
-      This is rh-card with a light theme.
-      <div slot="footer">Text in footer</div>
-    </rh-card>
+    <div class="demo-cards">
+
+      <rh-card color="lightest">
+        <h2 slot="header">Lightest card</h2>
+        This is the lightest rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="primary"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+      <rh-card color="light">
+        <h2 slot="header">Light card</h2>
+        This is the light rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="secondary"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+      <rh-card>
+        <h2 slot="header">Default card</h2>
+        This is the default rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="secondary"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+      <rh-card color="dark">
+        <h2 slot="header">Dark Card</h2>
+        This is the dark rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="secondary" on="dark"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+      <rh-card color="darkest">
+        <h2 slot="header">Darkest Card</h2>
+        This is the darkest rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="secondary" on="dark"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+      <rh-card color="complement">
+        <h2 slot="header">Complement Card</h2>
+        This is the complement rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="secondary" on="dark"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+      <rh-card color="accent">
+        <h2 slot="header">Accent Card</h2>
+        This is the accent rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="secondary" on="dark"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+    </div>
   </body>
 </html>

@@ -158,6 +158,14 @@ $rh-vars: (
   container-spacer:              rh-size-prem(16px),
   content-spacer:                rh-size-prem(4px),
 
+  container-spacer--xxs:         rh-size-prem(4px),
+  container-spacer--xs:          rh-size-prem(8px),
+  container-spacer--sm:          rh-size-prem(12px),
+  container-spacer--md:          rh-size-prem(24px),
+  container-spacer--lg:          rh-size-prem(32px),
+  container-spacer--xl:          rh-size-prem(48px),
+  container-spacer--xxl:         rh-size-prem(64px),
+
   font-size:                     #{$rh-global--font-size-root}px,
   font-size--sm:                 12px,
   font-size--lg:                 18px,
@@ -176,6 +184,11 @@ $rh-vars: (
   font-size--heading--delta:     18px,
   font-size--heading--epsilon:   16px,
   font-size--heading--zeta:      14px,
+
+  font-weight--light:            300,
+  font-weight--normal:           500,
+  font-weight--semi-bold:        600,
+  font-weight--bold:             700,
 
   link--text-decoration:         underline,
   link--text-decoration--hover:  underline,

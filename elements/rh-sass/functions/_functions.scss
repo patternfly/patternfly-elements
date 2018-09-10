@@ -133,7 +133,7 @@
 /// RH Var
 ///
 /// Returns CSS Var stack with exposed theme Var and respective SCSS fallback
-/// 
+///
 /// @param {String} $cssvar - Variable name to be used and prepended with --rh-theme
 /// @requires {String} $repo - Name of repo, which is "rh"
 /// @use -
@@ -148,7 +148,7 @@
 ///           font-size:   #{rh-var(  font-size  )};
 ///         }
 ///         ```
-@function rh-var($cssvar, $category: '', $map: $rh-var) {
+@function rh-var($cssvar, $category: '', $map: $rh-vars) {
     @if $category != "" {
       $category: "#{$category}--";
     }
@@ -170,7 +170,7 @@
 ///     2. use like this:
 ///         ```
 ///         .my-element {
-///           color:       #{rh-color(  surface-base--text  )};
+///           color:       #{rh-color(  surface--base--text  )};
 ///           background:  #{rh-color(  surface--base )};
 ///         }
 ///         ```

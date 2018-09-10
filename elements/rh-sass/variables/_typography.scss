@@ -87,6 +87,10 @@ $rh-global--font-size--heading--zeta:    14px;
 // Needs to be resolved! DO NOT USE!
 // ========================================================================
 
+$rh-global--FontSize:         $rh-global--font-size;
+$rh-global--FontSize--sm:     $rh-global--font-size--sm;
+$rh-global--FontSize--lg:     $rh-global--font-size--lg;
+
 // Line heights
 $rh-global--LineHeight--sm:  1.2 !default;
 $rh-global--LineHeight:      1.5 !default; // base

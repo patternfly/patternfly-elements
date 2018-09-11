@@ -1,14 +1,76 @@
 //
-// Vars are named:
-// `$rh-global--concept--modifier--state--PropertyTitleCase`
-// `$rh-c-block__element--modifier--state--PropertyTitleCase`
-//
-// For example:
-// $rh-global--color--primary
-// $rh-global--FontSize
-// $rh-global--heading--xs--FontSize
-// $rh-dropdown--heading--FontSize
-// $cp-accordion--heading--FontSize
+// NEEDS TO BE CLEANED UP
+
+
+// See _maps.scss
+// Use #{rh-var($cssvar)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================================
+// Spacers / Gutters
+// ========================================================================
+
+$rh-global--containter-spacer:              rh-size-prem(16px) !default;
+$rh-global--content-spacer:                 rh-size-prem(4px) !default;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================================
+// Needs to be resolved! DO NOT USE!
+// ========================================================================
+
 
 $rh-global--space-size-root: $rh-global--font-size-root !default; // for spaces
 
@@ -41,9 +103,10 @@ $rh-global--grid-breakpoint--lg--max: $rh-global--grid-breakpoint--xl - 1 !defau
 // ========================================================================
 
 // Factors of 1em or 16px;
-$rh-global--spacer--xs:     rh-size-prem(4px) !default;
-$rh-global--spacer--sm:     rh-size-prem(8px) !default;
-$rh-global--spacer:         rh-size-prem(16px) !default; // base
+$rh-global--spacer--xxs:    rh-size-prem(4px) !default;
+$rh-global--spacer--xs:     rh-size-prem(8px) !default;
+$rh-global--spacer--sm:     rh-size-prem(12px) !default; // NEW. Not in PF
+$rh-global--spacer:         $rh-global--containter-spacer; // base
 $rh-global--spacer--md:     rh-size-prem(24px) !default;
 $rh-global--spacer--lg:     rh-size-prem(32px) !default;
 $rh-global--spacer--xl:     rh-size-prem(48px) !default;

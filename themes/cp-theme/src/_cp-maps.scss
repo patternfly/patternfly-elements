@@ -1,0 +1,200 @@
+$cp-colors: (
+
+  // ========================================================================
+  // Base Text Colors
+  // ========================================================================
+
+  text:                               $rh-global--text-color,
+  text--on-dark:                      $rh-global--text-color--inverted,
+  text--on-saturated:                 $rh-global--text-color--inverted,
+
+
+  // ========================================================================
+  // Base UI Link Colors to be used below
+  // ========================================================================
+
+  ui-link:                            $rh-global--link-color,
+  ui-link--visited:                   $rh-global--link-color--visited,
+  ui-link--hover:                     $rh-global--link-color--hover,
+  ui-link--focus:                     $rh-global--link-color--focus,
+
+  ui-link--on-dark:                   $rh-global--link-color--inverted,
+  ui-link--on-dark--visited:          $rh-global--link-color--inverted--visited,
+  ui-link--on-dark--hover:            $rh-global--link-color--inverted--hover,
+  ui-link--on-dark--focus:            $rh-global--link-color--inverted--focus,
+
+  ui-link--on-saturated:              $rh-global--link-color--inverted,
+  ui-link--on-saturated--visited:     $rh-global--link-color--inverted--visited,
+  ui-link--on-saturated--hover:       $rh-global--link-color--inverted--hover,
+  ui-link--on-saturated--focus:       $rh-global--link-color--inverted--focus,
+
+
+  // ========================================================================
+  // Base UI Colors for Buttons, CTAs, and actionable UI elements
+  // ========================================================================
+
+  ui-base:                            $rh-global--ui-element-color,
+  ui-base--hover:                     $rh-global--ui-element-color--hover,
+  ui-base--text:                      $rh-global--color--white,
+  ui-base--text--hover:               $rh-global--color--white,
+
+  ui-complement:                      $rh-global--color--gray-iron,
+  ui-complement--hover:               $rh-global--color--black-nero,
+  ui-complement--text:                $rh-global--color--white,
+  ui-complement--text--hover:         $rh-global--color--white,
+
+  ui-accent:                          $rh-global--color--red,
+  ui-accent--hover:                   $rh-global--color--red-maroon,
+  ui-accent--text:                    $rh-global--color--white,
+  ui-accent--text--hover:             $rh-global--color--white,
+
+  ui-disabled:                        $rh-global--disabled-state--BackgroundColor,
+  ui-disabled--hover:                 $rh-global--disabled-state--BackgroundColor,
+  ui-disabled--text:                  $rh-global--disabled-state--Color,
+  ui-disabled--text--hover:           $rh-global--disabled-state--Color,
+
+
+  // ========================================================================
+  // Base Surface Colors for Container elements
+  // ========================================================================
+
+  // Lightest group
+  surface--lightest:                  $rh-global--color--white,
+  surface--lightest--text:            $rh-global--text-color,
+  surface--lightest--link:            $rh-global--link-color,
+  surface--lightest--link--visited:   $rh-global--link-color--visited,
+  surface--lightest--link--hover:     $rh-global--link-color--hover,
+  surface--lightest--link--focus:     $rh-global--link-color--focus,
+
+  // Lighter group
+  surface--lighter:                   $rh-global--color--gray-moon,
+  surface--lighter--text:             $rh-global--text-color,
+  surface--lighter--link:             $rh-global--link-color,
+  surface--lighter--link--visited:    $rh-global--link-color--visited,
+  surface--lighter--link--hover:      $rh-global--link-color--hover,
+  surface--lighter--link--focus:      $rh-global--link-color--focus,
+
+  // Base group
+  surface--base:                      $rh-global--color--gray-mercury,
+  surface--base--text:                $rh-global--text-color,
+  surface--base--link:                $rh-global--link-color,
+  surface--base--link--visited:       $rh-global--link-color--visited,
+  surface--base--link--hover:         $rh-global--link-color--hover,
+  surface--base--link--focus:         $rh-global--link-color--focus,
+
+  // Darker group
+  surface--darker:                    $rh-global--color--gray-iron,
+  surface--darker--text:              $rh-global--text-color--inverted,
+  surface--darker--link:              $rh-global--link-color--inverted,
+  surface--darker--link--visited:     $rh-global--link-color--inverted--visited,
+  surface--darker--link--hover:       $rh-global--link-color--inverted--hover,
+  surface--darker--link--focus:       $rh-global--link-color--inverted--focus,
+
+  // Darkest group
+  surface--darkest:                   $rh-global--color--black-nero,
+  surface--darkest--text:             $rh-global--text-color--inverted,
+  surface--darkest--link:             $rh-global--link-color--inverted,
+  surface--darkest--link--visited:    $rh-global--link-color--inverted--visited,
+  surface--darkest--link--hover:      $rh-global--link-color--inverted--hover,
+  surface--darkest--link--focus:      $rh-global--link-color--inverted--focus,
+
+  // Complement group
+  surface--complement:                $rh-global--color--blue-rain,
+  surface--complement--text:          $rh-global--text-color--inverted,
+  surface--complement--link:          $rh-global--text-color--inverted,
+  surface--complement--link--visited: $rh-global--text-color--inverted,
+  surface--complement--link--hover:   darken($rh-global--text-color--inverted, 10%),
+  surface--complement--link--focus:   darken($rh-global--text-color--inverted, 10%),
+
+
+  // Accent group
+  surface--accent:                    $rh-global--color--red,
+  surface--accent--text:              $rh-global--text-color--inverted,
+  surface--accent--link:              $rh-global--text-color--inverted,
+  surface--accent--link--visited:     $rh-global--text-color--inverted,
+  surface--accent--link--hover:       darken($rh-global--text-color--inverted, 10%),
+  surface--accent--link--focus:       darken($rh-global--text-color--inverted, 10%),
+
+
+  /* Palette of Border Colors */
+  surface--border:                    $rh-global--border--BorderColor,
+  surface--border--lightest:          $rh-global--border--BorderColor--light,
+  surface--border--darkest:           $rh-global--border--BorderColor--dark,
+
+
+  // ========================================================================
+  // Base Feedback Colors for messaging, errors, etc.
+  // ========================================================================
+
+  /* Palette of Feedback Colors */
+  feedback--critical:                 #f44336,
+  feedback--critical--lightest:       #ffebee,
+  feedback--critical--darkest:        #b71c1c,
+
+  feedback--important:                #ff5722,
+  feedback--important--lightest:      #fbe9e7,
+  feedback--important--darkest:       #bf360c,
+
+  feedback--moderate:                 #ff8f00,
+  feedback--moderate--lightest:       #fff8e1,
+  feedback--moderate--darkest:        #bd5200,
+
+  feedback--success:                  #2e7d32,
+  feedback--success--lightest:        #e8f5e9,
+  feedback--success--darkest:         #1b5e20,
+
+  feedback--info:                     #0277bd,
+  feedback--info--lightest:           #e1f5fe,
+  feedback--info--darkest:            #01579b,
+
+  feedback--default:                  #606060,
+  feedback--default--lightest:        #dfdfdf,
+  feedback--default--darkest:         #464646,
+
+);
+
+$cp-vars: (
+  container-spacer:              rh-size-prem(16px),
+  content-spacer:                rh-size-prem(4px),
+
+  container-spacer--xxs:         rh-size-prem(4px),
+  container-spacer--xs:          rh-size-prem(8px),
+  container-spacer--sm:          rh-size-prem(12px),
+  container-spacer--md:          rh-size-prem(24px),
+  container-spacer--lg:          rh-size-prem(32px),
+  container-spacer--xl:          rh-size-prem(48px),
+  container-spacer--xxl:         rh-size-prem(64px),
+
+  font-size:                     #{$rh-global--font-size-root}px,
+  font-size--sm:                 12px,
+  font-size--lg:                 18px,
+
+  font-family:                   '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
+  font-family--heading:          '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
+  font-family--code:             '"Overpass Mono", Consolas, Monaco, 'Andale Mono', monospace',
+
+  line-height:                   1.5,
+  line-height--for-sm:           1.5,
+  line-height--for-lg:           1.2,
+
+  font-size--heading--alpha:     32px,
+  font-size--heading--beta:      24px,
+  font-size--heading--gamma:     21px,
+  font-size--heading--delta:     18px,
+  font-size--heading--epsilon:   16px,
+  font-size--heading--zeta:      14px,
+
+  link--text-decoration:         underline,
+  link--text-decoration--hover:  underline,
+
+  border-width:                  1px,
+  border-style:                  solid,
+  border-radius:                 2px,
+
+  box-shadow--sm:                '0  rh-size-prem(1)  rh-size-prem(2) 0 rgba($rh-color--gray-1000, .2)',
+  box-shadow--md:                '0  rh-size-prem(2)  rh-size-prem(1) rh-size-prem(1) rgba($rh-color--gray-1000, .12), 0  rh-size-prem(4)  rh-size-prem(11) rh-size-prem(6) rgba($rh-color--gray-1000, .05)',
+  box-shadow--lg:                '0  rh-size-prem(3)  rh-size-prem(7) rh-size-prem(3) rgba($rh-color--gray-1000, .13), 0  rh-size-prem(11)  rh-size-prem(24) rh-size-prem(16) rgba($rh-color--gray-1000, .12)',
+  box-shadow--inset:             'inset 0 0 rh-size-prem(10) 0 rgba($rh-color--gray-1000, .25)',
+
+  animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),
+);

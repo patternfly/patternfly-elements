@@ -91,7 +91,7 @@ class RhAccordion extends RHElement {
   }
 
   constructor() {
-    super(RhAccordion.tag);
+    super(RhAccordion);
   }
 
   connectedCallback() {
@@ -375,7 +375,7 @@ class RhAccordionHeader extends RHElement {
   }
 
   constructor() {
-    super(RhAccordionHeader.tag);
+    super(RhAccordionHeader);
     this._clickHandler = this._clickHandler.bind(this);
   }
 
@@ -471,7 +471,7 @@ class RhAccordionPanel extends RHElement {
   }
 
   constructor() {
-    super(RhAccordionPanel.tag);
+    super(RhAccordionPanel);
   }
 
   connectedCallback() {

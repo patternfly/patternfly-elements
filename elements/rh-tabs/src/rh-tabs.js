@@ -157,7 +157,7 @@ class RhTabs extends RHElement {
   }
 
   constructor() {
-    super(RhTabs.tag);
+    super(RhTabs);
 
     this._linked = false;
 
@@ -444,7 +444,7 @@ class RhTab extends RHElement {
   }
 
   constructor() {
-    super(RhTab.tag);
+    super(RhTab);
 
     if (!this.id) {
       this.id = `${RhTab.tag}-${generateId()}`;
@@ -492,7 +492,7 @@ class RhTabPanel extends RHElement {
   }
 
   constructor() {
-    super(RhTabPanel.tag);
+    super(RhTabPanel);
 
     if (!this.id) {
       this.id = `${RhTabPanel.tag}-${generateId()}`;

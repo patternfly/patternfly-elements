@@ -143,7 +143,7 @@ class RhTabs extends RHElement {
   background-color: var(--rhe-c-tabs__tabs--BackgroundColor, transparent);
   border-top: var(--rhe-c-tabs__tabs--BorderTop, 0);
   border-right: var(--rhe-c-tabs__tabs--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__tabs--BorderBottom, 1px solid #ccc);
+  border-bottom: var(--rhe-c-tabs__tabs--BorderBottom, 1px solid #dfdfdf);
   border-left: var(--rhe-c-tabs__tabs--BorderLeft, 0); }
 
 .panels {
@@ -160,7 +160,7 @@ class RhTabs extends RHElement {
   width: var(--rhe-c-tabs__tabs--vertical--Width, 25%);
   background-color: var(--rhe-c-tabs__tabs--vertical--BackgroundColor, transparent);
   border-top: var(--rhe-c-tabs__tabs--vertical--BorderTop, 0);
-  border-right: var(--rhe-c-tabs__tabs--vertical--BorderRight, 1px solid #ccc);
+  border-right: var(--rhe-c-tabs__tabs--vertical--BorderRight, 1px solid #dfdfdf);
   border-bottom: var(--rhe-c-tabs__tabs--vertical--BorderBottom, 0);
   border-left: var(--rhe-c-tabs__tabs--vertical--BorderLeft, 0); }
 
@@ -179,10 +179,10 @@ class RhTabs extends RHElement {
   margin-right: var(--rhe-c-tabs__tab--selected--MarginRight, -1px);
   margin-bottom: var(--rhe-c-tabs__tab--selected--MarginBottom, 0);
   margin-left: var(--rhe-c-tabs__tab--selected--MarginLeft, 0);
-  border-top: var(--rhe-c-tabs__tab--selected--BorderTop, 1px solid #ccc);
+  border-top: var(--rhe-c-tabs__tab--selected--BorderTop, 1px solid #dfdfdf);
   border-right: var(--rhe-c-tabs__tab--selected--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__tab--selected--BorderBottom, 1px solid #ccc);
-  border-left: var(--rhe-c-tabs__tab--selected--BorderLeft, 1px solid #ccc); }
+  border-bottom: var(--rhe-c-tabs__tab--selected--BorderBottom, 1px solid #dfdfdf);
+  border-left: var(--rhe-c-tabs__tab--selected--BorderLeft, 1px solid #dfdfdf); }
 
 :host([vertical]) .panels {
   padding-top: var(--rhe-c-tabs__panel-vertical--PaddingTop, 0);
@@ -234,7 +234,7 @@ class RhTabs extends RHElement {
   }
 
   constructor() {
-    super(RhTabs.tag);
+    super(RhTabs);
 
     this._linked = false;
 
@@ -538,10 +538,10 @@ class RhTab extends RHElement {
   margin-right: var(--rhe-c-tabs__tab--selected--MarginRight, 0);
   margin-bottom: var(--rhe-c-tabs__tab--selected--MarginBottom, -1px);
   margin-left: var(--rhe-c-tabs__tab--selected--MarginLeft, 0);
-  border-top: var(--rhe-c-tabs__tab--selected--BorderTop, 1px solid #ccc);
-  border-right: var(--rhe-c-tabs__tab--selected--BorderRight, 1px solid #ccc);
+  border-top: var(--rhe-c-tabs__tab--selected--BorderTop, 1px solid #dfdfdf);
+  border-right: var(--rhe-c-tabs__tab--selected--BorderRight, 1px solid #dfdfdf);
   border-bottom: var(--rhe-c-tabs__tab--selected--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__tab--selected--BorderLeft, 1px solid #ccc);
+  border-left: var(--rhe-c-tabs__tab--selected--BorderLeft, 1px solid #dfdfdf);
   background-color: var(--rhe-c-tabs__tab--selected--BackgroundColor, #fff);
   text-transform: var(--rhe-c-tabs__tab--selected--TextTransform, none);
   font-weight: var(--rhe-c-tabs__tab--selected--FontWeight, normal);
@@ -642,7 +642,7 @@ class RhTab extends RHElement {
   }
 
   constructor() {
-    super(RhTab.tag);
+    super(RhTab);
 
     if (!this.id) {
       this.id = `${RhTab.tag}-${generateId()}`;
@@ -702,7 +702,7 @@ class RhTabPanel extends RHElement {
   }
 
   constructor() {
-    super(RhTabPanel.tag);
+    super(RhTabPanel);
 
     if (!this.id) {
       this.id = `${RhTabPanel.tag}-${generateId()}`;

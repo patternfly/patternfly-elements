@@ -1,3 +1,5 @@
+import RHElement from "../rhelement/rhelement.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -19,8 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import RHElement from "../rhelement/rhelement.js";
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
@@ -627,3 +627,4 @@ class RhAccordionPanel extends RHElement {
 RHElement.create(RhAccordionHeader);
 RHElement.create(RhAccordionPanel);
 RHElement.create(RhAccordion);
+//# sourceMappingURL=rh-accordion.js.map

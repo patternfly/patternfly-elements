@@ -111,7 +111,7 @@ class RHElement extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.innerHTML = null;
+    this.shadowRoot.innerHTML = "";
     this.template.innerHTML = this.html;
 
     if (window.ShadyCSS) {

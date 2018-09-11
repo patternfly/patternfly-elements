@@ -1,0 +1,24 @@
+@import "../red-hat-sass/red-hat";
+@import "./cp-maps";
+
+:root {
+  @each $cssvar, $varstack in $cp-colors {
+
+    --rh-theme--color--#{$cssvar}: #{$varstack};
+  }
+
+  @each $cssvar, $varstack in $cp-vars {
+
+    --rh-theme--#{$cssvar}: #{$varstack};
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--rh-theme--font-family);
+  font-size: var(--rh-theme--font-size);
+  line-height: var(--rh-theme--line-height);
+}

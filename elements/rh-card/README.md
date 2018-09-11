@@ -1,14 +1,26 @@
 # WIP 🐣: RHElements Card Element
 
-## Dependencies
+## Usage
 
-Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
+```html
+<rh-card>
+  <h2 slot="header">RH Card</h2>
+  This is the rh-card body.
+  <div slot="footer">Text in footer</div>
+</rh-card>
+```
 
-    npm install -g polyserve web-component-tester
+## Slots
 
-## Dev
+### header
+If this slot is used, we expect a heading level tag (h1, h2, h3, h4, h5, h6) to
+be used here.
 
-    npm start
+### Default slot (body)
+Any content that is not designated for the header or footer slot, will go to this slot.
+
+### footer
+Use this slot for anything that you want in the footer of the card.
 
 ## Test
 
@@ -20,13 +32,14 @@ Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-compone
 
 ## Demo
 
-Run `npm start` and Polyserve will start a server and open your default browser to the demo page of the element.
+From the RHElements root directory, run:
+
+    npm start
 
 ## Code style
 
 Card (and all RHElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
 
 [prettier]: https://github.com/prettier/prettier/
-[prettier-ed]: https://github.com/prettier/prettier/#editor-integration
-[polyserve]: https://github.com/Polymer/polyserve
+[prettier-ed]: https://prettier.io/docs/en/editors.html
 [web-component-tester]: https://github.com/Polymer/web-component-tester

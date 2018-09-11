@@ -1,15 +1,14 @@
-const path = require("path");
 const fs = require("fs");
+const path = require("path");
 
 const gulp = require("gulp");
-const babel = require("gulp-babel");
-const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
 const replace = require("gulp-replace");
 const stripCssComments = require("strip-css-comments");
 const trim = require("trim");
 const decomment = require("decomment");
 const sass = require("node-sass");
+const shell = require("gulp-shell");
 
 gulp.task("compile", () => {
   return gulp
@@ -20,18 +19,12 @@ gulp.task("compile", () => {
         "$1$2.umd$3"
       )
     )
-    .pipe(babel())
-    .pipe(uglify())
     .pipe(
       rename({
         suffix: ".umd"
       })
     )
     .pipe(gulp.dest("./"));
-});
-
-gulp.task("watch", () => {
-  return gulp.watch("./src/*", gulp.series("merge", "compile"));
 });
 
 gulp.task("merge", () => {
@@ -92,6 +85,14 @@ ${html}\`;
     .pipe(gulp.dest("./"));
 });
 
-gulp.task("default", gulp.series("merge", "compile"));
+gulp.task("watch", () => {
+  return gulp.watch("./src/*", gulp.series("build"));
+});
 
-gulp.task("dev", gulp.series("merge", "compile", "watch"));
+gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
+
+gulp.task("build", gulp.series("merge", "compile", "bundle"));
+
+gulp.task("default", gulp.series("build"));
+
+gulp.task("dev", gulp.series("build", "watch"));

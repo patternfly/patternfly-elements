@@ -2,14 +2,14 @@ const path = require("path");
 const fs = require("fs");
 
 const gulp = require("gulp");
-const babel = require("gulp-babel");
-const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
 const replace = require("gulp-replace");
 const sass = require("gulp-sass");
 const stripCssComments = require("gulp-strip-css-comments");
 const trim = require("gulp-trim");
 const del = require("del");
+const shell = require("gulp-shell");
+
 let watcher;
 
 gulp.task("clean", () => {
@@ -18,7 +18,7 @@ gulp.task("clean", () => {
 
 gulp.task("sass", () => {
   return gulp
-    .src(["./*.scss"])
+    .src(["./src/*.scss"])
     .pipe(sass())
     .pipe(stripCssComments())
     .pipe(trim())
@@ -42,8 +42,6 @@ gulp.task("replaceStyles", () => {
 gulp.task("compile", () => {
   return gulp
     .src(["./cp-theme.js"])
-    .pipe(babel())
-    .pipe(uglify())
     .pipe(
       rename({
         suffix: ".umd"
@@ -58,10 +56,17 @@ gulp.task("stopwatch", done => {
 });
 
 gulp.task("watch", () => {
-  watcher = gulp.watch(["./*.scss"], gulp.series("stopwatch", "sass", "watch"));
+  watcher = gulp.watch(["./src/*"], gulp.series("stopwatch", "build", "watch"));
   return watcher;
 });
 
-gulp.task("default", gulp.series("clean", "sass", "replaceStyles", "compile"));
+gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
+
+gulp.task(
+  "build",
+  gulp.series("clean", "sass", "replaceStyles", "compile", "bundle")
+);
+
+gulp.task("default", gulp.series("build"));
 
 gulp.task("dev", gulp.series("default", "watch"));

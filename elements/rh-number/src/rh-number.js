@@ -21,7 +21,7 @@
  */
 
 import RHElement from "../rhelement/rhelement.js";
-import "../../numeral/numeral.js";
+import numeral from "numeral";
 
 // easy aliases for common format strings
 const types = {
@@ -51,31 +51,45 @@ class RhNumber extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["number"];
+    return ["number", "format", "type"];
   }
 
   constructor() {
-    super(RhNumber.tag);
+    super(RhNumber);
   }
 
   connectedCallback() {
     super.connectedCallback();
+    this.connected = true;
 
     this._determineFormat();
     this._setInitialNumber();
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
-    // dynamically find handler function so other attributes can be watched
-    // simply by creating a function with the right name to handle their
-    // changes
-    this[`_${attr}AttrUpdate`](oldVal, newVal);
+    switch (attr) {
+      case "type":
+        this._determineFormat();
+        break;
+      case "format":
+        this._updateNumber(this.getAttribute("number"), newVal);
+        break;
+      case "number":
+        this._updateNumber(newVal, this.getAttribute("format"));
+    }
   }
 
   _setInitialNumber() {
-    const initialNumber =
-      typeof this.number === "undefined" ? this.textContent : this.number;
-    this.setAttribute("number", initialNumber);
+    const numberAttrDefined = !Number.isNaN(
+      parseFloat(this.getAttribute("number"))
+    );
+    const numberContentDefined = !Number.isNaN(parseFloat(this.textContent));
+
+    if (numberAttrDefined) {
+      this.setAttribute("number", this.getAttribute("number"));
+    } else if (numberContentDefined) {
+      this.setAttribute("number", this.textContent);
+    }
   }
 
   _determineFormat() {
@@ -88,10 +102,12 @@ class RhNumber extends RHElement {
     }
   }
 
-  _numberAttrUpdate(oldVal, newVal) {
-    this.shadowRoot.querySelector("span").textContent = numeral(newVal).format(
-      this.getAttribute("format")
-    );
+  _updateNumber(num, type) {
+    this.shadowRoot.querySelector("span").textContent = this._format(num, type);
+  }
+
+  _format(num, type) {
+    return numeral(num).format(type);
   }
 }
 

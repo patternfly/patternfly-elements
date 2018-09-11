@@ -1,3 +1,5 @@
+import { autoReveal } from "./utilities/reveal.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -41,24 +43,15 @@ class RHElement extends HTMLElement {
     this.setAttribute("rh-type", value);
   }
 
-  constructor(tag, type) {
+  constructor(rhClass, { type = null, delayRender = false } = {}) {
     super();
 
-    this.tag = tag;
+    this._rhClass = rhClass;
+    this.tag = rhClass.tag;
     this._queue = [];
-
     this.template = document.createElement("template");
-    this.template.innerHTML = this.html;
-
-    if (window.ShadyCSS && this.html) {
-      ShadyCSS.prepareTemplate(this.template, this.tag);
-    }
 
     this.attachShadow({ mode: "open" });
-
-    if (this.html) {
-      this.shadowRoot.appendChild(this.template.content.cloneNode(true));
-    }
 
     if (type) {
       this._queueAction({
@@ -69,15 +62,35 @@ class RHElement extends HTMLElement {
         }
       });
     }
+
+    if (!delayRender) {
+      this.render();
+    }
   }
 
   connectedCallback() {
     if (window.ShadyCSS) {
-      ShadyCSS.styleElement(this);
+      window.ShadyCSS.styleElement(this);
     }
 
     if (this._queue.length) {
       this._processQueue();
+    }
+  }
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    const cascadeTo = this._rhClass.cascadingAttributes[attr];
+    if (cascadeTo) {
+      this._copyAttribute(attr, cascadeTo);
+    }
+  }
+
+  _copyAttribute(name, to) {
+    const recipients = this.shadowRoot.querySelectorAll(to);
+    const value = this.getAttribute(name);
+    const fname = value == null ? "removeAttribute" : "setAttribute";
+    for (const node of recipients) {
+      node[fname](name, value);
     }
   }
 
@@ -96,6 +109,20 @@ class RHElement extends HTMLElement {
   _setProperty({ name, value }) {
     this[name] = value;
   }
+
+  render() {
+    this.shadowRoot.innerHTML = "";
+    this.template.innerHTML = this.html;
+
+    if (window.ShadyCSS) {
+      window.ShadyCSS.prepareTemplate(this.template, this.tag);
+    }
+
+    this.shadowRoot.appendChild(this.template.content.cloneNode(true));
+  }
 }
 
+autoReveal();
+
 export default RHElement;
+//# sourceMappingURL=rhelement.js.map

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script></script>
+
+    <noscript>
+      <link href="../../rhelement/rhelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
+
+  </head>
+  <body unresolved>
+
+    <rh-card>
+      <h2 slot="header">Card 1</h2>This is rh-card.
+      <div slot="footer">Text in footer</div>
+    </rh-card>
+
+    <script>
+      suite("using RHElements as AMD Modules", () => {
+        test('it should upgrade', done => {
+          require(['../../rh-card/rh-card.umd.js'], () => {
+            assert.instanceOf(
+              document.querySelector('rh-card'),
+              customElements.get('rh-card'),
+              'the <rh-card> should be an instance of RhCard'
+            );
+            done();
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
+

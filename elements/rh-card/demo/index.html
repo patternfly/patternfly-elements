@@ -4,17 +4,14 @@
     <meta charset="utf-8">
     <title>RHElements: rh-card Demo</title>
 
-    <!-- needed for CP-Themeset -->
-    <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+    <!-- needed for CP-Theme -->
+    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
     <!--
       if support for IE11 IS NOT needed, just include the stylesheet
       than contains all of the variables for your themeset
     -->
-    <!-- use cp-themeset -->
-    <!-- <link rel="stylesheet" type="text/css" href="../../cp-themeset/cp-themeset.css"> -->
-
-    <!-- use another themeset -->
-    <!-- <link rel="stylesheet" type="text/css" href="../../test-themeset/test-themeset.css"> -->
+    <!-- use cp-theme -->
+    <!-- <link rel="stylesheet" href="../../../themes/cp-theme/cp-theme.css" /> -->
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
@@ -26,7 +23,11 @@
       that you want
     -->
     <script>
-        require(['../rh-card.umd.js']);
+        require([
+          '../../../themes/cp-theme/cp-theme.umd.js',
+          '../../rh-cta/rh-cta.umd.js',
+          '../rh-card.umd.js'
+        ]);
     </script>
 
     <noscript>
@@ -35,27 +36,59 @@
 
     <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
 
-    <!--
-      if support IS needed for IE11
-    -->
-    <!-- use cp-themeset with support for IE11 -->
-    <!-- <script>require(['../../cp-themeset/cp-themeset.umd.js','../rh-card.umd.js'])</script> -->
+    <style>
+    /* For demo only */
+    .demo-cards {
+      display: flex;
+      flex-wrap: wrap;
+    }
 
-    <!-- use another themeset with support for IE11 -->
-    <!-- <script>require(['../../test-themeset/test-themeset.umd.js','../rh-card.umd.js'])</script> -->
+    .demo-cards > * {
+      margin: 0 16px 32px;
+      width: calc(25% - 32px);
+    }
+    </style>
 
   </head>
   <body unresolved>
     <h1>&lt;rh-card&gt;</h1>
-    <rh-card theme="dark">
-      <h2 slot="header">Dark Theme</h2>
-      This is rh-card with a dark theme.
-      <div slot="footer">Text in footer</div>
-    </rh-card>
-    <rh-card theme="light">
-      <h2 slot="header">Light Theme</h2>
-      This is rh-card with a light theme.
-      <div slot="footer">Text in footer</div>
-    </rh-card>
+    <div class="demo-cards">
+
+      <rh-card color="lightest">
+        <h2 slot="header">Lightest card</h2>
+        This is the lightest rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="primary"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+      <rh-card color="light">
+        <h2 slot="header">Light card</h2>
+        This is the light rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="secondary"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+      <rh-card>
+        <h2 slot="header">Default card</h2>
+        This is the default rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="secondary"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+      <rh-card color="dark">
+        <h2 slot="header">Dark Card</h2>
+        This is the dark rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="secondary" on="dark"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+      <rh-card color="darkest">
+        <h2 slot="header">Darkest Card</h2>
+        This is the darkest rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="secondary" on="dark"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+      <rh-card color="complement">
+        <h2 slot="header">Complement Card</h2>
+        This is the complement rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="secondary" on="dark"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+      <rh-card color="accent">
+        <h2 slot="header">Accent Card</h2>
+        This is the accent rh-card and <a href="#">a link</a>.
+        <div slot="footer"><rh-cta priority="secondary" on="dark"><a href="#">Learn more</a></rh-cta></div>
+      </rh-card>
+    </div>
   </body>
 </html>

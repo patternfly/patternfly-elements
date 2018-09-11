@@ -152,3 +152,49 @@ $cp-colors: (
   feedback--default--darkest:         #464646,
 
 );
+
+$cp-vars: (
+  container-spacer:              rh-size-prem(16px),
+  content-spacer:                rh-size-prem(4px),
+
+  container-spacer--xxs:         rh-size-prem(4px),
+  container-spacer--xs:          rh-size-prem(8px),
+  container-spacer--sm:          rh-size-prem(12px),
+  container-spacer--md:          rh-size-prem(24px),
+  container-spacer--lg:          rh-size-prem(32px),
+  container-spacer--xl:          rh-size-prem(48px),
+  container-spacer--xxl:         rh-size-prem(64px),
+
+  font-size:                     #{$rh-global--font-size-root}px,
+  font-size--sm:                 12px,
+  font-size--lg:                 18px,
+
+  font-family:                   '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
+  font-family--heading:          '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
+  font-family--code:             '"Overpass Mono", Consolas, Monaco, 'Andale Mono', monospace',
+
+  line-height:                   1.5,
+  line-height--for-sm:           1.5,
+  line-height--for-lg:           1.2,
+
+  font-size--heading--alpha:     32px,
+  font-size--heading--beta:      24px,
+  font-size--heading--gamma:     21px,
+  font-size--heading--delta:     18px,
+  font-size--heading--epsilon:   16px,
+  font-size--heading--zeta:      14px,
+
+  link--text-decoration:         underline,
+  link--text-decoration--hover:  underline,
+
+  border-width:                  1px,
+  border-style:                  solid,
+  border-radius:                 2px,
+
+  box-shadow--sm:                '0  rh-size-prem(1)  rh-size-prem(2) 0 rgba($rh-color--gray-1000, .2)',
+  box-shadow--md:                '0  rh-size-prem(2)  rh-size-prem(1) rh-size-prem(1) rgba($rh-color--gray-1000, .12), 0  rh-size-prem(4)  rh-size-prem(11) rh-size-prem(6) rgba($rh-color--gray-1000, .05)',
+  box-shadow--lg:                '0  rh-size-prem(3)  rh-size-prem(7) rh-size-prem(3) rgba($rh-color--gray-1000, .13), 0  rh-size-prem(11)  rh-size-prem(24) rh-size-prem(16) rgba($rh-color--gray-1000, .12)',
+  box-shadow--inset:             'inset 0 0 rh-size-prem(10) 0 rgba($rh-color--gray-1000, .25)',
+
+  animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),
+);

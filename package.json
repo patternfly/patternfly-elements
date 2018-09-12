@@ -11,7 +11,7 @@
     "test-suite-inject": "node scripts/test-suite-inject.js",
     "storybook": "start-storybook -c .storybook -p 9001 -s ./elements",
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
-    "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject"
+    "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject && npm run bootstrap"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.8",
@@ -42,6 +42,7 @@
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.1",
     "gulp-sequence": "^1.0.0",
+    "gulp-shell": "^0.6.5",
     "gulp-strip-css-comments": "^2.0.0",
     "gulp-svg-sprite": "^1.4.0",
     "gulp-trim": "^1.0.2",

@@ -43,10 +43,11 @@ class RHElement extends HTMLElement {
     this.setAttribute("rh-type", value);
   }
 
-  constructor(tag, type, delayRender = false) {
+  constructor(rhClass, { type = null, delayRender = false } = {}) {
     super();
 
-    this.tag = tag;
+    this._rhClass = rhClass;
+    this.tag = rhClass.tag;
     this._queue = [];
     this.template = document.createElement("template");
 
@@ -69,11 +70,31 @@ class RHElement extends HTMLElement {
 
   connectedCallback() {
     if (window.ShadyCSS) {
-      ShadyCSS.styleElement(this);
+      window.ShadyCSS.styleElement(this);
     }
 
     if (this._queue.length) {
       this._processQueue();
+    }
+  }
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    if (!this._rhClass.cascadingAttributes) {
+      return;
+    }
+
+    const cascadeTo = this._rhClass.cascadingAttributes[attr];
+    if (cascadeTo) {
+      this._copyAttribute(attr, cascadeTo);
+    }
+  }
+
+  _copyAttribute(name, to) {
+    const recipients = this.shadowRoot.querySelectorAll(to);
+    const value = this.getAttribute(name);
+    const fname = value == null ? "removeAttribute" : "setAttribute";
+    for (const node of recipients) {
+      node[fname](name, value);
     }
   }
 
@@ -94,11 +115,11 @@ class RHElement extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.innerHTML = null;
+    this.shadowRoot.innerHTML = "";
     this.template.innerHTML = this.html;
 
     if (window.ShadyCSS) {
-      ShadyCSS.prepareTemplate(this.template, this.tag);
+      window.ShadyCSS.prepareTemplate(this.template, this.tag);
     }
 
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));

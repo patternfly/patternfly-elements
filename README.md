@@ -4,10 +4,12 @@ RHElements is a collection of flexible and lightweight [Web Components][wc], and
 
 These are the goals of the RHElements project:
 
- - **minimalism**: small file size, minimal boilerplate, no "framework-like" features.
- - **write once, use everywhere**: RHElements work in React, Vue, Angular, vanilla JS, anywhere HTML elements are used.
+ - **minimal**: small file size, minimal boilerplate, no "framework-like" features.
+ - **universal**: write once, use everywhere.  RHElements work in React, Vue, Angular, vanilla JS, anywhere HTML elements are used.
 
-A recipe (yeoman generator) is included for creating Web Components that meets these goals.
+The result of these two principles is plugging one set of comopnents into a wide variety of applications, bringing UX consistency and developer familiarity to any web project.
+
+A Yeoman generator is included for creating Web Components that meets these goals.
 
 Let's get started!
 
@@ -18,23 +20,27 @@ Let's get started!
     npm install # this will take a while due to lerna bootstrap
     npm start
 
-*Notice: You will need to use [Node](https://nodejs.org/en/) v.7 or higher. These elements are written in [ES6](http://es6-features.org/).*
+The `start` script will launch the demo pages.  Demo pages are static showcases of each element, and also serve as scratchpads for experimenting while working on an element.
+
+*Notice: You will need to use [Node](https://nodejs.org/en/) v.7 or higher.  Storybook _may_ not work with Node v.10.*
 
 ## Developing new RHElements
 
 There are two types of development commands, root commands which you run from the root directory of the project, and element commands, which you run from an element directory.
 
-### Root commands
+### Repo commands
 
-These commands can be run from the root directory of RHElements and operate on all the elements.
+These commands are run from the root directory of RHElements repo.  They operate on all elements.
 
 | command | description |
 |---|---|
 | `npm start` | Launch a demo server. This should be continuously running as you work. |
 | `npm test` | Test ALL RHElements. |
 | `npm run build` | Build ALL RHElements. |
-| `npm run bootstrap` | Update ALL rhelements' dependencies and interlink them with [lerna bootstrap][lerna-bs]. |
-| `npm run storybook` | Run storybook  |
+| `npm run new` | Create a new RHElement. |
+| `npm run storybook` | Run storybook to preview all the RHElements.  |
+| `npm run build-storybook` | Build storybook for deployment as a static app.  |
+
 
 ### Element commands
 

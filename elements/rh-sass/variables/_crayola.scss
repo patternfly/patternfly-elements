@@ -1,0 +1,132 @@
+// ========================================================================
+// CRAYOLA COLORS for RHElements
+//
+// Basic named colors to be assigned to context in _colors.scss
+//
+// While these are available for styling RHElements, it's recommended
+//    that developers try to utilize the context-based colors in
+//    _colors.scss first.
+//
+// ========================================================================
+
+
+// ========================================================================
+// RHElement Brand Colors
+// Namespaced with $rhelements-- to separate from colors below, which will
+//    be based on these colors.
+// ========================================================================
+
+$rhelements--orange:            #fe460d !default;
+$rhelements--orange-dark:       #e23b0e !default;
+$rhelements--orange-darkest:    #ad2b0c !default;
+
+$rhelements--blue:              #0477a4 !default;
+$rhelements--blue-dark:         #046a89 !default;
+$rhelements--blue-darkest:      #044554 !default;
+
+$rhelements--green:             #aee339 !default;
+$rhelements--green-dark:        #a2c935 !default;
+$rhelements--green-darkest:     #7c9328 !default;
+
+$rhelements--gray:              #797979 !default;
+$rhelements--gray-light:        #d2d2d2 !default;
+$rhelements--gray-dark:         #333 !default;
+
+// Other tertiary named colors to be used below
+$rhelements--red:               #c00 !default;
+$rhelements--yellow:            #f0ab00 !default;
+$rhelements--cyan:              #007a87 !default;
+$rhelements--purple:            rebeccapurple !default; // Was #703fec
+
+// ========================================================================
+// B&W, Gray Values
+// ========================================================================
+
+$rh-color--white:               #fff !default;
+$rh-color--gray-50:             lighten($rhelements--gray, 60%) !default;
+$rh-color--gray-100:            lighten($rhelements--gray, 50%) !default;
+$rh-color--gray-150:            $rhelements--gray-light !default;
+$rh-color--gray-200:            lighten($rhelements--gray, 40%) !default;
+$rh-color--gray-300:            lighten($rhelements--gray, 30%) !default;
+$rh-color--gray-400:            lighten($rhelements--gray, 20%) !default;
+$rh-color--gray-500:            lighten($rhelements--gray, 10%) !default;
+$rh-color--gray-600:            $rhelements--gray !default;                 // Aliased
+$rh-color--gray-700:            darken($rhelements--gray, 10%) !default;
+$rh-color--gray-800:            darken($rhelements--gray, 20%) !default;
+$rh-color--gray-900:            darken($rhelements--gray, 30%) !default;
+$rh-color--gray-1000:           darken($rhelements--gray, 40%) !default;
+$rh-color--black:               $rh-color--gray-1000 !default;               // Aliased
+
+// ========================================================================
+// Hue Rainbow Values!
+// ========================================================================
+
+$rh-color--red-50:              lighten($rhelements--red, 50%) !default;
+$rh-color--red-100:             lighten($rhelements--red, 40%) !default;
+$rh-color--red-200:             lighten($rhelements--red, 30%) !default;
+$rh-color--red-300:             lighten($rhelements--red, 20%) !default;
+$rh-color--red-400:             lighten($rhelements--red, 10%) !default;
+$rh-color--red-500:             $rhelements--red !default;                // Aliased
+$rh-color--red-600:             darken($rhelements--red, 10%) !default;
+$rh-color--red-700:             darken($rhelements--red, 20%) !default;
+$rh-color--red-800:             darken($rhelements--red, 30%) !default;
+
+$rh-color--orange-50:           lighten($rhelements--orange, 40%) !default;
+$rh-color--orange-100:          lighten($rhelements--orange, 30%) !default;
+$rh-color--orange-200:          lighten($rhelements--orange, 20%) !default;
+$rh-color--orange-300:          lighten($rhelements--orange, 10%) !default;
+$rh-color--orange-400:          $rhelements--orange !default;              // Aliased
+$rh-color--orange-500:          darken($rhelements--orange, 10%) !default;
+$rh-color--orange-600:          darken($rhelements--orange, 20%) !default;
+$rh-color--orange-700:          darken($rhelements--orange, 30%) !default;
+$rh-color--orange-800:          darken($rhelements--orange, 40%) !default;
+
+$rh-color--yellow-50:           lighten($rhelements--yellow, 50%) !default;
+$rh-color--yellow-100:          lighten($rhelements--yellow, 40%) !default;
+$rh-color--yellow-200:          lighten($rhelements--yellow, 30%) !default;
+$rh-color--yellow-300:          lighten($rhelements--yellow, 20%) !default;
+$rh-color--yellow-400:          lighten($rhelements--yellow, 10%) !default;
+$rh-color--yellow-500:          $rhelements--yellow !default;              // Aliased
+$rh-color--yellow-600:          darken($rhelements--yellow, 10%) !default;
+$rh-color--yellow-700:          darken($rhelements--yellow, 20%) !default;
+$rh-color--yellow-800:          darken($rhelements--yellow, 30%) !default;
+
+$rh-color--green-50:            lighten($rhelements--green, 40%) !default;
+$rh-color--green-100:           lighten($rhelements--green, 30%) !default;
+$rh-color--green-200:           lighten($rhelements--green, 20%) !default;
+$rh-color--green-300:           lighten($rhelements--green, 10%) !default;
+$rh-color--green-400:           $rhelements--green !default;              // Aliased
+$rh-color--green-500:           darken($rhelements--green, 10%) !default;
+$rh-color--green-600:           darken($rhelements--green, 20%) !default;
+$rh-color--green-700:           darken($rhelements--green, 30%) !default;
+$rh-color--green-800:           darken($rhelements--green, 40%) !default;
+
+$rh-color--cyan-50:             lighten($rhelements--cyan, 60%) !default;
+$rh-color--cyan-100:            lighten($rhelements--cyan, 50%) !default;
+$rh-color--cyan-200:            lighten($rhelements--cyan, 40%) !default;
+$rh-color--cyan-300:            lighten($rhelements--cyan, 30%) !default;
+$rh-color--cyan-400:            lighten($rhelements--cyan, 20%) !default;
+$rh-color--cyan-500:            lighten($rhelements--cyan, 10%) !default;
+$rh-color--cyan-600:            $rhelements--cyan !default;              // Aliased
+$rh-color--cyan-700:            darken($rhelements--cyan, 10%) !default;
+$rh-color--cyan-800:            darken($rhelements--cyan, 20%) !default;
+
+$rh-color--blue-50:             lighten($rhelements--blue, 60%) !default;
+$rh-color--blue-100:            lighten($rhelements--blue, 50%) !default;
+$rh-color--blue-200:            lighten($rhelements--blue, 40%) !default;
+$rh-color--blue-300:            lighten($rhelements--blue, 30%) !default;
+$rh-color--blue-400:            lighten($rhelements--blue, 20%) !default;
+$rh-color--blue-500:            lighten($rhelements--blue, 10%) !default;
+$rh-color--blue-600:            $rhelements--blue !default;              // Aliased
+$rh-color--blue-700:            darken($rhelements--blue, 10%) !default;
+$rh-color--blue-800:            darken($rhelements--blue, 20%) !default;
+
+$rh-color--purple-50:           lighten($rhelements--purple, 40%) !default;
+$rh-color--purple-100:          lighten($rhelements--purple, 30%) !default;
+$rh-color--purple-200:          lighten($rhelements--purple, 20%) !default;
+$rh-color--purple-300:          lighten($rhelements--purple, 10%) !default;
+$rh-color--purple-400:          $rhelements--purple !default;            // Aliased
+$rh-color--purple-500:          darken($rhelements--purple, 10%) !default;
+$rh-color--purple-600:          darken($rhelements--purple, 20%) !default;
+$rh-color--purple-700:          darken($rhelements--purple, 30%) !default;
+$rh-color--purple-800:          darken($rhelements--purple, 40%) !default;

@@ -1,0 +1,18 @@
+{
+  "name": "@rhelements/all",
+  "description": "All the RHElements.",
+  "scripts": {
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/all/test/"
+  },
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "@rhelements/rh-card": "file:elements/rh-card",
+    "@rhelements/rh-cta": "file:elements/rh-cta",
+    "@rhelements/rh-datetime": "file:elements/rh-datetime",
+    "@rhelements/rh-icon": "file:elements/rh-icon",
+    "@rhelements/rh-icon-panel": "file:elements/rh-icon-panel",
+    "@rhelements/rh-number": "file:elements/rh-number",
+    "@rhelements/rhelement": "file:elements/rhelement"
+  }
+}

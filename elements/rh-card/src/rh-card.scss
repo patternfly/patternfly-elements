@@ -1,21 +1,98 @@
 @import "../../rh-sass/rh-sass";
 
 :host {
+  --rh-card--padding:        #{rh-var(container-spacer--lg)};
+  --rh-card--bg:             #{rh-color(surface--base)};
+  --rh-card--text:           #{rh-color(surface--base--text)};
+  --rh-card--link:           #{rh-color(surface--base--link)};
+  --rh-card--link--visited:  #{rh-color(surface--base--link--visited)};
+  --rh-card--link--hover:    #{rh-color(surface--base--link--hover)};
+  --rh-card--link--focus:    #{rh-color(surface--base--link--focus)};
+  --rh-card_header--size:    #{rh-var(font-size--heading--gamma)};
+
   display: block;
-  padding: var(--rhe-theme--spacer, $rh-global--spacer);
-  border: var(--rhe-theme--border--BorderWidth, $rh-global--border--BorderWidth)
-          var(--rhe-theme--border--BorderStyle, $rh-global--border--BorderStyle)
+  padding: var(--rh-card--padding);
+  border: rh-var(border-width)
+          rh-var(border-style)
           transparent;
+
+  // Base colors
+  background: var(--rh-card--bg);
+  color: var(--rh-card--text);
+
+  ::slotted(a) {
+    color: var(--rh-card--link);
+  }
+
+  ::slotted(a:visited) {
+    color: var(--rh-card--link--visited);
+  }
+
+  ::slotted(a:hover) {
+    color: var(--rh-card--link--hover);
+  }
+
+  ::slotted(a:focus) {
+    color: var(--rh-card--link--focus);
+  }
 }
 
-:host([theme="dark"]) {
-  background: var(--rhe-theme--bg-color--shade7, $rh-global--color--black-soft);
-  color: var(--rhe-theme--text-color--shade7, $rh-global--text-color--inverted);
+:host([color="dark"]) {
+  --rh-card--bg:             #{rh-color(surface--darker)};
+  --rh-card--text:           #{rh-color(surface--darker--text)};
+  --rh-card--link:           #{rh-color(surface--darker--link)};
+  --rh-card--link--visited:  #{rh-color(surface--darker--link--visited)};
+  --rh-card--link--hover:    #{rh-color(surface--darker--link--hover)};
+  --rh-card--link--focus:    #{rh-color(surface--darker--link--focus)};
 }
 
-:host([theme="light"]) {
-  background: var(--rhe-theme--bg-color--shade2, $rh-global--color--gray-platinum);
-  color: var(--rhe-theme--text-color--shade2, $rh-global--text-color);
+:host([color="darkest"]) {
+  --rh-card--bg:             #{rh-color(surface--darkest)};
+  --rh-card--text:           #{rh-color(surface--darkest--text)};
+  --rh-card--link:           #{rh-color(surface--darkest--link)};
+  --rh-card--link--visited:  #{rh-color(surface--darkest--link--visited)};
+  --rh-card--link--hover:    #{rh-color(surface--darkest--link--hover)};
+  --rh-card--link--focus:    #{rh-color(surface--darkest--link--focus)};
+}
+
+:host([color="light"]) {
+  --rh-card--bg:             #{rh-color(surface--lighter)};
+  --rh-card--text:           #{rh-color(surface--lighter--text)};
+  --rh-card--link:           #{rh-color(surface--lighter--link)};
+  --rh-card--link--visited:  #{rh-color(surface--lighter--link--visited)};
+  --rh-card--link--hover:    #{rh-color(surface--lighter--link--hover)};
+  --rh-card--link--focus:    #{rh-color(surface--lighter--link--focus)};
+}
+
+:host([color="lightest"]) {
+  --rh-card--bg:             #{rh-color(surface--lightest)};
+  --rh-card--text:           #{rh-color(surface--lightest--text)};
+  --rh-card--link:           #{rh-color(surface--lightest--link)};
+  --rh-card--link--visited:  #{rh-color(surface--lightest--link--visited)};
+  --rh-card--link--hover:    #{rh-color(surface--lightest--link--hover)};
+  --rh-card--link--focus:    #{rh-color(surface--lightest--link--focus)};
+}
+
+:host([color="complement"]) {
+  --rh-card--bg:             #{rh-color(surface--complement)};
+  --rh-card--text:           #{rh-color(surface--complement--text)};
+  --rh-card--link:           #{rh-color(surface--complement--link)};
+  --rh-card--link--visited:  #{rh-color(surface--complement--link--visited)};
+  --rh-card--link--hover:    #{rh-color(surface--complement--link--hover)};
+  --rh-card--link--focus:    #{rh-color(surface--complement--link--focus)};
+}
+
+:host([color="accent"]) {
+  --rh-card--bg:             #{rh-color(surface--accent)};
+  --rh-card--text:           #{rh-color(surface--accent--text)};
+  --rh-card--link:           #{rh-color(surface--accent--link)};
+  --rh-card--link--visited:  #{rh-color(surface--accent--link--visited)};
+  --rh-card--link--hover:    #{rh-color(surface--accent--link--hover)};
+  --rh-card--link--focus:    #{rh-color(surface--accent--link--focus)};
+}
+
+:host([size="small"]) {
+  --rh-card--padding:        #{rh-var(container-spacer)};
 }
 
 :host .rh-card__header::slotted(h1:first-child),
@@ -25,4 +102,10 @@
 :host .rh-card__header::slotted(h5:first-child),
 :host .rh-card__header::slotted(h6:first-child) {
   margin-top: 0 !important; // Specificity issue. Why?!
+  font-size: var(--rh-card_header--size);
+}
+
+:host .rh-card__footer {
+  display: block;
+  margin-top: rh-var(container-spacer);
 }

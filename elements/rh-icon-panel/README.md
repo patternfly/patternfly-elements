@@ -1,14 +1,33 @@
-# RHElements Search Element
+# WIP 🐣: RHElements Icon Panel Element
 
-## Dependencies
+## Usage
 
-Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
+```html
+<rh-icon-panel icon="rh-icon-server">
+  <h3 slot="header">This is rh-icon-panel</h3>
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  <rh-cta slot="footer">
+    <a href="https://rhelements.github.io">Learn more about RHElements</a>
+  </rh-cta>
+</rh-icon-panel>
+```
 
-    npm install -g polyserve web-component-tester
+## Slots
 
-## Dev
+### header
+The header of the icon panel
 
-    npm start
+### Default slot (body)
+Any content that is not designated for the header or footer slot, will go to this slot.
+
+### footer
+Use this slot for anything that you want in the footer of the icon panel.
+
+## Attributes
+
+### icon (observed)
+
+The name of the icon that you want to use. If the value of this attribute changes, the new icon will show up in the UI.
 
 ## Test
 
@@ -20,21 +39,14 @@ Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-compone
 
 ## Demo
 
-Run `npm start` and Polyserve will start a server and open your default browser to the demo page of the element.
+From the RHElements root directory, run:
 
-## Styling
-
-| Custom Property                       | Description                     | Default                        |
-|---------------------------------------|---------------------------------|--------------------------------|
-| --rhe-c-icon-panel__icon--MarginRight | Gutter between icon and content | $rh-global--spacer             |
-| --rhe-c-icon-panel__icon--size        | Icon size                       | $rh-global--icon-size--xl      |
-| --rhe-c-icon-panel__footer--MarginTop | Margin top of footer content    | $rh-global--FontSize           |
+    npm start
 
 ## Code style
 
-Search (and all RHElements) use [Prettier][prettier] to auto-format JS and JSON.  The style rules get applied when you commit a change.  If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
+Icon Panel (and all RHElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
 
 [prettier]: https://github.com/prettier/prettier/
-[prettier-ed]: https://github.com/prettier/prettier/#editor-integration
-[polyserve]: https://github.com/Polymer/polyserve
+[prettier-ed]: https://prettier.io/docs/en/editors.html
 [web-component-tester]: https://github.com/Polymer/web-component-tester

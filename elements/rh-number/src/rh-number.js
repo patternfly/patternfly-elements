@@ -1,14 +1,27 @@
-import Rhelement from "../rhelement/rhelement.js";
-import "../../numeral/numeral.js";
-
 /*
- * DO NOT EDIT. This will be autopopulated with the
- * html from rh-number.html and css from
- * rh-number.css
+ * Copyright 2018 Red Hat, Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
-const template = document.createElement("template");
-template.innerHTML = ``;
-/* end DO NOT EDIT */
+
+import RHElement from "../rhelement/rhelement.js";
+import numeral from "numeral";
 
 // easy aliases for common format strings
 const types = {
@@ -24,33 +37,59 @@ const types = {
 // debugger;
 numeral.locales.en.delimiters.thousands = " ";
 
-class RhNumber extends Rhelement {
+class RhNumber extends RHElement {
+  static get tag() {
+    return "rh-number";
+  }
+
+  get styleUrl() {
+    return "rh-number.scss";
+  }
+
+  get templateUrl() {
+    return "rh-number.html";
+  }
+
   static get observedAttributes() {
-    return ["number"];
+    return ["number", "format", "type"];
   }
 
   constructor() {
-    super("rh-number", template);
+    super(RhNumber);
   }
 
   connectedCallback() {
     super.connectedCallback();
+    this.connected = true;
 
     this._determineFormat();
     this._setInitialNumber();
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
-    // dynamically find handler function so other attributes can be watched
-    // simply by creating a function with the right name to handle their
-    // changes
-    this[`_${attr}AttrUpdate`](oldVal, newVal);
+    switch (attr) {
+      case "type":
+        this._determineFormat();
+        break;
+      case "format":
+        this._updateNumber(this.getAttribute("number"), newVal);
+        break;
+      case "number":
+        this._updateNumber(newVal, this.getAttribute("format"));
+    }
   }
 
   _setInitialNumber() {
-    const initialNumber =
-      typeof this.number === "undefined" ? this.textContent : this.number;
-    this.setAttribute("number", initialNumber);
+    const numberAttrDefined = !Number.isNaN(
+      parseFloat(this.getAttribute("number"))
+    );
+    const numberContentDefined = !Number.isNaN(parseFloat(this.textContent));
+
+    if (numberAttrDefined) {
+      this.setAttribute("number", this.getAttribute("number"));
+    } else if (numberContentDefined) {
+      this.setAttribute("number", this.textContent);
+    }
   }
 
   _determineFormat() {
@@ -63,11 +102,13 @@ class RhNumber extends Rhelement {
     }
   }
 
-  _numberAttrUpdate(oldVal, newVal) {
-    this.shadowRoot.querySelector("span").textContent = numeral(newVal).format(
-      this.getAttribute("format")
-    );
+  _updateNumber(num, type) {
+    this.shadowRoot.querySelector("span").textContent = this._format(num, type);
+  }
+
+  _format(num, type) {
+    return numeral(num).format(type);
   }
 }
 
-window.customElements.define("rh-number", RhNumber);
+RHElement.create(RhNumber);

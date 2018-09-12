@@ -10,6 +10,10 @@ module.exports = (baseConfig, env, defaultConfig) => {
       __dirname,
       "../node_modules/numeral/min/numeral.min.js"
     ),
+    "../../numeral/numeral.js": path.join(
+      __dirname,
+      "../node_modules/numeral/numeral.js"
+    ),
     "../../dialog-polyfill/dialog-polyfill.js": path.join(
       __dirname,
       "../node_modules/dialog-polyfill/dialog-polyfill.js"

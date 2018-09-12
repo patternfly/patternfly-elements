@@ -58,27 +58,27 @@ stories.add("rh-cta", () => {
     <h2>At a glance</h2>
     <div>
       <h3>Defaults</h3>
-      <rh-cta><a href="#">${textValue}</a></rh-cta>
-      <rh-cta priority="primary"><a href="#">${textValue}</a></rh-cta>
-      <rh-cta priority="secondary"><a href="#">${textValue}</a></rh-cta>
+      <rh-cta><a href="#">Default</a></rh-cta>
+      <rh-cta priority="primary"><a href="#">Primary</a></rh-cta>
+      <rh-cta priority="secondary"><a href="#">Secondary</a></rh-cta>
     </div>
     <div>
       <h3>Color: Base</h3>
-      <rh-cta color="base"><a href="#">${textValue}</a></rh-cta>
-      <rh-cta priority="primary" color="base"><a href="#">${textValue}</a></rh-cta>
-      <rh-cta priority="secondary" color="base"><a href="#">${textValue}</a></rh-cta>
+      <rh-cta color="base"><a href="#">Default</a></rh-cta>
+      <rh-cta priority="primary" color="base"><a href="#">Primary</a></rh-cta>
+      <rh-cta priority="secondary" color="base"><a href="#">Secondary</a></rh-cta>
     </div>
     <div>
       <h3>Color: Complement</h3>
-      <rh-cta color="complement"><a href="#">${textValue}</a></rh-cta>
-      <rh-cta priority="primary" color="complement"><a href="#">${textValue}</a></rh-cta>
-      <rh-cta priority="secondary" color="complement"><a href="#">${textValue}</a></rh-cta>
+      <rh-cta color="complement"><a href="#">Default</a></rh-cta>
+      <rh-cta priority="primary" color="complement"><a href="#">Primary</a></rh-cta>
+      <rh-cta priority="secondary" color="complement"><a href="#">Secondary</a></rh-cta>
     </div>
     <div>
       <h3>Color: Accent</h3>
-      <rh-cta color="accent"><a href="#">${textValue}</a></rh-cta>
-      <rh-cta priority="primary" color="accent"><a href="#">${textValue}</a></rh-cta>
-      <rh-cta priority="secondary" color="accent"><a href="#">${textValue}</a></rh-cta>
+      <rh-cta color="accent"><a href="#">Default</a></rh-cta>
+      <rh-cta priority="primary" color="accent"><a href="#">Primary</a></rh-cta>
+      <rh-cta priority="secondary" color="accent"><a href="#">Secondary</a></rh-cta>
     </div>
   </section>
   `;

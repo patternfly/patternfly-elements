@@ -42,14 +42,18 @@ class RhCard extends RHElement {
   border: var(--rh-theme--border-width, 1px) var(--rh-theme--border-style, solid) transparent;
   background: var(--rh-card--bg);
   color: var(--rh-broadcasted--color--text); }
-  :host > *::slotted(a) {
-    color: var(--rh-broadcasted--color--ui-link); }
-  :host > *::slotted(a:visited) {
-    color: var(--rh-broadcasted--color--ui-link--visited); }
-  :host > *::slotted(a:hover) {
-    color: var(--rh-broadcasted--color--ui-link--hover); }
-  :host > *::slotted(a:focus) {
-    color: var(--rh-broadcasted--color--ui-link--focus); }
+
+a {
+  color: var(--rh-broadcasted--color--ui-link); }
+
+a:visited {
+  color: var(--rh-broadcasted--color--ui-link--visited); }
+
+a:hover {
+  color: var(--rh-broadcasted--color--ui-link--hover); }
+
+a:focus {
+  color: var(--rh-broadcasted--color--ui-link--focus); }
 
 :host([color="dark"]) {
   --rh-card--bg:                               var(--rh-theme--color--surface--darker, #464646);
@@ -102,25 +106,25 @@ class RhCard extends RHElement {
 :host([size="small"]) {
   --rh-card--padding:        var(--rh-theme--container-spacer, 1rem); }
 
-:host .rh-card__header,
-:host .rh-card__body,
-:host .rh-card__footer {
+.rh-card__header,
+.rh-card__body,
+.rh-card__footer {
   display: block;
   margin: 0; }
 
-:host .rh-card__header::slotted(h1:first-child),
-:host .rh-card__header::slotted(h2:first-child),
-:host .rh-card__header::slotted(h3:first-child),
-:host .rh-card__header::slotted(h4:first-child),
-:host .rh-card__header::slotted(h5:first-child),
-:host .rh-card__header::slotted(h6:first-child) {
+.rh-card__header::slotted(h1:first-child),
+.rh-card__header::slotted(h2:first-child),
+.rh-card__header::slotted(h3:first-child),
+.rh-card__header::slotted(h4:first-child),
+.rh-card__header::slotted(h5:first-child),
+.rh-card__header::slotted(h6:first-child) {
   margin-top: 0 !important;
   font-size: var(--rh-card_header--size); }
 
-:host .rh-card__body::slotted(*:nth-child(2)) {
+.rh-card__body::slotted(*:nth-child(2)) {
   margin-top: 0 !important; }
 
-:host .rh-card__footer {
+.rh-card__footer {
   margin-top: auto;
   justify-self: flex-end; }
 </style>

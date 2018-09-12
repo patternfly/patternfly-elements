@@ -22,22 +22,22 @@
   // Base colors
   background: var(--rh-card--bg);
   color: var(--rh-broadcasted--color--text);
+}
 
-  & > *::slotted(a) {
-    color: var(--rh-broadcasted--color--ui-link);
-  }
+a {
+  color: var(--rh-broadcasted--color--ui-link);
+}
 
-  & > *::slotted(a:visited) {
-    color: var(--rh-broadcasted--color--ui-link--visited);
-  }
+a:visited {
+  color: var(--rh-broadcasted--color--ui-link--visited);
+}
 
-  & > *::slotted(a:hover) {
-    color: var(--rh-broadcasted--color--ui-link--hover);
-  }
+a:hover {
+  color: var(--rh-broadcasted--color--ui-link--hover);
+}
 
-  & > *::slotted(a:focus) {
-    color: var(--rh-broadcasted--color--ui-link--focus);
-  }
+a:focus {
+  color: var(--rh-broadcasted--color--ui-link--focus);
 }
 
 :host([color="dark"]) {
@@ -98,28 +98,28 @@
   --rh-card--padding:        #{rh-var(container-spacer)};
 }
 
-:host .rh-card__header,
-:host .rh-card__body,
-:host .rh-card__footer {
+.rh-card__header,
+.rh-card__body,
+.rh-card__footer {
   display: block;
   margin: 0;
 }
 
-:host .rh-card__header::slotted(h1:first-child),
-:host .rh-card__header::slotted(h2:first-child),
-:host .rh-card__header::slotted(h3:first-child),
-:host .rh-card__header::slotted(h4:first-child),
-:host .rh-card__header::slotted(h5:first-child),
-:host .rh-card__header::slotted(h6:first-child) {
+.rh-card__header::slotted(h1:first-child),
+.rh-card__header::slotted(h2:first-child),
+.rh-card__header::slotted(h3:first-child),
+.rh-card__header::slotted(h4:first-child),
+.rh-card__header::slotted(h5:first-child),
+.rh-card__header::slotted(h6:first-child) {
   margin-top: 0 !important; // Specificity issue. Why?!
   font-size: var(--rh-card_header--size);
 }
 
-:host .rh-card__body::slotted(*:nth-child(2)) { // child pseudo-selectors appear to be based on slotted code before upgrade.
+.rh-card__body::slotted(*:nth-child(2)) { // child pseudo-selectors appear to be based on slotted code before upgrade.
   margin-top: 0 !important;
 }
 
-:host .rh-card__footer {
+.rh-card__footer {
   // margin-top: rh-var(container-spacer);
   margin-top: auto; // This allows the footer to move to the very bottom
   justify-self: flex-end;

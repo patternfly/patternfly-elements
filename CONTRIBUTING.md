@@ -1,26 +1,32 @@
 ![RHElements logo](./brand/logo/png/rhelements-logo-blue.png)
 
-This is the contribution guide for [RHElements](README.md), a collection of flexible and lightweight [Web Components][wc].
+This is the contribution guide for [RHElements](README.md), a collection of flexible and lightweight [Web Components][wc] and the tools to build them.
 
-## Ways to contribute
+## Ways to contribute to RHElements
 
-STUB
+ - Use RHElements in your app (TODO: link to Homa's example apps and API docs)
+ - Theming (TODO: describe how)
+ - [Creating new elements](#developing-new-rhelements)
+ - Improve documentation (TODO: describe how to do this)
 
-## Developing new RHElements
+## Developing RHElements
 
 There are two types of development commands, root commands which you run from the root directory of the project, and element commands, which you run from an element directory.
 
-### Root commands
 
-These commands can be run from the root directory of RHElements and operate on all the elements.
+### Repo commands
+
+These commands are run from the root directory of RHElements repo.  They operate on all elements.
 
 | command | description |
 |---|---|
 | `npm start` | Launch a demo server. This should be continuously running as you work. |
 | `npm test` | Test ALL RHElements. |
 | `npm run build` | Build ALL RHElements. |
-| `npm run bootstrap` | Update ALL rhelements' dependencies and interlink them with [lerna bootstrap][lerna-bs]. |
-| `npm run storybook` | Run storybook  |
+| `npm run new` | Create a new RHElement. |
+| `npm run storybook` | Run storybook to preview all the RHElements.  |
+| `npm run build-storybook` | Build storybook for deployment as a static app.  |
+
 
 ### Element commands
 
@@ -42,21 +48,28 @@ While still running `npm start` in one terminal window (which runs the local ser
 
 ### Example development on an element
 
-In one terminal, start the demo server.
-
     cd /Sites/rhelement
     npm start
 
-In another terminal:
+    # SHIFT + CTRL + T to open a new tab in Terminal
 
     cd elements/rh-card  # or any other element
     npm run dev
 
 Make a change to the element and save. The gulpfile will handle transpiling the element down to ES5 and will bring in the HTML and Sass into the template in the element.
 
-## Test
+## Creating a new RHElement
 
-To test all RHElements, run `npm test` from the root of the repo. If you only want to test the element you're working on:
+
+## Testing
+
+### Running tests
+
+To test ALL RHElements, go to the root of the repo and run:
+
+    npm test
+    
+If you only want to test the element you're working on:
 
     cd elements/rh-card
     npm test
@@ -65,7 +78,19 @@ Also, if your tests are failing and you want access to a live browser to investi
 
     npm test -- -p
 
-The URL to the tests will be printed in the terminal.  It looks something like this: `http://localhost:8081/components/@rhelements/rhelements/generated-index.html?cli_browser_id=0`.
+The `-p` flag is available in both root and element-only testing.  Then open the URL that will be printed in the terminal. It looks something like this: `http://localhost:8081/components/@rhelements/rhelements/generated-index.html?cli_browser_id=0`.
+
+### Writing tests
+
+Tests are run using the [Web Component Tester][wct].  Each RHElement has a `test` directory.  Let's use `elements/rhelement/` as an example:
+
+    rhelement/                                    
+    └── test/
+        ├── index.html                            
+        ├── rhelement_cascade_attribute_test.html 
+        └── rhelement_test.html                   
+
+Each `rhelement_*.html` file contains a certain type of tests, and `index.html` is a loader which tells the test runner which html files to run.  These test files can get pretty long, which is why splitting up the tests can be a good idea.  However, most of the elements have only `index.html` and `elementName_test.html`, since they are very simple and don't have complex enough features to require splitting up their test suites.
 
 ## Storybook
 
@@ -94,14 +119,9 @@ For example:
       "../node_modules/whatwg-fetch/fetch.js" // this is where it lives in node_modules
     )
 
+
+[wct]: https://github.com/Polymer/tools/tree/master/packages/web-component-tester
 [lerna]: https://lernajs.io/
-[lerna-bs]: https://github.com/lerna/lerna#bootstrap
 [npmorg]: https://www.npmjs.com/org/rhelements
-[npmscripts]: https://docs.npmjs.com/misc/scripts
 [wc]: https://developer.mozilla.org/en-US/docs/Web/Web_Components
-[contrib]: CONTRIBUTING.md
-
-## Testing
-
-STUB.
 

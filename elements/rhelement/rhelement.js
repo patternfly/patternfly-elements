@@ -79,6 +79,10 @@ class RHElement extends HTMLElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
+    if (!this._rhClass.cascadingAttributes) {
+      return;
+    }
+
     const cascadeTo = this._rhClass.cascadingAttributes[attr];
     if (cascadeTo) {
       this._copyAttribute(attr, cascadeTo);

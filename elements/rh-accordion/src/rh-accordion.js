@@ -115,6 +115,8 @@ class RhAccordion extends RHElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
+    super.attributeChangedCallback(attr, oldVal, newVal);
+
     if (attr === "theme") {
       const headers = this.querySelectorAll(RhAccordionHeader.tag);
 

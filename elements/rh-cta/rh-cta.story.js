@@ -33,7 +33,7 @@ stories.add("rh-cta", () => {
   let colorAttr = colorValue != "default" ? ` color="${colorValue}"` : "";
 
   return `
-  <style>
+  <style>  
     div {
       margin-bottom: 40px;
     }
@@ -41,38 +41,42 @@ stories.add("rh-cta", () => {
     rh-cta {
       margin-right: 10px;
     }
-
   </style>
 
-  <div>
-    <h3>Adjust</h3>
-    <p>
-      <rh-cta${valueAttr}${colorAttr}><a href="#">Become a Member</a></rh-cta>
-    </p>
-  </div>
-  <div>
-    <h3>Defaults</h3>
-    <rh-cta><a href="#">Become a Member</a></rh-cta>
-    <rh-cta priority="primary"><a href="#">Become a Member</a></rh-cta>
-    <rh-cta priority="secondary"><a href="#">Become a Member</a></rh-cta>
-  </div>
-  <div>
-    <h3>Color: Base</h3>
-    <rh-cta color="base"><a href="#">Become a Member</a></rh-cta>
-    <rh-cta priority="primary" color="base"><a href="#">Become a Member</a></rh-cta>
-    <rh-cta priority="secondary" color="base"><a href="#">Become a Member</a></rh-cta>
-  </div>
-  <div>
-    <h3>Color: Complement</h3>
-    <rh-cta color="complement"><a href="#">Become a Member</a></rh-cta>
-    <rh-cta priority="primary" color="complement"><a href="#">Become a Member</a></rh-cta>
-    <rh-cta priority="secondary" color="complement"><a href="#">Become a Member</a></rh-cta>
-  </div>
-  <div>
-    <h3>Color: Accent</h3>
-    <rh-cta color="accent"><a href="#">Become a Member</a></rh-cta>
-    <rh-cta priority="primary" color="accent"><a href="#">Become a Member</a></rh-cta>
-    <rh-cta priority="secondary" color="accent"><a href="#">Become a Member</a></rh-cta>
-  </div>
+  <section>
+    <h2>Your RHElement</h2>
+    <rh-cta${valueAttr}${colorAttr}><a href="#">Become a Member</a></rh-cta>
+  </section>
+  <section>
+    <h2>Markup</h2>
+    <pre><code>&lt;rh-cta${valueAttr}${colorAttr}&gt;Become a Member&lt;/rh-cta&gt;</code></pre>
+  </section>
+  <section>
+    <h2>At a glance</h2>
+    <div>
+      <h3>Defaults</h3>
+      <rh-cta><a href="#">Become a Member</a></rh-cta>
+      <rh-cta priority="primary"><a href="#">Become a Member</a></rh-cta>
+      <rh-cta priority="secondary"><a href="#">Become a Member</a></rh-cta>
+    </div>
+    <div>
+      <h3>Color: Base</h3>
+      <rh-cta color="base"><a href="#">Become a Member</a></rh-cta>
+      <rh-cta priority="primary" color="base"><a href="#">Become a Member</a></rh-cta>
+      <rh-cta priority="secondary" color="base"><a href="#">Become a Member</a></rh-cta>
+    </div>
+    <div>
+      <h3>Color: Complement</h3>
+      <rh-cta color="complement"><a href="#">Become a Member</a></rh-cta>
+      <rh-cta priority="primary" color="complement"><a href="#">Become a Member</a></rh-cta>
+      <rh-cta priority="secondary" color="complement"><a href="#">Become a Member</a></rh-cta>
+    </div>
+    <div>
+      <h3>Color: Accent</h3>
+      <rh-cta color="accent"><a href="#">Become a Member</a></rh-cta>
+      <rh-cta priority="primary" color="accent"><a href="#">Become a Member</a></rh-cta>
+      <rh-cta priority="secondary" color="accent"><a href="#">Become a Member</a></rh-cta>
+    </div>
+  </section>
   `;
 });

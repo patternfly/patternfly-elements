@@ -1,6 +1,7 @@
 import { storiesOf } from "@storybook/polymer";
 import { withKnobs, text, select } from "@storybook/addon-knobs/polymer";
 import "./rh-cta";
+// import cpTheme from '../../themes/cp-theme/cp-theme.js';
 
 const stories = storiesOf("Call To Action", module);
 stories.addDecorator(withKnobs);
@@ -32,9 +33,46 @@ stories.add("rh-cta", () => {
   let colorAttr = colorValue != "default" ? ` color="${colorValue}"` : "";
 
   return `
-  <p>
-    <rh-cta${valueAttr}${colorAttr}><a href="#">Become a Member</a></rh-cta>
-  </p>
+  <style>
+    div {
+      margin-bottom: 40px;
+    }
 
+    rh-cta {
+      margin-right: 10px;
+    }
+
+  </style>
+
+  <div>
+    <h3>Adjust</h3>
+    <p>
+      <rh-cta${valueAttr}${colorAttr}><a href="#">Become a Member</a></rh-cta>
+    </p>
+  </div>
+  <div>
+    <h3>Defaults</h3>
+    <rh-cta><a href="#">Become a Member</a></rh-cta>
+    <rh-cta priority="primary"><a href="#">Become a Member</a></rh-cta>
+    <rh-cta priority="secondary"><a href="#">Become a Member</a></rh-cta>
+  </div>
+  <div>
+    <h3>Color: Base</h3>
+    <rh-cta color="base"><a href="#">Become a Member</a></rh-cta>
+    <rh-cta priority="primary" color="base"><a href="#">Become a Member</a></rh-cta>
+    <rh-cta priority="secondary" color="base"><a href="#">Become a Member</a></rh-cta>
+  </div>
+  <div>
+    <h3>Color: Complement</h3>
+    <rh-cta color="complement"><a href="#">Become a Member</a></rh-cta>
+    <rh-cta priority="primary" color="complement"><a href="#">Become a Member</a></rh-cta>
+    <rh-cta priority="secondary" color="complement"><a href="#">Become a Member</a></rh-cta>
+  </div>
+  <div>
+    <h3>Color: Accent</h3>
+    <rh-cta color="accent"><a href="#">Become a Member</a></rh-cta>
+    <rh-cta priority="primary" color="accent"><a href="#">Become a Member</a></rh-cta>
+    <rh-cta priority="secondary" color="accent"><a href="#">Become a Member</a></rh-cta>
+  </div>
   `;
 });

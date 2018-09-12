@@ -59,6 +59,28 @@
 
       RHElement.create(RhChild);
 
+      class RhObserveNoCascade extends RHElement {
+        static get tag() {
+          return "rh-observe-no-cascade"
+        }
+
+        static get observedAttributes() {
+          return ['test-attr'];
+        }
+
+        get html() {
+          return `
+            <slot></slot>
+          `;
+        }
+
+        constructor() {
+          super(RhObserveNoCascade);
+        }
+      }
+
+      RHElement.create(RhObserveNoCascade);
+
       suite('<rhelement>', () => {
 
         const testAttrName = 'test-attr';
@@ -123,6 +145,13 @@
 
           assert.equal(attrVal, child1.getAttribute(testAttrName));
           assert.equal(attrVal, child2.getAttribute(testAttrName));
+        });
+
+        test("RHElements without cascadingAttributes should allow attributeChangedCallback without triggering errors", () => {
+          const rhObserveNoCascade = document.createElement("rh-observe-no-cascade");
+          document.body.appendChild(rhObserveNoCascade);
+
+          rhObserveNoCascade.setAttribute("test-attr", "foo");
         });
       });
     </script>

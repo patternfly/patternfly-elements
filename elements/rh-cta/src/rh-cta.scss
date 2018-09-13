@@ -28,9 +28,9 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
   display: inline-block;
   font-weight: bold;
 
-  & ::slotted(a) {
+  ::slotted(a) {
     line-height: inherit;
-    color: var(--rh-cta--main);
+    color: var(--rh-cta--main) !important;
 
     &::after {
       display: block;
@@ -47,16 +47,16 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
   //  }
   // }
 
-  & ::slotted(a:hover) {
-    color: var(--rh-cta--main--hover);
+  ::slotted(a:hover) {
+    color: var(--rh-cta--main--hover) !important;
 
     &::after {
       @include rh-arrow-color(var(--rh-cta--main--hover));
     }
   }
 
-  & ::slotted(a:focus) {
-    color: var(--rh-cta--main--focus);
+  ::slotted(a:focus) {
+    color: var(--rh-cta--main--focus) !important;
 
     &::after {
       @include rh-arrow-color(var(--rh-cta--main--focus));
@@ -74,7 +74,7 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
   --rh-cta--aux:           #{rh-color(ui-accent--text)};
   --rh-cta--aux--hover:    #{rh-color(ui-accent--text--hover)};
 
-  & ::slotted(a) {
+  ::slotted(a) {
     display: inline-block;
     padding: $rh-cta--solid--padding-y $rh-cta--solid--padding-x; // not themeable for now
     border-radius: $rh-cta--solid--BorderRadius; // not themeable for now
@@ -82,20 +82,20 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
     text-decoration: none;
     line-height: 1.2;
 
-    border-color: var(--rh-cta--main);
-    background:   var(--rh-cta--main);
-    color:        var(--rh-cta--aux);
+    border-color: var(--rh-cta--main) !important;
+    background:   var(--rh-cta--main) !important;
+    color:        var(--rh-cta--aux) !important;
 
     &::after {
       display: none;
     }
   }
 
-  & ::slotted(a:hover),
-  & ::slotted(a:focus) { // Not sure we can lump these together
-    border-color: var(--rh-cta--main--hover);
-    background:   var(--rh-cta--main--hover);
-    color:        var(--rh-cta--aux--hover);
+  ::slotted(a:hover),
+  ::slotted(a:focus) { // Not sure we can lump these together
+    border-color: var(--rh-cta--main--hover) !important;
+    background:   var(--rh-cta--main--hover) !important;
+    color:        var(--rh-cta--aux--hover) !important;
   }
 
   // & ::slotted(a:visited),   TBD
@@ -108,7 +108,7 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
   --rh-cta--aux:           #{rh-color(ui-base--text)};
   --rh-cta--aux--hover:    #{rh-color(ui-base--text--hover)};
 
-  & ::slotted(a) {
+  ::slotted(a) {
     display: inline-block;
     padding: $rh-cta--solid--padding-y $rh-cta--solid--padding-x; // not themeable for now
     border-radius: $rh-cta--solid--BorderRadius; // not themeable for now
@@ -116,20 +116,20 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
     text-decoration: none;
     line-height: 1.2;
 
-    border-color: var(--rh-cta--main);
-    background:   var(--rh-cta--aux);
-    color:        var(--rh-cta--main);
+    border-color: var(--rh-cta--main) !important;
+    background:   var(--rh-cta--aux) !important;
+    color:        var(--rh-cta--main) !important;
 
     &::after {
       display: none;
     }
   }
 
-  & ::slotted(a:hover), // Not sure we can lump these together
-  & ::slotted(a:focus) {
-    border-color: var(--rh-cta--main--hover);
-    background:   var(--rh-cta--main--hover);
-    color:        var(--rh-cta--aux--hover);
+  ::slotted(a:hover), // Not sure we can lump these together
+  ::slotted(a:focus) {
+    border-color: var(--rh-cta--main--hover) !important;
+    background:   var(--rh-cta--main--hover) !important;
+    color:        var(--rh-cta--aux--hover) !important;
   }
 
   // & ::slotted(a:visited),   TBD

@@ -177,12 +177,12 @@ $cp-vars: (
   line-height--for-sm:           1.5,
   line-height--for-lg:           1.2,
 
-  font-size--heading--alpha:     32px,
-  font-size--heading--beta:      24px,
-  font-size--heading--gamma:     21px,
-  font-size--heading--delta:     18px,
-  font-size--heading--epsilon:   16px,
-  font-size--heading--zeta:      14px,
+  font-size--heading--alpha:     $rh-global--FontSize--heading--xxl,
+  font-size--heading--beta:      $rh-global--FontSize--heading--xl,
+  font-size--heading--gamma:     $rh-global--FontSize--heading--lg,
+  font-size--heading--delta:     $rh-global--FontSize--heading--md,
+  font-size--heading--epsilon:   $rh-global--FontSize--heading--sm,
+  font-size--heading--zeta:      $rh-global--FontSize--heading--xs,
 
   link--text-decoration:         underline,
   link--text-decoration--hover:  underline,

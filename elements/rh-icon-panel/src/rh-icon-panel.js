@@ -37,12 +37,13 @@ class RhIconPanel extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["icon"];
+    return ["icon", "circled"];
   }
 
   static get cascadingAttributes() {
     return {
-      icon: "rh-icon"
+      icon: "rh-icon",
+      circled: "rh-icon"
     };
   }
 

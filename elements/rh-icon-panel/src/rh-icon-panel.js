@@ -37,26 +37,18 @@ class RhIconPanel extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["icon"];
+    return ["icon", "circled"];
   }
 
   static get cascadingAttributes() {
     return {
-      icon: "rh-icon"
+      icon: "rh-icon",
+      circled: "rh-icon"
     };
   }
 
   constructor() {
     super(RhIconPanel);
-  }
-
-  attributeChangedCallback(attr, oldVal, newVal) {
-    if (attr === "icon") {
-      if (newVal) {
-        let iconElem = this.shadowRoot.querySelector("rh-icon");
-        iconElem.setAttribute("icon", newVal);
-      }
-    }
   }
 }
 

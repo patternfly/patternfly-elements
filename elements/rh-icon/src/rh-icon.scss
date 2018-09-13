@@ -1,18 +1,22 @@
 @import "../../rh-sass/rh-sass";
 
-$icon-colors: (
-  white: ('--rh-global--color--white', $rh-global--color--white), // name: (CSS Var, SASS var),
-  black: ('--rh-global--color--black', $rh-global--color--black)
-);
 
-$icon-bg-colors: (
-  white: ('--rh-global--color--white', $rh-global--color--white, '--rh-global--text-color', $rh-global--text-color), // name: (BG CSS Var, BG SASS var, fill CSS Var, fill SASS var),
-  red: ('--rh-global--color--red', $rh-global--color--red, '--rh-global--color--white', $rh-global--color--white),
-  light: ('--rh-global--color--gray2', $rh-global--color--gray2, '--rh-global--text-color', $rh-global--text-color),
-  dark: ('--rh-global--color--gray10', $rh-global--color--gray10, '--rh-global--color--white', $rh-global--color--white)
-);
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
 
-@mixin set-svg-size($size: 1em) {
+// Todo: convert these also
+$rh-icon--size:                             1em;
+$rh-icon--padding:                          .05em;
+$rh-icon--border-width:                     map-get($rh-vars, border-width);
+$rh-icon--border-style:                     map-get($rh-vars, border-style);
+
+
+/// ===========================================================================
+/// DEFUALT CTA
+/// ===========================================================================
+
+@mixin rh-icon-set-svg-size($size: 1em) {
   &,
   & svg {
     width: $size;
@@ -21,79 +25,145 @@ $icon-bg-colors: (
 }
 
 :host {
+  --rh-icon--spacing:                 #{rh-var(container-spacer)};
+  --rh-icon--size:                    var(--rh-theme--icon-size, 1em);
+  --rh-icon--color--bg:               transparent;
+  --rh-icon--color--border:           transparent;
+
   display: inline-block;
   vertical-align: middle;
-  @include set-svg-size(1em);
+  @include rh-icon-set-svg-size(1em);
+  border-radius: 50%;
+  background: var(--rh-icon--color--bg);
+  border: $rh-icon--border-width $rh-icon--border-style var(--rh-icon--color--border);
 
   svg {
-    fill: var(--rh-global--text-color, $rh-global--text-color);
+    fill: var(--rh-broadcasted--color--text);
   }
 
   @at-root #{&}([data-block]) {
     display: block;
-    margin-bottom: var(--rh-global--spacer, $rh-global--spacer);
-    margin-top: var(--rh-global--spacer, $rh-global--spacer);
+    margin-bottom: var(--rh-icon--spacing);
+    margin-top: var(--rh-icon--spacing);
 
     &:first-child {
       margin-top: 0;
     }
   }
+}
 
-  @each $color, $value in $icon-colors {
-    $cssvar: nth($value, 1);
-    $sass: nth($value, 2);
+:host([size="2x"]) {
+  @include rh-icon-set-svg-size(2em);
+}
 
-    @at-root #{&}([data-color="#{$color}"]) svg {
-      fill: var(#{$cssvar}, #{$sass});
-    }
-  }
+:host([size="3x"]) {
+  @include rh-icon-set-svg-size(3em);
+}
 
-  @at-root #{&}([data-bg]) {
-    border-radius: 50%;
-  }
+:host([size="4x"]) {
+  @include rh-icon-set-svg-size(4em);
+}
 
-  @at-root #{&}([data-bg="transparent"]) {
-    background: transparent;
-    border: var(--rh-global--border--BorderWidth, $rh-global--border--BorderWidth) var(--rh-global--border--BorderStyle, $rh-global--border--BorderStyle) var(--rh-global--border--BorderColor, $rh-global--border--BorderColor);
-  }
+// TODO: Sort out sizing
+:host([size="xl"]) {
+  @include rh-icon-set-svg-size(100px);
+}
 
-  @each $color, $value in $icon-bg-colors {
-    $cssvar: nth($value, 1);
-    $sass: nth($value, 2);
-    $fill-cssvar: nth($value, 3);
-    $fill-sass: nth($value, 4);
+:host([size="lg"]) {
+  @include rh-icon-set-svg-size(64px);
+}
 
-    @at-root #{&}([data-bg="#{$color}"]) {
-      background: var(#{$cssvar}, #{$sass});
-      fill: var(#{$fill-cssvar}, #{$fill-sass});
+:host([size="md"]) {
+  @include rh-icon-set-svg-size(32px);
+}
 
-      svg {
-        fill: var(#{$fill-cssvar}, #{$fill-sass});
-      }
-    }
-  }
+:host([size="sm"]) {
+  @include rh-icon-set-svg-size(14px);
+}
 
-  @at-root #{&}([data-size="2x"]) {
-    @include set-svg-size(2em);
-  }
+:host([color="base"]) {
+  --rh-broadcasted--color--text:      #{rh-color(ui-base)};
+}
 
-  @at-root #{&}([data-size="3x"]) {
-    @include set-svg-size(3em);
-  }
+:host([color="complement"]) {
+  --rh-broadcasted--color--text:      #{rh-color(ui-complement)};
+}
 
-  @at-root #{&}([data-size="4x"]) {
-    @include set-svg-size(4em);
-  }
+:host([color="accent"]) {
+  --rh-broadcasted--color--text:      #{rh-color(ui-accent)};
+}
 
-  @at-root #{&}([data-size="large"]) {
-    @include set-svg-size(100px);
-  }
+:host([color="critical"]) {
+  --rh-broadcasted--color--text:      #{rh-color(feedback--critical)};
+}
 
-  @at-root #{&}([data-size="medium"]) {
-    @include set-svg-size(70px);
-  }
+:host([color="important"]) {
+  --rh-broadcasted--color--text:      #{rh-color(feedback--important)};
+}
 
-  @at-root #{&}([data-size="small"]) {
-    @include set-svg-size(48px);
-  }
+:host([color="moderate"]) {
+  --rh-broadcasted--color--text:      #{rh-color(feedback--moderate)};
+}
+
+:host([color="success"]) {
+  --rh-broadcasted--color--text:      #{rh-color(feedback--success)};
+}
+
+:host([color="info"]) {
+  --rh-broadcasted--color--text:      #{rh-color(feedback--info)};
+}
+
+:host([color="default"]) {
+  --rh-broadcasted--color--text:      #{rh-color(feedback--default)};
+}
+
+// May need Feedback Darkest colors too.
+
+:host([circled]) {
+  --rh-icon--color--bg:               transparent;
+  --rh-icon--color--border:           #{rh-color(surface--border)};
+
+  padding: $rh-icon--padding;
+}
+
+:host([circled="base"]) {
+  --rh-icon--color--bg:               #{rh-color(surface--base)};
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      #{rh-color(surface--base--text)};
+}
+
+:host([circled="lightest"]) {
+  --rh-icon--color--bg:               #{rh-color(surface--lightest)};
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      #{rh-color(surface--lightest--text)};
+}
+
+:host([circled="light"]) {
+  --rh-icon--color--bg:               #{rh-color(surface--lighter)};
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      #{rh-color(surface--lighter--text)};
+}
+
+:host([circled="dark"]) {
+  --rh-icon--color--bg:               #{rh-color(surface--darker)};
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      #{rh-color(surface--darker--text)};
+}
+
+:host([circled="darkest"]) {
+  --rh-icon--color--bg:               #{rh-color(surface--darkest)};
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      #{rh-color(surface--darkest--text)};
+}
+
+:host([circled="complement"]) {
+  --rh-icon--color--bg:               #{rh-color(surface--complement)};
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      #{rh-color(surface--complement--text)};
+}
+
+:host([circled="accent"]) {
+  --rh-icon--color--bg:               #{rh-color(surface--accent)};
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      #{rh-color(surface--accent--text)};
 }

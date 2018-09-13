@@ -1,5 +1,18 @@
 @import "../../rh-sass/rh-sass";
 
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+// Todo: convert these also
+$rh-icon-panel__icon-size:           64px;
+$rh-icon-panel__icon-padding:        .05em;
+
+
+/// ===========================================================================
+/// DEFUALT RH ICON PANEL
+/// ===========================================================================
+
 :host {
   display: flex;
   align-content: flex-start;
@@ -11,12 +24,15 @@
 }
 
 :host rh-icon {
-  margin-right: var(--rh-icon-panel__icon--MarginRight, $rh-global--spacer);
-  font-size: var(--rh-icon-panel__icon--size, $rh-global--icon-size--xl);
-  line-height: var(--rh-icon-panel__icon--size, $rh-global--icon-size--xl);
-  // restrict size
-  min-width: 1em;
-  max-width: 1em;
+  --rh-icon--spacing:                 #{rh-var(container-spacer)};
+  --rh-icon--size:                    var(--rh-theme--icon-size, #{$rh-icon-panel__icon-size});
+
+  margin-right: var(--rh-icon--spacing);
+  font-size: var(--rh-icon--size);
+  line-height: var(--rh-icon--size);
+  padding: $rh-icon-panel__icon-padding;
+  min-width: var(--rh-icon--size);
+  max-width: var(--rh-icon--size);
 }
 
 :host ::slotted([slot="header"]),
@@ -25,7 +41,7 @@
 }
 
 :host ::slotted([slot="footer"]) {
-  margin-top: var(--rhe-icon-panel__footer--MarginTop, $rh-global--FontSize);
+  margin-top: 1em;
 }
 
 // Layout Styles

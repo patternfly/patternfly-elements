@@ -36,18 +36,21 @@ class RhIconPanel extends RHElement {
       flex-direction: row; } }
 
 :host rh-icon {
-  margin-right: var(--rh-icon-panel__icon--MarginRight, 1rem);
-  font-size: var(--rh-icon-panel__icon--size, 4rem);
-  line-height: var(--rh-icon-panel__icon--size, 4rem);
-  min-width: 1em;
-  max-width: 1em; }
+  --rh-icon--spacing:                 var(--rh-theme--container-spacer, 1rem);
+  --rh-icon--size:                    var(--rh-theme--icon-size, 64px);
+  margin-right: var(--rh-icon--spacing);
+  font-size: var(--rh-icon--size);
+  line-height: var(--rh-icon--size);
+  padding: 0.05em;
+  min-width: var(--rh-icon--size);
+  max-width: var(--rh-icon--size); }
 
 :host ::slotted([slot="header"]),
 :host ::slotted([slot="footer"]) {
   display: block; }
 
 :host ::slotted([slot="footer"]) {
-  margin-top: var(--rhe-icon-panel__footer--MarginTop, 16px); }
+  margin-top: 1em; }
 
 :host([stacked]) {
   flex-direction: column !important; }
@@ -77,26 +80,18 @@ class RhIconPanel extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["icon"];
+    return ["icon", "circled"];
   }
 
   static get cascadingAttributes() {
     return {
-      icon: "rh-icon"
+      icon: "rh-icon",
+      circled: "rh-icon"
     };
   }
 
   constructor() {
     super(RhIconPanel);
-  }
-
-  attributeChangedCallback(attr, oldVal, newVal) {
-    if (attr === "icon") {
-      if (newVal) {
-        let iconElem = this.shadowRoot.querySelector("rh-icon");
-        iconElem.setAttribute("icon", newVal);
-      }
-    }
   }
 }
 

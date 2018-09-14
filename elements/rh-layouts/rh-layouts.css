@@ -134,7 +134,7 @@
       grid-row: span 11; }
     .rh-l-grid > .rh-m-12-row {
       grid-row: span 12; } }
-  @media screen and (max-width: 576px) {
+  @media screen and (max-width: 0) {
     .rh-l-grid.rh-m-all-1-col-on-xs > * {
       grid-column-start: auto;
       grid-column-end: span 1; }
@@ -747,5 +747,5 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  padding: var(--rh-l-bullseye--Padding, 1rem);
+  padding: var(--rh-theme--container-spacer, 1rem);
   margin: 0; }

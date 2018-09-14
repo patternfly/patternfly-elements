@@ -34,7 +34,7 @@ h4,
 h5,
 h6 {
   font-size: 100%;
-  font-weight: $rh-global--FontWeight--normal;
+  font-weight: #{rh-var(font-weight--normal)};
 }
 
 ul {
@@ -74,7 +74,6 @@ th {
 }
 
 // Patternfly base styles
-
 *,
 *::before,
 *::after {
@@ -83,28 +82,35 @@ th {
 
 html {
   font-family: sans-serif;
-  line-height: 1.15;
+  line-height: #{rh-var(line-height)};
 }
 
 
 body {
-  font-family: $rh-global--FontFamily--sans-serif;
-  font-size: $rh-global--FontSize;
-  font-weight: $rh-global--FontWeight--normal;
-  line-height: $rh-global--LineHeight;
-  color: $rh-global--text-color;
+  font-family: #{rh-var(font-family)};
+  font-size: #{rh-var(font-size)};
+  font-weight: #{rh-var(font-weight--normal)};
+  line-height: #{rh-var(line-height)};
+  color: #{rh-color(text)};
   text-align: left;
 }
 
 // Links styles
-
 a {
-  color: $rh-global--link-color;
-  text-decoration: $rh-global--link--TextDecoration;
+  color: var(--rh-broadcasted--color--ui-link, #{map-get($rh-palette, 'ui-link')});
+  text-decoration: #{rh-var(link--text-decoration)};
+
+  &:visited {
+    color: var(--rh-broadcasted--color--ui-link--visited, #{map-get($rh-palette, 'ui-link--visited')});
+  }
 
   &:hover {
-    color: $rh-global--link-color--hover;
-    text-decoration: $rh-global--link--TextDecoration--hover;
+    color: var(--rh-broadcasted--color--ui-link--hover, #{map-get($rh-palette, 'ui-link--hover')});
+    text-decoration: #{rh-var(link--text-decoration--hover)};
+  }
+
+  &:focus {
+    color: var(--rh-broadcasted--color--ui-link--focus, #{map-get($rh-palette, 'ui-link--focus')});
   }
 }
 

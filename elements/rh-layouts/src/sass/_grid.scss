@@ -1,26 +1,4 @@
-// ============================================================================
-// Note: There should be no direct HEX or other values in this file.
-// Please reference CP-SASS variables.
-// ============================================================================
-//
-// Global vars are named:
-// `$rh-global--concept--PropertyTitleCase--modifier--state`
-// For example:
-// * $rh-global--color--primary
-// * $rh-global--FontSize
-// * --rh-theme--FontSize--heading--xs
-
-// Component/Element vars are named:
-// `$rh-c-block__element--modifier--state--PropertyTitleCase`
-// For example:
-// * --rh-dropdown--heading--FontSize
-// * --cp-accordion--heading--FontSize
-
-// $rh-global--gutter: $rh-global--spacer;
-//
-// :root {
-//   --rh-l-grid--m-gutter--GridGap: var(--rh--global--gutter, $rh-global--gutter);
-// }
+// Grid Layout
 
 /// Media query used to create responsive grid items
 /// @group mixins
@@ -28,27 +6,27 @@
 /// @parameter {Point} xs, sm, md, lg, xl, null
 @mixin GridMediaQuery($point) {
   @if $point == "xs" {
-    @media screen and (max-width: $rh-global--grid-breakpoint--sm) {
+    @media screen and (max-width: #{map-get($rh-vars, 'grid-breakpoint--xs')}) {
       @content;
     }
   }
   @else if $point == "sm" or $point == "" or $point == null {
-    @media screen and (min-width: $rh-global--grid-breakpoint--sm) {
+    @media screen and (min-width: #{map-get($rh-vars, 'grid-breakpoint--sm')}) {
       @content;
     }
   }
   @else if $point == "md" {
-    @media screen and (min-width: $rh-global--grid-breakpoint--md) {
+    @media screen and (min-width: #{map-get($rh-vars, 'grid-breakpoint--md')}) {
       @content;
     }
   }
   @else if $point == "lg" {
-    @media screen and (min-width: $rh-global--grid-breakpoint--lg) {
+    @media screen and (min-width: #{map-get($rh-vars, 'grid-breakpoint--lg')}) {
       @content;
     }
   }
   @else if $point == "xl" {
-    @media screen and (min-width: $rh-global--grid-breakpoint--xl) {
+    @media screen and (min-width: #{map-get($rh-vars, 'grid-breakpoint--xl')}) {
       @content;
     }
   }
@@ -123,6 +101,6 @@
   }
 
   &.rh-m-gutters {
-    grid-gap: var(--rh-l-grid--m-gutter--GridGap, $rh-global--spacer);
+    grid-gap: #{rh-var(container-spacer)};
   }
 }

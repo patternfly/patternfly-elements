@@ -31,7 +31,7 @@ h4,
 h5,
 h6 {
   font-size: 100%;
-  font-weight: 500; }
+  font-weight: var(--rh-theme--font-weight--normal, 500); }
 
 ul {
   list-style: none; }
@@ -70,22 +70,26 @@ th {
 
 html {
   font-family: sans-serif;
-  line-height: 1.15; }
+  line-height: var(--rh-theme--line-height, 1.5); }
 
 body {
-  font-family: "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.5;
-  color: #333;
+  font-family: var(--rh-theme--font-family, "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif);
+  font-size: var(--rh-theme--font-size, 16px);
+  font-weight: var(--rh-theme--font-weight--normal, 500);
+  line-height: var(--rh-theme--line-height, 1.5);
+  color: var(--rh-theme--color--text, #333);
   text-align: left; }
 
 a {
-  color: #06c;
-  text-decoration: underline; }
+  color: var(--rh-broadcasted--color--ui-link, #06c);
+  text-decoration: var(--rh-theme--link--text-decoration, underline); }
+  a:visited {
+    color: var(--rh-broadcasted--color--ui-link--visited, rebeccapurple); }
   a:hover {
-    color: #004080;
-    text-decoration: underline; }
+    color: var(--rh-broadcasted--color--ui-link--hover, #003366);
+    text-decoration: var(--rh-theme--link--text-decoration--hover, underline); }
+  a:focus {
+    color: var(--rh-broadcasted--color--ui-link--focus, #003366); }
 
 button,
 a {

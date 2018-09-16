@@ -127,3 +127,57 @@
     }
     @return $result;
 }
+
+
+
+/// RH Var
+///
+/// Returns CSS Var stack with exposed theme Var and respective SCSS fallback
+///
+/// @param {String} $cssvar - Variable name to be used and prepended with --rh-theme
+/// @requires {String} $repo - Name of repo, which is "rh"
+/// @use -
+///
+///     1.look up a color: /elements/rh-sass/variables/_maps.scss
+///         (FYI, maps references: /elements/rh-sass/variables/_colors.scss)
+///
+///     2. use like this:
+///         ```
+///         .my-element {
+///           padding:     #{rh-var(  container-spacer  )};
+///           font-size:   #{rh-var(  font-size  )};
+///         }
+///         ```
+@function rh-var($cssvar, $category: '', $map: $rh-vars) {
+    @if $category != "" {
+      $category: "#{$category}--";
+    }
+
+    @return var( --#{$repo}-theme--#{$category}#{$cssvar}, #{map-get($map, $cssvar)});
+}
+
+/// RH Color
+///
+/// Returns CSS Var stack with exposed theme Var and respective SCSS fallback
+///
+/// @param {String} $cssvar - Variable name to be used and prepended with --rh-theme
+/// @requires {String} $repo - Name of repo, which is "rh"
+/// @use -
+///
+///     1.look up a color: /elements/rh-sass/variables/_maps.scss
+///         (FYI, maps references: /elements/rh-sass/variables/_colors.scss)
+///
+///     2. use like this:
+///         ```
+///         .my-element {
+///           color:       #{rh-color(  surface--base--text  )};
+///           background:  #{rh-color(  surface--base )};
+///         }
+///         ```
+@function rh-color($cssvar, $category: 'color', $map: $rh-palette) {
+    @if $category != "" {
+      $category: "#{$category}--";
+    }
+
+    @return var( --#{$repo}-theme--#{$category}#{$cssvar}, #{map-get($map, $cssvar)});
+}

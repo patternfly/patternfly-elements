@@ -1,0 +1,206 @@
+$rh-palette: (
+
+  // ========================================================================
+  // Base Text Colors
+  // ========================================================================
+
+  text:                               $rh-color--text,
+  text--on-dark:                      $rh-color--text--on-dark,
+  text--on-saturated:                 $rh-color--text--on-saturated,
+
+
+  // ========================================================================
+  // Base UI Link Colors to be used below
+  // ========================================================================
+
+  ui-link:                            $rh-color--ui-link,
+  ui-link--visited:                   $rh-color--ui-link--visited,
+  ui-link--hover:                     $rh-color--ui-link--hover,
+  ui-link--focus:                     $rh-color--ui-link--focus,
+
+  ui-link--on-dark:                   $rh-color--ui-link--on-dark,
+  ui-link--on-dark--visited:          $rh-color--ui-link--on-dark--visited,
+  ui-link--on-dark--hover:            $rh-color--ui-link--on-dark--hover,
+  ui-link--on-dark--focus:            $rh-color--ui-link--on-dark--focus,
+
+  ui-link--on-saturated:              $rh-color--ui-link--on-saturated,
+  ui-link--on-saturated--visited:     $rh-color--ui-link--on-saturated--visited,
+  ui-link--on-saturated--hover:       $rh-color--ui-link--on-saturated--hover,
+  ui-link--on-saturated--focus:       $rh-color--ui-link--on-saturated--focus,
+
+
+  // ========================================================================
+  // Base UI Colors for Buttons, CTAs, and actionable UI elements
+  // ========================================================================
+
+  ui-base:                            $rh-color--ui-base,
+  ui-base--hover:                     $rh-color--ui-base--hover,
+  ui-base--text:                      $rh-color--ui-base--text,
+  ui-base--text--hover:               $rh-color--ui-base--text--hover,
+
+  ui-complement:                      $rh-color--ui-complement,
+  ui-complement--hover:               $rh-color--ui-complement--hover,
+  ui-complement--text:                $rh-color--ui-complement--text,
+  ui-complement--text--hover:         $rh-color--ui-complement--text--hover,
+
+  ui-accent:                          $rh-color--ui-accent,
+  ui-accent--hover:                   $rh-color--ui-accent--hover,
+  ui-accent--text:                    $rh-color--ui-accent--text,
+  ui-accent--text--hover:             $rh-color--ui-accent--text--hover,
+
+  ui-disabled:                        $rh-color--ui-disabled,
+  ui-disabled--hover:                 $rh-color--ui-disabled--hover,
+  ui-disabled--text:                  $rh-color--ui-disabled--text,
+  ui-disabled--text--hover:           $rh-color--ui-disabled--text--hover,
+
+
+  // ========================================================================
+  // Base Surface Colors for Container elements
+  // ========================================================================
+
+  // Lightest group
+  surface--lightest:                  $rh-color--surface--lightest,
+  surface--lightest--text:            $rh-color--surface--lightest--text,
+  surface--lightest--link:            $rh-color--surface--lightest--link,
+  surface--lightest--link--visited:   $rh-color--surface--lightest--link--visited,
+  surface--lightest--link--hover:     $rh-color--surface--lightest--link--hover,
+  surface--lightest--link--focus:     $rh-color--surface--lightest--link--focus,
+
+  // Lighter group
+  surface--lighter:                   $rh-color--surface--lighter,
+  surface--lighter--text:             $rh-color--surface--lighter--text,
+  surface--lighter--link:             $rh-color--surface--lighter--link,
+  surface--lighter--link--visited:    $rh-color--surface--lighter--link--visited,
+  surface--lighter--link--hover:      $rh-color--surface--lighter--link--hover,
+  surface--lighter--link--focus:      $rh-color--surface--lighter--link--focus,
+
+  // Base group
+  surface--base:                      $rh-color--surface--base,
+  surface--base--text:                $rh-color--surface--base--text,
+  surface--base--link:                $rh-color--surface--base--link,
+  surface--base--link--visited:       $rh-color--surface--base--link--visited,
+  surface--base--link--hover:         $rh-color--surface--base--link--hover,
+  surface--base--link--focus:         $rh-color--surface--base--link--focus,
+
+  // Darker group
+  surface--darker:                    $rh-color--surface--darker,
+  surface--darker--text:              $rh-color--surface--darker--text,
+  surface--darker--link:              $rh-color--surface--darker--link,
+  surface--darker--link--visited:     $rh-color--surface--darker--link--visited,
+  surface--darker--link--hover:       $rh-color--surface--darker--link--hover,
+  surface--darker--link--focus:       $rh-color--surface--darker--link--focus,
+
+  // Darkest group
+  surface--darkest:                   $rh-color--surface--darkest,
+  surface--darkest--text:             $rh-color--surface--darkest--text,
+  surface--darkest--link:             $rh-color--surface--darkest--link,
+  surface--darkest--link--visited:    $rh-color--surface--darkest--link--visited,
+  surface--darkest--link--hover:      $rh-color--surface--darkest--link--hover,
+  surface--darkest--link--focus:      $rh-color--surface--darkest--link--focus,
+
+  // Complement group
+  surface--complement:                $rh-color--surface--complement,
+  surface--complement--text:          $rh-color--surface--complement--text,
+  surface--complement--link:          $rh-color--surface--complement--link,
+  surface--complement--link--visited: $rh-color--surface--complement--link--visited,
+  surface--complement--link--hover:   $rh-color--surface--complement--link--hover,
+  surface--complement--link--focus:   $rh-color--surface--complement--link--focus,
+
+
+  // Accent group
+  surface--accent:                    $rh-color--surface--accent,
+  surface--accent--text:              $rh-color--surface--accent--text,
+  surface--accent--link:              $rh-color--surface--accent--link,
+  surface--accent--link--visited:     $rh-color--surface--accent--link--visited,
+  surface--accent--link--hover:       $rh-color--surface--accent--link--hover,
+  surface--accent--link--focus:       $rh-color--surface--accent--link--focus,
+
+
+  /* Palette of Border Colors */
+  surface--border:                    $rh-color--surface--border,
+  surface--border--lightest:          $rh-color--surface--border--lightest,
+  surface--border--darkest:           $rh-color--surface--border--darkest,
+
+
+  // ========================================================================
+  // Base Feedback Colors for messaging, errors, etc.
+  // ========================================================================
+
+  /* Palette of Feedback Colors */
+  feedback--critical:                 $rh-color--feedback--critical,
+  feedback--critical--lightest:       $rh-color--feedback--critical--lightest,
+  feedback--critical--darkest:        $rh-color--feedback--critical--darkest,
+
+  feedback--important:                $rh-color--feedback--important,
+  feedback--important--lightest:      $rh-color--feedback--important--lightest,
+  feedback--important--darkest:       $rh-color--feedback--important--darkest,
+
+  feedback--moderate:                 $rh-color--feedback--moderate,
+  feedback--moderate--lightest:       $rh-color--feedback--moderate--lightest,
+  feedback--moderate--darkest:        $rh-color--feedback--moderate--darkest,
+
+  feedback--success:                  $rh-color--feedback--success,
+  feedback--success--lightest:        $rh-color--feedback--success--lightest,
+  feedback--success--darkest:         $rh-color--feedback--success--darkest,
+
+  feedback--info:                     $rh-color--feedback--info,
+  feedback--info--lightest:           $rh-color--feedback--info--lightest,
+  feedback--info--darkest:            $rh-color--feedback--info--darkest,
+
+  feedback--default:                  $rh-color--feedback--default,
+  feedback--default--lightest:        $rh-color--feedback--default--lightest,
+  feedback--default--darkest:         $rh-color--feedback--default--darkest,
+
+);
+
+
+$rh-vars: (
+  container-spacer:              rh-size-prem(16px),
+  content-spacer:                rh-size-prem(4px),
+
+  container-spacer--xxs:         rh-size-prem(4px),
+  container-spacer--xs:          rh-size-prem(8px),
+  container-spacer--sm:          rh-size-prem(12px),
+  container-spacer--md:          rh-size-prem(24px),
+  container-spacer--lg:          rh-size-prem(32px),
+  container-spacer--xl:          rh-size-prem(48px),
+  container-spacer--xxl:         rh-size-prem(64px),
+
+  font-size:                     #{$rh-global--font-size-root}px,
+  font-size--sm:                 12px,
+  font-size--lg:                 18px,
+
+  font-family:                   '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
+  font-family--heading:          '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
+  font-family--code:             '"Overpass Mono", Consolas, Monaco, 'Andale Mono', monospace',
+
+  line-height:                   1.5,
+  line-height--for-sm:           1.5,
+  line-height--for-lg:           1.2,
+
+  font-size--heading--alpha:     32px,
+  font-size--heading--beta:      24px,
+  font-size--heading--gamma:     21px,
+  font-size--heading--delta:     18px,
+  font-size--heading--epsilon:   16px,
+  font-size--heading--zeta:      14px,
+
+  font-weight--light:            300,
+  font-weight--normal:           500,
+  font-weight--semi-bold:        600,
+  font-weight--bold:             700,
+
+  link--text-decoration:         underline,
+  link--text-decoration--hover:  underline,
+
+  border-width:                  1px,
+  border-style:                  solid,
+  border-radius:                 2px,
+
+  box-shadow--sm:                '0  rh-size-prem(1)  rh-size-prem(2) 0 rgba($rh-color--gray-1000, .2)',
+  box-shadow--md:                '0  rh-size-prem(2)  rh-size-prem(1) rh-size-prem(1) rgba($rh-color--gray-1000, .12), 0  rh-size-prem(4)  rh-size-prem(11) rh-size-prem(6) rgba($rh-color--gray-1000, .05)',
+  box-shadow--lg:                '0  rh-size-prem(3)  rh-size-prem(7) rh-size-prem(3) rgba($rh-color--gray-1000, .13), 0  rh-size-prem(11)  rh-size-prem(24) rh-size-prem(16) rgba($rh-color--gray-1000, .12)',
+  box-shadow--inset:             'inset 0 0 rh-size-prem(10) 0 rgba($rh-color--gray-1000, .25)',
+
+  animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),
+);

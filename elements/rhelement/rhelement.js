@@ -79,6 +79,10 @@ class RHElement extends HTMLElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
+    if (!this._rhClass.cascadingAttributes) {
+      return;
+    }
+
     const cascadeTo = this._rhClass.cascadingAttributes[attr];
     if (cascadeTo) {
       this._copyAttribute(attr, cascadeTo);
@@ -111,7 +115,7 @@ class RHElement extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.innerHTML = null;
+    this.shadowRoot.innerHTML = "";
     this.template.innerHTML = this.html;
 
     if (window.ShadyCSS) {

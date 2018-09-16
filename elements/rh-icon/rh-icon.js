@@ -38,73 +38,129 @@ class RhIcon extends RHElement {
     return `
 <style>
 :host {
+  --rh-icon--spacing:                 var(--rh-theme--container-spacer, 1rem);
+  --rh-icon--size:                    var(--rh-theme--icon-size, 1em);
+  --rh-icon--color--bg:               transparent;
+  --rh-icon--color--border:           transparent;
   display: inline-block;
-  vertical-align: middle; }
+  vertical-align: middle;
+  border-radius: 50%;
+  background: var(--rh-icon--color--bg);
+  border: 1px solid var(--rh-icon--color--border); }
   :host,
   :host svg {
     width: 1em;
     height: 1em; }
   :host svg {
-    fill: var(--rh-global--text-color, #333); }
+    fill: var(--rh-broadcasted--color--text); }
   :host([data-block]) {
     display: block;
-    margin-bottom: var(--rh-global--spacer, 1rem);
-    margin-top: var(--rh-global--spacer, 1rem); }
+    margin-bottom: var(--rh-icon--spacing);
+    margin-top: var(--rh-icon--spacing); }
     :host([data-block]):first-child {
       margin-top: 0; }
-  :host([data-color="white"]) svg {
-    fill: var(--rh-global--color--white, #fff); }
-  :host([data-color="black"]) svg {
-    fill: var(--rh-global--color--black, #1a1a1a); }
-  :host([data-bg]) {
-    border-radius: 50%; }
-  :host([data-bg="transparent"]) {
-    background: transparent;
-    border: var(--rh-global--border--BorderWidth, 1px) var(--rh-global--border--BorderStyle, solid) var(--rh-global--border--BorderColor, #ccc); }
-  :host([data-bg="white"]) {
-    background: var(--rh-global--color--white, #fff);
-    fill: var(--rh-global--text-color, #333); }
-    :host([data-bg="white"]) svg {
-      fill: var(--rh-global--text-color, #333); }
-  :host([data-bg="red"]) {
-    background: var(--rh-global--color--red, #c00);
-    fill: var(--rh-global--color--white, #fff); }
-    :host([data-bg="red"]) svg {
-      fill: var(--rh-global--color--white, #fff); }
-  :host([data-bg="light"]) {
-    background: var(--rh-global--color--gray2, #e7e7e7);
-    fill: var(--rh-global--text-color, #333); }
-    :host([data-bg="light"]) svg {
-      fill: var(--rh-global--text-color, #333); }
-  :host([data-bg="dark"]) {
-    background: var(--rh-global--color--gray10, #464646);
-    fill: var(--rh-global--color--white, #fff); }
-    :host([data-bg="dark"]) svg {
-      fill: var(--rh-global--color--white, #fff); }
-  :host([data-size="2x"]),
-  :host([data-size="2x"]) svg {
-    width: 2em;
-    height: 2em; }
-  :host([data-size="3x"]),
-  :host([data-size="3x"]) svg {
-    width: 3em;
-    height: 3em; }
-  :host([data-size="4x"]),
-  :host([data-size="4x"]) svg {
-    width: 4em;
-    height: 4em; }
-  :host([data-size="large"]),
-  :host([data-size="large"]) svg {
-    width: 100px;
-    height: 100px; }
-  :host([data-size="medium"]),
-  :host([data-size="medium"]) svg {
-    width: 70px;
-    height: 70px; }
-  :host([data-size="small"]),
-  :host([data-size="small"]) svg {
-    width: 48px;
-    height: 48px; }
+
+:host([size="2x"]),
+:host([size="2x"]) svg {
+  width: 2em;
+  height: 2em; }
+
+:host([size="3x"]),
+:host([size="3x"]) svg {
+  width: 3em;
+  height: 3em; }
+
+:host([size="4x"]),
+:host([size="4x"]) svg {
+  width: 4em;
+  height: 4em; }
+
+:host([size="xl"]),
+:host([size="xl"]) svg {
+  width: 100px;
+  height: 100px; }
+
+:host([size="lg"]),
+:host([size="lg"]) svg {
+  width: 64px;
+  height: 64px; }
+
+:host([size="md"]),
+:host([size="md"]) svg {
+  width: 32px;
+  height: 32px; }
+
+:host([size="sm"]),
+:host([size="sm"]) svg {
+  width: 14px;
+  height: 14px; }
+
+:host([color="base"]) {
+  --rh-broadcasted--color--text:      var(--rh-theme--color--ui-base, #0477a4); }
+
+:host([color="complement"]) {
+  --rh-broadcasted--color--text:      var(--rh-theme--color--ui-complement, #464646); }
+
+:host([color="accent"]) {
+  --rh-broadcasted--color--text:      var(--rh-theme--color--ui-accent, #fe460d); }
+
+:host([color="critical"]) {
+  --rh-broadcasted--color--text:      var(--rh-theme--color--feedback--critical, #990000); }
+
+:host([color="important"]) {
+  --rh-broadcasted--color--text:      var(--rh-theme--color--feedback--important, #d73401); }
+
+:host([color="moderate"]) {
+  --rh-broadcasted--color--text:      var(--rh-theme--color--feedback--moderate, #ffc024); }
+
+:host([color="success"]) {
+  --rh-broadcasted--color--text:      var(--rh-theme--color--feedback--success, #2e7d32); }
+
+:host([color="info"]) {
+  --rh-broadcasted--color--text:      var(--rh-theme--color--feedback--info, #0277bd); }
+
+:host([color="default"]) {
+  --rh-broadcasted--color--text:      var(--rh-theme--color--feedback--default, #606060); }
+
+:host([circled]) {
+  --rh-icon--color--bg:               transparent;
+  --rh-icon--color--border:           var(--rh-theme--color--surface--border, #dfdfdf);
+  padding: 0.05em; }
+
+:host([circled="base"]) {
+  --rh-icon--color--bg:               var(--rh-theme--color--surface--base, #dfdfdf);
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      var(--rh-theme--color--surface--base--text, #333); }
+
+:host([circled="lightest"]) {
+  --rh-icon--color--bg:               var(--rh-theme--color--surface--lightest, #fff);
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      var(--rh-theme--color--surface--lightest--text, #333); }
+
+:host([circled="light"]) {
+  --rh-icon--color--bg:               var(--rh-theme--color--surface--lighter, white);
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      var(--rh-theme--color--surface--lighter--text, #333); }
+
+:host([circled="dark"]) {
+  --rh-icon--color--bg:               var(--rh-theme--color--surface--darker, #464646);
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      var(--rh-theme--color--surface--darker--text, #fff); }
+
+:host([circled="darkest"]) {
+  --rh-icon--color--bg:               var(--rh-theme--color--surface--darkest, #131313);
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      var(--rh-theme--color--surface--darkest--text, #fff); }
+
+:host([circled="complement"]) {
+  --rh-icon--color--bg:               var(--rh-theme--color--surface--complement, #0477a4);
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      var(--rh-theme--color--surface--complement--text, #fff); }
+
+:host([circled="accent"]) {
+  --rh-icon--color--bg:               var(--rh-theme--color--surface--accent, #fe460d);
+  --rh-icon--color--border:           transparent;
+  --rh-broadcasted--color--text:      var(--rh-theme--color--surface--accent--text, #fff); }
 </style>
 <svg viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" focusable="false" style="pointer-events: none; display: block; width: 100%; height: 100%">
   <g>

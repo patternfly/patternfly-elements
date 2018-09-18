@@ -1,22 +1,48 @@
 //
-// Global vars are named:
-// `$rh-global--concept--PropertyTitleCase--modifier--state`
-// For example:
-// * $rh-global--color--primary
-// * $rh-global--FontSize
-// * --rh-global--FontSize--heading--xs
+// NEEDS TO BE CLEANED UP
 
-// Component/Element vars are named:
-// `$rh-c-block__element--modifier--state--PropertyTitleCase`
-// For example:
-// * --rh-dropdown--heading--FontSize
-// * --cp-accordion--heading--FontSize
+
+
+// See _maps.scss
+// Use #{rh-var($cssvar)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ========================================================================
-// Animations
+// UI Styles
 // ========================================================================
-
-$rh-global--animation-timing:    cubic-bezier(0.465, 0.183, 0.153, 0.946);
 
 $rh-global--link--TextDecoration: underline;
 $rh-global--link--TextDecoration--hover: underline;
@@ -25,27 +51,66 @@ $rh-global--link--TextDecoration--hover: underline;
 // Borders
 // ========================================================================
 
-$rh-global--border--BorderWidth:         1px !default;
-$rh-global--border--BorderWidth--thin:   $rh-global--border--BorderWidth !default;
+$rh-global--border-width:                    1px !default;
+$rh-global--border-style:                    solid !default;
+$rh-global--border-radius:                   2px;
+// For border color, see _colors.scss
 
-$rh-global--border--BorderStyle:         solid !default;
-$rh-global--border--BorderColor:         $rh-global--color--gray-silver !default;
-$rh-global--border--BorderColor--light:  $rh-global--color--gray-platinum !default;
-$rh-global--border--BorderColor--dark:   $rh-global--text-color;
+// ========================================================================
+// Shadows
+// ========================================================================
 
-$rh-global--border--BorderRadius:         0 !default;
-$rh-global--button-border--BorderRadius:  2px !default;
+$rh-global--box-shadow--sm:                  0  rh-size-prem(1)  rh-size-prem(2) 0 rgba($rh-color--gray-1000, .2) !default;
+$rh-global--box-shadow--md:                  0  rh-size-prem(2)  rh-size-prem(1) rh-size-prem(1) rgba($rh-color--gray-1000, .12), 0  rh-size-prem(4)  rh-size-prem(11) rh-size-prem(6) rgba($rh-color--gray-1000, .05) !default;
+$rh-global--box-shadow--lg:                  0  rh-size-prem(3)  rh-size-prem(7) rh-size-prem(3) rgba($rh-color--gray-1000, .13), 0  rh-size-prem(11)  rh-size-prem(24) rh-size-prem(16) rgba($rh-color--gray-1000, .12) !default;
+$rh-global--box-shadow--inset:               inset 0 0 rh-size-prem(10) 0 rgba($rh-color--gray-1000, .25) !default;
 
-$rh-global--border-radius:               2px;
+// ========================================================================
+// Animations
+// ========================================================================
+
+$rh-global--animation-timing:                cubic-bezier(0.465, 0.183, 0.153, 0.946);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================================
+// Needs to be resolved! DO NOT USE!
+// ========================================================================
+
+$rh-global--border--BorderWidth:         $rh-global--border-width;
+$rh-global--border--BorderWidth--thin:   $rh-global--border-width;
+
+$rh-global--border--BorderStyle:         $rh-global--border-style;
+$rh-global--border--BorderColor:         $rh-color--surface--border;
+$rh-global--border--BorderColor--light:  $rh-color--surface--border--lightest;
+$rh-global--border--BorderColor--dark:   $rh-color--surface--border--darkest;
+
+$rh-global--border--BorderRadius:         $rh-global--border-radius;
+$rh-global--button-border--BorderRadius:  $rh-global--border-radius;
+
+
 
 
 // ========================================================================
 // Shadows
 // ========================================================================
 
-$rh-global--shadow--BoxShadow--sm:  0  rh-size-prem(1)  rh-size-prem(2) 0 rgba($pf-color-black-1000, .2) !default;
-$rh-global--shadow--BoxShadow--md:  0  rh-size-prem(2)  rh-size-prem(1) rh-size-prem(1) rgba($pf-color-black-1000, .12), 0  rh-size-prem(4)  rh-size-prem(11) rh-size-prem(6) rgba($pf-color-black-1000, .05) !default;
-$rh-global--shadow--BoxShadow--lg:  0  rh-size-prem(3)  rh-size-prem(7) rh-size-prem(3) rgba($pf-color-black-1000, .13), 0  rh-size-prem(11)  rh-size-prem(24) rh-size-prem(16) rgba($pf-color-black-1000, .12) !default;
+$rh-global--shadow--BoxShadow--sm:  $rh-global--box-shadow--sm;
+$rh-global--shadow--BoxShadow--md:  $rh-global--box-shadow--md;
+$rh-global--shadow--BoxShadow--lg:  $rh-global--box-shadow--lg;
 
 $rh-global--shadow--BoxShadow--sm-right:  rh-size-prem(4)  0  rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
 $rh-global--shadow--BoxShadow--sm-left:   rh-size-prem(-4) 0 rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
@@ -60,4 +125,4 @@ $rh-global--shadow--BoxShadow--lg-left:   rh-size-prem(-12) 0 rh-size-prem(10) r
 $rh-global--shadow--BoxShadow--lg-bottom: 0 rh-size-prem(12) rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
 $rh-global--shadow--BoxShadow--lg-top:    0 rh-size-prem(-12) rh-size-prem(10) rh-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
 
-$rh-global--shadow--BoxShadow--inset:     inset 0 0 rh-size-prem(10) 0 rgba($pf-color-black-1000, .25) !default;
+$rh-global--shadow--BoxShadow--inset:     $rh-global--box-shadow--inset;

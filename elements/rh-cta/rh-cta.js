@@ -37,7 +37,7 @@ class RhCta extends RHElement {
   font-weight: bold; }
   :host ::slotted(a) {
     line-height: inherit;
-    color: var(--rh-cta--main); }
+    color: var(--rh-cta--main) !important; }
     :host ::slotted(a)::after {
       display: block;
       margin-left: 0.25rem;
@@ -50,11 +50,11 @@ class RhCta extends RHElement {
       display: inline-block;
       content: ""; }
   :host ::slotted(a:hover) {
-    color: var(--rh-cta--main--hover); }
+    color: var(--rh-cta--main--hover) !important; }
     :host ::slotted(a:hover)::after {
       border-top-color: var(--rh-cta--main--hover); }
   :host ::slotted(a:focus) {
-    color: var(--rh-cta--main--focus); }
+    color: var(--rh-cta--main--focus) !important; }
     :host ::slotted(a:focus)::after {
       border-top-color: var(--rh-cta--main--focus); }
 
@@ -70,16 +70,16 @@ class RhCta extends RHElement {
     border: 1px solid transparent;
     text-decoration: none;
     line-height: 1.2;
-    border-color: var(--rh-cta--main);
-    background: var(--rh-cta--main);
-    color: var(--rh-cta--aux); }
+    border-color: var(--rh-cta--main) !important;
+    background: var(--rh-cta--main) !important;
+    color: var(--rh-cta--aux) !important; }
     :host([priority="primary"]) ::slotted(a)::after {
       display: none; }
   :host([priority="primary"]) ::slotted(a:hover),
   :host([priority="primary"]) ::slotted(a:focus) {
-    border-color: var(--rh-cta--main--hover);
-    background: var(--rh-cta--main--hover);
-    color: var(--rh-cta--aux--hover); }
+    border-color: var(--rh-cta--main--hover) !important;
+    background: var(--rh-cta--main--hover) !important;
+    color: var(--rh-cta--aux--hover) !important; }
 
 :host([priority="secondary"]) {
   --rh-cta--main:          var(--rh-theme--color--ui-base, #0477a4);
@@ -93,16 +93,16 @@ class RhCta extends RHElement {
     border: 1px solid var(--rh-cta--main);
     text-decoration: none;
     line-height: 1.2;
-    border-color: var(--rh-cta--main);
-    background: var(--rh-cta--aux);
-    color: var(--rh-cta--main); }
+    border-color: var(--rh-cta--main) !important;
+    background: var(--rh-cta--aux) !important;
+    color: var(--rh-cta--main) !important; }
     :host([priority="secondary"]) ::slotted(a)::after {
       display: none; }
   :host([priority="secondary"]) ::slotted(a:hover),
   :host([priority="secondary"]) ::slotted(a:focus) {
-    border-color: var(--rh-cta--main--hover);
-    background: var(--rh-cta--main--hover);
-    color: var(--rh-cta--aux--hover); }
+    border-color: var(--rh-cta--main--hover) !important;
+    background: var(--rh-cta--main--hover) !important;
+    color: var(--rh-cta--aux--hover) !important; }
 
 :host([on="dark"]) {
   --rh-cta--main:        var(--rh-theme--color--text--on-dark, #fff);

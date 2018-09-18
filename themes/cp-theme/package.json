@@ -25,5 +25,8 @@
     }
   ],
   "license": "ISC",
-  "gitHead": "1035d989bf8fc80ded1415610d25da01307059cd"
+  "gitHead": "1035d989bf8fc80ded1415610d25da01307059cd",
+  "dependencies": {
+    "normalize-scss": "^7.0.1"
+  }
 }

@@ -4,7 +4,7 @@
     "className": "CpTheme",
     "elementName": "cp-theme"
   },
-  "version": "1.0.0-prerelease.1",
+  "version": "1.0.0-prerelease.2",
   "publishConfig": {
     "access": "public"
   },

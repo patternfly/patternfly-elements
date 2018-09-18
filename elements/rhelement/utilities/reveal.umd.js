@@ -31,15 +31,10 @@ export function autoReveal() {
   //
   // see https://github.com/github/webcomponentsjs#webcomponents-loaderjs for
   // info about web component readiness events
-  if (!window.WebComponents) {
-    console.warn(
-      "RHElements requires the Web Components polyfill, but it was not found. See https://github.com/github/webcomponentsjs for more information."
-    );
+  const polyfillPresent = window.WebComponents;
+  const polyfillReady = polyfillPresent && window.WebComponents.ready;
 
-    return;
-  }
-
-  if (window.WebComponents.ready) {
+  if (!polyfillPresent || polyfillReady) {
     handleWebComponentsReady();
   } else {
     window.addEventListener("WebComponentsReady", handleWebComponentsReady);

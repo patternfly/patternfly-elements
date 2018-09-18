@@ -7,6 +7,7 @@ import {
 } from "@storybook/addon-knobs/polymer";
 import "./rh-card";
 import cpTheme from "../../themes/cp-theme/cp-theme.js";
+import { escapeHTML } from "../../.storybook/utils.js";
 
 const stories = storiesOf("Card", module);
 stories.addDecorator(withKnobs);
@@ -90,9 +91,8 @@ stories.add("rh-card", () => {
     <pre style="margin-left:15px;">
 <code>&lt;rh-card${colorAttr}&gt;
   &lt;h2 slot="header"&gt;Card Heading&lt/h2&gt;
-  &lt;p&gt;Become a Member&lt;/p&gt;${cardFooter
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")}
+  &lt;p&gt;Become a Member&lt;/p&gt;
+  ${escapeHTML(cardFooter)}
 &lt;/rh-card&gt;</code>
   </pre>
   </section>

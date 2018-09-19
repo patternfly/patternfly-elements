@@ -1,13 +1,30 @@
 import { storiesOf } from "@storybook/polymer";
-import { withKnobs, text, select } from "@storybook/addon-knobs/polymer";
+import {
+  withKnobs,
+  text,
+  select,
+  boolean
+} from "@storybook/addon-knobs/polymer";
 import "./rh-card";
 import cpTheme from "../../themes/cp-theme/cp-theme.js";
+import { escapeHTML } from "../../.storybook/utils.js";
 
 const stories = storiesOf("Card", module);
 stories.addDecorator(withKnobs);
 
 stories.add("rh-card", () => {
   const colorLabel = "Color";
+  const ctaLabel = "Call to Action";
+  const ctaTypeLabel = "Priority";
+  const colorDefault = "default";
+  const ctaDefault = false;
+  const ctaTypeDefault = "default";
+  let ctaPriorityValue = "";
+  let cardFooter = "";
+  let cardFooterString = "";
+  let valueAttr = "";
+  let ctaOnDark = "";
+  let colorAttr = "";
 
   const colorOptions = {
     lightest: "lightest",
@@ -19,11 +36,30 @@ stories.add("rh-card", () => {
     accent: "accent"
   };
 
-  const colorDefault = "default";
+  const ctaTypeOptions = {
+    default: "default",
+    primary: "primary",
+    secondary: "secondary"
+  };
 
   const colorValue = select(colorLabel, colorOptions, colorDefault);
+  const ctaValue = boolean(ctaLabel, ctaDefault);
 
-  let colorAttr = colorValue != "default" ? ` color="${colorValue}"` : "";
+  if (ctaValue != false) {
+    let ctaPriorityValue = select(ctaTypeLabel, ctaTypeOptions, ctaTypeDefault);
+    valueAttr =
+      ctaPriorityValue != "default" ? ` priority="${ctaPriorityValue}"` : "";
+    if (
+      colorValue != "lightest" &&
+      colorValue != "light" &&
+      colorValue != "default"
+    ) {
+      ctaOnDark = ' on="dark"';
+    }
+    cardFooter = `\n  <div slot="footer"><rh-cta${valueAttr}${ctaOnDark}><a href="#">Learn more</a></div>`;
+  }
+
+  colorAttr = colorValue != "default" ? ` color="${colorValue}"` : "";
 
   return `
 
@@ -47,7 +83,7 @@ stories.add("rh-card", () => {
     <h2>Your RHElement</h2>
     <rh-card class="custom-card"${colorAttr}>
       <h2 slot="header">Card Heading</h2>
-      <p>Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
+      <p>Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>${cardFooter}
     </rh-card>
   </section>
   <section>
@@ -56,9 +92,9 @@ stories.add("rh-card", () => {
 <code>&lt;rh-card${colorAttr}&gt;
   &lt;h2 slot="header"&gt;Card Heading&lt/h2&gt;
   &lt;p&gt;Become a Member&lt;/p&gt;
+  ${escapeHTML(cardFooter)}
 &lt;/rh-card&gt;</code>
   </pre>
-
   </section>
   <section>
     <h2>At a glance</h2>
@@ -70,14 +106,8 @@ stories.add("rh-card", () => {
       </rh-card>
       <rh-card color="light">
         <h2 slot="header">Light card</h2>
-
-        <p>
-          Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.
-        </p>
-        <p>
-          Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
-        </p>
-
+        <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
+        <p>Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
         <div slot="footer"><rh-cta priority="secondary"><a href="#">Learn more</a></rh-cta></div>
       </rh-card>
       <rh-card>

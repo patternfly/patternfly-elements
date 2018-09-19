@@ -1,0 +1,4 @@
+elements/*/*.umd.js     -diff -merge
+elements/*/*.umd.js.map -diff -merge
+themes/*/*.umd.js       -diff -merge
+themes/*/*.umd.js.map   -diff -merge

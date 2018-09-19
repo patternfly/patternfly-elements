@@ -31,7 +31,10 @@ export function autoReveal() {
   //
   // see https://github.com/github/webcomponentsjs#webcomponents-loaderjs for
   // info about web component readiness events
-  if (window.WebComponents.ready) {
+  const polyfillPresent = window.WebComponents;
+  const polyfillReady = polyfillPresent && window.WebComponents.ready;
+
+  if (!polyfillPresent || polyfillReady) {
     handleWebComponentsReady();
   } else {
     window.addEventListener("WebComponentsReady", handleWebComponentsReady);

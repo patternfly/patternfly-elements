@@ -4,7 +4,7 @@
     "className": "RhIconPanel",
     "elementName": "rh-icon-panel"
   },
-  "version": "1.0.0-prerelease.2",
+  "version": "1.0.0-prerelease.3",
   "publishConfig": {
     "access": "public"
   },
@@ -24,8 +24,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rhelements/rh-sass": "^1.0.0-prerelease.2",
-    "@rhelements/rhelement": "^1.0.0-prerelease.2"
+    "@rhelements/rh-sass": "^1.0.0-prerelease.3",
+    "@rhelements/rhelement": "^1.0.0-prerelease.3"
   },
   "generator-rhelement-version": "0.5.0",
   "gitHead": "1035d989bf8fc80ded1415610d25da01307059cd"

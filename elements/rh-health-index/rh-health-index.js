@@ -35,24 +35,26 @@ class RhHealthIndex extends RHElement {
 
 .box-container {
   display: flex;
-  border: 1px solid #ececec;
-  margin-left: 8px; }
+  border: 1px solid var(--rh-theme--color--surface--border, #dfdfdf);
+  margin-left: var(--rh-theme--container-spacer--xs, 0.5rem); }
   .box-container .box {
-    background: white;
+    background: #fff;
     width: 10px;
     height: 20px;
-    border-right: 1px solid #ececec; }
-    .box-container .box.a.active {
+    border-right: 1px solid var(--rh-theme--color--surface--border, #dfdfdf); }
+    .box-container .box:last-child {
+      border-right: 0; }
+    .box-container .box.active.a {
       background-color: #3f9c35; }
-    .box-container .box.b.active {
+    .box-container .box.active.b {
       background-color: #92d400; }
-    .box-container .box.c.active {
+    .box-container .box.active.c {
       background-color: #efaa00; }
-    .box-container .box.d.active {
+    .box-container .box.active.d {
       background-color: #ec7a08; }
-    .box-container .box.e.active {
+    .box-container .box.active.e {
       background-color: #cc0000; }
-    .box-container .box.f.active {
+    .box-container .box.active.f {
       background-color: #a30000; }
 </style>
 <div id="healthIndex"></div>

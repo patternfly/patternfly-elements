@@ -1,6 +1,9 @@
 {
   "name": "@rhelements/rh-health-index",
   "version": "1.0.0-prerelease.3",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Health element for RHElements",
   "repository": {
     "type": "git",

@@ -1,0 +1,46 @@
+@import "../../rh-sass/rh-sass";
+:host {
+  display: inline-flex;
+  align-items: center;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.box-container {
+  display: flex;
+  border: 1px solid #ececec;
+  margin-left: 8px;
+
+  .box {
+    background: white;
+    width: 10px;
+    height: 20px;
+    border-right: 1px solid #ececec;
+
+    &.a.active {
+      background-color: #3f9c35;
+    }
+
+    &.b.active {
+      background-color: #92d400;
+    }
+
+    &.c.active {
+      background-color: #efaa00;
+    }
+
+    &.d.active {
+      background-color: #ec7a08;
+    }
+
+    &.e.active {
+      background-color: #cc0000;
+    }
+
+    &.f.active {
+      background-color: #a30000;
+    }
+  }
+}

@@ -14,6 +14,7 @@
     "@rhelements/rh-card": "file:elements/rh-card",
     "@rhelements/rh-cta": "file:elements/rh-cta",
     "@rhelements/rh-datetime": "file:elements/rh-datetime",
+    "@rhelements/rh-health-index": "file:elements/rh-health-index",
     "@rhelements/rh-icon": "file:elements/rh-icon",
     "@rhelements/rh-icon-panel": "file:elements/rh-icon-panel",
     "@rhelements/rh-number": "file:elements/rh-number",

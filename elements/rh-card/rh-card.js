@@ -27,7 +27,7 @@ class RhCard extends RHElement {
     return `
 <style>
 :host {
-  --rh-card--padding:                          var(--rh-theme--container-spacer--lg, 2rem);
+  --rh-card--padding:                          calc(var(--rh-theme--container-spacer, 1rem) * 2);
   --rh-card_header--size:                      var(--rh-theme--font-size--heading--gamma, 21px);
   --rh-card--bg:                               var(--rh-theme--color--surface--base, #dfdfdf);
   --rh-broadcasted--color--text:               var(--rh-theme--color--surface--base--text, #333);
@@ -39,7 +39,8 @@ class RhCard extends RHElement {
   flex-direction: column;
   justify-items: flex-start;
   padding: var(--rh-card--padding);
-  border: var(--rh-theme--border-width, 1px) var(--rh-theme--border-style, solid) transparent;
+  border: var(--rh-theme--surface--border-width, ) var(--rh-theme--surface--border-style, ) transparent;
+  border-radius: var(--rh-theme--surface--border-radius, );
   background: var(--rh-card--bg);
   color: var(--rh-broadcasted--color--text); }
 

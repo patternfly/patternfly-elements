@@ -1,7 +1,7 @@
 @import "../../rh-sass/rh-sass";
 
 :host {
-  --rh-card--padding:                          #{rh-var(container-spacer--lg)};
+  --rh-card--padding:                          calc(#{rh-var(container-spacer)} * 2); // 2x `container-spacer`
   --rh-card_header--size:                      #{rh-var(font-size--heading--gamma)};
   --rh-card--bg:                               #{rh-color(surface--base)};
   --rh-broadcasted--color--text:               #{rh-color(surface--base--text)};
@@ -15,9 +15,10 @@
   justify-items: flex-start;
 
   padding: var(--rh-card--padding);
-  border: rh-var(border-width)
-          rh-var(border-style)
+  border: rh-var(surface--border-width)
+          rh-var(surface--border-style)
           transparent;
+  border-radius: rh-var(surface--border-radius);
 
   // Base colors
   background: var(--rh-card--bg);

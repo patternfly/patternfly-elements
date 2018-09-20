@@ -91,6 +91,8 @@ $rh-global--icon-size--xs:              rh-size-prem(14px) !default;
 $rh-global--container-spacer:               rh-size-prem(16px) !default;
 $rh-global--content-spacer:                 rh-size-prem(4px) !default;
 
+$rh-global--containter-spacer:              $rh-global--container-spacer; // stupid containter.
+
 // ========================================================================
 // Needs to be resolved! DO NOT USE!
 // ========================================================================

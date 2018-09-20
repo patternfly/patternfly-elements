@@ -1,6 +1,9 @@
 {
   "name": "@rhelements/rh-health-index",
-  "version": "0.0.1",
+  "version": "1.0.0-prerelease.3",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Health element for RHElements",
   "repository": {
     "type": "git",
@@ -17,8 +20,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rhelements/rh-sass": "*",
-    "@rhelements/rhelement": "*"
+    "@rhelements/rh-sass": "^1.0.0-prerelease.3",
+    "@rhelements/rhelement": "^1.0.0-prerelease.3"
   },
   "generator-rhelement-version": "0.6.3"
 }

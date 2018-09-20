@@ -21,35 +21,54 @@
  */
 
 import RHElement from "../rhelement/rhelement.js";
-import "../rh-icon/rh-icon.js";
 
-class RhIconPanel extends RHElement {
+class RhHealthIndex extends RHElement {
   static get tag() {
-    return "rh-icon-panel";
-  }
-
-  get styleUrl() {
-    return "rh-icon-panel.scss";
+    return "rh-health-index";
   }
 
   get templateUrl() {
-    return "rh-icon-panel.html";
+    return "rh-health-index.html";
+  }
+
+  get styleUrl() {
+    return "rh-health-index.scss";
   }
 
   static get observedAttributes() {
-    return ["icon", "circled"];
-  }
-
-  static get cascadingAttributes() {
-    return {
-      icon: "rh-icon",
-      circled: "rh-icon"
-    };
+    return ["health-index"];
   }
 
   constructor() {
-    super(RhIconPanel);
+    super(RhHealthIndex.tag);
+  }
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    const healthIndex = newValue.toLowerCase();
+    const healthIndexUpperCase = newValue.toUpperCase();
+    const boxes = [...this.shadowRoot.querySelectorAll(".box")];
+
+    this.innerHTML = healthIndexUpperCase;
+    this.shadowRoot.querySelector(
+      "#healthIndex"
+    ).innerText = healthIndexUpperCase;
+
+    boxes.forEach(box => {
+      if (box.classList.contains(healthIndex)) {
+        box.classList.add("active");
+      } else {
+        box.classList.remove("active");
+      }
+    });
+
+    if (!this.shadowRoot.querySelector(".box.active")) {
+      console.warn(
+        `${
+          RhHealthIndex.tag
+        }: a valid health-index was not provided. Please use A, B, C, D, E, or F`
+      );
+    }
   }
 }
 
-RHElement.create(RhIconPanel);
+RHElement.create(RhHealthIndex);

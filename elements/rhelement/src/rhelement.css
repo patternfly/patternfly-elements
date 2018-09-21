@@ -1,0 +1,19 @@
+body {
+    --rh-reveal-duration: 0.1618s;
+    --rh-reveal-delay: 2s;
+
+    transition: opacity var(--rh-reveal-duration) ease-in-out;
+}
+body[unresolved] {
+    opacity: 0;
+    animation: reveal var(--rh-reveal-duration) var(--rh-reveal-delay) 1 forwards;
+}
+
+@keyframes reveal {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

@@ -46,7 +46,7 @@ class RhIcon extends RHElement {
   vertical-align: middle;
   border-radius: 50%;
   background: var(--rh-icon--color--bg);
-  border: 1px solid var(--rh-icon--color--border); }
+  border: var(--rh-icon--color--border); }
   :host,
   :host svg {
     width: 1em;

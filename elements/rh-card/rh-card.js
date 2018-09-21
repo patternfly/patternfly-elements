@@ -39,8 +39,8 @@ class RhCard extends RHElement {
   flex-direction: column;
   justify-items: flex-start;
   padding: var(--rh-card--padding);
-  border: var(--rh-theme--surface--border-width, ) var(--rh-theme--surface--border-style, ) transparent;
-  border-radius: var(--rh-theme--surface--border-radius, );
+  border: var(--rh-theme--surface--border-width, 1px) var(--rh-theme--surface--border-style, solid) transparent;
+  border-radius: var(--rh-theme--surface--border-radius, 0);
   background: var(--rh-card--bg);
   color: var(--rh-broadcasted--color--text); }
 

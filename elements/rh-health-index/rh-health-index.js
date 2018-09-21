@@ -117,3 +117,5 @@ class RhHealthIndex extends RHElement {
 }
 
 RHElement.create(RhHealthIndex);
+
+export default RhHealthIndex;

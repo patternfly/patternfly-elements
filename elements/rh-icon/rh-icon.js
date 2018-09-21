@@ -138,7 +138,7 @@ class RhIcon extends RHElement {
   --rh-broadcasted--color--text:      var(--rh-theme--color--surface--lightest--text, #333); }
 
 :host([circled="light"]) {
-  --rh-icon--color--bg:               var(--rh-theme--color--surface--lighter, white);
+  --rh-icon--color--bg:               var(--rh-theme--color--surface--lighter, #ececec);
   --rh-icon--color--border:           transparent;
   --rh-broadcasted--color--text:      var(--rh-theme--color--surface--lighter--text, #333); }
 

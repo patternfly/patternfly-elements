@@ -73,7 +73,7 @@ a:focus {
   --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--darkest--link--focus, #cce6ff); }
 
 :host([color="light"]) {
-  --rh-card--bg:                               var(--rh-theme--color--surface--lighter, white);
+  --rh-card--bg:                               var(--rh-theme--color--surface--lighter, #ececec);
   --rh-broadcasted--color--text:               var(--rh-theme--color--surface--lighter--text, #333);
   --rh-broadcasted--color--ui-link:            var(--rh-theme--color--surface--lighter--link, #06c);
   --rh-broadcasted--color--ui-link--visited:   var(--rh-theme--color--surface--lighter--link--visited, rebeccapurple);

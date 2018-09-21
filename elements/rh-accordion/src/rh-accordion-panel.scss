@@ -3,12 +3,13 @@
 :host {
   display: none;
   overflow: hidden;
-  background: white;
+  background: #{rh-color(surface--lightest)};
   will-change: height;
 }
 
 :host([expanded]) {
   display: block;
+  position: relative;
 }
 
 :host(.animating) {
@@ -17,7 +18,8 @@
 }
 
 .container {
-  border: 2px solid #f7f7f7;
+  margin: 0 1px; // align with 1px margin on header
+  border: 1px solid #{rh-color(surface--border--lightest)};
   border-top: none;
-  padding: 20px;
+  padding: #{rh-var(container-spacer)};
 }

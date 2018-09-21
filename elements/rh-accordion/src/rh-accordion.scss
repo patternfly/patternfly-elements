@@ -6,7 +6,3 @@
   overflow: hidden;
   margin: 0;
 }
-
-:host(rh-accordion[theme="striped"]) ::slotted(rh-accordion-header.even) {
-  background-color: var(--white, white);
-}

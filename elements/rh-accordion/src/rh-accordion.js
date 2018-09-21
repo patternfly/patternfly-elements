@@ -87,7 +87,13 @@ class RhAccordion extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["theme"];
+    return ["theme", "color"];
+  }
+
+  static get cascadingAttributes() {
+    return {
+      color: "rh-accordion-header"
+    };
   }
 
   constructor() {
@@ -117,7 +123,7 @@ class RhAccordion extends RHElement {
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
 
-    if (attr === "theme") {
+    if (attr === "color") {
       const headers = this.querySelectorAll(RhAccordionHeader.tag);
 
       if (newVal === "striped") {

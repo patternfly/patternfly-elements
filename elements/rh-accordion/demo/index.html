@@ -4,16 +4,22 @@
     <meta charset="utf-8">
     <title>RHElements: rh-accordion Demo</title>
 
+    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
+    <!-- <link rel="stylesheet" href="../../../themes/cp-theme/cp-theme.css" /> -->
+
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../rh-accordion.umd.js'])</script>
+    <script>require([
+      '../../../themes/cp-theme/cp-theme.umd.js',
+      '../rh-accordion.umd.js'
+    ])</script>
   </head>
   <body>
     <h1>&lt;rh-accordion&gt;</h1>
     <section>
-      <rh-accordion>
+      <rh-accordion color="lightest">
         <rh-accordion-header>
           <h2>Why do wizards need money if they could just create it?</h2>
         </rh-accordion-header>
@@ -49,7 +55,7 @@
     </section>
     <section>
       <h2>Striped Accordion</h2>
-      <rh-accordion theme="striped">
+      <rh-accordion color="striped">
         <rh-accordion-header>
           <h2>Why do wizards need money if they could just create it?</h2>
         </rh-accordion-header>

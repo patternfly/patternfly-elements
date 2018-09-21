@@ -82,9 +82,6 @@ class RhAccordion extends RHElement {
   position: relative;
   overflow: hidden;
   margin: 0; }
-
-:host(rh-accordion[theme="striped"]) ::slotted(rh-accordion-header.even) {
-  background-color: var(--white, white); }
 </style>
 
 <slot></slot>`;
@@ -103,7 +100,13 @@ class RhAccordion extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["theme"];
+    return ["theme", "color"];
+  }
+
+  static get cascadingAttributes() {
+    return {
+      color: "rh-accordion-header"
+    };
   }
 
   constructor() {
@@ -133,7 +136,7 @@ class RhAccordion extends RHElement {
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
 
-    if (attr === "theme") {
+    if (attr === "color") {
       const headers = this.querySelectorAll(RhAccordionHeader.tag);
 
       if (newVal === "striped") {
@@ -380,11 +383,63 @@ class RhAccordionHeader extends RHElement {
     return `
 <style>
 :host {
+  --rh-accordion--main:         var(--rh-theme--color--surface--lighter, white);
+  --rh-accordion--aux:          var(--rh-theme--color--surface--lighter--text, #333);
+  --rh-accordion--focus:        var(--rh-theme--color--surface--lighter--link--focus, #003366);
   display: block;
-  background: var(--gray-nimbus, #ededed); }
+  background: var(--rh-accordion--main);
+  color: var(--rh-accordion--aux); }
+  :host button {
+    padding: calc(var(--rh-theme--container-spacer, 1rem) * 0.75);
+    margin: 0;
+    width: 100%;
+    height: auto;
+    border: 1px solid transparent;
+    font-family: inherit;
+    font-size: var(--rh-theme--font-size, 16px);
+    line-height: 1.5;
+    text-align: left;
+    background: none;
+    cursor: pointer;
+    color: var(--rh-accordion--aux); }
+    :host button:focus {
+      outline: 1px solid var(--rh-accordion--focus); }
+    :host button::-moz-focus-inner {
+      border: 0; }
+    :host button[aria-expanded] {
+      position: relative;
+      display: block;
+      font-weight: normal;
+      padding-left: calc(var(--rh-theme--container-spacer, 1rem) * 2.5); }
+    :host button[aria-expanded="false"]::before {
+      content: "";
+      position: absolute;
+      left: var(--rh-theme--container-spacer, 1rem);
+      top: calc((var(--rh-theme--container-spacer, 1rem) * 0.75) + 0.5935em);
+      display: block;
+      border-style: solid;
+      border-width: 0.15em 0.15em 0 0;
+      height: 0.313em;
+      width: 0.313em;
+      text-align: center;
+      transition: transform 0.15s;
+      transform: rotate(45deg); }
+    :host button[aria-expanded="true"]::before {
+      content: "";
+      position: absolute;
+      left: var(--rh-theme--container-spacer, 1rem);
+      top: calc((var(--rh-theme--container-spacer, 1rem) * 0.75) + 0.5935em);
+      display: block;
+      width: 0.313em;
+      height: 0.313em;
+      border-style: solid;
+      border-width: 0.15em 0.15em 0 0;
+      text-align: center;
+      transition: all 0.15s;
+      transform: rotate(135deg); }
 
 :host(.animating) {
-  transition: transform 0.3s ease-in-out; }
+  transition: transform 0.3s var(--rh-theme--animation-timing, cubic-bezier(0.465, 0.183, 0.153, 0.946)); }
 
 h1,
 h2,
@@ -394,61 +449,41 @@ h5,
 h6 {
   margin: 1px; }
 
-button {
-  padding: 10px;
-  margin: 0;
-  border: 1px solid transparent;
-  font-family: inherit;
-  font-size: 16px;
-  line-height: 1.5;
-  min-height: 3em;
-  height: auto;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  background: none; }
+:host([color="lightest"]),
+:host([color="striped"].even) {
+  --rh-accordion--main:         var(--rh-theme--color--surface--lightest, #fff);
+  --rh-accordion--aux:          var(--rh-theme--color--surface--lightest--text, #333);
+  --rh-accordion--focus:        var(--rh-theme--color--surface--lightest--link--focus, #003366); }
+  :host([color="lightest"]) button[aria-expanded="true"],
+  :host([color="striped"].even) button[aria-expanded="true"] {
+    border-top-color: var(--rh-theme--color--surface--border--lightest, #f9f9f9);
+    border-left-color: var(--rh-theme--color--surface--border--lightest, #f9f9f9);
+    border-right-color: var(--rh-theme--color--surface--border--lightest, #f9f9f9); }
 
-button:focus {
-  outline: 1px solid blue; }
+:host([color="base"]) {
+  --rh-accordion--main:         var(--rh-theme--color--surface--base, #dfdfdf);
+  --rh-accordion--aux:          var(--rh-theme--color--surface--base--text, #333);
+  --rh-accordion--focus:        var(--rh-theme--color--surface--base--link--focus, #00305b); }
 
-button::-moz-focus-inner {
-  border: 0; }
+:host([color="dark"]) {
+  --rh-accordion--main:         var(--rh-theme--color--surface--darker, #464646);
+  --rh-accordion--aux:          var(--rh-theme--color--surface--darker--text, #fff);
+  --rh-accordion--focus:        var(--rh-theme--color--surface--darker--link--focus, #cce6ff); }
 
-[aria-expanded] {
-  position: relative;
-  display: block;
-  font-weight: normal;
-  padding-left: 2.5em; }
+:host([color="darkest"]) {
+  --rh-accordion--main:         var(--rh-theme--color--surface--darkest, #131313);
+  --rh-accordion--aux:          var(--rh-theme--color--surface--darkest--text, #fff);
+  --rh-accordion--focus:        var(--rh-theme--color--surface--darkest--link--focus, #cce6ff); }
 
-[aria-expanded="false"]::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: calc(10px + 0.5em);
-  display: block;
-  border-style: solid;
-  border-width: 0.15em 0.15em 0 0;
-  height: 0.35em;
-  width: 0.35em;
-  transform: rotate(45deg);
-  margin-left: 1em;
-  text-align: center;
-  transition: transform 0.15s; }
+:host([color="accent"]) {
+  --rh-accordion--main:         var(--rh-theme--color--surface--accent, #fe460d);
+  --rh-accordion--aux:          var(--rh-theme--color--surface--accent--text, #fff);
+  --rh-accordion--focus:        var(--rh-theme--color--surface--accent--link--focus, #cce6ff); }
 
-[aria-expanded="true"]::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: calc(10px + 0.5em);
-  display: block;
-  width: 0.35em;
-  height: 0.35em;
-  border-style: solid;
-  border-width: 0.15em 0.15em 0 0;
-  margin-left: 1em;
-  text-align: center;
-  transition: all 0.15s;
-  transform: rotate(135deg); }
+:host([color="complement"]) {
+  --rh-accordion--main:         var(--rh-theme--color--surface--complement, #0477a4);
+  --rh-accordion--aux:          var(--rh-theme--color--surface--complement--text, #fff);
+  --rh-accordion--focus:        var(--rh-theme--color--surface--complement--link--focus, #cce6ff); }
 </style>
 
 <button aria-expanded="false" role="tab"></button>`;
@@ -560,20 +595,22 @@ class RhAccordionPanel extends RHElement {
 :host {
   display: none;
   overflow: hidden;
-  background: white;
+  background: var(--rh-theme--color--surface--lightest, #fff);
   will-change: height; }
 
 :host([expanded]) {
-  display: block; }
+  display: block;
+  position: relative; }
 
 :host(.animating) {
   display: block;
   transition: height 0.3s ease-in-out; }
 
 .container {
-  border: 2px solid #f7f7f7;
+  margin: 0 1px;
+  border: 1px solid var(--rh-theme--color--surface--border--lightest, #f9f9f9);
   border-top: none;
-  padding: 20px; }
+  padding: var(--rh-theme--container-spacer, 1rem); }
 </style>
 
 <div tabindex="-1" role="tabpanel">

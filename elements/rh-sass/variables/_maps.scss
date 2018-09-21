@@ -166,6 +166,12 @@ $rh-vars: (
   container-spacer--xl:          rh-size-prem(48px),
   container-spacer--xxl:         rh-size-prem(64px),
 
+  grid-breakpoint--xs:           0,
+  grid-breakpoint--sm:           576px,
+  grid-breakpoint--md:           768px,
+  grid-breakpoint--lg:           992px,
+  grid-breakpoint--xl:           1200px,
+
   font-size:                     #{$rh-global--font-size-root}px,
   font-size--sm:                 12px,
   font-size--lg:                 18px,

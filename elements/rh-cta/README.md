@@ -29,19 +29,19 @@ We expect an anchor tag, `<a>` with an `href`, to be the first child inside `rh-
 
 | Theme Var Hook | Description | Default |
 | -------------- | ----------- | ------- |
-| --rh-theme--color--ui-link | Link color for default CTA | $rh-color--ui-link |
-| --rh-theme--color--ui-link--hover | Hover color for default CTA | $rh-color--ui-link--hover |
-| --rh-theme--color--ui-link--focus | Focus color for default CTA | $rh-color--ui-link--focus |
-| --rh-theme--color--ui-accent | Color for Primary CTA | $rh-color--ui-accent |
-| --rh-theme--color--ui-accent--hover | Hover color for Primary CTA | $rh-color--ui-accent--hover |
-| --rh-theme--color--ui-accent--text | Text color for Primary CTA | $rh-color--ui-accent--text |
-| --rh-theme--color--ui-accent--text--hover | Hover text color for Primary CTA | $rh-color--ui-accent--text--hover |
-| --rh-theme--color--ui-base | Border & text color for Secondary CTA | $rh-color--ui-base |
-| --rh-theme--color--ui-base--hover | Hover color for Secondary CTA | $rh-color--ui-base--hover |
-| --rh-theme--color--ui-base--text | Background color for Secondary CTA | $rh-color--ui-base--text |
-| --rh-theme--color--ui-base--text--hover | Hover text color for Secondary CTA | $rh-color--ui-base--text--hover |
-| --rh-theme--color--text--on-dark | Link color for default CTA with `on="dark"` | $rh-color--text--on-dark |
-| --rh-theme--color--ui-link--on-dark--hover | Hover color for default CTA with `on="dark"` | $rh-color--ui-link--on-dark--hover |
+| `--rh-theme--color--ui-link` | Link color for default CTA | $rh-color--ui-link |
+| `--rh-theme--color--ui-link--hover` | Hover color for default CTA | $rh-color--ui-link--hover |
+| `--rh-theme--color--ui-link--focus` | Focus color for default CTA | $rh-color--ui-link--focus |
+| `--rh-theme--color--ui-accent` | Color for Primary CTA | $rh-color--ui-accent |
+| `--rh-theme--color--ui-accent--hover` | Hover color for Primary CTA | $rh-color--ui-accent--hover |
+| `--rh-theme--color--ui-accent--text` | Text color for Primary CTA | $rh-color--ui-accent--text |
+| `--rh-theme--color--ui-accent--text--hover` | Hover text color for Primary CTA | $rh-color--ui-accent--text--hover |
+| `--rh-theme--color--ui-base` | Border & text color for Secondary CTA | $rh-color--ui-base |
+| `--rh-theme--color--ui-base--hover` | Hover color for Secondary CTA | $rh-color--ui-base--hover |
+| `--rh-theme--color--ui-base--text` | Background color for Secondary CTA | $rh-color--ui-base--text |
+| `--rh-theme--color--ui-base--text--hover` | Hover text color for Secondary CTA | $rh-color--ui-base--text--hover |
+| `--rh-theme--color--text--on-dark` | Link color for default CTA with `on="dark"` | $rh-color--text--on-dark |
+| `--rh-theme--color--ui-link--on-dark--hover` | Hover color for default CTA with `on="dark"` | $rh-color--ui-link--on-dark--hover |
 
 ### Testing Theme Var Hooks
 

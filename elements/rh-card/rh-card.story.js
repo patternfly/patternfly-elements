@@ -91,8 +91,7 @@ stories.add("rh-card", () => {
     <pre style="margin-left:15px;">
 <code>&lt;rh-card${colorAttr}&gt;
   &lt;h2 slot="header"&gt;Card Heading&lt/h2&gt;
-  &lt;p&gt;Become a Member&lt;/p&gt;
-  ${escapeHTML(cardFooter)}
+  &lt;p&gt;Become a Member&lt;/p&gt;${escapeHTML(cardFooter)}
 &lt;/rh-card&gt;</code>
   </pre>
   </section>

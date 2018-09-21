@@ -33,10 +33,45 @@ Add the content for your accordion panel here.
 
 ## Attributes
 
-### theme (observed)
+**`color`**
+Changes the color of `<rh-accordion-header>`
 
-Change the theme of the accordion. Options for this attribute are:
-- `striped`: zebra striping for each rh-accordion-header
+| Value | Description |
+| ------| ----------- |
+| `striped` | Alternates `light` and `lightest` theme colors on `<rh-accordion-header>` |
+| `lightest` | `lightest` theme color |
+| `light` (default) | `light` theme color |
+| `base` | `base` theme color |
+| `dark` | `dark` theme color |
+| `darkest` | `darkest` theme color |
+| `complement` | `complement `theme color |
+| `accent` | `accent` theme color |
+
+## Styling
+
+| Theme Var Hook | Description | Default |
+| -------------- | ----------- | ------- |
+| `--rh-theme--color--surface--lighter` | Default `<rh-accordion-header>` color | $rh-color--surface--lighter |
+| `--rh-theme--color--surface--lighter--text` | Default `<rh-accordion-header>` text color | $rh-color--surface--lighter--text |
+| `--rh-theme--color--surface--lighter--link--focus` | Focus border color for default `<rh-accordion-header>` | $rh-color--surface--lighter--link--focus |
+| `--rh-theme--color--surface--lightest` | Lightest `<rh-accordion-header>` color option | $rh-color--surface--lighter |
+| `--rh-theme--color--surface--lightest--text` | Lightest `<rh-accordion-header>` text color option | $rh-color--surface--lightest--text |
+| `--rh-theme--color--surface--lightest--link--focus` | Focus border color for lightest `<rh-accordion-header>` | $rh-color--surface--lightest--link--focus |
+| `--rh-theme--color--surface--base` | Base `<rh-accordion-header>` color option | $rh-color--surface--base |
+| `--rh-theme--color--surface--base--text` | Base `<rh-accordion-header>` text color option | $rh-color--surface--base--text |
+| `--rh-theme--color--surface--base--link--focus` | Focus border color for base `<rh-accordion-header>` | $rh-color--surface--base--link--focus |
+| `--rh-theme--color--surface--darker` | Dark `<rh-accordion-header>` color option | $rh-color--surface--darker |
+| `--rh-theme--color--surface--darker--text` | Dark `<rh-accordion-header>` text color option | $rh-color--surface--darker--text |
+| `--rh-theme--color--surface--darker--link--focus` | Focus border color for dark `<rh-accordion-header>` | $rh-color--surface--darker--link--focus |
+| `--rh-theme--color--surface--darkest` | Darkest `<rh-accordion-header>` color option | $rh-color--surface--darkest |
+| `--rh-theme--color--surface--darkest--text` | Darkest `<rh-accordion-header>` text color option | $rh-color--surface--darkest--text |
+| `--rh-theme--color--surface--darkest--link--focus` | Focus border color for darkest `<rh-accordion-header>` | $rh-color--surface--darkest--link--focus |
+| `--rh-theme--color--surface--complement` | Complement `<rh-accordion-header>` color option | $rh-color--surface--complement |
+| `--rh-theme--color--surface--complement--text` | Complement `<rh-accordion-header>` text color option | $rh-color--surface--complement--text |
+| `--rh-theme--color--surface--complement--link--focus` | Focus border color for complement `<rh-accordion-header>` | $rh-color--surface--complement--link--focus |
+| `--rh-theme--color--surface--accent` | Accent `<rh-accordion-header>` color option | $rh-color--surface--accent |
+| `--rh-theme--color--surface--accent--text` | Accent `<rh-accordion-header>` text color option | $rh-color--surface--accent--text |
+| `--rh-theme--color--surface--accent--link--focus` | Focus border color for accent `<rh-accordion-header>` | $rh-color--surface--accent--link--focus |
 
 ## Events
 

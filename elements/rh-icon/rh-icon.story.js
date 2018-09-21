@@ -23,18 +23,33 @@ stories.add("rh-icon", () => {
     info: "info"
   };
 
+  const sizeOptions = {
+    "2x": "2x",
+    "3x": "3x",
+    "4x": "4x",
+    sm: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl"
+  };
+
   const valueSelect = select("Icon", iconOptions, "server");
   const colorSelect = select("Color", colorOptions, "default");
+  const sizeSelect = select("Size", sizeOptions, "default");
+
+  let value = valueSelect != "default" ? ` icon="rh-icon-${valueSelect}"` : "";
+  let iconColor = colorSelect != "default" ? ` color="${colorSelect}"` : "";
+  let size = sizeSelect != "default" ? ` size="${sizeSelect}"` : "";
 
   return `
 
   <section>
     <h2>Your RHElement</h2>
-    <rh-icon icon="rh-icon-${valueSelect}" size="4x">
+    <rh-icon${value}${iconColor}${size}</rh-icon>
   </section>
   <section>
     <h2>Markup</h2>
-    <pre><code>&lt;rh-icon&gt;&lt;/rh-icon&gt;</code></pre>
+    <pre><code>&lt;rh-icon${value}${iconColor}${size}&gt;&lt;/rh-icon&gt;</code></pre>
   </section>
 
   `;

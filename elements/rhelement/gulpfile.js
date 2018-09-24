@@ -10,23 +10,12 @@ const cleanCSS = require("gulp-clean-css");
 const trim = require("gulp-trim");
 
 gulp.task("clean", () => {
-  return del(["./**/*.umd.*", "./*.min.css"]);
+  return del(["rhelement.js", "./**/*.umd.*", "./*.css", "./*.js.map"]);
 });
 
 gulp.task("compile", () => {
   return gulp
-    .src(
-      [
-        "./*.js",
-        "./utilities/*.js",
-        "!./gulpfile.js",
-        "!./*.story.js",
-        "!./rollup.config.js"
-      ],
-      {
-        base: "."
-      }
-    )
+    .src(["./rhelement.js", "./reveal.js"])
     .pipe(
       replace(
         /^(import .*?)(['"]\.\.?\/(?!\.\.\/).*)(\.js['"];)$/gm,
@@ -41,9 +30,13 @@ gulp.task("compile", () => {
     .pipe(gulp.dest("./"));
 });
 
+gulp.task("copy", () => {
+  return gulp.src(["./src/*"]).pipe(gulp.dest("./"));
+});
+
 gulp.task("minify-css", () => {
   return gulp
-    .src("./*.css")
+    .src("./src/*.css")
     .pipe(cleanCSS())
     .pipe(
       rename({
@@ -54,12 +47,15 @@ gulp.task("minify-css", () => {
 });
 
 gulp.task("watch", () => {
-  return gulp.watch("./rhelement.js", gulp.series("build"));
+  return gulp.watch("./src/**/*", gulp.series("build"));
 });
 
 gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-gulp.task("build", gulp.series("clean", "compile", "minify-css", "bundle"));
+gulp.task(
+  "build",
+  gulp.series("clean", "copy", "compile", "minify-css", "bundle")
+);
 
 gulp.task("default", gulp.series("build"));
 

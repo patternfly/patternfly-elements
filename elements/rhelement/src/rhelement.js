@@ -1,5 +1,3 @@
-import { autoReveal } from "./reveal.js";
-
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -21,6 +19,8 @@ import { autoReveal } from "./reveal.js";
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+import { autoReveal } from "./reveal.js";
 
 class RHElement extends HTMLElement {
   static create(rhe) {

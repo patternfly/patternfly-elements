@@ -13,7 +13,7 @@
   .rh-l-grid > *, .rh-l-grid__item {
     grid-column-start: auto;
     grid-column-end: span 12; }
-  @media screen and (min-width: 576px) {
+  @media screen and (min-width: ) {
     .rh-l-grid.rh-m-all-1-col > * {
       grid-column-start: auto;
       grid-column-end: span 1; }
@@ -134,7 +134,7 @@
       grid-row: span 11; }
     .rh-l-grid > .rh-m-12-row {
       grid-row: span 12; } }
-  @media screen and (max-width: 0) {
+  @media screen and (max-width: ) {
     .rh-l-grid.rh-m-all-1-col-on-xs > * {
       grid-column-start: auto;
       grid-column-end: span 1; }
@@ -255,7 +255,7 @@
       grid-row: span 11; }
     .rh-l-grid > .rh-m-12-row-on-xs {
       grid-row: span 12; } }
-  @media screen and (min-width: 576px) {
+  @media screen and (min-width: ) {
     .rh-l-grid.rh-m-all-1-col-on-sm > * {
       grid-column-start: auto;
       grid-column-end: span 1; }
@@ -376,7 +376,7 @@
       grid-row: span 11; }
     .rh-l-grid > .rh-m-12-row-on-sm {
       grid-row: span 12; } }
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: ) {
     .rh-l-grid.rh-m-all-1-col-on-md > * {
       grid-column-start: auto;
       grid-column-end: span 1; }
@@ -497,7 +497,7 @@
       grid-row: span 11; }
     .rh-l-grid > .rh-m-12-row-on-md {
       grid-row: span 12; } }
-  @media screen and (min-width: 992px) {
+  @media screen and (min-width: ) {
     .rh-l-grid.rh-m-all-1-col-on-lg > * {
       grid-column-start: auto;
       grid-column-end: span 1; }
@@ -618,7 +618,7 @@
       grid-row: span 11; }
     .rh-l-grid > .rh-m-12-row-on-lg {
       grid-row: span 12; } }
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: ) {
     .rh-l-grid.rh-m-all-1-col-on-xl > * {
       grid-column-start: auto;
       grid-column-end: span 1; }
@@ -740,7 +740,7 @@
     .rh-l-grid > .rh-m-12-row-on-xl {
       grid-row: span 12; } }
   .rh-l-grid.rh-m-gutters {
-    grid-gap: var(--rh-l-grid--m-gutter--GridGap, 1rem); }
+    grid-gap: var(--rh-theme--container-spacer, 1rem); }
 
 .rh-l-bullseye {
   display: flex;

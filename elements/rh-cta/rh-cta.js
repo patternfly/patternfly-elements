@@ -37,10 +37,11 @@ class RhCta extends RHElement {
   font-weight: bold; }
   :host ::slotted(a) {
     line-height: inherit;
-    color: var(--rh-cta--main) !important; }
+    color: var(--rh-cta--main) !important;
+    transition: all var(--rh-theme--animation-timing, cubic-bezier(0.465, 0.183, 0.153, 0.946)); }
     :host ::slotted(a)::after {
       display: block;
-      margin-left: 0.25rem;
+      margin-left: calc(var(--rh-theme--content-spacer, 1rem) * 0.25);
       vertical-align: middle;
       border-style: solid;
       border-width: 0.313em 0.313em 0;
@@ -65,9 +66,9 @@ class RhCta extends RHElement {
   --rh-cta--aux--hover:    var(--rh-theme--color--ui-accent--text--hover, #fff); }
   :host([priority="primary"]) ::slotted(a) {
     display: inline-block;
-    padding: 8px 32px;
-    border-radius: 5em;
-    border: 1px solid transparent;
+    padding: calc(var(--rh-theme--container-padding, 1rem) * 0.5) calc(var(--rh-theme--container-padding, 1rem) * 2);
+    border-radius: calc(var(--rh-theme--ui--border-radius, 2px) * 20);
+    border: var(--rh-theme--ui--border-width, 1px) var(--rh-theme--ui--border-style, solid) transparent;
     text-decoration: none;
     line-height: 1.2;
     border-color: var(--rh-cta--main) !important;
@@ -88,9 +89,9 @@ class RhCta extends RHElement {
   --rh-cta--aux--hover:    var(--rh-theme--color--ui-base--text--hover, #fff); }
   :host([priority="secondary"]) ::slotted(a) {
     display: inline-block;
-    padding: 8px 32px;
-    border-radius: 5em;
-    border: 1px solid var(--rh-cta--main);
+    padding: calc(var(--rh-theme--container-padding, 1rem) * 0.5) calc(var(--rh-theme--container-padding, 1rem) * 2);
+    border-radius: calc(var(--rh-theme--ui--border-radius, 2px) * 20);
+    border: var(--rh-theme--ui--border-width, 1px) var(--rh-theme--ui--border-style, solid) var(--rh-cta--main);
     text-decoration: none;
     line-height: 1.2;
     border-color: var(--rh-cta--main) !important;

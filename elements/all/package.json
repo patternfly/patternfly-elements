@@ -11,6 +11,7 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
+    "@rhelements/rh-accordion": "file:elements/rh-accordion",
     "@rhelements/rh-card": "file:elements/rh-card",
     "@rhelements/rh-cta": "file:elements/rh-cta",
     "@rhelements/rh-datetime": "file:elements/rh-datetime",

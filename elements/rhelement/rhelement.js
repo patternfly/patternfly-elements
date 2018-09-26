@@ -1,4 +1,4 @@
-import { autoReveal } from "./utilities/reveal.js";
+import { autoReveal } from "./reveal.js";
 
 /*
  * Copyright 2018 Red Hat, Inc.

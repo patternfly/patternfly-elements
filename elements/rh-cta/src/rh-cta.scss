@@ -4,15 +4,7 @@
 /// Component Specific SASS Vars
 /// ===========================================================================
 
-// Todo: convert these also
-$rh-cta__arrow-size:                        0.313em; // Was ~5px at 16px
-$rh-cta__arrow--spacer:                     $rh-global--spacer--xxs;
-$rh-cta--solid--BorderRadius:               5em !default; //$rh-global--border--BorderRadius !default;
-$rh-cta--solid--BorderWidth:                $rh-global--border--BorderWidth;
-$rh-cta--solid--padding-y:                  8px; //$rh-global--spacer--xs;
-$rh-cta--solid--padding-x:                  32px; //$rh-global--spacer--lg;
-$rh-cta--animation-timing:                  $rh-global--animation-timing;
-
+$rh-cta__arrow-size:                        0.313em;
 
 /// ===========================================================================
 /// DEFUALT CTA
@@ -31,10 +23,11 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
   ::slotted(a) {
     line-height: inherit;
     color: var(--rh-cta--main) !important;
+    transition: all #{rh-var(animation-timing)};
 
     &::after {
       display: block;
-      margin-left: $rh-cta__arrow--spacer; // not themeable for now
+      margin-left: calc(#{rh-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
       vertical-align: middle;
       @include rh-arrow(right, var(--rh-cta--main), $rh-cta__arrow-size, $rh-cta__arrow-size, true);
     }
@@ -76,9 +69,9 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 
   ::slotted(a) {
     display: inline-block;
-    padding: $rh-cta--solid--padding-y $rh-cta--solid--padding-x; // not themeable for now
-    border-radius: $rh-cta--solid--BorderRadius; // not themeable for now
-    border: $rh-cta--solid--BorderWidth solid transparent; // not themeable for now
+    padding: calc(#{rh-var(container-padding)} * 0.5) calc(#{rh-var(container-padding)} * 2);
+    border-radius: calc(#{rh-var(ui--border-radius)} * 20);
+    border: #{rh-var(ui--border-width)} #{rh-var(ui--border-style)} transparent;
     text-decoration: none;
     line-height: 1.2;
 
@@ -110,9 +103,9 @@ $rh-cta--animation-timing:                  $rh-global--animation-timing;
 
   ::slotted(a) {
     display: inline-block;
-    padding: $rh-cta--solid--padding-y $rh-cta--solid--padding-x; // not themeable for now
-    border-radius: $rh-cta--solid--BorderRadius; // not themeable for now
-    border: $rh-cta--solid--BorderWidth solid var(--rh-cta--main); // not themeable for now
+    padding: calc(#{rh-var(container-padding)} * 0.5) calc(#{rh-var(container-padding)} * 2);
+    border-radius: calc(#{rh-var(ui--border-radius)} * 20);
+    border: #{rh-var(ui--border-width)} #{rh-var(ui--border-style)} var(--rh-cta--main);
     text-decoration: none;
     line-height: 1.2;
 

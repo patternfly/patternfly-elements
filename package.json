@@ -11,6 +11,8 @@
     "test-suite-inject": "node scripts/test-suite-inject.js",
     "storybook": "start-storybook -c .storybook -p 9001 -s ./elements",
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
+    "gh-pages-storybook": "gh-pages -d .storybook_out -m 'Deploy Storybook'",
+    "deploy-storybook": "npm run build-storybook && npm run gh-pages-storybook",
     "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject && npm run bootstrap"
   },
   "devDependencies": {
@@ -69,7 +71,9 @@
     "whatwg-fetch": "^2.0.3",
     "yo": "^1.8.5"
   },
-  "dependencies": {},
+  "dependencies": {
+    "gh-pages": "^2.0.0"
+  },
   "lint-staged": {
     "*.{js,json}": [
       "prettier --write",

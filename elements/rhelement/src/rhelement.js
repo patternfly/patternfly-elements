@@ -90,7 +90,10 @@ class RHElement extends HTMLElement {
   }
 
   _copyAttribute(name, to) {
-    const recipients = this.shadowRoot.querySelectorAll(to);
+    const recipients = [
+      ...this.querySelectorAll(to),
+      ...this.shadowRoot.querySelectorAll(to)
+    ];
     const value = this.getAttribute(name);
     const fname = value == null ? "removeAttribute" : "setAttribute";
     for (const node of recipients) {

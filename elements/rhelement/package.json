@@ -4,7 +4,10 @@
     "className": "RHElement",
     "elementName": "rhelement"
   },
-  "version": "0.0.4",
+  "version": "1.0.0-prerelease.3",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": " element for RHElements",
   "repository": {
     "type": "git",
@@ -22,6 +25,6 @@
     "url": "https://github.com/kylebuch8"
   },
   "license": "MIT",
-  "dependencies": {},
-  "generator-rhelement-version": "0.3.4"
+  "generator-rhelement-version": "0.3.4",
+  "gitHead": "1035d989bf8fc80ded1415610d25da01307059cd"
 }

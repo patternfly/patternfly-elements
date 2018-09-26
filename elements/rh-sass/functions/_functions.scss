@@ -135,6 +135,8 @@
 /// Returns CSS Var stack with exposed theme Var and respective SCSS fallback
 ///
 /// @param {String} $cssvar - Variable name to be used and prepended with --rh-theme
+/// @param {String} $category - Category name to be appended to variables within the map/system
+/// @param {Map} $map - SASS Map of variables
 /// @requires {String} $repo - Name of repo, which is "rh"
 /// @use -
 ///
@@ -161,6 +163,8 @@
 /// Returns CSS Var stack with exposed theme Var and respective SCSS fallback
 ///
 /// @param {String} $cssvar - Variable name to be used and prepended with --rh-theme
+/// @param {String} $category - Category name to be appended to variables within the map/system, default is "color"
+/// @param {Map} $map - SASS Map of variables
 /// @requires {String} $repo - Name of repo, which is "rh"
 /// @use -
 ///
@@ -174,7 +178,7 @@
 ///           background:  #{rh-color(  surface--base )};
 ///         }
 ///         ```
-@function rh-color($cssvar, $category: 'color', $map: $rh-palette) {
+@function rh-color($cssvar, $category: 'color', $map: $rh-colors) {
     @if $category != "" {
       $category: "#{$category}--";
     }

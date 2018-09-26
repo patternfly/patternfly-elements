@@ -1,5 +1,9 @@
 {
   "name": "@rhelements/all",
+  "version": "1.0.0-prerelease.3",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "All the RHElements.",
   "scripts": {
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/all/test/"
@@ -7,9 +11,11 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
+    "@rhelements/rh-accordion": "file:elements/rh-accordion",
     "@rhelements/rh-card": "file:elements/rh-card",
     "@rhelements/rh-cta": "file:elements/rh-cta",
     "@rhelements/rh-datetime": "file:elements/rh-datetime",
+    "@rhelements/rh-health-index": "file:elements/rh-health-index",
     "@rhelements/rh-icon": "file:elements/rh-icon",
     "@rhelements/rh-icon-panel": "file:elements/rh-icon-panel",
     "@rhelements/rh-number": "file:elements/rh-number",

@@ -29,19 +29,35 @@ class RhIconPanel extends RHElement {
 <style>
 :host {
   display: flex;
-  align-content: flex-start; }
+  align-content: flex-start;
+  flex-direction: column; }
+  @media (min-width: 576px) {
+    :host {
+      flex-direction: row; } }
 
 :host rh-icon {
-  margin-right: var(--rhe-c-icon-panel__icon--MarginRight, 1rem);
-  font-size: var(--rhe-c-icon-panel__icon--size, 4rem);
-  line-height: var(--rhe-c-icon-panel__icon--size, 4rem); }
+  --rh-icon--spacing:                 var(--rh-theme--container-spacer, 1rem);
+  --rh-icon--size:                    var(--rh-theme--icon-size, 64px);
+  margin-right: var(--rh-icon--spacing);
+  font-size: var(--rh-icon--size);
+  line-height: var(--rh-icon--size);
+  padding: 0.05em;
+  min-width: var(--rh-icon--size);
+  max-width: var(--rh-icon--size); }
 
 :host ::slotted([slot="header"]),
 :host ::slotted([slot="footer"]) {
   display: block; }
 
 :host ::slotted([slot="footer"]) {
-  margin-top: var(--rhe-c-icon-panel__footer--MarginTop, 16px); }
+  margin-top: 1em; }
+
+:host([stacked]) {
+  flex-direction: column !important; }
+
+:host([stacked][centered]) {
+  align-items: center;
+  text-align: center; }
 </style>
 <rh-icon></rh-icon>
 <div class="content">
@@ -64,12 +80,13 @@ class RhIconPanel extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["icon"];
+    return ["icon", "circled"];
   }
 
   static get cascadingAttributes() {
     return {
-      icon: "rh-icon"
+      icon: "rh-icon",
+      circled: "rh-icon"
     };
   }
 

@@ -1,4 +1,4 @@
-import { autoReveal } from "./utilities/reveal.js";
+import { autoReveal } from "./reveal.js";
 
 /*
  * Copyright 2018 Red Hat, Inc.
@@ -79,6 +79,10 @@ class RHElement extends HTMLElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
+    if (!this._rhClass.cascadingAttributes) {
+      return;
+    }
+
     const cascadeTo = this._rhClass.cascadingAttributes[attr];
     if (cascadeTo) {
       this._copyAttribute(attr, cascadeTo);
@@ -86,7 +90,10 @@ class RHElement extends HTMLElement {
   }
 
   _copyAttribute(name, to) {
-    const recipients = this.shadowRoot.querySelectorAll(to);
+    const recipients = [
+      ...this.querySelectorAll(to),
+      ...this.shadowRoot.querySelectorAll(to)
+    ];
     const value = this.getAttribute(name);
     const fname = value == null ? "removeAttribute" : "setAttribute";
     for (const node of recipients) {

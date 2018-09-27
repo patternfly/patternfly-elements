@@ -22,15 +22,28 @@
 
 import RHElement from "../rhelement/rhelement.js";
 
+/**
+ * A simple card. `<rh-card>`
+ * @typicalname <rh-card>
+ */
 class RhCard extends RHElement {
+  /**
+   * This element's HTML tag.
+   */
   static get tag() {
     return "rh-card";
   }
 
+  /**
+   * The path to this element's SCSS or CSS file.
+   */
   get styleUrl() {
     return "rh-card.scss";
   }
 
+  /**
+   * The path to this element's HTML template.
+   */
   get templateUrl() {
     return "rh-card.html";
   }
@@ -42,4 +55,9 @@ class RhCard extends RHElement {
 
 RHElement.create(RhCard);
 
+/**
+ * RhCard
+ * @module RhCard
+ * @example @lang html <rh-card color="dark">
+ */
 export default RhCard;

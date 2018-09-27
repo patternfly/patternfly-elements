@@ -13,6 +13,7 @@
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
     "gh-pages-storybook": "gh-pages -d .storybook_out -m 'Deploy Storybook'",
     "deploy-storybook": "npm run build-storybook && npm run gh-pages-storybook",
+    "api-doc": "jsdoc2md --files elements/*/src/*.js > doc/api.md",
     "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject && npm run bootstrap"
   },
   "devDependencies": {
@@ -50,6 +51,7 @@
     "gulp-trim": "^1.0.2",
     "gulp-uglify": "^3.0.1",
     "husky": "^0.14.3",
+    "jsdoc-to-markdown": "^4.0.1",
     "lerna": "^3.0.0-rc.0",
     "lint-staged": "^7.2.0",
     "lodash": "^4.17.10",

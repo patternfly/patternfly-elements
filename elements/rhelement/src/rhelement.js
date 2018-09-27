@@ -22,11 +22,18 @@
 
 import { autoReveal } from "./reveal.js";
 
+/** RHElement base class. */
 class RHElement extends HTMLElement {
+  /**
+   * Create and register a RHElement with the customElements registry.
+   */
   static create(rhe) {
     window.customElements.define(rhe.tag, rhe);
   }
 
+  /**
+   * The component types.
+   */
   static get RhTypes() {
     return {
       Container: "container",
@@ -35,6 +42,9 @@ class RHElement extends HTMLElement {
     };
   }
 
+  /**
+   *
+   */
   get rhType() {
     return this.getAttribute("rh-type");
   }
@@ -43,6 +53,9 @@ class RHElement extends HTMLElement {
     this.setAttribute("rh-type", value);
   }
 
+  /**
+   * @param {RHElement} - A class that extends the RHElement base class.
+   */
   constructor(rhClass, { type = null, delayRender = false } = {}) {
     super();
 
@@ -54,7 +67,7 @@ class RHElement extends HTMLElement {
     this.attachShadow({ mode: "open" });
 
     if (type) {
-      this._queueAction({
+      this._queueConnectedAction({
         type: "setProperty",
         data: {
           name: "rhType",
@@ -101,7 +114,10 @@ class RHElement extends HTMLElement {
     }
   }
 
-  _queueAction(action) {
+  /**
+   * Queue up an action.  The action will be executed when the element is added to the DOM (ie, when the connectedCallback fires).
+   */
+  _queueConnectedAction(action) {
     this._queue.push(action);
   }
 

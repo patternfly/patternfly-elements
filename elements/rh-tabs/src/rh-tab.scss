@@ -1,211 +1,74 @@
 @import "../../rh-sass/rh-sass";
 
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+$rh-tabs__tab--PaddingRight-factor:  3.375; // 54px at 16px base.
+$rh-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
+
+/// ===========================================================================
+/// DEFUALT TAB
+/// ===========================================================================
+
 :host {
+  --rh-tabs--main:         transparent;
+  --rh-tabs--aux:          #{rh-color(surface--lightest--text)};
+  --rh-tabs--link:         #{rh-color(surface--lightest--link)};
+  --rh-tabs--focus:        #{rh-color(surface--lightest--link--focus)};
+
   position: relative;
   display: block;
+  margin: 0 0 -1px;
+
   // Padding
-  padding-top: var(--rhe-c-tabs__tab--PaddingTop, 14px); //13px 54px 24px 14px
-  padding-right: var(--rhe-c-tabs__tab--PaddingTop, 54px);
-  padding-bottom: var(--rhe-c-tabs__tab--PaddingTop, 24px);
-  padding-left: var(--rhe-c-tabs__tab--PaddingTop, 15px);
-  // Margins
-  margin-top: var(--rhe-c-tabs__tab--MarginTop, 0);
-  margin-right: var(--rhe-c-tabs__tab--MarginRight, 0);
-  margin-bottom: var(--rhe-c-tabs__tab--MarginBottom, 0);
-  margin-left: var(--rhe-c-tabs__tab--MarginLeft, 0);
-  // Borders
-  border-top: var(--rhe-c-tabs__tab--BorderTop, 1px solid transparent);
-  border-right: var(--rhe-c-tabs__tab--BorderRight, 1px solid transparent);
-  border-bottom: var(--rhe-c-tabs__tab--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__tab--BorderLeft, 1px solid transparent);
+  padding-top: #{rh-var(container-padding)};
+  padding-right: calc(#{rh-var(container-padding)} * #{$rh-tabs__tab--PaddingRight-factor});;
+  padding-bottom: calc(#{rh-var(container-padding)} * #{$rh-tabs__tab--PaddingBottom-factor});
+  padding-left: #{rh-var(container-padding)};
+  // Border
+  border: #{rh-var(ui--border-width)} #{rh-var(ui--border-style)} transparent;
+  border-bottom: 0;
   // Inner style
-  background-color: var(--rhe-c-tabs__tab--BackgroundColor, transparent);
-  text-transform: var(--rhe-c-tabs__tab--TextTransform, none);
-  font-weight: var(--rhe-c-tabs__tab--FontWeight, normal);
-  color: var(--rhe-c-tabs__tab--Color, $rh-global--text-color);
+  background-color: var(--rh-tabs--main);
+  color: var(--rh-tabs--aux);
+  text-transform: var(--rh-tabs__tab--TextTransform, none); // exposing this for RH
+  font-weight: #{rh-var(font-weight--normal)};
 
   white-space: nowrap;
   cursor: pointer;
 }
 
 :host([aria-selected="true"]) {
-  // Padding
-  padding-top: var(
-    --rhe-c-tabs__tab--selected--PaddingTop,
-    14px
-  ); //13px 54px 24px 14px
-  padding-right: var(--rhe-c-tabs__tab--selected--PaddingTop, 54px);
-  padding-bottom: var(--rhe-c-tabs__tab--selected--PaddingTop, 25px); // +1
-  padding-left: var(--rhe-c-tabs__tab--selected--PaddingTop, 15px);
-  // Margins
-  margin-top: var(--rhe-c-tabs__tab--selected--MarginTop, 0);
-  margin-right: var(--rhe-c-tabs__tab--selected--MarginRight, 0);
-  margin-bottom: var(--rhe-c-tabs__tab--selected--MarginBottom, -1px);
-  margin-left: var(--rhe-c-tabs__tab--selected--MarginLeft, 0);
-  // Borderss
-  border-top: var(
-    --rhe-c-tabs__tab--selected--BorderTop,
-    1px solid $rh-global--border--BorderColor
-  );
-  border-right: var(
-    --rhe-c-tabs__tab--selected--BorderRight,
-    1px solid $rh-global--border--BorderColor
-  );
-  border-bottom: var(--rhe-c-tabs__tab--selected--BorderBottom, 0);
-  border-left: var(
-    --rhe-c-tabs__tab--selected--BorderLeft,
-    1px solid $rh-global--border--BorderColor
-  );
-  // Inner style
-  background-color: var(
-    --rhe-c-tabs__tab--selected--BackgroundColor,
-    $rh-global--color--white
-  );
-  text-transform: var(--rhe-c-tabs__tab--selected--TextTransform, none);
-  font-weight: var(--rhe-c-tabs__tab--selected--FontWeight, normal);
-  color: var(--rhe-c-tabs__tab--selected--Color, $rh-global--text-color);
+  --rh-tabs--main:         #{rh-color(surface--lightest)};
+
+  // Border
+  border-color: #{rh-color(surface--border)};
+  border-bottom: 0;
 }
 
 .indicator {
-  display: var(
-    --rhe-c-tabs__indicator--Display,
-    block
-  ); // Use none to not show at all
-  // Positioning
   position: absolute;
-  top: var(--rhe-c-tabs__indicator--Top, auto);
-  right: var(--rhe-c-tabs__indicator--Right, auto);
-  bottom: var(--rhe-c-tabs__indicator--Bottom, 12px); // Was 10px
-  left: var(--rhe-c-tabs__indicator--Left, auto);
-  // Size
-  height: var(--rhe-c-tabs__indicator--Height, 4px);
-  width: var(--rhe-c-tabs__indicator--Width, 22px);
-  // Style & borders
-  background-color: var(
-    ----rhe-c-tabs__indicator--BackgroundColor,
-    $rh-global--color--gray-battleship
-  );
-  border-top: var(--rhe-c-tabs__indicator--BorderTop, 0);
-  border-right: var(--rhe-c-tabs__indicator--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__indicator--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__indicator--BorderLeft, 0);
+  bottom: 12px;
+  left: auto;
+
+  display: var(--rh-tabs__indicator--Display, block); // Exposing this for themability. Use `none` to not show at all
+  height: var(--rh-tabs__indicator--Height, 4px); // Exposing this for themability
+  width: var(--rh-tabs__indicator--Width, 22px); // Exposing this for themability
+
+  background-color: #{rh-color(surface--border--darkest)};
 }
 
 :host(:hover) .indicator {
-  display: var(
-    --rhe-c-tabs__indicator--hover--Display,
-    block
-  ); // Use none to not show at all
-  // Positioning
-  top: var(--rhe-c-tabs__indicator--hover--Top, auto);
-  right: var(--rhe-c-tabs__indicator--hover--Right, auto);
-  bottom: var(--rhe-c-tabs__indicator--hover--Bottom, 12px);
-  left: var(--rhe-c-tabs__indicator--hover--Left, auto);
-  // Size
-  height: var(--rhe-c-tabs__indicator--hover--Height, 4px);
-  width: var(--rhe-c-tabs__indicator--hover--Width, 22px);
-  // Style & borders
-  background-color: var(
-    --rhe-c-tabs__indicator--hover--BackgroundColor,
-    $rh-global--link-color--inverted--hover
-  );
-  border-top: var(--rhe-c-tabs__indicator--hover--BorderTop, 0);
-  border-right: var(--rhe-c-tabs__indicator--hover--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__indicator--hover--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__indicator--hover--BorderLeft, 0);
-}
-
-:host(:focus) {
-  outline: var(
-    --rhe-c-tabs__tab--focus--Outline,
-    2px solid $rh-global--link-color--inverted--hover
-  );
+  background-color: var(--rh-tabs--link);
 }
 
 :host([aria-selected="true"]) .indicator,
 :host([aria-selected="true"]:hover) .indicator {
-  display: var(
-    --rhe-c-tabs__indicator--selected--Display,
-    block
-  ); // Use none to not show at all
-  // Positioning
-  top: var(--rhe-c-tabs__indicator--selected--Top, auto);
-  right: var(--rhe-c-tabs__indicator--selected--Right, auto);
-  bottom: var(--rhe-c-tabs__indicator--selected--Bottom, 13px);
-  left: var(--rhe-c-tabs__indicator--selected--Left, auto);
-  // Size
-  height: var(--rhe-c-tabs__indicator--selected--Height, 4px);
-  width: var(--rhe-c-tabs__indicator--selected--Width, 22px);
-  // Style & borders
-  background-color: var(
-    --rhe-c-tabs__indicator--selected--BackgroundColor,
-    $rh-global--link-color
-  );
-  border-top: var(
-    --rhe-c-tabs__indicator--selected--BorderTop,
-    $rh-global--color--gray-battleship
-  );
-  border-right: var(
-    --rhe-c-tabs__indicator--selected--BorderRight,
-    $rh-global--color--gray-battleship
-  );
-  border-bottom: var(--rhe-c-tabs__indicator--selected--BorderBottom, 0);
-  border-left: var(
-    --rhe-c-tabs__indicator--selected--BorderLeft,
-    $rh-global--color--gray-battleship
-  );
+  background-color: var(--rh-tabs--link);
 }
 
-// Default Vertical
-:host([vertical]) .indicator {
-  // Positioning
-  top: var(--rhe-c-tabs__indicator--vertical--Top, auto);
-  right: var(--rhe-c-tabs__indicator--vertical--Right, auto);
-  bottom: var(--rhe-c-tabs__indicator--vertical--Bottom, 13px); // Was 10px
-  left: var(--rhe-c-tabs__indicator--vertical--Left, auto);
-  // Size
-  height: var(--rhe-c-tabs__indicator--vertical--Height, 4px);
-  width: var(
-    --rhe-c-tabs__indicator--vertical--Width,
-    22px
-  ); // Was 100% for subtabs
-  // Style & borders
-  background-color: var(
-    ----rhe-c-tabs__indicator--vertical--BackgroundColor,
-    $rh-global--color--gray-battleship
-  );
-  border-top: var(--rhe-c-tabs__indicator--vertical--BorderTop, 0);
-  border-right: var(--rhe-c-tabs__indicator--vertical--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__indicator--vertical--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__indicator--vertical--BorderLeft, 0);
-}
-
-:host([aria-selected="true"][vertical]) .indicator {
-  display: var(
-    --rhe-c-tabs__indicator--vertical--selected--Display,
-    block
-  ); // Use none to not show at all
-  // Positioning
-  top: var(--rhe-c-tabs__indicator--vertical--selected--Top, auto);
-  right: var(--rhe-c-tabs__indicator--vertical--selected--Right, auto);
-  bottom: var(--rhe-c-tabs__indicator--vertical--selected--Bottom, 13px);
-  left: var(--rhe-c-tabs__indicator--vertical--selected--Left, auto);
-  // Size
-  height: var(--rhe-c-tabs__indicator--vertical--selected--Height, 4px);
-  width: var(--rhe-c-tabs__indicator--vertical--selected--Width, 22px);
-  // Style & borders
-  background-color: var(
-    --rhe-c-tabs__indicator--vertical--selected--BackgroundColor,
-    $rh-global--link-color
-  );
-  border-top: var(--rhe-c-tabs__indicator--vertical--selected--BorderTop, 0);
-  border-right: var(
-    --rhe-c-tabs__indicator--vertical--selected--BorderRight,
-    0
-  );
-  border-bottom: var(
-    --rhe-c-tabs__indicator--vertical--selected--BorderBottom,
-    0
-  );
-  border-left: var(--rhe-c-tabs__indicator--vertical--selected--BorderLeft, 0);
+:host(:focus),
+:host(:focus-visible) {
+  outline: #{rh-var(ui--focus-outline-width)} #{rh-var(ui--focus-outline-style)} var(--rh-tabs--focus);
 }

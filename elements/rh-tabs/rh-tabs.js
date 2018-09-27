@@ -139,67 +139,37 @@ class RhTabs extends RHElement {
   display: block; }
 
 .tabs {
+  --rh-tabs--border-color:          var(--rh-theme--color--surface--border, #dfdfdf);
   display: flex;
-  background-color: var(--rhe-c-tabs__tabs--BackgroundColor, transparent);
-  border-top: var(--rhe-c-tabs__tabs--BorderTop, 0);
-  border-right: var(--rhe-c-tabs__tabs--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__tabs--BorderBottom, 1px solid #dfdfdf);
-  border-left: var(--rhe-c-tabs__tabs--BorderLeft, 0); }
+  border: 0;
+  border-bottom: var(--rh-theme--ui--border-width, 1px) var(--rh-theme--ui--border-style, solid) var(--rh-tabs--border-color); }
 
 .panels {
-  padding-top: var(--rhe-c-tabs__panel--PaddingTop, 1rem);
-  padding-right: var(--rhe-c-tabs__panel--PaddingTop, 0);
-  padding-bottom: var(--rhe-c-tabs__panel--PaddingTop, 0);
-  padding-left: var(--rhe-c-tabs__panel--PaddingTop, 0); }
+  padding: 0;
+  padding-top: var(--rh-theme--container-padding, 1rem); }
 
 :host([vertical]) {
   display: flex; }
 
 :host([vertical]) .tabs {
   flex-direction: column;
-  width: var(--rhe-c-tabs__tabs--vertical--Width, 25%);
-  background-color: var(--rhe-c-tabs__tabs--vertical--BackgroundColor, transparent);
-  border-top: var(--rhe-c-tabs__tabs--vertical--BorderTop, 0);
-  border-right: var(--rhe-c-tabs__tabs--vertical--BorderRight, 1px solid #dfdfdf);
-  border-bottom: var(--rhe-c-tabs__tabs--vertical--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__tabs--vertical--BorderLeft, 0); }
+  width: 25%;
+  border: 0;
+  border-right: var(--rh-theme--ui--border-width, 1px) var(--rh-theme--ui--border-style, solid) var(--rh-tabs--border-color); }
 
 :host([vertical]) .tabs ::slotted(rh-tab) {
-  border-top: var(--rhe-c-tabs__tab--selected--BorderTop, 1px solid transparent);
-  border-right: var(--rhe-c-tabs__tab--selected--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__tab--selected--BorderBottom, 1px solid transparent);
-  border-left: var(--rhe-c-tabs__tab--selected--BorderLeft, 1px solid transparent); }
+  margin: 0 -1px 0 0;
+  border: var(--rh-theme--ui--border-width, 1px) var(--rh-theme--ui--border-style, solid) transparent;
+  border-right: 0; }
 
 :host([vertical]) .tabs ::slotted(rh-tab[aria-selected="true"]) {
-  padding-top: var(--rhe-c-tabs__tab--selected--PaddingTop, 14px);
-  padding-right: var(--rhe-c-tabs__tab--selected--PaddingTop, 55px);
-  padding-bottom: var(--rhe-c-tabs__tab--selected--PaddingTop, 24px);
-  padding-left: var(--rhe-c-tabs__tab--selected--PaddingTop, 15px);
-  margin-top: var(--rhe-c-tabs__tab--selected--MarginTop, 0);
-  margin-right: var(--rhe-c-tabs__tab--selected--MarginRight, -1px);
-  margin-bottom: var(--rhe-c-tabs__tab--selected--MarginBottom, 0);
-  margin-left: var(--rhe-c-tabs__tab--selected--MarginLeft, 0);
-  border-top: var(--rhe-c-tabs__tab--selected--BorderTop, 1px solid #dfdfdf);
-  border-right: var(--rhe-c-tabs__tab--selected--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__tab--selected--BorderBottom, 1px solid #dfdfdf);
-  border-left: var(--rhe-c-tabs__tab--selected--BorderLeft, 1px solid #dfdfdf); }
+  border-color: var(--rh-tabs--border-color);
+  border-right: 0; }
 
 :host([vertical]) .panels {
-  padding-top: var(--rhe-c-tabs__panel-vertical--PaddingTop, 0);
-  padding-right: var(--rhe-c-tabs__panel-vertical--PaddingTop, 1rem);
-  padding-bottom: var(--rhe-c-tabs__panel-vertical--PaddingTop, 0);
-  padding-left: var(--rhe-c-tabs__panel-vertical--PaddingTop, 2rem); }
-
-:host([type="subtabs"]) .tabs ::slotted(rh-tab) {
-  padding-top: var(--rhe-c-subtabs__tab--PaddingTop, 6px);
-  padding-right: var(--rhe-c-subtabs__tab--PaddingTop, 0);
-  padding-bottom: var(--rhe-c-subtabs__tab--PaddingTop, 24px);
-  padding-left: var(--rhe-c-subtabs__tab--PaddingTop, 0);
-  margin: 0;
-  border: 0; }
-
-:host([type="subtabs"]) rh-tab .indicator {
-  bottom: var(--rhe-c-tabs__indicator--hover--Bottom, 12px); }
+  padding: 0;
+  padding-right: var(--rh-theme--container-padding, 1rem);
+  padding-left: calc(var(--rh-theme--container-padding, 1rem) * 2); }
 </style>
 <div class="tabs">
   <slot name="tab"></slot>
@@ -508,118 +478,50 @@ class RhTab extends RHElement {
     return `
 <style>
 :host {
+  --rh-tabs--main:         transparent;
+  --rh-tabs--aux:          var(--rh-theme--color--surface--lightest--text, #333);
+  --rh-tabs--link:         var(--rh-theme--color--surface--lightest--link, #06c);
+  --rh-tabs--focus:        var(--rh-theme--color--surface--lightest--link--focus, #003366);
   position: relative;
   display: block;
-  padding-top: var(--rhe-c-tabs__tab--PaddingTop, 14px);
-  padding-right: var(--rhe-c-tabs__tab--PaddingTop, 54px);
-  padding-bottom: var(--rhe-c-tabs__tab--PaddingTop, 24px);
-  padding-left: var(--rhe-c-tabs__tab--PaddingTop, 15px);
-  margin-top: var(--rhe-c-tabs__tab--MarginTop, 0);
-  margin-right: var(--rhe-c-tabs__tab--MarginRight, 0);
-  margin-bottom: var(--rhe-c-tabs__tab--MarginBottom, 0);
-  margin-left: var(--rhe-c-tabs__tab--MarginLeft, 0);
-  border-top: var(--rhe-c-tabs__tab--BorderTop, 1px solid transparent);
-  border-right: var(--rhe-c-tabs__tab--BorderRight, 1px solid transparent);
-  border-bottom: var(--rhe-c-tabs__tab--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__tab--BorderLeft, 1px solid transparent);
-  background-color: var(--rhe-c-tabs__tab--BackgroundColor, transparent);
-  text-transform: var(--rhe-c-tabs__tab--TextTransform, none);
-  font-weight: var(--rhe-c-tabs__tab--FontWeight, normal);
-  color: var(--rhe-c-tabs__tab--Color, #333);
+  margin: 0 0 -1px;
+  padding-top: var(--rh-theme--container-padding, 1rem);
+  padding-right: calc(var(--rh-theme--container-padding, 1rem) * 3.375);
+  padding-bottom: calc(var(--rh-theme--container-padding, 1rem) * 1.5);
+  padding-left: var(--rh-theme--container-padding, 1rem);
+  border: var(--rh-theme--ui--border-width, 1px) var(--rh-theme--ui--border-style, solid) transparent;
+  border-bottom: 0;
+  background-color: var(--rh-tabs--main);
+  color: var(--rh-tabs--aux);
+  text-transform: var(--rh-tabs__tab--TextTransform, none);
+  font-weight: var(--rh-theme--font-weight--normal, 500);
   white-space: nowrap;
   cursor: pointer; }
 
 :host([aria-selected="true"]) {
-  padding-top: var(--rhe-c-tabs__tab--selected--PaddingTop, 14px);
-  padding-right: var(--rhe-c-tabs__tab--selected--PaddingTop, 54px);
-  padding-bottom: var(--rhe-c-tabs__tab--selected--PaddingTop, 25px);
-  padding-left: var(--rhe-c-tabs__tab--selected--PaddingTop, 15px);
-  margin-top: var(--rhe-c-tabs__tab--selected--MarginTop, 0);
-  margin-right: var(--rhe-c-tabs__tab--selected--MarginRight, 0);
-  margin-bottom: var(--rhe-c-tabs__tab--selected--MarginBottom, -1px);
-  margin-left: var(--rhe-c-tabs__tab--selected--MarginLeft, 0);
-  border-top: var(--rhe-c-tabs__tab--selected--BorderTop, 1px solid #dfdfdf);
-  border-right: var(--rhe-c-tabs__tab--selected--BorderRight, 1px solid #dfdfdf);
-  border-bottom: var(--rhe-c-tabs__tab--selected--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__tab--selected--BorderLeft, 1px solid #dfdfdf);
-  background-color: var(--rhe-c-tabs__tab--selected--BackgroundColor, #fff);
-  text-transform: var(--rhe-c-tabs__tab--selected--TextTransform, none);
-  font-weight: var(--rhe-c-tabs__tab--selected--FontWeight, normal);
-  color: var(--rhe-c-tabs__tab--selected--Color, #333); }
+  --rh-tabs--main:         var(--rh-theme--color--surface--lightest, #fff);
+  border-color: var(--rh-theme--color--surface--border, #dfdfdf);
+  border-bottom: 0; }
 
 .indicator {
-  display: var(--rhe-c-tabs__indicator--Display, block);
   position: absolute;
-  top: var(--rhe-c-tabs__indicator--Top, auto);
-  right: var(--rhe-c-tabs__indicator--Right, auto);
-  bottom: var(--rhe-c-tabs__indicator--Bottom, 12px);
-  left: var(--rhe-c-tabs__indicator--Left, auto);
-  height: var(--rhe-c-tabs__indicator--Height, 4px);
-  width: var(--rhe-c-tabs__indicator--Width, 22px);
-  background-color: var(----rhe-c-tabs__indicator--BackgroundColor, #828282);
-  border-top: var(--rhe-c-tabs__indicator--BorderTop, 0);
-  border-right: var(--rhe-c-tabs__indicator--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__indicator--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__indicator--BorderLeft, 0); }
+  bottom: 12px;
+  left: auto;
+  display: var(--rh-tabs__indicator--Display, block);
+  height: var(--rh-tabs__indicator--Height, 4px);
+  width: var(--rh-tabs__indicator--Width, 22px);
+  background-color: var(--rh-theme--color--surface--border--darkest, #464646); }
 
 :host(:hover) .indicator {
-  display: var(--rhe-c-tabs__indicator--hover--Display, block);
-  top: var(--rhe-c-tabs__indicator--hover--Top, auto);
-  right: var(--rhe-c-tabs__indicator--hover--Right, auto);
-  bottom: var(--rhe-c-tabs__indicator--hover--Bottom, 12px);
-  left: var(--rhe-c-tabs__indicator--hover--Left, auto);
-  height: var(--rhe-c-tabs__indicator--hover--Height, 4px);
-  width: var(--rhe-c-tabs__indicator--hover--Width, 22px);
-  background-color: var(--rhe-c-tabs__indicator--hover--BackgroundColor, #2b9af3);
-  border-top: var(--rhe-c-tabs__indicator--hover--BorderTop, 0);
-  border-right: var(--rhe-c-tabs__indicator--hover--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__indicator--hover--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__indicator--hover--BorderLeft, 0); }
-
-:host(:focus) {
-  outline: var(--rhe-c-tabs__tab--focus--Outline, 2px solid #2b9af3); }
+  background-color: var(--rh-tabs--link); }
 
 :host([aria-selected="true"]) .indicator,
 :host([aria-selected="true"]:hover) .indicator {
-  display: var(--rhe-c-tabs__indicator--selected--Display, block);
-  top: var(--rhe-c-tabs__indicator--selected--Top, auto);
-  right: var(--rhe-c-tabs__indicator--selected--Right, auto);
-  bottom: var(--rhe-c-tabs__indicator--selected--Bottom, 13px);
-  left: var(--rhe-c-tabs__indicator--selected--Left, auto);
-  height: var(--rhe-c-tabs__indicator--selected--Height, 4px);
-  width: var(--rhe-c-tabs__indicator--selected--Width, 22px);
-  background-color: var(--rhe-c-tabs__indicator--selected--BackgroundColor, #06c);
-  border-top: var(--rhe-c-tabs__indicator--selected--BorderTop, #828282);
-  border-right: var(--rhe-c-tabs__indicator--selected--BorderRight, #828282);
-  border-bottom: var(--rhe-c-tabs__indicator--selected--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__indicator--selected--BorderLeft, #828282); }
+  background-color: var(--rh-tabs--link); }
 
-:host([vertical]) .indicator {
-  top: var(--rhe-c-tabs__indicator--vertical--Top, auto);
-  right: var(--rhe-c-tabs__indicator--vertical--Right, auto);
-  bottom: var(--rhe-c-tabs__indicator--vertical--Bottom, 13px);
-  left: var(--rhe-c-tabs__indicator--vertical--Left, auto);
-  height: var(--rhe-c-tabs__indicator--vertical--Height, 4px);
-  width: var(--rhe-c-tabs__indicator--vertical--Width, 22px);
-  background-color: var(----rhe-c-tabs__indicator--vertical--BackgroundColor, #828282);
-  border-top: var(--rhe-c-tabs__indicator--vertical--BorderTop, 0);
-  border-right: var(--rhe-c-tabs__indicator--vertical--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__indicator--vertical--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__indicator--vertical--BorderLeft, 0); }
-
-:host([aria-selected="true"][vertical]) .indicator {
-  display: var(--rhe-c-tabs__indicator--vertical--selected--Display, block);
-  top: var(--rhe-c-tabs__indicator--vertical--selected--Top, auto);
-  right: var(--rhe-c-tabs__indicator--vertical--selected--Right, auto);
-  bottom: var(--rhe-c-tabs__indicator--vertical--selected--Bottom, 13px);
-  left: var(--rhe-c-tabs__indicator--vertical--selected--Left, auto);
-  height: var(--rhe-c-tabs__indicator--vertical--selected--Height, 4px);
-  width: var(--rhe-c-tabs__indicator--vertical--selected--Width, 22px);
-  background-color: var(--rhe-c-tabs__indicator--vertical--selected--BackgroundColor, #06c);
-  border-top: var(--rhe-c-tabs__indicator--vertical--selected--BorderTop, 0);
-  border-right: var(--rhe-c-tabs__indicator--vertical--selected--BorderRight, 0);
-  border-bottom: var(--rhe-c-tabs__indicator--vertical--selected--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__indicator--vertical--selected--BorderLeft, 0); }
+:host(:focus),
+:host(:focus-visible) {
+  outline: var(--rh-theme--ui--focus-outline-width, 1px) var(--rh-theme--ui--focus-outline-style, solid) var(--rh-tabs--focus); }
 </style>
 <slot></slot>
 <div class="indicator"></div>`;

@@ -1,139 +1,61 @@
 @import "../../rh-sass/rh-sass";
 
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+$rh-tabs__panel--PaddingLeft-factor:  2;
+
+/// ===========================================================================
+/// DEFUALT TABS
+/// ===========================================================================
+
 :host {
   display: block;
 }
 
-// Default
 .tabs {
+  --rh-tabs--border-color:          #{rh-color(surface--border)};
+
   display: flex;
-  background-color: var(--rhe-c-tabs__tabs--BackgroundColor, transparent);
-  // Borders
-  border-top: var(--rhe-c-tabs__tabs--BorderTop, 0);
-  border-right: var(--rhe-c-tabs__tabs--BorderRight, 0);
-  border-bottom: var(
-    --rhe-c-tabs__tabs--BorderBottom,
-    1px solid $rh-global--border--BorderColor
-  );
-  border-left: var(--rhe-c-tabs__tabs--BorderLeft, 0);
+  border: 0;
+  border-bottom: #{rh-var(ui--border-width)} #{rh-var(ui--border-style)} var(--rh-tabs--border-color);
 }
 
 .panels {
-  // Padding
-  padding-top: var(--rhe-c-tabs__panel--PaddingTop, $rh-global--spacer);
-  padding-right: var(--rhe-c-tabs__panel--PaddingTop, 0);
-  padding-bottom: var(--rhe-c-tabs__panel--PaddingTop, 0);
-  padding-left: var(--rhe-c-tabs__panel--PaddingTop, 0);
+  padding: 0;
+  padding-top: #{rh-var(container-padding)};
 }
 
-// Vertical Setup
+/// ===========================================================================
+/// VERTICAL TABS
+/// ===========================================================================
+
 :host([vertical]) {
-  display: flex; // Makes the tabs side-by-side
+  display: flex; // Makes the tabs side-by-side with panels
 }
 
 :host([vertical]) .tabs {
   flex-direction: column;
-  width: var(--rhe-c-tabs__tabs--vertical--Width, 25%);
-  background-color: var(
-    --rhe-c-tabs__tabs--vertical--BackgroundColor,
-    transparent
-  );
-  // Borders
-  border-top: var(--rhe-c-tabs__tabs--vertical--BorderTop, 0);
-  border-right: var(
-    --rhe-c-tabs__tabs--vertical--BorderRight,
-    1px solid $rh-global--border--BorderColor
-  );
-  border-bottom: var(--rhe-c-tabs__tabs--vertical--BorderBottom, 0);
-  border-left: var(--rhe-c-tabs__tabs--vertical--BorderLeft, 0);
+  width: 25%;
+
+  border: 0;
+  border-right: #{rh-var(ui--border-width)} #{rh-var(ui--border-style)} var(--rh-tabs--border-color);
 }
 
 :host([vertical]) .tabs ::slotted(rh-tab) {
-  border-top: var(
-    --rhe-c-tabs__tab--selected--BorderTop,
-    1px solid transparent
-  );
-  border-right: var(--rhe-c-tabs__tab--selected--BorderRight, 0);
-  border-bottom: var(
-    --rhe-c-tabs__tab--selected--BorderBottom,
-    1px solid transparent
-  );
-  border-left: var(
-    --rhe-c-tabs__tab--selected--BorderLeft,
-    1px solid transparent
-  );
+  margin: 0 -1px 0 0;
+  border: #{rh-var(ui--border-width)} #{rh-var(ui--border-style)} transparent;
+  border-right: 0;
 }
 
 :host([vertical]) .tabs ::slotted(rh-tab[aria-selected="true"]) {
-  // Padding
-  padding-top: var(
-    --rhe-c-tabs__tab--selected--PaddingTop,
-    14px
-  ); //13px 54px 24px 14px
-  padding-right: var(--rhe-c-tabs__tab--selected--PaddingTop, 55px);
-  padding-bottom: var(--rhe-c-tabs__tab--selected--PaddingTop, 24px);
-  padding-left: var(--rhe-c-tabs__tab--selected--PaddingTop, 15px);
-  // Margins
-  margin-top: var(--rhe-c-tabs__tab--selected--MarginTop, 0);
-  margin-right: var(--rhe-c-tabs__tab--selected--MarginRight, -1px);
-  margin-bottom: var(--rhe-c-tabs__tab--selected--MarginBottom, 0);
-  margin-left: var(--rhe-c-tabs__tab--selected--MarginLeft, 0);
-  // Borders
-  border-top: var(
-    --rhe-c-tabs__tab--selected--BorderTop,
-    1px solid $rh-global--border--BorderColor
-  );
-  border-right: var(--rhe-c-tabs__tab--selected--BorderRight, 0);
-  border-bottom: var(
-    --rhe-c-tabs__tab--selected--BorderBottom,
-    1px solid $rh-global--border--BorderColor
-  );
-  border-left: var(
-    --rhe-c-tabs__tab--selected--BorderLeft,
-    1px solid $rh-global--border--BorderColor
-  );
+  border-color: var(--rh-tabs--border-color);
+  border-right: 0;
 }
 
 :host([vertical]) .panels {
-  // Padding
-  padding-top: var(--rhe-c-tabs__panel-vertical--PaddingTop, 0);
-  padding-right: var(
-    --rhe-c-tabs__panel-vertical--PaddingTop,
-    $rh-global--spacer
-  );
-  padding-bottom: var(--rhe-c-tabs__panel-vertical--PaddingTop, 0);
-  padding-left: var(
-    --rhe-c-tabs__panel-vertical--PaddingTop,
-    $rh-global--spacer * 2
-  );
+  padding: 0;
+  padding-right: #{rh-var(container-padding)};
+  padding-left: calc(#{rh-var(container-padding)} * #{$rh-tabs__panel--PaddingLeft-factor});
 }
-
-// Sub Tabs
-// type="subtabs"
-:host([type="subtabs"]) .tabs ::slotted(rh-tab) {
-  // Padding
-  padding-top: var(--rhe-c-subtabs__tab--PaddingTop, 6px);
-  padding-right: var(--rhe-c-subtabs__tab--PaddingTop, 0);
-  padding-bottom: var(--rhe-c-subtabs__tab--PaddingTop, 24px);
-  padding-left: var(--rhe-c-subtabs__tab--PaddingTop, 0);
-  // Margins
-  margin: 0;
-  // Borders
-  border: 0;
-}
-
-:host([type="subtabs"]) .tabs ::slotted(rh-tab[aria-selected="true"]) {
-}
-
-:host([type="subtabs"]) rh-tab .indicator {
-  bottom: var(--rhe-c-tabs__indicator--hover--Bottom, 12px);
-}
-
-// Sub Tabs Vertical
-// type="subtabs" vertical
-
-// Card Tabs
-// type="cards"
-
-// Card Tabs Vertical
-// type="cards" vertical

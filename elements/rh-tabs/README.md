@@ -43,9 +43,21 @@ Add the content for your tab panel here.
 
 Orients the tabs vertically on the left and pushes the content panes to the right.
 
+```html
+<rh-tabs vertical>
+  ...
+</rh-tabs>
+```
+
 ### selected-index (observed)
 
-Sets and reflects the currently selected tab index .
+Sets and reflects the currently selected tab index.
+
+```html
+<rh-tabs selected-index="2">
+  ...
+</rh-tabs>
+```
 
 ## Events
 
@@ -59,13 +71,20 @@ Fires when a selected tab is no longer the selected tab. The `event.detail.tab` 
 
 ## Styling
 
-| Custom Property                                     | Description                                         | Default                                 |
-| --------------------------------------------------- | --------------------------------------------------- | --------------------------------------- |
-| --rhe-c-tab-BackgroundColor                         | Background color of the tabs                        | $rh-global--color--black                |
-| --rhe-c-tab-selected-BackgroundColor                | Background color of the selected tab                | $rh-global--color--white                |
-| --rhe-c-tab-selected-Color                          | Font color of the selected tab                      | $rh-global--color--black-soft           |
-| --rhe-c-tab\_\_indicator--hover--BackgroundColor    | Background color of the indicator                   | $rh-global--link-color--inverted--hover |
-| --rhe-c-tab\_\_indicator--selected--BackgroundColor | Background color of the indicator of a selected tab | $rh-global--link-color                  |
+| Theme Var Hook | Description | Default |
+| -------------- | ----------- | ------- |
+| `--rh-theme--container-padding` | Tab padding and panel padding | 16px |
+| `--rh-theme--color--surface--border` | Link color for default CTA | `$rh-color--surface--border` |
+| `--rh-theme--ui--border-style` | Border style for selected tab | solid |
+| `--rh-theme--ui--border-width` | Border width for selected tab | 1px |
+| `--rh-theme--color--surface--lightest` | Selected tab background color | `$rh-color--surface--lightest` |
+| `--rh-theme--color--surface--lightest--text` | Default tab text color | `$rh-color--surface--lightest--text` |
+| `--rh-theme--color--surface--lightest--link` | Tab hover and selected indicator color | `$rh-color--surface--lightest--link` |
+| `--rh-theme--color--surface--lightest--link--focus` | Focused tab outline color | `$rh-color--surface--lightest--link--focus` |
+| `--rh-tabs__indicator--Display` | Tab indicator display | block |
+| `--rh-tabs__indicator--Height` | Tab indicator height | 4px |
+| `--rh-tabs__indicator--Width` | Tab indicator width | 22px |
+| `--rh-tabs__tab--TextTransform` | Tab text transform | none |
 
 ## Test
 

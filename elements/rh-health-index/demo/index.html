@@ -4,6 +4,12 @@
     <meta charset="utf-8">
     <title>RHElements: rh-health-index Demo</title>
 
+    <noscript>
+      <link href="../../rhelement/rhelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
+
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
@@ -14,8 +20,9 @@
         margin-bottom: 8px;
       }
     </style>
+
   </head>
-  <body>
+  <body unresolved>
     <h1>&lt;rh-health-index&gt;</h1>
     <div>
       <rh-health-index health-index="A">A</rh-health-index>

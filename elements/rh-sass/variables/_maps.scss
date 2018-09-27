@@ -188,6 +188,9 @@ $rh-vars: (
   ui--border-style:              solid,
   ui--border-radius:             2px,
 
+  ui--focus-outline-width:       1px,
+  ui--focus-outline-style:       solid,
+
   box-shadow--sm:                '0  #{rh-size-prem(1)}  #{rh-size-prem(2)} 0 rgba(#{$rh-color--gray-1000}, .2)',
   box-shadow--md:                '0  #{rh-size-prem(2)}  #{rh-size-prem(1)} #{rh-size-prem(1)} rgba(#{$rh-color--gray-1000}, .12), 0  #{rh-size-prem(4)}  #{rh-size-prem(11)} #{rh-size-prem(6)} rgba(#{$rh-color--gray-1000}, .05)',
   box-shadow--lg:                '0  #{rh-size-prem(3)}  #{rh-size-prem(7)} #{rh-size-prem(3)} rgba(#{$rh-color--gray-1000}, .13), 0  #{rh-size-prem(11)}  #{rh-size-prem(24)} #{rh-size-prem(16)} rgba(#{$rh-color--gray-1000}, .12)',

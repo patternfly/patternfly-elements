@@ -457,7 +457,7 @@ class RhAccordionHeader extends RHElement {
 
   _clickHandler(event) {
     this.dispatchEvent(
-      new CustomEvent(`${RhAccordion.tag}-change`, {
+      new CustomEvent(`${RhAccordion.tag}:change`, {
         detail: { expanded: !this.expanded },
         bubbles: true
       })

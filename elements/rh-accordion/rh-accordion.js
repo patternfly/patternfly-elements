@@ -580,7 +580,7 @@ h6 {
 
   _clickHandler(event) {
     this.dispatchEvent(
-      new CustomEvent(`${RhAccordion.tag}-change`, {
+      new CustomEvent(`${RhAccordion.tag}:change`, {
         detail: { expanded: !this.expanded },
         bubbles: true
       })

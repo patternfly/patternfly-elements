@@ -4,6 +4,7 @@ const req = require.context("../elements", true, /\.story\.js$/);
 
 setOptions({
   name: "RHElements",
+  url: "/",
   addonPanelInRight: true
 });
 

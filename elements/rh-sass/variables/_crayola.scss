@@ -5,7 +5,7 @@
 //
 // While these are available for styling RHElements, it's recommended
 //    that developers try to utilize the context-based colors in
-//    _colors.scss first.
+//    $rh-colors in _maps.scss first, and _colors.scss second.
 //
 // ========================================================================
 
@@ -43,10 +43,10 @@ $rhelements--purple:            rebeccapurple !default; // Was #703fec
 // ========================================================================
 
 $rh-color--white:               #fff !default;
-$rh-color--gray-50:             lighten($rhelements--gray, 60%) !default;
-$rh-color--gray-100:            lighten($rhelements--gray, 50%) !default;
-$rh-color--gray-150:            $rhelements--gray-light !default;
+$rh-color--gray-50:             lighten($rhelements--gray, 48%) !default;
+$rh-color--gray-100:            lighten($rhelements--gray, 45%) !default;
 $rh-color--gray-200:            lighten($rhelements--gray, 40%) !default;
+$rh-color--gray-250:            $rhelements--gray-light !default;
 $rh-color--gray-300:            lighten($rhelements--gray, 30%) !default;
 $rh-color--gray-400:            lighten($rhelements--gray, 20%) !default;
 $rh-color--gray-500:            lighten($rhelements--gray, 10%) !default;

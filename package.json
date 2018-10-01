@@ -11,6 +11,8 @@
     "test-suite-inject": "node scripts/test-suite-inject.js",
     "storybook": "start-storybook -c .storybook -p 9001 -s ./elements",
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
+    "gh-pages-storybook": "storybook-to-ghpages",
+    "deploy-storybook": "npm run build-storybook && npm run gh-pages-storybook",
     "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject && npm run bootstrap"
   },
   "devDependencies": {
@@ -21,6 +23,7 @@
     "@storybook/addon-viewport": "^3.4.8",
     "@storybook/cli": "^3.4.8",
     "@storybook/polymer": "^3.4.8",
+    "@storybook/storybook-deployer": "^2.3.0",
     "@webcomponents/webcomponentsjs": "^2.0.3",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.26.3",
@@ -33,7 +36,7 @@
     "decomment": "^0.9.1",
     "del": "^3.0.0",
     "dialog-polyfill": "^0.4.10",
-    "generator-rhelement": "^0.6.3",
+    "generator-rhelement": "^0.6.4",
     "global": "^4.3.2",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-babel": "^7.0.0",
@@ -69,7 +72,9 @@
     "whatwg-fetch": "^2.0.3",
     "yo": "^1.8.5"
   },
-  "dependencies": {},
+  "dependencies": {
+    "gh-pages": "^2.0.0"
+  },
   "lint-staged": {
     "*.{js,json}": [
       "prettier --write",

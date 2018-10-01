@@ -1,6 +1,9 @@
 {
   "name": "@rhelements/rh-layouts",
   "version": "1.0.0-prerelease.5",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "rh-layouts for Red Hat's Customer Portal and RHElements",
   "scripts": {
     "build": "../../node_modules/.bin/gulp",

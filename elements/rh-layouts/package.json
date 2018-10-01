@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/rh-layouts",
-  "version": "1.0.0-prerelease.5",
+  "version": "1.0.0-prerelease.6",
   "publishConfig": {
     "access": "public"
   },
@@ -16,9 +16,6 @@
       "url": "https://github.com/markcaron"
     }
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "license": "MIT",
   "dependencies": {
     "@rhelements/rh-sass": "*"

@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/all",
-  "version": "1.0.0-prerelease.5",
+  "version": "1.0.0-prerelease.6",
   "publishConfig": {
     "access": "public"
   },

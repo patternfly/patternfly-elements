@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/rh-health-index",
-  "version": "1.0.0-prerelease.3",
+  "version": "1.0.0-prerelease.4",
   "publishConfig": {
     "access": "public"
   },
@@ -20,8 +20,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rhelements/rh-sass": "^1.0.0-prerelease.3",
-    "@rhelements/rhelement": "^1.0.0-prerelease.3"
+    "@rhelements/rh-sass": "^1.0.0-prerelease.4",
+    "@rhelements/rhelement": "^1.0.0-prerelease.4"
   },
   "generator-rhelement-version": "0.6.3"
 }

@@ -4,7 +4,7 @@
     "className": "RhSass",
     "elementName": "rh-sass"
   },
-  "version": "1.0.0-prerelease.3",
+  "version": "1.0.0-prerelease.4",
   "publishConfig": {
     "access": "public"
   },

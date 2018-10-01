@@ -4,7 +4,7 @@
     "className": "RHElement",
     "elementName": "rhelement"
   },
-  "version": "1.0.0-prerelease.3",
+  "version": "1.0.0-prerelease.4",
   "publishConfig": {
     "access": "public"
   },

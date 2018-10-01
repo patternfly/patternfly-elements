@@ -11,7 +11,7 @@
     "test-suite-inject": "node scripts/test-suite-inject.js",
     "storybook": "start-storybook -c .storybook -p 9001 -s ./elements",
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
-    "gh-pages-storybook": "gh-pages -d .storybook_out -m 'Deploy Storybook'",
+    "gh-pages-storybook": "storybook-to-ghpages",
     "deploy-storybook": "npm run build-storybook && npm run gh-pages-storybook",
     "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject && npm run bootstrap"
   },
@@ -23,6 +23,7 @@
     "@storybook/addon-viewport": "^3.4.8",
     "@storybook/cli": "^3.4.8",
     "@storybook/polymer": "^3.4.8",
+    "@storybook/storybook-deployer": "^2.3.0",
     "@webcomponents/webcomponentsjs": "^2.0.3",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.26.3",

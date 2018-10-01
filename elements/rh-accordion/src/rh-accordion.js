@@ -106,7 +106,7 @@ class RhAccordion extends RHElement {
     this.setAttribute("role", "presentation");
     this.setAttribute("defined", "");
 
-    this.addEventListener(`${RhAccordion.tag}-change`, this._changeHandler);
+    this.addEventListener(`${RhAccordion.tag}:change`, this._changeHandler);
     this.addEventListener("keydown", this._keydownHandler);
 
     Promise.all([
@@ -116,7 +116,7 @@ class RhAccordion extends RHElement {
   }
 
   disconnectedCallback() {
-    this.removeEventListener(`${RhAccordion.tag}-change`, this._changeHandler);
+    this.removeEventListener(`${RhAccordion.tag}:change`, this._changeHandler);
     this.removeEventListener("keydown", this._keydownHandler);
   }
 
@@ -457,7 +457,7 @@ class RhAccordionHeader extends RHElement {
 
   _clickHandler(event) {
     this.dispatchEvent(
-      new CustomEvent(`${RhAccordion.tag}-change`, {
+      new CustomEvent(`${RhAccordion.tag}:change`, {
         detail: { expanded: !this.expanded },
         bubbles: true
       })

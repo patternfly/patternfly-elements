@@ -383,7 +383,7 @@ class RhAccordionHeader extends RHElement {
     return `
 <style>
 :host {
-  --rh-accordion--main:         var(--rh-theme--color--surface--lighter, white);
+  --rh-accordion--main:         var(--rh-theme--color--surface--lighter, #ececec);
   --rh-accordion--aux:          var(--rh-theme--color--surface--lighter--text, #333);
   --rh-accordion--focus:        var(--rh-theme--color--surface--lighter--link--focus, #003366);
   display: block;
@@ -456,9 +456,9 @@ h6 {
   --rh-accordion--focus:        var(--rh-theme--color--surface--lightest--link--focus, #003366); }
   :host([color="lightest"]) button[aria-expanded="true"],
   :host([color="striped"].even) button[aria-expanded="true"] {
-    border-top-color: var(--rh-theme--color--surface--border--lightest, #f9f9f9);
-    border-left-color: var(--rh-theme--color--surface--border--lightest, #f9f9f9);
-    border-right-color: var(--rh-theme--color--surface--border--lightest, #f9f9f9); }
+    border-top-color: var(--rh-theme--color--surface--border--lightest, #ececec);
+    border-left-color: var(--rh-theme--color--surface--border--lightest, #ececec);
+    border-right-color: var(--rh-theme--color--surface--border--lightest, #ececec); }
 
 :host([color="base"]) {
   --rh-accordion--main:         var(--rh-theme--color--surface--base, #dfdfdf);
@@ -608,7 +608,7 @@ class RhAccordionPanel extends RHElement {
 
 .container {
   margin: 0 1px;
-  border: 1px solid var(--rh-theme--color--surface--border--lightest, #f9f9f9);
+  border: 1px solid var(--rh-theme--color--surface--border--lightest, #ececec);
   border-top: none;
   padding: var(--rh-theme--container-spacer, 1rem); }
 </style>

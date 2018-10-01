@@ -73,6 +73,8 @@ class RHElement extends HTMLElement {
       window.ShadyCSS.styleElement(this);
     }
 
+    this.classList.add("rhelement");
+
     if (this._queue.length) {
       this._processQueue();
     }

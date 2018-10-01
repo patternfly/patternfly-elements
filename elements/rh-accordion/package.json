@@ -4,7 +4,7 @@
     "className": "RhAccordion",
     "elementName": "rh-accordion"
   },
-  "version": "1.0.0-prerelease.4",
+  "version": "1.0.0-prerelease.5",
   "description": "Accordion element for RHElements",
   "repository": {
     "type": "git",
@@ -21,8 +21,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rhelements/rh-sass": "^1.0.0-prerelease.4",
-    "@rhelements/rhelement": "^1.0.0-prerelease.4"
+    "@rhelements/rh-sass": "^1.0.0-prerelease.5",
+    "@rhelements/rhelement": "^1.0.0-prerelease.5"
   },
-  "generator-rhelement-version": "0.5.5"
+  "generator-rhelement-version": "0.5.5",
+  "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
 }

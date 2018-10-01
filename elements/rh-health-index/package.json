@@ -1,6 +1,6 @@
 {
   "name": "@rhelements/rh-health-index",
-  "version": "1.0.0-prerelease.4",
+  "version": "1.0.0-prerelease.5",
   "publishConfig": {
     "access": "public"
   },
@@ -20,8 +20,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rhelements/rh-sass": "^1.0.0-prerelease.4",
-    "@rhelements/rhelement": "^1.0.0-prerelease.4"
+    "@rhelements/rh-sass": "^1.0.0-prerelease.5",
+    "@rhelements/rhelement": "^1.0.0-prerelease.5"
   },
-  "generator-rhelement-version": "0.6.3"
+  "generator-rhelement-version": "0.6.3",
+  "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
 }

@@ -208,7 +208,7 @@
           const header = rhAccordion.querySelector('rh-accordion-header');
           const handlerSpy = sinon.spy();
 
-          document.addEventListener('rh-accordion-change', handlerSpy);
+          document.addEventListener('rh-accordion:change', handlerSpy);
 
           header.click();
 
@@ -218,7 +218,7 @@
           assert.isTrue(event.detail.expanded);
 
           // reset
-          document.removeEventListener('rh-accordion-change', handlerSpy);
+          document.removeEventListener('rh-accordion:change', handlerSpy);
           header.click();
         });
 

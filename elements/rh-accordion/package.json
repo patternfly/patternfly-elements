@@ -5,6 +5,9 @@
     "elementName": "rh-accordion"
   },
   "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Accordion element for RHElements",
   "repository": {
     "type": "git",

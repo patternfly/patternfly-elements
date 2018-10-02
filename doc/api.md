@@ -1,35 +1,18 @@
-## Modules
-
-<dl>
-<dt><a href="#module_RhCard">RhCard</a></dt>
-<dd><p>RhCard</p>
-</dd>
-</dl>
-
 ## Classes
 
 <dl>
 <dt><a href="#RhCard">RhCard</a></dt>
-<dd><p>A simple card. <code>&lt;rh-card&gt;</code></p>
+<dd><p>The class for <code>&lt;rh-card&gt;</code>.</p>
 </dd>
 <dt><a href="#RHElement">RHElement</a></dt>
 <dd><p>RHElement base class.</p>
 </dd>
 </dl>
 
-<a name="module_RhCard"></a>
-
-## RhCard
-RhCard
-
-**Example**  
-```html
-<rh-card color="dark">
-```
 <a name="RhCard"></a>
 
 ## RhCard
-A simple card. `<rh-card>`
+The class for `<rh-card>`.
 
 **Kind**: global class  
 

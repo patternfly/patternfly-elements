@@ -23,7 +23,7 @@
 import RHElement from "../rhelement/rhelement.js";
 
 /**
- * A simple card. `<rh-card>`
+ * The class for `<rh-card>`.
  * @typicalname <rh-card>
  */
 class RhCard extends RHElement {
@@ -55,9 +55,4 @@ class RhCard extends RHElement {
 
 RHElement.create(RhCard);
 
-/**
- * RhCard
- * @module RhCard
- * @example @lang html <rh-card color="dark">
- */
 export default RhCard;

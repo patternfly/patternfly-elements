@@ -20,12 +20,15 @@
  * SOFTWARE.
  */
 
+let logger = () => null;
+
 export function reveal() {
-  console.log(`[reveal] elements ready, revealing the body`);
+  logger(`[reveal] elements ready, revealing the body`);
   window.document.body.removeAttribute("unresolved");
 }
 
-export function autoReveal() {
+export function autoReveal(logFunction) {
+  logger = logFunction;
   // If Web Components are already ready, run the handler right away.  If they
   // are not yet ready, wait.
   //
@@ -42,6 +45,6 @@ export function autoReveal() {
 }
 
 function handleWebComponentsReady() {
-  console.log("[reveal] web components ready");
+  logger("[reveal] web components ready");
   reveal();
 }

@@ -1257,6 +1257,7 @@ class RhNumber extends RHElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
+    super.attributeChangedCallback(...arguments);
     switch (attr) {
       case "type":
         this._determineFormat();

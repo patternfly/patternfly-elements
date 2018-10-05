@@ -83,7 +83,6 @@ class RhAccordion extends RHElement {
   overflow: hidden;
   margin: 0; }
 </style>
-
 <slot></slot>`;
   }
 
@@ -485,7 +484,6 @@ h6 {
   --rh-accordion--aux:          var(--rh-theme--color--surface--complement--text, #fff);
   --rh-accordion--focus:        var(--rh-theme--color--surface--complement--link--focus, #cce6ff); }
 </style>
-
 <button aria-expanded="false" role="tab"></button>`;
   }
 
@@ -612,7 +610,6 @@ class RhAccordionPanel extends RHElement {
   border-top: none;
   padding: var(--rh-theme--container-spacer, 1rem); }
 </style>
-
 <div tabindex="-1" role="tabpanel">
   <div class="container">
     <slot></slot>

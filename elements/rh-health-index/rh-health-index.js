@@ -1,3 +1,5 @@
+import RHElement from "../rhelement/rhelement.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -19,8 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import RHElement from "../rhelement/rhelement.js";
 
 class RhHealthIndex extends RHElement {
   get html() {
@@ -119,3 +119,4 @@ class RhHealthIndex extends RHElement {
 RHElement.create(RhHealthIndex);
 
 export default RhHealthIndex;
+//# sourceMappingURL=rh-health-index.js.map

@@ -19,6 +19,7 @@
     "@rhelements/rh-icon": "file:elements/rh-icon",
     "@rhelements/rh-icon-panel": "file:elements/rh-icon-panel",
     "@rhelements/rh-number": "file:elements/rh-number",
+    "@rhelements/rh-pagination": "file:elements/rh-pagination",
     "@rhelements/rh-tabs": "file:elements/rh-tabs",
     "@rhelements/rhelement": "file:elements/rhelement"
   }

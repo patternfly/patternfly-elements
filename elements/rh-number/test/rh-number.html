@@ -14,6 +14,8 @@
     <rh-number type="abbrev">12345</rh-number>
     <rh-number type="percent">0.5678</rh-number>
     <rh-number type="e">2000000</rh-number>
+    <rh-number type="thousands" id="with-dec">1234.123</rh-number>
+    <rh-number type="thousands" id="without-dec">1234</rh-number>
     <rh-number number="10" id="test-change"></rh-number>
 
     <script>
@@ -53,6 +55,20 @@
           const content = rhNumber.shadowRoot.querySelector('span').textContent;
 
           assert.equal(content, '2.000e+6');
+        });
+
+        test('it should show a thousands number with a decimal', () => {
+          const rhNumber = document.querySelector('rh-number[type="thousands"]#with-dec');
+          const content = rhNumber.shadowRoot.querySelector('span').textContent;
+
+          assert.equal(content, '1 234.12');
+        });
+
+        test('it should show a thousands number without a decimal', () => {
+          const rhNumber = document.querySelector('rh-number[type="thousands"]#without-dec');
+          const content = rhNumber.shadowRoot.querySelector('span').textContent;
+
+          assert.equal(content, '1 234');
         });
 
         test('it should react to the number changing', () => {

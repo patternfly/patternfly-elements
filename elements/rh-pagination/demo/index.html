@@ -12,17 +12,16 @@
   </head>
   <body>
     <!-- http://www.a11ymatters.com/pattern/pagination/ -->
-    <rh-pagination>
-      <nav role="navigation" aria-label="Search Results Pagination">
-        <ul>
-          <li><a href="#" aria-label="Previous page">&#8592;</a></li>
-          <li><a href="#" aria-current="true">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-          <li><a href="#" aria-label="Next page">&#8594;</a></li>
-        </ul>
+    <!-- <nav role="navigation" aria-label="Search Results Pagination">
+    <ul>
+      <li><a href="#" aria-label="Previous page">&#8592;</a></li>
+      <li><a href="#" aria-label="Next page">&#8594;</a></li>
+    </ul>
+  </nav> -->
+    <rh-pagination current-page="1" total-pages="15" show-jump show-pages>
+      <nav>
+        <a href="#" control="previous">Previous</a>
+        <a href="#" control="next">Next</a>
       </nav>
     </rh-pagination>
   </body>

@@ -4,11 +4,23 @@
     <meta charset="utf-8">
     <title>RHElements: rh-pagination Demo</title>
 
+    <!-- needed for CP-Theme -->
+    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
+
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../rh-pagination.umd.js'])</script>
+    <script>require([
+      '../../../themes/cp-theme/cp-theme.umd.js',
+      '../rh-pagination.umd.js'
+    ])</script>
+
+    <style>
+    rh-pagination {
+      margin-bottom: 60px;
+    }
+    </style>
   </head>
   <body>
     <!-- http://www.a11ymatters.com/pattern/pagination/ -->
@@ -18,10 +30,16 @@
       <li><a href="#" aria-label="Next page">&#8594;</a></li>
     </ul>
   </nav> -->
-    <rh-pagination current-page="1" total-pages="15" show-jump show-pages>
+    <rh-pagination current-page="1" total-pages="15" show-jump>
       <nav>
         <a href="#" control="previous">Previous</a>
         <a href="#" control="next">Next</a>
+      </nav>
+    </rh-pagination>
+    <rh-pagination current-page="1" total-pages="15" show-jump show-pages>
+      <nav>
+        <a href="#" control="previous" aria-label="Previous page">&#8592;</a>
+        <a href="#" control="next" aria-label="Next page">&#8594;</a>
       </nav>
     </rh-pagination>
   </body>

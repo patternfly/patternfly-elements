@@ -29,6 +29,9 @@ class RhPagination extends RHElement {
 :host {
   display: block; }
 
+:host([hidden]) {
+  display: none; }
+
 :focus:not(:focus-visible) {
   outline: none; }
 
@@ -39,34 +42,58 @@ nav ul {
   margin: 0;
   padding: 0;
   list-style: none;
-  display: flex; }
+  display: flex;
+  align-items: center; }
   nav ul li {
     margin: 1px; }
-    nav ul li a {
+    nav ul li > a {
       display: block;
       padding: 0 calc(var(--rh-theme--font-size, 16px) * 0.75);
       line-height: calc(var(--rh-theme--font-size, 16px) * 2.5);
       min-height: calc(var(--rh-theme--font-size, 16px) * 2.5);
       min-width: calc(var(--rh-theme--font-size, 16px) * 2.5);
+      border: var(--rh-theme--ui--border-width, 1px) var(--rh-theme--ui--border-style, solid) transparent;
       background: var(--rh-theme--color--ui-subtle, #f3f3f3);
       color: var(--rh-theme--color--ui-subtle--text, #333);
       text-align: center;
       text-decoration: none; }
-      nav ul li a:hover, nav ul li a:focus, nav ul li a:active {
+      nav ul li > a:hover, nav ul li > a:focus, nav ul li > a:active {
         background: var(--rh-theme--color--ui-base, #0477a4);
         color: var(--rh-theme--color--ui-base--text, #fff); }
-      nav ul li a[aria-current] {
+      nav ul li > a[aria-current] {
         background: var(--rh-theme--color--ui-complement, #464646);
         color: var(--rh-theme--color--ui-complement--text, #fff); }
+    nav ul li#next {
+      order: 10; }
 
-:host([hidden]) {
-  display: none; }
+#jump {
+  margin: 0 var(--rh-theme--container-spacer, 1rem); }
+
+#currentPageInput {
+  margin-right: calc(var(--rh-theme--content-spacer, 1rem) * 0.5);
+  padding: 0 calc(var(--rh-theme--font-size, 16px) * 0.75);
+  line-height: calc(var(--rh-theme--font-size, 16px) * 2.5);
+  min-height: calc(var(--rh-theme--font-size, 16px) * 2.5);
+  border: var(--rh-theme--ui--border-width, 1px) var(--rh-theme--ui--border-style, solid) var(--rh-theme--color--surface--border, #dfdfdf);
+  box-shadow: inset 0 1px 1px 0 rgba(26, 26, 26, 0.1);
+  width: 4em;
+  font-size: inherit; }
+
+:host([show-pages]) #jump {
+  order: -1;
+  margin-left: 0; }
+
+:host([show-pages]) #next {
+  order: initial; }
 </style>
 <nav>
-  <ul id="list"></ul>
-  <form id="jump" hidden>
-    <input type="number" name="" id="currentPageInput"> of <a href="#" id="total-pages"></a>
-  </form>
+  <ul id="list">
+    <li id="jump" hidden>
+      <form>
+        <input type="number" name="" id="currentPageInput"> of <a href="#" id="total-pages"></a>
+      </form>
+    </li>
+  </ul>
 </nav>`;
   }
 
@@ -132,13 +159,16 @@ nav ul {
     const next = this.querySelector('a[control="next"]');
     const liPrevious = document.createElement("li");
     const liNext = document.createElement("li");
+    const liJump = this.shadowRoot.querySelector("#jump");
 
     liPrevious.setAttribute("id", "previous");
     liNext.setAttribute("id", "next");
     liPrevious.innerHTML = previous.outerHTML;
     liNext.innerHTML = next.outerHTML;
-    this.list.appendChild(liPrevious);
-    this.list.appendChild(liNext);
+    this.list.insertBefore(liPrevious, liJump);
+    this.list.insertBefore(liNext, liJump);
+    // this.list.appendChild(liPrevious);
+    // this.list.appendChild(liNext);
 
     if (this.hasAttribute("show-pages")) {
       this._buildPageNumbers();

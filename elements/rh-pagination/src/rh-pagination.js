@@ -85,13 +85,16 @@ class RhPagination extends RHElement {
     const next = this.querySelector('a[control="next"]');
     const liPrevious = document.createElement("li");
     const liNext = document.createElement("li");
+    const liJump = this.shadowRoot.querySelector("#jump");
 
     liPrevious.setAttribute("id", "previous");
     liNext.setAttribute("id", "next");
     liPrevious.innerHTML = previous.outerHTML;
     liNext.innerHTML = next.outerHTML;
-    this.list.appendChild(liPrevious);
-    this.list.appendChild(liNext);
+    this.list.insertBefore(liPrevious, liJump);
+    this.list.insertBefore(liNext, liJump);
+    // this.list.appendChild(liPrevious);
+    // this.list.appendChild(liNext);
 
     if (this.hasAttribute("show-pages")) {
       this._buildPageNumbers();

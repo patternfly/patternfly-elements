@@ -43,9 +43,10 @@ nav ul {
   padding: 0;
   list-style: none;
   display: flex;
-  align-items: center; }
+  align-items: baseline; }
   nav ul li {
-    margin: 1px; }
+    margin: 1px;
+    display: flex; }
     nav ul li > a {
       display: block;
       padding: 0 calc(var(--rh-theme--font-size, 16px) * 0.75);
@@ -56,7 +57,8 @@ nav ul {
       background: var(--rh-theme--color--ui-subtle, #f3f3f3);
       color: var(--rh-theme--color--ui-subtle--text, #333);
       text-align: center;
-      text-decoration: none; }
+      text-decoration: none;
+      vertical-align: middle; }
       nav ul li > a:hover, nav ul li > a:focus, nav ul li > a:active {
         background: var(--rh-theme--color--ui-base, #0477a4);
         color: var(--rh-theme--color--ui-base--text, #fff); }
@@ -68,6 +70,15 @@ nav ul {
 
 #jump {
   margin: 0 var(--rh-theme--container-spacer, 1rem); }
+  #jump a {
+    color: var(--rh-theme--color--ui-link, #06c);
+    text-decoration: none; }
+    #jump a:hover {
+      color: var(--rh-theme--color--ui-link--hover, #003366);
+      text-decoration: underline; }
+    #jump a:focus {
+      color: var(--rh-theme--color--ui-link--focus, #003366);
+      text-decoration: underline; }
 
 #currentPageInput {
   margin-right: calc(var(--rh-theme--content-spacer, 1rem) * 0.5);
@@ -75,7 +86,7 @@ nav ul {
   line-height: calc(var(--rh-theme--font-size, 16px) * 2.5);
   min-height: calc(var(--rh-theme--font-size, 16px) * 2.5);
   border: var(--rh-theme--ui--border-width, 1px) var(--rh-theme--ui--border-style, solid) var(--rh-theme--color--surface--border, #dfdfdf);
-  box-shadow: inset 0 1px 1px 0 rgba(26, 26, 26, 0.1);
+  box-shadow: var(--rh-theme--box-shadow--input, inset 0 1px 1px 0 rgba(19, 19, 19, 0.1));
   width: 4em;
   font-size: inherit; }
 

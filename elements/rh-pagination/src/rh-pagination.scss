@@ -30,10 +30,11 @@ nav {
     padding: 0;
     list-style: none;
     display: flex;
-    align-items: center;
+    align-items: baseline;
 
     li {
       margin: 1px;
+      display: flex;
 
       & > a {
         display: block;
@@ -46,6 +47,7 @@ nav {
         color: var(--rh-theme--color--ui-subtle--text, $rh-color--text); // May need to resolve this with maps
         text-align: center;
         text-decoration: none;
+        vertical-align: middle;
 
         &:hover,
         &:focus,
@@ -69,6 +71,21 @@ nav {
 
 #jump {
   margin: 0 rh-var(container-spacer);
+
+  a {
+    color: rh-color(ui-link);
+    text-decoration: none;
+
+    &:hover {
+      color: rh-color(ui-link--hover);
+      text-decoration: underline;
+    }
+
+    &:focus {
+      color: rh-color(ui-link--focus);
+      text-decoration: underline;
+    }
+  }
 }
 
 #currentPageInput {
@@ -77,8 +94,7 @@ nav {
   line-height: calc(#{rh-var(font-size)} * #{$rh-pagination_a--size-factor});
   min-height: calc(#{rh-var(font-size)} * #{$rh-pagination_a--size-factor});
   border: rh-var(ui--border-width) rh-var(ui--border-style) rh-color(surface--border);
-  // box-shadow: rh-var(box-shadow--inset);
-  box-shadow: inset 0 1px 1px 0 rgba(#1a1a1a, .1);
+  box-shadow: rh-var(box-shadow--input);
   width: 4em;
   font-size: inherit;
 }

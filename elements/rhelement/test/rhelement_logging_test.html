@@ -35,6 +35,12 @@
         constructor() {
           super(RhTest);
         }
+
+        attributeChangedCallback(attr, oldVal, newVal) {
+          super.attributeChangedCallback(...arguments);
+
+          this.log(`${attr}: new value = ${newVal}`);
+        }
       }
 
       RHElement.create(RhTest);
@@ -77,4 +83,3 @@
     </script>
   </body>
 </html>
-

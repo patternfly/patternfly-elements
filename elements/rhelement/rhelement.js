@@ -27,6 +27,19 @@ class RHElement extends HTMLElement {
     window.customElements.define(rhe.tag, rhe);
   }
 
+  static debugLog(preference = null) {
+    if (preference !== null) {
+      RHElement._debugLog = !!preference;
+    }
+    return RHElement._debugLog;
+  }
+
+  static log(...msgs) {
+    if (RHElement.debugLog()) {
+      console.log(...msgs);
+    }
+  }
+
   static get RhTypes() {
     return {
       Container: "container",
@@ -129,9 +142,13 @@ class RHElement extends HTMLElement {
 
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));
   }
+
+  log(...msgs) {
+    RHElement.log(`[${this.tag}]`, ...msgs);
+  }
 }
 
-autoReveal();
+autoReveal(RHElement.log);
 
 export default RHElement;
 //# sourceMappingURL=rhelement.js.map

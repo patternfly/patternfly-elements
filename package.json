@@ -7,13 +7,17 @@
     "build": "lerna run build",
     "bootstrap": "lerna bootstrap --hoist",
     "postinstall": "npm run bootstrap",
-    "precommit": "npm run test-suite-inject > /dev/null && lint-staged",
     "test-suite-inject": "node scripts/test-suite-inject.js",
     "storybook": "start-storybook -c .storybook -p 9001 -s ./elements",
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
     "gh-pages-storybook": "storybook-to-ghpages",
     "deploy-storybook": "npm run build-storybook && npm run gh-pages-storybook",
     "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject && npm run bootstrap"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test-suite-inject > /dev/null && lint-staged"
+    }
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.8",
@@ -38,8 +42,8 @@
     "dialog-polyfill": "^0.4.10",
     "generator-rhelement": "^0.6.4",
     "global": "^4.3.2",
-    "gulp": "github:gulpjs/gulp#4.0",
-    "gulp-babel": "^7.0.0",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^3.10.0",
     "gulp-rename": "^1.4.0",
     "gulp-replace": "^1.0.0",
@@ -50,7 +54,7 @@
     "gulp-svg-sprite": "^1.4.0",
     "gulp-trim": "^1.0.2",
     "gulp-uglify": "^3.0.1",
-    "husky": "^0.14.3",
+    "husky": "^1.1.1",
     "lerna": "^3.0.0-rc.0",
     "lint-staged": "^7.2.0",
     "lodash": "^4.17.10",
@@ -59,7 +63,7 @@
     "polymer-webpack-loader": "^2.0.3",
     "prettier": "^1.14.0",
     "requirejs": "^2.3.5",
-    "rollup": "^0.64.1",
+    "rollup": "^0.66.6",
     "rollup-plugin-babel": "^3.0.7",
     "rollup-plugin-commonjs": "^9.1.5",
     "rollup-plugin-node-resolve": "^3.3.0",
@@ -69,7 +73,7 @@
     "trim": "0.0.1",
     "wct-browser-legacy": "^1.0.1",
     "web-component-tester": "^6.7.1",
-    "whatwg-fetch": "^2.0.3",
+    "whatwg-fetch": "^3.0.0",
     "yo": "^1.8.5"
   },
   "dependencies": {

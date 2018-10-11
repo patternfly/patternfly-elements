@@ -24,14 +24,7 @@ function testPathAbs(element) {
 
 function testPathRel(prefix) {
   return function(element) {
-    return path.join(
-      prefix,
-      "node_modules",
-      "@rhelements",
-      element,
-      "test",
-      "index.html"
-    );
+    return path.join(prefix, "elements", element, "test", "index.html");
   };
 }
 
@@ -64,20 +57,5 @@ const withPaths = template.replace(
 );
 
 fs.writeFileSync(outFile, withPaths);
-
-// write elements/all/package.json
-
-const packagePath = "../elements/all/package.json";
-const allPackage = require(packagePath);
-allPackage.dependencies = withTests
-  .keyBy()
-  .mapKeys(e => `@rhelements/${e}`)
-  .mapValues(e => `file:elements/${e}`)
-  .value();
-
-fs.writeFileSync(
-  path.join(__dirname, packagePath),
-  JSON.stringify(allPackage, null, 2)
-);
 
 console.log(chalk.green(`Complete!`));

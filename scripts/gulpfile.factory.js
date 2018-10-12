@@ -1,10 +1,7 @@
 module.exports = function factory({
   elementName,
   className,
-  taskHooks = {
-    precompile: [],
-    prebundle: []
-  }
+  precompile = []
 } = {}) {
   const fs = require("fs");
   const path = require("path");
@@ -99,13 +96,7 @@ ${html}\`;
 
   gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-  const buildTasks = [
-    "merge",
-    ...[taskHooks.prebundle],
-    "compile",
-    ...[taskHooks.prebundle],
-    "bundle"
-  ].filter(t => t !== []);
+  const buildTasks = ["merge", ...precompile, "compile", "bundle"];
 
   gulp.task("build", gulp.series(...buildTasks));
 

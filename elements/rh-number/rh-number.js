@@ -1210,7 +1210,7 @@ const types = {
   percent: "0%",
   bytes: "0[.][00] ib",
   e: "0[.00]e+0",
-  thousands: "0,0[.00]"
+  thousands: "0,0[.][00]"
 };
 
 // use thin spaces to separate thousands chunks
@@ -1257,6 +1257,7 @@ class RhNumber extends RHElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
+    super.attributeChangedCallback(...arguments);
     switch (attr) {
       case "type":
         this._determineFormat();

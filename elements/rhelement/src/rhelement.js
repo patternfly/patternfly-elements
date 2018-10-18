@@ -59,6 +59,7 @@ class RHElement extends HTMLElement {
   constructor(rhClass, { type = null, delayRender = false } = {}) {
     super();
 
+    this.connected = false;
     this._rhClass = rhClass;
     this.tag = rhClass.tag;
     this._queue = [];
@@ -82,6 +83,8 @@ class RHElement extends HTMLElement {
   }
 
   connectedCallback() {
+    this.connected = true;
+
     if (window.ShadyCSS) {
       window.ShadyCSS.styleElement(this);
     }
@@ -91,6 +94,10 @@ class RHElement extends HTMLElement {
     if (this._queue.length) {
       this._processQueue();
     }
+  }
+
+  disconnectedCallback() {
+    this.connected = false;
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {

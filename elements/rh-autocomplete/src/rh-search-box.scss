@@ -1,0 +1,88 @@
+@import "../rh-sass/rh-sass";
+
+:host {
+  position: relative;
+  display:flex;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+input {
+  width: 100%;
+  flex: 1;
+  box-shadow: inset 0 1px 0px rgba(0,0,0,0.075) !important;
+  padding-left: 5px;
+  border-radius: 0;
+  background: #fff;
+  border: 1px solid #d1d1d1;
+  border-right: none;
+  font-size: 16px; /*1rem*/
+  line-height: 24px; /*1.5rem*/
+  height: 35px;
+  margin: 0px;
+  transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+}
+
+input:focus,
+input:focus ~ button.search-button {
+  border-color: #66afe9;
+  outline: 0;
+}
+
+input[type="search"],
+button {
+  -webkit-appearance: none;
+}
+
+input[type="search"]::-ms-clear {
+  display: none;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance:none
+}
+
+button.clear-search {
+  font-size: 27px;
+  color: #cccccc;
+  background-color: #fff;
+  font-weight: 600;
+  border: none;
+  line-height: 20px;
+  position: absolute;
+  right: 50px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0px;
+  margin: 0px;
+}
+
+button.clear-search:hover {
+  opacity: 1;
+  color: #06c;
+}
+
+button.search-button {
+  box-shadow: inset 0 1px 0px rgba(0,0,0,0.075);
+  background-color: #fff;
+  border-color: #0076e0;
+  color: #06c;
+  border: 1px solid #d1d1d1;
+  border-left: none;
+  margin: 0px;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+button[disabled="true"] {
+  color: #ccc;
+}

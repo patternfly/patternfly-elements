@@ -1,0 +1,50 @@
+@import "../rh-sass/rh-sass";
+
+:host {
+  position: relative;
+  display: none;
+}
+
+:host([open]) {
+  display: block;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+ul {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0px;
+  right: 0px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  z-index: 9999;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  cursor: pointer;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+ul li.active {
+    background-color: #f0f0f0;
+}
+
+ul li {
+    display: list-item;
+    cursor: pointer;
+    padding: 7px 10px;
+    margin: 2px 0px 2px 0px;
+}

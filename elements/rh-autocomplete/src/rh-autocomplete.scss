@@ -1,0 +1,8 @@
+@import "../../rh-sass/rh-sass";
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}

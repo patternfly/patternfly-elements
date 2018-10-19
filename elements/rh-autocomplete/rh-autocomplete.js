@@ -64,6 +64,7 @@ class RhAutocomplete extends RHElement {
 
     this._inputBox = this.shadowRoot.querySelector("#input-box");
     this._inputBox.value = this.initValue;
+    this._inputBox.debounce = this.debounce || 500;
 
     this._dropdown = this.shadowRoot.querySelector("#dropdown");
     this._dropdown.data = [];
@@ -98,16 +99,20 @@ class RhAutocomplete extends RHElement {
     );
   }
 
-  static get observedAttributes() {
-    return ["init-value"];
-  }
-
   get initValue() {
     return this.getAttribute("init-value");
   }
 
   set initValue(val) {
     this.setAttribute("init-value", val);
+  }
+
+  get debounce() {
+    return this.getAttribute("debounce");
+  }
+
+  set debounce(val) {
+    this.setAttribute("debounce", val);
   }
 
   _closeDroplist() {
@@ -217,6 +222,7 @@ class RhAutocomplete extends RHElement {
 * - Attributes ------------------------------------
 * value     | input box value
 * aria-open | A list is attached to input box. Use this attribute to set
+* debounce  | debounce value for firing rh-input-change-event event
               aria-autocomplete="list" and aria-haspopup="true" on input box
 
 * - Events ----------------------------------------
@@ -389,6 +395,14 @@ button[disabled="true"] {
     }
   }
 
+  get debounce() {
+    return this.getAttribute("debounce");
+  }
+
+  set debounce(val) {
+    this.setAttribute("debounce", val);
+  }
+
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback();
 
@@ -428,6 +442,7 @@ button[disabled="true"] {
 
     if (throttle === false) {
       throttle = true;
+
       window.setTimeout(() => {
         this.dispatchEvent(
           new CustomEvent("rh-input-change-event", {
@@ -438,7 +453,7 @@ button[disabled="true"] {
         );
 
         throttle = false;
-      }, 500);
+      }, parseInt(this.debounce, 10) || 500);
     }
   }
 

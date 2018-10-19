@@ -17,7 +17,7 @@
     <script>require(['../rh-autocomplete.umd.js'])</script>
   </head>
   <body unresolved>
-    <rh-autocomplete id="search-lazy-loading" init-value="uni"></rh-autocomplete>
+    <rh-autocomplete id="search-lazy-loading" init-value="uni" debounce="500"></rh-autocomplete>
     <script>
       const searchAutocomplete = document.querySelector('#search-lazy-loading');
 
@@ -26,6 +26,9 @@
 
         xhr.onload = function() {
           const response = JSON.parse(xhr.responseText);
+
+          if(response.status === 404) return;
+
           const regx =  new RegExp("\^" + params.query, "i");
 
           let responseReady = response.reduce(function(acc, item) {

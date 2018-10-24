@@ -117,12 +117,17 @@ class RhAutocomplete extends RHElement {
 
   _closeDroplist() {
     this._dropdown.open = null;
-    this._inputBox.setAttribute("aria-open", "");
+
+    this._dropdown.removeAttribute("active-index");
+    this._inputBox.removeAttribute("active-index");
   }
 
   _openDroplist() {
     this._dropdown.setAttribute("open", true);
-    this._inputBox.setAttribute("aria-open", true);
+
+    this._dropdown.setAttribute("active-index", 0);
+    this._inputBox.setAttribute("active-index", 0);
+    console.log("hello");
   }
 
   _optionSelected(e) {
@@ -215,15 +220,15 @@ class RhAutocomplete extends RHElement {
     }
 
     this._dropdown.activeIndex = activeIndex;
+    this._inputBox.activeIndex = activeIndex;
   }
 }
 
 /*
 * - Attributes ------------------------------------
-* value     | input box value
-* aria-open | A list is attached to input box. Use this attribute to set
-* debounce  | debounce value for firing rh-input-change-event event
-              aria-autocomplete="list" and aria-haspopup="true" on input box
+* value        | input box value
+* active-index | Set selected option
+* debounce     | debounce value for firing rh-input-change-event event
 
 * - Events ----------------------------------------
 * rh-input-change-event | Fires when user type in input box
@@ -311,21 +316,23 @@ button.search-button {
 button[disabled="true"] {
   color: #ccc; }
 </style>
-<label for="keywordInputx" class="sr-only">Keyword</label>
-  <input placeholder="Enter Your Search Term"
-    role="search"
-    type="search"
-    autocomplete="off"
-    autocorrect="off"
-    autocapitalize="off"
-    spellcheck="false"
-    class="form-control"/>
-  <button type="button" class="clear-search" aria-label="clear search query">
-    &times;
-  </button>
-  <button class="search-button" type="button" aria-label="Search">
-      <span class="web-icon-search" aria-hidden="true" title="Search">Search</span>
-  </button>`;
+<input placeholder="Enter Your Search Term"
+  role="combobox"
+  aria-label="Search"
+  aria-autocomplete="both"
+  aria-haspopup="true"
+  type="search"
+  autocomplete="off"
+  autocorrect="off"
+  autocapitalize="off"
+  spellcheck="false"
+  class="form-control"/>
+<button type="button" class="clear-search" aria-label="clear search query">
+  &times;
+</button>
+<button class="search-button" type="button" aria-label="Search">
+    <span class="web-icon-search" aria-hidden="true" title="Search">Search</span>
+</button>`;
   }
 
   static get tag() {
@@ -370,7 +377,7 @@ button[disabled="true"] {
   }
 
   static get observedAttributes() {
-    return ["value", "aria-open"];
+    return ["value", "active-index"];
   }
 
   get value() {
@@ -381,18 +388,12 @@ button[disabled="true"] {
     this.setAttribute("value", val);
   }
 
-  get ariaOpen() {
-    return this.hasAttribute("aria-open");
+  get activeIndex() {
+    return parseInt(this.getAttribute("active-index"), 10);
   }
 
-  set ariaOpen(val) {
-    val = Boolean(val);
-
-    if (val) {
-      this.setAttribute("aria-open", "");
-    } else {
-      this.removeAttribute("aria-open");
-    }
+  set activeIndex(val) {
+    this.setAttribute("active-index", val);
   }
 
   get debounce() {
@@ -417,13 +418,12 @@ button[disabled="true"] {
       }
     }
 
-    if (attr === "aria-open") {
+    if (attr === "active-index") {
       if (newVal) {
-        this._input.setAttribute("aria-autocomplete", "list");
-        this._input.setAttribute("aria-haspopup", true);
+        // add aria-activedescendant on input box
+        this._input.setAttribute("aria-activedescendant", "option-" + newVal);
       } else {
-        this._input.removeAttribute("aria-autocomplete", "");
-        this._input.removeAttribute("aria-haspopup", "");
+        this._input.setAttribute("aria-activedescendant", "");
       }
     }
   }
@@ -479,7 +479,6 @@ button[disabled="true"] {
 * - Attributes ------------------------------------
 * open               | Set when the combo box dropdown is open
 * active-index       | Set selected option
-* loading            | Set when new items are expected
 * reflow             | Re-renders the dropdown
 
 * - Events ----------------------------------------
@@ -533,8 +532,8 @@ ul li {
   padding: 7px 10px;
   margin: 2px 0px 2px 0px; }
 </style>
-<div class="suggestions-aria-help sr-only" role="status" aria-activedescendant="option-0"></div>
-<ul role="listbox" tabindex="-1">
+<div class="suggestions-aria-help sr-only" aria-hidden="false" role="status"></div>
+<ul role="listbox" tabindex="-1" id="results">
 </ul>`;
   }
 
@@ -622,12 +621,6 @@ ul li {
 
   _activeIndexChanged() {
     if (isNaN(this.activeIndex) || this.data.length === 0) return;
-
-    // add aria-activedescendant
-    this._ul.setAttribute(
-      "aria-activedescendant",
-      "option-" + this.activeIndex
-    );
 
     // remove active class
     this._ul.querySelector(".active").classList.remove("active");

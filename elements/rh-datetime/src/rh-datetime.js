@@ -72,8 +72,26 @@ class RhDatetime extends RHElement {
     this._type = val;
   }
 
+  get timestamp() {
+    return this._timestamp;
+  }
+
+  set timestamp(val) {
+    if (this._timestamp === val) {
+      return;
+    }
+
+    this._timestamp = val;
+
+    /* Convert timestamp to datetime and store */
+    this._datetime = new Date(val * 1000);
+    this.shadowRoot.querySelector("span").innerText = window.Intl
+      ? this._getTypeString()
+      : val;
+  }
+
   static get observedAttributes() {
-    return ["datetime", "type"];
+    return ["datetime", "type", "timestamp"];
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {

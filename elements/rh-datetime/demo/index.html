@@ -19,8 +19,8 @@
         relative3.setAttribute('datetime', new Date(Date.now() + 200000000).toString());
 
         function timer() {
-          realtime.setAttribute('datetime', new Date());
-          window.requestAnimationFrame(timer);
+         realtime.setAttribute('datetime', new Date());
+         window.requestAnimationFrame(timer);
         }
 
         window.requestAnimationFrame(timer);
@@ -51,6 +51,17 @@
           month="long"
           year="numeric">
           Mon Jan 2 15:04:05 EST 2006
+        </rh-datetime>
+      </p>
+      <p>
+        <strong>Just date (unix timestamp):</strong>
+        <rh-datetime
+          timestamp="1540575650"
+          type="local"
+          day="numeric"
+          month="long"
+          year="numeric">
+          1540575650
         </rh-datetime>
       </p>
       <p>

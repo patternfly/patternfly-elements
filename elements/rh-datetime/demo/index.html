@@ -19,8 +19,8 @@
         relative3.setAttribute('datetime', new Date(Date.now() + 200000000).toString());
 
         function timer() {
-         realtime.setAttribute('datetime', new Date());
-         window.requestAnimationFrame(timer);
+          realtime.setAttribute('datetime', new Date());
+          window.requestAnimationFrame(timer);
         }
 
         window.requestAnimationFrame(timer);

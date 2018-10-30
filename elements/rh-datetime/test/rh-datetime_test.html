@@ -84,6 +84,12 @@
       Mon Jan 2 15:04:05 EST 2006
     </rh-datetime>
 
+    <rh-datetime
+      id="simpleUnixtime"
+      timestamp="1136171045">
+      Mon Jan 2 15:04:05 EST 2006
+    </rh-datetime>
+
     <script>
       suite('<rh-datetime>', () => {
         test('it should upgrade', () => {
@@ -120,12 +126,22 @@
           const text = element.shadowRoot.querySelector('span').textContent;
 
           assert.match(text, /\d+ years ago/, "should show a relative time since the date");
-        })
+        });
+
+        test('unix timestamp should convert and display properly', () => {
+          const element = document.getElementById('yearsago');
+          const text = element.shadowRoot.querySelector('span').textContent;
+
+          assert.match(text, '1/2/2006', "should show a relative time since the date");
+        });
 
         test('it should show a formatted date with time for a different locale', () => {
+          const element = document.getElementById('esLocale');
+          const text = element.shadowRoot.querySelector('span').textContent;
 
+          assert.match(text, 'Monday, 02 Jan 2006, 15:04:05', "should show a (locally) formatted date with time");
         });
-      });
+      })
     </script>
   </body>
 </html>

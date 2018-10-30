@@ -21,6 +21,7 @@
     <script>
       const searchAutocomplete = document.querySelector('#search-lazy-loading');
 
+      // autocomplete call
       searchAutocomplete.autocompleteRequest = function(params, callback) {
         var xhr = new XMLHttpRequest();
 
@@ -39,13 +40,14 @@
           callback(responseReady);
         };
 
-        const url = 'https://restcountries.eu/rest/v2/name/' +
-                    params.query;
+        const url = 'https://restcountries.eu/rest/v2/name/' + params.query;
 
         xhr.open('GET', url, true);
         xhr.send();
       };
 
+      // when user performs search, this event is fired
+      // search phrase is passed to e.detail.searchValue
       searchAutocomplete.addEventListener('rh-search-event', function(e) {
         console.log('do search= ' + e.detail.searchValue);
       });

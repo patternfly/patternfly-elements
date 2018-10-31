@@ -36,7 +36,7 @@ class RhHealthIndex extends RHElement {
 .box-container {
   display: flex;
   border: 1px solid var(--rh-theme--color--surface--border, #dfdfdf);
-  margin-left: var(--rh-theme--container-spacer--xs, ); }
+  margin-left: calc(var(--rh-theme--container-spacer, 1rem) * 0.5); }
   .box-container .box {
     background: #fff;
     width: 10px;

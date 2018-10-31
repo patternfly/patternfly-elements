@@ -69,7 +69,7 @@ class RhCta extends RHElement {
     padding: calc(var(--rh-theme--container-padding, 1rem) * 0.5) calc(var(--rh-theme--container-padding, 1rem) * 2);
     border-radius: calc(var(--rh-theme--ui--border-radius, 2px) * 20);
     border: var(--rh-theme--ui--border-width, 1px) var(--rh-theme--ui--border-style, solid) transparent;
-    text-decoration: none;
+    text-decoration: none !important;
     line-height: 1.2;
     border-color: var(--rh-cta--main) !important;
     background: var(--rh-cta--main) !important;
@@ -92,7 +92,7 @@ class RhCta extends RHElement {
     padding: calc(var(--rh-theme--container-padding, 1rem) * 0.5) calc(var(--rh-theme--container-padding, 1rem) * 2);
     border-radius: calc(var(--rh-theme--ui--border-radius, 2px) * 20);
     border: var(--rh-theme--ui--border-width, 1px) var(--rh-theme--ui--border-style, solid) var(--rh-cta--main);
-    text-decoration: none;
+    text-decoration: none !important;
     line-height: 1.2;
     border-color: var(--rh-cta--main) !important;
     background: var(--rh-cta--aux) !important;

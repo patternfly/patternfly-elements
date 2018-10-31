@@ -72,7 +72,7 @@ $rh-cta__arrow-size:                        0.313em;
     padding: calc(#{rh-var(container-padding)} * 0.5) calc(#{rh-var(container-padding)} * 2);
     border-radius: calc(#{rh-var(ui--border-radius)} * 20);
     border: #{rh-var(ui--border-width)} #{rh-var(ui--border-style)} transparent;
-    text-decoration: none;
+    text-decoration: none !important;
     line-height: 1.2;
 
     border-color: var(--rh-cta--main) !important;
@@ -106,7 +106,7 @@ $rh-cta__arrow-size:                        0.313em;
     padding: calc(#{rh-var(container-padding)} * 0.5) calc(#{rh-var(container-padding)} * 2);
     border-radius: calc(#{rh-var(ui--border-radius)} * 20);
     border: #{rh-var(ui--border-width)} #{rh-var(ui--border-style)} var(--rh-cta--main);
-    text-decoration: none;
+    text-decoration: none !important;
     line-height: 1.2;
 
     border-color: var(--rh-cta--main) !important;

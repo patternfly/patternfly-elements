@@ -28,7 +28,7 @@ body {
   line-height: var(--rh-theme--line-height);
 }
 
-a:link {
+a {
   color: var(--rh-broadcasted--color--ui-link, #{map-get($cp-colors, 'ui-link')});
 }
 

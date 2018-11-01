@@ -129,7 +129,7 @@ body {
   font-size: var(--rh-theme--font-size);
   line-height: var(--rh-theme--line-height); }
 
-a:link {
+a {
   color: var(--rh-broadcasted--color--ui-link, #06c); }
 
 a:visited {

@@ -72,11 +72,7 @@ class RhDatetime extends RHElement {
     }
 
     this._timestamp = val;
-
-    /* Get local timezone offset */
-    let offset = new Date().getTimezoneOffset() * 60 * 1000;
-
-    this.setDate(new Date(val * 1000 + offset));
+    this.setDate(new Date(val * 1000));
   }
 
   get datetime() {

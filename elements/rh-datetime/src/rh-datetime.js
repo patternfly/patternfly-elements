@@ -41,6 +41,31 @@ class RhDatetime extends RHElement {
     this.type = this.getAttribute("type") || "local";
   }
 
+  get type() {
+    return this._type;
+  }
+
+  set type(val) {
+    if (this._type === val) {
+      return;
+    }
+
+    this._type = val;
+  }
+
+  get timestamp() {
+    return this._timestamp;
+  }
+
+  set timestamp(val) {
+    if (this._timestamp === val) {
+      return;
+    }
+
+    this._timestamp = val;
+    this.setDate(new Date(val * 1000));
+  }
+
   get datetime() {
     return this._datetime;
   }
@@ -54,30 +79,22 @@ class RhDatetime extends RHElement {
       return;
     }
 
-    this._datetime = Date.parse(val);
-    this.shadowRoot.querySelector("span").innerText = window.Intl
-      ? this._getTypeString()
-      : val;
-  }
-
-  get type() {
-    return this._type;
-  }
-
-  set type(val) {
-    if (this._type === val) {
-      return;
-    }
-
-    this._type = val;
+    this.setDate(Date.parse(val));
   }
 
   static get observedAttributes() {
-    return ["datetime", "type"];
+    return ["datetime", "type", "timestamp"];
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
     this[attr] = newVal;
+  }
+
+  setDate(date) {
+    this._datetime = date;
+    this.shadowRoot.querySelector("span").innerText = window.Intl
+      ? this._getTypeString()
+      : date.toLocaleString();
   }
 
   _getOptions() {

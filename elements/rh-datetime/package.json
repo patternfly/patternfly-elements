@@ -4,7 +4,7 @@
     "className": "RhDatetime",
     "elementName": "rh-datetime"
   },
-  "version": "1.0.0-prerelease.6",
+  "version": "1.0.0-prerelease.7",
   "publishConfig": {
     "access": "public"
   },
@@ -24,7 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rhelements/rhelement": "^1.0.0-prerelease.6"
+    "@rhelements/rhelement": "^1.0.0-prerelease.7"
   },
   "generator-rhelement-version": "0.2.8",
   "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"

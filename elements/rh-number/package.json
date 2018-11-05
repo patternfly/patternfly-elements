@@ -4,7 +4,7 @@
     "className": "RhNumber",
     "elementName": "rh-number"
   },
-  "version": "1.0.0-prerelease.6",
+  "version": "1.0.0-prerelease.7",
   "publishConfig": {
     "access": "public"
   },
@@ -24,7 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rhelements/rhelement": "^1.0.0-prerelease.6",
+    "@rhelements/rhelement": "^1.0.0-prerelease.7",
     "numeral": "^2.0.6"
   },
   "generator-rhelement-version": "0.2.9",

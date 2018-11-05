@@ -4,7 +4,7 @@
     "className": "RhCta",
     "elementName": "rh-cta"
   },
-  "version": "1.0.0-prerelease.6",
+  "version": "1.0.0-prerelease.7",
   "publishConfig": {
     "access": "public"
   },
@@ -24,8 +24,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rhelements/rh-sass": "^1.0.0-prerelease.6",
-    "@rhelements/rhelement": "^1.0.0-prerelease.6"
+    "@rhelements/rh-sass": "^1.0.0-prerelease.7",
+    "@rhelements/rhelement": "^1.0.0-prerelease.7"
   },
   "generator-rhelement-version": "0.5.0",
   "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"

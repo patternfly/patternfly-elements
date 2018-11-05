@@ -1,3 +1,5 @@
+import RHElement from "../rhelement/rhelement.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -20,8 +22,6 @@
  * SOFTWARE.
  */
 
-import RHElement from "../rhelement/rhelement.js";
-
 class RhHealthIndex extends RHElement {
   get html() {
     return `
@@ -36,7 +36,7 @@ class RhHealthIndex extends RHElement {
 .box-container {
   display: flex;
   border: 1px solid var(--rh-theme--color--surface--border, #dfdfdf);
-  margin-left: var(--rh-theme--container-spacer--xs, ); }
+  margin-left: calc(var(--rh-theme--container-spacer, 1rem) * 0.5); }
   .box-container .box {
     background: #fff;
     width: 10px;
@@ -119,3 +119,4 @@ class RhHealthIndex extends RHElement {
 RHElement.create(RhHealthIndex);
 
 export default RhHealthIndex;
+//# sourceMappingURL=rh-health-index.js.map

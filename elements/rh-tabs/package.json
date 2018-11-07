@@ -4,7 +4,7 @@
     "className": "RhTabs",
     "elementName": "rh-tabs"
   },
-  "version": "0.0.1",
+  "version": "1.0.0-prerelease.7",
   "publishConfig": {
     "access": "public"
   },
@@ -24,8 +24,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rhelements/rh-sass": "^1.0.0-prerelease.3",
-    "@rhelements/rhelement": "^1.0.0-prerelease.3"
+    "@rhelements/rh-sass": "^1.0.0-prerelease.7",
+    "@rhelements/rhelement": "^1.0.0-prerelease.7"
   },
-  "generator-rhelement-version": "0.5.4"
+  "generator-rhelement-version": "0.5.4",
+  "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
 }

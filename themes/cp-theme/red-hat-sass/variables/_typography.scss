@@ -29,21 +29,21 @@ $rh-global--FontFamily--monospace:     "Overpass Mono", Consolas, Monaco, 'Andal
 // ========================================================================
 
 // Heading sizes for Apps
-$rh-global--FontSize--heading--xxl:     rh-size-prem(32px) !default;
-$rh-global--FontSize--heading--xl:      rh-size-prem(28px) !default;
-$rh-global--FontSize--heading--lg:      rh-size-prem(24px) !default;
-$rh-global--FontSize--heading--md:      rh-size-prem(20px) !default;
-$rh-global--FontSize--heading--sm:      rh-size-prem(18px) !default;
-$rh-global--FontSize--heading--xs:      rh-size-prem(16px) !default;
-$rh-global--FontSize--heading--xxs:     rh-size-prem(14px) !default;
-
-
-// ========================================================================
-// Icons Sizes
-// ========================================================================
-
-$rh-global--icon-size--xl:              rh-size-prem(64px) !default;
-$rh-global--icon-size--lg:              rh-size-prem(48px) !default;
-$rh-global--icon-size--md:              rh-size-prem(32px) !default;
-$rh-global--icon-size--sm:              rh-size-prem(16px) !default;
-$rh-global--icon-size--xs:              rh-size-prem(14px) !default;
+$rh-global--FontSize--heading--xxl:     rh-size-prem($rh-global--font-size-root * 2)    !default;  // 32px 
+$rh-global--FontSize--heading--xl:      rh-size-prem($rh-global--font-size-root * 1.75) !default;  // 28px
+$rh-global--FontSize--heading--lg:      rh-size-prem($rh-global--font-size-root * 1.5)  !default;  // 24px
+$rh-global--FontSize--heading--md:      rh-size-prem($rh-global--font-size-root * 1.25) !default;  // 20px
+$rh-global--FontSize--heading--sm:      rh-size-prem($rh-global--font-size-root * 1.125)!default;  // 18px
+$rh-global--FontSize--heading--xs:      rh-size-prem($rh-global--font-size-root * 1)    !default;  // 16px
+$rh-global--FontSize--heading--xxs:     rh-size-prem($rh-global--font-size-root * 0.875)!default;  // 14px
+ 
+ 
+// ======================================================================== 
+// Icons Sizes 
+// ======================================================================== 
+ 
+$rh-global--icon-size--xl:              rh-size-prem($rh-global--font-size-root * 4)    !default;  // 64px 
+$rh-global--icon-size--lg:              rh-size-prem($rh-global--font-size-root * 3)    !default;  // 48px 
+$rh-global--icon-size--md:              rh-size-prem($rh-global--font-size-root * 2)    !default;  // 32px 
+$rh-global--icon-size--sm:              rh-size-prem($rh-global--font-size-root * 1)    !default;  // 16px
+$rh-global--icon-size--xs:              rh-size-prem($rh-global--font-size-root * 0.875)!default;  // 14px

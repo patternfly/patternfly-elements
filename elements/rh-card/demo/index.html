@@ -27,7 +27,6 @@
     require( [
       '../../../themes/cp-theme/cp-theme.umd.js',
       '../../rh-cta/rh-cta.umd.js',
-      '../../rh-cta/rh-card-header.umd.js',
       '../rh-card.umd.js'
     ] );
 
@@ -60,11 +59,7 @@
   <div class="demo-cards">
 
     <rh-card color="lightest">
-      <div slot="header">
-        <rh-card-header>
-          <a href="#">Lightest card</a>
-        </rh-card-header>
-      </div>
+      <h2 slot="header">Lightest card</h2>
       <p>This is the lightest rh-card and <a href="#">a link</a> using the rh-card-header component.</p>
       <div slot="footer">
         <rh-cta priority="primary"><a href="#">Learn more</a></rh-cta>

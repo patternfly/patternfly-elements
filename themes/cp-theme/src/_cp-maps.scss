@@ -66,6 +66,14 @@ $cp-colors: (
   surface--lightest--link--hover:     $rh-global--link-color--hover,
   surface--lightest--link--focus:     $rh-global--link-color--focus,
 
+  // Lightest harmony color
+  surface--lightest--harmony:                  $rh-global--color--gray-iron,
+  surface--lightest--harmony--text:            $rh-global--color--white,
+  surface--lightest--harmony--link:            $rh-global--link-color,
+  surface--lightest--harmony--link--visited:   $rh-global--link-color--visited,
+  surface--lightest--harmony--link--hover:     $rh-global--link-color--hover,
+  surface--lightest--harmony--link--focus:     $rh-global--link-color--focus,
+
   // Lighter group
   surface--lighter:                   $rh-global--color--gray-moon,
   surface--lighter--text:             $rh-global--text-color,
@@ -73,6 +81,14 @@ $cp-colors: (
   surface--lighter--link--visited:    $rh-global--link-color--visited,
   surface--lighter--link--hover:      $rh-global--link-color--hover,
   surface--lighter--link--focus:      $rh-global--link-color--focus,
+
+  // Lighter harmony color
+  surface--lighter--harmony:                  $rh-global--color--gray-iron,
+  surface--lighter--harmony--text:            $rh-global--color--white,
+  surface--lighter--harmony--link:            $rh-global--link-color,
+  surface--lighter--harmony--link--visited:   $rh-global--link-color--visited,
+  surface--lighter--harmony--link--hover:     $rh-global--link-color--hover,
+  surface--lighter--harmony--link--focus:     $rh-global--link-color--focus,
 
   // Base group
   surface--base:                      $rh-global--color--gray-mercury,
@@ -82,6 +98,14 @@ $cp-colors: (
   surface--base--link--hover:         $rh-global--link-color--hover,
   surface--base--link--focus:         $rh-global--link-color--focus,
 
+  // Base harmony color
+  surface--base--harmony:                  $rh-global--color--gray-iron,
+  surface--base--harmony--text:            $rh-global--color--white,
+  surface--base--harmony--link:            $rh-global--link-color,
+  surface--base--harmony--link--visited:   $rh-global--link-color--visited,
+  surface--base--harmony--link--hover:     $rh-global--link-color--hover,
+  surface--base--harmony--link--focus:     $rh-global--link-color--focus,
+
   // Darker group
   surface--darker:                    $rh-global--color--gray-iron,
   surface--darker--text:              $rh-global--text-color--inverted,
@@ -89,6 +113,14 @@ $cp-colors: (
   surface--darker--link--visited:     $rh-global--link-color--inverted--visited,
   surface--darker--link--hover:       $rh-global--link-color--inverted--hover,
   surface--darker--link--focus:       $rh-global--link-color--inverted--focus,
+
+  // Darker harmony color
+  surface--darker--harmony:                  $rh-global--color--gray-iron,
+  surface--darker--harmony--text:            $rh-global--color--white,
+  surface--darker--harmony--link:            $rh-global--link-color,
+  surface--darker--harmony--link--visited:   $rh-global--link-color--visited,
+  surface--darker--harmony--link--hover:     $rh-global--link-color--hover,
+  surface--darker--harmony--link--focus:     $rh-global--link-color--focus,
 
   // Darkest group
   surface--darkest:                   $rh-global--color--black-nero,
@@ -98,6 +130,14 @@ $cp-colors: (
   surface--darkest--link--hover:      $rh-global--link-color--inverted--hover,
   surface--darkest--link--focus:      $rh-global--link-color--inverted--focus,
 
+  // Darkest harmony color
+  surface--darkest--harmony:                  $rh-global--color--gray-iron,
+  surface--darkest--harmony--text:            $rh-global--color--white,
+  surface--darkest--harmony--link:            $rh-global--link-color,
+  surface--darkest--harmony--link--visited:   $rh-global--link-color--visited,
+  surface--darkest--harmony--link--hover:     $rh-global--link-color--hover,
+  surface--darkest--harmony--link--focus:     $rh-global--link-color--focus,
+
   // Complement group
   surface--complement:                $rh-global--color--blue-rain,
   surface--complement--text:          $rh-global--text-color--inverted,
@@ -106,6 +146,13 @@ $cp-colors: (
   surface--complement--link--hover:   darken($rh-global--text-color--inverted, 10%),
   surface--complement--link--focus:   darken($rh-global--text-color--inverted, 10%),
 
+  // Complement harmony color
+  surface--complement--harmony:                  $rh-global--color--gray-iron,
+  surface--complement--harmony--text:            $rh-global--color--white,
+  surface--complement--harmony--link:            $rh-global--link-color,
+  surface--complement--harmony--link--visited:   $rh-global--link-color--visited,
+  surface--complement--harmony--link--hover:     $rh-global--link-color--hover,
+  surface--complement--harmony--link--focus:     $rh-global--link-color--focus,
 
   // Accent group
   surface--accent:                    $rh-global--color--red,
@@ -115,6 +162,13 @@ $cp-colors: (
   surface--accent--link--hover:       darken($rh-global--text-color--inverted, 10%),
   surface--accent--link--focus:       darken($rh-global--text-color--inverted, 10%),
 
+  // Accent harmony color
+  surface--accent--harmony:                  $rh-global--color--gray-iron,
+  surface--accent--harmony--text:            $rh-global--color--white,
+  surface--accent--harmony--link:            $rh-global--link-color,
+  surface--accent--harmony--link--visited:   $rh-global--link-color--visited,
+  surface--accent--harmony--link--hover:     $rh-global--link-color--hover,
+  surface--accent--harmony--link--focus:     $rh-global--link-color--focus,
 
   /* Palette of Border Colors */
   surface--border:                    $rh-global--border--BorderColor,
@@ -166,11 +220,22 @@ $cp-vars: (
   font-family--code:             '"Overpass Mono", Consolas, Monaco, 'Andale Mono', monospace',
 
   font-size--heading--alpha:     $rh-global--FontSize--heading--xxl,
+  font-weight--heading--alpha:   $rh-global--FontWeight--bold,
+
   font-size--heading--beta:      $rh-global--FontSize--heading--xl,
+  font-weight--heading--beta:    $rh-global--FontWeight--bold,
+
   font-size--heading--gamma:     $rh-global--FontSize--heading--lg,
+  font-weight--heading--gamma:   $rh-global--FontWeight--bold,
+
   font-size--heading--delta:     $rh-global--FontSize--heading--md,
+  font-weight--heading--delta:   $rh-global--FontWeight--semi-bold,
+
   font-size--heading--epsilon:   $rh-global--FontSize--heading--sm,
+  font-weight--heading--epsilon: $rh-global--FontWeight--semi-bold,
+
   font-size--heading--zeta:      $rh-global--FontSize--heading--xs,
+  font-weight--heading--zeta:    $rh-global--FontWeight--semi-bold,
 
   link--text-decoration:         underline,
   link--text-decoration--hover:  underline,

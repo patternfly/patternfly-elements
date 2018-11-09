@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../rh-card-header.js"></script>
+  </head>
+  <body>
+
+    <rh-card-header>
+      This is the element content.
+    </rh-card-header>
+
+    <script>
+      suite('<rh-card-header>', () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(document.querySelector('rh-card-header'), customElements.get("rh-card-header", 'rh-card-header should be an instance of rhCardHeader'));
+        });
+
+        // you need to write more tests!!!
+
+      });
+    </script>
+  </body>
+</html>

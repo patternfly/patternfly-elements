@@ -6,3 +6,4 @@ lerna-debug.log
 npm-debug.log
 test/.wct-kludge
 .sass-cache
+.DS_Store

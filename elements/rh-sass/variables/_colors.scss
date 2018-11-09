@@ -75,6 +75,14 @@ $rh-color--surface--lightest--link--visited:   $rh-color--ui-link--visited !defa
 $rh-color--surface--lightest--link--hover:     $rh-color--ui-link--hover !default;
 $rh-color--surface--lightest--link--focus:     $rh-color--ui-link--focus !default;
 
+// Lightest Harmony group
+$rh-color--surface--lightest--harmony:                  darken($rh-color--surface--lightest, 10%);
+$rh-color--surface--lightest--harmony--text:            $rh-color--text !default;
+$rh-color--surface--lightest--harmony--link:            $rh-color--text !default;
+$rh-color--surface--lightest--harmony--link--visited:   $rh-color--ui-link--visited !default;
+$rh-color--surface--lightest--harmony--link--hover:     $rh-color--ui-link--hover !default;
+$rh-color--surface--lightest--harmony--link--focus:     $rh-color--ui-link--focus !default;
+
 // Lighter group
 $rh-color--surface--lighter:                   $rh-color--gray-100 !default;
 $rh-color--surface--lighter--text:             $rh-color--text !default;
@@ -82,6 +90,14 @@ $rh-color--surface--lighter--link:             $rh-color--ui-link !default;
 $rh-color--surface--lighter--link--visited:    $rh-color--ui-link--visited !default;
 $rh-color--surface--lighter--link--hover:      $rh-color--ui-link--hover !default;
 $rh-color--surface--lighter--link--focus:      $rh-color--ui-link--focus !default;
+
+// Lighter Harmony group
+$rh-color--surface--lighter--harmony:                  darken($rh-color--surface--lighter, 10%);
+$rh-color--surface--lighter--harmony--text:            $rh-color--text !default;
+$rh-color--surface--lighter--harmony--link:            $rh-color--text !default;
+$rh-color--surface--lighter--harmony--link--visited:   $rh-color--ui-link--visited !default;
+$rh-color--surface--lighter--harmony--link--hover:     $rh-color--ui-link--hover !default;
+$rh-color--surface--lighter--harmony--link--focus:     $rh-color--ui-link--focus !default;
 
 // Base group
 $rh-color--surface--base:                      $rh-color--gray-200 !default;
@@ -91,6 +107,14 @@ $rh-color--surface--base--link--visited:       #7551a6 !default;
 $rh-color--surface--base--link--hover:         #00305b !default;
 $rh-color--surface--base--link--focus:         #00305b !default;
 
+// Base Harmony group
+$rh-color--surface--base--harmony:                  darken($rh-color--surface--base, 10%);
+$rh-color--surface--base--harmony--text:            $rh-color--text--on-dark !default;
+$rh-color--surface--base--harmony--link:            $rh-color--text--on-dark !default;
+$rh-color--surface--base--harmony--link--visited:   $rh-color--ui-link--on-dark--visited !default;
+$rh-color--surface--base--harmony--link--hover:     $rh-color--ui-link--on-dark--hover !default;
+$rh-color--surface--base--harmony--link--focus:     $rh-color--ui-link--on-dark--focus !default;
+
 // Darker group
 $rh-color--surface--darker:                    $rh-color--gray-800 !default;
 $rh-color--surface--darker--text:              $rh-color--text--on-dark !default;
@@ -98,6 +122,14 @@ $rh-color--surface--darker--link:              $rh-color--ui-link--on-dark !defa
 $rh-color--surface--darker--link--visited:     $rh-color--ui-link--on-dark--visited !default;
 $rh-color--surface--darker--link--hover:       $rh-color--ui-link--on-dark--hover !default;
 $rh-color--surface--darker--link--focus:       $rh-color--ui-link--on-dark--focus !default;
+
+// Darker Harmony group
+$rh-color--surface--darker--harmony:                  darken($rh-color--surface--darker, 10%);
+$rh-color--surface--darker--harmony--text:            $rh-color--text--on-dark !default;
+$rh-color--surface--darker--harmony--link:            $rh-color--text--on-dark !default;
+$rh-color--surface--darker--harmony--link--visited:   $rh-color--ui-link--on-dark--visited !default;
+$rh-color--surface--darker--harmony--link--hover:     $rh-color--ui-link--on-dark--hover !default;
+$rh-color--surface--darker--harmony--link--focus:     $rh-color--ui-link--on-dark--focus !default;
 
 // Darkest group
 $rh-color--surface--darkest:                   $rh-color--gray-1000 !default;
@@ -107,6 +139,14 @@ $rh-color--surface--darkest--link--visited:    $rh-color--ui-link--on-dark--visi
 $rh-color--surface--darkest--link--hover:      $rh-color--ui-link--on-dark--hover !default;
 $rh-color--surface--darkest--link--focus:      $rh-color--ui-link--on-dark--focus !default;
 
+// Darkest Harmony group
+$rh-color--surface--darkest--harmony:                  darken($rh-color--surface--darkest, 10%);
+$rh-color--surface--darkest--harmony--text:            $rh-color--text--on-dark !default;
+$rh-color--surface--darkest--harmony--link:            $rh-color--text--on-dark !default;
+$rh-color--surface--darkest--harmony--link--visited:   $rh-color--ui-link--on-dark--visited !default;
+$rh-color--surface--darkest--harmony--link--hover:     $rh-color--ui-link--on-dark--hover !default;
+$rh-color--surface--darkest--harmony--link--focus:     $rh-color--ui-link--on-dark--focus !default;
+
 // Complement group
 $rh-color--surface--complement:                $rhelements--blue;
 $rh-color--surface--complement--text:          $rh-color--text--on-dark !default;
@@ -115,6 +155,13 @@ $rh-color--surface--complement--link--visited: $rh-color--ui-link--on-dark--visi
 $rh-color--surface--complement--link--hover:   $rh-color--ui-link--on-dark--hover !default;
 $rh-color--surface--complement--link--focus:   $rh-color--ui-link--on-dark--focus !default;
 
+// Complement Harmony group
+$rh-color--surface--complement--harmony:                darken($rh-color--surface--complement, 10%);
+$rh-color--surface--complement--harmony--text:          $rh-color--text--on-dark !default;
+$rh-color--surface--complement--harmony--link:          $rh-color--ui-link--on-dark !default;
+$rh-color--surface--complement--harmony--link--visited: $rh-color--ui-link--on-dark--visited !default;
+$rh-color--surface--complement--harmony--link--hover:   $rh-color--ui-link--on-dark--hover !default;
+$rh-color--surface--complement--harmony--link--focus:   $rh-color--ui-link--on-dark--focus !default;
 
 // Accent group
 $rh-color--surface--accent:                    $rhelements--orange;
@@ -124,7 +171,13 @@ $rh-color--surface--accent--link--visited:     $rh-color--ui-link--on-dark--visi
 $rh-color--surface--accent--link--hover:       $rh-color--ui-link--on-dark--hover !default;
 $rh-color--surface--accent--link--focus:       $rh-color--ui-link--on-dark--focus !default;
 
-
+// Complement Harmony group
+$rh-color--surface--accent--harmony:                darken($rh-color--surface--accent, 10%);
+$rh-color--surface--accent--harmony--text:          $rh-color--text--on-dark !default;
+$rh-color--surface--accent--harmony--link:          $rh-color--ui-link--on-dark !default;
+$rh-color--surface--accent--harmony--link--visited: $rh-color--ui-link--on-dark--visited !default;
+$rh-color--surface--accent--harmony--link--hover:   $rh-color--ui-link--on-dark--hover !default;
+$rh-color--surface--accent--harmony--link--focus:   $rh-color--ui-link--on-dark--focus !default;
 
 /* Palette of Border Colors */
 $rh-color--surface--border:                    $rh-color--gray-200 !default;  // Was #ccc

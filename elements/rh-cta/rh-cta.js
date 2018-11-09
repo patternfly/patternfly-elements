@@ -33,6 +33,7 @@ class RhCta extends RHElement {
   --rh-cta--main--visited:            var(--rh-theme--color--ui-link--visited, rebeccapurple);
   --rh-cta--aux:                      transparent;
   --rh-cta--aux--hover:               transparent;
+  --rh-broadcasted--link--text-decoration:     none;
   display: inline-block;
   font-weight: bold; }
   :host ::slotted(a) {

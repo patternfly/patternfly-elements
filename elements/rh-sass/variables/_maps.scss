@@ -66,6 +66,14 @@ $rh-colors: (
   surface--lightest--link--hover:     $rh-color--surface--lightest--link--hover,
   surface--lightest--link--focus:     $rh-color--surface--lightest--link--focus,
 
+  // Lightest harmony color
+  surface--lightest--harmony:                  $rh-color--surface--lightest--harmony,
+  surface--lightest--harmony--text:            $rh-color--surface--lightest--harmony--text,
+  surface--lightest--harmony--link:            $rh-color--surface--lightest--harmony--link,
+  surface--lightest--harmony--link--visited:   $rh-color--surface--lightest--harmony--link--visited,
+  surface--lightest--harmony--link--hover:     $rh-color--surface--lightest--harmony--link--hover,
+  surface--lightest--harmony--link--focus:     $rh-color--surface--lightest--harmony--link--focus,
+
   // Lighter group
   surface--lighter:                   $rh-color--surface--lighter,
   surface--lighter--text:             $rh-color--surface--lighter--text,
@@ -73,6 +81,14 @@ $rh-colors: (
   surface--lighter--link--visited:    $rh-color--surface--lighter--link--visited,
   surface--lighter--link--hover:      $rh-color--surface--lighter--link--hover,
   surface--lighter--link--focus:      $rh-color--surface--lighter--link--focus,
+
+  // Lighter harmony color
+  surface--lighter--harmony:                  $rh-color--surface--lighter--harmony,
+  surface--lighter--harmony--text:            $rh-color--surface--lighter--harmony--text,
+  surface--lighter--harmony--link:            $rh-color--surface--lighter--harmony--link,
+  surface--lighter--harmony--link--visited:   $rh-color--surface--lighter--harmony--link--visited,
+  surface--lighter--harmony--link--hover:     $rh-color--surface--lighter--harmony--link--hover,
+  surface--lighter--harmony--link--focus:     $rh-color--surface--lighter--harmony--link--focus,
 
   // Base group
   surface--base:                      $rh-color--surface--base,
@@ -82,6 +98,14 @@ $rh-colors: (
   surface--base--link--hover:         $rh-color--surface--base--link--hover,
   surface--base--link--focus:         $rh-color--surface--base--link--focus,
 
+  // Base harmony color
+  surface--base--harmony:                  $rh-color--surface--base--harmony,
+  surface--base--harmony--text:            $rh-color--surface--base--harmony--text,
+  surface--base--harmony--link:            $rh-color--surface--base--harmony--link,
+  surface--base--harmony--link--visited:   $rh-color--surface--base--harmony--link--visited,
+  surface--base--harmony--link--hover:     $rh-color--surface--base--harmony--link--hover,
+  surface--base--harmony--link--focus:     $rh-color--surface--base--harmony--link--focus,
+
   // Darker group
   surface--darker:                    $rh-color--surface--darker,
   surface--darker--text:              $rh-color--surface--darker--text,
@@ -89,6 +113,14 @@ $rh-colors: (
   surface--darker--link--visited:     $rh-color--surface--darker--link--visited,
   surface--darker--link--hover:       $rh-color--surface--darker--link--hover,
   surface--darker--link--focus:       $rh-color--surface--darker--link--focus,
+
+  // Darker harmony color
+  surface--darker--harmony:                  $rh-color--surface--darker--harmony,
+  surface--darker--harmony--text:            $rh-color--surface--darker--harmony--text,
+  surface--darker--harmony--link:            $rh-color--surface--darker--harmony--link,
+  surface--darker--harmony--link--visited:   $rh-color--surface--darker--harmony--link--visited,
+  surface--darker--harmony--link--hover:     $rh-color--surface--darker--harmony--link--hover,
+  surface--darker--harmony--link--focus:     $rh-color--surface--darker--harmony--link--focus,
 
   // Darkest group
   surface--darkest:                   $rh-color--surface--darkest,
@@ -98,6 +130,14 @@ $rh-colors: (
   surface--darkest--link--hover:      $rh-color--surface--darkest--link--hover,
   surface--darkest--link--focus:      $rh-color--surface--darkest--link--focus,
 
+  // Darkest harmony color
+  surface--darkest--harmony:                  $rh-color--surface--darkest--harmony,
+  surface--darkest--harmony--text:            $rh-color--surface--darkest--harmony--text,
+  surface--darkest--harmony--link:            $rh-color--surface--darkest--harmony--link,
+  surface--darkest--harmony--link--visited:   $rh-color--surface--darkest--harmony--link--visited,
+  surface--darkest--harmony--link--hover:     $rh-color--surface--darkest--harmony--link--hover,
+  surface--darkest--harmony--link--focus:     $rh-color--surface--darkest--harmony--link--focus,
+
   // Complement group
   surface--complement:                $rh-color--surface--complement,
   surface--complement--text:          $rh-color--surface--complement--text,
@@ -106,6 +146,13 @@ $rh-colors: (
   surface--complement--link--hover:   $rh-color--surface--complement--link--hover,
   surface--complement--link--focus:   $rh-color--surface--complement--link--focus,
 
+  // Complement harmony color
+  surface--complement--harmony:                  $rh-color--surface--complement--harmony,
+  surface--complement--harmony--text:            $rh-color--surface--complement--harmony--text,
+  surface--complement--harmony--link:            $rh-color--surface--complement--harmony--link,
+  surface--complement--harmony--link--visited:   $rh-color--surface--complement--harmony--link--visited,
+  surface--complement--harmony--link--hover:     $rh-color--surface--complement--harmony--link--hover,
+  surface--complement--harmony--link--focus:     $rh-color--surface--complement--harmony--link--focus,
 
   // Accent group
   surface--accent:                    $rh-color--surface--accent,
@@ -115,6 +162,13 @@ $rh-colors: (
   surface--accent--link--hover:       $rh-color--surface--accent--link--hover,
   surface--accent--link--focus:       $rh-color--surface--accent--link--focus,
 
+  // Accent harmony color
+  surface--accent--harmony:                  $rh-color--surface--accent--harmony,
+  surface--accent--harmony--text:            $rh-color--surface--accent--harmony--text,
+  surface--accent--harmony--link:            $rh-color--surface--accent--harmony--link,
+  surface--accent--harmony--link--visited:   $rh-color--surface--accent--harmony--link--visited,
+  surface--accent--harmony--link--hover:     $rh-color--surface--accent--harmony--link--hover,
+  surface--accent--harmony--link--focus:     $rh-color--surface--accent--harmony--link--focus,
 
   /* Palette of Border Colors */
   surface--border:                    $rh-color--surface--border,

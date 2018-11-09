@@ -17,6 +17,9 @@ $rh-cta__arrow-size:                        0.313em;
   --rh-cta--aux:                      transparent;
   --rh-cta--aux--hover:               transparent;
 
+  // Broadcast removal of the underline on the link
+  --rh-broadcasted--link--text-decoration:     none;
+
   display: inline-block;
   font-weight: bold;
 

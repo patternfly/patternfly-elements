@@ -51,42 +51,84 @@ import "./custom-style-interface.min.js";
   --rh-theme--color--surface--lightest--link--visited: #7551a6;
   --rh-theme--color--surface--lightest--link--hover: #004080;
   --rh-theme--color--surface--lightest--link--focus: #004080;
+  --rh-theme--color--surface--lightest--harmony: #e6e6e6;
+  --rh-theme--color--surface--lightest--harmony--text: #333;
+  --rh-theme--color--surface--lightest--harmony--link: #06c;
+  --rh-theme--color--surface--lightest--harmony--link--visited: #7551a6;
+  --rh-theme--color--surface--lightest--harmony--link--hover: #004080;
+  --rh-theme--color--surface--lightest--harmony--link--focus: #004080;
   --rh-theme--color--surface--lighter: #f0f0f0;
   --rh-theme--color--surface--lighter--text: #333;
   --rh-theme--color--surface--lighter--link: #06c;
   --rh-theme--color--surface--lighter--link--visited: #7551a6;
   --rh-theme--color--surface--lighter--link--hover: #004080;
   --rh-theme--color--surface--lighter--link--focus: #004080;
+  --rh-theme--color--surface--lighter--harmony: #d7d7d7;
+  --rh-theme--color--surface--lighter--harmony--text: #333;
+  --rh-theme--color--surface--lighter--harmony--link: #06c;
+  --rh-theme--color--surface--lighter--harmony--link--visited: #7551a6;
+  --rh-theme--color--surface--lighter--harmony--link--hover: #004080;
+  --rh-theme--color--surface--lighter--harmony--link--focus: #004080;
   --rh-theme--color--surface--base: #d2d2d2;
   --rh-theme--color--surface--base--text: #333;
   --rh-theme--color--surface--base--link: #06c;
   --rh-theme--color--surface--base--link--visited: #7551a6;
   --rh-theme--color--surface--base--link--hover: #004080;
   --rh-theme--color--surface--base--link--focus: #004080;
+  --rh-theme--color--surface--base--harmony: #b9b9b9;
+  --rh-theme--color--surface--base--harmony--text: #333;
+  --rh-theme--color--surface--base--harmony--link: #06c;
+  --rh-theme--color--surface--base--harmony--link--visited: #7551a6;
+  --rh-theme--color--surface--base--harmony--link--hover: #004080;
+  --rh-theme--color--surface--base--harmony--link--focus: #004080;
   --rh-theme--color--surface--darker: #464646;
   --rh-theme--color--surface--darker--text: #fff;
   --rh-theme--color--surface--darker--link: #73bcf7;
   --rh-theme--color--surface--darker--link--visited: #967abd;
   --rh-theme--color--surface--darker--link--hover: #2b9af3;
   --rh-theme--color--surface--darker--link--focus: #2b9af3;
-  --rh-theme--color--surface--darkest: #1e1e1e;
+  --rh-theme--color--surface--darker--harmony: #2d2d2d;
+  --rh-theme--color--surface--darker--harmony--text: #fff;
+  --rh-theme--color--surface--darker--harmony--link: #73bcf7;
+  --rh-theme--color--surface--darker--harmony--link--visited: #967abd;
+  --rh-theme--color--surface--darker--harmony--link--hover: #2b9af3;
+  --rh-theme--color--surface--darker--harmony--link--focus: #2b9af3;
+  --rh-theme--color--surface--darkest: #1a1a1a;
   --rh-theme--color--surface--darkest--text: #fff;
   --rh-theme--color--surface--darkest--link: #73bcf7;
   --rh-theme--color--surface--darkest--link--visited: #967abd;
   --rh-theme--color--surface--darkest--link--hover: #2b9af3;
   --rh-theme--color--surface--darkest--link--focus: #2b9af3;
+  --rh-theme--color--surface--darkest--harmony: #010101;
+  --rh-theme--color--surface--darkest--harmony--text: #fff;
+  --rh-theme--color--surface--darkest--harmony--link: #73bcf7;
+  --rh-theme--color--surface--darkest--harmony--link--visited: #967abd;
+  --rh-theme--color--surface--darkest--harmony--link--hover: #2b9af3;
+  --rh-theme--color--surface--darkest--harmony--link--focus: #2b9af3;
   --rh-theme--color--surface--complement: #264a60;
   --rh-theme--color--surface--complement--text: #fff;
   --rh-theme--color--surface--complement--link: #fff;
   --rh-theme--color--surface--complement--link--visited: #fff;
   --rh-theme--color--surface--complement--link--hover: #e6e6e6;
   --rh-theme--color--surface--complement--link--focus: #e6e6e6;
+  --rh-theme--color--surface--complement--harmony: #182e3b;
+  --rh-theme--color--surface--complement--harmony--text: #fff;
+  --rh-theme--color--surface--complement--harmony--link: #fff;
+  --rh-theme--color--surface--complement--harmony--link--visited: #fff;
+  --rh-theme--color--surface--complement--harmony--link--hover: #e6e6e6;
+  --rh-theme--color--surface--complement--harmony--link--focus: #e6e6e6;
   --rh-theme--color--surface--accent: #c00;
   --rh-theme--color--surface--accent--text: #fff;
   --rh-theme--color--surface--accent--link: #fff;
   --rh-theme--color--surface--accent--link--visited: #fff;
   --rh-theme--color--surface--accent--link--hover: #e6e6e6;
   --rh-theme--color--surface--accent--link--focus: #e6e6e6;
+  --rh-theme--color--surface--accent--harmony: #990000;
+  --rh-theme--color--surface--accent--harmony--text: #fff;
+  --rh-theme--color--surface--accent--harmony--link: #fff;
+  --rh-theme--color--surface--accent--harmony--link--visited: #fff;
+  --rh-theme--color--surface--accent--harmony--link--hover: #e6e6e6;
+  --rh-theme--color--surface--accent--harmony--link--focus: #e6e6e6;
   --rh-theme--color--surface--border: #ccc;
   --rh-theme--color--surface--border--lightest: #e7e7e7;
   --rh-theme--color--surface--border--darkest: #333;
@@ -117,11 +159,17 @@ import "./custom-style-interface.min.js";
   --rh-theme--font-family--heading: "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif;
   --rh-theme--font-family--code: "Overpass Mono", Consolas, Monaco,  Andale Mono , monospace;
   --rh-theme--font-size--heading--alpha: 2rem;
+  --rh-theme--font-weight--heading--alpha: 700;
   --rh-theme--font-size--heading--beta: 1.75rem;
+  --rh-theme--font-weight--heading--beta: 700;
   --rh-theme--font-size--heading--gamma: 1.5rem;
+  --rh-theme--font-weight--heading--gamma: 700;
   --rh-theme--font-size--heading--delta: 1.25rem;
+  --rh-theme--font-weight--heading--delta: 600;
   --rh-theme--font-size--heading--epsilon: 1.125rem;
+  --rh-theme--font-weight--heading--epsilon: 600;
   --rh-theme--font-size--heading--zeta: 1rem;
+  --rh-theme--font-weight--heading--zeta: 600;
   --rh-theme--link--text-decoration: underline;
   --rh-theme--link--text-decoration--hover: underline;
   --rh-theme--surface--border-width: 1px;
@@ -145,16 +193,14 @@ body {
   line-height: var(--rh-theme--line-height); }
 
 a {
-  color: var(--rh-broadcasted--color--ui-link, #06c); }
-
-a:visited {
-  color: var(--rh-broadcasted--color--ui-link--visited, var(--rh-broadcasted--color--ui-link, #7551a6)); }
-
-a:hover {
-  color: var(--rh-broadcasted--color--ui-link--hover, var(--rh-broadcasted--color--ui-link, #004080)); }
-
-a:focus {
-  color: var(--rh-broadcasted--color--ui-link--focus, var(--rh-broadcasted--color--ui-link, #004080)); }
+  color: var(--rh-broadcasted--color--ui-link, #06c);
+  text-decoration: var(--rh-broadcasted--link--text-decoration, underline); }
+  a:visited {
+    color: var(--rh-broadcasted--color--ui-link--visited, var(--rh-broadcasted--color--ui-link, #7551a6)); }
+  a:hover {
+    color: var(--rh-broadcasted--color--ui-link--hover, var(--rh-broadcasted--color--ui-link, #004080)); }
+  a:focus {
+    color: var(--rh-broadcasted--color--ui-link--focus, var(--rh-broadcasted--color--ui-link, #004080)); }
 
 p {
   margin: 1em 0; }</style>`;

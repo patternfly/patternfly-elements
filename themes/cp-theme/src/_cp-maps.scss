@@ -14,6 +14,7 @@ $cp-colors: (
   // ========================================================================
 
   ui-link:                            $rh-global--link-color,
+
   ui-link--visited:                   $rh-global--link-color--visited,
   ui-link--hover:                     $rh-global--link-color--hover,
   ui-link--focus:                     $rh-global--link-color--focus,
@@ -67,8 +68,8 @@ $cp-colors: (
   surface--lightest--link--focus:     $rh-global--link-color--focus,
 
   // Lightest harmony color
-  surface--lightest--harmony:                  $rh-global--color--gray-iron,
-  surface--lightest--harmony--text:            $rh-global--color--white,
+  surface--lightest--harmony:                  darken($rh-global--color--white, 10%),
+  surface--lightest--harmony--text:            $rh-global--text-color,
   surface--lightest--harmony--link:            $rh-global--link-color,
   surface--lightest--harmony--link--visited:   $rh-global--link-color--visited,
   surface--lightest--harmony--link--hover:     $rh-global--link-color--hover,
@@ -83,8 +84,8 @@ $cp-colors: (
   surface--lighter--link--focus:      $rh-global--link-color--focus,
 
   // Lighter harmony color
-  surface--lighter--harmony:                  $rh-global--color--gray-iron,
-  surface--lighter--harmony--text:            $rh-global--color--white,
+  surface--lighter--harmony:                  darken($rh-global--color--gray-moon, 10%),
+  surface--lighter--harmony--text:            $rh-global--text-color,
   surface--lighter--harmony--link:            $rh-global--link-color,
   surface--lighter--harmony--link--visited:   $rh-global--link-color--visited,
   surface--lighter--harmony--link--hover:     $rh-global--link-color--hover,
@@ -99,8 +100,8 @@ $cp-colors: (
   surface--base--link--focus:         $rh-global--link-color--focus,
 
   // Base harmony color
-  surface--base--harmony:                  $rh-global--color--gray-iron,
-  surface--base--harmony--text:            $rh-global--color--white,
+  surface--base--harmony:                  darken($rh-global--color--gray-mercury, 10%),
+  surface--base--harmony--text:            $rh-global--text-color,
   surface--base--harmony--link:            $rh-global--link-color,
   surface--base--harmony--link--visited:   $rh-global--link-color--visited,
   surface--base--harmony--link--hover:     $rh-global--link-color--hover,
@@ -115,15 +116,15 @@ $cp-colors: (
   surface--darker--link--focus:       $rh-global--link-color--inverted--focus,
 
   // Darker harmony color
-  surface--darker--harmony:                  $rh-global--color--gray-iron,
-  surface--darker--harmony--text:            $rh-global--color--white,
-  surface--darker--harmony--link:            $rh-global--link-color,
-  surface--darker--harmony--link--visited:   $rh-global--link-color--visited,
-  surface--darker--harmony--link--hover:     $rh-global--link-color--hover,
-  surface--darker--harmony--link--focus:     $rh-global--link-color--focus,
+  surface--darker--harmony:                  darken($rh-global--color--gray-iron, 10%),
+  surface--darker--harmony--text:            $rh-global--text-color--inverted,
+  surface--darker--harmony--link:            $rh-global--link-color--inverted,
+  surface--darker--harmony--link--visited:   $rh-global--link-color--inverted--visited,
+  surface--darker--harmony--link--hover:     $rh-global--link-color--inverted--hover,
+  surface--darker--harmony--link--focus:     $rh-global--link-color--inverted--focus,
 
   // Darkest group
-  surface--darkest:                   $rh-global--color--black-nero,
+  surface--darkest:                   $rh-global--color--black,
   surface--darkest--text:             $rh-global--text-color--inverted,
   surface--darkest--link:             $rh-global--link-color--inverted,
   surface--darkest--link--visited:    $rh-global--link-color--inverted--visited,
@@ -131,12 +132,12 @@ $cp-colors: (
   surface--darkest--link--focus:      $rh-global--link-color--inverted--focus,
 
   // Darkest harmony color
-  surface--darkest--harmony:                  $rh-global--color--gray-iron,
-  surface--darkest--harmony--text:            $rh-global--color--white,
-  surface--darkest--harmony--link:            $rh-global--link-color,
-  surface--darkest--harmony--link--visited:   $rh-global--link-color--visited,
-  surface--darkest--harmony--link--hover:     $rh-global--link-color--hover,
-  surface--darkest--harmony--link--focus:     $rh-global--link-color--focus,
+  surface--darkest--harmony:                  darken($rh-global--color--black, 10%),
+  surface--darkest--harmony--text:            $rh-global--text-color--inverted,
+  surface--darkest--harmony--link:            $rh-global--link-color--inverted,
+  surface--darkest--harmony--link--visited:   $rh-global--link-color--inverted--visited,
+  surface--darkest--harmony--link--hover:     $rh-global--link-color--inverted--hover,
+  surface--darkest--harmony--link--focus:     $rh-global--link-color--inverted--focus,
 
   // Complement group
   surface--complement:                $rh-global--color--blue-rain,
@@ -147,12 +148,12 @@ $cp-colors: (
   surface--complement--link--focus:   darken($rh-global--text-color--inverted, 10%),
 
   // Complement harmony color
-  surface--complement--harmony:                  $rh-global--color--gray-iron,
-  surface--complement--harmony--text:            $rh-global--color--white,
-  surface--complement--harmony--link:            $rh-global--link-color,
-  surface--complement--harmony--link--visited:   $rh-global--link-color--visited,
-  surface--complement--harmony--link--hover:     $rh-global--link-color--hover,
-  surface--complement--harmony--link--focus:     $rh-global--link-color--focus,
+  surface--complement--harmony:                  darken($rh-global--color--blue-rain, 10%),
+  surface--complement--harmony--text:            $rh-global--text-color--inverted,
+  surface--complement--harmony--link:            $rh-global--text-color--inverted,
+  surface--complement--harmony--link--visited:   $rh-global--text-color--inverted,
+  surface--complement--harmony--link--hover:     darken($rh-global--text-color--inverted, 10%),
+  surface--complement--harmony--link--focus:     darken($rh-global--text-color--inverted, 10%),
 
   // Accent group
   surface--accent:                    $rh-global--color--red,
@@ -163,12 +164,12 @@ $cp-colors: (
   surface--accent--link--focus:       darken($rh-global--text-color--inverted, 10%),
 
   // Accent harmony color
-  surface--accent--harmony:                  $rh-global--color--gray-iron,
-  surface--accent--harmony--text:            $rh-global--color--white,
-  surface--accent--harmony--link:            $rh-global--link-color,
-  surface--accent--harmony--link--visited:   $rh-global--link-color--visited,
-  surface--accent--harmony--link--hover:     $rh-global--link-color--hover,
-  surface--accent--harmony--link--focus:     $rh-global--link-color--focus,
+  surface--accent--harmony:                  darken($rh-global--color--red, 10%),
+  surface--accent--harmony--text:            $rh-global--text-color--inverted,
+  surface--accent--harmony--link:            $rh-global--text-color--inverted,
+  surface--accent--harmony--link--visited:   $rh-global--text-color--inverted,
+  surface--accent--harmony--link--hover:     darken($rh-global--text-color--inverted, 10%),
+  surface--accent--harmony--link--focus:     darken($rh-global--text-color--inverted, 10%),
 
   /* Palette of Border Colors */
   surface--border:                    $rh-global--border--BorderColor,

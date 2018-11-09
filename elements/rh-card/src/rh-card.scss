@@ -14,17 +14,18 @@
 
   // Color properties
   --rh-card--backgroundColor:                  var(--rh-card--bg);
-  --rh-card--borderColor:                      var(--rh-card--backgroundColor);
+  --rh-card--borderColor:                      transparent;
 
   // Header properties
-  --rh-card_header--size:                      #{rh-var(font-size--heading--delta)};
-  --rh-card_header--fontWeight:                #{rh-var(font-weight--heading--delta)};
-  --rh-card_header--textTransform:             uppercase;
+  --rh-card__header--size:                     #{rh-var(font-size--heading--delta)};
+  --rh-card__header--fontWeight:               #{rh-var(font-weight--heading--delta)};
+  --rh-card__header--textTransform:            uppercase;
   --rh-card__header--backgroundColor:          #{rh-color(surface--base--harmony)};
 
   // Broadcasted color properties
   --rh-broadcasted--color--text:               #{rh-color(surface--base--text)};
   --rh-broadcasted--color--ui-link:            #{rh-color(surface--base--link)};
+  --rh-broadcasted--link--text-decoration:     underline;
   --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--base--link--visited)};
   --rh-broadcasted--color--ui-link--hover:     #{rh-color(surface--base--link--hover)};
   --rh-broadcasted--color--ui-link--focus:     #{rh-color(surface--base--link--focus)};
@@ -33,30 +34,14 @@
   flex-direction: column;
   justify-items: flex-start;
 
-  border: rh-var(surface--border-width)
-          rh-var(surface--border-style)
-          var(--rh-card--borderColor);
+  border-width: 0; //rh-var(surface--border-width)
+  border-style: rh-var(surface--border-style);
+  border-color: var(--rh-card--borderColor, transparent);
   border-radius: rh-var(surface--border-radius);
 
   // Base colors
   background: var(--rh-card--backgroundColor);
   color: var(--rh-broadcasted--color--text);
-}
-
-a {
-  color: var(--rh-broadcasted--color--ui-link);
-}
-
-a:visited {
-  color: var(--rh-broadcasted--color--ui-link--visited);
-}
-
-a:hover {
-  color: var(--rh-broadcasted--color--ui-link--hover);
-}
-
-a:focus {
-  color: var(--rh-broadcasted--color--ui-link--focus);
 }
 
 :host([color="dark"]) {
@@ -70,10 +55,10 @@ a:focus {
   .rh-card__header {
     --rh-card__header--backgroundColor:         #{rh-color(surface--darker--harmony)};
     --rh-broadcasted--color--text:              #{rh-color(surface--darker--harmony--text)};
-    --rh-broadcasted--color--link:              #{rh-color(surface--darker--harmony--link)};
-    --rh-broadcasted--color--link--visited:     #{rh-color(surface--darker--harmony--link--visited)};
-    --rh-broadcasted--color--link--hover:       #{rh-color(surface--darker--harmony--link--hover)};
-    --rh-broadcasted--color--link--focus:       #{rh-color(surface--darker--harmony--link--focus)};
+    --rh-broadcasted--color--ui-link:           #{rh-color(surface--darker--harmony--text)};
+    --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--darker--harmony--link--visited)};
+    --rh-broadcasted--color--ui-link--hover:    #{rh-color(surface--darker--harmony--link--hover)};
+    --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--darker--harmony--link--focus)};
   }
 }
 
@@ -86,12 +71,12 @@ a:focus {
   --rh-broadcasted--color--ui-link--focus:     #{rh-color(surface--darkest--link--focus)};
   // Header colors
   .rh-card__header {
-    --rh-card__header--backgroundColor:         #{rh-color(surface--darkest--harmony)};
-    --rh-broadcasted--color--text:              #{rh-color(surface--darkest--harmony--text)};
-    --rh-broadcasted--color--link:              #{rh-color(surface--darkest--harmony--link)};
-    --rh-broadcasted--color--link--visited:     #{rh-color(surface--darkest--harmony--link--visited)};
-    --rh-broadcasted--color--link--hover:       #{rh-color(surface--darkest--harmony--link--hover)};
-    --rh-broadcasted--color--link--focus:       #{rh-color(surface--darkest--harmony--link--focus)};
+    --rh-card__header--backgroundColor:            #{rh-color(surface--darkest--harmony)};
+    --rh-broadcasted--color--text:                 #{rh-color(surface--darkest--harmony--text)};
+    --rh-broadcasted--color--ui-link:              #{rh-color(surface--darkest--harmony--text)};
+    --rh-broadcasted--color--ui-link--visited:     #{rh-color(surface--darkest--harmony--link--visited)};
+    --rh-broadcasted--color--ui-link--hover:       #{rh-color(surface--darkest--harmony--link--hover)};
+    --rh-broadcasted--color--ui-link--focus:       #{rh-color(surface--darkest--harmony--link--focus)};
   }
 }
 
@@ -106,10 +91,10 @@ a:focus {
   .rh-card__header {
     --rh-card__header--backgroundColor:         #{rh-color(surface--lighter--harmony)};
     --rh-broadcasted--color--text:              #{rh-color(surface--lighter--harmony--text)};
-    --rh-broadcasted--color--link:              #{rh-color(surface--lighter--harmony--link)};
-    --rh-broadcasted--color--link--visited:     #{rh-color(surface--lighter--harmony--link--visited)};
-    --rh-broadcasted--color--link--hover:       #{rh-color(surface--lighter--harmony--link--hover)};
-    --rh-broadcasted--color--link--focus:       #{rh-color(surface--lighter--harmony--link--focus)};
+    --rh-broadcasted--color--ui-link:           #{rh-color(surface--lighter--harmony--text)};
+    --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--lighter--harmony--link--visited)};
+    --rh-broadcasted--color--ui-link--hover:    #{rh-color(surface--lighter--harmony--link--hover)};
+    --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--lighter--harmony--link--focus)};
   }
 }
 
@@ -124,17 +109,17 @@ a:focus {
   .rh-card__header {
     --rh-card__header--backgroundColor:         #{rh-color(surface--lightest--harmony)};
     --rh-broadcasted--color--text:              #{rh-color(surface--lightest--harmony--text)};
-    --rh-broadcasted--color--link:              #{rh-color(surface--lightest--harmony--link)};
-    --rh-broadcasted--color--link--visited:     #{rh-color(surface--lightest--harmony--link--visited)};
-    --rh-broadcasted--color--link--hover:       #{rh-color(surface--lightest--harmony--link--hover)};
-    --rh-broadcasted--color--link--focus:       #{rh-color(surface--lightest--harmony--link--focus)};
+    --rh-broadcasted--color--ui-link:           #{rh-color(surface--lightest--harmony--text)};
+    --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--lightest--harmony--link--visited)};
+    --rh-broadcasted--color--ui-link--hover:    #{rh-color(surface--lightest--harmony--link--hover)};
+    --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--lightest--harmony--link--focus)};
   }
 }
 
 :host([color="complement"]) {
   --rh-card--backgroundColor:                  #{rh-color(surface--complement)};
   --rh-broadcasted--color--text:               #{rh-color(surface--complement--text)};
-  --rh-broadcasted--color--ui-link:            #{rh-color(surface--complement--link)};
+  --rh-broadcasted--color--ui-link:            #{rh-color(surface--complement--text)};
   --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--complement--link--visited)};
   --rh-broadcasted--color--ui-link--hover:     #{rh-color(surface--complement--link--hover)};
   --rh-broadcasted--color--ui-link--focus:     #{rh-color(surface--complement--link--focus)};
@@ -142,10 +127,10 @@ a:focus {
   .rh-card__header {
     --rh-card__header--backgroundColor:         #{rh-color(surface--complement--harmony)};
     --rh-broadcasted--color--text:              #{rh-color(surface--complement--harmony--text)};
-    --rh-broadcasted--color--link:              #{rh-color(surface--complement--harmony--link)};
-    --rh-broadcasted--color--link--visited:     #{rh-color(surface--complement--harmony--link--visited)};
-    --rh-broadcasted--color--link--hover:       #{rh-color(surface--complement--harmony--link--hover)};
-    --rh-broadcasted--color--link--focus:       #{rh-color(surface--complement--harmony--link--focus)};
+    --rh-broadcasted--color--ui-link:           #{rh-color(surface--complement--harmony--text)};
+    --rh-broadcasted--color--ui-link---visited: #{rh-color(surface--complement--harmony--link--visited)};
+    --rh-broadcasted--color--ui-link--hover:    #{rh-color(surface--complement--harmony--link--hover)};
+    --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--complement--harmony--link--focus)};
   }
 }
 
@@ -158,12 +143,12 @@ a:focus {
   --rh-broadcasted--color--ui-link--focus:     #{rh-color(surface--accent--link--focus)};
   // Header colors
   .rh-card__header {
-    --rh-card__header--backgroundColor:          #{rh-color(surface--accent--harmony)};
+    --rh-card__header--backgroundColor:         #{rh-color(surface--accent--harmony)};
     --rh-broadcasted--color--text:              #{rh-color(surface--accent--harmony--text)};
-    --rh-broadcasted--color--link:              #{rh-color(surface--accent--harmony--link)};
-    --rh-broadcasted--color--link--visited:     #{rh-color(surface--accent--harmony--link--visited)};
-    --rh-broadcasted--color--link--hover:       #{rh-color(surface--accent--harmony--link--hover)};
-    --rh-broadcasted--color--link--focus:       #{rh-color(surface--accent--harmony--link--focus)};
+    --rh-broadcasted--color--ui-link:           #{rh-color(surface--accent--harmony--text)};
+    --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--accent--harmony--link--visited)};
+    --rh-broadcasted--color--ui-link--hover:    #{rh-color(surface--accent--harmony--link--hover)};
+    --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--accent--harmony--link--focus)};
   }
 }
 
@@ -180,17 +165,18 @@ a:focus {
 
 .rh-card__header {
   --rh-broadcasted--color--text:              #{rh-color(surface--base--harmony--text)};
-  --rh-broadcasted--color--link:              #{rh-color(surface--base--harmony--link)};
-  --rh-broadcasted--color--link--visited:     #{rh-color(surface--base--harmony--link--visited)};
-  --rh-broadcasted--color--link--hover:       #{rh-color(surface--base--harmony--link--hover)};
-  --rh-broadcasted--color--link--focus:       #{rh-color(surface--base--harmony--link--focus)};
+  --rh-broadcasted--color--ui-link:           #{rh-color(surface--base--harmony--link)};
+  --rh-broadcasted--link--text-decoration:    none;
+  --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--base--harmony--link--visited)};
+  --rh-broadcasted--color--ui-link--hover:    #{rh-color(surface--base--harmony--link--hover)};
+  --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--base--harmony--link--focus)};
   // Set the header background color
-  background-color: var(--rh-card_header--backgroundColor);
+  background-color: var(--rh-card__header--backgroundColor);
   padding: var(--rh-card--spacing) var(--rh-card--paddingRight) var(--rh-card--spacing) var(--rh-card--paddingLeft);
   @for $n from 1 to 6 {
     &::slotted(h#{$n}:first-child) {
-      font-size: var(--rh-card_header--size);
-      text-transform: var(--rh-card_header--textTransform);
+      font-size: var(--rh-card__header--size);
+      text-transform: var(--rh-card__header--textTransform);
       color: var(--rh-broadcasted--color--text);
       margin-top: 0;
       margin-bottom: 0;

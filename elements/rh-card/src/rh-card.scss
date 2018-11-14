@@ -42,6 +42,7 @@
   // Base colors
   background: var(--rh-card--backgroundColor);
   color: var(--rh-broadcasted--color--text);
+  padding: var(--rh-card--paddingTop) var(--rh-card--paddingRight) var(--rh-card--paddingBottom) var(--rh-card--paddingLeft);
 }
 
 :host([color="dark"]) {
@@ -56,7 +57,7 @@
     --rh-card__header--backgroundColor:         #{rh-color(surface--darker--harmony)};
     --rh-broadcasted--color--text:              #{rh-color(surface--darker--harmony--text)};
     --rh-broadcasted--color--ui-link:           #{rh-color(surface--darker--harmony--text)};
-    --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--darker--harmony--link--visited)};
+    --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--darker--harmony--text)};
     --rh-broadcasted--color--ui-link--hover:    #{rh-color(surface--darker--harmony--link--hover)};
     --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--darker--harmony--link--focus)};
   }
@@ -74,7 +75,7 @@
     --rh-card__header--backgroundColor:            #{rh-color(surface--darkest--harmony)};
     --rh-broadcasted--color--text:                 #{rh-color(surface--darkest--harmony--text)};
     --rh-broadcasted--color--ui-link:              #{rh-color(surface--darkest--harmony--text)};
-    --rh-broadcasted--color--ui-link--visited:     #{rh-color(surface--darkest--harmony--link--visited)};
+    --rh-broadcasted--color--ui-link--visited:     #{rh-color(surface--darkest--harmony--text)};
     --rh-broadcasted--color--ui-link--hover:       #{rh-color(surface--darkest--harmony--link--hover)};
     --rh-broadcasted--color--ui-link--focus:       #{rh-color(surface--darkest--harmony--link--focus)};
   }
@@ -92,7 +93,7 @@
     --rh-card__header--backgroundColor:         #{rh-color(surface--lighter--harmony)};
     --rh-broadcasted--color--text:              #{rh-color(surface--lighter--harmony--text)};
     --rh-broadcasted--color--ui-link:           #{rh-color(surface--lighter--harmony--text)};
-    --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--lighter--harmony--link--visited)};
+    --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--lighter--harmony--text)};
     --rh-broadcasted--color--ui-link--hover:    #{rh-color(surface--lighter--harmony--link--hover)};
     --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--lighter--harmony--link--focus)};
   }
@@ -110,7 +111,7 @@
     --rh-card__header--backgroundColor:         #{rh-color(surface--lightest--harmony)};
     --rh-broadcasted--color--text:              #{rh-color(surface--lightest--harmony--text)};
     --rh-broadcasted--color--ui-link:           #{rh-color(surface--lightest--harmony--text)};
-    --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--lightest--harmony--link--visited)};
+    --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--lightest--harmony--text)};
     --rh-broadcasted--color--ui-link--hover:    #{rh-color(surface--lightest--harmony--link--hover)};
     --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--lightest--harmony--link--focus)};
   }
@@ -128,7 +129,7 @@
     --rh-card__header--backgroundColor:         #{rh-color(surface--complement--harmony)};
     --rh-broadcasted--color--text:              #{rh-color(surface--complement--harmony--text)};
     --rh-broadcasted--color--ui-link:           #{rh-color(surface--complement--harmony--text)};
-    --rh-broadcasted--color--ui-link---visited: #{rh-color(surface--complement--harmony--link--visited)};
+    --rh-broadcasted--color--ui-link---visited: #{rh-color(surface--complement--harmony--text)};
     --rh-broadcasted--color--ui-link--hover:    #{rh-color(surface--complement--harmony--link--hover)};
     --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--complement--harmony--link--focus)};
   }
@@ -146,7 +147,7 @@
     --rh-card__header--backgroundColor:         #{rh-color(surface--accent--harmony)};
     --rh-broadcasted--color--text:              #{rh-color(surface--accent--harmony--text)};
     --rh-broadcasted--color--ui-link:           #{rh-color(surface--accent--harmony--text)};
-    --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--accent--harmony--link--visited)};
+    --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--accent--harmony--text)};
     --rh-broadcasted--color--ui-link--hover:    #{rh-color(surface--accent--harmony--link--hover)};
     --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--accent--harmony--link--focus)};
   }
@@ -160,7 +161,7 @@
 .rh-card__body,
 .rh-card__footer {
   display: block;
-  margin: 0;
+  margin-bottom: var(--rh-card--spacing);
 }
 
 .rh-card__header {
@@ -172,35 +173,28 @@
   --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--base--harmony--link--focus)};
   // Set the header background color
   background-color: var(--rh-card__header--backgroundColor);
-  padding: var(--rh-card--spacing) var(--rh-card--paddingRight) var(--rh-card--spacing) var(--rh-card--paddingLeft);
+  margin-top: calc(-1 * var(--rh-card--paddingTop));
+  margin-right: calc(-1 * var(--rh-card--paddingRight));
+  margin-left: calc(-1 * var(--rh-card--paddingLeft));
+  padding-right: var(--rh-card--paddingRight);
+  padding-left: var(--rh-card--paddingLeft);
   @for $n from 1 to 6 {
     &::slotted(h#{$n}:first-child) {
       font-size: var(--rh-card__header--size);
       text-transform: var(--rh-card__header--textTransform);
       color: var(--rh-broadcasted--color--text);
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-    &::slotted(*:last-of-type) {
-      margin-bottom: 0;
+      margin-top: var(--rh-card--spacing);
+      margin-bottom: var(--rh-card--spacing);
     }
   }
 }
 
-.rh-card__body {
-  padding: var(--rh-card--spacing) var(--rh-card--paddingRight) var(--rh-card--spacing) var(--rh-card--paddingLeft);
-  &::slotted(*:nth-child(2)) { // child pseudo-selectors appear to be based on slotted code before upgrade.
-    margin-top: 0 !important;
-  }
-  // Use this when the header color is unique
-  // &:not(:first-child) {
-  //   padding-top: 0;
-  // }
+.rh-card__body,
+.rh-card__footer {
+  margin-top: calc(-1 * var(--rh-card--spacing));
 }
 
 .rh-card__footer {
-  // margin-top: rh-var(container-spacer);
   margin-top: auto; // This allows the footer to move to the very bottom
   justify-self: flex-end;
-  padding: var(--rh-card--spacing) var(--rh-card--paddingRight) var(--rh-card--paddingBottom) var(--rh-card--paddingLeft);
 }

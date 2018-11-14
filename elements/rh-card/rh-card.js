@@ -54,7 +54,8 @@ class RhCard extends RHElement {
   border-color: var(--rh-card--borderColor, transparent);
   border-radius: var(--rh-theme--surface--border-radius, 0);
   background: var(--rh-card--backgroundColor);
-  color: var(--rh-broadcasted--color--text); }
+  color: var(--rh-broadcasted--color--text);
+  padding: var(--rh-card--paddingTop) var(--rh-card--paddingRight) var(--rh-card--paddingBottom) var(--rh-card--paddingLeft); }
 
 :host([color="dark"]) {
   --rh-card--backgroundColor:                  var(--rh-theme--color--surface--darker, #464646);
@@ -67,7 +68,7 @@ class RhCard extends RHElement {
     --rh-card__header--backgroundColor:         var(--rh-theme--color--surface--darker--harmony, #2d2d2d);
     --rh-broadcasted--color--text:              var(--rh-theme--color--surface--darker--harmony--text, #fff);
     --rh-broadcasted--color--ui-link:           var(--rh-theme--color--surface--darker--harmony--text, #fff);
-    --rh-broadcasted--color--ui-link--visited:  var(--rh-theme--color--surface--darker--harmony--link--visited, #b38cd9);
+    --rh-broadcasted--color--ui-link--visited:  var(--rh-theme--color--surface--darker--harmony--text, #fff);
     --rh-broadcasted--color--ui-link--hover:    var(--rh-theme--color--surface--darker--harmony--link--hover, #cce6ff);
     --rh-broadcasted--color--ui-link--focus:    var(--rh-theme--color--surface--darker--harmony--link--focus, #cce6ff); }
 
@@ -82,7 +83,7 @@ class RhCard extends RHElement {
     --rh-card__header--backgroundColor:            var(--rh-theme--color--surface--darkest--harmony, black);
     --rh-broadcasted--color--text:                 var(--rh-theme--color--surface--darkest--harmony--text, #fff);
     --rh-broadcasted--color--ui-link:              var(--rh-theme--color--surface--darkest--harmony--text, #fff);
-    --rh-broadcasted--color--ui-link--visited:     var(--rh-theme--color--surface--darkest--harmony--link--visited, #b38cd9);
+    --rh-broadcasted--color--ui-link--visited:     var(--rh-theme--color--surface--darkest--harmony--text, #fff);
     --rh-broadcasted--color--ui-link--hover:       var(--rh-theme--color--surface--darkest--harmony--link--hover, #cce6ff);
     --rh-broadcasted--color--ui-link--focus:       var(--rh-theme--color--surface--darkest--harmony--link--focus, #cce6ff); }
 
@@ -97,7 +98,7 @@ class RhCard extends RHElement {
     --rh-card__header--backgroundColor:         var(--rh-theme--color--surface--lighter--harmony, #d2d2d2);
     --rh-broadcasted--color--text:              var(--rh-theme--color--surface--lighter--harmony--text, #333);
     --rh-broadcasted--color--ui-link:           var(--rh-theme--color--surface--lighter--harmony--text, #333);
-    --rh-broadcasted--color--ui-link--visited:  var(--rh-theme--color--surface--lighter--harmony--link--visited, rebeccapurple);
+    --rh-broadcasted--color--ui-link--visited:  var(--rh-theme--color--surface--lighter--harmony--text, #333);
     --rh-broadcasted--color--ui-link--hover:    var(--rh-theme--color--surface--lighter--harmony--link--hover, #003366);
     --rh-broadcasted--color--ui-link--focus:    var(--rh-theme--color--surface--lighter--harmony--link--focus, #003366); }
 
@@ -112,7 +113,7 @@ class RhCard extends RHElement {
     --rh-card__header--backgroundColor:         var(--rh-theme--color--surface--lightest--harmony, #e6e6e6);
     --rh-broadcasted--color--text:              var(--rh-theme--color--surface--lightest--harmony--text, #333);
     --rh-broadcasted--color--ui-link:           var(--rh-theme--color--surface--lightest--harmony--text, #333);
-    --rh-broadcasted--color--ui-link--visited:  var(--rh-theme--color--surface--lightest--harmony--link--visited, rebeccapurple);
+    --rh-broadcasted--color--ui-link--visited:  var(--rh-theme--color--surface--lightest--harmony--text, #333);
     --rh-broadcasted--color--ui-link--hover:    var(--rh-theme--color--surface--lightest--harmony--link--hover, #003366);
     --rh-broadcasted--color--ui-link--focus:    var(--rh-theme--color--surface--lightest--harmony--link--focus, #003366); }
 
@@ -127,7 +128,7 @@ class RhCard extends RHElement {
     --rh-card__header--backgroundColor:         var(--rh-theme--color--surface--complement--harmony, #035372);
     --rh-broadcasted--color--text:              var(--rh-theme--color--surface--complement--harmony--text, #fff);
     --rh-broadcasted--color--ui-link:           var(--rh-theme--color--surface--complement--harmony--text, #fff);
-    --rh-broadcasted--color--ui-link---visited: var(--rh-theme--color--surface--complement--harmony--link--visited, #b38cd9);
+    --rh-broadcasted--color--ui-link---visited: var(--rh-theme--color--surface--complement--harmony--text, #fff);
     --rh-broadcasted--color--ui-link--hover:    var(--rh-theme--color--surface--complement--harmony--link--hover, #cce6ff);
     --rh-broadcasted--color--ui-link--focus:    var(--rh-theme--color--surface--complement--harmony--link--focus, #cce6ff); }
 
@@ -140,11 +141,11 @@ class RhCard extends RHElement {
   --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--accent--link--focus, #cce6ff); }
   :host([color="accent"]) .rh-card__header {
     --rh-card__header--backgroundColor:         var(--rh-theme--color--surface--accent--harmony, #d73401);
-    --rh-broadcasted--color--text:              var(--rh-theme--color--surface--accent--harmony--text, #fff);
-    --rh-broadcasted--color--ui-link:           var(--rh-theme--color--surface--accent--harmony--text, #fff);
-    --rh-broadcasted--color--ui-link--visited:  var(--rh-theme--color--surface--accent--harmony--link--visited, #b38cd9);
-    --rh-broadcasted--color--ui-link--hover:    var(--rh-theme--color--surface--accent--harmony--link--hover, #cce6ff);
-    --rh-broadcasted--color--ui-link--focus:    var(--rh-theme--color--surface--accent--harmony--link--focus, #cce6ff); }
+    --rh-broadcasted--color--text:              var(--rh-theme--color--surface--accent--harmony--text, #333);
+    --rh-broadcasted--color--ui-link:           var(--rh-theme--color--surface--accent--harmony--text, #333);
+    --rh-broadcasted--color--ui-link--visited:  var(--rh-theme--color--surface--accent--harmony--text, #333);
+    --rh-broadcasted--color--ui-link--hover:    var(--rh-theme--color--surface--accent--harmony--link--hover, #003366);
+    --rh-broadcasted--color--ui-link--focus:    var(--rh-theme--color--surface--accent--harmony--link--focus, #003366); }
 
 :host([size="small"]) {
   --rh-card--padding:        var(--rh-theme--container-spacer, 1rem); }
@@ -153,7 +154,7 @@ class RhCard extends RHElement {
 .rh-card__body,
 .rh-card__footer {
   display: block;
-  margin: 0; }
+  margin-bottom: var(--rh-card--spacing); }
 
 .rh-card__header {
   --rh-broadcasted--color--text:              var(--rh-theme--color--surface--base--harmony--text, #fff);
@@ -163,57 +164,49 @@ class RhCard extends RHElement {
   --rh-broadcasted--color--ui-link--hover:    var(--rh-theme--color--surface--base--harmony--link--hover, #cce6ff);
   --rh-broadcasted--color--ui-link--focus:    var(--rh-theme--color--surface--base--harmony--link--focus, #cce6ff);
   background-color: var(--rh-card__header--backgroundColor);
-  padding: var(--rh-card--spacing) var(--rh-card--paddingRight) var(--rh-card--spacing) var(--rh-card--paddingLeft); }
+  margin-top: calc(-1 * var(--rh-card--paddingTop));
+  margin-right: calc(-1 * var(--rh-card--paddingRight));
+  margin-left: calc(-1 * var(--rh-card--paddingLeft));
+  padding-right: var(--rh-card--paddingRight);
+  padding-left: var(--rh-card--paddingLeft); }
   .rh-card__header::slotted(h1:first-child) {
     font-size: var(--rh-card__header--size);
     text-transform: var(--rh-card__header--textTransform);
     color: var(--rh-broadcasted--color--text);
-    margin-top: 0;
-    margin-bottom: 0; }
-  .rh-card__header::slotted(*:last-of-type) {
-    margin-bottom: 0; }
+    margin-top: var(--rh-card--spacing);
+    margin-bottom: var(--rh-card--spacing); }
   .rh-card__header::slotted(h2:first-child) {
     font-size: var(--rh-card__header--size);
     text-transform: var(--rh-card__header--textTransform);
     color: var(--rh-broadcasted--color--text);
-    margin-top: 0;
-    margin-bottom: 0; }
-  .rh-card__header::slotted(*:last-of-type) {
-    margin-bottom: 0; }
+    margin-top: var(--rh-card--spacing);
+    margin-bottom: var(--rh-card--spacing); }
   .rh-card__header::slotted(h3:first-child) {
     font-size: var(--rh-card__header--size);
     text-transform: var(--rh-card__header--textTransform);
     color: var(--rh-broadcasted--color--text);
-    margin-top: 0;
-    margin-bottom: 0; }
-  .rh-card__header::slotted(*:last-of-type) {
-    margin-bottom: 0; }
+    margin-top: var(--rh-card--spacing);
+    margin-bottom: var(--rh-card--spacing); }
   .rh-card__header::slotted(h4:first-child) {
     font-size: var(--rh-card__header--size);
     text-transform: var(--rh-card__header--textTransform);
     color: var(--rh-broadcasted--color--text);
-    margin-top: 0;
-    margin-bottom: 0; }
-  .rh-card__header::slotted(*:last-of-type) {
-    margin-bottom: 0; }
+    margin-top: var(--rh-card--spacing);
+    margin-bottom: var(--rh-card--spacing); }
   .rh-card__header::slotted(h5:first-child) {
     font-size: var(--rh-card__header--size);
     text-transform: var(--rh-card__header--textTransform);
     color: var(--rh-broadcasted--color--text);
-    margin-top: 0;
-    margin-bottom: 0; }
-  .rh-card__header::slotted(*:last-of-type) {
-    margin-bottom: 0; }
+    margin-top: var(--rh-card--spacing);
+    margin-bottom: var(--rh-card--spacing); }
 
-.rh-card__body {
-  padding: var(--rh-card--spacing) var(--rh-card--paddingRight) var(--rh-card--spacing) var(--rh-card--paddingLeft); }
-  .rh-card__body::slotted(*:nth-child(2)) {
-    margin-top: 0 !important; }
+.rh-card__body,
+.rh-card__footer {
+  margin-top: calc(-1 * var(--rh-card--spacing)); }
 
 .rh-card__footer {
   margin-top: auto;
-  justify-self: flex-end;
-  padding: var(--rh-card--spacing) var(--rh-card--paddingRight) var(--rh-card--paddingBottom) var(--rh-card--paddingLeft); }
+  justify-self: flex-end; }
 </style>
 <slot class="rh-card__header" name="header"></slot>
 <slot class="rh-card__body"></slot>

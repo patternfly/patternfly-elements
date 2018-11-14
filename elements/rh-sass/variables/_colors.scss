@@ -173,11 +173,11 @@ $rh-color--surface--accent--link--focus:       $rh-color--ui-link--on-dark--focu
 
 // Complement Harmony group
 $rh-color--surface--accent--harmony:                darken($rh-color--surface--accent, 10%);
-$rh-color--surface--accent--harmony--text:          $rh-color--text--on-dark !default;
-$rh-color--surface--accent--harmony--link:          $rh-color--ui-link--on-dark !default;
-$rh-color--surface--accent--harmony--link--visited: $rh-color--ui-link--on-dark--visited !default;
-$rh-color--surface--accent--harmony--link--hover:   $rh-color--ui-link--on-dark--hover !default;
-$rh-color--surface--accent--harmony--link--focus:   $rh-color--ui-link--on-dark--focus !default;
+$rh-color--surface--accent--harmony--text:          $rh-color--text !default;
+$rh-color--surface--accent--harmony--link:          $rh-color--ui-link !default;
+$rh-color--surface--accent--harmony--link--visited: $rh-color--ui-link--visited !default;
+$rh-color--surface--accent--harmony--link--hover:   $rh-color--ui-link--hover !default;
+$rh-color--surface--accent--harmony--link--focus:   $rh-color--ui-link--focus !default;
 
 /* Palette of Border Colors */
 $rh-color--surface--border:                    $rh-color--gray-200 !default;  // Was #ccc

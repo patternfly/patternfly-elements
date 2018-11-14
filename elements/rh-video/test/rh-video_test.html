@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../rh-video.js"></script>
+  </head>
+  <body>
+
+    <rh-video>
+      This is the element content.
+    </rh-video>
+
+    <script>
+      suite('<rh-video>', () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(document.querySelector('rh-video'), customElements.get("rh-video", 'rh-video should be an instance of rhVideo'));
+        });
+
+        // you need to write more tests!!!
+
+      });
+    </script>
+  </body>
+</html>

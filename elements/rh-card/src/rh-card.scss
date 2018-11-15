@@ -45,6 +45,10 @@
   padding: var(--rh-card--paddingTop) var(--rh-card--paddingRight) var(--rh-card--paddingBottom) var(--rh-card--paddingLeft);
 }
 
+slot:last-child {
+  margin-bottom: 0;
+}
+
 :host([color="dark"]) {
   --rh-card--backgroundColor:                  #{rh-color(surface--darker)};
   --rh-broadcasted--color--text:               #{rh-color(surface--darker--text)};
@@ -161,7 +165,12 @@
 .rh-card__body,
 .rh-card__footer {
   display: block;
-  margin-bottom: var(--rh-card--spacing);
+  &::slotted(*:first-child) {
+    margin-top: 0 !important;
+  }
+  &:not(:last-child) {
+    margin-bottom: var(--rh-card--spacing);
+  }
 }
 
 .rh-card__header {
@@ -176,6 +185,7 @@
   margin-top: calc(-1 * var(--rh-card--paddingTop));
   margin-right: calc(-1 * var(--rh-card--paddingRight));
   margin-left: calc(-1 * var(--rh-card--paddingLeft));
+  padding-top: var(--rh-card--spacing); // Top padding differs if background color applied
   padding-right: var(--rh-card--paddingRight);
   padding-left: var(--rh-card--paddingLeft);
   @for $n from 1 to 6 {
@@ -183,15 +193,8 @@
       font-size: var(--rh-card__header--size);
       text-transform: var(--rh-card__header--textTransform);
       color: var(--rh-broadcasted--color--text);
-      // margin-top: var(--rh-card--spacing);
-      // margin-bottom: var(--rh-card--spacing);
     }
   }
-}
-
-.rh-card__body,
-.rh-card__footer {
-  padding-top: var(--rh-card--spacing);
 }
 
 .rh-card__footer {

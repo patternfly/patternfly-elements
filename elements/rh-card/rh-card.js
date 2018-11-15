@@ -57,6 +57,9 @@ class RhCard extends RHElement {
   color: var(--rh-broadcasted--color--text);
   padding: var(--rh-card--paddingTop) var(--rh-card--paddingRight) var(--rh-card--paddingBottom) var(--rh-card--paddingLeft); }
 
+slot:last-child {
+  margin-bottom: 0; }
+
 :host([color="dark"]) {
   --rh-card--backgroundColor:                  var(--rh-theme--color--surface--darker, #464646);
   --rh-broadcasted--color--text:               var(--rh-theme--color--surface--darker--text, #fff);
@@ -153,8 +156,15 @@ class RhCard extends RHElement {
 .rh-card__header,
 .rh-card__body,
 .rh-card__footer {
-  display: block;
-  margin-bottom: var(--rh-card--spacing); }
+  display: block; }
+  .rh-card__header::slotted(*:first-child),
+  .rh-card__body::slotted(*:first-child),
+  .rh-card__footer::slotted(*:first-child) {
+    margin-top: 0 !important; }
+  .rh-card__header:not(:last-child),
+  .rh-card__body:not(:last-child),
+  .rh-card__footer:not(:last-child) {
+    margin-bottom: var(--rh-card--spacing); }
 
 .rh-card__header {
   --rh-broadcasted--color--text:              var(--rh-theme--color--surface--base--harmony--text, #fff);
@@ -167,6 +177,7 @@ class RhCard extends RHElement {
   margin-top: calc(-1 * var(--rh-card--paddingTop));
   margin-right: calc(-1 * var(--rh-card--paddingRight));
   margin-left: calc(-1 * var(--rh-card--paddingLeft));
+  padding-top: var(--rh-card--spacing);
   padding-right: var(--rh-card--paddingRight);
   padding-left: var(--rh-card--paddingLeft); }
   .rh-card__header::slotted(h1:first-child) {
@@ -189,10 +200,6 @@ class RhCard extends RHElement {
     font-size: var(--rh-card__header--size);
     text-transform: var(--rh-card__header--textTransform);
     color: var(--rh-broadcasted--color--text); }
-
-.rh-card__body,
-.rh-card__footer {
-  padding-top: var(--rh-card--spacing); }
 
 .rh-card__footer {
   margin-top: auto;

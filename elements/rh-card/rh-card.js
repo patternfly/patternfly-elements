@@ -153,14 +153,31 @@ slot:last-child {
 :host([size="small"]) {
   --rh-card--padding:        var(--rh-theme--container-spacer, 1rem); }
 
+::slotted(p) {
+  margin-top: 0 !important; }
+
+::slotted(h1) {
+  margin-top: 0 !important; }
+
+::slotted(h2) {
+  margin-top: 0 !important; }
+
+::slotted(h3) {
+  margin-top: 0 !important; }
+
+::slotted(h4) {
+  margin-top: 0 !important; }
+
+::slotted(h5) {
+  margin-top: 0 !important; }
+
+::slotted(h6) {
+  margin-top: 0 !important; }
+
 .rh-card__header,
 .rh-card__body,
 .rh-card__footer {
   display: block; }
-  .rh-card__header::slotted(*:first-child),
-  .rh-card__body::slotted(*:first-child),
-  .rh-card__footer::slotted(*:first-child) {
-    margin-top: 0 !important; }
   .rh-card__header:not(:last-child),
   .rh-card__body:not(:last-child),
   .rh-card__footer:not(:last-child) {

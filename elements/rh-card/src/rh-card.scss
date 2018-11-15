@@ -161,13 +161,17 @@ slot:last-child {
   --rh-card--padding:        #{rh-var(container-spacer)};
 }
 
+// Remove top margin from typography inside the component
+@each $tag in (p, h1, h2, h3, h4, h5, h6) {
+  ::slotted(#{$tag}) {
+    margin-top: 0 !important;
+  }
+}
+
 .rh-card__header,
 .rh-card__body,
 .rh-card__footer {
   display: block;
-  &::slotted(*:first-child) {
-    margin-top: 0 !important;
-  }
   &:not(:last-child) {
     margin-bottom: var(--rh-card--spacing);
   }
@@ -182,12 +186,15 @@ slot:last-child {
   --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--base--harmony--link--focus)};
   // Set the header background color
   background-color: var(--rh-card__header--backgroundColor);
+  // Margin style only on top and sides
   margin-top: calc(-1 * var(--rh-card--paddingTop));
   margin-right: calc(-1 * var(--rh-card--paddingRight));
   margin-left: calc(-1 * var(--rh-card--paddingLeft));
+  // Padding for the header region
   padding-top: var(--rh-card--spacing); // Top padding differs if background color applied
   padding-right: var(--rh-card--paddingRight);
   padding-left: var(--rh-card--paddingLeft);
+  // Heading styles
   @for $n from 1 to 6 {
     &::slotted(h#{$n}:first-child) {
       font-size: var(--rh-card__header--size);

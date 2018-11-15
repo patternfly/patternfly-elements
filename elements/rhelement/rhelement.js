@@ -139,6 +139,13 @@ class RHElement extends HTMLElement {
     this[name] = value;
   }
 
+  var(name) {
+    return window
+      .getComputedStyle(this)
+      .getPropertyValue(name)
+      .trim();
+  }
+
   render() {
     this.shadowRoot.innerHTML = "";
     this.template.innerHTML = this.html;

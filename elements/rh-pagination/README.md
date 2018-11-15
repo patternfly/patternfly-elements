@@ -53,12 +53,3 @@ We recommend not using the show-pages variant unless absolutely necessary. This 
 ## Serial navigation
 
 When it's unimportant for the user to know how many items are in the series, the standalone previous & next links can be used. The user can then simply navigate to the next item in the series. Information such as the title of the next item can be passed into the links, rather than "previous" and "next".
-
-
-
-
-
-
-
-
-

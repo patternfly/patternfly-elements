@@ -30,3 +30,34 @@ Pagination (and all RHElements) use [Prettier][prettier] to auto-format JS and J
 [prettier-ed]: https://github.com/prettier/prettier/#editor-integration
 [polyserve]: https://github.com/Polymer/polyserve
 [web-component-tester]: https://github.com/Polymer/web-component-tester
+
+-----
+
+# UX Guidelines
+
+## Variants
+
+- `default` - the pagination component comes with previous and next functionality 
+- `show-jump` - allows the user to know the total number of pages, and jump to the last page by clicking on the number. Also provides an input field for the user to jump to any page. 
+- `show-pages` - adds a series of numbers for the user to browse the first few pages
+
+
+## Standard pagination
+
+The best user experience for a long list of pages is the show-jump variant, which exposes the range. This is because the "next" button is the first item in the rh-pagination component for keyboard navigation, as well as screen-readers. Through the show-jump variant, users can both understand how many pages are in the series, and can also navigate to any page in the list.
+
+We recommend not using the show-pages variant unless absolutely necessary. This variant adds complexity and visual clutter.
+
+
+## Serial navigation
+
+When it's unimportant for the user to know how many items are in the series, the standalone previous & next links can be used. The user can then simply navigate to the next item in the series. Information such as the title of the next item can be passed into the links, rather than "previous" and "next".
+
+
+
+
+
+
+
+
+

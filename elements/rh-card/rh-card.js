@@ -172,37 +172,27 @@ class RhCard extends RHElement {
   .rh-card__header::slotted(h1:first-child) {
     font-size: var(--rh-card__header--size);
     text-transform: var(--rh-card__header--textTransform);
-    color: var(--rh-broadcasted--color--text);
-    margin-top: var(--rh-card--spacing);
-    margin-bottom: var(--rh-card--spacing); }
+    color: var(--rh-broadcasted--color--text); }
   .rh-card__header::slotted(h2:first-child) {
     font-size: var(--rh-card__header--size);
     text-transform: var(--rh-card__header--textTransform);
-    color: var(--rh-broadcasted--color--text);
-    margin-top: var(--rh-card--spacing);
-    margin-bottom: var(--rh-card--spacing); }
+    color: var(--rh-broadcasted--color--text); }
   .rh-card__header::slotted(h3:first-child) {
     font-size: var(--rh-card__header--size);
     text-transform: var(--rh-card__header--textTransform);
-    color: var(--rh-broadcasted--color--text);
-    margin-top: var(--rh-card--spacing);
-    margin-bottom: var(--rh-card--spacing); }
+    color: var(--rh-broadcasted--color--text); }
   .rh-card__header::slotted(h4:first-child) {
     font-size: var(--rh-card__header--size);
     text-transform: var(--rh-card__header--textTransform);
-    color: var(--rh-broadcasted--color--text);
-    margin-top: var(--rh-card--spacing);
-    margin-bottom: var(--rh-card--spacing); }
+    color: var(--rh-broadcasted--color--text); }
   .rh-card__header::slotted(h5:first-child) {
     font-size: var(--rh-card__header--size);
     text-transform: var(--rh-card__header--textTransform);
-    color: var(--rh-broadcasted--color--text);
-    margin-top: var(--rh-card--spacing);
-    margin-bottom: var(--rh-card--spacing); }
+    color: var(--rh-broadcasted--color--text); }
 
 .rh-card__body,
 .rh-card__footer {
-  margin-top: calc(-1 * var(--rh-card--spacing)); }
+  padding-top: var(--rh-card--spacing); }
 
 .rh-card__footer {
   margin-top: auto;

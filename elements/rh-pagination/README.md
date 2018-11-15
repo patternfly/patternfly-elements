@@ -39,7 +39,7 @@ Pagination (and all RHElements) use [Prettier][prettier] to auto-format JS and J
 
 - `default` - the pagination component comes with previous and next functionality 
 - `show-jump` - allows the user to know the total number of pages, and jump to the last page by clicking on the number. Also provides an input field for the user to jump to any page. 
-- `show-pages` - adds a series of numbers for the user to browse the first few pages
+- @TODO  `show-pages` - adds a series of numbers for the user to browse the first few pages. Also only appears when the element query state is larger than 768px.
 
 
 ## Standard pagination

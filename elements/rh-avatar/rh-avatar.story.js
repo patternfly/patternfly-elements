@@ -7,7 +7,6 @@ import {
 } from "@storybook/addon-knobs/polymer";
 
 import "./rh-avatar";
-import "./rh-layouts.css";
 
 const stories = storiesOf("Avatar", module);
 stories.addDecorator(withKnobs);
@@ -44,7 +43,7 @@ stories.add("rh-avatar", () => {
     <h1>Dynamic example</h1>
     <h2>Use knobs to adjust!</h2>
 
-    <!-- <link rel="stylesheet" type="text/css" href="/rh-layouts/rh-layouts.css"> -->
+    <link rel="stylesheet" type="text/css" href="/rh-layouts/rh-layouts.css">
 
     <div class="rh-l-bullseye">
       <div class="rh-l-bullseye__item">

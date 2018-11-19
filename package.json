@@ -62,7 +62,7 @@
     "lodash.clonedeep": "^4.5.0",
     "node-sass": "^4.9.2",
     "polymer-webpack-loader": "^2.0.3",
-    "prettier": "^1.14.0",
+    "prettier": "^1.15.2",
     "requirejs": "^2.3.5",
     "rollup": "^0.66.6",
     "rollup-plugin-babel": "^3.0.7",

@@ -26,7 +26,7 @@
           const img = rha.shadowRoot.querySelector('img');
           img.addEventListener('load', () => {
             assert.isTrue(img.complete, "image completes loading");
-            assert.isAbove(img.naturalWidth, 0, "image has a natural resolution");
+                assert.isAbove(img.naturalWidth, 0, "image has a natural resolution");
             done();
           });
           rha.src="mwcz.jpg";

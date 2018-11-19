@@ -28,11 +28,16 @@ class RhAvatar extends RHElement {
     return `
 <style>
 :host {
-  --rh-avatar--pattern-color1: var(--rh-theme--color--ui-accent, #cce6ff);
-  --rh-avatar--pattern-color2: var(--rh-theme--color--ui-accent--hover, #cce6ff);
+  --rh-avatar--pattern-color1: var(
+    --rh-avatar--color--background,
+    var(--rh-theme--color--ui-accent, #cce6ff)
+  );
+  --rh-avatar--pattern-color2: var(
+    --rh-avatar--color--foreground,
+    var(--rh-theme--color--ui-accent--hover, #cce6ff)
+  );
   --rh-avatar--text-color: var(--rh-theme--color--text--on-dark, #333);
   --rh-avatar--font-size: var(--rh-theme--font-size--heading--alpha, 1em);
-  --rh-avatar--border-radius: 16px;
   --rh-avatar--width: 128px;
   display: block;
   position: relative;
@@ -60,13 +65,16 @@ class RhAvatar extends RHElement {
     transform: translate(-50%, -50%);
     color: var(--rh-avatar--text-color);
     font-size: calc(2 * var(--rh-avatar--font-size));
+    line-height: 1em;
     font-weight: bold;
     text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3); }
 
-:host([shape=rounded]) img, :host([shape=rounded]) canvas {
-  border-radius: calc( var(--rh-avatar--width) / 8 + 1px); }
+:host([shape="rounded"]) img,
+:host([shape="rounded"]) canvas {
+  border-radius: calc(var(--rh-avatar--width) / 8 + 1px); }
 
-:host([shape=circle]) img, :host([shape=circle]) canvas {
+:host([shape="circle"]) img,
+:host([shape="circle"]) canvas {
   border-radius: 50%; }
 
 :host([src]) canvas {

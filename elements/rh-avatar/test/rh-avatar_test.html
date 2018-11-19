@@ -16,8 +16,8 @@
         test('it should upgrade', () => {
           assert.instanceOf(document.querySelector('rh-avatar'), customElements.get("rh-avatar", 'rh-avatar should be an instance of rhAvatar'));
         });
-        test('it should default to shape: "square"', () => {
-          assert.propertyVal(document.querySelector('#default-shape'), 'shape', 'square');
+        test('it should default to pattern: "square"', () => {
+          assert.propertyVal(document.querySelector('#default-shape'), 'pattern', 'squares');
         });
 
         // you need to write more tests!!!

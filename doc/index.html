@@ -1,25 +1,45 @@
-<!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>RHElements</title>
+        <meta charset="utf-8" >
+        <meta name="viewport" content="width=device-width" >
+        <title>RH Elements</title>
+
+        
+        <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+        <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+        <script>
+            require([
+              '../elements/rh-card/rh-card.umd.js',
+              '../elements/rh-cta/rh-cta.umd.js'
+            ]);
+        </script>
+
+        <noscript></noscript>
+
+        <link href="../elements/rhelement/rhelement.min.css" rel="stylesheet" />
     </head>
-    <body>
-
-        <h1>RHElements demos</h1>
-
-        <ul>
-            <li><a href="../elements/rh-accordion/demo">rh-accordion</a></li>
-            <li><a href="../elements/rh-card/demo">rh-card</a></li>
-            <li><a href="../elements/rh-cta/demo">rh-cta</a></li>
-            <li><a href="../elements/rh-datetime/demo">rh-datetime</a></li>
-            <li><a href="../elements/rh-health-index/demo">rh-health-index</a></li>
-            <li><a href="../elements/rh-icon-panel/demo">rh-icon-panel</a></li>
-            <li><a href="../elements/rh-icon/demo">rh-icon</a></li>
-            <li><a href="../elements/rh-number/demo">rh-number</a></li>
-            <li><a href="../elements/rh-tabs/demo">rh-tabs</a></li>
-        </ul>
-
+    <body unresolved>
+        <h1>Demos</h1>
+        <ul id="demos"><li><a href="../elements/rh-accordion/demo">rh-accordion</a></li>
+					<li><a href="../elements/rh-band/demo">rh-band</a></li>
+					<li><a href="../elements/rh-button/demo">rh-button</a></li>
+					<li><a href="../elements/rh-card/demo">rh-card</a></li>
+					<li><a href="../elements/rh-cta/demo">rh-cta</a></li>
+					<li><a href="../elements/rh-datetime/demo">rh-datetime</a></li>
+					<li><a href="../elements/rh-dropdown/demo">rh-dropdown</a></li>
+					<li><a href="../elements/rh-dropdown-button/demo">rh-dropdown-button</a></li>
+					<li><a href="../elements/rh-dropdown-menu/demo">rh-dropdown-menu</a></li>
+					<li><a href="../elements/rh-health-index/demo">rh-health-index</a></li>
+					<li><a href="../elements/rh-icon/demo">rh-icon</a></li>
+					<li><a href="../elements/rh-icon-panel/demo">rh-icon-panel</a></li>
+					<li><a href="../elements/rh-layouts/demo">rh-layouts</a></li>
+					<li><a href="../elements/rh-multiswitch/demo">rh-multiswitch</a></li>
+					<li><a href="../elements/rh-number/demo">rh-number</a></li>
+					<li><a href="../elements/rh-search-result/demo">rh-search-result</a></li>
+					<li><a href="../elements/rh-tabs/demo">rh-tabs</a></li>
+					<li><a href="../elements/rh-video/demo">rh-video</a></li>
+					<li><a href="../elements/rh-video-band/demo">rh-video-band</a></li></ul>
     </body>
 </html>

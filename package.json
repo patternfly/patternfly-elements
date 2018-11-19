@@ -1,7 +1,7 @@
 {
   "name": "@rhelements/rhelements",
   "scripts": {
-    "start": "spandx",
+    "start": "npm run index && spandx",
     "lerna": "lerna",
     "test": "npm run build && wct --configFile wct.conf.json test/index.html",
     "build": "lerna run build",
@@ -13,7 +13,8 @@
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
     "gh-pages-storybook": "storybook-to-ghpages",
     "deploy-storybook": "npm run build-storybook && npm run gh-pages-storybook",
-    "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject && npm run bootstrap"
+    "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject && npm run bootstrap",
+    "index": "node scripts/doc-listing-update.js"
   },
   "husky": {
     "hooks": {
@@ -78,7 +79,8 @@
     "yo": "^1.8.5"
   },
   "dependencies": {
-    "gh-pages": "^2.0.0"
+    "gh-pages": "^2.0.0",
+    "node-html-parser": "^1.1.11"
   },
   "lint-staged": {
     "*.{js,json}": [

@@ -52,7 +52,7 @@ stories.add("rh-cta", () => {
   </section>
   <section>
     <h2>Markup</h2>
-    <pre><code>&lt;rh-cta${valueAttr}${colorAttr}&gt;${textValue}&lt;/rh-cta&gt;</code></pre>
+    <pre><code>&lt;rh-cta${valueAttr}${colorAttr}&gt;&lt;a href="#"&gt;${textValue}&lt;/a&gt;&lt;/rh-cta&gt;</code></pre>
   </section>
   <section>
     <h2>At a glance</h2>

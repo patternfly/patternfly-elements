@@ -65,6 +65,10 @@ You can use any locale here.
 
 The value of this should be the same timestamp that you add to the light DOM.
 
+### timestamp (observed)
+
+A unix timestamp that will be converted for use in displaying the appropriate date. You would not use both datetime and timestamp, and the last updated will take precedence.
+
 ### type (observed)
 
 The options for type are:

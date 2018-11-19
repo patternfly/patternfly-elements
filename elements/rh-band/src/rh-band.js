@@ -35,9 +35,9 @@ class RhBand extends RHElement {
     return "rh-band.scss";
   }
 
-  // static get observedAttributes() {
-  //   return [];
-  // }
+  static get observedAttributes() {
+    return ["img-src"];
+  }
 
   constructor() {
     super(RhBand.tag);
@@ -49,7 +49,13 @@ class RhBand extends RHElement {
 
   // disconnectedCallback() {}
 
-  // attributeChangedCallback(attr, oldValue, newValue) {}
+  attributeChangedCallback(attr, oldValue, newValue) {
+    const imgSrc = newValue;
+    // Set the image as the background image
+    console.log(this.shadowRoot);
+    this.shadowRoot.querySelector(".rh-band__container").style.backgroundImage =
+      "url('" + imgSrc + "')";
+  }
 }
 
 RHElement.create(RhBand);

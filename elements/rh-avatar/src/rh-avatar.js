@@ -128,6 +128,9 @@ class RhAvatar extends RHElement {
   }
 
   _findInitials(name) {
+    if (!name || name.length === 0) {
+      return [];
+    }
     const nameArr = name.trim().split(/\s+/);
     const fi = nameArr[0][0];
     const li = nameArr.length > 1 ? nameArr[nameArr.length - 1][0] : "";

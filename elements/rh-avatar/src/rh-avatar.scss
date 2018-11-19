@@ -1,19 +1,86 @@
 @import "../../rh-sass/rh-sass";
 :host {
-  display: block;
+    --rh-avatar--pattern-color1: var(--rh-theme--color--ui-accent, #cce6ff);
+    --rh-avatar--pattern-color2: var(--rh-theme--color--ui-accent--hover, #cce6ff);
+    --rh-avatar--text-color: var(--rh-theme--color--text--on-dark, #333);
+    --rh-avatar--font-size: var(--rh-theme--font-size--heading--alpha, 1em);
+    --rh-avatar--border-radius: 16px;
+    --rh-avatar--width: 128px;
 
-  canvas {
-    width: 100%;
+    display: block;
+    position: relative;
 
-    image-rendering: optimizeSpeed;             /* Older versions of FF          */
-    image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
-    image-rendering: -webkit-optimize-contrast; /* Safari                        */
-    image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
-    image-rendering: pixelated;                 /* Awesome future-browsers       */
-    -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
-  }
+    width: var(--rh-avatar--width);
+    height: var(--rh-avatar--width); // not a typo; width == height
+
+    canvas {
+        // width: var(--rh-avatar--width);
+        // height: var(--rh-avatar--width);
+        width: 100%;
+        height: 100%;
+
+        image-rendering: optimizeSpeed;             /* Older versions of FF          */
+        image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+        image-rendering: -webkit-optimize-contrast; /* Safari                        */
+        image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+        image-rendering: pixelated;                 /* Awesome future-browsers       */
+        -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
+    }
+
+    #initials {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        color: var(--rh-avatar--text-color);
+        font-size: calc(2 * var(--rh-avatar--font-size));
+        font-weight: bold;
+        text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+}
+
+:host([shape=rounded]) {
+    // when border radius lines up with the size of the avatar's random
+    // patterns, it looks nice, so make border-radius the same size as the
+    // patterns, ie 1/8th the width of the avatars.  add 1px beacuse it looks
+    // just a little bit better.
+    img, canvas {
+        border-radius: calc( var(--rh-avatar--width) / 8 + 1px );
+    }
+}
+
+:host([shape=circle]) {
+    img, canvas {
+        border-radius: 50%;
+    }
+}
+
+// when src attribute is provided, show the img but hide the canvas
+:host([src]) {
+    canvas {
+        display: none;
+    }
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+// when src attribute is not present, hide the img
+:host(:not([src])) img {
+    display: none;
+}
+
+// when show-initials attribute is not present, hide initials
+:host(:not([show-initials])) #initials {
+    display: none;
 }
 
 :host([hidden]) {
-  display: none;
+    display: none;
 }

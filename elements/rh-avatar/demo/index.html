@@ -33,10 +33,14 @@
     <ul id="app">
       <li v-for="person in people">
         <div>
-          <input type="text" v-model:value="person.name">
+          <input type="text" v-model:name="person.name">
         </div>
-        <rh-avatar shape="square" v-bind:value="person.name"></rh-avatar>
-        <rh-avatar shape="triangle" v-bind:value="person.name"></rh-avatar>
+        <rh-avatar shape=rounded pattern="squares" v-bind:name="person.name"></rh-avatar>
+        <br>
+        <rh-avatar show-initials pattern="triangles" v-bind:name="person.name"></rh-avatar>
+        <br>
+        <rh-avatar src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg" v-bind:name="person.name"></rh-avatar>
+        <br>
       </li>
     </ul>
 
@@ -45,14 +49,14 @@
         el: "#app",
         data: {
           people: [
-            { name: "Tyler Martin" },
-            { name: "Michael Clayton" },
-            { name: "Mark Caron" },
-            { name: "Kyle Buchanan" },
-            { name: "Krystal Moore" },
-            { name: "Kendall Totten" },
-            { name: "Homa" },
-            { name: "Cassondra Roberts" },
+            { name: "Edison Lionetti" },
+            { name: "Libbie Koscinski" },
+            { name: "Blanca Rohloff" },
+            { name: "Edwardo Lindsey" },
+            { name: "Eleanore Stillwagon" },
+            { name: "Dominick Psencik" },
+            { name: "Arlene Boliek" },
+            { name: "Leland Asp" },
             { name: "" },
           ]
         }
@@ -62,7 +66,7 @@
         app.people[app.people.length - 1].name = Math.random();
       };
 
-      setInterval(animate, 1000);
+      // setInterval(animate, 1000);
     </script>
 
   </body>

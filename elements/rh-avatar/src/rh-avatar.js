@@ -37,38 +37,46 @@ class RhAvatar extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["value", "shape"];
+    return ["name", "pattern", "src", "shape"];
   }
 
-  static get shapes() {
+  static get patterns() {
     return {
-      triangle: "triangle",
-      square: "square"
+      triangles: "triangles",
+      squares: "squares"
     };
   }
 
-  get value() {
-    return this.getAttribute("value");
+  get name() {
+    return this.getAttribute("name");
   }
 
-  set value(val) {
-    return this.setAttribute("value", val);
+  set name(val) {
+    return this.setAttribute("name", val);
   }
 
-  get shape() {
-    return this.getAttribute("shape") || RhAvatar.shapes.square;
+  get src() {
+    return this.getAttribute("src");
   }
 
-  set shape(name) {
-    if (!RhAvatar.shapes[name]) {
+  set src(href) {
+    return this.setAttribute("src", href);
+  }
+
+  get pattern() {
+    return this.getAttribute("pattern") || RhAvatar.patterns.squares;
+  }
+
+  set pattern(name) {
+    if (!RhAvatar.patterns[name]) {
       this.log(
-        `invalid shape "${name}", valid shapes are: ${Object.values(
-          RhAvatar.shapes
+        `invalid pattern "${name}", valid patterns are: ${Object.values(
+          RhAvatar.patterns
         )}`
       );
       return;
     }
-    return this.setAttribute("shape", name);
+    return this.setAttribute("pattern", name);
   }
 
   constructor() {
@@ -78,25 +86,7 @@ class RhAvatar extends RHElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this._canvas = this.shadowRoot.querySelector("canvas");
-    this._canvas.width = 608;
-    this._canvas.height = 608;
-
-    this._squareSize = this._canvas.width / 8;
-    this._triangleSize = this._canvas.width / 4;
-
-    this._ctx = this._canvas.getContext("2d");
-
-    this._color1 =
-      window
-        .getComputedStyle(this)
-        .getPropertyValue("--rh-theme--color--ui-accent")
-        .trim() || "#cce6ff";
-    this._color2 =
-      window
-        .getComputedStyle(this)
-        .getPropertyValue("--rh-theme--color--ui-accent--hover")
-        .trim() || "#464646";
+    this._initCanvas();
 
     this.dispatchEvent(
       new CustomEvent(`${RhAvatar.tag}:connected`, {
@@ -108,31 +98,71 @@ class RhAvatar extends RHElement {
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(...arguments);
 
-    const value = this.getAttribute("value");
+    switch (attr) {
+      case "name":
+      case "pattern":
+        break;
+      case "src":
+        break;
+
+      default:
+    }
 
     if (this.connected) {
-      this._update(value);
+      this.update();
     } else {
-      this.addEventListener(`${RhAvatar.tag}:connected`, () =>
-        this._update(value)
-      );
+      this.addEventListener(`${RhAvatar.tag}:connected`, () => this.update());
     }
   }
 
-  _update(newValue) {
-    const bitPattern = hash(newValue).toString(2);
-    const arrPattern = bitPattern.split("").map(n => Number(n));
+  _initCanvas() {
+    this._canvas = this.shadowRoot.querySelector("canvas");
+    const size = this.var("--rh-avatar--width").replace(/px$/, "");
+    this._canvas.width = size;
+    this._canvas.height = size;
 
-    this._clear();
-    this._drawBackground();
-    if (this.shape === RhAvatar.shapes.square) {
-      this._drawSquarePattern(arrPattern);
-    } else if (this.shape === RhAvatar.shapes.triangle) {
-      this._drawTrianglePattern(arrPattern);
+    this._squareSize = this._canvas.width / 8;
+    this._triangleSize = this._canvas.width / 4;
+
+    this._ctx = this._canvas.getContext("2d");
+  }
+
+  _findInitials(name) {
+    const nameArr = name.trim().split(/\s+/);
+    const fi = nameArr[0][0];
+    const li = nameArr.length > 1 ? nameArr[nameArr.length - 1][0] : "";
+    return [fi, li];
+  }
+
+  _setInitials(initials) {
+    this.shadowRoot.querySelector("#initials").textContent = initials.join("");
+  }
+
+  _getColors() {
+    this._color1 = this.var("--rh-avatar--pattern-color1");
+    this._color2 = this.var("--rh-avatar--pattern-color2");
+  }
+
+  update() {
+    this._setInitials(this._findInitials(this.name));
+
+    // if we have a src element, update the img, otherwise update the random pattern
+    if (this.hasAttribute("src")) {
+      this.shadowRoot.querySelector("img").src = this.src;
+    } else {
+      const bitPattern = hash(this.name).toString(2);
+      const arrPattern = bitPattern.split("").map(n => Number(n));
+
+      this._getColors();
+      this._clear();
+      this._drawBackground();
+      if (this.pattern === RhAvatar.patterns.squares) {
+        this._drawSquarePattern(arrPattern);
+      } else if (this.pattern === RhAvatar.patterns.triangles) {
+        this._drawTrianglePattern(arrPattern);
+      }
+      this._drawGradient();
     }
-    this._drawGradient();
-
-    console.log(arrPattern.join("").padStart(32, 0));
   }
 
   _clear() {
@@ -178,10 +208,9 @@ class RhAvatar extends RHElement {
   _drawTrianglePattern(pattern) {
     this._ctx.fillStyle = this._color2;
     if (this._ctx) {
-      const patternFlip = pattern;
-      let i = patternFlip.length;
+      let i = pattern.length;
       while (i--) {
-        if (patternFlip[i]) {
+        if (pattern[i]) {
           const x = Math.floor(i / 2) % 2;
           const y = Math.floor(i / 4);
           const alt = i % 4;
@@ -251,9 +280,20 @@ class RhAvatar extends RHElement {
       this._canvas.width,
       0
     );
-    gradient.addColorStop(0, `${this._color2}cc`);
-    gradient.addColorStop(1, `${this._color2}00`);
-    gradient.addColorStop(1, `${this._color2}CC`);
+    let gradientColor1 = `${this._color2}`;
+    let gradientColor2 = `${this._color2}`;
+    if (/^#[A-f0-9]{3}$/.test(this._color2)) {
+      // color is of the form "#fff"
+      gradientColor1 += "c";
+      gradientColor2 += "0";
+    } else if (/^#[A-f0-9]{6}$/.test(this._color2)) {
+      // color is of the form "#ffffff"
+      gradientColor1 += "cc";
+      gradientColor2 += "00";
+    }
+    gradient.addColorStop(0, gradientColor1);
+    gradient.addColorStop(1, gradientColor2);
+    gradient.addColorStop(1, gradientColor1);
     this._ctx.fillStyle = gradient;
     this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
   }

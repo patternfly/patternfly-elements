@@ -5,8 +5,10 @@ import {
   select,
   boolean
 } from "@storybook/addon-knobs/polymer";
+
 import "./rh-card";
-import cpTheme from "../../themes/cp-theme/cp-theme.js";
+import "../../themes/cp-theme/cp-theme.js";
+
 import { escapeHTML } from "../../.storybook/utils.js";
 
 const stories = storiesOf("Card", module);

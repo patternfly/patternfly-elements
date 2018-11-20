@@ -20,7 +20,7 @@ module.exports = function factory({
       .src(`./${elementName}.js`)
       .pipe(
         replace(
-          /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)(\.js['"];)$/gm,
+          /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
           "$1$2.umd$3"
         )
       )

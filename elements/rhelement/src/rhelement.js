@@ -139,11 +139,15 @@ class RHElement extends HTMLElement {
     this[name] = value;
   }
 
-  var(name) {
+  static var(name, element = document.body) {
     return window
-      .getComputedStyle(this)
+      .getComputedStyle(element)
       .getPropertyValue(name)
       .trim();
+  }
+
+  var(name) {
+    return RHElement.var(name, this);
   }
 
   render() {
@@ -161,6 +165,8 @@ class RHElement extends HTMLElement {
     RHElement.log(`[${this.tag}]`, ...msgs);
   }
 }
+
+window.RHElement = RHElement;
 
 autoReveal(RHElement.log);
 

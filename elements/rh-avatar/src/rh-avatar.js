@@ -22,6 +22,7 @@
 
 import RHElement from "../rhelement/rhelement.js";
 import { hash } from "./djb-hash.js";
+import { hsl2rgb, rgb2hsl } from "./hslrgb.js";
 
 class RhAvatar extends RHElement {
   static get tag() {
@@ -141,9 +142,57 @@ class RhAvatar extends RHElement {
     this.shadowRoot.querySelector("#initials").textContent = initials.join("");
   }
 
-  _getColors() {
-    this._color1 = this.var("--rh-avatar--pattern-color1");
-    this._color2 = this.var("--rh-avatar--pattern-color2");
+  static _registerColors() {
+    this.colors = [];
+    const themeColors = RHElement.var("--rh-avatar--colors");
+
+    themeColors.split(/\s+/).forEach(colorCode => {
+      let pattern;
+      switch (colorCode.length) {
+        case 4: // ex: "#0fc"
+          pattern = /^#([A-f0-9])([A-f0-9])([A-f0-9])$/.exec(colorCode);
+          if (pattern) {
+            pattern.shift();
+            const color = pattern.map(c => parseInt(c + c, 16));
+            this._registerColor(color);
+          } else {
+            RHElement.log(`[rh-avatar] invalid color ${colorCode}`);
+          }
+          break;
+        case 7: // ex: "#00ffcc"
+          pattern = /^#([A-f0-9]{2})([A-f0-9]{2})([A-f0-9]{2})$/.exec(
+            colorCode
+          );
+          if (pattern) {
+            pattern.shift();
+            const color = pattern.map(c => parseInt(c, 16));
+            this._registerColor(color);
+          } else {
+            RHElement.log(`[rh-avatar] invalid color ${colorCode}`);
+          }
+      }
+    });
+
+    return this.colors;
+  }
+
+  static _registerColor(color) {
+    RhAvatar.colors.push({
+      color1: `rgb(${color.join(",")})`,
+      color2: `rgb(${this._adjustColor(color).join(",")})`
+    });
+  }
+
+  static _adjustColor(color) {
+    const dark = 0.1;
+    const l_adj = 0.1; // luminance adjustment
+    const hsl = rgb2hsl(...color);
+
+    // if luminance is too dark already, then lighten the alternate color
+    // instead of darkening it.
+    hsl[2] += hsl[2] > dark ? -l_adj : l_adj;
+
+    return hsl2rgb(...hsl);
   }
 
   update() {
@@ -155,8 +204,12 @@ class RhAvatar extends RHElement {
     } else {
       const bitPattern = hash(this.name).toString(2);
       const arrPattern = bitPattern.split("").map(n => Number(n));
+      this._colorIndex = Math.floor(
+        (RhAvatar.colors.length * parseInt(bitPattern, 2)) / Math.pow(2, 32)
+      );
+      this.color1 = RhAvatar.colors[this._colorIndex].color1;
+      this.color2 = RhAvatar.colors[this._colorIndex].color2;
 
-      this._getColors();
       this._clear();
       this._drawBackground();
       if (this.pattern === RhAvatar.patterns.squares) {
@@ -164,7 +217,7 @@ class RhAvatar extends RHElement {
       } else if (this.pattern === RhAvatar.patterns.triangles) {
         this._drawTrianglePattern(arrPattern);
       }
-      this._drawGradient();
+      // this._drawGradient();
     }
   }
 
@@ -173,12 +226,12 @@ class RhAvatar extends RHElement {
   }
 
   _drawBackground() {
-    this._ctx.fillStyle = this._color1;
+    this._ctx.fillStyle = this.color1;
     this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
   }
 
   _drawSquarePattern(pattern) {
-    this._ctx.fillStyle = this._color2;
+    this._ctx.fillStyle = this.color2;
     if (this._ctx) {
       let i = pattern.length;
       while (i--) {
@@ -209,7 +262,7 @@ class RhAvatar extends RHElement {
   }
 
   _drawTrianglePattern(pattern) {
-    this._ctx.fillStyle = this._color2;
+    this._ctx.fillStyle = this.color2;
     if (this._ctx) {
       let i = pattern.length;
       while (i--) {
@@ -283,13 +336,14 @@ class RhAvatar extends RHElement {
       this._canvas.width,
       0
     );
-    let gradientColor1 = `${this._color2}`;
-    let gradientColor2 = `${this._color2}`;
-    if (/^#[A-f0-9]{3}$/.test(this._color2)) {
+    const color = this.color2;
+    let gradientColor1 = color;
+    let gradientColor2 = color;
+    if (/^#[A-f0-9]{3}$/.test(color)) {
       // color is of the form "#fff"
       gradientColor1 += "c";
       gradientColor2 += "0";
-    } else if (/^#[A-f0-9]{6}$/.test(this._color2)) {
+    } else if (/^#[A-f0-9]{6}$/.test(color)) {
       // color is of the form "#ffffff"
       gradientColor1 += "cc";
       gradientColor2 += "00";
@@ -301,6 +355,8 @@ class RhAvatar extends RHElement {
     this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
   }
 }
+
+RhAvatar._registerColors();
 
 RHElement.create(RhAvatar);
 

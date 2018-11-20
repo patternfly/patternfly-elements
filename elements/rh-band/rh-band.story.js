@@ -9,6 +9,7 @@ stories.addDecorator(withKnobs);
 stories.add("rh-band", () => {
   // Pointer to theme file
   const themeLabel = "Theme file";
+  const themeValue = text(themeLabel, "");
 
   // Attributes
   const colorLabel = "Color";
@@ -21,7 +22,7 @@ stories.add("rh-band", () => {
     complement: "complement",
     accent: "accent"
   };
-  const colorDefault = "base";
+  const colorDefault = "light";
   const colorValue = select(colorLabel, colorOptions, colorDefault);
   let colorAttr = colorValue != "base" ? ` color="${colorValue}"` : "";
 
@@ -46,24 +47,30 @@ stories.add("rh-band", () => {
 
   const footerLabel = "Footer";
   const footerDefault =
-    "<rh-cta priority='primary'><a href='#'>Learn more</a></rh-cta>";
+    '<rh-cta priority="primary"><a href="#">Learn more</a></rh-cta>';
   const footerValue = text(footerLabel, footerDefault);
 
   const asideLabel = "Aside";
   const asideDefault =
-    "<rh-card color='complement'><p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p><rh-cta priority='tertiary'><a href='#'>Learn more</a></rh-cta></rh-card>";
+    '<rh-card color="dark"><h3>Lorem ipsum</h3><p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat.</p><rh-cta priority="tertiary" on="dark"><a href="#">Learn more</a></rh-cta></rh-card>';
   const asideValue = text(asideLabel, asideDefault);
 
   return `
   <section>
     <h2>Your RH Element</h2>
     <rh-band${colorAttr}>
-      ${titleValue || headingValue || summaryValue ? '<div slot="header">' : ""}
-        ${titleValue ? '<h2 slot="title">' + titleValue + "</h2>" : ""}
-        ${headingValue ? '<h3 slot="heading">' + headingValue + "</h3>" : ""}
-        ${summaryValue ? '<p slot="summary">' + summaryValue + "</p>" : ""}
-      ${titleValue || headingValue || summaryValue ? '</div">' : ""}
-      ${bodyValue ? "<div>" + bodyValue + "</div>" : ""}
+        ${titleValue ? '<h2 slot="header_title">' + titleValue + "</h2>" : ""}
+        ${
+          headingValue
+            ? '<h3 slot="header_heading">' + headingValue + "</h3>"
+            : ""
+        }
+        ${
+          summaryValue
+            ? '<p slot="header_summary">' + summaryValue + "</p>"
+            : ""
+        }
+      ${bodyValue ? bodyValue : ""}
       ${footerValue ? '<div slot="footer">' + footerValue + "</div>" : ""}
       ${asideValue ? '<div slot="aside">' + asideValue + "</div>" : ""}
     </rh-band>
@@ -72,31 +79,27 @@ stories.add("rh-band", () => {
     <h2>Markup</h2>
     <pre>
     &lt;rh-band${colorAttr}&gt;
-      ${
-        titleValue || headingValue || summaryValue
-          ? '&lt;div slot="header"&gt;'
-          : ""
-      }
         ${
           titleValue
-            ? "&lt;h2 slot='title&gt;" + escapeHTML(titleValue) + "&lt;/h2&gt;"
+            ? '&lt;h2 slot="header_title"&gt;' +
+              escapeHTML(titleValue) +
+              "&lt;/h2&gt;"
             : ""
         }
         ${
           headingValue
-            ? "&lt;h3 slot='heading'&gt;" +
+            ? '&lt;h3 slot="header_heading"&gt;' +
               escapeHTML(headingValue) +
               "&lt;/h3&gt;"
             : ""
         }
         ${
           summaryValue
-            ? "&lt;p slot='summary'&gt;" +
+            ? '&lt;p slot="header_summary"&gt;' +
               escapeHTML(summaryValue) +
               "&lt;/p&gt;"
             : ""
         }
-      ${titleValue || headingValue || summaryValue ? "&lt;/div&gt;" : ""}
       ${
         bodyValue
           ? "&lt;div&gt;\n\t" + escapeHTML(bodyValue) + "\n      &lt;/div&gt;"
@@ -104,14 +107,14 @@ stories.add("rh-band", () => {
       }
       ${
         footerValue
-          ? "&lt;div slot='footer'&gt;\n\t" +
+          ? '&lt;div slot="footer"&gt;\n\t' +
             escapeHTML(footerValue) +
             "\n      &lt;/div&gt;"
           : ""
       }
       ${
         asideValue
-          ? "&lt;div slot='aside'&gt;\n\t" +
+          ? '&lt;div slot="aside"&gt;\n\t' +
             escapeHTML(asideValue) +
             "\n      &lt;/div&gt;"
           : ""

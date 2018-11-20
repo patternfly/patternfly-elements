@@ -17,11 +17,15 @@
   --rh-band--borderStyle:                      #{rh-var(surface--border-style)};
   // Header-specific settings
   --rh-band_header--title--size:               #{rh-var(font-size--heading--gamma)};
-  --rh-band_header--heading--size:             #{rh-var(font-size--heading--gamma)};
-  --rh-band_header--summary--size:             #{rh-var(font-size--heading--gamma)};
-  --rh-band_header--title--weight:             #{rh-var(font-size--heading--gamma)};
-  --rh-band_header--heading--weight:           #{rh-var(font-size--heading--gamma)};
-  --rh-band_header--summary--weight:           #{rh-var(font-size--heading--gamma)};
+  --rh-band_header--heading--size:             #{rh-var(font-size--heading--alpha)};
+  --rh-band_header--summary--size:             #{rh-var(font-size--heading--delta)};
+  --rh-band_header--title--weight:             800;
+  --rh-band_header--heading--weight:           600;
+  --rh-band_header--summary--weight:           400;
+  // Layouts, grid layouts
+  --rh-band_header--layout:                    1fr;
+  --rh-band_body--layout:                      1fr;
+  --rh-band_footer--layout:                    1fr;
   // Text colors
   --rh-broadcasted--color--text:               #{rh-color(surface--base--text)};
   --rh-broadcasted--color--ui-link:            #{rh-color(surface--base--link)};
@@ -45,7 +49,7 @@
 }
 
 :host([color="dark"]) {
-  --rh-band--backgroundColor:                       #{rh-color(surface--darker)};
+  --rh-band--backgroundColor:                  #{rh-color(surface--darker)};
   --rh-broadcasted--color--text:               #{rh-color(surface--darker--text)};
   --rh-broadcasted--color--ui-link:            #{rh-color(surface--darker--link)};
   --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--darker--link--visited)};
@@ -150,6 +154,83 @@ a {
     padding-left: var(--rh-band--paddingLeft);
     width: var(--rh-band--width);
     margin: 0 auto;
+    // Aside layouts
+    // &[position~="right"] {
+      display: flex;
+      flex-direction: column;
+      @media (min-width: 768px) {
+        flex-direction: row;
+      }
+      > * {
+        flex-grow: 1;
+        @media (min-width: 588px) {
+          float: left;
+          width: 100%;
+        }
+        @media (max-width: 767px) {
+          margin-bottom: 30px;
+          clear: both;
+        }
+        &:first-child {
+          @media (min-width: 768px) {
+            width: calc(100% - 280px);
+            margin-right: 2.5702331142%;
+          }
+          @media (min-width: 992px) {
+            width: calc(100% - 330px);
+          }
+          @media (min-width: 1200px) {
+            width: calc(100% - 330px);
+          }
+        }
+        &:last-child {
+          margin-bottom: 0;
+        }
+        &:not(:first-child) {
+          @media (min-width: 768px) {
+            width: 250px;
+          }
+          @media (min-width: 992px) {
+            width: 300px;
+          }
+          @media (min-width: 1200px) {
+            width: 300px;
+          }
+        }
+      // }
+    }
+
+    // &[position~="left"] {
+        // @include aside($side: left, $query: "bp");
+    // }
+
+    // &[position~="swap"] {
+        // @include aside($side: right, $query: "bp", $swap: true);
+    // }
+
+    // &[position="left swap"] {
+    //     @include aside($side: left, $query: "bp", $swap: true);
+    // }
+
+    //////////////////////////////////////////////////////
+    // Specifically for SOLP usage, do not reuse elsewhere
+
+    // WIDE ASIDE: FOR FORMS IN THE SIDEBAR
+    // @include data-layout("~", aside-right-swap-wide) {
+    //     @include aside($side: right, $query: "bp", $swap: true, $sidebar-md: $aside-wide, $sidebar-lg: $aside-wide);
+    // }
+
+    // @include data-layout("~", aside-right-wide) {
+    //     @include aside($side: right, $query: "bp", $sidebar-md: $aside-wide, $sidebar-lg: $aside-wide);
+    // }
+
+    // @include data-layout("~", aside-left-swap-wide) {
+    //     @include aside($side: left, $query: "bp", $swap: true, $sidebar-md: $aside-wide, $sidebar-lg: $aside-wide);
+    // }
+
+    // @include data-layout("~", aside-left-wide) {
+    //     @include aside($side: left, $query: "bp", $sidebar-md: $aside-wide, $sidebar-lg: $aside-wide);
+    // }
   }
   &__header,
   &__body,
@@ -169,17 +250,57 @@ a {
     }
   }
   &__header {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 0;
+    // @media screen and (min-width: 768px) {
+    //   grid-template-columns: var(--rh-band_body--layout);
+    //   grid-gap: rh-var(container-spacer);
+    // }
     &--title {
-      font-size: var(--rh-card_header--title--size);
-      font-weight: var(--rh-card_header--title--weight);
+      @for $n from 1 to 6 {
+        &::slotted(h#{$n}) {
+          font-size: var(--rh-band_header--title--size);
+          font-weight: var(--rh-band_header--title--weight);
+          text-transform: uppercase;
+          margin-top: 0;
+        }
+      }
     }
     &--heading {
-      font-size: var(--rh-card_header--heading--size);
-      font-weight: var(--rh-card_header--heading--weight);
+      @for $n from 1 to 6 {
+        &::slotted(h#{$n}) {
+          font-size: var(--rh-band_header--heading--size);
+          font-weight: var(--rh-band_header--heading--weight);
+          margin-top: 0;
+        }
+      }
     }
     &--summary {
-      font-size: var(--rh-card_header--summary--size);
-      font-weight: var(--rh-card_header--summary--weight);
+      &::slotted(p) {
+        font-size: var(--rh-band_header--summary--size);
+        font-weight: var(--rh-band_header--summary--weight);
+        margin-top: 0;
+      }
     }
+  }
+  &__body {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: rh-var(container-spacer);
+    @media screen and (min-width: 768px) {
+      grid-template-columns: var(--rh-band_body--layout);
+    }
+  }
+  &__footer {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: rh-var(container-spacer);
+    @media screen and (min-width: 768px) {
+      grid-template-columns: var(--rh-band_body--layout);
+    }
+  }
+  &__aside {
+    max-width: 250px;
   }
 }

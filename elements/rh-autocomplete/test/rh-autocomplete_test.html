@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <title>rh-autocomplete tests</title>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
@@ -9,19 +10,76 @@
   </head>
   <body>
 
-    <rh-autocomplete>
-      This is the element content.
-    </rh-autocomplete>
+    <test-fixture id="autocomplete">
+      <template>
+        <rh-autocomplete></rh-autocomplete>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="autocomplete-has-init-value">
+      <template>
+        <rh-autocomplete init-value="uni"></rh-autocomplete>
+      </template>
+    </test-fixture>
 
     <script>
+
       suite('<rh-autocomplete>', () => {
-        test('it should upgrade', () => {
-          assert.instanceOf(document.querySelector('rh-autocomplete'), customElements.get("rh-autocomplete", 'rh-autocomplete should be an instance of rhAutocomplete'));
+        let autocompleteElem,
+            searchBoxElem,
+            input,
+            clearButton,
+            searchButton;
+
+        setup(function() {
+          autocompleteElem = fixture('autocomplete');
+
+          //rh-search-box
+          searchBoxElem = autocompleteElem.shadowRoot.querySelector('rh-search-box');
+          input = searchBoxElem.shadowRoot.querySelector('input');
+          clearButton = searchBoxElem.shadowRoot.querySelector('button.clear-search');
+          searchButton = searchBoxElem.shadowRoot.querySelector('button.search-button');
+
+          //rh-search-droplist
+          droplistElem = autocompleteElem.shadowRoot.querySelector('rh-search-droplist');
         });
 
-        // you need to write more tests!!!
+        test('it should upgrade', () => {
+          assert.instanceOf(autocompleteElem, customElements.get("rh-autocomplete", 'rh-autocomplete should be an instance of rhAutocomplete'));
+        });
+
+        test('should clear search when user press x button', () => {
+          input.value = 'test';
+          clearButton.click();
+          assert.isTrue(input.value === '');
+        });
+
+        test('hides x button when inputbox is empty', () => {
+          input.value = '';
+          assert.equal('', clearButton.style.display);
+        });
+
+        test('should emit an rh-search-event after click on searchBoxElem', (done) => {
+          const handlerSpy = sinon.spy();
+          input.value = 'test';
+          document.addEventListener('rh-search-event', handlerSpy);
+          searchButton.click();
+
+          const [event] = handlerSpy.getCall(0).args;
+
+          sinon.assert.calledOnce(handlerSpy);
+          assert.equal('test', event.detail.searchValue);
+          done();
+
+          // reset
+          document.removeEventListener('rh-search-event', handlerSpy);
+          input.value = '';
+        });
 
       });
+
+      a11ySuite('autocomplete');
+
     </script>
   </body>
 </html>

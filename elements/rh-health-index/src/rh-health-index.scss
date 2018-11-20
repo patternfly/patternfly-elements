@@ -32,7 +32,7 @@ $rh-health--color-f: #a30000;
 .box-container {
   display: flex;
   border: 1px solid #{rh-color(surface--border)};
-  margin-left: #{rh-var(container-spacer--xs)};
+  margin-left: calc(#{rh-var(container-spacer)} * 0.5);
 
   .box {
     background: $rh-health--color-bg;

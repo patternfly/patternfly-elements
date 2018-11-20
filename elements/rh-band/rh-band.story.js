@@ -22,37 +22,37 @@ stories.add("rh-band", () => {
     accent: "accent"
   };
   const colorDefault = "base";
-  const colorValue = select(colorType, colorOptions, colorDefault);
+  const colorValue = select(colorLabel, colorOptions, colorDefault);
   let colorAttr = colorValue != "base" ? ` color="${colorValue}"` : "";
 
   // Slots
-  const titleType = "Title";
+  const titleLabel = "Title";
   const titleDefault = "Foo bar";
-  const titleValue = text(titleType, titleDefault);
+  const titleValue = text(titleLabel, titleDefault);
 
-  const headingType = "Heading";
+  const headingLabel = "Heading";
   const headingDefault = "Lorem ipsum dolor sit amet";
-  const headingValue = text(headingType, headingDefault);
+  const headingValue = text(headingLabel, headingDefault);
 
-  const summaryType = "Summary";
+  const summaryLabel = "Summary";
   const summaryDefault =
     "Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.";
-  const summaryValue = text(summaryType, summaryDefault);
+  const summaryValue = text(summaryLabel, summaryDefault);
 
-  const bodyType = "Body";
+  const bodyLabel = "Body";
   const bodyDefault =
     "<p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>";
-  const bodyValue = text(bodyType, bodyDefault);
+  const bodyValue = text(bodyLabel, bodyDefault);
 
-  const footerType = "Footer";
+  const footerLabel = "Footer";
   const footerDefault =
     "<rh-cta priority='primary'><a href='#'>Learn more</a></rh-cta>";
-  const footerValue = text(footerType, footerDefault);
+  const footerValue = text(footerLabel, footerDefault);
 
-  const asideType = "Aside";
+  const asideLabel = "Aside";
   const asideDefault =
     "<rh-card color='complement'><p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p><rh-cta priority='tertiary'><a href='#'>Learn more</a></rh-cta></rh-card>";
-  const asideValue = text(asideType, asideDefault);
+  const asideValue = text(asideLabel, asideDefault);
 
   return `
   <section>
@@ -70,17 +70,53 @@ stories.add("rh-band", () => {
   </section>
   <section>
     <h2>Markup</h2>
-    <pre style="margin-left:15px;">
-    <code>&lt;rh-band${colorAttr}&gt;
-      ${titleValue || headingValue || summaryValue ? '&lt;div slot="header"&gt;' : ""}
-        ${titleValue ? "&lt;h2 slot='title&gt;" + escapeHTML(titleValue) + "&lt;/h2&gt;" : ""}
-        ${headingValue ? "&lt;h3 slot='heading'&gt;" + escapeHTML(headingValue) + "&lt;/h3&gt;" : ""}
-        ${summaryValue ? "&lt;p slot='summary'&gt;" + escapeHTML(summaryValue) + "&lt;/p&gt;" : ""}
+    <pre>
+    &lt;rh-band${colorAttr}&gt;
+      ${
+        titleValue || headingValue || summaryValue
+          ? '&lt;div slot="header"&gt;'
+          : ""
+      }
+        ${
+          titleValue
+            ? "&lt;h2 slot='title&gt;" + escapeHTML(titleValue) + "&lt;/h2&gt;"
+            : ""
+        }
+        ${
+          headingValue
+            ? "&lt;h3 slot='heading'&gt;" +
+              escapeHTML(headingValue) +
+              "&lt;/h3&gt;"
+            : ""
+        }
+        ${
+          summaryValue
+            ? "&lt;p slot='summary'&gt;" +
+              escapeHTML(summaryValue) +
+              "&lt;/p&gt;"
+            : ""
+        }
       ${titleValue || headingValue || summaryValue ? "&lt;/div&gt;" : ""}
-      ${bodyValue ? "&lt;div&gt;" + escapeHTML(bodyValue) + "&lt;/div&gt;" : ""}
-      ${footerValue ? "&lt;div slot='footer'&gt;" + escapeHTML(footerValue) + "&lt;/div&gt;" : ""}
-      ${asideValue ? "&lt;div slot='aside'&gt;" + escapeHTML(asideValue) + "&lt;/div&gt;" : ""}
-      &lt;/rh-band&gt;</code>
+      ${
+        bodyValue
+          ? "&lt;div&gt;\n\t" + escapeHTML(bodyValue) + "\n      &lt;/div&gt;"
+          : ""
+      }
+      ${
+        footerValue
+          ? "&lt;div slot='footer'&gt;\n\t" +
+            escapeHTML(footerValue) +
+            "\n      &lt;/div&gt;"
+          : ""
+      }
+      ${
+        asideValue
+          ? "&lt;div slot='aside'&gt;\n\t" +
+            escapeHTML(asideValue) +
+            "\n      &lt;/div&gt;"
+          : ""
+      }
+    &lt;/rh-band&gt;
     </pre>
   </section>
   `;

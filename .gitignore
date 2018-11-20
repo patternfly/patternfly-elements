@@ -4,7 +4,7 @@ tmp
 
 # Logs
 lerna-debug.log
-npm-debug.log
+npm-debug.log*
 
 # Local files
 *.local.umd.js

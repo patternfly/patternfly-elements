@@ -170,6 +170,18 @@ class RhTabs extends RHElement {
   padding: 0;
   padding-right: var(--rh-theme--container-padding, 1rem);
   padding-left: calc(var(--rh-theme--container-padding, 1rem) * 2); }
+
+:host([rh-variant="primary"]) .tabs {
+  border-bottom: transparent;
+  border-right: transparent;
+  justify-content: space-between; }
+
+:host([vertical][rh-variant="primary"]) {
+  align-items: flex-start; }
+
+:host([rh-variant="secondary"]) .tabs {
+  border-bottom: transparent;
+  justify-content: space-between; }
 </style>
 <div class="tabs">
   <slot name="tab"></slot>
@@ -192,7 +204,7 @@ class RhTabs extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["vertical", "selected-index"];
+    return ["vertical", "selected-index", "rh-variant"];
   }
 
   get selectedIndex() {
@@ -244,6 +256,18 @@ class RhTabs extends RHElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
+      case "rh-variant":
+        if (this.getAttribute("rh-variant") === "primary") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("rh-variant", "primary")
+          );
+        } else if (this.getAttribute("rh-variant") === "secondary") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("rh-variant", "secondary")
+          );
+        }
+        break;
+
       case "vertical":
         if (this.hasAttribute("vertical")) {
           this.setAttribute("aria-orientation", "vertical");
@@ -522,6 +546,62 @@ class RhTab extends RHElement {
 :host(:focus),
 :host(:focus-visible) {
   outline: var(--rh-theme--ui--focus-outline-width, 1px) var(--rh-theme--ui--focus-outline-style, solid) var(--rh-tabs--focus); }
+
+:host([rh-variant="primary"]) {
+  text-align: center;
+  padding: 0 5px 16px; }
+  :host([rh-variant="primary"]) .indicator {
+    width: 100%;
+    left: 0; }
+
+:host([rh-variant="primary"][aria-selected="true"]) {
+  border: transparent; }
+
+:host([rh-variant="primary"][aria-selected="false"]) {
+  border: transparent; }
+  :host([rh-variant="primary"][aria-selected="false"]) .indicator {
+    display: none; }
+
+:host([rh-variant="secondary"]) {
+  text-align: center;
+  padding: 10px 44px;
+  border: 1px solid #252527; }
+  :host([rh-variant="secondary"]) .indicator {
+    position: absolute;
+    display: block;
+    bottom: -15px;
+    width: 0;
+    height: 0; }
+
+:host([vertical][rh-variant="primary"]) {
+  text-align: right;
+  padding-right: 16px; }
+  :host([vertical][rh-variant="primary"]) .indicator {
+    left: auto;
+    right: 0;
+    top: 0;
+    display: var(--rh-tabs__indicator--Display, block);
+    height: var(--rh-tabs__indicator--Height, 22px);
+    width: var(--rh-tabs__indicator--Width, 4px); }
+
+:host([vertical][rh-variant="primary"][aria-selected="true"]) {
+  border: transparent !important; }
+
+:host([rh-variant="secondary"][aria-selected="true"]) {
+  background-color: #252527;
+  color: #ffffff; }
+  :host([rh-variant="secondary"][aria-selected="true"]) .indicator {
+    border-left: var(--rh-theme--container-spacer, 1rem) solid transparent;
+    border-right: var(--rh-theme--container-spacer, 1rem) solid transparent;
+    border-top: var(--rh-theme--container-spacer, 1rem) solid #252527;
+    background-color: transparent; }
+
+:host([rh-variant="secondary"][aria-selected="false"]) {
+  color: #0477a4; }
+
+:host([rh-variant="secondary"]:hover) {
+  background-color: #252527;
+  color: #ffffff; }
 </style>
 <slot></slot>
 <div class="indicator"></div>`;

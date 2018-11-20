@@ -59,3 +59,26 @@ $rh-tabs__panel--PaddingLeft-factor:  2;
   padding-right: #{rh-var(container-padding)};
   padding-left: calc(#{rh-var(container-padding)} * #{$rh-tabs__panel--PaddingLeft-factor});
 }
+
+/// ===========================================================================
+/// TAB VARIANTS
+/// ===========================================================================
+
+:host([rh-variant="primary"]) {
+  .tabs {
+    border-bottom: transparent;
+    border-right: transparent;
+    justify-content: space-between; 
+  }
+}
+:host([vertical][rh-variant="primary"]) {
+  align-items: flex-start;
+} 
+
+:host([rh-variant="secondary"]) {
+  .tabs {
+    border-bottom: transparent;
+    justify-content: space-between; 
+  }
+}
+

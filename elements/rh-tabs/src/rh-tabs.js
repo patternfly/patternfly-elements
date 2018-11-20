@@ -145,7 +145,7 @@ class RhTabs extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["vertical", "selected-index"];
+    return ["vertical", "selected-index", "rh-variant"];
   }
 
   get selectedIndex() {
@@ -197,6 +197,18 @@ class RhTabs extends RHElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
+      case "rh-variant":
+        if (this.getAttribute("rh-variant") === "primary") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("rh-variant", "primary")
+          );
+        } else if (this.getAttribute("rh-variant") === "secondary") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("rh-variant", "secondary")
+          );
+        }
+        break;
+
       case "vertical":
         if (this.hasAttribute("vertical")) {
           this.setAttribute("aria-orientation", "vertical");

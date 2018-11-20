@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/polymer";
 import { withKnobs, text, select } from "@storybook/addon-knobs/polymer";
-import { configureViewport } from "@storybook/addon-viewport";
+import { escapeHTML } from "../../.storybook/utils.js";
 import "./rh-band";
 
 const stories = storiesOf("Band", module);
@@ -67,6 +67,21 @@ stories.add("rh-band", () => {
       ${footerValue ? '<div slot="footer">' + footerValue + "</div>" : ""}
       ${asideValue ? '<div slot="aside">' + asideValue + "</div>" : ""}
     </rh-band>
+  </section>
+  <section>
+    <h2>Markup</h2>
+    <pre style="margin-left:15px;">
+    <code>&lt;rh-band${colorAttr}&gt;
+      ${titleValue || headingValue || summaryValue ? '&lt;div slot="header"&gt;' : ""}
+        ${titleValue ? "&lt;h2 slot='title&gt;" + escapeHTML(titleValue) + "&lt;/h2&gt;" : ""}
+        ${headingValue ? "&lt;h3 slot='heading'&gt;" + escapeHTML(headingValue) + "&lt;/h3&gt;" : ""}
+        ${summaryValue ? "&lt;p slot='summary'&gt;" + escapeHTML(summaryValue) + "&lt;/p&gt;" : ""}
+      ${titleValue || headingValue || summaryValue ? "&lt;/div&gt;" : ""}
+      ${bodyValue ? "&lt;div&gt;" + escapeHTML(bodyValue) + "&lt;/div&gt;" : ""}
+      ${footerValue ? "&lt;div slot='footer'&gt;" + escapeHTML(footerValue) + "&lt;/div&gt;" : ""}
+      ${asideValue ? "&lt;div slot='aside'&gt;" + escapeHTML(asideValue) + "&lt;/div&gt;" : ""}
+      &lt;/rh-band&gt;</code>
+    </pre>
   </section>
   `;
 });

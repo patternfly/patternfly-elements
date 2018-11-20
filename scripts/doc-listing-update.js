@@ -1,4 +1,3 @@
-const parser = require("node-html-parser");
 const fs = require("fs");
 const path = require("path");
 
@@ -28,11 +27,10 @@ const index = path.join(__dirname, "../doc/index.html");
 // Read in the wrapper template
 fs.readFile(wrapper, (err, data) => {
   if (err) throw err;
-  const content = data.toString();
-  const root = parser.parse(content, { script: true, style: true });
-  root.querySelector("#demos").set_content(markup);
+  let content = data.toString();
+  content = content.replace("<!-- Inject list -->", markup + "\n\t\t\t\t");
   // Output the updated index file
-  fs.writeFile(index, root.toString(), function(err) {
+  fs.writeFile(index, content, function(err) {
     if (err) throw err;
   });
 });

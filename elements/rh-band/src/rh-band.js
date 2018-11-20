@@ -52,9 +52,10 @@ class RhBand extends RHElement {
   attributeChangedCallback(attr, oldValue, newValue) {
     const imgSrc = newValue;
     // Set the image as the background image
-    console.log(this.shadowRoot);
-    this.shadowRoot.querySelector(".rh-band__container").style.backgroundImage =
-      "url('" + imgSrc + "')";
+    if (imgSrc) {
+      this.shadowRoot.querySelector(".rh-band__wrapper").style.backgroundImage =
+        "url('" + imgSrc + "')";
+    }
   }
 }
 

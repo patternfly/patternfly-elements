@@ -26,9 +26,18 @@ stories.add("rh-band", () => {
   let colorAttr = colorValue != "base" ? ` color="${colorValue}"` : "";
 
   // Slots
-  const headerType = "Header";
-  const headerDefault = "Lorem ipsum dolor sit amet";
-  const headerValue = text(headerType, headerDefault);
+  const titleType = "Title";
+  const titleDefault = "Foo bar";
+  const titleValue = text(titleType, titleDefault);
+
+  const headingType = "Heading";
+  const headingDefault = "Lorem ipsum dolor sit amet";
+  const headingValue = text(headingType, headingDefault);
+
+  const summaryType = "Summary";
+  const summaryDefault =
+    "Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.";
+  const summaryValue = text(summaryType, summaryDefault);
 
   const bodyType = "Body";
   const bodyDefault =
@@ -49,10 +58,14 @@ stories.add("rh-band", () => {
   <section>
     <h2>Your RH Element</h2>
     <rh-band${colorAttr}>
-      ${headerValue ? '<h2 name="header">' + headerValue + "</h2>" : ""}
+      ${titleValue || headingValue || summaryValue ? '<div slot="header">' : ""}
+        ${titleValue ? '<h2 slot="title">' + titleValue + "</h2>" : ""}
+        ${headingValue ? '<h3 slot="heading">' + headingValue + "</h3>" : ""}
+        ${summaryValue ? '<p slot="summary">' + summaryValue + "</p>" : ""}
+      ${titleValue || headingValue || summaryValue ? '</div">' : ""}
       ${bodyValue ? "<div>" + bodyValue + "</div>" : ""}
-      ${footerValue ? '<div name="footer">' + footerValue + "</div>" : ""}
-      ${asideValue ? '<div name="aside">' + asideValue + "</div>" : ""}
+      ${footerValue ? '<div slot="footer">' + footerValue + "</div>" : ""}
+      ${asideValue ? '<div slot="aside">' + asideValue + "</div>" : ""}
     </rh-band>
   </section>
   `;

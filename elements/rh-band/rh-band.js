@@ -27,32 +27,26 @@ class RhBand extends RHElement {
     return `
 <style>
 :host {
-  --rh-band--paddingTop:                       calc(var(--rh-theme--container-spacer, 1rem) * 4);
-  --rh-band--paddingRight:                     var(--rh-theme--container-spacer, 1rem);
-  --rh-band--paddingBottom:                    calc(var(--rh-theme--container-spacer, 1rem) * 4);
-  --rh-band--paddingLeft:                      var(--rh-theme--container-spacer, 1rem);
+  --rh-band--paddingTop:                      calc(var(--rh-theme--container-spacer, 1rem) * 4);
+  --rh-band--paddingRight:                    var(--rh-theme--container-spacer, 1rem);
+  --rh-band--paddingBottom:                   calc(var(--rh-theme--container-spacer, 1rem) * 4);
+  --rh-band--paddingLeft:                     var(--rh-theme--container-spacer, 1rem);
   --rh-band--backgroundColor:                 var(--rh-theme--color--surface--base, #dfdfdf);
   --rh-band--backgroundPositionX:             center;
   --rh-band--backgroundPositionY:             center;
-  --rh-band--borderColor:                      transparent;
-  --rh-band--borderTopWidth:                   var(--rh-theme--surface--border-width, 1px);
-  --rh-band--borderBottomWidth:                var(--rh-theme--surface--border-width, 1px);
-  --rh-band--borderStyle:                      var(--rh-theme--surface--border-style, solid);
-  --rh-band_header--title--size:               var(--rh-theme--font-size--heading--gamma, 21px);
-  --rh-band_header--heading--size:             var(--rh-theme--font-size--heading--alpha, 32px);
-  --rh-band_header--summary--size:             var(--rh-theme--font-size--heading--delta, 18px);
-  --rh-band_header--title--weight:             600;
-  --rh-band_header--heading--weight:           600;
-  --rh-band_header--summary--weight:           300;
-  --rh-band_header--layout:                    1fr;
-  --rh-band_body--layout:                      1fr;
-  --rh-band_footer--layout:                    1fr;
-  --rh-broadcasted--color--text:               var(--rh-theme--color--surface--base--text, #333);
-  --rh-broadcasted--color--ui-link:            var(--rh-theme--color--surface--base--link, #00538c);
-  --rh-broadcasted--color--ui-link--visited:   var(--rh-theme--color--surface--base--link--visited, #7551a6);
-  --rh-broadcasted--color--ui-link--hover:     var(--rh-theme--color--surface--base--link--hover, #00305b);
-  --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--base--link--focus, #00305b);
-  --rh-band--width:                            auto; }
+  --rh-band--borderColor:                     transparent;
+  --rh-band--borderTopWidth:                  var(--rh-theme--surface--border-width, 1px);
+  --rh-band--borderBottomWidth:               var(--rh-theme--surface--border-width, 1px);
+  --rh-band--borderStyle:                     var(--rh-theme--surface--border-style, solid);
+  --rh-band_header--layout:                   1fr;
+  --rh-band_body--layout:                     1fr;
+  --rh-band_footer--layout:                   1fr;
+  --rh-broadcasted--color--text:              var(--rh-theme--color--surface--base--text, #333);
+  --rh-broadcasted--color--ui-link:           var(--rh-theme--color--surface--base--link, #00538c);
+  --rh-broadcasted--color--ui-link--visited:  var(--rh-theme--color--surface--base--link--visited, #7551a6);
+  --rh-broadcasted--color--ui-link--hover:    var(--rh-theme--color--surface--base--link--hover, #00305b);
+  --rh-broadcasted--color--ui-link--focus:    var(--rh-theme--color--surface--base--link--focus, #00305b);
+  --rh-band--width:                           auto; }
   @media screen and (min-width: 576px) {
     :host {
       --rh-band--width: calc(576px - calc(var(--rh-band--paddingRight) * 2)); } }
@@ -79,7 +73,7 @@ class RhBand extends RHElement {
   --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--darker--link--focus, #cce6ff); }
 
 :host([color="darkest"]) {
-  --rh-band--backgroundColor:                       var(--rh-theme--color--surface--darkest, #131313);
+  --rh-band--backgroundColor:                  var(--rh-theme--color--surface--darkest, #131313);
   --rh-broadcasted--color--text:               var(--rh-theme--color--surface--darkest--text, #fff);
   --rh-broadcasted--color--ui-link:            var(--rh-theme--color--surface--darkest--link, #99ccff);
   --rh-broadcasted--color--ui-link--visited:   var(--rh-theme--color--surface--darkest--link--visited, #b38cd9);
@@ -87,7 +81,7 @@ class RhBand extends RHElement {
   --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--darkest--link--focus, #cce6ff); }
 
 :host([color="light"]) {
-  --rh-band--backgroundColor:                       var(--rh-theme--color--surface--lighter, #ececec);
+  --rh-band--backgroundColor:                  var(--rh-theme--color--surface--lighter, #ececec);
   --rh-broadcasted--color--text:               var(--rh-theme--color--surface--lighter--text, #333);
   --rh-broadcasted--color--ui-link:            var(--rh-theme--color--surface--lighter--link, #06c);
   --rh-broadcasted--color--ui-link--visited:   var(--rh-theme--color--surface--lighter--link--visited, rebeccapurple);
@@ -95,7 +89,7 @@ class RhBand extends RHElement {
   --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--lighter--link--focus, #003366); }
 
 :host([color="lightest"]) {
-  --rh-band--backgroundColor:                       var(--rh-theme--color--surface--lightest, #fff);
+  --rh-band--backgroundColor:                  var(--rh-theme--color--surface--lightest, #fff);
   --rh-broadcasted--color--text:               var(--rh-theme--color--surface--lightest--text, #333);
   --rh-broadcasted--color--ui-link:            var(--rh-theme--color--surface--lightest--link, #06c);
   --rh-broadcasted--color--ui-link--visited:   var(--rh-theme--color--surface--lightest--link--visited, rebeccapurple);
@@ -159,163 +153,72 @@ a {
   padding-bottom: 0;
   padding-left: var(--rh-band--paddingLeft);
   width: var(--rh-band--width);
-  margin: 0 auto;
+  margin: 0 auto; }
+
+.rh-band__container, .rh-band__content {
   display: flex;
   flex-direction: column; }
   @media (min-width: 768px) {
-    .rh-band__container {
+    .rh-band__container, .rh-band__content {
       flex-direction: row; } }
-  .rh-band__container > * {
+  .rh-band__container > *, .rh-band__content > * {
     flex-grow: 1; }
     @media (min-width: 588px) {
-      .rh-band__container > * {
+      .rh-band__container > *, .rh-band__content > * {
         float: left;
         width: 100%; } }
     @media (max-width: 767px) {
-      .rh-band__container > * {
-        margin-bottom: 30px;
+      .rh-band__container > *, .rh-band__content > * {
+        margin-bottom: 2rem;
         clear: both; } }
     @media (min-width: 768px) {
-      .rh-band__container > *:first-child {
-        width: calc(100% - 280px);
+      .rh-band__container > *:first-child, .rh-band__content > *:first-child {
+        width: calc(100% - 250px + 2rem);
         margin-right: 2.5702331142%; } }
     @media (min-width: 992px) {
-      .rh-band__container > *:first-child {
-        width: calc(100% - 330px); } }
-    @media (min-width: 1200px) {
-      .rh-band__container > *:first-child {
-        width: calc(100% - 330px); } }
-    .rh-band__container > *:last-child {
+      .rh-band__container > *:first-child, .rh-band__content > *:first-child {
+        width: calc(100% - 300px + 2rem); } }
+    .rh-band__container > *:last-child, .rh-band__content > *:last-child {
       margin-bottom: 0; }
+    @media (min-width: 588px) {
+      [aside-position~="left"] .rh-band__container > *, [aside-position~="left"] .rh-band__content > * {
+        float: right; } }
     @media (min-width: 768px) {
-      .rh-band__container > *:not(:first-child) {
-        width: 250px; } }
-    @media (min-width: 992px) {
-      .rh-band__container > *:not(:first-child) {
-        width: 300px; } }
-    @media (min-width: 1200px) {
-      .rh-band__container > *:not(:first-child) {
-        width: 300px; } }
+      [aside-position~="left"] .rh-band__container > *:first-child, [aside-position~="left"] .rh-band__content > *:first-child {
+        margin-left: 2.5702331142%; } }
+    [aside-position~="left"] .rh-band__container > *:last-child, [aside-position~="left"] .rh-band__content > *:last-child {
+      order: -1; }
+
+.rh-band__main > *:not(:last-child) {
+  margin-bottom: var(--rh-theme--container-spacer, 1rem); }
 
 .rh-band__header, .rh-band__body, .rh-band__footer, .rh-band__aside {
-  display: block;
-  margin: 0; }
-  .rh-band__header::slotted(*:nth-child(2)), .rh-band__body::slotted(*:nth-child(2)), .rh-band__footer::slotted(*:nth-child(2)), .rh-band__aside::slotted(*:nth-child(2)) {
-    margin-top: 0 !important; }
-  .rh-band__header::slotted(h1:first-child), .rh-band__body::slotted(h1:first-child), .rh-band__footer::slotted(h1:first-child), .rh-band__aside::slotted(h1:first-child) {
-    margin-top: 0 !important;
-    font-size: var(--rh-band_header--size); }
-  .rh-band__header::slotted(h2:first-child), .rh-band__body::slotted(h2:first-child), .rh-band__footer::slotted(h2:first-child), .rh-band__aside::slotted(h2:first-child) {
-    margin-top: 0 !important;
-    font-size: var(--rh-band_header--size); }
-  .rh-band__header::slotted(h3:first-child), .rh-band__body::slotted(h3:first-child), .rh-band__footer::slotted(h3:first-child), .rh-band__aside::slotted(h3:first-child) {
-    margin-top: 0 !important;
-    font-size: var(--rh-band_header--size); }
-  .rh-band__header::slotted(h4:first-child), .rh-band__body::slotted(h4:first-child), .rh-band__footer::slotted(h4:first-child), .rh-band__aside::slotted(h4:first-child) {
-    margin-top: 0 !important;
-    font-size: var(--rh-band_header--size); }
-  .rh-band__header::slotted(h5:first-child), .rh-band__body::slotted(h5:first-child), .rh-band__footer::slotted(h5:first-child), .rh-band__aside::slotted(h5:first-child) {
-    margin-top: 0 !important;
-    font-size: var(--rh-band_header--size); }
+  display: block; }
+  .rh-band__header::slotted(*), .rh-band__body::slotted(*), .rh-band__footer::slotted(*), .rh-band__aside::slotted(*) {
+    margin-top: 0; }
 
-.rh-band__header--title::slotted(h1) {
-  font-size: var(--rh-band_header--title--size);
-  font-weight: var(--rh-band_header--title--weight);
+.rh-band__header::slotted([typography="title"]) {
+  font-size: var(--rh-theme--font-size--heading--gamma, 21px);
+  font-weight: 600;
+  line-height: 1;
   color: var(--rh-theme--color--ui-accent, #fe460d);
   text-transform: uppercase;
   margin-top: 0; }
+  .rh-band__header::slotted([typography="title"]):not(:last-child) {
+    margin-bottom: .65em; }
 
-.rh-band__header--title::slotted(h1:not(:last-child)) {
-  margin-bottom: .65em; }
-
-.rh-band__header--title::slotted(h2) {
-  font-size: var(--rh-band_header--title--size);
-  font-weight: var(--rh-band_header--title--weight);
-  color: var(--rh-theme--color--ui-accent, #fe460d);
-  text-transform: uppercase;
-  margin-top: 0; }
-
-.rh-band__header--title::slotted(h2:not(:last-child)) {
-  margin-bottom: .65em; }
-
-.rh-band__header--title::slotted(h3) {
-  font-size: var(--rh-band_header--title--size);
-  font-weight: var(--rh-band_header--title--weight);
-  color: var(--rh-theme--color--ui-accent, #fe460d);
-  text-transform: uppercase;
-  margin-top: 0; }
-
-.rh-band__header--title::slotted(h3:not(:last-child)) {
-  margin-bottom: .65em; }
-
-.rh-band__header--title::slotted(h4) {
-  font-size: var(--rh-band_header--title--size);
-  font-weight: var(--rh-band_header--title--weight);
-  color: var(--rh-theme--color--ui-accent, #fe460d);
-  text-transform: uppercase;
-  margin-top: 0; }
-
-.rh-band__header--title::slotted(h4:not(:last-child)) {
-  margin-bottom: .65em; }
-
-.rh-band__header--title::slotted(h5) {
-  font-size: var(--rh-band_header--title--size);
-  font-weight: var(--rh-band_header--title--weight);
-  color: var(--rh-theme--color--ui-accent, #fe460d);
-  text-transform: uppercase;
-  margin-top: 0; }
-
-.rh-band__header--title::slotted(h5:not(:last-child)) {
-  margin-bottom: .65em; }
-
-.rh-band__header--heading::slotted(h1) {
-  font-size: var(--rh-band_header--heading--size);
-  font-weight: var(--rh-band_header--heading--weight);
+.rh-band__header::slotted([typography="heading"]) {
+  font-size: var(--rh-theme--font-size--heading--alpha, 32px);
+  font-weight: 600;
+  line-height: 1;
   color: var(--rh-theme--color--heading, );
   margin-top: 0; }
+  .rh-band__header::slotted([typography="heading"]):not(:last-child) {
+    margin-bottom: .2em; }
 
-.rh-band__header--heading::slotted(h1:not(:last-child)) {
-  margin-bottom: .2em; }
-
-.rh-band__header--heading::slotted(h2) {
-  font-size: var(--rh-band_header--heading--size);
-  font-weight: var(--rh-band_header--heading--weight);
-  color: var(--rh-theme--color--heading, );
-  margin-top: 0; }
-
-.rh-band__header--heading::slotted(h2:not(:last-child)) {
-  margin-bottom: .2em; }
-
-.rh-band__header--heading::slotted(h3) {
-  font-size: var(--rh-band_header--heading--size);
-  font-weight: var(--rh-band_header--heading--weight);
-  color: var(--rh-theme--color--heading, );
-  margin-top: 0; }
-
-.rh-band__header--heading::slotted(h3:not(:last-child)) {
-  margin-bottom: .2em; }
-
-.rh-band__header--heading::slotted(h4) {
-  font-size: var(--rh-band_header--heading--size);
-  font-weight: var(--rh-band_header--heading--weight);
-  color: var(--rh-theme--color--heading, );
-  margin-top: 0; }
-
-.rh-band__header--heading::slotted(h4:not(:last-child)) {
-  margin-bottom: .2em; }
-
-.rh-band__header--heading::slotted(h5) {
-  font-size: var(--rh-band_header--heading--size);
-  font-weight: var(--rh-band_header--heading--weight);
-  color: var(--rh-theme--color--heading, );
-  margin-top: 0; }
-
-.rh-band__header--heading::slotted(h5:not(:last-child)) {
-  margin-bottom: .2em; }
-
-.rh-band__header--summary::slotted(p) {
-  font-size: var(--rh-band_header--summary--size);
-  font-weight: var(--rh-band_header--summary--weight);
+.rh-band__header::slotted([typography="summary"]) {
+  font-size: var(--rh-theme--font-size--heading--delta, 18px);
+  font-weight: 300;
   color: var(--rh-theme--color--text, #333);
   margin-top: 0;
   margin-bottom: 0; }
@@ -338,37 +241,47 @@ a {
 
 .rh-band__aside {
   max-width: 250px; }
+  @media (min-width: 992px) {
+    .rh-band__aside {
+      width: 300px; } }
 </style>
 <div class="rh-band__wrapper">
   <div class="rh-band__container">
+    ${
+      this.has_slot("aside") &&
+      this.asidePosition.includes("full") &&
+      this.asidePosition.includes("top")
+        ? `<slot class="rh-band__aside" name="aside"></slot>`
+        : ""
+    }
     <section class="rh-band__main">
       ${
-        this.has_slot("aside")
-          ? `<slot class="rh-band__aside" name="aside"></slot>`
-          : ""
-      }
-      ${
-        this.has_slot("header")
-          ? `<slot class="rh-band__header" name="header">`
-          : ""
-      }
-        ${
-          this.has_slot("header_title")
-            ? `<slot class="rh-band__header--title" name="header_title"></slot>`
-            : ""
-        }
-        ${
-          this.has_slot("header_heading")
-            ? `<slot class="rh-band__header--heading" name="header_heading"></slot>`
-            : ""
-        }
-        ${
+        this.has_slot("header") &&
+        !(
+          this.has_slot("header_title") ||
+          this.has_slot("header_heading") ||
           this.has_slot("header_summary")
-            ? `<slot class="rh-band__header--summary" name="header_summary"></slot>`
+        )
+          ? `<slot class="rh-band__header" name="header"></slot>`
+          : ""
+      }
+      <div class="rh-band__content">
+        ${
+          this.has_slot("aside") &&
+          !this.asidePosition.includes("full") &&
+          this.asidePosition.includes("top")
+            ? `<slot class="rh-band__aside" name="aside"></slot>`
             : ""
         }
-      ${this.has_slot("header") ? `</slot>` : ""}
-      <slot class="rh-band__body"></slot>
+        <slot class="rh-band__body"></slot>
+        ${
+          this.has_slot("aside") &&
+          !this.asidePosition.includes("full") &&
+          !this.asidePosition.includes("top")
+            ? `<slot class="rh-band__aside" name="aside"></slot>`
+            : ""
+        }
+      </div>
       ${
         this.has_slot("footer")
           ? `<slot class="rh-band__footer" name="footer"></slot>`
@@ -376,7 +289,9 @@ a {
       }
     </section>
     ${
-      this.has_slot("aside")
+      this.has_slot("aside") &&
+      this.asidePosition.includes("full") &&
+      !this.asidePosition.includes("top")
         ? `<slot class="rh-band__aside" name="aside"></slot>`
         : ""
     }
@@ -396,8 +311,19 @@ a {
     return "rh-band.scss";
   }
 
-  has_slot(name) {
-    return this.querySelector(`[slot='${name}']`);
+  // Push the aside position selector to the wrappers
+  _pushAttribute(selector, attribute) {
+    this.shadowRoot
+      .querySelector(selector)
+      .setAttribute(attribute, this.getAttribute(attribute));
+  }
+
+  get asidePosition() {
+    // X: right, left
+    // Y: full, body
+    // MOBILE: top, bottom
+    // Push the aside position selector to the wrappers
+    return this.getAttribute("aside-position").split(" ");
   }
 
   static get observedAttributes() {
@@ -410,6 +336,7 @@ a {
 
   connectedCallback() {
     super.connectedCallback();
+    this._pushAttribute(".rh-band__wrapper", "aside-position");
   }
 
   // disconnectedCallback() {}

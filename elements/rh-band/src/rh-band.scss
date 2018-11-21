@@ -1,40 +1,37 @@
 @import "../../rh-sass/rh-sass";
 
+$aside-md: 250px;
+$aside-lg: 300px;
+
 :host {
   // Spacing values
-  --rh-band--paddingTop:                       calc(#{rh-var(container-spacer)} * 4);
-  --rh-band--paddingRight:                     #{rh-var(container-spacer)};
-  --rh-band--paddingBottom:                    calc(#{rh-var(container-spacer)} * 4);
-  --rh-band--paddingLeft:                      #{rh-var(container-spacer)};
+  --rh-band--paddingTop:                      calc(#{rh-var(container-spacer)} * 4);
+  --rh-band--paddingRight:                    #{rh-var(container-spacer)};
+  --rh-band--paddingBottom:                   calc(#{rh-var(container-spacer)} * 4);
+  --rh-band--paddingLeft:                     #{rh-var(container-spacer)};
   // Surface colors
   --rh-band--backgroundColor:                 #{rh-color(surface--base)};
   --rh-band--backgroundPositionX:             center;
   --rh-band--backgroundPositionY:             center;
   // Border settings
-  --rh-band--borderColor:                      transparent;
-  --rh-band--borderTopWidth:                   #{rh-var(surface--border-width)};
-  --rh-band--borderBottomWidth:                #{rh-var(surface--border-width)};
-  --rh-band--borderStyle:                      #{rh-var(surface--border-style)};
-  // Header-specific settings
-  --rh-band_header--title--size:               #{rh-var(font-size--heading--gamma)};
-  --rh-band_header--heading--size:             #{rh-var(font-size--heading--alpha)};
-  --rh-band_header--summary--size:             #{rh-var(font-size--heading--delta)};
-  --rh-band_header--title--weight:             #{$rh-global--FontWeight--semi-bold};
-  --rh-band_header--heading--weight:           #{$rh-global--FontWeight--semi-bold};
-  --rh-band_header--summary--weight:           #{$rh-global--FontWeight--light};
+  --rh-band--borderColor:                     transparent;
+  --rh-band--borderTopWidth:                  #{rh-var(surface--border-width)};
+  --rh-band--borderBottomWidth:               #{rh-var(surface--border-width)};
+  --rh-band--borderStyle:                     #{rh-var(surface--border-style)};
   // Layouts, grid layouts
-  --rh-band_header--layout:                    1fr;
-  --rh-band_body--layout:                      1fr;
-  --rh-band_footer--layout:                    1fr;
+  --rh-band_header--layout:                   1fr;
+  --rh-band_body--layout:                     1fr;
+  --rh-band_footer--layout:                   1fr;
   // Text colors
-  --rh-broadcasted--color--text:               #{rh-color(surface--base--text)};
-  --rh-broadcasted--color--ui-link:            #{rh-color(surface--base--link)};
-  --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--base--link--visited)};
-  --rh-broadcasted--color--ui-link--hover:     #{rh-color(surface--base--link--hover)};
-  --rh-broadcasted--color--ui-link--focus:     #{rh-color(surface--base--link--focus)};
+  --rh-broadcasted--color--text:              #{rh-color(surface--base--text)};
+  --rh-broadcasted--color--ui-link:           #{rh-color(surface--base--link)};
+  --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--base--link--visited)};
+  --rh-broadcasted--color--ui-link--hover:    #{rh-color(surface--base--link--hover)};
+  --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--base--link--focus)};
   // Band width logic
   // Initialize at mobile breakpoint
-  --rh-band--width:                            auto;
+  --rh-band--width:                           auto;
+
   // Loop through the other breakpoints
   @each $size in (sm, md, lg, xl) {
     @media screen and (min-width: rh-breakpoint(#{$size})) {
@@ -58,7 +55,7 @@
 }
 
 :host([color="darkest"]) {
-  --rh-band--backgroundColor:                       #{rh-color(surface--darkest)};
+  --rh-band--backgroundColor:                  #{rh-color(surface--darkest)};
   --rh-broadcasted--color--text:               #{rh-color(surface--darkest--text)};
   --rh-broadcasted--color--ui-link:            #{rh-color(surface--darkest--link)};
   --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--darkest--link--visited)};
@@ -67,7 +64,7 @@
 }
 
 :host([color="light"]) {
-  --rh-band--backgroundColor:                       #{rh-color(surface--lighter)};
+  --rh-band--backgroundColor:                  #{rh-color(surface--lighter)};
   --rh-broadcasted--color--text:               #{rh-color(surface--lighter--text)};
   --rh-broadcasted--color--ui-link:            #{rh-color(surface--lighter--link)};
   --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--lighter--link--visited)};
@@ -76,7 +73,7 @@
 }
 
 :host([color="lightest"]) {
-  --rh-band--backgroundColor:                       #{rh-color(surface--lightest)};
+  --rh-band--backgroundColor:                  #{rh-color(surface--lightest)};
   --rh-broadcasted--color--text:               #{rh-color(surface--lightest--text)};
   --rh-broadcasted--color--ui-link:            #{rh-color(surface--lightest--link)};
   --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--lightest--link--visited)};
@@ -154,137 +151,92 @@ a {
     padding-left: var(--rh-band--paddingLeft);
     width: var(--rh-band--width);
     margin: 0 auto;
+  }
+  &__container,
+  &__content {
     // Aside layouts
-    // &[position~="right"] {
-      display: flex;
-      flex-direction: column;
-      @media (min-width: 768px) {
-        flex-direction: row;
+    display: flex;
+    flex-direction: column;
+    @media (min-width: $rh-global--grid-breakpoint--md) {
+      flex-direction: row;
+    }
+    > * {
+      flex-grow: 1;
+      @media (min-width: #{$rh-global--grid-breakpoint--sm + 12}) {
+        float: left;
+        width: 100%;
       }
-      > * {
-        flex-grow: 1;
-        @media (min-width: 588px) {
-          float: left;
-          width: 100%;
+      @media (max-width: $rh-global--grid-breakpoint--sm--max) {
+        margin-bottom: #{$rh-global--spacer * 2};
+        clear: both;
+      }
+      &:first-child {
+        @media (min-width: $rh-global--grid-breakpoint--md) {
+          width: calc(100% - #{$aside-md} + #{$rh-global--spacer * 2});
+          margin-right: 2.5702331142%;
         }
-        @media (max-width: 767px) {
-          margin-bottom: 30px;
-          clear: both;
+        @media (min-width: $rh-global--grid-breakpoint--lg) {
+          width: calc(100% - #{$aside-lg} + #{$rh-global--spacer * 2});
+        }
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+      [aside-position~="left"] & {
+        @media (min-width: #{$rh-global--grid-breakpoint--sm + 12}) {
+          float: right;
         }
         &:first-child {
-          @media (min-width: 768px) {
-            width: calc(100% - 280px);
-            margin-right: 2.5702331142%;
-          }
-          @media (min-width: 992px) {
-            width: calc(100% - 330px);
-          }
-          @media (min-width: 1200px) {
-            width: calc(100% - 330px);
+          @media (min-width: $rh-global--grid-breakpoint--md) {
+            margin-left: 2.5702331142%;
           }
         }
         &:last-child {
-          margin-bottom: 0;
+          order: -1;
         }
-        &:not(:first-child) {
-          @media (min-width: 768px) {
-            width: 250px;
-          }
-          @media (min-width: 992px) {
-            width: 300px;
-          }
-          @media (min-width: 1200px) {
-            width: 300px;
-          }
-        }
-      // }
+      }
     }
-
-    // &[position~="left"] {
-        // @include aside($side: left, $query: "bp");
-    // }
-
-    // &[position~="swap"] {
-        // @include aside($side: right, $query: "bp", $swap: true);
-    // }
-
-    // &[position="left swap"] {
-    //     @include aside($side: left, $query: "bp", $swap: true);
-    // }
-
-    //////////////////////////////////////////////////////
-    // Specifically for SOLP usage, do not reuse elsewhere
-
-    // WIDE ASIDE: FOR FORMS IN THE SIDEBAR
-    // @include data-layout("~", aside-right-swap-wide) {
-    //     @include aside($side: right, $query: "bp", $swap: true, $sidebar-md: $aside-wide, $sidebar-lg: $aside-wide);
-    // }
-
-    // @include data-layout("~", aside-right-wide) {
-    //     @include aside($side: right, $query: "bp", $sidebar-md: $aside-wide, $sidebar-lg: $aside-wide);
-    // }
-
-    // @include data-layout("~", aside-left-swap-wide) {
-    //     @include aside($side: left, $query: "bp", $swap: true, $sidebar-md: $aside-wide, $sidebar-lg: $aside-wide);
-    // }
-
-    // @include data-layout("~", aside-left-wide) {
-    //     @include aside($side: left, $query: "bp", $sidebar-md: $aside-wide, $sidebar-lg: $aside-wide);
-    // }
+  }
+  &__main > *:not(:last-child) {
+    margin-bottom: #{rh-var(container-spacer)};
   }
   &__header,
   &__body,
   &__footer,
   &__aside {
     display: block;
-    margin: 0;
-    // Child pseudo-selectors based on slotted code before upgrade
-    &::slotted(*:nth-child(2)) {
-      margin-top: 0 !important;
-    }
-    @for $n from 1 to 6 {
-      &::slotted(h#{$n}:first-child) {
-        margin-top: 0 !important;
-        font-size: var(--rh-band_header--size);
-      }
+    &::slotted(*) {
+      margin-top: 0;
     }
   }
   &__header {
-    &--title {
-      @for $n from 1 to 6 {
-        &::slotted(h#{$n}) {
-          font-size: var(--rh-band_header--title--size);
-          font-weight: var(--rh-band_header--title--weight);
-          color: #{rh-color(ui-accent)};
-          text-transform: uppercase;
-          margin-top: 0;
-        }
-        &::slotted(h#{$n}:not(:last-child)) {
-          margin-bottom: .65em;
-        }
+    &::slotted([typography="title"]) {
+      font-size: #{rh-var(font-size--heading--gamma)};
+      font-weight: $rh-global--FontWeight--semi-bold;
+      line-height: 1;
+      color: #{rh-color(ui-accent)};
+      text-transform: uppercase;
+      margin-top: 0;
+      &:not(:last-child) {
+        margin-bottom: .65em;
       }
     }
-    &--heading {
-      @for $n from 1 to 6 {
-        &::slotted(h#{$n}) {
-          font-size: var(--rh-band_header--heading--size);
-          font-weight: var(--rh-band_header--heading--weight);
-          color: #{rh-color(heading)};
-          margin-top: 0;
-        }
-        &::slotted(h#{$n}:not(:last-child)) {
-          margin-bottom: .2em;
-        }
+    &::slotted([typography="heading"]) {
+      font-size: #{rh-var(font-size--heading--alpha)};
+      font-weight: $rh-global--FontWeight--semi-bold;
+      line-height: 1;
+      color: #{rh-color(heading)};
+      margin-top: 0;
+      &:not(:last-child) {
+        margin-bottom: .2em;
       }
     }
-    &--summary {
-      &::slotted(p) {
-        font-size: var(--rh-band_header--summary--size);
-        font-weight: var(--rh-band_header--summary--weight);
-        color: #{rh-color(text)};
-        margin-top: 0;
-        margin-bottom: 0;
-      }
+    &::slotted([typography="summary"]) {
+      font-size: #{rh-var(font-size--heading--delta)};
+      font-weight: $rh-global--FontWeight--light;
+      color: #{rh-color(text)};
+      margin-top: 0;
+      margin-bottom: 0;
     }
   }
   &__body {
@@ -304,6 +256,9 @@ a {
     }
   }
   &__aside {
-    max-width: 250px;
+    max-width: #{$aside-md};
+    @media (min-width: $rh-global--grid-breakpoint--lg) {
+      width: #{$aside-lg};
+    }
   }
 }

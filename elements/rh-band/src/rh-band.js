@@ -35,8 +35,19 @@ class RhBand extends RHElement {
     return "rh-band.scss";
   }
 
-  has_slot(name) {
-    return this.querySelector(`[slot='${name}']`);
+  // Push the aside position selector to the wrappers
+  _pushAttribute(selector, attribute) {
+    this.shadowRoot
+      .querySelector(selector)
+      .setAttribute(attribute, this.getAttribute(attribute));
+  }
+
+  get asidePosition() {
+    // X: right, left
+    // Y: full, body
+    // MOBILE: top, bottom
+    // Push the aside position selector to the wrappers
+    return this.getAttribute("aside-position").split(" ");
   }
 
   static get observedAttributes() {
@@ -49,6 +60,7 @@ class RhBand extends RHElement {
 
   connectedCallback() {
     super.connectedCallback();
+    this._pushAttribute(".rh-band__wrapper", "aside-position");
   }
 
   // disconnectedCallback() {}

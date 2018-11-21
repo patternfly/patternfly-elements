@@ -40,6 +40,10 @@ stories.add("rh-band", () => {
     "Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.";
   const summaryValue = text(summaryLabel, summaryDefault);
 
+  const headerLabel = "Optional raw header";
+  const headerDefault = "";
+  const headerValue = text(headerLabel, headerDefault);
+
   const bodyLabel = "Body";
   const bodyDefault =
     "<p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>";
@@ -50,26 +54,71 @@ stories.add("rh-band", () => {
     '<rh-cta priority="primary"><a href="#">Learn more</a></rh-cta>';
   const footerValue = text(footerLabel, footerDefault);
 
+  // Attributes
+  const asidePositionXLabel = "Aside position (x)";
+  const asidePositionXOptions = {
+    left: "left",
+    right: "right"
+  };
+  const asidePositionXDefault = "right";
+  const asidePositionXValue = select(
+    asidePositionXLabel,
+    asidePositionXOptions,
+    asidePositionXDefault
+  );
+  let asidePositionAttr = ` aside-position="${asidePositionXValue}`;
+
+  const asidePositionYLabel = "Aside position (y)";
+  const asidePositionYOptions = {
+    full: "full",
+    body: "body"
+  };
+  const asidePositionYDefault = "body";
+  const asidePositionYValue = select(
+    asidePositionYLabel,
+    asidePositionYOptions,
+    asidePositionYDefault
+  );
+  asidePositionAttr += asidePositionYValue ? ` ${asidePositionYValue}` : ``;
+
+  const asideMobileLabel = "Aside position (mobile)";
+  const asideMobileOptions = {
+    top: "top",
+    bottom: "bottom"
+  };
+  const asideMobileDefault = "bottom";
+  const asideMobileValue = select(
+    asideMobileLabel,
+    asideMobileOptions,
+    asideMobileDefault
+  );
+  asidePositionAttr += asideMobileValue ? ` ${asideMobileValue}"` : `"`;
+
   const asideLabel = "Aside";
   const asideDefault =
-    '<rh-card color="dark"><h3>Lorem ipsum</h3><p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat.</p><rh-cta priority="tertiary" on="dark"><a href="#">Learn more</a></rh-cta></rh-card>';
+    '<rh-card color="dark"><h3 slot="header">Lorem ipsum</h3><p>Ut wisi enim ad minim veniam.</p><rh-cta slot="footer" priority="tertiary" on="dark"><a href="#">Learn more</a></rh-cta></rh-card>';
   const asideValue = text(asideLabel, asideDefault);
 
   return `
   <section>
     <h2>Your RH Element</h2>
-    <rh-band${colorAttr}>
-        ${titleValue ? '<h2 slot="header_title">' + titleValue + "</h2>" : ""}
-        ${
-          headingValue
-            ? '<h3 slot="header_heading">' + headingValue + "</h3>"
-            : ""
-        }
-        ${
-          summaryValue
-            ? '<p slot="header_summary">' + summaryValue + "</p>"
-            : ""
-        }
+    <rh-band${colorAttr}${asidePositionAttr}>
+      ${
+        titleValue
+          ? '<h2 slot="header" typography="title">' + titleValue + "</h2>"
+          : ""
+      }
+      ${
+        headingValue
+          ? '<h3 slot="header" typography="heading">' + headingValue + "</h3>"
+          : ""
+      }
+      ${
+        summaryValue
+          ? '<p slot="header" typography="summary">' + summaryValue + "</p>"
+          : ""
+      }
+      ${headerValue ? '<div slot="header">' + headerValue + "</div>" : ""}
       ${bodyValue ? bodyValue : ""}
       ${footerValue ? '<div slot="footer">' + footerValue + "</div>" : ""}
       ${asideValue ? '<div slot="aside">' + asideValue + "</div>" : ""}
@@ -78,48 +127,45 @@ stories.add("rh-band", () => {
   <section>
     <h2>Markup</h2>
     <pre>
-    &lt;rh-band${colorAttr}&gt;
-        ${
-          titleValue
-            ? '&lt;h2 slot="header_title"&gt;' +
-              escapeHTML(titleValue) +
-              "&lt;/h2&gt;"
-            : ""
-        }
-        ${
-          headingValue
-            ? '&lt;h3 slot="header_heading"&gt;' +
-              escapeHTML(headingValue) +
-              "&lt;/h3&gt;"
-            : ""
-        }
-        ${
-          summaryValue
-            ? '&lt;p slot="header_summary"&gt;' +
-              escapeHTML(summaryValue) +
-              "&lt;/p&gt;"
-            : ""
-        }
+    ${escapeHTML("<rh-band" + colorAttr + asidePositionAttr + ">")}
       ${
-        bodyValue
-          ? "&lt;div&gt;\n\t" + escapeHTML(bodyValue) + "\n      &lt;/div&gt;"
+        titleValue
+          ? `${escapeHTML(
+              '<h2 slot="header" typography="title">' + titleValue + "</h2>"
+            )}`
           : ""
       }
       ${
+        headingValue
+          ? `${escapeHTML(
+              '<h3 slot="header" typography="heading">' + headingValue + "</h3>"
+            )}`
+          : ""
+      }
+      ${
+        summaryValue
+          ? `${escapeHTML(
+              '<p slot="header" typography="summary">' + summaryValue + "</p>"
+            )}`
+          : ""
+      }
+      ${
+        headerValue
+          ? `${escapeHTML('<div slot="header">' + headerValue + "</div>")}`
+          : ""
+      }
+      ${bodyValue ? `${escapeHTML(bodyValue)}` : ""}
+      ${
         footerValue
-          ? '&lt;div slot="footer"&gt;\n\t' +
-            escapeHTML(footerValue) +
-            "\n      &lt;/div&gt;"
+          ? `${escapeHTML('<div slot="footer">' + footerValue + "</div>")}`
           : ""
       }
       ${
         asideValue
-          ? '&lt;div slot="aside"&gt;\n\t' +
-            escapeHTML(asideValue) +
-            "\n      &lt;/div&gt;"
+          ? `${escapeHTML('<div slot="aside">' + asideValue + "</div>")}`
           : ""
       }
-    &lt;/rh-band&gt;
+    ${escapeHTML("</rh-band>")}
     </pre>
   </section>
   `;

@@ -35,17 +35,21 @@ class RhBand extends RHElement {
     return "rh-band.scss";
   }
 
+  has_slot(name) {
+    return this.querySelector(`[slot='${name}']`);
+  }
+
   static get observedAttributes() {
     return ["img-src"];
   }
 
   constructor() {
-    super(RhBand.tag);
+    super(RhBand);
   }
 
-  // connectedCallback() {
-  //   super.connectedCallback();
-  // }
+  connectedCallback() {
+    super.connectedCallback();
+  }
 
   // disconnectedCallback() {}
 

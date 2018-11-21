@@ -41,9 +41,9 @@ class RhBand extends RHElement {
   --rh-band_header--title--size:               var(--rh-theme--font-size--heading--gamma, 21px);
   --rh-band_header--heading--size:             var(--rh-theme--font-size--heading--alpha, 32px);
   --rh-band_header--summary--size:             var(--rh-theme--font-size--heading--delta, 18px);
-  --rh-band_header--title--weight:             800;
+  --rh-band_header--title--weight:             600;
   --rh-band_header--heading--weight:           600;
-  --rh-band_header--summary--weight:           400;
+  --rh-band_header--summary--weight:           300;
   --rh-band_header--layout:                    1fr;
   --rh-band_body--layout:                      1fr;
   --rh-band_footer--layout:                    1fr;
@@ -218,59 +218,107 @@ a {
     margin-top: 0 !important;
     font-size: var(--rh-band_header--size); }
 
-.rh-band__header {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 0; }
-  .rh-band__header--title::slotted(h1) {
-    font-size: var(--rh-band_header--title--size);
-    font-weight: var(--rh-band_header--title--weight);
-    text-transform: uppercase;
-    margin-top: 0; }
-  .rh-band__header--title::slotted(h2) {
-    font-size: var(--rh-band_header--title--size);
-    font-weight: var(--rh-band_header--title--weight);
-    text-transform: uppercase;
-    margin-top: 0; }
-  .rh-band__header--title::slotted(h3) {
-    font-size: var(--rh-band_header--title--size);
-    font-weight: var(--rh-band_header--title--weight);
-    text-transform: uppercase;
-    margin-top: 0; }
-  .rh-band__header--title::slotted(h4) {
-    font-size: var(--rh-band_header--title--size);
-    font-weight: var(--rh-band_header--title--weight);
-    text-transform: uppercase;
-    margin-top: 0; }
-  .rh-band__header--title::slotted(h5) {
-    font-size: var(--rh-band_header--title--size);
-    font-weight: var(--rh-band_header--title--weight);
-    text-transform: uppercase;
-    margin-top: 0; }
-  .rh-band__header--heading::slotted(h1) {
-    font-size: var(--rh-band_header--heading--size);
-    font-weight: var(--rh-band_header--heading--weight);
-    margin-top: 0; }
-  .rh-band__header--heading::slotted(h2) {
-    font-size: var(--rh-band_header--heading--size);
-    font-weight: var(--rh-band_header--heading--weight);
-    margin-top: 0; }
-  .rh-band__header--heading::slotted(h3) {
-    font-size: var(--rh-band_header--heading--size);
-    font-weight: var(--rh-band_header--heading--weight);
-    margin-top: 0; }
-  .rh-band__header--heading::slotted(h4) {
-    font-size: var(--rh-band_header--heading--size);
-    font-weight: var(--rh-band_header--heading--weight);
-    margin-top: 0; }
-  .rh-band__header--heading::slotted(h5) {
-    font-size: var(--rh-band_header--heading--size);
-    font-weight: var(--rh-band_header--heading--weight);
-    margin-top: 0; }
-  .rh-band__header--summary::slotted(p) {
-    font-size: var(--rh-band_header--summary--size);
-    font-weight: var(--rh-band_header--summary--weight);
-    margin-top: 0; }
+.rh-band__header--title::slotted(h1) {
+  font-size: var(--rh-band_header--title--size);
+  font-weight: var(--rh-band_header--title--weight);
+  color: var(--rh-theme--color--ui-accent, #fe460d);
+  text-transform: uppercase;
+  margin-top: 0; }
+
+.rh-band__header--title::slotted(h1:not(:last-child)) {
+  margin-bottom: .65em; }
+
+.rh-band__header--title::slotted(h2) {
+  font-size: var(--rh-band_header--title--size);
+  font-weight: var(--rh-band_header--title--weight);
+  color: var(--rh-theme--color--ui-accent, #fe460d);
+  text-transform: uppercase;
+  margin-top: 0; }
+
+.rh-band__header--title::slotted(h2:not(:last-child)) {
+  margin-bottom: .65em; }
+
+.rh-band__header--title::slotted(h3) {
+  font-size: var(--rh-band_header--title--size);
+  font-weight: var(--rh-band_header--title--weight);
+  color: var(--rh-theme--color--ui-accent, #fe460d);
+  text-transform: uppercase;
+  margin-top: 0; }
+
+.rh-band__header--title::slotted(h3:not(:last-child)) {
+  margin-bottom: .65em; }
+
+.rh-band__header--title::slotted(h4) {
+  font-size: var(--rh-band_header--title--size);
+  font-weight: var(--rh-band_header--title--weight);
+  color: var(--rh-theme--color--ui-accent, #fe460d);
+  text-transform: uppercase;
+  margin-top: 0; }
+
+.rh-band__header--title::slotted(h4:not(:last-child)) {
+  margin-bottom: .65em; }
+
+.rh-band__header--title::slotted(h5) {
+  font-size: var(--rh-band_header--title--size);
+  font-weight: var(--rh-band_header--title--weight);
+  color: var(--rh-theme--color--ui-accent, #fe460d);
+  text-transform: uppercase;
+  margin-top: 0; }
+
+.rh-band__header--title::slotted(h5:not(:last-child)) {
+  margin-bottom: .65em; }
+
+.rh-band__header--heading::slotted(h1) {
+  font-size: var(--rh-band_header--heading--size);
+  font-weight: var(--rh-band_header--heading--weight);
+  color: var(--rh-theme--color--heading, );
+  margin-top: 0; }
+
+.rh-band__header--heading::slotted(h1:not(:last-child)) {
+  margin-bottom: .2em; }
+
+.rh-band__header--heading::slotted(h2) {
+  font-size: var(--rh-band_header--heading--size);
+  font-weight: var(--rh-band_header--heading--weight);
+  color: var(--rh-theme--color--heading, );
+  margin-top: 0; }
+
+.rh-band__header--heading::slotted(h2:not(:last-child)) {
+  margin-bottom: .2em; }
+
+.rh-band__header--heading::slotted(h3) {
+  font-size: var(--rh-band_header--heading--size);
+  font-weight: var(--rh-band_header--heading--weight);
+  color: var(--rh-theme--color--heading, );
+  margin-top: 0; }
+
+.rh-band__header--heading::slotted(h3:not(:last-child)) {
+  margin-bottom: .2em; }
+
+.rh-band__header--heading::slotted(h4) {
+  font-size: var(--rh-band_header--heading--size);
+  font-weight: var(--rh-band_header--heading--weight);
+  color: var(--rh-theme--color--heading, );
+  margin-top: 0; }
+
+.rh-band__header--heading::slotted(h4:not(:last-child)) {
+  margin-bottom: .2em; }
+
+.rh-band__header--heading::slotted(h5) {
+  font-size: var(--rh-band_header--heading--size);
+  font-weight: var(--rh-band_header--heading--weight);
+  color: var(--rh-theme--color--heading, );
+  margin-top: 0; }
+
+.rh-band__header--heading::slotted(h5:not(:last-child)) {
+  margin-bottom: .2em; }
+
+.rh-band__header--summary::slotted(p) {
+  font-size: var(--rh-band_header--summary--size);
+  font-weight: var(--rh-band_header--summary--weight);
+  color: var(--rh-theme--color--text, #333);
+  margin-top: 0;
+  margin-bottom: 0; }
 
 .rh-band__body {
   display: grid;
@@ -294,15 +342,44 @@ a {
 <div class="rh-band__wrapper">
   <div class="rh-band__container">
     <section class="rh-band__main">
-      <slot class="rh-band__header" name="header">
-        <slot class="rh-band__header--title" name="header_title"></slot>
-        <slot class="rh-band__header--heading" name="header_heading"></slot>
-        <slot class="rh-band__header--summary" name="header_summary"></slot>
-      </slot>
+      ${
+        this.has_slot("aside")
+          ? `<slot class="rh-band__aside" name="aside"></slot>`
+          : ""
+      }
+      ${
+        this.has_slot("header")
+          ? `<slot class="rh-band__header" name="header">`
+          : ""
+      }
+        ${
+          this.has_slot("header_title")
+            ? `<slot class="rh-band__header--title" name="header_title"></slot>`
+            : ""
+        }
+        ${
+          this.has_slot("header_heading")
+            ? `<slot class="rh-band__header--heading" name="header_heading"></slot>`
+            : ""
+        }
+        ${
+          this.has_slot("header_summary")
+            ? `<slot class="rh-band__header--summary" name="header_summary"></slot>`
+            : ""
+        }
+      ${this.has_slot("header") ? `</slot>` : ""}
       <slot class="rh-band__body"></slot>
-      <slot class="rh-band__footer" name="footer"></slot>
+      ${
+        this.has_slot("footer")
+          ? `<slot class="rh-band__footer" name="footer"></slot>`
+          : ""
+      }
     </section>
-    <slot class="rh-band__aside" name="aside"></slot>
+    ${
+      this.has_slot("aside")
+        ? `<slot class="rh-band__aside" name="aside"></slot>`
+        : ""
+    }
   </div>
 </div>`;
   }
@@ -319,17 +396,21 @@ a {
     return "rh-band.scss";
   }
 
+  has_slot(name) {
+    return this.querySelector(`[slot='${name}']`);
+  }
+
   static get observedAttributes() {
     return ["img-src"];
   }
 
   constructor() {
-    super(RhBand.tag);
+    super(RhBand);
   }
 
-  // connectedCallback() {
-  //   super.connectedCallback();
-  // }
+  connectedCallback() {
+    super.connectedCallback();
+  }
 
   // disconnectedCallback() {}
 

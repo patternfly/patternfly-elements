@@ -1,14 +1,15 @@
 <div class="rh-band__wrapper">
   <div class="rh-band__container">
     <section class="rh-band__main">
-      <slot class="rh-band__header" name="header">
-        <slot class="rh-band__header--title" name="header_title"></slot>
-        <slot class="rh-band__header--heading" name="header_heading"></slot>
-        <slot class="rh-band__header--summary" name="header_summary"></slot>
-      </slot>
+      ${this.has_slot("aside") ? `<slot class="rh-band__aside" name="aside"></slot>` : ''}
+      ${this.has_slot("header") ? `<slot class="rh-band__header" name="header">` : ''}
+        ${this.has_slot("header_title") ? `<slot class="rh-band__header--title" name="header_title"></slot>` : ''}
+        ${this.has_slot("header_heading") ? `<slot class="rh-band__header--heading" name="header_heading"></slot>` : ''}
+        ${this.has_slot("header_summary") ? `<slot class="rh-band__header--summary" name="header_summary"></slot>` : ''}
+      ${this.has_slot("header") ? `</slot>` : ''}
       <slot class="rh-band__body"></slot>
-      <slot class="rh-band__footer" name="footer"></slot>
+      ${this.has_slot("footer") ? `<slot class="rh-band__footer" name="footer"></slot>` : ''}
     </section>
-    <slot class="rh-band__aside" name="aside"></slot>
+    ${this.has_slot("aside") ? `<slot class="rh-band__aside" name="aside"></slot>` : ''}
   </div>
 </div>

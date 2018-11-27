@@ -80,6 +80,27 @@ class RHElement extends HTMLElement {
       });
     }
 
+    // Set the EQ values on container elements
+    console.log(type);
+    if (type === "container") {
+      this._queueAction(
+        {
+          type: "setCustomProperty",
+          data: {
+            name: "--rh-eq--width",
+            value: this._getContainerSize(".rh-band__wrapper", "width") + "px"
+          }
+        },
+        {
+          type: "setCustomProperty",
+          data: {
+            name: "--rh-eq--height",
+            value: this._getContainerSize(".rh-band__wrapper", "height") + "px"
+          }
+        }
+      );
+    }
+
     if (!delayRender) {
       this.render();
     }
@@ -134,6 +155,31 @@ class RHElement extends HTMLElement {
 
   _setProperty({ name, value }) {
     this[name] = value;
+  }
+
+  // Push attribute from parent wrapper to child selector
+  _pushAttributeTo(selector, attribute) {
+    if (this.getAttribute(attribute) !== null) {
+      this.shadowRoot
+        .querySelector(selector)
+        .setAttribute(attribute, this.getAttribute(attribute));
+    }
+  }
+
+  // Set the custom property value
+  _setCustomProperty(name, value) {
+    this.shadowRoot.querySelector(
+      "style"
+    ).textContent += `:host { ${name}: ${value}; }`;
+  }
+
+  // Get the size of the container by selector
+  _getContainerSize(selector, direction) {
+    if (direction === "height") {
+      return this.shadowRoot.querySelector(selector).offsetHeight;
+    } else {
+      return this.shadowRoot.querySelector(selector).offsetWidth;
+    }
   }
 
   render() {

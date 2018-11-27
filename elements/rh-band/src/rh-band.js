@@ -35,13 +35,6 @@ class RhBand extends RHElement {
     return "rh-band.scss";
   }
 
-  // Push the aside position selector to the wrappers
-  _pushAttribute(selector, attribute) {
-    this.shadowRoot
-      .querySelector(selector)
-      .setAttribute(attribute, this.getAttribute(attribute));
-  }
-
   get asidePosition() {
     // X: right, left
     // Y: full, body
@@ -60,7 +53,9 @@ class RhBand extends RHElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this._pushAttribute(".rh-band__wrapper", "aside-position");
+    this._queue.push(
+      this._pushAttributeTo(".rh-band__wrapper", "aside-position")
+    );
   }
 
   // disconnectedCallback() {}
@@ -75,6 +70,6 @@ class RhBand extends RHElement {
   }
 }
 
-RHElement.create(RhBand);
+RHElement.create(RhBand, { type: "container" });
 
 export default RhBand;

@@ -157,15 +157,6 @@ class RHElement extends HTMLElement {
     this[name] = value;
   }
 
-  // Push attribute from parent wrapper to child selector
-  _pushAttributeTo(selector, attribute) {
-    if (this.getAttribute(attribute) !== null) {
-      this.shadowRoot
-        .querySelector(selector)
-        .setAttribute(attribute, this.getAttribute(attribute));
-    }
-  }
-
   // Set the custom property value
   _setCustomProperty(name, value) {
     this.shadowRoot.querySelector(

@@ -3,6 +3,9 @@
 :host {
   position: relative;
   display: none;
+  font-family: var(--rh-theme--font-family);
+  font-size: var(--rh-theme--font-size);
+  line-height: var(--rh-theme--line-height);
 }
 
 :host([open]) {
@@ -20,31 +23,41 @@
   border: 0;
 }
 
-ul {
+.droplist {
   display: block;
   position: absolute;
   top: 100%;
   left: 0px;
   right: 0px;
+  z-index: 9999;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+input {
+  font-family: var(--rh-theme--font-family);
+  font-size: var(--rh-theme--font-size);
+  line-height: var(--rh-theme--line-height);
+}
+
+ul {
+  font-family: var(--rh-theme--font-family);
+  font-size: var(--rh-theme--font-size);
+  line-height: var(--rh-theme--line-height);
   background-color: #fff;
   border: 1px solid #ccc;
   border-top: none;
-  z-index: 9999;
   margin: 0px;
   padding: 0px;
   list-style: none;
   cursor: pointer;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
 
-ul li.active {
-    background-color: #f0f0f0;
-}
-
-ul li {
-    display: list-item;
-    cursor: pointer;
-    padding: 7px 10px;
-    margin: 2px 0px 2px 0px;
+  li {
+      display: list-item;
+      cursor: pointer;
+      padding: 7px 10px;
+      margin: 2px 0px 2px 0px;
+      &.active {
+          background-color: #{rh-color( surface--lighter )};;
+      }
+  }
 }

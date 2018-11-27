@@ -76,8 +76,8 @@ button.search-button {
   box-shadow: inset 0 1px 0px rgba(0,0,0,0.075);
   background-color: #fff;
   border-color: #0076e0;
-  color: #06c;
-  border: 1px solid #d1d1d1;
+  color: #{rh-color( ui-link )};
+  border: 1px solid #{rh-color( surface--border--lightest)};
   border-left: none;
   margin: 0px;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;

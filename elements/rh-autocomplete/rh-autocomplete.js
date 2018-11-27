@@ -307,8 +307,8 @@ button.search-button {
   box-shadow: inset 0 1px 0px rgba(0, 0, 0, 0.075);
   background-color: #fff;
   border-color: #0076e0;
-  color: #06c;
-  border: 1px solid #d1d1d1;
+  color: var(--rh-theme--color--ui-link, #06c);
+  border: 1px solid var(--rh-theme--color--surface--border--lightest, #ececec);
   border-left: none;
   margin: 0px;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s; }
@@ -491,7 +491,10 @@ class RhSearchDroplist extends RHElement {
 <style>
 :host {
   position: relative;
-  display: none; }
+  display: none;
+  font-family: var(--rh-theme--font-family);
+  font-size: var(--rh-theme--font-size);
+  line-height: var(--rh-theme--line-height); }
 
 :host([open]) {
   display: block; }
@@ -506,35 +509,45 @@ class RhSearchDroplist extends RHElement {
   clip: rect(0, 0, 0, 0);
   border: 0; }
 
-ul {
+.droplist {
   display: block;
   position: absolute;
   top: 100%;
   left: 0px;
   right: 0px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-top: none;
   z-index: 9999;
-  margin: 0px;
-  padding: 0px;
-  list-style: none;
-  cursor: pointer;
   overflow-y: scroll;
   overflow-x: hidden; }
 
-ul li.active {
-  background-color: #f0f0f0; }
+input {
+  font-family: var(--rh-theme--font-family);
+  font-size: var(--rh-theme--font-size);
+  line-height: var(--rh-theme--line-height); }
 
-ul li {
-  display: list-item;
-  cursor: pointer;
-  padding: 7px 10px;
-  margin: 2px 0px 2px 0px; }
+ul {
+  font-family: var(--rh-theme--font-family);
+  font-size: var(--rh-theme--font-size);
+  line-height: var(--rh-theme--line-height);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  cursor: pointer; }
+  ul li {
+    display: list-item;
+    cursor: pointer;
+    padding: 7px 10px;
+    margin: 2px 0px 2px 0px; }
+    ul li.active {
+      background-color: var(--rh-theme--color--surface--lighter, #ececec); }
 </style>
 <div class="suggestions-aria-help sr-only" aria-hidden="false" role="status"></div>
-<ul role="listbox" tabindex="-1" id="results">
-</ul>`;
+<div class="droplist">
+  <ul role="listbox" tabindex="-1" id="results">
+  </ul>
+</div>`;
   }
 
   static get tag() {

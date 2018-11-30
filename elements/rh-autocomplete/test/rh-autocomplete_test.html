@@ -6,19 +6,16 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../rh-autocomplete.js"></script>
+         <script>require([
+          '../../../themes/cp-theme/cp-theme.umd.js',
+          '../rh-autocomplete.umd.js'
+        ])</script>
   </head>
   <body>
 
     <test-fixture id="autocomplete">
       <template>
         <rh-autocomplete></rh-autocomplete>
-      </template>
-    </test-fixture>
-
-    <test-fixture id="autocomplete-has-init-value">
-      <template>
-        <rh-autocomplete init-value="uni"></rh-autocomplete>
       </template>
     </test-fixture>
 
@@ -44,7 +41,7 @@
           droplistElem = autocompleteElem.shadowRoot.querySelector('rh-search-droplist');
         });
 
-        test('it should upgrade', () => {
+        test('it should upgrade rh-autocomplete', () => {
           assert.instanceOf(autocompleteElem, customElements.get("rh-autocomplete", 'rh-autocomplete should be an instance of rhAutocomplete'));
         });
 
@@ -59,23 +56,21 @@
           assert.equal('', clearButton.style.display);
         });
 
-        test('should emit an rh-search-event after click on searchBoxElem', (done) => {
-          const handlerSpy = sinon.spy();
+        test('should fires rh-search-event with event.detail.searchValue equal to searched term after click on search icon', (done) => {
           input.value = 'test';
-          document.addEventListener('rh-search-event', handlerSpy);
+          document.addEventListener('rh-search-event', function(event) {
+            assert.equal(event.detail.searchValue, 'test');
+            done();
+          });
           searchButton.click();
-
-          const [event] = handlerSpy.getCall(0).args;
-
-          sinon.assert.calledOnce(handlerSpy);
-          assert.equal('test', event.detail.searchValue);
-          done();
-
-          // reset
-          document.removeEventListener('rh-search-event', handlerSpy);
-          input.value = '';
         });
 
+        test('should set value of init-value as input value', () => {
+          autocompleteElem.setAttribute("init-value", "test");
+          setTimeout(() => {
+            assert.equal(input.value , "test");
+          }, 0);
+        });
       });
 
       a11ySuite('autocomplete');

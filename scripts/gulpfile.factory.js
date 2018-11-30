@@ -1,7 +1,7 @@
 module.exports = function factory({
   elementName,
   className,
-  precompile = []
+  precompile = ["clean"]
 } = {}) {
   const fs = require("fs");
   const path = require("path");
@@ -14,10 +14,25 @@ module.exports = function factory({
   const decomment = require("decomment");
   const sass = require("node-sass");
   const shell = require("gulp-shell");
+  const clean = require("gulp-clean");
+
+  const paths = {
+    root: "../..",
+    base: "./",
+    src: "./src",
+    dist: "./dist",
+    test: "./test",
+    temp: "./tmp",
+    demo: "./demo"
+  };
+
+  gulp.task("clean", () => {
+    return gulp.src(paths.dist, { read: false }).pipe(clean());
+  });
 
   gulp.task("compile", () => {
     return gulp
-      .src(`./${elementName}.js`)
+      .src(path.join(paths.dist, `${elementName}.js`))
       .pipe(
         replace(
           /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
@@ -29,12 +44,12 @@ module.exports = function factory({
           suffix: ".umd"
         })
       )
-      .pipe(gulp.dest("./"));
+      .pipe(gulp.dest(paths.dist));
   });
 
   gulp.task("merge", () => {
     return gulp
-      .src(`./src/${elementName}.js`)
+      .src(path.join(paths.src, `${elementName}.js`))
       .pipe(
         replace(
           /extends\s+RHElement\s+{/g,
@@ -54,7 +69,7 @@ module.exports = function factory({
             );
 
             let html = fs
-              .readFileSync(path.join("./src", templateUrl))
+              .readFileSync(path.join(paths.src, templateUrl))
               .toString()
               .trim();
 
@@ -67,7 +82,7 @@ module.exports = function factory({
               oneLineFile
             );
 
-            const styleFilePath = path.join("./src", styleUrl);
+            const styleFilePath = path.join(paths.src, styleUrl);
 
             let cssResult = sass.renderSync({
               file: styleFilePath
@@ -87,14 +102,17 @@ ${html}\`;
           }
         )
       )
-      .pipe(gulp.dest("./"));
+      .pipe(gulp.dest(paths.dist));
   });
 
   gulp.task("watch", () => {
-    return gulp.watch("./src/*", gulp.series("build"));
+    return gulp.watch(path.join(paths.src, "*"), gulp.series("build"));
   });
 
-  gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
+  gulp.task(
+    "bundle",
+    shell.task(path.join(paths.root, "node_modules/.bin/rollup -c"))
+  );
 
   const buildTasks = ["merge", ...precompile, "compile", "bundle"];
 

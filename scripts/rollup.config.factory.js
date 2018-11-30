@@ -2,9 +2,10 @@ import resolve from "rollup-plugin-node-resolve";
 import babel from "rollup-plugin-babel";
 import commonjs from "rollup-plugin-commonjs";
 import { uglify } from "rollup-plugin-uglify";
+import path from "path";
 
 function esmConfig({ elementName, className } = {}) {
-  const esmFilename = `${elementName}.js`;
+  const esmFilename = path.join("./dist", `${elementName}.js`);
 
   return {
     input: esmFilename,
@@ -19,7 +20,7 @@ function esmConfig({ elementName, className } = {}) {
 }
 
 function umdConfig({ elementName, className } = {}) {
-  const umdFilename = `${elementName}.umd.js`;
+  const umdFilename = path.join("./dist", `${elementName}.umd.js`);
 
   return {
     input: umdFilename,

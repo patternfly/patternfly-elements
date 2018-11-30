@@ -1,7 +1,7 @@
 module.exports = function factory({
   elementName,
   className,
-  precompile = ["clean"]
+  precompile = ["clean", "compress"]
 } = {}) {
   const fs = require("fs");
   const path = require("path");
@@ -15,6 +15,7 @@ module.exports = function factory({
   const sass = require("node-sass");
   const shell = require("gulp-shell");
   const clean = require("gulp-clean");
+  const terser = require("gulp-terser");
 
   const paths = {
     root: "../..",
@@ -25,27 +26,6 @@ module.exports = function factory({
     temp: "./tmp",
     demo: "./demo"
   };
-
-  gulp.task("clean", () => {
-    return gulp.src(paths.dist, { read: false }).pipe(clean());
-  });
-
-  gulp.task("compile", () => {
-    return gulp
-      .src(path.join(paths.dist, `${elementName}.js`))
-      .pipe(
-        replace(
-          /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
-          "$1$2.umd$3"
-        )
-      )
-      .pipe(
-        rename({
-          suffix: ".umd"
-        })
-      )
-      .pipe(gulp.dest(paths.dist));
-  });
 
   gulp.task("merge", () => {
     return gulp
@@ -101,6 +81,41 @@ ${html}\`;
 `;
           }
         )
+      )
+      .pipe(gulp.dest(paths.base));
+  });
+
+  gulp.task("clean", () => {
+    return gulp
+      .src(path.join(paths.dist, "*"), { read: false, allowEmpty: true })
+      .pipe(clean());
+  });
+
+  gulp.task("compress", () => {
+    return gulp
+      .src(path.join(paths.base, `${elementName}.js`))
+      .pipe(
+        terser({
+          mangle: false,
+          ecma: 6
+        })
+      )
+      .pipe(gulp.dest(paths.dist));
+  });
+
+  gulp.task("compile", () => {
+    return gulp
+      .src(path.join(paths.src, `${elementName}.js`))
+      .pipe(
+        replace(
+          /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
+          "$1$2.umd$3"
+        )
+      )
+      .pipe(
+        rename({
+          suffix: ".umd"
+        })
       )
       .pipe(gulp.dest(paths.dist));
   });

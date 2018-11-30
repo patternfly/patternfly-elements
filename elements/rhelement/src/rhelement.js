@@ -56,6 +56,10 @@ class RHElement extends HTMLElement {
     this.setAttribute("rh-type", value);
   }
 
+  has_slot(name) {
+    return this.querySelector(`[slot='${name}']`);
+  }
+
   constructor(rhClass, { type = null, delayRender = false } = {}) {
     super();
 
@@ -74,6 +78,27 @@ class RHElement extends HTMLElement {
           value: type
         }
       });
+    }
+
+    // Set the EQ values on container elements
+    console.log(type);
+    if (type === "container") {
+      this._queueAction(
+        {
+          type: "setCustomProperty",
+          data: {
+            name: "--rh-eq--width",
+            value: this._getContainerSize(".rh-band__wrapper", "width") + "px"
+          }
+        },
+        {
+          type: "setCustomProperty",
+          data: {
+            name: "--rh-eq--height",
+            value: this._getContainerSize(".rh-band__wrapper", "height") + "px"
+          }
+        }
+      );
     }
 
     if (!delayRender) {
@@ -130,6 +155,22 @@ class RHElement extends HTMLElement {
 
   _setProperty({ name, value }) {
     this[name] = value;
+  }
+
+  // Set the custom property value
+  _setCustomProperty(name, value) {
+    this.shadowRoot.querySelector(
+      "style"
+    ).textContent += `:host { ${name}: ${value}; }`;
+  }
+
+  // Get the size of the container by selector
+  _getContainerSize(selector, direction) {
+    if (direction === "height") {
+      return this.shadowRoot.querySelector(selector).offsetHeight;
+    } else {
+      return this.shadowRoot.querySelector(selector).offsetWidth;
+    }
   }
 
   render() {

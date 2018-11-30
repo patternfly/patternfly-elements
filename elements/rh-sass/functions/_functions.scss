@@ -158,6 +158,23 @@
     @return var( --#{$repo}-theme--#{$category}#{$cssvar}, #{map-get($map, $cssvar)});
 }
 
+
+
+/// RH Var Fallback
+///
+/// Returns the SCSS fallback value only
+///
+/// @param {String} $size - Variable name to be used and prepended with --rh-theme
+/// @use -
+/// ```
+/// @media screen and (min-width: rh-breakpoint(sm)) {
+///    --rh-band--width: #{rh-breakpoint(sm) - $box-padding * 2};
+/// }
+/// ```
+@function rh-breakpoint($size) {
+    @return #{map-get($rh-vars, grid-breakpoint--#{$size})};
+}
+
 /// RH Color
 ///
 /// Returns CSS Var stack with exposed theme Var and respective SCSS fallback

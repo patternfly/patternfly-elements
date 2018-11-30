@@ -1,8 +1,7 @@
 {
   "name": "@rhelements/rhelements",
   "scripts": {
-    "index": "node scripts/doc-listing-update.js",
-    "start": "npm run index && spandx",
+    "start": "spandx",
     "lerna": "lerna",
     "test": "npm run build && wct --configFile wct.conf.json test/index.html",
     "build": "lerna run build",

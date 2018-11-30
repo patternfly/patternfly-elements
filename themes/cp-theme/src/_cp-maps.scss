@@ -8,6 +8,14 @@ $cp-colors: (
   text--on-dark:                      $rh-global--text-color--inverted,
   text--on-saturated:                 $rh-global--text-color--inverted,
 
+// ========================================================================
+  // Heading Text Colors
+  // ========================================================================
+
+  heading:                            $rh-global--heading-color,
+  heading--on-dark:                   $rh-global--heading-color--inverted,
+  heading--on-saturated:              $rh-global--heading-color--inverted,
+
 
   // ========================================================================
   // Base UI Link Colors to be used below

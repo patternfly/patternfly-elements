@@ -118,8 +118,11 @@ $rh-global--color--gray12:            $rh-global--color--black-nero !default;
 // Where context switches...
 // ========================================================================
 
-$rh-global--text-color:           $rh-global--color--gray-night !default; // #333
+$rh-global--text-color:           $rh-global--color--gray-batman !default;
 $rh-global--text-color--inverted: $rh-global--color--white !default;
+
+$rh-global--heading-color:           $rh-global--color--black-soft !default;
+$rh-global--heading-color--inverted: $rh-global--color--white !default;
 
 // Text links on _white_ or _light_ backgrounds
 $rh-global--link-color:           $rh-global--color--blue-denim !default;    // Link

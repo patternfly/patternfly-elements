@@ -257,10 +257,10 @@ input {
   flex: 1;
   box-shadow: inset 0 1px 0px rgba(0, 0, 0, 0.075) !important;
   padding-left: 5px;
+  padding-right: 30px;
   border-radius: 0;
   background: #fff;
-  border: 1px solid #d1d1d1;
-  border-right: none;
+  border: 1px solid var(--rh-theme--color--surface--border--lightest, #ececec);
   font-size: 16px;
   
   line-height: 24px;
@@ -285,7 +285,7 @@ input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none; }
 
-button.clear-search {
+button {
   font-size: 27px;
   color: #cccccc;
   background-color: #fff;
@@ -293,8 +293,8 @@ button.clear-search {
   border: none;
   line-height: 20px;
   position: absolute;
-  right: 50px;
-  top: 50%;
+  right: 30px;
+  top: 45%;
   transform: translate(-50%, -50%);
   padding: 0px;
   margin: 0px; }
@@ -304,14 +304,15 @@ button.clear-search:hover {
   color: #06c; }
 
 button.search-button {
-  box-shadow: inset 0 1px 0px rgba(0, 0, 0, 0.075);
-  background-color: #fff;
-  border-color: #0076e0;
-  color: var(--rh-theme--color--ui-link, #06c);
-  border: 1px solid var(--rh-theme--color--surface--border--lightest, #ececec);
-  border-left: none;
-  margin: 0px;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s; }
+  right: 0px;
+  width: 16px; }
+
+button.search-button svg {
+  fill: #06c; }
+
+button.search-button:hover svg,
+button.search-button:focus svg {
+  fill: #004080; }
 
 button[disabled="true"] {
   color: #ccc; }
@@ -331,7 +332,13 @@ button[disabled="true"] {
   &times;
 </button>
 <button class="search-button" type="button" aria-label="Search">
-    <span class="web-icon-search" aria-hidden="true" title="Search">Search</span>
+  <svg viewBox="0 0 512 512">
+    <path d="M256.233,5.756c-71.07,15.793-141.44,87.863-155.834,159.233c-11.495,57.076,0.3,111.153,27.688,154.335L6.339,441.172
+  c-8.596,8.596-8.596,22.391,0,30.987l33.286,33.286c8.596,8.596,22.391,8.596,30.987,0L192.26,383.796
+  c43.282,27.688,97.559,39.683,154.734,28.188c79.167-15.893,142.04-77.067,159.632-155.934
+  C540.212,104.314,407.968-27.93,256.233,5.756z M435.857,208.37c0,72.869-59.075,131.944-131.944,131.944
+  S171.969,281.239,171.969,208.37S231.043,76.426,303.913,76.426S435.857,135.501,435.857,208.37z"/>
+  </svg>
 </button>`;
   }
 

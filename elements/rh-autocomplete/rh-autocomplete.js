@@ -127,7 +127,6 @@ class RhAutocomplete extends RHElement {
 
     this._dropdown.setAttribute("active-index", 0);
     this._inputBox.setAttribute("active-index", 0);
-    console.log("hello");
   }
 
   _optionSelected(e) {

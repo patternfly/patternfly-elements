@@ -34,8 +34,3 @@ fs.readFile(wrapper, (err, data) => {
     if (err) throw err;
   });
 });
-
-// From the wrapper.html, get the ID element #demos and replace with the above markup
-const outFile = path.join(__dirname, "../doc/index.html");
-
-// fs.writeFileSync(outFile);

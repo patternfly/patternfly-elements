@@ -2,9 +2,6 @@
 node_modules
 tmp
 
-# Compiled index
-doc/index.html
-
 # Logs
 lerna-debug.log
 npm-debug.log*

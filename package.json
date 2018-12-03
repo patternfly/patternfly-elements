@@ -1,7 +1,7 @@
 {
   "name": "@rhelements/rhelements",
   "scripts": {
-    "start": "npm run index && spandx",
+    "start": "spandx",
     "lerna": "lerna",
     "test": "npm run build && wct --configFile wct.conf.json test/index.html",
     "build": "lerna run build",

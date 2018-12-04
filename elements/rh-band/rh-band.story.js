@@ -8,8 +8,8 @@ stories.addDecorator(withKnobs);
 
 stories.add("rh-band", () => {
   // Pointer to theme file
-  const themeLabel = "Theme file";
-  const themeValue = text(themeLabel, "");
+  // const themeLabel = "Theme file";
+  // const themeValue = text(themeLabel, "");
 
   // Attributes
   const colorLabel = "Color";

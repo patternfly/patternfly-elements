@@ -53,13 +53,15 @@ class RhBand extends RHElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this._queueAction({
-      type: "copyAttribute",
-      data: {
-        name: "aside-position",
-        to: ".rh-band__wrapper"
-      }
-    });
+    // this._queueAction({
+    //   type: "copyAttribute",
+    //   data: {
+    //     name: "aside-position",
+    //     to: ".rh-band__wrapper"
+    //   }
+    // });
+
+    this._copyAttribute("aside-position", ".rh-band__wrapper");
   }
 
   // disconnectedCallback() {}

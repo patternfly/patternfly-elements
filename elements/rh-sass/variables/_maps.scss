@@ -74,6 +74,14 @@ $rh-colors: (
   surface--lighter--link--hover:      $rh-color--surface--lighter--link--hover,
   surface--lighter--link--focus:      $rh-color--surface--lighter--link--focus,
 
+  // Light group - @TODO this is a dupe of lighter until lighter can be deprecated
+  surface--light:                   $rh-color--surface--light,
+  surface--light--text:             $rh-color--surface--light--text,
+  surface--light--link:             $rh-color--surface--light--link,
+  surface--light--link--visited:    $rh-color--surface--light--link--visited,
+  surface--light--link--hover:      $rh-color--surface--light--link--hover,
+  surface--light--link--focus:      $rh-color--surface--light--link--focus,
+
   // Base group
   surface--base:                      $rh-color--surface--base,
   surface--base--text:                $rh-color--surface--base--text,
@@ -81,6 +89,14 @@ $rh-colors: (
   surface--base--link--visited:       $rh-color--surface--base--link--visited,
   surface--base--link--hover:         $rh-color--surface--base--link--hover,
   surface--base--link--focus:         $rh-color--surface--base--link--focus,
+
+  // Dark group - @TODO this is a dupe of lighter until lighter can be deprecated
+  surface--dark:                    $rh-color--surface--dark,
+  surface--dark--text:              $rh-color--surface--dark--text,
+  surface--dark--link:              $rh-color--surface--dark--link,
+  surface--dark--link--visited:     $rh-color--surface--dark--link--visited,
+  surface--dark--link--hover:       $rh-color--surface--dark--link--hover,
+  surface--dark--link--focus:       $rh-color--surface--dark--link--focus,
 
   // Darker group
   surface--darker:                    $rh-color--surface--darker,

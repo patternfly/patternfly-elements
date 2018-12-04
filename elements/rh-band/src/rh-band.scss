@@ -1,6 +1,7 @@
 @import "../../rh-sass/rh-sass";
 
 $LOCAL: band;
+$SLOT: "";
 $aside-md: 250px;
 $aside-lg: 300px;
 
@@ -64,10 +65,10 @@ $aside-lg: 300px;
   }
 }
 
-// :host([size="small"]) {
-//   --rh-band--paddingTop:        #{rh-var(container-spacer)};
-//   --rh-band--paddingBottom:     #{rh-var(container-spacer)};
-// }
+:host([size="small"]) {
+  --rh-band--paddingTop:        #{rh-var(container-spacer)};
+  --rh-band--paddingBottom:     #{rh-var(container-spacer)};
+}
 
 a {
   color: rh-radio(ui-link);
@@ -138,7 +139,7 @@ a {
       &:first-child {
         @media (min-width: $rh-global--grid-breakpoint--md) {
           width: calc(100% - #{$aside-md} + #{$rh-global--spacer * 2});
-          margin-right: 2.5702331142%;
+          margin-right: 2.5%;
         }
         @media (min-width: $rh-global--grid-breakpoint--lg) {
           width: calc(100% - #{$aside-lg} + #{$rh-global--spacer * 2});
@@ -146,14 +147,14 @@ a {
       }
       &:last-child {
         margin-bottom: 0;
-      }
+      } 
       [aside-position~="left"] & {
         @media (min-width: #{$rh-global--grid-breakpoint--sm + 12}) {
           float: right;
         }
         &:first-child {
           @media (min-width: $rh-global--grid-breakpoint--md) {
-            margin-left: 2.5702331142%;
+            margin-left: 2.5%;
           }
         }
         &:last-child {
@@ -176,10 +177,11 @@ a {
   }
   &__header {
     &::slotted([typography="title"]) {
+      $SLOT: header-title;
       font-size: #{rh-var(font-size--heading--gamma)};
       font-weight: $rh-global--FontWeight--semi-bold;
       line-height: 1;
-      color: var(--rh-band_header-title--color);
+      color: rh-local(color);
       text-transform: uppercase;
       margin-top: 0;
       &:not(:last-child) {
@@ -190,7 +192,7 @@ a {
       font-size: #{rh-var(font-size--heading--alpha)};
       font-weight: $rh-global--FontWeight--semi-bold;
       line-height: 1;
-      color: #{rh-color(heading)};
+      color: rh-radio(ui-text);
       margin-top: 0;
       &:not(:last-child) {
         margin-bottom: .2em;
@@ -199,7 +201,7 @@ a {
     &::slotted([typography="summary"]) {
       font-size: #{rh-var(font-size--heading--delta)};
       font-weight: $rh-global--FontWeight--light;
-      color: #{rh-color(text)};
+      color: #{rh-radio(ui-text)};
       margin-top: 0;
       margin-bottom: 0;
     }

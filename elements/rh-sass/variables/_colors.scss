@@ -83,6 +83,14 @@ $rh-color--surface--lighter--link--visited:    $rh-color--ui-link--visited !defa
 $rh-color--surface--lighter--link--hover:      $rh-color--ui-link--hover !default;
 $rh-color--surface--lighter--link--focus:      $rh-color--ui-link--focus !default;
 
+// Light group - @TODO this is a dupe of lighter until lighter can be deprecated
+$rh-color--surface--light:                   $rh-color--gray-100 !default;
+$rh-color--surface--light--text:             $rh-color--text !default;
+$rh-color--surface--light--link:             $rh-color--ui-link !default;
+$rh-color--surface--light--link--visited:    $rh-color--ui-link--visited !default;
+$rh-color--surface--light--link--hover:      $rh-color--ui-link--hover !default;
+$rh-color--surface--light--link--focus:      $rh-color--ui-link--focus !default;
+
 // Base group
 $rh-color--surface--base:                      $rh-color--gray-200 !default;
 $rh-color--surface--base--text:                $rh-color--text !default;
@@ -98,6 +106,14 @@ $rh-color--surface--darker--link:              $rh-color--ui-link--on-dark !defa
 $rh-color--surface--darker--link--visited:     $rh-color--ui-link--on-dark--visited !default;
 $rh-color--surface--darker--link--hover:       $rh-color--ui-link--on-dark--hover !default;
 $rh-color--surface--darker--link--focus:       $rh-color--ui-link--on-dark--focus !default;
+
+// Dark group - @TODO this is a dupe of lighter until lighter can be deprecated
+$rh-color--surface--dark:                    $rh-color--gray-800 !default;
+$rh-color--surface--dark--text:              $rh-color--text--on-dark !default;
+$rh-color--surface--dark--link:              $rh-color--ui-link--on-dark !default;
+$rh-color--surface--dark--link--visited:     $rh-color--ui-link--on-dark--visited !default;
+$rh-color--surface--dark--link--hover:       $rh-color--ui-link--on-dark--hover !default;
+$rh-color--surface--dark--link--focus:       $rh-color--ui-link--on-dark--focus !default;
 
 // Darkest group
 $rh-color--surface--darkest:                   $rh-color--gray-1000 !default;

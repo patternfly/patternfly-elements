@@ -66,12 +66,12 @@ class RhBand extends RHElement {
       --rh-band--paddingBottom: calc(var(--rh-theme--container-spacer, 1rem) * 2); } }
 
 :host([color="dark"]) {
-  --rh-band--backgroundColor:                  var(--rh-theme--color--surface--dark, );
-  --rh-broadcasted--color--text:               var(--rh-theme--color--surface--dark--text, );
-  --rh-broadcasted--color--ui-link:            var(--rh-theme--color--surface--dark--link, );
-  --rh-broadcasted--color--ui-link--visited:   var(--rh-theme--color--surface--dark--link--visited, );
-  --rh-broadcasted--color--ui-link--hover:     var(--rh-theme--color--surface--dark--link--hover, );
-  --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--dark--link--focus, );
+  --rh-band--backgroundColor:                  var(--rh-theme--color--surface--dark, #464646);
+  --rh-broadcasted--color--text:               var(--rh-theme--color--surface--dark--text, #fff);
+  --rh-broadcasted--color--ui-link:            var(--rh-theme--color--surface--dark--link, #99ccff);
+  --rh-broadcasted--color--ui-link--visited:   var(--rh-theme--color--surface--dark--link--visited, #b38cd9);
+  --rh-broadcasted--color--ui-link--hover:     var(--rh-theme--color--surface--dark--link--hover, #cce6ff);
+  --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--dark--link--focus, #cce6ff);
   --rh-band_header-title--color:               var(--rh-theme--color--ui-accent, #fe460d); }
 
 :host([color="darkest"]) {
@@ -102,12 +102,12 @@ class RhBand extends RHElement {
   --rh-band_header-title--color:               var(--rh-theme--color--ui-accent, #fe460d); }
 
 :host([color="light"]) {
-  --rh-band--backgroundColor:                  var(--rh-theme--color--surface--light, );
-  --rh-broadcasted--color--text:               var(--rh-theme--color--surface--light--text, );
-  --rh-broadcasted--color--ui-link:            var(--rh-theme--color--surface--light--link, );
-  --rh-broadcasted--color--ui-link--visited:   var(--rh-theme--color--surface--light--link--visited, );
-  --rh-broadcasted--color--ui-link--hover:     var(--rh-theme--color--surface--light--link--hover, );
-  --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--light--link--focus, );
+  --rh-band--backgroundColor:                  var(--rh-theme--color--surface--light, #ececec);
+  --rh-broadcasted--color--text:               var(--rh-theme--color--surface--light--text, #333);
+  --rh-broadcasted--color--ui-link:            var(--rh-theme--color--surface--light--link, #06c);
+  --rh-broadcasted--color--ui-link--visited:   var(--rh-theme--color--surface--light--link--visited, rebeccapurple);
+  --rh-broadcasted--color--ui-link--hover:     var(--rh-theme--color--surface--light--link--hover, #003366);
+  --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--light--link--focus, #003366);
   --rh-band_header-title--color:               var(--rh-theme--color--ui-accent, #fe460d); }
 
 :host([color="lightest"]) {
@@ -119,15 +119,19 @@ class RhBand extends RHElement {
   --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--lightest--link--focus, #003366);
   --rh-band_header-title--color:               var(--rh-theme--color--ui-accent, #fe460d); }
 
+:host([size="small"]) {
+  --rh-band--paddingTop:        var(--rh-theme--container-spacer, 1rem);
+  --rh-band--paddingBottom:     var(--rh-theme--container-spacer, 1rem); }
+
 a {
-  color: var(--rh-band--ui-link);
+  color: var(--rh-broadcasted--ui-link);
   text-transform: var(--rh-broadcasted--ui-link--textTransform); }
   a:visited {
-    color: var(--rh-broadcasted--color--ui-link--visited); }
+    color: var(--rh-broadcasted--ui-link--visited); }
   a:hover {
-    color: var(--rh-broadcasted--color--ui-link--hover); }
+    color: var(--rh-broadcasted--ui-link--hover); }
   a:focus {
-    color: var(--rh-broadcasted--color--ui-link--focus); }
+    color: var(--rh-broadcasted--ui-link--focus); }
 
 .rh-band__wrapper {
   position: relative;
@@ -177,7 +181,7 @@ a {
     @media (min-width: 768px) {
       .rh-band__container > *:first-child, .rh-band__content > *:first-child {
         width: calc(100% - 250px + 2rem);
-        margin-right: 2.5702331142%; } }
+        margin-right: 2.5%; } }
     @media (min-width: 992px) {
       .rh-band__container > *:first-child, .rh-band__content > *:first-child {
         width: calc(100% - 300px + 2rem); } }
@@ -188,7 +192,7 @@ a {
         float: right; } }
     @media (min-width: 768px) {
       [aside-position~="left"] .rh-band__container > *:first-child, [aside-position~="left"] .rh-band__content > *:first-child {
-        margin-left: 2.5702331142%; } }
+        margin-left: 2.5%; } }
     [aside-position~="left"] .rh-band__container > *:last-child, [aside-position~="left"] .rh-band__content > *:last-child {
       order: -1; }
 
@@ -204,7 +208,7 @@ a {
   font-size: var(--rh-theme--font-size--heading--gamma, 21px);
   font-weight: 600;
   line-height: 1;
-  color: var(--rh-band_header-title--color);
+  color: var(--rh-band--color);
   text-transform: uppercase;
   margin-top: 0; }
   .rh-band__header::slotted([typography="title"]):not(:last-child) {
@@ -214,7 +218,7 @@ a {
   font-size: var(--rh-theme--font-size--heading--alpha, 32px);
   font-weight: 600;
   line-height: 1;
-  color: var(--rh-theme--color--heading, );
+  color: var(--rh-broadcasted--ui-text);
   margin-top: 0; }
   .rh-band__header::slotted([typography="heading"]):not(:last-child) {
     margin-bottom: .2em; }
@@ -222,7 +226,7 @@ a {
 .rh-band__header::slotted([typography="summary"]) {
   font-size: var(--rh-theme--font-size--heading--delta, 18px);
   font-weight: 300;
-  color: var(--rh-theme--color--text, #333);
+  color: var(--rh-broadcasted--ui-text);
   margin-top: 0;
   margin-bottom: 0; }
 
@@ -332,13 +336,15 @@ a {
 
   connectedCallback() {
     super.connectedCallback();
-    this._queueAction({
-      type: "copyAttribute",
-      data: {
-        name: "aside-position",
-        to: ".rh-band__wrapper"
-      }
-    });
+    // this._queueAction({
+    //   type: "copyAttribute",
+    //   data: {
+    //     name: "aside-position",
+    //     to: ".rh-band__wrapper"
+    //   }
+    // });
+
+    this._copyAttribute("aside-position", ".rh-band__wrapper");
   }
 
   // disconnectedCallback() {}

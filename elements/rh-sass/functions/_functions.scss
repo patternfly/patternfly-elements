@@ -233,12 +233,15 @@
 /// @use -
 ///     ```
 ///     :host {
-///         padding-top:      #{rh-local(paddingTop)};
+///         padding-top:      #{rh-local(paddingTop`)};
 ///         padding-bottom:   #{rh-local(paddingBottom)};
 ///     }
 ///     ```
 @function rh-local($cssvar) {
-    @return var( --#{$repo}-#{$LOCAL}--#{to-string($cssvar, '--')});
+    @if $SLOT != "" {
+      $slot: "_#{$SLOT}";
+    }
+    @return var( --#{$repo}-#{$LOCAL}#{$SLOT}--#{to-string($cssvar, '--')});
 }
 
 /// RH Radio

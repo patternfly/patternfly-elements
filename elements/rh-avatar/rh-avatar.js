@@ -124,6 +124,10 @@ class RhAvatar extends RHElement {
     };
   }
 
+  static get defaultColors() {
+    return "#3B0083 #f0ab00 #007a87 #00b9e4 #92d400";
+  }
+
   get name() {
     return this.getAttribute("name");
   }
@@ -210,7 +214,8 @@ class RhAvatar extends RHElement {
 
   static _registerColors() {
     this.colors = [];
-    const themeColors = RHElement.var("--rh-avatar--colors");
+    const themeColors =
+      RHElement.var("--rh-avatar--colors") || this.defaultColors;
 
     themeColors.split(/\s+/).forEach(colorCode => {
       let pattern;

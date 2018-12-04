@@ -85,6 +85,26 @@
     @return $string;
 }
 
+@function to-string($list, $glue: '', $is-nested: false) {
+    $result: null;
+
+    @for $i from 1 through length($list) {
+        $e: nth($list, $i);
+
+        @if type-of($e) == list {
+        $result: $result#{to-string($e, $glue, true)};
+        } @else {
+        $result: if(
+            $i != length($list) or $is-nested,
+            $result#{$e}#{$glue},
+            $result#{$e}
+        );
+        }
+    }
+
+    @return $result;
+}
+
 @function str-split($string, $separator) {
     // empty array/list
     $split-arr: ();
@@ -201,4 +221,52 @@
     }
 
     @return var( --#{$repo}-theme--#{$category}#{$cssvar}, #{map-get($map, $cssvar)});
+}
+
+/// RH Color
+///
+/// Returns CSS Var stack with exposed theme Var and respective SCSS fallback
+///
+/// @param {String} $cssvar - Variable name to be used and prepended with --rh-theme
+/// @param {String} $category - Category name to be appended to variables within the map/system, default is "color"
+/// @param {Map} $map - SASS Map of variables
+/// @requires {String} $repo - Name of repo, which is "rh"
+/// @use -
+///
+///     1.look up a color: /elements/rh-sass/variables/_maps.scss
+///         (FYI, maps references: /elements/rh-sass/variables/_colors.scss)
+///
+///     2. use like this:
+///         ```
+///         .my-element {
+///           color:       #{rh-color(  surface--base--text  )};
+///           background:  #{rh-color(  surface--base )};
+///         }
+///         ```
+@function rh-local($cssvar) {
+    @return var( --#{$repo}-#{$LOCAL}--#{$cssvar});
+}
+
+/// RH Color
+///
+/// Returns CSS Var stack with exposed theme Var and respective SCSS fallback
+///
+/// @param {String} $cssvar - Variable name to be used and prepended with --rh-theme
+/// @param {String} $category - Category name to be appended to variables within the map/system, default is "color"
+/// @param {Map} $map - SASS Map of variables
+/// @requires {String} $repo - Name of repo, which is "rh"
+/// @use -
+///
+///     1.look up a color: /elements/rh-sass/variables/_maps.scss
+///         (FYI, maps references: /elements/rh-sass/variables/_colors.scss)
+///
+///     2. use like this:
+///         ```
+///         .my-element {
+///           color:       #{rh-color(  surface--base--text  )};
+///           background:  #{rh-color(  surface--base )};
+///         }
+///         ```
+@function rh-radio($cssvar) {
+    @return var( --#{$repo}-broadcasted--#{to-string($cssvar, '--')});
 }

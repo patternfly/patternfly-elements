@@ -1,5 +1,6 @@
 @import "../../rh-sass/rh-sass";
 
+$LOCAL: band;
 $aside-md: 250px;
 $aside-lg: 300px;
 
@@ -18,6 +19,8 @@ $aside-lg: 300px;
   --rh-band--borderTopWidth:                  #{rh-var(surface--border-width)};
   --rh-band--borderBottomWidth:               #{rh-var(surface--border-width)};
   --rh-band--borderStyle:                     #{rh-var(surface--border-style)};
+  // Accent title styles
+  --rh-band_header-title--color:             #{rh-color(ui-accent)};
   // Layouts, grid layouts
   --rh-band_header--layout:                   1fr;
   --rh-band_body--layout:                     1fr;
@@ -35,7 +38,7 @@ $aside-lg: 300px;
   // Loop through the other breakpoints
   @each $size in (sm, md, lg, xl) {
     @media screen and (min-width: rh-breakpoint(#{$size})) {
-      --rh-band--width: calc(#{rh-breakpoint(#{$size})} - calc(var(--rh-band--paddingRight) * 2));
+      --rh-band--width: calc(#{rh-breakpoint(#{$size})} - calc(#{rh-local(paddingRight)} * 2));
     }
   }
   // Reduce padding for print
@@ -45,76 +48,38 @@ $aside-lg: 300px;
   }
 }
 
-:host([color="dark"]) {
-  --rh-band--backgroundColor:                  #{rh-color(surface--darker)};
-  --rh-broadcasted--color--text:               #{rh-color(surface--darker--text)};
-  --rh-broadcasted--color--ui-link:            #{rh-color(surface--darker--link)};
-  --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--darker--link--visited)};
-  --rh-broadcasted--color--ui-link--hover:     #{rh-color(surface--darker--link--hover)};
-  --rh-broadcasted--color--ui-link--focus:     #{rh-color(surface--darker--link--focus)};
+@each $color in (dark, darkest, accent, complement, light, lightest) {
+  :host([color="#{$color}"]) {
+    --rh-band--backgroundColor:                  #{rh-color(surface--#{$color})};
+    --rh-broadcasted--color--text:               #{rh-color(surface--#{$color}--text)};
+    --rh-broadcasted--color--ui-link:            #{rh-color(surface--#{$color}--link)};
+    --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--#{$color}--link--visited)};
+    --rh-broadcasted--color--ui-link--hover:     #{rh-color(surface--#{$color}--link--hover)};
+    --rh-broadcasted--color--ui-link--focus:     #{rh-color(surface--#{$color}--link--focus)};
+    @if $color in (dark, darkest, accent, complement) {
+      --rh-band_header-title--color:               #{rh-color(ui-accent)};
+    } @else {
+      --rh-band_header-title--color:               #{rh-color(surface--#{$color}--text)};
+    }
+  }
 }
 
-:host([color="darkest"]) {
-  --rh-band--backgroundColor:                  #{rh-color(surface--darkest)};
-  --rh-broadcasted--color--text:               #{rh-color(surface--darkest--text)};
-  --rh-broadcasted--color--ui-link:            #{rh-color(surface--darkest--link)};
-  --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--darkest--link--visited)};
-  --rh-broadcasted--color--ui-link--hover:     #{rh-color(surface--darkest--link--hover)};
-  --rh-broadcasted--color--ui-link--focus:     #{rh-color(surface--darkest--link--focus)};
-}
-
-:host([color="light"]) {
-  --rh-band--backgroundColor:                  #{rh-color(surface--lighter)};
-  --rh-broadcasted--color--text:               #{rh-color(surface--lighter--text)};
-  --rh-broadcasted--color--ui-link:            #{rh-color(surface--lighter--link)};
-  --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--lighter--link--visited)};
-  --rh-broadcasted--color--ui-link--hover:     #{rh-color(surface--lighter--link--hover)};
-  --rh-broadcasted--color--ui-link--focus:     #{rh-color(surface--lighter--link--focus)};
-}
-
-:host([color="lightest"]) {
-  --rh-band--backgroundColor:                  #{rh-color(surface--lightest)};
-  --rh-broadcasted--color--text:               #{rh-color(surface--lightest--text)};
-  --rh-broadcasted--color--ui-link:            #{rh-color(surface--lightest--link)};
-  --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--lightest--link--visited)};
-  --rh-broadcasted--color--ui-link--hover:     #{rh-color(surface--lightest--link--hover)};
-  --rh-broadcasted--color--ui-link--focus:     #{rh-color(surface--lightest--link--focus)};
-}
-
-:host([color="complement"]) {
-  --rh-band--backgroundColor:                       #{rh-color(surface--complement)};
-  --rh-broadcasted--color--text:               #{rh-color(surface--complement--text)};
-  --rh-broadcasted--color--ui-link:            #{rh-color(surface--complement--link)};
-  --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--complement--link--visited)};
-  --rh-broadcasted--color--ui-link--hover:     #{rh-color(surface--complement--link--hover)};
-  --rh-broadcasted--color--ui-link--focus:     #{rh-color(surface--complement--link--focus)};
-}
-
-:host([color="accent"]) {
-  --rh-band--backgroundColor:                       #{rh-color(surface--accent)};
-  --rh-broadcasted--color--text:               #{rh-color(surface--accent--text)};
-  --rh-broadcasted--color--ui-link:            #{rh-color(surface--accent--link)};
-  --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--accent--link--visited)};
-  --rh-broadcasted--color--ui-link--hover:     #{rh-color(surface--accent--link--hover)};
-  --rh-broadcasted--color--ui-link--focus:     #{rh-color(surface--accent--link--focus)};
-}
-
-:host([size="small"]) {
-  --rh-band--paddingTop:        #{rh-var(container-spacer)};
-  --rh-band--paddingBottom:     #{rh-var(container-spacer)};
-}
+// :host([size="small"]) {
+//   --rh-band--paddingTop:        #{rh-var(container-spacer)};
+//   --rh-band--paddingBottom:     #{rh-var(container-spacer)};
+// }
 
 a {
-  color: var(--rh-broadcasted--color--ui-link);
-  text-transform: var(--rh-broadcasted--ui-link--textTransform);
+  color: rh-radio(ui-link);
+  text-transform: rh-radio(ui-link, textTransform);
   &:visited {
-    color: var(--rh-broadcasted--color--ui-link--visited);
+    color: rh-radio(ui-link, visited);
   }
   &:hover {
-    color: var(--rh-broadcasted--color--ui-link--hover);
+    color: rh-radio(ui-link, hover);
   }
   &:focus {
-    color: var(--rh-broadcasted--color--ui-link--focus);
+    color: rh-radio(ui-link, focus);
   }
 }
 
@@ -126,30 +91,30 @@ a {
     justify-items: flex-start;
 
     // Padding styles
-    padding-top: var(--rh-band--paddingTop);
-    padding-bottom: var(--rh-band--paddingBottom);
+    padding-top: rh-local(paddingTop);
+    padding-bottom: rh-local(paddingBottom);
 
     // Border styles
-    border-top-width: var(--rh-band--borderTopWidth);
-    border-bottom-width: var(--rh-band--borderBottomWidth);
-    border-style: var(--rh-band--borderStyle);
-    border-color: var(--rh-band--borderColor);
+    border-top-width: rh-local(borderTopWidth);
+    border-bottom-width: rh-local(borderBottomWidth);
+    border-style: rh-local(borderStyle);
+    border-color: rh-local(borderColor);
 
     // Base colors
-    background-color: var(--rh-band--backgroundColor);
-    background-position-x: var(--rh-band--backgroundPositionX);
-    background-position-y: var(--rh-band--backgroundPositionY);
-    color: var(--rh-broadcasted--color--text);
+    background-color: rh-local(backgroundColor);
+    background-position-x: rh-local(backgroundPositionX);
+    background-position-y: rh-local(backgroundPositionY);
+    color: rh-radio(color--text);
 
     // Remove background color for print
     @include rh-no-print-background;
   }
   &__container {
     padding-top: 0;
-    padding-right: var(--rh-band--paddingRight);
+    padding-right: rh-local(paddingRight);
     padding-bottom: 0;
-    padding-left: var(--rh-band--paddingLeft);
-    width: var(--rh-band--width);
+    padding-left: rh-local(paddingLeft);
+    width: rh-local(width)
     margin: 0 auto;
   }
   &__container,
@@ -214,7 +179,7 @@ a {
       font-size: #{rh-var(font-size--heading--gamma)};
       font-weight: $rh-global--FontWeight--semi-bold;
       line-height: 1;
-      color: #{rh-color(ui-accent)};
+      color: var(--rh-band_header-title--color);
       text-transform: uppercase;
       margin-top: 0;
       &:not(:last-child) {

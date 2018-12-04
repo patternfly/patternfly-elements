@@ -60,6 +60,13 @@ class RHElement extends HTMLElement {
     return this.querySelector(`[slot='${name}']`);
   }
 
+  size() {
+    return {
+      width: this.offsetWidth,
+      height: this.offsetHeight
+    };
+  }
+
   constructor(rhClass, { type = null, delayRender = false } = {}) {
     super();
 
@@ -81,25 +88,25 @@ class RHElement extends HTMLElement {
     }
 
     // Set the EQ values on container elements
-    console.log(type);
-    if (type === "container") {
-      this._queueAction(
-        {
-          type: "setCustomProperty",
-          data: {
-            name: "--rh-eq--width",
-            value: this._getContainerSize(".rh-band__wrapper", "width") + "px"
-          }
-        },
-        {
-          type: "setCustomProperty",
-          data: {
-            name: "--rh-eq--height",
-            value: this._getContainerSize(".rh-band__wrapper", "height") + "px"
-          }
+    // console.log(type);
+    // if (type === "container") {
+    this._queueAction(
+      {
+        type: "setCustomProperty",
+        data: {
+          name: "--rh-eq--width",
+          value: this._getContainerSize().width
         }
-      );
-    }
+      },
+      {
+        type: "setCustomProperty",
+        data: {
+          name: "--rh-eq--height",
+          value: this._getContainerSize().height
+        }
+      }
+    );
+    // }
 
     if (!delayRender) {
       this.render();
@@ -165,12 +172,15 @@ class RHElement extends HTMLElement {
   }
 
   // Get the size of the container by selector
-  _getContainerSize(selector, direction) {
-    if (direction === "height") {
-      return this.shadowRoot.querySelector(selector).offsetHeight;
-    } else {
-      return this.shadowRoot.querySelector(selector).offsetWidth;
+  _getContainerSize(selector = "self") {
+    let el = this;
+    if (selector !== "self") {
+      el = this.shadowRoot.querySelector(selector);
     }
+    return {
+      height: el.offsetHeight,
+      width: el.offsetWidth
+    };
   }
 
   render() {

@@ -65,11 +65,14 @@ class RhBand extends RHElement {
   // disconnectedCallback() {}
 
   attributeChangedCallback(attr, oldValue, newValue) {
-    const imgSrc = newValue;
-    // Set the image as the background image
-    if (imgSrc) {
-      this.shadowRoot.querySelector(".rh-band__wrapper").style.backgroundImage =
-        "url('" + imgSrc + "')";
+    switch (attr) {
+      case "img-src": {
+        // Set the image as the background image
+        this.shadowRoot.querySelector(
+          ".rh-band__wrapper"
+        ).style.backgroundImage = newValue ? `url('${newValue}')` : ``;
+        break;
+      }
     }
   }
 }

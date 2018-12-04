@@ -223,50 +223,36 @@
     @return var( --#{$repo}-theme--#{$category}#{$cssvar}, #{map-get($map, $cssvar)});
 }
 
-/// RH Color
+/// RH Local
 ///
-/// Returns CSS Var stack with exposed theme Var and respective SCSS fallback
+/// Returns CSS Var for the local component-scoped variable
 ///
-/// @param {String} $cssvar - Variable name to be used and prepended with --rh-theme
-/// @param {String} $category - Category name to be appended to variables within the map/system, default is "color"
-/// @param {Map} $map - SASS Map of variables
+/// @param {String} $cssvar - Variable identifiers which are postfixed and combined using '--'
 /// @requires {String} $repo - Name of repo, which is "rh"
+/// @requires {String} $LOCAL - Name of component, this is defined at the top of the sass file for the component
 /// @use -
-///
-///     1.look up a color: /elements/rh-sass/variables/_maps.scss
-///         (FYI, maps references: /elements/rh-sass/variables/_colors.scss)
-///
-///     2. use like this:
-///         ```
-///         .my-element {
-///           color:       #{rh-color(  surface--base--text  )};
-///           background:  #{rh-color(  surface--base )};
-///         }
-///         ```
+///     ```
+///     :host {
+///         padding-top:      #{rh-local(paddingTop)};
+///         padding-bottom:   #{rh-local(paddingBottom)};
+///     }
+///     ```
 @function rh-local($cssvar) {
-    @return var( --#{$repo}-#{$LOCAL}--#{$cssvar});
+    @return var( --#{$repo}-#{$LOCAL}--#{to-string($cssvar, '--')});
 }
 
-/// RH Color
+/// RH Radio
 ///
-/// Returns CSS Var stack with exposed theme Var and respective SCSS fallback
+/// Returns CSS Var for a broadcasted variable
 ///
-/// @param {String} $cssvar - Variable name to be used and prepended with --rh-theme
-/// @param {String} $category - Category name to be appended to variables within the map/system, default is "color"
-/// @param {Map} $map - SASS Map of variables
+/// @param {String} $cssvar - Variable identifiers which are postfixed and combined using '--'
 /// @requires {String} $repo - Name of repo, which is "rh"
 /// @use -
-///
-///     1.look up a color: /elements/rh-sass/variables/_maps.scss
-///         (FYI, maps references: /elements/rh-sass/variables/_colors.scss)
-///
-///     2. use like this:
-///         ```
-///         .my-element {
-///           color:       #{rh-color(  surface--base--text  )};
-///           background:  #{rh-color(  surface--base )};
-///         }
-///         ```
-@function rh-radio($cssvar) {
+///     ```
+///     a:visited {
+///         color:       #{rh-radio(  ui-link, visited  )};
+///     }
+///     ```
+@function rh-radio($cssvar...) {
     @return var( --#{$repo}-broadcasted--#{to-string($cssvar, '--')});
 }

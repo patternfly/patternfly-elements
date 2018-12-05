@@ -31,7 +31,7 @@ The type of pattern to display.  Currently supported values are `"squares"` and 
 
 | squares | triangles |
 | --- | --- |
-| ![squares image](squares.png) | ![triangles image](triangles.png) |
+| ![squares image](./squares.png) | ![triangles image](./triangles.png) |
 
 ### shape (observed)
 

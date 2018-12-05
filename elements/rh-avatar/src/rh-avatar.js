@@ -139,7 +139,18 @@ class RhAvatar extends RHElement {
     const nameArr = name.trim().split(/\s+/);
     const fi = nameArr[0][0];
     const li = nameArr.length > 1 ? nameArr[nameArr.length - 1][0] : "";
-    return [fi, li];
+
+    // For 1 name, return 1 initial.  For two names, return two initials.  For
+    // three names, return three initials.  For more than three names, return
+    // two initials (first name and last name).
+    switch (nameArr.length) {
+      case 1:
+        return [fi];
+      case 3:
+        return [fi, nameArr[1][0], li];
+      default:
+        return [fi, li];
+    }
   }
 
   _setInitials(initials) {

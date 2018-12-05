@@ -47,7 +47,8 @@ class RhBand extends RHElement {
   --rh-broadcasted--color--ui-link--visited:  var(--rh-theme--color--surface--base--link--visited, #7551a6);
   --rh-broadcasted--color--ui-link--hover:    var(--rh-theme--color--surface--base--link--hover, #00305b);
   --rh-broadcasted--color--ui-link--focus:    var(--rh-theme--color--surface--base--link--focus, #00305b);
-  --rh-band--width:                           auto; }
+  --rh-band--width:                           auto;
+  display: block; }
   @media screen and (min-width: 576px) {
     :host {
       --rh-band--width: calc(576px - calc(var(--rh-band--paddingRight) * 2)); } }
@@ -263,12 +264,7 @@ a {
     }
     <section class="rh-band__main">
       ${
-        this.has_slot("header") &&
-        !(
-          this.has_slot("header_title") ||
-          this.has_slot("header_heading") ||
-          this.has_slot("header_summary")
-        )
+        this.has_slot("header")
           ? `<slot class="rh-band__header" name="header"></slot>`
           : ""
       }
@@ -330,21 +326,26 @@ a {
     return ["img-src"];
   }
 
+  static get cascadingAttributes() {
+    return {
+      "aside-position": ".rh-band__wrapper"
+    };
+  }
+
+  // Declare the type of this component
+  static get rhType() {
+    return RHElement.rhType.container;
+  }
+
   constructor() {
     super(RhBand);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    // this._queueAction({
-    //   type: "copyAttribute",
-    //   data: {
-    //     name: "aside-position",
-    //     to: ".rh-band__wrapper"
-    //   }
-    // });
 
-    this._copyAttribute("aside-position", ".rh-band__wrapper");
+    // This is where it has content and should have width!
+    console.log(this.size());
   }
 
   // disconnectedCallback() {}
@@ -362,7 +363,7 @@ a {
   }
 }
 
-RHElement.create(RhBand, { type: "container" });
+RHElement.create(RhBand);
 
 export default RhBand;
 //# sourceMappingURL=rh-band.js.map

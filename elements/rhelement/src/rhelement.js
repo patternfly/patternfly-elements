@@ -44,7 +44,7 @@ class RHElement extends HTMLElement {
     return {
       Container: "container",
       Content: "content",
-      Pattern: "pattern"
+      Combo: "combo"
     };
   }
 

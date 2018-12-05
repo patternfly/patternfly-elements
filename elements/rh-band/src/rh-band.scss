@@ -47,6 +47,9 @@ $aside-lg: 300px;
     --rh-band--paddingTop:    calc(#{rh-var(container-spacer)} * 2);
     --rh-band--paddingBottom: calc(#{rh-var(container-spacer)} * 2);
   }
+
+  // Tag element styles
+  display: block;
 }
 
 @each $color in (dark, darkest, accent, complement, light, lightest) {

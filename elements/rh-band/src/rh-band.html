@@ -2,7 +2,7 @@
   <div class="rh-band__container">
     ${this.has_slot("aside") && this.asidePosition.includes("full") && this.asidePosition.includes("top") ? `<slot class="rh-band__aside" name="aside"></slot>` : ''}
     <section class="rh-band__main">
-      ${this.has_slot("header") && !(this.has_slot("header_title") || this.has_slot("header_heading") || this.has_slot("header_summary")) ? `<slot class="rh-band__header" name="header"></slot>` : ''}
+      ${this.has_slot("header") ? `<slot class="rh-band__header" name="header"></slot>` : ''}
       <div class="rh-band__content">
         ${this.has_slot("aside") && !this.asidePosition.includes("full") && this.asidePosition.includes("top") ? `<slot class="rh-band__aside" name="aside"></slot>` : ''}
         <slot class="rh-band__body"></slot>

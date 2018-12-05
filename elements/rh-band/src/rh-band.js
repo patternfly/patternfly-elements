@@ -47,21 +47,26 @@ class RhBand extends RHElement {
     return ["img-src"];
   }
 
+  static get cascadingAttributes() {
+    return {
+      "aside-position": ".rh-band__wrapper"
+    };
+  }
+
+  // Declare the type of this component
+  static get rhType() {
+    return RHElement.rhType.container;
+  }
+
   constructor() {
     super(RhBand);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    // this._queueAction({
-    //   type: "copyAttribute",
-    //   data: {
-    //     name: "aside-position",
-    //     to: ".rh-band__wrapper"
-    //   }
-    // });
 
-    this._copyAttribute("aside-position", ".rh-band__wrapper");
+    // This is where it has content and should have width!
+    console.log(this.size());
   }
 
   // disconnectedCallback() {}
@@ -79,6 +84,6 @@ class RhBand extends RHElement {
   }
 }
 
-RHElement.create(RhBand, { type: "container" });
+RHElement.create(RhBand);
 
 export default RhBand;

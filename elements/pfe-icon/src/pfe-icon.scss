@@ -1,0 +1,169 @@
+@import "../../pfe-sass/pfe-sass";
+
+
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+// Todo: convert these also
+$pfe-icon--size:                             1em;
+$pfe-icon--padding:                          .05em;
+$pfe-icon--border-width:                     map-get($pfe-vars, border-width);
+$pfe-icon--border-style:                     map-get($pfe-vars, border-style);
+
+
+/// ===========================================================================
+/// DEFUALT CTA
+/// ===========================================================================
+
+@mixin pfe-icon-set-svg-size($size: 1em) {
+  &,
+  & svg {
+    width: $size;
+    height: $size;
+  }
+}
+
+:host {
+  --pfe-icon--spacing:                 #{pfe-var(container-spacer)};
+  --pfe-icon--size:                    var(--pfe-theme--icon-size, 1em);
+  --pfe-icon--color--bg:               transparent;
+  --pfe-icon--color--border:           transparent;
+
+  display: inline-block;
+  vertical-align: middle;
+  @include pfe-icon-set-svg-size(1em);
+  border-radius: 50%;
+  background: var(--pfe-icon--color--bg);
+  border: $pfe-icon--border-width $pfe-icon--border-style var(--pfe-icon--color--border);
+
+  svg {
+    fill: var(--pfe-broadcasted--color--text);
+  }
+
+  @at-root #{&}([data-block]) {
+    display: block;
+    margin-bottom: var(--pfe-icon--spacing);
+    margin-top: var(--pfe-icon--spacing);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+:host([size="2x"]) {
+  @include pfe-icon-set-svg-size(2em);
+}
+
+:host([size="3x"]) {
+  @include pfe-icon-set-svg-size(3em);
+}
+
+:host([size="4x"]) {
+  @include pfe-icon-set-svg-size(4em);
+}
+
+// TODO: Sort out sizing
+:host([size="xl"]) {
+  @include pfe-icon-set-svg-size(100px);
+}
+
+:host([size="lg"]) {
+  @include pfe-icon-set-svg-size(64px);
+}
+
+:host([size="md"]) {
+  @include pfe-icon-set-svg-size(32px);
+}
+
+:host([size="sm"]) {
+  @include pfe-icon-set-svg-size(14px);
+}
+
+:host([color="base"]) {
+  --pfe-broadcasted--color--text:      #{pfe-color(ui-base)};
+}
+
+:host([color="complement"]) {
+  --pfe-broadcasted--color--text:      #{pfe-color(ui-complement)};
+}
+
+:host([color="accent"]) {
+  --pfe-broadcasted--color--text:      #{pfe-color(ui-accent)};
+}
+
+:host([color="critical"]) {
+  --pfe-broadcasted--color--text:      #{pfe-color(feedback--critical)};
+}
+
+:host([color="important"]) {
+  --pfe-broadcasted--color--text:      #{pfe-color(feedback--important)};
+}
+
+:host([color="moderate"]) {
+  --pfe-broadcasted--color--text:      #{pfe-color(feedback--moderate)};
+}
+
+:host([color="success"]) {
+  --pfe-broadcasted--color--text:      #{pfe-color(feedback--success)};
+}
+
+:host([color="info"]) {
+  --pfe-broadcasted--color--text:      #{pfe-color(feedback--info)};
+}
+
+:host([color="default"]) {
+  --pfe-broadcasted--color--text:      #{pfe-color(feedback--default)};
+}
+
+// May need Feedback Darkest colors too.
+
+:host([circled]) {
+  --pfe-icon--color--bg:               transparent;
+  --pfe-icon--color--border:           #{pfe-color(surface--border)};
+
+  padding: $pfe-icon--padding;
+}
+
+:host([circled="base"]) {
+  --pfe-icon--color--bg:               #{pfe-color(surface--base)};
+  --pfe-icon--color--border:           transparent;
+  --pfe-broadcasted--color--text:      #{pfe-color(surface--base--text)};
+}
+
+:host([circled="lightest"]) {
+  --pfe-icon--color--bg:               #{pfe-color(surface--lightest)};
+  --pfe-icon--color--border:           transparent;
+  --pfe-broadcasted--color--text:      #{pfe-color(surface--lightest--text)};
+}
+
+:host([circled="light"]) {
+  --pfe-icon--color--bg:               #{pfe-color(surface--lighter)};
+  --pfe-icon--color--border:           transparent;
+  --pfe-broadcasted--color--text:      #{pfe-color(surface--lighter--text)};
+}
+
+:host([circled="dark"]) {
+  --pfe-icon--color--bg:               #{pfe-color(surface--darker)};
+  --pfe-icon--color--border:           transparent;
+  --pfe-broadcasted--color--text:      #{pfe-color(surface--darker--text)};
+}
+
+:host([circled="darkest"]) {
+  --pfe-icon--color--bg:               #{pfe-color(surface--darkest)};
+  --pfe-icon--color--border:           transparent;
+  --pfe-broadcasted--color--text:      #{pfe-color(surface--darkest--text)};
+}
+
+:host([circled="complement"]) {
+  --pfe-icon--color--bg:               #{pfe-color(surface--complement)};
+  --pfe-icon--color--border:           transparent;
+  --pfe-broadcasted--color--text:      #{pfe-color(surface--complement--text)};
+}
+
+:host([circled="accent"]) {
+  --pfe-icon--color--bg:               #{pfe-color(surface--accent)};
+  --pfe-icon--color--border:           transparent;
+  --pfe-broadcasted--color--text:      #{pfe-color(surface--accent--text)};
+}

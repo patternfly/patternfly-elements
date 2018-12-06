@@ -1,0 +1,24 @@
+{
+  "name": "@pfelements/pfe-layouts",
+  "version": "1.0.0-prerelease.7",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "pfe-layouts for Red Hat's Customer Portal and PFElements",
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp",
+    "dev": "../../node_modules/.bin/gulp dev"
+  },
+  "contributors": [
+    {
+      "name": "Mark Caron",
+      "email": "mark@redhat.com",
+      "url": "https://github.com/markcaron"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@pfelements/pfe-sass": "*"
+  },
+  "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
+}

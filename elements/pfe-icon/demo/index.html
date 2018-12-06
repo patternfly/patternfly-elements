@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PFElements: pfe-icon Demo</title>
+
+    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
+    <!-- <link rel="stylesheet" href="../../../themes/cp-theme/cp-theme.css" /> -->
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../pfe-icon.umd.js'])</script>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+
+    <style>
+    .icons {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .icons li {
+      width: 10%;
+    }
+    </style>
+  </head>
+  <body unresolved>
+    <h1>&lt;pfe-icon&gt;</h1>
+
+    <ul class="icons">
+      <li>
+        <pfe-icon icon="pfe-icon-server" size="4x"></pfe-icon>
+      </li>
+      <li>
+        <pfe-icon icon="pfe-icon-server-alt1" size="4x" color="base"></pfe-icon>
+      </li>
+      <li>
+        <pfe-icon icon="pfe-icon-server-alt2" size="4x" color="complement"></pfe-icon>
+      </li>
+      <li>
+        <pfe-icon icon="pfe-icon-server-deploy" size="4x" color="accent"></pfe-icon>
+      </li>
+      <li>
+        <pfe-icon icon="pfe-icon-server-stack" size="4x" color="critical"></pfe-icon>
+      </li>
+      <li>
+        <pfe-icon icon="pfe-icon-server-stack-alt1" size="4x" color="important"></pfe-icon>
+      </li>
+      <li>
+        <pfe-icon icon="pfe-icon-server-stack-alt2" size="4x" color="moderate"></pfe-icon>
+      </li>
+      <li>
+        <pfe-icon icon="pfe-icon-server-vintage" size="4x" color="success"></pfe-icon>
+      </li>
+      <li>
+        <pfe-icon icon="pfe-icon-server-vintage-alt1" size="4x" color="info"></pfe-icon>
+      </li>
+    </ul>
+
+  </body>
+</html>

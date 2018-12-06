@@ -29,11 +29,27 @@ class RhHideShow extends RHElement {
 :host {
   display: block; }
 </style>
-${
-      this.isTab()
-        ? `<rh-tabs><slot name="header"></slot><slot></slot></rh-tabs>`
-        : `<rh-accordion><rh-accordion-header><slot name="header"></slot></rh-accordion-header><rh-accordion-panel><slot></slot></rh-accordion-panel></rh-accordion>`
-    }`;
+${this.isTab() ? `<rh-tabs>` : `<rh-accordion>`}
+	${
+    this.isTab() && this.has_slot("hide-show-header")
+      ? `<rh-tab>`
+      : `<rh-accordion-header>`
+  }
+		${
+      this.has_slot("hide-show-header")
+        ? `<slot name="hide-show-header"></slot>`
+        : ``
+    }
+	${
+    this.isTab() && this.has_slot("hide-show-header")
+      ? `</rh-tab>`
+      : `</rh-accordion-header>`
+  }
+
+		${this.isTab() ? `<rh-tab-panel>` : `<rh-accordion-panel>`}
+		${`<slot></slot>`}
+	${this.isTab() ? `</rh-tab-panel>` : `</rh-accordion-panel>`}
+${this.isTab() ? `</rh-tabs>` : `</rh-accordion>`}`;
   }
 
   static get tag() {
@@ -67,7 +83,6 @@ ${
 
   connectedCallback() {
     super.connectedCallback();
-    this.render();
   }
 
   // disconnectedCallback() {}

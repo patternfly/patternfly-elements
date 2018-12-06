@@ -54,7 +54,6 @@ class RhHideShow extends RHElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.render();
   }
 
   // disconnectedCallback() {}

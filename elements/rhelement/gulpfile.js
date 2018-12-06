@@ -8,6 +8,7 @@ const rename = require("gulp-rename");
 const replace = require("gulp-replace");
 const cleanCSS = require("gulp-clean-css");
 const trim = require("gulp-trim");
+const banner = require("gulp-banner");
 
 gulp.task("clean", () => {
   return del(["rhelement.js", "./**/*.umd.*", "./*.css", "./*.js.map"]);
@@ -27,11 +28,15 @@ gulp.task("compile", () => {
         suffix: ".umd"
       })
     )
+    .pipe(banner(`/*\n\t${fs.readFileSync("LICENSE.txt", "utf8")}\n*/\n\n`))
     .pipe(gulp.dest("./"));
 });
 
 gulp.task("copy", () => {
-  return gulp.src(["./src/*"]).pipe(gulp.dest("./"));
+  return gulp
+    .src(["./src/*"])
+    .pipe(banner(`/*\n${fs.readFileSync("LICENSE.txt", "utf8")}\n*/`))
+    .pipe(gulp.dest("./"));
 });
 
 gulp.task("minify-css", () => {

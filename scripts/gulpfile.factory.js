@@ -77,7 +77,7 @@ ${html}\`;
             .readFileSync("LICENSE.txt", "utf8")
             .split("\n")
             .map(line => ` * ${line}\n`)
-            .join("")}*/\n`
+            .join("")}*/\n\n`
         )
       )
       .pipe(gulp.dest("./"));

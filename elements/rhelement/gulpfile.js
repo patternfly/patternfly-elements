@@ -28,14 +28,21 @@ gulp.task("compile", () => {
         suffix: ".umd"
       })
     )
-    .pipe(banner(`/*\n\t${fs.readFileSync("LICENSE.txt", "utf8")}\n*/\n\n`))
     .pipe(gulp.dest("./"));
 });
 
 gulp.task("copy", () => {
   return gulp
     .src(["./src/*"])
-    .pipe(banner(`/*\n${fs.readFileSync("LICENSE.txt", "utf8")}\n*/`))
+    .pipe(
+      banner(
+        `/*\n${fs
+          .readFileSync("LICENSE.txt", "utf8")
+          .split("\n")
+          .map(line => ` * ${line}\n`)
+          .join("")}*/\n\n`
+      )
+    )
     .pipe(gulp.dest("./"));
 });
 

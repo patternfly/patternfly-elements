@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>RHElements: rh-hide-show Demo</title>
+    <!-- needed for CP-Theme -->
+    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
+
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>
+        require([
+          '../../../themes/cp-theme/cp-theme.umd.js',
+          '../../rh-cta/rh-cta.umd.js',
+          '../rh-hide-show.umd.js',
+          '../../rh-tabs/rh-tabs.umd.js',
+          '../../rh-accordion/rh-accordion.umd.js',
+          '../../rh-card/rh-card.umd.js'
+        ]);
+    </script>
+
+    <noscript>
+      <link href="../../rhelement/rhelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
+  </head>
+  <body unresolved>
+    <rh-hide-show>
+      <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nulla vitae elit libero, a pharetra augue.</p>
+
+<!--       <rh-accordion color="">
+        <rh-accordion-header>
+          <h2>Why do wizards need money if they could just create it?</h2>
+        </rh-accordion-header>
+        <rh-accordion-panel>
+          <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure out of thin air will not last, it is illegal in the wizarding world.</p>
+          <rh-cta priority="secondary"><a href="#">learn more</a></rh-cta>
+        </rh-accordion-panel>
+        <rh-accordion-header>
+          <h2>Why doesn't Harry have a portrait of his parents?</h2>
+        </rh-accordion-header>
+        <rh-accordion-panel>
+          <p>The characters in the portraits are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general representation of the individual they depict. A portrait of his parents would not be of much help to Harry.</p>
+        </rh-accordion-panel>
+      </rh-accordion>
+ -->
+    </rh-hide-show>
+  </body>
+</html>

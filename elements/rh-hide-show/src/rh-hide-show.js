@@ -35,44 +35,26 @@ class RhHideShow extends RHElement {
     return "rh-hide-show.scss";
   }
 
-  documentIsFinishedLoading() {
-    return /^complete|^i|^c/.test(document.readyState);
+  isTab() {
+    return this.parentNode.offsetWidth > 768;
   }
 
   // static get observedAttributes() {
   //   return [];
   // }
 
-  constructor() {
-    super(RhHideShow.tag);
-
-    this._hideShowContainer = this.querySelector("rh-hide-show");
-    this.tabsSet;
+  // Declare the type of this component
+  static get rhType() {
+    return RHElement.rhType.combo;
   }
 
-  size() {
-    return {
-      width: this.offsetWidth,
-      height: this.offsetHeight
-    };
+  constructor() {
+    super(RhHideShow, { delayRender: true });
   }
 
   connectedCallback() {
     super.connectedCallback();
-
-    // This is where it has content and should have width!
-    // console.log(this.width());
-
-    var tabsSet = false;
-    var hideshowWidth = this.size().width;
-    if (hideshowWidth > 768) {
-      console.log("This should display as tabs.");
-      var tabsSet = true;
-    }
-    console.log(hideshowWidth);
-    console.log(tabsSet);
-
-    return tabsSet;
+    this.render();
   }
 
   // disconnectedCallback() {}

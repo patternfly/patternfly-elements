@@ -56,6 +56,10 @@ class RHElement extends HTMLElement {
     this.setAttribute("rh-type", value);
   }
 
+  has_slot(name) {
+    return this.querySelector(`[slot='${name}']`);
+  }
+
   constructor(rhClass, { type = null, delayRender = false } = {}) {
     super();
 

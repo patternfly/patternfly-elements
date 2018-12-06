@@ -3,10 +3,20 @@ const gulpFactory = require("../../scripts/gulpfile.factory.js");
 const rhelementPackage = require("./package.json");
 
 const fs = require("fs");
+const path = require("path");
 const gulp = require("gulp");
 const rename = require("gulp-rename");
 const replace = require("gulp-replace");
 const svgSprite = require("gulp-svg-sprite");
+
+const paths = {
+  base: "./",
+  src: "./src",
+  dist: "./dist",
+  test: "./test",
+  temp: "./tmp",
+  demo: "./demo"
+};
 
 // Custom gulp tasks for rh-icon
 gulp.task("svgSprite", function() {
@@ -27,19 +37,19 @@ gulp.task("svgSprite", function() {
       })
     )
     .pipe(rename("rh-icons.svg"))
-    .pipe(gulp.dest("./"));
+    .pipe(gulp.dest(paths.temp));
 });
 
 gulp.task("stuffSprite", () => {
   return gulp
-    .src("./rh-icon.js")
+    .src(path.join(paths.src, "rh-icon.js"))
     .pipe(
       replace(
         /<svg xmlns[\s\S]*?<\/svg>/g,
-        "" + fs.readFileSync("./rh-icons.svg")
+        "" + fs.readFileSync(path.join(paths.temp, "rh-icons.svg"))
       )
     )
-    .pipe(gulp.dest("./"));
+    .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task("combineAndStuff", gulp.series("svgSprite", "stuffSprite"));

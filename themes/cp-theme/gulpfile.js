@@ -12,42 +12,51 @@ const shell = require("gulp-shell");
 
 let watcher;
 
+const paths = {
+  base: "./",
+  src: "./src",
+  dist: "./dist",
+  test: "./test",
+  temp: "./tmp",
+  demo: "./demo"
+};
+
 gulp.task("clean", () => {
-  return del(["./*.umd.*"]);
+  return del([path.join(paths.dist, "*")]);
 });
 
 gulp.task("sass", () => {
   return gulp
-    .src(["./src/*.scss"])
+    .src([path.join(paths.src, "*.scss")])
     .pipe(sass())
     .pipe(stripCssComments())
     .pipe(trim())
-    .pipe(gulp.dest("./"));
+    .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task("replaceStyles", () => {
   return gulp
-    .src("./src/cp-theme.js")
+    .src(path.join(paths.src, "cp-theme.js"))
     .pipe(
       replace(
         /<style id="\${templateId}-style"><\/style>/g,
         '<style id="${templateId}-style">' +
-          fs.readFileSync("./cp-theme.css") +
+          fs.readFileSync(path.join(paths.dist, "cp-theme.css")) +
           "</style>"
       )
     )
-    .pipe(gulp.dest("./"));
+    .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task("compile", () => {
   return gulp
-    .src(["./cp-theme.js"])
+    .src([path.join(paths.dist, "cp-theme.js")])
     .pipe(
       rename({
         suffix: ".umd"
       })
     )
-    .pipe(gulp.dest("./"));
+    .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task("stopwatch", done => {
@@ -56,7 +65,10 @@ gulp.task("stopwatch", done => {
 });
 
 gulp.task("watch", () => {
-  watcher = gulp.watch(["./src/*"], gulp.series("stopwatch", "build", "watch"));
+  watcher = gulp.watch(
+    [path.join(paths.src, "*")],
+    gulp.series("stopwatch", "build", "watch")
+  );
   return watcher;
 });
 

@@ -1,6 +1,6 @@
-import "./scoping-shim.min.js";
-import "./apply-shim.min.js";
-import "./custom-style-interface.min.js";
+import "../dependencies/scoping-shim.min.js";
+import "../dependencies/apply-shim.min.js";
+import "../dependencies/custom-style-interface.min.js";
 
 (function() {
   const templateId = "cp-theme";

@@ -18,7 +18,6 @@ module.exports = function factory({
   const terser = require("gulp-terser");
 
   const paths = {
-    root: "../..",
     base: "./",
     src: "./src",
     dist: "./dist",
@@ -82,7 +81,7 @@ ${html}\`;
           }
         )
       )
-      .pipe(gulp.dest(paths.base));
+      .pipe(gulp.dest(paths.temp));
   });
 
   gulp.task("clean", () => {
@@ -93,7 +92,7 @@ ${html}\`;
 
   gulp.task("compress", () => {
     return gulp
-      .src(path.join(paths.base, `${elementName}.js`))
+      .src(path.join(paths.temp, `${elementName}.js`))
       .pipe(
         terser({
           mangle: false,
@@ -124,12 +123,21 @@ ${html}\`;
     return gulp.watch(path.join(paths.src, "*"), gulp.series("build"));
   });
 
-  gulp.task(
-    "bundle",
-    shell.task(path.join(paths.root, "node_modules/.bin/rollup -c"))
-  );
+  gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-  const buildTasks = ["merge", ...precompile, "compile", "bundle"];
+  gulp.task("clean:temp", () => {
+    return gulp
+      .src(paths.temp, { read: false, allowEmpty: true })
+      .pipe(clean());
+  });
+
+  const buildTasks = [
+    "merge",
+    ...precompile,
+    "compile",
+    "bundle",
+    "clean:temp"
+  ];
 
   gulp.task("build", gulp.series(...buildTasks));
 

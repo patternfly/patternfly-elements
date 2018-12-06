@@ -1,3 +1,5 @@
+import RHElement from "../rhelement/rhelement.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  * 
@@ -20,7 +22,6 @@
  * SOFTWARE.
  * 
 */
-import RHElement from "../rhelement/rhelement.js";
 
 class RhCard extends RHElement {
   get html() {
@@ -154,3 +155,4 @@ a:focus {
 RHElement.create(RhCard);
 
 export default RhCard;
+//# sourceMappingURL=rh-card.js.map

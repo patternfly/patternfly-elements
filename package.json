@@ -1,19 +1,22 @@
 {
   "name": "@rhelements/rhelements",
   "scripts": {
-    "start": "spandx",
+    "start": "npm run doc-listing-inject && spandx",
     "lerna": "lerna",
     "test": "npm run build && wct --configFile wct.conf.json test/index.html",
+    "dev": "bash scripts/dev.sh",
     "build": "lerna run build",
     "clean": "rm -rf node_modules package-lock.json {elements,themes}/*/{node_modules,package-lock.json}",
     "bootstrap": "lerna bootstrap --hoist",
     "postinstall": "npm run bootstrap",
     "test-suite-inject": "node scripts/test-suite-inject.js",
+    "doc-listing-inject": "node scripts/doc-listing-inject.js",
     "storybook": "start-storybook -c .storybook -p 9001 -s ./elements",
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
     "gh-pages-storybook": "storybook-to-ghpages",
     "deploy-storybook": "npm run build-storybook && npm run gh-pages-storybook",
-    "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run test-suite-inject && npm run bootstrap"
+    "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run post-new",
+    "post-new": "npm run test-suite-inject && npm run doc-listing-inject && npm run bootstrap"
   },
   "husky": {
     "hooks": {

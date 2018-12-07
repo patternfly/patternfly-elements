@@ -3,6 +3,9 @@ node_modules
 tmp
 elements/**/dist
 
+# Compiled index
+doc/index.html
+
 # Logs
 lerna-debug.log
 npm-debug.log*

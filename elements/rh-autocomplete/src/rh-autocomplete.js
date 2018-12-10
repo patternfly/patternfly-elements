@@ -53,7 +53,7 @@ class RhAutocomplete extends RHElement {
     super.connectedCallback();
 
     this._inputBox = this.shadowRoot.querySelector("#input-box");
-    this._inputBox.value = this.initValue;
+    this._inputBox.value = this.initValue || "";
     this._inputBox.debounce = this.debounce || 500;
 
     this._dropdown = this.shadowRoot.querySelector("#dropdown");
@@ -87,6 +87,18 @@ class RhAutocomplete extends RHElement {
       "rh-option-selected",
       this._optionSelected.bind(this)
     );
+  }
+
+  static get observedAttributes() {
+    return ["init-value"];
+  }
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    super.attributeChangedCallback();
+
+    if (this[name] !== newVal) {
+      this[name] = newVal;
+    }
   }
 
   get initValue() {
@@ -167,7 +179,7 @@ class RhAutocomplete extends RHElement {
     let key = e.keyCode;
 
     if (
-      this._dropdown.data.length === 0 && //????
+      this._dropdown.data.length === 0 &&
       key !== KEYCODE.DOWN &&
       key !== KEYCODE.UP &&
       key !== KEYCODE.ENTER &&
@@ -274,6 +286,7 @@ class RhSearchBox extends RHElement {
   }
 
   set value(val) {
+    if (val === "") this._clear();
     this.setAttribute("value", val);
   }
 

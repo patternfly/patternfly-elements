@@ -99,21 +99,21 @@ stories.add("rh-band", () => {
   <section>
     <h2>Markup</h2>
     <pre>
-    ${escapeHTML("<rh-band" + colorAttr + asidePositionAttr + ">")}
+    ${escapeHTML(`<rh-band${colorAttr}${asidePositionAttr}>`)}
       ${
         headerValue
-          ? `${escapeHTML('<div slot="header">' + headerValue + "</div>")}`
+          ? `${escapeHTML(`<div slot="header">${headerValue}</div>`)}`
           : ""
       }
       ${bodyValue ? `${escapeHTML(bodyValue)}` : ""}
       ${
         footerValue
-          ? `${escapeHTML('<div slot="footer">' + footerValue + "</div>")}`
+          ? `${escapeHTML(`<div slot="footer">${footerValue}</div>`)}`
           : ""
       }
       ${
         asideValue
-          ? `${escapeHTML('<div slot="aside">' + asideValue + "</div>")}`
+          ? `${escapeHTML(`<div slot="aside">${asideValue}</div>`)}`
           : ""
       }
     ${escapeHTML("</rh-band>")}

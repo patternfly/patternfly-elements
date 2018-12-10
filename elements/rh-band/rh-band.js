@@ -146,6 +146,14 @@ class RhBand extends RHElement {
   padding-left: var(--rh-band--paddingLeft);
   width: var(--rh-band--width);
   margin: 0 auto; }
+  @media (min-width: 768px) {
+    [aside~="full"] .rh-band__container {
+      width: calc(100% - 250px + var(--rh-theme--container-spacer, 1rem) * 2);
+      margin-right: calc(var(--rh-theme--container-spacer, 1rem) * 2); } }
+  @media (min-width: 768px) {
+    .rh-band__container [aside~="full"][aside~="left"] {
+      margin-right: 0;
+      margin-left: calc(var(--rh-theme--container-spacer, 1rem) * 2); } }
 
 .rh-band__container, .rh-band__content {
   flex-grow: 1;
@@ -162,8 +170,6 @@ class RhBand extends RHElement {
       margin-bottom: 2rem; } }
   .rh-band__container > *:last-child, .rh-band__content > *:last-child {
     margin-bottom: 0; }
-    [aside~="left"] .rh-band__container > *:last-child, [aside~="left"] .rh-band__content > *:last-child {
-      order: -1; }
 
 .rh-band__main > *:not(:last-child) {
   margin-bottom: var(--rh-theme--container-spacer, 1rem); }
@@ -188,12 +194,11 @@ class RhBand extends RHElement {
   grid-gap: var(--rh-theme--container-spacer, 1rem); }
   @media screen and (min-width: 768px) {
     .rh-band__body {
-      grid-template-columns: var(--rh-band--layout); } }
-  @media (min-width: 768px) {
-    .rh-band__body {
-      width: calc(100% - 250px + var(--rh-theme--container-spacer, 1rem) * 2);
-      margin-right: calc(var(--rh-theme--container-spacer, 1rem) * 2); }
-      [aside~="left"] .rh-band__body {
+      grid-template-columns: var(--rh-band--layout);
+      width: calc(100% - 250px + var(--rh-theme--container-spacer, 1rem) * 2); }
+      [aside^="full"] .rh-band__body {
+        margin-right: calc(var(--rh-theme--container-spacer, 1rem) * 2); }
+      [aside~="left"][aside^="full"] .rh-band__body {
         margin-right: 0;
         margin-left: calc(var(--rh-theme--container-spacer, 1rem) * 2); } }
   @media (min-width: 992px) {
@@ -212,8 +217,7 @@ class RhBand extends RHElement {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: var(--rh-theme--container-spacer, 1rem);
-  max-width: 250px;
-  float: right; }
+  max-width: 250px; }
   @media screen and (min-width: 768px) {
     .rh-band__aside {
       grid-template-columns: var(--rh-band--layout); } }
@@ -221,7 +225,7 @@ class RhBand extends RHElement {
     .rh-band__aside {
       width: 300px; } }
   [aside~="left"] .rh-band__aside {
-    float: left; }
+    order: -1; }
 </style>
 <div class="rh-band__wrapper">
   <div class="rh-band__container">
@@ -315,12 +319,15 @@ class RhBand extends RHElement {
     super.connectedCallback();
 
     // This is where it has content and should have width!
-    // console.log(this.size());
+    this.shadowRoot.style.setProperty("--rh-eq--width", this.size().width);
+    this.shadowRoot.style.setProperty("--rh-eq--height", this.size().height);
   }
 
   // disconnectedCallback() {}
 
   attributeChangedCallback(attr, oldValue, newValue) {
+    super.attributeChangedCallback(attr, oldValue, newValue);
+
     switch (attr) {
       case "img-src": {
         // Set the image as the background image

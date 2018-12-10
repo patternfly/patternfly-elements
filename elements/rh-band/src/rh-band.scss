@@ -101,6 +101,19 @@ $aside-lg: 300px;
     padding-left:   #{rh-local(paddingLeft)};
     width:          #{rh-local(width)};
     margin:         0 auto;
+
+    [aside~="full"] & {
+      @media (min-width: #{rh-breakpoint(md)}) {
+        width:        calc(100% - #{$aside-md} + #{rh-var(container-spacer)} * 2);
+        margin-right: calc(#{rh-var(container-spacer)} * 2);
+      }
+    }
+    [aside~="full"][aside~="left"] {
+      @media (min-width: #{rh-breakpoint(md)}) {
+        margin-right: 0;
+        margin-left: calc(#{rh-var(container-spacer)} * 2);
+      }
+    }
   }
   &__container,
   &__content {
@@ -122,9 +135,6 @@ $aside-lg: 300px;
       }
       &:last-child {
         margin-bottom: 0;
-        [aside~="left"] & {
-          order: -1;
-        }
       }
     }
   }
@@ -157,13 +167,11 @@ $aside-lg: 300px;
     grid-gap: #{rh-var(container-spacer)};
     @media screen and (min-width: #{rh-breakpoint(md)}) {
       grid-template-columns: #{rh-local(layout)};
-    }
-
-    // Layout styles
-    @media (min-width: #{rh-breakpoint(md)}) {
-      width:        calc(100% - #{$aside-md} + #{rh-var(container-spacer)} * 2);
-      margin-right: calc(#{rh-var(container-spacer)} * 2);
-      [aside~="left"] & {
+      width: calc(100% - #{$aside-md} + #{rh-var(container-spacer)} * 2);
+      [aside^="full"] & {
+        margin-right: calc(#{rh-var(container-spacer)} * 2);
+      }
+      [aside~="left"][aside^="full"] & {
         margin-right: 0;
         margin-left: calc(#{rh-var(container-spacer)} * 2);
       }
@@ -193,9 +201,8 @@ $aside-lg: 300px;
     @media (min-width: #{rh-breakpoint(lg)}) {
       width: #{$aside-lg};
     }
-    float: right;
     [aside~="left"] & {
-      float: left;
+      order: -1;
     }
   }
 }

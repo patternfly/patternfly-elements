@@ -66,12 +66,15 @@ class RhBand extends RHElement {
     super.connectedCallback();
 
     // This is where it has content and should have width!
-    // console.log(this.size());
+    this.shadowRoot.style.setProperty("--rh-eq--width", this.size().width);
+    this.shadowRoot.style.setProperty("--rh-eq--height", this.size().height);
   }
 
   // disconnectedCallback() {}
 
   attributeChangedCallback(attr, oldValue, newValue) {
+    super.attributeChangedCallback(attr, oldValue, newValue);
+
     switch (attr) {
       case "img-src": {
         // Set the image as the background image

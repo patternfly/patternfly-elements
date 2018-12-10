@@ -40,16 +40,16 @@ class RhBand extends RHElement {
     // Y: full, body
     // MOBILE: top, bottom
     // Push the aside position selector to the wrappers
-    return this.getAttribute("aside-position").split(" ");
+    return this.getAttribute("aside").split(" ");
   }
 
   static get observedAttributes() {
-    return ["img-src"];
+    return ["aside", "img-src"];
   }
 
   static get cascadingAttributes() {
     return {
-      "aside-position": ".rh-band__wrapper"
+      aside: ".rh-band__wrapper"
     };
   }
 
@@ -66,7 +66,7 @@ class RhBand extends RHElement {
     super.connectedCallback();
 
     // This is where it has content and should have width!
-    console.log(this.size());
+    // console.log(this.size());
   }
 
   // disconnectedCallback() {}

@@ -66,7 +66,7 @@ stories.add("rh-band", () => {
     asidePositionXOptions,
     asidePositionXDefault
   );
-  let asidePositionAttr = ` aside-position="${asidePositionXValue}`;
+  let asidePositionAttr = ` aside="${asidePositionXValue}`;
 
   const asidePositionYLabel = "Aside position (y)";
   const asidePositionYOptions = {

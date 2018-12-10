@@ -60,17 +60,12 @@ $aside-lg: 300px;
     --rh-broadcasted--color--ui-link--visited:   #{rh-color(surface--#{$color}--link--visited)};
     --rh-broadcasted--color--ui-link--hover:     #{rh-color(surface--#{$color}--link--hover)};
     --rh-broadcasted--color--ui-link--focus:     #{rh-color(surface--#{$color}--link--focus)};
-    @if $color in (dark, darkest, accent, complement) {
-      --rh-band_header-title--color:               #{rh-color(ui-accent)};
-    } @else {
-      --rh-band_header-title--color:               #{rh-color(surface--#{$color}--text)};
-    }
   }
 }
 
 :host([size="small"]) {
-  --rh-band--paddingTop:        rh-var(container-spacer);
-  --rh-band--paddingBottom:     rh-var(container-spacer);
+  --rh-band--paddingTop:        #{rh-var(container-spacer)};
+  --rh-band--paddingBottom:     #{rh-var(container-spacer)};
 }
 
 .rh-band {
@@ -81,34 +76,37 @@ $aside-lg: 300px;
     justify-items: flex-start;
 
     // Padding styles
-    padding-top:    rh-local(paddingTop);
-    padding-bottom: rh-local(paddingBottom);
+    padding-top:    #{rh-local(paddingTop)};
+    padding-bottom: #{rh-local(paddingBottom)};
 
     // Border styles
-    border-top-width:    rh-local(borderTopWidth);
-    border-bottom-width: rh-local(borderBottomWidth);
-    border-style:        rh-local(borderStyle);
-    border-color:        rh-local(borderColor);
+    border-top-width:    #{rh-local(borderTopWidth)};
+    border-bottom-width: #{rh-local(borderBottomWidth)};
+    border-style:        #{rh-local(borderStyle)};
+    border-color:        #{rh-local(borderColor)};
 
     // Base colors
-    background-color:      rh-local(backgroundColor);
-    background-position-x: rh-local(backgroundPositionX);
-    background-position-y: rh-local(backgroundPositionY);
-    color:                 rh-radio(color--text);
+    background-color:      #{rh-local(backgroundColor)};
+    background-position-x: #{rh-local(backgroundPositionX)};
+    background-position-y: #{rh-local(backgroundPositionY)};
+    color:                 #{rh-radio(color, text)};
 
     // Remove background color for print
     @include rh-no-print-background;
   }
   &__container {
     padding-top:    0;
-    padding-right:  rh-local(paddingRight);
+    padding-right:  #{rh-local(paddingRight)};
     padding-bottom: 0;
-    padding-left:   rh-local(paddingLeft);
-    width:          rh-local(width);
+    padding-left:   #{rh-local(paddingLeft)};
+    width:          #{rh-local(width)};
     margin:         0 auto;
   }
   &__container,
   &__content {
+    // Fill the majority of the band
+    flex-grow: 1;
+
     // Aside layouts
     display:        flex;
     flex-direction: column;
@@ -116,37 +114,15 @@ $aside-lg: 300px;
       flex-direction: row;
     }
     > * {
-      flex-grow: 1;
       @media (min-width: #{rh-breakpoint(sm)}) {
-        float: left;
         width: 100%;
       }
       @media (max-width: #{rh-breakpoint(md) - 1}) {
         margin-bottom: #{$rh-global--spacer * 2};
-        clear: both;
-      }
-      &:first-child {
-        @media (min-width: #{rh-breakpoint(md)}) {
-          width:        calc(100% - #{$aside-md} + #{rh-var(container-spacer) * 2});
-          margin-right: #{rh-var(container-spacer) * 2};
-        }
-        @media (min-width: #{rh-breakpoint(lg)}) {
-          width: calc(100% - #{$aside-lg} + #{rh-var(container-spacer) * 2});
-        }
       }
       &:last-child {
         margin-bottom: 0;
-      } 
-      [aside-position~="left"] & {
-        @media (min-width: #{rh-breakpoint(sm)}) {
-          float: right;
-        }
-        &:first-child {
-          @media (min-width: #{rh-breakpoint(md)}) {
-            margin-left: #{rh-var(container-spacer) * 2};
-          }
-        }
-        &:last-child {
+        [aside~="left"] & {
           order: -1;
         }
       }
@@ -168,40 +144,58 @@ $aside-lg: 300px;
     $SLOT: header;
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: rh-var(container-spacer);
+    grid-gap: #{rh-var(container-spacer)};
     @media screen and (min-width: #{rh-breakpoint(md)}) {
-      grid-template-columns: rh-local(layout);
+      grid-template-columns: #{rh-local(layout)};
     }
   }
   &__body {
     $SLOT: body;
+    flex-grow: 1;
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: rh-var(container-spacer);
+    grid-gap: #{rh-var(container-spacer)};
     @media screen and (min-width: #{rh-breakpoint(md)}) {
-      grid-template-columns: rh-local(layout);
+      grid-template-columns: #{rh-local(layout)};
+    }
+
+    // Layout styles
+    @media (min-width: #{rh-breakpoint(md)}) {
+      width:        calc(100% - #{$aside-md} + #{rh-var(container-spacer)} * 2);
+      margin-right: calc(#{rh-var(container-spacer)} * 2);
+      [aside~="left"] & {
+        margin-right: 0;
+        margin-left: calc(#{rh-var(container-spacer)} * 2);
+      }
+    }
+    @media (min-width: #{rh-breakpoint(lg)}) {
+      width: calc(100% - #{$aside-lg} + #{rh-var(container-spacer)} * 2);
     }
   }
   &__footer {
     $SLOT: footer;
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: rh-var(container-spacer);
+    grid-gap: #{rh-var(container-spacer)};
     @media screen and (min-width: #{rh-breakpoint(md)}) {
-      grid-template-columns: rh-local(layout);
+      grid-template-columns: #{rh-local(layout)};
     }
   }
   &__aside {
     $SLOT: aside;
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: rh-var(container-spacer);
+    grid-gap:  #{rh-var(container-spacer)};
     max-width: #{$aside-md};
     @media screen and (min-width: #{rh-breakpoint(md)}) {
-      grid-template-columns: rh-local(layout);
+      grid-template-columns: #{rh-local(layout)};
     }
     @media (min-width: #{rh-breakpoint(lg)}) {
       width: #{$aside-lg};
+    }
+    float: right;
+    [aside~="left"] & {
+      float: left;
     }
   }
 }

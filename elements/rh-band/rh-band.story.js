@@ -27,21 +27,8 @@ stories.add("rh-band", () => {
   let colorAttr = colorValue != "base" ? ` color="${colorValue}"` : "";
 
   // Slots
-  const titleLabel = "Title";
-  const titleDefault = "Foo bar";
-  const titleValue = text(titleLabel, titleDefault);
-
-  const headingLabel = "Heading";
-  const headingDefault = "Lorem ipsum dolor sit amet";
-  const headingValue = text(headingLabel, headingDefault);
-
-  const summaryLabel = "Summary";
-  const summaryDefault =
-    "Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.";
-  const summaryValue = text(summaryLabel, summaryDefault);
-
-  const headerLabel = "Optional raw header";
-  const headerDefault = "";
+  const headerLabel = "Header";
+  const headerDefault = "<h2>Foo bar</h2>";
   const headerValue = text(headerLabel, headerDefault);
 
   const bodyLabel = "Body";
@@ -103,21 +90,6 @@ stories.add("rh-band", () => {
   <section>
     <h2>Your RH Element</h2>
     <rh-band${colorAttr}${asidePositionAttr}>
-      ${
-        titleValue
-          ? '<h2 slot="header" typography="title">' + titleValue + "</h2>"
-          : ""
-      }
-      ${
-        headingValue
-          ? '<h3 slot="header" typography="heading">' + headingValue + "</h3>"
-          : ""
-      }
-      ${
-        summaryValue
-          ? '<p slot="header" typography="summary">' + summaryValue + "</p>"
-          : ""
-      }
       ${headerValue ? '<div slot="header">' + headerValue + "</div>" : ""}
       ${bodyValue ? bodyValue : ""}
       ${footerValue ? '<div slot="footer">' + footerValue + "</div>" : ""}
@@ -128,27 +100,6 @@ stories.add("rh-band", () => {
     <h2>Markup</h2>
     <pre>
     ${escapeHTML("<rh-band" + colorAttr + asidePositionAttr + ">")}
-      ${
-        titleValue
-          ? `${escapeHTML(
-              '<h2 slot="header" typography="title">' + titleValue + "</h2>"
-            )}`
-          : ""
-      }
-      ${
-        headingValue
-          ? `${escapeHTML(
-              '<h3 slot="header" typography="heading">' + headingValue + "</h3>"
-            )}`
-          : ""
-      }
-      ${
-        summaryValue
-          ? `${escapeHTML(
-              '<p slot="header" typography="summary">' + summaryValue + "</p>"
-            )}`
-          : ""
-      }
       ${
         headerValue
           ? `${escapeHTML('<div slot="header">' + headerValue + "</div>")}`

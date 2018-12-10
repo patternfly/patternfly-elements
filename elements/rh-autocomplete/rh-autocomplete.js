@@ -325,6 +325,9 @@ button.search-button:hover svg,
 button.search-button:focus svg {
   fill: #004080; }
 
+button.search-button[disabled="true"] svg {
+  fill: #ccc; }
+
 button[disabled="true"] {
   color: #ccc; }
 </style>

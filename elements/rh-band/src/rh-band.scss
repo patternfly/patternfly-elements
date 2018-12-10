@@ -69,22 +69,8 @@ $aside-lg: 300px;
 }
 
 :host([size="small"]) {
-  --rh-band--paddingTop:        #{rh-var(container-spacer)};
-  --rh-band--paddingBottom:     #{rh-var(container-spacer)};
-}
-
-a {
-  color: rh-radio(ui-link);
-  text-transform: rh-radio(ui-link, textTransform);
-  &:visited {
-    color: rh-radio(ui-link, visited);
-  }
-  &:hover {
-    color: rh-radio(ui-link, hover);
-  }
-  &:focus {
-    color: rh-radio(ui-link, focus);
-  }
+  --rh-band--paddingTop:        rh-var(container-spacer);
+  --rh-band--paddingBottom:     rh-var(container-spacer);
 }
 
 .rh-band {
@@ -95,69 +81,69 @@ a {
     justify-items: flex-start;
 
     // Padding styles
-    padding-top: rh-local(paddingTop);
+    padding-top:    rh-local(paddingTop);
     padding-bottom: rh-local(paddingBottom);
 
     // Border styles
-    border-top-width: rh-local(borderTopWidth);
+    border-top-width:    rh-local(borderTopWidth);
     border-bottom-width: rh-local(borderBottomWidth);
-    border-style: rh-local(borderStyle);
-    border-color: rh-local(borderColor);
+    border-style:        rh-local(borderStyle);
+    border-color:        rh-local(borderColor);
 
     // Base colors
-    background-color: rh-local(backgroundColor);
+    background-color:      rh-local(backgroundColor);
     background-position-x: rh-local(backgroundPositionX);
     background-position-y: rh-local(backgroundPositionY);
-    color: rh-radio(color--text);
+    color:                 rh-radio(color--text);
 
     // Remove background color for print
     @include rh-no-print-background;
   }
   &__container {
-    padding-top: 0;
-    padding-right: rh-local(paddingRight);
+    padding-top:    0;
+    padding-right:  rh-local(paddingRight);
     padding-bottom: 0;
-    padding-left: rh-local(paddingLeft);
-    width: rh-local(width);
-    margin: 0 auto;
+    padding-left:   rh-local(paddingLeft);
+    width:          rh-local(width);
+    margin:         0 auto;
   }
   &__container,
   &__content {
     // Aside layouts
-    display: flex;
+    display:        flex;
     flex-direction: column;
-    @media (min-width: $rh-global--grid-breakpoint--md) {
+    @media (min-width: #{rh-breakpoint(md)}) {
       flex-direction: row;
     }
     > * {
       flex-grow: 1;
-      @media (min-width: #{$rh-global--grid-breakpoint--sm + 12}) {
+      @media (min-width: #{rh-breakpoint(sm)}) {
         float: left;
         width: 100%;
       }
-      @media (max-width: $rh-global--grid-breakpoint--sm--max) {
+      @media (max-width: #{rh-breakpoint(md) - 1}) {
         margin-bottom: #{$rh-global--spacer * 2};
         clear: both;
       }
       &:first-child {
-        @media (min-width: $rh-global--grid-breakpoint--md) {
-          width: calc(100% - #{$aside-md} + #{$rh-global--spacer * 2});
-          margin-right: 2.5%;
+        @media (min-width: #{rh-breakpoint(md)}) {
+          width:        calc(100% - #{$aside-md} + #{rh-var(container-spacer) * 2});
+          margin-right: #{rh-var(container-spacer) * 2};
         }
-        @media (min-width: $rh-global--grid-breakpoint--lg) {
-          width: calc(100% - #{$aside-lg} + #{$rh-global--spacer * 2});
+        @media (min-width: #{rh-breakpoint(lg)}) {
+          width: calc(100% - #{$aside-lg} + #{rh-var(container-spacer) * 2});
         }
       }
       &:last-child {
         margin-bottom: 0;
       } 
       [aside-position~="left"] & {
-        @media (min-width: #{$rh-global--grid-breakpoint--sm + 12}) {
+        @media (min-width: #{rh-breakpoint(sm)}) {
           float: right;
         }
         &:first-child {
-          @media (min-width: $rh-global--grid-breakpoint--md) {
-            margin-left: 2.5%;
+          @media (min-width: #{rh-breakpoint(md)}) {
+            margin-left: #{rh-var(container-spacer) * 2};
           }
         }
         &:last-child {
@@ -179,55 +165,42 @@ a {
     }
   }
   &__header {
-    &::slotted([typography="title"]) {
-      $SLOT: header-title;
-      font-size: #{rh-var(font-size--heading--gamma)};
-      font-weight: $rh-global--FontWeight--semi-bold;
-      line-height: 1;
-      color: rh-local(color);
-      text-transform: uppercase;
-      margin-top: 0;
-      &:not(:last-child) {
-        margin-bottom: .65em;
-      }
-    }
-    &::slotted([typography="heading"]) {
-      font-size: #{rh-var(font-size--heading--alpha)};
-      font-weight: $rh-global--FontWeight--semi-bold;
-      line-height: 1;
-      color: rh-radio(ui-text);
-      margin-top: 0;
-      &:not(:last-child) {
-        margin-bottom: .2em;
-      }
-    }
-    &::slotted([typography="summary"]) {
-      font-size: #{rh-var(font-size--heading--delta)};
-      font-weight: $rh-global--FontWeight--light;
-      color: #{rh-radio(ui-text)};
-      margin-top: 0;
-      margin-bottom: 0;
+    $SLOT: header;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: rh-var(container-spacer);
+    @media screen and (min-width: #{rh-breakpoint(md)}) {
+      grid-template-columns: rh-local(layout);
     }
   }
   &__body {
+    $SLOT: body;
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: rh-var(container-spacer);
-    @media screen and (min-width: $rh-global--grid-breakpoint--md) {
-      grid-template-columns: var(--rh-band_body--layout);
+    @media screen and (min-width: #{rh-breakpoint(md)}) {
+      grid-template-columns: rh-local(layout);
     }
   }
   &__footer {
+    $SLOT: footer;
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: rh-var(container-spacer);
-    @media screen and (min-width: $rh-global--grid-breakpoint--md) {
-      grid-template-columns: var(--rh-band_body--layout);
+    @media screen and (min-width: #{rh-breakpoint(md)}) {
+      grid-template-columns: rh-local(layout);
     }
   }
   &__aside {
+    $SLOT: aside;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: rh-var(container-spacer);
     max-width: #{$aside-md};
-    @media (min-width: $rh-global--grid-breakpoint--lg) {
+    @media screen and (min-width: #{rh-breakpoint(md)}) {
+      grid-template-columns: rh-local(layout);
+    }
+    @media (min-width: #{rh-breakpoint(lg)}) {
       width: #{$aside-lg};
     }
   }

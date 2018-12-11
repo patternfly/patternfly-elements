@@ -27,15 +27,22 @@
     <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
   </head>
   <body unresolved>
+    <h1>&lt;rh-hide-show&gt;</h1>
+    <h2>accordion</h2>
     <div style="width: 300px">
-      <rh-hide-show style="background-color: pink;">
-        <h2 slot="header">Foo</h2>
-        <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nulla vitae elit libero, a pharetra augue.</p>
+      <rh-hide-show>
+        <rh-hide-show-header>
+          <h2 slot="tab">Foo</h2>
+        </rh-hide-show-header>
+        <rh-hide-show-panel>
+          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nulla vitae elit libero, a pharetra augue.</p>
+        </rh-hide-show-panel>
       </rh-hide-show>
     </div>
     <hr>
+    <h2>tabs</h2>
     <div style="width: 900px">
-      <rh-hide-show style="background-color: lightblue">
+      <rh-hide-show>
         <h2 slot="header">Bar</h2>
         <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nulla vitae elit libero, a pharetra augue.</p>
       </rh-hide-show>

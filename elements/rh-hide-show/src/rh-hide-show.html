@@ -1,9 +1,1 @@
-${ this.isTab() ? `<rh-tabs>` : `<rh-accordion>` }
-	${ this.isTab() && this.has_slot("hide-show-header") ? `<rh-tab>` : `<rh-accordion-header>` }
-		${ this.has_slot("hide-show-header") ? `<slot name="hide-show-header"></slot>` : `` }
-	${ this.isTab() && this.has_slot("hide-show-header") ? `</rh-tab>` : `</rh-accordion-header>` }
-	
-	${ this.isTab() ? `<rh-tab-panel>` : `<rh-accordion-panel>` }
-		${ `<slot></slot>` }
-	${ this.isTab() ? `</rh-tab-panel>` : `</rh-accordion-panel>` }
-${ this.isTab() ? `</rh-tabs>` : `</rh-accordion>` }
+<slot></slot>

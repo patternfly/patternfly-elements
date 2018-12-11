@@ -47,16 +47,12 @@ stories.add("rh-cta", () => {
   </style>
 
   <section>
-    <h2>Your RH Element</h2>
-    <rh-cta${valueAttr}${colorAttr}>
-      <a href="#">${textValue}</a>
-    </rh-cta>
+    <h2>Your RHElement</h2>
+    <rh-cta${valueAttr}${colorAttr}><a href="#">${textValue}</a></rh-cta>
   </section>
   <section>
     <h2>Markup</h2>
-    <pre>${escapeHTML(
-      `rh-cta${valueAttr}${colorAttr}><a href="#">${textValue}</a></rh-cta>`
-    )}</pre>
+    <pre><code>&lt;rh-cta${valueAttr}${colorAttr}&gt;&lt;a href="#"&gt;${textValue}&lt;/a&gt;&lt;/rh-cta&gt;</code></pre>
   </section>
   <section>
     <h2>At a glance</h2>

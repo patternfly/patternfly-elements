@@ -27,21 +27,31 @@ class RhHideShow extends RHElement {
     return "rh-hide-show";
   }
 
+  get styleUrl() {
+    return "rh-hide-show.css";
+  }
+
   get templateUrl() {
     return "rh-hide-show.html";
   }
 
-  get styleUrl() {
-    return "rh-hide-show.scss";
-  }
-
-  isTab() {
+  get isTab() {
     return this.parentNode.offsetWidth > 768;
   }
 
-  // static get observedAttributes() {
-  //   return [];
-  // }
+  static get observedAttributes() {
+    return ["vertical", "selected-index", "rh-variant", "theme", "color"];
+  }
+
+  static get cascadingAttributes() {
+    return {
+      vertical: "rh-tabs",
+      "selected-index": "rh-tabs",
+      "rh-variant": "rh-tabs",
+      theme: "rh-accordion",
+      color: "rh-accordion"
+    };
+  }
 
   // Declare the type of this component
   static get rhType() {
@@ -49,7 +59,30 @@ class RhHideShow extends RHElement {
   }
 
   constructor() {
-    super(RhHideShow, { delayRender: true });
+    super(RhHideShow, {
+      delayRender: true
+    });
+
+    this.groupings = [];
+
+    this._observer = new MutationObserver(() => {
+      const tempGrouping = [...this.querySelectorAll("rh-hide-show-set")];
+      tempGrouping.forEach(group => {
+        const tempGroup = {
+          heading: group.querySelector("[heading]"),
+          body: group.querySelector(":not([heading])")
+        };
+
+        this.groupings.push(tempGroup);
+      });
+
+      this.render();
+    });
+
+    this._observer.observe(this, {
+      attributes: true,
+      childList: true
+    });
   }
 
   connectedCallback() {

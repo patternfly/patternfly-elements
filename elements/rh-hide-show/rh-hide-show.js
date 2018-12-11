@@ -29,48 +29,72 @@ class RhHideShow extends RHElement {
 :host {
   display: block; }
 </style>
-${this.isTab() ? `<rh-tabs>` : `<rh-accordion>`}
-	${
-    this.isTab() && this.has_slot("hide-show-header")
-      ? `<rh-tab>`
-      : `<rh-accordion-header>`
-  }
-		${
-      this.has_slot("hide-show-header")
-        ? `<slot name="hide-show-header"></slot>`
-        : ``
-    }
-	${
-    this.isTab() && this.has_slot("hide-show-header")
-      ? `</rh-tab>`
-      : `</rh-accordion-header>`
-  }
-
-		${this.isTab() ? `<rh-tab-panel>` : `<rh-accordion-panel>`}
-		${`<slot></slot>`}
-	${this.isTab() ? `</rh-tab-panel>` : `</rh-accordion-panel>`}
-${this.isTab() ? `</rh-tabs>` : `</rh-accordion>`}`;
+${
+      this.isTab
+        ? `
+    <rh-tabs>
+      ${this.groupings
+        .map(
+          group => `
+        <rh-tab role="heading" slot="tab">
+          ${group.heading.outerHTML}
+        </rh-tab>
+        <rh-tab-panel role="region" slot="panel">
+          ${group.body.outerHTML}
+        </rh-tab-panel>
+      `
+        )
+        .join("")}
+    </rh-tabs>
+  `
+        : `
+    <rh-accordion>
+      ${this.groupings
+        .map(
+          group => `
+        <rh-accordion-header>
+          ${group.heading.outerHTML}
+        </rh-accordion-header>
+        <rh-accordion-panel>
+          ${group.body.outerHTML}
+        </rh-accordion-panel>
+      `
+        )
+        .join("")}
+    </rh-accordion>
+  `
+    }`;
   }
 
   static get tag() {
     return "rh-hide-show";
   }
 
+  get styleUrl() {
+    return "rh-hide-show.css";
+  }
+
   get templateUrl() {
     return "rh-hide-show.html";
   }
 
-  get styleUrl() {
-    return "rh-hide-show.scss";
-  }
-
-  isTab() {
+  get isTab() {
     return this.parentNode.offsetWidth > 768;
   }
 
-  // static get observedAttributes() {
-  //   return [];
-  // }
+  static get observedAttributes() {
+    return ["vertical", "selected-index", "rh-variant", "theme", "color"];
+  }
+
+  static get cascadingAttributes() {
+    return {
+      vertical: "rh-tabs",
+      "selected-index": "rh-tabs",
+      "rh-variant": "rh-tabs",
+      theme: "rh-accordion",
+      color: "rh-accordion"
+    };
+  }
 
   // Declare the type of this component
   static get rhType() {
@@ -78,7 +102,30 @@ ${this.isTab() ? `</rh-tabs>` : `</rh-accordion>`}`;
   }
 
   constructor() {
-    super(RhHideShow, { delayRender: true });
+    super(RhHideShow, {
+      delayRender: true
+    });
+
+    this.groupings = [];
+
+    this._observer = new MutationObserver(() => {
+      const tempGrouping = [...this.querySelectorAll("rh-hide-show-set")];
+      tempGrouping.forEach(group => {
+        const tempGroup = {
+          heading: group.querySelector("[heading]"),
+          body: group.querySelector(":not([heading])")
+        };
+
+        this.groupings.push(tempGroup);
+      });
+
+      this.render();
+    });
+
+    this._observer.observe(this, {
+      attributes: true,
+      childList: true
+    });
   }
 
   connectedCallback() {

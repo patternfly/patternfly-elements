@@ -58,7 +58,8 @@ module.exports = function factory({
               .toString()
               .trim();
 
-            html = decomment(html);
+            // This does not work for es6 template syntax
+            // html = decomment(html);
 
             const [
               ,

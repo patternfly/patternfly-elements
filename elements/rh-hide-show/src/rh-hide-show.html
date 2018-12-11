@@ -1,9 +1,24 @@
-${ this.isTab() ? `<rh-tabs>` : `<rh-accordion>` }
-	${ this.isTab() && this.has_slot("hide-show-header") ? `<rh-tab>` : `<rh-accordion-header>` }
-		${ this.has_slot("hide-show-header") ? `<slot name="hide-show-header"></slot>` : `` }
-	${ this.isTab() && this.has_slot("hide-show-header") ? `</rh-tab>` : `</rh-accordion-header>` }
-	
-	${ this.isTab() ? `<rh-tab-panel>` : `<rh-accordion-panel>` }
-		${ `<slot></slot>` }
-	${ this.isTab() ? `</rh-tab-panel>` : `</rh-accordion-panel>` }
-${ this.isTab() ? `</rh-tabs>` : `</rh-accordion>` }
+${this.isTab ? `
+    <rh-tabs>
+      ${this.groupings.map(group => `
+        <rh-tab role="heading" slot="tab">
+          ${group.heading.outerHTML}
+        </rh-tab>
+        <rh-tab-panel role="region" slot="panel">
+          ${group.body.outerHTML}
+        </rh-tab-panel>
+      `).join('')}
+    </rh-tabs>
+  ` : `
+    <rh-accordion>
+      ${this.groupings.map(group => `
+        <rh-accordion-header>
+          ${group.heading.outerHTML}
+        </rh-accordion-header>
+        <rh-accordion-panel>
+          ${group.body.outerHTML}
+        </rh-accordion-panel>
+      `).join('')}
+    </rh-accordion>
+  `}
+  

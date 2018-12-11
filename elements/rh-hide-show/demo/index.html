@@ -6,7 +6,7 @@
     <!-- needed for CP-Theme -->
     <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
 
-    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <!-- script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>
@@ -18,8 +18,13 @@
           '../../rh-accordion/rh-accordion.umd.js',
           '../../rh-card/rh-card.umd.js'
         ]);
-    </script>
+    </script -->
 
+    <script type="module">
+        import '../rh-hide-show.js';
+        import '../../rh-tabs/rh-tabs.js';
+        import '../../rh-accordion/rh-accordion.js';
+    </script>
     <noscript>
       <link href="../../rhelement/rhelement-noscript.min.css" rel="stylesheet">
     </noscript>

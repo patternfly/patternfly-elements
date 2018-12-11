@@ -35,7 +35,7 @@ class RhHideShow extends RHElement {
     return "rh-hide-show.html";
   }
 
-  isTab() {
+  get isTab() {
     return this.parentNode.offsetWidth > 768;
   }
 
@@ -49,8 +49,7 @@ class RhHideShow extends RHElement {
       "selected-index": "rh-tabs",
       "rh-variant": "rh-tabs",
       theme: "rh-accordion",
-      color: "rh-accordion",
-      "render-as": "rh-hide-show-set"
+      color: "rh-accordion"
     };
   }
 
@@ -60,25 +59,34 @@ class RhHideShow extends RHElement {
   }
 
   constructor() {
-    super(RhHideShow);
+    super(RhHideShow, {
+      delayRender: true
+    });
+
+    this.groupings = [];
+
+    this._observer = new MutationObserver(() => {
+      const tempGrouping = [...this.querySelectorAll("rh-hide-show-set")];
+      tempGrouping.forEach(group => {
+        const tempGroup = {
+          heading: group.querySelector("[heading]"),
+          body: group.querySelector(":not([heading])")
+        };
+
+        this.groupings.push(tempGroup);
+      });
+
+      this.render();
+    });
+
+    this._observer.observe(this, {
+      attributes: true,
+      childList: true
+    });
   }
 
   connectedCallback() {
     super.connectedCallback();
-
-    // let tag = document.createElement("rh-accordion");
-    // if (this.isTab()) {
-    //   tag = document.createElement("rh-tabs");
-    // }
-
-    // if (this.children.length > 0) {
-    //   Array.from(this.children).forEach(child => {
-    //     tag.appendChild(child);
-    //   });
-    // }
-    // this.shadowRoot.innerHTML = "";
-    // // Add the element to the shadow DOM
-    // this.shadowRoot.appendChild(tag);
   }
 
   // disconnectedCallback() {}
@@ -86,96 +94,6 @@ class RhHideShow extends RHElement {
   // attributeChangedCallback(attr, oldValue, newValue) {}
 }
 
-class RhHideShowSet extends RHElement {
-  static get tag() {
-    return "rh-hide-show-set";
-  }
-
-  get styleUrl() {
-    return "rh-hide-show.css";
-  }
-
-  get templateUrl() {
-    return "rh-hide-show-set.html";
-  }
-
-  isTab() {
-    return this.parentNode.parentNode.offsetWidth > 768;
-  }
-
-  // static get observedAttributes() {
-  //   return [];
-  // }
-
-  // Declare the type of this component
-  static get rhType() {
-    return RHElement.rhType.component;
-  }
-
-  constructor() {
-    super(RhHideShowSet);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    // if (this.children.length > 0) {
-    //   let tag_header;
-    //   let tag_panel;
-
-    //   // Create an array from the child nodes
-    //   let header = Array.from(this.children).filter(
-    //     child => child.slot === "rh-hide-show-set--header"
-    //   );
-    //   let panels = Array.from(this.children).filter(
-    //     child => child.slot !== "rh-hide-show-set--header"
-    //   );
-
-    //   // Check if this should be a tab or accordion
-    //   if (this.isTab()) {
-    //     // Build the header section
-    //     tag_header = document.createElement("rh-tab");
-    //     tag_header.setAttribute("slot", "tab");
-    //     tag_header.setAttribute("role", "heading");
-    //     // Build the panel section
-    //     tag_panel = document.createElement("rh-tab-panel");
-    //     tag_panel.setAttribute("slot", "panel");
-    //     tag_panel.setAttribute("role", "region");
-
-    //     if (header.length > 0) {
-    //       tag_header.innerText = header[0].innerText;
-    //     }
-    //   } else {
-    //     tag_header = document.createElement("rh-accordion-header");
-    //     tag_panel = document.createElement("rh-accordion-panel");
-    //     if (header.length > 0) {
-    //       header.forEach(child => {
-    //         tag_header.appendChild(child);
-    //       });
-    //     }
-    //   }
-
-    //   if (panels.length > 0) {
-    //     panels.forEach(child => {
-    //       tag_panel.appendChild(child);
-    //     });
-    //   }
-
-    //   this.shadowRoot.innerHTML = "";
-    //   // Add the header to the shadow DOM
-    //   this.shadowRoot.appendChild(tag_header);
-    //   // Add the panel to the shadow DOM
-    //   this.shadowRoot.appendChild(tag_panel);
-    // }
-  }
-
-  // disconnectedCallback() {}
-
-  // attributeChangedCallback(attr, oldValue, newValue) {}
-}
-
-RHElement.create(RhHideShowSet);
 RHElement.create(RhHideShow);
 
-// export default RhHideShow;
-// export default RhHideShowSet;
+export default RhHideShow;

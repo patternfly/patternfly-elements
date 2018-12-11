@@ -553,9 +553,6 @@ class RhTabsGroup extends RHElement {
 
     this._tabSlot = this.shadowRoot.querySelector('slot[name="tab"]');
     this._panelSlot = this.shadowRoot.querySelector('slot[name="panel"]');
-
-    this._tabSlot.addEventListener("slotchange", this._onSlotChange);
-    this._panelSlot.addEventListener("slotchange", this._onSlotChange);
   }
 
   connectedCallback() {

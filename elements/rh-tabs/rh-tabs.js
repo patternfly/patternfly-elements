@@ -702,7 +702,7 @@ class RhTabsGroup extends RHElement {
   display: block; }
 </style>
 <div class="tabs">
-  <slot name="tab"></slot>
+  <slot name="header"></slot>
 </div>
 <div class="panels">
   <slot></slot>
@@ -742,9 +742,6 @@ class RhTabsGroup extends RHElement {
 
     this._tabSlot = this.shadowRoot.querySelector('slot[name="tab"]');
     this._panelSlot = this.shadowRoot.querySelector('slot[name="panel"]');
-
-    this._tabSlot.addEventListener("slotchange", this._onSlotChange);
-    this._panelSlot.addEventListener("slotchange", this._onSlotChange);
   }
 
   connectedCallback() {

@@ -66,8 +66,8 @@ class RhBand extends RHElement {
     super.connectedCallback();
 
     // This is where it has content and should have width!
-    this.shadowRoot.style.setProperty("--rh-eq--width", this.size().width);
-    this.shadowRoot.style.setProperty("--rh-eq--height", this.size().height);
+    // this.shadowRoot.style.setProperty("--rh-eq--width", this.size().width);
+    // this.shadowRoot.style.setProperty("--rh-eq--height", this.size().height);
   }
 
   // disconnectedCallback() {}

@@ -105,7 +105,6 @@ class RHElement extends HTMLElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
-    console.log(this._rhClass.cascadingAttributes);
     if (!this._rhClass.cascadingAttributes) {
       return;
     }

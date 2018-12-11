@@ -101,19 +101,6 @@ $aside-lg: 300px;
     padding-left:   #{rh-local(paddingLeft)};
     width:          #{rh-local(width)};
     margin:         0 auto;
-
-    [aside~="full"] & {
-      @media (min-width: #{rh-breakpoint(md)}) {
-        width:        calc(100% - #{$aside-md} + #{rh-var(container-spacer)} * 2);
-        margin-right: calc(#{rh-var(container-spacer)} * 2);
-      }
-    }
-    [aside~="full"][aside~="left"] {
-      @media (min-width: #{rh-breakpoint(md)}) {
-        margin-right: 0;
-        margin-left: calc(#{rh-var(container-spacer)} * 2);
-      }
-    }
   }
   &__container,
   &__content {
@@ -129,9 +116,10 @@ $aside-lg: 300px;
     > * {
       @media (min-width: #{rh-breakpoint(sm)}) {
         width: 100%;
-      }
-      @media (max-width: #{rh-breakpoint(md) - 1}) {
         margin-bottom: #{$rh-global--spacer * 2};
+      }
+      @media (max-width: #{rh-breakpoint(md)}) {
+        margin-bottom: 0;
       }
       &:last-child {
         margin-bottom: 0;
@@ -140,6 +128,21 @@ $aside-lg: 300px;
   }
   &__main > *:not(:last-child) {
     margin-bottom: #{rh-var(container-spacer)};
+  }
+  &__main,
+  &__body {
+    @media screen and (min-width: #{rh-breakpoint(md)}) {
+      margin-right: calc(#{rh-var(container-spacer)} * 2);
+      [aside~="left"] & {
+        margin-right: 0;
+      }
+      [aside~="left"] & {
+        margin-left: calc(#{rh-var(container-spacer)} * 2);
+      }
+    }
+    @media (min-width: #{rh-breakpoint(lg)}) {
+      width: calc(100% - #{$aside-lg} + calc(#{rh-var(container-spacer)} * 2));
+    }
   }
   &__header,
   &__body,
@@ -167,17 +170,11 @@ $aside-lg: 300px;
     grid-gap: #{rh-var(container-spacer)};
     @media screen and (min-width: #{rh-breakpoint(md)}) {
       grid-template-columns: #{rh-local(layout)};
-      width: calc(100% - #{$aside-md} + #{rh-var(container-spacer)} * 2);
-      [aside^="full"] & {
-        margin-right: calc(#{rh-var(container-spacer)} * 2);
-      }
-      [aside~="left"][aside^="full"] & {
+      width: calc(100% - (#{$aside-md} + calc(#{rh-var(container-spacer)} * 2)));
+      [aside~="full"] & {
         margin-right: 0;
-        margin-left: calc(#{rh-var(container-spacer)} * 2);
+        margin-left: 0;
       }
-    }
-    @media (min-width: #{rh-breakpoint(lg)}) {
-      width: calc(100% - #{$aside-lg} + #{rh-var(container-spacer)} * 2);
     }
   }
   &__footer {
@@ -203,6 +200,9 @@ $aside-lg: 300px;
     }
     [aside~="left"] & {
       order: -1;
+    }
+    [aside~="right"] & {
+      order: 2;
     }
   }
 }

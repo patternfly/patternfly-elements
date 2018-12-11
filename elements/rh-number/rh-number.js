@@ -4,10 +4,10 @@ var commonjsGlobal =
   typeof window !== "undefined"
     ? window
     : typeof global !== "undefined"
-      ? global
-      : typeof self !== "undefined"
-        ? self
-        : {};
+    ? global
+    : typeof self !== "undefined"
+    ? self
+    : {};
 
 function createCommonjsModule(fn, module) {
   return (module = { exports: {} }), fn(module, module.exports), module.exports;
@@ -15,12 +15,12 @@ function createCommonjsModule(fn, module) {
 
 var numeral = createCommonjsModule(function(module) {
   /*! @preserve
- * numeral.js
- * version : 2.0.6
- * author : Adam Draper
- * license : MIT
- * http://adamwdraper.github.com/Numeral-js/
- */
+   * numeral.js
+   * version : 2.0.6
+   * author : Adam Draper
+   * license : MIT
+   * http://adamwdraper.github.com/Numeral-js/
+   */
 
   (function(global, factory) {
     if (module.exports) {
@@ -154,8 +154,8 @@ var numeral = createCommonjsModule(function(module) {
           signed = numeral._.includes(format, "+")
             ? format.indexOf("+")
             : value < 0
-              ? format.indexOf("-")
-              : -1;
+            ? format.indexOf("-")
+            : -1;
           format = format.replace(/[\+|\-]/g, "");
         }
 
@@ -790,12 +790,12 @@ var numeral = createCommonjsModule(function(module) {
         return ~~((number % 100) / 10) === 1
           ? "th"
           : b === 1
-            ? "st"
-            : b === 2
-              ? "nd"
-              : b === 3
-                ? "rd"
-                : "th";
+          ? "st"
+          : b === 2
+          ? "nd"
+          : b === 3
+          ? "rd"
+          : "th";
       },
       currency: {
         symbol: "$"

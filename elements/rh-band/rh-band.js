@@ -146,14 +146,6 @@ class RhBand extends RHElement {
   padding-left: var(--rh-band--paddingLeft);
   width: var(--rh-band--width);
   margin: 0 auto; }
-  @media (min-width: 768px) {
-    [aside~="full"] .rh-band__container {
-      width: calc(100% - 250px + var(--rh-theme--container-spacer, 1rem) * 2);
-      margin-right: calc(var(--rh-theme--container-spacer, 1rem) * 2); } }
-  @media (min-width: 768px) {
-    .rh-band__container [aside~="full"][aside~="left"] {
-      margin-right: 0;
-      margin-left: calc(var(--rh-theme--container-spacer, 1rem) * 2); } }
 
 .rh-band__container, .rh-band__content {
   flex-grow: 1;
@@ -164,15 +156,28 @@ class RhBand extends RHElement {
       flex-direction: row; } }
   @media (min-width: 576px) {
     .rh-band__container > *, .rh-band__content > * {
-      width: 100%; } }
-  @media (max-width: 768px - 1) {
-    .rh-band__container > *, .rh-band__content > * {
+      width: 100%;
       margin-bottom: 2rem; } }
+  @media (max-width: 768px) {
+    .rh-band__container > *, .rh-band__content > * {
+      margin-bottom: 0; } }
   .rh-band__container > *:last-child, .rh-band__content > *:last-child {
     margin-bottom: 0; }
 
 .rh-band__main > *:not(:last-child) {
   margin-bottom: var(--rh-theme--container-spacer, 1rem); }
+
+@media screen and (min-width: 768px) {
+  .rh-band__main, .rh-band__body {
+    margin-right: calc(var(--rh-theme--container-spacer, 1rem) * 2); }
+    [aside~="left"] .rh-band__main, [aside~="left"] .rh-band__body {
+      margin-right: 0; }
+    [aside~="left"] .rh-band__main, [aside~="left"] .rh-band__body {
+      margin-left: calc(var(--rh-theme--container-spacer, 1rem) * 2); } }
+
+@media (min-width: 992px) {
+  .rh-band__main, .rh-band__body {
+    width: calc(100% - 300px + calc(var(--rh-theme--container-spacer, 1rem) * 2)); } }
 
 .rh-band__header, .rh-band__body, .rh-band__footer, .rh-band__aside {
   display: block; }
@@ -195,15 +200,10 @@ class RhBand extends RHElement {
   @media screen and (min-width: 768px) {
     .rh-band__body {
       grid-template-columns: var(--rh-band--layout);
-      width: calc(100% - 250px + var(--rh-theme--container-spacer, 1rem) * 2); }
-      [aside^="full"] .rh-band__body {
-        margin-right: calc(var(--rh-theme--container-spacer, 1rem) * 2); }
-      [aside~="left"][aside^="full"] .rh-band__body {
+      width: calc(100% - (250px + calc(var(--rh-theme--container-spacer, 1rem) * 2))); }
+      [aside~="full"] .rh-band__body {
         margin-right: 0;
-        margin-left: calc(var(--rh-theme--container-spacer, 1rem) * 2); } }
-  @media (min-width: 992px) {
-    .rh-band__body {
-      width: calc(100% - 300px + var(--rh-theme--container-spacer, 1rem) * 2); } }
+        margin-left: 0; } }
 
 .rh-band__footer {
   display: grid;
@@ -226,6 +226,8 @@ class RhBand extends RHElement {
       width: 300px; } }
   [aside~="left"] .rh-band__aside {
     order: -1; }
+  [aside~="right"] .rh-band__aside {
+    order: 2; }
 </style>
 <div class="rh-band__wrapper">
   <div class="rh-band__container">
@@ -319,8 +321,8 @@ class RhBand extends RHElement {
     super.connectedCallback();
 
     // This is where it has content and should have width!
-    this.shadowRoot.style.setProperty("--rh-eq--width", this.size().width);
-    this.shadowRoot.style.setProperty("--rh-eq--height", this.size().height);
+    // this.shadowRoot.style.setProperty("--rh-eq--width", this.size().width);
+    // this.shadowRoot.style.setProperty("--rh-eq--height", this.size().height);
   }
 
   // disconnectedCallback() {}

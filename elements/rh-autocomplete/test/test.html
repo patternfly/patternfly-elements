@@ -10,7 +10,11 @@
   </head>
   <body>
     <div style="width:50%;">
-      <rh-autocomplete id="autocomplete"></rh-autocomplete>
+      <test-fixture id="autocomplete">
+        <template>
+          <rh-autocomplete></rh-autocomplete>
+        </template>
+      </test-fixture>
     </div>
     <script>
       suite('<rh-autocomplete>', () => {
@@ -18,11 +22,12 @@
             searchBoxElem,
             input,
             clearButton,
-            searchButton;
+            searchButton,
+            droplistElem;
 
         // function to run before each test within this suite.
         setup(function() {
-          autocompleteElem = document.querySelector('#autocomplete');
+          autocompleteElem = fixture('autocomplete');
 
           //rh-search-box
           searchBoxElem = autocompleteElem.shadowRoot.querySelector('rh-search-box');

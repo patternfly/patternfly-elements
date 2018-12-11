@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>rh-autocomplete tests</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../rh-autocomplete.js"></script>
+  </head>
+  <body>
+    <test-fixture id="autocomplete-a11y">
+      <template>
+        <rh-autocomplete></rh-autocomplete>
+      </template>
+    </test-fixture>
+    <script>
+      suite('<rh-autocomplete>', () => {});
+      a11ySuite('autocomplete-a11y');
+    </script>
+</body>
+</html>

@@ -39,6 +39,16 @@ class RhHideShow extends RHElement {
     return this.parentNode.offsetWidth > 768;
   }
 
+  get tabVariant() {
+    return this.getAttribute("rh-variant");
+  }
+
+  get tabOrientation() {
+    if (this.hasAttribute("vertical")) {
+      return "vertical";
+    }
+  }
+
   static get observedAttributes() {
     return ["vertical", "selected-index", "rh-variant", "theme", "color"];
   }
@@ -83,10 +93,14 @@ class RhHideShow extends RHElement {
       attributes: true,
       childList: true
     });
+
+    // this.variant = this.getAttribute('rh-variant');
+    // console.log(this.variant);
   }
 
   connectedCallback() {
     super.connectedCallback();
+    console.log(this.parentNode.offsetWidth);
   }
 
   // disconnectedCallback() {}

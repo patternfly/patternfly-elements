@@ -1,5 +1,5 @@
 ${this.isTab ? `
-    <rh-tabs>
+    <rh-tabs rh-variant="${this.tabVariant}" ${this.tabOrientation}>
       ${this.groupings.map(group => `
         <rh-tab role="heading" slot="tab">
           ${group.heading.outerHTML}
@@ -10,7 +10,7 @@ ${this.isTab ? `
       `).join('')}
     </rh-tabs>
   ` : `
-    <rh-accordion>
+    <rh-accordion rh-variant=${this.tabVariant}>
       ${this.groupings.map(group => `
         <rh-accordion-header>
           ${group.heading.outerHTML}

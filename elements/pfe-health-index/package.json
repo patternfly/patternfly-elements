@@ -1,5 +1,5 @@
 {
-  "name": "@pfelements/pfe-health-index",
+  "name": "@patternfly/pfe-health-index",
   "pfelement": {
     "className": "PfeHealthIndex",
     "elementName": "pfe-health-index"

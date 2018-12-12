@@ -1,5 +1,5 @@
 {
-  "name": "@pfelements/pfe-layouts",
+  "name": "@patternfly/pfe-layouts",
   "version": "1.0.0-prerelease.7",
   "publishConfig": {
     "access": "public"

@@ -1,5 +1,5 @@
 {
-  "name": "@pfelements/pfe-number",
+  "name": "@patternfly/pfe-number",
   "pfelement": {
     "className": "PfeNumber",
     "elementName": "pfe-number"

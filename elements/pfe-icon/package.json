@@ -1,5 +1,5 @@
 {
-  "name": "@pfelements/pfe-icon",
+  "name": "@patternfly/pfe-icon",
   "pfelement": {
     "className": "PfeIcon",
     "elementName": "pfe-icon"

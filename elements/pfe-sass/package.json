@@ -1,5 +1,5 @@
 {
-  "name": "@pfelements/pfe-sass",
+  "name": "@patternfly/pfe-sass",
   "pfelement": {
     "className": "PfeSass",
     "elementName": "pfe-sass"

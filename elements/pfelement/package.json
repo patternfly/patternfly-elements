@@ -1,5 +1,5 @@
 {
-  "name": "@pfelements/pfelement",
+  "name": "@patternfly/pfelement",
   "pfelement": {
     "className": "PFElement",
     "elementName": "pfelement"

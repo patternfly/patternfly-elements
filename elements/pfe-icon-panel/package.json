@@ -1,5 +1,5 @@
 {
-  "name": "@pfelements/pfe-icon-panel",
+  "name": "@patternfly/pfe-icon-panel",
   "pfelement": {
     "className": "PfeIconPanel",
     "elementName": "pfe-icon-panel"

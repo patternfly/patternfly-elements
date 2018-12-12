@@ -1,5 +1,5 @@
 {
-  "name": "@pfelements/pfe-cta",
+  "name": "@patternfly/pfe-cta",
   "pfelement": {
     "className": "PfeCta",
     "elementName": "pfe-cta"

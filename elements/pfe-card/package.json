@@ -1,5 +1,5 @@
 {
-  "name": "@pfelements/pfe-card",
+  "name": "@patternfly/pfe-card",
   "pfelement": {
     "className": "PfeCard",
     "elementName": "pfe-card"

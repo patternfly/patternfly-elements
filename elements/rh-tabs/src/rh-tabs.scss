@@ -47,6 +47,7 @@ $rh-tabs__panel--PaddingLeft-factor:  2;
   margin: 0 -1px 0 0;
   border: #{rh-var(ui--border-width)} #{rh-var(ui--border-style)} transparent;
   border-right: 0;
+  position: relative;
 }
 
 :host([vertical]) .tabs ::slotted(rh-tab[aria-selected="true"]) {
@@ -79,6 +80,12 @@ $rh-tabs__panel--PaddingLeft-factor:  2;
   .tabs {
     border-bottom: transparent;
     justify-content: space-between; 
+  }
+}
+
+:host([vertical][rh-variant="secondary"]) {
+  .tabs {
+    justify-content: flex-start; 
   }
 }
 

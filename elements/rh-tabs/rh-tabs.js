@@ -160,7 +160,8 @@ class RhTabs extends RHElement {
 :host([vertical]) .tabs ::slotted(rh-tab) {
   margin: 0 -1px 0 0;
   border: var(--rh-theme--ui--border-width, 1px) var(--rh-theme--ui--border-style, solid) transparent;
-  border-right: 0; }
+  border-right: 0;
+  position: relative; }
 
 :host([vertical]) .tabs ::slotted(rh-tab[aria-selected="true"]) {
   border-color: var(--rh-tabs--border-color);
@@ -182,6 +183,9 @@ class RhTabs extends RHElement {
 :host([rh-variant="secondary"]) .tabs {
   border-bottom: transparent;
   justify-content: space-between; }
+
+:host([vertical][rh-variant="secondary"]) .tabs {
+  justify-content: flex-start; }
 </style>
 <div class="tabs">
   <slot name="tab"></slot>
@@ -567,11 +571,29 @@ class RhTab extends RHElement {
   padding: 10px 44px;
   border: 1px solid #252527; }
   :host([rh-variant="secondary"]) .indicator {
-    position: absolute;
+    display: none; }
+
+:host([rh-variant="secondary"][aria-selected="true"]) {
+  background-color: #252527;
+  color: #ffffff; }
+  :host([rh-variant="secondary"][aria-selected="true"]) .indicator {
     display: block;
     bottom: -15px;
     width: 0;
-    height: 0; }
+    height: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: var(--rh-theme--container-spacer, 1rem) solid transparent;
+    border-right: var(--rh-theme--container-spacer, 1rem) solid transparent;
+    border-top: var(--rh-theme--container-spacer, 1rem) solid #252527;
+    background-color: transparent; }
+
+:host([rh-variant="secondary"][aria-selected="false"]) {
+  color: #0477a4; }
+
+:host([rh-variant="secondary"]:hover) {
+  background-color: #252527;
+  color: #ffffff; }
 
 :host([vertical][rh-variant="primary"]) {
   text-align: right;
@@ -587,21 +609,16 @@ class RhTab extends RHElement {
 :host([vertical][rh-variant="primary"][aria-selected="true"]) {
   border: transparent !important; }
 
-:host([rh-variant="secondary"][aria-selected="true"]) {
-  background-color: #252527;
-  color: #ffffff; }
-  :host([rh-variant="secondary"][aria-selected="true"]) .indicator {
-    border-left: var(--rh-theme--container-spacer, 1rem) solid transparent;
-    border-right: var(--rh-theme--container-spacer, 1rem) solid transparent;
-    border-top: var(--rh-theme--container-spacer, 1rem) solid #252527;
-    background-color: transparent; }
-
-:host([rh-variant="secondary"][aria-selected="false"]) {
-  color: #0477a4; }
-
-:host([rh-variant="secondary"]:hover) {
-  background-color: #252527;
-  color: #ffffff; }
+:host([vertical][rh-variant="secondary"][aria-selected="true"]) .indicator {
+  display: block;
+  left: auto;
+  right: -18%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: var(--rh-theme--container-spacer, 1rem) solid transparent;
+  border-left: var(--rh-theme--container-spacer, 1rem) solid #252527;
+  border-bottom: var(--rh-theme--container-spacer, 1rem) solid transparent;
+  background-color: transparent; }
 </style>
 <slot></slot>
 <div class="indicator"></div>`;

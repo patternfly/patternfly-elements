@@ -44,7 +44,30 @@
   </head>
   <body>
     <h1>&lt;rh-tabs&gt;</h1>
-
+    <section class="example">
+      <h2>Style: Horizontal default</h2>
+      <rh-tabs>
+        <rh-tab role="heading" slot="tab">Tab 1</rh-tab>
+        <rh-tab-panel role="region" slot="panel">
+          <h2>Content 1</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </rh-tab-panel>
+        <rh-tab role="heading" slot="tab">Tab 2</rh-tab>
+        <rh-tab-panel role="region" slot="panel">
+          <h2>Content 2</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </rh-tab-panel>
+        <rh-tab role="heading" slot="tab">Tab 3</rh-tab>
+        <rh-tab-panel role="region" slot="panel">
+          <h2>Content 3</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </rh-tab-panel>
+      </rh-tabs>
+    </section>
     <section class="example">
       <h2>Style: Horizontal primary</h2>
       <rh-tabs rh-variant="primary">
@@ -94,8 +117,8 @@
       </rh-tabs>
     </section>
     <section class="example">
-      <h2>Style: Horizontal default</h2>
-      <rh-tabs>
+      <h2>Style: Vertical Default</h2>
+      <rh-tabs vertical>
         <rh-tab role="heading" slot="tab">Tab 1</rh-tab>
         <rh-tab-panel role="region" slot="panel">
           <h2>Content 1</h2>
@@ -117,7 +140,6 @@
         </rh-tab-panel>
       </rh-tabs>
     </section>
-
     <section class="example">
       <h2>Style: Vertical primary</h2>
       <rh-tabs vertical rh-variant="primary">
@@ -143,8 +165,8 @@
       </rh-tabs>
     </section>
     <section class="example">
-      <h2>Style: Vertical</h2>
-      <rh-tabs vertical>
+      <h2>Style: Vertical Secondary</h2>
+      <rh-tabs vertical rh-variant="secondary">
         <rh-tab role="heading" slot="tab">Tab 1</rh-tab>
         <rh-tab-panel role="region" slot="panel">
           <h2>Content 1</h2>
@@ -166,7 +188,6 @@
         </rh-tab-panel>
       </rh-tabs>
     </section>
-
     <section class="example">
       <h2>Selected Index</h2>
       <rh-tabs selected-index="1">

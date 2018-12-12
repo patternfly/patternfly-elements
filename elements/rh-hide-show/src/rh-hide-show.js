@@ -40,7 +40,13 @@ class RhHideShow extends RHElement {
   }
 
   get tabVariant() {
-    return this.getAttribute("rh-variant");
+    if (this.getAttribute("rh-variant") === "primary") {
+      return "rh-variant=primary color=striped";
+    } else if (this.getAttribute("rh-variant") === "secondary") {
+      return "rh-variant=secondary color=dark";
+    } else {
+      return "color=lightest";
+    }
   }
 
   get tabOrientation() {
@@ -93,9 +99,6 @@ class RhHideShow extends RHElement {
       attributes: true,
       childList: true
     });
-
-    // this.variant = this.getAttribute('rh-variant');
-    // console.log(this.variant);
   }
 
   connectedCallback() {

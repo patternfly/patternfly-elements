@@ -1,10 +1,25 @@
 import { storiesOf } from "@storybook/polymer";
+import { withKnobs, text, select } from "@storybook/addon-knobs/polymer";
+import { escapeHTML } from "../../.storybook/utils.js";
 import "./rh-accordion";
 
-storiesOf("Accordion", module).add(
-  "rh-accordion",
-  () => `
-  <rh-accordion>
+const stories = storiesOf("Accordion", module);
+stories.addDecorator(withKnobs);
+
+stories.add("rh-accordion", () => {
+  const color = select("Header color", {
+    "": "",
+    "color=lightest": "Lightest",
+    "color=striped": "Striped",
+    "color=base": "Base",
+    "color=dark": "Dark",
+    "color=darkest": "Darkest",
+    "color=accent": "Accent",
+    "color=complement": "Complement"
+  });
+
+  return `
+  <rh-accordion ${color}>
     <rh-accordion-header>
       <h2>Why do wizards need money if they could just create it?</h2>
     </rh-accordion-header>
@@ -37,5 +52,5 @@ storiesOf("Accordion", module).add(
       <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a></p>
     </rh-accordion-panel>
   </rh-accordion>
-  `
-);
+  `;
+});

@@ -32,7 +32,7 @@ class RhHideShow extends RHElement {
 ${
       this.isTab
         ? `
-    <rh-tabs rh-variant="${this.tabVariant}" ${this.tabOrientation}>
+    <rh-tabs ${this.tabVariant} ${this.tabOrientation}>
       ${this.groupings
         .map(
           group => `
@@ -48,7 +48,7 @@ ${
     </rh-tabs>
   `
         : `
-    <rh-accordion rh-variant=${this.tabVariant}>
+    <rh-accordion ${this.tabVariant}>
       ${this.groupings
         .map(
           group => `
@@ -83,7 +83,13 @@ ${
   }
 
   get tabVariant() {
-    return this.getAttribute("rh-variant");
+    if (this.getAttribute("rh-variant") === "primary") {
+      return "rh-variant=primary color=striped";
+    } else if (this.getAttribute("rh-variant") === "secondary") {
+      return "rh-variant=secondary color=dark";
+    } else {
+      return "color=lightest";
+    }
   }
 
   get tabOrientation() {
@@ -136,9 +142,6 @@ ${
       attributes: true,
       childList: true
     });
-
-    // this.variant = this.getAttribute('rh-variant');
-    // console.log(this.variant);
   }
 
   connectedCallback() {

@@ -8,7 +8,7 @@ stories.addDecorator(withKnobs);
 
 stories.add("rh-accordion", () => {
   const color = select("Header color", {
-    "": "",
+    "": "default",
     "color=lightest": "Lightest",
     "color=striped": "Striped",
     "color=base": "Base",

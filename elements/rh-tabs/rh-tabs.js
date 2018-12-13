@@ -553,7 +553,7 @@ class RhTab extends RHElement {
 
 :host([rh-variant="primary"]) {
   text-align: center;
-  padding: 0 5px 16px; }
+  padding: 0 calc(var(--rh-theme--container-padding, 1rem) / 3) var(--rh-theme--container-padding, 1rem); }
   :host([rh-variant="primary"]) .indicator {
     width: 100%;
     left: 0; }
@@ -568,7 +568,7 @@ class RhTab extends RHElement {
 
 :host([rh-variant="secondary"]) {
   text-align: center;
-  padding: 10px 44px;
+  padding: calc(var(--rh-theme--container-padding, 1rem) * .666) calc(var(--rh-theme--container-padding, 1rem) * 2.75);
   border: 1px solid #252527; }
   :host([rh-variant="secondary"]) .indicator {
     display: none; }
@@ -578,7 +578,7 @@ class RhTab extends RHElement {
   color: #ffffff; }
   :host([rh-variant="secondary"][aria-selected="true"]) .indicator {
     display: block;
-    bottom: -15px;
+    bottom: -33%;
     width: 0;
     height: 0;
     left: 50%;
@@ -597,7 +597,7 @@ class RhTab extends RHElement {
 
 :host([vertical][rh-variant="primary"]) {
   text-align: right;
-  padding-right: 16px; }
+  padding-right: var(--rh-theme--container-padding, 1rem); }
   :host([vertical][rh-variant="primary"]) .indicator {
     left: auto;
     right: 0;
@@ -610,15 +610,18 @@ class RhTab extends RHElement {
   border: transparent !important; }
 
 :host([vertical][rh-variant="secondary"][aria-selected="true"]) .indicator {
-  display: block;
-  left: auto;
-  right: -18%;
+  left: 99%;
   top: 50%;
   transform: translateY(-50%);
   border-top: var(--rh-theme--container-spacer, 1rem) solid transparent;
   border-left: var(--rh-theme--container-spacer, 1rem) solid #252527;
   border-bottom: var(--rh-theme--container-spacer, 1rem) solid transparent;
   background-color: transparent; }
+
+:host ::slotted(h2) {
+  font-size: var(--rh-theme--font-size);
+  font-weight: var(--rh-theme--font-weight--normal, 500);
+  margin: 0; }
 </style>
 <slot></slot>
 <div class="indicator"></div>`;

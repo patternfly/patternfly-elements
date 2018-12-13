@@ -37,7 +37,7 @@ ${
         .map(
           group => `
         <rh-tab role="heading" slot="tab">
-          ${group.heading.outerHTML}
+          ${group.heading.innerText}
         </rh-tab>
         <rh-tab-panel role="region" slot="panel">
           ${group.body.outerHTML}
@@ -146,7 +146,6 @@ ${
 
   connectedCallback() {
     super.connectedCallback();
-    console.log(this.parentNode.offsetWidth);
   }
 
   // disconnectedCallback() {}

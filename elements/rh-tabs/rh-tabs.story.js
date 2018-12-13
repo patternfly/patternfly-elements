@@ -17,7 +17,7 @@ stories.add("rh-tabs", () => {
   );
 
   const variant = select("Variant", {
-    "": "",
+    "": "default",
     "rh-variant=primary": "Primary",
     "rh-variant=secondary": "Secondary"
   });

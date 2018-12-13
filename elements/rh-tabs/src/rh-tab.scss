@@ -83,7 +83,7 @@ $rh-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
 :host([rh-variant="primary"]) {
   text-align: center;
-  padding: 0 5px 16px;
+  padding: 0 calc(#{rh-var(container-padding)} / 3) #{rh-var(container-padding)};
 
   .indicator {
     width: 100%;
@@ -105,7 +105,7 @@ $rh-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
 :host([rh-variant="secondary"]) {
   text-align: center;
-  padding: 10px 44px;
+  padding: calc(#{rh-var(container-padding)} * .666) calc(#{rh-var(container-padding)} * 2.75);
   border: 1px solid $rh-global--color--black-soft;
 
   .indicator {
@@ -121,7 +121,7 @@ $rh-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
   .indicator {
     display: block;
-    bottom: -15px;
+    bottom: -33%;
     width: 0;
     height: 0;
     left: 50%;
@@ -150,7 +150,7 @@ $rh-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
 :host([vertical][rh-variant="primary"]) {
   text-align: right;
-  padding-right: 16px;
+  padding-right: #{rh-var(container-padding)};
 
   .indicator {
     left: auto;
@@ -171,9 +171,7 @@ $rh-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 :host([vertical][rh-variant="secondary"][aria-selected="true"]) {
 
   .indicator {
-    display: block;
-    left: auto;
-    right: -18%;
+    left: 99%;
     top: 50%;
     transform: translateY(-50%);
     border-top: #{rh-var(container-spacer)} solid transparent;
@@ -183,3 +181,8 @@ $rh-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   }
 }
 
+:host ::slotted(h2) {
+  font-size: var(--rh-theme--font-size);
+  font-weight: var(--rh-theme--font-weight--normal, 500);
+  margin: 0;
+}

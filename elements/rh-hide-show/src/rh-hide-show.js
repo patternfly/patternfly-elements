@@ -103,7 +103,6 @@ class RhHideShow extends RHElement {
 
   connectedCallback() {
     super.connectedCallback();
-    console.log(this.parentNode.offsetWidth);
   }
 
   // disconnectedCallback() {}

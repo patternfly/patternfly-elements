@@ -2,7 +2,7 @@ ${this.isTab ? `
     <rh-tabs ${this.tabVariant} ${this.tabOrientation}>
       ${this.groupings.map(group => `
         <rh-tab role="heading" slot="tab">
-          ${group.heading.outerHTML}
+          ${group.heading.innerText}
         </rh-tab>
         <rh-tab-panel role="region" slot="panel">
           ${group.body.outerHTML}

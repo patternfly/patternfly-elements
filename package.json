@@ -1,5 +1,5 @@
 {
-  "name": "@rhelements/rhelements",
+  "name": "@patternfly/pfelements",
   "scripts": {
     "start": "npm run doc-listing-inject && spandx",
     "lerna": "lerna",

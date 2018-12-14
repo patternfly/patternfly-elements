@@ -1,0 +1,61 @@
+@import "../../pfe-sass/pfe-sass";
+
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+$pfe-tabs__panel--PaddingLeft-factor:  2;
+
+/// ===========================================================================
+/// DEFUALT TABS
+/// ===========================================================================
+
+:host {
+  display: block;
+}
+
+.tabs {
+  --pfe-tabs--border-color:          #{pfe-color(surface--border)};
+
+  display: flex;
+  border: 0;
+  border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
+}
+
+.panels {
+  padding: 0;
+  padding-top: #{pfe-var(container-padding)};
+}
+
+/// ===========================================================================
+/// VERTICAL TABS
+/// ===========================================================================
+
+:host([vertical]) {
+  display: flex; // Makes the tabs side-by-side with panels
+}
+
+:host([vertical]) .tabs {
+  flex-direction: column;
+  width: 25%;
+
+  border: 0;
+  border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
+}
+
+:host([vertical]) .tabs ::slotted(pfe-tab) {
+  margin: 0 -1px 0 0;
+  border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
+  border-right: 0;
+}
+
+:host([vertical]) .tabs ::slotted(pfe-tab[aria-selected="true"]) {
+  border-color: var(--pfe-tabs--border-color);
+  border-right: 0;
+}
+
+:host([vertical]) .panels {
+  padding: 0;
+  padding-right: #{pfe-var(container-padding)};
+  padding-left: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__panel--PaddingLeft-factor});
+}

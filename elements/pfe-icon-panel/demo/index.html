@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PFElements: pfe-icon-panel Demo</title>
+
+    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
+    <!-- <link rel="stylesheet" href="../../../themes/cp-theme/cp-theme.css" /> -->
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../pfe-icon-panel.umd.js'])</script>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+  </head>
+  <body unresolved>
+    <pfe-icon-panel icon="pfe-icon-server">
+      <h3 slot="header">Default</h3>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      <pfe-cta slot="footer"><a href="#">Learn more</a></pfe-cta>
+    </pfe-icon-panel>
+    <pfe-icon-panel icon="pfe-icon-server-stack" stacked>
+      <h3 slot="header">Stacked</h3>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </pfe-icon-panel>
+    <pfe-icon-panel icon="pfe-icon-server-stack-alt1" stacked centered>
+      <h3 slot="header">Stacked &amp; Centered</h3>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </pfe-icon-panel>
+    <pfe-icon-panel icon="pfe-icon-server-alt1" circled>
+      <h3 slot="header">Circled Default</h3>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </pfe-icon-panel>
+    <pfe-icon-panel icon="pfe-icon-server-alt2" circled="dark">
+      <h3 slot="header">Circled Default</h3>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </pfe-icon-panel>
+    <pfe-icon-panel icon="pfe-icon-server-deploy" circled="darkest">
+      <h3 slot="header">Circled Default</h3>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </pfe-icon-panel>
+  </body>
+</html>

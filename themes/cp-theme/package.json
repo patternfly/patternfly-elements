@@ -8,7 +8,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "cp-theme for Red Hat's Customer Portal and RHElements",
+  "description": "cp-theme for Red Hat's Customer Portal and PFElements",
   "repository": {
     "type": "git",
     "url": "https://github.com/RHElements/rhelements/themes/cp-theme.git"

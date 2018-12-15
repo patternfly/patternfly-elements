@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PFElements: pfe-cta Demo</title>
+
+    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
+    <!-- <link rel="stylesheet" href="../../../themes/cp-theme/cp-theme.css" /> -->
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require([
+      '../../../themes/cp-theme/cp-theme.umd.js',
+      '../pfe-cta.umd.js'
+    ])</script>
+
+    <style>
+      body {
+        font: 16px/1.5 Overpass, Arial, sans-sans-serif;
+      }
+
+      p {
+        margin-bottom: 60px !important;
+      }
+
+      pfe-cta + pfe-cta {
+        margin-left: 10px;
+      }
+
+      .inverted-demo {
+        padding: 16px;
+        background: #464646;
+      }
+
+      .unfilled-demo {
+        padding: 16px;
+        background: #d2d2d2;
+      }
+    </style>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+  </head>
+  <body unresolved>
+    <h1>&lt;pfe-cta&gt;</h1>
+
+    <h2>Defaults</h2>
+    <p>
+      <pfe-cta><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
+    </p>
+
+    <h2>Color: Base</h2>
+    <p>
+      <pfe-cta color="base"><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary" color="base"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary" color="base"><a href="#">Secondary</a></pfe-cta>
+    </p>
+
+    <h2>Color: Complement</h2>
+    <p>
+      <pfe-cta color="complement"><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary" color="complement"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary" color="complement"><a href="#">Secondary</a></pfe-cta>
+    </p>
+
+    <h2>Color: Accent</h2>
+    <p>
+      <pfe-cta color="accent"><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary" color="accent"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary" color="accent"><a href="#">Secondary</a></pfe-cta>
+    </p>
+
+    <h2>Defaults; On: Dark</h2>
+    <p class="inverted-demo">
+      <pfe-cta on="dark"><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary" on="dark"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary" on="dark"><a href="#">Secondary</a></pfe-cta>
+    </p>
+
+    <p>
+      General rule of thumb: If you add <code>color="..."</code> it'll override <code>on="dark"</code>. See below.
+    </p>
+
+    <h2>Color: Base; On: Dark</h2>
+    <p class="inverted-demo">
+      <pfe-cta color="base" on="dark"><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary" color="base" on="dark"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary" color="base" on="dark"><a href="#">Secondary</a></pfe-cta>
+    </p>
+
+    <h2>Color: Complement; On: Dark</h2>
+    <p class="inverted-demo">
+      <pfe-cta color="complement" on="dark"><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary" color="complement" on="dark"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary" color="complement" on="dark"><a href="#">Secondary</a></pfe-cta>
+    </p>
+
+    <h2>Color: Accent; On: Dark</h2>
+    <p class="inverted-demo">
+      <pfe-cta color="accent" on="dark"><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary" color="accent" on="dark"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary" color="accent" on="dark"><a href="#">Secondary</a></pfe-cta>
+    </p>
+  </body>
+</html>

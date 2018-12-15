@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../pfe-hide-show.js"></script>
+  </head>
+  <body>
+
+    <pfe-hide-show>
+      This is the element content.
+    </pfe-hide-show>
+
+    <script>
+      suite('<pfe-hide-show>', () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(document.querySelector('pfe-hide-show'), customElements.get("pfe-hide-show", 'pfe-hide-show should be an instance of rhHideShow'));
+        });
+
+        // you need to write more tests!!!
+
+      });
+    </script>
+  </body>
+</html>

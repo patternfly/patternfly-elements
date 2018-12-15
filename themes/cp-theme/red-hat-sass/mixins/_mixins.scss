@@ -1,11 +1,11 @@
 // $boxSize = any box-sizing property, default is border-box
-@mixin rh-box-sizing($boxSize: border-box) {
+@mixin pfe-box-sizing($boxSize: border-box) {
   *, *::before, *::after {
     box-sizing: $boxSize;
   }
 }
 
-@mixin rh-clearfix {
+@mixin pfe-clearfix {
   &::after {
     clear: both;
     content: "";
@@ -13,18 +13,18 @@
   }
 }
 
-@mixin rh-reset-list() {
+@mixin pfe-reset-list() {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-@mixin rh-reset-box() {
+@mixin pfe-reset-box() {
   margin: 0;
   padding: 0;
 }
 
-@mixin rh-sr-only() {
+@mixin pfe-sr-only() {
   position: absolute;
   overflow: hidden;
   clip: rect(0,0,0,0);
@@ -35,11 +35,11 @@
   border: 0;
 }
 
-@mixin rh-transition($properties...) {
+@mixin pfe-transition($properties...) {
   $return: null;
   @each $property in $properties {
     @if length($property) == 1 {
-      $return: append($return, #{$property} 250ms $rh-global--animation-timing, comma);
+      $return: append($return, #{$property} 250ms $pfe-global--animation-timing, comma);
     }
     @else if length($property) == 2 {
       $return: append($return, nth($property, 1) nth($property, 2), comma);
@@ -49,7 +49,7 @@
 }
 
 // Make a CSS arrow
-@mixin rh-arrow($type, $color, $width: 8px, $height: 5px, $pseudo: false) {
+@mixin pfe-arrow($type, $color, $width: 8px, $height: 5px, $pseudo: false) {
   $direction: (
     up: 180deg,
     down: 0deg,
@@ -68,18 +68,18 @@
   }
 }
 
-@mixin rh-print-media {
+@mixin pfe-print-media {
   @media print {
     @content;
   }
 }
 
-@mixin rh-print-background {
+@mixin pfe-print-background {
   -webkit-print-color-adjust: exact;
   color-adjust: exact;
 }
 // scss-lint:disable ImportantRule
-@mixin rh-no-print-background {
+@mixin pfe-no-print-background {
   @include print-media {
     background-color: white !important;
     background-image: none !important;
@@ -88,7 +88,7 @@
 }
 // scss-lint:enable ImportantRule
 
-@mixin rh-pipe( $position: right, $padding: 0, $margin: 0, $color: $border-color) {
+@mixin pfe-pipe( $position: right, $padding: 0, $margin: 0, $color: $border-color) {
   border: 1px solid transparent;
   border-#{$position}-color: $color;
   @if $position == right {
@@ -101,7 +101,7 @@
   }
 }
 
-@mixin rh-retina {
+@mixin pfe-retina {
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     @content;
   }

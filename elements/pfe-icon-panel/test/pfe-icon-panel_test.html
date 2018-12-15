@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../pfe-icon-panel.js"></script>
+  </head>
+  <body>
+
+    <pfe-icon-panel id="panel1" icon="pfe-icon-server">
+      <h3 slot="header">This is pfe-icon-panel</h3>
+      Lorem ipsum dolor sit amet.
+      <pfe-cta slot="footer"><a href="#">Learn more</a></pfe-cta>
+    </pfe-icon-panel>
+
+    <pfe-icon-panel id="panel2" icon="pfe-icon-server-deploy">
+      <h3 slot="header">This is pfe-icon-panel</h3>
+      Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </pfe-icon-panel>
+
+    <script>
+      suite('<pfe-icon-panel>', () => {
+        const panel1 = document.querySelector("#panel1");
+        const panel2 = document.querySelector("#panel2");
+
+        test('it should upgrade', () => {
+          assert.instanceOf(
+            document.querySelector('pfe-icon-panel'),
+            customElements.get('pfe-icon-panel'),
+            'the <pfe-icon-panel> should be an instance of PfeIconPanel'
+          );
+        });
+        test('it should show an icon', () => {
+          const svgD = panel1.shadowRoot.querySelector("pfe-icon").shadowRoot.querySelector('svg g path').getAttribute('d');
+          assert.isOk(svgD, "the panel's internal pfe-icon has an svg with a path");
+        });
+
+        test("header, body, and footer are placed into correct slot", () => {
+          // header wound up in the header slot
+          assert.equal(
+            panel1.querySelector("[slot=header]").assignedSlot,
+            panel1.shadowRoot.querySelector(".content .header")
+          );
+
+          const bodyText = panel1.shadowRoot
+            .querySelector(".content .body")
+            .assignedNodes()
+            .map(n => n.textContent)
+            .join("")
+            .trim();
+          assert.equal(bodyText, "Lorem ipsum dolor sit amet.");
+
+          // footer wound up in the footer slot
+          assert.equal(
+            panel1.querySelector("[slot=footer]").assignedSlot,
+            panel1.shadowRoot.querySelector(".content .footer")
+          );
+        });
+      });
+    </script>
+  </body>
+</html>

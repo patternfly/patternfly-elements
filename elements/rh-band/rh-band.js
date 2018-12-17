@@ -27,10 +27,9 @@ class RhBand extends RHElement {
     return `
 <style>
 :host {
-  --rh-band--paddingTop:                      calc(var(--rh-theme--container-spacer, 1rem) * 4);
-  --rh-band--paddingRight:                    var(--rh-theme--container-spacer, 1rem);
-  --rh-band--paddingBottom:                   calc(var(--rh-theme--container-spacer, 1rem) * 4);
-  --rh-band--paddingLeft:                     var(--rh-theme--container-spacer, 1rem);
+  --rh-band--padding-vertical:                 calc( var(--rh-theme--container-spacer, 1rem) * 4);
+  --rh-band--padding-horizontal:               calc( var(--rh-theme--container-spacer, 1rem) * 1);
+  --rh-band--padding-full:                         var(--rh-band--padding-vertical)  var(--rh-band--padding-horizontal);
   --rh-band--backgroundColor:                 var(--rh-theme--color--surface--base, #dfdfdf);
   --rh-band--backgroundPositionX:             center;
   --rh-band--backgroundPositionY:             center;
@@ -49,22 +48,18 @@ class RhBand extends RHElement {
   --rh-broadcasted--color--ui-link--focus:    var(--rh-theme--color--surface--base--link--focus, #00305b);
   --rh-band--width:                           auto;
   display: block; }
-  @media screen and (min-width: 576px) {
-    :host {
-      --rh-band--width: calc(576px - calc(var(--rh-band--paddingRight) * 2)); } }
   @media screen and (min-width: 768px) {
     :host {
-      --rh-band--width: calc(768px - calc(var(--rh-band--paddingRight) * 2)); } }
+      --rh-band--width: calc( 768px - calc(var(--rh-band--padding-horizontal) * 4) ); } }
   @media screen and (min-width: 992px) {
     :host {
-      --rh-band--width: calc(992px - calc(var(--rh-band--paddingRight) * 2)); } }
+      --rh-band--width: calc( 992px - calc(var(--rh-band--padding-horizontal) * 4) ); } }
   @media screen and (min-width: 1200px) {
     :host {
-      --rh-band--width: calc(1200px - calc(var(--rh-band--paddingRight) * 2)); } }
+      --rh-band--width: calc( 1200px - calc(var(--rh-band--padding-horizontal) * 4) ); } }
   @media print {
     :host {
-      --rh-band--paddingTop:    calc(var(--rh-theme--container-spacer, 1rem) * 2);
-      --rh-band--paddingBottom: calc(var(--rh-theme--container-spacer, 1rem) * 2); } }
+      --rh-band--padding-full:    calc(var(--rh-band--padding-vertical) / 2)  var(--rh-band--padding-horizontal); } }
 
 :host([color="dark"]) {
   --rh-band--backgroundColor:                  var(--rh-theme--color--surface--dark, #464646);
@@ -115,16 +110,14 @@ class RhBand extends RHElement {
   --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--lightest--link--focus, #003366); }
 
 :host([size="small"]) {
-  --rh-band--paddingTop:        var(--rh-theme--container-spacer, 1rem);
-  --rh-band--paddingBottom:     var(--rh-theme--container-spacer, 1rem); }
+  --rh-band--padding-full:   calc(var(--rh-band--padding-vertical) / 4)  var(--rh-band--padding-horizontal); }
 
 .rh-band__wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-items: flex-start;
-  padding-top: var(--rh-band--paddingTop);
-  padding-bottom: var(--rh-band--paddingBottom);
+  padding: calc(var(--rh-band--padding-vertical) / 2) var(--rh-band--padding-horizontal);
   border-top-width: var(--rh-band--borderTopWidth);
   border-bottom-width: var(--rh-band--borderBottomWidth);
   border-style: var(--rh-band--borderStyle);
@@ -133,6 +126,9 @@ class RhBand extends RHElement {
   background-position-x: var(--rh-band--backgroundPositionX);
   background-position-y: var(--rh-band--backgroundPositionY);
   color: var(--rh-broadcasted--color--text); }
+  @media (min-width: 576px) {
+    .rh-band__wrapper {
+      padding: var(--rh-band--padding-full); } }
   @media print {
     .rh-band__wrapper {
       background-color: white !important;
@@ -140,12 +136,8 @@ class RhBand extends RHElement {
       box-shadow: none !important; } }
 
 .rh-band__container {
-  padding-top: 0;
-  padding-right: var(--rh-band--paddingRight);
-  padding-bottom: 0;
-  padding-left: var(--rh-band--paddingLeft);
-  width: var(--rh-band--width);
-  margin: 0 auto; }
+  margin: 0 auto;
+  max-width: var(--rh-band--width); }
 
 .rh-band__container, .rh-band__content {
   flex-grow: 1;
@@ -166,18 +158,6 @@ class RhBand extends RHElement {
 
 .rh-band__main > *:not(:last-child) {
   margin-bottom: var(--rh-theme--container-spacer, 1rem); }
-
-@media screen and (min-width: 768px) {
-  .rh-band__main, .rh-band__body {
-    margin-right: calc(var(--rh-theme--container-spacer, 1rem) * 2); }
-    [aside~="left"] .rh-band__main, [aside~="left"] .rh-band__body {
-      margin-right: 0; }
-    [aside~="left"] .rh-band__main, [aside~="left"] .rh-band__body {
-      margin-left: calc(var(--rh-theme--container-spacer, 1rem) * 2); } }
-
-@media (min-width: 992px) {
-  .rh-band__main, .rh-band__body {
-    width: calc(100% - 300px + calc(var(--rh-theme--container-spacer, 1rem) * 2)); } }
 
 .rh-band__header, .rh-band__body, .rh-band__footer, .rh-band__aside {
   display: block; }
@@ -216,18 +196,26 @@ class RhBand extends RHElement {
 .rh-band__aside {
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: var(--rh-theme--container-spacer, 1rem);
-  max-width: 250px; }
+  grid-gap: var(--rh-theme--container-spacer, 1rem); }
+  [aside~="left"] .rh-band__aside {
+    margin: var(--rh-theme--container-spacer, 1rem) 0; }
+  [aside~="right"] .rh-band__aside {
+    margin: var(--rh-theme--container-spacer, 1rem) 0; }
   @media screen and (min-width: 768px) {
     .rh-band__aside {
-      grid-template-columns: var(--rh-band--layout); } }
+      grid-template-columns: var(--rh-band--layout);
+      max-width: 250px; }
+      [aside~="left"] .rh-band__aside {
+        order: -1;
+        margin: 0;
+        margin-right: calc(var(--rh-theme--container-spacer, 1rem) * 2); }
+      [aside~="right"] .rh-band__aside {
+        order: 2;
+        margin: 0;
+        margin-left: calc(var(--rh-theme--container-spacer, 1rem) * 2); } }
   @media (min-width: 992px) {
     .rh-band__aside {
       width: 300px; } }
-  [aside~="left"] .rh-band__aside {
-    order: -1; }
-  [aside~="right"] .rh-band__aside {
-    order: 2; }
 </style>
 <div class="rh-band__wrapper">
   <div class="rh-band__container">

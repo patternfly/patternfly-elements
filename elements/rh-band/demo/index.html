@@ -17,21 +17,28 @@
     <script>require([
       '../rh-band.umd.js',
       '../../rh-card/rh-card.umd.js',
-      '../../rh-cta/rh-cta.umd.js'
+      '../../rh-cta/rh-cta.umd.js',
+      '../../../themes/cp-theme/cp-theme.umd.js',
     ])</script>
+    <style>
+      .pfe-band-summary {
+        font-size: 20px;
+        margin: 0;
+      }
+    </style>
   </head>
   <body unresolved>
 
     <rh-band color="lightest" aside="right body bottom">
-      <h2 slot="header">Lightest band</h3>
-      <p slot="header">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+      <h2 slot="header">Lightest band, header region</h3>
+      <p slot="header" class="pfe-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
       <rh-cta priority="primary" slot="footer">
         <a href="#">Learn more</a>
       </rh-cta>
       <div slot="aside">
         <rh-card color="base">
-          <h3 slot="header">Lorem ipsum</h3>
+          <h3 slot="header">Aside: right body bottom</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <rh-cta slot="footer" priority="tertiary">
             <a href="#">Learn more</a>
@@ -42,14 +49,14 @@
 
     <rh-band color="light" aside="left body bottom">
       <h2 slot="header">Light band</h2>
-      <p slot="header">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+      <p slot="header" class="pfe-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
       <rh-cta priority="primary" slot="footer">
         <a href="#">Learn more</a>
       </rh-cta>
       <div slot="aside">
         <rh-card color="complement">
-          <h3 slot="header">Lorem ipsum</h3>
+          <h3 slot="header">Aside: left body bottom</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <rh-cta slot="footer" priority="tertiary" on="dark">
             <a href="#">Learn more</a>
@@ -60,14 +67,14 @@
 
     <rh-band aside="right full bottom">
       <h2 slot="header">Default band</h2>
-      <p slot="header">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+      <p slot="header" class="pfe-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
       <rh-cta priority="primary" slot="footer">
         <a href="#">Learn more</a>
       </rh-cta>
       <div slot="aside">
         <rh-card color="dark">
-          <h3 slot="header">Lorem ipsum</h3>
+          <h3 slot="header">Aside: right full bottom</h3>
           <p>Ut wisi enim ad minim veniam. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
           <rh-cta slot="footer" priority="tertiary" on="dark">
             <a href="#">Learn more</a>
@@ -78,14 +85,14 @@
 
     <rh-band color="dark" aside="left full bottom" img-src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/header/header-hub-svsp-2000x1562.jpg">
       <h2 slot="header">Dark band with imaged background</h2>
-      <p slot="header">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+      <p slot="header" class="pfe-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
       <rh-cta priority="primary" slot="footer">
         <a href="#">Learn more</a>
       </rh-cta>
       <div slot="aside">
         <rh-card color="dark">
-          <h3 slot="header">Lorem ipsum</h3>
+          <h3 slot="header">Aside: left full bottom</h3>
           <p>Ut wisi enim ad minim veniam. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
           <rh-cta slot="footer" priority="tertiary" on="dark">
             <a href="#">Learn more</a>
@@ -96,14 +103,14 @@
 
     <rh-band color="darkest" aside="right full top">
       <h2 slot="header">Darkest band</h2>
-      <p slot="header">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+      <p slot="header" class="pfe-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
       <rh-cta priority="primary" slot="footer">
         <a href="#">Learn more</a>
       </rh-cta>
       <div slot="aside">
         <rh-card color="dark">
-          <h3 slot="header">Lorem ipsum</h3>
+          <h3 slot="header">Aside: right full top</h3>
           <p>Ut wisi enim ad minim veniam. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
           <rh-cta slot="footer" priority="tertiary" on="dark">
             <a href="#">Learn more</a>
@@ -114,14 +121,14 @@
 
     <rh-band color="accent" aside="left body top">
       <h2 slot="header">Lightest band</h2>
-      <p slot="header">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+      <p slot="header" class="pfe-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
       <rh-cta priority="primary" on="dark">
         <a href="#">Learn more</a>
       </rh-cta>
       <div slot="aside">
         <rh-card color="light">
-          <h3 slot="header">Lorem ipsum</h3>
+          <h3 slot="header">Aside: left body top</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <rh-cta slot="footer" priority="tertiary">
             <a href="#">Learn more</a>
@@ -132,14 +139,14 @@
 
     <rh-band color="complement" aside="right body bottom">
       <h2 slot="header">Lightest band</h2>
-      <p slot="header">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+      <p slot="header" class="pfe-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
       <rh-cta priority="primary" slot="footer">
         <a href="#">Learn more</a>
       </rh-cta>
       <div slot="aside">
         <rh-card color="dark">
-          <h3 slot="header">Lorem ipsum</h3>
+          <h3 slot="header">Aside: right body bottom</h3>
           <p>Ut wisi enim ad minim veniam.</p>
           <rh-cta slot="footer" priority="tertiary" on="dark">
             <a href="#">Learn more</a>
@@ -147,6 +154,6 @@
         </rh-card>
       </div>
     </rh-band>
-    
+
   </body>
 </html>

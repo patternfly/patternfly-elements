@@ -6,22 +6,22 @@
 // Base Typography
 // ========================================================================
 
-$rh-global--FontSize:        #{$rh-global--font-size-root}px !default;
+$pfe-global--FontSize:        #{$pfe-global--font-size-root}px !default;
 
 // Line heights
-$rh-global--LineHeight--sm:  1.2 !default;
-$rh-global--LineHeight:      1.5 !default; // base
-$rh-global--LineHeight--lg:  1.8 !default;
+$pfe-global--LineHeight--sm:  1.2 !default;
+$pfe-global--LineHeight:      1.5 !default; // base
+$pfe-global--LineHeight--lg:  1.8 !default;
 
 // Font weights
-$rh-global--FontWeight--light:      300;
-$rh-global--FontWeight--normal:     500; // base
-$rh-global--FontWeight--semi-bold:  600;
-$rh-global--FontWeight--bold:       700;
+$pfe-global--FontWeight--light:      300;
+$pfe-global--FontWeight--normal:     500; // base
+$pfe-global--FontWeight--semi-bold:  600;
+$pfe-global--FontWeight--bold:       700;
 
 // Font families
-$rh-global--FontFamily--sans-serif:    "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif;
-$rh-global--FontFamily--monospace:     "Overpass Mono", Consolas, Monaco, 'Andale Mono', monospace;
+$pfe-global--FontFamily--sans-serif:    "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif;
+$pfe-global--FontFamily--monospace:     "Overpass Mono", Consolas, Monaco, 'Andale Mono', monospace;
 
 
 // ========================================================================
@@ -29,21 +29,21 @@ $rh-global--FontFamily--monospace:     "Overpass Mono", Consolas, Monaco, 'Andal
 // ========================================================================
 
 // Heading sizes for Apps
-$rh-global--FontSize--heading--xxl:     rh-size-prem($rh-global--font-size-root * 2)    !default;  // 32px 
-$rh-global--FontSize--heading--xl:      rh-size-prem($rh-global--font-size-root * 1.75) !default;  // 28px
-$rh-global--FontSize--heading--lg:      rh-size-prem($rh-global--font-size-root * 1.5)  !default;  // 24px
-$rh-global--FontSize--heading--md:      rh-size-prem($rh-global--font-size-root * 1.25) !default;  // 20px
-$rh-global--FontSize--heading--sm:      rh-size-prem($rh-global--font-size-root * 1.125)!default;  // 18px
-$rh-global--FontSize--heading--xs:      rh-size-prem($rh-global--font-size-root * 1)    !default;  // 16px
-$rh-global--FontSize--heading--xxs:     rh-size-prem($rh-global--font-size-root * 0.875)!default;  // 14px
- 
- 
-// ======================================================================== 
-// Icons Sizes 
-// ======================================================================== 
- 
-$rh-global--icon-size--xl:              rh-size-prem($rh-global--font-size-root * 4)    !default;  // 64px 
-$rh-global--icon-size--lg:              rh-size-prem($rh-global--font-size-root * 3)    !default;  // 48px 
-$rh-global--icon-size--md:              rh-size-prem($rh-global--font-size-root * 2)    !default;  // 32px 
-$rh-global--icon-size--sm:              rh-size-prem($rh-global--font-size-root * 1)    !default;  // 16px
-$rh-global--icon-size--xs:              rh-size-prem($rh-global--font-size-root * 0.875)!default;  // 14px
+$pfe-global--FontSize--heading--xxl:     pfe-size-prem($rh-global--font-size-root * 2)    !default;   // 32px
+$pfe-global--FontSize--heading--xl:      pfe-size-prem($rh-global--font-size-root * 1.75) !default;   // 28px
+$pfe-global--FontSize--heading--lg:      pfe-size-prem($rh-global--font-size-root * 1.5)  !default;   // 24px
+$pfe-global--FontSize--heading--md:      pfe-size-prem($rh-global--font-size-root * 1.25) !default;   // 20px
+$pfe-global--FontSize--heading--sm:      pfe-size-prem($rh-global--font-size-root * 1.125) !default;  // 18px
+$pfe-global--FontSize--heading--xs:      pfe-size-prem($rh-global--font-size-root * 1) !default;      // 16px
+$pfe-global--FontSize--heading--xxs:     pfe-size-prem($rh-global--font-size-root * 0.875) !default;  // 14px
+
+
+// ========================================================================
+// Icons Sizes
+// ========================================================================
+
+$pfe-global--icon-size--xl:              pfe-size-prem($rh-global--font-size-root * 4) !default;      // 64px
+$pfe-global--icon-size--lg:              pfe-size-prem($rh-global--font-size-root * 3) !default;      // 48px
+$pfe-global--icon-size--md:              pfe-size-prem($rh-global--font-size-root * 2) !default;      // 32px
+$pfe-global--icon-size--sm:              pfe-size-prem($rh-global--font-size-root * 1) !default;      // 16px
+$pfe-global--icon-size--xs:              pfe-size-prem($rh-global--font-size-root * 0.875) !default;  // 14px

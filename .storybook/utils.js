@@ -1,4 +1,4 @@
-// This is a collection of functions to reuse within RHElements stories.
+// This is a collection of functions to reuse within PFElements stories.
 
 export function escapeHTML(html) {
   const div = document.createElement("div");

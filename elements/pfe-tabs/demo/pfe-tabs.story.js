@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/polymer";
 import { withKnobs, select } from "@storybook/addon-knobs/polymer";
-import "./pfe-tabs";
+import "../dist/pfe-tabs";
 
 const stories = storiesOf("Tabs", module);
 stories.addDecorator(withKnobs);

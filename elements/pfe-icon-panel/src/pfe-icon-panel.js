@@ -20,8 +20,8 @@
  * SOFTWARE.
  */
 
-import PFElement from "../pfelement/pfelement.js";
-import "../pfe-icon/pfe-icon.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
+import "../../pfe-icon/dist/pfe-icon.js";
 
 class PfeIconPanel extends PFElement {
   static get tag() {

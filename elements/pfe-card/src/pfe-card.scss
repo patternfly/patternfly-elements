@@ -1,4 +1,4 @@
-@import "../../pfe-sass/pfe-sass";
+@import "../../pfe-sass/dist/pfe-sass";
 
 :host {
   --pfe-card--padding:                          calc(#{pfe-var(container-spacer)} * 2); // 2x `container-spacer`

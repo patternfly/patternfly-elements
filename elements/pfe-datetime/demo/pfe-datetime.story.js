@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import "./pfe-datetime";
+import "../dist/pfe-datetime";
 
 storiesOf("Datetime", module).add("pfe-datetime", () => {
   const now = new Date();

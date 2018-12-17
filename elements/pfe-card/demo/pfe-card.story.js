@@ -5,9 +5,9 @@ import {
   select,
   boolean
 } from "@storybook/addon-knobs/polymer";
-import "./pfe-card";
-import cpTheme from "../../themes/cp-theme/cp-theme.js";
-import { escapeHTML } from "../../.storybook/utils.js";
+import "../dist/pfe-card";
+import cpTheme from "../../../themes/cp-theme/dist/cp-theme.js";
+import { escapeHTML } from "../../../.storybook/utils.js";
 
 const stories = storiesOf("Card", module);
 stories.addDecorator(withKnobs);

@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/polymer";
 import { withKnobs, text, select } from "@storybook/addon-knobs/polymer";
-import "./pfe-health-index";
+import "../dist/pfe-health-index";
 
 const stories = storiesOf("Health Index", module);
 stories.addDecorator(withKnobs);

@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/polymer";
 import { withKnobs, text, select } from "@storybook/addon-knobs/polymer";
-import "./pfe-cta";
-// import cpTheme from '../../themes/cp-theme/cp-theme.js';
+import "../dist/pfe-cta";
+// import cpTheme from '../../themes/cp-theme/dist/cp-theme.js';
 
 const stories = storiesOf("Call To Action", module);
 stories.addDecorator(withKnobs);

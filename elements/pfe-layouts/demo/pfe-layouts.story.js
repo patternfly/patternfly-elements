@@ -3,8 +3,8 @@ import { storiesOf } from "@storybook/polymer";
 storiesOf("Layouts", module).add(
   "pfe-layouts",
   () => `
-  <link rel="stylesheet" type="text/css" href="/pfe-layouts/pfe-base.css">
-  <link rel="stylesheet" type="text/css" href="/pfe-layouts/pfe-layouts.css">
+  <link rel="stylesheet" type="text/css" href="/pfe-layouts/dist/pfe-base.css">
+  <link rel="stylesheet" type="text/css" href="/pfe-layouts/dist/pfe-layouts.css">
   <style>
   body {
     padding: 32px;

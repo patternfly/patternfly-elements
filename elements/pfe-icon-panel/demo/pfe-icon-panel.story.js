@@ -5,7 +5,7 @@ import {
   select,
   boolean
 } from "@storybook/addon-knobs/polymer";
-import "./pfe-icon-panel";
+import "../dist/pfe-icon-panel";
 
 const stories = storiesOf("Icon", module);
 stories.addDecorator(withKnobs);

@@ -15,13 +15,14 @@ const paths = {
   dist: "./dist",
   test: "./test",
   temp: "./tmp",
-  demo: "./demo"
+  demo: "./demo",
+  svg: "./svg"
 };
 
 // Custom gulp tasks for pfe-icon
 gulp.task("svgSprite", function() {
   return gulp
-    .src("./svg/*.svg")
+    .src(path.join(paths.svg, "*.svg"))
     .pipe(
       svgSprite({
         mode: {
@@ -42,7 +43,7 @@ gulp.task("svgSprite", function() {
 
 gulp.task("stuffSprite", () => {
   return gulp
-    .src(path.join(paths.src, "pfe-icon.js"))
+    .src(path.join(paths.temp, "pfe-icon.js"))
     .pipe(
       replace(
         /<svg xmlns[\s\S]*?<\/svg>/g,
@@ -57,5 +58,5 @@ gulp.task("combineAndStuff", gulp.series("svgSprite", "stuffSprite"));
 // call the central gulp build, and pass in the custom tasks to be run pre-bundle
 gulpFactory({
   ...pfelementPackage.pfelement,
-  precompile: ["combineAndStuff"]
+  precompile: ["clean", "compress", "combineAndStuff"]
 });

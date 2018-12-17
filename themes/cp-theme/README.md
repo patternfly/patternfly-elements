@@ -10,14 +10,14 @@ Styles PFElements for the Red Hat Customer Portal.
 
 ```html
 <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
-<script>require(['/path/to/themes/cp-theme/cp-theme.umd.js'])</script>
+<script>require(['/path/to/themes/cp-theme/dist/cp-theme.umd.js'])</script>
 ```
 
 ### W3C Spec
 
 ```html
 <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
-<link rel="stylesheet" href="/path/to/themes/cp-theme/cp-theme.css" />
+<link rel="stylesheet" href="/path/to/themes/cp-theme/dist/cp-theme.css" />
 ```
 
 ## Test

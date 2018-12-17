@@ -7,7 +7,7 @@ To create a new PFElement, use `npm run new` from the root of the PFElements rep
 Here is an example of a new element and how it extends the base PFElement.
 
 ```javascript
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 
 class MyElement extends PFElement {
   // The HTML tag name for this element.  This will be passed into `customElements.define()`.

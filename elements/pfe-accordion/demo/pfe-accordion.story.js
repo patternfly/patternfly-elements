@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import "./pfe-accordion";
+import "../dist/pfe-accordion";
 
 storiesOf("Accordion", module).add(
   "pfe-accordion",

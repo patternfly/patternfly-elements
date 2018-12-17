@@ -8,7 +8,16 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "Sass variables and mixins for pfe-elements",
+  "description": "Sass variables and mixins for PatternFly Elements",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "main": "pfe-sass.scss",
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev"
+  },
   "contributors": [
     {
       "name": "Kyle Buchanan",

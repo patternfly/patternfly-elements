@@ -1,7 +1,9 @@
 # Development files
 node_modules
 tmp
-elements/pfe-*/pfe-*.js*
+elements/*/*.js*
+elements/*/*.css
+!elements/*/*.story.js
 
 # Compiled index
 doc/index.html

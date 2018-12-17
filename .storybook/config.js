@@ -3,7 +3,7 @@ import { setOptions } from "@storybook/addon-options";
 const req = require.context("../elements", true, /\.story\.js$/);
 
 setOptions({
-  name: "RHElements",
+  name: "PatternFly Elements",
   url: "/",
   addonPanelInRight: true
 });

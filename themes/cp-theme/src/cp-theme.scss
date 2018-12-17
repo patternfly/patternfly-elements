@@ -5,12 +5,12 @@
 :root {
   @each $cssvar, $varstack in $cp-colors {
 
-    --rh-theme--color--#{$cssvar}: #{$varstack};
+    --pfe-theme--color--#{$cssvar}: #{$varstack};
   }
 
   @each $cssvar, $varstack in $cp-vars {
 
-    --rh-theme--#{$cssvar}: #{$varstack};
+    --pfe-theme--#{$cssvar}: #{$varstack};
   }
 }
 
@@ -23,25 +23,25 @@
 }
 
 body {
-  font-family: var(--rh-theme--font-family);
-  font-size: var(--rh-theme--font-size);
-  line-height: var(--rh-theme--line-height);
+  font-family: var(--pfe-theme--font-family);
+  font-size: var(--pfe-theme--font-size);
+  line-height: var(--pfe-theme--line-height);
 }
 
 a {
-  color: var(--rh-broadcasted--color--ui-link, #{map-get($cp-colors, 'ui-link')});
+  color: var(--pfe-broadcasted--color--ui-link, #{map-get($cp-colors, 'ui-link')});
 }
 
 a:visited {
-  color: var(--rh-broadcasted--color--ui-link--visited, var(--rh-broadcasted--color--ui-link, #{map-get($cp-colors, 'ui-link--visited')}));
+  color: var(--pfe-broadcasted--color--ui-link--visited, var(--pfe-broadcasted--color--ui-link, #{map-get($cp-colors, 'ui-link--visited')}));
 }
 
 a:hover {
-  color: var(--rh-broadcasted--color--ui-link--hover, var(--rh-broadcasted--color--ui-link, #{map-get($cp-colors, 'ui-link--hover')}));
+  color: var(--pfe-broadcasted--color--ui-link--hover, var(--pfe-broadcasted--color--ui-link, #{map-get($cp-colors, 'ui-link--hover')}));
 }
 
 a:focus {
-  color: var(--rh-broadcasted--color--ui-link--focus, var(--rh-broadcasted--color--ui-link, #{map-get($cp-colors, 'ui-link--focus')}));
+  color: var(--pfe-broadcasted--color--ui-link--focus, var(--pfe-broadcasted--color--ui-link, #{map-get($cp-colors, 'ui-link--focus')}));
 }
 
 p {

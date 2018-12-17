@@ -1,10 +1,10 @@
-$rh-global--color-map--copy: (
+$pfe-global--color-map--copy: (
     default-paragraph: (
-        dark: $rh-global--text-color--inverted,
-        dark-subtle: $rh-global--text-color--inverted,
-        dark-desaturated: $rh-global--text-color--inverted,
-        light: $rh-global--text-color,
-        subtle: $rh-global--text-color,
-        light-subtle: $rh-global--text-color,
+        dark: $pfe-global--text-color--inverted,
+        dark-subtle: $pfe-global--text-color--inverted,
+        dark-desaturated: $pfe-global--text-color--inverted,
+        light: $pfe-global--text-color,
+        subtle: $pfe-global--text-color,
+        light-subtle: $pfe-global--text-color,
     )
 );

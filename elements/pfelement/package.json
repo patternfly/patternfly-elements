@@ -8,12 +8,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": " element for PFElements",
+  "description": "Base element for PFElements",
   "repository": {
     "type": "git",
     "url": ""
   },
-  "main": "index.js",
+  "main": "pfelement.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

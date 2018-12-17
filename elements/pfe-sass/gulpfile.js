@@ -32,11 +32,15 @@ gulp.task("copy", () => {
   return gulp.src(path.join(paths.src, "**/*")).pipe(gulp.dest(paths.dist));
 });
 
+gulp.task("copy:assets", () => {
+  return gulp.src(["LICENSE.txt", "README.md"]).pipe(gulp.dest(paths.dist));
+});
+
 gulp.task("watch", () => {
   return gulp.watch(path.join(paths.src, "*"), gulp.series("build"));
 });
 
-const buildTasks = ["clean", "copy"];
+const buildTasks = ["clean", "copy", "copy:assets"];
 
 gulp.task("build", gulp.series(...buildTasks));
 

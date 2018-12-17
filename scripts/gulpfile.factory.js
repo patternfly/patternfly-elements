@@ -119,6 +119,10 @@ ${html}\`;
       .pipe(gulp.dest(paths.dist));
   });
 
+  gulp.task("copy:assets", () => {
+    return gulp.src(["LICENSE.txt", "README.md"]).pipe(gulp.dest(paths.dist));
+  });
+
   gulp.task("watch", () => {
     return gulp.watch(path.join(paths.src, "*"), gulp.series("build"));
   });
@@ -132,6 +136,7 @@ ${html}\`;
   });
 
   const buildTasks = [
+    "copy:assets",
     "merge",
     ...precompile,
     "compile",

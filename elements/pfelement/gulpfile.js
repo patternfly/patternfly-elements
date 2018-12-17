@@ -29,6 +29,10 @@ gulp.task("copy", () => {
   return gulp.src(path.join(paths.src, "*")).pipe(gulp.dest(paths.dist));
 });
 
+gulp.task("copy:assets", () => {
+  return gulp.src(["LICENSE.txt", "README.md"]).pipe(gulp.dest(paths.dist));
+});
+
 // Deprecated clean task
 // gulp.task("clean", () => {
 //   return del(["pfelement.js", "./**/*.umd.*", "./*.css", "./*.js.map"]);
@@ -71,7 +75,7 @@ gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
 gulp.task(
   "build",
-  gulp.series("clean", "copy", "compile", "minify-css", "bundle")
+  gulp.series("clean", "copy", "copy:assets", "compile", "minify-css", "bundle")
 );
 
 gulp.task("default", gulp.series("build"));

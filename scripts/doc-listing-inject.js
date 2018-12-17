@@ -8,7 +8,7 @@ let elementNames = fs
   .filter(file => fs.statSync(path.join(elementsDir, file)).isDirectory());
 
 // Remove rhelement core from listing
-elementNames = elementNames.filter(folder => folder !== "rhelement");
+elementNames = elementNames.filter(folder => folder !== "pfelement");
 
 // Remove themesets and sass helpers from the listings
 elementNames = elementNames.filter(

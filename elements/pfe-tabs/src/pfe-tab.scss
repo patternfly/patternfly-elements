@@ -1,0 +1,74 @@
+@import "../../pfe-sass/pfe-sass";
+
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+$pfe-tabs__tab--PaddingRight-factor:  3.375; // 54px at 16px base.
+$pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
+
+/// ===========================================================================
+/// DEFUALT TAB
+/// ===========================================================================
+
+:host {
+  --pfe-tabs--main:         transparent;
+  --pfe-tabs--aux:          #{pfe-color(surface--lightest--text)};
+  --pfe-tabs--link:         #{pfe-color(surface--lightest--link)};
+  --pfe-tabs--focus:        #{pfe-color(surface--lightest--link--focus)};
+
+  position: relative;
+  display: block;
+  margin: 0 0 -1px;
+
+  // Padding
+  padding-top: #{pfe-var(container-padding)};
+  padding-right: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__tab--PaddingRight-factor});;
+  padding-bottom: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__tab--PaddingBottom-factor});
+  padding-left: #{pfe-var(container-padding)};
+  // Border
+  border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
+  border-bottom: 0;
+  // Inner style
+  background-color: var(--pfe-tabs--main);
+  color: var(--pfe-tabs--aux);
+  text-transform: var(--pfe-tabs__tab--TextTransform, none); // exposing this for RH
+  font-weight: #{pfe-var(font-weight--normal)};
+
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+:host([aria-selected="true"]) {
+  --pfe-tabs--main:         #{pfe-color(surface--lightest)};
+
+  // Border
+  border-color: #{pfe-color(surface--border)};
+  border-bottom: 0;
+}
+
+.indicator {
+  position: absolute;
+  bottom: 12px;
+  left: auto;
+
+  display: var(--pfe-tabs__indicator--Display, block); // Exposing this for themability. Use `none` to not show at all
+  height: var(--pfe-tabs__indicator--Height, 4px); // Exposing this for themability
+  width: var(--pfe-tabs__indicator--Width, 22px); // Exposing this for themability
+
+  background-color: #{pfe-color(surface--border--darkest)};
+}
+
+:host(:hover) .indicator {
+  background-color: var(--pfe-tabs--link);
+}
+
+:host([aria-selected="true"]) .indicator,
+:host([aria-selected="true"]:hover) .indicator {
+  background-color: var(--pfe-tabs--link);
+}
+
+:host(:focus),
+:host(:focus-visible) {
+  outline: #{pfe-var(ui--focus-outline-width)} #{pfe-var(ui--focus-outline-style)} var(--pfe-tabs--focus);
+}

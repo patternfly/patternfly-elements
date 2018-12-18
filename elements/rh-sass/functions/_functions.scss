@@ -237,11 +237,19 @@
 ///         padding-bottom:   #{rh-local(paddingBottom)};
 ///     }
 ///     ```
+
+// @TODO Still needs fallback
+$rh-local-spacer: "";
+
 @function rh-local($cssvar) {
     @if $SLOT != "" {
-      $slot: "_#{$SLOT}";
+      $SLOT: #{$SLOT};
+      $rh-local-spacer: "_" !global;
     }
-    @return var( --#{$repo}-#{$LOCAL}#{$SLOT}--#{to-string($cssvar, '--')});
+    @else {
+      $SLOT: null;
+    }
+    @return var( --#{$repo}-#{$LOCAL}#{$rh-local-spacer}#{$SLOT}--#{to-string($cssvar, '--')});
 }
 
 /// RH Radio

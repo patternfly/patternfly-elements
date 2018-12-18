@@ -27,10 +27,10 @@ class RhBand extends RHElement {
     return `
 <style>
 :host {
-  --rh-band--paddingTop:                      calc(var(--rh-theme--container-spacer, 1rem) * 4);
-  --rh-band--paddingRight:                    var(--rh-theme--container-spacer, 1rem);
-  --rh-band--paddingBottom:                   calc(var(--rh-theme--container-spacer, 1rem) * 4);
-  --rh-band--paddingLeft:                     var(--rh-theme--container-spacer, 1rem);
+  display: block;
+  --rh-band--padding__vertical:                 calc( var(--rh-theme--container-spacer, 1rem) * 4);
+  --rh-band--padding__horizontal:               calc( var(--rh-theme--container-spacer, 1rem) * 1);
+  --rh-band--padding:                         var(--rh-band--padding__vertical)  var(--rh-band--padding__horizontal);
   --rh-band--backgroundColor:                 var(--rh-theme--color--surface--base, #dfdfdf);
   --rh-band--backgroundPositionX:             center;
   --rh-band--backgroundPositionY:             center;
@@ -42,29 +42,28 @@ class RhBand extends RHElement {
   --rh-band_header--layout:                   1fr;
   --rh-band_body--layout:                     1fr;
   --rh-band_footer--layout:                   1fr;
+  --rh-band_aside--layout:                    300px;
+  --rh-band--gutter:                          calc(var(--rh-theme--container-spacer, 1rem) * 2);
   --rh-broadcasted--color--text:              var(--rh-theme--color--surface--base--text, #333);
   --rh-broadcasted--color--ui-link:           var(--rh-theme--color--surface--base--link, #00538c);
   --rh-broadcasted--color--ui-link--visited:  var(--rh-theme--color--surface--base--link--visited, #7551a6);
   --rh-broadcasted--color--ui-link--hover:    var(--rh-theme--color--surface--base--link--hover, #00305b);
   --rh-broadcasted--color--ui-link--focus:    var(--rh-theme--color--surface--base--link--focus, #00305b);
-  --rh-band--width:                           auto;
-  display: block; }
-  @media screen and (min-width: 576px) {
-    :host {
-      --rh-band--width: calc(576px - calc(var(--rh-band--paddingRight) * 2)); } }
+  --rh-band--width:                           auto; }
+  :host *, :host *::before, :host *::after {
+    box-sizing: border-box; }
   @media screen and (min-width: 768px) {
     :host {
-      --rh-band--width: calc(768px - calc(var(--rh-band--paddingRight) * 2)); } }
+      --rh-band--width: calc( 768px - calc(var(--rh-band--padding__horizontal) * 4) ); } }
   @media screen and (min-width: 992px) {
     :host {
-      --rh-band--width: calc(992px - calc(var(--rh-band--paddingRight) * 2)); } }
+      --rh-band--width: calc( 992px - calc(var(--rh-band--padding__horizontal) * 4) ); } }
   @media screen and (min-width: 1200px) {
     :host {
-      --rh-band--width: calc(1200px - calc(var(--rh-band--paddingRight) * 2)); } }
+      --rh-band--width: calc( 1200px - calc(var(--rh-band--padding__horizontal) * 4) ); } }
   @media print {
     :host {
-      --rh-band--paddingTop:    calc(var(--rh-theme--container-spacer, 1rem) * 2);
-      --rh-band--paddingBottom: calc(var(--rh-theme--container-spacer, 1rem) * 2); } }
+      --rh-band--padding:    calc(var(--rh-band--padding__vertical) / 2)  var(--rh-band--padding__horizontal); } }
 
 :host([color="dark"]) {
   --rh-band--backgroundColor:                  var(--rh-theme--color--surface--dark, #464646);
@@ -115,37 +114,29 @@ class RhBand extends RHElement {
   --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--lightest--link--focus, #003366); }
 
 :host([size="small"]) {
-  --rh-band--paddingTop:        var(--rh-theme--container-spacer, 1rem);
-  --rh-band--paddingBottom:     var(--rh-theme--container-spacer, 1rem); }
+  --rh-band--padding:   calc(var(--rh-band--padding__vertical) / 4)  var(--rh-band--padding__horizontal); }
 
 .rh-band__wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-items: flex-start;
-  padding-top: var(--rh-band--paddingTop);
-  padding-bottom: var(--rh-band--paddingBottom);
+  padding: calc(var(--rh-band--padding__vertical) / 2) var(--rh-band--padding__horizontal);
+  border: 0px var(--rh-band--borderStyle) var(--rh-band--borderColor);
   border-top-width: var(--rh-band--borderTopWidth);
   border-bottom-width: var(--rh-band--borderBottomWidth);
-  border-style: var(--rh-band--borderStyle);
-  border-color: var(--rh-band--borderColor);
   background-color: var(--rh-band--backgroundColor);
   background-position-x: var(--rh-band--backgroundPositionX);
   background-position-y: var(--rh-band--backgroundPositionY);
   color: var(--rh-broadcasted--color--text); }
+  @media (min-width: 576px) {
+    .rh-band__wrapper {
+      padding: var(--rh-band--padding); } }
   @media print {
     .rh-band__wrapper {
       background-color: white !important;
       background-image: none !important;
       box-shadow: none !important; } }
-
-.rh-band__container {
-  padding-top: 0;
-  padding-right: var(--rh-band--paddingRight);
-  padding-bottom: 0;
-  padding-left: var(--rh-band--paddingLeft);
-  width: var(--rh-band--width);
-  margin: 0 auto; }
 
 .rh-band__container, .rh-band__content {
   flex-grow: 1;
@@ -154,80 +145,64 @@ class RhBand extends RHElement {
   @media (min-width: 768px) {
     .rh-band__container, .rh-band__content {
       flex-direction: row; } }
-  @media (min-width: 576px) {
-    .rh-band__container > *, .rh-band__content > * {
-      width: 100%;
-      margin-bottom: 2rem; } }
-  @media (max-width: 768px) {
-    .rh-band__container > *, .rh-band__content > * {
-      margin-bottom: 0; } }
-  .rh-band__container > *:last-child, .rh-band__content > *:last-child {
-    margin-bottom: 0; }
 
-.rh-band__main > *:not(:last-child) {
-  margin-bottom: var(--rh-theme--container-spacer, 1rem); }
+.rh-band__container {
+  margin: 0 auto;
+  max-width: var(--rh-band--width); }
 
-@media screen and (min-width: 768px) {
-  .rh-band__main, .rh-band__body {
-    margin-right: calc(var(--rh-theme--container-spacer, 1rem) * 2); }
-    [aside~="left"] .rh-band__main, [aside~="left"] .rh-band__body {
-      margin-right: 0; }
-    [aside~="left"] .rh-band__main, [aside~="left"] .rh-band__body {
-      margin-left: calc(var(--rh-theme--container-spacer, 1rem) * 2); } }
+@media (max-width: 768px) {
+  .rh-band__container > *:not(:last-child), .rh-band__content > *:not(:last-child) {
+    margin-bottom: var(--rh-theme--container-spacer, 1rem); } }
 
-@media (min-width: 992px) {
-  .rh-band__main, .rh-band__body {
-    width: calc(100% - 300px + calc(var(--rh-theme--container-spacer, 1rem) * 2)); } }
+.rh-band__main, .rh-band__body {
+  flex: 1; }
+  .rh-band__main > *:not(:last-child), .rh-band__body > *:not(:last-child) {
+    margin-bottom: var(--rh-theme--container-spacer, 1rem); }
 
 .rh-band__header, .rh-band__body, .rh-band__footer, .rh-band__aside {
-  display: block; }
+  display: block;
+  display: grid;
+  grid-column: 1fr;
+  grid-gap: var(--rh-theme--container-spacer, 1rem); }
   .rh-band__header::slotted(*), .rh-band__body::slotted(*), .rh-band__footer::slotted(*), .rh-band__aside::slotted(*) {
     margin-top: 0; }
 
-.rh-band__header {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: var(--rh-theme--container-spacer, 1rem); }
-  @media screen and (min-width: 768px) {
-    .rh-band__header {
-      grid-template-columns: var(--rh-band--layout); } }
+@media screen and (min-width: 768px) {
+  .rh-band__header {
+    grid-template-columns: var(--rh-band_header--layout); } }
 
 .rh-band__body {
-  flex-grow: 1;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: var(--rh-theme--container-spacer, 1rem); }
+  flex-grow: 1; }
   @media screen and (min-width: 768px) {
     .rh-band__body {
-      grid-template-columns: var(--rh-band--layout);
-      width: calc(100% - (250px + calc(var(--rh-theme--container-spacer, 1rem) * 2))); }
+      grid-template-columns: var(--rh-band_body--layout); }
       [aside~="full"] .rh-band__body {
         margin-right: 0;
         margin-left: 0; } }
 
-.rh-band__footer {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: var(--rh-theme--container-spacer, 1rem); }
-  @media screen and (min-width: 768px) {
-    .rh-band__footer {
-      grid-template-columns: var(--rh-band--layout); } }
+@media screen and (min-width: 768px) {
+  .rh-band__footer {
+    grid-template-columns: var(--rh-band_footer--layout); } }
 
 .rh-band__aside {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: var(--rh-theme--container-spacer, 1rem);
-  max-width: 250px; }
+  min-width: 240px; }
   @media screen and (min-width: 768px) {
     .rh-band__aside {
-      grid-template-columns: var(--rh-band--layout); } }
-  @media (min-width: 992px) {
+      grid-template-columns: var(--rh-band_aside--layout);
+      flex-basis: var(--rh-band_aside--layout); } }
+  @media screen and (min-width: 768px) and (max-width: 992px) {
     .rh-band__aside {
-      width: 300px; } }
-  [aside~="left"] .rh-band__aside {
-    order: -1; }
-  [aside~="right"] .rh-band__aside {
-    order: 2; }
+      --rh-band_aside--layout: 240px; } }
+
+@media screen and (min-width: 768px) {
+  .rh-band__aside {
+    margin: 0; }
+    [aside~="left"] .rh-band__aside {
+      order: -1;
+      margin-right: var(--rh-band--gutter); }
+    [aside~="right"] .rh-band__aside {
+      order: 2;
+      margin-left: var(--rh-band--gutter); } }
 </style>
 <div class="rh-band__wrapper">
   <div class="rh-band__container">

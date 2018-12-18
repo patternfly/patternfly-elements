@@ -2,54 +2,69 @@
 
 $LOCAL: band;
 $SLOT: "";
-$aside-md: 250px;
+$aside-sm: 240px;
 $aside-lg: 300px;
 
+
+
 :host {
-  // Spacing values
-  --rh-band--paddingTop:                      calc(#{rh-var(container-spacer)} * 4);
-  --rh-band--paddingRight:                    #{rh-var(container-spacer)};
-  --rh-band--paddingBottom:                   calc(#{rh-var(container-spacer)} * 4);
-  --rh-band--paddingLeft:                     #{rh-var(container-spacer)};
+  // Tag element styles
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  display: block;
+
+  // Default spacing values
+  --rh-band--padding__vertical:                 calc( #{rh-var(container-spacer)} * 4);
+  --rh-band--padding__horizontal:               calc( #{rh-var(container-spacer)} * 1);
+  // Bring them together for ease of use below
+  --rh-band--padding:                         #{rh-local(padding__vertical)}  #{rh-local(padding__horizontal)};
+
   // Surface colors
   --rh-band--backgroundColor:                 #{rh-color(surface--base)};
   --rh-band--backgroundPositionX:             center;
   --rh-band--backgroundPositionY:             center;
+
   // Border settings
   --rh-band--borderColor:                     transparent;
   --rh-band--borderTopWidth:                  #{rh-var(surface--border-width)};
   --rh-band--borderBottomWidth:               #{rh-var(surface--border-width)};
   --rh-band--borderStyle:                     #{rh-var(surface--border-style)};
+
   // Accent title styles
   --rh-band_header-title--color:             #{rh-color(ui-accent)};
+
   // Layouts, grid layouts
   --rh-band_header--layout:                   1fr;
   --rh-band_body--layout:                     1fr;
   --rh-band_footer--layout:                   1fr;
+  --rh-band_aside--layout:                    #{$aside-lg};
+  --rh-band--gutter:                          #{ calc(#{rh-var(container-spacer)} * 2)) };
+
   // Text colors
   --rh-broadcasted--color--text:              #{rh-color(surface--base--text)};
   --rh-broadcasted--color--ui-link:           #{rh-color(surface--base--link)};
   --rh-broadcasted--color--ui-link--visited:  #{rh-color(surface--base--link--visited)};
   --rh-broadcasted--color--ui-link--hover:    #{rh-color(surface--base--link--hover)};
   --rh-broadcasted--color--ui-link--focus:    #{rh-color(surface--base--link--focus)};
+
   // Band width logic
   // Initialize at mobile breakpoint
   --rh-band--width:                           auto;
 
+
   // Loop through the other breakpoints
-  @each $size in (sm, md, lg, xl) {
+  @each $size in (md, lg, xl) {
     @media screen and (min-width: rh-breakpoint(#{$size})) {
-      --rh-band--width: calc(#{rh-breakpoint(#{$size})} - calc(#{rh-local(paddingRight)} * 2));
+
+      --rh-band--width: calc( #{rh-breakpoint(#{$size})} - calc(#{rh-local(padding__horizontal)} * 4) );
+
     }
   }
   // Reduce padding for print
   @media print {
-    --rh-band--paddingTop:    calc(#{rh-var(container-spacer)} * 2);
-    --rh-band--paddingBottom: calc(#{rh-var(container-spacer)} * 2);
+    --rh-band--padding:    calc(#{rh-local(padding__vertical)} / 2)  #{rh-local(padding__horizontal)};
   }
-
-  // Tag element styles
-  display: block;
 }
 
 @each $color in (dark, darkest, accent, complement, light, lightest) {
@@ -63,10 +78,12 @@ $aside-lg: 300px;
   }
 }
 
+// thinner padding on top & bottom
 :host([size="small"]) {
-  --rh-band--paddingTop:        #{rh-var(container-spacer)};
-  --rh-band--paddingBottom:     #{rh-var(container-spacer)};
+  --rh-band--padding:   calc(#{rh-local(padding__vertical)} / 4)  #{rh-local(padding__horizontal)};
 }
+
+//  rh-local returns: var(--rh-band-(SLOT)--argument);
 
 .rh-band {
   &__wrapper {
@@ -75,15 +92,18 @@ $aside-lg: 300px;
     flex-direction: column;
     justify-items: flex-start;
 
-    // Padding styles
-    padding-top:    #{rh-local(paddingTop)};
-    padding-bottom: #{rh-local(paddingBottom)};
+    // Padding 
+    padding: calc(#{rh-local(padding__vertical)} / 2)  #{rh-local(padding__horizontal)};
+
+    @media (min-width: #{rh-breakpoint(sm)}) {
+      padding: #{rh-local(padding)};
+    }
 
     // Border styles
+    border: 0px #{rh-local(borderStyle)} #{rh-local(borderColor)};
     border-top-width:    #{rh-local(borderTopWidth)};
     border-bottom-width: #{rh-local(borderBottomWidth)};
-    border-style:        #{rh-local(borderStyle)};
-    border-color:        #{rh-local(borderColor)};
+
 
     // Base colors
     background-color:      #{rh-local(backgroundColor)};
@@ -93,14 +113,7 @@ $aside-lg: 300px;
 
     // Remove background color for print
     @include rh-no-print-background;
-  }
-  &__container {
-    padding-top:    0;
-    padding-right:  #{rh-local(paddingRight)};
-    padding-bottom: 0;
-    padding-left:   #{rh-local(paddingLeft)};
-    width:          #{rh-local(width)};
-    margin:         0 auto;
+
   }
   &__container,
   &__content {
@@ -113,64 +126,57 @@ $aside-lg: 300px;
     @media (min-width: #{rh-breakpoint(md)}) {
       flex-direction: row;
     }
-    > * {
-      @media (min-width: #{rh-breakpoint(sm)}) {
-        width: 100%;
-        margin-bottom: #{$rh-global--spacer * 2};
-      }
+  }
+  &__container {
+    margin:         0 auto;
+    max-width: #{rh-local(width)};
+  }
+  &__container, // wraps main and aside
+  &__content // wraps body and aside
+  {
+    // spacing between children on mobile (around aside region)
+    > *:not(:last-child) {
       @media (max-width: #{rh-breakpoint(md)}) {
-        margin-bottom: 0;
-      }
-      &:last-child {
-        margin-bottom: 0;
+         margin-bottom: #{rh-var(container-spacer)};
       }
     }
   }
-  &__main > *:not(:last-child) {
-    margin-bottom: #{rh-var(container-spacer)};
-  }
+
   &__main,
   &__body {
-    @media screen and (min-width: #{rh-breakpoint(md)}) {
-      margin-right: calc(#{rh-var(container-spacer)} * 2);
-      [aside~="left"] & {
-        margin-right: 0;
-      }
-      [aside~="left"] & {
-        margin-left: calc(#{rh-var(container-spacer)} * 2);
-      }
-    }
-    @media (min-width: #{rh-breakpoint(lg)}) {
-      width: calc(100% - #{$aside-lg} + calc(#{rh-var(container-spacer)} * 2));
+    flex: 1;
+    // spacing between children:; 
+    > *:not(:last-child) {
+         margin-bottom: #{rh-var(container-spacer)};
     }
   }
+
   &__header,
   &__body,
   &__footer,
   &__aside {
     display: block;
+    display: grid;  // for elegant display of children
+    grid-column: 1fr;
+    grid-gap: #{rh-var(container-spacer)};
     &::slotted(*) {
       margin-top: 0;
     }
   }
   &__header {
-    $SLOT: header;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: #{rh-var(container-spacer)};
+    $SLOT: header !global;
+    
     @media screen and (min-width: #{rh-breakpoint(md)}) {
       grid-template-columns: #{rh-local(layout)};
     }
   }
   &__body {
-    $SLOT: body;
+    $SLOT: body !global;
     flex-grow: 1;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: #{rh-var(container-spacer)};
+
     @media screen and (min-width: #{rh-breakpoint(md)}) {
       grid-template-columns: #{rh-local(layout)};
-      width: calc(100% - (#{$aside-md} + calc(#{rh-var(container-spacer)} * 2)));
+
       [aside~="full"] & {
         margin-right: 0;
         margin-left: 0;
@@ -178,31 +184,38 @@ $aside-lg: 300px;
     }
   }
   &__footer {
-    $SLOT: footer;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: #{rh-var(container-spacer)};
+    $SLOT: footer !global;
+
     @media screen and (min-width: #{rh-breakpoint(md)}) {
       grid-template-columns: #{rh-local(layout)};
     }
   }
+
   &__aside {
-    $SLOT: aside;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap:  #{rh-var(container-spacer)};
-    max-width: #{$aside-md};
+    $SLOT: aside !global;
+    min-width:             $aside-sm;
+
     @media screen and (min-width: #{rh-breakpoint(md)}) {
       grid-template-columns: #{rh-local(layout)};
+      flex-basis:            #{rh-local(layout)};
     }
-    @media (min-width: #{rh-breakpoint(lg)}) {
-      width: #{$aside-lg};
+    @media screen and (min-width: #{rh-breakpoint(md)}) and (max-width: #{rh-breakpoint(lg)}) {
+      --rh-band_aside--layout: #{$aside-sm}; // set limiter
     }
-    [aside~="left"] & {
-      order: -1;
-    }
-    [aside~="right"] & {
-      order: 2;
+  }
+  &__aside {  // walk away from aside SLOT var to invoke gutter
+    $rh-local-spacer: "" !global;
+    $SLOT: "" !global;
+    @media screen and (min-width: #{rh-breakpoint(md)}) {
+      margin: 0;
+      [aside~="left"] & {
+        order: -1;
+        margin-right: #{rh-local(gutter)}; // apply to aside region because of flex-basis
+      }
+      [aside~="right"] & {
+        order: 2;
+        margin-left: #{rh-local(gutter)};
+      }
     }
   }
 }

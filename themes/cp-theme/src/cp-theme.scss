@@ -44,6 +44,16 @@ a:focus {
   color: var(--rh-broadcasted--color--ui-link--focus, var(--rh-broadcasted--color--ui-link, #{map-get($cp-colors, 'ui-link--focus')}));
 }
 
-p {
-  margin: 1em 0;
-}
+// Suggested for typography cleanup:
+// h1, h2, h3, h4, h5, h6, p {
+//    margin-top: 0;
+// }
+// p:not(:last-child) {
+//   margin-bottom: 1em;
+// }
+// rh-band p {
+//   margin-bottom: 0;
+// }
+// rh-band p:not(:last-child) {
+//   margin-bottom: 1em;
+// }

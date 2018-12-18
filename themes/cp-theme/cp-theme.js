@@ -157,10 +157,7 @@ a:hover {
   color: var(--rh-broadcasted--color--ui-link--hover, var(--rh-broadcasted--color--ui-link, #004080)); }
 
 a:focus {
-  color: var(--rh-broadcasted--color--ui-link--focus, var(--rh-broadcasted--color--ui-link, #004080)); }
-
-p {
-  margin: 1em 0; }</style>`;
+  color: var(--rh-broadcasted--color--ui-link--focus, var(--rh-broadcasted--color--ui-link, #004080)); }</style>`;
 
   document.head.appendChild(cpthemeTemplate);
 

@@ -143,3 +143,6 @@ a:hover {
 
 a:focus {
   color: var(--rh-broadcasted--color--ui-link--focus, var(--rh-broadcasted--color--ui-link, #004080)); }
+
+p {
+  margin: 1em 0; }

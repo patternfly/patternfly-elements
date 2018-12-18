@@ -1,0 +1,73 @@
+@import "../../pfe-sass/pfe-sass";
+
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+$pfe-health--width: 10px;
+$pfe-health--height: $pfe-health--width * 2;
+
+$pfe-health--color-bg: #fff;
+
+$pfe-health--color-a: #3f9c35;
+$pfe-health--color-b: #92d400;
+$pfe-health--color-c: #efaa00;
+$pfe-health--color-d: #ec7a08;
+$pfe-health--color-e: #cc0000;
+$pfe-health--color-f: #a30000;
+
+/// ===========================================================================
+/// WHATEVER
+/// ===========================================================================
+
+:host {
+  display: inline-flex;
+  align-items: center;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.box-container {
+  display: flex;
+  border: 1px solid #{pfe-color(surface--border)};
+  margin-left: calc(#{pfe-var(container-spacer)} * 0.5);
+
+  .box {
+    background: $pfe-health--color-bg;
+    width: $pfe-health--width;
+    height: $pfe-health--height;
+    border-right: 1px solid #{pfe-color(surface--border)};
+
+    &:last-child {
+      border-right: 0;
+    }
+
+    &.active {
+      &.a {
+        background-color: $pfe-health--color-a;
+      }
+
+      &.b {
+        background-color: $pfe-health--color-b;
+      }
+
+      &.c {
+        background-color: $pfe-health--color-c;
+      }
+
+      &.d {
+        background-color: $pfe-health--color-d;
+      }
+
+      &.e {
+        background-color: $pfe-health--color-e;
+      }
+
+      &.f {
+        background-color: $pfe-health--color-f;
+      }
+    }
+  }
+}

@@ -1,0 +1,191 @@
+import { storiesOf } from "@storybook/polymer";
+import "./pfe-datetime";
+
+storiesOf("Datetime", module).add("pfe-datetime", () => {
+  const now = new Date();
+  let realtime = now;
+
+  const yearsago = new Date(
+    new Date().setFullYear(new Date().getFullYear() - 10)
+  );
+  const yearago = new Date(
+    new Date().setFullYear(new Date().getFullYear() - 1)
+  );
+  const hoursago = new Date(new Date().setHours(new Date().getHours() - 2));
+  const minutesago = new Date(
+    new Date().setMinutes(new Date().getMinutes() - 10)
+  );
+  const minutesuntil = new Date(
+    new Date().setMinutes(new Date().getMinutes() + 22)
+  );
+  const hoursuntil = new Date(new Date().setHours(new Date().getHours() + 13));
+  const yearuntil = new Date(
+    new Date().setFullYear(new Date().getFullYear() + 1)
+  );
+  const yearsuntil = new Date(
+    new Date().setFullYear(new Date().getFullYear() + 10)
+  );
+
+  function timer() {
+    document.getElementById("realtime").setAttribute("datetime", new Date());
+    window.requestAnimationFrame(timer);
+  }
+
+  window.requestAnimationFrame(timer);
+
+  return `
+      <style>
+        section {
+          margin-bottom: 32px;
+        }
+      </style>
+
+      <section>
+        <h2>Unformatted</h2>
+        <pfe-datetime datetime="${now}">
+          ${now}
+        </pfe-datetime>
+      </section>
+      <section>
+        <h2>Local</h2>
+        <p>
+          <strong>Just date:</strong>
+          <pfe-datetime
+            datetime="${now}"
+            type="local"
+            day="numeric"
+            month="long"
+            year="numeric">
+            ${now}
+          </pfe-datetime>
+        </p>
+        <p>
+          <strong>With time: </strong>
+          <pfe-datetime
+            datetime="${now}"
+            type="local"
+            weekday="long"
+            month="short"
+            day="2-digit"
+            year="numeric"
+            hour="2-digit"
+            minute="2-digit"
+            second="2-digit">
+            ${now}
+          </pfe-datetime>
+        </p>
+        <p>
+          <strong>With an en-GB locale: </strong>
+          <pfe-datetime
+            datetime="${now}"
+            type="local"
+            weekday="long"
+            month="short"
+            day="2-digit"
+            year="numeric"
+            hour="2-digit"
+            minute="2-digit"
+            second="2-digit"
+            locale="en-GB">
+            ${now}
+          </pfe-datetime>
+        </p>
+        <p>
+          <strong>With a es locale: </strong>
+          <pfe-datetime
+            datetime="${now}"
+            type="local"
+            weekday="long"
+            month="short"
+            day="2-digit"
+            year="numeric"
+            hour="2-digit"
+            minute="2-digit"
+            second="2-digit"
+            locale="es">
+            ${now}
+          </pfe-datetime>
+        </p>
+      </section>
+      <section>
+        <h2>Time Adverbial</h2>
+        <p>
+          <pfe-datetime type="relative" datetime="${yearsago}">
+            ${yearsago}
+          </pfe-datetime>
+        </p>
+        <p>
+          <pfe-datetime type="relative" datetime="${yearago}">
+            ${yearago}
+          </pfe-datetime>
+        </p>
+        <p>
+          <pfe-datetime type="relative" datetime="${hoursago}">
+            ${hoursago}
+          </pfe-datetime>
+        </p>
+        <p>
+          <pfe-datetime type="relative" datetime="${minutesago}">
+            ${minutesago}
+          </pfe-datetime>
+        </p>
+        <p>
+          <pfe-datetime type="relative" datetime="${now}">
+            ${now}
+          </pfe-datetime>
+        </p>
+        <p>
+          <pfe-datetime type="relative" datetime="${minutesuntil}">
+            ${minutesuntil}
+          </pfe-datetime>
+        </p>
+        <p>
+          <pfe-datetime type="relative" datetime="${hoursuntil}">
+            ${hoursuntil}
+          </pfe-datetime>
+        </p>
+        <p>
+          <pfe-datetime type="relative" datetime="${yearuntil}">
+            ${yearuntil}
+          </pfe-datetime>
+        </p>
+        <p>
+          <pfe-datetime type="relative" datetime="${yearsuntil}">
+            ${yearsuntil}
+          </pfe-datetime>
+        </p>
+      </section>
+      <section>
+        <h2>Real-time updates</h2>
+        <pfe-datetime
+          id="realtime"
+          datetime="${realtime}"
+          type="local"
+          hour="2-digit"
+          minute="2-digit"
+          second="2-digit">
+          ${realtime}
+        </pfe-datetime>
+      </section>
+
+      <script>
+        (() => {
+          var realtime = document.getElementById('realtime');
+          var relative1 = document.getElementById('minutesago');
+          var relative2 = document.getElementById('hoursuntil');
+          var relative3 = document.getElementById('daysuntil');
+
+          relative1.setAttribute('datetime', new Date(Date.now() - 600000).toString());
+          relative2.setAttribute('datetime', new Date(Date.now() + 6000000).toString());
+          relative3.setAttribute('datetime', new Date(Date.now() + 200000000).toString());
+
+          function timer() {
+            realtime.setAttribute('datetime', new Date());
+            window.requestAnimationFrame(timer);
+          }
+
+          window.requestAnimationFrame(timer);
+        })();
+      </script>
+    `;
+});

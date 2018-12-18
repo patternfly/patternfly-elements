@@ -1,0 +1,127 @@
+@import "../../pfe-sass/pfe-sass";
+
+:host {
+  --pfe-card--padding:                          calc(#{pfe-var(container-spacer)} * 2); // 2x `container-spacer`
+  --pfe-card_header--size:                      #{pfe-var(font-size--heading--gamma)};
+  --pfe-card--bg:                               #{pfe-color(surface--base)};
+  --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
+  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--link)};
+  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--link--visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--link--hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
+
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+
+  padding: var(--pfe-card--padding);
+  border: pfe-var(surface--border-width)
+          pfe-var(surface--border-style)
+          transparent;
+  border-radius: pfe-var(surface--border-radius);
+
+  // Base colors
+  background: var(--pfe-card--bg);
+  color: var(--pfe-broadcasted--color--text);
+}
+
+a {
+  color: var(--pfe-broadcasted--color--ui-link);
+}
+
+a:visited {
+  color: var(--pfe-broadcasted--color--ui-link--visited);
+}
+
+a:hover {
+  color: var(--pfe-broadcasted--color--ui-link--hover);
+}
+
+a:focus {
+  color: var(--pfe-broadcasted--color--ui-link--focus);
+}
+
+:host([color="dark"]) {
+  --pfe-card--bg:                               #{pfe-color(surface--darker)};
+  --pfe-broadcasted--color--text:               #{pfe-color(surface--darker--text)};
+  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darker--link)};
+  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darker--link--visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darker--link--hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darker--link--focus)};
+}
+
+:host([color="darkest"]) {
+  --pfe-card--bg:                               #{pfe-color(surface--darkest)};
+  --pfe-broadcasted--color--text:               #{pfe-color(surface--darkest--text)};
+  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darkest--link)};
+  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darkest--link--visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darkest--link--hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darkest--link--focus)};
+}
+
+:host([color="light"]) {
+  --pfe-card--bg:                               #{pfe-color(surface--lighter)};
+  --pfe-broadcasted--color--text:               #{pfe-color(surface--lighter--text)};
+  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lighter--link)};
+  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--lighter--link--visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--lighter--link--hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--lighter--link--focus)};
+}
+
+:host([color="lightest"]) {
+  --pfe-card--bg:                               #{pfe-color(surface--lightest)};
+  --pfe-broadcasted--color--text:               #{pfe-color(surface--lightest--text)};
+  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lightest--link)};
+  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--lightest--link--visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--lightest--link--hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--lightest--link--focus)};
+}
+
+:host([color="complement"]) {
+  --pfe-card--bg:                               #{pfe-color(surface--complement)};
+  --pfe-broadcasted--color--text:               #{pfe-color(surface--complement--text)};
+  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--complement--link)};
+  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--complement--link--visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--complement--link--hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--complement--link--focus)};
+}
+
+:host([color="accent"]) {
+  --pfe-card--bg:                               #{pfe-color(surface--accent)};
+  --pfe-broadcasted--color--text:               #{pfe-color(surface--accent--text)};
+  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--accent--link)};
+  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--accent--link--visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--accent--link--hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--accent--link--focus)};
+}
+
+:host([size="small"]) {
+  --pfe-card--padding:        #{pfe-var(container-spacer)};
+}
+
+.pfe-card__header,
+.pfe-card__body,
+.pfe-card__footer {
+  display: block;
+  margin: 0;
+}
+
+.pfe-card__header::slotted(h1:first-child),
+.pfe-card__header::slotted(h2:first-child),
+.pfe-card__header::slotted(h3:first-child),
+.pfe-card__header::slotted(h4:first-child),
+.pfe-card__header::slotted(h5:first-child),
+.pfe-card__header::slotted(h6:first-child) {
+  margin-top: 0 !important; // Specificity issue. Why?!
+  font-size: var(--pfe-card_header--size);
+}
+
+.pfe-card__body::slotted(*:nth-child(2)) { // child pseudo-selectors appear to be based on slotted code before upgrade.
+  margin-top: 0 !important;
+}
+
+.pfe-card__footer {
+  // margin-top: pfe-var(container-spacer);
+  margin-top: auto; // This allows the footer to move to the very bottom
+  justify-self: flex-end;
+}

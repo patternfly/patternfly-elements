@@ -1,0 +1,55 @@
+@import "../../pfe-sass/pfe-sass";
+
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+// Todo: convert these also
+$pfe-icon-panel__icon-size:           64px;
+$pfe-icon-panel__icon-padding:        .05em;
+
+
+/// ===========================================================================
+/// DEFUALT RH ICON PANEL
+/// ===========================================================================
+
+:host {
+  display: flex;
+  align-content: flex-start;
+  flex-direction: column;
+
+  @media (min-width: $pfe-global--grid-breakpoint--sm) {
+		flex-direction: row;
+	}
+}
+
+:host pfe-icon {
+  --pfe-icon--spacing:                 #{pfe-var(container-spacer)};
+  --pfe-icon--size:                    var(--pfe-theme--icon-size, #{$pfe-icon-panel__icon-size});
+
+  margin-right: var(--pfe-icon--spacing);
+  font-size: var(--pfe-icon--size);
+  line-height: var(--pfe-icon--size);
+  padding: $pfe-icon-panel__icon-padding;
+  min-width: var(--pfe-icon--size);
+  max-width: var(--pfe-icon--size);
+}
+
+:host ::slotted([slot="header"]),
+:host ::slotted([slot="footer"]) {
+  display: block;
+}
+
+:host ::slotted([slot="footer"]) {
+  margin-top: 1em;
+}
+
+// Layout Styles
+:host([stacked]) {
+  flex-direction: column !important;
+}
+
+:host([stacked][centered]) {
+  align-items: center;
+  text-align: center;
+}

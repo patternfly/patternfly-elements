@@ -60,11 +60,14 @@ button {
   border: none;
   line-height: 20px;
   position: absolute;
-  right: 30px;
   top: 45%;
   transform: translate(-50%, -50%);
   padding: 0px;
   margin: 0px;
+}
+
+button.clear-search {
+  right: 24px;
 }
 
 button.clear-search:hover {
@@ -92,4 +95,12 @@ button.search-button[disabled="true"] svg {
 
 button[disabled="true"] {
   color: #ccc;
+}
+
+.loading {
+  position: absolute;
+  width: 25px;
+  right: 42px;
+  top: 60%;
+  transform: translate(-50%, -50%);
 }

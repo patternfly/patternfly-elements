@@ -90,15 +90,46 @@ class RhAutocomplete extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["init-value"];
+    return ["init-value", "loading"];
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback();
 
-    if (this[name] !== newVal) {
-      this[name] = newVal;
+    switch (attr) {
+      case "loading":
+        if (this.loading) {
+          this.shadowRoot
+            .querySelector("rh-search-box")
+            .shadowRoot.querySelector(".loading")
+            .removeAttribute("hidden");
+        } else {
+          this.shadowRoot
+            .querySelector("rh-search-box")
+            .shadowRoot.querySelector(".loading")
+            .setAttribute("hidden", "");
+        }
+        break;
+
+      case "init-value":
+        if (this["init-value"] !== newVal) {
+          this["init-value"] = newVal;
+        }
+        break;
     }
+  }
+
+  set loading(value) {
+    const loading = Boolean(value);
+    if (loading) {
+      this.setAttribute("loading", "");
+    } else {
+      this.removeAttribute("loading");
+    }
+  }
+
+  get loading() {
+    return this.hasAttribute("loading");
   }
 
   get initValue() {

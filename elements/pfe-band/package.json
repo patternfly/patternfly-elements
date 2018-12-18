@@ -1,8 +1,14 @@
 {
-  "name": "@pfelements/pfe-band",
-  "rhelement": {
+  "name": "@patternfly/pfe-band",
+  "pfelement": {
     "className": "PfeBand",
-    "elementName": "pfe-band"
+    "elementName": "pfe-band",
+    "files": {
+      "styles": "src/pfe-band.scss",
+      "template": "src/pfe-band.html",
+      "js": "src/pfe-band.js",
+      "properties": "src/pfe-band-properties.json"
+    }
   },
   "version": "1.0.0-prerelease.7",
   "description": "Band container for PatternFly Elements",
@@ -24,8 +30,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rhelements/pfe-sass": "1.0.0-prerelease.7",
-    "@rhelements/rhelement": "1.0.0-prerelease.7"
+    "@patternfly/pfe-sass": "1.0.0-prerelease.7",
+    "@patternfly/pfelement": "1.0.0-prerelease.7"
   },
-  "generator-rhelement-version": "0.6.8"
+  "generator-rhelement-version": "0.6.8",
+  "keywords": [
+    "web-components",
+    "html"
+  ]
 }

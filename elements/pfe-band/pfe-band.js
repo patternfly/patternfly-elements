@@ -1,3 +1,5 @@
+import PFElement from "../pfelement/pfelement.js";
+
 /*
  * Copyright 2018 Red Hat, Inc.
  *
@@ -20,9 +22,86 @@
  * SOFTWARE.
  */
 
-import PFElement from "../pfelement/pfelement.js";
-
 class PfeBand extends PFElement {
+  get html() {
+    return `
+<div class="pfe-band__wrapper">
+  <div class="pfe-band__container">
+    ${
+      this.has_slot("aside") &&
+      this.asidePosition.includes("full") &&
+      this.asidePosition.includes("top")
+        ? `<slot class="pfe-band__aside" name="aside"></slot>`
+        : ""
+    }
+    <section class="pfe-band__main">
+      ${
+        this.has_slot("header")
+          ? `<slot class="pfe-band__header" name="header"></slot>`
+          : ""
+      }
+      <div class="pfe-band__content">
+        ${
+          this.has_slot("aside") &&
+          !this.asidePosition.includes("full") &&
+          this.asidePosition.includes("top")
+            ? `<slot class="pfe-band__aside" name="aside"></slot>`
+            : ""
+        }
+        <slot class="pfe-band__body"></slot>
+        ${
+          this.has_slot("aside") &&
+          !this.asidePosition.includes("full") &&
+          !this.asidePosition.includes("top")
+            ? `<slot class="pfe-band__aside" name="aside"></slot>`
+            : ""
+        }
+      </div>
+      ${
+        this.has_slot("footer")
+          ? `<slot class="pfe-band__footer" name="footer"></slot>`
+          : ""
+      }
+    </section>
+    ${
+      this.has_slot("aside") &&
+      this.asidePosition.includes("full") &&
+      !this.asidePosition.includes("top")
+        ? `<slot class="pfe-band__aside" name="aside"></slot>`
+        : ""
+    }
+  </div>
+</div>`;
+  }
+
+  static get properties() {
+    return {
+      "pfe-color": {
+        title: "Background color",
+        name: "pfe-color",
+        type: "string",
+        enum: [
+          "lightest",
+          "light",
+          "base",
+          "dark",
+          "darkest",
+          "complement",
+          "accent"
+        ],
+        default: "base",
+        observer: "_colorChanged"
+      },
+      "pfe-img-src": {
+        title: "Background image",
+        name: "pfe-img-src",
+        type: "string",
+        default: "",
+        observer: "_imgSrcChanged"
+      }
+    };
+  }
+
   static get tag() {
     return "pfe-band";
   }
@@ -77,9 +156,13 @@ class PfeBand extends PFElement {
       if (props.hasOwnProperty(p)) {
         if (this.hasAttribute(p)) {
           this[p] = this.getAttribute(p);
+          // Validate against the schema?
         } else {
-          this.setAttribute(p, props[p].value);
-          this[p] = props[p].value;
+          // Only attach the attribute if it has a hardcoded value
+          if (props[p].value) {
+            this.setAttribute(p, props[p].value);
+            this[p] = props[p].value;
+          }
         }
       }
     }
@@ -112,4 +195,5 @@ class PfeBand extends PFElement {
 
 PFElement.create(PfeBand);
 
-export { PfeBand as default };
+export default PfeBand;
+//# sourceMappingURL=pfe-band.js.map

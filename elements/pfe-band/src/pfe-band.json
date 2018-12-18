@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Band",
+  "description": "This element creates a header, body, footer, and aside region in which to place content or other components.",
+  "type": "object",
+  "tag": "pfe-band",
+  "class": "pfe-band",
+  "category": "container",
+  "properties": {
+    "pfe-color": {
+      "title": "Background color",
+      "name": "pfe-color",
+      "type": "string",
+      "enum": [
+        "lightest",
+        "light",
+        "base",
+        "dark",
+        "darkest",
+        "complement",
+        "accent"
+      ],
+      "default": "base",
+      "observer": "_colorChanged"
+    },
+    "pfe-img-src": {
+      "title": "Background image",
+      "name": "pfe-img-src",
+      "type": "string",
+      "default": "",
+      "observer": "_imgSrcChanged"
+    }
+  },
+  "required": ["name"],
+  "additionalProperties": false
+}

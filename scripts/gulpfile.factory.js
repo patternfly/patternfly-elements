@@ -39,49 +39,73 @@ module.exports = function factory({
         replace(
           /extends\s+PFElement\s+{/g,
           (classStatement, character, jsFile) => {
-            // extract the templateUrl and styleUrl with regex.  Would prefer to do
-            // this by require'ing rh-something.js and asking it directly, but without
-            // node.js support for ES modules, we're stuck with this.
+            // Extract the urls for template, style, and schema
+            // -- Would prefer to do this by require'ing and asking it directly, but without
+            //    node.js support for ES modules, we're stuck with this.
             const oneLineFile = jsFile
               .slice(character)
               .split("\n")
               .join(" ");
+
             const [
               ,
               templateUrl
             ] = /get\s+templateUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
               oneLineFile
             );
-
-            let html = fs
-              .readFileSync(path.join("./src", templateUrl))
-              .toString()
-              .trim();
-
-            html = decomment(html);
-
             const [
               ,
               styleUrl
             ] = /get\s+styleUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
               oneLineFile
             );
+            const [
+              ,
+              schemaUrl
+            ] = /get\s+schemaUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
+              oneLineFile
+            );
 
-            const styleFilePath = path.join("./src", styleUrl);
+            let html = "";
+            let cssResult = "";
+            let schema = "{}";
 
-            let cssResult = sass.renderSync({
-              file: styleFilePath
-            }).css;
+            if (fs.existsSync(path.join("./src", templateUrl))) {
+              html = fs
+                .readFileSync(path.join("./src", templateUrl))
+                .toString()
+                .trim();
+              html = decomment(html);
+            }
 
-            cssResult = stripCssComments(cssResult).trim();
+            if (fs.existsSync(path.join("./src", styleUrl))) {
+              let rawCSS = sass.renderSync({
+                file: path.join("./src", styleUrl)
+              }).css;
+              rawCSS = stripCssComments(cssResult).trim();
+              if (rawCSS && rawCSS !== "") {
+                cssResult = `<style>${rawCSS}</style>`;
+              }
+            }
+
+            if (fs.existsSync(path.join("./src", schemaUrl))) {
+              let schemaObj = JSON.parse(
+                fs.readFileSync(path.join("./src", schemaUrl))
+              );
+              if (schemaObj && typeof schemaObj === "object") {
+                schema = schemaObj.properties;
+                schema = JSON.stringify(schema);
+              }
+            }
 
             return `${classStatement}
   get html() {
-    return \`
-<style>
-${cssResult}
-</style>
+    return \`${cssResult}
 ${html}\`;
+  }
+
+  static get properties() {
+    return ${schema};
   }
 `;
           }

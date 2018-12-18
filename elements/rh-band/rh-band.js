@@ -28,9 +28,9 @@ class RhBand extends RHElement {
 <style>
 :host {
   display: block;
-  --rh-band--padding-vertical:                 calc( var(--rh-theme--container-spacer, 1rem) * 4);
-  --rh-band--padding-horizontal:               calc( var(--rh-theme--container-spacer, 1rem) * 1);
-  --rh-band--padding:                         var(--rh-band--padding-vertical)  var(--rh-band--padding-horizontal);
+  --rh-band--padding__vertical:                 calc( var(--rh-theme--container-spacer, 1rem) * 4);
+  --rh-band--padding__horizontal:               calc( var(--rh-theme--container-spacer, 1rem) * 1);
+  --rh-band--padding:                         var(--rh-band--padding__vertical)  var(--rh-band--padding__horizontal);
   --rh-band--backgroundColor:                 var(--rh-theme--color--surface--base, #dfdfdf);
   --rh-band--backgroundPositionX:             center;
   --rh-band--backgroundPositionY:             center;
@@ -54,16 +54,16 @@ class RhBand extends RHElement {
     box-sizing: border-box; }
   @media screen and (min-width: 768px) {
     :host {
-      --rh-band--width: calc( 768px - calc(var(--rh-band--padding-horizontal) * 4) ); } }
+      --rh-band--width: calc( 768px - calc(var(--rh-band--padding__horizontal) * 4) ); } }
   @media screen and (min-width: 992px) {
     :host {
-      --rh-band--width: calc( 992px - calc(var(--rh-band--padding-horizontal) * 4) ); } }
+      --rh-band--width: calc( 992px - calc(var(--rh-band--padding__horizontal) * 4) ); } }
   @media screen and (min-width: 1200px) {
     :host {
-      --rh-band--width: calc( 1200px - calc(var(--rh-band--padding-horizontal) * 4) ); } }
+      --rh-band--width: calc( 1200px - calc(var(--rh-band--padding__horizontal) * 4) ); } }
   @media print {
     :host {
-      --rh-band--padding:    calc(var(--rh-band--padding-vertical) / 2)  var(--rh-band--padding-horizontal); } }
+      --rh-band--padding:    calc(var(--rh-band--padding__vertical) / 2)  var(--rh-band--padding__horizontal); } }
 
 :host([color="dark"]) {
   --rh-band--backgroundColor:                  var(--rh-theme--color--surface--dark, #464646);
@@ -114,14 +114,14 @@ class RhBand extends RHElement {
   --rh-broadcasted--color--ui-link--focus:     var(--rh-theme--color--surface--lightest--link--focus, #003366); }
 
 :host([size="small"]) {
-  --rh-band--padding:   calc(var(--rh-band--padding-vertical) / 4)  var(--rh-band--padding-horizontal); }
+  --rh-band--padding:   calc(var(--rh-band--padding__vertical) / 4)  var(--rh-band--padding__horizontal); }
 
 .rh-band__wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-items: flex-start;
-  padding: calc(var(--rh-band--padding-vertical) / 2) var(--rh-band--padding-horizontal);
+  padding: calc(var(--rh-band--padding__vertical) / 2) var(--rh-band--padding__horizontal);
   border: 0px var(--rh-band--borderStyle) var(--rh-band--borderColor);
   border-top-width: var(--rh-band--borderTopWidth);
   border-bottom-width: var(--rh-band--borderBottomWidth);

@@ -15,10 +15,10 @@ $aside-lg: 342px;
   display: block;
 
   // Default spacing values
-  --rh-band--padding-vertical:                 calc( #{rh-var(container-spacer)} * 4);
-  --rh-band--padding-horizontal:               calc( #{rh-var(container-spacer)} * 1);
+  --rh-band--padding__vertical:                 calc( #{rh-var(container-spacer)} * 4);
+  --rh-band--padding__horizontal:               calc( #{rh-var(container-spacer)} * 1);
   // Bring them together for ease of use below
-  --rh-band--padding:                         #{rh-local(padding-vertical)}  #{rh-local(padding-horizontal)};
+  --rh-band--padding:                         #{rh-local(padding__vertical)}  #{rh-local(padding__horizontal)};
 
   // Surface colors
   --rh-band--backgroundColor:                 #{rh-color(surface--base)};
@@ -57,13 +57,13 @@ $aside-lg: 342px;
   @each $size in (md, lg, xl) {
     @media screen and (min-width: rh-breakpoint(#{$size})) {
 
-      --rh-band--width: calc( #{rh-breakpoint(#{$size})} - calc(#{rh-local(padding-horizontal)} * 4) );
+      --rh-band--width: calc( #{rh-breakpoint(#{$size})} - calc(#{rh-local(padding__horizontal)} * 4) );
 
     }
   }
   // Reduce padding for print
   @media print {
-    --rh-band--padding:    calc(#{rh-local(padding-vertical)} / 2)  #{rh-local(padding-horizontal)};
+    --rh-band--padding:    calc(#{rh-local(padding__vertical)} / 2)  #{rh-local(padding__horizontal)};
   }
 }
 
@@ -80,7 +80,7 @@ $aside-lg: 342px;
 
 // thinner padding on top & bottom
 :host([size="small"]) {
-  --rh-band--padding:   calc(#{rh-local(padding-vertical)} / 4)  #{rh-local(padding-horizontal)};
+  --rh-band--padding:   calc(#{rh-local(padding__vertical)} / 4)  #{rh-local(padding__horizontal)};
 }
 
 //  rh-local returns: var(--rh-band-(SLOT)--argument);
@@ -93,7 +93,7 @@ $aside-lg: 342px;
     justify-items: flex-start;
 
     // Padding 
-    padding: calc(#{rh-local(padding-vertical)} / 2)  #{rh-local(padding-horizontal)};
+    padding: calc(#{rh-local(padding__vertical)} / 2)  #{rh-local(padding__horizontal)};
 
     @media (min-width: #{rh-breakpoint(sm)}) {
       padding: #{rh-local(padding)};

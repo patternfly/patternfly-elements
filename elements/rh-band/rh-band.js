@@ -42,7 +42,7 @@ class RhBand extends RHElement {
   --rh-band_header--layout:                   1fr;
   --rh-band_body--layout:                     1fr;
   --rh-band_footer--layout:                   1fr;
-  --rh-band_aside--layout:                    342px;
+  --rh-band_aside--layout:                    300px;
   --rh-band--gutter:                          calc(var(--rh-theme--container-spacer, 1rem) * 2);
   --rh-broadcasted--color--text:              var(--rh-theme--color--surface--base--text, #333);
   --rh-broadcasted--color--ui-link:           var(--rh-theme--color--surface--base--link, #00538c);
@@ -185,14 +185,14 @@ class RhBand extends RHElement {
     grid-template-columns: var(--rh-band_footer--layout); } }
 
 .rh-band__aside {
-  min-width: 250px; }
+  min-width: 240px; }
   @media screen and (min-width: 768px) {
     .rh-band__aside {
       grid-template-columns: var(--rh-band_aside--layout);
       flex-basis: var(--rh-band_aside--layout); } }
   @media screen and (min-width: 768px) and (max-width: 992px) {
     .rh-band__aside {
-      --rh-band_aside--layout: 250px; } }
+      --rh-band_aside--layout: 240px; } }
 
 @media screen and (min-width: 768px) {
   .rh-band__aside {

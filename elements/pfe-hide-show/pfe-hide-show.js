@@ -32,9 +32,10 @@ class PfeHideShow extends PFElement {
 ${
       this.isTab
         ? `
-    <pfe-tabs${Object.entries(this.settings).map(
-      (attr, value) => ` ${attr}="${value}"`
-    )}${this.orientation}>
+    <pfe-tabs ${
+      this.settings.variant ? "pfe-variant=" + this.settings.variant : ""
+    }
+    ${this.orientation ? this.orientation : ""}>
       ${this.groupings
         .map(
           group => `
@@ -50,12 +51,10 @@ ${
     </pfe-tabs>
   `
         : `
-    <pfe-accordion${Object.entries(this.settings).map(
-      (attr, value) => ` ${attr}="${value}"`
-    )}>
-      ${this.groupings
-        .map(
-          group => `
+    <pfe-accordion ${this.settings.color ? "color=" + this.settings.color : ""}>
+        ${this.groupings
+          .map(
+            group => `
         <pfe-accordion-header>
           ${group.heading.outerHTML}
         </pfe-accordion-header>
@@ -63,8 +62,8 @@ ${
             ${group.body.map(item => item.outerHTML).join("")}
         </pfe-accordion-panel>
       `
-        )
-        .join("")}
+          )
+          .join("")}
     </pfe-accordion>
   `
     }`;

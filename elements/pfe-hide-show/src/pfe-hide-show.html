@@ -1,5 +1,6 @@
 ${this.isTab ? `
-    <pfe-tabs${Object.entries(this.settings).map((attr, value) => ` ${attr}="${value}"`)}${this.orientation}>
+    <pfe-tabs ${this.settings.variant ? "pfe-variant=" + this.settings.variant : ""}
+    ${this.orientation ? this.orientation : ""}>
       ${this.groupings.map(group => `
         <pfe-tab slot="tab">
           ${group.heading.innerText}
@@ -10,8 +11,8 @@ ${this.isTab ? `
       `).join('')}
     </pfe-tabs>
   ` : `
-    <pfe-accordion${Object.entries(this.settings).map((attr, value) => ` ${attr}="${value}"`)}>
-      ${this.groupings.map(group => `
+    <pfe-accordion ${this.settings.color ? "color=" + this.settings.color : ""}>
+        ${this.groupings.map(group => `
         <pfe-accordion-header>
           ${group.heading.outerHTML}
         </pfe-accordion-header>

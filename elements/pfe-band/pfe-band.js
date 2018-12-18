@@ -156,13 +156,9 @@ class PfeBand extends PFElement {
       if (props.hasOwnProperty(p)) {
         if (this.hasAttribute(p)) {
           this[p] = this.getAttribute(p);
-          // Validate against the schema?
         } else {
-          // Only attach the attribute if it has a hardcoded value
-          if (props[p].value) {
-            this.setAttribute(p, props[p].value);
-            this[p] = props[p].value;
-          }
+          this.setAttribute(p, props[p].value);
+          this[p] = props[p].value;
         }
       }
     }

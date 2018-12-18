@@ -1,12 +1,12 @@
 import { storiesOf } from "@storybook/polymer";
 import { withKnobs, text, select } from "@storybook/addon-knobs/polymer";
 import { escapeHTML } from "../../.storybook/utils.js";
-import "./rh-band";
+import "./pfe-band";
 
 const stories = storiesOf("Band", module);
 stories.addDecorator(withKnobs);
 
-stories.add("rh-band", () => {
+stories.add("pfe-band", () => {
   // Pointer to theme file
   // const themeLabel = "Theme file";
   // const themeValue = text(themeLabel, "");
@@ -24,7 +24,7 @@ stories.add("rh-band", () => {
   };
   const colorDefault = "light";
   const colorValue = select(colorLabel, colorOptions, colorDefault);
-  let colorAttr = colorValue != "base" ? ` color="${colorValue}"` : "";
+  let colorAttr = colorValue != "base" ? ` pfe-color="${colorValue}"` : "";
 
   // Slots
   const headerLabel = "Header";
@@ -38,7 +38,7 @@ stories.add("rh-band", () => {
 
   const footerLabel = "Footer";
   const footerDefault =
-    '<rh-cta priority="primary"><a href="#">Learn more</a></rh-cta>';
+    '<pfe-cta priority="primary"><a href="#">Learn more</a></pfe-cta>';
   const footerValue = text(footerLabel, footerDefault);
 
   // Attributes
@@ -53,7 +53,7 @@ stories.add("rh-band", () => {
     asidePositionXOptions,
     asidePositionXDefault
   );
-  let asidePositionAttr = ` aside="${asidePositionXValue}`;
+  let asidePositionAttr = ` pfe-aside="${asidePositionXValue}`;
 
   const asidePositionYLabel = "Aside position (y)";
   const asidePositionYOptions = {
@@ -83,23 +83,23 @@ stories.add("rh-band", () => {
 
   const asideLabel = "Aside";
   const asideDefault =
-    '<rh-card color="dark"><h3 slot="header">Lorem ipsum</h3><p>Ut wisi enim ad minim veniam.</p><rh-cta slot="footer" priority="tertiary" on="dark"><a href="#">Learn more</a></rh-cta></rh-card>';
+    '<pfe-card color="dark"><h3 slot="header">Lorem ipsum</h3><p>Ut wisi enim ad minim veniam.</p><pfe-cta slot="footer" priority="tertiary" on="dark"><a href="#">Learn more</a></pfe-cta></pfe-card>';
   const asideValue = text(asideLabel, asideDefault);
 
   return `
   <section>
-    <h2>Your RH Element</h2>
-    <rh-band${colorAttr}${asidePositionAttr}>
+    <h2>Band container</h2>
+    <pfe-band${colorAttr}${asidePositionAttr}>
       ${headerValue ? '<div slot="header">' + headerValue + "</div>" : ""}
       ${bodyValue ? bodyValue : ""}
       ${footerValue ? '<div slot="footer">' + footerValue + "</div>" : ""}
       ${asideValue ? '<div slot="aside">' + asideValue + "</div>" : ""}
-    </rh-band>
+    </pfe-band>
   </section>
   <section>
     <h2>Markup</h2>
     <pre>
-    ${escapeHTML(`<rh-band${colorAttr}${asidePositionAttr}>`)}
+    ${escapeHTML(`<pfe-band${colorAttr}${asidePositionAttr}>`)}
       ${
         headerValue
           ? `${escapeHTML(`<div slot="header">${headerValue}</div>`)}`
@@ -116,7 +116,7 @@ stories.add("rh-band", () => {
           ? `${escapeHTML(`<div slot="aside">${asideValue}</div>`)}`
           : ""
       }
-    ${escapeHTML("</rh-band>")}
+    ${escapeHTML("</pfe-band>")}
     </pre>
   </section>
   `;

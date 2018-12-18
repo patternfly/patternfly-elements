@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../rh-band.js"></script>
+    <script type="module" src="../pfe-band.js"></script>
   </head>
   <body>
 
-    <rh-band>
+    <pfe-band>
       This is the element content.
-    </rh-band>
+    </pfe-band>
 
     <script>
-      suite('<rh-band>', () => {
+      suite('<pfe-band>', () => {
         test('it should upgrade', () => {
-          assert.instanceOf(document.querySelector('rh-band'), customElements.get("rh-band", 'rh-band should be an instance of rhBand'));
+          assert.instanceOf(document.querySelector('pfe-band'), customElements.get("pfe-band", 'pfe-band should be an instance of PfeBand'));
         });
 
         // you need to write more tests!!!

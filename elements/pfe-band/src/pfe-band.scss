@@ -1,0 +1,216 @@
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: band;
+$SLOT: "";
+$aside-sm: 240px;
+$aside-lg: 300px;
+
+:host {
+  display: block;
+
+  // Default spacing values
+  --pfe-band--padding__vertical:                 calc( #{pfe-var(container-spacer)} * 4);
+  --pfe-band--padding__horizontal:               calc( #{pfe-var(container-spacer)} * 1);
+  // Bring them together for ease of use below
+  --pfe-band--padding:                         #{pfe-local(padding__vertical)}  #{pfe-local(padding__horizontal)};
+
+  // Surface colors
+  --pfe-band--backgroundColor:                 #{pfe-color(surface--base)};
+  --pfe-band--backgroundPositionX:             center;
+  --pfe-band--backgroundPositionY:             center;
+
+  // Border settings
+  --pfe-band--borderColor:                     transparent;
+  --pfe-band--borderTopWidth:                  #{pfe-var(surface--border-width)};
+  --pfe-band--borderBottomWidth:               #{pfe-var(surface--border-width)};
+  --pfe-band--borderStyle:                     #{pfe-var(surface--border-style)};
+
+  // Accent title styles
+  --pfe-band_header-title--color:             #{pfe-color(ui-accent)};
+
+  // Layouts, grid layouts
+  --pfe-band_header--layout:                   1fr;
+  --pfe-band_body--layout:                     1fr;
+  --pfe-band_footer--layout:                   1fr;
+  --pfe-band_aside--layout:                    #{$aside-lg};
+  --pfe-band--gutter:                          #{ calc(#{pfe-var(container-spacer)} * 2) };
+
+  // Text colors
+  --pfe-broadcasted--color--text:              #{pfe-color(surface--base--text)};
+  --pfe-broadcasted--color--ui-link:           #{pfe-color(surface--base--link)};
+  --pfe-broadcasted--color--ui-link--visited:  #{pfe-color(surface--base--link--visited)};
+  --pfe-broadcasted--color--ui-link--hover:    #{pfe-color(surface--base--link--hover)};
+  --pfe-broadcasted--color--ui-link--focus:    #{pfe-color(surface--base--link--focus)};
+
+  // Band width logic
+  // Initialize at mobile breakpoint
+  --pfe-band--width: auto;
+
+  // Loop through the other breakpoints
+  @each $size in (md, lg, xl) {
+    @media screen and (min-width: pfe-breakpoint(#{$size})) {
+      --pfe-band--width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(padding__horizontal)} * 4) );
+    }
+  }
+  // Reduce padding for print
+  @media print {
+    --pfe-band--padding: calc(#{pfe-local(padding__vertical)} / 2) #{pfe-local(padding__horizontal)};
+  }
+
+  // Tag element styles
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+}
+
+@each $color in (dark, darkest, accent, complement, light, lightest) {
+  :host([pfe-color="#{$color}"]) {
+    --pfe-band--backgroundColor:                  #{pfe-color(surface--#{$color})};
+    --pfe-broadcasted--color--text:               #{pfe-color(surface--#{$color}--text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--#{$color}--link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--#{$color}--link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--#{$color}--link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--#{$color}--link--focus)};
+  }
+}
+
+// thinner padding on top & bottom
+:host([pfe-size="small"]) {
+  --pfe-band--padding:   calc(#{pfe-local(padding__vertical)} / 4)  #{pfe-local(padding__horizontal)};
+}
+
+//  pfe-local returns: var(--pfe-band(_SLOT)--argument);
+
+.pfe-band {
+  // Wrapper sets padding and background visuals
+  &__wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-start;
+
+    // Padding 
+    padding: calc(#{pfe-local(padding__vertical)} / 2)  #{pfe-local(padding__horizontal)};
+
+    @media (min-width: #{pfe-breakpoint(sm)}) {
+      padding: #{pfe-local(padding)};
+    }
+
+    // Border styles
+    border: 0px #{pfe-local(borderStyle)} #{pfe-local(borderColor)};
+    border-top-width:    #{pfe-local(borderTopWidth)};
+    border-bottom-width: #{pfe-local(borderBottomWidth)};
+
+
+    // Base colors
+    background-color:      #{pfe-local(backgroundColor)};
+    background-position-x: #{pfe-local(backgroundPositionX)};
+    background-position-y: #{pfe-local(backgroundPositionY)};
+    color:                 #{pfe-radio(color, text)};
+
+    // Remove background color for print
+    @include pfe-no-print-background;
+  }
+
+  &__container,
+  &__content {
+    // Fill the majority of the band
+    flex-grow: 1;
+
+    // Aside layouts
+    display:        flex;
+    flex-direction: column;
+    @media (min-width: #{pfe-breakpoint(md)}) {
+      flex-direction: row;
+    }
+  }
+  &__container {
+    margin:         0 auto;
+    max-width: #{pfe-local(width)};
+  }
+  &__container, // wraps main and aside
+  &__content { // wraps body and aside
+    // spacing between children on mobile (around aside region)
+    > *:not(:last-child) {
+      @media (max-width: #{pfe-breakpoint(md)}) {
+         margin-bottom: #{pfe-var(container-spacer)};
+      }
+    }
+  }
+
+  &__main,
+  &__body {
+    flex: 1;
+    // spacing between children:; 
+    > *:not(:last-child) {
+         margin-bottom: #{pfe-var(container-spacer)};
+    }
+  }
+
+  &__header,
+  &__body,
+  &__footer,
+  &__aside {
+    display: block;
+    display: grid;  // for elegant display of children
+    grid-column: 1fr;
+    grid-gap: #{pfe-var(container-spacer)};
+
+    &::slotted(*) {
+      margin-top: 0;
+    }
+  }
+  &__header {
+    $SLOT: header;
+    
+    @media screen and (min-width: #{pfe-breakpoint(md)}) {
+      grid-template-columns: #{pfe-local(layout)};
+    }
+  }
+  &__body {
+    $SLOT: body;
+
+    flex-grow: 1;
+    @media screen and (min-width: #{pfe-breakpoint(md)}) {
+      grid-template-columns: #{pfe-local(layout)};
+      [pfe-aside~="full"] & {
+        margin-right: 0;
+        margin-left: 0;
+      }
+    }
+  }
+  &__footer {
+    $SLOT: footer;
+
+    @media screen and (min-width: #{pfe-breakpoint(md)}) {
+      grid-template-columns: #{pfe-local(layout)};
+    }
+  }
+
+  &__aside {
+    $SLOT:     aside;
+    min-width: $aside-sm;
+
+    @media screen and (min-width: #{pfe-breakpoint(md)}) {
+      grid-template-columns: #{pfe-local(layout)};
+      flex-basis:            #{pfe-local(layout)};
+    }
+    @media screen and (min-width: #{pfe-breakpoint(md)}) and (max-width: #{pfe-breakpoint(lg)}) {
+      --pfe-band_aside--layout: #{$aside-sm}; // set limiter
+    }
+  }
+  &__aside {  // walk away from aside SLOT var to invoke gutter
+    $SLOT: "";
+    @media screen and (min-width: #{pfe-breakpoint(md)}) {
+      margin: 0;
+      [pfe-aside~="left"] & {
+        order: -1;
+        margin-right: #{pfe-local(gutter)}; // apply to aside region because of flex-basis
+      }
+      [pfe-aside~="right"] & {
+        order: 2;
+        margin-left: #{pfe-local(gutter)};
+      }
+    }
+  }
+}

@@ -20,19 +20,19 @@
  * SOFTWARE.
  */
 
-import RHElement from "../rhelement/rhelement.js";
+import PFElement from "../pfelement/pfelement.js";
 
-class RhBand extends RHElement {
+class PfeBand extends PFElement {
   static get tag() {
-    return "rh-band";
+    return "pfe-band";
   }
 
   get templateUrl() {
-    return "rh-band.html";
+    return "pfe-band.html";
   }
 
   get styleUrl() {
-    return "rh-band.scss";
+    return "pfe-band.scss";
   }
 
   get asidePosition() {
@@ -44,30 +44,30 @@ class RhBand extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["aside", "img-src"];
+    return ["pfe-aside", "pfe-img-src"];
   }
 
   static get cascadingAttributes() {
     return {
-      aside: ".rh-band__wrapper"
+      aside: ".pfe-band__wrapper"
     };
   }
 
   // Declare the type of this component
-  static get rhType() {
-    return RHElement.rhType.container;
+  static get pfeType() {
+    return PFElement.pfeType.container;
   }
 
   constructor() {
-    super(RhBand);
+    super(PfeBand);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
     // This is where it has content and should have width!
-    // this.shadowRoot.style.setProperty("--rh-eq--width", this.size().width);
-    // this.shadowRoot.style.setProperty("--rh-eq--height", this.size().height);
+    // this.shadowRoot.style.setProperty("--pfe-eq--width", this.size().width);
+    // this.shadowRoot.style.setProperty("--pfe-eq--height", this.size().height);
   }
 
   // disconnectedCallback() {}
@@ -76,10 +76,10 @@ class RhBand extends RHElement {
     super.attributeChangedCallback(attr, oldValue, newValue);
 
     switch (attr) {
-      case "img-src": {
+      case "pfe-img-src": {
         // Set the image as the background image
         this.shadowRoot.querySelector(
-          ".rh-band__wrapper"
+          ".pfe-band__wrapper"
         ).style.backgroundImage = newValue ? `url('${newValue}')` : ``;
         break;
       }
@@ -87,6 +87,6 @@ class RhBand extends RHElement {
   }
 }
 
-RHElement.create(RhBand);
+PFElement.create(PfeBand);
 
-export default RhBand;
+export default PfeBand;

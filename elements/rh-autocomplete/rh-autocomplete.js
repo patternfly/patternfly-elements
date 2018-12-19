@@ -60,6 +60,7 @@ class RhAutocomplete extends RHElement {
   }
 
   connectedCallback() {
+    this.loading = false;
     super.connectedCallback();
 
     this._inputBox = this.shadowRoot.querySelector("#input-box");

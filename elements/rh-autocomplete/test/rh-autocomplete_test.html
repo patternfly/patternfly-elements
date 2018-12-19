@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
+     <script src="../../test-fixture/test-fixture-mocha.js"></script>
     <script type="module" src="../rh-autocomplete.js"></script>
   </head>
   <body>
@@ -13,15 +14,15 @@
       <rh-autocomplete id="autocomplete"></rh-autocomplete>
     </div>
     <script>
-      suite('<rh-autocomplete>', () => {
+      describe('<rh-autocomplete>', () => {
         let autocompleteElem,
             searchBoxElem,
             input,
             clearButton,
             searchButton;
 
-        // function to run before each test within this suite.
-        setup(function() {
+        //function to run before each test within this suite.
+        beforeEach(function() {
           autocompleteElem = document.querySelector('#autocomplete');
 
           //rh-search-box
@@ -34,104 +35,36 @@
           droplistElem = autocompleteElem.shadowRoot.querySelector('rh-search-droplist');
         });
 
-        teardown(() => {
+        afterEach(() => {
           input.value = "";
           autocompleteElem.initValue = "";
         });
 
-        test('it should upgrade rh-autocomplete', () => {
+        it('should upgrade rh-autocomplete', () => {
           assert.instanceOf(autocompleteElem, customElements.get("rh-autocomplete", 'rh-autocomplete should be an instance of rhAutocomplete'));
         });
 
-        test('hides x button when input box is empty', () => {
+        it('should hide x button when input box is empty', () => {
             assert.isTrue(clearButton.hidden);
         });
 
-        test('should clear search when user press x button', () => {
+        it('should clear search when user press x button', () => {
           input.value = "search-term";
-          clearButton.click();
+          searchBoxElem._clear();
           assert.isTrue(clearButton.hidden);
         });
 
-        test('should fires rh-search-event after click on search icon[event]', (done) => {
+        it('should fires rh-search-event after click on search icon[event]', (done) => {
           input.value = "test2";
+
           autocompleteElem.addEventListener("rh-search-event", function(event) {
             assert.equal(event.detail.searchValue, "test2");
             done();
           });
-          searchButton.click();
+
+          searchBoxElem._search();
         });
 
-        test('should fires rh-search-event after click on search icon[sinon]', () => {
-          input.value = "test";
-          let searchHandlerSpy = sinon.spy();
-          document.addEventListener('rh-search-event', searchHandlerSpy);
-          searchButton.click();
-
-          const [event] = searchHandlerSpy.getCall(0).args;
-
-          sinon.assert.calledOnce(searchHandlerSpy);
-          assert.equal(event.detail.searchValue, "test");
-        });
-
-        test('sends search event when user press enter', () => {
-          let keyPressedSpy = sinon.spy();
-
-          input.value = "test";
-          document.addEventListener('rh-search-event', keyPressedSpy);
-
-          let keyboardEvent = new KeyboardEvent('keydown', {
-              code: 'Enter',
-              key: 'Enter',
-              charKode: 13,
-              keyCode: 13
-          });
-          document.dispatchEvent(keyboardEvent);
-
-          const [event] = keyPressedSpy.getCall(0).args;
-          sinon.assert.calledOnce(keyPressedSpy);
-        });
-
-        test('search q[sinon]', (done) => {
-          let keyPressedSpy = sinon.spy();
-
-          autocompleteElem.addEventListener("rh-search-event", keyPressedSpy);
-
-          let keyboardEvent = new KeyboardEvent('keydown', {
-              bubbles : true,
-              code: 'q',
-              key: 'q',
-              keyCode: 81
-          });
-          input.dispatchEvent(keyboardEvent);
-          searchButton.click();
-
-          const [event] = keyPressedSpy.getCall(0).args;
-          sinon.assert.calledOnce(keyPressedSpy);
-          assert.equal(event.detail.searchValue, "q");
-        });
-
-        test('search q[event]', (done) => {
-
-          autocompleteElem.addEventListener("rh-search-event", (event) => {
-            assert.equal(event.detail.searchValue, "q");
-            done();
-          });
-
-          let keyboardEvent = new KeyboardEvent('keydown', {
-              bubbles : true,
-              code: 'q',
-              key: 'q',
-              keyCode: 81
-          });
-          input.dispatchEvent(keyboardEvent);
-          searchButton.click();
-        });
-
-        test('should set value of init-value as input value', () => {
-          autocompleteElem.initValue = "search"
-          assert.equal(input.value, autocompleteElem.initValue);
-        });
       });
     </script>
   </body>

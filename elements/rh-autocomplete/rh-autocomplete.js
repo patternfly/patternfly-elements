@@ -597,7 +597,7 @@ class RhSearchDroplist extends RHElement {
   top: 100%;
   left: 0px;
   right: 0px;
-  height: 250px;
+  max-height: 250px;
   z-index: 9999;
   overflow-y: scroll;
   overflow-x: hidden;

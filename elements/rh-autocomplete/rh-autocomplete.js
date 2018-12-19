@@ -60,12 +60,13 @@ class RhAutocomplete extends RHElement {
   }
 
   connectedCallback() {
-    this.loading = false;
     super.connectedCallback();
 
+    this.loading = false;
+    this.debounce = this.debounce || 300;
     this._inputBox = this.shadowRoot.querySelector("#input-box");
     this._inputBox.value = this.initValue || "";
-    this._inputBox.debounce = this.debounce || 500;
+    this._inputBox.debounce = this.debounce;
 
     this._dropdown = this.shadowRoot.querySelector("#dropdown");
     this._dropdown.data = [];
@@ -479,7 +480,7 @@ button[disabled="true"] {
   }
 
   get debounce() {
-    return this.getAttribute("debounce");
+    return parseInt(this.getAttribute("debounce"), 10);
   }
 
   set debounce(val) {
@@ -535,7 +536,7 @@ button[disabled="true"] {
         );
 
         throttle = false;
-      }, parseInt(this.debounce, 10) || 500);
+      }, this.debounce);
     }
   }
 
@@ -731,7 +732,8 @@ ul {
     let ulWrapper = this.shadowRoot.querySelector(".droplist");
     let activeOptionHeight = activeOption.offsetHeight;
     activeOptionHeight += parseInt(
-      window.getComputedStyle(activeOption).getPropertyValue("margin-bottom")
+      window.getComputedStyle(activeOption).getPropertyValue("margin-bottom"),
+      10
     );
     ulWrapper.scrollTop =
       activeOption.offsetTop - ulWrapper.offsetHeight + activeOptionHeight;

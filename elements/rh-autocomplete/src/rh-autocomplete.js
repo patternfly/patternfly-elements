@@ -513,6 +513,15 @@ class RhSearchDroplist extends RHElement {
     );
     this.selectedOption = activeOption.innerHTML;
     activeOption.classList.add("active");
+
+    // scroll to selected element when selected item with keyboard is out of view
+    let ulWrapper = this.shadowRoot.querySelector(".droplist");
+    let activeOptionHeight = activeOption.offsetHeight;
+    activeOptionHeight += parseInt(
+      window.getComputedStyle(activeOption).getPropertyValue("margin-bottom")
+    );
+    ulWrapper.scrollTop =
+      activeOption.offsetTop - ulWrapper.offsetHeight + activeOptionHeight;
   }
 
   get open() {

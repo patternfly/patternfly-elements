@@ -24,15 +24,18 @@
 }
 
 .droplist {
-  display: block;
   position: absolute;
   top: 100%;
   left: 0px;
   right: 0px;
+  height: 250px;
   z-index: 9999;
   overflow-y: scroll;
   overflow-x: hidden;
+  border: 1px solid #ccc;
+  background-color: #fff;
 }
+
 input {
   font-family: var(--rh-theme--font-family);
   font-size: var(--rh-theme--font-size);
@@ -43,8 +46,6 @@ ul {
   font-family: var(--rh-theme--font-family);
   font-size: var(--rh-theme--font-size);
   line-height: var(--rh-theme--line-height);
-  background-color: #fff;
-  border: 1px solid #ccc;
   border-top: none;
   margin: 0px;
   padding: 0px;

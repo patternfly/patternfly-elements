@@ -591,14 +591,16 @@ class RhSearchDroplist extends RHElement {
   border: 0; }
 
 .droplist {
-  display: block;
   position: absolute;
   top: 100%;
   left: 0px;
   right: 0px;
+  height: 250px;
   z-index: 9999;
   overflow-y: scroll;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  border: 1px solid #ccc;
+  background-color: #fff; }
 
 input {
   font-family: var(--rh-theme--font-family);
@@ -609,8 +611,6 @@ ul {
   font-family: var(--rh-theme--font-family);
   font-size: var(--rh-theme--font-size);
   line-height: var(--rh-theme--line-height);
-  background-color: #fff;
-  border: 1px solid #ccc;
   border-top: none;
   margin: 0px;
   padding: 0px;
@@ -626,7 +626,7 @@ ul {
 </style>
 <div class="suggestions-aria-help sr-only" aria-hidden="false" role="status"></div>
 <div class="droplist">
-  <ul role="listbox" tabindex="-1" id="results">
+  <ul role="listbox" tabindex="-1">
   </ul>
 </div>`;
   }
@@ -725,6 +725,15 @@ ul {
     );
     this.selectedOption = activeOption.innerHTML;
     activeOption.classList.add("active");
+
+    // scroll to selected element when selected item with keyboard is out of view
+    let ulWrapper = this.shadowRoot.querySelector(".droplist");
+    let activeOptionHeight = activeOption.offsetHeight;
+    activeOptionHeight += parseInt(
+      window.getComputedStyle(activeOption).getPropertyValue("margin-bottom")
+    );
+    ulWrapper.scrollTop =
+      activeOption.offsetTop - ulWrapper.offsetHeight + activeOptionHeight;
   }
 
   get open() {

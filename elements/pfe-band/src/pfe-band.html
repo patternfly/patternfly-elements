@@ -1,13 +1,13 @@
 <div class="pfe-band__container">
-  ${this.has_slot("aside") && this.asidePosition.includes("full") && this.asidePosition.includes("top") ? `<slot class="pfe-band__aside" name="aside"></slot>` : ''}
+  ${this.has_slot("aside") && this.asidePosition.height === "full" && this.asidePosition.mobile === "top" ? `<slot class="pfe-band__aside" name="aside"></slot>` : ''}
   <section class="pfe-band__main">
     ${this.has_slot("header") ? `<slot class="pfe-band__header" name="header"></slot>` : ''}
     <div class="pfe-band__content">
-      ${this.has_slot("aside") && !this.asidePosition.includes("full") && this.asidePosition.includes("top") ? `<slot class="pfe-band__aside" name="aside"></slot>` : ''}
+      ${this.has_slot("aside") && this.asidePosition.height !== "full" && this.asidePosition.mobile === "top" ? `<slot class="pfe-band__aside" name="aside"></slot>` : ''}
       <slot class="pfe-band__body"></slot>
-      ${this.has_slot("aside") && !this.asidePosition.includes("full") && !this.asidePosition.includes("top") ? `<slot class="pfe-band__aside" name="aside"></slot>` : ''}
+      ${this.has_slot("aside") && this.asidePosition.height !== "full" && this.asidePosition.mobile !== "top" ? `<slot class="pfe-band__aside" name="aside"></slot>` : ''}
     </div>
     ${this.has_slot("footer") ? `<slot class="pfe-band__footer" name="footer"></slot>` : ''}
   </section>
-  ${this.has_slot("aside") && this.asidePosition.includes("full") && !this.asidePosition.includes("top") ? `<slot class="pfe-band__aside" name="aside"></slot>` : ''}
+  ${this.has_slot("aside") && this.asidePosition.height === "full" && this.asidePosition.mobile !== "top" ? `<slot class="pfe-band__aside" name="aside"></slot>` : ''}
 </div>

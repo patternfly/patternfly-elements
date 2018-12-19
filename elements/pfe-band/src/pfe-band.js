@@ -40,25 +40,28 @@ class PfeBand extends PFElement {
   }
 
   get asidePosition() {
-    // X: right, left
-    // Y: full, body
-    // MOBILE: top, bottom
-    // Push the aside position selector to the wrappers
-    let array = [];
-    let aside_props = this.getAttribute("pfe-aside");
-    if (aside_props) {
-      array = aside_props.split(" ");
-    }
-    return array;
+    return {
+      desktop: this.getAttribute("pfe-aside-desktop"),
+      mobile: this.getAttribute("pfe-aside-mobile"),
+      height: this.getAttribute("pfe-aside-height")
+    };
   }
 
   static get observedAttributes() {
-    return ["pfe-aside", "pfe-img-src"];
+    return [
+      "pfe-aside-desktop",
+      "pfe-aside-mobile",
+      "pfe-aside-height",
+      "pfe-color",
+      "pfe-img-src"
+    ];
   }
 
   static get cascadingAttributes() {
     return {
-      "pfe-aside": ".pfe-band__container"
+      "pfe-aside-desktop": ".pfe-band__container",
+      "pfe-aside-mobile": ".pfe-band__container",
+      "pfe-aside-height": ".pfe-band__container"
     };
   }
 
@@ -94,9 +97,15 @@ class PfeBand extends PFElement {
     }
   }
 
+  _basicAttributeChanged(attr, oldValue, newValue) {
+    // this.setAttribute(attr, newValue);
+    this[attr].value = newValue;
+  }
+
   // Update the color attribute and contexts
   _colorChanged(attr, oldValue, newValue) {
-    this.setAttribute(attr, newValue);
+    // this.setAttribute(attr, newValue);
+    this[attr].value = newValue;
     // If the new value has a dark background, update children elements
     this._updateContext(newValue);
   }

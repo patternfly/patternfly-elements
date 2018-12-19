@@ -161,7 +161,7 @@ $aside-lg: 300px;
     flex-grow: 1;
     @media screen and (min-width: #{pfe-breakpoint(md)}) {
       grid-template-columns: #{pfe-local(layout, body)};
-      [pfe-aside~="full"] & {
+      [pfe-aside-height="full"] & {
         margin-right: 0;
         margin-left: 0;
       }
@@ -185,7 +185,7 @@ $aside-lg: 300px;
     @media screen and (min-width: #{pfe-breakpoint(md)}) {
       margin-left: #{pfe-local(gutter)};
       order: 2;
-      [pfe-aside~="left"] & {
+      [pfe-aside-desktop="left"] & {
         order: -1;
         margin-right: #{pfe-local(gutter)};
         margin-left: 0;

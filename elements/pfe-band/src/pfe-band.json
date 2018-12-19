@@ -28,13 +28,28 @@
       "default": "",
       "observer": "_imgSrcChanged"
     },
-    "pfe-aside": {
-      "title": "Aside positioning",
+    "pfe-aside-desktop": {
+      "title": "Aside positioning (desktop)",
       "type": "string",
-      "default": "",
-      "observer": ""
+      "default": "right",
+      "enum": ["right", "left"],
+      "observer": "_basicAttributeChanged"
+    },
+    "pfe-aside-mobile": {
+      "title": "Aside positioning (mobile)",
+      "type": "string",
+      "default": "bottom",
+      "enum": ["top", "bottom"],
+      "observer": "_basicAttributeChanged"
+    },
+    "pfe-aside-height": {
+      "title": "Aside height",
+      "type": "string",
+      "default": "body",
+      "enum": ["full", "body"],
+      "observer": "_basicAttributeChanged"
     }
   },
-  "required": ["name"],
+  "required": [],
   "additionalProperties": false
 }

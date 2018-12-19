@@ -167,7 +167,7 @@ class PfeBand extends PFElement {
   @media screen and (min-width: 768px) {
     .pfe-band__body {
       grid-template-columns: var(--pfe-band_body--layout); }
-      [pfe-aside~="full"] .pfe-band__body {
+      [pfe-aside-height="full"] .pfe-band__body {
         margin-right: 0;
         margin-left: 0; } }
 
@@ -187,15 +187,15 @@ class PfeBand extends PFElement {
     .pfe-band__aside {
       margin-left: var(--pfe-band--gutter);
       order: 2; }
-      [pfe-aside~="left"] .pfe-band__aside {
+      [pfe-aside-desktop="left"] .pfe-band__aside {
         order: -1;
         margin-right: var(--pfe-band--gutter);
         margin-left: 0; } }</style>
 <div class="pfe-band__container">
   ${
     this.has_slot("aside") &&
-    this.asidePosition.includes("full") &&
-    this.asidePosition.includes("top")
+    this.asidePosition.height === "full" &&
+    this.asidePosition.mobile === "top"
       ? `<slot class="pfe-band__aside" name="aside"></slot>`
       : ""
   }
@@ -208,16 +208,16 @@ class PfeBand extends PFElement {
     <div class="pfe-band__content">
       ${
         this.has_slot("aside") &&
-        !this.asidePosition.includes("full") &&
-        this.asidePosition.includes("top")
+        this.asidePosition.height !== "full" &&
+        this.asidePosition.mobile === "top"
           ? `<slot class="pfe-band__aside" name="aside"></slot>`
           : ""
       }
       <slot class="pfe-band__body"></slot>
       ${
         this.has_slot("aside") &&
-        !this.asidePosition.includes("full") &&
-        !this.asidePosition.includes("top")
+        this.asidePosition.height !== "full" &&
+        this.asidePosition.mobile !== "top"
           ? `<slot class="pfe-band__aside" name="aside"></slot>`
           : ""
       }
@@ -230,8 +230,8 @@ class PfeBand extends PFElement {
   </section>
   ${
     this.has_slot("aside") &&
-    this.asidePosition.includes("full") &&
-    !this.asidePosition.includes("top")
+    this.asidePosition.height === "full" &&
+    this.asidePosition.mobile !== "top"
       ? `<slot class="pfe-band__aside" name="aside"></slot>`
       : ""
   }
@@ -261,11 +261,26 @@ class PfeBand extends PFElement {
         default: "",
         observer: "_imgSrcChanged"
       },
-      "pfe-aside": {
-        title: "Aside positioning",
+      "pfe-aside-desktop": {
+        title: "Aside positioning (desktop)",
         type: "string",
-        default: "",
-        observer: ""
+        default: "right",
+        enum: ["right", "left"],
+        observer: "_basicAttributeChanged"
+      },
+      "pfe-aside-mobile": {
+        title: "Aside positioning (mobile)",
+        type: "string",
+        default: "bottom",
+        enum: ["top", "bottom"],
+        observer: "_basicAttributeChanged"
+      },
+      "pfe-aside-height": {
+        title: "Aside height",
+        type: "string",
+        default: "body",
+        enum: ["full", "body"],
+        observer: "_basicAttributeChanged"
       }
     };
   }
@@ -287,25 +302,28 @@ class PfeBand extends PFElement {
   }
 
   get asidePosition() {
-    // X: right, left
-    // Y: full, body
-    // MOBILE: top, bottom
-    // Push the aside position selector to the wrappers
-    let array = [];
-    let aside_props = this.getAttribute("pfe-aside");
-    if (aside_props) {
-      array = aside_props.split(" ");
-    }
-    return array;
+    return {
+      desktop: this.getAttribute("pfe-aside-desktop"),
+      mobile: this.getAttribute("pfe-aside-mobile"),
+      height: this.getAttribute("pfe-aside-height")
+    };
   }
 
   static get observedAttributes() {
-    return ["pfe-aside", "pfe-img-src"];
+    return [
+      "pfe-aside-desktop",
+      "pfe-aside-mobile",
+      "pfe-aside-height",
+      "pfe-color",
+      "pfe-img-src"
+    ];
   }
 
   static get cascadingAttributes() {
     return {
-      "pfe-aside": ".pfe-band__container"
+      "pfe-aside-desktop": ".pfe-band__container",
+      "pfe-aside-mobile": ".pfe-band__container",
+      "pfe-aside-height": ".pfe-band__container"
     };
   }
 
@@ -341,9 +359,15 @@ class PfeBand extends PFElement {
     }
   }
 
+  _basicAttributeChanged(attr, oldValue, newValue) {
+    // this.setAttribute(attr, newValue);
+    this[attr].value = newValue;
+  }
+
   // Update the color attribute and contexts
   _colorChanged(attr, oldValue, newValue) {
-    this.setAttribute(attr, newValue);
+    // this.setAttribute(attr, newValue);
+    this[attr].value = newValue;
     // If the new value has a dark background, update children elements
     this._updateContext(newValue);
   }

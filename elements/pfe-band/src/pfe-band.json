@@ -9,13 +9,12 @@
   "properties": {
     "pfe-color": {
       "title": "Background color",
-      "name": "pfe-color",
       "type": "string",
       "enum": [
         "lightest",
-        "light",
+        "lighter",
         "base",
-        "dark",
+        "darker",
         "darkest",
         "complement",
         "accent"
@@ -25,10 +24,15 @@
     },
     "pfe-img-src": {
       "title": "Background image",
-      "name": "pfe-img-src",
       "type": "string",
       "default": "",
       "observer": "_imgSrcChanged"
+    },
+    "pfe-aside": {
+      "title": "Aside positioning",
+      "type": "string",
+      "default": "",
+      "observer": ""
     }
   },
   "required": ["name"],

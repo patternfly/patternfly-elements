@@ -82,8 +82,8 @@ module.exports = function factory({
               let rawCSS = sass.renderSync({
                 file: path.join("./src", styleUrl)
               }).css;
-              rawCSS = stripCssComments(cssResult).trim();
-              if (rawCSS && rawCSS !== "") {
+              rawCSS = stripCssComments(rawCSS).trim();
+              if (rawCSS.toString() !== "") {
                 cssResult = `<style>${rawCSS}</style>`;
               }
             }

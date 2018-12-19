@@ -1,7 +1,6 @@
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: band;
-$SLOT: "";
 $aside-sm: 240px;
 $aside-lg: 300px;
 
@@ -20,10 +19,7 @@ $aside-lg: 300px;
   --pfe-band--backgroundPositionY:             center;
 
   // Border settings
-  --pfe-band--borderColor:                     transparent;
-  --pfe-band--borderTopWidth:                  #{pfe-var(surface--border-width)};
-  --pfe-band--borderBottomWidth:               #{pfe-var(surface--border-width)};
-  --pfe-band--borderStyle:                     #{pfe-var(surface--border-style)};
+  --pfe-band--border:                          #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
 
   // Accent title styles
   --pfe-band_header-title--color:             #{pfe-color(ui-accent)};
@@ -57,13 +53,38 @@ $aside-lg: 300px;
     --pfe-band--padding: calc(#{pfe-local(padding__vertical)} / 2) #{pfe-local(padding__horizontal)};
   }
 
+  // Wrapper sets padding and background visuals
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+
+  // Padding 
+  padding: calc(#{pfe-local(padding__vertical)} / 2)  #{pfe-local(padding__horizontal)};
+
+  @media (min-width: #{pfe-breakpoint(sm)}) {
+    padding: #{pfe-local(padding)};
+  }
+
+  // Border styles
+  border: #{pfe-local(border)};
+
+  // Base colors
+  background-color:      #{pfe-local(backgroundColor)};
+  background-position-x: #{pfe-local(backgroundPositionX)};
+  background-position-y: #{pfe-local(backgroundPositionY)};
+  color:                 #{pfe-radio(color, text)};
+
+  // Remove background color for print
+  @include pfe-no-print-background;
+
   // Tag element styles
   *, *::before, *::after {
     box-sizing: border-box;
   }
 }
 
-@each $color in (dark, darkest, accent, complement, light, lightest) {
+@each $color in (darker, darkest, accent, complement, lighter, lightest) {
   :host([pfe-color="#{$color}"]) {
     --pfe-band--backgroundColor:                  #{pfe-color(surface--#{$color})};
     --pfe-broadcasted--color--text:               #{pfe-color(surface--#{$color}--text)};
@@ -82,57 +103,28 @@ $aside-lg: 300px;
 //  pfe-local returns: var(--pfe-band(_SLOT)--argument);
 
 .pfe-band {
-  // Wrapper sets padding and background visuals
-  &__wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-items: flex-start;
-
-    // Padding 
-    padding: calc(#{pfe-local(padding__vertical)} / 2)  #{pfe-local(padding__horizontal)};
-
-    @media (min-width: #{pfe-breakpoint(sm)}) {
-      padding: #{pfe-local(padding)};
-    }
-
-    // Border styles
-    border: 0px #{pfe-local(borderStyle)} #{pfe-local(borderColor)};
-    border-top-width:    #{pfe-local(borderTopWidth)};
-    border-bottom-width: #{pfe-local(borderBottomWidth)};
-
-
-    // Base colors
-    background-color:      #{pfe-local(backgroundColor)};
-    background-position-x: #{pfe-local(backgroundPositionX)};
-    background-position-y: #{pfe-local(backgroundPositionY)};
-    color:                 #{pfe-radio(color, text)};
-
-    // Remove background color for print
-    @include pfe-no-print-background;
-  }
-
   &__container,
   &__content {
     // Fill the majority of the band
     flex-grow: 1;
 
-    // Aside layouts
+    // Set the default flow for the layout in the container and content regions
     display:        flex;
     flex-direction: column;
     @media (min-width: #{pfe-breakpoint(md)}) {
       flex-direction: row;
     }
   }
+   // Wraps main and aside
   &__container {
-    margin:         0 auto;
+    margin:    0 auto;
     max-width: #{pfe-local(width)};
   }
-  &__container, // wraps main and aside
+  &__container,
   &__content { // wraps body and aside
     // spacing between children on mobile (around aside region)
     > *:not(:last-child) {
-      @media (max-width: #{pfe-breakpoint(md)}) {
+      @media (max-width: #{pfe-breakpoint(md) - 1}) {
          margin-bottom: #{pfe-var(container-spacer)};
       }
     }
@@ -141,7 +133,7 @@ $aside-lg: 300px;
   &__main,
   &__body {
     flex: 1;
-    // spacing between children:; 
+    // spacing between children
     > *:not(:last-child) {
          margin-bottom: #{pfe-var(container-spacer)};
     }
@@ -153,7 +145,7 @@ $aside-lg: 300px;
   &__aside {
     display: block;
     display: grid;  // for elegant display of children
-    grid-column: 1fr;
+    grid-template-columns: 1fr;
     grid-gap: #{pfe-var(container-spacer)};
 
     &::slotted(*) {
@@ -161,18 +153,14 @@ $aside-lg: 300px;
     }
   }
   &__header {
-    $SLOT: header;
-    
     @media screen and (min-width: #{pfe-breakpoint(md)}) {
-      grid-template-columns: #{pfe-local(layout)};
+      grid-template-columns: #{pfe-local(layout, header)};
     }
   }
   &__body {
-    $SLOT: body;
-
     flex-grow: 1;
     @media screen and (min-width: #{pfe-breakpoint(md)}) {
-      grid-template-columns: #{pfe-local(layout)};
+      grid-template-columns: #{pfe-local(layout, body)};
       [pfe-aside~="full"] & {
         margin-right: 0;
         margin-left: 0;
@@ -180,36 +168,27 @@ $aside-lg: 300px;
     }
   }
   &__footer {
-    $SLOT: footer;
-
     @media screen and (min-width: #{pfe-breakpoint(md)}) {
-      grid-template-columns: #{pfe-local(layout)};
+      grid-template-columns: #{pfe-local(layout, footer)};
     }
   }
 
   &__aside {
-    $SLOT:     aside;
     min-width: $aside-sm;
 
     @media screen and (min-width: #{pfe-breakpoint(md)}) {
-      grid-template-columns: #{pfe-local(layout)};
-      flex-basis:            #{pfe-local(layout)};
+      grid-template-columns: #{pfe-local(layout, aside)};
     }
-    @media screen and (min-width: #{pfe-breakpoint(md)}) and (max-width: #{pfe-breakpoint(lg)}) {
-      --pfe-band_aside--layout: #{$aside-sm}; // set limiter
+    @media screen and (min-width: #{pfe-breakpoint(md)}) and (max-width: #{pfe-breakpoint(lg) - 1}) {
+      --pfe-band_aside--layout: #{$aside-sm}; // Set limit to aside width
     }
-  }
-  &__aside {  // walk away from aside SLOT var to invoke gutter
-    $SLOT: "";
     @media screen and (min-width: #{pfe-breakpoint(md)}) {
-      margin: 0;
+      margin-left: #{pfe-local(gutter)};
+      order: 2;
       [pfe-aside~="left"] & {
         order: -1;
-        margin-right: #{pfe-local(gutter)}; // apply to aside region because of flex-basis
-      }
-      [pfe-aside~="right"] & {
-        order: 2;
-        margin-left: #{pfe-local(gutter)};
+        margin-right: #{pfe-local(gutter)};
+        margin-left: 0;
       }
     }
   }

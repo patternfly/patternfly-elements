@@ -58,7 +58,7 @@ class PfeBand extends PFElement {
 
   static get cascadingAttributes() {
     return {
-      aside: ".pfe-band__wrapper"
+      "pfe-aside": ".pfe-band__container"
     };
   }
 
@@ -69,28 +69,15 @@ class PfeBand extends PFElement {
 
   constructor() {
     super(PfeBand);
-    // Map the imported properties json to real props on the element
-    // @notice static getter of properties is built via tooling
-    // to edit modify src/pfe-band.json
-    let props = PfeBand.properties;
-    for (let p in props) {
-      if (props.hasOwnProperty(p)) {
-        if (this.hasAttribute(p)) {
-          this[p] = this.getAttribute(p);
-        } else {
-          this.setAttribute(p, props[p].value);
-          this[p] = props[p].value;
-        }
-      }
-    }
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    // This is where it has content and should have width!
-    // this.shadowRoot.style.setProperty("--pfe-eq--width", this.size().width);
-    // this.shadowRoot.style.setProperty("--pfe-eq--height", this.size().height);
+    // If a color is defined, update context for children
+    if (this["pfe-color"]) {
+      this._updateContext(this["pfe-color"].value);
+    }
   }
 
   // disconnectedCallback() {}
@@ -98,14 +85,37 @@ class PfeBand extends PFElement {
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
 
-    switch (attr) {
-      case "pfe-img-src": {
-        // Set the image as the background image
-        this.shadowRoot.querySelector(
-          ".pfe-band__wrapper"
-        ).style.backgroundImage = newValue ? `url('${newValue}')` : ``;
-        break;
-      }
+    // If the observer is defined in the attribute properties
+    if (this[attr] && this[attr].observer) {
+      // Get the observer function
+      let observer = this[this[attr].observer].bind(this);
+      // If it's a function, allow it to run
+      if (typeof observer === "function") observer(attr, oldValue, newValue);
+    }
+  }
+
+  // Update the color attribute and contexts
+  _colorChanged(attr, oldValue, newValue) {
+    this.setAttribute(attr, newValue);
+    // If the new value has a dark background, update children elements
+    this._updateContext(newValue);
+  }
+
+  // Update the background image
+  _imgSrcChanged(attr, oldValue, newValue) {
+    // Set the image as the background image
+    this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
+  }
+
+  // Set the children's context if parent background is dark
+  _updateContext(context) {
+    if (["darkest", "dark"].includes(context)) {
+      ["pfe-cta"].forEach(elementName => {
+        const els = [...this.querySelectorAll(elementName)];
+        els.forEach(el => {
+          el.setAttribute("on", "dark");
+        });
+      });
     }
   }
 }

@@ -1,12 +1,16 @@
 import { storiesOf } from "@storybook/polymer";
 // import { withKnobs, text, select } from "@storybook/addon-knobs/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
+
 import { escapeHTML } from "../../.storybook/utils.js";
+
 import PfeBand from "./pfe-band.js";
 
 const stories = storiesOf("Band", module);
+
 stories.addDecorator(storybookBridge.withKnobs);
-stories.add("pfe-band", () => {
+
+stories.add("Live demo", () => {
   var binding = {};
   let attributes = "";
 
@@ -61,8 +65,6 @@ stories.add("pfe-band", () => {
         attributes += ` ${kebab}="${binding[key]}"`;
     }
   }
-
-  console.log(attributes);
 
   return `
 <pfe-band${attributes}>

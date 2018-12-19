@@ -24,53 +24,217 @@ import PFElement from "../pfelement/pfelement.js";
 
 class PfeBand extends PFElement {
   get html() {
-    return `
-<div class="pfe-band__wrapper">
-  <div class="pfe-band__container">
+    return `<style>:host {
+  display: block;
+  --pfe-band--padding__vertical:                 calc( var(--pfe-theme--container-spacer, 1rem) * 4);
+  --pfe-band--padding__horizontal:               calc( var(--pfe-theme--container-spacer, 1rem) * 1);
+  --pfe-band--padding:                         var(--pfe-band--padding__vertical)  var(--pfe-band--padding__horizontal);
+  --pfe-band--backgroundColor:                 var(--pfe-theme--color--surface--base, #dfdfdf);
+  --pfe-band--backgroundPositionX:             center;
+  --pfe-band--backgroundPositionY:             center;
+  --pfe-band--border:                          var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) transparent;
+  --pfe-band_header-title--color:             var(--pfe-theme--color--ui-accent, #fe460d);
+  --pfe-band_header--layout:                   1fr;
+  --pfe-band_body--layout:                     1fr;
+  --pfe-band_footer--layout:                   1fr;
+  --pfe-band_aside--layout:                    300px;
+  --pfe-band--gutter:                          calc(var(--pfe-theme--container-spacer, 1rem) * 2);
+  --pfe-broadcasted--color--text:              var(--pfe-theme--color--surface--base--text, #333);
+  --pfe-broadcasted--color--ui-link:           var(--pfe-theme--color--surface--base--link, #00538c);
+  --pfe-broadcasted--color--ui-link--visited:  var(--pfe-theme--color--surface--base--link--visited, #7551a6);
+  --pfe-broadcasted--color--ui-link--hover:    var(--pfe-theme--color--surface--base--link--hover, #00305b);
+  --pfe-broadcasted--color--ui-link--focus:    var(--pfe-theme--color--surface--base--link--focus, #00305b);
+  --pfe-band--width: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+  padding: calc(var(--pfe-band--padding__vertical) / 2) var(--pfe-band--padding__horizontal);
+  border: var(--pfe-band--border);
+  background-color: var(--pfe-band--backgroundColor);
+  background-position-x: var(--pfe-band--backgroundPositionX);
+  background-position-y: var(--pfe-band--backgroundPositionY);
+  color: var(--pfe-broadcasted--color--text); }
+  @media screen and (min-width: 768px) {
+    :host {
+      --pfe-band--width: calc( 768px - calc(var(--pfe-band--padding__horizontal) * 4) ); } }
+  @media screen and (min-width: 992px) {
+    :host {
+      --pfe-band--width: calc( 992px - calc(var(--pfe-band--padding__horizontal) * 4) ); } }
+  @media screen and (min-width: 1200px) {
+    :host {
+      --pfe-band--width: calc( 1200px - calc(var(--pfe-band--padding__horizontal) * 4) ); } }
+  @media print {
+    :host {
+      --pfe-band--padding: calc(var(--pfe-band--padding__vertical) / 2) var(--pfe-band--padding__horizontal); } }
+  @media (min-width: 576px) {
+    :host {
+      padding: var(--pfe-band--padding); } }
+  @media print {
+    :host {
+      background-color: white !important;
+      background-image: none !important;
+      box-shadow: none !important; } }
+  :host *, :host *::before, :host *::after {
+    box-sizing: border-box; }
+
+:host([pfe-color="darker"]) {
+  --pfe-band--backgroundColor:                  var(--pfe-theme--color--surface--darker, #464646);
+  --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--darker--text, #fff);
+  --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--darker--link, #99ccff);
+  --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--darker--link--visited, #b38cd9);
+  --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--darker--link--hover, #cce6ff);
+  --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--darker--link--focus, #cce6ff); }
+
+:host([pfe-color="darkest"]) {
+  --pfe-band--backgroundColor:                  var(--pfe-theme--color--surface--darkest, #131313);
+  --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--darkest--text, #fff);
+  --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--darkest--link, #99ccff);
+  --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--darkest--link--visited, #b38cd9);
+  --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--darkest--link--hover, #cce6ff);
+  --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--darkest--link--focus, #cce6ff); }
+
+:host([pfe-color="accent"]) {
+  --pfe-band--backgroundColor:                  var(--pfe-theme--color--surface--accent, #fe460d);
+  --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--accent--text, #fff);
+  --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--accent--link, #99ccff);
+  --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--accent--link--visited, #b38cd9);
+  --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--accent--link--hover, #cce6ff);
+  --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--accent--link--focus, #cce6ff); }
+
+:host([pfe-color="complement"]) {
+  --pfe-band--backgroundColor:                  var(--pfe-theme--color--surface--complement, #0477a4);
+  --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--complement--text, #fff);
+  --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--complement--link, #99ccff);
+  --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--complement--link--visited, #b38cd9);
+  --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--complement--link--hover, #cce6ff);
+  --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--complement--link--focus, #cce6ff); }
+
+:host([pfe-color="lighter"]) {
+  --pfe-band--backgroundColor:                  var(--pfe-theme--color--surface--lighter, #ececec);
+  --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--lighter--text, #333);
+  --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--lighter--link, #06c);
+  --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--lighter--link--visited, rebeccapurple);
+  --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--lighter--link--hover, #003366);
+  --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--lighter--link--focus, #003366); }
+
+:host([pfe-color="lightest"]) {
+  --pfe-band--backgroundColor:                  var(--pfe-theme--color--surface--lightest, #fff);
+  --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--lightest--text, #333);
+  --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--lightest--link, #06c);
+  --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--lightest--link--visited, rebeccapurple);
+  --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--lightest--link--hover, #003366);
+  --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--lightest--link--focus, #003366); }
+
+:host([pfe-size="small"]) {
+  --pfe-band--padding:   calc(var(--pfe-band--padding__vertical) / 4)  var(--pfe-band--padding__horizontal); }
+
+.pfe-band__container, .pfe-band__content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column; }
+  @media (min-width: 768px) {
+    .pfe-band__container, .pfe-band__content {
+      flex-direction: row; } }
+
+.pfe-band__container {
+  margin: 0 auto;
+  max-width: var(--pfe-band--width); }
+
+@media (max-width: 768px - 1) {
+  .pfe-band__container > *:not(:last-child), .pfe-band__content > *:not(:last-child) {
+    margin-bottom: var(--pfe-theme--container-spacer, 1rem); } }
+
+.pfe-band__main, .pfe-band__body {
+  flex: 1; }
+  .pfe-band__main > *:not(:last-child), .pfe-band__body > *:not(:last-child) {
+    margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+
+.pfe-band__header, .pfe-band__body, .pfe-band__footer, .pfe-band__aside {
+  display: block;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: var(--pfe-theme--container-spacer, 1rem); }
+  .pfe-band__header::slotted(*), .pfe-band__body::slotted(*), .pfe-band__footer::slotted(*), .pfe-band__aside::slotted(*) {
+    margin-top: 0; }
+
+@media screen and (min-width: 768px) {
+  .pfe-band__header {
+    grid-template-columns: var(--pfe-band_header--layout); } }
+
+.pfe-band__body {
+  flex-grow: 1; }
+  @media screen and (min-width: 768px) {
+    .pfe-band__body {
+      grid-template-columns: var(--pfe-band_body--layout); }
+      [pfe-aside~="full"] .pfe-band__body {
+        margin-right: 0;
+        margin-left: 0; } }
+
+@media screen and (min-width: 768px) {
+  .pfe-band__footer {
+    grid-template-columns: var(--pfe-band_footer--layout); } }
+
+.pfe-band__aside {
+  min-width: 240px; }
+  @media screen and (min-width: 768px) {
+    .pfe-band__aside {
+      grid-template-columns: var(--pfe-band_aside--layout); } }
+  @media screen and (min-width: 768px) and (max-width: 992px - 1) {
+    .pfe-band__aside {
+      --pfe-band_aside--layout: 240px; } }
+  @media screen and (min-width: 768px) {
+    .pfe-band__aside {
+      margin-left: var(--pfe-band--gutter);
+      order: 2; }
+      [pfe-aside~="left"] .pfe-band__aside {
+        order: -1;
+        margin-right: var(--pfe-band--gutter);
+        margin-left: 0; } }</style>
+<div class="pfe-band__container">
+  ${
+    this.has_slot("aside") &&
+    this.asidePosition.includes("full") &&
+    this.asidePosition.includes("top")
+      ? `<slot class="pfe-band__aside" name="aside"></slot>`
+      : ""
+  }
+  <section class="pfe-band__main">
     ${
-      this.has_slot("aside") &&
-      this.asidePosition.includes("full") &&
-      this.asidePosition.includes("top")
-        ? `<slot class="pfe-band__aside" name="aside"></slot>`
+      this.has_slot("header")
+        ? `<slot class="pfe-band__header" name="header"></slot>`
         : ""
     }
-    <section class="pfe-band__main">
+    <div class="pfe-band__content">
       ${
-        this.has_slot("header")
-          ? `<slot class="pfe-band__header" name="header"></slot>`
+        this.has_slot("aside") &&
+        !this.asidePosition.includes("full") &&
+        this.asidePosition.includes("top")
+          ? `<slot class="pfe-band__aside" name="aside"></slot>`
           : ""
       }
-      <div class="pfe-band__content">
-        ${
-          this.has_slot("aside") &&
-          !this.asidePosition.includes("full") &&
-          this.asidePosition.includes("top")
-            ? `<slot class="pfe-band__aside" name="aside"></slot>`
-            : ""
-        }
-        <slot class="pfe-band__body"></slot>
-        ${
-          this.has_slot("aside") &&
-          !this.asidePosition.includes("full") &&
-          !this.asidePosition.includes("top")
-            ? `<slot class="pfe-band__aside" name="aside"></slot>`
-            : ""
-        }
-      </div>
+      <slot class="pfe-band__body"></slot>
       ${
-        this.has_slot("footer")
-          ? `<slot class="pfe-band__footer" name="footer"></slot>`
+        this.has_slot("aside") &&
+        !this.asidePosition.includes("full") &&
+        !this.asidePosition.includes("top")
+          ? `<slot class="pfe-band__aside" name="aside"></slot>`
           : ""
       }
-    </section>
+    </div>
     ${
-      this.has_slot("aside") &&
-      this.asidePosition.includes("full") &&
-      !this.asidePosition.includes("top")
-        ? `<slot class="pfe-band__aside" name="aside"></slot>`
+      this.has_slot("footer")
+        ? `<slot class="pfe-band__footer" name="footer"></slot>`
         : ""
     }
-  </div>
+  </section>
+  ${
+    this.has_slot("aside") &&
+    this.asidePosition.includes("full") &&
+    !this.asidePosition.includes("top")
+      ? `<slot class="pfe-band__aside" name="aside"></slot>`
+      : ""
+  }
 </div>`;
   }
 
@@ -78,13 +242,12 @@ class PfeBand extends PFElement {
     return {
       "pfe-color": {
         title: "Background color",
-        name: "pfe-color",
         type: "string",
         enum: [
           "lightest",
-          "light",
+          "lighter",
           "base",
-          "dark",
+          "darker",
           "darkest",
           "complement",
           "accent"
@@ -94,10 +257,15 @@ class PfeBand extends PFElement {
       },
       "pfe-img-src": {
         title: "Background image",
-        name: "pfe-img-src",
         type: "string",
         default: "",
         observer: "_imgSrcChanged"
+      },
+      "pfe-aside": {
+        title: "Aside positioning",
+        type: "string",
+        default: "",
+        observer: ""
       }
     };
   }
@@ -137,7 +305,7 @@ class PfeBand extends PFElement {
 
   static get cascadingAttributes() {
     return {
-      aside: ".pfe-band__wrapper"
+      "pfe-aside": ".pfe-band__container"
     };
   }
 
@@ -148,28 +316,15 @@ class PfeBand extends PFElement {
 
   constructor() {
     super(PfeBand);
-    // Map the imported properties json to real props on the element
-    // @notice static getter of properties is built via tooling
-    // to edit modify src/pfe-band.json
-    let props = PfeBand.properties;
-    for (let p in props) {
-      if (props.hasOwnProperty(p)) {
-        if (this.hasAttribute(p)) {
-          this[p] = this.getAttribute(p);
-        } else {
-          this.setAttribute(p, props[p].value);
-          this[p] = props[p].value;
-        }
-      }
-    }
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    // This is where it has content and should have width!
-    // this.shadowRoot.style.setProperty("--pfe-eq--width", this.size().width);
-    // this.shadowRoot.style.setProperty("--pfe-eq--height", this.size().height);
+    // If a color is defined, update context for children
+    if (this["pfe-color"]) {
+      this._updateContext(this["pfe-color"].value);
+    }
   }
 
   // disconnectedCallback() {}
@@ -177,14 +332,37 @@ class PfeBand extends PFElement {
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
 
-    switch (attr) {
-      case "pfe-img-src": {
-        // Set the image as the background image
-        this.shadowRoot.querySelector(
-          ".pfe-band__wrapper"
-        ).style.backgroundImage = newValue ? `url('${newValue}')` : ``;
-        break;
-      }
+    // If the observer is defined in the attribute properties
+    if (this[attr] && this[attr].observer) {
+      // Get the observer function
+      let observer = this[this[attr].observer].bind(this);
+      // If it's a function, allow it to run
+      if (typeof observer === "function") observer(attr, oldValue, newValue);
+    }
+  }
+
+  // Update the color attribute and contexts
+  _colorChanged(attr, oldValue, newValue) {
+    this.setAttribute(attr, newValue);
+    // If the new value has a dark background, update children elements
+    this._updateContext(newValue);
+  }
+
+  // Update the background image
+  _imgSrcChanged(attr, oldValue, newValue) {
+    // Set the image as the background image
+    this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
+  }
+
+  // Set the children's context if parent background is dark
+  _updateContext(context) {
+    if (["darkest", "dark"].includes(context)) {
+      ["pfe-cta"].forEach(elementName => {
+        const els = [...this.querySelectorAll(elementName)];
+        els.forEach(el => {
+          el.setAttribute("on", "dark");
+        });
+      });
     }
   }
 }

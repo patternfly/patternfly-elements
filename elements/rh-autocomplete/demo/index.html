@@ -20,27 +20,29 @@
     ])</script>
   </head>
   <body unresolved>
-    <rh-autocomplete id="search-lazy-loading" init-value="uni" debounce="500"></rh-autocomplete>
+    <rh-autocomplete id="search-lazy-loading" init-value="uni" debounce="500" loading></rh-autocomplete>
     <script>
       const searchAutocomplete = document.querySelector('#search-lazy-loading');
 
       // autocomplete call
       searchAutocomplete.autocompleteRequest = function(params, callback) {
         var xhr = new XMLHttpRequest();
-
+        searchAutocomplete.setAttribute('loading', '');
         xhr.onload = function() {
-          const response = JSON.parse(xhr.responseText);
+          searchAutocomplete.removeAttribute('loading', '');
 
-          if(response.status === 404) return;
+          if(xhr.status === 404) {
+            callback([]);
+          } else {
+            const response = JSON.parse(xhr.responseText);
+            const regx = new RegExp("\^" + params.query, "i");
 
-          const regx =  new RegExp("\^" + params.query, "i");
-
-          let responseReady = response.reduce(function(acc, item) {
-            if (regx.test(item.name)) acc.push(item.name);
-            return acc;
-          }, []);
-
-          callback(responseReady);
+            let responseReady = response.reduce(function(acc, item) {
+              if (regx.test(item.name)) acc.push(item.name);
+              return acc;
+            }, []);
+            callback(responseReady);
+          }
         };
 
         const url = 'https://restcountries.eu/rest/v2/name/' + params.query;

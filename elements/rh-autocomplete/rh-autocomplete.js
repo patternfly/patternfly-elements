@@ -127,7 +127,6 @@ class RhAutocomplete extends RHElement {
 
           searchBox.querySelector("input").removeAttribute("disabled");
         } else {
-          console.log(searchBox.querySelectorAll("button"));
           searchBox.querySelectorAll("button").forEach(e => {
             e.setAttribute("disabled", "");
           });
@@ -527,7 +526,7 @@ button.search-button:disabled svg {
       if (newVal === "") {
         this._searchBtn.setAttribute("disabled", true);
       } else {
-        if (!this._searchBtn.hasAttribute("disabled"))
+        if (!this._input.hasAttribute("disabled"))
           this._searchBtn.removeAttribute("disabled");
         this._clearBtn.removeAttribute("hidden");
       }

@@ -34,6 +34,7 @@ class PfeBand extends PFElement {
   --pfe-band--backgroundPositionY:             center;
   --pfe-band--border:                          var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) transparent;
   --pfe-band_header-title--color:             var(--pfe-theme--color--ui-accent, #fe460d);
+  --pfe-band--layout:                          1fr;
   --pfe-band_header--layout:                   1fr;
   --pfe-band_body--layout:                     1fr;
   --pfe-band_footer--layout:                   1fr;
@@ -129,113 +130,77 @@ class PfeBand extends PFElement {
 :host([pfe-size="small"]) {
   --pfe-band--padding:   calc(var(--pfe-band--padding__vertical) / 4)  var(--pfe-band--padding__horizontal); }
 
-.pfe-band__container, .pfe-band__content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column; }
-  @media (min-width: 768px) {
-    .pfe-band__container, .pfe-band__content {
-      flex-direction: row; } }
-
 .pfe-band__container {
   margin: 0 auto;
-  max-width: var(--pfe-band--width); }
-
-@media (max-width: 768px - 1) {
-  .pfe-band__container > *:not(:last-child), .pfe-band__content > *:not(:last-child) {
-    margin-bottom: var(--pfe-theme--container-spacer, 1rem); } }
-
-.pfe-band__main, .pfe-band__body {
-  flex: 1; }
-  .pfe-band__main > *:not(:last-child), .pfe-band__body > *:not(:last-child) {
-    margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
-
-.pfe-band__header, .pfe-band__body, .pfe-band__footer, .pfe-band__aside {
-  display: block;
+  max-width: var(--pfe-band--width);
   display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: var(--pfe-theme--container-spacer, 1rem); }
-  .pfe-band__header::slotted(*), .pfe-band__body::slotted(*), .pfe-band__footer::slotted(*), .pfe-band__aside::slotted(*) {
-    margin-top: 0; }
+  grid-gap: var(--pfe-theme--container-spacer, 1rem) calc(var(--pfe-theme--container-spacer, 1rem) * 4);
+  grid-template-columns: var(--pfe-band--layout);
+  grid-template-rows: max-content;
+  grid-template-areas: "header" "body" "footer" "aside"; }
+  [pfe-aside-mobile="top"] .pfe-band__container {
+    grid-template-areas: "aside" "header" "body" "footer"; }
+  @media (min-width: 576px) {
+    .pfe-band__container {
+      --pfe-band--layout: 3fr minmax($aside-sm, 1fr);
+      grid-template-areas: "header header" "body aside" "footer footer"; } }
+  @media (max-width: 768px - 1) {
+    .pfe-band__container > *:not(:last-child) {
+      margin-bottom: var(--pfe-theme--container-spacer, 1rem); } }
 
-@media screen and (min-width: 768px) {
-  .pfe-band__header {
-    grid-template-columns: var(--pfe-band_header--layout); } }
+.pfe-band__header {
+  grid-area: header;
+  display: grid;
+  grid-gap: var(--pfe-theme--container-spacer, 1rem);
+  grid-template-columns: var(--pfe-band_header--layout);
+  grid-template-rows: max-content; }
+  .pfe-band__header > *::slotted(*) {
+    margin: 0; }
 
 .pfe-band__body {
-  flex-grow: 1; }
-  @media screen and (min-width: 768px) {
-    .pfe-band__body {
-      grid-template-columns: var(--pfe-band_body--layout); }
-      [pfe-aside-height="full"] .pfe-band__body {
-        margin-right: 0;
-        margin-left: 0; } }
+  grid-area: body;
+  display: grid;
+  grid-gap: var(--pfe-theme--container-spacer, 1rem);
+  grid-template-columns: var(--pfe-band_body--layout);
+  grid-template-rows: max-content; }
+  .pfe-band__body > *::slotted(*) {
+    margin: 0; }
 
-@media screen and (min-width: 768px) {
-  .pfe-band__footer {
-    grid-template-columns: var(--pfe-band_footer--layout); } }
+.pfe-band__footer {
+  grid-area: footer;
+  display: grid;
+  grid-gap: var(--pfe-theme--container-spacer, 1rem);
+  grid-template-columns: var(--pfe-band_footer--layout);
+  grid-template-rows: max-content; }
+  .pfe-band__footer > *::slotted(*) {
+    margin: 0; }
 
 .pfe-band__aside {
-  min-width: 240px; }
-  @media screen and (min-width: 768px) {
-    .pfe-band__aside {
-      grid-template-columns: var(--pfe-band_aside--layout); } }
-  @media screen and (min-width: 768px) and (max-width: 992px - 1) {
-    .pfe-band__aside {
-      --pfe-band_aside--layout: 240px; } }
-  @media screen and (min-width: 768px) {
-    .pfe-band__aside {
-      margin-left: var(--pfe-band--gutter);
-      order: 2; }
-      [pfe-aside-desktop="left"] .pfe-band__aside {
-        order: -1;
-        margin-right: var(--pfe-band--gutter);
-        margin-left: 0; } }</style>
-<div class="pfe-band__container">
+  grid-area: aside;
+  display: grid;
+  grid-gap: var(--pfe-theme--container-spacer, 1rem);
+  grid-template-columns: var(--pfe-band_aside--layout);
+  grid-template-rows: max-content; }
+  .pfe-band__aside > *::slotted(*) {
+    margin: 0; }</style>
+<section class="pfe-band__container">
   ${
-    this.has_slot("aside") &&
-    this.asidePosition.height === "full" &&
-    this.asidePosition.mobile === "top"
-      ? `<slot class="pfe-band__aside" name="aside"></slot>`
+    this.has_slot("header")
+      ? `<div class="pfe-band__header"><slot name="header"></slot></div>`
       : ""
   }
-  <section class="pfe-band__main">
-    ${
-      this.has_slot("header")
-        ? `<slot class="pfe-band__header" name="header"></slot>`
-        : ""
-    }
-    <div class="pfe-band__content">
-      ${
-        this.has_slot("aside") &&
-        this.asidePosition.height !== "full" &&
-        this.asidePosition.mobile === "top"
-          ? `<slot class="pfe-band__aside" name="aside"></slot>`
-          : ""
-      }
-      <slot class="pfe-band__body"></slot>
-      ${
-        this.has_slot("aside") &&
-        this.asidePosition.height !== "full" &&
-        this.asidePosition.mobile !== "top"
-          ? `<slot class="pfe-band__aside" name="aside"></slot>`
-          : ""
-      }
-    </div>
-    ${
-      this.has_slot("footer")
-        ? `<slot class="pfe-band__footer" name="footer"></slot>`
-        : ""
-    }
-  </section>
+  <div class="pfe-band__body"><slot></slot></div>
   ${
-    this.has_slot("aside") &&
-    this.asidePosition.height === "full" &&
-    this.asidePosition.mobile !== "top"
-      ? `<slot class="pfe-band__aside" name="aside"></slot>`
+    this.has_slot("footer")
+      ? `<div class="pfe-band__footer"><slot name="footer"></slot></div>`
       : ""
   }
-</div>`;
+  ${
+    this.has_slot("aside")
+      ? `<div class="pfe-band__aside"><slot name="aside"></slot></div>`
+      : ""
+  }
+</section>`;
   }
 
   static get properties() {

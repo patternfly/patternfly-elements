@@ -2,68 +2,103 @@ import { storiesOf } from "@storybook/polymer";
 import { withKnobs, text, select } from "@storybook/addon-knobs/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 
-import { escapeHTML, dynamicKnobs } from "../../../.storybook/utils.js";
+import {
+  escapeHTML,
+  dynamicKnobs,
+  component,
+  autoHeading,
+  autoContent
+} from "../../../.storybook/utils.js";
+const cleaner = require("clean-html");
 
 import PfeBand from "../pfe-band.js";
 
+const darkThemes = ["darker", "darkest", "complement", "accent"];
+
 const stories = storiesOf("Band", module);
+
+// Define the templates to be used
+const template = (data = {}) => {
+  return component("pfe-band", data.properties, [
+    {
+      tag: "h1",
+      slot: "header",
+      check: data.hasHeader,
+      content: autoHeading()
+    },
+    {
+      content: autoContent(4, 3)
+    },
+    {
+      tag: "pfe-cta",
+      slot: "footer",
+      check: data.hasFooter,
+      attributes: {
+        priority: "primary"
+      },
+      content: '<a href="#">Learn more</a>'
+    },
+    {
+      slot: "aside",
+      check: data.hasAside,
+      component: component(
+        "pfe-card",
+        {
+          slot: "aside",
+          color: darkThemes.includes(data.properties["pfe-color"])
+            ? "lightest"
+            : "complement"
+        },
+        [
+          {
+            tag: "h3",
+            slot: "header",
+            content: "Aside"
+          },
+          {
+            content: autoContent(1, 1, true)
+          },
+          {
+            tag: "pfe-cta",
+            slot: "footer",
+            content: '<a href="#">Learn more</a>',
+            attributes: {
+              priority: "tertiary",
+              on: darkThemes.includes(data.properties["pfe-color"])
+                ? "dark"
+                : ""
+            }
+          }
+        ]
+      )
+    }
+  ]);
+};
 
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeBand.tag, () => {
-  let attributes = "";
-  const binding = dynamicKnobs(PfeBand.properties, storybookBridge);
+  const binding = {};
 
-  Object.entries(binding).forEach(prop => {
-    let key = prop[0];
-    let value = prop[1];
-    // Ensure ke-bab case
-    let kebab = key.replace(
-      /[A-Z\u00C0-\u00D6\u00D8-\u00DE]/g,
-      match => `-${match.toLowerCase()}`
-    );
-    if (value) attributes += ` ${kebab}="${value}"`;
-  });
+  binding.properties = dynamicKnobs(PfeBand.properties, storybookBridge);
+  binding["hasHeader"] = storybookBridge["boolean"]("Header slot", true);
+  binding["hasFooter"] = storybookBridge["boolean"]("Footer slot", true);
+  binding["hasAside"] = storybookBridge["boolean"]("Aside slot", true);
 
-  console.log(binding);
+  let rendered = template(binding);
+  cleaner.clean(
+    rendered,
+    {
+      indent: "    ",
+      "remove-attributes": [],
+      wrap: 0
+    },
+    html => (rendered = html)
+  );
 
-  return `
-<pfe-band${attributes}>
-  <h1 slot="header">Lorem ipsum</h1>
-  <article>
-    <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
-    <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-    <pfe-cta priority="primary" slot="footer">
-      <a href="#">Learn more</a>
-    </pfe-cta>
-  </article>
-  <pfe-card color="complement" slot="aside">
-    <h3 slot="header">Aside</h3>
-    <p>Ut wisi enim ad minim veniam.</p>
-    <pfe-cta slot="footer" priority="tertiary" on="dark">
-      <a href="#">Learn more</a>
-    </pfe-cta>
-  </pfe-card>
-</pfe-band>
-
+  return `${rendered}
 <pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold;border: 1px solid #bccc;">
-${escapeHTML(`<pfe-band${attributes}>
-  <h1 slot="header">Lorem ipsum</h1>
-  <article>
-    <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
-    <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-    <pfe-cta priority="primary" slot="footer">
-      <a href="#">Learn more</a>
-    </pfe-cta>
-  </article>
-  <pfe-card color="complement" slot="aside">
-    <h3 slot="header">Aside</h3>
-    <p>Ut wisi enim ad minim veniam.</p>
-    <pfe-cta slot="footer" priority="tertiary" on="dark">
-      <a href="#">Learn more</a>
-    </pfe-cta>
-  </pfe-card>
-</pfe-band>`)}
+${escapeHTML(rendered)}
 </pre>
 `;
 });

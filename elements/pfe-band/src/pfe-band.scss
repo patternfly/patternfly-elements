@@ -25,6 +25,7 @@ $aside-lg: 300px;
   --pfe-band_header-title--color:             #{pfe-color(ui-accent)};
 
   // Layouts, grid layouts
+  --pfe-band--layout:                          1fr;
   --pfe-band_header--layout:                   1fr;
   --pfe-band_body--layout:                     1fr;
   --pfe-band_footer--layout:                   1fr;
@@ -100,95 +101,55 @@ $aside-lg: 300px;
   --pfe-band--padding:   calc(#{pfe-local(padding__vertical)} / 4)  #{pfe-local(padding__horizontal)};
 }
 
-//  pfe-local returns: var(--pfe-band(_SLOT)--argument);
-
 .pfe-band {
-  &__container,
-  &__content {
-    // Fill the majority of the band
-    flex-grow: 1;
-
-    // Set the default flow for the layout in the container and content regions
-    display:        flex;
-    flex-direction: column;
-    @media (min-width: #{pfe-breakpoint(md)}) {
-      flex-direction: row;
-    }
-  }
-   // Wraps main and aside
   &__container {
     margin:    0 auto;
     max-width: #{pfe-local(width)};
-  }
-  &__container,
-  &__content { // wraps body and aside
-    // spacing between children on mobile (around aside region)
-    > *:not(:last-child) {
-      @media (max-width: #{pfe-breakpoint(md) - 1}) {
-         margin-bottom: #{pfe-var(container-spacer)};
-      }
-    }
-  }
 
-  &__main,
-  &__body {
-    flex: 1;
-    // spacing between children
-    > *:not(:last-child) {
-         margin-bottom: #{pfe-var(container-spacer)};
-    }
-  }
+    // Grid styles
+    display:   grid;
+    grid-gap:  #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 4);
+    grid-template-columns: #{pfe-local(layout)};
+    grid-template-rows: max-content;
+    grid-template-areas:
+     "header"
+     "body"
+     "footer"
+     "aside";
+     // Move the aside for mobile if top selected
+     [pfe-aside-mobile="top"] & {
+       grid-template-areas:
+          "aside"
+          "header"
+          "body"
+          "footer";
+     }
 
-  &__header,
-  &__body,
-  &__footer,
-  &__aside {
-    display: block;
-    display: grid;  // for elegant display of children
-    grid-template-columns: 1fr;
-    grid-gap: #{pfe-var(container-spacer)};
+     @media (min-width: #{pfe-breakpoint(sm)}) {
+       --pfe-band--layout: 3fr minmax($aside-sm, 1fr);
+       grid-template-areas:
+        "header header"
+        "body aside"
+        "footer footer";
+     }
 
-    &::slotted(*) {
-      margin-top: 0;
-    }
+     // spacing between children on mobile (around aside region)
+     > *:not(:last-child) {
+       @media (max-width: #{pfe-breakpoint(md) - 1}) {
+           margin-bottom: #{pfe-var(container-spacer)};
+       }
+     }
   }
-  &__header {
-    @media screen and (min-width: #{pfe-breakpoint(md)}) {
-      grid-template-columns: #{pfe-local(layout, header)};
-    }
-  }
-  &__body {
-    flex-grow: 1;
-    @media screen and (min-width: #{pfe-breakpoint(md)}) {
-      grid-template-columns: #{pfe-local(layout, body)};
-      [pfe-aside-height="full"] & {
-        margin-right: 0;
-        margin-left: 0;
-      }
-    }
-  }
-  &__footer {
-    @media screen and (min-width: #{pfe-breakpoint(md)}) {
-      grid-template-columns: #{pfe-local(layout, footer)};
-    }
-  }
-
-  &__aside {
-    min-width: $aside-sm;
-
-    @media screen and (min-width: #{pfe-breakpoint(md)}) {
-      grid-template-columns: #{pfe-local(layout, aside)};
-    }
-    @media screen and (min-width: #{pfe-breakpoint(md)}) and (max-width: #{pfe-breakpoint(lg) - 1}) {
-      --pfe-band_aside--layout: #{$aside-sm}; // Set limit to aside width
-    }
-    @media screen and (min-width: #{pfe-breakpoint(md)}) {
-      margin-left: #{pfe-local(gutter)};
-      order: 2;
-      [pfe-aside-desktop="left"] & {
-        order: -1;
-        margin-right: #{pfe-local(gutter)};
-        margin-left: 0;
+  @each $slot in (header, body, footer, aside) {
+    &__#{$slot} {
+      grid-area: $slot;
+      // Set up the internal grid system for each slot
+      display: grid;
+      grid-gap: #{pfe-var(container-spacer)};
+      grid-template-columns: #{pfe-local(layout, $slot)};
+      grid-template-rows: max-content;
+      > *::slotted(*) {
+        margin: 0;
       }
     }
   }

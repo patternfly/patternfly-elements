@@ -21,6 +21,8 @@
   </head>
   <body unresolved>
     <rh-autocomplete id="search-lazy-loading" init-value="uni" debounce="500" loading></rh-autocomplete>
+    <br>
+    <rh-autocomplete id="search-lazy-loading" init-value="uni" debounce="500" loading disabled></rh-autocomplete>
     <script>
       const searchAutocomplete = document.querySelector('#search-lazy-loading');
 
@@ -29,7 +31,7 @@
         var xhr = new XMLHttpRequest();
         searchAutocomplete.setAttribute('loading', '');
         xhr.onload = function() {
-          searchAutocomplete.removeAttribute('loading', '');
+          searchAutocomplete.removeAttribute('loading');
 
           if(xhr.status === 404) {
             callback([]);

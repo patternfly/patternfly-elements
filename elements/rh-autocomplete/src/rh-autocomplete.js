@@ -53,8 +53,10 @@ class RhAutocomplete extends RHElement {
     super.connectedCallback();
 
     this.loading = false;
+    this.disabled = false;
     this.debounce = this.debounce || 300;
     this._inputBox = this.shadowRoot.querySelector("#input-box");
+
     this._inputBox.value = this.initValue || "";
     this._inputBox.debounce = this.debounce;
 
@@ -92,24 +94,35 @@ class RhAutocomplete extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["init-value", "loading"];
+    return ["init-value", "loading", "disabled"];
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback();
-
+    let searchBox = this.shadowRoot.querySelector("rh-search-box").shadowRoot;
     switch (attr) {
       case "loading":
         if (this.loading) {
-          this.shadowRoot
-            .querySelector("rh-search-box")
-            .shadowRoot.querySelector(".loading")
-            .removeAttribute("hidden");
+          searchBox.querySelector(".loading").removeAttribute("hidden");
         } else {
-          this.shadowRoot
-            .querySelector("rh-search-box")
-            .shadowRoot.querySelector(".loading")
-            .setAttribute("hidden", "");
+          searchBox.querySelector(".loading").setAttribute("hidden", "");
+        }
+        break;
+
+      case "disabled":
+        if (this.disabled) {
+          searchBox.querySelectorAll("button").forEach(e => {
+            e.removeAttribute("disabled");
+          });
+
+          searchBox.querySelector("input").removeAttribute("disabled");
+        } else {
+          console.log(searchBox.querySelectorAll("button"));
+          searchBox.querySelectorAll("button").forEach(e => {
+            e.setAttribute("disabled", "");
+          });
+
+          searchBox.querySelector("input").setAttribute("disabled", "");
         }
         break;
 
@@ -119,6 +132,19 @@ class RhAutocomplete extends RHElement {
         }
         break;
     }
+  }
+
+  set disabled(value) {
+    const disabled = Boolean(value);
+    if (disabled) {
+      this.setAttribute("disabled", "");
+    } else {
+      this.removeAttribute("disabled");
+    }
+  }
+
+  get disabled() {
+    return this.hasAttribute("disabled");
   }
 
   set loading(value) {
@@ -348,7 +374,8 @@ class RhSearchBox extends RHElement {
       if (newVal === "") {
         this._searchBtn.setAttribute("disabled", true);
       } else {
-        this._searchBtn.removeAttribute("disabled");
+        if (!this._searchBtn.hasAttribute("disabled"))
+          this._searchBtn.removeAttribute("disabled");
         this._clearBtn.removeAttribute("hidden");
       }
     }

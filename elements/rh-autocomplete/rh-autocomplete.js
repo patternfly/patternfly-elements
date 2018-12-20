@@ -63,8 +63,10 @@ class RhAutocomplete extends RHElement {
     super.connectedCallback();
 
     this.loading = false;
+    this.disabled = false;
     this.debounce = this.debounce || 300;
     this._inputBox = this.shadowRoot.querySelector("#input-box");
+
     this._inputBox.value = this.initValue || "";
     this._inputBox.debounce = this.debounce;
 
@@ -102,24 +104,35 @@ class RhAutocomplete extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["init-value", "loading"];
+    return ["init-value", "loading", "disabled"];
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback();
-
+    let searchBox = this.shadowRoot.querySelector("rh-search-box").shadowRoot;
     switch (attr) {
       case "loading":
         if (this.loading) {
-          this.shadowRoot
-            .querySelector("rh-search-box")
-            .shadowRoot.querySelector(".loading")
-            .removeAttribute("hidden");
+          searchBox.querySelector(".loading").removeAttribute("hidden");
         } else {
-          this.shadowRoot
-            .querySelector("rh-search-box")
-            .shadowRoot.querySelector(".loading")
-            .setAttribute("hidden", "");
+          searchBox.querySelector(".loading").setAttribute("hidden", "");
+        }
+        break;
+
+      case "disabled":
+        if (this.disabled) {
+          searchBox.querySelectorAll("button").forEach(e => {
+            e.removeAttribute("disabled");
+          });
+
+          searchBox.querySelector("input").removeAttribute("disabled");
+        } else {
+          console.log(searchBox.querySelectorAll("button"));
+          searchBox.querySelectorAll("button").forEach(e => {
+            e.setAttribute("disabled", "");
+          });
+
+          searchBox.querySelector("input").setAttribute("disabled", "");
         }
         break;
 
@@ -129,6 +142,19 @@ class RhAutocomplete extends RHElement {
         }
         break;
     }
+  }
+
+  set disabled(value) {
+    const disabled = Boolean(value);
+    if (disabled) {
+      this.setAttribute("disabled", "");
+    } else {
+      this.removeAttribute("disabled");
+    }
+  }
+
+  get disabled() {
+    return this.hasAttribute("disabled");
   }
 
   set loading(value) {
@@ -299,19 +325,25 @@ class RhSearchBox extends RHElement {
 input {
   width: 100%;
   flex: 1;
-  box-shadow: inset 0 1px 0px rgba(0, 0, 0, 0.075) !important;
+  box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075) !important;
   padding-left: 5px;
   padding-right: 30px;
   border-radius: 0;
-  background: #fff;
+  background-color: #fff;
   border: 1px solid var(--rh-theme--color--surface--border--lightest, #ececec);
   font-size: 16px;
   
   line-height: 24px;
   
   height: 35px;
-  margin: 0px;
   transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s; }
+
+input:disabled,
+button:disabled {
+  cursor: not-allowed;
+  background-color: #eee;
+  color: #ccc;
+  opacity: 1; }
 
 input:focus,
 input:focus ~ button.search-button {
@@ -332,45 +364,44 @@ input[type="search"]::-webkit-search-decoration {
 button {
   font-size: 27px;
   color: #cccccc;
-  background-color: #fff;
   font-weight: 600;
   border: none;
-  line-height: 20px;
   position: absolute;
-  top: 45%;
-  transform: translate(-50%, -50%);
   padding: 0px;
-  margin: 0px; }
+  margin-top: 1px; }
 
 button.clear-search {
-  right: 24px; }
+  right: 31px;
+  width: 20px;
+  margin-right: 5px; }
 
 button.clear-search:hover {
   opacity: 1;
   color: #06c; }
 
 button.search-button {
-  right: 0px;
-  width: 16px; }
+  right: 1px;
+  width: 30px; }
 
 button.search-button svg {
-  fill: #06c; }
+  fill: #06c;
+  width: 16px; }
 
 button.search-button:hover svg,
 button.search-button:focus svg {
   fill: #004080; }
 
-button.search-button[disabled="true"] svg {
-  fill: #ccc; }
-
-button[disabled="true"] {
+button.clear-search:hover {
   color: #ccc; }
+
+button.search-button:disabled svg {
+  fill: #ccc; }
 
 .loading {
   position: absolute;
   width: 25px;
-  right: 42px;
-  top: 60%;
+  right: 45px;
+  top: 62%;
   transform: translate(-50%, -50%); }
 </style>
 <input placeholder="Enter Your Search Term"
@@ -496,7 +527,8 @@ button[disabled="true"] {
       if (newVal === "") {
         this._searchBtn.setAttribute("disabled", true);
       } else {
-        this._searchBtn.removeAttribute("disabled");
+        if (!this._searchBtn.hasAttribute("disabled"))
+          this._searchBtn.removeAttribute("disabled");
         this._clearBtn.removeAttribute("hidden");
       }
     }

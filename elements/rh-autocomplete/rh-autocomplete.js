@@ -341,7 +341,7 @@ input {
 input:disabled,
 button:disabled {
   cursor: not-allowed;
-  background-color: #eee;
+  background-color: transparent;
   color: #ccc;
   opacity: 1; }
 

@@ -246,6 +246,8 @@ class RhAutocomplete extends RHElement {
       return;
 
     let activeIndex = parseInt(this._dropdown.activeIndex, 10) || null;
+    let selectedOption = this._dropdown.selectedOption;
+
     let optionsLength = this._dropdown.data.length;
 
     if (key == KEYCODE.ESC) {
@@ -278,7 +280,6 @@ class RhAutocomplete extends RHElement {
 
     this._dropdown.activeIndex = activeIndex;
     this._inputBox.activeIndex = activeIndex;
-    this._inputBox.value = this._dropdown.getAttribute("selected-option");
   }
 }
 

@@ -4,11 +4,14 @@ import * as storybookBridge from "@storybook/addon-knobs/polymer";
 
 import {
   escapeHTML,
-  dynamicKnobs,
+  autoPropKnobs,
+  autoContentKnobs,
   component,
   autoHeading,
-  autoContent
+  autoContent,
+  customTag
 } from "../../../.storybook/utils.js";
+
 const cleaner = require("clean-html");
 
 import PfeBand from "../pfe-band.js";
@@ -19,58 +22,21 @@ const stories = storiesOf("Band", module);
 
 // Define the templates to be used
 const template = (data = {}) => {
-  return component("pfe-band", data.properties, [
+  return component("pfe-band", data.prop, [
     {
-      tag: "h1",
       slot: "header",
-      check: data.hasHeader,
-      content: autoHeading()
+      content: data.has.header
     },
     {
-      content: autoContent(4, 3)
+      content: data.has.body
     },
     {
-      tag: "pfe-cta",
       slot: "footer",
-      check: data.hasFooter,
-      attributes: {
-        priority: "primary"
-      },
-      content: '<a href="#">Learn more</a>'
+      content: data.has.footer
     },
     {
       slot: "aside",
-      check: data.hasAside,
-      component: component(
-        "pfe-card",
-        {
-          slot: "aside",
-          color: darkThemes.includes(data.properties["pfe-color"])
-            ? "lightest"
-            : "complement"
-        },
-        [
-          {
-            tag: "h3",
-            slot: "header",
-            content: "Aside"
-          },
-          {
-            content: autoContent(1, 1, true)
-          },
-          {
-            tag: "pfe-cta",
-            slot: "footer",
-            content: '<a href="#">Learn more</a>',
-            attributes: {
-              priority: "tertiary",
-              on: darkThemes.includes(data.properties["pfe-color"])
-                ? "dark"
-                : ""
-            }
-          }
-        ]
-      )
+      component: data.has.aside
     }
   ]);
 };
@@ -78,14 +44,76 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeBand.tag, () => {
-  const binding = {};
+  const config = {};
+  const props = PfeBand.properties;
+  const slots = PfeBand.slots;
 
-  binding.properties = dynamicKnobs(PfeBand.properties, storybookBridge);
-  binding["hasHeader"] = storybookBridge["boolean"]("Header slot", true);
-  binding["hasFooter"] = storybookBridge["boolean"]("Footer slot", true);
-  binding["hasAside"] = storybookBridge["boolean"]("Aside slot", true);
+  //-- Add default content to slot objects
 
-  let rendered = template(binding);
+  // Build the default header content
+  slots.header.default = customTag({
+    tag: "h1",
+    content: autoHeading()
+  });
+
+  // Build the default body content
+  slots.body.default = autoContent(4, 3);
+
+  // Build the default footer component
+  slots.footer.default = component(
+    "pfe-cta",
+    {
+      priority: "primary"
+    },
+    [
+      {
+        content: '<a href="#">Learn more</a>'
+      }
+    ]
+  );
+
+  // Build the default aside component
+  slots.aside.default = component(
+    "pfe-card",
+    {
+      slot: "aside",
+      color: darkThemes.includes(props["pfe-color"])
+        ? "lightest"
+        : "complement",
+      on: darkThemes.includes(props["pfe-color"]) ? "" : "dark"
+    },
+    [
+      {
+        tag: "h3",
+        slot: "header",
+        content: "Aside"
+      },
+      {
+        content: autoContent(1, 1, true)
+      },
+      {
+        content: component(
+          "pfe-cta",
+          {
+            slot: "footer",
+            priority: "tertiary",
+            on: darkThemes.includes(props["pfe-color"]) ? "dark" : ""
+          },
+          [
+            {
+              content: '<a href="#">Learn more</a>'
+            }
+          ]
+        )
+      }
+    ]
+  );
+
+  config.prop = autoPropKnobs(props, storybookBridge);
+  config.has = autoContentKnobs(slots, storybookBridge);
+
+  let rendered = template(config);
+
   cleaner.clean(
     rendered,
     {

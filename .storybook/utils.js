@@ -17,26 +17,15 @@ const listProperties = obj =>
     .map(set => (set[1] ? ` ${set[0]}="${set[1]}"` : ""))
     .join("");
 
-const customTag = data => {
+export function customTag(data) {
   return `<${data.tag ? data.tag : "div"} slot="${data.slot}"${listProperties(
     data.attributes || {}
   )}>${data.content || autoContent()}</${data.tag ? data.tag : "div"}>`;
-};
+}
 
 // If a slot is a component or content, render that raw, if it's got a tag defined, run the custom tag function
 const renderSlots = (slots = []) =>
-  slots
-    .map(
-      slot =>
-        slot.check || typeof slot.check === "undefined"
-          ? slot.component
-            ? slot.component
-            : slot.tag
-              ? customTag(slot)
-              : slot.content
-          : ""
-    )
-    .join("");
+  slots.map(slot => (slot.content ? slot.content : "")).join("");
 
 // Creates a component dynamically based on inputs
 export function component(tag, attributes = {}, slots = []) {
@@ -60,10 +49,8 @@ export function autoContent(max = 5, min = 1, short = false) {
   });
 }
 
-export function dynamicKnobs(properties, bridge) {
+export function autoPropKnobs(properties, bridge) {
   var binding = {};
-  let attributes = "";
-
   Object.entries(properties).forEach(prop => {
     let attr = prop[0];
     let title = prop[1].title || attr;
@@ -87,12 +74,23 @@ export function dynamicKnobs(properties, bridge) {
         options.map(item => (opts[item] = item));
 
         // Create the knob
-        binding[attr] = bridge["select"](title, opts, defaultValue);
+        binding[attr] = bridge.select(title, opts, defaultValue);
       } else {
         // Create the knob
         binding[attr] = bridge[method](title, defaultValue);
       }
     }
   });
+  return binding;
+}
+
+export function autoContentKnobs(slots, bridge) {
+  let binding = {};
+
+  Object.entries(slots).forEach(slot => {
+    binding[slot[0]] = bridge.text(slot[1].title, slot[1].default);
+    console.dir(slot);
+  });
+
   return binding;
 }

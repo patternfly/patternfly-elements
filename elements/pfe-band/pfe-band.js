@@ -26,19 +26,20 @@ class PfeBand extends PFElement {
   get html() {
     return `<style>:host {
   display: block;
-  --pfe-band--padding__vertical:                 calc( var(--pfe-theme--container-spacer, 1rem) * 4);
-  --pfe-band--padding__horizontal:               calc( var(--pfe-theme--container-spacer, 1rem) * 1);
+  --pfe-band--padding__vertical:               calc( var(--pfe-theme--container-spacer, 1rem) * 4);
+  --pfe-band--padding__horizontal:             calc( var(--pfe-theme--container-spacer, 1rem) * 1);
   --pfe-band--padding:                         var(--pfe-band--padding__vertical)  var(--pfe-band--padding__horizontal);
   --pfe-band--backgroundColor:                 var(--pfe-theme--color--surface--base, #dfdfdf);
-  --pfe-band--backgroundPositionX:             center;
-  --pfe-band--backgroundPositionY:             center;
+  --pfe-band--backgroundPosition:              center center;
   --pfe-band--border:                          var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) transparent;
-  --pfe-band_header-title--color:             var(--pfe-theme--color--ui-accent, #fe460d);
   --pfe-band--layout:                          1fr;
   --pfe-band_header--layout:                   1fr;
   --pfe-band_body--layout:                     1fr;
   --pfe-band_footer--layout:                   1fr;
   --pfe-band_aside--layout:                    300px;
+  --pfe-band--gridTemplateArea_layer1: "header";
+  --pfe-band--gridTemplateArea_layer2: "body";
+  --pfe-band--gridTemplateArea_layer3: "footer" "aside";
   --pfe-band--gutter:                          calc(var(--pfe-theme--container-spacer, 1rem) * 2);
   --pfe-broadcasted--color--text:              var(--pfe-theme--color--surface--base--text, #333);
   --pfe-broadcasted--color--ui-link:           var(--pfe-theme--color--surface--base--link, #00538c);
@@ -53,8 +54,7 @@ class PfeBand extends PFElement {
   padding: calc(var(--pfe-band--padding__vertical) / 2) var(--pfe-band--padding__horizontal);
   border: var(--pfe-band--border);
   background-color: var(--pfe-band--backgroundColor);
-  background-position-x: var(--pfe-band--backgroundPositionX);
-  background-position-y: var(--pfe-band--backgroundPositionY);
+  background-position: var(--pfe-band--backgroundPosition);
   color: var(--pfe-broadcasted--color--text); }
   @media screen and (min-width: 768px) {
     :host {
@@ -133,17 +133,31 @@ class PfeBand extends PFElement {
 .pfe-band__container {
   margin: 0 auto;
   max-width: var(--pfe-band--width);
+  display: flex;
+  flex-flow: row nowrap;
   display: grid;
   grid-gap: var(--pfe-theme--container-spacer, 1rem) calc(var(--pfe-theme--container-spacer, 1rem) * 4);
   grid-template-columns: var(--pfe-band--layout);
   grid-template-rows: max-content;
-  grid-template-areas: "header" "body" "footer" "aside"; }
-  [pfe-aside-mobile="top"] .pfe-band__container {
-    grid-template-areas: "aside" "header" "body" "footer"; }
+  grid-template-areas: var(--pfe-band--gridTemplateArea_layer1) var(--pfe-band--gridTemplateArea_layer2) var(--pfe-band--gridTemplateArea_layer3); }
+  .pfe-band__container[pfe-aside-mobile="top"] {
+    --pfe-band--gridTemplateArea_layer1: "aside" "header";
+    --pfe-band--gridTemplateArea_layer3: "footer"; }
   @media (min-width: 576px) {
-    .pfe-band__container {
+    .pfe-band__container[pfe-aside-desktop] {
+      --pfe-band--gridTemplateArea_layer1: "header header"; }
+    .pfe-band__container[pfe-aside-desktop="right"] {
       --pfe-band--layout: 3fr minmax($aside-sm, 1fr);
-      grid-template-areas: "header header" "body aside" "footer footer"; } }
+      --pfe-band--gridTemplateArea_layer2: "body aside";
+      --pfe-band--gridTemplateArea_layer3: "footer aside"; }
+    .pfe-band__container[pfe-aside-desktop="left"] {
+      --pfe-band--layout: minmax($aside-sm, 1fr) 3fr;
+      --pfe-band--gridTemplateArea_layer2: "aside body";
+      --pfe-band--gridTemplateArea_layer3: "aside footer"; }
+    .pfe-band__container[pfe-aside-height="full"] {
+      --pfe-band--gridTemplateArea_layer1: "header aside"; }
+      .pfe-band__container[pfe-aside-height="full"][pfe-aside-desktop="left"] {
+        --pfe-band--gridTemplateArea_layer1: "aside header"; } }
   @media (max-width: 768px - 1) {
     .pfe-band__container > *:not(:last-child) {
       margin-bottom: var(--pfe-theme--container-spacer, 1rem); } }
@@ -250,6 +264,38 @@ class PfeBand extends PFElement {
     };
   }
 
+  static get slots() {
+    return {
+      header: {
+        title: "Header",
+        type: "array",
+        items: { title: "Body item", oneOf: [{ $ref: "raw" }] }
+      },
+      body: {
+        title: "Body",
+        type: "array",
+        items: { title: "Body item", oneOf: [{ $ref: "raw" }] }
+      },
+      footer: {
+        title: "Footer",
+        type: "array",
+        maxItems: 3,
+        items: {
+          title: "Footer item",
+          oneOf: [{ $ref: "pfe-cta" }, { $ref: "raw" }]
+        }
+      },
+      aside: {
+        title: "Aside",
+        type: "array",
+        items: {
+          title: "Body item",
+          oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }]
+        }
+      }
+    };
+  }
+
   static get tag() {
     return "pfe-band";
   }
@@ -293,21 +339,16 @@ class PfeBand extends PFElement {
   }
 
   // Declare the type of this component
-  static get pfeType() {
-    return PFElement.pfeType.container;
+  static get PfeType() {
+    return PFElement.PfeTypes.Container;
   }
 
   constructor() {
-    super(PfeBand);
+    super(PfeBand, { type: PfeBand.PfeType });
   }
 
   connectedCallback() {
     super.connectedCallback();
-
-    // If a color is defined, update context for children
-    if (this["pfe-color"]) {
-      this._updateContext(this["pfe-color"].value);
-    }
   }
 
   // disconnectedCallback() {}
@@ -345,11 +386,14 @@ class PfeBand extends PFElement {
 
   // Set the children's context if parent background is dark
   _updateContext(context) {
-    if (["darkest", "dark"].includes(context)) {
+    if (["darkest", "darker", "complement", "accent"].includes(context)) {
       ["pfe-cta"].forEach(elementName => {
-        const els = [...this.querySelectorAll(elementName)];
+        const els = [...this.querySelectorAll(`${elementName}`)];
         els.forEach(el => {
-          el.setAttribute("on", "dark");
+          const myContainer = el.closest("[pfe-type='container']");
+          if (myContainer === this || myContainer === null) {
+            el.setAttribute("on", "dark");
+          }
         });
       });
     }

@@ -7,49 +7,117 @@
   "class": "pfe-band",
   "category": "container",
   "properties": {
-    "pfe-color": {
-      "title": "Background color",
-      "type": "string",
-      "enum": [
-        "lightest",
-        "lighter",
-        "base",
-        "darker",
-        "darkest",
-        "complement",
-        "accent"
-      ],
-      "default": "base",
-      "observer": "_colorChanged"
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "header": {
+          "title": "Header",
+          "type": "array",
+          "items": {
+            "title": "Body item",
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        },
+        "body": {
+          "title": "Body",
+          "type": "array",
+          "items": {
+            "title": "Body item",
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        },
+        "footer": {
+          "title": "Footer",
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "title": "Footer item",
+            "oneOf": [
+              {
+                "$ref": "pfe-cta"
+              },
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        },
+        "aside": {
+          "title": "Aside",
+          "type": "array",
+          "items": {
+            "title": "Body item",
+            "oneOf": [
+              {
+                "$ref": "pfe-card"
+              },
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        }
+      }
     },
-    "pfe-img-src": {
-      "title": "Background image",
-      "type": "string",
-      "default": "",
-      "observer": "_imgSrcChanged"
-    },
-    "pfe-aside-desktop": {
-      "title": "Aside positioning (desktop)",
-      "type": "string",
-      "default": "right",
-      "enum": ["right", "left"],
-      "observer": "_basicAttributeChanged"
-    },
-    "pfe-aside-mobile": {
-      "title": "Aside positioning (mobile)",
-      "type": "string",
-      "default": "bottom",
-      "enum": ["top", "bottom"],
-      "observer": "_basicAttributeChanged"
-    },
-    "pfe-aside-height": {
-      "title": "Aside height",
-      "type": "string",
-      "default": "body",
-      "enum": ["full", "body"],
-      "observer": "_basicAttributeChanged"
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "pfe-color": {
+          "title": "Background color",
+          "type": "string",
+          "enum": [
+            "lightest",
+            "lighter",
+            "base",
+            "darker",
+            "darkest",
+            "complement",
+            "accent"
+          ],
+          "default": "base",
+          "observer": "_colorChanged"
+        },
+        "pfe-img-src": {
+          "title": "Background image",
+          "type": "string",
+          "default": "",
+          "observer": "_imgSrcChanged"
+        },
+        "pfe-aside-desktop": {
+          "title": "Aside positioning (desktop)",
+          "type": "string",
+          "default": "right",
+          "enum": ["right", "left"],
+          "observer": "_basicAttributeChanged"
+        },
+        "pfe-aside-mobile": {
+          "title": "Aside positioning (mobile)",
+          "type": "string",
+          "default": "bottom",
+          "enum": ["top", "bottom"],
+          "observer": "_basicAttributeChanged"
+        },
+        "pfe-aside-height": {
+          "title": "Aside height",
+          "type": "string",
+          "default": "body",
+          "enum": ["full", "body"],
+          "observer": "_basicAttributeChanged"
+        }
+      }
     }
   },
-  "required": [],
+  "required": ["slots", "attributes"],
   "additionalProperties": false
 }

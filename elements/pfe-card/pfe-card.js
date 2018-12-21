@@ -24,9 +24,7 @@ import PFElement from "../pfelement/pfelement.js";
 
 class PfeCard extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   --pfe-card--padding:                          calc(var(--pfe-theme--container-spacer, 1rem) * 2);
   --pfe-card_header--size:                      var(--pfe-theme--font-size--heading--gamma, 21px);
   --pfe-card--bg:                               var(--pfe-theme--color--surface--base, #dfdfdf);
@@ -127,8 +125,7 @@ a:focus {
 
 .pfe-card__footer {
   margin-top: auto;
-  justify-self: flex-end; }
-</style>
+  justify-self: flex-end; }</style>
 <slot class="pfe-card__header" name="header"></slot>
 <slot class="pfe-card__body"></slot>
 <slot class="pfe-card__footer" name="footer"></slot>`;
@@ -146,8 +143,47 @@ a:focus {
     return "pfe-card.html";
   }
 
+  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.Container;
+  }
+
+  static get observedAttributes() {
+    return ["color"];
+  }
+
   constructor() {
-    super(PfeCard);
+    super(PfeCard, { type: PfeCard.PfeType });
+  }
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    super.attributeChangedCallback(attr, oldValue, newValue);
+
+    // If the observer is defined in the attribute properties
+    if (attr === "color") {
+      this._colorChanged(attr, oldValue, newValue);
+    }
+  }
+
+  // Update the color attribute and contexts
+  _colorChanged(attr, oldValue, newValue) {
+    // If the new value has a dark background, update children elements
+    this._updateContext(newValue);
+  }
+
+  // Set the children's context if parent background is dark
+  _updateContext(context) {
+    if (["darkest", "dark", "complement", "accent"].includes(context)) {
+      ["pfe-cta"].forEach(elementName => {
+        const els = [...this.querySelectorAll(`${elementName}`)];
+        els.forEach(el => {
+          const myContainer = el.closest("[pfe-type='container']");
+          if (myContainer === this || myContainer === null) {
+            el.setAttribute("on", "dark");
+          }
+        });
+      });
+    }
   }
 }
 

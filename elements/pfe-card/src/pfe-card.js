@@ -35,8 +35,47 @@ class PfeCard extends PFElement {
     return "pfe-card.html";
   }
 
+  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.Container;
+  }
+
+  static get observedAttributes() {
+    return ["color"];
+  }
+
   constructor() {
-    super(PfeCard);
+    super(PfeCard, { type: PfeCard.PfeType });
+  }
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    super.attributeChangedCallback(attr, oldValue, newValue);
+
+    // If the observer is defined in the attribute properties
+    if (attr === "color") {
+      this._colorChanged(attr, oldValue, newValue);
+    }
+  }
+
+  // Update the color attribute and contexts
+  _colorChanged(attr, oldValue, newValue) {
+    // If the new value has a dark background, update children elements
+    this._updateContext(newValue);
+  }
+
+  // Set the children's context if parent background is dark
+  _updateContext(context) {
+    if (["darkest", "dark", "complement", "accent"].includes(context)) {
+      ["pfe-cta"].forEach(elementName => {
+        const els = [...this.querySelectorAll(`${elementName}`)];
+        els.forEach(el => {
+          const myContainer = el.closest("[pfe-type='container']");
+          if (myContainer === this || myContainer === null) {
+            el.setAttribute("on", "dark");
+          }
+        });
+      });
+    }
   }
 }
 

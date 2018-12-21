@@ -8,21 +8,17 @@ $aside-lg: 300px;
   display: block;
 
   // Default spacing values
-  --pfe-band--padding__vertical:                 calc( #{pfe-var(container-spacer)} * 4);
-  --pfe-band--padding__horizontal:               calc( #{pfe-var(container-spacer)} * 1);
+  --pfe-band--padding__vertical:               calc( #{pfe-var(container-spacer)} * 4);
+  --pfe-band--padding__horizontal:             calc( #{pfe-var(container-spacer)} * 1);
   // Bring them together for ease of use below
   --pfe-band--padding:                         #{pfe-local(padding__vertical)}  #{pfe-local(padding__horizontal)};
 
   // Surface colors
   --pfe-band--backgroundColor:                 #{pfe-color(surface--base)};
-  --pfe-band--backgroundPositionX:             center;
-  --pfe-band--backgroundPositionY:             center;
+  --pfe-band--backgroundPosition:              center center;
 
   // Border settings
   --pfe-band--border:                          #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
-
-  // Accent title styles
-  --pfe-band_header-title--color:             #{pfe-color(ui-accent)};
 
   // Layouts, grid layouts
   --pfe-band--layout:                          1fr;
@@ -30,6 +26,11 @@ $aside-lg: 300px;
   --pfe-band_body--layout:                     1fr;
   --pfe-band_footer--layout:                   1fr;
   --pfe-band_aside--layout:                    #{$aside-lg};
+
+  --pfe-band--gridTemplateArea_layer1: "header";
+  --pfe-band--gridTemplateArea_layer2: "body";
+  --pfe-band--gridTemplateArea_layer3: "footer" "aside";
+  
   --pfe-band--gutter:                          #{ calc(#{pfe-var(container-spacer)} * 2) };
 
   // Text colors
@@ -72,8 +73,7 @@ $aside-lg: 300px;
 
   // Base colors
   background-color:      #{pfe-local(backgroundColor)};
-  background-position-x: #{pfe-local(backgroundPositionX)};
-  background-position-y: #{pfe-local(backgroundPositionY)};
+  background-position:   #{pfe-local(backgroundPosition)};
   color:                 #{pfe-radio(color, text)};
 
   // Remove background color for print
@@ -106,37 +106,52 @@ $aside-lg: 300px;
     margin:    0 auto;
     max-width: #{pfe-local(width)};
 
+    // Fallback flex styles
+    display: flex;
+    flex-flow: row nowrap;
+
     // Grid styles
     display:   grid;
     grid-gap:  #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 4);
     grid-template-columns: #{pfe-local(layout)};
     grid-template-rows: max-content;
-    grid-template-areas:
-     "header"
-     "body"
-     "footer"
-     "aside";
+    grid-template-areas: var(--pfe-band--gridTemplateArea_layer1) var(--pfe-band--gridTemplateArea_layer2) var(--pfe-band--gridTemplateArea_layer3);
      // Move the aside for mobile if top selected
-     [pfe-aside-mobile="top"] & {
-       grid-template-areas:
-          "aside"
-          "header"
-          "body"
-          "footer";
+     &[pfe-aside-mobile="top"] {
+        --pfe-band--gridTemplateArea_layer1: "aside" "header";
+        --pfe-band--gridTemplateArea_layer3: "footer";
      }
 
      @media (min-width: #{pfe-breakpoint(sm)}) {
-       --pfe-band--layout: 3fr minmax($aside-sm, 1fr);
-       grid-template-areas:
-        "header header"
-        "body aside"
-        "footer footer";
-     }
+      &[pfe-aside-desktop] {
+        --pfe-band--gridTemplateArea_layer1: "header header";
+      }
+       &[pfe-aside-desktop="right"] {
+          --pfe-band--layout: 3fr minmax($aside-sm, 1fr);
+          --pfe-band--gridTemplateArea_layer2: "body aside";
+          --pfe-band--gridTemplateArea_layer3: "footer aside";
+       }
+
+       // Move the aside for desktop if left selected
+       &[pfe-aside-desktop="left"] {
+         --pfe-band--layout: minmax($aside-sm, 1fr) 3fr;
+         --pfe-band--gridTemplateArea_layer2: "aside body";
+         --pfe-band--gridTemplateArea_layer3: "aside footer";
+       }
+
+        // Move the aside for desktop if left selected
+        &[pfe-aside-height="full"] {
+          --pfe-band--gridTemplateArea_layer1: "header aside";
+          &[pfe-aside-desktop="left"] {
+            --pfe-band--gridTemplateArea_layer1: "aside header";
+          }
+        }
+    }
 
      // spacing between children on mobile (around aside region)
      > *:not(:last-child) {
        @media (max-width: #{pfe-breakpoint(md) - 1}) {
-           margin-bottom: #{pfe-var(container-spacer)};
+          margin-bottom: #{pfe-var(container-spacer)};
        }
      }
   }

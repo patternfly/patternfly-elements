@@ -66,21 +66,16 @@ class PfeBand extends PFElement {
   }
 
   // Declare the type of this component
-  static get pfeType() {
-    return PFElement.pfeType.container;
+  static get PfeType() {
+    return PFElement.PfeTypes.Container;
   }
 
   constructor() {
-    super(PfeBand);
+    super(PfeBand, { type: PfeBand.PfeType });
   }
 
   connectedCallback() {
     super.connectedCallback();
-
-    // If a color is defined, update context for children
-    if (this["pfe-color"]) {
-      this._updateContext(this["pfe-color"].value);
-    }
   }
 
   // disconnectedCallback() {}
@@ -118,11 +113,14 @@ class PfeBand extends PFElement {
 
   // Set the children's context if parent background is dark
   _updateContext(context) {
-    if (["darkest", "dark"].includes(context)) {
+    if (["darkest", "darker", "complement", "accent"].includes(context)) {
       ["pfe-cta"].forEach(elementName => {
-        const els = [...this.querySelectorAll(elementName)];
+        const els = [...this.querySelectorAll(`${elementName}`)];
         els.forEach(el => {
-          el.setAttribute("on", "dark");
+          const myContainer = el.closest("[pfe-type='container']");
+          if (myContainer === this || myContainer === null) {
+            el.setAttribute("on", "dark");
+          }
         });
       });
     }

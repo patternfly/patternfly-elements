@@ -47,40 +47,39 @@ module.exports = function factory({
               .split("\n")
               .join(" ");
 
-            const [
-              ,
-              templateUrl
-            ] = /get\s+templateUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
-              oneLineFile
-            );
-            const [
-              ,
-              styleUrl
-            ] = /get\s+styleUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
-              oneLineFile
-            );
-            const [
-              ,
-              schemaUrl
-            ] = /get\s+schemaUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
-              oneLineFile
-            );
+            let url = {};
+            ["template", "style", "schema"].forEach(type => {
+              const re = new RegExp(
+                `get\\s+${type}Url\\([^)]*\\)\\s*{\\s*return\\s+"([^"]+)"`,
+                "g"
+              );
+              const parse = re.exec(oneLineFile);
+              url[type] =
+                typeof parse === "object" && parse !== null ? parse[1] : null;
+            });
 
             let html = "";
             let cssResult = "";
-            let schema = "{}";
+            let properties = "";
+            let slots = "";
 
-            if (fs.existsSync(path.join("./src", templateUrl))) {
+            if (
+              url.template !== null &&
+              fs.existsSync(path.join("./src", url.template))
+            ) {
               html = fs
-                .readFileSync(path.join("./src", templateUrl))
+                .readFileSync(path.join("./src", url.template))
                 .toString()
                 .trim();
               html = decomment(html);
             }
 
-            if (fs.existsSync(path.join("./src", styleUrl))) {
+            if (
+              url.style !== null &&
+              fs.existsSync(path.join("./src", url.style))
+            ) {
               let rawCSS = sass.renderSync({
-                file: path.join("./src", styleUrl)
+                file: path.join("./src", url.style)
               }).css;
               rawCSS = stripCssComments(rawCSS).trim();
               if (rawCSS.toString() !== "") {
@@ -88,13 +87,24 @@ module.exports = function factory({
               }
             }
 
-            if (fs.existsSync(path.join("./src", schemaUrl))) {
+            if (
+              url.schema !== null &&
+              fs.existsSync(path.join("./src", url.schema))
+            ) {
+              properties = "{}";
+              slots = "{}";
               let schemaObj = JSON.parse(
-                fs.readFileSync(path.join("./src", schemaUrl))
+                fs.readFileSync(path.join("./src", url.schema))
               );
               if (schemaObj && typeof schemaObj === "object") {
-                schema = schemaObj.properties;
-                schema = JSON.stringify(schema);
+                if (schemaObj.properties.attributes) {
+                  properties = schemaObj.properties.attributes.properties;
+                  properties = JSON.stringify(properties);
+                }
+                if (schemaObj.properties.slots) {
+                  slots = schemaObj.properties.slots.properties;
+                  slots = JSON.stringify(slots);
+                }
               }
             }
 
@@ -102,11 +112,23 @@ module.exports = function factory({
   get html() {
     return \`${cssResult}
 ${html}\`;
-  }
+  }${
+    properties
+      ? `
 
   static get properties() {
-    return ${schema};
-  }
+    return ${properties};
+  }`
+      : ""
+  }${
+              slots
+                ? `
+
+  static get slots() {
+    return ${slots};
+  }`
+                : ""
+            }
 `;
           }
         )

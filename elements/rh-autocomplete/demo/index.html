@@ -22,13 +22,13 @@
   <body unresolved>
     <rh-autocomplete id="search-lazy-loading" init-value="uni" debounce="500"></rh-autocomplete>
     <br>
-    <rh-autocomplete init-value="uni" disabled></rh-autocomplete>
+    <rh-autocomplete init-value="hello" is-disabled></rh-autocomplete>
     <script>
       const searchAutocomplete = document.querySelector('#search-lazy-loading');
-
       // autocomplete call
       searchAutocomplete.autocompleteRequest = function(params, callback) {
         var xhr = new XMLHttpRequest();
+
         searchAutocomplete.setAttribute('loading', '');
         xhr.onload = function() {
           searchAutocomplete.removeAttribute('loading');

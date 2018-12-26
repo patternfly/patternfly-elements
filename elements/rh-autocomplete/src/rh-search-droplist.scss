@@ -55,8 +55,8 @@ ul {
   li {
       display: list-item;
       cursor: pointer;
-      padding: 7px 10px;
-      margin: 2px 0px 2px 0px;
+      padding: 10px;
+      margin: 0px; /*margin needs to be zero otherwise we have blind area on click*/
       &.active {
           background-color: #{rh-color( surface--lighter )};;
       }

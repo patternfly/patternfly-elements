@@ -63,11 +63,9 @@ class RhAutocomplete extends RHElement {
     super.connectedCallback();
 
     this.loading = false;
-    this.disabled = false;
     this.debounce = this.debounce || 300;
-    this._inputBox = this.shadowRoot.querySelector("#input-box");
 
-    this._inputBox.value = this.initValue || "";
+    this._inputBox = this.shadowRoot.querySelector("#input-box");
     this._inputBox.debounce = this.debounce;
 
     this._dropdown = this.shadowRoot.querySelector("#dropdown");
@@ -104,7 +102,7 @@ class RhAutocomplete extends RHElement {
   }
 
   static get observedAttributes() {
-    return ["init-value", "loading", "disabled"];
+    return ["init-value", "loading", "is-disabled"];
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
@@ -112,48 +110,51 @@ class RhAutocomplete extends RHElement {
     let searchBox = this.shadowRoot.querySelector("rh-search-box").shadowRoot;
     switch (attr) {
       case "loading":
-        if (this.loading) {
-          searchBox.querySelector(".loading").removeAttribute("hidden");
-        } else {
+        if (
+          !this.loading ||
+          this._inputBox.shadowRoot.querySelector("input").value === ""
+        ) {
           searchBox.querySelector(".loading").setAttribute("hidden", "");
+        } else {
+          searchBox.querySelector(".loading").removeAttribute("hidden");
         }
+
         break;
 
-      case "disabled":
-        if (this.disabled) {
-          searchBox.querySelectorAll("button").forEach(e => {
-            e.removeAttribute("disabled");
-          });
-
-          searchBox.querySelector("input").removeAttribute("disabled");
-        } else {
+      case "is-disabled":
+        if (this.isDisabled) {
           searchBox.querySelectorAll("button").forEach(e => {
             e.setAttribute("disabled", "");
           });
-
           searchBox.querySelector("input").setAttribute("disabled", "");
+        } else {
+          searchBox.querySelectorAll("button").forEach(e => {
+            e.removeAttribute("disabled");
+          });
+          searchBox.querySelector("input").removeAttribute("disabled");
         }
         break;
 
       case "init-value":
         if (this["init-value"] !== newVal) {
-          this["init-value"] = newVal;
+          this.shadowRoot
+            .querySelector("#input-box")
+            .shadowRoot.querySelector("input").value = newVal;
         }
         break;
     }
   }
 
-  set disabled(value) {
-    const disabled = Boolean(value);
-    if (disabled) {
-      this.setAttribute("disabled", "");
+  set isDisabled(value) {
+    if (value) {
+      this.setAttribute("is-disabled", "");
     } else {
-      this.removeAttribute("disabled");
+      this.removeAttribute("is-disabled");
     }
   }
 
-  get disabled() {
-    return this.hasAttribute("disabled");
+  get isDisabled() {
+    return this.hasAttribute("is-disabled");
   }
 
   set loading(value) {
@@ -236,11 +237,16 @@ class RhAutocomplete extends RHElement {
     response.length !== 0 ? this._openDroplist() : this._closeDroplist();
   }
 
-  _reset(selectedValue) {
-    this._inputBox.value = selectedValue;
+  _reset() {
     this._dropdown.activeIndex = null;
     this._dropdown.data = [];
     this._closeDroplist();
+  }
+
+  _activeOption(activeIndex) {
+    return this._dropdown.shadowRoot.querySelector(
+      "li:nth-child(" + (activeIndex + 1) + ")"
+    ).innerHTML;
   }
 
   _inputKeyUp(e) {
@@ -256,8 +262,6 @@ class RhAutocomplete extends RHElement {
       return;
 
     let activeIndex = parseInt(this._dropdown.activeIndex, 10) || null;
-    let selectedOption = this._dropdown.selectedOption;
-
     let optionsLength = this._dropdown.data.length;
 
     if (key == KEYCODE.ESC) {
@@ -268,21 +272,28 @@ class RhAutocomplete extends RHElement {
       if (activeIndex < 0) {
         activeIndex = optionsLength - 1;
       }
+
+      if (activeIndex !== null) {
+        this._inputBox.shadowRoot.querySelector(
+          "input"
+        ).value = this._activeOption(activeIndex);
+      }
     } else if (key === KEYCODE.DOWN) {
       activeIndex += 1;
 
       if (activeIndex > optionsLength - 1) {
         activeIndex = 0;
       }
-    } else if (key === KEYCODE.ENTER) {
-      let selectedValue;
-      if (activeIndex) {
-        selectedValue = this._dropdown.getAttribute("selected-option");
-        this._reset(selectedValue);
-      } else {
-        selectedValue = this._inputBox.value;
-      }
 
+      if (activeIndex !== null) {
+        this._inputBox.shadowRoot.querySelector(
+          "input"
+        ).value = this._activeOption(activeIndex);
+      }
+    } else if (key === KEYCODE.ENTER) {
+      let selectedValue = this._inputBox.shadowRoot.querySelector("input")
+        .value;
+      this._reset();
       // send search request
       this._dispatchSearchEvent(selectedValue);
       return;
@@ -325,16 +336,14 @@ input {
   width: 100%;
   flex: 1;
   box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075) !important;
-  padding-left: 5px;
+  padding-left: 10px;
   padding-right: 30px;
   border-radius: 0;
   background-color: #fff;
-  border: 1px solid var(--rh-theme--color--surface--border--lightest, #ececec);
+  border: 1px solid var(--rh-theme--color--surface--border, #dfdfdf);
   font-size: 16px;
   
-  line-height: 24px;
-  
-  height: 35px;
+  height: 40px;
   transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s; }
 
 input:disabled,
@@ -361,18 +370,21 @@ input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none; }
 
 button {
-  font-size: 27px;
   color: #cccccc;
+  background-color: transparent;
   font-weight: 600;
   border: none;
   position: absolute;
-  padding: 0px;
-  margin-top: 1px; }
+  top: 0px;
+  bottom: 0px;
+  padding: 0px; }
 
 button.clear-search {
   right: 31px;
   width: 20px;
-  margin-right: 5px; }
+  top: -4px;
+  margin-right: 5px;
+  font-size: 27px; }
 
 button.clear-search:hover {
   opacity: 1;
@@ -489,16 +501,7 @@ button.search-button:disabled svg {
   }
 
   static get observedAttributes() {
-    return ["value", "active-index"];
-  }
-
-  get value() {
-    return this.getAttribute("value");
-  }
-
-  set value(val) {
-    if (val === "") this._clear();
-    this.setAttribute("value", val);
+    return ["active-index"];
   }
 
   get activeIndex() {
@@ -520,18 +523,6 @@ button.search-button:disabled svg {
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback();
 
-    if (attr === "value") {
-      this._input.value = newVal;
-
-      if (newVal === "") {
-        this._searchBtn.setAttribute("disabled", true);
-      } else {
-        if (!this._input.hasAttribute("disabled"))
-          this._searchBtn.removeAttribute("disabled");
-        this._clearBtn.removeAttribute("hidden");
-      }
-    }
-
     if (attr === "active-index") {
       if (newVal) {
         // add aria-activedescendant on input box
@@ -552,7 +543,14 @@ button.search-button:disabled svg {
   }
 
   _inputChanged() {
-    this.value = this._input.value;
+    if (this._input.value === "") {
+      this._searchBtn.setAttribute("disabled", true);
+      this._clearBtn.setAttribute("hidden", true);
+    } else {
+      if (!this._input.hasAttribute("disabled"))
+        this._searchBtn.removeAttribute("disabled");
+      this._clearBtn.removeAttribute("hidden");
+    }
 
     if (throttle === false) {
       throttle = true;
@@ -652,8 +650,9 @@ ul {
   ul li {
     display: list-item;
     cursor: pointer;
-    padding: 7px 10px;
-    margin: 2px 0px 2px 0px; }
+    padding: 10px;
+    margin: 0px;
+     }
     ul li.active {
       background-color: var(--rh-theme--color--surface--lighter, #ececec); }
 </style>
@@ -687,6 +686,7 @@ ul {
       ".suggestions-aria-help"
     );
 
+    this.activeIndex = null;
     this._ul = this.shadowRoot.querySelector("ul");
     this._ul.addEventListener("mousedown", this._optionSelected.bind(this));
   }
@@ -727,7 +727,7 @@ ul {
   }
 
   static get observedAttributes() {
-    return ["open", "reflow", "active-index", "selected-option"];
+    return ["open", "reflow", "active-index"];
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
@@ -747,7 +747,7 @@ ul {
   }
 
   _activeIndexChanged() {
-    if (isNaN(this.activeIndex) || this.data.length === 0) return;
+    if (isNaN(this.activeIndex) || !this.data || this.data.length === 0) return;
 
     // remove active class
     this._ul.querySelector(".active").classList.remove("active");
@@ -756,7 +756,7 @@ ul {
     let activeOption = this._ul.querySelector(
       "li:nth-child(" + (this.activeIndex + 1) + ")"
     );
-    this.selectedOption = activeOption.innerHTML;
+
     activeOption.classList.add("active");
 
     // scroll to selected element when selected item with keyboard is out of view
@@ -785,19 +785,11 @@ ul {
   }
 
   get activeIndex() {
-    return parseInt(this.getAttribute("active-index"), 10);
+    return parseInt(this.getAttribute("active-index"), 10) || null;
   }
 
   set activeIndex(val) {
     this.setAttribute("active-index", val);
-  }
-
-  get selectedOption() {
-    this.getAttribute("selected-option");
-  }
-
-  set selectedOption(val) {
-    this.setAttribute("selected-option", val);
   }
 
   get reflow() {

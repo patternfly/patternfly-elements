@@ -71,6 +71,8 @@ class RhAutocomplete extends RHElement {
     this._dropdown = this.shadowRoot.querySelector("#dropdown");
     this._dropdown.data = [];
 
+    this.activeIndex = null;
+
     this.addEventListener(
       "rh-input-change-event",
       this._autocomplete.bind(this)
@@ -196,8 +198,8 @@ class RhAutocomplete extends RHElement {
   _openDroplist() {
     this._dropdown.setAttribute("open", true);
 
-    this._dropdown.setAttribute("active-index", 0);
-    this._inputBox.setAttribute("active-index", 0);
+    this._dropdown.setAttribute("active-index", null);
+    this._inputBox.setAttribute("active-index", null);
   }
 
   _optionSelected(e) {
@@ -244,8 +246,9 @@ class RhAutocomplete extends RHElement {
   }
 
   _activeOption(activeIndex) {
+    if (activeIndex === null || activeIndex === "null") return;
     return this._dropdown.shadowRoot.querySelector(
-      "li:nth-child(" + (activeIndex + 1) + ")"
+      "li:nth-child(" + (parseInt(activeIndex, 10) + 1) + ")"
     ).innerHTML;
   }
 
@@ -261,35 +264,40 @@ class RhAutocomplete extends RHElement {
     )
       return;
 
-    let activeIndex = parseInt(this._dropdown.activeIndex, 10) || null;
+    let activeIndex = this._dropdown.activeIndex;
     let optionsLength = this._dropdown.data.length;
 
     if (key == KEYCODE.ESC) {
       this._closeDroplist();
     } else if (key === KEYCODE.UP) {
+      activeIndex =
+        activeIndex === null || activeIndex === "null"
+          ? optionsLength
+          : parseInt(activeIndex, 10);
+
       activeIndex -= 1;
 
       if (activeIndex < 0) {
         activeIndex = optionsLength - 1;
       }
 
-      if (activeIndex !== null) {
-        this._inputBox.shadowRoot.querySelector(
-          "input"
-        ).value = this._activeOption(activeIndex);
-      }
+      this._inputBox.shadowRoot.querySelector(
+        "input"
+      ).value = this._activeOption(activeIndex);
     } else if (key === KEYCODE.DOWN) {
+      activeIndex =
+        activeIndex === null || activeIndex === "null"
+          ? -1
+          : parseInt(activeIndex, 10);
       activeIndex += 1;
 
       if (activeIndex > optionsLength - 1) {
         activeIndex = 0;
       }
 
-      if (activeIndex !== null) {
-        this._inputBox.shadowRoot.querySelector(
-          "input"
-        ).value = this._activeOption(activeIndex);
-      }
+      this._inputBox.shadowRoot.querySelector(
+        "input"
+      ).value = this._activeOption(activeIndex);
     } else if (key === KEYCODE.ENTER) {
       let selectedValue = this._inputBox.shadowRoot.querySelector("input")
         .value;
@@ -372,7 +380,6 @@ input[type="search"]::-webkit-search-decoration {
 button {
   color: #cccccc;
   background-color: transparent;
-  font-weight: 600;
   border: none;
   position: absolute;
   top: 0px;
@@ -382,9 +389,12 @@ button {
 button.clear-search {
   right: 31px;
   width: 20px;
-  top: -4px;
+  top: 45%;
+  transform: translate(-50%, -50%);
   margin-right: 5px;
-  font-size: 27px; }
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 20px; }
 
 button.clear-search:hover {
   opacity: 1;
@@ -505,7 +515,7 @@ button.search-button:disabled svg {
   }
 
   get activeIndex() {
-    return parseInt(this.getAttribute("active-index"), 10);
+    return this.getAttribute("active-index") || null;
   }
 
   set activeIndex(val) {
@@ -513,7 +523,7 @@ button.search-button:disabled svg {
   }
 
   get debounce() {
-    return parseInt(this.getAttribute("debounce"), 10);
+    return this.getAttribute("debounce");
   }
 
   set debounce(val) {
@@ -719,9 +729,7 @@ ul {
 
     this._ul.innerHTML = `${options
       .map((item, index) => {
-        return `<li id="option-${index}" class="${
-          index === 0 ? "active" : ""
-        }" role="option" tabindex="-1" value="${item}">${item}</li>`;
+        return `<li id="option-${index}" role="option" tabindex="-1" value="${item}">${item}</li>`;
       })
       .join("")}`;
   }
@@ -747,14 +755,22 @@ ul {
   }
 
   _activeIndexChanged() {
-    if (isNaN(this.activeIndex) || !this.data || this.data.length === 0) return;
+    if (
+      !this.data ||
+      this.data.length === 0 ||
+      this.activeIndex === null ||
+      this.activeIndex === "null"
+    )
+      return;
 
     // remove active class
-    this._ul.querySelector(".active").classList.remove("active");
+    if (this._ul.querySelector(".active")) {
+      this._ul.querySelector(".active").classList.remove("active");
+    }
 
     // add active class to selected option
     let activeOption = this._ul.querySelector(
-      "li:nth-child(" + (this.activeIndex + 1) + ")"
+      "li:nth-child(" + (parseInt(this.activeIndex, 10) + 1) + ")"
     );
 
     activeOption.classList.add("active");
@@ -785,7 +801,7 @@ ul {
   }
 
   get activeIndex() {
-    return parseInt(this.getAttribute("active-index"), 10) || null;
+    return this.getAttribute("active-index");
   }
 
   set activeIndex(val) {

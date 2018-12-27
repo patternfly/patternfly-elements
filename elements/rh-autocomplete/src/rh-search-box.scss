@@ -66,22 +66,25 @@ button {
   top: 0px;
   bottom: 0px;
   padding: 0px;
+  margin: 0px;
+  cursor: pointer;
 }
 
 button.clear-search {
   right: 31px;
   width: 20px;
-  top: 45%;
-  transform: translate(-50%, -50%);
   margin-right: 5px;
-  font-size: 28px;
-  font-weight: 600;
-  line-height: 20px;
 }
 
-button.clear-search:hover {
+button.clear-search svg {
+  width: 12px;
+  stroke: #ccc;
+}
+
+button.clear-search:hover svg,
+button.clear-search:focus svg {
   opacity: 1;
-  color: #06c;
+  stroke: #06c;
 }
 
 button.search-button {

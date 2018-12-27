@@ -69,6 +69,7 @@ class RhAutocomplete extends RHElement {
     this._inputBox.debounce = this.debounce;
 
     this._dropdown = this.shadowRoot.querySelector("#dropdown");
+    this.addEventListener("rh-search-event", this._updateInputBox.bind(this));
     this._dropdown.data = [];
 
     this.activeIndex = null;
@@ -89,6 +90,11 @@ class RhAutocomplete extends RHElement {
   }
 
   disconnectedCallback() {
+    this.removeEventListener(
+      "rh-search-event",
+      this._updateInputBox.bind(this)
+    );
+
     this.removeEventListener(
       "rh-input-change-event",
       this._autocomplete.bind(this)
@@ -186,6 +192,12 @@ class RhAutocomplete extends RHElement {
 
   set debounce(val) {
     this.setAttribute("debounce", val);
+  }
+
+  _updateInputBox(e) {
+    this._inputBox.shadowRoot.querySelector("input").value =
+      e.detail.searchValue;
+    this._reset();
   }
 
   _closeDroplist() {
@@ -314,7 +326,6 @@ class RhAutocomplete extends RHElement {
 
 /*
 * - Attributes ------------------------------------
-* value        | input box value
 * active-index | Set selected option
 * debounce     | debounce value for firing rh-input-change-event event
 

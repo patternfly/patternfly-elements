@@ -15,12 +15,12 @@ function createCommonjsModule(fn, module) {
 
 var numeral = createCommonjsModule(function(module) {
   /*! @preserve
-   * numeral.js
-   * version : 2.0.6
-   * author : Adam Draper
-   * license : MIT
-   * http://adamwdraper.github.com/Numeral-js/
-   */
+ * numeral.js
+ * version : 2.0.6
+ * author : Adam Draper
+ * license : MIT
+ * http://adamwdraper.github.com/Numeral-js/
+ */
 
   (function(global, factory) {
     if (module.exports) {
@@ -1219,12 +1219,9 @@ numeral.locales.en.delimiters.thousands = " ";
 
 class PfeNumber extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   display: inline;
-  white-space: nowrap; }
-</style>
+  white-space: nowrap; }</style>
 <span></span>`;
   }
 

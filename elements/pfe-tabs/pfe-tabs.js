@@ -133,9 +133,7 @@ function generateId() {
 
 class PfeTabs extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   display: block; }
 
 .tabs {
@@ -169,8 +167,7 @@ class PfeTabs extends PFElement {
 :host([vertical]) .panels {
   padding: 0;
   padding-right: var(--pfe-theme--container-padding, 1rem);
-  padding-left: calc(var(--pfe-theme--container-padding, 1rem) * 2); }
-</style>
+  padding-left: calc(var(--pfe-theme--container-padding, 1rem) * 2); }</style>
 <div class="tabs">
   <slot name="tab"></slot>
 </div>
@@ -475,9 +472,7 @@ class PfeTabs extends PFElement {
 
 class RhTab extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   --pfe-tabs--main:         transparent;
   --pfe-tabs--aux:          var(--pfe-theme--color--surface--lightest--text, #333);
   --pfe-tabs--link:         var(--pfe-theme--color--surface--lightest--link, #06c);
@@ -521,8 +516,7 @@ class RhTab extends PFElement {
 
 :host(:focus),
 :host(:focus-visible) {
-  outline: var(--pfe-theme--ui--focus-outline-width, 1px) var(--pfe-theme--ui--focus-outline-style, solid) var(--pfe-tabs--focus); }
-</style>
+  outline: var(--pfe-theme--ui--focus-outline-width, 1px) var(--pfe-theme--ui--focus-outline-style, solid) var(--pfe-tabs--focus); }</style>
 <slot></slot>
 <div class="indicator"></div>`;
   }
@@ -580,14 +574,11 @@ class RhTab extends PFElement {
 
 class RhTabPanel extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   display: block; }
 
 :host([hidden]) {
-  display: none; }
-</style>
+  display: none; }</style>
 <slot></slot>`;
   }
 

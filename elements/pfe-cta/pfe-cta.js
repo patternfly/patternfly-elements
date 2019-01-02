@@ -24,9 +24,7 @@ import PFElement from "../pfelement/pfelement.js";
 
 class PfeCta extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   --pfe-cta--main:                     var(--pfe-theme--color--ui-link, #06c);
   --pfe-cta--main--hover:              var(--pfe-theme--color--ui-link--hover, #003366);
   --pfe-cta--main--focus:              var(--pfe-theme--color--ui-link--focus, #003366);
@@ -139,8 +137,7 @@ class PfeCta extends PFElement {
   --pfe-cta--main:        var(--pfe-theme--color--ui-accent, #fe460d) !important;
   --pfe-cta--main--hover: var(--pfe-theme--color--ui-accent--hover, #a42701) !important;
   --pfe-cta--aux:         var(--pfe-theme--color--ui-accent--text, #fff) !important;
-  --pfe-cta--aux--hover:  var(--pfe-theme--color--ui-accent--text--hover, #fff) !important; }
-</style>
+  --pfe-cta--aux--hover:  var(--pfe-theme--color--ui-accent--text--hover, #fff) !important; }</style>
 <slot></slot>`;
   }
 

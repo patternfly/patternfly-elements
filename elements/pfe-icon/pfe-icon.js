@@ -35,9 +35,7 @@ if (!document.getElementById(templateId)) {
 
 class PfeIcon extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   --pfe-icon--spacing:                 var(--pfe-theme--container-spacer, 1rem);
   --pfe-icon--size:                    var(--pfe-theme--icon-size, 1em);
   --pfe-icon--color--bg:               transparent;
@@ -160,8 +158,7 @@ class PfeIcon extends PFElement {
 :host([circled="accent"]) {
   --pfe-icon--color--bg:               var(--pfe-theme--color--surface--accent, #fe460d);
   --pfe-icon--color--border:           transparent;
-  --pfe-broadcasted--color--text:      var(--pfe-theme--color--surface--accent--text, #fff); }
-</style>
+  --pfe-broadcasted--color--text:      var(--pfe-theme--color--surface--accent--text, #fff); }</style>
 <svg viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" focusable="false" style="pointer-events: none; display: block; width: 100%; height: 100%">
   <g>
     <path d=""></path>

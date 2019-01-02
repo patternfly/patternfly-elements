@@ -23,6 +23,7 @@ const defaultBody = tools.autoContent(1, 2);
 stories.add(PfeCard.tag, () => {
   let config = {};
   // const props = PfeCard.properties;
+  // Manually defining props but this can be done in a schema instead
   const props = {
     color: {
       title: "Color",
@@ -36,18 +37,21 @@ stories.add(PfeCard.tag, () => {
         "complement",
         "accent"
       ],
-      default: "default"
+      default: "complement"
     },
     size: {
       title: "Padding size",
       type: "string",
-      enum: ["small"]
+      enum: ["small", "standard"],
+      default: "standard"
     }
   };
 
+  // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 
   // const slots = PfeCard.slots;
+  // Manually defining the slots but this can be done in a schema instead
   const slots = {
     header: {
       title: "Header"
@@ -65,12 +69,30 @@ stories.add(PfeCard.tag, () => {
   // Build the default body content
   slots.body.default = defaultBody;
 
+  // Trigger the auto generation of the knobs for slots
   config.has = tools.autoContentKnobs(slots, storybookBridge);
 
-  const ctaValue = storybookBridge.boolean("Include a call-to-action?", false);
+  // Add the footer slot manually, does not accept user input via field
+  slots.footer = {
+    title: "Footer"
+  };
 
+  // Create an object for the footer attributes
+  let footerAttrs = {};
+  let ctaText;
+  let ctaLink;
+
+  // Manually ask user if they want a CTA included
+  const ctaValue = storybookBridge.boolean(
+    "Include a call-to-action?",
+    true,
+    "Call-to-action"
+  );
+
+  // If they do, prompt them for the cta text and style
   if (ctaValue) {
-    const ctaText = storybookBridge.text("Text", "Learn more");
+    ctaText = storybookBridge.text("Text", "Learn more", "Call-to-action");
+    ctaLink = storybookBridge.text("Link", "#", "Call-to-action");
     const ctaPriorityValue = storybookBridge.select(
       "Priority",
       {
@@ -78,32 +100,33 @@ stories.add(PfeCard.tag, () => {
         primary: "primary",
         secondary: "secondary"
       },
-      "default"
+      "default",
+      "Call-to-action"
     );
 
-    // Add the footer slot
-    slots.footer = {
-      title: "Footer"
-    };
+    // Print the priority attribute if it's not default
+    if (ctaPriorityValue !== "default") {
+      footerAttrs.priority = ctaPriorityValue;
+    }
 
-    let footerAttrs = {
-      priority: ctaPriorityValue
-    };
-
+    // If the card uses a dark theme, add the on="dark" attribute
     if (
       ["dark", "darkest", "accent", "complement"].includes(config.prop.color)
     ) {
       footerAttrs.on = "dark";
     }
+  }
 
-    // Build the default footer component
-    slots.footer.default = ctaValue
-      ? tools.component("pfe-cta", footerAttrs, [
-          {
-            content: `<a href="#">${ctaText}</a>`
-          }
-        ])
-      : "";
+  // Build the default footer component
+  slots.footer.default = "";
+
+  // If the link exists, add the default value for the footer slot
+  if (ctaValue) {
+    slots.footer.default = tools.component("pfe-cta", footerAttrs, [
+      {
+        content: `<a href="${ctaLink}">${ctaText}</a>`
+      }
+    ]);
   }
 
   config.slots = [
@@ -122,6 +145,15 @@ stories.add(PfeCard.tag, () => {
       content: slots.footer ? slots.footer.default : ""
     }
   ];
+
+  // Some attribute values don't need to be included in the markup
+  if (config.prop.color === "default") {
+    config.prop.color = "";
+  }
+
+  if (config.prop.size === "standard") {
+    config.prop.size = "";
+  }
 
   let rendered = template(config);
 

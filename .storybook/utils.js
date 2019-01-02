@@ -20,7 +20,12 @@ String.prototype.sentenceCase = function() {
 // Print attributes based on an object
 const listProperties = obj =>
   Object.entries(obj)
-    .map(set => (set[1] && set[1] !== "null" ? ` ${set[0]}="${set[1]}"` : ""))
+    .map(set => {
+      let p = set[0];
+      let v = set[1];
+      let print = set[2] || true;
+      return print && v && v !== "null" ? ` ${p}="${v}"` : "";
+    })
     .join("");
 
 // Create a tag based on a provided object
@@ -46,7 +51,7 @@ export function component(tag, attributes = {}, slots = []) {
 
 // Create an automatic heading
 export function autoHeading(short = false) {
-  let length = short ? Math.random() * 4 + 2 : Math.random() * 10 + 5;
+  let length = short ? Math.random() + 2 : Math.random() * 10 + 5;
   return loremIpsum({ count: length, units: "words" }).sentenceCase();
 }
 
@@ -89,13 +94,14 @@ export function autoPropKnobs(properties, bridge) {
         // If a default is not defined, add a null option
         if (defaultValue === "" || defaultValue === null) {
           opts.null = "none";
+          defaultValue = null;
         }
 
         // Create the knob
-        binding[attr] = bridge.select(title, opts, defaultValue);
+        binding[attr] = bridge.select(title, opts, defaultValue, "Attributes");
       } else {
         // Create the knob
-        binding[attr] = bridge[method](title, defaultValue);
+        binding[attr] = bridge[method](title, defaultValue, "Attributes");
       }
     }
   });
@@ -107,7 +113,7 @@ export function autoContentKnobs(slots, bridge) {
   let binding = {};
 
   Object.entries(slots).forEach(slot => {
-    binding[slot[0]] = bridge.text(slot[1].title, slot[1].default);
+    binding[slot[0]] = bridge.text(slot[1].title, slot[1].default, "Content");
   });
 
   return binding;

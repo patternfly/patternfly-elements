@@ -510,3 +510,5 @@ class RhTabPanel extends PFElement {
 PFElement.create(RhTab);
 PFElement.create(RhTabPanel);
 PFElement.create(PfeTabs);
+
+export { PfeTabs as default };

@@ -375,14 +375,15 @@ input {
   font-size: 16px;
   
   height: 40px;
-  transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s; }
+  transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+  opacity: 1; }
 
 input:disabled,
 button:disabled {
   cursor: not-allowed;
   background-color: transparent;
   color: #ccc;
-  opacity: 1; }
+  opacity: 0.5; }
 
 input:focus,
 input:focus ~ button.search-button {

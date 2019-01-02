@@ -1,6 +1,10 @@
 // This is a collection of functions to reuse within PFElements stories.
+
+// Automatic content generation
+// https://www.npmjs.com/package/lorem-ipsum
 const loremIpsum = require("lorem-ipsum");
 
+// Escape HTML to display markup as content
 export function escapeHTML(html) {
   const div = document.createElement("div");
   const text = document.createTextNode(html);
@@ -8,22 +12,33 @@ export function escapeHTML(html) {
   return div.innerHTML;
 }
 
+// Convert a string to sentence case
 String.prototype.sentenceCase = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
+// Print attributes based on an object
 const listProperties = obj =>
   Object.entries(obj)
-    .map(set => (set[1] ? ` ${set[0]}="${set[1]}"` : ""))
+    .map(set => {
+      let p = set[0];
+      let v = set[1];
+      let print = set[2] || true;
+      return print && v && v !== "null" ? ` ${p}="${v}"` : "";
+    })
     .join("");
 
-export function customTag(data) {
-  return `<${data.tag ? data.tag : "div"} slot="${data.slot}"${listProperties(
-    data.attributes || {}
-  )}>${data.content || autoContent()}</${data.tag ? data.tag : "div"}>`;
+// Create a tag based on a provided object
+export function customTag(obj) {
+  return `<${obj.tag ? obj.tag : "div"} ${
+    obj.slot ? `slot="${obj.slot}"` : ""
+  }${listProperties(obj.attributes || {})}>${obj.content || autoContent()}</${
+    obj.tag ? obj.tag : "div"
+  }>`;
 }
 
-// If a slot is a component or content, render that raw, if it's got a tag defined, run the custom tag function
+// If a slot is a component or content, render that raw
+// if it's got a tag defined, run the custom tag function
 const renderSlots = (slots = []) =>
   slots.map(slot => (slot.content ? slot.content : "")).join("");
 
@@ -34,11 +49,13 @@ export function component(tag, attributes = {}, slots = []) {
   }</${tag}>`;
 }
 
+// Create an automatic heading
 export function autoHeading(short = false) {
-  let length = short ? Math.random() * 2 + 2 : Math.random() * 4 + 2;
+  let length = short ? Math.random() + 2 : Math.random() * 10 + 5;
   return loremIpsum({ count: length, units: "words" }).sentenceCase();
 }
 
+// Create a set of automatic content
 export function autoContent(max = 5, min = 1, short = false) {
   return loremIpsum({
     count: Math.floor(Math.random() * max + min),
@@ -49,6 +66,7 @@ export function autoContent(max = 5, min = 1, short = false) {
   });
 }
 
+// Return Storybook knobs based on an object containing property definitions for the component
 export function autoPropKnobs(properties, bridge) {
   var binding = {};
   Object.entries(properties).forEach(prop => {
@@ -73,24 +91,39 @@ export function autoPropKnobs(properties, bridge) {
         // Convert the array into an object
         options.map(item => (opts[item] = item));
 
+        // If a default is not defined, add a null option
+        if (defaultValue === "" || defaultValue === null) {
+          opts.null = "none";
+          defaultValue = null;
+        }
+
         // Create the knob
-        binding[attr] = bridge.select(title, opts, defaultValue);
+        binding[attr] = bridge.select(title, opts, defaultValue, "Attributes");
       } else {
         // Create the knob
-        binding[attr] = bridge[method](title, defaultValue);
+        binding[attr] = bridge[method](title, defaultValue, "Attributes");
       }
     }
   });
   return binding;
 }
 
+// Create knobs to render input fields for the slots
 export function autoContentKnobs(slots, bridge) {
   let binding = {};
 
   Object.entries(slots).forEach(slot => {
-    binding[slot[0]] = bridge.text(slot[1].title, slot[1].default);
-    console.dir(slot);
+    binding[slot[0]] = bridge.text(slot[1].title, slot[1].default, "Content");
   });
+
+  // Hold this; could be used for dynamic field generation
+  // Object.entries(slots).forEach(slot => {
+  //   // If a slot can contain sub components, prompt the user
+  //   binding["type_" + slot[0]] = bridge.select(slot[1].title + " type", slot[1].canContain, "raw", "Content");
+  //   if (binding["type_" + slot[0]] === "raw") {
+  //     binding[slot[0]] = bridge.text(slot[1].title, slot[1].default, "Content");
+  //   }
+  // });
 
   return binding;
 }

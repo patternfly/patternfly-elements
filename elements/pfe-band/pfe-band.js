@@ -143,21 +143,24 @@ class PfeBand extends PFElement {
   .pfe-band__container[pfe-aside-mobile="top"] {
     --pfe-band--gridTemplateArea_layer1: "aside" "header";
     --pfe-band--gridTemplateArea_layer3: "footer"; }
-  @media (min-width: 576px) {
-    .pfe-band__container[pfe-aside-desktop] {
-      --pfe-band--gridTemplateArea_layer1: "header header"; }
-    .pfe-band__container[pfe-aside-desktop="right"] {
-      --pfe-band--layout: 3fr minmax($aside-sm, 1fr);
+  @media (min-width: 768px) {
+    .pfe-band__container {
+      --pfe-band--layout: calc(100% - $aside-sm) $aside-sm;
+      --pfe-band--gridTemplateArea_layer1: "header header";
       --pfe-band--gridTemplateArea_layer2: "body aside";
       --pfe-band--gridTemplateArea_layer3: "footer aside"; }
-    .pfe-band__container[pfe-aside-desktop="left"] {
-      --pfe-band--layout: minmax($aside-sm, 1fr) 3fr;
-      --pfe-band--gridTemplateArea_layer2: "aside body";
-      --pfe-band--gridTemplateArea_layer3: "aside footer"; }
-    .pfe-band__container[pfe-aside-height="full"] {
-      --pfe-band--gridTemplateArea_layer1: "header aside"; }
-      .pfe-band__container[pfe-aside-height="full"][pfe-aside-desktop="left"] {
-        --pfe-band--gridTemplateArea_layer1: "aside header"; } }
+      .pfe-band__container[pfe-aside-mobile="top"] {
+        --pfe-band--gridTemplateArea_layer1: "header header";
+        --pfe-band--gridTemplateArea_layer2: "body aside";
+        --pfe-band--gridTemplateArea_layer3: "footer aside"; }
+      .pfe-band__container[pfe-aside-desktop="left"] {
+        --pfe-band--layout: $aside-sm calc(100% - $aside-sm);
+        --pfe-band--gridTemplateArea_layer2: "aside body";
+        --pfe-band--gridTemplateArea_layer3: "aside footer"; }
+      .pfe-band__container[pfe-aside-height="full"] {
+        --pfe-band--gridTemplateArea_layer1: "header aside"; }
+        .pfe-band__container[pfe-aside-height="full"][pfe-aside-desktop="left"] {
+          --pfe-band--gridTemplateArea_layer1: "aside header"; } }
   @media (max-width: 768px - 1) {
     .pfe-band__container > *:not(:last-child) {
       margin-bottom: var(--pfe-theme--container-spacer, 1rem); } }
@@ -269,29 +272,29 @@ class PfeBand extends PFElement {
       header: {
         title: "Header",
         type: "array",
+        namedSlot: true,
+        maxItems: 3,
         items: { title: "Body item", oneOf: [{ $ref: "raw" }] }
       },
       body: {
         title: "Body",
         type: "array",
-        items: { title: "Body item", oneOf: [{ $ref: "raw" }] }
+        namedSlot: false,
+        items: { oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }] }
       },
       footer: {
         title: "Footer",
         type: "array",
+        namedSlot: true,
         maxItems: 3,
-        items: {
-          title: "Footer item",
-          oneOf: [{ $ref: "pfe-cta" }, { $ref: "raw" }]
-        }
+        items: { oneOf: [{ $ref: "pfe-cta" }, { $ref: "raw" }] }
       },
       aside: {
         title: "Aside",
         type: "array",
-        items: {
-          title: "Body item",
-          oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }]
-        }
+        namedSlot: true,
+        maxItems: 5,
+        items: { oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }] }
       }
     };
   }
@@ -349,6 +352,19 @@ class PfeBand extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+
+    // Set attribute default values on .pfe-band__container
+    let attr = this.getAttribute("pfe-aside-desktop");
+    if (!attr) {
+      console.dir(PfeBand.properties);
+      console.log(PfeBand.properties["pfe-aside-desktop"].default);
+      this.shadowRoot
+        .querySelector(".pfe-band__container")
+        .setAttribute(
+          "pfe-aside-desktop",
+          PfeBand.properties["pfe-aside-desktop"].default
+        );
+    }
   }
 
   // disconnectedCallback() {}

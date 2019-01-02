@@ -122,19 +122,21 @@ $aside-lg: 300px;
         --pfe-band--gridTemplateArea_layer3: "footer";
      }
 
-     @media (min-width: #{pfe-breakpoint(sm)}) {
-      &[pfe-aside-desktop] {
+     @media (min-width: #{pfe-breakpoint(md)}) {
+      --pfe-band--layout: calc(100% - $aside-sm) $aside-sm;
+      --pfe-band--gridTemplateArea_layer1: "header header";
+      --pfe-band--gridTemplateArea_layer2: "body aside";
+      --pfe-band--gridTemplateArea_layer3: "footer aside";
+
+      &[pfe-aside-mobile="top"] {
         --pfe-band--gridTemplateArea_layer1: "header header";
+        --pfe-band--gridTemplateArea_layer2: "body aside";
+        --pfe-band--gridTemplateArea_layer3: "footer aside";
       }
-       &[pfe-aside-desktop="right"] {
-          --pfe-band--layout: 3fr minmax($aside-sm, 1fr);
-          --pfe-band--gridTemplateArea_layer2: "body aside";
-          --pfe-band--gridTemplateArea_layer3: "footer aside";
-       }
 
        // Move the aside for desktop if left selected
        &[pfe-aside-desktop="left"] {
-         --pfe-band--layout: minmax($aside-sm, 1fr) 3fr;
+         --pfe-band--layout: $aside-sm calc(100% - $aside-sm);
          --pfe-band--gridTemplateArea_layer2: "aside body";
          --pfe-band--gridTemplateArea_layer3: "aside footer";
        }

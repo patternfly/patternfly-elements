@@ -15,6 +15,8 @@
         "header": {
           "title": "Header",
           "type": "array",
+          "namedSlot": true,
+          "maxItems": 3,
           "items": {
             "title": "Body item",
             "oneOf": [
@@ -27,9 +29,12 @@
         "body": {
           "title": "Body",
           "type": "array",
+          "namedSlot": false,
           "items": {
-            "title": "Body item",
             "oneOf": [
+              {
+                "$ref": "pfe-card"
+              },
               {
                 "$ref": "raw"
               }
@@ -39,9 +44,9 @@
         "footer": {
           "title": "Footer",
           "type": "array",
+          "namedSlot": true,
           "maxItems": 3,
           "items": {
-            "title": "Footer item",
             "oneOf": [
               {
                 "$ref": "pfe-cta"
@@ -55,8 +60,9 @@
         "aside": {
           "title": "Aside",
           "type": "array",
+          "namedSlot": true,
+          "maxItems": 5,
           "items": {
-            "title": "Body item",
             "oneOf": [
               {
                 "$ref": "pfe-card"

@@ -14,6 +14,7 @@ const stories = storiesOf("Band", module);
 const template = (data = {}) => {
   return tools.component(PfeBand.tag, data.prop, data.slots);
 };
+const defaultHeading = tools.autoHeading();
 
 stories.addDecorator(storybookBridge.withKnobs);
 
@@ -23,12 +24,22 @@ stories.add(PfeBand.tag, () => {
   const slots = PfeBand.slots;
 
   //-- Add default content to slot objects
+  Object.entries(slots).forEach(slot => {
+    let supportedComponents = [];
+    if (slot[1].type === "array") {
+      slot[1].items.oneOf.forEach(item =>
+        supportedComponents.push(
+          Object.entries(item)
+            .map(i => i[1])
+            .join("")
+        )
+      );
+    }
+    slot[1].canContain = supportedComponents;
+  });
 
   // Build the default header content
-  slots.header.default = tools.customTag({
-    tag: "h1",
-    content: tools.autoHeading()
-  });
+  slots.header.default = defaultHeading;
 
   // Build the default body content
   slots.body.default = tools.autoContent(4, 3);
@@ -37,6 +48,7 @@ stories.add(PfeBand.tag, () => {
   slots.footer.default = tools.component(
     "pfe-cta",
     {
+      slot: "footer",
       priority: "primary"
     },
     [
@@ -83,24 +95,39 @@ stories.add(PfeBand.tag, () => {
     ]
   );
 
+  props["pfe-color"].default = "light";
+
   config.prop = tools.autoPropKnobs(props, storybookBridge);
   config.has = tools.autoContentKnobs(slots, storybookBridge);
 
+  // Don't print the attribute if it's the default value
+  [
+    "pfe-color",
+    "pfe-aside-desktop",
+    "pfe-aside-mobile",
+    "pfe-aside-height"
+  ].forEach(p => {
+    if (config.prop[p] === PfeBand.properties[p].default) {
+      config.prop[p] = "";
+    }
+  });
+
   config.slots = [
     {
-      slot: "header",
-      content: config.has.header
+      content: tools.customTag({
+        tag: "h1",
+        slot: "header",
+        content: config.has.header
+      })
     },
     {
       content: config.has.body
     },
     {
-      slot: "footer",
       content: config.has.footer
     },
     {
-      slot: "aside",
-      component: config.has.aside
+      content: config.has.aside
     }
   ];
 

@@ -174,15 +174,13 @@ class PfeTabs extends PFElement {
 
 :host([pfe-variant="primary"]) .tabs {
   border-bottom: transparent;
-  border-right: transparent;
-  justify-content: space-between; }
+  border-right: transparent; }
 
 :host([vertical][pfe-variant="primary"]) {
   align-items: flex-start; }
 
 :host([pfe-variant="secondary"]) .tabs {
-  border-bottom: transparent;
-  justify-content: space-between; }
+  border-bottom: transparent; }
 
 :host([vertical][pfe-variant="secondary"]) .tabs {
   justify-content: flex-start; }
@@ -553,7 +551,8 @@ class RhTab extends PFElement {
 
 :host([pfe-variant="primary"]) {
   text-align: center;
-  padding: 0 calc(var(--pfe-theme--container-padding, 1rem) / 3) var(--pfe-theme--container-padding, 1rem); }
+  padding: 0 calc(var(--pfe-theme--container-padding, 1rem) / 3) var(--pfe-theme--container-padding, 1rem);
+  margin-right: 2%; }
   :host([pfe-variant="primary"]) .indicator {
     width: 100%;
     left: 0; }
@@ -569,7 +568,8 @@ class RhTab extends PFElement {
 :host([pfe-variant="secondary"]) {
   text-align: center;
   padding: calc(var(--pfe-theme--container-padding, 1rem) * .666) calc(var(--pfe-theme--container-padding, 1rem) * 2.75);
-  border: 1px solid #252527; }
+  border: 1px solid #252527;
+  margin-right: 2%; }
   :host([pfe-variant="secondary"]) .indicator {
     display: none; }
 

@@ -69,7 +69,6 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
   .tabs {
     border-bottom: transparent;
     border-right: transparent;
-    justify-content: space-between; 
   }
 }
 :host([vertical][pfe-variant="primary"]) {
@@ -79,7 +78,6 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 :host([pfe-variant="secondary"]) {
   .tabs {
     border-bottom: transparent;
-    justify-content: space-between; 
   }
 }
 

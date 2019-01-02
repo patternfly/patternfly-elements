@@ -84,6 +84,7 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 :host([pfe-variant="primary"]) {
   text-align: center;
   padding: 0 calc(#{pfe-var(container-padding)} / 3) #{pfe-var(container-padding)};
+  margin-right: 2%;
 
   .indicator {
     width: 100%;
@@ -107,6 +108,7 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   text-align: center;
   padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 2.75);
   border: 1px solid $pfe-global--color--black-soft;
+  margin-right: 2%;
 
   .indicator {
     display: none;

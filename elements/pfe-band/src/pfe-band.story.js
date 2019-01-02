@@ -1,16 +1,6 @@
 import { storiesOf } from "@storybook/polymer";
-import { withKnobs, text, select } from "@storybook/addon-knobs/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
-
-import {
-  escapeHTML,
-  autoPropKnobs,
-  autoContentKnobs,
-  component,
-  autoHeading,
-  autoContent,
-  customTag
-} from "../../../.storybook/utils.js";
+import * as tools from "../../../.storybook/utils.js";
 
 const cleaner = require("clean-html");
 
@@ -22,45 +12,29 @@ const stories = storiesOf("Band", module);
 
 // Define the templates to be used
 const template = (data = {}) => {
-  return component("pfe-band", data.prop, [
-    {
-      slot: "header",
-      content: data.has.header
-    },
-    {
-      content: data.has.body
-    },
-    {
-      slot: "footer",
-      content: data.has.footer
-    },
-    {
-      slot: "aside",
-      component: data.has.aside
-    }
-  ]);
+  return tools.component(PfeBand.tag, data.prop, data.slots);
 };
 
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeBand.tag, () => {
-  const config = {};
+  let config = {};
   const props = PfeBand.properties;
   const slots = PfeBand.slots;
 
   //-- Add default content to slot objects
 
   // Build the default header content
-  slots.header.default = customTag({
+  slots.header.default = tools.customTag({
     tag: "h1",
-    content: autoHeading()
+    content: tools.autoHeading()
   });
 
   // Build the default body content
-  slots.body.default = autoContent(4, 3);
+  slots.body.default = tools.autoContent(4, 3);
 
   // Build the default footer component
-  slots.footer.default = component(
+  slots.footer.default = tools.component(
     "pfe-cta",
     {
       priority: "primary"
@@ -73,7 +47,7 @@ stories.add(PfeBand.tag, () => {
   );
 
   // Build the default aside component
-  slots.aside.default = component(
+  slots.aside.default = tools.component(
     "pfe-card",
     {
       slot: "aside",
@@ -89,10 +63,10 @@ stories.add(PfeBand.tag, () => {
         content: "Aside"
       },
       {
-        content: autoContent(1, 1, true)
+        content: tools.autoContent(1, 1, true)
       },
       {
-        content: component(
+        content: tools.component(
           "pfe-cta",
           {
             slot: "footer",
@@ -109,8 +83,26 @@ stories.add(PfeBand.tag, () => {
     ]
   );
 
-  config.prop = autoPropKnobs(props, storybookBridge);
-  config.has = autoContentKnobs(slots, storybookBridge);
+  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.has = tools.autoContentKnobs(slots, storybookBridge);
+
+  config.slots = [
+    {
+      slot: "header",
+      content: config.has.header
+    },
+    {
+      content: config.has.body
+    },
+    {
+      slot: "footer",
+      content: config.has.footer
+    },
+    {
+      slot: "aside",
+      component: config.has.aside
+    }
+  ];
 
   let rendered = template(config);
 
@@ -126,7 +118,7 @@ stories.add(PfeBand.tag, () => {
 
   return `${rendered}
 <pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold;border: 1px solid #bccc;">
-${escapeHTML(rendered)}
+${tools.escapeHTML(rendered)}
 </pre>
 `;
 });

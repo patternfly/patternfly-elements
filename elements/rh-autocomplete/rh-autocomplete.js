@@ -146,9 +146,18 @@ class RhAutocomplete extends RHElement {
       case "init-value":
         if (this["init-value"] !== newVal) {
           let inputBox = this.shadowRoot.querySelector("#input-box").shadowRoot;
+          let searchButton = inputBox.querySelector("button.search-button");
+          let clearSearchButton = inputBox.querySelector("button.clear-search");
 
+          // set inputbox and buttons in the inner component
           inputBox.querySelector("input").value = newVal;
-          inputBox.querySelector("button.search-button").disabled = false;
+          if (newVal !== "") {
+            searchButton.removeAttribute("disabled");
+            clearSearchButton.removeAttribute("hidden");
+          } else {
+            searchButton.setAttribute("disabled", "");
+            clearSearchButton.setAttribute("hidden", "");
+          }
         }
         break;
     }

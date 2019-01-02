@@ -26,11 +26,11 @@
     <script>
       const searchAutocomplete = document.querySelector('#search-lazy-loading');
       // autocomplete call
-      searchAutocomplete.autocompleteRequest = function(params, callback) {
+      searchAutocomplete.autocompleteRequest = (params, callback) => {
         var xhr = new XMLHttpRequest();
 
         searchAutocomplete.setAttribute('loading', '');
-        xhr.onload = function() {
+        xhr.onload = () => {
           searchAutocomplete.removeAttribute('loading');
 
           if(xhr.status === 404) {
@@ -39,7 +39,7 @@
             const response = JSON.parse(xhr.responseText);
             const regx = new RegExp("\^" + params.query, "i");
 
-            let responseReady = response.reduce(function(acc, item) {
+            let responseReady = response.reduce((acc, item) => {
               if (regx.test(item.name)) acc.push(item.name);
               return acc;
             }, []);

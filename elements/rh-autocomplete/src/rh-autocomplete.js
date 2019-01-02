@@ -135,9 +135,10 @@ class RhAutocomplete extends RHElement {
 
       case "init-value":
         if (this["init-value"] !== newVal) {
-          this.shadowRoot
-            .querySelector("#input-box")
-            .shadowRoot.querySelector("input").value = newVal;
+          let inputBox = this.shadowRoot.querySelector("#input-box").shadowRoot;
+
+          inputBox.querySelector("input").value = newVal;
+          inputBox.querySelector("button.search-button").disabled = false;
         }
         break;
     }
@@ -229,6 +230,8 @@ class RhAutocomplete extends RHElement {
   }
 
   _sendAutocompleteRequest(input) {
+    if (!this.autocompleteRequest) return;
+
     this.autocompleteRequest(
       { query: input },
       this._autocompleteCallback.bind(this)

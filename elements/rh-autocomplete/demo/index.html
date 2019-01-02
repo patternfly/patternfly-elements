@@ -20,11 +20,16 @@
     ])</script>
   </head>
   <body unresolved>
+    <rh-autocomplete></rh-autocomplete>
+    <br>
     <rh-autocomplete id="search-lazy-loading" init-value="uni" debounce="500"></rh-autocomplete>
     <br>
-    <rh-autocomplete init-value="hello" is-disabled></rh-autocomplete>
+    <rh-autocomplete is-disabled >
+
+    </rh-autocomplete>
     <script>
       const searchAutocomplete = document.querySelector('#search-lazy-loading');
+
       // autocomplete call
       searchAutocomplete.autocompleteRequest = (params, callback) => {
         var xhr = new XMLHttpRequest();

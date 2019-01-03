@@ -36,10 +36,9 @@ class PfeBand extends PFElement {
   --pfe-band_header--layout:                   1fr;
   --pfe-band_body--layout:                     1fr;
   --pfe-band_footer--layout:                   1fr;
-  --pfe-band_aside--layout:                    300px;
+  --pfe-band_aside--layout:                    1fr;
   --pfe-band--gridTemplateArea_layer1: "header";
-  --pfe-band--gridTemplateArea_layer2: "body";
-  --pfe-band--gridTemplateArea_layer3: "footer" "aside";
+  --pfe-band--gridTemplateArea_layer2: "main" "aside";
   --pfe-band--gutter:                          calc(var(--pfe-theme--container-spacer, 1rem) * 2);
   --pfe-broadcasted--color--text:              var(--pfe-theme--color--surface--base--text, #333);
   --pfe-broadcasted--color--ui-link:           var(--pfe-theme--color--surface--base--link, #00538c);
@@ -130,91 +129,196 @@ class PfeBand extends PFElement {
 :host([pfe-size="small"]) {
   --pfe-band--padding:   calc(var(--pfe-band--padding__vertical) / 4)  var(--pfe-band--padding__horizontal); }
 
+.pfe-band__header:not(:last-child) {
+  margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+
 .pfe-band__container {
+  --pfe-band_region--width: calc(1fr - 240px - calc(var(--pfe-theme--container-spacer, 1rem) * 2));
+  position: relative;
   margin: 0 auto;
   max-width: var(--pfe-band--width);
   display: flex;
-  flex-flow: row nowrap;
-  display: grid;
-  grid-gap: var(--pfe-theme--container-spacer, 1rem) calc(var(--pfe-theme--container-spacer, 1rem) * 4);
-  grid-template-columns: var(--pfe-band--layout);
-  grid-template-rows: max-content;
-  grid-template-areas: var(--pfe-band--gridTemplateArea_layer1) var(--pfe-band--gridTemplateArea_layer2) var(--pfe-band--gridTemplateArea_layer3); }
-  .pfe-band__container[pfe-aside-mobile="top"] {
-    --pfe-band--gridTemplateArea_layer1: "aside" "header";
-    --pfe-band--gridTemplateArea_layer3: "footer"; }
-  @media (min-width: 768px) {
+  flex-flow: row wrap;
+  align-items: flex-start;
+  justify-content: space-between; }
+  @supports (display: grid) {
     .pfe-band__container {
-      --pfe-band--layout: calc(100% - $aside-sm) $aside-sm;
-      --pfe-band--gridTemplateArea_layer1: "header header";
-      --pfe-band--gridTemplateArea_layer2: "body aside";
-      --pfe-band--gridTemplateArea_layer3: "footer aside"; }
+      display: grid;
+      grid-gap: var(--pfe-theme--container-spacer, 1rem) calc(var(--pfe-theme--container-spacer, 1rem) * 4);
+      grid-template-columns: var(--pfe-band--layout);
+      grid-template-rows: max-content;
+      grid-template-areas: var(--pfe-band--gridTemplateArea_layer1) var(--pfe-band--gridTemplateArea_layer2); }
       .pfe-band__container[pfe-aside-mobile="top"] {
-        --pfe-band--gridTemplateArea_layer1: "header header";
-        --pfe-band--gridTemplateArea_layer2: "body aside";
-        --pfe-band--gridTemplateArea_layer3: "footer aside"; }
-      .pfe-band__container[pfe-aside-desktop="left"] {
-        --pfe-band--layout: $aside-sm calc(100% - $aside-sm);
-        --pfe-band--gridTemplateArea_layer2: "aside body";
-        --pfe-band--gridTemplateArea_layer3: "aside footer"; }
+        --pfe-band--gridTemplateArea_layer1: "aside" "header";
+        --pfe-band--gridTemplateArea_layer2: "main"; }
       .pfe-band__container[pfe-aside-height="full"] {
-        --pfe-band--gridTemplateArea_layer1: "header aside"; }
-        .pfe-band__container[pfe-aside-height="full"][pfe-aside-desktop="left"] {
-          --pfe-band--gridTemplateArea_layer1: "aside header"; } }
-  @media (max-width: 768px - 1) {
-    .pfe-band__container > *:not(:last-child) {
-      margin-bottom: var(--pfe-theme--container-spacer, 1rem); } }
+        --pfe-band--gridTemplateArea_layer2: "main" "aside"; }
+        .pfe-band__container[pfe-aside-height="full"][pfe-aside-mobile="top"] {
+          --pfe-band--gridTemplateArea_layer1: "aside";
+          --pfe-band--gridTemplateArea_layer2: "main"; }
+      @media (min-width: 768px) {
+        .pfe-band__container {
+          --pfe-band--layout: 1fr 240px;
+          --pfe-band--gridTemplateArea_layer1: "header header";
+          --pfe-band--gridTemplateArea_layer2: "main aside"; }
+          .pfe-band__container[pfe-aside-mobile="top"] {
+            --pfe-band--gridTemplateArea_layer1: "header header";
+            --pfe-band--gridTemplateArea_layer2: "main aside"; }
+          .pfe-band__container[pfe-aside-desktop="left"] {
+            --pfe-band--layout: 240px 1fr;
+            --pfe-band--gridTemplateArea_layer2: "aside main"; }
+          .pfe-band__container[pfe-aside-height="full"] {
+            --pfe-band--gridTemplateArea_layer1: "aside";
+            --pfe-band--gridTemplateArea_layer2: "main"; }
+            .pfe-band__container[pfe-aside-height="full"][pfe-aside-mobile="bottom"], .pfe-band__container[pfe-aside-height="full"][pfe-aside-mobile="top"] {
+              --pfe-band--gridTemplateArea_layer1: "main aside";
+              --pfe-band--gridTemplateArea_layer2: "main aside"; }
+            .pfe-band__container[pfe-aside-height="full"][pfe-aside-desktop="left"] {
+              --pfe-band--gridTemplateArea_layer1: "aside main";
+              --pfe-band--gridTemplateArea_layer2: "aside main"; } }
+      @media (min-width: 992px) {
+        .pfe-band__container {
+          --pfe-band--layout: 1fr 300px; }
+          .pfe-band__container[pfe-aside-desktop="left"] {
+            --pfe-band--layout: 300px 1fr; } } }
 
 .pfe-band__header {
-  grid-area: header;
-  display: grid;
-  grid-gap: var(--pfe-theme--container-spacer, 1rem);
-  grid-template-columns: var(--pfe-band_header--layout);
-  grid-template-rows: max-content; }
-  .pfe-band__header > *::slotted(*) {
-    margin: 0; }
+  display: flex;
+  flex-flow: column nowrap; }
 
 .pfe-band__body {
-  grid-area: body;
-  display: grid;
-  grid-gap: var(--pfe-theme--container-spacer, 1rem);
-  grid-template-columns: var(--pfe-band_body--layout);
-  grid-template-rows: max-content; }
-  .pfe-band__body > *::slotted(*) {
-    margin: 0; }
+  display: flex;
+  flex-flow: column nowrap; }
 
 .pfe-band__footer {
-  grid-area: footer;
-  display: grid;
-  grid-gap: var(--pfe-theme--container-spacer, 1rem);
-  grid-template-columns: var(--pfe-band_footer--layout);
-  grid-template-rows: max-content; }
-  .pfe-band__footer > *::slotted(*) {
-    margin: 0; }
+  display: flex;
+  flex-flow: column nowrap; }
 
 .pfe-band__aside {
-  grid-area: aside;
-  display: grid;
-  grid-gap: var(--pfe-theme--container-spacer, 1rem);
-  grid-template-columns: var(--pfe-band_aside--layout);
-  grid-template-rows: max-content; }
+  display: flex;
+  flex-flow: column nowrap; }
+
+@media (min-width: 768px) {
+  .pfe-band__container[pfe-aside-desktop="left"], .pfe-band__container[pfe-aside-mobile="top"] {
+    flex-direction: row-reverse; }
+  .pfe-band__main {
+    display: flex;
+    flex-flow: column nowrap;
+    width: var(--pfe-band_region--width); }
+    .pfe-band__main > *:not(:last-child) {
+      margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+  .pfe-band__header {
+    order: -1; }
+  .pfe-band__body > *::slotted(*:not(:last-child)) {
+    margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+  .pfe-band__aside {
+    order: 1;
+    width: 240px; }
+    [pfe-aside-desktop="right"] .pfe-band__aside {
+      order: 0; } }
+
+@media (min-width: 992px) {
+  .pfe-band__aside {
+    width: 300px; } }
+
+.pfe-band__header {
+  display: flex;
+  flex-flow: column nowrap; }
+  @supports (display: grid) {
+    .pfe-band__header {
+      display: grid;
+      grid-gap: var(--pfe-theme--container-spacer, 1rem);
+      grid-template-columns: var(--pfe-band_header--layout);
+      grid-template-rows: max-content; } }
+  .pfe-band__header > *::slotted(*) {
+    margin: 0; }
+  .pfe-band__header > *:not(:last-child)::slotted(*) {
+    margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+
+.pfe-band__body {
+  display: flex;
+  flex-flow: column nowrap; }
+  @supports (display: grid) {
+    .pfe-band__body {
+      display: grid;
+      grid-gap: var(--pfe-theme--container-spacer, 1rem);
+      grid-template-columns: var(--pfe-band_body--layout);
+      grid-template-rows: max-content; } }
+  .pfe-band__body > *::slotted(*) {
+    margin: 0; }
+  .pfe-band__body > *:not(:last-child)::slotted(*) {
+    margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+
+.pfe-band__footer {
+  display: flex;
+  flex-flow: column nowrap; }
+  @supports (display: grid) {
+    .pfe-band__footer {
+      display: grid;
+      grid-gap: var(--pfe-theme--container-spacer, 1rem);
+      grid-template-columns: var(--pfe-band_footer--layout);
+      grid-template-rows: max-content; } }
+  .pfe-band__footer > *::slotted(*) {
+    margin: 0; }
+  .pfe-band__footer > *:not(:last-child)::slotted(*) {
+    margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+
+.pfe-band__aside {
+  display: flex;
+  flex-flow: column nowrap; }
+  @supports (display: grid) {
+    .pfe-band__aside {
+      display: grid;
+      grid-gap: var(--pfe-theme--container-spacer, 1rem);
+      grid-template-columns: var(--pfe-band_aside--layout);
+      grid-template-rows: max-content; } }
   .pfe-band__aside > *::slotted(*) {
-    margin: 0; }</style>
+    margin: 0; }
+  .pfe-band__aside > *:not(:last-child)::slotted(*) {
+    margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+
+@media (min-width: 0) {
+  @supports (display: grid) {
+    .pfe-band__header {
+      grid-area: header;
+      width: auto; }
+    .pfe-band__main {
+      grid-area: main;
+      width: auto; }
+    .pfe-band__aside {
+      grid-area: aside;
+      width: auto; } } }</style>
 <section class="pfe-band__container">
   ${
-    this.has_slot("header")
-      ? `<div class="pfe-band__header"><slot name="header"></slot></div>`
-      : ""
-  }
-  <div class="pfe-band__body"><slot></slot></div>
-  ${
-    this.has_slot("footer")
-      ? `<div class="pfe-band__footer"><slot name="footer"></slot></div>`
+    this.has_slot("pfe-band-aside") && this.asidePosition.mobile === "top"
+      ? `<div class="pfe-band__aside"><slot name="pfe-band-aside"></slot></div>`
       : ""
   }
   ${
-    this.has_slot("aside")
-      ? `<div class="pfe-band__aside"><slot name="aside"></slot></div>`
+    this.has_slot("pfe-band-aside") && this.asidePosition.height === "full"
+      ? `<div class="pfe-band__main">`
+      : ""
+  }
+  ${
+    this.has_slot("pfe-band-header")
+      ? `<slot class="pfe-band__header" name="pfe-band-header"></slot>`
+      : ""
+  }
+  ${
+    this.has_slot("pfe-band-aside") && this.asidePosition.height !== "full"
+      ? `<div class="pfe-band__main">`
+      : ""
+  }
+    <div class="pfe-band__body"><slot></slot></div>
+    ${
+      this.has_slot("pfe-band-footer")
+        ? `<div class="pfe-band__footer"><slot name="pfe-band-footer"></slot></div>`
+        : ""
+    }
+    ${this.has_slot("pfe-band-aside") ? `</div>` : ""}
+  ${
+    this.has_slot("pfe-band-aside") && this.asidePosition.mobile !== "top"
+      ? `<div class="pfe-band__aside"><slot name="pfe-band-aside"></slot></div>`
       : ""
   }
 </section>`;
@@ -269,27 +373,27 @@ class PfeBand extends PFElement {
 
   static get slots() {
     return {
-      header: {
+      "pfe-band-header": {
         title: "Header",
         type: "array",
         namedSlot: true,
         maxItems: 3,
         items: { title: "Body item", oneOf: [{ $ref: "raw" }] }
       },
-      body: {
+      "pfe-band-body": {
         title: "Body",
         type: "array",
         namedSlot: false,
         items: { oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }] }
       },
-      footer: {
+      "pfe-band-footer": {
         title: "Footer",
         type: "array",
         namedSlot: true,
         maxItems: 3,
         items: { oneOf: [{ $ref: "pfe-cta" }, { $ref: "raw" }] }
       },
-      aside: {
+      "pfe-band-aside": {
         title: "Aside",
         type: "array",
         namedSlot: true,
@@ -352,19 +456,6 @@ class PfeBand extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-
-    // Set attribute default values on .pfe-band__container
-    let attr = this.getAttribute("pfe-aside-desktop");
-    if (!attr) {
-      console.dir(PfeBand.properties);
-      console.log(PfeBand.properties["pfe-aside-desktop"].default);
-      this.shadowRoot
-        .querySelector(".pfe-band__container")
-        .setAttribute(
-          "pfe-aside-desktop",
-          PfeBand.properties["pfe-aside-desktop"].default
-        );
-    }
   }
 
   // disconnectedCallback() {}

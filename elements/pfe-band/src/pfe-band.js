@@ -76,19 +76,6 @@ class PfeBand extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-
-    // Set attribute default values on .pfe-band__container
-    let attr = this.getAttribute("pfe-aside-desktop");
-    if (!attr) {
-      console.dir(PfeBand.properties);
-      console.log(PfeBand.properties["pfe-aside-desktop"].default);
-      this.shadowRoot
-        .querySelector(".pfe-band__container")
-        .setAttribute(
-          "pfe-aside-desktop",
-          PfeBand.properties["pfe-aside-desktop"].default
-        );
-    }
   }
 
   // disconnectedCallback() {}

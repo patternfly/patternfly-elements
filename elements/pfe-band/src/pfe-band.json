@@ -12,7 +12,7 @@
       "description": "Definition of the supported slots",
       "type": "object",
       "properties": {
-        "header": {
+        "pfe-band-header": {
           "title": "Header",
           "type": "array",
           "namedSlot": true,
@@ -26,7 +26,7 @@
             ]
           }
         },
-        "body": {
+        "pfe-band-body": {
           "title": "Body",
           "type": "array",
           "namedSlot": false,
@@ -41,7 +41,7 @@
             ]
           }
         },
-        "footer": {
+        "pfe-band-footer": {
           "title": "Footer",
           "type": "array",
           "namedSlot": true,
@@ -57,7 +57,7 @@
             ]
           }
         },
-        "aside": {
+        "pfe-band-aside": {
           "title": "Aside",
           "type": "array",
           "namedSlot": true,

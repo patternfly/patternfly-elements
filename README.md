@@ -1,4 +1,4 @@
-**[Getting Started][start] | [Element Catalog][storybook] | [Creating Components][develop] | [Theming Components][theming]**
+**[Getting Started][start] | [Element Catalog][storybook] | [Discovery doc](https://docs.google.com/document/d/1THnbwpUelkNfwHs8br-DmFYbJjX5NQwVveGYAP7XUAY/edit) | [Creating Components][develop] | [Theming Components][theming]**
 
 ![PFElements logo](./brand/logo/png/rhelements-logo-red.png)
 

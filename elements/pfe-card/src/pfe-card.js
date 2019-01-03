@@ -21,6 +21,7 @@
  */
 
 import PFElement from "../pfelement/pfelement.js";
+import { HAXWiring } from "@lrnwebcomponents/hax-body-behaviors/lib/HAXWiring.js";
 
 class PfeCard extends PFElement {
   static get tag() {
@@ -37,6 +38,67 @@ class PfeCard extends PFElement {
 
   constructor() {
     super(PfeCard);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    let haxProps = {
+      canScale: true,
+      canPosition: true,
+      canEditSource: false,
+      gizmo: {
+        title: "Card",
+        description: "A simple UI Card for presenting related material.",
+        icon: "icons:check-box-outline-blank",
+        color: "red",
+        groups: ["Red Hat"],
+        handles: [
+          {
+            text: "slot"
+          }
+        ],
+        meta: {
+          author: "Red Hat",
+          owner: "Red Hat"
+        }
+      },
+      settings: {
+        quick: [],
+        configure: [
+          {
+            attribute: "color",
+            title: "Color",
+            type: "select",
+            options: {
+              accent: "accent",
+              complement: "complement",
+              lightest: "lightest",
+              light: "light",
+              dark: "dark",
+              darkest: "darkest"
+            }
+          },
+          {
+            slot: "header",
+            title: "Header",
+            type: "code-editor"
+          },
+          {
+            slot: "",
+            title: "Body",
+            type: "code-editor"
+          },
+          {
+            slot: "footer",
+            title: "Footer",
+            type: "code-editor"
+          }
+        ],
+        advanced: []
+      }
+    };
+    this.HAXWiring = new HAXWiring();
+    this.HAXWiring.setup(haxProps, PfeCard.tag, this);
   }
 }
 

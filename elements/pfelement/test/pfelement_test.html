@@ -18,6 +18,9 @@
       const colors = ["red", "yellow", "blue"];
 
       class TestElement extends PFElement {
+        static get type() {
+          return PFElement.PfeTypes.Content;
+        }
         static get tag() {
           return "test-element"
         }
@@ -29,7 +32,7 @@
         }
 
         constructor() {
-          super(TestElement.tag, { type: PFElement.PfeTypes.Content });
+          super(TestElement);
         }
       }
 
@@ -49,7 +52,7 @@
         }
 
         constructor() {
-          super(TestElementDelayRender.tag, { delayRender: true });
+          super(TestElementDelayRender, { delayRender: true });
         }
 
         connectedCallback() {
@@ -65,7 +68,7 @@
       PFElement.create(TestElementDelayRender);
 
       suite('<pfelement>', () => {
-        test("it should set the pfe-type attribute if passed a type in the constructor", () => {
+        test("it should set the pfe-type attribute if a type getter is declared on PfeType", () => {
           const testElementEl = document.createElement("test-element");
           testElementEl.id = "test-element";
           document.body.appendChild(testElementEl);

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+
+  </head>
+  <body unresolved>
+
+    <pfe-card>
+      <h2 slot="header">Card 1</h2>This is pfe-card.
+      <div slot="footer">Text in footer</div>
+    </pfe-card>
+
+  <script type="module">
+      import PfeCard from "../../pfe-card/pfe-card.js";
+      suite("using PFElements as ESM Modules", () => {
+        test('the element-level "connected" event should fire', done => {
+          const pfeCard = document.createElement("pfe-card");
+          pfeCard.addEventListener("connected", () => {
+            done();
+          });
+          document.body.appendChild(pfeCard);
+        });
+        test('the class-level "connected" event should fire', done => {
+          let x = 0;
+          const cards = [0,0,0]
+            .map(n => document.createElement("pfe-card"))
+            .forEach(card => {
+              card.addEventListener("connected", () => {
+                x += 1;
+                if (x === 3) {
+                  done();
+                }
+              });
+              document.body.appendChild(card);
+            });
+        });
+      });
+    </script>
+  </body>
+</html>
+

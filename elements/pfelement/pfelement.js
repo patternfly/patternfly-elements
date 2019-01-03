@@ -27,6 +27,14 @@ class PFElement extends HTMLElement {
     window.customElements.define(pfe.tag, pfe);
   }
 
+  /**
+   * Register a class-level event listener.
+   */
+  static addEventListener(type, listener) {
+    this._listeners[this.name] = this._listeners[this.name] || {};
+    this._listeners[this.name][type] = listener;
+  }
+
   static debugLog(preference = null) {
     if (preference !== null) {
       PFElement._debugLog = !!preference;
@@ -38,6 +46,13 @@ class PFElement extends HTMLElement {
     if (PFElement.debugLog()) {
       console.log(...msgs);
     }
+  }
+
+  /**
+   * Get any class-level event listeners.
+   */
+  static get listeners() {
+    return PFElement._listeners[this.name] || {};
   }
 
   static get PfeTypes() {
@@ -56,23 +71,18 @@ class PFElement extends HTMLElement {
     this.setAttribute("pfe-type", value);
   }
 
-  constructor(pfeClass, { type = null, delayRender = false } = {}) {
+  constructor(pfeClass, { type = pfeClass.type, delayRender = false } = {}) {
     super();
 
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
-    this._queue = [];
     this.template = document.createElement("template");
 
     this.attachShadow({ mode: "open" });
 
-    if (type) {
-      this._queueAction({
-        type: "setProperty",
-        data: {
-          name: "pfeType",
-          value: type
-        }
+    if (pfeClass.type) {
+      this.addEventListener("connected", () => {
+        this.pfeType = type;
       });
     }
 
@@ -88,9 +98,18 @@ class PFElement extends HTMLElement {
 
     this.classList.add("PFElement");
 
-    if (this._queue.length) {
-      this._processQueue();
+    // if there's a class-level connected listener, trigger it
+    const listener = this._pfeClass.listeners["connected"];
+    if (listener) {
+      listener.call(this, { target: this });
     }
+
+    // if there are any a element-level connected listeners, trigger them
+    this.dispatchEvent(
+      new CustomEvent(`connected`, {
+        bubbles: false
+      })
+    );
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
@@ -116,22 +135,6 @@ class PFElement extends HTMLElement {
     }
   }
 
-  _queueAction(action) {
-    this._queue.push(action);
-  }
-
-  _processQueue() {
-    this._queue.forEach(action => {
-      this[`_${action.type}`](action.data);
-    });
-
-    this._queue = [];
-  }
-
-  _setProperty({ name, value }) {
-    this[name] = value;
-  }
-
   render() {
     this.shadowRoot.innerHTML = "";
     this.template.innerHTML = this.html;
@@ -147,6 +150,8 @@ class PFElement extends HTMLElement {
     PFElement.log(`[${this.tag}]`, ...msgs);
   }
 }
+
+PFElement._listeners = {}; // holds class-level event listeners
 
 autoReveal(PFElement.log);
 

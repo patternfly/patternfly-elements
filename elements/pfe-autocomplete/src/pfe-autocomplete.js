@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-import RHElement from "../rhelement/rhelement.js";
+import PFElement from "../pfelement/pfelement.js";
 
 const KEYCODE = {
   ENTER: 13,
@@ -32,21 +32,21 @@ const KEYCODE = {
 // use this variable to debounce api call when user types very fast
 let throttle = false;
 
-class RhAutocomplete extends RHElement {
+class PfeAutocomplete extends PFElement {
   static get tag() {
-    return "rh-autocomplete";
+    return "pfe-autocomplete";
   }
 
   get templateUrl() {
-    return "rh-autocomplete.html";
+    return "pfe-autocomplete.html";
   }
 
   get styleUrl() {
-    return "rh-autocomplete.scss";
+    return "pfe-autocomplete.scss";
   }
 
   constructor() {
-    super(RhAutocomplete);
+    super(PfeAutocomplete);
   }
 
   connectedCallback() {
@@ -59,42 +59,42 @@ class RhAutocomplete extends RHElement {
     this._inputBox.debounce = this.debounce;
 
     this._dropdown = this.shadowRoot.querySelector("#dropdown");
-    this.addEventListener("rh-search-event", this._updateInputBox.bind(this));
+    this.addEventListener("pfe-search-event", this._updateInputBox.bind(this));
     this._dropdown.data = [];
 
     this.activeIndex = null;
 
     this.addEventListener(
-      "rh-input-change-event",
+      "pfe-input-change-event",
       this._autocomplete.bind(this)
     );
-    this.addEventListener("rh-input-blur", this._closeDroplist.bind(this));
+    this.addEventListener("pfe-input-blur", this._closeDroplist.bind(this));
     this.addEventListener("keyup", this._inputKeyUp.bind(this));
 
     // these two events, fire search
-    this.addEventListener("rh-search-event", this._closeDroplist.bind(this));
+    this.addEventListener("pfe-search-event", this._closeDroplist.bind(this));
     this.addEventListener(
-      "rh-option-selected",
+      "pfe-option-selected",
       this._optionSelected.bind(this)
     );
   }
 
   disconnectedCallback() {
     this.removeEventListener(
-      "rh-search-event",
+      "pfe-search-event",
       this._updateInputBox.bind(this)
     );
 
     this.removeEventListener(
-      "rh-input-change-event",
+      "pfe-input-change-event",
       this._autocomplete.bind(this)
     );
-    this.removeEventListener("rh-input-blur", this._closeDroplist.bind(this));
+    this.removeEventListener("pfe-input-blur", this._closeDroplist.bind(this));
     this.removeEventListener("keyup", this._inputKeyUp.bind(this));
 
-    this.removeEventListener("rh-search-event", this._closeDroplist);
+    this.removeEventListener("pfe-search-event", this._closeDroplist);
     this.removeEventListener(
-      "rh-option-selected",
+      "pfe-option-selected",
       this._optionSelected.bind(this)
     );
   }
@@ -105,7 +105,7 @@ class RhAutocomplete extends RHElement {
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback();
-    let searchBox = this.shadowRoot.querySelector("rh-search-box").shadowRoot;
+    let searchBox = this.shadowRoot.querySelector("pfe-search-box").shadowRoot;
     switch (attr) {
       case "loading":
         if (
@@ -225,7 +225,7 @@ class RhAutocomplete extends RHElement {
 
   _dispatchSearchEvent(searchQuery) {
     this.dispatchEvent(
-      new CustomEvent("rh-search-event", {
+      new CustomEvent("pfe-search-event", {
         detail: { searchValue: searchQuery },
         bubbles: true,
         composed: true
@@ -329,27 +329,27 @@ class RhAutocomplete extends RHElement {
 /*
 * - Attributes ------------------------------------
 * active-index | Set selected option
-* debounce     | debounce value for firing rh-input-change-event event
+* debounce     | debounce value for firing pfe-input-change-event event
 
 * - Events ----------------------------------------
-* rh-input-change-event | Fires when user type in input box
-* rh-input-blur         | Fires when input box blurs
+* pfe-input-change-event | Fires when user type in input box
+* pfe-input-blur         | Fires when input box blurs
 */
-class RhSearchBox extends RHElement {
+class PfeSearchBox extends PFElement {
   static get tag() {
-    return "rh-search-box";
+    return "pfe-search-box";
   }
 
   get templateUrl() {
-    return "rh-search-box.html";
+    return "pfe-search-box.html";
   }
 
   get styleUrl() {
-    return "rh-search-box.scss";
+    return "pfe-search-box.scss";
   }
 
   constructor() {
-    super(RhSearchBox);
+    super(PfeSearchBox);
   }
 
   connectedCallback() {
@@ -412,7 +412,7 @@ class RhSearchBox extends RHElement {
 
   _inputBlured() {
     this.dispatchEvent(
-      new CustomEvent("rh-input-blur", {
+      new CustomEvent("pfe-input-blur", {
         bubbles: true,
         composed: true
       })
@@ -434,7 +434,7 @@ class RhSearchBox extends RHElement {
 
       window.setTimeout(() => {
         this.dispatchEvent(
-          new CustomEvent("rh-input-change-event", {
+          new CustomEvent("pfe-input-change-event", {
             detail: { inputValue: this._input.value },
             bubbles: true,
             composed: true
@@ -455,7 +455,7 @@ class RhSearchBox extends RHElement {
 
   _search(event) {
     this.dispatchEvent(
-      new CustomEvent("rh-search-event", {
+      new CustomEvent("pfe-search-event", {
         detail: { searchValue: this._input.value },
         bubbles: true,
         composed: true
@@ -471,24 +471,24 @@ class RhSearchBox extends RHElement {
 * reflow             | Re-renders the dropdown
 
 * - Events ----------------------------------------
-* rh-option-selected | Fires when an option is selected.
+* pfe-option-selected | Fires when an option is selected.
   event.detailes.selectedValue contains the selected value.
 */
-class RhSearchDroplist extends RHElement {
+class PfeSearchDroplist extends PFElement {
   static get tag() {
-    return "rh-search-droplist";
+    return "pfe-search-droplist";
   }
 
   get templateUrl() {
-    return "rh-search-droplist.html";
+    return "pfe-search-droplist.html";
   }
 
   get styleUrl() {
-    return "rh-search-droplist.scss";
+    return "pfe-search-droplist.scss";
   }
 
   constructor() {
-    super(RhSearchDroplist);
+    super(PfeSearchDroplist);
   }
 
   connectedCallback() {
@@ -510,7 +510,7 @@ class RhSearchDroplist extends RHElement {
   _optionSelected(e) {
     if (e.target.tagName === "LI") {
       this.dispatchEvent(
-        new CustomEvent("rh-option-selected", {
+        new CustomEvent("pfe-option-selected", {
           detail: { optionValue: e.target.innerText },
           bubbles: true,
           composed: true
@@ -625,8 +625,8 @@ class RhSearchDroplist extends RHElement {
   }
 }
 
-RHElement.create(RhSearchBox);
-RHElement.create(RhSearchDroplist);
-RHElement.create(RhAutocomplete);
+PFElement.create(PfeSearchBox);
+PFElement.create(PfeSearchDroplist);
+PFElement.create(PfeAutocomplete);
 
-export default RhAutocomplete;
+export default PfeAutocomplete;

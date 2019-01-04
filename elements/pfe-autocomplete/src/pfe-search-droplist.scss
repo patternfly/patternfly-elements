@@ -1,11 +1,11 @@
-@import "../rh-sass/rh-sass";
+@import "../pfe-sass/pfe-sass";
 
 :host {
   position: relative;
   display: none;
-  font-family: var(--rh-theme--font-family);
-  font-size: var(--rh-theme--font-size);
-  line-height: var(--rh-theme--line-height);
+  font-family: var(--pfe-theme--font-family);
+  font-size: var(--pfe-theme--font-size);
+  line-height: var(--pfe-theme--line-height);
 }
 
 :host([open]) {
@@ -37,15 +37,15 @@
 }
 
 input {
-  font-family: var(--rh-theme--font-family);
-  font-size: var(--rh-theme--font-size);
-  line-height: var(--rh-theme--line-height);
+  font-family: var(--pfe-theme--font-family);
+  font-size: var(--pfe-theme--font-size);
+  line-height: var(--pfe-theme--line-height);
 }
 
 ul {
-  font-family: var(--rh-theme--font-family);
-  font-size: var(--rh-theme--font-size);
-  line-height: var(--rh-theme--line-height);
+  font-family: var(--pfe-theme--font-family);
+  font-size: var(--pfe-theme--font-size);
+  line-height: var(--pfe-theme--line-height);
   border-top: none;
   margin: 0px;
   padding: 0px;
@@ -58,7 +58,7 @@ ul {
       padding: 10px;
       margin: 0px; /*margin needs to be zero otherwise we have blind area on click*/
       &.active {
-          background-color: #{rh-color( surface--lighter )};;
+          background-color: #{pfe-color( surface--lighter )};;
       }
   }
 }

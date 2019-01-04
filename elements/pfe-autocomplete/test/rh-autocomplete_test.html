@@ -2,19 +2,19 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>rh-autocomplete tests</title>
+    <title>pfe-autocomplete tests</title>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
      <script src="../../test-fixture/test-fixture-mocha.js"></script>
-    <script type="module" src="../rh-autocomplete.js"></script>
+    <script type="module" src="../pfe-autocomplete.js"></script>
   </head>
   <body>
     <div style="width:50%;">
-      <rh-autocomplete id="autocomplete"></rh-autocomplete>
+      <pfe-autocomplete id="autocomplete"></pfe-autocomplete>
     </div>
     <script>
-      describe('<rh-autocomplete>', () => {
+      describe('<pfe-autocomplete>', () => {
         let autocompleteElem,
             searchBoxElem,
             input,
@@ -25,14 +25,14 @@
         beforeEach(function() {
           autocompleteElem = document.querySelector('#autocomplete');
 
-          //rh-search-box
-          searchBoxElem = autocompleteElem.shadowRoot.querySelector('rh-search-box');
+          //pfe-search-box
+          searchBoxElem = autocompleteElem.shadowRoot.querySelector('pfe-search-box');
           input = searchBoxElem.shadowRoot.querySelector('input');
           clearButton = searchBoxElem.shadowRoot.querySelector('button.clear-search');
           searchButton = searchBoxElem.shadowRoot.querySelector('button.search-button');
 
-          //rh-search-droplist
-          droplistElem = autocompleteElem.shadowRoot.querySelector('rh-search-droplist');
+          //pfe-search-droplist
+          droplistElem = autocompleteElem.shadowRoot.querySelector('pfe-search-droplist');
         });
 
         afterEach(() => {
@@ -40,8 +40,8 @@
           autocompleteElem.initValue = "";
         });
 
-        it('should upgrade rh-autocomplete', () => {
-          assert.instanceOf(autocompleteElem, customElements.get("rh-autocomplete", 'rh-autocomplete should be an instance of rhAutocomplete'));
+        it('should upgrade pfe-autocomplete', () => {
+          assert.instanceOf(autocompleteElem, customElements.get("pfe-autocomplete", 'pfe-autocomplete should be an instance of pfeAutocomplete'));
         });
 
         it('should hide x button when input box is empty', () => {
@@ -54,10 +54,10 @@
           assert.isTrue(clearButton.hidden);
         });
 
-        it('should fires rh-search-event after click on search icon[event]', (done) => {
+        it('should fires pfe-search-event after click on search icon[event]', (done) => {
           input.value = "test2";
 
-          autocompleteElem.addEventListener("rh-search-event", function(event) {
+          autocompleteElem.addEventListener("pfe-search-event", function(event) {
             assert.equal(event.detail.searchValue, "test2");
             done();
           });

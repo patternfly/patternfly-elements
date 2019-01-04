@@ -2,13 +2,13 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>RHElements: rh-autocomplete Demo</title>
+    <title>PFElements: pfe-autocomplete Demo</title>
 
     <noscript>
-      <link href="../../rhelement/rhelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../rhelement/rhelement.min.css" rel="stylesheet">
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
@@ -16,17 +16,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require([
       '../../../themes/cp-theme/cp-theme.umd.js',
-      '../rh-autocomplete.umd.js'
+      '../pfe-autocomplete.umd.js'
     ])</script>
   </head>
   <body unresolved>
-    <rh-autocomplete></rh-autocomplete>
+    <pfe-autocomplete id="search-lazy-loading" init-value="uni" debounce="500"></pfe-autocomplete>
     <br>
-    <rh-autocomplete id="search-lazy-loading" init-value="uni" debounce="500"></rh-autocomplete>
-    <br>
-    <rh-autocomplete is-disabled >
+    <pfe-autocomplete is-disabled >
 
-    </rh-autocomplete>
+    </pfe-autocomplete>
     <script>
       const searchAutocomplete = document.querySelector('#search-lazy-loading');
 
@@ -60,7 +58,7 @@
 
       // when user performs search, this event is fired
       // search phrase is passed to e.detail.searchValue
-      searchAutocomplete.addEventListener('rh-search-event', function(e) {
+      searchAutocomplete.addEventListener('pfe-search-event', function(e) {
         console.log('do search= ' + e.detail.searchValue);
       });
     </script>

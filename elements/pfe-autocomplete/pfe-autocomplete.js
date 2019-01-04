@@ -1,4 +1,4 @@
-import RHElement from "../rhelement/rhelement.js";
+import PFElement from "../pfelement/pfelement.js";
 
 /*
  * Copyright 2018 Red Hat, Inc.
@@ -32,31 +32,31 @@ const KEYCODE = {
 // use this variable to debounce api call when user types very fast
 let throttle = false;
 
-class RhAutocomplete extends RHElement {
+class PfeAutocomplete extends PFElement {
   get html() {
     return `
 <style>
 :host {
   display: block; }
 </style>
-<rh-search-box id="input-box"></rh-search-box>
-<rh-search-droplist id="dropdown"></rh-search-droplist>`;
+<pfe-search-box id="input-box"></pfe-search-box>
+<pfe-search-droplist id="dropdown"></pfe-search-droplist>`;
   }
 
   static get tag() {
-    return "rh-autocomplete";
+    return "pfe-autocomplete";
   }
 
   get templateUrl() {
-    return "rh-autocomplete.html";
+    return "pfe-autocomplete.html";
   }
 
   get styleUrl() {
-    return "rh-autocomplete.scss";
+    return "pfe-autocomplete.scss";
   }
 
   constructor() {
-    super(RhAutocomplete);
+    super(PfeAutocomplete);
   }
 
   connectedCallback() {
@@ -69,42 +69,42 @@ class RhAutocomplete extends RHElement {
     this._inputBox.debounce = this.debounce;
 
     this._dropdown = this.shadowRoot.querySelector("#dropdown");
-    this.addEventListener("rh-search-event", this._updateInputBox.bind(this));
+    this.addEventListener("pfe-search-event", this._updateInputBox.bind(this));
     this._dropdown.data = [];
 
     this.activeIndex = null;
 
     this.addEventListener(
-      "rh-input-change-event",
+      "pfe-input-change-event",
       this._autocomplete.bind(this)
     );
-    this.addEventListener("rh-input-blur", this._closeDroplist.bind(this));
+    this.addEventListener("pfe-input-blur", this._closeDroplist.bind(this));
     this.addEventListener("keyup", this._inputKeyUp.bind(this));
 
     // these two events, fire search
-    this.addEventListener("rh-search-event", this._closeDroplist.bind(this));
+    this.addEventListener("pfe-search-event", this._closeDroplist.bind(this));
     this.addEventListener(
-      "rh-option-selected",
+      "pfe-option-selected",
       this._optionSelected.bind(this)
     );
   }
 
   disconnectedCallback() {
     this.removeEventListener(
-      "rh-search-event",
+      "pfe-search-event",
       this._updateInputBox.bind(this)
     );
 
     this.removeEventListener(
-      "rh-input-change-event",
+      "pfe-input-change-event",
       this._autocomplete.bind(this)
     );
-    this.removeEventListener("rh-input-blur", this._closeDroplist.bind(this));
+    this.removeEventListener("pfe-input-blur", this._closeDroplist.bind(this));
     this.removeEventListener("keyup", this._inputKeyUp.bind(this));
 
-    this.removeEventListener("rh-search-event", this._closeDroplist);
+    this.removeEventListener("pfe-search-event", this._closeDroplist);
     this.removeEventListener(
-      "rh-option-selected",
+      "pfe-option-selected",
       this._optionSelected.bind(this)
     );
   }
@@ -115,7 +115,7 @@ class RhAutocomplete extends RHElement {
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback();
-    let searchBox = this.shadowRoot.querySelector("rh-search-box").shadowRoot;
+    let searchBox = this.shadowRoot.querySelector("pfe-search-box").shadowRoot;
     switch (attr) {
       case "loading":
         if (
@@ -235,7 +235,7 @@ class RhAutocomplete extends RHElement {
 
   _dispatchSearchEvent(searchQuery) {
     this.dispatchEvent(
-      new CustomEvent("rh-search-event", {
+      new CustomEvent("pfe-search-event", {
         detail: { searchValue: searchQuery },
         bubbles: true,
         composed: true
@@ -339,13 +339,13 @@ class RhAutocomplete extends RHElement {
 /*
 * - Attributes ------------------------------------
 * active-index | Set selected option
-* debounce     | debounce value for firing rh-input-change-event event
+* debounce     | debounce value for firing pfe-input-change-event event
 
 * - Events ----------------------------------------
-* rh-input-change-event | Fires when user type in input box
-* rh-input-blur         | Fires when input box blurs
+* pfe-input-change-event | Fires when user type in input box
+* pfe-input-blur         | Fires when input box blurs
 */
-class RhSearchBox extends RHElement {
+class PfeSearchBox extends PFElement {
   get html() {
     return `
 <style>
@@ -371,7 +371,7 @@ input {
   padding-right: 30px;
   border-radius: 0;
   background-color: #fff;
-  border: 1px solid var(--rh-theme--color--surface--border, #dfdfdf);
+  border: 1px solid var(--pfe-theme--color--surface--border, #dfdfdf);
   font-size: 16px;
   
   height: 40px;
@@ -499,19 +499,19 @@ button.search-button:disabled svg {
   }
 
   static get tag() {
-    return "rh-search-box";
+    return "pfe-search-box";
   }
 
   get templateUrl() {
-    return "rh-search-box.html";
+    return "pfe-search-box.html";
   }
 
   get styleUrl() {
-    return "rh-search-box.scss";
+    return "pfe-search-box.scss";
   }
 
   constructor() {
-    super(RhSearchBox);
+    super(PfeSearchBox);
   }
 
   connectedCallback() {
@@ -574,7 +574,7 @@ button.search-button:disabled svg {
 
   _inputBlured() {
     this.dispatchEvent(
-      new CustomEvent("rh-input-blur", {
+      new CustomEvent("pfe-input-blur", {
         bubbles: true,
         composed: true
       })
@@ -596,7 +596,7 @@ button.search-button:disabled svg {
 
       window.setTimeout(() => {
         this.dispatchEvent(
-          new CustomEvent("rh-input-change-event", {
+          new CustomEvent("pfe-input-change-event", {
             detail: { inputValue: this._input.value },
             bubbles: true,
             composed: true
@@ -617,7 +617,7 @@ button.search-button:disabled svg {
 
   _search(event) {
     this.dispatchEvent(
-      new CustomEvent("rh-search-event", {
+      new CustomEvent("pfe-search-event", {
         detail: { searchValue: this._input.value },
         bubbles: true,
         composed: true
@@ -633,19 +633,19 @@ button.search-button:disabled svg {
 * reflow             | Re-renders the dropdown
 
 * - Events ----------------------------------------
-* rh-option-selected | Fires when an option is selected.
+* pfe-option-selected | Fires when an option is selected.
   event.detailes.selectedValue contains the selected value.
 */
-class RhSearchDroplist extends RHElement {
+class PfeSearchDroplist extends PFElement {
   get html() {
     return `
 <style>
 :host {
   position: relative;
   display: none;
-  font-family: var(--rh-theme--font-family);
-  font-size: var(--rh-theme--font-size);
-  line-height: var(--rh-theme--line-height); }
+  font-family: var(--pfe-theme--font-family);
+  font-size: var(--pfe-theme--font-size);
+  line-height: var(--pfe-theme--line-height); }
 
 :host([open]) {
   display: block; }
@@ -673,14 +673,14 @@ class RhSearchDroplist extends RHElement {
   background-color: #fff; }
 
 input {
-  font-family: var(--rh-theme--font-family);
-  font-size: var(--rh-theme--font-size);
-  line-height: var(--rh-theme--line-height); }
+  font-family: var(--pfe-theme--font-family);
+  font-size: var(--pfe-theme--font-size);
+  line-height: var(--pfe-theme--line-height); }
 
 ul {
-  font-family: var(--rh-theme--font-family);
-  font-size: var(--rh-theme--font-size);
-  line-height: var(--rh-theme--line-height);
+  font-family: var(--pfe-theme--font-family);
+  font-size: var(--pfe-theme--font-size);
+  line-height: var(--pfe-theme--line-height);
   border-top: none;
   margin: 0px;
   padding: 0px;
@@ -693,7 +693,7 @@ ul {
     margin: 0px;
      }
     ul li.active {
-      background-color: var(--rh-theme--color--surface--lighter, #ececec); }
+      background-color: var(--pfe-theme--color--surface--lighter, #ececec); }
 </style>
 <div class="suggestions-aria-help sr-only" aria-hidden="false" role="status"></div>
 <div class="droplist">
@@ -703,19 +703,19 @@ ul {
   }
 
   static get tag() {
-    return "rh-search-droplist";
+    return "pfe-search-droplist";
   }
 
   get templateUrl() {
-    return "rh-search-droplist.html";
+    return "pfe-search-droplist.html";
   }
 
   get styleUrl() {
-    return "rh-search-droplist.scss";
+    return "pfe-search-droplist.scss";
   }
 
   constructor() {
-    super(RhSearchDroplist);
+    super(PfeSearchDroplist);
   }
 
   connectedCallback() {
@@ -737,7 +737,7 @@ ul {
   _optionSelected(e) {
     if (e.target.tagName === "LI") {
       this.dispatchEvent(
-        new CustomEvent("rh-option-selected", {
+        new CustomEvent("pfe-option-selected", {
           detail: { optionValue: e.target.innerText },
           bubbles: true,
           composed: true
@@ -852,9 +852,9 @@ ul {
   }
 }
 
-RHElement.create(RhSearchBox);
-RHElement.create(RhSearchDroplist);
-RHElement.create(RhAutocomplete);
+PFElement.create(PfeSearchBox);
+PFElement.create(PfeSearchDroplist);
+PFElement.create(PfeAutocomplete);
 
-export default RhAutocomplete;
-//# sourceMappingURL=rh-autocomplete.js.map
+export default PfeAutocomplete;
+//# sourceMappingURL=pfe-autocomplete.js.map

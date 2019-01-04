@@ -4,11 +4,11 @@
     "className": "CpTheme",
     "elementName": "cp-theme"
   },
-  "version": "1.0.0-prerelease.3",
+  "version": "1.0.0-prerelease.7",
   "publishConfig": {
     "access": "public"
   },
-  "description": "cp-theme for Red Hat's Customer Portal and RHElements",
+  "description": "cp-theme for Red Hat's Customer Portal and PFElements",
   "repository": {
     "type": "git",
     "url": "https://github.com/RHElements/rhelements/themes/cp-theme.git"
@@ -25,7 +25,7 @@
     }
   ],
   "license": "ISC",
-  "gitHead": "1035d989bf8fc80ded1415610d25da01307059cd",
+  "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421",
   "dependencies": {
     "normalize-scss": "^7.0.1"
   }

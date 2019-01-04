@@ -1,0 +1,147 @@
+@import "../../pfe-sass/pfe-sass";
+
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+$pfe-accordion_button--LineHeight:      1.5;
+$pfe-accordion_chevron--size:           0.313em;
+$pfe-accordion_chevron--weight:         0.15em;
+$pfe-accordion_chevron--placement:      ($pfe-accordion_button--LineHeight / 2) - ($pfe-accordion_chevron--size / 2);
+$pfe-accordion_button--padding-factor:  0.75;
+
+
+/// ===========================================================================
+/// DEFUALT ACCORDION HEADING
+/// ===========================================================================
+:host {
+  --pfe-accordion--main:         #{pfe-color(surface--lighter)};
+  --pfe-accordion--aux:          #{pfe-color(surface--lighter--text)};
+  --pfe-accordion--focus:        #{pfe-color(surface--lighter--link--focus)};
+
+  display: block;
+  background: var(--pfe-accordion--main);
+  color: var(--pfe-accordion--aux);
+
+  button {
+    padding: calc(#{pfe-var(container-spacer)} * #{$pfe-accordion_button--padding-factor});
+    margin: 0;
+    width: 100%;
+    height: auto;
+    border: 1px solid transparent;
+    font-family: inherit;
+    font-size: #{pfe-var(font-size)};
+    line-height: $pfe-accordion_button--LineHeight;
+    text-align: left;
+    background: none;
+    cursor: pointer;
+    color: var(--pfe-accordion--aux);
+
+    &:focus {
+      outline: 1px solid var(--pfe-accordion--focus);
+    }
+
+    &::-moz-focus-inner {
+      border: 0;
+    }
+
+    &[aria-expanded] {
+      position: relative;
+      display: block;
+      font-weight: normal;
+      padding-left: calc(#{pfe-var(container-spacer)} * 2.5);
+    }
+
+    &[aria-expanded="false"]::before {
+      content: "";
+      position: absolute;
+      left: #{pfe-var(container-spacer)};
+      top: calc((#{pfe-var(container-spacer)} * #{$pfe-accordion_button--padding-factor}) + #{$pfe-accordion_chevron--placement} );
+      display: block;
+      border-style: solid;
+      border-width: $pfe-accordion_chevron--weight $pfe-accordion_chevron--weight 0 0;
+      height: $pfe-accordion_chevron--size;
+      width: $pfe-accordion_chevron--size;
+      text-align: center;
+      transition: transform 0.15s;
+      transform: rotate(45deg);
+    }
+
+    &[aria-expanded="true"]::before {
+      content: "";
+      position: absolute;
+      left: #{pfe-var(container-spacer)};
+      top: calc((#{pfe-var(container-spacer)} * #{$pfe-accordion_button--padding-factor}) + #{$pfe-accordion_chevron--placement} );
+      display: block;
+      width: $pfe-accordion_chevron--size;
+      height: $pfe-accordion_chevron--size;
+      border-style: solid;
+      border-width: $pfe-accordion_chevron--weight $pfe-accordion_chevron--weight 0 0;
+      text-align: center;
+      transition: all 0.15s;
+      transform: rotate(135deg);
+    }
+  }
+}
+
+:host(.animating) {
+  transition: transform 0.3s #{pfe-var(animation-timing)};
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 1px; // Gives the 1px spacing between each + room for focus border.
+}
+
+
+
+/// ===========================================================================
+/// COLOR OVERRIDES
+/// ===========================================================================
+
+:host([color="lightest"]),
+:host([color="striped"].even) {
+  --pfe-accordion--main:         #{pfe-color(surface--lightest)};
+  --pfe-accordion--aux:          #{pfe-color(surface--lightest--text)};
+  --pfe-accordion--focus:        #{pfe-color(surface--lightest--link--focus)};
+
+  button[aria-expanded="true"] {
+    border-top-color: #{pfe-color(surface--border--lightest)};
+    border-left-color: #{pfe-color(surface--border--lightest)};
+    border-right-color: #{pfe-color(surface--border--lightest)};
+  }
+}
+
+:host([color="base"]) {
+  --pfe-accordion--main:         #{pfe-color(surface--base)};
+  --pfe-accordion--aux:          #{pfe-color(surface--base--text)};
+  --pfe-accordion--focus:        #{pfe-color(surface--base--link--focus)};
+}
+
+:host([color="dark"]) {
+  --pfe-accordion--main:         #{pfe-color(surface--darker)};
+  --pfe-accordion--aux:          #{pfe-color(surface--darker--text)};
+  --pfe-accordion--focus:        #{pfe-color(surface--darker--link--focus)};
+}
+
+:host([color="darkest"]) {
+  --pfe-accordion--main:         #{pfe-color(surface--darkest)};
+  --pfe-accordion--aux:          #{pfe-color(surface--darkest--text)};
+  --pfe-accordion--focus:        #{pfe-color(surface--darkest--link--focus)};
+}
+
+:host([color="accent"]) {
+  --pfe-accordion--main:         #{pfe-color(surface--accent)};
+  --pfe-accordion--aux:          #{pfe-color(surface--accent--text)};
+  --pfe-accordion--focus:        #{pfe-color(surface--accent--link--focus)};
+}
+
+:host([color="complement"]) {
+  --pfe-accordion--main:         #{pfe-color(surface--complement)};
+  --pfe-accordion--aux:          #{pfe-color(surface--complement--text)};
+  --pfe-accordion--focus:        #{pfe-color(surface--complement--link--focus)};
+}

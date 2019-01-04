@@ -20,7 +20,7 @@ module.exports = function factory({
       .src(`./${elementName}.js`)
       .pipe(
         replace(
-          /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)(\.js['"];)$/gm,
+          /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
           "$1$2.umd$3"
         )
       )
@@ -37,7 +37,7 @@ module.exports = function factory({
       .src(`./src/${elementName}.js`)
       .pipe(
         replace(
-          /extends\s+RHElement\s+{/g,
+          /extends\s+PFElement\s+{/g,
           (classStatement, character, jsFile) => {
             // extract the templateUrl and styleUrl with regex.  Would prefer to do
             // this by require'ing rh-something.js and asking it directly, but without

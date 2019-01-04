@@ -1,8 +1,33 @@
+# Development files
 node_modules
+tmp
+
+# Compiled index
+doc/index.html
+
+# Logs
 lerna-debug.log
+npm-debug.log*
+
+# Local files
 *.local.umd.js
 *.local.js
+
+# Storybook
 .storybook_out
-npm-debug.log
+
 test/.wct-kludge
+
+# Sass
 .sass-cache
+
+# Mac-specific
+.DS_Store
+
+# IDEs
+.vimrc
+.sonarlint
+
+# Temp files
+*~
+*.swp

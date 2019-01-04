@@ -4,54 +4,54 @@ $cp-colors: (
   // Base Text Colors
   // ========================================================================
 
-  text:                               $rh-global--text-color,
-  text--on-dark:                      $rh-global--text-color--inverted,
-  text--on-saturated:                 $rh-global--text-color--inverted,
+  text:                               $pfe-global--text-color,
+  text--on-dark:                      $pfe-global--text-color--inverted,
+  text--on-saturated:                 $pfe-global--text-color--inverted,
 
 
   // ========================================================================
   // Base UI Link Colors to be used below
   // ========================================================================
 
-  ui-link:                            $rh-global--link-color,
-  ui-link--visited:                   $rh-global--link-color--visited,
-  ui-link--hover:                     $rh-global--link-color--hover,
-  ui-link--focus:                     $rh-global--link-color--focus,
+  ui-link:                            $pfe-global--link-color,
+  ui-link--visited:                   $pfe-global--link-color--visited,
+  ui-link--hover:                     $pfe-global--link-color--hover,
+  ui-link--focus:                     $pfe-global--link-color--focus,
 
-  ui-link--on-dark:                   $rh-global--link-color--inverted,
-  ui-link--on-dark--visited:          $rh-global--link-color--inverted--visited,
-  ui-link--on-dark--hover:            $rh-global--link-color--inverted--hover,
-  ui-link--on-dark--focus:            $rh-global--link-color--inverted--focus,
+  ui-link--on-dark:                   $pfe-global--link-color--inverted,
+  ui-link--on-dark--visited:          $pfe-global--link-color--inverted--visited,
+  ui-link--on-dark--hover:            $pfe-global--link-color--inverted--hover,
+  ui-link--on-dark--focus:            $pfe-global--link-color--inverted--focus,
 
-  ui-link--on-saturated:              $rh-global--link-color--inverted,
-  ui-link--on-saturated--visited:     $rh-global--link-color--inverted--visited,
-  ui-link--on-saturated--hover:       $rh-global--link-color--inverted--hover,
-  ui-link--on-saturated--focus:       $rh-global--link-color--inverted--focus,
+  ui-link--on-saturated:              $pfe-global--link-color--inverted,
+  ui-link--on-saturated--visited:     $pfe-global--link-color--inverted--visited,
+  ui-link--on-saturated--hover:       $pfe-global--link-color--inverted--hover,
+  ui-link--on-saturated--focus:       $pfe-global--link-color--inverted--focus,
 
 
   // ========================================================================
   // Base UI Colors for Buttons, CTAs, and actionable UI elements
   // ========================================================================
 
-  ui-base:                            $rh-global--ui-element-color,
-  ui-base--hover:                     $rh-global--ui-element-color--hover,
-  ui-base--text:                      $rh-global--color--white,
-  ui-base--text--hover:               $rh-global--color--white,
+  ui-base:                            $pfe-global--ui-element-color,
+  ui-base--hover:                     $pfe-global--ui-element-color--hover,
+  ui-base--text:                      $pfe-global--color--white,
+  ui-base--text--hover:               $pfe-global--color--white,
 
-  ui-complement:                      $rh-global--color--gray-iron,
-  ui-complement--hover:               $rh-global--color--black-nero,
-  ui-complement--text:                $rh-global--color--white,
-  ui-complement--text--hover:         $rh-global--color--white,
+  ui-complement:                      $pfe-global--color--gray-iron,
+  ui-complement--hover:               $pfe-global--color--black-nero,
+  ui-complement--text:                $pfe-global--color--white,
+  ui-complement--text--hover:         $pfe-global--color--white,
 
-  ui-accent:                          $rh-global--color--red,
-  ui-accent--hover:                   $rh-global--color--red-maroon,
-  ui-accent--text:                    $rh-global--color--white,
-  ui-accent--text--hover:             $rh-global--color--white,
+  ui-accent:                          $pfe-global--color--red,
+  ui-accent--hover:                   $pfe-global--color--red-maroon,
+  ui-accent--text:                    $pfe-global--color--white,
+  ui-accent--text--hover:             $pfe-global--color--white,
 
-  ui-disabled:                        $rh-global--disabled-state--BackgroundColor,
-  ui-disabled--hover:                 $rh-global--disabled-state--BackgroundColor,
-  ui-disabled--text:                  $rh-global--disabled-state--Color,
-  ui-disabled--text--hover:           $rh-global--disabled-state--Color,
+  ui-disabled:                        $pfe-global--disabled-state--BackgroundColor,
+  ui-disabled--hover:                 $pfe-global--disabled-state--BackgroundColor,
+  ui-disabled--text:                  $pfe-global--disabled-state--Color,
+  ui-disabled--text--hover:           $pfe-global--disabled-state--Color,
 
 
   // ========================================================================
@@ -59,67 +59,67 @@ $cp-colors: (
   // ========================================================================
 
   // Lightest group
-  surface--lightest:                  $rh-global--color--white,
-  surface--lightest--text:            $rh-global--text-color,
-  surface--lightest--link:            $rh-global--link-color,
-  surface--lightest--link--visited:   $rh-global--link-color--visited,
-  surface--lightest--link--hover:     $rh-global--link-color--hover,
-  surface--lightest--link--focus:     $rh-global--link-color--focus,
+  surface--lightest:                  $pfe-global--color--white,
+  surface--lightest--text:            $pfe-global--text-color,
+  surface--lightest--link:            $pfe-global--link-color,
+  surface--lightest--link--visited:   $pfe-global--link-color--visited,
+  surface--lightest--link--hover:     $pfe-global--link-color--hover,
+  surface--lightest--link--focus:     $pfe-global--link-color--focus,
 
   // Lighter group
-  surface--lighter:                   $rh-global--color--gray-moon,
-  surface--lighter--text:             $rh-global--text-color,
-  surface--lighter--link:             $rh-global--link-color,
-  surface--lighter--link--visited:    $rh-global--link-color--visited,
-  surface--lighter--link--hover:      $rh-global--link-color--hover,
-  surface--lighter--link--focus:      $rh-global--link-color--focus,
+  surface--lighter:                   $pfe-global--color--gray-moon,
+  surface--lighter--text:             $pfe-global--text-color,
+  surface--lighter--link:             $pfe-global--link-color,
+  surface--lighter--link--visited:    $pfe-global--link-color--visited,
+  surface--lighter--link--hover:      $pfe-global--link-color--hover,
+  surface--lighter--link--focus:      $pfe-global--link-color--focus,
 
   // Base group
-  surface--base:                      $rh-global--color--gray-mercury,
-  surface--base--text:                $rh-global--text-color,
-  surface--base--link:                $rh-global--link-color,
-  surface--base--link--visited:       $rh-global--link-color--visited,
-  surface--base--link--hover:         $rh-global--link-color--hover,
-  surface--base--link--focus:         $rh-global--link-color--focus,
+  surface--base:                      $pfe-global--color--gray-mercury,
+  surface--base--text:                $pfe-global--text-color,
+  surface--base--link:                $pfe-global--link-color,
+  surface--base--link--visited:       $pfe-global--link-color--visited,
+  surface--base--link--hover:         $pfe-global--link-color--hover,
+  surface--base--link--focus:         $pfe-global--link-color--focus,
 
   // Darker group
-  surface--darker:                    $rh-global--color--gray-iron,
-  surface--darker--text:              $rh-global--text-color--inverted,
-  surface--darker--link:              $rh-global--link-color--inverted,
-  surface--darker--link--visited:     $rh-global--link-color--inverted--visited,
-  surface--darker--link--hover:       $rh-global--link-color--inverted--hover,
-  surface--darker--link--focus:       $rh-global--link-color--inverted--focus,
+  surface--darker:                    $pfe-global--color--gray-iron,
+  surface--darker--text:              $pfe-global--text-color--inverted,
+  surface--darker--link:              $pfe-global--link-color--inverted,
+  surface--darker--link--visited:     $pfe-global--link-color--inverted--visited,
+  surface--darker--link--hover:       $pfe-global--link-color--inverted--hover,
+  surface--darker--link--focus:       $pfe-global--link-color--inverted--focus,
 
   // Darkest group
-  surface--darkest:                   $rh-global--color--black-nero,
-  surface--darkest--text:             $rh-global--text-color--inverted,
-  surface--darkest--link:             $rh-global--link-color--inverted,
-  surface--darkest--link--visited:    $rh-global--link-color--inverted--visited,
-  surface--darkest--link--hover:      $rh-global--link-color--inverted--hover,
-  surface--darkest--link--focus:      $rh-global--link-color--inverted--focus,
+  surface--darkest:                   $pfe-global--color--black-nero,
+  surface--darkest--text:             $pfe-global--text-color--inverted,
+  surface--darkest--link:             $pfe-global--link-color--inverted,
+  surface--darkest--link--visited:    $pfe-global--link-color--inverted--visited,
+  surface--darkest--link--hover:      $pfe-global--link-color--inverted--hover,
+  surface--darkest--link--focus:      $pfe-global--link-color--inverted--focus,
 
   // Complement group
-  surface--complement:                $rh-global--color--blue-rain,
-  surface--complement--text:          $rh-global--text-color--inverted,
-  surface--complement--link:          $rh-global--text-color--inverted,
-  surface--complement--link--visited: $rh-global--text-color--inverted,
-  surface--complement--link--hover:   darken($rh-global--text-color--inverted, 10%),
-  surface--complement--link--focus:   darken($rh-global--text-color--inverted, 10%),
+  surface--complement:                $pfe-global--color--blue-rain,
+  surface--complement--text:          $pfe-global--text-color--inverted,
+  surface--complement--link:          $pfe-global--text-color--inverted,
+  surface--complement--link--visited: $pfe-global--text-color--inverted,
+  surface--complement--link--hover:   darken($pfe-global--text-color--inverted, 10%),
+  surface--complement--link--focus:   darken($pfe-global--text-color--inverted, 10%),
 
 
   // Accent group
-  surface--accent:                    $rh-global--color--red,
-  surface--accent--text:              $rh-global--text-color--inverted,
-  surface--accent--link:              $rh-global--text-color--inverted,
-  surface--accent--link--visited:     $rh-global--text-color--inverted,
-  surface--accent--link--hover:       darken($rh-global--text-color--inverted, 10%),
-  surface--accent--link--focus:       darken($rh-global--text-color--inverted, 10%),
+  surface--accent:                    $pfe-global--color--red,
+  surface--accent--text:              $pfe-global--text-color--inverted,
+  surface--accent--link:              $pfe-global--text-color--inverted,
+  surface--accent--link--visited:     $pfe-global--text-color--inverted,
+  surface--accent--link--hover:       darken($pfe-global--text-color--inverted, 10%),
+  surface--accent--link--focus:       darken($pfe-global--text-color--inverted, 10%),
 
 
   /* Palette of Border Colors */
-  surface--border:                    $rh-global--border--BorderColor,
-  surface--border--lightest:          $rh-global--border--BorderColor--light,
-  surface--border--darkest:           $rh-global--border--BorderColor--dark,
+  surface--border:                    $pfe-global--border--BorderColor,
+  surface--border--lightest:          $pfe-global--border--BorderColor--light,
+  surface--border--darkest:           $pfe-global--border--BorderColor--dark,
 
 
   // ========================================================================
@@ -154,9 +154,9 @@ $cp-colors: (
 );
 
 $cp-vars: (
-  container-spacer:              rh-size-prem(16px),
-  container-padding:             rh-size-prem(16px),
-  content-spacer:                rh-size-prem(16px),
+  container-spacer:              pfe-size-prem(16px),
+  container-padding:             pfe-size-prem(16px),
+  content-spacer:                pfe-size-prem(16px),
 
   font-size:                     16px,
   line-height:                   1.5,
@@ -165,12 +165,12 @@ $cp-vars: (
   font-family--heading:          '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
   font-family--code:             '"Overpass Mono", Consolas, Monaco, 'Andale Mono', monospace',
 
-  font-size--heading--alpha:     $rh-global--FontSize--heading--xxl,
-  font-size--heading--beta:      $rh-global--FontSize--heading--xl,
-  font-size--heading--gamma:     $rh-global--FontSize--heading--lg,
-  font-size--heading--delta:     $rh-global--FontSize--heading--md,
-  font-size--heading--epsilon:   $rh-global--FontSize--heading--sm,
-  font-size--heading--zeta:      $rh-global--FontSize--heading--xs,
+  font-size--heading--alpha:     $pfe-global--FontSize--heading--xxl,
+  font-size--heading--beta:      $pfe-global--FontSize--heading--xl,
+  font-size--heading--gamma:     $pfe-global--FontSize--heading--lg,
+  font-size--heading--delta:     $pfe-global--FontSize--heading--md,
+  font-size--heading--epsilon:   $pfe-global--FontSize--heading--sm,
+  font-size--heading--zeta:      $pfe-global--FontSize--heading--xs,
 
   link--text-decoration:         underline,
   link--text-decoration--hover:  underline,
@@ -182,10 +182,10 @@ $cp-vars: (
   ui--border-style:              solid,
   ui--border-radius:             2px,
 
-  box-shadow--sm:                '0  #{rh-size-prem(1)}  #{rh-size-prem(2)} 0 rgba(#{$rh-global--color--gray12}, .2)',
-  box-shadow--md:                '0  #{rh-size-prem(2)}  #{rh-size-prem(1)} #{rh-size-prem(1)} rgba(#{$rh-global--color--gray12}, .12), 0  #{rh-size-prem(4)}  #{rh-size-prem(11)} #{rh-size-prem(6)} rgba(#{$rh-global--color--gray12}, .05)',
-  box-shadow--lg:                '0  #{rh-size-prem(3)}  #{rh-size-prem(7)} #{rh-size-prem(3)} rgba(#{$rh-global--color--gray12}, .13), 0  #{rh-size-prem(11)}  #{rh-size-prem(24)} #{rh-size-prem(16)} rgba(#{$rh-global--color--gray12}, .12)',
-  box-shadow--inset:             'inset 0 0 #{rh-size-prem(10)} 0 rgba(#{$rh-global--color--gray12}, .25)',
+  box-shadow--sm:                '0  #{pfe-size-prem(1)}  #{pfe-size-prem(2)} 0 rgba(#{$pfe-global--color--gray12}, .2)',
+  box-shadow--md:                '0  #{pfe-size-prem(2)}  #{pfe-size-prem(1)} #{pfe-size-prem(1)} rgba(#{$pfe-global--color--gray12}, .12), 0  #{pfe-size-prem(4)}  #{pfe-size-prem(11)} #{pfe-size-prem(6)} rgba(#{$pfe-global--color--gray12}, .05)',
+  box-shadow--lg:                '0  #{pfe-size-prem(3)}  #{pfe-size-prem(7)} #{pfe-size-prem(3)} rgba(#{$pfe-global--color--gray12}, .13), 0  #{pfe-size-prem(11)}  #{pfe-size-prem(24)} #{pfe-size-prem(16)} rgba(#{$pfe-global--color--gray12}, .12)',
+  box-shadow--inset:             'inset 0 0 #{pfe-size-prem(10)} 0 rgba(#{$pfe-global--color--gray12}, .25)',
 
   animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),
 );

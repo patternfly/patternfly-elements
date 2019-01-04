@@ -1,0 +1,189 @@
+@import "../../pfe-sass/pfe-sass";
+
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+$pfe-cta__arrow-size:                        0.313em;
+
+/// ===========================================================================
+/// DEFUALT CTA
+/// ===========================================================================
+:host {
+  --pfe-cta--main:                     #{pfe-color(ui-link)};
+  --pfe-cta--main--hover:              #{pfe-color(ui-link--hover)};
+  --pfe-cta--main--focus:              #{pfe-color(ui-link--focus)};
+  --pfe-cta--main--visited:            #{pfe-color(ui-link--visited)};
+  --pfe-cta--aux:                      transparent;
+  --pfe-cta--aux--hover:               transparent;
+
+  display: inline-block;
+  font-weight: bold;
+
+  ::slotted(a) {
+    line-height: inherit;
+    color: var(--pfe-cta--main) !important;
+    transition: all #{pfe-var(animation-timing)};
+
+    &::after {
+      display: block;
+      margin-left: calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
+      vertical-align: middle;
+      @include pfe-arrow(right, var(--pfe-cta--main), $pfe-cta__arrow-size, $pfe-cta__arrow-size, true);
+    }
+  }
+
+  // & ::slotted(a:visited) {
+  //  color: var(--pfe-cta--main--visited);
+  //  &::after {
+  //    @include pfe-arrow-color(var(--pfe-cta--main--visited));
+  //  }
+  // }
+
+  ::slotted(a:hover) {
+    color: var(--pfe-cta--main--hover) !important;
+
+    &::after {
+      @include pfe-arrow-color(var(--pfe-cta--main--hover));
+    }
+  }
+
+  ::slotted(a:focus) {
+    color: var(--pfe-cta--main--focus) !important;
+
+    &::after {
+      @include pfe-arrow-color(var(--pfe-cta--main--focus));
+    }
+  }
+}
+
+
+/// ===========================================================================
+/// Styles for "Button" CTAs
+/// ===========================================================================
+:host([priority="primary"]) {
+  --pfe-cta--main:          #{pfe-color(ui-accent)};
+  --pfe-cta--main--hover:   #{pfe-color(ui-accent--hover)};
+  --pfe-cta--aux:           #{pfe-color(ui-accent--text)};
+  --pfe-cta--aux--hover:    #{pfe-color(ui-accent--text--hover)};
+
+  ::slotted(a) {
+    display: inline-block;
+    padding: calc(#{pfe-var(container-padding)} * 0.5) calc(#{pfe-var(container-padding)} * 2);
+    border-radius: calc(#{pfe-var(ui--border-radius)} * 20);
+    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
+    text-decoration: none;
+    line-height: 1.2;
+
+    border-color: var(--pfe-cta--main) !important;
+    background:   var(--pfe-cta--main) !important;
+    color:        var(--pfe-cta--aux) !important;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  ::slotted(a:hover),
+  ::slotted(a:focus) { // Not sure we can lump these together
+    border-color: var(--pfe-cta--main--hover) !important;
+    background:   var(--pfe-cta--main--hover) !important;
+    color:        var(--pfe-cta--aux--hover) !important;
+  }
+
+  // & ::slotted(a:visited),   TBD
+
+}
+
+:host([priority="secondary"]) {
+  --pfe-cta--main:          #{pfe-color(ui-base)};
+  --pfe-cta--main--hover:   #{pfe-color(ui-base--hover)};
+  --pfe-cta--aux:           #{pfe-color(ui-base--text)};
+  --pfe-cta--aux--hover:    #{pfe-color(ui-base--text--hover)};
+
+  ::slotted(a) {
+    display: inline-block;
+    padding: calc(#{pfe-var(container-padding)} * 0.5) calc(#{pfe-var(container-padding)} * 2);
+    border-radius: calc(#{pfe-var(ui--border-radius)} * 20);
+    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-cta--main);
+    text-decoration: none;
+    line-height: 1.2;
+
+    border-color: var(--pfe-cta--main) !important;
+    background:   var(--pfe-cta--aux) !important;
+    color:        var(--pfe-cta--main) !important;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  ::slotted(a:hover), // Not sure we can lump these together
+  ::slotted(a:focus) {
+    border-color: var(--pfe-cta--main--hover) !important;
+    background:   var(--pfe-cta--main--hover) !important;
+    color:        var(--pfe-cta--aux--hover) !important;
+  }
+
+  // & ::slotted(a:visited),   TBD
+}
+
+
+/// ===========================================================================
+/// ON DARK
+/// ===========================================================================
+:host([on="dark"]) {
+  --pfe-cta--main:        #{pfe-color(text--on-dark)};
+  --pfe-cta--main--hover: #{pfe-color(ui-link--on-dark--hover)};
+  --pfe-cta--aux:         transparent;
+  --pfe-cta--aux--hover:  transparent;
+}
+
+:host([on="dark"][priority="primary"]) {
+  --pfe-cta--main:        #{pfe-color(ui-accent--text)};
+  --pfe-cta--main--hover: #{pfe-color(ui-accent--text--hover)};
+  --pfe-cta--aux:         #{pfe-color(ui-accent)};
+  --pfe-cta--aux--hover:  #{pfe-color(ui-accent--hover)};
+}
+
+:host([on="dark"][priority="secondary"]) {
+  --pfe-cta--main:        #{pfe-color(ui-base--text)};
+  --pfe-cta--main--hover: #{pfe-color(ui-base--text--hover)};
+  --pfe-cta--aux:         transparent;
+  --pfe-cta--aux--hover:  #{pfe-color(ui-base--hover)};
+}
+
+
+/// ===========================================================================
+/// COLOR OVERRIDE: BASE
+/// ===========================================================================
+
+:host([color="base"]) {
+  --pfe-cta--main:        #{pfe-color(ui-base)} !important;
+  --pfe-cta--main--hover: #{pfe-color(ui-base--hover)} !important;
+  --pfe-cta--aux:         #{pfe-color(ui-base--text)} !important;
+  --pfe-cta--aux--hover:  #{pfe-color(ui-base--text--hover)} !important;
+}
+
+
+/// ===========================================================================
+/// COLOR OVERRIDE: COMPLEMENT
+/// ===========================================================================
+
+:host([color="complement"]) {
+  --pfe-cta--main:        #{pfe-color(ui-complement)} !important;
+  --pfe-cta--main--hover: #{pfe-color(ui-complement--hover)} !important;
+  --pfe-cta--aux:         #{pfe-color(ui-complement--text)} !important;
+  --pfe-cta--aux--hover:  #{pfe-color(ui-complement--text--hover)} !important;
+}
+
+
+/// ===========================================================================
+/// COLOR OVERRIDE: ACCENT
+/// ===========================================================================
+:host([color="accent"]) {
+  --pfe-cta--main:        #{pfe-color(ui-accent)} !important;
+  --pfe-cta--main--hover: #{pfe-color(ui-accent--hover)} !important;
+  --pfe-cta--aux:         #{pfe-color(ui-accent--text)} !important;
+  --pfe-cta--aux--hover:  #{pfe-color(ui-accent--text--hover)} !important;
+}

@@ -1,5 +1,5 @@
 {
-  "name": "@pfelements/pfe-hide-show",
+  "name": "@patternfly/pfe-hide-show",
   "pfelement": {
     "className": "PfeHideShow",
     "elementName": "pfe-hide-show"
@@ -24,8 +24,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@pfelements/pfe-sass": "1.0.0-prerelease.7",
-    "@pfelements/pfelement": "1.0.0-prerelease.7"
+    "@patternfly/pfe-sass": "1.0.0-prerelease.7",
+    "@patternfly/pfelement": "1.0.0-prerelease.7"
   },
   "generator-pfelement-version": "0.6.8"
 }

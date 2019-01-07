@@ -24,10 +24,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-accordion": "1.0.0-prerelease.7",
-    "@patternfly/pfelement": "1.0.0-prerelease.7",
-    "@patternfly/pfe-sass": "1.0.0-prerelease.7",
-    "@patternfly/pfe-tabs": "1.0.0-prerelease.7"
+    "@patternfly/pfe-accordion": "^1.0.0-prerelease.7",
+    "@patternfly/pfelement": "^1.0.0-prerelease.7",
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.7",
+    "@patternfly/pfe-tabs": "^1.0.0-prerelease.7"
   },
   "generator-pfelement-version": "0.6.8"
 }

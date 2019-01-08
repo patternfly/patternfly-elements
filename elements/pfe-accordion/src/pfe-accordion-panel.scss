@@ -1,0 +1,25 @@
+@import "../../pfe-sass/pfe-sass";
+
+:host {
+  display: none;
+  overflow: hidden;
+  background: #{pfe-color(surface--lightest)};
+  will-change: height;
+}
+
+:host([expanded]) {
+  display: block;
+  position: relative;
+}
+
+:host(.animating) {
+  display: block;
+  transition: height 0.3s ease-in-out;
+}
+
+.container {
+  margin: 0 1px; // align with 1px margin on header
+  border: 1px solid #{pfe-color(surface--border--lightest)};
+  border-top: none;
+  padding: #{pfe-var(container-spacer)};
+}

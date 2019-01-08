@@ -12,12 +12,12 @@
 // Use function 'map-collect' to merge all maps
 // This needs to be located here in order to avoid
 // variable issues.
-$rh-global--color-map: map-collect(
-    $rh-global--color-map--block,
-    $rh-global--color-map--copy,
-    $rh-global--color-map--form,
-    $rh-global--color-map--icon,
-    $rh-global--color-map--link,
-    $rh-global--color-map--table,
-    $rh-global--color-map--title
+$pfe-global--color-map: map-collect(
+    $pfe-global--color-map--block,
+    $pfe-global--color-map--copy,
+    $pfe-global--color-map--form,
+    $pfe-global--color-map--icon,
+    $pfe-global--color-map--link,
+    $pfe-global--color-map--table,
+    $pfe-global--color-map--title
 );

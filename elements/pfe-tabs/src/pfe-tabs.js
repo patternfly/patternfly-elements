@@ -145,7 +145,7 @@ class PfeTabs extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["vertical", "selected-index", "pfe-variant"];
+    return ["vertical", "selected-index", "pfe-variant", "color"];
   }
 
   get selectedIndex() {
@@ -195,42 +195,56 @@ class PfeTabs extends PFElement {
     this.removeEventListener("click", this._onClick);
   }
 
+  parentChildHandoff(attributeName, attributeValue) {
+    this._allTabs().forEach(tab =>
+      tab.setAttribute(attributeName, attributeValue)
+    );
+    this._allPanels().forEach(panel =>
+      panel.setAttribute(attributeName, attributeValue)
+    );
+  }
+
   attributeChangedCallback(attr, oldValue, newValue) {
-    switch (attr) {
-      case "pfe-variant":
-        if (this.getAttribute("pfe-variant") === "primary") {
-          this._allTabs().forEach(tab =>
-            tab.setAttribute("pfe-variant", "primary")
-          );
-        } else if (this.getAttribute("pfe-variant") === "secondary") {
-          this._allTabs().forEach(tab =>
-            tab.setAttribute("pfe-variant", "secondary")
-          );
-        }
-        break;
+    if (attr == "color" || attr == "pfe-variant") {
+      var attributeValue = this.getAttribute(attr);
+      this.parentChildHandoff(attr, attributeValue);
+    } else {
+      switch (attr) {
+        // get values of attribute set on parent, pass onto tab & panel via parentChildHandoff()
+        //case "color":
+        //  var attributeValue = this.getAttribute( attr )
+        //  this.parentChildHandoff( attr, attributeValue );
+        //break;
+        //case "pfe-variant":
+        //  var attributeValue = this.getAttribute( attr )
+        //  this.parentChildHandoff( attr, attributeValue );
+        //break;
 
-      case "vertical":
-        if (this.hasAttribute("vertical")) {
-          this.setAttribute("aria-orientation", "vertical");
-          this._allPanels().forEach(panel =>
-            panel.setAttribute("vertical", "")
-          );
-          this._allTabs().forEach(tab => tab.setAttribute("vertical", ""));
-        } else {
-          this.removeAttribute("aria-orientation");
-          this._allPanels().forEach(panel => panel.removeAttribute("vertical"));
-          this._allTabs().forEach(tab => tab.removeAttribute("vertical"));
-        }
-        break;
+        case "vertical":
+          if (this.hasAttribute("vertical")) {
+            this.setAttribute("aria-orientation", "vertical");
+            this._allPanels().forEach(panel =>
+              panel.setAttribute("vertical", "")
+            );
+            this._allTabs().forEach(tab => tab.setAttribute("vertical", ""));
+          } else {
+            this.removeAttribute("aria-orientation");
+            this._allPanels().forEach(panel =>
+              panel.removeAttribute("vertical")
+            );
+            this._allTabs().forEach(tab => tab.removeAttribute("vertical"));
+          }
+          break;
 
-      case "selected-index":
-        Promise.all([
-          customElements.whenDefined(RhTab.tag),
-          customElements.whenDefined(RhTabPanel.tag)
-        ]).then(() => {
-          this._linkPanels();
-          this.selectIndex(newValue);
-        });
+        case "selected-index":
+          Promise.all([
+            customElements.whenDefined(RhTab.tag),
+            customElements.whenDefined(RhTabPanel.tag)
+          ]).then(() => {
+            this._linkPanels();
+            this.selectIndex(newValue);
+          });
+      }
     }
   }
 

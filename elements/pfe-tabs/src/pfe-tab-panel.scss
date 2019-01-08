@@ -2,8 +2,32 @@
 
 :host {
   display: block;
+  padding: #{pfe-var(container-padding)};
+  border: solid 1px transparent;
+  border-color: #{pfe-color(surface--border)};
+  border-top: transparent;
 }
 
 :host([hidden]) {
   display: none;
 }
+
+// COLOR LOOP
+$colors: lightest, light, darkest, dark, accent, complement, base;
+
+@each $color in $colors {
+  :host([color="#{$color}"]) {
+    background-color: #{pfe-color(surface--#{$color})};
+  }
+}
+
+
+
+// VARIANTS
+:host([pfe-variant="primary"]) {
+	// Border
+	border-color: transparent;
+	padding: 0;
+}
+
+	//border-bottom-color: #{pfe-color(surface--border)};

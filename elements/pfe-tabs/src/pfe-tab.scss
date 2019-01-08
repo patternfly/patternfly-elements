@@ -24,32 +24,44 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   // Padding
   padding-top: #{pfe-var(container-padding)};
   padding-right: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__tab--PaddingRight-factor});;
-  padding-bottom: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__tab--PaddingBottom-factor});
+  padding-bottom: #{pfe-var(container-padding)};
   padding-left: #{pfe-var(container-padding)};
-  // Border
+  // Border, set by color to avoid "jumping"
   border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
-  border-bottom: 0;
   // Inner style
   background-color: var(--pfe-tabs--main);
   color: var(--pfe-tabs--aux);
   text-transform: var(--pfe-tabs__tab--TextTransform, none); // exposing this for RH
   font-weight: #{pfe-var(font-weight--normal)};
-
   white-space: nowrap;
   cursor: pointer;
+
+}
+::slotted(*) {
+  padding-bottom: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__tab--PaddingBottom-factor});
 }
 
 :host([aria-selected="true"]) {
-  --pfe-tabs--main:         #{pfe-color(surface--lightest)};
+  --pfe-tabs--main: #{pfe-color(surface--lightest)};
 
   // Border
-  border-color: #{pfe-color(surface--border)};
-  border-bottom: 0;
+  border:  #{pfe-color(surface--border)} solid 1px;
+  border-bottom-color: transparent;
+
+  // to bring focus ring above other tabs
+  z-index: 1;
+}
+:host([aria-selected="false"]) {
+  --pfe-tabs--main: #{pfe-color(surface--lightest)};
+
+  // Border
+  border-color: transparent;
+  border-bottom-color: #{pfe-color(surface--border)};
 }
 
 .indicator {
-  position: absolute;
-  bottom: 12px;
+  //position: absolute;
+  //bottom: 0px;
   left: auto;
 
   display: var(--pfe-tabs__indicator--Display, block); // Exposing this for themability. Use `none` to not show at all
@@ -82,9 +94,12 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 // Horizontal primary sets.
 
 :host([pfe-variant="primary"]) {
+  background-color: transparent;;
   text-align: center;
   padding: 0 calc(#{pfe-var(container-padding)} / 3) #{pfe-var(container-padding)};
   margin-right: 2%;
+  // Border
+  border-color: transparent;
 
   .indicator {
     width: 100%;
@@ -109,6 +124,8 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 2.75);
   border: 1px solid $pfe-global--color--black-soft;
   margin-right: 2%;
+  display: flex;
+   align-items: center; // horizontally align text
 
   .indicator {
     display: none;
@@ -123,14 +140,14 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
   .indicator {
     display: block;
-    bottom: -33%;
+    bottom: calc(#{pfe-var(container-padding)} * -0.666);  //magic number
     width: 0;
     height: 0;
     left: 50%;
     transform: translateX(-50%);
     border-left: #{pfe-var(container-spacer)} solid transparent;
     border-right: #{pfe-var(container-spacer)} solid transparent;
-    border-top: #{pfe-var(container-spacer)} solid $pfe-global--color--black-soft;
+    border-top: #{pfe-var(container-spacer)} solid red;//$pfe-global--color--black-soft;
     background-color: transparent;
   }
 }
@@ -186,4 +203,13 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   font-size: var(--pfe-theme--font-size);
   font-weight: var(--pfe-theme--font-weight--normal, 500);
   margin: 0;
+}
+
+// COLOR LOOP
+$colors: lightest, light, darkest, dark, accent, complement, base;
+
+@each $color in $colors {
+  :host([color="#{$color}"]) {
+    background-color: #{pfe-color(surface--#{$color})};
+  }
 }

@@ -82,7 +82,9 @@ ${
   }
 
   get isTab() {
-    return this.parentNode.offsetWidth > 768;
+    return this.parentNode
+      ? this.parentNode.offsetWidth > 768
+      : window.outerWidth > 768;
   }
 
   get settings() {

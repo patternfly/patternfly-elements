@@ -2,11 +2,12 @@ import { storiesOf } from "@storybook/polymer";
 import {
   withKnobs,
   text,
-  boolean,
-  select
+  select,
+  boolean
 } from "@storybook/addon-knobs/polymer";
-
 import "./pfe-avatar";
+import cpTheme from "../../themes/cp-theme/cp-theme.js";
+import { escapeHTML } from "../../.storybook/utils.js";
 
 const stories = storiesOf("Avatar", module);
 stories.addDecorator(withKnobs);
@@ -37,6 +38,9 @@ stories.add("pfe-avatar", () => {
     }
   ];
 
+  const customAvatar = `<pfe-avatar shape="${shape}" pattern="${pattern}" name="${name}"${src &&
+    ` src="${src}"`}></pfe-avatar>`;
+
   return `
     <h1>Dynamic example</h1>
     <h2>Use knobs to adjust!</h2>
@@ -45,11 +49,15 @@ stories.add("pfe-avatar", () => {
 
     <div class="rh-l-bullseye">
       <div class="rh-l-bullseye__item">
-        <pfe-avatar shape="${shape}" pattern="${pattern}" name="${name}" ${src &&
-    `src="${src}"`}></pfe-avatar>
+      ${customAvatar}
       </div>
     </div>
-
+    <section>
+      <h2>Markup</h2>
+      <pre style="margin-left:15px;">
+        <code>${escapeHTML(customAvatar)}</code>
+      </pre>
+    </section>
     <h1>Static examples</h1>
 
     <style>

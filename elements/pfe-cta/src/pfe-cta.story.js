@@ -2,8 +2,6 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-const cleaner = require("clean-html");
-
 import PfeCta from "../pfe-cta";
 
 // import cpTheme from "../../../themes/cp-theme/cp-theme.js";
@@ -73,23 +71,9 @@ stories.add(PfeCta.tag, () => {
     }
   ];
 
-  let rendered = template(config);
-
-  cleaner.clean(
-    rendered,
-    {
-      indent: "    ",
-      "remove-attributes": [],
-      wrap: 0
-    },
-    html => (rendered = html)
-  );
-
-  return `${rendered}
-<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold;border: 1px solid #bccc;">
-${tools.escapeHTML(rendered)}
-</pre>
-`;
+  const render = template(config);
+  const output = tools.preview(render);
+  return output;
 });
 
 stories.add("At a glance", () => {

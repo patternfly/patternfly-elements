@@ -3,6 +3,7 @@
 // Automatic content generation
 // https://www.npmjs.com/package/lorem-ipsum
 const loremIpsum = require("lorem-ipsum");
+const cleaner = require("clean-html");
 
 // Escape HTML to display markup as content
 export function escapeHTML(html) {
@@ -117,4 +118,23 @@ export function autoContentKnobs(slots, bridge) {
   });
 
   return binding;
+}
+
+export function preview(markup) {
+  // Prettify and clean the markup for rendering
+  cleaner.clean(
+    markup,
+    {
+      indent: "    ",
+      "remove-attributes": [],
+      wrap: 0
+    },
+    html => (markup = html)
+  );
+
+  // Return the rendered markup and the code snippet output
+  return `${markup}
+  <pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">
+    ${escapeHTML(markup)}
+  </pre>`;
 }

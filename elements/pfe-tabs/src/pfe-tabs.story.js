@@ -33,11 +33,10 @@ stories.add(PfeTabs.tag, () => {
   // const props = PfeTabs.properties;
   // Manually defining props but this can be done in a schema instead
   const props = {
-    orientation: {
-      title: "Orientation",
-      type: "string",
-      enum: ["horizontal", "vertical"],
-      default: "horizontal"
+    vertical: {
+      title: "Vertical orientation",
+      type: "boolean",
+      default: "false"
     }
   };
 

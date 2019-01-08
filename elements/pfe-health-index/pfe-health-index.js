@@ -85,7 +85,7 @@ class PfeHealthIndex extends PFElement {
   }
 
   constructor() {
-    super(PfeHealthIndex.tag);
+    super(PfeHealthIndex);
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {

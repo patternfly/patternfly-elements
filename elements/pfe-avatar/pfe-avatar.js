@@ -59,16 +59,6 @@ class PfeAvatar extends PFElement {
     
     -ms-interpolation-mode: nearest-neighbor;
      }
-  :host #initials {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--pfe-avatar--text-color);
-    font-size: calc(2 * var(--pfe-avatar--font-size));
-    line-height: 1em;
-    font-weight: bold;
-    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3); }
 
 :host([shape="rounded"]) img,
 :host([shape="rounded"]) canvas {
@@ -90,13 +80,9 @@ class PfeAvatar extends PFElement {
 :host(:not([src])) img {
   display: none; }
 
-:host(:not([show-initials])) #initials {
-  display: none; }
-
 :host([hidden]) {
   display: none; }
 </style>
-<div id="initials"></div>
 <canvas></canvas>
 <img>`;
   }
@@ -198,31 +184,6 @@ class PfeAvatar extends PFElement {
     this._ctx = this._canvas.getContext("2d");
   }
 
-  _findInitials(name) {
-    if (!name || name.length === 0) {
-      return [];
-    }
-    const nameArr = name.trim().split(/\s+/);
-    const fi = nameArr[0][0];
-    const li = nameArr.length > 1 ? nameArr[nameArr.length - 1][0] : "";
-
-    // For 1 name, return 1 initial.  For two names, return two initials.  For
-    // three names, return three initials.  For more than three names, return
-    // two initials (first name and last name).
-    switch (nameArr.length) {
-      case 1:
-        return [fi];
-      case 3:
-        return [fi, nameArr[1][0], li];
-      default:
-        return [fi, li];
-    }
-  }
-
-  _setInitials(initials) {
-    this.shadowRoot.querySelector("#initials").textContent = initials.join("");
-  }
-
   static _registerColors() {
     this.colors = [];
     const themeColors =
@@ -278,8 +239,6 @@ class PfeAvatar extends PFElement {
   }
 
   update() {
-    this._setInitials(this._findInitials(this.name));
-
     // if we have a src element, update the img, otherwise update the random pattern
     if (this.hasAttribute("src")) {
       this.shadowRoot.querySelector("img").src = this.src;

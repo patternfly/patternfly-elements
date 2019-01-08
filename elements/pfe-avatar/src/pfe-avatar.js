@@ -132,31 +132,6 @@ class PfeAvatar extends PFElement {
     this._ctx = this._canvas.getContext("2d");
   }
 
-  _findInitials(name) {
-    if (!name || name.length === 0) {
-      return [];
-    }
-    const nameArr = name.trim().split(/\s+/);
-    const fi = nameArr[0][0];
-    const li = nameArr.length > 1 ? nameArr[nameArr.length - 1][0] : "";
-
-    // For 1 name, return 1 initial.  For two names, return two initials.  For
-    // three names, return three initials.  For more than three names, return
-    // two initials (first name and last name).
-    switch (nameArr.length) {
-      case 1:
-        return [fi];
-      case 3:
-        return [fi, nameArr[1][0], li];
-      default:
-        return [fi, li];
-    }
-  }
-
-  _setInitials(initials) {
-    this.shadowRoot.querySelector("#initials").textContent = initials.join("");
-  }
-
   static _registerColors() {
     this.colors = [];
     const themeColors =
@@ -212,8 +187,6 @@ class PfeAvatar extends PFElement {
   }
 
   update() {
-    this._setInitials(this._findInitials(this.name));
-
     // if we have a src element, update the img, otherwise update the random pattern
     if (this.hasAttribute("src")) {
       this.shadowRoot.querySelector("img").src = this.src;

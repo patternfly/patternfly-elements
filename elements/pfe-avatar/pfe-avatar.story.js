@@ -13,7 +13,6 @@ stories.addDecorator(withKnobs);
 
 stories.add("pfe-avatar", () => {
   const name = text("Name", "Apple Cinnamon");
-  const initials = boolean("Show Initials", false);
   const pattern = select("Pattern", ["triangles", "squares"], "squares");
   const shape = select("Shape", ["default", "rounded", "circle"], "squares");
   const src = text("Image URL", "");
@@ -22,8 +21,7 @@ stories.add("pfe-avatar", () => {
     {
       name: "Hannah Abbott",
       shape: "default",
-      pattern: "squares",
-      initials: true
+      pattern: "squares"
     },
     {
       name: "Susan Bones",
@@ -47,8 +45,8 @@ stories.add("pfe-avatar", () => {
 
     <div class="rh-l-bullseye">
       <div class="rh-l-bullseye__item">
-        <pfe-avatar shape="${shape}" pattern="${pattern}" ${initials &&
-    "show-initials"} name="${name}" ${src && `src="${src}"`}></pfe-avatar>
+        <pfe-avatar shape="${shape}" pattern="${pattern}" name="${name}" ${src &&
+    `src="${src}"`}></pfe-avatar>
       </div>
     </div>
 
@@ -78,16 +76,13 @@ stories.add("pfe-avatar", () => {
                   slot="header"
                   ${ex.src ? `src=${ex.src}` : `pattern="${ex.pattern}"`}
                   shape="${ex.shape}"
-                  ${ex.initials && "show-initials"}
                   name="${ex.name}">
                 </pfe-avatar>
                 Avatar for "${ex.name}"
                 with ${
                   ex.src ? `a user-selected image` : `patterned ${ex.pattern}`
                 },
-                ${ex.shape} shape,
-                and ${ex.initials ? "with" : "without"}
-                initials.
+                ${ex.shape} shape.
                </p>
             </rh-card>
           `

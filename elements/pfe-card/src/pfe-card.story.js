@@ -40,8 +40,7 @@ stories.add(PfeCard.tag, () => {
     size: {
       title: "Padding size",
       type: "string",
-      enum: ["small", "standard"],
-      default: "standard"
+      enum: ["small"]
     }
   };
 

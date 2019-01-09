@@ -24,19 +24,20 @@ stories.add(PfeDatetime.tag, () => {
     datetime: {
       title: "Datetime",
       type: "string",
-      default: "January 9, 2019"
+      default: "January 9, 2019",
+      required: true
     },
     type: {
       title: "Type",
       type: "string",
       enum: ["local", "relative"],
-      default: "local"
+      default: "local",
+      required: true
     },
     weekday: {
       title: "Weekday",
       type: "string",
-      enum: ["short", "long"],
-      default: "long"
+      enum: ["short", "long"]
     },
     day: {
       title: "Day",
@@ -59,26 +60,22 @@ stories.add(PfeDatetime.tag, () => {
     hour: {
       title: "Hour",
       type: "string",
-      enum: ["numeric", "2-digit"],
-      default: "numeric"
+      enum: ["numeric", "2-digit"]
     },
     minute: {
       title: "Minute",
       type: "string",
-      enum: ["numeric", "2-digit"],
-      default: "numeric"
+      enum: ["numeric", "2-digit"]
     },
     second: {
       title: "Second",
       type: "string",
-      enum: ["numeric", "2-digit"],
-      default: "numeric"
+      enum: ["numeric", "2-digit"]
     },
     locale: {
       title: "Timezone",
       type: "string",
-      enum: ["short", "long"],
-      default: "long"
+      default: "en-US"
     }
   };
 

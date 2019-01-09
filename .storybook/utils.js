@@ -77,6 +77,7 @@ export function autoPropKnobs(properties, bridge) {
     let defaultValue = prop[1].default;
     let options = prop[1].enum || [];
     let hidden = prop[1].hidden || false;
+    let required = prop[1].required || false;
 
     // Set the default method to text
     let method = "text";
@@ -89,14 +90,15 @@ export function autoPropKnobs(properties, bridge) {
       // If an array of options exists, create a select list
       if (options.length > 0) {
         let opts = {};
-        // Convert the array into an object
-        options.map(item => (opts[item] = item));
 
         // If a default is not defined, add a null option
-        if (defaultValue === "" || defaultValue === null) {
-          opts.null = "none";
-          defaultValue = null;
+        if (defaultValue === "" || defaultValue === null || !required) {
+          opts.null = "";
+          defaultValue = !defaultValue ? null : defaultValue;
         }
+
+        // Convert the array into an object
+        options.map(item => (opts[item] = item.sentenceCase()));
 
         // Create the knob
         binding[attr] = bridge.select(title, opts, defaultValue, "Attributes");

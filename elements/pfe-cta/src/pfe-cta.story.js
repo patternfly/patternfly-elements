@@ -72,8 +72,7 @@ stories.add(PfeCta.tag, () => {
   ];
 
   const render = template(config);
-  const output = tools.preview(render);
-  return output;
+  return tools.preview(render);
 });
 
 stories.add("At a glance", () => {

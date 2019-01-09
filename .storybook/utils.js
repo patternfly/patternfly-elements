@@ -73,8 +73,8 @@ export function autoPropKnobs(properties, bridge) {
   Object.entries(properties).forEach(prop => {
     let attr = prop[0];
     let title = prop[1].title || attr;
-    let defaultValue = prop[1].default || "";
     let type = prop[1].type || "string";
+    let defaultValue = prop[1].default;
     let options = prop[1].enum || [];
     let hidden = prop[1].hidden || false;
 
@@ -120,21 +120,84 @@ export function autoContentKnobs(slots, bridge) {
   return binding;
 }
 
-export function preview(markup) {
+export function demo(markup) {
   // Prettify and clean the markup for rendering
   cleaner.clean(
     markup,
     {
       indent: "    ",
       "remove-attributes": [],
+      "break-around-tags": [
+        "body",
+        "blockquote",
+        "br",
+        "div",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "head",
+        "hr",
+        "link",
+        "meta",
+        "p",
+        "table",
+        "title",
+        "td",
+        "tr",
+        "a"
+      ],
       wrap: 0
     },
     html => (markup = html)
   );
 
   // Return the rendered markup and the code snippet output
-  return `${markup}
-  <pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">
-    ${escapeHTML(markup)}
-  </pre>`;
+  return `${markup}`;
+}
+
+export function code(markup) {
+  // Prettify and clean the markup for rendering
+  cleaner.clean(
+    markup,
+    {
+      indent: "    ",
+      "remove-attributes": [],
+      "break-around-tags": [
+        "body",
+        "blockquote",
+        "br",
+        "div",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "head",
+        "hr",
+        "link",
+        "meta",
+        "p",
+        "table",
+        "title",
+        "td",
+        "tr",
+        "a"
+      ],
+      wrap: 0
+    },
+    html => (markup = html)
+  );
+
+  // Return the rendered markup and the code snippet output
+  return `<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">${escapeHTML(
+    markup
+  )}</pre>`;
+}
+
+export function preview(markup) {
+  return demo(markup) + code(markup);
 }

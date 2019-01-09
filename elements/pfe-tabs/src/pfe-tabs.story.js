@@ -14,7 +14,7 @@ const defaultPanel =
     tag: "h3",
     content: tools.autoHeading()
   }) +
-  tools.autoContent(5, 3) +
+  tools.autoContent(3, 3) +
   tools.component("pfe-cta", {}, [
     {
       content: "<a href='#'>Learn more</a>"
@@ -36,7 +36,7 @@ stories.add(PfeTabs.tag, () => {
     vertical: {
       title: "Vertical orientation",
       type: "boolean",
-      default: "false"
+      default: false
     }
   };
 
@@ -115,7 +115,7 @@ stories.add(PfeTabs.tag, () => {
                   tag: "h3",
                   content: tools.autoHeading()
                 }) +
-                tools.autoContent(5, 3) +
+                tools.autoContent(3, 3) +
                 tools.component("pfe-cta", {}, [
                   {
                     content: "<a href='#'>Learn more</a>"

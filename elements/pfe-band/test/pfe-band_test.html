@@ -27,25 +27,35 @@
     </pfe-band>
 
     <script>
+      const band = [...document.querySelectorAll("pfe-band")];
+      // Themes and their expected hex values
+      const colors = {
+        default: "#dfdfdf",
+        darker: "#464646",
+        darkest: "#131313",
+        accent: "#fe460d",
+        complement: "#0477a4",
+        lighter: "#ececec",
+        lightest: "#ffffff"
+      };
+      // Converts a hex value to RGBA
       const hexToRgb = hex => {
-        const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/.exec(hex);
           return [
               parseInt(r, 16),
               parseInt(g, 16),
               parseInt(b, 16)
            ];
       };
-
+      // Gets the rgba value from an element
       const getColor = (el, prop) => {
-        const [, r, g, b] = getComputedStyle(el, null)
-          [prop].match(/rgba?\((\d+),\s+(\d+),\s+(\d+)\)/)
+        const [, r, g, b] = getComputedStyle(el, null)[prop].match(/rgba?\((\d+),\s+(\d+),\s+(\d+).*\)/)
           .map(n => +n);
         return [r, g, b];
       };
       
       suite("<pfe-band>", () => {
-        const band = [...document.querySelectorAll("pfe-band")];
-
+        // Test that the web component rendered
         test("it should upgrade", () => {
           assert.instanceOf(
             band[0],
@@ -54,8 +64,39 @@
           );
         });
 
-        test("it should have a background color of gray", () => {
-          assert.equal(getColor(band[0]), hexToRgb("#d2d3d5"));
+        // Iterate over the colors object to test expected background color results
+        Object.entries(colors).forEach(set => {
+          test(`it should have a background color of ${set[1]} when pfe-color is ${set[0]}`, () => {
+            // If this is not the default theme, update the variable
+            if(set[0] !== "default") {
+              //Update the color attribute
+              band[0].setAttribute("pfe-color", set[0]);
+            }
+            // Test that the color is rendering as expected
+            assert.deepEqual(getColor(band[0], "background-color"), hexToRgb(set[1]));
+          });
+        });
+
+        // Test that the default padding is correct
+        test("it should have default padding when no size attribute is set", () => {
+          // Test that the color is rendering as expected
+          if(window.outerWidth > 576) {
+            assert.equal(getComputedStyle(band[0], null)["padding"], "64px 16px");
+          } else {
+            assert.equal(getComputedStyle(band[0], null)["padding"], "32px 16px");
+          }
+        });
+
+        // Test that the padding is reduced if the size is set to small
+        test("it should have reduced padding when the size attribute is small", () => {
+          //Update the color attribute
+          band[0].setAttribute("pfe-size", "small");
+          // Test that the color is rendering as expected
+          if(window.outerWidth > 576) {
+            assert.equal(getComputedStyle(band[0], null)["padding"], "16px");
+          } else {
+            assert.equal(getComputedStyle(band[0], null)["padding"], "32px 16px");
+          }
         });
       });
     </script>

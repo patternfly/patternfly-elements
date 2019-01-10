@@ -74,12 +74,6 @@ class PfeBand extends PFElement {
     super(PfeBand, { type: PfeBand.PfeType });
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-  }
-
-  // disconnectedCallback() {}
-
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
 

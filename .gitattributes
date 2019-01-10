@@ -1,5 +1,10 @@
-elements/*/*.umd.js     -diff -merge
-elements/*/*.umd.js.map -diff -merge
-themes/*/*.umd.js       -diff -merge
-themes/*/*.umd.js.map   -diff -merge
-package-lock.json       -diff -merge
+elements/*/*.js              -diff -merge
+elements/*/gulpfile.js       diff merge
+elements/*/rollup.config.js  diff merge
+elements/*/*.story.js        diff merge
+
+elements/*/*.umd.js          -diff -merge
+elements/*/*.umd.js.map      -diff -merge
+themes/*/*.umd.js            -diff -merge
+themes/*/*.umd.js.map        -diff -merge
+package-lock.json            -diff -merge

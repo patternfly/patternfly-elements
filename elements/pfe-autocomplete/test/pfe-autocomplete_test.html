@@ -11,7 +11,9 @@
   </head>
   <body>
     <div style="width:50%;">
-      <pfe-autocomplete id="autocomplete"></pfe-autocomplete>
+        <pfe-autocomplete id="autocomplete">
+            <input placeholder="Enter Your Search Term"/>
+        </pfe-autocomplete>
     </div>
     <script>
       describe('<pfe-autocomplete>', () => {
@@ -23,25 +25,22 @@
 
         //function to run before each test within this suite.
         beforeEach(function() {
-          autocompleteElem = document.querySelector('#autocomplete');
+            autocompleteElem = document.querySelector('#autocomplete');
+            clearButton = autocompleteElem.shadowRoot.querySelector(".clear-search");
+            searchButton = autocompleteElem.shadowRoot.querySelector(".search-button");
+            input = autocompleteElem.querySelector("input");
+            droplistElem = autocompleteElem.shadowRoot.querySelector("#dropdown");
 
-          //pfe-search-box
-          searchBoxElem = autocompleteElem.shadowRoot.querySelector('pfe-search-box');
-          input = searchBoxElem.shadowRoot.querySelector('input');
-          clearButton = searchBoxElem.shadowRoot.querySelector('button.clear-search');
-          searchButton = searchBoxElem.shadowRoot.querySelector('button.search-button');
-
-          //pfe-search-droplist
-          droplistElem = autocompleteElem.shadowRoot.querySelector('pfe-search-droplist');
+            //droplistElem = autocompleteElem.shadowRoot.querySelector('pfe-search-droplist');
         });
 
         afterEach(() => {
-          input.value = "";
-          autocompleteElem.initValue = "";
+            input.value = "";
+            autocompleteElem.initValue = "";
         });
 
         it('should upgrade pfe-autocomplete', () => {
-          assert.instanceOf(autocompleteElem, customElements.get("pfe-autocomplete", 'pfe-autocomplete should be an instance of pfeAutocomplete'));
+            assert.instanceOf(autocompleteElem, customElements.get("pfe-autocomplete", 'pfe-autocomplete should be an instance of pfeAutocomplete'));
         });
 
         it('should hide x button when input box is empty', () => {
@@ -49,20 +48,20 @@
         });
 
         it('should clear search when user press x button', () => {
-          input.value = "search-term";
-          searchBoxElem._clear();
-          assert.isTrue(clearButton.hidden);
+            input.value = "search-term";
+            autocompleteElem._clear();
+            assert.isTrue(clearButton.hidden);
         });
 
         it('should fires pfe-search-event after click on search icon[event]', (done) => {
-          input.value = "test2";
+            input.value = "test2";
 
-          autocompleteElem.addEventListener("pfe-search-event", function(event) {
-            assert.equal(event.detail.searchValue, "test2");
-            done();
-          });
+            autocompleteElem.addEventListener("pfe-search-event", function(event) {
+                assert.equal(event.detail.searchValue, "test2");
+                done();
+            });
 
-          searchBoxElem._search();
+            autocompleteElem._search();
         });
 
       });

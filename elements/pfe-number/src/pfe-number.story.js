@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/polymer";
 import { withKnobs, text } from "@storybook/addon-knobs/polymer";
-import "./pfe-number";
+import "../pfe-number.js";
 
 const stories = storiesOf("Number", module);
 stories.addDecorator(withKnobs);

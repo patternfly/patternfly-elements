@@ -613,4 +613,6 @@ class RhTabPanel extends PFElement {
 PFElement.create(RhTab);
 PFElement.create(RhTabPanel);
 PFElement.create(PfeTabs);
+
+export default PfeTabs;
 //# sourceMappingURL=pfe-tabs.js.map

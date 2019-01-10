@@ -1,5 +1,5 @@
 {
-  "name": "@rhelements/cp-theme",
+  "name": "@patternfly/cp-theme",
   "rhelement": {
     "className": "CpTheme",
     "elementName": "cp-theme"
@@ -8,7 +8,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "cp-theme for Red Hat's Customer Portal and PFElements",
+  "description": "cp-theme for Red Hat's Customer Portal and PatternFly Elements",
   "repository": {
     "type": "git",
     "url": "https://github.com/RHElements/rhelements/themes/cp-theme.git"

@@ -1,7 +1,102 @@
 import { storiesOf } from "@storybook/polymer";
-import "./pfe-datetime";
+import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as tools from "../../../.storybook/utils.js";
 
-storiesOf("Datetime", module).add("pfe-datetime", () => {
+import PfeDatetime from "../pfe-datetime";
+
+// import cpTheme from "../../../themes/cp-theme/cp-theme.js";
+
+const stories = storiesOf("Datetime", module);
+
+// Define the template to be used
+const template = (data = {}) => {
+  return tools.component(PfeDatetime.tag, data.prop, data.slots);
+};
+
+stories.addDecorator(storybookBridge.withKnobs);
+
+stories.add(PfeDatetime.tag, () => {
+  let config = {};
+  // const props = PfeCta.properties;
+  // Manually defining props but this can be done in a schema instead
+
+  const props = {
+    datetime: {
+      title: "Datetime",
+      type: "string",
+      default: "January 9, 2019"
+    },
+    type: {
+      title: "Type",
+      type: "string",
+      enum: ["local", "relative"],
+      default: "local"
+    },
+    weekday: {
+      title: "Weekday",
+      type: "string",
+      enum: ["short", "long"],
+      default: "long"
+    },
+    day: {
+      title: "Day",
+      type: "string",
+      enum: ["numeric", "2-digit"],
+      default: "numeric"
+    },
+    month: {
+      title: "Month",
+      type: "string",
+      enum: ["short", "long"],
+      default: "long"
+    },
+    year: {
+      title: "Year",
+      type: "string",
+      enum: ["numeric", "2-digit"],
+      default: "numeric"
+    },
+    hour: {
+      title: "Hour",
+      type: "string",
+      enum: ["numeric", "2-digit"],
+      default: "numeric"
+    },
+    minute: {
+      title: "Minute",
+      type: "string",
+      enum: ["numeric", "2-digit"],
+      default: "numeric"
+    },
+    second: {
+      title: "Second",
+      type: "string",
+      enum: ["numeric", "2-digit"],
+      default: "numeric"
+    },
+    locale: {
+      title: "Timezone",
+      type: "string",
+      enum: ["short", "long"],
+      default: "long"
+    }
+  };
+
+  // Trigger the auto generation of the knobs for attributes
+  config.prop = tools.autoPropKnobs(props, storybookBridge);
+
+  // Fallback date is the "content" for this component
+  config.slots = [
+    {
+      content: config.prop.datetime
+    }
+  ];
+
+  const render = template(config);
+  return `<h1>${tools.demo(render)}</h1>${tools.code(render)}`;
+});
+
+storiesOf("Datetime", module).add("Demo", () => {
   const now = new Date();
   let realtime = now;
 

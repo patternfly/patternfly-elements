@@ -3,6 +3,7 @@
 // Automatic content generation
 // https://www.npmjs.com/package/lorem-ipsum
 const loremIpsum = require("lorem-ipsum");
+const cleaner = require("clean-html");
 
 // Escape HTML to display markup as content
 export function escapeHTML(html) {
@@ -72,8 +73,8 @@ export function autoPropKnobs(properties, bridge) {
   Object.entries(properties).forEach(prop => {
     let attr = prop[0];
     let title = prop[1].title || attr;
-    let defaultValue = prop[1].default || "";
     let type = prop[1].type || "string";
+    let defaultValue = prop[1].default;
     let options = prop[1].enum || [];
     let hidden = prop[1].hidden || false;
 
@@ -116,14 +117,87 @@ export function autoContentKnobs(slots, bridge) {
     binding[slot[0]] = bridge.text(slot[1].title, slot[1].default, "Content");
   });
 
-  // Hold this; could be used for dynamic field generation
-  // Object.entries(slots).forEach(slot => {
-  //   // If a slot can contain sub components, prompt the user
-  //   binding["type_" + slot[0]] = bridge.select(slot[1].title + " type", slot[1].canContain, "raw", "Content");
-  //   if (binding["type_" + slot[0]] === "raw") {
-  //     binding[slot[0]] = bridge.text(slot[1].title, slot[1].default, "Content");
-  //   }
-  // });
-
   return binding;
+}
+
+export function demo(markup) {
+  // Prettify and clean the markup for rendering
+  cleaner.clean(
+    markup,
+    {
+      indent: "    ",
+      "remove-attributes": [],
+      "break-around-tags": [
+        "body",
+        "blockquote",
+        "br",
+        "div",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "head",
+        "hr",
+        "link",
+        "meta",
+        "p",
+        "table",
+        "title",
+        "td",
+        "tr",
+        "a"
+      ],
+      wrap: 0
+    },
+    html => (markup = html)
+  );
+
+  // Return the rendered markup and the code snippet output
+  return `${markup}`;
+}
+
+export function code(markup) {
+  // Prettify and clean the markup for rendering
+  cleaner.clean(
+    markup,
+    {
+      indent: "    ",
+      "remove-attributes": [],
+      "break-around-tags": [
+        "body",
+        "blockquote",
+        "br",
+        "div",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "head",
+        "hr",
+        "link",
+        "meta",
+        "p",
+        "table",
+        "title",
+        "td",
+        "tr",
+        "a"
+      ],
+      wrap: 0
+    },
+    html => (markup = html)
+  );
+
+  // Return the rendered markup and the code snippet output
+  return `<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">${escapeHTML(
+    markup
+  )}</pre>`;
+}
+
+export function preview(markup) {
+  return demo(markup) + code(markup);
 }

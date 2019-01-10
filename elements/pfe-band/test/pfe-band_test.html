@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/components/web-component-tester/browser.js"></script-->
+    <script src="/components/web-component-tester/browser.js"></script>
     <script type="module" src="../pfe-band.js"></script>
   </head>
   <body>
-    <pfe-band>
+    <pfe-band id="band1">
       <header slot="pfe-band-header">
         <h1>Default band, header region</h1>
         <p>Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
@@ -27,13 +27,35 @@
     </pfe-band>
 
     <script>
+      const hexToRgb = hex => {
+        const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+          return [
+              parseInt(r, 16),
+              parseInt(g, 16),
+              parseInt(b, 16)
+           ];
+      };
+
+      const getColor = (el, prop) => {
+        const [, r, g, b] = getComputedStyle(el, null)
+          [prop].match(/rgba?\((\d+),\s+(\d+),\s+(\d+)\)/)
+          .map(n => +n);
+        return [r, g, b];
+      };
+      
       suite("<pfe-band>", () => {
+        const band = [...document.querySelectorAll("pfe-band")];
+
         test("it should upgrade", () => {
           assert.instanceOf(
-            document.querySelector("pfe-band"),
+            band[0],
             customElements.get("pfe-band"),
             "pfe-band should be an instance of PfeBand"
           );
+        });
+
+        test("it should have a background color of gray", () => {
+          assert.equal(getColor(band[0]), hexToRgb("#d2d3d5"));
         });
       });
     </script>

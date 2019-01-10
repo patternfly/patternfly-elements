@@ -75,11 +75,14 @@ function generateId() {
 
 class PfeAccordion extends PFElement {
   get html() {
-    return `<style>:host {
+    return `
+<style>
+:host {
   display: block;
   position: relative;
   overflow: hidden;
-  margin: 0; }</style>
+  margin: 0; }
+</style>
 <slot></slot>`;
   }
 
@@ -376,7 +379,9 @@ class PfeAccordion extends PFElement {
 
 class PfeAccordionHeader extends PFElement {
   get html() {
-    return `<style>:host {
+    return `
+<style>
+:host {
   --pfe-accordion--main:         var(--pfe-theme--color--surface--lighter, #ececec);
   --pfe-accordion--aux:          var(--pfe-theme--color--surface--lighter--text, #333);
   --pfe-accordion--focus:        var(--pfe-theme--color--surface--lighter--link--focus, #003366);
@@ -477,7 +482,8 @@ h6 {
 :host([color="complement"]) {
   --pfe-accordion--main:         var(--pfe-theme--color--surface--complement, #0477a4);
   --pfe-accordion--aux:          var(--pfe-theme--color--surface--complement--text, #fff);
-  --pfe-accordion--focus:        var(--pfe-theme--color--surface--complement--link--focus, #cce6ff); }</style>
+  --pfe-accordion--focus:        var(--pfe-theme--color--surface--complement--link--focus, #cce6ff); }
+</style>
 <button aria-expanded="false" role="tab"></button>`;
   }
 
@@ -582,7 +588,9 @@ h6 {
 
 class PfeAccordionPanel extends PFElement {
   get html() {
-    return `<style>:host {
+    return `
+<style>
+:host {
   display: none;
   overflow: hidden;
   background: var(--pfe-theme--color--surface--lightest, #fff);
@@ -600,7 +608,8 @@ class PfeAccordionPanel extends PFElement {
   margin: 0 1px;
   border: 1px solid var(--pfe-theme--color--surface--border--lightest, #ececec);
   border-top: none;
-  padding: var(--pfe-theme--container-spacer, 1rem); }</style>
+  padding: var(--pfe-theme--container-spacer, 1rem); }
+</style>
 <div tabindex="-1" role="tabpanel">
   <div class="container">
     <slot></slot>

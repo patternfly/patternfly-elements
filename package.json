@@ -83,8 +83,7 @@
     "yo": "^1.8.5"
   },
   "dependencies": {
-    "gh-pages": "^2.0.0",
-    "wct": "^2.4.6"
+    "gh-pages": "^2.0.0"
   },
   "lint-staged": {
     "*.{js,json}": [

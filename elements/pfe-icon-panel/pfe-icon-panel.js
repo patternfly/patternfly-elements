@@ -25,7 +25,9 @@ import "../pfe-icon/pfe-icon.js";
 
 class PfeIconPanel extends PFElement {
   get html() {
-    return `<style>:host {
+    return `
+<style>
+:host {
   display: flex;
   align-content: flex-start;
   flex-direction: column; }
@@ -55,7 +57,8 @@ class PfeIconPanel extends PFElement {
 
 :host([stacked][centered]) {
   align-items: center;
-  text-align: center; }</style>
+  text-align: center; }
+</style>
 <pfe-icon></pfe-icon>
 <div class="content">
   <slot class="header" name="header"></slot>

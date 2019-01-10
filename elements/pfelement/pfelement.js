@@ -44,7 +44,7 @@ class PFElement extends HTMLElement {
     return {
       Container: "container",
       Content: "content",
-      Combo: "combo"
+      Pattern: "pattern"
     };
   }
 
@@ -56,10 +56,6 @@ class PFElement extends HTMLElement {
     this.setAttribute("pfe-type", value);
   }
 
-  has_slot(name) {
-    return this.querySelector(`[slot='${name}']`);
-  }
-
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
     super();
 
@@ -67,29 +63,6 @@ class PFElement extends HTMLElement {
     this.tag = pfeClass.tag;
     this._queue = [];
     this.template = document.createElement("template");
-
-    // Map the imported properties json to real props on the element
-    // @notice static getter of properties is built via tooling
-    // to edit modify src/element.json
-    if (typeof pfeClass.properties === "object") {
-      Object.entries(pfeClass.properties).forEach(prop => {
-        let attr = prop[0];
-        let data = prop[1];
-        // Set the attribute's property equal to the schema input
-        this[attr] = data;
-
-        if (this.hasAttribute(attr)) {
-          // If the attribute exists on the host
-          // define the property based on that value
-          this[attr].value = this.getAttribute(attr);
-        } else if (data.default) {
-          // Otherwise, if a default value is defined
-          // initialize the property using it
-          this.setAttribute(attr, data.default);
-          this[attr].value = data.default;
-        }
-      });
-    }
 
     this.attachShadow({ mode: "open" });
 

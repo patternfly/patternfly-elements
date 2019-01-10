@@ -24,7 +24,7 @@ $pfe-global--color--purple:            #7551a6 !default;
 $pfe-global--color--teal:              $pf-color-cyan-400 !default;
 $pfe-global--color--teal-dark:         #004153 !default;     // Brand as "Dark Blue"
 
-// pfe-specific Accents
+// RH-specific Accents
 $pfe-global--color--blue-peacock:      $pf-color-blue-400 !default;
 $pfe-global--color--orange:            $pf-color-orange-400 !default; // Near match to "Tangerine"
 $pfe-global--color--green-verde:       $pf-color-green-400 !default;
@@ -120,9 +120,6 @@ $pfe-global--color--gray12:            $pfe-global--color--black-nero !default;
 
 $pfe-global--text-color:           $pfe-global--color--gray-night !default; // #333
 $pfe-global--text-color--inverted: $pfe-global--color--white !default;
-
-$pfe-global--heading-color:           $pfe-global--color--black-soft !default;
-$pfe-global--heading-color--inverted: $pfe-global--color--white !default;
 
 // Text links on _white_ or _light_ backgrounds
 $pfe-global--link-color:           $pfe-global--color--blue-denim !default;    // Link

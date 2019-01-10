@@ -1,5 +1,5 @@
 {
-  "verbose": true,
+  "verbose": false,
   "npm": true,
   "plugins": {
     "local": {

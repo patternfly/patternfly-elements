@@ -109,6 +109,10 @@ class PfeHideShow extends PFElement {
   connectedCallback() {
     super.connectedCallback();
   }
+
+  disconnectedCallback() {
+    this._observer.disconnect();
+  }
 }
 
 PFElement.create(PfeHideShow);

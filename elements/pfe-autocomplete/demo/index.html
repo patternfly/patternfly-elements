@@ -20,20 +20,20 @@
     ])</script>
   </head>
   <body unresolved>
-    <pfe-autocomplete id="search-lazy-loading" init-value="uni" debounce="500"></pfe-autocomplete>
-    <br>
-    <pfe-autocomplete is-disabled >
-
+    <pfe-autocomplete is-disabled>
+        <input placeholder="Enter Your Search Term"/>
     </pfe-autocomplete>
+    <br>
+    <pfe-autocomplete is-disabled init-value="uni"><input placeholder="Enter Your Search Term"/></pfe-autocomplete>
     <script>
       const searchAutocomplete = document.querySelector('#search-lazy-loading');
 
       // autocomplete call
-      searchAutocomplete.autocompleteRequest = (params, callback) => {
+      searchAutocomplete.autocompleteRequest = function(params, callback) {
         var xhr = new XMLHttpRequest();
 
         searchAutocomplete.setAttribute('loading', '');
-        xhr.onload = () => {
+        xhr.onload = function() {
           searchAutocomplete.removeAttribute('loading');
 
           if(xhr.status === 404) {
@@ -42,7 +42,7 @@
             const response = JSON.parse(xhr.responseText);
             const regx = new RegExp("\^" + params.query, "i");
 
-            let responseReady = response.reduce((acc, item) => {
+            var responseReady = response.reduce(function(acc, item) {
               if (regx.test(item.name)) acc.push(item.name);
               return acc;
             }, []);

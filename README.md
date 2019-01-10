@@ -1,11 +1,11 @@
 **[Getting Started][start] | [Element Catalog][storybook] | [Discovery doc](https://docs.google.com/document/d/1THnbwpUelkNfwHs8br-DmFYbJjX5NQwVveGYAP7XUAY/edit) | [Creating Components][develop] | [Theming Components][theming]**
 
-![PFElements logo](./brand/logo/png/rhelements-logo-red.png)
+<!-- ![PatternFly Elements logo](./brand/logo/png/rhelements-logo-red.png) -->
 
 [PatternFly Elements][pfe] is a collection of flexible and lightweight [Web Components][wc], and the tools to build them. PatternFly Elements are...
 
 - **Lightweight**: small file size, minimal boilerplate, no "framework-like" features.
-- **Universal**: write once, use everywhere. PFElements work in React, Vue, Angular, vanilla JS, anywhere HTML elements are used.
+- **Universal**: write once, use everywhere. PatternFly Elements work in React, Vue, Angular, vanilla JS, anywhere HTML elements are used.
 
 The result of these two principles is plugging one set of comopnents into a wide variety of applications, bringing UX consistency and developer familiarity to any web project.
 
@@ -20,7 +20,7 @@ Let's get started!
     npm install # this will take a while due to lerna bootstrap
     npm run storybook
 
-The `storybook` script will launch the interactive demo pages.
+The storybook script will launch the interactive demo pages.
 
 _Notice: You will need to use [Node](https://nodejs.org/en/) v.7 or higher. Storybook *may* not work with Node v.10._
 

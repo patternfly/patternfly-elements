@@ -11,27 +11,29 @@
   </head>
   <body>
     <div style="width:50%;">
-        <pfe-autocomplete id="autocomplete">
-            <input placeholder="Enter Your Search Term"/>
-        </pfe-autocomplete>
+        <test-fixture id="autocomplete">
+            <template>
+                <pfe-autocomplete>
+                    <input placeholder="Enter Your Search Term"/>
+                </pfe-autocomplete>
+            </template>
+        </test-fixture>
     </div>
     <script>
       describe('<pfe-autocomplete>', () => {
         let autocompleteElem,
-            searchBoxElem,
             input,
             clearButton,
-            searchButton;
+            searchButton,
+            droplistElem;
 
         //function to run before each test within this suite.
         beforeEach(function() {
-            autocompleteElem = document.querySelector('#autocomplete');
+            autocompleteElem = fixture('autocomplete');
+            input = autocompleteElem.querySelector("input");
             clearButton = autocompleteElem.shadowRoot.querySelector(".clear-search");
             searchButton = autocompleteElem.shadowRoot.querySelector(".search-button");
-            input = autocompleteElem.querySelector("input");
             droplistElem = autocompleteElem.shadowRoot.querySelector("#dropdown");
-
-            //droplistElem = autocompleteElem.shadowRoot.querySelector('pfe-search-droplist');
         });
 
         afterEach(() => {

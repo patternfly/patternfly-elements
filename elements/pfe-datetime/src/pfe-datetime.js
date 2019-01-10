@@ -179,3 +179,5 @@ class PfeDatetime extends PFElement {
 }
 
 PFElement.create(PfeDatetime);
+
+export default PfeDatetime;

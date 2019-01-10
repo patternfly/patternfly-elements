@@ -490,3 +490,5 @@ class PfeAccordionPanel extends PFElement {
 PFElement.create(PfeAccordionHeader);
 PFElement.create(PfeAccordionPanel);
 PFElement.create(PfeAccordion);
+
+export { PfeAccordion as default };

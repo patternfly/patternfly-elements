@@ -5,16 +5,16 @@ import {
   select,
   number
 } from "@storybook/addon-knobs/polymer";
-import { escapeHTML } from "../../.storybook/utils.js";
+import { escapeHTML } from "../../../.storybook/utils.js";
 
-import "./pfe-hide-show";
+import PfeHideShow from "../pfe-hide-show";
 
 const lorem = require("lorem-ipsum");
 
 const stories = storiesOf("Hide-show", module);
 stories.addDecorator(withKnobs);
 
-stories.add("pfe-hide-show", () => {
+stories.add(PfeHideShow.tag, () => {
   const orientationLabel = "Orientation";
   const orientationOptions = {
     "": "Horizontal",

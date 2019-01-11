@@ -97,7 +97,7 @@
           assert.equal(firstHeader.getAttribute('tabindex'), '0');
           assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
           assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
-          assert.isTrue(thirdHeader.hasAttribute('aria-controls');
+          assert.isTrue(thirdHeader.hasAttribute('aria-controls'));
           assert.equal(thirdHeader.getAttribute('tabindex'), '-1');
         });
 
@@ -112,7 +112,7 @@
           assert.isTrue(firstHeader.hasAttribute('aria-controls'));
           assert.equal(firstHeader.getAttribute('color'), 'striped');
           assert.isTrue(firstPanel.hasAttribute('aria-labelledby'));
-          assert.isTrue(secondHeader.hasAttribute('aria-controls');
+          assert.isTrue(secondHeader.hasAttribute('aria-controls'));
           assert.isTrue(secondPanel.hasAttribute('aria-labelledby'));
         });
 
@@ -126,10 +126,9 @@
           assert.equal(firstHeader.getAttribute('tabindex'), '0');
           assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
           assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
-          assert.isTrue(fifthHeader.hasAttribute('aria-controls');
+          assert.isTrue(fifthHeader.hasAttribute('aria-controls'));
           assert.equal(fifthHeader.getAttribute('tabindex'), '-1');
         });
-
       });
     </script>
   </body>

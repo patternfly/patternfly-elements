@@ -11,6 +11,7 @@
   </head>
   <body>
 
+    <div style="width: 1024px;">
       <pfe-hide-show id="default">
         <pfe-hide-show-set>
           <h2 pfe-heading>heading 1</h2>
@@ -25,7 +26,8 @@
           <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
         </pfe-hide-show-set>
       </pfe-hide-show>
-
+    </div>
+    <div style="width: 600px;">
       <pfe-hide-show pfe-variant="primary" id="primary">
         <pfe-hide-show-set>
           <h2 pfe-heading>heading 1</h2>
@@ -40,7 +42,9 @@
           <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
         </pfe-hide-show-set>
       </pfe-hide-show>
+    </div>
 
+    <div style="width: 1024px;">
       <pfe-hide-show pfe-variant="secondary" id="secondary">
         <pfe-hide-show-set>
           <h2 pfe-heading>heading 1</h2>
@@ -63,7 +67,8 @@
           <p>Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh ultricies vehicula ut id elit. Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est at lobortis. Donec ullamcorper nulla non metus auctor fringilla.</p>
         </pfe-hide-show-set>
       </pfe-hide-show>
-
+    </div>
+    <div style="width: 1024px;">
       <pfe-hide-show vertical pfe-variant="secondary" id="secondary">
         <pfe-hide-show-set>
           <h2 pfe-heading>heading 1</h2>
@@ -78,14 +83,52 @@
           <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
         </pfe-hide-show-set>
       </pfe-hide-show>
-
+    </div>
     <script>
       suite('<pfe-hide-show>', () => {
-        test('it should upgrade', () => {
-          assert.instanceOf(document.querySelector('pfe-hide-show'), customElements.get("pfe-hide-show", 'pfe-hide-show should be an instance of rhHideShow'));
+        test('it should have the proper attributes for tabs', () => {
+          const pfeHideShow = document.querySelector('#default');
+          const firstHeader = [...pfeHideShow.querySelector('pfe-tab')];
+          const secondHeader = [...pfeHideShow.querySelector('pfe-tab:nth-child(2)')];
+          const thirdHeader = [...pfeHideShow.querySelector('pfe-tab:nth-child(3)')];
+          const panel = [...pfeHideShow.querySelectorAll('pfe-tab-panel')];
+          assert.isTrue(panel.hasAttribute('aria-labelledby'));
+          assert.isTrue(firstHeader.hasAttribute('aria-controls'));
+          assert.equal(firstHeader.getAttribute('tabindex'), '0');
+          assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
+          assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
+          assert.isTrue(thirdHeader.hasAttribute('aria-controls');
+          assert.equal(thirdHeader.getAttribute('tabindex'), '-1');
         });
 
-        // you need to write more tests!!!
+        test('it should be a striped accordion', () => {
+          const pfeHideShow = document.querySelector('#primary');
+          const firstHeader = [...pfeHideShow.querySelector('pfe-accordion-header')];
+          const secondHeader = [...pfeHideShow.querySelector('pfe-accordion-header:nth-child(2)')];
+          const thirdHeader = [...pfeHideShow.querySelector('pfe-accordion-header:nth-child(3)')];
+          const firstPanel = [...pfeHideShow.querySelector('pfe-accordion-panel')];
+          const secondPanel = [...pfeHideShow.querySelector('pfe-accordion-panel:nth-child(2)')];
+          assert.isTrue(firstPanel.hasAttribute('aria-labelledby'));
+          assert.isTrue(firstHeader.hasAttribute('aria-controls'));
+          assert.equal(firstHeader.getAttribute('color'), 'striped');
+          assert.isTrue(firstPanel.hasAttribute('aria-labelledby'));
+          assert.isTrue(secondHeader.hasAttribute('aria-controls');
+          assert.isTrue(secondPanel.hasAttribute('aria-labelledby'));
+        });
+
+        test('it should have dark tabs', () => {
+          const pfeHideShow = document.querySelector('#secondary');
+          const tabSet = [...pfeHideShow.querySelector('pfe-tabs')];
+          const firstHeader = [...pfeHideShow.querySelector('pfe-tab')];     
+          const secondHeader = [...pfeHideShow.querySelector('pfe-tab:nth-child(2)')];
+          const fifthHeader = [...pfeHideShow.querySelector('pfe-tab:nth-child(5)')];
+          assert.equal(tabSet.getAttribute('pfe-variant'), 'secondary');
+          assert.equal(firstHeader.getAttribute('tabindex'), '0');
+          assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
+          assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
+          assert.isTrue(fifthHeader.hasAttribute('aria-controls');
+          assert.equal(fifthHeader.getAttribute('tabindex'), '-1');
+        });
 
       });
     </script>

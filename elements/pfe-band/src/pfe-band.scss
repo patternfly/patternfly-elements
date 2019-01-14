@@ -102,7 +102,7 @@ $aside-lg: 300px;
 
 .pfe-band {
   &__container {
-    --pfe-band_region--width: calc(1fr - #{$aside-sm} - calc(#{pfe-var(container-spacer)} * 2));
+    --pfe-band_region--width: calc(1fr - #{$aside-sm} - #{pfe-local(gutter)});
 
     position:  relative;
     margin:    0 auto;
@@ -115,7 +115,7 @@ $aside-lg: 300px;
     justify-content: space-between;
   }
   &__header:not(:last-child) {
-    margin-bottom: #{pfe-var(container-spacer)};
+    margin-bottom: #{pfe-local(gutter)};
   }
   &__main {
     display:     flex;
@@ -136,7 +136,7 @@ $aside-lg: 300px;
         margin: 0;
       }
       > *:not(:last-child)::slotted(*) {
-        margin-bottom: #{pfe-var(container-spacer)};
+        margin-bottom: #{pfe-local(gutter)};
       }
     }
   }
@@ -151,7 +151,7 @@ $aside-lg: 300px;
       order: -1;
     }
     &__body > *::slotted(*:not(:last-child)) {
-      margin-bottom: #{pfe-var(container-spacer)};
+      margin-bottom: #{pfe-local(gutter)};
     }
     &__aside {
       order: 1;
@@ -180,7 +180,7 @@ $aside-lg: 300px;
       &__#{$slot} {
         // Set up the internal grid system for each slot
         display: grid;
-        grid-gap: #{pfe-var(container-spacer)};
+        grid-gap: #{pfe-local(gutter)};
         grid-template-columns: #{pfe-local(layout, $slot)};
         grid-template-rows: max-content;
         > *:not(:last-child)::slotted(*) {
@@ -194,7 +194,7 @@ $aside-lg: 300px;
     }
     &__container {
       display:   grid;
-      grid-gap:  #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 4);
+      grid-gap:  #{pfe-local(gutter)} calc(#{pfe-local(gutter)} * 2);
       grid-template-columns: #{pfe-local(layout)};
       grid-template-rows: max-content;
       grid-template-areas: var(--pfe-band--gridTemplateArea_layer1) var(--pfe-band--gridTemplateArea_layer2);

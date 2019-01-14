@@ -130,7 +130,7 @@ class PfeBand extends PFElement {
   --pfe-band--padding:   calc(var(--pfe-band--padding__vertical) / 4)  var(--pfe-band--padding__horizontal); }
 
 .pfe-band__container {
-  --pfe-band_region--width: calc(1fr - 240px - calc(var(--pfe-theme--container-spacer, 1rem) * 2));
+  --pfe-band_region--width: calc(1fr - 240px - var(--pfe-band--gutter));
   position: relative;
   margin: 0 auto;
   max-width: var(--pfe-band--width);
@@ -140,7 +140,7 @@ class PfeBand extends PFElement {
   justify-content: space-between; }
 
 .pfe-band__header:not(:last-child) {
-  margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+  margin-bottom: var(--pfe-band--gutter); }
 
 .pfe-band__main {
   display: flex;
@@ -157,7 +157,7 @@ class PfeBand extends PFElement {
   .pfe-band__header > *::slotted(*) {
     margin: 0; }
   .pfe-band__header > *:not(:last-child)::slotted(*) {
-    margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+    margin-bottom: var(--pfe-band--gutter); }
 
 .pfe-band__body {
   display: flex;
@@ -165,7 +165,7 @@ class PfeBand extends PFElement {
   .pfe-band__body > *::slotted(*) {
     margin: 0; }
   .pfe-band__body > *:not(:last-child)::slotted(*) {
-    margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+    margin-bottom: var(--pfe-band--gutter); }
 
 .pfe-band__footer {
   display: flex;
@@ -173,7 +173,7 @@ class PfeBand extends PFElement {
   .pfe-band__footer > *::slotted(*) {
     margin: 0; }
   .pfe-band__footer > *:not(:last-child)::slotted(*) {
-    margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+    margin-bottom: var(--pfe-band--gutter); }
 
 .pfe-band__aside {
   display: flex;
@@ -181,7 +181,7 @@ class PfeBand extends PFElement {
   .pfe-band__aside > *::slotted(*) {
     margin: 0; }
   .pfe-band__aside > *:not(:last-child)::slotted(*) {
-    margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+    margin-bottom: var(--pfe-band--gutter); }
 
 @media (min-width: 768px) {
   .pfe-band__container[pfe-aside-desktop="left"], .pfe-band__container[pfe-aside-mobile="top"] {
@@ -189,7 +189,7 @@ class PfeBand extends PFElement {
   .pfe-band__header {
     order: -1; }
   .pfe-band__body > *::slotted(*:not(:last-child)) {
-    margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+    margin-bottom: var(--pfe-band--gutter); }
   .pfe-band__aside {
     order: 1;
     width: 240px; }
@@ -213,28 +213,28 @@ class PfeBand extends PFElement {
       width: auto; } }
   .pfe-band__header {
     display: grid;
-    grid-gap: var(--pfe-theme--container-spacer, 1rem);
+    grid-gap: var(--pfe-band--gutter);
     grid-template-columns: var(--pfe-band_header--layout);
     grid-template-rows: max-content; }
     .pfe-band__header > *:not(:last-child)::slotted(*) {
       margin-bottom: 0; }
   .pfe-band__body {
     display: grid;
-    grid-gap: var(--pfe-theme--container-spacer, 1rem);
+    grid-gap: var(--pfe-band--gutter);
     grid-template-columns: var(--pfe-band_body--layout);
     grid-template-rows: max-content; }
     .pfe-band__body > *:not(:last-child)::slotted(*) {
       margin-bottom: 0; }
   .pfe-band__footer {
     display: grid;
-    grid-gap: var(--pfe-theme--container-spacer, 1rem);
+    grid-gap: var(--pfe-band--gutter);
     grid-template-columns: var(--pfe-band_footer--layout);
     grid-template-rows: max-content; }
     .pfe-band__footer > *:not(:last-child)::slotted(*) {
       margin-bottom: 0; }
   .pfe-band__aside {
     display: grid;
-    grid-gap: var(--pfe-theme--container-spacer, 1rem);
+    grid-gap: var(--pfe-band--gutter);
     grid-template-columns: var(--pfe-band_aside--layout);
     grid-template-rows: max-content; }
     .pfe-band__aside > *:not(:last-child)::slotted(*) {
@@ -244,7 +244,7 @@ class PfeBand extends PFElement {
     margin-bottom: 0; }
   .pfe-band__container {
     display: grid;
-    grid-gap: var(--pfe-theme--container-spacer, 1rem) calc(var(--pfe-theme--container-spacer, 1rem) * 4);
+    grid-gap: var(--pfe-band--gutter) calc(var(--pfe-band--gutter) * 2);
     grid-template-columns: var(--pfe-band--layout);
     grid-template-rows: max-content;
     grid-template-areas: var(--pfe-band--gridTemplateArea_layer1) var(--pfe-band--gridTemplateArea_layer2); }

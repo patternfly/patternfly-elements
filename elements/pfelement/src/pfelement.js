@@ -85,7 +85,8 @@ class PFElement extends HTMLElement {
         } else if (data.default) {
           // Otherwise, if a default value is defined
           // initialize the property using it
-          this.setAttribute(attr, data.default);
+          // @TODO not sure if we want to add these properties by default
+          // this.setAttribute(attr, data.default);
           this[attr].value = data.default;
         }
       });

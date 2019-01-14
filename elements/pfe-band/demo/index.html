@@ -18,8 +18,7 @@
     <script>require([
       '../pfe-band.umd.js',
       '../../pfe-card/pfe-card.umd.js',
-      '../../pfe-cta/pfe-cta.umd.js',
-      '../../../themes/cp-theme/cp-theme.umd.js',
+      '../../pfe-cta/pfe-cta.umd.js'
     ])</script>
 
     <style>
@@ -163,26 +162,47 @@
       </pfe-card>
     </pfe-band>
 
-    <pfe-band style="--pfe-band_body--layout: 1fr 1fr;" pfe-color="complement" pfe-aside-desktop="right" pfe-aside-mobile="bottom" pfe-aside-height="body">
+    <pfe-band pfe-color="complement" pfe-aside-desktop="right" pfe-aside-mobile="bottom" pfe-aside-height="body">
       <header slot="pfe-band-header">
         <h2>Complement band</h2>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       </header>
-      <pfe-card>
-        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
-      </pfe-card>
-      <pfe-card>
-        <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-        <pfe-cta priority="primary" slot="footer">
-          <a href="#">Learn more</a>
-        </pfe-cta>
-      </pfe-card>
+      <article class="pfe-l-grid pfe-m-gutters pfe-m-all-2-col">
+        <pfe-card>
+          <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
+        </pfe-card>
+        <pfe-card>
+          <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <pfe-cta priority="primary" slot="footer">
+            <a href="#">Learn more</a>
+          </pfe-cta>
+        </pfe-card>
+      </article>
       <pfe-card color="dark" slot="pfe-band-aside">
         <h3 slot="header">Aside: right body bottom</h3>
         <p>Ut wisi enim ad minim veniam.</p>
         <pfe-cta slot="footer" priority="tertiary" on="dark">
           <a href="#">Learn more</a>
         </pfe-cta>
+      </pfe-card>
+    </pfe-band>
+
+    <pfe-band style="--pfe-band_body--layout: 1fr 1fr;">
+      <header slot="pfe-band-header">
+        <h2>Layout variables; no aside</h2>
+        <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+      </header>
+      <pfe-card color="complement">
+        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+      </pfe-card>
+      <pfe-card color="complement">
+        <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+      </pfe-card>
+      <pfe-card color="complement">
+        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+      </pfe-card>
+      <pfe-card color="complement">
+        <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
       </pfe-card>
     </pfe-band>
 

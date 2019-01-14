@@ -80,6 +80,7 @@
         // Test that the default padding is correct
         test("it should have default padding when no size attribute is set", () => {
           // Test that the color is rendering as expected
+          // @TODO need a way to adjust the viewport
           if(window.outerWidth > 576) {
             assert.equal(getComputedStyle(band[0], null)["padding"], "64px 16px");
           } else {
@@ -98,8 +99,30 @@
             assert.equal(getComputedStyle(band[0], null)["padding"], "32px 16px");
           }
         });
+        
+        // Test the default positions of the aside region in the DOM
+        test("it should have rendered the markup correctly for the aside defaults", () => {
+          const container = band[0].shadowRoot.querySelector(".pfe-band__container");
+          const main      = container.children[1];
+          const aside     = container.children[2];
 
-        // @TODO Write tests for aside layout
+          // Test that the container exists
+          assert.isDefined(container, '.pfe-band__container is not `undefined`');
+
+          if(container) {
+            // Test that the header is the first item in the pfe-band__container
+            assert.equal(container.children[0].className, "pfe-band__header");
+            // Test that the pfe-band__main wrapper is the second item in the pfe-band__container
+            assert.equal(main.className, "pfe-band__main");
+            // Test that the pfe-band__main wrapper contains the body and then the footer
+            assert.equal(main.children[0].className, "pfe-band__body");
+            assert.equal(main.children[1].className, "pfe-band__footer");
+            // Test that the aside is the last item in the pfe-band__container
+            assert.equal(aside.className, "pfe-band__aside");
+          }
+        });
+
+        // @TODO Write tests for aside layout variations and rendered view
       });
     </script>
   </body>

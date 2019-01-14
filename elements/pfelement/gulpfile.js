@@ -8,6 +8,7 @@ const rename = require("gulp-rename");
 const replace = require("gulp-replace");
 const cleanCSS = require("gulp-clean-css");
 const trim = require("gulp-trim");
+const banner = require("gulp-banner");
 
 gulp.task("clean", () => {
   return del(["pfelement.js", "./**/*.umd.*", "./*.css", "./*.js.map"]);
@@ -31,7 +32,18 @@ gulp.task("compile", () => {
 });
 
 gulp.task("copy", () => {
-  return gulp.src(["./src/*"]).pipe(gulp.dest("./"));
+  return gulp
+    .src(["./src/*"])
+    .pipe(
+      banner(
+        `/*\n${fs
+          .readFileSync("LICENSE.txt", "utf8")
+          .split("\n")
+          .map(line => ` * ${line}\n`)
+          .join("")}*/\n\n`
+      )
+    )
+    .pipe(gulp.dest("./"));
 });
 
 gulp.task("minify-css", () => {

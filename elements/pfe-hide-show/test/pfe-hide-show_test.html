@@ -69,7 +69,7 @@
       </pfe-hide-show>
     </div>
     <div style="width: 1024px;">
-      <pfe-hide-show vertical pfe-variant="secondary" id="secondary">
+      <pfe-hide-show vertical pfe-variant="secondary" id="secondary-vertical">
         <pfe-hide-show-set>
           <h2 pfe-heading>heading 1</h2>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
@@ -87,47 +87,57 @@
     <script>
       suite('<pfe-hide-show>', () => {
         test('it should have the proper attributes for tabs', () => {
-          const pfeHideShow = document.querySelector('#default');
-          const firstHeader = [...pfeHideShow.querySelector('pfe-tab')];
-          const secondHeader = [...pfeHideShow.querySelector('pfe-tab:nth-child(2)')];
-          const thirdHeader = [...pfeHideShow.querySelector('pfe-tab:nth-child(3)')];
-          const panel = [...pfeHideShow.querySelectorAll('pfe-tab-panel')];
+          // const pfeHideShow = document.querySelector('#default').shadowRoot;
+          const pfeTabs = document.querySelector('#default').shadowRoot.querySelector("pfe-tabs");
+          const firstHeader = pfeTabs.querySelector('pfe-tab:nth-child(1)');
+          const thirdHeader = pfeTabs.querySelector('pfe-tab:nth-child(5)');
+          const panel = pfeTabs.querySelector('pfe-tab-panel');
           assert.isTrue(panel.hasAttribute('aria-labelledby'));
+          assert.isTrue(firstHeader.hasAttribute('aria-controls'));
           assert.isTrue(firstHeader.hasAttribute('aria-controls'));
           assert.equal(firstHeader.getAttribute('tabindex'), '0');
           assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
-          assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
           assert.isTrue(thirdHeader.hasAttribute('aria-controls'));
           assert.equal(thirdHeader.getAttribute('tabindex'), '-1');
+          assert.equal(thirdHeader.getAttribute('aria-selected'), 'false');
         });
 
-        test('it should be a striped accordion', () => {
-          const pfeHideShow = document.querySelector('#primary');
-          const firstHeader = [...pfeHideShow.querySelector('pfe-accordion-header')];
-          const secondHeader = [...pfeHideShow.querySelector('pfe-accordion-header:nth-child(2)')];
-          const thirdHeader = [...pfeHideShow.querySelector('pfe-accordion-header:nth-child(3)')];
-          const firstPanel = [...pfeHideShow.querySelector('pfe-accordion-panel')];
-          const secondPanel = [...pfeHideShow.querySelector('pfe-accordion-panel:nth-child(2)')];
-          assert.isTrue(firstPanel.hasAttribute('aria-labelledby'));
+        test('it should be a striped accordion', () => { 
+          // const pfeHideShow = document.querySelector('#primary');
+          const pfeAccordion = document.querySelector('#primary').shadowRoot.querySelector("pfe-accordion");
+          const firstHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-child(1)');
+          const thirdHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-child(5)');
+          const firstPanel = document.querySelector('#primary').shadowRoot.querySelector("pfe-accordion-panel:nth-child(2)");
+          const secondPanel = pfeAccordion.querySelector('pfe-accordion-panel:nth-child(4)');
           assert.isTrue(firstHeader.hasAttribute('aria-controls'));
           assert.equal(firstHeader.getAttribute('color'), 'striped');
+          assert.isTrue(thirdHeader.hasAttribute('aria-controls'));
           assert.isTrue(firstPanel.hasAttribute('aria-labelledby'));
-          assert.isTrue(secondHeader.hasAttribute('aria-controls'));
-          assert.isTrue(secondPanel.hasAttribute('aria-labelledby'));
+            assert.isTrue(secondPanel.hasAttribute('aria-labelledby'));
         });
 
         test('it should have dark tabs', () => {
-          const pfeHideShow = document.querySelector('#secondary');
-          const tabSet = [...pfeHideShow.querySelector('pfe-tabs')];
-          const firstHeader = [...pfeHideShow.querySelector('pfe-tab')];     
-          const secondHeader = [...pfeHideShow.querySelector('pfe-tab:nth-child(2)')];
-          const fifthHeader = [...pfeHideShow.querySelector('pfe-tab:nth-child(5)')];
-          assert.equal(tabSet.getAttribute('pfe-variant'), 'secondary');
+          const pfeTabs = document.querySelector('#secondary').shadowRoot.querySelector("pfe-tabs");
+          const firstHeader = pfeTabs.querySelector('pfe-tab:nth-child(1)');
+          const secondHeader = pfeTabs.querySelector('pfe-tab:nth-child(3)');
+          const fifthHeader = pfeTabs.querySelector('pfe-tab:nth-child(9)');
+          assert.equal(pfeTabs.getAttribute('pfe-variant'), 'secondary');
           assert.equal(firstHeader.getAttribute('tabindex'), '0');
           assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
           assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
           assert.isTrue(fifthHeader.hasAttribute('aria-controls'));
           assert.equal(fifthHeader.getAttribute('tabindex'), '-1');
+        });
+
+        test('it should have vertical tabs', () => {
+          const pfeTabs = document.querySelector('#secondary-vertical').shadowRoot.querySelector("pfe-tabs");
+          const firstHeader = pfeTabs.querySelector('pfe-tab:nth-child(1)');
+          const secondHeader = pfeTabs.querySelector('pfe-tab:nth-child(3)');
+          assert.isTrue(pfeTabs.hasAttribute('vertical'));
+          assert.equal(pfeTabs.getAttribute('pfe-variant'), 'secondary');
+          assert.equal(firstHeader.getAttribute('tabindex'), '0');
+          assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
+          assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
         });
       });
     </script>

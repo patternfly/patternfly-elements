@@ -12,22 +12,15 @@
     <link href="../../pfe-layouts/pfe-layouts.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/webcomponents-bundle.js"></script>
 
-    <script src="../../pfelement/pfelement.umd.js"></script>
-    <script src="../pfe-band.umd.js"></script>
-    <script src="../../pfe-card/pfe-card.umd.js"></script>
-    <script src="../../pfe-cta/pfe-cta.umd.js"></script>
-
-    <!--
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require([
       '../pfe-band.umd.js',
       '../../pfe-card/pfe-card.umd.js',
       '../../pfe-cta/pfe-cta.umd.js'
     ])</script>
-    -->
 
     <style>
     body {
@@ -115,7 +108,7 @@
       </pfe-card>
     </pfe-band>
 
-    <pfe-band pfe-color="darker" pfe-aside-desktop="left" pfe-aside-mobile="bottom" pfe-aside-height="full" pfe-img-src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/header/header-hub-svsp-2000x1562.jpg">
+    <pfe-band id="band" pfe-color="darker" pfe-aside-desktop="left" pfe-aside-mobile="bottom" pfe-aside-height="full" pfe-img-src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/header/header-hub-svsp-2000x1562.jpg">
       <header slot="pfe-band-header">
         <h2>Dark band with imaged background</h2>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
@@ -123,7 +116,7 @@
       <article>
         <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
       </article>
-      <pfe-cta priority="primary" slot="pfe-band-footer">
+      <pfe-cta id="cta" priority="primary" slot="pfe-band-footer">
         <a href="#">Learn more</a>
       </pfe-cta>
       <pfe-card color="dark" slot="pfe-band-aside">

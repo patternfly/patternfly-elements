@@ -127,10 +127,9 @@ class PFElement extends HTMLElement {
   _mapSchemaToProperties(properties) {
     // Map the imported properties json to real props on the element
     // @notice static getter of properties is built via tooling
-    // to edit modify src/element.json
-    Object.entries(properties).forEach(prop => {
-      let attr = prop[0];
-      let data = prop[1];
+    // to edit modify src/element.json]
+    Object.keys(properties).forEach(attr => {
+      let data = properties[attr];
       // Set the attribute's property equal to the schema input
       this[attr] = data;
       // Initialize the value to null

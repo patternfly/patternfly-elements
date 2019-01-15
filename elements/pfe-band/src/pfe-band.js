@@ -164,13 +164,11 @@ class PfeBand extends PFElement {
   }
 
   _basicAttributeChanged(attr, oldValue, newValue) {
-    // this.setAttribute(attr, newValue);
     this[attr].value = newValue;
   }
 
   // Update the color attribute and contexts
   _colorChanged(attr, oldValue, newValue) {
-    // this.setAttribute(attr, newValue);
     this[attr].value = newValue;
     // If the new value has a dark background, update children elements
     this._updateContext(newValue);

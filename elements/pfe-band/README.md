@@ -4,12 +4,12 @@ This container element provides a set of slots in which to render banded content
 
 ## Slots
 
-All slots other than `body` are optional.  If the slot is not defined, the container tag for it will not be rendered in the template.
+All slots other than `pfe-band-body` are optional.  If the slot is not defined, the container tag for it will not be rendered in the template.
 
-- `header`: This slot renders at the top of the container and generally contains the title, headline, and or subheadline content.  Other possible candidates include a set of social sharing links or tags that describe the content below. The recommended tag for this slot is the `header` tag with h-level or p tags contained within it.
-- `body`: This is the default slot and contains the bulk of the content in this element.  Paragraph text or a grid of cards or images might be rendered in this region.  Recommended tag for this slot is the `article` tag.
-- `footer`: This slot is typically used for calls-to-action or footnotes and is pushed to the bottom of the container.  Recommended tags include `pfe-cta` or `footer`.
-- `aside`: This slot is for content that should be rendered to the right or left of the default slot on desktop.  Asides often contain `pfe-card` or interest forms which provide users a little more information or context for the band.
+- `pfe-band-header`: This slot renders at the top of the container and generally contains the title, headline, and or subheadline content.  Other possible candidates include a set of social sharing links or tags that describe the content below. The recommended tag for this slot is the `header` tag with h-level or p tags contained within it.
+- **Default slot**: This is the default slot and contains the bulk of the content in this element.  Paragraph text or a grid of cards or images might be rendered in this region.  Recommended tag for this slot is the `article` tag. Any content not assigned to a slot will be rendered here.
+- `pfe-band-footer`: This slot is typically used for calls-to-action or footnotes and is pushed to the bottom of the container.  Recommended tags include `pfe-cta` or `footer`.
+- `pfe-band-aside`: This slot is for content that should be rendered to the right or left of the default slot on desktop.  Asides often contain `pfe-card` or interest forms which provide users a little more information or context for the band.
 
 ## Attributes
 

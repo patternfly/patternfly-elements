@@ -27,9 +27,7 @@ $aside-lg: 300px;
   --pfe-band_footer--layout:                   1fr;
   --pfe-band_aside--layout:                    1fr;
 
-  --pfe-band--gridTemplateArea_layer1: "header";
-  --pfe-band--gridTemplateArea_layer2: "main" "aside";
-  
+  // Vertical spacing
   --pfe-band--gutter:                          #{pfe-var(container-spacer)};
 
   // Text colors
@@ -103,6 +101,10 @@ $aside-lg: 300px;
 .pfe-band {
   &__container {
     --pfe-band_region--width: calc(1fr - #{$aside-sm} - #{pfe-local(gutter)});
+    --pfe-band--gridTemplateArea_row2: "body";
+    @media (min-width: #{pfe-breakpoint(md)}) {
+      --pfe-band--gridTemplateArea_row2: "body body";
+    }
 
     position:  relative;
     margin:    0 auto;
@@ -113,13 +115,98 @@ $aside-lg: 300px;
     flex-flow:       row wrap;
     align-items:     flex-start;
     justify-content: space-between;
-  }
-  &__header:not(:last-child) {
-    margin-bottom: #{pfe-local(gutter)};
+    // Grid support styles
+    @supports (display: grid) {
+      display:   grid;
+      grid-gap: #{pfe-local(gutter)};
+      grid-column-gap: calc(#{pfe-local(gutter)} * 3);
+      grid-template-columns: #{pfe-local(layout)};
+      grid-template-rows: max-content;
+      grid-template-areas: var(--pfe-band--gridTemplateArea_row1) var(--pfe-band--gridTemplateArea_row2);
+    }
+    &[pfe-aside-desktop="left"],
+    &[pfe-aside-mobile="top"] {
+      @media (min-width: #{pfe-breakpoint(md)}) {
+        flex-direction: row-reverse;
+      }
+    }
+    &[pfe-has-header] {
+      --pfe-band--gridTemplateArea_row1: "header";
+      // Adjust styles at md breakpoint and higher
+      @media (min-width: #{pfe-breakpoint(md)}) {
+        --pfe-band--gridTemplateArea_row1: "header header";
+      }
+      &[pfe-aside-mobile="top"] {
+        --pfe-band--gridTemplateArea_row1: "aside" "header";
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          --pfe-band--gridTemplateArea_row1: "header header";
+        }
+      }
+    }
+    &[pfe-has-aside] {
+      --pfe-band--gridTemplateArea_row2: "main" "aside";
+      // Adjust styles at md breakpoint and higher
+      @media (min-width: #{pfe-breakpoint(md)}) {
+        --pfe-band--layout: 1fr #{$aside-sm};
+        --pfe-band--gridTemplateArea_row2: "main aside";
+      }
+      @media (min-width: #{pfe-breakpoint(lg)}) {
+        --pfe-band--layout: 1fr #{$aside-lg};
+      }
+    }
+    // Move the aside for mobile if top selected
+    &[pfe-aside-mobile="top"] {
+      --pfe-band--gridTemplateArea_row1: "aside";
+      --pfe-band--gridTemplateArea_row2: "main";
+    }
+    &[pfe-aside-height="full"] {
+      // --pfe-band--gridTemplateArea_row2: "main" "aside";
+      @media (min-width: #{pfe-breakpoint(md)}) {
+        --pfe-band--gridTemplateArea_row1: "aside";
+        --pfe-band--gridTemplateArea_row2: "main";
+      }
+      &[pfe-aside-mobile="bottom"],
+      &[pfe-aside-mobile="top"] {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          --pfe-band--gridTemplateArea_row1: "main aside";
+          --pfe-band--gridTemplateArea_row2: "main aside";
+        }
+      }
+      &[pfe-aside-desktop="left"] {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          --pfe-band--gridTemplateArea_row1: "aside main";
+          --pfe-band--gridTemplateArea_row2: "aside main";
+        }
+      }
+    }
+    // Move the aside for desktop if left selected
+    &[pfe-aside-desktop="left"] {
+      @media (min-width: #{pfe-breakpoint(md)}) {
+        --pfe-band--layout: #{$aside-sm} 1fr;
+        --pfe-band--gridTemplateArea_row2: "aside main";
+      }
+      @media (min-width: #{pfe-breakpoint(lg)}) {
+        --pfe-band--layout: #{$aside-lg} 1fr;
+      }
+    }
   }
   &__main {
     display:     flex;
     flex-flow:   column nowrap;
+    // Grid support styles
+    @supports (display: grid) {
+      display:   grid;
+      grid-gap: #{pfe-local(gutter)};
+      grid-column-gap: calc(#{pfe-local(gutter)} * 3);
+      grid-template-areas: var(--pfe-band_main--gridTemplateArea_header) "body" var(--pfe-band_main--gridTemplateArea_footer);
+    }
+    @each $slot in (header, footer) {
+      [pfe-has-#{$slot}] & {
+        @supports (display: grid) {
+          --pfe-band_main--gridTemplateArea_#{$slot}: "#{$slot}";
+        }
+      }
+    }
     > *:not(:last-child) {
       margin-bottom: #{pfe-local(gutter)};
     }
@@ -132,129 +219,62 @@ $aside-lg: 300px;
     &__#{$slot} {
       display:     flex;
       flex-flow:   column nowrap;
-      &::slotted(*) {
-        margin: 0;
-      }
-      ::slotted(*:not(:last-child)) {
-        margin-bottom: #{pfe-local(gutter)};
-      }
-    }
-  }
-  @media (min-width: #{pfe-breakpoint(md)}) {
-    &__container {
-      &[pfe-aside-desktop="left"],
-      &[pfe-aside-mobile="top"] {
-        flex-direction: row-reverse;
-      }
-    }
-    &__header {
-      order: -1;
-    }
-    &__body > *::slotted(*:not(:last-child)) {
-      margin-bottom: #{pfe-local(gutter)};
-    }
-    &__aside {
-      order: 1;
-      [pfe-aside-desktop="right"] & {
-        order: 0;
-      }
-      width: #{$aside-sm};
-    }
-  }
-  @media (min-width: #{pfe-breakpoint(lg)}) {
-    &__aside {
-      width: #{$aside-lg};
-    }
-  }
-  // Grid support styles
-  @supports (display: grid) {
-    @media (min-width: 0) {
-      @each $slot in (header, main, aside) {
-        &__#{$slot} {
-          grid-area: #{$slot};
-          width: auto;
-        }
-      }
-    }
-    @each $slot in (header, body, footer, aside) {
-      &__#{$slot} {
+      // Grid support styles
+      @supports (display: grid) {
         // Set up the internal grid system for each slot
         display: grid;
         grid-gap: #{pfe-local(gutter)};
         grid-template-columns: #{pfe-local(layout, $slot)};
         grid-template-rows: max-content;
-        > *:not(:last-child)::slotted(*) {
+      }
+      &:not(:last-child) {
+        margin-bottom: #{pfe-local(gutter)};
+        @supports (display: grid) {
+          margin-bottom: 0;
+        }
+      }
+      &::slotted(*) {
+        margin: 0;
+      }
+      &::slotted(*:not(:last-child)) {
+        margin-bottom: #{pfe-local(gutter)};
+        @supports (display: grid) {
           margin-bottom: 0;
         }
       }
     }
-    &__header:not(:last-child),
-    &__body > *::slotted(*:not(:last-child)) {
-      margin-bottom: 0;
+  }
+  @each $slot in (header, main, aside) {
+    &__#{$slot} {
+      // Grid support styles
+      @supports (display: grid) {
+        @media (min-width: 0) {
+          grid-area: #{$slot};
+          width: auto;
+        }
+      }
     }
-    &__container {
-      display:   grid;
-      grid-row-gap: #{pfe-local(gutter)};
-      grid-column-gap: calc(#{pfe-local(gutter)} * 3);
-      grid-template-columns: #{pfe-local(layout)};
-      grid-template-rows: max-content;
-      grid-template-areas: var(--pfe-band--gridTemplateArea_layer1) var(--pfe-band--gridTemplateArea_layer2);
-    
-      // Move the aside for mobile if top selected
-      &[pfe-aside-mobile="top"] {
-          --pfe-band--gridTemplateArea_layer1: "aside" "header";
-          --pfe-band--gridTemplateArea_layer2: "main";
+  }
+  &__header {
+    @media (min-width: #{pfe-breakpoint(md)}) {
+      order: -1;
+    }
+  }
+  &__body > *::slotted(*:not(:last-child)) {
+    @media (min-width: #{pfe-breakpoint(md)}) {
+      margin-bottom: #{pfe-local(gutter)};
+    }
+  }
+  &__aside {
+    @media (min-width: #{pfe-breakpoint(md)}) {
+      order: 1;
+      width: #{$aside-sm};
+      [pfe-aside-desktop="right"] & {
+        order: 0;
       }
-      &[pfe-aside-height="full"] {
-          --pfe-band--gridTemplateArea_layer2: "main" "aside";
-          &[pfe-aside-mobile="top"] {
-            --pfe-band--gridTemplateArea_layer1: "aside";
-            --pfe-band--gridTemplateArea_layer2: "main";
-          }
-      }
-
-      // Adjust styles at md breakpoint and higher
-      @media (min-width: #{pfe-breakpoint(md)}) {
-        &[pfe-has-aside] {
-          --pfe-band--layout: 1fr #{$aside-sm};
-          --pfe-band--gridTemplateArea_layer1: "header header";
-          --pfe-band--gridTemplateArea_layer2: "main aside";
-        }
-
-        &[pfe-aside-mobile="top"] {
-          --pfe-band--gridTemplateArea_layer1: "header header";
-          --pfe-band--gridTemplateArea_layer2: "main aside";
-        }
-
-        // Move the aside for desktop if left selected
-        &[pfe-aside-desktop="left"] {
-          --pfe-band--layout: #{$aside-sm} 1fr;
-          --pfe-band--gridTemplateArea_layer2: "aside main";
-        }
-
-        // Move the aside for desktop if left selected
-        &[pfe-aside-height="full"] {
-          --pfe-band--gridTemplateArea_layer1: "aside";
-          --pfe-band--gridTemplateArea_layer2: "main";
-          &[pfe-aside-mobile="bottom"],
-          &[pfe-aside-mobile="top"] {
-            --pfe-band--gridTemplateArea_layer1: "main aside";
-            --pfe-band--gridTemplateArea_layer2: "main aside";
-          }
-          &[pfe-aside-desktop="left"] {
-            --pfe-band--gridTemplateArea_layer1: "aside main";
-            --pfe-band--gridTemplateArea_layer2: "aside main";
-          }
-        }
-      }
-      @media (min-width: #{pfe-breakpoint(lg)}) {
-        &[pfe-has-aside] {
-          --pfe-band--layout: 1fr #{$aside-lg};
-        }
-        &[pfe-aside-desktop="left"] {
-          --pfe-band--layout: #{$aside-lg} 1fr;
-        }
-      }
+    }
+    @media (min-width: #{pfe-breakpoint(lg)}) {
+      width: #{$aside-lg};
     }
   }
 }

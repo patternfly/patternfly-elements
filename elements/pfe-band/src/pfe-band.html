@@ -1,4 +1,4 @@
-<section class="pfe-band__container">
+<section class="pfe-band__container"${this.has_slot("pfe-band-aside") ? ` pfe-has-aside` : ""}>
   ${this.has_slot("pfe-band-aside") && this.asidePosition.mobile === "top" ? `<slot class="pfe-band__aside" name="pfe-band-aside"></slot>` : ""}
   ${this.has_slot("pfe-band-aside") && this.asidePosition.height === "full" ? `<div class="pfe-band__main">` : ""}
   ${this.has_slot("pfe-band-header") ? `<slot class="pfe-band__header" name="pfe-band-header"></slot>` : ""}

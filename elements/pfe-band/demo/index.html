@@ -13,13 +13,21 @@
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+
+    <script src="../../pfelement/pfelement.umd.js"></script>
+    <script src="../pfe-band.umd.js"></script>
+    <script src="../../pfe-card/pfe-card.umd.js"></script>
+    <script src="../../pfe-cta/pfe-cta.umd.js"></script>
+
+    <!--
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require([
       '../pfe-band.umd.js',
       '../../pfe-card/pfe-card.umd.js',
       '../../pfe-cta/pfe-cta.umd.js'
     ])</script>
+    -->
 
     <style>
     body {
@@ -45,7 +53,8 @@
     </style>
   </head>
   <body unresolved>
-    <h1>&lt;pfe-band&gt;</h1>
+    <pfe-band pfe-size="small"><h1>&lt;pfe-band&gt;</h1></pfe-band>
+
     <pfe-band pfe-color="lightest" pfe-aside-desktop="right" pfe-aside-mobile="bottom" pfe-aside-height="body">
       <header slot="pfe-band-header">
         <h1>Lightest band, header region</h1>
@@ -79,7 +88,7 @@
       <pfe-card color="complement" slot="pfe-band-aside">
         <h3 slot="header">Aside: left body bottom</h3>
         <p>Ut wisi enim ad minim veniam.</p>
-        <pfe-cta slot="footer" priority="tertiary">
+        <pfe-cta slot="footer" priority="tertiary" on="dark">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
@@ -100,7 +109,7 @@
       <pfe-card color="dark" slot="pfe-band-aside">
         <h3 >Aside: right full bottom</h3>
         <p>Ut wisi enim ad minim veniam. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
-        <pfe-cta slot="footer" priority="tertiary">
+        <pfe-cta slot="footer" priority="tertiary" on="dark">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
@@ -149,11 +158,12 @@
         <h2>Accent band</h2>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       </header>
-      <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+      <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+      <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
       <pfe-cta priority="primary">
         <a href="#">Learn more</a>
       </pfe-cta>
-      <pfe-card color="light" slot="pfe-band-aside">
+      <pfe-card color="lightest" slot="pfe-band-aside">
         <h3 slot="header">Aside: left body top</h3>
         <p>Ut wisi enim ad minim veniam.</p>
         <pfe-cta slot="footer" priority="tertiary">
@@ -162,49 +172,62 @@
       </pfe-card>
     </pfe-band>
 
-    <pfe-band pfe-color="complement" pfe-aside-desktop="right" pfe-aside-mobile="bottom" pfe-aside-height="body">
+    <pfe-band pfe-color="complement">
       <header slot="pfe-band-header">
-        <h2>Complement band</h2>
+        <h2>Complement band, layout classes</h2>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       </header>
-      <article class="pfe-l-grid pfe-m-gutters pfe-m-all-2-col">
+      <article class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col">
         <pfe-card>
-          <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
+          <h3>Lorem ipsum</h3>
+          <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
         </pfe-card>
         <pfe-card>
-          <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          <pfe-cta priority="primary" slot="footer">
-            <a href="#">Learn more</a>
-          </pfe-cta>
+          <h3>Lorem ipsum</h3>
+          <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
         </pfe-card>
       </article>
+      <pfe-cta priority="secondary" slot="pfe-band-footer">
+        <a href="#">Learn more</a>
+      </pfe-cta>
       <pfe-card color="dark" slot="pfe-band-aside">
         <h3 slot="header">Aside: right body bottom</h3>
-        <p>Ut wisi enim ad minim veniam.</p>
+        <p>Ut wisi enim ad minim veniam. At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet.</p>
         <pfe-cta slot="footer" priority="tertiary" on="dark">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
     </pfe-band>
 
-    <pfe-band style="--pfe-band_body--layout: 1fr 1fr;">
+    <pfe-band style="--pfe-band_body--layout: repeat(auto-fit, minmax(250px, 1fr));">
       <header slot="pfe-band-header">
         <h2>Layout variables; no aside</h2>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       </header>
-      <pfe-card color="complement">
-        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+      <pfe-card color="dark">
+        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+        <pfe-cta priority="tertiary" slot="footer" on="dark">
+          <a href="#">Learn more</a>
+        </pfe-cta>
       </pfe-card>
-      <pfe-card color="complement">
+      <pfe-card color="dark">
         <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        <pfe-cta priority="tertiary" slot="footer" on="dark">
+          <a href="#">Learn more</a>
+        </pfe-cta>
       </pfe-card>
-      <pfe-card color="complement">
-        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+      <pfe-card color="dark">
+        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+        <pfe-cta priority="tertiary" slot="footer" on="dark">
+          <a href="#">Learn more</a>
+        </pfe-cta>
       </pfe-card>
-      <pfe-card color="complement">
+      <pfe-card color="dark">
         <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        <pfe-cta priority="tertiary" slot="footer" on="dark">
+          <a href="#">Learn more</a>
+        </pfe-cta>
       </pfe-card>
     </pfe-band>
-
   </body>
 </html>

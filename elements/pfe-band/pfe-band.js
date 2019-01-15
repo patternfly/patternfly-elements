@@ -39,7 +39,7 @@ class PfeBand extends PFElement {
   --pfe-band_aside--layout:                    1fr;
   --pfe-band--gridTemplateArea_layer1: "header";
   --pfe-band--gridTemplateArea_layer2: "main" "aside";
-  --pfe-band--gutter:                          calc(var(--pfe-theme--container-spacer, 1rem) * 2);
+  --pfe-band--gutter:                          var(--pfe-theme--container-spacer, 1rem);
   --pfe-broadcasted--color--text:              var(--pfe-theme--color--surface--base--text, #333);
   --pfe-broadcasted--color--ui-link:           var(--pfe-theme--color--surface--base--link, #00538c);
   --pfe-broadcasted--color--ui-link--visited:  var(--pfe-theme--color--surface--base--link--visited, #7551a6);
@@ -146,7 +146,7 @@ class PfeBand extends PFElement {
   display: flex;
   flex-flow: column nowrap; }
   .pfe-band__main > *:not(:last-child) {
-    margin-bottom: var(--pfe-theme--container-spacer, 1rem); }
+    margin-bottom: var(--pfe-band--gutter); }
   @media (min-width: 768px) {
     .pfe-band__main {
       width: var(--pfe-band_region--width); } }
@@ -154,33 +154,33 @@ class PfeBand extends PFElement {
 .pfe-band__header {
   display: flex;
   flex-flow: column nowrap; }
-  .pfe-band__header > *::slotted(*) {
+  .pfe-band__header::slotted(*) {
     margin: 0; }
-  .pfe-band__header > *:not(:last-child)::slotted(*) {
+  .pfe-band__header ::slotted(*:not(:last-child)) {
     margin-bottom: var(--pfe-band--gutter); }
 
 .pfe-band__body {
   display: flex;
   flex-flow: column nowrap; }
-  .pfe-band__body > *::slotted(*) {
+  .pfe-band__body::slotted(*) {
     margin: 0; }
-  .pfe-band__body > *:not(:last-child)::slotted(*) {
+  .pfe-band__body ::slotted(*:not(:last-child)) {
     margin-bottom: var(--pfe-band--gutter); }
 
 .pfe-band__footer {
   display: flex;
   flex-flow: column nowrap; }
-  .pfe-band__footer > *::slotted(*) {
+  .pfe-band__footer::slotted(*) {
     margin: 0; }
-  .pfe-band__footer > *:not(:last-child)::slotted(*) {
+  .pfe-band__footer ::slotted(*:not(:last-child)) {
     margin-bottom: var(--pfe-band--gutter); }
 
 .pfe-band__aside {
   display: flex;
   flex-flow: column nowrap; }
-  .pfe-band__aside > *::slotted(*) {
+  .pfe-band__aside::slotted(*) {
     margin: 0; }
-  .pfe-band__aside > *:not(:last-child)::slotted(*) {
+  .pfe-band__aside ::slotted(*:not(:last-child)) {
     margin-bottom: var(--pfe-band--gutter); }
 
 @media (min-width: 768px) {
@@ -244,7 +244,8 @@ class PfeBand extends PFElement {
     margin-bottom: 0; }
   .pfe-band__container {
     display: grid;
-    grid-gap: var(--pfe-band--gutter) calc(var(--pfe-band--gutter) * 2);
+    grid-row-gap: var(--pfe-band--gutter);
+    grid-column-gap: calc(var(--pfe-band--gutter) * 3);
     grid-template-columns: var(--pfe-band--layout);
     grid-template-rows: max-content;
     grid-template-areas: var(--pfe-band--gridTemplateArea_layer1) var(--pfe-band--gridTemplateArea_layer2); }
@@ -257,31 +258,33 @@ class PfeBand extends PFElement {
         --pfe-band--gridTemplateArea_layer1: "aside";
         --pfe-band--gridTemplateArea_layer2: "main"; }
     @media (min-width: 768px) {
-      .pfe-band__container {
+      .pfe-band__container[pfe-has-aside] {
         --pfe-band--layout: 1fr 240px;
         --pfe-band--gridTemplateArea_layer1: "header header";
         --pfe-band--gridTemplateArea_layer2: "main aside"; }
-        .pfe-band__container[pfe-aside-mobile="top"] {
-          --pfe-band--gridTemplateArea_layer1: "header header";
+      .pfe-band__container[pfe-aside-mobile="top"] {
+        --pfe-band--gridTemplateArea_layer1: "header header";
+        --pfe-band--gridTemplateArea_layer2: "main aside"; }
+      .pfe-band__container[pfe-aside-desktop="left"] {
+        --pfe-band--layout: 240px 1fr;
+        --pfe-band--gridTemplateArea_layer2: "aside main"; }
+      .pfe-band__container[pfe-aside-height="full"] {
+        --pfe-band--gridTemplateArea_layer1: "aside";
+        --pfe-band--gridTemplateArea_layer2: "main"; }
+        .pfe-band__container[pfe-aside-height="full"][pfe-aside-mobile="bottom"], .pfe-band__container[pfe-aside-height="full"][pfe-aside-mobile="top"] {
+          --pfe-band--gridTemplateArea_layer1: "main aside";
           --pfe-band--gridTemplateArea_layer2: "main aside"; }
-        .pfe-band__container[pfe-aside-desktop="left"] {
-          --pfe-band--layout: 240px 1fr;
-          --pfe-band--gridTemplateArea_layer2: "aside main"; }
-        .pfe-band__container[pfe-aside-height="full"] {
-          --pfe-band--gridTemplateArea_layer1: "aside";
-          --pfe-band--gridTemplateArea_layer2: "main"; }
-          .pfe-band__container[pfe-aside-height="full"][pfe-aside-mobile="bottom"], .pfe-band__container[pfe-aside-height="full"][pfe-aside-mobile="top"] {
-            --pfe-band--gridTemplateArea_layer1: "main aside";
-            --pfe-band--gridTemplateArea_layer2: "main aside"; }
-          .pfe-band__container[pfe-aside-height="full"][pfe-aside-desktop="left"] {
-            --pfe-band--gridTemplateArea_layer1: "aside main";
-            --pfe-band--gridTemplateArea_layer2: "aside main"; } }
+        .pfe-band__container[pfe-aside-height="full"][pfe-aside-desktop="left"] {
+          --pfe-band--gridTemplateArea_layer1: "aside main";
+          --pfe-band--gridTemplateArea_layer2: "aside main"; } }
     @media (min-width: 992px) {
-      .pfe-band__container {
+      .pfe-band__container[pfe-has-aside] {
         --pfe-band--layout: 1fr 300px; }
-        .pfe-band__container[pfe-aside-desktop="left"] {
-          --pfe-band--layout: 300px 1fr; } } }</style>
-<section class="pfe-band__container">
+      .pfe-band__container[pfe-aside-desktop="left"] {
+        --pfe-band--layout: 300px 1fr; } } }</style>
+<section class="pfe-band__container"${
+      this.has_slot("pfe-band-aside") ? ` pfe-has-aside` : ""
+    }>
   ${
     this.has_slot("pfe-band-aside") && this.asidePosition.mobile === "top"
       ? `<slot class="pfe-band__aside" name="pfe-band-aside"></slot>`
@@ -345,21 +348,24 @@ class PfeBand extends PFElement {
         type: "string",
         default: "right",
         enum: ["right", "left"],
-        observer: "_basicAttributeChanged"
+        observer: "_basicAttributeChanged",
+        options: { dependencies: [{ type: "slot", id: "pfe-band-aside" }] }
       },
       "pfe-aside-mobile": {
         title: "Aside positioning (mobile)",
         type: "string",
         default: "bottom",
         enum: ["top", "bottom"],
-        observer: "_basicAttributeChanged"
+        observer: "_basicAttributeChanged",
+        options: { dependencies: [{ type: "slot", id: "pfe-band-aside" }] }
       },
       "pfe-aside-height": {
         title: "Aside height",
         type: "string",
         default: "body",
         enum: ["full", "body"],
-        observer: "_basicAttributeChanged"
+        observer: "_basicAttributeChanged",
+        options: { dependencies: [{ type: "slot", id: "pfe-band-aside" }] }
       }
     };
   }

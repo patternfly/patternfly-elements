@@ -68,28 +68,8 @@ class PFElement extends HTMLElement {
     this._queue = [];
     this.template = document.createElement("template");
 
-    // Map the imported properties json to real props on the element
-    // @notice static getter of properties is built via tooling
-    // to edit modify src/element.json
     if (typeof pfeClass.properties === "object") {
-      Object.entries(pfeClass.properties).forEach(prop => {
-        let attr = prop[0];
-        let data = prop[1];
-        // Set the attribute's property equal to the schema input
-        this[attr] = data;
-
-        if (this.hasAttribute(attr)) {
-          // If the attribute exists on the host
-          // define the property based on that value
-          this[attr].value = this.getAttribute(attr);
-        } else if (data.default) {
-          // Otherwise, if a default value is defined
-          // initialize the property using it
-          // @TODO not sure if we want to add these properties by default
-          // this.setAttribute(attr, data.default);
-          this[attr].value = data.default;
-        }
-      });
+      this._mapSchemaToProperties(pfeClass.properties);
     }
 
     this.attachShadow({ mode: "open" });
@@ -142,6 +122,55 @@ class PFElement extends HTMLElement {
     for (const node of recipients) {
       node[fname](name, value);
     }
+  }
+
+  _mapSchemaToProperties(properties) {
+    // Map the imported properties json to real props on the element
+    // @notice static getter of properties is built via tooling
+    // to edit modify src/element.json
+    Object.entries(properties).forEach(prop => {
+      let attr = prop[0];
+      let data = prop[1];
+      // Set the attribute's property equal to the schema input
+      this[attr] = data;
+      // Initialize the value to null
+      this[attr].value = null;
+
+      // If the attribute exists on the host
+      if (this.hasAttribute(attr)) {
+        // Set property value based on the existing attribute
+        this[attr].value = this.getAttribute(attr);
+      }
+      // Otherwise, look for a default and use that instead
+      else if (data.default) {
+        // If the dependency exists or there are no dependencies, set the default
+        if (
+          this._hasDependency(data.options) ||
+          (data.options && data.options.dependencies.length <= 0)
+        ) {
+          this.setAttribute(attr, data.default);
+          this[attr].value = data.default;
+        }
+      }
+    });
+  }
+
+  _hasDependency(opts) {
+    // Get any possible dependencies for this attribute to exist
+    let dependencies = opts ? opts.dependencies : [];
+    // Check that dependent item exists
+    dependencies.forEach(dep => {
+      // If the type is slot, check that it exists OR
+      // if the type is an attribute, check if the attribute is defined
+      if (
+        (dep.type === "slot" && this.has_slot(dep.id)) ||
+        (dep.type === "attribute" && this.getAttribute(dep.id))
+      ) {
+        // If the slot does exist, add the attribute with the default value
+        return true;
+      }
+    });
+    return false;
   }
 
   _queueAction(action) {

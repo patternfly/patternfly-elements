@@ -105,21 +105,45 @@
           "type": "string",
           "default": "right",
           "enum": ["right", "left"],
-          "observer": "_basicAttributeChanged"
+          "observer": "_basicAttributeChanged",
+          "options": {
+            "dependencies": [
+              {
+                "type": "slot",
+                "id": "pfe-band-aside"
+              }
+            ]
+          }
         },
         "pfe-aside-mobile": {
           "title": "Aside positioning (mobile)",
           "type": "string",
           "default": "bottom",
           "enum": ["top", "bottom"],
-          "observer": "_basicAttributeChanged"
+          "observer": "_basicAttributeChanged",
+          "options": {
+            "dependencies": [
+              {
+                "type": "slot",
+                "id": "pfe-band-aside"
+              }
+            ]
+          }
         },
         "pfe-aside-height": {
           "title": "Aside height",
           "type": "string",
           "default": "body",
           "enum": ["full", "body"],
-          "observer": "_basicAttributeChanged"
+          "observer": "_basicAttributeChanged",
+          "options": {
+            "dependencies": [
+              {
+                "type": "slot",
+                "id": "pfe-band-aside"
+              }
+            ]
+          }
         }
       }
     }

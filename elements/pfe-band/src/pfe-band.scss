@@ -30,7 +30,7 @@ $aside-lg: 300px;
   --pfe-band--gridTemplateArea_layer1: "header";
   --pfe-band--gridTemplateArea_layer2: "main" "aside";
   
-  --pfe-band--gutter:                          #{calc(#{pfe-var(container-spacer)} * 2)};
+  --pfe-band--gutter:                          #{pfe-var(container-spacer)};
 
   // Text colors
   --pfe-broadcasted--color--text:              #{pfe-color(surface--base--text)};
@@ -121,7 +121,7 @@ $aside-lg: 300px;
     display:     flex;
     flex-flow:   column nowrap;
     > *:not(:last-child) {
-      margin-bottom: #{pfe-var(container-spacer)};
+      margin-bottom: #{pfe-local(gutter)};
     }
     @media (min-width: #{pfe-breakpoint(md)}) {
       width: #{pfe-local(width, region)};
@@ -132,10 +132,10 @@ $aside-lg: 300px;
     &__#{$slot} {
       display:     flex;
       flex-flow:   column nowrap;
-      > *::slotted(*) {
+      &::slotted(*) {
         margin: 0;
       }
-      > *:not(:last-child)::slotted(*) {
+      ::slotted(*:not(:last-child)) {
         margin-bottom: #{pfe-local(gutter)};
       }
     }
@@ -194,7 +194,8 @@ $aside-lg: 300px;
     }
     &__container {
       display:   grid;
-      grid-gap:  #{pfe-local(gutter)} calc(#{pfe-local(gutter)} * 2);
+      grid-row-gap: #{pfe-local(gutter)};
+      grid-column-gap: calc(#{pfe-local(gutter)} * 3);
       grid-template-columns: #{pfe-local(layout)};
       grid-template-rows: max-content;
       grid-template-areas: var(--pfe-band--gridTemplateArea_layer1) var(--pfe-band--gridTemplateArea_layer2);
@@ -214,9 +215,11 @@ $aside-lg: 300px;
 
       // Adjust styles at md breakpoint and higher
       @media (min-width: #{pfe-breakpoint(md)}) {
-        --pfe-band--layout: 1fr #{$aside-sm};
-        --pfe-band--gridTemplateArea_layer1: "header header";
-        --pfe-band--gridTemplateArea_layer2: "main aside";
+        &[pfe-has-aside] {
+          --pfe-band--layout: 1fr #{$aside-sm};
+          --pfe-band--gridTemplateArea_layer1: "header header";
+          --pfe-band--gridTemplateArea_layer2: "main aside";
+        }
 
         &[pfe-aside-mobile="top"] {
           --pfe-band--gridTemplateArea_layer1: "header header";
@@ -245,7 +248,9 @@ $aside-lg: 300px;
         }
       }
       @media (min-width: #{pfe-breakpoint(lg)}) {
-        --pfe-band--layout: 1fr #{$aside-lg};
+        &[pfe-has-aside] {
+          --pfe-band--layout: 1fr #{$aside-lg};
+        }
         &[pfe-aside-desktop="left"] {
           --pfe-band--layout: #{$aside-lg} 1fr;
         }

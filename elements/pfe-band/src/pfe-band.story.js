@@ -39,16 +39,16 @@ stories.add(PfeBand.tag, () => {
   });
 
   // Build the default header content
-  slots.header.default = defaultHeading;
+  slots["pfe-band-header"].default = defaultHeading;
 
   // Build the default body content
-  slots.body.default = tools.autoContent(4, 3);
+  slots["pfe-band-body"].default = tools.autoContent(4, 3);
 
   // Build the default footer component
-  slots.footer.default = tools.component(
+  slots["pfe-band-footer"].default = tools.component(
     "pfe-cta",
     {
-      slot: "footer",
+      slot: "pfe-band-footer",
       priority: "primary"
     },
     [
@@ -59,14 +59,11 @@ stories.add(PfeBand.tag, () => {
   );
 
   // Build the default aside component
-  slots.aside.default = tools.component(
+  slots["pfe-band-aside"].default = tools.component(
     "pfe-card",
     {
-      slot: "aside",
-      color: darkThemes.includes(props["pfe-color"])
-        ? "lightest"
-        : "complement",
-      on: darkThemes.includes(props["pfe-color"]) ? "" : "dark"
+      slot: "pfe-band-aside",
+      color: darkThemes.includes(props["pfe-color"]) ? "lightest" : "complement"
     },
     [
       {
@@ -82,8 +79,7 @@ stories.add(PfeBand.tag, () => {
           "pfe-cta",
           {
             slot: "footer",
-            priority: "tertiary",
-            on: darkThemes.includes(props["pfe-color"]) ? "dark" : ""
+            priority: "tertiary"
           },
           [
             {
@@ -116,18 +112,18 @@ stories.add(PfeBand.tag, () => {
     {
       content: tools.customTag({
         tag: "h1",
-        slot: "header",
-        content: config.has.header
+        slot: "pfe-band-header",
+        content: config.has["pfe-band-header"]
       })
     },
     {
-      content: config.has.body
+      content: config.has["pfe-band-body"]
     },
     {
-      content: config.has.footer
+      content: config.has["pfe-band-footer"]
     },
     {
-      content: config.has.aside
+      content: config.has["pfe-band-aside"]
     }
   ];
 

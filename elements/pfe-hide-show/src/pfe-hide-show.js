@@ -90,28 +90,23 @@ class PfeHideShow extends PFElement {
 
     this._observer = new MutationObserver(() => {
       const tempGrouping = [...this.querySelectorAll("pfe-hide-show-set")];
+
       tempGrouping.forEach(group => {
         const tempGroup = {
           heading: group.querySelector("[pfe-heading]"),
           body: [...group.querySelectorAll(":not([pfe-heading])")]
         };
+
         this.groupings.push(tempGroup);
       });
+
+      this._observer.disconnect();
       this.render();
     });
 
     this._observer.observe(this, {
-      attributes: true,
       childList: true
     });
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-  }
-
-  disconnectedCallback() {
-    this._observer.disconnect();
   }
 }
 

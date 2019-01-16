@@ -2,17 +2,17 @@ import PFElement from "../pfelement/pfelement.js";
 
 /*
  * Copyright 2018 Red Hat, Inc.
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,8 +20,8 @@ import PFElement from "../pfelement/pfelement.js";
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- */
+ * 
+*/
 
 class PfeHideShow extends PFElement {
   get html() {
@@ -137,28 +137,23 @@ ${
 
     this._observer = new MutationObserver(() => {
       const tempGrouping = [...this.querySelectorAll("pfe-hide-show-set")];
+
       tempGrouping.forEach(group => {
         const tempGroup = {
           heading: group.querySelector("[pfe-heading]"),
           body: [...group.querySelectorAll(":not([pfe-heading])")]
         };
+
         this.groupings.push(tempGroup);
       });
+
+      this._observer.disconnect();
       this.render();
     });
 
     this._observer.observe(this, {
-      attributes: true,
       childList: true
     });
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-  }
-
-  disconnectedCallback() {
-    this._observer.disconnect();
   }
 }
 

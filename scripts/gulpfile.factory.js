@@ -14,23 +14,7 @@ module.exports = function factory({
   const decomment = require("decomment");
   const sass = require("node-sass");
   const shell = require("gulp-shell");
-
-  gulp.task("compile", () => {
-    return gulp
-      .src(`./${elementName}.js`)
-      .pipe(
-        replace(
-          /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
-          "$1$2.umd$3"
-        )
-      )
-      .pipe(
-        rename({
-          suffix: ".umd"
-        })
-      )
-      .pipe(gulp.dest("./"));
-  });
+  const banner = require("gulp-banner");
 
   gulp.task("merge", () => {
     return gulp
@@ -132,6 +116,32 @@ ${html}\`;
 `;
           }
         )
+      )
+      .pipe(
+        banner(
+          `/*\n${fs
+            .readFileSync("LICENSE.txt", "utf8")
+            .split("\n")
+            .map(line => ` * ${line}\n`)
+            .join("")}*/\n\n`
+        )
+      )
+      .pipe(gulp.dest("./"));
+  });
+
+  gulp.task("compile", () => {
+    return gulp
+      .src(`./${elementName}.js`)
+      .pipe(
+        replace(
+          /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
+          "$1$2.umd$3"
+        )
+      )
+      .pipe(
+        rename({
+          suffix: ".umd"
+        })
       )
       .pipe(gulp.dest("./"));
   });

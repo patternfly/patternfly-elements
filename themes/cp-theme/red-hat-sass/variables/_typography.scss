@@ -6,7 +6,7 @@
 // Base Typography
 // ========================================================================
 
-$pfe-global--FontSize:        #{$pfe-global--font-size-root}px !default;
+$pfe-global--FontSize:        $pfe-global--font-size-root + 0px !default;
 
 // Line heights
 $pfe-global--LineHeight--sm:  1.2 !default;

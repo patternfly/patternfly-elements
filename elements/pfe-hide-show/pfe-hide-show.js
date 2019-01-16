@@ -152,6 +152,7 @@ ${
     });
 
     this._observer.observe(this, {
+      attributes: true,
       childList: true
     });
   }

@@ -162,10 +162,7 @@ class PfeTabs extends PFElement {
       this.selectedIndex = 0;
     }
 
-    Promise.all([
-      customElements.whenDefined(RhTab.tag),
-      customElements.whenDefined(RhTabPanel.tag)
-    ]).then(() => this._linkPanels());
+    Promise.all([customElements.whenDefined(RhTab.tag), customElements.whenDefined(RhTabPanel.tag)]).then(() => this._linkPanels());
   }
 
   disconnectedCallback() {
@@ -178,9 +175,7 @@ class PfeTabs extends PFElement {
       case "vertical":
         if (this.hasAttribute("vertical")) {
           this.setAttribute("aria-orientation", "vertical");
-          this._allPanels().forEach(panel =>
-            panel.setAttribute("vertical", "")
-          );
+          this._allPanels().forEach(panel => panel.setAttribute("vertical", ""));
           this._allTabs().forEach(tab => tab.setAttribute("vertical", ""));
         } else {
           this.removeAttribute("aria-orientation");
@@ -190,10 +185,7 @@ class PfeTabs extends PFElement {
         break;
 
       case "selected-index":
-        Promise.all([
-          customElements.whenDefined(RhTab.tag),
-          customElements.whenDefined(RhTabPanel.tag)
-        ]).then(() => {
+        Promise.all([customElements.whenDefined(RhTab.tag), customElements.whenDefined(RhTabPanel.tag)]).then(() => {
           this._linkPanels();
           this.selectIndex(newValue);
         });
@@ -245,9 +237,7 @@ class PfeTabs extends PFElement {
     tabs.forEach(tab => {
       const panel = tab.nextElementSibling;
       if (panel.tagName.toLowerCase() !== "pfe-tab-panel") {
-        console.warn(
-          `${PfeTabs.tag}: tab #${tab.id} is not a sibling of a <pfe-tab-panel>`
-        );
+        console.warn(`${PfeTabs.tag}: tab #${tab.id} is not a sibling of a <pfe-tab-panel>`);
         return;
       }
 

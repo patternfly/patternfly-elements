@@ -1,10 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import {
-  withKnobs,
-  text,
-  select,
-  boolean
-} from "@storybook/addon-knobs/polymer";
+import { withKnobs, text, select, boolean } from "@storybook/addon-knobs/polymer";
 import "../pfe-icon-panel.js";
 
 const stories = storiesOf("Icon", module);
@@ -38,8 +33,7 @@ stories.add("pfe-icon-panel", () => {
 
   if (circledBoolean != false) {
     circledSelect = select("Circle Color", circledOptions, "default");
-    circled =
-      circledSelect != "default" ? ` circled="${circledSelect}"` : " circled";
+    circled = circledSelect != "default" ? ` circled="${circledSelect}"` : " circled";
   }
 
   const stackedBoolean = boolean("Stacked", false);

@@ -119,10 +119,7 @@ class PfeAccordion extends PFElement {
     this.addEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
     this.addEventListener("keydown", this._keydownHandler);
 
-    Promise.all([
-      customElements.whenDefined(PfeAccordionHeader.tag),
-      customElements.whenDefined(PfeAccordionPanel.tag)
-    ]).then(this._linkPanels());
+    Promise.all([customElements.whenDefined(PfeAccordionHeader.tag), customElements.whenDefined(PfeAccordionPanel.tag)]).then(this._linkPanels());
   }
 
   disconnectedCallback() {
@@ -337,9 +334,7 @@ class PfeAccordion extends PFElement {
     const next = header.nextElementSibling;
 
     if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
-      console.error(
-        `${PfeAccordion.tag}: Sibling element to a header needs to be a panel`
-      );
+      console.error(`${PfeAccordion.tag}: Sibling element to a header needs to be a panel`);
       return;
     }
 
@@ -348,15 +343,13 @@ class PfeAccordion extends PFElement {
 
   _previousHeader() {
     const headers = this._allHeaders();
-    let newIndex =
-      headers.findIndex(header => header === document.activeElement) - 1;
+    let newIndex = headers.findIndex(header => header === document.activeElement) - 1;
     return headers[(newIndex + headers.length) % headers.length];
   }
 
   _nextHeader() {
     const headers = this._allHeaders();
-    let newIndex =
-      headers.findIndex(header => header === document.activeElement) + 1;
+    let newIndex = headers.findIndex(header => header === document.activeElement) + 1;
     return headers[newIndex % headers.length];
   }
 
@@ -541,11 +534,7 @@ h6 {
     }
 
     if (!isHeaderTag) {
-      console.warn(
-        `${
-          PfeAccordionHeader.tag
-        }: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`
-      );
+      console.warn(`${PfeAccordionHeader.tag}: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`);
     }
 
     this.addEventListener("click", this._clickHandler);

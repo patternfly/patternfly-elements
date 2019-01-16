@@ -91,10 +91,7 @@ class PFElement extends HTMLElement {
   }
 
   _copyAttribute(name, to) {
-    const recipients = [
-      ...this.querySelectorAll(to),
-      ...this.shadowRoot.querySelectorAll(to)
-    ];
+    const recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];
     const value = this.getAttribute(name);
     const fname = value == null ? "removeAttribute" : "setAttribute";
     for (const node of recipients) {
@@ -121,10 +118,7 @@ class PFElement extends HTMLElement {
       // Otherwise, look for a default and use that instead
       else if (data.default) {
         // If the dependency exists or there are no dependencies, set the default
-        if (
-          this._hasDependency(data.options) ||
-          (data.options && data.options.dependencies.length <= 0)
-        ) {
+        if (this._hasDependency(data.options) || (data.options && data.options.dependencies.length <= 0)) {
           this.setAttribute(attr, data.default);
           this[attr].value = data.default;
         }
@@ -139,10 +133,7 @@ class PFElement extends HTMLElement {
     dependencies.forEach(dep => {
       // If the type is slot, check that it exists OR
       // if the type is an attribute, check if the attribute is defined
-      if (
-        (dep.type === "slot" && this.has_slot(dep.id)) ||
-        (dep.type === "attribute" && this.getAttribute(dep.id))
-      ) {
+      if ((dep.type === "slot" && this.has_slot(dep.id)) || (dep.type === "attribute" && this.getAttribute(dep.id))) {
         // If the slot does exist, add the attribute with the default value
         return true;
       }

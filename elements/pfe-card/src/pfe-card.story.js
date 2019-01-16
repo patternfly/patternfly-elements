@@ -26,15 +26,7 @@ stories.add(PfeCard.tag, () => {
     color: {
       title: "Color",
       type: "string",
-      enum: [
-        "lightest",
-        "light",
-        "default",
-        "dark",
-        "darkest",
-        "complement",
-        "accent"
-      ],
+      enum: ["lightest", "light", "default", "dark", "darkest", "complement", "accent"],
       default: "complement"
     },
     size: {
@@ -81,11 +73,7 @@ stories.add(PfeCard.tag, () => {
   let ctaLink;
 
   // Manually ask user if they want a CTA included
-  const ctaValue = storybookBridge.boolean(
-    "Include a call-to-action?",
-    true,
-    "Call-to-action"
-  );
+  const ctaValue = storybookBridge.boolean("Include a call-to-action?", true, "Call-to-action");
 
   // If they do, prompt them for the cta text and style
   if (ctaValue) {
@@ -108,9 +96,7 @@ stories.add(PfeCard.tag, () => {
     }
 
     // If the card uses a dark theme, add the on="dark" attribute
-    if (
-      ["dark", "darkest", "accent", "complement"].includes(config.prop.color)
-    ) {
+    if (["dark", "darkest", "accent", "complement"].includes(config.prop.color)) {
       footerAttrs.on = "dark";
     }
   }

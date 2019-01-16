@@ -28,14 +28,7 @@ gulp.task("sass", () => {
 gulp.task("replaceStyles", () => {
   return gulp
     .src("./src/cp-theme.js")
-    .pipe(
-      replace(
-        /<style id="\${templateId}-style"><\/style>/g,
-        '<style id="${templateId}-style">' +
-          fs.readFileSync("./cp-theme.css") +
-          "</style>"
-      )
-    )
+    .pipe(replace(/<style id="\${templateId}-style"><\/style>/g, '<style id="${templateId}-style">' + fs.readFileSync("./cp-theme.css") + "</style>"))
     .pipe(gulp.dest("./"));
 });
 
@@ -62,10 +55,7 @@ gulp.task("watch", () => {
 
 gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-gulp.task(
-  "build",
-  gulp.series("clean", "sass", "replaceStyles", "compile", "bundle")
-);
+gulp.task("build", gulp.series("clean", "sass", "replaceStyles", "compile", "bundle"));
 
 gulp.task("default", gulp.series("build"));
 

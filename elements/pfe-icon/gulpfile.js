@@ -33,12 +33,7 @@ gulp.task("svgSprite", function() {
 gulp.task("stuffSprite", () => {
   return gulp
     .src("./pfe-icon.js")
-    .pipe(
-      replace(
-        /<svg xmlns[\s\S]*?<\/svg>/g,
-        "" + fs.readFileSync("./pfe-icons.svg")
-      )
-    )
+    .pipe(replace(/<svg xmlns[\s\S]*?<\/svg>/g, "" + fs.readFileSync("./pfe-icons.svg")))
     .pipe(gulp.dest("./"));
 });
 

@@ -25,9 +25,7 @@ import PFElement from "../pfelement/pfelement.js";
 // -- Polyfills
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
 if (!Element.prototype.matches) {
-  Element.prototype.matches =
-    Element.prototype.msMatchesSelector ||
-    Element.prototype.webkitMatchesSelector;
+  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
 }
 
 if (!Element.prototype.closest) {
@@ -73,13 +71,7 @@ if (!Array.prototype.includes) {
       var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
       function sameValueZero(x, y) {
-        return (
-          x === y ||
-          (typeof x === "number" &&
-            typeof y === "number" &&
-            isNaN(x) &&
-            isNaN(y))
-        );
+        return x === y || (typeof x === "number" && typeof y === "number" && isNaN(x) && isNaN(y));
       }
 
       // 7. Repeat, while k < len
@@ -125,13 +117,7 @@ class PfeBand extends PFElement {
   }
 
   static get observedAttributes() {
-    return [
-      "pfe-aside-desktop",
-      "pfe-aside-mobile",
-      "pfe-aside-height",
-      "pfe-color",
-      "pfe-img-src"
-    ];
+    return ["pfe-aside-desktop", "pfe-aside-mobile", "pfe-aside-height", "pfe-color", "pfe-img-src"];
   }
 
   static get cascadingAttributes() {

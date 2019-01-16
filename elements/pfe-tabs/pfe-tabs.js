@@ -1,5 +1,28 @@
 import PFElement from "../pfelement/pfelement.js";
 
+/*
+ * Copyright 2019 Red Hat, Inc.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+*/
+
 // https://tc39.github.io/ecma262/#sec-array.prototype.find
 if (!Array.prototype.find) {
   Object.defineProperty(Array.prototype, "find", {
@@ -206,10 +229,7 @@ class PfeTabs extends PFElement {
       this.selectedIndex = 0;
     }
 
-    Promise.all([
-      customElements.whenDefined(RhTab.tag),
-      customElements.whenDefined(RhTabPanel.tag)
-    ]).then(() => this._linkPanels());
+    Promise.all([customElements.whenDefined(RhTab.tag), customElements.whenDefined(RhTabPanel.tag)]).then(() => this._linkPanels());
   }
 
   disconnectedCallback() {
@@ -222,9 +242,7 @@ class PfeTabs extends PFElement {
       case "vertical":
         if (this.hasAttribute("vertical")) {
           this.setAttribute("aria-orientation", "vertical");
-          this._allPanels().forEach(panel =>
-            panel.setAttribute("vertical", "")
-          );
+          this._allPanels().forEach(panel => panel.setAttribute("vertical", ""));
           this._allTabs().forEach(tab => tab.setAttribute("vertical", ""));
         } else {
           this.removeAttribute("aria-orientation");
@@ -234,10 +252,7 @@ class PfeTabs extends PFElement {
         break;
 
       case "selected-index":
-        Promise.all([
-          customElements.whenDefined(RhTab.tag),
-          customElements.whenDefined(RhTabPanel.tag)
-        ]).then(() => {
+        Promise.all([customElements.whenDefined(RhTab.tag), customElements.whenDefined(RhTabPanel.tag)]).then(() => {
           this._linkPanels();
           this.selectIndex(newValue);
         });
@@ -289,9 +304,7 @@ class PfeTabs extends PFElement {
     tabs.forEach(tab => {
       const panel = tab.nextElementSibling;
       if (panel.tagName.toLowerCase() !== "pfe-tab-panel") {
-        console.warn(
-          `${PfeTabs.tag}: tab #${tab.id} is not a sibling of a <pfe-tab-panel>`
-        );
+        console.warn(`${PfeTabs.tag}: tab #${tab.id} is not a sibling of a <pfe-tab-panel>`);
         return;
       }
 

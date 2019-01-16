@@ -6,7 +6,7 @@ const cleaner = require("clean-html");
 
 import PfeBand from "../pfe-band.js";
 
-const darkThemes = ["darker", "darkest", "complement", "accent"];
+let theme = "base";
 
 const stories = storiesOf("Band", module);
 
@@ -14,56 +14,17 @@ const stories = storiesOf("Band", module);
 const template = (data = {}) => {
   return tools.component(PfeBand.tag, data.prop, data.slots);
 };
-const defaultHeading = tools.autoHeading();
 
-stories.addDecorator(storybookBridge.withKnobs);
-
-stories.add(PfeBand.tag, () => {
-  let config = {};
-  const props = PfeBand.properties;
-  const slots = PfeBand.slots;
-
-  //-- Add default content to slot objects
-  Object.entries(slots).forEach(slot => {
-    let supportedComponents = [];
-    if (slot[1].type === "array") {
-      slot[1].items.oneOf.forEach(item =>
-        supportedComponents.push(
-          Object.entries(item)
-            .map(i => i[1])
-            .join("")
-        )
-      );
-    }
-    slot[1].canContain = supportedComponents;
-  });
-
-  // Build the default header content
-  slots["pfe-band-header"].default = defaultHeading;
-
-  // Build the default body content
-  slots["pfe-band-body"].default = tools.autoContent(4, 3);
-
-  // Build the default footer component
-  slots["pfe-band-footer"].default = tools.component(
-    "pfe-cta",
-    {
-      slot: "pfe-band-footer",
-      priority: "primary"
-    },
-    [
-      {
-        content: '<a href="#">Learn more</a>'
-      }
-    ]
-  );
-
-  // Build the default aside component
-  slots["pfe-band-aside"].default = tools.component(
+const defaultContent = {
+  header: tools.autoHeading(),
+  body: tools.component("article", {
+    content: tools.autoContent(4, 3)
+  }),
+  aside: tools.component(
     "pfe-card",
     {
-      slot: "pfe-band-aside",
-      color: darkThemes.includes(props["pfe-color"]) ? "lightest" : "complement"
+      slot: "pfe-band--aside",
+      color: `${["darker", "darkest", "complement", "accent"].includes(theme) ? "lightest" : "complement"}`
     },
     [
       {
@@ -89,20 +50,57 @@ stories.add(PfeBand.tag, () => {
         )
       }
     ]
-  );
+  ),
+  footer: tools.component(
+    "pfe-cta",
+    {
+      slot: "pfe-band--footer",
+      priority: "primary"
+    },
+    [
+      {
+        content: '<a href="#">Learn more</a>'
+      }
+    ]
+  )
+};
 
-  props["pfe-color"].default = "light";
+stories.addDecorator(storybookBridge.withKnobs);
+
+stories.add(PfeBand.tag, () => {
+  let config = {};
+  const props = PfeBand.properties;
+  const slots = PfeBand.slots;
+
+  //-- Add default content to slot objects
+  Object.entries(slots).forEach(slot => {
+    let supportedComponents = [];
+    if (slot[1].type === "array") {
+      slot[1].items.oneOf.forEach(item =>
+        supportedComponents.push(
+          Object.entries(item)
+            .map(i => i[1])
+            .join("")
+        )
+      );
+    }
+    slot[1].canContain = supportedComponents;
+  });
+
+  ["header", "body", "aside", "footer"].forEach(region => {
+    // Build the default content for that region
+    slots[region].default = defaultContent[region];
+  });
+
+  props.color.default = "light";
 
   config.prop = tools.autoPropKnobs(props, storybookBridge);
   config.has = tools.autoContentKnobs(slots, storybookBridge);
 
+  theme = config.prop.color;
+
   // Don't print the attribute if it's the default value
-  [
-    "pfe-color",
-    "pfe-aside-desktop",
-    "pfe-aside-mobile",
-    "pfe-aside-height"
-  ].forEach(p => {
+  ["color", "aside-desktop", "aside-mobile", "aside-height"].forEach(p => {
     if (config.prop[p] === PfeBand.properties[p].default) {
       config.prop[p] = "";
     }
@@ -112,36 +110,22 @@ stories.add(PfeBand.tag, () => {
     {
       content: tools.customTag({
         tag: "h1",
-        slot: "pfe-band-header",
-        content: config.has["pfe-band-header"]
+        slot: "pfe-band--header",
+        content: config.has.header
       })
     },
     {
-      content: config.has["pfe-band-body"]
+      content: config.has.body
     },
     {
-      content: config.has["pfe-band-footer"]
+      content: config.has.footer
     },
     {
-      content: config.has["pfe-band-aside"]
+      content: config.has.aside
     }
   ];
 
   let rendered = template(config);
 
-  cleaner.clean(
-    rendered,
-    {
-      indent: "    ",
-      "remove-attributes": [],
-      wrap: 0
-    },
-    html => (rendered = html)
-  );
-
-  return `${rendered}
-<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold;border: 1px solid #bccc;">
-${tools.escapeHTML(rendered)}
-</pre>
-`;
+  return tools.preview(rendered);
 });

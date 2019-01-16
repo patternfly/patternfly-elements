@@ -142,3 +142,19 @@
 @mixin pfe-define-vars($this-component-var, $this-theme-var, $this-fallback) {
   --pfe-local-#{$this-component-var}: var(--pfe-#{$this-component-var}, var(--pfe-theme--#{$this-theme-var}, #{$this-fallback}));
 }
+
+// Mixin for building slot selectors
+@mixin pfe-slot($slot-name, $selector: "") {
+  // This logic makes it much easier to style default slots in a loop
+  // with named slots
+  @if $slot-name != default {
+    ::slotted([slot="#{$slot-name}"]#{$selector}) {
+      @content;
+    }
+  }
+  @else {
+    ::slotted(*) {
+      @content;
+    }
+  }
+}

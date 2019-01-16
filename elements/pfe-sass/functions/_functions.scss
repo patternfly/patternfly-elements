@@ -10,6 +10,10 @@
     @return pfe-strip-unit($pxval) / $base * 1rem;
 }
 
+@function pfe-size-rem2px($remval, $base: $pfe-global--font-size-root) {
+    @return pfe-strip-unit($remval) * ($base / 1px);
+}
+
 /// Map deep get
 /// @author Hugo Giraudel
 /// @access public

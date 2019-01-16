@@ -25,35 +25,33 @@ const listProperties = obj =>
       let p = set[0];
       let v = set[1];
       let print = set[2] || true;
-      return print && v && v !== "null" ? ` ${p}="${v}"` : "";
+      return print && v && v !== "null" ? ` ${p !== "slot" ? "pfe-" : ""}${p}="${v}"` : "";
     })
     .join("");
 
 // Create a tag based on a provided object
 export function customTag(obj) {
-  return `<${obj.tag ? obj.tag : "div"} ${
-    obj.slot ? `slot="${obj.slot}"` : ""
-  }${listProperties(obj.attributes || {})}>${obj.content || autoContent()}</${
+  return `<${obj.tag ? obj.tag : "div"} ${obj.slot ? `slot="${obj.slot}"` : ""}${listProperties(obj.attributes || {})}>${obj.content || autoContent()}</${
     obj.tag ? obj.tag : "div"
   }>`;
 }
 
 // If a slot is a component or content, render that raw
 // if it's got a tag defined, run the custom tag function
-const renderSlots = (slots = []) =>
-  slots.map(slot => (slot.content ? slot.content : "")).join("");
+const renderSlots = (slots = []) => slots.map(slot => (slot.content ? slot.content : "")).join("");
 
 // Creates a component dynamically based on inputs
 export function component(tag, attributes = {}, slots = []) {
-  return `<${tag}${listProperties(attributes)}>${
-    slots.length > 0 ? renderSlots(slots) : autoContent()
-  }</${tag}>`;
+  return `<${tag}${listProperties(attributes)}>${slots.length > 0 ? renderSlots(slots) : autoContent()}</${tag}>`;
 }
 
 // Create an automatic heading
 export function autoHeading(short = false) {
   let length = short ? Math.random() + 2 : Math.random() * 10 + 5;
-  return loremIpsum({ count: length, units: "words" }).sentenceCase();
+  return loremIpsum({
+    count: length,
+    units: "words"
+  }).sentenceCase();
 }
 
 // Create a set of automatic content
@@ -127,28 +125,7 @@ export function demo(markup) {
     {
       indent: "    ",
       "remove-attributes": [],
-      "break-around-tags": [
-        "body",
-        "blockquote",
-        "br",
-        "div",
-        "h1",
-        "h2",
-        "h3",
-        "h4",
-        "h5",
-        "h6",
-        "head",
-        "hr",
-        "link",
-        "meta",
-        "p",
-        "table",
-        "title",
-        "td",
-        "tr",
-        "a"
-      ],
+      "break-around-tags": ["body", "blockquote", "br", "div", "h1", "h2", "h3", "h4", "h5", "h6", "head", "hr", "link", "meta", "p", "table", "title", "td", "tr", "a"],
       wrap: 0
     },
     html => (markup = html)
@@ -165,37 +142,14 @@ export function code(markup) {
     {
       indent: "    ",
       "remove-attributes": [],
-      "break-around-tags": [
-        "body",
-        "blockquote",
-        "br",
-        "div",
-        "h1",
-        "h2",
-        "h3",
-        "h4",
-        "h5",
-        "h6",
-        "head",
-        "hr",
-        "link",
-        "meta",
-        "p",
-        "table",
-        "title",
-        "td",
-        "tr",
-        "a"
-      ],
+      "break-around-tags": ["body", "blockquote", "br", "div", "h1", "h2", "h3", "h4", "h5", "h6", "head", "hr", "link", "meta", "p", "table", "title", "td", "tr", "a"],
       wrap: 0
     },
     html => (markup = html)
   );
 
   // Return the rendered markup and the code snippet output
-  return `<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">${escapeHTML(
-    markup
-  )}</pre>`;
+  return `<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">${escapeHTML(markup)}</pre>`;
 }
 
 export function preview(markup) {

@@ -70,9 +70,7 @@ class PfeDatetime extends PFElement {
 
   setDate(date) {
     this._datetime = date;
-    this.shadowRoot.querySelector("span").innerText = window.Intl
-      ? this._getTypeString()
-      : date.toLocaleString();
+    this.shadowRoot.querySelector("span").innerText = window.Intl ? this._getTypeString() : date.toLocaleString();
   }
 
   _getOptions() {

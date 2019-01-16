@@ -2,17 +2,17 @@ import PFElement from "../pfelement/pfelement.js";
 
 /*
  * Copyright 2018 Red Hat, Inc.
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,14 +20,13 @@ import PFElement from "../pfelement/pfelement.js";
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
+ * 
+*/
 
 // -- Polyfills
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
 if (!Element.prototype.matches) {
-  Element.prototype.matches =
-    Element.prototype.msMatchesSelector ||
-    Element.prototype.webkitMatchesSelector;
+  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
 }
 
 if (!Element.prototype.closest) {
@@ -73,13 +72,7 @@ if (!Array.prototype.includes) {
       var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
       function sameValueZero(x, y) {
-        return (
-          x === y ||
-          (typeof x === "number" &&
-            typeof y === "number" &&
-            isNaN(x) &&
-            isNaN(y))
-        );
+        return x === y || (typeof x === "number" && typeof y === "number" && isNaN(x) && isNaN(y));
       }
 
       // 7. Repeat, while k < len
@@ -204,19 +197,156 @@ class PfeBand extends PFElement {
 :host([pfe-size="small"]) {
   --pfe-band--padding:   calc(var(--pfe-band--padding__vertical) / 4)  var(--pfe-band--padding__horizontal); }
 
+.pfe-band__body {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start; }
+  @supports (display: grid) {
+    .pfe-band__body {
+      grid-area: body;
+      display: grid;
+      grid-gap: var(--pfe-band--gutter);
+      grid-template-columns: var(--pfe-band_body--layout);
+      grid-template-rows: max-content; } }
+
+::slotted(*) {
+  margin-bottom: var(--pfe-band--gutter); }
+  @supports (display: grid) {
+    ::slotted(*) {
+      margin-bottom: 0; } }
+
+::slotted(*) {
+  margin: 0; }
+
+::slotted(*) {
+  margin-bottom: var(--pfe-band--gutter); }
+  @supports (display: grid) {
+    ::slotted(*) {
+      margin-bottom: 0; } }
+
+.pfe-band__header {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start; }
+  @supports (display: grid) {
+    .pfe-band__header {
+      grid-area: header;
+      display: grid;
+      grid-gap: var(--pfe-band--gutter);
+      grid-template-columns: var(--pfe-band_header--layout);
+      grid-template-rows: max-content; } }
+
+::slotted([slot="pfe-band--header"]:not(:last-child)) {
+  margin-bottom: var(--pfe-band--gutter); }
+  @supports (display: grid) {
+    ::slotted([slot="pfe-band--header"]:not(:last-child)) {
+      margin-bottom: 0; } }
+
+::slotted([slot="pfe-band--header"] > *) {
+  margin: 0; }
+
+::slotted([slot="pfe-band--header"] > *:not(:last-child)) {
+  margin-bottom: var(--pfe-band--gutter); }
+  @supports (display: grid) {
+    ::slotted([slot="pfe-band--header"] > *:not(:last-child)) {
+      margin-bottom: 0; } }
+
+.pfe-band__footer {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start; }
+  @supports (display: grid) {
+    .pfe-band__footer {
+      grid-area: footer;
+      display: grid;
+      grid-gap: var(--pfe-band--gutter);
+      grid-template-columns: var(--pfe-band_footer--layout);
+      grid-template-rows: max-content; } }
+
+::slotted([slot="pfe-band--footer"]:not(:last-child)) {
+  margin-bottom: var(--pfe-band--gutter); }
+  @supports (display: grid) {
+    ::slotted([slot="pfe-band--footer"]:not(:last-child)) {
+      margin-bottom: 0; } }
+
+::slotted([slot="pfe-band--footer"] > *) {
+  margin: 0; }
+
+::slotted([slot="pfe-band--footer"] > *:not(:last-child)) {
+  margin-bottom: var(--pfe-band--gutter); }
+  @supports (display: grid) {
+    ::slotted([slot="pfe-band--footer"] > *:not(:last-child)) {
+      margin-bottom: 0; } }
+
+.pfe-band__aside {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start; }
+  @supports (display: grid) {
+    .pfe-band__aside {
+      grid-area: aside;
+      display: grid;
+      grid-gap: var(--pfe-band--gutter);
+      grid-template-columns: var(--pfe-band_aside--layout);
+      grid-template-rows: max-content; } }
+
+::slotted([slot="pfe-band--aside"]:not(:last-child)) {
+  margin-bottom: var(--pfe-band--gutter); }
+  @supports (display: grid) {
+    ::slotted([slot="pfe-band--aside"]:not(:last-child)) {
+      margin-bottom: 0; } }
+
+::slotted([slot="pfe-band--aside"] > *) {
+  margin: 0; }
+
+::slotted([slot="pfe-band--aside"] > *:not(:last-child)) {
+  margin-bottom: var(--pfe-band--gutter); }
+  @supports (display: grid) {
+    ::slotted([slot="pfe-band--aside"] > *:not(:last-child)) {
+      margin-bottom: 0; } }
+
 .pfe-band__container {
   --pfe-band_region--width: calc(1fr - 240px - var(--pfe-band--gutter));
-  --pfe-band--gridTemplateArea_row2: "body";
+  --pfe-band--gridTemplateArea: "body";
   position: relative;
   margin: 0 auto;
-  max-width: var(--pfe-band--width);
-  display: flex;
-  flex-flow: row wrap;
-  align-items: flex-start;
-  justify-content: space-between; }
+  max-width: var(--pfe-band--width); }
   @media (min-width: 768px) {
     .pfe-band__container {
-      --pfe-band--gridTemplateArea_row2: "body body"; } }
+      --pfe-band--gridTemplateArea: "body body"; } }
+  .pfe-band__container[pfe-has-header] {
+    --pfe-band--gridTemplateArea: "header" "body"; }
+    @media (min-width: 768px) {
+      .pfe-band__container[pfe-has-header] {
+        --pfe-band--gridTemplateArea: "header header" "body body"; } }
+    .pfe-band__container[pfe-has-header][pfe-has-aside] {
+      --pfe-band--gridTemplateArea: "header" "body" "aside"; }
+      @media (min-width: 768px) {
+        .pfe-band__container[pfe-has-header][pfe-has-aside] {
+          --pfe-band--gridTemplateArea: "header header" "body aside"; } }
+  .pfe-band__container[pfe-has-aside] {
+    --pfe-band--gridTemplateArea: "main" "aside"; }
+    @media (min-width: 768px) {
+      .pfe-band__container[pfe-has-aside] {
+        --pfe-band--layout: 1fr 240px;
+        --pfe-band--gridTemplateArea: "main aside"; } }
+    @media (min-width: 992px) {
+      .pfe-band__container[pfe-has-aside] {
+        --pfe-band--layout: 1fr 300px; } }
+  .pfe-band__container[pfe-aside-mobile="top"] {
+    --pfe-band--gridTemplateArea: "aside" "main"; }
+  .pfe-band__container[pfe-has-header][pfe-aside-mobile="top"] {
+    --pfe-band--gridTemplateArea: "aside" "header" "main"; }
+  @media (min-width: 768px) {
+    .pfe-band__container[pfe-aside-desktop="left"] {
+      --pfe-band--layout: 240px 1fr;
+      --pfe-band--gridTemplateArea: "aside main"; } }
+  @media (min-width: 992px) {
+    .pfe-band__container[pfe-aside-desktop="left"] {
+      --pfe-band--layout: 300px 1fr; } }
+  @media (min-width: 768px) {
+    .pfe-band__container[pfe-has-header][pfe-aside-desktop="left"] {
+      --pfe-band--gridTemplateArea: "header header" "aside main"; } }
   @supports (display: grid) {
     .pfe-band__container {
       display: grid;
@@ -224,261 +354,59 @@ class PfeBand extends PFElement {
       grid-column-gap: calc(var(--pfe-band--gutter) * 3);
       grid-template-columns: var(--pfe-band--layout);
       grid-template-rows: max-content;
-      grid-template-areas: var(--pfe-band--gridTemplateArea_row1) var(--pfe-band--gridTemplateArea_row2); } }
-  @media (min-width: 768px) {
-    .pfe-band__container[pfe-aside-desktop="left"], .pfe-band__container[pfe-aside-mobile="top"] {
-      flex-direction: row-reverse; } }
-  .pfe-band__container[pfe-has-header] {
-    --pfe-band--gridTemplateArea_row1: "header"; }
-    @media (min-width: 768px) {
-      .pfe-band__container[pfe-has-header] {
-        --pfe-band--gridTemplateArea_row1: "header header"; } }
-    .pfe-band__container[pfe-has-header][pfe-aside-mobile="top"] {
-      --pfe-band--gridTemplateArea_row1: "aside" "header"; }
-      @media (min-width: 768px) {
-        .pfe-band__container[pfe-has-header][pfe-aside-mobile="top"] {
-          --pfe-band--gridTemplateArea_row1: "header header"; } }
-  .pfe-band__container[pfe-has-aside] {
-    --pfe-band--gridTemplateArea_row2: "main" "aside"; }
-    @media (min-width: 768px) {
-      .pfe-band__container[pfe-has-aside] {
-        --pfe-band--layout: 1fr 240px;
-        --pfe-band--gridTemplateArea_row2: "main aside"; } }
-    @media (min-width: 992px) {
-      .pfe-band__container[pfe-has-aside] {
-        --pfe-band--layout: 1fr 300px; } }
-  .pfe-band__container[pfe-aside-mobile="top"] {
-    --pfe-band--gridTemplateArea_row1: "aside";
-    --pfe-band--gridTemplateArea_row2: "main"; }
-  @media (min-width: 768px) {
-    .pfe-band__container[pfe-aside-height="full"] {
-      --pfe-band--gridTemplateArea_row1: "aside";
-      --pfe-band--gridTemplateArea_row2: "main"; } }
-  @media (min-width: 768px) {
-    .pfe-band__container[pfe-aside-height="full"][pfe-aside-mobile="bottom"], .pfe-band__container[pfe-aside-height="full"][pfe-aside-mobile="top"] {
-      --pfe-band--gridTemplateArea_row1: "main aside";
-      --pfe-band--gridTemplateArea_row2: "main aside"; } }
-  @media (min-width: 768px) {
-    .pfe-band__container[pfe-aside-height="full"][pfe-aside-desktop="left"] {
-      --pfe-band--gridTemplateArea_row1: "aside main";
-      --pfe-band--gridTemplateArea_row2: "aside main"; } }
-  @media (min-width: 768px) {
-    .pfe-band__container[pfe-aside-desktop="left"] {
-      --pfe-band--layout: 240px 1fr;
-      --pfe-band--gridTemplateArea_row2: "aside main"; } }
-  @media (min-width: 992px) {
-    .pfe-band__container[pfe-aside-desktop="left"] {
-      --pfe-band--layout: 300px 1fr; } }
-
-.pfe-band__main {
-  display: flex;
-  flex-flow: column nowrap; }
-  @supports (display: grid) {
-    .pfe-band__main {
-      display: grid;
-      grid-gap: var(--pfe-band--gutter);
-      grid-column-gap: calc(var(--pfe-band--gutter) * 3);
-      grid-template-areas: var(--pfe-band_main--gridTemplateArea_header) "body" var(--pfe-band_main--gridTemplateArea_footer); } }
-  @supports (display: grid) {
-    [pfe-has-header] .pfe-band__main {
-      --pfe-band_main--gridTemplateArea_header: "header"; } }
-  @supports (display: grid) {
-    [pfe-has-footer] .pfe-band__main {
-      --pfe-band_main--gridTemplateArea_footer: "footer"; } }
-  .pfe-band__main > *:not(:last-child) {
-    margin-bottom: var(--pfe-band--gutter); }
-  @media (min-width: 768px) {
-    .pfe-band__main {
-      width: var(--pfe-band_region--width); } }
-
-.pfe-band__header {
-  display: flex;
-  flex-flow: column nowrap; }
-  @supports (display: grid) {
-    .pfe-band__header {
-      display: grid;
-      grid-gap: var(--pfe-band--gutter);
-      grid-template-columns: var(--pfe-band_header--layout);
-      grid-template-rows: max-content; } }
-  .pfe-band__header:not(:last-child) {
-    margin-bottom: var(--pfe-band--gutter); }
-    @supports (display: grid) {
-      .pfe-band__header:not(:last-child) {
-        margin-bottom: 0; } }
-  .pfe-band__header::slotted(*) {
-    margin: 0; }
-  .pfe-band__header::slotted(*:not(:last-child)) {
-    margin-bottom: var(--pfe-band--gutter); }
-    @supports (display: grid) {
-      .pfe-band__header::slotted(*:not(:last-child)) {
-        margin-bottom: 0; } }
-
-.pfe-band__body {
-  display: flex;
-  flex-flow: column nowrap; }
-  @supports (display: grid) {
-    .pfe-band__body {
-      display: grid;
-      grid-gap: var(--pfe-band--gutter);
-      grid-template-columns: var(--pfe-band_body--layout);
-      grid-template-rows: max-content; } }
-  .pfe-band__body:not(:last-child) {
-    margin-bottom: var(--pfe-band--gutter); }
-    @supports (display: grid) {
-      .pfe-band__body:not(:last-child) {
-        margin-bottom: 0; } }
-  .pfe-band__body::slotted(*) {
-    margin: 0; }
-  .pfe-band__body::slotted(*:not(:last-child)) {
-    margin-bottom: var(--pfe-band--gutter); }
-    @supports (display: grid) {
-      .pfe-band__body::slotted(*:not(:last-child)) {
-        margin-bottom: 0; } }
-
-.pfe-band__footer {
-  display: flex;
-  flex-flow: column nowrap; }
-  @supports (display: grid) {
-    .pfe-band__footer {
-      display: grid;
-      grid-gap: var(--pfe-band--gutter);
-      grid-template-columns: var(--pfe-band_footer--layout);
-      grid-template-rows: max-content; } }
-  .pfe-band__footer:not(:last-child) {
-    margin-bottom: var(--pfe-band--gutter); }
-    @supports (display: grid) {
-      .pfe-band__footer:not(:last-child) {
-        margin-bottom: 0; } }
-  .pfe-band__footer::slotted(*) {
-    margin: 0; }
-  .pfe-band__footer::slotted(*:not(:last-child)) {
-    margin-bottom: var(--pfe-band--gutter); }
-    @supports (display: grid) {
-      .pfe-band__footer::slotted(*:not(:last-child)) {
-        margin-bottom: 0; } }
-
-.pfe-band__aside {
-  display: flex;
-  flex-flow: column nowrap; }
-  @supports (display: grid) {
-    .pfe-band__aside {
-      display: grid;
-      grid-gap: var(--pfe-band--gutter);
-      grid-template-columns: var(--pfe-band_aside--layout);
-      grid-template-rows: max-content; } }
-  .pfe-band__aside:not(:last-child) {
-    margin-bottom: var(--pfe-band--gutter); }
-    @supports (display: grid) {
-      .pfe-band__aside:not(:last-child) {
-        margin-bottom: 0; } }
-  .pfe-band__aside::slotted(*) {
-    margin: 0; }
-  .pfe-band__aside::slotted(*:not(:last-child)) {
-    margin-bottom: var(--pfe-band--gutter); }
-    @supports (display: grid) {
-      .pfe-band__aside::slotted(*:not(:last-child)) {
-        margin-bottom: 0; } }
-
-@supports (display: grid) {
-  @media (min-width: 0) {
-    .pfe-band__header {
-      grid-area: header;
-      width: auto; } } }
-
-@supports (display: grid) {
-  @media (min-width: 0) {
-    .pfe-band__main {
-      grid-area: main;
-      width: auto; } } }
-
-@supports (display: grid) {
-  @media (min-width: 0) {
-    .pfe-band__aside {
-      grid-area: aside;
-      width: auto; } } }
+      grid-template-areas: var(--pfe-band--gridTemplateArea); } }
 
 @media (min-width: 768px) {
-  .pfe-band__header {
-    order: -1; } }
-
-@media (min-width: 768px) {
-  .pfe-band__body > *::slotted(*:not(:last-child)) {
-    margin-bottom: var(--pfe-band--gutter); } }
-
-@media (min-width: 768px) {
-  .pfe-band__aside {
-    order: 1;
-    width: 240px; }
-    [pfe-aside-desktop="right"] .pfe-band__aside {
-      order: 0; } }
+  [pfe-has-aside] .pfe-band__main {
+    float: left;
+    width: calc(100% - 230px); } }
 
 @media (min-width: 992px) {
-  .pfe-band__aside {
-    width: 300px; } }</style>
-<section class="pfe-band__container"${
-      this.has_slot("pfe-band-aside") ? ` pfe-has-aside` : ""
-    }${this.has_slot("pfe-band-header") ? ` pfe-has-header` : ""}${
-      this.has_slot("pfe-band-footer") ? ` pfe-has-footer` : ""
-    }>
-  ${
-    this.has_slot("pfe-band-aside") && this.asidePosition.mobile === "top"
-      ? `<slot class="pfe-band__aside" name="pfe-band-aside"></slot>`
-      : ""
-  }
-  ${
-    this.has_slot("pfe-band-aside") && this.asidePosition.height === "full"
-      ? `<div class="pfe-band__main">`
-      : ""
-  }
-  ${
-    this.has_slot("pfe-band-header")
-      ? `<slot class="pfe-band__header" name="pfe-band-header"></slot>`
-      : ""
-  }
-  ${
-    this.has_slot("pfe-band-aside") && this.asidePosition.height !== "full"
-      ? `<div class="pfe-band__main">`
-      : ""
-  }
-    <slot class="pfe-band__body"></slot>
-    ${
-      this.has_slot("pfe-band-footer")
-        ? `<slot class="pfe-band__footer" name="pfe-band-footer"></slot>`
-        : ""
-    }
-    ${this.has_slot("pfe-band-aside") ? `</div>` : ""}
-  ${
-    this.has_slot("pfe-band-aside") && this.asidePosition.mobile !== "top"
-      ? `<slot class="pfe-band__aside" name="pfe-band-aside"></slot>`
-      : ""
-  }
+  [pfe-has-aside] .pfe-band__main {
+    width: calc(100% - 290px); } }
+
+@supports (display: grid) {
+  .pfe-band__main {
+    display: grid;
+    grid-gap: var(--pfe-band--gutter);
+    grid-column-gap: calc(var(--pfe-band--gutter) * 3);
+    grid-template-areas: var(--pfe-band_main--gridTemplateArea_header) "body" var(--pfe-band_main--gridTemplateArea_footer);
+    width: auto !important; } }
+
+@supports (display: grid) {
+  [pfe-has-header] .pfe-band__main {
+    --pfe-band_main--gridTemplateArea_header: "header"; } }
+
+@supports (display: grid) {
+  [pfe-has-footer] .pfe-band__main {
+    --pfe-band_main--gridTemplateArea_footer: "footer"; } }
+
+.pfe-band__main > *:not(:last-child) {
+  margin-bottom: var(--pfe-band--gutter); }
+
+@media (min-width: 768px) {
+  .pfe-band__main {
+    width: var(--pfe-band_region--width); } }</style>
+<section class="pfe-band__container"${["header", "footer", "aside"].map(slot => (this.has_slot(`pfe-band--${slot}`) ? `pfe-has-${slot}` : "")).join(" ")}>
+  ${this.has_slot("pfe-band--aside") && this.asidePosition.mobile === "top" ? `<slot class="pfe-band__aside" name="pfe-band--aside"></slot>` : ""}
+  ${this.has_slot("pfe-band--header") ? `<slot class="pfe-band__header" name="pfe-band--header"></slot>` : ""}
+  <slot class="pfe-band__body"></slot>
+  ${this.has_slot("pfe-band--aside") && this.asidePosition.mobile !== "top" ? `<slot class="pfe-band__aside" name="pfe-band--aside"></slot>` : ""}
+  ${this.has_slot("pfe-band--footer") ? `<slot class="pfe-band__footer" name="pfe-band--footer"></slot>` : ""}
 </section>`;
   }
 
   static get properties() {
     return {
-      "pfe-color": {
+      color: {
         title: "Background color",
         type: "string",
-        enum: [
-          "lightest",
-          "lighter",
-          "base",
-          "darker",
-          "darkest",
-          "complement",
-          "accent"
-        ],
+        enum: ["lightest", "lighter", "base", "darker", "darkest", "complement", "accent"],
         default: "base",
         observer: "_colorChanged"
       },
-      "pfe-img-src": {
-        title: "Background image",
-        type: "string",
-        default: "",
-        observer: "_imgSrcChanged"
-      },
-      "pfe-aside-desktop": {
+      "img-src": { title: "Background image", type: "string", default: "", observer: "_imgSrcChanged" },
+      "aside-desktop": {
         title: "Aside positioning (desktop)",
         type: "string",
         default: "right",
@@ -486,7 +414,7 @@ class PfeBand extends PFElement {
         observer: "_basicAttributeChanged",
         options: { dependencies: [{ type: "slot", id: "pfe-band-aside" }] }
       },
-      "pfe-aside-mobile": {
+      "aside-mobile": {
         title: "Aside positioning (mobile)",
         type: "string",
         default: "bottom",
@@ -494,7 +422,7 @@ class PfeBand extends PFElement {
         observer: "_basicAttributeChanged",
         options: { dependencies: [{ type: "slot", id: "pfe-band-aside" }] }
       },
-      "pfe-aside-height": {
+      "aside-height": {
         title: "Aside height",
         type: "string",
         default: "body",
@@ -507,33 +435,10 @@ class PfeBand extends PFElement {
 
   static get slots() {
     return {
-      "pfe-band-header": {
-        title: "Header",
-        type: "array",
-        namedSlot: true,
-        maxItems: 3,
-        items: { title: "Body item", oneOf: [{ $ref: "raw" }] }
-      },
-      "pfe-band-body": {
-        title: "Body",
-        type: "array",
-        namedSlot: false,
-        items: { oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }] }
-      },
-      "pfe-band-footer": {
-        title: "Footer",
-        type: "array",
-        namedSlot: true,
-        maxItems: 3,
-        items: { oneOf: [{ $ref: "pfe-cta" }, { $ref: "raw" }] }
-      },
-      "pfe-band-aside": {
-        title: "Aside",
-        type: "array",
-        namedSlot: true,
-        maxItems: 5,
-        items: { oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }] }
-      }
+      header: { title: "Header", type: "array", namedSlot: true, maxItems: 3, items: { title: "Body item", oneOf: [{ $ref: "raw" }] } },
+      body: { title: "Body", type: "array", namedSlot: false, items: { oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }] } },
+      footer: { title: "Footer", type: "array", namedSlot: true, maxItems: 3, items: { oneOf: [{ $ref: "pfe-cta" }, { $ref: "raw" }] } },
+      aside: { title: "Aside", type: "array", namedSlot: true, maxItems: 5, items: { oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }] } }
     };
   }
 
@@ -562,13 +467,7 @@ class PfeBand extends PFElement {
   }
 
   static get observedAttributes() {
-    return [
-      "pfe-aside-desktop",
-      "pfe-aside-mobile",
-      "pfe-aside-height",
-      "pfe-color",
-      "pfe-img-src"
-    ];
+    return ["pfe-aside-desktop", "pfe-aside-mobile", "pfe-aside-height", "pfe-color", "pfe-img-src"];
   }
 
   static get cascadingAttributes() {

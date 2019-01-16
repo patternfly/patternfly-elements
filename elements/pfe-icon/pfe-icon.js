@@ -201,9 +201,7 @@ class PfeIcon extends PFElement {
         return;
       }
 
-      this.shadowRoot
-        .querySelector("svg g path")
-        .setAttribute("d", svgPath.getAttribute("d"));
+      this.shadowRoot.querySelector("svg g path").setAttribute("d", svgPath.getAttribute("d"));
     }
   }
 }

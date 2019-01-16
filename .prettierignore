@@ -7,7 +7,8 @@ package-lock.json
 # These ignore paths are for when prettier via 'lerna run' which cd's into each
 # package's dir, so they are relative to the package dirs.
 
-/*.js
+/**/*
+!/src/*.js
 !/gulpfile.js
 !/rollup.config.js
 !/*.story.js
@@ -17,11 +18,13 @@ package-lock.json
 # These ignore paths are for repo-wide prettier runs (like pre-commit hooks)
 # where the working directory is the repo root.
 
-elements/*/*.js
+elements/*/**/*
+!elements/*/src/*.js
 !elements/*/gulpfile.js
 !elements/*/rollup.config.js
 !elements/*/*.story.js
-themes/*/*.js
+themes/*/**/*
+!themes/*/src/*.js
 !themes/*/gulpfile.js
 !themes/*/rollup.config.js
 !themes/*/*.story.js

@@ -3,9 +3,9 @@
   "scripts": {
     "start": "npm run doc-listing-inject && spandx",
     "lerna": "lerna",
-    "test": "npm run build && wct --configFile wct.conf.json test/index.html",
+    "test": "bash scripts/test.sh",
     "dev": "bash scripts/dev.sh",
-    "build": "lerna run build",
+    "build": "bash scripts/build.sh",
     "clean": "rm -rf node_modules package-lock.json {elements,themes}/*/{node_modules,package-lock.json}",
     "bootstrap": "lerna bootstrap --hoist",
     "postinstall": "npm run bootstrap",
@@ -24,6 +24,7 @@
     }
   },
   "devDependencies": {
+    "@polymer/iron-test-helpers": "^3.0.1",
     "@storybook/addon-actions": "^3.4.8",
     "@storybook/addon-knobs": "^3.4.8",
     "@storybook/addon-notes": "^3.4.8",

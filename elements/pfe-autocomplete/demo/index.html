@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PFElements: pfe-autocomplete Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require([
+      '../../../themes/cp-theme/cp-theme.umd.js',
+      '../pfe-autocomplete.umd.js'
+    ])</script>
+  </head>
+  <body unresolved>
+    <pfe-autocomplete id="search-lazy-loading" debounce="500" init-value="uni">
+        <input placeholder="Enter Your Search Term"/>
+    </pfe-autocomplete>
+    <br>
+    <pfe-autocomplete is-disabled init-value="uni"><input placeholder="Enter Your Search Term"/></pfe-autocomplete>
+    <script>
+      const searchAutocomplete = document.querySelector('#search-lazy-loading');
+
+      // autocomplete call
+      searchAutocomplete.autocompleteRequest = function(params, callback) {
+        var xhr = new XMLHttpRequest();
+
+        searchAutocomplete.setAttribute('loading', '');
+        xhr.onload = function() {
+          searchAutocomplete.removeAttribute('loading');
+
+          if(xhr.status === 404) {
+            callback([]);
+          } else {
+            const response = JSON.parse(xhr.responseText);
+            const regx = new RegExp("\^" + params.query, "i");
+
+            var responseReady = response.reduce(function(acc, item) {
+              if (regx.test(item.name)) acc.push(item.name);
+              return acc;
+            }, []);
+            callback(responseReady);
+          }
+        };
+
+        const url = 'https://restcountries.eu/rest/v2/name/' + params.query;
+
+        xhr.open('GET', url, true);
+        xhr.send();
+      };
+
+      // when user performs search, this event is fired
+      // search phrase is passed to e.detail.searchValue
+      searchAutocomplete.addEventListener('pfe-search-event', function(e) {
+        console.log('do search= ' + e.detail.searchValue);
+      });
+    </script>
+  </body>
+</html>

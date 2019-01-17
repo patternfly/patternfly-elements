@@ -1,5 +1,5 @@
 {
-  "name": "@patternfly/pfe-accordion",
+  "name": "@patternfly/pfe-autocomplete",
   "pfelement": {
     "className": "PfeAutocomplete",
     "elementName": "pfe-autocomplete"

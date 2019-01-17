@@ -100,14 +100,26 @@ storiesOf("Datetime", module).add("Demo", () => {
   const now = new Date();
   let realtime = now;
 
-  const yearsago = new Date(new Date().setFullYear(new Date().getFullYear() - 10));
-  const yearago = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
+  const yearsago = new Date(
+    new Date().setFullYear(new Date().getFullYear() - 10)
+  );
+  const yearago = new Date(
+    new Date().setFullYear(new Date().getFullYear() - 1)
+  );
   const hoursago = new Date(new Date().setHours(new Date().getHours() - 2));
-  const minutesago = new Date(new Date().setMinutes(new Date().getMinutes() - 10));
-  const minutesuntil = new Date(new Date().setMinutes(new Date().getMinutes() + 22));
+  const minutesago = new Date(
+    new Date().setMinutes(new Date().getMinutes() - 10)
+  );
+  const minutesuntil = new Date(
+    new Date().setMinutes(new Date().getMinutes() + 22)
+  );
   const hoursuntil = new Date(new Date().setHours(new Date().getHours() + 13));
-  const yearuntil = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
-  const yearsuntil = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
+  const yearuntil = new Date(
+    new Date().setFullYear(new Date().getFullYear() + 1)
+  );
+  const yearsuntil = new Date(
+    new Date().setFullYear(new Date().getFullYear() + 10)
+  );
 
   function timer() {
     document.getElementById("realtime").setAttribute("datetime", new Date());

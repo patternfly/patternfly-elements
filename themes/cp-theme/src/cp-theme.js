@@ -18,6 +18,8 @@ import "./custom-style-interface.min.js";
   document.head.appendChild(cpthemeTemplate);
 
   if (window.ShadyCSS) {
-    window.ShadyCSS.CustomStyleInterface.addCustomStyle(document.querySelector(`#${templateId}-style`));
+    window.ShadyCSS.CustomStyleInterface.addCustomStyle(
+      document.querySelector(`#${templateId}-style`)
+    );
   }
 })();

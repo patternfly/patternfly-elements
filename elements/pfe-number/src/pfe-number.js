@@ -59,7 +59,9 @@ class PfeNumber extends PFElement {
   }
 
   _setInitialNumber() {
-    const numberAttrDefined = !Number.isNaN(parseFloat(this.getAttribute("number")));
+    const numberAttrDefined = !Number.isNaN(
+      parseFloat(this.getAttribute("number"))
+    );
     const numberContentDefined = !Number.isNaN(parseFloat(this.textContent));
 
     if (numberAttrDefined) {

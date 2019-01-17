@@ -25,8 +25,11 @@ import PFElement from "../pfelement/pfelement.js";
 
 class PfeDatetime extends PFElement {
   get html() {
-    return `<style>:host {
-  display: inline; }</style>
+    return `
+<style>
+:host {
+  display: inline; }
+</style>
 <span></span>`;
   }
 
@@ -99,7 +102,9 @@ class PfeDatetime extends PFElement {
 
   setDate(date) {
     this._datetime = date;
-    this.shadowRoot.querySelector("span").innerText = window.Intl ? this._getTypeString() : date.toLocaleString();
+    this.shadowRoot.querySelector("span").innerText = window.Intl
+      ? this._getTypeString()
+      : date.toLocaleString();
   }
 
   _getOptions() {

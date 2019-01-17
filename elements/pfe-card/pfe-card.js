@@ -23,78 +23,11 @@ import PFElement from "../pfelement/pfelement.js";
  * 
 */
 
-// -- Polyfills
-// https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
-if (!Element.prototype.matches) {
-  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
-}
-
-if (!Element.prototype.closest) {
-  Element.prototype.closest = function(s) {
-    var el = this;
-
-    do {
-      if (el.matches(s)) return el;
-      el = el.parentElement || el.parentNode;
-    } while (el !== null && el.nodeType === 1);
-    return null;
-  };
-}
-
-// https://tc39.github.io/ecma262/#sec-array.prototype.includes
-if (!Array.prototype.includes) {
-  Object.defineProperty(Array.prototype, "includes", {
-    value: function(valueToFind, fromIndex) {
-      if (this == null) {
-        throw new TypeError('"this" is null or not defined');
-      }
-
-      // 1. Let O be ? ToObject(this value).
-      var o = Object(this);
-
-      // 2. Let len be ? ToLength(? Get(O, "length")).
-      var len = o.length >>> 0;
-
-      // 3. If len is 0, return false.
-      if (len === 0) {
-        return false;
-      }
-
-      // 4. Let n be ? ToInteger(fromIndex).
-      //    (If fromIndex is undefined, this step produces the value 0.)
-      var n = fromIndex | 0;
-
-      // 5. If n ≥ 0, then
-      //  a. Let k be n.
-      // 6. Else n < 0,
-      //  a. Let k be len + n.
-      //  b. If k < 0, let k be 0.
-      var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
-
-      function sameValueZero(x, y) {
-        return x === y || (typeof x === "number" && typeof y === "number" && isNaN(x) && isNaN(y));
-      }
-
-      // 7. Repeat, while k < len
-      while (k < len) {
-        // a. Let elementK be the result of ? Get(O, ! ToString(k)).
-        // b. If SameValueZero(valueToFind, elementK) is true, return true.
-        if (sameValueZero(o[k], valueToFind)) {
-          return true;
-        }
-        // c. Increase k by 1.
-        k++;
-      }
-
-      // 8. Return false
-      return false;
-    }
-  });
-}
-
 class PfeCard extends PFElement {
   get html() {
-    return `<style>:host {
+    return `
+<style>
+:host {
   --pfe-card--padding:                          calc(var(--pfe-theme--container-spacer, 1rem) * 2);
   --pfe-card_header--size:                      var(--pfe-theme--font-size--heading--gamma, 21px);
   --pfe-card--bg:                               var(--pfe-theme--color--surface--base, #dfdfdf);
@@ -195,7 +128,8 @@ a:focus {
 
 .pfe-card__footer {
   margin-top: auto;
-  justify-self: flex-end; }</style>
+  justify-self: flex-end; }
+</style>
 <slot class="pfe-card__header" name="header"></slot>
 <slot class="pfe-card__body"></slot>
 <slot class="pfe-card__footer" name="footer"></slot>`;
@@ -213,47 +147,8 @@ a:focus {
     return "pfe-card.html";
   }
 
-  // Declare the type of this component
-  static get PfeType() {
-    return PFElement.PfeTypes.Container;
-  }
-
-  static get observedAttributes() {
-    return ["color"];
-  }
-
   constructor() {
-    super(PfeCard, { type: PfeCard.PfeType });
-  }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
-
-    // If the observer is defined in the attribute properties
-    if (attr === "color") {
-      this._colorChanged(attr, oldValue, newValue);
-    }
-  }
-
-  // Update the color attribute and contexts
-  _colorChanged(attr, oldValue, newValue) {
-    // If the new value has a dark background, update children elements
-    this._updateContext(newValue);
-  }
-
-  // Set the children's context if parent background is dark
-  _updateContext(context) {
-    if (["darkest", "dark", "complement", "accent"].includes(context)) {
-      ["pfe-cta"].forEach(elementName => {
-        const els = [...this.querySelectorAll(`${elementName}`)];
-        els.forEach(el => {
-          const myContainer = el.closest("[pfe-type='container']");
-          if (myContainer === this || myContainer === null) {
-            el.setAttribute("on", "dark");
-          }
-        });
-      });
-    }
+    super(PfeCard);
   }
 }
 

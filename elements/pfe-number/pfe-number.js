@@ -1,6 +1,13 @@
 import PFElement from "../pfelement/pfelement.js";
 
-var commonjsGlobal = typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
+var commonjsGlobal =
+  typeof window !== "undefined"
+    ? window
+    : typeof global !== "undefined"
+      ? global
+      : typeof self !== "undefined"
+        ? self
+        : {};
 
 function createCommonjsModule(fn, module) {
   return (module = { exports: {} }), fn(module, module.exports), module.exports;
@@ -69,11 +76,17 @@ var numeral = createCommonjsModule(function(module) {
       } else if (typeof input === "string") {
         if (options.zeroFormat && input === options.zeroFormat) {
           value = 0;
-        } else if ((options.nullFormat && input === options.nullFormat) || !input.replace(/[^0-9]+/g, "").length) {
+        } else if (
+          (options.nullFormat && input === options.nullFormat) ||
+          !input.replace(/[^0-9]+/g, "").length
+        ) {
           value = null;
         } else {
           for (kind in formats) {
-            regexp = typeof formats[kind].regexps.unformat === "function" ? formats[kind].regexps.unformat() : formats[kind].regexps.unformat;
+            regexp =
+              typeof formats[kind].regexps.unformat === "function"
+                ? formats[kind].regexps.unformat()
+                : formats[kind].regexps.unformat;
 
             if (regexp && input.match(regexp)) {
               unformatFunction = formats[kind].unformat;
@@ -134,8 +147,15 @@ var numeral = createCommonjsModule(function(module) {
         if (numeral._.includes(format, "(")) {
           negP = true;
           format = format.replace(/[\(|\)]/g, "");
-        } else if (numeral._.includes(format, "+") || numeral._.includes(format, "-")) {
-          signed = numeral._.includes(format, "+") ? format.indexOf("+") : value < 0 ? format.indexOf("-") : -1;
+        } else if (
+          numeral._.includes(format, "+") ||
+          numeral._.includes(format, "-")
+        ) {
+          signed = numeral._.includes(format, "+")
+            ? format.indexOf("+")
+            : value < 0
+              ? format.indexOf("-")
+              : -1;
           format = format.replace(/[\+|\-]/g, "");
         }
 
@@ -156,15 +176,24 @@ var numeral = createCommonjsModule(function(module) {
             // trillion
             abbr += locale.abbreviations.trillion;
             value = value / trillion;
-          } else if ((abs < trillion && abs >= billion && !abbrForce) || abbrForce === "b") {
+          } else if (
+            (abs < trillion && abs >= billion && !abbrForce) ||
+            abbrForce === "b"
+          ) {
             // billion
             abbr += locale.abbreviations.billion;
             value = value / billion;
-          } else if ((abs < billion && abs >= million && !abbrForce) || abbrForce === "m") {
+          } else if (
+            (abs < billion && abs >= million && !abbrForce) ||
+            abbrForce === "m"
+          ) {
             // million
             abbr += locale.abbreviations.million;
             value = value / million;
-          } else if ((abs < million && abs >= thousand && !abbrForce) || abbrForce === "k") {
+          } else if (
+            (abs < million && abs >= thousand && !abbrForce) ||
+            abbrForce === "k"
+          ) {
             // thousand
             abbr += locale.abbreviations.thousand;
             value = value / thousand;
@@ -192,9 +221,18 @@ var numeral = createCommonjsModule(function(module) {
           if (numeral._.includes(precision, "[")) {
             precision = precision.replace("]", "");
             precision = precision.split("[");
-            decimal = numeral._.toFixed(value, precision[0].length + precision[1].length, roundingFunction, precision[1].length);
+            decimal = numeral._.toFixed(
+              value,
+              precision[0].length + precision[1].length,
+              roundingFunction,
+              precision[1].length
+            );
           } else {
-            decimal = numeral._.toFixed(value, precision.length, roundingFunction);
+            decimal = numeral._.toFixed(
+              value,
+              precision.length,
+              roundingFunction
+            );
           }
 
           int = decimal.split(".")[0];
@@ -213,7 +251,12 @@ var numeral = createCommonjsModule(function(module) {
         }
 
         // check abbreviation again after rounding
-        if (abbr && !abbrForce && Number(int) >= 1000 && abbr !== locale.abbreviations.trillion) {
+        if (
+          abbr &&
+          !abbrForce &&
+          Number(int) >= 1000 &&
+          abbr !== locale.abbreviations.trillion
+        ) {
           int = String(Number(int) / 1000);
 
           switch (abbr) {
@@ -242,7 +285,12 @@ var numeral = createCommonjsModule(function(module) {
         }
 
         if (thousands > -1) {
-          int = int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1" + locale.delimiters.thousands);
+          int = int
+            .toString()
+            .replace(
+              /(\d)(?=(\d{3})+(?!\d))/g,
+              "$1" + locale.delimiters.thousands
+            );
         }
 
         if (format.indexOf(".") === 0) {
@@ -255,7 +303,10 @@ var numeral = createCommonjsModule(function(module) {
           output = (negP && neg ? "(" : "") + output + (negP && neg ? ")" : "");
         } else {
           if (signed >= 0) {
-            output = signed === 0 ? (neg ? "-" : "+") + output : output + (neg ? "-" : "+");
+            output =
+              signed === 0
+                ? (neg ? "-" : "+") + output
+                : output + (neg ? "-" : "+");
           } else if (neg) {
             output = "-" + output;
           }
@@ -279,17 +330,28 @@ var numeral = createCommonjsModule(function(module) {
 
         if (options.zeroFormat && string === options.zeroFormat) {
           value = 0;
-        } else if ((options.nullFormat && string === options.nullFormat) || !string.replace(/[^0-9]+/g, "").length) {
+        } else if (
+          (options.nullFormat && string === options.nullFormat) ||
+          !string.replace(/[^0-9]+/g, "").length
+        ) {
           value = null;
         } else {
           value = 1;
 
           if (locale.delimiters.decimal !== ".") {
-            string = string.replace(/\./g, "").replace(locale.delimiters.decimal, ".");
+            string = string
+              .replace(/\./g, "")
+              .replace(locale.delimiters.decimal, ".");
           }
 
           for (abbreviation in abbreviations) {
-            regexp = new RegExp("[^a-zA-Z]" + locale.abbreviations[abbreviation] + "(?:\\)|(\\" + locale.currency.symbol + ")?(?:\\))?)?$");
+            regexp = new RegExp(
+              "[^a-zA-Z]" +
+                locale.abbreviations[abbreviation] +
+                "(?:\\)|(\\" +
+                locale.currency.symbol +
+                ")?(?:\\))?)?$"
+            );
 
             if (stringOriginal.match(regexp)) {
               value *= Math.pow(10, abbreviations[abbreviation]);
@@ -298,7 +360,15 @@ var numeral = createCommonjsModule(function(module) {
           }
 
           // check for negative number
-          value *= (string.split("-").length + Math.min(string.split("(").length - 1, string.split(")").length - 1)) % 2 ? 1 : -1;
+          value *=
+            (string.split("-").length +
+              Math.min(
+                string.split("(").length - 1,
+                string.split(")").length - 1
+              )) %
+            2
+              ? 1
+              : -1;
 
           // remove non numbers
           string = string.replace(/[^0-9\.]+/g, "");
@@ -319,7 +389,9 @@ var numeral = createCommonjsModule(function(module) {
       },
       reduce: function(array, callback /*, initialValue*/) {
         if (this === null) {
-          throw new TypeError("Array.prototype.reduce called on null or undefined");
+          throw new TypeError(
+            "Array.prototype.reduce called on null or undefined"
+          );
         }
 
         if (typeof callback !== "function") {
@@ -390,7 +462,10 @@ var numeral = createCommonjsModule(function(module) {
 
         // Use the smallest precision value possible to avoid errors from floating point representation
         if (splitValue.length === 2) {
-          boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
+          boundedPrecision = Math.min(
+            Math.max(splitValue[1].length, minDecimals),
+            maxDecimals
+          );
         } else {
           boundedPrecision = minDecimals;
         }
@@ -398,10 +473,14 @@ var numeral = createCommonjsModule(function(module) {
         power = Math.pow(10, boundedPrecision);
 
         // Multiply up by precision, round accurately, then divide and use native toFixed():
-        output = (roundingFunction(value + "e+" + boundedPrecision) / power).toFixed(boundedPrecision);
+        output = (
+          roundingFunction(value + "e+" + boundedPrecision) / power
+        ).toFixed(boundedPrecision);
 
         if (optionals > maxDecimals - boundedPrecision) {
-          optionalsRegExp = new RegExp("\\.?0{1," + (optionals - (maxDecimals - boundedPrecision)) + "}$");
+          optionalsRegExp = new RegExp(
+            "\\.?0{1," + (optionals - (maxDecimals - boundedPrecision)) + "}$"
+          );
           output = output.replace(optionalsRegExp, "");
         }
 
@@ -477,14 +556,24 @@ var numeral = createCommonjsModule(function(module) {
     };
 
     numeral.validate = function(val, culture) {
-      var _decimalSep, _thousandSep, _currSymbol, _valArray, _abbrObj, _thousandRegEx, localeData, temp;
+      var _decimalSep,
+        _thousandSep,
+        _currSymbol,
+        _valArray,
+        _abbrObj,
+        _thousandRegEx,
+        localeData,
+        temp;
 
       //coerce val to string
       if (typeof val !== "string") {
         val += "";
 
         if (console.warn) {
-          console.warn("Numeral.js: Value is not string. It has been co-erced to: ", val);
+          console.warn(
+            "Numeral.js: Value is not string. It has been co-erced to: ",
+            val
+          );
         }
       }
 
@@ -532,7 +621,12 @@ var numeral = createCommonjsModule(function(module) {
       temp = val.match(/[^\d]+$/);
       if (temp !== null) {
         val = val.slice(0, -1);
-        if (temp[0] !== _abbrObj.thousand && temp[0] !== _abbrObj.million && temp[0] !== _abbrObj.billion && temp[0] !== _abbrObj.trillion) {
+        if (
+          temp[0] !== _abbrObj.thousand &&
+          temp[0] !== _abbrObj.million &&
+          temp[0] !== _abbrObj.billion &&
+          temp[0] !== _abbrObj.trillion
+        ) {
           return false;
         }
       }
@@ -545,12 +639,23 @@ var numeral = createCommonjsModule(function(module) {
           return false;
         } else {
           if (_valArray.length < 2) {
-            return !!_valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx);
+            return (
+              !!_valArray[0].match(/^\d+.*\d$/) &&
+              !_valArray[0].match(_thousandRegEx)
+            );
           } else {
             if (_valArray[0].length === 1) {
-              return !!_valArray[0].match(/^\d+$/) && !_valArray[0].match(_thousandRegEx) && !!_valArray[1].match(/^\d+$/);
+              return (
+                !!_valArray[0].match(/^\d+$/) &&
+                !_valArray[0].match(_thousandRegEx) &&
+                !!_valArray[1].match(/^\d+$/)
+              );
             } else {
-              return !!_valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx) && !!_valArray[1].match(/^\d+$/);
+              return (
+                !!_valArray[0].match(/^\d+.*\d$/) &&
+                !_valArray[0].match(_thousandRegEx) &&
+                !!_valArray[1].match(/^\d+$/)
+              );
             }
           }
         }
@@ -627,14 +732,19 @@ var numeral = createCommonjsModule(function(module) {
           return accum - Math.round(corrFactor * curr);
         }
 
-        this._value = _.reduce([value], cback, Math.round(this._value * corrFactor)) / corrFactor;
+        this._value =
+          _.reduce([value], cback, Math.round(this._value * corrFactor)) /
+          corrFactor;
 
         return this;
       },
       multiply: function(value) {
         function cback(accum, curr, currI, O) {
           var corrFactor = _.correctionFactor(accum, curr);
-          return (Math.round(accum * corrFactor) * Math.round(curr * corrFactor)) / Math.round(corrFactor * corrFactor);
+          return (
+            (Math.round(accum * corrFactor) * Math.round(curr * corrFactor)) /
+            Math.round(corrFactor * corrFactor)
+          );
         }
 
         this._value = _.reduce([this._value, value], cback, 1);
@@ -677,7 +787,15 @@ var numeral = createCommonjsModule(function(module) {
       },
       ordinal: function(number) {
         var b = number % 10;
-        return ~~((number % 100) / 10) === 1 ? "th" : b === 1 ? "st" : b === 2 ? "nd" : b === 3 ? "rd" : "th";
+        return ~~((number % 100) / 10) === 1
+          ? "th"
+          : b === 1
+            ? "st"
+            : b === 2
+              ? "nd"
+              : b === 3
+                ? "rd"
+                : "th";
       },
       currency: {
         symbol: "$"
@@ -726,7 +844,17 @@ var numeral = createCommonjsModule(function(module) {
         },
         binary = {
           base: 1024,
-          suffixes: ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
+          suffixes: [
+            "B",
+            "KiB",
+            "MiB",
+            "GiB",
+            "TiB",
+            "PiB",
+            "EiB",
+            "ZiB",
+            "YiB"
+          ]
         };
 
       var allSuffixes = decimal.suffixes.concat(
@@ -746,7 +874,11 @@ var numeral = createCommonjsModule(function(module) {
         format: function(value, format, roundingFunction) {
           var output,
             bytes = numeral._.includes(format, "ib") ? binary : decimal,
-            suffix = numeral._.includes(format, " b") || numeral._.includes(format, " ib") ? " " : "",
+            suffix =
+              numeral._.includes(format, " b") ||
+              numeral._.includes(format, " ib")
+                ? " "
+                : "",
             power,
             min,
             max;
@@ -758,7 +890,11 @@ var numeral = createCommonjsModule(function(module) {
             min = Math.pow(bytes.base, power);
             max = Math.pow(bytes.base, power + 1);
 
-            if (value === null || value === 0 || (value >= min && value < max)) {
+            if (
+              value === null ||
+              value === 0 ||
+              (value >= min && value < max)
+            ) {
               suffix += bytes.suffixes[power];
 
               if (min > 0) {
@@ -826,7 +962,11 @@ var numeral = createCommonjsModule(function(module) {
           if (value >= 0) {
             symbols.before = symbols.before.replace(/[\-\(]/, "");
             symbols.after = symbols.after.replace(/[\-\)]/, "");
-          } else if (value < 0 && (!numeral._.includes(symbols.before, "-") && !numeral._.includes(symbols.before, "("))) {
+          } else if (
+            value < 0 &&
+            (!numeral._.includes(symbols.before, "-") &&
+              !numeral._.includes(symbols.before, "("))
+          ) {
             symbols.before = "-" + symbols.before;
           }
 
@@ -839,7 +979,11 @@ var numeral = createCommonjsModule(function(module) {
                 output = numeral._.insert(output, locale.currency.symbol, i);
                 break;
               case " ":
-                output = numeral._.insert(output, " ", i + locale.currency.symbol.length - 1);
+                output = numeral._.insert(
+                  output,
+                  " ",
+                  i + locale.currency.symbol.length - 1
+                );
                 break;
             }
           }
@@ -850,10 +994,29 @@ var numeral = createCommonjsModule(function(module) {
 
             switch (symbol) {
               case "$":
-                output = i === symbols.after.length - 1 ? output + locale.currency.symbol : numeral._.insert(output, locale.currency.symbol, -(symbols.after.length - (1 + i)));
+                output =
+                  i === symbols.after.length - 1
+                    ? output + locale.currency.symbol
+                    : numeral._.insert(
+                        output,
+                        locale.currency.symbol,
+                        -(symbols.after.length - (1 + i))
+                      );
                 break;
               case " ":
-                output = i === symbols.after.length - 1 ? output + " " : numeral._.insert(output, " ", -(symbols.after.length - (1 + i) + locale.currency.symbol.length - 1));
+                output =
+                  i === symbols.after.length - 1
+                    ? output + " "
+                    : numeral._.insert(
+                        output,
+                        " ",
+                        -(
+                          symbols.after.length -
+                          (1 + i) +
+                          locale.currency.symbol.length -
+                          1
+                        )
+                      );
                 break;
             }
           }
@@ -871,17 +1034,26 @@ var numeral = createCommonjsModule(function(module) {
         },
         format: function(value, format, roundingFunction) {
           var output,
-            exponential = typeof value === "number" && !numeral._.isNaN(value) ? value.toExponential() : "0e+0",
+            exponential =
+              typeof value === "number" && !numeral._.isNaN(value)
+                ? value.toExponential()
+                : "0e+0",
             parts = exponential.split("e");
 
           format = format.replace(/e[\+|\-]{1}0/, "");
 
-          output = numeral._.numberToFormat(Number(parts[0]), format, roundingFunction);
+          output = numeral._.numberToFormat(
+            Number(parts[0]),
+            format,
+            roundingFunction
+          );
 
           return output + "e" + parts[1];
         },
         unformat: function(string) {
-          var parts = numeral._.includes(string, "e+") ? string.split("e+") : string.split("e-"),
+          var parts = numeral._.includes(string, "e+")
+              ? string.split("e+")
+              : string.split("e-"),
             value = Number(parts[0]),
             power = Number(parts[1]);
 
@@ -889,7 +1061,9 @@ var numeral = createCommonjsModule(function(module) {
 
           function cback(accum, curr, currI, O) {
             var corrFactor = numeral._.correctionFactor(accum, curr),
-              num = (accum * corrFactor * (curr * corrFactor)) / (corrFactor * corrFactor);
+              num =
+                (accum * corrFactor * (curr * corrFactor)) /
+                (corrFactor * corrFactor);
             return num;
           }
 
@@ -972,7 +1146,13 @@ var numeral = createCommonjsModule(function(module) {
             minutes = Math.floor((value - hours * 60 * 60) / 60),
             seconds = Math.round(value - hours * 60 * 60 - minutes * 60);
 
-          return hours + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+          return (
+            hours +
+            ":" +
+            (minutes < 10 ? "0" + minutes : minutes) +
+            ":" +
+            (seconds < 10 ? "0" + seconds : seconds)
+          );
         },
         unformat: function(string) {
           var timeArray = string.split(":"),
@@ -1040,9 +1220,12 @@ numeral.locales.en.delimiters.thousands = " ";
 
 class PfeNumber extends PFElement {
   get html() {
-    return `<style>:host {
+    return `
+<style>
+:host {
   display: inline;
-  white-space: nowrap; }</style>
+  white-space: nowrap; }
+</style>
 <span></span>`;
   }
 
@@ -1089,7 +1272,9 @@ class PfeNumber extends PFElement {
   }
 
   _setInitialNumber() {
-    const numberAttrDefined = !Number.isNaN(parseFloat(this.getAttribute("number")));
+    const numberAttrDefined = !Number.isNaN(
+      parseFloat(this.getAttribute("number"))
+    );
     const numberContentDefined = !Number.isNaN(parseFloat(this.textContent));
 
     if (numberAttrDefined) {

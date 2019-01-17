@@ -25,7 +25,9 @@ import PFElement from "../pfelement/pfelement.js";
 
 class PfeHealthIndex extends PFElement {
   get html() {
-    return `<style>:host {
+    return `
+<style>
+:host {
   display: inline-flex;
   align-items: center; }
 
@@ -54,7 +56,8 @@ class PfeHealthIndex extends PFElement {
     .box-container .box.active.e {
       background-color: #cc0000; }
     .box-container .box.active.f {
-      background-color: #a30000; }</style>
+      background-color: #a30000; }
+</style>
 <div id="healthIndex"></div>
 <div class="box-container">
   <div class="box a"></div>
@@ -92,7 +95,9 @@ class PfeHealthIndex extends PFElement {
     const boxes = [...this.shadowRoot.querySelectorAll(".box")];
 
     this.innerHTML = healthIndexUpperCase;
-    this.shadowRoot.querySelector("#healthIndex").innerText = healthIndexUpperCase;
+    this.shadowRoot.querySelector(
+      "#healthIndex"
+    ).innerText = healthIndexUpperCase;
 
     boxes.forEach(box => {
       if (box.classList.contains(healthIndex)) {
@@ -103,7 +108,11 @@ class PfeHealthIndex extends PFElement {
     });
 
     if (!this.shadowRoot.querySelector(".box.active")) {
-      console.warn(`${PfeHealthIndex.tag}: a valid health-index was not provided. Please use A, B, C, D, E, or F`);
+      console.warn(
+        `${
+          PfeHealthIndex.tag
+        }: a valid health-index was not provided. Please use A, B, C, D, E, or F`
+      );
     }
   }
 }

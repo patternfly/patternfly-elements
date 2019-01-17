@@ -23,9 +23,13 @@ class PfeCta extends PFElement {
     const firstChild = this.children[0];
 
     if (!firstChild) {
-      console.warn("The first child in the light DOM must be an anchor tag (<a>)");
+      console.warn(
+        "The first child in the light DOM must be an anchor tag (<a>)"
+      );
     } else if (firstChild && firstChild.tagName.toLowerCase() !== "a") {
-      console.warn("The first child in the light DOM must be an anchor tag (<a>)");
+      console.warn(
+        "The first child in the light DOM must be an anchor tag (<a>)"
+      );
     } else {
       this.link = this.querySelector("a");
     }

@@ -17,7 +17,12 @@ gulp.task("clean", () => {
 gulp.task("compile", () => {
   return gulp
     .src(["./pfelement.js", "./reveal.js"])
-    .pipe(replace(/^(import .*?)(['"]\.\.?\/(?!\.\.\/).*)(\.js['"];)$/gm, "$1$2.umd$3"))
+    .pipe(
+      replace(
+        /^(import .*?)(['"]\.\.?\/(?!\.\.\/).*)(\.js['"];)$/gm,
+        "$1$2.umd$3"
+      )
+    )
     .pipe(
       rename({
         suffix: ".umd"
@@ -59,7 +64,10 @@ gulp.task("watch", () => {
 
 gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-gulp.task("build", gulp.series("clean", "copy", "compile", "minify-css", "bundle"));
+gulp.task(
+  "build",
+  gulp.series("clean", "copy", "compile", "minify-css", "bundle")
+);
 
 gulp.task("default", gulp.series("build"));
 

@@ -134,7 +134,9 @@ function generateId() {
 
 class PfeTabs extends PFElement {
   get html() {
-    return `<style>:host {
+    return `
+<style>
+:host {
   display: block; }
 
 .tabs {
@@ -168,7 +170,8 @@ class PfeTabs extends PFElement {
 :host([vertical]) .panels {
   padding: 0;
   padding-right: var(--pfe-theme--container-padding, 1rem);
-  padding-left: calc(var(--pfe-theme--container-padding, 1rem) * 2); }</style>
+  padding-left: calc(var(--pfe-theme--container-padding, 1rem) * 2); }
+</style>
 <div class="tabs">
   <slot name="tab"></slot>
 </div>
@@ -229,7 +232,10 @@ class PfeTabs extends PFElement {
       this.selectedIndex = 0;
     }
 
-    Promise.all([customElements.whenDefined(RhTab.tag), customElements.whenDefined(RhTabPanel.tag)]).then(() => this._linkPanels());
+    Promise.all([
+      customElements.whenDefined(RhTab.tag),
+      customElements.whenDefined(RhTabPanel.tag)
+    ]).then(() => this._linkPanels());
   }
 
   disconnectedCallback() {
@@ -242,7 +248,9 @@ class PfeTabs extends PFElement {
       case "vertical":
         if (this.hasAttribute("vertical")) {
           this.setAttribute("aria-orientation", "vertical");
-          this._allPanels().forEach(panel => panel.setAttribute("vertical", ""));
+          this._allPanels().forEach(panel =>
+            panel.setAttribute("vertical", "")
+          );
           this._allTabs().forEach(tab => tab.setAttribute("vertical", ""));
         } else {
           this.removeAttribute("aria-orientation");
@@ -252,7 +260,10 @@ class PfeTabs extends PFElement {
         break;
 
       case "selected-index":
-        Promise.all([customElements.whenDefined(RhTab.tag), customElements.whenDefined(RhTabPanel.tag)]).then(() => {
+        Promise.all([
+          customElements.whenDefined(RhTab.tag),
+          customElements.whenDefined(RhTabPanel.tag)
+        ]).then(() => {
           this._linkPanels();
           this.selectIndex(newValue);
         });
@@ -304,7 +315,9 @@ class PfeTabs extends PFElement {
     tabs.forEach(tab => {
       const panel = tab.nextElementSibling;
       if (panel.tagName.toLowerCase() !== "pfe-tab-panel") {
-        console.warn(`${PfeTabs.tag}: tab #${tab.id} is not a sibling of a <pfe-tab-panel>`);
+        console.warn(
+          `${PfeTabs.tag}: tab #${tab.id} is not a sibling of a <pfe-tab-panel>`
+        );
         return;
       }
 
@@ -463,7 +476,9 @@ class PfeTabs extends PFElement {
 
 class RhTab extends PFElement {
   get html() {
-    return `<style>:host {
+    return `
+<style>
+:host {
   --pfe-tabs--main:         transparent;
   --pfe-tabs--aux:          var(--pfe-theme--color--surface--lightest--text, #333);
   --pfe-tabs--link:         var(--pfe-theme--color--surface--lightest--link, #06c);
@@ -507,7 +522,8 @@ class RhTab extends PFElement {
 
 :host(:focus),
 :host(:focus-visible) {
-  outline: var(--pfe-theme--ui--focus-outline-width, 1px) var(--pfe-theme--ui--focus-outline-style, solid) var(--pfe-tabs--focus); }</style>
+  outline: var(--pfe-theme--ui--focus-outline-width, 1px) var(--pfe-theme--ui--focus-outline-style, solid) var(--pfe-tabs--focus); }
+</style>
 <slot></slot>
 <div class="indicator"></div>`;
   }
@@ -565,11 +581,14 @@ class RhTab extends PFElement {
 
 class RhTabPanel extends PFElement {
   get html() {
-    return `<style>:host {
+    return `
+<style>
+:host {
   display: block; }
 
 :host([hidden]) {
-  display: none; }</style>
+  display: none; }
+</style>
 <slot></slot>`;
   }
 

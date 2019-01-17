@@ -19,30 +19,97 @@ String.prototype.sentenceCase = function() {
 };
 
 // Print attributes based on an object
-const listProperties = obj =>
+const listProperties = (obj, prefix = "") =>
   Object.entries(obj)
     .map(set => {
       let p = set[0];
       let v = set[1];
       let print = set[2] || true;
-      return print && v && v !== "null" ? ` ${p !== "slot" ? "pfe-" : ""}${p}="${v}"` : "";
+      return print && v && v !== "null" ? ` ${p !== "slot" ? `${prefix ? `${prefix}-` : ""}` : ""}${p}="${v}"` : "";
     })
     .join("");
 
 // Create a tag based on a provided object
-export function customTag(obj) {
-  return `<${obj.tag ? obj.tag : "div"} ${obj.slot ? `slot="${obj.slot}"` : ""}${listProperties(obj.attributes || {})}>${obj.content || autoContent()}</${
-    obj.tag ? obj.tag : "div"
-  }>`;
+// Accepts an object that can contain (all optional):
+// -- tag: html tag such as h1 or p, default is div
+// -- slot: rendered as slot="<input>"
+// -- attributes: passed through the listProperties function
+// -- content: Accepts html or plain text or renders default content
+export function customTag(obj, prefix = "") {
+  let start = "";
+  let end = "";
+  // If a tag is defined, or it has slots or attributes to apply
+  // render an open and close tag
+  if (obj.tag || obj.slot || obj.attributes) {
+    start += "<";
+    end += "</";
+    // If a tag is defined, use that, else use a div
+    if (obj.tag) {
+      start += obj.tag;
+      end += obj.tag;
+    } else {
+      start += "div";
+      end += "div";
+    }
+    start += obj.slot ? ` slot="${obj.slot}"` : "";
+    start += obj.attributes ? listProperties(obj.attributes || {}, prefix) : "";
+    start += ">";
+    end += ">";
+  }
+  return `${start}${obj.content || autoContent()}${end}`;
 }
+
+const parseMarkup = string => {
+  let obj = {};
+  let search = string.match(/<(\w+[-\w]*)(.*?)>/);
+  // Remove the full string from the array
+  search.shift();
+  if (search.length > 0) {
+    obj.tag = search.shift();
+  }
+  if (search.length > 0 && typeof search[0] === "string") {
+    // Break the attributes apart by the equal sign
+    let attr = search[0].split(" ");
+    obj.attributes = {};
+    if (attr.length > 0) {
+      attr.forEach(set => {
+        let items = set.split("=");
+        if (items.length > 0 && typeof items[0] === "string" && typeof items[1] === "string") {
+          obj.attributes[items[0]] = items[1].replace(/['"]+/g, "");
+        }
+      });
+    }
+  }
+  // Strip the original string of the wrapper element
+  let reg = new RegExp(`<\/?${obj.tag}.*?>`, "g");
+  obj.content = string.replace(reg, "");
+  return obj;
+};
 
 // If a slot is a component or content, render that raw
 // if it's got a tag defined, run the custom tag function
-const renderSlots = (slots = []) => slots.map(slot => (slot.content ? slot.content : "")).join("");
+const renderSlots = (slots = []) =>
+  slots
+    .map(slot => {
+      // If there are slot or attribute values but no tag defined
+      // Grep the content to see if we can use the first tag passed in
+      if ((slot.slot || slot.attributes) && !slot.tag) {
+        Object.assign(slot, parseMarkup(slot.content));
+      }
+      return slot.content
+        ? customTag({
+            tag: slot.tag,
+            slot: slot.slot,
+            attributes: slot.attributes,
+            content: slot.content
+          })
+        : "";
+    })
+    .join("");
 
 // Creates a component dynamically based on inputs
-export function component(tag, attributes = {}, slots = []) {
-  return `<${tag}${listProperties(attributes)}>${slots.length > 0 ? renderSlots(slots) : autoContent()}</${tag}>`;
+export function component(tag, attributes = {}, slots = [], prefix = "") {
+  return `<${tag}${listProperties(attributes, prefix)}>${slots.length > 0 ? renderSlots(slots) : autoContent()}</${tag}>`;
 }
 
 // Create an automatic heading
@@ -119,22 +186,11 @@ export function autoContentKnobs(slots, bridge) {
 }
 
 export function demo(markup) {
-  // Prettify and clean the markup for rendering
-  cleaner.clean(
-    markup,
-    {
-      indent: "    ",
-      "remove-attributes": [],
-      "break-around-tags": ["body", "blockquote", "br", "div", "h1", "h2", "h3", "h4", "h5", "h6", "head", "hr", "link", "meta", "p", "table", "title", "td", "tr", "a"],
-      wrap: 0
-    },
-    html => (markup = html)
-  );
-
   // Return the rendered markup and the code snippet output
   return `${markup}`;
 }
 
+// prettier-ignore-start
 export function code(markup) {
   // Prettify and clean the markup for rendering
   cleaner.clean(
@@ -142,7 +198,32 @@ export function code(markup) {
     {
       indent: "    ",
       "remove-attributes": [],
-      "break-around-tags": ["body", "blockquote", "br", "div", "h1", "h2", "h3", "h4", "h5", "h6", "head", "hr", "link", "meta", "p", "table", "title", "td", "tr", "a"],
+      "break-around-tags": [
+        "body",
+        "blockquote",
+        "br",
+        "div",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "head",
+        "hr",
+        "link",
+        "meta",
+        "p",
+        "table",
+        "title",
+        "td",
+        "tr",
+        "a",
+        "section",
+        "article",
+        "footer",
+        "aside"
+      ],
       wrap: 0
     },
     html => (markup = html)
@@ -151,6 +232,7 @@ export function code(markup) {
   // Return the rendered markup and the code snippet output
   return `<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">${escapeHTML(markup)}</pre>`;
 }
+// prettier-ignore-end
 
 export function preview(markup) {
   return demo(markup) + code(markup);

@@ -5,25 +5,34 @@ import * as tools from "../../../.storybook/utils.js";
 const cleaner = require("clean-html");
 
 import PfeBand from "../pfe-band.js";
+// -- @TODO We can import properties from these
+// -- to allow dynamic field generation
+// import PfeCta from "../pfe-cta.js";
+// import PfeCard from "../pfe-card.js";
 
 let theme = "base";
 
 const stories = storiesOf("Band", module);
 
 // Define the templates to be used
-const template = (data = {}) => {
-  return tools.component(PfeBand.tag, data.prop, data.slots);
-};
+const template = (data = {}) => tools.component(PfeBand.tag, data.prop, data.slots, "pfe");
 
+// prettier-ignore-start
 const defaultContent = {
-  header: tools.autoHeading(),
-  body: tools.component("article", {
+  header: tools.customTag({
+    tag: "header",
+    content: tools.customTag({
+      tag: "h1",
+      content: tools.autoHeading()
+    })
+  }),
+  body: tools.customTag({
+    tag: "article",
     content: tools.autoContent(4, 3)
   }),
   aside: tools.component(
     "pfe-card",
     {
-      slot: "pfe-band--aside",
       color: `${["darker", "darkest", "complement", "accent"].includes(theme) ? "lightest" : "complement"}`
     },
     [
@@ -44,7 +53,11 @@ const defaultContent = {
           },
           [
             {
-              content: '<a href="#">Learn more</a>'
+              tag: "a",
+              attributes: {
+                href: "#"
+              },
+              content: "Learn more"
             }
           ]
         )
@@ -54,16 +67,20 @@ const defaultContent = {
   footer: tools.component(
     "pfe-cta",
     {
-      slot: "pfe-band--footer",
       priority: "primary"
     },
     [
       {
-        content: '<a href="#">Learn more</a>'
+        tag: "a",
+        attributes: {
+          href: "#"
+        },
+        content: "Learn more"
       }
     ]
   )
 };
+// prettier-ignore-end
 
 stories.addDecorator(storybookBridge.withKnobs);
 
@@ -73,6 +90,7 @@ stories.add(PfeBand.tag, () => {
   const slots = PfeBand.slots;
 
   //-- Add default content to slot objects
+  // prettier-ignore-start
   Object.entries(slots).forEach(slot => {
     let supportedComponents = [];
     if (slot[1].type === "array") {
@@ -86,44 +104,46 @@ stories.add(PfeBand.tag, () => {
     }
     slot[1].canContain = supportedComponents;
   });
+  // prettier-ignore-end
 
+  // -- Attach the default content for that region
   ["header", "body", "aside", "footer"].forEach(region => {
-    // Build the default content for that region
     slots[region].default = defaultContent[region];
   });
 
+  // -- Customize the default selection for the preview
   props.color.default = "light";
 
+  // Build the knobs and read in their selections
   config.prop = tools.autoPropKnobs(props, storybookBridge);
   config.has = tools.autoContentKnobs(slots, storybookBridge);
 
-  theme = config.prop.color;
-
-  // Don't print the attribute if it's the default value
+  // Don't print the attribute in the example if it's the default value
   ["color", "aside-desktop", "aside-mobile", "aside-height"].forEach(p => {
     if (config.prop[p] === PfeBand.properties[p].default) {
       config.prop[p] = "";
     }
   });
 
+  // prettier-ignore-start
   config.slots = [
     {
-      content: tools.customTag({
-        tag: "h1",
-        slot: "pfe-band--header",
-        content: config.has.header
-      })
+      slot: "pfe-band--header",
+      content: config.has.header
     },
     {
       content: config.has.body
     },
     {
+      slot: "pfe-band--footer",
       content: config.has.footer
     },
     {
+      slot: "pfe-band--aside",
       content: config.has.aside
     }
   ];
+  // prettier-ignore-end
 
   let rendered = template(config);
 

@@ -311,7 +311,7 @@ class PfeBand extends PFElement {
   --pfe-band--gridTemplateArea_mobile: "body";
   position: relative;
   margin: 0 auto;
-  max-width: var(--pfe-band--width); }
+  width: var(--pfe-band--width); }
   .pfe-band__container[pfe-has-aside] {
     --pfe-band--gridTemplateArea_mobile: "body" "aside";
     --pfe-band--gridTemplateArea_desktop: "body aside"; }

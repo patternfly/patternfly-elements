@@ -225,7 +225,7 @@ $aside-lg: 300px;
 
     position:  relative;
     margin:    0 auto;
-    max-width: #{pfe-local(width)};
+    width: #{pfe-local(width)};
     
     // Grid support styles
     @supports (display: grid) {

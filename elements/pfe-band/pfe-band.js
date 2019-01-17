@@ -26,13 +26,14 @@ import PFElement from "../pfelement/pfelement.js";
 // -- Polyfill for supporting Element.closest
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
 if (!Element.prototype.matches) {
-  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+  Element.prototype.matches =
+    Element.prototype.msMatchesSelector ||
+    Element.prototype.webkitMatchesSelector;
 }
 
 if (!Element.prototype.closest) {
   Element.prototype.closest = function(s) {
     var el = this;
-
     do {
       if (el.matches(s)) return el;
       el = el.parentElement || el.parentNode;
@@ -73,7 +74,13 @@ if (!Array.prototype.includes) {
       var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
       function sameValueZero(x, y) {
-        return x === y || (typeof x === "number" && typeof y === "number" && isNaN(x) && isNaN(y));
+        return (
+          x === y ||
+          (typeof x === "number" &&
+            typeof y === "number" &&
+            isNaN(x) &&
+            isNaN(y))
+        );
       }
 
       // 7. Repeat, while k < len
@@ -115,6 +122,8 @@ class PfeBand extends PFElement {
   --pfe-broadcasted--color--ui-link--hover:    var(--pfe-theme--color--surface--base--link--hover, #00305b);
   --pfe-broadcasted--color--ui-link--focus:    var(--pfe-theme--color--surface--base--link--focus, #00305b);
   --pfe-band--width: auto;
+  --pfe-band--width_aside-sm: 240px;
+  --pfe-band--width_aside-lg: 300px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -307,7 +316,7 @@ class PfeBand extends PFElement {
       margin-bottom: 0; } }
 
 .pfe-band__container {
-  --pfe-band_region--width: calc(calc(1fr - 240px) - var(--pfe-band--gutter));
+  --pfe-band_region--width: calc(calc(1fr - var(--pfe-band--width_aside-sm)) - var(--pfe-band--gutter));
   --pfe-band--gridTemplateArea_mobile: "body";
   position: relative;
   margin: 0 auto;
@@ -317,20 +326,20 @@ class PfeBand extends PFElement {
     --pfe-band--gridTemplateArea_desktop: "body aside"; }
     @media (min-width: 768px) {
       .pfe-band__container[pfe-has-aside] {
-        --pfe-band--layout: 1fr 240px; } }
+        --pfe-band--layout: 1fr var(--pfe-band--width_aside-sm); } }
     @media (min-width: 992px) {
       .pfe-band__container[pfe-has-aside] {
-        --pfe-band--layout: 1fr 300px; } }
+        --pfe-band--layout: 1fr var(--pfe-band--width_aside-lg); } }
     .pfe-band__container[pfe-has-aside][pfe-aside-mobile="top"] {
       --pfe-band--gridTemplateArea_mobile: "aside" "body"; }
     .pfe-band__container[pfe-has-aside][pfe-aside-desktop="left"] {
       --pfe-band--gridTemplateArea_desktop: "aside body"; }
       @media (min-width: 768px) {
         .pfe-band__container[pfe-has-aside][pfe-aside-desktop="left"] {
-          --pfe-band--layout: 240px 1fr; } }
+          --pfe-band--layout: var(--pfe-band--width_aside-sm) 1fr; } }
       @media (min-width: 992px) {
         .pfe-band__container[pfe-has-aside][pfe-aside-desktop="left"] {
-          --pfe-band--layout: 300px 1fr; } }
+          --pfe-band--layout: var(--pfe-band--width_aside-lg) 1fr; } }
   .pfe-band__container[pfe-has-header] {
     --pfe-band--gridTemplateArea_mobile: "header" "body"; }
     .pfe-band__container[pfe-has-header][pfe-has-aside] {
@@ -381,12 +390,32 @@ class PfeBand extends PFElement {
       @media (min-width: 768px) {
         .pfe-band__container {
           grid-template-areas: var(--pfe-band--gridTemplateArea_desktop); } } }</style>
-<section class="pfe-band__container"${["header", "footer", "aside"].map(slot => (this.has_slot(`pfe-band--${slot}`) ? `pfe-has-${slot}` : "")).join(" ")}>
-  ${this.has_slot("pfe-band--aside") && this.asidePosition.mobile === "top" ? `<slot class="pfe-band__aside" name="pfe-band--aside"></slot>` : ""}
-  ${this.has_slot("pfe-band--header") ? `<slot class="pfe-band__header" name="pfe-band--header"></slot>` : ""}
+<section class="pfe-band__container"${["header", "footer", "aside"]
+      .map(
+        slot => (this.has_slot(`pfe-band--${slot}`) ? `pfe-has-${slot}` : "")
+      )
+      .join(" ")}>
+  ${
+    this.has_slot("pfe-band--aside") && this.asidePosition.mobile === "top"
+      ? `<slot class="pfe-band__aside" name="pfe-band--aside"></slot>`
+      : ""
+  }
+  ${
+    this.has_slot("pfe-band--header")
+      ? `<slot class="pfe-band__header" name="pfe-band--header"></slot>`
+      : ""
+  }
   <slot class="pfe-band__body"></slot>
-  ${this.has_slot("pfe-band--aside") && this.asidePosition.mobile !== "top" ? `<slot class="pfe-band__aside" name="pfe-band--aside"></slot>` : ""}
-  ${this.has_slot("pfe-band--footer") ? `<slot class="pfe-band__footer" name="pfe-band--footer"></slot>` : ""}
+  ${
+    this.has_slot("pfe-band--aside") && this.asidePosition.mobile !== "top"
+      ? `<slot class="pfe-band__aside" name="pfe-band--aside"></slot>`
+      : ""
+  }
+  ${
+    this.has_slot("pfe-band--footer")
+      ? `<slot class="pfe-band__footer" name="pfe-band--footer"></slot>`
+      : ""
+  }
 </section>`;
   }
 
@@ -395,11 +424,24 @@ class PfeBand extends PFElement {
       color: {
         title: "Background color",
         type: "string",
-        enum: ["lightest", "lighter", "base", "darker", "darkest", "complement", "accent"],
+        enum: [
+          "lightest",
+          "lighter",
+          "base",
+          "darker",
+          "darkest",
+          "complement",
+          "accent"
+        ],
         default: "base",
         observer: "_colorChanged"
       },
-      "img-src": { title: "Background image", type: "string", default: "", observer: "_imgSrcChanged" },
+      "img-src": {
+        title: "Background image",
+        type: "string",
+        default: "",
+        observer: "_imgSrcChanged"
+      },
       "aside-desktop": {
         title: "Aside positioning (desktop)",
         type: "string",
@@ -429,10 +471,33 @@ class PfeBand extends PFElement {
 
   static get slots() {
     return {
-      header: { title: "Header", type: "array", namedSlot: true, maxItems: 3, items: { title: "Body item", oneOf: [{ $ref: "raw" }] } },
-      body: { title: "Body", type: "array", namedSlot: false, items: { oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }] } },
-      footer: { title: "Footer", type: "array", namedSlot: true, maxItems: 3, items: { oneOf: [{ $ref: "pfe-cta" }, { $ref: "raw" }] } },
-      aside: { title: "Aside", type: "array", namedSlot: true, maxItems: 5, items: { oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }] } }
+      header: {
+        title: "Header",
+        type: "array",
+        namedSlot: true,
+        maxItems: 3,
+        items: { title: "Body item", oneOf: [{ $ref: "raw" }] }
+      },
+      body: {
+        title: "Body",
+        type: "array",
+        namedSlot: false,
+        items: { oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }] }
+      },
+      footer: {
+        title: "Footer",
+        type: "array",
+        namedSlot: true,
+        maxItems: 3,
+        items: { oneOf: [{ $ref: "pfe-cta" }, { $ref: "raw" }] }
+      },
+      aside: {
+        title: "Aside",
+        type: "array",
+        namedSlot: true,
+        maxItems: 5,
+        items: { oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }] }
+      }
     };
   }
 
@@ -461,7 +526,13 @@ class PfeBand extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-aside-desktop", "pfe-aside-mobile", "pfe-aside-height", "pfe-color", "pfe-img-src"];
+    return [
+      "pfe-aside-desktop",
+      "pfe-aside-mobile",
+      "pfe-aside-height",
+      "pfe-color",
+      "pfe-img-src"
+    ];
   }
 
   static get cascadingAttributes() {
@@ -478,14 +549,13 @@ class PfeBand extends PFElement {
   }
 
   constructor() {
-    super(PfeBand, {
-      type: PfeBand.PfeType
-    });
+    super(PfeBand, { type: PfeBand.PfeType });
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
-
+    // Strip the prefix form the attribute
+    attr = attr.replace("pfe-", "");
     // If the observer is defined in the attribute properties
     if (this[attr] && this[attr].observer) {
       // Get the observer function

@@ -3,13 +3,14 @@ import PFElement from "../pfelement/pfelement.js";
 // -- Polyfill for supporting Element.closest
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
 if (!Element.prototype.matches) {
-  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+  Element.prototype.matches =
+    Element.prototype.msMatchesSelector ||
+    Element.prototype.webkitMatchesSelector;
 }
 
 if (!Element.prototype.closest) {
   Element.prototype.closest = function(s) {
     var el = this;
-
     do {
       if (el.matches(s)) return el;
       el = el.parentElement || el.parentNode;
@@ -50,7 +51,13 @@ if (!Array.prototype.includes) {
       var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
       function sameValueZero(x, y) {
-        return x === y || (typeof x === "number" && typeof y === "number" && isNaN(x) && isNaN(y));
+        return (
+          x === y ||
+          (typeof x === "number" &&
+            typeof y === "number" &&
+            isNaN(x) &&
+            isNaN(y))
+        );
       }
 
       // 7. Repeat, while k < len
@@ -96,7 +103,13 @@ class PfeBand extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-aside-desktop", "pfe-aside-mobile", "pfe-aside-height", "pfe-color", "pfe-img-src"];
+    return [
+      "pfe-aside-desktop",
+      "pfe-aside-mobile",
+      "pfe-aside-height",
+      "pfe-color",
+      "pfe-img-src"
+    ];
   }
 
   static get cascadingAttributes() {
@@ -113,14 +126,13 @@ class PfeBand extends PFElement {
   }
 
   constructor() {
-    super(PfeBand, {
-      type: PfeBand.PfeType
-    });
+    super(PfeBand, { type: PfeBand.PfeType });
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
-
+    // Strip the prefix form the attribute
+    attr = attr.replace("pfe-", "");
     // If the observer is defined in the attribute properties
     if (this[attr] && this[attr].observer) {
       // Get the observer function

@@ -1,8 +1,6 @@
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: band;
-$aside-sm: 240px;
-$aside-lg: 300px;
 
 :host {
   display: block;
@@ -40,6 +38,8 @@ $aside-lg: 300px;
   // Band width logic
   // Initialize at mobile breakpoint
   --pfe-band--width: auto;
+  --pfe-band--width_aside-sm: 240px;
+  --pfe-band--width_aside-lg: 300px;
 
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
@@ -140,17 +140,17 @@ $aside-lg: 300px;
 .pfe-band {
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
-    --pfe-band_region--width: calc(calc(1fr - #{$aside-sm}) - #{pfe-local(gutter)});
+    --pfe-band_region--width: calc(calc(1fr - #{pfe-local(width_aside-sm)}) - #{pfe-local(gutter)});
     --pfe-band--gridTemplateArea_mobile: "body";
     // Styles for the different combination of regions
     &[pfe-has-aside] {
       --pfe-band--gridTemplateArea_mobile: "body" "aside";
       --pfe-band--gridTemplateArea_desktop: "body aside";
       @media (min-width: #{pfe-breakpoint(md)}) {
-        --pfe-band--layout: 1fr #{$aside-sm};
+        --pfe-band--layout: 1fr #{pfe-local(width_aside-sm)};
       }
       @media (min-width: #{pfe-breakpoint(lg)}) {
-        --pfe-band--layout: 1fr #{$aside-lg};
+        --pfe-band--layout: 1fr #{pfe-local(width_aside-lg)};
       }
       &[pfe-aside-mobile="top"] {
         --pfe-band--gridTemplateArea_mobile: "aside" "body";
@@ -158,10 +158,10 @@ $aside-lg: 300px;
       &[pfe-aside-desktop="left"] {
         --pfe-band--gridTemplateArea_desktop: "aside body";
         @media (min-width: #{pfe-breakpoint(md)}) {
-          --pfe-band--layout: #{$aside-sm} 1fr;
+          --pfe-band--layout: #{pfe-local(width_aside-sm)} 1fr;
         }
         @media (min-width: #{pfe-breakpoint(lg)}) {
-          --pfe-band--layout: #{$aside-lg} 1fr;
+          --pfe-band--layout: #{pfe-local(width_aside-lg)} 1fr;
         }
       }
     }

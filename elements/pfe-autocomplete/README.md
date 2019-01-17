@@ -2,8 +2,6 @@
 
 <pfe-autocomplete> is a Web Component that provides options in a dropdown list as user types in an input box by showing result from an api call.
 
-![pfe-autocomplete-screenshot.png](pfe-autocomplete-screenshot.png)
-
 ## Install
 ```
 npm install @patternfly/cp-theme

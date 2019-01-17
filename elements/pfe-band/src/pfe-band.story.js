@@ -17,7 +17,7 @@ const stories = storiesOf("Band", module);
 // Define the templates to be used
 const template = (data = {}) => tools.component(PfeBand.tag, data.prop, data.slots, "pfe");
 
-// prettier-ignore-start
+// prettier-ignore
 const defaultContent = {
   header: tools.customTag({
     tag: "header",
@@ -30,57 +30,36 @@ const defaultContent = {
     tag: "article",
     content: tools.autoContent(4, 3)
   }),
-  aside: tools.component(
-    "pfe-card",
-    {
-      color: `${["darker", "darkest", "complement", "accent"].includes(theme) ? "lightest" : "complement"}`
-    },
-    [
-      {
-        tag: "h3",
-        slot: "header",
-        content: "Aside"
+  aside: tools.component("pfe-card", {
+    color: `${["darker", "darkest", "complement", "accent"].includes(theme) ? "lightest" : "complement"}`
+  }, [{
+    tag: "h3",
+    slot: "header",
+    content: "Aside"
+  }, {
+    content: tools.autoContent(1, 1, true)
+  }, {
+    content: tools.component("pfe-cta", {
+      slot: "footer",
+      priority: "tertiary"
+    }, [{
+      tag: "a",
+      attributes: {
+        href: "#"
       },
-      {
-        content: tools.autoContent(1, 1, true)
-      },
-      {
-        content: tools.component(
-          "pfe-cta",
-          {
-            slot: "footer",
-            priority: "tertiary"
-          },
-          [
-            {
-              tag: "a",
-              attributes: {
-                href: "#"
-              },
-              content: "Learn more"
-            }
-          ]
-        )
-      }
-    ]
-  ),
-  footer: tools.component(
-    "pfe-cta",
-    {
-      priority: "primary"
+      content: "Learn more"
+    }])
+  }]),
+  footer: tools.component("pfe-cta", {
+    priority: "primary"
+  }, [{
+    tag: "a",
+    attributes: {
+      href: "#"
     },
-    [
-      {
-        tag: "a",
-        attributes: {
-          href: "#"
-        },
-        content: "Learn more"
-      }
-    ]
-  )
+    content: "Learn more"
+  }])
 };
-// prettier-ignore-end
 
 stories.addDecorator(storybookBridge.withKnobs);
 
@@ -90,7 +69,6 @@ stories.add(PfeBand.tag, () => {
   const slots = PfeBand.slots;
 
   //-- Add default content to slot objects
-  // prettier-ignore-start
   Object.entries(slots).forEach(slot => {
     let supportedComponents = [];
     if (slot[1].type === "array") {
@@ -104,7 +82,6 @@ stories.add(PfeBand.tag, () => {
     }
     slot[1].canContain = supportedComponents;
   });
-  // prettier-ignore-end
 
   // -- Attach the default content for that region
   ["header", "body", "aside", "footer"].forEach(region => {
@@ -125,25 +102,19 @@ stories.add(PfeBand.tag, () => {
     }
   });
 
-  // prettier-ignore-start
-  config.slots = [
-    {
-      slot: "pfe-band--header",
-      content: config.has.header
-    },
-    {
-      content: config.has.body
-    },
-    {
-      slot: "pfe-band--footer",
-      content: config.has.footer
-    },
-    {
-      slot: "pfe-band--aside",
-      content: config.has.aside
-    }
-  ];
-  // prettier-ignore-end
+  // prettier-ignore
+  config.slots = [{
+    slot: "pfe-band--header",
+    content: config.has.header
+  }, {
+    content: config.has.body
+  }, {
+    slot: "pfe-band--footer",
+    content: config.has.footer
+  }, {
+    slot: "pfe-band--aside",
+    content: config.has.aside
+  }];
 
   let rendered = template(config);
 

@@ -60,29 +60,41 @@ export function customTag(obj, prefix = "") {
 }
 
 const parseMarkup = string => {
+  // Define the regex for use below
+  let find = /<(\w+[-\w]*)(.*?)>/;
+  let quotes = /['\"]+/g;
+  // Initialize the empty return object
   let obj = {};
-  let search = string.match(/<(\w+[-\w]*)(.*?)>/);
-  // Remove the full string from the array
-  search.shift();
-  if (search.length > 0) {
-    obj.tag = search.shift();
-  }
-  if (search.length > 0 && typeof search[0] === "string") {
-    // Break the attributes apart by the equal sign
-    let attr = search[0].split(" ");
-    obj.attributes = {};
-    if (attr.length > 0) {
-      attr.forEach(set => {
-        let items = set.split("=");
-        if (items.length > 0 && typeof items[0] === "string" && typeof items[1] === "string") {
-          obj.attributes[items[0]] = items[1].replace(/['"]+/g, "");
-        }
-      });
+  // Initialize the attributes object
+  obj.attributes = {};
+  // Capture the tag name and properties
+  let result = string.match(find);
+  // If results remain in the array, get the tag
+  if (result !== null && result.length > 0 && typeof result[1] === "string") {
+    obj.tag = result[1];
+    // If results remain in the array, get the attributes
+    if (result.length > 1 && typeof result[2] === "string") {
+      // Break the attributes apart using the spaces
+      let attr = result[2].trim().split(" ");
+      // If any attributes exist, break them down further
+      if (attr.length > 0) {
+        attr.forEach(set => {
+          // Break the attributes apart using the equal sign
+          let items = set.trim().split("=");
+          // If items are returned and they are both strings, add them to the attributes object
+          if (items.length > 1 && typeof items[0] === "string" && typeof items[1] === "string") {
+            obj.attributes[items[0].trim()] = items[1].replace(quotes, "").trim();
+          }
+        });
+      }
     }
+    // Strip the original string of the wrapper element
+    obj.content = string.replace(new RegExp(`<\/?${obj.tag}.*?>`, "g"), "");
+  } else {
+    obj.tag = "div";
+    obj.content = string;
   }
-  // Strip the original string of the wrapper element
-  let reg = new RegExp(`<\/?${obj.tag}.*?>`, "g");
-  obj.content = string.replace(reg, "");
+  // Return the new object with the metadata
   return obj;
 };
 
@@ -93,7 +105,10 @@ const renderSlots = (slots = []) =>
     .map(slot => {
       // If there are slot or attribute values but no tag defined
       // Grep the content to see if we can use the first tag passed in
-      if ((slot.slot || slot.attributes) && !slot.tag) {
+      let has_tag = typeof slot.tag !== "undefined";
+      let has_slot = typeof slot.slot !== "undefined" && slot.slot.length > 0;
+      let has_attr = typeof slot.attributes !== "undefined" && Object.keys(slot.attributes).length > 0;
+      if (!has_tag && (has_slot || has_attr)) {
         Object.assign(slot, parseMarkup(slot.content));
       }
       return slot.content

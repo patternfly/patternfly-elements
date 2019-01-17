@@ -102,7 +102,7 @@
             "dependencies": [
               {
                 "type": "slot",
-                "id": "pfe-band-aside"
+                "id": "aside"
               }
             ]
           }
@@ -117,7 +117,7 @@
             "dependencies": [
               {
                 "type": "slot",
-                "id": "pfe-band-aside"
+                "id": "aside"
               }
             ]
           }
@@ -132,7 +132,7 @@
             "dependencies": [
               {
                 "type": "slot",
-                "id": "pfe-band-aside"
+                "id": "aside"
               }
             ]
           }

@@ -1,6 +1,10 @@
-@function pfe-strip-unit($num) {
-    @return $num / ($num * 0 + 1);
-}
+@function pfe-strip-unit($number) {
+    @if type-of($number) == "number" and not unitless($number) {
+      @return $number / ($number * 0 + 1);
+    }
+  
+    @return $number;
+  }
 
 @function pfe-size-pem($pxval, $base: $pfe-global--font-size-root) {
     @return pfe-strip-unit($pxval) / $base * 1em;
@@ -22,47 +26,57 @@
 /// @return {*} - Desired value
 @function map-deep-get($map, $keys...) {
     @each $key in $keys {
-        @if type-of($map) == "map" {
+        @if type-of($map)=="map" {
             $map: map-get($map, $key);
         }
+
         @else {
             @warn "Map provided is not a map."
         }
     }
+
     @return $map;
 }
 
 // Collect all maps and merge them together
 @function map-collect($maps...) {
     $collection: ();
+
     @each $map in $maps {
         $collection: map-merge($collection, $map);
     }
+
     @return $collection;
 }
 
 // New color function to only return theme colors
-@function color( $name, $theme: "light", $opacity: 1 ) {
+@function color($name, $theme: "light", $opacity: 1) {
     $map: map-get($color-map, $name);
     $error: false;
     $color: null;
-    @if $map != null {
+
+    @if $map !=null {
         $color: map-get($map, $theme);
     }
+
     @else {
         $error: true;
     }
-    @if type-of($color) == color {
-        @if $opacity == 1 {
+
+    @if type-of($color)==color {
+        @if $opacity==1 {
             @return $color;
         }
+
         @if $opacity < 1 {
-            @return rgba( $color, $opacity );
+            @return rgba($color, $opacity);
         }
     }
+
     @else {
         $error: true;
     }
+
     @if $error {
         @warn "#{$name} is not a valid color";
     }
@@ -80,12 +94,14 @@
 }
 
 @function str-replace($string, $search, $replace: "") {
-    @if type-of($string) == "string" and type-of($search) == "string" {
+    @if type-of($string)=="string"and type-of($search)=="string" {
         $index: str-index($string, $search);
+
         @if $index {
-            @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+            @return str-slice($string, 1, $index - 1)+$replace+str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
         }
     }
+
     @return $string;
 }
 
@@ -95,14 +111,14 @@
     @for $i from 1 through length($list) {
         $e: nth($list, $i);
 
-        @if type-of($e) == list {
-        $result: $result#{to-string($e, $glue, true)};
-        } @else {
-        $result: if(
-            $i != length($list) or $is-nested,
+        @if type-of($e)==list {
+            $result: $result#{to-string($e, $glue, true)};
+        }
+
+        @else {
+            $result: if($i !=length($list) or $is-nested,
             $result#{$e}#{$glue},
-            $result#{$e}
-        );
+            $result#{$e});
         }
     }
 
@@ -114,8 +130,9 @@
     $split-arr: ();
     // first index of separator in string
     $index: str-index("#{$string}", $separator);
+
     // loop through string
-    @while $index != null {
+    @while $index !=null {
         // get the substring from the first character to the separator
         $item: str-slice($string, 1, $index - 1);
         // push item to array
@@ -125,8 +142,35 @@
         // find new index of separator
         $index: str-index($string, $separator);
     }
+
     // add the remaining string to list (the last item) and return
     @return append($split-arr, $string);
+}
+
+// https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
+/// Remove all trailing and leading whitespaces from `$string`.
+/// @since 1.2.0
+/// @param {String} $string - string
+/// @return {String}
+
+@function str-trim($string) {
+    $start: 1;
+    $end: str-length($string);
+
+    @for $i from 1 through str-length($string) {
+        $first: str-slice($string, $i, $i);
+        $last: str-slice($string, -$i, -$i);
+
+        @if $first==" "and $i+1==$start+1 {
+            $start: $i + 1;
+        }
+
+        @if $last==" "and str-length($string) - $i==$end - 1 {
+            $end: str-length($string) - $i;
+        }
+    }
+
+    @return str-slice($string, $start, $end);
 }
 
 // https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
@@ -134,21 +178,25 @@
 /// @param {String} $string - string to check
 /// @param {String} $needle - substring to check
 /// @return {Bool}
+
 @function str-starts-with($string, $needle) {
-    @return str-slice($string, 1, str-length($needle)) == $needle;
+    @return str-slice($string, 1, str-length($needle))==$needle;
 }
 
 // https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/#removing-values-from-list
 @function remove($list, $value, $recursive: false) {
     $result: ();
+
     @for $i from 1 through length($list) {
-        @if type-of(nth($list, $i)) == list and $recursive {
+        @if type-of(nth($list, $i))==list and $recursive {
             $result: append($result, remove(nth($list, $i), $value, $recursive));
         }
-        @else if nth($list, $i) != $value {
+
+        @else if nth($list, $i) !=$value {
             $result: append($result, nth($list, $i));
         }
     }
+
     @return $result;
 }
 
@@ -175,11 +223,11 @@
 ///         }
 ///         ```
 @function pfe-var($cssvar, $category: '', $map: $pfe-vars) {
-    @if $category != "" {
-      $category: "#{$category}--";
+    @if $category !="" {
+        $category: "#{$category}--";
     }
 
-    @return var( --#{$repo}-theme--#{$category}#{$cssvar}, #{map-get($map, $cssvar)});
+    @return var(--#{$repo}-theme--#{$category}#{$cssvar}, #{map-get($map, $cssvar)});
 }
 
 
@@ -195,8 +243,12 @@
 ///    --pfe-band--width: #{pfe-breakpoint(sm) - $box-padding * 2};
 /// }
 /// ```
-@function pfe-breakpoint($size) {
-    @return #{map-get($pfe-vars, grid-breakpoint--#{$size})};
+@function pfe-breakpoint($size, $max: false) {
+    $bp: map-get($pfe-vars, grid-breakpoint--#{$size});
+    @if $max {
+        $bp: (pfe-strip-unit($bp) - 1) * 1px;
+    }
+    @return $bp;
 }
 
 /// Color
@@ -219,12 +271,15 @@
 ///           background:  #{pfe-color(  surface--base )};
 ///         }
 ///         ```
-@function pfe-color($cssvar, $category: 'color', $map: $pfe-colors) {
-    @if $category != "" {
-      $category: "#{$category}--";
+@function pfe-color($cssvar,
+$category: 'color',
+$map: $pfe-colors) {
+    @if $category !="" {
+        $category: "#{$category}--";
     }
 
-    @return var( --#{$repo}-theme--#{$category}#{$cssvar}, #{map-get($map, $cssvar)});
+    @return var(--#{$repo}-theme--#{$category}#{$cssvar},
+    #{map-get($map, $cssvar)});
 }
 
 /// Local
@@ -242,10 +297,12 @@
 ///         padding-bottom:   #{pfe-local(paddingBottom)};
 ///     }
 ///     ```
-@function pfe-local($cssvar, $region: "") {
-    @if $region != "" {
-      $region: "_#{$region}";
+@function pfe-local($cssvar,
+$region: "") {
+    @if $region !="" {
+        $region: "_#{$region}";
     }
+
     @return var(--#{$repo}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')});
 }
 
@@ -262,5 +319,5 @@
 ///     }
 ///     ```
 @function pfe-radio($cssvar...) {
-    @return var( --#{$repo}-broadcasted--#{to-string($cssvar, '--')});
+    @return var(--#{$repo}-broadcasted--#{to-string($cssvar, '--')});
 }

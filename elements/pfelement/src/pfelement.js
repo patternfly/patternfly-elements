@@ -1,4 +1,5 @@
 import { autoReveal } from "./reveal.js";
+const prefix = "pfe-";
 
 class PFElement extends HTMLElement {
   static create(pfe) {
@@ -27,11 +28,11 @@ class PFElement extends HTMLElement {
   }
 
   get pfeType() {
-    return this.getAttribute("pfe-type");
+    return this.getAttribute(`${prefix}type`);
   }
 
   set pfeType(value) {
-    this.setAttribute("pfe-type", value);
+    this.setAttribute(`${prefix}type`, value);
   }
 
   has_slot(name) {
@@ -47,7 +48,7 @@ class PFElement extends HTMLElement {
     this.template = document.createElement("template");
 
     if (typeof pfeClass.properties === "object") {
-      this._mapSchemaToProperties(pfeClass.properties);
+      this._mapSchemaToProperties(pfeClass.tag, pfeClass.properties);
     }
 
     this.attachShadow({ mode: "open" });
@@ -99,10 +100,10 @@ class PFElement extends HTMLElement {
     }
   }
 
-  _mapSchemaToProperties(properties) {
+  _mapSchemaToProperties(tag, properties) {
     // Map the imported properties json to real props on the element
     // @notice static getter of properties is built via tooling
-    // to edit modify src/element.json]
+    // to edit modify src/element.json
     Object.keys(properties).forEach(attr => {
       let data = properties[attr];
       // Set the attribute's property equal to the schema input
@@ -111,29 +112,29 @@ class PFElement extends HTMLElement {
       this[attr].value = null;
 
       // If the attribute exists on the host
-      if (this.hasAttribute(attr)) {
+      if (this.hasAttribute(`${prefix}${attr}`)) {
         // Set property value based on the existing attribute
-        this[attr].value = this.getAttribute(attr);
+        this[attr].value = this.getAttribute(`${prefix}${attr}`);
       }
       // Otherwise, look for a default and use that instead
       else if (data.default) {
         // If the dependency exists or there are no dependencies, set the default
-        if (this._hasDependency(data.options) || (data.options && data.options.dependencies.length <= 0)) {
-          this.setAttribute(attr, data.default);
+        if (this._hasDependency(tag, data.options) || (data.options && data.options.dependencies.length <= 0)) {
+          this.setAttribute(`${prefix}${attr}`, data.default);
           this[attr].value = data.default;
         }
       }
     });
   }
 
-  _hasDependency(opts) {
+  _hasDependency(tag, opts) {
     // Get any possible dependencies for this attribute to exist
     let dependencies = opts ? opts.dependencies : [];
     // Check that dependent item exists
     dependencies.forEach(dep => {
       // If the type is slot, check that it exists OR
       // if the type is an attribute, check if the attribute is defined
-      if ((dep.type === "slot" && this.has_slot(dep.id)) || (dep.type === "attribute" && this.getAttribute(dep.id))) {
+      if ((dep.type === "slot" && this.has_slot(`${tag}--${dep.id}`)) || (dep.type === "attribute" && this.getAttribute(`${prefix}${dep.id}`))) {
         // If the slot does exist, add the attribute with the default value
         return true;
       }

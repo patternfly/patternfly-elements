@@ -23,7 +23,7 @@ import PFElement from "../pfelement/pfelement.js";
  * 
 */
 
-// -- Polyfills
+// -- Polyfill for supporting Element.closest
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
 if (!Element.prototype.matches) {
   Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
@@ -41,6 +41,7 @@ if (!Element.prototype.closest) {
   };
 }
 
+// -- Polyfill for supporting Array.includes
 // https://tc39.github.io/ecma262/#sec-array.prototype.includes
 if (!Array.prototype.includes) {
   Object.defineProperty(Array.prototype, "includes", {
@@ -306,47 +307,69 @@ class PfeBand extends PFElement {
       margin-bottom: 0; } }
 
 .pfe-band__container {
-  --pfe-band_region--width: calc(1fr - 240px - var(--pfe-band--gutter));
-  --pfe-band--gridTemplateArea: "body";
+  --pfe-band_region--width: calc(calc(1fr - 240px) - var(--pfe-band--gutter));
+  --pfe-band--gridTemplateArea_mobile: "body";
   position: relative;
   margin: 0 auto;
   max-width: var(--pfe-band--width); }
-  @media (min-width: 768px) {
-    .pfe-band__container {
-      --pfe-band--gridTemplateArea: "body body"; } }
-  .pfe-band__container[pfe-has-header] {
-    --pfe-band--gridTemplateArea: "header" "body"; }
-    @media (min-width: 768px) {
-      .pfe-band__container[pfe-has-header] {
-        --pfe-band--gridTemplateArea: "header header" "body body"; } }
-    .pfe-band__container[pfe-has-header][pfe-has-aside] {
-      --pfe-band--gridTemplateArea: "header" "body" "aside"; }
-      @media (min-width: 768px) {
-        .pfe-band__container[pfe-has-header][pfe-has-aside] {
-          --pfe-band--gridTemplateArea: "header header" "body aside"; } }
   .pfe-band__container[pfe-has-aside] {
-    --pfe-band--gridTemplateArea: "main" "aside"; }
+    --pfe-band--gridTemplateArea_mobile: "body" "aside";
+    --pfe-band--gridTemplateArea_desktop: "body aside"; }
     @media (min-width: 768px) {
       .pfe-band__container[pfe-has-aside] {
-        --pfe-band--layout: 1fr 240px;
-        --pfe-band--gridTemplateArea: "main aside"; } }
+        --pfe-band--layout: 1fr 240px; } }
     @media (min-width: 992px) {
       .pfe-band__container[pfe-has-aside] {
         --pfe-band--layout: 1fr 300px; } }
-  .pfe-band__container[pfe-aside-mobile="top"] {
-    --pfe-band--gridTemplateArea: "aside" "main"; }
-  .pfe-band__container[pfe-has-header][pfe-aside-mobile="top"] {
-    --pfe-band--gridTemplateArea: "aside" "header" "main"; }
-  @media (min-width: 768px) {
-    .pfe-band__container[pfe-aside-desktop="left"] {
-      --pfe-band--layout: 240px 1fr;
-      --pfe-band--gridTemplateArea: "aside main"; } }
-  @media (min-width: 992px) {
-    .pfe-band__container[pfe-aside-desktop="left"] {
-      --pfe-band--layout: 300px 1fr; } }
-  @media (min-width: 768px) {
+    .pfe-band__container[pfe-has-aside][pfe-aside-mobile="top"] {
+      --pfe-band--gridTemplateArea_mobile: "aside" "body"; }
+    .pfe-band__container[pfe-has-aside][pfe-aside-desktop="left"] {
+      --pfe-band--gridTemplateArea_desktop: "aside body"; }
+      @media (min-width: 768px) {
+        .pfe-band__container[pfe-has-aside][pfe-aside-desktop="left"] {
+          --pfe-band--layout: 240px 1fr; } }
+      @media (min-width: 992px) {
+        .pfe-band__container[pfe-has-aside][pfe-aside-desktop="left"] {
+          --pfe-band--layout: 300px 1fr; } }
+  .pfe-band__container[pfe-has-header] {
+    --pfe-band--gridTemplateArea_mobile: "header" "body"; }
+    .pfe-band__container[pfe-has-header][pfe-has-aside] {
+      --pfe-band--gridTemplateArea_mobile: "header" "body" "aside";
+      --pfe-band--gridTemplateArea_desktop: "header header" "body aside"; }
+    .pfe-band__container[pfe-has-header][pfe-aside-mobile="top"] {
+      --pfe-band--gridTemplateArea_mobile: "aside" "header" "body"; }
+    .pfe-band__container[pfe-has-header][pfe-aside-height="full"] {
+      --pfe-band--gridTemplateArea_desktop: "header aside" "body aside"; }
     .pfe-band__container[pfe-has-header][pfe-aside-desktop="left"] {
-      --pfe-band--gridTemplateArea: "header header" "aside main"; } }
+      --pfe-band--gridTemplateArea_desktop: "header header" "aside body"; }
+      .pfe-band__container[pfe-has-header][pfe-aside-desktop="left"][pfe-aside-height="full"] {
+        --pfe-band--gridTemplateArea_desktop: "aside header" "aside body"; }
+  .pfe-band__container[pfe-has-footer] {
+    --pfe-band--gridTemplateArea_mobile: "body" "footer"; }
+    .pfe-band__container[pfe-has-footer][pfe-has-aside] {
+      --pfe-band--gridTemplateArea_mobile: "body" "aside" "footer";
+      --pfe-band--gridTemplateArea_desktop: "body aside" "footer footer"; }
+    .pfe-band__container[pfe-has-footer][pfe-aside-mobile="top"] {
+      --pfe-band--gridTemplateArea_mobile: "aside" "body" "footer"; }
+    .pfe-band__container[pfe-has-footer][pfe-aside-height="full"] {
+      --pfe-band--gridTemplateArea_desktop: "body aside" "footer aside" ; }
+    .pfe-band__container[pfe-has-footer][pfe-aside-desktop="left"] {
+      --pfe-band--gridTemplateArea_desktop: "aside body" "footer footer"; }
+      .pfe-band__container[pfe-has-footer][pfe-aside-desktop="left"][pfe-aside-height="full"] {
+        --pfe-band--gridTemplateArea_desktop: "aside body" "aside footer"; }
+  .pfe-band__container[pfe-has-header][pfe-has-footer] {
+    --pfe-band--gridTemplateArea_mobile: "header" "body" "footer"; }
+    .pfe-band__container[pfe-has-header][pfe-has-footer][pfe-has-aside] {
+      --pfe-band--gridTemplateArea_mobile: "header" "body" "footer" "aside";
+      --pfe-band--gridTemplateArea_desktop: "header header" "body aside" "footer footer"; }
+    .pfe-band__container[pfe-has-header][pfe-has-footer][pfe-aside-mobile="top"] {
+      --pfe-band--gridTemplateArea_mobile: "aside" "header" "body" "footer"; }
+    .pfe-band__container[pfe-has-header][pfe-has-footer][pfe-aside-height="full"] {
+      --pfe-band--gridTemplateArea_desktop: "header aside" "body aside" "footer aside" ; }
+    .pfe-band__container[pfe-has-header][pfe-has-footer][pfe-aside-desktop="left"] {
+      --pfe-band--gridTemplateArea_desktop: "header header" "aside body" "footer footer"; }
+      .pfe-band__container[pfe-has-header][pfe-has-footer][pfe-aside-desktop="left"][pfe-aside-height="full"] {
+        --pfe-band--gridTemplateArea_desktop: "aside header" "aside body" "aside footer"; }
   @supports (display: grid) {
     .pfe-band__container {
       display: grid;
@@ -354,39 +377,10 @@ class PfeBand extends PFElement {
       grid-column-gap: calc(var(--pfe-band--gutter) * 3);
       grid-template-columns: var(--pfe-band--layout);
       grid-template-rows: max-content;
-      grid-template-areas: var(--pfe-band--gridTemplateArea); } }
-
-@media (min-width: 768px) {
-  [pfe-has-aside] .pfe-band__main {
-    float: left;
-    width: calc(100% - 230px); } }
-
-@media (min-width: 992px) {
-  [pfe-has-aside] .pfe-band__main {
-    width: calc(100% - 290px); } }
-
-@supports (display: grid) {
-  .pfe-band__main {
-    display: grid;
-    grid-gap: var(--pfe-band--gutter);
-    grid-column-gap: calc(var(--pfe-band--gutter) * 3);
-    grid-template-areas: var(--pfe-band_main--gridTemplateArea_header) "body" var(--pfe-band_main--gridTemplateArea_footer);
-    width: auto !important; } }
-
-@supports (display: grid) {
-  [pfe-has-header] .pfe-band__main {
-    --pfe-band_main--gridTemplateArea_header: "header"; } }
-
-@supports (display: grid) {
-  [pfe-has-footer] .pfe-band__main {
-    --pfe-band_main--gridTemplateArea_footer: "footer"; } }
-
-.pfe-band__main > *:not(:last-child) {
-  margin-bottom: var(--pfe-band--gutter); }
-
-@media (min-width: 768px) {
-  .pfe-band__main {
-    width: var(--pfe-band_region--width); } }</style>
+      grid-template-areas: var(--pfe-band--gridTemplateArea_mobile); }
+      @media (min-width: 768px) {
+        .pfe-band__container {
+          grid-template-areas: var(--pfe-band--gridTemplateArea_desktop); } } }</style>
 <section class="pfe-band__container"${["header", "footer", "aside"].map(slot => (this.has_slot(`pfe-band--${slot}`) ? `pfe-has-${slot}` : "")).join(" ")}>
   ${this.has_slot("pfe-band--aside") && this.asidePosition.mobile === "top" ? `<slot class="pfe-band__aside" name="pfe-band--aside"></slot>` : ""}
   ${this.has_slot("pfe-band--header") ? `<slot class="pfe-band__header" name="pfe-band--header"></slot>` : ""}
@@ -412,7 +406,7 @@ class PfeBand extends PFElement {
         default: "right",
         enum: ["right", "left"],
         observer: "_basicAttributeChanged",
-        options: { dependencies: [{ type: "slot", id: "pfe-band-aside" }] }
+        options: { dependencies: [{ type: "slot", id: "aside" }] }
       },
       "aside-mobile": {
         title: "Aside positioning (mobile)",
@@ -420,7 +414,7 @@ class PfeBand extends PFElement {
         default: "bottom",
         enum: ["top", "bottom"],
         observer: "_basicAttributeChanged",
-        options: { dependencies: [{ type: "slot", id: "pfe-band-aside" }] }
+        options: { dependencies: [{ type: "slot", id: "aside" }] }
       },
       "aside-height": {
         title: "Aside height",
@@ -428,7 +422,7 @@ class PfeBand extends PFElement {
         default: "body",
         enum: ["full", "body"],
         observer: "_basicAttributeChanged",
-        options: { dependencies: [{ type: "slot", id: "pfe-band-aside" }] }
+        options: { dependencies: [{ type: "slot", id: "aside" }] }
       }
     };
   }
@@ -484,7 +478,9 @@ class PfeBand extends PFElement {
   }
 
   constructor() {
-    super(PfeBand, { type: PfeBand.PfeType });
+    super(PfeBand, {
+      type: PfeBand.PfeType
+    });
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {

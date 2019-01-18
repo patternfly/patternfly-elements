@@ -15,7 +15,8 @@ let theme = "base";
 const stories = storiesOf("Band", module);
 
 // Define the templates to be used
-const template = (data = {}) => tools.component(PfeBand.tag, data.prop, data.slots, "pfe");
+const template = (data = {}) =>
+  tools.component(PfeBand.tag, data.prop, data.slots, "pfe");
 
 // prettier-ignore
 const defaultContent = {

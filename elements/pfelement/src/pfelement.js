@@ -106,10 +106,11 @@ class PFElement extends HTMLElement {
     }
   }
 
+  // Map the imported properties json to real props on the element
+  // @notice static getter of properties is built via tooling
+  // to edit modify src/element.json
   _mapSchemaToProperties(tag, properties) {
-    // Map the imported properties json to real props on the element
-    // @notice static getter of properties is built via tooling
-    // to edit modify src/element.json
+    // Loop over the properties provided by the schema
     Object.keys(properties).forEach(attr => {
       let data = properties[attr];
       // Set the attribute's property equal to the schema input
@@ -124,12 +125,11 @@ class PFElement extends HTMLElement {
       }
       // Otherwise, look for a default and use that instead
       else if (data.default) {
+        const dependency_exists = this._hasDependency(tag, data.options);
+        const no_dependencies =
+          !data.options || (data.options && !data.options.dependencies.length);
         // If the dependency exists or there are no dependencies, set the default
-        if (
-          this._hasDependency(tag, data.options) ||
-          !data.options ||
-          (data.options && !data.options.dependencies.length)
-        ) {
+        if (dependency_exists || no_dependencies) {
           this.setAttribute(`${prefix}${attr}`, data.default);
           this[attr].value = data.default;
         }
@@ -137,35 +137,32 @@ class PFElement extends HTMLElement {
     });
   }
 
+  // Test whether expected dependencies exist
   _hasDependency(tag, opts) {
     // Get any possible dependencies for this attribute to exist
     let dependencies = opts ? opts.dependencies : [];
-    // Check that dependent item exists
+    // Initialize the dependency return value
     let hasDependency = false;
-
+    // Check that dependent item exists
+    // Loop through the dependencies defined
     for (let i = 0; i < dependencies.length; i += 1) {
-      if (
-        (dependencies[i].type === "slot" &&
-          this.has_slot(`${tag}--${dependencies[i].id}`)) ||
-        (dependencies[i].type === "attribute" &&
-          this.getAttribute(`${prefix}${dependencies[i].id}`))
-      ) {
+      const slot_exists =
+        dependencies[i].type === "slot" &&
+        this.has_slot(`${tag}--${dependencies[i].id}`);
+      const attribute_exists =
+        dependencies[i].type === "attribute" &&
+        this.getAttribute(`${prefix}${dependencies[i].id}`);
+      // If the type is slot, check that it exists OR
+      // if the type is an attribute, check if the attribute is defined
+      if (slot_exists || attribute_exists) {
         // If the slot does exist, add the attribute with the default value
         hasDependency = true;
+        // Exit the loop
         break;
       }
     }
-
+    // Return a boolean if the dependency exists
     return hasDependency;
-    // dependencies.forEach(dep => {
-    //   // If the type is slot, check that it exists OR
-    //   // if the type is an attribute, check if the attribute is defined
-    //   if ((dep.type === "slot" && this.has_slot(`${tag}--${dep.id}`)) || (dep.type === "attribute" && this.getAttribute(`${prefix}${dep.id}`))) {
-    //     // If the slot does exist, add the attribute with the default value
-    //     return true;
-    //   }
-    // });
-    // return false;
   }
 
   _queueAction(action) {

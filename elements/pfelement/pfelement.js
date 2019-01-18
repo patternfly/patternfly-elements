@@ -120,10 +120,6 @@ class PFElement extends HTMLElement {
     this._queue = [];
     this.template = document.createElement("template");
 
-    if (typeof pfeClass.properties === "object") {
-      this._mapSchemaToProperties(pfeClass.tag, pfeClass.properties);
-    }
-
     this.attachShadow({ mode: "open" });
 
     if (type) {
@@ -148,6 +144,13 @@ class PFElement extends HTMLElement {
 
     this.classList.add("PFElement");
 
+    if (typeof this._pfeClass.properties === "object") {
+      this._mapSchemaToProperties(
+        this._pfeClass.tag,
+        this._pfeClass.properties
+      );
+    }
+
     if (this._queue.length) {
       this._processQueue();
     }
@@ -165,7 +168,10 @@ class PFElement extends HTMLElement {
   }
 
   _copyAttribute(name, to) {
-    const recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];
+    const recipients = [
+      ...this.querySelectorAll(to),
+      ...this.shadowRoot.querySelectorAll(to)
+    ];
     const value = this.getAttribute(name);
     const fname = value == null ? "removeAttribute" : "setAttribute";
     for (const node of recipients) {
@@ -192,7 +198,11 @@ class PFElement extends HTMLElement {
       // Otherwise, look for a default and use that instead
       else if (data.default) {
         // If the dependency exists or there are no dependencies, set the default
-        if (this._hasDependency(tag, data.options) || (data.options && data.options.dependencies.length <= 0)) {
+        if (
+          this._hasDependency(tag, data.options) ||
+          !data.options ||
+          (data.options && !data.options.dependencies.length)
+        ) {
           this.setAttribute(`${prefix}${attr}`, data.default);
           this[attr].value = data.default;
         }
@@ -204,15 +214,31 @@ class PFElement extends HTMLElement {
     // Get any possible dependencies for this attribute to exist
     let dependencies = opts ? opts.dependencies : [];
     // Check that dependent item exists
-    dependencies.forEach(dep => {
-      // If the type is slot, check that it exists OR
-      // if the type is an attribute, check if the attribute is defined
-      if ((dep.type === "slot" && this.has_slot(`${tag}--${dep.id}`)) || (dep.type === "attribute" && this.getAttribute(`${prefix}${dep.id}`))) {
+    let hasDependency = false;
+
+    for (let i = 0; i < dependencies.length; i += 1) {
+      if (
+        (dependencies[i].type === "slot" &&
+          this.has_slot(`${tag}--${dependencies[i].id}`)) ||
+        (dependencies[i].type === "attribute" &&
+          this.getAttribute(`${prefix}${dependencies[i].id}`))
+      ) {
         // If the slot does exist, add the attribute with the default value
-        return true;
+        hasDependency = true;
+        break;
       }
-    });
-    return false;
+    }
+
+    return hasDependency;
+    // dependencies.forEach(dep => {
+    //   // If the type is slot, check that it exists OR
+    //   // if the type is an attribute, check if the attribute is defined
+    //   if ((dep.type === "slot" && this.has_slot(`${tag}--${dep.id}`)) || (dep.type === "attribute" && this.getAttribute(`${prefix}${dep.id}`))) {
+    //     // If the slot does exist, add the attribute with the default value
+    //     return true;
+    //   }
+    // });
+    // return false;
   }
 
   _queueAction(action) {

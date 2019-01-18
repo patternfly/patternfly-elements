@@ -12,7 +12,7 @@
     <link href="../../pfe-layouts/pfe-layouts.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/custom-elements-es5-adapter.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/custom-elements-es5-adapter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/webcomponents-bundle.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
@@ -20,7 +20,12 @@
       '../pfe-band.umd.js',
       '../../pfe-card/pfe-card.umd.js',
       '../../pfe-cta/pfe-cta.umd.js'
-    ])</script>
+    ])</script>-->
+    <script type="module">
+      import "../pfe-band.js";
+      import "../../pfe-card/pfe-card.js";
+      import "../../pfe-cta/pfe-cta.js";
+    </script>
 
     <style>
     body {
@@ -62,7 +67,7 @@
   <body unresolved>
     <pfe-band pfe-size="small"><h1>&lt;pfe-band&gt;</h1></pfe-band>
 
-    <pfe-band pfe-color="lightest" pfe-aside-desktop="right" pfe-aside-mobile="bottom" pfe-aside-height="body">
+    <pfe-band pfe-color="lightest">
       <header slot="pfe-band--header">
         <h1>Lightest band, header region</h1>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
@@ -83,7 +88,7 @@
       </pfe-card>
     </pfe-band>
 
-    <pfe-band pfe-color="lighter" pfe-aside-desktop="left" pfe-aside-mobile="bottom" pfe-aside-height="body">
+    <pfe-band pfe-color="lighter" pfe-aside-desktop="left">
       <header slot="pfe-band--header">
         <h2>Light band</h2>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
@@ -101,7 +106,7 @@
       </pfe-card>
     </pfe-band>
 
-    <pfe-band pfe-aside-desktop="right" pfe-aside-mobile="bottom" pfe-aside-height="full">
+    <pfe-band pfe-aside-height="full">
       <header slot="pfe-band--header">
         <h2>Default band</h2>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>

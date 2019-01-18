@@ -94,6 +94,10 @@ class PfeBand extends PFElement {
     return "pfe-band.scss";
   }
 
+  get imageSrc() {
+    return this.getAttribute("pfe-img-src");
+  }
+
   get asidePosition() {
     return {
       desktop: this.getAttribute("pfe-aside-desktop"),
@@ -127,6 +131,14 @@ class PfeBand extends PFElement {
 
   constructor() {
     super(PfeBand, { type: PfeBand.PfeType });
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    // Initialize the background image attachment
+    if (this.imageSrc) {
+      this.style.backgroundImage = `url('${this.imageSrc}')`;
+    }
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {

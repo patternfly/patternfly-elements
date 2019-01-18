@@ -104,13 +104,13 @@ class PfeBand extends PFElement {
   get html() {
     return `<style>:host {
   display: block;
-  --pfe-band--padding_vertical:               calc( var(--pfe-theme--container-spacer, 1rem) * 4);
-  --pfe-band--padding_horizontal:             calc( var(--pfe-theme--container-spacer, 1rem) * 1);
-  --pfe-band--padding:                         var(--pfe-band--padding_vertical)  var(--pfe-band--padding_horizontal);
-  --pfe-band--backgroundColor:                 var(--pfe-theme--color--surface--base, #dfdfdf);
-  --pfe-band--backgroundPosition:              center center;
-  --pfe-band--border:                          var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) transparent;
-  --pfe-band--layout:                          1fr;
+  --pfe-band--Padding--vertical:               calc( var(--pfe-theme--container-spacer, 1rem) * 4);
+  --pfe-band--Padding--horizontal:             calc( var(--pfe-theme--container-spacer, 1rem) * 1);
+  --pfe-band--Padding:                         var(--pfe-band--Padding--vertical)  var(--pfe-band--Padding--horizontal);
+  --pfe-band--BackgroundColor:                 var(--pfe-theme--color--surface--base, #dfdfdf);
+  --pfe-band--BackgroundPosition:              center center;
+  --pfe-band--Border:                          var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) transparent;
+  --pfe-band--layout:                           1fr;
   --pfe-band__header--layout:                   1fr;
   --pfe-band__body--layout:                     1fr;
   --pfe-band__footer--layout:                   1fr;
@@ -121,33 +121,33 @@ class PfeBand extends PFElement {
   --pfe-broadcasted--color--ui-link--visited:  var(--pfe-theme--color--surface--base--link--visited, #7551a6);
   --pfe-broadcasted--color--ui-link--hover:    var(--pfe-theme--color--surface--base--link--hover, #00305b);
   --pfe-broadcasted--color--ui-link--focus:    var(--pfe-theme--color--surface--base--link--focus, #00305b);
-  --pfe-band--width: auto;
-  --pfe-band--width_aside-sm: 240px;
-  --pfe-band--width_aside-lg: 300px;
+  --pfe-band--Width: auto;
+  --pfe-band--Width__aside--sm: 240px;
+  --pfe-band--Width__aside--lg: 300px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-items: flex-start;
-  padding: calc(var(--pfe-band--padding_vertical) / 2) var(--pfe-band--padding_horizontal);
-  border: var(--pfe-band--border);
-  background-color: var(--pfe-band--backgroundColor);
-  background-position: var(--pfe-band--backgroundPosition);
+  padding: calc(var(--pfe-band--Padding--vertical) / 2) var(--pfe-band--Padding--horizontal);
+  border: var(--pfe-band--Border);
+  background-color: var(--pfe-band--BackgroundColor);
+  background-position: var(--pfe-band--BackgroundPosition);
   color: var(--pfe-broadcasted--color--text); }
   @media screen and (min-width: 768px) {
     :host {
-      --pfe-band--width: calc( 768px - calc(var(--pfe-band--padding_horizontal) * 4) ); } }
+      --pfe-band--Width: calc( 768px - calc(var(--pfe-band--Padding--horizontal) * 4) ); } }
   @media screen and (min-width: 992px) {
     :host {
-      --pfe-band--width: calc( 992px - calc(var(--pfe-band--padding_horizontal) * 4) ); } }
+      --pfe-band--Width: calc( 992px - calc(var(--pfe-band--Padding--horizontal) * 4) ); } }
   @media screen and (min-width: 1200px) {
     :host {
-      --pfe-band--width: calc( 1200px - calc(var(--pfe-band--padding_horizontal) * 4) ); } }
+      --pfe-band--Width: calc( 1200px - calc(var(--pfe-band--Padding--horizontal) * 4) ); } }
   @media print {
     :host {
-      --pfe-band--padding: calc(var(--pfe-band--padding_vertical) / 2) var(--pfe-band--padding_horizontal); } }
+      --pfe-band--Padding: calc(var(--pfe-band--Padding--vertical) / 2) var(--pfe-band--Padding--horizontal); } }
   @media (min-width: 576px) {
     :host {
-      padding: var(--pfe-band--padding); } }
+      padding: var(--pfe-band--Padding); } }
   @media print {
     :host {
       background-color: white !important;
@@ -157,7 +157,7 @@ class PfeBand extends PFElement {
     box-sizing: border-box; }
 
 :host([pfe-color="darker"]) {
-  --pfe-band--backgroundColor:                  var(--pfe-theme--color--surface--darker, #464646);
+  --pfe-band--BackgroundColor:                  var(--pfe-theme--color--surface--darker, #464646);
   --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--darker--text, #fff);
   --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--darker--link, #99ccff);
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--darker--link--visited, #b38cd9);
@@ -165,7 +165,7 @@ class PfeBand extends PFElement {
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--darker--link--focus, #cce6ff); }
 
 :host([pfe-color="darkest"]) {
-  --pfe-band--backgroundColor:                  var(--pfe-theme--color--surface--darkest, #131313);
+  --pfe-band--BackgroundColor:                  var(--pfe-theme--color--surface--darkest, #131313);
   --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--darkest--text, #fff);
   --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--darkest--link, #99ccff);
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--darkest--link--visited, #b38cd9);
@@ -173,7 +173,7 @@ class PfeBand extends PFElement {
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--darkest--link--focus, #cce6ff); }
 
 :host([pfe-color="accent"]) {
-  --pfe-band--backgroundColor:                  var(--pfe-theme--color--surface--accent, #fe460d);
+  --pfe-band--BackgroundColor:                  var(--pfe-theme--color--surface--accent, #fe460d);
   --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--accent--text, #fff);
   --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--accent--link, #99ccff);
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--accent--link--visited, #b38cd9);
@@ -181,7 +181,7 @@ class PfeBand extends PFElement {
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--accent--link--focus, #cce6ff); }
 
 :host([pfe-color="complement"]) {
-  --pfe-band--backgroundColor:                  var(--pfe-theme--color--surface--complement, #0477a4);
+  --pfe-band--BackgroundColor:                  var(--pfe-theme--color--surface--complement, #0477a4);
   --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--complement--text, #fff);
   --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--complement--link, #99ccff);
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--complement--link--visited, #b38cd9);
@@ -189,7 +189,7 @@ class PfeBand extends PFElement {
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--complement--link--focus, #cce6ff); }
 
 :host([pfe-color="lighter"]) {
-  --pfe-band--backgroundColor:                  var(--pfe-theme--color--surface--lighter, #ececec);
+  --pfe-band--BackgroundColor:                  var(--pfe-theme--color--surface--lighter, #ececec);
   --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--lighter--text, #333);
   --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--lighter--link, #06c);
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--lighter--link--visited, rebeccapurple);
@@ -197,7 +197,7 @@ class PfeBand extends PFElement {
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--lighter--link--focus, #003366); }
 
 :host([pfe-color="lightest"]) {
-  --pfe-band--backgroundColor:                  var(--pfe-theme--color--surface--lightest, #fff);
+  --pfe-band--BackgroundColor:                  var(--pfe-theme--color--surface--lightest, #fff);
   --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--lightest--text, #333);
   --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--lightest--link, #06c);
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--lightest--link--visited, rebeccapurple);
@@ -205,7 +205,7 @@ class PfeBand extends PFElement {
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--lightest--link--focus, #003366); }
 
 :host([pfe-size="small"]) {
-  --pfe-band--padding:   calc(var(--pfe-band--padding_vertical) / 4)  var(--pfe-band--padding_horizontal); }
+  --pfe-band--Padding:   calc(var(--pfe-band--Padding--vertical) / 4)  var(--pfe-band--Padding--horizontal); }
 
 .pfe-band__body {
   display: flex;
@@ -312,30 +312,30 @@ class PfeBand extends PFElement {
       margin-bottom: 0; } }
 
 .pfe-band__container {
-  --pfe-band_region--width: calc(calc(1fr - var(--pfe-band--width_aside-sm)) - var(--pfe-band--gutter));
+  --pfe-band_region--width: calc(calc(1fr - var(--pfe-band--Width__aside--sm)) - var(--pfe-band--gutter));
   --pfe-band--gridTemplateArea_mobile: "body";
   position: relative;
   margin: 0 auto;
-  width: var(--pfe-band--width); }
+  width: var(--pfe-band--Width); }
   .pfe-band__container[pfe-has-aside] {
     --pfe-band--gridTemplateArea_mobile: "body" "aside";
     --pfe-band--gridTemplateArea_desktop: "body aside"; }
     @media (min-width: 768px) {
       .pfe-band__container[pfe-has-aside] {
-        --pfe-band--layout: 1fr var(--pfe-band--width_aside-sm); } }
+        --pfe-band--layout: 1fr var(--pfe-band--Width__aside--sm); } }
     @media (min-width: 992px) {
       .pfe-band__container[pfe-has-aside] {
-        --pfe-band--layout: 1fr var(--pfe-band--width_aside-lg); } }
+        --pfe-band--layout: 1fr var(--pfe-band--Width__aside--lg); } }
     .pfe-band__container[pfe-has-aside][pfe-aside-mobile="top"] {
       --pfe-band--gridTemplateArea_mobile: "aside" "body"; }
     .pfe-band__container[pfe-has-aside][pfe-aside-desktop="left"] {
       --pfe-band--gridTemplateArea_desktop: "aside body"; }
       @media (min-width: 768px) {
         .pfe-band__container[pfe-has-aside][pfe-aside-desktop="left"] {
-          --pfe-band--layout: var(--pfe-band--width_aside-sm) 1fr; } }
+          --pfe-band--layout: var(--pfe-band--Width__aside--sm) 1fr; } }
       @media (min-width: 992px) {
         .pfe-band__container[pfe-has-aside][pfe-aside-desktop="left"] {
-          --pfe-band--layout: var(--pfe-band--width_aside-lg) 1fr; } }
+          --pfe-band--layout: var(--pfe-band--Width__aside--lg) 1fr; } }
   .pfe-band__container[pfe-has-header] {
     --pfe-band--gridTemplateArea_mobile: "header" "body"; }
     .pfe-band__container[pfe-has-header][pfe-has-aside] {

@@ -6,20 +6,20 @@ $LOCAL: band;
   display: block;
 
   // Default spacing values
-  --pfe-band--padding_vertical:               calc( #{pfe-var(container-spacer)} * 4);
-  --pfe-band--padding_horizontal:             calc( #{pfe-var(container-spacer)} * 1);
+  --pfe-band--Padding--vertical:               calc( #{pfe-var(container-spacer)} * 4);
+  --pfe-band--Padding--horizontal:             calc( #{pfe-var(container-spacer)} * 1);
   // Bring them together for ease of use below
-  --pfe-band--padding:                         #{pfe-local(padding_vertical)}  #{pfe-local(padding_horizontal)};
+  --pfe-band--Padding:                         #{pfe-local(Padding--vertical)}  #{pfe-local(Padding--horizontal)};
 
   // Surface colors
-  --pfe-band--backgroundColor:                 #{pfe-color(surface--base)};
-  --pfe-band--backgroundPosition:              center center;
+  --pfe-band--BackgroundColor:                 #{pfe-color(surface--base)};
+  --pfe-band--BackgroundPosition:              center center;
 
   // Border settings
-  --pfe-band--border:                          #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
+  --pfe-band--Border:                          #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
 
   // Layouts, grid layouts
-  --pfe-band--layout:                          1fr;
+  --pfe-band--layout:                           1fr;
   --pfe-band__header--layout:                   1fr;
   --pfe-band__body--layout:                     1fr;
   --pfe-band__footer--layout:                   1fr;
@@ -37,19 +37,19 @@ $LOCAL: band;
 
   // Band width logic
   // Initialize at mobile breakpoint
-  --pfe-band--width: auto;
-  --pfe-band--width_aside-sm: 240px;
-  --pfe-band--width_aside-lg: 300px;
+  --pfe-band--Width: auto;
+  --pfe-band--Width__aside--sm: 240px;
+  --pfe-band--Width__aside--lg: 300px;
 
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
     @media screen and (min-width: pfe-breakpoint(#{$size})) {
-      --pfe-band--width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(padding_horizontal)} * 4) );
+      --pfe-band--Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) );
     }
   }
   // Reduce padding for print
   @media print {
-    --pfe-band--padding: calc(#{pfe-local(padding_vertical)} / 2) #{pfe-local(padding_horizontal)};
+    --pfe-band--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
   }
 
   // Wrapper sets padding and background visuals
@@ -59,18 +59,18 @@ $LOCAL: band;
   justify-items: flex-start;
 
   // Padding 
-  padding: calc(#{pfe-local(padding_vertical)} / 2)  #{pfe-local(padding_horizontal)};
+  padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
 
   @media (min-width: #{pfe-breakpoint(sm)}) {
-    padding: #{pfe-local(padding)};
+    padding: #{pfe-local(Padding)};
   }
 
   // Border styles
-  border: #{pfe-local(border)};
+  border: #{pfe-local(Border)};
 
   // Base colors
-  background-color:      #{pfe-local(backgroundColor)};
-  background-position:   #{pfe-local(backgroundPosition)};
+  background-color:      #{pfe-local(BackgroundColor)};
+  background-position:   #{pfe-local(BackgroundPosition)};
   color:                 #{pfe-radio(color, text)};
 
   // Remove background color for print
@@ -84,7 +84,7 @@ $LOCAL: band;
 
 @each $color in (darker, darkest, accent, complement, lighter, lightest) {
   :host([pfe-color="#{$color}"]) {
-    --pfe-band--backgroundColor:                  #{pfe-color(surface--#{$color})};
+    --pfe-band--BackgroundColor:                  #{pfe-color(surface--#{$color})};
     --pfe-broadcasted--color--text:               #{pfe-color(surface--#{$color}--text)};
     --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--#{$color}--link)};
     --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--#{$color}--link--visited)};
@@ -95,7 +95,7 @@ $LOCAL: band;
 
 // thinner padding on top & bottom
 :host([pfe-size="small"]) {
-  --pfe-band--padding:   calc(#{pfe-local(padding_vertical)} / 4)  #{pfe-local(padding_horizontal)};
+  --pfe-band--Padding:   calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
 }
 
 @each $slot in (default, header, footer, aside) {
@@ -142,17 +142,17 @@ $LOCAL: band;
 .pfe-band {
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
-    --pfe-band_region--width: calc(calc(1fr - #{pfe-local(width_aside-sm)}) - #{pfe-local(gutter)});
+    --pfe-band_region--width: calc(calc(1fr - #{pfe-local(Width__aside--sm)}) - #{pfe-local(gutter)});
     --pfe-band--gridTemplateArea_mobile: "body";
     // Styles for the different combination of regions
     &[pfe-has-aside] {
       --pfe-band--gridTemplateArea_mobile: "body" "aside";
       --pfe-band--gridTemplateArea_desktop: "body aside";
       @media (min-width: #{pfe-breakpoint(md)}) {
-        --pfe-band--layout: 1fr #{pfe-local(width_aside-sm)};
+        --pfe-band--layout: 1fr #{pfe-local(Width__aside--sm)};
       }
       @media (min-width: #{pfe-breakpoint(lg)}) {
-        --pfe-band--layout: 1fr #{pfe-local(width_aside-lg)};
+        --pfe-band--layout: 1fr #{pfe-local(Width__aside--lg)};
       }
       &[pfe-aside-mobile="top"] {
         --pfe-band--gridTemplateArea_mobile: "aside" "body";
@@ -160,10 +160,10 @@ $LOCAL: band;
       &[pfe-aside-desktop="left"] {
         --pfe-band--gridTemplateArea_desktop: "aside body";
         @media (min-width: #{pfe-breakpoint(md)}) {
-          --pfe-band--layout: #{pfe-local(width_aside-sm)} 1fr;
+          --pfe-band--layout: #{pfe-local(Width__aside--sm)} 1fr;
         }
         @media (min-width: #{pfe-breakpoint(lg)}) {
-          --pfe-band--layout: #{pfe-local(width_aside-lg)} 1fr;
+          --pfe-band--layout: #{pfe-local(Width__aside--lg)} 1fr;
         }
       }
     }
@@ -227,7 +227,7 @@ $LOCAL: band;
 
     position:  relative;
     margin:    0 auto;
-    width: #{pfe-local(width)};
+    width: #{pfe-local(Width)};
     
     // Grid support styles
     @supports (display: grid) {

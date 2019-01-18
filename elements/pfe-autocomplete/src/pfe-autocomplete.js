@@ -208,6 +208,9 @@ class PfeAutocomplete extends PFElement {
     if (this._input.value === "") {
       this._searchBtn.setAttribute("disabled", "");
       this._clearBtn.setAttribute("hidden", "");
+
+      this._reset();
+      return;
     } else {
       if (!this._input.hasAttribute("disabled")) {
         this._searchBtn.removeAttribute("disabled");
@@ -285,6 +288,7 @@ class PfeAutocomplete extends PFElement {
   }
 
   _reset() {
+    debugger;
     this._dropdown.activeIndex = null;
     this._input.setAttribute("aria-activedescendant", "");
     this._dropdown.data = [];
@@ -310,16 +314,16 @@ class PfeAutocomplete extends PFElement {
     )
       return;
 
-    if (!this._dropdown.open) {
-      return;
-    }
-
     let activeIndex = this._dropdown.activeIndex;
     let optionsLength = this._dropdown.data.length;
 
     if (key == KEYCODE.ESC) {
       this._closeDroplist();
     } else if (key === KEYCODE.UP) {
+      if (!this._dropdown.open) {
+        return;
+      }
+
       activeIndex =
         activeIndex === null || activeIndex === "null"
           ? optionsLength
@@ -333,6 +337,10 @@ class PfeAutocomplete extends PFElement {
 
       this._input.value = this._activeOption(activeIndex);
     } else if (key === KEYCODE.DOWN) {
+      if (!this._dropdown.open) {
+        return;
+      }
+
       activeIndex =
         activeIndex === null || activeIndex === "null"
           ? -1

@@ -2,17 +2,17 @@ import PFElement from "../pfelement/pfelement.js";
 
 /*
  * Copyright 2018 Red Hat, Inc.
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,7 +20,8 @@ import PFElement from "../pfelement/pfelement.js";
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
+ * 
+*/
 
 const KEYCODE = {
   ENTER: 13,
@@ -368,6 +369,9 @@ button.search-button:disabled svg {
     if (this._input.value === "") {
       this._searchBtn.setAttribute("disabled", "");
       this._clearBtn.setAttribute("hidden", "");
+
+      this._reset();
+      return;
     } else {
       if (!this._input.hasAttribute("disabled")) {
         this._searchBtn.removeAttribute("disabled");
@@ -445,6 +449,7 @@ button.search-button:disabled svg {
   }
 
   _reset() {
+    debugger;
     this._dropdown.activeIndex = null;
     this._input.setAttribute("aria-activedescendant", "");
     this._dropdown.data = [];
@@ -470,16 +475,16 @@ button.search-button:disabled svg {
     )
       return;
 
-    if (!this._dropdown.open) {
-      return;
-    }
-
     let activeIndex = this._dropdown.activeIndex;
     let optionsLength = this._dropdown.data.length;
 
     if (key == KEYCODE.ESC) {
       this._closeDroplist();
     } else if (key === KEYCODE.UP) {
+      if (!this._dropdown.open) {
+        return;
+      }
+
       activeIndex =
         activeIndex === null || activeIndex === "null"
           ? optionsLength
@@ -493,6 +498,10 @@ button.search-button:disabled svg {
 
       this._input.value = this._activeOption(activeIndex);
     } else if (key === KEYCODE.DOWN) {
+      if (!this._dropdown.open) {
+        return;
+      }
+
       activeIndex =
         activeIndex === null || activeIndex === "null"
           ? -1

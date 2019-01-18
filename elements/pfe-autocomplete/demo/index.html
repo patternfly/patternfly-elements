@@ -20,12 +20,59 @@
     ])</script>
   </head>
   <body unresolved>
-    <pfe-autocomplete id="search-lazy-loading" debounce="500" init-value="uni">
+    <h1>&lt;pfe-autocomplete&gt;</h1>
+    <h2>Static Data</h2>
+    <p>Uses an array of strings.</p>
+    <div>
+      <pfe-autocomplete id="static" debounce="300">
         <input placeholder="Enter Your Search Term"/>
-    </pfe-autocomplete>
-    <br>
-    <pfe-autocomplete is-disabled init-value="uni"><input placeholder="Enter Your Search Term"/></pfe-autocomplete>
+      </pfe-autocomplete>
+    </div>
+    <h4>Static Selected Value: <span id="staticSelectedValue"></span></h4>
+
+    <h2>Lazy Loading with init-value</h2>
+    <p>Makes an ajax call, filters the response and sends the filtered data to the component.</p>
+    <div>
+      <pfe-autocomplete id="search-lazy-loading" debounce="500" init-value="uni">
+        <input placeholder="Enter Your Search Term"/>
+      </pfe-autocomplete>
+    </div>
+    <h4>Ajax Selected Value: <span id="ajaxSelectedValue"></span></h4>
+
+    <h2>Disabled</h2>
+    <div>
+      <pfe-autocomplete is-disabled init-value="uni"><input placeholder="Enter Your Search Term"/></pfe-autocomplete>
+    </div>
     <script>
+      const staticAutocomplete = document.querySelector("#static");
+      const items = [
+        "Item 1",
+        "Item 2",
+        "United States",
+        "Chicago Cubs",
+        "Red Hat",
+        "Purple",
+        "Curious George",
+        "United Kingdom",
+        "Elephant",
+        "Baseball",
+        "Bingo",
+        "Book",
+        "Android",
+        "iOS",
+        "Linux",
+        "Red Hat Enterprise Linux"
+      ];
+
+      staticAutocomplete.autocompleteRequest = function(params, callback) {
+        const regx = new RegExp("\^" + params.query, "i");
+        callback(items.filter(item => regx.test(item)));
+      };
+
+      staticAutocomplete.addEventListener('pfe-search-event', function(e) {
+        document.querySelector("#staticSelectedValue").textContent = e.detail.searchValue;
+      });
+
       const searchAutocomplete = document.querySelector('#search-lazy-loading');
 
       // autocomplete call
@@ -59,7 +106,7 @@
       // when user performs search, this event is fired
       // search phrase is passed to e.detail.searchValue
       searchAutocomplete.addEventListener('pfe-search-event', function(e) {
-        console.log('do search= ' + e.detail.searchValue);
+        document.querySelector("#ajaxSelectedValue").textContent = e.detail.searchValue;
       });
     </script>
   </body>

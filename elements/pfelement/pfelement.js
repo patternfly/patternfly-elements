@@ -117,6 +117,7 @@ class PFElement extends HTMLElement {
 
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
+    this.props = pfeClass.properties;
     this._queue = [];
     this.template = document.createElement("template");
 
@@ -144,11 +145,8 @@ class PFElement extends HTMLElement {
 
     this.classList.add("PFElement");
 
-    if (typeof this._pfeClass.properties === "object") {
-      this._mapSchemaToProperties(
-        this._pfeClass.tag,
-        this._pfeClass.properties
-      );
+    if (typeof this.props === "object") {
+      this._mapSchemaToProperties(this.tag, this.props);
     }
 
     if (this._queue.length) {

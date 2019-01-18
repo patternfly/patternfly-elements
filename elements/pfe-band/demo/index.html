@@ -16,6 +16,9 @@
     
     <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/webcomponents-loader.js"></script> -->
+
+    <!-- IE11 test: use bundle + require with umd files -->
+    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/webcomponents-bundle.js"></script>
 
     <!-- Tests require pulling in the UMD version of the files -->
@@ -24,27 +27,17 @@
     <script>
       require([
         '../../pfe-card/pfe-card.umd.js',
-        '../../pfe-cta/pfe-cta.umd.js',
-        '../pfe-band.umd.js'
+        '../pfe-band.umd.js',
+        '../../pfe-cta/pfe-cta.umd.js'
       ]);
     </script>
 
     <!-- Modern browsers can read this; tests importing js files as modules -->
       <!-- <script type="module">
         import "../../pfe-card/pfe-card.js";
-        import "../../pfe-cta/pfe-cta.js";
         import "../pfe-band.js";
+        import "../../pfe-cta/pfe-cta.js";
       </script> -->
-    
-
-    <!-- IE11 test -->
-    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/webcomponents-bundle.js"></script> -->
-    
-    <!-- <script src="../../pfelement/pfelement.umd.js"></script> -->
-    <!-- <script src="../../pfe-card/pfe-card.umd.js"></script>
-    <script src="../pfe-band.umd.js"></script>
-    <script src="../../pfe-cta/pfe-cta.umd.js"></script> -->
 
     <style>
     body {

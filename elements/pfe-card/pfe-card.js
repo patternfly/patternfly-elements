@@ -221,6 +221,10 @@ a:focus {
     return "pfe-card.html";
   }
 
+  get backgroundColor() {
+    return this.getAttribute("color") || "base";
+  }
+
   static get observedAttributes() {
     return ["color"];
   }
@@ -232,6 +236,14 @@ a:focus {
 
   constructor() {
     super(PfeCard, { type: PfeCard.PfeType });
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    // Initialize the context setting for the children elements
+    if (this.backgroundColor) {
+      this._updateContext(this.backgroundColor);
+    }
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {

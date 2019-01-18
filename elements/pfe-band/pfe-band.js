@@ -104,17 +104,17 @@ class PfeBand extends PFElement {
   get html() {
     return `<style>:host {
   display: block;
-  --pfe-band--padding__vertical:               calc( var(--pfe-theme--container-spacer, 1rem) * 4);
-  --pfe-band--padding__horizontal:             calc( var(--pfe-theme--container-spacer, 1rem) * 1);
-  --pfe-band--padding:                         var(--pfe-band--padding__vertical)  var(--pfe-band--padding__horizontal);
+  --pfe-band--padding_vertical:               calc( var(--pfe-theme--container-spacer, 1rem) * 4);
+  --pfe-band--padding_horizontal:             calc( var(--pfe-theme--container-spacer, 1rem) * 1);
+  --pfe-band--padding:                         var(--pfe-band--padding_vertical)  var(--pfe-band--padding_horizontal);
   --pfe-band--backgroundColor:                 var(--pfe-theme--color--surface--base, #dfdfdf);
   --pfe-band--backgroundPosition:              center center;
   --pfe-band--border:                          var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) transparent;
   --pfe-band--layout:                          1fr;
-  --pfe-band_header--layout:                   1fr;
-  --pfe-band_body--layout:                     1fr;
-  --pfe-band_footer--layout:                   1fr;
-  --pfe-band_aside--layout:                    1fr;
+  --pfe-band__header--layout:                   1fr;
+  --pfe-band__body--layout:                     1fr;
+  --pfe-band__footer--layout:                   1fr;
+  --pfe-band__aside--layout:                    1fr;
   --pfe-band--gutter:                          var(--pfe-theme--container-spacer, 1rem);
   --pfe-broadcasted--color--text:              var(--pfe-theme--color--surface--base--text, #333);
   --pfe-broadcasted--color--ui-link:           var(--pfe-theme--color--surface--base--link, #00538c);
@@ -128,23 +128,23 @@ class PfeBand extends PFElement {
   display: flex;
   flex-direction: column;
   justify-items: flex-start;
-  padding: calc(var(--pfe-band--padding__vertical) / 2) var(--pfe-band--padding__horizontal);
+  padding: calc(var(--pfe-band--padding_vertical) / 2) var(--pfe-band--padding_horizontal);
   border: var(--pfe-band--border);
   background-color: var(--pfe-band--backgroundColor);
   background-position: var(--pfe-band--backgroundPosition);
   color: var(--pfe-broadcasted--color--text); }
   @media screen and (min-width: 768px) {
     :host {
-      --pfe-band--width: calc( 768px - calc(var(--pfe-band--padding__horizontal) * 4) ); } }
+      --pfe-band--width: calc( 768px - calc(var(--pfe-band--padding_horizontal) * 4) ); } }
   @media screen and (min-width: 992px) {
     :host {
-      --pfe-band--width: calc( 992px - calc(var(--pfe-band--padding__horizontal) * 4) ); } }
+      --pfe-band--width: calc( 992px - calc(var(--pfe-band--padding_horizontal) * 4) ); } }
   @media screen and (min-width: 1200px) {
     :host {
-      --pfe-band--width: calc( 1200px - calc(var(--pfe-band--padding__horizontal) * 4) ); } }
+      --pfe-band--width: calc( 1200px - calc(var(--pfe-band--padding_horizontal) * 4) ); } }
   @media print {
     :host {
-      --pfe-band--padding: calc(var(--pfe-band--padding__vertical) / 2) var(--pfe-band--padding__horizontal); } }
+      --pfe-band--padding: calc(var(--pfe-band--padding_vertical) / 2) var(--pfe-band--padding_horizontal); } }
   @media (min-width: 576px) {
     :host {
       padding: var(--pfe-band--padding); } }
@@ -205,7 +205,7 @@ class PfeBand extends PFElement {
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--lightest--link--focus, #003366); }
 
 :host([pfe-size="small"]) {
-  --pfe-band--padding:   calc(var(--pfe-band--padding__vertical) / 4)  var(--pfe-band--padding__horizontal); }
+  --pfe-band--padding:   calc(var(--pfe-band--padding_vertical) / 4)  var(--pfe-band--padding_horizontal); }
 
 .pfe-band__body {
   display: flex;
@@ -216,8 +216,7 @@ class PfeBand extends PFElement {
       grid-area: body;
       display: grid;
       grid-gap: var(--pfe-band--gutter);
-      grid-template-columns: var(--pfe-band_body--layout);
-      grid-template-rows: max-content; } }
+      grid-template-columns: var(--pfe-band__body--layout); } }
 
 ::slotted(*) {
   margin-bottom: var(--pfe-band--gutter); }
@@ -243,8 +242,7 @@ class PfeBand extends PFElement {
       grid-area: header;
       display: grid;
       grid-gap: var(--pfe-band--gutter);
-      grid-template-columns: var(--pfe-band_header--layout);
-      grid-template-rows: max-content; } }
+      grid-template-columns: var(--pfe-band__header--layout); } }
 
 ::slotted([slot="pfe-band--header"]:not(:last-child)) {
   margin-bottom: var(--pfe-band--gutter); }
@@ -270,8 +268,7 @@ class PfeBand extends PFElement {
       grid-area: footer;
       display: grid;
       grid-gap: var(--pfe-band--gutter);
-      grid-template-columns: var(--pfe-band_footer--layout);
-      grid-template-rows: max-content; } }
+      grid-template-columns: var(--pfe-band__footer--layout); } }
 
 ::slotted([slot="pfe-band--footer"]:not(:last-child)) {
   margin-bottom: var(--pfe-band--gutter); }
@@ -297,8 +294,7 @@ class PfeBand extends PFElement {
       grid-area: aside;
       display: grid;
       grid-gap: var(--pfe-band--gutter);
-      grid-template-columns: var(--pfe-band_aside--layout);
-      grid-template-rows: max-content; } }
+      grid-template-columns: var(--pfe-band__aside--layout); } }
 
 ::slotted([slot="pfe-band--aside"]:not(:last-child)) {
   margin-bottom: var(--pfe-band--gutter); }
@@ -520,6 +516,10 @@ class PfeBand extends PFElement {
     return this.getAttribute("pfe-img-src");
   }
 
+  get backgroundColor() {
+    return this.getAttribute("pfe-color");
+  }
+
   get asidePosition() {
     return {
       desktop: this.getAttribute("pfe-aside-desktop"),
@@ -559,7 +559,11 @@ class PfeBand extends PFElement {
     super.connectedCallback();
     // Initialize the background image attachment
     if (this.imageSrc) {
-      this.style.backgroundImage = `url('${this.imageSrc}')`;
+      this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
+    }
+    // Initialize the context setting for the children elements
+    if (this.backgroundColor) {
+      this._updateContext(this.backgroundColor);
     }
   }
 

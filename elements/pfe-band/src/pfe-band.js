@@ -98,6 +98,10 @@ class PfeBand extends PFElement {
     return this.getAttribute("pfe-img-src");
   }
 
+  get backgroundColor() {
+    return this.getAttribute("pfe-color");
+  }
+
   get asidePosition() {
     return {
       desktop: this.getAttribute("pfe-aside-desktop"),
@@ -137,7 +141,11 @@ class PfeBand extends PFElement {
     super.connectedCallback();
     // Initialize the background image attachment
     if (this.imageSrc) {
-      this.style.backgroundImage = `url('${this.imageSrc}')`;
+      this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
+    }
+    // Initialize the context setting for the children elements
+    if (this.backgroundColor) {
+      this._updateContext(this.backgroundColor);
     }
   }
 

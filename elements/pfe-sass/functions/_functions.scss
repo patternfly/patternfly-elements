@@ -297,13 +297,19 @@ $map: $pfe-colors) {
 ///         padding-bottom:   #{pfe-local(paddingBottom)};
 ///     }
 ///     ```
-@function pfe-local($cssvar,
-$region: "") {
-    @if $region !="" {
-        $region: "_#{$region}";
+@function pfe-local($cssvar, $fallback: null, $region: null) {
+    // If a region value exists, build the region string
+    @if $region != null {
+        $region: "__#{$region}";
     }
-
-    @return var(--#{$repo}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')});
+    // Start building the variable declaration
+    $var-declaration: "--#{$repo}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')}";
+    // If a fallback is defined, pass that in too
+    @if $fallback != null {
+        $var-declaration: "#{$var-declaration}, #{$fallback}";
+    }
+    // Return the variable declaration string
+    @return var(#{$var-declaration});
 }
 
 /// Radio

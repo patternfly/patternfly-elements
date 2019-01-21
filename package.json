@@ -25,6 +25,7 @@
     }
   },
   "devDependencies": {
+    "@polymer/iron-test-helpers": "^3.0.1",
     "@storybook/addon-actions": "^3.4.8",
     "@storybook/addon-knobs": "^3.4.8",
     "@storybook/addon-notes": "^3.4.8",

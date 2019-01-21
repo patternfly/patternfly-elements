@@ -115,7 +115,8 @@ class PfeBand extends PFElement {
   --pfe-band__body--layout:                     1fr;
   --pfe-band__footer--layout:                   1fr;
   --pfe-band__aside--layout:                    1fr;
-  --pfe-band--gutter:                          var(--pfe-theme--container-spacer, 1rem);
+  --pfe-band--gutter--vertical:                 var(--pfe-theme--container-spacer, 1rem);
+  --pfe-band--gutter--horizontal:               calc(var(--pfe-theme--container-spacer, 1rem) * 3);
   --pfe-broadcasted--color--text:              var(--pfe-theme--color--surface--base--text, #333);
   --pfe-broadcasted--color--ui-link:           var(--pfe-theme--color--surface--base--link, #00538c);
   --pfe-broadcasted--color--ui-link--visited:  var(--pfe-theme--color--surface--base--link--visited, #7551a6);
@@ -215,11 +216,12 @@ class PfeBand extends PFElement {
     .pfe-band__body {
       grid-area: body;
       display: grid;
-      grid-gap: var(--pfe-band--gutter);
+      grid-row-gap: var(--pfe-band--gutter--vertical);
+      grid-column-gap: var(--pfe-band--gutter--horizontal);
       grid-template-columns: var(--pfe-band__body--layout); } }
 
 ::slotted(*) {
-  margin-bottom: var(--pfe-band--gutter); }
+  margin-bottom: var(--pfe-band--gutter--vertical); }
   @supports (display: grid) {
     ::slotted(*) {
       margin-bottom: 0; } }
@@ -228,7 +230,7 @@ class PfeBand extends PFElement {
   margin: 0; }
 
 ::slotted(*) {
-  margin-bottom: var(--pfe-band--gutter); }
+  margin-bottom: var(--pfe-band--gutter--vertical); }
   @supports (display: grid) {
     ::slotted(*) {
       margin-bottom: 0; } }
@@ -241,11 +243,12 @@ class PfeBand extends PFElement {
     .pfe-band__header {
       grid-area: header;
       display: grid;
-      grid-gap: var(--pfe-band--gutter);
+      grid-row-gap: var(--pfe-band--gutter--vertical);
+      grid-column-gap: var(--pfe-band--gutter--horizontal);
       grid-template-columns: var(--pfe-band__header--layout); } }
 
 ::slotted([slot="pfe-band--header"]:not(:last-child)) {
-  margin-bottom: var(--pfe-band--gutter); }
+  margin-bottom: var(--pfe-band--gutter--vertical); }
   @supports (display: grid) {
     ::slotted([slot="pfe-band--header"]:not(:last-child)) {
       margin-bottom: 0; } }
@@ -254,7 +257,7 @@ class PfeBand extends PFElement {
   margin: 0; }
 
 ::slotted([slot="pfe-band--header"] > *:not(:last-child)) {
-  margin-bottom: var(--pfe-band--gutter); }
+  margin-bottom: var(--pfe-band--gutter--vertical); }
   @supports (display: grid) {
     ::slotted([slot="pfe-band--header"] > *:not(:last-child)) {
       margin-bottom: 0; } }
@@ -267,11 +270,12 @@ class PfeBand extends PFElement {
     .pfe-band__footer {
       grid-area: footer;
       display: grid;
-      grid-gap: var(--pfe-band--gutter);
+      grid-row-gap: var(--pfe-band--gutter--vertical);
+      grid-column-gap: var(--pfe-band--gutter--horizontal);
       grid-template-columns: var(--pfe-band__footer--layout); } }
 
 ::slotted([slot="pfe-band--footer"]:not(:last-child)) {
-  margin-bottom: var(--pfe-band--gutter); }
+  margin-bottom: var(--pfe-band--gutter--vertical); }
   @supports (display: grid) {
     ::slotted([slot="pfe-band--footer"]:not(:last-child)) {
       margin-bottom: 0; } }
@@ -280,7 +284,7 @@ class PfeBand extends PFElement {
   margin: 0; }
 
 ::slotted([slot="pfe-band--footer"] > *:not(:last-child)) {
-  margin-bottom: var(--pfe-band--gutter); }
+  margin-bottom: var(--pfe-band--gutter--vertical); }
   @supports (display: grid) {
     ::slotted([slot="pfe-band--footer"] > *:not(:last-child)) {
       margin-bottom: 0; } }
@@ -293,11 +297,12 @@ class PfeBand extends PFElement {
     .pfe-band__aside {
       grid-area: aside;
       display: grid;
-      grid-gap: var(--pfe-band--gutter);
+      grid-row-gap: var(--pfe-band--gutter--vertical);
+      grid-column-gap: var(--pfe-band--gutter--horizontal);
       grid-template-columns: var(--pfe-band__aside--layout); } }
 
 ::slotted([slot="pfe-band--aside"]:not(:last-child)) {
-  margin-bottom: var(--pfe-band--gutter); }
+  margin-bottom: var(--pfe-band--gutter--vertical); }
   @supports (display: grid) {
     ::slotted([slot="pfe-band--aside"]:not(:last-child)) {
       margin-bottom: 0; } }
@@ -306,13 +311,13 @@ class PfeBand extends PFElement {
   margin: 0; }
 
 ::slotted([slot="pfe-band--aside"] > *:not(:last-child)) {
-  margin-bottom: var(--pfe-band--gutter); }
+  margin-bottom: var(--pfe-band--gutter--vertical); }
   @supports (display: grid) {
     ::slotted([slot="pfe-band--aside"] > *:not(:last-child)) {
       margin-bottom: 0; } }
 
 .pfe-band__container {
-  --pfe-band_region--width: calc(calc(1fr - var(--pfe-band--Width__aside--sm)) - var(--pfe-band--gutter));
+  --pfe-band_region--width: calc(calc(1fr - var(--pfe-band--Width__aside--sm)) - var(--pfe-band--gutter--horizontal));
   --pfe-band--gridTemplateArea_mobile: "body";
   position: relative;
   margin: 0 auto;
@@ -378,8 +383,8 @@ class PfeBand extends PFElement {
   @supports (display: grid) {
     .pfe-band__container {
       display: grid;
-      grid-gap: var(--pfe-band--gutter);
-      grid-column-gap: calc(var(--pfe-band--gutter) * 3);
+      grid-row-gap: var(--pfe-band--gutter--vertical);
+      grid-column-gap: var(--pfe-band--gutter--horizontal);
       grid-template-columns: var(--pfe-band--layout);
       grid-template-rows: max-content;
       grid-template-areas: var(--pfe-band--gridTemplateArea_mobile); }

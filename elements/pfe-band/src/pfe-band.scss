@@ -26,7 +26,8 @@ $LOCAL: band;
   --pfe-band__aside--layout:                    1fr;
 
   // Vertical spacing
-  --pfe-band--gutter:                          #{pfe-var(container-spacer)};
+  --pfe-band--gutter--vertical:                 #{pfe-var(container-spacer)};
+  --pfe-band--gutter--horizontal:               calc(#{pfe-var(container-spacer)} * 3);
 
   // Text colors
   --pfe-broadcasted--color--text:              #{pfe-color(surface--base--text)};
@@ -115,7 +116,8 @@ $LOCAL: band;
       grid-area: #{$grid-area};
       // Set up the internal grid system for each slot
       display: grid;
-      grid-gap: #{pfe-local(gutter)};
+      grid-row-gap: #{pfe-local(gutter--vertical)};
+      grid-column-gap: #{pfe-local(gutter--horizontal)};
       grid-template-columns: #{pfe-local(
         $cssvar: layout,
         $region: $grid-area
@@ -123,7 +125,7 @@ $LOCAL: band;
     }
   }
   @include pfe-slot($slot-name, ":not(:last-child)") {
-    margin-bottom: #{pfe-local(gutter)};
+    margin-bottom: #{pfe-local(gutter--vertical)};
     @supports (display: grid) {
       margin-bottom: 0;
     }
@@ -132,7 +134,7 @@ $LOCAL: band;
     margin: 0;
   }
   @include pfe-slot($slot-name, "> *:not(:last-child)") {
-    margin-bottom: #{pfe-local(gutter)};
+    margin-bottom: #{pfe-local(gutter--vertical)};
     @supports (display: grid) {
       margin-bottom: 0;
     }
@@ -142,7 +144,7 @@ $LOCAL: band;
 .pfe-band {
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
-    --pfe-band_region--width: calc(calc(1fr - #{pfe-local(Width__aside--sm)}) - #{pfe-local(gutter)});
+    --pfe-band_region--width: calc(calc(1fr - #{pfe-local(Width__aside--sm)}) - #{pfe-local(gutter--horizontal)});
     --pfe-band--gridTemplateArea_mobile: "body";
     // Styles for the different combination of regions
     &[pfe-has-aside] {
@@ -231,12 +233,12 @@ $LOCAL: band;
     
     // Grid support styles
     @supports (display: grid) {
-      display:   grid;
-      grid-gap: #{pfe-local(gutter)};
-      grid-column-gap: calc(#{pfe-local(gutter)} * 3);
+      display:               grid;
+      grid-row-gap:          #{pfe-local(gutter--vertical)};
+      grid-column-gap:       #{pfe-local(gutter--horizontal)};
       grid-template-columns: #{pfe-local(layout)};
-      grid-template-rows: max-content;
-      grid-template-areas: var(--pfe-band--gridTemplateArea_mobile);
+      grid-template-rows:    max-content;
+      grid-template-areas:   var(--pfe-band--gridTemplateArea_mobile);
       @media (min-width: #{pfe-breakpoint(md)}) {
         grid-template-areas: var(--pfe-band--gridTemplateArea_desktop);
       }

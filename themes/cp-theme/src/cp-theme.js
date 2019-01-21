@@ -1,6 +1,8 @@
-import "./scoping-shim.min.js";
-import "./apply-shim.min.js";
-import "./custom-style-interface.min.js";
+import shim from "rollup-plugin-shim";
+
+// import "./scoping-shim.min.js";
+// import "./apply-shim.min.js";
+// import "./custom-style-interface.min.js";
 
 (function() {
   const templateId = "cp-theme";

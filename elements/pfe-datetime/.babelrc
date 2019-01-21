@@ -1,4 +1,17 @@
 {
-  "presets": [["env", { "modules": false }]],
-  "plugins": ["external-helpers"]
+  "presets": [
+    [
+      "@babel/preset-env", {
+        "targets": {
+          "browsers": [
+            "last 2 versions",
+            "Firefox > 23",
+            "iOS > 5"]
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-external-helpers"
+  ]
 }

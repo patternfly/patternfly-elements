@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>PatternFly Element: Call-to-action Demo</title>
     <meta charset="utf-8">
-    <title>PFElements: pfe-cta Demo</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
 
     <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
     <!-- <link rel="stylesheet" href="../../../themes/cp-theme/cp-theme.css" /> -->
 
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <!-- <link href="../../pfe-layouts/pfe-layouts.css" rel="stylesheet"> -->
+
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require([
-      '../../../themes/cp-theme/cp-theme.umd.js',
-      '../pfe-cta.umd.js'
-    ])</script>
+    <script>
+      require([
+        "../pfe-cta.umd.js",
+        "../../../themes/cp-theme/cp-theme.umd.js"
+      ]);
+    </script>
 
     <style>
       body {
@@ -39,12 +50,6 @@
         background: #d2d2d2;
       }
     </style>
-
-    <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
-    </noscript>
-
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
   </head>
   <body unresolved>
     <h1>&lt;pfe-cta&gt;</h1>

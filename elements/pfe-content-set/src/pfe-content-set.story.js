@@ -7,14 +7,14 @@ import {
 } from "@storybook/addon-knobs/polymer";
 import { escapeHTML } from "../../../.storybook/utils.js";
 
-import PfeHideShow from "../pfe-hide-show";
+import PfeContentSet from "../pfe-content-set";
 
 const lorem = require("lorem-ipsum");
 
-const stories = storiesOf("Hide-show", module);
+const stories = storiesOf("Content-set", module);
 stories.addDecorator(withKnobs);
 
-stories.add(PfeHideShow.tag, () => {
+stories.add(PfeContentSet.tag, () => {
   const orientationLabel = "Orientation";
   const orientationOptions = {
     "": "Horizontal",
@@ -67,20 +67,20 @@ stories.add(PfeHideShow.tag, () => {
     );
 
   const template = `
-<pfe-hide-show${orientationAttr}${variantAttr}>
+<pfe-content-set${orientationAttr}${variantAttr}>
 ${Array(countVar)
     .join(0)
     .split(0)
     .map(
       (item, i) => `
-    <pfe-hide-show-set>
+    <pfe-content-set-set>
         <h2 pfe-heading>${sets[i].heading}</h2>
         ${sets[i].panel}
-    </pfe-hide-show-set>
+    </pfe-content-set-set>
 `
     )
     .join("")}
-</pfe-hide-show>
+</pfe-content-set>
 `;
 
   return `

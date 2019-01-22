@@ -49,7 +49,7 @@ class PfeAvatar extends PFElement {
   }
 
   static get defaultColors() {
-    return "#3B0083 #f0ab00 #007a87 #00b9e4 #92d400";
+    return "#67accf #448087 #709c6b #a35252 #826cbb";
   }
 
   get name() {

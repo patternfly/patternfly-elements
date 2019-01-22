@@ -29,16 +29,6 @@ class PfeAvatar extends PFElement {
     return `
 <style>
 :host {
-  --pfe-avatar--pattern-color1: var(
-    --pfe-avatar--color--background,
-    var(--pfe-theme--color--ui-accent, #cce6ff)
-  );
-  --pfe-avatar--pattern-color2: var(
-    --pfe-avatar--color--foreground,
-    var(--pfe-theme--color--ui-accent--hover, #cce6ff)
-  );
-  --pfe-avatar--text-color: var(--pfe-theme--color--text--on-dark, #333);
-  --pfe-avatar--font-size: var(--pfe-theme--font-size--heading--alpha, 1em);
   --pfe-avatar--width: 128px;
   display: block;
   position: relative;
@@ -111,7 +101,7 @@ class PfeAvatar extends PFElement {
   }
 
   static get defaultColors() {
-    return "#3B0083 #f0ab00 #007a87 #00b9e4 #92d400";
+    return "#67accf #448087 #709c6b #a35252 #826cbb";
   }
 
   get name() {

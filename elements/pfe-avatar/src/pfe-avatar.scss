@@ -1,18 +1,6 @@
 @import "../../pfe-sass/pfe-sass";
+
 :host {
-  // --pfe-avatar--color--background: var(--pfe-theme--color--ui-accent, #cce6ff);
-  // --pfe-avatar--color--foreground: var(--pfe-theme--color--ui-accent--hover, #cce6ff);
-  // --pfe-avatar--color--gradient: var(--pfe-avatar--color--background, #cce6ff);
-  --pfe-avatar--pattern-color1: var(
-    --pfe-avatar--color--background,
-    var(--pfe-theme--color--ui-accent, #cce6ff)
-  );
-  --pfe-avatar--pattern-color2: var(
-    --pfe-avatar--color--foreground,
-    var(--pfe-theme--color--ui-accent--hover, #cce6ff)
-  );
-  --pfe-avatar--text-color: var(--pfe-theme--color--text--on-dark, #333);
-  --pfe-avatar--font-size: var(--pfe-theme--font-size--heading--alpha, 1em);
   --pfe-avatar--width: 128px;
 
   display: block;

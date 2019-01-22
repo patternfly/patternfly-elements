@@ -45,7 +45,7 @@ stories.add("pfe-avatar", () => {
     <h1>Dynamic example</h1>
     <h2>Use knobs to adjust!</h2>
 
-    <link rel="stylesheet" type="text/css" href="/rh-layouts/rh-layouts.css">
+    <link rel="stylesheet" type="text/css" href="/pfe-layouts/pfe-layouts.css">
 
     <div class="rh-l-bullseye">
       <div class="rh-l-bullseye__item">
@@ -54,8 +54,7 @@ stories.add("pfe-avatar", () => {
     </div>
     <section>
       <h2>Markup</h2>
-      <pre style="margin-left:15px;">
-        <code>${escapeHTML(customAvatar)}</code>
+      <pre style="margin-left:15px;"><code>${escapeHTML(customAvatar)}</code>
       </pre>
     </section>
     <h1>Static examples</h1>
@@ -66,7 +65,7 @@ stories.add("pfe-avatar", () => {
         flex-wrap: wrap;
       }
 
-      .demo-cards > rh-card {
+      .demo-cards > pfe-card {
         margin: 0 16px 32px;
         width: 168px;
         box-sizing: content-box;
@@ -77,7 +76,7 @@ stories.add("pfe-avatar", () => {
       ${staticExamples
         .map(
           ex => `
-            <rh-card>
+            <pfe-card color="light">
               <h2 slot="header">${ex.name}</h2>
               <p>
                 <pfe-avatar
@@ -92,7 +91,7 @@ stories.add("pfe-avatar", () => {
                 },
                 ${ex.shape} shape.
                </p>
-            </rh-card>
+            </pfe-card>
           `
         )
         .join("\n")}

@@ -100,7 +100,7 @@ class PfeHideShow extends PFElement {
         this.groupings.push(tempGroup);
       });
 
-      this._observer.disconnect();
+      // this._observer.disconnect();
       this.render();
     });
 
@@ -108,6 +108,14 @@ class PfeHideShow extends PFElement {
       attributes: true,
       childList: true
     });
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+  }
+
+  disconnectedCallback() {
+    this._observer.disconnect();
   }
 }
 

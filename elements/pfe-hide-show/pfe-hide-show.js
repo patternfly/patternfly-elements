@@ -147,7 +147,7 @@ ${
         this.groupings.push(tempGroup);
       });
 
-      this._observer.disconnect();
+      // this._observer.disconnect();
       this.render();
     });
 
@@ -155,6 +155,14 @@ ${
       attributes: true,
       childList: true
     });
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+  }
+
+  disconnectedCallback() {
+    this._observer.disconnect();
   }
 }
 

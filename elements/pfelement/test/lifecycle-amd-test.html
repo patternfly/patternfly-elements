@@ -9,9 +9,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 
-    <script>
-      require(['../../pfe-card/pfe-card.umd.js']);
-    </script>
 
     <noscript>
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
@@ -28,27 +25,30 @@
     </pfe-card>
 
     <script>
-      suite("using PFElements as AMD Modules", () => {
-        test('the element-level "connected" event should fire', done => {
-          const pfeCard = document.createElement("pfe-card");
-          pfeCard.addEventListener("connected", () => {
-            done();
-          });
-          document.body.appendChild(pfeCard);
-        });
-        test('the class-level "connected" event should fire', done => {
-          let x = 0;
-          const cards = [0,0,0]
-            .map(n => document.createElement("pfe-card"))
-            .forEach(card => {
-              card.addEventListener("connected", () => {
-                x += 1;
-                if (x === 3) {
-                  done();
-                }
-              });
-              document.body.appendChild(card);
+      require(['../../pfe-card/pfe-card.umd.js'], function(PfeCard) {
+        suite("using PFElements as AMD Modules", () => {
+          test('the element-level "connected" event should fire', done => {
+            const pfeCard = document.createElement("pfe-card");
+            pfeCard.addEventListener("connected", () => {
+              done();
             });
+            document.body.appendChild(pfeCard);
+          });
+          test('the class-level "connected" event should fire', done => {
+            let x = 0;
+            PfeCard.addEventListener("connected", () => {
+              x += 1;
+              if (x === 3) {
+                done();
+              }
+            });
+            // create three cards and add them to the DOM
+            const cards = [0,0,0]
+              .map(n => document.createElement("pfe-card"))
+              .forEach(card => {
+                document.body.appendChild(card);
+              });
+          });
         });
       });
     </script>

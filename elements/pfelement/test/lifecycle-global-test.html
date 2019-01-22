@@ -30,15 +30,16 @@
         });
         test('the class-level "connected" event should fire', done => {
           let x = 0;
+          window.PfeCard.addEventListener("connected", () => {
+            x += 1;
+            if (x === 3) {
+              done();
+            }
+          });
+          // create three cards and add them to the DOM
           const cards = [0,0,0]
             .map(n => document.createElement("pfe-card"))
             .forEach(card => {
-              card.addEventListener("connected", () => {
-                x += 1;
-                if (x === 3) {
-                  done();
-                }
-              });
               document.body.appendChild(card);
             });
         });

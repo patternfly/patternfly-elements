@@ -85,7 +85,7 @@ ${Array(countVar)
 
   return `
 <section>
-    <h2>Hide-Show</h2>
+    <h2>Content set</h2>
     ${template}
 </section>
 <section>

@@ -4,12 +4,12 @@ This container element provides a set of slots in which to render banded content
 
 ## Slots
 
-All slots other than `pfe-band-body` are optional.  If the slot is not defined, the container tag for it will not be rendered in the template.
+All slots other than `pfe-band--body` are optional.  If the slot is not defined, the container tag for it will not be rendered in the template.
 
-- `pfe-band-header`: This slot renders at the top of the container and generally contains the title, headline, and or subheadline content.  Other possible candidates include a set of social sharing links or tags that describe the content below. The recommended tag for this slot is the `header` tag with h-level or p tags contained within it.
+- `pfe-band--header`: This slot renders at the top of the container and generally contains the title, headline, and or subheadline content.  Other possible candidates include a set of social sharing links or tags that describe the content below. The recommended tag for this slot is the `header` tag with h-level or p tags contained within it.
 - **Default slot**: This is the default slot and contains the bulk of the content in this element.  Paragraph text or a grid of cards or images might be rendered in this region.  Recommended tag for this slot is the `article` tag. Any content not assigned to a slot will be rendered here.
-- `pfe-band-footer`: This slot is typically used for calls-to-action or footnotes and is pushed to the bottom of the container.  Recommended tags include `pfe-cta` or `footer`.
-- `pfe-band-aside`: This slot is for content that should be rendered to the right or left of the default slot on desktop.  Asides often contain `pfe-card` or interest forms which provide users a little more information or context for the band.
+- `pfe-band--footer`: This slot is typically used for calls-to-action or footnotes and is pushed to the bottom of the container.  Recommended tags include `pfe-cta` or `footer`.
+- `pfe-band--aside`: This slot is for content that should be rendered to the right or left of the default slot on desktop.  Asides often contain `pfe-card` or interest forms which provide users a little more information or context for the band.
 
 ## Attributes
 
@@ -38,7 +38,8 @@ There are several attributes available for customizing the visual treatment of t
     | lighter | <span class="color-preview" style="--bg:#ececec"></span> #ececec |
     | lightest | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
 
-- `pfe-img-src`: Optional background image applied to the entire band container.  Alignment of this image can be managed using the `--pfe-band--backgroundPosition` variable which is set to `center center` by default;
+- `pfe-img-src`: Optional background image applied to the entire band container.  Alignment of this image can be managed using the `--pfe-band--BackgroundPosition` variable which is set to `center center` by default.
+- `pfe-size`: Optionally adjusts the padding on the container.  Accepts: `small`.
 
 ### Aside settings
 The aside settings have defaults and if no attribute is defined on the element's main tag, these attributes will be injected with their default values automatically.
@@ -50,8 +51,8 @@ The aside settings have defaults and if no attribute is defined on the element's
 ## Variables
 There are several powerful variables available to hook into and override default styles.
 
-- Verical and horizontal padding: `--pfe-band--padding__vertical` and `--pfe-band--padding__horizontal` accept size values such as px, em, rem, etc.
-- Background color: Though using the `pfe-color` attribute is strongly recommended when setting the background color for the band, you can also use completely custom colors by updating the `--pfe-band--backgroundColor` variable.  If you update this value manually, you should also update the `--pfe-broadcasted--color--text`, `--pfe-broadcasted--color--ui-link`[--visited, --hover, --focus] at the same time so that the text and links rendered on this background color show up correctly.
+- Verical and horizontal padding: `--pfe-band--Padding--vertical` and `--pfe-band--Padding--horizontal` accept size values such as px, em, rem, etc.
+- Background color: Though using the `pfe-color` attribute is strongly recommended when setting the background color for the band, you can also use completely custom colors by updating the `--pfe-band--BackgroundColor` variable.  If you update this value manually, you should also update the `--pfe-broadcasted--color--text`, `--pfe-broadcasted--color--ui-link`[--visited, --hover, --focus] at the same time so that the text and links rendered on this background color show up correctly.
 - Background position: This is designed for use with the `pfe-img-src` attribute to allow you to align your background image.  Default value is `center center`.
 - Border: This allows the customization of a border around the entire container and is primarily designed to be used to add a top and/or bottom border line.  This variable accepts the entire border shorthand and is set to transparent by default.
 - Layout: The band has a rudimentary layout system designed to be used inside the slot regions for the header, body, footer, and aside.  It uses the CSS grid spec and creates a stacked layout by default.  By updating these values, you will be able to create simple grid layouts.  Please note that these do not include fallbacks for older browsers. Possible values include: `1fr 1fr`, `repeat(3, 1fr)`, `repeat(auto-fill, minmax(300px, 1fr))`
@@ -60,8 +61,6 @@ There are several powerful variables available to hook into and override default
     * `--pfe-band_body--layout`: Applied to `.pfe-band__body`.
     * `--pfe-band_footer--layout`: Applied to `.pfe-band__footer`.
     * `--pfe-band_aside--layout`: Applied to `.pfe-band__aside`.
-
-    _Note: `pfe-band__main` will always use a stacked layout._
 
 ## Dependencies
 

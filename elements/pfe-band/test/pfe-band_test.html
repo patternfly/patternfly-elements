@@ -9,7 +9,7 @@
   </head>
   <body>
     <pfe-band id="band1">
-      <header slot="pfe-band-header">
+      <header slot="pfe-band--header">
         <h1>Default band, header region</h1>
         <p>Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       </header>
@@ -18,8 +18,8 @@
         <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
         <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
       </article>
-      <a href="#" slot="pfe-band-footer">Footer region</a>
-      <div slot="pfe-band-aside">
+      <a href="#" slot="pfe-band--footer">Footer region</a>
+      <div slot="pfe-band--aside">
         <h3>Aside: right body bottom</h3>
         <p>Ut wisi enim ad minim veniam.</p>
         <a href="#">Learn more</a>
@@ -103,22 +103,23 @@
         // Test the default positions of the aside region in the DOM
         test("it should have rendered the markup correctly for the aside defaults", () => {
           const container = band[0].shadowRoot.querySelector(".pfe-band__container");
-          const main      = container.children[1];
+          const header    = container.children[0];
+          const body      = container.children[1];
           const aside     = container.children[2];
+          const footer    = container.children[3];
 
           // Test that the container exists
           assert.isDefined(container, '.pfe-band__container is not `undefined`');
 
           if(container) {
-            // Test that the header is the first item in the pfe-band__container
-            assert.equal(container.children[0].className, "pfe-band__header");
-            // Test that the pfe-band__main wrapper is the second item in the pfe-band__container
-            assert.equal(main.className, "pfe-band__main");
-            // Test that the pfe-band__main wrapper contains the body and then the footer
-            assert.equal(main.children[0].className, "pfe-band__body");
-            assert.equal(main.children[1].className, "pfe-band__footer");
-            // Test that the aside is the last item in the pfe-band__container
+            // Test that the header is the first item in the container
+            assert.equal(header.className, "pfe-band__header");
+            // Test that the body is the second item in the container
+            assert.equal(body.className, "pfe-band__body");
+            // Test that the aside is the third item in the container
             assert.equal(aside.className, "pfe-band__aside");
+            // Test that the footer is the last item in the container
+            assert.equal(footer.className, "pfe-band__footer");
           }
         });
 

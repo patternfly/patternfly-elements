@@ -136,7 +136,7 @@ ${
     this.groupings = [];
 
     this._observer = new MutationObserver(() => {
-      const tempGrouping = [...this.querySelectorAll("pfe-content-set-set")];
+      const tempGrouping = [...this.querySelectorAll("pfe-content-set-group")];
 
       tempGrouping.forEach(group => {
         const tempGroup = {

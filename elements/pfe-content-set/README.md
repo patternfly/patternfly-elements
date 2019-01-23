@@ -14,24 +14,24 @@ Requires both the `pfe-accordion` and `pfe-tabs` components, as well as the base
 
 ## Usage
 
-You must wrap each chunk of information (heading + content) in a `<pfe-content-set-set>` tag. 
+You must wrap each chunk of information (heading + content) in a `<pfe-content-set-group>` tag. 
 
 You must also apply the `pfe-heading` to the HTML heading element, like an H2 or H3. Otherwise content within the component will not be rendered.
 
 ```html
 <pfe-content-set>
-  <pfe-content-set-set>
+  <pfe-content-set-group>
     <h2 pfe-heading>Heading 1</h2>
     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
-  </pfe-content-set-set>
-  <pfe-content-set-set>
+  </pfe-content-set-group>
+  <pfe-content-set-group>
     <h2 pfe-heading>Heading 2</h2>
     <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam volu et jen, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-  </pfe-content-set-set>
-  <pfe-content-set-set>
+  </pfe-content-set-group>
+  <pfe-content-set-group>
     <h2 pfe-heading>Heading 3</h2>
     <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-  </pfe-content-set-set>
+  </pfe-content-set-group>
 </pfe-content-set>
 
 ```

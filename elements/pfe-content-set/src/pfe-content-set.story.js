@@ -73,10 +73,10 @@ ${Array(countVar)
     .split(0)
     .map(
       (item, i) => `
-    <pfe-content-set-set>
+    <pfe-content-set-group>
         <h2 pfe-heading>${sets[i].heading}</h2>
         ${sets[i].panel}
-    </pfe-content-set-set>
+    </pfe-content-set-group>
 `
     )
     .join("")}

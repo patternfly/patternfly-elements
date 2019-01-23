@@ -11,7 +11,7 @@ import PfeContentSet from "../pfe-content-set";
 
 const lorem = require("lorem-ipsum");
 
-const stories = storiesOf("Content-set", module);
+const stories = storiesOf("Content set", module);
 stories.addDecorator(withKnobs);
 
 stories.add(PfeContentSet.tag, () => {

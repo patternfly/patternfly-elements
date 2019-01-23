@@ -7,7 +7,7 @@
 $pfe-tabs__panel--PaddingLeft-factor:  2;
 
 /// ===========================================================================
-/// DEFUALT TABS
+/// DEFAULT TABS
 /// ===========================================================================
 
 :host {
@@ -47,6 +47,7 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
   margin: 0 -1px 0 0;
   border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
   border-right: 0;
+  position: relative;
 }
 
 :host([vertical]) .tabs ::slotted(pfe-tab[aria-selected="true"]) {
@@ -58,4 +59,30 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
   padding: 0;
   padding-right: #{pfe-var(container-padding)};
   padding-left: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__panel--PaddingLeft-factor});
+}
+
+/// ===========================================================================
+/// TAB VARIANTS
+/// ===========================================================================
+
+:host([pfe-variant="primary"]) {
+  .tabs {
+    border-bottom: transparent;
+    border-right: transparent;
+  }
+}
+:host([vertical][pfe-variant="primary"]) {
+  align-items: flex-start;
+} 
+
+:host([pfe-variant="secondary"]) {
+  .tabs {
+    border-bottom: transparent;
+  }
+}
+
+:host([vertical][pfe-variant="secondary"]) {
+  .tabs {
+    justify-content: flex-start; 
+  }
 }

@@ -2,17 +2,17 @@ import PFElement from "../pfelement/pfelement.js";
 
 /*
  * Copyright 2019 Red Hat, Inc.
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,8 +20,8 @@ import PFElement from "../pfelement/pfelement.js";
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- */
+ * 
+*/
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.find
 if (!Array.prototype.find) {
@@ -161,7 +161,8 @@ class PfeTabs extends PFElement {
 :host([vertical]) .tabs ::slotted(pfe-tab) {
   margin: 0 -1px 0 0;
   border: var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) transparent;
-  border-right: 0; }
+  border-right: 0;
+  position: relative; }
 
 :host([vertical]) .tabs ::slotted(pfe-tab[aria-selected="true"]) {
   border-color: var(--pfe-tabs--border-color);
@@ -171,6 +172,19 @@ class PfeTabs extends PFElement {
   padding: 0;
   padding-right: var(--pfe-theme--container-padding, 1rem);
   padding-left: calc(var(--pfe-theme--container-padding, 1rem) * 2); }
+
+:host([pfe-variant="primary"]) .tabs {
+  border-bottom: transparent;
+  border-right: transparent; }
+
+:host([vertical][pfe-variant="primary"]) {
+  align-items: flex-start; }
+
+:host([pfe-variant="secondary"]) .tabs {
+  border-bottom: transparent; }
+
+:host([vertical][pfe-variant="secondary"]) .tabs {
+  justify-content: flex-start; }
 </style>
 <div class="tabs">
   <slot name="tab"></slot>
@@ -193,7 +207,7 @@ class PfeTabs extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["vertical", "selected-index"];
+    return ["vertical", "selected-index", "pfe-variant"];
   }
 
   get selectedIndex() {
@@ -245,6 +259,18 @@ class PfeTabs extends PFElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
+      case "pfe-variant":
+        if (this.getAttribute("pfe-variant") === "primary") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("pfe-variant", "primary")
+          );
+        } else if (this.getAttribute("pfe-variant") === "secondary") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("pfe-variant", "secondary")
+          );
+        }
+        break;
+
       case "vertical":
         if (this.hasAttribute("vertical")) {
           this.setAttribute("aria-orientation", "vertical");
@@ -523,6 +549,80 @@ class RhTab extends PFElement {
 :host(:focus),
 :host(:focus-visible) {
   outline: var(--pfe-theme--ui--focus-outline-width, 1px) var(--pfe-theme--ui--focus-outline-style, solid) var(--pfe-tabs--focus); }
+
+:host([pfe-variant="primary"]) {
+  text-align: center;
+  padding: 0 calc(var(--pfe-theme--container-padding, 1rem) / 3) var(--pfe-theme--container-padding, 1rem);
+  margin-right: 2%; }
+  :host([pfe-variant="primary"]) .indicator {
+    width: 100%;
+    left: 0; }
+
+:host([pfe-variant="primary"][aria-selected="true"]) {
+  border: transparent; }
+
+:host([pfe-variant="primary"][aria-selected="false"]) {
+  border: transparent; }
+  :host([pfe-variant="primary"][aria-selected="false"]) .indicator {
+    display: none; }
+
+:host([pfe-variant="secondary"]) {
+  text-align: center;
+  padding: calc(var(--pfe-theme--container-padding, 1rem) * .666) calc(var(--pfe-theme--container-padding, 1rem) * 2.75);
+  border: 1px solid #252527;
+  margin-right: 2%; }
+  :host([pfe-variant="secondary"]) .indicator {
+    display: none; }
+
+:host([pfe-variant="secondary"][aria-selected="true"]) {
+  background-color: #252527;
+  color: #ffffff; }
+  :host([pfe-variant="secondary"][aria-selected="true"]) .indicator {
+    display: block;
+    bottom: -33%;
+    width: 0;
+    height: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: var(--pfe-theme--container-spacer, 1rem) solid transparent;
+    border-right: var(--pfe-theme--container-spacer, 1rem) solid transparent;
+    border-top: var(--pfe-theme--container-spacer, 1rem) solid #252527;
+    background-color: transparent; }
+
+:host([pfe-variant="secondary"][aria-selected="false"]) {
+  color: #0477a4; }
+
+:host([pfe-variant="secondary"]:hover) {
+  background-color: #252527;
+  color: #ffffff; }
+
+:host([vertical][pfe-variant="primary"]) {
+  text-align: right;
+  padding-right: var(--pfe-theme--container-padding, 1rem); }
+  :host([vertical][pfe-variant="primary"]) .indicator {
+    left: auto;
+    right: 0;
+    top: 0;
+    display: var(--pfe-tabs__indicator--Display, block);
+    height: var(--pfe-tabs__indicator--Height, 22px);
+    width: var(--pfe-tabs__indicator--Width, 4px); }
+
+:host([vertical][pfe-variant="primary"][aria-selected="true"]) {
+  border: transparent !important; }
+
+:host([vertical][pfe-variant="secondary"][aria-selected="true"]) .indicator {
+  left: 99%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: var(--pfe-theme--container-spacer, 1rem) solid transparent;
+  border-left: var(--pfe-theme--container-spacer, 1rem) solid #252527;
+  border-bottom: var(--pfe-theme--container-spacer, 1rem) solid transparent;
+  background-color: transparent; }
+
+::slotted(h2) {
+  font-size: var(--pfe-theme--font-size);
+  font-weight: var(--pfe-theme--font-weight--normal, 500);
+  margin: 0; }
 </style>
 <slot></slot>
 <div class="indicator"></div>`;

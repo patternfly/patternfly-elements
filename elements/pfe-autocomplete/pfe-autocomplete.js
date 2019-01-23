@@ -154,8 +154,10 @@ button.search-button:disabled svg {
   padding-top: 7px; }
 </style>
 <div id="input-box-wrapper">
+    <!-- Input box -->
     <slot></slot>
 
+    <!-- loading icon -->
     <span class="loading" aria-hidden="true" hidden>
         <svg viewBox="0 0 40 40" enable-background="new 0 0 40 40">
           <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
@@ -174,6 +176,7 @@ button.search-button:disabled svg {
         </svg>
     </span>
 
+    <!-- clear search button -->
     <button class="clear-search" type="button" aria-label="clear search query" hidden>
       <svg viewBox="0 0 40 40" enable-background="new 0 0 40 40">
         <line x1="5" y1="5" x2="35" y2="35" stroke-width="10" stroke-linecap="round" stroke-miterlimit="10"></line>
@@ -181,6 +184,7 @@ button.search-button:disabled svg {
       </svg>
     </button>
 
+    <!-- Search button -->
     <button class="search-button" type="button" aria-label="Search" disabled>
       <svg viewBox="0 0 512 512">
         <path d="M256.233,5.756c-71.07,15.793-141.44,87.863-155.834,159.233c-11.495,57.076,0.3,111.153,27.688,154.335L6.339,441.172

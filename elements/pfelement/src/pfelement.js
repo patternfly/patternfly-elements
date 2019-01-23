@@ -34,6 +34,10 @@ class PFElement extends HTMLElement {
     this.setAttribute("pfe-type", value);
   }
 
+  has_slot(name) {
+    return this.querySelector(`[slot='${name}']`);
+  }
+
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
     super();
 

@@ -25,8 +25,11 @@ import PFElement from "../pfelement/pfelement.js";
 
 class PfeDatetime extends PFElement {
   get html() {
-    return `<style>:host {
-  display: inline; }</style>
+    return `
+<style>
+:host {
+  display: inline; }
+</style>
 <span></span>`;
   }
 

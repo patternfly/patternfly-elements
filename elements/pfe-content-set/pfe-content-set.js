@@ -25,8 +25,11 @@ import PFElement from "../pfelement/pfelement.js";
 
 class PfeContentSet extends PFElement {
   get html() {
-    return `<style>:host {
-  display: block; }</style>
+    return `
+<style>
+:host {
+  display: block; }
+</style>
 ${
       this.isTab
         ? `

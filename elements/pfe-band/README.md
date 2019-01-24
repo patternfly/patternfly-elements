@@ -62,16 +62,6 @@ There are several powerful variables available to hook into and override default
     * `--pfe-band_footer--layout`: Applied to `.pfe-band__footer`.
     * `--pfe-band_aside--layout`: Applied to `.pfe-band__aside`.
 
-## Dependencies
-
-Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
-
-    npm install -g polyserve web-component-tester
-
-## Dev
-
-    npm start
-
 ## Test
 
     npm run test
@@ -82,7 +72,9 @@ Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-compone
 
 ## Demo
 
-Run `npm start` and Polyserve will start a server and open your default browser to the demo page of the element.
+From the PFElements root directory, run:
+
+    npm start
 
 ## Code style
 
@@ -90,5 +82,4 @@ Band (and all PatternFly Elements) use [Prettier][prettier] to auto-format JS an
 
 [prettier]: https://github.com/prettier/prettier/
 [prettier-ed]: https://github.com/prettier/prettier/#editor-integration
-[polyserve]: https://github.com/Polymer/polyserve
 [web-component-tester]: https://github.com/Polymer/web-component-tester

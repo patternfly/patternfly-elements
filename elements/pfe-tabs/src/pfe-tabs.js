@@ -123,7 +123,7 @@ class PfeTabs extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["vertical", "selected-index"];
+    return ["vertical", "selected-index", "pfe-variant"];
   }
 
   get selectedIndex() {
@@ -175,6 +175,18 @@ class PfeTabs extends PFElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
+      case "pfe-variant":
+        if (this.getAttribute("pfe-variant") === "primary") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("pfe-variant", "primary")
+          );
+        } else if (this.getAttribute("pfe-variant") === "secondary") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("pfe-variant", "secondary")
+          );
+        }
+        break;
+
       case "vertical":
         if (this.hasAttribute("vertical")) {
           this.setAttribute("aria-orientation", "vertical");

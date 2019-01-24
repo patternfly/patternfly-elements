@@ -1,9 +1,11 @@
 const shell = require("shelljs");
 const inquirer = require("inquirer");
+const lerna_version = require("@lerna/version/lib/prompt-version");
 
 const cmds = {
   git_status: "git status --untracked-files=no --porcelain",
-  reset: "git checkout master && git reset --hard origin/master"
+  reset: "git checkout master && git reset --hard origin/master",
+  lerna_version: version => `npm run lerna version -- --no-push ${version}`
 };
 
 async function main() {
@@ -45,8 +47,8 @@ Please commit or stash the changes before publishing.`);
  * Check out the master branch.
  */
 async function checkOutMaster() {
-  console.log("checking out master");
-  shell.exec(cmds.git_status, { silent: true });
+  console.log("checking out master (disabled for testing)");
+  // shell.exec(cmds.git_status, { silent: true });
 }
 
 /**
@@ -57,10 +59,40 @@ async function bumpVersion() {
   // Choose the appropriate version bump type for the release you’re publishing.
   // use inquirer to provide a more straightforward choice than Lerna offers
   // if bumping a prerelease version (example: from 1.0.0-prerelease.2 to 1.0.0-prerelease.3), choose Custom Prerelease
-  // npm run lerna version -- --no-push --preid prerelease
-  const git_reset = await inquirer.prompt([
-    { name: "git-reset", type: "confirm" }
-  ]);
+
+  const prompt = await lerna_version(() => "prerelease");
+
+  const version = await prompt({
+    version: require("../lerna.json").version,
+    prereleaseId: "prerelease"
+  });
+
+  console.log(version);
+
+  const version_bump = shell.exec(cmds.lerna_version(version), {
+    silent: false
+  });
+  // const version_bump = shell.exec(cmds.lerna_version, { silent: false });
+
+  // const answer = await inquirer.prompt([
+  //   {
+  //     name: "type",
+  //     type: "list",
+  //     message: "What type of release is this?",
+  //     choices: [
+  //       { value: patch, name: `Patch (${patch})` },
+  //       { value: minor, name: `Minor (${minor})` },
+  //       { value: major, name: `Major (${major})` },
+  //       { value: prepatch, name: `Prepatch (${prepatch})` },
+  //       { value: preminor, name: `Preminor (${preminor})` },
+  //       { value: premajor, name: `Premajor (${premajor})` },
+  //       { value: "PRERELEASE", name: "Custom Prerelease" },
+  //       { value: "CUSTOM", name: "Custom Version" }
+  //     ]
+  //   }
+  // ]);
+
+  // console.log(answer);
 }
 
 /**

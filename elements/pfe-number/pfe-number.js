@@ -4,10 +4,10 @@ var commonjsGlobal =
   typeof window !== "undefined"
     ? window
     : typeof global !== "undefined"
-    ? global
-    : typeof self !== "undefined"
-    ? self
-    : {};
+      ? global
+      : typeof self !== "undefined"
+        ? self
+        : {};
 
 function createCommonjsModule(fn, module) {
   return (module = { exports: {} }), fn(module, module.exports), module.exports;
@@ -15,12 +15,12 @@ function createCommonjsModule(fn, module) {
 
 var numeral = createCommonjsModule(function(module) {
   /*! @preserve
-   * numeral.js
-   * version : 2.0.6
-   * author : Adam Draper
-   * license : MIT
-   * http://adamwdraper.github.com/Numeral-js/
-   */
+ * numeral.js
+ * version : 2.0.6
+ * author : Adam Draper
+ * license : MIT
+ * http://adamwdraper.github.com/Numeral-js/
+ */
 
   (function(global, factory) {
     if (module.exports) {
@@ -154,8 +154,8 @@ var numeral = createCommonjsModule(function(module) {
           signed = numeral._.includes(format, "+")
             ? format.indexOf("+")
             : value < 0
-            ? format.indexOf("-")
-            : -1;
+              ? format.indexOf("-")
+              : -1;
           format = format.replace(/[\+|\-]/g, "");
         }
 
@@ -790,12 +790,12 @@ var numeral = createCommonjsModule(function(module) {
         return ~~((number % 100) / 10) === 1
           ? "th"
           : b === 1
-          ? "st"
-          : b === 2
-          ? "nd"
-          : b === 3
-          ? "rd"
-          : "th";
+            ? "st"
+            : b === 2
+              ? "nd"
+              : b === 3
+                ? "rd"
+                : "th";
       },
       currency: {
         symbol: "$"
@@ -1183,17 +1183,17 @@ var numeral = createCommonjsModule(function(module) {
 
 /*
  * Copyright 2019 Red Hat, Inc.
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -1201,8 +1201,8 @@ var numeral = createCommonjsModule(function(module) {
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- */
+ * 
+*/
 
 // easy aliases for common format strings
 const types = {

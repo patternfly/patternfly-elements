@@ -45,6 +45,7 @@ Please commit or stash the changes before publishing.`);
  * Check out the master branch.
  */
 async function checkOutMaster() {
+  console.log("checking out master");
   shell.exec(cmds.git_status, { silent: true });
 }
 
@@ -52,6 +53,7 @@ async function checkOutMaster() {
  * Update version with Lerna.
  */
 async function bumpVersion() {
+  console.log("time to bump the version");
   // Choose the appropriate version bump type for the release you’re publishing.
   // use inquirer to provide a more straightforward choice than Lerna offers
   // if bumping a prerelease version (example: from 1.0.0-prerelease.2 to 1.0.0-prerelease.3), choose Custom Prerelease
@@ -65,6 +67,7 @@ async function bumpVersion() {
  * Create branch for the PR.
  */
 async function createBranch() {
+  console.log("let's create a branch");
   // get the version from package.json
   // create a branch named “release/$NEW_VERSION” (example: “release/1.0.0-prerelease.3”)
 }
@@ -72,6 +75,7 @@ async function createBranch() {
  * Push the new branch.
  */
 async function pushBranch() {
+  console.log("let us push the branch!");
   // git push origin release/1.0.0-prerelease.3 -u
 }
 
@@ -81,6 +85,7 @@ async function pushBranch() {
  * though, so we an wipe them out safely.
  */
 async function resetMaster() {
+  console.log("master looks dirty let's reset it");
   // git checkout master
   // git reset --hard origin/master
 }
@@ -89,6 +94,7 @@ async function resetMaster() {
  * Offer a link to create a pull request with the new branch.
  */
 async function offerPR() {
+  console.log("wanna make a PR?");
   // create a PR for the branch you just created
   // delete branch after merging PR
 }

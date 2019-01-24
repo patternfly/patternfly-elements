@@ -1,5 +1,5 @@
 {
-  "name": "@rhelements/cp-theme",
+  "name": "@patternfly/cp-theme",
   "rhelement": {
     "className": "CpTheme",
     "elementName": "cp-theme"

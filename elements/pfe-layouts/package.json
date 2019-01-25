@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/pfe-layouts",
-  "version": "1.0.0-prerelease.7",
+  "version": "1.0.0-prerelease.8",
   "publishConfig": {
     "access": "public"
   },
@@ -18,7 +18,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.7"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.8"
   },
   "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
 }

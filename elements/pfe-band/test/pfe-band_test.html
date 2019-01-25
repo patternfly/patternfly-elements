@@ -81,10 +81,10 @@
         test("it should have default padding when no size attribute is set", () => {
           // Test that the color is rendering as expected
           // @TODO need a way to adjust the viewport
-          if(window.outerWidth > 576) {
-            assert.equal(getComputedStyle(band[0], null)["padding"], "64px 16px");
-          } else {
+          if(window.outerWidth <= 576) {
             assert.equal(getComputedStyle(band[0], null)["padding"], "32px 16px");
+          } else {
+            assert.equal(getComputedStyle(band[0], null)["padding"], "64px 16px");
           }
         });
 
@@ -93,10 +93,10 @@
           //Update the color attribute
           band[0].setAttribute("pfe-size", "small");
           // Test that the color is rendering as expected
-          if(window.outerWidth > 576) {
-            assert.equal(getComputedStyle(band[0], null)["padding"], "16px");
-          } else {
+          if(window.outerWidth <= 576) {
             assert.equal(getComputedStyle(band[0], null)["padding"], "32px 16px");
+          } else {
+            assert.equal(getComputedStyle(band[0], null)["padding"], "16px");
           }
         });
         

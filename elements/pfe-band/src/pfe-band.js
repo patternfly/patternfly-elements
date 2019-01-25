@@ -77,25 +77,55 @@ if (!Array.prototype.includes) {
   });
 }
 
-class PfeCard extends PFElement {
+class PfeBand extends PFElement {
   static get tag() {
-    return "pfe-card";
+    return "pfe-band";
   }
 
-  get styleUrl() {
-    return "pfe-card.scss";
+  get schemaUrl() {
+    return "pfe-band.json";
   }
 
   get templateUrl() {
-    return "pfe-card.html";
+    return "pfe-band.html";
+  }
+
+  get styleUrl() {
+    return "pfe-band.scss";
+  }
+
+  get imageSrc() {
+    return this.getAttribute("pfe-img-src");
   }
 
   get backgroundColor() {
-    return this.getAttribute("color") || "base";
+    return this.getAttribute("pfe-color");
+  }
+
+  get asidePosition() {
+    return {
+      desktop: this.getAttribute("pfe-aside-desktop"),
+      mobile: this.getAttribute("pfe-aside-mobile"),
+      height: this.getAttribute("pfe-aside-height")
+    };
   }
 
   static get observedAttributes() {
-    return ["color"];
+    return [
+      "pfe-aside-desktop",
+      "pfe-aside-mobile",
+      "pfe-aside-height",
+      "pfe-color",
+      "pfe-img-src"
+    ];
+  }
+
+  static get cascadingAttributes() {
+    return {
+      "pfe-aside-desktop": ".pfe-band__container",
+      "pfe-aside-mobile": ".pfe-band__container",
+      "pfe-aside-height": ".pfe-band__container"
+    };
   }
 
   // Declare the type of this component
@@ -104,11 +134,15 @@ class PfeCard extends PFElement {
   }
 
   constructor() {
-    super(PfeCard, { type: PfeCard.PfeType });
+    super(PfeBand, { type: PfeBand.PfeType });
   }
 
   connectedCallback() {
     super.connectedCallback();
+    // Initialize the background image attachment
+    if (this.imageSrc) {
+      this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
+    }
     // Initialize the context setting for the children elements
     if (this.backgroundColor) {
       this._updateContext(this.backgroundColor);
@@ -117,20 +151,37 @@ class PfeCard extends PFElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
-    if (attr === "color") {
-      this._colorChanged(attr, oldValue, newValue);
+    // Strip the prefix form the attribute
+    attr = attr.replace("pfe-", "");
+    // If the observer is defined in the attribute properties
+    if (this[attr] && this[attr].observer) {
+      // Get the observer function
+      let observer = this[this[attr].observer].bind(this);
+      // If it's a function, allow it to run
+      if (typeof observer === "function") observer(attr, oldValue, newValue);
     }
+  }
+
+  _basicAttributeChanged(attr, oldValue, newValue) {
+    this[attr].value = newValue;
   }
 
   // Update the color attribute and contexts
   _colorChanged(attr, oldValue, newValue) {
+    this[attr].value = newValue;
     // If the new value has a dark background, update children elements
     this._updateContext(newValue);
   }
 
+  // Update the background image
+  _imgSrcChanged(attr, oldValue, newValue) {
+    // Set the image as the background image
+    this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
+  }
+
   // Set the children's context if parent background is dark
   _updateContext(context) {
-    if (["darkest", "dark", "complement", "accent"].includes(context)) {
+    if (["darkest", "darker", "complement", "accent"].includes(context)) {
       ["pfe-cta"].forEach(elementName => {
         const els = [...this.querySelectorAll(`${elementName}`)];
         els.forEach(el => {
@@ -144,6 +195,6 @@ class PfeCard extends PFElement {
   }
 }
 
-PFElement.create(PfeCard);
+PFElement.create(PfeBand);
 
-export default PfeCard;
+export { PfeBand as default };

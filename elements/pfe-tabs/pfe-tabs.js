@@ -134,9 +134,7 @@ function generateId() {
 
 class PfeTabs extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   display: block; }
 
 .tabs {
@@ -184,8 +182,7 @@ class PfeTabs extends PFElement {
   border-bottom: transparent; }
 
 :host([vertical][pfe-variant="secondary"]) .tabs {
-  justify-content: flex-start; }
-</style>
+  justify-content: flex-start; }</style>
 <div class="tabs">
   <slot name="tab"></slot>
 </div>
@@ -502,9 +499,7 @@ class PfeTabs extends PFElement {
 
 class RhTab extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   --pfe-tabs--main:         transparent;
   --pfe-tabs--aux:          var(--pfe-theme--color--surface--lightest--text, #333);
   --pfe-tabs--link:         var(--pfe-theme--color--surface--lightest--link, #06c);
@@ -622,8 +617,7 @@ class RhTab extends PFElement {
 ::slotted(h2) {
   font-size: var(--pfe-theme--font-size);
   font-weight: var(--pfe-theme--font-weight--normal, 500);
-  margin: 0; }
-</style>
+  margin: 0; }</style>
 <slot></slot>
 <div class="indicator"></div>`;
   }
@@ -681,14 +675,11 @@ class RhTab extends PFElement {
 
 class RhTabPanel extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   display: block; }
 
 :host([hidden]) {
-  display: none; }
-</style>
+  display: none; }</style>
 <slot></slot>`;
   }
 

@@ -54,48 +54,58 @@
     <h1>&lt;pfe-card&gt;</h1>
     <div class="demo-cards">
 
-      <pfe-card color="lightest">
-        <h2 slot="header">Lightest card</h2>
+      <pfe-card pfe-color="lightest">
+        <h2 slot="pfe-card--header">Lightest card</h2>
         <p>This is the lightest pfe-card and <a href="#">a link</a>.</p>
-        <div slot="footer"><pfe-cta priority="primary"><a href="#">Learn more</a></pfe-cta></div>
+        <pfe-cta priority="primary" slot="pfe-card--footer">
+          <a href="#">Learn more</a>
+        </pfe-cta>
       </pfe-card>
-      <pfe-card color="light">
-        <h2 slot="header">Light card</h2>
 
-        <p>
-          This is the light pfe-card and <a href="#">a link</a>.
-        </p>
-        <p>
-          Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.
-        </p>
-        <p>
-          Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
-        </p>
-
-        <div slot="footer"><pfe-cta priority="secondary"><a href="#">Learn more</a></pfe-cta></div>
+      <pfe-card pfe-color="lighter">
+        <h2 slot="pfe-card--header">Light card</h2>
+        <p>This is the light pfe-card and <a href="#">a link</a>.</p>
+        <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
+        <p>Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
+        <pfe-cta priority="secondary" slot="pfe-card--footer">
+          <a href="#">Learn more</a>
+        </pfe-cta>
       </pfe-card>
+      
       <pfe-card>
-        <h2 slot="header">Default card</h2>
+        <h2 slot="pfe-card--header">Default card</h2>
         Unwrapped item. This is the default pfe-card and <a href="#">a link</a>.
-        <div slot="footer"><pfe-cta priority="secondary"><a href="#">Learn more</a></pfe-cta></div>
+        <pfe-cta priority="secondary" slot="pfe-card--footer">
+          <a href="#">Learn more</a>
+        </pfe-cta>
       </pfe-card>
-      <pfe-card color="dark">
-        <h2 slot="header">Dark Card</h2>
+
+      <pfe-card pfe-color="darker">
+        <h2 slot="pfe-card--header">Dark Card</h2>
         <p>This is the dark pfe-card and <a href="#">a link</a>.</p>
-        <div slot="footer"><pfe-cta priority="secondary" on="dark"><a href="#">Learn more</a></pfe-cta></div>
+        <pfe-cta priority="secondary" slot="pfe-card--footer">
+          <a href="#">Learn more</a>
+        </pfe-cta>
       </pfe-card>
-      <pfe-card color="darkest">
-        <h2 slot="header">Darkest Card</h2>
+
+      <pfe-card pfe-color="darkest">
+        <h2 slot="pfe-card--header">Darkest Card</h2>
         <p>This is the darkest pfe-card and <a href="#">a link</a>.</p>
-        <div slot="footer"><pfe-cta priority="secondary" on="dark"><a href="#">Learn more</a></pfe-cta></div>
+        <pfe-cta priority="secondary" slot="pfe-card--footer">
+          <a href="#">Learn more</a>
+        </pfe-cta>
       </pfe-card>
-      <pfe-card color="complement">
-        <h2 slot="header">Complement Card</h2>
+
+      <pfe-card pfe-color="complement">
+        <h2 slot="pfe-card--header">Complement Card</h2>
         <p>This is the complement pfe-card and <a href="#">a link</a>.</p>
-        <div slot="footer"><pfe-cta priority="secondary" on="dark"><a href="#">Learn more</a></pfe-cta></div>
+        <pfe-cta priority="secondary" slot="pfe-card--footer">
+          <a href="#">Learn more</a>
+        </pfe-cta>
       </pfe-card>
-      <pfe-card color="accent">
-        <h2 slot="header">Accent Card</h2>
+
+      <pfe-card pfe-color="accent">
+        <h2 slot="pfe-card--header">Accent Card</h2>
         <p>This is the accent pfe-card and <a href="#">a link</a>. Leverage agile frameworks to provide a robust synopsis for high level overviews.</p>
       </pfe-card>
     </div>

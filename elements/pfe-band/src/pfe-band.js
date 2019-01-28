@@ -151,7 +151,7 @@ class PfeBand extends PFElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
-    // Strip the prefix form the attribute
+    // Strip the prefix from the attribute
     attr = attr.replace("pfe-", "");
     // If the observer is defined in the attribute properties
     if (this[attr] && this[attr].observer) {

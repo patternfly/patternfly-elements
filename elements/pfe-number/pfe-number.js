@@ -1220,12 +1220,9 @@ numeral.locales.en.delimiters.thousands = " ";
 
 class PfeNumber extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   display: inline;
-  white-space: nowrap; }
-</style>
+  white-space: nowrap; }</style>
 <span></span>`;
   }
 

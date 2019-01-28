@@ -25,9 +25,7 @@ import PFElement from "../pfelement/pfelement.js";
 
 class PfeHealthIndex extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   display: inline-flex;
   align-items: center; }
 
@@ -56,8 +54,7 @@ class PfeHealthIndex extends PFElement {
     .box-container .box.active.e {
       background-color: #cc0000; }
     .box-container .box.active.f {
-      background-color: #a30000; }
-</style>
+      background-color: #a30000; }</style>
 <div id="healthIndex"></div>
 <div class="box-container">
   <div class="box a"></div>

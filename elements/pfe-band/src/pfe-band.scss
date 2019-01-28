@@ -1,0 +1,247 @@
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: band;
+
+:host {
+  display: block;
+
+  // Default spacing values
+  --pfe-band--Padding--vertical:               calc( #{pfe-var(container-spacer)} * 4);
+  --pfe-band--Padding--horizontal:             calc( #{pfe-var(container-spacer)} * 1);
+  // Bring them together for ease of use below
+  --pfe-band--Padding:                         #{pfe-local(Padding--vertical)}  #{pfe-local(Padding--horizontal)};
+
+  // Surface colors
+  --pfe-band--BackgroundColor:                 #{pfe-color(surface--base)};
+  --pfe-band--BackgroundPosition:              center center;
+
+  // Border settings
+  --pfe-band--Border:                          #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
+
+  // Layouts, grid layouts
+  --pfe-band--layout:                           1fr;
+  --pfe-band__header--layout:                   1fr;
+  --pfe-band__body--layout:                     1fr;
+  --pfe-band__footer--layout:                   1fr;
+  --pfe-band__aside--layout:                    1fr;
+
+  // Vertical spacing
+  --pfe-band--gutter--vertical:                 #{pfe-var(container-spacer)};
+  --pfe-band--gutter--horizontal:               calc(#{pfe-var(container-spacer)} * 3);
+
+  // Text colors
+  --pfe-broadcasted--color--text:              #{pfe-color(surface--base--text)};
+  --pfe-broadcasted--color--ui-link:           #{pfe-color(surface--base--link)};
+  --pfe-broadcasted--color--ui-link--visited:  #{pfe-color(surface--base--link--visited)};
+  --pfe-broadcasted--color--ui-link--hover:    #{pfe-color(surface--base--link--hover)};
+  --pfe-broadcasted--color--ui-link--focus:    #{pfe-color(surface--base--link--focus)};
+
+  // Band width logic
+  // Initialize at mobile breakpoint
+  --pfe-band--Width: auto;
+  --pfe-band--Width__aside--sm: 240px;
+  --pfe-band--Width__aside--lg: 300px;
+
+  // Loop through the other breakpoints
+  @each $size in (md, lg, xl) {
+    @media screen and (min-width: pfe-breakpoint(#{$size})) {
+      --pfe-band--Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) );
+    }
+  }
+  // Reduce padding for print
+  @media print {
+    --pfe-band--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
+  }
+
+  // Wrapper sets padding and background visuals
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+
+  // Padding 
+  padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
+
+  @media (min-width: #{pfe-breakpoint(sm)}) {
+    padding: #{pfe-local(Padding)};
+  }
+
+  // Border styles
+  border: #{pfe-local(Border)};
+
+  // Base colors
+  background-color:      #{pfe-local(BackgroundColor)};
+  background-position:   #{pfe-local(BackgroundPosition)};
+  color:                 #{pfe-radio(color, text)};
+
+  // Remove background color for print
+  @include pfe-no-print-background;
+
+  // Tag element styles
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+}
+
+@each $color in (darker, darkest, accent, complement, lighter, lightest) {
+  :host([pfe-color="#{$color}"]) {
+    --pfe-band--BackgroundColor:                  #{pfe-color(surface--#{$color})};
+    --pfe-broadcasted--color--text:               #{pfe-color(surface--#{$color}--text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--#{$color}--link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--#{$color}--link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--#{$color}--link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--#{$color}--link--focus)};
+  }
+}
+
+// thinner padding on top & bottom
+:host([pfe-size="small"]) {
+  --pfe-band--Padding:   calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
+}
+
+@each $slot in (default, header, footer, aside) {
+  $slot-name: $slot;
+  $grid-area: "body";
+  @if $slot != default {
+    $slot-name: "pfe-band--#{$slot-name}";
+    $grid-area: $slot;
+  }
+  .pfe-band__#{$grid-area} {
+    // Set up the flex styles for each region
+    display:     flex;
+    flex-flow:   column nowrap;
+    align-items: flex-start;
+    // Grid support styles
+    @supports (display: grid) {
+      grid-area: #{$grid-area};
+      // Set up the internal grid system for each slot
+      display: grid;
+      grid-row-gap: #{pfe-local(gutter--vertical)};
+      grid-column-gap: #{pfe-local(gutter--horizontal)};
+      grid-template-columns: #{pfe-local(
+        $cssvar: layout,
+        $region: $grid-area
+      )};
+    }
+  }
+  @include pfe-slot($slot-name, ":not(:last-child)") {
+    margin-bottom: #{pfe-local(gutter--vertical)};
+    @supports (display: grid) {
+      margin-bottom: 0;
+    }
+  }
+  @include pfe-slot($slot-name, "> *") {
+    margin: 0;
+  }
+  @include pfe-slot($slot-name, "> *:not(:last-child)") {
+    margin-bottom: #{pfe-local(gutter--vertical)};
+    @supports (display: grid) {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.pfe-band {
+  &__container {
+    // Does not need to be wrapped in @supports because it updates variables
+    --pfe-band_region--width: calc(calc(1fr - #{pfe-local(Width__aside--sm)}) - #{pfe-local(gutter--horizontal)});
+    --pfe-band--gridTemplateArea_mobile: "body";
+    // Styles for the different combination of regions
+    &[pfe-has-aside] {
+      --pfe-band--gridTemplateArea_mobile: "body" "aside";
+      --pfe-band--gridTemplateArea_desktop: "body aside";
+      @media (min-width: #{pfe-breakpoint(md)}) {
+        --pfe-band--layout: 1fr #{pfe-local(Width__aside--sm)};
+      }
+      @media (min-width: #{pfe-breakpoint(lg)}) {
+        --pfe-band--layout: 1fr #{pfe-local(Width__aside--lg)};
+      }
+      &[pfe-aside-mobile="top"] {
+        --pfe-band--gridTemplateArea_mobile: "aside" "body";
+      }
+      &[pfe-aside-desktop="left"] {
+        --pfe-band--gridTemplateArea_desktop: "aside body";
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          --pfe-band--layout: #{pfe-local(Width__aside--sm)} 1fr;
+        }
+        @media (min-width: #{pfe-breakpoint(lg)}) {
+          --pfe-band--layout: #{pfe-local(Width__aside--lg)} 1fr;
+        }
+      }
+    }
+    &[pfe-has-header] {
+      --pfe-band--gridTemplateArea_mobile: "header" "body";
+      &[pfe-has-aside] {
+        --pfe-band--gridTemplateArea_mobile: "header" "body" "aside";
+        --pfe-band--gridTemplateArea_desktop: "header header" "body aside";
+      }
+      &[pfe-aside-mobile="top"] {
+        --pfe-band--gridTemplateArea_mobile: "aside" "header" "body";
+      }
+      &[pfe-aside-height="full"] {
+        --pfe-band--gridTemplateArea_desktop: "header aside" "body aside";
+      }
+      &[pfe-aside-desktop="left"] {
+        --pfe-band--gridTemplateArea_desktop: "header header" "aside body";
+        &[pfe-aside-height="full"] {
+          --pfe-band--gridTemplateArea_desktop: "aside header" "aside body";
+        }
+      }
+    }
+    &[pfe-has-footer] {
+      --pfe-band--gridTemplateArea_mobile: "body" "footer";
+      &[pfe-has-aside] {
+        --pfe-band--gridTemplateArea_mobile: "body" "aside" "footer";
+        --pfe-band--gridTemplateArea_desktop: "body aside" "footer footer";
+      }
+      &[pfe-aside-mobile="top"] {
+        --pfe-band--gridTemplateArea_mobile: "aside" "body" "footer";
+      }
+      &[pfe-aside-height="full"] {
+        --pfe-band--gridTemplateArea_desktop: "body aside" "footer aside" ;
+      }
+      &[pfe-aside-desktop="left"] {
+        --pfe-band--gridTemplateArea_desktop: "aside body" "footer footer";
+        &[pfe-aside-height="full"] {
+          --pfe-band--gridTemplateArea_desktop: "aside body" "aside footer";
+        }
+      }
+    }
+    &[pfe-has-header][pfe-has-footer] {
+      --pfe-band--gridTemplateArea_mobile: "header" "body" "footer";
+      &[pfe-has-aside] {
+        --pfe-band--gridTemplateArea_mobile: "header" "body" "footer" "aside";
+        --pfe-band--gridTemplateArea_desktop: "header header" "body aside" "footer footer";
+      }
+      &[pfe-aside-mobile="top"] {
+        --pfe-band--gridTemplateArea_mobile: "aside" "header" "body" "footer";
+      }
+      &[pfe-aside-height="full"] {
+        --pfe-band--gridTemplateArea_desktop: "header aside" "body aside" "footer aside" ;
+      }
+      &[pfe-aside-desktop="left"] {
+        --pfe-band--gridTemplateArea_desktop: "header header" "aside body" "footer footer";
+        &[pfe-aside-height="full"] {
+          --pfe-band--gridTemplateArea_desktop: "aside header" "aside body" "aside footer";
+        }
+      }
+    }
+
+    position:  relative;
+    margin:    0 auto;
+    width: #{pfe-local(Width)};
+    
+    // Grid support styles
+    @supports (display: grid) {
+      display:               grid;
+      grid-row-gap:          #{pfe-local(gutter--vertical)};
+      grid-column-gap:       #{pfe-local(gutter--horizontal)};
+      grid-template-columns: #{pfe-local(layout)};
+      grid-template-rows:    max-content;
+      grid-template-areas:   var(--pfe-band--gridTemplateArea_mobile);
+      @media (min-width: #{pfe-breakpoint(md)}) {
+        grid-template-areas: var(--pfe-band--gridTemplateArea_desktop);
+      }
+    }
+  }
+}

@@ -323,6 +323,8 @@
       margin: 0;
       grid-column-start: auto;
       grid-column-end: span 12; }
+    .pfe-l-grid.pfe-l-grid-fill-height {
+      height: 100%; }
     @media screen and (min-width: 576px) {
       .pfe-l-grid.pfe-m-all-1-col > * {
         width: auto;

@@ -1,5 +1,5 @@
 {
   "lerna": "2.5.1",
   "packages": ["elements/*", "themes/*"],
-  "version": "1.0.0-prerelease.7"
+  "version": "1.0.0-prerelease.8"
 }

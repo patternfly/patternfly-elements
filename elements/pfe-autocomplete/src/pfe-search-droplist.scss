@@ -1,0 +1,58 @@
+@import "../pfe-sass/pfe-sass";
+
+:host {
+  position: relative;
+  display: none;
+  font-family: var(--pfe-theme--font-family);
+  font-size: var(--pfe-theme--font-size);
+  line-height: var(--pfe-theme--line-height);
+}
+
+:host([open]) {
+  display: block;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.droplist {
+  position: absolute;
+  top: 100%;
+  left: 0px;
+  right: 0px;
+  max-height: 250px;
+  z-index: 9999;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+ul {
+  font-family: var(--pfe-theme--font-family);
+  font-size: var(--pfe-theme--font-size);
+  line-height: var(--pfe-theme--line-height);
+  border-top: none;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  cursor: pointer;
+
+  li {
+      display: list-item;
+      cursor: pointer;
+      padding: 10px;
+      margin: 0px; /*margin needs to be zero otherwise we have blind area on click*/
+      &.active {
+          background-color: #{pfe-color( surface--lighter )};;
+      }
+  }
+}

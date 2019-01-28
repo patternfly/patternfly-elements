@@ -115,7 +115,7 @@ class PfeCard extends PFElement {
   --pfe-card--BorderRadius: var(--pfe-theme--surface--border-radius, 0);
   --pfe-card--Border: var(--pfe-card--BorderWeight) var(--pfe-card--BorderStyle) var(--pfe-card--BorderColor);
   --pfe-card--BackgroundColor: var(--pfe-theme--color--surface--base, #dfdfdf);
-  --pfe-card__header--BackgroundColor: var(--pfe-theme--color--surface--base--harmony, );
+  --pfe-card__header--BackgroundColor: var(--pfe-theme--color--surface--base--harmony, #acacac);
   --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--base--text, #333);
   --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--base--link, #00538c);
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--base--link--visited, #7551a6);
@@ -141,14 +141,14 @@ class PfeCard extends PFElement {
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--darker--link--visited, #b38cd9);
   --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--darker--link--hover, #cce6ff);
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--darker--link--focus, #cce6ff);
-  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--darker--harmony, ); }
+  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--darker--harmony, #2d2d2d); }
   :host([color="darker"]) .pfe-card__header,
   :host([pfe-color="darker"]) .pfe-card__header {
-    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--darker--harmony--text, );
-    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--darker--harmony--link, );
-    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--darker--harmony--link--visited, );
-    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--darker--harmony--link--hover, );
-    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--darker--harmony--link--focus, ); }
+    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--darker--harmony--text, #fff);
+    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--darker--harmony--link, #99ccff);
+    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--darker--harmony--link--visited, #b38cd9);
+    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--darker--harmony--link--hover, #cce6ff);
+    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--darker--harmony--link--focus, #cce6ff); }
 
 :host([color="darker"]),
 :host([pfe-color="darker"]) {
@@ -158,14 +158,14 @@ class PfeCard extends PFElement {
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--darker--link--visited, #b38cd9);
   --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--darker--link--hover, #cce6ff);
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--darker--link--focus, #cce6ff);
-  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--darker--harmony, ); }
+  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--darker--harmony, #2d2d2d); }
   :host([color="darker"]) .pfe-card__header,
   :host([pfe-color="darker"]) .pfe-card__header {
-    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--darker--harmony--text, );
-    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--darker--harmony--link, );
-    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--darker--harmony--link--visited, );
-    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--darker--harmony--link--hover, );
-    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--darker--harmony--link--focus, ); }
+    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--darker--harmony--text, #fff);
+    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--darker--harmony--link, #99ccff);
+    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--darker--harmony--link--visited, #b38cd9);
+    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--darker--harmony--link--hover, #cce6ff);
+    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--darker--harmony--link--focus, #cce6ff); }
 
 :host([color="darkest"]),
 :host([pfe-color="darkest"]) {
@@ -175,14 +175,14 @@ class PfeCard extends PFElement {
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--darkest--link--visited, #b38cd9);
   --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--darkest--link--hover, #cce6ff);
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--darkest--link--focus, #cce6ff);
-  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--darkest--harmony, ); }
+  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--darkest--harmony, black); }
   :host([color="darkest"]) .pfe-card__header,
   :host([pfe-color="darkest"]) .pfe-card__header {
-    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--darkest--harmony--text, );
-    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--darkest--harmony--link, );
-    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--darkest--harmony--link--visited, );
-    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--darkest--harmony--link--hover, );
-    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--darkest--harmony--link--focus, ); }
+    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--darkest--harmony--text, #fff);
+    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--darkest--harmony--link, #99ccff);
+    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--darkest--harmony--link--visited, #b38cd9);
+    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--darkest--harmony--link--hover, #cce6ff);
+    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--darkest--harmony--link--focus, #cce6ff); }
 
 :host([color="lighter"]),
 :host([pfe-color="lighter"]) {
@@ -192,14 +192,14 @@ class PfeCard extends PFElement {
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--lighter--link--visited, rebeccapurple);
   --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--lighter--link--hover, #003366);
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--lighter--link--focus, #003366);
-  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--lighter--harmony, ); }
+  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--lighter--harmony, #d2d2d2); }
   :host([color="lighter"]) .pfe-card__header,
   :host([pfe-color="lighter"]) .pfe-card__header {
-    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--lighter--harmony--text, );
-    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--lighter--harmony--link, );
-    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--lighter--harmony--link--visited, );
-    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--lighter--harmony--link--hover, );
-    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--lighter--harmony--link--focus, ); }
+    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--lighter--harmony--text, #333);
+    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--lighter--harmony--link, #06c);
+    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--lighter--harmony--link--visited, rebeccapurple);
+    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--lighter--harmony--link--hover, #003366);
+    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--lighter--harmony--link--focus, #003366); }
 
 :host([color="lighter"]),
 :host([pfe-color="lighter"]) {
@@ -209,14 +209,14 @@ class PfeCard extends PFElement {
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--lighter--link--visited, rebeccapurple);
   --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--lighter--link--hover, #003366);
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--lighter--link--focus, #003366);
-  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--lighter--harmony, ); }
+  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--lighter--harmony, #d2d2d2); }
   :host([color="lighter"]) .pfe-card__header,
   :host([pfe-color="lighter"]) .pfe-card__header {
-    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--lighter--harmony--text, );
-    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--lighter--harmony--link, );
-    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--lighter--harmony--link--visited, );
-    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--lighter--harmony--link--hover, );
-    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--lighter--harmony--link--focus, ); }
+    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--lighter--harmony--text, #333);
+    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--lighter--harmony--link, #06c);
+    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--lighter--harmony--link--visited, rebeccapurple);
+    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--lighter--harmony--link--hover, #003366);
+    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--lighter--harmony--link--focus, #003366); }
 
 :host([color="lightest"]),
 :host([pfe-color="lightest"]) {
@@ -226,14 +226,14 @@ class PfeCard extends PFElement {
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--lightest--link--visited, rebeccapurple);
   --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--lightest--link--hover, #003366);
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--lightest--link--focus, #003366);
-  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--lightest--harmony, ); }
+  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--lightest--harmony, #e6e6e6); }
   :host([color="lightest"]) .pfe-card__header,
   :host([pfe-color="lightest"]) .pfe-card__header {
-    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--lightest--harmony--text, );
-    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--lightest--harmony--link, );
-    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--lightest--harmony--link--visited, );
-    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--lightest--harmony--link--hover, );
-    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--lightest--harmony--link--focus, ); }
+    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--lightest--harmony--text, #333);
+    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--lightest--harmony--link, #06c);
+    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--lightest--harmony--link--visited, rebeccapurple);
+    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--lightest--harmony--link--hover, #003366);
+    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--lightest--harmony--link--focus, #003366); }
 
 :host([color="complement"]),
 :host([pfe-color="complement"]) {
@@ -243,14 +243,14 @@ class PfeCard extends PFElement {
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--complement--link--visited, #b38cd9);
   --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--complement--link--hover, #cce6ff);
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--complement--link--focus, #cce6ff);
-  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--complement--harmony, ); }
+  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--complement--harmony, #022f40); }
   :host([color="complement"]) .pfe-card__header,
   :host([pfe-color="complement"]) .pfe-card__header {
-    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--complement--harmony--text, );
-    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--complement--harmony--link, );
-    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--complement--harmony--link--visited, );
-    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--complement--harmony--link--hover, );
-    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--complement--harmony--link--focus, ); }
+    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--complement--harmony--text, #fff);
+    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--complement--harmony--link, #99ccff);
+    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--complement--harmony--link--visited, #b38cd9);
+    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--complement--harmony--link--hover, #cce6ff);
+    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--complement--harmony--link--focus, #cce6ff); }
 
 :host([color="accent"]),
 :host([pfe-color="accent"]) {
@@ -260,14 +260,14 @@ class PfeCard extends PFElement {
   --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--surface--accent--link--visited, #b38cd9);
   --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--accent--link--hover, #cce6ff);
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--accent--link--focus, #cce6ff);
-  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--accent--harmony, ); }
+  --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--accent--harmony, #8b2101); }
   :host([color="accent"]) .pfe-card__header,
   :host([pfe-color="accent"]) .pfe-card__header {
-    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--accent--harmony--text, );
-    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--accent--harmony--link, );
-    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--accent--harmony--link--visited, );
-    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--accent--harmony--link--hover, );
-    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--accent--harmony--link--focus, ); }
+    --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--accent--harmony--text, #fff);
+    --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--accent--harmony--link, #99ccff);
+    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--accent--harmony--link--visited, #b38cd9);
+    --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--accent--harmony--link--hover, #cce6ff);
+    --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--accent--harmony--link--focus, #cce6ff); }
 
 :host([size="small"]),
 :host([pfe-size="small"]) {
@@ -277,25 +277,25 @@ class PfeCard extends PFElement {
   --pfe-card--PaddingLeft:    var(--pfe-theme--container-spacer, 1rem); }
 
 ::slotted(p) {
-  margin-top: 0 !important; }
+  margin-top: 0; }
 
 ::slotted(h1) {
-  margin-top: 0 !important; }
+  margin-top: 0; }
 
 ::slotted(h2) {
-  margin-top: 0 !important; }
+  margin-top: 0; }
 
 ::slotted(h3) {
-  margin-top: 0 !important; }
+  margin-top: 0; }
 
 ::slotted(h4) {
-  margin-top: 0 !important; }
+  margin-top: 0; }
 
 ::slotted(h5) {
-  margin-top: 0 !important; }
+  margin-top: 0; }
 
 ::slotted(h6) {
-  margin-top: 0 !important; }
+  margin-top: 0; }
 
 .pfe-card__header, .pfe-card__body, .pfe-card__footer {
   display: block; }
@@ -303,18 +303,19 @@ class PfeCard extends PFElement {
     margin-bottom: var(--pfe-card--spacing); }
 
 .pfe-card__header {
-  --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--base--harmony--text, );
-  --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--base--harmony--link, );
-  --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--base--harmony--link--visited, );
-  --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--base--harmony--link--hover, );
-  --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--base--harmony--link--focus, );
+  --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--base--harmony--text, #333);
+  --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--base--harmony--link, #00538c);
+  --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--base--harmony--link--visited, #7551a6);
+  --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--base--harmony--link--hover, #00305b);
+  --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--base--harmony--link--focus, #00305b);
   background-color: var(--pfe-card__header--BackgroundColor);
   margin-top: calc(-1 * var(--pfe-card--PaddingTop));
   margin-right: calc(-1 * var(--pfe-card--PaddingRight));
   margin-left: calc(-1 * var(--pfe-card--PaddingLeft));
   padding-top: var(--pfe-card--spacing);
   padding-right: var(--pfe-card--PaddingRight);
-  padding-left: var(--pfe-card--PaddingLeft); }
+  padding-left: var(--pfe-card--PaddingLeft);
+  padding-bottom: var(--pfe-card--spacing); }
 
 .pfe-card__footer {
   margin-top: auto;

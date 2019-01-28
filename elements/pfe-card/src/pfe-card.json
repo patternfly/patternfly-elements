@@ -88,19 +88,6 @@
           "type": "string",
           "enum": ["small"],
           "observer": "_basicAttributeChanged"
-        },
-        "hat": {
-          "title": "Card hat",
-          "type": "boolean",
-          "observer": "_basicAttributeChanged",
-          "options": {
-            "dependencies": [
-              {
-                "type": "slot",
-                "id": "header"
-              }
-            ]
-          }
         }
       }
     }

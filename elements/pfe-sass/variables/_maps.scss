@@ -66,6 +66,14 @@ $pfe-colors: (
   surface--lightest--link--hover:     $pfe-color--surface--lightest--link--hover,
   surface--lightest--link--focus:     $pfe-color--surface--lightest--link--focus,
 
+  // Lightest group: Harmony
+  surface--lightest--harmony:                  $pfe-color--surface--lightest--harmony,
+  surface--lightest--harmony--text:            $pfe-color--surface--lightest--harmony--text,
+  surface--lightest--harmony--link:            $pfe-color--surface--lightest--harmony--link,
+  surface--lightest--harmony--link--visited:   $pfe-color--surface--lightest--harmony--link--visited,
+  surface--lightest--harmony--link--hover:     $pfe-color--surface--lightest--harmony--link--hover,
+  surface--lightest--harmony--link--focus:     $pfe-color--surface--lightest--harmony--link--focus,
+
   // Lighter group
   surface--lighter:                   $pfe-color--surface--lighter,
   surface--lighter--text:             $pfe-color--surface--lighter--text,
@@ -73,6 +81,14 @@ $pfe-colors: (
   surface--lighter--link--visited:    $pfe-color--surface--lighter--link--visited,
   surface--lighter--link--hover:      $pfe-color--surface--lighter--link--hover,
   surface--lighter--link--focus:      $pfe-color--surface--lighter--link--focus,
+
+  // Lighter group: Harmony
+  surface--lighter--harmony:                  $pfe-color--surface--lighter--harmony,
+  surface--lighter--harmony--text:            $pfe-color--surface--lighter--harmony--text,
+  surface--lighter--harmony--link:            $pfe-color--surface--lighter--harmony--link,
+  surface--lighter--harmony--link--visited:   $pfe-color--surface--lighter--harmony--link--visited,
+  surface--lighter--harmony--link--hover:     $pfe-color--surface--lighter--harmony--link--hover,
+  surface--lighter--harmony--link--focus:     $pfe-color--surface--lighter--harmony--link--focus,
 
   // Base group
   surface--base:                      $pfe-color--surface--base,
@@ -82,6 +98,14 @@ $pfe-colors: (
   surface--base--link--hover:         $pfe-color--surface--base--link--hover,
   surface--base--link--focus:         $pfe-color--surface--base--link--focus,
 
+  // Base group: Harmony
+  surface--base--harmony:                  $pfe-color--surface--base--harmony,
+  surface--base--harmony--text:            $pfe-color--surface--base--harmony--text,
+  surface--base--harmony--link:            $pfe-color--surface--base--harmony--link,
+  surface--base--harmony--link--visited:   $pfe-color--surface--base--harmony--link--visited,
+  surface--base--harmony--link--hover:     $pfe-color--surface--base--harmony--link--hover,
+  surface--base--harmony--link--focus:     $pfe-color--surface--base--harmony--link--focus,
+
   // Darker group
   surface--darker:                    $pfe-color--surface--darker,
   surface--darker--text:              $pfe-color--surface--darker--text,
@@ -89,6 +113,14 @@ $pfe-colors: (
   surface--darker--link--visited:     $pfe-color--surface--darker--link--visited,
   surface--darker--link--hover:       $pfe-color--surface--darker--link--hover,
   surface--darker--link--focus:       $pfe-color--surface--darker--link--focus,
+
+  // Darker group: Harmony
+  surface--darker--harmony:                  $pfe-color--surface--darker--harmony,
+  surface--darker--harmony--text:            $pfe-color--surface--darker--harmony--text,
+  surface--darker--harmony--link:            $pfe-color--surface--darker--harmony--link,
+  surface--darker--harmony--link--visited:   $pfe-color--surface--darker--harmony--link--visited,
+  surface--darker--harmony--link--hover:     $pfe-color--surface--darker--harmony--link--hover,
+  surface--darker--harmony--link--focus:     $pfe-color--surface--darker--harmony--link--focus,
 
   // Darkest group
   surface--darkest:                   $pfe-color--surface--darkest,
@@ -98,6 +130,14 @@ $pfe-colors: (
   surface--darkest--link--hover:      $pfe-color--surface--darkest--link--hover,
   surface--darkest--link--focus:      $pfe-color--surface--darkest--link--focus,
 
+  // Darkest group: Harmony
+  surface--darkest--harmony:                  $pfe-color--surface--darkest--harmony,
+  surface--darkest--harmony--text:            $pfe-color--surface--darkest--harmony--text,
+  surface--darkest--harmony--link:            $pfe-color--surface--darkest--harmony--link,
+  surface--darkest--harmony--link--visited:   $pfe-color--surface--darkest--harmony--link--visited,
+  surface--darkest--harmony--link--hover:     $pfe-color--surface--darkest--harmony--link--hover,
+  surface--darkest--harmony--link--focus:     $pfe-color--surface--darkest--harmony--link--focus,
+
   // Complement group
   surface--complement:                $pfe-color--surface--complement,
   surface--complement--text:          $pfe-color--surface--complement--text,
@@ -106,6 +146,13 @@ $pfe-colors: (
   surface--complement--link--hover:   $pfe-color--surface--complement--link--hover,
   surface--complement--link--focus:   $pfe-color--surface--complement--link--focus,
 
+  // Complement group: Harmony
+  surface--complement--harmony:                  $pfe-color--surface--complement--harmony,
+  surface--complement--harmony--text:            $pfe-color--surface--complement--harmony--text,
+  surface--complement--harmony--link:            $pfe-color--surface--complement--harmony--link,
+  surface--complement--harmony--link--visited:   $pfe-color--surface--complement--harmony--link--visited,
+  surface--complement--harmony--link--hover:     $pfe-color--surface--complement--harmony--link--hover,
+  surface--complement--harmony--link--focus:     $pfe-color--surface--complement--harmony--link--focus,
 
   // Accent group
   surface--accent:                    $pfe-color--surface--accent,
@@ -114,6 +161,14 @@ $pfe-colors: (
   surface--accent--link--visited:     $pfe-color--surface--accent--link--visited,
   surface--accent--link--hover:       $pfe-color--surface--accent--link--hover,
   surface--accent--link--focus:       $pfe-color--surface--accent--link--focus,
+
+  // Accent group: Harmony
+  surface--accent--harmony:                  $pfe-color--surface--accent--harmony,
+  surface--accent--harmony--text:            $pfe-color--surface--accent--harmony--text,
+  surface--accent--harmony--link:            $pfe-color--surface--accent--harmony--link,
+  surface--accent--harmony--link--visited:   $pfe-color--surface--accent--harmony--link--visited,
+  surface--accent--harmony--link--hover:     $pfe-color--surface--accent--harmony--link--hover,
+  surface--accent--harmony--link--focus:     $pfe-color--surface--accent--harmony--link--focus,
 
 
   /* Palette of Border Colors */

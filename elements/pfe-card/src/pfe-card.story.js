@@ -4,8 +4,6 @@ import * as tools from "../../../.storybook/utils.js";
 
 import PfeCard from "../pfe-card";
 
-// import cpTheme from "../../../themes/cp-theme/cp-theme.js";
-
 const stories = storiesOf("Card", module);
 
 // Define the template to be used
@@ -20,44 +18,12 @@ const defaultBody = tools.autoContent(1, 2);
 
 stories.add(PfeCard.tag, () => {
   let config = {};
-  // const props = PfeCard.properties;
-  // Manually defining props but this can be done in a schema instead
-  const props = {
-    color: {
-      title: "Color",
-      type: "string",
-      enum: [
-        "lightest",
-        "light",
-        "default",
-        "dark",
-        "darkest",
-        "complement",
-        "accent"
-      ],
-      default: "complement"
-    },
-    size: {
-      title: "Padding size",
-      type: "string",
-      enum: ["small", "standard"],
-      default: "standard"
-    }
-  };
+  const props = PfeCard.properties;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 
-  // const slots = PfeCard.slots;
-  // Manually defining the slots but this can be done in a schema instead
-  const slots = {
-    header: {
-      title: "Header"
-    },
-    body: {
-      title: "Body"
-    }
-  };
+  const slots = PfeCard.slots;
 
   //-- Add default content to slot objects
 

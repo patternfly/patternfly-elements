@@ -37,16 +37,23 @@
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
 
     <style>
-    /* For demo only */
-    .demo-cards {
-      display: flex;
-      flex-wrap: wrap;
-    }
+      /* For demo only */
+      .demo-cards {
+        display: flex;
+        flex-wrap: wrap;
+      }
 
-    .demo-cards > * {
-      margin: 0 16px 32px;
-      width: calc(25% - 32px);
-    }
+      .demo-cards > * {
+        margin: 0 16px 32px;
+        width: calc(25% - 32px);
+      }
+
+      h2[slot="pfe-card--header"] {
+        margin-bottom: 0;
+        text-transform: uppercase;
+        font-size: 1.1em;
+        font-weight: bolder;
+      }
     </style>
 
   </head>
@@ -54,7 +61,7 @@
     <h1>&lt;pfe-card&gt;</h1>
     <div class="demo-cards">
 
-      <pfe-card pfe-color="lightest">
+      <pfe-card pfe-color="lightest" style="--pfe-card--BorderColor: #eee">
         <h2 slot="pfe-card--header">Lightest card</h2>
         <p>This is the lightest pfe-card and <a href="#">a link</a>.</p>
         <pfe-cta priority="primary" slot="pfe-card--footer">
@@ -80,7 +87,7 @@
         </pfe-cta>
       </pfe-card>
 
-      <pfe-card pfe-color="darker">
+      <pfe-card pfe-color="darker" pfe-img-src="https://www.redhat.com/files/webux/img/bandbg/bg-infrastructure-management-pattern-transparent-tile.png" style="--pfe-card__header--BackgroundColor: rgba(45,45,45,.7);">
         <h2 slot="pfe-card--header">Dark Card</h2>
         <p>This is the dark pfe-card and <a href="#">a link</a>.</p>
         <pfe-cta priority="secondary" slot="pfe-card--footer">

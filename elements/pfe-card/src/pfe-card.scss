@@ -103,10 +103,11 @@ $LOCAL: card;
   --pfe-card--PaddingLeft:    #{pfe-var(container-spacer)};
 }
 
-// Remove top margin from typography inside the component
+// Remove margins from typography inside the slots
 @each $tag in (p, h1, h2, h3, h4, h5, h6) {
   ::slotted(#{$tag}) {
-    margin-top: 0 !important;
+    // Remove top margins
+    margin-top: 0;
   }
 }
 
@@ -138,6 +139,7 @@ $LOCAL: card;
     padding-top: #{pfe-local(spacing)}; // Top padding differs if background color applied
     padding-right: #{pfe-local(PaddingRight)};
     padding-left: #{pfe-local(PaddingLeft)};
+    padding-bottom: #{pfe-local(spacing)};
   }
   
   &__footer {

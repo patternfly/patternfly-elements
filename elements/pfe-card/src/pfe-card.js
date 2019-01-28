@@ -83,15 +83,15 @@ class PfeCard extends PFElement {
   }
 
   get schemaUrl() {
-    return "pfe-band.json";
-  }
-
-  get styleUrl() {
-    return "pfe-card.scss";
+    return "pfe-card.json";
   }
 
   get templateUrl() {
     return "pfe-card.html";
+  }
+
+  get styleUrl() {
+    return "pfe-card.scss";
   }
 
   get imageSrc() {

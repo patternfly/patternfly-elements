@@ -2,17 +2,17 @@ import PFElement from "../pfelement/pfelement.js";
 
 /*
  * Copyright 2019 Red Hat, Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,14 +20,12 @@ import PFElement from "../pfelement/pfelement.js";
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
-*/
+ *
+ */
 
 class PfeCta extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   --pfe-cta--main:                     var(--pfe-theme--color--ui-link, #06c);
   --pfe-cta--main--hover:              var(--pfe-theme--color--ui-link--hover, #003366);
   --pfe-cta--main--focus:              var(--pfe-theme--color--ui-link--focus, #003366);
@@ -140,8 +138,7 @@ class PfeCta extends PFElement {
   --pfe-cta--main:        var(--pfe-theme--color--ui-accent, #fe460d) !important;
   --pfe-cta--main--hover: var(--pfe-theme--color--ui-accent--hover, #a42701) !important;
   --pfe-cta--aux:         var(--pfe-theme--color--ui-accent--text, #fff) !important;
-  --pfe-cta--aux--hover:  var(--pfe-theme--color--ui-accent--text--hover, #fff) !important; }
-</style>
+  --pfe-cta--aux--hover:  var(--pfe-theme--color--ui-accent--text--hover, #fff) !important; }</style>
 <slot></slot>`;
   }
 

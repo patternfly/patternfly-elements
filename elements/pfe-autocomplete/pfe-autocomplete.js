@@ -2,17 +2,17 @@ import PFElement from "../pfelement/pfelement.js";
 
 /*
  * Copyright 2018 Red Hat, Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,8 +20,8 @@ import PFElement from "../pfelement/pfelement.js";
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
-*/
+ *
+ */
 
 const KEYCODE = {
   ENTER: 13,
@@ -35,9 +35,7 @@ let throttle = false;
 
 class PfeAutocomplete extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   display: block;
   position: relative; }
 
@@ -151,13 +149,10 @@ button.search-button:disabled svg {
 
 .loading svg {
   width: 26px;
-  padding-top: 7px; }
-</style>
+  padding-top: 7px; }</style>
 <div id="input-box-wrapper">
-    <!-- Input box -->
     <slot></slot>
 
-    <!-- loading icon -->
     <span class="loading" aria-hidden="true" hidden>
         <svg viewBox="0 0 40 40" enable-background="new 0 0 40 40">
           <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
@@ -176,7 +171,6 @@ button.search-button:disabled svg {
         </svg>
     </span>
 
-    <!-- clear search button -->
     <button class="clear-search" type="button" aria-label="clear search query" hidden>
       <svg viewBox="0 0 40 40" enable-background="new 0 0 40 40">
         <line x1="5" y1="5" x2="35" y2="35" stroke-width="10" stroke-linecap="round" stroke-miterlimit="10"></line>
@@ -184,7 +178,6 @@ button.search-button:disabled svg {
       </svg>
     </button>
 
-    <!-- Search button -->
     <button class="search-button" type="button" aria-label="Search" disabled>
       <svg viewBox="0 0 512 512">
         <path d="M256.233,5.756c-71.07,15.793-141.44,87.863-155.834,159.233c-11.495,57.076,0.3,111.153,27.688,154.335L6.339,441.172
@@ -549,9 +542,7 @@ button.search-button:disabled svg {
 */
 class PfeSearchDroplist extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   position: relative;
   display: none;
   font-family: var(--pfe-theme--font-family);
@@ -599,8 +590,7 @@ ul {
     margin: 0px;
      }
     ul li.active {
-      background-color: var(--pfe-theme--color--surface--lighter, #ececec); }
-</style>
+      background-color: var(--pfe-theme--color--surface--lighter, #ececec); }</style>
 <div class="suggestions-aria-help sr-only" aria-hidden="false" role="status"></div>
 <div class="droplist">
   <ul role="listbox" tabindex="-1">

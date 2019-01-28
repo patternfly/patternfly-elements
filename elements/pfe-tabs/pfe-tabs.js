@@ -2,17 +2,17 @@ import PFElement from "../pfelement/pfelement.js";
 
 /*
  * Copyright 2019 Red Hat, Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,8 +20,8 @@ import PFElement from "../pfelement/pfelement.js";
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
-*/
+ *
+ */
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.find
 if (!Array.prototype.find) {
@@ -134,9 +134,7 @@ function generateId() {
 
 class PfeTabs extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   display: block; }
 
 .tabs {
@@ -184,8 +182,7 @@ class PfeTabs extends PFElement {
   border-bottom: transparent; }
 
 :host([vertical][pfe-variant="secondary"]) .tabs {
-  justify-content: flex-start; }
-</style>
+  justify-content: flex-start; }</style>
 <div class="tabs">
   <slot name="tab"></slot>
 </div>
@@ -502,9 +499,7 @@ class PfeTabs extends PFElement {
 
 class RhTab extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   --pfe-tabs--main:         transparent;
   --pfe-tabs--aux:          var(--pfe-theme--color--surface--lightest--text, #333);
   --pfe-tabs--link:         var(--pfe-theme--color--surface--lightest--link, #06c);
@@ -622,8 +617,7 @@ class RhTab extends PFElement {
 ::slotted(h2) {
   font-size: var(--pfe-theme--font-size);
   font-weight: var(--pfe-theme--font-weight--normal, 500);
-  margin: 0; }
-</style>
+  margin: 0; }</style>
 <slot></slot>
 <div class="indicator"></div>`;
   }
@@ -681,14 +675,11 @@ class RhTab extends PFElement {
 
 class RhTabPanel extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   display: block; }
 
 :host([hidden]) {
-  display: none; }
-</style>
+  display: none; }</style>
 <slot></slot>`;
   }
 

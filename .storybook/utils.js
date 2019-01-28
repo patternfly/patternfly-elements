@@ -19,33 +19,122 @@ String.prototype.sentenceCase = function() {
 };
 
 // Print attributes based on an object
-const listProperties = obj =>
+const listProperties = (obj, prefix = "") =>
   Object.entries(obj)
     .map(set => {
       let p = set[0];
       let v = set[1];
       let print = set[2] || true;
-      return print && v && v !== "null" ? ` ${p}="${v}"` : "";
+      return print && v && v !== "null"
+        ? ` ${p !== "slot" ? `${prefix ? `${prefix}-` : ""}` : ""}${p}="${v}"`
+        : "";
     })
     .join("");
 
 // Create a tag based on a provided object
-export function customTag(obj) {
-  return `<${obj.tag ? obj.tag : "div"} ${
-    obj.slot ? `slot="${obj.slot}"` : ""
-  }${listProperties(obj.attributes || {})}>${obj.content || autoContent()}</${
-    obj.tag ? obj.tag : "div"
-  }>`;
+// Accepts an object that can contain (all optional):
+// -- tag: html tag such as h1 or p, default is div
+// -- slot: rendered as slot="<input>"
+// -- attributes: passed through the listProperties function
+// -- content: Accepts html or plain text or renders default content
+export function customTag(obj, prefix = "") {
+  let start = "";
+  let end = "";
+  // If a tag is defined, or it has slots or attributes to apply
+  // render an open and close tag
+  if (obj.tag || obj.slot || obj.attributes) {
+    start += "<";
+    end += "</";
+    // If a tag is defined, use that, else use a div
+    if (obj.tag) {
+      start += obj.tag;
+      end += obj.tag;
+    } else {
+      start += "div";
+      end += "div";
+    }
+    start += obj.slot ? ` slot="${obj.slot}"` : "";
+    start += obj.attributes ? listProperties(obj.attributes || {}, prefix) : "";
+    start += ">";
+    end += ">";
+  }
+  return `${start}${obj.content || autoContent()}${end}`;
 }
+
+const parseMarkup = string => {
+  // Define the regex for use below
+  let find = /<(\w+[-\w]*)(.*?)>/;
+  let quotes = /['\"]+/g;
+  // Initialize the empty return object
+  let obj = {};
+  // Initialize the attributes object
+  obj.attributes = {};
+  // Capture the tag name and properties
+  let result = string.match(find);
+  // If results remain in the array, get the tag
+  if (result !== null && result.length > 0 && typeof result[1] === "string") {
+    obj.tag = result[1];
+    // If results remain in the array, get the attributes
+    if (result.length > 1 && typeof result[2] === "string") {
+      // Break the attributes apart using the spaces
+      let attr = result[2].trim().split(" ");
+      // If any attributes exist, break them down further
+      if (attr.length > 0) {
+        attr.forEach(set => {
+          // Break the attributes apart using the equal sign
+          let items = set.trim().split("=");
+          // If items are returned and they are both strings, add them to the attributes object
+          if (
+            items.length > 1 &&
+            typeof items[0] === "string" &&
+            typeof items[1] === "string"
+          ) {
+            obj.attributes[items[0].trim()] = items[1]
+              .replace(quotes, "")
+              .trim();
+          }
+        });
+      }
+    }
+    // Strip the original string of the wrapper element
+    obj.content = string.replace(new RegExp(`<\/?${obj.tag}.*?>`, "g"), "");
+  } else {
+    obj.tag = "div";
+    obj.content = string;
+  }
+  // Return the new object with the metadata
+  return obj;
+};
 
 // If a slot is a component or content, render that raw
 // if it's got a tag defined, run the custom tag function
 const renderSlots = (slots = []) =>
-  slots.map(slot => (slot.content ? slot.content : "")).join("");
+  slots
+    .map(slot => {
+      // If there are slot or attribute values but no tag defined
+      // Grep the content to see if we can use the first tag passed in
+      let has_tag = typeof slot.tag !== "undefined";
+      let has_slot = typeof slot.slot !== "undefined" && slot.slot.length > 0;
+      let has_attr =
+        typeof slot.attributes !== "undefined" &&
+        Object.keys(slot.attributes).length > 0;
+      if (!has_tag && (has_slot || has_attr)) {
+        Object.assign(slot, parseMarkup(slot.content));
+      }
+      return slot.content
+        ? customTag({
+            tag: slot.tag,
+            slot: slot.slot,
+            attributes: slot.attributes,
+            content: slot.content
+          })
+        : "";
+    })
+    .join("");
 
 // Creates a component dynamically based on inputs
-export function component(tag, attributes = {}, slots = []) {
-  return `<${tag}${listProperties(attributes)}>${
+export function component(tag, attributes = {}, slots = [], prefix = "") {
+  return `<${tag}${listProperties(attributes, prefix)}>${
     slots.length > 0 ? renderSlots(slots) : autoContent()
   }</${tag}>`;
 }
@@ -53,7 +142,10 @@ export function component(tag, attributes = {}, slots = []) {
 // Create an automatic heading
 export function autoHeading(short = false) {
   let length = short ? Math.random() + 2 : Math.random() * 10 + 5;
-  return loremIpsum({ count: length, units: "words" }).sentenceCase();
+  return loremIpsum({
+    count: length,
+    units: "words"
+  }).sentenceCase();
 }
 
 // Create a set of automatic content
@@ -121,43 +213,11 @@ export function autoContentKnobs(slots, bridge) {
 }
 
 export function demo(markup) {
-  // Prettify and clean the markup for rendering
-  cleaner.clean(
-    markup,
-    {
-      indent: "    ",
-      "remove-attributes": [],
-      "break-around-tags": [
-        "body",
-        "blockquote",
-        "br",
-        "div",
-        "h1",
-        "h2",
-        "h3",
-        "h4",
-        "h5",
-        "h6",
-        "head",
-        "hr",
-        "link",
-        "meta",
-        "p",
-        "table",
-        "title",
-        "td",
-        "tr",
-        "a"
-      ],
-      wrap: 0
-    },
-    html => (markup = html)
-  );
-
   // Return the rendered markup and the code snippet output
   return `${markup}`;
 }
 
+// prettier-ignore-start
 export function code(markup) {
   // Prettify and clean the markup for rendering
   cleaner.clean(
@@ -185,7 +245,11 @@ export function code(markup) {
         "title",
         "td",
         "tr",
-        "a"
+        "a",
+        "section",
+        "article",
+        "footer",
+        "aside"
       ],
       wrap: 0
     },
@@ -197,6 +261,7 @@ export function code(markup) {
     markup
   )}</pre>`;
 }
+// prettier-ignore-end
 
 export function preview(markup) {
   return demo(markup) + code(markup);

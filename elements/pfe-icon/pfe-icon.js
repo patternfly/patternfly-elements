@@ -2,17 +2,17 @@ import PFElement from "../pfelement/pfelement.js";
 
 /*
  * Copyright 2019 Red Hat, Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,8 +20,8 @@ import PFElement from "../pfelement/pfelement.js";
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
-*/
+ *
+ */
 
 const templateId = "pfe-icon-head";
 if (!document.getElementById(templateId)) {
@@ -36,9 +36,7 @@ if (!document.getElementById(templateId)) {
 
 class PfeIcon extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   --pfe-icon--spacing:                 var(--pfe-theme--container-spacer, 1rem);
   --pfe-icon--size:                    var(--pfe-theme--icon-size, 1em);
   --pfe-icon--color--bg:               transparent;
@@ -161,8 +159,7 @@ class PfeIcon extends PFElement {
 :host([circled="accent"]) {
   --pfe-icon--color--bg:               var(--pfe-theme--color--surface--accent, #fe460d);
   --pfe-icon--color--border:           transparent;
-  --pfe-broadcasted--color--text:      var(--pfe-theme--color--surface--accent--text, #fff); }
-</style>
+  --pfe-broadcasted--color--text:      var(--pfe-theme--color--surface--accent--text, #fff); }</style>
 <svg viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" focusable="false" style="pointer-events: none; display: block; width: 100%; height: 100%">
   <g>
     <path d=""></path>

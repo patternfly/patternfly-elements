@@ -2,17 +2,17 @@ import PFElement from "../pfelement/pfelement.js";
 
 /*
  * Copyright 2019 Red Hat, Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,8 +20,8 @@ import PFElement from "../pfelement/pfelement.js";
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
-*/
+ *
+ */
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
@@ -76,14 +76,11 @@ function generateId() {
 
 class PfeAccordion extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   display: block;
   position: relative;
   overflow: hidden;
-  margin: 0; }
-</style>
+  margin: 0; }</style>
 <slot></slot>`;
   }
 
@@ -380,9 +377,7 @@ class PfeAccordion extends PFElement {
 
 class PfeAccordionHeader extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   --pfe-accordion--main:         var(--pfe-theme--color--surface--lighter, #ececec);
   --pfe-accordion--aux:          var(--pfe-theme--color--surface--lighter--text, #333);
   --pfe-accordion--focus:        var(--pfe-theme--color--surface--lighter--link--focus, #003366);
@@ -483,8 +478,7 @@ h6 {
 :host([color="complement"]) {
   --pfe-accordion--main:         var(--pfe-theme--color--surface--complement, #0477a4);
   --pfe-accordion--aux:          var(--pfe-theme--color--surface--complement--text, #fff);
-  --pfe-accordion--focus:        var(--pfe-theme--color--surface--complement--link--focus, #cce6ff); }
-</style>
+  --pfe-accordion--focus:        var(--pfe-theme--color--surface--complement--link--focus, #cce6ff); }</style>
 <button aria-expanded="false" role="tab"></button>`;
   }
 
@@ -589,9 +583,7 @@ h6 {
 
 class PfeAccordionPanel extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   display: none;
   overflow: hidden;
   background: var(--pfe-theme--color--surface--lightest, #fff);
@@ -609,8 +601,7 @@ class PfeAccordionPanel extends PFElement {
   margin: 0 1px;
   border: 1px solid var(--pfe-theme--color--surface--border--lightest, #ececec);
   border-top: none;
-  padding: var(--pfe-theme--container-spacer, 1rem); }
-</style>
+  padding: var(--pfe-theme--container-spacer, 1rem); }</style>
 <div tabindex="-1" role="tabpanel">
   <div class="container">
     <slot></slot>

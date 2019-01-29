@@ -1,52 +1,47 @@
 import { storiesOf } from "@storybook/polymer";
-import {
-  withKnobs,
-  text,
-  select,
-  number
-} from "@storybook/addon-knobs/polymer";
-import { escapeHTML } from "../../../.storybook/utils.js";
+import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as tools from "../../../.storybook/utils.js";
 
 import PfeContentSet from "../pfe-content-set";
 
-const lorem = require("lorem-ipsum");
-
 const stories = storiesOf("Content set", module);
-stories.addDecorator(withKnobs);
+
+// Define the template to be used
+const template = (data = {}) => {
+  return tools.component(PfeContentSet.tag, data.prop, data.slots);
+};
+
+stories.addDecorator(storybookBridge.withKnobs);
+
+const defaultHeading = tools.autoHeading(true);
+const defaultPanel = tools.autoContent(1, 2);
 
 stories.add(PfeContentSet.tag, () => {
-  const orientationLabel = "Orientation";
-  const orientationOptions = {
-    "": "Horizontal",
-    vertical: "Vertical"
-  };
-  const orientationDefault = "";
-  const orientation = select(
-    orientationLabel,
-    orientationOptions,
-    orientationDefault
-  );
-  const orientationAttr = orientation ? ` ${orientation}` : "";
+  let config = {};
 
-  const variantLabel = "Variant";
-  const variantOptions = {
-    "": "default",
-    primary: "Primary",
-    secondary: "Secondary"
+  // const props = PfeContentSet.properties;
+  // Manually defining props but this can be done in a schema instead
+  const props = {
+    orientation: {
+      title: "Orientation",
+      type: "string",
+      enum: ["horizontal", "vertical"],
+      default: "Horizontal",
+      required: true
+    },
+    "pfe-variant": {
+      title: "Variant",
+      type: "string",
+      enum: ["primary", "secondary"]
+    }
   };
-  const variantDefault = "";
-  const variant = select(variantLabel, variantOptions, variantDefault);
-  const variantAttr = variant ? ` pfe-variant="${variant}"` : "";
+
+  // Trigger the auto generation of the knobs for attributes
+  config.prop = tools.autoPropKnobs(props, storybookBridge);
 
   const countLabel = "# of sets";
   const countDefault = 3;
-  const countVar = number(countLabel, countDefault);
-
-  const headingConfig = {
-    count: 2,
-    units: "words",
-    format: "plain"
-  };
+  const countVar = storybookBridge.number(countLabel, countDefault);
 
   const sets = [];
   Array(countVar)
@@ -54,42 +49,29 @@ stories.add(PfeContentSet.tag, () => {
     .split(0)
     .map((item, i) =>
       sets.push({
-        heading: lorem(headingConfig).replace(/^\w/, c => c.toUpperCase()),
-        panel: `<h2>${lorem(headingConfig).replace(/^\w/, c =>
-          c.toUpperCase()
-        )}</h2>
-      ${lorem({
-        count: i + 1,
-        units: "paragraphs",
-        format: "html"
-      })}`
+        heading: defaultHeading.replace(/^\w/, c => c.toUpperCase()),
+        panel: defaultPanel
       })
     );
 
-  const template = `
-<pfe-content-set${orientationAttr}${variantAttr}>
-${Array(countVar)
-    .join(0)
-    .split(0)
-    .map(
-      (item, i) => `
-    <pfe-content-set-group>
-        <h2 pfe-heading>${sets[i].heading}</h2>
-        ${sets[i].panel}
-    </pfe-content-set-group>
-`
-    )
-    .join("")}
-</pfe-content-set>
-`;
+  config.slots = [
+    {
+      content: Array(countVar)
+        .join(0)
+        .split(0)
+        .map((item, i) =>
+          tools.component("pfe-content-set-group", {}, [
+            {
+              content:
+                "<h2 pfe-heading>" + sets[i].heading + "</h2>" + sets[i].panel
+            }
+          ])
+        )
+        .join("")
+    }
+  ];
 
-  return `
-<section>
-    <h2>Content set</h2>
-    ${template}
-</section>
-<section>
-    <h2>Markup</h2>
-    <pre style="white-space: pre-wrap; margin: 0;">${escapeHTML(template)}</pre>
-</section>`;
+  const render = template(config);
+  const output = tools.preview(render);
+  return output;
 });

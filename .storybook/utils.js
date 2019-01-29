@@ -3,6 +3,8 @@
 // Automatic content generation
 // https://www.npmjs.com/package/lorem-ipsum
 const loremIpsum = require("lorem-ipsum");
+// HTML cleaner
+// https://www.npmjs.com/package/clean-html
 const cleaner = require("clean-html");
 
 // Escape HTML to display markup as content
@@ -22,14 +24,37 @@ String.prototype.sentenceCase = function() {
 const listProperties = (obj, prefix = "") =>
   Object.entries(obj)
     .map(set => {
+      let string = " ";
       let p = set[0];
       let v = set[1];
       let print = set[2] || true;
-      return print && v && v !== "null"
-        ? ` ${p !== "slot" ? `${prefix ? `${prefix}-` : ""}` : ""}${p}="${v}"`
-        : "";
+      // If printing is allowed, the value exists and is not null and is not a slot
+      if (
+        print &&
+        typeof v !== "undefined" &&
+        (v !== null || v !== "null") &&
+        p !== "slot"
+      ) {
+        string += prefix ? `${prefix}-` : "";
+        string += p;
+        // If the value is a boolean and is false, or the value is not a string true
+        if (
+          (typeof v === "string" && v !== "true") ||
+          (typeof v === "boolean" && !v)
+        ) {
+          string += "=";
+          if (typeof v === "string") {
+            // If it's a string, use quotation marks around it
+            string += `"${v}"`;
+          } else {
+            // Use, use it raw
+            string += v;
+          }
+        }
+      }
+      return string.toLowerCase();
     })
-    .join("");
+    .join(" ");
 
 // Create a tag based on a provided object
 // Accepts an object that can contain (all optional):
@@ -194,7 +219,7 @@ export function autoPropKnobs(properties, bridge) {
 
         // If this is not a required field, add a null option
         if (!required) {
-          opts.null = "";
+          opts.null = "-- Not selected --";
         }
 
         // Convert the array into an object

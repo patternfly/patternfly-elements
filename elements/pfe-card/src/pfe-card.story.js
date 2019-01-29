@@ -4,8 +4,6 @@ import * as tools from "../../../.storybook/utils.js";
 
 import PfeCard from "../pfe-card";
 
-// import cpTheme from "../../../themes/cp-theme/cp-theme.js";
-
 const stories = storiesOf("Card", module);
 
 // Define the template to be used
@@ -26,13 +24,24 @@ stories.add(PfeCard.tag, () => {
     color: {
       title: "Color",
       type: "string",
-      enum: ["lightest", "light", "dark", "darkest", "complement", "accent"],
-      default: "complement"
+      enum: [
+        "lightest",
+        "light",
+        "base",
+        "dark",
+        "darkest",
+        "complement",
+        "accent"
+      ],
+      default: "complement",
+      required: true
     },
     size: {
       title: "Padding size",
       type: "string",
-      enum: ["small"]
+      enum: ["standard", "small"],
+      default: "standard",
+      required: true
     }
   };
 
@@ -85,7 +94,7 @@ stories.add(PfeCard.tag, () => {
     const ctaPriorityValue = storybookBridge.select(
       "Priority",
       {
-        null: "",
+        null: "default",
         primary: "primary",
         secondary: "secondary"
       },
@@ -136,7 +145,7 @@ stories.add(PfeCard.tag, () => {
   ];
 
   // Some attribute values don't need to be included in the markup
-  if (config.prop.color === "default") {
+  if (config.prop.color === "base") {
     config.prop.color = "";
   }
 

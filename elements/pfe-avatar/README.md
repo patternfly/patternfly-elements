@@ -9,7 +9,7 @@ PFElements Avatar Element
 
 <pfe-avatar name="Libbie Koscinski" shape="rounded" pattern="squares"></pfe-avatar>
 
-<pfe-avatar name="Blanca Rohloff" show-initials pattern="triangles"></pfe-avatar>
+<pfe-avatar name="Blanca Rohloff" pattern="triangles"></pfe-avatar>
 
 <pfe-avatar name="Edwardo Lindsey" src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg"></pfe-avatar>
 ```
@@ -18,7 +18,7 @@ PFElements Avatar Element
 
 ### name (observed) (required)
 
-The user's name, either given name and family name, or username. When displaying a pattern, the name will be used to seed the pattern generator. The name is also used for displaying initials.
+The user's name, either given name and family name, or username. When displaying a pattern, the name will be used to seed the pattern generator.
 
 ### src (observed)
 
@@ -35,10 +35,6 @@ The type of pattern to display. Currently supported values are `"squares"` and `
 ### shape (observed)
 
 The shape of the avatar itself. Supported values are `"square"` (default), `"rounded"`, and `"circle"`.
-
-### show-initials
-
-This attribute indicates that the user's initials should be shown on top of the pattern. It is not observed, per se, but it does respond when the attribute is added and removed, via CSS instead of `observedAttributes`.
 
 ## Styling
 

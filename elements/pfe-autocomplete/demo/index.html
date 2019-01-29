@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PFElements: pfe-autocomplete Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require([
+      '../../../themes/cp-theme/cp-theme.umd.js',
+      '../pfe-autocomplete.umd.js'
+    ])</script>
+  </head>
+  <body unresolved>
+    <h1>&lt;pfe-autocomplete&gt;</h1>
+    <h2>Static Data</h2>
+    <p>Uses an array of strings.</p>
+    <div>
+      <pfe-autocomplete id="static" debounce="300">
+        <input placeholder="Enter Your Search Term"/>
+      </pfe-autocomplete>
+    </div>
+    <h4>Static Selected Value: <span id="staticSelectedValue"></span></h4>
+
+    <h2>Lazy Loading with init-value</h2>
+    <p>Makes an ajax call, filters the response and sends the filtered data to the component.</p>
+    <div>
+      <pfe-autocomplete id="search-lazy-loading" debounce="500" init-value="uni">
+        <input placeholder="Enter Your Search Term"/>
+      </pfe-autocomplete>
+    </div>
+    <h4>Ajax Selected Value: <span id="ajaxSelectedValue"></span></h4>
+
+    <h2>Disabled</h2>
+    <div>
+      <pfe-autocomplete is-disabled init-value="uni"><input placeholder="Enter Your Search Term"/></pfe-autocomplete>
+    </div>
+    <script>
+      const staticAutocomplete = document.querySelector("#static");
+      const items = [
+        "Item 1",
+        "Item 2",
+        "United States",
+        "Chicago Cubs",
+        "Red Hat",
+        "Purple",
+        "Curious George",
+        "United Kingdom",
+        "Elephant",
+        "Baseball",
+        "Bingo",
+        "Book",
+        "Android",
+        "iOS",
+        "Linux",
+        "Red Hat Enterprise Linux"
+      ];
+
+      staticAutocomplete.autocompleteRequest = function(params, callback) {
+        const regx = new RegExp("\^" + params.query, "i");
+        callback(items.filter(item => regx.test(item)));
+      };
+
+      staticAutocomplete.addEventListener('pfe-search-event', function(e) {
+        document.querySelector("#staticSelectedValue").textContent = e.detail.searchValue;
+      });
+
+      const searchAutocomplete = document.querySelector('#search-lazy-loading');
+
+      // autocomplete call
+      searchAutocomplete.autocompleteRequest = function(params, callback) {
+        var xhr = new XMLHttpRequest();
+
+        searchAutocomplete.setAttribute('loading', '');
+        xhr.onload = function() {
+          searchAutocomplete.removeAttribute('loading');
+
+          if(xhr.status === 404) {
+            callback([]);
+          } else {
+            const response = JSON.parse(xhr.responseText);
+            const regx = new RegExp("\^" + params.query, "i");
+
+            var responseReady = response.reduce(function(acc, item) {
+              if (regx.test(item.name)) acc.push(item.name);
+              return acc;
+            }, []);
+            callback(responseReady);
+          }
+        };
+
+        const url = 'https://restcountries.eu/rest/v2/name/' + params.query;
+
+        xhr.open('GET', url, true);
+        xhr.send();
+      };
+
+      // when user performs search, this event is fired
+      // search phrase is passed to e.detail.searchValue
+      searchAutocomplete.addEventListener('pfe-search-event', function(e) {
+        document.querySelector("#ajaxSelectedValue").textContent = e.detail.searchValue;
+      });
+    </script>
+  </body>
+</html>

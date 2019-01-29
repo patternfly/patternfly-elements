@@ -16,7 +16,7 @@
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
     "gh-pages-storybook": "storybook-to-ghpages",
     "deploy-storybook": "npm run build-storybook && npm run gh-pages-storybook",
-    "new": "cd elements && yo --no-insight --no-update-notifier rhelement && npm run post-new",
+    "new": "cd elements && yo --no-insight --no-update-notifier pfelement && npm run post-new",
     "post-new": "npm run test-suite-inject && npm run doc-listing-inject && npm run bootstrap"
   },
   "husky": {
@@ -25,6 +25,7 @@
     }
   },
   "devDependencies": {
+    "@polymer/iron-test-helpers": "^3.0.1",
     "@storybook/addon-actions": "^3.4.8",
     "@storybook/addon-knobs": "^3.4.8",
     "@storybook/addon-notes": "^3.4.8",
@@ -46,7 +47,7 @@
     "decomment": "^0.9.1",
     "del": "^3.0.0",
     "dialog-polyfill": "^0.4.10",
-    "generator-rhelement": "^0.6.4",
+    "generator-pfelement": "^1.0.0",
     "global": "^4.3.2",
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",

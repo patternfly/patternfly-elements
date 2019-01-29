@@ -194,7 +194,7 @@ export function autoPropKnobs(properties, bridge) {
 
         // If this is not a required field, add a null option
         if (!required) {
-          opts.null = "";
+          opts[""] = "default";
         }
 
         // Convert the array into an object

@@ -85,7 +85,6 @@ stories.add(PfeCard.tag, () => {
     const ctaPriorityValue = storybookBridge.select(
       "Priority",
       {
-        null: "",
         primary: "primary",
         secondary: "secondary"
       },

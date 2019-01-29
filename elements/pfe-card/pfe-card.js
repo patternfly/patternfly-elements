@@ -320,9 +320,73 @@ class PfeCard extends PFElement {
 .pfe-card__footer {
   margin-top: auto;
   justify-self: flex-end; }</style>
-<slot class="pfe-card__header" name="pfe-card--header"></slot>
+  ${
+    this.has_slot("pfe-card--header")
+      ? `<slot class="pfe-card__header" name="pfe-card--header"></slot>`
+      : ""
+  }
 <slot class="pfe-card__body"></slot>
-<slot class="pfe-card__footer" name="pfe-card--footer"></slot>`;
+${
+      this.has_slot("pfe-card--footer")
+        ? `<slot class="pfe-card__footer" name="pfe-card--footer"></slot>`
+        : ""
+    }`;
+  }
+
+  static get properties() {
+    return {
+      color: {
+        title: "Background color",
+        type: "string",
+        enum: [
+          "lightest",
+          "lighter",
+          "base",
+          "darker",
+          "darkest",
+          "complement",
+          "accent"
+        ],
+        default: "base",
+        observer: "_colorChanged"
+      },
+      "img-src": {
+        title: "Background image",
+        type: "string",
+        observer: "_imgSrcChanged"
+      },
+      size: {
+        title: "Padding size",
+        type: "string",
+        enum: ["small"],
+        observer: "_basicAttributeChanged"
+      }
+    };
+  }
+
+  static get slots() {
+    return {
+      header: {
+        title: "Header",
+        type: "array",
+        namedSlot: true,
+        maxItems: 3,
+        items: { title: "Body item", oneOf: [{ $ref: "raw" }] }
+      },
+      body: {
+        title: "Body",
+        type: "array",
+        namedSlot: false,
+        items: { oneOf: [{ $ref: "pfe-card" }, { $ref: "raw" }] }
+      },
+      footer: {
+        title: "Footer",
+        type: "array",
+        namedSlot: true,
+        maxItems: 3,
+        items: { oneOf: [{ $ref: "pfe-cta" }, { $ref: "raw" }] }
+      }
+    };
   }
 
   static get tag() {
@@ -330,15 +394,15 @@ class PfeCard extends PFElement {
   }
 
   get schemaUrl() {
-    return "pfe-band.json";
-  }
-
-  get styleUrl() {
-    return "pfe-card.scss";
+    return "pfe-card.json";
   }
 
   get templateUrl() {
     return "pfe-card.html";
+  }
+
+  get styleUrl() {
+    return "pfe-card.scss";
   }
 
   get imageSrc() {

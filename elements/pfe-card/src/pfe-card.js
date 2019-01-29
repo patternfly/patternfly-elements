@@ -178,4 +178,4 @@ class PfeCard extends PFElement {
 
 PFElement.create(PfeCard);
 
-export default PfeCard;
+export { PfeCard as default };

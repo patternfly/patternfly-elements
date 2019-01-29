@@ -2,6 +2,23 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
+// Add custom styles
+const styles = `<style>
+  *,
+  *:after,
+  *:before {
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+  }
+  body {
+      margin: 0; /* Removes default 8px margin */
+  }
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 0;
+      margin-bottom: 0;
+  }
+</style>`;
+
 import PfeCard from "../pfe-card";
 
 const stories = storiesOf("Card", module);
@@ -19,6 +36,9 @@ const defaultBody = tools.autoContent(1, 2);
 stories.add(PfeCard.tag, () => {
   let config = {};
   const props = PfeCard.properties;
+
+  // Set the storybook default to something more exciting
+  props.color.default == "complement";
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);
@@ -72,13 +92,6 @@ stories.add(PfeCard.tag, () => {
     if (ctaPriorityValue !== "default") {
       footerAttrs.priority = ctaPriorityValue;
     }
-
-    // If the card uses a dark theme, add the on="dark" attribute
-    if (
-      ["dark", "darkest", "accent", "complement"].includes(config.prop.color)
-    ) {
-      footerAttrs.on = "dark";
-    }
   }
 
   // Build the default footer component
@@ -93,25 +106,22 @@ stories.add(PfeCard.tag, () => {
     ]);
   }
 
-  config.slots = [
-    {
-      slot: "header",
-      content: tools.customTag({
-        tag: "h3",
-        content: config.has.header
-      })
-    },
-    {
-      content: config.has.body
-    },
-    {
-      slot: "footer",
-      content: slots.footer ? slots.footer.default : ""
-    }
-  ];
+  // prettier-ignore
+  config.slots = [{
+    slot: "pfe-card--header",
+    content: tools.customTag({
+      tag: "h3",
+      content: config.has.header
+    })
+  }, {
+    content: config.has.body
+  }, {
+    slot: "pfe-card--footer",
+    content: slots.footer ? slots.footer.default : ""
+  }];
 
   // Some attribute values don't need to be included in the markup
-  if (config.prop.color === "default") {
+  if (config.prop.color === "base") {
     config.prop.color = "";
   }
 
@@ -119,7 +129,7 @@ stories.add(PfeCard.tag, () => {
     config.prop.size = "";
   }
 
-  const render = template(config);
-  const output = tools.preview(render);
-  return output;
+  const rendered = template(config);
+
+  return styles + tools.preview(rendered);
 });

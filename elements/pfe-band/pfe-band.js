@@ -391,11 +391,9 @@ class PfeBand extends PFElement {
       @media (min-width: 768px) {
         .pfe-band__container {
           grid-template-areas: var(--pfe-band--gridTemplateArea_desktop); } } }</style>
-<section class="pfe-band__container"${["header", "footer", "aside"]
-      .map(
-        slot => (this.has_slot(`pfe-band--${slot}`) ? `pfe-has-${slot}` : "")
-      )
-      .join(" ")}>
+  <section class="pfe-band__container"${["header", "footer", "aside"]
+    .map(slot => (this.has_slot(`pfe-band--${slot}`) ? `pfe-has-${slot}` : ""))
+    .join(" ")}>
   ${
     this.has_slot("pfe-band--aside") && this.asidePosition.mobile === "top"
       ? `<slot class="pfe-band__aside" name="pfe-band--aside"></slot>`

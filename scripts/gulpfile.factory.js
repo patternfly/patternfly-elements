@@ -92,7 +92,7 @@ module.exports = function factory({
             return `${classStatement}
   get html() {
     return \`${cssResult}
-${html}\`;
+  ${html}\`;
   }${
     properties
       ? `

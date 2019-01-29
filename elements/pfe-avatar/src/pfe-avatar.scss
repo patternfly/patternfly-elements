@@ -22,7 +22,7 @@
   }
 }
 
-:host([shape="rounded"]) {
+:host([pfe-shape="rounded"]) {
   // when border radius lines up with the size of the avatar's random
   // patterns, it looks nice, so make border-radius the same size as the
   // patterns, ie 1/8th the width of the avatars.  add 1px beacuse it looks
@@ -33,7 +33,7 @@
   }
 }
 
-:host([shape="circle"]) {
+:host([pfe-shape="circle"]) {
   img,
   canvas {
     border-radius: 50%;
@@ -41,7 +41,7 @@
 }
 
 // when src attribute is provided, show the img but hide the canvas
-:host([src]) {
+:host([pfe-src]) {
   canvas {
     display: none;
   }
@@ -55,7 +55,7 @@
 }
 
 // when src attribute is not present, hide the img
-:host(:not([src])) img {
+:host(:not([pfe-src])) img {
   display: none;
 }
 

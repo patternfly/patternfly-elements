@@ -16,15 +16,15 @@ PFElements Avatar Element
 
 ## Attributes
 
-### name (observed) (required)
+### pfe-name (observed) (required)
 
 The user's name, either given name and family name, or username. When displaying a pattern, the name will be used to seed the pattern generator.
 
-### src (observed)
+### pfe-src (observed)
 
 The URL to the user's custom avatar image. It will be displayed instead of a random pattern.
 
-### pattern (observed)
+### pfe-pattern (observed)
 
 The type of pattern to display. Currently supported values are `"squares"` and `"triangles"`.
 
@@ -32,7 +32,7 @@ The type of pattern to display. Currently supported values are `"squares"` and `
 | ------------------------------- | ----------------------------------- |
 | ![squares image](./squares.png) | ![triangles image](./triangles.png) |
 
-### shape (observed)
+### pfe-shape (observed)
 
 The shape of the avatar itself. Supported values are `"square"` (default), `"rounded"`, and `"circle"`.
 

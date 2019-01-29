@@ -16,7 +16,7 @@ class PfeAvatar extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["name", "pattern", "src", "shape"];
+    return ["pfe-name", "pfe-pattern", "pfe-src", "pfe-shape"];
   }
 
   static get patterns() {
@@ -31,23 +31,23 @@ class PfeAvatar extends PFElement {
   }
 
   get name() {
-    return this.getAttribute("name");
+    return this.getAttribute("pfe-name");
   }
 
   set name(val) {
-    return this.setAttribute("name", val);
+    return this.setAttribute("pfe-name", val);
   }
 
   get src() {
-    return this.getAttribute("src");
+    return this.getAttribute("pfe-src");
   }
 
   set src(href) {
-    return this.setAttribute("src", href);
+    return this.setAttribute("pfe-src", href);
   }
 
   get pattern() {
-    return this.getAttribute("pattern") || PfeAvatar.patterns.squares;
+    return this.getAttribute("pfe-pattern") || PfeAvatar.patterns.squares;
   }
 
   set pattern(name) {
@@ -59,7 +59,7 @@ class PfeAvatar extends PFElement {
       );
       return;
     }
-    return this.setAttribute("pattern", name);
+    return this.setAttribute("pfe-pattern", name);
   }
 
   constructor() {
@@ -156,7 +156,7 @@ class PfeAvatar extends PFElement {
 
   update() {
     // if we have a src element, update the img, otherwise update the random pattern
-    if (this.hasAttribute("src")) {
+    if (this.hasAttribute("pfe-src")) {
       this.shadowRoot.querySelector("img").src = this.src;
     } else {
       const bitPattern = hash(this.name).toString(2);

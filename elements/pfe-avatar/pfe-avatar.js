@@ -1,6 +1,4 @@
 import PFElement from "../pfelement/pfelement.js";
-import { hash } from "./djb-hash.js";
-import { hsl2rgb, rgb2hsl } from "./hslrgb.js";
 
 /*
  * Copyright 2018 Red Hat, Inc.
@@ -22,13 +20,185 @@ import { hsl2rgb, rgb2hsl } from "./hslrgb.js";
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ *
+ */
+
+/**
+ * djb2 string hashing function.
+ *
+ * @see http://www.cse.yorku.ca/~oz/hash.html
+ * @param {String} str the string to hash.
+ * @return {Number} a positive integer
+ */
+
+function hash(str) {
+  let hash = 5381;
+  let i = str.length;
+
+  while (i) {
+    hash = (hash * 33) ^ str.charCodeAt(--i);
+  }
+
+  return hash >>> 0;
+}
+
+/*
+ * Copyright 2018 Red Hat, Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ */
+
+function h2rgb(v1, v2, vH) {
+  if (vH < 0) vH += 1;
+  if (vH > 1) vH -= 1;
+  if (6 * vH < 1) return v1 + (v2 - v1) * 6 * vH;
+  if (2 * vH < 1) return v2;
+  if (3 * vH < 2) return v1 + (v2 - v1) * (2 / 3 - vH) * 6;
+  return v1;
+}
+
+/**
+ * Convert an HSL color to RGB.
+ *
+ * @param {Number} H the hue component
+ * @param {Number} S the saturation component
+ * @param {Number} L the luminance component
+ * @return {Array} [R, G, B]
+ *
+ * @see https://www.easyrgb.com/en/math.php
+ */
+function hsl2rgb(_H, _S, _L) {
+  let R, G, B;
+
+  const H = Math.max(0, Math.min(1, _H));
+  const S = Math.max(0, Math.min(1, _S));
+  const L = Math.max(0, Math.min(1, _L));
+
+  if (S == 0) {
+    R = L * 255;
+    G = L * 255;
+    B = L * 255;
+  } else {
+    let a, b;
+
+    if (L < 0.5) {
+      b = L * (1 + S);
+    } else {
+      b = L + S - S * L;
+    }
+
+    a = 2 * L - b;
+
+    R = 255 * h2rgb(a, b, H + 1 / 3);
+    G = 255 * h2rgb(a, b, H);
+    B = 255 * h2rgb(a, b, H - 1 / 3);
+  }
+
+  return [R, G, B];
+}
+
+/**
+ * Convert an RGBcolor to HSL .
+ *
+ * @param {Number} R the red component
+ * @param {Number} G the green component
+ * @param {Number} B the blue component
+ * @return {Array} [H, S, L]
+ *
+ * @see https://www.easyrgb.com/en/math.php
+ */
+function rgb2hsl(_R, _G, _B) {
+  let H, S, L;
+
+  const R = Math.max(0, Math.min(255, _R));
+  const G = Math.max(0, Math.min(255, _G));
+  const B = Math.max(0, Math.min(255, _B));
+
+  const r = R / 255;
+  const g = G / 255;
+  const b = B / 255;
+
+  const var_min = Math.min(Math.min(r, g), b);
+  const var_max = Math.max(Math.max(r, g), b);
+  const del_max = var_max - var_min;
+
+  L = (var_max + var_min) / 2;
+
+  if (del_max === 0) {
+    H = 0;
+    S = 0;
+  } else {
+    if (L < 0.5) {
+      S = del_max / (var_max + var_min);
+    } else {
+      S = del_max / (2 - var_max - var_min);
+    }
+
+    const del_r = ((var_max - r) / 6 + del_max / 2) / del_max;
+    const del_g = ((var_max - g) / 6 + del_max / 2) / del_max;
+    const del_b = ((var_max - b) / 6 + del_max / 2) / del_max;
+
+    if (r == var_max) {
+      H = del_b - del_g;
+    } else if (g == var_max) {
+      H = 1 / 3 + del_r - del_b;
+    } else if (b == var_max) {
+      H = 2 / 3 + del_g - del_r;
+    }
+
+    if (H < 0) {
+      H += 1;
+    } else if (H > 1) {
+      H -= 1;
+    }
+  }
+
+  return [H, S, L];
+}
+
+/*
+ * Copyright 2018 Red Hat, Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
  */
 
 class PfeAvatar extends PFElement {
   get html() {
-    return `
-<style>
-:host {
+    return `<style>:host {
   --pfe-avatar--width: 128px;
   display: block;
   position: relative;
@@ -50,29 +220,28 @@ class PfeAvatar extends PFElement {
     -ms-interpolation-mode: nearest-neighbor;
      }
 
-:host([shape="rounded"]) img,
-:host([shape="rounded"]) canvas {
+:host([pfe-shape="rounded"]) img,
+:host([pfe-shape="rounded"]) canvas {
   border-radius: calc(var(--pfe-avatar--width) / 8 + 1px); }
 
-:host([shape="circle"]) img,
-:host([shape="circle"]) canvas {
+:host([pfe-shape="circle"]) img,
+:host([pfe-shape="circle"]) canvas {
   border-radius: 50%; }
 
-:host([src]) canvas {
+:host([pfe-src]) canvas {
   display: none; }
 
-:host([src]) img {
+:host([pfe-src]) img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover; }
 
-:host(:not([src])) img {
+:host(:not([pfe-src])) img {
   display: none; }
 
 :host([hidden]) {
-  display: none; }
-</style>
+  display: none; }</style>
 <canvas></canvas>
 <img>`;
   }
@@ -90,7 +259,7 @@ class PfeAvatar extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["name", "pattern", "src", "shape"];
+    return ["pfe-name", "pfe-pattern", "pfe-src", "pfe-shape"];
   }
 
   static get patterns() {
@@ -105,23 +274,23 @@ class PfeAvatar extends PFElement {
   }
 
   get name() {
-    return this.getAttribute("name");
+    return this.getAttribute("pfe-name");
   }
 
   set name(val) {
-    return this.setAttribute("name", val);
+    return this.setAttribute("pfe-name", val);
   }
 
   get src() {
-    return this.getAttribute("src");
+    return this.getAttribute("pfe-src");
   }
 
   set src(href) {
-    return this.setAttribute("src", href);
+    return this.setAttribute("pfe-src", href);
   }
 
   get pattern() {
-    return this.getAttribute("pattern") || PfeAvatar.patterns.squares;
+    return this.getAttribute("pfe-pattern") || PfeAvatar.patterns.squares;
   }
 
   set pattern(name) {
@@ -133,7 +302,7 @@ class PfeAvatar extends PFElement {
       );
       return;
     }
-    return this.setAttribute("pattern", name);
+    return this.setAttribute("pfe-pattern", name);
   }
 
   constructor() {
@@ -230,7 +399,7 @@ class PfeAvatar extends PFElement {
 
   update() {
     // if we have a src element, update the img, otherwise update the random pattern
-    if (this.hasAttribute("src")) {
+    if (this.hasAttribute("pfe-src")) {
       this.shadowRoot.querySelector("img").src = this.src;
     } else {
       const bitPattern = hash(this.name).toString(2);

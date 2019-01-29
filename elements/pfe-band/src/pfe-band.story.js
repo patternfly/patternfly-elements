@@ -67,6 +67,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 stories.add(PfeBand.tag, () => {
   let config = {};
   const props = PfeBand.properties;
+
   const slots = PfeBand.slots;
 
   //-- Add default content to slot objects
@@ -90,7 +91,13 @@ stories.add(PfeBand.tag, () => {
   });
 
   // -- Customize the default selection for the preview
-  props.color.default = "light";
+  props.color.default = "lightest";
+
+  // Set required fields for storybook interface
+  props.color.required = true;
+  props["aside-desktop"].required = true;
+  props["aside-mobile"].required = true;
+  props["aside-height"].required = true;
 
   // Build the knobs and read in their selections
   config.prop = tools.autoPropKnobs(props, storybookBridge);

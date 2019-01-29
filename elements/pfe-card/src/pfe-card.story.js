@@ -26,15 +26,7 @@ stories.add(PfeCard.tag, () => {
     color: {
       title: "Color",
       type: "string",
-      enum: [
-        "lightest",
-        "light",
-        "default",
-        "dark",
-        "darkest",
-        "complement",
-        "accent"
-      ],
+      enum: ["lightest", "light", "dark", "darkest", "complement", "accent"],
       default: "complement"
     },
     size: {
@@ -93,16 +85,16 @@ stories.add(PfeCard.tag, () => {
     const ctaPriorityValue = storybookBridge.select(
       "Priority",
       {
-        default: "default",
+        null: "",
         primary: "primary",
         secondary: "secondary"
       },
-      "default",
+      "",
       "Call-to-action"
     );
 
     // Print the priority attribute if it's not default
-    if (ctaPriorityValue !== "default") {
+    if (ctaPriorityValue !== "") {
       footerAttrs.priority = ctaPriorityValue;
     }
 

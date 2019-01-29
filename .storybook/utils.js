@@ -27,12 +27,18 @@ const listProperties = (obj, prefix = "") =>
       let string = " ";
       let p = set[0];
       let v = set[1];
-      let print = set[2] || true;
+      let print = set[2];
+
+      // If no print value is provided, default to true
+      if (typeof print === "undefined") {
+        print = true;
+      }
+
       // If printing is allowed, the value exists and is not null and is not a slot
       if (
         print &&
         typeof v !== "undefined" &&
-        (v !== null || v !== "null") &&
+        (v !== null && v !== "null") &&
         p !== "slot"
       ) {
         string += prefix ? `${prefix}-` : "";
@@ -166,7 +172,7 @@ export function component(tag, attributes = {}, slots = [], prefix = "") {
 
 // Create an automatic heading
 export function autoHeading(short = false) {
-  let length = short ? Math.random() + 2 : Math.random() * 10 + 5;
+  let length = short ? Math.random() + 1 : Math.random() * 10 + 5;
   return loremIpsum({
     count: length,
     units: "words"
@@ -298,7 +304,7 @@ export function code(markup) {
 
   // Return the rendered markup and the code snippet output
   return `<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">${escapeHTML(
-    markup
+    markup.replace(/\=\"\"/g, "")
   )}</pre>`;
 }
 // prettier-ignore-end

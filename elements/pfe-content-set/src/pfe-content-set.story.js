@@ -63,13 +63,33 @@ stories.add(PfeContentSet.tag, () => {
           tools.component("pfe-content-set-group", {}, [
             {
               content:
-                "<h2 pfe-heading>" + sets[i].heading + "</h2>" + sets[i].panel
+                tools.customTag(
+                  {
+                    tag: "h2",
+                    attributes: {
+                      heading: true
+                    },
+                    content: sets[i].heading
+                  },
+                  "pfe"
+                ) + sets[i].panel
             }
           ])
         )
         .join("")
     }
   ];
+
+  // Some attribute values don't need to be included in the markup
+  if (config.prop.orientation === "horizontal") {
+    config.prop.orientation = null;
+  }
+  if (config.prop.orientation === "vertical") {
+    // If the value is vertical, don't print an orientation attribute
+    config.prop.orientation = null;
+    // Add the vertical attribute set to true
+    config.prop.vertical = true;
+  }
 
   const render = template(config);
   const output = tools.preview(render);

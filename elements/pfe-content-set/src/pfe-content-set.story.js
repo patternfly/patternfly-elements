@@ -11,10 +11,20 @@ const template = (data = {}) => {
   return tools.component(PfeContentSet.tag, data.prop, data.slots);
 };
 
-stories.addDecorator(storybookBridge.withKnobs);
+// @TODO add back the CTA after bug is fixed
+const cta = "";
 
-const defaultHeading = tools.autoHeading(true);
-const defaultPanel = tools.autoContent(1, 2);
+// const cta = tools.component("pfe-cta", {}, [{
+//   content: tools.customTag({
+//     tag: "a",
+//     attributes: {
+//       href: "#"
+//     },
+//     content: "Learn more"
+//   })
+// }]);
+
+stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeContentSet.tag, () => {
   let config = {};
@@ -49,8 +59,8 @@ stories.add(PfeContentSet.tag, () => {
     .split(0)
     .map((item, i) =>
       sets.push({
-        heading: defaultHeading.replace(/^\w/, c => c.toUpperCase()),
-        panel: defaultPanel
+        heading: tools.autoHeading(true).replace(/^\w/, c => c.toUpperCase()),
+        panel: tools.autoContent(1, 2) + cta
       })
     );
 

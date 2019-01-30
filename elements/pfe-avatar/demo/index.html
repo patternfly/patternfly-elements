@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PFElements: pfe-avatar Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <!-- <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script> -->
+    <!-- <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script> -->
+    <!-- <script>require(['../../pfelement/pfelement.umd.js', '../pfe-avatar.umd.js'], function(PFElement) { -->
+    <!--   PFElement.debugLog(true); -->
+    <!--   })</script> -->
+
+    <script type="module" src="../pfe-avatar.js"></script>
+    <script src="../../../themes/cp-theme/cp-theme.umd.js"></script>
+
+    <style type="text/css" media="screen">
+      /* :root {
+        --pfe-avatar--colors: #3B0083 #f0ab00 #007a87 #00b9e4 #92d400;
+      } */
+      pfe-avatar { display: inline-block; margin: 20px; }
+      input { font-size: 2rem; }
+    </style>
+  </head>
+  <body unresolved>
+
+    <ul id="app">
+      <li v-for="person in people">
+        <div>
+          <input type="text" v-model:name="person.name">
+        </div>
+        <pfe-avatar pfe-shape=rounded pfe-pattern="squares" v-bind:pfe-name="person.name"></pfe-avatar>
+        <br>
+        <pfe-avatar pfe-pattern="triangles" v-bind:pfe-name="person.name"></pfe-avatar>
+        <br>
+        <pfe-avatar pfe-src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg" v-bind:pfe-name="person.name"></pfe-avatar>
+        <br>
+      </li>
+    </ul>
+
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          people: [
+            { name: "Edison Lionetti" },
+            { name: "Libbie Koscinski" },
+            { name: "Blanca Rohloff" },
+            { name: "Edwardo Lindsey" },
+            { name: "Eleanore Stillwagon" },
+            { name: "Dominick Psencik" },
+            { name: "Arlene Boliek" },
+            { name: "Leland Asp" },
+            { name: "" },
+          ]
+        }
+      });
+
+      function animate() {
+        app.people[app.people.length - 1].name = Math.random();
+      };
+
+      // setInterval(animate, 1000);
+    </script>
+
+  </body>
+</html>

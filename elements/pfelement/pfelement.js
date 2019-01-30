@@ -1,16 +1,16 @@
 /*
  * Copyright 2019 Red Hat, Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,8 +18,8 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
-*/
+ *
+ */
 
 let logger = () => null;
 
@@ -52,17 +52,17 @@ function handleWebComponentsReady() {
 
 /*
  * Copyright 2019 Red Hat, Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -70,8 +70,8 @@ function handleWebComponentsReady() {
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
-*/
+ *
+ */
 const prefix = "pfe-";
 
 class PFElement extends HTMLElement {
@@ -119,6 +119,7 @@ class PFElement extends HTMLElement {
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
     super();
 
+    this.connected = false;
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this.props = pfeClass.properties;
@@ -143,6 +144,8 @@ class PFElement extends HTMLElement {
   }
 
   connectedCallback() {
+    this.connected = true;
+
     if (window.ShadyCSS) {
       window.ShadyCSS.styleElement(this);
     }
@@ -156,6 +159,10 @@ class PFElement extends HTMLElement {
     if (this._queue.length) {
       this._processQueue();
     }
+  }
+
+  disconnectedCallback() {
+    this.connected = false;
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
@@ -254,6 +261,17 @@ class PFElement extends HTMLElement {
 
   _setProperty({ name, value }) {
     this[name] = value;
+  }
+
+  static var(name, element = document.body) {
+    return window
+      .getComputedStyle(element)
+      .getPropertyValue(name)
+      .trim();
+  }
+
+  var(name) {
+    return PFElement.var(name, this);
   }
 
   render() {

@@ -25,7 +25,9 @@ const listProperties = (obj, prefix = "") =>
       let p = set[0];
       let v = set[1];
       let print = set[2] || true;
-      return print && v && v !== "null" ? ` ${p !== "slot" ? `${prefix ? `${prefix}-` : ""}` : ""}${p}="${v}"` : "";
+      return print && v && v !== "null"
+        ? ` ${p !== "slot" ? `${prefix ? `${prefix}-` : ""}` : ""}${p}="${v}"`
+        : "";
     })
     .join("");
 
@@ -82,8 +84,14 @@ const parseMarkup = string => {
           // Break the attributes apart using the equal sign
           let items = set.trim().split("=");
           // If items are returned and they are both strings, add them to the attributes object
-          if (items.length > 1 && typeof items[0] === "string" && typeof items[1] === "string") {
-            obj.attributes[items[0].trim()] = items[1].replace(quotes, "").trim();
+          if (
+            items.length > 1 &&
+            typeof items[0] === "string" &&
+            typeof items[1] === "string"
+          ) {
+            obj.attributes[items[0].trim()] = items[1]
+              .replace(quotes, "")
+              .trim();
           }
         });
       }
@@ -107,7 +115,9 @@ const renderSlots = (slots = []) =>
       // Grep the content to see if we can use the first tag passed in
       let has_tag = typeof slot.tag !== "undefined";
       let has_slot = typeof slot.slot !== "undefined" && slot.slot.length > 0;
-      let has_attr = typeof slot.attributes !== "undefined" && Object.keys(slot.attributes).length > 0;
+      let has_attr =
+        typeof slot.attributes !== "undefined" &&
+        Object.keys(slot.attributes).length > 0;
       if (!has_tag && (has_slot || has_attr)) {
         Object.assign(slot, parseMarkup(slot.content));
       }
@@ -124,7 +134,9 @@ const renderSlots = (slots = []) =>
 
 // Creates a component dynamically based on inputs
 export function component(tag, attributes = {}, slots = [], prefix = "") {
-  return `<${tag}${listProperties(attributes, prefix)}>${slots.length > 0 ? renderSlots(slots) : autoContent()}</${tag}>`;
+  return `<${tag}${listProperties(attributes, prefix)}>${
+    slots.length > 0 ? renderSlots(slots) : autoContent()
+  }</${tag}>`;
 }
 
 // Create an automatic heading
@@ -245,7 +257,9 @@ export function code(markup) {
   );
 
   // Return the rendered markup and the code snippet output
-  return `<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">${escapeHTML(markup)}</pre>`;
+  return `<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">${escapeHTML(
+    markup
+  )}</pre>`;
 }
 // prettier-ignore-end
 

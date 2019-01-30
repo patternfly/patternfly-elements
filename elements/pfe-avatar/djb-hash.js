@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Red Hat, Inc.
+ * Copyright 2018 Red Hat, Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,31 +21,23 @@
  *
  */
 
-let logger = () => null;
+/**
+ * djb2 string hashing function.
+ *
+ * @see http://www.cse.yorku.ca/~oz/hash.html
+ * @param {String} str the string to hash.
+ * @return {Number} a positive integer
+ */
 
-export function reveal() {
-  logger(`[reveal] elements ready, revealing the body`);
-  window.document.body.removeAttribute("unresolved");
-}
+function hash(str) {
+  let hash = 5381;
+  let i = str.length;
 
-export function autoReveal(logFunction) {
-  logger = logFunction;
-  // If Web Components are already ready, run the handler right away.  If they
-  // are not yet ready, wait.
-  //
-  // see https://github.com/github/webcomponentsjs#webcomponents-loaderjs for
-  // info about web component readiness events
-  const polyfillPresent = window.WebComponents;
-  const polyfillReady = polyfillPresent && window.WebComponents.ready;
-
-  if (!polyfillPresent || polyfillReady) {
-    handleWebComponentsReady();
-  } else {
-    window.addEventListener("WebComponentsReady", handleWebComponentsReady);
+  while (i) {
+    hash = (hash * 33) ^ str.charCodeAt(--i);
   }
+
+  return hash >>> 0;
 }
 
-function handleWebComponentsReady() {
-  logger("[reveal] web components ready");
-  reveal();
-}
+export { hash };

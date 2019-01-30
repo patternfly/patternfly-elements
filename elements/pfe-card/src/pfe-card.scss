@@ -63,17 +63,15 @@ $LOCAL: card;
 
 // @TODO Deprecate "dark" and "light" in favor of "darker" and "lighter"
 @each $color in (dark, darker, darkest, light, lighter, lightest, complement, accent) {
+  $label: $color;
   // Add backward support for dark and light
-  @if $color == "dark" {
-    $color: darker;
-  }
-  @else if $color == light {
-    $color: lighter;
+  @if $color == "dark" or $color == "light" {
+    $color: "#{$color}er";
   }
   // Update variable values to match provided attribute
   // @TODO deprecate [color] in favor of [pfe-color]
-  :host([color="#{$color}"]),
-  :host([pfe-color="#{$color}"]) {
+  :host([color="#{$label}"]),
+  :host([pfe-color="#{$label}"]) {
     --pfe-card--BackgroundColor:                  #{pfe-color(surface--#{$color})};
     --pfe-broadcasted--color--text:               #{pfe-color(surface--#{$color}--text)};
     --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--#{$color}--link)};

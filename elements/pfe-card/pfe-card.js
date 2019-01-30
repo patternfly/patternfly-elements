@@ -133,8 +133,8 @@ class PfeCard extends PFElement {
   background-color: var(--pfe-card--BackgroundColor);
   color: var(--pfe-broadcasted--color--text); }
 
-:host([color="darker"]),
-:host([pfe-color="darker"]) {
+:host([color="dark"]),
+:host([pfe-color="dark"]) {
   --pfe-card--BackgroundColor:                  var(--pfe-theme--color--surface--darker, #464646);
   --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--darker--text, #fff);
   --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--darker--link, #99ccff);
@@ -142,8 +142,8 @@ class PfeCard extends PFElement {
   --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--darker--link--hover, #cce6ff);
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--darker--link--focus, #cce6ff);
   --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--darker--harmony, #2d2d2d); }
-  :host([color="darker"]) .pfe-card__header,
-  :host([pfe-color="darker"]) .pfe-card__header {
+  :host([color="dark"]) .pfe-card__header,
+  :host([pfe-color="dark"]) .pfe-card__header {
     --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--darker--harmony--text, #fff);
     --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--darker--harmony--link, #99ccff);
     --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--darker--harmony--link--visited, #b38cd9);
@@ -184,8 +184,8 @@ class PfeCard extends PFElement {
     --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--surface--darkest--harmony--link--hover, #cce6ff);
     --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--surface--darkest--harmony--link--focus, #cce6ff); }
 
-:host([color="lighter"]),
-:host([pfe-color="lighter"]) {
+:host([color="light"]),
+:host([pfe-color="light"]) {
   --pfe-card--BackgroundColor:                  var(--pfe-theme--color--surface--lighter, #ececec);
   --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--lighter--text, #333);
   --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--lighter--link, #06c);
@@ -193,8 +193,8 @@ class PfeCard extends PFElement {
   --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--surface--lighter--link--hover, #003366);
   --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--surface--lighter--link--focus, #003366);
   --pfe-card__header--BackgroundColor:          var(--pfe-theme--color--surface--lighter--harmony, #d2d2d2); }
-  :host([color="lighter"]) .pfe-card__header,
-  :host([pfe-color="lighter"]) .pfe-card__header {
+  :host([color="light"]) .pfe-card__header,
+  :host([pfe-color="light"]) .pfe-card__header {
     --pfe-broadcasted--color--text:             var(--pfe-theme--color--surface--lighter--harmony--text, #333);
     --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--surface--lighter--harmony--link, #06c);
     --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--surface--lighter--harmony--link--visited, rebeccapurple);

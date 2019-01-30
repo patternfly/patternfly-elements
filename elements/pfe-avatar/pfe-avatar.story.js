@@ -39,7 +39,7 @@ stories.add("pfe-avatar", () => {
   ];
 
   const customAvatar = `<pfe-avatar pfe-shape="${shape}" pfe-pattern="${pattern}" pfe-name="${name}"${src &&
-    ` src="${src}"`}></pfe-avatar>`;
+    ` pfe-src="${src}"`}></pfe-avatar>`;
 
   return `
     <h1>Dynamic example</h1>

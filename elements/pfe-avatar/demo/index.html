@@ -38,11 +38,11 @@
         <div>
           <input type="text" v-model:name="person.name">
         </div>
-        <pfe-avatar shape=rounded pattern="squares" v-bind:name="person.name"></pfe-avatar>
+        <pfe-avatar pfe-shape=rounded pfe-pattern="squares" v-bind:pfe-name="person.name"></pfe-avatar>
         <br>
-        <pfe-avatar pattern="triangles" v-bind:name="person.name"></pfe-avatar>
+        <pfe-avatar pfe-pattern="triangles" v-bind:pfe-name="person.name"></pfe-avatar>
         <br>
-        <pfe-avatar src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg" v-bind:name="person.name"></pfe-avatar>
+        <pfe-avatar pfe-src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg" v-bind:pfe-name="person.name"></pfe-avatar>
         <br>
       </li>
     </ul>

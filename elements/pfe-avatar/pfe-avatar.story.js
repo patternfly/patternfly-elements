@@ -38,7 +38,7 @@ stories.add("pfe-avatar", () => {
     }
   ];
 
-  const customAvatar = `<pfe-avatar shape="${shape}" pattern="${pattern}" name="${name}"${src &&
+  const customAvatar = `<pfe-avatar pfe-shape="${shape}" pfe-pattern="${pattern}" pfe-name="${name}"${src &&
     ` src="${src}"`}></pfe-avatar>`;
 
   return `
@@ -81,9 +81,11 @@ stories.add("pfe-avatar", () => {
               <p>
                 <pfe-avatar
                   slot="header"
-                  ${ex.src ? `src=${ex.src}` : `pattern="${ex.pattern}"`}
-                  shape="${ex.shape}"
-                  name="${ex.name}">
+                  ${
+                    ex.src ? `pfe-src=${ex.src}` : `pfe-pattern="${ex.pattern}"`
+                  }
+                  pfe-shape="${ex.shape}"
+                  pfe-name="${ex.name}">
                 </pfe-avatar>
                 Avatar for "${ex.name}"
                 with ${

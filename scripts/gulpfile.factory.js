@@ -14,6 +14,120 @@ module.exports = function factory({
   const decomment = require("decomment");
   const sass = require("node-sass");
   const shell = require("gulp-shell");
+  const banner = require("gulp-banner");
+
+  gulp.task("merge", () => {
+    return gulp
+      .src(`./src/${elementName}.js`)
+      .pipe(
+        replace(
+          /extends\s+PFElement\s+{/g,
+          (classStatement, character, jsFile) => {
+            // Extract the urls for template, style, and schema
+            // -- Would prefer to do this by require'ing and asking it directly, but without
+            //    node.js support for ES modules, we're stuck with this.
+            const oneLineFile = jsFile
+              .slice(character)
+              .split("\n")
+              .join(" ");
+
+            let url = {};
+            ["template", "style", "schema"].forEach(type => {
+              const re = new RegExp(
+                `get\\s+${type}Url\\([^)]*\\)\\s*{\\s*return\\s+"([^"]+)"`,
+                "g"
+              );
+              const parse = re.exec(oneLineFile);
+              url[type] =
+                typeof parse === "object" && parse !== null ? parse[1] : null;
+            });
+
+            let html = "";
+            let cssResult = "";
+            let properties = "";
+            let slots = "";
+
+            if (
+              url.template !== null &&
+              fs.existsSync(path.join("./src", url.template))
+            ) {
+              html = fs
+                .readFileSync(path.join("./src", url.template))
+                .toString()
+                .trim();
+              html = decomment(html);
+            }
+
+            if (
+              url.style !== null &&
+              fs.existsSync(path.join("./src", url.style))
+            ) {
+              let rawCSS = sass.renderSync({
+                file: path.join("./src", url.style)
+              }).css;
+              rawCSS = stripCssComments(rawCSS).trim();
+              if (rawCSS.toString() !== "") {
+                cssResult = `<style>${rawCSS}</style>`;
+              }
+            }
+
+            if (
+              url.schema !== null &&
+              fs.existsSync(path.join("./src", url.schema))
+            ) {
+              properties = "{}";
+              slots = "{}";
+              let schemaObj = JSON.parse(
+                fs.readFileSync(path.join("./src", url.schema))
+              );
+              if (schemaObj && typeof schemaObj === "object") {
+                if (schemaObj.properties.attributes) {
+                  properties = schemaObj.properties.attributes.properties;
+                  properties = JSON.stringify(properties);
+                }
+                if (schemaObj.properties.slots) {
+                  slots = schemaObj.properties.slots.properties;
+                  slots = JSON.stringify(slots);
+                }
+              }
+            }
+
+            return `${classStatement}
+  get html() {
+    return \`${cssResult}
+${html}\`;
+  }${
+    properties
+      ? `
+
+  static get properties() {
+    return ${properties};
+  }`
+      : ""
+  }${
+              slots
+                ? `
+
+  static get slots() {
+    return ${slots};
+  }`
+                : ""
+            }
+`;
+          }
+        )
+      )
+      .pipe(
+        banner(
+          `/*\n${fs
+            .readFileSync("LICENSE.txt", "utf8")
+            .split("\n")
+            .map(line => ` * ${line}\n`)
+            .join("")}*/\n\n`
+        )
+      )
+      .pipe(gulp.dest("./"));
+  });
 
   gulp.task("compile", () => {
     return gulp
@@ -28,64 +142,6 @@ module.exports = function factory({
         rename({
           suffix: ".umd"
         })
-      )
-      .pipe(gulp.dest("./"));
-  });
-
-  gulp.task("merge", () => {
-    return gulp
-      .src(`./src/${elementName}.js`)
-      .pipe(
-        replace(
-          /extends\s+PFElement\s+{/g,
-          (classStatement, character, jsFile) => {
-            // extract the templateUrl and styleUrl with regex.  Would prefer to do
-            // this by require'ing rh-something.js and asking it directly, but without
-            // node.js support for ES modules, we're stuck with this.
-            const oneLineFile = jsFile
-              .slice(character)
-              .split("\n")
-              .join(" ");
-            const [
-              ,
-              templateUrl
-            ] = /get\s+templateUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
-              oneLineFile
-            );
-
-            let html = fs
-              .readFileSync(path.join("./src", templateUrl))
-              .toString()
-              .trim();
-
-            html = decomment(html);
-
-            const [
-              ,
-              styleUrl
-            ] = /get\s+styleUrl\([^)]*\)\s*{\s*return\s+"([^"]+)"/.exec(
-              oneLineFile
-            );
-
-            const styleFilePath = path.join("./src", styleUrl);
-
-            let cssResult = sass.renderSync({
-              file: styleFilePath
-            }).css;
-
-            cssResult = stripCssComments(cssResult).trim();
-
-            return `${classStatement}
-  get html() {
-    return \`
-<style>
-${cssResult}
-</style>
-${html}\`;
-  }
-`;
-          }
-        )
       )
       .pipe(gulp.dest("./"));
   });

@@ -1,25 +1,3 @@
-/*
- * Copyright 2018 Red Hat, Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 import PFElement from "../pfelement/pfelement.js";
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.find
@@ -145,7 +123,7 @@ class PfeTabs extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["vertical", "selected-index"];
+    return ["vertical", "selected-index", "pfe-variant"];
   }
 
   get selectedIndex() {
@@ -197,6 +175,18 @@ class PfeTabs extends PFElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
+      case "pfe-variant":
+        if (this.getAttribute("pfe-variant") === "primary") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("pfe-variant", "primary")
+          );
+        } else if (this.getAttribute("pfe-variant") === "secondary") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("pfe-variant", "secondary")
+          );
+        }
+        break;
+
       case "vertical":
         if (this.hasAttribute("vertical")) {
           this.setAttribute("aria-orientation", "vertical");
@@ -510,3 +500,5 @@ class RhTabPanel extends PFElement {
 PFElement.create(RhTab);
 PFElement.create(RhTabPanel);
 PFElement.create(PfeTabs);
+
+export { PfeTabs as default };

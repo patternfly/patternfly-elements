@@ -115,6 +115,7 @@ class PfeCard extends PFElement {
   --pfe-card--BorderRadius: var(--pfe-theme--surface--border-radius, 0);
   --pfe-card--Border: var(--pfe-card--BorderWeight) var(--pfe-card--BorderStyle) var(--pfe-card--BorderColor);
   --pfe-card--BackgroundColor: var(--pfe-theme--color--surface--base, #dfdfdf);
+  --pfe-card--BackgroundPosition: center center;
   --pfe-card__header--BackgroundColor: var(--pfe-theme--color--surface--base--harmony, #acacac);
   --pfe-broadcasted--color--text:               var(--pfe-theme--color--surface--base--text, #333);
   --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--surface--base--link, #00538c);
@@ -131,6 +132,7 @@ class PfeCard extends PFElement {
   border: var(--pfe-card--Border);
   border-radius: var(--pfe-card--BorderRadius);
   background-color: var(--pfe-card--BackgroundColor);
+  background-position: var(--pfe-card--BackgroundPosition);
   color: var(--pfe-broadcasted--color--text); }
 
 :host([color="dark"]),

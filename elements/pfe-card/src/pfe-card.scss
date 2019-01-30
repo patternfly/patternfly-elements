@@ -28,6 +28,7 @@ $LOCAL: card;
 
   //-- Color properties
   --pfe-card--BackgroundColor: #{pfe-color(surface--base)};
+  --pfe-card--BackgroundPosition: center center;
 
   // Background color support for header region
   --pfe-card__header--BackgroundColor: #{pfe-color(surface--base--harmony)};
@@ -58,6 +59,7 @@ $LOCAL: card;
 
   // Base colors
   background-color: #{pfe-local(BackgroundColor)};
+  background-position: #{pfe-local(BackgroundPosition)};
   color: #{pfe-radio(color, text)};
 }
 

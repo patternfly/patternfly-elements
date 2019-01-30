@@ -18,7 +18,7 @@ module.exports = function factory({
 
   gulp.task("merge", () => {
     return gulp
-      .src(`./src/${elementName}.js`)
+      .src(`./src/**/*.js`)
       .pipe(
         replace(
           /extends\s+PFElement\s+{/g,

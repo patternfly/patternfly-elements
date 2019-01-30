@@ -46,6 +46,7 @@ class PFElement extends HTMLElement {
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
     super();
 
+    this.connected = false;
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this.props = pfeClass.properties;
@@ -70,6 +71,8 @@ class PFElement extends HTMLElement {
   }
 
   connectedCallback() {
+    this.connected = true;
+
     if (window.ShadyCSS) {
       window.ShadyCSS.styleElement(this);
     }
@@ -83,6 +86,10 @@ class PFElement extends HTMLElement {
     if (this._queue.length) {
       this._processQueue();
     }
+  }
+
+  disconnectedCallback() {
+    this.connected = false;
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
@@ -181,6 +188,17 @@ class PFElement extends HTMLElement {
 
   _setProperty({ name, value }) {
     this[name] = value;
+  }
+
+  static var(name, element = document.body) {
+    return window
+      .getComputedStyle(element)
+      .getPropertyValue(name)
+      .trim();
+  }
+
+  var(name) {
+    return PFElement.var(name, this);
   }
 
   render() {

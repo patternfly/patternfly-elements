@@ -15,6 +15,7 @@ module.exports = {
     watchOptions: {
       ignoreInitial: true,
       ignored: ["node_modules"]
-    }
+    },
+    middleware: [require("compression")()]
   }
 };

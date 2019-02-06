@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PatternFly Element | pfe-badge Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../pfe-badge.umd.js'])</script>
+
+    <style>
+      body {
+        font: 16px/1.5 Overpass, Arial, sans-sans-serif;
+        padding: 1rem 1.5rem;
+      }
+
+      body h1 {
+        margin-bottom: 3.5rem;
+      }
+
+      body section {
+        margin-bottom: 3rem;
+      }
+
+      pfe-badge {
+        background-color: red;
+        margin-right: .5rem;
+      }
+    </style>
+  </head>
+  <body class="new-theme" unresolved>
+    <h1>&lt;pfe-badge&gt;</h1>
+
+    <section id="small">
+      <h2>Small</h2>
+
+      <pfe-badge size="sm">
+        20
+      </pfe-badge>
+
+      <pfe-badge color="slate" size="sm">
+        107
+      </pfe-badge>
+
+      <pfe-badge color="orange" size="sm">
+        4,000
+      </pfe-badge>
+
+      <pfe-badge color="green" size="sm">
+        200
+      </pfe-badge>
+
+      <pfe-badge color="red" size="sm">
+        9
+      </pfe-badge>
+
+      <pfe-badge color="blue" size="sm">
+        Badge
+      </pfe-badge>
+    </section>
+
+    <section id="medium">
+      <h2>Medium</h2>
+
+      <pfe-badge>
+        <span>Badge</span>
+      </pfe-badge>
+
+      <pfe-badge color="slate">
+        Badge
+      </pfe-badge>
+
+      <pfe-badge color="orange">
+        Badge
+      </pfe-badge>
+
+      <pfe-badge color="green">
+        Badge
+      </pfe-badge>
+
+      <pfe-badge color="red">
+        Badge
+      </pfe-badge>
+
+      <pfe-badge color="blue">
+        Badge
+      </pfe-badge>
+    </section>
+
+    <section id="large">
+      <h2>Large</h2>
+
+      <pfe-badge size="lg">
+        Badge
+      </pfe-badge>
+
+      <pfe-badge color="slate" size="lg">
+        Badge
+      </pfe-badge>
+
+      <pfe-badge color="orange" size="lg">
+        Badge
+      </pfe-badge>
+
+      <pfe-badge color="green" size="lg">
+        Badge
+      </pfe-badge>
+
+      <pfe-badge color="red" size="lg">
+        Badge
+      </pfe-badge>
+
+      <pfe-badge color="blue" size="lg">
+        Badge
+      </pfe-badge>
+    </section>
+
+
+  </body>
+</html>

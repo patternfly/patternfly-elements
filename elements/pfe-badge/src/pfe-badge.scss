@@ -1,0 +1,172 @@
+@import "../../pfe-sass/pfe-sass";
+
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+$pfe-badge__padding--sm:                                         .3rem .7rem;
+$pfe-badge__padding:                                            .35rem .8rem;
+$pfe-badge__padding--lg:                                        .4rem .85rem;
+
+/// ===========================================================================
+/// DEFUALT BADGE
+/// ===========================================================================
+
+:host {
+  --pfe-badge--base--bg:           #{pfe-color(feedback--default--lightest)};
+  --pfe-badge--base--color:                               #{pfe-color(text)};
+  --pfe-badge--base--font-size:                        #{pfe-var(font-size)};
+  // --pfe-badge--base--padding:                            $pfe-badge__padding;
+  
+  display: inline-block;
+  padding: $pfe-badge__padding;
+  border: 1px solid transparent;
+  border-radius: 20px !important;
+  background-color: var(--pfe-badge--base--bg) !important;
+  color: var(--pfe-badge--base--color) !important;
+  font-size: calc(var(--pfe-badge--base--font-size) * 0.8);
+  font-weight: #{pfe-var(font-weight--bold)};
+  // text-transform: uppercase;
+  line-height: 1.1;
+  
+  ::slotted(*) {
+    display: inline-block;
+    border-radius: 20px !important;
+    background-color: var(--pfe-badge--base--bg) !important;
+    color: var(--pfe-badge--base--color) !important;
+    vertical-align: middle;
+  }
+}
+
+/// ===========================================================================
+/// SIZE OVERRIDE
+/// ===========================================================================
+
+:host([size="sm"]) {
+  padding:  $pfe-badge__padding--sm;
+  font-size: calc(var(--pfe-badge--base--font-size) * 0.7);
+  font-weight: #{pfe-var(font-weight--bold)};
+}
+
+:host([size="md"]){
+  padding:  $pfe-badge__padding;
+  font-size: calc(var(--pfe-badge--base--font-size) * 0.8);
+}
+
+:host([size="lg"]) {
+  padding:  $pfe-badge__padding--lg;
+  font-size: calc(var(--pfe-badge--base--font-size) * .9);
+  line-height: 1.2;
+}
+
+/// ===========================================================================
+/// COLOR OVERRIDE
+/// ===========================================================================
+
+:host([color="white"]) {
+  --pfe-badge--base--bg:                     #{pfe-color(feedback--default)};
+  --pfe-badge--base--color:                               #{pfe-color(text)};
+  
+  background-color: var(--pfe-badge--base--bg) !important;
+  color: var(--pfe-badge--base--color) !important;
+  
+  ::slotted(*) {
+    background-color: var(--pfe-badge--base--bg) !important;
+    color: var(--pfe-badge--base--color) !important;
+  }
+}
+
+:host([color="grey"]),
+:host([color="gray"]),
+:host([priority="default"]) {
+  --pfe-badge--base--bg:                     #{pfe-color(feedback--default)};
+  --pfe-badge--base--color:                               #{pfe-color(text)};
+  
+  background-color: var(--pfe-badge--base--bg) !important;
+  color: var(--pfe-badge--base--color) !important;
+  
+  ::slotted(*) {
+    background-color: var(--pfe-badge--base--bg) !important;
+    color: var(--pfe-badge--base--color) !important;
+  }
+}
+
+:host([color="slate"]),
+:host([priority="normal"]) {
+  --pfe-badge--base--bg:            #{pfe-color(feedback--default--darkest)};
+  --pfe-badge--base--color:                      #{pfe-color(text--on-dark)};
+  
+  background-color: var(--pfe-badge--base--bg) !important;
+  color: var(--pfe-badge--base--color) !important;
+  font-weight: #{pfe-var(font-weight--semi-bold)};
+  
+  ::slotted(*) {
+    background-color: var(--pfe-badge--base--bg) !important;
+    color: var(--pfe-badge--base--color) !important;
+  }
+}
+
+:host([color="blue"]),
+:host([priority="info"]) {
+  --pfe-badge--base--bg:                       #{pfe-color(feedback--info)};
+  --pfe-badge--base--color:                     #{pfe-color(text--on-dark)};
+  
+  background-color: var(--pfe-badge--base--bg) !important;
+  color: var(--pfe-badge--base--color) !important;
+  font-weight: #{pfe-var(font-weight--semi-bold)};
+  
+  ::slotted(*) {
+    background-color: var(--pfe-badge--base--bg) !important;
+    color: var(--pfe-badge--base--color) !important;
+  }
+}
+
+:host([color="green"]),
+:host([priority="success"]) {
+  --pfe-badge--base--bg:                    #{pfe-color(feedback--success)};
+  --pfe-badge--base--color:                     #{pfe-color(text--on-dark)};
+  
+  background-color: var(--pfe-badge--base--bg) !important;
+  color: var(--pfe-badge--base--color) !important;
+  font-weight: #{pfe-var(font-weight--semi-bold)};
+  
+  ::slotted(*) {
+    background-color: var(--pfe-badge--base--bg) !important;
+    color: var(--pfe-badge--base--color) !important;
+  }
+}
+
+:host([color="orange"]),
+:host([priority="warning"]) {
+  --pfe-badge--base--bg:                  #{pfe-color(feedback--important)};
+  --pfe-badge--base--color:                     #{pfe-color(text--on-dark)};
+  
+  background-color: var(--pfe-badge--base--bg) !important;
+  color: var(--pfe-badge--base--color) !important;
+  font-weight: #{pfe-var(font-weight--semi-bold)};
+  
+  ::slotted(*) {
+    background-color: var(--pfe-badge--base--bg) !important;
+    color: var(--pfe-badge--base--color) !important;
+  }
+}
+
+:host([color="red"]),
+:host([priority="critical"]) {
+  --pfe-badge--base--bg:                   #{pfe-color(feedback--critical)};
+  --pfe-badge--base--color:                     #{pfe-color(text--on-dark)};
+  
+  background-color: var(--pfe-badge--base--bg) !important;
+  color: var(--pfe-badge--base--color) !important;
+  font-weight: #{pfe-var(font-weight--semi-bold)};
+  
+  ::slotted(*) {
+    background-color: var(--pfe-badge--base--bg) !important;
+    color: var(--pfe-badge--base--color) !important;
+  }
+}
+
+
+:host([hidden]) {
+  display: none;
+}

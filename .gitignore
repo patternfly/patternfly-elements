@@ -7,7 +7,6 @@ elements/*/*.js
 elements/*/*.map
 elements/*/*.css
 # but don't ignore tooling files
-!elements/*/*.story.js
 !elements/*/gulpfile.js
 !elements/*/rollup.config.js
 
@@ -15,7 +14,6 @@ elements/*/*.css
 themes/*/*.js
 themes/*/*.map
 themes/*/*.css
-!themes/*/*.story.js
 !themes/*/gulpfile.js
 !themes/*/rollup.config.js
 

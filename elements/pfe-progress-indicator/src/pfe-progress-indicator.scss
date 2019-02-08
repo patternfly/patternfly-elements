@@ -1,0 +1,67 @@
+@import "../../pfe-sass/pfe-sass";
+:host {
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:host([pfe-indeterminate]) {
+    animation:spin 1s linear infinite;
+    -webkit-animation:spin 1s linear infinite;
+    -moz-animation:spin 1s linear infinite;
+
+    border-bottom: 4px solid rgba(0,0,0,0.25);
+    border-left: 4px solid rgba(0,0,0,0.25);
+    border-radius: 100%;
+    border-right: 4px solid rgba(0,0,0,0.25);
+    border-top: 4px solid rgba(0,0,0,0.75);
+
+    display: inline-block;
+    height: 2rem;
+    margin: 0 auto;
+    position: relative;
+    width: 2rem;
+    vertical-align: middle;
+    visibility: visible;
+}
+
+@-ms-keyframes spin {
+    from {
+        -ms-transform: rotate(0deg);
+    } to {
+        -ms-transform: rotate(360deg);
+    }
+}
+@-moz-keyframes spin {
+    from {
+        -moz-transform: rotate(0deg);
+    } to {
+        -moz-transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+    } to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+  }

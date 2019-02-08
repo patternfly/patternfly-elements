@@ -48,7 +48,9 @@ module.exports = function factory({
             let slots = "";
 
             let pathDefined = url.template !== null;
-            let fileExists = fs.existsSync(path.join("./src", url.template));
+            let fileExists = pathDefined
+              ? fs.existsSync(path.join("./src", url.template))
+              : false;
             if (pathDefined && fileExists) {
               html = fs
                 .readFileSync(path.join("./src", url.template))
@@ -58,7 +60,9 @@ module.exports = function factory({
             }
 
             pathDefined = url.style !== null;
-            fileExists = fs.existsSync(path.join("./src", url.style));
+            fileExists = pathDefined
+              ? fs.existsSync(path.join("./src", url.style))
+              : false;
             if (pathDefined && fileExists) {
               let rawCSS = sass.renderSync({
                 file: path.join("./src", url.style)
@@ -70,7 +74,9 @@ module.exports = function factory({
             }
 
             pathDefined = url.schema !== null;
-            fileExists = fs.existsSync(path.join("./src", url.schema));
+            fileExists = pathDefined
+              ? fs.existsSync(path.join("./src", url.schema))
+              : false;
             if (pathDefined && fileExists) {
               properties = "{}";
               slots = "{}";

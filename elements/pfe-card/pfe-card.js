@@ -322,17 +322,9 @@ class PfeCard extends PFElement {
 .pfe-card__footer {
   margin-top: auto;
   justify-self: flex-end; }</style>
-  ${
-    this.has_slot("pfe-card--header")
-      ? `<slot class="pfe-card__header" name="pfe-card--header"></slot>`
-      : ""
-  }
+  <slot class="pfe-card__header" name="pfe-card--header"></slot>
 <slot class="pfe-card__body"></slot>
-${
-      this.has_slot("pfe-card--footer")
-        ? `<slot class="pfe-card__footer" name="pfe-card--footer"></slot>`
-        : ""
-    }`;
+<slot class="pfe-card__footer" name="pfe-card--footer"></slot>`;
   }
 
   static get properties() {

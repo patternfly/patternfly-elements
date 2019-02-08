@@ -139,7 +139,7 @@ class PfeCta extends PFElement {
   --pfe-cta--main--hover: var(--pfe-theme--color--ui-accent--hover, #a42701) !important;
   --pfe-cta--aux:         var(--pfe-theme--color--ui-accent--text, #fff) !important;
   --pfe-cta--aux--hover:  var(--pfe-theme--color--ui-accent--text--hover, #fff) !important; }</style>
-<slot></slot>`;
+  <slot></slot>`;
   }
 
   static get tag() {

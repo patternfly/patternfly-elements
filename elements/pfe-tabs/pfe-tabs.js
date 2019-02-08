@@ -1,302 +1,719 @@
-import e from "../pfelement/pfelement.js";
-Array.prototype.find ||
+import PFElement from "../pfelement/pfelement.js";
+
+/*
+ * Copyright 2019 Red Hat, Inc.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+*/
+
+// https://tc39.github.io/ecma262/#sec-array.prototype.find
+if (!Array.prototype.find) {
   Object.defineProperty(Array.prototype, "find", {
-    value: function(e) {
-      if (null == this) throw new TypeError('"this" is null or not defined');
-      var t = Object(this),
-        r = t.length >>> 0;
-      if ("function" != typeof e)
-        throw new TypeError("predicate must be a function");
-      for (var a = arguments[1], n = 0; n < r; ) {
-        var i = t[n];
-        if (e.call(a, i, n, t)) return i;
-        n++;
+    value: function(predicate) {
+      // 1. Let O be ? ToObject(this value).
+      if (this == null) {
+        throw new TypeError('"this" is null or not defined');
       }
-    },
-    configurable: !0,
-    writable: !0
-  }),
-  Array.prototype.findIndex ||
-    Object.defineProperty(Array.prototype, "findIndex", {
-      value: function(e) {
-        if (null == this) throw new TypeError('"this" is null or not defined');
-        var t = Object(this),
-          r = t.length >>> 0;
-        if ("function" != typeof e)
-          throw new TypeError("predicate must be a function");
-        for (var a = arguments[1], n = 0; n < r; ) {
-          var i = t[n];
-          if (e.call(a, i, n, t)) return n;
-          n++;
+
+      var o = Object(this);
+
+      // 2. Let len be ? ToLength(? Get(O, "length")).
+      var len = o.length >>> 0;
+
+      // 3. If IsCallable(predicate) is false, throw a TypeError exception.
+      if (typeof predicate !== "function") {
+        throw new TypeError("predicate must be a function");
+      }
+
+      // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
+      var thisArg = arguments[1];
+
+      // 5. Let k be 0.
+      var k = 0;
+
+      // 6. Repeat, while k < len
+      while (k < len) {
+        // a. Let Pk be ! ToString(k).
+        // b. Let kValue be ? Get(O, Pk).
+        // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
+        // d. If testResult is true, return kValue.
+        var kValue = o[k];
+        if (predicate.call(thisArg, kValue, k, o)) {
+          return kValue;
         }
-        return -1;
-      },
-      configurable: !0,
-      writable: !0
-    });
-const t = { DOWN: 40, LEFT: 37, RIGHT: 39, UP: 38, HOME: 36, END: 35 };
-function r() {
+        // e. Increase k by 1.
+        k++;
+      }
+
+      // 7. Return undefined.
+      return undefined;
+    },
+    configurable: true,
+    writable: true
+  });
+}
+
+// https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
+if (!Array.prototype.findIndex) {
+  Object.defineProperty(Array.prototype, "findIndex", {
+    value: function(predicate) {
+      // 1. Let O be ? ToObject(this value).
+      if (this == null) {
+        throw new TypeError('"this" is null or not defined');
+      }
+
+      var o = Object(this);
+
+      // 2. Let len be ? ToLength(? Get(O, "length")).
+      var len = o.length >>> 0;
+
+      // 3. If IsCallable(predicate) is false, throw a TypeError exception.
+      if (typeof predicate !== "function") {
+        throw new TypeError("predicate must be a function");
+      }
+
+      // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
+      var thisArg = arguments[1];
+
+      // 5. Let k be 0.
+      var k = 0;
+
+      // 6. Repeat, while k < len
+      while (k < len) {
+        // a. Let Pk be ! ToString(k).
+        // b. Let kValue be ? Get(O, Pk).
+        // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
+        // d. If testResult is true, return k.
+        var kValue = o[k];
+        if (predicate.call(thisArg, kValue, k, o)) {
+          return k;
+        }
+        // e. Increase k by 1.
+        k++;
+      }
+
+      // 7. Return -1.
+      return -1;
+    },
+    configurable: true,
+    writable: true
+  });
+}
+
+const KEYCODE = {
+  DOWN: 40,
+  LEFT: 37,
+  RIGHT: 39,
+  UP: 38,
+  HOME: 36,
+  END: 35
+};
+
+function generateId() {
   return Math.random()
     .toString(36)
     .substr(2, 9);
 }
-class a extends e {
+
+class PfeTabs extends PFElement {
   get html() {
-    return '<style>:host {\n  display: block; }\n\n.tabs {\n  --pfe-tabs--border-color:          var(--pfe-theme--color--surface--border, #dfdfdf);\n  display: flex;\n  border: 0;\n  border-bottom: var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-tabs--border-color); }\n\n.panels {\n  padding: 0;\n  padding-top: var(--pfe-theme--container-padding, 1rem); }\n\n:host([vertical]) {\n  display: flex; }\n\n:host([vertical]) .tabs {\n  flex-direction: column;\n  width: 25%;\n  border: 0;\n  border-right: var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-tabs--border-color); }\n\n:host([vertical]) .tabs ::slotted(pfe-tab) {\n  margin: 0 -1px 0 0;\n  border: var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) transparent;\n  border-right: 0;\n  position: relative; }\n\n:host([vertical]) .tabs ::slotted(pfe-tab[aria-selected="true"]) {\n  border-color: var(--pfe-tabs--border-color);\n  border-right: 0; }\n\n:host([vertical]) .panels {\n  padding: 0;\n  padding-right: var(--pfe-theme--container-padding, 1rem);\n  padding-left: calc(var(--pfe-theme--container-padding, 1rem) * 2); }\n\n:host([pfe-variant="primary"]) .tabs {\n  border-bottom: transparent;\n  border-right: transparent; }\n\n:host([vertical][pfe-variant="primary"]) {\n  align-items: flex-start; }\n\n:host([pfe-variant="secondary"]) .tabs {\n  border-bottom: transparent; }\n\n:host([vertical][pfe-variant="secondary"]) .tabs {\n  justify-content: flex-start; }</style>\n<div class="tabs">\n  <slot name="tab"></slot>\n</div>\n<div class="panels">\n  <slot name="panel"></slot>\n</div>';
+    return `<style>:host {
+  display: block; }
+
+.tabs {
+  --pfe-tabs--border-color:          var(--pfe-theme--color--surface--border, #dfdfdf);
+  display: flex;
+  border: 0;
+  border-bottom: var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-tabs--border-color); }
+
+.panels {
+  padding: 0;
+  padding-top: var(--pfe-theme--container-padding, 1rem); }
+
+:host([vertical]) {
+  display: flex; }
+
+:host([vertical]) .tabs {
+  flex-direction: column;
+  width: 25%;
+  border: 0;
+  border-right: var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-tabs--border-color); }
+
+:host([vertical]) .tabs ::slotted(pfe-tab) {
+  margin: 0 -1px 0 0;
+  border: var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) transparent;
+  border-right: 0;
+  position: relative; }
+
+:host([vertical]) .tabs ::slotted(pfe-tab[aria-selected="true"]) {
+  border-color: var(--pfe-tabs--border-color);
+  border-right: 0; }
+
+:host([vertical]) .panels {
+  padding: 0;
+  padding-right: var(--pfe-theme--container-padding, 1rem);
+  padding-left: calc(var(--pfe-theme--container-padding, 1rem) * 2); }
+
+:host([pfe-variant="primary"]) .tabs {
+  border-bottom: transparent;
+  border-right: transparent; }
+
+:host([vertical][pfe-variant="primary"]) {
+  align-items: flex-start; }
+
+:host([pfe-variant="secondary"]) .tabs {
+  border-bottom: transparent; }
+
+:host([vertical][pfe-variant="secondary"]) .tabs {
+  justify-content: flex-start; }</style>
+  <div class="tabs">
+  <slot name="tab"></slot>
+</div>
+<div class="panels">
+  <slot name="panel"></slot>
+</div>`;
   }
+
   static get tag() {
     return "pfe-tabs";
   }
+
   get styleUrl() {
     return "pfe-tabs.scss";
   }
+
   get templateUrl() {
     return "pfe-tabs.html";
   }
+
   static get observedAttributes() {
     return ["vertical", "selected-index", "pfe-variant"];
   }
+
   get selectedIndex() {
     return this.getAttribute("selected-index");
   }
-  set selectedIndex(e) {
-    this.setAttribute("selected-index", e);
+
+  set selectedIndex(value) {
+    this.setAttribute("selected-index", value);
   }
+
   constructor() {
-    super(a),
-      (this._linked = !1),
-      (this._onSlotChange = this._onSlotChange.bind(this)),
-      (this._tabSlot = this.shadowRoot.querySelector('slot[name="tab"]')),
-      (this._panelSlot = this.shadowRoot.querySelector('slot[name="panel"]')),
-      this._tabSlot.addEventListener("slotchange", this._onSlotChange),
-      this._panelSlot.addEventListener("slotchange", this._onSlotChange);
+    super(PfeTabs);
+
+    this._linked = false;
+
+    this._onSlotChange = this._onSlotChange.bind(this);
+
+    this._tabSlot = this.shadowRoot.querySelector('slot[name="tab"]');
+    this._panelSlot = this.shadowRoot.querySelector('slot[name="panel"]');
+
+    this._tabSlot.addEventListener("slotchange", this._onSlotChange);
+    this._panelSlot.addEventListener("slotchange", this._onSlotChange);
   }
+
   connectedCallback() {
-    super.connectedCallback(),
-      this.addEventListener("keydown", this._onKeyDown),
-      this.addEventListener("click", this._onClick),
-      this.hasAttribute("role") || this.setAttribute("role", "tablist"),
-      this.hasAttribute("selected-index") || (this.selectedIndex = 0),
-      Promise.all([
-        customElements.whenDefined(n.tag),
-        customElements.whenDefined(i.tag)
-      ]).then(() => this._linkPanels());
+    super.connectedCallback();
+
+    this.addEventListener("keydown", this._onKeyDown);
+    this.addEventListener("click", this._onClick);
+
+    if (!this.hasAttribute("role")) {
+      this.setAttribute("role", "tablist");
+    }
+
+    if (!this.hasAttribute("selected-index")) {
+      this.selectedIndex = 0;
+    }
+
+    Promise.all([
+      customElements.whenDefined(RhTab.tag),
+      customElements.whenDefined(RhTabPanel.tag)
+    ]).then(() => this._linkPanels());
   }
+
   disconnectedCallback() {
-    this.removeEventListener("keydown", this._onKeyDown),
-      this.removeEventListener("click", this._onClick);
+    this.removeEventListener("keydown", this._onKeyDown);
+    this.removeEventListener("click", this._onClick);
   }
-  attributeChangedCallback(e, t, r) {
-    switch (e) {
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    switch (attr) {
       case "pfe-variant":
-        "primary" === this.getAttribute("pfe-variant")
-          ? this._allTabs().forEach(e =>
-              e.setAttribute("pfe-variant", "primary")
-            )
-          : "secondary" === this.getAttribute("pfe-variant") &&
-            this._allTabs().forEach(e =>
-              e.setAttribute("pfe-variant", "secondary")
-            );
+        if (this.getAttribute("pfe-variant") === "primary") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("pfe-variant", "primary")
+          );
+        } else if (this.getAttribute("pfe-variant") === "secondary") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("pfe-variant", "secondary")
+          );
+        }
         break;
+
       case "vertical":
-        this.hasAttribute("vertical")
-          ? (this.setAttribute("aria-orientation", "vertical"),
-            this._allPanels().forEach(e => e.setAttribute("vertical", "")),
-            this._allTabs().forEach(e => e.setAttribute("vertical", "")))
-          : (this.removeAttribute("aria-orientation"),
-            this._allPanels().forEach(e => e.removeAttribute("vertical")),
-            this._allTabs().forEach(e => e.removeAttribute("vertical")));
+        if (this.hasAttribute("vertical")) {
+          this.setAttribute("aria-orientation", "vertical");
+          this._allPanels().forEach(panel =>
+            panel.setAttribute("vertical", "")
+          );
+          this._allTabs().forEach(tab => tab.setAttribute("vertical", ""));
+        } else {
+          this.removeAttribute("aria-orientation");
+          this._allPanels().forEach(panel => panel.removeAttribute("vertical"));
+          this._allTabs().forEach(tab => tab.removeAttribute("vertical"));
+        }
         break;
+
       case "selected-index":
         Promise.all([
-          customElements.whenDefined(n.tag),
-          customElements.whenDefined(i.tag)
+          customElements.whenDefined(RhTab.tag),
+          customElements.whenDefined(RhTabPanel.tag)
         ]).then(() => {
-          this._linkPanels(), this.selectIndex(r);
+          this._linkPanels();
+          this.selectIndex(newValue);
         });
     }
   }
-  select(e) {
-    e &&
-      ("pfe-tab" === e.tagName.toLowerCase()
-        ? (this.selectedIndex = this._getTabIndex(e))
-        : console.warn(`${a.tag}: the tab must be a pfe-tab element`));
+
+  select(newTab) {
+    if (!newTab) {
+      return;
+    }
+
+    if (newTab.tagName.toLowerCase() !== "pfe-tab") {
+      console.warn(`${PfeTabs.tag}: the tab must be a pfe-tab element`);
+      return;
+    }
+
+    this.selectedIndex = this._getTabIndex(newTab);
   }
-  selectIndex(e) {
-    if (void 0 === e) return;
-    const t = parseInt(e, 10),
-      r = this._allTabs()[t];
-    r ? this._selectTab(r) : console.warn(`${a.tag}: tab ${e} does not exist`);
+
+  selectIndex(_index) {
+    if (_index === undefined) {
+      return;
+    }
+
+    const index = parseInt(_index, 10);
+    const tabs = this._allTabs();
+    const tab = tabs[index];
+
+    if (!tab) {
+      console.warn(`${PfeTabs.tag}: tab ${_index} does not exist`);
+      return;
+    }
+
+    this._selectTab(tab);
   }
+
   _onSlotChange() {
-    (this._linked = !1), this._linkPanels();
+    this._linked = false;
+    this._linkPanels();
   }
+
   _linkPanels() {
-    if (this._linked) return;
-    this._allTabs().forEach(e => {
-      const t = e.nextElementSibling;
-      "pfe-tab-panel" === t.tagName.toLowerCase()
-        ? (e.setAttribute("aria-controls", t.id),
-          t.setAttribute("aria-labelledby", e.id))
-        : console.warn(
-            `${a.tag}: tab #${e.id} is not a sibling of a <pfe-tab-panel>`
-          );
-    }),
-      (this._linked = !0);
+    if (this._linked) {
+      return;
+    }
+
+    const tabs = this._allTabs();
+
+    tabs.forEach(tab => {
+      const panel = tab.nextElementSibling;
+      if (panel.tagName.toLowerCase() !== "pfe-tab-panel") {
+        console.warn(
+          `${PfeTabs.tag}: tab #${tab.id} is not a sibling of a <pfe-tab-panel>`
+        );
+        return;
+      }
+
+      tab.setAttribute("aria-controls", panel.id);
+      panel.setAttribute("aria-labelledby", tab.id);
+    });
+
+    this._linked = true;
   }
+
   _allPanels() {
     return [...this.querySelectorAll("pfe-tab-panel")];
   }
+
   _allTabs() {
     return [...this.querySelectorAll("pfe-tab")];
   }
-  _panelForTab(e) {
-    const t = e.getAttribute("aria-controls");
-    return this.querySelector(`#${t}`);
+
+  _panelForTab(tab) {
+    const panelId = tab.getAttribute("aria-controls");
+    return this.querySelector(`#${panelId}`);
   }
+
   _prevTab() {
-    const e = this._allTabs();
-    let t = e.findIndex(e => e.selected) - 1;
-    return e[(t + e.length) % e.length];
+    const tabs = this._allTabs();
+    let newIdx = tabs.findIndex(tab => tab.selected) - 1;
+    return tabs[(newIdx + tabs.length) % tabs.length];
   }
+
   _firstTab() {
-    return this._allTabs()[0];
+    const tabs = this._allTabs();
+    return tabs[0];
   }
+
   _lastTab() {
-    const e = this._allTabs();
-    return e[e.length - 1];
+    const tabs = this._allTabs();
+    return tabs[tabs.length - 1];
   }
+
   _nextTab() {
-    const e = this._allTabs();
-    let t = e.findIndex(e => e.selected) + 1;
-    return e[t % e.length];
+    const tabs = this._allTabs();
+    let newIdx = tabs.findIndex(tab => tab.selected) + 1;
+    return tabs[newIdx % tabs.length];
   }
-  _getTabIndex(e) {
-    return this._allTabs().findIndex(t => t.id === e.id);
+
+  _getTabIndex(_tab) {
+    const tabs = this._allTabs();
+    const index = tabs.findIndex(tab => tab.id === _tab.id);
+    return index;
   }
+
   reset() {
-    const e = this._allTabs(),
-      t = this._allPanels();
-    e.forEach(e => (e.selected = !1)), t.forEach(e => (e.hidden = !0));
+    const tabs = this._allTabs();
+    const panels = this._allPanels();
+
+    tabs.forEach(tab => (tab.selected = false));
+    panels.forEach(panel => (panel.hidden = true));
   }
-  _selectTab(e) {
+
+  _selectTab(newTab) {
     this.reset();
-    const t = this._panelForTab(e);
-    let r = !1;
-    if (!t) throw new Error(`No panel with id ${t.id}`);
-    this.selected &&
-      this.selected !== e &&
-      ((r = !0),
+
+    const newPanel = this._panelForTab(newTab);
+    let newTabSelected = false;
+
+    if (!newPanel) {
+      throw new Error(`No panel with id ${newPanel.id}`);
+    }
+
+    if (this.selected && this.selected !== newTab) {
+      newTabSelected = true;
+
       this.dispatchEvent(
-        new CustomEvent(`${a.tag}:hidden-tab`, {
-          bubbles: !0,
-          detail: { tab: this.selected }
+        new CustomEvent(`${PfeTabs.tag}:hidden-tab`, {
+          bubbles: true,
+          detail: {
+            tab: this.selected
+          }
         })
-      )),
-      (e.selected = !0),
-      (t.hidden = !1),
-      this._setFocus && (e.focus(), (this._setFocus = !1));
-    this._allTabs().findIndex(e => e.selected);
-    (this.selected = e),
-      r &&
-        this.dispatchEvent(
-          new CustomEvent(`${a.tag}:shown-tab`, {
-            bubbles: !0,
-            detail: { tab: this.selected }
-          })
-        );
+      );
+    }
+
+    newTab.selected = true;
+    newPanel.hidden = false;
+
+    if (this._setFocus) {
+      newTab.focus();
+      this._setFocus = false;
+    }
+
+    const tabs = this._allTabs();
+    const newIdx = tabs.findIndex(tab => tab.selected);
+
+    this.selected = newTab;
+
+    if (newTabSelected) {
+      this.dispatchEvent(
+        new CustomEvent(`${PfeTabs.tag}:shown-tab`, {
+          bubbles: true,
+          detail: {
+            tab: this.selected
+          }
+        })
+      );
+    }
   }
-  _onKeyDown(e) {
-    if ("tab" !== e.target.getAttribute("role")) return;
-    if (e.altKey) return;
-    let r;
-    switch (e.keyCode) {
-      case t.LEFT:
-      case t.UP:
-        r = this._prevTab();
+
+  _onKeyDown(event) {
+    if (event.target.getAttribute("role") !== "tab") {
+      return;
+    }
+
+    if (event.altKey) {
+      return;
+    }
+
+    let newTab;
+
+    switch (event.keyCode) {
+      case KEYCODE.LEFT:
+      case KEYCODE.UP:
+        newTab = this._prevTab();
         break;
-      case t.RIGHT:
-      case t.DOWN:
-        r = this._nextTab();
+
+      case KEYCODE.RIGHT:
+      case KEYCODE.DOWN:
+        newTab = this._nextTab();
         break;
-      case t.HOME:
-        r = this._firstTab();
+
+      case KEYCODE.HOME:
+        newTab = this._firstTab();
         break;
-      case t.END:
-        r = this._lastTab();
+
+      case KEYCODE.END:
+        newTab = this._lastTab();
         break;
+
       default:
         return;
     }
-    e.preventDefault(),
-      (this.selectedIndex = this._getTabIndex(r)),
-      (this._setFocus = !0);
+
+    event.preventDefault();
+
+    this.selectedIndex = this._getTabIndex(newTab);
+    this._setFocus = true;
   }
-  _onClick(e) {
-    "tab" === e.target.getAttribute("role") &&
-      (this.selectedIndex = this._getTabIndex(e.target));
+
+  _onClick(event) {
+    if (event.target.getAttribute("role") !== "tab") {
+      return;
+    }
+
+    this.selectedIndex = this._getTabIndex(event.target);
   }
 }
-class n extends e {
+
+class RhTab extends PFElement {
   get html() {
-    return '<style>:host {\n  --pfe-tabs--main:         transparent;\n  --pfe-tabs--aux:          var(--pfe-theme--color--surface--lightest--text, #333);\n  --pfe-tabs--link:         var(--pfe-theme--color--surface--lightest--link, #06c);\n  --pfe-tabs--focus:        var(--pfe-theme--color--surface--lightest--link--focus, #003366);\n  position: relative;\n  display: block;\n  margin: 0 0 -1px;\n  padding-top: var(--pfe-theme--container-padding, 1rem);\n  padding-right: calc(var(--pfe-theme--container-padding, 1rem) * 3.375);\n  padding-bottom: calc(var(--pfe-theme--container-padding, 1rem) * 1.5);\n  padding-left: var(--pfe-theme--container-padding, 1rem);\n  border: var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) transparent;\n  border-bottom: 0;\n  background-color: var(--pfe-tabs--main);\n  color: var(--pfe-tabs--aux);\n  text-transform: var(--pfe-tabs__tab--TextTransform, none);\n  font-weight: var(--pfe-theme--font-weight--normal, 500);\n  white-space: nowrap;\n  cursor: pointer; }\n\n:host([aria-selected="true"]) {\n  --pfe-tabs--main:         var(--pfe-theme--color--surface--lightest, #fff);\n  border-color: var(--pfe-theme--color--surface--border, #dfdfdf);\n  border-bottom: 0; }\n\n.indicator {\n  position: absolute;\n  bottom: 12px;\n  left: auto;\n  display: var(--pfe-tabs__indicator--Display, block);\n  height: var(--pfe-tabs__indicator--Height, 4px);\n  width: var(--pfe-tabs__indicator--Width, 22px);\n  background-color: var(--pfe-theme--color--surface--border--darkest, #464646); }\n\n:host(:hover) .indicator {\n  background-color: var(--pfe-tabs--link); }\n\n:host([aria-selected="true"]) .indicator,\n:host([aria-selected="true"]:hover) .indicator {\n  background-color: var(--pfe-tabs--link); }\n\n:host(:focus),\n:host(:focus-visible) {\n  outline: var(--pfe-theme--ui--focus-outline-width, 1px) var(--pfe-theme--ui--focus-outline-style, solid) var(--pfe-tabs--focus); }\n\n:host([pfe-variant="primary"]) {\n  text-align: center;\n  padding: 0 calc(var(--pfe-theme--container-padding, 1rem) / 3) var(--pfe-theme--container-padding, 1rem);\n  margin-right: 2%; }\n  :host([pfe-variant="primary"]) .indicator {\n    width: 100%;\n    left: 0; }\n\n:host([pfe-variant="primary"][aria-selected="true"]) {\n  border: transparent; }\n\n:host([pfe-variant="primary"][aria-selected="false"]) {\n  border: transparent; }\n  :host([pfe-variant="primary"][aria-selected="false"]) .indicator {\n    display: none; }\n\n:host([pfe-variant="secondary"]) {\n  text-align: center;\n  padding: calc(var(--pfe-theme--container-padding, 1rem) * .666) calc(var(--pfe-theme--container-padding, 1rem) * 2.75);\n  border: 1px solid #252527;\n  margin-right: 2%; }\n  :host([pfe-variant="secondary"]) .indicator {\n    display: none; }\n\n:host([pfe-variant="secondary"][aria-selected="true"]) {\n  background-color: #252527;\n  color: #ffffff; }\n  :host([pfe-variant="secondary"][aria-selected="true"]) .indicator {\n    display: block;\n    bottom: -33%;\n    width: 0;\n    height: 0;\n    left: 50%;\n    transform: translateX(-50%);\n    border-left: var(--pfe-theme--container-spacer, 1rem) solid transparent;\n    border-right: var(--pfe-theme--container-spacer, 1rem) solid transparent;\n    border-top: var(--pfe-theme--container-spacer, 1rem) solid #252527;\n    background-color: transparent; }\n\n:host([pfe-variant="secondary"][aria-selected="false"]) {\n  color: #0477a4; }\n\n:host([pfe-variant="secondary"]:hover) {\n  background-color: #252527;\n  color: #ffffff; }\n\n:host([vertical][pfe-variant="primary"]) {\n  text-align: right;\n  padding-right: var(--pfe-theme--container-padding, 1rem); }\n  :host([vertical][pfe-variant="primary"]) .indicator {\n    left: auto;\n    right: 0;\n    top: 0;\n    display: var(--pfe-tabs__indicator--Display, block);\n    height: var(--pfe-tabs__indicator--Height, 22px);\n    width: var(--pfe-tabs__indicator--Width, 4px); }\n\n:host([vertical][pfe-variant="primary"][aria-selected="true"]) {\n  border: transparent !important; }\n\n:host([vertical][pfe-variant="secondary"][aria-selected="true"]) .indicator {\n  left: 99%;\n  top: 50%;\n  transform: translateY(-50%);\n  border-top: var(--pfe-theme--container-spacer, 1rem) solid transparent;\n  border-left: var(--pfe-theme--container-spacer, 1rem) solid #252527;\n  border-bottom: var(--pfe-theme--container-spacer, 1rem) solid transparent;\n  background-color: transparent; }\n\n::slotted(h2) {\n  font-size: var(--pfe-theme--font-size);\n  font-weight: var(--pfe-theme--font-weight--normal, 500);\n  margin: 0; }</style>\n<slot></slot>\n<div class="indicator"></div>';
+    return `<style>:host {
+  --pfe-tabs--main:         transparent;
+  --pfe-tabs--aux:          var(--pfe-theme--color--surface--lightest--text, #333);
+  --pfe-tabs--link:         var(--pfe-theme--color--surface--lightest--link, #06c);
+  --pfe-tabs--focus:        var(--pfe-theme--color--surface--lightest--link--focus, #003366);
+  position: relative;
+  display: block;
+  margin: 0 0 -1px;
+  padding-top: var(--pfe-theme--container-padding, 1rem);
+  padding-right: calc(var(--pfe-theme--container-padding, 1rem) * 3.375);
+  padding-bottom: calc(var(--pfe-theme--container-padding, 1rem) * 1.5);
+  padding-left: var(--pfe-theme--container-padding, 1rem);
+  border: var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) transparent;
+  border-bottom: 0;
+  background-color: var(--pfe-tabs--main);
+  color: var(--pfe-tabs--aux);
+  text-transform: var(--pfe-tabs__tab--TextTransform, none);
+  font-weight: var(--pfe-theme--font-weight--normal, 500);
+  white-space: nowrap;
+  cursor: pointer; }
+
+:host([aria-selected="true"]) {
+  --pfe-tabs--main:         var(--pfe-theme--color--surface--lightest, #fff);
+  border-color: var(--pfe-theme--color--surface--border, #dfdfdf);
+  border-bottom: 0; }
+
+.indicator {
+  position: absolute;
+  bottom: 12px;
+  left: auto;
+  display: var(--pfe-tabs__indicator--Display, block);
+  height: var(--pfe-tabs__indicator--Height, 4px);
+  width: var(--pfe-tabs__indicator--Width, 22px);
+  background-color: var(--pfe-theme--color--surface--border--darkest, #464646); }
+
+:host(:hover) .indicator {
+  background-color: var(--pfe-tabs--link); }
+
+:host([aria-selected="true"]) .indicator,
+:host([aria-selected="true"]:hover) .indicator {
+  background-color: var(--pfe-tabs--link); }
+
+:host(:focus),
+:host(:focus-visible) {
+  outline: var(--pfe-theme--ui--focus-outline-width, 1px) var(--pfe-theme--ui--focus-outline-style, solid) var(--pfe-tabs--focus); }
+
+:host([pfe-variant="primary"]) {
+  text-align: center;
+  padding: 0 calc(var(--pfe-theme--container-padding, 1rem) / 3) var(--pfe-theme--container-padding, 1rem);
+  margin-right: 2%; }
+  :host([pfe-variant="primary"]) .indicator {
+    width: 100%;
+    left: 0; }
+
+:host([pfe-variant="primary"][aria-selected="true"]) {
+  border: transparent; }
+
+:host([pfe-variant="primary"][aria-selected="false"]) {
+  border: transparent; }
+  :host([pfe-variant="primary"][aria-selected="false"]) .indicator {
+    display: none; }
+
+:host([pfe-variant="secondary"]) {
+  text-align: center;
+  padding: calc(var(--pfe-theme--container-padding, 1rem) * .666) calc(var(--pfe-theme--container-padding, 1rem) * 2.75);
+  border: 1px solid #252527;
+  margin-right: 2%; }
+  :host([pfe-variant="secondary"]) .indicator {
+    display: none; }
+
+:host([pfe-variant="secondary"][aria-selected="true"]) {
+  background-color: #252527;
+  color: #ffffff; }
+  :host([pfe-variant="secondary"][aria-selected="true"]) .indicator {
+    display: block;
+    bottom: -33%;
+    width: 0;
+    height: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: var(--pfe-theme--container-spacer, 1rem) solid transparent;
+    border-right: var(--pfe-theme--container-spacer, 1rem) solid transparent;
+    border-top: var(--pfe-theme--container-spacer, 1rem) solid #252527;
+    background-color: transparent; }
+
+:host([pfe-variant="secondary"][aria-selected="false"]) {
+  color: #0477a4; }
+
+:host([pfe-variant="secondary"]:hover) {
+  background-color: #252527;
+  color: #ffffff; }
+
+:host([vertical][pfe-variant="primary"]) {
+  text-align: right;
+  padding-right: var(--pfe-theme--container-padding, 1rem); }
+  :host([vertical][pfe-variant="primary"]) .indicator {
+    left: auto;
+    right: 0;
+    top: 0;
+    display: var(--pfe-tabs__indicator--Display, block);
+    height: var(--pfe-tabs__indicator--Height, 22px);
+    width: var(--pfe-tabs__indicator--Width, 4px); }
+
+:host([vertical][pfe-variant="primary"][aria-selected="true"]) {
+  border: transparent !important; }
+
+:host([vertical][pfe-variant="secondary"][aria-selected="true"]) .indicator {
+  left: 99%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: var(--pfe-theme--container-spacer, 1rem) solid transparent;
+  border-left: var(--pfe-theme--container-spacer, 1rem) solid #252527;
+  border-bottom: var(--pfe-theme--container-spacer, 1rem) solid transparent;
+  background-color: transparent; }
+
+::slotted(h2) {
+  font-size: var(--pfe-theme--font-size);
+  font-weight: var(--pfe-theme--font-weight--normal, 500);
+  margin: 0; }</style>
+  <slot></slot>
+<div class="indicator"></div>`;
   }
+
   static get tag() {
     return "pfe-tab";
   }
+
   get styleUrl() {
     return "pfe-tab.scss";
   }
+
   get templateUrl() {
     return "pfe-tab.html";
   }
+
   static get observedAttributes() {
     return ["aria-selected"];
   }
+
   constructor() {
-    super(n), this.id || (this.id = `${n.tag}-${r()}`);
+    super(RhTab);
+
+    if (!this.id) {
+      this.id = `${RhTab.tag}-${generateId()}`;
+    }
   }
+
   connectedCallback() {
-    super.connectedCallback(),
-      this.setAttribute("role", "tab"),
-      this.setAttribute("aria-selected", "false"),
-      this.setAttribute("tabindex", -1),
-      this.parentNode.hasAttribute("vertical") &&
-        this.setAttribute("vertical", "");
+    super.connectedCallback();
+
+    this.setAttribute("role", "tab");
+    this.setAttribute("aria-selected", "false");
+    this.setAttribute("tabindex", -1);
+
+    if (this.parentNode.hasAttribute("vertical")) {
+      this.setAttribute("vertical", "");
+    }
   }
+
   attributeChangedCallback() {
-    const e = Boolean(this.selected);
-    this.setAttribute("tabindex", e ? 0 : -1);
+    const value = Boolean(this.selected);
+    this.setAttribute("tabindex", value ? 0 : -1);
   }
-  set selected(e) {
-    (e = Boolean(e)), this.setAttribute("aria-selected", e);
+
+  set selected(value) {
+    value = Boolean(value);
+    this.setAttribute("aria-selected", value);
   }
+
   get selected() {
-    return "true" === this.getAttribute("aria-selected");
+    return this.getAttribute("aria-selected") === "true" ? true : false;
   }
 }
-class i extends e {
+
+class RhTabPanel extends PFElement {
   get html() {
-    return "<style>:host {\n  display: block; }\n\n:host([hidden]) {\n  display: none; }</style>\n<slot></slot>";
+    return `<style>:host {
+  display: block; }
+
+:host([hidden]) {
+  display: none; }</style>
+  <slot></slot>`;
   }
+
   static get tag() {
     return "pfe-tab-panel";
   }
+
   get styleUrl() {
     return "pfe-tab-panel.scss";
   }
+
   get templateUrl() {
     return "pfe-tab-panel.html";
   }
+
   constructor() {
-    super(i), this.id || (this.id = `${i.tag}-${r()}`);
+    super(RhTabPanel);
+
+    if (!this.id) {
+      this.id = `${RhTabPanel.tag}-${generateId()}`;
+    }
   }
+
   connectedCallback() {
-    super.connectedCallback(),
-      this.setAttribute("role", "tabpanel"),
-      this.setAttribute("tabindex", 0);
+    super.connectedCallback();
+
+    this.setAttribute("role", "tabpanel");
+    this.setAttribute("tabindex", 0);
   }
 }
-e.create(n), e.create(i), e.create(a);
-export default a;
+
+PFElement.create(RhTab);
+PFElement.create(RhTabPanel);
+PFElement.create(PfeTabs);
+
+export default PfeTabs;
 //# sourceMappingURL=pfe-tabs.js.map

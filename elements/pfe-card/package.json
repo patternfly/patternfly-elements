@@ -22,6 +22,9 @@
   "author": {
     "name": "Mark Caron"
   },
+  "contributors": [
+    "castastrophe"
+  ],
   "license": "MIT",
   "dependencies": {
     "@patternfly/pfe-sass": "^1.0.0-prerelease.8",

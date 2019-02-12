@@ -102,8 +102,7 @@ class PfeAvatar extends PFElement {
 
   static _registerColors() {
     this.colors = [];
-    const themeColors =
-      PFElement.var("--pfe-avatar--colors") || this.defaultColors;
+    const themeColors = this.var("--pfe-avatar--colors") || this.defaultColors;
 
     themeColors.split(/\s+/).forEach(colorCode => {
       let pattern;
@@ -115,7 +114,7 @@ class PfeAvatar extends PFElement {
             const color = pattern.map(c => parseInt(c + c, 16));
             this._registerColor(color);
           } else {
-            PFElement.log(`[pfe-avatar] invalid color ${colorCode}`);
+            this.log(`[pfe-avatar] invalid color ${colorCode}`);
           }
           break;
         case 7: // ex: "#00ffcc"
@@ -127,7 +126,7 @@ class PfeAvatar extends PFElement {
             const color = pattern.map(c => parseInt(c, 16));
             this._registerColor(color);
           } else {
-            PFElement.log(`[pfe-avatar] invalid color ${colorCode}`);
+            this.log(`[pfe-avatar] invalid color ${colorCode}`);
           }
       }
     });

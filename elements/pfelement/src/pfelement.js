@@ -39,8 +39,8 @@ class PFElement extends HTMLElement {
     return this.querySelector(`[slot='${name}']`);
   }
 
-  has_slot(name) {
-    return this.querySelector(`[slot='${name}']`);
+  has_slots(name) {
+    return this.querySelectorAll(`[slot='${name}']`);
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {

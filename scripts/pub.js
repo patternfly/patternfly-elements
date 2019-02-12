@@ -1,21 +1,43 @@
 const shell = require("shelljs");
 const inquirer = require("inquirer");
+const semver = require("semver");
 const lerna_version = require("@lerna/version/lib/prompt-version");
+const fs = require("fs-extra");
+const path = require("path");
 
 const cmds = {
   git_status: "git status --untracked-files=no --porcelain",
   reset: "git checkout master && git reset --hard origin/master",
-  lerna_version: version => `npm run lerna version -- --no-push ${version}`
+  lerna_version: version =>
+    `npm run lerna version -- --no-git-tag-version --yes --no-push ${version}`,
+  create_branch: version => `git checkout -b release/${version}`,
+  push_branch: version => `git push origin release/${version} -u`,
+
+  build: `npm install && npm run build && git add elements/*/*.{js,map,css} -f`
 };
 
+async function getVersion() {
+  return (await fs.readJson(path.join(__dirname, "../lerna.json"))).version;
+}
+
 async function main() {
-  await assertCleanRepo();
+  // await assertCleanRepo();
   await checkOutMaster();
   await bumpVersion();
   await createBranch();
+  await build();
+  await commit;
+  // git commit -am “$NEW_VERSION”
+  // git tag $NEW_VERSION
+  // Remove the bundle files: for e in elements/*; do git rm -f elements/$(basename $e)/$(basename $e).*; done
+  // git commit -am “remove bundles from $NEW_VERSION”
+  //
+  //
   await pushBranch();
+  await pushTags();
   await resetMaster();
   await offerPR();
+  await npmPublish();
   done();
 }
 
@@ -55,44 +77,17 @@ async function checkOutMaster() {
  * Update version with Lerna.
  */
 async function bumpVersion() {
-  console.log("time to bump the version");
-  // Choose the appropriate version bump type for the release you’re publishing.
-  // use inquirer to provide a more straightforward choice than Lerna offers
-  // if bumping a prerelease version (example: from 1.0.0-prerelease.2 to 1.0.0-prerelease.3), choose Custom Prerelease
-
+  // call Lerna's own version bump chooser.
   const prompt = await lerna_version(() => "prerelease");
 
   const version = await prompt({
-    version: require("../lerna.json").version,
+    version: await getVersion(),
     prereleaseId: "prerelease"
   });
 
-  console.log(version);
-
-  const version_bump = shell.exec(cmds.lerna_version(version), {
+  shell.exec(cmds.lerna_version(version), {
     silent: false
   });
-  // const version_bump = shell.exec(cmds.lerna_version, { silent: false });
-
-  // const answer = await inquirer.prompt([
-  //   {
-  //     name: "type",
-  //     type: "list",
-  //     message: "What type of release is this?",
-  //     choices: [
-  //       { value: patch, name: `Patch (${patch})` },
-  //       { value: minor, name: `Minor (${minor})` },
-  //       { value: major, name: `Major (${major})` },
-  //       { value: prepatch, name: `Prepatch (${prepatch})` },
-  //       { value: preminor, name: `Preminor (${preminor})` },
-  //       { value: premajor, name: `Premajor (${premajor})` },
-  //       { value: "PRERELEASE", name: "Custom Prerelease" },
-  //       { value: "CUSTOM", name: "Custom Version" }
-  //     ]
-  //   }
-  // ]);
-
-  // console.log(answer);
 }
 
 /**
@@ -103,12 +98,28 @@ async function createBranch() {
   // get the version from package.json
   // create a branch named “release/$NEW_VERSION” (example: “release/1.0.0-prerelease.3”)
 }
+
+/**
+ * Run a build.  Includes npm install, build, and force-adding bundles.
+ */
+async function build() {
+  shell.exec(cmds.build, { silent: false });
+}
+
 /**
  * Push the new branch.
  */
 async function pushBranch() {
   console.log("let us push the branch!");
   // git push origin release/1.0.0-prerelease.3 -u
+}
+
+/**
+ * Push the new branch.
+ */
+async function pushTags() {
+  console.log("let us push the new tags!");
+  // git push --tags
 }
 
 /**
@@ -129,6 +140,15 @@ async function offerPR() {
   console.log("wanna make a PR?");
   // create a PR for the branch you just created
   // delete branch after merging PR
+}
+
+/**
+ * Publish to NPM.
+ */
+async function npmPublish() {
+  console.log("publish to npm");
+  // git checkout $NEW_VERSION
+  // npm run lerna publish from-git
 }
 
 /**

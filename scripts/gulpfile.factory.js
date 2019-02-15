@@ -3,22 +3,93 @@ module.exports = function factory({
   className,
   precompile = []
 } = {}) {
+  const { task, src, dest, watch, parallel, series } = require("gulp");
+
+  const paths = {
+    source: "./src",
+    compiled: "./",
+    temp: "./tmp"
+  };
+
+  // Tooling
   const fs = require("fs");
   const path = require("path");
-
-  const gulp = require("gulp");
-  const rename = require("gulp-rename");
   const replace = require("gulp-replace");
-  const stripCssComments = require("strip-css-comments");
+  const merge = require('merge-stream');
+
+  // Rollup
+  const shell = require("gulp-shell");
+
+  // JavaScript
+  const banner = require("gulp-banner");
+  const rename = require("gulp-rename");
+
+  // Styles
+  const sass = require("gulp-sass");
+  sass.compiler = require("node-sass");
+
+  const postcss = require("gulp-postcss");
+  const sourcemaps = require("gulp-sourcemaps");
+  const autoprefixer = require("autoprefixer");
+
+  // Markup
   const trim = require("trim");
   const decomment = require("decomment");
-  const sass = require("node-sass");
-  const shell = require("gulp-shell");
-  const banner = require("gulp-banner");
 
-  gulp.task("merge", () => {
-    return gulp
-      .src([`./src/**/*.js`])
+  // Compile the sass into css, compress, autoprefix
+  task("compile:sass", () => {
+    return src(path.join(paths.source, "**/*.scss"))
+      .pipe(sourcemaps.init())
+      .pipe(
+        sass({
+          outputStyle: "compressed"
+        }).on("error", sass.logError)
+      )
+      .pipe(
+        postcss([
+          autoprefixer({
+            browsers: [
+              "last 2 versions",
+              "Firefox > 40",
+              "iOS > 5"
+            ]
+          })
+        ])
+      )
+      .pipe(sourcemaps.write(paths.compiled))
+      .pipe(dest(paths.temp));
+  });
+
+  // Move the map file to the compiled location
+  task("move:maps", () => {
+    return src(path.join(paths.temp, "*.map"))
+      .pipe(dest(paths.compiled));
+  });
+
+  // Returns a string with the cleaned up HTML
+  const htmlCompiler = (htmlFile) => {
+    return decomment(
+      fs.readFileSync(htmlFile)
+      .toString()
+      .trim());
+  };
+
+  const getURLs = (string, types) => {
+    let urls = {};
+    types.forEach(type => {
+      const re = new RegExp(
+        `get\\s+${type}Url\\([^)]*\\)\\s*{\\s*return\\s+"([^"]+)"`,
+        "g"
+      );
+      const parse = re.exec(string);
+      urls[type] =
+        typeof parse === "object" && parse !== null ? parse[1] : null;
+    });
+    return urls;
+  };
+
+  task("merge", () => {
+    return src(path.join(paths.source, "**/*.js"))
       .pipe(
         replace(
           /extends\s+PFElement\s+{/g,
@@ -31,54 +102,42 @@ module.exports = function factory({
               .split("\n")
               .join(" ");
 
-            let url = {};
-            ["template", "style", "schema"].forEach(type => {
-              const re = new RegExp(
-                `get\\s+${type}Url\\([^)]*\\)\\s*{\\s*return\\s+"([^"]+)"`,
-                "g"
-              );
-              const parse = re.exec(oneLineFile);
-              url[type] =
-                typeof parse === "object" && parse !== null ? parse[1] : null;
-            });
-
+            let url = getURLs(oneLineFile, ["template", "style", "schema"]);
             let html = "";
             let cssResult = "";
             let properties = "";
             let slots = "";
 
-            if (
-              url.template !== null &&
-              fs.existsSync(path.join("./src", url.template))
-            ) {
-              html = fs
-                .readFileSync(path.join("./src", url.template))
-                .toString()
-                .trim();
-              html = decomment(html);
+            // Check for the html template
+            let is_defined = url.template !== null;
+            let file_exists = fs.existsSync(path.join(paths.source, url.template));
+            if (is_defined && file_exists) {
+              html = htmlCompiler(path.join(paths.source, url.template));
             }
 
-            if (
-              url.style !== null &&
-              fs.existsSync(path.join("./src", url.style))
-            ) {
-              let rawCSS = sass.renderSync({
-                file: path.join("./src", url.style)
-              }).css;
-              rawCSS = stripCssComments(rawCSS).trim();
-              if (rawCSS.toString() !== "") {
-                cssResult = `<style>${rawCSS}</style>`;
+            // Check for the stylesheet template
+            is_defined = url.style !== null;
+            file_exists = fs.existsSync(path.join(paths.source, url.style));
+            if (is_defined && file_exists) {
+              // @TODO GET THE STYLES FROM THE TEMP DIR CSS FILE
+              let temp = path.join(paths.temp, `${path.basename(url.style, ".scss")}.css`);
+              // Read in the content of the compiled file
+              if(fs.existsSync(temp)) {
+                result = fs.readFileSync(temp);
+                // If the string is not empty, add to the results variable
+                if (result.toString() !== "") {
+                  cssResult = `<style>${result}</style>`;
+                }
               }
             }
 
-            if (
-              url.schema !== null &&
-              fs.existsSync(path.join("./src", url.schema))
-            ) {
+            is_defined = url.schema !== null;
+            file_exists = fs.existsSync(path.join(paths.source, url.schema));
+            if (is_defined && file_exists) {
               properties = "{}";
               slots = "{}";
               let schemaObj = JSON.parse(
-                fs.readFileSync(path.join("./src", url.schema))
+                fs.readFileSync(path.join(paths.source, url.schema))
               );
               if (schemaObj && typeof schemaObj === "object") {
                 if (schemaObj.properties.attributes) {
@@ -92,28 +151,18 @@ module.exports = function factory({
               }
             }
 
-            return `${classStatement}
-  get html() {
-    return \`${cssResult}
-${html}\`;
-  }${
-    properties
-      ? `
-
-  static get properties() {
-    return ${properties};
-  }`
-      : ""
-  }${
-              slots
-                ? `
-
-  static get slots() {
-    return ${slots};
-  }`
-                : ""
+            let template = classStatement;
+            if(cssResult || html) {
+              template += ` get html() { return \`${cssResult}${html}\`; }`;
             }
-`;
+            if(properties) {
+              template += ` static get properties() { return ${properties}; }`;
+            }
+            if(slots) {
+              template += ` static get slots() { return ${slots}; }`;
+            }
+
+            return template;
           }
         )
       )
@@ -126,12 +175,11 @@ ${html}\`;
             .join("")}*/\n\n`
         )
       )
-      .pipe(gulp.dest("./"));
+      .pipe(dest(paths.compiled));
   });
 
-  gulp.task("compile", () => {
-    return gulp
-      .src(`./${elementName}.js`)
+  task("compile", () => {
+    return src(`./${elementName}.js`)
       .pipe(
         replace(
           /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
@@ -143,22 +191,18 @@ ${html}\`;
           suffix: ".umd"
         })
       )
-      .pipe(gulp.dest("./"));
+      .pipe(dest(paths.compiled));
   });
 
-  gulp.task("watch", () => {
-    return gulp.watch("./src/*", gulp.series("build"));
+  task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
+
+  task("build", series("compile:sass", "merge", ...precompile, "compile", "move:maps", "bundle"));
+
+  task("watch", () => {
+    return watch(path.join(paths.source, "*"), "build"); 
   });
 
-  gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
+  task("dev", parallel("build", "watch"));
 
-  const buildTasks = ["merge", ...precompile, "compile", "bundle"];
-
-  gulp.task("build", gulp.series(...buildTasks));
-
-  gulp.task("default", gulp.series("build"));
-
-  gulp.task("dev", gulp.series("build", "watch"));
-
-  return gulp;
+  task("default", series("build"));
 };

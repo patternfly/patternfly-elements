@@ -4,7 +4,7 @@
     "className": "PfeAutocomplete",
     "elementName": "pfe-autocomplete"
   },
-  "version": "1.0.0-prerelease.7",
+  "version": "1.0.0-prerelease.8",
   "description": "Autocomplete element for PFElements",
   "repository": {
     "type": "git",
@@ -24,8 +24,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.7",
-    "@patternfly/pfelement": "^1.0.0-prerelease.7"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.8",
+    "@patternfly/pfelement": "^1.0.0-prerelease.8"
   },
   "generator-pfelement-version": "0.5.5"
 }

@@ -8,7 +8,7 @@ $pfe-tabs__tab--PaddingRight-factor:  3.375; // 54px at 16px base.
 $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
 /// ===========================================================================
-/// DEFUALT TAB
+/// DEFAULT TAB
 /// ===========================================================================
 
 :host {
@@ -59,10 +59,12 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   background-color: #{pfe-color(surface--border--darkest)};
 }
 
+// Hover state for inactive tabs.
 :host(:hover) .indicator {
   background-color: var(--pfe-tabs--link);
 }
 
+// Active tab styles
 :host([aria-selected="true"]) .indicator,
 :host([aria-selected="true"]:hover) .indicator {
   background-color: var(--pfe-tabs--link);
@@ -71,4 +73,117 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 :host(:focus),
 :host(:focus-visible) {
   outline: #{pfe-var(ui--focus-outline-width)} #{pfe-var(ui--focus-outline-style)} var(--pfe-tabs--focus);
+}
+
+/// ===========================================================================
+/// HORIZONTAL TAB VARIANTS
+/// ===========================================================================
+
+// Horizontal primary sets.
+
+:host([pfe-variant="primary"]) {
+  text-align: center;
+  padding: 0 calc(#{pfe-var(container-padding)} / 3) #{pfe-var(container-padding)};
+  margin-right: 2%;
+
+  .indicator {
+    width: 100%;
+    left: 0;
+  }
+}
+
+:host([pfe-variant="primary"][aria-selected="true"]) {
+  border: transparent;
+}
+
+:host([pfe-variant="primary"][aria-selected="false"]) {
+  border: transparent;
+
+  .indicator {
+    display: none;
+  }
+}
+
+:host([pfe-variant="secondary"]) {
+  text-align: center;
+  padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 2.75);
+  border: 1px solid $pfe-global--color--black-soft;
+  margin-right: 2%;
+
+  .indicator {
+    display: none;
+  }
+}
+
+// Horizontal secondary sets.
+
+:host([pfe-variant="secondary"][aria-selected="true"]) {
+  background-color: $pfe-global--color--black-soft;
+  color: #ffffff;
+
+  .indicator {
+    display: block;
+    bottom: -33%;
+    width: 0;
+    height: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: #{pfe-var(container-spacer)} solid transparent;
+    border-right: #{pfe-var(container-spacer)} solid transparent;
+    border-top: #{pfe-var(container-spacer)} solid $pfe-global--color--black-soft;
+    background-color: transparent;
+  }
+}
+
+:host([pfe-variant="secondary"][aria-selected="false"]) {
+  color: $pfe-color--ui-base;
+}
+
+:host([pfe-variant="secondary"]:hover) {
+  background-color: $pfe-global--color--black-soft;
+  color: #ffffff;
+}
+
+/// ===========================================================================
+/// VERTICAL TAB VARIANTS
+/// ===========================================================================
+
+// Vertical primary sets.
+
+:host([vertical][pfe-variant="primary"]) {
+  text-align: right;
+  padding-right: #{pfe-var(container-padding)};
+
+  .indicator {
+    left: auto;
+    right: 0;
+    top: 0;
+    display: var(--pfe-tabs__indicator--Display, block); // Exposing this for themability. Use `none` to not show at all
+    height: var(--pfe-tabs__indicator--Height, 22px); // Exposing this for themability
+    width: var(--pfe-tabs__indicator--Width, 4px); // Exposing this for themability
+  }
+}
+
+:host([vertical][pfe-variant="primary"][aria-selected="true"]) {
+  border: transparent !important;
+}
+
+// Vertical secondary sets.
+
+:host([vertical][pfe-variant="secondary"][aria-selected="true"]) {
+  .indicator {
+    left: 99%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: #{pfe-var(container-spacer)} solid transparent;
+    border-left: #{pfe-var(container-spacer)} solid  $pfe-global--color--black-soft;
+    border-bottom: #{pfe-var(container-spacer)} solid transparent;
+    background-color: transparent;
+  }
+}
+
+::slotted(h2) {
+  font-size: var(--pfe-theme--font-size);
+  font-weight: var(--pfe-theme--font-weight--normal, 500);
+  margin: 0;
 }

@@ -2,6 +2,21 @@
 node_modules
 tmp
 
+# ignore js, map, and css in element dirs
+elements/*/*.js
+elements/*/*.map
+elements/*/*.css
+# but don't ignore tooling files
+!elements/*/gulpfile.js
+!elements/*/rollup.config.js
+
+# and same for themes
+themes/*/*.js
+themes/*/*.map
+themes/*/*.css
+!themes/*/gulpfile.js
+!themes/*/rollup.config.js
+
 # Compiled index
 doc/index.html
 

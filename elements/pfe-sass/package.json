@@ -4,7 +4,7 @@
     "className": "PfeSass",
     "elementName": "pfe-sass"
   },
-  "version": "1.0.0-prerelease.8",
+  "version": "1.0.0-prerelease.9",
   "publishConfig": {
     "access": "public"
   },

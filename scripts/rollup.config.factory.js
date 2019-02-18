@@ -14,7 +14,11 @@ function esmConfig({ elementName, className } = {}) {
       format: "esm",
       sourcemap: true
     },
-    plugins: [resolve(), commonjs(), terser()],
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser()
+    ],
     external: id => id.startsWith("..")
   };
 }

@@ -14,17 +14,17 @@
     <link href="../../pfe-layouts/pfe-layouts.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     
     <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/webcomponents-loader.js"></script> -->
+    <!-- <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
 
     <!-- IE11 test: use bundle + require with umd files -->
     <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/webcomponents-bundle.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 
     <!-- Tests require pulling in the UMD version of the files -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script src="/requirejs/require.js"></script>
     
     <script>
       require([
@@ -201,7 +201,7 @@
       <pfe-cta priority="primary">
         <a href="#">Learn more</a>
       </pfe-cta>
-      <pfe-card color="lightest" slot="pfe-band--aside" style="height: -webkit-fill-available;">
+      <pfe-card color="lightest" slot="pfe-band--aside">
         <h3 slot="header">Aside: left body top</h3>
         <p>Ut wisi enim ad minim veniam.</p>
         <pfe-cta slot="footer" priority="tertiary">

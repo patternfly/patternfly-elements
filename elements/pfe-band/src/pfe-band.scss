@@ -111,6 +111,7 @@ $LOCAL: band;
     display:     flex;
     flex-flow:   column nowrap;
     align-items: flex-start;
+    
     // Grid support styles
     @supports (display: grid) {
       grid-area: #{$grid-area};
@@ -145,7 +146,8 @@ $LOCAL: band;
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
     --pfe-band_region--width: calc(calc(1fr - #{pfe-local(Width__aside--sm)}) - #{pfe-local(gutter--horizontal)});
-    --pfe-band--gridTemplateArea_mobile: "body";
+    --pfe-band--gridTemplateArea_mobile:  "body";
+    --pfe-band--gridTemplateArea_desktop: "body";
     // Styles for the different combination of regions
     &[pfe-has-aside] {
       --pfe-band--gridTemplateArea_mobile: "body" "aside";
@@ -171,6 +173,7 @@ $LOCAL: band;
     }
     &[pfe-has-header] {
       --pfe-band--gridTemplateArea_mobile: "header" "body";
+      --pfe-band--gridTemplateArea_desktop: "header" "body";
       &[pfe-has-aside] {
         --pfe-band--gridTemplateArea_mobile: "header" "body" "aside";
         --pfe-band--gridTemplateArea_desktop: "header header" "body aside";
@@ -190,6 +193,7 @@ $LOCAL: band;
     }
     &[pfe-has-footer] {
       --pfe-band--gridTemplateArea_mobile: "body" "footer";
+      --pfe-band--gridTemplateArea_desktop: "body" "footer";
       &[pfe-has-aside] {
         --pfe-band--gridTemplateArea_mobile: "body" "aside" "footer";
         --pfe-band--gridTemplateArea_desktop: "body aside" "footer footer";
@@ -209,6 +213,7 @@ $LOCAL: band;
     }
     &[pfe-has-header][pfe-has-footer] {
       --pfe-band--gridTemplateArea_mobile: "header" "body" "footer";
+      --pfe-band--gridTemplateArea_desktop: "header" "body" "footer";
       &[pfe-has-aside] {
         --pfe-band--gridTemplateArea_mobile: "header" "body" "footer" "aside";
         --pfe-band--gridTemplateArea_desktop: "header header" "body aside" "footer footer";

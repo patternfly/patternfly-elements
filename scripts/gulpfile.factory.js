@@ -47,6 +47,9 @@ module.exports = function factory({
         }).on("error", sass.logError)
       )
       .pipe(
+        replace(/\:\s+(\d)/, ": $1")
+      )
+      .pipe(
         postcss([
           autoprefixer({
             browsers: [
@@ -218,7 +221,7 @@ module.exports = function factory({
   task("build", series("compile:sass", "merge", ...precompile, parallel("compile", "move:maps", "bundle"), "clean"));
 
   task("watch", () => {
-    return watch(path.join(paths.source, "*"), "build"); 
+    return watch(path.join(paths.source, "*"), series("build")); 
   });
 
   task("dev", parallel("build", "watch"));

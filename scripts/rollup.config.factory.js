@@ -2,6 +2,7 @@ import resolve from "rollup-plugin-node-resolve";
 import babel from "rollup-plugin-babel";
 import commonjs from "rollup-plugin-commonjs";
 import { uglify } from "rollup-plugin-uglify";
+import { terser } from "rollup-plugin-terser";
 
 function esmConfig({ elementName, className } = {}) {
   const esmFilename = `${elementName}.js`;
@@ -13,7 +14,7 @@ function esmConfig({ elementName, className } = {}) {
       format: "esm",
       sourcemap: true
     },
-    plugins: [resolve(), commonjs()],
+    plugins: [resolve(), commonjs(), terser()],
     external: id => id.startsWith("..")
   };
 }

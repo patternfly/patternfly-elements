@@ -1,0 +1,35 @@
+{
+  "name": "@patternfly/pfe-content-set",
+  "pfelement": {
+    "className": "PfeContentSet",
+    "elementName": "pfe-content-set"
+  },
+  "version": "1.0.0-prerelease.9",
+  "description": "This PatternFly Element dynamically hides and shows content; the style is determined by the available space.",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-content-set/test/"
+  },
+  "author": {
+    "name": "cd"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@patternfly/pfe-accordion": "^1.0.0-prerelease.9",
+    "@patternfly/pfe-tabs": "^1.0.0-prerelease.9",
+    "@patternfly/pfelement": "^1.0.0-prerelease.9"
+  },
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.9"
+  },
+  "generator-pfelement-version": "0.6.8"
+}

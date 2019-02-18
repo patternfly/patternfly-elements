@@ -7,7 +7,7 @@
 - **Lightweight**: small file size, minimal boilerplate, no "framework-like" features.
 - **Universal**: write once, use everywhere. PatternFly Elements work in React, Vue, Angular, vanilla JS, anywhere HTML elements are used.
 
-The result of these two principles is plugging one set of comopnents into a wide variety of applications, bringing UX consistency and developer familiarity to any web project.
+The result of these two principles is plugging one set of components into a wide variety of applications, bringing UX consistency and developer familiarity to any web project.
 
 A Yeoman generator is included for creating Web Components that meets these goals.
 

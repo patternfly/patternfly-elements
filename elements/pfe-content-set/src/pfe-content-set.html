@@ -1,0 +1,25 @@
+${this.isTab ? `
+    <pfe-tabs ${this.settings.variant ? "pfe-variant=" + this.settings.variant : ""}
+    ${this.orientation ? this.orientation : ""}>
+      ${this.groupings.map(group => `
+        <pfe-tab slot="tab">
+          ${group.heading.innerText}
+        </pfe-tab>
+        <pfe-tab-panel slot="panel">
+          ${group.body.map(item => item.outerHTML).join("")}
+        </pfe-tab-panel>
+      `).join('')}
+    </pfe-tabs>
+  ` : `
+    <pfe-accordion ${this.settings.color ? "color=" + this.settings.color : ""}>
+        ${this.groupings.map(group => `
+        <pfe-accordion-header>
+          ${group.heading.outerHTML}
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+            ${group.body.map(item => item.outerHTML).join("")}
+        </pfe-accordion-panel>
+      `).join('')}
+    </pfe-accordion>
+  `}
+  

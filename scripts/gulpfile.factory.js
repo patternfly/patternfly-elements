@@ -15,7 +15,8 @@ module.exports = function factory({
   const fs = require("fs");
   const path = require("path");
   const replace = require("gulp-replace");
-  const merge = require('merge-stream');
+  const merge = require("merge-stream");
+  const clean = require("gulp-clean");
 
   // Rollup
   const shell = require("gulp-shell");
@@ -65,6 +66,16 @@ module.exports = function factory({
     return src(path.join(paths.temp, "*.map"))
       .pipe(dest(paths.compiled));
   });
+ 
+  // Delete the temp directory
+  gulp.task("clean", function () {
+      return gulp.src([
+        paths.temp
+      ], {
+        read: false
+      })
+          .pipe(clean());
+  });
 
   // Returns a string with the cleaned up HTML
   const htmlCompiler = (htmlFile) => {
@@ -110,29 +121,36 @@ module.exports = function factory({
 
             // Check for the html template
             let is_defined = url.template !== null;
-            let file_exists = fs.existsSync(path.join(paths.source, url.template));
+            let file_exists = fs.existsSync(path.join(paths.source, url.template || ""));
             if (is_defined && file_exists) {
-              html = htmlCompiler(path.join(paths.source, url.template));
+              html = htmlCompiler(path.join(paths.source, url.template || ""));
             }
 
             // Check for the stylesheet template
             is_defined = url.style !== null;
-            file_exists = fs.existsSync(path.join(paths.source, url.style));
+            file_exists = fs.existsSync(path.join(paths.source, url.style || ""));
             if (is_defined && file_exists) {
-              // @TODO GET THE STYLES FROM THE TEMP DIR CSS FILE
-              let temp = path.join(paths.temp, `${path.basename(url.style, ".scss")}.css`);
+              let result = "";
+              // Get the compiled css styles from the temp directory
+              let css_styles = path.join(paths.temp, `${path.basename(url.style, ".scss")}.css`);
+              // As a backup, check for the compiled css styles in the source directory
+              let backup_styles = path.join(paths.source, `${path.basename(url.style, ".scss")}.css`);
               // Read in the content of the compiled file
-              if(fs.existsSync(temp)) {
-                result = fs.readFileSync(temp);
-                // If the string is not empty, add to the results variable
-                if (result.toString() !== "") {
-                  cssResult = `<style>${result}</style>`;
-                }
+              if(fs.existsSync(css_styles)) {
+                result = fs.readFileSync(css_styles);
+              } else if(fs.existsSync(backup_styles)) {
+                result = fs.readFileSync(backup_styles);
+              } else {
+                console.warn("Compiled CSS assets cannot be found.");
+              }
+              // If the string is not empty, add to the results variable
+              if (result.toString() !== "") {
+                cssResult = `<style>${result}</style>`;
               }
             }
 
             is_defined = url.schema !== null;
-            file_exists = fs.existsSync(path.join(paths.source, url.schema));
+            file_exists = fs.existsSync(path.join(paths.source, url.schema || ""));
             if (is_defined && file_exists) {
               properties = "{}";
               slots = "{}";
@@ -196,7 +214,7 @@ module.exports = function factory({
 
   task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-  task("build", series("compile:sass", "merge", ...precompile, "compile", "move:maps", "bundle"));
+  task("build", series("compile:sass", "merge", ...precompile, parallel("compile", "move:maps", "bundle"), "clean"));
 
   task("watch", () => {
     return watch(path.join(paths.source, "*"), "build"); 

@@ -68,11 +68,12 @@ module.exports = function factory({
   });
  
   // Delete the temp directory
-  gulp.task("clean", function () {
-      return gulp.src([
+  task("clean", function () {
+      return src([
         paths.temp
       ], {
-        read: false
+        read: false,
+        allowEmpty: true
       })
           .pipe(clean());
   });

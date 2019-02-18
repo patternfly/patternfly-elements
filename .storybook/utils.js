@@ -58,7 +58,7 @@ export function customTag(obj, prefix = "") {
     start += ">";
     end += ">";
   }
-  return `${start}${typeof obj.content !== "undefined" ? obj.content || autoContent() : ""}${end}`;
+  return `${start}${obj.content || autoContent()}${end}`;
 }
 
 const parseMarkup = string => {

@@ -8,7 +8,7 @@
     "build": "bash scripts/build.sh",
     "clean": "rm -rf node_modules package-lock.json {elements,themes}/*/{node_modules,package-lock.json}",
     "bootstrap": "lerna bootstrap --hoist",
-    "postinstall": "npm run bootstrap",
+    "postinstall": "npm run bootstrap && npm run build",
     "test-suite-inject": "node scripts/test-suite-inject.js",
     "doc-listing-inject": "node scripts/doc-listing-inject.js",
     "license-update": "node scripts/license-update.js",
@@ -21,7 +21,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test-suite-inject > /dev/null && lint-staged"
+      "pre-commit": "npm run test-suite-inject > /dev/null && pretty-quick --staged"
     }
   },
   "devDependencies": {
@@ -43,6 +43,7 @@
     "browser-sync": "^2.24.6",
     "chalk": "^2.4.1",
     "clean-html": "^1.5.0",
+    "compression": "^1.7.3",
     "css-scss": "^0.1.1",
     "decomment": "^0.9.1",
     "del": "^3.0.0",
@@ -64,18 +65,19 @@
     "gulp-uglify": "^3.0.1",
     "husky": "^1.1.1",
     "lerna": "^3.0.0-rc.0",
-    "lint-staged": "^7.2.0",
     "lodash": "^4.17.10",
     "lodash.clonedeep": "^4.5.0",
     "lorem-ipsum": "^1.0.6",
     "node-sass": "^4.9.2",
     "polymer-webpack-loader": "^2.0.3",
-    "prettier": "^1.14.0",
+    "prettier": "^1.15.2",
+    "pretty-quick": "^1.8.0",
     "requirejs": "^2.3.5",
     "rollup": "^0.66.6",
     "rollup-plugin-babel": "^3.0.7",
     "rollup-plugin-commonjs": "^9.1.5",
     "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-terser": "^4.0.2",
     "rollup-plugin-uglify": "^4.0.0",
     "spandx": "^1.0.3",
     "strip-css-comments": "^3.0.0",
@@ -87,12 +89,6 @@
   },
   "dependencies": {
     "gh-pages": "^2.0.0"
-  },
-  "lint-staged": {
-    "*.{js,json}": [
-      "prettier --write",
-      "git add"
-    ]
   },
   "private": true
 }

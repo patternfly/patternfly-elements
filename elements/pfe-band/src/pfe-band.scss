@@ -111,7 +111,6 @@ $LOCAL: band;
     display:     flex;
     flex-flow:   column nowrap;
     align-items: flex-start;
-    
     // Grid support styles
     @supports (display: grid) {
       grid-area: #{$grid-area};

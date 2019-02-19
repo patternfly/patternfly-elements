@@ -15,7 +15,6 @@ module.exports = function factory({
   const fs = require("fs");
   const path = require("path");
   const replace = require("gulp-replace");
-  const merge = require("merge-stream");
   const clean = require("gulp-clean");
 
   // Rollup

@@ -5,6 +5,12 @@ module.exports = function factory({
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
 
+  const browser_support = [
+    "last 2 versions",
+    "Firefox > 40",
+    "iOS > 5"
+  ];
+
   const paths = {
     source: "./src",
     compiled: "./",
@@ -28,9 +34,9 @@ module.exports = function factory({
   const sass = require("gulp-sass");
   sass.compiler = require("node-sass");
 
-  const postcss = require("gulp-postcss");
   const sourcemaps = require("gulp-sourcemaps");
   const autoprefixer = require("autoprefixer");
+  const cssnano = require("gulp-cssnano");
 
   // Markup
   const trim = require("trim");
@@ -38,26 +44,18 @@ module.exports = function factory({
 
   // Compile the sass into css, compress, autoprefix
   task("compile:sass", () => {
-    return src(path.join(paths.source, "**/*.scss"))
+    return src(path.join(paths.source, "**/*.{scss,css}"))
       .pipe(sourcemaps.init())
       .pipe(
-        sass({
-          outputStyle: "compressed"
-        }).on("error", sass.logError)
+        sass().on("error", sass.logError)
       )
       .pipe(
-        replace(/\:\s+(\d)/, ": $1")
-      )
-      .pipe(
-        postcss([
-          autoprefixer({
-            browsers: [
-              "last 2 versions",
-              "Firefox > 40",
-              "iOS > 5"
-            ]
-          })
-        ])
+        cssnano({
+          autoprefixer: {
+            browsers: browser_support,
+            add: true
+          }
+        })
       )
       .pipe(sourcemaps.write(paths.compiled))
       .pipe(dest(paths.temp));

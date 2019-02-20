@@ -5,31 +5,27 @@ import { uglify } from "rollup-plugin-uglify";
 import { terser } from "rollup-plugin-terser";
 
 function esmConfig({ elementName, className } = {}) {
-  const esmFilename = `${elementName}.js`;
-
   return {
-    input: esmFilename,
+    input: `${elementName}.js`,
     output: {
-      file: esmFilename,
+      file: `${elementName}.js`,
       format: "esm",
       sourcemap: true
     },
     plugins: [
       resolve(),
       commonjs(),
-      terser()
+      // terser()
     ],
     external: id => id.startsWith("..")
   };
 }
 
 function umdConfig({ elementName, className } = {}) {
-  const umdFilename = `${elementName}.umd.js`;
-
   return {
-    input: umdFilename,
+    input: `${elementName}.umd.js`,
     output: {
-      file: umdFilename,
+      file: `${elementName}.umd.js`,
       format: "umd",
       sourcemap: true,
       name: className
@@ -37,9 +33,49 @@ function umdConfig({ elementName, className } = {}) {
     plugins: [
       resolve(),
       commonjs(),
-      babel({
-        // exclude: "node_modules/**" // only transpile our source code
-      }),
+      babel(),
+      // uglify()
+    ],
+    external: id => id.startsWith("..")
+  };
+}
+
+function esmMinify({ elementName, className } = {}) {
+  return {
+    input: `${elementName}.js`,
+    output: {
+      file: `${elementName}.min.js`,
+      format: "esm",
+      sourcemap: false
+    },
+    plugins: [
+      terser({
+        output: {
+          comments: function(node, comment) {
+            var text = comment.value;
+            var type = comment.type;
+            if (type == "comment2") {
+              // multiline comment
+              return /@preserve|@license|@cc_on/i.test(text);
+            }
+          }
+        }
+      })
+    ],
+    external: id => id.startsWith("..")
+  };
+}
+
+function umdMinify({ elementName, className } = {}) {
+  return {
+    input: `${elementName}.umd.js`,
+    output: {
+      file: `${elementName}.umd.min.js`,
+      format: "umd",
+      sourcemap: false,
+      name: className
+    },
+    plugins: [
       uglify()
     ],
     external: id => id.startsWith("..")
@@ -49,6 +85,8 @@ function umdConfig({ elementName, className } = {}) {
 export default function factory({ elementName, className } = {}) {
   return [
     esmConfig({ elementName, className }),
-    umdConfig({ elementName, className })
+    umdConfig({ elementName, className }),
+    esmMinify({ elementName, className }),
+    umdMinify({ elementName, className })
   ];
 }

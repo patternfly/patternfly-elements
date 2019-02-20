@@ -3,8 +3,6 @@
 $LOCAL: band;
 
 :host {
-  display: block;
-
   // Default spacing values
   --pfe-band--Padding--vertical:               calc( #{pfe-var(container-spacer)} * 4);
   --pfe-band--Padding--horizontal:             calc( #{pfe-var(container-spacer)} * 1);

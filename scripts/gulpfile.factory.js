@@ -34,6 +34,7 @@ module.exports = function factory({
   const sass = require("gulp-sass");
   sass.compiler = require("node-sass");
 
+  const postcss = require('gulp-postcss');
   const sourcemaps = require("gulp-sourcemaps");
   const autoprefixer = require("autoprefixer");
   const cssnano = require("gulp-cssnano");
@@ -46,36 +47,87 @@ module.exports = function factory({
   task("compile:sass", () => {
     return src(path.join(paths.source, "**/*.{scss,css}"))
       .pipe(sourcemaps.init())
+      // Compile the Sass into CSS
       .pipe(
-        sass().on("error", sass.logError)
+        sass({
+          outputStyle: "expanded"
+        }).on("error", sass.logError)
       )
+      // Adds autoprefixing to the compiled sass
+      .pipe(
+        postcss([
+          autoprefixer(browser_support)
+        ])
+      )
+      // Write the sourcemap
+      .pipe(sourcemaps.write(paths.compiled))
+      // Output the unminified file
+      .pipe(dest(paths.compiled));
+  });
+
+  task("minify:css", () => {
+    return src(["*.css"], {
+      cwd: paths.compiled
+    })
+      // Minify the file
       .pipe(
         cssnano({
           autoprefixer: {
             browsers: browser_support,
-            add: true
+            add: false
           }
         })
       )
-      .pipe(sourcemaps.write(paths.compiled))
-      .pipe(dest(paths.temp));
+      // Add the .min suffix
+      .pipe(rename({
+        suffix: ".min"
+      }))
+      // Output the minified file
+      .pipe(dest(paths.compiled));
   });
 
-  // Move the map file to the compiled location
-  task("move:maps", () => {
-    return src(path.join(paths.temp, "*.map"))
+  task("fallback:css", () => {
+    const classRegex = new RegExp(`\.${elementName}__(\w+)(.*){`, "gi");
+    return src(["*.css"], {
+      cwd: paths.compiled
+    })
+      // Replace host with the element tag
+      .pipe(
+        replace(":host ", `${elementName} `)
+      )
+      .pipe(
+        replace(/:host\((.*)\)/g, `${elementName}$1`)
+      )
+      // Try to approximate class name to possible slot name
+      .pipe(
+        replace(/\.([\w|-]+)__(\w+)(.*){/g, `${elementName}[slot="$1--$2"]$3{`)
+      )
+      // Replace slotted with slot reference
+      .pipe(
+        replace(/\:\:slotted\(\[slot\=\"(.*)\"\](.*)\)/g, `${elementName}[slot="$1"]$2`)
+      )
+      // Replace slotted with slot reference
+      .pipe(
+        replace(/\:\:slotted\((.*)\)/g, `${elementName}[slot] > $1`)
+      )
+      // Add the .fallback suffix
+      .pipe(rename({
+        suffix: "-fallback"
+      }))
+      // Output the updated file
       .pipe(dest(paths.compiled));
   });
  
   // Delete the temp directory
-  task("clean", function () {
+  task("clean", () => {
       return src([
-        paths.temp
+        `${elementName}*.{js,css,map}`
       ], {
+        cwd: paths.compiled,
         read: false,
         allowEmpty: true
       })
-          .pipe(clean());
+        .pipe(clean());
   });
 
   // Returns a string with the cleaned up HTML
@@ -132,15 +184,11 @@ module.exports = function factory({
             file_exists = fs.existsSync(path.join(paths.source, url.style || ""));
             if (is_defined && file_exists) {
               let result = "";
-              // Get the compiled css styles from the temp directory
-              let css_styles = path.join(paths.temp, `${path.basename(url.style, ".scss")}.css`);
-              // As a backup, check for the compiled css styles in the source directory
-              let backup_styles = path.join(paths.source, `${path.basename(url.style, ".scss")}.css`);
+              // Get the compiled css styles from the source directory
+              let css_styles = path.join(paths.source, `${path.basename(url.style, ".scss")}.min.css`);
               // Read in the content of the compiled file
               if(fs.existsSync(css_styles)) {
                 result = fs.readFileSync(css_styles);
-              } else if(fs.existsSync(backup_styles)) {
-                result = fs.readFileSync(backup_styles);
               } else {
                 console.warn("Compiled CSS assets cannot be found.");
               }
@@ -172,13 +220,25 @@ module.exports = function factory({
 
             let template = classStatement;
             if(cssResult || html) {
-              template += ` get html() { return \`${cssResult}${html}\`; }`;
+              template += `
+
+  get html() {
+    return \`${cssResult}${html}\`;
+  }`;
             }
             if(properties) {
-              template += ` static get properties() { return ${properties}; }`;
+              template += `
+
+  static get properties() {
+    return ${properties};
+  }`;
             }
             if(slots) {
-              template += ` static get slots() { return ${slots}; }`;
+              template += `
+
+  static get slots() {
+    return ${slots};
+  }`;
             }
 
             return template;
@@ -187,7 +247,7 @@ module.exports = function factory({
       )
       .pipe(
         banner(
-          `/*\n${fs
+          `/*\n * @license\n${fs
             .readFileSync("LICENSE.txt", "utf8")
             .split("\n")
             .map(line => ` * ${line}\n`)
@@ -215,7 +275,7 @@ module.exports = function factory({
 
   task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-  task("build", series("compile:sass", "merge", ...precompile, parallel("compile", "move:maps", "bundle"), "clean"));
+  task("build", series("clean", ...precompile, "compile:sass", "fallback:css", "minify:css", "merge", parallel("compile", "bundle")));
 
   task("watch", () => {
     return watch(path.join(paths.source, "*"), series("build")); 

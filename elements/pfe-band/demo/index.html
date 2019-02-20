@@ -15,7 +15,7 @@
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/custom-elements-es5-adapter.js"></script>
-    
+
     <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/webcomponents-loader.js"></script> -->
 
@@ -25,7 +25,7 @@
 
     <!-- Tests require pulling in the UMD version of the files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    
+
     <script>
       require([
         '../../pfe-card/pfe-card.umd.js',
@@ -93,6 +93,7 @@
   <body unresolved>
     <pfe-band pfe-size="small"><h1>&lt;pfe-band&gt;</h1></pfe-band>
 
+<div style="width: 1000px;margin:auto;"> <!-- arbitrary restricting container -->
     <pfe-band pfe-color="lightest">
       <header slot="pfe-band--header">
         <h1>Lightest band, header region</h1>
@@ -113,7 +114,7 @@
         </pfe-cta>
       </pfe-card>
     </pfe-band>
-
+</div>
     <pfe-band pfe-color="lighter" pfe-aside-desktop="left">
       <header slot="pfe-band--header">
         <h2>Lighter band; no footer</h2>
@@ -201,7 +202,7 @@
       <pfe-cta priority="primary">
         <a href="#">Learn more</a>
       </pfe-cta>
-      <pfe-card color="lightest" slot="pfe-band--aside" style="height: -webkit-fill-available;">
+      <pfe-card color="lightest" slot="pfe-band--aside">
         <h3 slot="header">Aside: left body top</h3>
         <p>Ut wisi enim ad minim veniam.</p>
         <pfe-cta slot="footer" priority="tertiary">

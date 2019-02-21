@@ -46,7 +46,9 @@ module.exports = function factory({
 
   // Compile the sass into css, compress, autoprefix
   task("compile:sass", () => {
-    return src(path.join(paths.source, "**/*.{scss,css}"))
+    return src("*.{scss,css}", {
+      cwd: paths.source
+    })
       .pipe(sourcemaps.init())
       // Compile the Sass into CSS
       .pipe(
@@ -144,7 +146,9 @@ module.exports = function factory({
   };
 
   task("merge", () => {
-    return src(path.join(paths.source, "**/*.js"))
+    return src("**/*.js", {
+      cwd: paths.source
+    })
       .pipe(
         replace(
           /extends\s+PFElement\s+{/g,
@@ -249,7 +253,9 @@ module.exports = function factory({
   });
 
   task("compile", () => {
-    return src(`./${elementName}.js`)
+    return src(`${elementName}.js`, {
+        cwd: paths.compiled
+      })
       .pipe(
         replace(
           /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
@@ -266,7 +272,7 @@ module.exports = function factory({
 
   task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-  task("build", series("clean", ...precompile, "compile:sass", "fallback:css", "minify:css", "merge", parallel("compile", "bundle")));
+  task("build", series("clean", "compile:sass", "fallback:css", "minify:css", "merge", ...precompile, parallel("compile", "bundle")));
 
   task("watch", () => {
     return watch(path.join(paths.source, "*"), series("build")); 

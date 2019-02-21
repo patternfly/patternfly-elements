@@ -47,6 +47,27 @@ class PfeNavigationItem extends PFElement {
     }
   }
 
+  // Update the icon attribute and return the SVG
+  _updateIcon(attr, oldValue, newValue){
+    switch (newValue) {
+      case "Search":
+        // Get the search SVG
+      case "Globe":
+        // Get the globe SVG
+      case "Person":
+        // Get the person SVG
+      case "App":
+        // Get the person SVG
+      default:
+        // @TODO is there a default icon?
+    }
+  }
+
+  _moveElement(attr, oldValue, newValue){
+    // Move the element into the region defined by the attribute
+    // this context = the element on which the changed attribute exists
+  }
+
   // disconnectedCallback() {}
 
   // attributeChangedCallback(attr, oldValue, newValue) {}

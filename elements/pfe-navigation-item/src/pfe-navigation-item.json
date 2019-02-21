@@ -12,10 +12,46 @@
         "description": "Definition of the supported slots",
         "type": "object",
         "properties": {
-          "body": {
-            "title": "Body",
+          "skip-links": {
+            "title": "Skip navigation",
             "type": "array",
-            "namedSlot": false,
+            "namedSlot": true,
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "logo": {
+            "title": "Logo",
+            "type": "array",
+            "namedSlot": true,
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "main": {
+            "title": "Main navigation",
+            "type": "array",
+            "namedSlot": true,
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "utility": {
+            "title": "Utility navigation",
+            "type": "array",
+            "namedSlot": true,
             "items": {
               "oneOf": [
                 {
@@ -29,7 +65,30 @@
       "attributes": {
         "title": "Attributes",
         "type": "object",
-        "properties": {}
+        "properties": {
+          "icon": {
+            "title": "Icon",
+            "type": "string",
+            "observed": "_updateIcon"
+          },
+          "mobile-position": {
+            "title": "Position of element on mobile",
+            "type": "string",
+            "enum": [
+              "top",
+              "bottom"
+            ],
+            "options": {
+              "dependencies": [
+                {
+                  "type": "slot",
+                  "id": "utility"
+                }
+              ]
+            },
+            "observed": "_moveElement"
+          }
+        }
       }
     },
     "required": ["slots", "attributes"],

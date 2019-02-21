@@ -110,7 +110,7 @@ $LOCAL: band;
     // Set up the flex styles for each region
     display:     flex;
     flex-flow:   column nowrap;
-    //align-items: flex-start;
+    align-items: flex-start;
     // Grid support styles
     @supports (display: grid) {
       grid-area: #{$grid-area};

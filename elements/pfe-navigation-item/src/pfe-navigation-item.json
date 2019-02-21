@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Navigation item",
+    "description": "This element renders....",
+    "type": "object",
+    "tag": "pfe-navigation-item",
+    "class": "pfe-navigation-item",
+    "category": "container",
+    "properties": {
+      "slots": {
+        "title": "Slots",
+        "description": "Definition of the supported slots",
+        "type": "object",
+        "properties": {
+          "body": {
+            "title": "Body",
+            "type": "array",
+            "namedSlot": false,
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "attributes": {
+        "title": "Attributes",
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "required": ["slots", "attributes"],
+    "additionalProperties": false
+  }
+  

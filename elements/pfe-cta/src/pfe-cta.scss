@@ -1,5 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: cta;
+
 /// ===========================================================================
 /// Component Specific SASS Vars
 /// ===========================================================================
@@ -17,42 +19,51 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--aux:                      transparent;
   --pfe-cta--aux--hover:               transparent;
 
+  --pfe-cta--link--Color:           #{pfe-local(main)};
+  --pfe-cta--link--BackgroundColor: transparent;
+  --pfe-cta--link__after--Color:    #{pfe-local(main)};
+  --pfe-cta--link--Padding:         0;
+  --pfe-cta--link--BorderColor:     transparent;
+  --pfe-cta--link--Border:          #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(link--BorderColor)};
+  --pfe-cta--link--BorderRadius:    none;
+  --pfe-cta--link--LineHeight:      inherit;
+  --pfe-cta--link--BorderRadius:    none;
+  --pfe-cta--link--TextDecoration:  none;
+
   display: inline-block;
   font-weight: bold;
 
   ::slotted(a) {
-    line-height: inherit;
-    color: var(--pfe-cta--main) !important;
-    transition: all #{pfe-var(animation-timing)};
-
-    &::after {
-      display: block;
-      margin-left: calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
-      vertical-align: middle;
-      @include pfe-arrow(right, var(--pfe-cta--main), $pfe-cta__arrow-size, $pfe-cta__arrow-size, true);
-    }
+    transition:       all #{pfe-var(animation-timing)};
+    line-height:      #{pfe-local(link--LineHeight)};
+    color:            #{pfe-local(link--Color)};
+    background-color: #{pfe-local(link--BackgroundColor)};
+    padding:          #{pfe-local(link--Padding)};
+    border:           #{pfe-local(link--Border)};
+    border-radius:    #{pfe-local(link--BorderRadius)};
+    text-decoration:  #{pfe-local(link--TextDecoration)};
   }
 
-  // & ::slotted(a:visited) {
-  //  color: var(--pfe-cta--main--visited);
-  //  &::after {
-  //    @include pfe-arrow-color(var(--pfe-cta--main--visited));
-  //  }
-  // }
-
-  ::slotted(a:hover) {
-    color: var(--pfe-cta--main--hover) !important;
-
-    &::after {
-      @include pfe-arrow-color(var(--pfe-cta--main--hover));
-    }
+  ::slotted(a)::after {
+    display: inline-block;
+    margin-left: calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
+    vertical-align: calc(.5em - #{$pfe-cta__arrow-size});
+    @include pfe-arrow(
+      right,
+      #{pfe-local(link__after--Color)},
+      $pfe-cta__arrow-size,
+      $pfe-cta__arrow-size,
+      true
+    );
   }
 
-  ::slotted(a:focus) {
-    color: var(--pfe-cta--main--focus) !important;
+  @each $state in (hover, focus) {
+    ::slotted(a:#{$state}) {
+      --pfe-cta--link--Color: #{pfe-local(main--#{$state})};
+    }
 
-    &::after {
-      @include pfe-arrow-color(var(--pfe-cta--main--focus));
+    ::slotted(a:#{$state})::after {
+      --pfe-cta--link__after--Color: #{pfe-local(main--#{$state})};
     }
   }
 }
@@ -61,38 +72,46 @@ $pfe-cta__arrow-size:                        0.313em;
 /// ===========================================================================
 /// Styles for "Button" CTAs
 /// ===========================================================================
+:host([priority="primary"]),
+:host([priority="secondary"]) {
+  --pfe-cta--link--Padding:         calc(#{pfe-var(container-padding)} * 0.5) calc(#{pfe-var(container-padding)} * 2);
+  --pfe-cta--link--BorderRadius:    calc(#{pfe-var(ui--border-radius)} * 20);
+  --pfe-cta--link--LineHeight:      1.2;
+
+  ::slotted(a) {
+    display: inline-block;
+  }
+
+  ::slotted(a)::after {
+    display: none;
+  }
+
+  %states {
+    --pfe-cta--link--Color:           #{pfe-local(aux--hover)};
+    --pfe-cta--link--BorderColor:     #{pfe-local(main--hover)};
+    --pfe-cta--link--BackgroundColor: #{pfe-local(main--hover)};
+  }
+
+  ::slotted(a:hover) {
+    @extend %states;
+  }
+  
+  ::slotted(a:focus) {
+    @extend %states;
+  }
+
+  // @TODO Visited state
+}
+
 :host([priority="primary"]) {
   --pfe-cta--main:          #{pfe-color(ui-accent)};
   --pfe-cta--main--hover:   #{pfe-color(ui-accent--hover)};
   --pfe-cta--aux:           #{pfe-color(ui-accent--text)};
   --pfe-cta--aux--hover:    #{pfe-color(ui-accent--text--hover)};
 
-  ::slotted(a) {
-    display: inline-block;
-    padding: calc(#{pfe-var(container-padding)} * 0.5) calc(#{pfe-var(container-padding)} * 2);
-    border-radius: calc(#{pfe-var(ui--border-radius)} * 20);
-    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
-    text-decoration: none;
-    line-height: 1.2;
-
-    border-color: var(--pfe-cta--main) !important;
-    background:   var(--pfe-cta--main) !important;
-    color:        var(--pfe-cta--aux) !important;
-
-    &::after {
-      display: none;
-    }
-  }
-
-  ::slotted(a:hover),
-  ::slotted(a:focus) { // Not sure we can lump these together
-    border-color: var(--pfe-cta--main--hover) !important;
-    background:   var(--pfe-cta--main--hover) !important;
-    color:        var(--pfe-cta--aux--hover) !important;
-  }
-
-  // & ::slotted(a:visited),   TBD
-
+  --pfe-cta--link--Color:             #{pfe-local(aux)};
+  --pfe-cta--link--BackgroundColor:   #{pfe-local(main)};
+  --pfe-cta--link--BorderColor:       #{pfe-local(main)};
 }
 
 :host([priority="secondary"]) {
@@ -101,31 +120,9 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--aux:           #{pfe-color(ui-base--text)};
   --pfe-cta--aux--hover:    #{pfe-color(ui-base--text--hover)};
 
-  ::slotted(a) {
-    display: inline-block;
-    padding: calc(#{pfe-var(container-padding)} * 0.5) calc(#{pfe-var(container-padding)} * 2);
-    border-radius: calc(#{pfe-var(ui--border-radius)} * 20);
-    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-cta--main);
-    text-decoration: none;
-    line-height: 1.2;
-
-    border-color: var(--pfe-cta--main) !important;
-    background:   var(--pfe-cta--aux) !important;
-    color:        var(--pfe-cta--main) !important;
-
-    &::after {
-      display: none;
-    }
-  }
-
-  ::slotted(a:hover), // Not sure we can lump these together
-  ::slotted(a:focus) {
-    border-color: var(--pfe-cta--main--hover) !important;
-    background:   var(--pfe-cta--main--hover) !important;
-    color:        var(--pfe-cta--aux--hover) !important;
-  }
-
-  // & ::slotted(a:visited),   TBD
+  --pfe-cta--link--Color:           #{pfe-local(main)};
+  --pfe-cta--link--BackgroundColor: #{pfe-local(aux)};
+  --pfe-cta--link--BorderColor:     #{pfe-local(main)};
 }
 
 

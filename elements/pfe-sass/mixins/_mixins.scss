@@ -144,7 +144,7 @@
 }
 
 // Mixin for building slot selectors
-@mixin pfe-slot($slot-name, $selector: "") {
+@mixin pfe-slot($slot-name: "default", $selector: "") {
   // This logic makes it much easier to style default slots in a loop
   // with named slots
   @if $slot-name != default {
@@ -153,7 +153,10 @@
     }
   }
   @else {
-    ::slotted(*) {
+    @if $selector == "" {
+      $selector: "*";
+    }
+    ::slotted(#{$selector}) {
       @content;
     }
   }

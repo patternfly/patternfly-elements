@@ -1,8 +1,72 @@
 @import "../../pfe-sass/pfe-sass";
+
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+$pfe-nav-item__arrow-size:                        0.313em;
+
+/// ===========================================================================
+/// DEFUALT nav-item
+/// ===========================================================================
 :host {
-  display: block;
+
+	--pfe-nav-item--main:        #{pfe-color(text)};              // text
+	--pfe-nav-item--main--hover: #{pfe-color(text--on-dark)};     // text hover
+
+	--pfe-nav-item--aux:         transparent;                     // bg 
+	--pfe-nav-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
+
+
+    display: inline-block;
+    font-weight: bold;
+    font-family: #{pfe-var(font-family)};
+    font-weight: 300;
+
+	::slotted(a) {
+		display: block;
+	    line-height: inherit;
+	    transition: all #{pfe-var(animation-timing)};
+	    padding: calc(#{pfe-var(container-padding)} * 2) 
+	             calc(#{pfe-var(container-padding)} * 1);
+	    text-decoration: none;
+  
+	    // COLOR
+	    border-top:       transparent solid 2px;
+		color:            var(--pfe-nav-item--main);   //text
+		background:       var(--pfe-nav-item--aux);  //bg
+	}
+
+	::slotted(a:hover) {
+	    border-top-color: pink;
+	    background:       var(--pfe-nav-item--aux);
+	    color:            var(--pfe-nav-item--main);
+	}
+
+	::slotted(a:focus) {
+	    border-top-color: #{pfe-color(surface-accent)};
+	    background:       var(--pfe-nav-item--aux);
+	    color:            var(--pfe-nav-item--main);
+	}
+
+	::slotted(a.active) {
+	    border-top-color: #{pfe-color(surface-accent)};
+	    background:       var(--pfe-nav-item--aux);
+	    color:            var(--pfe-nav-item--main);
+	}
 }
 
-:host([hidden]) {
-  display: none;
+
+/// ===========================================================================
+/// ON DARK
+/// ===========================================================================
+:host([on="dark"]) {
+	--pfe-nav-item--main:        #{pfe-color(text--on-dark)};      // text
+	--pfe-nav-item--main--hover: #{pfe-color(text)};               // text hover
+
+	--pfe-nav-item--aux:         #{pfe-color(surface--darkest)};   // bg 
+	--pfe-nav-item--aux--hover:  transparent;                      // bg hover
+
+
 }
+

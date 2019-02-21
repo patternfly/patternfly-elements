@@ -27,12 +27,12 @@
   <body unresolved>
     <h1>&lt;pfe-navigation-item&gt;</h1>
 
-    <pfe-band color="darkest" style="--pfe-band--layout: repeat(auto-fit, 50px)">
+    <pfe-band color="darkest" style="--pfe-band--Padding: 10px; --pfe-band__body--layout: repeat(auto-fit, 100px)">
       <pfe-navigation-item pfe-icon="login-icon">
         <!-- Account log in toggle & menu-->
-        <a slot="pfe-nav-item--trigger" href="url-to-login-landing-page">Log in</a>
-        <div slot="pfe-nav-item--tray" hidden aria-hidden="true">
-          <section pfe-nav-item--tray-region="main" class="pile-o-links  pfe-l-grid …">
+        <a slot="pfe-navigation-item--trigger" href="#url-to-login-landing-page">Log in</a>
+        <div slot="pfe-navigation-item--tray" hidden aria-hidden="true">
+          <section pfe-navigation-item--tray-region="main">
             <pfe-link-list role="region">
               <h2><a href="#">Flagship Products</a></h2>
               <ul>
@@ -48,8 +48,8 @@
               </ul>
             </pfe-link-list>
           </section>
-          <aside pfe-nav-item--tray-region="aside">Promo with captions, fancy other stuff</aside>
-          <footer pfe-nav-item--tray-region="footer" class>
+          <aside pfe-navigation-item--tray-region="aside">Promo with captions, fancy other stuff</aside>
+          <footer pfe-navigation-item--tray-region="footer" class>
             <pfe-cta>link</pfe-cta>
           </footer>
         </div>
@@ -57,14 +57,18 @@
 
       <pfe-navigation-item pfe-icon="globe">
         <!-- Language toggle & menu -->
-        <a slot="pfe-nav-item--trigger" href="url-to-language-page">English</a>
-        <div slot="pfe-nav-item--flyout">
-          < custom code to do this thing </div> </pfe-navigation-item> <pfe-navigation-item pfe-icon="apps">
-            <!-- Apps & Websites -->
-            <a slot="pfe-nav-item--trigger" href="url-to-rh-websites-page">Apps &amp; Websites</a>
-            <div slot="pfe-nav-item--flyout">
-              custom code to do this thing
-            </div>
+        <a slot="pfe-navigation-item--trigger" href="#url-to-language-page">English</a>
+        <div slot="pfe-navigation-item--flyout">
+          custom code to do this thing
+        </div>
+      </pfe-navigation-item>
+      
+      <pfe-navigation-item pfe-icon="apps">
+        <!-- Apps & Websites -->
+        <a slot="pfe-navigation-item--trigger" href="url-to-rh-websites-page">Apps &amp; Websites</a>
+        <div slot="pfe-navigation-item--flyout">
+          custom code to do this thing
+        </div>
       </pfe-navigation-item>
     </pfe-band>
 

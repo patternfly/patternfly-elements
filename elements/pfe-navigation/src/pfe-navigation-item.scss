@@ -27,9 +27,21 @@ $pfe-nav-size: 4em;
 :host {
   font-family: #{pfe-var(font-family)};
 
-	::slotted(a) {
-		//@include pfe-expand-button;
-	}
+  @media (max-width: #{pfe-breakpoint(md, $max: true)}) {
+  	::slotted(a) {
+	  	@include pfe-expand-button;
+	  	@include pfe-expand-button-expanded;
+	  	text-decoration: none;
+
+	  	&[aria-expanded="false"]::after {
+	  		@include pfe-expand-button-expanded-false($position: after);
+	  	}
+
+	  	&[aria-expanded="true"]::after {
+	  		@include pfe-expand-button-expanded-true($position: after);
+	  	}
+  	}
+  }
 
 	@media (min-width: #{pfe-breakpoint(md)}) {
 		--pfe-nav-item--main:        #{pfe-color(text)};              // text

@@ -43,10 +43,12 @@ $LOCAL: navigation;
 }
 
 .pfe-navigation {
-	&__container {
-		display: grid;
-		grid-template-areas: "logo main main main utility";
-		grid-template-rows: 1fr;
+	@media (min-width: #{pfe-breakpoint(md)}) {
+		&--container {
+			display: grid;
+			grid-template-areas: "logo main main main utility";
+			grid-template-rows: 1fr;
+		}
 	}
 	&__main {
 		grid-area: main;
@@ -67,3 +69,10 @@ $LOCAL: navigation;
 		grid-area: utility;
 	}
 }
+ul {
+	padding-inline-start: 0;
+}
+li {
+	list-style-type: none;
+}
+

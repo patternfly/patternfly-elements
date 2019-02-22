@@ -16,7 +16,7 @@
 /// MOBILE
 /// ===========================================================================
 :host {
-	@media (max-width: $pfe-global--grid-breakpoint--sm--max ) {
+	@media (max-width: #{pfe-breakpoint(md-max)} ) {
 	    display: inline-block;
 	}
 }

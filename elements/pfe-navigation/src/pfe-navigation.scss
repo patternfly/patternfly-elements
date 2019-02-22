@@ -50,12 +50,21 @@ $LOCAL: navigation;
 }
 
 .pfe-navigation {
-	&--container {
-		display: grid;
-		grid-template-areas: "logo main main main utility";
-		grid-template-rows: 1fr;
+	@media (min-width: #{pfe-breakpoint(md)}) {
+		&--container {
+			display: grid;
+			grid-template-areas: "logo main main main utility";
+			grid-template-rows: 1fr;
+		}
 	}
 	&--list {
 		@include pfe-reset-list;
 	}
 }
+ul {
+	padding-inline-start: 0;
+}
+li {
+	list-style-type: none;
+}
+

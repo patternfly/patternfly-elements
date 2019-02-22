@@ -1,4 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
+@import "../../pfe-sass/extends/extends";
 
 /// ===========================================================================
 /// Component Specific SASS Vars
@@ -16,7 +17,7 @@
 /// MOBILE
 /// ===========================================================================
 :host {
-	@media (max-width: $pfe-global--grid-breakpoint--sm--max ) {
+	@media (max-width: #{pfe-breakpoint(md-max)} ) {
 	    display: inline-block;
 	}
 }
@@ -25,6 +26,12 @@
 /// DESKTOP
 /// ===========================================================================
 :host {
+  font-family: #{pfe-var(font-family)};
+
+	::slotted(a) {
+		@include pfe-expand-button;
+	}
+
 	@media (min-width: #{pfe-breakpoint(md)}) {
 		--pfe-nav-item--main:        #{pfe-color(text)};              // text
 		--pfe-nav-item--main--hover: #{pfe-color(text--on-dark)};     // text hover
@@ -34,7 +41,6 @@
 
 	    display: inline-block;
 	    font-weight: bold;
-	    font-family: #{pfe-var(font-family)};
 	    font-weight: 300;
 
 		::slotted(a) {
@@ -65,10 +71,9 @@
 		}
 		::slotted(a:focus:not(:focus-visible)) {
 			outline: none; // removes outline for mouse users, preserves it for keyboard users
-			background: pink !important;
 		}
 
-		::slotted(a.active) {
+		::slotted(a:active) {
 		    border-top-color: #{pfe-color(surface-accent)};
 		    background:       var(--pfe-nav-item--aux--hover);
 		    color:            var(--pfe-nav-item--main--hover);

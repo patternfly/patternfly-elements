@@ -1,5 +1,4 @@
 @import "../../pfe-sass/pfe-sass";
-@import "../../pfe-sass/extends/extends";
 
 /// ===========================================================================
 /// DEFAULT ACCORDION HEADING
@@ -14,18 +13,18 @@
   color: var(--pfe-expanded--aux);
 
   button {
-    @extend %pfe-expand-button;
+    @include pfe-expand-button;
 
     &[aria-expanded] {
-      @extend %pfe-expand-button-expanded;
+      @include pfe-expand-button-expanded;
     }
 
     &[aria-expanded="false"]::before {
-      @extend %pfe-expand-button-expanded-false;
+      @include pfe-expand-button-expanded-false;
     }
 
     &[aria-expanded="true"]::before {
-      @extend %pfe-expand-button-expanded-true;
+      @include pfe-expand-button-expanded-true;
     }
   }
 }
@@ -49,29 +48,29 @@ h6 {
 
 :host([color="lightest"]),
 :host([color="striped"].even) {
-  @extend %pfe-expand-button-color-lightest;
+  @include pfe-expand-button-color-lightest;
 
   button[aria-expanded="true"] {
-    @extend %pfe-expand-button-color-lightest-expanded;
+    @include pfe-expand-button-color-lightest-expanded;
   }
 }
 
 :host([color="base"]) {
-  @extend %pfe-expand-button-color-base;
+  @include pfe-expand-button-color-base;
 }
 
 :host([color="dark"]) {
-  @extend %pfe-expand-button-color-dark;
+  @include pfe-expand-button-color-dark;
 }
 
 :host([color="darkest"]) {
-  @extend %pfe-expand-button-color-darkest;
+  @include pfe-expand-button-color-darkest;
 }
 
 :host([color="accent"]) {
-  @extend %pfe-expand-button-color-accent;
+  @include pfe-expand-button-color-accent;
 }
 
 :host([color="complement"]) {
-  @extend %pfe-expand-button-color-complement;
+  @include pfe-expand-button-color-complement;
 }

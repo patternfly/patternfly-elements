@@ -5,9 +5,9 @@ import {
   select,
   boolean
 } from "@storybook/addon-knobs/polymer";
-import "./pfe-avatar";
-import cpTheme from "../../themes/cp-theme/cp-theme.js";
-import { escapeHTML } from "../../.storybook/utils.js";
+import "../pfe-avatar";
+import cpTheme from "../../../themes/cp-theme/cp-theme.js";
+import { escapeHTML } from "../../../.storybook/utils.js";
 
 const stories = storiesOf("Avatar", module);
 stories.addDecorator(withKnobs);

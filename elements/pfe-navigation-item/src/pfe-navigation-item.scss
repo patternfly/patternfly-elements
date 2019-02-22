@@ -38,21 +38,21 @@ $pfe-nav-item__arrow-size:                        0.313em;
 	}
 
 	::slotted(a:hover) {
-	    border-top-color: pink;
-	    background:       var(--pfe-nav-item--aux);
-	    color:            var(--pfe-nav-item--main);
+	    border-top-color: red;
+	    background:       var(--pfe-nav-item--aux--hover);
+	    color:            var(--pfe-nav-item--main--hover);
 	}
 
 	::slotted(a:focus) {
 	    border-top-color: #{pfe-color(surface-accent)};
-	    background:       var(--pfe-nav-item--aux);
-	    color:            var(--pfe-nav-item--main);
+	    background:       var(--pfe-nav-item--aux--hover);
+	    color:            var(--pfe-nav-item--main--hover);
 	}
 
 	::slotted(a.active) {
 	    border-top-color: #{pfe-color(surface-accent)};
-	    background:       var(--pfe-nav-item--aux);
-	    color:            var(--pfe-nav-item--main);
+	    background:       var(--pfe-nav-item--aux--hover);
+	    color:            var(--pfe-nav-item--main--hover);
 	}
 }
 
@@ -64,9 +64,8 @@ $pfe-nav-item__arrow-size:                        0.313em;
 	--pfe-nav-item--main:        #{pfe-color(text--on-dark)};      // text
 	--pfe-nav-item--main--hover: #{pfe-color(text)};               // text hover
 
-	--pfe-nav-item--aux:         #{pfe-color(surface--darkest)};   // bg 
-	--pfe-nav-item--aux--hover:  transparent;                      // bg hover
-
-
+	--pfe-nav-item--aux:         transparent;                      // bg 
+	--pfe-nav-item--aux--hover:  #{pfe-color(surface--lightest)};  // bg hover                   // bg hover
+ 
 }
 

@@ -196,7 +196,6 @@ $pfe-expand_button--padding-factor:  0.75;
     position: relative;
     display: block;
     font-weight: normal;
-    padding-left: calc(#{pfe-var(container-spacer)} * 2.5);
 }
 
 @mixin pfe-expand-button-expanded-false($position: before) {
@@ -206,11 +205,13 @@ $pfe-expand_button--padding-factor:  0.75;
       left: #{pfe-var(container-spacer)};
       transition: transform 0.15s;
       transform: rotate(45deg);
+      padding-left: calc(#{pfe-var(container-spacer)} * 2.5);
     }
     @else {
       right: #{pfe-var(container-spacer)};
       transition: all 0.15s;
       transform: rotate(135deg);
+      padding-right: calc(#{pfe-var(container-spacer)} * 2.5);
     }
     top: calc((#{pfe-var(container-spacer)} * #{$pfe-expand_button--padding-factor}) + #{$pfe-expand_chevron--placement} );
     display: block;

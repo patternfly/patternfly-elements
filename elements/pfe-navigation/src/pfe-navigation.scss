@@ -53,7 +53,9 @@ $LOCAL: navigation;
 	border: #{pfe-local(Border)};
 
 	// Set the defaults for look and feel
-	background-color: #{pfe-local(BackgroundColor)};
+	@media (min-width: #{pfe-breakpoint(md)}) {
+		background-color: #{pfe-local(BackgroundColor)};
+	}
 }
 
 :host([pfe-sticky]) {
@@ -95,21 +97,22 @@ $LOCAL: navigation;
 		&,
 		nav, 
 		ul {
-			display: flex;
-			flex-flow: row nowrap;
+			@media (min-width: #{pfe-breakpoint(md)}) {
+				display: flex;
+				flex-flow: row nowrap;
+			}
 		}
 		ul {
 			@include pfe-reset-list;
+			padding-inline-start: 0;
+		}
+		li {
+			list-style-type: none;
 		}
 	}
 	&__utility {
 		grid-area: utility;
 	}
 }
-ul {
-	padding-inline-start: 0;
-}
-li {
-	list-style-type: none;
-}
+
 

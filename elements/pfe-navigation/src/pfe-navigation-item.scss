@@ -90,6 +90,7 @@ $pfe-nav-size: 4em;
 		width: 			var(--pfe-navigation--Width);
 	}
 	&__button {
+		text-decoration: none;
 		@media (min-width: #{pfe-breakpoint(md)}) {
 			flex: 1;
 			display: flex;
@@ -97,7 +98,19 @@ $pfe-nav-size: 4em;
 			align-items: center;
 			justify-content: center;
 		}
+	  @media (max-width: #{pfe-breakpoint(md, $max: true)}) {
+			@include pfe-expand-button;
+			@include pfe-expand-button-expanded;
+
+			&[aria-expanded="false"]::after {
+				@include pfe-expand-button-expanded-false($position: after);
+			}
+			&[aria-expanded="true"]::after {
+				@include pfe-expand-button-expanded-true($position: after);
+			}
+	  }
 	}
+
 	&__icon {
 		@media (min-width: #{pfe-breakpoint(md)}) {
 			margin: 0;

@@ -9,54 +9,68 @@
 /// DEFUALT nav-item
 /// ===========================================================================
 :host {
-
 	--pfe-nav-item--main:        #{pfe-color(text)};              // text
 	--pfe-nav-item--main--hover: #{pfe-color(text--on-dark)};     // text hover
 
 	--pfe-nav-item--aux:         transparent;                     // bg 
 	--pfe-nav-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
+}
 
-
-    display: inline-block;
-    font-weight: bold;
-    font-family: #{pfe-var(font-family)};
-    font-weight: 300;
-
-	::slotted(a) {
-		display: block;
-	    line-height: inherit;
-	    transition: all #{pfe-var(animation-timing)};
-	    padding: calc(#{pfe-var(container-padding)} * 2) 
-	             calc(#{pfe-var(container-padding)} * 1);
-	    text-decoration: none;
-  
-	    // COLOR
-	    border-top:       transparent solid 2px;
-		color:            var(--pfe-nav-item--main);   //text
-		background:       var(--pfe-nav-item--aux);  //bg
+/// ===========================================================================
+/// MOBILE
+/// ===========================================================================
+:host {
+	@media (max-width: $pfe-global--grid-breakpoint--sm--max ) {
+	    display: inline-block;
 	}
+}
 
-	::slotted(a:hover) {
-	    border-top-color: #{pfe-color(surface--accent)};
-	    background:       var(--pfe-nav-item--aux--hover);
-	    color:            var(--pfe-nav-item--main--hover);
-	}
+/// ===========================================================================
+/// DESKTOP
+/// ===========================================================================
+:host {
+	@media (min-width: #{pfe-breakpoint(md)}) {
+	    display: inline-block;
+	    font-weight: bold;
+	    font-family: #{pfe-var(font-family)};
+	    font-weight: 300;
 
-	::slotted(a:focus) {
-	    border-top-color: #{pfe-color(surface-accent)};
-	    background:       var(--pfe-nav-item--aux--hover);
-	    color:            var(--pfe-nav-item--main--hover);
+		::slotted(a) {
+			display: block;
+		    line-height: inherit;
+		    transition: all #{pfe-var(animation-timing)};
+		    padding: calc(#{pfe-var(container-padding)} * 2) 
+		             calc(#{pfe-var(container-padding)} * 1);
+		    text-decoration: none;
+	  
+		    // COLOR
+		    border-top:       transparent solid 2px;
+			color:            var(--pfe-nav-item--main);   //text
+			background:       var(--pfe-nav-item--aux);  //bg
+		}
 
-	}
-	::slotted(a:focus:not(:focus-visible)) {
-		outline: none; // removes outline for mouse users, preserves it for keyboard users
-		background: pink !important;
-	}
+		::slotted(a:hover) {
+		    border-top-color: #{pfe-color(surface--accent)};
+		    background:       var(--pfe-nav-item--aux--hover);
+		    color:            var(--pfe-nav-item--main--hover);
+		}
 
-	::slotted(a.active) {
-	    border-top-color: #{pfe-color(surface-accent)};
-	    background:       var(--pfe-nav-item--aux--hover);
-	    color:            var(--pfe-nav-item--main--hover);
+		::slotted(a:focus) {
+		    border-top-color: #{pfe-color(surface-accent)};
+		    background:       var(--pfe-nav-item--aux--hover);
+		    color:            var(--pfe-nav-item--main--hover);
+
+		}
+		::slotted(a:focus:not(:focus-visible)) {
+			outline: none; // removes outline for mouse users, preserves it for keyboard users
+			background: pink !important;
+		}
+
+		::slotted(a.active) {
+		    border-top-color: #{pfe-color(surface-accent)};
+		    background:       var(--pfe-nav-item--aux--hover);
+		    color:            var(--pfe-nav-item--main--hover);
+		}
 	}
 }
 
@@ -65,11 +79,12 @@
 /// ON DARK
 /// ===========================================================================
 :host([on="dark"]) {
-	--pfe-nav-item--main:        #{pfe-color(text--on-dark)};      // text
-	--pfe-nav-item--main--hover: #{pfe-color(text)};               // text hover
+	@media (min-width: #{pfe-breakpoint(md)}) {
+		--pfe-nav-item--main:        #{pfe-color(text--on-dark)};      // text
+		--pfe-nav-item--main--hover: #{pfe-color(text)};               // text hover
 
-	--pfe-nav-item--aux:         transparent;                      // bg 
-	--pfe-nav-item--aux--hover:  #{pfe-color(surface--lightest)};  // bg hover                   // bg hover
- 
+		--pfe-nav-item--aux:         transparent;                      // bg 
+		--pfe-nav-item--aux--hover:  #{pfe-color(surface--lightest)};  // bg hover
+	}                  
 }
 

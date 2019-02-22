@@ -24,9 +24,55 @@ class PfeNavigationItem extends PFElement {
     return "pfe-navigation-item.scss";
   }
 
-  // static get observedAttributes() {
-  //   return [];
-  // }
+  static get icons() {
+      return {
+          bento: "<svg width='19px' height='19px' viewBox='0 0 19 19' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Icon' fill='#FFFFFF'><rect id='Rectangle' x='14' y='14' width='5' height='5'></rect><rect id='Rectangle' x='7' y='14' width='5' height='5'></rect><rect id='Rectangle' x='0' y='14' width='5' height='5'></rect><rect id='Rectangle' x='14' y='7' width='5' height='5'></rect><rect id='Rectangle' x='7' y='7' width='5' height='5'></rect><rect id='Rectangle' x='0' y='7' width='5' height='5'></rect><rect id='Rectangle' x='14' y='0' width='5' height='5'></rect><rect id='Rectangle' x='7' y='0' width='5' height='5'></rect><rect id='Rectangle' x='0' y='0' width='5' height='5'></rect></g></g></svg>",
+          globe: "",
+          menu: "",
+          search: "",
+          user: ""
+      }
+  }
+
+  get expanded() {
+    return this.classList.contains("expanded");
+  }
+
+  set expanded(val) {
+    val = Boolean(val);
+
+    if (val) {
+      this.classList.add("expanded");
+
+      if (this.trigger) {
+        this.trigger.setAttribute("aria-expanded", true);
+      }
+
+      if (this.tray) {
+        this.tray.classList.remove("hide");
+        this.tray.setAttribute("aria-expanded", true);
+      }
+    } else {
+      this.classList.remove("expanded");
+
+      if (this.trigger) {
+        this.trigger.removeAttribute("aria-expanded");
+      }
+
+      if (this.tray) {
+        this.tray.classList.add("hide");
+        this.tray.removeAttribute("aria-expanded");
+      }
+    }
+
+    this.dispatchEvent(
+      new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
+        detail: { navigationItem: this, expanded: this.expanded },
+        bubbles: true,
+        composed: true
+      })
+    );
+  }
 
   // Declare the type of this component
   static get PfeType() {
@@ -35,44 +81,41 @@ class PfeNavigationItem extends PFElement {
 
   constructor() {
     super(PfeNavigationItem, { type: PfeNavigationItem.PfeType });
+
+    this._clickHandler = this._clickHandler.bind(this);
+    this._keydownHandler = this._keydownHandler.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    // Get the trigger slot
-    // const trigger = 
-    // Register click event on the trigger slot
-    this.addEventListener("click", this._clickHandler);
+    this.tray = this.shadowRoot.querySelector(".pfe-navigation-item--wrapper");
 
-    this.addEventListener(`${PfeNavigationItem.tag}:active`, this._changeHandler);
-    this.addEventListener("keydown", this._keydownHandler);
-    
-
-    // this.setAttribute("role", "presentation");
-    // this.setAttribute("defined", "");
-  }
-
-  _clickHandler(event) {
-    event.preventDefault();
-    // Check that the event fired is from the trigger slot
-    if (event.target.getAttribute("slot") === "pfe-navigation-item--trigger") {
-      
-      // Open the tray if it's not open, close if it is
+    if (!this.tray) {
+      return;
     }
-    // If the event is fired from the tray
 
-    this.dispatchEvent(
-      new CustomEvent(`${PfeNavigationItem.tag}:active`, {
-        detail: { expanded: !this.expanded },
-        bubbles: true
-      })
-    );
+    this.trigger = this.querySelector('a[slot="pfe-navigation-item--trigger"]')
+    this.lightDomTray = this.querySelector('[slot="pfe-navigation-item--tray"]');
+    this.expanded = false;
+
+    if (this.trigger && !this.trigger.hasAttribute("role")) {
+      this.trigger.setAttribute("role", "button");
+    }
+
+    if (this.lightDomTray) {
+      this.lightDomTray.removeAttribute("hidden");
+    }
+
+    this.addEventListener("click", this._clickHandler);
+    this.addEventListener("keydown", this._keydownHandler);
   }
 
   disconnectedCallback() {
-    this.removeEventListener("click", this._changeHandler);
-    this.removeEventListener("keydown", this._keydownHandler);
+    if (this.tray) {
+      this.removeEventListener("click", this._changeHandler);
+      this.removeEventListener("keydown", this._keydownHandler);
+    }
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -88,21 +131,48 @@ class PfeNavigationItem extends PFElement {
     }
   }
 
-  _changeHandler(evt) {
+  _clickHandler(event) {
+    if (event.target === this.trigger) {
+      event.preventDefault();
+      this.expanded = !this.expanded;
+    }
+  }
 
+  _keydownHandler(event) {
+    switch (event.key) {
+      case "Spacebar":
+      case " ":
+        event.preventDefault();
+        this.expanded = !this.expanded;
+        break;
+      case "Esc":
+      case "Escape":
+        event.preventDefault();
+        this.expanded = false;
+        if (this.trigger) {
+          this.trigger.focus();
+        }
+        break;
+      default:
+        return;
+    }
   }
 
   // Update the icon attribute and return the SVG
   _updateIcon(attr, oldValue, newValue){
-    switch (newValue) {
-      case "Search":
+    switch (newValue.toLowerCase()) {
+      case "search":
         // Get the search SVG
-      case "Globe":
+        return this.icon.search;
+      case "globe":
         // Get the globe SVG
-      case "Person":
+        return this.icon.globe;
+      case "user":
         // Get the person SVG
-      case "App":
+        return this.icon.user;
+      case "bento":
         // Get the person SVG
+        return this.icon.bento;
       default:
         // @TODO is there a default icon?
     }

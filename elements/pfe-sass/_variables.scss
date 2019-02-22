@@ -1,8 +1,18 @@
+// DO NOT USE.
+@import "variables/deprecated-colors"; 
 
-@import "variables/deprecated-colors"; // DO NOT USE.
-
-@import "variables/crayola";
+// Sass vars
+@import "variables/crayola";  
 @import "variables/colors";
+@import "variables/layout";
+
+// Turn into CSS vars
 @import "variables/maps";
 
-@import "variables/deprecated-vars";   // DO NOT USE.
+
+// DO NOT USE.
+@import "variables/deprecated-vars";   
+
+
+
+

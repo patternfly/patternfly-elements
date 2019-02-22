@@ -24,16 +24,6 @@ class PfeNavigationItem extends PFElement {
     return "pfe-navigation-item.scss";
   }
 
-  static get icons() {
-      return {
-          bento: "<svg width='19px' height='19px' viewBox='0 0 19 19' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Icon' fill='#FFFFFF'><rect id='Rectangle' x='14' y='14' width='5' height='5'></rect><rect id='Rectangle' x='7' y='14' width='5' height='5'></rect><rect id='Rectangle' x='0' y='14' width='5' height='5'></rect><rect id='Rectangle' x='14' y='7' width='5' height='5'></rect><rect id='Rectangle' x='7' y='7' width='5' height='5'></rect><rect id='Rectangle' x='0' y='7' width='5' height='5'></rect><rect id='Rectangle' x='14' y='0' width='5' height='5'></rect><rect id='Rectangle' x='7' y='0' width='5' height='5'></rect><rect id='Rectangle' x='0' y='0' width='5' height='5'></rect></g></g></svg>",
-          globe: "",
-          menu: "",
-          search: "",
-          user: ""
-      }
-  }
-
   get expanded() {
     return this.tray.hasAttribute("aria-expanded");
   }
@@ -66,6 +56,16 @@ class PfeNavigationItem extends PFElement {
     }
   }
 
+  static get iconSVG() {
+    return {
+        bento: "<svg width='19px' height='19px' viewBox='0 0 19 19' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Icon' fill='#FFFFFF'><rect id='Rectangle' x='14' y='14' width='5' height='5'></rect><rect id='Rectangle' x='7' y='14' width='5' height='5'></rect><rect id='Rectangle' x='0' y='14' width='5' height='5'></rect><rect id='Rectangle' x='14' y='7' width='5' height='5'></rect><rect id='Rectangle' x='7' y='7' width='5' height='5'></rect><rect id='Rectangle' x='0' y='7' width='5' height='5'></rect><rect id='Rectangle' x='14' y='0' width='5' height='5'></rect><rect id='Rectangle' x='7' y='0' width='5' height='5'></rect><rect id='Rectangle' x='0' y='0' width='5' height='5'></rect></g></g></svg>",
+        globe: "",
+        menu: "",
+        search: "",
+        user: ""
+    };
+  }
+
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Container;
@@ -79,21 +79,54 @@ class PfeNavigationItem extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.trigger = this.querySelector('a[slot="pfe-navigation-item--trigger"]')
+    // Attach a trigger property to the component with the trigger slot
+    this.trigger = this.querySelector('[slot="pfe-navigation-item--trigger"]')
+    // Attach a tray property to the component with the trigger slot
     this.lightDomTray = this.querySelector('[slot="pfe-navigation-item--tray"]');
+    // Get the ShadowDOM tray wrapper from the template
     this.tray = this.shadowRoot.querySelector(".pfe-navigation-item--wrapper");
+    // Initialize expanded to false
     this.expanded = false;
 
-    if (!this.trigger.hasAttribute("role")) {
+    // If the role attribute has not been provided, attach it to the trigger
+    if (this.trigger && !this.trigger.hasAttribute("role")) {
       this.trigger.setAttribute("role", "button");
     }
 
+    // If the light DOM tray has been provided, remove the hidden attributes
     if (this.lightDomTray) {
       this.lightDomTray.removeAttribute("hidden");
     }
 
+    // Attach an on click listener
     this.addEventListener("click", this._clickHandler);
+    // Attach an on keydown listener
     this.addEventListener("keydown", this._keydownHandler);
+
+    // Copy the content of the trigger slot into the ShadowDOM
+    const lightTrigger = this.querySelector('[slot="pfe-navigation-item--trigger"]');
+    const shadowTrigger = this.shadowRoot.querySelector('[name="pfe-navigation-item--trigger"]')
+    // If the slot and contents exist, append the fragment to the DOM
+    if(lightTrigger && shadowTrigger) {
+      lightTrigger.classList.add("pfe-navigation-item--text");
+      lightTrigger.removeAttribute("slot");
+      shadowTrigger.appendChild(lightTrigger);
+    }
+
+    // Add the icon to the trigger if the property has been set
+    if(this.hasAttribute("pfe-icon")) {
+      const iconName = this.getAttribute("pfe-icon");
+      // If an icon string is returned and that string is part of the stored SVGs
+      if(iconName && this._pfeClass.iconSVG[iconName]) {
+        // Parse the string of SVG into an SVG object
+        let svg = document.createElement("span");
+        svg.classList.add("pfe-navigation-item--icon");
+        svg.innerHTML = this._pfeClass.iconSVG[iconName];
+        if(this.trigger) {
+          this.trigger.insertBefore(svg, this.trigger.firstChild);
+        }
+      }
+    }
   }
 
   _clickHandler(event) {
@@ -132,6 +165,7 @@ class PfeNavigationItem extends PFElement {
 
   // Update the icon attribute and return the SVG
   _updateIcon(attr, oldValue, newValue){
+    // Inject the icon into the trigger element
     switch (newValue.toLowerCase()) {
       case "search":
         // Get the search SVG
@@ -145,8 +179,6 @@ class PfeNavigationItem extends PFElement {
       case "bento":
         // Get the person SVG
         return this.icon.bento;
-      default:
-        // @TODO is there a default icon?
     }
   }
 }

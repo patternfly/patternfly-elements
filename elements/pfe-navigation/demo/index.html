@@ -30,7 +30,6 @@
     <pfe-navigation pfe-color="darkest">
       <div slot="pfe-navigation--skip">
         <a href="#rh-main-content">Skip to content</a>
-        <a href="#rh-main-nav">Skip to main navigation</a>
       </div>
 
       <div slot="pfe-navigation--logo">
@@ -51,10 +50,10 @@
             <pfe-navigation-item on="dark">
               <a slot="pfe-navigation-item--trigger" href="/products">Products</a>
 
-              <div slot="pfe-navigation-item--tray" hidden aria-hidden="true">
-                <section pfe-navigation-item--tray-region="main" class="pile-o-links  pfe-l-grid …">
+              <div slot="pfe-navigation-item--tray" hidden>
+                <div pfe-navigation-item--tray-region="main" class="pile-o-links  pfe-l-grid …">
                   <pfe-link-list role="region">
-                    <h2><a href="#">Flagship Products</a></h2>
+                    <h2><a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux">Flagship Products</a></h2>
                     <ul>
                       <li><a href="#">Awesome</a></li>
                       <li><a href="#">So good</a></li>
@@ -67,7 +66,7 @@
                       <li><a href="#">Collab #2</a></li>
                     </ul>
                   </pfe-link-list>
-                </section>
+                </div>
                 <aside pfe-navigation-item--tray-region="aside">Promo with captions, fancy other stuff</aside>
 
                 <footer pfe-navigation-item--tray-region="footer" class>
@@ -79,7 +78,7 @@
           <li>
             <pfe-navigation-item on="dark">
               <a slot="pfe-navigation-item--trigger" href="/solutions">Solutions</a>
-              <div slot="pfe-navigation-item--tray" hidden aria-hidden="true">
+              <div slot="pfe-navigation-item--tray" hidden>
                 <pfe-link-list role="region">
                   <h2><a href="#">Main offerings</a></h2>
                   <ul>
@@ -109,7 +108,7 @@
       <pfe-navigation-item on="dark" slot="pfe-navigation--utility" pfe-icon="user">
         <a slot="pfe-navigation-item--trigger" href="#url-to-login-landing-page">Log in</a>
         <div slot="pfe-navigation-item--tray" hidden>
-          <section pfe-navigation-item--tray-region="main">
+          <div pfe-navigation-item--tray-region="main">
             <pfe-link-list role="region">
               <h2><a href="#">Flagship Products</a></h2>
               <ul>
@@ -124,7 +123,7 @@
                 <li><a href="#">Collab #2</a></li>
               </ul>
             </pfe-link-list>
-          </section>
+          </div>
           <aside pfe-navigation-item--tray-region="aside">Promo with captions, fancy other stuff</aside>
           <footer pfe-navigation-item--tray-region="footer" class>
             <pfe-cta>link</pfe-cta>

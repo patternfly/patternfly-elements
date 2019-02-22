@@ -38,9 +38,27 @@ class PFElement extends HTMLElement {
   has_slot(name) {
     return this.querySelector(`[slot='${name}']`);
   }
-
-  has_slot(name) {
-    return this.querySelector(`[slot='${name}']`);
+  
+  // Expects an object containing the content selector and the shadow selector
+  static moveToShadowDOM(items, context) {
+    // Copy the content from the slot into the ShadowDOM
+    Object.entries(items).forEach(item => {
+      // Document fragments are more efficient
+      const fraggle = document.createDocumentFragment();
+      // Get the content and the slots
+      if(item[0] && item[1]) {
+        const contents = [...context.querySelectorAll(item[0])];
+        const slot = context.shadowRoot.querySelector(item[1]);
+        // For each content item, append it to the fragment
+        contents.forEach(content => {
+          fraggle.appendChild(content);
+        });
+        // If the slot and contents exist, append the fragment to the DOM
+        if (slot && contents.length) {
+          slot.appendChild(fraggle);
+        }
+      }
+    });
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {

@@ -1,13 +1,6 @@
 import PFElement from "../pfelement/pfelement.js";
 import PfeNavigationItem from "./pfe-navigation-item.js";
 
-const KEYCODE = {
-  ENTER: 13,
-  DOWN: 40,
-  UP: 38,
-  ESC: 27
-};
-
 class PfeNavigation extends PFElement {
   static get tag() {
     return "pfe-navigation";
@@ -36,6 +29,12 @@ class PfeNavigation extends PFElement {
 
   constructor() {
     super(PfeNavigation, { type: PfeNavigation.PfeType });
+    this.activeNavigationItem = null;
+    this._toggledHandler = this._toggledHandler.bind(this);
+    this.addEventListener(
+      `${PfeNavigationItem.tag}:toggled`,
+      this._toggledHandler
+    );
   }
 
   connectedCallback() {
@@ -43,23 +42,18 @@ class PfeNavigation extends PFElement {
 
     // Define the name of the slots
     const slots = {
-        main: "pfe-navigation--main",
-        utility: "pfe-navigation--utility"
+      "[slot=\"pfe-navigation--main\"]": "[pfe-id=\"pfe-navigation--main\"]",
+      "[slot=\"pfe-navigation--utility\"]": "[pfe-id=\"pfe-navigation--utility\"]",
     };
-    // Copy the content of the main and utility slots into the ShadowDOM
-    Object.values(slots).forEach(slotName => {
-        const fraggle = document.createDocumentFragment();
-        // Get the content and the slots
-        const contents = [...this.querySelectorAll(`[slot="${slotName}"]`)];
-        const slot = this.shadowRoot.querySelector(`[pfe-id="${slotName}"]`);
-        contents.forEach(content => {
-            fraggle.appendChild(content);
-        });
-        // If the slot and contents exist, append the fragment to the DOM
-        if(slot && contents.length) {
-            slot.appendChild(fraggle);
-        }
-    });
+    // Move the content from the main and utility slots into the shadowDOM
+    this._pfeClass.moveToShadowDOM(slots, this);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener(
+      `${PfeNavigationItem.tag}:toggled`,
+      this._toggledHandler
+    );
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -73,6 +67,20 @@ class PfeNavigation extends PFElement {
       // If it's a function, allow it to run
       if (typeof observer === "function") observer(attr, oldValue, newValue);
     }
+  }
+
+  _toggledHandler(event) {
+    if (!this.activeNavigationItem) {
+      this.activeNavigationItem = event.detail.navigationItem;
+      return;
+    }
+
+    if (this.activeNavigationItem === event.detail.navigationItem) {
+      return;
+    }
+
+    this.activeNavigationItem.expanded = false;
+    this.activeNavigationItem = event.detail.navigationItem;
   }
 }
 

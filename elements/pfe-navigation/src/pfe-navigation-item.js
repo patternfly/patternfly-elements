@@ -25,7 +25,7 @@ class PfeNavigationItem extends PFElement {
   }
 
   get expanded() {
-    return this.tray.hasAttribute("aria-expanded");
+    return this.classList.contains("expanded");
   }
 
   set expanded(val) {
@@ -54,15 +54,23 @@ class PfeNavigationItem extends PFElement {
         this.tray.removeAttribute("aria-expanded");
       }
     }
+
+    this.dispatchEvent(
+      new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
+        detail: { navigationItem: this, expanded: this.expanded },
+        bubbles: true,
+        composed: true
+      })
+    );
   }
 
   static get iconSVG() {
     return {
-        bento: "<svg width='19px' height='19px' viewBox='0 0 19 19' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Icon' fill='#FFFFFF'><rect id='Rectangle' x='14' y='14' width='5' height='5'></rect><rect id='Rectangle' x='7' y='14' width='5' height='5'></rect><rect id='Rectangle' x='0' y='14' width='5' height='5'></rect><rect id='Rectangle' x='14' y='7' width='5' height='5'></rect><rect id='Rectangle' x='7' y='7' width='5' height='5'></rect><rect id='Rectangle' x='0' y='7' width='5' height='5'></rect><rect id='Rectangle' x='14' y='0' width='5' height='5'></rect><rect id='Rectangle' x='7' y='0' width='5' height='5'></rect><rect id='Rectangle' x='0' y='0' width='5' height='5'></rect></g></g></svg>",
-        globe: "",
-        menu: "",
-        search: "",
-        user: ""
+        bento:  "<g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Icon' fill='#FFFFFF'><rect id='Rectangle' x='14' y='14' width='5' height='5'></rect><rect id='Rectangle' x='7' y='14' width='5' height='5'></rect><rect id='Rectangle' x='0' y='14' width='5' height='5'></rect><rect id='Rectangle' x='14' y='7' width='5' height='5'></rect><rect id='Rectangle' x='7' y='7' width='5' height='5'></rect><rect id='Rectangle' x='0' y='7' width='5' height='5'></rect><rect id='Rectangle' x='14' y='0' width='5' height='5'></rect><rect id='Rectangle' x='7' y='0' width='5' height='5'></rect><rect id='Rectangle' x='0' y='0' width='5' height='5'></rect></g></g>",
+        globe:  "<g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Icon' transform='translate(1.000000, 1.000000)' stroke='#FFFFFF'><circle id='Oval' cx='9.5' cy='9.5' r='9.5'></circle><ellipse id='Oval' cx='9.5' cy='9.5' rx='4.75' ry='9.5'></ellipse><path d='M9.5,0 L9.5,19' id='Path'></path><path d='M1,14 L18,14' id='Path'></path><path d='M0,9.5 L19,9.5' id='Path'></path><path d='M1,5 L18,5' id='Path'></path></g></g>",
+        menu:   "<g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Icon' fill='#FFFFFF' stroke='#FFFFFF'><rect id='Rectangle' x='0.5' y='14.5' width='22' height='3'></rect><rect id='Rectangle' x='0.5' y='7.5' width='22' height='3'></rect><rect id='Rectangle' x='0.5' y='0.5' width='22' height='3'></rect></g></g>",
+        search: "<g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Icon' transform='translate(1.000000, 1.000000)' stroke='#FFFFFF'><path d='M12,13 L18,19' id='Path' stroke-linecap='round'></path><ellipse id='Oval' cx='7' cy='7.5' rx='7' ry='7.5'></ellipse></g></g>",
+        user:   "<g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' stroke-linecap='round'><g id='Icon' transform='translate(1.000000, 1.000000)' stroke='#FFFFFF'><path d='M0,19 C0,13.75 4.25,9.5 9.5,9.5 C14.75,9.5 19,13.75 19,19' id='Path'></path><circle id='Oval' cx='9.5' cy='4.75' r='4.75'></circle></g></g>"
     };
   }
 
@@ -73,23 +81,25 @@ class PfeNavigationItem extends PFElement {
 
   constructor() {
     super(PfeNavigationItem, { type: PfeNavigationItem.PfeType });
+
     this._clickHandler = this._clickHandler.bind(this);
+    this._keydownHandler = this._keydownHandler.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
+    // Get the ShadowDOM tray wrapper from the template
+    this.tray = this.shadowRoot.querySelector(".pfe-navigation-item--wrapper");
     // Attach a trigger property to the component with the trigger slot
     this.trigger = this.querySelector('[slot="pfe-navigation-item--trigger"]')
     // Attach a tray property to the component with the trigger slot
     this.lightDomTray = this.querySelector('[slot="pfe-navigation-item--tray"]');
-    // Get the ShadowDOM tray wrapper from the template
-    this.tray = this.shadowRoot.querySelector(".pfe-navigation-item--wrapper");
     // Initialize expanded to false
     this.expanded = false;
 
     // If the role attribute has not been provided, attach it to the trigger
-    if (this.trigger && !this.trigger.hasAttribute("role")) {
+    if (this.tray && this.trigger && !this.trigger.hasAttribute("role")) {
       this.trigger.setAttribute("role", "button");
     }
 
@@ -98,10 +108,13 @@ class PfeNavigationItem extends PFElement {
       this.lightDomTray.removeAttribute("hidden");
     }
 
-    // Attach an on click listener
-    this.addEventListener("click", this._clickHandler);
-    // Attach an on keydown listener
-    this.addEventListener("keydown", this._keydownHandler);
+    // Only attach event listeners if the tray exists
+    if (this.tray) {
+      // Attach an on click listener
+      this.addEventListener("click", this._clickHandler);
+      // Attach an on keydown listener
+      this.addEventListener("keydown", this._keydownHandler);
+    }
 
     // Copy the content of the trigger slot into the ShadowDOM
     const lightTrigger = this.querySelector('[slot="pfe-navigation-item--trigger"]');
@@ -118,8 +131,12 @@ class PfeNavigationItem extends PFElement {
       const iconName = this.getAttribute("pfe-icon");
       // If an icon string is returned and that string is part of the stored SVGs
       if(iconName && this._pfeClass.iconSVG[iconName]) {
-        // Parse the string of SVG into an SVG object
-        let svg = document.createElement("span");
+        // Build the SVG into an object
+        let svg = document.createElement("svg");
+        svg.version = "1.1";
+        svg.xmlns = "http://www.w3.org/2000/svg";
+        svg["xmlns:xlink"] = "http://www.w3.org/1999/xlink";
+        // Add an icon class to the svg
         svg.classList.add("pfe-navigation-item--icon");
         svg.innerHTML = this._pfeClass.iconSVG[iconName];
         if(this.trigger) {
@@ -129,25 +146,11 @@ class PfeNavigationItem extends PFElement {
     }
   }
 
-  _clickHandler(event) {
-    event.preventDefault();
-
-    if (event.target === this.trigger) {
-      this.expanded = !this.expanded;
-
-      this.dispatchEvent(
-        new CustomEvent(`${PfeNavigationItem.tag}:active`, {
-          detail: { expanded: this.expanded },
-          bubbles: true,
-          composed: true
-        })
-      );
-    }
-  }
-
   disconnectedCallback() {
-    this.removeEventListener("click", this._changeHandler);
-    this.removeEventListener("keydown", this._keydownHandler);
+    if (this.tray) {
+      this.removeEventListener("click", this._changeHandler);
+      this.removeEventListener("keydown", this._keydownHandler);
+    }
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -160,6 +163,36 @@ class PfeNavigationItem extends PFElement {
       let observer = this[this[attr].observer].bind(this);
       // If it's a function, allow it to run
       if (typeof observer === "function") observer(attr, oldValue, newValue);
+    }
+  }
+
+  _clickHandler(event) {
+    event.preventDefault();
+    debugger;
+    console.log(event);
+    if (event.target === this.trigger) {
+      event.preventDefault();
+      this.expanded = !this.expanded;
+    }
+  }
+
+  _keydownHandler(event) {
+    switch (event.key) {
+      case "Spacebar":
+      case " ":
+        event.preventDefault();
+        this.expanded = !this.expanded;
+        break;
+      case "Esc":
+      case "Escape":
+        event.preventDefault();
+        this.expanded = false;
+        if (this.trigger) {
+          this.trigger.focus();
+        }
+        break;
+      default:
+        return;
     }
   }
 

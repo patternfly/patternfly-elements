@@ -1,4 +1,5 @@
 import PFElement from "../pfelement/pfelement.js";
+import PfeNavigationItem from "./pfe-navigation-item.js";
 
 const KEYCODE = {
   ENTER: 13,
@@ -41,13 +42,13 @@ class PfeNavigation extends PFElement {
     super.connectedCallback();
 
     // Get the trigger slot
-    // const trigger = 
+    // const trigger =
     // Register click event on the trigger slot
     // this.addEventListener("click", this._clickHandler);
 
     // this.addEventListener(`${PfeNavigation.tag}:active`, this._changeHandler);
     // this.addEventListener("keydown", this._keydownHandler);
-    
+
 
     // this.setAttribute("role", "presentation");
     // this.setAttribute("defined", "");
@@ -57,7 +58,7 @@ class PfeNavigation extends PFElement {
     event.preventDefault();
     // Check that the event fired is from the trigger slot
     if (event.target.getAttribute("slot") === "pfe-navigation--trigger") {
-      
+
       // Open the tray if it's not open, close if it is
     }
     // If the event is fired from the tray

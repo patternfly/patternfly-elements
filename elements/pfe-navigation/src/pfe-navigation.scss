@@ -11,6 +11,10 @@
 :host {
 	display: block;
 	width: 100%;
-	background-color: #{pfe-color(surface--darkest)};
+
 }
 
+
+:host([color="darkest"]) {
+	background-color: #{pfe-color(surface--darkest)};
+}

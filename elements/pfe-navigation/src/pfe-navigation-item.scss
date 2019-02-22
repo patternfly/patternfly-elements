@@ -6,14 +6,10 @@
 
 
 /// ===========================================================================
-/// DEFUALT nav-item
+/// DEFAULT nav-item
 /// ===========================================================================
 :host {
-	--pfe-nav-item--main:        #{pfe-color(text)};              // text
-	--pfe-nav-item--main--hover: #{pfe-color(text--on-dark)};     // text hover
 
-	--pfe-nav-item--aux:         transparent;                     // bg 
-	--pfe-nav-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
 }
 
 /// ===========================================================================
@@ -30,6 +26,12 @@
 /// ===========================================================================
 :host {
 	@media (min-width: #{pfe-breakpoint(md)}) {
+		--pfe-nav-item--main:        #{pfe-color(text)};              // text
+		--pfe-nav-item--main--hover: #{pfe-color(text--on-dark)};     // text hover
+
+		--pfe-nav-item--aux:         transparent;                     // bg 
+		--pfe-nav-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
+
 	    display: inline-block;
 	    font-weight: bold;
 	    font-family: #{pfe-var(font-family)};
@@ -45,7 +47,7 @@
 	  
 		    // COLOR
 		    border-top:       transparent solid 2px;
-			color:            var(--pfe-nav-item--main);   //text
+			color:            var(--pfe-nav-item--main); //text
 			background:       var(--pfe-nav-item--aux);  //bg
 		}
 

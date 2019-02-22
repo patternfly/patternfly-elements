@@ -12,17 +12,18 @@
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <!-- <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>
       require([
         '../../pfe-band/pfe-band.umd.js',
         '../pfe-navigation.umd.js',
-        '../pfe-navigation-item.umd.js'
+        '../pfe-navigation-item.js'
       ])
 
-    </script>
+    </script> -->
+    <script type="module" src="../pfe-navigation.js"></script>
   </head>
 
   <body unresolved >
@@ -78,7 +79,7 @@
     <hr/>
 
     <h1>&lt;pfe-navigation-item on='dark'&gt;</h1>
-    <pfe-navigation>
+    <pfe-navigation color="darkest">
       <pfe-navigation-item on="dark" pfe-icon="login-icon">
         <!-- Account log in toggle & menu-->
         <a slot="pfe-navigation-item--trigger" href="#url-to-login-landing-page">Log in</a>

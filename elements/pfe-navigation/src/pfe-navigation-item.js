@@ -117,32 +117,41 @@ class PfeNavigationItem extends PFElement {
     }
 
     // Copy the content of the trigger slot into the ShadowDOM
-    const lightTrigger = this.querySelector('[slot="pfe-navigation-item--trigger"]');
-    const shadowTrigger = this.shadowRoot.querySelector('[name="pfe-navigation-item--trigger"]')
-    // If the slot and contents exist, append the fragment to the DOM
-    if(lightTrigger && shadowTrigger) {
-      lightTrigger.classList.add("pfe-navigation-item__text");
-      lightTrigger.removeAttribute("slot");
-      shadowTrigger.appendChild(lightTrigger);
+    const slots = {
+      "[slot=\"pfe-navigation-item--trigger\"]": "[name=\"pfe-navigation-item--trigger\"]"
+    };
+
+    this._pfeClass.moveToShadowDOM(slots, this);
+
+    const shadowTrigger = this.shadowRoot.querySelector("[name=\"pfe-navigation-item--trigger\"]");
+    // Find and remove the slot from the trigger's child
+    if(this.trigger) {
+      this.trigger.classList.add("pfe-navigation-item__button");
+      this.trigger.removeAttribute("slot");
     }
 
-    // Add the icon to the trigger if the property has been set
-    if(this.hasAttribute("pfe-icon")) {
-      const iconName = this.getAttribute("pfe-icon");
-      // If an icon string is returned and that string is part of the stored SVGs
-      if(iconName && this._pfeClass.iconSVG[iconName]) {
-        // Build the SVG into an object
-        let svg = document.createElement("svg");
-        svg.version = "1.1";
-        svg.xmlns = "http://www.w3.org/2000/svg";
-        svg["xmlns:xlink"] = "http://www.w3.org/1999/xlink";
-        // Add an icon class to the svg
-        svg.classList.add("pfe-navigation-item--icon");
-        svg.innerHTML = this._pfeClass.iconSVG[iconName];
-        if(this.trigger) {
-          this.trigger.insertBefore(svg, this.trigger.firstChild);
+    // Create a span tag to wrap the link text in
+    const textWrapper = document.createElement("span");
+    textWrapper.classList.add("pfe-navigation-item__text")
+    const linkElement = this.shadowRoot.querySelector(".pfe-navigation-item__button");
+    if(linkElement) {
+      textWrapper.innerText = linkElement.innerText;
+      linkElement.innerText = "";
+
+      // Add the icon to the trigger if the property has been set
+      if(this.hasAttribute("pfe-icon")) {
+        const iconName = this.getAttribute("pfe-icon");
+        // If an icon string is returned and that string is part of the stored SVGs
+        if(iconName && this._pfeClass.iconSVG[iconName]) {
+          // Build the SVG into an object
+          let svg = this._buildSVG(iconName, "pfe-navigation-item__icon");
+          if(shadowTrigger) {
+            linkElement.append(svg);
+          }
         }
       }
+
+      linkElement.append(textWrapper);
     }
   }
 
@@ -164,6 +173,20 @@ class PfeNavigationItem extends PFElement {
       // If it's a function, allow it to run
       if (typeof observer === "function") observer(attr, oldValue, newValue);
     }
+  }
+
+  _buildSVG(icon, className = "") {
+    let svg = document.createElement("svg");
+    svg.setAttribute("width", "19px");
+    svg.setAttribute("height", "19px");
+    svg.setAttribute("viewBox", "0 0 19 19");
+    svg.setAttribute("version", "1.1");
+    svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+    // Add an icon class to the svg
+    svg.classList.add(className);
+    svg.innerHTML = this._pfeClass.iconSVG[icon];
+    return svg;
   }
 
   _clickHandler(event) {

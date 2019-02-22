@@ -9,8 +9,23 @@
 /// DEFAULT navigation
 /// ===========================================================================
 :host {
+	position: relative;
+	top: 0;
+	left: 0;
 	display: block;
 	width: 100%;
-	background-color: #{pfe-color(surface--darkest)};
+
+	background-color: #{pfe-local(BackgroundColor)};
 }
 
+.pfe-navigation {
+	&--container {
+		@extend %default-container !optional;
+	}
+}
+
+@each $color in (darker, darkest, accent, complement, lighter, lightest) {
+  :host([pfe-color="#{$color}"]) {
+	--pfe-band--BackgroundColor: #{pfe-color(surface--#{$color})};
+  }
+}

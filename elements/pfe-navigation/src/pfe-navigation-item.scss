@@ -25,16 +25,21 @@ $pfe-nav-size: 4em;
 /// DESKTOP
 /// ===========================================================================
 :host {
+  font-family: #{pfe-var(font-family)};
+
+	::slotted(a) {
+		@include pfe-expand-button;
+	}
+
 	@media (min-width: #{pfe-breakpoint(md)}) {
 		--pfe-nav-item--main:        #{pfe-color(text)};              // text
 		--pfe-nav-item--main--hover: #{pfe-color(text--on-dark)};     // text hover
 
-		--pfe-nav-item--aux:         transparent;                     // bg 
+		--pfe-nav-item--aux:         transparent;                     // bg
 		--pfe-nav-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
 
 		display: block;
 	    font-weight: bold;
-	    font-family: #{pfe-var(font-family)};
 	    font-weight: 300;
 	    min-height: $pfe-nav-size;
 		
@@ -68,10 +73,14 @@ $pfe-nav-size: 4em;
 
 		    line-height: $pfe-nav-size;
 		    transition: all #{pfe-var(animation-timing)};
+
 		    padding: 0 calc(#{pfe-var(container-padding)} * 1);
 	    }
 		::slotted(a) {
 		    text-decoration: none;
+		    //padding: calc(#{pfe-var(container-padding)} * 2)
+		    //         calc(#{pfe-var(container-padding)} * 1);
+
 		    border-top:       transparent solid 2px;
 			color:            var(--pfe-nav-item--main); //text
 			background:       var(--pfe-nav-item--aux);  //bg
@@ -110,8 +119,11 @@ $pfe-nav-size: 4em;
 		--pfe-nav-item--main:        #{pfe-color(text--on-dark)};      // text
 		--pfe-nav-item--main--hover: #{pfe-color(text)};               // text hover
 
-		--pfe-nav-item--aux:         transparent;                      // bg 
+		--pfe-nav-item--aux:         transparent;                      // bg
 		--pfe-nav-item--aux--hover:  #{pfe-color(surface--lightest)};  // bg hover
-	}                  
+	}
 }
 
+.hide {
+	display: none;
+}

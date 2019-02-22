@@ -32,21 +32,38 @@ $LOCAL: navigation;
   }
 }
 
-@each $slot in (skip, logo, main, utility) {
+@each $slot in (skip, logo) {
+	@include pfe-slot("pfe-navigation--#{$slot}") {
+		grid-area: $slot;
+	}
 }
 
 @include pfe-slot("pfe-navigation--skip") {
-    position: absolute;
-    left: -999px;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    z-index: -999;
+	@include pfe-sr-only;
 }
 
 .pfe-navigation {
-	&--container {
-		@extend %default-container !optional;
+	&__container {
+		display: grid;
+		grid-template-areas: "logo main main main utility";
+		grid-template-rows: 1fr;
+	}
+	&__main {
+		grid-area: main;
+	}
+	&__main,
+	&__utility {
+		&,
+		nav, 
+		ul {
+			display: flex;
+			flex-flow: row nowrap;
+		}
+		ul {
+			@include pfe-reset-list;
+		}
+	}
+	&__utility {
+		grid-area: utility;
 	}
 }

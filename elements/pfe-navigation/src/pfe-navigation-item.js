@@ -24,6 +24,16 @@ class PfeNavigationItem extends PFElement {
     return "pfe-navigation-item.scss";
   }
 
+  static get icons() {
+      return {
+          bento: "<svg width='19px' height='19px' viewBox='0 0 19 19' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Icon' fill='#FFFFFF'><rect id='Rectangle' x='14' y='14' width='5' height='5'></rect><rect id='Rectangle' x='7' y='14' width='5' height='5'></rect><rect id='Rectangle' x='0' y='14' width='5' height='5'></rect><rect id='Rectangle' x='14' y='7' width='5' height='5'></rect><rect id='Rectangle' x='7' y='7' width='5' height='5'></rect><rect id='Rectangle' x='0' y='7' width='5' height='5'></rect><rect id='Rectangle' x='14' y='0' width='5' height='5'></rect><rect id='Rectangle' x='7' y='0' width='5' height='5'></rect><rect id='Rectangle' x='0' y='0' width='5' height='5'></rect></g></g></svg>",
+          globe: "",
+          menu: "",
+          search: "",
+          user: ""
+      }
+  }
+
   get expanded() {
     return this.classList.contains("expanded");
   }
@@ -150,15 +160,19 @@ class PfeNavigationItem extends PFElement {
 
   // Update the icon attribute and return the SVG
   _updateIcon(attr, oldValue, newValue){
-    switch (newValue) {
-      case "Search":
+    switch (newValue.toLowerCase()) {
+      case "search":
         // Get the search SVG
-      case "Globe":
+        return this.icon.search;
+      case "globe":
         // Get the globe SVG
-      case "Person":
+        return this.icon.globe;
+      case "user":
         // Get the person SVG
-      case "App":
+        return this.icon.user;
+      case "bento":
         // Get the person SVG
+        return this.icon.bento;
       default:
         // @TODO is there a default icon?
     }

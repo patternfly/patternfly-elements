@@ -27,7 +27,7 @@
   <body unresolved>
     <h1>&lt;pfe-navigation&gt;</h1>
 
-    <pfe-navigation pfe-color="lightest">
+    <pfe-navigation pfe-color="darkest">
       <div slot="pfe-navigation--skip">
         <a href="#rh-main-content">Skip to content</a>
       </div>
@@ -37,7 +37,7 @@
       </div>
 
       <!-- Search -->
-      <pfe-navigation-item slot="pfe-navigation--utility" pfe-icon="search">
+      <pfe-navigation-item on="dark" slot="pfe-navigation--utility" pfe-icon="search">
         <a slot="pfe-navigation-item--trigger" href="#url-to-search-page">Search</a>
         <p slot="pfe-navigation-item--tray">
           <a>Search</a>
@@ -47,7 +47,7 @@
       <nav slot="pfe-navigation--main" id="rh-main-nav" aria-label="Main">
         <ul>
           <li>
-            <pfe-navigation-item>
+            <pfe-navigation-item on="dark">
               <a slot="pfe-navigation-item--trigger" href="/products">Products</a>
 
               <div slot="pfe-navigation-item--tray" hidden>
@@ -76,7 +76,7 @@
             </pfe-navigation-item>
           </li>
           <li>
-            <pfe-navigation-item>
+            <pfe-navigation-item on="dark">
               <a slot="pfe-navigation-item--trigger" href="/solutions">Solutions</a>
               <div slot="pfe-navigation-item--tray" hidden>
                 <pfe-link-list role="region">
@@ -92,12 +92,12 @@
             </pfe-navigation-item>
           </li>
           <li>
-            <pfe-navigation-item>
+            <pfe-navigation-item on="dark">
               <a slot="pfe-navigation-item--trigger" href="#">Services &amp; support</a>
             </pfe-navigation-item>
           </li>
           <li>
-            <pfe-navigation-item>
+            <pfe-navigation-item on="dark">
               <a href="#">Resources</a>
             </pfe-navigation-item>
           </li>
@@ -105,7 +105,7 @@
       </nav>
 
       <!-- Account log in toggle & menu-->
-      <pfe-navigation-item slot="pfe-navigation--utility" pfe-icon="login-icon">
+      <pfe-navigation-item on="dark" slot="pfe-navigation--utility" pfe-icon="login-icon">
         <a slot="pfe-navigation-item--trigger" href="#url-to-login-landing-page">Log in</a>
         <div slot="pfe-navigation-item--tray" hidden>
           <div pfe-navigation-item--tray-region="main">
@@ -132,7 +132,7 @@
       </pfe-navigation-item>
 
       <!-- Language toggle & menu -->
-      <pfe-navigation-item slot="pfe-navigation--utility" pfe-icon="globe">
+      <pfe-navigation-item on="dark" slot="pfe-navigation--utility" pfe-icon="globe">
         <a slot="pfe-navigation-item--trigger" href="#url-to-language-page">English</a>
         <div slot="pfe-navigation-item--tray">
           custom code to do this thing
@@ -140,7 +140,7 @@
       </pfe-navigation-item>
 
       <!-- Apps & Websites -->
-      <pfe-navigation-item slot="pfe-navigation--utility" pfe-icon="apps">
+      <pfe-navigation-item on="dark" slot="pfe-navigation--utility" pfe-icon="apps">
         <a slot="pfe-navigation-item--trigger" href="url-to-rh-websites-page">Apps &amp; Websites</a>
         <div slot="pfe-navigation-item--tray">
           custom code to do this thing
@@ -148,53 +148,7 @@
       </pfe-navigation-item>
     </pfe-navigation>
 
-    <hr/>
 
-    <h1>&lt;pfe-navigation on='dark'&gt;</h1>
-    <pfe-navigation>
-      <pfe-navigation-item on="dark" pfe-icon="login-icon">
-        <!-- Account log in toggle & menu-->
-        <a slot="pfe-navigation-item--trigger" href="#url-to-login-landing-page">Log in</a>
-        <div slot="pfe-navigation-item--tray" hidden>
-          <div pfe-navigation-item--tray-region="main">
-            <pfe-link-list role="region">
-              <h2><a href="#">Flagship Products</a></h2>
-              <ul>
-                <li><a href="#">Awesome</a></li>
-                <li><a href="#">So good</a></li>
-              </ul>
-            </pfe-link-list>
-            <pfe-link-list role="region">
-              <h2><a href="#">Collaborations</a></h2>
-              <ul>
-                <li><a href="#">Collab #1</a></li>
-                <li><a href="#">Collab #2</a></li>
-              </ul>
-            </pfe-link-list>
-          </div>
-          <aside pfe-navigation-item--tray-region="aside">Promo with captions, fancy other stuff</aside>
-          <footer pfe-navigation-item--tray-region="footer" class>
-            <pfe-cta>link</pfe-cta>
-          </footer>
-        </div>
-      </pfe-navigation-item>
-
-      <pfe-navigation-item on="dark" pfe-icon="globe">
-        <!-- Language toggle & menu -->
-        <a slot="pfe-navigation-item--trigger" href="#url-to-language-page">English</a>
-        <div slot="pfe-navigation-item--tray">
-          custom code to do this thing
-        </div>
-      </pfe-navigation-item>
-
-      <pfe-navigation-item on="dark" pfe-icon="apps">
-        <!-- Apps & Websites -->
-        <a slot="pfe-navigation-item--trigger" href="url-to-rh-websites-page">Apps &amp; Websites</a>
-        <div slot="pfe-navigation-item--tray">
-          custom code to do this thing
-        </div>
-      </pfe-navigation-item>
-    </pfe-navigation>
 
   </body>
 

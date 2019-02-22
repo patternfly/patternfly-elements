@@ -3,7 +3,7 @@
 /// ===========================================================================
 /// Component Specific SASS Vars
 /// ===========================================================================
-
+$pfe-nav-size: 4em;
 
 /// ===========================================================================
 /// DEFAULT nav-item
@@ -28,7 +28,7 @@
   font-family: #{pfe-var(font-family)};
 
 	::slotted(a) {
-		@include pfe-expand-button;
+		//@include pfe-expand-button;
 	}
 
 	@media (min-width: #{pfe-breakpoint(md)}) {
@@ -38,30 +38,58 @@
 		--pfe-nav-item--aux:         transparent;                     // bg
 		--pfe-nav-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
 
-	    display: inline-block;
+		display: block;
 	    font-weight: bold;
 	    font-weight: 300;
+	    min-height: $pfe-nav-size;
+		
+		//border: green solid 1px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		.pfe-navigation-item--button {
+			//border: orange solid 1px;
 
-		::slotted(a) {
-			display: block;
-		    line-height: inherit;
+	    	flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+		.pfe-navigation-item--icon {
+			//border: pink solid 1px;
+			margin: 0;
+		}
+		.pfe-navigation-item--text {
+			//border: green solid 1px;
+			margin: 0;
+			color:            var(--pfe-nav-item--main); //maybe temporary?
+			background:       var(--pfe-nav-item--aux); 
+		}
+	    ::slotted([slot="pfe-navigation-item--trigger"]) {
+	    	padding: 0 calc(#{pfe-var(container-padding)} * 1);
+		    line-height: $pfe-nav-size;
+
 		    transition: all #{pfe-var(animation-timing)};
-		    padding: calc(#{pfe-var(container-padding)} * 2)
-		             calc(#{pfe-var(container-padding)} * 1);
+	    }
+		::slotted(a) {
+			cursor: pointer;
 		    text-decoration: none;
-
-		    // COLOR
 		    border-top:       transparent solid 2px;
 			color:            var(--pfe-nav-item--main); //text
 			background:       var(--pfe-nav-item--aux);  //bg
 		}
-
 		::slotted(a:hover) {
 		    border-top-color: #{pfe-color(surface--accent)};
 		    background:       var(--pfe-nav-item--aux--hover);
 		    color:            var(--pfe-nav-item--main--hover);
 		}
-
+		::slotted(a:active) {
+		    border-top-color: #{pfe-color(surface-accent)};
+		    background:       var(--pfe-nav-item--aux--hover);
+		    color:            var(--pfe-nav-item--main--hover);
+		}
 		::slotted(a:focus) {
 		    border-top-color: #{pfe-color(surface-accent)};
 		    background:       var(--pfe-nav-item--aux--hover);
@@ -70,12 +98,6 @@
 		}
 		::slotted(a:focus:not(:focus-visible)) {
 			outline: none; // removes outline for mouse users, preserves it for keyboard users
-		}
-
-		::slotted(a:active) {
-		    border-top-color: #{pfe-color(surface-accent)};
-		    background:       var(--pfe-nav-item--aux--hover);
-		    color:            var(--pfe-nav-item--main--hover);
 		}
 	}
 }

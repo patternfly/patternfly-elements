@@ -4,7 +4,6 @@
 /// Component Specific SASS Vars
 /// ===========================================================================
 
-$pfe-nav-item__arrow-size:                        0.313em;
 
 /// ===========================================================================
 /// DEFUALT nav-item
@@ -38,7 +37,7 @@ $pfe-nav-item__arrow-size:                        0.313em;
 	}
 
 	::slotted(a:hover) {
-	    border-top-color: red;
+	    border-top-color: #{pfe-color(surface--accent)};
 	    background:       var(--pfe-nav-item--aux--hover);
 	    color:            var(--pfe-nav-item--main--hover);
 	}
@@ -47,6 +46,11 @@ $pfe-nav-item__arrow-size:                        0.313em;
 	    border-top-color: #{pfe-color(surface-accent)};
 	    background:       var(--pfe-nav-item--aux--hover);
 	    color:            var(--pfe-nav-item--main--hover);
+
+	}
+	::slotted(a:focus:not(:focus-visible)) {
+		outline: none; // removes outline for mouse users, preserves it for keyboard users
+		background: pink !important;
 	}
 
 	::slotted(a.active) {

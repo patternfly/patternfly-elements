@@ -63,9 +63,27 @@ class PfeNavigationItem extends PFElement {
     }
   }
 
-  _moveElement(attr, oldValue, newValue){
-    // Move the element into the region defined by the attribute
-    // this context = the element on which the changed attribute exists
+  _moveElements() {
+    //   <section pfe-nav-item--tray-region="main" class="pile-o-links  pfe-l-grid …">
+    //   <pfe-link-list role="region">
+    //     <h2><a href="#">Flagship Products</a></h2>
+    //     <ul>
+    //       <li><a href="#">Awesome</a></li>
+    //       <li><a href="#">So good</a></li>
+    //     </ul>
+    //   </pfe-link-list>
+    //   <pfe-link-list role="region">
+    //     <h2><a href="#">Collaborations</a></h2>
+    //     <ul>
+    //       <li><a href="#">Collab #1</a></li>
+    //       <li><a href="#">Collab #2</a></li>
+    //     </ul>
+    //   </pfe-link-list>
+    // </section>
+    // <aside pfe-nav-item--tray-region="aside">Promo with captions, fancy other stuff</aside>
+    // <footer pfe-nav-item--tray-region="footer" class>
+    //   <pfe-cta>link</pfe-cta>
+    // </footer>
   }
 
   // disconnectedCallback() {}

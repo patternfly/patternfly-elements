@@ -50,7 +50,7 @@ $LOCAL: navigation;
 	}
 
 	// Border styles
-	border: #{pfe-local(Border)};
+	//border: #{pfe-local(Border)};
 
 	// Set the defaults for look and feel
 	@media (min-width: #{pfe-breakpoint(md)}) {

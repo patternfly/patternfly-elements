@@ -298,7 +298,8 @@ module.exports = function factory({
       "minify:css",
       "merge",
       ...precompile,
-      parallel("compile", "bundle")
+      "compile",
+      "bundle"
     )
   );
 

@@ -5,27 +5,27 @@ import { uglify } from "rollup-plugin-uglify";
 import { terser } from "rollup-plugin-terser";
 
 function esmConfig({ elementName, className } = {}) {
+  const esmFilename = `${elementName}.js`;
+
   return {
-    input: `${elementName}.js`,
+    input: esmFilename,
     output: {
-      file: `${elementName}.js`,
+      file: esmFilename,
       format: "esm",
       sourcemap: true
     },
-    plugins: [
-      resolve(),
-      commonjs(),
-      // terser()
-    ],
+    plugins: [resolve(), commonjs(), terser()],
     external: id => id.startsWith("..")
   };
 }
 
 function umdConfig({ elementName, className } = {}) {
+  const umdFilename = `${elementName}.umd.js`;
+
   return {
-    input: `${elementName}.umd.js`,
+    input: umdFilename,
     output: {
-      file: `${elementName}.umd.js`,
+      file: umdFilename,
       format: "umd",
       sourcemap: true,
       name: className
@@ -33,49 +33,9 @@ function umdConfig({ elementName, className } = {}) {
     plugins: [
       resolve(),
       commonjs(),
-      babel(),
-      // uglify()
-    ],
-    external: id => id.startsWith("..")
-  };
-}
-
-function esmMinify({ elementName, className } = {}) {
-  return {
-    input: `${elementName}.js`,
-    output: {
-      file: `${elementName}.min.js`,
-      format: "esm",
-      sourcemap: false
-    },
-    plugins: [
-      terser({
-        output: {
-          comments: function(node, comment) {
-            var text = comment.value;
-            var type = comment.type;
-            if (type == "comment2") {
-              // multiline comment
-              return /@preserve|@license|@cc_on/i.test(text);
-            }
-          }
-        }
-      })
-    ],
-    external: id => id.startsWith("..")
-  };
-}
-
-function umdMinify({ elementName, className } = {}) {
-  return {
-    input: `${elementName}.umd.js`,
-    output: {
-      file: `${elementName}.umd.min.js`,
-      format: "umd",
-      sourcemap: false,
-      name: className
-    },
-    plugins: [
+      babel({
+        // exclude: "node_modules/**" // only transpile our source code
+      }),
       uglify()
     ],
     external: id => id.startsWith("..")
@@ -85,8 +45,6 @@ function umdMinify({ elementName, className } = {}) {
 export default function factory({ elementName, className } = {}) {
   return [
     esmConfig({ elementName, className }),
-    umdConfig({ elementName, className }),
-    esmMinify({ elementName, className }),
-    umdMinify({ elementName, className })
+    umdConfig({ elementName, className })
   ];
 }

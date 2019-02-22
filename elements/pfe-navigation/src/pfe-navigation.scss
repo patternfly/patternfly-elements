@@ -1,5 +1,6 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: navigation;
 /// ===========================================================================
 /// Component Specific SASS Vars
 /// ===========================================================================
@@ -9,6 +10,8 @@
 /// DEFAULT navigation
 /// ===========================================================================
 :host {
+	// Darkest is the default background color
+	--pfe-navigation--BackgroundColor: #{pfe-color(surface--darkest)};
 	position: relative;
 	top: 0;
 	left: 0;
@@ -26,6 +29,6 @@
 
 @each $color in (darker, darkest, accent, complement, lighter, lightest) {
   :host([pfe-color="#{$color}"]) {
-	--pfe-band--BackgroundColor: #{pfe-color(surface--#{$color})};
+	--pfe-navigation--BackgroundColor: #{pfe-color(surface--#{$color})};
   }
 }

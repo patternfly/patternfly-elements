@@ -5,11 +5,7 @@ module.exports = function factory({
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
 
-  const browser_support = [
-    "last 2 versions",
-    "Firefox > 40",
-    "iOS > 5"
-  ];
+  const browser_support = ["last 2 versions", "Firefox > 40", "iOS > 5"];
 
   const paths = {
     source: "./src",
@@ -34,7 +30,7 @@ module.exports = function factory({
   const sass = require("gulp-sass");
   sass.compiler = require("node-sass");
 
-  const postcss = require('gulp-postcss');
+  const postcss = require("gulp-postcss");
   const sourcemaps = require("gulp-sourcemaps");
   const autoprefixer = require("autoprefixer");
   const cleanCSS = require("gulp-clean-css");
@@ -46,89 +42,99 @@ module.exports = function factory({
 
   // Compile the sass into css, compress, autoprefix
   task("compile:sass", () => {
-    return src("*.{scss,css}", {
-      cwd: paths.source
-    })
-      .pipe(sourcemaps.init())
-      // Compile the Sass into CSS
-      .pipe(
-        sass({
-          outputStyle: "expanded"
-        }).on("error", sass.logError)
-      )
-      // Adds autoprefixing to the compiled sass
-      .pipe(
-        postcss([
-          postcssCustomProperties(),
-          autoprefixer(browser_support)
-        ])
-      )
-      // Write the sourcemap
-      .pipe(sourcemaps.write(paths.compiled))
-      // Output the unminified file
-      .pipe(dest(paths.compiled));
+    return (
+      src("*.{scss,css}", {
+        cwd: paths.source
+      })
+        .pipe(sourcemaps.init())
+        // Compile the Sass into CSS
+        .pipe(
+          sass({
+            outputStyle: "expanded"
+          }).on("error", sass.logError)
+        )
+        // Adds autoprefixing to the compiled sass
+        .pipe(
+          postcss([postcssCustomProperties(), autoprefixer(browser_support)])
+        )
+        // Write the sourcemap
+        .pipe(sourcemaps.write(paths.compiled))
+        // Output the unminified file
+        .pipe(dest(paths.compiled))
+    );
   });
 
   task("minify:css", () => {
-    return src(["*.css"], {
-      cwd: paths.compiled
-    })
-      // Minify the file
-      .pipe(
-        cleanCSS({
-          compatibility: "ie11"
-        })
-      )
-      // Add the .min suffix
-      .pipe(rename({
-        suffix: ".min"
-      }))
-      // Output the minified file
-      .pipe(dest(paths.compiled));
+    return (
+      src(["*.css"], {
+        cwd: paths.compiled
+      })
+        // Minify the file
+        .pipe(
+          cleanCSS({
+            compatibility: "ie11"
+          })
+        )
+        // Add the .min suffix
+        .pipe(
+          rename({
+            suffix: ".min"
+          })
+        )
+        // Output the minified file
+        .pipe(dest(paths.compiled))
+    );
   });
 
   task("fallback:css", () => {
     const classRegex = new RegExp(`\.${elementName}__(\w+)(.*){`, "gi");
-    return src(["*.css"], {
-      cwd: paths.compiled
-    })
-      .pipe(
-        replace(/,\s+\:/g, ",\n:")
-      )
-      // Replace host and slot with fallbacks
-      .pipe(
-        replace(/^\s*(:host(\(([^\)]*)\))?)?\s*(::slotted\(([^\)]+)\))?(\s*[{|,])/gmi, `${elementName}$3 $5$6`)
-      )
-      // // Try to approximate class name to possible slot name
-      .pipe(
-        replace(/\.([\w|-]+)__(\w+)(.*){/g, `${elementName}[slot="$1--$2"]$3{`)
-      )
-      // Add the .fallback suffix
-      .pipe(rename({
-        suffix: "-fallback"
-      }))
-      // Output the updated file
-      .pipe(dest(paths.compiled));
+    return (
+      src(["*.css"], {
+        cwd: paths.compiled
+      })
+        .pipe(replace(/,\s+\:/g, ",\n:"))
+        // Replace host and slot with fallbacks
+        .pipe(
+          replace(
+            /^\s*(:host(\(([^\)]*)\))?)?\s*(::slotted\(([^\)]+)\))?(\s*[{|,])/gim,
+            `${elementName}$3 $5$6`
+          )
+        )
+        // // Try to approximate class name to possible slot name
+        .pipe(
+          replace(
+            /\.([\w|-]+)__(\w+)(.*){/g,
+            `${elementName}[slot="$1--$2"]$3{`
+          )
+        )
+        // Add the .fallback suffix
+        .pipe(
+          rename({
+            suffix: "-fallback"
+          })
+        )
+        // Output the updated file
+        .pipe(dest(paths.compiled))
+    );
   });
- 
+
   // Delete the temp directory
   task("clean", () => {
-      return src([
-        `${elementName}*.{js,css,map}`
-      ], {
-        cwd: paths.compiled,
-        read: false,
-        allowEmpty: true
-      })
-        .pipe(clean());
+    return src([`${elementName}*.{js,css,map}`], {
+      cwd: paths.compiled,
+      read: false,
+      allowEmpty: true
+    }).pipe(clean());
   });
 
   // Returns a string with the cleaned up HTML
-  const htmlCompiler = (htmlFile) => {
+  const htmlCompiler = htmlFile => {
     return decomment(
-      fs.readFileSync(htmlFile)
-      .toString()
-      .trim());
+      fs
+        .readFileSync(htmlFile)
+        .toString()
+        .trim()
+    );
   };
 
   const getURLs = (string, types) => {
@@ -169,23 +175,32 @@ module.exports = function factory({
 
             // Check for the html template
             let is_defined = url.template !== null;
-            let file_exists = fs.existsSync(path.join(paths.source, url.template || ""));
+            let file_exists = fs.existsSync(
+              path.join(paths.source, url.template || "")
+            );
             if (is_defined && file_exists) {
               html = htmlCompiler(path.join(paths.source, url.template || ""));
             }
 
             // Check for the stylesheet template
             is_defined = url.style !== null;
-            file_exists = fs.existsSync(path.join(paths.source, url.style || ""));
+            file_exists = fs.existsSync(
+              path.join(paths.source, url.style || "")
+            );
             if (is_defined && file_exists) {
               let result = "";
               // Get the compiled css styles from the source directory
-              let css_styles = path.join(paths.compiled, `${path.basename(url.style, ".scss")}.min.css`);
+              let css_styles = path.join(
+                paths.compiled,
+                `${path.basename(url.style, ".scss")}.min.css`
+              );
               // Read in the content of the compiled file
-              if(fs.existsSync(css_styles)) {
+              if (fs.existsSync(css_styles)) {
                 result = fs.readFileSync(css_styles);
               } else {
-                console.error(`Compiled CSS asset ${css_styles} cannot be found.`);
+                console.error(
+                  `Compiled CSS asset ${css_styles} cannot be found.`
+                );
               }
               // If the string is not empty, add to the results variable
               if (result.toString() !== "") {
@@ -194,7 +209,9 @@ module.exports = function factory({
             }
 
             is_defined = url.schema !== null;
-            file_exists = fs.existsSync(path.join(paths.source, url.schema || ""));
+            file_exists = fs.existsSync(
+              path.join(paths.source, url.schema || "")
+            );
             if (is_defined && file_exists) {
               properties = "{}";
               slots = "{}";
@@ -214,21 +231,21 @@ module.exports = function factory({
             }
 
             let template = classStatement;
-            if(cssResult || html) {
+            if (cssResult || html) {
               template += `
 
   get html() {
     return \`${cssResult}${html}\`;
   }`;
             }
-            if(properties) {
+            if (properties) {
               template += `
 
   static get properties() {
     return ${properties};
   }`;
             }
-            if(slots) {
+            if (slots) {
               template += `
 
   static get slots() {
@@ -254,8 +271,8 @@ module.exports = function factory({
 
   task("compile", () => {
     return src(`${elementName}.js`, {
-        cwd: paths.compiled
-      })
+      cwd: paths.compiled
+    })
       .pipe(
         replace(
           /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
@@ -272,10 +289,21 @@ module.exports = function factory({
 
   task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-  task("build", series("clean", "compile:sass", "fallback:css", "minify:css", "merge", ...precompile, parallel("compile", "bundle")));
+  task(
+    "build",
+    series(
+      "clean",
+      "compile:sass",
+      "fallback:css",
+      "minify:css",
+      "merge",
+      ...precompile,
+      parallel("compile", "bundle")
+    )
+  );
 
   task("watch", () => {
-    return watch(path.join(paths.source, "*"), series("build")); 
+    return watch(path.join(paths.source, "*"), series("build"));
   });
 
   task("dev", parallel("build", "watch"));

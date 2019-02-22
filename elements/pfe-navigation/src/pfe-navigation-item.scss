@@ -1,4 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
+@import "../../pfe-sass/extends/extends";
 
 /// ===========================================================================
 /// Component Specific SASS Vars
@@ -6,21 +7,17 @@
 
 
 /// ===========================================================================
-/// DEFUALT nav-item
+/// DEFAULT nav-item
 /// ===========================================================================
 :host {
-	--pfe-nav-item--main:        #{pfe-color(text)};              // text
-	--pfe-nav-item--main--hover: #{pfe-color(text--on-dark)};     // text hover
 
-	--pfe-nav-item--aux:         transparent;                     // bg
-	--pfe-nav-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
 }
 
 /// ===========================================================================
 /// MOBILE
 /// ===========================================================================
 :host {
-	@media (max-width: $pfe-global--grid-breakpoint--sm--max ) {
+	@media (max-width: #{pfe-breakpoint(md-max)} ) {
 	    display: inline-block;
 	}
 }
@@ -29,10 +26,21 @@
 /// DESKTOP
 /// ===========================================================================
 :host {
+  font-family: #{pfe-var(font-family)};
+
+	::slotted(a) {
+		@include pfe-expand-button;
+	}
+
 	@media (min-width: #{pfe-breakpoint(md)}) {
+		--pfe-nav-item--main:        #{pfe-color(text)};              // text
+		--pfe-nav-item--main--hover: #{pfe-color(text--on-dark)};     // text hover
+
+		--pfe-nav-item--aux:         transparent;                     // bg
+		--pfe-nav-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
+
 	    display: inline-block;
 	    font-weight: bold;
-	    font-family: #{pfe-var(font-family)};
 	    font-weight: 300;
 
 		::slotted(a) {
@@ -45,7 +53,7 @@
 
 		    // COLOR
 		    border-top:       transparent solid 2px;
-			color:            var(--pfe-nav-item--main);   //text
+			color:            var(--pfe-nav-item--main); //text
 			background:       var(--pfe-nav-item--aux);  //bg
 		}
 
@@ -63,10 +71,9 @@
 		}
 		::slotted(a:focus:not(:focus-visible)) {
 			outline: none; // removes outline for mouse users, preserves it for keyboard users
-			background: pink !important;
 		}
 
-		::slotted(a.active) {
+		::slotted(a:active) {
 		    border-top-color: #{pfe-color(surface-accent)};
 		    background:       var(--pfe-nav-item--aux--hover);
 		    color:            var(--pfe-nav-item--main--hover);

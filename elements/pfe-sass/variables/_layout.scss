@@ -1,0 +1,14 @@
+// ========================================================================
+// Grid Breakpoints
+// ========================================================================
+
+$pfe-global--grid-breakpoint--xs: 0 !default;
+$pfe-global--grid-breakpoint--sm: 576px !default;
+$pfe-global--grid-breakpoint--md: 768px !default;
+$pfe-global--grid-breakpoint--lg: 992px !default;
+$pfe-global--grid-breakpoint--xl: 1200px !default;
+
+$pfe-global--grid-breakpoint--xs--max: $pfe-global--grid-breakpoint--sm - 1 !default;
+$pfe-global--grid-breakpoint--sm--max: $pfe-global--grid-breakpoint--md - 1 !default;
+$pfe-global--grid-breakpoint--md--max: $pfe-global--grid-breakpoint--lg - 1 !default;
+$pfe-global--grid-breakpoint--lg--max: $pfe-global--grid-breakpoint--xl - 1 !default;

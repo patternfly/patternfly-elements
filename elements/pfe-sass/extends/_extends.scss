@@ -1,0 +1,111 @@
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+$pfe-expand_button--LineHeight:      1.5;
+$pfe-expand_chevron--size:           0.313em;
+$pfe-expand_chevron--weight:         0.15em;
+$pfe-expand_chevron--placement:      ($pfe-expand_button--LineHeight / 2) - ($pfe-expand_chevron--size / 2);
+$pfe-expand_button--padding-factor:  0.75;
+
+%pfe-expand-button {
+    padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_button--padding-factor});
+    margin: 0;
+    width: 100%;
+    height: auto;
+    border: 1px solid transparent;
+    font-family: inherit;
+    font-size: #{pfe-var(font-size)};
+    line-height: $pfe-expand_button--LineHeight;
+    text-align: left;
+    background: none;
+    cursor: pointer;
+    color: var(--pfe-expanded--aux);
+
+    &:focus {
+      outline: 1px solid var(--pfe-expanded--focus);
+    }
+
+    &::-moz-focus-inner {
+      border: 0;
+    }
+}
+
+%pfe-expand-button-expanded {
+    position: relative;
+    display: block;
+    font-weight: normal;
+    padding-left: calc(#{pfe-var(container-spacer)} * 2.5);
+}
+
+%pfe-expand-button-expanded-false {
+    content: "";
+    position: absolute;
+    left: #{pfe-var(container-spacer)};
+    top: calc((#{pfe-var(container-spacer)} * #{$pfe-expand_button--padding-factor}) + #{$pfe-expand_chevron--placement} );
+    display: block;
+    border-style: solid;
+    border-width: $pfe-expand_chevron--weight $pfe-expand_chevron--weight 0 0;
+    height: $pfe-expand_chevron--size;
+    width: $pfe-expand_chevron--size;
+    text-align: center;
+    transition: transform 0.15s;
+    transform: rotate(45deg);
+}
+
+%pfe-expand-button-expanded-true {
+    content: "";
+    position: absolute;
+    left: #{pfe-var(container-spacer)};
+    top: calc((#{pfe-var(container-spacer)} * #{$pfe-expand_button--padding-factor}) + #{$pfe-expand_chevron--placement} );
+    display: block;
+    width: $pfe-expand_chevron--size;
+    height: $pfe-expand_chevron--size;
+    border-style: solid;
+    border-width: $pfe-expand_chevron--weight $pfe-expand_chevron--weight 0 0;
+    text-align: center;
+    transition: all 0.15s;
+    transform: rotate(135deg);
+}
+
+%pfe-expand-button-color-base {
+    --pfe-expanded--main:         #{pfe-color(surface--base)};
+    --pfe-expanded--aux:          #{pfe-color(surface--base--text)};
+    --pfe-expanded--focus:        #{pfe-color(surface--base--link--focus)};
+}
+
+%pfe-expand-button-color-lightest {
+    --pfe-expanded--main:         #{pfe-color(surface--lightest)};
+    --pfe-expanded--aux:          #{pfe-color(surface--lightest--text)};
+    --pfe-expanded--focus:        #{pfe-color(surface--lightest--link--focus)};
+}
+
+%pfe-expand-button-color-lightest-expanded {
+    border-top-color: #{pfe-color(surface--border--lightest)};
+    border-left-color: #{pfe-color(surface--border--lightest)};
+    border-right-color: #{pfe-color(surface--border--lightest)};
+}
+
+%pfe-expand-button-color-dark {
+    --pfe-expanded--main:         #{pfe-color(surface--darker)};
+    --pfe-expanded--aux:          #{pfe-color(surface--darker--text)};
+    --pfe-expanded--focus:        #{pfe-color(surface--darker--link--focus)};
+}
+
+%pfe-expand-button-color-darkest {
+    --pfe-expanded--main:         #{pfe-color(surface--darkest)};
+    --pfe-expanded--aux:          #{pfe-color(surface--darkest--text)};
+    --pfe-expanded--focus:        #{pfe-color(surface--darkest--link--focus)};
+}
+
+%pfe-expand-button-color-accent {
+    --pfe-expanded--main:         #{pfe-color(surface--accent)};
+    --pfe-expanded--aux:          #{pfe-color(surface--accent--text)};
+    --pfe-expanded--focus:        #{pfe-color(surface--accent--link--focus)};
+}
+
+%pfe-expand-button-color-complement {
+    --pfe-expanded--main:         #{pfe-color(surface--complement)};
+    --pfe-expanded--aux:          #{pfe-color(surface--complement--text)};
+    --pfe-expanded--focus:        #{pfe-color(surface--complement--link--focus)};
+}

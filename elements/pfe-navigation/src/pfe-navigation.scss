@@ -23,12 +23,16 @@ $LOCAL: navigation;
 
 :host([pfe-sticky]) {
 	position: fixed;
+	position: sticky;
 }
 
 @each $color in (darker, darkest, accent, complement, lighter, lightest) {
   :host([pfe-color="#{$color}"]) {
 	--pfe-navigation--BackgroundColor: #{pfe-color(surface--#{$color})};
   }
+}
+
+@each $slot in (skip, logo, main, utility) {
 }
 
 @include pfe-slot("pfe-navigation--skip") {

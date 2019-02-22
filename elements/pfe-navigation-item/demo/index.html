@@ -27,8 +27,8 @@
   <body unresolved>
     <h1>&lt;pfe-navigation-item&gt;</h1>
 
-    <pfe-band color="darkest" style="--pfe-band--Padding: 10px; --pfe-band__body--layout: repeat(auto-fit, 100px)">
-      <pfe-navigation-item pfe-icon="login-icon">
+    <pfe-band pfe-color="darkest" style="--pfe-band--Padding: 0; --pfe-band__body--layout: repeat(auto-fit, 100px)">
+      <pfe-navigation-item on="dark" pfe-icon="login-icon">
         <!-- Account log in toggle & menu-->
         <a slot="pfe-navigation-item--trigger" href="#url-to-login-landing-page">Log in</a>
         <div slot="pfe-navigation-item--tray" hidden aria-hidden="true">
@@ -55,7 +55,7 @@
         </div>
       </pfe-navigation-item>
 
-      <pfe-navigation-item pfe-icon="globe">
+      <pfe-navigation-item on="dark" pfe-icon="globe">
         <!-- Language toggle & menu -->
         <a slot="pfe-navigation-item--trigger" href="#url-to-language-page">English</a>
         <div slot="pfe-navigation-item--flyout">
@@ -63,7 +63,7 @@
         </div>
       </pfe-navigation-item>
       
-      <pfe-navigation-item pfe-icon="apps">
+      <pfe-navigation-item on="dark" pfe-icon="apps">
         <!-- Apps & Websites -->
         <a slot="pfe-navigation-item--trigger" href="url-to-rh-websites-page">Apps &amp; Websites</a>
         <div slot="pfe-navigation-item--flyout">

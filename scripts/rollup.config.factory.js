@@ -14,7 +14,7 @@ function esmConfig({ elementName, className } = {}) {
     },
     plugins: [
       resolve(),
-      commonjs(),
+      commonjs()
       // terser()
     ],
     external: id => id.startsWith("..")
@@ -33,7 +33,7 @@ function umdConfig({ elementName, className } = {}) {
     plugins: [
       resolve(),
       commonjs(),
-      babel(),
+      babel()
       // uglify()
     ],
     external: id => id.startsWith("..")
@@ -75,9 +75,7 @@ function umdMinify({ elementName, className } = {}) {
       sourcemap: false,
       name: className
     },
-    plugins: [
-      uglify()
-    ],
+    plugins: [uglify()],
     external: id => id.startsWith("..")
   };
 }

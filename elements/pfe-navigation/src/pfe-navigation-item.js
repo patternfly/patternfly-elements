@@ -25,7 +25,7 @@ class PfeNavigationItem extends PFElement {
   }
 
   get expanded() {
-    return this.tray.hasAttribute("aria-expanded");
+    return this.classList.contains("expanded");
   }
 
   set expanded(val) {
@@ -54,6 +54,14 @@ class PfeNavigationItem extends PFElement {
         this.tray.removeAttribute("aria-expanded");
       }
     }
+
+    this.dispatchEvent(
+      new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
+        detail: { navigationItem: this, expanded: this.expanded },
+        bubbles: true,
+        composed: true
+      })
+    );
   }
 
   // Declare the type of this component
@@ -63,18 +71,25 @@ class PfeNavigationItem extends PFElement {
 
   constructor() {
     super(PfeNavigationItem, { type: PfeNavigationItem.PfeType });
+
     this._clickHandler = this._clickHandler.bind(this);
+    this._keydownHandler = this._keydownHandler.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
+    this.tray = this.shadowRoot.querySelector(".pfe-navigation-item--wrapper");
+
+    if (!this.tray) {
+      return;
+    }
+
     this.trigger = this.querySelector('a[slot="pfe-navigation-item--trigger"]')
     this.lightDomTray = this.querySelector('[slot="pfe-navigation-item--tray"]');
-    this.tray = this.shadowRoot.querySelector(".pfe-navigation-item--wrapper");
     this.expanded = false;
 
-    if (!this.trigger.hasAttribute("role")) {
+    if (this.trigger && !this.trigger.hasAttribute("role")) {
       this.trigger.setAttribute("role", "button");
     }
 
@@ -86,25 +101,11 @@ class PfeNavigationItem extends PFElement {
     this.addEventListener("keydown", this._keydownHandler);
   }
 
-  _clickHandler(event) {
-    event.preventDefault();
-
-    if (event.target === this.trigger) {
-      this.expanded = !this.expanded;
-
-      this.dispatchEvent(
-        new CustomEvent(`${PfeNavigationItem.tag}:active`, {
-          detail: { expanded: this.expanded },
-          bubbles: true,
-          composed: true
-        })
-      );
-    }
-  }
-
   disconnectedCallback() {
-    this.removeEventListener("click", this._changeHandler);
-    this.removeEventListener("keydown", this._keydownHandler);
+    if (this.tray) {
+      this.removeEventListener("click", this._changeHandler);
+      this.removeEventListener("keydown", this._keydownHandler);
+    }
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -117,6 +118,33 @@ class PfeNavigationItem extends PFElement {
       let observer = this[this[attr].observer].bind(this);
       // If it's a function, allow it to run
       if (typeof observer === "function") observer(attr, oldValue, newValue);
+    }
+  }
+
+  _clickHandler(event) {
+    if (event.target === this.trigger) {
+      event.preventDefault();
+      this.expanded = !this.expanded;
+    }
+  }
+
+  _keydownHandler(event) {
+    switch (event.key) {
+      case "Spacebar":
+      case " ":
+        event.preventDefault();
+        this.expanded = !this.expanded;
+        break;
+      case "Esc":
+      case "Escape":
+        event.preventDefault();
+        this.expanded = false;
+        if (this.trigger) {
+          this.trigger.focus();
+        }
+        break;
+      default:
+        return;
     }
   }
 

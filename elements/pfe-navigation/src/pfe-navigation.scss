@@ -32,7 +32,7 @@ $LOCAL: navigation;
   }
 }
 
-@each $slot in (skip, logo, main, utility) {
+@each $slot in (skip, logo) {
 	@include pfe-slot("pfe-navigation--#{$slot}") {
 		grid-area: $slot;
 	}
@@ -42,20 +42,28 @@ $LOCAL: navigation;
 	@include pfe-sr-only;
 }
 
-@include pfe-slot("pfe-navigation--logo") {}
-
-// @TODO need to get the ul from the light DOM and move it to the shadow
-@include pfe-slot("pfe-navigation--main", "ul") {
-	@include pfe-reset-list;
-}
-
 .pfe-navigation {
-	&--container {
+	&__container {
 		display: grid;
 		grid-template-areas: "logo main main main utility";
 		grid-template-rows: 1fr;
 	}
-	&--list {
-		@include pfe-reset-list;
+	&__main {
+		grid-area: main;
+	}
+	&__main,
+	&__utility {
+		&,
+		nav, 
+		ul {
+			display: flex;
+			flex-flow: row nowrap;
+		}
+		ul {
+			@include pfe-reset-list;
+		}
+	}
+	&__utility {
+		grid-area: utility;
 	}
 }

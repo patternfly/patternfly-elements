@@ -1,0 +1,75 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Navigation",
+    "description": "This element renders....",
+    "type": "object",
+    "tag": "pfe-navigation",
+    "class": "pfe-navigation",
+    "category": "container",
+    "properties": {
+      "slots": {
+        "title": "Slots",
+        "description": "Definition of the supported slots",
+        "type": "object",
+        "properties": {
+          "skip-links": {
+            "title": "Skip navigation",
+            "type": "array",
+            "namedSlot": true,
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "logo": {
+            "title": "Logo",
+            "type": "array",
+            "namedSlot": true,
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "main": {
+            "title": "Main navigation",
+            "type": "array",
+            "namedSlot": true,
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "utility": {
+            "title": "Utility navigation",
+            "type": "array",
+            "namedSlot": true,
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "attributes": {
+        "title": "Attributes",
+        "type": "object",
+        "properties": {
+        }
+      }
+    },
+    "required": ["slots", "attributes"],
+    "additionalProperties": false
+  }
+  

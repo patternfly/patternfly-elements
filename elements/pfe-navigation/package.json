@@ -1,8 +1,8 @@
 {
-  "name": "@patternfly/pfe-navigation-item",
+  "name": "@patternfly/pfe-navigation",
   "pfelement": {
-    "className": "PfeNavigationItem",
-    "elementName": "pfe-navigation-item"
+    "className": "PfeNavigation",
+    "elementName": "pfe-navigation"
   },
   "version": "1.0.0-prerelease.9",
   "description": "Navigation element for PatternFly Elements",

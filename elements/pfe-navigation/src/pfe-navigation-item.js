@@ -1,5 +1,12 @@
 import PFElement from "../pfelement/pfelement.js";
 
+const KEYCODE = {
+  ENTER: 13,
+  DOWN: 40,
+  UP: 38,
+  ESC: 27
+};
+
 class PfeNavigationItem extends PFElement {
   static get tag() {
     return "pfe-navigation-item";
@@ -32,6 +39,40 @@ class PfeNavigationItem extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+
+    // Get the trigger slot
+    // const trigger = 
+    // Register click event on the trigger slot
+    this.addEventListener("click", this._clickHandler);
+
+    this.addEventListener(`${PfeNavigationItem.tag}:active`, this._changeHandler);
+    this.addEventListener("keydown", this._keydownHandler);
+    
+
+    // this.setAttribute("role", "presentation");
+    // this.setAttribute("defined", "");
+  }
+
+  _clickHandler(event) {
+    event.preventDefault();
+    // Check that the event fired is from the trigger slot
+    if (event.target.getAttribute("slot") === "pfe-navigation-item--trigger") {
+      
+      // Open the tray if it's not open, close if it is
+    }
+    // If the event is fired from the tray
+
+    this.dispatchEvent(
+      new CustomEvent(`${PfeNavigationItem.tag}:active`, {
+        detail: { expanded: !this.expanded },
+        bubbles: true
+      })
+    );
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener("click", this._changeHandler);
+    this.removeEventListener("keydown", this._keydownHandler);
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -45,6 +86,10 @@ class PfeNavigationItem extends PFElement {
       // If it's a function, allow it to run
       if (typeof observer === "function") observer(attr, oldValue, newValue);
     }
+  }
+
+  _changeHandler(evt) {
+
   }
 
   // Update the icon attribute and return the SVG
@@ -62,33 +107,6 @@ class PfeNavigationItem extends PFElement {
         // @TODO is there a default icon?
     }
   }
-
-  _moveElements() {
-    //   <section pfe-nav-item--tray-region="main" class="pile-o-links  pfe-l-grid …">
-    //   <pfe-link-list role="region">
-    //     <h2><a href="#">Flagship Products</a></h2>
-    //     <ul>
-    //       <li><a href="#">Awesome</a></li>
-    //       <li><a href="#">So good</a></li>
-    //     </ul>
-    //   </pfe-link-list>
-    //   <pfe-link-list role="region">
-    //     <h2><a href="#">Collaborations</a></h2>
-    //     <ul>
-    //       <li><a href="#">Collab #1</a></li>
-    //       <li><a href="#">Collab #2</a></li>
-    //     </ul>
-    //   </pfe-link-list>
-    // </section>
-    // <aside pfe-nav-item--tray-region="aside">Promo with captions, fancy other stuff</aside>
-    // <footer pfe-nav-item--tray-region="footer" class>
-    //   <pfe-cta>link</pfe-cta>
-    // </footer>
-  }
-
-  // disconnectedCallback() {}
-
-  // attributeChangedCallback(attr, oldValue, newValue) {}
 }
 
 PFElement.create(PfeNavigationItem);

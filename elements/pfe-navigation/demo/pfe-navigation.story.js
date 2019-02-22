@@ -1,11 +1,11 @@
 import { storiesOf } from "@storybook/polymer";
-import "../pfe-navigation-item";
+import "../pfe-navigation";
 
 storiesOf("Navigation", module).add(
-  "pfe-navigation-item",
+  "pfe-navigation",
   () => `
-  <pfe-navigation-item>
+  <pfe-navigation>
     Navigation
-  </pfe-navigation-item>
+  </pfe-navigation>
   `
 );

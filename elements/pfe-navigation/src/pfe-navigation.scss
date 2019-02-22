@@ -45,13 +45,12 @@ $LOCAL: navigation;
 @include pfe-slot("pfe-navigation--logo") {}
 
 // @TODO need to get the ul from the light DOM and move it to the shadow
-@include pfe-slot("pfe-navigation--main") {
-	// @include pfe-reset-list;
+@include pfe-slot("pfe-navigation--main", "ul") {
+	@include pfe-reset-list;
 }
 
 .pfe-navigation {
 	&--container {
-		@extend %default-container !optional;
 		display: grid;
 		grid-template-areas: "logo main main main utility";
 		grid-template-rows: 1fr;

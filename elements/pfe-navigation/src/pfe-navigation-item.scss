@@ -12,7 +12,7 @@
 	--pfe-nav-item--main:        #{pfe-color(text)};              // text
 	--pfe-nav-item--main--hover: #{pfe-color(text--on-dark)};     // text hover
 
-	--pfe-nav-item--aux:         transparent;                     // bg 
+	--pfe-nav-item--aux:         transparent;                     // bg
 	--pfe-nav-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
 }
 
@@ -39,10 +39,10 @@
 			display: block;
 		    line-height: inherit;
 		    transition: all #{pfe-var(animation-timing)};
-		    padding: calc(#{pfe-var(container-padding)} * 2) 
+		    padding: calc(#{pfe-var(container-padding)} * 2)
 		             calc(#{pfe-var(container-padding)} * 1);
 		    text-decoration: none;
-	  
+
 		    // COLOR
 		    border-top:       transparent solid 2px;
 			color:            var(--pfe-nav-item--main);   //text
@@ -83,8 +83,11 @@
 		--pfe-nav-item--main:        #{pfe-color(text--on-dark)};      // text
 		--pfe-nav-item--main--hover: #{pfe-color(text)};               // text hover
 
-		--pfe-nav-item--aux:         transparent;                      // bg 
+		--pfe-nav-item--aux:         transparent;                      // bg
 		--pfe-nav-item--aux--hover:  #{pfe-color(surface--lightest)};  // bg hover
-	}                  
+	}
 }
 
+.hide {
+	display: none;
+}

@@ -24,9 +24,37 @@ class PfeNavigationItem extends PFElement {
     return "pfe-navigation-item.scss";
   }
 
-  // static get observedAttributes() {
-  //   return [];
-  // }
+  get expanded() {
+    return this.tray.hasAttribute("aria-expanded");
+  }
+
+  set expanded(val) {
+    val = Boolean(val);
+
+    if (val) {
+      this.classList.add("expanded");
+
+      if (this.trigger) {
+        this.trigger.setAttribute("aria-expanded", true);
+      }
+
+      if (this.tray) {
+        this.tray.classList.remove("hide");
+        this.tray.setAttribute("aria-expanded", true);
+      }
+    } else {
+      this.classList.remove("expanded");
+
+      if (this.trigger) {
+        this.trigger.removeAttribute("aria-expanded");
+      }
+
+      if (this.tray) {
+        this.tray.classList.add("hide");
+        this.tray.removeAttribute("aria-expanded");
+      }
+    }
+  }
 
   // Declare the type of this component
   static get PfeType() {
@@ -35,39 +63,43 @@ class PfeNavigationItem extends PFElement {
 
   constructor() {
     super(PfeNavigationItem, { type: PfeNavigationItem.PfeType });
+    this._clickHandler = this._clickHandler.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    // Get the trigger slot
-    // const trigger = 
-    // Register click event on the trigger slot
+    this.trigger = this.querySelector('a[slot="pfe-navigation-item--trigger"]')
+    this.lightDomTray = this.querySelector('[slot="pfe-navigation-item--tray"]');
+    this.tray = this.shadowRoot.querySelector(".pfe-navigation-item--wrapper");
+    this.expanded = false;
+
+    if (!this.trigger.hasAttribute("role")) {
+      this.trigger.setAttribute("role", "button");
+    }
+
+    if (this.lightDomTray) {
+      this.lightDomTray.removeAttribute("hidden");
+    }
+
     this.addEventListener("click", this._clickHandler);
-
-    this.addEventListener(`${PfeNavigationItem.tag}:active`, this._changeHandler);
     this.addEventListener("keydown", this._keydownHandler);
-    
-
-    // this.setAttribute("role", "presentation");
-    // this.setAttribute("defined", "");
   }
 
   _clickHandler(event) {
     event.preventDefault();
-    // Check that the event fired is from the trigger slot
-    if (event.target.getAttribute("slot") === "pfe-navigation-item--trigger") {
-      
-      // Open the tray if it's not open, close if it is
-    }
-    // If the event is fired from the tray
 
-    this.dispatchEvent(
-      new CustomEvent(`${PfeNavigationItem.tag}:active`, {
-        detail: { expanded: !this.expanded },
-        bubbles: true
-      })
-    );
+    if (event.target === this.trigger) {
+      this.expanded = !this.expanded;
+
+      this.dispatchEvent(
+        new CustomEvent(`${PfeNavigationItem.tag}:active`, {
+          detail: { expanded: this.expanded },
+          bubbles: true,
+          composed: true
+        })
+      );
+    }
   }
 
   disconnectedCallback() {
@@ -86,10 +118,6 @@ class PfeNavigationItem extends PFElement {
       // If it's a function, allow it to run
       if (typeof observer === "function") observer(attr, oldValue, newValue);
     }
-  }
-
-  _changeHandler(evt) {
-
   }
 
   // Update the icon attribute and return the SVG

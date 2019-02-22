@@ -38,6 +38,8 @@ class PfeNavigation extends PFElement {
       `${PfeNavigationItem.tag}:toggled`,
       this._toggledHandler
     );
+
+    // Connect to the body element and trigger the lock
   }
 
   connectedCallback() {

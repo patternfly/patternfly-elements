@@ -1,5 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: navigation-item;
+
 /// ===========================================================================
 /// Component Specific SASS Vars
 /// ===========================================================================
@@ -11,6 +13,11 @@ $pfe-nav-size: 4em;
 :host {
 	// Fill the navigation container
 	height: 100%;
+	// Update the navigation padding in this context
+	--pfe-navigation--Padding--vertical: #{pfe-var(container-spacer)};
+
+	--pfe-navigation-item__tray--Width__aside--sm: 240px;
+	--pfe-navigation-item__tray--Width__aside--lg: 300px;
 }
 
 /// ===========================================================================
@@ -65,13 +72,22 @@ $pfe-nav-size: 4em;
 .pfe-navigation-item {
 	&__wrapper {
 		display: block;
+		background-color: #{pfe-color(surface--lighter)};
 		position: absolute;
 		top: 80px; // @TODO Need to do this with JS
 		left: 0;
 		width: 100%;
+		z-index: 1;
+		transition: all #{pfe-var(animation-timing)};
+
 		&[hidden] {
 			display: none;
 		}
+	}
+	&__container {
+		margin:    	0 auto;
+		padding: #{pfe-var(container-spacer)} #{pfe-local(Padding--horizontal)};
+		width: 			var(--pfe-navigation--Width);
 	}
 	&__button {
 		@media (min-width: #{pfe-breakpoint(md)}) {

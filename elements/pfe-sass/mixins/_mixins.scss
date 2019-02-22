@@ -285,3 +285,15 @@ $pfe-expand_button--padding-factor:  0.75;
     --pfe-expanded--focus:        #{pfe-color(surface--complement--link--focus)};
 }
 
+@mixin pfe-container {
+  position: relative;
+	display: block;
+	width: 100%;
+
+	// Padding 
+	padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
+
+	@media (min-width: #{pfe-breakpoint(sm)}) {
+		padding: #{pfe-local(Padding)};
+	}
+}

@@ -121,7 +121,7 @@ class PfeNavigationItem extends PFElement {
     const shadowTrigger = this.shadowRoot.querySelector('[name="pfe-navigation-item--trigger"]')
     // If the slot and contents exist, append the fragment to the DOM
     if(lightTrigger && shadowTrigger) {
-      lightTrigger.classList.add("pfe-navigation-item--text");
+      lightTrigger.classList.add("pfe-navigation-item__text");
       lightTrigger.removeAttribute("slot");
       shadowTrigger.appendChild(lightTrigger);
     }

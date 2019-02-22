@@ -27,89 +27,98 @@ $pfe-nav-size: 4em;
 :host {
   font-family: #{pfe-var(font-family)};
 
-  @media (max-width: #{pfe-breakpoint(md, $max: true)}) {
-  	::slotted(a) {
-	  	@include pfe-expand-button;
-	  	@include pfe-expand-button-expanded;
-	  	text-decoration: none;
+  @media (min-width: #{pfe-breakpoint(md)}) {
+	  --pfe-nav-item--main:        #{pfe-color(text)};              // text
+	  --pfe-nav-item--main--hover: #{pfe-color(text--on-dark)};     // text hover
 
-	  	&[aria-expanded="false"]::after {
-	  		@include pfe-expand-button-expanded-false($position: after);
-	  	}
+	  --pfe-nav-item--aux:         transparent;                     // bg
+	  --pfe-nav-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
 
-	  	&[aria-expanded="true"]::after {
-	  		@include pfe-expand-button-expanded-true($position: after);
-	  	}
-  	}
+	  display: block;
+	  font-weight: bold;
+	  font-weight: 300;
+	  min-height: $pfe-nav-size;
+	  
+	  //border: green solid 1px;
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+	  justify-content: center;
   }
+}
 
-	@media (min-width: #{pfe-breakpoint(md)}) {
-		--pfe-nav-item--main:        #{pfe-color(text)};              // text
-		--pfe-nav-item--main--hover: #{pfe-color(text--on-dark)};     // text hover
+::slotted(a) {
+  @media (max-width: #{pfe-breakpoint(md, $max: true)}) {
+	@include pfe-expand-button;
+	@include pfe-expand-button-expanded;
+	text-decoration: none;
+  }
+}
+::slotted(a[aria-expanded="false"]::after) {
+	@include pfe-expand-button-expanded-false($position: after);
+}
+::slotted(a[aria-expanded="true"]::after) {
+	@include pfe-expand-button-expanded-true($position: after);
+}
 
-		--pfe-nav-item--aux:         transparent;                     // bg
-		--pfe-nav-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
 
-		display: block;
-	    font-weight: bold;
-	    font-weight: 300;
-	    min-height: $pfe-nav-size;
-		
-		//border: green solid 1px;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		.pfe-navigation-item--button {
-			//border: orange solid 1px;
-
-	    	flex: 1;
+.pfe-navigation-item {
+	&__wrapper {
+		&[hidden] {
+			display: none;
+		}
+	}
+	&__button {
+		@media (min-width: #{pfe-breakpoint(md)}) {
+			flex: 1;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
 		}
-		.pfe-navigation-item--icon {
-			//border: pink solid 1px;
+	}
+	&__icon {
+		@media (min-width: #{pfe-breakpoint(md)}) {
 			margin: 0;
 		}
-		.pfe-navigation-item--text {
-			//border: green solid 1px;
+	}
+	&__text {
+		cursor: pointer;
+		text-decoration: none;
+		border-top:       transparent solid 2px;
+		color:            var(--pfe-nav-item--main); //text
+		background:       var(--pfe-nav-item--aux);  //bg
+		padding: 0 calc(#{pfe-var(container-padding)} * 1);
+		line-height: $pfe-nav-size;
+	
+		transition: all #{pfe-var(animation-timing)};
+		&:hover {
+			border-top-color: #{pfe-color(surface--accent)};
+			background:       var(--pfe-nav-item--aux--hover);
+			color:            var(--pfe-nav-item--main--hover);
+		}
+		&:active {
+			border-top-color: #{pfe-color(surface--accent)};
+			background:       var(--pfe-nav-item--aux--hover);
+			color:            var(--pfe-nav-item--main--hover);
+		}
+		&:focus {
+			border-top-color: #{pfe-color(surface--accent)};
+			background:       var(--pfe-nav-item--aux--hover);
+			color:            var(--pfe-nav-item--main--hover);
+			&:not(:focus-visible) {
+				outline: none; // removes outline for mouse users, preserves it for keyboard users
+			}
+		}
+		@media (max-width: #{pfe-breakpoint(md, $max: true)}) {
+		  @include pfe-expand-button;
+		  @include pfe-expand-button-expanded;
+		  text-decoration: none;
+		}
+		@media (min-width: #{pfe-breakpoint(md)}) {
 			margin: 0;
 			color:            var(--pfe-nav-item--main); //maybe temporary?
 			background:       var(--pfe-nav-item--aux); 
-		}
-	    ::slotted([slot="pfe-navigation-item--trigger"]) {
-	    	padding: 0 calc(#{pfe-var(container-padding)} * 1);
-		    line-height: $pfe-nav-size;
-
-		    transition: all #{pfe-var(animation-timing)};
-	    }
-		::slotted(a) {
-			cursor: pointer;
-		    text-decoration: none;
-		    border-top:       transparent solid 2px;
-			color:            var(--pfe-nav-item--main); //text
-			background:       var(--pfe-nav-item--aux);  //bg
-		}
-		::slotted(a:hover) {
-		    border-top-color: #{pfe-color(surface--accent)};
-		    background:       var(--pfe-nav-item--aux--hover);
-		    color:            var(--pfe-nav-item--main--hover);
-		}
-		::slotted(a:active) {
-		    border-top-color: #{pfe-color(surface-accent)};
-		    background:       var(--pfe-nav-item--aux--hover);
-		    color:            var(--pfe-nav-item--main--hover);
-		}
-		::slotted(a:focus) {
-		    border-top-color: #{pfe-color(surface-accent)};
-		    background:       var(--pfe-nav-item--aux--hover);
-		    color:            var(--pfe-nav-item--main--hover);
-
-		}
-		::slotted(a:focus:not(:focus-visible)) {
-			outline: none; // removes outline for mouse users, preserves it for keyboard users
 		}
 	}
 }
@@ -128,6 +137,6 @@ $pfe-nav-size: 4em;
 	}
 }
 
-.hide {
+:host([hidden]) {
 	display: none;
 }

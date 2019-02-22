@@ -39,7 +39,7 @@ class PfeNavigationItem extends PFElement {
       }
 
       if (this.tray) {
-        this.tray.classList.remove("hide");
+        this.tray.removeAttribute("hidden");
         this.tray.setAttribute("aria-expanded", true);
       }
     } else {
@@ -50,7 +50,7 @@ class PfeNavigationItem extends PFElement {
       }
 
       if (this.tray) {
-        this.tray.classList.add("hide");
+        this.tray.setAttribute("hidden", true);
         this.tray.removeAttribute("aria-expanded");
       }
     }
@@ -89,33 +89,6 @@ class PfeNavigationItem extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    // Get the ShadowDOM tray wrapper from the template
-    this.tray = this.shadowRoot.querySelector(".pfe-navigation-item--wrapper");
-    // Attach a trigger property to the component with the trigger slot
-    this.trigger = this.querySelector('[slot="pfe-navigation-item--trigger"]')
-    // Attach a tray property to the component with the trigger slot
-    this.lightDomTray = this.querySelector('[slot="pfe-navigation-item--tray"]');
-    // Initialize expanded to false
-    this.expanded = false;
-
-    // If the role attribute has not been provided, attach it to the trigger
-    if (this.tray && this.trigger && !this.trigger.hasAttribute("role")) {
-      this.trigger.setAttribute("role", "button");
-    }
-
-    // If the light DOM tray has been provided, remove the hidden attributes
-    if (this.lightDomTray) {
-      this.lightDomTray.removeAttribute("hidden");
-    }
-
-    // Only attach event listeners if the tray exists
-    if (this.tray) {
-      // Attach an on click listener
-      this.addEventListener("click", this._clickHandler);
-      // Attach an on keydown listener
-      this.addEventListener("keydown", this._keydownHandler);
-    }
-
     // Copy the content of the trigger slot into the ShadowDOM
     const slots = {
       "[slot=\"pfe-navigation-item--trigger\"]": "[name=\"pfe-navigation-item--trigger\"]"
@@ -123,7 +96,18 @@ class PfeNavigationItem extends PFElement {
 
     this._pfeClass.moveToShadowDOM(slots, this);
 
-    const shadowTrigger = this.shadowRoot.querySelector("[name=\"pfe-navigation-item--trigger\"]");
+    // Attach a trigger property to the component with the trigger slot
+    this.trigger = this.shadowRoot.querySelector("[name=\"pfe-navigation-item--trigger\"]");
+    // Get the ShadowDOM tray wrapper from the template
+    this.tray = this.shadowRoot.querySelector(".pfe-navigation-item__wrapper");
+
+    // Attach a tray property to the component with the trigger slot
+    this.lightDomTray = this.querySelector('[slot="pfe-navigation-item--tray"]');
+    // If the light DOM tray has been provided, remove the hidden attributes
+    if (this.lightDomTray) {
+      this.lightDomTray.removeAttribute("hidden");
+    }
+
     // Find and remove the slot from the trigger's child
     if(this.trigger) {
       this.trigger.classList.add("pfe-navigation-item__button");
@@ -145,7 +129,7 @@ class PfeNavigationItem extends PFElement {
         if(iconName && this._pfeClass.iconSVG[iconName]) {
           // Build the SVG into an object
           let svg = this._buildSVG(iconName, "pfe-navigation-item__icon");
-          if(shadowTrigger) {
+          if(this.trigger) {
             linkElement.append(svg);
           }
         }
@@ -153,12 +137,28 @@ class PfeNavigationItem extends PFElement {
 
       linkElement.append(textWrapper);
     }
+
+    // Initialize expanded to false
+    this.expanded = false;
+
+    // If the role attribute has not been provided, attach it to the trigger
+    if (this.tray && this.trigger && !this.trigger.hasAttribute("role")) {
+      this.trigger.setAttribute("role", "button");
+    }
+
+    // Only attach event listeners if the tray exists
+    if (this.tray) {
+      // Attach an on click listener
+      this.trigger.addEventListener("click", this._clickHandler);
+      // Attach an on keydown listener
+      this.trigger.addEventListener("keydown", this._keydownHandler);
+    }
   }
 
   disconnectedCallback() {
     if (this.tray) {
-      this.removeEventListener("click", this._changeHandler);
-      this.removeEventListener("keydown", this._keydownHandler);
+      this.trigger.removeEventListener("click", this._changeHandler);
+      this.trigger.removeEventListener("keydown", this._keydownHandler);
     }
   }
 

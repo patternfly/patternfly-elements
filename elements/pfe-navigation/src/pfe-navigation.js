@@ -18,9 +18,9 @@ class PfeNavigation extends PFElement {
     return "pfe-navigation.scss";
   }
 
-  // static get observedAttributes() {
-  //   return [];
-  // }
+  static get observedAttributes() {
+    return [ "pfe-color" ];
+  }
 
   // Declare the type of this component
   static get PfeType() {
@@ -29,8 +29,11 @@ class PfeNavigation extends PFElement {
 
   constructor() {
     super(PfeNavigation, { type: PfeNavigation.PfeType });
+    // Initialize a placeholder for the active navigation item
     this.activeNavigationItem = null;
+    // Bind the toggle handler to the base
     this._toggledHandler = this._toggledHandler.bind(this);
+    // Add an event listener for the toggled state
     this.addEventListener(
       `${PfeNavigationItem.tag}:toggled`,
       this._toggledHandler
@@ -45,11 +48,13 @@ class PfeNavigation extends PFElement {
       "[slot=\"pfe-navigation--main\"]": "[pfe-id=\"pfe-navigation--main\"]",
       "[slot=\"pfe-navigation--utility\"]": "[pfe-id=\"pfe-navigation--utility\"]",
     };
+
     // Move the content from the main and utility slots into the shadowDOM
     this._pfeClass.moveToShadowDOM(slots, this);
   }
 
   disconnectedCallback() {
+    // Remove the event listeners
     this.removeEventListener(
       `${PfeNavigationItem.tag}:toggled`,
       this._toggledHandler
@@ -70,16 +75,21 @@ class PfeNavigation extends PFElement {
   }
 
   _toggledHandler(event) {
+    // If there is not an active navigation item
     if (!this.activeNavigationItem) {
-      this.activeNavigationItem = event.detail.navigationItem;
-      return;
+        // Attach the item to the base 
+        this.activeNavigationItem = event.detail.navigationItem;
+        return;
     }
 
+    // If the event is fired on the currently active item
     if (this.activeNavigationItem === event.detail.navigationItem) {
       return;
     }
 
+    // Otherwise, close the navigation item
     this.activeNavigationItem.expanded = false;
+    // Assign this item to the navigation item
     this.activeNavigationItem = event.detail.navigationItem;
   }
 }

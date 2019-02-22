@@ -191,7 +191,7 @@ class PfeNavigationItem extends PFElement {
 
   _clickHandler(event) {
     event.preventDefault();
-    if (event.target === this.trigger) {
+    if (event.target.parentElement === this.trigger) {
       event.preventDefault();
       this.expanded = !this.expanded;
     }

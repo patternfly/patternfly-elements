@@ -35,7 +35,6 @@ $pfe-nav-size: 4em;
 	  --pfe-nav-item--aux:         transparent;                     // bg
 	  --pfe-nav-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
 
-	  display: block;
 	  font-weight: bold;
 	  font-weight: 300;
 	  min-height: $pfe-nav-size;
@@ -50,9 +49,9 @@ $pfe-nav-size: 4em;
 
 ::slotted(a) {
   @media (max-width: #{pfe-breakpoint(md, $max: true)}) {
-	@include pfe-expand-button;
-	@include pfe-expand-button-expanded;
-	text-decoration: none;
+		@include pfe-expand-button;
+		@include pfe-expand-button-expanded;
+		text-decoration: none;
   }
 }
 ::slotted(a[aria-expanded="false"]::after) {
@@ -65,6 +64,11 @@ $pfe-nav-size: 4em;
 
 .pfe-navigation-item {
 	&__wrapper {
+		display: block;
+		position: absolute;
+		top: 80px; // @TODO Need to do this with JS
+		left: 0;
+		width: 100%;
 		&[hidden] {
 			display: none;
 		}

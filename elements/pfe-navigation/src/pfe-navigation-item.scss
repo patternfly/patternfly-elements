@@ -9,7 +9,8 @@ $pfe-nav-size: 4em;
 /// DEFAULT nav-item
 /// ===========================================================================
 :host {
-
+	// Fill the navigation container
+	height: 100%;
 }
 
 /// ===========================================================================
@@ -82,6 +83,11 @@ $pfe-nav-size: 4em;
 		}
 	}
 	&__text {
+		// Fill the navigation container
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		cursor: pointer;
 		text-decoration: none;
 		border-top:       transparent solid 2px;

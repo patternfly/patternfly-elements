@@ -44,7 +44,7 @@ $LOCAL: navigation;
 
 .pfe-navigation {
 	@media (min-width: #{pfe-breakpoint(md)}) {
-		&--container {
+		&__container {
 			display: grid;
 			grid-template-areas: "logo main main main utility";
 			grid-template-rows: 1fr;

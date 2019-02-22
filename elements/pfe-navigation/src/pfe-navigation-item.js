@@ -168,8 +168,6 @@ class PfeNavigationItem extends PFElement {
 
   _clickHandler(event) {
     event.preventDefault();
-    debugger;
-    console.log(event);
     if (event.target === this.trigger) {
       event.preventDefault();
       this.expanded = !this.expanded;

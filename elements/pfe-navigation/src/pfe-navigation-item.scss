@@ -17,7 +17,7 @@
 /// MOBILE
 /// ===========================================================================
 :host {
-	@media (max-width: $pfe-global--grid-breakpoint--sm--max ) {
+	@media (max-width: #{pfe-breakpoint(md-max)} ) {
 	    display: inline-block;
 	}
 }
@@ -71,10 +71,9 @@
 		}
 		::slotted(a:focus:not(:focus-visible)) {
 			outline: none; // removes outline for mouse users, preserves it for keyboard users
-			background: pink !important;
 		}
 
-		::slotted(a.active) {
+		::slotted(a:active) {
 		    border-top-color: #{pfe-color(surface-accent)};
 		    background:       var(--pfe-nav-item--aux--hover);
 		    color:            var(--pfe-nav-item--main--hover);

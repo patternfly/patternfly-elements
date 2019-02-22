@@ -197,6 +197,16 @@ $pfe-vars: (
   grid-breakpoint--lg:           992px,
   grid-breakpoint--xl:           1200px,
 
+  xs:                            $pfe-global--grid-breakpoint--xs,
+  sm:                            $pfe-global--grid-breakpoint--sm,
+  md:                            $pfe-global--grid-breakpoint--md,
+  lg:                            $pfe-global--grid-breakpoint--lg,
+  xl:                            $pfe-global--grid-breakpoint--xl,
+  xs-max:                        $pfe-global--grid-breakpoint--xs--max,
+  sm-max:                        $pfe-global--grid-breakpoint--sm--max,
+  md-max:                        $pfe-global--grid-breakpoint--md--max,
+  lg-max:                        $pfe-global--grid-breakpoint--lg--max,
+
   box-shadow--sm:                '0  #{pfe-size-prem(1)}  #{pfe-size-prem(2)} 0 rgba(#{$pfe-color--gray-1000}, .2)',
   box-shadow--md:                '0  #{pfe-size-prem(2)}  #{pfe-size-prem(1)} #{pfe-size-prem(1)} rgba(#{$pfe-color--gray-1000}, .12), 0  #{pfe-size-prem(4)}  #{pfe-size-prem(11)} #{pfe-size-prem(6)} rgba(#{$pfe-color--gray-1000}, .05)',
   box-shadow--lg:                '0  #{pfe-size-prem(3)}  #{pfe-size-prem(7)} #{pfe-size-prem(3)} rgba(#{$pfe-color--gray-1000}, .13), 0  #{pfe-size-prem(11)}  #{pfe-size-prem(24)} #{pfe-size-prem(16)} rgba(#{$pfe-color--gray-1000}, .12)',

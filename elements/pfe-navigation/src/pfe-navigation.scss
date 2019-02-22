@@ -17,18 +17,28 @@ $LOCAL: navigation;
 	left: 0;
 	display: block;
 	width: 100%;
-
+	// Set the defaults for look and feel
 	background-color: #{pfe-local(BackgroundColor)};
-}
-
-.pfe-navigation {
-	&--container {
-		@extend %default-container !optional;
-	}
 }
 
 @each $color in (darker, darkest, accent, complement, lighter, lightest) {
   :host([pfe-color="#{$color}"]) {
 	--pfe-navigation--BackgroundColor: #{pfe-color(surface--#{$color})};
   }
+}
+
+::slotted([slot="pfe-navigation--skip"]) {
+    position:absolute;
+    left:-999px;
+    top:auto;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    z-index:-999;
+}
+
+.pfe-navigation {
+	&--container {
+		@extend %default-container !optional;
+	}
 }

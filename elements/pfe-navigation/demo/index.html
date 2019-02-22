@@ -28,8 +28,12 @@
     <h1>&lt;pfe-navigation-item&gt;</h1>
 
     <pfe-navigation pfe-color="lightest">
+      <div slot="pfe-navigation--skip-links">
+        <a href="#rh-main-content">Skip to content</a>
+        <a href="#rh-main-nav">Skip to main navigation</a>
+      </div>
 
-      <pfe-navigation-item  pfe-icon="login-icon">
+      <pfe-navigation-item pfe-icon="login-icon">
 
         <!-- Account log in toggle & menu-->
         <a slot="pfe-navigation-item--trigger" href="#url-to-login-landing-page">Log in</a>
@@ -60,7 +64,7 @@
       <pfe-navigation-item pfe-icon="globe">
         <!-- Language toggle & menu -->
         <a slot="pfe-navigation-item--trigger" href="#url-to-language-page">English</a>
-        <div slot="pfe-navigation-item--flyout">
+        <div slot="pfe-navigation-item--tray">
           custom code to do this thing
         </div>
       </pfe-navigation-item>
@@ -68,7 +72,7 @@
       <pfe-navigation-item pfe-icon="apps">
         <!-- Apps & Websites -->
         <a slot="pfe-navigation-item--trigger" href="url-to-rh-websites-page">Apps &amp; Websites</a>
-        <div slot="pfe-navigation-item--flyout">
+        <div slot="pfe-navigation-item--tray">
           custom code to do this thing
         </div>
       </pfe-navigation-item>
@@ -108,7 +112,7 @@
       <pfe-navigation-item on="dark" pfe-icon="globe">
         <!-- Language toggle & menu -->
         <a slot="pfe-navigation-item--trigger" href="#url-to-language-page">English</a>
-        <div slot="pfe-navigation-item--flyout">
+        <div slot="pfe-navigation-item--tray">
           custom code to do this thing
         </div>
       </pfe-navigation-item>
@@ -116,7 +120,7 @@
       <pfe-navigation-item on="dark" pfe-icon="apps">
         <!-- Apps & Websites -->
         <a slot="pfe-navigation-item--trigger" href="url-to-rh-websites-page">Apps &amp; Websites</a>
-        <div slot="pfe-navigation-item--flyout">
+        <div slot="pfe-navigation-item--tray">
           custom code to do this thing
         </div>
       </pfe-navigation-item>

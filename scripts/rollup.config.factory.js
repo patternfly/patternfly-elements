@@ -46,7 +46,7 @@ function esmMinify({ elementName, className } = {}) {
     output: {
       file: `${elementName}.min.js`,
       format: "esm",
-      sourcemap: false
+      sourcemap: true
     },
     plugins: [
       terser({
@@ -72,7 +72,7 @@ function umdMinify({ elementName, className } = {}) {
     output: {
       file: `${elementName}.umd.min.js`,
       format: "umd",
-      sourcemap: false,
+      sourcemap: true,
       name: className
     },
     plugins: [uglify()],

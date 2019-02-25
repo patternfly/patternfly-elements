@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html data-ng-app="performanceDevelopmentApp" class="layout-pf layout-pf-fixed">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance + Development</title>
+    <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon" />
+    <base href="/">
+
+    <!-- PatternFly Styles -->
+    <link href="/assets/css/rcue/dist/css/rcue.min.css" rel="stylesheet" media="screen, print">
+    <link href="/assets/css/rcue/dist/css/rcue-additions.min.css" rel="stylesheet" media="screen, print">
+    <!-- ABT Custom Styles -->
+    <!--link href="/assets/css/style.min.css" rel="stylesheet" media="screen"-->
+
+
+    <link href="/assets/css/angular-state-loader.css" rel="stylesheet" media="screen, print">
+    <script src="/assets/js/lib/angular.min.js"></script>
+    <script src="/assets/js/lib/angular-ui-router.min.js"></script>
+    <script src="/assets/js/lib/angular-cookies.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="/assets/js/lib/jquery.min.js"></script>
+    <script src="/assets/js/lib/jquery-ui.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/assets/js/lib/bootstrap.min.js"></script>
+    <!-- PatternFly -->
+    <script src="/assets/js/patternfly/dist/js/patternfly.min.js"></script>
+    <script>
+        // Initialize Popovers
+        $(document).ready(function() {
+            $('[data-toggle=popover]').popovers()
+        });
+        // Close list on outside clicks without stopping event propagation
+
+        $(document).on('click', function(event) {
+            list = $('.options-bar__list');
+            if (list!= undefined && (!$(event.target).closest('.options-bar__box').length)) {
+                list.removeClass('focused');
+                console.log('clicked focused');
+            }
+            console.log('clicked on document ');
+            search = $('.dropdown-content');
+            if (search!= undefined  && (!$(event.target).closest('.form-control').length)) {
+                search.addClass('dropdown-content-hide');
+                console.log('clicked search');
+            }
+
+        });
+
+    </script>
+    <link href="/assets/css/style.css" rel="stylesheet" media="screen, print">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" media="screen, print">
+    <!-- Angular JS -->
+    <script src="/assets/js/PerformanceDevelopmentController.js"></script>
+    <script src="/assets/js/keycloak.js"></script>
+    <script src="/assets/js/angular-state-loader.js"></script>
+    <script src="/assets/js/shared/shared.module.js"></script>
+    <script src="/assets/js/shared/config.service.js"></script>
+    <script src="/assets/js/shared/ssologin/httprequestinterceptor.factory.js"></script>
+    <script src="/assets/js/shared/ssologin/localtoken.factory.js"></script>
+    <script src="/assets/js/shared/ssologin/keycloak.service.js"></script>
+    <script src="/assets/js/shared/ssologin/ssologin.component.js"></script>
+    <script src="/assets/js/shared/user/user.module.js"></script>
+    <script src="/assets/js/shared/user/user.service.js"></script>
+    <script src="/assets/js/expandable-textarea.component.js"></script>
+    <script src="/assets/js/patternfly/dist/js/bootstrap-combobox.js"></script>
+    <script src="/assets/js/patternfly/dist/js/bootstrap-datepicker.js"></script>
+    <script src="/assets/js/patternfly/dist/js/bootstrap-select.min.js"></script>
+    <script src="/assets/js/patternfly/dist/js/bootstrap-treeview.min.js"></script>
+    <script src="/assets/js/patternfly/dist/js/angular-sanitize.js"></script>
+    <script src="/assets/js/patternfly/dist/js/angular-animate.js"></script>
+    <script src="/assets/js/patternfly/dist/js/ui-bootstrap-tpls.js"></script>
+    <script src="/assets/js/patternfly/dist/js/lodash.min.js"></script>
+    <script src="/assets/js/patternfly/dist/js/angular-patternfly.min.js"></script>
+
+</head>
+
+<!-- data-ng-init="pNDController.init()" -->
+<!--data-ng-controller="PerformanceDevelopmentController as pNDController"  data-ng-init="pNDController.init()"-->
+
+<body ui-view='' data-ng-model-options="{ debounce: 1000 }" class="cards-pf">
+
+    <div class="overlay hidden" id="overlaySuccess">
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-ng-click="pNDController.closeSuccessAlert()">
+                <span class="pficon pficon-close"></span>
+            </button>
+            <span class="pficon pficon-ok"></span>
+            <strong>Nice!</strong> Your requested email has been sent!
+        </div>
+    </div>
+    <div class="overlay hidden" id="overlayFailure">
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-ng-click="pNDController.closeFailureAlert()">
+                <span class="pficon pficon-close"></span>
+            </button>
+            <span class="pficon pficon-ok"></span>
+            <strong>Oh no!</strong> Your requested email failed to send! Please contact customer support!
+        </div>
+    </div>
+    <nav id="navbar" class="navbar navbar-default navbar-pf" role="navigation">
+        <div class="navbar-header nav-bar-horizontal">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-5">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            <a href="/" class="navbar-brand">
+                <!--img class="navbar-brand-icon" src="resources/img/logo.png" alt="" /-->
+                <div class="navbar-year">
+                    Performance + Development
+                    <span class="status">
+                        {{ pNDController.saveStatus }} </span>
+                </div>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-collapse-5">
+            <ul class="nav navbar-nav navbar-utility">
+                <li data-ng-if="pNDController.isOwner == true && pNDController.hasManager == true">
+                    <a class="nav-item-iconic pointer utility-tray" id="notify_manager_header" data-ng-click="pNDController.sendEmail()">
+                         <span title="profile" class="fa fa-envelope nav-icon-iconic"></span>
+                         <span class="iconic-label">Notify Manager</span>
+                    </a>
+                </li>
+                <li data-ng-if="pNDController.isManager == true">
+                    <a class="nav-item-iconic pointer utility-tray" id="notify_associate_header" data-ng-click="pNDController.sendEmail()">
+                        <span title="profile" class="fa fa-envelope nav-icon-iconic"></span>
+                        <span class="iconic-label">Notify Associate</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="print" ui-sref="print({'#': '0'})">
+                        <span title="Print" class="fa pficon-print nav-icon-iconic"></span>
+                        <span class="iconic-label">PRINT</span>
+                    </a>
+                </li>
+                <li class="dropdown nav-bar-horizontal">
+                    <a class="dropdown-toggle nav-item-iconic pointer utility-tray" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span title="Information" class="fa pficon-help nav-icon-iconic"></span>
+                        <span class="iconic-label">Information</span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="https://mojo.redhat.com/docs/DOC-1143591" target="_blank">Resources</a>
+                        </li>
+                        <li data-toggle="modal" data-target="#help-modal">
+                            <a href="">Help/Feedback</a>
+                        </li>
+                        <li data-toggle="modal" data-target="#about-modal">
+                            <a href="">About</a>
+                        </li>
+                    </ul>
+                </li>
+                <li data-ng-if="pNDController.owner.cn!=pNDController.accessor.cn">
+                    <a class="nav-item-iconic pointer utility-tray" id="profilehome" href="/">
+                        <span title="profile" class="fa pficon-user nav-icon-iconic"></span>
+                        <span class="iconic-label">{{pNDController.accessor.cn}}</span>
+                    </a>
+                </li>
+                <li data-ng-if="pNDController.owner.cn!=pNDController.accessor.cn">
+                    <a class="nav-item-iconic pointer utility-tray" id="breadcrum" href="#0" style="padding-left: 0px; padding-right: 0px">
+                        <span title="profile" class="fa fa-angle-double-right nav-icon-iconic"></span>
+                        <span title="profile" class="fa fa-angle-double-right nav-icon-iconic"></span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-item-iconic pointer utility-tray" id="profileIntro" ui-sref="introduction({'#': '0'})">
+                        <span title="profile" class="fa pficon-user nav-icon-iconic"></span>
+                        <span class="iconic-label">{{pNDController.owner.cn}}</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-primary">
+                <li class="dropdown performance">
+                    <a href="#0" class="nav-item-iconic" data-toggle="dropdown">
+                        <span class="navbar-menu">Performance</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a ui-sref="performance({'#': 'section-a'})">
+                                <span class="navbar-menu"><h4>Key Responsibilities</h4></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="performance({'#': 'section-a2'})">
+                                <span class="navbar-menu"><h4>Competencies</h4></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="performance({'#': 'section-a3'})">
+                                <span class="navbar-menu"><h4>Performance Goals</h4></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="performance({'#': 'section-a4'})">
+                                <span class="navbar-menu"><h4>Notes + Annual Alignment</h4></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown development">
+                    <a href="#0" class="nav-item-iconic" data-toggle="dropdown">
+                        <span class="navbar-menu">Development</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a ui-sref="development({'#': 'section-b' })">
+                                <span class="navbar-menu"><h4>Aspirations</h4></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="development({'#': 'section-b2' })">
+                                <span class="navbar-menu"><h4>Development Objectives</h4></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="development({'#': 'section-b3'})">
+                                <span class="navbar-menu"><h4>Notes + Annual Alignment</h4></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="mynotes">
+                    <a ui-sref="mynotes({'#': 'section-c' })" class="nav-item-iconic">
+                        <span class="navbar-menu">Additional Notes</span>
+                    </a>
+                </li>
+                <li data-ng-if="(pNDController.reports.length > 1 || pNDController.accessor.admin )&& pNDController.owner.cn==pNDController.accessor.cn" class="myteam">
+                    <a ui-sref="myteam({'#': 'section-d' })" class="nav-item-iconic">
+                        <span class="navbar-menu">My Team</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div data-ng-repeat='noti in pNDController.notifications' data-ng-class="noti.statusClass" class="toast-pf toast-pf-top-right alert alert-dismissable">
+            <button data-ng-click='pNDController.removeNoti(noti, $index)' type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                <span class="pficon pficon-close"></span>
+            </button>
+            <span class="pficon pficon-ok"></span> {{noti.message}}
+        </div>
+    </nav>
+    <!--/.navbar-->
+    <div class="container-fluid container-cards-pf nav-pf-persistent-secondary print-no-margin">
+        <div ng-show="loading">
+            <div id="spinnerdiv">
+                <img src="/assets/img/loading-icon.svg" class="ajax-loader" height="100" width="100" />
+            </div>
+        </div>
+        <ui-view></ui-view>
+
+
+        <p>Last accessed by associate at: {{pNDController.document.ownerAccessTime}}
+            <br /> Last accessed by manager at: {{pNDController.document.managerAccessTime}}</p>
+
+        <div>
+            <a class="btn btn-danger btn-lg" id="notify_manager_footer" data-ng-if="pNDController.isOwner == true && pNDController.hasManager == true" data-ng-click="pNDController.sendEmail()">
+                <span title="profile" class="fa fa-envelope"></span>
+                <span>Notify Manager</span>
+            </a>
+            <a class="btn btn-danger btn-lg" if="notify_associate_footer" data-ng-if="pNDController.isManager == true" data-ng-click="pNDController.sendEmail()">
+               <span title="profile" class="fa fa-envelope"></span>
+               <span>Notify Associate</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="modal fade" id="about-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content about-modal-pf">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span class="pficon pficon-close"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alignment" align="center">
+                        <img class="modal-img" src="/assets/img/pndLogo.jpg" alt="Performance + Development Avatar">
+                    </div>
+                    <br/> <br/>
+                    <p>The Performance + Development web app was built by Red Hat Associates using…</p>
+                    <div>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="https://www.openshift.com" target="_blank">
+                                    OpenShift by Red Hat
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.patternfly.org" target="_blank">
+                                    PatternFly
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.redhat.com/en/technologies/jboss-middleware/application-platform" target="_blank">
+                                    Red Hat JBoss Enterprise Application Platform
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux" target="_blank">
+                                    Red Hat Enterprise Linux
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.redhat.com/en/technologies/virtualization/enterprise-virtualization" target="_blank">
+                                    Red Hat Enterprise Virtualization
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.ansible.com" target="_blank">
+                                    Ansible by Red Hat
+                                </a>
+                            </li>
+                            <li>
+                                Angular JS
+                            </li>
+                            <li>
+                                Java
+                            </li>
+                            <li>
+                                Spring
+                            </li>
+                        </ul>
+                    </div>
+                    <!--div class="trademark-pf">
+                  Trademark and Copyright Information
+                </div-->
+                </div>
+                <!--style>
+            .modal-footer img {
+                max-height: 26px;
+                padding-right: 13px;
+            }
+            </style-->
+                <div class="modal-footer">
+                    <a href="https://www.openshift.com" target="_blank">
+                        <img src="/assets/img/OpenShift.png" alt="OpenShift logo" class="modal-logo">
+                    </a>
+                    <a href="https://www.patternfly.org" target="_blank">
+                        <img src="/assets/img/patternfly.svg" alt="Patternfly logo" class="modal-logo">
+                    </a>
+                    <a href="https://www.redhat.com/en/technologies/jboss-middleware/application-platform" target="_blank">
+                        <img src="/assets/img/jboss-middleware.png" alt="JBoss EAP logo" class="modal-logo">
+                    </a>
+
+                    <a href="https://www.redhat.com/en/technologies/virtualization/enterprise-virtualization" target="_blank">
+                        <img src="/assets/img/rhev.png" alt="RHEV logo" class="modal-logo">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="error-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content about-modal-pf">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span class="pficon pficon-close"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h1>
+                        Oops! We&apos;re having difficulty connecting to the server.
+                        <br/>
+                        <br/> Please refresh the page to try again. Any unsaved work will be lost.
+                        <br />
+                        <br /> {{ pNDController.lastSuccessfulSaveText }}
+                        <br/>
+                        <br/>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="load-error-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content about-modal-pf">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alignment" align="center">
+                        <img class="modal-img" src="/assets/img/pndLogo.jpg" alt="Performance + Development Avatar">
+                    </div>
+                    <br /><br />
+                    <h1>
+                        Only full-time employees can access this application. You are marked with the employee type '{{pNDController.error_employee_type}}' in the Rover People application.
+                        <br /><br />If you believe this is an error, please contact <a href="mailto:people-helpdesk@redhat.com">people-helpdesk@redhat.com</a> to correct your information.
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content about-modal-pf">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span class="pficon pficon-close"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alignment" align="center">
+                        <img class="modal-img" src="/assets/img/pndLogo.jpg" alt="Performance + Development Avatar">
+                    </div>
+                    <br>
+                    <h2>
+                        For issues, questions or feedback contact:
+                        <br>
+                        <a href="mailto:people-helpdesk@redhat.com">people-helpdesk@redhat.com</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+<script>
+    $(document).ready(function() {
+
+
+        // Add back link to sub items list (so user can go back to categories)
+
+
+
+        // Convert .svg images to inline svg code
+        $('img.svg').each(function() {
+            var $img = $(this);
+            var imgID = $img.attr('id');
+            var imgClass = $img.attr('class');
+            var imgURL = $img.attr('src');
+
+            $.get(imgURL, function(data) {
+                // Get the SVG tag, ignore the rest
+                var $svg = $(data).find('svg');
+
+                // Add replaced image's ID to the new SVG
+                if (typeof imgID !== 'undefined') {
+                    $svg = $svg.attr('id', imgID);
+                }
+                // Add replaced image's classes to the new SVG
+                if (typeof imgClass !== 'undefined') {
+                    $svg = $svg.attr('class', imgClass + ' replaced-svg');
+                }
+
+                // Remove any invalid XML tags as per http://validator.w3.org
+                $svg = $svg.removeAttr('xmlns:a');
+
+                // Replace image with new SVG
+                $img.replaceWith($svg);
+
+            }, 'xml');
+
+        });
+
+    });
+</script>
+
+</html>
+
+<!--
+Brought to you by your friends at...
+
+                                               @@@#
+                                               @@@@    @,
+                                               @@@@    @@                                `'
+                                               @@@@    @@                                @+
+                         .                     @@@@    @@     `                          @+
+      @@@@ '@@@@    ;@@@@@@@@'       .@@@@@@@@ @@@@    @@ ,@@##@@@,      @@@#+#@@@    @@@@@@@@@;
+      @@@@@@@@@@   @@@@@@@@@@@@     @@@@@@@@@@@@@@@    @@@@      +@#     `       @@      @+
+      @@@@@@#,`,  @@@@     .@@@@   @@@@@;    ;@@@@@    @@;        #@              @+     @+
+      @@@@@      @@@@       @@@@   @@@@`      :@@@@    @@          @'             @@     @+
+      @@@@;      @@@@#######@@@@: #@@@@        @@@@    @@          @+       .'#@@@@@     @+
+      @@@@.      @@@@@@@@@@@@@@@+ @@@@@        @@@@    @@          @+    `@@@,    @@     @+
+      @@@@.      @@@@...........` @@@@@        @@@@    @@          @+   #@,       @@     @+
+      @@@@.      @@@@             ,@@@@       :@@@@    @@          @+   @#        @@     @+
+      @@@@.      ,@@@@:            @@@@@.    ;@@@@@    @@          @+  .@:        @@     @+
+      @@@@.       '@@@@@@@@@@@@     @@@@@@@@@@@@@@@    @@          @+   @@      `@@@     @@
+      @@@@.         @@@@@@@@@@@'     #@@@@@@@@ @@@@    @@          @+   `@@#:;+@@ @@     .@@';+ :#
+                       `:'',            ;+'`                               ;#'`            ,''.  ,
+
+Audrey Onderdonk
+Batul Fatima
+Ben Pritchett
+Ben Radey
+Bill Montgomery
+Cassie Mansbach
+Dewayne Walker
+Drew McMillen
+Geraldine Duncan
+Heather Burnett
+Jennifer Calogero
+Kelly Porter
+Mark Chappell
+Seth Shevach
+Abhishek koserwal
+-->

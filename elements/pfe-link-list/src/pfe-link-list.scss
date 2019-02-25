@@ -1,0 +1,68 @@
+@import "../../pfe-sass/pfe-sass";
+
+/// ===========================================================================
+/// DEFUALT LINK-LIST
+/// ===========================================================================
+
+$LOCAL: link-list;
+
+:host {
+  --pfe-link-list--padding:                     calc(#{pfe-var(container-spacer)} * 1); // 1x `container-spacer`
+  --pfe-link-list_header--size:                 #{pfe-var(font-size--heading--epsilon)};
+  --pfe-link-list_header--color:                #{pfe-var(font-size--heading--epsilon)};
+  --pfe-link-list--bg:                          #{pfe-color(surface--base)};
+  --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
+  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--link)};
+  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--link--visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--link--hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
+
+  display: block;
+  padding: var(--pfe-link-list--padding);
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.pfe-link-list__header {
+  & h1, h2, h3, h4, h5, h6 {
+    // color: var(--pfe-link-list_header--color); TODO fix the color variables to import from the new color palette
+    color: #252525;
+    font-family: "Overpass", arial, sans-serif;
+    font-weight: 400;
+    margin: 0;
+    margin-block-end: 0; // user stylesheet overwrites normal margin?
+    margin-block-start: 0;
+    margin-bottom: 1rem;
+  }
+}
+
+.pfe-link-list__list {
+  & ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    & li {
+      margin-bottom: 1rem;
+      & a {
+        // color: var(--pfe-broadcasted--color--ui-link); TODO fix the color variables to import from the new color palette
+        color: #0066CC;
+        font-family: "Overpass", arial, sans-serif;
+        font-weight: 400;
+        text-decoration: none;
+        &:hover {
+          // color: var(--pfe-broadcasted--color--ui-link--hover); TODO fix the color variables to import from the new color palette
+          color: darken(#0066CC, 20%);
+        }
+        &:visited {
+          // color: var(--pfe-broadcasted--color--ui-link); TODO fix the color variables to import from the new color palette
+          color: #0066CC;
+        }
+        &:focus {
+          color: var(--pfe-broadcasted--color--ui-link--focus);
+        }
+      }
+    }
+  }
+}

@@ -51,6 +51,9 @@ class PFElement extends HTMLElement {
         const slot = context.shadowRoot.querySelector(item[1]);
         // For each content item, append it to the fragment
         contents.forEach(content => {
+          // Remove slot designation
+          content.removeAttribute("slot");
+          // Append content to the fragment
           fraggle.appendChild(content);
         });
         // If the slot and contents exist, append the fragment to the DOM

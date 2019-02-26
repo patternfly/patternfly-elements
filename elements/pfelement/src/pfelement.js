@@ -47,8 +47,8 @@ class PFElement extends HTMLElement {
       const fraggle = document.createDocumentFragment();
       // Get the content and the slots
       if(item[0] && item[1]) {
-        const contents = [...context.querySelectorAll(item[0])];
-        const slot = context.shadowRoot.querySelector(`[slot=\"${item[1]}\"]`);
+        const contents = [...context.querySelectorAll(`[slot=\"${item[0]}\"]`)];
+        const slot = context.shadowRoot.querySelector(item[1]);
         // For each content item, append it to the fragment
         contents.forEach(content => {
           // Remove slot designation

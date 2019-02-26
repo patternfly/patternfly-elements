@@ -167,7 +167,7 @@ $pfe-expand_chevron--size:           0.313em;
 $pfe-expand_chevron--weight:         0.15em;
 $pfe-expand_chevron--placement:      ($pfe-expand_button--LineHeight / 2) - ($pfe-expand_chevron--size / 2);
 $pfe-expand_button--padding-factor:  0.75;
-$pfe-expand_button--border-dark: #979797;
+$pfe-expand_button--border-dark:     #979797;
 
 @mixin pfe-trigger-button($theme: light) {
     padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_button--padding-factor});

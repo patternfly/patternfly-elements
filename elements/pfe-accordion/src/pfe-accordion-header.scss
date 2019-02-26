@@ -38,6 +38,12 @@
     @include pfe-trigger-button-last;
   }  
 }
+:host([color="dark"]:last-of-type),
+:host([on="dark"]:last-of-type) {
+  button {
+    @include pfe-trigger-button-last($theme: dark);
+  }  
+}
 
 :host(.animating) {
   transition: transform 0.3s #{pfe-var(animation-timing)};

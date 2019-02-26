@@ -1,26 +1,15 @@
 @import "../../pfe-sass/pfe-sass";
 
 :host {
-  display: none;
-  overflow: hidden;
-  will-change: height;
-  border-left: 3px solid transparent; // make a var for this!
-}
-
-:host([expanded]) {
-  display: block;
-  position: relative;
+  @include accordion-panel;
 }
 
 :host([color="light"][expanded]) {
-    box-shadow: 0 5px 3px #f2f2f2;
-    border-left: 3px solid #06c; // override the var
-    background: #{pfe-color(surface--lightest)};
+  @include accordion-panel-expanded;
 }
 
 :host([color="dark"][expanded]) {
-    border-left: 3px solid #fff; // override the var
-    background: #{pfe-color(surface--darker)};
+  @include accordion-panel-expanded($theme: dark);
 }
 
 :host(.animating) {
@@ -29,15 +18,11 @@
 }
 
 .container {
-  padding: 0 #{pfe-var(container-spacer)} #{pfe-var(container-spacer)} #{pfe-var(container-spacer)};
-  overflow: hidden;
-
   :host([color="light"]) & {
-    border-right: 1px solid #{pfe-color(surface--border--lightest)};
-    border-bottom: 1px solid #{pfe-color(surface--border--lightest)};
+    @include accordion-panel-container($theme: light);
   }
 
   :host([color="dark"]) & {
-    color: white;
+    @include accordion-panel-container($theme: dark);
   }
 }

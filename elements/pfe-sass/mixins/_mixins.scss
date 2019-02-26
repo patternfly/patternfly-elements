@@ -167,6 +167,7 @@ $pfe-expand_chevron--size:           0.313em;
 $pfe-expand_chevron--weight:         0.15em;
 $pfe-expand_chevron--placement:      ($pfe-expand_button--LineHeight / 2) - ($pfe-expand_chevron--size / 2);
 $pfe-expand_button--padding-factor:  0.75;
+$pfe-expand_button--border-dark: #979797;
 
 @mixin pfe-trigger-button($theme: light) {
     padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_button--padding-factor});
@@ -182,23 +183,29 @@ $pfe-expand_button--padding-factor:  0.75;
     cursor: pointer;
     color: var(--pfe-expanded--aux);
     @if $theme == dark {
-      border-top-color: #{pfe-color(surface--border--darkest)};
+        // border-top-color: #{pfe-color(surface--border--darkest)};
+        border-top-color: $pfe-expand_button--border-dark;
     }
     @else {
-      border-top-color: #{pfe-color(surface--border--lightest)};
+        border-top-color: #{pfe-color(surface--border--lightest)};
     }
 
     &:focus {
-      outline: 1px solid var(--pfe-expanded--focus);
+        outline: 1px solid var(--pfe-expanded--focus);
     }
 
     &::-moz-focus-inner {
-      border: 0;
+        border: 0;
     }
 }
 
-@mixin pfe-trigger-button-last {
-  border-bottom-color: #{pfe-color(surface--border--lightest)}; // use a var here
+@mixin pfe-trigger-button-last($theme: light) {
+    @if $theme == dark {
+        border-bottom-color: $pfe-expand_button--border-dark; // use a var here
+    }
+    @else {
+        border-bottom-color: #{pfe-color(surface--border--lightest)}; // use a var here
+    }
 }
 
 @mixin pfe-trigger-expanded {
@@ -296,3 +303,38 @@ $pfe-expand_button--padding-factor:  0.75;
     }
 }
 
+@mixin accordion-panel {
+  display: none;
+  overflow: hidden;
+  will-change: height;
+  border-color: transparent; // make a var for this!
+}
+
+@mixin accordion-panel-expanded($theme: light) {
+  display: block;
+  position: relative;
+  border-width: 0;
+  border-left-width: 3px;
+  border-style: solid;
+  @if $theme == dark {
+    border-color: $pfe-color--white;
+    background: #{pfe-color(surface--darker)};
+  }
+  @else {
+    box-shadow: 0 5px 3px rgba(140, 140, 140, 0.35);
+    border-color: #06c; // override the var
+    background: #{pfe-color(surface--lightest)};
+  }
+}
+
+@mixin accordion-panel-container($theme: light) {
+  padding: 0 #{pfe-var(container-spacer)} #{pfe-var(container-spacer)} #{pfe-var(container-spacer)};
+  overflow: hidden;
+  @if $theme == light {
+    border-right: 1px solid #{pfe-color(surface--border--lightest)};
+    border-bottom: 1px solid #{pfe-color(surface--border--lightest)};
+  }
+  @else {
+    color: white;
+  }
+}

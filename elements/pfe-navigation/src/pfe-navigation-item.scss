@@ -74,7 +74,8 @@ $pfe-nav-size: 4em;
 		display: block;
 		background-color: #{pfe-color(surface--lightest)};
 		position: absolute;
-		top: 80px; // @TODO Need to do this with JS
+		top: 68px; // @TODO Need to do this with JS
+	    box-shadow: 1px 1px 10px #333; // @todo remove when overlay is in place
 		left: 0;
 		width: 100%;
 		z-index: 1;
@@ -87,7 +88,7 @@ $pfe-nav-size: 4em;
 	&__container {
 		display: 		flex;
 		margin:    	10px auto;
-		width: 			var(--pfe-navigation--Width);
+		//width: 		#{pfe-local(tray--Width)};
 	}
 	&__button {
 		text-decoration: none;
@@ -204,3 +205,13 @@ $pfe-nav-size: 4em;
 :host([hidden]) {
 	display: none;
 }
+
+/// ===========================================================================
+/// TRAY
+/// ===========================================================================
+
+::slotted([slot="pfe-navigation-item--tray"]) {
+    margin: auto;
+	display: flex;
+}
+

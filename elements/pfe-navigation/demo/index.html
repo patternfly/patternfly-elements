@@ -27,11 +27,14 @@
     <script type="module" src="../../pfe-card/pfe-card.js"></script>
     <script type="module" src="../../pfe-cta/pfe-cta.js"></script>
     <script type="module" src="../../pfe-link-list/pfe-link-list.js"></script>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
   </head>
 
   <body unresolved>
-    <h1>&lt;pfe-navigation&gt;</h1>
-
     <pfe-navigation pfe-color="darkest">
       <div slot="pfe-navigation--skip">
         <a href="#rh-main-content">Skip to content</a>
@@ -56,7 +59,7 @@
               <a slot="pfe-navigation-item--trigger" href="/products">Products</a>
 
               <div slot="pfe-navigation-item--tray" hidden>
-                <div pfe-navigation-item--tray-region="main" class="pile-o-links  pfe-l-grid">
+                <pfe-band pfe-color="lightest" style="--pfe-band--Padding--vertical: 10px;" pfe-navigation-item--tray-region="main" class="pile-o-links  pfe-l-grid">
                   <pfe-link-list role="region">
                     <h2 slot="pfe-link-list--header"><a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux">Flagship Products</a></h2>
                     <ul slot="pfe-link-list--list">
@@ -71,28 +74,32 @@
                       <li><a href="#">Collab #2</a></li>
                     </ul>
                   </pfe-link-list>
+                  <div slot="pfe-band--aside"pfe-navigation-item--tray-region="aside">
+                    <pfe-card color="complement">Promo with captions, fancy other stuff
+                    </pfe-card>
+                  </div>
+                  <div slot="pfe-band--footer" pfe-navigation-item--tray-region="footer" class>
+                    <pfe-cta ><a href="#">CTA link</a></pfe-cta>
+                    <pfe-cta ><a href="#">CTA link</a></pfe-cta>
+                  </div>
                 </div>
-                <aside pfe-navigation-item--tray-region="aside">Promo with captions, fancy other stuff</aside>
-
-                <footer pfe-navigation-item--tray-region="footer" class>
-                  <pfe-cta>link</pfe-cta>
-                </footer>
-              </div>
             </pfe-navigation-item>
           </li>
           <li>
             <pfe-navigation-item on="dark">
               <a slot="pfe-navigation-item--trigger" href="/solutions">Solutions</a>
               <div slot="pfe-navigation-item--tray" hidden>
-                <pfe-link-list role="region">
-                  <h2 slot="pfe-link-list--header"><a href="#">Main offerings</a></h2>
-                  <ul slot="pfe-link-list--list">
-                    <li><a href="#">The best</a></li>
-                    <li><a href="#">The bestest</a></li>
-                    <li><a href="#">More better</a></li>
-                    <li><a href="#">Even better</a></li>
-                  </ul>
-                </pfe-link-list>
+                <pfe-band pfe-color="lightest">
+                  <pfe-link-list role="region">
+                    <h2 slot="pfe-link-list--header"><a href="#">Main offerings</a></h2>
+                    <ul slot="pfe-link-list--list">
+                      <li><a href="#">The best</a></li>
+                      <li><a href="#">The bestest</a></li>
+                      <li><a href="#">More better</a></li>
+                      <li><a href="#">Even better</a></li>
+                    </ul>
+                  </pfe-link-list>
+                </pfe-band>
               </div>
             </pfe-navigation-item>
           </li>
@@ -113,26 +120,26 @@
       <pfe-navigation-item on="dark" slot="pfe-navigation--utility" pfe-icon="user">
         <a slot="pfe-navigation-item--trigger" href="#url-to-login-landing-page">Log in</a>
         <div slot="pfe-navigation-item--tray" hidden>
-          <div pfe-navigation-item--tray-region="main">
-            <pfe-link-list role="region">
-              <h2 slot="pfe-link-list--header"><a href="#">Flagship Products</a></h2>
-              <ul slot="pfe-link-list--list">
-                <li><a href="#">Awesome</a></li>
-                <li><a href="#">So good</a></li>
-              </ul>
-            </pfe-link-list>
-            <pfe-link-list role="region">
-              <h2 slot="pfe-link-list--header"><a href="#">Collaborations</a></h2>
-              <ul slot="pfe-link-list--list">
-                <li><a href="#">Collab #1</a></li>
-                <li><a href="#">Collab #2</a></li>
-              </ul>
-            </pfe-link-list>
-          </div>
-          <aside pfe-navigation-item--tray-region="aside">Promo with captions, fancy other stuff</aside>
-          <footer pfe-navigation-item--tray-region="footer" class>
-            <pfe-cta>link</pfe-cta>
-          </footer>
+            <pfe-band pfe-color="lightest" style="--pfe-band--Padding--vertical: 10px;" pfe-navigation-item--tray-region="main">
+              <pfe-link-list role="region">
+                <h2 slot="pfe-link-list--header"><a href="#">Flagship Products</a></h2>
+                <ul slot="pfe-link-list--list">
+                  <li><a href="#">Awesome</a></li>
+                  <li><a href="#">So good</a></li>
+                </ul>
+              </pfe-link-list>
+              <pfe-link-list role="region">
+                <h2 slot="pfe-link-list--header"><a href="#">Collaborations</a></h2>
+                <ul slot="pfe-link-list--list">
+                  <li><a href="#">Collab #1</a></li>
+                  <li><a href="#">Collab #2</a></li>
+                </ul>
+              </pfe-link-list>
+              <div slot="pfe-band--aside" pfe-navigation-item--tray-region="aside">Promo with captions, fancy other stuff</div>
+              <div slot="footer" pfe-navigation-item--tray-region="footer" class>
+                <pfe-cta><a href="#">link</a></pfe-cta>
+              </div>
+          </pfe-band>
         </div>
       </pfe-navigation-item>
 
@@ -153,7 +160,7 @@
       </pfe-navigation-item>
     </pfe-navigation>
 
-    <pfe-band pfe-color="lightest">
+    <pfe-band pfe-color="lightest" style="--pfe-band--Padding--vertical: 10px;" pfe-color="lightest">
         <header slot="pfe-band--header">
           <h1>Lightest band, header region</h1>
           <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
@@ -174,7 +181,7 @@
         </pfe-card>
     </pfe-band>
 
-    <pfe-band pfe-color="lighter" pfe-aside-desktop="left">
+    <pfe-band pfe-color="lightest" style="--pfe-band--Padding--vertical: 10px;" pfe-color="lighter" pfe-aside-desktop="left">
       <header slot="pfe-band--header">
         <h2>Lighter band; no footer</h2>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>

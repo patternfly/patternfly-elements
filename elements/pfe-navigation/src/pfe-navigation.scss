@@ -41,16 +41,8 @@ $LOCAL: navigation;
 	position: relative;
 	display: block;
 	width: 100%;
+	margin: 0;
 
-	// Padding 
-	padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
-
-	@media (min-width: #{pfe-breakpoint(sm)}) {
-		padding: #{pfe-local(Padding)};
-	}
-
-	// Border styles
-	//border: #{pfe-local(Border)};
 
 	// Set the defaults for look and feel
 	@media (min-width: #{pfe-breakpoint(md)}) {
@@ -112,6 +104,7 @@ $LOCAL: navigation;
 	}
 	&__utility {
 		grid-area: utility;
+	    justify-content: flex-end;
 	}
 }
 

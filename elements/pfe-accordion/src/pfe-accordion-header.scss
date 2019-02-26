@@ -4,29 +4,39 @@
 /// DEFAULT ACCORDION HEADING
 /// ===========================================================================
 :host {
-  --pfe-expanded--main:         #{pfe-color(surface--lighter)};
-  --pfe-expanded--aux:          #{pfe-color(surface--lighter--text)};
-  --pfe-expanded--focus:        #{pfe-color(surface--lighter--link--focus)};
+  // --pfe-expanded--aux:          #{pfe-color(surface--lighter--text)}; //Text color
+  // --pfe-expanded--focus:        #{pfe-color(surface--lighter--link--focus)};
 
   display: block;
   background: var(--pfe-expanded--main);
   color: var(--pfe-expanded--aux);
-
+  border-left: 3px solid transparent;
   button {
-    @include pfe-expand-button;
+    @include pfe-trigger-button;
+    font-weight: 700;
 
     &[aria-expanded] {
-      @include pfe-expand-button-expanded;
+      @include pfe-trigger-expanded;
     }
 
-    &[aria-expanded="false"]::before {
-      @include pfe-expand-button-expanded-false;
+    &[aria-expanded="false"]::after {
+      @include pfe-chevron-expanded-false;
     }
 
-    &[aria-expanded="true"]::before {
-      @include pfe-expand-button-expanded-true;
+    &[aria-expanded="true"]::after {
+      @include pfe-chevron-expanded-true;
     }
   }
+  > * {
+    margin: 0;
+  }
+}
+
+// add border bottom to the last button in an accordion set.
+:host(:not([aria-expanded="true"]):last-of-type) {
+  button {
+    @include pfe-trigger-button-last;
+  }  
 }
 
 :host(.animating) {
@@ -46,31 +56,28 @@ h6 {
 /// COLOR OVERRIDES
 /// ===========================================================================
 
-:host([color="lightest"]),
-:host([color="striped"].even) {
-  @include pfe-expand-button-color-lightest;
+:host([color="light"]) {
+  @include pfe-trigger-color-light;
 
   button[aria-expanded="true"] {
-    @include pfe-expand-button-color-lightest-expanded;
+    @include pfe-trigger-color-light-borders;
   }
 }
 
-:host([color="base"]) {
-  @include pfe-expand-button-color-base;
+:host([color="dark"]),
+:host([on="dark"]) {
+  @include pfe-trigger-color-dark;
+  button {
+    @include pfe-trigger-button($theme: dark);
+  }
 }
 
-:host([color="dark"]) {
-  @include pfe-expand-button-color-dark;
+:host([color="light"][aria-expanded="true"]) {
+  @include pfe-trigger-color-light-expanded;
 }
 
-:host([color="darkest"]) {
-  @include pfe-expand-button-color-darkest;
-}
+:host([color="dark"][aria-expanded="true"]),
+:host([on="dark"][aria-expanded="true"]) {
+  @include pfe-trigger-color-dark-expanded;
 
-:host([color="accent"]) {
-  @include pfe-expand-button-color-accent;
-}
-
-:host([color="complement"]) {
-  @include pfe-expand-button-color-complement;
 }

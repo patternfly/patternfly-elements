@@ -26,12 +26,22 @@
         font-family: Overpass;
         padding: 16px 32px 32px;
       }
+      .dark-background {
+        background-color: #000;
+      }
+      .gray-background {
+        background-color: #f2f2f2;
+      }
+      pfe-accordion {
+        max-width: 700px;
+        margin: 0 auto;
+      }
     </style>
   </head>
   <body unresolved>
     <h1>&lt;pfe-accordion&gt;</h1>
-    <section>
-      <pfe-accordion color="lightest">
+    <section class="gray-background">
+      <pfe-accordion color="light">
         <pfe-accordion-header>
           <h2>Why do wizards need money if they could just create it?</h2>
         </pfe-accordion-header>
@@ -65,9 +75,9 @@
         </pfe-accordion-panel>
       </pfe-accordion>
     </section>
-    <section>
-      <h2>Striped Accordion</h2>
-      <pfe-accordion color="striped">
+    <section class="dark-background">
+      <h2 style="color: white;">Dark Accordion</h2>
+      <pfe-accordion color="dark">
         <pfe-accordion-header>
           <h2>Why do wizards need money if they could just create it?</h2>
         </pfe-accordion-header>
@@ -101,5 +111,6 @@
         </pfe-accordion-panel>
       </pfe-accordion>
     </section>
+
   </body>
 </html>

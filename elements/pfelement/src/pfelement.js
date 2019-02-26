@@ -47,7 +47,7 @@ class PFElement extends HTMLElement {
       const fraggle = document.createDocumentFragment();
       // Get the content and the slots
       if(item[0] && item[1]) {
-        const contents = [...context.querySelectorAll(item[0])];
+        const contents = [...context.querySelectorAll(`[slot=\"${item[0]}\"]`)];
         const slot = context.shadowRoot.querySelector(item[1]);
         // For each content item, append it to the fragment
         contents.forEach(content => {
@@ -62,6 +62,33 @@ class PFElement extends HTMLElement {
         }
       }
     });
+  }
+
+  static swapElements(oldEl, newEl, attributes = []) {
+    if(oldEl && oldEl.attributes.length > 0 && newEl) {
+      [...oldEl.attributes].forEach((attr) => {
+        if(attributes.length) {
+          // Only add supported attributes to the new element
+          attributes.forEach(a => {
+            if (a === attr.name) {
+              // Give the new element this attribute from the old element
+              newEl.setAttribute(attr.name, attr.value);
+            }
+          })
+
+        } else {
+          // Give the new element all the attributes of the old element
+          newEl.setAttribute(attr.name, attr.value);
+        }
+      });
+
+      // Get the parent container of the old element
+      const parent = oldEl.parentNode;
+      // If the parent element is found, replace the old element with the new one
+      if(parent) {
+        parent.replaceChild(newEl, oldEl);
+      }
+    }
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {

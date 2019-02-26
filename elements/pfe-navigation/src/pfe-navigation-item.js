@@ -190,7 +190,7 @@ class PfeNavigationItem extends PFElement {
 
     // Copy the content of the trigger slot into the ShadowDOM
     const slots = {
-      "[slot=\"pfe-navigation-item--trigger\"]": "[name=\"pfe-navigation-item--trigger\"]"
+      "pfe-navigation-item--trigger": "[name=\"pfe-navigation-item--trigger\"]"
     };
 
     this._pfeClass.moveToShadowDOM(slots, this);

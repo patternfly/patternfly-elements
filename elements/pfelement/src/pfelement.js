@@ -48,7 +48,7 @@ class PFElement extends HTMLElement {
       // Get the content and the slots
       if(item[0] && item[1]) {
         const contents = [...context.querySelectorAll(item[0])];
-        const slot = context.shadowRoot.querySelector(item[1]);
+        const slot = context.shadowRoot.querySelector(`[slot=\"${item[1]}\"]`);
         // For each content item, append it to the fragment
         contents.forEach(content => {
           // Remove slot designation

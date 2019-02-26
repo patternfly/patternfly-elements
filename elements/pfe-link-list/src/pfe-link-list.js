@@ -34,12 +34,17 @@ class PfeLinkList extends PFElement {
 
     // Define the name of the slots
     const slots = {
-      "[slot=\"pfe-link-list--header\"]": "[pfe-id=\"pfe-link-list--header\"]",
-      "[slot=\"pfe-link-list--list\"]": "[pfe-id=\"pfe-link-list--list\"]",
+      "pfe-link-list--header": "[pfe-id=\"pfe-link-list--header\"]",
+      "pfe-link-list--list": "[pfe-id=\"pfe-link-list--list\"]",
     };
 
     // Move the content from the main and utility slots into the shadowDOM
     this._pfeClass.moveToShadowDOM(slots, this);
+
+    const header = this.shadowRoot.querySelector(".pfe-link-list__header");
+    const hlevel = this.shadowRoot.querySelector(".pfe-link-list__header > *");
+    
+    console.log(header.prop("attributes"));
   }
 
   // disconnectedCallback() {}

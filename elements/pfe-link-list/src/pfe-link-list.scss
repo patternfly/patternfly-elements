@@ -1,16 +1,16 @@
 @import "../../pfe-sass/pfe-sass";
 
-/// ===========================================================================
-/// DEFUALT LINK-LIST
-/// ===========================================================================
-
 $LOCAL: link-list;
 
+/// ===========================================================================
+/// DEFAULT LINK-LIST
+/// ===========================================================================
 :host {
-  --pfe-link-list--padding:                     calc(#{pfe-var(container-spacer)} * 1); // 1x `container-spacer`
-  --pfe-link-list_header--size:                 #{pfe-var(font-size--heading--epsilon)};
-  --pfe-link-list_header--color:                #{pfe-var(font-size--heading--epsilon)};
-  --pfe-link-list--bg:                          #{pfe-color(surface--base)};
+  --pfe-link-list--Padding:                     #{pfe-var(container-spacer)};
+  --pfe-link-list__header--FontSize:            #{pfe-var(font-size--heading--epsilon)};
+  --pfe-link-list__header--Color:               #{pfe-color(surface--base--text)};
+
+  // Broadcasted color
   --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
   --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--link)};
   --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--link--visited)};
@@ -18,17 +18,17 @@ $LOCAL: link-list;
   --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
 
   display: block;
-  padding: var(--pfe-link-list--padding);
+  padding: #{pfe-local(Padding)};
 }
 
 :host([hidden]) {
   display: none;
 }
 
-.pfe-link-list__header {
-  & h1, h2, h3, h4, h5, h6 {
+.pfe-link-list {
+    &__header {
     // color: var(--pfe-link-list_header--color); TODO fix the color variables to import from the new color palette
-    color: #252525;
+    color: #{pfe-local(Color, header)}; // #252525;
     font-family: "Overpass", arial, sans-serif;
     font-weight: 400;
     margin: 0;
@@ -36,10 +36,7 @@ $LOCAL: link-list;
     margin-block-start: 0;
     margin-bottom: 1rem;
   }
-}
-
-.pfe-link-list__list {
-  & ul {
+  &__list {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -60,7 +57,7 @@ $LOCAL: link-list;
           color: #0066CC;
         }
         &:focus {
-          color: var(--pfe-broadcasted--color--ui-link--focus);
+          color: #{pfe-radio(color--ui-link--focus)};
         }
       }
     }

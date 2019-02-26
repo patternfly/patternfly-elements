@@ -14,13 +14,13 @@ $pfe-nav-size: 4em;
 	// Fill the navigation container
 	height: 100%;
 	// Update the navigation padding in this context
-	--pfe-navigation--Padding--vertical: #{pfe-var(container-spacer)};
-	--pfe-navigation--Padding--horizontal: 0;
+	--pfe-navigation-item--Padding--vertical:   #{pfe-var(container-spacer)};
+	--pfe-navigation-item--Padding--horizontal: #{pfe-var(container-spacer)};
 
 	--pfe-navigation-item__tray--Width__aside--sm: 240px;
 	--pfe-navigation-item__tray--Width__aside--lg: 300px;
 
-	--pfe-navigation-item--Color: 					#{pfe-local(main)};
+	--pfe-navigation-item--Color: 			#{pfe-local(main)};
 	--pfe-navigation-item--BackgroundColor: #{pfe-local(aux)};
 	--pfe-navigation-item--BorderTopColor:	transparent;
 
@@ -46,8 +46,6 @@ $pfe-nav-size: 4em;
 	  font-weight: bold;
 	  font-weight: 300;
 	  min-height:  #{$pfe-nav-size};
-	  
-	  //border: green solid 1px;
 	  display: flex;
 	  flex-direction: column;
 	  align-items: center;
@@ -71,6 +69,7 @@ $pfe-nav-size: 4em;
 
 
 .pfe-navigation-item {
+
 	&__wrapper {
 		display: block;
 		background-color: #{pfe-color(surface--lightest)};
@@ -105,33 +104,33 @@ $pfe-nav-size: 4em;
 		}
 		@media (min-width: #{pfe-breakpoint(md)}) {
 			flex: 1;
-			display: 					flex;
+			display:			flex;
 			flex-direction: 	column;
-			align-items: 			center;
+			align-items: 		center;
 			justify-content: 	center;
+			padding: 0 3px;
 			// Fill the navigation container
-			height: 					100%;
-			cursor: 					pointer;
+			height: 			100%;
+			cursor: 			pointer;
 			text-decoration: 	none;
-			border-top:       #{pfe-local(BorderColor)} solid 2px;
+			border-top:       #{pfe-local(BorderTopColor)} solid 2px;
 			color:            #{pfe-local(Color)}; //text
 			background-color: #{pfe-local(BackgroundColor)};  //bg
-			padding: 					0 calc(#{pfe-var(container-padding)} * 1);
 			line-height: 			#{$pfe-nav-size};
 		}
 
 	  &:hover {
-			--pfe-navigation-item--Color: 					#{pfe-local(main--hover)};
+			--pfe-navigation-item--Color:			#{pfe-local(main--hover)};
 			--pfe-navigation-item--BackgroundColor: #{pfe-local(aux--hover)};
 			--pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
 	  }
 	  &:active {
-			--pfe-navigation-item--Color: #{pfe-local(main--hover)};
+			--pfe-navigation-item--Color:			#{pfe-local(main--hover)};
 			--pfe-navigation-item--BackgroundColor: #{pfe-local(aux--hover)};
 			--pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
 	  }
 	  &:focus {
-			--pfe-navigation-item--Color: #{pfe-local(main--hover)};
+			--pfe-navigation-item--Color: 			#{pfe-local(main--hover)};
 			--pfe-navigation-item--BackgroundColor: #{pfe-local(aux--hover)};
 			--pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
 	  	&:not(:focus-visible) {
@@ -142,10 +141,10 @@ $pfe-nav-size: 4em;
 
 	&__icon {
 		@media (min-width: #{pfe-breakpoint(md)}) {
-			margin: 0 0 2px 0;
+			padding: 0 0 10px 0;
 			display: block;
-			height: 20px;
 			width: 	20px;
+
 			[pfe-icon="bento"] & #Icon {
 				-webkit-text-fill-color: 	 #{pfe-local(Color)};
 				fill: 	#{pfe-local(Color)};
@@ -173,12 +172,20 @@ $pfe-nav-size: 4em;
 		  text-decoration: none;
 		}
 		@media (min-width: #{pfe-breakpoint(md)}) {
+			font-size: 0.9em;
 			margin: 0;
 			color:  inherit; 
 			line-height: 1.2;
+			padding: 0 #{pfe-local(Padding--horizontal)};
 		}
 	}
 }
+//shrink the text size of nav items with icons
+[pfe-icon] .pfe-navigation-item__text {
+	font-size: 0.8em;
+	//padding: calc(#{pfe-local(Padding--vertical)} * 0.5) #{pfe-local(Padding--horizontal)}#{pfe-local(Padding--vertical)};
+}
+
 
 
 /// ===========================================================================

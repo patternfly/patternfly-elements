@@ -70,7 +70,7 @@ class PfeAccordion extends PFElement {
 
   static get cascadingAttributes() {
     return {
-      color: "pfe-accordion-header"
+      color: "pfe-accordion-header, pfe-accordion-panel"
     };
   }
 

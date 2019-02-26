@@ -70,7 +70,7 @@ class PfeNavigationItem extends PFElement {
           attributes: {
             width: "19px",
             height: "19px",
-            viewBox: "0 0 19 19",
+            viewBox: "-1 -1 20 20",
             version: "1.1",
             xmlns: "http://www.w3.org/2000/svg",
             "xmlns:xlink": "http://www.w3.org/1999/xlink"
@@ -93,7 +93,7 @@ class PfeNavigationItem extends PFElement {
           attributes: {
             width: "21px",
             height: "21px",
-            viewBox: "0 0 21 21",
+            viewBox: "-1 -1 22 22",
             version: "1.1",
             xmlns: "http://www.w3.org/2000/svg",
             "xmlns:xlink": "http://www.w3.org/1999/xlink"
@@ -113,7 +113,7 @@ class PfeNavigationItem extends PFElement {
           attributes: {
             width: "23px",
             height: "18px",
-            viewBox: "0 0 23 18",
+            viewBox: "-1 -1 24 19",
             version: "1.1",
             xmlns: "http://www.w3.org/2000/svg",
             "xmlns:xlink": "http://www.w3.org/1999/xlink"
@@ -130,7 +130,7 @@ class PfeNavigationItem extends PFElement {
           attributes: {
             width: "20px",
             height: "20px",
-            viewBox: "0 0 20 20",
+            viewBox: "-1 -1 21 21",
             version: "1.1",
             xmlns: "http://www.w3.org/2000/svg",
             "xmlns:xlink": "http://www.w3.org/1999/xlink"
@@ -214,7 +214,7 @@ class PfeNavigationItem extends PFElement {
       // Create a span tag to wrap the link text in
       const textWrapper = document.createElement("span");
       textWrapper.classList.add("pfe-navigation-item__text");
-      
+
       // Assign the text wrapper the inner text of the trigger
       textWrapper.innerText = this.trigger.innerText;
       // Reset the inner text of the trigger element

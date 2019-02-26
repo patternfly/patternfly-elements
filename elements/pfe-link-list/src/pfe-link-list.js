@@ -41,10 +41,21 @@ class PfeLinkList extends PFElement {
     // Move the content from the main and utility slots into the shadowDOM
     this._pfeClass.moveToShadowDOM(slots, this);
 
-    const header = this.shadowRoot.querySelector(".pfe-link-list__header");
-    const hlevel = this.shadowRoot.querySelector(".pfe-link-list__header > *");
-    
-    console.log(header.prop("attributes"));
+    [{
+      class: "header",
+      selector: "*",
+      attributes: ["class"]
+    }, {
+      class: "list",
+      selector: "ul",
+      attributes: ["class"]
+    }].forEach((section) => {
+      let wrapper = this.shadowRoot.querySelector(`.pfe-link-list__${section.class}`);
+      let child   = this.shadowRoot.querySelector(`.pfe-link-list__${section.class} > ${section.selector}`);
+  
+      // Swap the placeholder element from the template with the element provided by the lightDOM
+      this._pfeClass._swapElements(wrapper, child, section.attributes);
+    });
   }
 
   // disconnectedCallback() {}

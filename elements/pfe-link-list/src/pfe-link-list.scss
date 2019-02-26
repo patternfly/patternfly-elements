@@ -26,38 +26,29 @@ $LOCAL: link-list;
 }
 
 .pfe-link-list {
-    &__header {
-    // color: var(--pfe-link-list_header--color); TODO fix the color variables to import from the new color palette
-    color: #{pfe-local(Color, header)}; // #252525;
-    font-family: "Overpass", arial, sans-serif;
-    font-weight: 400;
-    margin: 0;
+  &__header {
+    font-family: #{pfe-var(font-family)};
+    color: #{pfe-local(Color, header)}; // #252525; // @TODO fix the color variables to import from the new color palette
+    font-weight: #{pfe-var(font-weight--light)};
+    margin: 0 0 1rem 0;
     margin-block-end: 0; // user stylesheet overwrites normal margin?
     margin-block-start: 0;
-    margin-bottom: 1rem;
   }
   &__list {
     margin: 0;
     padding: 0;
     list-style: none;
-    & li {
+    li {
       margin-bottom: 1rem;
-      & a {
-        // color: var(--pfe-broadcasted--color--ui-link); TODO fix the color variables to import from the new color palette
-        color: #0066CC;
-        font-family: "Overpass", arial, sans-serif;
-        font-weight: 400;
-        text-decoration: none;
-        &:hover {
-          // color: var(--pfe-broadcasted--color--ui-link--hover); TODO fix the color variables to import from the new color palette
-          color: darken(#0066CC, 20%);
-        }
-        &:visited {
-          // color: var(--pfe-broadcasted--color--ui-link); TODO fix the color variables to import from the new color palette
-          color: #0066CC;
-        }
-        &:focus {
-          color: #{pfe-radio(color--ui-link--focus)};
+    }
+    a {
+      font-family: #{pfe-var(font-family)};
+      color: #{pfe-radio(color--ui-link)}; // @TODO fix the color variables to import from the new color palette
+      font-weight: #{pfe-var(font-weight--light)};
+      text-decoration: none;
+      @each $state in (hover, visited, focus) {
+        &:#{$state} {
+          color: #{pfe-radio(color--ui-link--#{$state})};
         }
       }
     }

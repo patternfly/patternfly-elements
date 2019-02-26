@@ -208,32 +208,7 @@ class PfeNavigationItem extends PFElement {
     }
 
     if(this.trigger) {
-      // Find and remove the slot from the trigger's child
-      this.trigger.removeAttribute("slot");
-
-      // Create a span tag to wrap the link text in
-      const textWrapper = document.createElement("span");
-      textWrapper.classList.add("pfe-navigation-item__text");
-      
-      // Assign the text wrapper the inner text of the trigger
-      textWrapper.innerText = this.trigger.innerText;
-      // Reset the inner text of the trigger element
-      this.trigger.innerText = "";
-
-      // Add the icon to the trigger if the property has been set
-      if(this.hasAttribute("pfe-icon")) {
-        const iconName = this.getAttribute("pfe-icon");
-        // If an icon string is returned and that string is part of the stored SVGs
-        if(iconName && this._pfeClass.iconSVG[iconName]) {
-          // Build the SVG into an object
-          let svg = this._buildSVG(iconName, "pfe-navigation-item__icon");
-          if(this.trigger) {
-            this.trigger.append(svg);
-          }
-        }
-      }
-
-      this.trigger.append(textWrapper);
+      this._buildTrigger();
     }
 
     // Initialize expanded to false
@@ -271,6 +246,39 @@ class PfeNavigationItem extends PFElement {
       // If it's a function, allow it to run
       if (typeof observer === "function") observer(attr, oldValue, newValue);
     }
+  }
+
+  _buildTrigger() {
+    // Find and remove the slot from the trigger's child
+    this.trigger.removeAttribute("slot");
+
+    // Create a span tag to wrap the link text in
+    const textWrapper = document.createElement("span");
+    textWrapper.classList.add("pfe-navigation-item__text");
+    
+    // Assign the text wrapper the inner text of the trigger
+    textWrapper.innerText = this.trigger.innerText;
+    // Reset the inner text of the trigger element
+    this.trigger.innerText = "";
+
+    // Add the icon to the trigger if the property has been set
+    if(this.hasAttribute("pfe-icon")) {
+      const iconName = this.getAttribute("pfe-icon");
+      // If an icon string is returned and that string is part of the stored SVGs
+      if(iconName && this._pfeClass.iconSVG[iconName]) {
+        // Build the SVG into an object
+        let svg = this._buildSVG(iconName, "pfe-navigation-item__icon");
+        if(this.trigger) {
+          this.trigger.append(svg);
+        }
+      }
+    }
+
+    this.trigger.append(textWrapper);
+  }
+  
+  _trayRegions() {
+    // pfe-navigation-item--tray-region="main", "footer", "aside"
   }
 
   _buildSVG(icon, className = "") {

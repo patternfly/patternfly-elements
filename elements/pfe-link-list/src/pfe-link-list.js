@@ -5,6 +5,10 @@ class PfeLinkList extends PFElement {
     return "pfe-link-list";
   }
 
+  get schemaUrl() {
+    return "pfe-link-list.json";
+  }
+
   get templateUrl() {
     return "pfe-link-list.html";
   }
@@ -17,32 +21,25 @@ class PfeLinkList extends PFElement {
   //   return [];
   // }
 
+  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.Content;
+  }
+
   constructor() {
-    super(PfeLinkList);
+    super(PfeLinkList, { type: PfeLinkList.PfeType });
   }
   connectedCallback() {
     super.connectedCallback();
+
     // Define the name of the slots
-     const slots = {
-       header: "pfe-link-list--header",
-       list: "pfe-link-list--list"
-     };
-     // Copy the content of the main and utility slots into the ShadowDOM
-     Object.values(slots).forEach(slotName => {
-       const fraggle = document.createDocumentFragment();
-       // Get the content and the slots
-       const contents = [...this.querySelectorAll(`[slot="${slotName}"]`)];
-       const slot = this.shadowRoot.querySelector(`[name="${slotName}"]`);
-       console.log(contents);
-       console.log(fraggle);
-       contents.forEach(content => {
-         fraggle.appendChild(content);
-       });
-       // If the slot and contents exist, append the fragment to the DOM
-       if (slot && contents.length) {
-         slot.appendChild(fraggle);
-       }
-     });
+    const slots = {
+      "[slot=\"pfe-link-list--header\"]": "[pfe-id=\"pfe-link-list--header\"]",
+      "[slot=\"pfe-link-list--list\"]": "[pfe-id=\"pfe-link-list--list\"]",
+    };
+
+    // Move the content from the main and utility slots into the shadowDOM
+    this._pfeClass.moveToShadowDOM(slots, this);
   }
 
   // disconnectedCallback() {}

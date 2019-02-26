@@ -73,7 +73,7 @@ $pfe-nav-size: 4em;
 .pfe-navigation-item {
 	&__wrapper {
 		display: block;
-		background-color: #{pfe-color(surface--lighter)};
+		background-color: #{pfe-color(surface--lightest)};
 		position: absolute;
 		top: 80px; // @TODO Need to do this with JS
 		left: 0;
@@ -86,8 +86,8 @@ $pfe-nav-size: 4em;
 		}
 	}
 	&__container {
-		margin:    	0 auto;
-		padding: 		#{pfe-var(container-spacer)} #{pfe-local(Padding--horizontal)};
+		display: 		flex;
+		margin:    	10px auto;
 		width: 			var(--pfe-navigation--Width);
 	}
 	&__button {

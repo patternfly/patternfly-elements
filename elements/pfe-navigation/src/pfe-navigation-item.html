@@ -1,5 +1,7 @@
 <!-- Navigation item -->
-<slot name="pfe-navigation-item--trigger"></slot>
+<div class="pfe-navigation-item__button">
+    <slot name="pfe-navigation-item--trigger"></slot>
+</div>
 
 ${this.has_slot("pfe-navigation-item--tray") ? `
 <section class="pfe-navigation-item__wrapper" hidden>

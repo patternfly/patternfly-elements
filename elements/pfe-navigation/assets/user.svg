@@ -4,7 +4,7 @@
     <title>Icon</title>
     <desc>Created with Sketch.</desc>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
-        <g id="Icon" transform="translate(1.000000, 1.000000)" stroke="#FFFFFF">
+        <g id="Icon">
             <path d="M0,19 C0,13.75 4.25,9.5 9.5,9.5 C14.75,9.5 19,13.75 19,19" id="Path"></path>
             <circle id="Oval" cx="9.5" cy="4.75" r="4.75"></circle>
         </g>

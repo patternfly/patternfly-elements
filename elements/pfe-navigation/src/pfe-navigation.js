@@ -47,8 +47,8 @@ class PfeNavigation extends PFElement {
 
     // Define the name of the slots
     const slots = {
-      "[slot=\"pfe-navigation--main\"]": "[pfe-id=\"pfe-navigation--main\"]",
-      "[slot=\"pfe-navigation--utility\"]": "[pfe-id=\"pfe-navigation--utility\"]",
+      "pfe-navigation--main": "[pfe-id=\"pfe-navigation--main\"]",
+      "pfe-navigation--utility": "[pfe-id=\"pfe-navigation--utility\"]",
     };
 
     // Move the content from the main and utility slots into the shadowDOM

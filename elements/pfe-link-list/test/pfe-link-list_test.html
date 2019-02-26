@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../pfe-link-list.js"></script>
+  </head>
+  <body>
+
+    <pfe-link-list>
+      This is the element content.
+    </pfe-link-list>
+
+    <script>
+      suite('<pfe-link-list>', () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(document.querySelector('pfe-link-list'), customElements.get("pfe-link-list", 'pfe-link-list should be an instance of pfeLinkList'));
+        });
+
+        // you need to write more tests!!!
+
+      });
+    </script>
+  </body>
+</html>

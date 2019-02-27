@@ -2,6 +2,10 @@ import { autoReveal } from "./reveal.js";
 const prefix = "pfe-";
 
 class PFElement extends HTMLElement {
+  static get version() {
+    return "$version";
+  }
+
   static create(pfe) {
     window.customElements.define(pfe.tag, pfe);
   }

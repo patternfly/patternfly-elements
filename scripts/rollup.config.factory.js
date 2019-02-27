@@ -3,6 +3,9 @@ import babel from "rollup-plugin-babel";
 import commonjs from "rollup-plugin-commonjs";
 import { uglify } from "rollup-plugin-uglify";
 import { terser } from "rollup-plugin-terser";
+import replace from "rollup-plugin-re";
+
+const importRegex = /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
 
 function esmConfig({ elementName, className } = {}) {
   return {
@@ -12,18 +15,14 @@ function esmConfig({ elementName, className } = {}) {
       format: "esm",
       sourcemap: true
     },
-    plugins: [
-      resolve(),
-      commonjs()
-      // terser()
-    ],
+    plugins: [resolve(), commonjs()],
     external: id => id.startsWith("..")
   };
 }
 
 function umdConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.umd.js`,
+    input: `${elementName}.js`,
     output: {
       file: `${elementName}.umd.js`,
       format: "umd",
@@ -31,16 +30,23 @@ function umdConfig({ elementName, className } = {}) {
       name: className
     },
     plugins: [
+      replace({
+        patterns: [
+          {
+            test: importRegex,
+            replace: "$1$2.umd$3"
+          }
+        ]
+      }),
       resolve(),
       commonjs(),
       babel()
-      // uglify()
     ],
     external: id => id.startsWith("..")
   };
 }
 
-function esmMinify({ elementName, className } = {}) {
+function esmMinConfig({ elementName, className } = {}) {
   return {
     input: `${elementName}.js`,
     output: {
@@ -49,16 +55,17 @@ function esmMinify({ elementName, className } = {}) {
       sourcemap: true
     },
     plugins: [
+      replace({
+        patterns: [
+          {
+            test: importRegex,
+            replace: "$1$2.min.js$3"
+          }
+        ]
+      }),
       terser({
         output: {
-          comments: function(node, comment) {
-            var text = comment.value;
-            var type = comment.type;
-            if (type == "comment2") {
-              // multiline comment
-              return /@preserve|@license|@cc_on/i.test(text);
-            }
-          }
+          comments: /@preserve|@license|@cc_on/i
         }
       })
     ],
@@ -66,16 +73,31 @@ function esmMinify({ elementName, className } = {}) {
   };
 }
 
-function umdMinify({ elementName, className } = {}) {
+function umdMinConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.umd.js`,
+    input: `${elementName}.js`,
     output: {
       file: `${elementName}.umd.min.js`,
       format: "umd",
       sourcemap: true,
       name: className
     },
-    plugins: [uglify()],
+    plugins: [
+      replace({
+        patterns: [
+          {
+            test: importRegex,
+            replace: "$1$2.umd.min$3"
+            // ".js" is not included here to maintain compability with the AMD
+            // module format, see umdConfig above for more info.
+          }
+        ]
+      }),
+      resolve(),
+      commonjs(),
+      babel(),
+      uglify()
+    ],
     external: id => id.startsWith("..")
   };
 }
@@ -84,7 +106,7 @@ export default function factory({ elementName, className } = {}) {
   return [
     esmConfig({ elementName, className }),
     umdConfig({ elementName, className }),
-    esmMinify({ elementName, className }),
-    umdMinify({ elementName, className })
+    esmMinConfig({ elementName, className }),
+    umdMinConfig({ elementName, className })
   ];
 }

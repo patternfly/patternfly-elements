@@ -45,7 +45,7 @@ $LOCAL: navigation;
 	// Padding 
 	padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
 
-	@media (min-width: #{pfe-breakpoint(sm)}) {
+	@media (min-width: #{pfe-breakpoint(lg)}) {
 		padding: #{pfe-local(Padding)};
 	}
 
@@ -53,7 +53,7 @@ $LOCAL: navigation;
 	//border: #{pfe-local(Border)};
 
 	// Set the defaults for look and feel
-	@media (min-width: #{pfe-breakpoint(md)}) {
+	@media (min-width: #{pfe-breakpoint(lg)}) {
 		background-color: #{pfe-local(BackgroundColor)};
 	}
 }
@@ -83,7 +83,7 @@ $LOCAL: navigation;
 	&__container {
 		margin:    	0 auto;
 		width: 		#{pfe-local(Width)};
-		@media (min-width: #{pfe-breakpoint(md)}) {
+		@media (min-width: #{pfe-breakpoint(lg)}) {
 			display: grid;
 			grid-template-areas: "logo main main main utility";
 			grid-template-rows: 1fr;
@@ -97,7 +97,7 @@ $LOCAL: navigation;
 		&,
 		nav, 
 		ul {
-			@media (min-width: #{pfe-breakpoint(md)}) {
+			@media (min-width: #{pfe-breakpoint(lg)}) {
 				display: flex;
 				flex-flow: row nowrap;
 			}

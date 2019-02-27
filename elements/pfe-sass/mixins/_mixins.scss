@@ -223,7 +223,7 @@ $pfe-expand_button--border-dark:     #979797;
     --pfe-expanded--main:         #{pfe-color(surface--lightest)};
     --pfe-expanded--aux:          #{pfe-color(surface--lightest--text)};
     --pfe-expanded--focus:        #{pfe-color(surface--lightest--link--focus)};
-    border-left: 3px solid #06c; // use a var here
+    --pfe-expanded--border-left:  #{pfe-color(ui-link)};
 }
 
 @mixin pfe-trigger-color-dark {
@@ -236,7 +236,7 @@ $pfe-expand_button--border-dark:     #979797;
     --pfe-expanded--main:         #{pfe-color(surface--darker)};
     --pfe-expanded--aux:          #{pfe-color(surface--darkest--text)};
     --pfe-expanded--focus:        #{pfe-color(surface--darker--link--focus)};
-    border-left: 3px solid #fff;
+    --pfe-expanded--border-left:  #{pfe-color(surface--lightest)};
 }
 
 @mixin pfe-trigger-color-light-borders {
@@ -322,9 +322,13 @@ $pfe-expand_button--border-dark:     #979797;
   }
   @else {
     box-shadow: 0 5px 3px rgba(140, 140, 140, 0.35);
-    border-color: #06c; // override the var
+    border-color: $pfe-color--ui-link;
     background: #{pfe-color(surface--lightest)};
   }
+}
+
+@mixin accordion-panel-expanded-last-dark {
+    border-bottom: 1px solid $pfe-expand_button--border-dark;
 }
 
 @mixin accordion-panel-container($theme: light) {

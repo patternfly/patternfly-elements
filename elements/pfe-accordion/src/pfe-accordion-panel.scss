@@ -26,3 +26,8 @@
     @include accordion-panel-container($theme: dark);
   }
 }
+
+:host(:last-of-type[color="dark"][expanded]) {
+  @include accordion-panel-expanded-last-dark;
+}
+

@@ -64,23 +64,33 @@ $pfe-nav-size: 4em;
 .pfe-navigation-item {
 
 	&__wrapper {
-		display: block;
-		background-color: #{pfe-color(surface--lightest)};
-		position: absolute;
-		top: 80px; // @TODO Need to do this with JS
-		left: 0;
-		width: 100%;
-		z-index: 1;
-		transition: all #{pfe-var(animation-timing)};
+		@media (max-width: #{pfe-breakpoint(md, $max: true)}) {
+			@include accordion-panel-expanded;
+		}
+		@media (min-width: #{pfe-breakpoint(md)}) {
+			display: block;
+			background-color: #{pfe-color(surface--lightest)};
+			position: absolute;
+			top: 80px; // @TODO Need to do this with JS
+			left: 0;
+			width: 100%;
+			z-index: 1;
+			transition: all #{pfe-var(animation-timing)};
+		}
 
 		&[hidden] {
 			display: none;
 		}
 	}
 	&__container {
-		display: 		flex;
-		margin:    	10px auto;
-		width: 			var(--pfe-navigation--Width);
+		@media (max-width: #{pfe-breakpoint(md, $max: true)}) {
+			@include accordion-panel-container;
+		}
+		@media (min-width: #{pfe-breakpoint(md)}) {
+			display: 		flex;
+			margin:    	10px auto;
+			width: 			var(--pfe-navigation--Width);
+		}
 	}
 	&__button {
 		text-decoration: none;
@@ -130,8 +140,6 @@ $pfe-nav-size: 4em;
 	  		outline: none; // removes outline for mouse users, preserves it for keyboard users
 	  	}
 	  }
-		&--tray {
-		}
 	}
 
 	&__icon {

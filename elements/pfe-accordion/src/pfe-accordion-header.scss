@@ -6,11 +6,14 @@
 :host {
   // --pfe-expanded--aux:          #{pfe-color(surface--lighter--text)}; //Text color
   // --pfe-expanded--focus:        #{pfe-color(surface--lighter--link--focus)};
+  --pfe-expanded--border-left: transparent;
 
   display: block;
   background: var(--pfe-expanded--main);
   color: var(--pfe-expanded--aux);
-  border-left: 3px solid transparent;
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-left-color: var(--pfe-expanded--border-left);
   button {
     @include pfe-trigger-button;
     font-weight: 700;
@@ -32,15 +35,18 @@
   }
 }
 
-// add border bottom to the last button in an accordion set.
-:host(:not([aria-expanded="true"]):last-of-type) {
-  button {
+:host(:last-of-type) {
+}
+
+// Add border bottom to the last button in an accordion set.
+:host(:last-of-type) {
+  button[aria-expanded="false"] {
     @include pfe-trigger-button-last;
   }  
 }
 :host([color="dark"]:last-of-type),
 :host([on="dark"]:last-of-type) {
-  button {
+  button[aria-expanded="false"] {
     @include pfe-trigger-button-last($theme: dark);
   }  
 }
@@ -85,5 +91,4 @@ h6 {
 :host([color="dark"][aria-expanded="true"]),
 :host([on="dark"][aria-expanded="true"]) {
   @include pfe-trigger-color-dark-expanded;
-
 }

@@ -19,6 +19,7 @@
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require([
+      '../../../themes/cp-theme/cp-theme.umd.js',
       '../pfe-accordion.umd.js'
     ])</script>
     <style>
@@ -83,7 +84,7 @@
     </section>
     <section class="dark-background">
       <h2 style="color: white;">Dark Accordion</h2>
-      <pfe-accordion color="dark">
+      <pfe-accordion color="dark" on="dark">
         <pfe-accordion-header>
           <h2>Why do wizards need money if they could just create it?</h2>
         </pfe-accordion-header>
@@ -119,12 +120,12 @@
     </section>
     <section class="dark-gray-background">
       <h2 style="color: white;">Double-nested dark accordion</h2>
-      <pfe-accordion color="dark">
+      <pfe-accordion color="dark" on="dark">
         <pfe-accordion-header>
           <h2>Why do wizards need money if they could just create it?</h2>
         </pfe-accordion-header>
         <pfe-accordion-panel>
-          <pfe-accordion color="dark">
+          <pfe-accordion color="dark" on="dark">
             <pfe-accordion-header>
               <h2>Why do wizards need money if they could just create it?</h2>
             </pfe-accordion-header>

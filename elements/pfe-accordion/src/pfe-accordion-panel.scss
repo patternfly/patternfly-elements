@@ -35,4 +35,11 @@
   @include accordion-panel-expanded-last-dark;
 }
 
-
+//Todo - turn this into a mixin
+:host([on="dark"]) {
+  --pfe-broadcasted--color--text:               #{pfe-color(surface--darker--text)};
+  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darker--link)};
+  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darker--link--visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darker--link--hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darker--link--focus)};
+}

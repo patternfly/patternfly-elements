@@ -16,7 +16,6 @@
   border-left-color: var(--pfe-expanded--border-left);
   button {
     @include pfe-trigger-button;
-    font-weight: 700;
 
     &[aria-expanded] {
       @include pfe-trigger-expanded;

@@ -168,26 +168,36 @@ $pfe-expand_chevron--weight:         0.15em;
 $pfe-expand_chevron--placement:      ($pfe-expand_button--LineHeight / 2) - ($pfe-expand_chevron--size / 2);
 $pfe-expand_button--padding-factor:  0.75;
 $pfe-expand_button--border-dark:     #979797;
+$pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_button--padding-factor});
 
-@mixin pfe-trigger-button($theme: light) {
-    padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_button--padding-factor});
+@mixin pfe-trigger-button($theme: light, $align: left) {
     margin: 0;
     width: 100%;
     height: auto;
     border: 1px solid transparent;
     font-family: inherit;
     font-size: #{pfe-var(font-size)};
+    font-weight: 700;
     line-height: $pfe-expand_button--LineHeight;
     text-align: left;
     background: none;
     cursor: pointer;
     color: var(--pfe-expanded--aux);
+    z-index: 2;
+    position: relative;
+    
     @if $theme == dark {
-        // border-top-color: #{pfe-color(surface--border--darkest)};
         border-top-color: $pfe-expand_button--border-dark;
     }
     @else {
         border-top-color: #{pfe-color(surface--border--lightest)};
+    }
+
+    @if $theme == right {
+        padding: $pfe-expand_button--padding $pfe-expand_button--padding $pfe-expand_button--padding 50px;
+    }
+    @else {
+        padding: $pfe-expand_button--padding 50px $pfe-expand_button--padding $pfe-expand_button--padding;
     }
 
     &:focus {

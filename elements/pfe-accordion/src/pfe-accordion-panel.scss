@@ -2,6 +2,10 @@
 
 :host {
   @include accordion-panel;
+
+::slotted(pfe-accordion) {
+    padding: 0 14px;
+  }
 }
 
 :host([color="light"][expanded]) {
@@ -30,4 +34,5 @@
 :host(:last-of-type[color="dark"][expanded]) {
   @include accordion-panel-expanded-last-dark;
 }
+
 

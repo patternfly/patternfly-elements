@@ -1,7 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
 :host {
-  @include accordion-panel;
+  @include pfe-accordion-panel;
 
 ::slotted(pfe-accordion) {
     padding: 0 14px;
@@ -9,11 +9,11 @@
 }
 
 :host([color="light"][expanded]) {
-  @include accordion-panel-expanded;
+  @include pfe-accordion-panel-expanded;
 }
 
 :host([color="dark"][expanded]) {
-  @include accordion-panel-expanded($theme: dark);
+  @include pfe-accordion-panel-expanded($theme: dark);
 }
 
 :host(.animating) {
@@ -23,18 +23,18 @@
 
 .container {
   :host([color="light"]) & {
-    @include accordion-panel-container($theme: light);
+    @include pfe-accordion-panel-container($theme: light);
   }
 
   :host([color="dark"]) & {
-    @include accordion-panel-container($theme: dark);
+    @include pfe-accordion-panel-container($theme: dark);
   }
 }
 
 :host(:last-of-type[color="dark"][expanded]) {
-  @include accordion-panel-expanded-last-dark;
+  @include pfe-accordion-panel-expanded-last-dark;
 }
 
 :host([on="dark"]) {
-  @include accordion-header-theme($theme: dark);
+  @include pfe-theme($theme: dark);
 }

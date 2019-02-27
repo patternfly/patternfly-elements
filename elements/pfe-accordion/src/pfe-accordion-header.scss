@@ -93,7 +93,7 @@ h6 {
 }
 
 :host([on="dark"]) {
-  @include accordion-header-theme($theme: dark);
+  @include pfe-theme($theme: dark);
 }
 
 

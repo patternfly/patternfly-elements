@@ -3,39 +3,99 @@ import babel from "rollup-plugin-babel";
 import commonjs from "rollup-plugin-commonjs";
 import { uglify } from "rollup-plugin-uglify";
 import { terser } from "rollup-plugin-terser";
+import replace from "rollup-plugin-re";
+
+const importRegex = /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
 
 function esmConfig({ elementName, className } = {}) {
-  const esmFilename = `${elementName}.js`;
-
   return {
-    input: esmFilename,
+    input: `${elementName}.js`,
     output: {
-      file: esmFilename,
+      file: `${elementName}.js`,
       format: "esm",
       sourcemap: true
     },
-    plugins: [resolve(), commonjs(), terser()],
+    plugins: [resolve(), commonjs()],
     external: id => id.startsWith("..")
   };
 }
 
 function umdConfig({ elementName, className } = {}) {
-  const umdFilename = `${elementName}.umd.js`;
-
   return {
-    input: umdFilename,
+    input: `${elementName}.js`,
     output: {
-      file: umdFilename,
+      file: `${elementName}.umd.js`,
       format: "umd",
       sourcemap: true,
       name: className
     },
     plugins: [
+      replace({
+        patterns: [
+          {
+            test: importRegex,
+            replace: "$1$2.umd$3"
+          }
+        ]
+      }),
       resolve(),
       commonjs(),
-      babel({
-        // exclude: "node_modules/**" // only transpile our source code
+      babel()
+    ],
+    external: id => id.startsWith("..")
+  };
+}
+
+function esmMinConfig({ elementName, className } = {}) {
+  return {
+    input: `${elementName}.js`,
+    output: {
+      file: `${elementName}.min.js`,
+      format: "esm",
+      sourcemap: true
+    },
+    plugins: [
+      replace({
+        patterns: [
+          {
+            test: importRegex,
+            replace: "$1$2.min.js$3"
+          }
+        ]
       }),
+      terser({
+        output: {
+          comments: /@preserve|@license|@cc_on/i
+        }
+      })
+    ],
+    external: id => id.startsWith("..")
+  };
+}
+
+function umdMinConfig({ elementName, className } = {}) {
+  return {
+    input: `${elementName}.js`,
+    output: {
+      file: `${elementName}.umd.min.js`,
+      format: "umd",
+      sourcemap: true,
+      name: className
+    },
+    plugins: [
+      replace({
+        patterns: [
+          {
+            test: importRegex,
+            replace: "$1$2.umd.min$3"
+            // ".js" is not included here to maintain compability with the AMD
+            // module format, see umdConfig above for more info.
+          }
+        ]
+      }),
+      resolve(),
+      commonjs(),
+      babel(),
       uglify()
     ],
     external: id => id.startsWith("..")
@@ -45,6 +105,8 @@ function umdConfig({ elementName, className } = {}) {
 export default function factory({ elementName, className } = {}) {
   return [
     esmConfig({ elementName, className }),
-    umdConfig({ elementName, className })
+    umdConfig({ elementName, className }),
+    esmMinConfig({ elementName, className }),
+    umdMinConfig({ elementName, className })
   ];
 }

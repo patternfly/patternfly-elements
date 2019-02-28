@@ -35,6 +35,20 @@
   border: 0;
 }
 
+/// ===========================================================================
+/// Theme Color Vars
+/// ===========================================================================
+
+@mixin pfe-theme($theme) {
+  @if $theme == dark {
+    --pfe-broadcasted--color--text:               #{pfe-color(surface--darker--text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darker--link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darker--link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darker--link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darker--link--focus)};
+  }
+}
+
 @mixin pfe-transition($properties...) {
   $return: null;
   @each $property in $properties {
@@ -185,7 +199,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     color: var(--pfe-expanded--aux);
     z-index: 2;
     position: relative;
-    
+
     @if $theme == dark {
         border-top-color: $pfe-expand_button--border-dark;
     }
@@ -313,14 +327,14 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     }
 }
 
-@mixin accordion-panel {
+@mixin pfe-accordion-panel {
   display: none;
   overflow: hidden;
   will-change: height;
-  border-color: transparent; // make a var for this!
+  border-color: transparent;
 }
 
-@mixin accordion-panel-expanded($theme: light) {
+@mixin pfe-accordion-panel-expanded($theme: light) {
   display: block;
   position: relative;
   border-width: 0;
@@ -337,11 +351,11 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
   }
 }
 
-@mixin accordion-panel-expanded-last-dark {
+@mixin pfe-accordion-panel-expanded-last-dark {
     border-bottom: 1px solid $pfe-expand_button--border-dark;
 }
 
-@mixin accordion-panel-container($theme: light) {
+@mixin pfe-accordion-panel-container($theme: light) {
   padding: 0 #{pfe-var(container-spacer)} #{pfe-var(container-spacer)} #{pfe-var(container-spacer)};
   overflow: hidden;
   @if $theme == light {

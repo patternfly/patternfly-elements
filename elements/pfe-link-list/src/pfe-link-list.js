@@ -54,7 +54,7 @@ class PfeLinkList extends PFElement {
       let child   = this.shadowRoot.querySelector(`.pfe-link-list__${section.class} > ${section.selector}`);
   
       // Swap the placeholder element from the template with the element provided by the lightDOM
-      this._pfeClass._swapElements(wrapper, child, section.attributes);
+      this._pfeClass.swapElements(wrapper, child, section.attributes);
     });
   }
 

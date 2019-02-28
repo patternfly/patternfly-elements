@@ -63,7 +63,7 @@ $pfe-nav-size: 4em;
 
 .pfe-navigation-item {
 
-	&__wrapper {
+	&__tray {
 		@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
 			@include accordion-panel-expanded;
 		}
@@ -81,6 +81,17 @@ $pfe-nav-size: 4em;
 		&[hidden] {
 			display: none;
 		}
+		&--main {
+			flex-grow: 1;
+		}
+		&--aside {
+			width: 240px;
+		}
+		&--footer {
+			width: 100%;
+			border-top: 1px solid gray;
+			padding-top: 10px;
+		}
 	}
 	&__container {
 		@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
@@ -88,11 +99,12 @@ $pfe-nav-size: 4em;
 		}
 		@media (min-width: #{pfe-breakpoint(lg)}) {
 			display: 		flex;
+			flex-flow:  row wrap;
 			margin:    	10px auto;
 			width: 			var(--pfe-navigation--Width);
 		}
 	}
-	&__button {
+	&__trigger {
 		text-decoration: none;
 		@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
 			@include pfe-trigger-button;

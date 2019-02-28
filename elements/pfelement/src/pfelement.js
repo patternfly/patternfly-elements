@@ -48,7 +48,7 @@ class PFElement extends HTMLElement {
       // Get the content and the slots
       if(item[0] && item[1]) {
         const contents = [...context.querySelectorAll(`[slot=\"${item[0]}\"]`)];
-        const slot = context.shadowRoot.querySelector(item[1]);
+        const templateSlot = context.shadowRoot.querySelector(item[1]);
         // For each content item, append it to the fragment
         contents.forEach(content => {
           // Remove slot designation
@@ -57,8 +57,8 @@ class PFElement extends HTMLElement {
           fraggle.appendChild(content);
         });
         // If the slot and contents exist, append the fragment to the DOM
-        if (slot && contents.length) {
-          slot.appendChild(fraggle);
+        if (templateSlot && contents.length) {
+          templateSlot.appendChild(fraggle);
         }
       }
     });

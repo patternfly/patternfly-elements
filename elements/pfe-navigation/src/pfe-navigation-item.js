@@ -181,39 +181,68 @@ class PfeNavigationItem extends PFElement {
   constructor() {
     super(PfeNavigationItem, { type: PfeNavigationItem.PfeType });
 
+    this.building = true;
     this._clickHandler = this._clickHandler.bind(this);
     this._keydownHandler = this._keydownHandler.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
-
-    // Copy the content of the trigger slot into the ShadowDOM
-    const slots = {
-      "pfe-navigation-item--trigger": "[name=\"pfe-navigation-item--trigger\"]"
-    };
-
-    this._pfeClass.moveToShadowDOM(slots, this);
+    this.lightDOM = [...this.children];
 
     // Attach a trigger property to the component with the trigger slot
     this.trigger = {
-      shadow: this.shadowRoot.querySelector(".pfe-navigation-item__trigger"),
-      light: this.querySelector('[slot="pfe-navigation-item--trigger"]')
+      slotName: `${this.tag}--trigger`,
+      content: []
     };
 
     // Get the ShadowDOM tray wrapper from the template
     this.tray = {
-      shadow: this.shadowRoot.querySelector(".pfe-navigation-item__tray"),
-      light: this.querySelector('[slot="pfe-navigation-item--tray"]')
+      slotName: `${this.tag}--tray`,
+      content: []
     };
 
-    if(this.trigger.shadow) {
-      // A trigger can exist without a tray
-      this._buildTrigger();
+    if(this.lightDOM.length && this.building) {
+      this._assignContent(this.lightDOM);
 
-      // But a tray cannot exist without the trigger
-      if(this.tray.shadow) {
-        this._buildTray();
+      ["trigger", "tray"].forEach((slot) => {
+        this[slot].light  = this.querySelector(`[slot="${this[slot].slotName}"]`);
+        this[slot].shadow = this.shadowRoot.querySelector(`.${this[slot].slotName.replace("--", "__")}`);
+      });
+
+      // If the trigger can't be found using the slot name, build it from provided content
+      if(!this.trigger.light) {
+        let content;
+        if(this.trigger.content.length > 1) {
+          content = document.createElement("span");
+          this.trigger.content.forEach((item) => {
+            content.append(item);
+          });
+        } else {
+          content = this.trigger.content[0];
+        }
+        this.trigger.light = content;
+      }
+      
+      // @NOTE: Trays only work when assigned to a slot
+
+      // @TODO Cassondra start here tomorrow morning!! 2-27
+
+      // Copy the content of the trigger slot into the ShadowDOM
+      const slots = {
+        "pfe-navigation-item--trigger": "[name=\"pfe-navigation-item--trigger\"]"
+      };
+
+      this._pfeClass.moveToShadowDOM(slots, this);
+
+      if(this.trigger.shadow) {
+        // A trigger can exist without a tray
+        this._buildTrigger();
+
+        // But a tray cannot exist without the trigger
+        if(this.tray.shadow) {
+          this._buildTray();
+        }
       }
     }
   }
@@ -239,13 +268,54 @@ class PfeNavigationItem extends PFElement {
     }
   }
 
+  _assignContent(lightDOM) {
+    for (let i = 0; i < lightDOM.length; i++) {
+      const child = lightDOM[i];
+      // Check first for slot names
+      switch (child.getAttribute("slot")) {
+        case this.trigger.slotName:
+          this.trigger.content.push(child);
+          break;
+        case this.tray.slotName:
+          this.tray.content.push(child);
+          break;
+        default:
+          // If it's the first child the tag is a link
+          // assign it to the trigger
+          // but only if the trigger does not already exist
+          if(i === 0 && child.tagName === "A" && !this.trigger.content.length) {
+            this.trigger.content.push(child);
+          }
+          else if(!this.tray.content.length) {
+            this.tray.content.push(child);
+          }
+          break;
+      }
+    }
+    this.building = false;
+  }
+
   _buildTrigger() {
-    // Create a span tag to wrap the link text in
-    const textWrapper = document.createElement("span");
-    textWrapper.classList.add("pfe-navigation-item__text");
-    
-    // Assign the text wrapper the inner text of the trigger
-    textWrapper.innerText = this.trigger.shadow.innerText;
+    let textWrapper;
+
+    if(this.trigger.shadow.innerText) {
+      // Create a span tag to wrap the link text in
+      textWrapper = document.createElement("span");
+      textWrapper.classList.add("pfe-navigation-item__text");
+
+      // Assign the text wrapper the inner text of the trigger
+      textWrapper.innerText = this.trigger.shadow.innerText;
+    } else {
+      // Loop over each child of the component
+      for (let i = 0; i < this.lightDOM.length; i++) {
+        const child = this.lightDOM[i];
+        if(child.tagName === "A") {
+          textWrapper = child;
+          textWrapper.classList.add("pfe-navigation-item__link");
+          break;
+        }
+      }
+    }
 
     // Reset the inner text of the trigger element
     this.trigger.shadow.innerText = "";

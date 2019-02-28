@@ -71,7 +71,7 @@ $pfe-nav-size: 4em;
 			display: block;
 			background-color: #{pfe-color(surface--lightest)};
 			position: absolute;
-			top: 80px; // @TODO Need to do this with JS
+			top: var(--pfe-navigation--Height, 70px); // @TODO Need to do this with JS
 			left: 0;
 			width: 100%;
 			z-index: 1;
@@ -193,6 +193,9 @@ $pfe-nav-size: 4em;
 			padding: 0 #{pfe-local(Padding--horizontal)};
 		}
 	}
+
+	// Placeholder styles for direct link items
+	&__link {}
 }
 //shrink the text size of nav items with icons
 [pfe-icon] .pfe-navigation-item__text {

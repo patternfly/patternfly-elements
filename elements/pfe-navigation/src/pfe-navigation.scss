@@ -25,6 +25,7 @@ $LOCAL: navigation;
 	// Band width logic
 	// Initialize at mobile breakpoint
 	--pfe-navigation--Width: auto;
+	// --pfe-navigation--Height: auto;
 
 	// Loop through the other breakpoints
 	@each $size in (md, lg, xl) {
@@ -40,22 +41,6 @@ $LOCAL: navigation;
 
 	position: relative;
 	display: block;
-	width: 100%;
-
-	// Padding 
-	padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
-
-	@media (min-width: #{pfe-breakpoint(lg)}) {
-		padding: #{pfe-local(Padding)};
-	}
-
-	// Border styles
-	//border: #{pfe-local(Border)};
-
-	// Set the defaults for look and feel
-	@media (min-width: #{pfe-breakpoint(lg)}) {
-		background-color: #{pfe-local(BackgroundColor)};
-	}
 }
 
 :host([pfe-sticky]) {
@@ -80,14 +65,42 @@ $LOCAL: navigation;
 }
 
 .pfe-navigation {
+	&__wrapper {
+		position: relative;
+		z-index: 2;
+		width: 100%;
+
+		// Padding 
+		padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
+	
+		// Border styles
+		//border: #{pfe-local(Border)};
+	
+		// Set the defaults for look and feel
+		@media (min-width: #{pfe-breakpoint(lg)}) {
+			background-color: #{pfe-local(BackgroundColor)};
+			padding: #{pfe-local(Padding)};
+		}
+	}
 	&__container {
 		margin:    	0 auto;
 		width: 		#{pfe-local(Width)};
+		z-index: 	2;
 		@media (min-width: #{pfe-breakpoint(lg)}) {
 			display: grid;
 			grid-template-areas: "logo main main main utility";
 			grid-template-rows: 1fr;
 		}
+	}
+	&__overlay {
+		display: block;
+		background-color: #25252580;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		z-index: 1;
 	}
 	&__main {
 		grid-area: main;

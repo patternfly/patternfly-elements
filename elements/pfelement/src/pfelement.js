@@ -89,6 +89,20 @@ class PFElement extends HTMLElement {
         parent.replaceChild(newEl, oldEl);
       }
     }
+    // Return the new element at the end of the swap
+    return newEl;
+  }
+
+  static copyAttributes(from, to, ignore = [], only = []) {
+    if(from && from.attributes.length > 0 && to) {
+      [...from.attributes].forEach((attr) => {
+        // If the attribute is not flagged to ignore, copy it
+        if (!ignore.includes(attr.name) || (only.length && only.includes(attr.name))) {
+          to.setAttribute(attr.name, attr.value);
+        }
+      });
+    }
+    return to;
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {

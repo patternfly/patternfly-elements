@@ -90,6 +90,7 @@ $LOCAL: navigation;
 			display: grid;
 			grid-template-areas: "logo main main main utility";
 			grid-template-rows: 1fr;
+			grid-gap: 20px;
 		}
 	}
 	&__overlay {

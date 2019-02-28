@@ -1,4 +1,5 @@
 import PFElement from "../pfelement/pfelement.js";
+import { text } from "../../../../../Library/Caches/typescript/3.3/node_modules/@types/body-parser/index.js";
 
 const KEYCODE = {
   ENTER: 13,
@@ -181,7 +182,7 @@ class PfeNavigationItem extends PFElement {
   constructor() {
     super(PfeNavigationItem, { type: PfeNavigationItem.PfeType });
 
-    this.building = true;
+    this.doneBuilding = false;
     this._clickHandler = this._clickHandler.bind(this);
     this._keydownHandler = this._keydownHandler.bind(this);
   }
@@ -202,7 +203,7 @@ class PfeNavigationItem extends PFElement {
       content: []
     };
 
-    if(this.lightDOM.length && this.building) {
+    if(this.lightDOM.length && !this.doneBuilding) {
       this._assignContent(this.lightDOM);
 
       ["trigger", "tray"].forEach((slot) => {
@@ -226,21 +227,12 @@ class PfeNavigationItem extends PFElement {
       
       // @NOTE: Trays only work when assigned to a slot
 
-      // @TODO Cassondra start here tomorrow morning!! 2-27
-
-      // Copy the content of the trigger slot into the ShadowDOM
-      const slots = {
-        "pfe-navigation-item--trigger": "[name=\"pfe-navigation-item--trigger\"]"
-      };
-
-      this._pfeClass.moveToShadowDOM(slots, this);
-
-      if(this.trigger.shadow) {
+      if(this.trigger.light) {
         // A trigger can exist without a tray
         this._buildTrigger();
 
         // But a tray cannot exist without the trigger
-        if(this.tray.shadow) {
+        if(this.tray.light) {
           this._buildTray();
         }
       }
@@ -292,33 +284,38 @@ class PfeNavigationItem extends PFElement {
           break;
       }
     }
-    this.building = false;
+    this.doneBuilding = true;
   }
 
   _buildTrigger() {
-    let textWrapper;
-
-    if(this.trigger.shadow.innerText) {
-      // Create a span tag to wrap the link text in
-      textWrapper = document.createElement("span");
-      textWrapper.classList.add("pfe-navigation-item__text");
-
-      // Assign the text wrapper the inner text of the trigger
-      textWrapper.innerText = this.trigger.shadow.innerText;
-    } else {
-      // Loop over each child of the component
-      for (let i = 0; i < this.lightDOM.length; i++) {
-        const child = this.lightDOM[i];
-        if(child.tagName === "A") {
-          textWrapper = child;
-          textWrapper.classList.add("pfe-navigation-item__link");
-          break;
-        }
-      }
+    let newTrigger;
+    let className  = `${this.tag}__text`;
+    let copyExcept = ["href", "slot"];
+    // If no tray exists, use a different class and keep the link href
+    if(!this.tray.light) {
+      className  = `${this.tag}__link`;
+      copyExcept = ["slot"];
     }
 
-    // Reset the inner text of the trigger element
-    this.trigger.shadow.innerText = "";
+    // If the tray exists for this trigger element, convert the link to a span tag
+    if(this.tray.light) {
+      // Create a span tag to wrap the link text in
+      newTrigger = document.createElement("span");
+      // Assign the text wrapper the inner text of the trigger
+      newTrigger.innerText = this.trigger.light.innerText;
+      // If a link exists on the link in the light DOM, capture that info in a new attribute
+      if(this.trigger.light.href) {
+        newTrigger.setAttribute(`${this.tag}--top-link`, this.trigger.light.href);
+      }
+    } else {
+      newTrigger = this.trigger.light;
+    }
+
+    // Copy attributes to the new element
+    if(newTrigger) {
+      this._pfeClass.copyAttributes(this.trigger.light, newTrigger, copyExcept);
+      newTrigger.classList.add(className);
+    }
 
     // Add the icon to the trigger if the property has been set
     if(this.hasAttribute("pfe-icon")) {
@@ -326,14 +323,15 @@ class PfeNavigationItem extends PFElement {
       // If an icon string is returned and that string is part of the stored SVGs
       if(iconName && this._pfeClass.iconSVG[iconName]) {
         // Build the SVG into an object
-        let svg = this._buildSVG(iconName, "pfe-navigation-item__icon");
+        let svg = this._buildSVG(iconName, `${this.tag}__icon`);
         if(this.trigger.shadow) {
           this.trigger.shadow.append(svg);
         }
       }
     }
 
-    this.trigger.shadow.append(textWrapper);
+    // Append the light DOM to the shadow DOM for the trigger
+    this.trigger.shadow.append(newTrigger);
 
     // If the role attribute has not been provided, attach it to the trigger
     if (this.tray.shadow && !this.trigger.shadow.hasAttribute("role")) {
@@ -357,7 +355,8 @@ class PfeNavigationItem extends PFElement {
 
     this._pfeClass.moveToShadowDOM(slots, this);
 
-    this.tray.container = this.shadowRoot.querySelector(".pfe-navigation-item__container");
+    this.tray.container = this.shadowRoot.querySelector(`.${this.tag}__container`);
+    
     // Initialize arrays for each region
     this.tray.main   = [];
     this.tray.aside  = [];
@@ -371,20 +370,20 @@ class PfeNavigationItem extends PFElement {
     const trayRegions = [...this.tray.container.children];
     // Pull out the aside and footer elements
     for (let i = 0; i < trayRegions.length; i++) {
-      switch (trayRegions[i].getAttribute("pfe-navigation-item--tray-region")) {
+      switch (trayRegions[i].getAttribute(`${this.tag}--tray-region`)) {
         case "aside":
-          trayRegions[i].classList.add("pfe-navigation-item__tray--aside");
+          trayRegions[i].classList.add(`${this.tag}__tray--aside`);
           break;
         case "footer":
-          trayRegions[i].classList.add("pfe-navigation-item__tray--footer");
+          trayRegions[i].classList.add(`${this.tag}__tray--footer`);
           break;
         default:
-          trayRegions[i].classList.add("pfe-navigation-item__tray--main");
+          trayRegions[i].classList.add(`${this.tag}__tray--main`);
           break;
       }
 
       // Remove the region definitions from the children elements
-      trayRegions[i].removeAttribute("pfe-navigation-item--tray-region");
+      trayRegions[i].removeAttribute(`${this.tag}--tray-region`);
     }
     
 

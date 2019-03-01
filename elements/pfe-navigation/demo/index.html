@@ -45,11 +45,11 @@
     <h1>&lt;pfe-navigation&gt;</h1>
 
     <pfe-navigation pfe-color="darkest">
-      <div slot="pfe-navigation--skip">
+      <div slot="skip">
         <a href="#rh-main-content">Skip to content</a>
       </div>
 
-      <div slot="pfe-navigation--logo">
+      <div slot="logo">
         <h2 slot="logo" style="max-width: 140px">
           <a href="#" style="color:#fff">
             <span style="display: none;">Red Hat</span>
@@ -59,21 +59,21 @@
       </div>
 
       <!-- Search -->
-      <pfe-navigation-item on="dark" slot="pfe-navigation--utility" pfe-icon="search">
-        <a slot="pfe-navigation-item--trigger" href="#url-to-search-page">Search</a>
-        <p slot="pfe-navigation-item--tray">
+      <pfe-navigation-item on="dark" slot="utility" pfe-icon="search">
+        <a slot="trigger" href="#url-to-search-page">Search</a>
+        <p slot="tray">
           <a>Search</a>
         </p>
       </pfe-navigation-item>
 
-      <nav slot="pfe-navigation--main" id="rh-main-nav" aria-label="Main">
+      <nav slot="main" id="rh-main-nav" aria-label="Main">
         <ul>
           <li>
-            <pfe-navigation-item on="dark" pfe-navigation--category="Products">
-              <a slot="pfe-navigation-item--trigger" href="/products">Products</a>
+            <pfe-navigation-item on="dark" category="Products">
+              <a slot="trigger" href="/products">Products</a>
 
-              <div slot="pfe-navigation-item--tray" hidden>
-                <div pfe-navigation-item--tray-region="main" class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
+              <div slot="tray" hidden>
+                <div tray-region="main" class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
                   <pfe-link-list role="region" pfe-navigation--subcategory="Flagship Products">
                     <h2 slot="pfe-link-list--header">
                       <a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux" pfe-navigation-link-label="Flagship Products">Flagship Products</a>
@@ -93,13 +93,13 @@
                     </ul>
                   </pfe-link-list>
                 </div>
-                <aside pfe-navigation-item--tray-region="aside">
+                <aside tray-region="aside">
                   <pfe-card style="height: 100px;">
                     Sample promo
                   </pfe-card>
                   <p>Promo with captions, fancy other stuff</p>
                 </aside>
-                <footer pfe-navigation-item--tray-region="footer" class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
+                <footer tray-region="footer" class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
                   <pfe-cta>
                     <a href="#" pfe-navigation-link-label="Promo link #1">Link #1</a>
                   </pfe-cta>
@@ -115,8 +115,8 @@
           </li>
           <li>
             <pfe-navigation-item on="dark">
-              <a slot="pfe-navigation-item--trigger" href="/solutions">Solutions</a>
-              <div slot="pfe-navigation-item--tray" hidden>
+              <a slot="trigger" href="/solutions">Solutions</a>
+              <div slot="tray" hidden>
                 <pfe-link-list role="region">
                   <h2 slot="pfe-link-list--header"><a href="#">Main offerings</a></h2>
                   <ul slot="pfe-link-list--list">
@@ -131,7 +131,7 @@
           </li>
           <li>
             <pfe-navigation-item on="dark">
-              <a slot="pfe-navigation-item--trigger" href="#">Services &amp; support</a>
+              <a slot="trigger" href="#">Services &amp; support</a>
             </pfe-navigation-item>
           </li>
           <li>
@@ -144,9 +144,9 @@
 
       <!-- Account log in toggle & menu-->
       <pfe-navigation-item on="dark" slot="pfe-navigation--utility" pfe-icon="user">
-        <a slot="pfe-navigation-item--trigger" href="#url-to-login-landing-page">Log in</a>
-        <div slot="pfe-navigation-item--tray" hidden>
-          <div pfe-navigation-item--tray-region="main">
+        <a slot="trigger" href="#url-to-login-landing-page">Log in</a>
+        <div slot="tray" hidden>
+          <div tray-region="main">
             <pfe-link-list role="region">
               <h2 slot="pfe-link-list--header"><a href="#">Flagship Products</a></h2>
               <ul slot="pfe-link-list--list">
@@ -162,25 +162,25 @@
               </ul>
             </pfe-link-list>
           </div>
-          <aside pfe-navigation-item--tray-region="aside">Promo with captions, fancy other stuff</aside>
-          <footer pfe-navigation-item--tray-region="footer" class>
+          <aside tray-region="aside">Promo with captions, fancy other stuff</aside>
+          <footer tray-region="footer" class>
             <pfe-cta>link</pfe-cta>
           </footer>
         </div>
       </pfe-navigation-item>
 
       <!-- Language toggle & menu -->
-      <pfe-navigation-item on="dark" slot="pfe-navigation--utility" pfe-icon="globe">
-        <a slot="pfe-navigation-item--trigger" href="#url-to-language-page">English</a>
-        <div slot="pfe-navigation-item--tray">
+      <pfe-navigation-item on="dark" slot="utility" pfe-icon="globe">
+        <a slot="trigger" href="#url-to-language-page">English</a>
+        <div slot="tray">
           custom code to do this thing
         </div>
       </pfe-navigation-item>
 
       <!-- Apps & Websites -->
-      <pfe-navigation-item on="dark" slot="pfe-navigation--utility" pfe-icon="bento">
-        <a slot="pfe-navigation-item--trigger" href="url-to-rh-websites-page">Apps &amp; Websites</a>
-        <div slot="pfe-navigation-item--tray">
+      <pfe-navigation-item on="dark" slot="utility" pfe-icon="bento" pfe-top-link>
+        <a slot="trigger" href="url-to-rh-websites-page">Apps &amp; Websites</a>
+        <div slot="tray">
           custom code to do this thing
         </div>
       </pfe-navigation-item>
@@ -229,8 +229,8 @@
     <pfe-band pfe-size="small">
       <h2 slot="pfe-band--header">Testing the nav item outside of navigation</h2>
       <pfe-navigation-item pfe-icon="search">
-          <a slot="pfe-navigation-item--trigger" href="#url-to-search-page">Search</a>
-          <p slot="pfe-navigation-item--tray">
+          <a slot="trigger" href="#url-to-search-page">Search</a>
+          <p slot="tray">
             <a>Search</a>
           </p>
         </pfe-navigation-item>

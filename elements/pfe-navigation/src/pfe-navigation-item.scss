@@ -11,8 +11,6 @@ $pfe-nav-size: 4em;
 /// DEFAULT navigation-item
 /// ===========================================================================
 :host {
-	// Fill the navigation container
-	height: 100%;
 	// Update the navigation padding in this context
 	--pfe-navigation-item--Padding--vertical:   #{pfe-var(container-spacer)};
 	--pfe-navigation-item--Padding--horizontal: #{pfe-var(container-spacer)};
@@ -24,50 +22,81 @@ $pfe-nav-size: 4em;
 	--pfe-navigation-item--BackgroundColor: #{pfe-local(aux)};
 	--pfe-navigation-item--BorderTopColor:	transparent;
 
+	// Fill the navigation container
+	height: 100%;
 	font-family: #{pfe-var(font-family)};
 
 	/// ===========================================================================
 	/// MOBILE
 	/// ===========================================================================
-	@media (max-width: #{pfe-breakpoint(lg-max)} ) {
-	    display: inline-block;
-	}
+	// @media (max-width: #{pfe-breakpoint(lg-max)} ) {
+		// display: inline-block;
+	// }
 
 	/// ===========================================================================
 	/// DESKTOP
 	/// ===========================================================================
-    @media (min-width: #{pfe-breakpoint(lg)}) {
-	    --pfe-navigation-item--main:        #{pfe-color(text)};              // text
-	    --pfe-navigation-item--main--hover: #{pfe-color(text--on-dark)};     // text hover
-  
-	    --pfe-navigation-item--aux:         transparent;                     // bg
-	    --pfe-navigation-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
-  
-	    font-weight: bold;
-	    font-weight: 300;
-	    min-height:  #{$pfe-nav-size};
-	    display: flex;
-	    flex-direction: column;
-	    align-items: center;
-	    justify-content: center;
-    }
+	// @media (min-width: #{pfe-breakpoint(lg)}) {
+		--pfe-navigation-item--main:        #{pfe-color(text)};              // text
+		--pfe-navigation-item--main--hover: #{pfe-color(text--on-dark)};     // text hover
+
+		--pfe-navigation-item--aux:         transparent;                     // bg
+		--pfe-navigation-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
+
+		font-weight: bold;
+		font-weight: 300;
+		min-height:  #{$pfe-nav-size};
+
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 0 3px;
+	// }
 }
 
-::slotted(a) {
-    @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-		@include pfe-trigger-button;
-		@include pfe-trigger-expanded;
-		text-decoration: none;
-    }
+/// ===========================================================================
+/// ON DARK
+/// ===========================================================================
+:host([on="dark"]) {
+	// @media (min-width: #{pfe-breakpoint(lg)}) {
+		--pfe-navigation-item--main:        #{pfe-color(text--on-dark)};      // text
+		--pfe-navigation-item--main--hover: #{pfe-color(text)};               // text hover
+
+		--pfe-navigation-item--aux:         transparent;                      // bg
+		--pfe-navigation-item--aux--hover:  #{pfe-color(surface--lightest)};  // bg hover
+	// }
 }
+
+:host([hidden]) {
+	display: none;
+}
+
+:host([hidden][pfe-top-link]) {
+	@media (max-width: #{pfe-breakpoint(md, $max: true)}) {
+		display: flex !important;
+	}
+}
+
+// Clear the styles for links in the trigger slot
+::slotted(a:not([slot="tray"])) {
+	color: inherit;
+	text-decoration: none;
+}
+
+// ::slotted([slot="trigger"]) {
+// 	@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+// 		@include pfe-trigger-button;
+// 		@include pfe-trigger-expanded;
+// 	}
+// }
 
 .pfe-navigation-item {
-
 	&__tray {
-		@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-			@include pfe-accordion-panel-expanded;
-		}
-		@media (min-width: #{pfe-breakpoint(lg)}) {
+		// @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+		// 	@include pfe-accordion-panel-expanded;
+		// }
+		// @media (min-width: #{pfe-breakpoint(lg)}) {
 			display: block;
 			background-color: #{pfe-color(surface--lightest)};
 			position: absolute;
@@ -76,7 +105,7 @@ $pfe-nav-size: 4em;
 			width: 100%;
 			z-index: 1;
 			transition: all #{pfe-var(animation-timing)};
-		}
+		// }
 
 		&[hidden] {
 			display: none;
@@ -97,26 +126,47 @@ $pfe-nav-size: 4em;
 		@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
 			@include pfe-accordion-panel-container;
 		}
-		@media (min-width: #{pfe-breakpoint(lg)}) {
+		// @media (min-width: #{pfe-breakpoint(lg)}) {
 			display: 		flex;
 			flex-flow:  row wrap;
 			margin:    	10px auto;
 			width: 			var(--pfe-navigation--Width);
-		}
+		// }
 	}
 	&__trigger {
-		text-decoration: none;
-		@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-			@include pfe-trigger-button;
-			@include pfe-trigger-expanded;
+		transition: all #{pfe-var(animation-timing)};
+		cursor: 			pointer;
+		text-decoration: 	none;
 
-			&[aria-expanded="false"]::after {
-				@include pfe-chevron-expanded-false;
+		border-top:       #{pfe-local(BorderTopColor)} solid 2px;
+		color:            #{pfe-local(Color)}; //text
+		background-color: #{pfe-local(BackgroundColor)};  //bg
+		line-height: 			#{$pfe-nav-size};
+
+		@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+			// --pfe-navigation-item--Color:			#{pfe-local(main--hover)};
+			// --pfe-navigation-item--BackgroundColor: #{pfe-local(aux--hover)};
+			// --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
+			
+			// If it's not a top-level link, hide it in mobile from the nav
+			&:not([pfe-top-link]) {
+				display: none;
 			}
-			&[aria-expanded="true"]::after {
-				@include pfe-chevron-expanded-true;
+			// If it doesn't have an icon, give it menu flyout styles
+			&:not([pfe-icon]) {
+				@include pfe-trigger-button;
+				@include pfe-trigger-expanded;
+	
+				&[aria-expanded="false"]::after {
+					@include pfe-chevron-expanded-false;
+				}
+				&[aria-expanded="true"]::after {
+					@include pfe-chevron-expanded-true;
+				}
 			}
 		}
+
+		// Desktop styles
 		@media (min-width: #{pfe-breakpoint(lg)}) {
 			flex: 1;
 			display:			flex;
@@ -124,14 +174,9 @@ $pfe-nav-size: 4em;
 			align-items: 		center;
 			justify-content: 	center;
 			padding: 0 3px;
+
 			// Fill the navigation container
 			height: 			100%;
-			cursor: 			pointer;
-			text-decoration: 	none;
-			border-top:       #{pfe-local(BorderTopColor)} solid 2px;
-			color:            #{pfe-local(Color)}; //text
-			background-color: #{pfe-local(BackgroundColor)};  //bg
-			line-height: 			#{$pfe-nav-size};
 		}
 
 	  &:hover {
@@ -155,7 +200,7 @@ $pfe-nav-size: 4em;
 	}
 
 	&__icon {
-		@media (min-width: #{pfe-breakpoint(lg)}) {
+		// @media (min-width: #{pfe-breakpoint(lg)}) {
 			padding: 0 0 10px 0;
 			display: flex;
 			width: 	20px;
@@ -176,45 +221,31 @@ $pfe-nav-size: 4em;
 				-webkit-text-stroke-color: #{pfe-local(Color)};
 				stroke: #{pfe-local(Color)};
 			}
-		}
+		// }
 	}
-	&__text {	
-		transition: all #{pfe-var(animation-timing)};
+
+	&__text,
+	&__link {
+		margin: 0;
+		color:  inherit;
+		line-height: 1.2;
 
 		@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-		  @include pfe-trigger-expanded;
-		  text-decoration: none;
+			[pfe-top-link] & {
+				font-size: 0.9em;
+				padding: 0 #{pfe-local(Padding--horizontal)};
+			}
 		}
+
 		@media (min-width: #{pfe-breakpoint(lg)}) {
 			font-size: 0.9em;
-			margin: 0;
-			color:  inherit; 
-			line-height: 1.2;
 			padding: 0 #{pfe-local(Padding--horizontal)};
 		}
+
+		//shrink the text size of nav items with icons
+		[pfe-icon] & {
+			font-size: 0.8em;
+		}
+
 	}
-}
-//shrink the text size of nav items with icons
-[pfe-icon] .pfe-navigation-item__text {
-	font-size: 0.8em;
-	//padding: calc(#{pfe-local(Padding--vertical)} * 0.5) #{pfe-local(Padding--horizontal)}#{pfe-local(Padding--vertical)};
-}
-
-
-
-/// ===========================================================================
-/// ON DARK
-/// ===========================================================================
-:host([on="dark"]) {
-	@media (min-width: #{pfe-breakpoint(lg)}) {
-		--pfe-navigation-item--main:        #{pfe-color(text--on-dark)};      // text
-		--pfe-navigation-item--main--hover: #{pfe-color(text)};               // text hover
-
-		--pfe-navigation-item--aux:         transparent;                      // bg
-		--pfe-navigation-item--aux--hover:  #{pfe-color(surface--lightest)};  // bg hover
-	}
-}
-
-:host([hidden]) {
-	display: none;
 }

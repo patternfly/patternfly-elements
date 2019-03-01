@@ -1,10 +1,22 @@
 <!-- Navigation -->
 <div class="pfe-navigation__wrapper">
     <div class="pfe-navigation__container">
-        <slot name="pfe-navigation--logo" class="pfe-navigation__logo"></slot>
-        <slot name="pfe-navigation--skip" class="pfe-navigation__skip"></slot>
-        <slot name="pfe-navigation--main" class="pfe-navigation__main"></slot>
-        <slot name="pfe-navigation--utility" class="pfe-navigation__utility"></slot>
+        <slot name="logo" class="pfe-navigation__logo"></slot>
+        <slot name="skip" class="pfe-navigation__skip"></slot>
+        <slot name="main" class="pfe-navigation__main"></slot>
+        <div class="pfe-navigation__utility">
+            <pfe-navigation-item pfe-icon="menu" on="dark" pfe-top-link hidden>
+                <span slot="trigger">Menu</span>
+                <div slot="tray">
+                    <div class="pfe-navigation__utility--mobile">
+                        <div>Top links</div>
+                        <div>Middle links</div>
+                        <div>Bottom links</div>
+                    </div>
+                </div>
+            </pfe-navigation-item>
+            <slot name="utility" class="pfe-navigation__utility-links"></slot>
+        </div>
     </div>
 </div>
 <div class="pfe-navigation__overlay"></div>

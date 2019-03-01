@@ -1,12 +1,12 @@
 <!-- Navigation item -->
 <div class="pfe-navigation-item__trigger">
     <span class="pfe-navigation-item__icon"></span>
-    <slot name="pfe-navigation-item--trigger" class="pfe-navigation-item__text"></slot>
+    ${this.has_slot("trigger") ? `<slot name="trigger" class="pfe-navigation-item__text"></slot>` : `<slot class="pfe-navigation-item__link"></slot>`}
 </div>
 
-${this.has_slot("pfe-navigation-item--tray") ? `
+${this.has_slot("tray") ? `
 <section class="pfe-navigation-item__tray" hidden>
     <div class="pfe-navigation-item__container">
-        <slot name="pfe-navigation-item--tray"></slot>
+        <slot name="tray"></slot>
     </div>
 </section>` : ""}

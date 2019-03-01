@@ -163,13 +163,15 @@ class PfeNavigationItem extends PFElement {
 
   static get observedAttributes() {
     return [
-      "pfe-icon"
+      "pfe-icon",
+      "pfe-top-link"
     ];
   }
 
   static get cascadingAttributes() {
     return {
-      "pfe-icon": ".pfe-navigation-item__trigger"
+      "pfe-icon": ".pfe-navigation-item__trigger",
+      "pfe-top-link": ".pfe-navigation-item__trigger",
     };
   }
 
@@ -181,29 +183,18 @@ class PfeNavigationItem extends PFElement {
   constructor() {
     super(PfeNavigationItem, { type: PfeNavigationItem.PfeType });
 
-    this.runCount = 0;
-
-    this._readyEvent = new CustomEvent(`${this.tag}:ready`);
+    // This context attribute will track the region of the navigation
+    this.context = null;
 
     this._clickHandler = this._clickHandler.bind(this);
     this._keydownHandler = this._keydownHandler.bind(this);
 
-    this.ready = false;
-
     ["trigger", "tray"].forEach((slot) => {
       this[slot] = {
-        slotName: `${this.tag}--${slot}`,
-        className: `${this.tag}__${slot}`,
-        light:   this.querySelector(`[slot="${this.tag}--${slot}"]`),
-        shadow:  this.shadowRoot.querySelector(`.${this.tag}__${slot}`),
-        content: []
+        light:   this.querySelector(`[slot="${slot}"]`),
+        shadow:  this.shadowRoot.querySelector(`.${this.tag}__${slot}`)
       };
     });
-
-    // If this is not contained by a navigation element, release it for rendering
-    if(!this.closest("pfe-navigation")) {
-      this.ready = true;
-    }
   }
 
   connectedCallback() {
@@ -249,7 +240,7 @@ class PfeNavigationItem extends PFElement {
         const trayRegions = [...this.tray.container.children];
         // Pull out the aside and footer elements
         for (let i = 0; i < trayRegions.length; i++) {
-          switch (trayRegions[i].getAttribute(`${this.tag}--tray-region`)) {
+          switch (trayRegions[i].getAttribute("tray-region")) {
             case "aside":
               trayRegions[i].classList.add(`${this.tag}__tray--aside`);
               break;
@@ -262,7 +253,7 @@ class PfeNavigationItem extends PFElement {
           }
 
           // Remove the region definitions from the children elements
-          trayRegions[i].removeAttribute(`${this.tag}--tray-region`);
+          trayRegions[i].removeAttribute("tray-region");
         }
       }
     }
@@ -286,32 +277,6 @@ class PfeNavigationItem extends PFElement {
       let observer = this[this[attr].observer].bind(this);
       // If it's a function, allow it to run
       if (typeof observer === "function") observer(attr, oldValue, newValue);
-    }
-  }
-
-  _sortContent(lightDOM) {
-    for (let i = 0; i < lightDOM.length; i++) {
-      const child = lightDOM[i];
-      // Check first for slot names
-      switch (child.getAttribute("slot")) {
-        case this.trigger.slotName:
-          this.trigger.content.push(child);
-          break;
-        case this.tray.slotName:
-          this.tray.content.push(child);
-          break;
-        default:
-          // If it's the first child the tag is a link
-          // assign it to the trigger
-          // but only if the trigger does not already exist
-          if(i === 0 && child.tagName === "A" && !this.trigger.content.length) {
-            this.trigger.content.push(child);
-          }
-          else if(!this.tray.content.length) {
-            this.tray.content.push(child);
-          }
-          break;
-      }
     }
   }
 

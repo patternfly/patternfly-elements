@@ -53,26 +53,31 @@ $LOCAL: navigation;
   }
 }
 
-@each $slot in (skip, logo) {
-	@include pfe-slot("pfe-navigation--#{$slot}") {
-		grid-area: $slot;
-	}
+::slotted([slot="logo"]) {
+	min-width: 80px;
 }
 
-@include pfe-slot("pfe-navigation--skip") {
+::slotted([slot="skip"]) {
 	@include pfe-sr-only;
 }
 
-@include pfe-slot("pfe-navigation--main") {
+::slotted([slot="main"]) {
 	display: contents;
 }
 
+// ::slotted([slot="utility"]) {}
+
 .pfe-navigation {
+	&__logo {
+		grid-area: logo;
+	}
+	&__skip {
+		grid-area: skip;
+	}
 	&__wrapper {
 		position: relative;
 		z-index: 2;
 		width: 100%;
-
 		// Padding 
 		padding: #{pfe-local(Padding)};
 	}
@@ -80,11 +85,13 @@ $LOCAL: navigation;
 		margin:    	0 auto;
 		width: 		#{pfe-local(Width)};
 		z-index: 	2;
+
+		display: grid;
+		grid-template-rows: 1fr;
+		grid-gap: 20px;
+		grid-template-areas: "logo utility utility";
 		@media (min-width: #{pfe-breakpoint(lg)}) {
-			display: grid;
 			grid-template-areas: "logo main main main utility";
-			grid-template-rows: 1fr;
-			grid-gap: 20px;
 		}
 	}
 	[active] &__overlay {
@@ -99,27 +106,30 @@ $LOCAL: navigation;
 	}
 	&__main {
 		grid-area: main;
-	}
-	&__main,
-	&__utility {
-		&,
-		nav, 
-		ul {
-			@media (min-width: #{pfe-breakpoint(lg)}) {
-				display: flex;
-				flex-flow: row nowrap;
-			}
+		// display: none;
+		@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+			background-color: #aaa;
+
+			display: flex;
+			flex-flow: column nowrap;
+			position: absolute;
+			top: 91px;
+			left: 0;
+			width: 100%;
 		}
-		ul {
-			@include pfe-reset-list;
-			padding-inline-start: 0;
-		}
-		li {
-			list-style-type: none;
+		@media (min-width: #{pfe-breakpoint(lg)}) {
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: stretch;
+			justify-content: flex-start;
 		}
 	}
 	&__utility {
 		grid-area: utility;
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: stretch;
+		justify-content: flex-end;
 	}
 }
 

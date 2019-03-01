@@ -30,8 +30,17 @@ class PfeNavigation extends PFElement {
   constructor() {
     super(PfeNavigation, { type: PfeNavigation.PfeType });
 
+    this._linked = false;
+    this._onSlotChange = this._onSlotChange.bind(this);
+
+    this.slots = {};
+    ["main", "utility"].forEach((region) => {
+      this.slots[region] = this.shadowRoot.querySelector(`slot[name="${region}"]`);
+      this.slots[region].addEventListener("slotchange", this._onSlotChange(region));
+    });
+
     // Initialize a placeholder for the active navigation item
-    this.activeNavigationItem = null;
+    this._activeNavigationItem = null;
 
     // Bind the toggle handler to the base
     this._toggledHandler = this._toggledHandler.bind(this);
@@ -76,24 +85,34 @@ class PfeNavigation extends PFElement {
   }
 
   _toggledHandler(event) {
+    // Set the state of the navigation to open
     this.setAttribute("active", "true");
+
     // If there is not an active navigation item
-    if (!this.activeNavigationItem) {
+    if (!this._activeNavigationItem) {
         // Attach the item to the base 
-        this.activeNavigationItem = event.detail.navigationItem;
+        this._activeNavigationItem = event.detail.navigationItem;
         return;
     }
 
     // If the event is fired on the currently active item
-    if (this.activeNavigationItem === event.detail.navigationItem) {
+    if (this._activeNavigationItem === event.detail.navigationItem) {
       this.setAttribute("active", "false");
       return;
     }
 
     // Otherwise, close the navigation item
-    this.activeNavigationItem.expanded = false;
+    this._activeNavigationItem.expanded = false;
     // Assign this item to the navigation item
-    this.activeNavigationItem = event.detail.navigationItem;
+    this._activeNavigationItem = event.detail.navigationItem;
+  }
+
+  _onSlotChange(region) {
+    this._linked = false;
+    
+    this.slots[region].context = region;
+
+    this._linked = true;
   }
 }
 

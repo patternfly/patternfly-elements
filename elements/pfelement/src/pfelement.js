@@ -39,6 +39,23 @@ class PFElement extends HTMLElement {
     return this.querySelector(`[slot='${name}']`);
   }
 
+  static copyElement(replace, copy, attributes = []) {
+    if(replace && replace.attributes.length > 0 && copy) {
+      // Copy attributes from the old element to the new one
+      this.copyAttributes(replace, copy, [], attributes);
+      // Get the parent container of the old element
+      const parent = replace.parentNode;
+      // If the parent element is found, replace the old element with the new one
+      if(parent) {
+        parent.replaceChild(copy, replace);
+        // Return the new element at the end of the swap
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   static copyAttributes(from, to, ignore = [], only = []) {
     if(from && from.attributes.length > 0 && to) {
       [...from.attributes].forEach((attr) => {

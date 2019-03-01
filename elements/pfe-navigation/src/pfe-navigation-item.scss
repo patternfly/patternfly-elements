@@ -157,7 +157,7 @@ $pfe-nav-size: 4em;
 	&__icon {
 		@media (min-width: #{pfe-breakpoint(lg)}) {
 			padding: 0 0 10px 0;
-			display: block;
+			display: flex;
 			width: 	20px;
 
 			[pfe-icon="bento"] & #Icon {
@@ -193,9 +193,6 @@ $pfe-nav-size: 4em;
 			padding: 0 #{pfe-local(Padding--horizontal)};
 		}
 	}
-
-	// Placeholder styles for direct link items
-	&__link {}
 }
 //shrink the text size of nav items with icons
 [pfe-icon] .pfe-navigation-item__text {

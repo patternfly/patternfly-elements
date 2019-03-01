@@ -27,19 +27,10 @@ class PfeLinkList extends PFElement {
   }
 
   constructor() {
-    super(PfeLinkList, { type: PfeLinkList.PfeType });
+    super(PfeLinkList, { type: PfeLinkList.PfeType, delayRender: true });
   }
   connectedCallback() {
     super.connectedCallback();
-
-    // Define the name of the slots
-    const slots = {
-      "pfe-link-list--header": "[pfe-id=\"pfe-link-list--header\"]",
-      "pfe-link-list--list": "[pfe-id=\"pfe-link-list--list\"]",
-    };
-
-    // Move the content from the main and utility slots into the shadowDOM
-    this._pfeClass.moveToShadowDOM(slots, this);
 
     [{
       class: "header",
@@ -54,7 +45,7 @@ class PfeLinkList extends PFElement {
       let child   = this.shadowRoot.querySelector(`.pfe-link-list__${section.class} > ${section.selector}`);
   
       // Swap the placeholder element from the template with the element provided by the lightDOM
-      this._pfeClass.swapElements(wrapper, child, section.attributes);
+      // this._pfeClass.copyElement(wrapper, child, section.attributes);
     });
   }
 

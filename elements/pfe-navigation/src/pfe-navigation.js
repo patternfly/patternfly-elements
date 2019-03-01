@@ -29,10 +29,13 @@ class PfeNavigation extends PFElement {
 
   constructor() {
     super(PfeNavigation, { type: PfeNavigation.PfeType });
+
     // Initialize a placeholder for the active navigation item
     this.activeNavigationItem = null;
+
     // Bind the toggle handler to the base
     this._toggledHandler = this._toggledHandler.bind(this);
+
     // Add an event listener for the toggled state
     this.addEventListener(
       `${PfeNavigationItem.tag}:toggled`,
@@ -45,14 +48,10 @@ class PfeNavigation extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    // Define the name of the slots
-    const slots = {
-      "pfe-navigation--main": "[pfe-id=\"pfe-navigation--main\"]",
-      "pfe-navigation--utility": "[pfe-id=\"pfe-navigation--utility\"]",
-    };
+    this.navigationItems = [...this.querySelectorAll("pfe-navigation-item")];
 
-    // Move the content from the main and utility slots into the shadowDOM
-    this._pfeClass.moveToShadowDOM(slots, this);
+    // Initialize the state to inactive
+    this.setAttribute("active", "false");
   }
 
   disconnectedCallback() {
@@ -77,6 +76,7 @@ class PfeNavigation extends PFElement {
   }
 
   _toggledHandler(event) {
+    this.setAttribute("active", "true");
     // If there is not an active navigation item
     if (!this.activeNavigationItem) {
         // Attach the item to the base 
@@ -86,6 +86,7 @@ class PfeNavigation extends PFElement {
 
     // If the event is fired on the currently active item
     if (this.activeNavigationItem === event.detail.navigationItem) {
+      this.setAttribute("active", "false");
       return;
     }
 

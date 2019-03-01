@@ -181,58 +181,88 @@ class PfeNavigationItem extends PFElement {
   constructor() {
     super(PfeNavigationItem, { type: PfeNavigationItem.PfeType });
 
-    this.doneBuilding = false;
+    this.runCount = 0;
+
+    this._readyEvent = new CustomEvent(`${this.tag}:ready`);
+
     this._clickHandler = this._clickHandler.bind(this);
     this._keydownHandler = this._keydownHandler.bind(this);
+
+    this.ready = false;
+
+    ["trigger", "tray"].forEach((slot) => {
+      this[slot] = {
+        slotName: `${this.tag}--${slot}`,
+        className: `${this.tag}__${slot}`,
+        light:   this.querySelector(`[slot="${this.tag}--${slot}"]`),
+        shadow:  this.shadowRoot.querySelector(`.${this.tag}__${slot}`),
+        content: []
+      };
+    });
+
+    // If this is not contained by a navigation element, release it for rendering
+    if(!this.closest("pfe-navigation")) {
+      this.ready = true;
+    }
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this.lightDOM = [...this.children];
 
-    // Attach a trigger property to the component with the trigger slot
-    this.trigger = {
-      slotName: `${this.tag}--trigger`,
-      content: []
-    };
-
-    // Get the ShadowDOM tray wrapper from the template
-    this.tray = {
-      slotName: `${this.tag}--tray`,
-      content: []
-    };
-
-    if(this.lightDOM.length && !this.doneBuilding) {
-      this._assignContent(this.lightDOM);
-
-      ["trigger", "tray"].forEach((slot) => {
-        this[slot].light  = this.querySelector(`[slot="${this[slot].slotName}"]`);
-        this[slot].shadow = this.shadowRoot.querySelector(`.${this[slot].slotName.replace("--", "__")}`);
-      });
-
-      // If the trigger can't be found using the slot name, build it from provided content
-      if(!this.trigger.light) {
-        let content;
-        if(this.trigger.content.length > 1) {
-          content = document.createElement("span");
-          this.trigger.content.forEach((item) => {
-            content.append(item);
-          });
-        } else {
-          content = this.trigger.content[0];
-        }
-        this.trigger.light = content;
+    if(this.trigger.light) {
+      // If the role attribute has not been provided, attach it to the trigger
+      if (!this.trigger.shadow.hasAttribute("role")) {
+        this.trigger.shadow.setAttribute("role", "button");
       }
-      
-      // @NOTE: Trays only work when assigned to a slot
 
-      if(this.trigger.light) {
-        // A trigger can exist without a tray
-        this._buildTrigger();
+      // Attach an on click listener
+      this.trigger.shadow.addEventListener("click", this._clickHandler);
+      // Attach an on keydown listener
+      this.trigger.shadow.addEventListener("keydown", this._keydownHandler);
 
-        // But a tray cannot exist without the trigger
-        if(this.tray.light) {
-          this._buildTray();
+      // Add the icon to the trigger if the property has been set
+      if(this.hasAttribute("pfe-icon")) {
+        const iconName = this.getAttribute("pfe-icon");
+        // If an icon string is returned and that string is part of the stored SVGs
+        if(iconName && this._pfeClass.iconSVG[iconName]) {
+          let iconSlot = this.trigger.shadow.querySelector(`.${this.tag}__icon`);
+          if(iconSlot) {
+            iconSlot.append(this._buildSVG(iconName));
+          }
+        }
+      }
+    }
+
+    // Remove the hidden attribute from the light DOM element
+    if(this.tray.light) {
+      this.tray.light.removeAttribute("hidden");
+
+      // Initialize expanded to false
+      this.expanded = false;
+
+      // Get the container element from the template
+      this.tray.container = this.shadowRoot.querySelector(`.${this.tag}__container`);
+
+      // Convert pfe-navigation-item--tray-region into classes for styling
+      // Get all elements inside the container
+      if(this.tray.container) {
+        const trayRegions = [...this.tray.container.children];
+        // Pull out the aside and footer elements
+        for (let i = 0; i < trayRegions.length; i++) {
+          switch (trayRegions[i].getAttribute(`${this.tag}--tray-region`)) {
+            case "aside":
+              trayRegions[i].classList.add(`${this.tag}__tray--aside`);
+              break;
+            case "footer":
+              trayRegions[i].classList.add(`${this.tag}__tray--footer`);
+              break;
+            default:
+              trayRegions[i].classList.add(`${this.tag}__tray--main`);
+              break;
+          }
+
+          // Remove the region definitions from the children elements
+          trayRegions[i].removeAttribute(`${this.tag}--tray-region`);
         }
       }
     }
@@ -259,7 +289,7 @@ class PfeNavigationItem extends PFElement {
     }
   }
 
-  _assignContent(lightDOM) {
+  _sortContent(lightDOM) {
     for (let i = 0; i < lightDOM.length; i++) {
       const child = lightDOM[i];
       // Check first for slot names
@@ -283,114 +313,6 @@ class PfeNavigationItem extends PFElement {
           break;
       }
     }
-    this.doneBuilding = true;
-  }
-
-  _buildTrigger() {
-    let newTrigger;
-    let className  = `${this.tag}__text`;
-    let copyExcept = ["href", "slot"];
-    // If no tray exists, use a different class and keep the link href
-    if(!this.tray.light) {
-      className  = `${this.tag}__link`;
-      copyExcept = ["slot"];
-    }
-
-    // If the tray exists for this trigger element, convert the link to a span tag
-    if(this.tray.light) {
-      // Create a span tag to wrap the link text in
-      newTrigger = document.createElement("span");
-      // Assign the text wrapper the inner text of the trigger
-      newTrigger.innerText = this.trigger.light.innerText;
-      // If a link exists on the link in the light DOM, capture that info in a new attribute
-      if(this.trigger.light.href) {
-        newTrigger.setAttribute(`${this.tag}--top-link`, this.trigger.light.href);
-      }
-    } else {
-      newTrigger = this.trigger.light;
-    }
-
-    // Copy attributes to the new element
-    if(newTrigger) {
-      this._pfeClass.copyAttributes(this.trigger.light, newTrigger, copyExcept);
-      newTrigger.classList.add(className);
-    }
-
-    // Add the icon to the trigger if the property has been set
-    if(this.hasAttribute("pfe-icon")) {
-      const iconName = this.getAttribute("pfe-icon");
-      // If an icon string is returned and that string is part of the stored SVGs
-      if(iconName && this._pfeClass.iconSVG[iconName]) {
-        // Build the SVG into an object
-        let svg = this._buildSVG(iconName, `${this.tag}__icon`);
-        if(this.trigger.shadow) {
-          this.trigger.shadow.append(svg);
-        }
-      }
-    }
-
-    // Append the light DOM to the shadow DOM for the trigger
-    this.trigger.shadow.append(newTrigger);
-
-    // If the role attribute has not been provided, attach it to the trigger
-    if (this.tray.shadow && !this.trigger.shadow.hasAttribute("role")) {
-      this.trigger.shadow.setAttribute("role", "button");
-    }
-  }
-  
-  _buildTray() {
-    // If the light DOM tray has been provided, remove the hidden attributes
-    if (this.tray.light) {
-      this.tray.light.removeAttribute("hidden");
-    }
-    
-    // Initialize expanded to false
-    this.expanded = false;
-
-    // Copy the content of the tray slot into the ShadowDOM
-    const slots = {
-      "pfe-navigation-item--tray": "[name=\"pfe-navigation-item--tray\"]"
-    };
-
-    this._pfeClass.moveToShadowDOM(slots, this);
-
-    this.tray.container = this.shadowRoot.querySelector(`.${this.tag}__container`);
-    
-    // Initialize arrays for each region
-    this.tray.main   = [];
-    this.tray.aside  = [];
-    this.tray.footer = [];
-    
-    // Swap the slot with the lightDOM content
-    this._pfeClass.swapElements(this.tray.container, this.tray.light);
-
-    // Convert pfe-navigation-item--tray-region into classes for styling
-    // Get all elements inside the container
-    const trayRegions = [...this.tray.container.children];
-    // Pull out the aside and footer elements
-    for (let i = 0; i < trayRegions.length; i++) {
-      switch (trayRegions[i].getAttribute(`${this.tag}--tray-region`)) {
-        case "aside":
-          trayRegions[i].classList.add(`${this.tag}__tray--aside`);
-          break;
-        case "footer":
-          trayRegions[i].classList.add(`${this.tag}__tray--footer`);
-          break;
-        default:
-          trayRegions[i].classList.add(`${this.tag}__tray--main`);
-          break;
-      }
-
-      // Remove the region definitions from the children elements
-      trayRegions[i].removeAttribute(`${this.tag}--tray-region`);
-    }
-    
-
-
-    // Attach an on click listener
-    this.trigger.shadow.addEventListener("click", this._clickHandler);
-    // Attach an on keydown listener
-    this.trigger.shadow.addEventListener("keydown", this._keydownHandler);
   }
 
   _buildSVG(icon, className = "") {
@@ -405,14 +327,17 @@ class PfeNavigationItem extends PFElement {
         });
       }
       // Add an icon class to the svg
-      svg.classList.add(className);
+      if(className) {
+        svg.classList.add(className);
+      }
       svg.innerHTML = code;
     }
     return svg;
   }
 
   _clickHandler(event) {
-    event.preventDefault();
+    console.log(event.target);
+    console.log(this.trigger);
     if (event.target.parentElement === this.trigger.shadow) {
       event.preventDefault();
       this.expanded = !this.expanded;

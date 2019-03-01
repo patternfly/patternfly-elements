@@ -38,60 +38,6 @@ class PFElement extends HTMLElement {
   has_slot(name) {
     return this.querySelector(`[slot='${name}']`);
   }
-  
-  // Expects an object containing the content selector and the shadow selector
-  static moveToShadowDOM(items, context) {
-    // Copy the content from the slot into the ShadowDOM
-    Object.entries(items).forEach(item => {
-      // Document fragments are more efficient
-      const fraggle = document.createDocumentFragment();
-      // Get the content and the slots
-      if(item[0] && item[1]) {
-        const contents = [...context.querySelectorAll(`[slot=\"${item[0]}\"]`)];
-        const templateSlot = context.shadowRoot.querySelector(item[1]);
-        // For each content item, append it to the fragment
-        contents.forEach(content => {
-          // Remove slot designation
-          content.removeAttribute("slot");
-          // Append content to the fragment
-          fraggle.appendChild(content);
-        });
-        // If the slot and contents exist, append the fragment to the DOM
-        if (templateSlot && contents.length) {
-          templateSlot.appendChild(fraggle);
-        }
-      }
-    });
-  }
-
-  static swapElements(oldEl, newEl, attributes = []) {
-    if(oldEl && oldEl.attributes.length > 0 && newEl) {
-      [...oldEl.attributes].forEach((attr) => {
-        if(attributes.length) {
-          // Only add supported attributes to the new element
-          attributes.forEach(a => {
-            if (a === attr.name) {
-              // Give the new element this attribute from the old element
-              newEl.setAttribute(attr.name, attr.value);
-            }
-          })
-
-        } else {
-          // Give the new element all the attributes of the old element
-          newEl.setAttribute(attr.name, attr.value);
-        }
-      });
-
-      // Get the parent container of the old element
-      const parent = oldEl.parentNode;
-      // If the parent element is found, replace the old element with the new one
-      if(parent) {
-        parent.replaceChild(newEl, oldEl);
-      }
-    }
-    // Return the new element at the end of the swap
-    return newEl;
-  }
 
   static copyAttributes(from, to, ignore = [], only = []) {
     if(from && from.attributes.length > 0 && to) {

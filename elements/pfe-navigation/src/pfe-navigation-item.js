@@ -301,6 +301,7 @@ class PfeNavigationItem extends PFElement {
   }
 
   _clickHandler(event) {
+    event.preventDefault();
     console.log(event.target);
     console.log(this.trigger);
     if (event.target.parentElement === this.trigger.shadow) {

@@ -18,7 +18,7 @@ $pfe-nav-size: 4em;
 	--pfe-navigation-item__tray--Width__aside--sm: 240px;
 	--pfe-navigation-item__tray--Width__aside--lg: 300px;
 
-	--pfe-navigation-item--Color: 			#{pfe-local(main)};
+	--pfe-navigation-item--Color: 					#{pfe-local(main)};
 	--pfe-navigation-item--BackgroundColor: #{pfe-local(aux)};
 	--pfe-navigation-item--BorderTopColor:	transparent;
 
@@ -82,6 +82,12 @@ $pfe-nav-size: 4em;
 ::slotted(a:not([slot="tray"])) {
 	color: inherit;
 	text-decoration: none;
+	// Fill the link container
+	margin-top: -2px;
+	height: calc(100% + 2px);
+	width: 100%;
+	display: flex;
+	align-items: center;
 }
 
 // ::slotted([slot="trigger"]) {
@@ -123,9 +129,9 @@ $pfe-nav-size: 4em;
 		}
 	}
 	&__container {
-		@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-			@include pfe-accordion-panel-container;
-		}
+		// @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+		// 	@include pfe-accordion-panel-container;
+		// }
 		// @media (min-width: #{pfe-breakpoint(lg)}) {
 			display: 		flex;
 			flex-flow:  row wrap;

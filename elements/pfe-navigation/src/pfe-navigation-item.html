@@ -1,6 +1,6 @@
 <!-- Navigation item -->
 <div class="pfe-navigation-item__trigger">
-    <span class="pfe-navigation-item__icon"></span>
+    ${this.hasAttribute("pfe-icon") ? `<span class="pfe-navigation-item__icon"></span>` : ""}
     ${this.has_slot("trigger") ? `<slot name="trigger" class="pfe-navigation-item__text"></slot>` : `<slot class="pfe-navigation-item__link"></slot>`}
 </div>
 

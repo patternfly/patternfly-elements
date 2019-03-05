@@ -34,7 +34,7 @@ class PfeNavigation extends PFElement {
     this._onSlotChange = this._onSlotChange.bind(this);
 
     this.slots = {};
-    ["main", "utility"].forEach((region) => {
+    ["main", "search", "language", "login", "site-switcher"].forEach((region) => {
       this.slots[region] = this.shadowRoot.querySelector(`slot[name="${region}"]`);
       this.slots[region].addEventListener("slotchange", this._onSlotChange(region));
     });

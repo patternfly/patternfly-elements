@@ -31,7 +31,7 @@ module.exports = function factory({
               .join(" ");
 
             let url = {};
-            ["template", "style", "schema"].forEach(type => {
+            ["template", "style", "schema", "assets"].forEach(type => {
               const re = new RegExp(
                 `get\\s+${type}Url\\([^)]*\\)\\s*{\\s*return\\s+"([^"]+)"`,
                 "g"
@@ -45,6 +45,7 @@ module.exports = function factory({
             let cssResult = "";
             let properties = "";
             let slots = "";
+            let assets = "";
 
             if (
               url.template !== null &&
@@ -89,6 +90,18 @@ module.exports = function factory({
                   slots = JSON.stringify(slots);
                 }
               }
+            }
+
+            if (
+              url.assets !== null &&
+              fs.existsSync(path.join("./src", url.assets))
+            ) {
+              assets = "{}";
+              html = fs
+                .readFileSync(path.join("./src", url.assets))
+                .toString()
+                .trim();
+              html = decomment(html);
             }
 
             return `${classStatement}

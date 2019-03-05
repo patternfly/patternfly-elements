@@ -5,17 +5,23 @@
         <slot name="skip" class="pfe-navigation__skip"></slot>
         <slot name="main" class="pfe-navigation__main"></slot>
         <div class="pfe-navigation__utility">
-            <pfe-navigation-item pfe-icon="menu" on="dark" pfe-top-link hidden>
+            <pfe-navigation-item pfe-icon="menu" on="dark" hidden>
                 <span slot="trigger">Menu</span>
                 <div slot="tray">
                     <div class="pfe-navigation__utility--mobile">
-                        <div>Top links</div>
-                        <div>Middle links</div>
-                        <div>Bottom links</div>
+                        <!--slot name="search"></slot-->
+                        <!--slot name="main" class="pfe-navigation__main"></slot-->
+                        <!--slot name="login"></slot-->
+                        <!--slot name="language"></slot-->
                     </div>
                 </div>
             </pfe-navigation-item>
-            <slot name="utility" class="pfe-navigation__utility-links"></slot>
+            <div class="pfe-navigation__utility" hidden>
+                <slot name="search" class="pfe-navigation__utility-links"></slot>
+                <slot name="login" class="pfe-navigation__utility-links"></slot>
+                <slot name="language" class="pfe-navigation__utility-links"></slot>
+            </div>
+            <slot name="site-switcher" class="pfe-navigation__utility-links"></slot>
         </div>
     </div>
 </div>

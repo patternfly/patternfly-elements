@@ -1,12 +1,10 @@
 <!-- Navigation item -->
 <div class="pfe-navigation-item__trigger">
-    ${this.hasAttribute("pfe-icon") ? `<span class="pfe-navigation-item__icon"></span>` : ""}
-    ${this.has_slot("trigger") ? `<slot name="trigger" class="pfe-navigation-item__text"></slot>` : `<slot class="pfe-navigation-item__link"></slot>`}
+    ${this.hasAttribute("pfe-icon") ? `<span class="pfe-navigation-item__icon">${this.iconSVG[this.getAttribute("pfe-icon")]}</span>` : ""}
+    <slot name="trigger" class="${this.has_slot("trigger") ? "pfe-navigation-item__text" : "pfe-navigation-item__link"}"></slot>
 </div>
 
 ${this.has_slot("tray") ? `
 <section class="pfe-navigation-item__tray" hidden>
-    <div class="pfe-navigation-item__container">
-        <slot name="tray"></slot>
-    </div>
+    <slot name="tray" class="pfe-navigation-item__container"></slot>
 </section>` : ""}

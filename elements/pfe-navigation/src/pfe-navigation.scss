@@ -47,11 +47,11 @@ $LOCAL: navigation;
 	position: sticky;
 }
 
-@each $color in (darker, darkest, accent, complement, lighter, lightest) {
-  :host([pfe-color="#{$color}"]) {
-	--pfe-navigation--BackgroundColor: #{pfe-color(surface--#{$color})};
-  }
-}
+// @each $color in (darker, darkest, accent, complement, lighter, lightest) {
+//   :host([pfe-color="#{$color}"]) {
+// 	--pfe-navigation--BackgroundColor: #{pfe-color(surface--#{$color})};
+//   }
+// }
 
 ::slotted([slot="logo"]) {
 	min-width: 80px;

@@ -1,0 +1,13 @@
+@mixin make-label($back, $text) {
+    background: $back;
+    color: $text;
+    &.is-secondary {
+        background: none;
+        color: $back;
+        border-color: $back;
+    }
+    &.is-tertiary {
+        background: none;
+        color: $back;
+    }
+}

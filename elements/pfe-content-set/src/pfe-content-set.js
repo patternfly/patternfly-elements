@@ -64,7 +64,7 @@ class PfeContentSet extends PFElement {
 
   _buildAccordion() {
     const fragment = document.createDocumentFragment();
-    const accordion = document.createElement(PfeAccordion.tag);
+    const accordion = document.createElement("pfe-accordion");
 
     [...this.children].forEach(child => {
       if (child.hasAttribute("pfe-content-set--header")) {
@@ -91,7 +91,7 @@ class PfeContentSet extends PFElement {
 
   _buildTabs() {
     const fragment = document.createDocumentFragment();
-    const tabs = document.createElement(PfeTabs.tag);
+    const tabs = document.createElement("pfe-tabs");
 
     [...this.children].forEach(child => {
       if (child.hasAttribute("pfe-content-set--header")) {

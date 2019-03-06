@@ -9,8 +9,9 @@ const {
 
 const browser_support = [
   "last 2 versions",
-  "Firefox > 40",
-  "iOS > 5"
+  "Firefox > 51",
+  "iOS > 7",
+  "ie 11"
 ];
 
 const paths = {

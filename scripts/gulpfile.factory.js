@@ -5,7 +5,12 @@ module.exports = function factory({
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
 
-  const browser_support = ["last 2 versions", "Firefox > 40", "iOS > 5"];
+  const browser_support = [
+    "last 2 versions",
+    "Firefox > 51",
+    "iOS > 7",
+    "ie 11"
+  ];
 
   const paths = {
     source: "./src",

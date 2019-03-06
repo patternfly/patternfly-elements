@@ -78,6 +78,7 @@ $LOCAL: band;
   // Tag element styles
   *, *::before, *::after {
     box-sizing: border-box;
+    background: pink;
   }
 }
 
@@ -97,137 +98,45 @@ $LOCAL: band;
   --pfe-band--Padding:   calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
 }
 
-@each $slot in (default, header, footer, aside) {
-  $slot-name: $slot;
-  $grid-area: "body";
-  @if $slot != default {
-    $slot-name: "pfe-band--#{$slot-name}";
-    $grid-area: $slot;
-  }
-  .pfe-band__#{$grid-area} {
+@each $slot in (header, body, footer, aside) {
+  // Attach styles to the shadow element slot
+  .pfe-band__#{$slot} {
+    max-width: max-content;
+
     // Set up the flex styles for each region
     display:     flex;
     flex-flow:   column nowrap;
     align-items: flex-start;
     // Grid support styles
     @supports (display: grid) {
-      grid-area: #{$grid-area};
+      grid-area: #{$slot};
       // Set up the internal grid system for each slot
       display: grid;
       grid-row-gap: #{pfe-local(gutter--vertical)};
       grid-column-gap: #{pfe-local(gutter--horizontal)};
       grid-template-columns: #{pfe-local(
         $cssvar: layout,
-        $region: $grid-area
+        $region: $slot
       )};
     }
   }
-  @include pfe-slot($slot-name, ":not(:last-child)") {
-    margin-bottom: #{pfe-local(gutter--vertical)};
-    @supports (display: grid) {
-      margin-bottom: 0;
-    }
+}
+
+::slotted(*:not(:last-child)),
+::slotted(* > *:not(:last-child)) {
+  margin-bottom: #{pfe-local(gutter--vertical)};
+  @supports (display: grid) {
+    margin-bottom: 0;
   }
-  @include pfe-slot($slot-name, "> *") {
-    margin: 0;
-  }
-  @include pfe-slot($slot-name, "> *:not(:last-child)") {
-    margin-bottom: #{pfe-local(gutter--vertical)};
-    @supports (display: grid) {
-      margin-bottom: 0;
-    }
-  }
+}
+::slotted(* > *) {
+  margin: 0;
 }
 
 .pfe-band {
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
     --pfe-band_region--width: calc(calc(1fr - #{pfe-local(Width__aside--sm)}) - #{pfe-local(gutter--horizontal)});
-    --pfe-band--gridTemplateArea_mobile:  "body";
-    --pfe-band--gridTemplateArea_desktop: "body";
-    // Styles for the different combination of regions
-    &[pfe-has-aside] {
-      --pfe-band--gridTemplateArea_mobile: "body" "aside";
-      --pfe-band--gridTemplateArea_desktop: "body aside";
-      @media (min-width: #{pfe-breakpoint(md)}) {
-        --pfe-band--layout: 1fr #{pfe-local(Width__aside--sm)};
-      }
-      @media (min-width: #{pfe-breakpoint(lg)}) {
-        --pfe-band--layout: 1fr #{pfe-local(Width__aside--lg)};
-      }
-      &[pfe-aside-mobile="top"] {
-        --pfe-band--gridTemplateArea_mobile: "aside" "body";
-      }
-      &[pfe-aside-desktop="left"] {
-        --pfe-band--gridTemplateArea_desktop: "aside body";
-        @media (min-width: #{pfe-breakpoint(md)}) {
-          --pfe-band--layout: #{pfe-local(Width__aside--sm)} 1fr;
-        }
-        @media (min-width: #{pfe-breakpoint(lg)}) {
-          --pfe-band--layout: #{pfe-local(Width__aside--lg)} 1fr;
-        }
-      }
-    }
-    &[pfe-has-header] {
-      --pfe-band--gridTemplateArea_mobile: "header" "body";
-      --pfe-band--gridTemplateArea_desktop: "header" "body";
-      &[pfe-has-aside] {
-        --pfe-band--gridTemplateArea_mobile: "header" "body" "aside";
-        --pfe-band--gridTemplateArea_desktop: "header header" "body aside";
-      }
-      &[pfe-aside-mobile="top"] {
-        --pfe-band--gridTemplateArea_mobile: "aside" "header" "body";
-      }
-      &[pfe-aside-height="full"] {
-        --pfe-band--gridTemplateArea_desktop: "header aside" "body aside";
-      }
-      &[pfe-aside-desktop="left"] {
-        --pfe-band--gridTemplateArea_desktop: "header header" "aside body";
-        &[pfe-aside-height="full"] {
-          --pfe-band--gridTemplateArea_desktop: "aside header" "aside body";
-        }
-      }
-    }
-    &[pfe-has-footer] {
-      --pfe-band--gridTemplateArea_mobile: "body" "footer";
-      --pfe-band--gridTemplateArea_desktop: "body" "footer";
-      &[pfe-has-aside] {
-        --pfe-band--gridTemplateArea_mobile: "body" "aside" "footer";
-        --pfe-band--gridTemplateArea_desktop: "body aside" "footer footer";
-      }
-      &[pfe-aside-mobile="top"] {
-        --pfe-band--gridTemplateArea_mobile: "aside" "body" "footer";
-      }
-      &[pfe-aside-height="full"] {
-        --pfe-band--gridTemplateArea_desktop: "body aside" "footer aside" ;
-      }
-      &[pfe-aside-desktop="left"] {
-        --pfe-band--gridTemplateArea_desktop: "aside body" "footer footer";
-        &[pfe-aside-height="full"] {
-          --pfe-band--gridTemplateArea_desktop: "aside body" "aside footer";
-        }
-      }
-    }
-    &[pfe-has-header][pfe-has-footer] {
-      --pfe-band--gridTemplateArea_mobile: "header" "body" "footer";
-      --pfe-band--gridTemplateArea_desktop: "header" "body" "footer";
-      &[pfe-has-aside] {
-        --pfe-band--gridTemplateArea_mobile: "header" "body" "footer" "aside";
-        --pfe-band--gridTemplateArea_desktop: "header header" "body aside" "footer footer";
-      }
-      &[pfe-aside-mobile="top"] {
-        --pfe-band--gridTemplateArea_mobile: "aside" "header" "body" "footer";
-      }
-      &[pfe-aside-height="full"] {
-        --pfe-band--gridTemplateArea_desktop: "header aside" "body aside" "footer aside" ;
-      }
-      &[pfe-aside-desktop="left"] {
-        --pfe-band--gridTemplateArea_desktop: "header header" "aside body" "footer footer";
-        &[pfe-aside-height="full"] {
-          --pfe-band--gridTemplateArea_desktop: "aside header" "aside body" "aside footer";
-        }
-      }
-    }
 
     position:  relative;
     margin:    0 auto;
@@ -240,10 +149,126 @@ $LOCAL: band;
       grid-column-gap:       #{pfe-local(gutter--horizontal)};
       grid-template-columns: #{pfe-local(layout)};
       grid-template-rows:    max-content;
-      grid-template-areas:   var(--pfe-band--gridTemplateArea_mobile);
+      grid-template-areas:   "body";
       @media (min-width: #{pfe-breakpoint(md)}) {
-        grid-template-areas: var(--pfe-band--gridTemplateArea_desktop);
+        grid-template-areas: "body";
       }
     }
+    // Styles for the different combination of regions
+    &[pfe-has-aside] {
+      grid-template-areas:   "body" "aside";
+      @media (min-width: #{pfe-breakpoint(md)}) {
+        grid-template-areas: "body aside";
+      }
+      @media (min-width: #{pfe-breakpoint(md)}) {
+        --pfe-band--layout: 1fr #{pfe-local(Width__aside--sm)};
+      }
+      @media (min-width: #{pfe-breakpoint(lg)}) {
+        --pfe-band--layout: 1fr #{pfe-local(Width__aside--lg)};
+      }
+      &[pfe-aside-mobile="top"] {
+        grid-template-areas:   "aside" "body";
+      }
+      &[pfe-aside-desktop="left"] {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          --pfe-band--layout: #{pfe-local(Width__aside--sm)} 1fr;
+          grid-template-areas: "aside body";
+        }
+        @media (min-width: #{pfe-breakpoint(lg)}) {
+          --pfe-band--layout: #{pfe-local(Width__aside--lg)} 1fr;
+        }
+      }
+    }
+    &[pfe-has-header] {
+      grid-template-areas:   "header" "body";
+      @media (min-width: #{pfe-breakpoint(md)}) {
+        grid-template-areas: "header" "body";
+      }
+      &[pfe-has-aside] {
+        grid-template-areas:   "header" "body" "aside";
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas: "header header" "body aside";
+        }
+      }
+      &[pfe-aside-mobile="top"] {
+        grid-template-areas:   "aside" "header" "body";
+      }
+      &[pfe-aside-height="full"] {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas: "header aside" "body aside";
+        }
+      }
+      &[pfe-aside-desktop="left"] {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas:   "header header" "aside body";
+        }
+        &[pfe-aside-height="full"] {
+          @media (min-width: #{pfe-breakpoint(md)}) {
+            grid-template-areas: "aside header" "aside body";
+          }
+        }
+      }
+    }
+    &[pfe-has-footer] {
+      grid-template-areas:   "body" "footer";
+      @media (min-width: #{pfe-breakpoint(md)}) {
+        grid-template-areas: "body" "footer";
+      }
+      &[pfe-has-aside] {
+        grid-template-areas:   "body" "aside" "footer";
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas: "body aside" "footer footer";
+        }
+      }
+      &[pfe-aside-mobile="top"] {
+        grid-template-areas:   "aside" "body" "footer";
+      }
+      &[pfe-aside-height="full"] {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas: "body aside" "footer aside" ;
+        }
+      }
+      &[pfe-aside-desktop="left"] {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas: "aside body" "footer footer";
+        }
+        &[pfe-aside-height="full"] {
+          @media (min-width: #{pfe-breakpoint(md)}) {
+            grid-template-areas: "aside body" "aside footer";
+          }
+        }
+      }
+    }
+    &[pfe-has-header][pfe-has-footer] {
+      grid-template-areas:   "header" "body" "footer";
+      @media (min-width: #{pfe-breakpoint(md)}) {
+        grid-template-areas: "header" "body" "footer";
+      }
+      &[pfe-has-aside] {
+        grid-template-areas:   "header" "body" "footer" "aside";
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas: "header header" "body aside" "footer footer";
+        }
+      }
+      &[pfe-aside-mobile="top"] {
+        grid-template-areas:  "aside" "header" "body" "footer";
+      }
+      &[pfe-aside-height="full"] {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas: "header aside" "body aside" "footer aside" ;
+        }
+      }
+      &[pfe-aside-desktop="left"] {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas: "header header" "aside body" "footer footer";
+        }
+        &[pfe-aside-height="full"] {
+          @media (min-width: #{pfe-breakpoint(md)}) {
+            grid-template-areas: "aside header" "aside body" "aside footer";
+          }
+        }
+      }
+    }
+
   }
 }

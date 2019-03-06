@@ -182,8 +182,14 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   }
 }
 
-::slotted(h2) {
+::slotted(h1),
+::slotted(h2),
+::slotted(h3),
+::slotted(h4),
+::slotted(h5),
+::slotted(h6) {
   font-size: var(--pfe-theme--font-size);
   font-weight: var(--pfe-theme--font-weight--normal, 500);
   margin: 0;
+  user-select: none;
 }

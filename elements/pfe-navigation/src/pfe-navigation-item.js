@@ -24,10 +24,6 @@ class PfeNavigationItem extends PFElement {
     return "pfe-navigation-item.scss";
   }
 
-  get assetsUrl() {
-    return "../assets/*.svg";
-  }
-
   get expanded() {
     return this.classList.contains("expanded");
   }

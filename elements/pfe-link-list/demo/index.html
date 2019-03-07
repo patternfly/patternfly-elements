@@ -18,16 +18,38 @@
   </head>
   <body unresolved>
     <h1>&lt;pfe-link-list&gt;</h1>
-    <div style="width: 25%; margin: 0 auto;">
+    <div style="display: grid; grid-gap: 10px; grid-template-columns: repeat(3, 1fr); margin: 0 auto; max-width: 1200px;">
       <pfe-link-list>
-        <h3 id="simple-list" slot="pfe-link-list--header">List Title</h3>
-        <ul aria-labelledby="simple-list"  slot="pfe-link-list--list">
-          <li class="link-list--item"><a class="list-link--item__link" href="#">Link number one</a></li>
-          <li class="link-list--item"><a class="list-link--item__link" href="#">Link number two</a></li>
-          <li class="link-list--item"><a class="list-link--item__link" href="#">Link number three</a></li>
-          <li class="link-list--item"><a class="list-link--item__link" href="#">Link number four</a></li>
-          <li class="link-list--item"><a class="list-link--item__link" href="#">Link number five</a></li>
-          <li class="link-list--item"><a class="list-link--item__link" href="#">Link number six</a></li>
+        <h3 id="simple-list">List Title</h3>
+        <ul aria-labelledby="simple-list">
+          <li><a href="#">Link number one</a></li>
+          <li><a href="#">Link number two</a></li>
+          <li><a href="#">Link number three</a></li>
+          <li><a href="#">Link number four</a></li>
+          <li><a href="#">Link number five</a></li>
+          <li><a href="#">Link number six</a></li>
+        </ul>
+      </pfe-link-list>
+      <pfe-link-list>
+        <h2 id="list-2"><a href="#">List Title</a></h2>
+        <ul aria-labelledby="list-2">
+          <li><a href="#">Link number one</a></li>
+          <li><a href="#">Link number two</a></li>
+          <li><a href="#">Link number three</a></li>
+          <li><a href="#">Link number four</a></li>
+          <li><a href="#">Link number five</a></li>
+          <li><a href="#">Link number six</a></li>
+        </ul>
+      </pfe-link-list>
+      <pfe-link-list>
+        <h4 id="list-3">List Title</h4>
+        <ul aria-labelledby="list-3">
+          <li><a href="#">Link number one</a></li>
+          <li><a href="#">Link number two</a></li>
+          <li><a href="#">Link number three</a></li>
+          <li><a href="#">Link number four</a></li>
+          <li><a href="#">Link number five</a></li>
+          <li><a href="#">Link number six</a></li>
         </ul>
       </pfe-link-list>
     </div>

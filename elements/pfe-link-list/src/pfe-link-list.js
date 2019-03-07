@@ -27,26 +27,26 @@ class PfeLinkList extends PFElement {
   }
 
   constructor() {
-    super(PfeLinkList, { type: PfeLinkList.PfeType, delayRender: true });
+    super(PfeLinkList, { type: PfeLinkList.PfeType });
   }
+
   connectedCallback() {
     super.connectedCallback();
 
-    [{
-      class: "header",
-      selector: "*",
-      attributes: ["class"]
-    }, {
-      class: "list",
-      selector: "ul",
-      attributes: ["class"]
-    }].forEach((section) => {
-      let wrapper = this.shadowRoot.querySelector(`.pfe-link-list__${section.class}`);
-      let child   = this.shadowRoot.querySelector(`.pfe-link-list__${section.class} > ${section.selector}`);
-  
-      // Swap the placeholder element from the template with the element provided by the lightDOM
-      this._pfeClass.copyElement(wrapper, child, section.attributes);
+    // Copy the element provided by the lightDOM to the shadowDOM
+    const fragment = document.createDocumentFragment();
+    [...this.children].map(child => {
+      // Clone the element and all it's descendants
+      const twin = child.cloneNode(true);
+      if(/^(H[1-6])$/.test(twin.tagName)) {
+        twin.classList.add("pfe-link-list__header");
+      } else if(/^(UL)$/.test(twin.tagName)) {
+        twin.classList.add("pfe-link-list__list");
+      }
+      fragment.appendChild(twin);
     });
+    
+    this.shadowRoot.appendChild(fragment);
   }
 
   // disconnectedCallback() {}

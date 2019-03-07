@@ -25,32 +25,38 @@ $LOCAL: link-list;
   display: none;
 }
 
-.pfe-link-list {
-  &__header {
-    font-family: #{pfe-var(font-family)};
-    color: #{pfe-local(Color, header)}; // #252525; // @TODO fix the color variables to import from the new color palette
-    font-weight: #{pfe-var(font-weight--light)};
-    margin: 0 0 1rem 0;
-    margin-block-end: 0; // user stylesheet overwrites normal margin?
-    margin-block-start: 0;
-  }
-  &__list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    li {
-      margin-bottom: 1rem;
-    }
-    a {
-      font-family: #{pfe-var(font-family)};
-      color: #{pfe-radio(color--ui-link)}; // @TODO fix the color variables to import from the new color palette
-      font-weight: #{pfe-var(font-weight--light)};
-      text-decoration: none;
-      @each $state in (hover, visited, focus) {
-        &:#{$state} {
-          color: #{pfe-radio(color--ui-link--#{$state})};
-        }
+.pfe-link-list__header {
+  font-family: #{pfe-var(font-family)};
+  color: #{pfe-local(Color, header)}; // #252525; // @TODO fix the color variables to import from the new color palette
+  font-weight: #{pfe-var(font-weight--bold)};
+  margin: 0;
+  margin-block-end: 0; // user stylesheet overwrites normal margin?
+  margin-block-start: 0;
+  padding-bottom: 1rem;
+  a {
+    color: #{pfe-radio(color--ui-link)};
+    font-size: 1rem;
+    text-decoration: none;
+    @each $state in (hover, visited, focus) {
+      &:#{$state} {
+        color: #{pfe-radio(color--ui-link--#{$state})};
       }
+    }
+  }
+}
+ul {
+  @include pfe-reset-list;
+}
+li:not(:last-child) {
+  margin-bottom: 1rem;
+}
+li a {
+  color: #{pfe-radio(color--ui-link)}; // @TODO fix the color variables to import from the new color palette
+  font-weight: #{pfe-var(font-weight--light)};
+  text-decoration: none;
+  @each $state in (hover, visited, focus) {
+    &:#{$state} {
+      color: #{pfe-radio(color--ui-link--#{$state})};
     }
   }
 }

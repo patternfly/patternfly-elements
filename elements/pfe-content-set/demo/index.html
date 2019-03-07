@@ -3,13 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>PatternFly Element | pfe-content-set Demo</title>
-
-    <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
-    </noscript>
-
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
-
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.7/custom-elements-es5-adapter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.7/webcomponents-bundle.js"></script>
@@ -19,7 +12,39 @@
         "../../../themes/cp-theme/cp-theme.umd.js",
         "../pfe-content-set.umd.js"
       ])
-      </script>
+    </script>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+    <style>
+      h1, h2 {
+        margin-bottom: .3em;
+      }
+      h2 {
+        color: var(--pfe-theme--color--ui-accent, #c00);
+        font-size: 1.2em;
+        text-transform: uppercase;
+      }
+      h2 a {
+        color: inherit;
+        cursor: pointer;
+      }
+      h3 {
+        font-size: 1.4em;
+        color: var(--pfe-theme--color--ui-complement, #464646);
+      }
+      p {
+        margin-top: 0 !important;
+      }
+      hr {
+        margin: 40px 10px;
+        border-color: transparent;
+        border-bottom-color: #ccc;
+      }
+    </style>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
     <style>
       .cta a {
         display: inline-block;
@@ -209,7 +234,7 @@
       </pfe-content-set>
     </div>
 
-    <!-- <pfe-content-set>
+    <pfe-content-set>
       <h2 pfe-content-set--header>Heading 1</h2>
       <div pfe-content-set--panel>
         <p>Content for heading 1.</p>
@@ -219,7 +244,7 @@
       </div>
       <h2 pfe-content-set--header>Heading 2</h2>
       <div pfe-content-set--panel>Content for heading 2.</div>
-    </pfe-content-set>-->
+    </pfe-content-set>
 
 
   </body>

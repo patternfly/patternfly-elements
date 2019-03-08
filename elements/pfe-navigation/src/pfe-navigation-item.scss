@@ -5,7 +5,9 @@ $LOCAL: navigation-item;
 /// ===========================================================================
 /// Component Specific SASS Vars
 /// ===========================================================================
-$pfe-nav-size: 4em;
+$pfe-navigation--height: 4em;
+$pfe-navigation__aside--width--sm: 240px;
+$pfe-navigation__aside--width--lg: 300px;
 
 /// ===========================================================================
 /// DEFAULT navigation-item
@@ -15,12 +17,12 @@ $pfe-nav-size: 4em;
 	--pfe-navigation-item--Padding--vertical:   #{pfe-var(container-spacer)};
 	--pfe-navigation-item--Padding--horizontal: #{pfe-var(container-spacer)};
 
-	--pfe-navigation-item__tray--Width__aside--sm: 240px;
-	--pfe-navigation-item__tray--Width__aside--lg: 300px;
+	--pfe-navigation-item__tray--Width__aside: 	#{$pfe-navigation__aside--width--lg};
+	--pfe-navigation-item__tray--BorderTop: 	1px solid gray;
 
-	--pfe-navigation-item--Color: 					#{pfe-local(main)};
-	--pfe-navigation-item--BackgroundColor: #{pfe-local(aux)};
-	--pfe-navigation-item--BorderTopColor:	transparent;
+	--pfe-navigation-item--Color: 				#{pfe-local(main)};
+	--pfe-navigation-item--BackgroundColor: 	#{pfe-local(aux)};
+	--pfe-navigation-item--BorderTopColor:		transparent;
 
 	// Fill the navigation container
 	height: 100%;
@@ -45,7 +47,7 @@ $pfe-nav-size: 4em;
 
 		font-weight: bold;
 		font-weight: 300;
-		min-height:  #{$pfe-nav-size};
+		min-height:  #{$pfe-navigation--height};
 
 		display: flex;
 		flex-direction: column;
@@ -82,11 +84,6 @@ $pfe-nav-size: 4em;
 ::slotted(a:not([slot="tray"])) {
 	color: inherit;
 	text-decoration: none;
-	// Fill the link container
-	margin-top: -2px;
-	width: 100%;
-	display: flex;
-	align-items: center;
 }
 
 // ::slotted([slot="trigger"]) {
@@ -97,7 +94,11 @@ $pfe-nav-size: 4em;
 // }
 
 ::slotted([slot="tray"]) {
-	display: contents;
+	display: grid;
+	grid-template-areas: "main aside" "footer footer";
+	grid-template-columns: 1fr var(--pfe-navigation-item__tray--Width__aside);
+    grid-gap: 10px;
+    width: 100%;
 }
 
 .pfe-navigation-item {
@@ -105,8 +106,7 @@ $pfe-nav-size: 4em;
 		display: block;
 		background-color: #{pfe-color(surface--lighter)};
 		position: absolute;
-		// top: var(--pfe-navigation--Height, 70px); // @TODO Need to do this with JS
-		top: 80px;
+		top: 80px; // @TODO Need to do this with JS
 		left: 0;
 		width: 100%;
 		z-index: 1;
@@ -130,7 +130,7 @@ $pfe-nav-size: 4em;
 		border-top:       #{pfe-local(BorderTopColor)} solid 2px;
 		color:            #{pfe-local(Color)}; //text
 		background-color: #{pfe-local(BackgroundColor)};  //bg
-		line-height: 	  #{$pfe-nav-size};
+		line-height: 	  #{$pfe-navigation--height};
 
 		flex: 1;
 		display:			flex;
@@ -139,14 +139,10 @@ $pfe-nav-size: 4em;
 		justify-content: 	center;
 
 		min-width: 80px;
-		padding: 20px 3px 0;
+		padding: 0 3px;
 
 		// Fill the navigation container
 		height: 			calc(100% - 20px);
-
-		&[pfe-icon] {
-			justify-content: flex-start;
-		}
 
 		// If it doesn't have an icon, give it menu flyout styles
 		@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {

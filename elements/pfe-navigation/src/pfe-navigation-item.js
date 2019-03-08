@@ -55,6 +55,8 @@ class PfeNavigationItem extends PFElement {
       }
     }
 
+    console.log(this.expanded);
+
     this.dispatchEvent(
       new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
         detail: { navigationItem: this, expanded: this.expanded },
@@ -142,9 +144,7 @@ class PfeNavigationItem extends PFElement {
   }
 
   static get observedAttributes() {
-    return [
-      "pfe-icon"
-    ];
+    return ["pfe-icon"];
   }
 
   static get cascadingAttributes() {
@@ -188,39 +188,30 @@ class PfeNavigationItem extends PFElement {
       this.trigger.shadow.addEventListener("click", this._clickHandler);
       // Attach an on keydown listener
       this.trigger.shadow.addEventListener("keydown", this._keydownHandler);
-    }
 
-    // Remove the hidden attribute from the light DOM element
-    if(this.tray.light) {
-      this.tray.light.removeAttribute("hidden");
+      // Remove the hidden attribute from the light DOM element
+      if(this.tray.light) {
+        this.tray.light.removeAttribute("hidden");
 
-      // Initialize expanded to false
-      this.expanded = false;
+        // Initialize expanded to false
+        this.expanded = false;
 
-      // Convert pfe-navigation-item--tray-region into classes for styling
-      // Get all elements inside the container
-      const trayRegions = [...this.tray.light.children];
-      // Pull out the aside and footer elements
-      for (let i = 0; i < trayRegions.length; i++) {
-        if (trayRegions[i].hasAttribute("tray-region")) {
-          trayRegions[i].classList.add(`${this.tag}__tray--${trayRegions[i].getAttribute("tray-region")}`);
-          switch(trayRegions[i].getAttribute("tray-region")) {
-            case "main":
-              trayRegions[i].style.flexGrow = 1;
-              break;
-            case "aside":
-              trayRegions[i].style.width = "240px";
-              break;
-            case "footer":
-              trayRegions[i].style.width = "100%";
-              trayRegions[i].style.borderTop = "1px solid gray";
-              trayRegions[i].style.paddingTop = "10px";
-              break;
+        // Get all elements inside the container
+        const trayRegions = [...this.tray.light.children];
+        // Loop through all tray elements and attach the grid areas for them
+        for (let i = 0; i < trayRegions.length; i++) {
+          if (trayRegions[i].hasAttribute("tray-region")) {
+            // Apply the grid area property to each region
+            trayRegions[i].style.gridArea = trayRegions[i].getAttribute("tray-region");
+            // Add additional border and padding properties to the footer
+            if(trayRegions[i].getAttribute("tray-region") === "footer") {
+              trayRegions[i].style.borderTop = "var(--pfe-navigation-item__tray--BorderTop)";
+              trayRegions[i].style.paddingTop = "var(--pfe-navigation-item--Padding--vertical)";
+            }
           }
         }
 
-        // Remove the region definitions from the children elements
-        // trayRegions[i].removeAttribute("tray-region");
+        // Position the tray underneath the trigger element
       }
     }
   }
@@ -276,25 +267,6 @@ class PfeNavigationItem extends PFElement {
       default:
         return;
     }
-  }
-
-  // Update the icon attribute and return the SVG
-  _updateIcon(attr, oldValue, newValue){
-    // Inject the icon into the trigger element
-    // switch (newValue.toLowerCase()) {
-    //   case "search":
-    //     // Get the search SVG
-    //     return this.icon.search;
-    //   case "globe":
-    //     // Get the globe SVG
-    //     return this.icon.globe;
-    //   case "user":
-    //     // Get the person SVG
-    //     return this.icon.user;
-    //   case "bento":
-    //     // Get the person SVG
-    //     return this.icon.bento;
-    // }
   }
 }
 

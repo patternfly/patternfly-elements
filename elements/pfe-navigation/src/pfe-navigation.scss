@@ -92,7 +92,7 @@ $LOCAL: navigation;
 			grid-template-areas: "logo main main main utility";
 		}
 	}
-	[active] &__overlay {
+	&__overlay {
 		display: block;
 		background-color: #25252580;
 		position: absolute;
@@ -101,6 +101,9 @@ $LOCAL: navigation;
 		width: 100vw;
 		height: 100vh;
 		z-index: 1;
+		&[hidden] {
+			display: none;
+		}
 	}
 	&__main {
 		grid-area: main;

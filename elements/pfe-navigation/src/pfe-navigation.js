@@ -58,6 +58,7 @@ class PfeNavigation extends PFElement {
     super.connectedCallback();
 
     this.navigationItems = [...this.querySelectorAll("pfe-navigation-item")];
+    this.overlay = this.shadowRoot.querySelector(".pfe-navigation__overlay");
 
     const fragment = document.createDocumentFragment();
     const mobile = this.shadowRoot.querySelector(".pfe-navigation__utility--mobile");
@@ -78,9 +79,6 @@ class PfeNavigation extends PFElement {
 
     // Add the fragment to the mobile navigation
     mobile.appendChild(fragment);
-
-    // Initialize the state to inactive
-    this.setAttribute("active", "false");
   }
 
   disconnectedCallback() {
@@ -105,8 +103,8 @@ class PfeNavigation extends PFElement {
   }
 
   _toggledHandler(event) {
-    // Set the state of the navigation to open
-    this.setAttribute("active", "true");
+    console.log(event);
+    this.overlay.removeAttribute("hidden");
 
     // If there is not an active navigation item
     if (!this._activeNavigationItem) {
@@ -117,7 +115,7 @@ class PfeNavigation extends PFElement {
 
     // If the event is fired on the currently active item
     if (this._activeNavigationItem === event.detail.navigationItem) {
-      this.setAttribute("active", "false");
+      this.overlay.setAttribute("hidden", true);
       return;
     }
 

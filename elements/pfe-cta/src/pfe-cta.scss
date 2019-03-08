@@ -1,16 +1,8 @@
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: cta;
-
-/// ===========================================================================
-/// Component Specific SASS Vars
-/// ===========================================================================
-
 $pfe-cta__arrow-size:                        0.313em;
 
-/// ===========================================================================
-/// DEFAULT CTA
-/// ===========================================================================
 :host {
   // Property variables
   --pfe-cta--Padding:      0;
@@ -39,50 +31,50 @@ $pfe-cta__arrow-size:                        0.313em;
   font-size:   #{pfe-var(font-size)};
   font-weight: #{pfe-var(font-weight--bold)};
   line-height: #{pfe-var(line-height)};
+}
 
-  // Style the slotted link element
-  ::slotted(a) {
-    transition: all #{pfe-var(animation-timing)};
+// Style the slotted link element
+::slotted(a) {
+  transition: all #{pfe-var(animation-timing)};
 
-    display:      flex;
-    flex-flow:    row nowrap;
-    align-items:  center;
-    justify-content: center;
+  display:      flex;
+  flex-flow:    row nowrap;
+  align-items:  center;
+  justify-content: center;
 
-    line-height: inherit;
-    text-decoration: none;
-    vertical-align:  middle;
+  line-height: inherit;
+  text-decoration: none;
+  vertical-align:  middle;
 
-    color:            #{pfe-local(Color)};
-    background-color: #{pfe-local(BackgroundColor)};
+  color:            #{pfe-local(Color)};
+  background-color: #{pfe-local(BackgroundColor)};
 
-    padding:       #{pfe-local(Padding)};
-    border-radius: #{pfe-local(BorderRadius)};
-    border:        #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
-    // border-color:  #{pfe-local(BorderColor)};
+  padding:       #{pfe-local(Padding)};
+  border-radius: #{pfe-local(BorderRadius)};
+  border:        #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
 
-    &::after {
-      margin-left: calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
+  &::after {
+    margin-left: calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
 
-      // Bring in the styles for the CSS arrow
-      @include pfe-arrow(
-        $type: right,
-        $color: #{pfe-local(Color)},
-        $width: $pfe-cta__arrow-size,
-        $height: $pfe-cta__arrow-size,
-        $pseudo: true
-      );
+    // Bring in the styles for the CSS arrow
+    @include pfe-arrow(
+      $type: right,
+      $color: #{pfe-local(Color)},
+      $width: $pfe-cta__arrow-size,
+      $height: $pfe-cta__arrow-size,
+      $pseudo: true
+    );
 
-      display:     #{pfe-local($cssvar: Display, $region: arrow)};
-    }
+    // This overrides a display style from the pfe-arrow mixin
+    display:     #{pfe-local($cssvar: Display, $region: arrow)};
   }
+}
 
-  // Loop through states and apply update to color
-  @each $state in (hover, focus) {
-    ::slotted(a:#{$state}) {
-      --pfe-cta--Color: #{pfe-local(main--#{$state})};
-      --pfe-broadcasted--color--ui-link--#{$state}: #{pfe-local(main--#{$state})};
-    }
+// Loop through states and apply update to color
+@each $state in (hover, focus) {
+  ::slotted(a:#{$state}) {
+    --pfe-cta--Color: #{pfe-local(main--#{$state})};
+    --pfe-broadcasted--color--ui-link--#{$state}: #{pfe-local(main--#{$state})};
   }
 }
 
@@ -90,7 +82,8 @@ $pfe-cta__arrow-size:                        0.313em;
 /// ===========================================================================
 /// Styles for "Button" CTAs
 /// ===========================================================================
-:host([priority="primary"],[priority="secondary"]) {
+:host([priority="primary"],[priority="secondary"]),
+:host([pfe-priority="primary"],[pfe-priority="secondary"]) {
   // Button padding and border radius settings
   --pfe-cta--Padding:      calc(#{pfe-var(container-padding)} * 0.5) calc(#{pfe-var(container-padding)} * 2);
   --pfe-cta--BorderRadius: #{pfe-var(ui--border-radius)};
@@ -108,7 +101,11 @@ $pfe-cta__arrow-size:                        0.313em;
   }
 }
 
-:host([priority="primary"]) {
+/// ===========================================================================
+/// PRIMARY CTAs
+/// ===========================================================================
+:host([priority="primary"]),
+:host([pfe-priority="primary"]) {
   --pfe-cta--main:          #{pfe-color(ui-accent)};
   --pfe-cta--aux:           #{pfe-color(ui-accent--text)};
 
@@ -122,7 +119,11 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--Color:           #{pfe-local(aux)};
 }
 
-:host([priority="secondary"]) {
+/// ===========================================================================
+/// SECONDARY CTAs
+/// ===========================================================================
+:host([priority="secondary"]),
+:host([pfe-priority="secondary"]) {
   --pfe-cta--main:          #{pfe-color(ui-base)};
   --pfe-cta--aux:           transparent;
 
@@ -136,7 +137,6 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--Color:           #{pfe-local(main)};
 }
 
-
 /// ===========================================================================
 /// ON DARK
 /// ===========================================================================
@@ -148,7 +148,9 @@ $pfe-cta__arrow-size:                        0.313em;
   }
 }
 
-:host([on="dark"][priority="primary"]) {
+// Primary variation
+:host([on="dark"][priority="primary"]),
+:host([on="dark"][pfe-priority="primary"]) {
   --pfe-cta--main:        #{pfe-color(ui-accent--text)};
   --pfe-cta--aux:         #{pfe-color(ui-accent)};
 
@@ -158,7 +160,9 @@ $pfe-cta__arrow-size:                        0.313em;
   }
 }
 
-:host([on="dark"][priority="secondary"]) {
+// Secondary variation
+:host([on="dark"][priority="secondary"]),
+:host([on="dark"][pfe-priority="secondary"]) {
   --pfe-cta--main:        #{pfe-color(ui-base--text)};
 
   @each $state in (hover, focus) {
@@ -166,64 +170,38 @@ $pfe-cta__arrow-size:                        0.313em;
   }
 }
 
-
 /// ===========================================================================
-/// COLOR OVERRIDE: BASE
+/// COLOR OVERRIDES
 /// ===========================================================================
-
-:host([color="base"]),
-:host([color="base"][on="dark"]) {
-  --pfe-cta--main:        #{pfe-color(ui-base)};
-  --pfe-cta--aux:         #{pfe-color(ui-base--text)};
-
-  @each $state in (hover, focus) {
-    --pfe-cta--main--#{$state}: #{pfe-color(ui-base--#{$state})};
-    --pfe-cta--aux--#{$state}:  #{pfe-color(ui-base--text--#{$state})};
+@each $color in (base, complement, accent) {
+  :host([color="#{$color}"]),
+  :host([color="#{$color}"][on="dark"]),
+  :host([pfe-color="#{$color}"]),
+  :host([pfe-color="#{$color}"][on="dark"]) {
+    --pfe-cta--main:        #{pfe-color(ui-#{$color})};
+    --pfe-cta--aux:         #{pfe-color(ui-#{$color}--text)};
+  
+    @each $state in (hover, focus) {
+      --pfe-cta--main--#{$state}: #{pfe-color(ui-#{$color}--#{$state})};
+      --pfe-cta--aux--#{$state}:  #{pfe-color(ui-#{$color}--text--#{$state})};
+    }
   }
 }
 
+/// ===========================================================================
+/// COLOR OVERRIDE: SECONDARY AUX
+/// ===========================================================================
 :host([color="base"][priority="secondary"]),
-:host([color="base"][priority="secondary"][on="dark"]) {
-  --pfe-cta--aux: transparent;
-}
-
-
-/// ===========================================================================
-/// COLOR OVERRIDE: COMPLEMENT
-/// ===========================================================================
-
-:host([color="complement"]),
-:host([color="complement"][on="dark"]) {
-  --pfe-cta--main:        #{pfe-color(ui-complement)};
-  --pfe-cta--aux:         #{pfe-color(ui-complement--text)};
-
-  @each $state in (hover, focus) {
-    --pfe-cta--main--#{$state}: #{pfe-color(ui-complement--#{$state})};
-    --pfe-cta--aux--#{$state}:  #{pfe-color(ui-complement--text--#{$state})};
-  }
-}
-
+:host([color="base"][priority="secondary"][on="dark"]),
 :host([color="complement"][priority="secondary"]),
-:host([color="complement"][priority="secondary"][on="dark"]) {
-  --pfe-cta--aux: transparent;
-}
-
-
-/// ===========================================================================
-/// COLOR OVERRIDE: ACCENT
-/// ===========================================================================
-:host([color="accent"]),
-:host([color="accent"][on="dark"]) {
-  --pfe-cta--main:        #{pfe-color(ui-accent)};
-  --pfe-cta--aux:         #{pfe-color(ui-accent--text)};
-
-  @each $state in (hover, focus) {
-    --pfe-cta--main--#{$state}: #{pfe-color(ui-accent--#{$state})};
-    --pfe-cta--aux--#{$state}:  #{pfe-color(ui-accent--text--#{$state})};
-  }
-}
-
+:host([color="complement"][priority="secondary"][on="dark"]),
 :host([color="accent"][priority="secondary"]),
-:host([color="accent"][priority="secondary"][on="dark"]) {
+:host([color="accent"][priority="secondary"][on="dark"])
+:host([pfe-color="base"][pfe-priority="secondary"]),
+:host([pfe-color="base"][pfe-priority="secondary"][on="dark"]),
+:host([pfe-color="complement"][pfe-priority="secondary"]),
+:host([pfe-color="complement"][pfe-priority="secondary"][on="dark"]),
+:host([pfe-color="accent"][pfe-priority="secondary"]),
+:host([pfe-color="accent"][pfe-priority="secondary"][on="dark"]) {
   --pfe-cta--aux: transparent;
 }

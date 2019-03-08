@@ -10,10 +10,41 @@
   <body>
 
     <pfe-cta>
-      This is the element content.
+      <a>This is the element content.</a>
     </pfe-cta>
 
     <script>
+      const cta = [...document.querySelectorAll("pfe-cta")];
+
+      // Priority states
+      const priorities = {
+        default: "color",
+        primary: "background-color",
+        secondary: "border-color"
+      };
+
+      // Themes and their expected hex values
+      const color_bgs = {
+        base: "#0477a4",
+        complement: "#464646",
+        accent: "#fe460d"
+      };
+      // Converts a hex value to RGBA
+      const hexToRgb = hex => {
+        const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/.exec(hex);
+          return [
+              parseInt(r, 16),
+              parseInt(g, 16),
+              parseInt(b, 16)
+           ];
+      };
+      // Gets the rgba value from an element
+      const getColor = (el, prop) => {
+        const [, r, g, b] = getComputedStyle(el, null)[prop].match(/rgba?\((\d+),\s+(\d+),\s+(\d+).*\)/)
+          .map(n => +n);
+        return [r, g, b];
+      };
+
       suite('<pfe-cta>', () => {
         test('it should upgrade', () => {
           assert.instanceOf(
@@ -22,6 +53,24 @@
             'the <pfe-cta> should be an instance of PfeCta'
           );
         });
+
+        // Iterate over the colors object to test expected background color results
+        Object.entries(priorities).forEach(priority => {
+          cta[0].setAttribute("pfe-priority", priority[0]);
+          Object.entries(color_bgs).forEach(set => {
+            //Update the color attribute
+            cta[0].setAttribute("pfe-color", set[0]);
+            test(`it should have a ${priority[1]} of ${set[1]} when pfe-color is ${set[0]} and pfe-priority is ${priority[0]}`, () => {
+              // Test that the color is rendering as expected
+              assert.deepEqual(getColor(cta[0].querySelector("a"), priority[1]), hexToRgb(set[1]));
+            });
+            // Remove the attribute when test is complete
+            cta[0].removeAttribute("pfe-color");
+          });
+          // Remove the attribute when test is complete
+          cta[0].removeAttribute("pfe-priority");
+        });
+
       });
     </script>
   </body>

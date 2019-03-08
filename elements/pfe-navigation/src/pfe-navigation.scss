@@ -65,8 +65,6 @@ $LOCAL: navigation;
 	display: contents;
 }
 
-// ::slotted([slot="utility"]) {}
-
 .pfe-navigation {
 	&__logo {
 		grid-area: logo;
@@ -106,17 +104,7 @@ $LOCAL: navigation;
 	}
 	&__main {
 		grid-area: main;
-		// display: none;
-		@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-			background-color: #aaa;
-
-			display: flex;
-			flex-flow: column nowrap;
-			position: absolute;
-			top: 91px;
-			left: 0;
-			width: 100%;
-		}
+		display: none;
 		@media (min-width: #{pfe-breakpoint(lg)}) {
 			display: flex;
 			flex-flow: row nowrap;
@@ -130,6 +118,21 @@ $LOCAL: navigation;
 		flex-flow: row nowrap;
 		align-items: stretch;
 		justify-content: flex-end;
+		> * {
+			display: block;
+		}
+		> [pfe-icon="menu"] {
+			@media (min-width: #{pfe-breakpoint(lg)}) {
+				display: none;
+			}
+		}
+		&-links {
+			&:not([name="site-switcher"]) {
+				@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+					display: none;
+				}
+			}
+		}
 	}
 }
 

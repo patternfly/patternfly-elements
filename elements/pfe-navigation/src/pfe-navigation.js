@@ -59,6 +59,26 @@ class PfeNavigation extends PFElement {
 
     this.navigationItems = [...this.querySelectorAll("pfe-navigation-item")];
 
+    const fragment = document.createDocumentFragment();
+    const mobile = this.shadowRoot.querySelector(".pfe-navigation__utility--mobile");
+    let copies = {};
+
+    ["logo", "main", "search", "login", "language", "site-switcher"].map(slot => {
+      this[slot] = this.querySelector(`[slot="${slot}"]`);
+      if(this[slot]) {
+        copies[slot] = this[slot].cloneNode(true);
+      }
+    });
+
+    // Attach each item for the mobile navigation
+    fragment.appendChild(copies.search);
+    fragment.appendChild(copies.main);
+    fragment.appendChild(copies.login);
+    fragment.appendChild(copies.language);
+
+    // Add the fragment to the mobile navigation
+    mobile.appendChild(fragment);
+
     // Initialize the state to inactive
     this.setAttribute("active", "false");
   }

@@ -40,9 +40,6 @@ $LOCAL: link-list;
   padding-bottom: 1rem;
   a {
     color: #{pfe-radio(color--ui-link)};
-    font-family: "Overpass", Helvetica, sans-serif;
-    font-family: #{pfe-var(font-family)};
-    font-size: 1rem;
     text-decoration: none;
     @each $state in (hover, visited, focus) {
       &:#{$state} {
@@ -54,19 +51,21 @@ $LOCAL: link-list;
 ul {
   @include pfe-reset-list;
 }
-li:not(:last-child) {
-  margin-bottom: 1rem;
-}
-li a {
-  color: #{pfe-radio(color--ui-link)};
+li {
   font-family: "Overpass", Helvetica, sans-serif;
   font-family: #{pfe-var(font-family)};
   font-weight: #{pfe-var(font-weight--light)};
   font-size: 1rem;
-  text-decoration: none;
-  @each $state in (hover, visited, focus) {
-    &:#{$state} {
-      color: #{pfe-radio(color--ui-link--#{$state})};
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+  a {
+    color: #{pfe-radio(color--ui-link)};
+    text-decoration: none;
+    @each $state in (hover, visited, focus) {
+      &:#{$state} {
+        color: #{pfe-radio(color--ui-link--#{$state})};
+      }
     }
   }
 }

@@ -12,7 +12,7 @@ if hugoCheck; then
   hugo server &
   popd > /dev/null
 else
-  echo "Not running Hugo server (docs site) becuase hugo is not installed."
+  echo "Not running Hugo server (docs site) because hugo is not installed."
 fi
 
 eval $CMD

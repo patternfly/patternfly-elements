@@ -1,0 +1,1 @@
+.editable[placeholder]:empty:before{content:attr(placeholder);color:rgba(17,17,19,.4);font-weight:400}.editable[placeholder]:empty:focus:before{content:""}

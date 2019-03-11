@@ -1,0 +1,82 @@
+// MESSAGE
+// ---------------------------------------------------------------------------
+
+.message {
+    position: fixed;
+    top: $space-8;
+    right: $space-8;
+    width: $message-width;
+    background: $message-background;
+    box-shadow: $message-box-shadow;
+    border-radius: $message-border-radius;
+    z-index: $z-over-all;
+    border: $message-border-width $message-border-style $message-border-color;
+    font-family: $message-font-family;
+    font-size: $message-font-size;
+    font-weight: $message-font-weight;
+    text-transform: $message-text-transform;
+    color: $message-color-text;
+    padding: $message-padding;
+
+    & h1,
+    & h2,
+    & h3,
+    & h4,
+    & h5,
+    & h6,
+    & a {
+        color: inherit;
+    }
+    & a:hover {
+        @include transition;
+        color: $message-link-color-hover;
+    }
+    &.is-center,
+    &.is-centered {
+        left: 50%;
+        margin-left: -180px;
+    }
+    &.is-left {
+        left: $space-8;
+        right: auto;
+    }
+    &.is-line {
+        width: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        border-radius: 0;
+    }
+}
+.message.is-error {
+    background: $message-error-background;
+    color: $message-error-color-text;
+    border-color: $message-error-border-color;
+    & a:hover {
+        color: $message-error-link-color-hover;
+    }
+}
+.message.is-success {
+    background: $message-success-background;
+    color: $message-success-color-text;
+    border-color: $message-success-border-color;
+    & a:hover {
+        color: $message-success-link-color-hover;
+    }
+}
+.message.is-focus {
+    background: $message-focus-background;
+    color: $message-focus-color-text;
+    border-color: $message-focus-border-color;
+    & a:hover {
+        color: $message-focus-link-color-hover;
+    }
+}
+.message.is-black {
+    background: $message-black-background;
+    color: $message-black-color-text;
+    border-color: $message-black-border-color;
+    & a:hover {
+        color: $message-black-link-color-hover;
+    }
+}

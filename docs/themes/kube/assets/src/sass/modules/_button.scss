@@ -1,0 +1,169 @@
+// BUTTON
+// ---------------------------------------------------------------------------
+
+.button {
+    &,
+    &:active,
+    &:focus {
+        -webkit-appearance: none;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    	vertical-align: middle;
+
+    	font-family: inherit;
+    	font-size: $button-default-font-size;
+    	font-weight: $button-default-font-weight;
+
+        text-decoration: $button-default-text-decoration;
+    	text-transform: $button-default-text-transform;
+
+    	color: $button-default-color-text;
+    	background: $button-default-background;
+    	border-radius: $button-default-border-radius;
+    	border: $button-default-border-width $button-default-border-style $button-default-border-color;
+
+    	min-height: $button-default-height;
+        padding: $button-default-padding;
+        box-shadow: $button-default-box-shadow;
+    	cursor: pointer;
+
+    	line-height: 1.2;
+	}
+	& i,
+	& span {
+    	display: inline-block;
+    	font-size: 16px;
+        margin-left: $space-4;
+        margin-right: $space-4;
+	}
+    &:hover {
+        @include transition;
+        outline: none;
+    	text-decoration: none;
+    	color: $button-default-color-text;
+    	background-color: lighten($button-default-background, 10%);
+    }
+    // Disabled
+    &:disabled,
+    &.is-disabled {
+    	cursor: default;
+    	font-style: normal;
+        color: #fff;
+    	background-color: rgba($color-black, .5);
+    	opacity: .55;
+    }
+    // Secondary
+    &.is-secondary {
+
+    	font-size: $button-secondary-font-size;
+    	font-weight: $button-secondary-font-weight;
+
+        text-decoration: $button-secondary-text-decoration;
+    	text-transform: $button-secondary-text-transform;
+
+    	color: $button-secondary-color-text;
+    	background: $button-secondary-background;
+    	border-radius: $button-secondary-border-radius;
+    	border: $button-secondary-border-width $button-secondary-border-style $button-secondary-border-color;
+
+    	min-height: $button-secondary-height;
+        padding: $button-secondary-padding;
+        box-shadow: $button-secondary-box-shadow;
+
+        &:hover {
+            color: rgba(#fff, .95);
+            background: $button-secondary-border-color;
+            border-color: $button-secondary-border-color;
+        }
+        &.is-loading:before {
+            width: 24px - $button-secondary-border-width;
+        	height: 24px - $button-secondary-border-width;
+        	border-color: rgba($button-secondary-border-color, .25);
+    	    border-bottom-color: $button-secondary-border-color;
+	    }
+	    &.is-loading:hover:before {
+    	    border-color: rgba(#fff, .25);
+    	    border-bottom-color: #fff;
+	    }
+        &:disabled,
+        &.is-disabled {
+            color: rgba($color-black, .5);
+            border-color: rgba($color-black, .3);
+            background: none;
+        }
+    }
+    // Tertiary
+    &.is-tertiary {
+
+    	font-size: $button-tertiary-font-size;
+    	font-weight: $button-tertiary-font-weight;
+
+        text-decoration: $button-tertiary-text-decoration;
+    	text-transform: $button-tertiary-text-transform;
+
+    	color: $button-tertiary-color-text;
+    	background: $button-tertiary-background;
+    	border-radius: $button-tertiary-border-radius;
+    	border: $button-tertiary-border-width $button-tertiary-border-style $button-tertiary-border-color;
+
+    	min-height: $button-tertiary-height;
+        padding: $button-tertiary-padding;
+        box-shadow: $button-tertiary-box-shadow;
+
+        &:hover {
+            color: $color-black;
+        }
+        &.is-loading:before {
+        	border-color: rgba($button-tertiary-color-text, 0.25);
+    	    border-bottom-color: $button-tertiary-color-text;
+	    }
+        &:disabled,
+        &.is-disabled {
+            text-decoration: none;
+            color: rgba($color-black, .5);
+        }
+    }
+    // Inverted
+    &.is-inverted {
+        color: $color-black;
+        background-color: $color-inverted;
+        &:hover {
+            opacity: .7;
+        }
+        &.is-secondary {
+            background: none;
+            color: $color-inverted;
+            border-color: $color-inverted;
+            &:hover {
+                opacity: 1;
+                background-color: $color-inverted;
+                color: rgba($color-black, .95);
+                border-color: $color-inverted;
+            }
+        }
+        &.is-tertiary {
+            background: none;
+            color: $color-inverted;
+            &:hover {
+                opacity: .6;
+            }
+        }
+    }
+    // Small
+    &.is-small {
+        font-size: $button-small-font-size;
+        min-height: $button-small-height;
+        padding: $button-small-padding;
+    }
+    &.is-big {
+        font-size: $button-big-font-size;
+        min-height: $button-big-height;
+        padding: $button-big-padding;
+    }
+    // Loading
+    &:empty.is-loading:before {
+        margin-right: 0;
+    }
+}

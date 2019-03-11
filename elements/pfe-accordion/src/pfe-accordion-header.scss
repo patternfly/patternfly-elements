@@ -1,33 +1,53 @@
 @import "../../pfe-sass/pfe-sass";
-@import "../../pfe-sass/extends/extends";
 
 /// ===========================================================================
 /// DEFAULT ACCORDION HEADING
 /// ===========================================================================
 :host {
-  --pfe-expanded--main:         #{pfe-color(surface--lighter)};
-  --pfe-expanded--aux:          #{pfe-color(surface--lighter--text)};
-  --pfe-expanded--focus:        #{pfe-color(surface--lighter--link--focus)};
+  // --pfe-expanded--aux:          #{pfe-color(surface--lighter--text)}; //Text color
+  // --pfe-expanded--focus:        #{pfe-color(surface--lighter--link--focus)};
+  --pfe-expanded--border-left: transparent;
 
   display: block;
   background: var(--pfe-expanded--main);
   color: var(--pfe-expanded--aux);
-
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-left-color: var(--pfe-expanded--border-left);
   button {
-    @extend %pfe-expand-button;
+    @include pfe-trigger-button;
 
     &[aria-expanded] {
-      @extend %pfe-expand-button-expanded;
+      @include pfe-trigger-expanded;
     }
 
-    &[aria-expanded="false"]::before {
-      @extend %pfe-expand-button-expanded-false;
+    &[aria-expanded="false"]::after {
+      @include pfe-chevron-expanded-false;
     }
 
-    &[aria-expanded="true"]::before {
-      @extend %pfe-expand-button-expanded-true;
+    &[aria-expanded="true"]::after {
+      @include pfe-chevron-expanded-true;
     }
   }
+  > * {
+    margin: 0;
+  }
+}
+
+:host(:last-of-type) {
+}
+
+// Add border bottom to the last button in an accordion set.
+:host(:last-of-type) {
+  button[aria-expanded="false"] {
+    @include pfe-trigger-button-last;
+  }  
+}
+:host([color="dark"]:last-of-type),
+:host([on="dark"]:last-of-type) {
+  button[aria-expanded="false"] {
+    @include pfe-trigger-button-last($theme: dark);
+  }  
 }
 
 :host(.animating) {
@@ -47,31 +67,31 @@ h6 {
 /// COLOR OVERRIDES
 /// ===========================================================================
 
-:host([color="lightest"]),
-:host([color="striped"].even) {
-  @extend %pfe-expand-button-color-lightest;
+:host([color="light"]) {
+  @include pfe-trigger-color-light;
 
   button[aria-expanded="true"] {
-    @extend %pfe-expand-button-color-lightest-expanded;
+    @include pfe-trigger-color-light-borders;
   }
 }
 
-:host([color="base"]) {
-  @extend %pfe-expand-button-color-base;
+:host([color="dark"]),
+:host([on="dark"]) {
+  @include pfe-trigger-color-dark;
+  button {
+    @include pfe-trigger-button($theme: dark);
+  }
 }
 
-:host([color="dark"]) {
-  @extend %pfe-expand-button-color-dark;
+:host([color="light"][aria-expanded="true"]) {
+  @include pfe-trigger-color-light-expanded;
 }
 
-:host([color="darkest"]) {
-  @extend %pfe-expand-button-color-darkest;
+:host([color="dark"][aria-expanded="true"]),
+:host([on="dark"][aria-expanded="true"]) {
+  @include pfe-trigger-color-dark-expanded;
 }
 
-:host([color="accent"]) {
-  @extend %pfe-expand-button-color-accent;
-}
-
-:host([color="complement"]) {
-  @extend %pfe-expand-button-color-complement;
+:host([on="dark"]) {
+  @include pfe-theme($theme: dark);
 }

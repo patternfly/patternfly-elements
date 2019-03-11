@@ -259,13 +259,13 @@ class PfeTabs extends PFElement {
       const panel = tab.nextElementSibling;
       if (panel.tagName.toLowerCase() !== "pfe-tab-panel") {
         console.warn(
-          `${PfeTabs.tag}: tab #${tab.id} is not a sibling of a <pfe-tab-panel>`
+          `${PfeTabs.tag}: tab #${tab.pfeId} is not a sibling of a <pfe-tab-panel>`
         );
         return;
       }
 
-      tab.setAttribute("aria-controls", panel.id);
-      panel.setAttribute("aria-labelledby", tab.id);
+      tab.setAttribute("aria-controls", panel.pfeId);
+      panel.setAttribute("aria-labelledby", tab.pfeId);
 
       tab.addEventListener("click", this._onClick);
     });
@@ -283,7 +283,7 @@ class PfeTabs extends PFElement {
 
   _panelForTab(tab) {
     const panelId = tab.getAttribute("aria-controls");
-    return this.querySelector(`#${panelId}`);
+    return this.querySelector(`[pfe-id="${panelId}"]`);
   }
 
   _prevTab() {
@@ -310,7 +310,7 @@ class PfeTabs extends PFElement {
 
   _getTabIndex(_tab) {
     const tabs = this._allTabs();
-    const index = tabs.findIndex(tab => tab.id === _tab.id);
+    const index = tabs.findIndex(tab => tab.pfeId === _tab.pfeId);
     return index;
   }
 
@@ -329,7 +329,7 @@ class PfeTabs extends PFElement {
     let newTabSelected = false;
 
     if (!newPanel) {
-      throw new Error(`No panel with id ${newPanel.id}`);
+      throw new Error(`No panel with pfeId ${newPanel.pfeId}`);
     }
 
     if (this.selected && this.selected !== newTab) {
@@ -440,11 +440,23 @@ class PfeTab extends PFElement {
     super(PfeTab);
   }
 
+  get pfeId() {
+    return this.getAttribute("pfe-id");
+  }
+
+  set pfeId(id) {
+    if (!id) {
+      return;
+    }
+
+    this.setAttribute("pfe-id", id);
+  }
+
   connectedCallback() {
     super.connectedCallback();
 
-    if (!this.id) {
-      this.id = `${PfeTab.tag}-${generateId()}`;
+    if (!this.pfeId) {
+      this.pfeId = `${PfeTab.tag}-${generateId()}`;
     }
 
     this.setAttribute("role", "tab");
@@ -484,6 +496,18 @@ class PfeTabPanel extends PFElement {
     return "pfe-tab-panel.html";
   }
 
+  get pfeId() {
+    return this.getAttribute("pfe-id");
+  }
+
+  set pfeId(id) {
+    if (!id) {
+      return;
+    }
+
+    this.setAttribute("pfe-id", id);
+  }
+
   constructor() {
     super(PfeTabPanel);
   }
@@ -491,8 +515,8 @@ class PfeTabPanel extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    if (!this.id) {
-      this.id = `${PfeTabPanel.tag}-${generateId()}`;
+    if (!this.pfeId) {
+      this.pfeId = `${PfeTabPanel.tag}-${generateId()}`;
     }
 
     this.setAttribute("role", "tabpanel");

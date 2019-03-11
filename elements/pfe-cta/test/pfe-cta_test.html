@@ -16,11 +16,12 @@
     <script>
       const cta = [...document.querySelectorAll("pfe-cta")];
 
-      // Priority states
+      // Priority states and one of the properties they influence for testing
+      // property should be the one that gets the main color pop
       const priorities = {
         default: "color",
         primary: "background-color",
-        secondary: "border-color"
+        secondary: "color"
       };
 
       // Themes and their expected hex values
@@ -46,7 +47,7 @@
       };
 
       suite('<pfe-cta>', () => {
-        test('it should upgrade', () => {
+        test('should upgrade', () => {
           assert.instanceOf(
             document.querySelector('pfe-cta'),
             customElements.get('pfe-cta'),
@@ -60,7 +61,7 @@
           Object.entries(color_bgs).forEach(set => {
             //Update the color attribute
             cta[0].setAttribute("pfe-color", set[0]);
-            test(`it should have a ${priority[1]} of ${set[1]} when pfe-color is ${set[0]} and pfe-priority is ${priority[0]}`, () => {
+            test(`should have a ${priority[1]} of ${set[1]} when pfe-color is ${set[0]} and pfe-priority is ${priority[0]}`, () => {
               // Test that the color is rendering as expected
               assert.deepEqual(getColor(cta[0].querySelector("a"), priority[1]), hexToRgb(set[1]));
             });

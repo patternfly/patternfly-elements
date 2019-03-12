@@ -1,0 +1,15 @@
+@mixin pfe-accessibility-focus( $color: $link-color ) {
+    outline-offset: 1px;
+    outline-style: dotted;
+    outline-width: 1px;
+    //scss-lint:disable ImportantRule
+    text-decoration: none !important;
+    @if type-of( $color ) == color {
+        outline-color: $color;
+    }
+}
+
+@mixin pfe-underline( $color: default-link-hover-line, $opacity: 1 ) {
+    text-decoration: underline;
+    text-decoration-skip: ink;
+}

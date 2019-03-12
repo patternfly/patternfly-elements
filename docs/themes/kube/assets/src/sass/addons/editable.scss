@@ -1,0 +1,13 @@
+// EDITABLE
+// ---------------------------------------------------------------------------
+@import '../vars';
+@import '../mixins';
+
+.editable[placeholder]:empty:before {
+    content: attr(placeholder);
+    color: rgba($color-black, .4);
+    font-weight: normal;
+}
+.editable[placeholder]:empty:focus:before {
+    content: "";
+}

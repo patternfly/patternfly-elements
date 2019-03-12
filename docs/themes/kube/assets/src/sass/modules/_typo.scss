@@ -1,0 +1,353 @@
+// TYPO
+// ---------------------------------------------------------------------------
+
+html {
+    font-size: $font-size-default;
+}
+body {
+    font-family: $font-family-text;
+    color: $color-text;
+    line-height: $base-line;
+}
+
+// Links
+a {
+    color: $color-link;
+}
+a:hover {
+    color: $color-link-hover;
+}
+
+
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $font-family-text;
+    font-weight: $headings-font-weight;
+    text-rendering: optimizeLegibility;
+    color: inherit;
+    line-height: $headings-base-line;
+
+    & + * {
+        margin-top: $space-8;
+    }
+    & + h1,
+    & + h2,
+    & + h3,
+    & + h4,
+    & + h5,
+    & + h6 {
+        margin-top: $space-8;
+    }
+
+}
+h1 { font-size: $headings-font-size-1; }
+h2 { font-size: $headings-font-size-2; }
+h3 { font-size: $headings-font-size-3; }
+h4 { font-size: $headings-font-size-4; }
+h5 { font-size: $headings-font-size-5; }
+h6 { font-size: $headings-font-size-6; }
+h6 {
+    text-transform: uppercase;
+    letter-spacing: .01em;
+}
+
+// Blocks
+p,
+blockquote,
+hr,
+pre,
+ol,
+ul,
+dl,
+figure,
+address {
+    margin-bottom: $space-16;
+}
+p,
+blockquote,
+hr,
+pre,
+ol,
+ul,
+dl,
+table,
+div,
+form {
+    & + h1,
+    & + h2,
+    & + h3,
+    & + h4,
+    & + h5,
+    & + h6 {
+        margin-top: $space-20;
+    }
+}
+
+// Lists
+ul,
+ol {
+    margin-left: $space-20;
+}
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+nav ul,
+nav ol {
+    margin-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+nav ul ul,
+nav ul ol,
+nav ol ol,
+nav ol ul {
+    margin-left: $space-20;
+}
+li li {
+    font-size: 1em;
+}
+ul.is-bar,
+ol.is-bar {
+    margin: 0;
+    list-style: none;
+
+    & li {
+        display: inline-block;
+    }
+    & li + li {
+        margin-left: $list-bar-space;
+    }
+}
+dt {
+    font-weight: 600;
+}
+dl {
+    & dd + dt {
+        margin-top: $space-8;
+    }
+}
+
+// Line
+hr {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    overflow: visible;
+    margin-top: -1px;
+}
+
+// Blockquote
+blockquote {
+    font-size: $blockquote-font-size;
+    font-weight: $blockquote-font-weight;
+    font-style: $blockquote-font-style;
+    line-height: $blockquote-line-height;
+    color: $blockquote-color-text;
+    padding: $blockquote-padding;
+    border: $blockquote-border;
+    border-left: $blockquote-border-left;
+
+    & small {
+        color: $blockquote-color-text;
+    }
+    & p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// Inline Tags
+b,
+strong {
+    font-weight: 600;
+}
+em,
+i,
+cite,
+dfn {
+    font-style: italic;
+}
+time, small {
+    display: inline-block;
+    font-size: 87.5%;
+    line-height: 1;
+    color: $color-text-secondary;
+}
+figcaption, code, var, kbd {
+    display: inline-block;
+    font-family: $font-family-monospace;
+    font-size: 87.5%;
+    line-height: 1;
+    color: rgba($color-black, .85);
+}
+figcaption {
+    font-size: 80%;
+    font-style: italic;
+    color: rgba($color-black, .7);
+}
+code {
+    color: $code-color-text;
+    background: $code-background;
+    border: $code-border-width $code-border-style $code-border-color;
+    border-radius: $code-border-radius;
+}
+var {
+    opacity: .7;
+    font-style: normal;
+}
+dfn,
+abbr {
+    text-transform: uppercase;
+    &[title] {
+        text-decoration: none;
+        border-bottom: 1px dotted rgba($color-black, .5);
+        cursor: help;
+    }
+}
+code, kbd {
+    position: relative;
+    top: -1px;
+    padding: .25em .35em;
+}
+kbd {
+    color: $kbd-color-text;
+    background: $kbd-background;
+    border: $kbd-border-width $kbd-border-style $kbd-border-color;
+    border-radius: $kbd-border-radius;
+}
+
+// Sup & sub
+sup,
+sub {
+    font-size: .6em;
+}
+sup {
+    vertical-align: top;
+    position: relative;
+    bottom: -.2em;
+}
+h1,
+h2,
+h3 {
+    & sup,
+    & sub {
+        font-size: .4em;
+    }
+}
+sub {
+    line-height: 1;
+}
+
+// Preformatted
+pre  {
+    font-family: $font-family-monospace;
+    font-size: $pre-font-size;
+}
+pre,
+pre code {
+    background: $pre-background;
+    padding: 0;
+    top: 0;
+    display: block;
+    line-height: $pre-line-height;
+    color: $pre-color-text;
+    overflow: auto;
+    white-space: pre;
+}
+pre {
+    padding: $pre-padding;
+    border: $pre-border-width $pre-border-style $pre-border-color;
+    border-radius: $pre-border-radius;
+}
+pre code {
+    font-size: 100%;
+    border: none;
+    background: none;
+}
+
+// Figure
+figure {
+    & div + figcaption,
+    & pre + figcaption{
+        position: relative;
+        top: -8px;
+    }
+}
+figure pre {
+    background-color: none;
+    border: 1px solid rgba($color-black, .1);
+    border-radius: $border-radius;
+    margin-bottom: .5rem;
+}
+
+// Modifiers
+ul.is-unstyled {
+    & {
+        margin-left: 0;
+    }
+    &,
+    & ul {
+        list-style: none;
+    }
+}
+.is-muted {
+    color: rgba($color-black, .6);
+}
+.is-muted a,
+a.is-muted {
+    color: rgba($color-black, .6);
+}
+.is-muted a:hover,
+a.is-muted:hover {
+    @include transition;
+    color: $color-black;
+}
+.is-color-black {
+    &,
+    & a {
+        color: $color-black;
+    }
+}
+a.is-color-black:hover,
+.is-color-black a:hover {
+    color: $color-link-hover;
+}
+.is-large {
+    font-size: $font-size-large;
+    line-height: $base-line-large;
+}
+.is-big {
+    font-size: $font-size-big;
+    line-height: $base-line-big;
+}
+.is-small {
+    font-size: $font-size-small;
+}
+.is-smaller {
+    font-size: $font-size-smaller;
+}
+.is-text-center {
+    text-align: center;
+}
+.is-text-right {
+    text-align: right;
+}
+@include for-mobile {
+    .is-text-left-mobile { text-align: left; }
+    .is-text-right-mobile { text-align: right; }
+    .is-text-center-mobile { text-align: center; }
+}
+.is-nowrap,
+.is-nowrap td {
+	white-space: nowrap;
+}
+.is-highlight {
+    background-color: $color-highlight;
+}

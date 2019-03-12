@@ -1,0 +1,69 @@
+// GRID
+// ---------------------------------------------------------------------------
+
+.is-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    margin-left: -$grid-gap;
+
+    &.is-gapless,
+    &.is-gapless > .is-row {
+        margin-left: 0;
+        margin-top: 0;
+    }
+    & > .is-col {
+        flex: 1;
+        margin-left: $grid-gap;
+
+        &.is-10  { min-width: calc(10% - #{$grid-gap});  }
+        &.is-20  { min-width: calc(20% - #{$grid-gap});  }
+        &.is-25  { min-width: calc(25% - #{$grid-gap});  }
+        &.is-30  { min-width: calc(30% - #{$grid-gap});  }
+        &.is-33,
+        &.is-34  { min-width: calc(33.3333% - #{$grid-gap});  }
+        &.is-35  { min-width: calc(35% - #{$grid-gap});  }
+        &.is-40  { min-width: calc(40% - #{$grid-gap});  }
+        &.is-50  { min-width: calc(50% - #{$grid-gap});  }
+        &.is-60  { min-width: calc(60% - #{$grid-gap});  }
+        &.is-65  { min-width: calc(65% - #{$grid-gap});  }
+        &.is-66,
+        &.is-67  { min-width: calc(66.6666% - #{$grid-gap});  }
+        &.is-70  { min-width: calc(70% - #{$grid-gap});  }
+        &.is-75  { min-width: calc(75% - #{$grid-gap}); }
+        &.is-80  { min-width: calc(80% - #{$grid-gap}); }
+        &.is-90  { min-width: calc(90% - #{$grid-gap}); }
+    }
+
+    &.is-gapless > .is-col {
+        margin-left: 0;
+    }
+}
+
+// Offset
+[class^='is-offset-'],
+[class*=' is-offset-'] {
+    @include for-mobile() {
+        margin-left: 0;
+    }
+}
+
+@include for-mobile {
+    .is-row {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        margin-left: 0;
+        margin-top: 0;
+
+        & + .is-row {
+            margin-top: 0;
+        }
+        & > .is-col {
+            flex: 0 0 100%;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-left: 0;
+        }
+    }
+}

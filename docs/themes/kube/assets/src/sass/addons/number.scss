@@ -1,0 +1,75 @@
+// NUMBER
+// ---------------------------------------------------------------------------
+@import '../vars';
+@import '../mixins';
+
+.input-number {
+    position: relative;
+    display: flex;
+
+    & input[type=number]::-webkit-inner-spin-button,
+    & input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    & input[type=number] {
+        -moz-appearance: textfield;
+        width: auto;
+        text-align: center;
+    }
+
+    & .is-up,
+    & .is-down {
+        width: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    	vertical-align: middle;
+        cursor: pointer;
+        color: $color-text;
+        font-size: $font-size-small;
+        text-decoration: none;
+        text-align: center;
+        -webkit-user-select: none;
+        user-select: none;
+        border: $input-default-border-width $input-default-border-style $input-default-border-color;
+        &:hover {
+            background-color: rgba($color-black, .04);
+        }
+    }
+    & .is-up {
+        border-left-color: transparent;
+        margin-left: -1px;
+    }
+    & .is-down {
+        border-right-color: transparent;
+        margin-right: -1px;
+    }
+    & .input-number-nav {
+        position: relative;
+        width: 24px;
+        margin-left: -1px;
+
+        & .is-up,
+        & .is-down {
+            margin: 0;
+            position: absolute;
+            cursor: pointer;
+            width: 24px;
+            height: 50%;
+            line-height: 20px;
+        }
+        & .is-up {
+            top: 0;
+            right: 0;
+            border-bottom-color: transparent;
+        }
+        & .is-down {
+            border-right: $input-default-border-width $input-default-border-style $input-default-border-color;
+            right: 0;
+            bottom: 0;
+        }
+    }
+
+}

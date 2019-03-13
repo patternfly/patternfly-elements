@@ -153,7 +153,7 @@ class PfeTabs extends PFElement {
     super.connectedCallback();
 
     this.addEventListener("keydown", this._onKeyDown);
-    // this.addEventListener("click", this._onClick);
+    this.addEventListener("click", this._onClick);
 
     if (!this.hasAttribute("role")) {
       this.setAttribute("role", "tablist");

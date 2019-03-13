@@ -13,7 +13,6 @@ Requires both the `pfe-accordion` and `pfe-tabs` components, as well as the base
 
 ## Usage
 
-<!-- You must wrap each chunk of information (heading + content) in a `<pfe-content-set-group>` tag. -->
 Each header must have an attribute of `pfe-content-set--header` and each panel must have an attribute of `pfe-content-set--panel`. Each header must be immediately followed by a panel.
 
 ```html

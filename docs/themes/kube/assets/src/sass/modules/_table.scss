@@ -1,0 +1,131 @@
+// TABLE
+// ---------------------------------------------------------------------------
+
+table {
+	font-size: $table-font-size;
+	border-collapse: collapse;
+	border-spacing: 0;
+	max-width: 100%;
+	width: 100%;
+	empty-cells: show;
+	margin-bottom: $space-20;
+}
+table caption {
+    text-align: left;
+    font-size: $table-caption-font-size;
+    font-weight: $table-caption-font-weight;
+    text-transform: $table-caption-text-transform;
+    color: $table-caption-color-text;
+    letter-spacing: $table-caption-letter-spacing;
+    margin-bottom: $space-2;
+}
+th {
+	font-weight: $table-head-font-weight;
+	color: $table-head-color-text;
+	text-align: left;
+	vertical-align: bottom;
+}
+td {
+	color: $table-color-text;
+	vertical-align: top;
+}
+tbody.is-middle td,
+tr.is-middle td,
+td.is-middle {
+    vertical-align: middle;
+}
+th,
+td {
+    @include cropline;
+
+	padding: $table-padding-tb $table-padding-rl;
+	border-bottom: $table-border;
+	&:first-child {
+		padding-left: 0;
+	}
+	&:last-child {
+		padding-right: 0;
+	}
+}
+tbody th,
+tbody td {
+    border-width: $table-th-border-width;
+    border-color: $table-th-border-color;
+}
+tfoot th,
+tfoot td {
+	color: rgba($color-text, .5);
+}
+
+// Bordered
+table.is-border,
+table.is-bordered {
+
+	& td,
+	& th {
+		border: $table-border;
+	}
+	& tbody th,
+	& tbody td {
+        border-bottom-width: $table-th-border-width;
+        border-bottom-color: $table-th-border-color;
+    }
+}
+
+// Striped
+table.is-striped tr:nth-child(odd) td {
+	background-color: $table-background-striped;
+}
+
+table.is-border,
+table.is-bordered,
+table.is-striped {
+	& td,
+	& th {
+		&:first-child {
+			padding-left: $table-padding-rl;
+		}
+		&:last-child {
+			padding-right: $table-padding-rl;
+		}
+	}
+}
+
+// Responsive
+@include for-mobile() {
+    table.is-responsive {
+        th {
+            display: none;
+        }
+        tr, td {
+            display: block;
+        }
+        tr:nth-child(odd) {
+            background-color: $table-background-striped;
+        }
+        td {
+            padding: $space-16;
+            text-align: right;
+        }
+        td:before {
+            margin-top: $space-2;
+            content: attr(data-label);
+            float: left;
+            font-size: $font-size-small;
+            font-weight: bold;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+    }
+}
+
+// Container
+.is-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: $space-16;
+
+    & table {
+        margin-bottom: 0;
+    }
+}

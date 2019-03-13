@@ -28,8 +28,5 @@
     "@patternfly/pfe-tabs": "^1.0.0-prerelease.9",
     "@patternfly/pfelement": "^1.0.0-prerelease.9"
   },
-  "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.9"
-  },
-  "generator-pfelement-version": "0.6.8"
+  "generator-pfelement-version": "1.1.0"
 }

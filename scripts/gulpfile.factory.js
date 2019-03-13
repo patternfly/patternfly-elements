@@ -1,7 +1,7 @@
 module.exports = function factory({
   elementName,
   className,
-  precompile = []
+  prebundle = []
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
 
@@ -48,7 +48,7 @@ module.exports = function factory({
   // Compile the sass into css, compress, autoprefix
   task("compile:sass", () => {
     return (
-      src("*.{scss,css}", {
+      src(`${elementName}.{scss,css}`, {
         cwd: paths.source
       })
         .pipe(sourcemaps.init())
@@ -94,7 +94,7 @@ module.exports = function factory({
   task("fallback:css", () => {
     const classRegex = new RegExp(`\.${elementName}__(\w+)(.*){`, "gi");
     return (
-      src(["*.css"], {
+      src([`${elementName}.css`], {
         cwd: paths.compiled
       })
         .pipe(replace(/,\s+\:/g, ",\n:"))
@@ -157,7 +157,7 @@ module.exports = function factory({
   };
 
   task("merge", () => {
-    return src("**/*.js", {
+    return src(`${elementName}.js`, {
       cwd: paths.source
     })
       .pipe(
@@ -302,7 +302,7 @@ module.exports = function factory({
       "fallback:css",
       "minify:css",
       "merge",
-      ...precompile,
+      ...prebundle,
       "compile",
       "bundle"
     )

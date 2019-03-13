@@ -15,42 +15,82 @@
           '../../../themes/cp-theme/cp-theme.umd.js',
           '../pfe-content-set.umd.js',
           '../../pfe-tabs/pfe-tabs.umd.js',
-          '../../pfe-accordion/pfe-accordion.umd.js'
+          '../../pfe-accordion/pfe-accordion.umd.js',
+          '../../pfe-cta/pfe-cta.umd.js'
         ]);
     </script>
     <noscript>
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
+    <style>
+      h1, h2 {
+        margin-bottom: .3em;
+      }
+      h2 {
+        color: var(--pfe-theme--color--ui-accent, #c00);
+        font-size: 1.2em;
+        text-transform: uppercase;
+      }
+      h2 a {
+        color: inherit;
+        cursor: pointer;
+      }
+      h3 {
+        font-size: 1.4em;
+        color: var(--pfe-theme--color--ui-complement, #464646);
+      }
+      p {
+        margin-top: 0 !important;
+      }
+      hr {
+        margin: 40px 10px;
+        border-color: transparent;
+        border-bottom-color: #ccc;
+      }
+    </style>
 
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
   </head>
   <body unresolved>
     <h1>&lt;pfe-content-set&gt;</h1>
-    <h2><em>On mobile ( &lt;768px ), all examples should render as an Accordion.</em></h2>
-    <hr/>
-
-    <h2>On desktop, example below should render as accordion (default style):</h2>
-    <h3>Container max: 500px</h3>
-    <div style="max-width: 500px">
+    <p>This component will render your content in either an <a href="#accordions">accordion</a> or a <a href="#tabs">tabset</a> depending on the available space.</p>
+    <p>Note: <em>On mobile ( &lt;768px ), all examples should render as an Accordion.</em></p>
+    <br>
+    <h2><a name="accordions">Accordions</a></h2>
+    <p>On desktop at sizes below 768px, this component should render as an accordion.</p>
+    <h3>Accordion: default</h3>
+    <p><strong>Container max:</strong> 500px</p>
+    <div style="max-width: 500px; border: 1px dashed #ccc;">
       <pfe-content-set>
         <pfe-content-set-group>
           <h2 pfe-heading>Heading 1</h2>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
+          <pfe-cta priority="primary">
+            <a href="#">Primary</a>
+          </pfe-cta>
         </pfe-content-set-group>
         <pfe-content-set-group>
           <h2 pfe-heading>Heading 2</h2>
-          <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam volu et jen, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <article>
+            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam volu et jen, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <pfe-cta priority="primary">
+              <a href="#">Primary</a>
+            </pfe-cta>
+          </article>
         </pfe-content-set-group>
         <pfe-content-set-group>
           <h2 pfe-heading>Heading 3</h2>
           <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+          <pfe-cta priority="primary">
+              <a href="#">Primary</a>
+            </pfe-cta>
         </pfe-content-set-group>
       </pfe-content-set>
     </div>
     <hr>
-    <h2>On desktop, example below should render as accordion (primary style):</h2>
-    <h3>Container max: 500px</h3>
-    <div style="max-width: 500px">
+    <h3>Accordion: Primary variant</h3>
+    <p><strong>Container max:</strong> 600px</p>
+    <div style="max-width: 600px; border: 1px dashed #ccc;">
       <pfe-content-set pfe-variant="primary">
         <pfe-content-set-group>
           <h2 pfe-heading>Heading 1</h2>
@@ -69,9 +109,9 @@
       </pfe-content-set>
     </div>
     <hr>
-    <h2>On desktop, example below should render as accordion (secondary style):</h2>
-    <h3>Container max: 500px</h3>
-    <div style="max-width: 500px">
+    <h3>Accordion: Secondary variant</h3>
+    <p><strong>Container max:</strong> 700px</p>
+    <div style="max-width: 700px; border: 1px dashed #ccc;">
       <pfe-content-set pfe-variant="secondary">
         <pfe-content-set-group>
           <h2 pfe-heading>Heading 1</h2>
@@ -91,18 +131,29 @@
       </pfe-content-set>
     </div>
     <hr>
-    <h2>On desktop, example below should render as tabs (default style):</h2>
-    <div>
+    <h2><a name="tabs">Tabs</a></h2>
+    <p>On desktop, example below should render as tabs (default style).</p>
+    <h3>Tabs: default</h3>
+    <p><strong>Container max:</strong> 800px</p>
+    <div style="max-width: 800px; border: 1px dashed #ccc;">
       <pfe-content-set >
           <pfe-content-set-group>
             <h2 pfe-heading>Heading 1 Foo</h2>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
+            <article>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
+              <pfe-cta priority="secondary">
+                <a href="#">Primary</a>
+              </pfe-cta>
+            </article>
           </pfe-content-set-group>
           <pfe-content-set-group>
             <h2 pfe-heading>Heading 2</h2>
             <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <pfe-cta priority="secondary">
+              <a href="#">Primary</a>
+            </pfe-cta>
           </pfe-content-set-group>
           <pfe-content-set-group>
             <h2 pfe-heading>Heading 3</h2>
@@ -112,8 +163,9 @@
       </pfe-content-set>
     </div>
     <hr>
-    <h2>On desktop, example below should render as tabs (primary style):</h2>
-    <div>
+    <h3>Tabs: Primary variant</h3>
+    <p><strong>Container max:</strong> 900px</p>
+    <div style="max-width: 900px; border: 1px dashed #ccc;">
       <pfe-content-set pfe-variant="primary">
           <pfe-content-set-group>
             <h2 pfe-heading>Heading 1 Bar</h2>
@@ -133,8 +185,8 @@
       </pfe-content-set>
     </div>
     <hr>
-    <h2>On desktop, example below should render as tabs (secondary style):</h2>
-    <div>
+    <h3>Tabs: Secondary variant</h3>
+    <div style="border: 1px dashed #ccc;">
       <pfe-content-set pfe-variant="secondary">
           <pfe-content-set-group>
             <h2 pfe-heading>Heading 1</h2>
@@ -153,9 +205,11 @@
           </pfe-content-set-group>
       </pfe-content-set>
     </div>
-<hr>
-    <h2>On desktop, example below should render as vertical tabs (default style):</h2>
-    <div>
+    <hr>
+    <p>On desktop, example below should render as vertical tabs (default style).</p>
+    <h3>Vertical tabs: Default</h3>
+    <p><strong>Container max:</strong> 800px</p>
+    <div style="max-width: 800px; border: 1px dashed #ccc;">
       <pfe-content-set vertical >
           <pfe-content-set-group>
             <h2 pfe-heading>Heading 1</h2>
@@ -174,9 +228,10 @@
           </pfe-content-set-group>
       </pfe-content-set>
     </div>
-<hr>
-    <h2>On desktop, example below should render as vertical tabs (primary style):</h2>
-    <div>
+    <hr>
+    <h3>Vertical tabs: Primary variant</h3>
+    <p><strong>Container max:</strong> 900px</p>
+    <div style="max-width: 900px; border: 1px dashed #ccc;">
       <pfe-content-set vertical pfe-variant="primary">
           <pfe-content-set-group>
             <h2 pfe-heading>Heading 1</h2>
@@ -196,8 +251,8 @@
       </pfe-content-set>
     </div>
     <hr>
-    <h2>On desktop, example below should render as vertical tabs (secondary style):</h2>
-    <div>
+    <h3>Vertical tabs: Secondary variant</h3>
+    <div style="border: 1px dashed #ccc;">
       <pfe-content-set vertical pfe-variant="secondary">
           <pfe-content-set-group>
             <h2 pfe-heading>Heading 1</h2>

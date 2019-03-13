@@ -72,13 +72,14 @@ class PfeContentSet extends PFElement {
       tempGrouping.forEach(group => {
         const tempGroup = {
           heading: group.querySelector("[pfe-heading]"),
-          body: [...group.querySelectorAll(":not([pfe-heading])")]
+          body: [...group.children].filter(child => {
+            return !child.hasAttribute("pfe-heading");
+          })
         };
 
         this.groupings.push(tempGroup);
       });
 
-      // this._observer.disconnect();
       this.render();
     });
 

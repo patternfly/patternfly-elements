@@ -1,5 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: tab;
+
 /// ===========================================================================
 /// Component Specific SASS Vars
 /// ===========================================================================
@@ -22,10 +24,10 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   margin: 0 0 -1px;
 
   // Padding
-  padding-top: #{pfe-var(container-padding)};
-  padding-right: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__tab--PaddingRight-factor});;
+  padding-top:    #{pfe-var(container-padding)};
+  padding-right:  calc(#{pfe-var(container-padding)} * #{$pfe-tabs__tab--PaddingRight-factor});;
   padding-bottom: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__tab--PaddingBottom-factor});
-  padding-left: #{pfe-var(container-padding)};
+  padding-left:   #{pfe-var(container-padding)};
   // Border
   border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
   border-bottom: 0;
@@ -40,7 +42,7 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 }
 
 :host([aria-selected="true"]) {
-  --pfe-tabs--main:         #{pfe-color(surface--lightest)};
+  --pfe-tabs--main: #{pfe-color(surface--lightest)};
 
   // Border
   border-color: #{pfe-color(surface--border)};
@@ -53,13 +55,13 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   left: auto;
 
   display: var(--pfe-tabs__indicator--Display, block); // Exposing this for themability. Use `none` to not show at all
-  height: var(--pfe-tabs__indicator--Height, 4px); // Exposing this for themability
-  width: var(--pfe-tabs__indicator--Width, 22px); // Exposing this for themability
+  height:  var(--pfe-tabs__indicator--Height, 4px); // Exposing this for themability
+  width:   var(--pfe-tabs__indicator--Width, 22px); // Exposing this for themability
 
   background-color: #{pfe-color(surface--border--darkest)};
 }
 
-// Hover state for inactive tabs.
+// Hover state for inactive tabs
 :host(:hover) .indicator {
   background-color: var(--pfe-tabs--link);
 }
@@ -79,8 +81,7 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 /// HORIZONTAL TAB VARIANTS
 /// ===========================================================================
 
-// Horizontal primary sets.
-
+// Horizontal primary sets
 :host([pfe-variant="primary"]) {
   text-align: center;
   padding: 0 calc(#{pfe-var(container-padding)} / 3) #{pfe-var(container-padding)};
@@ -107,7 +108,7 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 :host([pfe-variant="secondary"]) {
   text-align: center;
   padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 2.75);
-  border: 1px solid $pfe-global--color--black-soft;
+  border: 1px solid #{pfe-color(surface--border--darkest)};
   margin-right: 2%;
 
   .indicator {
@@ -118,8 +119,8 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 // Horizontal secondary sets.
 
 :host([pfe-variant="secondary"][aria-selected="true"]) {
-  background-color: $pfe-global--color--black-soft;
-  color: #ffffff;
+  background-color: #{pfe-color(surface--darkest)};
+  color: #{pfe-color(surface--darkest--text)};
 
   .indicator {
     display: block;
@@ -128,20 +129,20 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
     height: 0;
     left: 50%;
     transform: translateX(-50%);
-    border-left: #{pfe-var(container-spacer)} solid transparent;
+    border-left:  #{pfe-var(container-spacer)} solid transparent;
     border-right: #{pfe-var(container-spacer)} solid transparent;
-    border-top: #{pfe-var(container-spacer)} solid $pfe-global--color--black-soft;
+    border-top:   #{pfe-var(container-spacer)} solid $pfe-global--color--black-soft;
     background-color: transparent;
   }
 }
 
 :host([pfe-variant="secondary"][aria-selected="false"]) {
-  color: $pfe-color--ui-base;
+  color: #{pfe-color(ui-base)};
 }
 
 :host([pfe-variant="secondary"]:hover) {
-  background-color: $pfe-global--color--black-soft;
-  color: #ffffff;
+  background-color: #{pfe-color(surface--darkest)};
+  color: #{pfe-color(surface--darkest--text)};
 }
 
 /// ===========================================================================
@@ -155,12 +156,12 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   padding-right: #{pfe-var(container-padding)};
 
   .indicator {
-    left: auto;
+    left:  auto;
     right: 0;
-    top: 0;
+    top:   0;
     display: var(--pfe-tabs__indicator--Display, block); // Exposing this for themability. Use `none` to not show at all
-    height: var(--pfe-tabs__indicator--Height, 22px); // Exposing this for themability
-    width: var(--pfe-tabs__indicator--Width, 4px); // Exposing this for themability
+    height:  var(--pfe-tabs__indicator--Height, 22px); // Exposing this for themability
+    width:   var(--pfe-tabs__indicator--Width, 4px); // Exposing this for themability
   }
 }
 
@@ -170,16 +171,14 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
 // Vertical secondary sets.
 
-:host([vertical][pfe-variant="secondary"][aria-selected="true"]) {
-  .indicator {
-    left: 99%;
-    top: 50%;
-    transform: translateY(-50%);
-    border-top: #{pfe-var(container-spacer)} solid transparent;
-    border-left: #{pfe-var(container-spacer)} solid  $pfe-global--color--black-soft;
-    border-bottom: #{pfe-var(container-spacer)} solid transparent;
-    background-color: transparent;
-  }
+:host([vertical][pfe-variant="secondary"][aria-selected="true"]) .indicator {
+  left: 99%;
+  top:  50%;
+  transform: translateY(-50%);
+  border-top:     #{pfe-var(container-spacer)} solid transparent;
+  border-left:    #{pfe-var(container-spacer)} solid  $pfe-global--color--black-soft;
+  border-bottom:  #{pfe-var(container-spacer)} solid transparent;
+  background-color: transparent;
 }
 
 ::slotted(h1),
@@ -188,8 +187,8 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 ::slotted(h4),
 ::slotted(h5),
 ::slotted(h6) {
-  font-size: var(--pfe-theme--font-size);
-  font-weight: var(--pfe-theme--font-weight--normal, 500);
+  font-size:   #{pfe-var(font-size)};
+  font-weight: #{pfe-var(font-weight--normal)};
   margin: 0;
   user-select: none;
 }

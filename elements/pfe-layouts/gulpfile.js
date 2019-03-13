@@ -41,7 +41,7 @@ const postcssCustomProperties = require("postcss-custom-properties");
 
 // Compile the sass into css, compress, autoprefix
 task("compile:sass", () => {
-  return src("*.{scss,css}", {
+  return src("pfe-{base,layouts}.scss", {
       cwd: paths.source
     })
     .pipe(sourcemaps.init())
@@ -65,7 +65,7 @@ task("compile:sass", () => {
 });
 
 task("minify:css", () => {
-  return src(["*.css"], {
+  return src(["pfe-{base,layouts}.css"], {
       cwd: paths.compiled
     })
     // Minify the file

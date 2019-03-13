@@ -65,21 +65,9 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 /// TAB VARIANTS
 /// ===========================================================================
 
-:host([pfe-variant="primary"]) {
-  .tabs {
-    border-bottom: transparent;
-    border-right: transparent;
-  }
-}
 :host([vertical][pfe-variant="primary"]) {
   align-items: flex-start;
 } 
-
-:host([pfe-variant="secondary"]) {
-  .tabs {
-    border-bottom: transparent;
-  }
-}
 
 :host([vertical][pfe-variant="secondary"]) {
   .tabs {

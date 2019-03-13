@@ -47,17 +47,17 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   border-bottom: 0;
 }
 
-.indicator {
-  position: absolute;
-  bottom: 12px;
-  left: auto;
+// .indicator {
+//   position: absolute;
+//   bottom: 12px;
+//   left: auto;
 
-  display: var(--pfe-tabs__indicator--Display, block); // Exposing this for themability. Use `none` to not show at all
-  height: var(--pfe-tabs__indicator--Height, 4px); // Exposing this for themability
-  width: var(--pfe-tabs__indicator--Width, 22px); // Exposing this for themability
+//   display: var(--pfe-tabs__indicator--Display, block); // Exposing this for themability. Use `none` to not show at all
+//   height: var(--pfe-tabs__indicator--Height, 4px); // Exposing this for themability
+//   width: var(--pfe-tabs__indicator--Width, 22px); // Exposing this for themability
 
-  background-color: #{pfe-color(surface--border--darkest)};
-}
+//   background-color: #{pfe-color(surface--border--darkest)};
+// }
 
 // Hover state for inactive tabs.
 :host(:hover) .indicator {
@@ -65,10 +65,6 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 }
 
 // Active tab styles
-:host([aria-selected="true"]) .indicator,
-:host([aria-selected="true"]:hover) .indicator {
-  background-color: var(--pfe-tabs--link);
-}
 
 :host(:focus),
 :host(:focus-visible) {
@@ -83,60 +79,40 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
 :host([pfe-variant="primary"]) {
   text-align: center;
-  padding: 0 calc(#{pfe-var(container-padding)} / 3) #{pfe-var(container-padding)};
-  margin-right: 2%;
-
-  .indicator {
-    width: 100%;
-    left: 0;
-  }
+  padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 1.5);
 }
 
 :host([pfe-variant="primary"][aria-selected="true"]) {
   border: transparent;
+  border-bottom: 4px solid #EE0000;
 }
 
 :host([pfe-variant="primary"][aria-selected="false"]) {
   border: transparent;
-
-  .indicator {
-    display: none;
-  }
 }
 
 :host([pfe-variant="secondary"]) {
   text-align: center;
-  padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 2.75);
-  border: 1px solid $pfe-global--color--black-soft;
-  margin-right: 2%;
-
-  .indicator {
-    display: none;
-  }
+  padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 1.5);
+  background-color: #f0f0f0;
 }
 
 // Horizontal secondary sets.
 
 :host([pfe-variant="secondary"][aria-selected="true"]) {
-  background-color: $pfe-global--color--black-soft;
-  color: #ffffff;
-
-  .indicator {
-    display: block;
-    bottom: -33%;
-    width: 0;
-    height: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: #{pfe-var(container-spacer)} solid transparent;
-    border-right: #{pfe-var(container-spacer)} solid transparent;
-    border-top: #{pfe-var(container-spacer)} solid $pfe-global--color--black-soft;
-    background-color: transparent;
-  }
+  background-color: #fff;
+  border-top: 4px solid #EE0000;
 }
 
 :host([pfe-variant="secondary"][aria-selected="false"]) {
-  color: $pfe-color--ui-base;
+  color: #252525;
+  border-right: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
+  border-bottom: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
+
+}
+
+:host([pfe-variant="secondary"][aria-selected="false"]):last-child {
+  border-right: 0;
 }
 
 :host([pfe-variant="secondary"]:hover) {
@@ -150,37 +126,22 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
 // Vertical primary sets.
 
-:host([vertical][pfe-variant="primary"]) {
-  text-align: right;
-  padding-right: #{pfe-var(container-padding)};
-
-  .indicator {
-    left: auto;
-    right: 0;
-    top: 0;
-    display: var(--pfe-tabs__indicator--Display, block); // Exposing this for themability. Use `none` to not show at all
-    height: var(--pfe-tabs__indicator--Height, 22px); // Exposing this for themability
-    width: var(--pfe-tabs__indicator--Width, 4px); // Exposing this for themability
-  }
+:host([vertical]) {
+  text-align: left;
+  padding-left: calc(#{pfe-var(container-padding)} * .75);
 }
 
 :host([vertical][pfe-variant="primary"][aria-selected="true"]) {
-  border: transparent !important;
+  border-color-top: transparent !important;
+  border-right: 4px solid #EE0000 !important;
+}
+
+:host([vertical][pfe-variant="secondary"][aria-selected="true"]) {
+  // border: transparent;
+  border-left: 4px solid #EE0000 !important;
 }
 
 // Vertical secondary sets.
-
-:host([vertical][pfe-variant="secondary"][aria-selected="true"]) {
-  .indicator {
-    left: 99%;
-    top: 50%;
-    transform: translateY(-50%);
-    border-top: #{pfe-var(container-spacer)} solid transparent;
-    border-left: #{pfe-var(container-spacer)} solid  $pfe-global--color--black-soft;
-    border-bottom: #{pfe-var(container-spacer)} solid transparent;
-    background-color: transparent;
-  }
-}
 
 ::slotted(h2) {
   font-size: var(--pfe-theme--font-size);

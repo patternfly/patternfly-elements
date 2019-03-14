@@ -75,9 +75,9 @@ h1, h2, h3, h4, h5, h6 {
       }
     }
 }
-:host([color="lighter"][aria-expanded="true"]),
-:host([color="lightest"][aria-expanded="true"]) {
-  @include pfe-trigger-color-lightest-expanded;
+:host([color="lighter"]),
+:host([color="lightest"]) {
+  @include pfe-trigger-color-lightest;
 }
 
 
@@ -93,9 +93,9 @@ h1, h2, h3, h4, h5, h6 {
     @include pfe-trigger-color-darkest; 
   }
 }
-:host([on="dark"][aria-expanded="true"]),
-:host([color="darker"][aria-expanded="true"]),
-:host([color="darkest"][aria-expanded="true"]) {
-  @include pfe-trigger-color-dark-expanded;
+:host([on="dark"]),
+:host([color="darker"]),
+:host([color="darkest"]) {
+  @include pfe-trigger-color-darkest;
 }
 

@@ -234,8 +234,8 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
 
 @mixin pfe-accordion-header {
   display: block;
-  //background: var(--pfe-expanded--main);
-  //color: var(--pfe-expanded--aux);
+  //background: var(--pfe-accordion--main);
+  //color: var(--pfe-accordion--aux);
 
   button {
     -webkit-appearance: button;
@@ -246,36 +246,36 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
 }
 
 @mixin pfe-trigger-button($theme: light, $align: left) {
-    --pfe-expanded--main:               transparent;
-    --pfe-expanded--aux:                #{pfe-color(surface--lightest--text)};
-    --pfe-expanded--focus:              #{pfe-color(surface--lightest--link--focus)};
-    --pfe-expanded--border-left:        3px solid transparent;
-    --pfe-expanded--border-right:       1px solid transparent;
-    --pfe-expanded--border-top-bottom:  0px;
-    --pfe-expanded--border-focus-color: blue;
+    --pfe-accordion--main:               transparent;
+    --pfe-accordion--aux:                #{pfe-color(surface--lightest--text)};
+    --pfe-accordion--focus:              #{pfe-color(surface--lightest--link--focus)};
+    --pfe-accordion--border-left:        3px solid transparent;
+    --pfe-accordion--border-right:       1px solid transparent;
+    --pfe-accordion--border-top-bottom:  0px;
+    --pfe-accordion--border-focus-color: #{pfe-color(surface--accent)};;
 
     margin: 0;
     width: 100%;
     height: auto;
     font-family: inherit;
-    font-size: #{pfe-var(font-size * 1.1)};
+    font-size: 16px; //calc(#{pfe-var(font-size)} * 1.1);
     font-weight: 700;
     line-height: #{pfe-var(line-height)};
     text-align: left;
     cursor: pointer;
-    color: var(--pfe-expanded--aux);
+    color: var(--pfe-accordion--aux);
     z-index: 1;
     position: relative;
-    background: var(--pfe-expanded--main);
-    border-left:   var(--pfe-expanded--border-left);
-    border-right:  var( --pfe-expanded--border-right);
-    border-bottom: var(--pfe-expanded--border-top-bottom);
-    border-top:    var(--pfe-expanded--border-top-bottom);
+    background: var(--pfe-accordion--main);
+    border-left:   var(--pfe-accordion--border-left);
+    border-right:  var( --pfe-accordion--border-right);
+    border-bottom: var(--pfe-accordion--border-top-bottom);
+    border-top:    var(--pfe-accordion--border-top-bottom);
 
     &:focus {
         outline: none;
-        border-left-color:  var(--pfe-expanded--border-focus-color);
-        border-right-color: var(--pfe-expanded--border-focus-color);
+        border-left-color:  var(--pfe-accordion--border-focus-color);
+        border-right-color: var(--pfe-accordion--border-focus-color);
         z-index: 2;
     }
 
@@ -305,44 +305,44 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
 }
 
 @mixin pfe-trigger-color-light {
-    --pfe-expanded--main:         transparent;
-    --pfe-expanded--aux:          #{pfe-color(surface--lightest--text)};
-    --pfe-expanded--focus:        #{pfe-color(surface--lightest--link--focus)};
-    --pfe-expanded--border-top-bottom: #{pfe-color(surface--border--lightest)} solid 1px;
+    --pfe-accordion--main:         transparent;
+    --pfe-accordion--aux:          #{pfe-color(surface--lightest--text)};
+    --pfe-accordion--focus:        #{pfe-color(surface--lightest--link--focus)};
+    --pfe-accordion--border-top-bottom: #{pfe-color(surface--border--lightest)} solid 1px;
 }
 
 @mixin pfe-trigger-color-light-expanded {
-    //--pfe-expanded--main:              #{pfe-color(surface--lightest)};
-    //--pfe-expanded--aux:               #{pfe-color(surface--lightest--text)};
-    //--pfe-expanded--focus:             #{pfe-color(surface--lightest--link--focus)};
-    --pfe-expanded--border-left:  solid 3px #{pfe-color(ui-link)};
+    --pfe-accordion--main:              #{pfe-color(surface--lightest)};
+    --pfe-accordion--aux:               #{pfe-color(surface--lightest--text)};
+    --pfe-accordion--focus:             #{pfe-color(surface--lightest--link--focus)};
+    --pfe-accordion--border-left:  solid 3px #{pfe-color(ui-link)};
 }
 @mixin pfe-trigger-color-lightest {
-  --pfe-expanded--main:         #{pfe-color(surface--lightest)};
-  --pfe-expanded--aux:          #{pfe-color(surface--lightest--text)};
-  --pfe-expanded--focus:        #{pfe-color(surface--lightest--link--focus)};
-  --pfe-expanded--border-top-bottom: #{pfe-color(surface--border--lightest)} solid 1px;
+  --pfe-accordion--main:         #{pfe-color(surface--lightest)};
+  --pfe-accordion--aux:          #{pfe-color(surface--lightest--text)};
+  --pfe-accordion--focus:        #{pfe-color(surface--lightest--link--focus)};
+  --pfe-accordion--border-top-bottom: #{pfe-color(surface--border--lightest)} solid 1px;
 }
 
 //// DARK
 
 @mixin pfe-trigger-color-dark {
-    --pfe-expanded--main:         transparent;
-    --pfe-expanded--aux:          #{pfe-color(surface--darkest--text)};
-    --pfe-expanded--focus:        #{pfe-color(surface--darker--link--focus)};
+    --pfe-accordion--main:         transparent;
+    --pfe-accordion--aux:          #{pfe-color(surface--darkest--text)};
+    --pfe-accordion--focus:        #{pfe-color(surface--darker--link--focus)};
 }
 
 @mixin pfe-trigger-color-dark-expanded {
-    //--pfe-expanded--main:         #{pfe-color(surface--darker)};
-    //--pfe-expanded--aux:          #{pfe-color(surface--darkest--text)};
-    //--pfe-expanded--focus:        #{pfe-color(surface--darker--link--focus)};
-    --pfe-expanded--border-left:  solid 3px #{pfe-color(surface--lightest)};
+    --pfe-accordion--main:         #{pfe-color(surface--darker)};
+    --pfe-accordion--aux:          #{pfe-color(surface--darkest--text)};
+    --pfe-accordion--focus:        #{pfe-color(surface--darker--link--focus)};
+    --pfe-accordion--border-left:  solid 3px #{pfe-color(surface--lightest)};
 }
 
 @mixin pfe-trigger-color-darkest {
-    --pfe-expanded--main:         #{pfe-color(surface--darker)};
-    --pfe-expanded--aux:          #{pfe-color(surface--darkest--text)};
-    --pfe-expanded--focus:        #{pfe-color(surface--darker--link--focus)};
+    --pfe-accordion--main:         #{pfe-color(surface--darker)};
+    --pfe-accordion--aux:          #{pfe-color(surface--darkest--text)};
+    --pfe-accordion--focus:        #{pfe-color(surface--darker--link--focus)};
 }
 
 /// ===========================================================================
@@ -402,7 +402,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
   padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
 
   @media (min-width: #{pfe-breakpoint(sm)}) {
-    padding: #{pfe-local(Padding)};
+     padding: #{pfe-local(Padding)};
   }
 }
 
@@ -422,7 +422,6 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
 @mixin pfe-accordion-panel-expanded-style($theme: light) {
   border-right: 1px solid transparent;
   border-left: 3px solid transparent;
-  color: pink !important;
   @if $theme == dark {
     border-left-color: #{pfe-color(surface--darkest--text)};
     background: #{pfe-color(surface--darker)};
@@ -444,5 +443,5 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
 }
 
 @mixin pfe-accordion-panel-container-inset  {
-  padding: 0 #{pfe-var(container-spacer)};
+  padding: 0 #{pfe-var(container-spacer)} #{pfe-var(container-spacer)};
 }

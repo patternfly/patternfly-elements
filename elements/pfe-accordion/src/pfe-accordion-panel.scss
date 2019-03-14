@@ -1,12 +1,19 @@
- 
+@import "../../pfe-sass/pfe-sass";
+
+/// ===========================================================================
+/// DEFAULT ACCORDION PANEL
+/// ===========================================================================
+
 :host {
    @include pfe-accordion-panel;
+
 }
 
 
 
 :host([expanded]) {
    @include pfe-accordion-panel-expanded;
+   @include pfe-accordion-panel-expanded-style;
  }
  
 

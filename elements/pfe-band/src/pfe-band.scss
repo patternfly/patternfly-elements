@@ -99,46 +99,41 @@ $LOCAL: band;
   --pfe-band--Padding:   calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
 }
 
-@each $slot in (default, header, footer, aside) {
-  $slot-name: $slot;
-  $grid-area: "body";
-  @if $slot != default {
-    $slot-name: "pfe-band--#{$slot-name}";
-    $grid-area: $slot;
-  }
-  .pfe-band__#{$grid-area} {
-    // Set up the flex styles for each region
-    display:     flex;
-    flex-flow:   column nowrap;
+.pfe-band__body {
+    display: block;
+}
+.pfe-band__header,
+.pfe-band__aside,
+.pfe-band__footer {
+    display: flex;
+    flex-flow: column nowrap;
     align-items: flex-start;
-    // Grid support styles
-    @supports (display: grid) {
-      grid-area: #{$grid-area};
-      // Set up the internal grid system for each slot
-      display: grid;
-      grid-row-gap: #{pfe-local(gutter--vertical)};
-      grid-column-gap: #{pfe-local(gutter--horizontal)};
-      grid-template-columns: #{pfe-local(
-        $cssvar: layout,
-        $region: $grid-area
-      )};
+}
+
+@supports (display: grid) {
+    .pfe-band__header,
+    .pfe-band__aside,
+    .pfe-band__footer {
+        display: grid;
+        grid-row-gap: var(--pfe-band--gutter--vertical);
+        grid-column-gap: var(--pfe-band--gutter--horizontal);
     }
-  }
-  @include pfe-slot($slot-name, ":not(:last-child)") {
-    margin-bottom: #{pfe-local(gutter--vertical)};
-    @supports (display: grid) {
-      margin-bottom: 0;
+    .pfe-band__header {
+        grid-area: header;
+        grid-template-columns: var(--pfe-band__header--layout);
     }
-  }
-  @include pfe-slot($slot-name, "> *") {
-    margin: 0;
-  }
-  @include pfe-slot($slot-name, "> *:not(:last-child)") {
-    margin-bottom: #{pfe-local(gutter--vertical)};
-    @supports (display: grid) {
-      margin-bottom: 0;
+    .pfe-band__footer {
+        grid-area: footer;
+        grid-template-columns: var(--pfe-band__footer--layout);
     }
-  }
+    .pfe-band__aside {
+        grid-area: aside;
+        grid-template-columns: var(--pfe-band__aside--layout);
+    }
+    .pfe-band__body {
+        grid-area: body;
+        grid-template-columns: var(--pfe-band__body--layout);
+    }
 }
 
 .pfe-band {

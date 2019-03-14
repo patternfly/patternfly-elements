@@ -48,7 +48,7 @@ module.exports = function factory({
   // Compile the sass into css, compress, autoprefix
   task("compile:styles", () => {
     return (
-      src(`${elementName}*.{scss,css}`, {
+      src("*.{scss,css}", {
         cwd: paths.source
       })
         .pipe(sourcemaps.init())

@@ -63,11 +63,19 @@ class PfeNavigation extends PFElement {
     const mobile = this.shadowRoot.querySelector(".pfe-navigation__utility--mobile");
     let copies = {};
 
+    // Add on dark to all the navigation items inside this wrapper
+    [...this.querySelectorAll("pfe-navigation-item")].map(item => item.setAttribute("on", "dark"));
+    [...this.shadowRoot.querySelectorAll("pfe-navigation-item")].map(item => item.setAttribute("on", "dark"));
+
     ["logo", "main", "search", "login", "language", "site-switcher"].map(slot => {
       this[slot] = this.querySelector(`[slot="${slot}"]`);
       if(this[slot]) {
         copies[slot] = this[slot].cloneNode(true);
-        copies[slot].setAttribute("pfe-menu", "mobile");
+        if(copies[slot].tagName === PfeNavigationItem.tag.toUpperCase()) {
+          copies[slot].setAttribute("pfe-menu", "mobile");
+        } else {
+          [...copies[slot].querySelectorAll("pfe-navigation-item")].map(item => item.setAttribute("pfe-menu", "mobile"));
+        }
       }
     });
 

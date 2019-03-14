@@ -59,9 +59,9 @@
       </div>
 
       <!-- Search -->
-      <pfe-navigation-item on="dark" slot="search" pfe-icon="search">
+      <pfe-navigation-item slot="search" pfe-icon="search">
         <a slot="trigger" href="#url-to-search-page">Search</a>
-        <p slot="tray">
+        <p slot="tray" hidden>
           <a>Search</a>
         </p>
       </pfe-navigation-item>
@@ -69,7 +69,7 @@
       <nav slot="main" id="rh-main-nav" aria-label="Main">
         <ul>
           <li>
-            <pfe-navigation-item on="dark" category="Products">
+            <pfe-navigation-item category="Products">
               <a slot="trigger" href="/products">Products</a>
               <div slot="tray" hidden>
                 <div tray-region="main" class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
@@ -113,7 +113,7 @@
             </pfe-navigation-item>
           </li>
           <li>
-            <pfe-navigation-item on="dark">
+            <pfe-navigation-item>
               <a slot="trigger" href="/solutions">Solutions</a>
               <div slot="tray" hidden>
                 <pfe-link-list role="region">
@@ -129,12 +129,12 @@
             </pfe-navigation-item>
           </li>
           <li>
-            <pfe-navigation-item on="dark">
+            <pfe-navigation-item>
               <a slot="trigger" href="#">Services &amp; support</a>
             </pfe-navigation-item>
           </li>
           <li>
-            <pfe-navigation-item on="dark">
+            <pfe-navigation-item>
               <a href="#">Resources</a>
             </pfe-navigation-item>
           </li>
@@ -142,7 +142,7 @@
       </nav>
 
       <!-- Account log in toggle & menu-->
-      <pfe-navigation-item on="dark" slot="login" pfe-icon="user">
+      <pfe-navigation-item slot="login" pfe-icon="user">
         <a slot="trigger" href="#url-to-login-landing-page">Log in</a>
         <div slot="tray" hidden>
           <div tray-region="main">
@@ -169,17 +169,17 @@
       </pfe-navigation-item>
 
       <!-- Language toggle & menu -->
-      <pfe-navigation-item on="dark" slot="language" pfe-icon="globe">
+      <pfe-navigation-item slot="language" pfe-icon="globe">
         <a slot="trigger" href="#url-to-language-page">English</a>
-        <div slot="tray">
+        <div slot="tray" hidden>
           custom code to do this thing
         </div>
       </pfe-navigation-item>
 
       <!-- Apps & Websites -->
-      <pfe-navigation-item on="dark" slot="site-switcher" pfe-icon="bento" pfe-top-link>
+      <pfe-navigation-item slot="site-switcher" pfe-icon="bento" pfe-top-link>
         <a slot="trigger" href="url-to-rh-websites-page">Apps &amp; Websites</a>
-        <div slot="tray">
+        <div slot="tray" hidden>
           custom code to do this thing
         </div>
       </pfe-navigation-item>

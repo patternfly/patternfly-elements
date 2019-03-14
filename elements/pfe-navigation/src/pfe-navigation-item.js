@@ -167,15 +167,15 @@ class PfeNavigationItem extends PFElement {
 
     ["trigger", "tray"].forEach((slot) => {
       this[slot] = {
-        light:   this.querySelector(`[slot="${slot}"]`),
+        light:   [...this.querySelectorAll(`[slot="${slot}"]`)],
         shadow:  this.shadowRoot.querySelector(`.${this.tag}__${slot}`)
       };
     });
 
     // If the trigger and tray slots have not been assigned
     if(!this.trigger.light) {
-      // Get the first link and assign it to the trigger
-      this.trigger.light = this.querySelector("a");
+      // Get all child elements and assign them to the trigger
+      this.trigger.light = [...this.querySelectorAll("*:not([slot='tray'])")];
     }
   }
 
@@ -186,6 +186,11 @@ class PfeNavigationItem extends PFElement {
       // If the role attribute has not been provided, attach it to the trigger
       if (!this.trigger.shadow.hasAttribute("role")) {
         this.trigger.shadow.setAttribute("role", "button");
+        if(this.hasAttribute("pfe-menu")) {
+          this.trigger.shadow.setAttribute("pfe-menu", this.getAttribute("pfe-menu"));
+        } else {
+          this.trigger.shadow.setAttribute("pfe-menu", "desktop");
+        }
       }
 
       // Attach an on click listener
@@ -195,24 +200,33 @@ class PfeNavigationItem extends PFElement {
 
       // Remove the hidden attribute from the light DOM element
       if(this.tray.light) {
-        this.tray.light.removeAttribute("hidden");
+        this.tray.light.map(item => { item.removeAttribute("hidden") });
 
         // Initialize expanded to false
         this.expanded = false;
 
         // Get all elements inside the container
-        const trayRegions = [...this.tray.light.children];
-        // Loop through all tray elements and attach the grid areas for them
-        for (let i = 0; i < trayRegions.length; i++) {
-          if (trayRegions[i].hasAttribute("tray-region")) {
-            // Apply the grid area property to each region
-            trayRegions[i].style.gridArea = trayRegions[i].getAttribute("tray-region");
-            // Add additional border and padding properties to the footer
-            if(trayRegions[i].getAttribute("tray-region") === "footer") {
-              trayRegions[i].style.borderTop = "var(--pfe-navigation-item__tray--BorderTop)";
-              trayRegions[i].style.paddingTop = "var(--pfe-navigation-item--Padding--vertical)";
+        this.tray.light.map(trayItem => {
+          const trayRegions = [...trayItem.children];
+          // Loop through all tray elements and attach the grid areas for them
+          for (let i = 0; i < trayRegions.length; i++) {
+            if (trayRegions[i].hasAttribute("tray-region")) {
+              // Apply the grid area property to each region
+              trayRegions[i].style.gridArea = trayRegions[i].getAttribute("tray-region");
+              this.tray.shadow.setAttribute(`has-${trayRegions[i].getAttribute("tray-region")}`, true);
+              // Add additional border and padding properties to the footer
+              if(trayRegions[i].getAttribute("tray-region") === "footer") {
+                trayRegions[i].style.borderTop = "var(--pfe-navigation-item__tray--BorderTop)";
+                trayRegions[i].style.paddingTop = "var(--pfe-navigation-item--Padding--vertical)";
+              }
             }
           }
+        });
+
+        if(this.hasAttribute("pfe-menu")) {
+          this.tray.shadow.setAttribute("pfe-menu", this.getAttribute("pfe-menu"));
+        } else {
+          this.tray.shadow.setAttribute("pfe-menu", "desktop");
         }
 
         // Position the tray underneath the trigger element

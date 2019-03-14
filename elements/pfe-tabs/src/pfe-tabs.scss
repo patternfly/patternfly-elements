@@ -42,7 +42,7 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
   border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
 }
 
-:host([vertical][pfe-variant="secondary"]) .tabs {
+:host([vertical][pfe-variant="earth"]) .tabs {
   padding-left: 0;
 }
 
@@ -57,7 +57,7 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 /// TAB VARIANTS
 /// ===========================================================================
 
-:host([vertical][pfe-variant="secondary"]) {
+:host([vertical][pfe-variant="earth"]) {
   padding-top: #{pfe-var(container-padding)};
   .tabs {
     justify-content: flex-start; 
@@ -68,7 +68,7 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 /// TAB STYLES BASED ON SIBLINGS
 /// ===========================================================================
 
-:host([pfe-variant="secondary"]) {
+:host([pfe-variant="earth"]) {
   .tabs {
     padding-left: #{pfe-var(container-padding)};
 

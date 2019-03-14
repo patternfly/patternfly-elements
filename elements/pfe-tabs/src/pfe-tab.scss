@@ -65,22 +65,22 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 }
 
 /// ===========================================================================
-/// SECONDARY TAB VARIANTS
+/// EARTH TAB VARIANTS
 /// ===========================================================================
 
-:host([pfe-variant="secondary"]) {
+:host([pfe-variant="earth"]) {
   text-align: center;
   padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 1.5);
 }
 
-:host([pfe-variant="secondary"][aria-selected="false"]) {
+:host([pfe-variant="earth"][aria-selected="false"]) {
   border-left: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
   border-bottom: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
   border-top: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} #{pfe-color(surface--lighter)};
   --pfe-tabs--main: #{pfe-color(surface--lighter)};
 }
 
-:host([pfe-variant="secondary"][aria-selected="true"]) {
+:host([pfe-variant="earth"][aria-selected="true"]) {
   --pfe-tabs--main: #{pfe-color(surface--lightest)};
   border-top: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
   border-bottom: 0;
@@ -105,18 +105,18 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   border-right: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
 }
 
-// Vertical secondary sets.
+// Vertical earth sets.
 
-:host([vertical][pfe-variant="secondary"]) {
+:host([vertical][pfe-variant="earth"]) {
   border-top: 0;
 }
 
-:host([vertical][pfe-variant="secondary"][aria-selected="true"]) {
+:host([vertical][pfe-variant="earth"][aria-selected="true"]) {
   border-right: 0;
   border-left: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
 }
 
-:host([vertical][pfe-variant="secondary"][aria-selected="false"]) {
+:host([vertical][pfe-variant="earth"][aria-selected="false"]) {
   border-left: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} #{pfe-color(surface--lighter)};
   border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
   border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);

@@ -176,13 +176,13 @@ class PfeTabs extends PFElement {
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
       case "pfe-variant":
-        if (this.getAttribute("pfe-variant") === "primary") {
+        if (this.getAttribute("pfe-variant") === "wind") {
           this._allTabs().forEach(tab =>
-            tab.setAttribute("pfe-variant", "primary")
+            tab.setAttribute("pfe-variant", "wind")
           );
-        } else if (this.getAttribute("pfe-variant") === "secondary") {
+        } else if (this.getAttribute("pfe-variant") === "earth") {
           this._allTabs().forEach(tab =>
-            tab.setAttribute("pfe-variant", "secondary")
+            tab.setAttribute("pfe-variant", "earth")
           );
         }
         break;

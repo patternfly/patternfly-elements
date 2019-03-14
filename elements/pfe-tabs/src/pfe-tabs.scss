@@ -36,10 +36,6 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
   }
 }
 
-// :host([pfe-variant="secondary"]) .tabs ::slotted(pfe-tab[aria-selected="true"]) + .tabs ::slotted(pfe-tab[aria-selected="false"] {
-//   border-left: 0;
-// }
-
 /// ===========================================================================
 /// VERTICAL TABS
 /// ===========================================================================
@@ -68,10 +64,6 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 /// ===========================================================================
 /// TAB VARIANTS
 /// ===========================================================================
-
-:host([vertical][pfe-variant="primary"]) {
-  align-items: flex-start;
-} 
 
 :host([vertical][pfe-variant="secondary"]) {
   .tabs {

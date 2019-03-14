@@ -50,8 +50,7 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 }
 
 :host([aria-selected="true"]) {
-  --pfe-tabs--main:         #{pfe-color(surface--lightest)};
-  --pfe-tabs--aux:          #000000;
+  --pfe-tabs--aux: $pfe-color--black;
   // Border
   border-bottom: 0;
   border: transparent;
@@ -62,39 +61,36 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   border: transparent;
 }
 
+:host(:hover) {
+  color: $pfe-global--color--black-soft;
+}
+
+/// ===========================================================================
+/// SECONDARY TAB VARIANTS
+/// ===========================================================================
+
 :host([pfe-variant="secondary"]) {
   text-align: center;
   padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 1.5);
-  background-color: #f0f0f0;
 }
 
 :host([pfe-variant="secondary"][aria-selected="false"]) {
   border-left: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
   border-bottom: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
+  border-top: 4px solid #f0f0f0;
+  --pfe-tabs--main: #f0f0f0;
 }
 
-// Horizontal secondary sets.
-
 :host([pfe-variant="secondary"][aria-selected="true"]) {
-  background-color: #fff;
+  --pfe-tabs--main: #{pfe-color(surface--lightest)};
   border-top: 4px solid var(--pfe-tabs--highlight);
   border-bottom: 0;
 }
 
-:host([pfe-variant="secondary"][aria-selected="false"]) {
-  border-top: 4px solid #f0f0f0;
-}
-
-:host([pfe-variant="secondary"]:hover) {
-  // background-color: $pfe-global--color--black-soft;
-  color: $pfe-global--color--black-soft;
-}
 
 /// ===========================================================================
-/// VERTICAL TAB VARIANTS
+/// VERTICAL TAB ORIENTATION
 /// ===========================================================================
-
-// Vertical primary sets.
 
 :host([vertical]) {
   text-align: left;
@@ -106,22 +102,25 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 }
 
 :host([vertical][aria-selected="true"]) {
-  border-color-top: transparent !important;
-  border-right: 4px solid #ee0000 !important;
-}
-
-:host([vertical][pfe-variant="secondary"][aria-selected="true"]) {
-  border-right: 0 !important;
-  border-top: 0;
-  border-left: 4px solid #ee0000 !important;
-}
-
-:host([vertical][pfe-variant="secondary"][aria-selected="false"]) {
-  border-left: 4px solid #f0f0f0 !important;
-  border-bottom: #{pfe-var(ui--border-width)} solid var(--pfe-tabs--border-color);
+  border-color-top: transparent;
+  border-right: 4px solid var(--pfe-tabs--highlight);
 }
 
 // Vertical secondary sets.
+
+:host([vertical][pfe-variant="secondary"]) {
+  border-top: 0;
+}
+
+:host([vertical][pfe-variant="secondary"][aria-selected="true"]) {
+  border-right: 0;
+  border-left: 4px solid var(--pfe-tabs--highlight);
+}
+
+:host([vertical][pfe-variant="secondary"][aria-selected="false"]) {
+  border-left: 4px solid #f0f0f0;
+  border-bottom: #{pfe-var(ui--border-width)} solid var(--pfe-tabs--border-color);
+}
 
 ::slotted(h2) {
   font-size: var(--pfe-theme--font-size);

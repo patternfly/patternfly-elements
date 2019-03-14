@@ -5,4 +5,28 @@
   position: relative;
   overflow: hidden;
   margin: 0;
+  color: var(--pfe-broadcasted--color--text);
 }
+
+:host([on="dark"]) {
+  @include pfe-theme($theme: "dark");
+}
+:host([color="darker"]) {
+  @include pfe-theme($theme: "darker");
+}
+:host([color="darkest"]) {
+  @include pfe-theme($theme: "darkest");
+}
+
+
+:host([on="light"]) {
+  @include pfe-theme($theme: "light");
+}
+
+:host([on="lighter"]) {
+  @include pfe-theme($theme: "lighter");
+}
+:host([on="lightest"]) {
+  @include pfe-theme($theme: "lightest");
+}
+

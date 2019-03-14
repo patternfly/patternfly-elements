@@ -1,40 +1,50 @@
 @import "../../pfe-sass/pfe-sass";
 
-:host {
-  @include pfe-accordion-panel;
+/// ===========================================================================
+/// DEFAULT ACCORDION PANEL
+/// ===========================================================================
 
-::slotted(pfe-accordion) {
-    padding: 0 14px;
-  }
+:host {
+   @include pfe-accordion-panel;
 }
 
-:host([color="light"][expanded]) {
-  @include pfe-accordion-panel-expanded;
+:host([expanded]) {
+   @include pfe-accordion-panel-expanded;
+   @include pfe-accordion-panel-expanded-style;
+}
+ 
+:host([color="lighter"][expanded]),
+:host([color="lightest"][expanded]) {
+  @include pfe-accordion-panel-expanded-style;
+  @include pfe-accordion-panel-expanded-style-lightest;
 }
 
 :host([color="dark"][expanded]) {
-  @include pfe-accordion-panel-expanded($theme: dark);
+  @include pfe-accordion-panel-expanded-style($theme: dark);
 }
 
+:host([color="darker"][expanded]),
+:host([color="darkest"][expanded]) {
+  @include pfe-accordion-panel-expanded-style($theme: dark);
+  @include pfe-accordion-panel-expanded-style-darkest;
+ }
+
+ 
 :host(.animating) {
   display: block;
   transition: height 0.3s ease-in-out;
 }
 
+ 
 .container {
-  :host([color="light"]) & {
-    @include pfe-accordion-panel-container($theme: light);
-  }
-
-  :host([color="dark"]) & {
-    @include pfe-accordion-panel-container($theme: dark);
-  }
+  @include pfe-accordion-panel-container-inset;
 }
-
-:host(:last-of-type[color="dark"][expanded]) {
-  @include pfe-accordion-panel-expanded-last-dark;
+ 
+:host(:last-of-type[expanded]) {
+  @include pfe-accordion-panel-expanded-last;
 }
+:host(:last-of-type[color="darker"][expanded]),
+:host(:last-of-type[color="darkest"][expanded]) {
+   @include pfe-accordion-panel-expanded-last-dark;
+ }
 
-:host([on="dark"]) {
-  @include pfe-theme($theme: dark);
-}

@@ -3,37 +3,45 @@
 /// ===========================================================================
 /// DEFAULT ACCORDION HEADING
 /// ===========================================================================
+
+
 :host {
-  --pfe-expanded--border-left: transparent;
+  @include  pfe-accordion-header;
 
-  display: block;
-  background: var(--pfe-expanded--main);
-  color: var(--pfe-expanded--aux);
-  border-left-width: 3px;
-  border-left-style: solid;
-  border-left-color: var(--pfe-expanded--border-left);
   button {
-    @include pfe-trigger-button;
+    @include pfe-trigger-button; // border 3px
+    @include pfe-trigger-color-light;
 
-    &[aria-expanded] {
-      @include pfe-trigger-expanded;
-    }
-
-    &[aria-expanded="false"]::after {
-      @include pfe-chevron-expanded-false;
+    &[aria-expanded="true"] {
+        @include pfe-trigger-color-light-expanded;
+        @include pfe-trigger-expanded;
     }
 
     &[aria-expanded="true"]::after {
-      @include pfe-chevron-expanded-true;
+        @include pfe-chevron-expanded-true;
     }
-  }
-  > * {
-    margin: 0;
+    &[aria-expanded="false"]::after {
+        @include pfe-chevron-expanded-false;
+    }
   }
 }
 
-:host(:last-of-type) {
+
+////////// last child
+
+:host([color="darker"]:last-of-type),
+:host([color="darkest"]:last-of-type) {
+  button[aria-expanded="false"] {
+    @include pfe-trigger-button-last($theme: dark);
+  }  
 }
+:host([color="lighter"]:last-of-type),
+:host([color="lightest"]:last-of-type) {
+  button[aria-expanded="false"] {
+    @include pfe-trigger-button-last($theme: light);
+  }  
+}
+
 
 // Add border bottom to the last button in an accordion set.
 :host(:last-of-type) {
@@ -41,23 +49,15 @@
     @include pfe-trigger-button-last;
   }  
 }
-:host([color="dark"]:last-of-type),
-:host([on="dark"]:last-of-type) {
-  button[aria-expanded="false"] {
-    @include pfe-trigger-button-last($theme: dark);
-  }  
+
+:host(:last-of-type) {
 }
 
 :host(.animating) {
   transition: transform 0.3s #{pfe-var(animation-timing)};
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   margin: 1px; // Gives the 1px spacing between each + room for focus border.
 }
 
@@ -65,31 +65,37 @@ h6 {
 /// COLOR OVERRIDES
 /// ===========================================================================
 
-:host([color="light"]) {
-  @include pfe-trigger-color-light;
+:host([color="lighter"]),
+:host([color="lightest"]) {
+    button {
+      @include pfe-trigger-color-lightest;
 
-  button[aria-expanded="true"] {
-    @include pfe-trigger-color-light-borders;
-  }
+      &[aria-expanded="true"] {
+        @include pfe-trigger-color-light-expanded;
+      }
+    }
+}
+:host([color="lighter"]),
+:host([color="lightest"]) {
+  @include pfe-trigger-color-lightest;
 }
 
-:host([color="dark"]),
+
 :host([on="dark"]) {
-  @include pfe-trigger-color-dark;
   button {
-    @include pfe-trigger-button($theme: dark);
+    @include pfe-trigger-color-dark; 
   }
 }
 
-:host([color="light"][aria-expanded="true"]) {
-  @include pfe-trigger-color-light-expanded;
+:host([color="darker"]),
+:host([color="darkest"]) {
+  button {
+    @include pfe-trigger-color-darkest; 
+  }
+}
+:host([on="dark"]),
+:host([color="darker"]),
+:host([color="darkest"]) {
+  @include pfe-trigger-color-darkest;
 }
 
-:host([color="dark"][aria-expanded="true"]),
-:host([on="dark"][aria-expanded="true"]) {
-  @include pfe-trigger-color-dark-expanded;
-}
-
-:host([on="dark"]) {
-  @include pfe-theme($theme: dark);
-}

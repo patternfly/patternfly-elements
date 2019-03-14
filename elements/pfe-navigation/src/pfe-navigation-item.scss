@@ -31,6 +31,9 @@ $pfe-navigation__aside--width--lg: 300px;
 	--pfe-navigation-item--aux--hover:  #{pfe-color(surface--darkest)};  // bg hover
 
 	font-family: #{pfe-var(font-family)};
+	* {
+		box-sizing: border-box;
+	}
 }
 
 :host([hidden]) {
@@ -102,10 +105,10 @@ $pfe-navigation__aside--width--lg: 300px;
 			display:			flex;
 			flex-flow: 			column nowrap;
 			align-items: 		center;
-			justify-content: 	center;
+			justify-content: 	space-between;
 
 			min-width: 80px;
-			padding: 0 3px;
+			padding: 20px 3px;
 
 			// Fill the navigation container
 			height: 100%;
@@ -186,13 +189,15 @@ $pfe-navigation__aside--width--lg: 300px;
 	
 	&__tray {
 		display: block;
-		background-color: #{pfe-color(surface--lighter)};
 		position: absolute;
 		left: 0;
 		margin-top: -2px;
 		width: 100%;
 		z-index: 1;
 		transition: all #{pfe-var(animation-timing)};
+
+		background-color: #{pfe-color(surface--lighter)};
+		color: #{pfe-color(surface--lighter--text)};
 
 		&[pfe-menu="mobile"],
 		&[hidden] {

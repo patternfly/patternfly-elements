@@ -55,13 +55,13 @@ class PfeNavigationItem extends PFElement {
       }
     }
 
-    // this.dispatchEvent(
-    //   new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
-    //     detail: { navigationItem: this, expanded: this.expanded },
-    //     bubbles: true,
-    //     composed: true
-    //   })
-    // );
+    this.dispatchEvent(
+      new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
+        detail: { navigationItem: this, expanded: this.expanded },
+        bubbles: true,
+        composed: true
+      })
+    );
   }
 
   get iconSVG() {
@@ -213,7 +213,9 @@ class PfeNavigationItem extends PFElement {
             if (trayRegions[i].hasAttribute("tray-region")) {
               // Apply the grid area property to each region
               trayRegions[i].style.gridArea = trayRegions[i].getAttribute("tray-region");
-              this.tray.shadow.setAttribute(`has-${trayRegions[i].getAttribute("tray-region")}`, true);
+              if(this.tray.shadow) {
+                this.tray.shadow.setAttribute(`has-${trayRegions[i].getAttribute("tray-region")}`, true);
+              }
               // Add additional border and padding properties to the footer
               if(trayRegions[i].getAttribute("tray-region") === "footer") {
                 trayRegions[i].style.borderTop = "var(--pfe-navigation-item__tray--BorderTop)";
@@ -223,10 +225,12 @@ class PfeNavigationItem extends PFElement {
           }
         });
 
-        if(this.hasAttribute("pfe-menu")) {
-          this.tray.shadow.setAttribute("pfe-menu", this.getAttribute("pfe-menu"));
-        } else {
-          this.tray.shadow.setAttribute("pfe-menu", "desktop");
+        if(this.tray.shadow) {
+          if(this.hasAttribute("pfe-menu")) {
+            this.tray.shadow.setAttribute("pfe-menu", this.getAttribute("pfe-menu"));
+          } else {
+            this.tray.shadow.setAttribute("pfe-menu", "desktop");
+          }
         }
 
         // Position the tray underneath the trigger element

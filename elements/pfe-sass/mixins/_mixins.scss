@@ -268,7 +268,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     position: relative;
     background: var(--pfe-accordion--main);
     border-left:   var(--pfe-accordion--border-left);
-    border-right:  var( --pfe-accordion--border-right);
+    border-right:  var(--pfe-accordion--border-right);
     border-bottom: var(--pfe-accordion--border-top-bottom);
     border-top:    var(--pfe-accordion--border-top-bottom);
 
@@ -302,6 +302,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
 @mixin pfe-trigger-expanded {
     position: relative;
     display: block;
+    border-bottom: 0px;
 }
 
 @mixin pfe-trigger-color-light {
@@ -315,7 +316,8 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     --pfe-accordion--main:              #{pfe-color(surface--lightest)};
     --pfe-accordion--aux:               #{pfe-color(surface--lightest--text)};
     --pfe-accordion--focus:             #{pfe-color(surface--lightest--link--focus)};
-    --pfe-accordion--border-left:  solid 3px #{pfe-color(ui-link)};
+    --pfe-accordion--border-left:  solid 3px #{pfe-color(surface--lightest--link)};
+    --pfe-accordion--border-right: solid 1px #{pfe-color(surface--border--lightest)};
 }
 @mixin pfe-trigger-color-lightest {
   --pfe-accordion--main:         #{pfe-color(surface--lightest)};
@@ -333,14 +335,15 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
 }
 
 @mixin pfe-trigger-color-dark-expanded {
-    --pfe-accordion--main:         #{pfe-color(surface--darker)};
+    --pfe-accordion--main:         #{pfe-color(surface--darkest)};
     --pfe-accordion--aux:          #{pfe-color(surface--darkest--text)};
-    --pfe-accordion--focus:        #{pfe-color(surface--darker--link--focus)};
-    --pfe-accordion--border-left:  solid 3px #{pfe-color(surface--lightest)};
+    --pfe-accordion--focus:        #{pfe-color(surface--darkest--link--focus)};
+    --pfe-accordion--border-left:  solid 3px #{pfe-color(surface--darkest--link)};
+    --pfe-accordion--border-right: solid 1px #{pfe-color(surface--border-darkest)};
 }
 
 @mixin pfe-trigger-color-darkest {
-    --pfe-accordion--main:         #{pfe-color(surface--darker)};
+    --pfe-accordion--main:         #{pfe-color(surface--darkest)};
     --pfe-accordion--aux:          #{pfe-color(surface--darkest--text)};
     --pfe-accordion--focus:        #{pfe-color(surface--darker--link--focus)};
 }
@@ -424,15 +427,20 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
   border-left: 3px solid transparent;
   @if $theme == dark {
     border-left-color: #{pfe-color(surface--darkest--text)};
-    background: #{pfe-color(surface--darker)};
   }
   @else {
     box-shadow: 0 5px 3px rgba(140, 140, 140, 0.35);
     border-left-color: #{pfe-color(surface--lightest--link)};
     border-right-color: #{pfe-color(surface--border--lightest)};
     border-bottom: #{pfe-color(surface--border--lightest)} 1px solid;
-    background: #{pfe-color(surface--lightest)};
   }
+}
+@mixin pfe-accordion-panel-expanded-style-darkest {
+    background: #{pfe-color(surface--darkest)};
+}
+
+@mixin pfe-accordion-panel-expanded-style-lightest {
+    background: #{pfe-color(surface--lightest)};
 }
 
 @mixin pfe-accordion-panel-expanded-last-dark {

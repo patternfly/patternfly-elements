@@ -6,26 +6,29 @@
 
 :host {
    @include pfe-accordion-panel;
-
 }
-
-
 
 :host([expanded]) {
    @include pfe-accordion-panel-expanded;
    @include pfe-accordion-panel-expanded-style;
- }
+}
  
-
 :host([color="lighter"][expanded]),
 :host([color="lightest"][expanded]) {
   @include pfe-accordion-panel-expanded-style;
+  @include pfe-accordion-panel-expanded-style-lightest;
+}
+
+:host([color="dark"][expanded]) {
+  @include pfe-accordion-panel-expanded-style($theme: dark);
 }
 
 :host([color="darker"][expanded]),
 :host([color="darkest"][expanded]) {
   @include pfe-accordion-panel-expanded-style($theme: dark);
+  @include pfe-accordion-panel-expanded-style-darkest;
  }
+
  
 :host(.animating) {
   display: block;

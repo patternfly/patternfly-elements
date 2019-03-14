@@ -142,20 +142,17 @@ $pfe-navigation__aside--width--lg: 300px;
 		padding: 0 3px;
 
 		// Fill the navigation container
-		height: 			calc(100% - 20px);
-
+		height: 100%;
 		// If it doesn't have an icon, give it menu flyout styles
-		@media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-			&:not([pfe-icon]) {
-				@include pfe-trigger-button;
-				@include pfe-trigger-expanded;
+		[pfe-menu="mobile"] & {
+			@include pfe-trigger-button;
+			@include pfe-trigger-expanded;
 
-				&[aria-expanded="false"]::after {
-					@include pfe-chevron-expanded-false;
-				}
-				&[aria-expanded="true"]::after {
-					@include pfe-chevron-expanded-true;
-				}
+			&[aria-expanded="false"]::after {
+				@include pfe-chevron-expanded-false;
+			}
+			&[aria-expanded="true"]::after {
+				@include pfe-chevron-expanded-true;
 			}
 		}
 

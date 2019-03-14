@@ -55,15 +55,13 @@ class PfeNavigationItem extends PFElement {
       }
     }
 
-    console.log(this.expanded);
-
-    this.dispatchEvent(
-      new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
-        detail: { navigationItem: this, expanded: this.expanded },
-        bubbles: true,
-        composed: true
-      })
-    );
+    // this.dispatchEvent(
+    //   new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
+    //     detail: { navigationItem: this, expanded: this.expanded },
+    //     bubbles: true,
+    //     composed: true
+    //   })
+    // );
   }
 
   get iconSVG() {
@@ -173,6 +171,12 @@ class PfeNavigationItem extends PFElement {
         shadow:  this.shadowRoot.querySelector(`.${this.tag}__${slot}`)
       };
     });
+
+    // If the trigger and tray slots have not been assigned
+    if(!this.trigger.light) {
+      // Get the first link and assign it to the trigger
+      this.trigger.light = this.querySelector("a");
+    }
   }
 
   connectedCallback() {

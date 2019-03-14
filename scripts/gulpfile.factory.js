@@ -46,9 +46,9 @@ module.exports = function factory({
   const decomment = require("decomment");
 
   // Compile the sass into css, compress, autoprefix
-  task("compile:sass", () => {
+  task("compile:styles", () => {
     return (
-      src(`${elementName}.{scss,css}`, {
+      src(`${elementName}*.{scss,css}`, {
         cwd: paths.source
       })
         .pipe(sourcemaps.init())
@@ -91,37 +91,38 @@ module.exports = function factory({
     );
   });
 
-  task("fallback:css", () => {
-    const classRegex = new RegExp(`\.${elementName}__(\w+)(.*){`, "gi");
-    return (
-      src([`${elementName}.css`], {
-        cwd: paths.compiled
-      })
-        .pipe(replace(/,\s+\:/g, ",\n:"))
-        // Replace host and slot with fallbacks
-        .pipe(
-          replace(
-            /^\s*(:host(\(([^\)]*)\))?)?\s*(::slotted\(([^\)]+)\))?(\s*[{|,])/gim,
-            `${elementName}$3 $5$6`
-          )
-        )
-        // // Try to approximate class name to possible slot name
-        .pipe(
-          replace(
-            /\.([\w|-]+)__(\w+)(.*){/g,
-            `${elementName}[slot="$1--$2"]$3{`
-          )
-        )
-        // Add the .fallback suffix
-        .pipe(
-          rename({
-            suffix: "-fallback"
-          })
-        )
-        // Output the updated file
-        .pipe(dest(paths.compiled))
-    );
-  });
+  // @TODO commenting out the fallbacks for now
+  // task("fallback:css", () => {
+  //   const classRegex = new RegExp(`\.${elementName}__(\w+)(.*){`, "gi");
+  //   return (
+  //     src([`${elementName}.css`], {
+  //       cwd: paths.compiled
+  //     })
+  //       .pipe(replace(/,\s+\:/g, ",\n:"))
+  //       // Replace host and slot with fallbacks
+  //       .pipe(
+  //         replace(
+  //           /^\s*(:host(\(([^\)]*)\))?)?\s*(::slotted\(([^\)]+)\))?(\s*[{|,])/gim,
+  //           `${elementName}$3 $5$6`
+  //         )
+  //       )
+  //       // // Try to approximate class name to possible slot name
+  //       .pipe(
+  //         replace(
+  //           /\.([\w|-]+)__(\w+)(.*){/g,
+  //           `${elementName}[slot="$1--$2"]$3{`
+  //         )
+  //       )
+  //       // Add the .fallback suffix
+  //       .pipe(
+  //         rename({
+  //           suffix: "-fallback"
+  //         })
+  //       )
+  //       // Output the updated file
+  //       .pipe(dest(paths.compiled))
+  //   );
+  // });
 
   // Delete the temp directory
   task("clean", () => {
@@ -298,8 +299,8 @@ module.exports = function factory({
     "build",
     series(
       "clean",
-      "compile:sass",
-      "fallback:css",
+      "compile:styles",
+      // "fallback:css",
       "minify:css",
       "merge",
       ...prebundle,

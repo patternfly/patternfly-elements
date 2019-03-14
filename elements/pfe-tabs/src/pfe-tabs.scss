@@ -27,6 +27,19 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
   padding-top: #{pfe-var(container-padding)};
 }
 
+:host([pfe-variant="secondary"]) {
+  .tabs {
+    padding-left: #{pfe-var(container-padding)};
+    ::slotted(pfe-tab[aria-selected="false"]:first-of-type) {
+      border-left: 0;
+    }
+  }
+}
+
+// :host([pfe-variant="secondary"]) .tabs ::slotted(pfe-tab[aria-selected="true"]) + .tabs ::slotted(pfe-tab[aria-selected="false"] {
+//   border-left: 0;
+// }
+
 /// ===========================================================================
 /// VERTICAL TABS
 /// ===========================================================================
@@ -38,21 +51,12 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 :host([vertical]) .tabs {
   flex-direction: column;
   width: 25%;
-
   border: 0;
   border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
 }
 
-:host([vertical]) .tabs ::slotted(pfe-tab) {
-  margin: 0 -1px 0 0;
-  border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
-  border-right: 0;
-  position: relative;
-}
-
-:host([vertical]) .tabs ::slotted(pfe-tab[aria-selected="true"]) {
-  border-color: var(--pfe-tabs--border-color);
-  border-right: 0;
+:host([vertical][pfe-variant="secondary"]) .tabs {
+  padding-left: 0;
 }
 
 :host([vertical]) .panels {

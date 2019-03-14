@@ -7,62 +7,6 @@
 $pfe-tabs__tab--PaddingRight-factor:  3.375; // 54px at 16px base.
 $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
-/// ===========================================================================
-/// DEFAULT TAB
-/// ===========================================================================
-
-:host {
-  --pfe-tabs--main:         transparent;
-  --pfe-tabs--aux:          #{pfe-color(surface--lightest--text)};
-  --pfe-tabs--link:         #{pfe-color(surface--lightest--link)};
-  --pfe-tabs--focus:        #{pfe-color(surface--lightest--link--focus)};
-
-  position: relative;
-  display: block;
-  margin: 0 0 -1px;
-
-  // Padding
-  padding-top: #{pfe-var(container-padding)};
-  padding-right: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__tab--PaddingRight-factor});;
-  padding-bottom: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__tab--PaddingBottom-factor});
-  padding-left: #{pfe-var(container-padding)};
-  // Border
-  border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
-  border-bottom: 0;
-  // Inner style
-  background-color: var(--pfe-tabs--main);
-  color: var(--pfe-tabs--aux);
-  text-transform: var(--pfe-tabs__tab--TextTransform, none); // exposing this for RH
-  font-weight: #{pfe-var(font-weight--normal)};
-
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-:host([aria-selected="true"]) {
-  --pfe-tabs--main:         #{pfe-color(surface--lightest)};
-
-  // Border
-  border-color: #{pfe-color(surface--border)};
-  border-bottom: 0;
-}
-
-// .indicator {
-//   position: absolute;
-//   bottom: 12px;
-//   left: auto;
-
-//   display: var(--pfe-tabs__indicator--Display, block); // Exposing this for themability. Use `none` to not show at all
-//   height: var(--pfe-tabs__indicator--Height, 4px); // Exposing this for themability
-//   width: var(--pfe-tabs__indicator--Width, 22px); // Exposing this for themability
-
-//   background-color: #{pfe-color(surface--border--darkest)};
-// }
-
-// Hover state for inactive tabs.
-:host(:hover) .indicator {
-  background-color: var(--pfe-tabs--link);
-}
 
 // Active tab styles
 
@@ -77,17 +21,44 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
 // Horizontal primary sets.
 
-:host([pfe-variant="primary"]) {
-  text-align: center;
+:host {
+  --pfe-tabs--main:         transparent;
+  --pfe-tabs--aux:          #929292;
+  --pfe-tabs--link:         #{pfe-color(surface--lightest--link)};
+  --pfe-tabs--focus:        #{pfe-color(surface--lightest--link--focus)};
+  --pfe-tabs--highlight:    #ee0000;
+
+  position: relative;
+  display: block;
+  margin: 0 0 -1px;
+
+  // Padding
   padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 1.5);
+
+  // Border
+  border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
+  border-bottom: 0;
+  // Inner style
+  background-color: var(--pfe-tabs--main);
+  color: var(--pfe-tabs--aux);
+  text-transform: var(--pfe-tabs__tab--TextTransform, none); // exposing this for RH
+  font-weight: #{pfe-var(font-weight--normal)};
+
+  white-space: nowrap;
+  cursor: pointer;
+  text-align: center;
 }
 
-:host([pfe-variant="primary"][aria-selected="true"]) {
+:host([aria-selected="true"]) {
+  --pfe-tabs--main:         #{pfe-color(surface--lightest)};
+  --pfe-tabs--aux:          #000000;
+  // Border
+  border-bottom: 0;
   border: transparent;
-  border-bottom: 4px solid #EE0000;
+  border-bottom: 4px solid var(--pfe-tabs--highlight);
 }
 
-:host([pfe-variant="primary"][aria-selected="false"]) {
+:host([aria-selected="false"]) {
   border: transparent;
 }
 
@@ -97,27 +68,26 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   background-color: #f0f0f0;
 }
 
+:host([pfe-variant="secondary"][aria-selected="false"]) {
+  border-left: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
+  border-bottom: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
+}
+
 // Horizontal secondary sets.
 
 :host([pfe-variant="secondary"][aria-selected="true"]) {
   background-color: #fff;
-  border-top: 4px solid #EE0000;
+  border-top: 4px solid var(--pfe-tabs--highlight);
+  border-bottom: 0;
 }
 
 :host([pfe-variant="secondary"][aria-selected="false"]) {
-  color: #252525;
-  border-right: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
-  border-bottom: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
-
-}
-
-:host([pfe-variant="secondary"][aria-selected="false"]):last-child {
-  border-right: 0;
+  border-top: 4px solid #f0f0f0;
 }
 
 :host([pfe-variant="secondary"]:hover) {
-  background-color: $pfe-global--color--black-soft;
-  color: #ffffff;
+  // background-color: $pfe-global--color--black-soft;
+  color: $pfe-global--color--black-soft;
 }
 
 /// ===========================================================================
@@ -128,17 +98,27 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
 :host([vertical]) {
   text-align: left;
+  margin: 0 -1px 0 0;
+  border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
+  border-right: 0;
+  position: relative;
   padding-left: calc(#{pfe-var(container-padding)} * .75);
 }
 
-:host([vertical][pfe-variant="primary"][aria-selected="true"]) {
+:host([vertical][aria-selected="true"]) {
   border-color-top: transparent !important;
-  border-right: 4px solid #EE0000 !important;
+  border-right: 4px solid #ee0000 !important;
 }
 
 :host([vertical][pfe-variant="secondary"][aria-selected="true"]) {
-  // border: transparent;
-  border-left: 4px solid #EE0000 !important;
+  border-right: 0 !important;
+  border-top: 0;
+  border-left: 4px solid #ee0000 !important;
+}
+
+:host([vertical][pfe-variant="secondary"][aria-selected="false"]) {
+  border-left: 4px solid #f0f0f0 !important;
+  border-bottom: #{pfe-var(ui--border-width)} solid var(--pfe-tabs--border-color);
 }
 
 // Vertical secondary sets.

@@ -1,5 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: tabs;
+
 /// ===========================================================================
 /// Component Specific SASS Vars
 /// ===========================================================================
@@ -15,11 +17,11 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 }
 
 .tabs {
-  --pfe-tabs--border-color:          #{pfe-color(surface--border)};
+  --pfe-tabs--BorderColor: #{pfe-color(surface--border)};
 
   display: flex;
   border: 0;
-  border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
+  border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
 }
 
 .panels {
@@ -37,10 +39,9 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 
 :host([vertical]) .tabs {
   flex-direction: column;
-  width: 25%;
-
+  width:  25%;
   border: 0;
-  border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
+  border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
 }
 
 :host([vertical]) .tabs ::slotted(pfe-tab) {
@@ -51,7 +52,7 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 }
 
 :host([vertical]) .tabs ::slotted(pfe-tab[aria-selected="true"]) {
-  border-color: var(--pfe-tabs--border-color);
+  border-color: #{pfe-local(BorderColor)};
   border-right: 0;
 }
 
@@ -64,25 +65,19 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 /// ===========================================================================
 /// TAB VARIANTS
 /// ===========================================================================
-
-:host([pfe-variant="primary"]) {
-  .tabs {
-    border-bottom: transparent;
-    border-right: transparent;
-  }
+:host([pfe-variant="primary"]) .tabs {
+  border-bottom: transparent;
+  border-right:  transparent;
 }
+
 :host([vertical][pfe-variant="primary"]) {
   align-items: flex-start;
 } 
 
-:host([pfe-variant="secondary"]) {
-  .tabs {
-    border-bottom: transparent;
-  }
+:host([pfe-variant="secondary"]) .tabs {
+  border-bottom: transparent;
 }
 
-:host([vertical][pfe-variant="secondary"]) {
-  .tabs {
-    justify-content: flex-start; 
-  }
+:host([vertical][pfe-variant="secondary"]) .tabs {
+  justify-content: flex-start; 
 }

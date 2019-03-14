@@ -1,0 +1,84 @@
+// Clearfix
+@mixin clearfix() {
+    &:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+// Cropline
+@mixin cropline($line-height: 1.5, $lheight: $letter-height, $ctop: $crop-top, $cbottom: $crop-bottom) {
+    &::before,
+    &::after {
+        content: '';
+        display: block;
+        height: 0;
+        width: 0;
+    }
+    &::before {
+        margin-top: calc((#{$lheight} - #{$line-height}) * #{$ctop});
+    }
+    &::after {
+        margin-bottom: calc((#{$lheight} - #{$line-height}) * #{$cbottom});
+    }
+}
+
+// Transition
+@mixin transition($transition: all linear .2s) {
+    -moz-transition: $transition;
+    transition: $transition;
+}
+
+// Transform
+@mixin transform($transforms) {
+    -moz-transform: $transforms;
+    -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+    transform: $transforms;
+}
+
+// Blur
+@mixin blur($radius) {
+    -webkit-filter: blur($radius);
+    -moz-filter: blur($radius);
+    -ms-filter: blur($radius);
+    filter: blur($radius);
+}
+
+// Striped
+@mixin striped($color: rgba(255, 255, 255, .2), $angle: 45deg) {
+    background-image: -webkit-linear-gradient($angle, $color 25%, transparent 25%, transparent 50%, $color 50%, $color 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient($angle, $color 25%, transparent 25%, transparent 50%, $color 50%, $color 75%, transparent 75%, transparent);
+    background-image: linear-gradient($angle, $color 25%, transparent 25%, transparent 50%, $color 50%, $color 75%, transparent 75%, transparent);
+}
+
+// Animation
+@mixin animation($animation) {
+    -webkit-animation: $animation;
+    -moz-animation: $animation;
+    animation: $animation;
+}
+
+// Retina Images
+@mixin retina-background-image($file, $type, $width:  auto, $height:  auto) {
+
+    background-repeat: no-repeat;
+    background-image: url($file + '.' + $type);
+
+    @media
+      only screen and (-webkit-min-device-pixel-ratio: 2),
+      only screen and (min--moz-device-pixel-ratio: 2),
+      only screen and (-o-min-device-pixel-ratio: 2/1),
+      only screen and (min-device-pixel-ratio: 2),
+      only screen and (min-resolution: 192dpi),
+      only screen and (min-resolution: 2dppx) {
+        background-image: url($file + '-2x.' + $type);
+        background-size: $width $height;
+    }
+}
+
+// Full Height Footer
+@mixin full-height-footer($color: #000) {
+    box-shadow: 0px 500px 0px 500px $color;
+}

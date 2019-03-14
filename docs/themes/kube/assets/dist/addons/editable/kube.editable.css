@@ -1,0 +1,7 @@
+.editable[placeholder]:empty:before {
+  content: attr(placeholder);
+  color: rgba(17, 17, 19, 0.4);
+  font-weight: normal; }
+
+.editable[placeholder]:empty:focus:before {
+  content: ""; }

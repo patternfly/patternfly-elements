@@ -1,0 +1,98 @@
+// NAVBAR
+// ---------------------------------------------------------------------------
+
+.is-navbar-container,
+.is-navbar-box {
+    @include make-container;
+    @include flex-items-middle;
+
+    min-width: 100%;
+    min-height: 100%;
+
+    & .is-brand {
+        @include flex;
+        @include flex-items-middle;
+
+        & h1,
+        & h2,
+        & h3,
+        & h4,
+        & h5,
+        & h6 {
+            line-height: 1;
+            margin: 0;
+        }
+    }
+}
+.is-navbar {
+    @include make-container;
+    @include flex-items-middle;
+
+    & ul {
+        @include make-container;
+        @include flex-items-middle;
+    }
+    & li {
+        white-space: nowrap;
+        margin-left: $navbar-item-space;
+    }
+    & a:not(.button) {
+        @include cropline(1);
+        line-height: 1;
+        display: block;
+        padding-top: $space-8;
+        padding-bottom: $space-8;
+    }
+    & form {
+        margin: 0;
+    }
+    & input {
+        position: relative;
+        top: 1px;
+    }
+    & nav.is-justify {
+        text-align: center;
+        width: 100%;
+
+        & li {
+            flex: 1;
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+}
+
+@include for-mobile {
+    .is-navbar-container.is-scrollable,
+    .is-navbar-box.is-scrollable {
+        &,
+        & .is-navbar,
+        & .is-navbar ul {
+            display: flex;
+            flex-direction: row;
+        }
+    }
+    .is-navbar-container:not(.is-scrollable),
+    .is-navbar-box:not(.is-scrollable) {
+        &,
+        & .is-navbar,
+        & .is-navbar ul {
+            align-items: flex-start;
+            display: block;
+            max-width: 100%;
+        }
+        & .is-navbar {
+            & li {
+                margin-left: 0;
+            }
+            & input,
+            & .button.is-small {
+                margin-top: $space-8;
+                margin-bottom: $space-8;
+            }
+            & nav.is-justify {
+                text-align: left;
+            }
+        }
+    }
+}

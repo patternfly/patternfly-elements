@@ -27,15 +27,6 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
   padding-top: #{pfe-var(container-padding)};
 }
 
-:host([pfe-variant="secondary"]) {
-  .tabs {
-    padding-left: #{pfe-var(container-padding)};
-    ::slotted(pfe-tab[aria-selected="false"]:first-of-type) {
-      border-left: 0;
-    }
-  }
-}
-
 /// ===========================================================================
 /// VERTICAL TABS
 /// ===========================================================================
@@ -46,7 +37,7 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 
 :host([vertical]) .tabs {
   flex-direction: column;
-  width: 25%;
+  width: 22.22%;
   border: 0;
   border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
 }
@@ -57,6 +48,7 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 
 :host([vertical]) .panels {
   padding: 0;
+  width: 77.78%;
   padding-right: #{pfe-var(container-padding)};
   padding-left: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__panel--PaddingLeft-factor});
 }
@@ -66,7 +58,22 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 /// ===========================================================================
 
 :host([vertical][pfe-variant="secondary"]) {
+  padding-top: #{pfe-var(container-padding)};
   .tabs {
     justify-content: flex-start; 
+  }
+}
+
+/// ===========================================================================
+/// TAB STYLES BASED ON SIBLINGS
+/// ===========================================================================
+
+:host([pfe-variant="secondary"]) {
+  .tabs {
+    padding-left: #{pfe-var(container-padding)};
+
+    ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
+      border-left: 0;
+    }
   }
 }

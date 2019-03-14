@@ -23,10 +23,10 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
 :host {
   --pfe-tabs--main:         transparent;
-  --pfe-tabs--aux:          #929292;
+  --pfe-tabs--aux:          #{pfe-color(text--deemphasized)}; // mockup has #929292
   --pfe-tabs--link:         #{pfe-color(surface--lightest--link)};
   --pfe-tabs--focus:        #{pfe-color(surface--lightest--link--focus)};
-  --pfe-tabs--highlight:    #ee0000;
+  --pfe-tabs--highlight:    #{pfe-color(feedback--critical)};// mockup has #ee0000
 
   position: relative;
   display: block;
@@ -52,9 +52,8 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 :host([aria-selected="true"]) {
   --pfe-tabs--aux: $pfe-color--black;
   // Border
-  border-bottom: 0;
   border: transparent;
-  border-bottom: 4px solid var(--pfe-tabs--highlight);
+  border-bottom: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
 }
 
 :host([aria-selected="false"]) {
@@ -77,19 +76,19 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 :host([pfe-variant="secondary"][aria-selected="false"]) {
   border-left: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
   border-bottom: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
-  border-top: 4px solid #f0f0f0;
-  --pfe-tabs--main: #f0f0f0;
+  border-top: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} #{pfe-color(surface--lighter)};
+  --pfe-tabs--main: #{pfe-color(surface--lighter)};
 }
 
 :host([pfe-variant="secondary"][aria-selected="true"]) {
   --pfe-tabs--main: #{pfe-color(surface--lightest)};
-  border-top: 4px solid var(--pfe-tabs--highlight);
+  border-top: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
   border-bottom: 0;
 }
 
 
 /// ===========================================================================
-/// VERTICAL TAB ORIENTATION
+/// VERTICAL TABS
 /// ===========================================================================
 
 :host([vertical]) {
@@ -103,7 +102,7 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
 :host([vertical][aria-selected="true"]) {
   border-color-top: transparent;
-  border-right: 4px solid var(--pfe-tabs--highlight);
+  border-right: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
 }
 
 // Vertical secondary sets.
@@ -114,12 +113,13 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
 :host([vertical][pfe-variant="secondary"][aria-selected="true"]) {
   border-right: 0;
-  border-left: 4px solid var(--pfe-tabs--highlight);
+  border-left: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
 }
 
 :host([vertical][pfe-variant="secondary"][aria-selected="false"]) {
-  border-left: 4px solid #f0f0f0;
-  border-bottom: #{pfe-var(ui--border-width)} solid var(--pfe-tabs--border-color);
+  border-left: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} #{pfe-color(surface--lighter)};
+  border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
+  border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
 }
 
 ::slotted(h2) {

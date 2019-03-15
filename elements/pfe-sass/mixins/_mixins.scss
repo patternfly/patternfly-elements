@@ -342,7 +342,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
 }
 
 @mixin pfe-trigger-color-dark-expanded {
-    --pfe-accordion--main:         #{pfe-color(surface--darkest)};
+    --pfe-accordion--main:         #{pfe-color(surface--darker)};
     --pfe-accordion--aux:          #{pfe-color(surface--darkest--text)};
     --pfe-accordion--focus:        #{pfe-color(surface--darkest--link--focus)};
     --pfe-accordion--border-left:  #{pfe-var(surface--border-width-thick)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
@@ -354,6 +354,15 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     --pfe-accordion--aux:          #{pfe-color(surface--darkest--text)};
     --pfe-accordion--focus:        #{pfe-color(surface--darker--link--focus)};
 }
+
+@mixin pfe-trigger-color-darkest-expanded {
+    --pfe-accordion--main:         #{pfe-color(surface--darkest)};
+    --pfe-accordion--aux:          #{pfe-color(surface--darkest--text)};
+    --pfe-accordion--focus:        #{pfe-color(surface--darkest--link--focus)};
+    --pfe-accordion--border-left:  #{pfe-var(surface--border-width-thick)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
+    --pfe-accordion--border-right: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
+}
+
 
 /// ===========================================================================
 /// Accordion chevrons
@@ -433,6 +442,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
   border-right: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
   border-left: #{pfe-var(surface--border-width-thick)} #{pfe-var(surface--border-style)} transparent;
   @if $theme == dark {
+    background-color: #{pfe-color(surface--darker)};
     border-left-color: #{pfe-color(surface--darkest--text)};
     border-left-color: #{pfe-color(surface--darkest--text)};
   }

@@ -94,7 +94,11 @@ h1, h2, h3, h4, h5, h6 {
 
 :host([on="dark"]) {
   button {
-    @include pfe-trigger-color-dark; 
+    @include pfe-trigger-color-dark;
+
+    &[aria-expanded="true"] {
+      @include pfe-trigger-color-dark-expanded;
+    }
   }
 }
 
@@ -104,13 +108,7 @@ h1, h2, h3, h4, h5, h6 {
     @include pfe-trigger-color-darkest;
 
     &[aria-expanded="true"] {
-      @include pfe-trigger-color-dark-expanded;
+      @include pfe-trigger-color-darkest-expanded;
     }
   }
 }
-:host([on="dark"]),
-:host([color="darker"]),
-:host([color="darkest"]) {
-  @include pfe-trigger-color-darkest;
-}
-

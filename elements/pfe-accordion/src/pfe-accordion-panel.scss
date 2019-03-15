@@ -19,7 +19,7 @@
   @include pfe-accordion-panel-expanded-style-lightest;
 }
 
-:host([color="dark"][expanded]) {
+:host([on="dark"][expanded]) {
   @include pfe-accordion-panel-expanded-style($theme: dark);
 }
 

@@ -226,8 +226,8 @@
 /// Accordion Specific SASS Vars
 /// ===========================================================================
 $pfe-expand-button--LineHeight:      1.5;
-$pfe-expand_chevron--size:           0.313em;
-$pfe-expand_chevron--weight:         0.15em;
+$pfe-expand_chevron--size:           0.4em;
+$pfe-expand_chevron--weight:         0.1em;
 $pfe-expand_chevron--placement:      ($pfe-expand_button--LineHeight / 2) - ($pfe-expand_chevron--size / 2);
 $pfe-expand_button--padding-factor:  0.75;
 $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_button--padding-factor});
@@ -379,7 +379,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     width: $pfe-expand_chevron--size;
     text-align: center;
     transition: transform 0.15s;
-    transform: rotate(-135deg);
+    transform: rotate(45deg);
     @if $position == before {
       left: #{pfe-var(container-spacer)};
     }
@@ -400,7 +400,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     text-align: center;
     border-bottom: 0;
     transition: all 0.15s;
-    transform: rotate(135deg);
+    transform: rotate(-45deg);
     @if $position == before {
       left: #{pfe-var(container-spacer)};
     }
@@ -442,6 +442,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
   border-right: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
   border-left: #{pfe-var(surface--border-width-thick)} #{pfe-var(surface--border-style)} transparent;
   @if $theme == dark {
+    box-shadow: none;
     background-color: #{pfe-color(surface--darker)};
     border-left-color: #{pfe-color(surface--darkest--text)};
     border-right-color: #{pfe-color(surface--darkest--text)};

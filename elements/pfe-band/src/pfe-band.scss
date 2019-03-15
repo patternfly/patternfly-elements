@@ -101,6 +101,7 @@ $LOCAL: band;
 
 .pfe-band__body {
     display: block;
+    margin-bottom: #{pfe-local(gutter--vertical)};
 }
 .pfe-band__header,
 .pfe-band__aside,
@@ -108,6 +109,7 @@ $LOCAL: band;
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
+    margin-bottom: #{pfe-local(gutter--vertical)};
 }
 
 @supports (display: grid) {
@@ -117,6 +119,7 @@ $LOCAL: band;
         display: grid;
         grid-row-gap: var(--pfe-band--gutter--vertical);
         grid-column-gap: var(--pfe-band--gutter--horizontal);
+        margin-bottom: 0;
     }
     .pfe-band__header {
         grid-area: header;
@@ -132,7 +135,7 @@ $LOCAL: band;
     }
     .pfe-band__body {
         grid-area: body;
-        grid-template-columns: var(--pfe-band__body--layout);
+        margin-bottom: 0;
     }
 }
 

@@ -444,7 +444,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
   @if $theme == dark {
     background-color: #{pfe-color(surface--darker)};
     border-left-color: #{pfe-color(surface--darkest--text)};
-    border-left-color: #{pfe-color(surface--darkest--text)};
+    border-right-color: #{pfe-color(surface--darkest--text)};
   }
   @else {
     box-shadow: 0 5px #{pfe-var(surface--border-width-thick)} rgba(140, 140, 140, 0.35);

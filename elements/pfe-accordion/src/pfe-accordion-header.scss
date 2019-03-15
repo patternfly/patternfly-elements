@@ -27,26 +27,28 @@
 
 ////////// last child
 
-:host([color="darker"]:last-of-type),
-:host([color="darkest"]:last-of-type) {
-  button[aria-expanded="false"] {
-    @include pfe-trigger-button-last($theme: dark);
-  }  
-}
+// To Do: add lighter/lightest and darker/darkest colors.
 
-:host([color="lighter"]:last-of-type),
-:host([color="lightest"]:last-of-type) {
-  button[aria-expanded="false"] {
-    @include pfe-trigger-button-last($theme: light);
-  }  
-}
+// :host([color="darker"]:last-of-type),
+// :host([color="darkest"]:last-of-type) {
+//   button[aria-expanded="false"] {
+//     @include pfe-trigger-button-last($theme: dark);
+//   }  
+// }
 
-:host([color="darker"]:first-child),
-:host([color="darkest"]:first-child) {
-  button {
-    @include pfe-trigger-button-first($theme: dark);
-  }  
-}
+// :host([color="lighter"]:last-of-type),
+// :host([color="lightest"]:last-of-type) {
+//   button[aria-expanded="false"] {
+//     @include pfe-trigger-button-last($theme: light);
+//   }  
+// }
+
+// :host([color="darker"]:first-child),
+// :host([color="darkest"]:first-child) {
+//   button {
+//     @include pfe-trigger-button-first($theme: dark);
+//   }  
+// }
 
 :host(:first-child),
 :host([color="lighter"]:first-child),
@@ -76,22 +78,6 @@ h1, h2, h3, h4, h5, h6 {
 /// COLOR OVERRIDES
 /// ===========================================================================
 
-:host([color="lighter"]),
-:host([color="lightest"]) {
-    button {
-      @include pfe-trigger-color-lightest;
-
-      &[aria-expanded="true"] {
-        @include pfe-trigger-color-light-expanded;
-      }
-    }
-}
-
-:host([color="lighter"]),
-:host([color="lightest"]) {
-  @include pfe-trigger-color-lightest;
-}
-
 :host([on="dark"]) {
   button {
     @include pfe-trigger-color-dark;
@@ -102,13 +88,26 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-:host([color="darker"]),
-:host([color="darkest"]) {
-  button {
-    @include pfe-trigger-color-darkest;
+// To Do: add lighter/lightest and darker/darkest colors.
 
-    &[aria-expanded="true"] {
-      @include pfe-trigger-color-darkest-expanded;
-    }
-  }
-}
+// :host([color="lighter"]),
+// :host([color="lightest"]) {
+//     button {
+//       @include pfe-trigger-color-lightest;
+
+//       &[aria-expanded="true"] {
+//         @include pfe-trigger-color-light-expanded;
+//       }
+//     }
+// }
+
+// :host([color="darker"]),
+// :host([color="darkest"]) {
+//   button {
+//     @include pfe-trigger-color-darkest;
+
+//     &[aria-expanded="true"] {
+//       @include pfe-trigger-color-darkest-expanded;
+//     }
+//   }
+// }

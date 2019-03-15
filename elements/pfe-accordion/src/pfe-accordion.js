@@ -186,8 +186,8 @@ class PfeAccordion extends PFElement {
     headers.forEach(header => {
       const panel = this._panelForHeader(header);
 
-      header.setAttribute("aria-controls", panel.id);
-      panel.setAttribute("aria-labelledby", header.id);
+      header.setAttribute("aria-controls", panel.pfeId);
+      panel.setAttribute("aria-labelledby", header.pfeId);
     });
   }
 
@@ -357,6 +357,18 @@ class PfeAccordionHeader extends PFElement {
     return "pfe-accordion-header.html";
   }
 
+  get pfeId() {
+    return this.getAttribute("pfe-id");
+  }
+
+  set pfeId(id) {
+    if (!id) {
+      return;
+    }
+
+    this.setAttribute("pfe-id", id);
+  }
+
   static get observedAttributes() {
     return ["aria-expanded"];
   }
@@ -373,8 +385,8 @@ class PfeAccordionHeader extends PFElement {
       this.setAttribute("role", "header");
     }
 
-    if (!this.id) {
-      this.id = `${PfeAccordionHeader.tag}-${generateId()}`;
+    if (!this.pfeId) {
+      this.pfeId = `${PfeAccordionHeader.tag}-${generateId()}`;
     }
 
     this.button = this.shadowRoot.querySelector("button");
@@ -457,6 +469,18 @@ class PfeAccordionPanel extends PFElement {
     return "pfe-accordion-panel.html";
   }
 
+  get pfeId() {
+    return this.getAttribute("pfe-id");
+  }
+
+  set pfeId(id) {
+    if (!id) {
+      return;
+    }
+
+    this.setAttribute("pfe-id", id);
+  }
+
   constructor() {
     super(PfeAccordionPanel);
   }
@@ -468,8 +492,8 @@ class PfeAccordionPanel extends PFElement {
       this.setAttribute("role", "region");
     }
 
-    if (!this.id) {
-      this.id = `${PfeAccordionPanel.tag}-${generateId()}`;
+    if (!this.pfeId) {
+      this.pfeId = `${PfeAccordionPanel.tag}-${generateId()}`;
     }
   }
 

@@ -44,7 +44,6 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   text-transform: var(--pfe-tabs__tab--TextTransform, none); // exposing this for RH
   font-weight: #{pfe-var(font-weight--normal)};
 
-  white-space: nowrap;
   cursor: pointer;
   text-align: center;
 }
@@ -65,6 +64,18 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 }
 
 /// ===========================================================================
+/// WIND TAB VARIANTS
+/// ===========================================================================
+
+:host([pfe-variant="wind"][aria-selected="true"][on="dark"]) {
+  color: #fff;
+}
+
+:host([pfe-variant="wind"][on="dark"]:hover) {
+  color: #fff;
+}
+
+/// ===========================================================================
 /// EARTH TAB VARIANTS
 /// ===========================================================================
 
@@ -82,8 +93,13 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 
 :host([pfe-variant="earth"][aria-selected="true"]) {
   --pfe-tabs--main: #{pfe-color(surface--lightest)};
+  border-left: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
   border-top: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
   border-bottom: 0;
+}
+
+:host([pfe-variant="earth"][aria-selected="true"]:last-of-type) {
+    border-right: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
 }
 
 
@@ -105,7 +121,9 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   border-right: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
 }
 
-// Vertical earth sets.
+/// ===========================================================================
+/// EARTH TAB VERTICAL
+/// ===========================================================================
 
 :host([vertical][pfe-variant="earth"]) {
   border-top: 0;
@@ -114,12 +132,18 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 :host([vertical][pfe-variant="earth"][aria-selected="true"]) {
   border-right: 0;
   border-left: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
+  border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
 }
 
 :host([vertical][pfe-variant="earth"][aria-selected="false"]) {
   border-left: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} #{pfe-color(surface--lighter)};
+  border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
+  border-bottom: 0;
+  border-right: #{-pfevar(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
+}
+
+:host([vertical][pfe-variant="earth"]:last-of-type) {
   border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
-  border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
 }
 
 ::slotted(h2) {

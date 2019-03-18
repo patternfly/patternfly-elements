@@ -44,6 +44,7 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 
 :host([vertical][pfe-variant="earth"]) .tabs {
   padding-left: 0;
+  padding-top: #{pfe-var(container-padding)};
 }
 
 :host([vertical]) .panels {

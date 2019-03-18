@@ -16,7 +16,7 @@
   @include pfe-theme($theme: "light");
 }
 
-// To Do: add lighter/lightest and darker/darkest colors.
+// @TODO: add lighter/lightest and darker/darkest colors.
 
 // :host([color="darker"]) {
 //   @include pfe-theme($theme: "darker");

@@ -240,18 +240,6 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
   button {
     -webkit-appearance: button;
   }
-  h2 button {
-    font-size: calc((#{pfe-var(font-size)} * 1.5));
-  }
-  h3 button {
-    font-size: calc((#{pfe-var(font-size)} * 1.35));
-  }
-  h4 button {
-    font-size: calc((#{pfe-var(font-size)} * 1.2));
-  }
-  h5 button {
-    font-size: calc((#{pfe-var(font-size)} * 1));
-  }
   > * {
     margin: 0;
   }
@@ -270,6 +258,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     height: auto;
     font-family: inherit;
     font-weight: 700;
+    font-size: calc((#{pfe-var(font-size)} * 1.1));
     line-height: #{pfe-var(line-height)};
     text-align: left;
     cursor: pointer;
@@ -299,6 +288,9 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     @else {
         padding: $pfe-expand_button--padding 50px $pfe-expand_button--padding $pfe-expand_button--padding;
     }
+    //[scale="large"] & {  @TODO later, type scale support
+    //    font-size: calc((#{pfe-var(font-size)} * 1.3));
+    //}
 }
 
 @mixin pfe-trigger-button-last($theme: light) {

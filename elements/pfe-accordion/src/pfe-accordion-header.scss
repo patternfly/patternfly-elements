@@ -19,6 +19,7 @@
     &[aria-expanded="true"]::after {
         @include pfe-chevron-expanded-true;
     }
+
     &[aria-expanded="false"]::after {
         @include pfe-chevron-expanded-false;
     }
@@ -69,9 +70,6 @@
 :host(.animating) {
   transition: transform 0.3s #{pfe-var(animation-timing)};
 }
-
-
-
 
 /// ===========================================================================
 /// COLOR OVERRIDES

@@ -41,12 +41,20 @@
 
 @mixin pfe-theme($theme) {
   @if $theme == dark {
-    --pfe-broadcasted--color--text:               #{pfe-color(surface--darkest--text)};
-    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darkest--link)};
-    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darkest--link--visited)};
-    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darkest--link--hover)};
-    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darkest--link--focus)};
+    --pfe-broadcasted--color--text:               #{pfe-color(text--on-dark)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(link--on-dark)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(link--visited--on-dark)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(link--hover--on-dark)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(link--focus--on-dark)};
   }
+  @if $theme == light {
+    --pfe-broadcasted--color--text:               #{pfe-color(text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(link--focus)};
+  }
+  // THEMES:
   @if $theme == darker {
     --pfe-broadcasted--color--text:               #{pfe-color(surface--darker--text)};
     --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darker--link)};
@@ -75,13 +83,7 @@
     --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--complement--link--hover)};
     --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--complement--link--focus)};
   }
-  @if $theme == light {
-    --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
-    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--link)};
-    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--link--visited)};
-    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--link--hover)};
-    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
-  }
+
   @if $theme == lighter {
     --pfe-broadcasted--color--text:               #{pfe-color(surface--lighter--text)};
     --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lighter--link)};
@@ -238,6 +240,18 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
   button {
     -webkit-appearance: button;
   }
+  h2 button {
+    font-size: calc((#{pfe-var(font-size)} * 1.5));
+  }
+  h3 button {
+    font-size: calc((#{pfe-var(font-size)} * 1.35));
+  }
+  h4 button {
+    font-size: calc((#{pfe-var(font-size)} * 1.2));
+  }
+  h5 button {
+    font-size: calc((#{pfe-var(font-size)} * 1));
+  }
   > * {
     margin: 0;
   }
@@ -250,13 +264,11 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     --pfe-accordion--border-left:        #{pfe-var(surface--border-width-thick)} #{pfe-var(surface--border-style)} transparent;
     --pfe-accordion--border-right:       #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
     --pfe-accordion--border-bottom:  0px;
-    --pfe-accordion--border-focus-color: #{pfe-color(surface--accent)};;
 
     margin: 0;
     width: 100%;
     height: auto;
     font-family: inherit;
-    font-size: calc((#{pfe-var(font-size)} * 1.1));
     font-weight: 700;
     line-height: #{pfe-var(line-height)};
     text-align: left;
@@ -270,10 +282,10 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     border-bottom: var(--pfe-accordion--border-bottom);
     border-top: 0;
 
+    &:hover,
     &:focus {
         outline: none;
-        border-left-color:  var(--pfe-accordion--border-focus-color);
-        border-right-color: var(--pfe-accordion--border-focus-color);
+        border-left-color:  var(--pfe-accordion--focus);
         z-index: 2;
     }
 

@@ -277,6 +277,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
         border-left-color:  var(--pfe-accordion--focus);
         z-index: 2;
         text-decoration: underline;
+        text-decoration-color: pfe-color(surface--border--darker);
     }
 
     &::-moz-focus-inner {
@@ -329,7 +330,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     --pfe-accordion--aux:               #{pfe-color(surface--lightest--text)};
     --pfe-accordion--focus:             #{pfe-color(surface--lightest--link)};
     --pfe-accordion--border-left:       #{pfe-var(surface--border-width-thick)} #{pfe-var(surface--border-style)} #{pfe-color(surface--lightest--link)};
-    --pfe-accordion--border-right:      #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border--lightest-link)};
+    --pfe-accordion--border-right:      #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border--lightest)};
 }
 @mixin pfe-trigger-color-lightest {
   --pfe-accordion--main:          #{pfe-color(surface--lightest)};

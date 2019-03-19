@@ -99,11 +99,8 @@ $LOCAL: band;
   --pfe-band--Padding:   calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
 }
 
-.pfe-band__body {
-    display: block;
-    margin-bottom: #{pfe-local(gutter--vertical)};
-}
 .pfe-band__header,
+.pfe-band__body,
 .pfe-band__aside,
 .pfe-band__footer {
     display: flex;
@@ -114,6 +111,7 @@ $LOCAL: band;
 
 @supports (display: grid) {
     .pfe-band__header,
+    .pfe-band__body,
     .pfe-band__aside,
     .pfe-band__footer {
         display: grid;
@@ -135,6 +133,7 @@ $LOCAL: band;
     }
     .pfe-band__body {
         grid-area: body;
+        grid-template-columns: var(--pfe-band__body--layout);
         margin-bottom: 0;
     }
 }

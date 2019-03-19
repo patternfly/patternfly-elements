@@ -35,6 +35,69 @@
   border: 0;
 }
 
+/// ===========================================================================
+/// Theme Color Vars   - use with on="dark" to affect light DOM
+/// ===========================================================================
+
+@mixin pfe-theme($theme) {
+  @if $theme == dark {
+    --pfe-broadcasted--color--text:               #{pfe-color(surface--darkest--text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darkest--link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darkest--link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darkest--link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darkest--link--focus)};
+  }
+  @if $theme == darker {
+    --pfe-broadcasted--color--text:               #{pfe-color(surface--darker--text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darker--link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darker--link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darker--link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darker--link--focus)};
+  }
+  @if $theme == darkest {
+    --pfe-broadcasted--color--text:               #{pfe-color(surface--darkest--text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darkest--link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darkest--link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darkest--link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darkest--link--focus)};
+  }
+  @if $theme == accent {
+    --pfe-broadcasted--color--text:               #{pfe-color(surface--accent--text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--accent--link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--accent--link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--accent--link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--accent--link--focus)};
+  }
+  @if $theme == complement {
+    --pfe-broadcasted--color--text:               #{pfe-color(surface--complement--text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--complement--link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--complement--link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--complement--link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--complement--link--focus)};
+  }
+  @if $theme == light {
+    --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
+  }
+  @if $theme == lighter {
+    --pfe-broadcasted--color--text:               #{pfe-color(surface--lighter--text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lighter--link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--lighter--link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--lighter--link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--lighter--link--focus)};
+  }
+  @if $theme == lightest {
+    --pfe-broadcasted--color--text:               #{pfe-color(surface--lightest--text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lightest--link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--lightest--link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--lightest--link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--lightest--link--focus)};
+  }
+}
+
 @mixin pfe-transition($properties...) {
   $return: null;
   @each $property in $properties {
@@ -237,20 +300,15 @@
 @mixin pfe-tab-vertical {
   text-align: left;
   margin: 0 -1px 0 0;
+  padding-left: calc(#{pfe-var(container-padding)} * .75);
   border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
   border-right: 0;
   position: relative;
-  padding-left: calc(#{pfe-var(container-padding)} * .75);
 }
 
 @mixin pfe-tab-vertical-selected {
   border-color-top: transparent;
   border-right: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
-}
-
-@mixin pfe-tab-earth {
-  text-align: center;
-  padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 1.5);
 }
 
 @mixin pfe-tab-earth-selected-false {
@@ -265,22 +323,22 @@
 }
 
 @mixin pfe-tab-earth-vertical-selected {
+  border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
   border-right: 0;
   border-left: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
-  border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
 }
 
 @mixin pfe-tab-earth-vertical-selected-false {
-  border-left: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} #{pfe-color(surface--lighter)};
   border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
   border-bottom: 0;
+  border-left: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} #{pfe-color(surface--lighter)};
 }
 
 @mixin pfe-tab-earth-selected {
   --pfe-tabs--main: #{pfe-color(surface--lightest)};
-  border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
   border-top: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
   border-bottom: 0;
+  border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
 }
 
 @mixin pfe-tab-earth-selected-last {

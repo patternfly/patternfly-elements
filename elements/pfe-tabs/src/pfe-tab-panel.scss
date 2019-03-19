@@ -2,6 +2,7 @@
 
 :host {
   display: block;
+  color: var(--pfe-broadcasted--color--text);
 }
 
 :host([hidden]) {

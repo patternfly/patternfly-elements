@@ -53,10 +53,6 @@ $LOCAL: tab;
 /// EARTH TAB VARIANTS
 /// ===========================================================================
 
-:host([pfe-variant="earth"]) {
-  @include pfe-tab-earth;
-}
-
 :host([pfe-variant="earth"][aria-selected="false"]) {
   @include pfe-tab-earth-selected-false;
 }

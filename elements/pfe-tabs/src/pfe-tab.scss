@@ -2,14 +2,6 @@
 
 $LOCAL: tab;
 
-/// ===========================================================================
-/// Component Specific SASS Vars
-/// ===========================================================================
-
-$pfe-tabs__tab--PaddingRight-factor:  3.375; // 54px at 16px base.
-$pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
-
-
 // Active tab styles
 
 :host(:focus),
@@ -18,62 +10,43 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 }
 
 /// ===========================================================================
-/// HORIZONTAL TAB VARIANTS
+/// HORIZONTAL TAB ORIENTATION
 /// ===========================================================================
 
-// Horizontal primary sets.
-
 :host {
-  --pfe-tabs--main:         transparent;
-  --pfe-tabs--aux:          #{pfe-color(text--deemphasized)}; // mockup has #929292
-  --pfe-tabs--link:         #{pfe-color(surface--lightest--link)};
-  --pfe-tabs--focus:        #{pfe-color(surface--lightest--link--focus)};
-  --pfe-tabs--highlight:    #{pfe-color(feedback--critical)};// mockup has #ee0000
-
-  position: relative;
-  display: block;
-  margin: 0 0 -1px;
-
-  // Padding
-  padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 1.5);
-  // Border
-  border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
-  border-bottom: 0;
-  // Inner style
-  background-color: var(--pfe-tabs--main);
-  color: var(--pfe-tabs--aux);
-  text-transform: var(--pfe-tabs__tab--TextTransform, none); // exposing this for RH
-  font-weight: #{pfe-var(font-weight--normal)};
-
-  cursor: pointer;
-  text-align: center;
+  @include pfe-tab;
 }
 
 :host([aria-selected="true"]) {
-  --pfe-tabs--aux: $pfe-color--black;
-
-  // Border
-  border: transparent;
-  border-bottom: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
-}
-
-:host([aria-selected="false"]) {
-  border: transparent;
+  @include pfe-tab-selected;
 }
 
 :host(:hover) {
-  color: $pfe-global--color--black-soft;
+  @include pfe-tab-hover;
+}
+
+/// ===========================================================================
+/// VERTICAL TAB ORIENTATION
+/// ===========================================================================
+
+:host([vertical]) {
+  @include pfe-tab-vertical;
+}
+
+:host([vertical][aria-selected="true"]) {
+  @include pfe-tab-vertical-selected;
+}
 
 /// ===========================================================================
 /// WIND TAB VARIANTS
 /// ===========================================================================
 
 :host([pfe-variant="wind"][aria-selected="true"][on="dark"]) {
-  color: #fff;
+  @include pfe-tab-wind-dark-selected;
 }
 
 :host([pfe-variant="wind"][on="dark"]:hover) {
-  color: #fff;
+  @include pfe-tab-wind-dark-selected;
 }
 
 /// ===========================================================================
@@ -81,75 +54,41 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
 /// ===========================================================================
 
 :host([pfe-variant="earth"]) {
-  text-align: center;
-  padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 1.5);
+  @include pfe-tab-earth;
 }
 
 :host([pfe-variant="earth"][aria-selected="false"]) {
-  border-left: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
-  border-bottom: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
-  border-top: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} #{pfe-color(surface--lighter)};
-  --pfe-tabs--main: #{pfe-color(surface--lighter)};
+  @include pfe-tab-earth-selected-false;
 }
 
 :host([pfe-variant="earth"][aria-selected="true"]) {
-  --pfe-tabs--main: #{pfe-color(surface--lightest)};
-  border-left: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
-  border-top: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
-  border-bottom: 0;
+  @include pfe-tab-earth-selected;
 }
 
 :host([pfe-variant="earth"][aria-selected="true"]:last-of-type) {
-    border-right: #{pfe-var(ui--border-width)} solid #{pfe-color(surface--border)};
-}
-
-
-/// ===========================================================================
-/// VERTICAL TABS
-/// ===========================================================================
-
-:host([vertical]) {
-  text-align: left;
-  margin: 0 -1px 0 0;
-  border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
-  border-right: 0;
-  position: relative;
-  padding-left: calc(#{pfe-var(container-padding)} * .75);
-}
-
-:host([vertical][aria-selected="true"]) {
-  border-color-top: transparent;
-  border-right: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
+  @include pfe-tab-earth-selected-last;
 }
 
 /// ===========================================================================
-/// EARTH TAB VERTICAL
+/// EARTH TAB VERTICAL ORIENTATION
 /// ===========================================================================
 
 :host([vertical][pfe-variant="earth"]) {
-  border-top: 0;
+  @include pfe-tab-earth-vertical;
+}
+
+:host([vertical][pfe-variant="earth"]:first-of-type) {
+  @include pfe-tab-earth-vertical-first;
 }
 
 :host([vertical][pfe-variant="earth"][aria-selected="true"]) {
-  border-right: 0;
-  border-left: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
-  border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
+  @include pfe-tab-earth-vertical-selected;
 }
 
 :host([vertical][pfe-variant="earth"][aria-selected="false"]) {
-  border-left: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} #{pfe-color(surface--lighter)};
-  border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
-  border-bottom: 0;
-  border-right: #{-pfevar(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
+  @include pfe-tab-earth-vertical-selected-false;
 }
 
-:host([vertical][pfe-variant="earth"]:last-of-type) {
-  border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
-}
-
-::slotted(h2) {
-  font-size: var(--pfe-theme--font-size);
-  font-weight: var(--pfe-theme--font-weight--normal, 500);
-  margin: 0;
-  user-select: none;
+:host([vertical][pfe-variant="earth"][aria-selected="true"]:last-of-type) {
+  @include pfe-tab-earth-vertical-selected-last;
 }

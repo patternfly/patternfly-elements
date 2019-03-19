@@ -33,10 +33,10 @@ class PfeContentSet extends PFElement {
     let settings = {};
     const variant = this.getAttribute("pfe-variant");
 
-    if (variant === "primary") {
+    if (variant === "wind") {
       settings.variant = variant;
       settings.color = "striped";
-    } else if (variant === "secondary") {
+    } else if (variant === "earth") {
       settings.variant = variant;
       settings.color = "dark";
     } else {

@@ -7,7 +7,7 @@ This container element provides a set of slots in which to render banded content
 All slots other than `pfe-band--body` are optional.  If the slot is not defined, the container tag for it will not be rendered in the template.
 
 - `pfe-band--header`: This slot renders at the top of the container and generally contains the title, headline, and or subheadline content.  Other possible candidates include a set of social sharing links or tags that describe the content below. The recommended tag for this slot is the `header` tag with h-level or p tags contained within it.
-- **Default slot**: This unnamed slot should contain the bulk of the content in this element.  The recommended wrapper within this slot is the `article` tag, but a div could also work to contain text elements like paragraphs. If you are rendering non-text components such as cards or images, no wrapper is necessary, and these items will make use of the grid layout.  Any content not assigned to a named slot will be rendered here.
+- **Default slot**: This unnamed slot should contain the bulk of the content in this element.  The recommended wrapper within this slot is the `article` tag, but a `div` could also work to contain text elements like paragraphs. If you are rendering non-text components such as cards or images, no wrapper is necessary, and these items will make use of the grid layout.  Any content not assigned to a named slot will be rendered here.
 - `pfe-band--footer`: This slot is typically used for calls-to-action or footnotes and is pushed to the bottom of the container.  Recommended tags include `pfe-cta` or `footer`.
 - `pfe-band--aside`: This slot is for content that should be rendered to the right or left of the default slot on desktop.  Asides often contain `pfe-card` or interest forms which provide users a little more information or context for the band.
 
@@ -27,7 +27,7 @@ All slots other than `pfe-band--body` are optional.  If the slot is not defined,
         <p>Ut wisi enim ad minim veniam.</p>
     </pfe-card>
 
-    <footer slot="pfe-band--footer" class="custom-footnote">
+    <footer slot="pfe-band--footer">
         <pfe-cta slot="footer" priority="tertiary">
             <a href="#">Learn more</a>
         </pfe-cta>

@@ -4,8 +4,6 @@ import * as tools from "../../../.storybook/utils.js";
 
 import PfeCard from "../pfe-card";
 
-// import cpTheme from "../../../themes/cp-theme/cp-theme.js";
-
 const stories = storiesOf("Card", module);
 
 // Define the template to be used

@@ -12,7 +12,6 @@ tags = [ "theme" ]
 <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
 <link rel="stylesheet" type="text/css" href="../pfe-layouts.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="../../cp-themeset/cp-themeset.css">
 
 <style>
 

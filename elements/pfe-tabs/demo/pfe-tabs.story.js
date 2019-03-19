@@ -4,8 +4,6 @@ import * as tools from "../../../.storybook/utils.js";
 
 import PfeTabs from "../pfe-tabs.js";
 
-// import cpTheme from "../../../themes/cp-theme/cp-theme.js";
-
 const stories = storiesOf("Tabs", module);
 
 const defaultTab = tools.autoHeading(true);

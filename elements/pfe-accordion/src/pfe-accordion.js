@@ -65,7 +65,7 @@ class PfeAccordion extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["theme", "color"];
+    return ["theme", "color", "on"];
   }
 
   static get cascadingAttributes() {

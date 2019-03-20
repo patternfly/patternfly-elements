@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PatternFly Element | pfe-pagination Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.6/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.6/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../pfe-pagination.umd.js'])</script>
+    <!-- <script type="module" src="../pfe-pagination.js"></script> -->
+    <style>
+      pfe-pagination {
+        margin-bottom: 32px;
+      }
+    </style>
+  </head>
+  <body unresolved>
+    <h1>&lt;pfe-pagination&gt;</h1>
+    <pfe-pagination current-page="1" total-pages="15" show-jump>
+      <nav>
+        <a href="#" control="previous">&#8592;</a>
+        <a href="#" control="next">&#8594;</a>
+      </nav>
+    </pfe-pagination>
+
+    <pfe-pagination current-page="1" total-pages="15" show-jump>
+      <nav>
+        <a href="#" control="previous">Previous</a>
+        <a href="#" control="next">Next</a>
+      </nav>
+    </pfe-pagination>
+
+    <pfe-pagination current-page="1" total-pages="5" show-pages>
+      <nav>
+        <a href="#" control="previous">Previous</a>
+        <a href="#" control="next">Next</a>
+      </nav>
+    </pfe-pagination>
+
+    <pfe-pagination current-page="1" total-pages="9" show-pages>
+      <nav>
+        <a href="#" control="previous">Previous</a>
+        <a href="#" control="next">Next</a>
+      </nav>
+    </pfe-pagination>
+
+    <pfe-pagination current-page="1" total-pages="15" show-pages>
+      <nav>
+        <a href="#" control="previous">Previous</a>
+        <a href="#" control="next">Next</a>
+      </nav>
+    </pfe-pagination>
+
+    <pfe-pagination current-page="1" total-pages="30" show-jump show-pages>
+      <nav>
+        <a href="#" control="previous">&#8592;</a>
+        <a href="#" control="next">&#8594;</a>
+      </nav>
+    </pfe-pagination>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<nav role="navigation" aria-label="Pagination">
+  <ul>
+    ${this.showJump ? `
+      ${!this.showPages ? `
+        <li><a href="#" id="previous">${this.previousText}</a></li>
+        <li><a href="#" id="next">${this.nextText}</a></li>
+      ` : ``}
+      <li id="jump">
+        <form>
+          <input
+            type="number"
+            id="currentPageInput"
+            value="${this.currentPage}"
+            min="1"
+            max="${this.totalPages}"> of
+          <a href="#" id="lastPage" page="${this.totalPages}">${this.totalPages}</a>
+        </form>
+      </li>
+    ` : ``}
+    ${this.showPages ? `
+      <li><a href="#" id="previous">${this.previousText}</a></li>
+      ${this.pages.map(page => `
+        <li>
+          ${page.ellipsize ? `
+            <div class="ellipses">${page.text}</div>
+          ` : `
+            <a
+              href="#"
+              class="page"
+              page="${page.text}"
+              aria-label="${page.ariaLabel}"
+              ${this.currentPage == page.text ? ` aria-current="true"` : `` }>
+              ${page.text}
+            </a>
+          `}
+        </li>
+      `).join("\n")}
+      <li><a href="#" id="next">${this.nextText}</a></li>
+    `: ``}
+  </ul>
+</nav>

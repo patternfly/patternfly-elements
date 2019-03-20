@@ -1,0 +1,131 @@
+@import "../../pfe-sass/pfe-sass";
+
+/// ===========================================================================
+/// Component Specific SASS Vars
+/// ===========================================================================
+
+$pfe-pagination_a--padding-factor: 0.75;
+$pfe-pagination_a--size-factor: 2.5;
+
+/// ===========================================================================
+/// DEFUALT PAGINATION
+/// ===========================================================================
+
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:focus:not(:focus-visible) {
+  // Thanks, Lea Verou!
+  outline: none;
+}
+
+nav {
+  @include pfe-box-sizing();
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: baseline;
+
+    li {
+      margin: 1px;
+      display: flex;
+
+      .ellipses {
+        display: block;
+        padding: 0
+          calc(#{pfe-var(font-size)} * #{$pfe-pagination_a--padding-factor});
+        line-height: calc(
+          #{pfe-var(font-size)} * #{$pfe-pagination_a--size-factor}
+        );
+        min-height: calc(
+          #{pfe-var(font-size)} * #{$pfe-pagination_a--size-factor}
+        );
+        min-width: calc(
+          #{pfe-var(font-size)} * #{$pfe-pagination_a--size-factor}
+        );
+      }
+
+      & > a {
+        display: block;
+        padding: 0
+          calc(#{pfe-var(font-size)} * #{$pfe-pagination_a--padding-factor});
+        line-height: calc(
+          #{pfe-var(font-size)} * #{$pfe-pagination_a--size-factor}
+        );
+        min-height: calc(
+          #{pfe-var(font-size)} * #{$pfe-pagination_a--size-factor}
+        );
+        min-width: calc(
+          #{pfe-var(font-size)} * #{$pfe-pagination_a--size-factor}
+        );
+        border: pfe-var(ui--border-width) pfe-var(ui--border-style) transparent;
+        background: var(
+          --pfe-theme--color--ui-subtle,
+          $pfe-color--gray-50
+        ); // May need to resolve this with maps
+        color: var(
+          --pfe-theme--color--ui-subtle--text,
+          $pfe-color--text
+        ); // May need to resolve this with maps
+        text-align: center;
+        text-decoration: none;
+        vertical-align: middle;
+
+        &:hover,
+        &:focus,
+        &:active {
+          background: pfe-color(ui-base);
+          color: pfe-color(ui-base--text);
+        }
+
+        &[aria-current] {
+          background: pfe-color(ui-complement);
+          color: pfe-color(ui-complement--text);
+        }
+      }
+
+      &#next {
+        order: 10;
+      }
+    }
+  }
+}
+
+#jump {
+  margin: 0 pfe-var(container-spacer);
+
+  a {
+    color: pfe-color(ui-link);
+    text-decoration: none;
+
+    &:hover {
+      color: pfe-color(ui-link--hover);
+      text-decoration: underline;
+    }
+
+    &:focus {
+      color: pfe-color(ui-link--focus);
+      text-decoration: underline;
+    }
+  }
+}
+
+#currentPageInput {
+  margin-right: calc(#{pfe-var(content-spacer)} * 0.5);
+  padding: 0 calc(#{pfe-var(font-size)} * #{$pfe-pagination_a--padding-factor});
+  line-height: calc(#{pfe-var(font-size)} * #{$pfe-pagination_a--size-factor});
+  min-height: calc(#{pfe-var(font-size)} * #{$pfe-pagination_a--size-factor});
+  border: pfe-var(ui--border-width) pfe-var(ui--border-style)
+    pfe-color(surface--border);
+  box-shadow: pfe-var(box-shadow--input);
+  width: 4em;
+  font-size: inherit;
+}

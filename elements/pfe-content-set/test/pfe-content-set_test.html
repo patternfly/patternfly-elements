@@ -83,7 +83,6 @@
           const secondPanel = pfeAccordion.querySelector('pfe-accordion-panel:nth-child(4)');
 
           assert.isTrue(firstHeader.hasAttribute('aria-controls'));
-          assert.equal(firstHeader.getAttribute('color'), 'lightest');
           assert.isTrue(thirdHeader.hasAttribute('aria-controls'));
           assert.isTrue(firstPanel.hasAttribute('aria-labelledby'));
           assert.isTrue(secondPanel.hasAttribute('aria-labelledby'));

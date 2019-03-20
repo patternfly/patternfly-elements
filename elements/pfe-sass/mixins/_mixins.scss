@@ -271,10 +271,14 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     border-bottom: var(--pfe-accordion--border-bottom);
     border-top: 0;
 
-    &:hover,
-    &:focus {
+    &:hover {
         outline: none;
         border-left-color:  var(--pfe-accordion--focus);
+        z-index: 2;
+    }
+
+    &:focus {
+        outline: none;
         z-index: 2;
         text-decoration: underline;
         text-decoration-color: pfe-color(surface--border--darker);

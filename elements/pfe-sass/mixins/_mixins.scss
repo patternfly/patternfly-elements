@@ -460,6 +460,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
   @else {
     box-shadow: 0 5px #{pfe-var(surface--border-width-thick)} rgba(140, 140, 140, 0.35);
     border-left-color: #{pfe-color(surface--lightest--link)};
+    background-color: #{pfe-color(surface--lightest)};
     border-right-color: #{pfe-color(surface--border--lightest)};
     border-bottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border--lightest)};
   }

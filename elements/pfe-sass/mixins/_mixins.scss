@@ -250,7 +250,7 @@
 
 @mixin pfe-tabs-panel {
   padding: 0;
-  padding-top: #{pfe-var(container-padding)};
+  //padding-top: #{pfe-var(container-padding)};
 }
 
 @mixin pfe-tabs-panel-vertical {

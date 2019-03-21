@@ -223,7 +223,7 @@
 }
 
 /// ===========================================================================
-/// Tab-specific SASS Vars
+/// Tab-specific SASS mixins
 /// ===========================================================================
 @mixin pfe-tabs-vertical {
   padding-top: #{pfe-var(container-padding)};
@@ -250,14 +250,12 @@
 
 @mixin pfe-tabs-panel {
   padding: 0;
-  //padding-top: #{pfe-var(container-padding)};
 }
 
 @mixin pfe-tabs-panel-vertical {
   padding: 0;
   width: 77.78%;
   padding-right: #{pfe-var(container-padding)};
-  padding-left: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__panel--PaddingLeft-factor});
 }
 
 @mixin pfe-tab {
@@ -329,30 +327,42 @@
 }
 
 @mixin pfe-tab-earth-vertical-selected-false {
-  border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-  border-bottom: 0;
-  border-left: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} #{pfe-color(surface--lighter)};
+    border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    border-bottom: 0;
+    border-left: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} #{pfe-color(surface--lighter)};
 }
 
 @mixin pfe-tab-earth-selected {
-  --pfe-tabs--main: #{pfe-color(surface--lightest)};
-  border-top: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
-  border-bottom: 0;
-  border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    --pfe-tabs--main: #{pfe-color(surface--lightest)};
+    border-top: #{pfe-var(ui--tab-highlight-width)} #{pfe-var(ui--tab-highlight-style)} var(--pfe-tabs--highlight);
+    border-bottom: 0;
+    border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
 }
 
 @mixin pfe-tab-earth-selected-last {
-  border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
 }
 
 @mixin pfe-tab-earth-vertical-selected-last {
-  border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
 }
 
 @mixin pfe-tab-earth-vertical-first {
-  border-top: 0;
+    border-top: 0;
 }
 
 @mixin pfe-tab-wind-dark-selected {
-  --pfe-tabs--aux: #{pfe-color(ui-tab--dark-hover-color)};
+    --pfe-tabs--aux: #{pfe-color(ui-tab--dark-hover-color)};
+}
+
+@mixin pfe-tab-panel-container {
+    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    border-top: none;
+    padding: #{pfe-var(container-spacer)};
+    padding: calc(#{pfe-var(container-spacer)} * 2);
+}
+
+@mixin pfe-tab-panel-container-vertical {
+    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)}  #{pfe-color(surface--border)};
+    border-left: none;
 }

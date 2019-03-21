@@ -55,7 +55,7 @@ You may also specify multiple elements.  For example, `pfe-card` and `pfe-cta` a
 npm run dev pfe-card pfe-cta
 ```
 
-## Preview Your Changes
+## Preview your changes
 
 From the root of the PatternFly Elements repository, run the start command which will open a browser to the `/doc` directory.
 

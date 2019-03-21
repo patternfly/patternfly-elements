@@ -480,5 +480,7 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
 }
 
 @mixin pfe-accordion-panel-container-inset  {
+  box-sizing: border-box;
   padding: 0 #{pfe-var(container-spacer)} #{pfe-var(container-spacer)};
+  width: 100%;
 }

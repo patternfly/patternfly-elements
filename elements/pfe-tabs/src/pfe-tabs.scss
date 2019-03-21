@@ -10,15 +10,16 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 
 :host {
   display: block;
+
+  .panels {
+    @include pfe-tabs-panel;
+  }
 }
 
 .tabs {
   @include pfe-tabs-tabset;
 }
 
-.panels {
-  @include pfe-tabs-panel;
-}
 
 /// ===========================================================================
 /// VERTICAL ORIENTATION

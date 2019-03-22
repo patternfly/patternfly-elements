@@ -8,11 +8,11 @@
   @include  pfe-accordion-header;
 
   button {
-    @include pfe-trigger-button; // border 3px
-    @include pfe-trigger-color-light;
+    @include pfe-trigger-button($type: accordion); // border 3px
+    @include pfe-trigger-color-light($type: accordion);
 
     &[aria-expanded="true"] {
-        @include pfe-trigger-color-light-expanded;
+        @include pfe-trigger-color-light-expanded($type: accordion);
         @include pfe-trigger-expanded;
     }
 
@@ -77,10 +77,10 @@
 
 :host([on="dark"]) {
   button {
-    @include pfe-trigger-color-dark;
+    @include pfe-trigger-color-dark($type: accordion);
 
     &[aria-expanded="true"] {
-      @include pfe-trigger-color-dark-expanded;
+      @include pfe-trigger-color-dark-expanded($type: accordion);
     }
   }
 }

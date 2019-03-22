@@ -46,3 +46,6 @@ test/.wct-kludge
 # Temp files
 *~
 *.swp
+
+# Kube assets
+docs/resources/_gen/assets

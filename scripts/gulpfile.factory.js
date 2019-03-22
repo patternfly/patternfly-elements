@@ -66,14 +66,6 @@ module.exports = function factory({
         .pipe(sourcemaps.write(paths.compiled))
         // Output the unminified file
         .pipe(dest(paths.compiled))
-    );
-  });
-
-  task("minify:css", () => {
-    return (
-      src(["*.css"], {
-        cwd: paths.compiled
-      })
         // Minify the file
         .pipe(
           cleanCSS({
@@ -301,7 +293,7 @@ module.exports = function factory({
       "clean",
       "compile:styles",
       // "fallback:css",
-      "minify:css",
+      // "minify:css",
       "merge",
       ...prebundle,
       "compile",

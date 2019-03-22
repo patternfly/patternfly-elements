@@ -10,8 +10,8 @@ $LOCAL: accordion;
   @include  pfe-accordion-header;
 
   button {
-    @include pfe-trigger-button;
     @include pfe-trigger-color($component-name: accordion);
+    @include pfe-trigger-button;
 
     &[aria-expanded="true"] {
       @include pfe-trigger-color-expanded($component-name: accordion);

@@ -2,6 +2,20 @@
 
 $LOCAL: band;
 
+%flex-fallback {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    margin-bottom: #{pfe-local(gutter--vertical)};
+}
+
+%grid-layout {
+  display: grid;
+  grid-row-gap: #{pfe-local(gutter--vertical)};
+  grid-column-gap: #{pfe-local(gutter--horizontal)};
+  margin-bottom: 0;
+}
+
 :host {
   // Default spacing values
   --pfe-band--Padding--vertical:               calc( #{pfe-var(container-spacer)} * 4);
@@ -53,9 +67,7 @@ $LOCAL: band;
 
   // Wrapper sets padding and background visuals
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-items: flex-start;
+  @extend %flex-fallback;
 
   // Padding 
   padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
@@ -95,41 +107,6 @@ $LOCAL: band;
 // thinner padding on top & bottom
 :host([pfe-size="small"]) {
   --pfe-band--Padding:   calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
-}
-
-@each $slot in (header, body, footer, aside) {
-  // Attach styles to the shadow element slot
-  .pfe-band__#{$slot} {
-    max-width: max-content;
-
-    // Set up the flex styles for each region
-    display:     flex;
-    flex-flow:   column nowrap;
-    align-items: flex-start;
-    // Grid support styles
-    @supports (display: grid) {
-      grid-area: #{$slot};
-      // Set up the internal grid system for each slot
-      display: grid;
-      grid-row-gap: #{pfe-local(gutter--vertical)};
-      grid-column-gap: #{pfe-local(gutter--horizontal)};
-      grid-template-columns: #{pfe-local(
-        $cssvar: layout,
-        $region: $slot
-      )};
-    }
-  }
-}
-
-::slotted(*:not(:last-child)),
-::slotted(* > *:not(:last-child)) {
-  margin-bottom: #{pfe-local(gutter--vertical)};
-  @supports (display: grid) {
-    margin-bottom: 0;
-  }
-}
-::slotted(* > *) {
-  margin: 0;
 }
 
 .pfe-band {
@@ -269,5 +246,34 @@ $LOCAL: band;
       }
     }
 
+    position:  relative;
+    margin:    0 auto;
+    width: #{pfe-local(Width)};
+    @extend %flex-fallback;
+
+    // Grid support styles
+    @supports (display: grid) {
+      @extend %grid-layout;
+      grid-template-columns: #{pfe-local(layout)};
+      grid-template-rows:    max-content;
+      grid-template-areas:   var(--pfe-band--gridTemplateArea_mobile);
+      @media (min-width: #{pfe-breakpoint(md)}) {
+        grid-template-areas: var(--pfe-band--gridTemplateArea_desktop);
+      }
+    }
+  }
+  // For each section in the band layout
+  @each $section in (header, body, aside, footer) {
+    &__#{$section} { // i.e., pfe-band__header
+      @extend %flex-fallback; // Add the flex fallback styles
+      // Apply the standard grid
+      @supports (display: grid) {
+          @extend %grid-layout;
+          // Apply the section as a named grid-area
+          grid-area: #{$section};
+          // Allow users to hook into the layout with custom columns
+          grid-template-columns: var(--pfe-band__#{$section}--layout);
+      }
+    }
   }
 }

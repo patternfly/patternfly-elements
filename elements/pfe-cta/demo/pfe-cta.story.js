@@ -4,8 +4,6 @@ import * as tools from "../../../.storybook/utils.js";
 
 import PfeCta from "../pfe-cta";
 
-// import cpTheme from "../../../themes/cp-theme/cp-theme.js";
-
 const stories = storiesOf("Call to action", module);
 
 // Define the template to be used

@@ -176,38 +176,6 @@
   }
 }
 
-
-/// RH Define Vars
-/// Helps define the CSS Var madness, making it easier for devs!
-/// @param {String} $this-component-var - Component specific variable name
-/// @param {String} $this-theme-var - Theme variable name
-/// @param {String} $this-fallback - Fallback color
-///
-/// ---------------------------------------------------------------------------
-///
-/// SASS fallback based on PFElements style
-/// $pfe-global[--context][--state][--PropertyCamelCase]
-
-/// Theme level Var
-/// --pfe-theme[--context][--state][--PropertyCamelCase]
-/// --pfe-theme--heading--hover--BackgroundColor
-
-/// Component Var for theming specific cases
-/// --pfe-[component-block][__element][--context][--state][--PropertyCamelCase]
-/// --pfe-teaser__title--link-color--visited
-/// --pfe-teaser__subtitle--link-color--visited
-
-/// Defined locally for sanity
-/// --pfe-local-[component-block][__element][--context][--state][--PropertyCamelCase]
-/// --pfe-local-cta--link-color--inverted
-///
-/// ---------------------------------------------------------------------------
-///
-///                     ↓ component,         ↓ theme,         ↓ fallback
-@mixin pfe-define-vars($this-component-var, $this-theme-var, $this-fallback) {
-  --pfe-local-#{$this-component-var}: var(--pfe-#{$this-component-var}, var(--pfe-theme--#{$this-theme-var}, #{$this-fallback}));
-}
-
 // Mixin for building slot selectors
 @mixin pfe-slot($slot-name, $selector: "") {
   // This logic makes it much easier to style default slots in a loop
@@ -227,13 +195,13 @@
 /// ===========================================================================
 /// Accordion Specific SASS Vars
 /// ===========================================================================
-$pfe-expand-button--LineHeight:      1.5;
-$pfe-expand_chevron--size:           0.4em;
-$pfe-expand_chevron--weight:         0.1em;
-$pfe-expand_chevron--placement:      ($pfe-expand_button--LineHeight / 2) - ($pfe-expand_chevron--size / 2);
-$pfe-expand_button--Padding--factor:  0.75;
-$pfe-expand_button--Padding: #{pfe-var(container-spacer)};
-$pfe-expand_button--Padding--wide: calc(#{pfe-var(container-spacer)} * 1.5);
+$pfe-expand_button--LineHeight:      1.5;
+$pfe-expand_button--Padding--factor: .75;
+$pfe-expand_button--Padding--wide:   calc(#{pfe-var(container-spacer)} * 1.5);
+
+$pfe-expand_chevron--size:           .4em;
+$pfe-expand_chevron--weight:         .1em;
+$pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe-expand_chevron--size / 2};
 
 @mixin pfe-accordion-header {
   display: block;
@@ -242,7 +210,7 @@ $pfe-expand_button--Padding--wide: calc(#{pfe-var(container-spacer)} * 1.5);
   }
 }
 
-@mixin pfe-trigger-button($theme: light, $align: left, $component-name) {
+@mixin pfe-trigger-button($component-name, $theme: light, $align: left) {
     --pfe-#{$component-name}--main:             transparent;
     --pfe-#{$component-name}--aux:              #{pfe-color(surface--lightest--text)};
     --pfe-#{$component-name}--focus:            #{pfe-color(surface--lightest--link)};
@@ -286,9 +254,9 @@ $pfe-expand_button--Padding--wide: calc(#{pfe-var(container-spacer)} * 1.5);
         border: 0;
     }
     @if $align == right {
-        padding: $pfe-expand_button--Padding $pfe-expand_button--Padding--wide $pfe-expand_button--Padding 50px;
+        padding: #{pfe-var(container-spacer)} $pfe-expand_button--Padding--wide #{pfe-var(container-spacer)} 50px;
     } @else {
-        padding: $pfe-expand_button--Padding 50px $pfe-expand_button--Padding $pfe-expand_button--Padding--wide;
+        padding: #{pfe-var(container-spacer)} 50px #{pfe-var(container-spacer)} $pfe-expand_button--Padding--wide;
     }
     // @TODO later, type scale support
     //[scale="large"] & {
@@ -324,7 +292,7 @@ $pfe-expand_button--Padding--wide: calc(#{pfe-var(container-spacer)} * 1.5);
     border-bottom: 0;
 }
 
-@mixin pfe-trigger-color($theme: light, $component-name) {
+@mixin pfe-trigger-color($component-name, $theme: light) {
   @if $theme == dark {
     --pfe-#{$component-name}--main:         transparent;
     --pfe-#{$component-name}--aux:          #{pfe-color(surface--darkest--text)};
@@ -338,7 +306,7 @@ $pfe-expand_button--Padding--wide: calc(#{pfe-var(container-spacer)} * 1.5);
   }
 }
 
-@mixin pfe-trigger-color-expanded($theme: light, $component-name) {
+@mixin pfe-trigger-color-expanded($component-name, $theme: light) {
   @if $theme == dark {
     --pfe-#{$component-name}--main:         #{pfe-color(surface--darker)};
     --pfe-#{$component-name}--aux:          #{pfe-color(surface--darkest--text)};
@@ -413,7 +381,6 @@ $pfe-expand_button--Padding--wide: calc(#{pfe-var(container-spacer)} * 1.5);
   overflow: hidden;
   will-change: height;
   border-color: transparent;
-  overflow: hidden;
 }
 
 @mixin pfe-accordion-panel-expanded {
@@ -441,6 +408,6 @@ $pfe-expand_button--Padding--wide: calc(#{pfe-var(container-spacer)} * 1.5);
 
 @mixin pfe-accordion-panel-container-inset  {
   box-sizing: border-box;
-  padding: 0 #{$pfe-expand_button--Padding--wide} #{$pfe-expand_button--Padding};
+  padding: 0 #{$pfe-expand_button--Padding--wide} #{pfe-var(container-spacer)};
   width: 100%;
 }

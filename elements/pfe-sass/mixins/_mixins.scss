@@ -219,7 +219,7 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     width: 100%;
     height: auto;
     font-family: inherit;
-    font-weight: 700;
+    font-weight: #{pfe-var(font-weight--bold)};
     text-align: left;
     cursor: pointer;
     z-index: 1;
@@ -237,7 +237,7 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
 
     &:hover {
         outline: none;
-        border-left-color:  #{pfe-local(BorderLeftColor--focus)};
+        border-left-color: #{pfe-local(BorderLeftColor--focus)};
         z-index: 2;
     }
 
@@ -251,15 +251,12 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     &::-moz-focus-inner {
         border: 0;
     }
+
     @if $align == right {
         padding: #{$pfe-expand_button--padding} #{$pfe-expand_button--padding--wide} #{$pfe-expand_button--padding} 50px;
     } @else {
         padding: #{$pfe-expand_button--padding} 50px #{$pfe-expand_button--padding} #{$pfe-expand_button--padding--wide};
     }
-    // @TODO later, type scale support
-    //[scale="large"] & {
-    //    font-size: calc((#{pfe-var(font-size)} * 1.3));
-    //}
 }
 
 @mixin pfe-trigger-button-last($theme: light) {
@@ -300,16 +297,17 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
   @if $theme == dark {
     --pfe-#{$component-name}--main:         #{pfe-color(surface--darker)};
     --pfe-#{$component-name}--aux:          #{pfe-color(surface--darkest--text)};
+    --pfe-#{$component-name}--BorderLeft:   #{pfe-var(surface--border-width-heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
+    --pfe-#{$component-name}--BorderRight:  #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
+
     --pfe-#{$component-name}--BorderLeftColor--focus: #{pfe-color(surface--lightest)};
-    --pfe-#{$component-name}--BorderLeft:  #{pfe-var(surface--border-width-heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
-    --pfe-#{$component-name}--BorderRight: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
   }
   @else {
     --pfe-#{$component-name}--main:              #{pfe-color(surface--lightest)};
     --pfe-#{$component-name}--aux:               #{pfe-color(surface--lightest--text)};
     --pfe-#{$component-name}--focus:             #{pfe-color(surface--lightest--link)};
-    --pfe-#{$component-name}--BorderLeft:       #{pfe-var(surface--border-width-heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--lightest--link)};
-    --pfe-#{$component-name}--BorderRight:      #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border--lightest)};
+    --pfe-#{$component-name}--BorderLeft:        #{pfe-var(surface--border-width-heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--lightest--link)};
+    --pfe-#{$component-name}--BorderRight:       #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border--lightest)};
   }
 }
 
@@ -323,8 +321,8 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
   top: calc((#{pfe-var(container-spacer)} * #{$pfe-expand_button--padding--factor}) + #{$pfe-expand_chevron--placement} );
   display: block;
   border-style: #{pfe-var(surface--border-style)};
-  height: $pfe-expand_chevron--size;
-  width: $pfe-expand_chevron--size;
+  height: #{$pfe-expand_chevron--size};
+  width:  #{$pfe-expand_chevron--size};
   text-align: center;
   transition: transform 0.15s;
   @if $state {

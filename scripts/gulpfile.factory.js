@@ -118,7 +118,11 @@ module.exports = function factory({
 
   // Delete the temp directory
   task("clean", () => {
-    return src([`${elementName}*.{js,css,map}`], {
+    return src([
+      "*.{js,css,map}",
+      "!gulpfile.js",
+      "!rollup.config.js"
+    ], {
       cwd: paths.compiled,
       read: false,
       allowEmpty: true
@@ -267,6 +271,16 @@ module.exports = function factory({
       .pipe(dest(paths.compiled));
   });
 
+  task("copy", () => {
+    return src([
+      "*.js",
+      `!${elementName}.js`
+    ], {
+      cwd: paths.source
+    })
+      .pipe(dest(paths.compiled));
+  });
+
   task("compile", () => {
     return src(`${elementName}.js`, {
       cwd: paths.compiled
@@ -295,6 +309,7 @@ module.exports = function factory({
       // "fallback:css",
       // "minify:css",
       "merge",
+      "copy",
       ...prebundle,
       "compile",
       "bundle"

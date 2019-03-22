@@ -23,7 +23,7 @@
 }
 
 .container {
-  @include pfe-accordion-panel-container-inset;
+  @include pfe-accordion-panel-container-inset($align: left);
 }
  
 :host(:last-of-type[expanded]) {

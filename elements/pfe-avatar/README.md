@@ -5,13 +5,13 @@ PFElements Avatar Element
 ## Usage
 
 ```html
-<pfe-avatar name="Eleanore Stillwagon"></pfe-avatar>
+<pfe-avatar pfe-name="Eleanore Stillwagon"></pfe-avatar>
 
-<pfe-avatar name="Libbie Koscinski" shape="rounded" pattern="squares"></pfe-avatar>
+<pfe-avatar pfe-name="Libbie Koscinski" pfe-shape="rounded" pfe-pattern="squares"></pfe-avatar>
 
-<pfe-avatar name="Blanca Rohloff" pattern="triangles"></pfe-avatar>
+<pfe-avatar pfe-name="Blanca Rohloff" pfe-pattern="triangles"></pfe-avatar>
 
-<pfe-avatar name="Edwardo Lindsey" src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg"></pfe-avatar>
+<pfe-avatar pfe-name="Edwardo Lindsey" pfe-src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg"></pfe-avatar>
 ```
 
 ## Attributes

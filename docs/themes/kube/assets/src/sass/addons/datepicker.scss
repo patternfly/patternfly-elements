@@ -1,0 +1,199 @@
+// DATEPICKER
+// ---------------------------------------------------------------------------
+@import '../vars';
+@import '../mixins';
+
+// VARS
+$datepicker-background-color: #fff !default;
+$datepicker-border-radius: $border-radius !default;
+$datepicker-border-width: 0 !default;
+$datepicker-border-style: solid !default;
+$datepicker-border-color: transparent !default;
+$datepicker-box-shadow: $shadow-2 !default;
+$datepicker-padding: $space-20 !default;
+
+// controls
+$datepicker-controls-text-color: rgba($color-black, .75) !default;
+
+// month
+$datepicker-month-font-size: 12px !default;
+$datepicker-month-text-color: $color-black !default;
+
+// weekdays
+$datepicker-weekdays-font-size: 11px !default;
+$datepicker-weekdays-text-color: $color-black !default;
+
+// cell
+$datepicker-cell-font-size: 12px !default;
+$datepicker-cell-border-color: #fff !default;
+$datepicker-cell-background-color: #fff !default;
+$datepicker-cell-text-color: $color-black !default;
+$datepicker-cell-hover-background-color: $color-focus !default;
+$datepicker-cell-hover-text-color: #fff !default;
+
+// out
+$datepicker-out-background-color: transparent !default;
+$datepicker-out-text-color: rgba($color-black, .4) !default;
+$datepicker-out-hover-background-color: $color-focus !default;
+$datepicker-out-hover-text-color: #fff !default;
+
+// selected
+$datepicker-selected-border-color: #fff !default;
+$datepicker-selected-background-color: $color-focus !default;
+$datepicker-selected-text-color: #fff !default;
+$datepicker-selected-hover-text-color: #fff !default;
+
+// disabled
+$datepicker-disabled-background-color: #fff !default;
+$datepicker-disabled-text-color: rgba($color-black, .3) !default;
+
+// SCSS
+.datepicker {
+	position: absolute;
+	background-color: $datepicker-background-color;
+	padding: $datepicker-padding;
+	border: $datepicker-border-width $datepicker-border-style $datepicker-border-color;
+	border-radius: $datepicker-border-radius;
+	box-shadow: $datepicker-box-shadow;
+	&.is-embed {
+        border: 1px solid rgba($color-black, .05);
+    	max-width: 288px;
+		position: static;
+		box-shadow: none;
+	}
+}
+.datepicker-head {
+    display: flex;
+    align-items: center;
+    margin-top: -4px;
+    margin-bottom: 8px;
+}
+.datepicker-control {
+	width: 24px;
+	height: 24px;
+	color: $datepicker-controls-text-color;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.datepicker-month-box {
+    flex: 1;
+	font-size: $datepicker-month-font-size;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: $datepicker-month-text-color;
+	text-align: center;
+    padding: 8px 0 4px 0;
+	& span {
+    	margin: 0 1px;
+	}
+}
+.datepicker-select-year {
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+	height: 24px;
+	line-height: 24px;
+	& .datepicker-select-year-caret {
+		position: relative;
+		top: -1px;
+		display: inline-block;
+		width: 0;
+		height: 0;
+		margin-left: .3em;
+		vertical-align: middle;
+		border-top: 4px solid;
+		border-right: 4px solid transparent;
+		border-left: 4px solid transparent;
+	}
+	& select {
+		z-index: 2;
+		position: absolute;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		height: 24px;
+		-webkit-appearance: menulist-button;
+		-moz-appearance: menulist-button;
+		-ms-appearance: menulist-button;
+		appearance: menulist-button;
+	}
+}
+.datepicker-weekdays {
+	white-space: nowrap;
+	& span {
+		display: inline-block;
+		text-align: center;
+		width: 36px;
+		height: 24px;
+        margin-top: -1px;
+    	margin-left: -1px;
+		font-size: $datepicker-weekdays-font-size;
+		font-weight: bold;
+		color: $datepicker-weekdays-text-color;
+	}
+}
+.datepicker-row {
+    @include clearfix;
+}
+.datepicker-cell {
+	float: left;
+	text-align: center;
+	width: 36px;
+	height: 32px;
+	line-height: 32px;
+	margin-top: -1px;
+	margin-left: -1px;
+
+	font-size: $datepicker-cell-font-size;
+	border: 1px solid $datepicker-cell-border-color;
+
+	& a {
+		display: block;
+		color: $datepicker-cell-text-color;
+		line-height: 31px;
+		text-decoration: none;
+		background: $datepicker-cell-background-color;
+    }
+    & a:hover {
+		background: $datepicker-cell-hover-background-color;
+		color: $datepicker-cell-hover-text-color;
+	}
+	&.is-out {
+        & a {
+            background-color: $datepicker-out-background-color;
+            color: $datepicker-out-text-color;
+        }
+        & a:hover {
+		    color: $datepicker-out-hover-text-color;
+		    background-color: $datepicker-out-hover-background-color;
+		}
+	}
+	&.is-selected {
+
+    	border-color: $datepicker-selected-border-color;
+
+    	& a {
+    		background: $datepicker-selected-background-color;
+    		color: $datepicker-selected-text-color;
+        }
+        & a:hover {
+			color: $datepicker-selected-hover-text-color;
+		}
+	}
+	&.is-disabled {
+    	& a,
+        & a:hover {
+		    background-color: $datepicker-disabled-background-color;
+            color: $datepicker-disabled-text-color;
+            cursor: default;
+        }
+	}
+
+}

@@ -1,5 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: accordion;
+
 /// ===========================================================================
 /// DEFAULT ACCORDION HEADING
 /// ===========================================================================
@@ -8,52 +10,24 @@
   @include  pfe-accordion-header;
 
   button {
-    @include pfe-trigger-button($type: accordion); // border 3px
-    @include pfe-trigger-color-light($type: accordion);
+    @include pfe-trigger-color($component-name: accordion);
+    @include pfe-trigger-button;
 
     &[aria-expanded="true"] {
-        @include pfe-trigger-color-light-expanded($type: accordion);
-        @include pfe-trigger-expanded;
-    }
-
-    &[aria-expanded="true"]::after {
-        @include pfe-chevron-expanded-true;
+      @include pfe-trigger-color-expanded($component-name: accordion);
+      @include pfe-trigger-expanded;
+      &::after {
+        @include pfe-chevron-expanded;
+      }
     }
 
     &[aria-expanded="false"]::after {
-        @include pfe-chevron-expanded-false;
+        @include pfe-chevron-expanded($state: false);
     }
   }
 }
 
-////////// last child
-
-// @TODO: add lighter/lightest and darker/darkest colors.
-
-// :host([color="darker"]:last-of-type),
-// :host([color="darkest"]:last-of-type) {
-//   button[aria-expanded="false"] {
-//     @include pfe-trigger-button-last($theme: dark);
-//   }  
-// }
-
-// :host([color="lighter"]:last-of-type),
-// :host([color="lightest"]:last-of-type) {
-//   button[aria-expanded="false"] {
-//     @include pfe-trigger-button-last($theme: light);
-//   }  
-// }
-
-// :host([color="darker"]:first-child),
-// :host([color="darkest"]:first-child) {
-//   button {
-//     @include pfe-trigger-button-first($theme: dark);
-//   }  
-// }
-
-:host(:first-child),
-:host([color="lighter"]:first-child),
-:host([color="lightest"]:first-child) {
+:host(:first-child) {
   button {
     @include pfe-trigger-button-first($theme: light);
   }  
@@ -72,39 +46,15 @@
 }
 
 /// ===========================================================================
-/// COLOR OVERRIDES
+/// CONTEXT STYLES, ON=DARK
 /// ===========================================================================
 
 :host([on="dark"]) {
   button {
-    @include pfe-trigger-color-dark($type: accordion);
+    @include pfe-trigger-color($theme: dark, $component-name: accordion);
 
     &[aria-expanded="true"] {
-      @include pfe-trigger-color-dark-expanded($type: accordion);
+      @include pfe-trigger-color-expanded($theme: dark, $component-name: accordion);
     }
   }
 }
-
-// @TODO: add lighter/lightest and darker/darkest colors.
-
-// :host([color="lighter"]),
-// :host([color="lightest"]) {
-//     button {
-//       @include pfe-trigger-color-lightest;
-
-//       &[aria-expanded="true"] {
-//         @include pfe-trigger-color-light-expanded;
-//       }
-//     }
-// }
-
-// :host([color="darker"]),
-// :host([color="darkest"]) {
-//   button {
-//     @include pfe-trigger-color-darkest;
-
-//     &[aria-expanded="true"] {
-//       @include pfe-trigger-color-darkest-expanded;
-//     }
-//   }
-// }

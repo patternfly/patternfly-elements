@@ -1,5 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: accordion;
+
 /// ===========================================================================
 /// DEFAULT ACCORDION PANEL
 /// ===========================================================================
@@ -14,6 +16,7 @@
 }
  
 :host([on="dark"][expanded]) {
+  @include pfe-theme($theme: "dark");
   @include pfe-accordion-panel-expanded-style($theme: dark);
 }
 
@@ -25,27 +28,8 @@
 .container {
   @include pfe-accordion-panel-container-inset($align: left);
 }
- 
+
 :host(:last-of-type[expanded]) {
-  @include pfe-accordion-panel-expanded-last;
+  margin-bottom: 0;
 }
-
-// @TODO: add lighter/lightest and darker/darkest colors.
-
-// :host([color="lighter"][expanded]),
-// :host([color="lightest"][expanded]) {
-//   @include pfe-accordion-panel-expanded-style;
-//   @include pfe-accordion-panel-expanded-style-lightest;
-// }
-
-// :host([color="darker"][expanded]),
-// :host([color="darkest"][expanded]) {
-//   @include pfe-accordion-panel-expanded-style($theme: dark);
-//   @include pfe-accordion-panel-expanded-style-darkest;
-//  }
-
-// :host(:last-of-type[color="darker"][expanded]),
-// :host(:last-of-type[color="darkest"][expanded]) {
-//    @include pfe-accordion-panel-expanded-last-dark;
-// }
 

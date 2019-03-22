@@ -197,8 +197,9 @@
 /// ===========================================================================
 
 $pfe-expand_button--LineHeight:      1.5;
+$pfe-expand_button--Padding:         #{pfe-var(container-spacer)};
 $pfe-expand_button--Padding--factor: .75;
-$pfe-expand_button--Padding--wide:   calc(#{pfe-var(container-spacer)} * 1.5);
+$pfe-expand_button--Padding--wide:   #{$pfe-expand_button--Padding * 1.5};
 
 $pfe-expand_chevron--size:           .4em;
 $pfe-expand_chevron--weight:         .1em;
@@ -215,7 +216,7 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     --pfe-#{$component-name}--main:             transparent;
     --pfe-#{$component-name}--aux:              #{pfe-color(surface--lightest--text)};
     --pfe-#{$component-name}--focus:            #{pfe-color(surface--lightest--link)};
-    --pfe-#{$component-name}--border-left:      #{pfe-var(surface--border-width-thick)} #{pfe-var(surface--border-style)} transparent;
+    --pfe-#{$component-name}--border-left:      #{pfe-var(surface--border-width-heavy)} #{pfe-var(surface--border-style)} transparent;
     --pfe-#{$component-name}--border-right:     #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
     --pfe-#{$component-name}--border-bottom:    0;
 
@@ -255,9 +256,9 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
         border: 0;
     }
     @if $align == right {
-        padding: #{pfe-var(container-spacer)} $pfe-expand_button--Padding--wide #{pfe-var(container-spacer)} 50px;
+        padding: #{$pfe-expand_button--Padding} $pfe-expand_button--Padding--wide #{$pfe-expand_button--Padding} 50px;
     } @else {
-        padding: #{pfe-var(container-spacer)} 50px #{pfe-var(container-spacer)} $pfe-expand_button--Padding--wide;
+        padding: #{$pfe-expand_button--Padding} 50px #{$pfe-expand_button--Padding} $pfe-expand_button--Padding--wide;
     }
     // @TODO later, type scale support
     //[scale="large"] & {
@@ -312,14 +313,14 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     --pfe-#{$component-name}--main:         #{pfe-color(surface--darker)};
     --pfe-#{$component-name}--aux:          #{pfe-color(surface--darkest--text)};
     --pfe-#{$component-name}--focus:        #{pfe-color(surface--lightest)};
-    --pfe-#{$component-name}--border-left:  #{pfe-var(surface--border-width-thick)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
+    --pfe-#{$component-name}--border-left:  #{pfe-var(surface--border-width-heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
     --pfe-#{$component-name}--border-right: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
   }
   @else {
     --pfe-#{$component-name}--main:              #{pfe-color(surface--lightest)};
     --pfe-#{$component-name}--aux:               #{pfe-color(surface--lightest--text)};
     --pfe-#{$component-name}--focus:             #{pfe-color(surface--lightest--link)};
-    --pfe-#{$component-name}--border-left:       #{pfe-var(surface--border-width-thick)} #{pfe-var(surface--border-style)} #{pfe-color(surface--lightest--link)};
+    --pfe-#{$component-name}--border-left:       #{pfe-var(surface--border-width-heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--lightest--link)};
     --pfe-#{$component-name}--border-right:      #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border--lightest)};
   }
 }

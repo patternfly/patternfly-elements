@@ -232,7 +232,8 @@ $pfe-expand_chevron--size:           0.4em;
 $pfe-expand_chevron--weight:         0.1em;
 $pfe-expand_chevron--placement:      ($pfe-expand_button--LineHeight / 2) - ($pfe-expand_chevron--size / 2);
 $pfe-expand_button--padding-factor:  0.75;
-$pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_button--padding-factor});
+$pfe-expand_button--padding: #{pfe-var(container-spacer)};
+$pfe-expand_button--padding-wide: calc(#{pfe-var(container-spacer)} * 1.5);
 
 @mixin pfe-accordion-header {
   display: block;
@@ -288,10 +289,10 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
         border: 0;
     }
     @if $theme == right {
-        padding: $pfe-expand_button--padding $pfe-expand_button--padding $pfe-expand_button--padding 50px;
+        padding: $pfe-expand_button--padding $pfe-expand_button--padding-wide $pfe-expand_button--padding 50px;
     }
     @else {
-        padding: $pfe-expand_button--padding 50px $pfe-expand_button--padding $pfe-expand_button--padding;
+        padding: $pfe-expand_button--padding 50px $pfe-expand_button--padding $pfe-expand_button--padding-wide;
     }
     //[scale="large"] & {  @TODO later, type scale support
     //    font-size: calc((#{pfe-var(font-size)} * 1.3));
@@ -391,10 +392,10 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     transition: transform 0.15s;
     transform: rotate(45deg);
     @if $position == before {
-      left: #{pfe-var(container-spacer)};
+      left: $pfe-expand_button--padding-wide;
     }
     @else {
-      right: #{pfe-var(container-spacer)};
+      right: $pfe-expand_button--padding-wide;
     }
 }
 
@@ -412,10 +413,10 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
     transition: all 0.15s;
     transform: rotate(-45deg);
     @if $position == before {
-      left: #{pfe-var(container-spacer)};
+      left: $pfe-expand_button--padding-wide;
     }
     @else {
-      right: #{pfe-var(container-spacer)};
+      right: $pfe-expand_button--padding-wide;
     }
 }
 
@@ -482,6 +483,6 @@ $pfe-expand_button--padding: calc(#{pfe-var(container-spacer)} * #{$pfe-expand_b
 
 @mixin pfe-accordion-panel-container-inset  {
   box-sizing: border-box;
-  padding: 0 #{pfe-var(container-spacer)} #{pfe-var(container-spacer)};
+  padding: 0 $pfe-expand_button--padding-wide $pfe-expand_button--padding;
   width: 100%;
 }

@@ -81,6 +81,7 @@
   <body unresolved>
     <pfe-band pfe-size="small"><h1>&lt;pfe-band&gt;</h1></pfe-band>
 
+<div style="width: 1000px;margin:auto;"> <!-- arbitrary restricting container -->
     <pfe-band pfe-color="lightest">
       <header slot="pfe-band--header">
         <h1>Lightest band, header region</h1>
@@ -101,7 +102,7 @@
         </pfe-cta>
       </pfe-card>
     </pfe-band>
-
+</div>
     <pfe-band pfe-color="lighter" pfe-aside-desktop="left">
       <header slot="pfe-band--header">
         <h2>Lighter band; no footer</h2>
@@ -191,7 +192,7 @@
       <pfe-cta priority="primary">
         <a href="#">Learn more</a>
       </pfe-cta>
-      <pfe-card color="lightest" slot="pfe-band--aside" style="height: -webkit-fill-available;">
+      <pfe-card color="lightest" slot="pfe-band--aside">
         <h3 slot="header">Aside: left body top</h3>
         <p>Ut wisi enim ad minim veniam.</p>
         <pfe-cta slot="footer" priority="tertiary">
@@ -201,6 +202,29 @@
       <footer slot="pfe-band--footer" class="custom-footnote">
         <ol>
           <li>Footnote ipsum accusam et justo duo dolores et ea rebum.</li>
+          <li>Footnote ipsum accusam et justo duo dolores et ea rebum.</li>
+        </ol>
+      </footer>
+    </pfe-band>
+
+     <pfe-band  pfe-aside-desktop="left" pfe-aside-mobile="top">
+      <header slot="pfe-band--header">
+        <h2>Short content band</h2>
+        <p class="custom-band-summary">Header region, consetetur sadluptua.</p>
+      </header>
+      <p>Short content sadipscing elitra.</p>
+      <pfe-cta priority="primary">
+        <a href="#">Learn more</a>
+      </pfe-cta>
+      <pfe-card color="lightest" slot="pfe-band--aside">
+        <h3 slot="header">Aside: left body top</h3>
+        <p>Ut wisi enim ad minim veniam.</p>
+        <pfe-cta slot="footer" priority="tertiary">
+          <a href="#">Learn more</a>
+        </pfe-cta>
+      </pfe-card>
+      <footer slot="pfe-band--footer" class="custom-footnote">
+        <ol>
           <li>Footnote ipsum accusam et justo duo dolores et ea rebum.</li>
         </ol>
       </footer>

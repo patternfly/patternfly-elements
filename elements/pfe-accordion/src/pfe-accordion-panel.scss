@@ -29,23 +29,8 @@
 :host(:last-of-type[expanded]) {
   @include pfe-accordion-panel-expanded-last;
 }
-
-// @TODO: add lighter/lightest and darker/darkest colors.
-
-// :host([color="lighter"][expanded]),
-// :host([color="lightest"][expanded]) {
-//   @include pfe-accordion-panel-expanded-style;
-//   @include pfe-accordion-panel-expanded-style-lightest;
-// }
-
-// :host([color="darker"][expanded]),
-// :host([color="darkest"][expanded]) {
-//   @include pfe-accordion-panel-expanded-style($theme: dark);
-//   @include pfe-accordion-panel-expanded-style-darkest;
-//  }
-
-// :host(:last-of-type[color="darker"][expanded]),
-// :host(:last-of-type[color="darkest"][expanded]) {
-//    @include pfe-accordion-panel-expanded-last-dark;
-// }
+ 
+:host(:last-of-type[expanded][on="dark"]) {
+  @include pfe-accordion-panel-expanded-last($theme: dark);
+}
 

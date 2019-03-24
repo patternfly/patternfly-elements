@@ -19,7 +19,9 @@
       '../../pfe-band/pfe-band.umd.js',
       '../../pfe-card/pfe-card.umd.js'
     ])</script>
+
     <style>
+      /* TEMPORARY UNTIL REDHAT-THEME HAS NEW FONTS */
       :root {
         --pfe-theme--font-family--heading: "Red Hat Display", "RedHatDisplay", Arial;
         --pfe-theme--font-family--text: "Red Hat Text", "RedHatText", Arial;
@@ -32,8 +34,7 @@
        <pfe-band pfe-color="lightest">
         <pfe-text slot="pfe-band--header">
           <p pfe-text="headline-2">Band title: lorem ipsum</strong></p>
-          <p pfe-text="headline-1">Band headline: The world's leading provider of <em>open source solutions</em>, where the best ideas win.</p>
-
+          <h1 pfe-text="headline-1">Band headline: The world's leading provider of <em>open source solutions</em>, where the best ideas win.</h1>
         </pfe-text>
 
           <article>

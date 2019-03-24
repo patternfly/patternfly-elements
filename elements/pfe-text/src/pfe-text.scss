@@ -16,6 +16,9 @@
     margin-top: 0;
     margin-bottom: #{pfe-var(content-spacer)};
 }
+::slotted(*:last-child) {
+	margin-bottom: 0;
+}
 ::slotted(strong){
     font-weight: #{pfe-var(font-weight--bold)};
 }
@@ -71,8 +74,4 @@
 ::slotted(*[pfe-text="headline-6"]) {
     font-size: #{pfe-var(font-size--heading--zeta)};
     font-weight: #{pfe-var(font-weight--light)};
-}
-
-::slotted(*:last-child) {
-	margin-bottom: 0;
 }

@@ -1,0 +1,50 @@
+@import "../../pfe-sass/pfe-sass";
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+
+/* TYPOGRAPHY */
+::slotted([pfe-heading="headline-1"]),
+::slotted([pfe-heading="headline-2"]),
+::slotted([pfe-heading="headline-3"]),
+::slotted([pfe-heading="headline-4"]),
+::slotted([pfe-heading="headline-5"]),
+::slotted([pfe-heading="headline-6"], ){
+    font-family: #{pfe-var(font-family--heading)};
+    line-height: #{pfe-var(font-line-height--heading)};
+    font-weight: #{pfe-var(font-weight--heading)};
+}
+
+/*  --pfe-theme--font-size--heading--alpha */
+::slotted([pfe-heading="headline-1"]) {
+    font-size: #{pfe-var(font-size--heading--alpha)};
+}
+
+::slotted([pfe-heading="headline-2"]) {
+    font-size: #{pfe-var(font-size--heading--beta)};
+}
+
+::slotted([pfe-heading="headline-3"]) {
+    font-size: #{pfe-var(font-size--heading--gamma)};
+}
+
+::slotted([pfe-heading="headline-4"]) {
+    font-size: #{pfe-var(font-size--heading--delta)};
+}
+
+::slotted([pfe-heading="headline-5"]) {
+    font-size: #{pfe-var(font-size--heading--epsilon)};
+}
+
+::slotted([pfe-heading="headline-6"]) {
+    font-size: #{pfe-var(font-size--heading--zeta)};
+}
+
+::slotted(*:last-child) {
+	margin-bottom: 0;
+}

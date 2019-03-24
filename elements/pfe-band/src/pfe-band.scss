@@ -40,7 +40,7 @@ $LOCAL: band;
   --pfe-band__aside--layout:                    1fr;
 
   // Vertical spacing
-  --pfe-band--gutter--vertical:                 #{pfe-var(container-spacer)};
+  --pfe-band--gutter--vertical:                 calc(2.5 * #{pfe-var(content-spacer)});
   --pfe-band--gutter--horizontal:               calc(#{pfe-var(container-spacer)} * 3);
 
   // Text colors

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PatternFly Element | pfe-heading Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require([
+      '../pfe-heading.umd.js',
+      '../../pfe-band/pfe-band.umd.js'
+    ])</script>
+    <style>
+      :root {
+        --pfe-theme--font-family--heading: "Red Hat Display", "RedHatDisplay", Arial;
+        --pfe-theme--font-family--text: "Red Hat Text", "RedHatText", Arial;
+      }
+    </style>
+  </head>
+  <body unresolved>
+    <h1>&lt;pfe-heading&gt;</h1>
+    <pfe-band pfe-color="lightest">
+      <article>
+    <pfe-heading>
+      <p pfe-heading="headline-1">pfe-heading="headline-1"<br/> The world's leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+      <p pfe-heading="headline-2">pfe-heading="headline-2"<br/> The world's leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+      <p pfe-heading="headline-3">pfe-heading="headline-3"<br/> The world's leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+      <p pfe-heading="headline-4">pfe-heading="headline-4"<br/> The world's leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+      <p pfe-heading="headline-5">pfe-heading="headline-5"<br/> The world's leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+      <p pfe-heading="headline-6">pfe-heading="headline-6"<br/> The world's leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+    </pfe-heading>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis ornare erat, sit amet aliquet tortor. Aenean dapibus leo nec commodo blandit. Aliquam erat volutpat. Aenean ac rutrum nisl, non volutpat metus. Cras sed luctus libero. Donec id orci quis justo tincidunt placerat. Donec ut vulputate mauris. Pellentesque eu velit quis ligula scelerisque laoreet. Nunc non leo id diam lacinia tristique id nec quam. Ut et dui massa. Etiam condimentum interdum nulla, in fermentum neque ultricies vestibulum. Ut eget leo aliquam sapien vestibulum eleifend nec quis nunc. In tincidunt metus erat, non hendrerit turpis venenatis ac. Phasellus interdum et dui sed posuere. Duis dictum velit sed enim mollis pharetra. Aenean vitae ultricies eros.</p>
+  </article>
+  </pfe-band>
+  </body>
+</html>

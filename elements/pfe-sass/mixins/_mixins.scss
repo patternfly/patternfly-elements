@@ -355,14 +355,19 @@
     --pfe-tabs--aux: #{pfe-color(ui-tab--dark-hover-color)};
 }
 
-@mixin pfe-tab-panel-container {
-    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-    border-top: none;
-    padding: #{pfe-var(container-spacer)};
-    padding: calc(#{pfe-var(container-spacer)} * 2);
-}
-
-@mixin pfe-tab-panel-container-vertical {
-    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)}  #{pfe-color(surface--border)};
-    border-left: none;
+@mixin pfe-tab-panel-container($orientation: "horizontal", $border: false) {
+    padding: #{pfe-var(container-spacer)} 0;
+    @if $orientation == "vertical" {
+      padding-left: calc(#{pfe-var(container-spacer)} * 2);
+    }
+    @if $border {
+      padding: calc(#{pfe-var(container-spacer)} * 2);
+      border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+      @if $orientation == "horizontal" {
+        border-top: none;
+      }
+      @if $orientation == "vertical" {
+        border-left: none;
+      }
+    }
 }

@@ -123,7 +123,7 @@ class PfeTabs extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["vertical", "selected-index", "pfe-variant", "on"];
+    return ["vertical", "selected-index", "pfe-variant"];
   }
 
   get selectedIndex() {
@@ -181,17 +181,15 @@ class PfeTabs extends PFElement {
           this._allTabs().forEach(tab =>
             tab.setAttribute("pfe-variant", "wind")
           );
+          this._allPanels().forEach(panel =>
+            panel.setAttribute("pfe-variant", "wind")
+          );
         } else if (this.getAttribute("pfe-variant") === "earth") {
           this._allTabs().forEach(tab =>
             tab.setAttribute("pfe-variant", "earth")
           );
-        }
-        break;
-
-      case "on":
-        if (this.getAttribute("on") === "dark") {
-          this._allTabs().forEach(tab =>
-            tab.setAttribute("on", "dark")
+          this._allPanels().forEach(panel =>
+            panel.setAttribute("pfe-variant", "earth")
           );
         }
         break;

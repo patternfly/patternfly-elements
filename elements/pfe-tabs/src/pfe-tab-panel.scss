@@ -3,19 +3,27 @@
 :host {
   display: block;
   color: var(--pfe-broadcasted--color--text);
-
-	.container {
-		@include pfe-tab-panel-container;
-	}
 }
 
 :host([hidden]) {
   display: none;
 }
 
-:host([vertical]) {
-
-	.container {
-		@include pfe-tab-panel-container-vertical;
-	}
+/* Horizontal */
+:host([pfe-variant="wind"]) .container {
+	@include pfe-tab-panel-container;
 }
+
+:host([pfe-variant="earth"]) .container {
+	@include pfe-tab-panel-container($border: true);
+}
+
+/* Vertical */
+:host([pfe-variant="wind"][vertical]) .container {
+	@include pfe-tab-panel-container($orientation: "vertical");
+}
+
+:host([pfe-variant="earth"][vertical]) .container {
+	@include pfe-tab-panel-container($orientation: "vertical", $border: true);
+}
+

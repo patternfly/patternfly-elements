@@ -123,7 +123,7 @@ class PfeTabs extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["vertical", "selected-index", "pfe-variant"];
+    return ["vertical", "selected-index", "pfe-variant", "on"];
   }
 
   get selectedIndex() {
@@ -207,6 +207,14 @@ class PfeTabs extends PFElement {
           this._allTabs().forEach(tab => tab.removeAttribute("vertical"));
         }
         break;
+
+      case "on":
+        if (this.getAttribute("on") === "dark") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("on", "dark")
+           );
+         }
+         break;
 
       case "selected-index":
         Promise.all([

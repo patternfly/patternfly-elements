@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>PatternFly Element | pfe-content-set Demo</title>
+    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.7/custom-elements-es5-adapter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.7/webcomponents-bundle.js"></script>
@@ -17,16 +18,22 @@
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
     <style>
+      body {
+        font-family: Overpass;
+        padding: 0;
+        margin: 0;
+      }
+
       .faux-container {
         border: 1px dashed #ccc;
         padding: 30px;
       }
       h1, h2 {
         margin-bottom: .3em;
+        margin-top: 0;
       }
       h2 {
         font-size: 1.2em;
-        text-transform: uppercase;
       }
       h2 a {
         color: inherit;
@@ -44,10 +51,9 @@
         border-color: transparent;
         border-bottom-color: #ccc;
       }
-    </style>
-
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
-    <style>
+      .dark-background {
+        background-color: #000;
+      }
       .cta a {
         display: inline-block;
         background-color: #c00;
@@ -61,6 +67,8 @@
         color: white;
       }
     </style>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
   </head>
   <body unresolved>
     <h1>&lt;pfe-content-set&gt;</h1>
@@ -69,24 +77,7 @@
     <br>
     <h2><a name="accordions">Accordions</a></h2>
     <p>On desktop at sizes below 768px, this component should render as an accordion.</p>
-    <h3>Accordion: default</h3>
-    <p><strong>Container max:</strong> 500px</p>
-    <div style="max-width: 500px; " class="faux-container">
-      <pfe-content-set>
-        <h2 pfe-content-set--header>Heading 1</h2>
-        <div pfe-content-set--panel>
-          <p>Content for heading 1.</p>
-          <div class="cta">
-            <a href="https://redhat.com">Primary CTA</a>
-          </div>
-        </div>
-        <h2 pfe-content-set--header>Heading 2</h2>
-        <div pfe-content-set--panel>Content for heading 2.</div>
-        <h2 pfe-content-set--header>Heading 3</h2>
-        <div pfe-content-set--panel>Content for heading 3.</div>
-      </pfe-content-set>
-    </div>
-    <h2>On desktop, example below should render as accordion (primary style):</h2>
+    <h2>On desktop, example below should render as accordion on a light theme:</h2>
     <h3>Container max: 500px</h3>
     <div style="max-width: 500px">
       <pfe-content-set pfe-variant="wind">
@@ -104,29 +95,31 @@
       </pfe-content-set>
     </div>
 
-    <h2>On desktop, example below should render as accordion (secondary style):</h2>
+    <h2>On desktop, example below should render as accordion on a dark theme:</h2>
     <h3>Container max: 500px</h3>
-    <div style="max-width: 500px">
-      <pfe-content-set pfe-variant="earth">
-        <h2 pfe-content-set--header>Heading 1</h2>
-        <div pfe-content-set--panel>
-          <p>Content for heading 1.</p>
-          <div class="cta">
-            <a href="https://redhat.com">Primary CTA</a>
+    <div class="dark-background">
+      <div style="max-width: 500px">
+        <pfe-content-set pfe-variant="earth" on="dark">
+          <h2 pfe-content-set--header>Heading 1</h2>
+          <div pfe-content-set--panel>
+            <p>Content for heading 1.</p>
+            <div class="cta">
+              <a href="https://redhat.com">Primary CTA</a>
+            </div>
           </div>
-        </div>
-        <h2 pfe-content-set--header>Heading 2</h2>
-        <div pfe-content-set--panel>Content for heading 2.</div>
-        <h2 pfe-content-set--header>Heading 3</h2>
-        <div pfe-content-set--panel>Content for heading 3.</div>
-      </pfe-content-set>
+          <h2 pfe-content-set--header>Heading 2</h2>
+          <div pfe-content-set--panel>Content for heading 2.</div>
+          <h2 pfe-content-set--header>Heading 3</h2>
+          <div pfe-content-set--panel>Content for heading 3.</div>
+        </pfe-content-set>
+      </div>
     </div>
 
     <hr>
 
-    <h2>On desktop, example below should render as tabs (wind style):</h2>
-    <div>
-      <pfe-content-set>
+    <h2>On desktop, example below should render as tabs (wind style) on a dark background:</h2>
+    <div class="dark-background">
+      <pfe-content-set pfe-variant="wind" on="dark">
         <h2 pfe-content-set--header>Heading 1</h2>
         <div pfe-content-set--panel>
           <p>Content for heading 1.</p>
@@ -181,7 +174,7 @@
     <hr>
     <h2>On desktop, example below should render as vertical tabs (wind style):</h2>
     <div>
-      <pfe-content-set vertical>
+      <pfe-content-set vertical pfe-variant="wind">
         <h2 pfe-content-set--header>Heading 1</h2>
         <div pfe-content-set--panel>
           <p>Content for heading 1.</p>
@@ -197,12 +190,7 @@
     </div>
 
     <hr>
-<<<<<<< HEAD
-
     <h2>On desktop, example below should render as vertical tabs (wind style):</h2>
-=======
-    <h2>On desktop, example below should render as vertical tabs (primary style):</h2>
->>>>>>> master
     <div>
       <pfe-content-set vertical pfe-variant="wind">
         <h2 pfe-content-set--header>Heading 1</h2>
@@ -220,12 +208,7 @@
     </div>
 
     <hr>
-<<<<<<< HEAD
-
     <h2>On desktop, example below should render as vertical tabs (earth style):</h2>
-=======
-    <h2>On desktop, example below should render as vertical tabs (secondary style):</h2>
->>>>>>> master
     <div>
       <pfe-content-set vertical pfe-variant="earth">
         <h2 pfe-content-set--header>Heading 1</h2>
@@ -242,7 +225,7 @@
       </pfe-content-set>
     </div>
 
-    <pfe-content-set>
+    <pfe-content-set pfe-variant="wind">
       <h2 pfe-content-set--header>Heading 1</h2>
       <div pfe-content-set--panel>
         <p>Content for heading 1.</p>

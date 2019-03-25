@@ -32,17 +32,17 @@ class PfeContentSet extends PFElement {
   get settings() {
     let settings = {};
     const variant = this.getAttribute("pfe-variant");
+    const theme = this.getAttribute("on");
 
     if (variant === "wind") {
       settings.variant = variant;
-      settings.color = "striped";
     } else if (variant === "earth") {
       settings.variant = variant;
-      settings.color = "dark";
-    } else {
-      settings.color = "lightest";
     }
 
+    if (theme === "dark") {
+      settings.theme = theme 
+    }
     return settings;
   }
 
@@ -93,9 +93,9 @@ class PfeContentSet extends PFElement {
     // Append the accordion to the document fragment
     fragment.appendChild(accordion);
 
-    // Pass the color property down to the accordion component
-    if (this.settings.color) {
-      accordion.setAttribute("color", this.settings.color);
+    // Pass the theme property down to the accordion component
+    if (this.settings.theme) {
+      accordion.setAttribute("on", this.settings.theme);
     }
 
     // Append the fragment to the component
@@ -145,6 +145,11 @@ class PfeContentSet extends PFElement {
     // Pass the variant attribute down to the tabs component
     if (this.settings.variant) {
       tabs.setAttribute("pfe-variant", this.settings.variant);
+    }
+
+    // Pass the theme property down to the accordion component
+    if (this.settings.theme) {
+      tabs.setAttribute("on", this.settings.theme);
     }
 
     // Append the fragment to the component

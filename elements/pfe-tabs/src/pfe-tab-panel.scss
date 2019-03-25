@@ -9,6 +9,11 @@
   display: none;
 }
 
+:host([on="dark"]) {
+	color: #{pfe-colors(text--on-dark)};
+  @include pfe-theme($theme: "dark");
+}
+
 /* Horizontal */
 :host([pfe-variant="wind"]) .container {
 	@include pfe-tab-panel-container;

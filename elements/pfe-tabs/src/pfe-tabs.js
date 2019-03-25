@@ -212,7 +212,10 @@ class PfeTabs extends PFElement {
         if (this.getAttribute("on") === "dark") {
           this._allTabs().forEach(tab =>
             tab.setAttribute("on", "dark")
-           );
+          );
+          this._allPanels().forEach(panel =>
+            panel.setAttribute("on", "dark")
+          );
          }
          break;
 

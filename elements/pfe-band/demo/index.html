@@ -23,6 +23,7 @@
     <!-- IE11 test: use bundle + require with umd files -->
     <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/webcomponents-bundle.js"></script>
+    <link rel="stylesheet" href="https://www.redhat.com/profiles/rh/themes/redhatdotcom/css/editorial.css">
 
     <!-- Tests require pulling in the UMD version of the files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
@@ -78,7 +79,7 @@
     }
     </style>
   </head>
-  <body unresolved>
+  <body unresolved class="editorial body1 generic1">
     <pfe-band pfe-size="small"><h1>&lt;pfe-band&gt;</h1></pfe-band>
 
 <div style="width: 1000px;margin:auto;"> <!-- arbitrary restricting container -->
@@ -169,10 +170,12 @@
         <h2>Darkest band with header tag</h2>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       </header>
+      <section class="body1 generic1 band">
       <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
       <pfe-cta priority="primary" slot="pfe-band--footer">
         <a href="#">Learn more</a>
       </pfe-cta>
+    </section>
       <pfe-card color="dark" slot="pfe-band--aside">
         <h3 slot="header">Aside: right full top</h3>
         <p>Ut wisi enim ad minim veniam. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>

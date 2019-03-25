@@ -17,6 +17,10 @@
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
     <style>
+      .faux-container {
+        border: 1px dashed #ccc;
+        padding: 30px;
+      }
       h1, h2 {
         margin-bottom: .3em;
       }
@@ -61,13 +65,14 @@
   </head>
   <body unresolved>
     <h1>&lt;pfe-content-set&gt;</h1>
-    <h2><em>On mobile ( &lt;768px ), all examples should render as an Accordion.</em></h2>
-
-    <hr>
-
-    <h2>On desktop, example below should render as accordion (default style):</h2>
-    <h3>Container max: 500px</h3>
-    <div style="max-width: 500px">
+    <p>This component will render your content in either an <a href="#accordions">accordion</a> or a <a href="#tabs">tabset</a> depending on the available space.</p>
+    <p>Note: <em>On mobile ( &lt;768px ), all examples should render as an Accordion.</em></p>
+    <br>
+    <h2><a name="accordions">Accordions</a></h2>
+    <p>On desktop at sizes below 768px, this component should render as an accordion.</p>
+    <h3>Accordion: default</h3>
+    <p><strong>Container max:</strong> 500px</p>
+    <div style="max-width: 500px; " class="faux-container">
       <pfe-content-set>
         <h2 pfe-content-set--header>Heading 1</h2>
         <div pfe-content-set--panel>
@@ -82,7 +87,6 @@
         <div pfe-content-set--panel>Content for heading 3.</div>
       </pfe-content-set>
     </div>
-
     <h2>On desktop, example below should render as accordion (primary style):</h2>
     <h3>Container max: 500px</h3>
     <div style="max-width: 500px">
@@ -139,7 +143,6 @@
     </div>
 
     <hr>
-
     <h2>On desktop, example below should render as tabs (primary style):</h2>
     <div>
       <pfe-content-set pfe-variant="primary">
@@ -177,7 +180,6 @@
     </div>
 
     <hr>
-
     <h2>On desktop, example below should render as vertical tabs (default style):</h2>
     <div>
       <pfe-content-set vertical>
@@ -196,7 +198,6 @@
     </div>
 
     <hr>
-
     <h2>On desktop, example below should render as vertical tabs (primary style):</h2>
     <div>
       <pfe-content-set vertical pfe-variant="primary">
@@ -215,7 +216,6 @@
     </div>
 
     <hr>
-
     <h2>On desktop, example below should render as vertical tabs (secondary style):</h2>
     <div>
       <pfe-content-set vertical pfe-variant="secondary">

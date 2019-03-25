@@ -124,6 +124,7 @@ $pfe-colors: (
   surface--border:                    $pfe-color--surface--border,
   surface--border--lightest:          $pfe-color--surface--border--lightest,
   surface--border--darkest:           $pfe-color--surface--border--darkest,
+  surface--border--darker:            $pfe-color--surface--border--darker,
 
 
   // ========================================================================
@@ -186,6 +187,7 @@ $pfe-vars: (
   link--text-decoration--hover:  underline,
 
   surface--border-width:         1px,
+  surface--border-width--heavy:  3px,
   surface--border-style:         solid,
   surface--border-radius:        0,
   ui--border-width:              1px,

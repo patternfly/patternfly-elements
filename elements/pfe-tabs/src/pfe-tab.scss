@@ -77,7 +77,7 @@ $LOCAL: tabs;
 
 :host([pfe-variant="wind"][aria-selected="true"][on="dark"]),
 :host([pfe-variant="wind"][on="dark"]:hover) {
-  --pfe-tabs--aux: #{pfe-color(ui-tab--dark-hover-color)};
+  --pfe-tabs--aux: #{pfe-color(text--on-dark)};
 }
 
 /// ===========================================================================

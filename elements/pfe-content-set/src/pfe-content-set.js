@@ -34,15 +34,14 @@ class PfeContentSet extends PFElement {
     const variant = this.getAttribute("pfe-variant");
     const theme = this.getAttribute("on");
 
-    if (variant === "wind") {
-      settings.variant = variant;
-    } else if (variant === "earth") {
+    if (variant) {
       settings.variant = variant;
     }
 
-    if (theme === "dark") {
+    if (theme) {
       settings.theme = theme 
     }
+
     return settings;
   }
 

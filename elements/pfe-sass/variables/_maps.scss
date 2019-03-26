@@ -7,7 +7,6 @@ $pfe-colors: (
   text:                               $pfe-color--text,
   text--on-dark:                      $pfe-color--text--on-dark,
   text--on-saturated:                 $pfe-color--text--on-saturated,
-  text--deemphasized:                 $pfe-color--gray-500,
 
 
   // ========================================================================
@@ -54,7 +53,6 @@ $pfe-colors: (
   ui-disabled--text:                  $pfe-color--ui-disabled--text,
   ui-disabled--text--hover:           $pfe-color--ui-disabled--text--hover,
 
-  ui-tab--highlight-color:            $pfelements--red,
   ui-tab--dark-hover-color:           $pfe-color--white,
 
 
@@ -196,9 +194,6 @@ $pfe-vars: (
 
   ui--focus-outline-width:       1px,
   ui--focus-outline-style:       solid,
-
-  ui--tab-highlight-width:       4px,
-  ui--tab-highlight-style:       solid,
 
   grid-breakpoint--xs:           0,
   grid-breakpoint--sm:           576px,

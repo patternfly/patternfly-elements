@@ -10,7 +10,7 @@
       "properties": "src/pfe-band-properties.json"
     }
   },
-  "version": "1.0.0-prerelease.9",
+  "version": "1.0.0-prerelease.10",
   "description": "Band container for PatternFly Elements",
   "repository": {
     "type": "git",
@@ -30,8 +30,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.9",
-    "@patternfly/pfelement": "^1.0.0-prerelease.9"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.10",
+    "@patternfly/pfelement": "^1.0.0-prerelease.10"
   },
   "generator-rhelement-version": "0.6.8",
   "keywords": [

@@ -199,6 +199,7 @@
 
 @mixin pfe-tab-panel-container($orientation: "horizontal", $border: false) {
     margin: 0;
+    width: 100%;
     padding: #{pfe-var(container-spacer)} 0;
     @if $orientation == "vertical" {
       padding-left: calc(#{pfe-var(container-spacer)} * 2);

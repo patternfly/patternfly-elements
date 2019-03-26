@@ -5,6 +5,10 @@ $LOCAL: tabs;
 :host {
   display: block;
   color: #{pfe-radio(color--text)};
+
+  [tabindex] {
+  	display: flex;
+  }
 }
 
 :host([hidden]) {

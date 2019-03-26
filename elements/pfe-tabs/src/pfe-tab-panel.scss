@@ -26,11 +26,13 @@ $LOCAL: tabs;
 }
 
 /* Vertical */
-:host([pfe-variant="wind"][vertical]) .container {
-	@include pfe-tab-panel-container($orientation: "vertical");
-}
 
-:host([pfe-variant="earth"][vertical]) .container {
-	@include pfe-tab-panel-container($orientation: "vertical", $border: true);
-}
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+	:host([pfe-variant="wind"][vertical]) .container {
+		@include pfe-tab-panel-container($orientation: "vertical");
+	}
 
+	:host([pfe-variant="earth"][vertical]) .container {
+		@include pfe-tab-panel-container($orientation: "vertical", $border: true);
+	}
+}

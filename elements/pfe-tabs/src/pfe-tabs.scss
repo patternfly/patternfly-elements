@@ -28,20 +28,22 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 /// VERTICAL ORIENTATION
 /// ===========================================================================
 
-:host([vertical]) {
-  display: flex; // Sets tabs to appear to the left of the panels.
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+  :host([vertical]) {
+    display: flex; // Sets tabs to appear to the left of the panels.
 
-  .tabs {
-    flex-direction: column;
-    width: 22.22%;
-    border: 0;
-    border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
-  }
+    .tabs {
+      flex-direction: column;
+      width: 22.22%;
+      border: 0;
+      border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
+    }
 
-  .panels {
-    padding: 0;
-    width: 77.78%;
-    padding-right: #{pfe-var(container-padding)};
+    .panels {
+      padding: 0;
+      width: 77.78%;
+      padding-right: #{pfe-var(container-padding)};
+    }
   }
 }
 
@@ -49,12 +51,14 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 /// TAB VARIANTS
 /// ===========================================================================
 
-:host([vertical][pfe-variant="earth"]) {
-  padding-top: #{pfe-var(container-padding)};
-
-  .tabs {
-    padding-left: 0;
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+  :host([vertical][pfe-variant="earth"]) {
     padding-top: #{pfe-var(container-padding)};
+
+    .tabs {
+      padding-left: 0;
+      padding-top: #{pfe-var(container-padding)};
+    }
   }
 }
 
@@ -71,22 +75,22 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 :host([on="dark"]) {
   @include pfe-theme($theme: "dark");
 }
-:host([color="darker"]) {
-  @include pfe-theme($theme: "darker");
-}
-:host([color="darkest"]) {
-  @include pfe-theme($theme: "darkest");
-}
+// :host([color="darker"]) {
+//   @include pfe-theme($theme: "darker");
+// }
+// :host([color="darkest"]) {
+//   @include pfe-theme($theme: "darkest");
+// }
 
 
 :host([on="light"]) {
   @include pfe-theme($theme: "light");
 }
 
-:host([on="lighter"]) {
-  @include pfe-theme($theme: "lighter");
-}
-:host([on="lightest"]) {
-  @include pfe-theme($theme: "lightest");
-}
+// :host([on="lighter"]) {
+//   @include pfe-theme($theme: "lighter");
+// }
+// :host([on="lightest"]) {
+//   @include pfe-theme($theme: "lightest");
+// }
 

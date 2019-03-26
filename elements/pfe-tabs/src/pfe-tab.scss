@@ -55,18 +55,20 @@ $LOCAL: tabs;
 /// VERTICAL TAB ORIENTATION
 /// ===========================================================================
 
-:host([vertical]) {
-  text-align: left;
-  margin: 0 -1px 0 0;
-  padding-left: calc(#{pfe-var(container-padding)} * .75);
-  border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
-  border-right: 0;
-  position: relative;
-}
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+  :host([vertical]) {
+    text-align: left;
+    margin: 0 -1px 0 0;
+    padding-left: calc(#{pfe-var(container-padding)} * .75);
+    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
+    border-right: 0;
+    position: relative;
+  }
 
-:host([vertical][aria-selected="true"]) {
-  border-color-top: transparent;
-  border-right: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+  :host([vertical][aria-selected="true"]) {
+    border-color-top: transparent;
+    border-right: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+  }
 }
 
 /// ===========================================================================
@@ -104,26 +106,28 @@ $LOCAL: tabs;
 /// EARTH TAB VERTICAL ORIENTATION
 /// ===========================================================================
 
-:host([vertical][pfe-variant="earth"]) {
-  border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-}
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+  :host([vertical][pfe-variant="earth"]) {
+    border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  }
 
-:host([vertical][pfe-variant="earth"]:first-of-type) {
-  border-top: 0;
-}
+  :host([vertical][pfe-variant="earth"]:first-of-type) {
+    border-top: 0;
+  }
 
-:host([vertical][pfe-variant="earth"][aria-selected="true"]) {
-  border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-  border-right: 0;
-  border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
-}
+  :host([vertical][pfe-variant="earth"][aria-selected="true"]) {
+    border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    border-right: 0;
+    border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+  }
 
-:host([vertical][pfe-variant="earth"][aria-selected="false"]) {
-  border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-  border-bottom: 0;
-  border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
-}
+  :host([vertical][pfe-variant="earth"][aria-selected="false"]) {
+    border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    border-bottom: 0;
+    border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
+  }
 
-:host([vertical][pfe-variant="earth"][aria-selected="true"]:last-of-type) {
-  border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  :host([vertical][pfe-variant="earth"][aria-selected="true"]:last-of-type) {
+    border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  }
 }

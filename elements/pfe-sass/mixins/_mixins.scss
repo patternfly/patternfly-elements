@@ -84,6 +84,7 @@
     --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--complement--link--hover)};
     --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--complement--link--focus)};
   }
+
   @else if $theme == lighter {
     --pfe-broadcasted--color--text:               #{pfe-color(surface--lighter--text)};
     --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lighter--link)};

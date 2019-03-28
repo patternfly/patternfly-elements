@@ -110,7 +110,7 @@
 
     $color: map-get($pfe-colors, #{$ui-name}#{$theme});
     @if type-of($color) == "color" {
-        @return $color;
+        @return var(--pfe-theme--#{$ui-name}#{$theme}, $color);
     }
     @else {
         @warn "#{$ui-name}#{$theme} does not exist in the color map";

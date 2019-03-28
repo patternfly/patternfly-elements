@@ -65,12 +65,13 @@ class PfeAccordion extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["theme", "color"];
+    return ["theme", "color", "on"];
   }
 
   static get cascadingAttributes() {
     return {
-      color: "pfe-accordion-header"
+      color: "pfe-accordion-header, pfe-accordion-panel",
+      on: "pfe-accordion-header, pfe-accordion-panel"
     };
   }
 

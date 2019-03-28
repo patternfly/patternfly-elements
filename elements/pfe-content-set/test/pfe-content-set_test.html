@@ -20,7 +20,7 @@
     </div>
 
     <div style="width: 600px;">
-      <pfe-content-set pfe-variant="primary" id="primary">
+      <pfe-content-set pfe-variant="wind" id="wind">
           <h2 pfe-content-set--header>heading 1</h2>
           <p pfe-content-set--panel>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
           <h2 pfe-content-set--header>heading 2</h2>
@@ -31,7 +31,7 @@
     </div>
 
     <div style="width: 1024px;">
-      <pfe-content-set pfe-variant="secondary" id="secondary">
+      <pfe-content-set pfe-variant="earth" id="earth">
           <h2 pfe-content-set--header>heading 1</h2>
           <p pfe-content-set--panel>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
           <h2 pfe-content-set--header>heading 2</h2>
@@ -46,7 +46,7 @@
     </div>
 
     <div style="width: 1024px;">
-      <pfe-content-set vertical pfe-variant="secondary" id="secondary-vertical">
+      <pfe-content-set vertical pfe-variant="earth" id="earth-vertical">
           <h2 pfe-content-set--header>heading 1</h2>
           <p pfe-content-set--panel>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
           <h2 pfe-content-set--header>heading 2</h2>
@@ -75,27 +75,26 @@
           assert.equal(thirdHeader.getAttribute('aria-selected'), 'false');
         });
 
-        test('it should be a striped accordion', () => {
-          const pfeAccordion = document.querySelector('#primary').querySelector("pfe-accordion");
+        test('it should be a light accordion', () => {
+          const pfeAccordion = document.querySelector('#wind').querySelector("pfe-accordion");
           const firstHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-child(1)');
           const thirdHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-child(5)');
-          const firstPanel = document.querySelector('#primary').querySelector("pfe-accordion-panel:nth-child(2)");
+          const firstPanel = document.querySelector('#wind').querySelector("pfe-accordion-panel:nth-child(2)");
           const secondPanel = pfeAccordion.querySelector('pfe-accordion-panel:nth-child(4)');
 
           assert.isTrue(firstHeader.hasAttribute('aria-controls'));
-          assert.equal(firstHeader.getAttribute('color'), 'striped');
           assert.isTrue(thirdHeader.hasAttribute('aria-controls'));
           assert.isTrue(firstPanel.hasAttribute('aria-labelledby'));
           assert.isTrue(secondPanel.hasAttribute('aria-labelledby'));
         });
 
         test('it should have dark tabs', () => {
-          const pfeTabs = document.querySelector('#secondary').querySelector("pfe-tabs");
+          const pfeTabs = document.querySelector('#earth').querySelector("pfe-tabs");
           const firstHeader = pfeTabs.querySelector('pfe-tab:nth-child(1)');
           const secondHeader = pfeTabs.querySelector('pfe-tab:nth-child(3)');
           const fifthHeader = pfeTabs.querySelector('pfe-tab:nth-child(9)');
 
-          assert.equal(pfeTabs.getAttribute('pfe-variant'), 'secondary');
+          assert.equal(pfeTabs.getAttribute('pfe-variant'), 'earth');
           assert.equal(firstHeader.getAttribute('tabindex'), '0');
           assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
           assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
@@ -104,11 +103,11 @@
         });
 
         test('it should have vertical tabs', () => {
-          const pfeTabs = document.querySelector('#secondary-vertical').querySelector("pfe-tabs");
+          const pfeTabs = document.querySelector('#earth-vertical').querySelector("pfe-tabs");
           const firstHeader = pfeTabs.querySelector('pfe-tab:nth-child(1)');
           const secondHeader = pfeTabs.querySelector('pfe-tab:nth-child(3)');
           assert.isTrue(pfeTabs.hasAttribute('vertical'));
-          assert.equal(pfeTabs.getAttribute('pfe-variant'), 'secondary');
+          assert.equal(pfeTabs.getAttribute('pfe-variant'), 'earth');
           assert.equal(firstHeader.getAttribute('tabindex'), '0');
           assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
           assert.equal(secondHeader.getAttribute('aria-selected'), 'false');

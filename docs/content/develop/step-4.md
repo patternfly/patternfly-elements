@@ -14,7 +14,8 @@ We've been publishing our PatternFly Elements to the [@patternfly organization](
 To roll a new release, use the following steps:
 
 1. Start in the root directory of the patternfly-elements project.
-2. Check out the master branch and pull down the latest: `git checkout master && git pull`.
+2. Check out the master branch and pull down the latest: 
+    - `git reset --hard && git clean -df && git checkout master && git fetch origin && git pull`
 3. To have lerna bump the verions, run: `npm run lerna version -- --no-git-tag-version --no-push --preid prerelease`.
     - Choose the appropriate version bump type for the release you're publishing:
         - if bumping a prerelease version (example: from 1.0.0-prerelease.2 to 1.0.0-prerelease.3), choose *Custom Prerelease*
@@ -32,8 +33,9 @@ To roll a new release, use the following steps:
 12. Checkout master and reset:
     - `git checkout master`
     - `git reset --hard origin/master`
-13. Create a PR for the branch you just created: [https://github.com/patternfly/patternfly-elements/compare](https://github.com/patternfly/patternfly-elements/compare)
-14. Delete branch after merging PR.
+13. [Create a pull request](https://github.com/patternfly/patternfly-elements/compare) for the branch you just created.
+14. Delete branch after merging pull request:
+    - `git branch -D release/$NEW_VERSION`
 15. To publish to npm (you will have to have the right credentials to do this):
-    - `git checkout v$NEW_VERSION`
-    - `npm run lerna publish from-git`
+    - Checkout the tag release you just rolled: `git checkout v$NEW_VERSION`
+    - From that code, run the lerna publishing task: `npm run lerna publish from-git`

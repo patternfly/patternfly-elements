@@ -15,9 +15,14 @@ module.exports = function factory({
   const shell = require("gulp-shell");
   const banner = require("gulp-banner");
 
+  const paths = {
+    source: "./src",
+    compiled: "./dist"
+  };
+
   gulp.task("merge", () => {
     return gulp
-      .src([`./src/**/*.js`])
+      .src(path.join(paths.source, "**/*.js"))
       .pipe(
         replace(
           /extends\s+PFElement\s+{/g,
@@ -48,10 +53,10 @@ module.exports = function factory({
 
             if (
               url.template !== null &&
-              fs.existsSync(path.join("./src", url.template))
+              fs.existsSync(path.join(paths.source, url.template))
             ) {
               html = fs
-                .readFileSync(path.join("./src", url.template))
+                .readFileSync(path.join(paths.source, url.template))
                 .toString()
                 .trim();
               html = decomment(html);
@@ -59,10 +64,10 @@ module.exports = function factory({
 
             if (
               url.style !== null &&
-              fs.existsSync(path.join("./src", url.style))
+              fs.existsSync(path.join(paths.source, url.style))
             ) {
               let rawCSS = sass.renderSync({
-                file: path.join("./src", url.style)
+                file: path.join(paths.source, url.style)
               }).css;
               rawCSS = stripCssComments(rawCSS).trim();
               if (rawCSS.toString() !== "") {
@@ -72,12 +77,12 @@ module.exports = function factory({
 
             if (
               url.schema !== null &&
-              fs.existsSync(path.join("./src", url.schema))
+              fs.existsSync(path.join(paths.source, url.schema))
             ) {
               properties = "{}";
               slots = "{}";
               let schemaObj = JSON.parse(
-                fs.readFileSync(path.join("./src", url.schema))
+                fs.readFileSync(path.join(paths.source, url.schema))
               );
               if (schemaObj && typeof schemaObj === "object") {
                 if (schemaObj.properties.attributes) {
@@ -125,11 +130,11 @@ ${html}\`;
             .join("")}*/\n\n`
         )
       )
-      .pipe(gulp.dest("./"));
+      .pipe(gulp.dest(paths.compiled));
   });
 
   gulp.task("watch", () => {
-    return gulp.watch("./src/*", gulp.series("build"));
+    return gulp.watch(path.join(paths.source, "*"), gulp.series("build"));
   });
 
   gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));

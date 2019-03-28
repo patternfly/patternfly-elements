@@ -6,6 +6,9 @@ tmp
 elements/*/*.js
 elements/*/*.map
 elements/*/*.css
+
+elements/*/dist
+
 # but don't ignore tooling files
 !elements/*/gulpfile.js
 !elements/*/rollup.config.js

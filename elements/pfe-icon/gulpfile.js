@@ -8,6 +8,11 @@ const rename = require("gulp-rename");
 const replace = require("gulp-replace");
 const svgSprite = require("gulp-svg-sprite");
 
+const paths = {
+  source: "./src",
+  compiled: "./dist"
+};
+
 // Custom gulp tasks for pfe-icon
 gulp.task("svgSprite", function() {
   return gulp
@@ -27,19 +32,21 @@ gulp.task("svgSprite", function() {
       })
     )
     .pipe(rename("pfe-icons.svg"))
-    .pipe(gulp.dest("./"));
+    .pipe(gulp.dest(paths.compiled));
 });
 
 gulp.task("stuffSprite", () => {
   return gulp
-    .src("./pfe-icon.js")
+    .src("pfe-icon.js", {
+      cwd: paths.compiled
+    })
     .pipe(
       replace(
         /<svg xmlns[\s\S]*?<\/svg>/g,
         "" + fs.readFileSync("./pfe-icons.svg")
       )
     )
-    .pipe(gulp.dest("./"));
+    .pipe(gulp.dest(paths.compiled));
 });
 
 gulp.task("combineAndStuff", gulp.series("svgSprite", "stuffSprite"));

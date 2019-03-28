@@ -10,13 +10,22 @@ const cleanCSS = require("gulp-clean-css");
 const trim = require("gulp-trim");
 const banner = require("gulp-banner");
 
+const paths = {
+  source: "./src",
+  compiled: "./dist"
+};
+
 gulp.task("clean", () => {
-  return del(["pfelement.js", "./**/*.umd.*", "./*.css", "./*.js.map"]);
+  return del(["pfelement.js", "**/*.umd.*", "*.css", "*.js.map"], {
+    cwd: paths.compiled
+  });
 });
 
 gulp.task("compile", () => {
   return gulp
-    .src(["./pfelement.js", "./reveal.js"])
+    .src(["pfelement.js", "reveal.js"], {
+      cwd: paths.source
+    })
     .pipe(
       replace(
         /^(import .*?)(['"]\.\.?\/(?!\.\.\/).*)(\.js['"];)$/gm,
@@ -28,12 +37,14 @@ gulp.task("compile", () => {
         suffix: ".umd"
       })
     )
-    .pipe(gulp.dest("./"));
+    .pipe(gulp.dest(paths.compiled));
 });
 
 gulp.task("copy", () => {
   return gulp
-    .src(["./src/*"])
+    .src(["*"], {
+      cwd: paths.source
+    })
     .pipe(
       banner(
         `/*\n${fs
@@ -43,23 +54,25 @@ gulp.task("copy", () => {
           .join("")}*/\n\n`
       )
     )
-    .pipe(gulp.dest("./"));
+    .pipe(gulp.dest(paths.compiled));
 });
 
 gulp.task("minify-css", () => {
   return gulp
-    .src("./src/*.css")
+    .src("*.css", {
+      cwd: paths.source
+    })
     .pipe(cleanCSS())
     .pipe(
       rename({
         suffix: ".min"
       })
     )
-    .pipe(gulp.dest("./"));
+    .pipe(gulp.dest(paths.compiled));
 });
 
 gulp.task("watch", () => {
-  return gulp.watch("./src/**/*", gulp.series("build"));
+  return gulp.watch(path.join(paths.source, "**/*"), gulp.series("build"));
 });
 
 gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));

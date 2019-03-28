@@ -9,9 +9,9 @@ const importRegex = /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
 
 function esmConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.js`,
+    input: `./dist/${elementName}.js`,
     output: {
-      file: `${elementName}.js`,
+      file: `./dist/${elementName}.js`,
       format: "esm",
       sourcemap: true
     },
@@ -22,9 +22,9 @@ function esmConfig({ elementName, className } = {}) {
 
 function umdConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.js`,
+    input: `./dist/${elementName}.js`,
     output: {
-      file: `${elementName}.umd.js`,
+      file: `./dist/${elementName}.umd.js`,
       format: "umd",
       sourcemap: true,
       name: className
@@ -48,9 +48,9 @@ function umdConfig({ elementName, className } = {}) {
 
 function esmMinConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.js`,
+    input: `./dist/${elementName}.js`,
     output: {
-      file: `${elementName}.min.js`,
+      file: `./dist/${elementName}.min.js`,
       format: "esm",
       sourcemap: true
     },
@@ -75,9 +75,9 @@ function esmMinConfig({ elementName, className } = {}) {
 
 function umdMinConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.js`,
+    input: `./dist/${elementName}.js`,
     output: {
-      file: `${elementName}.umd.min.js`,
+      file: `./dist/${elementName}.umd.min.js`,
       format: "umd",
       sourcemap: true,
       name: className

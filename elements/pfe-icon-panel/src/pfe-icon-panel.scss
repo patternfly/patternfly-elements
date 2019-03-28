@@ -18,21 +18,21 @@ $pfe-icon-panel__icon-padding:        .05em;
   align-content: flex-start;
   flex-direction: column;
 
-  @media (min-width: $pfe-global--grid-breakpoint--sm) {
+  @media (min-width: #{map-get($pfe-vars, grid-breakpoint--sm)}) {
 		flex-direction: row;
 	}
 }
 
 :host pfe-icon {
-  --pfe-icon--spacing:                 #{pfe-var(container-spacer)};
-  --pfe-icon--size:                    var(--pfe-theme--icon-size, #{$pfe-icon-panel__icon-size});
+  --pfe-icon--spacing: #{pfe-var(container-spacer)};
+  --pfe-icon--size:    #{$pfe-icon-panel__icon-size};
 
   margin-right: var(--pfe-icon--spacing);
-  font-size: var(--pfe-icon--size);
-  line-height: var(--pfe-icon--size);
-  padding: $pfe-icon-panel__icon-padding;
-  min-width: var(--pfe-icon--size);
-  max-width: var(--pfe-icon--size);
+  font-size:    var(--pfe-icon--size);
+  line-height:  var(--pfe-icon--size);
+  padding:      #{$pfe-icon-panel__icon-padding};
+  min-width:    var(--pfe-icon--size);
+  max-width:    var(--pfe-icon--size);
 }
 
 :host ::slotted([slot="header"]),
@@ -46,7 +46,7 @@ $pfe-icon-panel__icon-padding:        .05em;
 
 // Layout Styles
 :host([stacked]) {
-  flex-direction: column !important;
+  flex-direction: column;
 }
 
 :host([stacked][centered]) {

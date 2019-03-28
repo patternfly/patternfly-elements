@@ -36,7 +36,7 @@ $LOCAL: tabs;
 
 :host(:focus),
 :host(:focus-visible) {
-  outline: 1px solid #{$pfe-color--ui-link--focus};
+  outline: 1px solid #{color(ui-link--focus)};
   outline: #{pfe-var(ui--focus-outline-width)} #{pfe-var(ui--focus-outline-style)} #{pfe-local(focus)};
 }
 

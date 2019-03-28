@@ -1,6 +1,6 @@
-import PFElement from "../pfelement/pfelement.js";
-import PfeAccordion from "../pfe-accordion/pfe-accordion.js";
-import PfeTabs from "../pfe-tabs/pfe-tabs.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
+import PfeAccordion from "../../pfe-accordion/dist/pfe-accordion.js";
+import PfeTabs from "../../pfe-tabs/dist/pfe-tabs.js";
 
 class PfeContentSet extends PFElement {
   static get tag() {

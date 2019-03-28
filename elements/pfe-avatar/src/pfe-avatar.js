@@ -1,4 +1,4 @@
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 import { hash } from "./djb-hash.js";
 import { hsl2rgb, rgb2hsl } from "./hslrgb.js";
 

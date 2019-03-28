@@ -12,28 +12,34 @@ const del = require("del");
 let watcher;
 
 gulp.task("clean", () => {
-  return del(["./*.css", "./*.min.css"]);
+  return del(["*.css", "*.min.css"], {
+    cwd: "./dist"
+  });
 });
 
 gulp.task("sass", () => {
   return gulp
-    .src(["./src/*.scss"])
+    .src(["*.scss"], {
+      cwd: "./src"
+    })
     .pipe(sass())
     .pipe(stripCssComments())
     .pipe(trim())
-    .pipe(gulp.dest("./"));
+    .pipe(gulp.dest("./dist"));
 });
 
 gulp.task("minify-css", () => {
   return gulp
-    .src("./*.css")
+    .src("*.css", {
+      cwd: "./dist"
+    })
     .pipe(cleanCSS())
     .pipe(
       rename({
         suffix: ".min"
       })
     )
-    .pipe(gulp.dest("./"));
+    .pipe(gulp.dest("./dist"));
 });
 
 gulp.task("stopwatch", done => {

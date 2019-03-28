@@ -1,4 +1,4 @@
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 
 // -- Polyfill for supporting Element.closest
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest

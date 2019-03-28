@@ -17,6 +17,8 @@ $LOCAL: band;
 }
 
 :host {
+  display: block;
+
   // Default spacing values
   --pfe-band--Padding--vertical:               calc( #{pfe-var(container-spacer)} * 4);
   --pfe-band--Padding--horizontal:             calc( #{pfe-var(container-spacer)} * 1);
@@ -113,32 +115,13 @@ $LOCAL: band;
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
     --pfe-band_region--width: calc(calc(1fr - #{pfe-local(Width__aside--sm)}) - #{pfe-local(gutter--horizontal)});
-
-    position:  relative;
-    margin:    0 auto;
-    width: #{pfe-local(Width)};
-    
-    // Grid support styles
-    @supports (display: grid) {
-      display:               grid;
-      grid-row-gap:          #{pfe-local(gutter--vertical)};
-      grid-column-gap:       #{pfe-local(gutter--horizontal)};
-      grid-template-columns: #{pfe-local(layout)};
-      grid-template-rows:    max-content;
-      grid-template-areas:   "body";
-      @media (min-width: #{pfe-breakpoint(md)}) {
-        grid-template-areas: "body";
-      }
-    }
+    --pfe-band--gridTemplateArea_mobile: "body";
     // Styles for the different combination of regions
     &[pfe-has-aside] {
       --pfe-band--gridTemplateArea_mobile:
         "body" "aside";
       --pfe-band--gridTemplateArea_desktop:
         "body aside";
-      @media (min-width: #{pfe-breakpoint(md)}) {
-        grid-template-areas: "body aside";
-      }
       @media (min-width: #{pfe-breakpoint(md)}) {
         --pfe-band--layout: 1fr #{pfe-local(Width__aside--sm)};
       }
@@ -154,7 +137,6 @@ $LOCAL: band;
           "aside body";
         @media (min-width: #{pfe-breakpoint(md)}) {
           --pfe-band--layout: #{pfe-local(Width__aside--sm)} 1fr;
-          grid-template-areas: "aside body";
         }
         @media (min-width: #{pfe-breakpoint(lg)}) {
           --pfe-band--layout: #{pfe-local(Width__aside--lg)} 1fr;

@@ -46,11 +46,10 @@ module.exports = function factory({
             let properties = "";
             let slots = "";
 
-            let pathDefined = url.template !== null;
-            let fileExists = pathDefined
-              ? fs.existsSync(path.join("./src", url.template))
-              : false;
-            if (pathDefined && fileExists) {
+            if (
+              url.template !== null &&
+              fs.existsSync(path.join("./src", url.template))
+            ) {
               html = fs
                 .readFileSync(path.join("./src", url.template))
                 .toString()
@@ -58,11 +57,10 @@ module.exports = function factory({
               html = decomment(html);
             }
 
-            pathDefined = url.style !== null;
-            fileExists = pathDefined
-              ? fs.existsSync(path.join("./src", url.style))
-              : false;
-            if (pathDefined && fileExists) {
+            if (
+              url.style !== null &&
+              fs.existsSync(path.join("./src", url.style))
+            ) {
               let rawCSS = sass.renderSync({
                 file: path.join("./src", url.style)
               }).css;
@@ -72,11 +70,10 @@ module.exports = function factory({
               }
             }
 
-            pathDefined = url.schema !== null;
-            fileExists = pathDefined
-              ? fs.existsSync(path.join("./src", url.schema))
-              : false;
-            if (pathDefined && fileExists) {
+            if (
+              url.schema !== null &&
+              fs.existsSync(path.join("./src", url.schema))
+            ) {
               properties = "{}";
               slots = "{}";
               let schemaObj = JSON.parse(
@@ -97,7 +94,7 @@ module.exports = function factory({
             return `${classStatement}
   get html() {
     return \`${cssResult}
-  ${html}\`;
+${html}\`;
   }${
     properties
       ? `

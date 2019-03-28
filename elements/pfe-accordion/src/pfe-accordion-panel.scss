@@ -16,6 +16,7 @@ $LOCAL: accordion;
 }
  
 :host([on="dark"][expanded]) {
+  @include pfe-theme($theme: "dark");
   @include pfe-accordion-panel-expanded-style($theme: dark);
 }
 

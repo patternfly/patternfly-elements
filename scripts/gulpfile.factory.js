@@ -1,13 +1,12 @@
 module.exports = function factory({
   elementName,
   className,
-  precompile = []
+  prebundle = []
 } = {}) {
   const fs = require("fs");
   const path = require("path");
 
   const gulp = require("gulp");
-  const rename = require("gulp-rename");
   const replace = require("gulp-replace");
   const stripCssComments = require("strip-css-comments");
   const trim = require("trim");
@@ -18,7 +17,7 @@ module.exports = function factory({
 
   gulp.task("merge", () => {
     return gulp
-      .src(`./src/**/*.js`)
+      .src([`./src/**/*.js`])
       .pipe(
         replace(
           /extends\s+PFElement\s+{/g,
@@ -132,32 +131,13 @@ module.exports = function factory({
       .pipe(gulp.dest("./"));
   });
 
-  gulp.task("compile", () => {
-    return gulp
-      .src(`./${elementName}.js`)
-      .pipe(
-        replace(
-          /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
-          "$1$2.umd$3"
-        )
-      )
-      .pipe(
-        rename({
-          suffix: ".umd"
-        })
-      )
-      .pipe(gulp.dest("./"));
-  });
-
   gulp.task("watch", () => {
     return gulp.watch("./src/*", gulp.series("build"));
   });
 
   gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
-  const buildTasks = ["merge", ...precompile, "compile", "bundle"];
-
-  gulp.task("build", gulp.series(...buildTasks));
+  gulp.task("build", gulp.series(...["merge", ...prebundle, "bundle"]));
 
   gulp.task("default", gulp.series("build"));
 

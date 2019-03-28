@@ -1,0 +1,350 @@
+// FORM
+// ---------------------------------------------------------------------------
+
+// placeholder
+::placeholder {
+    color: $input-placeholder-text-color;
+    opacity: 1;
+}
+:-ms-input-placeholder {
+    color: $input-placeholder-text-color;
+}
+::-ms-input-placeholder {
+    color: $input-placeholder-text-color;
+}
+
+// Fieldset
+fieldset {
+    font-family: inherit;
+    border: $form-fieldset-border-width $form-fieldset-border-style $form-fieldset-border-color;
+    border-radius: $form-fieldset-border-radius;
+    padding: $form-fieldset-padding;
+    margin-bottom: $form-item-margin;
+}
+legend {
+	font-size: $form-legend-font-size;
+	font-weight: $form-legend-font-weight;
+	text-transform: $form-legend-text-transform;
+	color: $form-legend-color-text;
+	padding: 0 1rem;
+	margin-left: -1rem;
+	top: $space-2;
+	position: relative;
+	line-height: 0;
+}
+
+// Input
+input,
+textarea,
+select {
+    display: block;
+    width: 100%;
+	font-family: inherit;
+    vertical-align: middle;
+
+	font-size: $input-default-font-size;
+	font-weight: $input-default-font-weight;
+	height: $input-default-height;
+	background-color: $input-default-background;
+    border: $input-default-border-width $input-default-border-style $input-default-border-color;
+    border-radius: $input-default-border-radius;
+    box-shadow: $input-default-box-shadow;
+    padding: $input-default-padding;
+    color: $input-default-color-text;
+}
+textarea {
+    padding: $input-textarea-padding;
+    resize: vertical;
+    height: auto;
+    line-height: $input-textarea-base-line;
+    vertical-align: top;
+}
+// Select
+select {
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="9" height="12" viewBox="0 0 9 12"><path fill="rgba(0, 0, 0, .4)" d="M0.722,4.823L-0.01,4.1,4.134-.01,4.866,0.716Zm7.555,0L9.01,4.1,4.866-.01l-0.732.726ZM0.722,7.177L-0.01,7.9,4.134,12.01l0.732-.726Zm7.555,0L9.01,7.9,4.866,12.01l-0.732-.726Z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right .65em center;
+    padding-right: 28px;
+}
+select[multiple] {
+    background-image: none;
+    height: auto;
+    padding: $space-8;
+}
+
+// States
+input,
+textarea,
+select {
+    &:hover {
+    	outline: none;
+    	color: $input-hover-color-text;
+    	background-color: $input-hover-background;
+    	border: $input-hover-border-width $input-hover-border-style $input-hover-border-color;
+        box-shadow: $input-hover-box-shadow;
+    }
+    &:focus {
+        @include transition;
+    	outline: none;
+    	color: $input-focus-color-text;
+    	background-color: $input-focus-background;
+    	border: $input-focus-border-width $input-focus-border-style $input-focus-border-color;
+        box-shadow: $input-focus-box-shadow;
+    }
+    &.is-error {
+        background-color: $input-error-background;
+    	border: $input-error-border-width $input-error-border-style $input-error-border-color;
+        box-shadow: $input-error-box-shadow;
+    	&:focus {
+            border-color: $input-error-focus-border-color;
+            box-shadow: $input-error-focus-box-shadow;
+    	}
+	}
+    &.is-success  {
+        background-color: $input-success-background;
+    	border: $input-success-border-width $input-success-border-style $input-success-border-color;
+        box-shadow: $input-success-box-shadow;
+    	&:focus {
+            border-color: $input-success-focus-border-color;
+            box-shadow: $input-success-focus-box-shadow;
+    	}
+    }
+    &:disabled,
+    &.is-disabled {
+        &,
+        &:hover {
+        	resize: none;
+        	opacity: $input-disabled-opacity;
+        	cursor: default;
+        	font-style: italic;
+        	color: $input-disabled-color-text;
+        	border: $input-default-border-width $input-default-border-style $input-default-border-color;
+        	box-shadow: $input-default-box-shadow;
+        	background-color: $input-default-background;
+    	}
+	}
+}
+input[type="radio"],
+input[type="checkbox"] {
+    &.is-error {
+    	outline: 2px $input-error-border-style $input-error-border-color;
+	}
+    &.is-success  {
+    	outline: 2px $input-success-border-style $input-success-border-color;
+    }
+}
+
+// File
+input[type="file"] {
+    width: auto;
+    border: none;
+    padding: 0;
+    height: auto;
+    background: none;
+    box-shadow: none;
+    display: inline-block;
+}
+
+// Search
+input[type="search"],
+input.is-search {
+    background-repeat: no-repeat;
+    background-position: 8px 51%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="rgb(0, 0, 0)" fill-opacity="0.4" d="M14.891,14.39l-0.5.5a0.355,0.355,0,0,1-.5,0L9.526,10.529a5.3,5.3,0,1,1,2.106-4.212,5.268,5.268,0,0,1-1.1,3.21l4.362,4.362A0.354,0.354,0,0,1,14.891,14.39ZM6.316,2.418a3.9,3.9,0,1,0,3.9,3.9A3.9,3.9,0,0,0,6.316,2.418Z"/></svg>');
+    padding-left: 32px;
+}
+
+// Radio & Checkbox
+input[type="radio"],
+input[type="checkbox"] {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+
+// Label
+label {
+    display: block;
+
+    font-size: $form-label-font-size;
+    font-weight: $form-label-font-weight;
+    text-transform: $form-label-text-transform;
+    color: $form-label-color-text;
+    margin-bottom: $space-4;
+
+    &.is-checkbox,
+    & .is-desc,
+    & .is-success,
+    & .is-error {
+    	text-transform: none;
+    	font-weight: normal;
+    }
+    &.is-checkbox {
+        font-size: $font-size-default;
+        line-height: $base-line;
+    	cursor: pointer;
+    	color: inherit;
+
+    	&.is-small { font-size: $font-size-small; }
+    	&.is-big { font-size: $font-size-big; }
+    	&.is-large { font-size: $font-size-large; }
+    }
+}
+
+// Form
+form {
+    margin-bottom: $form-item-margin;
+
+    & span,
+    & div {
+        &.is-success {
+            font-size: $font-size-smaller;
+            color: $color-success;
+        }
+        &.is-error {
+            font-size: $font-size-smaller;
+            color: $color-error;
+        }
+    }
+    & span.is-success,
+    & span.is-error {
+        margin-left: $space-2;
+    }
+    & .is-desc {
+        font-size: $form-desc-font-size;
+        font-weight: $form-desc-font-weight;
+        text-transform: $form-desc-text-transform;
+        color: $form-desc-color-text;
+    }
+    & span.is-desc {
+        margin-left: $space-4;
+    }
+    & div.is-desc {
+        margin-top: $space-4;
+        margin-bottom: -$space-4;
+    }
+    & .is-req {
+        position: relative;
+        top: 1px;
+    	font-size: $form-req-font-size;
+    	font-weight: $form-req-font-weight;
+    	color: $form-req-color-text;
+    }
+}
+
+.form-item {
+    margin-bottom: $form-item-margin;
+}
+fieldset > .form-item:last-child {
+    margin-bottom: 0;
+}
+.form-checkboxes {
+    & label.is-checkbox {
+        display: inline-block;
+        margin-right: $space-16;
+	}
+}
+.form-item.is-inline,
+.form-item.is-inline-offset {
+    padding-left: $form-item-inline-offset;
+}
+.form-item.is-inline {
+    & label:not(.is-checkbox) {
+        float: left;
+        margin-left: -$form-item-inline-offset;
+    }
+}
+.form-item.is-bar {
+    & input,
+    & textarea,
+    & select {
+        display: inline-block;
+        width: auto;
+    }
+}
+.form-item.is-buttons {
+    display: flex;
+
+    & button,
+    & .button {
+        margin-right: $space-8;
+    }
+    & button + .button.is-tertiary {
+        margin-left: $space-8;
+    }
+    & button.is-push-right,
+    & .button.is-tertiary.is-push-right,
+    & .button.is-push-right {
+        margin-left: auto;
+        margin-right: 0;
+    }
+}
+
+// Append & Prepend
+.is-append,
+.is-prepend {
+	@include flex;
+
+	& input {
+		@include flex-item-one;
+	}
+	& .button,
+	& span,
+	& a {
+		@include flex-item-shrink;
+    }
+	& span,
+	& a {
+        @include flex;
+        @include flex-items-column;
+        @include flex-items-center;
+    	padding: $input-append-padding;
+		border: $input-append-border-width $input-append-border-style $input-append-border-color;
+    	background-color: $input-append-background;
+		white-space: nowrap;
+    }
+    & span {
+		font-size: $input-append-font-size;
+		font-weight: $input-append-font-weight;
+        text-transform: $input-append-text-transform;
+		color: $input-append-color-text;
+	}
+	& a {
+    	font-size: 1rem;
+    	color: rgba($color-black, .6);
+    	text-decoration: none;
+    	&:hover {
+        	color: $color-black;
+    	}
+	}
+}
+.is-prepend {
+    & input {
+        border-radius: 0 $input-default-border-radius $input-default-border-radius 0;
+    }
+    & .button {
+        margin-right: -1px;
+        border-radius: $input-default-border-radius 0 0 $input-default-border-radius !important;
+    }
+    & span,
+    & a {
+        border-right: none;
+        border-radius: $input-default-border-radius 0 0 $input-default-border-radius;
+    }
+}
+.is-append {
+    & input {
+        border-radius: $input-default-border-radius 0 0 $input-default-border-radius;
+    }
+    & .button {
+        margin-left: -1px;
+        border-radius: 0 $input-default-border-radius $input-default-border-radius 0 !important;
+    }
+    & span,
+    & a {
+        border-left: none;
+        border-radius: 0 $input-default-border-radius $input-default-border-radius 0;
+    }
+}

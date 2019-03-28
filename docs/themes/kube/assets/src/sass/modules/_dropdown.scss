@@ -1,0 +1,50 @@
+// DROPDOWN
+// ---------------------------------------------------------------------------
+
+.dropdown {
+    position: absolute;
+    z-index: $z-over-control;
+
+    background: $dropdown-background;
+    box-shadow: $dropdown-box-shadow;
+    border-radius: $dropdown-border-radius;
+    width: $dropdown-width;
+    font-size: $dropdown-font-size;
+    font-weight: $dropdown-font-weight;
+    border: $dropdown-border-width $dropdown-border-style $dropdown-border-color;
+    padding: $dropdown-padding;
+
+    & span,
+    & a {
+        display: block;
+        text-decoration: none;
+        padding: $space-8 $space-16;
+        white-space: nowrap;
+    }
+    & a {
+        color: $dropdown-item-color-text;
+        background: $dropdown-item-background;
+    }
+    & a:hover {
+        color: $dropdown-item-hover-color-text;
+        background: $dropdown-item-hover-background;
+    }
+    & a.is-separator {
+        padding-bottom: $space-8;
+        border-bottom: $dropdown-separator-border-bottom;
+    }
+    & a:first-child,
+    & span:first-child {
+        border-top-left-radius: $dropdown-border-radius;
+        border-top-right-radius: $dropdown-border-radius;
+    }
+    & a.is-active,
+    & span {
+        &,
+        &:hover {
+            cursor: text;
+            color: $dropdown-item-active-color-text;
+            background: $dropdown-item-active-background;
+        }
+    }
+}

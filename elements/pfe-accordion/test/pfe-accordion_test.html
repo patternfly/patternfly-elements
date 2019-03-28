@@ -68,8 +68,8 @@
           assert.equal(header.getAttribute('role'), 'header');
           assert.isTrue(panel.hasAttribute('aria-labelledby'));
           assert.equal(panel.getAttribute('role'), 'region');
-          assert.equal(header.id, panel.getAttribute('aria-labelledby'));
-          assert.equal(panel.id, header.getAttribute('aria-controls'));
+          assert.equal(header.pfeId, panel.getAttribute('aria-labelledby'));
+          assert.equal(panel.pfeId, header.getAttribute('aria-controls'));
         });
 
         test('it should expand a panel when a header is selected', () => {

@@ -1,0 +1,43 @@
+// container
+@mixin make-container {
+    display: flex;
+    flex: 1;
+
+    @include for-mobile {
+        flex-direction: column;
+    }
+}
+@mixin make-container-row {
+    display: flex;
+    flex: 1;
+}
+@mixin make-container-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+// middle
+@mixin make-items-middle {
+    @include flex-items-middle;
+    @include for-mobile {
+        @include flex-items-left;
+        align-items: flex-start;
+    }
+}
+
+// content
+@mixin make-content {
+    flex: 1;
+    min-width: 0;
+}
+
+// sidebar
+@mixin make-sidebar($width) {
+    @include flex-item-width($width);
+}
+
+// offset
+@mixin make-gap-offset($width) {
+    margin-left: calc($width + #{$grid-gap}) !important;
+}

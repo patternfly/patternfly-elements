@@ -1,0 +1,128 @@
+// PAGER
+// ---------------------------------------------------------------------------
+
+.pager {
+    @include clearfix;
+
+    font-size: $pager-font-size;
+    font-weight: $pager-font-weight;
+    text-transform: $pager-text-transform;
+    margin-top: $space-20;
+    margin-bottom: $space-20;
+
+    & a,
+    & span {
+        float: left;
+        padding: $pager-padding;
+        border: $pager-border-width $pager-border-style $pager-border-color;
+        border-right-color: transparent;
+        color: $pager-color-text;
+    	text-decoration: none;
+        line-height: 1.4;
+        &:first-child {
+            border-top-left-radius: $pager-border-radius;
+            border-bottom-left-radius: $pager-border-radius;
+        }
+        &:last-child {
+            border-right-color: $pager-border-color;
+            border-top-right-radius: $pager-border-radius;
+            border-bottom-right-radius: $pager-border-radius;
+        }
+    }
+    & a.is-prev:before,
+    & a.is-next:after {
+        position: relative;
+        top: 1px;
+        font-size: 125%;
+        line-height: 1;
+    }
+    & a.is-prev:before {
+        content: '<';
+        margin-right: $space-8;
+    }
+    & a.is-next:after {
+        content: '>';
+        margin-left: $space-8;
+    }
+    & a.is-prev:empty:before {
+        margin-right: 0;
+    }
+    & a.is-next:empty:after {
+        margin-left: 0;
+    }
+    & a:hover {
+        @include transition;
+        background-color: rgba($color-black, .05);
+    }
+    & a.is-disabled {
+        background-color: rgba($color-black, .05);
+        color: rgba($color-black, .5);
+    }
+    & span,
+    & a.is-current,
+    & a.is-active {
+        background-color: $color-black;
+        border-color: $color-black;
+        color: #fff;
+    }
+    &.is-stacked {
+        & a {
+            position: relative;
+            width: 50%;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 0;
+            padding-top: $space-20;
+        }
+        & a:hover {
+            background: none;
+            text-decoration: underline;
+            color: $color-link-hover;
+        }
+        & a.is-prev:before,
+        & a.is-next:after {
+            content: '';
+            margin: 0;
+        }
+        & a.is-prev:after,
+        & a.is-next:before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: attr(data-label);
+            font-size: 11px;
+            text-transform: uppercase;
+            font-style: normal;
+            font-weight: normal;
+            letter-spacing: .03em;
+            margin-bottom: $space-4;
+            color: rgba($color-black, .5);
+        }
+        & .is-next {
+            text-align: right;
+        }
+        & a.is-next:before {
+            right: 0;
+        }
+    }
+
+}
+
+// Responsive
+@include for-mobile() {
+    .pager.is-stacked {
+        & a {
+            float: none;
+            display: block;
+            width: 100%;
+            margin-bottom: $space-20;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+        & a.is-next {
+            text-align: left;
+        }
+    }
+}

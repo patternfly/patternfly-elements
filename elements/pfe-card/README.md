@@ -13,13 +13,13 @@ PFElements Card Element
 ```
 
 ## Slots
-All slots other than `pfe-card--body` are optional.  If the slot is not defined, the container tag for it will not be rendered in the template.
+All slots are optional.  If the slot is not defined, the content will be added to the `body` region of the card.
 
 ### Header
 If this slot is used, we expect a heading level tag (h1, h2, h3, h4, h5, h6).
 
 ### Default slot (body)
-Any content that is not designated for the header or footer slot, will go to this slot.
+Any content that is not designated for the `header` or `footer` slot, will go to this slot.
 
 ### Footer
 Use this slot for anything that you want in the footer of the card.

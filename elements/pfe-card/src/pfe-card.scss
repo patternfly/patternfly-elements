@@ -18,7 +18,7 @@ $LOCAL: card;
   --pfe-card--spacing: #{pfe-var(container-spacer)};
 
   //-- Border settings
-  --pfe-card--BorderWeight: 1px;
+  --pfe-card--BorderWeight: 0;
   --pfe-card--BorderStyle:  solid;
   --pfe-card--BorderColor:  transparent;
   --pfe-card--BorderRadius: #{pfe-var(surface--border-radius)};

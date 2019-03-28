@@ -406,3 +406,21 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     padding: 0 #{$pfe-expand_button--padding--wide} #{$pfe-expand_button--padding} #{$pfe-expand_chevron--padding};
   }
 }
+
+@mixin set-surface-colors($prefix: pfe, $component-name: $LOCAL, $colors: (darker, darkest, accent, complement, lighter, lightest), $properties: (BackgroundColor)) {
+  @if $prefix != "" {
+    $prefix: #{$prefix}-;
+  }
+  @each $color in $colors {
+    :host([#{$prefix}color="#{$color}"]) {
+      @each $property in $properties {
+        --pfe-#{$component-name}--#{$property}:     #{pfe-color(surface--#{$color})};
+      }
+      --pfe-broadcasted--color--text:               #{get-ui-color($color, text)};
+      --pfe-broadcasted--color--ui-link:            #{get-ui-color($color, ui-link)};
+      --pfe-broadcasted--color--ui-link--visited:   #{get-ui-color($color, ui-link, visited)};
+      --pfe-broadcasted--color--ui-link--hover:     #{get-ui-color($color, ui-link, hover)};
+      --pfe-broadcasted--color--ui-link--focus:     #{get-ui-color($color, ui-link, focus)};
+    }
+  }
+}

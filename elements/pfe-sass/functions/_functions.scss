@@ -50,18 +50,9 @@
 }
 
 // New color function to only return theme colors
-@function color($name, $theme: "light", $opacity: 1) {
-    $map: map-get($color-map, $name);
+@function color($name, $opacity: 1) {
+    $color: map-get($pfe-colors, $name);
     $error: false;
-    $color: null;
-
-    @if $map !=null {
-        $color: map-get($map, $theme);
-    }
-
-    @else {
-        $error: true;
-    }
 
     @if type-of($color)==color {
         @if $opacity==1 {
@@ -79,6 +70,50 @@
 
     @if $error {
         @warn "#{$name} is not a valid color";
+    }
+}
+
+// New function to get the theme for a particular surface color
+@function get-surface-theme($color-name, $opacity: 1) {
+    $theme: map-get($pfe-colors, surface--#{$color-name}--theme);
+    $error: false;
+
+    @if $theme {
+        @return $theme;
+    }
+    @else {
+        $error: true;
+    }
+
+    @if $error {
+        @warn "#{$name} is not a valid surface color";
+    }
+}
+
+// New function to get the theme for a particular surface color
+@function get-ui-color($surface-color, $ui-name, $state: null) {
+    $theme: map-get($pfe-colors, surface--#{$surface-color}--theme);
+
+    @if $theme != light {
+        $theme: --on-#{$theme};
+    }
+    @else if $theme == light {
+        $theme: "";
+    }
+    @else {
+        @warn "#{$theme} is not a valid theme value";
+    }
+
+    @if $state {
+        $theme: #{$theme}--#{$state};
+    }
+
+    $color: map-get($pfe-colors, #{$ui-name}#{$theme});
+    @if type-of($color) == "color" {
+        @return $color;
+    }
+    @else {
+        @warn "#{$ui-name}#{$theme} does not exist in the color map";
     }
 }
 

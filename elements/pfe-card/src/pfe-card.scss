@@ -1,14 +1,18 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: card;
+
 :host {
   --pfe-card--padding:                          calc(#{pfe-var(container-spacer)} * 2); // 2x `container-spacer`
   --pfe-card_header--size:                      #{pfe-var(font-size--heading--gamma)};
   --pfe-card--bg:                               #{pfe-color(surface--base)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
+
+  // Text colors
+  --pfe-broadcasted--color--text:               #{get-ui-color(base, text)};
+  --pfe-broadcasted--color--ui-link:            #{get-ui-color(base, ui-link)};
+  --pfe-broadcasted--color--ui-link--visited:   #{get-ui-color(base, ui-link, visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{get-ui-color(base, ui-link, hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{get-ui-color(base, ui-link, focus)};
 
   display: flex;
   flex-direction: column;
@@ -25,75 +29,29 @@
   color: var(--pfe-broadcasted--color--text);
 }
 
-a {
-  color: var(--pfe-broadcasted--color--ui-link);
-}
-
-a:visited {
-  color: var(--pfe-broadcasted--color--ui-link--visited);
-}
-
-a:hover {
-  color: var(--pfe-broadcasted--color--ui-link--hover);
-}
-
-a:focus {
-  color: var(--pfe-broadcasted--color--ui-link--focus);
-}
-
 :host([color="dark"]) {
   --pfe-card--bg:                               #{pfe-color(surface--darker)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--darker--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darker--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darker--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darker--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darker--link--focus)};
-}
-
-:host([color="darkest"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--darkest)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--darkest--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darkest--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darkest--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darkest--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darkest--link--focus)};
+  --pfe-broadcasted--color--text:               #{get-ui-color(darker, text)};
+  --pfe-broadcasted--color--ui-link:            #{get-ui-color(darker, ui-link)};
+  --pfe-broadcasted--color--ui-link--visited:   #{get-ui-color(darker, ui-link, visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{get-ui-color(darker, ui-link, hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{get-ui-color(darker, ui-link, focus)};
 }
 
 :host([color="light"]) {
   --pfe-card--bg:                               #{pfe-color(surface--lighter)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--lighter--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lighter--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--lighter--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--lighter--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--lighter--link--focus)};
+  --pfe-broadcasted--color--text:               #{get-ui-color(lighter, text)};
+  --pfe-broadcasted--color--ui-link:            #{get-ui-color(lighter, ui-link)};
+  --pfe-broadcasted--color--ui-link--visited:   #{get-ui-color(lighter, ui-link, visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{get-ui-color(lighter, ui-link, hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{get-ui-color(lighter, ui-link, focus)};
 }
 
-:host([color="lightest"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--lightest)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--lightest--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lightest--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--lightest--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--lightest--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--lightest--link--focus)};
-}
-
-:host([color="complement"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--complement)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--complement--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--complement--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--complement--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--complement--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--complement--link--focus)};
-}
-
-:host([color="accent"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--accent)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--accent--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--accent--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--accent--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--accent--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--accent--link--focus)};
-}
+// Calls :host([color=""]) for each color value
+@include set-surface-colors(
+  $prefix: "",
+  $properties: bg
+);
 
 :host([size="small"]) {
   --pfe-card--padding:        #{pfe-var(container-spacer)};

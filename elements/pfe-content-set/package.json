@@ -4,7 +4,7 @@
     "className": "PfeContentSet",
     "elementName": "pfe-content-set"
   },
-  "version": "1.0.0-prerelease.9",
+  "version": "1.0.0-prerelease.10",
   "description": "This PatternFly Element dynamically hides and shows content; the style is determined by the available space.",
   "repository": {
     "type": "git",
@@ -24,9 +24,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-accordion": "^1.0.0-prerelease.9",
-    "@patternfly/pfe-tabs": "^1.0.0-prerelease.9",
-    "@patternfly/pfelement": "^1.0.0-prerelease.9"
+    "@patternfly/pfe-accordion": "^1.0.0-prerelease.10",
+    "@patternfly/pfe-tabs": "^1.0.0-prerelease.10",
+    "@patternfly/pfelement": "^1.0.0-prerelease.10"
   },
   "generator-pfelement-version": "1.1.0"
 }

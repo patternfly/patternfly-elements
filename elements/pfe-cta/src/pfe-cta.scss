@@ -79,6 +79,8 @@ $pfe-cta__arrow-size:                        0.313em;
     background:   var(--pfe-cta--main);
     color:        var(--pfe-cta--aux);
 
+    --pfe-broadcasted--color--ui-link: var(--pfe-cta--aux);
+
     &::after {
       display: none;
     }
@@ -89,6 +91,8 @@ $pfe-cta__arrow-size:                        0.313em;
     border-color: var(--pfe-cta--main--hover);
     background:   var(--pfe-cta--main--hover);
     color:        var(--pfe-cta--aux--hover);
+
+    --pfe-broadcasted--color--ui-link--hover: var(--pfe-cta--aux--hover);
   }
 
   // & ::slotted(a:visited),   TBD
@@ -113,6 +117,8 @@ $pfe-cta__arrow-size:                        0.313em;
     background:   var(--pfe-cta--aux);
     color:        var(--pfe-cta--main);
 
+    --pfe-broadcasted--color--ui-link--hover: var(--pfe-cta--main);
+
     &::after {
       display: none;
     }
@@ -123,6 +129,8 @@ $pfe-cta__arrow-size:                        0.313em;
     border-color: var(--pfe-cta--main--hover);
     background:   var(--pfe-cta--main--hover);
     color:        var(--pfe-cta--aux--hover);
+    
+    --pfe-broadcasted--color--ui-link--hover: var(--pfe-cta--aux--hover);
   }
 
   // & ::slotted(a:visited),   TBD

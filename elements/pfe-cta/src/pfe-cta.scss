@@ -7,7 +7,7 @@
 $pfe-cta__arrow-size:                        0.313em;
 
 /// ===========================================================================
-/// DEFUALT CTA
+/// DEFAULT CTA
 /// ===========================================================================
 :host {
   --pfe-cta--main:                     #{pfe-color(ui-link)};
@@ -22,7 +22,7 @@ $pfe-cta__arrow-size:                        0.313em;
 
   ::slotted(a) {
     line-height: inherit;
-    color: var(--pfe-cta--main) !important;
+    color: var(--pfe-cta--main);
     transition: all #{pfe-var(animation-timing)};
 
     &::after {
@@ -41,7 +41,7 @@ $pfe-cta__arrow-size:                        0.313em;
   // }
 
   ::slotted(a:hover) {
-    color: var(--pfe-cta--main--hover) !important;
+    color: var(--pfe-cta--main--hover);
 
     &::after {
       @include pfe-arrow-color(var(--pfe-cta--main--hover));
@@ -49,7 +49,7 @@ $pfe-cta__arrow-size:                        0.313em;
   }
 
   ::slotted(a:focus) {
-    color: var(--pfe-cta--main--focus) !important;
+    color: var(--pfe-cta--main--focus);
 
     &::after {
       @include pfe-arrow-color(var(--pfe-cta--main--focus));
@@ -75,9 +75,11 @@ $pfe-cta__arrow-size:                        0.313em;
     text-decoration: none;
     line-height: 1.2;
 
-    border-color: var(--pfe-cta--main) !important;
-    background:   var(--pfe-cta--main) !important;
-    color:        var(--pfe-cta--aux) !important;
+    border-color: var(--pfe-cta--main);
+    background:   var(--pfe-cta--main);
+    color:        var(--pfe-cta--aux);
+
+    --pfe-broadcasted--color--ui-link: var(--pfe-cta--aux);
 
     &::after {
       display: none;
@@ -86,9 +88,11 @@ $pfe-cta__arrow-size:                        0.313em;
 
   ::slotted(a:hover),
   ::slotted(a:focus) { // Not sure we can lump these together
-    border-color: var(--pfe-cta--main--hover) !important;
-    background:   var(--pfe-cta--main--hover) !important;
-    color:        var(--pfe-cta--aux--hover) !important;
+    border-color: var(--pfe-cta--main--hover);
+    background:   var(--pfe-cta--main--hover);
+    color:        var(--pfe-cta--aux--hover);
+
+    --pfe-broadcasted--color--ui-link--hover: var(--pfe-cta--aux--hover);
   }
 
   // & ::slotted(a:visited),   TBD
@@ -109,9 +113,11 @@ $pfe-cta__arrow-size:                        0.313em;
     text-decoration: none;
     line-height: 1.2;
 
-    border-color: var(--pfe-cta--main) !important;
-    background:   var(--pfe-cta--aux) !important;
-    color:        var(--pfe-cta--main) !important;
+    border-color: var(--pfe-cta--main);
+    background:   var(--pfe-cta--aux);
+    color:        var(--pfe-cta--main);
+
+    --pfe-broadcasted--color--ui-link--hover: var(--pfe-cta--main);
 
     &::after {
       display: none;
@@ -120,9 +126,11 @@ $pfe-cta__arrow-size:                        0.313em;
 
   ::slotted(a:hover), // Not sure we can lump these together
   ::slotted(a:focus) {
-    border-color: var(--pfe-cta--main--hover) !important;
-    background:   var(--pfe-cta--main--hover) !important;
-    color:        var(--pfe-cta--aux--hover) !important;
+    border-color: var(--pfe-cta--main--hover);
+    background:   var(--pfe-cta--main--hover);
+    color:        var(--pfe-cta--aux--hover);
+    
+    --pfe-broadcasted--color--ui-link--hover: var(--pfe-cta--aux--hover);
   }
 
   // & ::slotted(a:visited),   TBD
@@ -158,11 +166,12 @@ $pfe-cta__arrow-size:                        0.313em;
 /// COLOR OVERRIDE: BASE
 /// ===========================================================================
 
-:host([color="base"]) {
-  --pfe-cta--main:        #{pfe-color(ui-base)} !important;
-  --pfe-cta--main--hover: #{pfe-color(ui-base--hover)} !important;
-  --pfe-cta--aux:         #{pfe-color(ui-base--text)} !important;
-  --pfe-cta--aux--hover:  #{pfe-color(ui-base--text--hover)} !important;
+:host([color="base"]),
+:host([color="base"][on="dark"]) {
+  --pfe-cta--main:        #{pfe-color(ui-base)};
+  --pfe-cta--main--hover: #{pfe-color(ui-base--hover)};
+  --pfe-cta--aux:         #{pfe-color(ui-base--text)};
+  --pfe-cta--aux--hover:  #{pfe-color(ui-base--text--hover)};
 }
 
 
@@ -170,20 +179,22 @@ $pfe-cta__arrow-size:                        0.313em;
 /// COLOR OVERRIDE: COMPLEMENT
 /// ===========================================================================
 
-:host([color="complement"]) {
-  --pfe-cta--main:        #{pfe-color(ui-complement)} !important;
-  --pfe-cta--main--hover: #{pfe-color(ui-complement--hover)} !important;
-  --pfe-cta--aux:         #{pfe-color(ui-complement--text)} !important;
-  --pfe-cta--aux--hover:  #{pfe-color(ui-complement--text--hover)} !important;
+:host([color="complement"]),
+:host([color="complement"][on="dark"]) {
+  --pfe-cta--main:        #{pfe-color(ui-complement)};
+  --pfe-cta--main--hover: #{pfe-color(ui-complement--hover)};
+  --pfe-cta--aux:         #{pfe-color(ui-complement--text)};
+  --pfe-cta--aux--hover:  #{pfe-color(ui-complement--text--hover)};
 }
 
 
 /// ===========================================================================
 /// COLOR OVERRIDE: ACCENT
 /// ===========================================================================
-:host([color="accent"]) {
-  --pfe-cta--main:        #{pfe-color(ui-accent)} !important;
-  --pfe-cta--main--hover: #{pfe-color(ui-accent--hover)} !important;
-  --pfe-cta--aux:         #{pfe-color(ui-accent--text)} !important;
-  --pfe-cta--aux--hover:  #{pfe-color(ui-accent--text--hover)} !important;
+:host([color="accent"]),
+:host([color="accent"][on="dark"]) {
+  --pfe-cta--main:        #{pfe-color(ui-accent)};
+  --pfe-cta--main--hover: #{pfe-color(ui-accent--hover)};
+  --pfe-cta--aux:         #{pfe-color(ui-accent--text)};
+  --pfe-cta--aux--hover:  #{pfe-color(ui-accent--text--hover)};
 }

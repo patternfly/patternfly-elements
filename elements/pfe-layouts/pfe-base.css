@@ -31,7 +31,7 @@ h4,
 h5,
 h6 {
   font-size: 100%;
-  font-weight: var(--pfe-theme--font-weight--normal, 500); }
+  font-weight: var(--pfe-theme--font-weight--normal, 400); }
 
 ul {
   list-style: none; }
@@ -75,7 +75,7 @@ html {
 body {
   font-family: var(--pfe-theme--font-family, "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif);
   font-size: var(--pfe-theme--font-size, 16px);
-  font-weight: var(--pfe-theme--font-weight--normal, 500);
+  font-weight: var(--pfe-theme--font-weight--normal, 400);
   line-height: var(--pfe-theme--line-height, 1.5);
   color: var(--pfe-theme--color--text, #333);
   text-align: left; }

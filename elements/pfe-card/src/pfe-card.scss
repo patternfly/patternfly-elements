@@ -13,6 +13,8 @@
   display: flex;
   flex-direction: column;
   justify-items: flex-start;
+  // This allows the card to fill it's container if necessary
+  align-self: stretch;
 
   padding: var(--pfe-card--padding);
   border: pfe-var(surface--border-width)

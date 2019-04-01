@@ -8,7 +8,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "Card element for PFElements",
+  "description": "Cards for PatternFly Elements",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/patternfly/patternfly-elements/tree/v1.0.0-prerelease.10/elements/pfe-card"
@@ -19,7 +23,7 @@
     "dev": "../../node_modules/.bin/gulp dev",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-card/test/"
   },
-  "authors": [
+  "contributors": [
     {
       "name": "Mark Caron",
       "email": "mark@redhat.com",

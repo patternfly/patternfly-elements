@@ -8,7 +8,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "Health element for PFElements",
+  "description": "Health index for PatternFly Elements",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/patternfly/patternfly-elements/tree/v1.0.0-prerelease.10/elements/pfe-health-index"
@@ -19,7 +23,7 @@
     "dev": "../../node_modules/.bin/gulp dev",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-health-index/test/"
   },
-  "authors": [
+  "contributors": [
     {
       "name": "Kyle Buchanan",
       "email": "kylebuch8@gmail.com",

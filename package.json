@@ -4,6 +4,10 @@
     "access": "public"
   },
   "description": "Monorepo for the PatternFly Elements project.",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/patternfly/patternfly-elements.git"

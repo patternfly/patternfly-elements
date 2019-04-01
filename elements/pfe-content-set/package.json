@@ -6,6 +6,10 @@
   },
   "version": "1.0.0-prerelease.10",
   "description": "This PatternFly Element dynamically hides and shows content; the style is determined by the available space.",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/patternfly/patternfly-elements/tree/v1.0.0-prerelease.10/elements/pfe-content-set"
@@ -19,7 +23,7 @@
     "dev": "../../node_modules/.bin/gulp dev",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-content-set/test/"
   },
-  "authors": [
+  "contributors": [
     {
       "name": "cd"
     },

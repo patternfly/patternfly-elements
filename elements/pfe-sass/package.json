@@ -9,6 +9,10 @@
     "access": "public"
   },
   "description": "Sass variables and mixins for pfe-elements",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patternfly/patternfly-elements/tree/v1.0.0-prerelease.10/elements/pfe-sass"
+  },
   "contributors": [
     {
       "name": "Kyle Buchanan",
@@ -19,6 +23,16 @@
       "name": "Mark Caron",
       "email": "mark@redhat.com",
       "url": "https://github.com/markcaron"
+    },
+    {
+      "name": "castastrophe",
+      "url": "https://github.com/castastrophe"
+    },
+    {
+      "name": "Kendall Totten"
+    },
+    {
+      "name": "cd"
     }
   ],
   "license": "MIT",

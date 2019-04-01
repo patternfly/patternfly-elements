@@ -1,10 +1,18 @@
 {
   "name": "@patternfly/pfe-layouts",
+  "pfelement": {
+    "className": "PfeLayouts",
+    "elementName": "pfe-layouts"
+  },
   "version": "1.0.0-prerelease.10",
   "publishConfig": {
     "access": "public"
   },
-  "description": "pfe-layouts for Red Hat's Customer Portal and PFElements",
+  "description": "Layouts helper classes for PFElements",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patternfly/patternfly-elements/tree/v1.0.0-prerelease.10/elements/pfe-layouts"
+  },
   "scripts": {
     "build": "../../node_modules/.bin/gulp",
     "dev": "../../node_modules/.bin/gulp dev"
@@ -20,5 +28,6 @@
   "dependencies": {
     "@patternfly/pfe-sass": "^1.0.0-prerelease.10"
   },
+  "generator-pfelement-version": "v0.6.8",
   "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
 }

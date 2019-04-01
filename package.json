@@ -1,5 +1,13 @@
 {
   "name": "@patternfly/patternfly-elements",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Monorepo for the PatternFly Elements project.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patternfly/patternfly-elements.git"
+  },
   "scripts": {
     "start": "npm run doc-listing-inject && spandx",
     "lerna": "lerna",

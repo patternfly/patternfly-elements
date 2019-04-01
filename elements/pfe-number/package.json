@@ -8,7 +8,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "Number element for PFElements",
+  "description": "Number formatting for PatternFly Elements",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/patternfly/patternfly-elements/tree/v1.0.0-prerelease.10/elements/pfe-number"
@@ -29,6 +33,5 @@
     "@patternfly/pfelement": "^1.0.0-prerelease.10",
     "numeral": "^2.0.6"
   },
-  "generator-pfelement-version": "v0.6.8",
   "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
 }

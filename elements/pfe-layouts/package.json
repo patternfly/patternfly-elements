@@ -8,7 +8,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "Layouts helper classes for PFElements",
+  "description": "Layouts helper classes for PatternFly Elements",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/patternfly/patternfly-elements/tree/v1.0.0-prerelease.10/elements/pfe-layouts"
@@ -28,6 +32,5 @@
   "dependencies": {
     "@patternfly/pfe-sass": "^1.0.0-prerelease.10"
   },
-  "generator-pfelement-version": "v0.6.8",
   "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
 }

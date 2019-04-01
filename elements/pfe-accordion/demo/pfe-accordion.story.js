@@ -20,6 +20,19 @@ stories.add(PfeAccordion.tag, () => {
   let config = {};
   // const props = PfeAccordion.properties;
   // const slots = PfeAccordion.slots;
+  const props = {
+    on: {
+      title: "Theme",
+      type: "string",
+      enum: [
+        "light",
+        "dark"
+      ],
+      default: "light"
+    }
+  };
+
+  config.prop = tools.autoPropKnobs(props, storybookBridge);
 
   //-- Add content to light DOM
   config.slots = [];

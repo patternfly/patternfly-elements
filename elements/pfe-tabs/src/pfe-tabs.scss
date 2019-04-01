@@ -1,88 +1,97 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: tabs;
+
 /// ===========================================================================
 /// Component Specific SASS Vars
 /// ===========================================================================
 
 $pfe-tabs__panel--PaddingLeft-factor:  2;
 
-/// ===========================================================================
-/// DEFAULT TABS
-/// ===========================================================================
-
 :host {
   display: block;
+
+  .panels {
+    padding: 0;
+  }
 }
 
 .tabs {
-  --pfe-tabs--border-color:          #{pfe-color(surface--border)};
-
+  --pfe-tabs--BorderColor: #{pfe-color(surface--border)};
   display: flex;
   border: 0;
-  border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
+  border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
 }
 
-.panels {
-  padding: 0;
-  padding-top: #{pfe-var(container-padding)};
-}
 
 /// ===========================================================================
-/// VERTICAL TABS
+/// VERTICAL ORIENTATION
 /// ===========================================================================
 
-:host([vertical]) {
-  display: flex; // Makes the tabs side-by-side with panels
-}
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+  :host([vertical]) {
+    display: flex; // Sets tabs to appear to the left of the panels.
 
-:host([vertical]) .tabs {
-  flex-direction: column;
-  width: 25%;
+    .tabs {
+      flex-direction: column;
+      width: 22.22%;
+      border: 0;
+      border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
+    }
 
-  border: 0;
-  border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-tabs--border-color);
-}
-
-:host([vertical]) .tabs ::slotted(pfe-tab) {
-  margin: 0 -1px 0 0;
-  border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
-  border-right: 0;
-  position: relative;
-}
-
-:host([vertical]) .tabs ::slotted(pfe-tab[aria-selected="true"]) {
-  border-color: var(--pfe-tabs--border-color);
-  border-right: 0;
-}
-
-:host([vertical]) .panels {
-  padding: 0;
-  padding-right: #{pfe-var(container-padding)};
-  padding-left: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__panel--PaddingLeft-factor});
+    .panels {
+      padding: 0;
+      width: 77.78%;
+      padding-right: #{pfe-var(container-padding)};
+    }
+  }
 }
 
 /// ===========================================================================
 /// TAB VARIANTS
 /// ===========================================================================
 
-:host([pfe-variant="primary"]) {
-  .tabs {
-    border-bottom: transparent;
-    border-right: transparent;
-  }
-}
-:host([vertical][pfe-variant="primary"]) {
-  align-items: flex-start;
-} 
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+  :host([vertical][pfe-variant="earth"]) {
+    padding-top: #{pfe-var(container-padding)};
 
-:host([pfe-variant="secondary"]) {
-  .tabs {
-    border-bottom: transparent;
+    .tabs {
+      padding-left: 0;
+      padding-top: #{pfe-var(container-padding)};
+    }
   }
 }
 
-:host([vertical][pfe-variant="secondary"]) {
+:host([pfe-variant="earth"]) {
   .tabs {
-    justify-content: flex-start; 
+    padding-left: #{pfe-var(container-padding)};
+
+    ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
+      border-left: 0;
+    }
   }
 }
+
+:host([on="dark"]) {
+  @include pfe-theme($theme: "dark");
+}
+// TODO: address tabs on darker and darkest themes.
+// :host([color="darker"]) {
+//   @include pfe-theme($theme: "darker");
+// }
+// :host([color="darkest"]) {
+//   @include pfe-theme($theme: "darkest");
+// }
+
+
+:host([on="light"]) {
+  @include pfe-theme($theme: "light");
+}
+// TODO: address tabs on lighter and lightest themes.
+// :host([on="lighter"]) {
+//   @include pfe-theme($theme: "lighter");
+// }
+// :host([on="lightest"]) {
+//   @include pfe-theme($theme: "lightest");
+// }
+

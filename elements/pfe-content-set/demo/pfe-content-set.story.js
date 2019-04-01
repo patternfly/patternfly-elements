@@ -30,11 +30,10 @@ stories.add(PfeContentSet.tag, () => {
 
   const variantLabel = "Variant";
   const variantOptions = {
-    "": "default",
-    primary: "Primary",
-    secondary: "Secondary"
+    wind: "wind",
+    earth: "earth"
   };
-  const variantDefault = "";
+  const variantDefault = "wind";
   const variant = select(variantLabel, variantOptions, variantDefault);
   const variantAttr = variant ? ` pfe-variant="${variant}"` : "";
 
@@ -55,7 +54,7 @@ stories.add(PfeContentSet.tag, () => {
     .map((item, i) =>
       sets.push({
         heading: lorem(headingConfig).replace(/^\w/, c => c.toUpperCase()),
-        panel: `<h2>${lorem(headingConfig).replace(/^\w/, c =>
+        panel: `<h2 style="margin-top: 0;">${lorem(headingConfig).replace(/^\w/, c =>
           c.toUpperCase()
         )}</h2>
       ${lorem({
@@ -73,12 +72,10 @@ ${Array(countVar)
     .split(0)
     .map(
       (item, i) => `
-    <pfe-content-set-group>
-        <h2 pfe-heading>${sets[i].heading}</h2>
-        ${sets[i].panel}
-    </pfe-content-set-group>
-`
-    )
+  <h3 pfe-content-set--header style="margin: 0;">${sets[i].heading}</h3>
+  <div pfe-content-set--panel>
+    ${sets[i].panel}
+  </div>`)
     .join("")}
 </pfe-content-set>
 `;

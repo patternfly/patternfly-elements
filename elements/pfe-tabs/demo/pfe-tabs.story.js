@@ -4,8 +4,6 @@ import * as tools from "../../../.storybook/utils.js";
 
 import PfeTabs from "../pfe-tabs.js";
 
-// import cpTheme from "../../../themes/cp-theme/cp-theme.js";
-
 const stories = storiesOf("Tabs", module);
 
 const defaultTab = tools.autoHeading(true);
@@ -37,6 +35,24 @@ stories.add(PfeTabs.tag, () => {
       title: "Vertical orientation",
       type: "boolean",
       default: false
+    },
+    on: {
+      title: "Theme",
+      type: "string",
+      enum: [
+        "light",
+        "dark"
+      ],
+      default: "light"
+    },
+    "pfe-variant": {
+      title: "Variant",
+      type: "string",
+      enum: [
+        "wind",
+        "earth"
+      ],
+      default: "wind"
     }
   };
 

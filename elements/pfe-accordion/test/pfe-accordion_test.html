@@ -237,25 +237,6 @@
 
           sinon.assert.calledWith(spy, 'pfe-accordion-header: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)');
         });
-
-        test('it should add an even or odd class to the headers if the theme is striped', () => {
-          const pfeAccordion = document.querySelector('pfe-accordion');
-          const headers = [...pfeAccordion.querySelectorAll('pfe-accordion-header')];
-
-          pfeAccordion.setAttribute('color', 'striped');
-
-          /*
-           * this can be confusing. index of 0 is really "even" but visually,
-           * the first heading (index of 0) is 1 making it have a class of odd.
-           */
-          headers.forEach((header, index) => {
-            if (index % 2 === 0) {
-              assert.isTrue(header.classList.contains('odd'));
-            } else {
-              assert.isTrue(header.classList.contains('even'));
-            }
-          });
-        });
       });
     </script>
   </body>

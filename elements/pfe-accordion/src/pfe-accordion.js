@@ -84,7 +84,7 @@ class PfeAccordion extends PFElement {
   }
 
   constructor() {
-    super(PfeAccordion, { type: PfeBand.PfeType });
+    super(PfeAccordion, { type: PfeAccordion.PfeType });
   }
 
   connectedCallback() {

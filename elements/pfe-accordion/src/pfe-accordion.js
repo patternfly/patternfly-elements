@@ -64,19 +64,27 @@ class PfeAccordion extends PFElement {
     return "pfe-accordion.html";
   }
 
+  get schemaUrl() {
+    return "pfe-accordion.json";
+  }
+
   static get observedAttributes() {
-    return ["theme", "color", "on"];
+    return ["on"];
   }
 
   static get cascadingAttributes() {
     return {
-      color: "pfe-accordion-header, pfe-accordion-panel",
       on: "pfe-accordion-header, pfe-accordion-panel"
     };
   }
 
+  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.Container;
+  }
+
   constructor() {
-    super(PfeAccordion);
+    super(PfeAccordion, { type: PfeBand.PfeType });
   }
 
   connectedCallback() {
@@ -101,21 +109,6 @@ class PfeAccordion extends PFElement {
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
-
-    if (attr === "color") {
-      const headers = this.querySelectorAll(PfeAccordionHeader.tag);
-
-      if (newVal === "striped") {
-        [...headers].forEach((header, index) => {
-          const headerClass = index % 2 ? "even" : "odd";
-          header.classList.add(headerClass);
-        });
-      } else {
-        [...headers].forEach((header, index) => {
-          header.classList.remove("even", "odd");
-        });
-      }
-    }
   }
 
   toggle(index) {

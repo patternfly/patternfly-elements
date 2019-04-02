@@ -21,7 +21,7 @@ String.prototype.sentenceCase = function() {
 };
 
 // Print attributes based on an object
-const listProperties = (obj, prefix = "") =>
+const listProperties = (obj) =>
   Object.entries(obj)
     .map(set => {
       let string = " ";
@@ -41,7 +41,6 @@ const listProperties = (obj, prefix = "") =>
         (v !== null && v !== "null") &&
         p !== "slot"
       ) {
-        string += prefix ? `${prefix}-` : "";
         string += p;
         // If the value is a boolean and is false, or the value is not a string true
         if (
@@ -68,7 +67,7 @@ const listProperties = (obj, prefix = "") =>
 // -- slot: rendered as slot="<input>"
 // -- attributes: passed through the listProperties function
 // -- content: Accepts html or plain text or renders default content
-export function customTag(obj, prefix = "") {
+export function customTag(obj) {
   let start = "";
   let end = "";
 
@@ -86,7 +85,7 @@ export function customTag(obj, prefix = "") {
       end += "div";
     }
     start += obj.slot ? ` slot="${obj.slot}"` : "";
-    start += obj.attributes ? listProperties(obj.attributes || {}, prefix) : "";
+    start += obj.attributes ? listProperties(obj.attributes || {}) : "";
     start += ">";
     end += ">";
   }
@@ -165,8 +164,8 @@ const renderSlots = (slots = []) =>
     .join("");
 
 // Creates a component dynamically based on inputs
-export function component(tag, attributes = {}, slots = [], prefix = "") {
-  return `<${tag}${listProperties(attributes, prefix)}>${
+export function component(tag, attributes = {}, slots = []) {
+  return `<${tag}${listProperties(attributes)}>${
     slots.length > 0 ? renderSlots(slots) : autoContent()
   }</${tag}>`;
 }

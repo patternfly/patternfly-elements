@@ -1,37 +1,44 @@
 import { storiesOf } from "@storybook/polymer";
-import { withKnobs, text } from '@storybook/addon-knobs/polymer';
-import { escapeHTML } from "../../../.storybook/utils.js";
-import "../pfe-markdown";
+import * as storybookBridge from '@storybook/addon-knobs/polymer';
+import * as tools from "../../../.storybook/utils.js";
+
+import PfeMarkdown from "../pfe-markdown.js";
 
 const stories = storiesOf("Markdown", module);
-stories.addDecorator(withKnobs);
 
-stories.add(
-  "pfe-markdown",
-  () => {
-    const markdown = text("Markdown", `# Here is some markdown
+// Define the templates to be used
+const template = (data = {}) =>
+  tools.component(PfeMarkdown.tag, data.prop, data.slots);
+
+stories.addDecorator(storybookBridge.withKnobs);
+
+stories.add(PfeMarkdown.tag, () => {
+  let config = {};
+  const props = PfeMarkdown.properties;
+  const slots = PfeMarkdown.slots;
+
+  slots.default.default = `# Here is some markdown
 
 And some some more
 
 ### Here is a heading level 3
 
-And a [link](https://redhat.com)`);
+And a [link](https://redhat.com)`;
 
-    const markdownElement = `
-<pfe-markdown>
-  <div pfe-markdown-container># Here is some markdown</div>
-</pfe-markdown>`;
+  // Build the knobs and read in their selections
+  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.has = tools.autoContentKnobs(slots, storybookBridge);
 
-    return `
-      <pfe-markdown>
-        <div pfe-markdown-container>${markdown}</div>
-      </pfe-markdown>
+  config.slots = [{
+    content: tools.customTag({
+      tag: "div",
+      attributes: {
+        "pfe-markdown-container": true
+      },
+      content: config.has.default
+    })
+  }];
 
-      <section>
-        <h2>Markup</h2>
-        <pre style="margin-left:15px;"><code>${escapeHTML(markdownElement)}</code>
-        </pre>
-      </section>
-    `
-  }
-);
+  let rendered = template(config);
+  return tools.preview(rendered);
+});

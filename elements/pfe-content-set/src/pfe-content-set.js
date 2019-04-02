@@ -29,22 +29,6 @@ class PfeContentSet extends PFElement {
       : window.outerWidth > 768;
   }
 
-  get settings() {
-    let settings = {};
-    const variant = this.getAttribute("pfe-variant");
-    const theme = this.getAttribute("on");
-
-    if (variant) {
-      settings.variant = variant;
-    }
-
-    if (theme) {
-      settings.theme = theme 
-    }
-
-    return settings;
-  }
-
   constructor() {
     super(PfeContentSet, { delayRender: true });
   }
@@ -93,8 +77,8 @@ class PfeContentSet extends PFElement {
     fragment.appendChild(accordion);
 
     // Pass the theme property down to the accordion component
-    if (this.settings.theme) {
-      accordion.setAttribute("on", this.settings.theme);
+    if (this.on) {
+      accordion.setAttribute("on", this.on);
     }
 
     // Append the fragment to the component
@@ -137,18 +121,18 @@ class PfeContentSet extends PFElement {
     fragment.appendChild(tabs);
 
     // If the orientation is set to vertical, add that attribute to the tabs
-    if (this.orientation === "vertical") {
+    if (this.vertical.value !== null && this.vertical.value !== false) {
       tabs.setAttribute("vertical", true);
     }
 
     // Pass the variant attribute down to the tabs component
-    if (this.settings.variant) {
-      tabs.setAttribute("pfe-variant", this.settings.variant);
+    if (this.variant.value !== this.variant.default) {
+      tabs.setAttribute("pfe-variant", this.variant.value);
     }
 
     // Pass the theme property down to the accordion component
-    if (this.settings.theme) {
-      tabs.setAttribute("on", this.settings.theme);
+    if (this.on.value) {
+      tabs.setAttribute("on", this.on.value);
     }
 
     // Append the fragment to the component

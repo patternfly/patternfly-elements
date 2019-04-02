@@ -26,8 +26,8 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeContentSet.tag, () => {
   let config = {};
-  let heading = [];
-  let panel = [];
+  let headings = [];
+  let panels = [];
 
   const props = PfeContentSet.properties;
 
@@ -48,35 +48,29 @@ stories.add(PfeContentSet.tag, () => {
   );
     
   // Let the user customize the first header + panel set
-  for (let i = 0; i < countVar; i++) {
-    if (customContent) {
-      heading[i] = storybookBridge.text(`Heading ${i + 1}`, "", "set");
-      panel[i] = storybookBridge.text(`Panel ${i + 1}`, "", "set");
-    } else {
-      heading[i] = tools.autoHeading(true).replace(/^\w/, c => c.toUpperCase());
-      panel[i] = tools.autoContent(1, 2) + cta;
+  if (customContent) {
+    for (let i = 0; i < countVar; i++) {
+      headings[i] = storybookBridge.text(`Heading ${i + 1}`, "", "set");
+      panels[i] = storybookBridge.text(`Panel ${i + 1}`, "", "set");
     }
   }
-
-  const content = Array(countVar)
-    .join(0)
-    .split(0)
-    .map((item, i) =>
-      tools.customTag({
-        tag: "h3",
-        attributes: {
-          "pfe-content-set--header": true
-        },
-        content: heading[i]
-      }) + tools.customTag({
-        tag: "div",
-        attributes: {
-          "pfe-content-set--panel": true
-        },
-        content: panel[i]
-      })
-    )
-    .join("");
+  
+  let content = "";
+  for (let i = 0; i < countVar; i++) {
+    content += tools.customTag({
+      tag: "h3",
+      attributes: {
+        "pfe-content-set--header": true
+      },
+      content: customContent ? headings[i] : tools.autoHeading(true).replace(/^\w/, c => c.toUpperCase())
+    }) + tools.customTag({
+      tag: "div",
+      attributes: {
+        "pfe-content-set--panel": true
+      },
+      content: customContent ? panels[i] : tools.autoContent(1, 2) + cta
+    });
+  }
 
   config.slots = [
     {
@@ -90,7 +84,6 @@ stories.add(PfeContentSet.tag, () => {
   }
 
   const render = template(config);
-  
   const output = tools.preview(render);
   return output;
 });

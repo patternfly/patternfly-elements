@@ -122,14 +122,15 @@ class PFElement extends HTMLElement {
     // Loop over the properties provided by the schema
     Object.keys(properties).forEach(attr => {
       let data = properties[attr];
-      let hasPrefix = false;
+      // Prefix default is true
+      let hasPrefix = true;
       let attrName = attr;
       // Set the attribute's property equal to the schema input
       this[attr] = data;
       // Initialize the value to null
       this[attr].value = null;
 
-      if(this[attr].prefixed) {
+      if(typeof this[attr].prefixed !== "undefined") {
         hasPrefix = this[attr].prefixed;
       }
 

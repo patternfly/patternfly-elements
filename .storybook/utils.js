@@ -71,6 +71,7 @@ const listProperties = (obj, prefix = "") =>
 export function customTag(obj, prefix = "") {
   let start = "";
   let end = "";
+
   // If a tag is defined, or it has slots or attributes to apply
   // render an open and close tag
   if (obj.tag || obj.slot || obj.attributes) {
@@ -89,7 +90,7 @@ export function customTag(obj, prefix = "") {
     start += ">";
     end += ">";
   }
-  return `${start}${obj.content || autoContent()}${end}`;
+  return `${start}${obj.content}${end}`;
 }
 
 const parseMarkup = string => {
@@ -201,6 +202,10 @@ export function autoPropKnobs(properties, bridge) {
     let options = prop[1].enum || [];
     let hidden = prop[1].hidden;
     let required = prop[1].required;
+    let prefixed = prop[1].prefixed;
+
+    // Convert the type to lowercase values
+    type = type.toLowerCase();
 
     // Initialize booleans to false if undefined
     if (typeof hidden === "undefined") {
@@ -211,10 +216,18 @@ export function autoPropKnobs(properties, bridge) {
       required = false;
     }
 
+    if (typeof prefixed === "undefined") {
+      prefixed = false;
+    }
+
+    if(prefixed) {
+      attr = `pfe-${attr}`;
+    }
+
     // Set the default method to text
     let method = "text";
     if (["boolean", "number", "object", "array", "date"].includes(type)) {
-      method = type.toLowerCase();
+      method = type;
     }
 
     // If the property is not hidden from the user

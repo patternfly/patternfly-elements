@@ -90,17 +90,9 @@ stories.add(PfeTabs.tag, () => {
   }
 
   // Some attribute values don't need to be included in the markup
-  if (config.prop.orientation === "vertical") {
-    // Add the vertical attribute set to true
-    config.prop.vertical = true;
+  if (!config.prop.vertical) {
+    config.prop.vertical = null;
   }
-
-  config.prop["pfe-variant"] = config.prop.variant;
-  config.prop.variant = null;
-
-  config.prop.orientation = null;
-
-  console.log(config);
 
   const render = template(config);
   const output = tools.preview(render);

@@ -35,12 +35,14 @@ class PFElement extends HTMLElement {
     this.setAttribute(`${prefix}type`, value);
   }
 
+  // Returns a single element assigned to that slot; if multiple, it returns the first
   has_slot(name) {
     return this.querySelector(`[slot='${name}']`);
   }
 
-  has_slot(name) {
-    return this.querySelector(`[slot='${name}']`);
+  // Returns an array with all elements assigned to that slot
+  has_slots(name) {
+    return [...this.querySelectorAll(`[slot='${name}']`)];
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {

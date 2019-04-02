@@ -122,8 +122,12 @@ class PfeTabs extends PFElement {
     return "pfe-tabs.html";
   }
 
+  get schemaUrl() {
+    return "pfe-tabs.json";
+  }
+
   static get observedAttributes() {
-    return ["vertical", "selected-index", "pfe-variant"];
+    return ["vertical", "selected-index", "pfe-variant", "on"];
   }
 
   get selectedIndex() {
@@ -177,13 +181,19 @@ class PfeTabs extends PFElement {
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
       case "pfe-variant":
-        if (this.getAttribute("pfe-variant") === "primary") {
+        if (this.getAttribute("pfe-variant") === "wind") {
           this._allTabs().forEach(tab =>
-            tab.setAttribute("pfe-variant", "primary")
+            tab.setAttribute("pfe-variant", "wind")
           );
-        } else if (this.getAttribute("pfe-variant") === "secondary") {
+          this._allPanels().forEach(panel =>
+            panel.setAttribute("pfe-variant", "wind")
+          );
+        } else if (this.getAttribute("pfe-variant") === "earth") {
           this._allTabs().forEach(tab =>
-            tab.setAttribute("pfe-variant", "secondary")
+            tab.setAttribute("pfe-variant", "earth")
+          );
+          this._allPanels().forEach(panel =>
+            panel.setAttribute("pfe-variant", "earth")
           );
         }
         break;
@@ -201,6 +211,17 @@ class PfeTabs extends PFElement {
           this._allTabs().forEach(tab => tab.removeAttribute("vertical"));
         }
         break;
+
+      case "on":
+        if (this.getAttribute("on") === "dark") {
+          this._allTabs().forEach(tab =>
+            tab.setAttribute("on", "dark")
+          );
+          this._allPanels().forEach(panel =>
+            panel.setAttribute("on", "dark")
+          );
+         }
+         break;
 
       case "selected-index":
         Promise.all([

@@ -6,7 +6,6 @@ $LOCAL: band;
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
-    margin-bottom: #{pfe-local(gutter--vertical)};
 }
 
 %grid-layout {
@@ -275,6 +274,7 @@ $LOCAL: band;
   @each $section in (header, body, aside, footer) {
     &__#{$section} { // i.e., pfe-band__header
       @extend %flex-fallback; // Add the flex fallback styles
+      margin-bottom: #{pfe-local(gutter--vertical)};
       // Apply the standard grid
       @supports (display: grid) {
           @extend %grid-layout;
@@ -284,5 +284,9 @@ $LOCAL: band;
           grid-template-columns: var(--pfe-band__#{$section}--layout);
       }
     }
+  }
+
+  &__aside {
+    align-self: stretch;
   }
 }

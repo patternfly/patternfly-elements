@@ -3,6 +3,7 @@ import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeTabs from "../pfe-tabs.js";
+import PfeCta from "../../pfe-cta/pfe-cta.js";
 
 const stories = storiesOf("Tabs", module);
 
@@ -23,28 +24,12 @@ stories.add(PfeTabs.tag, () => {
   let tabs = [];
   let panels = [];
 
-  // const props = PfeTabs.properties;
-
-  // Manually defining props but this can be done in a schema instead
-  const props = {
-    orientation: {
-      title: "Orientation",
-      type: "string",
-      enum: ["horizontal", "vertical"],
-      default: "horizontal",
-      required: true
-    },
-    variant: {
-      title: "Variant",
-      type: "string",
-      enum: ["primary", "secondary"]
-    }
-  };
+  const props = PfeTabs.properties;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 
-  // const slots = PfeTabs.slots;
+  const slots = PfeTabs.slots;
 
   //-- Add content to light DOM
   config.slots = [];
@@ -114,6 +99,8 @@ stories.add(PfeTabs.tag, () => {
   config.prop.variant = null;
 
   config.prop.orientation = null;
+
+  console.log(config);
 
   const render = template(config);
   const output = tools.preview(render);

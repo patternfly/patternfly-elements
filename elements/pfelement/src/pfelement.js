@@ -122,15 +122,25 @@ class PFElement extends HTMLElement {
     // Loop over the properties provided by the schema
     Object.keys(properties).forEach(attr => {
       let data = properties[attr];
+      let hasPrefix = false;
+      let attrName = attr;
       // Set the attribute's property equal to the schema input
       this[attr] = data;
       // Initialize the value to null
       this[attr].value = null;
 
+      if(this[attr].prefixed) {
+        hasPrefix = this[attr].prefixed;
+      }
+
+      if(hasPrefix) {
+        attrName = `${prefix}${attr}`;
+      }
+
       // If the attribute exists on the host
-      if (this.hasAttribute(`${prefix}${attr}`)) {
+      if (this.hasAttribute(attrName)) {
         // Set property value based on the existing attribute
-        this[attr].value = this.getAttribute(`${prefix}${attr}`);
+        this[attr].value = this.getAttribute(attrName);
       }
       // Otherwise, look for a default and use that instead
       else if (data.default) {
@@ -139,7 +149,7 @@ class PFElement extends HTMLElement {
           !data.options || (data.options && !data.options.dependencies.length);
         // If the dependency exists or there are no dependencies, set the default
         if (dependency_exists || no_dependencies) {
-          this.setAttribute(`${prefix}${attr}`, data.default);
+          this.setAttribute(attrName, data.default);
           this[attr].value = data.default;
         }
       }

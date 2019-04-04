@@ -12,7 +12,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/patternfly/patternfly-elements/tree/v1.0.0-prerelease.10/elements/pfe-autocomplete"
+    "url" : "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-autocomplete"
   },
   "publishConfig": {
     "access": "public"
@@ -32,6 +33,5 @@
   "dependencies": {
     "@patternfly/pfe-sass": "^1.0.0-prerelease.11",
     "@patternfly/pfelement": "^1.0.0-prerelease.11"
-  },
-  "generator-pfelement-version": "0.5.5"
+  }
 }

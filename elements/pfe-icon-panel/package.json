@@ -15,7 +15,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/patternfly/patternfly-elements/tree/v1.0.0-prerelease.10/elements/pfe-icon-panel"
+    "url" : "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-icon-panel"
   },
   "main": "pfe-icon-panel.js",
   "scripts": {

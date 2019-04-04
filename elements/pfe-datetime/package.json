@@ -11,7 +11,8 @@
   "description": "Datetime element for PFElements",
   "repository": {
     "type": "git",
-    "url": "https://github.com/patternfly/patternfly-elements/tree/v1.0.0-prerelease.10/elements/pfe-datetime"
+    "url" : "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-datetime"
   },
   "main": "pfe-datetime.js",
   "scripts": {
@@ -22,6 +23,11 @@
   "authors": [
     {
       "name": "Luke Dary"
+    },
+    {
+      "name": "Kyle Buchanan",
+      "email": "kylebuch8@gmail.com",
+      "url": "https://github.com/kylebuch8"
     }
   ],
   "license": "MIT",

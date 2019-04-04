@@ -15,7 +15,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/patternfly/patternfly-elements/tree/v1.0.0-prerelease.10/elements/pfe-card"
+    "url" : "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-card"
   },
   "main": "pfe-card.js",
   "scripts": {

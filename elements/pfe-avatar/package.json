@@ -12,7 +12,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/patternfly/patternfly-elements/tree/v1.0.0-prerelease.10/elements/pfe-avatar"
+    "url" : "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-avatar"
   },
   "publishConfig": {
     "access": "public"

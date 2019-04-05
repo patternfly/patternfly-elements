@@ -13,3 +13,69 @@
     text-decoration: underline;
     text-decoration-skip: ink;
 }
+
+/// ===========================================================================
+/// Theme Color Vars   - use with on="dark" to affect light DOM
+/// ===========================================================================
+
+@mixin pfe-theme($theme) {
+    // GENERAL CONTEXT-BASED UPDATES, ON="DARK"
+    @if $theme == dark {
+        --pfe-broadcasted--color--text:               #{pfe-color(text--on-dark)};
+        --pfe-broadcasted--color--ui-link:            #{pfe-color(ui-link--on-dark)};
+        --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(ui-link--on-dark--visited)};
+        --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(ui-link--on-dark--hover)};
+        --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(ui-link--on-dark--focus)};
+    }
+    @else if $theme == light {
+        --pfe-broadcasted--color--text:               #{pfe-color(text)};
+        --pfe-broadcasted--color--ui-link:            #{pfe-color(ui-link)};
+        --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(ui-link--visited)};
+        --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(ui-link--hover)};
+        --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(ui-link--focus)};
+    }
+    // MORE SPECIFIC COLOR BASED UPDATES, COLOR="DARKER"
+    @else if $theme == darker {
+        --pfe-broadcasted--color--text:               #{pfe-color(surface--darker--text)};
+        --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darker--link)};
+        --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darker--link--visited)};
+        --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darker--link--hover)};
+        --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darker--link--focus)};
+    }
+    @else if $theme == darkest {
+        --pfe-broadcasted--color--text:               #{pfe-color(surface--darkest--text)};
+        --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darkest--link)};
+        --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darkest--link--visited)};
+        --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darkest--link--hover)};
+        --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darkest--link--focus)};
+    }
+    @else if $theme == accent {
+        --pfe-broadcasted--color--text:               #{pfe-color(surface--accent--text)};
+        --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--accent--link)};
+        --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--accent--link--visited)};
+        --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--accent--link--hover)};
+        --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--accent--link--focus)};
+    }
+    @else if $theme == complement {
+        --pfe-broadcasted--color--text:               #{pfe-color(surface--complement--text)};
+        --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--complement--link)};
+        --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--complement--link--visited)};
+        --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--complement--link--hover)};
+        --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--complement--link--focus)};
+    }
+
+    @else if $theme == lighter {
+        --pfe-broadcasted--color--text:               #{pfe-color(surface--lighter--text)};
+        --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lighter--link)};
+        --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--lighter--link--visited)};
+        --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--lighter--link--hover)};
+        --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--lighter--link--focus)};
+    }
+    @else if $theme == lightest {
+        --pfe-broadcasted--color--text:               #{pfe-color(surface--lightest--text)};
+        --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lightest--link)};
+        --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--lightest--link--visited)};
+        --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--lightest--link--hover)};
+        --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--lightest--link--focus)};
+    }
+}

@@ -40,6 +40,7 @@ $LOCAL: tabs;
 }
 
 /* Horizontal */
+:host .container,
 :host([pfe-variant="wind"]) .container {
 	@include pfe-tab-panel-container;
 }
@@ -51,7 +52,8 @@ $LOCAL: tabs;
 /* Vertical */
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
-	:host([pfe-variant="wind"][vertical]) .container {
+  :host([vertical]) .container,
+  :host([pfe-variant="wind"][vertical]) .container {
 		@include pfe-tab-panel-container($orientation: "vertical");
 	}
 

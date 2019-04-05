@@ -34,6 +34,7 @@ class PfeMarkdown extends PFElement {
     this._markdownRender = null;
     this._markdownContainer = null;
     this._observerConfig = { childList: true, subtree: true };
+    this._readyStateChangeHandler = this._readyStateChangeHandler.bind(this);
 
     this.observer = new MutationObserver((mutationList, observer) => {
       if (!this._markdownContainer.textContent) {
@@ -59,6 +60,25 @@ class PfeMarkdown extends PFElement {
     this._markdownRender.setAttribute("pfe-markdown-render", "");
     this.appendChild(this._markdownRender);
 
+    if (document.readyState === "complete") {
+      this._init();
+    } else {
+      document.addEventListener("readystatechange", this._readyStateChangeHandler);
+    }
+  }
+
+  disconnectedCallback() {
+    this.observer.disconnect();
+  }
+
+  _readyStateChangeHandler(event) {
+    if (event.target.readyState === "complete") {
+      document.removeEventListener("readystatechange", this._readyStateChangeHandler);
+      this._init();
+    }
+  }
+
+  _init() {
     if (this._markdownContainer.textContent) {
       this.markdown = this._markdownContainer.textContent;
     }
@@ -66,18 +86,12 @@ class PfeMarkdown extends PFElement {
     this._muationObserve();
   }
 
-  disconnectedCallback() {
-    this.observer.disconnect();
-  }
-
   renderMarkdown() {
-    this._markdownRender.innerHTML = marked(
-      this.markdown
-    );
+    this._markdownRender.innerHTML = marked(this.markdown);
   }
 
   _muationObserve() {
-    this.observer.observe(this, this._observerConfig);
+    this.observer.observe(this._markdownContainer, this._observerConfig);
   }
 
   // pulled from https://github.com/PolymerElements/marked-element/blob/master/marked-element.js#L340

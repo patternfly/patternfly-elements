@@ -1,9 +1,61 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: tabs;
+
+@mixin pfe-tab-panel-container($orientation: "horizontal", $border: false) {
+    margin: 0;
+    width: 100%;
+    padding: #{pfe-var(container-spacer)} 0;
+    @if $orientation == "vertical" {
+      padding-left: calc(#{pfe-var(container-spacer)} * 2);
+    }
+    @if $border {
+      padding: calc(#{pfe-var(container-spacer)} * 2);
+      border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+      @if $orientation == "horizontal" {
+        border-top: none;
+      }
+      @if $orientation == "vertical" {
+        border-left: none;
+      }
+    }
+}
+
 :host {
   display: block;
+  color: #{pfe-radio(color--text)};
+
+  [tabindex] {
+  	display: flex;
+  }
 }
 
 :host([hidden]) {
   display: none;
+}
+
+:host([on="dark"]) {
+	color: #{pfe-colors(text--on-dark)};
+  @include pfe-theme($theme: "dark");
+}
+
+/* Horizontal */
+:host([pfe-variant="wind"]) .container {
+	@include pfe-tab-panel-container;
+}
+
+:host([pfe-variant="earth"]) .container {
+	@include pfe-tab-panel-container($border: true);
+}
+
+/* Vertical */
+
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+	:host([pfe-variant="wind"][vertical]) .container {
+		@include pfe-tab-panel-container($orientation: "vertical");
+	}
+
+	:host([pfe-variant="earth"][vertical]) .container {
+		@include pfe-tab-panel-container($orientation: "vertical", $border: true);
+	}
 }

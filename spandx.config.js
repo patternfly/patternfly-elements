@@ -1,6 +1,6 @@
 module.exports = {
   host: "localhost",
-  port: 1234,
+  port: "auto",
   open: true,
   startPath: "/examples",
   verbose: false,

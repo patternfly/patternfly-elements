@@ -4,7 +4,7 @@
     "className": "PfeNumber",
     "elementName": "pfe-number"
   },
-  "version": "1.0.0-prerelease.9",
+  "version": "1.0.0-prerelease.11",
   "publishConfig": {
     "access": "public"
   },
@@ -24,7 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.9",
+    "@patternfly/pfelement": "^1.0.0-prerelease.11",
     "numeral": "^2.0.6"
   },
   "generator-pfelement-version": "0.2.9",

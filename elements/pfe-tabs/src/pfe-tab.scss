@@ -16,16 +16,16 @@ $LOCAL: tabs;
   position: relative;
   display: block;
   margin: 0 0 -1px;
-
-  // Padding
   padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 1.5);
-  // Border
   border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
   border-bottom: 0;
+
   // Inner style
-  background-color: var(--pfe-tabs--main);
-  color: var(--pfe-tabs--aux);
-  text-transform: var(--pfe-tabs__tab--TextTransform, none); // exposing this for RH
+  background-color: #{pfe-local(main)};
+  color: #{pfe-local(aux)};
+
+  // Exposing this for customization
+  text-transform: var(--pfe-tabs__tab--TextTransform, none);
   font-weight: #{pfe-var(font-weight--normal)};
 
   cursor: pointer;
@@ -33,7 +33,6 @@ $LOCAL: tabs;
 }
 
 // Active tab styles
-
 :host(:focus),
 :host(:focus-visible) {
   outline: 1px solid #{$pfe-color--ui-link--focus};
@@ -42,7 +41,6 @@ $LOCAL: tabs;
 
 :host([aria-selected="true"]) {
   --pfe-tabs--aux: #{$pfe-color--black};
-  // Border
   border: transparent;
   border-bottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
 }
@@ -66,15 +64,17 @@ $LOCAL: tabs;
   }
 
   :host([vertical][aria-selected="true"]) {
-    border-color-top: transparent;
+    border-top-color: transparent;
     border-right: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
   }
 }
 
 /// ===========================================================================
-/// WIND TAB VARIANTS
+/// WIND TAB VARIANTS / DEFAULT
 /// ===========================================================================
 
+:host([aria-selected="true"][on="dark"]),
+:host([on="dark"]:hover),
 :host([pfe-variant="wind"][aria-selected="true"][on="dark"]),
 :host([pfe-variant="wind"][on="dark"]:hover) {
   --pfe-tabs--aux: #{pfe-color(text--on-dark)};

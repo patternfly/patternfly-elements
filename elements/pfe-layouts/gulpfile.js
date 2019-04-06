@@ -1,56 +1,104 @@
+const {
+  task,
+  src,
+  dest,
+  watch,
+  parallel,
+  series
+} = require("gulp");
+
+const browser_support = [
+  "last 2 versions",
+  "Firefox > 51",
+  "iOS > 7",
+  "ie 11"
+];
+
+const paths = {
+  source: "./src",
+  compiled: "./",
+  temp: "./tmp"
+};
+
+// Tooling
 const fs = require("fs");
+const path = require("path");
+const replace = require("gulp-replace");
+const clean = require("gulp-clean");
 
-const gulp = require("gulp");
-const babel = require("gulp-babel");
-const uglify = require("gulp-uglify");
+// JavaScript
 const rename = require("gulp-rename");
+
+// Styles
 const sass = require("gulp-sass");
-const stripCssComments = require("gulp-strip-css-comments");
+sass.compiler = require("node-sass");
+
+const postcss = require('gulp-postcss');
+const sourcemaps = require("gulp-sourcemaps");
+const autoprefixer = require("autoprefixer");
 const cleanCSS = require("gulp-clean-css");
-const trim = require("gulp-trim");
-const del = require("del");
-let watcher;
+const postcssCustomProperties = require("postcss-custom-properties");
 
-gulp.task("clean", () => {
-  return del(["./*.css", "./*.min.css"]);
-});
-
-gulp.task("sass", () => {
-  return gulp
-    .src(["./src/*.scss"])
-    .pipe(sass())
-    .pipe(stripCssComments())
-    .pipe(trim())
-    .pipe(gulp.dest("./"));
-});
-
-gulp.task("minify-css", () => {
-  return gulp
-    .src("./*.css")
-    .pipe(cleanCSS())
+// Compile the sass into css, compress, autoprefix
+task("compile:sass", () => {
+  return src("pfe-{base,layouts}.scss", {
+      cwd: paths.source
+    })
+    .pipe(sourcemaps.init())
+    // Compile the Sass into CSS
     .pipe(
-      rename({
-        suffix: ".min"
+      sass({
+        outputStyle: "expanded"
+      }).on("error", sass.logError)
+    )
+    // Adds autoprefixing to the compiled sass
+    .pipe(
+      postcss([
+        postcssCustomProperties(),
+        autoprefixer(browser_support)
+      ])
+    )
+    // Write the sourcemap
+    .pipe(sourcemaps.write(paths.compiled))
+    // Output the unminified file
+    .pipe(dest(paths.compiled));
+});
+
+task("minify:css", () => {
+  return src(["pfe-{base,layouts}.css"], {
+      cwd: paths.compiled
+    })
+    // Minify the file
+    .pipe(
+      cleanCSS({
+        compatibility: "ie11"
       })
     )
-    .pipe(gulp.dest("./"));
+    // Add the .min suffix
+    .pipe(rename({
+      suffix: ".min"
+    }))
+    // Output the minified file
+    .pipe(dest(paths.compiled));
 });
 
-gulp.task("stopwatch", done => {
-  watcher.close();
-  done();
+task("clean", () => {
+  return src([
+      `*.{css,map}`
+    ], {
+      cwd: paths.compiled,
+      read: false,
+      allowEmpty: true
+    })
+    .pipe(clean());
 });
 
-gulp.task("watch", () => {
-  watcher = gulp.watch(
-    ["./src/*.scss"],
-    gulp.series("stopwatch", "sass", "watch")
-  );
-  return watcher;
+task("build", series("clean", "compile:sass", "minify:css"));
+
+task("watch", () => {
+  return watch(path.join(paths.source, "*"), series("build"));
 });
 
-gulp.task("build", gulp.series("clean", "sass", "minify-css"));
+task("dev", parallel("build", "watch"));
 
-gulp.task("default", gulp.series("build"));
-
-gulp.task("dev", gulp.series("default", "watch"));
+task("default", series("build"));

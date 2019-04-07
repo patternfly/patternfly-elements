@@ -330,3 +330,28 @@ $map: $pfe-colors) {
 @function pfe-radio($cssvar...) {
     @return var(--#{$repo}-broadcasted--#{to-string($cssvar, '--')});
 }
+
+
+// New broadcast function, for use with content components
+//  1st arg:            lookup broadcast variable  (1 of 7)
+//  2nd arg, optional:  lookup theme variable, if different than broadcast color
+//
+//  usage:   #{pfe-broadcast(ui-base--hover)};
+//  result:  var(--pfe-broadcasted--color--ui-base--hover, var(--pfe-theme--color--ui-base--hover, #022f40));
+//
+//  usage:   #{pfe-broadcast(ui-base, ui-link)};
+//  result:  var(--pfe-broadcasted--color--ui-link, var(--pfe-theme--color--ui-base, #0477a4));
+
+$BROADCAST-VARS: 'text' 'text--alt' 'ui-link' 'ui-link--hover' 'ui-link--visited' 'ui-link--focus';
+
+@function pfe-broadcast ($broadcast, $theme-color: $broadcast) {
+    @if not index($BROADCAST-VARS, $broadcast) {
+      @warn "#{$broadcast} variable is not valid";
+    }
+    @else {
+      @return var(
+        --#{$repo}-broadcasted--color--#{to-string($broadcast,'--')},
+        #{pfe-color($theme-color)}
+      );
+    }
+}

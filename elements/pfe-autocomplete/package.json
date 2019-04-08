@@ -33,5 +33,6 @@
   "dependencies": {
     "@patternfly/pfe-sass": "^1.0.0-prerelease.11",
     "@patternfly/pfelement": "^1.0.0-prerelease.11"
-  }
+  },
+  "generator-pfelement-version": "0.5.5"
 }

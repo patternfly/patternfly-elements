@@ -42,5 +42,6 @@
     "@patternfly/pfe-sass": "^1.0.0-prerelease.11",
     "@patternfly/pfelement": "^1.0.0-prerelease.11"
   },
+  "generator-pfelement-version": "0.5.5",
   "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
 }

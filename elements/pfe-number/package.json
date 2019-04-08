@@ -34,5 +34,6 @@
     "@patternfly/pfelement": "^1.0.0-prerelease.11",
     "numeral": "^2.0.6"
   },
+  "generator-pfelement-version": "0.2.9",
   "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
 }

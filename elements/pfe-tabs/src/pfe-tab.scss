@@ -93,6 +93,7 @@ $LOCAL: tabs;
 
 :host([pfe-variant="earth"][aria-selected="true"]) {
   --pfe-tabs--main: #{pfe-color(surface--lightest)};
+  --pfe-tabs--aux: #{pfe-color(surface--lightest--text)};
   border-top: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
   border-bottom: 0;
   border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};

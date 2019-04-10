@@ -1,0 +1,75 @@
+// ALERT
+// ---------------------------------------------------------------------------
+
+.alert {
+    font-family: $alert-font-family;
+    font-size: $alert-font-size;
+    font-weight: $alert-font-weight;
+    text-transform: $alert-text-transform;
+    background: $alert-background;
+    color: $alert-color-text;
+    padding: $alert-padding;
+    box-shadow: $alert-box-shadow;
+    border: $alert-border-width $alert-border-style $alert-border-color;
+    border-radius: $alert-border-radius;
+
+    position: relative;
+    margin-bottom: $space-16;
+
+    & h1,
+    & h2,
+    & h3,
+    & h4,
+    & h5,
+    & h6 {
+        margin-bottom: $space-2;
+    }
+    & a {
+        color: inherit;
+    }
+    & a:hover {
+        @include transition;
+        color: $alert-link-color-hover;
+    }
+    & .close {
+        position: absolute;
+        right: $space-8;
+        top: $space-16;
+    }
+    & p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+.alert.is-error {
+    background: $alert-error-background;
+    border-color: $alert-error-border-color;
+    color: $alert-error-color-text;
+    & a:hover {
+        color: $alert-error-link-color-hover;
+    }
+}
+.alert.is-success {
+    background: $alert-success-background;
+    border-color: $alert-success-border-color;
+    color: $alert-success-color-text;
+    & a:hover {
+        color: $alert-success-link-color-hover;
+    }
+}
+.alert.is-focus {
+    background: $alert-focus-background;
+    border-color: $alert-focus-border-color;
+    color: $alert-focus-color-text;
+    & a:hover {
+        color: $alert-focus-link-color-hover;
+    }
+}
+.alert.is-inverted {
+    background: $alert-inverted-background;
+    border-color: $alert-inverted-border-color;
+    color: $alert-inverted-color-text;
+    & a:hover {
+        color: $alert-inverted-link-color-hover;
+    }
+}

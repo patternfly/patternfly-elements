@@ -109,16 +109,16 @@
           const tab = rhTabs.querySelector('pfe-tab');
           const panel = rhTabs.querySelector('pfe-tab-panel');
 
-          assert.isTrue(tab.hasAttribute("id"));
-          assert.isTrue(panel.hasAttribute("id"));
+          assert.isTrue(tab.hasAttribute("pfe-id"));
+          assert.isTrue(panel.hasAttribute("pfe-id"));
           assert.equal(rhTabs.getAttribute("role"), "tablist");
           assert.equal(tab.getAttribute("role"), "tab");
           assert.isTrue(tab.hasAttribute("aria-selected"));
           assert.isTrue(tab.hasAttribute("aria-controls"));
           assert.equal(panel.getAttribute("role"), "tabpanel");
           assert.isTrue(panel.hasAttribute("aria-labelledby"));
-          assert.equal(tab.id, panel.getAttribute("aria-labelledby"));
-          assert.equal(tab.getAttribute("aria-controls"), panel.id);
+          assert.equal(tab.pfeId, panel.getAttribute("aria-labelledby"));
+          assert.equal(tab.getAttribute("aria-controls"), panel.pfeId);
         });
 
         test('it should use the ids that are provided instead of generating new ones', () => {
@@ -202,7 +202,7 @@
             const eventDetail = handlerSpy.getCall(0).args[0].detail;
 
             sinon.assert.calledOnce(handlerSpy);
-            assert.equal(firstTab.id, eventDetail.tab.id);
+            assert.equal(firstTab.pfeId, eventDetail.tab.pfeId);
 
             document.removeEventListener('pfe-tabs:hidden-tab', handlerSpy);
             done();
@@ -221,7 +221,7 @@
             const eventDetail = handlerSpy.getCall(0).args[0].detail;
 
             sinon.assert.calledOnce(handlerSpy);
-            assert.equal(secondTab.id, eventDetail.tab.id);
+            assert.equal(secondTab.pfeId, eventDetail.tab.pfeId);
 
             document.removeEventListener('pfe-tabs:shown-tab', handlerSpy);
             done();

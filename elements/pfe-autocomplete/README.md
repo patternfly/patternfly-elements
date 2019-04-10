@@ -4,15 +4,12 @@
 
 ## Install
 ```
-npm install @patternfly/cp-theme
 npm install @patternfly/pfe-autocomplete
 ```
 
-cp-theme is a package that contains css variables setting that is used for theming patternfly elements.
 
 Once installed, import it to your application:
 ```
-import '@patternfly/cp-theme.umd.js';
 import '@patternfly/pfe-autocomplete.umd.js';
 ```
 

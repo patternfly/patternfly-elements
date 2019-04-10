@@ -1,15 +1,23 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: accordion;
+
+/// ===========================================================================
+/// DEFAULT ACCORDION PANEL
+/// ===========================================================================
+
 :host {
-  display: none;
-  overflow: hidden;
-  background: #{pfe-color(surface--lightest)};
-  will-change: height;
+   @include pfe-accordion-panel;
 }
 
 :host([expanded]) {
-  display: block;
-  position: relative;
+   @include pfe-accordion-panel-expanded;
+   @include pfe-accordion-panel-expanded-style;
+}
+ 
+:host([on="dark"][expanded]) {
+  @include pfe-theme($theme: "dark");
+  @include pfe-accordion-panel-expanded-style($theme: dark);
 }
 
 :host(.animating) {
@@ -18,8 +26,10 @@
 }
 
 .container {
-  margin: 0 1px; // align with 1px margin on header
-  border: 1px solid #{pfe-color(surface--border--lightest)};
-  border-top: none;
-  padding: #{pfe-var(container-spacer)};
+  @include pfe-accordion-panel-container-inset($align: left);
 }
+
+:host(:last-of-type[expanded]) {
+  margin-bottom: 0;
+}
+

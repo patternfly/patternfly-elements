@@ -163,6 +163,10 @@ $half-grip-gap: map-get($pfe-vars, 'container-spacer') / 2;
       grid-column-end: span 12;
     }
 
+    &.pfe-l-grid-fill-height {
+      height: 100%;
+    }
+
     // Loop through $breakpoints map to generate responsive classes
     @each $breakpoint, $value in $breakpoints {
       @include GridMediaQuery($breakpoint) {

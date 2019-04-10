@@ -1,0 +1,49 @@
+// AUTOCOMPLETE
+// ---------------------------------------------------------------------------
+@import '../vars';
+@import '../mixins';
+
+// VARS
+$autocomplete-background-color: #fff !default;
+$autocomplete-box-shadow: $shadow-1 !default;
+$autocomplete-max-height: 200px !default;
+$autocomplete-border-radius: $border-radius !default;
+$autocomplete-border-width: 0 !default;
+$autocomplete-border-style: solid !default;
+$autocomplete-border-color: transparent !default;
+
+// SCSS
+.autocomplete {
+    position: absolute;
+    background-color: $autocomplete-background-color;
+    box-shadow: $autocomplete-box-shadow;
+    padding: 0;
+    max-height: $autocomplete-max-height;
+    border-bottom-left-radius: $autocomplete-border-radius;
+    border-bottom-right-radius: $autocomplete-border-radius;
+    border: $autocomplete-border-width $autocomplete-border-style $autocomplete-border-color;
+    overflow: auto;
+
+    & a {
+        font-size: $font-size-ui;
+        display: block;
+        padding: $space-8;
+        text-decoration: none;
+        color: $color-text;
+        border-bottom: 1px solid rgba($color-black, .05);
+        &:last-child {
+            border-bottom-color: transparent;
+        }
+        &:hover,
+        &.is-active {
+            background-color: $color-focus;
+            color: rgba(#fff, .9);
+        }
+    }
+}
+.autocomplete-labels {
+    & .label {
+        margin-right: $space-4;
+        margin-bottom: $space-4;
+    }
+}

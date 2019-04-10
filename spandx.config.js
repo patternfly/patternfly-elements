@@ -1,12 +1,12 @@
 module.exports = {
   host: "localhost",
-  port: 1234,
+  port: "auto",
   open: true,
-  startPath: "/doc",
+  startPath: "/examples",
   verbose: false,
   routes: {
     "/elements": "./elements",
-    "/doc": "./doc",
+    "/examples": "./examples",
     "/favicon.ico": "./favicon.ico",
     "/": "./node_modules",
     "/themes": "./themes"
@@ -15,6 +15,7 @@ module.exports = {
     watchOptions: {
       ignoreInitial: true,
       ignored: ["node_modules"]
-    }
+    },
+    middleware: [require("compression")()]
   }
 };

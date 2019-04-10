@@ -4,28 +4,37 @@
     "className": "PfeCard",
     "elementName": "pfe-card"
   },
-  "version": "1.0.0-prerelease.8",
+  "version": "1.0.0-prerelease.11",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Card element for PFElements",
+  "description": "Cards for PatternFly Elements",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
   "repository": {
     "type": "git",
-    "url": ""
+    "url" : "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-card"
   },
-  "main": "index.js",
+  "main": "pfe-card.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-card/test/"
   },
-  "author": {
-    "name": "Mark Caron"
-  },
+  "contributors": [
+    {
+      "name": "Mark Caron",
+      "email": "mark@redhat.com",
+      "url": "https://github.com/markcaron"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.8",
-    "@patternfly/pfelement": "^1.0.0-prerelease.8"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.11",
+    "@patternfly/pfelement": "^1.0.0-prerelease.11"
   },
   "generator-pfelement-version": "0.5.0",
   "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"

@@ -1,18 +1,17 @@
 const shell = require("shelljs");
-const inquirer = require("inquirer");
-const semver = require("semver");
 const lerna_version = require("@lerna/version/lib/prompt-version");
 const fs = require("fs-extra");
 const path = require("path");
+const { spawn } = require("child_process");
 
 const cmds = {
   git_status: "git status --untracked-files=no --porcelain",
   reset: "git checkout master && git reset --hard origin/master",
-  lerna_version: version =>
-    `npm run lerna version -- --no-git-tag-version --yes --no-push ${version}`,
+  lerna_version: `npm run lerna version -- --no-git-tag-version --no-push`,
   create_branch: version => `git checkout -b release/${version}`,
   push_branch: version => `git push origin release/${version} -u`,
-
+  commit: version =>
+    `git add elements/*/*.{js,map,css} -f && git commit -am "${version}"`,
   build: `npm install && npm run build && git add elements/*/*.{js,map,css} -f`
 };
 
@@ -22,22 +21,23 @@ async function getVersion() {
 
 async function main() {
   // await assertCleanRepo();
-  await checkOutMaster();
-  await bumpVersion();
-  await createBranch();
-  await build();
-  await commit;
-  // git commit -am “$NEW_VERSION”
-  // git tag $NEW_VERSION
-  // Remove the bundle files: for e in elements/*; do git rm -f elements/$(basename $e)/$(basename $e).*; done
-  // git commit -am “remove bundles from $NEW_VERSION”
-  //
-  //
-  await pushBranch();
-  await pushTags();
-  await resetMaster();
-  await offerPR();
-  await npmPublish();
+  const steps = [
+    checkOutMaster,
+    bumpVersionSh
+    // createBranch,
+    // build,
+    // commit,
+    // pushBranch,
+    // pushTags,
+    // resetMaster,
+    // offerPR,
+    // npmPublish
+  ];
+
+  for (step of steps) {
+    await step();
+  }
+
   done();
 }
 
@@ -91,6 +91,31 @@ async function bumpVersion() {
 }
 
 /**
+ * Update version with Lerna.
+ */
+async function bumpVersionSh() {
+  // Call lerna version, with extra cruft to enable an interactive shell process
+  // const sh = spawn("bash", [], { stdio: "inherit" });
+  const sh = spawn("bash", ["-i"]);
+  // sh.stdout.setEncoding("utf8");
+  sh.stdin.write("echo foo");
+  sh.stdout.on("data", data => {
+    console.log(data.toString());
+  });
+  setTimeout(() => sh.kill(), 5000);
+  await new Promise((resolve, reject) => {
+    sh.on("close", code => {
+      console.log(`[shell] terminated : ${code}`);
+      resolve();
+    });
+  });
+
+  // shell.exec(cmds.lerna_version, {
+  //   silent: false
+  // });
+}
+
+/**
  * Create branch for the PR.
  */
 async function createBranch() {
@@ -104,6 +129,13 @@ async function createBranch() {
  */
 async function build() {
   shell.exec(cmds.build, { silent: false });
+}
+
+/**
+ * Commit the changes.
+ */
+async function commit() {
+  shell.exec(cmds.commit(), { silent: false });
 }
 
 /**

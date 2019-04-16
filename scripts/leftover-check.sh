@@ -4,11 +4,29 @@ DIRS=""
 DIRS_COUNT=""
 LEFTOVERS=0
 
+package_json_exists() {
+  find $1 -maxdepth 1 -name "package.json" -type f -print > /dev/null
+  return $?
+}
+
+node_modules_exists() {
+  find $1 -maxdepth 1 -name "node_modules" -type d -print > /dev/null
+  return $?
+}
+
 for e in elements/*; do
   DIRS=$(find $e/* -maxdepth 0 -type d -print)
-  DIRS_COUNT=$(echo $DIRS | wc -w)
 
-  if [[ $DIRS_COUNT == 1 ]] && echo $DIRS | grep "node_modules$" >/dev/null; then
+  echo
+  echo $e
+  echo package.json exists
+  package_json_exists $e
+  echo $?
+  echo node_modules exists
+  node_modules_exists $e
+  echo $?
+
+  if !( package_json_exists $e ) && node_modules_exists $e; then
     LEFTOVERS=$((LEFTOVERS+1))
     echo "WARNING: Found leftover element: $e"
   fi

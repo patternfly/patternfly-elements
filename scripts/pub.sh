@@ -35,7 +35,7 @@ checkoutMaster() {
 #    - if bumping a prerelease version (example: from 1.0.0-prerelease.2 to 1.0.0-prerelease.3), choose Custom Prerelease
 bumpVersion() {
   OLD_VERSION=$(node -e "console.log(require('./lerna.json').version)")
-  ./node_modules/.bin/lerna version -- --no-git-tag-version --no-push --preid="$PRERELEASE_PREFIX" || exit 1
+  ./node_modules/.bin/lerna version --no-git-tag-version --no-push --preid="$PRERELEASE_PREFIX" || exit 1
   NEW_VERSION=$(node -e "console.log(require('./lerna.json').version)")
 }
 

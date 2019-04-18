@@ -14,26 +14,20 @@ node_modules_exists() {
   return $?
 }
 
+# for each element, check for a node_modules dir without a corresponding
+# package.json.  That indicates the element does not exist in this branch.
 for e in elements/*; do
-  DIRS=$(find $e/* -maxdepth 0 -type d -print)
-
-  echo
-  echo $e
-  echo package.json exists
-  package_json_exists $e
-  echo $?
-  echo node_modules exists
-  node_modules_exists $e
-  echo $?
-
-  if !( package_json_exists $e ) && node_modules_exists $e; then
+  if [[ -d $e/node_modules && !( -f $e/package.json ) ]]; then
+    if [[ "$LEFTOVERS" == 0 ]]; then
+      echo -e "INFO: the following \"leftover\" elements were found:\n"
+    fi
     LEFTOVERS=$((LEFTOVERS+1))
-    echo "WARNING: Found leftover element: $e"
+    echo "$e"
   fi
 done
 
 if [[ $LEFTOVERS > 0 ]]; then
-  echo -e "\n$([ $LEFTOVERS == 1 ] && echo "This element" || echo "These elements") were likely created on another branch, but do not exist in your current branch.  Git did not delete $([ $LEFTOVERS == 1 ] && echo "it" || echo "them") when you switched branches because they contain a \`node_modules\` directory which is not tracked by git.  They can be safely deleted if they are causing you any issues."
+  echo -e "\nA \"leftover\" element arises when you create an element on a branch, then leave that branch, yet the element's directory still exists.  This is caused by the element's (untracked) node_modules directory preventing git from fully cleaning up after the branch change.  The leftover elements can be safely deleted.  However, if you do return to work on the leftover element you will need to \`npm install\` again."
 fi
 
 exit 0 # always exist 0 to prevent npm from printing a giant error blurb that takes attention away from these warnings

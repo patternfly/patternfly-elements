@@ -10,6 +10,12 @@ NEW_VERSION=""
 TAG_NAME=""
 RELEASE_BRANCH=""
 
+trap ctrl_c INT
+
+ctrl_c() {
+  echo "ctrl-c detected"
+}
+
 checkDir() {
   if [[ -f ./package.json ]]; then
     if grep '"@patternfly/patternfly-elements"' package.json >/dev/null; then

@@ -14,6 +14,7 @@ trap ctrl_c INT
 
 ctrl_c() {
   echo "ctrl-c detected"
+  exit 1
 }
 
 checkDir() {
@@ -80,19 +81,36 @@ resetMaster() {
 }
 
 npmPublish() {
-  git checkout $TAG_NAME
-  # npm run lerna publish from-git
-  echo 'lerna publish to npm'
+  while true; do
+    read -p "Do you wish to install this program? Y/n " yn
+    echo
+    case $yn in
+      [Yy]* ) git checkout $TAG_NAME && npm run lerna publish from-git; break;;
+      [Nn]* ) exit;;
+      * ) echo "Please answer 'Y' or 'n'.";;
+    esac
+  done
+}
+
+handlePR() {
+  if command -v hub > /dev/null; then
+    echo "Hub installation found, creating a PR."
+    hub pull-request --browse --message "version bumps from release $RELEASE_BRANCH"
+  else
+    echo
+    echo "FINAL STEP:"
+    echo "Follow this link to create a pull request, merging the release branch ($RELEASE_BRANCH) into master."
+    echo
+    echo "  https://github.com/patternfly/patternfly-elements/compare/$RELEASE_BRANCH?expand=1"
+    echo
+    echo "Note, if you install Hub (https://hub.github.com/) then this step will be automated in the future."
+  fi
 }
 
 goodbye() {
   echo "Returning you to the master branch."
   git checkout master
-  echo " 15. create a PR for the branch you just created"
-  echo " 16. delete branch after merging PR"
 }
-
-
 
 checkDir
 cleanWorkspace
@@ -106,4 +124,5 @@ removeIgnoredFiles
 pushToOrigin
 resetMaster
 npmPublish
+handlePR
 goodbye

@@ -1,0 +1,1 @@
+{"version":3,"sources":["pfe-number.scss","pfe-number.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,mBAAmB;ACCrB","file":"pfe-number.css","sourcesContent":[":host {\n  display: inline;\n  white-space: nowrap;\n}\n",":host {\n  display: inline;\n  white-space: nowrap;\n}\n"]}

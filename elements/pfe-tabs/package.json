@@ -4,7 +4,7 @@
     "className": "PfeTabs",
     "elementName": "pfe-tabs"
   },
-  "version": "1.0.0-prerelease.11",
+  "version": "0.0.0-test.0",
   "publishConfig": {
     "access": "public"
   },
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url" : "github:patternfly/patternfly-elements",
+    "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-tabs"
   },
   "main": "pfe-tabs.js",
@@ -36,8 +36,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.11",
-    "@patternfly/pfelement": "^1.0.0-prerelease.11"
+    "@patternfly/pfe-sass": "^0.0.0-test.0",
+    "@patternfly/pfelement": "^0.0.0-test.0"
   },
   "generator-pfelement-version": "0.5.4",
   "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"

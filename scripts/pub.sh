@@ -81,11 +81,16 @@ resetMaster() {
 }
 
 npmPublish() {
+  git checkout $TAG_NAME || exit 1
+  npm run lerna publish from-git || exit 1
+}
+
+npmPublishAsk() {
   while true; do
     read -p "Last chance to bail out.  Publish $RELEASE_BRANCH to npm? Y/n " yn
     echo
     case $yn in
-      [Yy]* ) git checkout $TAG_NAME && npm run lerna publish from-git; break;;
+      [Yy]* ) npmPublish; break;;
       [Nn]* ) exit;;
       * ) echo "Please answer 'Y' or 'n'.";;
     esac
@@ -123,6 +128,6 @@ gitTag
 removeIgnoredFiles
 pushToOrigin
 resetMaster
-npmPublish
+npmPublishAsk
 handlePR
 goodbye

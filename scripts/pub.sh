@@ -29,7 +29,7 @@ checkDir() {
 }
 
 cleanWorkspace() {
-  git status --untracked-files=no --porcelain || exit 1
+  git status --untracked-files=no --porcelain > /dev/null || exit 1
 }
 
 checkoutMaster() {

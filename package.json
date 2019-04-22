@@ -18,7 +18,7 @@
     "clean": "rm -rf node_modules package-lock.json {elements,themes}/*/{node_modules,package-lock.json}",
     "bootstrap": "lerna bootstrap --hoist",
     "deploy-docs": "bash scripts/deploy-docs.sh",
-    "release": "bash scripts/pub.sh",
+    "release": "bash scripts/release.sh",
     "postinstall": "npm run bootstrap && npm run build",
     "test-suite-inject": "node scripts/test-suite-inject.js",
     "doc-listing-inject": "node scripts/doc-listing-inject.js",

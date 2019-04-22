@@ -83,18 +83,6 @@ npmPublish() {
   git checkout .
 }
 
-npmPublishAsk() {
-  while true; do
-    read -p "Last chance to bail out.  Publish $RELEASE_BRANCH to npm? Y/n " yn
-    echo
-    case $yn in
-      [Yy]* ) npmPublish; break;;
-      [Nn]* ) echo "Skipped publishing to NPM.";;
-      * ) echo "Please answer 'Y' or 'n'.";;
-    esac
-  done
-}
-
 handlePR() {
   if command -v hub > /dev/null; then
     echo "Hub installation found, creating a PR."
@@ -126,6 +114,6 @@ gitTag
 removeIgnoredFiles
 pushToOrigin
 resetMaster
-npmPublishAsk
+npmPublish
 handlePR
 goodbye

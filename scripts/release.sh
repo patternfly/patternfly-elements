@@ -86,6 +86,7 @@ npmPublish() {
 handlePR() {
   if command -v hub > /dev/null; then
     echo "Hub installation found, creating a PR."
+    git checkout $RELEASE_BRANCH
     hub pull-request --browse --message "version bumps from release $RELEASE_BRANCH"
   else
     echo

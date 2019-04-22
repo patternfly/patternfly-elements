@@ -50,7 +50,7 @@ createBranch() {
 }
 
 npmInstall() {
-  npm install || exit 1
+  npm ci || exit 1
 }
 
 commitIgnoredFiles() {

@@ -80,6 +80,7 @@ resetMaster() {
 npmPublish() {
   git checkout $TAG_NAME || exit 1
   npm run lerna publish from-git || exit 1
+  git checkout .
 }
 
 npmPublishAsk() {

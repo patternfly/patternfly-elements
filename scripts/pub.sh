@@ -82,7 +82,7 @@ resetMaster() {
 
 npmPublish() {
   while true; do
-    read -p "Do you wish to install this program? Y/n " yn
+    read -p "Last chance to bail out.  Publish $RELEASE_BRANCH to npm? Y/n " yn
     echo
     case $yn in
       [Yy]* ) git checkout $TAG_NAME && npm run lerna publish from-git; break;;

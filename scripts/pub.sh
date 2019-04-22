@@ -35,11 +35,8 @@ cleanWorkspace() {
 checkoutMaster() {
   git checkout master || exit 1
   git pull origin master || exit 1
-
 }
 
-#    - Choose the appropriate version bump type for the release you’re publishing.
-#    - if bumping a prerelease version (example: from 1.0.0-prerelease.2 to 1.0.0-prerelease.3), choose Custom Prerelease
 bumpVersion() {
   OLD_VERSION=$(node -e "console.log(require('./lerna.json').version)")
   ./node_modules/.bin/lerna version --no-git-tag-version --no-push --preid="$PRERELEASE_PREFIX" || exit 1
@@ -91,7 +88,7 @@ npmPublishAsk() {
     echo
     case $yn in
       [Yy]* ) npmPublish; break;;
-      [Nn]* ) exit;;
+      [Nn]* ) echo "Skipped publishing to NPM.";;
       * ) echo "Please answer 'Y' or 'n'.";;
     esac
   done
@@ -119,7 +116,7 @@ goodbye() {
 
 checkDir
 cleanWorkspace
-#checkoutMaster
+checkoutMaster
 bumpVersion
 createBranch
 npmInstall

@@ -1,5 +1,14 @@
 {
   "name": "@patternfly/patternfly-elements",
+  "description": "Monorepo for the PatternFly Elements project.",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements"
+  },
   "scripts": {
     "start": "npm run doc-listing-inject && spandx",
     "lerna": "lerna",
@@ -18,11 +27,13 @@
     "gh-pages-storybook": "storybook-to-ghpages",
     "deploy-storybook": "npm run build-storybook && npm run gh-pages-storybook",
     "new": "cd elements && yo --no-insight --no-update-notifier pfelement && npm run post-new",
-    "post-new": "npm run test-suite-inject && npm run doc-listing-inject && npm run bootstrap"
+    "post-new": "npm run test-suite-inject && npm run doc-listing-inject && npm run bootstrap",
+    "leftover-check": "bash scripts/leftover-check.sh"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test-suite-inject > /dev/null && pretty-quick --staged"
+      "pre-commit": "npm run test-suite-inject > /dev/null && pretty-quick --staged",
+      "post-checkout": "npm run leftover-check"
     }
   },
   "devDependencies": {

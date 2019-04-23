@@ -36,8 +36,7 @@ checkDir() {
 
 cleanWorkspace() {
   log "verifying clean workspace"
-  [[ "$(git status --untracked-files=no --porcelain | wc -l)" == 0 ]] || log "error: Release cannot continue because you have local changes.  Please commit or stash your changes and try again." && exit 1
-
+  [[ "$(git status --untracked-files=no --porcelain | wc -l)" == 0 ]] || ( log "error: Release cannot continue because you have local changes.  Please commit or stash your changes and try again." && exit 1 )
 }
 
 checkoutMaster() {
@@ -57,7 +56,7 @@ createBranch() {
   log "creating release branch with new version numbers"
   TAG_NAME="v$NEW_VERSION"
   RELEASE_BRANCH="release/$TAG_NAME"
-  git co -b $RELEASE_BRANCH || exit 1
+  git checkout -b $RELEASE_BRANCH || exit 1
 }
 
 npmInstall() {

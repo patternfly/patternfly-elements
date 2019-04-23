@@ -57,7 +57,7 @@ createBranch() {
   log "creating release branch with new version numbers"
   TAG_NAME="v$NEW_VERSION"
   RELEASE_BRANCH="release/$TAG_NAME"
-  git co -b $RELEASE_BRANCH || exit 1
+  git checkout -b $RELEASE_BRANCH || exit 1
 }
 
 npmInstall() {

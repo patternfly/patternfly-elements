@@ -4,14 +4,14 @@
     "className": "PfeDatetime",
     "elementName": "pfe-datetime"
   },
-  "version": "1.0.0-prerelease.11",
+  "version": "0.0.0-test.1",
   "publishConfig": {
     "access": "public"
   },
   "description": "Datetime element for PFElements",
   "repository": {
     "type": "git",
-    "url" : "github:patternfly/patternfly-elements",
+    "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-datetime"
   },
   "main": "pfe-datetime.js",
@@ -32,7 +32,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.11"
+    "@patternfly/pfelement": "^0.0.0-test.1"
   },
   "generator-pfelement-version": "0.2.8",
   "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"

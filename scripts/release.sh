@@ -105,7 +105,7 @@ handlePR() {
   if command -v hub > /dev/null; then
     log "Hub installation found, creating a PR."
     git checkout $RELEASE_BRANCH
-    hub pull-request --browse --message "version bumps from release $RELEASE_BRANCH"
+    hub pull-request --browse --message "version bumps from $RELEASE_BRANCH"
   else
     log
     log "FINAL STEP:"

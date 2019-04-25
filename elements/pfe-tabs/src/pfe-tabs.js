@@ -122,6 +122,10 @@ class PfeTabs extends PFElement {
     return "pfe-tabs.html";
   }
 
+  get schemaUrl() {
+    return "pfe-tabs.json";
+  }
+
   static get observedAttributes() {
     return ["vertical", "selected-index", "pfe-variant", "on"];
   }

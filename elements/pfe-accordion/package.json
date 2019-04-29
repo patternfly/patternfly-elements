@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url" : "github:patternfly/patternfly-elements",
+    "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-accordion"
   },
   "main": "pfe-accordion.js",

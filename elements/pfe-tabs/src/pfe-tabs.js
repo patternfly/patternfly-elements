@@ -142,15 +142,10 @@ class PfeTabs extends PFElement {
     super(PfeTabs);
 
     this._linked = false;
-
-    this._onSlotChange = this._onSlotChange.bind(this);
+    this._init = this._init.bind(this);
     this._onClick = this._onClick.bind(this);
-
-    this._tabSlot = this.shadowRoot.querySelector('slot[name="tab"]');
-    this._panelSlot = this.shadowRoot.querySelector('slot[name="panel"]');
-
-    this._tabSlot.addEventListener("slotchange", this._onSlotChange);
-    this._panelSlot.addEventListener("slotchange", this._onSlotChange);
+    this._linkPanels = this._linkPanels.bind(this);
+    this._observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
@@ -159,23 +154,22 @@ class PfeTabs extends PFElement {
     this.addEventListener("keydown", this._onKeyDown);
     this.addEventListener("click", this._onClick);
 
-    if (!this.hasAttribute("role")) {
-      this.setAttribute("role", "tablist");
-    }
-
-    if (!this.hasAttribute("selected-index")) {
-      this.selectedIndex = 0;
-    }
-
     Promise.all([
       customElements.whenDefined(PfeTab.tag),
       customElements.whenDefined(PfeTabPanel.tag)
-    ]).then(() => this._linkPanels());
+    ]).then(() => {
+      if (this.children.length) {
+        this._init();
+      }
+
+      this._observer.observe(this, { childList: true });
+    });
   }
 
   disconnectedCallback() {
     this.removeEventListener("keydown", this._onKeyDown);
-    this._allTabs().forEach(tab => tab.removeEventListener("click", this._onClick))
+    this._allTabs().forEach(tab => tab.removeEventListener("click", this._onClick));
+    this._observer.disconnect();
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -264,7 +258,15 @@ class PfeTabs extends PFElement {
     this._selectTab(tab);
   }
 
-  _onSlotChange() {
+  _init() {
+    if (!this.hasAttribute("role")) {
+      this.setAttribute("role", "tablist");
+    }
+
+    if (!this.hasAttribute("selected-index")) {
+      this.selectedIndex = 0;
+    }
+
     this._linked = false;
     this._linkPanels();
   }
@@ -272,6 +274,10 @@ class PfeTabs extends PFElement {
   _linkPanels() {
     if (this._linked) {
       return;
+    }
+
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
     }
 
     const tabs = this._allTabs();
@@ -292,6 +298,10 @@ class PfeTabs extends PFElement {
     });
 
     this._linked = true;
+
+    if (window.ShadyCSS) {
+      this._observer.observe(this, { childList: true });
+    }
   }
 
   _allPanels() {
@@ -457,8 +467,13 @@ class PfeTab extends PFElement {
     return ["aria-selected"];
   }
 
-  constructor() {
-    super(PfeTab);
+  set selected(value) {
+    value = Boolean(value);
+    this.setAttribute("aria-selected", value);
+  }
+
+  get selected() {
+    return this.getAttribute("aria-selected") === "true" ? true : false;
   }
 
   get pfeId() {
@@ -473,20 +488,21 @@ class PfeTab extends PFElement {
     this.setAttribute("pfe-id", id);
   }
 
+  constructor() {
+    super(PfeTab);
+
+    this._init = this._init.bind(this);
+    this._observer = new MutationObserver(this._init);
+  }
+
   connectedCallback() {
     super.connectedCallback();
 
-    if (!this.pfeId) {
-      this.pfeId = `${PfeTab.tag}-${generateId()}`;
+    if (this.children.length || this.textContent.trim().length) {
+      this._init();
     }
 
-    this.setAttribute("role", "tab");
-    this.setAttribute("aria-selected", "false");
-    this.setAttribute("tabindex", -1);
-
-    if (this.parentNode.hasAttribute("vertical")) {
-      this.setAttribute("vertical", "");
-    }
+    this._observer.observe(this, { childList: true });
   }
 
   attributeChangedCallback() {
@@ -494,13 +510,38 @@ class PfeTab extends PFElement {
     this.setAttribute("tabindex", value ? 0 : -1);
   }
 
-  set selected(value) {
-    value = Boolean(value);
-    this.setAttribute("aria-selected", value);
+  disconnectedCallback() {
+    this._observer.disconnect();
   }
 
-  get selected() {
-    return this.getAttribute("aria-selected") === "true" ? true : false;
+  _init() {
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
+
+    if  (!this.pfeId) {
+      this.pfeId = `${PfeTab.tag}-${generateId()}`;
+    }
+
+    if (this.getAttribute("role") !== "tab") {
+      this.setAttribute("role", "tab");
+    }
+
+    if (!this.hasAttribute("aria-selected")) {
+      this.setAttribute("aria-selected", "false");
+    }
+
+    if (!this.hasAttribute("tabindex")) {
+      this.setAttribute("tabindex", -1);
+    }
+
+    if (this.parentNode.hasAttribute("vertical")) {
+      this.setAttribute("vertical", "");
+    }
+
+    if (window.ShadyCSS) {
+      this._observer.observe(this, { childList: true });
+    }
   }
 }
 
@@ -531,17 +572,44 @@ class PfeTabPanel extends PFElement {
 
   constructor() {
     super(PfeTabPanel);
+
+    this._init = this._init.bind(this);
+    this._observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
+    this._init();
+    this._observer.observe(this, { childList: true });
+  }
+
+  disconnectedCallback() {
+    this._observer.disconnect();
+  }
+
+  _init() {
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
+
     if (!this.pfeId) {
       this.pfeId = `${PfeTabPanel.tag}-${generateId()}`;
     }
 
-    this.setAttribute("role", "tabpanel");
-    this.setAttribute("tabindex", 0);
+    if (this.getAttribute("role") !== "tabpanel") {
+      this.setAttribute("role", "tabpanel");
+    }
+
+    if (!this.hasAttribute("tabindex")) {
+      this.setAttribute("tabindex", 0);
+    }
+
+    this.hidden = true;
+
+    if (window.ShadyCSS) {
+      this._observer.observe(this, { childList: true });
+    }
   }
 }
 

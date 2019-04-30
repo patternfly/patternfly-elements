@@ -259,7 +259,7 @@ class PfeTabs extends PFElement {
   }
 
   _init() {
-    if (!this.hasAttribute("role")) {
+    if (this.getAttribute("role") !== "tablist") {
       this.setAttribute("role", "tablist");
     }
 

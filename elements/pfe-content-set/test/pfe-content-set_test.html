@@ -56,6 +56,20 @@
       </pfe-content-set>
     </div>
 
+    <div style="width: 1024px;">
+      <pfe-content-set id="dynamicTabs">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <p pfe-content-set--panel>Panel 1</p>
+      </pfe-content-set>
+    </div>
+
+    <div style="width: 600px">
+      <pfe-content-set id="dynamicAccordion">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <p pfe-content-set--panel>Panel 1</p>
+      </pfe-content-set>
+    </div>
+
     <script>
       suite('<pfe-content-set>', () => {
         test('it should have the proper attributes for tabs', () => {
@@ -111,6 +125,43 @@
           assert.equal(firstHeader.getAttribute('tabindex'), '0');
           assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
           assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
+        });
+
+        test("it should properly initialize any dynamically added headers and panels", done => {
+          const pfeContentSetTabs = document.querySelector("#dynamicTabs");
+          const pfeContentSetAccordion = document.querySelector("#dynamicAccordion");
+          const documentFragment = document.createDocumentFragment();
+
+          var newHeader = document.createElement("h2");
+          newHeader.setAttribute("pfe-content-set--header", true);
+          newHeader.setAttribute("pfe-id", "newHeader");
+          newHeader.textContent = "New Heading";
+
+          var newPanel = document.createElement("div");
+          newPanel.setAttribute("pfe-content-set--panel", true);
+          newPanel.setAttribute("pfe-id", "newPanel");
+          newPanel.textContent = "New Panel";
+
+          documentFragment.appendChild(newHeader);
+          documentFragment.appendChild(newPanel);
+
+          const tabsDocumentFragment = documentFragment.cloneNode(true);
+          const accordionDocumentFragment = documentFragment.cloneNode(true);
+
+          pfeContentSetTabs.appendChild(tabsDocumentFragment);
+          pfeContentSetAccordion.appendChild(accordionDocumentFragment);
+
+          flush(() => {
+            const pfeTabs = pfeContentSetTabs.querySelector("pfe-tabs");
+            const pfeAccordion = pfeContentSetAccordion.querySelector("pfe-accordion");
+
+            assert.isNotNull(pfeTabs.querySelector('[pfe-id="newHeader"]'));
+            assert.isNotNull(pfeTabs.querySelector('[pfe-id="newPanel"]'));
+            assert.isNotNull(pfeAccordion.querySelector('[pfe-id="newHeader"]'));
+            assert.isNotNull(pfeAccordion.querySelector('[pfe-id="newPanel"]'));
+
+            done();
+          });
         });
       });
     </script>

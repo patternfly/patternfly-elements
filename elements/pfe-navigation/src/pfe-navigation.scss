@@ -1,0 +1,147 @@
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: navigation;
+
+:host {
+  // Default spacing values
+  --pfe-navigation--Padding--vertical: calc(#{pfe-var(container-spacer)} * 4);
+  --pfe-navigation--Padding--horizontal: #{pfe-var(container-spacer)};
+
+  // Darkest is the default background color
+  // --pfe-navigation--BackgroundColor: #{pfe-color(surface--darkest)};
+  --pfe-navigation--BackgroundColor: #ccc;
+  // --pfe-navigation--Color: #{pfe-color(surface--darkest--text)};
+  --pfe-navigation--Color: #333;
+
+  // Border settings
+  --pfe-navigation--Border: #{pfe-var(surface--border-width)} #{pfe-var(
+      surface--border-style
+    )} transparent;
+
+  // Band width logic
+  // Initialize at mobile breakpoint
+  --pfe-navigation--Width: auto;
+  --pfe-navigation--Height: auto;
+
+  // Loop through the other breakpoints
+  @each $size in (md, lg, xl) {
+    @media screen and (min-width: pfe-breakpoint(#{$size})) {
+      --pfe-navigation--Width: calc(
+        #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4)
+      );
+    }
+  }
+
+  // Reduce padding for print
+  @media print {
+    --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(
+        Padding--horizontal
+      )};
+  }
+
+  display: block;
+  background-color: #{pfe-local(BackgroundColor)};
+  color: #{pfe-local(Color)};
+  width: 100%;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+::slotted([slot="logo"]) {
+  min-width: 80px;
+}
+
+::slotted([slot="skip"]) {
+  @include pfe-sr-only;
+}
+
+::slotted([slot="main"]) {
+  display: contents;
+}
+
+.pfe-navigation {
+  &__logo {
+    grid-area: logo;
+  }
+  &__skip {
+    grid-area: skip;
+  }
+  &__wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    // Padding
+    padding: #{pfe-local(Padding)};
+  }
+  &__container {
+    margin: 0 auto;
+    width: #{pfe-local(Width)};
+    z-index: 2;
+
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-gap: 20px;
+    grid-template-areas: "logo utility utility";
+    @media (min-width: #{pfe-breakpoint(lg)}) {
+      grid-template-areas: "logo main main main utility";
+    }
+  }
+  &__overlay {
+    display: block;
+    background-color: #25252580;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    &[hidden] {
+      display: none;
+    }
+  }
+  &__main {
+    grid-area: main;
+    display: none;
+    @media (min-width: #{pfe-breakpoint(lg)}) {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: stretch;
+      justify-content: flex-start;
+    }
+  }
+  &__utility {
+    grid-area: utility;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    justify-content: flex-end;
+    > * {
+      display: block;
+    }
+    > [pfe-icon="menu"] {
+      @media (min-width: #{pfe-breakpoint(lg)}) {
+        display: none;
+      }
+    }
+    &-links {
+      &:not([name="site-switcher"]) {
+        @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+          display: none;
+        }
+      }
+    }
+    &--mobile {
+      display: grid;
+      grid-gap: #{pfe-var(container-spacer)};
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-gap: #{pfe-var(container-spacer)};
+      }
+    }
+  }
+}

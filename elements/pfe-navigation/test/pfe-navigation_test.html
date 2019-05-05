@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../pfe-navigation.js"></script>
+  </head>
+  <body>
+
+    <pfe-navigation>
+      This is the element content.
+    </pfe-navigation>
+
+    <script>
+      suite('<pfe-navigation>', () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(document.querySelector('pfe-navigation'), customElements.get("pfe-navigation", 'pfe-navigation should be an instance of pfeNavigation'));
+        });
+
+        // you need to write more tests!!!
+
+      });
+    </script>
+  </body>
+</html>

@@ -8,9 +8,8 @@ $LOCAL: navigation;
   --pfe-navigation--Padding--horizontal: #{pfe-var(container-spacer)};
 
   // Darkest is the default background color
-  // --pfe-navigation--BackgroundColor: #{pfe-color(surface--darkest)};
-  --pfe-navigation--BackgroundColor: #ccc;
-  // --pfe-navigation--Color: #{pfe-color(surface--darkest--text)};
+  --pfe-navigation--BackgroundColor: #{pfe-color(surface--darkest)};
+  --pfe-navigation--Color: #{pfe-color(surface--darkest--text)};
   --pfe-navigation--Color: #333;
 
   // Border settings

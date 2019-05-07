@@ -26,13 +26,30 @@ class PfeNavigation extends PFElement {
 
   constructor() {
     super(PfeNavigation);
+
+    this._activeNavigationItem = null;
+
+    this._toggledHandler = this._toggledHandler.bind(this);
+    this.addEventListener(`${PfeNavigationItem.tag}:toggled`, this._toggledHandler);
   }
 
   // connectedCallback() {
   //   super.connectedCallback();
   // }
 
-  // disconnectedCallback() {}
+  disconnectedCallback() {
+    this.removeEventListener(`${PfeNavigationItem.tag}:toggled`, this._toggledHandler);
+  }
+
+  _toggledHandler(event) {
+    if (!this._activeNavigationItem) {
+      this._activeNavigationItem = event.detail.navigationItem;
+      return;
+    }
+
+    this._activeNavigationItem.expanded = false;
+    this._activeNavigationItem = event.detail.navigationItem;
+  }
 
   // attributeChangedCallback(attr, oldValue, newValue) {}
 }
@@ -84,14 +101,6 @@ class PfeNavigationItem extends PFElement {
         this.tray.removeAttribute("aria-expanded");
       }
     }
-
-    this.dispatchEvent(
-      new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
-        detail: { navigationItem: this, expanded: this.expanded },
-        bubbles: true,
-        composed: true
-      })
-    );
   }
 
   constructor() {
@@ -127,6 +136,7 @@ class PfeNavigationItem extends PFElement {
   _clickHandler(event) {
     event.preventDefault();
     this.expanded = !this.expanded;
+    this._fireExpandToggledEvent();
   }
 
   _keydownHandler(event) {
@@ -135,6 +145,7 @@ class PfeNavigationItem extends PFElement {
       case " ":
         event.preventDefault();
         this.expanded = !this.expanded;
+        this._fireExpandToggledEvent();
         break;
       case "Esc":
       case "Escape":
@@ -145,10 +156,21 @@ class PfeNavigationItem extends PFElement {
         }
 
         this.expanded = false;
+        this._fireExpandToggledEvent();
         break;
       default:
         return;
     }
+  }
+
+  _fireExpandToggledEvent() {
+    this.dispatchEvent(
+      new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
+        detail: { navigationItem: this, expanded: this.expanded },
+        bubbles: true,
+        composed: true
+      })
+    );
   }
 }
 

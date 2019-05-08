@@ -1,0 +1,78 @@
+@import "../../pfe-sass/pfe-sass";
+:host {
+  --pfe-status--bg-color: #{pfe-color(feedback--default)};
+  --pfe-status--text-color: #{pfe-color(feedback--default--lightest)};
+
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.flag {
+  position: fixed;
+  right: 0;
+  top: 0;
+  background: var(--pfe-status--bg-color);
+  color: var(--pfe-status--text-color);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+
+  span {
+    transform: rotateZ(90deg);
+    display: inline-block;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    line-height: 1em;
+    white-space: nowrap;
+    // writing-mode: vertical-rl;
+    // text-orientation: mixed;
+  }
+}
+
+:host([pfe-status="warning"]),
+:host([pfe-status="moderate"]) {
+  --pfe-status--bg-color: #{pfe-color(feedback--moderate)};
+  --pfe-status--text-color: #{pfe-color(feedback--moderate--darkest)};
+}
+
+:host([pfe-status="important"]) {
+  --pfe-status--bg-color: #{pfe-color(feedback--important)};
+  --pfe-status--text-color: #{pfe-color(feedback--important--lightest)};
+}
+
+:host([pfe-status="critical"]) {
+  --pfe-status--bg-color: #{pfe-color(feedback--critical)};
+  --pfe-status--text-color: #{pfe-color(feedback--critical--lightest)};
+}
+
+:host([pfe-status="success"]) {
+  --pfe-status--bg-color: #{pfe-color(feedback--success)};
+  --pfe-status--text-color: #{pfe-color(feedback--success--lightest)};
+}
+
+:host([pfe-status="info"]) {
+  --pfe-status--bg-color: #{pfe-color(feedback--info)};
+  --pfe-status--text-color: #{pfe-color(feedback--info--lightest)};
+}
+
+:host([pfe-status="normal"]) {
+  --pfe-status--bg-color: #{pfe-color(ui-base)};
+  --pfe-status--text-color: #{pfe-color(ui-base--text)};
+}
+
+:host([pfe-status="complement"]) {
+  --pfe-status--bg-color: #{pfe-color(ui-complement)};
+  --pfe-status--text-color: #{pfe-color(ui-complement--text)};
+}
+
+:host([pfe-status="accent"]) {
+  --pfe-status--bg-color: #{pfe-color(ui-accent)};
+  --pfe-status--text-color: #{pfe-color(ui-accent--text)};
+}

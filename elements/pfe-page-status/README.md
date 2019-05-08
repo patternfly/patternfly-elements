@@ -1,19 +1,19 @@
-# PatternFly Element | Docs Status Element
+# PatternFly Element | Page Status Element
 
 PFE Docs Status creates a flag/banner on the right side of the page denoting the status of the page or Doc the author is viewing.
 
 ## Usage
 
 ```html
-<pfe-docs-status pfe-status="critical">
+<pfe-page-status pfe-status="critical">
   Previewing
-</pfe-docs-status>
+</pfe-page-status>
 ```
 
 ```html
-<pfe-docs-status pfe-status="moderate">
+<pfe-page-status pfe-status="moderate">
   Unpublished
-</pfe-docs-status>
+</pfe-page-status>
 ```
 
 ## Dependencies
@@ -40,7 +40,7 @@ Run `npm start` and Polyserve will start a server and open your default browser 
 
 ## Code style
 
-Docs Status (and all PatternFly Elements) use [Prettier][prettier] to auto-format JS and JSON.  The style rules get applied when you commit a change.  If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
+Page Status (and all PatternFly Elements) use [Prettier][prettier] to auto-format JS and JSON.  The style rules get applied when you commit a change.  If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
 
 [prettier]: https://github.com/prettier/prettier/
 [prettier-ed]: https://github.com/prettier/prettier/#editor-integration

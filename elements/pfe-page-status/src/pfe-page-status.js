@@ -1,16 +1,16 @@
 import PFElement from "../pfelement/pfelement.js";
 
-class PfeDocsStatus extends PFElement {
+class PfePageStatus extends PFElement {
   static get tag() {
-    return "pfe-docs-status";
+    return "pfe-page-status";
   }
 
   get templateUrl() {
-    return "pfe-docs-status.html";
+    return "pfe-page-status.html";
   }
 
   get styleUrl() {
-    return "pfe-docs-status.scss";
+    return "pfe-page-status.scss";
   }
 
   // static get observedAttributes() {
@@ -18,7 +18,7 @@ class PfeDocsStatus extends PFElement {
   // }
 
   constructor() {
-    super(PfeDocsStatus);
+    super(PfePageStatus);
   }
 
   // connectedCallback() {
@@ -30,6 +30,6 @@ class PfeDocsStatus extends PFElement {
   // attributeChangedCallback(attr, oldValue, newValue) {}
 }
 
-PFElement.create(PfeDocsStatus);
+PFElement.create(PfePageStatus);
 
-export default PfeDocsStatus;
+export default PfePageStatus;

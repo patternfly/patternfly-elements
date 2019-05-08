@@ -4,13 +4,17 @@ PFE Docs Status creates a flag/banner on the right side of the page denoting the
 
 ## Usage
 
-```<pfe-docs-status pfe-status="critical">
+```html
+<pfe-docs-status pfe-status="critical">
   Previewing
-</pfe-docs-status>```
+</pfe-docs-status>
+```
 
-```<pfe-docs-status pfe-status="moderate">
+```html
+<pfe-docs-status pfe-status="moderate">
   Unpublished
-</pfe-docs-status>```
+</pfe-docs-status>
+```
 
 ## Dependencies
 

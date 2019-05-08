@@ -16,23 +16,24 @@ PFE Page Status creates a flag/banner on the right side of the page denoting the
 </pfe-page-status>
 ```
 
-## Options
+## Options & Styling
 
-### Status
+### Statuses
 
 Use the attribute `pfe-status="{option}"`
 
-**Options**
-- default &mdash; uses `--pfe-theme--color--feedback--default`
-- `moderate` &mdash; uses `--pfe-theme--color--feedback--moderate`
-- `warning` &mdash; *Same as `moderate`*
-- `important` &mdash; uses `--pfe-theme--color--feedback--important`
-- `critical` &mdash; uses `--pfe-theme--color--feedback--critical`
-- `success` &mdash; uses `--pfe-theme--color--feedback--success`
-- `info` &mdash; uses `--pfe-theme--color--feedback--info`
-- `normal` &mdash; uses `--pfe-theme--color--ui-base`
-- `accent` &mdash; uses `--pfe-theme--color--ui-accent`
-- `complement` &mdash;  uses `--pfe-theme--color--ui-complement`
+| Option | Theme Color Variable |
+| ------ | -------------------- |
+| default | `--pfe-theme--color--feedback--default` |
+| `moderate` | `--pfe-theme--color--feedback--moderate` |
+| `warning` | *Same as `moderate`* |
+| `important` | `--pfe-theme--color--feedback--important` |
+| `critical` | `--pfe-theme--color--feedback--critical` |
+| `success` | `--pfe-theme--color--feedback--success` |
+| `info` | `--pfe-theme--color--feedback--info` |
+| `normal` | `--pfe-theme--color--ui-base` |
+| `accent` | `--pfe-theme--color--ui-accent` |
+| `complement` | `--pfe-theme--color--ui-complement` |
 
 ## Dependencies
 

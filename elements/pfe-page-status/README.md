@@ -16,6 +16,24 @@ PFE Page Status creates a flag/banner on the right side of the page denoting the
 </pfe-page-status>
 ```
 
+## Options
+
+### Status
+
+Use the attribute `pfe-status="{option}"`
+
+**Options**
+- default &mdash; uses `--pfe-theme--color--feedback--default`
+- `moderate` &mdash; uses `--pfe-theme--color--feedback--moderate`
+- `warning` &mdash; *Same as `moderate`*
+- `important` &mdash; uses `--pfe-theme--color--feedback--important`
+- `critical` &mdash; uses `--pfe-theme--color--feedback--critical`
+- `success` &mdash; uses `--pfe-theme--color--feedback--success`
+- `info` &mdash; uses `--pfe-theme--color--feedback--info`
+- `normal` &mdash; uses `--pfe-theme--color--ui-base`
+- `accent` &mdash; uses `--pfe-theme--color--ui-accent`
+- `complement` &mdash;  uses `--pfe-theme--color--ui-complement`
+
 ## Dependencies
 
 Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.

@@ -1,7 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 :host {
-  --pfe-status--bg-color: #{pfe-color(feedback--default)};
-  --pfe-status--text-color: #{pfe-color(feedback--default--lightest)};
+  --pfe-status--BackgroundColor: #{pfe-color(feedback--default)};
+  --pfe-broadcasted--color--text: #{pfe-color(feedback--default--lightest)};
 
   display: block;
 }
@@ -14,8 +14,8 @@
   position: fixed;
   right: 0;
   top: 0;
-  background: var(--pfe-status--bg-color);
-  color: var(--pfe-status--text-color);
+  background-color: var(--pfe-status--BackgroundColor);
+  color: var(--pfe-broadcasted--color--text);
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -38,41 +38,41 @@
 
 :host([pfe-status="warning"]),
 :host([pfe-status="moderate"]) {
-  --pfe-status--bg-color: #{pfe-color(feedback--moderate)};
-  --pfe-status--text-color: #{pfe-color(feedback--moderate--darkest)};
+  --pfe-status--BackgroundColor: #{pfe-color(feedback--moderate)};
+  --pfe-broadcasted--color--text: #{pfe-color(feedback--moderate--darkest)};
 }
 
 :host([pfe-status="important"]) {
-  --pfe-status--bg-color: #{pfe-color(feedback--important)};
-  --pfe-status--text-color: #{pfe-color(feedback--important--lightest)};
+  --pfe-status--BackgroundColor: #{pfe-color(feedback--important)};
+  --pfe-broadcasted--color--text: #{pfe-color(feedback--important--lightest)};
 }
 
 :host([pfe-status="critical"]) {
-  --pfe-status--bg-color: #{pfe-color(feedback--critical)};
-  --pfe-status--text-color: #{pfe-color(feedback--critical--lightest)};
+  --pfe-status--BackgroundColor: #{pfe-color(feedback--critical)};
+  --pfe-broadcasted--color--text: #{pfe-color(feedback--critical--lightest)};
 }
 
 :host([pfe-status="success"]) {
-  --pfe-status--bg-color: #{pfe-color(feedback--success)};
-  --pfe-status--text-color: #{pfe-color(feedback--success--lightest)};
+  --pfe-status--BackgroundColor: #{pfe-color(feedback--success)};
+  --pfe-broadcasted--color--text: #{pfe-color(feedback--success--lightest)};
 }
 
 :host([pfe-status="info"]) {
-  --pfe-status--bg-color: #{pfe-color(feedback--info)};
-  --pfe-status--text-color: #{pfe-color(feedback--info--lightest)};
+  --pfe-status--BackgroundColor: #{pfe-color(feedback--info)};
+  --pfe-broadcasted--color--text: #{pfe-color(feedback--info--lightest)};
 }
 
 :host([pfe-status="normal"]) {
-  --pfe-status--bg-color: #{pfe-color(ui-base)};
-  --pfe-status--text-color: #{pfe-color(ui-base--text)};
+  --pfe-status--BackgroundColor: #{pfe-color(ui-base)};
+  --pfe-broadcasted--color--text: #{pfe-color(ui-base--text)};
 }
 
 :host([pfe-status="complement"]) {
-  --pfe-status--bg-color: #{pfe-color(ui-complement)};
-  --pfe-status--text-color: #{pfe-color(ui-complement--text)};
+  --pfe-status--BackgroundColor: #{pfe-color(ui-complement)};
+  --pfe-broadcasted--color--text: #{pfe-color(ui-complement--text)};
 }
 
 :host([pfe-status="accent"]) {
-  --pfe-status--bg-color: #{pfe-color(ui-accent)};
-  --pfe-status--text-color: #{pfe-color(ui-accent--text)};
+  --pfe-status--BackgroundColor: #{pfe-color(ui-accent)};
+  --pfe-broadcasted--color--text: #{pfe-color(ui-accent--text)};
 }

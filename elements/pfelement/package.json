@@ -4,26 +4,40 @@
     "className": "PFElement",
     "elementName": "pfelement"
   },
-  "version": "1.0.0-prerelease.10",
+  "version": "1.0.0-prerelease.13",
   "publishConfig": {
     "access": "public"
   },
-  "description": " element for PFElements",
+  "description": "Base class for PatternFly Elements",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfelement"
   },
-  "main": "index.js",
+  "main": "pfelement.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfelement/test/"
   },
-  "author": {
-    "name": "Kyle Buchanan",
-    "email": "kylebuch8@gmail.com",
-    "url": "https://github.com/kylebuch8"
-  },
+  "contributors": [
+    {
+      "name": "Kyle Buchanan",
+      "email": "kylebuch8@gmail.com",
+      "url": "https://github.com/kylebuch8"
+    },
+    {
+      "name": "Michael Clayton"
+    },
+    {
+      "name": "castastrophe",
+      "url": "https://github.com/castastrophe"
+    }
+  ],
   "license": "MIT",
   "generator-pfelement-version": "0.3.4",
   "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"

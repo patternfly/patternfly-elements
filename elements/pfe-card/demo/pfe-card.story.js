@@ -80,16 +80,16 @@ stories.add(PfeCard.tag, () => {
     const ctaPriorityValue = storybookBridge.select(
       "Priority",
       {
-        default: "default",
+        null: "default",
         primary: "primary",
         secondary: "secondary"
       },
-      "default",
+      "",
       "Call-to-action"
     );
 
     // Print the priority attribute if it's not default
-    if (ctaPriorityValue !== "default") {
+    if (ctaPriorityValue !== "") {
       footerAttrs.priority = ctaPriorityValue;
     }
   }

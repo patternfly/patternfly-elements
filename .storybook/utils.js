@@ -3,6 +3,8 @@
 // Automatic content generation
 // https://www.npmjs.com/package/lorem-ipsum
 const loremIpsum = require("lorem-ipsum");
+// HTML cleaner
+// https://www.npmjs.com/package/clean-html
 const cleaner = require("clean-html");
 
 // Escape HTML to display markup as content
@@ -19,17 +21,45 @@ String.prototype.sentenceCase = function() {
 };
 
 // Print attributes based on an object
-const listProperties = (obj, prefix = "") =>
+const listProperties = (obj) =>
   Object.entries(obj)
     .map(set => {
+      let string = " ";
       let p = set[0];
       let v = set[1];
-      let print = set[2] || true;
-      return print && v && v !== "null"
-        ? ` ${p !== "slot" ? `${prefix ? `${prefix}-` : ""}` : ""}${p}="${v}"`
-        : "";
+      let print = set[2];
+
+      // If no print value is provided, default to true
+      if (typeof print === "undefined") {
+        print = true;
+      }
+
+      // If printing is allowed, the value exists and is not null and is not a slot
+      if (
+        print &&
+        typeof v !== "undefined" &&
+        (v !== null && v !== "null") &&
+        p !== "slot"
+      ) {
+        string += p;
+        // If the value is a boolean and is false, or the value is not a string true
+        if (
+          (typeof v === "string" && v !== "true") ||
+          (typeof v === "boolean" && !v)
+        ) {
+          string += "=";
+          if (typeof v === "string") {
+            // If it's a string, use quotation marks around it
+            string += `"${v}"`;
+          } else {
+            // Use, use it raw
+            string += v;
+          }
+        }
+      }
+      return string.toLowerCase();
     })
-    .join("");
+    .join(" ");
 
 // Create a tag based on a provided object
 // Accepts an object that can contain (all optional):
@@ -37,9 +67,10 @@ const listProperties = (obj, prefix = "") =>
 // -- slot: rendered as slot="<input>"
 // -- attributes: passed through the listProperties function
 // -- content: Accepts html or plain text or renders default content
-export function customTag(obj, prefix = "") {
+export function customTag(obj) {
   let start = "";
   let end = "";
+
   // If a tag is defined, or it has slots or attributes to apply
   // render an open and close tag
   if (obj.tag || obj.slot || obj.attributes) {
@@ -54,11 +85,11 @@ export function customTag(obj, prefix = "") {
       end += "div";
     }
     start += obj.slot ? ` slot="${obj.slot}"` : "";
-    start += obj.attributes ? listProperties(obj.attributes || {}, prefix) : "";
+    start += obj.attributes ? listProperties(obj.attributes || {}) : "";
     start += ">";
     end += ">";
   }
-  return `${start}${obj.content || autoContent()}${end}`;
+  return `${start}${obj.content}${end}`;
 }
 
 const parseMarkup = string => {
@@ -133,15 +164,15 @@ const renderSlots = (slots = []) =>
     .join("");
 
 // Creates a component dynamically based on inputs
-export function component(tag, attributes = {}, slots = [], prefix = "") {
-  return `<${tag}${listProperties(attributes, prefix)}>${
+export function component(tag, attributes = {}, slots = []) {
+  return `<${tag}${listProperties(attributes)}>${
     slots.length > 0 ? renderSlots(slots) : autoContent()
   }</${tag}>`;
 }
 
 // Create an automatic heading
 export function autoHeading(short = false) {
-  let length = short ? Math.random() + 2 : Math.random() * 10 + 5;
+  let length = short ? Math.random() + 1 : Math.random() * 10 + 5;
   return loremIpsum({
     count: length,
     units: "words"
@@ -168,12 +199,34 @@ export function autoPropKnobs(properties, bridge) {
     let type = prop[1].type || "string";
     let defaultValue = prop[1].default;
     let options = prop[1].enum || [];
-    let hidden = prop[1].hidden || false;
+    let hidden = prop[1].hidden;
+    let required = prop[1].required;
+    let prefixed = prop[1].prefixed;
+
+    // Convert the type to lowercase values
+    type = type.toLowerCase();
+
+    // Initialize booleans to false if undefined
+    if (typeof hidden === "undefined") {
+      hidden = false;
+    }
+
+    if (typeof required === "undefined") {
+      required = false;
+    }
+
+    if (typeof prefixed === "undefined") {
+      prefixed = false;
+    }
+
+    if(prefixed) {
+      attr = `pfe-${attr}`;
+    }
 
     // Set the default method to text
     let method = "text";
     if (["boolean", "number", "object", "array", "date"].includes(type)) {
-      method = type.toLowerCase();
+      method = type;
     }
 
     // If the property is not hidden from the user
@@ -181,12 +234,17 @@ export function autoPropKnobs(properties, bridge) {
       // If an array of options exists, create a select list
       if (options.length > 0) {
         let opts = {};
+
+        // If this is not a required field, add a null option
+        if (!required) {
+          opts.null = "-- Not selected --";
+        }
+
         // Convert the array into an object
         options.map(item => (opts[item] = item));
 
-        // If a default is not defined, add a null option
+        // If the default value is not defined, use the new null option as the default
         if (defaultValue === "" || defaultValue === null) {
-          opts.null = "none";
           defaultValue = null;
         }
 
@@ -258,7 +316,7 @@ export function code(markup) {
 
   // Return the rendered markup and the code snippet output
   return `<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">${escapeHTML(
-    markup
+    markup.replace(/\=\"\"/g, "")
   )}</pre>`;
 }
 // prettier-ignore-end

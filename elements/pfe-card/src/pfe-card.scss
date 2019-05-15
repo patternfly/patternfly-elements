@@ -46,7 +46,7 @@ $LOCAL: card;
   --pfe-card--BackgroundPosition: center center;
 
   // Background color support for header region
-  --pfe-card__header--BackgroundColor: #{pfe-color(surface--base--harmony)};
+  --pfe-card__header--BackgroundColor: #{pfe-color(surface--base)}aa;
 
   // Broadcast color variables
   --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
@@ -96,15 +96,7 @@ $LOCAL: card;
     --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--#{$color}--link--hover)};
     --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--#{$color}--link--focus)};
     // Header colors
-    --pfe-card__header--BackgroundColor:          #{pfe-color(surface--#{$color}--harmony)};
-    // Update broadcast variables in header region of card
-    .pfe-card__header {
-      --pfe-broadcasted--color--text:             #{pfe-color(surface--#{$color}--harmony--text)};
-      --pfe-broadcasted--color--ui-link:          #{pfe-color(surface--#{$color}--harmony--link)};
-      --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--#{$color}--harmony--link--visited)};
-      --pfe-broadcasted--color--ui-link--hover:   #{pfe-color(surface--#{$color}--harmony--link--hover)};
-      --pfe-broadcasted--color--ui-link--focus:   #{pfe-color(surface--#{$color}--harmony--link--focus)};
-    }
+    --pfe-card__header--BackgroundColor:          #{pfe-color(surface--#{$color})}aa;
     
   }
 }

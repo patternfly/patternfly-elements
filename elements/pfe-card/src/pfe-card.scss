@@ -120,7 +120,7 @@ $LOCAL: card;
 }
 
 ::slotted([pfe-overflow~="bottom"]) {
-    margin-bottom: calc(-1 * #{pfe-local(PaddingBottom)});
+    margin-bottom: calc(-1 * calc(#{pfe-local(PaddingBottom)} + #{pfe-local(BorderRadius)}));
     align-self: flex-end;
 }
 

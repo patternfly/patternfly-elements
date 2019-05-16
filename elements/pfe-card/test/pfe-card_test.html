@@ -8,12 +8,33 @@
     <script type="module" src="../pfe-card.js"></script>
   </head>
   <body>
+    <style>
+      .grid {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(3, 1fr);
+      }
+      h2 {
+        margin-bottom: 0;
+      }
+    </style>
+    <div class="grid">
 
-    <pfe-card id="card1">
-      <h2 slot="pfe-card--header">Card 1</h2>
-      <p>This is pfe-card.</p>
-      <div slot="pfe-card--footer">Text in footer</div>
-    </pfe-card>
+      <pfe-card id="card1">
+        <h2 slot="pfe-card--header">Card 1</h2>
+        <p>This is pfe-card.</p>
+        <div slot="pfe-card--footer">Text in footer</div>
+      </pfe-card>
+
+      <pfe-card id="card2">
+        <img src="http://placekitten.com/200/150"/>
+      </pfe-card>
+
+      <pfe-card id="card3">
+        <h2 slot="pfe-card--header">Card 3</h2>
+        <img src="http://placekitten.com/1000/500" pfe-overflow="top right bottom left"/>
+      </pfe-card>
+    </div>
 
     <script>
       const card = [...document.querySelectorAll("pfe-card")];
@@ -66,6 +87,13 @@
           class: "pfe-card__footer",
           content: "Text in footer"
         }
+      };
+
+      const overflow = {
+        top: "",
+        right: "",
+        bottom: "",
+        left: ""
       };
 
       suite("<pfe-card>", () => {
@@ -125,6 +153,29 @@
             assert.equal(content, slot[1].content);
           });
         });
+
+        // Iterate over possibilities for images
+        Object.entries(overflow).forEach(direction => {
+          test(`image should overflow to the ${direction}`, () => {
+            let image = card[1].querySelector("img");
+            image.setAttribute("pfe-overflow", direction);
+            setTimeout(function(){
+              let margin = direction !== "bottom" ? "-32px" : "-35px";
+              assert.equal(getComputedStyle(image, null)[`margin-${direction}`], margin);
+            }, 50);
+          });
+        });
+
+        test("image should overflow all padding", () => {
+          let image = card[2].querySelector("img");
+          setTimeout(function(){
+            assert.equal(getComputedStyle(image, null)["margin-top"], "-16px");
+            assert.equal(getComputedStyle(image, null)["margin-right"], "-32px");
+            assert.equal(getComputedStyle(image, null)["margin-bottom"], "-35px");
+            assert.equal(getComputedStyle(image, null)["margin-left"], "-32px");
+          }, 50);
+        });
+
       });
     </script>
   </body>

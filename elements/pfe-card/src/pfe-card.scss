@@ -94,6 +94,8 @@ $LOCAL: card;
 }
 
 ::slotted([pfe-overflow~="top"]) {
+  z-index: 1;
+  margin-top: -2rem; //IE11 fallback
   margin-top: calc(-1 * #{pfe-local(PaddingTop)});
   .pfe-card__header + &,
   .pfe-card__body + & {  
@@ -102,15 +104,18 @@ $LOCAL: card;
 }
 
 ::slotted([pfe-overflow~="right"]) {
+  margin-right: -2rem; //IE11 fallback
   margin-right: calc(-1 * #{pfe-local(PaddingRight)});
 }
 
 ::slotted([pfe-overflow~="bottom"]) {
-    margin-bottom: calc(-1 * calc(#{pfe-local(PaddingBottom)} + #{pfe-local(BorderRadius)}));
-    align-self: flex-end;
+  margin-bottom: -2rem; //IE11 fallback
+  margin-bottom: calc(-1 * calc(#{pfe-local(PaddingBottom)} + #{pfe-local(BorderRadius)}));
+  align-self: flex-end;
 }
 
 ::slotted([pfe-overflow~="left"]) {
+  margin-left: -2rem; //IE11 fallback
   margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
 }
 
@@ -119,14 +124,17 @@ $LOCAL: card;
 }
 
 ::slotted(img[pfe-overflow~="right"]) {
+  max-width: calc(100% + 2rem); //IE11 fallback
   max-width: calc(100% + #{pfe-local(PaddingRight)});
 }
 
 ::slotted(img[pfe-overflow~="left"]) {
+  max-width: calc(100% + 2rem); //IE11 fallback
   max-width: calc(100% + #{pfe-local(PaddingLeft)});
 }
 
 ::slotted(img[pfe-overflow~="right"][pfe-overflow~="left"]) {
+  max-width: calc(100% + 4rem); //IE11 fallback
   max-width: calc(100% + calc(#{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)}));
 }
 
@@ -140,14 +148,18 @@ $LOCAL: card;
 
 ::slotted([slot="pfe-card--header"]) {
   display: block;
+  z-index: 2;
   // Declare the header background color
   background-color: #{pfe-local($cssvar: BackgroundColor, $region: header)};
   color: #{pfe-local($cssvar: Color, $region: header)};
 
   // Margin style only on top and sides
+  margin-top:    -2rem; //IE11 fallback
   margin-top:    calc(-1 * #{pfe-local(PaddingTop)});
+  margin-right:  -2rem; //IE11 fallback
   margin-right:  calc(-1 * #{pfe-local(PaddingRight)});
   margin-bottom: #{pfe-local(spacing)};
+  margin-left:   -2rem; //IE11 fallback
   margin-left:   calc(-1 * #{pfe-local(PaddingLeft)});
 
   // Padding for the header region

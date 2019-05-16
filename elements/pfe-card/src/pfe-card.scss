@@ -11,12 +11,6 @@ $LOCAL: card;
   --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--link--visited)};
   --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--link--hover)};
   --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
-
-  display: flex;
-  flex-direction: column;
-  justify-items: flex-start;
-  // This allows the card to fill it's container if necessary
-  align-self: stretch;
   
   //-- Padding and spacing values
 
@@ -33,17 +27,17 @@ $LOCAL: card;
   --pfe-card--spacing: #{pfe-var(container-spacer)};
 
   //-- Border settings
-  --pfe-card--BorderWeight: 0;
-  --pfe-card--BorderStyle:  solid;
-  --pfe-card--BorderColor:  transparent;
   --pfe-card--BorderRadius: #{pfe-var(surface--border-radius)};
 
   //-- Border variable encompasses width, style, and color
-  --pfe-card--Border: #{pfe-local(BorderWeight)} #{pfe-local(BorderStyle)} #{pfe-local(BorderColor)};
+  --pfe-card--Border: #{pfe-local(BorderWeight, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)};
 
   //-- Color properties
   --pfe-card--BackgroundColor: #{pfe-color(surface--base)};
   --pfe-card--BackgroundPosition: center center;
+
+  --pfe-card__header--BackgroundColor: rgba(0, 0, 0, #{pfe-var(opacity)});
+  --pfe-card__header--Color:           var(--pfe-broadcasted--color--text);
 
   // Broadcast color variables
   --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
@@ -59,15 +53,23 @@ $LOCAL: card;
   // @TODO deprecate padding and bg in favor of BEM naming
   --pfe-card--padding:      #{pfe-local(Padding)};
   --pfe-card--bg:           #{pfe-local(BackgroundColor)};
+}
 
+:host(.PFElement) {
   // Start of style declarations for host element
   display: flex;
   flex-direction: column;
   justify-items: flex-start;
+  // This allows the card to fill it's container if necessary
+  align-self: stretch;
 
   padding:       #{pfe-local(Padding)};
   border:        #{pfe-local(Border)};
   border-radius: #{pfe-local(BorderRadius)};
+
+  // This property ensures that children in the slots do no overflow
+  // the border-radius being set on the container
+  overflow: hidden;
 
   // Base colors
   background-color: #{pfe-local(BackgroundColor)};
@@ -163,7 +165,8 @@ $LOCAL: card;
   
   &__header {
     // Declare the header background color
-    background-color: rgba(0, 0, 0, #{pfe-var(opacity)});
+    background-color: #{pfe-local($cssvar: BackgroundColor, $region: header)};
+    color: #{pfe-local($cssvar: Color, $region: header)};
     // Margin style only on top and sides
     margin-top: calc(-1 * #{pfe-local(PaddingTop)});
     margin-right: calc(-1 * #{pfe-local(PaddingRight)});

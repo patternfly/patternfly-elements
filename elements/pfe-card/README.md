@@ -16,13 +16,13 @@ PFElements Card Element
 All slots are optional.  If the slot is not defined, the content will be added to the `body` region of the card.
 
 ### Header
-If this slot is used, we expect a heading level tag (h1, h2, h3, h4, h5, h6).
+If this slot is used, we expect a heading level tag (h1, h2, h3, h4, h5, h6).  An icon, svg, or use of the icon component are also valid in this region.
 
 ### Default slot (body)
 Any content that is not designated for the `header` or `footer` slot, will go to this slot.
 
 ### Footer
-Use this slot for anything that you want in the footer of the card.
+Use this slot for anything that you want to be stuck to the base of the card.  This region is bottom-aligned.
 
 ## Attributes
 

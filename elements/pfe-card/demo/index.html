@@ -43,6 +43,16 @@
         font-size: 1.1em;
         font-weight: bolder;
       }
+
+      .custom-border {
+        --pfe-card--BorderColor: #eee;
+        --pfe-card--BorderWeight: 1px;
+      }
+
+      .custom-header-background {
+        --pfe-card__header--BackgroundColor: #0477a4;
+        --pfe-card__header--Color: #fff;
+      }
     </style>
 
   </head>
@@ -50,7 +60,7 @@
     <h1>&lt;pfe-card&gt;</h1>
     <div class="demo-cards">
 
-      <pfe-card pfe-color="lightest" style="--pfe-card--BorderColor: #eee">
+      <pfe-card pfe-color="lightest" class="custom-border">
         <h2 slot="pfe-card--header">Lightest card</h2>
         <p>This is the lightest pfe-card and <a href="#">a link</a>.</p>
         <pfe-cta slot="pfe-card--footer">
@@ -125,7 +135,7 @@
         </pfe-cta>
       </pfe-card>
 
-      <pfe-card pfe-color="lighter">
+      <pfe-card pfe-color="lighter" class="custom-header-background">
         <h2 slot="pfe-card--header">Imaged card with side overflow + header</h2>
         <img pfe-overflow="top right left" src="https://via.placeholder.com/400x200"/>
         <p style="margin-top: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis, porro?</p>

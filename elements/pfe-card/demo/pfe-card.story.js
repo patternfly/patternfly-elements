@@ -38,7 +38,7 @@ stories.add(PfeCard.tag, () => {
   const props = PfeCard.properties;
 
   // Set the storybook default to something more exciting
-  props.color.default == "complement";
+  props.color.default = "complement";
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);

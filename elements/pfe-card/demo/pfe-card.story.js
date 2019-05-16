@@ -53,58 +53,98 @@ stories.add(PfeCard.tag, () => {
   // Build the default body content
   slots.body.default = defaultBody;
 
-  // Trigger the auto generation of the knobs for slots
-  config.has = tools.autoContentKnobs(slots, storybookBridge);
-
-  // Add the footer slot manually, does not accept user input via field
-  slots.footer = {
-    title: "Footer"
-  };
-
-  // Create an object for the footer attributes
-  let footerAttrs = {};
-  let ctaText;
-  let ctaLink;
-
-  // Manually ask user if they want a CTA included
-  const ctaValue = storybookBridge.boolean(
-    "Include a call-to-action?",
+  // Manually ask user if they want an image included
+  const imageValue = storybookBridge.boolean(
+    "Include a sample image?",
     true,
-    "Call-to-action"
+    "Image"
   );
 
-  // If they do, prompt them for the cta text and style
-  if (ctaValue) {
-    ctaText = storybookBridge.text("Text", "Learn more", "Call-to-action");
-    ctaLink = storybookBridge.text("Link", "#", "Call-to-action");
-    const ctaPriorityValue = storybookBridge.select(
-      "Priority",
-      {
-        null: "default",
-        primary: "primary",
-        secondary: "secondary"
-      },
-      "",
-      "Call-to-action"
-    );
+  let overflowAttr = [];
+  let image = "";
+  let region = "body";
 
-    // Print the priority attribute if it's not default
-    if (ctaPriorityValue !== "") {
-      footerAttrs.priority = ctaPriorityValue;
+  // If they do, prompt them for the image properties
+  if (imageValue) {
+    let overflow = storybookBridge.select("Image overflow?", {
+      null: "no overflow",
+      top: "top & sides",
+      bottom: "bottom & sides",
+      sides: "sides only"
+    }, "no overflow", "Image");
+
+    // Create the overflow attribute value based on user selections
+    switch(overflow) {
+      case "top":
+        overflowAttr.push("top");
+        overflowAttr.push("right");
+        overflowAttr.push("left");
+        break;
+      case "bottom":
+        overflowAttr.push("right");
+        overflowAttr.push("bottom");
+        overflowAttr.push("left");
+        region = "footer";
+        break;
+      case "sides":
+        overflowAttr.push("right");
+        overflowAttr.push("left");
+        break;
+    }
+
+    image = `<img src=\"http://placekitten.com/1000/300\" ${overflowAttr.length > 0 ? ` pfe-overflow=\"${overflowAttr.join(" ")}\"` : ""}/>`;
+    if(region === "footer") {
+      slots.footer.default = image;
+    } else {
+      slots.body.default = image + slots.body.default;
     }
   }
 
-  // Build the default footer component
-  slots.footer.default = "";
+  // Create an object for the footer attributes
+  let footerAttrs = {};
 
-  // If the link exists, add the default value for the footer slot
-  if (ctaValue) {
-    slots.footer.default = tools.component("pfe-cta", footerAttrs, [
-      {
-        content: `<a href="${ctaLink}">${ctaText}</a>`
+  if (!imageValue || imageValue && !overflowAttr.includes("bottom")) {
+    let ctaText;
+    let ctaLink;
+
+    // Manually ask user if they want a CTA included
+    const ctaValue = storybookBridge.boolean(
+      "Include a call-to-action?",
+      true,
+      "Call-to-action"
+    );
+
+    // If they do, prompt them for the cta text and style
+    if (ctaValue) {
+      ctaText = storybookBridge.text("Text", "Learn more", "Call-to-action");
+      ctaLink = storybookBridge.text("Link", "#", "Call-to-action");
+      const ctaPriorityValue = storybookBridge.select(
+        "Priority",
+        {
+          null: "default",
+          primary: "primary",
+          secondary: "secondary"
+        },
+        "",
+        "Call-to-action"
+      );
+
+      // Print the priority attribute if it's not default
+      if (ctaPriorityValue !== "") {
+        footerAttrs.priority = ctaPriorityValue;
       }
-    ]);
+
+      // If the link exists, add the default value for the footer slot
+      slots.footer.default = tools.component("pfe-cta", footerAttrs, [
+        {
+          content: `<a href="${ctaLink}">${ctaText}</a>`
+        }
+      ]);
+    }
   }
+
+  // Trigger the auto generation of the knobs for slots
+  config.has = tools.autoContentKnobs(slots, storybookBridge);
 
   // prettier-ignore
   config.slots = [{
@@ -117,7 +157,7 @@ stories.add(PfeCard.tag, () => {
     content: config.has.body
   }, {
     slot: "pfe-card--footer",
-    content: slots.footer ? slots.footer.default : ""
+    content: config.has.footer
   }];
 
   // Some attribute values don't need to be included in the markup

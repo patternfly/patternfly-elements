@@ -68,26 +68,25 @@ const listProperties = (obj) =>
 // -- attributes: passed through the listProperties function
 // -- content: Accepts html or plain text or renders default content
 export function customTag(obj) {
+  // Most common self-closing tags = br, hr, img, input, link
+  let selfClosing = ["br", "hr", "img", "input", "link"];
   let start = "";
   let end = "";
 
   // If a tag is defined, or it has slots or attributes to apply
   // render an open and close tag
   if (obj.tag || obj.slot || obj.attributes) {
-    start += "<";
-    end += "</";
     // If a tag is defined, use that, else use a div
     if (obj.tag) {
-      start += obj.tag;
-      end += obj.tag;
+      start += `<${obj.tag}`;
+      end   += !selfClosing.includes(obj.tag) ? `</${obj.tag}>` : "";
     } else {
-      start += "div";
-      end += "div";
+      start += "<div";
+      end += "</div>";
     }
     start += obj.slot ? ` slot="${obj.slot}"` : "";
     start += obj.attributes ? listProperties(obj.attributes || {}) : "";
-    start += ">";
-    end += ">";
+    start += !selfClosing.includes(obj.tag) ? ">" : "/>";
   }
   return `${start}${obj.content}${end}`;
 }
@@ -108,9 +107,9 @@ const parseMarkup = string => {
     // If results remain in the array, get the attributes
     if (result.length > 1 && typeof result[2] === "string") {
       // Break the attributes apart using the spaces
-      let attr = result[2].trim().split(" ");
+      let attr = result[2].trim().match(/[\w|-]+="[^"]+"/g);
       // If any attributes exist, break them down further
-      if (attr.length > 0) {
+      if (attr !== null) {
         attr.forEach(set => {
           // Break the attributes apart using the equal sign
           let items = set.trim().split("=");
@@ -142,6 +141,7 @@ const parseMarkup = string => {
 const renderSlots = (slots = []) =>
   slots
     .map(slot => {
+      let selfClosing = ["br", "hr", "img", "input", "link"];
       // If there are slot or attribute values but no tag defined
       // Grep the content to see if we can use the first tag passed in
       let has_tag = typeof slot.tag !== "undefined";
@@ -150,9 +150,10 @@ const renderSlots = (slots = []) =>
         typeof slot.attributes !== "undefined" &&
         Object.keys(slot.attributes).length > 0;
       if (!has_tag && (has_slot || has_attr)) {
-        Object.assign(slot, parseMarkup(slot.content));
+        let parsed = parseMarkup(slot.content);
+        Object.assign(slot, parsed);
       }
-      return slot.content
+      return slot.content || slot.tag && selfClosing.includes(slot.tag)
         ? customTag({
             tag: slot.tag,
             slot: slot.slot,

@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PFElements: pfe-card Demo</title>
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
@@ -35,11 +36,11 @@
 
       .demo-cards > * {
         margin: 0 16px 32px;
+        min-width: 200px;
         width: calc(25% - 32px);
       }
 
       h2[slot="pfe-card--header"] {
-        margin-bottom: 0;
         font-size: 1.1em;
         font-weight: bolder;
       }

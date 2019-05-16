@@ -138,36 +138,42 @@ $LOCAL: card;
   }
 }
 
+::slotted([slot="pfe-card--header"]) {
+  display: block;
+  // Declare the header background color
+  background-color: #{pfe-local($cssvar: BackgroundColor, $region: header)};
+  color: #{pfe-local($cssvar: Color, $region: header)};
+
+  // Margin style only on top and sides
+  margin-top:    calc(-1 * #{pfe-local(PaddingTop)});
+  margin-right:  calc(-1 * #{pfe-local(PaddingRight)});
+  margin-bottom: #{pfe-local(spacing)};
+  margin-left:   calc(-1 * #{pfe-local(PaddingLeft)});
+
+  // Padding for the header region
+  padding-top:    #{pfe-local(spacing)}; // Top padding differs if background color applied
+  padding-right:  #{pfe-local(PaddingRight)};
+  padding-left:   #{pfe-local(PaddingLeft)};
+  padding-bottom: #{pfe-local(spacing)};
+}
+
+::slotted(:not([slot])) {
+  display: block;
+  margin-bottom: #{pfe-local(spacing)};
+}
+
+::slotted([slot="pfe-card--footer"]) {
+  display: flex;
+  flex-flow: column wrap;
+  margin-top: auto; // This allows the footer to move to the very bottom
+  justify-self: flex-end;
+}
+
 .pfe-card {
   &__header,
-  &__body,
-  &__footer {
-    display: block;
-
-    &:not(:last-child) {
-      margin-bottom: #{pfe-local(spacing)};
+  &__body {
+    &:last-child {
+      margin-bottom: 0;
     }
-  }
-  
-  &__header {
-    // Declare the header background color
-    background-color: #{pfe-local($cssvar: BackgroundColor, $region: header)};
-    color: #{pfe-local($cssvar: Color, $region: header)};
-    // Margin style only on top and sides
-    margin-top: calc(-1 * #{pfe-local(PaddingTop)});
-    margin-right: calc(-1 * #{pfe-local(PaddingRight)});
-    margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
-    // Padding for the header region
-    padding-top: #{pfe-local(spacing)}; // Top padding differs if background color applied
-    padding-right: #{pfe-local(PaddingRight)};
-    padding-left: #{pfe-local(PaddingLeft)};
-    padding-bottom: #{pfe-local(spacing)};
-  }
-  
-  &__footer {
-    display: flex;
-    flex-flow: column wrap;
-    margin-top: auto; // This allows the footer to move to the very bottom
-    justify-self: flex-end;
   }
 }

@@ -96,6 +96,57 @@
         left: ""
       };
 
+      const customProperties = {
+        paddingTop: {
+          variable: "--pfe-card--PaddingTop",
+          css: "padding-top",
+          default:  "32px",
+          custom: "28px"
+        },
+        paddingRight: {
+          variable: "--pfe-card--PaddingRight",
+          css: "padding-right",
+          default:  "32px",
+          custom: "28px"
+        },
+        paddingBottom: {
+          variable: "--pfe-card--PaddingBottom",
+          css: "padding-bottom",
+          default:  "32px",
+          custom: "28px"
+        },
+        paddingLeft: {
+          variable: "--pfe-card--PaddingLeft",
+          css: "padding-left",
+          default:  "32px",
+          custom: "28px"
+        },
+        padding: {
+          variable: "--pfe-card--Padding",
+          css: "padding",
+          default:  "32px 32px 32px 32px",
+          custom: "20px 10px 20px 10px"
+        },
+        borderRadius: {
+          variable: "--pfe-card--BorderRadius",
+          css: "border-radius",
+          default:  "3px",
+          custom: "50%"
+        },
+        border: {
+          variable: "--pfe-card--Border",
+          css: "border",
+          default:  "0 solid transparent",
+          custom: "1px solid #eee"
+        },
+        backgroundColor: {
+          variable: "--pfe-card--BackgroundColor",
+          css: "background-color",
+          default:  "#dfdfdf",
+          custom: "hotpink"
+        }
+      };
+
       suite("<pfe-card>", () => {
         test("it should upgrade", () => {
           assert.instanceOf(
@@ -174,6 +225,23 @@
             assert.equal(getComputedStyle(image, null)["margin-bottom"], "-35px");
             assert.equal(getComputedStyle(image, null)["margin-left"], "-32px");
           }, 50);
+        });
+
+        // Iterate over the custom properties to test overrides work
+        Object.entries(customProperties).forEach(set => {
+          let property = set[1];
+          test(`Test that ${property.variable} allows user customization`, () => {
+            // Test default value
+            setTimeout(function(){
+              assert.equal(getComputedStyle(card[0], null)[property.css], property.default, `${property.css} should equal ${property.default}`);
+            }, 50);
+            // Update the variable
+            card[0].style.setProperty(property.variable, property.custom);
+            // Test the update worked
+            setTimeout(function(){
+              assert.equal(getComputedStyle(card[0], null)[property.css], property.custom, `${property.css} should equal ${property.custom}`);
+            }, 50);
+          });
         });
 
       });

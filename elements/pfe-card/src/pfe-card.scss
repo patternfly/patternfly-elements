@@ -3,17 +3,6 @@
 $LOCAL: card;
 
 :host {
-  --pfe-card--padding:                          calc(#{pfe-var(container-spacer)} * 2); // 2x `container-spacer`
-  --pfe-card_header--size:                      #{pfe-var(font-size--heading--gamma)};
-  --pfe-card--bg:                               #{pfe-color(surface--base)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
-  
-  //-- Padding and spacing values
-
   // Individual padding overrides available
   --pfe-card--PaddingTop: calc(#{pfe-var(container-spacer)} * 2);
   --pfe-card--PaddingRight: calc(#{pfe-var(container-spacer)} * 2);
@@ -36,18 +25,15 @@ $LOCAL: card;
   --pfe-card--BackgroundColor: #{pfe-color(surface--base)};
   --pfe-card--BackgroundPosition: center center;
 
-  --pfe-card__header--BackgroundColor: rgba(0, 0, 0, #{pfe-var(opacity)});
-  --pfe-card__header--Color:           var(--pfe-broadcasted--color--text);
-
-  // Broadcast color variables
+  // Broadcasted values set to match background color
   --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
   --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--link)};
   --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--link--visited)};
   --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--link--hover)};
   --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
 
-  //-- Deprecated but still supported
-  --pfe-card_header--size:  #{pfe-var(font-size--heading--gamma)};
+  --pfe-card__header--BackgroundColor: rgba(0, 0, 0, #{pfe-var(opacity)});
+  --pfe-card__header--Color:           var(--pfe-broadcasted--color--text);
 
   // Add backward support for previous variable naming
   // @TODO deprecate padding and bg in favor of BEM naming

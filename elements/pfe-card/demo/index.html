@@ -40,7 +40,6 @@
 
       h2[slot="pfe-card--header"] {
         margin-bottom: 0;
-        text-transform: uppercase;
         font-size: 1.1em;
         font-weight: bolder;
       }
@@ -54,7 +53,7 @@
       <pfe-card pfe-color="lightest" style="--pfe-card--BorderColor: #eee">
         <h2 slot="pfe-card--header">Lightest card</h2>
         <p>This is the lightest pfe-card and <a href="#">a link</a>.</p>
-        <pfe-cta priority="primary" slot="pfe-card--footer">
+        <pfe-cta slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
@@ -64,7 +63,7 @@
         <p>This is the light pfe-card and <a href="#">a link</a>.</p>
         <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
         <p>Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
-        <pfe-cta priority="secondary" slot="pfe-card--footer">
+        <pfe-cta slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
@@ -72,7 +71,7 @@
       <pfe-card>
         <h2 slot="pfe-card--header">Default card</h2>
         Unwrapped item. This is the default pfe-card and <a href="#">a link</a>.
-        <pfe-cta priority="secondary" slot="pfe-card--footer">
+        <pfe-cta slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
@@ -80,7 +79,7 @@
       <pfe-card pfe-color="darker" pfe-img-src="https://www.redhat.com/files/webux/img/bandbg/bg-infrastructure-management-pattern-transparent-tile.png" style="--pfe-card__header--BackgroundColor: rgba(45,45,45,.7);">
         <h2 slot="pfe-card--header">Dark Card</h2>
         <p>This is the dark pfe-card and <a href="#">a link</a>.</p>
-        <pfe-cta priority="secondary" slot="pfe-card--footer">
+        <pfe-cta slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
@@ -88,7 +87,7 @@
       <pfe-card pfe-color="darkest">
         <h2 slot="pfe-card--header">Darkest Card</h2>
         <p>This is the darkest pfe-card and <a href="#">a link</a>.</p>
-        <pfe-cta priority="secondary" slot="pfe-card--footer">
+        <pfe-cta slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
@@ -96,7 +95,7 @@
       <pfe-card pfe-color="complement">
         <h2 slot="pfe-card--header">Complement Card</h2>
         <p>This is the complement pfe-card and <a href="#">a link</a>.</p>
-        <pfe-cta priority="secondary" slot="pfe-card--footer">
+        <pfe-cta slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
@@ -104,6 +103,49 @@
       <pfe-card pfe-color="accent">
         <h2 slot="pfe-card--header">Accent Card</h2>
         <p>This is the accent pfe-card and <a href="#">a link</a>. Leverage agile frameworks to provide a robust synopsis for high level overviews.</p>
+      </pfe-card>
+    </div>
+
+    <div class="demo-cards">
+      <pfe-card pfe-color="lighter">
+        <img src="https://via.placeholder.com/400x200"/>
+        <h2>Imaged card with no overflow</h2>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+        <pfe-cta slot="pfe-card--footer">
+          <a href="#">Learn more</a>
+        </pfe-cta>
+      </pfe-card>
+
+      <pfe-card pfe-color="lighter">
+        <img pfe-overflow="top right left" src="https://via.placeholder.com/400x200"/>
+        <h2>Imaged card with top & side overflow</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis, porro?</p>
+        <pfe-cta slot="pfe-card--footer">
+          <a href="#">Learn more</a>
+        </pfe-cta>
+      </pfe-card>
+
+      <pfe-card pfe-color="lighter">
+        <h2 slot="pfe-card--header">Imaged card with side overflow + header</h2>
+        <img pfe-overflow="top right left" src="https://via.placeholder.com/400x200"/>
+        <p style="margin-top: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis, porro?</p>
+        <pfe-cta slot="pfe-card--footer">
+          <a href="#">Learn more</a>
+        </pfe-cta>
+      </pfe-card>
+
+      <pfe-card pfe-color="lighter">
+        <h2>Imaged card with side overflow</h2>
+        <img pfe-overflow="right left" src="https://via.placeholder.com/400x200"/>
+        <pfe-cta slot="pfe-card--footer">
+          <a href="#">Learn more</a>
+        </pfe-cta>
+      </pfe-card>
+
+      <pfe-card pfe-color="lighter">
+        <h2>Imaged card with side & bottom overflow</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta rerum tempore natus alias! Cumque illum provident corrupti voluptates.</p>
+        <img pfe-overflow="right left bottom" src="https://via.placeholder.com/400x200" slot="pfe-card--footer"/>
       </pfe-card>
     </div>
   </body>

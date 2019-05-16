@@ -45,9 +45,6 @@ $LOCAL: card;
   --pfe-card--BackgroundColor: #{pfe-color(surface--base)};
   --pfe-card--BackgroundPosition: center center;
 
-  // Background color support for header region
-  --pfe-card__header--BackgroundColor: #{pfe-color(surface--base)}aa;
-
   // Broadcast color variables
   --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
   --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--link)};
@@ -95,8 +92,6 @@ $LOCAL: card;
     --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--#{$color}--link--visited)};
     --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--#{$color}--link--hover)};
     --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--#{$color}--link--focus)};
-    // Header colors
-    --pfe-card__header--BackgroundColor:          #{pfe-color(surface--#{$color})}aa;
     
   }
 }
@@ -108,6 +103,43 @@ $LOCAL: card;
   --pfe-card--PaddingRight:   #{pfe-var(container-spacer)};
   --pfe-card--PaddingBottom:  #{pfe-var(container-spacer)};
   --pfe-card--PaddingLeft:    #{pfe-var(container-spacer)};
+}
+
+::slotted([pfe-overflow~="right"]) {
+    margin-right: calc(-1 * #{pfe-local(PaddingRight)});
+}
+
+::slotted([pfe-overflow~="left"]) {
+    margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
+}
+
+::slotted([pfe-overflow~="top"]) {
+  margin-top: calc(-1 * #{pfe-local(PaddingTop)});
+  .pfe-card__header + &,
+  .pfe-card__body + & {  
+      margin-top: calc(-1 * #{pfe-local(spacing)});
+  }
+}
+
+::slotted([pfe-overflow~="bottom"]) {
+    margin-bottom: calc(-1 * #{pfe-local(PaddingBottom)});
+    align-self: flex-end;
+}
+
+::slotted(img) {
+  max-width: 100%;
+}
+
+::slotted(img[pfe-overflow~="right"]) {
+  max-width: calc(100% + #{pfe-local(PaddingRight)});
+}
+
+::slotted(img[pfe-overflow~="left"]) {
+  max-width: calc(100% + #{pfe-local(PaddingLeft)});
+}
+
+::slotted(img[pfe-overflow~="right"][pfe-overflow~="left"]) {
+  max-width: calc(100% + calc(#{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)}));
 }
 
 // Remove margins from typography inside the slots
@@ -130,14 +162,8 @@ $LOCAL: card;
   }
   
   &__header {
-    --pfe-broadcasted--color--text:             #{pfe-color(surface--base--harmony--text)};
-    --pfe-broadcasted--color--ui-link:          #{pfe-color(surface--base--harmony--link)};
-    --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--base--harmony--link--visited)};
-    --pfe-broadcasted--color--ui-link--hover:   #{pfe-color(surface--base--harmony--link--hover)};
-    --pfe-broadcasted--color--ui-link--focus:   #{pfe-color(surface--base--harmony--link--focus)};
-
     // Declare the header background color
-    background-color: #{pfe-local($cssvar: BackgroundColor, $region: header)};
+    background-color: rgba(0, 0, 0, #{pfe-var(opacity)});
     // Margin style only on top and sides
     margin-top: calc(-1 * #{pfe-local(PaddingTop)});
     margin-right: calc(-1 * #{pfe-local(PaddingRight)});
@@ -150,6 +176,8 @@ $LOCAL: card;
   }
   
   &__footer {
+    display: flex;
+    flex-flow: column wrap;
     margin-top: auto; // This allows the footer to move to the very bottom
     justify-self: flex-end;
   }

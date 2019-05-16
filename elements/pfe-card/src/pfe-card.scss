@@ -107,14 +107,6 @@ $LOCAL: card;
   --pfe-card--PaddingLeft:    #{pfe-var(container-spacer)};
 }
 
-::slotted([pfe-overflow~="right"]) {
-    margin-right: calc(-1 * #{pfe-local(PaddingRight)});
-}
-
-::slotted([pfe-overflow~="left"]) {
-    margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
-}
-
 ::slotted([pfe-overflow~="top"]) {
   margin-top: calc(-1 * #{pfe-local(PaddingTop)});
   .pfe-card__header + &,
@@ -123,9 +115,17 @@ $LOCAL: card;
   }
 }
 
+::slotted([pfe-overflow~="right"]) {
+  margin-right: calc(-1 * #{pfe-local(PaddingRight)});
+}
+
 ::slotted([pfe-overflow~="bottom"]) {
     margin-bottom: calc(-1 * #{pfe-local(PaddingBottom)});
     align-self: flex-end;
+}
+
+::slotted([pfe-overflow~="left"]) {
+  margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
 }
 
 ::slotted(img) {

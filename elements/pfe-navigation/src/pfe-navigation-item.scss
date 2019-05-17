@@ -1,5 +1,68 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: navigation-item;
+
 :host {
-  display: block;
+  display: inline-block;
+}
+
+.trigger {
+  position: relative;
+}
+
+.trigger ::slotted([slot="trigger"]),
+.trigger ::slotted(a) {
+  display: inline-block;
+  padding: 32px 12px;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+  color: white;
+  white-space: nowrap;
+}
+
+.trigger ::slotted([slot="trigger"][aria-expanded="true"]) {
+  background: white;
+  color: black;
+}
+
+.pfe-navigation-item__tray {
+  background-color: white;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  color: black;
+}
+
+.pfe-navigation-item__tray ::slotted([slot="tray"]) {
+  width: var(--pfe-navigation--Width);
+  margin: 0 auto;
+  padding: 32px 0;
+}
+
+.indicator {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: red;
+  pointer-events: none;
+  z-index: 1;
+
+  &.expanded {
+    display: block;
+  }
+}
+
+.pfe-navigation-item {
+  &__icon {
+    [pfe-icon="menu"] & #Icon {
+      -webkit-text-stroke-color: #{pfe-local(Color)};
+      -webkit-text-fill-color: #{pfe-local(Color)};
+      stroke: #{pfe-local(Color)};
+      fill: #{pfe-local(Color)};
+    }
+  }
 }

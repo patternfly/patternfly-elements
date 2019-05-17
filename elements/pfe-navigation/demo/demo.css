@@ -1,0 +1,274 @@
+@font-face {
+  font-family: "Red Hat Text";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.woff")
+      format("woff");
+  font-weight: 300;
+  font-style: "normal";
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Text";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.woff")
+      format("woff");
+  font-weight: 300;
+  font-style: italic;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Text";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.woff")
+      format("woff");
+  font-weight: 400;
+  font-style: "normal";
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Text";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Regular.woff")
+      format("woff");
+  font-weight: 400;
+  font-style: italic;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Text";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.woff")
+      format("woff");
+  font-weight: 500;
+  font-style: "normal";
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Text";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.woff")
+      format("woff");
+  font-weight: 500;
+  font-style: italic;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Text";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.woff")
+      format("woff");
+  font-weight: 700;
+  font-style: "normal";
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Text";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatText-Medium.woff")
+      format("woff");
+  font-weight: 700;
+  font-style: italic;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.woff")
+      format("woff");
+  font-weight: 300;
+  font-style: "normal";
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.woff")
+      format("woff");
+  font-weight: 300;
+  font-style: italic;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.woff")
+      format("woff");
+  font-weight: 400;
+  font-style: "normal";
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Regular.woff")
+      format("woff");
+  font-weight: 400;
+  font-style: italic;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Medium.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Medium.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Medium.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Medium.woff")
+      format("woff");
+  font-weight: 700;
+  font-style: "normal";
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Medium.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Medium.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Medium.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Medium.woff")
+      format("woff");
+  font-weight: 700;
+  font-style: italic;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Bold.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Bold.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Bold.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Bold.woff")
+      format("woff");
+  font-weight: 900;
+  font-style: "normal";
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Bold.eot");
+  src: url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Bold.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Bold.woff2")
+      format("woff2"),
+    url("https://access.redhat.com/webassets/avalon/f/nimbus/redhat/RedHatDisplay-Bold.woff")
+      format("woff");
+  font-weight: 900;
+  font-style: italic;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  font-family: "Red Hat Text";
+}
+
+[slot="logo"] h2 {
+  margin: 0;
+}
+
+[slot="logo"] h2 a {
+  display: inline-block;
+  color: white;
+  text-decoration: none;
+}
+
+.redhat-logo {
+  width: 110px;
+  height: 36px;
+}
+
+.site-title {
+  position: relative;
+  line-height: 48px;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .025em;
+  text-decoration: none;
+}
+
+.site-title:before {
+  position: absolute;
+  left: 20px;
+  top: 6px;
+  content: "";
+  height: 34px;
+  width: 1px;
+  background: rgba(255,255,255,0.3)
+}
+
+@media (min-width: 992px) {
+  .redhat-logo {
+    width: 135px;
+  }
+}
+
+.gray {
+  background-color: #ccc;
+  margin-top: 16px;
+  padding: 16px;
+}

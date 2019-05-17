@@ -155,12 +155,12 @@ $LOCAL: card;
 
   // Margin style only on top and sides
   margin-top:    -2rem; //IE11 fallback
-  margin-top:    calc(-1 * #{pfe-local(PaddingTop)});
+  margin-top:    calc(-1 * #{pfe-local(PaddingTop)}) !important;
   margin-right:  -2rem; //IE11 fallback
-  margin-right:  calc(-1 * #{pfe-local(PaddingRight)});
+  margin-right:  calc(-1 * #{pfe-local(PaddingRight)}) !important;
   margin-bottom: #{pfe-local(spacing)};
   margin-left:   -2rem; //IE11 fallback
-  margin-left:   calc(-1 * #{pfe-local(PaddingLeft)});
+  margin-left:   calc(-1 * #{pfe-local(PaddingLeft)}) !important;
 
   // Padding for the header region
   padding-top:    #{pfe-local(spacing)}; // Top padding differs if background color applied

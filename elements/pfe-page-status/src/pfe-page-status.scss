@@ -1,9 +1,25 @@
 @import "../../pfe-sass/pfe-sass";
+
+$LOCAL: status;
+
 :host {
-  --pfe-status--BackgroundColor: #{pfe-color(feedback--default)};
+  --pfe-status--BackgroundColor:  #{pfe-color(feedback--default)};
   --pfe-broadcasted--color--text: #{pfe-color(feedback--default--lightest)};
 
-  display: block;
+  --pfe-status--TextTransform: uppercase;
+
+  background-color: #{pfe-local(BackgroundColor)};
+  color: var(--pfe-broadcasted--color--text);
+
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
 }
 
 :host([hidden]) {
@@ -11,55 +27,30 @@
 }
 
 .flag {
-  position: fixed;
-  right: 0;
-  top: 0;
-  background-color: var(--pfe-status--BackgroundColor);
-  color: var(--pfe-broadcasted--color--text);
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 3rem;
+  transform: rotateZ(90deg);
+}
 
-  span {
-    transform: rotateZ(90deg);
-    display: inline-block;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.875rem;
-    line-height: 1em;
-    white-space: nowrap;
-    // writing-mode: vertical-rl;
-    // text-orientation: mixed;
+.flag > span {
+  display: inline-block;
+  font-weight: bold;
+  text-transform: #{pfe-local(TextTransform)};
+  font-size: 0.875rem;
+  line-height: 1em;
+  white-space: nowrap;
+  // writing-mode: vertical-rl;
+  // text-orientation: mixed;
+}
+
+@each $state in (moderate, important, critical, success, info) {
+  :host([pfe-status="#{$state}"]) {
+    --pfe-status--BackgroundColor:  #{pfe-color(feedback--#{$state})};
+    --pfe-broadcasted--color--text: #{pfe-color(feedback--#{$state}--lightest)};
   }
 }
 
-:host([pfe-status="warning"]),
-:host([pfe-status="moderate"]) {
-  --pfe-status--BackgroundColor: #{pfe-color(feedback--moderate)};
+:host([pfe-status="warning"]) {
+  --pfe-status--BackgroundColor:  #{pfe-color(feedback--moderate)};
   --pfe-broadcasted--color--text: #{pfe-color(feedback--moderate--darkest)};
-}
-
-:host([pfe-status="important"]) {
-  --pfe-status--BackgroundColor: #{pfe-color(feedback--important)};
-  --pfe-broadcasted--color--text: #{pfe-color(feedback--important--lightest)};
-}
-
-:host([pfe-status="critical"]) {
-  --pfe-status--BackgroundColor: #{pfe-color(feedback--critical)};
-  --pfe-broadcasted--color--text: #{pfe-color(feedback--critical--lightest)};
-}
-
-:host([pfe-status="success"]) {
-  --pfe-status--BackgroundColor: #{pfe-color(feedback--success)};
-  --pfe-broadcasted--color--text: #{pfe-color(feedback--success--lightest)};
-}
-
-:host([pfe-status="info"]) {
-  --pfe-status--BackgroundColor: #{pfe-color(feedback--info)};
-  --pfe-broadcasted--color--text: #{pfe-color(feedback--info--lightest)};
 }
 
 :host([pfe-status="normal"]) {
@@ -67,12 +58,9 @@
   --pfe-broadcasted--color--text: #{pfe-color(ui-base--text)};
 }
 
-:host([pfe-status="complement"]) {
-  --pfe-status--BackgroundColor: #{pfe-color(ui-complement)};
-  --pfe-broadcasted--color--text: #{pfe-color(ui-complement--text)};
-}
-
-:host([pfe-status="accent"]) {
-  --pfe-status--BackgroundColor: #{pfe-color(ui-accent)};
-  --pfe-broadcasted--color--text: #{pfe-color(ui-accent--text)};
+@each $color in (complement, accent) {
+  :host([pfe-status="#{$color}"]) {
+    --pfe-status--BackgroundColor: #{pfe-color(ui-#{$color})};
+    --pfe-broadcasted--color--text: #{pfe-color(ui-#{$color}--text)};
+  }
 }

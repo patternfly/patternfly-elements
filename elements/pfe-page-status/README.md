@@ -1,6 +1,6 @@
 # PatternFly Element | Page Status Element
 
-PFE Page Status creates a flag/banner on the right side of the page denoting the status of the page or Doc the author is viewing.
+The Page Status element creates a flag/banner on the right side of the page denoting the status of the page or Doc the author is viewing.
 
 ## Usage
 

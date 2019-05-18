@@ -96,10 +96,10 @@ $LOCAL: card;
 ::slotted([pfe-overflow~="top"]) {
   z-index: 1;
   margin-top: -2rem; //IE11 fallback
-  margin-top: calc(-1 * #{pfe-local(PaddingTop)});
+  margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
   .pfe-card__header + &,
   .pfe-card__body + & {  
-      margin-top: calc(-1 * #{pfe-local(spacing)});
+      margin-top: calc(-1 * #{pfe-local(spacing)}) !important;
   }
 }
 
@@ -157,10 +157,10 @@ $LOCAL: card;
   margin-top:    -2rem; //IE11 fallback
   margin-top:    calc(-1 * #{pfe-local(PaddingTop)}) !important;
   margin-right:  -2rem; //IE11 fallback
-  margin-right:  calc(-1 * #{pfe-local(PaddingRight)}) !important;
+  margin-right:  calc(-1 * #{pfe-local(PaddingRight)});
   margin-bottom: #{pfe-local(spacing)};
   margin-left:   -2rem; //IE11 fallback
-  margin-left:   calc(-1 * #{pfe-local(PaddingLeft)}) !important;
+  margin-left:   calc(-1 * #{pfe-local(PaddingLeft)});
 
   // Padding for the header region
   padding-top:    #{pfe-local(spacing)}; // Top padding differs if background color applied

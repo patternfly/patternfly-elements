@@ -33,21 +33,25 @@ canonifyURLs = true
     weight = 100
     url = "/:getting-started/"
 [[menu.main]]
-    name = "Develop"
+    name = "Components"
     weight = 200
+    url = "/:components/"
+[[menu.main]]
+    name = "Develop"
+    weight = 300
     url = "/:develop/"
 [[menu.main]]
     name = "Theme"
-    weight = 300
+    weight = 400
     url = "/:theme/"
     
 [[menu.extra]]
     name = "Community"
-    weight = 400
+    weight = 500
     url = "/:site-info/community"
 [[menu.extra]]
     name = "Help"
-    weight = 500
+    weight = 600
     url = "/:site-info/get-help"
     
     

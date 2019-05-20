@@ -109,6 +109,16 @@ function generateId() {
     .substr(2, 9);
 }
 
+/**
+ * A tabs element for keeping tabs on your tabs.
+ *
+ * @customElement pfe-tabs
+ *
+ * @attr {Boolean} vertical - should the tabs be arranged vertically
+ * @attr {String} selected-index - the index of the currently selected tab
+ * @attr pfe-variant - something variants
+ * @attr {Light|Dark} on - what color is this on
+ */
 class PfeTabs extends PFElement {
   static get tag() {
     return "pfe-tabs";
@@ -168,7 +178,9 @@ class PfeTabs extends PFElement {
 
   disconnectedCallback() {
     this.removeEventListener("keydown", this._onKeyDown);
-    this._allTabs().forEach(tab => tab.removeEventListener("click", this._onClick));
+    this._allTabs().forEach(tab =>
+      tab.removeEventListener("click", this._onClick)
+    );
     this._observer.disconnect();
   }
 
@@ -208,14 +220,10 @@ class PfeTabs extends PFElement {
 
       case "on":
         if (this.getAttribute("on") === "dark") {
-          this._allTabs().forEach(tab =>
-            tab.setAttribute("on", "dark")
-          );
-          this._allPanels().forEach(panel =>
-            panel.setAttribute("on", "dark")
-          );
-         }
-         break;
+          this._allTabs().forEach(tab => tab.setAttribute("on", "dark"));
+          this._allPanels().forEach(panel => panel.setAttribute("on", "dark"));
+        }
+        break;
 
       case "selected-index":
         Promise.all([
@@ -286,7 +294,9 @@ class PfeTabs extends PFElement {
       const panel = tab.nextElementSibling;
       if (panel.tagName.toLowerCase() !== "pfe-tab-panel") {
         console.warn(
-          `${PfeTabs.tag}: tab #${tab.pfeId} is not a sibling of a <pfe-tab-panel>`
+          `${PfeTabs.tag}: tab #${
+            tab.pfeId
+          } is not a sibling of a <pfe-tab-panel>`
         );
         return;
       }
@@ -450,6 +460,16 @@ class PfeTabs extends PFElement {
   }
 }
 
+/**
+ * A tab element for tabbing.
+ *
+ * @customElement pfe-tab
+ *
+ * @cssprop --pfe-tabs--aux - the auxillary (foreground) color for this element
+ * @cssprop --pfe-tabs--main - the main (background) color for this element
+ * @cssprop --pfe-tabs__tab--TextTransform - any `text-transform` properties to apply to this element
+ * @cssprop --pfe-* - this element supports [PatternFly Elements theme properties](#link-to-theme-props)
+ */
 class PfeTab extends PFElement {
   static get tag() {
     return "pfe-tab";
@@ -519,7 +539,7 @@ class PfeTab extends PFElement {
       this._observer.disconnect();
     }
 
-    if  (!this.pfeId) {
+    if (!this.pfeId) {
       this.pfeId = `${PfeTab.tag}-${generateId()}`;
     }
 
@@ -545,6 +565,16 @@ class PfeTab extends PFElement {
   }
 }
 
+/**
+ * A tab panel elemenent for putting things into.
+ *
+ * @customElement pfe-tab-panel
+ *
+ * @cssprop --pfe-tabs--aux - the auxillary (foreground) color for this element
+ * @cssprop --pfe-tabs--main - the main (background) color for this element
+ * @cssprop --pfe-tabs__tab--TextTransform - any `text-transform` properties to apply to this element
+ * @cssprop --pfe-* - this element supports [PatternFly Elements theme properties](#link-to-theme-props)
+ */
 class PfeTabPanel extends PFElement {
   static get tag() {
     return "pfe-tab-panel";

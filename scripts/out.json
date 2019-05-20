@@ -1,0 +1,280 @@
+building schema for ../elements/pfe-tabs/src/pfe-tabs.js
+Analyzing 1 file...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: The json transformer hasn't been finished yet. You can expect large changes in this output.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[
+  {
+    "fromLib": false,
+    "node": "{NODE}",
+    "tagName": "pfe-tabs",
+    "declaration": {
+      "node": "{NODE}",
+      "members": [
+        {
+          "kind": "attribute",
+          "attrName": "vertical",
+          "type": {
+            "kind": "BOOLEAN"
+          },
+          "node": "{NODE}"
+        },
+        {
+          "kind": "attribute",
+          "attrName": "selected-index",
+          "type": {
+            "kind": "STRING"
+          },
+          "node": "{NODE}"
+        },
+        {
+          "kind": "attribute",
+          "attrName": "pfe-variant",
+          "type": {
+            "kind": "ANY"
+          },
+          "node": "{NODE}"
+        },
+        {
+          "kind": "attribute",
+          "attrName": "on",
+          "type": {
+            "kind": "UNION",
+            "types": [
+              {
+                "kind": "STRING_LITERAL",
+                "value": "Light"
+              },
+              {
+                "kind": "STRING_LITERAL",
+                "value": "Dark"
+              }
+            ]
+          },
+          "node": "{NODE}"
+        },
+        {
+          "kind": "property",
+          "propName": "selectedIndex",
+          "type": "{TYPE}",
+          "required": false,
+          "node": "{NODE}"
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "cssProperties": [],
+      "inheritNodes": [],
+      "inherits": [],
+      "className": "PfeTabs",
+      "jsDoc": {
+        "comment": "A tabs element for keeping tabs on your tabs.",
+        "tags": [
+          {
+            "node": "{NODE}",
+            "tag": "customElement",
+            "comment": "pfe-tabs"
+          },
+          {
+            "node": "{NODE}",
+            "tag": "attr",
+            "comment": "{Boolean} vertical - should the tabs be arranged vertically"
+          },
+          {
+            "node": "{NODE}",
+            "tag": "attr",
+            "comment": "{String} selected-index - the index of the currently selected tab"
+          },
+          {
+            "node": "{NODE}",
+            "tag": "attr",
+            "comment": "pfe-variant - something variants"
+          },
+          {
+            "node": "{NODE}",
+            "tag": "attr",
+            "comment": "{Light|Dark} on - what color is this on"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "fromLib": false,
+    "node": "{NODE}",
+    "tagName": "pfe-tab",
+    "declaration": {
+      "node": "{NODE}",
+      "members": [
+        {
+          "kind": "attribute",
+          "attrName": "aria-selected",
+          "type": {
+            "kind": "ANY"
+          },
+          "node": "{NODE}"
+        },
+        {
+          "kind": "property",
+          "propName": "selected",
+          "type": "{TYPE}",
+          "required": false,
+          "node": "{NODE}"
+        },
+        {
+          "kind": "property",
+          "propName": "pfeId",
+          "type": "{TYPE}",
+          "required": false,
+          "node": "{NODE}"
+        },
+        {
+          "kind": "property",
+          "propName": "value",
+          "type": "{TYPE}",
+          "node": "{NODE}"
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "cssProperties": [
+        {
+          "name": "--pfe-*",
+          "jsDoc": {
+            "comment": "this element supports [PatternFly Elements theme properties](#link-to-theme-props)"
+          }
+        },
+        {
+          "name": "--pfe-tabs__tab--TextTransform",
+          "jsDoc": {
+            "comment": "any `text-transform` properties to apply to this element"
+          }
+        },
+        {
+          "name": "--pfe-tabs--main",
+          "jsDoc": {
+            "comment": "the main (background) color for this element"
+          }
+        },
+        {
+          "name": "--pfe-tabs--aux",
+          "jsDoc": {
+            "comment": "the auxillary (foreground) color for this element"
+          }
+        }
+      ],
+      "inheritNodes": [],
+      "inherits": [],
+      "className": "PfeTab",
+      "jsDoc": {
+        "comment": "A tab element for tabbing.",
+        "tags": [
+          {
+            "node": "{NODE}",
+            "tag": "customElement",
+            "comment": "pfe-tab"
+          },
+          {
+            "node": "{NODE}",
+            "tag": "cssprop",
+            "comment": "--pfe-tabs--aux - the auxillary (foreground) color for this element"
+          },
+          {
+            "node": "{NODE}",
+            "tag": "cssprop",
+            "comment": "--pfe-tabs--main - the main (background) color for this element"
+          },
+          {
+            "node": "{NODE}",
+            "tag": "cssprop",
+            "comment": "--pfe-tabs__tab--TextTransform - any `text-transform` properties to apply to this element"
+          },
+          {
+            "node": "{NODE}",
+            "tag": "cssprop",
+            "comment": "--pfe-* - this element supports [PatternFly Elements theme properties](#link-to-theme-props)"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "fromLib": false,
+    "node": "{NODE}",
+    "tagName": "pfe-tab-panel",
+    "declaration": {
+      "node": "{NODE}",
+      "members": [
+        {
+          "kind": "property",
+          "propName": "pfeId",
+          "type": "{TYPE}",
+          "required": false,
+          "node": "{NODE}"
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "cssProperties": [
+        {
+          "name": "--pfe-*",
+          "jsDoc": {
+            "comment": "this element supports [PatternFly Elements theme properties](#link-to-theme-props)"
+          }
+        },
+        {
+          "name": "--pfe-tabs__tab--TextTransform",
+          "jsDoc": {
+            "comment": "any `text-transform` properties to apply to this element"
+          }
+        },
+        {
+          "name": "--pfe-tabs--main",
+          "jsDoc": {
+            "comment": "the main (background) color for this element"
+          }
+        },
+        {
+          "name": "--pfe-tabs--aux",
+          "jsDoc": {
+            "comment": "the auxillary (foreground) color for this element"
+          }
+        }
+      ],
+      "inheritNodes": [],
+      "inherits": [],
+      "className": "PfeTabPanel",
+      "jsDoc": {
+        "comment": "A tab panel elemenent for putting things into.",
+        "tags": [
+          {
+            "node": "{NODE}",
+            "tag": "customElement",
+            "comment": "pfe-tab-panel"
+          },
+          {
+            "node": "{NODE}",
+            "tag": "cssprop",
+            "comment": "--pfe-tabs--aux - the auxillary (foreground) color for this element"
+          },
+          {
+            "node": "{NODE}",
+            "tag": "cssprop",
+            "comment": "--pfe-tabs--main - the main (background) color for this element"
+          },
+          {
+            "node": "{NODE}",
+            "tag": "cssprop",
+            "comment": "--pfe-tabs__tab--TextTransform - any `text-transform` properties to apply to this element"
+          },
+          {
+            "node": "{NODE}",
+            "tag": "cssprop",
+            "comment": "--pfe-* - this element supports [PatternFly Elements theme properties](#link-to-theme-props)"
+          }
+        ]
+      }
+    }
+  }
+]
+

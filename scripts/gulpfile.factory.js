@@ -15,7 +15,8 @@ module.exports = function factory({
   const paths = {
     source: "./src",
     compiled: "./",
-    temp: "./tmp"
+    temp: "./tmp",
+    scripts: "../../scripts"
   };
 
   // Tooling
@@ -23,6 +24,9 @@ module.exports = function factory({
   const path = require("path");
   const replace = require("gulp-replace");
   const clean = require("gulp-clean");
+  const template = require("gulp-template");
+  const data = require("gulp-data");
+  const wca = require("web-component-analyzer");
 
   // Rollup
   const shell = require("gulp-shell");
@@ -83,6 +87,32 @@ module.exports = function factory({
     );
   });
 
+  let analysis = null;
+
+  task("analyze", () => {
+    return shell(["echo helloworld"]);
+  });
+
+  task("compile:schema", series("analyze"));
+
+  // task("compile:schema", () => {
+  //   const fileName = path.resolve(paths.source, `${elementName}.js`);
+  //   return (
+  //     src("schema-template.json", {
+  //       cwd: paths.scripts
+  //     })
+  //       // .pipe(data(wca.analyzeComponents(fileName)))
+  //       .pipe(data(() => ({ name: "TESTNAME" })))
+  //       .pipe(template())
+  //       .pipe(
+  //         rename({
+  //           basename: elementName
+  //         })
+  //       )
+  //       .pipe(dest(paths.compiled))
+  //   );
+  // });
+
   // @TODO commenting out the fallbacks for now
   // task("fallback:css", () => {
   //   const classRegex = new RegExp(`\.${elementName}__(\w+)(.*){`, "gi");
@@ -118,11 +148,7 @@ module.exports = function factory({
 
   // Delete the temp directory
   task("clean", () => {
-    return src([
-      "*.{js,css,map}",
-      "!gulpfile.js",
-      "!rollup.config.js"
-    ], {
+    return src(["*.{js,css,map}", "!gulpfile.js", "!rollup.config.js"], {
       cwd: paths.compiled,
       read: false,
       allowEmpty: true
@@ -272,13 +298,9 @@ module.exports = function factory({
   });
 
   task("copy", () => {
-    return src([
-      "*.js",
-      `!${elementName}.js`
-    ], {
+    return src(["*.js", `!${elementName}.js`], {
       cwd: paths.source
-    })
-      .pipe(dest(paths.compiled));
+    }).pipe(dest(paths.compiled));
   });
 
   task("compile", () => {

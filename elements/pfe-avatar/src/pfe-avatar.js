@@ -2,7 +2,24 @@ import PFElement from "../pfelement/pfelement.js";
 import { hash } from "./djb-hash.js";
 import { hsl2rgb, rgb2hsl } from "./hslrgb.js";
 
+/**
+ * Here is a description of my web component.
+ *
+ * @customElement pfe-avatar
+ *
+ * @attr my-attr
+ *
+ * @prop {String} myProp - You can use this jsdoc tag to document properties.
+ * @prop value
+ *
+ * @cssprop --pfe-avatar--width - the width (and height, it's a square) of the avatar.
+ * @cssprop --pfe-avatar--colors - the color palette for anonymous avatars.  The value can be a series of hex color values separated by spaces, for example: `--pfe-avatar--colors: "#67accf #448087 #709c6b #a35252 #826cbb"`
+ */
 class PfeAvatar extends PFElement {
+  /**
+   * The name of this element's HTML tag.
+   * @return {string} The tag name.
+   */
   static get tag() {
     return "pfe-avatar";
   }
@@ -15,6 +32,9 @@ class PfeAvatar extends PFElement {
     return "pfe-avatar.scss";
   }
 
+  /**
+   * The element attributes to observe.
+   */
   static get observedAttributes() {
     return ["pfe-name", "pfe-pattern", "pfe-src", "pfe-shape"];
   }
@@ -34,6 +54,9 @@ class PfeAvatar extends PFElement {
     return this.getAttribute("pfe-name");
   }
 
+  /**
+   * @attr pfe-name
+   */
   set name(val) {
     return this.setAttribute("pfe-name", val);
   }
@@ -42,6 +65,9 @@ class PfeAvatar extends PFElement {
     return this.getAttribute("pfe-src");
   }
 
+  /**
+   * @attr pfe-src
+   */
   set src(href) {
     return this.setAttribute("pfe-src", href);
   }
@@ -50,6 +76,11 @@ class PfeAvatar extends PFElement {
     return this.getAttribute("pfe-pattern") || PfeAvatar.patterns.squares;
   }
 
+  /**
+   * The shape used in the geometric pattern for anonymous users.
+   * @type {"triangles"|"squares"}
+   * @attr pfe-pattern
+   */
   set pattern(name) {
     if (!PfeAvatar.patterns[name]) {
       this.log(

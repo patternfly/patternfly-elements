@@ -4,8 +4,6 @@ import * as tools from "../../../.storybook/utils.js";
 
 import PfeCta from "../pfe-cta";
 
-// import cpTheme from "../../../themes/cp-theme/cp-theme.js";
-
 const stories = storiesOf("Call to action", module);
 
 // Define the template to be used
@@ -23,14 +21,13 @@ stories.add(PfeCta.tag, () => {
     priority: {
       title: "Priority",
       type: "string",
-      enum: ["default", "primary", "secondary"],
+      enum: ["primary", "secondary"],
       default: "primary"
     },
     color: {
       title: "Color",
       type: "string",
-      enum: ["default", "base", "complement", "accent"],
-      default: "default"
+      enum: ["base", "complement", "accent"]
     }
   };
 

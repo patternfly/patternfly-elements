@@ -3,23 +3,14 @@ import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeTabs from "../pfe-tabs.js";
-
-// import cpTheme from "../../../themes/cp-theme/cp-theme.js";
+import PfeCta from "../../pfe-cta/pfe-cta.js";
 
 const stories = storiesOf("Tabs", module);
 
-const defaultTab = tools.autoHeading(true);
-const defaultPanel =
-  tools.customTag({
-    tag: "h3",
-    content: tools.autoHeading()
-  }) +
-  tools.autoContent(3, 3) +
-  tools.component("pfe-cta", {}, [
-    {
-      content: "<a href='#'>Learn more</a>"
-    }
-  ]);
+// prettier-ignore
+const defaultCTA = tools.component("pfe-cta", {}, [{
+  content: "<a href='#'>Learn more</a>"
+}]);
 
 // Define the template to be used
 const template = (data = {}) => {
@@ -30,20 +21,15 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeTabs.tag, () => {
   let config = {};
-  // const props = PfeTabs.properties;
-  // Manually defining props but this can be done in a schema instead
-  const props = {
-    vertical: {
-      title: "Vertical orientation",
-      type: "boolean",
-      default: false
-    }
-  };
+  let tabs = [];
+  let panels = [];
+
+  const props = PfeTabs.properties;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 
-  // const slots = PfeTabs.slots;
+  const slots = PfeTabs.slots;
 
   //-- Add content to light DOM
   config.slots = [];
@@ -54,77 +40,58 @@ stories.add(PfeTabs.tag, () => {
     max: 10
   });
 
-  // Let the user customize the first header + panel set
-  let tab = storybookBridge.text("Tab", defaultTab, "tabset");
-  let panel = storybookBridge.text("Panel", defaultPanel, "tabset");
+  // Ask user if they want to add any custom content
+  const customContent = storybookBridge.boolean(
+    "Use custom content?",
+    false,
+    "Content"
+  );
 
-  config.slots.push({
-    content:
-      tools.component(
+  // Let the user customize the first header + panel set
+  if (customContent) {
+    for (let i = 0; i < tabCount; i++) {
+      tabs[i] = storybookBridge.text(`Tab ${i + 1}`, "", "tabset");
+      panels[i] = storybookBridge.text(`Panel ${i + 1}`, "", "tabset");
+    }
+  }
+
+  for (let i = 0; i < tabCount; i++) {
+    config.slots.push({
+      slot: "tab",
+      content: tools.component(
         "pfe-tab",
         {
-          role: "heading",
-          slot: "tab"
+          role: "heading"
         },
         [
           {
-            content: tab
-          }
-        ]
-      ) +
-      tools.component(
-        "pfe-tab-panel",
-        {
-          role: "region",
-          slot: "panel"
-        },
-        [
-          {
-            content: panel
+            content: customContent ? tabs[i] : tools.autoHeading(true)
           }
         ]
       )
-  });
-
-  // Use dynamic content for the rest
-  for (let i = 1; i < tabCount; i++) {
-    config.slots.push({
-      content:
-        tools.component(
-          "pfe-tab",
-          {
-            role: "heading",
-            slot: "tab"
-          },
-          [
-            {
-              content: tools.autoHeading(true)
-            }
-          ]
-        ) +
-        tools.component(
-          "pfe-tab-panel",
-          {
-            role: "region",
-            slot: "panel"
-          },
-          [
-            {
-              content:
-                tools.customTag({
-                  tag: "h3",
-                  content: tools.autoHeading()
-                }) +
-                tools.autoContent(3, 3) +
-                tools.component("pfe-cta", {}, [
-                  {
-                    content: "<a href='#'>Learn more</a>"
-                  }
-                ])
-            }
-          ]
-        )
     });
+
+    config.slots.push({
+      slot: "panel",
+      content: tools.component(
+        "pfe-tab-panel",
+        {
+          role: "region"
+        },
+        [
+          {
+            content: customContent
+              ? panels[i]
+              : tools.autoContent(3, 3) + defaultCTA
+          }
+        ]
+      )
+    });
+  }
+
+  // Some attribute values don't need to be included in the markup
+  if (!config.prop.vertical) {
+    config.prop.vertical = null;
   }
 
   const render = template(config);

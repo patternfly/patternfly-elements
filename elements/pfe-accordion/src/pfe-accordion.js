@@ -64,18 +64,30 @@ class PfeAccordion extends PFElement {
     return "pfe-accordion.html";
   }
 
+  get schemaUrl() {
+    return "pfe-accordion.json";
+  }
+
   static get observedAttributes() {
-    return ["theme", "color"];
+    return ["on"];
   }
 
   static get cascadingAttributes() {
     return {
-      color: "pfe-accordion-header"
+      on: "pfe-accordion-header, pfe-accordion-panel"
     };
   }
 
+  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.Container;
+  }
+
   constructor() {
-    super(PfeAccordion);
+    super(PfeAccordion, { type: PfeAccordion.PfeType });
+
+    this._linkPanels = this._linkPanels.bind(this);
+    this._observer = new MutationObserver(this._linkPanels);
   }
 
   connectedCallback() {
@@ -90,31 +102,23 @@ class PfeAccordion extends PFElement {
     Promise.all([
       customElements.whenDefined(PfeAccordionHeader.tag),
       customElements.whenDefined(PfeAccordionPanel.tag)
-    ]).then(this._linkPanels());
+    ]).then(() => {
+      if (this.children.length) {
+        this._linkPanels();
+      }
+
+      this._observer.observe(this, { childList: true });
+    });
   }
 
   disconnectedCallback() {
     this.removeEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
     this.removeEventListener("keydown", this._keydownHandler);
+    this._observer.disconnect();
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
-
-    if (attr === "color") {
-      const headers = this.querySelectorAll(PfeAccordionHeader.tag);
-
-      if (newVal === "striped") {
-        [...headers].forEach((header, index) => {
-          const headerClass = index % 2 ? "even" : "odd";
-          header.classList.add(headerClass);
-        });
-      } else {
-        [...headers].forEach((header, index) => {
-          header.classList.remove("even", "odd");
-        });
-      }
-    }
   }
 
   toggle(index) {
@@ -185,8 +189,12 @@ class PfeAccordion extends PFElement {
     headers.forEach(header => {
       const panel = this._panelForHeader(header);
 
-      header.setAttribute("aria-controls", panel.id);
-      panel.setAttribute("aria-labelledby", header.id);
+      if (!panel) {
+        return;
+      }
+
+      header.setAttribute("aria-controls", panel.pfeId);
+      panel.setAttribute("aria-labelledby", header.pfeId);
     });
   }
 
@@ -214,6 +222,11 @@ class PfeAccordion extends PFElement {
   }
 
   _expandPanel(panel) {
+    if (!panel) {
+      console.error(`${PfeAccordion.tag}: Trying to expand a panel that doesn't exist`);
+      return;
+    }
+
     if (panel.expanded) {
       return;
     }
@@ -229,6 +242,11 @@ class PfeAccordion extends PFElement {
   }
 
   _collapsePanel(panel) {
+    if (!panel) {
+      console.error(`${PfeAccordion.tag}: Trying to collapse a panel that doesn't exist`);
+      return;
+    }
+
     if (!panel.expanded) {
       return;
     }
@@ -304,6 +322,10 @@ class PfeAccordion extends PFElement {
   _panelForHeader(header) {
     const next = header.nextElementSibling;
 
+    if (!next) {
+      return;
+    }
+
     if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
       console.error(
         `${PfeAccordion.tag}: Sibling element to a header needs to be a panel`
@@ -356,24 +378,73 @@ class PfeAccordionHeader extends PFElement {
     return "pfe-accordion-header.html";
   }
 
+  get pfeId() {
+    return this.getAttribute("pfe-id");
+  }
+
+  set pfeId(id) {
+    if (!id) {
+      return;
+    }
+
+    this.setAttribute("pfe-id", id);
+  }
+
   static get observedAttributes() {
     return ["aria-expanded"];
   }
 
   constructor() {
     super(PfeAccordionHeader);
+
+    this._init = this._init.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
+    this._observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
+    if (this.children.length || this.textContent.trim().length) {
+      this._init();
+    }
+
+    this.addEventListener("click", this._clickHandler);
+    this._observer.observe(this, { childList: true });
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener("click", this._clickHandler);
+    this._observer.disconnect();
+  }
+
+  get expanded() {
+    return this.hasAttribute("aria-expanded");
+  }
+
+  set expanded(val) {
+    val = Boolean(val);
+
+    if (val) {
+      this.setAttribute("aria-expanded", true);
+      this.button.setAttribute("aria-expanded", true);
+    } else {
+      this.removeAttribute("aria-expanded");
+      this.button.setAttribute("aria-expanded", false);
+    }
+  }
+
+  _init() {
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
+
     if (!this.hasAttribute("role")) {
       this.setAttribute("role", "header");
     }
 
-    if (!this.id) {
-      this.id = `${PfeAccordionHeader.tag}-${generateId()}`;
+    if (!this.pfeId) {
+      this.pfeId = `${PfeAccordionHeader.tag}-${generateId()}`;
     }
 
     this.button = this.shadowRoot.querySelector("button");
@@ -410,26 +481,8 @@ class PfeAccordionHeader extends PFElement {
       );
     }
 
-    this.addEventListener("click", this._clickHandler);
-  }
-
-  disconnectedCallback() {
-    this.removeEventListener("click", this._clickHandler);
-  }
-
-  get expanded() {
-    return this.hasAttribute("aria-expanded");
-  }
-
-  set expanded(val) {
-    val = Boolean(val);
-
-    if (val) {
-      this.setAttribute("aria-expanded", true);
-      this.button.setAttribute("aria-expanded", true);
-    } else {
-      this.removeAttribute("aria-expanded");
-      this.button.setAttribute("aria-expanded", false);
+    if (window.ShadyCSS) {
+      this._observer.observe(this, { childList: true });
     }
   }
 
@@ -456,6 +509,18 @@ class PfeAccordionPanel extends PFElement {
     return "pfe-accordion-panel.html";
   }
 
+  get pfeId() {
+    return this.getAttribute("pfe-id");
+  }
+
+  set pfeId(id) {
+    if (!id) {
+      return;
+    }
+
+    this.setAttribute("pfe-id", id);
+  }
+
   constructor() {
     super(PfeAccordionPanel);
   }
@@ -467,8 +532,8 @@ class PfeAccordionPanel extends PFElement {
       this.setAttribute("role", "region");
     }
 
-    if (!this.id) {
-      this.id = `${PfeAccordionPanel.tag}-${generateId()}`;
+    if (!this.pfeId) {
+      this.pfeId = `${PfeAccordionPanel.tag}-${generateId()}`;
     }
   }
 

@@ -2,6 +2,19 @@
 
 $LOCAL: band;
 
+%flex-fallback {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+}
+
+%grid-layout {
+  display: grid;
+  grid-row-gap: #{pfe-local(gutter--vertical)};
+  grid-column-gap: #{pfe-local(gutter--horizontal)};
+  margin-bottom: 0;
+}
+
 :host {
   display: block;
 
@@ -55,9 +68,7 @@ $LOCAL: band;
 
   // Wrapper sets padding and background visuals
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-items: flex-start;
+  @extend %flex-fallback;
 
   // Padding 
   padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
@@ -99,48 +110,6 @@ $LOCAL: band;
   --pfe-band--Padding:   calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
 }
 
-@each $slot in (default, header, footer, aside) {
-  $slot-name: $slot;
-  $grid-area: "body";
-  @if $slot != default {
-    $slot-name: "pfe-band--#{$slot-name}";
-    $grid-area: $slot;
-  }
-  .pfe-band__#{$grid-area} {
-    // Set up the flex styles for each region
-    display:     flex;
-    flex-flow:   column nowrap;
-    align-items: flex-start;
-    // Grid support styles
-    @supports (display: grid) {
-      grid-area: #{$grid-area};
-      // Set up the internal grid system for each slot
-      display: grid;
-      grid-row-gap: #{pfe-local(gutter--vertical)};
-      grid-column-gap: #{pfe-local(gutter--horizontal)};
-      grid-template-columns: #{pfe-local(
-        $cssvar: layout,
-        $region: $grid-area
-      )};
-    }
-  }
-  @include pfe-slot($slot-name, ":not(:last-child)") {
-    margin-bottom: #{pfe-local(gutter--vertical)};
-    @supports (display: grid) {
-      margin-bottom: 0;
-    }
-  }
-  @include pfe-slot($slot-name, "> *") {
-    margin: 0;
-  }
-  @include pfe-slot($slot-name, "> *:not(:last-child)") {
-    margin-bottom: #{pfe-local(gutter--vertical)};
-    @supports (display: grid) {
-      margin-bottom: 0;
-    }
-  }
-}
-
 .pfe-band {
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
@@ -148,8 +117,10 @@ $LOCAL: band;
     --pfe-band--gridTemplateArea_mobile: "body";
     // Styles for the different combination of regions
     &[pfe-has-aside] {
-      --pfe-band--gridTemplateArea_mobile: "body" "aside";
-      --pfe-band--gridTemplateArea_desktop: "body aside";
+      --pfe-band--gridTemplateArea_mobile:
+        "body" "aside";
+      --pfe-band--gridTemplateArea_desktop:
+        "body aside";
       @media (min-width: #{pfe-breakpoint(md)}) {
         --pfe-band--layout: 1fr #{pfe-local(Width__aside--sm)};
       }
@@ -157,10 +128,12 @@ $LOCAL: band;
         --pfe-band--layout: 1fr #{pfe-local(Width__aside--lg)};
       }
       &[pfe-aside-mobile="top"] {
-        --pfe-band--gridTemplateArea_mobile: "aside" "body";
+        --pfe-band--gridTemplateArea_mobile:
+          "aside" "body";
       }
       &[pfe-aside-desktop="left"] {
-        --pfe-band--gridTemplateArea_desktop: "aside body";
+        --pfe-band--gridTemplateArea_desktop:
+          "aside body";
         @media (min-width: #{pfe-breakpoint(md)}) {
           --pfe-band--layout: #{pfe-local(Width__aside--sm)} 1fr;
         }
@@ -170,72 +143,125 @@ $LOCAL: band;
       }
     }
     &[pfe-has-header] {
-      --pfe-band--gridTemplateArea_mobile: "header" "body";
+      --pfe-band--gridTemplateArea_mobile:
+        "header" "body";
       &[pfe-has-aside] {
-        --pfe-band--gridTemplateArea_mobile: "header" "body" "aside";
-        --pfe-band--gridTemplateArea_desktop: "header header" "body aside";
+        --pfe-band--gridTemplateArea_mobile:  
+          "header" 
+          "body" "aside";
+        --pfe-band--gridTemplateArea_desktop: 
+          "header header" 
+          "body aside";
       }
       &[pfe-aside-mobile="top"] {
-        --pfe-band--gridTemplateArea_mobile: "aside" "header" "body";
+        --pfe-band--gridTemplateArea_mobile:  
+          "aside" 
+          "header" 
+          "body";
       }
       &[pfe-aside-height="full"] {
-        --pfe-band--gridTemplateArea_desktop: "header aside" "body aside";
+        --pfe-band--gridTemplateArea_desktop:
+          "header aside"
+          "body aside";
       }
       &[pfe-aside-desktop="left"] {
-        --pfe-band--gridTemplateArea_desktop: "header header" "aside body";
+        --pfe-band--gridTemplateArea_desktop:
+          "header header"
+          "aside body";
         &[pfe-aside-height="full"] {
-          --pfe-band--gridTemplateArea_desktop: "aside header" "aside body";
+          --pfe-band--gridTemplateArea_desktop:
+            "aside header"
+            "aside body";
         }
       }
     }
     &[pfe-has-footer] {
-      --pfe-band--gridTemplateArea_mobile: "body" "footer";
+      --pfe-band--gridTemplateArea_mobile:
+        "body"
+        "footer";
       &[pfe-has-aside] {
-        --pfe-band--gridTemplateArea_mobile: "body" "aside" "footer";
-        --pfe-band--gridTemplateArea_desktop: "body aside" "footer footer";
+        --pfe-band--gridTemplateArea_mobile:
+          "body"
+          "aside"
+          "footer";
+        --pfe-band--gridTemplateArea_desktop:
+          "body aside"
+          "footer footer";
       }
       &[pfe-aside-mobile="top"] {
-        --pfe-band--gridTemplateArea_mobile: "aside" "body" "footer";
+        --pfe-band--gridTemplateArea_mobile:
+          "aside"
+          "body"
+          "footer";
       }
       &[pfe-aside-height="full"] {
-        --pfe-band--gridTemplateArea_desktop: "body aside" "footer aside" ;
+        --pfe-band--gridTemplateArea_desktop:
+          "body aside"
+          "footer aside" ;
       }
       &[pfe-aside-desktop="left"] {
-        --pfe-band--gridTemplateArea_desktop: "aside body" "footer footer";
+        --pfe-band--gridTemplateArea_desktop:
+          "aside body"
+          "footer footer";
         &[pfe-aside-height="full"] {
-          --pfe-band--gridTemplateArea_desktop: "aside body" "aside footer";
+          --pfe-band--gridTemplateArea_desktop:
+            "aside body"
+            "aside footer";
         }
       }
     }
     &[pfe-has-header][pfe-has-footer] {
-      --pfe-band--gridTemplateArea_mobile: "header" "body" "footer";
+      --pfe-band--gridTemplateArea_mobile:
+        "header"
+        "body"
+        "footer";
       &[pfe-has-aside] {
-        --pfe-band--gridTemplateArea_mobile: "header" "body" "footer" "aside";
-        --pfe-band--gridTemplateArea_desktop: "header header" "body aside" "footer footer";
+        --pfe-band--gridTemplateArea_mobile:
+          "header"
+          "body"
+          "footer"
+          "aside";
+        --pfe-band--gridTemplateArea_desktop:
+          "header header"
+          "body aside"
+          "footer footer";
       }
       &[pfe-aside-mobile="top"] {
-        --pfe-band--gridTemplateArea_mobile: "aside" "header" "body" "footer";
+        --pfe-band--gridTemplateArea_mobile:
+          "aside"
+          "header"
+          "body"
+          "footer";
       }
       &[pfe-aside-height="full"] {
-        --pfe-band--gridTemplateArea_desktop: "header aside" "body aside" "footer aside" ;
+        --pfe-band--gridTemplateArea_desktop:
+          "header aside"
+          "body aside"
+          "footer aside" ;
       }
       &[pfe-aside-desktop="left"] {
-        --pfe-band--gridTemplateArea_desktop: "header header" "aside body" "footer footer";
+        --pfe-band--gridTemplateArea_desktop:
+          "header header"
+          "aside body"
+          "footer footer";
         &[pfe-aside-height="full"] {
-          --pfe-band--gridTemplateArea_desktop: "aside header" "aside body" "aside footer";
+          --pfe-band--gridTemplateArea_desktop:
+            "aside header"
+            "aside body"
+            "aside footer";
         }
       }
     }
 
     position:  relative;
     margin:    0 auto;
-    width: #{pfe-local(Width)};
-    
+    width: 100%;
+    max-width: #{pfe-local(Width)};
+    @extend %flex-fallback;
+
     // Grid support styles
     @supports (display: grid) {
-      display:               grid;
-      grid-row-gap:          #{pfe-local(gutter--vertical)};
-      grid-column-gap:       #{pfe-local(gutter--horizontal)};
+      @extend %grid-layout;
       grid-template-columns: #{pfe-local(layout)};
       grid-template-rows:    max-content;
       grid-template-areas:   var(--pfe-band--gridTemplateArea_mobile);
@@ -243,5 +269,24 @@ $LOCAL: band;
         grid-template-areas: var(--pfe-band--gridTemplateArea_desktop);
       }
     }
+  }
+  // For each section in the band layout
+  @each $section in (header, body, aside, footer) {
+    &__#{$section} { // i.e., pfe-band__header
+      @extend %flex-fallback; // Add the flex fallback styles
+      margin-bottom: #{pfe-local(gutter--vertical)};
+      // Apply the standard grid
+      @supports (display: grid) {
+          @extend %grid-layout;
+          // Apply the section as a named grid-area
+          grid-area: #{$section};
+          // Allow users to hook into the layout with custom columns
+          grid-template-columns: var(--pfe-band__#{$section}--layout);
+      }
+    }
+  }
+
+  &__aside {
+    align-self: stretch;
   }
 }

@@ -1,95 +1,89 @@
 import { storiesOf } from "@storybook/polymer";
-import {
-  withKnobs,
-  text,
-  select,
-  number
-} from "@storybook/addon-knobs/polymer";
-import { escapeHTML } from "../../../.storybook/utils.js";
+import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as tools from "../../../.storybook/utils.js";
 
 import PfeContentSet from "../pfe-content-set";
-
-const lorem = require("lorem-ipsum");
+import PfeCta from "../../pfe-cta/pfe-cta";
 
 const stories = storiesOf("Content set", module);
-stories.addDecorator(withKnobs);
+
+// Define the template to be used
+const template = (data = {}) => {
+  return tools.component(PfeContentSet.tag, data.prop, data.slots);
+};
+
+const cta = tools.component("pfe-cta", {}, [{
+  content: tools.customTag({
+    tag: "a",
+    attributes: {
+      href: "#"
+    },
+    content: "Learn more"
+  })
+}]);
+
+stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeContentSet.tag, () => {
-  const orientationLabel = "Orientation";
-  const orientationOptions = {
-    "": "Horizontal",
-    vertical: "Vertical"
-  };
-  const orientationDefault = "";
-  const orientation = select(
-    orientationLabel,
-    orientationOptions,
-    orientationDefault
+  let config = {};
+  let headings = [];
+  let panels = [];
+
+  const props = PfeContentSet.properties;
+
+  // Trigger the auto generation of the knobs for attributes
+  config.prop = tools.autoPropKnobs(props, storybookBridge);
+
+  // Let the user determine number of tabs
+  let countVar = storybookBridge.number("Count", 3, {
+    min: 1,
+    max: 10
+  });
+
+  // Ask user if they want to add any custom content
+  const customContent = storybookBridge.boolean(
+    "Use custom content?",
+    false,
+    "Content"
   );
-  const orientationAttr = orientation ? ` ${orientation}` : "";
+    
+  // Let the user customize the first header + panel set
+  if (customContent) {
+    for (let i = 0; i < countVar; i++) {
+      headings[i] = storybookBridge.text(`Heading ${i + 1}`, "", "set");
+      panels[i] = storybookBridge.text(`Panel ${i + 1}`, "", "set");
+    }
+  }
+  
+  let content = "";
+  for (let i = 0; i < countVar; i++) {
+    content += tools.customTag({
+      tag: "h3",
+      attributes: {
+        "pfe-content-set--header": true
+      },
+      content: customContent ? headings[i] : tools.autoHeading(true).replace(/^\w/, c => c.toUpperCase())
+    }) + tools.customTag({
+      tag: "div",
+      attributes: {
+        "pfe-content-set--panel": true
+      },
+      content: customContent ? panels[i] : tools.autoContent(1, 2) + cta
+    });
+  }
 
-  const variantLabel = "Variant";
-  const variantOptions = {
-    "": "default",
-    primary: "Primary",
-    secondary: "Secondary"
-  };
-  const variantDefault = "";
-  const variant = select(variantLabel, variantOptions, variantDefault);
-  const variantAttr = variant ? ` pfe-variant="${variant}"` : "";
+  config.slots = [
+    {
+      content: content
+    }
+  ];
 
-  const countLabel = "# of sets";
-  const countDefault = 3;
-  const countVar = number(countLabel, countDefault);
+  // Some attribute values don't need to be included in the markup
+  if (!config.prop.vertical) {
+    config.prop.vertical = null;
+  }
 
-  const headingConfig = {
-    count: 2,
-    units: "words",
-    format: "plain"
-  };
-
-  const sets = [];
-  Array(countVar)
-    .join(0)
-    .split(0)
-    .map((item, i) =>
-      sets.push({
-        heading: lorem(headingConfig).replace(/^\w/, c => c.toUpperCase()),
-        panel: `<h2>${lorem(headingConfig).replace(/^\w/, c =>
-          c.toUpperCase()
-        )}</h2>
-      ${lorem({
-        count: i + 1,
-        units: "paragraphs",
-        format: "html"
-      })}`
-      })
-    );
-
-  const template = `
-<pfe-content-set${orientationAttr}${variantAttr}>
-${Array(countVar)
-    .join(0)
-    .split(0)
-    .map(
-      (item, i) => `
-    <pfe-content-set-group>
-        <h2 pfe-heading>${sets[i].heading}</h2>
-        ${sets[i].panel}
-    </pfe-content-set-group>
-`
-    )
-    .join("")}
-</pfe-content-set>
-`;
-
-  return `
-<section>
-    <h2>Content set</h2>
-    ${template}
-</section>
-<section>
-    <h2>Markup</h2>
-    <pre style="white-space: pre-wrap; margin: 0;">${escapeHTML(template)}</pre>
-</section>`;
+  const render = template(config);
+  const output = tools.preview(render);
+  return output;
 });

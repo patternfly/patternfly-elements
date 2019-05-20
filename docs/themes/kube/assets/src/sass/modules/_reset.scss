@@ -1,0 +1,65 @@
+// RESET
+// ---------------------------------------------------------------------------
+html {
+    box-sizing: border-box;
+    -webkit-text-size-adjust: 100%;
+}
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+img,
+video,
+audio {
+    max-width: 100%;
+}
+img,
+video {
+    height: auto;
+}
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+svg {
+    max-height: 100%;
+}
+svg:not(:root) {
+    overflow: hidden;
+}
+iframe {
+    border: none;
+    width: 100%;
+}
+button,
+[type="submit"] {
+    -webkit-appearance: button;
+}
+[type="radio"],
+[type="checkbox"] {
+    vertical-align: middle;
+    position: relative;
+    bottom: 0.15rem;
+    margin-right: 2px;
+}
+input[type="search"] {
+    -webkit-appearance: textfield;
+}
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+::-moz-focus-inner {
+    border: none;
+    padding: 0;
+}

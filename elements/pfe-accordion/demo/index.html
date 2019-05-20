@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>PFElements: pfe-accordion Demo</title>
-
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
     <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
-    <!-- <link rel="stylesheet" href="../../../themes/cp-theme/cp-theme.css" /> -->
-
     <noscript>
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
@@ -19,39 +20,127 @@
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require([
-      '../pfe-accordion.umd.js'
+
+      '../pfe-accordion.umd.js',
+      '../../pfe-band/pfe-band.umd.js'
     ])</script>
+
+    <style>
+      body {
+        font-family: Overpass;
+        padding: 16px 32px 32px;
+      }
+      section {
+        padding: 2rem;
+      }
+      a {
+        color: var(--pfe-broadcasted--color--ui-link);
+      }
+      a:hover {
+        color: var(--pfe-broadcasted--color--ui-link--hover);
+      }
+      a:visited {
+        color: var(--pfe-broadcasted--color--ui-link--visited);
+      }
+      a:focus {
+        color: var(--pfe-broadcasted--color--ui-link--focus);
+      }
+      .dark-background {
+        background-color: #191e84;
+      }
+      .white-background {
+        background-color: #fff;
+      }
+      .med-background {
+        background-color: #9394ba;
+      }
+      .dark-gray-background {
+        background-color: #222591;
+      }
+      .light-gray-background {
+        background-color: #f8f8f8;
+      }
+
+    </style>
   </head>
   <body unresolved>
-    <h1>&lt;pfe-accordion&gt;</h1>
-    <section>
-      <pfe-accordion color="lightest">
+
+    <section class="light-gray-background">
+      <h2>&lt;pfe-accordion&gt;</h2><br/>
+      <pfe-accordion>
         <pfe-accordion-header>
-          <h2>Why do wizards need money if they could just create it?</h2>
+          <h3>Why do wizards need money if they could just create it?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure out of thin air will not last, it is illegal in the wizarding world.</p>
         </pfe-accordion-panel>
         <pfe-accordion-header>
-          <h2>Why doesn't Harry have a portrait of his parents?</h2>
+          <h3>Why doesn't Harry have a portrait of his parents?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
-          <p>The characters in the portraits are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general representation of the individual they depict. A portrait of his parents would not be of much help to Harry.</p>
+          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict. A portrait of his parents would not be of much help to Harry.</p>
         </pfe-accordion-panel>
         <pfe-accordion-header>
-          <h2>Why is Harry considered a half-blood if both of his parents could use magic?</h2>
+          <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider themselves pure, such as the Malfoy's or other antagonists.</p>
         </pfe-accordion-panel>
         <pfe-accordion-header>
-          <h2>Is Hogwarts the only wizarding school?</h2>
+          <h3>Is Hogwarts the only wizarding school?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
         </pfe-accordion-panel>
         <pfe-accordion-header>
-          <h2>Where do the main characters work as adults?</h2>
+          <h3>Where do the main characters work as adults?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily Prophet.</p>
+          <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a></p>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+      <pfe-accordion>
+        <pfe-accordion-header>
+          Something
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </pfe-accordion-panel>
+      </pfe-accordion>
+
+      <button id="addTabAndPanelBtn">Add Tab &amp; Panel</button>
+    </section>
+
+    <section class="dark-background" >
+      <h2 style="color:white;">pfe-accordion  on=dark</h2><br/>
+      <pfe-accordion on="dark">
+        <pfe-accordion-header>
+          <h3>Why do wizards need money if they could just create it?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure out of thin air will not last, it is illegal in the wizarding world.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Why doesn't Harry have a portrait of his parents?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict. A portrait of his parents would not be of much help to Harry.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider themselves pure, such as the Malfoy's or other antagonists.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Is Hogwarts the only wizarding school?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Where do the main characters work as adults?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily Prophet.</p>
@@ -59,35 +148,68 @@
         </pfe-accordion-panel>
       </pfe-accordion>
     </section>
-    <section>
-      <h2>Striped Accordion</h2>
-      <pfe-accordion color="striped">
+    <section class="light-gray-background">
+      <h2>&lt;pfe-accordion&gt; nested</h2><br/>
+      <pfe-accordion>
+
         <pfe-accordion-header>
-          <h2>Why do wizards need money if they could just create it?</h2>
+          <h3>Why do wizards need money if they could just create it?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+      <pfe-accordion>
+        <pfe-accordion-header>
+          <h3>Why do wizards need money if they could just create it?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure out of thin air will not last, it is illegal in the wizarding world.</p>
         </pfe-accordion-panel>
         <pfe-accordion-header>
-          <h2>Why doesn't Harry have a portrait of his parents?</h2>
+          <h3>Why doesn't Harry have a portrait of his parents?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
-          <p>The characters in the portraits are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general representation of the individual they depict. A portrait of his parents would not be of much help to Harry.</p>
+          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict. A portrait of his parents would not be of much help to Harry.</p>
         </pfe-accordion-panel>
         <pfe-accordion-header>
-          <h2>Why is Harry considered a half-blood if both of his parents could use magic?</h2>
+          <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider themselves pure, such as the Malfoy's or other antagonists.</p>
         </pfe-accordion-panel>
         <pfe-accordion-header>
-          <h2>Is Hogwarts the only wizarding school?</h2>
+          <h3>Is Hogwarts the only wizarding school?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
         </pfe-accordion-panel>
         <pfe-accordion-header>
-          <h2>Where do the main characters work as adults?</h2>
+          <h3>Where do the main characters work as adults?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily Prophet.</p>
+          <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a></p>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Why doesn't Harry have a portrait of his parents?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict. A portrait of his parents would not be of much help to Harry.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider themselves pure, such as the Malfoy's or other antagonists.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Is Hogwarts the only wizarding school?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Where do the main characters work as adults?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily Prophet.</p>
@@ -95,5 +217,24 @@
         </pfe-accordion-panel>
       </pfe-accordion>
     </section>
+
+    <script>
+      var btn = document.querySelector("#addTabAndPanelBtn");
+      var pfeAccordion = document.querySelector("pfe-accordion");
+
+      btn.addEventListener("click", function() {
+        var fragment = document.createDocumentFragment();
+
+        var header = document.createElement("pfe-accordion-header");
+        header.innerHTML = "<h3>New Tab</h3>";
+
+        var panel = document.createElement("pfe-accordion-panel");
+        panel.innerHTML = "<p>New panel text</p>";
+
+        fragment.appendChild(header);
+        fragment.appendChild(panel);
+        pfeAccordion.appendChild(fragment);
+      });
+    </script>
   </body>
 </html>

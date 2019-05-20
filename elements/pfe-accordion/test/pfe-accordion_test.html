@@ -43,6 +43,15 @@
       </pfe-accordion-panel>
     </pfe-accordion>
 
+    <pfe-accordion id="dynamic">
+      <pfe-accordion-header>
+        <h2>Header</h2>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        Panel
+      </pfe-accordion-panel>
+    </pfe-accordion>
+
     <script>
       suite('<pfe-accordion>', () => {
         test('it should upgrade pfe-accordion', () => {
@@ -68,8 +77,8 @@
           assert.equal(header.getAttribute('role'), 'header');
           assert.isTrue(panel.hasAttribute('aria-labelledby'));
           assert.equal(panel.getAttribute('role'), 'region');
-          assert.equal(header.id, panel.getAttribute('aria-labelledby'));
-          assert.equal(panel.id, header.getAttribute('aria-controls'));
+          assert.equal(header.pfeId, panel.getAttribute('aria-labelledby'));
+          assert.equal(panel.pfeId, header.getAttribute('aria-controls'));
         });
 
         test('it should expand a panel when a header is selected', () => {
@@ -238,22 +247,38 @@
           sinon.assert.calledWith(spy, 'pfe-accordion-header: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)');
         });
 
-        test('it should add an even or odd class to the headers if the theme is striped', () => {
-          const pfeAccordion = document.querySelector('pfe-accordion');
-          const headers = [...pfeAccordion.querySelectorAll('pfe-accordion-header')];
+        test('it should properly initialize any dynamically added headers and panels', done => {
+          const pfeAccordion = document.querySelector('#dynamic');
+          const documentFragment = document.createDocumentFragment();
 
-          pfeAccordion.setAttribute('color', 'striped');
+          const newHeader = document.createElement("pfe-accordion-header");
+          newHeader.id = "newHeader";
+          newHeader.innerHTML = `<h2>New Header</h2>`;
 
-          /*
-           * this can be confusing. index of 0 is really "even" but visually,
-           * the first heading (index of 0) is 1 making it have a class of odd.
-           */
-          headers.forEach((header, index) => {
-            if (index % 2 === 0) {
-              assert.isTrue(header.classList.contains('odd'));
-            } else {
-              assert.isTrue(header.classList.contains('even'));
-            }
+          const newPanel = document.createElement("pfe-accordion-panel");
+          newPanel.id = "newPanel";
+          newPanel.innerHTML = `New Panel`;
+
+          documentFragment.appendChild(newHeader);
+          documentFragment.appendChild(newPanel);
+
+          pfeAccordion.appendChild(documentFragment);
+
+          flush(() => {
+            const newHeaderElement = document.querySelector("#newHeader");
+            const newPanelElement = document.querySelector("#newPanel");
+
+            assert.equal(newHeaderElement.getAttribute("role"), "header");
+            assert.isTrue(newHeaderElement.hasAttribute("pfe-id"));
+            assert.isTrue(newHeaderElement.hasAttribute("aria-controls"));
+            assert.equal(newHeaderElement.getAttribute("aria-controls"), newPanelElement.getAttribute("pfe-id"));
+
+            assert.equal(newPanelElement.getAttribute("role"), "region");
+            assert.isTrue(newPanelElement.hasAttribute("pfe-id"));
+            assert.isTrue(newPanelElement.hasAttribute("aria-labelledby"));
+            assert.equal(newPanelElement.getAttribute("aria-labelledby"), newHeaderElement.getAttribute("pfe-id"));
+
+            done();
           });
         });
       });

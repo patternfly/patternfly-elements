@@ -4,14 +4,14 @@ const fs = require("fs");
 const path = require("path");
 const { promisify } = require("util");
 const exec = promisify(require("child_process").exec);
+const _ = require("lodash");
 
+const writeFile = promisify(fs.writeFile);
 const readFile = promisify(fs.readFile);
 const unlink = promisify(fs.unlink);
 
 const wca = path.resolve(__dirname, "../node_modules/.bin/wca");
-const outDir = "../.tmp";
-
-console.log(`outDir: ${outDir}`);
+const outDir = ".tmp";
 
 /**
  * Get an object representing the JSDOC metadata about an element.
@@ -23,18 +23,15 @@ console.log(`outDir: ${outDir}`);
  * [web-component-analyzer](https://github.com/runem/web-component-analyzer)
  * @async
  */
-async function getElementJSDOC(file) {
+async function getElementAnalysis(file) {
   const absFile = path.resolve(process.cwd(), file);
-  console.log(absFile);
-  console.log(wca);
-  console.log(outDir);
-  const cmd = await exec(
-    `node ${wca} analyze ${absFile} --format json --outDir=${outDir}`
-  );
+  const cmdText = `node ${wca} analyze ${absFile} --format json --outDir=${outDir}`;
+  // console.log(cmdText);
+  const cmd = await exec(cmdText);
 
   // derive a filename and path for the new json file
   const schemaFile = path.basename(file).replace(path.extname(file), ".json");
-  const schemaPath = path.join(__dirname, outDir, schemaFile);
+  const schemaPath = path.join(process.cwd(), outDir, schemaFile);
 
   // get the JSON representation fo the element's jsdoc
   const jsonJSDOC = require(schemaPath);
@@ -55,11 +52,32 @@ function getSchemaTemplate() {
 }
 
 async function buildSchema(file) {
-  console.log(`building schema for ${file}`);
-  // const template = await getSchemaTemplate();
+  const schemaTemplate = await getSchemaTemplate();
   // console.log(template);
-  const jsdoc = await getElementJSDOC(file);
-  console.log(jsdoc);
+  const analyses = await getElementAnalysis(file);
+
+  const schemas = analyses.map(analysis =>
+    _.template(schemaTemplate)(analysis)
+  );
+  return Promise.all(schemas.map(async schema => await writeSchema(schema)));
+  // return schemas;
+}
+
+/**
+ * Write the schema to disk.
+ * @param {Object} schema The JS object containing the schema, to be JSON.stringified.
+ * @async
+ */
+function writeSchema(schema) {
+  const tagName = JSON.parse(schema).tag;
+  const schemaPath = path.resolve(
+    __dirname,
+    "..",
+    "elements",
+    tagName,
+    `${tagName}.json`
+  );
+  return writeFile(schemaPath, schema);
 }
 
 // allow running this from the command line, such as:

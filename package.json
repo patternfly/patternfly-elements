@@ -104,7 +104,7 @@
     "strip-css-comments": "^3.0.0",
     "trim": "0.0.1",
     "wct-browser-legacy": "^1.0.1",
-    "web-component-analyzer": "0.1.4",
+    "web-component-analyzer": "github:mwcz/web-component-analyzer#support-abs-paths",
     "web-component-tester": "^6.7.1",
     "whatwg-fetch": "^3.0.0",
     "yo": "^1.8.5"

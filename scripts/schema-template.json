@@ -1,11 +1,10 @@
 {
-  "TESTNAME": "<%= name %>",
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Band",
+  "title": "<%= tagName %>",
   "description": "This element creates a header, body, footer, and aside region in which to place content or other components.",
   "type": "object",
-  "tag": "pfe-band",
-  "class": "pfe-band",
+  "tag": "<%= tagName %>",
+  "class": "<%= declaration.tagName %>",
   "category": "container",
   "properties": {
     "slots": {

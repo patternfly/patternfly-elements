@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "pfe-tab-panel",
-  "description": "This element creates a header, body, footer, and aside region in which to place content or other components.",
+  "description": "A tab panel elemenent for putting things into.",
   "type": "object",
   "tag": "pfe-tab-panel",
   "class": "",

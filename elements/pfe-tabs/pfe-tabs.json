@@ -12,77 +12,59 @@
       "description": "Definition of the supported slots",
       "type": "object",
       "properties": {
-        
-          "panel": {
-            "title": "panel",
-            "description": "each `<pfe-tab-panel>` goes in this slot",
-            "type": "array",
-            "namedSlot": true
-          },
-        
-          "tab": {
-            "title": "tab",
-            "description": "each `<pfe-tab>` goes in this slot",
-            "type": "array",
-            "namedSlot": true
-          },
-        
-          "default": {
-            "title": "default",
-            "description": "default slot",
-            "type": "array",
-            "namedSlot": false
-          }
-        
+        "panel": {
+          "title": "panel",
+          "description": "each `<pfe-tab-panel>` goes in this slot",
+          "type": "array",
+          "namedSlot": true
+        },
+        "tab": {
+          "title": "tab",
+          "description": "each `<pfe-tab>` goes in this slot",
+          "type": "array",
+          "namedSlot": true
+        },
+        "default": {
+          "title": "default",
+          "description": "default slot",
+          "type": "array",
+          "namedSlot": false
+        }
       }
     },
     "attributes": {
       "title": "Attributes",
       "type": "object",
       "properties": {
-        
-          "[selected-index=0]": {
-            "title": "[selected-index=0]",
-            "type": "string",
-            
-            "prefixed": true
-          },
-        
-          "vertical": {
-            "title": "vertical",
-            "type": "string",
-            
-            "prefixed": true
-          },
-        
-          "selected-index": {
-            "title": "selected-index",
-            "type": "string",
-            
-            "prefixed": true
-          },
-        
-          "pfe-variant": {
-            "title": "pfe-variant",
-            "type": "string",
-            
-            "prefixed": true
-          },
-        
-          "on": {
-            "title": "on",
-            "type": "string",
-            
-            "enum": [
-              
-                "Light",
-              
-                "Dark"
-              
-            ],
-            "prefixed": true
-          },
-        
+        "[selected-index=0]": {
+          "title": "[selected-index=0]",
+          "type": "string",
+          "prefixed": true
+        },
+        "vertical": {
+          "title": "vertical",
+          "type": "string",
+          "prefixed": true
+        },
+        "selected-index": {
+          "title": "selected-index",
+          "type": "string",
+          "prefixed": true
+        },
+        "pfe-variant": {
+          "title": "pfe-variant",
+          "type": "string",
+          "prefixed": true
+        },
+        "on": {
+          "title": "on",
+          "type": "string",
+          "enum": [
+            "Light",
+            "Dark"
+          ],
+          "prefixed": true
+        },
         "class": {
           "title": "PFElement class",
           "type": "string",
@@ -92,6 +74,9 @@
       }
     }
   },
-  "required": ["slots", "attributes"],
+  "required": [
+    "slots",
+    "attributes"
+  ],
   "additionalProperties": false
 }

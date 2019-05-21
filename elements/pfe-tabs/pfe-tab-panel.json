@@ -11,15 +11,12 @@
       "title": "Slots",
       "description": "Definition of the supported slots",
       "type": "object",
-      "properties": {
-        
-      }
+      "properties": {}
     },
     "attributes": {
       "title": "Attributes",
       "type": "object",
       "properties": {
-        
         "class": {
           "title": "PFElement class",
           "type": "string",
@@ -29,6 +26,9 @@
       }
     }
   },
-  "required": ["slots", "attributes"],
+  "required": [
+    "slots",
+    "attributes"
+  ],
   "additionalProperties": false
 }

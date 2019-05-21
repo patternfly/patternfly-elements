@@ -11,22 +11,17 @@
       "title": "Slots",
       "description": "Definition of the supported slots",
       "type": "object",
-      "properties": {
-        
-      }
+      "properties": {}
     },
     "attributes": {
       "title": "Attributes",
       "type": "object",
       "properties": {
-        
-          "aria-selected": {
-            "title": "aria-selected",
-            "type": "string",
-            
-            "prefixed": true
-          },
-        
+        "aria-selected": {
+          "title": "aria-selected",
+          "type": "string",
+          "prefixed": true
+        },
         "class": {
           "title": "PFElement class",
           "type": "string",
@@ -36,6 +31,9 @@
       }
     }
   },
-  "required": ["slots", "attributes"],
+  "required": [
+    "slots",
+    "attributes"
+  ],
   "additionalProperties": false
 }

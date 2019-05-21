@@ -12,142 +12,82 @@
       "description": "Definition of the supported slots",
       "type": "object",
       "properties": {
-        "header": {
-          "title": "Header",
-          "type": "array",
-          "namedSlot": true,
-          "maxItems": 3,
-          "items": {
-            "title": "Body item",
-            "oneOf": [
-              {
-                "$ref": "raw"
-              }
-            ]
+        
+          "panel": {
+            "title": "panel",
+            "description": "each `<pfe-tab-panel>` goes in this slot",
+            "type": "array",
+            "namedSlot": true
+          },
+        
+          "tab": {
+            "title": "tab",
+            "description": "each `<pfe-tab>` goes in this slot",
+            "type": "array",
+            "namedSlot": true
+          },
+        
+          "default": {
+            "title": "default",
+            "description": "default slot",
+            "type": "array",
+            "namedSlot": false
           }
-        },
-        "body": {
-          "title": "Body",
-          "type": "array",
-          "namedSlot": false,
-          "items": {
-            "oneOf": [
-              {
-                "$ref": "pfe-card"
-              },
-              {
-                "$ref": "raw"
-              }
-            ]
-          }
-        },
-        "footer": {
-          "title": "Footer",
-          "type": "array",
-          "namedSlot": true,
-          "maxItems": 3,
-          "items": {
-            "oneOf": [
-              {
-                "$ref": "pfe-cta"
-              },
-              {
-                "$ref": "raw"
-              }
-            ]
-          }
-        },
-        "aside": {
-          "title": "Aside",
-          "type": "array",
-          "namedSlot": true,
-          "maxItems": 5,
-          "items": {
-            "oneOf": [
-              {
-                "$ref": "pfe-card"
-              },
-              {
-                "$ref": "raw"
-              }
-            ]
-          }
-        }
+        
       }
     },
     "attributes": {
       "title": "Attributes",
       "type": "object",
       "properties": {
-        "color": {
-          "title": "Background color",
+        
+          "[selected-index=0]": {
+            "title": "[selected-index=0]",
+            "type": "string",
+            
+            "prefixed": true
+          },
+        
+          "vertical": {
+            "title": "vertical",
+            "type": "string",
+            
+            "prefixed": true
+          },
+        
+          "selected-index": {
+            "title": "selected-index",
+            "type": "string",
+            
+            "prefixed": true
+          },
+        
+          "pfe-variant": {
+            "title": "pfe-variant",
+            "type": "string",
+            
+            "prefixed": true
+          },
+        
+          "on": {
+            "title": "on",
+            "type": "string",
+            
+            "enum": [
+              
+                "Light",
+              
+                "Dark"
+              
+            ],
+            "prefixed": true
+          },
+        
+        "class": {
+          "title": "PFElement class",
           "type": "string",
-          "enum": [
-            "lightest",
-            "lighter",
-            "base",
-            "darker",
-            "darkest",
-            "complement",
-            "accent"
-          ],
-          "default": "base",
-          "prefixed": true,
-          "observer": "_colorChanged"
-        },
-        "img-src": {
-          "title": "Background image",
-          "type": "string",
-          "prefixed": true,
-          "observer": "_imgSrcChanged"
-        },
-        "aside-desktop": {
-          "title": "Aside positioning (desktop)",
-          "type": "string",
-          "default": "right",
-          "enum": ["right", "left"],
-          "prefixed": true,
-          "observer": "_basicAttributeChanged",
-          "options": {
-            "dependencies": [
-              {
-                "type": "slot",
-                "id": "aside"
-              }
-            ]
-          }
-        },
-        "aside-mobile": {
-          "title": "Aside positioning (mobile)",
-          "type": "string",
-          "default": "bottom",
-          "enum": ["top", "bottom"],
-          "prefixed": true,
-          "observer": "_basicAttributeChanged",
-          "options": {
-            "dependencies": [
-              {
-                "type": "slot",
-                "id": "aside"
-              }
-            ]
-          }
-        },
-        "aside-height": {
-          "title": "Aside height",
-          "type": "string",
-          "default": "body",
-          "enum": ["full", "body"],
-          "prefixed": true,
-          "observer": "_basicAttributeChanged",
-          "options": {
-            "dependencies": [
-              {
-                "type": "slot",
-                "id": "aside"
-              }
-            ]
-          }
+          "default": "PFElement",
+          "prefixed": false
         }
       }
     }

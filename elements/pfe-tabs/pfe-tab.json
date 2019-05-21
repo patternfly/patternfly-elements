@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "pfe-tab",
+  "description": "This element creates a header, body, footer, and aside region in which to place content or other components.",
+  "type": "object",
+  "tag": "pfe-tab",
+  "class": "",
+  "category": "container",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        
+      }
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        
+          "aria-selected": {
+            "title": "aria-selected",
+            "type": "string",
+            
+            "prefixed": true
+          },
+        
+        "class": {
+          "title": "PFElement class",
+          "type": "string",
+          "default": "PFElement",
+          "prefixed": false
+        }
+      }
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

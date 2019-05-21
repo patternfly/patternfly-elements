@@ -118,6 +118,10 @@ function generateId() {
  * @attr {String} selected-index - the index of the currently selected tab
  * @attr pfe-variant - something variants
  * @attr {Light|Dark} on - what color is this on
+ *
+ * @slot - default slot
+ * @slot tab - each `<pfe-tab>` goes in this slot
+ * @slot panel - each `<pfe-tab-panel>` goes in this slot
  */
 class PfeTabs extends PFElement {
   static get tag() {

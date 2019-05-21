@@ -6,38 +6,48 @@ const { promisify } = require("util");
 const exec = promisify(require("child_process").exec);
 const _ = require("lodash");
 
+const manifest = require("./manifest.js");
+
 const writeFile = promisify(fs.writeFile);
 const readFile = promisify(fs.readFile);
 const unlink = promisify(fs.unlink);
 
 const wca = path.resolve(__dirname, "../node_modules/.bin/wca");
-const outDir = ".tmp";
+const tmpDir = ".tmp";
 
 /**
  * Get an object representing the JSDOC metadata about an element.
  *
- * @param {String} file A path to the element's source file, containing the
- * jsdoc annotations.  The path should be relative to current working
- * directory.
+ * @param {String} tagName the element's tag name, ex: `pfe-card`
  * @returns {Object} an object containing the JSDOC metadata, as emitted by
  * [web-component-analyzer](https://github.com/runem/web-component-analyzer)
  * @async
  */
-async function getElementAnalysis(file) {
-  const absFile = path.resolve(process.cwd(), file);
-  const cmdText = `node ${wca} analyze ${absFile} --format json --outDir=${outDir}`;
-  // console.log(cmdText);
-  const cmd = await exec(cmdText);
+async function getElementAnalysis(tagName) {
+  const tagManifest = manifest(tagName);
+
+  const cmdText = `node ${wca} analyze ${
+    tagManifest.module
+  } --format json --outDir=${tmpDir}`;
+
+  await exec(cmdText);
 
   // derive a filename and path for the new json file
-  const schemaFile = path.basename(file).replace(path.extname(file), ".json");
-  const schemaPath = path.join(process.cwd(), outDir, schemaFile);
+  const tmpSchemaFile = path.basename(tagManifest.schema);
+  const tmpSchemaPath = path.join(process.cwd(), tmpDir, tmpSchemaFile);
 
   // get the JSON representation fo the element's jsdoc
-  const jsonJSDOC = require(schemaPath);
+  const jsonJSDOC = require(tmpSchemaPath);
 
   // remove the json file
-  await unlink(schemaPath);
+  try {
+    // await unlink(tmpSchemaPath);
+  } catch (e) {
+    console.warn(
+      `Harmless warning: could not remove temporary JSON schema file ${tmpSchemaPath}, full error below.`
+    );
+    console.error(e);
+  }
 
   return jsonJSDOC;
 }
@@ -51,32 +61,31 @@ function getSchemaTemplate() {
   return readFile(path.resolve(__dirname, "schema-template.json"));
 }
 
-async function buildSchema(file) {
+async function buildSchema(tagName) {
+  // the dir to write the schema(s)
+  const dir = manifest(tagName).dir;
   const schemaTemplate = await getSchemaTemplate();
   // console.log(template);
-  const analyses = await getElementAnalysis(file);
+  const analyses = await getElementAnalysis(tagName);
 
   const schemas = analyses.map(analysis =>
     _.template(schemaTemplate)(analysis)
   );
-  return Promise.all(schemas.map(async schema => await writeSchema(schema)));
+  return Promise.all(
+    schemas.map(async schema => await writeSchema(schema, dir))
+  );
   // return schemas;
 }
 
 /**
  * Write the schema to disk.
  * @param {Object} schema The JS object containing the schema, to be JSON.stringified.
+ * @param {String} dir the directory path into which the schema file will be written
  * @async
  */
-function writeSchema(schema) {
+function writeSchema(schema, dir) {
   const tagName = JSON.parse(schema).tag;
-  const schemaPath = path.resolve(
-    __dirname,
-    "..",
-    "elements",
-    tagName,
-    `${tagName}.json`
-  );
+  const schemaPath = path.resolve(dir, `${tagName}.json`);
   return writeFile(schemaPath, schema);
 }
 

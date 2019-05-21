@@ -12,142 +12,38 @@
       "description": "Definition of the supported slots",
       "type": "object",
       "properties": {
-        "header": {
-          "title": "Header",
-          "type": "array",
-          "namedSlot": true,
-          "maxItems": 3,
-          "items": {
-            "title": "Body item",
-            "oneOf": [
-              {
-                "$ref": "raw"
-              }
-            ]
-          }
-        },
-        "body": {
-          "title": "Body",
-          "type": "array",
-          "namedSlot": false,
-          "items": {
-            "oneOf": [
-              {
-                "$ref": "pfe-card"
-              },
-              {
-                "$ref": "raw"
-              }
-            ]
-          }
-        },
-        "footer": {
-          "title": "Footer",
-          "type": "array",
-          "namedSlot": true,
-          "maxItems": 3,
-          "items": {
-            "oneOf": [
-              {
-                "$ref": "pfe-cta"
-              },
-              {
-                "$ref": "raw"
-              }
-            ]
-          }
-        },
-        "aside": {
-          "title": "Aside",
-          "type": "array",
-          "namedSlot": true,
-          "maxItems": 5,
-          "items": {
-            "oneOf": [
-              {
-                "$ref": "pfe-card"
-              },
-              {
-                "$ref": "raw"
-              }
-            ]
-          }
-        }
+        <% declaration.slots.forEach((slot,i,slots) => { %>
+          "<%= slot.name || "default" %>": {
+            "title": "<%= slot.name || "default" %>",
+            "description": "<%= slot.jsDoc.comment %>",
+            "type": "array",
+            "namedSlot": <%= !!slot.name %>
+          }<%= (i < slots.length - 1) ? "," : "" %>
+        <% }); %>
       }
     },
     "attributes": {
       "title": "Attributes",
       "type": "object",
       "properties": {
-        "color": {
-          "title": "Background color",
+        <% _.filter(declaration.members, { kind: "attribute" }).forEach(attr => { %>
+          "<%= attr.attrName %>": {
+            "title": "<%= attr.attrName %>",
+            "type": "string",
+            <% if (attr.type.kind === "UNION") { %>
+            "enum": [
+              <% attr.type.types.forEach((type, i, types) => { %>
+                "<%= type.value %>"<%= (i < types.length - 1) ? "," : "" %>
+              <% }); %>
+            ],<% } %>
+            "prefixed": true
+          },
+        <% }); %>
+        "class": {
+          "title": "PFElement class",
           "type": "string",
-          "enum": [
-            "lightest",
-            "lighter",
-            "base",
-            "darker",
-            "darkest",
-            "complement",
-            "accent"
-          ],
-          "default": "base",
-          "prefixed": true,
-          "observer": "_colorChanged"
-        },
-        "img-src": {
-          "title": "Background image",
-          "type": "string",
-          "prefixed": true,
-          "observer": "_imgSrcChanged"
-        },
-        "aside-desktop": {
-          "title": "Aside positioning (desktop)",
-          "type": "string",
-          "default": "right",
-          "enum": ["right", "left"],
-          "prefixed": true,
-          "observer": "_basicAttributeChanged",
-          "options": {
-            "dependencies": [
-              {
-                "type": "slot",
-                "id": "aside"
-              }
-            ]
-          }
-        },
-        "aside-mobile": {
-          "title": "Aside positioning (mobile)",
-          "type": "string",
-          "default": "bottom",
-          "enum": ["top", "bottom"],
-          "prefixed": true,
-          "observer": "_basicAttributeChanged",
-          "options": {
-            "dependencies": [
-              {
-                "type": "slot",
-                "id": "aside"
-              }
-            ]
-          }
-        },
-        "aside-height": {
-          "title": "Aside height",
-          "type": "string",
-          "default": "body",
-          "enum": ["full", "body"],
-          "prefixed": true,
-          "observer": "_basicAttributeChanged",
-          "options": {
-            "dependencies": [
-              {
-                "type": "slot",
-                "id": "aside"
-              }
-            ]
-          }
+          "default": "PFElement",
+          "prefixed": false
         }
       }
     }

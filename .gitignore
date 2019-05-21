@@ -49,3 +49,4 @@ test/.wct-kludge
 
 # Kube assets
 docs/resources/_gen/assets
+.tmp

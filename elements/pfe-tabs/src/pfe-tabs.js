@@ -465,7 +465,7 @@ class PfeTabs extends PFElement {
 }
 
 /**
- * A tab element for tabbing.
+ * A tabby tabby cat.
  *
  * @customElement pfe-tab
  *
@@ -570,7 +570,7 @@ class PfeTab extends PFElement {
 }
 
 /**
- * A tab panel elemenent for putting things into.
+ * A tab panel element for putting your TABBY things into.
  *
  * @customElement pfe-tab-panel
  *

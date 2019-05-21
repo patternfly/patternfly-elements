@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "<%= tagName %>",
-  "description": "This element creates a header, body, footer, and aside region in which to place content or other components.",
+  "description": "<%= declaration.jsDoc.comment %>",
   "type": "object",
   "tag": "<%= tagName %>",
   "class": "<%= declaration.tagName %>",

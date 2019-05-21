@@ -85,8 +85,18 @@ async function buildSchema(tagName) {
  */
 function writeSchema(schema, dir) {
   const tagName = JSON.parse(schema).tag;
+  const schemaFormatted = formatSchema(schema);
   const schemaPath = path.resolve(dir, `${tagName}.json`);
-  return writeFile(schemaPath, schema);
+  return writeFile(schemaPath, schemaFormatted);
+}
+
+/**
+ * Format the JSON schema.  This takes a JSON string, parses and re-stringifies it to apply the desired formatting.  The main reason for this function is so we don't have to awkwardly position template syntax in order to achieve the desired whitespace.
+ * @param {String} the JSON string.
+ * @return {String} the formatted JSON string.
+ */
+function formatSchema(schema) {
+  return JSON.stringify(JSON.parse(schema), null, 2);
 }
 
 // allow running this from the command line, such as:

@@ -7,6 +7,9 @@ const loremIpsum = require("lorem-ipsum");
 // https://www.npmjs.com/package/clean-html
 const cleaner = require("clean-html");
 
+// Most common self-closing tags = br, hr, img, input, link
+const selfClosing = ["br", "hr", "img", "input", "link"];
+
 // Escape HTML to display markup as content
 export function escapeHTML(html) {
   const div = document.createElement("div");
@@ -68,8 +71,6 @@ const listProperties = (obj) =>
 // -- attributes: passed through the listProperties function
 // -- content: Accepts html or plain text or renders default content
 export function customTag(obj) {
-  // Most common self-closing tags = br, hr, img, input, link
-  let selfClosing = ["br", "hr", "img", "input", "link"];
   let start = "";
   let end = "";
 
@@ -141,7 +142,6 @@ const parseMarkup = string => {
 const renderSlots = (slots = []) =>
   slots
     .map(slot => {
-      let selfClosing = ["br", "hr", "img", "input", "link"];
       // If there are slot or attribute values but no tag defined
       // Grep the content to see if we can use the first tag passed in
       let has_tag = typeof slot.tag !== "undefined";

@@ -35,16 +35,6 @@ Use the attribute `pfe-status="{option}"`
 | `accent` | `--pfe-theme--color--ui-accent` |
 | `complement` | `--pfe-theme--color--ui-complement` |
 
-## Dependencies
-
-Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
-
-    npm install -g polyserve web-component-tester
-
-## Dev
-
-    npm start
-
 ## Test
 
     npm run test
@@ -55,7 +45,9 @@ Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-compone
 
 ## Demo
 
-Run `npm start` and Polyserve will start a server and open your default browser to the demo page of the element.
+From the PFElements root directory, run:
+
+    npm start
 
 ## Code style
 

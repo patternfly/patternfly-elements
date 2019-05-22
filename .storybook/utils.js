@@ -7,6 +7,9 @@ const loremIpsum = require("lorem-ipsum");
 // https://www.npmjs.com/package/clean-html
 const cleaner = require("clean-html");
 
+// Most common self-closing tags = br, hr, img, input, link
+const selfClosing = ["br", "hr", "img", "input", "link"];
+
 // Escape HTML to display markup as content
 export function escapeHTML(html) {
   const div = document.createElement("div");

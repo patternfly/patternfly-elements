@@ -32,7 +32,7 @@ $LOCAL: card;
   --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--link--hover)};
   --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
 
-  --pfe-card__header--BackgroundColor: rgba(0, 0, 0, #{pfe-var(opacity)});
+  --pfe-card__header--BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)});
   --pfe-card__header--Color:           var(--pfe-broadcasted--color--text);
 
   // Add backward support for previous variable naming

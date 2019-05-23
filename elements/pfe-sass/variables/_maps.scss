@@ -161,13 +161,15 @@ $pfe-vars: (
 
   font-size:                     16px,
   line-height:                   1.5,
-  line-height--heading:          1.3,
-  line-height--heading-xl:       1.2,
+  line-height--heading:          1.2,
+  line-height--heading--alpha:   1.3,
 
   font-family:                   '\"Red Hat Text\", \"Overpass\", Overpass, Helvetica, helvetica, arial, sans-serif',
   font-family--heading:          '\"Red Hat Display\", \"Overpass\", Overpass, Helvetica, helvetica, arial, sans-serif',
   font-family--code:             '\"Overpass Mono\", Consolas, Monaco, \"Andale Mono\", monospace',
 
+  font-size--heading--xxl:       48px,
+  font-size--heading--xl:        40px,
   font-size--heading--alpha:     36px,
   font-size--heading--beta:      28px,
   font-size--heading--gamma:     24px,

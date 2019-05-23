@@ -1,6 +1,5 @@
-@import "../../pfe-sass/red-hat-font";
-
 @import "../../pfe-sass/pfe-sass";
+
 :host {
   display: block;
 }
@@ -18,20 +17,25 @@
     margin-top: 0;
     margin-bottom: #{pfe-var(content-spacer)};
 }
+
 ::slotted(*:last-child) {
 	margin-bottom: 0;
 }
+
 ::slotted(strong),
 ::slotted(b){
     font-weight: #{pfe-var(font-weight--bold)};
 }
+
 ::slotted(sup) {
 
 }
+
 ::slotted(em),
 ::slotted(i) {
-
+    font-style: italic;
 }
+
 ::slotted(dl),
 ::slotted(ul) {
     margin-left: 10px;
@@ -43,50 +47,69 @@
 ::slotted(h4),
 ::slotted(h5),
 ::slotted(h6),
-::slotted([pfe-text="headline-1"]),
-::slotted([pfe-text="headline-2"]),
-::slotted([pfe-text="headline-3"]),
-::slotted([pfe-text="headline-4"]),
-::slotted([pfe-text="headline-5"]),
-::slotted([pfe-text="headline-6"]) {
+::slotted([pfe-heading="xxl"]),
+::slotted([pfe-heading="xl"]),
+::slotted([pfe-heading="alpha"]),
+::slotted([pfe-heading="beta"]),
+::slotted([pfe-heading="gamma"]),
+::slotted([pfe-heading="delta"]),
+::slotted([pfe-heading="epsilon"]),
+::slotted([pfe-heading="zeta"]) {
     font-family: #{pfe-var(font-family--heading)};
-    line-height: #{pfe-var(line-height--heading)};
     margin-bottom: calc(#{pfe-var(content-spacer)}  * 1.1);
 }
 
 /* size */
+::slotted([pfe-heading="xxl"]) {
+    font-size: #{pfe-var(font-size--heading--xxl)};
+    font-weight: #{pfe-var(font-weight--light)};
+    line-height: #{pfe-var(line-height--heading)};
+}
+
+::slotted([pfe-heading="xl"]) {
+    font-size: #{pfe-var(font-size--heading--xl)};
+    font-weight: #{pfe-var(font-weight--light)};
+    line-height: #{pfe-var(line-height--heading)};
+}
+
 ::slotted(h1),
-::slotted(*[pfe-text="headline-1"]) {
+::slotted([pfe-heading="alpha"]) {
     font-size: #{pfe-var(font-size--heading--alpha)};
     font-weight: #{pfe-var(font-weight--light)};
+    line-height: #{pfe-var(line-height--heading--alpha)};
 }
 
 ::slotted(h2),
-::slotted(*[pfe-text="headline-2"]) {
+::slotted([pfe-heading="beta"]) {
     font-size: #{pfe-var(font-size--heading--beta)};
     font-weight: #{pfe-var(font-weight--light)};
+    line-height: #{pfe-var(line-height--heading)};
 }
 
 ::slotted(h3),
-::slotted(*[pfe-text="headline-3"]) {
+::slotted([pfe-heading="gamma"]) {
     font-size: #{pfe-var(font-size--heading--gamma)};
     font-weight: #{pfe-var(font-weight--normal)};
+    line-height: #{pfe-var(line-height--heading)};
 }
 
 ::slotted(h4),
-::slotted(*[pfe-text="headline-4"]) {
+::slotted([pfe-heading="delta"]) {
     font-size: #{pfe-var(font-size--heading--delta)};
     font-weight: #{pfe-var(font-weight--normal)};
+    line-height: #{pfe-var(line-height--heading)};
 }
 
 ::slotted(h5),
-::slotted(*[pfe-text="headline-5"]) {
+::slotted([pfe-heading="epsilon"]) {
     font-size: #{pfe-var(font-size--heading--epsilon)};
     font-weight: #{pfe-var(font-weight--light)};
+    line-height: #{pfe-var(line-height--heading)};
 }
 
 ::slotted(h6),
-::slotted(*[pfe-text="headline-6"]) {
+::slotted([pfe-heading="zeta"]) {
     font-size: #{pfe-var(font-size--heading--zeta)};
     font-weight: #{pfe-var(font-weight--light)};
+    line-height: #{pfe-var(line-height--heading)};
 }

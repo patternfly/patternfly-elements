@@ -1,4 +1,5 @@
 import { autoReveal } from "./reveal.js";
+import { each } from "bluebird";
 const prefix = "pfe-";
 
 class PFElement extends HTMLElement {
@@ -52,6 +53,7 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this.props = pfeClass.properties;
+    this.slots = pfeClass.slots;
     this._queue = [];
     this.template = document.createElement("template");
 
@@ -83,6 +85,10 @@ class PFElement extends HTMLElement {
 
     if (typeof this.props === "object") {
       this._mapSchemaToProperties(this.tag, this.props);
+    }
+
+    if (typeof this.slots === "object") {
+      this._mapSchemaToSlots(this.tag, this.slots);
     }
 
     if (this._queue.length) {
@@ -170,7 +176,7 @@ class PFElement extends HTMLElement {
     for (let i = 0; i < dependencies.length; i += 1) {
       const slot_exists =
         dependencies[i].type === "slot" &&
-        this.has_slot(`${tag}--${dependencies[i].id}`);
+        this.has_slots(`${tag}--${dependencies[i].id}`).length > 0;
       const attribute_exists =
         dependencies[i].type === "attribute" &&
         this.getAttribute(`${prefix}${dependencies[i].id}`);
@@ -185,6 +191,35 @@ class PFElement extends HTMLElement {
     }
     // Return a boolean if the dependency exists
     return hasDependency;
+  }
+
+  // Map the imported slots json
+  // @notice static getter of properties is built via tooling
+  // to edit modify src/element.json
+  _mapSchemaToSlots(tag, slots) {
+    // Loop over the properties provided by the schema
+    Object.keys(slots).forEach(slot => {
+      let slotObj    = slots[slot];
+      let slotExists = false;
+      // If it's a named slot, look for that slot definition
+      if(slotObj.namedSlot) {
+        if(this.has_slots(`${tag}--${slot}`).length > 0) {
+          slotExists = true;
+        }
+      // If it's the default slot, look for elements not assigned to a slot
+      } else {
+        if([...this.querySelectorAll(":not([slot])")].length > 0) {
+          slotExists = true;
+        }
+      }
+
+      // If the slot exists, attach a class to the parent to indicate that
+      if(slotExists) {
+        this.classList.add(`has_${slot}`);
+      } else {
+        this.classList.remove(`has_${slot}`);
+      }
+    });
   }
 
   _queueAction(action) {

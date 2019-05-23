@@ -119,6 +119,7 @@ class PfeCard extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+
     // Initialize the background image attachment
     if (this.imageSrc) {
       this._imgSrcChanged("pfe-img-src", "", this.imageSrc);

@@ -97,9 +97,8 @@ $LOCAL: card;
   z-index: 1;
   margin-top: -2rem; //IE11 fallback
   margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
-  .pfe-card__header + &,
-  .pfe-card__body + & {  
-      margin-top: calc(-1 * #{pfe-local(spacing)}) !important;
+  :host(.has_header) & {
+    padding-top: #{pfe-local(spacing)};
   }
 }
 

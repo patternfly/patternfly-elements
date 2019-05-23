@@ -34,6 +34,12 @@
         <h2 slot="pfe-card--header">Card 3</h2>
         <img src="http://placekitten.com/1000/500" pfe-overflow="top right bottom left"/>
       </pfe-card>
+
+      <pfe-card id="card4">
+        <h2 slot="pfe-card--header">Card 4</h2>
+        <p>This is pfe-card.</p>
+        <div slot="pfe-card--footer">Text in footer</div>
+      </pfe-card>
     </div>
 
     <script>
@@ -244,6 +250,21 @@
           });
         });
 
+        test("it should add or remove has_body, has_header, has_footer attributes if the slots exist", done => {
+          const card = document.querySelector("#card4");
+          assert.isTrue(card.hasAttribute("has_header"));
+          assert.isTrue(card.hasAttribute("has_body"));
+          assert.isTrue(card.hasAttribute("has_footer"));
+
+          card.querySelector("h2").remove();
+          card.querySelector("div").remove();
+
+          flush(() => {
+            assert.isFalse(card.hasAttribute("has_header"));
+            assert.isFalse(card.hasAttribute("has_footer"));
+            done();
+          })
+        });
       });
     </script>
   </body>

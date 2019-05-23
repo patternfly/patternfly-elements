@@ -50,8 +50,7 @@ $pfe-cta__arrow-size:                        0.313em;
   color:            #{pfe-local(Color)};
   background-color: #{pfe-local(BackgroundColor)};
 
-  // padding:       #{pfe-local(Padding)};
-  padding: 16px 32px;
+  padding:       #{pfe-local(Padding)};
   border-radius: #{pfe-local(BorderRadius)};
   border:        #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
 
@@ -94,7 +93,7 @@ $pfe-cta__arrow-size:                        0.313em;
 :host([priority="primary"],[priority="secondary"]),
 :host([pfe-priority="primary"],[pfe-priority="secondary"]) {
   // Button padding and border radius settings
-  --pfe-cta--Padding:      calc(#{pfe-var(container-padding)} * 0.5) calc(#{pfe-var(container-padding)} * 2);
+  --pfe-cta--Padding:      #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
   --pfe-cta--BorderRadius: #{pfe-var(ui--border-radius)};
   // Arrow styles
   --pfe-cta__arrow--Display:  none;

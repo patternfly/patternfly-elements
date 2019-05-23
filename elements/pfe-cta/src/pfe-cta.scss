@@ -35,6 +35,7 @@ $pfe-cta__arrow-size:                        0.313em;
 
 // Style the slotted link element
 ::slotted(a) {
+  position: relative;
   transition: all #{pfe-var(animation-timing)};
 
   display:      flex;
@@ -49,7 +50,8 @@ $pfe-cta__arrow-size:                        0.313em;
   color:            #{pfe-local(Color)};
   background-color: #{pfe-local(BackgroundColor)};
 
-  padding:       #{pfe-local(Padding)};
+  // padding:       #{pfe-local(Padding)};
+  padding: 16px 32px;
   border-radius: #{pfe-local(BorderRadius)};
   border:        #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
 
@@ -57,18 +59,19 @@ $pfe-cta__arrow-size:                        0.313em;
     margin-left: calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
 
     // Bring in the styles for the CSS arrow
-    @include pfe-arrow(
-      $type: right,
-      $color: #{pfe-local(Color)},
-      $width: $pfe-cta__arrow-size,
-      $height: $pfe-cta__arrow-size,
-      $pseudo: true
-    );
+    // @include pfe-arrow(
+    //   $type: right,
+    //   $color: #{pfe-local(Color)},
+    //   $width: $pfe-cta__arrow-size,
+    //   $height: $pfe-cta__arrow-size,
+    //   $pseudo: true
+    // );
 
     // This overrides a display style from the pfe-arrow mixin
     display:     #{pfe-local($cssvar: Display, $region: arrow)};
   }
 }
+
 
 // Loop through states and apply update to color
 @each $state in (hover, focus) {
@@ -78,6 +81,12 @@ $pfe-cta__arrow-size:                        0.313em;
   }
 }
 
+::slotted(a:focus) {
+  &::before {
+    content: " ";
+    @include pfe-cta-focus;
+  }
+}
 
 /// ===========================================================================
 /// Styles for "Button" CTAs
@@ -99,6 +108,12 @@ $pfe-cta__arrow-size:                        0.313em;
       --pfe-broadcasted--color--ui-link--#{$state}: #{pfe-local(aux--#{$state})};
     }
   }
+
+  // &:focus {
+  //   &::before {
+  //     @include pfe-cta-focus;
+  //   }
+  // }
 }
 
 /// ===========================================================================

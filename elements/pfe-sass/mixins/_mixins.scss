@@ -406,3 +406,17 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     padding: 0 #{$pfe-expand_button--padding--wide} #{$pfe-expand_button--padding} #{$pfe-expand_chevron--padding};
   }
 }
+
+@mixin pfe-cta-focus {
+  content: "";
+  border: 1px solid #fff;
+  outline: none;
+  left: 2px;
+  top: 2px;
+  right: 2px;
+  bottom: 2px;
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 2px;
+}

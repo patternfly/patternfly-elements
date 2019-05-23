@@ -115,6 +115,9 @@ class PfeCard extends PFElement {
 
   constructor() {
     super(PfeCard, { type: PfeCard.PfeType });
+    this._observer = new MutationObserver(() => {
+      this._mapSchemaToSlots(this.tag, this.slots);
+    });
   }
 
   connectedCallback() {
@@ -128,6 +131,12 @@ class PfeCard extends PFElement {
     if (this.backgroundColor) {
       this._updateContext(this.backgroundColor);
     }
+
+    this._observer.observe(this, { childList: true });
+  }
+
+  disconnectedCallback() {
+    this._observer.disconnect();
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {

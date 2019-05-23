@@ -80,7 +80,10 @@ class PFElement extends HTMLElement {
       window.ShadyCSS.styleElement(this);
     }
 
+    // maybe we should use just the attribute instead of the class?
+    // https://github.com/angular/angular/issues/15399#issuecomment-318785677
     this.classList.add("PFElement");
+    this.setAttribute("pfelement", "");
 
     if (typeof this.props === "object") {
       this._mapSchemaToProperties(this.tag, this.props);
@@ -137,11 +140,11 @@ class PFElement extends HTMLElement {
       // Initialize the value to null
       this[attr].value = null;
 
-      if(typeof this[attr].prefixed !== "undefined") {
+      if (typeof this[attr].prefixed !== "undefined") {
         hasPrefix = this[attr].prefixed;
       }
 
-      if(hasPrefix) {
+      if (hasPrefix) {
         attrName = `${prefix}${attr}`;
       }
 
@@ -198,25 +201,25 @@ class PFElement extends HTMLElement {
   _mapSchemaToSlots(tag, slots) {
     // Loop over the properties provided by the schema
     Object.keys(slots).forEach(slot => {
-      let slotObj    = slots[slot];
+      let slotObj = slots[slot];
       let slotExists = false;
       // If it's a named slot, look for that slot definition
-      if(slotObj.namedSlot) {
-        if(this.has_slots(`${tag}--${slot}`).length > 0) {
+      if (slotObj.namedSlot) {
+        if (this.has_slots(`${tag}--${slot}`).length > 0) {
           slotExists = true;
         }
-      // If it's the default slot, look for elements not assigned to a slot
+        // If it's the default slot, look for elements not assigned to a slot
       } else {
-        if([...this.querySelectorAll(":not([slot])")].length > 0) {
+        if ([...this.querySelectorAll(":not([slot])")].length > 0) {
           slotExists = true;
         }
       }
 
-      // If the slot exists, attach a class to the parent to indicate that
-      if(slotExists) {
-        this.classList.add(`has_${slot}`);
+      // If the slot exists, attach an attribute to the parent to indicate that
+      if (slotExists) {
+        this.setAttribute(`has_${slot}`, "");
       } else {
-        this.classList.remove(`has_${slot}`);
+        this.removeAttribute(`has_${slot}`);
       }
     });
   }

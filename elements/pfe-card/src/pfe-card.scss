@@ -41,7 +41,7 @@ $LOCAL: card;
   --pfe-card--bg:           #{pfe-local(BackgroundColor)};
 }
 
-:host(.PFElement) {
+:host([pfelement]) {
   // Start of style declarations for host element
   display: flex;
   flex-direction: column;
@@ -80,7 +80,7 @@ $LOCAL: card;
     --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--#{$color}--link--visited)};
     --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--#{$color}--link--hover)};
     --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--#{$color}--link--focus)};
-    
+
   }
 }
 
@@ -97,7 +97,7 @@ $LOCAL: card;
   z-index: 1;
   margin-top: -2rem; //IE11 fallback
   margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
-  :host(.has_header) & {
+  :host([has_header]) & {
     padding-top: #{pfe-local(spacing)};
   }
 }

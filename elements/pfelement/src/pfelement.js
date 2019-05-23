@@ -1,5 +1,4 @@
 import { autoReveal } from "./reveal.js";
-import { each } from "bluebird";
 const prefix = "pfe-";
 
 class PFElement extends HTMLElement {

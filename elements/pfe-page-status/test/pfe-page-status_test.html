@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../pfe-page-status.js"></script>
+  </head>
+  <body>
+
+    <pfe-page-status>
+      This is the element content.
+    </pfe-page-status>
+
+    <script>
+      const banner = [...document.querySelectorAll("pfe-page-status")];
+
+      const statuses = {
+        default: "#606060",
+        moderate: "#ffc024",
+        warning: "#ffc024",
+        important: "#d73401",
+        critical: "#bb0000",
+        success: "#2e7d32",
+        info: "#0277bd",
+        normal: "#0477a4",
+        accent: "#fe460d",
+        complement: "#464646",
+      };
+      // Converts a hex value to RGBA
+      const hexToRgb = hex => {
+        const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/.exec(hex);
+          return [
+              parseInt(r, 16),
+              parseInt(g, 16),
+              parseInt(b, 16)
+           ];
+      };
+      // Gets the rgba value from an element
+      const getColor = (el, prop) => {
+        const [, r, g, b] = getComputedStyle(el, null)[prop].match(/rgba?\((\d+),\s+(\d+),\s+(\d+).*\)/)
+          .map(n => +n);
+        return [r, g, b];
+      };
+
+      suite('<pfe-page-status>', () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(document.querySelector('pfe-page-status'), customElements.get("pfe-page-status", 'pfe-page-status should be an instance of pfePageStatus'));
+        });
+
+        // Iterate over the colors object to test expected background color results
+        Object.entries(statuses).forEach(set => {
+          test(`it should have a background color of ${set[1]} when pfe-status is ${set[0]}`, () => {
+            // If this is not the default theme, update the variable
+            if(set[0] !== "default") {
+              //Update the color attribute
+              banner[0].setAttribute("pfe-status", set[0]);
+            }
+            // Test that the color is rendering as expected
+            assert.deepEqual(getColor(banner[0], "background-color"), hexToRgb(set[1]));
+          });
+        });
+
+      });
+    </script>
+  </body>
+</html>

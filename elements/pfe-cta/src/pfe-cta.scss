@@ -10,10 +10,10 @@ $pfe-cta__arrow-size:                        0.313em;
 /// DEFAULT CTA
 /// ===========================================================================
 :host {
-  --pfe-cta--main:                     #{pfe-color(ui-link)};
-  --pfe-cta--main--hover:              #{pfe-color(ui-link--hover)};
-  --pfe-cta--main--focus:              #{pfe-color(ui-link--focus)};
-  --pfe-cta--main--visited:            #{pfe-color(ui-link--visited)};
+  --pfe-cta--main:                     #{pfe-apply-broadcast(ui-link)};
+  --pfe-cta--main--hover:              #{pfe-apply-broadcast(ui-link--hover)};
+  --pfe-cta--main--focus:              #{pfe-apply-broadcast(ui-link--focus)};
+  --pfe-cta--main--visited:            #{pfe-apply-broadcast(ui-link--visited)};
   --pfe-cta--aux:                      transparent;
   --pfe-cta--aux--hover:               transparent;
 
@@ -104,10 +104,6 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--main--hover:   #{pfe-color(ui-base--hover)};
   --pfe-cta--aux:           #{pfe-color(ui-base--text)};
   --pfe-cta--aux--hover:    #{pfe-color(ui-base--text--hover)};
-  //--pfe-cta--main:          #{pfe-broadcast(ui-base, ui-link)};
-  //--pfe-cta--main--hover:   #{pfe-broadcast(ui-base--hover)};
-  //--pfe-cta--aux:           #{pfe-broadcast(ui-base--text)};
-  //--pfe-cta--aux--hover:    #{pfe-broadcast(ui-base--text--hover)};
 
   ::slotted(a) {
     display: inline-block;
@@ -140,13 +136,12 @@ $pfe-cta__arrow-size:                        0.313em;
   // & ::slotted(a:visited),   TBD
 }
 
-
 /// ===========================================================================
 /// ON DARK
 /// ===========================================================================
 :host([on="dark"]) {
-  --pfe-cta--main:        #{pfe-color(text--on-dark)};
-  --pfe-cta--main--hover: #{pfe-color(ui-link--on-dark--hover)};
+  --pfe-cta--main:        #{pfe-color(surface--darker--ui-link)};
+  --pfe-cta--main--hover: #{pfe-color(surface--darker--ui-link--hover)};
   --pfe-cta--aux:         transparent;
   --pfe-cta--aux--hover:  transparent;
 }

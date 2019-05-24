@@ -43,11 +43,7 @@ $LOCAL: band;
   --pfe-band--gutter--horizontal:               calc(#{pfe-var(container-spacer)} * 3);
 
   // Text colors
-  --pfe-broadcasted--color--text:              #{pfe-color(surface--base--text)};
-  --pfe-broadcasted--color--ui-link:           #{pfe-color(surface--base--ui-link)};
-  --pfe-broadcasted--color--ui-link--visited:  #{pfe-color(surface--base--ui-link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:    #{pfe-color(surface--base--ui-link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:    #{pfe-color(surface--base--ui-link--focus)};
+  @include pfe-set-broadcast(base);
 
   // Band width logic
   // Initialize at mobile breakpoint
@@ -97,11 +93,7 @@ $LOCAL: band;
 @each $color in (darker, darkest, accent, complement, lighter, lightest) {
   :host([pfe-color="#{$color}"]) {
     --pfe-band--BackgroundColor:                  #{pfe-color(surface--#{$color})};
-    --pfe-broadcasted--color--text:               #{pfe-color(surface--#{$color}--text)};
-    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--#{$color}--link)};
-    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--#{$color}--link--visited)};
-    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--#{$color}--link--hover)};
-    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--#{$color}--link--focus)};
+    @include pfe-set-broadcast($color);
   }
 }
 

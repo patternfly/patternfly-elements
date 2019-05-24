@@ -10,11 +10,3 @@ $LOCAL: accordion;
   color: #{pfe-apply-broadcast(text)};
 }
 
-:host([on="dark"]) {
-  @include pfe-set-broadcast(darkest);
-}
-
-:host([on="light"]) {
-  @include pfe-set-broadcast(lightest);
-}
-

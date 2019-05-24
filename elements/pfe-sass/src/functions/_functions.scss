@@ -200,8 +200,6 @@
     @return $result;
 }
 
-
-
 /// Var
 ///
 /// Returns CSS Var stack with exposed theme Var and respective SCSS fallback
@@ -229,8 +227,6 @@
 
     @return var(--#{$repo}-theme--#{$category}#{$cssvar}, #{map-get($map, $cssvar)});
 }
-
-
 
 /// Var Fallback
 ///
@@ -327,7 +323,6 @@ $map: $pfe-colors) {
       @warn "--#{$repo}-broadcasted--color--#{$broadcast} variable is not currently supported.";
     }
     @else {
-      @return var(
-        --#{$repo}-broadcasted--color--#{to-string($broadcast,'--')});
+      @return var(--#{$repo}-broadcasted--color--#{to-string($broadcast,'--')}, #{pfe-color(#{to-string($broadcast,'--')})});
     }
 }

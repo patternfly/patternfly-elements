@@ -1,0 +1,31 @@
+.PFElement {
+    font-family: var(--pfe-theme--font-family);
+    color: var(--pfe-broadcasted--color--text);
+}
+.PFElement a {
+    color: var(--pfe-broadcasted--color--ui-link);
+}
+.PFElement a:visited {
+    color: var(--pfe-broadcasted--color--ui-link--visited);
+}
+.PFElement a:hover {
+    color: var(--pfe-broadcasted--color--ui-link--hover);
+}
+.PFElement a:focus {
+    color: var(--pfe-broadcasted--color--ui-link--focus);
+}
+.PFElement > *:first-child {
+    margin-top: 0;
+}
+.PFElement h1,
+.PFElement h2,
+.PFElement h3,
+.PFElement h4,
+.PFElement h5,
+.PFElement h6 {
+    font-family: var(--pfe-theme--font-family--heading);
+}
+.PFElement pre,
+.PFElement code {
+    font-family: var(--pfe-theme--font-family--code);
+}  

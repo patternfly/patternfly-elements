@@ -14,6 +14,10 @@ class PfeMarkdown extends PFElement {
     return "pfe-markdown.scss";
   }
 
+  get schemaUrl() {
+    return "pfe-markdown.json";
+  }
+
   get markdown() {
     return this._markdown;
   }

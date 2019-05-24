@@ -2,7 +2,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-source hugo-check.sh
+source $DIR/hugo-check.sh
 
 hugoNoisyCheck || exit 1
 

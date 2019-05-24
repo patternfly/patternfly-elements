@@ -82,20 +82,30 @@ class PfeCard extends PFElement {
     return "pfe-card";
   }
 
-  get styleUrl() {
-    return "pfe-card.scss";
+  get schemaUrl() {
+    return "pfe-card.json";
   }
 
   get templateUrl() {
     return "pfe-card.html";
   }
 
+  get styleUrl() {
+    return "pfe-card.scss";
+  }
+
+  get imageSrc() {
+    return this.getAttribute("pfe-img-src");
+  }
+
   get backgroundColor() {
-    return this.getAttribute("color") || "base";
+    return (
+      this.getAttribute("pfe-color") || this.getAttribute("color") || "base"
+    );
   }
 
   static get observedAttributes() {
-    return ["color"];
+    return ["pfe-color", "pfe-img-src", "pfe-size"];
   }
 
   // Declare the type of this component
@@ -105,32 +115,65 @@ class PfeCard extends PFElement {
 
   constructor() {
     super(PfeCard, { type: PfeCard.PfeType });
+    this._observer = new MutationObserver(() => {
+      this._mapSchemaToSlots(this.tag, this.slots);
+    });
   }
 
   connectedCallback() {
     super.connectedCallback();
+
+    // Initialize the background image attachment
+    if (this.imageSrc) {
+      this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
+    }
     // Initialize the context setting for the children elements
     if (this.backgroundColor) {
       this._updateContext(this.backgroundColor);
     }
+
+    this._observer.observe(this, { childList: true });
+  }
+
+  disconnectedCallback() {
+    this._observer.disconnect();
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
-    if (attr === "color") {
-      this._colorChanged(attr, oldValue, newValue);
+    // Strip the prefix from the attribute
+    attr = attr.replace("pfe-", "");
+    // If the observer is defined in the attribute properties
+    if (this[attr] && this[attr].observer) {
+      // Get the observer function
+      let observer = this[this[attr].observer].bind(this);
+      // If it's a function, allow it to run
+      if (typeof observer === "function") observer(attr, oldValue, newValue);
     }
+  }
+
+  _basicAttributeChanged(attr, oldValue, newValue) {
+    this[attr].value = newValue;
   }
 
   // Update the color attribute and contexts
   _colorChanged(attr, oldValue, newValue) {
+    this[attr].value = newValue;
     // If the new value has a dark background, update children elements
     this._updateContext(newValue);
   }
 
+  // Update the background image
+  _imgSrcChanged(attr, oldValue, newValue) {
+    // Set the image as the background image
+    this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
+  }
+
   // Set the children's context if parent background is dark
   _updateContext(context) {
-    if (["darkest", "dark", "complement", "accent"].includes(context)) {
+    if (
+      ["darkest", "darker", "dark", "complement", "accent"].includes(context)
+    ) {
       ["pfe-cta"].forEach(elementName => {
         const els = [...this.querySelectorAll(`${elementName}`)];
         els.forEach(el => {
@@ -146,4 +189,4 @@ class PfeCard extends PFElement {
 
 PFElement.create(PfeCard);
 
-export default PfeCard;
+export { PfeCard as default };

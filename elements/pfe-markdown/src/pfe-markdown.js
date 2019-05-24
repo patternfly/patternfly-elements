@@ -57,18 +57,18 @@ class PfeMarkdown extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this._markdownContainer = this.querySelector("[pfe-markdown-container]");
-    this._markdownContainer.style.display = "none";
-
     this._markdownRender = document.createElement("div");
     this._markdownRender.setAttribute("pfe-markdown-render", "");
     this.appendChild(this._markdownRender);
 
-    if (document.readyState === "complete") {
-      this._init();
-    } else {
-      document.addEventListener("readystatechange", this._readyStateChangeHandler);
-    }
+    this.shadowRoot.querySelector("slot").addEventListener("slotchange", () => {
+      if (!this._markdownContainer) {
+        this._markdownContainer = this.querySelector("[pfe-markdown-container]");
+        this._markdownContainer.style.display = "none";
+
+        this._init();
+      }
+    });
   }
 
   disconnectedCallback() {

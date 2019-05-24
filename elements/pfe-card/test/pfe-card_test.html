@@ -162,6 +162,22 @@
           );
         });
 
+        test("it should add or remove has_body, has_header, has_footer attributes if the slots exist", done => {
+          const card = document.querySelector("#card4");
+          assert.isTrue(card.hasAttribute("has_header"));
+          assert.isTrue(card.hasAttribute("has_body"));
+          assert.isTrue(card.hasAttribute("has_footer"));
+
+          card.querySelector("h2").remove();
+          card.querySelector("div").remove();
+
+          flush(() => {
+            assert.isFalse(card.hasAttribute("has_header"));
+            assert.isFalse(card.hasAttribute("has_footer"));
+            done();
+          })
+        });
+
         // Iterate over the colors object to test expected background color results
         Object.entries(colors).forEach(set => {
           test(`it should have a background color of ${set[1]} when pfe-color is ${set[0]}`, () => {
@@ -248,22 +264,6 @@
               assert.equal(getComputedStyle(card[0], null)[property.css], property.custom, `${property.css} should equal ${property.custom}`);
             }, 50);
           });
-        });
-
-        test("it should add or remove has_body, has_header, has_footer attributes if the slots exist", done => {
-          const card = document.querySelector("#card4");
-          assert.isTrue(card.hasAttribute("has_header"));
-          assert.isTrue(card.hasAttribute("has_body"));
-          assert.isTrue(card.hasAttribute("has_footer"));
-
-          card.querySelector("h2").remove();
-          card.querySelector("div").remove();
-
-          flush(() => {
-            assert.isFalse(card.hasAttribute("has_header"));
-            assert.isFalse(card.hasAttribute("has_footer"));
-            done();
-          })
         });
       });
     </script>

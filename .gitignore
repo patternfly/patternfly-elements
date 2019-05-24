@@ -48,4 +48,4 @@ test/.wct-kludge
 *.swp
 
 # Kube assets
-docs/resources/_gen/assets
+./docs/resources/_gen

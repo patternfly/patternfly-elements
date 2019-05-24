@@ -4,23 +4,64 @@ PFElements Card Element
 
 ```html
 <pfe-card>
-  <h2 slot="header">RH Card</h2>
-  This is the pfe-card body.
-  <div slot="footer">Text in footer</div>
+  <h2 slot="pfe-card--header">Card header</h2>
+  <p>This is the pfe-card body.</p>
+  <pfe-cta slot="pfe-card--footer">
+    <a href="#">Footer link</a>
+  </pfe-cta>
 </pfe-card>
 ```
 
 ## Slots
+All slots are optional.  If the slot is not defined, the content will be added to the `body` region of the card.
 
-### header
-If this slot is used, we expect a heading level tag (h1, h2, h3, h4, h5, h6) to
-be used here.
+### Header
+If this slot is used, we expect a heading level tag (h1, h2, h3, h4, h5, h6).  An icon, svg, or use of the icon component are also valid in this region.
 
 ### Default slot (body)
-Any content that is not designated for the header or footer slot, will go to this slot.
+Any content that is not designated for the `header` or `footer` slot, will go to this slot.
 
-### footer
-Use this slot for anything that you want in the footer of the card.
+### Footer
+Use this slot for anything that you want to be stuck to the base of the card.  This region is bottom-aligned.
+
+## Attributes
+
+<style>
+    .color-preview {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        vertical-align: middle;
+        background-color: var(--bg, #ffffff);
+        border: 1px solid #444444;
+    }
+</style>
+
+There are several attributes available for customizing the visual treatment of this container.
+
+- `pfe-color`: Options include darkest, darker, accent, complement, lighter, lightest.  The card has a default value of `#dfdfdf`. Your theme will influence these colors so check there first if you are seeing inconsistencies.
+
+    | color | hex |
+    |-------|-----|
+    | default | <span class="color-preview" style="--bg:#dfdfdf"></span> #dfdfdf |
+    | darker | <span class="color-preview" style="--bg:#464646"></span> #464646 |
+    | darkest | <span class="color-preview" style="--bg:#131313"></span> #131313 |
+    | accent | <span class="color-preview" style="--bg:#fe460d"></span> #fe460d |
+    | complement | <span class="color-preview" style="--bg:#0477a4"></span> #0477a4 |
+    | lighter | <span class="color-preview" style="--bg:#ececec"></span> #ececec |
+    | lightest | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
+
+- `pfe-img-src`: Optional background image applied to the entire card container.  Alignment of this image can be managed using the `--pfe-card--BackgroundPosition` variable which is set to `center center` by default.
+- `pfe-size`: Optionally adjusts the padding on the container.  Accepts: `small`.
+- `pfe-overflow`: Optionally allows an image or element to overflow the padding on the container. This property should be added to the direct child of the slotm such as on an image tag; should be added to the element that you want to overflow the container. Accepts: `top`, `right`, `bottom`, `left`.
+
+## Variables
+There are several powerful variables available to hook into and override default styles.
+
+- Background color: Though using the `pfe-color` attribute is strongly recommended when setting the background color for the band, you can also use completely custom colors by updating the `--pfe-card--BackgroundColor` variable.  If you update this value manually, you should also update the `--pfe-broadcasted--color--text`, `--pfe-broadcasted--color--ui-link`[--visited, --hover, --focus] at the same time so that the text and links rendered on this background color show up correctly.
+- Background position: This is designed for use with the `pfe-img-src` attribute to allow you to align your background image.  Default value is `center center`. **Variable name:** `--pfe-card--BackgroundPosition`.
+- Border: This allows the customization of a border around the entire container.  There is a variable for the entire border shorthand (transparent by default) or you can hook into the individual properties. **Variable name:** `--pfe-card--BorderRadius` and `--pfe-card--Border` or `--pfe-card--BorderWeight`, `--pfe-card--BorderStyle`, `--pfe-card--BorderColor`.
+- Padding: You can customize the padding around the outside of the card container by connecting to either the shortcut padding variable or just one or more of the individual padding regions. **Variable names:** `--pfe-card--Padding` or `--pfe-card--PaddingTop`, `--pfe-card--PaddingRight`, `--pfe-card--PaddingBottom`, `--pfe-card--PaddingLeft`.
 
 ## Test
 

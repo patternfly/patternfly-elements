@@ -155,7 +155,8 @@ module.exports = function factory({
 
   task("merge", () => {
     return src(`${elementName}.js`, {
-      cwd: paths.source
+      cwd: paths.source,
+      allowEmpty: true
     })
       .pipe(
         replace(
@@ -283,7 +284,8 @@ module.exports = function factory({
 
   task("compile", () => {
     return src(`${elementName}.js`, {
-      cwd: paths.compiled
+      cwd: paths.compiled,
+      allowEmpty: true
     })
       .pipe(
         replace(

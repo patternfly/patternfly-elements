@@ -44,10 +44,10 @@ $LOCAL: band;
 
   // Text colors
   --pfe-broadcasted--color--text:              #{pfe-color(surface--base--text)};
-  --pfe-broadcasted--color--ui-link:           #{pfe-color(surface--base--link)};
-  --pfe-broadcasted--color--ui-link--visited:  #{pfe-color(surface--base--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:    #{pfe-color(surface--base--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:    #{pfe-color(surface--base--link--focus)};
+  --pfe-broadcasted--color--ui-link:           #{pfe-color(surface--base--ui-link)};
+  --pfe-broadcasted--color--ui-link--visited:  #{pfe-color(surface--base--ui-link--visited)};
+  --pfe-broadcasted--color--ui-link--hover:    #{pfe-color(surface--base--ui-link--hover)};
+  --pfe-broadcasted--color--ui-link--focus:    #{pfe-color(surface--base--ui-link--focus)};
 
   // Band width logic
   // Initialize at mobile breakpoint

@@ -71,7 +71,7 @@ $pfe-expand_button--padding-factor:  0.75;
 %pfe-expand-button-color-base {
     --pfe-expanded--main:         #{pfe-color(surface--base)};
     --pfe-expanded--aux:          #{pfe-color(surface--base--text)};
-    --pfe-expanded--focus:        #{pfe-color(surface--base--link--focus)};
+    --pfe-expanded--focus:        #{pfe-color(surface--base--ui-link--focus)};
 }
 
 %pfe-expand-button-color-lightest {

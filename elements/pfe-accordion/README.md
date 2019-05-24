@@ -62,7 +62,7 @@ Changes the color of `<pfe-accordion-header>`
 | `--pfe-theme--color--surface--lightest--link--focus`   | Focus border color for lightest `<pfe-accordion-header>`   | $pfe-color--surface--lightest--link--focus   |
 | `--pfe-theme--color--surface--base`                    | Base `<pfe-accordion-header>` color option                 | $pfe-color--surface--base                    |
 | `--pfe-theme--color--surface--base--text`              | Base `<pfe-accordion-header>` text color option            | $pfe-color--surface--base--text              |
-| `--pfe-theme--color--surface--base--link--focus`       | Focus border color for base `<pfe-accordion-header>`       | $pfe-color--surface--base--link--focus       |
+| `--pfe-theme--color--surface--base--ui-link--focus`       | Focus border color for base `<pfe-accordion-header>`       | $pfe-color--surface--base--ui-link--focus       |
 | `--pfe-theme--color--surface--darker`                  | Dark `<pfe-accordion-header>` color option                 | $pfe-color--surface--darker                  |
 | `--pfe-theme--color--surface--darker--text`            | Dark `<pfe-accordion-header>` text color option            | $pfe-color--surface--darker--text            |
 | `--pfe-theme--color--surface--darker--link--focus`     | Focus border color for dark `<pfe-accordion-header>`       | $pfe-color--surface--darker--link--focus     |

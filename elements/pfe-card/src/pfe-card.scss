@@ -26,11 +26,7 @@ $LOCAL: card;
   --pfe-card--BackgroundPosition: center center;
 
   // Broadcasted values set to match background color
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
+  @include pfe-set-broadcast(base);
 
   --pfe-card__header--BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)});
   --pfe-card__header--Color:           var(--pfe-broadcasted--color--text);
@@ -75,11 +71,7 @@ $LOCAL: card;
   :host([color="#{$label}"]),
   :host([pfe-color="#{$label}"]) {
     --pfe-card--BackgroundColor:                  #{pfe-color(surface--#{$color})};
-    --pfe-broadcasted--color--text:               #{pfe-color(surface--#{$color}--text)};
-    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--#{$color}--link)};
-    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--#{$color}--link--visited)};
-    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--#{$color}--link--hover)};
-    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--#{$color}--link--focus)};
+    @include pfe-set-broadcast($color);
 
   }
 }

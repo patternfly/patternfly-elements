@@ -23,7 +23,7 @@ $LOCAL: tabs;
 
 :host {
   display: block;
-  color: #{pfe-radio(color--text)};
+  color: #{pfe-apply-broadcast(text)};
 
   [tabindex] {
   	display: flex;
@@ -36,7 +36,7 @@ $LOCAL: tabs;
 
 :host([on="dark"]) {
 	color: #{pfe-colors(text--on-dark)};
-  @include pfe-theme($theme: "dark");
+  @include pfe-set-broadcast(darkest);
 }
 
 /* Horizontal */

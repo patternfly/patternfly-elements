@@ -3,10 +3,28 @@
 $LOCAL: accordion;
 
 :host {
+  --pfe-accordion--main:         #{pfe-color(surface--lightest)};
+  --pfe-accordion--aux:          #{pfe-color(surface--lightest--text)};
+
+  --pfe-accordion--accent:       transparent;
+
   display: block;
   position: relative;
   overflow: hidden;
   margin: 0;
-  color: #{pfe-apply-broadcast(text)};
 }
 
+// Only invoke the light broadcast settings if on="dark" is not present
+:host(:not([on="dark"])) {
+  @include pfe-set-broadcast(lightest);
+}
+
+
+/// ===========================================================================
+/// CONTEXT STYLES, ON=DARK
+/// ===========================================================================
+
+:host([on="dark"]) {
+  --pfe-accordion--main:         transparent;
+  --pfe-accordion--aux:          #{pfe-apply-broadcast(text)};
+}

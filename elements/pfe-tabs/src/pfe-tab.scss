@@ -9,8 +9,8 @@ $LOCAL: tabs;
 :host {
   --pfe-tabs--main:         transparent;
   --pfe-tabs--aux:          #{pfe-color(ui-disabled--text)}; 
-  --pfe-tabs--link:         #{pfe-color(surface--lightest--link)};
-  --pfe-tabs--focus:        #{pfe-color(surface--lightest--link--focus)};
+  --pfe-tabs--link:         #{pfe-color(surface--lightest--ui-link)};
+  --pfe-tabs--focus:        #{pfe-color(surface--lightest--ui-link--focus)};
   --pfe-tabs--highlight:    #{pfe-color(ui-accent)};
 
   position: relative;

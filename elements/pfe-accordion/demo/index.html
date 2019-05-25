@@ -20,7 +20,6 @@
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require([
-
       '../pfe-accordion.umd.js',
       '../../pfe-band/pfe-band.umd.js'
     ])</script>
@@ -47,6 +46,11 @@
       }
       .dark-background {
         background-color: #191e84;
+        --pfe-broadcasted--color--text: #fff;
+        --pfe-broadcasted--color--ui-link: #99ccff;
+        --pfe-broadcasted--color--ui-link--hover: #cce6ff;
+        --pfe-broadcasted--color--ui-link--visited: #b38cd9;
+        --pfe-broadcasted--color--ui-link--focus: #cce6ff;
       }
       .white-background {
         background-color: #fff;
@@ -56,6 +60,11 @@
       }
       .dark-gray-background {
         background-color: #222591;
+        --pfe-broadcasted--color--text: #fff;
+        --pfe-broadcasted--color--ui-link: #99ccff;
+        --pfe-broadcasted--color--ui-link--hover: #cce6ff;
+        --pfe-broadcasted--color--ui-link--visited: #b38cd9;
+        --pfe-broadcasted--color--ui-link--focus: #cce6ff;
       }
       .light-gray-background {
         background-color: #f8f8f8;
@@ -73,6 +82,8 @@
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure out of thin air will not last, it is illegal in the wizarding world.</p>
+          <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure out of thin air will not last, it is illegal in the wizarding world.</p>
+          <pfe-cta><a href="#">Foo</a></pfe-cta>
         </pfe-accordion-panel>
         <pfe-accordion-header>
           <h3>Why doesn't Harry have a portrait of his parents?</h3>

@@ -77,7 +77,7 @@ $pfe-expand_button--padding-factor:  0.75;
 %pfe-expand-button-color-lightest {
     --pfe-expanded--main:         #{pfe-color(surface--lightest)};
     --pfe-expanded--aux:          #{pfe-color(surface--lightest--text)};
-    --pfe-expanded--focus:        #{pfe-color(surface--lightest--link--focus)};
+    --pfe-expanded--focus:        #{pfe-color(surface--lightest--ui-link--focus)};
 }
 
 %pfe-expand-button-color-lightest-expanded {
@@ -89,23 +89,23 @@ $pfe-expand_button--padding-factor:  0.75;
 %pfe-expand-button-color-dark {
     --pfe-expanded--main:         #{pfe-color(surface--darker)};
     --pfe-expanded--aux:          #{pfe-color(surface--darker--text)};
-    --pfe-expanded--focus:        #{pfe-color(surface--darker--link--focus)};
+    --pfe-expanded--focus:        #{pfe-color(surface--darker--ui-link--focus)};
 }
 
 %pfe-expand-button-color-darkest {
     --pfe-expanded--main:         #{pfe-color(surface--darkest)};
     --pfe-expanded--aux:          #{pfe-color(surface--darkest--text)};
-    --pfe-expanded--focus:        #{pfe-color(surface--darkest--link--focus)};
+    --pfe-expanded--focus:        #{pfe-color(surface--darkest--ui-link--focus)};
 }
 
 %pfe-expand-button-color-accent {
     --pfe-expanded--main:         #{pfe-color(surface--accent)};
     --pfe-expanded--aux:          #{pfe-color(surface--accent--text)};
-    --pfe-expanded--focus:        #{pfe-color(surface--accent--link--focus)};
+    --pfe-expanded--focus:        #{pfe-color(surface--accent--ui-link--focus)};
 }
 
 %pfe-expand-button-color-complement {
     --pfe-expanded--main:         #{pfe-color(surface--complement)};
     --pfe-expanded--aux:          #{pfe-color(surface--complement--text)};
-    --pfe-expanded--focus:        #{pfe-color(surface--complement--link--focus)};
+    --pfe-expanded--focus:        #{pfe-color(surface--complement--ui-link--focus)};
 }

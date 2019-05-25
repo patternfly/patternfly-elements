@@ -44,6 +44,15 @@
       section {
         margin-bottom: 3rem;
       }
+
+      .dark-background {
+        background-color: #000;
+        --pfe-broadcasted--color--text: #fff;
+        --pfe-broadcasted--color--ui-link: #99ccff;
+        --pfe-broadcasted--color--ui-link--hover: #cce6ff;
+        --pfe-broadcasted--color--ui-link--visited: #b38cd9;
+        --pfe-broadcasted--color--ui-link--focus: #cce6ff;
+      }
     </style>
 
     <noscript>
@@ -54,7 +63,7 @@
   </head>
   <body unresolved>
     <h1>&lt;pfe-tabs&gt;</h1>
-    <section class="example" style="background-color: #000;">
+    <section class="example dark-background">
       <h2 style="color: #fff;">Style: Horizontal earth (on dark background)</h2>
       <pfe-tabs pfe-variant="earth" on="dark">
         <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>

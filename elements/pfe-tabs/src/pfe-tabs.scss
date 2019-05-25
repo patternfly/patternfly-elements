@@ -10,6 +10,7 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 
 :host {
   display: block;
+  color: #{pfe-apply-broadcast(text)};
 
   .panels {
     padding: 0;
@@ -72,28 +73,6 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
   }
 }
 
-:host([on="dark"]) {
-  @include pfe-set-broadcast(darker);
-}
-
-// TODO: address tabs on darker and darkest themes.
-// :host([color="darker"]) {
-//   @include pfe-theme($theme: "darker");
+// :host([on="dark"]) {
+//   @include pfe-set-broadcast(darker);
 // }
-// :host([color="darkest"]) {
-//   @include pfe-theme($theme: "darkest");
-// }
-
-
-// :host([on="light"]) {
-//   @include pfe-theme($theme: "light");
-// }
-
-// TODO: address tabs on lighter and lightest themes.
-// :host([on="lighter"]) {
-//   @include pfe-theme($theme: "lighter");
-// }
-// :host([on="lightest"]) {
-//   @include pfe-theme($theme: "lightest");
-// }
-

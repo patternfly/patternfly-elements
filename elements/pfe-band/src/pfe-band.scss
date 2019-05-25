@@ -79,7 +79,7 @@ $LOCAL: band;
   // Base colors
   background-color:      #{pfe-local(BackgroundColor)};
   background-position:   #{pfe-local(BackgroundPosition)};
-  color:                 #{pfe-radio(color, text)};
+  color:                 #{pfe-apply-broadcast(text)};
 
   // Remove background color for print
   @include pfe-no-print-background;
@@ -92,14 +92,14 @@ $LOCAL: band;
 
 @each $color in (darker, darkest, accent, complement, lighter, lightest) {
   :host([pfe-color="#{$color}"]) {
-    --pfe-band--BackgroundColor:                  #{pfe-color(surface--#{$color})};
+    --pfe-band--BackgroundColor: #{pfe-color(surface--#{$color})};
     @include pfe-set-broadcast($color);
   }
 }
 
 // thinner padding on top & bottom
 :host([pfe-size="small"]) {
-  --pfe-band--Padding:   calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
+  --pfe-band--Padding: calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
 }
 
 .pfe-band {

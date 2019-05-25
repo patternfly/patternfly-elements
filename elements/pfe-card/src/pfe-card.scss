@@ -29,7 +29,7 @@ $LOCAL: card;
   @include pfe-set-broadcast(base);
 
   --pfe-card__header--BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)});
-  --pfe-card__header--Color:           var(--pfe-broadcasted--color--text);
+  --pfe-card__header--Color:           #{pfe-apply-broadcast(text)};
 
   // Add backward support for previous variable naming
   // @TODO deprecate padding and bg in favor of BEM naming
@@ -56,7 +56,7 @@ $LOCAL: card;
   // Base colors
   background-color: #{pfe-local(BackgroundColor)};
   background-position: #{pfe-local(BackgroundPosition)};
-  color: #{pfe-radio(color, text)};
+  color: #{pfe-apply-broadcast(text)};
 }
 
 // @TODO Deprecate "dark" and "light" in favor of "darker" and "lighter"

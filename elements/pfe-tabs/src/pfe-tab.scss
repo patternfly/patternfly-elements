@@ -21,6 +21,7 @@ $LOCAL: tabs;
 
   position: relative;
   display: block;
+  overflow-x: auto;
 
   transition: background-color .3s ease;
 
@@ -62,6 +63,11 @@ $LOCAL: tabs;
 :host([aria-selected="true"]) {
   --pfe-tabs--aux:  #{pfe-apply-broadcast(text)};
   --pfe-tabs--BorderBottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+  z-index: 2;
+}
+
+:host([aria-selected="false"]) {
+  z-index: 1;
 }
 
 /// ===========================================================================
@@ -113,12 +119,7 @@ $LOCAL: tabs;
 }
 
 :host([pfe-variant="earth"]:hover) {
-  --pfe-tabs--main: #{pfe-color(surface--lightest)};
-  --pfe-tabs--aux:  #{pfe-color(surface--lightest--text)}; 
-}
-
-:host([pfe-variant="earth"]:last-of-type:hover) {
-  --pfe-tabs--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  --pfe-tabs--aux:  #{pfe-color(surface--lighter--text)}; 
 }
 
 /// ===========================================================================
@@ -139,14 +140,18 @@ $LOCAL: tabs;
     --pfe-tabs--BorderRight: 0;
     --pfe-tabs--BorderLeft: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
   }
+  
+  :host([vertical][pfe-variant="earth"][aria-selected="true"]:first-of-type) {
+    --pfe-tabs--BorderTop: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  }
+
+  :host([vertical][pfe-variant="earth"][aria-selected="true"]:last-of-type) {
+    --pfe-tabs--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  }
 
   :host([vertical][pfe-variant="earth"][aria-selected="false"]) {
     --pfe-tabs--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
     --pfe-tabs--BorderBottom: 0;
     --pfe-tabs--BorderLeft: #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
-  }
-
-  :host([vertical][pfe-variant="earth"][aria-selected="true"]:last-of-type) {
-    --pfe-tabs--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
   }
 }

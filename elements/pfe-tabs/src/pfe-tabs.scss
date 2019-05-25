@@ -70,6 +70,10 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
     ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
       border-left: 0;
     }
+
+    ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type:hover) {
+      border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    }
   }
 }
 

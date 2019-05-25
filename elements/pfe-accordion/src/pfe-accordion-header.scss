@@ -105,6 +105,10 @@ $LOCAL: accordion;
   }
 }
 
+:host(.animating) {
+  transition: transform 0.3s #{pfe-var(animation-timing)};
+}
+
 :host(:first-child) button {
   --pfe-accordion--BorderTopColor: #{pfe-color(surface--border)};
 }

@@ -44,6 +44,13 @@ $LOCAL: accordion;
   padding: 0 #{$pfe-expand_chevron--padding} #{$pfe-expand_button--padding} #{$pfe-expand_button--padding--wide};
 }
 
+:host(.animating) {
+  display: block;
+  position: relative;
+  
+  transition: height 0.3s ease-in-out;
+}
+
 :host([expanded]) {
   --pfe-accordion--BorderRightColor: #{pfe-color(surface--border)};
   --pfe-accordion--accent: #{pfe-color(surface--lightest--ui-link)};

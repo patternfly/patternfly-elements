@@ -1,0 +1,106 @@
+/*
+ * Copyright 2018 Red Hat, Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+/* Palette of Border Colors */
+/* Palette of Feedback Colors */
+:host {
+  display: block;
+}
+
+:host .panels {
+  padding: 0;
+}
+
+.tabs {
+  --pfe-tabs--BorderColor: var(--pfe-theme--color--surface--border, #d2d2d2);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  border: 0;
+  border-bottom: 1px solid var(--pfe-tabs--BorderColor);
+  border-bottom: var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-tabs--BorderColor);
+}
+
+@media screen and (min-width: 768px) {
+  :host([vertical]) {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  :host([vertical]) .tabs {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    width: 22.22%;
+    border: 0;
+    border-right: 1px solid var(--pfe-tabs--BorderColor);
+    border-right: var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-tabs--BorderColor);
+  }
+  :host([vertical]) .panels {
+    padding: 0;
+    width: 77.78%;
+    padding-right: 1rem;
+    padding-right: var(--pfe-theme--container-padding, 1rem);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  :host([vertical][pfe-variant="earth"]) {
+    padding-top: 1rem;
+    padding-top: var(--pfe-theme--container-padding, 1rem);
+  }
+  :host([vertical][pfe-variant="earth"]) .tabs {
+    padding-left: 0;
+    padding-top: 1rem;
+    padding-top: var(--pfe-theme--container-padding, 1rem);
+  }
+}
+
+:host([pfe-variant="earth"]) .tabs {
+  padding-left: 1rem;
+  padding-left: var(--pfe-theme--container-padding, 1rem);
+}
+
+:host([pfe-variant="earth"]) .tabs ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
+  border-left: 0;
+}
+
+:host([on="dark"]) {
+  --pfe-broadcasted--color--text:               var(--pfe-theme--color--text--on-dark, #fff);
+  --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--ui-link--on-dark, #99ccff);
+  --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--ui-link--on-dark--visited, #b38cd9);
+  --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--ui-link--on-dark--hover, #cce6ff);
+  --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--ui-link--on-dark--focus, #cce6ff);
+}
+
+:host([on="light"]) {
+  --pfe-broadcasted--color--text:               var(--pfe-theme--color--text, #333);
+  --pfe-broadcasted--color--ui-link:            var(--pfe-theme--color--ui-link, #06c);
+  --pfe-broadcasted--color--ui-link--visited:   var(--pfe-theme--color--ui-link--visited, rebeccapurple);
+  --pfe-broadcasted--color--ui-link--hover:     var(--pfe-theme--color--ui-link--hover, #003366);
+  --pfe-broadcasted--color--ui-link--focus:     var(--pfe-theme--color--ui-link--focus, #003366);
+}
+
+/*# sourceMappingURL=pfe-tabs.css.map */

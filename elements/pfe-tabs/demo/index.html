@@ -2,30 +2,33 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PatternFly Elements: pfe-tabs Demo</title>
 
-    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
-
-    <!--
+    <!-- Stylesheets for testing light DOM styles.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
-    <link rel="stylesheet" href="../../../themes/cp-theme/cp-theme.css" /> -->
+    -->
+    
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-layouts.css" />
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script src="/requirejs/require.js"></script>
     <script>require([
       '../pfe-tabs.umd.js'
     ])</script>
 
     <style>
-      body {
-        font-family: Overpass;
-        padding: 0;
-        margin: 0;
-      }
-
       .example,
       .subsection {
         margin: 32px 0px;
@@ -38,20 +41,13 @@
         padding-bottom: 0;
         margin-bottom: 0;
       }
-      h2 {
-        margin-top: 0 !important;
-      }
+
       section {
-        margin-bottom: 3rem;
+        padding: 2rem;
       }
 
       .dark-background {
         background-color: #000;
-        --pfe-broadcasted--color--text: #fff;
-        --pfe-broadcasted--color--ui-link: #99ccff;
-        --pfe-broadcasted--color--ui-link--hover: #cce6ff;
-        --pfe-broadcasted--color--ui-link--visited: #b38cd9;
-        --pfe-broadcasted--color--ui-link--focus: #cce6ff;
       }
     </style>
 
@@ -159,7 +155,7 @@
         </pfe-tab-panel>
       </pfe-tabs>
     </section>
-    <section class="example dark-background">
+    <section class="example dark-background on-dark">
       <h2 style="color: #fff;">Style: Horizontal earth (on dark background)</h2>
       <pfe-tabs pfe-variant="earth" on="dark">
         <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>

@@ -4,23 +4,31 @@
     <meta charset="utf-8">
     <title>PFElements: pfe-avatar Demo</title>
 
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+    
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-layouts.css" />
+
     <noscript>
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
 
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="/requirejs/require.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
 
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <!-- <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script> -->
-    <!-- <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script> -->
-    <!-- <script>require(['../../pfelement/pfelement.umd.js', '../pfe-avatar.umd.js'], function(PFElement) { -->
-    <!--   PFElement.debugLog(true); -->
-    <!--   })</script> -->
-
-    <script type="module" src="../pfe-avatar.js"></script>
+    <script>require([
+      '../pfe-avatar.umd.js'
+    ])</script>
 
     <style type="text/css" media="screen">
       /* :root {

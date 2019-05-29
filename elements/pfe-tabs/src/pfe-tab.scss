@@ -35,8 +35,10 @@ $LOCAL: tabs;
   border-left: #{pfe-local(BorderLeft)};
 
   // Inner style
-  background-color: var(--pfe-tabs--main);
-  color: var(--pfe-tabs--aux);
+  background-color: #{pfe-local(main)};
+  color: #{pfe-local(aux)};
+
+  --pfe-broadcasted--color--text: #{pfe-local(aux)};
 
   text-transform: var(--pfe-tabs__tab--TextTransform, none); // exposing this for RH
   font-weight: #{pfe-var(font-weight--normal)};

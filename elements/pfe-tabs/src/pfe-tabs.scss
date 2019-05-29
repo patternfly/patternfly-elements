@@ -54,11 +54,10 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([vertical][pfe-variant="earth"]) {
-    padding-top: #{pfe-var(container-padding)};
-
     .tabs {
       padding-left: 0;
       padding-top: #{pfe-var(container-padding)};
+      padding-bottom: #{pfe-var(container-padding)};
     }
   }
 }
@@ -76,7 +75,3 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
     }
   }
 }
-
-// :host([on="dark"]) {
-//   @include pfe-set-broadcast(darker);
-// }

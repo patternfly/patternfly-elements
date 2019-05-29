@@ -4,7 +4,6 @@ $LOCAL: tabs;
 
 :host {
   display: block;
-
 	margin: -1px 0 0;
   width: 100%;
   padding: #{pfe-var(container-spacer)} 0;
@@ -26,6 +25,7 @@ $LOCAL: tabs;
   @media screen and (min-width: #{pfe-breakpoint(md)}) {
 		margin: 0;
     width: 100%;
+    min-height: 100%;
     padding: #{pfe-var(container-spacer)} 0;
     padding-left: calc(#{pfe-var(container-spacer)} * 2);
   }
@@ -35,10 +35,7 @@ $LOCAL: tabs;
   @media screen and (min-width: #{pfe-breakpoint(md)}) {
 		margin: 0;
     width: 100%;
-    padding: #{pfe-var(container-spacer)} 0;
-    padding-left: calc(#{pfe-var(container-spacer)} * 2);
     padding: calc(#{pfe-var(container-spacer)} * 2);
-
     border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
     border-left: none;
 	}

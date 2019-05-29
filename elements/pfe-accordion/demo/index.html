@@ -2,23 +2,28 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PFElements: pfe-accordion Demo</title>
+
     <!-- Stylesheets for testing light DOM styles.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
     -->
-    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
+    
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-layouts.css" />
+
     <noscript>
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
 
-
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script src="/requirejs/require.js"></script>
     <script>require([
       '../pfe-accordion.umd.js',
       '../../pfe-band/pfe-band.umd.js'
@@ -26,45 +31,16 @@
 
     <style>
       body {
-        font-family: Overpass;
         padding: 16px 32px 32px;
       }
       section {
         padding: 2rem;
       }
-      a {
-        color: var(--pfe-broadcasted--color--ui-link);
-      }
-      a:hover {
-        color: var(--pfe-broadcasted--color--ui-link--hover);
-      }
-      a:visited {
-        color: var(--pfe-broadcasted--color--ui-link--visited);
-      }
-      a:focus {
-        color: var(--pfe-broadcasted--color--ui-link--focus);
-      }
       .dark-background {
         background-color: #191e84;
-        --pfe-broadcasted--color--text: #fff;
-        --pfe-broadcasted--color--ui-link: #99ccff;
-        --pfe-broadcasted--color--ui-link--hover: #cce6ff;
-        --pfe-broadcasted--color--ui-link--visited: #b38cd9;
-        --pfe-broadcasted--color--ui-link--focus: #cce6ff;
       }
       .white-background {
         background-color: #fff;
-      }
-      .med-background {
-        background-color: #9394ba;
-      }
-      .dark-gray-background {
-        background-color: #222591;
-        --pfe-broadcasted--color--text: #fff;
-        --pfe-broadcasted--color--ui-link: #99ccff;
-        --pfe-broadcasted--color--ui-link--hover: #cce6ff;
-        --pfe-broadcasted--color--ui-link--visited: #b38cd9;
-        --pfe-broadcasted--color--ui-link--focus: #cce6ff;
       }
       .light-gray-background {
         background-color: #f8f8f8;
@@ -114,7 +90,7 @@
       <button id="addTabAndPanelBtn">Add Tab &amp; Panel</button>
     </section>
 
-    <section class="dark-background" >
+    <section class="dark-background on-dark" >
       <h2 style="color:white;">pfe-accordion  on=dark</h2><br/>
       <pfe-accordion on="dark">
         <pfe-accordion-header>

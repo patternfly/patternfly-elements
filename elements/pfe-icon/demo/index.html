@@ -4,13 +4,17 @@
     <meta charset="utf-8">
     <title>PFElements: pfe-icon Demo</title>
 
-    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-layouts.css" />
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../pfe-icon.umd.js'])</script>
+    <script src="/requirejs/require.js"></script>
+    <script>require([
+      '../pfe-icon.umd.js'
+    ])</script>
 
     <noscript>
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
@@ -33,11 +37,18 @@
       .icons li {
         display: flex;
         flex-flow: column wrap;
+        justify-content: center;
       }
 
       .icons li > pfe-icon {
-        flex-grow: 1;
         margin-bottom: 5px;
+      }
+
+      .descriptors {
+        flex-grow: 1;
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: flex-end;
       }
 
       .icons li span {
@@ -49,175 +60,229 @@
       }
 
       section {
-        padding: 2em 0;
+        padding: 2em 1em;
+      }
+
+      section > h2 {
+        color: var(--pfe-broadcasted--color--text);
       }
 
       .dark-background {
-        padding: 2em 1em;
         background-color: #000;
-        --pfe-broadcasted--color--text: #fff;
-        --pfe-broadcasted--color--ui-link: #99ccff;
-        --pfe-broadcasted--color--ui-link--hover: #cce6ff;
-        --pfe-broadcasted--color--ui-link--visited: #b38cd9;
-        --pfe-broadcasted--color--ui-link--focus: #cce6ff;
+      }
+
+      .gray-background {
+        background-color: #f0f0f0;
       }
     </style>
   </head>
   <body unresolved>
     <h1>&lt;pfe-icon&gt;</h1>
 
-    <section>
+    <section class="on-light">
       <h2>Vanilla icons</h2>
       <ul class="icons">
         <li>
           <pfe-icon icon="pfe-icon-server" size="4x"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Color: default</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 4x</span>
+          	<span>Color: default</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-alt1" size="4x" color="base"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Color: base</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 4x</span>
+          	<span>Color: base</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-alt2" size="4x" color="complement"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Color: complement</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 4x</span>
+          	<span>Color: complement</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-deploy" size="4x" color="accent"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Color: accent</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 4x</span>
+          	<span>Color: accent</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-stack" size="4x" color="critical"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Color: critical</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 4x</span>
+          	<span>Color: critical</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-stack-alt1" size="4x" color="important"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Color: important</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 4x</span>
+          	<span>Color: important</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-stack-alt2" size="4x" color="moderate"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Color: moderate</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 4x</span>
+          	<span>Color: moderate</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-vintage" size="4x" color="success"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Color: success</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 4x</span>
+          	<span>Color: success</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-vintage-alt1" size="4x" color="info"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Color: info</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 4x</span>
+          	<span>Color: info</span>
+        	</div>
+				</li>
       </ul>
     </section>
 
-    <section>
+    <section class="gray-background on-light">
       <h2>Circled icons</h2>
       <ul class="icons">
         <li>
-          <pfe-icon icon="pfe-icon-server" size="4x" circled></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Circled</span>
-          <span>Color: default</span>
-        </li>
+          <pfe-icon icon="pfe-icon-server" size="sm" circled></pfe-icon>
+					<div class="descriptors">
+          	<span>Size: sm</span>
+          	<span>Circled</span>
+          	<span>Color: default</span>
+        	</div>
+				</li>
         <li>
-          <pfe-icon class="bordered" icon="pfe-icon-server-deploy" size="4x" circled color="lightest"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Circled</span>
-          <span>Color: lightest</span>
-        </li>
+          <pfe-icon class="bordered" icon="pfe-icon-server-deploy" size="md" circled color="lightest"></pfe-icon>
+					<div class="descriptors">
+          	<span>Size: md</span>
+          	<span>Circled</span>
+          	<span>Color: lightest</span>
+        	</div>
+				</li>
         <li>
-          <pfe-icon icon="pfe-icon-server-stack" size="4x" circled color="lighter"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Circled</span>
-          <span>Color: lighter</span>
-        </li>
+          <pfe-icon icon="pfe-icon-server-stack" size="lg" circled color="lighter"></pfe-icon>
+					<div class="descriptors">
+          	<span>Size: lg</span>
+          	<span>Circled</span>
+          	<span>Color: lighter</span>
+        	</div>
+				</li>
         <li>
-          <pfe-icon icon="pfe-icon-server-alt1" size="4x" circled color="base"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Circled</span>
-          <span>Color: base</span>
-        </li>
+          <pfe-icon icon="pfe-icon-server-alt1" size="xl" circled color="base"></pfe-icon>
+					<div class="descriptors">
+          	<span>Size: xl</span>
+          	<span>Circled</span>
+          	<span>Color: base</span>
+        	</div>
+				</li>
         <li>
-          <pfe-icon icon="pfe-icon-server-stack-alt1" size="4x" circled color="darker"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Circled</span>
-          <span>Color: darker</span>
-        </li>
+          <pfe-icon icon="pfe-icon-server-stack-alt1" size="1x" circled color="darker"></pfe-icon>
+					<div class="descriptors">
+          	<span>Size: 1x</span>
+          	<span>Circled</span>
+          	<span>Color: darker</span>
+        	</div>
+				</li>
         <li>
-          <pfe-icon icon="pfe-icon-server-stack-alt2" size="4x" circled color="darkest"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Circled</span>
-          <span>Color: darkest</span>
-        </li>
+          <pfe-icon icon="pfe-icon-server-stack-alt2" size="2x" circled color="darkest"></pfe-icon>
+					<div class="descriptors">
+          	<span>Size: 2x</span>
+          	<span>Circled</span>
+          	<span>Color: darkest</span>
+        	</div>
+				</li>
         <li>
-          <pfe-icon icon="pfe-icon-server-vintage" size="4x" circled color="complement"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Circled</span>
-          <span>Color: complement</span>
-        </li>
+          <pfe-icon icon="pfe-icon-server-vintage" size="3x" circled color="complement"></pfe-icon>
+					<div class="descriptors">
+          	<span>Size: 3x</span>
+          	<span>Circled</span>
+          	<span>Color: complement</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-vintage-alt1" size="4x" circled color="accent"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Circled</span>
-          <span>Color: accent</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 4x</span>
+          	<span>Circled</span>
+          	<span>Color: accent</span>
+        	</div>
+				</li>
       </ul>
     </section>
 
-    <section class="dark-background">
-      <h2 style="color: white;">Test that broadcast variables work with icons</h2>
+    <section class="dark-background on-dark">
+      <h2>Test that broadcast variables work with icons</h2>
       <ul class="icons">
         <li>
           <pfe-icon icon="pfe-icon-server"></pfe-icon>
-          <span>Default</span>
-        </li>
+					<div class="descriptors">
+          	<span>Default</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-alt1" size="sm" color="base"></pfe-icon>
-          <span>Size: sm</span>
-          <span>Color: base</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: sm</span>
+          	<span>Color: base</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-alt2" size="md" color="complement"></pfe-icon>
-          <span>Size: md</span>
-          <span>Color: complement</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: md</span>
+          	<span>Color: complement</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-deploy" size="lg" color="accent"></pfe-icon>
-          <span>Size: lg</span>
-          <span>Color: accent</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: lg</span>
+          	<span>Color: accent</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-stack" size="xl" color="critical"></pfe-icon>
-          <span>Size: xl</span>
-          <span>Color: critical</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: xl</span>
+          	<span>Color: critical</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-stack-alt1" size="1x" color="important"></pfe-icon>
-          <span>Size: 1x</span>
-          <span>Color: important</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 1x</span>
+          	<span>Color: important</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-stack-alt2" size="2x" color="moderate"></pfe-icon>
-          <span>Size: 2x</span>
-          <span>Color: moderate</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 2x</span>
+          	<span>Color: moderate</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-vintage" size="3x" color="success"></pfe-icon>
-          <span>Size: 3x</span>
-          <span>Color: success</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 3x</span>
+          	<span>Color: success</span>
+        	</div>
+				</li>
         <li>
           <pfe-icon icon="pfe-icon-server-vintage-alt1" size="4x" color="info"></pfe-icon>
-          <span>Size: 4x</span>
-          <span>Color: info</span>
-        </li>
+					<div class="descriptors">
+          	<span>Size: 4x</span>
+          	<span>Color: info</span>
+        	</div>
+				</li>
       </ul>
     </section>
 

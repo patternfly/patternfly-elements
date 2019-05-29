@@ -2,21 +2,28 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>PatternFly Element | pfe-markdown Demo</title>
+
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+    
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-layouts.css" />
 
     <noscript>
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
-    
-    <!-- Test using the Red Hat theme -->
-    <link href="https://static.redhat.com/libs/redhat/redhat-theme/latest/advanced-theme.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.7/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.7/webcomponents-bundle.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="/requirejs/require.js"></script>
     <script>require(['../pfe-markdown.umd.min.js'])</script>
     <!-- <script type="module" src="../pfe-markdown.min.js"></script> -->
 
@@ -24,18 +31,16 @@
     <script defer src="../pfe-markdown.umd.min.js"></script> -->
 
     <style>
+      h1,
+      p {
+        color: var(--pfe-broadcasted--color--text);
+      }
       section {
-        margin-bottom: 32px;
+        padding: 2rem;
         border-bottom: 1px solid #ececec;
       }
-
-      a {
-        color: red;
-        font-family: cursive;
-      }
-
-      a:visited {
-        color: teal;
+      .dark-background {
+        background-color: #000;
       }
     </style>
 
@@ -78,7 +83,14 @@
     <h1>&lt;pfe-markdown&gt;</h1>
     <section>
       <pfe-markdown>
-        <div pfe-markdown-container># This is a heading</div>
+        <div pfe-markdown-container># This is a heading
+Paragraph text.</div>
+      </pfe-markdown>
+    </section>
+    <section class="dark-background on-dark">
+      <pfe-markdown>
+        <div pfe-markdown-container># This is a heading on dark
+Paragraph text.</div>
       </pfe-markdown>
     </section>
     <section>

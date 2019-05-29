@@ -24,7 +24,7 @@ const template = (data = {}) => {
   return tools.component(PfeCard.tag, data.prop, data.slots);
 };
 
-stories.addDecorator(storybookBridge.withKnobs);
+stories.addDecorator(storybookBridge.withKnobs({ escapeHTML: false }));
 
 const defaultHeading = tools.autoHeading(true);
 const defaultBody = tools.autoContent(1, 2);

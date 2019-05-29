@@ -1,0 +1,40 @@
+{
+  "name": "@patternfly/pfe-page-status",
+  "pfelement": {
+    "className": "PfePageStatus",
+    "elementName": "pfe-page-status"
+  },
+  "version": "1.0.0-prerelease.15",
+  "description": "Page element for PatternFly Elements",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-page-status"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "pfe-page-status.js",
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-page-status/test/"
+  },
+  "contributors": [
+    {
+      "name": "Mark Caron",
+      "email": "mark@redhat.com",
+      "url": "https://github.com/markcaron"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.15",
+    "@patternfly/pfelement": "^1.0.0-prerelease.15"
+  },
+  "generator-pfelement-version": "1.1.0"
+}

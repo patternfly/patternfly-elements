@@ -130,11 +130,11 @@
 //    }
 
 @mixin pfe-set-broadcast($color, $broadcast: $BROADCAST-VARS, $color-set: surface) {
-  $string: #{$color-set}-;
-  @if index((surface, feedback), $color-set) != null {
-    $string: #{$string}-;
-  }
   @each $type in $broadcast {
+    $string: #{$color-set}-;
+    @if index((surface, feedback), $color-set) != null {
+      $string: #{$string}-;
+    }
     @if index((ui, feedback), $color-set) != null {
       $string: #{$string}#{$color};
     }

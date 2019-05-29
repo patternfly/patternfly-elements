@@ -1,5 +1,8 @@
 import { configure } from "@storybook/polymer";
 import { setOptions } from "@storybook/addon-options";
+
+import "./test-theme.css";
+
 const req = require.context("../elements", true, /\.story\.js$/);
 
 setOptions({

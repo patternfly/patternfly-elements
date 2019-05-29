@@ -3,9 +3,14 @@ const gulpFactory = require("../../scripts/gulpfile.factory.js");
 const pfelementPackage = require("./package.json");
 
 const { task, src, dest, watch, parallel, series } = require("gulp");
+
+const fs = require("fs");
+
 const clean = require("gulp-clean");
 const mergeStream = require("merge-stream");
 const globSass = require("gulp-sass-globbing");
+
+const banner = require("gulp-banner");
 
 // Delete the temp directory
 task("clean", () => {
@@ -33,9 +38,26 @@ task("sass:globbing", () => {
     return stream;
 });
 
+task("prepend:license", () => {
+  return src("pfe-sass.scss", {
+    cwd: "./src"
+  })
+  .pipe(
+    banner(
+      `/*\n * @license\n${fs
+        .readFileSync("LICENSE.txt", "utf8")
+        .split("\n")
+        .map(line => ` * ${line}\n`)
+        .join("")}*/\n\n`
+    )
+  )
+  .pipe(dest("./"));
+});
+
 task("build", series(
     "clean",
-    "sass:globbing"
+    "sass:globbing",
+    "prepend:license"
   )
 );
 

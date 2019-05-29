@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../pfe-icon.js"></script>
+    <script type="module" src="../pfe-icon-set.js"></script>
   </head>
   <body>
 
-    <pfe-icon>
+    <pfe-icon-set>
       This is the element content.
-    </pfe-icon>
+    </pfe-icon-set>
 
     <script>
-      suite('<pfe-icon>', () => {
+      suite('<pfe-icon-set>', () => {
         test('it should upgrade', () => {
-          assert.instanceOf(document.querySelector('pfe-icon'), customElements.get("pfe-icon", 'pfe-icon should be an instance of pfeIcon'));
+          assert.instanceOf(document.querySelector('pfe-icon-set'), customElements.get("pfe-icon-set", 'pfe-icon-set should be an instance of pfeIconSet'));
         });
 
         // you need to write more tests!!!

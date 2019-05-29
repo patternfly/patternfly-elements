@@ -1,11 +1,11 @@
 import { storiesOf } from "@storybook/polymer";
-import "../pfe-icon";
+import "../pfe-icon-set";
 
 storiesOf("Icon", module).add(
-  "pfe-icon",
+  "pfe-icon-set",
   () => `
-  <pfe-icon>
+  <pfe-icon-set>
     Icon
-  </pfe-icon>
+  </pfe-icon-set>
   `
 );

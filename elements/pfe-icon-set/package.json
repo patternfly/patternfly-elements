@@ -1,8 +1,8 @@
 {
-  "name": "@patternfly/pfe-icon",
+  "name": "@patternfly/pfe-icon-set",
   "pfelement": {
-    "className": "PfeIcon",
-    "elementName": "pfe-icon"
+    "className": "PfeIconSet",
+    "elementName": "pfe-icon-set"
   },
   "version": "1.0.0-prerelease.14",
   "description": "Icon element for PatternFly Elements",
@@ -17,7 +17,7 @@
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-icon/test/"
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-icon-set/test/"
   },
   "author": {
     "name": "Michael Clayton &lt;mclayton@redhat.com&gt;"
@@ -25,8 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "@patternfly/pfe-sass": "1.0.0-prerelease.14",
-    "@patternfly/pfelement": "1.0.0-prerelease.14",
-    "@redhat/rh-iconfont": "github:mwcz/rh-iconfont#package-svgs"
+    "@patternfly/pfelement": "1.0.0-prerelease.14"
   },
   "generator-pfelement-version": "1.1.0"
 }

@@ -1,78 +1,70 @@
-/*
- * Copyright 2018 Red Hat, Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 import PFElement from "../pfelement/pfelement.js";
-
-const templateId = "pfe-icon-head";
-if (!document.getElementById(templateId)) {
-  const cpRHIconTemplate = document.createElement("div");
-
-  cpRHIconTemplate.setAttribute("style", "display: none;");
-  cpRHIconTemplate.setAttribute("id", templateId);
-
-  cpRHIconTemplate.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg"></svg>`;
-  document.head.appendChild(cpRHIconTemplate);
-}
+import PfeIconSet from "../pfe-icon-set/pfe-icon-set.js";
 
 class PfeIcon extends PFElement {
   static get tag() {
     return "pfe-icon";
   }
 
-  get styleUrl() {
-    return "pfe-icon.scss";
-  }
-
   get templateUrl() {
     return "pfe-icon.html";
   }
 
+  get styleUrl() {
+    return "pfe-icon.scss";
+  }
+
   static get observedAttributes() {
-    return ["icon"];
+    return ["pfe-icon"];
+  }
+
+  static iconSetInstalled(setName) {
+    return document.body.querySelector(
+      `pfe-icon-set[pfe-set-name='${setName}']`
+    );
+  }
+
+  static startLoading(name) {
+    const alreadyLoading = PfeIcon.currentlyLoading.has(name);
+
+    if (alreadyLoading) {
+    } else {
+      PfeIcon.currentlyLoading.add(name);
+    }
+
+    fetch(/* TODO write get path code*/)
+      .then(rsp => rsp.text())
+      .then(PfeIcon.completeLoading);
+  }
+
+  static completeLoading(name, text) {
+    PfeIcon.currentlyLoading.delete(name);
+    /* TODO inject SVG into somewhere (head?) */
   }
 
   constructor() {
     super(PfeIcon);
   }
 
-  attributeChangedCallback(attr, oldVal, newVal) {
-    if (attr === "icon") {
-      if (!newVal) {
-        console.warn(`pfe-icon: no icon name provided`);
-        return;
-      }
+  // connectedCallback() {
+  //   super.connectedCallback();
+  // }
 
-      const svgPath = this.ownerDocument.head.querySelector(`#${newVal} path`);
-
-      if (!svgPath) {
-        console.warn(`pfe-icon: unable to find svg path for ${newVal}`);
-        return;
-      }
-
-      this.shadowRoot
-        .querySelector("svg g path")
-        .setAttribute("d", svgPath.getAttribute("d"));
+  attributeChangedCallback(attr, oldValue, newValue) {
+    super.attributeChangedCallback(...arguments);
+    if (attr == "pfe-icon" && oldValue !== newValue) {
+      this.handleNewIcon(newValue);
     }
+  }
+
+  handleNewIcon(iconAttr) {
+    const [set, ...icon] = iconAttr.split("-");
+    console.log(set, icon);
   }
 }
 
+PfeIcon.currentlyLoading = new Set();
+
 PFElement.create(PfeIcon);
+
+export default PfeIcon;

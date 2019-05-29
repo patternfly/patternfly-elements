@@ -70,10 +70,14 @@ class PfeContentSet extends PFElement {
 
   _buildAccordion() {
     const existingAccordion = this.querySelector("pfe-accordion");
+    // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();
+    // Use the existing accordion or create the accordion wrapper component
     const accordion = existingAccordion || document.createElement("pfe-accordion");
 
+    // Iterate over each element in the light DOM
     [...this.children].forEach(child => {
+      // If one of them has the attribute indicating they belong in the header region
       if (child.hasAttribute("pfe-content-set--header")) {
         const header = document.createElement("pfe-accordion-header");
 
@@ -93,6 +97,7 @@ class PfeContentSet extends PFElement {
       fragment.appendChild(accordion);
     }
 
+    // Pass the theme property down to the accordion component
     if (this.on) {
       accordion.setAttribute("on", this.on);
     }
@@ -104,10 +109,14 @@ class PfeContentSet extends PFElement {
 
   _buildTabs() {
     const existingTabs = this.querySelector("pfe-tabs");
+    // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();
+    // Use the existing tabs or create the tabs wrapper component
     const tabs = existingTabs || document.createElement("pfe-tabs");
 
+    // Iterate over each element in the light DOM
     [...this.children].forEach(child => {
+      // If one of them has the attribute indicating they belong in the panel region
       if (child.hasAttribute("pfe-content-set--header")) {
         const header = document.createElement("pfe-tab");
 
@@ -131,14 +140,17 @@ class PfeContentSet extends PFElement {
       fragment.appendChild(tabs);
     }
 
+    // If the orientation is set to vertical, add that attribute to the tabs
     if (this.vertical.value !== null && this.vertical.value !== false) {
       tabs.setAttribute("vertical", true);
     }
 
+    // Pass the variant attribute down to the tabs component
     if (this.variant.value !== this.variant.default) {
       tabs.setAttribute("pfe-variant", this.variant.value);
     }
 
+    // Pass the theme property down to the tabs component
     if (this.on.value) {
       tabs.setAttribute("on", this.on.value);
     }

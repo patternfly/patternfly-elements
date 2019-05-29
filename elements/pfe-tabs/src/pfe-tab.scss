@@ -38,6 +38,7 @@ $LOCAL: tabs;
   background-color: #{pfe-local(main)};
   color: #{pfe-local(aux)};
 
+  // Update the broadcasted variable to match the auxillary color
   --pfe-broadcasted--color--text: #{pfe-local(aux)};
 
   text-transform: var(--pfe-tabs__tab--TextTransform, none); // exposing this for RH

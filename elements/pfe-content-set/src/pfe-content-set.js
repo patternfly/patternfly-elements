@@ -77,8 +77,8 @@ class PfeContentSet extends PFElement {
     fragment.appendChild(accordion);
 
     // Pass the theme property down to the accordion component
-    if (this.on) {
-      accordion.setAttribute("on", this.on);
+    if (this.on.value) {
+      accordion.setAttribute("on", this.on.value);
     }
 
     // Append the fragment to the component

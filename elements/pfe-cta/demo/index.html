@@ -6,25 +6,24 @@
 
     <title>PFElements: pfe-cta Demo</title>
 
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+    
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-layouts.css" />
+
     <noscript>
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
-      <link href="../../pfe-cta/pfe-cta-fallback.css" rel="stylesheet">
     </noscript>
 
-    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    
-    <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
-    <!-- <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
-
-    <!-- IE11 test: use bundle + require with umd files -->
-    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
-    <script src="/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-
-    <!-- Tests require pulling in the UMD version of the files -->
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="/requirejs/require.js"></script>
 
     <script>require([
@@ -32,10 +31,6 @@
     ])</script>
 
     <style>
-      body {
-        font: 16px/1.5 Overpass, Arial, sans-sans-serif;
-      }
-
       p {
         margin-bottom: 60px !important;
       }
@@ -87,10 +82,10 @@
     </p>
 
     <h2>Defaults; On: Dark</h2>
-    <p class="inverted-demo">
-      <pfe-cta on="dark"><a href="#">Default</a></pfe-cta>
-      <pfe-cta priority="primary" on="dark"><a href="#">Primary</a></pfe-cta>
-      <pfe-cta priority="secondary" on="dark"><a href="#">Secondary</a></pfe-cta>
+    <p class="inverted-demo on-dark">
+      <pfe-cta><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
     </p>
 
     <p>
@@ -98,24 +93,24 @@
     </p>
 
     <h2>Color: Base; On: Dark</h2>
-    <p class="inverted-demo">
-      <pfe-cta color="base" on="dark"><a href="#">Default</a></pfe-cta>
-      <pfe-cta priority="primary" color="base" on="dark"><a href="#">Primary</a></pfe-cta>
-      <pfe-cta priority="secondary" color="base" on="dark"><a href="#">Secondary</a></pfe-cta>
+    <p class="inverted-demo on-dark">
+      <pfe-cta color="base"><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary" color="base"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary" color="base"><a href="#">Secondary</a></pfe-cta>
     </p>
 
     <h2>Color: Complement; On: Dark</h2>
-    <p class="inverted-demo">
-      <pfe-cta color="complement" on="dark"><a href="#">Default</a></pfe-cta>
-      <pfe-cta priority="primary" color="complement" on="dark"><a href="#">Primary</a></pfe-cta>
-      <pfe-cta priority="secondary" color="complement" on="dark"><a href="#">Secondary</a></pfe-cta>
+    <p class="inverted-demo on-dark">
+      <pfe-cta color="complement"><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary" color="complement"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary" color="complement"><a href="#">Secondary</a></pfe-cta>
     </p>
 
     <h2>Color: Accent; On: Dark</h2>
-    <p class="inverted-demo">
-      <pfe-cta color="accent" on="dark"><a href="#">Default</a></pfe-cta>
-      <pfe-cta priority="primary" color="accent" on="dark"><a href="#">Primary</a></pfe-cta>
-      <pfe-cta priority="secondary" color="accent" on="dark"><a href="#">Secondary</a></pfe-cta>
+    <p class="inverted-demo on-dark">
+      <pfe-cta color="accent"><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary" color="accent"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary" color="accent"><a href="#">Secondary</a></pfe-cta>
     </p>
   </body>
 </html>

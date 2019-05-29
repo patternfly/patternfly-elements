@@ -1,5 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: cta;
+
 /// ===========================================================================
 /// Component Specific SASS Vars
 /// ===========================================================================
@@ -22,37 +24,44 @@ $pfe-cta__arrow-size:                        0.313em;
 
   ::slotted(a) {
     line-height: inherit;
-    color: var(--pfe-cta--main);
+    color: #{pfe-local(main)};
     transition: all #{pfe-var(animation-timing)};
+
+    --pfe-broadcasted--color--ui-link: #{pfe-local(main)};
 
     &::after {
       display: block;
       margin-left: calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
-      vertical-align: middle;
-      @include pfe-arrow(right, var(--pfe-cta--main), $pfe-cta__arrow-size, $pfe-cta__arrow-size, true);
+      @include pfe-arrow(
+        right,
+        #{pfe-local(main)},
+        $pfe-cta__arrow-size,
+        $pfe-cta__arrow-size,
+        true
+      );
     }
   }
 
   // & ::slotted(a:visited) {
-  //  color: var(--pfe-cta--main--visited);
+  //  color: #{pfe-local(main--visited)};
   //  &::after {
-  //    @include pfe-arrow-color(var(--pfe-cta--main--visited));
+  //    @include pfe-arrow-color(#{pfe-local(main--visited)});
   //  }
   // }
 
   ::slotted(a:hover) {
-    color: var(--pfe-cta--main--hover);
+    color: #{pfe-local(main--hover)};
 
     &::after {
-      @include pfe-arrow-color(var(--pfe-cta--main--hover));
+      @include pfe-arrow-color(#{pfe-local(main--hover)});
     }
   }
 
   ::slotted(a:focus) {
-    color: var(--pfe-cta--main--focus);
+    color: #{pfe-local(main--focus)};
 
     &::after {
-      @include pfe-arrow-color(var(--pfe-cta--main--focus));
+      @include pfe-arrow-color(#{pfe-local(main--focus)});
     }
   }
 }
@@ -67,6 +76,8 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--aux:           #{pfe-color(ui-accent--text)};
   --pfe-cta--aux--hover:    #{pfe-color(ui-accent--text--hover)};
 
+  // @include pfe-set-broadcast(accent);
+
   ::slotted(a) {
     display: inline-block;
     padding: calc(#{pfe-var(container-padding)} * 0.5) calc(#{pfe-var(container-padding)} * 2);
@@ -75,11 +86,11 @@ $pfe-cta__arrow-size:                        0.313em;
     text-decoration: none;
     line-height: 1.2;
 
-    border-color: var(--pfe-cta--main);
-    background:   var(--pfe-cta--main);
-    color:        var(--pfe-cta--aux);
+    border-color:     #{pfe-local(main)};
+    background-color: #{pfe-local(main)};
+    color:            #{pfe-local(aux)};
 
-    --pfe-broadcasted--color--ui-link: var(--pfe-cta--aux);
+    --pfe-broadcasted--color--ui-link: #{pfe-local(aux)};
 
     &::after {
       display: none;
@@ -88,11 +99,11 @@ $pfe-cta__arrow-size:                        0.313em;
 
   ::slotted(a:hover),
   ::slotted(a:focus) { // Not sure we can lump these together
-    border-color: var(--pfe-cta--main--hover);
-    background:   var(--pfe-cta--main--hover);
-    color:        var(--pfe-cta--aux--hover);
+    border-color:     #{pfe-local(main--hover)};
+    background-color: #{pfe-local(main--hover)};
+    color:            #{pfe-local(aux--hover)};
 
-    --pfe-broadcasted--color--ui-link--hover: var(--pfe-cta--aux--hover);
+    --pfe-broadcasted--color--ui-link--hover: #{pfe-local(aux--hover)};
   }
 
   // & ::slotted(a:visited),   TBD
@@ -105,19 +116,21 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--aux:           #{pfe-color(ui-base--text)};
   --pfe-cta--aux--hover:    #{pfe-color(ui-base--text--hover)};
 
+  // @include pfe-set-broadcast(base);
+
   ::slotted(a) {
     display: inline-block;
     padding: calc(#{pfe-var(container-padding)} * 0.5) calc(#{pfe-var(container-padding)} * 2);
     border-radius: calc(#{pfe-var(ui--border-radius)} * 20);
-    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} var(--pfe-cta--main);
+    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(main)};
     text-decoration: none;
     line-height: 1.2;
 
-    border-color: var(--pfe-cta--main);
-    background:   var(--pfe-cta--aux);
-    color:        var(--pfe-cta--main);
+    border-color: #{pfe-local(main)};
+    background:   #{pfe-local(aux)};
+    color:        #{pfe-local(main)};
 
-    --pfe-broadcasted--color--ui-link--hover: var(--pfe-cta--main);
+    --pfe-broadcasted--color--ui-link--hover: #{pfe-local(main)};
 
     &::after {
       display: none;
@@ -126,38 +139,14 @@ $pfe-cta__arrow-size:                        0.313em;
 
   ::slotted(a:hover), // Not sure we can lump these together
   ::slotted(a:focus) {
-    border-color: var(--pfe-cta--main--hover);
-    background:   var(--pfe-cta--main--hover);
-    color:        var(--pfe-cta--aux--hover);
+    border-color: #{pfe-local(main--hover)};
+    background:   #{pfe-local(main--hover)};
+    color:        #{pfe-local(aux--hover)};
     
-    --pfe-broadcasted--color--ui-link--hover: var(--pfe-cta--aux--hover);
+    --pfe-broadcasted--color--ui-link--hover: #{pfe-local(aux--hover)};
   }
 
   // & ::slotted(a:visited),   TBD
-}
-
-/// ===========================================================================
-/// ON DARK
-/// ===========================================================================
-:host([on="dark"]) {
-  --pfe-cta--main:        #{pfe-color(surface--darker--ui-link)};
-  --pfe-cta--main--hover: #{pfe-color(surface--darker--ui-link--hover)};
-  --pfe-cta--aux:         transparent;
-  --pfe-cta--aux--hover:  transparent;
-}
-
-:host([on="dark"][priority="primary"]) {
-  --pfe-cta--main:        #{pfe-color(ui-accent--text)};
-  --pfe-cta--main--hover: #{pfe-color(ui-accent--text--hover)};
-  --pfe-cta--aux:         #{pfe-color(ui-accent)};
-  --pfe-cta--aux--hover:  #{pfe-color(ui-accent--hover)};
-}
-
-:host([on="dark"][priority="secondary"]) {
-  --pfe-cta--main:        #{pfe-color(ui-base--text)};
-  --pfe-cta--main--hover: #{pfe-color(ui-base--text--hover)};
-  --pfe-cta--aux:         transparent;
-  --pfe-cta--aux--hover:  #{pfe-color(ui-base--hover)};
 }
 
 
@@ -165,8 +154,7 @@ $pfe-cta__arrow-size:                        0.313em;
 /// COLOR OVERRIDE: BASE
 /// ===========================================================================
 
-:host([color="base"]),
-:host([color="base"][on="dark"]) {
+:host([color="base"]) {
   --pfe-cta--main:        #{pfe-color(ui-base)};
   --pfe-cta--main--hover: #{pfe-color(ui-base--hover)};
   --pfe-cta--aux:         #{pfe-color(ui-base--text)};
@@ -178,8 +166,7 @@ $pfe-cta__arrow-size:                        0.313em;
 /// COLOR OVERRIDE: COMPLEMENT
 /// ===========================================================================
 
-:host([color="complement"]),
-:host([color="complement"][on="dark"]) {
+:host([color="complement"]) {
   --pfe-cta--main:        #{pfe-color(ui-complement)};
   --pfe-cta--main--hover: #{pfe-color(ui-complement--hover)};
   --pfe-cta--aux:         #{pfe-color(ui-complement--text)};
@@ -190,8 +177,7 @@ $pfe-cta__arrow-size:                        0.313em;
 /// ===========================================================================
 /// COLOR OVERRIDE: ACCENT
 /// ===========================================================================
-:host([color="accent"]),
-:host([color="accent"][on="dark"]) {
+:host([color="accent"]) {
   --pfe-cta--main:        #{pfe-color(ui-accent)};
   --pfe-cta--main--hover: #{pfe-color(ui-accent--hover)};
   --pfe-cta--aux:         #{pfe-color(ui-accent--text)};

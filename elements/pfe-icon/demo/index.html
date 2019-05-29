@@ -19,51 +19,207 @@
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
 
     <style>
-    .icons {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-    }
+      body {
+        font-size: 16px;
+      }
+      .icons {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(10%, 1fr));
+      }
 
-    .icons li {
-      width: 10%;
-    }
+      .icons li {
+        display: flex;
+        flex-flow: column wrap;
+      }
+
+      .icons li > pfe-icon {
+        flex-grow: 1;
+        margin-bottom: 5px;
+      }
+
+      .icons li span {
+        color: #666;
+      }
+
+      .bordered {
+        --pfe-icon--BorderColor: #eee;
+      }
+
+      section {
+        padding: 2em 0;
+      }
+
+      .dark-background {
+        padding: 2em 1em;
+        background-color: #000;
+        --pfe-broadcasted--color--text: #fff;
+        --pfe-broadcasted--color--ui-link: #99ccff;
+        --pfe-broadcasted--color--ui-link--hover: #cce6ff;
+        --pfe-broadcasted--color--ui-link--visited: #b38cd9;
+        --pfe-broadcasted--color--ui-link--focus: #cce6ff;
+      }
     </style>
   </head>
   <body unresolved>
     <h1>&lt;pfe-icon&gt;</h1>
 
-    <ul class="icons">
-      <li>
-        <pfe-icon icon="pfe-icon-server" size="4x"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-alt1" size="4x" color="base"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-alt2" size="4x" color="complement"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-deploy" size="4x" color="accent"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-stack" size="4x" color="critical"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-stack-alt1" size="4x" color="important"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-stack-alt2" size="4x" color="moderate"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-vintage" size="4x" color="success"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-vintage-alt1" size="4x" color="info"></pfe-icon>
-      </li>
-    </ul>
+    <section>
+      <h2>Vanilla icons</h2>
+      <ul class="icons">
+        <li>
+          <pfe-icon icon="pfe-icon-server" size="4x"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Color: default</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-alt1" size="4x" color="base"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Color: base</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-alt2" size="4x" color="complement"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Color: complement</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-deploy" size="4x" color="accent"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Color: accent</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-stack" size="4x" color="critical"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Color: critical</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-stack-alt1" size="4x" color="important"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Color: important</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-stack-alt2" size="4x" color="moderate"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Color: moderate</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-vintage" size="4x" color="success"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Color: success</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-vintage-alt1" size="4x" color="info"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Color: info</span>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Circled icons</h2>
+      <ul class="icons">
+        <li>
+          <pfe-icon icon="pfe-icon-server" size="4x" circled></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Circled</span>
+          <span>Color: default</span>
+        </li>
+        <li>
+          <pfe-icon class="bordered" icon="pfe-icon-server-deploy" size="4x" circled color="lightest"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Circled</span>
+          <span>Color: lightest</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-stack" size="4x" circled color="lighter"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Circled</span>
+          <span>Color: lighter</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-alt1" size="4x" circled color="base"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Circled</span>
+          <span>Color: base</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-stack-alt1" size="4x" circled color="darker"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Circled</span>
+          <span>Color: darker</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-stack-alt2" size="4x" circled color="darkest"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Circled</span>
+          <span>Color: darkest</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-vintage" size="4x" circled color="complement"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Circled</span>
+          <span>Color: complement</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-vintage-alt1" size="4x" circled color="accent"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Circled</span>
+          <span>Color: accent</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="dark-background">
+      <h2 style="color: white;">Test that broadcast variables work with icons</h2>
+      <ul class="icons">
+        <li>
+          <pfe-icon icon="pfe-icon-server"></pfe-icon>
+          <span>Default</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-alt1" size="sm" color="base"></pfe-icon>
+          <span>Size: sm</span>
+          <span>Color: base</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-alt2" size="md" color="complement"></pfe-icon>
+          <span>Size: md</span>
+          <span>Color: complement</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-deploy" size="lg" color="accent"></pfe-icon>
+          <span>Size: lg</span>
+          <span>Color: accent</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-stack" size="xl" color="critical"></pfe-icon>
+          <span>Size: xl</span>
+          <span>Color: critical</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-stack-alt1" size="1x" color="important"></pfe-icon>
+          <span>Size: 1x</span>
+          <span>Color: important</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-stack-alt2" size="2x" color="moderate"></pfe-icon>
+          <span>Size: 2x</span>
+          <span>Color: moderate</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-vintage" size="3x" color="success"></pfe-icon>
+          <span>Size: 3x</span>
+          <span>Color: success</span>
+        </li>
+        <li>
+          <pfe-icon icon="pfe-icon-server-vintage-alt1" size="4x" color="info"></pfe-icon>
+          <span>Size: 4x</span>
+          <span>Color: info</span>
+        </li>
+      </ul>
+    </section>
 
   </body>
 </html>

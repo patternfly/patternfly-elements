@@ -1,5 +1,6 @@
 @import "../../pfe-sass/pfe-sass";
 
+
 $LOCAL: cta;
 $pfe-cta__arrow-size:                        0.313em;
 
@@ -121,6 +122,7 @@ $pfe-cta__arrow-size:                        0.313em;
 :host([priority="primary"]),
 :host([pfe-priority="primary"]) {
   --pfe-cta--main:          #{pfe-color(ui-accent)};
+  // --pfe-cta--main:          #{pfe-color(ui-link--red)};
   --pfe-cta--aux:           #{pfe-color(ui-accent--text)};
 
   @each $state in (hover, focus) {

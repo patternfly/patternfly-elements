@@ -261,12 +261,12 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
 }
 
 @mixin pfe-trigger-button-last($theme: light) {
-  border-bottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border--lightest)};
+  border-bottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
   // @TODO Support differences based on theme
 }
 
 @mixin pfe-trigger-button-first($theme: light) {
-  border-top: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border--lightest)};
+  border-top: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
   // @TODO Support differences based on theme
 }
 
@@ -286,9 +286,9 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     --pfe-#{$component-name}--main:         transparent;
     --pfe-#{$component-name}--aux:          #{pfe-color(surface--lightest--text)};
 
-    --pfe-#{$component-name}--BorderLeft:  #{pfe-var(surface--border-width-heavy)} #{pfe-var(surface--border-style)} transparent;
+    --pfe-#{$component-name}--BorderLeft:  #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} transparent;
     --pfe-#{$component-name}--BorderRight: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
-    --pfe-#{$component-name}--BorderBottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border--lightest)};
+    --pfe-#{$component-name}--BorderBottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
 
     --pfe-#{$component-name}--BorderLeftColor--focus: #{pfe-color(surface--lightest--link)};
   }
@@ -298,7 +298,7 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
   @if $theme == dark {
     --pfe-#{$component-name}--main:         #{pfe-color(surface--darker)};
     --pfe-#{$component-name}--aux:          #{pfe-color(surface--darkest--text)};
-    --pfe-#{$component-name}--BorderLeft:   #{pfe-var(surface--border-width-heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
+    --pfe-#{$component-name}--BorderLeft:   #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
     --pfe-#{$component-name}--BorderRight:  #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
 
     --pfe-#{$component-name}--BorderLeftColor--focus: #{pfe-color(surface--lightest)};
@@ -307,8 +307,8 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     --pfe-#{$component-name}--main:              #{pfe-color(surface--lightest)};
     --pfe-#{$component-name}--aux:               #{pfe-color(surface--lightest--text)};
     --pfe-#{$component-name}--focus:             #{pfe-color(surface--lightest--link)};
-    --pfe-#{$component-name}--BorderLeft:        #{pfe-var(surface--border-width-heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--lightest--link)};
-    --pfe-#{$component-name}--BorderRight:       #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border--lightest)};
+    --pfe-#{$component-name}--BorderLeft:        #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--lightest--link)};
+    --pfe-#{$component-name}--BorderRight:       #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
   }
 }
 
@@ -390,8 +390,8 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     box-shadow: 0 5px #{pfe-var(surface--border-width--heavy)} rgba(140, 140, 140, 0.35);
     border-left-color: #{pfe-color(surface--lightest--link)};
     background-color: #{pfe-color(surface--lightest)};
-    border-right-color: #{pfe-color(surface--border--lightest)};
-    border-bottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border--lightest)};
+    border-right-color: #{pfe-color(surface--border)};
+    border-bottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
   }
 }
 

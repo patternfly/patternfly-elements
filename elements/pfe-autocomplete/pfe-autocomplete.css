@@ -1,0 +1,172 @@
+/*
+ * Copyright 2018 Red Hat, Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+/* Palette of Border Colors */
+/* Palette of Feedback Colors */
+:host {
+  display: block;
+  position: relative;
+}
+
+.input-box-wrapper {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+#input-box-wrapper ::slotted(input) {
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075) !important;
+          box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075) !important;
+  padding-left: 10px;
+  padding-right: 30px;
+  border-radius: 0;
+  background-color: #fff;
+  border: 1px solid #d2d2d2;
+  border: 1px solid var(--pfe-theme--color--surface--border, #d2d2d2);
+  font-size: 16px;
+  /*1rem*/
+  height: 40px;
+  -webkit-transition: border-color ease-in-out 0.15s,-webkit-box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s,-webkit-box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s,-webkit-box-shadow ease-in-out 0.15s;
+  opacity: 1;
+  outline: 0;
+}
+
+#input-box-wrapper ::slotted(input:disabled),
+button:disabled {
+  cursor: not-allowed;
+  background-color: transparent;
+  color: #ccc;
+  opacity: 0.5;
+}
+
+#input-box-wrapper button:focus,
+#input-box-wrapper ::slotted(input:focus) {
+  border-color: #66afe9;
+  outline: 0;
+}
+
+#input-box-wrapper ::slotted(input),
+button {
+  -webkit-appearance: none;
+}
+
+#input-box-wrapper ::slotted([type="search"]::-ms-clear) {
+  display: none;
+}
+
+#input-box-wrapper ::slotted(input[type="search"]::-webkit-search-cancel-button),
+#input-box-wrapper ::slotted(input[type="search"]::-webkit-search-decoration) {
+  -webkit-appearance: none;
+}
+
+button {
+  color: #cccccc;
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  padding: 0px;
+  margin: 0px;
+  cursor: pointer;
+}
+
+button.clear-search {
+  right: 30px;
+  width: 20px;
+  margin: 2px 1px;
+  background-color: #fff;
+}
+
+button.clear-search svg {
+  width: 12px;
+  stroke: #ccc;
+}
+
+button.clear-search:hover svg,
+button.clear-search:focus svg {
+  opacity: 1;
+  stroke: #06c;
+}
+
+button[disabled].clear-search:hover svg,
+button[disabled].clear-search:focus svg {
+  stroke: #ccc;
+}
+
+button.search-button {
+  right: 1px;
+  width: 30px;
+}
+
+button.search-button svg {
+  fill: #06c;
+  width: 16px;
+}
+
+button.search-button:hover svg,
+button.search-button:focus svg {
+  fill: #004080;
+}
+
+button.clear-search:hover {
+  color: #ccc;
+}
+
+button.search-button:disabled svg {
+  fill: #ccc;
+}
+
+.loading {
+  position: absolute;
+  width: 30px;
+  right: 52px;
+  top: 0px;
+  bottom: 0px;
+}
+
+.loading svg {
+  width: 26px;
+  padding-top: 7px;
+}
+
+/*# sourceMappingURL=pfe-autocomplete.css.map */

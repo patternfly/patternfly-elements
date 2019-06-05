@@ -27,6 +27,15 @@ class PFElement extends HTMLElement {
     };
   }
 
+  static get KEYCODE() {
+    return {
+      ENTER: 13,
+      DOWN: 40,
+      UP: 38,
+      ESC: 27
+    }
+  };
+
   get pfeType() {
     return this.getAttribute(`${prefix}type`);
   }

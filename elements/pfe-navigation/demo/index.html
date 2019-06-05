@@ -5,24 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>PatternFly Element | pfe-navigation Demo</title>
 
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-base.css" />
+    <!-- <link rel="stylesheet" href="../../pfe-layouts/pfe-context.css" /> -->
+    <link rel="stylesheet" href="../../pfe-layouts/pfe-layouts.css" />
+
+    <link rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-theme/latest/advanced-theme.css"/>
+
     <noscript>
-      <link
-        href="../../pfelement/pfelement-noscript.min.css"
-        rel="stylesheet"
-      />
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet" />
-    <link href="../../pfe-layouts/pfe-layouts.min.css" rel="stylesheet" />
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
     <link href="demo.css" rel="stylesheet" />
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>
-      require(["../pfe-navigation.umd.js"]);
-    </script>
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="/requirejs/require.js"></script>
+    <script>require([
+      '../pfe-navigation.umd.js',
+      '../../pfe-link-list/pfe-link-list.umd.js',
+      '../../pfe-card/pfe-card.umd.js',
+      '../../pfe-cta/pfe-cta.umd.js'
+    ])</script>
 
     <!-- <script type="module" src="../pfe-navigation.js"></script> -->
   </head>
@@ -37,7 +42,7 @@
       <div slot="logo">
         <h2>
           <a href="https://redhat.com">
-            <img class="redhat-logo" src="https://redhat.com/profiles/rh/themes/redhatdotcom/img/logo.svg" class="screen" title="Red Hat">
+            <img class="redhat-logo" src="https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo--on-dark--200.png" class="screen" title="Red Hat">
           </a>
         </h2>
       </div>
@@ -54,18 +59,55 @@
           <ul>
             <li>
               <pfe-navigation-item>
-                <a href="/products" slot="trigger">Products</a>
+                <a href="#" slot="trigger">Products</a>
                 <div slot="tray" hidden>
-                  Products tray
-                  <div class="gray">
-                    Something that should be gray
-                  </div>
+                    <pfe-link-list>
+                      <h2 slot="pfe-link-list--header">
+                        <a href="#">Platforms</a>
+                      </h2>
+                      <ul slot="pfe-link-list--list">
+                        <li><a href="#">Red Hat Enterprise Linux</a></li>
+                        <li><a href="#">Red Hat JBoss Enterprise Application Platform</a></li>
+                        <li><a href="#">Red Hat OpenShift</a></li>
+                        <li><a href="#">Red Hat OpenStack Platform</a></li>
+                        <li><a href="#">Red Hat Virtualization</a></li>
+                      </ul>
+                    </pfe-link-list>
+                    <pfe-link-list>
+                      <h2 slot="pfe-link-list--header">
+                        <a href="#">Integration</a>
+                      </h2>
+                      <ul slot="pfe-link-list--list">
+                        <li><a href="#">Red Hat 3scale API Management</a></li>
+                        <li><a href="#">Red Hat AMQ</a></li>
+                        <li><a href="#">Red Hat Fuse</a></li>
+                        <li><a href="#">Red Hat Fuse Online</a></li>
+                      </ul>
+                    </pfe-link-list>
+                    <pfe-link-list>
+                      <h2 slot="pfe-link-list--header">
+                        <a href="#">Cloud computing</a>
+                      </h2>
+                      <ul slot="pfe-link-list--list">
+                        <li><a href="#">Red Hat Cloud Infrastructure</a></li>
+                        <li><a href="#">Red Hat Cloud Suite</a></li>
+                        <li><a href="#">Red Hat CloudForms</a></li>
+                        <li><a href="#">Red Hat Hyperconverged Infrastructure</a></li>
+                        <li><a href="#">Red Hat OpenShift</a></li>
+                        <li><a href="#">Red Hat OpenStack Platform</a></li>
+                        <li><a href="#">Red Hat Quay</a></li>
+                    </ul>
+                  </pfe-link-list>
+                  <pfe-cta><a href="#">Buy products online</a></pfe-cta>
+                  <pfe-card style="height: 300px;">
+                    <h2>Promotional content</h2>
+                  </pfe-card>
                 </div>
               </pfe-navigation-item>
             </li>
             <li>
               <pfe-navigation-item>
-                <a href="/solutions" slot="trigger">Solutions</a>
+                <a href="#" slot="trigger">Solutions</a>
                 <div slot="tray" hidden>
                   Solutions tray
                 </div>

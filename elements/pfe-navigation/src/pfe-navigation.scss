@@ -7,22 +7,17 @@ $LOCAL: navigation;
   --pfe-navigation--Padding--horizontal: #{pfe-var(container-spacer)};
   --pfe-navigation--BackgroundColor: #{pfe-color(surface--darkest)};
   --pfe-navigation--Color: #{pfe-color(surface--darkest--text)};
-  --pfe-navigation--Border: #{pfe-var(surface--border-width)} #{pfe-var(
-      surface--border-style
-    )} transparent;
+  --pfe-navigation--Border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
   --pfe-navigation--Width: auto;
   --pfe-navigation--Height: auto;
 
   @each $size in (md, lg, xl) {
     @media screen and (min-width: pfe-breakpoint(#{$size})) {
-      --pfe-navigation--Width: calc(
-        #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4)
-      );
+      --pfe-navigation--Width: calc(#{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4));
     }
   }
 
   display: block;
-  font-size: 16px;
 }
 
 .pfe-navigation__wrapper {
@@ -38,12 +33,11 @@ $LOCAL: navigation;
       // width: 1150px;
     }
   }
+
   margin: 0 auto;
   width: #{pfe-local(Width)};
   color: #{pfe-local(Color)};
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: auto 1fr;
   grid-template-columns: auto 1fr;
   grid-template-areas: "logo main utility";
 }

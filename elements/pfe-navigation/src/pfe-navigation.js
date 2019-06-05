@@ -1,12 +1,5 @@
 import PFElement from "../pfelement/pfelement.js";
-import PfeAccordion from "../pfe-accordion/pfe-accordion.js";
-
-const KEYCODE = {
-  ENTER: 13,
-  DOWN: 40,
-  UP: 38,
-  ESC: 27
-};
+// import PfeAccordion from "../pfe-accordion/pfe-accordion.js";
 
 class PfeNavigation extends PFElement {
   static get tag() {
@@ -24,14 +17,21 @@ class PfeNavigation extends PFElement {
   constructor() {
     super(PfeNavigation);
 
+    // Initialize the active item to null
     this._activeNavigationItem = null;
 
+    // Attach event handlers
     this._toggledHandler = this._toggledHandler.bind(this);
+    this._observerHandler = this._observerHandler.bind(this);
+
+    // Connect functions
     this._init = this._init.bind(this);
     this._setupSearch = this._setupSearch.bind(this);
-    this._observerHandler = this._observerHandler.bind(this);
+
+    // Attach the mutation observer
     this._observer = new MutationObserver(this._observerHandler);
 
+    // Set up the toggled event listener
     this.addEventListener(
       `${PfeNavigationItem.tag}:toggled`,
       this._toggledHandler
@@ -43,12 +43,17 @@ class PfeNavigation extends PFElement {
 
     this.overlay = this.shadowRoot.querySelector(".pfe-navigation__overlay");
     this._searchSlot = this.shadowRoot.querySelector(`slot[name="search"]`);
+
+    // Set up event listener for slotchange on search
+    // @TODO Kyle do we need this for each slot?
     this._searchSlot.addEventListener("slotchange", this._setupSearch);
 
+    // If light DOM exists, initialize it
     if (this.children.length) {
       this._init();
     }
 
+    // Set up the observer to watch the children elements
     this._observer.observe(this, {
       childList: true,
       subtree: true,
@@ -57,12 +62,15 @@ class PfeNavigation extends PFElement {
   }
 
   disconnectedCallback() {
+    // Remove the event listeners
     this.removeEventListener(
       `${PfeNavigationItem.tag}:toggled`,
       this._toggledHandler
     );
 
     this._observer.disconnect();
+
+    // Remove the listener on the search slot
     this._searchSlot.removeEventListener("slotchange", this._setupSearch);
   }
 
@@ -88,7 +96,7 @@ class PfeNavigation extends PFElement {
   }
 
   _init() {
-    // @IE11
+    // @IE11 Remove the observer
     if (window.ShadyCSS) {
       this._observer.disconnect();
     }
@@ -108,11 +116,8 @@ class PfeNavigation extends PFElement {
 
     this._setupMobileNav();
 
-    // @IE11
     if (window.ShadyCSS) {
-      // this is necessary for IE11 so the script doesn't become
-      // non-responsive
-      // @IE11
+      // @IE11 Prevents the script from becoming non-responsive
       setTimeout(() => {
         this._observer.observe(this, {
           childList: true,
@@ -132,40 +137,44 @@ class PfeNavigation extends PFElement {
 
   _setupMobileNav() {
     const triggers = [
-      ...this.querySelectorAll("pfe-navigation-main pfe-navigation-item a")
+      ...this.querySelectorAll("pfe-navigation-item > a")
     ];
-    const fragment = document.createDocumentFragment();
-    const accordion = document.createElement("pfe-accordion");
-    const menuSlotMobile = this.querySelector(`[slot="menu-mobile"]`);
 
-    triggers.forEach(trigger => {
-      const clone = trigger.cloneNode(true);
-      const header = document.createElement("pfe-accordion-header");
-      const panel = document.createElement("pfe-accordion-panel");
+    console.log(triggers);
+    
+    // const fragment = document.createDocumentFragment();
+    // const accordion = document.createElement("pfe-accordion");
+    // const menuSlotMobile = this.querySelector(`[slot="menu-mobile"]`);
 
-      if (!trigger.hasAttribute("slot")) {
-        header.innerHTML = clone.outerHTML;
-      } else {
-        header.textContent = trigger.textContent;
-      }
+    // triggers.forEach(trigger => {
+    //   const clone = trigger.cloneNode(true);
+    //   const header = document.createElement("pfe-accordion-header");
+    //   const heading = document.createElement("h2");
+    //   const panel = document.createElement("pfe-accordion-panel");
+    //   const has_panel = trigger.nextElementSibling && trigger.nextElementSibling.getAttribute("slot") === "tray";
 
-      if (
-        trigger.nextElementSibling &&
-        trigger.nextElementSibling.getAttribute("slot") === "tray"
-      ) {
-        panel.innerHTML = trigger.nextElementSibling.innerHTML;
-      } else {
-        panel.innerHTML = "";
-      }
+    //   if (!trigger.hasAttribute("slot")) {
+    //     heading.innerHTML = clone.outerHTML;
+    //   } else {
+    //     heading.textContent = trigger.textContent;
+    //   }
 
-      accordion.appendChild(header);
-      accordion.appendChild(panel);
-    });
+    //   header.appendChild(heading);
 
-    fragment.appendChild(accordion);
+    //   if (has_panel) {
+    //     panel.innerHTML = trigger.nextElementSibling.innerHTML;
+    //   } else {
+    //     panel.innerHTML = "";
+    //   }
 
-    this._menuSlotMobile.innerHTML = "";
-    this._menuSlotMobile.appendChild(fragment);
+    //   accordion.appendChild(header);
+    //   accordion.appendChild(panel);
+    // });
+
+    // fragment.appendChild(accordion);
+
+    // this._menuSlotMobile.innerHTML = "";
+    // this._menuSlotMobile.appendChild(fragment);
   }
 }
 

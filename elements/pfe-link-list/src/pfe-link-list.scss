@@ -1,0 +1,71 @@
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: link-list;
+
+/// ===========================================================================
+/// DEFAULT LINK-LIST
+/// ===========================================================================
+:host {
+  --pfe-link-list--Padding:                     #{pfe-var(container-spacer)};
+  --pfe-link-list__header--FontSize:            #{pfe-var(font-size--heading--epsilon)};
+  --pfe-link-list__header--Color:               #{pfe-color(surface--base--text)};
+
+  // Broadcasted color
+  --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
+  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--link)};
+  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--link--visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--link--hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
+  --pfe-link-list--font-family:                 #{pfe-var(font-family)};
+  --pfe-link-list--font-family--heading:        #{pfe-var(font-family--heading)};
+  --pfe-link-list--font-weight--normal:         #{pfe-var(font-weight--normal)};
+
+  display: block;
+  padding: #{pfe-local(Padding)};
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.pfe-link-list__header {
+  color: #{pfe-local(Color, header)}; // #252525;
+  font-family: "Overpass", Helvetica, sans-serif;
+  font-family: #{pfe-var(font-family)};
+  font-size: 1rem;
+  font-weight: #{pfe-var(font-weight--bold)};
+  margin: 0;
+  margin-block-end: 0; // user stylesheet overwrites normal margin?
+  margin-block-start: 0;
+  padding-bottom: 1rem;
+  a {
+    color: #{pfe-radio(color--ui-link)};
+    text-decoration: none;
+    @each $state in (hover, visited, focus) {
+      &:#{$state} {
+        color: #{pfe-radio(color--ui-link--#{$state})};
+      }
+    }
+  }
+}
+ul {
+  @include pfe-reset-list;
+}
+li {
+  font-family: "Overpass", Helvetica, sans-serif;
+  font-family: #{pfe-var(font-family)};
+  font-weight: #{pfe-var(font-weight--light)};
+  font-size: 1rem;
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+  a {
+    color: #{pfe-radio(color--ui-link)};
+    text-decoration: none;
+    @each $state in (hover, visited, focus) {
+      &:#{$state} {
+        color: #{pfe-radio(color--ui-link--#{$state})};
+      }
+    }
+  }
+}

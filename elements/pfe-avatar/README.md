@@ -1,4 +1,4 @@
-PFElements Avatar Element
+# PFElements Avatar Element
 
 `pfe-avatar` is an element for displaying a user's avatar image. If the user in question has provided a custom avatar, provide it and it will be displayed. If they don't, a nice colored pattern will be generated based on their name. A specific name will always generate the same pattern, so users' avatars will stay static without the need for storing their generated image.
 

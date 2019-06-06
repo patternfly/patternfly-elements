@@ -13,6 +13,10 @@ class PfeCta extends PFElement {
     return "pfe-cta.html";
   }
 
+  get defaultStyle() {
+    return this.hasAttribute("priority") ? false : true;
+  }
+
   static get observedAttributes() {
     return [
       "pfe-priority",

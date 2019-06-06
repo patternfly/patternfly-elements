@@ -1,6 +1,4 @@
 @import "../../pfe-sass/pfe-sass";
-@import "../node_modules/rh-iconfont/dist/files/web-iconfont.scss";
-@import "../node_modules/rh-iconfont/dist/files/rh-iconfont.scss";
 
 @mixin pfe-cta-focus($border-color) {
   &::before {
@@ -79,36 +77,9 @@ $pfe-cta__arrow-size:                        0.313em;
   &::after {
     margin-left: calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
 
-    // Bring in  thestyles for the CSS ar    
-    // @include pfe-arrow(
-    //   $type: right,
-    //   $color: #{pfe-local(Color)},
-    //   $width: $pfe-cta__arrow-size,
-    //   $height: $pfe-cta__arrow-size,
-    //   $pseudo: true
-    // );row
-    
-
-
     // This overrides a display style from the pfe-arrow mixin
     // display:     #{pfe-local($cssvar: Display, $region: arrow)};
     // content: "\f101";
-  }
-}
-
-:host(:not([priority])) {
-
-  ::slotted(a) {
-    @include get-web-icon( arrow-right, $position: after ) {
-        position: relative;
-        margin-right: 2px;
-        margin-left: 6px;
-        transition: .3s ease all;
-    }
-  }
-  ::slotted(a:focus) {
-    // background-color: rgba(#{pfe-color(ui-link)}, 0.1);
-    background-color: rgba(0, 102, 204, .1);
   }
 }
 
@@ -117,6 +88,37 @@ $pfe-cta__arrow-size:                        0.313em;
   ::slotted(a:#{$state}) {
     --pfe-cta--Color: #{pfe-local(main--#{$state})};
     --pfe-broadcasted--color--ui-link--#{$state}: #{pfe-local(main--#{$state})};
+  }
+}
+
+/// ===========================================================================
+/// DEFAULT CTAs
+/// ===========================================================================
+
+:host(:not([priority])) {
+  display: flex;
+
+  ::slotted(a) {
+    --pfe-cta--Padding: .6rem 0;
+  }
+  ::slotted(a:focus) {
+    // background-color: rgba(#{pfe-color(ui-link)}, 0.1);
+    background-color: rgba(0, 102, 204, .1);
+  }
+
+  .pfe-cta--arrow {
+    width: 13px;
+    height: 13px;
+    fill: #{pfe-local(Color)};
+    padding: 1rem 0 1rem .375rem;
+    transition: .3s ease all;
+  }
+}
+
+:host(:not([priority]):hover) {
+  .pfe-cta--arrow {
+    fill: #{pfe-local(main--hover)};
+    padding: 1rem 0 1rem .5rem;
   }
 }
 

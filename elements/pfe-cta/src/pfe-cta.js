@@ -21,6 +21,7 @@ class PfeCta extends PFElement {
     return [
       "pfe-priority",
       "pfe-color",
+      "pfe-alt",
       "on"
     ];
   }

@@ -97,13 +97,13 @@ $pfe-cta__arrow-size:                        0.313em;
 
 :host(:not([priority])) {
   display: flex;
+  flex-direction: row;
 
   ::slotted(a) {
     --pfe-cta--Padding: .6rem 0;
   }
   ::slotted(a:focus) {
-    // background-color: rgba(#{pfe-color(ui-link)}, 0.1);
-    background-color: rgba(0, 102, 204, .1);
+    outline: none;
   }
 
   .pfe-cta--arrow {
@@ -119,6 +119,22 @@ $pfe-cta__arrow-size:                        0.313em;
   .pfe-cta--arrow {
     fill: #{pfe-local(main--hover)};
     padding: 1rem 0 1rem .5rem;
+  }
+}
+
+:host(:not([priority]):focus-within) {
+    background-color: rgba(0, 102, 204, .1);
+    .pfe-cta--arrow {
+      fill: #{pfe-local(main--focus)};
+    }
+}
+
+:host([on="dark"]:not([priority])) {
+  ::slotted(a) {
+    color: #{pfe-color(ui-link--on-dark)};
+  }
+  .pfe-cta--arrow {
+    fill: #{pfe-color(ui-link--on-dark)};
   }
 }
 
@@ -193,33 +209,34 @@ $pfe-cta__arrow-size:                        0.313em;
 /// ===========================================================================
 /// ON DARK
 /// ===========================================================================
-:host([on="dark"]) {
-  --pfe-cta--main:        #{pfe-color(text--on-dark)};
+// :host([on="dark"]) {
+//   --pfe-cta--main:        #{pfe-color(text--on-dark)};
 
-  @each $state in (hover, focus) {
-    --pfe-cta--main--#{$state}: #{pfe-color(ui-link--on-dark--#{$state})};
-  }
-}
+//   @each $state in (hover, focus) {
+//     --pfe-cta--main--#{$state}: #{pfe-color(ui-link--on-dark--#{$state})};
+//   }
+// }
 
 // Primary variation
-:host([on="dark"][priority="primary"]),
-:host([on="dark"][pfe-priority="primary"]) {
-  --pfe-cta--main:        #{pfe-color(ui-accent--text)};
-  --pfe-cta--aux:         #{pfe-color(ui-accent)};
+// :host([on="dark"][priority="primary"]),
+// :host([on="dark"][pfe-priority="primary"]) {
+//   --pfe-cta--main:        #{pfe-color(ui-accent--text)};
+//   --pfe-cta--aux:         #{pfe-color(ui-accent)};
 
-  @each $state in (hover, focus) {
-    --pfe-cta--main--#{$state}: #{pfe-color(ui-accent)};
-    --pfe-cta--aux--#{$state}:  #{pfe-color(ui-accent--text)};
-  }
-}
+//   @each $state in (hover, focus) {
+//     --pfe-cta--main--#{$state}: #{pfe-color(ui-accent)};
+//     --pfe-cta--aux--#{$state}:  #{pfe-color(ui-accent--text)};
+//   }
+// }
 
 // Secondary variation
 :host([on="dark"][priority="secondary"]),
 :host([on="dark"][pfe-priority="secondary"]) {
   --pfe-cta--main:        #{pfe-color(ui-base--text)};
+  --pfe-cta--aux--hover:  #{pfe-color(ui-complement--hover)};
 
   @each $state in (hover, focus) {
-    --pfe-cta--main--#{$state}: #{pfe-color(ui-base)};
+    --pfe-cta--main--#{$state}: #{pfe-color(surface--lightest)};
   }
 }
 

@@ -39,12 +39,18 @@ class PfeIcon extends PFElement {
     use.setAttribute("href", `${iconPath}#${iconId}`); // xlinks:href is better supported but deprecated
   }
 
-  useLocalIcon(name) {
-    PfeIconSet.loadIcon(name).then(svgStuff => console.log(svgStuff));
+  useLocalIcon(iconName) {
+    PfeIconSet.loadIcon(iconName);
     // const iconPath = PfeIconSet.getIconPath(newValue);
+    const setName = PfeIconSet.getSetName(iconName);
+    const iconSet = PfeIconSet.getIconSet(setName);
+    const { iconPath, iconId } = iconSet.resolveIconName(iconName);
+
     const svg = this.shadowRoot.querySelector("svg");
     const use = svg.querySelector("use");
-    use.setAttribute("href", `#${PfeIconSet.getIconId(name)}`);
+    use.setAttribute("href", `#${iconId}`);
+
+    this.appendChild(svg);
   }
 }
 

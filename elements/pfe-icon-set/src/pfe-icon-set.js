@@ -159,14 +159,10 @@ class PfeIconSet extends PFElement {
    * Inject an SVG icon into this element.
    */
   injectSVG(name, svgText) {
-    this.insertAdjacentHTML("beforeend", `<div id="${name}">${svgText}</div>`);
-    // fix the svg's ID
-    const div = this.querySelector(`#${name}`);
-    const svg = div.querySelector("svg");
-    div.removeAttribute("id");
-    // svg.setAttribute("id", PfeIconSet.getIconId(name));
-
-    return svg;
+    this.insertAdjacentHTML("beforeend", svgText);
+    return this.lastChild;
+    // document.body.insertAdjacentHTML("beforeend", svgText);
+    // return document.body.lastChild;
   }
 
   /**

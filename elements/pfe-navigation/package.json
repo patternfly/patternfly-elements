@@ -24,7 +24,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-accordion": "^1.0.0-prerelease.14",
     "@patternfly/pfe-sass": "1.0.0-prerelease.13",
     "@patternfly/pfelement": "1.0.0-prerelease.13"
   },

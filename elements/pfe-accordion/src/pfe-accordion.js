@@ -396,6 +396,8 @@ class PfeAccordionHeader extends PFElement {
   constructor() {
     super(PfeAccordionHeader);
 
+    this.button = this.shadowRoot.querySelector("button");
+
     this._init = this._init.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
     this._observer = new MutationObserver(this._init);
@@ -445,8 +447,6 @@ class PfeAccordionHeader extends PFElement {
     if (!this.pfeId) {
       this.pfeId = `${PfeAccordionHeader.tag}-${generateId()}`;
     }
-
-    this.button = this.shadowRoot.querySelector("button");
 
     const child = this.children[0];
     let isHeaderTag = false;

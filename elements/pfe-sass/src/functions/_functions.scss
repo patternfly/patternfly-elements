@@ -313,16 +313,16 @@ $map: $pfe-colors) {
 //  1st arg:            lookup broadcast variable  (1 of 6)
 //
 //  usage:   color: #{pfe-apply-broadcast(ui-base--hover)};
-//  result:  color: var(--pfe-broadcasted--color--ui-base--hover);
+//  result:  Error: --pfe-broadcasted--color--ui-base--hover variable is not currently supported.";
 //
 //  usage:   color: #{pfe-apply-broadcast(ui-link)};
 //  result:  color: var(--pfe-broadcasted--color--ui-link);
 
-@function pfe-apply-broadcast($broadcast) {
+@function pfe-apply-broadcast($broadcast, $fallback: #{pfe-color(#{to-string($broadcast,'--')})}) {
     @if not index($BROADCAST-VARS, $broadcast) {
-      @warn "--#{$repo}-broadcasted--color--#{$broadcast} variable is not currently supported.";
+      @error "--#{$repo}-broadcasted--color--#{$broadcast} variable is not currently supported.";
     }
     @else {
-      @return var(--#{$repo}-broadcasted--color--#{to-string($broadcast,'--')}, #{pfe-color(#{to-string($broadcast,'--')})});
+      @return var(--#{$repo}-broadcasted--color--#{to-string($broadcast,'--')}, $fallback);
     }
 }

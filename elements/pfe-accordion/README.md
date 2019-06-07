@@ -1,4 +1,4 @@
-# WIP 🐣: PFElements Accordion Element
+# PFElements Accordion Element
 
 ## Usage
 

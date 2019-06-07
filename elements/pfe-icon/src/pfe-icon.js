@@ -18,52 +18,35 @@ class PfeIcon extends PFElement {
     return ["pfe-icon"];
   }
 
-  static iconSetInstalled(setName) {
-    return document.body.querySelector(
-      `pfe-icon-set[pfe-set-name='${setName}']`
-    );
-  }
-
-  static startLoading(name) {
-    const alreadyLoading = PfeIcon.currentlyLoading.has(name);
-
-    if (alreadyLoading) {
-    } else {
-      PfeIcon.currentlyLoading.add(name);
-    }
-
-    fetch(/* TODO write get path code*/)
-      .then(rsp => rsp.text())
-      .then(PfeIcon.completeLoading);
-  }
-
-  static completeLoading(name, text) {
-    PfeIcon.currentlyLoading.delete(name);
-    /* TODO inject SVG into somewhere (head?) */
-  }
-
   constructor() {
     super(PfeIcon);
   }
 
-  // connectedCallback() {
-  //   super.connectedCallback();
-  // }
-
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(...arguments);
-    if (attr == "pfe-icon" && oldValue !== newValue) {
-      this.handleNewIcon(newValue);
-    }
+    this.useRemoteIcon(newValue);
+    // this.useLocalIcon(newValue);
   }
 
-  handleNewIcon(iconAttr) {
-    const [set, ...icon] = iconAttr.split("-");
-    console.log(set, icon);
+  useRemoteIcon(iconName) {
+    const setName = PfeIconSet.getSetName(iconName);
+    const iconSet = PfeIconSet.getIconSet(setName);
+    const { iconPath, iconId } = iconSet.resolveIconName(iconName);
+
+    const use = this.shadowRoot.querySelector("svg use");
+    // use.setAttribute("href", `${iconPath}#${name}`); // href is recommended but not as well supported
+    // use.setAttribute("xlinks:href", `${iconPath}#${iconId}`); // xlinks:href is better supported but deprecated
+    use.setAttribute("href", `${iconPath}#${iconId}`); // xlinks:href is better supported but deprecated
+  }
+
+  useLocalIcon(name) {
+    PfeIconSet.loadIcon(name).then(svgStuff => console.log(svgStuff));
+    // const iconPath = PfeIconSet.getIconPath(newValue);
+    const svg = this.shadowRoot.querySelector("svg");
+    const use = svg.querySelector("use");
+    use.setAttribute("href", `#${PfeIconSet.getIconId(name)}`);
   }
 }
-
-PfeIcon.currentlyLoading = new Set();
 
 PFElement.create(PfeIcon);
 

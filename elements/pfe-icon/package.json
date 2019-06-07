@@ -24,6 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@patternfly/pfe-icon-set": "1.0.0-prerelease.14",
     "@patternfly/pfe-sass": "1.0.0-prerelease.14",
     "@patternfly/pfelement": "1.0.0-prerelease.14",
     "@redhat/rh-iconfont": "github:mwcz/rh-iconfont#package-svgs"

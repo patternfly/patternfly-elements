@@ -77,7 +77,16 @@
       <h1 slot="pfe-band--header">&lt;pfe-cta&gt;</h1>
     </pfe-band>
 
-
+<!-- @TODO Address alt CTA styles when we have clarification about how they should be used -->
+<!--     <pfe-band>
+      <h2 slot="pfe-band--header">Alternatives</h2>
+      <p slot="pfe-band--header" class="button-layout">
+        <pfe-cta priority="primary" alt><a href="#">Primary</a></pfe-cta>
+        <pfe-cta priority="secondary" alt><a href="#">Secondary</a></pfe-cta>
+      </p>
+      <hr>
+    </pfe-band>
+ -->
     <pfe-band pfe-color="lightest">
       <h2 slot="pfe-band--header">Defaults</h2>
       <p slot="pfe-band--header" class="button-layout">
@@ -115,42 +124,6 @@
       </div>
     </pfe-band>
 
-    <pfe-band pfe-color="lightest">
-      <h2 slot="pfe-band--header">Alternatives</h2>
-      <p slot="pfe-band--header" class="button-layout">
-        <pfe-cta><a href="#">Default</a></pfe-cta>
-        <pfe-cta priority="primary" alt><a href="#">Primary</a></pfe-cta>
-        <pfe-cta priority="secondary" alt><a href="#">Secondary</a></pfe-cta>
-      </p>
-      <hr>
-      <h2>Color properties</h2>
-      <div class="card-layout">
-        <pfe-card color="lightest">
-          <h2 slot="header">Base</h2>
-          <p class="button-layout">
-            <pfe-cta color="base"><a href="#">Default</a></pfe-cta>
-            <pfe-cta priority="primary" color="base"><a href="#">Primary</a></pfe-cta>
-            <pfe-cta priority="secondary" color="base"><a href="#">Secondary</a></pfe-cta>
-          </p>
-        </pfe-card>
-        <pfe-card color="lightest">
-          <h2 slot="header">Complement</h2>
-          <p class="button-layout">
-            <pfe-cta color="complement"><a href="#">Default</a></pfe-cta>
-            <pfe-cta priority="primary" color="complement"><a href="#">Primary</a></pfe-cta>
-            <pfe-cta priority="secondary" color="complement"><a href="#">Secondary</a></pfe-cta>
-          </p>
-        </pfe-card>
-        <pfe-card color="lightest">
-          <h2 slot="header">Accent</h2>
-          <p class="button-layout">
-            <pfe-cta color="accent"><a href="#">Default</a></pfe-cta>
-            <pfe-cta priority="primary" color="accent"><a href="#">Primary</a></pfe-cta>
-            <pfe-cta priority="secondary" color="accent"><a href="#">Secondary</a></pfe-cta>
-          </p>
-        </pfe-card>
-      </div>
-    </pfe-band>
 
     <pfe-band pfe-color="darker">
       <h2 slot="pfe-band--header">Defaults &mdash; <code>on="dark"</code></h2>

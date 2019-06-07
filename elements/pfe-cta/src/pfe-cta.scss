@@ -115,6 +115,10 @@ $pfe-cta__arrow-size:                        0.313em;
   }
 }
 
+:host([color=complement]:not([priority])) {
+  --pfe-cta--main--focus: #{pfe-local(main--focus)};
+}
+
 :host(:not([priority]):hover) {
   .pfe-cta--arrow {
     fill: #{pfe-local(main--hover)};
@@ -179,9 +183,29 @@ $pfe-cta__arrow-size:                        0.313em;
 
   ::slotted(a:focus) {
     @include pfe-cta-focus(#{pfe-local(aux--focus)});
-    // @include pfe-cta-focus(#fff);
   }
 }
+
+
+// @TODO Set secondary alt styles when we have clarification about how they 
+// should be used.
+
+// :host([alt][priority="primary"]),
+// :host([alt][pfe-priority="primary"]) {
+//   --pfe-cta--main:          #{pfe-color(surface--lightest)};
+//   --pfe-cta--main--focus:   #{pfe-color(surface--border--lightest)};
+//   --pfe-cta--aux:           #{pfe-color(surface--lightest--text)};
+//   --pfe-cta--aux--focus:    #{pfe-color(surface--lightest--text)};
+
+//   --pfe-cta--BorderColor:     #{pfe-local(main)};
+//   --pfe-cta--BackgroundColor: #{pfe-local(main)};
+//   --pfe-cta--Color:           #{pfe-local(aux)};
+
+//   ::slotted(a:focus) {
+//     @include pfe-cta-focus(#{pfe-local(aux--focus)});
+//     --pfe-cta--main--focus: white;
+//   }
+// }
 
 /// ===========================================================================
 /// SECONDARY CTAs
@@ -206,6 +230,26 @@ $pfe-cta__arrow-size:                        0.313em;
   }
 }
 
+// @TODO Set secondary alt styles when we have clarification about how they 
+// should be used.
+
+// :host([alt][priority="secondary"]),
+// :host([alt][pfe-priority="secondary"]) {
+//   --pfe-cta--main:          #{pfe-color(ui-link)};
+//   --pfe-cta-main--focus:    #{pfe-color(ui-link--focus)};
+//   --pfe-cta--aux:           transparent;
+
+//   --pfe-cta--BorderColor:     #{pfe-local(main)};
+//   --pfe-cta--BackgroundColor: #{pfe-local(aux)};
+//   --pfe-cta--Color:           #{pfe-local(main)};
+
+//   ::slotted(a:focus) {
+//     --pfe-cta--BorderColor:     #{pfe-local(aux--focus)};
+//     @include pfe-cta-focus(#{pfe-local(aux--focus)});
+//   }
+// }
+
+
 /// ===========================================================================
 /// ON DARK
 /// ===========================================================================
@@ -217,17 +261,6 @@ $pfe-cta__arrow-size:                        0.313em;
 //   }
 // }
 
-// Primary variation
-// :host([on="dark"][priority="primary"]),
-// :host([on="dark"][pfe-priority="primary"]) {
-//   --pfe-cta--main:        #{pfe-color(ui-accent--text)};
-//   --pfe-cta--aux:         #{pfe-color(ui-accent)};
-
-//   @each $state in (hover, focus) {
-//     --pfe-cta--main--#{$state}: #{pfe-color(ui-accent)};
-//     --pfe-cta--aux--#{$state}:  #{pfe-color(ui-accent--text)};
-//   }
-// }
 
 // Secondary variation
 :host([on="dark"][priority="secondary"]),

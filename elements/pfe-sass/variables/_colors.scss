@@ -61,7 +61,7 @@ $pfe-color--ui-complement--text--focus:         $pfe-color--gray-1000 !default;
 $pfe-color--ui-complement--text--visited:       $pfe-color--text--on-dark !default;
 
 $pfe-color--ui-accent:                          $pfelements--red !default;
-$pfe-color--ui-accent--hover:                   darken($pfelements--red, 20%) !default;
+$pfe-color--ui-accent--hover:                   $pfelements--red-dark !default;
 $pfe-color--ui-accent--focus:                   $pfelements--red !default;
 $pfe-color--ui-accent--visited:                 $pfelements--red !default;
 $pfe-color--ui-accent--text:                    $pfe-color--text--on-dark !default;

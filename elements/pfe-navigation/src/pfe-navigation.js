@@ -1,12 +1,5 @@
 import PFElement from "../pfelement/pfelement.js";
 
-const KEYCODE = {
-  ENTER: 13,
-  DOWN: 40,
-  UP: 38,
-  ESC: 27
-};
-
 class PfeNavigation extends PFElement {
   static get tag() {
     return "pfe-navigation";
@@ -27,8 +20,10 @@ class PfeNavigation extends PFElement {
   constructor() {
     super(PfeNavigation);
 
+    // Initialize the active item to null
     this._activeNavigationItem = null;
 
+    // Attach event handlers
     this._toggledHandler = this._toggledHandler.bind(this);
     this.addEventListener(`${PfeNavigationItem.tag}:toggled`, this._toggledHandler);
   }

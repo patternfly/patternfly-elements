@@ -10,24 +10,14 @@ $LOCAL: navigation;
   // Darkest is the default background color
   --pfe-navigation--BackgroundColor: #{pfe-color(surface--darkest)};
   --pfe-navigation--Color: #{pfe-color(surface--darkest--text)};
-  --pfe-navigation--Color: #333;
-
-  // Border settings
-  --pfe-navigation--Border: #{pfe-var(surface--border-width)} #{pfe-var(
-      surface--border-style
-    )} transparent;
-
-  // Band width logic
-  // Initialize at mobile breakpoint
+  --pfe-navigation--Border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
   --pfe-navigation--Width: auto;
   --pfe-navigation--Height: auto;
 
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
     @media screen and (min-width: pfe-breakpoint(#{$size})) {
-      --pfe-navigation--Width: calc(
-        #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4)
-      );
+      --pfe-navigation--Width: calc(#{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4));
     }
   }
 
@@ -39,13 +29,28 @@ $LOCAL: navigation;
   }
 
   display: block;
+}
+
+.pfe-navigation__wrapper {
   background-color: #{pfe-local(BackgroundColor)};
   color: #{pfe-local(Color)};
   width: 100%;
 }
 
-:host([hidden]) {
-  display: none;
+.pfe-navigation__container {
+  // need to do something here for IE11 since we can't redefine the variable
+  @each $size in (md, lg, xl) {
+    @media screen and (min-width: pfe-breakpoint(#{$size})) {
+      // width: 1150px;
+    }
+  }
+
+  margin: 0 auto;
+  width: #{pfe-local(Width)};
+  color: #{pfe-local(Color)};
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "logo main utility";
 }
 
 ::slotted([slot="logo"]) {

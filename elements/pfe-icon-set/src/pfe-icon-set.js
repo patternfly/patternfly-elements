@@ -214,11 +214,11 @@ PFElement.create(PfeIconSet);
 [
   {
     name: "web",
-    path: "/rh-iconfont/dist/svg"
+    path: "/webassets/avalon/j/lib/rh-iconfont-svgs"
   },
   {
     name: "rh",
-    path: "/rh-iconfont/dist/svg"
+    path: "/webassets/avalon/j/lib/rh-iconfont-svgs"
   }
 ].forEach(set =>
   PfeIconSet.register(

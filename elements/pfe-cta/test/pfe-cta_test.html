@@ -10,7 +10,7 @@
   <body>
 
     <pfe-cta>
-      <a>This is the element content.</a>
+      <a href="https://redhat.com">redhat.com</a>
     </pfe-cta>
 
     <script>
@@ -55,23 +55,45 @@
           );
         });
 
-        // Iterate over the colors object to test expected background color results
-        Object.entries(priorities).forEach(priority => {
-          cta[0].setAttribute("pfe-priority", priority[0]);
-          Object.entries(color_bgs).forEach(set => {
-            //Update the color attribute
-            cta[0].setAttribute("pfe-color", set[0]);
-            test(`should have a ${priority[1]} of ${set[1]} when pfe-color is ${set[0]} and pfe-priority is ${priority[0]}`, () => {
-              // Test that the color is rendering as expected
-              assert.deepEqual(getColor(cta[0].querySelector("a"), priority[1]), hexToRgb(set[1]));
-            });
-            // Remove the attribute when test is complete
-            cta[0].removeAttribute("pfe-color");
+        test("it should log a warning if there are no children in the light DOM", done => {
+          const spy = sinon.spy(console, 'warn');
+          const pfeCta = document.createElement("pfe-cta");
+          pfeCta.textContent = "This is wrong";
+
+          document.body.appendChild(pfeCta);
+
+          flush(() => {
+            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be an anchor tag (<a>)');
+            spy.restore();
+            done();
           });
-          // Remove the attribute when test is complete
-          cta[0].removeAttribute("pfe-priority");
         });
 
+        test("it should log a warning if the first child in the light DOM is not an anchor", done => {
+          const spy = sinon.spy(console, 'warn');
+          const pfeCta = document.createElement("pfe-cta");
+          pfeCta.innerHTML = `<p>Something</p><a href="#">A link</a>`;
+
+          document.body.appendChild(pfeCta);
+
+          flush(() => {
+            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be an anchor tag (<a>)');
+            spy.restore();
+            done();
+          });
+        });
+
+        test("it should properly initialize when the contents of the slot change", done => {
+          const pfeCta = document.querySelector("pfe-cta");
+          assert.equal(pfeCta.link.getAttribute("href"), "https://redhat.com");
+
+          pfeCta.innerHTML = `<a href="https://access.redhat.com">Customer Portal</a>`;
+
+          flush(() => {
+            assert.equal(pfeCta.link.getAttribute("href"), "https://access.redhat.com");
+            done();
+          });
+        });
       });
     </script>
   </body>

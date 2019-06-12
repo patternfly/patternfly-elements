@@ -139,27 +139,6 @@ $pfe-cta__arrow-size:                        0.313em;
   }
 }
 
-/// ===========================================================================
-/// Styles for "Button" CTAs
-/// ===========================================================================
-:host([priority="primary"],[priority="secondary"]),
-:host([pfe-priority="primary"],[pfe-priority="secondary"]) {
-  // Button padding and border radius settings
-  --pfe-cta--Padding:      #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
-  --pfe-cta--BorderRadius: #{pfe-var(ui--border-radius)};
-  // Arrow styles
-  --pfe-cta__arrow--Display:  none;
-
-  // Loop through states and apply update to color
-  @each $state in (hover, focus) {
-    ::slotted(a:#{$state}) {
-      --pfe-cta--BorderColor:     #{pfe-local(main--#{$state})};
-      --pfe-cta--BackgroundColor: #{pfe-local(main--#{$state})};
-      --pfe-cta--Color:           #{pfe-local(aux--#{$state})};
-      --pfe-broadcasted--color--ui-link--#{$state}: #{pfe-local(aux--#{$state})};
-    }
-  }
-}
 
 /// ===========================================================================
 /// PRIMARY CTAs
@@ -181,28 +160,22 @@ $pfe-cta__arrow-size:                        0.313em;
   ::slotted(a:focus) {
     @include pfe-cta-focus(#{pfe-local(aux--focus)});
   }
+  // Button padding and border radius settings
+  --pfe-cta--Padding:      #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
+  --pfe-cta--BorderRadius: #{pfe-var(ui--border-radius)};
+  // Arrow styles
+  --pfe-cta__arrow--Display:  none;
+
+  // Loop through states and apply update to color
+  @each $state in (hover, focus) {
+    ::slotted(a:#{$state}) {
+      --pfe-cta--BorderColor:     #{pfe-local(main--#{$state})};
+      --pfe-cta--BackgroundColor: #{pfe-local(main--#{$state})};
+      --pfe-cta--Color:           #{pfe-local(aux--#{$state})};
+      --pfe-broadcasted--color--ui-link--#{$state}: #{pfe-local(aux--#{$state})};
+    }
+  }
 }
-
-
-// @TODO Set secondary alt styles when we have clarification about how they 
-// should be used.
-
-// :host([alt][priority="primary"]),
-// :host([alt][pfe-priority="primary"]) {
-//   --pfe-cta--main:          #{pfe-color(surface--lightest)};
-//   --pfe-cta--main--focus:   #{pfe-color(surface--border--lightest)};
-//   --pfe-cta--aux:           #{pfe-color(surface--lightest--text)};
-//   --pfe-cta--aux--focus:    #{pfe-color(surface--lightest--text)};
-
-//   --pfe-cta--BorderColor:     #{pfe-local(main)};
-//   --pfe-cta--BackgroundColor: #{pfe-local(main)};
-//   --pfe-cta--Color:           #{pfe-local(aux)};
-
-//   ::slotted(a:focus) {
-//     @include pfe-cta-focus(#{pfe-local(aux--focus)});
-//     --pfe-cta--main--focus: white;
-//   }
-// }
 
 /// ===========================================================================
 /// SECONDARY CTAs
@@ -225,27 +198,22 @@ $pfe-cta__arrow-size:                        0.313em;
     --pfe-cta--BorderColor:     #{pfe-local(aux--focus)};
     @include pfe-cta-focus(#{pfe-local(aux--focus)});
   }
+  // Button padding and border radius settings
+  --pfe-cta--Padding:      #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
+  --pfe-cta--BorderRadius: #{pfe-var(ui--border-radius)};
+  // Arrow styles
+  --pfe-cta__arrow--Display:  none;
+
+  // Loop through states and apply update to color
+  @each $state in (hover, focus) {
+    ::slotted(a:#{$state}) {
+      --pfe-cta--BorderColor:     #{pfe-local(main--#{$state})};
+      --pfe-cta--BackgroundColor: #{pfe-local(main--#{$state})};
+      --pfe-cta--Color:           #{pfe-local(aux--#{$state})};
+      --pfe-broadcasted--color--ui-link--#{$state}: #{pfe-local(aux--#{$state})};
+    }
+  }
 }
-
-// @TODO Set secondary alt styles when we have clarification about how they 
-// should be used.
-
-// :host([alt][priority="secondary"]),
-// :host([alt][pfe-priority="secondary"]) {
-//   --pfe-cta--main:          #{pfe-color(ui-link)};
-//   --pfe-cta-main--focus:    #{pfe-color(ui-link--focus)};
-//   --pfe-cta--aux:           transparent;
-
-//   --pfe-cta--BorderColor:     #{pfe-local(main)};
-//   --pfe-cta--BackgroundColor: #{pfe-local(aux)};
-//   --pfe-cta--Color:           #{pfe-local(main)};
-
-//   ::slotted(a:focus) {
-//     --pfe-cta--BorderColor:     #{pfe-local(aux--focus)};
-//     @include pfe-cta-focus(#{pfe-local(aux--focus)});
-//   }
-// }
-
 
 /// ===========================================================================
 /// ON DARK

@@ -1,4 +1,4 @@
-**[Getting Started][start] | [Element Catalog][storybook] | [Discovery doc](https://docs.google.com/document/d/1THnbwpUelkNfwHs8br-DmFYbJjX5NQwVveGYAP7XUAY/edit) | [Creating Components][develop] | [Theming Components][theming]**
+**[Getting Started][https://patternfly.github.io/patternfly-elements/getting-started/] | [Element Catalog][https://patternfly.github.io/patternfly-elements/demo/] | [Creating Components][https://patternfly.github.io/patternfly-elements/develop] | [Theming Components][https://patternfly.github.io/patternfly-elements/theme]**
 
 <!-- ![PatternFly Elements logo](./brand/logo/png/rhelements-logo-red.png) -->
 
@@ -26,12 +26,12 @@ _Notice: You will need to use [Node](https://nodejs.org/en/) v.7 or higher. Stor
 
 ---
 
-**[Getting Started][start] | [Developing Components][develop] | [Theming][theming]**
+[]: https://github.com/patternfly/patternfly-elements
 
-[pfe]: https://github.com/patternfly/patternfly-elements
-[wc]: https://developer.mozilla.org/en-US/docs/Web/Web_Components
-[home]: https://rhelements.github.io
-[start]: https://rhelements.github.io/getting-started/
-[develop]: https://rhelements.github.io/develop/
-[theming]: https://rhelements.github.io/theme/
-[storybook]: https://www.patternfly.org/patternfly-elements
+[home]: https://patternfly.github.io/patternfly-elements/
+[start]: https://patternfly.github.io/patternfly-elements/getting-started/
+[develop]: https://patternfly.github.io/patternfly-elements/develop/
+[theming]: https://patternfly.github.io/patternfly-elements/theme/
+[storybook]: https://patternfly.github.io/patternfly-elements/demo/
+[discovery doc](https://docs.google.com/document/d/1THnbwpUelkNfwHs8br-DmFYbJjX5NQwVveGYAP7XUAY/edit)
+[web components]: https://developer.mozilla.org/en-US/docs/Web/Web_Components

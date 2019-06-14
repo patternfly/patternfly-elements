@@ -1,8 +1,0 @@
-@import "../../pfe-sass/pfe-sass";
-:host {
-  display: block;
-}
-
-:host([hidden]) {
-  display: none;
-}

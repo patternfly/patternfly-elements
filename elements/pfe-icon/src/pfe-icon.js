@@ -1,5 +1,6 @@
 import PFElement from "../pfelement/pfelement.js";
-import PfeIconSet from "../pfe-icon-set/pfe-icon-set.js";
+import PfeIconSet from "./pfe-icon-set.js";
+import { addBuiltIns } from "./pfe-builtin-icon-sets.js";
 
 class PfeIcon extends PFElement {
   static get tag() {
@@ -24,39 +25,16 @@ class PfeIcon extends PFElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(...arguments);
-    // this.useRemoteIcon(newValue);
-    // this.useLocalIcon(newValue);
-    this.useIcon(newValue);
+    this.updateIcon(newValue);
   }
 
-  useIcon(iconName) {
-    switch (this.getAttribute("pfe-method")) {
-      case "use-local":
-        this.useLocalIcon(iconName);
-        break;
-      case "use-remote":
-        this.useRemoteIcon(iconName);
-        break;
-      case "duplicate":
-        this.useDuplicatedIcon(iconName);
-        break;
-      case "img":
-        this.useImgTag(iconName);
-        break;
-      default:
-        this.useDuplicatedIcon(iconName);
-    }
-  }
-
-  useRemoteIcon(iconName) {
-    const setName = PfeIconSet.getSetName(iconName);
-    const iconSet = PfeIconSet.getIconSet(setName);
-    const { iconPath, iconId } = iconSet.resolveIconName(iconName);
+  updateIcon(iconName) {
+    const iconSet = PfeIcon.getIconSet(iconName);
+    const { iconPath, iconId } = iconSet.parseIconName(iconName);
 
     const svg = this.shadowRoot.querySelector("svg");
-    const use = this.shadowRoot.querySelector("svg use");
+    const use = svg.querySelector("svg use");
     use.setAttribute("href", `${iconPath}#${iconId}`); // href is recommended but not as well supported
-    // use.setAttribute("xlink:href", `${iconPath}#${iconId}`); // xlink:href is better supported but deprecated
 
     // This is a bummer.  We have to move the svg into the light DOM (ie, into
     // the default slot).  this is required for Safari 10 and 11, where <use>
@@ -64,52 +42,32 @@ class PfeIcon extends PFElement {
     this.appendChild(svg);
   }
 
-  useImgTag(iconName) {
-    const setName = PfeIconSet.getSetName(iconName);
-    const iconSet = PfeIconSet.getIconSet(setName);
-    const { iconPath } = iconSet.resolveIconName(iconName);
-
-    // remove the svg so it won't take up space (this goes away if we pick img tag as the solution)
-    this.shadowRoot.removeChild(this.shadowRoot.querySelector("svg"));
-
-    this.shadowRoot.querySelector("img").src = iconPath;
+  /**
+   * Get an icon set by providing the set's name, _or_ the name of an icon from that set.
+   *
+   * @param {String} name the name of the set, or the name of an icon from that set.
+   * @return {PfeIconSet} the icon set
+   */
+  static getIconSet(name) {
+    const [setName] = name.split("-");
+    return this._iconSets[setName];
   }
 
-  useLocalIcon(iconName) {
-    PfeIconSet.loadIcon(iconName);
-    // const iconPath = PfeIconSet.getIconPath(newValue);
-    const setName = PfeIconSet.getSetName(iconName);
-    const iconSet = PfeIconSet.getIconSet(setName);
-    const { iconPath, iconId } = iconSet.resolveIconName(iconName);
-
-    const svg = this.shadowRoot.querySelector("svg");
-    const use = svg.querySelector("use");
-    use.setAttribute("href", `#${iconId}`);
-
-    // if the svg stays in the light dom, it's <use> can't see other light dom
-    // elements, so we move the svg into this element's default slot.
-    this.appendChild(svg);
-  }
-
-  useDuplicatedIcon(iconName) {
-    const loader = PfeIconSet.loadIcon(iconName);
-    if (loader && loader.then) {
-      loader.then(svg => {
-        // remove the placeholder svg from the shadowRoot (this is the svg with
-        // <use>).  If we go with this "duplicate" method, this won't be
-        // necessary because we'll remove it from the template.
-        this.shadowRoot.removeChild(this.shadowRoot.querySelector("svg"));
-        this.insertAdjacentHTML("beforeend", svg);
-      });
+  static addIconSet(name, path, parseIconName) {
+    if (this._iconSets[name]) {
+      throw new Error(
+        `can't add icon set ${name}; a set with that name already exists.`
+      );
     }
-    // else {
-    //   this.insertAdjacentHTML(
-    //     "beforeend",
-    //     PfeIconSet.installedIcons[iconName].svgText
-    //   );
-    // }
+
+    console.log(`adding icon set ${name}`);
+    this._iconSets[name] = new PfeIconSet(name, path, parseIconName);
   }
 }
+
+PfeIcon._iconSets = {};
+
+addBuiltIns(PfeIcon);
 
 PFElement.create(PfeIcon);
 

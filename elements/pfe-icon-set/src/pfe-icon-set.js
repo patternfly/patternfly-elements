@@ -63,12 +63,12 @@ class PfeIconSet extends PFElement {
 
     if (!set) {
       console.log(`${name} icon: can't load, set does not exist`);
-      return;
+      return new Promise((resolve, reject) => reject("no"));
     }
 
     if (this.getIconElement(name)) {
       console.log(`${name} icon: already installed, skipping fetch`);
-      return;
+      return new Promise((resolve, reject) => reject("no"));
     }
 
     console.log(`${name} icon: not yet installed`);
@@ -77,14 +77,15 @@ class PfeIconSet extends PFElement {
 
     if (isAlreadyLoading) {
       console.log(`${name} icon: already being fetched`);
+      return new Promise((resolve, reject) => resolve(this.pendingIcons[name]));
     }
 
     if (!isAlreadyLoading) {
       console.log(
         `${name} icon: fetching (not already installed and not already fetching)`
       );
-      this.pendingIcons[name] = true;
-      set.fetchIcon(name);
+      this.pendingIcons[name] = set.fetchIcon(name);
+      return this.pendingIcons[name];
     }
   }
 
@@ -92,18 +93,19 @@ class PfeIconSet extends PFElement {
    * Get an icon's DOM element, if it it exists.  This is also a good way to check if an icon has been installed.
    */
   static getIconElement(name) {
-    const setName = this.getSetName(name);
-    const set = this.getIconSet(setName);
-    if (set) {
-      return set.querySelector(`#${name} svg`);
-    } else {
-      console.log(`${name} icon: requested from nonexistant set ${setName}`);
-      return null;
-    }
+    return this.installedIcons[name];
+    // const setName = this.getSetName(name);
+    // const set = this.getIconSet(setName);
+    // if (set) {
+    //   return set.querySelector(`#${name} svg`);
+    // } else {
+    //   console.log(`${name} icon: requested from nonexistant set ${setName}`);
+    //   return null;
+    // }
   }
 
   fetchIcon(name) {
-    fetch(PfeIconSet.getIconPath(name))
+    return fetch(PfeIconSet.getIconPath(name))
       .then(rsp => rsp.text())
       .then(svgText => this.completeLoading(name, svgText));
   }
@@ -174,6 +176,8 @@ class PfeIconSet extends PFElement {
     const svg = this.injectSVG(name, svgText);
     const svgStuff = { svg, svgText };
     PfeIconSet.installedIcons[name] = svgStuff;
+
+    return svgText;
   }
 
   /**

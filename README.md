@@ -1,5 +1,4 @@
-<img src="https://www.patternfly.org/patternfly-elements/img/logo/svg/pfelements-icon-blue-shaded.svg"
-     alt="PatternFly Elements logo" width=100px />
+<img src="https://www.patternfly.org/patternfly-elements/img/logo/svg/pfelements-icon-blue-shaded.svg" alt="PatternFly Elements logo" width=100px />
      
 ## Table of Contents
 
@@ -36,5 +35,4 @@ _Notice: You will need to use [Node](https://nodejs.org/en/) v.7 or higher. Stor
 [develop](https://patternfly.github.io/patternfly-elements/develop/) | 
 [theming](https://patternfly.github.io/patternfly-elements/theme/) | 
 [storybook](https://patternfly.github.io/patternfly-elements/demo/) | 
-[discovery doc](https://docs.google.com/document/d/1THnbwpUelkNfwHs8br-DmFYbJjX5NQwVveGYAP7XUAY/edit) | 
 [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components)

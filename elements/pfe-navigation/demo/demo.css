@@ -1,7 +1,10 @@
 [slot="logo"] h2 a {
-  display: inline-block;
   color: white;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 5px 5px 0;
 }
 
 .redhat-logo {

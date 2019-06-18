@@ -2,13 +2,13 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>PatternFly Element | pfe-navigation Demo</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    
+    <title>PatternFly Element | Navigation Demo</title>
 
     <link rel="stylesheet" href="../../pfe-layouts/pfe-base.css" />
     <!-- <link rel="stylesheet" href="../../pfe-layouts/pfe-context.css" /> -->
     <link rel="stylesheet" href="../../pfe-layouts/pfe-layouts.css" />
-
-    <link rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-theme/latest/advanced-theme.css"/>
 
     <noscript>
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
@@ -16,16 +16,12 @@
 
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
     <link href="demo.css" rel="stylesheet" />
-
-      h2[slot="logo"] {
-        height: 102px;
-      }
-    </style>
-
+    
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="/requirejs/require.js"></script>
+
     <script>require([
       '../pfe-navigation.umd.js',
       '../../pfe-link-list/pfe-link-list.umd.js',
@@ -33,8 +29,9 @@
       '../../pfe-cta/pfe-cta.umd.js'
     ])</script>
 
-    <script type="module" src="../pfe-navigation.js"></script>
+    <!-- <script type="module" src="../pfe-navigation.js"></script> -->
   </head>
+
   <body unresolved>
     <h1>&lt;pfe-navigation&gt;</h1>
     <pfe-navigation>
@@ -44,12 +41,12 @@
       <div slot="logo">
         <h2>
           <a href="https://redhat.com">
-            <img class="redhat-logo" src="https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo--on-dark--200.png" class="screen" title="Red Hat">
+            <img class="redhat-logo" src="https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo--on-dark--200.png" class="screen" title="Red Hat"/>
           </a>
         </h2>
       </div>
       <pfe-navigation-item slot="search" pfe-icon="search">
-        <a slot="trigger" href="#url-to-search-page">Search</a>
+        <h3 slot="trigger"><a href="#url-to-search-page">Search</a></h3>
         <div slot="tray" hidden>
           <form>
             <input type="text" name="" value="" placeholder="Enter your search term">
@@ -61,12 +58,12 @@
           <ul>
             <li>
               <pfe-navigation-item>
-                <a href="#" slot="trigger">Products</a>
+                <h2 slot="trigger"><a href="#">Products</a></h2>
                 <div slot="tray" hidden>
                     <pfe-link-list>
-                      <h2 slot="pfe-link-list--header">
+                      <h3 slot="pfe-link-list--header">
                         <a href="#">Platforms</a>
-                      </h2>
+                      </h3>
                       <ul slot="pfe-link-list--list">
                         <li><a href="#">Red Hat Enterprise Linux</a></li>
                         <li><a href="#">Red Hat JBoss Enterprise Application Platform</a></li>
@@ -76,9 +73,9 @@
                       </ul>
                     </pfe-link-list>
                     <pfe-link-list>
-                      <h2 slot="pfe-link-list--header">
+                      <h3 slot="pfe-link-list--header">
                         <a href="#">Integration</a>
-                      </h2>
+                      </h3>
                       <ul slot="pfe-link-list--list">
                         <li><a href="#">Red Hat 3scale API Management</a></li>
                         <li><a href="#">Red Hat AMQ</a></li>
@@ -87,9 +84,9 @@
                       </ul>
                     </pfe-link-list>
                     <pfe-link-list>
-                      <h2 slot="pfe-link-list--header">
+                      <h3 slot="pfe-link-list--header">
                         <a href="#">Cloud computing</a>
-                      </h2>
+                      </h3>
                       <ul slot="pfe-link-list--list">
                         <li><a href="#">Red Hat Cloud Infrastructure</a></li>
                         <li><a href="#">Red Hat Cloud Suite</a></li>
@@ -109,116 +106,42 @@
             </li>
             <li>
               <pfe-navigation-item>
-                <a href="#" slot="trigger">Solutions</a>
+                <h2 slot="trigger"><a href="#">Solutions</a></h2>
                 <div slot="tray" hidden>
-                  Solutions tray
+                  <p>Solutions tray content</p>
                 </div>
               </pfe-navigation-item>
             </li>
             <li>
               <pfe-navigation-item>
-                <a href="/support">Services &amp; support</a>
+                <h2><a href="/support">Services &amp; support</a></h2>
               </pfe-navigation-item>
             </li>
             <li>
               <pfe-navigation-item>
-                <a href="/resources">Resources</a>
+                <h2><a href="/resources">Resources</a></h2>
               </pfe-navigation-item>
             </li>
             <li>
               <pfe-navigation-item>
-                <a href="/en/about">Red Hat &amp; open source</a>
+                <h2><a href="/en/about">Red Hat &amp; open source</a></h2>
               </pfe-navigation-item>
             </li>
           </ul>
         </pfe-navigation-main>
       </nav>
       <pfe-navigation-item slot="language" pfe-icon="globe">
-        <a slot="trigger" href="#url-to-language-page">English</a>
+        <h3 slot="trigger"><a href="#url-to-language-page">English</a></h3>
         <div slot="tray" hidden>
-          custom code to do this thing
+            <p>Custom code to do this thing.</p>
         </div>
       </pfe-navigation-item>
       <pfe-navigation-item slot="site-switcher" pfe-icon="bento" pfe-top-link>
-        <a slot="trigger" href="url-to-rh-websites-page">Apps &amp; Websites</a>
+        <h3 slot="trigger"><a href="url-to-rh-websites-page">Apps &amp; Websites</a></h3>
         <div slot="tray" hidden>
-          custom code to do this thing
+          <p>Custom code to do this thing.</p>
         </div>
       </pfe-navigation-item>
-    </pfe-navigation>
-
-      <!-- search -->
-      <pfe-navigation-item slot="search" pfe-icon="search">
-        <a slot="trigger" href="#url-to-search-page">Search</a>
-        <p slot="tray" hidden>
-          <a>Search</a>
-        </p>
-      </pfe-navigation-item>
-
-      <nav slot="main" id="rh-main-nav" aria-label="Main">
-        <ul>
-          <li>
-            <pfe-navigation-item category="Products">
-              <a slot="trigger" href="/products">Products</a>
-              <div slot="tray" hidden>
-                <div tray-region="main" class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
-                  <pfe-link-list role="region" pfe-navigation--subcategory="Flagship Products">
-                    <h2 slot="pfe-link-list--header">
-                      <a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux" pfe-navigation-link-label="Flagship Products">Flagship Products</a>
-                    </h2>
-                    <ul slot="pfe-link-list--list">
-                      <li><a href="#" pfe-navigation-link-label="Awesome">Awesome</a></li>
-                      <li><a href="#" pfe-navigation-link-label="So good">So good</a></li>
-                    </ul>
-                  </pfe-link-list>
-                  <pfe-link-list role="region">
-                    <h2 slot="pfe-link-list--header">
-                      <a href="#" pfe-navigation-link-label="Collaborations">Collaborations</a>
-                    </h2>
-                    <ul slot="pfe-link-list--list">
-                      <li><a href="#" pfe-navigation-link-label="Collab #1">Collab #1</a></li>
-                      <li><a href="#" pfe-navigation-link-label="Collab #2">Collab #2</a></li>
-                    </ul>
-                  </pfe-link-list>
-                </div>
-                <aside tray-region="aside">
-                  <pfe-card style="height: 100px;">
-                    Sample promo
-                  </pfe-card>
-                  <p>Promo with captions, fancy other stuff</p>
-                </aside>
-                <footer tray-region="footer" class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
-                  <pfe-cta>
-                    <a href="#" pfe-navigation-link-label="Promo link #1">Link #1</a>
-                  </pfe-cta>
-                  <pfe-cta>
-                    <a href="#" pfe-navigation-link-label="Promo link #1">Link #1</a>
-                  </pfe-cta>
-                  <pfe-cta>
-                    <a href="#" pfe-navigation-link-label="Promo link #1">Link #1</a>
-                  </pfe-cta>
-                </footer>
-              </div>
-            </pfe-navigation-item>
-          </li>
-          <li>
-            <pfe-navigation-item>
-              <a slot="trigger" href="/solutions">Solutions</a>
-              <div slot="tray" hidden>
-                <pfe-link-list role="region">
-                  <h2 slot="pfe-link-list--header"><a href="#">Main offerings</a></h2>
-                  <ul slot="pfe-link-list--list">
-                    <li><a href="#">The best</a></li>
-                    <li><a href="#">The bestest</a></li>
-                    <li><a href="#">More better</a></li>
-                    <li><a href="#">Even better</a></li>
-                  </ul>
-                </pfe-link-list>
-              </div>
-            </pfe-navigation-item>
-          </li>
-        </ul>
-      </nav>
     </pfe-navigation>
   </body>
 </html>

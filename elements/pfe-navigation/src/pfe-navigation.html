@@ -5,10 +5,11 @@
     <slot name="main" class="pfe-navigation__main"></slot>
     <div class="pfe-navigation__utility">
       <pfe-navigation-item pfe-icon="menu">
-        <span slot="trigger">Menu</span>
-        <div slot="tray">
+        <h2 slot="trigger">Menu</h2>
+        <div slot="tray" hidden>
           <div class="pfe-navigation__utility--mobile">
-            <!--slot name="search"></slot-->
+            <slot name="mobile-search"></slot>
+            <slot name="mobile-menu"></slot>
             <!--slot name="main" class="pfe-navigation__main"></slot-->
             <!--slot name="login"></slot-->
             <!--slot name="language"></slot-->

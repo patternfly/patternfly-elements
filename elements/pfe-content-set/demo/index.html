@@ -2,219 +2,289 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>PatternFly Elements: Hide/show Combo Demo</title>
-    <!-- needed for CP-Theme -->
+    <title>PatternFly Element | pfe-content-set Demo</title>
     <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
-
-    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <!-- <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.3/webcomponents-bundle.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.7/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.7/webcomponents-bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>
-        require([
-          '../../../themes/cp-theme/cp-theme.umd.js',
-          '../pfe-content-set.umd.js',
-          '../../pfe-tabs/pfe-tabs.umd.js',
-          '../../pfe-accordion/pfe-accordion.umd.js'
-        ]);
+      require([
+        "../pfe-content-set.umd.js"
+      ])
     </script>
+
     <noscript>
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
+    <style>
+      body {
+        font-family: Overpass;
+        padding: 0;
+        margin: 0;
+      }
+
+      .faux-container {
+        border: 1px dashed #ccc;
+        padding: 30px;
+      }
+      h1, h2 {
+        margin-bottom: .3em;
+        margin-top: 0;
+      }
+      h2 {
+        font-size: 1.2em;
+      }
+      h2 a {
+        color: inherit;
+        cursor: pointer;
+      }
+      h3 {
+        font-size: 1.4em;
+        color: var(--pfe-theme--color--ui-complement, #464646);
+      }
+      p {
+        margin-top: 0 !important;
+      }
+      hr {
+        margin: 40px 10px;
+        border-color: transparent;
+        border-bottom-color: #ccc;
+      }
+      .dark-background {
+        background-color: #000;
+        padding: 2rem 0;
+      }
+      .cta a {
+        display: inline-block;
+        background-color: #c00;
+        padding: 1rem 4rem;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: white;
+      }
+
+      .cta a:visited {
+        color: white;
+      }
+    </style>
 
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
   </head>
   <body unresolved>
     <h1>&lt;pfe-content-set&gt;</h1>
-    <h2><em>On mobile ( &lt;768px ), all examples should render as an Accordion.</em></h2>
-    <hr/>
+    <p>This component will render your content in either an <a href="#accordions">accordion</a> or a <a href="#tabs">tabset</a> depending on the available space.</p>
+    <p>Note: <em>On mobile ( &lt;768px ), all examples should render as an Accordion.</em></p>
+    <br>
+    <h2>On desktop, example below should render as accordion on a light theme:</h2>
+    <h3>Container max: 500px</h3>
+    <div style="max-width: 500px">
+      <pfe-content-set pfe-variant="wind">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <div pfe-content-set--panel>
+          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          <div class="cta">
+            <a href="https://redhat.com">Primary CTA</a>
+          </div>
+        </div>
+        <h2 pfe-content-set--header>Heading 2</h2>
+        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+        <h2 pfe-content-set--header>Heading 3</h2>
+        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
+      </pfe-content-set>
+    </div>
 
-    <h2>On desktop, example below should render as accordion (default style):</h2>
+    <h2>On desktop, example below should render as accordion on a dark theme:</h2>
     <h3>Container max: 500px</h3>
-    <div style="max-width: 500px">
-      <pfe-content-set>
-        <pfe-content-set-group>
-          <h2 pfe-heading>Heading 1</h2>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
-        </pfe-content-set-group>
-        <pfe-content-set-group>
-          <h2 pfe-heading>Heading 2</h2>
-          <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam volu et jen, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-        </pfe-content-set-group>
-        <pfe-content-set-group>
-          <h2 pfe-heading>Heading 3</h2>
-          <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-        </pfe-content-set-group>
-      </pfe-content-set>
+    <div class="dark-background">
+      <div style="max-width: 500px">
+        <pfe-content-set pfe-variant="earth" on="dark">
+          <h2 pfe-content-set--header>Heading 1</h2>
+          <div pfe-content-set--panel>
+            <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+            <div class="cta">
+              <a href="https://redhat.com">Primary CTA</a>
+            </div>
+          </div>
+          <h2 pfe-content-set--header>Heading 2</h2>
+          <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+          <h2 pfe-content-set--header>Heading 3</h2>
+          <div pfe-content-set--panel>Content for heading 3. </div>
+        </pfe-content-set>
+      </div>
     </div>
+
     <hr>
-    <h2>On desktop, example below should render as accordion (primary style):</h2>
-    <h3>Container max: 500px</h3>
-    <div style="max-width: 500px">
-      <pfe-content-set pfe-variant="primary">
-        <pfe-content-set-group>
-          <h2 pfe-heading>Heading 1</h2>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna sed diam voluptua.</p>
-        </pfe-content-set-group>
-        <pfe-content-set-group>
-          <h2 pfe-heading>Heading 2</h2>
-          <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-        </pfe-content-set-group>
-        <pfe-content-set-group>
-          <h2 pfe-heading>Heading 3</h2>
-          <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
-          <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-        </pfe-content-set-group>
+
+    <h2>On desktop, example below should render as tabs (wind style) on a dark background:</h2>
+    <div class="dark-background">
+      <pfe-content-set pfe-variant="wind" on="dark">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <div pfe-content-set--panel>
+          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          <div class="cta">
+            <a href="https://redhat.com">Primary CTA</a>
+          </div>
+        </div>
+        <h2 pfe-content-set--header>Heading 2</h2>
+        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+        <h2 pfe-content-set--header>Heading 3</h2>
+        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
       </pfe-content-set>
     </div>
+
     <hr>
-    <h2>On desktop, example below should render as accordion (secondary style):</h2>
-    <h3>Container max: 500px</h3>
-    <div style="max-width: 500px">
-      <pfe-content-set pfe-variant="secondary">
-        <pfe-content-set-group>
-          <h2 pfe-heading>Heading 1</h2>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-        </pfe-content-set-group>
-        <pfe-content-set-group>
-          <h2 pfe-heading>Heading 2</h2>
-          <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-        </pfe-content-set-group>
-        <pfe-content-set-group>
-          <h2 pfe-heading>Heading 3</h2>
-          <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
-          <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-        </pfe-content-set-group>
+    <h2>On desktop, example below should render as tabs (wind style):</h2>
+    <div>
+      <pfe-content-set pfe-variant="wind">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <div pfe-content-set--panel>
+          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          <div class="cta">
+            <a href="https://redhat.com">Primary CTA</a>
+          </div>
+        </div>
+        <h2 pfe-content-set--header>Heading 2</h2>
+        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+        <h2 pfe-content-set--header>Heading 3</h2>
+        <div pfe-content-set--panel>Content for heading 3. </div>
       </pfe-content-set>
     </div>
+
     <hr>
-    <h2>On desktop, example below should render as tabs (default style):</h2>
+
+    <h2>On desktop, example below should render as tabs (earth style):</h2>
     <div>
-      <pfe-content-set >
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 1 Foo</h2>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-          </pfe-content-set-group>
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 2</h2>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          </pfe-content-set-group>
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 3</h2>
-            <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-          </pfe-content-set-group>
+      <pfe-content-set pfe-variant="earth">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <div pfe-content-set--panel>
+          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          <div class="cta">
+            <a href="https://redhat.com">Primary CTA</a>
+          </div>
+        </div>
+        <h2 pfe-content-set--header>Heading 2</h2>
+        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+        <h2 pfe-content-set--header>Heading 3</h2>
+        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
       </pfe-content-set>
     </div>
+
     <hr>
-    <h2>On desktop, example below should render as tabs (primary style):</h2>
-    <div>
-      <pfe-content-set pfe-variant="primary">
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 1 Bar</h2>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-          </pfe-content-set-group>
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 2</h2>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          </pfe-content-set-group>
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 3</h2>
-            <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-          </pfe-content-set-group>
-      </pfe-content-set>
+    <h2>On desktop, example below should render as tabs on a dark theme:</h2>
+    <div class="dark-background">
+      <div>
+        <pfe-content-set pfe-variant="earth" on="dark">
+          <h2 pfe-content-set--header>Heading 1</h2>
+          <div pfe-content-set--panel>
+            <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+            <div class="cta">
+              <a href="https://redhat.com">Primary CTA</a>
+            </div>
+          </div>
+          <h2 pfe-content-set--header>Heading 2</h2>
+          <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+          <h2 pfe-content-set--header>Heading 3</h2>
+          <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
+        </pfe-content-set>
+      </div>
     </div>
+
     <hr>
-    <h2>On desktop, example below should render as tabs (secondary style):</h2>
+
+    <h2>On desktop, example below should render as vertical tabs (wind style):</h2>
     <div>
-      <pfe-content-set pfe-variant="secondary">
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 1</h2>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-          </pfe-content-set-group>
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 2</h2>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          </pfe-content-set-group>
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 3</h2>
-            <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-          </pfe-content-set-group>
+      <pfe-content-set vertical pfe-variant="wind">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <div pfe-content-set--panel>
+          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          <div class="cta">
+            <a href="https://redhat.com">Primary CTA</a>
+          </div>
+        </div>
+        <h2 pfe-content-set--header>Heading 2</h2>
+        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+        <h2 pfe-content-set--header>Heading 3</h2>
+        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
       </pfe-content-set>
     </div>
-<hr>
-    <h2>On desktop, example below should render as vertical tabs (default style):</h2>
-    <div>
-      <pfe-content-set vertical >
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 1</h2>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-          </pfe-content-set-group>
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 2</h2>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          </pfe-content-set-group>
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 3</h2>
-            <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-          </pfe-content-set-group>
-      </pfe-content-set>
-    </div>
-<hr>
-    <h2>On desktop, example below should render as vertical tabs (primary style):</h2>
-    <div>
-      <pfe-content-set vertical pfe-variant="primary">
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 1</h2>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-          </pfe-content-set-group>
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 2</h2>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          </pfe-content-set-group>
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 3</h2>
-            <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-          </pfe-content-set-group>
-      </pfe-content-set>
-    </div>
+
     <hr>
-    <h2>On desktop, example below should render as vertical tabs (secondary style):</h2>
-    <div>
-      <pfe-content-set vertical pfe-variant="secondary">
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 1</h2>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-          </pfe-content-set-group>
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 2</h2>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          </pfe-content-set-group>
-          <pfe-content-set-group>
-            <h2 pfe-heading>Heading 3</h2>
-            <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
-            <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
-          </pfe-content-set-group>
+    <h2>On desktop, example below should render as vertical tabs (wind style) on a dark background:</h2>
+    <div class="dark-background">
+      <pfe-content-set vertical pfe-variant="wind" on="dark">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <div pfe-content-set--panel>
+          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          <div class="cta">
+            <a href="https://redhat.com">Primary CTA</a>
+          </div>
+        </div>
+        <h2 pfe-content-set--header>Heading 2</h2>
+        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+        <h2 pfe-content-set--header>Heading 3</h2>
+        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
       </pfe-content-set>
     </div>
+
+    <hr>
+    <h2>On desktop, example below should render as vertical tabs (earth style):</h2>
+    <div>
+      <pfe-content-set vertical pfe-variant="earth">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <div pfe-content-set--panel>
+          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          <div class="cta">
+            <a href="https://redhat.com">Primary CTA</a>
+          </div>
+        </div>
+        <h2 pfe-content-set--header>Heading 2</h2>
+        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+        <h2 pfe-content-set--header>Heading 3</h2>
+        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
+      </pfe-content-set>
+    </div>
+
+    <hr>
+    <h2>On desktop, example below should render as vertical tabs (earth style):</h2>
+    <div class="dark-background">
+      <pfe-content-set vertical pfe-variant="earth" on="dark">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <div pfe-content-set--panel>
+          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          <div class="cta">
+            <a href="https://redhat.com">Primary CTA</a>
+          </div>
+        </div>
+        <h2 pfe-content-set--header>Heading 2</h2>
+        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+        <h2 pfe-content-set--header>Heading 3</h2>
+        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
+      </pfe-content-set>
+    </div>
+
+    <hr>
+    <pfe-content-set pfe-variant="wind">
+      <h2 pfe-content-set--header>Heading 1</h2>
+      <div pfe-content-set--panel>
+        <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+        <div class="cta">
+          <a href="https://redhat.com">Primary CTA</a>
+        </div>
+      </div>
+      <h2 pfe-content-set--header>Heading 2</h2>
+      <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+    </pfe-content-set>
+
+    <h2>This content set's markup is incorrect.</h2>
+    <pfe-content-set>
+      <h2>Heading 1</h2>
+      <div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+      </div>
+      <h2>Heading 2</h2>
+      <div>Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</div>
+    </pfe-content-set>
   </body>
 </html>

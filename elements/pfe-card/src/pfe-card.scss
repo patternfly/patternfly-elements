@@ -1,127 +1,190 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: card;
+
 :host {
-  --pfe-card--padding:                          calc(#{pfe-var(container-spacer)} * 2); // 2x `container-spacer`
-  --pfe-card_header--size:                      #{pfe-var(font-size--heading--gamma)};
-  --pfe-card--bg:                               #{pfe-color(surface--base)};
+  // Individual padding overrides available
+  --pfe-card--PaddingTop: calc(#{pfe-var(container-spacer)} * 2);
+  --pfe-card--PaddingRight: calc(#{pfe-var(container-spacer)} * 2);
+  --pfe-card--PaddingBottom: calc(#{pfe-var(container-spacer)} * 2);
+  --pfe-card--PaddingLeft: calc(#{pfe-var(container-spacer)} * 2);
+
+  // Combine above variables or allow single override point via variable
+  --pfe-card--Padding: #{pfe-local(PaddingTop)} #{pfe-local(PaddingRight)} #{pfe-local(PaddingBottom)} #{pfe-local(PaddingLeft)};
+
+  // Internal spacing; elements inside the card (header, body, footer regions)
+  --pfe-card--spacing: #{pfe-var(container-spacer)};
+
+  //-- Border settings
+  --pfe-card--BorderRadius: #{pfe-var(surface--border-radius)};
+
+  //-- Border variable encompasses width, style, and color
+  --pfe-card--Border: #{pfe-local(BorderWeight, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)};
+
+  //-- Color properties
+  --pfe-card--BackgroundColor: #{pfe-color(surface--base)};
+  --pfe-card--BackgroundPosition: center center;
+
+  // Broadcasted values set to match background color
   --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
   --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--link)};
   --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--link--visited)};
   --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--link--hover)};
   --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
 
+  --pfe-card__header--BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)});
+  --pfe-card__header--Color:           var(--pfe-broadcasted--color--text);
+
+  // Add backward support for previous variable naming
+  // @TODO deprecate padding and bg in favor of BEM naming
+  --pfe-card--padding:      #{pfe-local(Padding)};
+  --pfe-card--bg:           #{pfe-local(BackgroundColor)};
+}
+
+:host([pfelement]) {
+  // Start of style declarations for host element
   display: flex;
   flex-direction: column;
   justify-items: flex-start;
+  // This allows the card to fill it's container if necessary
+  align-self: stretch;
 
-  padding: var(--pfe-card--padding);
-  border: pfe-var(surface--border-width)
-          pfe-var(surface--border-style)
-          transparent;
-  border-radius: pfe-var(surface--border-radius);
+  padding:       #{pfe-local(Padding)};
+  border:        #{pfe-local(Border)};
+  border-radius: #{pfe-local(BorderRadius)};
+
+  // This property ensures that children in the slots do no overflow
+  // the border-radius being set on the container
+  overflow: hidden;
 
   // Base colors
-  background: var(--pfe-card--bg);
-  color: var(--pfe-broadcasted--color--text);
+  background-color: #{pfe-local(BackgroundColor)};
+  background-position: #{pfe-local(BackgroundPosition)};
+  color: #{pfe-radio(color, text)};
 }
 
-a {
-  color: var(--pfe-broadcasted--color--ui-link);
+// @TODO Deprecate "dark" and "light" in favor of "darker" and "lighter"
+@each $color in (dark, darker, darkest, light, lighter, lightest, complement, accent) {
+  $label: $color;
+  // Add backward support for dark and light
+  @if $color == "dark" or $color == "light" {
+    $color: "#{$color}er";
+  }
+  // Update variable values to match provided attribute
+  // @TODO deprecate [color] in favor of [pfe-color]
+  :host([color="#{$label}"]),
+  :host([pfe-color="#{$label}"]) {
+    --pfe-card--BackgroundColor:                  #{pfe-color(surface--#{$color})};
+    --pfe-broadcasted--color--text:               #{pfe-color(surface--#{$color}--text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--#{$color}--link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--#{$color}--link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--#{$color}--link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--#{$color}--link--focus)};
+
+  }
 }
 
-a:visited {
-  color: var(--pfe-broadcasted--color--ui-link--visited);
+// @TODO deprecate [size] in favor of [pfe-size]
+:host([size="small"]),
+:host([pfe-size="small"]) {
+  --pfe-card--PaddingTop:     #{pfe-var(container-spacer)};
+  --pfe-card--PaddingRight:   #{pfe-var(container-spacer)};
+  --pfe-card--PaddingBottom:  #{pfe-var(container-spacer)};
+  --pfe-card--PaddingLeft:    #{pfe-var(container-spacer)};
 }
 
-a:hover {
-  color: var(--pfe-broadcasted--color--ui-link--hover);
+::slotted([pfe-overflow~="top"]) {
+  z-index: 1;
+  margin-top: -2rem; //IE11 fallback
+  margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
+  :host([has_header]) & {
+    padding-top: #{pfe-local(spacing)};
+  }
 }
 
-a:focus {
-  color: var(--pfe-broadcasted--color--ui-link--focus);
+::slotted([pfe-overflow~="right"]) {
+  margin-right: -2rem; //IE11 fallback
+  margin-right: calc(-1 * #{pfe-local(PaddingRight)});
 }
 
-:host([color="dark"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--darker)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--darker--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darker--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darker--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darker--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darker--link--focus)};
+::slotted([pfe-overflow~="bottom"]) {
+  margin-bottom: -2rem; //IE11 fallback
+  margin-bottom: calc(-1 * calc(#{pfe-local(PaddingBottom)} + #{pfe-local(BorderRadius)}));
+  align-self: flex-end;
 }
 
-:host([color="darkest"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--darkest)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--darkest--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darkest--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darkest--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darkest--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darkest--link--focus)};
+::slotted([pfe-overflow~="left"]) {
+  margin-left: -2rem; //IE11 fallback
+  margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
 }
 
-:host([color="light"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--lighter)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--lighter--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lighter--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--lighter--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--lighter--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--lighter--link--focus)};
+::slotted(img) {
+  max-width: 100%;
 }
 
-:host([color="lightest"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--lightest)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--lightest--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lightest--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--lightest--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--lightest--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--lightest--link--focus)};
+::slotted(img[pfe-overflow~="right"]) {
+  max-width: calc(100% + 2rem); //IE11 fallback
+  max-width: calc(100% + #{pfe-local(PaddingRight)});
 }
 
-:host([color="complement"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--complement)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--complement--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--complement--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--complement--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--complement--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--complement--link--focus)};
+::slotted(img[pfe-overflow~="left"]) {
+  max-width: calc(100% + 2rem); //IE11 fallback
+  max-width: calc(100% + #{pfe-local(PaddingLeft)});
 }
 
-:host([color="accent"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--accent)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--accent--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--accent--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--accent--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--accent--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--accent--link--focus)};
+::slotted(img[pfe-overflow~="right"][pfe-overflow~="left"]) {
+  max-width: calc(100% + 4rem); //IE11 fallback
+  max-width: calc(100% + calc(#{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)}));
 }
 
-:host([size="small"]) {
-  --pfe-card--padding:        #{pfe-var(container-spacer)};
+// Remove margins from typography inside the slots
+@each $tag in (p, h1, h2, h3, h4, h5, h6) {
+  ::slotted(#{$tag}) {
+    // Remove top margins
+    margin-top: 0;
+  }
 }
 
-.pfe-card__header,
-.pfe-card__body,
-.pfe-card__footer {
+::slotted([slot="pfe-card--header"]) {
   display: block;
-  margin: 0;
+  z-index: 2;
+  // Declare the header background color
+  background-color: #{pfe-local($cssvar: BackgroundColor, $region: header)};
+  color: #{pfe-local($cssvar: Color, $region: header)};
+
+  // Margin style only on top and sides
+  margin-top:    -2rem; //IE11 fallback
+  margin-top:    calc(-1 * #{pfe-local(PaddingTop)}) !important;
+  margin-right:  -2rem; //IE11 fallback
+  margin-right:  calc(-1 * #{pfe-local(PaddingRight)});
+  margin-bottom: #{pfe-local(spacing)};
+  margin-left:   -2rem; //IE11 fallback
+  margin-left:   calc(-1 * #{pfe-local(PaddingLeft)});
+
+  // Padding for the header region
+  padding-top:    #{pfe-local(spacing)}; // Top padding differs if background color applied
+  padding-right:  #{pfe-local(PaddingRight)};
+  padding-left:   #{pfe-local(PaddingLeft)};
+  padding-bottom: #{pfe-local(spacing)};
 }
 
-.pfe-card__header::slotted(h1:first-child),
-.pfe-card__header::slotted(h2:first-child),
-.pfe-card__header::slotted(h3:first-child),
-.pfe-card__header::slotted(h4:first-child),
-.pfe-card__header::slotted(h5:first-child),
-.pfe-card__header::slotted(h6:first-child) {
-  margin-top: 0 !important; // Specificity issue. Why?!
-  font-size: var(--pfe-card_header--size);
+::slotted(:not([slot])) {
+  display: block;
+  margin-bottom: #{pfe-local(spacing)};
 }
 
-.pfe-card__body::slotted(*:nth-child(2)) { // child pseudo-selectors appear to be based on slotted code before upgrade.
-  margin-top: 0 !important;
-}
-
-.pfe-card__footer {
-  // margin-top: pfe-var(container-spacer);
+::slotted([slot="pfe-card--footer"]) {
+  display: flex;
+  flex-flow: column wrap;
   margin-top: auto; // This allows the footer to move to the very bottom
   justify-self: flex-end;
+}
+
+.pfe-card {
+  &__header,
+  &__body {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }

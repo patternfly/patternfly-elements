@@ -1,0 +1,76 @@
+// LABEL
+// ---------------------------------------------------------------------------
+
+.label {
+    display: inline-block;
+    vertical-align: baseline;
+    text-decoration: none;
+
+    font-size: $label-font-size;
+    font-weight: $label-font-weight;
+    letter-spacing: $label-letter-spacing;
+    text-transform: $label-text-transform;
+    line-height: $label-line-height;
+    background: $label-background;
+    color: $label-color-text;
+    padding: $label-padding;
+    border: $label-border-width $label-border-style $label-border-color;
+    border-radius: $label-border-radius;
+
+	& a {
+    	color: inherit;
+    	text-decoration: none;
+    	&:hover {
+    		color: inherit;
+    		text-decoration: underline;
+    	}
+	}
+	& .close {
+    	margin-right: -3px;
+	}
+}
+a.label {
+    color: $label-color-text;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+// Secondary
+.label.is-secondary {
+    font-size: $label-secondary-font-size;
+    font-weight: $label-secondary-font-weight;
+    letter-spacing: $label-secondary-letter-spacing;
+    text-transform: $label-secondary-text-transform;
+    padding: $label-secondary-padding;
+    background: $label-secondary-background;
+    color: $label-secondary-color-text;
+    border: $label-secondary-border-width $label-secondary-border-style $label-secondary-border-color;
+    border-radius: $label-secondary-border-radius;
+}
+
+// Tertiary
+.label.is-tertiary {
+    letter-spacing: $label-tertiary-letter-spacing;
+    background: $label-tertiary-background;
+    color: $label-tertiary-color-text;
+    text-transform: $label-tertiary-text-transform;
+    font-size: $label-tertiary-font-size;
+    font-weight: $label-tertiary-font-weight;
+    padding: $label-tertiary-padding;
+    border: $label-tertiary-border-width $label-tertiary-border-style $label-tertiary-border-color;
+    border-radius: $label-tertiary-border-radius;
+}
+
+// Badges
+.label.is-badge {
+    text-align: center;
+    font-size: $badge-font-size;
+    line-height: $badge-line-height;
+    height: 16px;
+    border-radius: 64px;
+    min-width: 16px;
+    padding-left: $space-2;
+    padding-right: $space-2;
+}

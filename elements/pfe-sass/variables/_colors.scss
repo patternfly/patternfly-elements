@@ -127,9 +127,11 @@ $pfe-color--surface--accent--link--focus:       $pfe-color--ui-link--on-dark--fo
 
 
 /* Palette of Border Colors */
-$pfe-color--surface--border:                    $pfe-color--gray-200 !default;  // Was #ccc
+$pfe-color--surface--border:                    $pfelements--gray-light !default;  // Was #dfdfdf
 $pfe-color--surface--border--lightest:          $pfe-color--gray-100 !default;  // Was #e7e7e7
+$pfe-color--surface--border--lighter:           $pfe-color--gray-100 !default;
 $pfe-color--surface--border--darkest:           $pfe-color--gray-800 !default;
+$pfe-color--surface--border--darker:            $pfe-color--gray-300 !default;
 
 /* Palette of Feedback Colors */
 $pfe-color--feedback--critical:                 $pfe-color--red-600 !default;

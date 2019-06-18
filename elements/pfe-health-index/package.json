@@ -4,28 +4,37 @@
     "className": "PfeHealthIndex",
     "elementName": "pfe-health-index"
   },
-  "version": "1.0.0-prerelease.8",
+  "version": "1.0.0-prerelease.16",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Health element for PFElements",
+  "description": "Health index for PatternFly Elements",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-health-index"
   },
-  "main": "index.js",
+  "main": "pfe-health-index.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-health-index/test/"
   },
-  "author": {
-    "name": "Kyle Buchanan"
-  },
+  "contributors": [
+    {
+      "name": "Kyle Buchanan",
+      "email": "kylebuch8@gmail.com",
+      "url": "https://github.com/kylebuch8"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.8",
-    "@patternfly/pfelement": "^1.0.0-prerelease.8"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.16",
+    "@patternfly/pfelement": "^1.0.0-prerelease.16"
   },
   "generator-pfelement-version": "0.6.3",
   "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"

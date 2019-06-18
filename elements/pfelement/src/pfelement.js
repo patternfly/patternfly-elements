@@ -35,12 +35,14 @@ class PFElement extends HTMLElement {
     this.setAttribute(`${prefix}type`, value);
   }
 
+  // Returns a single element assigned to that slot; if multiple, it returns the first
   has_slot(name) {
     return this.querySelector(`[slot='${name}']`);
   }
 
-  has_slot(name) {
-    return this.querySelector(`[slot='${name}']`);
+  // Returns an array with all elements assigned to that slot
+  has_slots(name) {
+    return [...this.querySelectorAll(`[slot='${name}']`)];
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
@@ -50,6 +52,7 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this.props = pfeClass.properties;
+    this.slots = pfeClass.slots;
     this._queue = [];
     this.template = document.createElement("template");
 
@@ -77,10 +80,17 @@ class PFElement extends HTMLElement {
       window.ShadyCSS.styleElement(this);
     }
 
+    // maybe we should use just the attribute instead of the class?
+    // https://github.com/angular/angular/issues/15399#issuecomment-318785677
     this.classList.add("PFElement");
+    this.setAttribute("pfelement", "");
 
     if (typeof this.props === "object") {
       this._mapSchemaToProperties(this.tag, this.props);
+    }
+
+    if (typeof this.slots === "object") {
+      this._mapSchemaToSlots(this.tag, this.slots);
     }
 
     if (this._queue.length) {
@@ -122,15 +132,26 @@ class PFElement extends HTMLElement {
     // Loop over the properties provided by the schema
     Object.keys(properties).forEach(attr => {
       let data = properties[attr];
+      // Prefix default is true
+      let hasPrefix = true;
+      let attrName = attr;
       // Set the attribute's property equal to the schema input
       this[attr] = data;
       // Initialize the value to null
       this[attr].value = null;
 
+      if (typeof this[attr].prefixed !== "undefined") {
+        hasPrefix = this[attr].prefixed;
+      }
+
+      if (hasPrefix) {
+        attrName = `${prefix}${attr}`;
+      }
+
       // If the attribute exists on the host
-      if (this.hasAttribute(`${prefix}${attr}`)) {
+      if (this.hasAttribute(attrName)) {
         // Set property value based on the existing attribute
-        this[attr].value = this.getAttribute(`${prefix}${attr}`);
+        this[attr].value = this.getAttribute(attrName);
       }
       // Otherwise, look for a default and use that instead
       else if (data.default) {
@@ -139,7 +160,7 @@ class PFElement extends HTMLElement {
           !data.options || (data.options && !data.options.dependencies.length);
         // If the dependency exists or there are no dependencies, set the default
         if (dependency_exists || no_dependencies) {
-          this.setAttribute(`${prefix}${attr}`, data.default);
+          this.setAttribute(attrName, data.default);
           this[attr].value = data.default;
         }
       }
@@ -157,7 +178,7 @@ class PFElement extends HTMLElement {
     for (let i = 0; i < dependencies.length; i += 1) {
       const slot_exists =
         dependencies[i].type === "slot" &&
-        this.has_slot(`${tag}--${dependencies[i].id}`);
+        this.has_slots(`${tag}--${dependencies[i].id}`).length > 0;
       const attribute_exists =
         dependencies[i].type === "attribute" &&
         this.getAttribute(`${prefix}${dependencies[i].id}`);
@@ -172,6 +193,35 @@ class PFElement extends HTMLElement {
     }
     // Return a boolean if the dependency exists
     return hasDependency;
+  }
+
+  // Map the imported slots json
+  // @notice static getter of properties is built via tooling
+  // to edit modify src/element.json
+  _mapSchemaToSlots(tag, slots) {
+    // Loop over the properties provided by the schema
+    Object.keys(slots).forEach(slot => {
+      let slotObj = slots[slot];
+      let slotExists = false;
+      // If it's a named slot, look for that slot definition
+      if (slotObj.namedSlot) {
+        if (this.has_slots(`${tag}--${slot}`).length > 0) {
+          slotExists = true;
+        }
+        // If it's the default slot, look for elements not assigned to a slot
+      } else {
+        if ([...this.querySelectorAll(":not([slot])")].length > 0) {
+          slotExists = true;
+        }
+      }
+
+      // If the slot exists, attach an attribute to the parent to indicate that
+      if (slotExists) {
+        this.setAttribute(`has_${slot}`, "");
+      } else {
+        this.removeAttribute(`has_${slot}`);
+      }
+    });
   }
 
   _queueAction(action) {

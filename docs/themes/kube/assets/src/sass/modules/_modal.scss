@@ -1,0 +1,75 @@
+// MODAL
+// ---------------------------------------------------------------------------
+
+.modal-box {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+	z-index: $z-over-page;
+}
+.modal {
+	position: relative;
+	margin: $space-16 auto;
+	padding: 0;
+
+	font-family: $modal-font-family;
+	background: $modal-background;
+	box-shadow: $modal-box-shadow;
+    border-radius: $modal-border-radius;
+	color: $modal-color-text;
+
+	& input,
+	& textarea {
+		@include for-mobile {
+		    font-size: 16px;
+		}
+	}
+    & .close {
+    	position: absolute;
+    	top: 22px;
+    	right: $space-16;
+    	font-size: 16px;
+    	width: 32px;
+    	height: 32px;
+    	line-height: 32px;
+    	opacity: .4;
+    }
+    & .close:hover {
+        opacity: 1;
+    }
+}
+.modal-header {
+	font-size: $modal-header-font-size;
+	font-weight: $modal-header-font-weight;
+    background: $modal-header-background;
+	padding: $modal-header-padding;
+	border-bottom: $modal-header-border-bottom;
+    &:empty {
+        display: none;
+    }
+}
+.modal-body {
+	font-size: $modal-body-font-size;
+    background: $modal-body-background;
+	padding: $modal-body-padding;
+}
+.modal-footer {
+	font-size: $modal-footer-font-size;
+	font-weight: $modal-footer-font-weight;
+    background-color: $modal-footer-background;
+	padding: $modal-footer-padding;
+	border-top: $modal-footer-border-top;
+    &:empty {
+        display: none;
+    }
+    & button {
+        margin-right: $space-8;
+    }
+    & button + button.is-tertiary {
+        margin-left: $space-8;
+    }
+}

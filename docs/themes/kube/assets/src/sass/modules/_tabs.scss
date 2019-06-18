@@ -1,0 +1,52 @@
+// TABS
+// ---------------------------------------------------------------------------
+
+.tabs {
+    @include flex;
+
+    font-size: $tabs-font-size;
+    font-weight: $tabs-font-weight;
+    text-transform: $tabs-text-transform;
+    margin-bottom: $space-20;
+
+    & a {
+    	position: relative;
+    	top: 1px;
+    	display: block;
+    	padding: $tabs-padding;
+    	border: $tabs-border-width $tabs-border-style $tabs-border-color;
+    	color: $tabs-color-text;
+    	background: $tabs-background;
+    	text-decoration: $tabs-text-decoration;
+    }
+    & a:hover {
+    	@include transition;
+
+    	color: $tabs-hover-color-text;
+    	background: $tabs-hover-background;
+    	text-decoration: $tabs-hover-text-decoration;
+    	border: $tabs-hover-border-width $tabs-hover-border-style $tabs-hover-border-color;
+    }
+    & a.is-active  {
+    	cursor: default;
+
+    	color: $tabs-active-color-text;
+    	background: $tabs-active-background;
+    	text-decoration: $tabs-active-text-decoration;
+    	border: $tabs-active-border-width $tabs-active-border-style $tabs-active-border-color;
+    }
+    & a:first-child {
+        border-top-left-radius: $tabs-border-radius;
+        border-bottom-left-radius: $tabs-border-radius;
+    }
+    & a:last-child {
+        border-top-right-radius: $tabs-border-radius;
+        border-bottom-right-radius: $tabs-border-radius;
+    }
+}
+
+@include for-mobile {
+    .tabs {
+        display: block;
+    }
+}

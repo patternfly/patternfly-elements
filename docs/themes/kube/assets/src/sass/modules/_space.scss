@@ -1,0 +1,184 @@
+// SPACE
+// ---------------------------------------------------------------------------
+
+// inset
+.is-inset-none {
+    padding: 0;
+}
+@each $name, $space in $map-space {
+    .is-inset-#{$name} { padding: $space; }
+}
+@include for-mobile {
+    .inset-none-mobile {
+        padding: 0;
+    }
+    @each $name, $space in $map-space {
+        .is-inset-#{$name}-mobile { padding: $space; }
+    }
+}
+
+// inset x
+.is-inset-x-none {
+    padding-left: 0;
+    padding-right: 0;
+}
+@each $name, $space in $map-space {
+    .is-inset-x-#{$name} { padding-left: $space; padding-right: $space; }
+}
+@include for-mobile {
+    .inset-x-none-mobile {
+        padding-left: 0; padding-right: 0;
+    }
+    @each $name, $space in $map-space {
+        .is-inset-x-#{$name}-mobile { padding-left: $space; padding-right: $space; }
+    }
+}
+
+// inset y
+.is-inset-y-none {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+@each $name, $space in $map-space {
+    .is-inset-y-#{$name} { padding-top: $space; padding-bottom: $space; }
+}
+@include for-mobile {
+    .inset-y-none-mobile {
+        padding-top: 0; padding-bottom: 0;
+    }
+    @each $name, $space in $map-space {
+        .is-inset-y-#{$name}-mobile { padding-top: $space; padding-bottom: $space; }
+    }
+}
+
+// inset top
+.is-inset-top-none {
+    padding-top: 0;
+}
+@each $name, $space in $map-space {
+  .is-inset-top-#{$name} { padding-top: $space; }
+}
+@include for-mobile {
+    .is-inset-top-none-mobile {
+        padding-top: 0;
+    }
+    @each $name, $space in $map-space {
+        .is-inset-top-#{$name}-mobile { padding-top: $space; }
+    }
+}
+
+// inset bottom
+.is-inset-bottom-none {
+    padding-bottom: 0;
+}
+@each $name, $space in $map-space {
+  .is-inset-bottom-#{$name} { padding-bottom: $space; }
+}
+@include for-mobile {
+    .is-inset-bottom-none-mobile {
+        padding-bottom: 0;
+    }
+    @each $name, $space in $map-space {
+        .is-inset-bottom-#{$name}-mobile { padding-bottom: $space; }
+    }
+}
+
+// inset left
+.is-inset-left-none {
+    padding-left: 0;
+}
+@each $name, $space in $map-space {
+  .is-inset-left-#{$name} { padding-left: $space; }
+}
+@include for-mobile {
+    .is-inset-left-none {
+        padding-left: 0;
+    }
+    @each $name, $space in $map-space {
+        .is-inset-left-#{$name}-mobile { padding-left: $space; }
+    }
+}
+
+// inset right
+.is-inset-right-none {
+    padding-right: 0;
+}
+@each $name, $space in $map-space {
+  .is-inset-right-#{$name} { padding-right: $space; }
+}
+@include for-mobile {
+    .is-inset-right-none-mobile {
+        padding-right: 0;
+    }
+    @each $name, $space in $map-space {
+        .is-inset-right-#{$name}-mobile { padding-right: $space; }
+    }
+}
+
+// outset
+.outset-none {
+    margin: 0;
+}
+@each $name, $space in $map-space {
+  .is-outset-#{$name} { margin: $space; }
+}
+@include for-mobile {
+    .outset-none-mobile {
+        margin: 0;
+    }
+    @each $name, $space in $map-space {
+        .is-outset-#{$name}-mobile { margin: $space; }
+    }
+}
+
+// outset x
+.outset-x-none {
+    margin-left: 0; margin-right: 0;
+}
+@each $name, $space in $map-space {
+  .is-outset-x-#{$name} { margin-left: $space; margin-right: $space; }
+}
+@include for-mobile {
+    .outset-x-none-mobile {
+        margin-left: 0; margin-right: 0;
+    }
+    @each $name, $space in $map-space {
+        .is-outset-x-#{$name}-mobile { margin-left: $space; margin-right: $space; }
+    }
+}
+
+// outset y
+.outset-y-none {
+    margin-top: 0; margin-bottom: 0;
+}
+@each $name, $space in $map-space {
+  .is-outset-y-#{$name} { margin-top: $space; margin-bottom: $space; }
+}
+@include for-mobile {
+    .outset-y-none-mobile {
+        margin-top: 0; margin-bottom: 0;
+    }
+    @each $name, $space in $map-space {
+        .is-outset-y-#{$name}-mobile { margin-top: $space; margin-bottom: $space; }
+    }
+}
+
+// stack
+.is-stack-none,
+.is-col-stack-none .is-col {
+    margin-bottom: 0;
+}
+@each $name, $space in $map-space {
+  .is-stack-#{$name},
+  .is-col-stack-#{$name} .is-col { margin-bottom: $space; }
+}
+@include for-mobile {
+    .is-stack-none-mobile,
+    .is-col-stack-none-mobile .is-col {
+        margin-bottom: 0;
+    }
+    @each $name, $space in $map-space {
+        .is-stack-#{$name}-mobile,
+        .is-col-stack-#{$name}-mobile .is-col { margin-bottom: $space; }
+    }
+}

@@ -1,31 +1,24 @@
 @import "../../pfe-sass/pfe-sass";
 
-/// ===========================================================================
-/// Component Specific SASS Vars
-/// ===========================================================================
-
-$pfe-tabs__tab--PaddingRight-factor:  3.375; // 54px at 16px base.
-$pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
+$LOCAL: tabs;
 
 /// ===========================================================================
-/// DEFAULT TAB
+/// HORIZONTAL TAB ORIENTATION
 /// ===========================================================================
 
 :host {
   --pfe-tabs--main:         transparent;
-  --pfe-tabs--aux:          #{pfe-color(surface--lightest--text)};
+  --pfe-tabs--aux:          #{pfe-color(ui-disabled--text)}; 
   --pfe-tabs--link:         #{pfe-color(surface--lightest--link)};
   --pfe-tabs--focus:        #{pfe-color(surface--lightest--link--focus)};
+  --pfe-tabs--highlight:    #{pfe-color(ui-accent)};
 
   position: relative;
   display: block;
   margin: 0 0 -1px;
 
   // Padding
-  padding-top: #{pfe-var(container-padding)};
-  padding-right: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__tab--PaddingRight-factor});;
-  padding-bottom: calc(#{pfe-var(container-padding)} * #{$pfe-tabs__tab--PaddingBottom-factor});
-  padding-left: #{pfe-var(container-padding)};
+  padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 1.5);
   // Border
   border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
   border-bottom: 0;
@@ -35,155 +28,106 @@ $pfe-tabs__tab--PaddingBottom-factor:  1.5; // 54px at 16px base.
   text-transform: var(--pfe-tabs__tab--TextTransform, none); // exposing this for RH
   font-weight: #{pfe-var(font-weight--normal)};
 
-  white-space: nowrap;
   cursor: pointer;
-}
-
-:host([aria-selected="true"]) {
-  --pfe-tabs--main:         #{pfe-color(surface--lightest)};
-
-  // Border
-  border-color: #{pfe-color(surface--border)};
-  border-bottom: 0;
-}
-
-.indicator {
-  position: absolute;
-  bottom: 12px;
-  left: auto;
-
-  display: var(--pfe-tabs__indicator--Display, block); // Exposing this for themability. Use `none` to not show at all
-  height: var(--pfe-tabs__indicator--Height, 4px); // Exposing this for themability
-  width: var(--pfe-tabs__indicator--Width, 22px); // Exposing this for themability
-
-  background-color: #{pfe-color(surface--border--darkest)};
-}
-
-// Hover state for inactive tabs.
-:host(:hover) .indicator {
-  background-color: var(--pfe-tabs--link);
+  text-align: center;
 }
 
 // Active tab styles
-:host([aria-selected="true"]) .indicator,
-:host([aria-selected="true"]:hover) .indicator {
-  background-color: var(--pfe-tabs--link);
-}
 
 :host(:focus),
 :host(:focus-visible) {
-  outline: #{pfe-var(ui--focus-outline-width)} #{pfe-var(ui--focus-outline-style)} var(--pfe-tabs--focus);
+  outline: 1px solid #{$pfe-color--ui-link--focus};
+  outline: #{pfe-var(ui--focus-outline-width)} #{pfe-var(ui--focus-outline-style)} #{pfe-local(focus)};
 }
 
-/// ===========================================================================
-/// HORIZONTAL TAB VARIANTS
-/// ===========================================================================
-
-// Horizontal primary sets.
-
-:host([pfe-variant="primary"]) {
-  text-align: center;
-  padding: 0 calc(#{pfe-var(container-padding)} / 3) #{pfe-var(container-padding)};
-  margin-right: 2%;
-
-  .indicator {
-    width: 100%;
-    left: 0;
-  }
-}
-
-:host([pfe-variant="primary"][aria-selected="true"]) {
+:host([aria-selected="true"]) {
+  --pfe-tabs--aux: #{$pfe-color--black};
+  // Border
   border: transparent;
+  border-bottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
 }
 
-:host([pfe-variant="primary"][aria-selected="false"]) {
-  border: transparent;
-
-  .indicator {
-    display: none;
-  }
-}
-
-:host([pfe-variant="secondary"]) {
-  text-align: center;
-  padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 2.75);
-  border: 1px solid $pfe-global--color--black-soft;
-  margin-right: 2%;
-
-  .indicator {
-    display: none;
-  }
-}
-
-// Horizontal secondary sets.
-
-:host([pfe-variant="secondary"][aria-selected="true"]) {
-  background-color: $pfe-global--color--black-soft;
-  color: #ffffff;
-
-  .indicator {
-    display: block;
-    bottom: -33%;
-    width: 0;
-    height: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: #{pfe-var(container-spacer)} solid transparent;
-    border-right: #{pfe-var(container-spacer)} solid transparent;
-    border-top: #{pfe-var(container-spacer)} solid $pfe-global--color--black-soft;
-    background-color: transparent;
-  }
-}
-
-:host([pfe-variant="secondary"][aria-selected="false"]) {
-  color: $pfe-color--ui-base;
-}
-
-:host([pfe-variant="secondary"]:hover) {
-  background-color: $pfe-global--color--black-soft;
-  color: #ffffff;
+:host(:hover) {
+  --pfe-tabs--aux: #{pfe-color(text)};
 }
 
 /// ===========================================================================
-/// VERTICAL TAB VARIANTS
+/// VERTICAL TAB ORIENTATION
 /// ===========================================================================
 
-// Vertical primary sets.
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+  :host([vertical]) {
+    text-align: left;
+    margin: 0 -1px 0 0;
+    padding-left: calc(#{pfe-var(container-padding)} * .75);
+    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
+    border-right: 0;
+    position: relative;
+  }
 
-:host([vertical][pfe-variant="primary"]) {
-  text-align: right;
-  padding-right: #{pfe-var(container-padding)};
-
-  .indicator {
-    left: auto;
-    right: 0;
-    top: 0;
-    display: var(--pfe-tabs__indicator--Display, block); // Exposing this for themability. Use `none` to not show at all
-    height: var(--pfe-tabs__indicator--Height, 22px); // Exposing this for themability
-    width: var(--pfe-tabs__indicator--Width, 4px); // Exposing this for themability
+  :host([vertical][aria-selected="true"]) {
+    border-color-top: transparent;
+    border-right: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
   }
 }
 
-:host([vertical][pfe-variant="primary"][aria-selected="true"]) {
-  border: transparent !important;
+/// ===========================================================================
+/// WIND TAB VARIANTS
+/// ===========================================================================
+
+:host([pfe-variant="wind"][aria-selected="true"][on="dark"]),
+:host([pfe-variant="wind"][on="dark"]:hover) {
+  --pfe-tabs--aux: #{pfe-color(text--on-dark)};
 }
 
-// Vertical secondary sets.
+/// ===========================================================================
+/// EARTH TAB VARIANTS
+/// ===========================================================================
 
-:host([vertical][pfe-variant="secondary"][aria-selected="true"]) {
-  .indicator {
-    left: 99%;
-    top: 50%;
-    transform: translateY(-50%);
-    border-top: #{pfe-var(container-spacer)} solid transparent;
-    border-left: #{pfe-var(container-spacer)} solid  $pfe-global--color--black-soft;
-    border-bottom: #{pfe-var(container-spacer)} solid transparent;
-    background-color: transparent;
+:host([pfe-variant="earth"][aria-selected="false"]) {
+  border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  border-top: #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
+  --pfe-tabs--main: #{pfe-color(surface--lighter)};
+}
+
+:host([pfe-variant="earth"][aria-selected="true"]) {
+  --pfe-tabs--main: #{pfe-color(surface--lightest)};
+  border-top: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+  border-bottom: 0;
+  border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+}
+
+:host([pfe-variant="earth"][aria-selected="true"]:last-of-type) {
+  border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+}
+
+/// ===========================================================================
+/// EARTH TAB VERTICAL ORIENTATION
+/// ===========================================================================
+
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+  :host([vertical][pfe-variant="earth"]) {
+    border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
   }
-}
 
-::slotted(h2) {
-  font-size: var(--pfe-theme--font-size);
-  font-weight: var(--pfe-theme--font-weight--normal, 500);
-  margin: 0;
+  :host([vertical][pfe-variant="earth"]:first-of-type) {
+    border-top: 0;
+  }
+
+  :host([vertical][pfe-variant="earth"][aria-selected="true"]) {
+    border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    border-right: 0;
+    border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+  }
+
+  :host([vertical][pfe-variant="earth"][aria-selected="false"]) {
+    border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    border-bottom: 0;
+    border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
+  }
+
+  :host([vertical][pfe-variant="earth"][aria-selected="true"]:last-of-type) {
+    border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  }
 }

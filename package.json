@@ -29,7 +29,9 @@
     "deploy-storybook": "npm run build-storybook && npm run gh-pages-storybook",
     "new": "cd elements && yo --no-insight --no-update-notifier pfelement && npm run post-new",
     "post-new": "npm run test-suite-inject && npm run doc-listing-inject && npm run bootstrap",
-    "leftover-check": "bash scripts/leftover-check.sh"
+    "leftover-check": "bash scripts/leftover-check.sh",
+    "demo": "npm run build && npm run start",
+    "ipdemo": "npm run dev &; npm run start"
   },
   "husky": {
     "hooks": {

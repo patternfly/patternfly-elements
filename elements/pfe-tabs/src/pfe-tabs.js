@@ -154,16 +154,11 @@ class PfeTabs extends PFElement {
     this.addEventListener("keydown", this._onKeyDown);
     this.addEventListener("click", this._onClick);
 
-    Promise.all([
-      customElements.whenDefined(PfeTab.tag),
-      customElements.whenDefined(PfeTabPanel.tag)
-    ]).then(() => {
-      if (this.children.length) {
-        this._init();
-      }
+    if (this.children.length) {
+      this._init();
+    }
 
-      this._observer.observe(this, { childList: true });
-    });
+    this._observer.observe(this, { childList: true });
   }
 
   disconnectedCallback() {
@@ -218,13 +213,8 @@ class PfeTabs extends PFElement {
          break;
 
       case "selected-index":
-        Promise.all([
-          customElements.whenDefined(PfeTab.tag),
-          customElements.whenDefined(PfeTabPanel.tag)
-        ]).then(() => {
-          this._linkPanels();
-          this.selectIndex(newValue);
-        });
+        this._linkPanels();
+        this.selectIndex(newValue);
     }
   }
 
@@ -605,7 +595,9 @@ class PfeTabPanel extends PFElement {
       this.setAttribute("tabindex", 0);
     }
 
-    this.hidden = true;
+    if (this.previousElementSibling.getAttribute("aria-selected") !== "true") {
+      this.hidden = true;
+    }
 
     if (window.ShadyCSS) {
       this._observer.observe(this, { childList: true });

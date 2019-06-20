@@ -21,7 +21,8 @@ $LOCAL: link-list;
   --pfe-link-list--font-weight--normal:         #{pfe-var(font-weight--normal)};
 
   display: block;
-  padding: #{pfe-local(Padding)};
+  // padding: #{pfe-local(Padding)};
+  text-align: left;
 }
 
 :host([hidden]) {

@@ -4,8 +4,10 @@ $LOCAL: navigation;
 
 :host {
   // Default spacing values
-  --pfe-navigation--Padding--vertical: calc(#{pfe-var(container-spacer)} * 4);
+  --pfe-navigation--Padding--vertical: 20px; // calc(#{pfe-var(container-spacer)} * 4);
   --pfe-navigation--Padding--horizontal: #{pfe-var(container-spacer)};
+
+  --pfe-navigation--Padding: 0 #{pfe-local(Padding--horizontal)};
 
   // Darkest is the default background color
   --pfe-navigation--BackgroundColor: #{pfe-color(surface--darkest)};
@@ -29,31 +31,20 @@ $LOCAL: navigation;
   display: block;
 }
 
-.pfe-navigation__wrapper {
-  background-color: #{pfe-local(BackgroundColor)};
-  color: #{pfe-local(Color)};
-  width: 100%;
-}
-
-.pfe-navigation__container {
-  // need to do something here for IE11 since we can't redefine the variable
-  @each $size in (md, lg, xl) {
-    @media screen and (min-width: pfe-breakpoint(#{$size})) {
-      width: calc(#{pfe-breakpoint(#{$size})} - #{map-get($pfe-vars, container-spacer) * 2});
-    }
-  }
-
-  margin: 0 auto;
-  width: #{pfe-local(Width)};
-  color: #{pfe-local(Color)};
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: space-between;
-}
+// ::slotted(*) {
+//   padding-top: #{pfe-local(Padding--vertical)};
+//   padding-bottom: #{pfe-local(Padding--vertical)};
+// }
 
 ::slotted([slot="logo"]) {
-  min-width: 80px;
+  margin: 0 !important;
+  
+  padding-top: #{pfe-local(Padding--vertical)} !important;
+  padding-right: 16px !important;
+  padding-bottom: #{pfe-local(Padding--vertical)} !important;
+
+  // min-width: 80px;
+  max-height: 72px;
 }
 
 ::slotted([slot="skip"]) {
@@ -68,23 +59,31 @@ $LOCAL: navigation;
 }
 
 .pfe-navigation {
-  // &__logo {
-  //   grid-area: logo;
-  // }
-  // &__skip {
-  //   grid-area: skip;
-  // }
   &__wrapper {
     position: relative;
     z-index: 2;
     width: 100%;
-    // Padding
-    padding: #{pfe-local(Padding)};
+    background-color: #{pfe-local(BackgroundColor)};
+    color: #{pfe-local(Color)};
+    width: 100%;
   }
   &__container {
     margin: 0 auto;
     width: #{pfe-local(Width)};
+    color: #{pfe-local(Color)};
     z-index: 2;
+
+    // need to do something here for IE11 since we can't redefine the variable
+    @each $size in (md, lg, xl) {
+      @media screen and (min-width: pfe-breakpoint(#{$size})) {
+        width: calc(#{pfe-breakpoint(#{$size})} - #{map-get($pfe-vars, container-spacer) * 2});
+      }
+    }
+
+    display: flex;
+    flex-flow: row nowrap;
+    // align-items: center;
+    // justify-content: space-between;
 
     // display: grid;
     // grid-template-rows: 1fr;

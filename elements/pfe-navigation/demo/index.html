@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    
+
     <title>PatternFly Element | Navigation Demo</title>
 
     <link rel="stylesheet" href="../../pfe-layouts/pfe-base.css" />
@@ -38,19 +38,19 @@
       <div slot="skip">
         <a href="#rh-main-content">Skip to content</a>
       </div>
-      <div slot="logo">
-        <h2>
-          <a href="https://redhat.com">
-            <img class="redhat-logo" src="https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo--on-dark--200.png" class="screen" title="Red Hat"/>
-          </a>
-        </h2>
-      </div>
+      <h2 slot="logo">
+        <a href="https://redhat.com">
+          <img class="redhat-logo" src="https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo--on-dark--200.png" class="screen" title="Red Hat"/>
+        </a>
+      </h2>
       <pfe-navigation-item slot="search" pfe-icon="search">
         <h3 slot="trigger"><a href="#url-to-search-page">Search</a></h3>
         <div slot="tray" hidden>
-          <form>
-            <input type="text" name="" value="" placeholder="Enter your search term">
-          </form>
+          <div class="container">
+            <form>
+              <input type="text" name="" value="" placeholder="Enter your search term">
+            </form>
+          </div>
         </div>
       </pfe-navigation-item>
       <nav pfe-navigation__main-nav slot="main" aria-label="Main">
@@ -60,71 +60,94 @@
               <pfe-navigation-item>
                 <h2 slot="trigger"><a href="#">Products</a></h2>
                 <div slot="tray" hidden>
-                    <pfe-link-list>
-                      <h3 slot="pfe-link-list--header">
-                        <a href="#">Platforms</a>
-                      </h3>
-                      <ul slot="pfe-link-list--list">
-                        <li><a href="#">Red Hat Enterprise Linux</a></li>
-                        <li><a href="#">Red Hat JBoss Enterprise Application Platform</a></li>
-                        <li><a href="#">Red Hat OpenShift</a></li>
-                        <li><a href="#">Red Hat OpenStack Platform</a></li>
-                        <li><a href="#">Red Hat Virtualization</a></li>
-                      </ul>
-                    </pfe-link-list>
-                    <pfe-link-list>
-                      <h3 slot="pfe-link-list--header">
-                        <a href="#">Integration</a>
-                      </h3>
-                      <ul slot="pfe-link-list--list">
-                        <li><a href="#">Red Hat 3scale API Management</a></li>
-                        <li><a href="#">Red Hat AMQ</a></li>
-                        <li><a href="#">Red Hat Fuse</a></li>
-                        <li><a href="#">Red Hat Fuse Online</a></li>
-                      </ul>
-                    </pfe-link-list>
-                    <pfe-link-list>
-                      <h3 slot="pfe-link-list--header">
-                        <a href="#">Cloud computing</a>
-                      </h3>
-                      <ul slot="pfe-link-list--list">
-                        <li><a href="#">Red Hat Cloud Infrastructure</a></li>
-                        <li><a href="#">Red Hat Cloud Suite</a></li>
-                        <li><a href="#">Red Hat CloudForms</a></li>
-                        <li><a href="#">Red Hat Hyperconverged Infrastructure</a></li>
-                        <li><a href="#">Red Hat OpenShift</a></li>
-                        <li><a href="#">Red Hat OpenStack Platform</a></li>
-                        <li><a href="#">Red Hat Quay</a></li>
-                    </ul>
-                  </pfe-link-list>
-                  <pfe-cta><a href="#">Buy products online</a></pfe-cta>
-                  <pfe-card style="height: 300px;">
-                    <h2>Promotional content</h2>
-                  </pfe-card>
+                    <div class="container">
+                      <div columns="3">
+                        <div stacked>
+                          <pfe-link-list>
+                            <h3 slot="pfe-link-list--header">
+                              <a href="#">Platforms</a>
+                            </h3>
+                            <ul slot="pfe-link-list--list">
+                              <li><a href="#">Red Hat Enterprise Linux</a></li>
+                              <li><a href="#">Red Hat JBoss Enterprise Application Platform</a></li>
+                              <li><a href="#">Red Hat OpenShift</a></li>
+                              <li><a href="#">Red Hat OpenStack Platform</a></li>
+                              <li><a href="#">Red Hat Virtualization</a></li>
+                            </ul>
+                          </pfe-link-list>
+                          <pfe-cta><a href="#">Buy products online</a></pfe-cta>
+                        </div>
+                        <pfe-link-list>
+                          <h3 slot="pfe-link-list--header">
+                            <a href="#">Integration</a>
+                          </h3>
+                          <ul slot="pfe-link-list--list">
+                            <li><a href="#">Red Hat 3scale API Management</a></li>
+                            <li><a href="#">Red Hat AMQ</a></li>
+                            <li><a href="#">Red Hat Fuse</a></li>
+                            <li><a href="#">Red Hat Fuse Online</a></li>
+                          </ul>
+                        </pfe-link-list>
+                        <pfe-link-list>
+                          <h3 slot="pfe-link-list--header">
+                            <a href="#">Cloud computing</a>
+                          </h3>
+                          <ul slot="pfe-link-list--list">
+                            <li><a href="#">Red Hat Cloud Infrastructure</a></li>
+                            <li><a href="#">Red Hat Cloud Suite</a></li>
+                            <li><a href="#">Red Hat CloudForms</a></li>
+                            <li><a href="#">Red Hat Hyperconverged Infrastructure</a></li>
+                            <li><a href="#">Red Hat OpenShift</a></li>
+                            <li><a href="#">Red Hat OpenStack Platform</a></li>
+                            <li><a href="#">Red Hat Quay</a></li>
+                        </ul>
+                      </pfe-link-list>
+                    </div>
+                    <pfe-card style="height: 300px;">
+                      <h2>Promotional content</h2>
+                    </pfe-card>
+                  </div>
                 </div>
               </pfe-navigation-item>
             </li>
             <li>
-              <pfe-navigation-item>
+              <pfe-navigation-item aria-current="location">
                 <h2 slot="trigger"><a href="#">Solutions</a></h2>
                 <div slot="tray" hidden>
-                  <p>Solutions tray content</p>
+                  <div class="container">
+                    <p>Solutions tray content</p>
+                  </div>
                 </div>
               </pfe-navigation-item>
             </li>
             <li>
               <pfe-navigation-item>
-                <h2><a href="/support">Services &amp; support</a></h2>
+                <h2 slot="trigger"><a href="/support">Services &amp; support</a></h2>
+                <div slot="tray" hidden>
+                  <div class="container">
+                    <p>Services tray content</p>
+                  </div>
+                </div>
               </pfe-navigation-item>
             </li>
             <li>
               <pfe-navigation-item>
-                <h2><a href="/resources">Resources</a></h2>
+                <h2 slot="trigger"><a href="/resources">Resources</a></h2>
+                <div slot="tray" hidden>
+                  <div class="container">
+                    <p>Resources tray content</p>
+                  </div>
+                </div>
               </pfe-navigation-item>
             </li>
             <li>
               <pfe-navigation-item>
-                <h2><a href="/en/about">Red Hat &amp; open source</a></h2>
+                <h2 slot="trigger"><a href="/en/about">Red Hat &amp; open source</a></h2>
+                <div slot="tray" hidden>
+                  <div class="container">
+                    <p>Open source tray content</p>
+                  </div>
+                </div>
               </pfe-navigation-item>
             </li>
           </ul>
@@ -133,13 +156,25 @@
       <pfe-navigation-item slot="language" pfe-icon="globe">
         <h3 slot="trigger"><a href="#url-to-language-page">English</a></h3>
         <div slot="tray" hidden>
+          <div class="container">
             <p>Custom code to do this thing.</p>
+          </div>
+        </div>
+      </pfe-navigation-item>
+      <pfe-navigation-item slot="login" pfe-icon="user">
+        <h3 slot="trigger"><a href="#login">Login</a></h3>
+        <div slot="tray" hidden>
+          <div class="container">
+            <p>Custom code to do this thing.</p>
+          </div>
         </div>
       </pfe-navigation-item>
       <pfe-navigation-item slot="site-switcher" pfe-icon="bento" pfe-top-link>
         <h3 slot="trigger"><a href="url-to-rh-websites-page">Apps &amp; Websites</a></h3>
         <div slot="tray" hidden>
-          <p>Custom code to do this thing.</p>
+          <div class="container">
+            <p>Custom code to do this thing.</p>
+          </div>
         </div>
       </pfe-navigation-item>
     </pfe-navigation>

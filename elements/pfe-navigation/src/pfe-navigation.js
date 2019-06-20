@@ -21,7 +21,9 @@ class PfeNavigation extends PFElement {
 
     this._toggledHandler = this._toggledHandler.bind(this);
     this._init = this._init.bind(this);
-    this._setupSearch = this._setupSearch.bind(this);
+
+    // this._setupSearch = this._setupSearch.bind(this);
+    
     this._observerHandler = this._observerHandler.bind(this);
     this._observer = new MutationObserver(this._observerHandler);
 
@@ -38,11 +40,19 @@ class PfeNavigation extends PFElement {
 
     this.overlay = this.shadowRoot.querySelector(".pfe-navigation__overlay");
 
+    // Capture the utility slots from shadow
     this._searchSlot = this.shadowRoot.querySelector(`slot[name="search"]`);
-    this._menuSlotMobile = this.shadowRoot.querySelector(`slot[name="mobile-menu"]`);
-    this._searchSlotMobile = this.shadowRoot.querySelector(`slot[name="mobile-search"]`);
+    this._loginSlot = this.shadowRoot.querySelector(`slot[name="login"]`);
+    this._languageSlot = this.shadowRoot.querySelector(`slot[name="language"]`);
+    // Capture mobile slots from shadow
+    this._menuSlotMobile     = this.shadowRoot.querySelector(`slot[name="mobile-menu"]`);
+    this._searchSlotMobile   = this.shadowRoot.querySelector(`slot[name="mobile-search"]`);
+    this._loginSlotMobile    = this.shadowRoot.querySelector(`slot[name="mobile-login"]`);
+    this._languageSlotMobile = this.shadowRoot.querySelector(`slot[name="mobile-language"]`);
 
     // this._searchSlot.addEventListener("slotchange", this._setupSearch);
+    // this._loginSlot.addEventListener("slotchange", this._setupLogin);
+    // this._languageSlot.addEventListener("slotchange", this._setupLanguage);
 
     if (this.children.length) {
       this._initialized = this._init();
@@ -132,12 +142,12 @@ class PfeNavigation extends PFElement {
     return ret;
   }
 
-  _setupSearch(event) {
-    const searchInnerHTML = this._searchSlot.assignedNodes()[0].querySelector(`[slot="tray"] > *`);
-    const searchInnerHTMLClone = searchInnerHTML.cloneNode(true);
+  // _setupSearch(event) {
+  //   const searchInnerHTML = this._searchSlot.assignedNodes()[0].querySelector(`[slot="tray"] > *`);
+  //   const searchInnerHTMLClone = searchInnerHTML.cloneNode(true);
 
-    this._searchSlotMobile.appendChild(searchInnerHTMLClone);
-  }
+  //   this._searchSlotMobile.appendChild(searchInnerHTMLClone);
+  // }
 
   _setupMobileNav() {
     if(!this._initialized) {
@@ -151,6 +161,16 @@ class PfeNavigation extends PFElement {
       // Set up the mobile search
       const searchClone = this.querySelector(`[slot="search"] > [slot="tray"]`).innerHTML;
       this._searchSlotMobile.innerHTML = searchClone;
+
+      // Set up the mobile login
+      const loginEl = this._loginSlot ? this._loginSlot.querySelector(`[slot="trigger"]`) : null;
+      const loginClone = loginEl !== null ? loginEl.innerHTML : "";
+      this._loginSlotMobile.innerHTML = loginClone;
+
+      // Set up the mobile language
+      const languageEl = this._languageSlot ? this._languageSlot.querySelector(`[slot="trigger"]`) : null;
+      const languageClone = languageEl !== null ? languageEl.innerHTML : "";
+      this._languageSlotMobile.innerHTML = languageClone;
 
       // Set up the mobile main menu
       triggers.forEach(trigger => {

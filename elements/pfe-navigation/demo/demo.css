@@ -1,10 +1,7 @@
-[slot="logo"] h2 a {
+[slot="logo"] > a {
   color: white;
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 5px 5px 5px 0;
+  display: inline-block;
 }
 
 .redhat-logo {
@@ -41,4 +38,28 @@
   background-color: #ccc;
   margin-top: 16px;
   padding: 16px;
+}
+
+.container {
+  max-width: var(--pfe-navigation--Width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  text-align: left;
+}
+
+[columns="3"] {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+[stacked] {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+[stacked] > *:not(:last-child) {
+  flex-grow: 1;
+  margin-bottom: 10px;
 }

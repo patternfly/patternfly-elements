@@ -14,7 +14,35 @@ $LOCAL: navigation-item;
   justify-content: center;
 }
 
-:host([hidden]) {
+:host([pfe-icon]) {
+  display: flex;
+}
+
+:host([pfe-icon]) ::slotted([slot="trigger"]) {
+  font-size: 12px; 
+}
+
+:host([pfe-icon="bento"]) { //& #Icon {
+  -webkit-text-fill-color: 	 #{pfe-local(Color)};
+  fill: 	#{pfe-local(Color)};
+}
+
+:host([pfe-icon="user"]), // & #Icon,
+:host([pfe-icon="globe"]),
+:host([pfe-icon="search"]) {
+  -webkit-text-stroke-color: #{pfe-local(Color)};
+  stroke: #{pfe-local(Color)};
+}
+
+:host([pfe-icon="menu"]) {
+  -webkit-text-stroke-color: #{pfe-local(Color)};
+  -webkit-text-fill-color: #{pfe-local(Color)};
+  stroke: #{pfe-local(Color)};
+  fill: #{pfe-local(Color)};
+}
+
+:host([hidden]),
+::slotted([slot="tray"][hidden]) {
 	display: none;
 }
 
@@ -71,119 +99,13 @@ $LOCAL: navigation-item;
   margin: 0 auto;
   padding: 32px 0;
 
+  transition: all #{pfe-var(animation-timing)};
   background-color: #{pfe-color(surface--lightest)};
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 1;
-  color: black;
-}
 
-::slotted([slot="tray"][hidden]) {
-  display: none;
-}
-
-.pfe-navigation-item__icon {
-  [pfe-icon="menu"] & #Icon {
-    -webkit-text-stroke-color: #{pfe-local(Color)};
-    -webkit-text-fill-color: #{pfe-local(Color)};
-    stroke: #{pfe-local(Color)};
-    fill: #{pfe-local(Color)};
-  }
-}
-
-// Clear the styles for links in the trigger slot
-::slotted(a:not([slot="tray"])) {
-	color: inherit;
-	text-decoration: none;
-}
-
-// .pfe-navigation-item--tray {
-//   display: block;
-//   position: absolute;
-//   top: 100%;
-//   left: 0;
-//   width: 100%;
-// }
-
-::slotted([slot="tray"]) {
-	// display: grid;
-	// grid-template-areas: "main";
-	// grid-template-columns: 1fr;
-	// grid-gap: #{pfe-var(container-spacer)};
-  // width: 100%;
-  
   display: block;
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%;
-  // max-width: var(--pfe-navigation--Width, auto);
   z-index: 1;
-  transition: all #{pfe-var(animation-timing)};
-
-  background-color: #{pfe-color(surface--lightest)};
   color: #{pfe-color(surface--lightest--text)};
-
-  // need to do something here for IE11 since we can't redefine the variable
-  // @each $size in (md, lg, xl) {
-  //   @media screen and (min-width: pfe-breakpoint(#{$size})) {
-  //     max-width: calc(#{pfe-breakpoint(#{$size})} - #{map-get($pfe-vars, container-spacer) * 2});
-  //   }
-  // }
-}
-
-// ::slotted([slot="tray"][has-aside]) {
-// 	grid-template-areas:
-// 		"main aside";
-// 		grid-template-columns: 1fr #{pfe-local($cssvar: Width__aside, $fallback: #{$pfe-navigation__aside--width--sm}, $region: tray)};
-// }
-// ::slotted([slot="tray"][has-footer]) {
-// 	grid-template-areas:
-// 		"main"
-// 		"footer";
-// }
-// ::slotted([slot="tray"][has-aside][has-footer]) {
-// 	grid-template-areas:
-// 		"main aside"
-// 		"footer footer";
-// }
-
-.pfe-navigation-item {
-	&__icon {
-		position: relative;
-		display: flex;
-		width: 	20px;
-
-		[pfe-menu="desktop"] & {
-			padding: 0 0 10px 0;
-		}
-		[pfe-menu="mobile"] & {
-			padding: 0 10px 0 0;
-		}
-		[pfe-icon="bento"] & #Icon {
-			-webkit-text-fill-color: 	 #{pfe-local(Color)};
-			fill: 	#{pfe-local(Color)};
-		}
-		[pfe-icon="user"] & #Icon,
-		[pfe-icon="globe"] & #Icon,
-		[pfe-icon="search"] & #Icon {
-			-webkit-text-stroke-color: #{pfe-local(Color)};
-			stroke: #{pfe-local(Color)};
-		}
-	}
-
-	&__text,
-	&__link {
-		//shrink the text size of nav items with icons
-		[pfe-icon] & {
-			font-size: .8em;
-		}
-	}
-	&__container {
-		display: 	flex;
-		flex-flow:  row wrap;
-		margin:    	#{pfe-var(container-spacer)} auto;
-		width: 		var(--pfe-navigation--Width);
-	}
 }

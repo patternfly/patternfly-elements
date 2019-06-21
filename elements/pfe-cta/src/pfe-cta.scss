@@ -97,7 +97,10 @@ $pfe-cta__arrow-size:                        0.313em;
 }
 
 :host(:not([priority]):focus-within) {
-    background-color: rgba(0, 102, 204, .1);
+  background-color: rgba(0, 102, 204, .1);
+  .pfe-cta--arrow {
+    fill: #{pfe-local(Color--focus)};
+  }
 }
 
 /// ===========================================================================
@@ -172,11 +175,26 @@ $pfe-cta__arrow-size:                        0.313em;
 
   --pfe-cta--background--hover:   #{pfe-color(ui-link)};
   --pfe-cta--border--hover:       #{pfe-color(ui-link)};
-  --pfe-cta--Color--hover:        #{pfe-color(ui-link--on-saturated)};
+  --pfe-cta--Color--hover:        #{pfe-color(ui-base--text)};
 
-  --pfe-cta--background--focus:   rgba(0,102,204, .5);
+  --pfe-cta--background--focus:   rgba(0,102,204, .1);
   --pfe-cta--inner-border--focus: #{pfe-color(ui-link)};
   --pfe-cta--Color--focus:        #{pfe-color(ui-link)};
+}
+
+:host([primary-alt]) {
+  --pfe-cta--background:          #{pfe-color(surface--lightest)};
+  --pfe-cta--border:              #{pfe-color(surface--darkest)};
+  --pfe-cta--inner-border:        transparent;
+  --pfe-cta--Color:               #{pfe-color(surface--darkest)};
+
+  --pfe-cta--background--hover:   #{pfe-color(surface--border--lightest)}; // probably need a new var for this.
+  --pfe-cta--border--hover:       #{pfe-color(surface--darkest)};
+  --pfe-cta--Color--hover:        #{pfe-color(surface--darkest)};
+
+  --pfe-cta--background--focus:   #{pfe-color(surface--lightest)};
+  --pfe-cta--inner-border--focus: #{pfe-color(surface--darkest)};
+  --pfe-cta--Color--focus:        #{pfe-color(surface--darkest)};
 }
 
 /// ===========================================================================
@@ -194,7 +212,7 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--border--hover:       #{pfe-color(surface--lightest)};
   --pfe-cta--Color--hover:        #{pfe-color(surface--lightest--text)};
 
-  --pfe-cta--background--focus:   rgba(21, 21, 21, .1);
+  --pfe-cta--background--focus:   rgba(255, 255, 255, .95);
   // --pfe-cta--inner-border--focus: #{pfe-color(surface--lightest--text)};
   // --pfe-cta--Color--focus:        #{pfe-color(surface--lightest)};
 }
@@ -242,17 +260,9 @@ $pfe-cta__arrow-size:                        0.313em;
 
 // Set accent color values  / do we even want to add support for default CTAs + accent?
 :host(:not([priority])[color="accent"]) {
-  //--pfe-cta--background:          transparent;  
-  //--pfe-cta--border:              transparent;
-  //--pfe-cta--inner-border:        transparent;
   --pfe-cta--Color:                #{pfe-color(surface--accent)};
-
-  //--pfe-cta--background--hover:   transparent;
-  //--pfe-cta--border--hover:       transparent;
   --pfe-cta--Color--hover:         #D40000; 
-
-    --pfe-cta--background--focus:   rebeccapurple;
-  //--pfe-cta--inner-border--focus: transparent;
+  --pfe-cta--background--focus:   rebeccapurple;
   --pfe-cta--Color--focus:         #{pfe-color(surface--accent)}; 
 }
 
@@ -301,20 +311,22 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--inner-border--focus: transparent;
   --pfe-cta--Color--focus:        #{pfe-color(surface--complement)};
 }
+
 :host([priority="primary"][color="complement"]) {
   --pfe-cta--background:          #{pfe-color(surface--complement)};
   --pfe-cta--border:              #{pfe-color(surface--complement)};
   --pfe-cta--inner-border:        transparent;
   --pfe-cta--Color:               #{pfe-color(surface--complement--text)};
 
-  --pfe-cta--background--hover:   #{pfe-color(surface--complement)};
-  --pfe-cta--border--hover:       #{pfe-color(surface--complement)};
+  --pfe-cta--background--hover:   #{pfe-color(surface--darker)};
+  --pfe-cta--border--hover:       #{pfe-color(surface--darker)};
   --pfe-cta--Color--hover:        #{pfe-color(surface--complement--text)};
 
   --pfe-cta--background--focus:   transparent;
   --pfe-cta--inner-border--focus: #{pfe-color(surface--complement--text)};
   --pfe-cta--Color--focus:        #{pfe-color(surface--complement--text)};
 }
+
 :host([priority="secondary"][color="complement"]) {
   --pfe-cta--background:          transparent;
   --pfe-cta--border:              #{pfe-color(surface--complement)};

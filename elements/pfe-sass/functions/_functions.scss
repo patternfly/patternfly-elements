@@ -328,5 +328,5 @@ $map: $pfe-colors) {
 /// @returns - var(--pfe-broadcasted--ui-link--visited);
 ///
 @function pfe-radio($cssvar...) {
-    @return var(--#{$repo}-broadcasted--#{to-string($cssvar, '--')});
+    @return var(--#{$repo}-broadcasted--color--#{to-string($cssvar, '--')});
 }

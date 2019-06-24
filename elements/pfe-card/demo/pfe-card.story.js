@@ -88,7 +88,7 @@ stories.add(PfeCard.tag, () => {
         break;
     }
 
-    image = `<img src=\"https://picsum.photos/1000/300\" ${overflowAttr.length > 0 ? ` pfe-overflow=\"${overflowAttr.join(" ")}\"` : ""}/>`;
+    image = `<img src=\"https://picsum.photos/id/1043/1000/300\" ${overflowAttr.length > 0 ? ` pfe-overflow=\"${overflowAttr.join(" ")}\"` : ""}/>`;
     if(region === "footer") {
       slots.footer.default = image;
     } else {

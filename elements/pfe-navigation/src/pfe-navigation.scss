@@ -82,16 +82,13 @@ $LOCAL: navigation;
 
     display: flex;
     flex-flow: row nowrap;
-    // align-items: center;
-    // justify-content: space-between;
+    align-items: stretch;
+    justify-content: space-between;
 
-    // display: grid;
-    // grid-template-rows: 1fr;
-    // grid-gap: 20px;
-    // grid-template-areas: "logo utility utility";
-    // @media (min-width: #{pfe-breakpoint(lg)}) {
-    //   grid-template-areas: "logo main main main utility";
-    // }
+    padding: 0 24px;
+    @media (min-width: #{pfe-breakpoint(lg)}) {
+      padding: 0;
+    }
   }
   &__overlay {
     display: block;
@@ -106,10 +103,16 @@ $LOCAL: navigation;
       display: none;
     }
   }
+  &__logo {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: center;
+  }
   &__main {
-    grid-area: main;
     display: none;
     @media (min-width: #{pfe-breakpoint(lg)}) {
+      flex-grow: 1;
       display: flex;
       flex-flow: row nowrap;
       align-items: stretch;

@@ -14,6 +14,37 @@ class PfeNavigation extends PFElement {
     return "pfe-navigation.scss";
   }
 
+  get iconSVG() {
+    return {
+      globe: `<?xml version="1.0" encoding="UTF-8"?>
+      <svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Icon</title>
+          <desc>Created with Sketch.</desc>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Icon">
+                  <circle id="Oval" cx="9.5" cy="9.5" r="9.5"></circle>
+                  <ellipse id="Oval" cx="9.5" cy="9.5" rx="4.75" ry="9.5"></ellipse>
+                  <path d="M9.5,0 L9.5,19" id="Path"></path>
+                  <path d="M1,14 L18,14" id="Path"></path>
+                  <path d="M0,9.5 L19,9.5" id="Path"></path>
+                  <path d="M1,5 L18,5" id="Path"></path>
+              </g>
+          </g>
+      </svg>`,
+      user: `<?xml version="1.0" encoding="UTF-8"?>
+      <svg width="21px" height="20px" viewBox="0 0 21 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Icon</title>
+          <desc>Created with Sketch.</desc>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+              <g id="Icon">
+                  <path d="M0,19 C0,13.75 4.25,9.5 9.5,9.5 C14.75,9.5 19,13.75 19,19" id="Path"></path>
+                  <circle id="Oval" cx="9.5" cy="4.75" r="4.75"></circle>
+              </g>
+          </g>
+      </svg>`
+    };
+  }
+
   constructor() {
     super(PfeNavigation);
 
@@ -41,18 +72,19 @@ class PfeNavigation extends PFElement {
     this.overlay = this.shadowRoot.querySelector(".pfe-navigation__overlay");
 
     // Capture the utility slots from shadow
-    this._searchSlot = this.shadowRoot.querySelector(`slot[name="search"]`);
-    this._loginSlot = this.shadowRoot.querySelector(`slot[name="login"]`);
-    this._languageSlot = this.shadowRoot.querySelector(`slot[name="language"]`);
+    this.searchSlot = this.querySelector(`[slot="search"]`);
+    this.loginSlot = this.querySelector(`[slot="login"]`);
+    this.languageSlot = this.querySelector(`[slot="language"]`);
+
     // Capture mobile slots from shadow
     this._menuSlotMobile     = this.shadowRoot.querySelector(`slot[name="mobile-menu"]`);
     this._searchSlotMobile   = this.shadowRoot.querySelector(`slot[name="mobile-search"]`);
     this._loginSlotMobile    = this.shadowRoot.querySelector(`slot[name="mobile-login"]`);
     this._languageSlotMobile = this.shadowRoot.querySelector(`slot[name="mobile-language"]`);
 
-    // this._searchSlot.addEventListener("slotchange", this._setupSearch);
-    // this._loginSlot.addEventListener("slotchange", this._setupLogin);
-    // this._languageSlot.addEventListener("slotchange", this._setupLanguage);
+    // this.searchSlot.addEventListener("slotchange", this._setupSearch);
+    // this.loginSlot.addEventListener("slotchange", this._setupLogin);
+    // this.languageSlot.addEventListener("slotchange", this._setupLanguage);
 
     if (this.children.length) {
       this._initialized = this._init();
@@ -78,7 +110,7 @@ class PfeNavigation extends PFElement {
     );
 
     this._observer.disconnect();
-    // this._searchSlot.removeEventListener("slotchange", this._setupSearch);
+    // this.searchSlot.removeEventListener("slotchange", this._setupSearch);
   }
 
   _observerHandler(mutationsList) {
@@ -112,19 +144,6 @@ class PfeNavigation extends PFElement {
         this._observer.disconnect();
       }
 
-      // if (!this._searchSlotMobile) {
-      //   this._searchSlotMobile = document.createElement("div");
-      //   this._searchSlotMobile.setAttribute("slot", "search-mobile");
-      //   this.appendChild(this._searchSlotMobile);
-      // }
-
-
-      // if (!this._menuSlotMobile) {
-      //   this._menuSlotMobile = document.createElement("div");
-      //   this._menuSlotMobile.setAttribute("slot", "menu-mobile");
-      //   this.appendChild(this._menuSlotMobile);
-      // }
-
       ret = this._setupMobileNav();
 
       // @IE11 This is necessary so the script doesn't become non-responsive
@@ -143,7 +162,7 @@ class PfeNavigation extends PFElement {
   }
 
   // _setupSearch(event) {
-  //   const searchInnerHTML = this._searchSlot.assignedNodes()[0].querySelector(`[slot="tray"] > *`);
+  //   const searchInnerHTML = this.searchSlot.assignedNodes()[0].querySelector(`[slot="tray"] > *`);
   //   const searchInnerHTMLClone = searchInnerHTML.cloneNode(true);
 
   //   this._searchSlotMobile.appendChild(searchInnerHTMLClone);
@@ -163,14 +182,23 @@ class PfeNavigation extends PFElement {
       this._searchSlotMobile.innerHTML = searchClone;
 
       // Set up the mobile login
-      const loginEl = this._loginSlot ? this._loginSlot.querySelector(`[slot="trigger"]`) : null;
+      const loginEl = this.loginSlot ? this.loginSlot.querySelector(`[slot="trigger"]`) : null;
       const loginClone = loginEl !== null ? loginEl.innerHTML : "";
       this._loginSlotMobile.innerHTML = loginClone;
+      // Copy the icon to the slot
+      if(this.loginSlot.hasAttribute("pfe-icon")) {
+        this._loginSlotMobile.setAttribute("pfe-icon", this.loginSlot.getAttribute("pfe-icon"));
+      }
 
       // Set up the mobile language
-      const languageEl = this._languageSlot ? this._languageSlot.querySelector(`[slot="trigger"]`) : null;
+      const languageEl = this.languageSlot ? this.languageSlot.querySelector(`[slot="trigger"]`) : null;
       const languageClone = languageEl !== null ? languageEl.innerHTML : "";
       this._languageSlotMobile.innerHTML = languageClone;
+      // Copy the icon to the slot
+      if(this.languageSlot.hasAttribute("pfe-icon")) {
+        this._languageSlotMobile.setAttribute("pfe-icon", this.languageSlot.getAttribute("pfe-icon"));
+      }
+
 
       // Set up the mobile main menu
       triggers.forEach(trigger => {
@@ -223,6 +251,10 @@ class PfeNavigationItem extends PFElement {
 
   static get PfeType() {
     return PFElement.PfeTypes.Container;
+  }
+
+  get hasIcon() {
+    return this.hasAttribute("pfe-icon");
   }
 
   get iconSVG() {
@@ -316,32 +348,32 @@ class PfeNavigationItem extends PFElement {
     if (val) {
       this.classList.add("expanded");
 
-      if (this.trigger) {
-        this.trigger.setAttribute("aria-expanded", true);
+      if (this._trigger) {
+        this._trigger.setAttribute("aria-expanded", true);
       }
 
-      if (this.tray) {
+      if (this._tray) {
         this.tray.removeAttribute("hidden");
-        this.tray.setAttribute("aria-expanded", true);
+        this._tray.setAttribute("aria-expanded", true);
       }
 
-      if (this.indicator) {
-        this.indicator.classList.add("expanded");
+      if (this._indicator) {
+        this._indicator.classList.add("expanded");
       }
     } else {
       this.classList.remove("expanded");
 
-      if (this.trigger) {
-        this.trigger.removeAttribute("aria-expanded");
+      if (this._trigger) {
+        this._trigger.setAttribute("aria-expanded", false);
       }
 
-      if (this.tray) {
+      if (this._tray) {
         this.tray.setAttribute("hidden", true);
-        this.tray.removeAttribute("aria-expanded");
+        this._tray.setAttribute("aria-expanded", false);
       }
 
-      if (this.indicator) {
-        this.indicator.classList.remove("expanded");
+      if (this._indicator) {
+        this._indicator.classList.remove("expanded");
       }
     }
   }
@@ -353,8 +385,14 @@ class PfeNavigationItem extends PFElement {
     this.trigger = null;
     this.tray = null;
 
+    this._trigger = this.shadowRoot.querySelector(".pfe-navigation-item__trigger");;
+    this._tray = this.shadowRoot.querySelector(".pfe-navigation-item__tray");;
+    this._icon = this.shadowRoot.querySelector(".pfe-navigation-item__icon");
+    this._indicator = this.shadowRoot.querySelector(".indicator");
+
     this._init = this._init.bind(this);
-    this._clickHandler = this._clickHandler.bind(this);
+    this._closeMenu = this._closeMenu.bind(this);
+    this._toggleMenu = this._toggleMenu.bind(this);
     this._keydownHandler = this._keydownHandler.bind(this);
   }
 
@@ -376,38 +414,39 @@ class PfeNavigationItem extends PFElement {
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
 
-    // if (attr === "pfe-icon") {
-    //   if (!this.shadowRoot.querySelector(".pfe-navigation-item__icon")) {
-    //     const span = document.createElement("span");
-    //     span.classList.add("pfe-navigation-item__icon");
-    //     this.shadowRoot.querySelector(".trigger").insertAdjacentElement("afterbegin", span);
-    //   }
-    
-    //   this.shadowRoot.querySelector(".pfe-navigation-item__icon").innerHTML = this.iconSVG[newValue];
-    // }
+    if (attr === "pfe-icon") {
+      this._icon.innerHTML = this.iconSVG[newValue];
+    }
   }
 
   disconnectedCallback() {
-    if (this.trigger) {
-      this.trigger.removeEventListener("click", this._clickHandler);
-      this.trigger.removeEventListener("keydown", this._keydownHandler);
+    if (this._trigger) {
+      this._trigger.removeEventListener("click", this._clickHandler);
+      this._trigger.removeEventListener("keydown", this._keydownHandler);
     }
   }
 
   _init() {
-    // Get the trigger and tray from the light DOM
-    // this.trigger = this.querySelector(`[slot="trigger"]`);
-    // this.tray = this.querySelector(`[slot="tray"]`);
-    this.indicator = this.shadowRoot.querySelector(".indicator");
-
     // If there is both a trigger and a tray element, add click events
-    if (this.trigger && this.tray) {
-      this.trigger.addEventListener("click", this._clickHandler);
-      this.trigger.addEventListener("keydown", this._keydownHandler);
+    if (this._trigger && this._tray) {
+      // Toggle the navigation when the trigger is clicked
+      this._trigger.addEventListener("click", this._toggleMenu);
+
+      // @TODO If the user clicks outside the navigation, it should close
+      // this.addEventListener("blur", this._closeMenu);
+
+      // Attaching to the parent element allows the exit key to work inside the tray too
+      this.addEventListener("keydown", this._keydownHandler);
     }
   }
 
-  _clickHandler(event) {
+  _closeMenu(event) {
+    event.preventDefault();
+    this.expanded = false;
+    this._fireExpandToggledEvent();
+  }
+
+  _toggleMenu(event) {
     event.preventDefault();
     this.expanded = !this.expanded;
     this._fireExpandToggledEvent();
@@ -417,20 +456,11 @@ class PfeNavigationItem extends PFElement {
     switch (event.key) {
       case "Spacebar":
       case " ":
-        event.preventDefault();
-        this.expanded = !this.expanded;
-        this._fireExpandToggledEvent();
+        this._toggleMenu(event);
         break;
       case "Esc":
       case "Escape":
-        event.preventDefault();
-
-        if (this.trigger) {
-          this.trigger.focus();
-        }
-
-        this.expanded = false;
-        this._fireExpandToggledEvent();
+        this._closeMenu(event);
         break;
       default:
         return;

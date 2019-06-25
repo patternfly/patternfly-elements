@@ -18,94 +18,119 @@ $LOCAL: navigation-item;
   display: flex;
 }
 
-:host([pfe-icon]) ::slotted([slot="trigger"]) {
-  font-size: 12px; 
-}
-
-:host([pfe-icon="bento"]) { //& #Icon {
-  -webkit-text-fill-color: 	 #{pfe-local(Color)};
-  fill: 	#{pfe-local(Color)};
-}
-
-:host([pfe-icon="user"]), // & #Icon,
-:host([pfe-icon="globe"]),
-:host([pfe-icon="search"]) {
-  -webkit-text-stroke-color: #{pfe-local(Color)};
-  stroke: #{pfe-local(Color)};
-}
-
-:host([pfe-icon="menu"]) {
-  -webkit-text-stroke-color: #{pfe-local(Color)};
-  -webkit-text-fill-color: #{pfe-local(Color)};
-  stroke: #{pfe-local(Color)};
-  fill: #{pfe-local(Color)};
-}
-
 :host([hidden]),
 ::slotted([slot="tray"][hidden]) {
 	display: none;
 }
 
 ::slotted([slot="trigger"]) {
-  --pfe-theme--link--text-decoration: none;
-  --pfe-theme--link--text-decoration--hover: none;
-  --pfe-theme--link--text-decoration--focus: none;
-
-  --pfe-broadcasted--color--ui-link:          #{pfe-local(Color)};
-  --pfe-broadcasted--color--ui-link--hover:   #{pfe-local(Color)};
-  --pfe-broadcasted--color--ui-link--visited: #{pfe-local(Color)};
-  --pfe-broadcasted--color--ui-link--focus:   #{pfe-local(Color)};
-
-  transition: all #{pfe-var(animation-timing)};
-  cursor: pointer;
-  text-decoration: none;
-
-  position: relative;
-  display: inline-block;
-  background-color: #{pfe-local(BackgroundColor)};  //bg
-  height: 100%;
-  padding: 20px 16px !important;
-
-  border-top: 4px solid #{pfe-local(BorderTopColor)};
-  margin: 0;
-  white-space: nowrap;
-
   font-family: #{pfe-var(font-family)};
   text-align: center;
   font-size: 14px;
   font-weight: 100;
-  color: #{pfe-local(Color)};
+  margin: 0;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-::slotted([slot="trigger"]:hover),
-:host([aria-current="location"]) ::slotted([slot="trigger"]) {
-  --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
-}
-
-::slotted([slot="trigger"][aria-expanded="true"]),
-::slotted([slot="trigger"]:active),
-::slotted([slot="trigger"]:focus) {
-  --pfe-navigation-item--Color: #{pfe-color(text)};
-  --pfe-navigation-item--BackgroundColor: #{pfe-color(surface--lightest)};
-  --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
-}
-
-::slotted([slot="trigger"]:focus:not(:focus-visible)) {
-  outline: none;  // removes outline for mouse users, preserves it for keyboard users
+:host([pfe-icon]) ::slotted([slot="trigger"]) {
+  font-size: 12px;
 }
 
 ::slotted([slot="tray"]) {
-  width: 100%;
-  margin: 0 auto;
-  padding: 32px 0;
+  padding: 24px;
+}
 
-  transition: all #{pfe-var(animation-timing)};
-  background-color: #{pfe-color(surface--lightest)};
+.pfe-navigation-item {
+  &__icon {
+    display: flex;
+    :host(:not([pfe-icon])) [aria-expanded="false"] & {
+      visibility: hidden;
+    }
+    :host(:not([pfe-icon])) & {
+      margin-top: 8px;
+      @include pfe-arrow(down, gray, $width: 6px, $height: 6px);
+    }
 
-  display: block;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1;
-  color: #{pfe-color(surface--lightest--text)};
+    :host([pfe-icon]) & {
+      margin-bottom: 8px;
+    }
+    :host([pfe-icon="bento"]) & #Icon {
+      -webkit-text-fill-color: 	 #{pfe-local(Color)};
+      fill: 	#{pfe-local(Color)};
+    }
+    
+    :host([pfe-icon="user"]) & #Icon,
+    :host([pfe-icon="globe"]) & #Icon,
+    :host([pfe-icon="search"]) & #Icon {
+      -webkit-text-stroke-color: #{pfe-local(Color)};
+      stroke: #{pfe-local(Color)};
+    }
+    
+    :host([pfe-icon="menu"]) & #Icon {
+      -webkit-text-stroke-color: #{pfe-local(Color)};
+      -webkit-text-fill-color: #{pfe-local(Color)};
+      stroke: #{pfe-local(Color)};
+      fill: #{pfe-local(Color)};
+    }
+    // [aria-expanded="true"] & {
+    //   display: block !important;
+    // }
+  }
+  &__trigger {
+    --pfe-theme--link--text-decoration: none;
+    --pfe-theme--link--text-decoration--hover: none;
+    --pfe-theme--link--text-decoration--focus: none;
+
+    --pfe-broadcasted--color--ui-link:          #{pfe-local(Color)};
+    --pfe-broadcasted--color--ui-link--hover:   #{pfe-local(Color)};
+    --pfe-broadcasted--color--ui-link--visited: #{pfe-local(Color)};
+    --pfe-broadcasted--color--ui-link--focus:   #{pfe-local(Color)};
+
+    transition: all #{pfe-var(animation-timing)};
+
+    position: relative;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+
+    background-color: #{pfe-local(BackgroundColor)};  //bg
+    padding: 20px 16px !important;
+
+    border-top: 4px solid #{pfe-local(BorderTopColor)};
+    color: #{pfe-local(Color)};
+    &:hover,
+    :host([aria-current="location"]) & {
+      --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
+    }
+    &[aria-expanded="true"],
+    .expanded &,
+    &:active,
+    &:focus {
+      --pfe-navigation-item--Color: #{pfe-color(text)};
+      --pfe-navigation-item--BackgroundColor: #{pfe-color(surface--lightest)};
+      --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
+    }
+    &:focus:not(:focus-visible) {
+      outline: none;  // removes outline for mouse users, preserves it for keyboard users
+    }
+  }
+  &__tray {
+    width: 100%;
+    margin: 0 auto;
+  
+    transition: all #{pfe-var(animation-timing)};
+    background-color: #{pfe-color(surface--lightest)};
+  
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    color: #{pfe-color(surface--lightest--text)};
+  }
 }

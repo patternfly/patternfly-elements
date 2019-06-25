@@ -1,2 +1,8 @@
-<slot name="trigger"></slot>
-<div class="pfe-navigation-item--tray"><slot name="tray"></slot></div>
+<div class="pfe-navigation-item__trigger" aria-expanded="false">
+    ${this.hasIcon ? `<span class="pfe-navigation-item__icon"></span>` : ""}
+    <slot name="trigger"></slot>
+    ${!this.hasIcon ? `<span class="pfe-navigation-item__icon"></span>` : ""}
+</div>
+<div class="pfe-navigation-item__tray">
+    <slot name="tray"></slot>
+</div>

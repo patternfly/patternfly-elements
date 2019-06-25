@@ -58,6 +58,10 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--background--focus:   rgba(0,102,204, .1);
   --pfe-cta--inner-border--focus: transparent;
   --pfe-cta--Color--focus:         #{pfe-color(ui-link--focus)};
+  --pfe-broadcasted--color--ui-link: #{pfe-local(Color)};
+  --pfe-broadcasted--color--ui-link--hover: #{pfe-local(Color--hover)};
+  --pfe-broadcasted--color--ui-link--focus: #{pfe-local(Color--focus)};
+
 
   ::slotted(a) {
     color: var(--pfe-cta--Color);
@@ -235,6 +239,7 @@ $pfe-cta__arrow-size:                        0.313em;
   border-color: #{pfe-local(border--hover)};
 
   ::slotted(a) {
+    --pfe-broadcasted--color--ui-link: #{pfe-local(Color--hover)};
     color: #{pfe-local(Color--hover)};
   }
 }
@@ -283,8 +288,13 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--background--hover:   #{pfe-color(surface--lightest)};
   --pfe-cta--border--hover:       #{pfe-color(surface--lightest)};
   --pfe-cta--Color--hover:        #{pfe-color(surface--lightest--text)};
-
   --pfe-cta--background--focus:   rgba(255, 255, 255, .95);
+}
+
+:host([priority="secondary"][on="dark"]:hover) {
+  ::slotted(a) {
+    color: #{pfe-local(Color--hover)};
+  }
 }
 
 //////////////////////////////

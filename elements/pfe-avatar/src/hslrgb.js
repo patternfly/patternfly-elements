@@ -39,36 +39,12 @@ export function hsl2rgb(_H, _S, _L) {
 
     a = 2 * L - b;
 
-    R = 255 * h2rgb(a, b, H + 1 / 3);
-    G = 255 * h2rgb(a, b, H);
-    B = 255 * h2rgb(a, b, H - 1 / 3);
+    R = Math.floor(255 * h2rgb(a, b, H + 1 / 3));
+    G = Math.floor(255 * h2rgb(a, b, H));
+    B = Math.floor(255 * h2rgb(a, b, H - 1 / 3));
   }
 
   return [R, G, B];
-}
-
-/**
- * Converts a decimal number into a hexadecimal number, left-padded to a given length.
- */
-function toHex(d, len) {
-  return ("0" + Math.round(d).toString(16)).slice(-len);
-}
-
-/**
- * Converts an HSL color to a hexadecimal color.
- */
-export function hsl2hex(_H, _S, _L) {
-  return rgb2hex(hsl2rgb(_H, _S, _L));
-}
-
-/**
- * Converts an RGB color to a hexadecimal color.
- */
-export function rgb2hex(_R, _G, _B) {
-  console.log(`converting ${_R}, ${_G}, ${_B} to hex`);
-  const ret = "#" + [_R, _G, _B].map(c => toHex(c, 2)).join("");
-  console.log(`done ${ret}`);
-  return ret;
 }
 
 /**

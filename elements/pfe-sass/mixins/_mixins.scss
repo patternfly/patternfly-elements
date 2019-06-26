@@ -233,7 +233,7 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     background-color: #{pfe-local(main)};
     border-left:      #{pfe-local(BorderLeft)};
     border-right:     #{pfe-local(BorderRight)};
-    border-bottom:    1px solid transparent; //#{pfe-local(BorderBottom)};
+    border-bottom:    #{pfe-local(BorderBottom)};
     border-top: 0;
 
     &:hover {
@@ -261,7 +261,7 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
 }
 
 @mixin pfe-trigger-button-last($theme: light) {
-  //border-bottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
+  border-bottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
   // @TODO Support differences based on theme
 }
 
@@ -366,31 +366,20 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
 }
 
 @mixin pfe-accordion-panel {
-  //display: none;
-  display: block;
-  height: 0px;
+  display: none;
   overflow: hidden;
   will-change: height;
   border-color: transparent;
-  border-bottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
-  [tabindex="-1"] {
-    display: none;
-  }
 }
 
 @mixin pfe-accordion-panel-expanded {
-  height: auto;
   display: block;
   position: relative;
-  [tabindex="-1"] {
-    display: block;
-  }
 }
 
 @mixin pfe-accordion-panel-expanded-style($theme: light) {
   border-right: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
   border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} transparent;
-  //border-bottom:    1px solid green; //#{pfe-local(BorderBottom)};
   @if $theme == dark {
     box-shadow: none;
     background-color: #{pfe-color(surface--darker)};
@@ -402,7 +391,7 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     border-left-color: #{pfe-color(surface--lightest--link)};
     background-color: #{pfe-color(surface--lightest)};
     border-right-color: #{pfe-color(surface--border)};
-    //border-bottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
+    border-bottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
   }
 }
 

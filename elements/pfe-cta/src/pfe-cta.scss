@@ -14,8 +14,6 @@ $pfe-cta__arrow-size: 0.313em;
   --pfe-cta--BackgroundColor:         transparent;
   --pfe-cta--BackgroundColor--hover:  transparent;
   --pfe-cta--BackgroundColor--focus:  rgba(0,102,204, .1);
-  // --pfe-cta--BackgroundColor--focus: transparent;
-  
 
   --pfe-cta--BorderColor:        transparent;
   --pfe-cta--BorderColor--hover: transparent;
@@ -145,7 +143,6 @@ $pfe-cta__arrow-size: 0.313em;
 
   --pfe-cta--BackgroundColor:          #{pfe-color(surface--accent)};
   --pfe-cta--BackgroundColor--hover:   #d40000;
-  --pfe-cta--BackgroundColor--focus:   transparent;
   --pfe-cta--BackgroundColor--focus: #{pfe-color(surface--accent)};
 
   --pfe-cta--BorderColor:        #{pfe-color(surface--accent)};
@@ -194,8 +191,10 @@ $pfe-cta__arrow-size: 0.313em;
 
   --pfe-cta--BorderColor:              #{pfe-color(ui-link)};
   --pfe-cta--BorderColor--hover:       #{pfe-color(ui-link)};
+  --pfe-cta--BorderColor--focus:       #{pfe-color(ui-link)};
 
   --pfe-cta__inner--BorderColor:        transparent;
+  --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-link)};
 
   --pfe-broadcasted--color--ui-link:               #{pfe-color(ui-link)};
   --pfe-broadcasted--color--ui-link--hover:        #{pfe-color(ui-base--text)};
@@ -209,6 +208,7 @@ $pfe-cta__arrow-size: 0.313em;
 
   --pfe-cta--BorderColor:              #{pfe-color(surface--lightest)};
   --pfe-cta--BorderColor--hover:       #{pfe-color(surface--border--lightest)};
+  --pfe-cta--BorderColor--focus:       #{pfe-color(surface--border--lightest)};
 
   --pfe-cta__inner--BorderColor:        transparent;
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--darkest)};
@@ -242,12 +242,9 @@ $pfe-cta__arrow-size: 0.313em;
 
 // Set accent color values  / do we even want to add support for default CTAs + accent?
 :host([color="accent"]) {
-  // --pfe-cta--BackgroundColor--focus:   rebeccapurple;
-
   --pfe-broadcasted--color--ui-link:                #{pfe-color(surface--accent)};
   --pfe-broadcasted--color--ui-link--hover:         #D40000; 
   --pfe-broadcasted--color--ui-link--focus:         #{pfe-color(surface--accent)}; 
-
 }
 
 :host([priority="primary"][color="accent"]) {
@@ -262,6 +259,7 @@ $pfe-cta__arrow-size: 0.313em;
 
   --pfe-cta--BorderColor:              #{pfe-color(surface--accent)};
   --pfe-cta--BorderColor--hover:       #{pfe-color(surface--accent)};
+  --pfe-cta--BorderColor--focus:       #{pfe-color(surface--accent)};
 
   --pfe-cta__inner--BorderColor:        transparent;
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--accent)};
@@ -288,16 +286,21 @@ $pfe-cta__arrow-size: 0.313em;
   --pfe-broadcasted--color--ui-link--focus:        #{pfe-color(surface--complement)};
 }
 
+:host(:not([priority])) {
+  --pfe-cta--BackgroundColor--focus:  rgba(0,102,204, .1);
+}
+
 :host([priority="primary"][color="complement"]) {
   --pfe-cta--BackgroundColor:          #{pfe-color(surface--complement)};
   --pfe-cta--BackgroundColor--hover:   #{pfe-color(surface--darker)};
-  --pfe-cta--BackgroundColor--focus:   transparent;
+  --pfe-cta--BackgroundColor--focus:   #{pfe-color(surface--darker)};
 
   --pfe-cta--BorderColor:              #{pfe-color(surface--complement)};
   --pfe-cta--BorderColor--hover:       #{pfe-color(surface--darker)};
 
   --pfe-cta__inner--BorderColor:        transparent;
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--complement--text)};
+  --pfe-cta--BorderColor--focus:        #{pfe-color(surface--darker)};
 
   --pfe-broadcasted--color--ui-link:               #{pfe-color(surface--complement--text)};
   --pfe-broadcasted--color--ui-link--hover:        #{pfe-color(surface--complement--text)};
@@ -307,12 +310,14 @@ $pfe-cta__arrow-size: 0.313em;
 :host([priority="secondary"][color="complement"]) {
   --pfe-cta--BackgroundColor:          transparent;
   --pfe-cta--BackgroundColor--hover:   #{pfe-color(surface--complement)};
+  --pfe-cta--BackgroundColor--focus:   rgba(21, 21, 21, .1);
 
   --pfe-cta--BorderColor:              #{pfe-color(surface--complement)};
   --pfe-cta--BorderColor--hover:       #{pfe-color(surface--complement)};
 
   --pfe-cta__inner--BorderColor:        transparent;
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--complement)};
+  --pfe-cta--BorderColor--focus:        #{pfe-color(surface--complement)};
 
   --pfe-broadcasted--color--ui-link:               #{pfe-color(surface--complement)};
   --pfe-broadcasted--color--ui-link--hover:        #{pfe-color(surface--complement--text)};

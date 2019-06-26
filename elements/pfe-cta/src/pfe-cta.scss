@@ -40,9 +40,8 @@ $pfe-cta__arrow-size:                        0.313em;
 
 :host {
   // Property variables
-  --pfe-cta--BorderRadius: 0;
-
-  --pfe-cta__arrow--Display:  inline-block;
+  --pfe-cta--BorderRadius:        0;
+  --pfe-cta__arrow--Display:      inline-block;
 
   // Color settings
   --pfe-cta--background:          transparent;
@@ -53,20 +52,18 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--background--hover:   transparent;
   --pfe-cta--border--hover:       transparent;
   --pfe-cta--Color--hover:        #{pfe-color(ui-link--hover)};
-  --pfe-cta--Color--active:       white;
-
   --pfe-cta--background--focus:   rgba(0,102,204, .1);
   --pfe-cta--inner-border--focus: transparent;
-  --pfe-cta--Color--focus:         #{pfe-color(ui-link--focus)};
-  --pfe-broadcasted--color--ui-link: #{pfe-local(Color)};
-  --pfe-broadcasted--color--ui-link--hover: #{pfe-local(Color--hover)};
-  --pfe-broadcasted--color--ui-link--focus: #{pfe-local(Color--focus)};
+  --pfe-cta--Color--focus:        #{pfe-color(ui-link--focus)};
 
+  --pfe-broadcasted--color--ui-link:          #{pfe-local(Color)};
+  --pfe-broadcasted--color--ui-link--hover:   #{pfe-local(Color--hover)};
+  --pfe-broadcasted--color--ui-link--focus:   #{pfe-local(Color--focus)};
 
   ::slotted(a) {
-    display: block;
-    color: var(--pfe-cta--Color);
-    --pfe-cta--Padding:      0;
+    display:                  block;
+    color:                    #{pfe-local(Color)};
+    --pfe-cta--Padding:       0;
   }
 
   ::slotted(a:hover) {
@@ -86,22 +83,22 @@ $pfe-cta__arrow-size:                        0.313em;
 
 // Style the slotted link element
 :host {
-  display: block;
-  position: relative;
-  transition: all #{pfe-var(animation-timing)};
+  display:              block;
+  position:             relative;
+  transition:           all #{pfe-var(animation-timing)};
 
-  line-height: inherit;
-  vertical-align:  middle;
-  color:            var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
-  color:            #{pfe-local(Color)};
-  background-color: #{pfe-local(background)};
+  line-height:          inherit;
+  vertical-align:       middle;
+  color:                var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
+  color:                #{pfe-local(Color)};
+  background-color:     #{pfe-local(background)};
 
-  border-radius: #{pfe-local(BorderRadius)};
-  border:        #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(border)};
+  border-radius:        #{pfe-local(BorderRadius)};
+  border:               #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(border)};
 
   ::slotted(a){
-    padding:       #{pfe-local(Padding)};
-    text-decoration: none;
+    padding:            #{pfe-local(Padding)};
+    text-decoration:    none;
   }
 
   ::slotted(a:focus) {
@@ -110,20 +107,19 @@ $pfe-cta__arrow-size:                        0.313em;
 }
 
 :host(:hover) {
-  background-color: #{pfe-local(background--hover)};
-  border-color:     #{pfe-local(border--hover)};
-  color:            var(--pfe-broadcasted--color--ui-link--hover, #{pfe-color(ui-link--hover)});;
-  color:            #{pfe-local(Color--hover)};
-  cursor: pointer;
+  background-color:    #{pfe-local(background--hover)};
+  border-color:        #{pfe-local(border--hover)};
+  color:               var(--pfe-broadcasted--color--ui-link--hover, #{pfe-color(ui-link--hover)});;
+  color:               #{pfe-local(Color--hover)};
 }
 
 :host(:focus) {
-  color: var(--pfe-broadcasted--color--ui-link--focus, #{pfe-color(ui-link--focus)});;
-  color: #{pfe-local(Color--focus)};
+  color:              var(--pfe-broadcasted--color--ui-link--focus, #{pfe-color(ui-link--focus)});;
+  color:              #{pfe-local(Color--focus)};
 }
 
 :host(::after) {
-  margin-left: calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
+  margin-left:        calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
 }
 
 /// ===========================================================================
@@ -149,11 +145,10 @@ $pfe-cta__arrow-size:                        0.313em;
 }
 
 :host(:not([priority]):hover) {
-  --pfe-cta--Color--hover: ;
 
   .pfe-cta--arrow {
-    fill: #{pfe-local(Color--hover)};
-    padding: 0 0 0 .5rem;
+    fill:         #{pfe-local(Color--hover)};
+    padding:      0 0 0 .5rem;
   }
 }
 
@@ -161,7 +156,7 @@ $pfe-cta__arrow-size:                        0.313em;
   background-color: rgba(0, 102, 204, .1);
 
   .pfe-cta--arrow {
-    fill: #{pfe-local(Color--focus)};
+    fill:           #{pfe-local(Color--focus)};
   }
 }
 
@@ -175,32 +170,32 @@ $pfe-cta__arrow-size:                        0.313em;
   // Arrow styles
   --pfe-cta__arrow--Display:  none;
 
-  --pfe-cta--background:          #{pfe-color(surface--accent)};
-  --pfe-cta--border:              #{pfe-color(surface--accent)};
-  --pfe-cta--inner-border:        transparent;
-  --pfe-cta--Color:               #{pfe-color(surface--accent--text)};
+  --pfe-cta--background:                    #{pfe-color(surface--accent)};
+  --pfe-cta--border:                        #{pfe-color(surface--accent)};
+  --pfe-cta--inner-border:                  transparent;
+  --pfe-cta--Color:                         #{pfe-color(surface--accent--text)};
 
-  --pfe-cta--background--hover:   #d40000;
-  --pfe-cta--border--hover:       #{pfe-color(surface--accent)};
-  --pfe-cta--Color--hover:        #{pfe-color(surface--accent--text)};
+  --pfe-cta--background--hover:             #{pfe-color(ui-accent--hover)};
+  --pfe-cta--border--hover:                 #{pfe-color(surface--accent)};
+  --pfe-cta--Color--hover:                  #{pfe-color(surface--accent--text)};
 
-  --pfe-cta--background--focus:   transparent;
-  --pfe-cta--inner-border--focus: #{pfe-color(surface--accent--text)};
-  --pfe-cta--Color--focus:        #{pfe-color(surface--accent--text)};
+  --pfe-cta--background--focus:             transparent;
+  --pfe-cta--inner-border--focus:           #{pfe-color(surface--accent--text)};
+  --pfe-cta--Color--focus:                  #{pfe-color(surface--accent--text)};
 
-  --pfe-broadcasted--color--ui-link: #{pfe-local(Color)};
+  --pfe-broadcasted--color--ui-link:        #{pfe-local(Color)};
   --pfe-broadcasted--color--ui-link--hover: #{pfe-local(Color--hover)};
   --pfe-broadcasted--color--ui-link--focus: #{pfe-local(Color--focus)};
 
   ::slotted(a){
-    --pfe-cta--Padding:     #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
+    --pfe-cta--Padding:                     #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
   }
 }
 
 ////////////////////////////////////////////////////////////////////////
 :host([priority="primary"]:focus-within) {
-  background-color: #{pfe-local(background)};
-  border-color: #{pfe-local(border)};
+  background-color:                         #{pfe-local(background)};
+  border-color:                             #{pfe-local(border)};
 
   ::slotted(a) {
     @include pfe-cta-focus(#{pfe-local(inner-border--focus)});
@@ -218,9 +213,9 @@ $pfe-cta__arrow-size:                        0.313em;
 /// ===========================================================================
 :host([priority="secondary"]) {
   // Button padding and border radius settings
-  --pfe-cta--BorderRadius: #{pfe-var(ui--border-radius)};
+  --pfe-cta--BorderRadius:        #{pfe-var(ui--border-radius)};
   // Arrow styles
-  --pfe-cta__arrow--Display:  none;
+  --pfe-cta__arrow--Display:      none;
 
   --pfe-cta--background:          transparent;
   --pfe-cta--border:              #{pfe-color(surface--darkest)};
@@ -234,7 +229,6 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--background--focus:   rgba(21, 21, 21, .1);
   --pfe-cta--inner-border--focus: #{pfe-color(surface--darkest)};
   --pfe-cta--Color--focus:        #{pfe-color(surface--darkest)};
-  --pfe-cta--Color--active:       #{pfe-color(surface--darkest)};
 
   --pfe-broadcasted--color--ui-link:          #{pfe-local(Color)};
   --pfe-broadcasted--color--ui-link--hover:   #{pfe-local(Color--hover)};
@@ -243,17 +237,12 @@ $pfe-cta__arrow-size:                        0.313em;
   ::slotted(a){
     --pfe-cta--Padding:     #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
   }
-
-  ::slotted(a:active) {
-    color: #{pfe-local(Color--active)};
-  }
 }
 
 :host([priority="secondary"]:focus-within) {
-  @include pfe-cta-focus(#{pfe-local(inner-border--focus)});
-  background-color: #{pfe-local(background--focus)};
-  border-color: #{pfe-local(border)};
-  --pfe-cta--Color: #{pfe-color(surface--darkest)};
+  background-color:             #{pfe-local(background--focus)};
+  border-color:                 #{pfe-local(border)};
+  --pfe-cta--Color:             #{pfe-color(surface--darkest)};
 
   ::slotted(a) {
     @include pfe-cta-focus(#{pfe-local(inner-border--focus)});
@@ -262,12 +251,12 @@ $pfe-cta__arrow-size:                        0.313em;
 
 ////////////////////////////////////////////////////////////////////////
 :host([priority="secondary"]:hover) {
-  background-color: #{pfe-local(background--hover)};
-  border-color: #{pfe-local(border--hover)};
-  --pfe-cta--Color--active: white;
+  background-color:                           #{pfe-local(background--hover)};
+  border-color:                               #{pfe-local(border--hover)};
+  --pfe-broadcasted--color--ui-link--focus:   #{pfe-local(Color--hover)};
 
   ::slotted(a) {
-    --pfe-broadcasted--color--ui-link: #{pfe-local(Color--hover)};
+    color:                         #{pfe-local(Color--hover)};
   }
 }
 
@@ -330,8 +319,8 @@ $pfe-cta__arrow-size:                        0.313em;
 // Set accent color values  / do we even want to add support for default CTAs + accent?
 :host(:not([priority])[color="accent"]) {
   --pfe-cta--Color:                #{pfe-color(surface--accent)};
-  --pfe-cta--Color--hover:         #D40000; 
-  --pfe-cta--background--focus:   rebeccapurple;
+  --pfe-cta--Color--hover:         #{pfe-color(ui-accent--hover)};
+  --pfe-cta--background--focus:    rgba(255, 255, 255, .95);
   --pfe-cta--Color--focus:         #{pfe-color(surface--accent)}; 
   --pfe-broadcasted--color--ui-link: #{pfe-local(Color)};
   --pfe-broadcasted--color--ui-link--hover: #{pfe-local(Color--hover)};

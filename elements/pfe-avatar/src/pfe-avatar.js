@@ -1,6 +1,6 @@
 import PFElement from "../pfelement/pfelement.js";
 import { hash } from "./djb-hash.js";
-import { hsl2rgb, rgb2hsl } from "./hslrgb.js";
+import { hsl2rgb, rgb2hsl, rgb2hex } from "./hslrgb.js";
 
 class PfeAvatar extends PFElement {
   static get tag() {
@@ -24,6 +24,10 @@ class PfeAvatar extends PFElement {
       triangles: "triangles",
       squares: "squares"
     };
+  }
+
+  static get defaultSize() {
+    return 128;
   }
 
   static get defaultColors() {
@@ -90,7 +94,9 @@ class PfeAvatar extends PFElement {
 
   _initCanvas() {
     this._canvas = this.shadowRoot.querySelector("canvas");
-    const size = this.var("--pfe-avatar--width").replace(/px$/, "");
+    const size =
+      this.var("--pfe-avatar--width").replace(/px$/, "") ||
+      PfeAvatar.defaultSize;
     this._canvas.width = size;
     this._canvas.height = size;
 
@@ -123,7 +129,9 @@ class PfeAvatar extends PFElement {
           );
           if (pattern) {
             pattern.shift();
+            console.log("pattern", pattern);
             const color = pattern.map(c => parseInt(c, 16));
+            console.log("color", color);
             this._registerColor(color);
           } else {
             this.log(`[pfe-avatar] invalid color ${colorCode}`);
@@ -136,8 +144,8 @@ class PfeAvatar extends PFElement {
 
   static _registerColor(color) {
     PfeAvatar.colors.push({
-      color1: `rgb(${color.join(",")})`,
-      color2: `rgb(${this._adjustColor(color).join(",")})`
+      color1: rgb2hex(...color),
+      color2: rgb2hex(...this._adjustColor(color))
     });
   }
 
@@ -145,6 +153,7 @@ class PfeAvatar extends PFElement {
     const dark = 0.1;
     const l_adj = 0.1; // luminance adjustment
     const hsl = rgb2hsl(...color);
+    console.log(`${color} -> ${hsl}`);
 
     // if luminance is too dark already, then lighten the alternate color
     // instead of darkening it.

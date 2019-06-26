@@ -20,11 +20,11 @@ $LOCAL: cta;
 $pfe-cta__arrow-size:                        0.313em;
 
 :host {
-  display: inline-block;
-  font-family: #{pfe-var(font-family)};
-  font-size:   #{pfe-var(font-size)};
-  font-weight: #{pfe-var(font-weight--bold)};
-  line-height: #{pfe-var(line-height)};
+  display:              inline-block;
+  font-family:          #{pfe-var(font-family)};
+  font-size:            #{pfe-var(font-size)};
+  font-weight:          #{pfe-var(font-weight--bold)};
+  line-height:          #{pfe-var(line-height)};
   background-color:     var(--pfe-cta--background);
   border-color:         var(--pfe-cta--border);
   color:                var(--pfe-cta--text);
@@ -53,6 +53,7 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--background--hover:   transparent;
   --pfe-cta--border--hover:       transparent;
   --pfe-cta--Color--hover:        #{pfe-color(ui-link--hover)};
+  --pfe-cta--Color--active:       white;
 
   --pfe-cta--background--focus:   rgba(0,102,204, .1);
   --pfe-cta--inner-border--focus: transparent;
@@ -198,9 +199,12 @@ $pfe-cta__arrow-size:                        0.313em;
 
 ////////////////////////////////////////////////////////////////////////
 :host([priority="primary"]:focus-within) {
-  @include pfe-cta-focus(#{pfe-local(inner-border--focus)});
   background-color: #{pfe-local(background)};
   border-color: #{pfe-local(border)};
+
+  ::slotted(a) {
+    @include pfe-cta-focus(#{pfe-local(inner-border--focus)});
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -230,6 +234,7 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--background--focus:   rgba(21, 21, 21, .1);
   --pfe-cta--inner-border--focus: #{pfe-color(surface--darkest)};
   --pfe-cta--Color--focus:        #{pfe-color(surface--darkest)};
+  --pfe-cta--Color--active:       #{pfe-color(surface--darkest)};
 
   --pfe-broadcasted--color--ui-link:          #{pfe-local(Color)};
   --pfe-broadcasted--color--ui-link--hover:   #{pfe-local(Color--hover)};
@@ -238,6 +243,10 @@ $pfe-cta__arrow-size:                        0.313em;
   ::slotted(a){
     --pfe-cta--Padding:     #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
   }
+
+  ::slotted(a:active) {
+    color: #{pfe-local(Color--active)};
+  }
 }
 
 :host([priority="secondary"]:focus-within) {
@@ -245,16 +254,20 @@ $pfe-cta__arrow-size:                        0.313em;
   background-color: #{pfe-local(background--focus)};
   border-color: #{pfe-local(border)};
   --pfe-cta--Color: #{pfe-color(surface--darkest)};
+
+  ::slotted(a) {
+    @include pfe-cta-focus(#{pfe-local(inner-border--focus)});
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////
 :host([priority="secondary"]:hover) {
   background-color: #{pfe-local(background--hover)};
   border-color: #{pfe-local(border--hover)};
+  --pfe-cta--Color--active: white;
 
   ::slotted(a) {
     --pfe-broadcasted--color--ui-link: #{pfe-local(Color--hover)};
-    --pfe-cta--Color: #{pfe-local(Color--hover)};
   }
 }
 
@@ -388,5 +401,3 @@ $pfe-cta__arrow-size:                        0.313em;
   --pfe-cta--inner-border--focus: #{pfe-color(surface--complement)};
   --pfe-cta--Color--focus:        #{pfe-color(surface--complement)};
 }
-
-

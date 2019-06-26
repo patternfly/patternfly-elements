@@ -1,159 +1,129 @@
 @import "../../pfe-sass/pfe-sass";
 
-@mixin pfe-cta-focus($inner-border-color) {
-  &::before {
-    content: "";
-    border: 1px solid $inner-border-color;
-    outline: none;
-    left: 2px;
-    top: 2px;
-    right: 2px;
-    bottom: 2px;
-    display: block;
-    box-sizing: border-box;
-    position: absolute;
-    border-radius: 2px;
-  }
-}
-
 $LOCAL: cta;
-$pfe-cta__arrow-size:                        0.313em;
-
-:host {
-  display:              inline-block;
-  font-family:          #{pfe-var(font-family)};
-  font-size:            #{pfe-var(font-size)};
-  font-weight:          #{pfe-var(font-weight--bold)};
-  line-height:          #{pfe-var(line-height)};
-  background-color:     var(--pfe-cta--background);
-  border-color:         var(--pfe-cta--border);
-  color:                var(--pfe-cta--text);
-
-  .pfe-cta--arrow {
-    fill: #{pfe-local(Color)};
-  }
-}
-
-////////////////////////////////////////////////////////////////////////
-
-// Set default color values
+$pfe-cta__arrow-size: 0.313em;
 
 :host {
   // Property variables
-  --pfe-cta--BorderRadius:        0;
-  --pfe-cta__arrow--Display:      inline-block;
+  --pfe-cta--BorderRadius: 0;
+
+  --pfe-cta__arrow--Display:  inline-block;
+  --pfe-cta__arrow--Padding:  0 0 0 .375rem;
 
   // Color settings
-  --pfe-cta--background:          transparent;
-  --pfe-cta--border:              transparent;
-  --pfe-cta--inner-border:        transparent;
-  --pfe-cta--Color:               #{pfe-color(ui-link)};
+  --pfe-cta--BackgroundColor:         transparent;
+  --pfe-cta--BackgroundColor--hover:  transparent;
+  --pfe-cta--BackgroundColor--focus:  rgba(0,102,204, .1);
 
-  --pfe-cta--background--hover:   transparent;
-  --pfe-cta--border--hover:       transparent;
-  --pfe-cta--Color--hover:        #{pfe-color(ui-link--hover)};
-  --pfe-cta--background--focus:   rgba(0,102,204, .1);
-  --pfe-cta--inner-border--focus: transparent;
-  --pfe-cta--Color--focus:        #{pfe-color(ui-link--focus)};
+  --pfe-cta--BorderColor:        transparent;
+  --pfe-cta--BorderColor--hover: transparent;
+  --pfe-cta--BorderColor--focus: transparent;
 
-  --pfe-broadcasted--color--ui-link:          #{pfe-local(Color)};
-  --pfe-broadcasted--color--ui-link--hover:   #{pfe-local(Color--hover)};
-  --pfe-broadcasted--color--ui-link--focus:   #{pfe-local(Color--focus)};
+  --pfe-cta--Color:        var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
+  --pfe-cta--Color--hover: var(--pfe-broadcasted--color--ui-link--hover, #{pfe-color(ui-link--hover)});
+  --pfe-cta--Color--focus: var(--pfe-broadcasted--color--ui-link--focus, #{pfe-color(ui-link--focus)});
 
-  ::slotted(a) {
-    display:                  block;
-    color:                    #{pfe-local(Color)};
-    --pfe-cta--Padding:       0;
+  --pfe-cta__inner--BorderColor:        transparent;
+  --pfe-cta__inner--BorderColor--hover: transparent;
+  --pfe-cta__inner--BorderColor--focus: transparent;
+
+  --pfe-cta--Padding: .6rem 0;
+
+  display: inline-block;
+  font-family: #{pfe-var(font-family)};
+  font-size:   #{pfe-var(font-size)};
+  font-weight: #{pfe-var(font-weight--bold)};
+  line-height: #{pfe-var(line-height)};
+
+  background-color: #{pfe-local(BackgroundColor)};
+  border-color:     #{pfe-local(BorderColor)};
+
+  position: relative;
+  transition: all #{pfe-var(animation-timing)};
+
+  line-height: inherit;
+  vertical-align:  middle;
+
+  background-color: #{pfe-local(BackgroundColor)};
+  border-radius: #{pfe-local(BorderRadius)};
+  border:        #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
+
+  .pfe-cta--wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
   }
 
-  ::slotted(a:hover) {
-    color: var(--pfe-cta--Color--hover);
-  }
+  .pfe-cta--arrow {
+    display: var(--pfe-cta__arrow--Display);
+    padding: var(--pfe-cta__arrow--Padding);
 
-  ::slotted(a:focus) {
-    color: var(--pfe-cta--Color--focus); 
-  }
-}
+    fill: #{pfe-local(Color)};
 
-:host([on="dark"]) {
-  --pfe-cta--Color:                #{pfe-color(ui-link--on-dark)};
-  --pfe-cta--Color--hover:         #{pfe-color(ui-link--on-dark--hover)};
-  --pfe-cta--Color--focus:         #{pfe-color(ui-link--on-dark--focus)}; 
-}
-
-// Style the slotted link element
-:host {
-  display:              block;
-  position:             relative;
-  transition:           all #{pfe-var(animation-timing)};
-
-  line-height:          inherit;
-  vertical-align:       middle;
-  color:                var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
-  color:                #{pfe-local(Color)};
-  background-color:     #{pfe-local(background)};
-
-  border-radius:        #{pfe-local(BorderRadius)};
-  border:               #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(border)};
-
-  ::slotted(a){
-    padding:            #{pfe-local(Padding)};
-    text-decoration:    none;
-  }
-
-  ::slotted(a:focus) {
-    outline: none;
+    position: relative;
+    top: .1rem; 
+    width: 13px;
+    height: 13px;
+    transition: .3s ease all;
   }
 }
 
 :host(:hover) {
-  background-color:    #{pfe-local(background--hover)};
-  border-color:        #{pfe-local(border--hover)};
-  color:               var(--pfe-broadcasted--color--ui-link--hover, #{pfe-color(ui-link--hover)});;
-  color:               #{pfe-local(Color--hover)};
+  --pfe-cta__arrow--Padding: 0 0 0 .5rem;
+
+  background-color: #{pfe-local(BackgroundColor--hover)};
+  border-color:     #{pfe-local(BorderColor--hover)};
+  cursor: pointer;
+
+  .pfe-cta--arrow {
+    fill: #{pfe-local(Color--hover)};
+  }
 }
 
-:host(:focus) {
-  color:              var(--pfe-broadcasted--color--ui-link--focus, #{pfe-color(ui-link--focus)});;
-  color:              #{pfe-local(Color--focus)};
+::slotted(:focus) {
+  &::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid var(--pfe-cta__inner--BorderColor--focus);
+    outline: none;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    right: 2px;
+    border-radius: 2px;
+  }
+
+  .pfe-cta--arrow {
+    fill: #{pfe-local(Color--focus)};
+  }
 }
 
 :host(::after) {
   margin-left:        calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
 }
 
-/// ===========================================================================
-/// DEFAULT CTAs
-/// ===========================================================================
+::slotted(a) {
+  display: block;
+  color: #{pfe-local(Color)};
 
-:host(:not([priority])) {
-  display: inline-block;
-  --pfe-cta--Padding: .6rem 0;
-
-  .pfe-cta--arrow {
-    position: relative;
-    top: .1rem; 
-    width: 13px;
-    height: 13px;
-    padding: 0 0 0 .375rem;
-    transition: .3s ease all;
-  }
-
-  ::slotted(a) {
-    display: inline-block;  
-  }
+  padding: #{pfe-local(Padding)};
+  text-decoration: none;
 }
 
-:host(:not([priority]):hover) {
-
-  .pfe-cta--arrow {
-    fill:         #{pfe-local(Color--hover)};
-    padding:      0 0 0 .5rem;
-  }
+::slotted(a:hover) {
+  color: #{pfe-local(Color--hover)};
 }
 
-:host(:not([priority]):focus-within) {
-  background-color: rgba(0, 102, 204, .1);
+::slotted(a:focus) {
+  color: #{pfe-local(Color--focus)};
+  outline: none;
+}
+
+:host(:focus-within) {
+  background-color: #{pfe-local(BackgroundColor--focus)};
+  border-color:     #{pfe-local(BorderColor--focus)};
 
   .pfe-cta--arrow {
     fill:           #{pfe-local(Color--focus)};
@@ -165,47 +135,25 @@ $pfe-cta__arrow-size:                        0.313em;
 /// ===========================================================================
 :host([priority="primary"]) {
   // Button padding and border radius settings
-  // --pfe-cta--Padding:      #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
+  --pfe-cta--Padding:      #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
   --pfe-cta--BorderRadius: #{pfe-var(ui--border-radius)};
+
   // Arrow styles
   --pfe-cta__arrow--Display:  none;
+  --pfe-cta--BackgroundColor:          #{pfe-color(surface--accent)};
+  --pfe-cta--BackgroundColor--hover:   #d40000;
+  --pfe-cta--BackgroundColor--focus: #{pfe-color(surface--accent)};
 
-  --pfe-cta--background:                    #{pfe-color(surface--accent)};
-  --pfe-cta--border:                        #{pfe-color(surface--accent)};
-  --pfe-cta--inner-border:                  transparent;
-  --pfe-cta--Color:                         #{pfe-color(surface--accent--text)};
+  --pfe-cta--BorderColor:        #{pfe-color(surface--accent)};
+  --pfe-cta--BorderColor--hover: #{pfe-color(surface--accent)};
+  --pfe-cta--BorderColor--focus: #{pfe-color(surface--accent)};
 
-  --pfe-cta--background--hover:             #{pfe-color(ui-accent--hover)};
-  --pfe-cta--border--hover:                 #{pfe-color(surface--accent)};
-  --pfe-cta--Color--hover:                  #{pfe-color(surface--accent--text)};
+  --pfe-cta__inner--BorderColor:       transparent;
+  --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--accent--text)};
 
-  --pfe-cta--background--focus:             transparent;
-  --pfe-cta--inner-border--focus:           #{pfe-color(surface--accent--text)};
-  --pfe-cta--Color--focus:                  #{pfe-color(surface--accent--text)};
-
-  --pfe-broadcasted--color--ui-link:        #{pfe-local(Color)};
-  --pfe-broadcasted--color--ui-link--hover: #{pfe-local(Color--hover)};
-  --pfe-broadcasted--color--ui-link--focus: #{pfe-local(Color--focus)};
-
-  ::slotted(a){
-    --pfe-cta--Padding:                     #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
-  }
-}
-
-////////////////////////////////////////////////////////////////////////
-:host([priority="primary"]:focus-within) {
-  background-color:                         #{pfe-local(background)};
-  border-color:                             #{pfe-local(border)};
-
-  ::slotted(a) {
-    @include pfe-cta-focus(#{pfe-local(inner-border--focus)});
-  }
-}
-
-////////////////////////////////////////////////////////////////////////
-:host([priority="primary"]:hover) {
-  background-color: #{pfe-local(background--hover)};
-  border-color: #{pfe-local(border--hover)};
+  --pfe-broadcasted--color--ui-link:        #{pfe-color(surface--accent--text)};
+  --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--accent--text)};
+  --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--accent--text)};
 }
 
 /// ===========================================================================
@@ -217,77 +165,56 @@ $pfe-cta__arrow-size:                        0.313em;
   // Arrow styles
   --pfe-cta__arrow--Display:      none;
 
-  --pfe-cta--background:          transparent;
-  --pfe-cta--border:              #{pfe-color(surface--darkest)};
-  --pfe-cta--inner-border:        transparent;
-  --pfe-cta--Color:               #{pfe-color(surface--darkest)};
+  --pfe-cta--BackgroundColor:          transparent;
+  --pfe-cta--BackgroundColor--hover:   #{pfe-color(surface--darkest)};
+  --pfe-cta--BackgroundColor--focus:   rgba(21, 21, 21, .1);
 
-  --pfe-cta--background--hover:   #{pfe-color(surface--darkest)};
-  --pfe-cta--border--hover:       #{pfe-color(surface--darkest)};
-  --pfe-cta--Color--hover:        #{pfe-color(surface--darkest--text)};
+  --pfe-cta--BorderColor:        #{pfe-color(surface--darkest)};
+  --pfe-cta--BorderColor--hover: #{pfe-color(surface--darkest)};
+  --pfe-cta--BorderColor--focus: #{pfe-color(surface--darkest)};
 
-  --pfe-cta--background--focus:   rgba(21, 21, 21, .1);
-  --pfe-cta--inner-border--focus: #{pfe-color(surface--darkest)};
-  --pfe-cta--Color--focus:        #{pfe-color(surface--darkest)};
+  --pfe-cta__inner--BorderColor:        transparent;
+  --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--darkest)};
 
-  --pfe-broadcasted--color--ui-link:          #{pfe-local(Color)};
-  --pfe-broadcasted--color--ui-link--hover:   #{pfe-local(Color--hover)};
-  --pfe-broadcasted--color--ui-link--focus:   #{pfe-local(Color--focus)};
-
-  ::slotted(a){
-    --pfe-cta--Padding:     #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
-  }
-}
-
-:host([priority="secondary"]:focus-within) {
-  background-color:             #{pfe-local(background--focus)};
-  border-color:                 #{pfe-local(border)};
-  --pfe-cta--Color:             #{pfe-color(surface--darkest)};
-
-  ::slotted(a) {
-    @include pfe-cta-focus(#{pfe-local(inner-border--focus)});
-  }
-}
-
-////////////////////////////////////////////////////////////////////////
-:host([priority="secondary"]:hover) {
-  background-color:                           #{pfe-local(background--hover)};
-  border-color:                               #{pfe-local(border--hover)};
-  --pfe-broadcasted--color--ui-link--focus:   #{pfe-local(Color--hover)};
-
-  ::slotted(a) {
-    color:                         #{pfe-local(Color--hover)};
-  }
+  --pfe-broadcasted--color--ui-link:        #{pfe-color(surface--darkest)};
+  --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--darkest--text)};
+  --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--darkest)};
+  
+  --pfe-cta--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
 }
 
 :host([secondary-alt]) {
-  --pfe-cta--background:          transparent;
-  --pfe-cta--border:              #{pfe-color(ui-link)};
-  --pfe-cta--inner-border:        transparent;
-  --pfe-cta--Color:               #{pfe-color(ui-link)};
+  --pfe-cta--BackgroundColor:          transparent;
+  --pfe-cta--BackgroundColor--hover:   #{pfe-color(ui-link)};
+  --pfe-cta--BackgroundColor--focus:   rgba(0,102,204, .1);
 
-  --pfe-cta--background--hover:   #{pfe-color(ui-link)};
-  --pfe-cta--border--hover:       #{pfe-color(ui-link)};
-  --pfe-cta--Color--hover:        #{pfe-color(ui-base--text)};
+  --pfe-cta--BorderColor:              #{pfe-color(ui-link)};
+  --pfe-cta--BorderColor--hover:       #{pfe-color(ui-link)};
+  --pfe-cta--BorderColor--focus:       #{pfe-color(ui-link)};
 
-  --pfe-cta--background--focus:   rgba(0,102,204, .1);
-  --pfe-cta--inner-border--focus: #{pfe-color(ui-link)};
-  --pfe-cta--Color--focus:        #{pfe-color(ui-link)};
+  --pfe-cta__inner--BorderColor:        transparent;
+  --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-link)};
+
+  --pfe-broadcasted--color--ui-link:               #{pfe-color(ui-link)};
+  --pfe-broadcasted--color--ui-link--hover:        #{pfe-color(ui-base--text)};
+  --pfe-broadcasted--color--ui-link--focus:        #{pfe-color(ui-link)};
 }
 
 :host([primary-alt]) {
-  --pfe-cta--background:          #{pfe-color(surface--lightest)};
-  --pfe-cta--border:              #{pfe-color(surface--lightest)};
-  --pfe-cta--inner-border:        transparent;
-  --pfe-cta--Color:               #{pfe-color(surface--darkest)};
+  --pfe-cta--BackgroundColor:          #{pfe-color(surface--lightest)};
+  --pfe-cta--BackgroundColor--hover:   #{pfe-color(surface--border--lightest)}; 
+  --pfe-cta--BackgroundColor--focus:   #{pfe-color(surface--lightest)};
 
-  --pfe-cta--background--hover:   #{pfe-color(surface--border--lightest)}; 
-  --pfe-cta--border--hover:       #{pfe-color(surface--border--lightest)};
-  --pfe-cta--Color--hover:        #{pfe-color(surface--darkest)};
+  --pfe-cta--BorderColor:              #{pfe-color(surface--lightest)};
+  --pfe-cta--BorderColor--hover:       #{pfe-color(surface--border--lightest)};
+  --pfe-cta--BorderColor--focus:       #{pfe-color(surface--border--lightest)};
 
-  --pfe-cta--background--focus:   #{pfe-color(surface--lightest)};
-  --pfe-cta--inner-border--focus: #{pfe-color(surface--darkest)};
-  --pfe-cta--Color--focus:        #{pfe-color(surface--darkest)};
+  --pfe-cta__inner--BorderColor:        transparent;
+  --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--darkest)};
+
+  --pfe-broadcasted--color--ui-link:               #{pfe-color(surface--darkest)};
+  --pfe-broadcasted--color--ui-link--hover:        #{pfe-color(surface--darkest)};
+  --pfe-broadcasted--color--ui-link--focus:        #{pfe-color(surface--darkest)};
 }
 
 /// ===========================================================================
@@ -296,97 +223,103 @@ $pfe-cta__arrow-size:                        0.313em;
 
 :host([priority="secondary"][on="dark"]),
 :host([priority="secondary"][color="alt"][on="dark"]) {
-  --pfe-cta--background:          transparent;
-  --pfe-cta--border:              #{pfe-color(surface--lightest)};
-  --pfe-cta--inner-border:        transparent;
-  --pfe-cta--Color:               #{pfe-color(surface--lightest)};
+  --pfe-cta--BackgroundColor:          transparent;
+  --pfe-cta--BackgroundColor--hover:   #{pfe-color(surface--lightest)};
+  --pfe-cta--BackgroundColor--focus:   rgba(255, 255, 255, .95);
 
-  --pfe-cta--background--hover:   #{pfe-color(surface--lightest)};
-  --pfe-cta--border--hover:       #{pfe-color(surface--lightest)};
-  --pfe-cta--Color--hover:        #{pfe-color(surface--lightest--text)};
-  --pfe-cta--background--focus:   rgba(255, 255, 255, .95);
-}
+  --pfe-cta--BorderColor:              #{pfe-color(surface--lightest)};
+  --pfe-cta--BorderColor--hover:       #{pfe-color(surface--lightest)};
 
-:host([priority="secondary"][on="dark"]:hover) {
-  ::slotted(a) {
-    color: #{pfe-local(Color--hover)};
-  }
+  --pfe-cta__inner--BorderColor:        transparent;
+
+  --pfe-broadcasted--color--ui-link:               #{pfe-color(surface--lightest)};
+  --pfe-broadcasted--color--ui-link--hover:        #{pfe-color(surface--lightest--text)};
 }
 
 //////////////////////////////
 // COLOR OVERRIDES
 
-// Set accent color values  / do we even want to add support for default CTAs + accent?
-:host(:not([priority])[color="accent"]) {
-  --pfe-cta--Color:                #{pfe-color(surface--accent)};
-  --pfe-cta--Color--hover:         #{pfe-color(ui-accent--hover)};
-  --pfe-cta--background--focus:    rgba(255, 255, 255, .95);
-  --pfe-cta--Color--focus:         #{pfe-color(surface--accent)}; 
-  --pfe-broadcasted--color--ui-link: #{pfe-local(Color)};
-  --pfe-broadcasted--color--ui-link--hover: #{pfe-local(Color--hover)};
-  --pfe-broadcasted--color--ui-link--focus: #{pfe-local(Color--focus)};
+// Set accent color values
 
+:host([color="accent"]) {
+  --pfe-broadcasted--color--ui-link:                #{pfe-color(surface--accent)};
+  --pfe-broadcasted--color--ui-link--hover:         #D40000; 
+  --pfe-broadcasted--color--ui-link--focus:         #{pfe-color(surface--accent)}; 
+}
+
+:host([priority="primary"][color="accent"]) {
+  --pfe-broadcasted--color--ui-link:        #{pfe-color(surface--accent--text)};
+  --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--accent--text)};
+  --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--accent--text)};;
 }
 
 :host([priority="secondary"][color="accent"]) {
-  --pfe-cta--background:          transparent;
-  --pfe-cta--border:              #{pfe-color(surface--accent)};
-  --pfe-cta--inner-border:        transparent;
-  --pfe-cta--Color:                #{pfe-color(surface--accent)};
+  --pfe-cta--BackgroundColor:          transparent;
+  --pfe-cta--BackgroundColor--hover:   #{pfe-color(surface--accent)};
 
-  --pfe-cta--background--hover:   #{pfe-color(surface--accent)};
-  --pfe-cta--border--hover:       #{pfe-color(surface--accent)};
-  --pfe-cta--Color--hover:        #{pfe-color(surface--accent--text)};
+  --pfe-cta--BorderColor:              #{pfe-color(surface--accent)};
+  --pfe-cta--BorderColor--hover:       #{pfe-color(surface--accent)};
+  --pfe-cta--BorderColor--focus:       #{pfe-color(surface--accent)};
 
-  --pfe-cta--inner-border--focus: #{pfe-color(surface--accent)};
-  --pfe-cta--Color--focus:        #{pfe-color(surface--accent)};;
+  --pfe-cta__inner--BorderColor:        transparent;
+  --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--accent)};
+
+  --pfe-broadcasted--color--ui-link:        #{pfe-color(surface--accent)};
+  --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--accent--text)};
+  --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--accent)};;
 }
 
 // Set complement color values
-:host(:not([priority])[color="complement"]) {
-  --pfe-cta--background:          transparent;
-  --pfe-cta--border:              transparent;
-  --pfe-cta--inner-border:        transparent;
-  --pfe-cta--Color:               #{pfe-color(surface--complement)};
+:host([color="complement"]) {
+  --pfe-cta--BackgroundColor:          transparent;
+  --pfe-cta--BackgroundColor--hover:   transparent;
+  --pfe-cta--BackgroundColor--focus:   transparent;
 
-  --pfe-cta--background--hover:   transparent;
-  --pfe-cta--border--hover:       transparent;
-  --pfe-cta--Color--hover:        #{pfe-color(surface--complement)};
+  --pfe-cta--BorderColor:              transparent;
+  --pfe-cta--BorderColor--hover:       transparent;
 
-  --pfe-cta--background--focus:   transparent;
-  --pfe-cta--inner-border--focus: transparent;
-  --pfe-cta--Color--focus:        #{pfe-color(surface--complement)};
+  --pfe-cta__inner--BorderColor:        transparent;
+  --pfe-cta__inner--BorderColor--focus: transparent;
 
-  --pfe-broadcasted--color--ui-link: #{pfe-local(Color)};
-  --pfe-broadcasted--color--ui-link--hover: #{pfe-local(Color--hover)};
-  --pfe-broadcasted--color--ui-link--focus: #{pfe-local(Color--focus)};
+  --pfe-broadcasted--color--ui-link:               #{pfe-color(surface--complement)};
+  --pfe-broadcasted--color--ui-link--hover:        #{pfe-color(surface--complement)};
+  --pfe-broadcasted--color--ui-link--focus:        #{pfe-color(surface--complement)};
+}
+
+:host(:not([priority])) {
+  --pfe-cta--BackgroundColor--focus:  rgba(0,102,204, .1);
 }
 
 :host([priority="primary"][color="complement"]) {
-  --pfe-cta--background:          #{pfe-color(surface--complement)};
-  --pfe-cta--border:              #{pfe-color(surface--complement)};
-  --pfe-cta--inner-border:        transparent;
-  --pfe-cta--Color:               #{pfe-color(surface--complement--text)};
+  --pfe-cta--BackgroundColor:          #{pfe-color(surface--complement)};
+  --pfe-cta--BackgroundColor--hover:   #{pfe-color(surface--darker)};
+  --pfe-cta--BackgroundColor--focus:   #{pfe-color(surface--darker)};
 
-  --pfe-cta--background--hover:   #{pfe-color(surface--darker)};
-  --pfe-cta--border--hover:       #{pfe-color(surface--darker)};
-  --pfe-cta--Color--hover:        #{pfe-color(surface--complement--text)};
+  --pfe-cta--BorderColor:              #{pfe-color(surface--complement)};
+  --pfe-cta--BorderColor--hover:       #{pfe-color(surface--darker)};
 
-  --pfe-cta--background--focus:   transparent;
-  --pfe-cta--inner-border--focus: #{pfe-color(surface--complement--text)};
-  --pfe-cta--Color--focus:        #{pfe-color(surface--complement--text)};
+  --pfe-cta__inner--BorderColor:        transparent;
+  --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--complement--text)};
+  --pfe-cta--BorderColor--focus:        #{pfe-color(surface--darker)};
+
+  --pfe-broadcasted--color--ui-link:               #{pfe-color(surface--complement--text)};
+  --pfe-broadcasted--color--ui-link--hover:        #{pfe-color(surface--complement--text)};
+  --pfe-broadcasted--color--ui-link--focus:        #{pfe-color(surface--complement--text)};
 }
 
 :host([priority="secondary"][color="complement"]) {
-  --pfe-cta--background:          transparent;
-  --pfe-cta--border:              #{pfe-color(surface--complement)};
-  --pfe-cta--inner-border:        transparent;
-  --pfe-cta--Color:               #{pfe-color(surface--complement)};
+  --pfe-cta--BackgroundColor:          transparent;
+  --pfe-cta--BackgroundColor--hover:   #{pfe-color(surface--complement)};
+  --pfe-cta--BackgroundColor--focus:   rgba(21, 21, 21, .1);
 
-  --pfe-cta--background--hover:   #{pfe-color(surface--complement)};
-  --pfe-cta--border--hover:       #{pfe-color(surface--complement)};
-  --pfe-cta--Color--hover:        #{pfe-color(surface--complement--text)};
+  --pfe-cta--BorderColor:              #{pfe-color(surface--complement)};
+  --pfe-cta--BorderColor--hover:       #{pfe-color(surface--complement)};
 
-  --pfe-cta--inner-border--focus: #{pfe-color(surface--complement)};
-  --pfe-cta--Color--focus:        #{pfe-color(surface--complement)};
+  --pfe-cta__inner--BorderColor:        transparent;
+  --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--complement)};
+  --pfe-cta--BorderColor--focus:        #{pfe-color(surface--complement)};
+
+  --pfe-broadcasted--color--ui-link:               #{pfe-color(surface--complement)};
+  --pfe-broadcasted--color--ui-link--hover:        #{pfe-color(surface--complement--text)};
+  --pfe-broadcasted--color--ui-link--focus:        #{pfe-color(surface--complement)};
 }

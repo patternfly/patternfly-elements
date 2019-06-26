@@ -9,17 +9,14 @@
   </head>
   <body>
 
-    <pfe-icon>
-      This is the element content.
-    </pfe-icon>
+    <pfe-icon size="4x" pfe-icon="rh-aed"></pfe-icon>
+    <img src="http://localhost:8000/webassets/avalon/j/lib/rh-iconfont-svgs/rh-icon-aed.svg">
 
     <script>
       suite('<pfe-icon>', () => {
         test('it should upgrade', () => {
           assert.instanceOf(document.querySelector('pfe-icon'), customElements.get("pfe-icon", 'pfe-icon should be an instance of pfeIcon'));
         });
-
-        // you need to write more tests!!!
 
       });
     </script>

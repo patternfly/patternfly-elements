@@ -30,16 +30,12 @@ class PfeIcon extends PFElement {
 
   updateIcon(iconName) {
     const iconSet = PfeIcon.getIconSet(iconName);
-    const { iconPath, iconId } = iconSet.parseIconName(iconName);
+    const { iconPath } = iconSet.parseIconName(iconName);
 
-    const svg = this.shadowRoot.querySelector("svg");
-    const use = svg.querySelector("svg use");
-    use.setAttribute("href", `${iconPath}#${iconId}`); // href is recommended but not as well supported
-
-    // This is a bummer.  We have to move the svg into the light DOM (ie, into
-    // the default slot).  this is required for Safari 10 and 11, where <use>
-    // doesn't work inside the shadow DOM.
-    this.appendChild(svg);
+    this.style.backgroundImage = `url(${iconPath})`;
+    this.style.filter = `url(#${
+      ["lightblue", "redhatred"][Math.round(Math.random())]
+    })`;
   }
 
   /**
@@ -60,15 +56,57 @@ class PfeIcon extends PFElement {
       );
     }
 
-    console.log(`adding icon set ${name}`);
     this._iconSets[name] = new PfeIconSet(name, path, parseIconName);
+  }
+
+  /**
+   * Create a placeholder SVG which will have SVG filters stuffed into it.
+   */
+  static createFilterSet() {
+    if (!this.getFilterSet()) {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.id = "pfe-filters";
+      // svg.style.display = "none";
+      document.body.appendChild(svg);
+    }
+  }
+
+  /**
+   * Get the filter set SVG element.
+   */
+  static getFilterSet() {
+    return document.querySelector("#pfe-filters");
+  }
+
+  /**
+   * Create a filter to be placed into the #pfe-filters SVG.
+   */
+  static createFilter(name, color = "#ee0000") {
+    if (/[^-_A-z0-1]/.test(name)) {
+      throw new Error(
+        `filter names must be valid html id's, so the provided filter name is invalid: ${name}`
+      );
+    }
+    const filter = `
+      <filter id="${name}" color-interpolation-filters="sRGB"
+              x="0" y="0" height="100%" width="100%">
+        <feFlood flood-color="${color}" result="COLOR" />
+        <feComposite operator="in" in="COLOR" in2="SourceAlpha" />
+      </filter>`;
+    // this.getFilterSet().insertAdjacentHTML("beforeend", filter);
+    this.getFilterSet().innerHTML += filter;
   }
 }
 
 PfeIcon._iconSets = {};
+PfeIcon.createFilterSet();
+PfeIcon.createFilter("lightblue", "#5CC8DF");
+PfeIcon.createFilter("redhatred", "rgb(210, 0, 0)");
+
+window.PfeIcon = PfeIcon;
 
 addBuiltIns(PfeIcon);
 
-PFElement.create(PfeIcon);
+setTimeout(() => PFElement.create(PfeIcon), 1000);
 
 export default PfeIcon;

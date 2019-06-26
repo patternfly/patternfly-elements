@@ -38,12 +38,15 @@ $pfe-icon--border-style:                     map-get($pfe-vars, border-style);
   vertical-align: middle;
   @include pfe-icon-set-svg-size(1em);
   border-radius: 50%;
-  background: var(--pfe-icon--color--bg);
+  background-color: var(--pfe-icon--color--bg);
   border: $pfe-icon--border-width $pfe-icon--border-style var(--pfe-icon--color--border);
 
-  svg {
-    fill: var(--pfe-broadcasted--color--text);
-  }
+  // background-image: none; /* this will be overwritten by pfe-icon.js */
+  background-size: contain;
+
+  // svg {
+  //   fill: var(--pfe-broadcasted--color--text);
+  // }
 
   @at-root #{&}([data-block]) {
     display: block;

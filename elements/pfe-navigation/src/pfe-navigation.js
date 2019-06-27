@@ -75,12 +75,12 @@ class PfeNavigation extends PFElement {
     this.searchSlot = this.querySelector(`[slot="search"]`);
     this.loginSlot = this.querySelector(`[slot="login"]`);
     this.languageSlot = this.querySelector(`[slot="language"]`);
+    this.loginSlotMobile    = this.querySelector(`[slot="mobile-login"]`);
+    this.languageSlotMobile = this.querySelector(`[slot="mobile-language"]`);
 
     // Capture mobile slots from shadow
     this._menuSlotMobile     = this.shadowRoot.querySelector(`slot[name="mobile-menu"]`);
     this._searchSlotMobile   = this.shadowRoot.querySelector(`slot[name="mobile-search"]`);
-    this._loginSlotMobile    = this.shadowRoot.querySelector(`slot[name="mobile-login"]`);
-    this._languageSlotMobile = this.shadowRoot.querySelector(`slot[name="mobile-language"]`);
 
     // this.searchSlot.addEventListener("slotchange", this._setupSearch);
     // this.loginSlot.addEventListener("slotchange", this._setupLogin);
@@ -182,22 +182,35 @@ class PfeNavigation extends PFElement {
       this._searchSlotMobile.innerHTML = searchClone;
 
       // Set up the mobile login
-      const loginEl = this.loginSlot ? this.loginSlot.querySelector(`[slot="trigger"]`) : null;
-      const loginClone = loginEl !== null ? loginEl.innerHTML : "";
-      this._loginSlotMobile.innerHTML = loginClone;
-      // Copy the icon to the slot
-      if(this.loginSlot.hasAttribute("pfe-icon")) {
-        this._loginSlotMobile.setAttribute("pfe-icon", this.loginSlot.getAttribute("pfe-icon"));
+      let loginLink = "#";
+      if(this.loginSlotMobile.hasAttribute("href")){
+        // Store the link value in a variable
+        loginLink = this.loginSlotMobile.getAttribute("href");
+      } else {
+        // Find the link inside the slot
+        if(this.loginSlotMobile.querySelector("a")) {
+          loginLink = this.loginSlotMobile.querySelector("a").getAttribute("href");
+        }
       }
+      // Get the element to attach the link to
+      this.shadowRoot.querySelector(`[connect-to="mobile-login"]`).setAttribute("href", loginLink);
+
+
+      // const loginClone = loginEl !== null ? loginEl.innerHTML : "";
+      // this._loginSlotMobile.innerHTML = loginClone;
+      // // Copy the icon to the slot
+      // if(this.loginSlot.hasAttribute("pfe-icon")) {
+      //   this._loginSlotMobile.setAttribute("pfe-icon", this.loginSlot.getAttribute("pfe-icon"));
+      // }
 
       // Set up the mobile language
-      const languageEl = this.languageSlot ? this.languageSlot.querySelector(`[slot="trigger"]`) : null;
-      const languageClone = languageEl !== null ? languageEl.innerHTML : "";
-      this._languageSlotMobile.innerHTML = languageClone;
-      // Copy the icon to the slot
-      if(this.languageSlot.hasAttribute("pfe-icon")) {
-        this._languageSlotMobile.setAttribute("pfe-icon", this.languageSlot.getAttribute("pfe-icon"));
-      }
+      // const languageEl = this.languageSlot ? this.languageSlot.querySelector(`[slot="trigger"]`) : null;
+      // const languageClone = languageEl !== null ? languageEl.innerHTML : "";
+      // this._languageSlotMobile.innerHTML = languageClone;
+      // // Copy the icon to the slot
+      // if(this.languageSlot.hasAttribute("pfe-icon")) {
+      //   this._languageSlotMobile.setAttribute("pfe-icon", this.languageSlot.getAttribute("pfe-icon"));
+      // }
 
 
       // Set up the mobile main menu

@@ -73,10 +73,9 @@ $pfe-cta__arrow-size: 0.313em;
 
   background-color: #{pfe-local(BackgroundColor--hover)};
   border-color:     #{pfe-local(BorderColor--hover)};
-  cursor: pointer;
 
   ::slotted(a) {
-    color: #{pfe-local(Color--hover)};
+    color: #{pfe-local(Color--hover)} !important;
   }
 
   .pfe-cta--arrow {
@@ -114,10 +113,6 @@ $pfe-cta__arrow-size: 0.313em;
 
   padding: #{pfe-local(Padding)};
   text-decoration: none;
-}
-
-::slotted(a:hover) {
-  color: #{pfe-local(Color--hover)};
 }
 
 ::slotted(a:focus) {

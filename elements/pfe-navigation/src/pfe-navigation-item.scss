@@ -5,7 +5,9 @@ $LOCAL: navigation-item;
 :host {
   --pfe-navigation-item--Color: #{pfe-color(text--on-dark)};
   --pfe-navigation-item--BackgroundColor: #{pfe-color(surface--darkest)};
-	--pfe-navigation-item--BorderTopColor: transparent;
+  --pfe-navigation-item--BorderTopColor: transparent;
+
+  --pfe-navigation-item__icon--Background: none;
 
   height: 100%;
   display: flex;
@@ -18,6 +20,15 @@ $LOCAL: navigation-item;
   display: flex;
 }
 
+@each $icon in (bento, user, globe, search, menu) {
+  :host([pfe-icon="#{$icon}"]) {
+    --pfe-navigation-item__icon--Background: #{map-get($icons, #{$icon}--on-dark)} no-repeat;
+  }
+  :host([pfe-icon="#{$icon}"].expanded) .pfe-navigation-item__trigger {
+    --pfe-navigation-item__icon--Background: #{map-get($icons, #{$icon})} no-repeat;
+  }
+}
+
 :host([hidden]),
 ::slotted([slot="tray"][hidden]) {
 	display: none;
@@ -26,7 +37,7 @@ $LOCAL: navigation-item;
 ::slotted([slot="trigger"]) {
   font-family: #{pfe-var(font-family)};
   text-align: center;
-  font-size: 14px;
+  font-size: 14px !important;
   font-weight: 100;
   margin: 0;
   cursor: pointer;
@@ -35,7 +46,7 @@ $LOCAL: navigation-item;
 }
 
 :host([pfe-icon]) ::slotted([slot="trigger"]) {
-  font-size: 12px;
+  font-size: 12px !important;
 }
 
 ::slotted([slot="tray"]) {
@@ -45,38 +56,23 @@ $LOCAL: navigation-item;
 .pfe-navigation-item {
   &__icon {
     display: flex;
+    background: var(--pfe-navigation-item__icon--Background);
+
     :host(:not([pfe-icon])) [aria-expanded="false"] & {
       visibility: hidden;
     }
+
     :host(:not([pfe-icon])) & {
-      margin-top: 8px;
       @include pfe-arrow(down, gray, $width: 6px, $height: 6px);
+      position: absolute;
+      bottom: 13px;
     }
 
     :host([pfe-icon]) & {
-      margin-bottom: 8px;
+      margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
+      width: 1.3em;
+      height: 1.3em;
     }
-    :host([pfe-icon="bento"]) & #Icon {
-      -webkit-text-fill-color: 	 #{pfe-local(Color)};
-      fill: 	#{pfe-local(Color)};
-    }
-    
-    :host([pfe-icon="user"]) & #Icon,
-    :host([pfe-icon="globe"]) & #Icon,
-    :host([pfe-icon="search"]) & #Icon {
-      -webkit-text-stroke-color: #{pfe-local(Color)};
-      stroke: #{pfe-local(Color)};
-    }
-    
-    :host([pfe-icon="menu"]) & #Icon {
-      -webkit-text-stroke-color: #{pfe-local(Color)};
-      -webkit-text-fill-color: #{pfe-local(Color)};
-      stroke: #{pfe-local(Color)};
-      fill: #{pfe-local(Color)};
-    }
-    // [aria-expanded="true"] & {
-    //   display: block !important;
-    // }
   }
   &__trigger {
     --pfe-theme--link--text-decoration: none;
@@ -98,23 +94,24 @@ $LOCAL: navigation-item;
     justify-content: center;
     flex-grow: 1;
 
-    background-color: #{pfe-local(BackgroundColor)};  //bg
+    background-color: #{pfe-local(BackgroundColor)};
     padding: 20px 16px !important;
 
     border-top: 4px solid #{pfe-local(BorderTopColor)};
     color: #{pfe-local(Color)};
+
     &:hover,
     :host([aria-current="location"]) & {
       --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
     }
+
     &[aria-expanded="true"],
-    .expanded &,
-    &:active,
-    &:focus {
+    .expanded & {
       --pfe-navigation-item--Color: #{pfe-color(text)};
       --pfe-navigation-item--BackgroundColor: #{pfe-color(surface--lightest)};
       --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
     }
+
     &:focus:not(:focus-visible) {
       outline: none;  // removes outline for mouse users, preserves it for keyboard users
     }

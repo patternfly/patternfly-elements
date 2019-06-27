@@ -1,7 +1,6 @@
 [slot="logo"] > a {
   color: white;
   text-decoration: none;
-  display: inline-block;
 }
 
 .redhat-logo {

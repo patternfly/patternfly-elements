@@ -257,83 +257,6 @@ class PfeNavigationItem extends PFElement {
     return this.hasAttribute("pfe-icon");
   }
 
-  get iconSVG() {
-    return {
-      bento: `<?xml version="1.0" encoding="UTF-8"?>
-      <svg width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
-          <title>Icon</title>
-          <desc>Created with Sketch.</desc>
-          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="Icon">
-                  <rect id="Rectangle" x="14" y="14" width="5" height="5"></rect>
-                  <rect id="Rectangle" x="7" y="14" width="5" height="5"></rect>
-                  <rect id="Rectangle" x="0" y="14" width="5" height="5"></rect>
-                  <rect id="Rectangle" x="14" y="7" width="5" height="5"></rect>
-                  <rect id="Rectangle" x="7" y="7" width="5" height="5"></rect>
-                  <rect id="Rectangle" x="0" y="7" width="5" height="5"></rect>
-                  <rect id="Rectangle" x="14" y="0" width="5" height="5"></rect>
-                  <rect id="Rectangle" x="7" y="0" width="5" height="5"></rect>
-                  <rect id="Rectangle" x="0" y="0" width="5" height="5"></rect>
-              </g>
-          </g>
-      </svg>`,
-      globe: `<?xml version="1.0" encoding="UTF-8"?>
-      <svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
-          <title>Icon</title>
-          <desc>Created with Sketch.</desc>
-          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="Icon">
-                  <circle id="Oval" cx="9.5" cy="9.5" r="9.5"></circle>
-                  <ellipse id="Oval" cx="9.5" cy="9.5" rx="4.75" ry="9.5"></ellipse>
-                  <path d="M9.5,0 L9.5,19" id="Path"></path>
-                  <path d="M1,14 L18,14" id="Path"></path>
-                  <path d="M0,9.5 L19,9.5" id="Path"></path>
-                  <path d="M1,5 L18,5" id="Path"></path>
-              </g>
-          </g>
-      </svg>`,
-      menu: `<?xml version="1.0" encoding="UTF-8"?>
-      <svg width="23px" height="18px" viewBox="0 0 23 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
-          <title>Icon</title>
-          <desc>Created with Sketch.</desc>
-          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="Icon">
-                  <rect id="Rectangle" x="0.5" y="14.5" width="22" height="3"></rect>
-                  <rect id="Rectangle" x="0.5" y="7.5" width="22" height="3"></rect>
-                  <rect id="Rectangle" x="0.5" y="0.5" width="22" height="3"></rect>
-              </g>
-          </g>
-      </svg>`,
-      search: `<?xml version="1.0" encoding="UTF-8"?>
-      <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
-          <title>Icon</title>
-          <desc>Created with Sketch.</desc>
-          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="Icon">
-                  <path d="M12,13 L18,19" id="Path" stroke-linecap="round"></path>
-                  <ellipse id="Oval" cx="7" cy="7.5" rx="7" ry="7.5"></ellipse>
-              </g>
-          </g>
-      </svg>`,
-      user: `<?xml version="1.0" encoding="UTF-8"?>
-      <svg width="21px" height="20px" viewBox="0 0 21 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
-          <title>Icon</title>
-          <desc>Created with Sketch.</desc>
-          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
-              <g id="Icon">
-                  <path d="M0,19 C0,13.75 4.25,9.5 9.5,9.5 C14.75,9.5 19,13.75 19,19" id="Path"></path>
-                  <circle id="Oval" cx="9.5" cy="4.75" r="4.75"></circle>
-              </g>
-          </g>
-      </svg>`
-    };
-  }
-
   static get observedAttributes() {
     return ["pfe-icon"];
   }
@@ -414,9 +337,9 @@ class PfeNavigationItem extends PFElement {
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
 
-    if (attr === "pfe-icon") {
-      this._icon.innerHTML = this.iconSVG[newValue];
-    }
+    // if (attr === "pfe-icon") {
+    //   this._icon.innerHTML = this.iconSVG[newValue];
+    // }
   }
 
   disconnectedCallback() {

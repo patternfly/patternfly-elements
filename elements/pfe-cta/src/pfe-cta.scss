@@ -75,6 +75,10 @@ $pfe-cta__arrow-size: 0.313em;
   border-color:     #{pfe-local(BorderColor--hover)};
   cursor: pointer;
 
+  ::slotted(a) {
+    color: #{pfe-local(Color--hover)};
+  }
+
   .pfe-cta--arrow {
     fill: #{pfe-local(Color--hover)};
   }

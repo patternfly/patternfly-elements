@@ -57,7 +57,6 @@ $pfe-cta__arrow-size: 0.313em;
   .pfe-cta--arrow {
     display: var(--pfe-cta__arrow--Display);
     padding: var(--pfe-cta__arrow--Padding);
-
     fill: #{pfe-local(Color)};
 
     position: relative;
@@ -70,17 +69,35 @@ $pfe-cta__arrow-size: 0.313em;
 
 :host(:hover) {
   --pfe-cta__arrow--Padding: 0 0 0 .5rem;
+  --pfe-broadcasted--color--ui-link: #{pfe-local(Color)};
+  --pfe-broadcasted--color--ui-link--hover: #{pfe-local(Color)};
+  --pfe-broadcasted--color--text: #{pfe-local(Color--hover)};
 
   background-color: #{pfe-local(BackgroundColor--hover)};
   border-color:     #{pfe-local(BorderColor--hover)};
+  cursor: pointer;
 
   ::slotted(a) {
-    color: #{pfe-local(Color--hover)} !important;
+    --pfe-broadcasted--color--ui-link: #{pfe-local(Color)};
+    --pfe-broadcasted--color--ui-link--hover: #{pfe-local(Color)};
+    color: #{pfe-local(Color--hover)};
   }
 
   .pfe-cta--arrow {
     fill: #{pfe-local(Color--hover)};
   }
+}
+
+::slotted(a) {
+  display: block;
+  color: #{pfe-local(Color)};
+  padding: #{pfe-local(Padding)};
+  text-decoration: none;
+}
+
+::slotted(a:focus) {
+  color: #{pfe-local(Color--focus)};
+  outline: none;
 }
 
 ::slotted(:focus) {
@@ -105,19 +122,6 @@ $pfe-cta__arrow-size: 0.313em;
 
 :host(::after) {
   margin-left:        calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
-}
-
-::slotted(a) {
-  display: block;
-  color: #{pfe-local(Color)};
-
-  padding: #{pfe-local(Padding)};
-  text-decoration: none;
-}
-
-::slotted(a:focus) {
-  color: #{pfe-local(Color--focus)};
-  outline: none;
 }
 
 :host(:focus-within) {
@@ -219,6 +223,18 @@ $pfe-cta__arrow-size: 0.313em;
 /// ===========================================================================
 /// ON DARK
 /// ===========================================================================
+:host(:not([priority])[on="dark"]:hover),
+:host(:not([priority])[pfe-color="base"][on="dark"]:hover) {
+  --pfe-cta__arrow--Padding: 0 0 0 .5rem;
+  --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--darker--link--hover)};
+  --pfe-broadcasted--color--ui-link: #{pfe-color(surface--darker--link--hover)};
+
+  ::slotted(a) {
+    --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--darker--link--hover)};
+    --pfe-broadcasted--color--ui-link: #{pfe-color(surface--darker--link--hover)};
+    color: #{pfe-local(Color--hover)};
+  }
+}
 
 :host([priority="secondary"][on="dark"]),
 :host([priority="secondary"][color="alt"][on="dark"]) {

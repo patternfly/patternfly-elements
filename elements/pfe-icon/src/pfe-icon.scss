@@ -40,13 +40,7 @@ $pfe-icon--border-style:                     map-get($pfe-vars, border-style);
   border-radius: 50%;
   background-color: var(--pfe-icon--color--bg);
   border: $pfe-icon--border-width $pfe-icon--border-style var(--pfe-icon--color--border);
-
-  // background-image: none; /* this will be overwritten by pfe-icon.js */
-  background-size: contain;
-
-  // svg {
-  //   fill: var(--pfe-broadcasted--color--text);
-  // }
+  position: relative;
 
   @at-root #{&}([data-block]) {
     display: block;
@@ -56,6 +50,20 @@ $pfe-icon--border-style:                     map-get($pfe-vars, border-style);
     &:first-child {
       margin-top: 0;
     }
+  }
+
+  .pfe-icon-container {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-size: contain;
+      filter: url(#pfe-icon-color-filter);
+  }
+
+  #pfe-icon-color-filter feFlood {
+    flood-color: var(--pfe-broadcasted--color--text)
   }
 }
 

@@ -32,10 +32,9 @@ class PfeIcon extends PFElement {
     const iconSet = PfeIcon.getIconSet(iconName);
     const { iconPath } = iconSet.parseIconName(iconName);
 
-    this.style.backgroundImage = `url(${iconPath})`;
-    this.style.filter = `url(#${
-      ["lightblue", "redhatred"][Math.round(Math.random())]
-    })`;
+    this.shadowRoot.querySelector(
+      ".pfe-icon-container"
+    ).style.backgroundImage = `url(${iconPath})`;
   }
 
   /**
@@ -58,55 +57,14 @@ class PfeIcon extends PFElement {
 
     this._iconSets[name] = new PfeIconSet(name, path, parseIconName);
   }
-
-  /**
-   * Create a placeholder SVG which will have SVG filters stuffed into it.
-   */
-  static createFilterSet() {
-    if (!this.getFilterSet()) {
-      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      svg.id = "pfe-filters";
-      // svg.style.display = "none";
-      document.body.appendChild(svg);
-    }
-  }
-
-  /**
-   * Get the filter set SVG element.
-   */
-  static getFilterSet() {
-    return document.querySelector("#pfe-filters");
-  }
-
-  /**
-   * Create a filter to be placed into the #pfe-filters SVG.
-   */
-  static createFilter(name, color = "#ee0000") {
-    if (/[^-_A-z0-1]/.test(name)) {
-      throw new Error(
-        `filter names must be valid html id's, so the provided filter name is invalid: ${name}`
-      );
-    }
-    const filter = `
-      <filter id="${name}" color-interpolation-filters="sRGB"
-              x="0" y="0" height="100%" width="100%">
-        <feFlood flood-color="${color}" result="COLOR" />
-        <feComposite operator="in" in="COLOR" in2="SourceAlpha" />
-      </filter>`;
-    // this.getFilterSet().insertAdjacentHTML("beforeend", filter);
-    this.getFilterSet().innerHTML += filter;
-  }
 }
 
 PfeIcon._iconSets = {};
-PfeIcon.createFilterSet();
-PfeIcon.createFilter("lightblue", "#5CC8DF");
-PfeIcon.createFilter("redhatred", "rgb(210, 0, 0)");
 
 window.PfeIcon = PfeIcon;
 
 addBuiltIns(PfeIcon);
 
-setTimeout(() => PFElement.create(PfeIcon), 1000);
+PFElement.create(PfeIcon);
 
 export default PfeIcon;

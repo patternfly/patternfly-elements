@@ -1,6 +1,9 @@
 module.exports = function factory({
-  elementName,
-  className,
+  version,
+  pfelement: {
+    elementName,
+    className,
+  },
   prebundle = []
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
@@ -233,6 +236,10 @@ module.exports = function factory({
             }
 
             let template = classStatement;
+            template += `
+  static get version() {
+    return "${version}";
+  }`;
             if (cssResult || html) {
               template += `
 

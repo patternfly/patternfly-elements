@@ -9,6 +9,7 @@ const replace = require("gulp-replace");
 const cleanCSS = require("gulp-clean-css");
 const trim = require("gulp-trim");
 const banner = require("gulp-banner");
+const package = require("./package.json");
 
 gulp.task("clean", () => {
   return del(["pfelement.js", "./**/*.umd.*", "./*.css", "./*.js.map"]);
@@ -58,6 +59,13 @@ gulp.task("minify-css", () => {
     .pipe(gulp.dest("./"));
 });
 
+gulp.task("replace-version", () => {
+  return gulp
+    .src("./pfelement.js")
+    .pipe(replace("{{version}}", package.version))
+    .pipe(gulp.dest("./"));
+});
+
 gulp.task("watch", () => {
   return gulp.watch("./src/**/*", gulp.series("build"));
 });
@@ -66,7 +74,14 @@ gulp.task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
 gulp.task(
   "build",
-  gulp.series("clean", "copy", "compile", "minify-css", "bundle")
+  gulp.series(
+    "clean",
+    "copy",
+    "replace-version",
+    "compile",
+    "minify-css",
+    "bundle"
+  )
 );
 
 gulp.task("default", gulp.series("build"));

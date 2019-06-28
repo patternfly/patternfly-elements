@@ -68,8 +68,11 @@ class PFElement extends HTMLElement {
 
     if(_slot) {
       let _slotChildren = _slot.assignedNodes();
-
-      _slotClone = _slotChildren[0].cloneNode(true);
+      let _slotClone = [];
+      _slotChildren.map(child => {
+        let clone = child.cloneNode(true);
+        _slotClone.push(clone);
+      });
 
       // If an element is provided, this is where we're copying to
       if(typeof elementSelector === "string") {
@@ -81,8 +84,10 @@ class PFElement extends HTMLElement {
       }
 
       if(_newSlot) {
-        _slotClone.removeAttribute("slot");
-        _newSlot.appendChild(_slotClone);
+        _slotClone.map(clone => {
+          clone.removeAttribute("slot");
+          _newSlot.appendChild(clone);
+        });
       }
 
       // Copy over any events from the original element

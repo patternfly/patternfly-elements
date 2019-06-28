@@ -21,10 +21,9 @@ class PfeNavigation extends PFElement {
 
     this._toggledHandler = this._toggledHandler.bind(this);
     this._init = this._init.bind(this);
-
-    // this._setupSearch = this._setupSearch.bind(this);
     
     this._observerHandler = this._observerHandler.bind(this);
+    this._stickyHandler = this._stickyHandler.bind(this);
     this._observer = new MutationObserver(this._observerHandler);
 
     this._initialized = false;
@@ -65,13 +64,7 @@ class PfeNavigation extends PFElement {
     if(this.hasAttribute("sticky") && this.getAttribute("sticky") != "false") {
       this.height = this.offsetHeight;
 
-      window.addEventListener("scroll", (event) => {
-        if(window.pageYOffset >= this.top) {
-          this.classList.add("sticky");
-        } else {
-          this.classList.remove("sticky");
-        }
-      });
+      window.addEventListener("scroll", this._stickyHandler);
     }
 
     Promise.all([
@@ -93,8 +86,9 @@ class PfeNavigation extends PFElement {
       this._toggledHandler
     );
 
+    window.removeEventListener("scroll", this._stickyHandler);
+
     this._observer.disconnect();
-    // this.searchSlot.removeEventListener("slotchange", this._setupSearch);
   }
 
   _observerHandler(mutationsList) {
@@ -118,6 +112,14 @@ class PfeNavigation extends PFElement {
 
     this._activeNavigationItem.expanded = false;
     this._activeNavigationItem = event.detail.navigationItem;
+  }
+
+  _stickyHandler() {
+    if(window.pageYOffset >= this.top) {
+      this.classList.add("sticky");
+    } else {
+      this.classList.remove("sticky");
+    }
   }
 
   _init() {

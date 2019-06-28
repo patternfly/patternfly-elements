@@ -35,7 +35,7 @@
 
   <body unresolved>
     <h1>&lt;pfe-navigation&gt;</h1>
-    <pfe-navigation sticky>
+    <pfe-navigation sticky close-on-click="external">
       <div slot="skip">
         <a href="#rh-main-content">Skip to content</a>
       </div>
@@ -360,4 +360,9 @@
       </pfe-card>
     </pfe-band>
   </body>
+  <script>
+    document.querySelector("[slot=search]").addEventListener("click", event => {
+      console.log("Click event?");
+    });
+  </script>
 </html>

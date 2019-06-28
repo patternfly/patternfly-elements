@@ -66,11 +66,8 @@ class PFElement extends HTMLElement {
       _slot = this.shadowRoot.querySelector("slot");
     }
 
-    console.dir(_slot);
-
     if(_slot) {
       let _slotChildren = _slot.assignedNodes();
-      console.log(_slotChildren);
 
       _slotClone = _slotChildren[0].cloneNode(true);
 
@@ -82,8 +79,6 @@ class PFElement extends HTMLElement {
       } else {
         _newSlot = this.shadowRoot;
       }
-      
-      console.log(_newSlot);
 
       if(_newSlot) {
         _slotClone.removeAttribute("slot");

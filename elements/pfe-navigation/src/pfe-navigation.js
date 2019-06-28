@@ -28,6 +28,8 @@ class PfeNavigation extends PFElement {
     this._observer = new MutationObserver(this._observerHandler);
 
     this._initialized = false;
+    this.height = 0;
+    this.top    = this.getBoundingClientRect().top || 0;
 
     this.addEventListener(
       `${PfeNavigationItem.tag}:toggled`,
@@ -55,12 +57,21 @@ class PfeNavigation extends PFElement {
     this._menuSlotMobile     = this.shadowRoot.querySelector(`slot[name="mobile-menu"]`);
     this._searchSlotMobile   = this.shadowRoot.querySelector(`slot[name="mobile-search"]`);
 
-    // this.searchSlot.addEventListener("slotchange", this._setupSearch);
-    // this.loginSlot.addEventListener("slotchange", this._setupLogin);
-    // this.languageSlot.addEventListener("slotchange", this._setupLanguage);
-
     if (this.children.length) {
       this._initialized = this._init();
+    }
+
+    // If the nav is set to sticky, inject the height of the nav to the next element in the DOM
+    if(this.hasAttribute("sticky") && this.getAttribute("sticky") != "false") {
+      this.height = this.offsetHeight;
+
+      window.addEventListener("scroll", (event) => {
+        if(window.pageYOffset >= this.top) {
+          this.classList.add("sticky");
+        } else {
+          this.classList.remove("sticky");
+        }
+      });
     }
 
     Promise.all([
@@ -119,6 +130,12 @@ class PfeNavigation extends PFElement {
 
       ret = this._setupMobileNav();
 
+      this.parentElement.addEventListener("click", (event) => {
+        if ((event.target !== this && event.target.closest("pfe-navigation") === null) || event.path[0] === this.overlay) {
+          this._toggledHandler(event);
+        }
+      }, true);
+
       // @IE11 This is necessary so the script doesn't become non-responsive
       if (window.ShadyCSS) {
         setTimeout(() => {
@@ -133,13 +150,6 @@ class PfeNavigation extends PFElement {
 
     return ret;
   }
-
-  // _setupSearch(event) {
-  //   const searchInnerHTML = this.searchSlot.assignedNodes()[0].querySelector(`[slot="tray"] > *`);
-  //   const searchInnerHTMLClone = searchInnerHTML.cloneNode(true);
-
-  //   this._searchSlotMobile.appendChild(searchInnerHTMLClone);
-  // }
 
   _setupMobileNav() {
     if(!this._initialized) {
@@ -167,24 +177,6 @@ class PfeNavigation extends PFElement {
       }
       // Get the element to attach the link to
       this.shadowRoot.querySelector(`[connect-to="mobile-login"]`).setAttribute("href", loginLink);
-
-
-      // const loginClone = loginEl !== null ? loginEl.innerHTML : "";
-      // this._loginSlotMobile.innerHTML = loginClone;
-      // // Copy the icon to the slot
-      // if(this.loginSlot.hasAttribute("pfe-icon")) {
-      //   this._loginSlotMobile.setAttribute("pfe-icon", this.loginSlot.getAttribute("pfe-icon"));
-      // }
-
-      // Set up the mobile language
-      // const languageEl = this.languageSlot ? this.languageSlot.querySelector(`[slot="trigger"]`) : null;
-      // const languageClone = languageEl !== null ? languageEl.innerHTML : "";
-      // this._languageSlotMobile.innerHTML = languageClone;
-      // // Copy the icon to the slot
-      // if(this.languageSlot.hasAttribute("pfe-icon")) {
-      //   this._languageSlotMobile.setAttribute("pfe-icon", this.languageSlot.getAttribute("pfe-icon"));
-      // }
-
 
       // Set up the mobile main menu
       triggers.forEach(trigger => {
@@ -322,10 +314,6 @@ class PfeNavigationItem extends PFElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
-
-    // if (attr === "pfe-icon") {
-    //   this._icon.innerHTML = this.iconSVG[newValue];
-    // }
   }
 
   disconnectedCallback() {
@@ -340,9 +328,6 @@ class PfeNavigationItem extends PFElement {
     if (this._trigger && this._tray) {
       // Toggle the navigation when the trigger is clicked
       this._trigger.addEventListener("click", this._toggleMenu);
-
-      // @TODO If the user clicks outside the navigation, it should close
-      // this.addEventListener("blur", this._closeMenu);
 
       // Attaching to the parent element allows the exit key to work inside the tray too
       this.addEventListener("keydown", this._keydownHandler);

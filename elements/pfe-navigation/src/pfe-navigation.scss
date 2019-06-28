@@ -31,6 +31,14 @@ $LOCAL: navigation;
   display: block;
 }
 
+:host(.sticky) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 99;
+}
+
 // ::slotted(*) {
 //   padding-top: #{pfe-local(Padding--vertical)};
 //   padding-bottom: #{pfe-local(Padding--vertical)};

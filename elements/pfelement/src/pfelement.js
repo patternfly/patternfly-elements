@@ -90,16 +90,9 @@ class PFElement extends HTMLElement {
         });
       }
 
-      // Copy over any events from the original element
-      // $.each($('#original').data('events'), function() {
-      //   // iterate registered handler of original
-      //   $.each(this, function() {
-      //     $('#target').bind(this.type, this.handler);
-      //   });
-      // });
-
       // After the content has been copied, hide the original slot
       _slot.style.display = "none";
+      _slot.setAttribute("hidden", true);
       
       return true;
     }

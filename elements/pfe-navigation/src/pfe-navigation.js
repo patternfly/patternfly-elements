@@ -23,6 +23,7 @@ class PfeNavigation extends PFElement {
     this._init = this._init.bind(this);
     
     this._observerHandler = this._observerHandler.bind(this);
+    this._outsideListener = this._outsideListener.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
     this._observer = new MutationObserver(this._observerHandler);
 
@@ -60,13 +61,6 @@ class PfeNavigation extends PFElement {
       this._initialized = this._init();
     }
 
-    // If the nav is set to sticky, inject the height of the nav to the next element in the DOM
-    if(this.hasAttribute("sticky") && this.getAttribute("sticky") != "false") {
-      this.height = this.offsetHeight;
-
-      window.addEventListener("scroll", this._stickyHandler);
-    }
-
     Promise.all([
       customElements.whenDefined(PfeNavigationItem.tag),
       customElements.whenDefined(PfeNavigationMain.tag)
@@ -87,6 +81,7 @@ class PfeNavigation extends PFElement {
     );
 
     window.removeEventListener("scroll", this._stickyHandler);
+    document.removeEventListener("click", this._outsideListener);
 
     this._observer.disconnect();
   }
@@ -98,18 +93,33 @@ class PfeNavigation extends PFElement {
   }
 
   _toggledHandler(event) {
-    if (!this._activeNavigationItem) {
+    // If there is no active navigation item at the moment, open the clicked element
+    if (!this._activeNavigationItem && event.detail.navigationItem !== null) {
       this._activeNavigationItem = event.detail.navigationItem;
+      // Add the overlay to the page
       this.overlay.removeAttribute("hidden");
       return;
     }
 
+    // If the item clicked equals the currently active navigation item
     if (this._activeNavigationItem === event.detail.navigationItem) {
+      // Close the navigation item and remove the overlay
       this._activeNavigationItem = null;
       this.overlay.setAttribute("hidden", true);
       return;
     }
 
+    // If no navigation item is provided
+    if (event.detail.navigationItem === null) {
+      // Close any open navigation items
+      this._activeNavigationItem.expanded = false;
+      // Set active to null and remove the overlay
+      this._activeNavigationItem = null;
+      this.overlay.setAttribute("hidden", true);
+      return;
+    }
+
+    // Otherwise, close the navigation item, open the next one
     this._activeNavigationItem.expanded = false;
     this._activeNavigationItem = event.detail.navigationItem;
   }
@@ -122,6 +132,19 @@ class PfeNavigation extends PFElement {
     }
   }
 
+  _outsideListener(event) {
+    if ((event.target !== this && event.target.closest("pfe-navigation") === null) || event.path[0] === this.overlay) {
+      // this._toggledHandler(event);
+      this.dispatchEvent(
+        new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
+          detail: { navigationItem: null, expanded: false },
+          bubbles: true,
+          composed: true
+        })
+      );
+    }
+  }
+
   _init() {
     let ret = false;
     if(!this._initialized) {
@@ -130,13 +153,20 @@ class PfeNavigation extends PFElement {
         this._observer.disconnect();
       }
 
+      // If the nav is set to sticky, inject the height of the nav to the next element in the DOM
+      if(this.hasAttribute("sticky") && this.getAttribute("sticky") != "false") {
+        this.height = this.offsetHeight;
+        this.style.setProperty("--pfe-navigation--Height", this.height + "px");
+
+        // Run the sticky check on first page load
+        this._stickyHandler();
+
+        window.addEventListener("scroll", this._stickyHandler);
+      }
+
       ret = this._setupMobileNav();
 
-      this.parentElement.addEventListener("click", (event) => {
-        if ((event.target !== this && event.target.closest("pfe-navigation") === null) || event.path[0] === this.overlay) {
-          this._toggledHandler(event);
-        }
-      }, true);
+      document.addEventListener("click", this._outsideListener);
 
       // @IE11 This is necessary so the script doesn't become non-responsive
       if (window.ShadyCSS) {

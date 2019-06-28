@@ -63,6 +63,9 @@ $LOCAL: navigation-item;
 
 ::slotted([slot="tray"]) {
   padding: 24px;
+  max-height: calc(100vh - var(--pfe-navigation--Height, 90px));
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .pfe-navigation-item {

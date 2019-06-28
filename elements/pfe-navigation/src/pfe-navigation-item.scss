@@ -34,19 +34,31 @@ $LOCAL: navigation-item;
 	display: none;
 }
 
-::slotted([slot="trigger"]) {
+// Making the trigger styles an extend to optimize the css output below
+%trigger-styles {
   font-family: #{pfe-var(font-family)};
   text-align: center;
-  font-size: 14px !important;
+  font-size: 14px;
   font-weight: 100;
   margin: 0;
-  cursor: pointer;
-  text-decoration: none;
   white-space: nowrap;
+  color: #{pfe-local(Color)};
+  a {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+  :host([pfe-icon]) & {
+    font-size: 12px;
+  }
 }
 
-:host([pfe-icon]) ::slotted([slot="trigger"]) {
-  font-size: 12px !important;
+#pfe-navigation-item--trigger {
+  @for $n from 1 through 6 {
+    h#{$n} {
+      @extend %trigger-styles;
+    }
+  }
 }
 
 ::slotted([slot="tray"]) {

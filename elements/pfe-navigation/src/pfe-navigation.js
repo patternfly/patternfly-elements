@@ -14,37 +14,6 @@ class PfeNavigation extends PFElement {
     return "pfe-navigation.scss";
   }
 
-  get iconSVG() {
-    return {
-      globe: `<?xml version="1.0" encoding="UTF-8"?>
-      <svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <title>Icon</title>
-          <desc>Created with Sketch.</desc>
-          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="Icon">
-                  <circle id="Oval" cx="9.5" cy="9.5" r="9.5"></circle>
-                  <ellipse id="Oval" cx="9.5" cy="9.5" rx="4.75" ry="9.5"></ellipse>
-                  <path d="M9.5,0 L9.5,19" id="Path"></path>
-                  <path d="M1,14 L18,14" id="Path"></path>
-                  <path d="M0,9.5 L19,9.5" id="Path"></path>
-                  <path d="M1,5 L18,5" id="Path"></path>
-              </g>
-          </g>
-      </svg>`,
-      user: `<?xml version="1.0" encoding="UTF-8"?>
-      <svg width="21px" height="20px" viewBox="0 0 21 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <title>Icon</title>
-          <desc>Created with Sketch.</desc>
-          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
-              <g id="Icon">
-                  <path d="M0,19 C0,13.75 4.25,9.5 9.5,9.5 C14.75,9.5 19,13.75 19,19" id="Path"></path>
-                  <circle id="Oval" cx="9.5" cy="4.75" r="4.75"></circle>
-              </g>
-          </g>
-      </svg>`
-    };
-  }
-
   constructor() {
     super(PfeNavigation);
 
@@ -77,6 +46,10 @@ class PfeNavigation extends PFElement {
     this.languageSlot = this.querySelector(`[slot="language"]`);
     this.loginSlotMobile    = this.querySelector(`[slot="mobile-login"]`);
     this.languageSlotMobile = this.querySelector(`[slot="mobile-language"]`);
+
+    ["search", "login", "language", "site-switcher"].forEach(slot => {
+      this.to_shadowdom(slot, `#pfe-navigation--${slot}`);
+    });
 
     // Capture mobile slots from shadow
     this._menuSlotMobile     = this.shadowRoot.querySelector(`slot[name="mobile-menu"]`);
@@ -318,11 +291,10 @@ class PfeNavigationItem extends PFElement {
     super(PfeNavigationItem);
 
     this.expanded = false;
-    this.trigger = null;
     this.tray = null;
 
-    this._trigger = this.shadowRoot.querySelector(".pfe-navigation-item__trigger");;
-    this._tray = this.shadowRoot.querySelector(".pfe-navigation-item__tray");;
+    this._trigger = this.shadowRoot.querySelector(".pfe-navigation-item__trigger");
+    this._tray = this.shadowRoot.querySelector(".pfe-navigation-item__tray");
     this._icon = this.shadowRoot.querySelector(".pfe-navigation-item__icon");
     this._indicator = this.shadowRoot.querySelector(".indicator");
 
@@ -339,7 +311,8 @@ class PfeNavigationItem extends PFElement {
     const unassigned = [...this.children].filter(child => !child.hasAttribute("slot"));
     unassigned.map(item => item.setAttribute("slot", "trigger"));
 
-    this.trigger = this.querySelector(`[slot="trigger"]`);
+    this.to_shadowdom("trigger", "#pfe-navigation-item--trigger");
+
     this.tray = this.querySelector(`[slot="tray"]`);
 
     this.shadowRoot

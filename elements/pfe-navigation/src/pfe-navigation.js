@@ -43,20 +43,17 @@ class PfeNavigation extends PFElement {
     this.overlay = this.shadowRoot.querySelector(".pfe-navigation__overlay");
 
     // Capture the utility slots from shadow
-    // this.slot = {
-    //   search: this.querySelector(`[slot="search"]`),
-    //   login: this.querySelector(`[slot="login"]`),
-    //   language: this.querySelector(`[slot="language"]`)
-    // };
+    this.slot = {
+      "search": this.querySelector(`[slot="search"]`),
+      "login": this.querySelector(`[slot="login"]`),
+      "language": this.querySelector(`[slot="language"]`),
+      "site-switcher": this.querySelector(`[slot="site-switcher"]`)
+    };
 
     this.mobileSlot = {
       login: this.querySelector(`[slot="mobile-login"]`),
       language: this.querySelector(`[slot="mobile-language"]`)
     };
-
-    ["search", "login", "language", "site-switcher"].forEach(slot => {
-      this.to_shadowdom(slot, `#pfe-navigation--${slot}`);
-    });
 
     // Capture mobile slots from shadow
     this._mobileSlot = {
@@ -67,18 +64,6 @@ class PfeNavigation extends PFElement {
     if (this.children.length) {
       this._initialized = this._init();
     }
-
-    Promise.all([
-      customElements.whenDefined(PfeNavigationItem.tag),
-      customElements.whenDefined(PfeNavigationMain.tag)
-    ]).then(() => {
-      // Do a thing once items and main are loaded?
-      this._observer.observe(this, {
-        childList: true,
-        subtree: true,
-        characterData: true
-      });
-    });
   }
 
   disconnectedCallback() {
@@ -223,6 +208,13 @@ class PfeNavigation extends PFElement {
         // Hide the slot
         this.mobileSlot[type].setAttribute("hidden", true);
         this.mobileSlot[type].style.display = "none";
+      });
+
+      ["search", "login", "language", "site-switcher"].forEach(slot => {
+        this.to_shadowdom(slot, `#pfe-navigation--${slot}`);
+        // Hide the original slots
+        this.slot[slot].setAttribute("hidden", true);
+        this.slot[slot].style.display = "none";
       });
 
       // Set up the mobile main menu

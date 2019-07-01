@@ -42,7 +42,8 @@ $LOCAL: navigation-item;
 
 :host([hidden]),
 ::slotted([slot="tray"][hidden]) {
-	display: none;
+  display: none;
+  visibility: hidden;
 }
 
 // Making the trigger styles an extend to optimize the css output below

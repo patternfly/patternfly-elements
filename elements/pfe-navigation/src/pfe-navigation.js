@@ -23,6 +23,7 @@ class PfeNavigation extends PFElement {
     this._init = this._init.bind(this);
     
     this._observerHandler = this._observerHandler.bind(this);
+    this._resizeHandler = this._resizeHandler.bind(this);
     this._outsideListener = this._outsideListener.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
     this._observer = new MutationObserver(this._observerHandler);
@@ -64,6 +65,8 @@ class PfeNavigation extends PFElement {
     if (this.children.length) {
       this._initialized = this._init();
     }
+
+    window.addEventListener("resize", this._resizeHandler);
   }
 
   disconnectedCallback() {
@@ -73,6 +76,7 @@ class PfeNavigation extends PFElement {
     );
 
     window.removeEventListener("scroll", this._stickyHandler);
+    window.removeEventListener("resize", this._resizeHandler);
     document.removeEventListener("click", this._outsideListener);
 
     this._observer.disconnect();
@@ -82,6 +86,18 @@ class PfeNavigation extends PFElement {
     // Reset the state to false, rerun the initializer
     this._initialized = false;
     this._initialized = this._init();
+  }
+
+  _resizeHandler(event) {
+    if(this._activeNavigationItem !== null) {
+      let isMenu = this._activeNavigationItem.getAttribute("pfe-icon") === "menu";
+      let isDesktop = window.outerWidth >= 996;
+      if(isDesktop && isMenu) {
+        this._activeNavigationItem.expanded = false;
+        this._activeNavigationItem = null;
+        this.overlay.setAttribute("hidden", true);
+      }
+    }
   }
 
   _toggledHandler(event) {
@@ -95,6 +111,7 @@ class PfeNavigation extends PFElement {
 
     // If the item clicked equals the currently active navigation item
     if (this._activeNavigationItem === event.detail.navigationItem) {
+      this._activeNavigationItem.expanded = false;
       // Close the navigation item and remove the overlay
       this._activeNavigationItem = null;
       this.overlay.setAttribute("hidden", true);

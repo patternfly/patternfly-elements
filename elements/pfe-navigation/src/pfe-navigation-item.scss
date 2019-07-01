@@ -6,8 +6,19 @@ $LOCAL: navigation-item;
   --pfe-navigation-item--Color: #{pfe-color(text--on-dark)};
   --pfe-navigation-item--BackgroundColor: #{pfe-color(surface--darkest)};
   --pfe-navigation-item--BorderTopColor: transparent;
+  --pfe-navigation-item--Padding--horizontal: #{pfe-var(container-padding)};
+  --pfe-navigation-item__tray--Padding: #{pfe-var(container-padding)};
 
   --pfe-navigation-item__icon--Background: none;
+  
+  @media screen and (min-width: pfe-breakpoint(md)) {
+    --pfe-navigation-item--Padding--horizontal: calc(#{pfe-var(container-padding)} / 2);
+    --pfe-navigation-item__tray--Padding: calc(#{pfe-var(container-padding)} * 2);
+  }
+
+  @media screen and (min-width: pfe-breakpoint(xl)) {
+    --pfe-navigation-item--Padding--horizontal: #{pfe-var(container-padding)};
+  }
 
   height: 100%;
   display: flex;
@@ -62,7 +73,7 @@ $LOCAL: navigation-item;
 }
 
 ::slotted([slot="tray"]) {
-  padding: 24px;
+  padding: var(--pfe-navigation-item__tray--Padding);
   max-height: calc(100vh - var(--pfe-navigation--Height, 90px));
   overflow-x: hidden;
   overflow-y: scroll;
@@ -78,7 +89,7 @@ $LOCAL: navigation-item;
     }
 
     :host(:not([pfe-icon])) & {
-      @include pfe-arrow(down, gray, $width: 6px, $height: 6px);
+      @include pfe-arrow(down, #{pfe-var(feedback--default--lightest)}, $width: 6px, $height: 6px);
       position: absolute;
       bottom: 13px;
     }
@@ -110,9 +121,9 @@ $LOCAL: navigation-item;
     flex-grow: 1;
 
     background-color: #{pfe-local(BackgroundColor)};
-    padding: 20px 16px !important;
+    padding: var(--pfe-navigation--Padding--vertical) var(--pfe-navigation-item--Padding--horizontal) !important;
 
-    border-top: 4px solid #{pfe-local(BorderTopColor)};
+    border-top: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderTopColor)};
     color: #{pfe-local(Color)};
 
     &:hover,

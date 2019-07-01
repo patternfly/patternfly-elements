@@ -3,6 +3,8 @@
 $LOCAL: navigation;
 
 :host {
+  --pfe-navigation__overlay--BackgroundColor: var(--pfe-theme--overlay--BackgroundColor, rgba(37, 37, 37, 0.5));
+
   // Default spacing values
   --pfe-navigation--Padding--vertical: 20px; // calc(#{pfe-var(container-spacer)} * 4);
   --pfe-navigation--Padding--horizontal: #{pfe-var(container-spacer)};
@@ -14,7 +16,7 @@ $LOCAL: navigation;
   --pfe-navigation--Color: #{pfe-color(surface--darkest--text)};
   --pfe-navigation--Border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
   --pfe-navigation--Width: auto;
-  --pfe-navigation--Height: auto;
+  --pfe-navigation--MinHeight: 72px;
 
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
@@ -39,20 +41,12 @@ $LOCAL: navigation;
   z-index: 99;
 }
 
-// ::slotted(*) {
-//   padding-top: #{pfe-local(Padding--vertical)};
-//   padding-bottom: #{pfe-local(Padding--vertical)};
-// }
-
 ::slotted([slot="logo"]) {
   margin: 0 !important;
-  
   padding-top: #{pfe-local(Padding--vertical)} !important;
-  padding-right: 16px !important;
+  padding-right: #{pfe-var(container-padding)} !important;
   padding-bottom: #{pfe-local(Padding--vertical)} !important;
-
-  // min-width: 80px;
-  max-height: 72px;
+  max-height: #{pfe-local(MinHeight)};
 }
 
 ::slotted([slot="skip"]) {
@@ -69,7 +63,7 @@ $LOCAL: navigation;
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
   color: var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
-  text-decoration: none;
+  text-decoration: var(--pfe-broadcasted--link--text-decoration, #{pfe-var(link--text-decoration)});
 }
 
 @each $icon in (user, globe) {
@@ -105,14 +99,14 @@ $LOCAL: navigation;
     align-items: stretch;
     justify-content: space-between;
 
-    padding: 0 24px;
+    padding: 0 calc(#{pfe-var(container-padding)} * 2);
     @media (min-width: #{pfe-breakpoint(lg)}) {
       padding: 0;
     }
   }
   &__overlay {
     display: block;
-    background-color: #25252580;
+    background-color: var(--pfe-navigation__overlay--BackgroundColor);;
     position: absolute;
     top: 0;
     left: 0;
@@ -140,7 +134,6 @@ $LOCAL: navigation;
     }
   }
   &__utility {
-    grid-area: utility;
     display: flex;
     flex-flow: row nowrap;
     align-items: stretch;
@@ -170,7 +163,7 @@ $LOCAL: navigation;
       &--columns {
         display: flex;
         flex-flow: row nowrap;
-        padding: 24px 0;
+        padding: calc(#{pfe-var(container-spacer)} * 2) 0;
       }
       &--item {
         display: flex;
@@ -180,27 +173,20 @@ $LOCAL: navigation;
         color: var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
         stroke: var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
         &:not(:last-child) {
-          margin-right: 40px;
+          margin-right: calc(#{pfe-var(container-spacer)} * 2.5);
         }
-        &:hover {
-          color: var(--pfe-broadcasted--color--ui-link--hover, #{pfe-color(ui-link--hover)});
-          stroke: var(--pfe-broadcasted--color--ui-link--hover, #{pfe-color(ui-link--hover)});
-        }
-        &:focus {
-          color: var(--pfe-broadcasted--color--ui-link--focus, #{pfe-color(ui-link--focus)});
-          stroke: var(--pfe-broadcasted--color--ui-link--focus, #{pfe-color(ui-link--focus)});
+        @each $state in (hover, focus, visited) {
+          &:#{$state} {
+            color: var(--pfe-broadcasted--color--ui-link--#{$state}, #{pfe-color(ui-link--#{$state})});
+            stroke: var(--pfe-broadcasted--color--ui-link--#{$state}, #{pfe-color(ui-link--#{$state})});
+          }
         }
       }
       &--icon {
         display: inline-block;
-        width: 20px;
-        height: 20px;
-        margin-right: 12px;
-        // stroke: var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
-        // &.pfe-icon--user,
-        // &.pfe-icon--globe {
-        //   stroke: var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
-        // }
+        width: 1em;
+        height: 1em;
+        margin-right: #{pfe-var(container-spacer)};
       }
     }
   }

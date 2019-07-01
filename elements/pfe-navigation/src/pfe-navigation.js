@@ -31,6 +31,10 @@ class PfeNavigation extends PFElement {
     return "pfe-navigation.scss";
   }
 
+  get schemaUrl() {
+    return "pfe-navigation.json";
+  }
+
   constructor() {
     super(PfeNavigation);
 
@@ -463,3 +467,7 @@ class PfeNavigationMain extends PFElement {
 PFElement.create(PfeNavigationItem);
 PFElement.create(PfeNavigationMain);
 PFElement.create(PfeNavigation);
+
+export default PfeNavigation;
+
+

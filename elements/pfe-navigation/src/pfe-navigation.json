@@ -1,0 +1,154 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Navigation",
+    "description": "This element renders a navigation component.",
+    "type": "object",
+    "tag": "pfe-navigation",
+    "class": "pfe-navigation",
+    "category": "content",
+    "properties": {
+      "slots": {
+        "title": "Slots",
+        "description": "Definition of the supported slots",
+        "type": "object",
+        "properties": {
+          "skip": {
+            "title": "Skip navigation",
+            "type": "array",
+            "namedSlot": false,
+            "items": {
+              "title": "Item",
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "logo": {
+            "title": "Logo",
+            "type": "array",
+            "namedSlot": false,
+            "items": {
+              "title": "Item",
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "search": {
+            "title": "Search",
+            "type": "array",
+            "namedSlot": false,
+            "items": {
+              "title": "Item",
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "main": {
+            "title": "Main navigation",
+            "type": "array",
+            "namedSlot": false,
+            "items": {
+              "title": "Item",
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "language": {
+            "title": "Language switcher",
+            "type": "array",
+            "namedSlot": false,
+            "items": {
+              "title": "Item",
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "login": {
+            "title": "Log in",
+            "type": "array",
+            "namedSlot": false,
+            "items": {
+              "title": "Item",
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "site-switcher": {
+            "title": "Site switcher",
+            "type": "array",
+            "namedSlot": false,
+            "items": {
+              "title": "Item",
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "mobile-login": {
+            "title": "Mobile login experience",
+            "type": "array",
+            "namedSlot": false,
+            "items": {
+              "title": "Item",
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          },
+          "mobile-language": {
+            "title": "Mobile language experience",
+            "type": "array",
+            "namedSlot": false,
+            "items": {
+              "title": "Item",
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "attributes": {
+        "title": "Attributes",
+        "type": "object",
+        "properties": {
+          "sticky": {
+            "title": "Sticky navigation",
+            "type": "boolean",
+            "default": true
+          },
+          "close-on-click": {
+            "title": "Close navigation on click event",
+            "type": "string",
+            "enum": [ "external" ],
+            "default": "external"
+          }
+        }
+      }
+    },
+    "required": ["slots", "attributes"],
+    "additionalProperties": false
+  }

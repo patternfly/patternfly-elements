@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "Link list",
-    "description": "This element renders....",
+    "description": "This element renders a styled list of links.",
     "type": "object",
     "tag": "pfe-link-list",
     "class": "pfe-link-list",
@@ -11,7 +11,21 @@
         "title": "Slots",
         "description": "Definition of the supported slots",
         "type": "object",
-        "properties": {}
+        "properties": {
+          "content": {
+            "title": "Content",
+            "type": "array",
+            "namedSlot": false,
+            "items": {
+              "title": "Body item",
+              "oneOf": [
+                {
+                  "$ref": "raw"
+                }
+              ]
+            }
+          }
+        }
       },
       "attributes": {
         "title": "Attributes",

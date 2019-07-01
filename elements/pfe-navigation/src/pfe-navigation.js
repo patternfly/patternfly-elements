@@ -44,9 +44,9 @@ class PfeNavigation extends PFElement {
 
     // Capture the utility slots from shadow
     this.slot = {
-      "search": this.querySelector(`[slot="search"]`),
-      "login": this.querySelector(`[slot="login"]`),
-      "language": this.querySelector(`[slot="language"]`),
+      search: this.querySelector(`[slot="search"]`),
+      login: this.querySelector(`[slot="login"]`),
+      language: this.querySelector(`[slot="language"]`),
       "site-switcher": this.querySelector(`[slot="site-switcher"]`)
     };
 
@@ -210,13 +210,6 @@ class PfeNavigation extends PFElement {
         this.mobileSlot[type].style.display = "none";
       });
 
-      ["search", "login", "language", "site-switcher"].forEach(slot => {
-        this.to_shadowdom(slot, `#pfe-navigation--${slot}`);
-        // Hide the original slots
-        this.slot[slot].setAttribute("hidden", true);
-        this.slot[slot].style.display = "none";
-      });
-
       // Set up the mobile main menu
       triggers.forEach(trigger => {
         const clone = trigger.cloneNode(true);
@@ -247,6 +240,11 @@ class PfeNavigation extends PFElement {
 
       this._mobileSlot.menu.innerHTML = "";
       this._mobileSlot.menu.appendChild(fragment);
+
+      ["search", "login", "language", "site-switcher"].forEach(slot => {
+        // Move them to the ShadowDOM
+        this.to_shadowdom(slot, `#pfe-navigation--${slot}`);
+      });
     }
 
     return true;

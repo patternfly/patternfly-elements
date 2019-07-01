@@ -31,6 +31,13 @@ $LOCAL: navigation-item;
   display: flex;
 }
 
+:host(:not([pfe-icon="menu"]):not([pfe-icon="bento"])) {
+  display: none;
+  @media screen and (min-width: pfe-breakpoint(lg)) {
+    display: flex;
+  }
+}
+
 @each $icon in (bento, user, globe, search, menu) {
   :host([pfe-icon="#{$icon}"]) {
     --pfe-navigation-item__icon--Background: #{map-get($icons, #{$icon}--on-dark)} no-repeat;

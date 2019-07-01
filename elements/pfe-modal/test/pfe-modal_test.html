@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../pfe-modal.js"></script>
+  </head>
+  <body>
+
+    <pfe-modal>
+      This is the element content.
+    </pfe-modal>
+
+    <script>
+      suite('<pfe-modal>', () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(document.querySelector('pfe-modal'), customElements.get("pfe-modal", 'pfe-modal should be an instance of pfeModal'));
+        });
+
+        // you need to write more tests!!!
+
+      });
+    </script>
+  </body>
+</html>

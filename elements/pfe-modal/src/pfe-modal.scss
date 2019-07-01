@@ -1,0 +1,54 @@
+@import "../../pfe-sass/pfe-sass";
+:host {
+  display: block;
+  background-color: white;
+}
+
+:host([hidden]) {
+  display: none;
+}
+:host {
+    --pfe-modal__overlay--BackgroundColor: var(--pfe-theme--overlay--BackgroundColor, rgba(37, 37, 37, 0.5));
+
+}
+
+.pfe-modal {
+	&__wrapper {
+		position: absolute;
+		z-index: 2;
+		left: 0;
+		right: 0;
+		max-width: 70vw;
+		min-width: 50vw;
+		max-height: 70vh;
+		min-height: 40vh;
+		margin: 0 auto;
+		background-color: white;
+		padding: 32px;
+		box-shadow: 5px 5px rgba(21, 21, 21, 0.1);
+	}
+
+	&__close-btn {
+		position: absolute;
+		top: 32px;
+		right: 32px;
+		transform: rotate(45deg);
+		font-size: 40px;
+		cursor: pointer;
+	}
+
+	&__overlay {
+	    display: block;
+	    background-color: var(--pfe-modal__overlay--BackgroundColor);
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 100vw;
+	    height: 100vh;
+	    z-index: 1;
+	    // &[hidden] {
+	    //   display: none;
+	    // }
+	}
+
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PatternFly Element | pfe-modal Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../pfe-modal.umd.js'])</script>
+  </head>
+  <body unresolved>
+    <h1>&lt;pfe-modal&gt;</h1>
+    <ul>
+      <li><a href="#modal1">Open modal with a header</a></li>
+      <li><a href="#modal2">Open modal without a header</a></li>
+    </ul>
+    <pfe-modal id="modal1">
+      <pfe-modal-header role="heading" slot="header">
+        <h2>Modal with a header</h2>
+      </pfe-modal-header>
+      <pfe-modal-body role="region" slot="body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </pfe-modal-body>
+    </pfe-modal>
+    <pfe-modal id="modal2" hidden>
+      <pfe-modal-body role="region" slot="body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </pfe-modal-body>
+    </pfe-modal>
+  </body>
+</html>

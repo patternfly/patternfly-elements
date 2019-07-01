@@ -153,17 +153,18 @@ $LOCAL: navigation;
     &--mobile {
       display: grid;
       grid-gap: #{pfe-var(container-spacer)};
-      ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: grid;
-        grid-gap: #{pfe-var(container-spacer)};
+      &--top {
+        @media screen and (min-width: pfe-breakpoint(sm)) {
+          display: none;
+        }
       }
       &--columns {
         display: flex;
         flex-flow: row nowrap;
         padding: calc(#{pfe-var(container-spacer)} * 2) 0;
+        @media screen and (min-width: pfe-breakpoint(sm)) {
+          display: none;
+        }
       }
       &--item {
         display: flex;

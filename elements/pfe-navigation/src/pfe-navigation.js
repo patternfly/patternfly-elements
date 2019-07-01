@@ -240,11 +240,6 @@ class PfeNavigation extends PFElement {
 
       this._mobileSlot.menu.innerHTML = "";
       this._mobileSlot.menu.appendChild(fragment);
-
-      ["search", "login", "language", "site-switcher"].forEach(slot => {
-        // Move them to the ShadowDOM
-        this.to_shadowdom(slot, `#pfe-navigation--${slot}`);
-      });
     }
 
     return true;

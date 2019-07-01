@@ -11,7 +11,7 @@ $LOCAL: navigation-item;
 
   --pfe-navigation-item__icon--Background: none;
   
-  @media screen and (min-width: pfe-breakpoint(md)) {
+  @media screen and (min-width: pfe-breakpoint(lg)) {
     --pfe-navigation-item--Padding--horizontal: calc(#{pfe-var(container-padding)} / 2);
     --pfe-navigation-item__tray--Padding: calc(#{pfe-var(container-padding)} * 2);
   }
@@ -33,7 +33,7 @@ $LOCAL: navigation-item;
 
 :host(:not([pfe-icon="menu"]):not([pfe-icon="bento"])) {
   display: none;
-  @media screen and (min-width: pfe-breakpoint(lg)) {
+  @media screen and (min-width: pfe-breakpoint(sm)) {
     display: flex;
   }
 }

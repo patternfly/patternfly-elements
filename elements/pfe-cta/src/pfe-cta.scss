@@ -117,11 +117,12 @@ $pfe-cta__arrow-size: 0.313em;
 }
 
 ::slotted(a:focus) {
+  outline: none !important;
   color: #{pfe-local(Color--focus)};
-  outline: none;
 }
 
 :host(:focus-within) {
+  outline: none !important;
   background-color: #{pfe-local(BackgroundColor--focus)};
   border-color:     #{pfe-local(BorderColor--focus)};
 

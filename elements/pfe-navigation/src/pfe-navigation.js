@@ -64,14 +64,6 @@ class PfeNavigation extends PFElement {
 
     this.overlay = this.shadowRoot.querySelector(".pfe-navigation__overlay");
 
-    // Capture the utility slots from shadow
-    this.slot = {
-      search: this.querySelector(`[slot="search"]`),
-      login: this.querySelector(`[slot="login"]`),
-      language: this.querySelector(`[slot="language"]`),
-      "site-switcher": this.querySelector(`[slot="site-switcher"]`)
-    };
-
     this.mobileSlot = {
       login: this.querySelector(`[slot="mobile-login"]`),
       language: this.querySelector(`[slot="mobile-language"]`)

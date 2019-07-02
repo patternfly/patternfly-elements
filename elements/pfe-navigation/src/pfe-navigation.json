@@ -15,7 +15,7 @@
           "skip": {
             "title": "Skip navigation",
             "type": "array",
-            "namedSlot": false,
+            "namedSlot": true,
             "items": {
               "title": "Item",
               "oneOf": [
@@ -28,7 +28,7 @@
           "logo": {
             "title": "Logo",
             "type": "array",
-            "namedSlot": false,
+            "namedSlot": true,
             "items": {
               "title": "Item",
               "oneOf": [
@@ -41,7 +41,7 @@
           "search": {
             "title": "Search",
             "type": "array",
-            "namedSlot": false,
+            "namedSlot": true,
             "items": {
               "title": "Item",
               "oneOf": [
@@ -67,7 +67,7 @@
           "language": {
             "title": "Language switcher",
             "type": "array",
-            "namedSlot": false,
+            "namedSlot": true,
             "items": {
               "title": "Item",
               "oneOf": [
@@ -80,7 +80,7 @@
           "login": {
             "title": "Log in",
             "type": "array",
-            "namedSlot": false,
+            "namedSlot": true,
             "items": {
               "title": "Item",
               "oneOf": [
@@ -93,7 +93,7 @@
           "site-switcher": {
             "title": "Site switcher",
             "type": "array",
-            "namedSlot": false,
+            "namedSlot": true,
             "items": {
               "title": "Item",
               "oneOf": [
@@ -106,7 +106,7 @@
           "mobile-login": {
             "title": "Mobile login experience",
             "type": "array",
-            "namedSlot": false,
+            "namedSlot": true,
             "items": {
               "title": "Item",
               "oneOf": [
@@ -119,7 +119,7 @@
           "mobile-language": {
             "title": "Mobile language experience",
             "type": "array",
-            "namedSlot": false,
+            "namedSlot": true,
             "items": {
               "title": "Item",
               "oneOf": [

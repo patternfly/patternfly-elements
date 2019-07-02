@@ -53,7 +53,7 @@ $LOCAL: navigation;
   @include pfe-sr-only;
 }
 
-::slotted([slot="main"]) {
+::slotted(:not([slot])) {
   display: none;
   @media (min-width: #{pfe-breakpoint(lg)}) {
     display: contents;

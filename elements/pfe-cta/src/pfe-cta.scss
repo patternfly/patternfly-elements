@@ -126,7 +126,6 @@ $pfe-cta__arrow-size: 0.313em;
 
 
 :host([priority]) {
-  display: block;
   .pfe-cta--wrapper {
     display: flex;
     flex-flow: row nowrap;
@@ -134,7 +133,7 @@ $pfe-cta__arrow-size: 0.313em;
   }
 }
 /// ===========================================================================
-/// BELOW THIS POINT, VARIABLE OVERRIDES ONLY
+/// BELOW THIS POINT, LOCAL VARIABLE OVERRIDES ONLY
 
 
 
@@ -307,7 +306,7 @@ $pfe-cta__arrow-size: 0.313em;
 
 :host([priority="primary"][color="complement"]) {
   --pfe-cta--BackgroundColor:          #{pfe-color(surface--complement)};
-  --pfe-cta--BackgroundColor--hover:   rgba(16, 86, 92, .95);
+  --pfe-cta--BackgroundColor--hover:   #0057ad;
   --pfe-cta--BackgroundColor--focus:   #{pfe-color(surface--complement)};
 
   --pfe-cta--BorderColor:              #{pfe-color(surface--complement)};

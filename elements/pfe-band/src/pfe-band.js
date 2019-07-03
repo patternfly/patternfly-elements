@@ -180,19 +180,19 @@ class PfeBand extends PFElement {
   }
 
   // Set the children's context if parent background is dark
-  _updateContext(context) {
-    if (["darkest", "darker", "complement", "accent"].includes(context)) {
-      ["pfe-cta"].forEach(elementName => {
-        const els = [...this.querySelectorAll(`${elementName}`)];
-        els.forEach(el => {
-          const myContainer = el.closest("[pfe-type=container]");
-          if (myContainer === this || myContainer === null) {
-            el.setAttribute("on", "dark");
-          }
-        });
-      });
-    }
-  }
+  //_updateContext(context) {
+  //  if (["darkest", "darker", "complement", "accent"].includes(context)) {
+  //    ["pfe-cta"].forEach(elementName => {
+  //      const els = [...this.querySelectorAll(`${elementName}`)];
+  //      els.forEach(el => {
+  //        const myContainer = el.closest("[pfe-type=container]");
+  //        if (myContainer === this || myContainer === null) {
+  //          el.setAttribute("on", "dark");
+  //        }
+  //      });
+  //    });
+  //  }
+  //}
 }
 
 PFElement.create(PfeBand);

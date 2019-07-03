@@ -34,6 +34,7 @@
     ])</script>
 
     <style>
+
       body {
         margin: 0;
       }
@@ -68,6 +69,7 @@
       pfe-cta {
         margin-top: 10px;
         margin-left: 20px;
+        --pfe-theme--color--surface--complement: #0066cc;
       }
 
       a {
@@ -77,7 +79,7 @@
         padding: 60px 15px;
         background:#222;
         --pfe-broadcasted--color--text:             var(--pfe-theme--color--text--on-dark, yellow);
-        --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--ui-link--on-dark, pink);
+        --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--ui-link--on-dark, red);
         --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--ui-link--on-dark--hover, orange);
         --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--ui-link--on-dark--visited, pink);
         --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--ui-link--on-dark--focus, orange);
@@ -86,6 +88,11 @@
         padding: 60px 15px;
         background:#cce7e8;
       }
+      .custom-on-dark-band {
+        padding:30px 15px;
+        background:#0d053e;
+
+      }
     </style>
   </head>
   <body unresolved>
@@ -93,16 +100,6 @@
       <h1 slot="pfe-band--header">&lt;pfe-cta&gt;</h1>
     </pfe-band>
 
-<!-- @TODO Address alt CTA styles when we have clarification about how they should be used -->
-<!--     <pfe-band>
-      <h2 slot="pfe-band--header">Alternatives</h2>
-      <p slot="pfe-band--header" class="button-layout">
-        <pfe-cta priority="primary" alt><a href="#">Primary</a></pfe-cta>
-        <pfe-cta priority="secondary" alt><a href="#">Secondary</a></pfe-cta>
-      </p>
-      <hr>
-    </pfe-band>
- -->
     <pfe-band pfe-color="lighter">
       <h2 slot="pfe-band--header">Default CTA styles</h2>
       <p slot="pfe-band--header" class="button-layout">
@@ -136,12 +133,7 @@
             <pfe-cta priority="secondary" color="accent"><a href="#">Secondary</a></pfe-cta>
           </p>
         </pfe-card>
-        <pfe-card color="lightest">
-          <h3><code>color=alt</code></h3><h3>(applies "link blue" color to secondary only)</h3>
-          <p class="button-layout">
-            <pfe-cta priority="secondary" color="alt"><a href="#">Secondary</a></pfe-cta>
-          </p>
-        </pfe-card>
+
       </div>
     </pfe-band>
 
@@ -173,12 +165,7 @@
             <pfe-cta priority="secondary" color="accent"><a href="#">Secondary</a></pfe-cta>
           </p>
         </pfe-card>
-        <pfe-card color="darkest">
-          <h3><code>color=alt</code></h3><h3>(applies "link blue" color to secondary only)</h3>
-          <p class="button-layout">
-            <pfe-cta priority="secondary" color="alt"><a href="#">Secondary</a></pfe-cta>
-          </p>
-        </pfe-card>
+
       </div>
     </pfe-band>
 
@@ -200,7 +187,6 @@
           <pfe-cta priority="primary" color="complement"><a href="#">Primary complement</a></pfe-cta>
           <pfe-cta priority="secondary" color="complement"><a href="#">Secondary complement</a></pfe-cta>
 
-          <pfe-cta priority="secondary" color="alt"><a href="#">Secondary alt</a></pfe-cta>
         </p>
       </div>
     <div class="custom-dark-band" >
@@ -216,11 +202,10 @@
           <pfe-cta priority="primary" color="complement"><a href="#">Primary complement</a></pfe-cta>
           <pfe-cta priority="secondary" color="complement"><a href="#">Secondary complement</a></pfe-cta>
 
-          <pfe-cta priority="secondary" color="alt"><a href="#">Secondary alt</a></pfe-cta>
         </p>
       </div>
 
-      <div style="background:#39045c;padding:30px 0;">
+      <div class="custom-on-dark-band">
           <h2 slot="pfe-band--header" style="color:white;">Custom band: <code>on=dark</code> (deprecated)</h2>
           <p slot="pfe-band--body" class="button-layout">
             <pfe-cta on="dark" ><a href="#">Default: on dark (color responsive)</a></pfe-cta>
@@ -233,7 +218,6 @@
             <pfe-cta priority="primary" color="complement"><a href="#">Primary complement</a></pfe-cta>
             <pfe-cta priority="secondary" color="complement"><a href="#">Secondary complement</a></pfe-cta>
 
-            <pfe-cta priority="secondary" color="alt"><a href="#">Secondary alt</a></pfe-cta>
           </p>
         </div>
   </body>

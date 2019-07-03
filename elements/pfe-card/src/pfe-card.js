@@ -127,10 +127,6 @@ class PfeCard extends PFElement {
     if (this.imageSrc) {
       this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
     }
-    // Initialize the context setting for the children elements
-    if (this.backgroundColor) {
-      this._updateContext(this.backgroundColor);
-    }
 
     this._observer.observe(this, { childList: true });
   }
@@ -159,8 +155,7 @@ class PfeCard extends PFElement {
   // Update the color attribute and contexts
   _colorChanged(attr, oldValue, newValue) {
     this[attr].value = newValue;
-    // If the new value has a dark background, update children elements
-    this._updateContext(newValue);
+
   }
 
   // Update the background image
@@ -169,22 +164,6 @@ class PfeCard extends PFElement {
     this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
   }
 
-  // Set the children's context if parent background is dark
-  //_updateContext(context) {
-  //  if (
-  //    ["darkest", "darker", "dark", "complement", "accent"].includes(context)
-  //  ) {
-  //    ["pfe-cta"].forEach(elementName => {
-  //      const els = [...this.querySelectorAll(`${elementName}`)];
-  //      els.forEach(el => {
-  //        const myContainer = el.closest("[pfe-type=container]");
-  //        //if (myContainer === this || myContainer === null) {
-  //        //  el.setAttribute("on", "dark");
-  //        //}
-  //      });
-  //    });
-  //  }
-  //}
 }
 
 PFElement.create(PfeCard);

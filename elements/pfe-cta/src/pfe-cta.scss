@@ -103,7 +103,7 @@ $pfe-cta__arrow-size: 0.313em;
 
 ::slotted(a) {
   display: inline;
-  color: #{pfe-local(Color)} !important;
+  color: #{pfe-local(Color, #003366)} !important;
 
   padding: #{pfe-local(Padding)};
   text-decoration: none;
@@ -176,29 +176,6 @@ $pfe-cta__arrow-size: 0.313em;
 }
 
 /// ===========================================================================
-/// COLOR=ALT
-
-// for secondary only, it uses the link color
-
-:host([priority="secondary"][color="alt"]) {
-  --pfe-cta--BackgroundColor:          transparent;
-  --pfe-cta--BackgroundColor--hover:   #{pfe-color(ui-link)};
-  --pfe-cta--BackgroundColor--focus:   #{pfe-color(surface--lighter)};
-
-  --pfe-cta--BorderColor:              #{pfe-color(ui-link)};
-  --pfe-cta--BorderColor--hover:       #{pfe-color(ui-link)};
-  --pfe-cta--BorderColor--focus:       #{pfe-color(ui-link)};
-
-  --pfe-cta__inner--BorderColor:        transparent;
-  --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-link)};
-
-  --pfe-cta--Color:                    #{pfe-color(ui-link)};
-  --pfe-cta--Color--hover:             #{pfe-color(ui-base--text)};
-  --pfe-cta--Color--focus:             #{pfe-color(ui-link)};
-}
-
-
-/// ===========================================================================
 // %^&$#@%^&*$#@&$*#@^&$(#@^$&*#@^$&*@#^$&*(@#^$&*#@^$&*#@^$&*#@$#))
 
 /* Broadcast interception! Tune into whatever colors the containers are offering up, per priority level */
@@ -219,20 +196,17 @@ $pfe-cta__arrow-size: 0.313em;
   --pfe-cta--Color:                   var(--pfe-broadcasted--color--text, #{pfe-color(surface--darkest)});
   --pfe-cta--Color--focus:            var(--pfe-broadcasted--color--text, #{pfe-color(surface--darkest)});
 }
-:host([priority="secondary"][color="alt"]) {
-  --pfe-cta--BackgroundColor--focus:  #{pfe-color(surface--lighter)};
-  --pfe-cta--BorderColor:             var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
-  --pfe-cta--Color:                   var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
-  --pfe-cta--Color--focus:            var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
-}
+
+// No need to define broadcast colors below this point, 
+// cta--Color isnt using broadcast anymore from here on out because these attributes win out over broadcast vars #opinionated
 
 // %^&$#@%^&*$#@&$*#@^&$(#@^$&*#@^$&*@#^$&*(@#^$&*#@^$&*#@^$&*#@$#))
 
-// No need to define broadcast colors below this point, 
-// cta--Color isnt using broadcast anymore from here on out because these attributes trump broadcast #opinionated
+
+
 
 /// ===========================================================================
-/// PRIMARY CTAs
+/// PRIMARY CTAs  
 /// ===========================================================================
 :host([priority="primary"]) {
   // Button padding and border radius settings
@@ -295,10 +269,6 @@ $pfe-cta__arrow-size: 0.313em;
     --pfe-cta--Color--hover: #{pfe-color(ui-link)};
 }
 
-:host([priority="secondary"][color="alt"][on="dark"]) {
-  --pfe-cta--BorderColor:      #{pfe-radio(ui-link)};
-  --pfe-cta--Color:            #{pfe-radio(ui-link)};
-}
 
 /// ===========================================================================
 /// COLOR=ACCENT

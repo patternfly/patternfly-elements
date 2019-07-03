@@ -178,10 +178,12 @@ $pfe-cta__arrow-size: 0.313em;
 /// ===========================================================================
 // %^&$#@%^&*$#@&$*#@^&$(#@^$&*#@^$&*@#^$&*(@#^$&*#@^$&*#@^$&*#@$#))
 
-/* Broadcast interception! Tune into whatever colors the containers are offering up, per priority level */
-// primary sets its own background colors, so it ignores broadcast 
-// if there is no broadcast, these are *still* seen by the browser, so set fallbacks here!
-// fallback values should match whats above 
+// Broadcast interception! Tune into whatever colors the containers are offering up, per priority level 
+
+// - The location of these styles in the doc is important
+// - priority="primary" sets its own background colors, so it ignores broadcast 
+// - if there is no broadcast variable available, these are still seen by the browser, so we also set fallbacks here!
+// - Fallback values should match whats above
 
 //default
 :host(:not([priority])) {
@@ -197,8 +199,8 @@ $pfe-cta__arrow-size: 0.313em;
   --pfe-cta--Color--focus:            var(--pfe-broadcasted--color--text, #{pfe-color(surface--darkest)});
 }
 
-// No need to define broadcast colors below this point, 
-// cta--Color isnt using broadcast anymore from here on out because these attributes win out over broadcast vars #opinionated
+// No need to define broadcast colors below this point,  --pfe-cta--Color isnt using broadcast anymore from here on out 
+// because these attributes should win out over broadcast variables #opinionated
 
 // %^&$#@%^&*$#@&$*#@^&$(#@^$&*#@^$&*@#^$&*(@#^$&*#@^$&*#@^$&*#@$#))
 

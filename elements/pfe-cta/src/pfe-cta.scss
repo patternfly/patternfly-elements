@@ -245,7 +245,7 @@ $pfe-cta__arrow-size: 0.313em;
 /// ===========================================================================
 /// ON DARK (deprecated) - this will set 
 
-:host(:not([priority][on="dark"])) {
+:host(:not([priority])[on="dark"]) {
   --pfe-cta--Color:        #{pfe-color(ui-link--on-dark)};
   --pfe-cta--Color--hover: #{pfe-color(ui-link--on-dark--hover)};
   --pfe-cta--Color--focus: #{pfe-color(ui-link--on-dark--focus)};

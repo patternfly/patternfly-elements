@@ -19,9 +19,9 @@ class PfeCta extends PFElement {
 
   static get observedAttributes() {
     return [
-      "pfe-priority",
-      "pfe-color",
-      "pfe-alt",
+      "priority",
+      "color",
+      "alt",
       "on"
     ];
   }

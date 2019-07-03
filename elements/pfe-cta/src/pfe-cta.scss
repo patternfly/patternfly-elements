@@ -203,12 +203,12 @@ $pfe-cta__arrow-size: 0.313em;
     --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--accent)};
 }
 
-:host([priority="secondary"][secondary-alt]:focus-within) {
+:host([priority="secondary"][alt]:focus-within) {
     --pfe-broadcasted--color--ui-link--hover: #{pfe-color(ui-link)};
 }
 
 
-:host([secondary-alt]) {
+:host([priority="secondary"][alt]) {
   --pfe-cta--BackgroundColor:          transparent;
   --pfe-cta--BackgroundColor--hover:   #{pfe-color(ui-link)};
   --pfe-cta--BackgroundColor--focus:   rgba(0,102,204, .1);
@@ -225,7 +225,7 @@ $pfe-cta__arrow-size: 0.313em;
   --pfe-broadcasted--color--ui-link--focus:        #{pfe-color(ui-link)};
 }
 
-:host([primary-alt]) {
+:host([priority="primary"][alt]) {
   --pfe-cta--BackgroundColor:          #{pfe-color(surface--lightest)};
   --pfe-cta--BackgroundColor--hover:   #{pfe-color(surface--border--lightest)}; 
   --pfe-cta--BackgroundColor--focus:   #{pfe-color(surface--lightest)};
@@ -247,7 +247,7 @@ $pfe-cta__arrow-size: 0.313em;
 /// ===========================================================================
 
 :host([priority="secondary"][on="dark"]),
-:host([priority="secondary"][color="alt"][on="dark"]) {
+:host([priority="secondary"][alt][on="dark"]) {
   --pfe-cta--BackgroundColor:          transparent;
   --pfe-cta--BackgroundColor--hover:   #{pfe-color(surface--lightest)};
   --pfe-cta--BackgroundColor--focus:   rgba(255, 255, 255, .95);

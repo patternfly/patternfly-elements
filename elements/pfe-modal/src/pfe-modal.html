@@ -1,6 +1,6 @@
-<div class="pfe-modal__wrapper" tabindex="0">
-	<div class="pfe-modal__close-btn" tabindex="0">+</div>
-	<slot name="header"></slot>
-	<slot name="body"></slot>
-</div>
-<div class="pfe-modal__overlay" hidden></div>
+<section class="pfe-modal__container" tabindex="0" ${this.has_slot(`pfe-modal--header`) ? `has_header` : ""}>
+	<div class="pfe-modal__close-btn" tabindex="-1">+</div>
+	<slot name="pfe-modal--header"></slot>
+	<slot name="pfe-modal--body"></slot>
+</section>
+<div class="pfe-modal__overlay"></div>

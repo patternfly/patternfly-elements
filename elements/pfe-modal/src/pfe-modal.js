@@ -60,7 +60,42 @@ class PfeModalHeader extends PFElement {
   // attributeChangedCallback(attr, oldValue, newValue) {}
 }
 
+class PfeModalTrigger extends PFElement {
+  static get tag() {
+    return "pfe-modal-trigger";
+  }
+
+  get templateUrl() {
+    return "pfe-modal-trigger.html";
+  }
+
+  // get styleUrl() {
+  //   return "pfe-modal-header.scss";
+  // }
+
+  // static get observedAttributes() {
+  //   return [];
+  // }
+
+  constructor() {
+    super(PfeModalHeader);
+    // this._clickHandler = this._clickHandler.bind(this);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    // this.addEventListener("click", this._clickHandler);
+  }
+
+  disconnectedCallback() {
+    // this.removeEventListener("click", this._clickHandler);
+  }
+
+  // attributeChangedCallback(attr, oldValue, newValue) {}
+}
+
 PFElement.create(PfeModal);
 PFElement.create(PfeModalHeader);
+PFElement.create(PfeModalTrigger);
 
 export default PfeModal;

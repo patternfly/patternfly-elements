@@ -13,7 +13,7 @@
 }
 
 .pfe-modal {
-	&__wrapper {
+	&__container {
 		position: absolute;
 		z-index: 2;
 		left: 0;
@@ -34,7 +34,12 @@
 		right: 32px;
 		transform: rotate(45deg);
 		font-size: 40px;
+		line-height: 0.5;
 		cursor: pointer;
+
+		&:focus {
+
+		}
 	}
 
 	&__overlay {

@@ -37,21 +37,20 @@
       body {
         margin: 0;
       }
-      pfe-band {
-        --pfe-band--Padding--horizontal: 60px;
-        --pfe-band--Width: 100%;
-      }
-
-      pfe-card {
-        display: grid;
-        grid-gap: 15px;
-        --pfe-card--padding: 0;
-      }
       h1, h2, h3, p {
         font-family: Arial, sans-serif;
       }
       h1, h2 {
         margin: 15px 0 10px;
+      }
+      pfe-band {
+        --pfe-band--Padding--horizontal: 60px;
+        --pfe-band--Width: 100%;
+      }
+      pfe-card {
+        display: grid;
+        grid-gap: 15px;
+        --pfe-card--padding: 0;
       }
       .button-layout {
         display: flex;
@@ -60,7 +59,6 @@
         margin-top: -10px;
         margin-left: -20px;
       }
-
       .card-layout {
         display: grid;
         grid-gap: 10px;
@@ -109,12 +107,19 @@
       <h2 slot="pfe-band--header">Default CTA styles</h2>
       <p slot="pfe-band--header" class="button-layout">
         <pfe-cta><a href="#">Default</a></pfe-cta>
+        <pfe-cta><a href="#">Default cta with longer text in case it wraps</a></pfe-cta>
         <pfe-cta priority="primary"><a href="#">Primary</a></pfe-cta>
         <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
       </p>
       <hr>
       <h2>Color attributes</h2>
       <div class="card-layout">
+        <pfe-card color="lightest">
+          <h3>no color attribute</h3>
+          <p class="button-layout">
+            <pfe-cta><a href="#">Default cta with longer text in case it wraps</a></pfe-cta>
+          </p>
+        </pfe-card>
         <pfe-card color="lightest">
           <h3><code>color=complement</code></h3>
           <p class="button-layout">
@@ -216,7 +221,7 @@
       </div>
 
       <div style="background:#39045c;padding:30px 0;">
-          <h2 slot="pfe-band--header" style="color:white;">Custom band &mdash; <code>on=dark</code> (deprecated)</h2>
+          <h2 slot="pfe-band--header" style="color:white;">Custom band: <code>on=dark</code> (deprecated)</h2>
           <p slot="pfe-band--header" class="button-layout">
             <pfe-cta on="dark" ><a href="#">Default: on dark (color responsive)</a></pfe-cta>
             <pfe-cta on="dark" priority="primary"><a href="#">Primary: on dark</a></pfe-cta>

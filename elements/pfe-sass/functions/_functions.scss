@@ -291,18 +291,6 @@
     @return var(#{$var-declaration});
 }
 
-@function pfe-fallback-only($cssvar, $category: 'color', $map: $pfe-colors) {
-    @if $category !="" {
-        $category: "#{$category}--";
-    }
-
-    // If a fallback is defined, pass that in too
-    @if map-get($map, $cssvar) != null {
-        @return #{map-get($map, $cssvar)};
-    }
-
-}
-
 /// Local
 ///
 /// Returns CSS Var for the local component-scoped variable

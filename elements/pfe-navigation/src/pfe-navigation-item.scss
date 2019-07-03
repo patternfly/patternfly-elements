@@ -6,6 +6,7 @@ $LOCAL: navigation-item;
   --pfe-navigation-item--Color: #{pfe-color(text--on-dark)};
   --pfe-navigation-item--BackgroundColor: #{pfe-color(surface--darkest)};
   --pfe-navigation-item--BorderTopColor: transparent;
+  --pfe-navigation-item--BorderColor: transparent;
   --pfe-navigation-item--Padding--horizontal: #{pfe-var(container-padding)};
   --pfe-navigation-item__tray--Padding: #{pfe-var(container-padding)};
 
@@ -66,6 +67,7 @@ $LOCAL: navigation-item;
     cursor: pointer;
     text-decoration: none;
     color: inherit;
+    outline: none;
   }
   :host([pfe-icon]) & {
     font-size: 12px;
@@ -132,11 +134,20 @@ $LOCAL: navigation-item;
     padding: var(--pfe-navigation--Padding--vertical) var(--pfe-navigation-item--Padding--horizontal) !important;
 
     border-top: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderTopColor)};
+    border-right: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
+    border-bottom: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
+    border-left: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
     color: #{pfe-local(Color)};
 
     &:hover,
-    :host([aria-current="location"]) & {
+    :host([aria-current="location"]) {
       --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
+    }
+
+    &:focus,
+    :host(:focus-within) & {
+      --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
+      --pfe-navigation-item--BorderColor: #{pfe-color(surface--lightest)};
     }
 
     &[aria-expanded="true"],

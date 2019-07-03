@@ -7,7 +7,7 @@ $LOCAL: navigation;
 
   // Default spacing values
   --pfe-navigation--Padding--vertical: 20px; // calc(#{pfe-var(container-spacer)} * 4);
-  --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-spacer)} * 2);
+  --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-spacer)} * 1.5);
 
   --pfe-navigation--Padding: 0 #{pfe-local(Padding--horizontal)};
 
@@ -91,7 +91,7 @@ $LOCAL: navigation;
       }
     }
 
-    padding: 0 calc(#{pfe-var(container-padding)} * 2);
+    padding: 0 #{pfe-local(Padding--horizontal)};
     @media (min-width: #{pfe-breakpoint(lg)}) {
       padding: 0;
     }

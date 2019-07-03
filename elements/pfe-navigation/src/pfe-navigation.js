@@ -124,7 +124,9 @@ class PfeNavigation extends PFElement {
 
     // If the item clicked equals the currently active navigation item
     if (this._activeNavigationItem === event.detail.navigationItem) {
-      this._activeNavigationItem.expanded = false;
+      if (this._activeNavigationItem !== null) {
+        this._activeNavigationItem.expanded = false;
+      }
       // Close the navigation item and remove the overlay
       this._activeNavigationItem = null;
       this.overlay.setAttribute("hidden", true);
@@ -398,8 +400,13 @@ class PfeNavigationItem extends PFElement {
 
   _closeMenu(event) {
     event.preventDefault();
-    this.expanded = false;
-    this._fireExpandToggledEvent();
+    this.dispatchEvent(
+      new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
+        detail: { navigationItem: null, expanded: false },
+        bubbles: true,
+        composed: true
+      })
+    );
   }
 
   _toggleMenu(event) {

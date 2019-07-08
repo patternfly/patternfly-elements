@@ -37,11 +37,14 @@ gulp.task("copy", () => {
     .src(["./src/*"])
     .pipe(
       banner(
-        `/*\n${fs
-          .readFileSync("LICENSE.txt", "utf8")
-          .split("\n")
-          .map(line => ` * ${line}\n`)
-          .join("")}*/\n\n`
+        `/*!
+ * ${package.pfelement.className} ${package.version}
+ * @license
+${fs
+  .readFileSync("LICENSE.txt", "utf8")
+  .split("\n")
+  .map(line => ` * ${line}\n`)
+  .join("")}*/\n\n`
       )
     )
     .pipe(gulp.dest("./"));

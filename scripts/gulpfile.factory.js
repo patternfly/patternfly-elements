@@ -1,9 +1,6 @@
 module.exports = function factory({
   version,
-  pfelement: {
-    elementName,
-    className,
-  },
+  pfelement: { elementName, className },
   prebundle = []
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
@@ -121,11 +118,7 @@ module.exports = function factory({
 
   // Delete the temp directory
   task("clean", () => {
-    return src([
-      "*.{js,css,map}",
-      "!gulpfile.js",
-      "!rollup.config.js"
-    ], {
+    return src(["*.{js,css,map}", "!gulpfile.js", "!rollup.config.js"], {
       cwd: paths.compiled,
       read: false,
       allowEmpty: true
@@ -268,24 +261,23 @@ module.exports = function factory({
       )
       .pipe(
         banner(
-          `/*\n * @license\n${fs
-            .readFileSync("LICENSE.txt", "utf8")
-            .split("\n")
-            .map(line => ` * ${line}\n`)
-            .join("")}*/\n\n`
+          `/*!
+ * ${className} ${version}
+ * @license
+${fs
+  .readFileSync("LICENSE.txt", "utf8")
+  .split("\n")
+  .map(line => ` * ${line}\n`)
+  .join("")}*/\n\n`
         )
       )
       .pipe(dest(paths.compiled));
   });
 
   task("copy", () => {
-    return src([
-      "*.js",
-      `!${elementName}.js`
-    ], {
+    return src(["*.js", `!${elementName}.js`], {
       cwd: paths.source
-    })
-      .pipe(dest(paths.compiled));
+    }).pipe(dest(paths.compiled));
   });
 
   task("compile", () => {

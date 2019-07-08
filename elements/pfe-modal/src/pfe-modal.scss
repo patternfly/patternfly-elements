@@ -9,7 +9,6 @@
 }
 :host {
     --pfe-modal__overlay--BackgroundColor: var(--pfe-theme--overlay--BackgroundColor, rgba(37, 37, 37, 0.5));
-
 }
 
 .pfe-modal {
@@ -39,17 +38,23 @@
 	}
 
 	&__overlay {
-	    display: block;
-	    background-color: var(--pfe-modal__overlay--BackgroundColor);
-	    position: absolute;
-	    top: 0;
-	    left: 0;
-	    width: 100vw;
-	    height: 100vh;
-	    z-index: 1;
-	    // &[hidden] {
-	    //   display: none;
-	    // }
+    display: block;
+    background-color: var(--pfe-modal__overlay--BackgroundColor);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
 	}
+}
+
+::slotted(:not([slot])) {
+	max-width: 95%;
+}
+
+::slotted(:not([slot]):first-child) {
+	margin-top: 0;
+  display: block;
 }
 

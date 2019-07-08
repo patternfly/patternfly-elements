@@ -19,7 +19,7 @@
   <body unresolved>
     <h1>&lt;pfe-modal&gt;</h1>
     <div>
-      <pfe-modal-trigger>
+      <pfe-modal-trigger slot="pfe-modal--header">
         <a href="#modal1">Open modal with a header</a>
       </pfe-modal-trigger>
       <pfe-modal id="modal1">
@@ -34,6 +34,7 @@
         <a href="#modal2">Open modal without a header</a>
       </pfe-modal-trigger>
       <pfe-modal id="modal2">
+        <h3>this has no header</h3>
         <p>This modal doesn't have a header. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       </pfe-modal>
     </div>

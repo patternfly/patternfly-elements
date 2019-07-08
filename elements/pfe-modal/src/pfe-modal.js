@@ -9,6 +9,10 @@ class PfeModal extends PFElement {
     return "pfe-modal.html";
   }
 
+  get schemaUrl() {
+    return "pfe-modal.json";
+  }
+
   get styleUrl() {
     return "pfe-modal.scss";
   }
@@ -18,7 +22,10 @@ class PfeModal extends PFElement {
   // }
 
   constructor() {
-    super(PfeModal);
+    super(PfeModal, { type: PfeModal.PfeType });
+    this._observer = new MutationObserver(() => {
+      this._mapSchemaToSlots(this.tag, this.slots);
+    });
   }
 
   connectedCallback() {
@@ -70,10 +77,6 @@ class PfeModalTrigger extends PFElement {
     return "pfe-modal-trigger.html";
   }
 
-  get styleUrl() {
-    return "pfe-modal-trigger.scss";
-  }
-
   // static get observedAttributes() {
   //   return [];
   // }
@@ -94,7 +97,6 @@ class PfeModalTrigger extends PFElement {
 
   // attributeChangedCallback(attr, oldValue, newValue) {}
 }
-
 
 PFElement.create(PfeModal);
 PFElement.create(PfeModalHeader);

@@ -114,7 +114,7 @@ $pfe-cta__arrow-size: 0.313em;
   color: #{pfe-local(Color--focus)} !important;
 }
 
-:host(:focus-within) {
+:host(.focus-within) {
   outline: none !important;
   background-color: #{pfe-local(BackgroundColor--focus)};
   border-color:     #{pfe-local(BorderColor--focus)};
@@ -171,7 +171,7 @@ $pfe-cta__arrow-size: 0.313em;
 
 
 // Secondary CTA colors when "active" (focus-within on parent, hover on link).
-:host([priority="secondary"]:focus-within) {
+:host([priority="secondary"].focus-within) {
     --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--darkest)};
 }
 
@@ -283,7 +283,7 @@ $pfe-cta__arrow-size: 0.313em;
   --pfe-cta--Color--focus:        #{pfe-color(surface--darkest)};
 }
 
-:host([priority="secondary"][on="dark"]:focus-within) {
+:host([priority="secondary"][on="dark"].focus-within) {
     --pfe-cta--Color--hover: #{pfe-color(ui-link)};
 }
 
@@ -316,7 +316,7 @@ $pfe-cta__arrow-size: 0.313em;
   --pfe-cta--Color--hover: #{pfe-color(surface--accent--text)};
   --pfe-cta--Color--focus: #{pfe-color(surface--accent)};;
 }
-:host([priority="secondary"][color="accent"]:focus-within) {
+:host([priority="secondary"][color="accent"].focus-within) {
     --pfe-cta--Color--hover: #{pfe-color(surface--accent)};
 }
 
@@ -357,7 +357,7 @@ $pfe-cta__arrow-size: 0.313em;
   --pfe-cta--Color--focus:        #{pfe-color(surface--complement)};
 }
 
-:host([priority="secondary"][color="complement"]:focus-within) {
+:host([priority="secondary"][color="complement"].focus-within) {
     --pfe-cta--Color--hover: #{pfe-color(surface--complement)};
 }
 

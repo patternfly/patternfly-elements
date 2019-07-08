@@ -40,10 +40,31 @@ class PfeCta extends PFElement {
     super.connectedCallback();
     this._slot = this.shadowRoot.querySelector("slot");
     this._slot.addEventListener("slotchange", this._init);
+
+    // Get the lightDOM link if it exists
+    this.link = this.querySelector("a");
+
+    // Check if this element has focus
+    this.link.addEventListener("focus", (event) => {
+      this.classList.add("focus-within");  
+    });
+
+    this.link.addEventListener("blur", (event) => {
+      this.classList.remove("focus-within");  
+    });
   }
 
   disconnectedCallback() {
     this._slot.removeEventListener("slotchange", this._init);
+
+    // Check if this element has focus
+    this.link.removeEventListener("focus", (event) => {
+      this.classList.add("focus-within");  
+    });
+
+    this.link.removeEventListener("blur", (event) => {
+      this.classList.remove("focus-within");  
+    });
   }
 
   _init() {

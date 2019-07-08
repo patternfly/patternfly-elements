@@ -33,58 +33,54 @@ class PfeCta extends PFElement {
 
   constructor() {
     super(PfeCta);
+    this.cta = null;
+
     this._init = this._init.bind(this);
+    this._focusHandler = this._focusHandler.bind(this);
+    this._blurHandler = this._blurHandler.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
+
     this._slot = this.shadowRoot.querySelector("slot");
     this._slot.addEventListener("slotchange", this._init);
 
+    this._init();
+
     // Get the lightDOM link if it exists
-    this.link = this.querySelector("a");
-
-    // Check if this element has focus
-    this.link.addEventListener("focus", (event) => {
-      this.classList.add("focus-within");  
-    });
-
-    this.link.addEventListener("blur", (event) => {
-      this.classList.remove("focus-within");  
-    });
+    this.cta.addEventListener("focus", this._focusHandler);
+    this.cta.addEventListener("blur", this._blurHandler);
   }
 
   disconnectedCallback() {
     this._slot.removeEventListener("slotchange", this._init);
 
-    // Check if this element has focus
-    this.link.removeEventListener("focus", (event) => {
-      this.classList.add("focus-within");  
-    });
-
-    this.link.removeEventListener("blur", (event) => {
-      this.classList.remove("focus-within");  
-    });
+    // Remove the focus state listeners
+    this.cta.removeEventListener("focus", this._focusHandler);
+    this.cta.removeEventListener("blur", this._blurHandler);
   }
 
   _init() {
     const firstChild = this.children[0];
 
-    if (!firstChild) {
+    if (!firstChild || (firstChild && !["A", "BUTTON", "INPUT"].includes(firstChild.tagName))) {
       console.warn(
         `${
           PfeCta.tag
-        }:The first child in the light DOM must be an anchor tag (<a>)`
-      );
-    } else if (firstChild && firstChild.tagName.toLowerCase() !== "a") {
-      console.warn(
-        `${
-          PfeCta.tag
-        }:The first child in the light DOM must be an anchor tag (<a>)`
+        }:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>, <input>)`
       );
     } else {
-      this.link = this.querySelector("a");
+      this.cta = firstChild;
     }
+  }
+
+  _focusHandler(event) {
+    this.classList.add("focus-within");
+  }
+
+  _blurHandler(event) {
+    this.classList.remove("focus-within");
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {

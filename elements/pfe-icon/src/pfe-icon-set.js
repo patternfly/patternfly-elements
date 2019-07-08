@@ -3,7 +3,7 @@ class PfeIconSet {
    * Run the icon set's name resolver to turn an icon name into an icon path, id, etc.
    */
   parseIconName(iconName) {
-    return this._parseIconName(iconName);
+    return this._parseIconName(iconName, this.name, this.path);
   }
 
   /**
@@ -20,7 +20,7 @@ class PfeIconSet {
   constructor(name, path, parseIconName) {
     this.name = name;
     this.path = path;
-    this.parseIconName = parseIconName;
+    this._parseIconName = parseIconName;
   }
 }
 

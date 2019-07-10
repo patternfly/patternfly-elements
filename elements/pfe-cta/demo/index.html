@@ -1,182 +1,207 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>PFElements: pfe-cta Demo</title>
+  <noscript>
+    <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    <link href="../../pfe-cta/pfe-cta-fallback.css" rel="stylesheet">
+  </noscript>
+  <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
+  <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
+  <!-- <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
+  <!-- IE11 test: use bundle + require with umd files -->
+  <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
+  <script src="/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <!-- Tests require pulling in the UMD version of the files -->
+  <script src="/requirejs/require.js"></script>
+  <script>
+  require([
+    '../pfe-cta.umd.js',
+    '../../pfe-band/pfe-band.umd.js',
+    '../../pfe-card/pfe-card.umd.js'
+  ])
 
-    <title>PFElements: pfe-cta Demo</title>
+  </script>
+  <style>
+  body {
+    margin: 0;
+  }
 
-    <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
-      <link href="../../pfe-cta/pfe-cta-fallback.css" rel="stylesheet">
-    </noscript>
-    
-    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+  h1,
+  h2,
+  h3,
+  p {
+    font-family: Arial, sans-serif;
+  }
 
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    
-    <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
-    <!-- <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
+  h1,
+  h2 {
+    margin: 15px 0 10px;
+  }
 
-    <!-- IE11 test: use bundle + require with umd files -->
-    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
-    <script src="/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  pfe-band {
+    --pfe-band--Padding--horizontal: 60px;
+    --pfe-band--Width: 100%;
+  }
 
-    <!-- Tests require pulling in the UMD version of the files -->
-    <script src="/requirejs/require.js"></script>
+  pfe-card {
+    display: grid;
+    grid-gap: 15px;
+    --pfe-card--padding: 0;
+  }
 
-    <script>require([
-      '../pfe-cta.umd.js',
-      '../../pfe-band/pfe-band.umd.js',
-      '../../pfe-card/pfe-card.umd.js'
-    ])</script>
 
-    <style>
-      body {
-        margin: 0;
-      }
-      pfe-band {
-        --pfe-band--Padding--horizontal: 60px;
-        --pfe-band--Width: 100%;
-      }
 
-      pfe-card {
-        display: grid;
-        grid-gap: 15px;
-        --pfe-card--padding: 0;
-      }
+  .card-layout {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
 
-      .button-layout {
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-        margin-top: -10px;
-        margin-left: -20px;
-      }
+  pfe-cta {
+    margin-top: 10px;
+    margin-left: 20px;
+    --pfe-theme--color--surface--complement: #0066cc;
+  }
 
-      .card-layout {
-        display: grid;
-        grid-gap: 10px;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      }
+  a {
+    color: #2290ff;
+  }
 
-      pfe-cta {
-        margin-top: 10px;
-        margin-left: 20px;
-      }
+  .custom-dark-band {
+    padding: 60px 15px;
+    background: #222;
+    --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark, yellow);
+    --pfe-broadcasted--color--ui-link: var(--pfe-theme--color--ui-link--on-dark, red);
+    --pfe-broadcasted--color--ui-link--hover: var(--pfe-theme--color--ui-link--on-dark--hover, orange);
+    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--ui-link--on-dark--visited, pink);
+    --pfe-broadcasted--color--ui-link--focus: var(--pfe-theme--color--ui-link--on-dark--focus, orange);
+  }
 
-      h1, h2, h3, p {
-        margin: 0;
-      }
-    </style>
-  </head>
-  <body unresolved>
-    <pfe-band pfe-color="complement" pfe-size="small">
-      <h1 slot="pfe-band--header">&lt;pfe-cta&gt;</h1>
-    </pfe-band>
+  .custom-light-band {
+    padding: 60px 15px;
+    background: #cce7e8;
+  }
 
-<!-- @TODO Address alt CTA styles when we have clarification about how they should be used -->
-<!--     <pfe-band>
-      <h2 slot="pfe-band--header">Alternatives</h2>
-      <p slot="pfe-band--header" class="button-layout">
-        <pfe-cta priority="primary" alt><a href="#">Primary</a></pfe-cta>
-        <pfe-cta priority="secondary" alt><a href="#">Secondary</a></pfe-cta>
-      </p>
-      <hr>
-    </pfe-band>
- -->
-    <pfe-band pfe-color="lightest">
-      <h2 slot="pfe-band--header">Defaults</h2>
-      <p slot="pfe-band--header" class="button-layout">
-        <pfe-cta><a href="#">Default</a></pfe-cta>
-        <pfe-cta priority="primary"><a href="#">Primary</a></pfe-cta>
-        <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
-      </p>
-      <hr>
-      <h2>Alternates</h2>
+  .custom-on-dark-band {
+    padding: 30px 15px;
+    background: #0d053e;
+  }
+
+  </style>
+</head>
+
+<body unresolved>
+  <pfe-band pfe-color="complement" pfe-size="small">
+    <h1 slot="pfe-band--header">&lt;pfe-cta&gt;</h1>
+  </pfe-band>
+
+
+  <pfe-band pfe-color="lighter">
+      <h2 slot="pfe-band--header">CTAs in light PFE containers</h3>
       <div class="card-layout">
         <pfe-card color="lightest">
-          <h2>Base</h2>
-          <p class="button-layout">
-            <pfe-cta color="base"><a href="#">Default</a></pfe-cta>
-            <pfe-cta priority="primary" color="base"><a href="#">Primary</a></pfe-cta>
-            <pfe-cta priority="secondary" color="base"><a href="#">Secondary</a></pfe-cta>
-          </p>
+          <h3>No color attribute</h3>
+          <div>
+            <pfe-cta><a href="#">Default</a></pfe-cta>
+            <pfe-cta><a href="#">Default cta with longer text in case it wraps</a></pfe-cta>
+            <pfe-cta priority="primary"><a href="#">Primary</a></pfe-cta>
+            <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
+          </div>
         </pfe-card>
         <pfe-card color="lightest">
-          <h2>Complement</h2>
-          <p class="button-layout">
+          <h3><code>color="complement"</code></h3>
+          <div>
             <pfe-cta color="complement"><a href="#">Default</a></pfe-cta>
             <pfe-cta priority="primary" color="complement"><a href="#">Primary</a></pfe-cta>
             <pfe-cta priority="secondary" color="complement"><a href="#">Secondary</a></pfe-cta>
-          </p>
+          </div>
         </pfe-card>
         <pfe-card color="lightest">
-          <h2>Accent</h2>
-          <p class="button-layout">
+          <h3><code>color="accent"</code></h3>
+          <div>
             <pfe-cta color="accent"><a href="#">Default</a></pfe-cta>
             <pfe-cta priority="primary" color="accent"><a href="#">Primary</a></pfe-cta>
             <pfe-cta priority="secondary" color="accent"><a href="#">Secondary</a></pfe-cta>
-          </p>
+          </div>
         </pfe-card>
-        <pfe-card color="lightest">
-          <h2>Alt</h2>
-          <p class="button-layout">
-            <pfe-cta><a href="#">Default</a></pfe-cta>
-            <pfe-cta priority="primary" primary-alt><a href="#">Primary</a></pfe-cta>
-            <pfe-cta priority="secondary" secondary-alt><a href="#">Secondary</a></pfe-cta>
-          </p>
-        </pfe-card>
-      </div>
-    </pfe-band>
-
-
-    <pfe-band pfe-color="darker">
-      <h2 slot="pfe-band--header">Defaults &mdash; <code>dark</code></h2>
-      <p slot="pfe-band--header" class="button-layout">
-        <pfe-cta><a href="#">Default</a></pfe-cta>
-        <pfe-cta priority="primary"><a href="#">Primary</a></pfe-cta>
-        <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
-      </p>
-      <hr>
-      <h2>Color properties</h2>
-      <p>General rule of thumb: If you add <code>color="..."</code> it'll override <code>dark</code>. See below.</p>
+    </div>
+  </pfe-band>
+  <pfe-band pfe-color="darker">
+    <h2 slot="pfe-band--header">CTAs in dark PFE containers</h3>
       <div class="card-layout">
-        <pfe-card color="dark">
-          <h2>Base</h2>
-          <p class="button-layout">
-            <pfe-cta color="base"><a href="#">Default</a></pfe-cta>
-            <pfe-cta priority="primary" color="base"><a href="#">Primary</a></pfe-cta>
-            <pfe-cta priority="secondary" color="base"><a href="#">Secondary</a></pfe-cta>
-          </p>
-        </pfe-card>
-        <pfe-card color="dark">
-          <h2>Complement</h2>
-          <p class="button-layout">
-            <pfe-cta color="complement"><a href="#">Default</a></pfe-cta>
-            <pfe-cta priority="primary" color="complement"><a href="#">Primary</a></pfe-cta>
-            <pfe-cta priority="secondary" color="complement"><a href="#">Secondary</a></pfe-cta>
-          </p>
-        </pfe-card>
-        <pfe-card color="dark">
-          <h2>Accent</h2>
-          <p class="button-layout">
-            <pfe-cta color="accent"><a href="#">Default</a></pfe-cta>
-            <pfe-cta priority="primary" color="accent"><a href="#">Primary</a></pfe-cta>
-            <pfe-cta priority="secondary" color="accent"><a href="#">Secondary</a></pfe-cta>
-          </p>
-        </pfe-card>
-        <pfe-card color="dark">
-          <h2>Alt</h2>
-          <p class="button-layout">
-            <pfe-cta><a href="#">Default</a></pfe-cta>
-            <pfe-cta priority="primary" primary-alt><a href="#">Primary</a></pfe-cta>
-            <pfe-cta priority="secondary" secondary-alt><a href="#">Secondary</a></pfe-cta>
-          </p>
-        </pfe-card>
+      <pfe-card color="darkest">
+        <h3>No color attribute</h3>
+        <div>
+          <pfe-cta><a href="#">Default</a></pfe-cta>
+          <pfe-cta><a href="#">Default cta with longer text in case it wraps</a></pfe-cta>
+          <pfe-cta priority="primary"><a href="#">Primary</a></pfe-cta>
+          <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
+          <pfe-cta priority="primary" color="lightest"><a href="#">Primary lightest</a></pfe-cta>
+        </div>
+      </pfe-card>
+      <pfe-card color="darkest">
+        <h3><code>color="complement"</code></h3>
+        <div>
+          <pfe-cta color="complement"><a href="#">Default</a></pfe-cta>
+          <pfe-cta priority="primary" color="complement"><a href="#">Primary</a></pfe-cta>
+          <pfe-cta priority="secondary" color="complement"><a href="#">Secondary</a></pfe-cta>
+        </div>
+      </pfe-card>
+      <pfe-card color="darkest">
+        <h3><code>color="accent"</code></h3>
+        <div>
+          <pfe-cta color="accent"><a href="#">Default</a></pfe-cta>
+          <pfe-cta priority="primary" color="accent"><a href="#">Primary</a></pfe-cta>
+          <pfe-cta priority="secondary" color="accent"><a href="#">Secondary</a></pfe-cta>
+        </div>
+      </pfe-card>
       </div>
-    </pfe-band>
-  </body>
+  </pfe-band>
+  <br />
+  <hr />
+  <br />
+  <h1>Old school testing (custom backgrounds)</h1>
+  <br />
+  <div class="custom-light-band ">
+    <h2>Custom light band with broadcast vars</h2>
+    <pfe-cta><a href="#">Default (color responsive)</a></pfe-cta>
+    <pfe-cta priority="primary"><a href="#">Primary: (color responsive)</a></pfe-cta>
+    <pfe-cta priority="secondary"><a href="#">Secondary: (color responsive)</a></pfe-cta>
+    <pfe-cta priority="primary" color="accent"><a href="#">Primary accent</a></pfe-cta>
+    <pfe-cta priority="secondary" color="accent"><a href="#">Secondary accent</a></pfe-cta>
+    <pfe-cta priority="primary" color="complement"><a href="#">Primary complement</a></pfe-cta>
+    <pfe-cta priority="secondary" color="complement"><a href="#">Secondary complement</a></pfe-cta>
+    <pfe-cta priority="primary" color="lightest"><a href="#">Primary lightest</a></pfe-cta>
+  </div>
+  <div class="custom-dark-band">
+    <h2 style="color:white;">Custom dark band with broadcast vars</h2>
+    <pfe-cta><a href="#">Default (color responsive)</a></pfe-cta>
+    <pfe-cta priority="primary"><a href="#">Primary (color responsive)</a></pfe-cta>
+    <pfe-cta priority="secondary"><a href="#">Secondary (color responsive)</a></pfe-cta>
+    <pfe-cta priority="primary" color="accent"><a href="#">Primary accent</a></pfe-cta>
+    <pfe-cta priority="secondary" color="accent"><a href="#">Secondary accent</a></pfe-cta>
+    <pfe-cta priority="primary" color="complement"><a href="#">Primary complement</a></pfe-cta>
+    <pfe-cta priority="secondary" color="complement"><a href="#">Secondary complement</a></pfe-cta>
+    <pfe-cta priority="primary" color="lightest"><a href="#">Primary lightest</a></pfe-cta>
+  </div>
+  <div class="custom-on-dark-band">
+    <h2 style="color:white;">Custom band: <code>on=dark</code> (deprecated)</h2>
+    <pfe-cta on="dark"><a href="#">Default: on dark (color responsive)</a></pfe-cta>
+    <pfe-cta on="dark" priority="primary"><a href="#">Primary: on dark</a></pfe-cta>
+    <pfe-cta on="dark" priority="secondary"><a href="#">Secondary: on dark (color responsive)</a></pfe-cta>
+    <pfe-cta priority="primary" color="accent"><a href="#">Primary accent</a></pfe-cta>
+    <pfe-cta priority="secondary" color="accent"><a href="#">Secondary accent</a></pfe-cta>
+    <pfe-cta priority="primary" color="complement"><a href="#">Primary complement</a></pfe-cta>
+    <pfe-cta priority="secondary" color="complement"><a href="#">Secondary complement</a></pfe-cta>
+    <pfe-cta priority="primary" color="lightest"><a href="#">Primary lightest</a></pfe-cta>
+  </div>
+
+</body>
+
 </html>

@@ -17,6 +17,14 @@ _Note: `pfe-cta` is not a button, though it may look like one visually._
 <pfe-cta priority="secondary">
   <a href="https://redhat.com/">Red Hat</a>
 </pfe-cta>
+
+<pfe-cta priority="primary" color="lightest">
+  <a href="https://pfelements.github.io/">Learn more about PFElements</a>
+</pfe-cta>
+
+<pfe-cta priority="secondary" color="complement">
+  <a href="https://redhat.com/">Red Hat</a>
+</pfe-cta>
 ```
 
 ## Slots
@@ -50,10 +58,10 @@ If you'd like to checkout how theming is possible using our CSS Var hooks, try a
 ```html
 <style>
 :root {
-  --pfe-theme--color--ui-accent:               green;
+  --pfe-theme--color--surface--accent:         green;
   --pfe-theme--color--ui-accent--hover:        darkgreen;
-  --pfe-theme--color--ui-accent--text:         white;
-  --pfe-theme--color--ui-accent--text--hover:  white;
+  --pfe-theme--color--surface--accent--text:   white;
+  --pfe-theme--color--surface--accent--text:   white;
 }
 </style>
 ```

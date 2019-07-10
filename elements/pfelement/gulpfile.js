@@ -38,7 +38,7 @@ gulp.task("copy", () => {
     .pipe(
       banner(
         `/*!
- * ${package.pfelement.className} ${package.version}
+ * PatternFly Elements: ${package.pfelement.className} ${package.version}
  * @license
 ${fs
   .readFileSync("LICENSE.txt", "utf8")

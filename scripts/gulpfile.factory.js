@@ -262,7 +262,7 @@ module.exports = function factory({
       .pipe(
         banner(
           `/*!
- * ${className} ${version}
+ * PatternFly Elements: ${className} ${version}
  * @license
 ${fs
   .readFileSync("LICENSE.txt", "utf8")

@@ -63,7 +63,7 @@
           document.body.appendChild(pfeCta);
 
           flush(() => {
-            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be an anchor tag (<a>)');
+            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>, <input>)');
             spy.restore();
             done();
           });
@@ -77,7 +77,7 @@
           document.body.appendChild(pfeCta);
 
           flush(() => {
-            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be an anchor tag (<a>)');
+            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>, <input>)');
             spy.restore();
             done();
           });

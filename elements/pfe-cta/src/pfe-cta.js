@@ -46,19 +46,19 @@ class PfeCta extends PFElement {
     this._slot = this.shadowRoot.querySelector("slot");
     this._slot.addEventListener("slotchange", this._init);
 
-    this._init();
-
-    // Get the lightDOM link if it exists
-    this.cta.addEventListener("focus", this._focusHandler);
-    this.cta.addEventListener("blur", this._blurHandler);
+    if (this.children.length) {
+      this._init();
+    }
   }
 
   disconnectedCallback() {
     this._slot.removeEventListener("slotchange", this._init);
 
     // Remove the focus state listeners
-    this.cta.removeEventListener("focus", this._focusHandler);
-    this.cta.removeEventListener("blur", this._blurHandler);
+    if (this.cta) {
+      this.cta.removeEventListener("focus", this._focusHandler);
+      this.cta.removeEventListener("blur", this._blurHandler);
+    }
   }
 
   _init() {
@@ -72,6 +72,8 @@ class PfeCta extends PFElement {
       );
     } else {
       this.cta = firstChild;
+      this.cta.addEventListener("focus", this._focusHandler);
+      this.cta.addEventListener("blur", this._blurHandler);
     }
   }
 

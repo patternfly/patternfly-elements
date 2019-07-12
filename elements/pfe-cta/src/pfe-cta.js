@@ -58,10 +58,12 @@ class PfeCta extends PFElement {
 
   _init() {
     const firstChild = this.children[0];
+    const supportedTags = ["a", "button", "input"];
     let supportedTag = false;
 
+
     if (firstChild) {
-      ["a", "button", "input"].forEach(tag => {
+      supportedTags.forEach(tag => {
         if (firstChild.tagName.toLowerCase() === tag) {
           supportedTag = true;
         }

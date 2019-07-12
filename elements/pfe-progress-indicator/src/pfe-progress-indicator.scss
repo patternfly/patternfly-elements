@@ -4,7 +4,7 @@
   display: none;
 }
 
-:host([pfe-indeterminate-fullscreen]) {
+:host([pfe-indeterminate]) {
     animation: spin 1s linear infinite;
     -webkit-animation:spin 1s linear infinite;
     -moz-animation:spin 1s linear infinite;

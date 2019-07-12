@@ -41,10 +41,8 @@ class PfeCta extends PFElement {
     // Get the slot
     this._slot = this.shadowRoot.querySelector("slot");
 
-    // If the slot exists, attach the slotchange listener
-    if(this._slot) {
-      this._slot.addEventListener("slotchange", this._init);
-    }
+    // Attach the slotchange listener
+    this._slot.addEventListener("slotchange", this._init);
 
     if (this.children.length) {
       this._init();
@@ -53,9 +51,7 @@ class PfeCta extends PFElement {
 
   disconnectedCallback() {
     // Remove the slot change listeners
-    if(this._slot) {
-      this._slot.removeEventListener("slotchange", this._init);
-    }
+    this._slot.removeEventListener("slotchange", this._init);
 
     // Remove the focus state listeners
     if(this.cta) {

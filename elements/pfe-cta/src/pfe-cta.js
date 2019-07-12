@@ -1,20 +1,5 @@
 import PFElement from "../pfelement/pfelement.js";
 
-if (!String.prototype.includes) {
-  String.prototype.includes = function(search, start) {
-    'use strict';
-    if (typeof start !== 'number') {
-      start = 0;
-    }
-
-    if (start + search.length > this.length) {
-      return false;
-    } else {
-      return this.indexOf(search, start) !== -1;
-    }
-  };
-}
-
 class PfeCta extends PFElement {
   static get tag() {
     return "pfe-cta";
@@ -73,8 +58,17 @@ class PfeCta extends PFElement {
 
   _init() {
     const firstChild = this.children[0];
+    let supportedTag = false;
 
-    if (!firstChild || (firstChild && !["A", "BUTTON", "INPUT"].includes(firstChild.tagName))) {
+    if (firstChild) {
+      ["a", "button", "input"].forEach(tag => {
+        if (firstChild.tagName.toLowerCase() === tag) {
+          supportedTag = true;
+        }
+      });
+    }
+
+    if (!firstChild || !supportedTag) {
       console.warn(
         `${
           PfeCta.tag

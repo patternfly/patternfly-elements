@@ -53,27 +53,42 @@ class PfeCta extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
+    // Get the slot
     this._slot = this.shadowRoot.querySelector("slot");
-    this._slot.addEventListener("slotchange", this._init);
+
+    // If the slot exists, attach the slotchange listener
+    if(this._slot) {
+      this._slot.addEventListener("slotchange", this._init);
+    }
 
     this._init();
 
-    // Get the lightDOM link if it exists
-    this.cta.addEventListener("focus", this._focusHandler);
-    this.cta.addEventListener("blur", this._blurHandler);
+    // Watch the light DOM link for focus and blur events
+    if(this.cta) {
+      this.cta.addEventListener("focus", this._focusHandler);
+      this.cta.addEventListener("blur", this._blurHandler);
+    }
   }
 
   disconnectedCallback() {
-    this._slot.removeEventListener("slotchange", this._init);
+    // Remove the slot change listeners
+    if(this._slot) {
+      this._slot.removeEventListener("slotchange", this._init);
+    }
 
     // Remove the focus state listeners
-    this.cta.removeEventListener("focus", this._focusHandler);
-    this.cta.removeEventListener("blur", this._blurHandler);
+    if(this.cta) {
+      this.cta.removeEventListener("focus", this._focusHandler);
+      this.cta.removeEventListener("blur", this._blurHandler);
+    }
   }
 
+  // Initialize the component
   _init() {
+    // Get the first child of the web component (light DOM)
     const firstChild = this.children[0];
 
+    // If the first child does not exist or that child is not a supported tag
     if (!firstChild || (firstChild && !["A", "BUTTON", "INPUT"].includes(firstChild.tagName))) {
       console.warn(
         `${
@@ -81,14 +96,17 @@ class PfeCta extends PFElement {
         }:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>, <input>)`
       );
     } else {
+      // Capture the first child as the CTA element
       this.cta = firstChild;
     }
   }
 
+  // On focus, add a class
   _focusHandler(event) {
     this.classList.add("focus-within");
   }
 
+  // On focus out, remove that class
   _blurHandler(event) {
     this.classList.remove("focus-within");
   }

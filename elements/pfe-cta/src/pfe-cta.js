@@ -49,12 +49,6 @@ class PfeCta extends PFElement {
     if (this.children.length) {
       this._init();
     }
-
-    // Watch the light DOM link for focus and blur events
-    if(this.cta) {
-      this.cta.addEventListener("focus", this._focusHandler);
-      this.cta.addEventListener("blur", this._blurHandler);
-    }
   }
 
   disconnectedCallback() {
@@ -95,6 +89,10 @@ class PfeCta extends PFElement {
     } else {
       // Capture the first child as the CTA element
       this.cta = firstChild;
+
+      // Watch the light DOM link for focus and blur events
+      this.cta.addEventListener("focus", this._focusHandler);
+      this.cta.addEventListener("blur", this._blurHandler);
     }
   }
 

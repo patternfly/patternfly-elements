@@ -92,12 +92,6 @@ stories.add("At a glance", () => {
       <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
     </div>
     <div>
-      <h3>Color: Base</h3>
-      <pfe-cta color="base"><a href="#">Default</a></pfe-cta>
-      <pfe-cta priority="primary" color="base"><a href="#">Primary</a></pfe-cta>
-      <pfe-cta priority="secondary" color="base"><a href="#">Secondary</a></pfe-cta>
-    </div>
-    <div>
       <h3>Color: Complement</h3>
       <pfe-cta color="complement"><a href="#">Default</a></pfe-cta>
       <pfe-cta priority="primary" color="complement"><a href="#">Primary</a></pfe-cta>
@@ -108,6 +102,10 @@ stories.add("At a glance", () => {
       <pfe-cta color="accent"><a href="#">Default</a></pfe-cta>
       <pfe-cta priority="primary" color="accent"><a href="#">Primary</a></pfe-cta>
       <pfe-cta priority="secondary" color="accent"><a href="#">Secondary</a></pfe-cta>
+    </div>
+    <div style="background:#333;padding:20px">
+      <h3 style="color:#fff">Color: Lightest</h3>
+      <pfe-cta priority="primary" color="lightest"><a href="#">Primary</a></pfe-cta>
     </div>
   </section>
   `;

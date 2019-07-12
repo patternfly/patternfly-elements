@@ -26,6 +26,14 @@ class PfeCta extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
+  static get observedAttributes() {
+    return [
+      "pfe-priority",
+      "pfe-color",
+      "on"
+    ];
+  }
+
   constructor() {
     super(PfeCta);
     this.cta = null;
@@ -57,6 +65,19 @@ class PfeCta extends PFElement {
     if(this.cta) {
       this.cta.removeEventListener("focus", this._focusHandler);
       this.cta.removeEventListener("blur", this._blurHandler);
+    }
+  }
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    super.attributeChangedCallback(attr, oldValue, newValue);
+    // Strip the prefix form the attribute
+    attr = attr.replace("pfe-", "");
+    // If the observer is defined in the attribute properties
+    if (this[attr] && this[attr].observer) {
+      // Get the observer function
+      let observer = this[this[attr].observer].bind(this);
+      // If it's a function, allow it to run
+      if (typeof observer === "function") observer(attr, oldValue, newValue);
     }
   }
 

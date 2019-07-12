@@ -95,8 +95,6 @@ class PfeCta extends PFElement {
     } else {
       // Capture the first child as the CTA element
       this.cta = firstChild;
-      this.cta.addEventListener("focus", this._focusHandler);
-      this.cta.addEventListener("blur", this._blurHandler);
     }
   }
 

@@ -1,20 +1,5 @@
 import PFElement from "../pfelement/pfelement.js";
 
-if (!String.prototype.includes) {
-  String.prototype.includes = function(search, start) {
-    'use strict';
-    if (typeof start !== 'number') {
-      start = 0;
-    }
-
-    if (start + search.length > this.length) {
-      return false;
-    } else {
-      return this.indexOf(search, start) !== -1;
-    }
-  };
-}
-
 class PfeCta extends PFElement {
   static get tag() {
     return "pfe-cta";
@@ -61,7 +46,9 @@ class PfeCta extends PFElement {
       this._slot.addEventListener("slotchange", this._init);
     }
 
-    this._init();
+    if (this.children.length) {
+      this._init();
+    }
 
     // Watch the light DOM link for focus and blur events
     if(this.cta) {
@@ -87,9 +74,19 @@ class PfeCta extends PFElement {
   _init() {
     // Get the first child of the web component (light DOM)
     const firstChild = this.children[0];
+    const supportedTags = ["a", "button", "input"];
+    let supportedTag = false;
 
     // If the first child does not exist or that child is not a supported tag
-    if (!firstChild || (firstChild && !["A", "BUTTON", "INPUT"].includes(firstChild.tagName))) {
+    if (firstChild) {
+      supportedTags.forEach(tag => {
+        if (firstChild.tagName.toLowerCase() === tag) {
+          supportedTag = true;
+        }
+      });
+    }
+
+    if (!firstChild || !supportedTag) {
       console.warn(
         `${
           PfeCta.tag
@@ -98,6 +95,8 @@ class PfeCta extends PFElement {
     } else {
       // Capture the first child as the CTA element
       this.cta = firstChild;
+      this.cta.addEventListener("focus", this._focusHandler);
+      this.cta.addEventListener("blur", this._blurHandler);
     }
   }
 

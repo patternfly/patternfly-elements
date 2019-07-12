@@ -28,17 +28,12 @@ class PfeCta extends PFElement {
     return "pfe-cta.html";
   }
 
-  get defaultStyle() {
-    return this.hasAttribute("priority") ? false : true;
+  get schemaUrl() {
+    return "pfe-cta.json";
   }
 
-  static get observedAttributes() {
-    return [
-      "pfe-priority",
-      "pfe-color",
-      "pfe-alt",
-      "on"
-    ];
+  get defaultStyle() {
+    return this.hasAttribute("priority") ? false : true;
   }
 
   // Declare the type of this component
@@ -96,19 +91,6 @@ class PfeCta extends PFElement {
 
   _blurHandler(event) {
     this.classList.remove("focus-within");
-  }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
-    // Strip the prefix form the attribute
-    attr = attr.replace("pfe-", "");
-    // If the observer is defined in the attribute properties
-    if (this[attr] && this[attr].observer) {
-      // Get the observer function
-      let observer = this[this[attr].observer].bind(this);
-      // If it's a function, allow it to run
-      if (typeof observer === "function") observer(attr, oldValue, newValue);
-    }
   }
 
   _basicAttributeChanged(attr, oldValue, newValue) {

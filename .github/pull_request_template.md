@@ -1,4 +1,4 @@
-## Feature Branch: Title
+## Title
 
 * Discovery doc:
 * Link(s) to demo pages_ where this element can be viewed:
@@ -24,4 +24,5 @@ Summarize files edited as part of this MR along with a brief description of what
 - [ ] Changelog: consider this your postage stamp, it can’t be merged without a changelog entry! 
 
 
+@patternfly/patternfly-elements-contributors
 

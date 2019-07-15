@@ -360,8 +360,12 @@
     </pfe-band>
   </body>
   <script>
-    document.querySelector("[slot=search]").addEventListener("click", event => {
-      console.log("Inject content into the tray...");
+    document.querySelector(`[slot="search"]`).addEventListener("click", event => {
+      console.log("Inject content into the search tray.");
+      const tray = event.target.querySelector(`[slot="tray"]`);
+      if (tray) {
+        tray.innerHTML += "<p>Test dynamic content injection.</p>";
+      }
     });
   </script>
 </html>

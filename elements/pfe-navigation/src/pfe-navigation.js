@@ -358,6 +358,7 @@ class PfeNavigationItem extends PFElement {
     this._closeMenu = this._closeMenu.bind(this);
     this._toggleMenu = this._toggleMenu.bind(this);
     this._keydownHandler = this._keydownHandler.bind(this);
+    this._suppressLink = this._suppressLink.bind(this);
   }
 
   connectedCallback() {
@@ -395,7 +396,7 @@ class PfeNavigationItem extends PFElement {
       const link = this.trigger.querySelector("a");
       if (link) {
         link.setAttribute("tabindex", "-1");
-        link.addEventListener("click", this._toggleMenu);
+        link.addEventListener("click", this._suppressLink);
       }
 
       // Attaching to the parent element allows the exit key to work inside the tray too
@@ -412,6 +413,10 @@ class PfeNavigationItem extends PFElement {
         composed: true
       })
     );
+  }
+
+  _suppressLink(event) {
+    event.preventDefault();
   }
 
   _toggleMenu(event) {

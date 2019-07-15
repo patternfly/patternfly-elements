@@ -6,8 +6,8 @@ $LOCAL: navigation;
   --pfe-navigation__overlay--BackgroundColor: var(--pfe-theme--overlay--BackgroundColor, rgba(37, 37, 37, 0.5));
 
   // Default spacing values
-  --pfe-navigation--Padding--vertical: 20px; // calc(#{pfe-var(container-spacer)} * 4);
-  --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-spacer)} * 1.5);
+  --pfe-navigation--Padding--vertical: #{pfe-var(container-padding)}; // 16px
+  --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} * 1.5); // 24px
 
   --pfe-navigation--Padding: 0 #{pfe-local(Padding--horizontal)};
 
@@ -98,7 +98,7 @@ $LOCAL: navigation;
   }
   &__overlay {
     display: block;
-    background-color: var(--pfe-navigation__overlay--BackgroundColor);;
+    background-color: var(--pfe-navigation__overlay--BackgroundColor);
     position: absolute;
     top: 0;
     left: 0;

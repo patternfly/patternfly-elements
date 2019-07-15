@@ -7,6 +7,7 @@ $LOCAL: navigation-item;
   --pfe-navigation-item--BackgroundColor: #{pfe-color(surface--darkest)};
   --pfe-navigation-item--BorderTopColor: transparent;
   --pfe-navigation-item--BorderColor: transparent;
+  --pfe-navigation-item--Padding--vertical: calc(#{pfe-var(container-padding)} / 2);
   --pfe-navigation-item--Padding--horizontal: #{pfe-var(container-padding)};
   --pfe-navigation-item__tray--Padding: #{pfe-var(container-padding)};
 
@@ -54,8 +55,7 @@ $LOCAL: navigation-item;
   visibility: hidden;
 }
 
-// Making the trigger styles an extend to optimize the css output below
-%trigger-styles {
+::slotted([slot="trigger"]) {
   font-family: #{pfe-var(font-family)};
   text-align: center;
   font-size: 14px;
@@ -63,23 +63,24 @@ $LOCAL: navigation-item;
   margin: 0;
   white-space: nowrap;
   color: #{pfe-local(Color)};
-  a {
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-    outline: none;
-  }
+  // a {
+  //   cursor: pointer;
+  //   text-decoration: none;
+  //   color: inherit;
+  //   outline: none;
+  // }
   :host([pfe-icon]) & {
     font-size: 12px;
   }
 }
 
-#pfe-navigation-item--trigger {
-  @for $n from 1 through 6 {
-    h#{$n} {
-      @extend %trigger-styles;
-    }
-  }
+::slotted([slot="trigger"]:hover) {
+  --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
+}
+
+::slotted([slot="trigger"]:focus) {
+  --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
+  --pfe-navigation-item--BorderColor: #{pfe-color(surface--lightest)};
 }
 
 ::slotted([slot="tray"]) {
@@ -90,31 +91,12 @@ $LOCAL: navigation-item;
 }
 
 .pfe-navigation-item {
-  &__icon {
-    display: flex;
-    background: var(--pfe-navigation-item__icon--Background);
-
-    :host(:not([pfe-icon])) [aria-expanded="false"] & {
-      visibility: hidden;
-    }
-
-    :host(:not([pfe-icon])) & {
-      @include pfe-arrow(down, #{pfe-var(feedback--default--lightest)}, $width: 6px, $height: 6px);
-      position: absolute;
-      bottom: 13px;
-    }
-
-    :host([pfe-icon]) & {
-      margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
-      width: 1.3em;
-      height: 1.3em;
-    }
-  }
   &__trigger {
     --pfe-theme--link--text-decoration: none;
     --pfe-theme--link--text-decoration--hover: none;
     --pfe-theme--link--text-decoration--focus: none;
 
+    --pfe-broadcasted--color--text:             #{pfe-local(Color)};
     --pfe-broadcasted--color--ui-link:          #{pfe-local(Color)};
     --pfe-broadcasted--color--ui-link--hover:   #{pfe-local(Color)};
     --pfe-broadcasted--color--ui-link--visited: #{pfe-local(Color)};
@@ -144,8 +126,7 @@ $LOCAL: navigation-item;
       --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
     }
 
-    &:focus,
-    :host(:focus-within) & {
+    &:focus {
       --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
       --pfe-navigation-item--BorderColor: #{pfe-color(surface--lightest)};
     }
@@ -159,6 +140,27 @@ $LOCAL: navigation-item;
 
     &:focus:not(:focus-visible) {
       outline: none;  // removes outline for mouse users, preserves it for keyboard users
+    }
+
+    &--icon {
+      display: flex;
+      background: var(--pfe-navigation-item__icon--Background);
+
+      :host(:not([pfe-icon])) [aria-expanded="false"] & {
+        visibility: hidden;
+      }
+
+      :host(:not([pfe-icon])) & {
+        @include pfe-arrow(down, #{pfe-var(feedback--default--lightest)}, $width: 6px, $height: 6px);
+        position: absolute;
+        bottom: 13px;
+      }
+
+      :host([pfe-icon]) & {
+        margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
+        width: 1.3em;
+        height: 1.3em;
+      }
     }
   }
   &__tray {

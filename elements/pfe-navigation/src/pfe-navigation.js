@@ -347,12 +347,12 @@ class PfeNavigationItem extends PFElement {
     super(PfeNavigationItem);
 
     this.expanded = false;
+    this.trigger = null;
     this.tray = null;
 
     this._trigger = this.shadowRoot.querySelector(".pfe-navigation-item__trigger");
     this._tray = this.shadowRoot.querySelector(".pfe-navigation-item__tray");
-    this._icon = this.shadowRoot.querySelector(".pfe-navigation-item__icon");
-    this._indicator = this.shadowRoot.querySelector(".indicator");
+    this._icon = this.shadowRoot.querySelector(".pfe-navigation-item__trigger--icon");
 
     this._init = this._init.bind(this);
     this._closeMenu = this._closeMenu.bind(this);
@@ -367,13 +367,14 @@ class PfeNavigationItem extends PFElement {
     const unassigned = [...this.children].filter(child => !child.hasAttribute("slot"));
     unassigned.map(item => item.setAttribute("slot", "trigger"));
 
-    this.to_shadowdom("trigger", "#pfe-navigation-item--trigger");
-
+    // Get the LightDOM trigger & tray content
+    this.trigger = this.querySelector(`[slot="trigger"]`);
     this.tray = this.querySelector(`[slot="tray"]`);
 
-    this.shadowRoot
-      .querySelector(`slot[name="trigger"]`)
-      .addEventListener("slotchange", this._init);
+    this._init();
+
+    // Add a slotchange listener to the lightDOM trigger
+    this.trigger.addEventListener("slotchange", this._init);
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -381,17 +382,21 @@ class PfeNavigationItem extends PFElement {
   }
 
   disconnectedCallback() {
-    if (this._trigger) {
-      this._trigger.removeEventListener("click", this._clickHandler);
-      this._trigger.removeEventListener("keydown", this._keydownHandler);
-    }
+    this._trigger.removeEventListener("click", this._clickHandler);
+    this._trigger.removeEventListener("keydown", this._keydownHandler);
   }
 
   _init() {
     // If there is both a trigger and a tray element, add click events
-    if (this._trigger && this._tray) {
+    if (this._tray) {
       // Toggle the navigation when the trigger is clicked
       this._trigger.addEventListener("click", this._toggleMenu);
+      // Turn off the fallback link
+      const link = this.trigger.querySelector("a");
+      if (link) {
+        link.setAttribute("tabindex", "-1");
+        link.addEventListener("click", this._toggleMenu);
+      }
 
       // Attaching to the parent element allows the exit key to work inside the tray too
       this.addEventListener("keydown", this._keydownHandler);
@@ -418,6 +423,7 @@ class PfeNavigationItem extends PFElement {
   _keydownHandler(event) {
     switch (event.key) {
       case "Spacebar":
+      case "Enter":
       case " ":
         this._toggleMenu(event);
         break;

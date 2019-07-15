@@ -3,6 +3,11 @@
   text-decoration: none;
 }
 
+[slot="logo"] > a:focus {
+  outline: 1px dashed #fff;
+  outline: var(--pfe-theme--surface--border-width, 1px) dashed var(--pfe-theme--color--surface--lightest, #fff);
+}
+
 .redhat-logo {
   max-width: 110px;
   max-height: 36px;

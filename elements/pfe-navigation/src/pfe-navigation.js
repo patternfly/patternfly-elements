@@ -317,13 +317,12 @@ class PfeNavigationItem extends PFElement {
         this._trigger.setAttribute("aria-expanded", true);
       }
 
-      if (this._tray) {
+      if (this.tray) {
         this.tray.removeAttribute("hidden");
-        this._tray.setAttribute("aria-expanded", true);
       }
 
-      if (this._indicator) {
-        this._indicator.classList.add("expanded");
+      if (this._tray) {
+        this._tray.setAttribute("aria-expanded", true);
       }
     } else {
       this.classList.remove("expanded");
@@ -332,13 +331,12 @@ class PfeNavigationItem extends PFElement {
         this._trigger.setAttribute("aria-expanded", false);
       }
 
-      if (this._tray) {
+      if (this.tray) {
         this.tray.setAttribute("hidden", true);
-        this._tray.setAttribute("aria-expanded", false);
       }
 
-      if (this._indicator) {
-        this._indicator.classList.remove("expanded");
+      if (this._tray) {
+        this._tray.setAttribute("aria-expanded", false);
       }
     }
   }
@@ -349,6 +347,7 @@ class PfeNavigationItem extends PFElement {
     this.expanded = false;
     this.trigger = null;
     this.tray = null;
+    this.linkUrl = null;
 
     this._trigger = this.shadowRoot.querySelector(".pfe-navigation-item__trigger");
     this._tray = this.shadowRoot.querySelector(".pfe-navigation-item__tray");
@@ -359,6 +358,7 @@ class PfeNavigationItem extends PFElement {
     this._toggleMenu = this._toggleMenu.bind(this);
     this._keydownHandler = this._keydownHandler.bind(this);
     this._suppressLink = this._suppressLink.bind(this);
+    this._navigateToUrl = this._navigateToUrl.bind(this);
   }
 
   connectedCallback() {
@@ -388,12 +388,13 @@ class PfeNavigationItem extends PFElement {
   }
 
   _init() {
-    // If there is both a trigger and a tray element, add click events
-    if (this._tray) {
+    const link = this.trigger.querySelector("a");
+
+    // If there is a tray element, add click events
+    if (this.tray) {
       // Toggle the navigation when the trigger is clicked
       this._trigger.addEventListener("click", this._toggleMenu);
       // Turn off the fallback link
-      const link = this.trigger.querySelector("a");
       if (link) {
         link.setAttribute("tabindex", "-1");
         link.addEventListener("click", this._suppressLink);
@@ -401,6 +402,9 @@ class PfeNavigationItem extends PFElement {
 
       // Attaching to the parent element allows the exit key to work inside the tray too
       this.addEventListener("keydown", this._keydownHandler);
+    } else {
+      this.linkUrl = link ? link.href : "#";
+      this._trigger.addEventListener("click", this._navigateToUrl);
     }
   }
 
@@ -417,6 +421,11 @@ class PfeNavigationItem extends PFElement {
 
   _suppressLink(event) {
     event.preventDefault();
+  }
+
+  _navigateToUrl(event) {
+    event.preventDefault();
+    window.location.href = this.linkUrl;
   }
 
   _toggleMenu(event) {

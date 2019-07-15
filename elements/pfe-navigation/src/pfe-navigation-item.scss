@@ -9,6 +9,10 @@ $LOCAL: navigation-item;
   --pfe-navigation-item--BorderColor: transparent;
   --pfe-navigation-item--Padding--vertical: calc(#{pfe-var(container-padding)} / 2);
   --pfe-navigation-item--Padding--horizontal: #{pfe-var(container-padding)};
+
+  --pfe-navigation-item__trigger--FontSize: 14px;
+  --pfe-navigation-item__trigger--FontWeight: 100;
+
   --pfe-navigation-item__tray--Padding: #{pfe-var(container-padding)};
 
   --pfe-navigation-item__icon--Background: none;
@@ -44,7 +48,7 @@ $LOCAL: navigation-item;
   :host([pfe-icon="#{$icon}"]) {
     --pfe-navigation-item__icon--Background: #{map-get($icons, #{$icon}--on-dark)} no-repeat;
   }
-  :host([pfe-icon="#{$icon}"].expanded) .pfe-navigation-item__trigger {
+  :host([pfe-icon="#{$icon}"].expanded) {
     --pfe-navigation-item__icon--Background: #{map-get($icons, #{$icon})} no-repeat;
   }
 }
@@ -56,21 +60,23 @@ $LOCAL: navigation-item;
 }
 
 ::slotted([slot="trigger"]) {
+  @each $level in (alpha, beta, gamma) {
+    --pfe-theme--font-size--#{$level}: #{pfe-local($cssvar: FontSize, $region: trigger)};
+    --pfe-theme--font-weight--#{$level}: #{pfe-local($cssvar: FontWeight, $region: trigger)};
+  }
+
   font-family: #{pfe-var(font-family)};
   text-align: center;
-  font-size: 14px;
-  font-weight: 100;
+  font-size: #{pfe-local($cssvar: FontSize, $region: trigger)};
+  font-weight: #{pfe-local($cssvar: FontWeight, $region: trigger)};
+  color: #{pfe-local(Color)};
+
   margin: 0;
   white-space: nowrap;
-  color: #{pfe-local(Color)};
-  // a {
-  //   cursor: pointer;
-  //   text-decoration: none;
-  //   color: inherit;
-  //   outline: none;
-  // }
+  outline: none;
+
   :host([pfe-icon]) & {
-    font-size: 12px;
+    --pfe-navigation-item__trigger--FontSize: 12px;
   }
 }
 
@@ -84,7 +90,7 @@ $LOCAL: navigation-item;
 }
 
 ::slotted([slot="tray"]) {
-  padding: var(--pfe-navigation-item__tray--Padding);
+  padding: #{pfe-local($cssvar: Padding, $region: tray)};
   max-height: calc(100vh - var(--pfe-navigation--Height, 90px));
   overflow-x: hidden;
   overflow-y: scroll;
@@ -144,16 +150,17 @@ $LOCAL: navigation-item;
 
     &--icon {
       display: flex;
-      background: var(--pfe-navigation-item__icon--Background);
+      background: #{pfe-local($cssvar: Background, $region: icon)};
 
       :host(:not([pfe-icon])) [aria-expanded="false"] & {
         visibility: hidden;
       }
 
       :host(:not([pfe-icon])) & {
-        @include pfe-arrow(down, #{pfe-var(feedback--default--lightest)}, $width: 6px, $height: 6px);
-        position: absolute;
-        bottom: 13px;
+        @include pfe-arrow(down, #{pfe-color(feedback--default)}, $width: 6px, $height: 6px) {
+          position: absolute;
+          bottom: 13px;
+        }
       }
 
       :host([pfe-icon]) & {

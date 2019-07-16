@@ -12,11 +12,9 @@ $LOCAL: navigation-item;
         color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
     }
     .pfe-navigation-item__tray {
-        height: 100vh;
-
-        // padding: #{pfe-local($cssvar: Padding, $region: tray)};
-        // max-height: calc(100vh - var(--pfe-navigation--Height, 90px));
-        // overflow-x: hidden;
-        // overflow-y: scroll;
+        padding: #{pfe-local($cssvar: Padding, $region: tray)};
+        max-height: calc(100vh - var(--pfe-navigation--Height, 90px));
+        overflow-x: hidden;
+        overflow-y: scroll;
     }
 // }

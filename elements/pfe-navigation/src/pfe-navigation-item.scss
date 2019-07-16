@@ -54,8 +54,7 @@ $LOCAL: navigation-item;
 }
 
 :host([hidden]),
-::slotted([slot="tray"][hidden]),
-.pfe-navigation-item__tray [hidden] {
+::slotted([slot="tray"][hidden]) {
   display: none;
   visibility: hidden;
 }
@@ -169,17 +168,22 @@ $LOCAL: navigation-item;
     }
   }
   &__tray {
+    display: none;
+
     width: 100%;
     margin: 0 auto;
   
     transition: all #{pfe-var(animation-timing)};
     background-color: #{pfe-color(surface--lightest)};
   
-    display: block;
     position: absolute;
     top: 100%;
     left: 0;
     z-index: 1;
     color: #{pfe-color(surface--lightest--text)};
+    .expanded &,
+    &[aria-expanded="true"] {
+      display: block;
+    }
   }
 }

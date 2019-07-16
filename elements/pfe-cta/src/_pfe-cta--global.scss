@@ -1,0 +1,50 @@
+@import "../../pfe-sass/pfe-sass";
+
+
+@mixin pfe-cta-workarounds {
+  pfe-cta {
+    display: inline-block;
+    font-family: $pfe-global--font-family;
+  }
+  pfe-cta a {
+    display: inline-block;
+    color: pfe-fallback(ui-link);
+  }
+  pfe-cta a:visited {
+    color: pfe-fallback(ui-link);
+  }
+  pfe-cta a:hover {
+    color: pfe-fallback(ui-link);
+  }
+  pfe-cta a:focus {
+    color: pfe-fallback(ui-link);
+  }
+  pfe-cta[priority] {
+    background: pfe-fallback(surface--darker--text) !important;
+    border-color: pfe-fallback(surface--darker--text) !important;
+  }
+  pfe-cta[priority] a {
+    padding: 16px 32px;
+    text-decoration: none;
+    color: pfe-fallback(surface--lightest--text);
+  }
+  pfe-cta[priority] a:visited {
+    color: pfe-fallback(surface--lightest--text);
+  }
+  pfe-cta[priority] a:hover,
+  pfe-cta[priority] a:focus {
+    color: pfe-fallback(ui-link);
+  }
+  pfe-cta[priority="primary"] {
+    background: pfe-fallback(surface--accent) !important;
+    border-color: pfe-fallback(surface--accent) !important;
+  }
+  pfe-cta[priority="primary"] a,
+  pfe-cta[priority="primary"] a:visited {
+    color: pfe-fallback(surface--darker--text);
+  }
+  pfe-cta[priority="primary"] a:hover,
+  pfe-cta[priority="primary"] a:focus {
+    color: pfe-fallback(surface--border);
+  }
+}

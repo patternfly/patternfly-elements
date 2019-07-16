@@ -1,0 +1,14 @@
+@import "pfe-cta--global";
+
+///* Microsoft Edge Browser 12+ (All) - @supports method */
+@supports (-ms-ime-align:auto)  {
+  @include pfe-cta-workarounds;
+}
+
+///* IE11 */
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+   @include pfe-cta-workarounds;
+}
+.pfe-cta {
+  border: green solid 10px !important;
+}

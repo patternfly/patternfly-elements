@@ -68,7 +68,6 @@ $LOCAL: navigation-item;
   color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
 }
 
-.pfe-navigation-item__tray,
 ::slotted([slot="tray"]) {
   padding: #{pfe-local($cssvar: Padding, $region: tray)};
   max-height: calc(100vh - var(--pfe-navigation--Height, 90px));

@@ -162,7 +162,10 @@ class PfeNavigation extends PFElement {
     if ((event.target !== this && event.target.closest("pfe-navigation") === null) || event.path[0] === this.overlay) {
       this.dispatchEvent(
         new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
-          detail: { navigationItem: null, expanded: false },
+          detail: {
+            navigationItem: null,
+            expanded: false
+          },
           bubbles: true,
           composed: true
         })
@@ -411,7 +414,10 @@ class PfeNavigationItem extends PFElement {
     event.preventDefault();
     this.dispatchEvent(
       new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
-        detail: { navigationItem: null, expanded: false },
+        detail: {
+          navigationItem: null,
+          expanded: false
+        },
         bubbles: true,
         composed: true
       })
@@ -452,7 +458,12 @@ class PfeNavigationItem extends PFElement {
   _fireExpandToggledEvent() {
     this.dispatchEvent(
       new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
-        detail: { navigationItem: this, expanded: this.expanded },
+        detail: {
+          navigationItem: this,
+          expanded: this.expanded,
+          slot: this.getAttribute("slot"),
+          content: this.querySelector(`[slot="tray"]`)
+        },
         bubbles: true,
         composed: true
       })

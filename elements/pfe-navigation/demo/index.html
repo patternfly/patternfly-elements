@@ -361,11 +361,15 @@
     </pfe-band>
   </body>
   <script>
-    document.querySelector(`[slot="search"]`).addEventListener("click", event => {
-      console.log("Inject content into the search tray.");
-      const tray = event.target.querySelector(`[slot="tray"]`);
-      if (tray) {
-        tray.innerHTML += "<p>Test dynamic content injection.</p>";
+    document.addEventListener("pfe-navigation-item:toggled", event => {
+      if (event.detail.slot === "language" && event.detail.content !== null) {
+        const container = event.detail.content.querySelector(".container");
+        const newContent = `<p>Inject new content into the ${event.detail.slot} slot.</p>`;
+        if (event.detail.expanded) {
+          container.innerHTML = newContent;
+        } else {
+          container.innerHTML = "";
+        }
       }
     });
   </script>

@@ -1,16 +1,17 @@
 :host {
-    display: block;
-  }
+  display: block;
+  height: 100%
+}
   
-  ::slotted(*) {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: stretch;
-  }
+::slotted(*) {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+}
 
-  ::slotted(ul) {
-    list-style-type: none;
-  }
+::slotted(ul) {
+  list-style-type: none;
+}

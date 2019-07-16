@@ -160,7 +160,6 @@ class PfeNavigation extends PFElement {
 
   _outsideListener(event) {
     if ((event.target !== this && event.target.closest("pfe-navigation") === null) || event.path[0] === this.overlay) {
-      // this._toggledHandler(event);
       this.dispatchEvent(
         new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
           detail: { navigationItem: null, expanded: false },

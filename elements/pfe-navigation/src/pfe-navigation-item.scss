@@ -54,41 +54,21 @@ $LOCAL: navigation-item;
 }
 
 :host([hidden]),
-::slotted([slot="tray"][hidden]) {
+::slotted([slot="tray"][hidden]),
+.pfe-navigation-item__tray [hidden] {
   display: none;
   visibility: hidden;
 }
 
 ::slotted([slot="trigger"]) {
-  @each $level in (alpha, beta, gamma) {
-    --pfe-theme--font-size--#{$level}: #{pfe-local($cssvar: FontSize, $region: trigger)};
-    --pfe-theme--font-weight--#{$level}: #{pfe-local($cssvar: FontWeight, $region: trigger)};
-  }
-
-  font-family: #{pfe-var(font-family)};
-  text-align: center;
-  font-size: #{pfe-local($cssvar: FontSize, $region: trigger)};
-  font-weight: #{pfe-local($cssvar: FontWeight, $region: trigger)};
-  color: #{pfe-local(Color)};
-
   margin: 0;
-  white-space: nowrap;
-  outline: none;
-
-  :host([pfe-icon]) & {
-    --pfe-navigation-item__trigger--FontSize: 12px;
-  }
+  font-family: #{pfe-var(font-family)};
+  font-size: #{pfe-local($cssvar: FontSize, $fallback: 14px, $region: trigger)};
+  font-weight: #{pfe-local($cssvar: FontWeight, $fallback: 100, $region: trigger)};
+  color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
 }
 
-::slotted([slot="trigger"]:hover) {
-  --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
-}
-
-::slotted([slot="trigger"]:focus) {
-  --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};
-  --pfe-navigation-item--BorderColor: #{pfe-color(surface--lightest)};
-}
-
+.pfe-navigation-item__tray,
 ::slotted([slot="tray"]) {
   padding: #{pfe-local($cssvar: Padding, $region: tray)};
   max-height: calc(100vh - var(--pfe-navigation--Height, 90px));
@@ -108,6 +88,11 @@ $LOCAL: navigation-item;
     --pfe-broadcasted--color--ui-link--visited: #{pfe-local(Color)};
     --pfe-broadcasted--color--ui-link--focus:   #{pfe-local(Color)};
 
+    @each $level in (alpha, beta, gamma) {
+      --pfe-theme--font-size--#{$level}: #{pfe-local($cssvar: FontSize, $region: trigger)};
+      --pfe-theme--font-weight--#{$level}: #{pfe-local($cssvar: FontWeight, $region: trigger)};
+    }
+
     transition: all #{pfe-var(animation-timing)};
 
     position: relative;
@@ -117,6 +102,16 @@ $LOCAL: navigation-item;
     align-items: center;
     justify-content: center;
     flex-grow: 1;
+  
+    font-family: #{pfe-var(font-family)};
+    text-align: center;
+    font-size: #{pfe-local($cssvar: FontSize, $region: trigger)};
+    font-weight: #{pfe-local($cssvar: FontWeight, $region: trigger)};
+    color: #{pfe-local(Color)};
+  
+    margin: 0;
+    white-space: nowrap;
+    outline: none;
 
     background-color: #{pfe-local(BackgroundColor)};
     padding: var(--pfe-navigation--Padding--vertical) var(--pfe-navigation-item--Padding--horizontal) !important;
@@ -147,6 +142,10 @@ $LOCAL: navigation-item;
     &:focus:not(:focus-visible) {
       outline: none;  // removes outline for mouse users, preserves it for keyboard users
     }
+  
+    :host([pfe-icon]) & {
+      --pfe-navigation-item__trigger--FontSize: 12px;
+    }
 
     &--icon {
       display: flex;
@@ -165,8 +164,8 @@ $LOCAL: navigation-item;
 
       :host([pfe-icon]) & {
         margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
-        width: 1.3em;
-        height: 1.3em;
+        width: 21px;
+        height: 21px;
       }
     }
   }

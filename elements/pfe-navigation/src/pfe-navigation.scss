@@ -23,6 +23,12 @@ $LOCAL: navigation;
   }
 
   display: block;
+  background-color: #{map-get($pfe-colors, surface--darkest)};
+  background-color: #{pfe-local(BackgroundColor)};
+  color: #{pfe-local(Color)};
+
+  z-index: 2;
+  width: 100%;
 }
 
 :host(.sticky) {
@@ -33,24 +39,19 @@ $LOCAL: navigation;
   z-index: 99;
 }
 
+// Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
   margin: 0 !important;
-  padding-top: #{pfe-local(Padding--vertical)} !important;
-  padding-right: #{pfe-var(container-padding)} !important;
-  padding-bottom: #{pfe-local(Padding--vertical)} !important;
   max-height: #{pfe-local(MinHeight)};
 }
 
-::slotted([slot="skip"]) {
-  @include pfe-sr-only;
-}
-
-::slotted(:not([slot])) {
-  display: none;
-  @media (min-width: #{pfe-breakpoint(lg)}) {
-    display: contents;
-  }
-}
+// ::slotted(:not([slot])) {
+//   display: none;
+//   @media (min-width: #{pfe-breakpoint(lg)}) {
+//     display: inline;
+//     display: contents;
+//   }
+// }
 
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
@@ -68,14 +69,11 @@ $LOCAL: navigation;
   &__wrapper {
     position: relative;
     z-index: 2;
-    width: 100%;
-    background-color: #{pfe-local(BackgroundColor)};
-    color: #{pfe-local(Color)};
-    width: 100%;
   }
   &__container {
     margin: 0 auto;
-    color: #{pfe-local(Color)};
+    padding: 0 #{pfe-local(Padding--horizontal)};
+    // color: #{pfe-local(Color)};
     z-index: 2;
 
     display: flex;
@@ -91,7 +89,6 @@ $LOCAL: navigation;
       }
     }
 
-    padding: 0 #{pfe-local(Padding--horizontal)};
     @media (min-width: #{pfe-breakpoint(lg)}) {
       padding: 0;
     }
@@ -114,6 +111,13 @@ $LOCAL: navigation;
     flex-flow: column nowrap;
     align-items: flex-start;
     justify-content: center;
+    
+    padding-top: #{pfe-local(Padding--vertical)};
+    padding-right: #{pfe-var(container-padding)};
+    padding-bottom: #{pfe-local(Padding--vertical)};
+  }
+  &__skip {
+    @include pfe-sr-only;
   }
   &__main {
     display: none;

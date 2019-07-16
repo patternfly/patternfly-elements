@@ -1,0 +1,14 @@
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: navigation-item;
+
+// Edge and IE11 styles
+// @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+    .pfe-navigation-item__trigger > *:not(.pfe-navigation-item__trigger--icon) {
+        margin: 0;
+        font-family: #{pfe-var(font-family)};
+        font-size: #{pfe-local($cssvar: FontSize, $fallback: 14px, $region: trigger)};
+        font-weight: #{pfe-local($cssvar: FontWeight, $fallback: 100, $region: trigger)};
+        color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
+    }
+// }

@@ -14,7 +14,50 @@
         height: 40px;
       }
       body { background: #d1d1d1; color: black; }
+      #filter-green feFlood {
+        flood-color: green;
+      }
+
+      .svgicon {
+        filter: url(#filter-green);
+      }
     </style>
+
+    <script>
+      class SvgTest extends HTMLElement {
+        constructor() {
+          super();
+          this.template = document.createElement("template");
+          this.attachShadow({ mode: "open" });
+          this.shadowRoot.innerHTML = "";
+          this.template.innerHTML = `
+
+    <div style="filter: url(#fg); height: 40px; width: 40px; background-image: url(rh-icon-api.svg);"></div>
+`;
+          this.shadowRoot.appendChild(this.template.content.cloneNode(true));
+        }
+      }
+      window.customElements.define("svg-test", SvgTest);
+    </script>
+
+<svg xmlns="http://www.w3.org/2000/svg">
+      <filter id="fg" color-interpolation-filters="sRGB" x="0" y="0" height="100%" width="100%">
+      <feFlood flood-color=green result="COLOR" />
+      <feComposite operator="in" in="COLOR" in2="SourceAlpha" />
+      </filter>
+    </svg>
+    <br>
+
+    <svg-test></svg-test>
+
+    <br>
+
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <filter id="filter-green" color-interpolation-filters="sRGB" x="0" y="0" height="100%" width="100%">
+      <feFlood result="COLOR" />
+      <feComposite operator="in" in="COLOR" in2="SourceAlpha" />
+      </filter>
+    </svg>
 
     <h1>basic square demo</h1>
     <p>This is a <code>&lt;use&gt;</code> on a remote svg (<code>./square.svg</code>).</p>
@@ -58,5 +101,8 @@
 
     <h1>img tag pointing at an svg with content-type "image/svg+xml"</h1>
     <img style="width: 40px" src="rh-icon-api.svg">
+
+    <h1>background-image svg</h1>
+    <div class="svgicon" style="height: 40px; width: 40px; background-image: url(rh-icon-api.svg);"></div>
   </body>
 </html>

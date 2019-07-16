@@ -21,8 +21,7 @@ $pfe-icon--border-style:                     map-get($pfe-vars, border-style);
 
 @mixin pfe-icon-set-svg-size($size: 1em) {
   &,
-  & svg,
-  & svg use{
+  & svg {
     width: $size;
     height: $size;
   }
@@ -52,18 +51,9 @@ $pfe-icon--border-style:                     map-get($pfe-vars, border-style);
     }
   }
 
-  .pfe-icon-container {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background-size: contain;
-      filter: url(#pfe-icon-color-filter);
-  }
 
-  #pfe-icon-color-filter feFlood {
-    flood-color: var(--pfe-broadcasted--color--text)
+  svg filter feFlood {
+    flood-color: var(--pfe-broadcasted--color--text);
   }
 }
 

@@ -1,8 +1,8 @@
 /**
  * An icon name parser for the PFE built-in icon sets.
  */
-function parseIconName(iconName, iconSetName, iconSetPath) {
-  const [, , iconName] = /^([^-]+)-(.*)/.exec(iconName);
+function parseIconName(name, iconSetName, iconSetPath) {
+  const [, , iconName] = /^([^-]+)-(.*)/.exec(name);
 
   const iconId = `${iconSetName}-icon-${iconName}`;
   const iconPath = `${iconSetPath}/${iconId}.svg`;

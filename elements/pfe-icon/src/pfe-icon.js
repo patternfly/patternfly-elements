@@ -33,35 +33,8 @@ class PfeIcon extends PFElement {
     const { iconPath } = iconSet.parseIconName(iconName);
 
     this.shadowRoot
-      .querySelector(".pfe-icon-container")
+      .querySelector("svg image")
       .setAttribute("xlink:href", iconPath);
-    // this.shadowRoot.querySelector(
-    //   ".pfe-icon-container"
-    // ).style.backgroundImage = `url(${iconPath})`;
-
-    const randomId =
-      "filter-" +
-      Math.random()
-        .toString()
-        .slice(2, 10);
-
-    // this.setFilterId(randomId);
-
-    // this.shadowRoot.querySelector("svg feFlood").style.floodColor =
-    //   "var(--pfe-broadcasted--color--text)";
-  }
-
-  /**
-   * Sets the id attribute on the <filter> element and points the CSS `filter` at that id.
-   */
-  setFilterId(id) {
-    // set the CSS filter property to point at the given id
-    this.shadowRoot.querySelector(
-      ".pfe-icon-container"
-    ).style.filter = `url(#${id})`;
-
-    // set the id attribute on the SVG filter element to match
-    this.shadowRoot.querySelector("svg filter").setAttribute("id", id);
   }
 
   /**
@@ -87,8 +60,6 @@ class PfeIcon extends PFElement {
 }
 
 PfeIcon._iconSets = {};
-
-window.PfeIcon = PfeIcon;
 
 addBuiltIns(PfeIcon);
 

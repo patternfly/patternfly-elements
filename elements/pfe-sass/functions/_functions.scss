@@ -290,13 +290,6 @@
     // Return the variable declaration string
     @return var(#{$var-declaration});
 }
-@function pfe-fallback($cssvar, $category: 'color', $map: $pfe-colors) {
-    @if $category !="" {
-        $category: "#{$category}--";
-    }
-    // Return the variable declaration string
-    @return #{map-get($map, $cssvar)};
-}
 
 /// Local
 ///

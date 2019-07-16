@@ -51,8 +51,13 @@ $pfe-icon--border-style:                     map-get($pfe-vars, border-style);
     }
   }
 
-  svg filter feFlood {
-    flood-color: var(--pfe-broadcasted--color--text);
+  svg {
+    image.load-failed {
+        display: none;
+    }
+    filter feFlood {
+      flood-color: var(--pfe-broadcasted--color--text);
+    }
   }
 }
 

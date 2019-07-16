@@ -5,18 +5,101 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../pfe-icon.js"></script>
   </head>
   <body>
 
-    <pfe-icon size="4x" pfe-icon="rh-aed"></pfe-icon>
-    <img src="http://localhost:8000/webassets/avalon/j/lib/rh-iconfont-svgs/rh-icon-aed.svg">
+    <pfe-icon></pfe-icon>
 
-    <script>
+    <script type="module">
+
+      import PfeIcon from "../pfe-icon.js";
+
+      const icon = document.body.querySelector('pfe-icon');
+      const image = icon.shadowRoot.querySelector("svg image");
+      const filter = icon.shadowRoot.querySelector("svg filter");
+      const feFlood = icon.shadowRoot.querySelector("svg filter feFlood");
+
+      const sizeAttr = "size"; // the name of the size attribute (unprefixed and likely to change)
+
       suite('<pfe-icon>', () => {
         test('it should upgrade', () => {
           assert.instanceOf(document.querySelector('pfe-icon'), customElements.get("pfe-icon", 'pfe-icon should be an instance of pfeIcon'));
         });
+
+        test('it should error when adding the same icon set name twice', () => {
+          // add an icon set named test
+          PfeIcon.addIconSet('test');
+
+          // adding the same icon set name again should throw
+          assert.throws(() => PfeIcon.addIconSet('test'), "already exists");
+        });
+
+        test('it should change icon when icon name is changed', done => {
+          const image = icon.shadowRoot.querySelector("svg image");
+          const testIcons = ["rh-aed", "rh-api", "rh-atom", "rh-bike"]
+
+          // a promise that triggers when a new image is loaded
+          // note that the event listener is never removed, but that's okay
+          // because the leftover event listeners are noops; they'll resolve an
+          // already-resolved promise.
+          function waitForLoad() {
+            return new Promise(resolve => {
+              image.addEventListener("load", resolve);
+            });
+          }
+
+          async function test() {
+            // wait for each test icon to be loaded, then move to the next one
+            for (let iconName of testIcons) {
+              icon.setAttribute("pfe-icon", iconName);
+              await waitForLoad();
+            }
+            done();
+          }
+
+          test();
+        });
+
+        test('it should change color when CSS var is changed', () => {
+          // we can't get the exact color of the image, but we can make sure
+          // the feFlood element is getting `flood-color` from the appropriate
+          // CSS variable.
+          const newColor = "rgb(10, 11, 12)";
+
+          icon.style.setProperty("--pfe-broadcasted--color--text", newColor);
+
+          const { floodColor } = getComputedStyle(feFlood);
+
+          assert.equal(floodColor, newColor);
+
+          icon.style.removeProperty("--pfe-broadcasted--color--text");
+        });
+
+        test('it should change size based on the relative size attribute values', () => {
+          function sizeCheck(sizes) {
+            let lastSize = { width: 0, height: 0 };
+            sizes.forEach(size => {
+              icon.setAttribute(sizeAttr, size);
+              const { width, height } = icon.getBoundingClientRect();
+              assert.isAbove(width, lastSize.width, `size "${size}" should be wider than the size below`);
+              assert.isAbove(height, lastSize.height, `size "${size}" should be taller than the size below`);
+
+              lastSize = { width, height };
+            });
+          }
+
+          sizeCheck(["2x", "3x", "4x"]);
+          sizeCheck(["sm", "md", "lg", "xl"]);
+        });
+
+
+        // TODO finish these
+        // test stubs, it should...
+        //
+        // print helpful error when invalid icon set is used
+        // print helpful error when valid icon set but invalid icon is used
+        // hide <image> when invalid icon set or invalid icon is used
+        // occupy space when invalid icon set or invalid icon is used
 
       });
     </script>

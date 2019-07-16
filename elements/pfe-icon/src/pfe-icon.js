@@ -21,6 +21,23 @@ class PfeIcon extends PFElement {
 
   constructor() {
     super(PfeIcon);
+
+    this.image = this.shadowRoot.querySelector("svg image");
+    this.image.addEventListener("load", () => this.iconLoad());
+    this.image.addEventListener("error", () => this.iconLoadError());
+  }
+
+  iconLoad() {
+    this.image.classList.remove("load-failed");
+  }
+
+  iconLoadError() {
+    console.error(
+      `icon named "${this.getAttribute(
+        "pfe-icon"
+      )}" failed to load from URL ${this.image.getAttribute("xlink:href")}`
+    );
+    this.image.classList.add("load-failed");
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -32,9 +49,7 @@ class PfeIcon extends PFElement {
     const iconSet = PfeIcon.getIconSet(iconName);
     const { iconPath } = iconSet.parseIconName(iconName);
 
-    this.shadowRoot
-      .querySelector("svg image")
-      .setAttribute("xlink:href", iconPath);
+    this.image.setAttribute("xlink:href", iconPath);
   }
 
   /**

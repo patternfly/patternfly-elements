@@ -76,6 +76,8 @@
         });
 
         test('it should change size based on the relative size attribute values', () => {
+          // a function that accepts "size" values and makes sure they're
+          // arranged in order from smallest to largest.
           function sizeCheck(sizes) {
             let lastSize = { width: 0, height: 0 };
             sizes.forEach(size => {
@@ -88,19 +90,34 @@
             });
           }
 
+          // test all the valid values for "size"
           sizeCheck(["2x", "3x", "4x"]);
           sizeCheck(["sm", "md", "lg", "xl"]);
         });
 
+        test('it should print helpful error when given an invalid icon set name', () => {
+          const badIconName = "badiconset-iconname";
+          const spy = sinon.spy(console, 'warn');
+          icon.setAttribute("pfe-icon", badIconName);
+          sinon.assert.calledWith(spy,`icon "${badIconName}" was requested but no icon set "${badIconName.split('-')[0]}" is registered`);
+          spy.restore();
+        });
 
-        // TODO finish these
-        // test stubs, it should...
-        //
-        // print helpful error when invalid icon set is used
-        // print helpful error when valid icon set but invalid icon is used
-        // hide <image> when invalid icon set or invalid icon is used
-        // occupy space when invalid icon set or invalid icon is used
-
+        test('it should hide <image> when given an invalid icon or icon set', done => {
+          const badIconName = "rh-badiconname";
+          const oldLoadError = icon.iconLoadError;
+          icon.iconLoadError = () => {
+            // invoke the old load error handler as if it were still attached to the icon
+            oldLoadError.call(icon);
+            // make sure the image is hidden
+            const imageStyle = getComputedStyle(image);
+            assert.equal(imageStyle.display, "none", "svg <image> should have display:none when icon load fails");
+            // restore the old icon load error
+            icon.iconLoadError = oldLoadError;
+            done();
+          };
+          icon.setAttribute("pfe-icon", badIconName);
+        });
       });
     </script>
   </body>

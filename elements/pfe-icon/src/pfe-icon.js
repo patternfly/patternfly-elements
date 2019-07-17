@@ -32,7 +32,7 @@ class PfeIcon extends PFElement {
   }
 
   iconLoadError() {
-    console.error(
+    console.warn(
       `icon named "${this.getAttribute(
         "pfe-icon"
       )}" failed to load from URL ${this.image.getAttribute("xlink:href")}`
@@ -46,21 +46,28 @@ class PfeIcon extends PFElement {
   }
 
   updateIcon(iconName) {
-    const iconSet = PfeIcon.getIconSet(iconName);
-    const { iconPath } = iconSet.parseIconName(iconName);
+    const { setName, set } = PfeIcon.getIconSet(iconName);
 
-    this.image.setAttribute("xlink:href", iconPath);
+    if (set) {
+      const { iconPath } = set.parseIconName(iconName);
+      this.image.setAttribute("xlink:href", iconPath);
+    } else {
+      console.warn(
+        `icon "${iconName}" was requested but no icon set "${setName}" is registered`
+      );
+    }
   }
 
   /**
    * Get an icon set by providing the set's name, _or_ the name of an icon from that set.
    *
-   * @param {String} name the name of the set, or the name of an icon from that set.
+   * @param {String} iconName the name of the set, or the name of an icon from that set.
    * @return {PfeIconSet} the icon set
    */
-  static getIconSet(name) {
-    const [setName] = name.split("-");
-    return this._iconSets[setName];
+  static getIconSet(iconName) {
+    const [setName] = iconName.split("-");
+    const set = this._iconSets[setName];
+    return { setName, set };
   }
 
   static addIconSet(name, path, parseIconName) {

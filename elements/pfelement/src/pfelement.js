@@ -27,6 +27,14 @@ class PFElement extends HTMLElement {
     };
   }
 
+  static get version() {
+    return "{{version}}";
+  }
+
+  get version() {
+    return this._pfeClass.version;
+  }
+
   get pfeType() {
     return this.getAttribute(`${prefix}type`);
   }

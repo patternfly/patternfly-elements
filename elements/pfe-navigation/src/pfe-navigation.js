@@ -41,6 +41,8 @@ class PfeNavigation extends PFElement {
 
     // Attach functions for use below
     this._init = this._init.bind(this);
+    this._setupMobileNav = this._setupMobileNav.bind(this);
+    this._setupMobileSearch = this._setupMobileSearch.bind(this);
     // -- handlers
     this._toggledHandler = this._toggledHandler.bind(this);
     this._observerHandler = this._observerHandler.bind(this);
@@ -76,6 +78,7 @@ class PfeNavigation extends PFElement {
     // If this element contains light DOM, initialize it
     if (this.children.length) {
       this.mobileSlot = {
+        menu: this.querySelector(`[slot="menu-mobile"]`),
         login: this.querySelector(`[slot="mobile-login"]`),
         language: this.querySelector(`[slot="mobile-language"]`)
       };
@@ -95,6 +98,11 @@ class PfeNavigation extends PFElement {
   disconnectedCallback() {
     // Remove the custom listener for the toggled event
     this.removeEventListener("pfe-navigation-item:toggled", this._toggledHandler);
+    
+    // If the mobile search slot exists, remove it's listener
+    if(this.mobileSlot.search) {
+      this.mobileSlot.search.addEventListener("slotchange", this._setupMobileSearch);
+    }
 
     // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("scroll", this._stickyHandler);
@@ -203,11 +211,14 @@ class PfeNavigation extends PFElement {
         // Run the sticky check on first page load
         this._stickyHandler();
 
+        // Attach the scroll event to the window
         window.addEventListener("scroll", this._stickyHandler);
       }
 
+      // Setup the mobile navigation region
       ret = this._setupMobileNav();
 
+      // Listen for clicks outside the navigation element
       document.addEventListener("click", this._outsideListener);
 
       // @IE11 This is necessary so the script doesn't become non-responsive
@@ -230,13 +241,17 @@ class PfeNavigation extends PFElement {
       const triggers = [
         ...this.querySelectorAll("pfe-navigation-main pfe-navigation-item > *:first-child")
       ];
+      // Create a new pfe-accordion element
       const fragment = document.createDocumentFragment();
       const accordion = document.createElement("pfe-accordion");
-      const menuSlotMobile = this.querySelector(`[slot="menu-mobile"]`);
 
-      // Set up the mobile search
-      const searchClone = this.querySelector(`[slot="search"] > [slot="tray"]`).innerHTML;
-      this._mobileSlot.search.innerHTML = searchClone;
+      // Set up the mobile search, look for the mobile search flag in the search slot
+      this.mobileSlot.search = this.querySelector(`[slot="search"] [pfe-navigation--mobile-search]`);
+      // If the slot exists, grab it's content and inject into the mobile slot in shadow DOM
+      if (this.mobileSlot.search) {
+        this._setupMobileSearch();
+        this.mobileSlot.search.addEventListener("slotchange", this._setupMobileSearch);
+      }
 
       // Set up the mobile login and language links
       ["login", "language"].forEach(type => {
@@ -292,6 +307,13 @@ class PfeNavigation extends PFElement {
     }
 
     return true;
+  }
+
+  _setupMobileSearch() {
+    // If the slot exists, grab it's content and inject into the mobile slot in shadow DOM
+    const searchClone = this.mobileSlot.search.cloneNode(true);
+    searchClone.removeAttribute("pfe-navigation--mobile-search");
+    this._mobileSlot.search.appendChild(searchClone);
   }
 }
 

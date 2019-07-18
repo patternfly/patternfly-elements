@@ -1,7 +1,7 @@
 import PFElement from "../pfelement/pfelement.js";
 import PfeAccordion from "../pfe-accordion/pfe-accordion.js";
 
-if (!("path" in Event.prototype))
+if (!("path" in Event.prototype)) {
   Object.defineProperty(Event.prototype, "path", {
     get: function() {
       var path = [];
@@ -17,6 +17,7 @@ if (!("path" in Event.prototype))
       return path;
     }
   });
+}
 
 class PfeNavigation extends PFElement {
   static get tag() {
@@ -38,53 +39,59 @@ class PfeNavigation extends PFElement {
   constructor() {
     super(PfeNavigation);
 
-    this._activeNavigationItem = null;
-
-    this._toggledHandler = this._toggledHandler.bind(this);
+    // Attach functions for use below
     this._init = this._init.bind(this);
-    
+    // -- handlers
+    this._toggledHandler = this._toggledHandler.bind(this);
     this._observerHandler = this._observerHandler.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
-    this._outsideListener = this._outsideListener.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
+    this._outsideListener = this._outsideListener.bind(this);
     this._observer = new MutationObserver(this._observerHandler);
 
-    this._initialized = false;
-    this.height = 0;
-    this.top    = this.getBoundingClientRect().top || 0;
-
-    this.addEventListener(
-      `${PfeNavigationItem.tag}:toggled`,
-      this._toggledHandler
-    );
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    this.overlay = this.shadowRoot.querySelector(".pfe-navigation__overlay");
-
-    this.mobileSlot = {
-      login: this.querySelector(`[slot="mobile-login"]`),
-      language: this.querySelector(`[slot="mobile-language"]`)
-    };
-
-    // Capture mobile slots from shadow
+    // Capture shadow elements
+    this._overlay = this.shadowRoot.querySelector(".pfe-navigation__overlay");
     this._mobileSlot = {
       menu: this.shadowRoot.querySelector(`slot[name="mobile-menu"]`),
       search: this.shadowRoot.querySelector(`slot[name="mobile-search"]`)
     };
 
-    if (this.children.length) {
-      this._initialized = this._init();
-    }
+    // Initialize active navigation item to null
+    this._activeNavigationItem = null;
+    // Set the state of this element to false until initialized
+    this._initialized = false;
+    // Initial height of the element is 0
+    this.height = 0;
+    // Initial position of this element from the top of the screen
+    this.top    = this.getBoundingClientRect().top || 0;
+    // Initialize light DOM and shadow DOM mobile slot objects
+    this.mobileSlot = {};
 
-    window.addEventListener("resize", this._resizeHandler);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    // If this element contains light DOM, initialize it
+    if (this.children.length) {
+      this.mobileSlot = {
+        login: this.querySelector(`[slot="mobile-login"]`),
+        language: this.querySelector(`[slot="mobile-language"]`)
+      };
+      this._initialized = this._init();
+
+      // Listen for the toggled event on the navigation children
+      this.addEventListener("pfe-navigation-item:toggled", this._toggledHandler);
+      // Watch for screen resizing
+      window.addEventListener("resize", this._resizeHandler);
+    } else {
+      console.warn("This component does not have any light DOM children.  Please check documentation for requirements.");
+    }
   }
 
   disconnectedCallback() {
     this.removeEventListener(
-      `${PfeNavigationItem.tag}:toggled`,
+      "pfe-navigation-item:toggled",
       this._toggledHandler
     );
 
@@ -108,7 +115,7 @@ class PfeNavigation extends PFElement {
       if(isDesktop && isMenu) {
         this._activeNavigationItem.expanded = false;
         this._activeNavigationItem = null;
-        this.overlay.setAttribute("hidden", true);
+        this._overlay.setAttribute("hidden", true);
       }
     }
   }
@@ -118,7 +125,7 @@ class PfeNavigation extends PFElement {
     if (!this._activeNavigationItem && event.detail.navigationItem !== null) {
       this._activeNavigationItem = event.detail.navigationItem;
       // Add the overlay to the page
-      this.overlay.removeAttribute("hidden");
+      this._overlay.removeAttribute("hidden");
       return;
     }
 
@@ -129,7 +136,7 @@ class PfeNavigation extends PFElement {
       }
       // Close the navigation item and remove the overlay
       this._activeNavigationItem = null;
-      this.overlay.setAttribute("hidden", true);
+      this._overlay.setAttribute("hidden", true);
       return;
     }
 
@@ -139,7 +146,7 @@ class PfeNavigation extends PFElement {
       this._activeNavigationItem.expanded = false;
       // Set active to null and remove the overlay
       this._activeNavigationItem = null;
-      this.overlay.setAttribute("hidden", true);
+      this._overlay.setAttribute("hidden", true);
       return;
     }
 
@@ -159,9 +166,9 @@ class PfeNavigation extends PFElement {
   }
 
   _outsideListener(event) {
-    if ((event.target !== this && event.target.closest("pfe-navigation") === null) || event.path[0] === this.overlay) {
+    if ((event.target !== this && event.target.closest("pfe-navigation") === null) || event.path[0] === this._overlay) {
       this.dispatchEvent(
-        new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
+        new CustomEvent("pfe-navigation-item:toggled", {
           detail: {
             navigationItem: null,
             expanded: false
@@ -297,6 +304,7 @@ class PfeNavigationItem extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
+  // Used in the template to determine where to print the icon
   get hasIcon() {
     return this.hasAttribute("pfe-icon");
   }
@@ -351,9 +359,9 @@ class PfeNavigationItem extends PFElement {
     this.tray = null;
     this.linkUrl = null;
 
-    this._trigger = this.shadowRoot.querySelector(".pfe-navigation-item__trigger");
-    this._tray = this.shadowRoot.querySelector(".pfe-navigation-item__tray");
-    this._icon = this.shadowRoot.querySelector(".pfe-navigation-item__trigger--icon");
+    this._trigger = this.shadowRoot.querySelector(`.${this.tag}__trigger`);
+    this._tray = this.shadowRoot.querySelector(`.${this.tag}__tray`);
+    this._icon = this.shadowRoot.querySelector(`.${this.tag}__trigger--icon`);
 
     this._init = this._init.bind(this);
     this._closeMenu = this._closeMenu.bind(this);
@@ -413,7 +421,7 @@ class PfeNavigationItem extends PFElement {
   _closeMenu(event) {
     event.preventDefault();
     this.dispatchEvent(
-      new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
+      new CustomEvent(`${this.tag}:toggled`, {
         detail: {
           navigationItem: null,
           expanded: false
@@ -457,12 +465,12 @@ class PfeNavigationItem extends PFElement {
 
   _fireExpandToggledEvent() {
     this.dispatchEvent(
-      new CustomEvent(`${PfeNavigationItem.tag}:toggled`, {
+      new CustomEvent(`${this.tag}:toggled`, {
         detail: {
           navigationItem: this,
           expanded: this.expanded,
           slot: this.getAttribute("slot"),
-          content: this.querySelector(`[slot="tray"]`)
+          content: this.tray
         },
         bubbles: true,
         composed: true

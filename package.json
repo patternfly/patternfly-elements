@@ -83,7 +83,7 @@
     "gulp-trim": "^1.0.2",
     "gulp-uglify": "^3.0.1",
     "husky": "^1.1.1",
-    "lerna": "^3.14.1",
+    "lerna": "^3.0.0-rc.0",
     "lodash": "^4.17.10",
     "lodash.clonedeep": "^4.5.0",
     "lorem-ipsum": "^1.0.6",

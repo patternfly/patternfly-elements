@@ -63,17 +63,9 @@
           "title": "Color",
           "type": "string",
           "enum": [
-            "base",
             "complement",
-            "accent"
-          ],
-          "observer": "_basicAttributeChanged"
-        },
-        "on": {
-          "title": "Context indicator",
-          "type": "string",
-          "enum": [
-            "dark"
+            "accent",
+            "lightest"
           ],
           "observer": "_basicAttributeChanged"
         }

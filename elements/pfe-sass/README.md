@@ -21,32 +21,33 @@ If the container allows changes to  background colors should influence the child
 
 ### CSS Example
 
+Let's use the pfe-cta as an example. We can start by defining local variables, namespaced for this component, and then updating the values of those variables as we go.
 
 ```
     // 1. set up local vars equal to theme vars & fallbacks
     :host {
-      --pfe-local--Color: var(theme--ui-link, #06c);
+      --pfe-cta--Color: var(theme--ui-link, #06c);
     }
 
     // 2. Use color property once, map to local var value
     :host(:not([priority]) {
       ::slotted(a) {
          //color: blue; CSS compiler will print this for IE11
-         color: var(--pfe-local--Color, blue) !important;
+         color: var(--pfe-cta--Color, blue) !important;
       }
     }
 
     // 3. Use broadcasted as value, with theme fallback after other declarations
     :host {
-      --pfe-local--Color: var(broadcasted--ui-link, var(theme--ui-link, #06c));   
+      --pfe-cta--Color: var(broadcasted--ui-link, var(theme--ui-link, #06c));   
     }
 
     // 4. Override broadcasted last
     [on=dark] {
-      --pfe-local--Color: var(theme--ui-link--on-dark);
+      --pfe-cta--Color: var(theme--ui-link--on-dark);
     }
     [color=accent] {
-      --pfe-local--Color: var(theme--surface-accent--ui-link);
+      --pfe-cta--Color: var(theme--surface-accent--ui-link);
     }
 ```
 

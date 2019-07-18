@@ -36,7 +36,7 @@ $pfe-cta__arrow-size: 0.313em;
   border-color:     pfe-local(BorderColor);
 
   position: relative;
-  transition: all pfe-var(animation-timing);
+  transition: .3s ease padding;//padding pfe-var(animation-timing);
 
   line-height: inherit;
   vertical-align:  middle;
@@ -57,7 +57,7 @@ $pfe-cta__arrow-size: 0.313em;
     top: .1rem; 
     width: 13px;
     height: 13px;
-    transition: .3s ease all;
+    transition: .3s ease padding;
   }
 }
 

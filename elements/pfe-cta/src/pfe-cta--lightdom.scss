@@ -10,7 +10,7 @@ $LOCAL: cta;
 /** Set link tag styles for IE11 & EDGE **/
 [class^="pfe-cta"][class="PFElement"],
 .pfe-cta--wrapper {
-  
+
   a, a:visited {
       font-family: $pfe-global--font-family;
       display: inline;
@@ -36,7 +36,7 @@ $LOCAL: cta;
   a:focus {
     outline: none !important;
 
-    &::before {  // Arrow after default CTA
+    &::before {  // inner border on priority CTAs
       content: "";
       display: block;
       box-sizing: border-box;
@@ -65,6 +65,28 @@ $LOCAL: cta;
     text-decoration: none;
   }
 }
+
+[class^="pfe-cta"][class="PFElement"][pfe-priority="secondary"]  { //ie11
+  background-color: pfe-local(
+    $cssvar: BackgroundColor, $fallback: #{pfe-fallback(surface--lightest)},
+  );
+}
+[class^="pfe-cta"][class="PFElement"][pfe-priority="secondary"], //ie11
+[pfe-priority="secondary"] .pfe-cta--wrapper {
+
+  input, button, a {
+      color: pfe-local(
+        $cssvar: Color, $fallback: #{pfe-fallback(surface--base--text)},
+      ) !important;
+  }
+  &:hover input, &:hover button, &:hover a, 
+  input:hover, button:hover, a:hover {
+      color: pfe-local(
+        $cssvar: Color--hover, $fallback: #{pfe-fallback(ui-link--on-saturated)},
+      ) !important;
+  }
+}
+
 
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
   pfe-cta.PFElement{

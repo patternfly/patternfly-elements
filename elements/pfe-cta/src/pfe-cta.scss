@@ -60,14 +60,12 @@ $pfe-cta__arrow-size: 0.313em;
 
 :host(:hover) {
   --pfe-cta__arrow--Padding: 0 0 0 .5rem;
-
   background-color: pfe-local(BackgroundColor--hover);
   border-color:     pfe-local(BorderColor--hover);
   cursor:           pointer;
 
   ::slotted(*) {
     color: pfe-local(Color--hover) !important; // because of redhat-theme styles on links
-
     &::before  {
       border: 1px solid var(--pfe-cta__inner--BorderColor--hover);
     }
@@ -82,9 +80,11 @@ $pfe-cta__arrow-size: 0.313em;
   outline: none !important;
   background-color: pfe-local(BackgroundColor--focus);
   border-color:     pfe-local(BorderColor--focus);
+
   ::slotted(*) {
     color: pfe-local(Color--focus) !important; // because of redhat-theme styles on links
   }
+
   .pfe-cta--arrow {
     fill:           pfe-local(Color--focus);
   }
@@ -94,6 +94,7 @@ $pfe-cta__arrow-size: 0.313em;
 :host([pfe-priority]) {
   padding: #{pfe-local(Padding)};
   --pfe-cta--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
+
   .pfe-cta--wrapper {
     display: flex;
     flex-flow: row nowrap;
@@ -130,9 +131,11 @@ $pfe-cta__arrow-size: 0.313em;
 ::slotted(:focus) {
   outline: none !important;
   color: pfe-local(Color--focus) !important;  // because of redhat-theme styles on links
+
   &::before {
     border: 1px solid var(--pfe-cta__inner--BorderColor--focus);
   }
+
   .pfe-cta--arrow {
     fill: pfe-local(Color--focus);
   }
@@ -220,8 +223,6 @@ $pfe-cta__arrow-size: 0.313em;
 
 :host([pfe-priority="primary"][pfe-color="lightest"]) {
   --pfe-cta--BackgroundColor:           #{pfe-color(surface--lightest)};
-
-
   --pfe-cta--BorderColor:               #{pfe-color(surface--lightest)};
   --pfe-cta--BackgroundColor--hover:    #{pfe-color(surface--lighter)};
   --pfe-cta__inner--BorderColor:        transparent;
@@ -234,8 +235,6 @@ $pfe-cta__arrow-size: 0.313em;
   --pfe-cta--BorderColor--focus:        #{pfe-color(surface--lightest)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--darkest)};
   --pfe-cta--Color--focus:              #{pfe-color(surface--lightest--text)};
-
-
 }
 
 /// ===========================================================================
@@ -257,7 +256,6 @@ $pfe-cta__arrow-size: 0.313em;
   --pfe-cta--BorderColor--hover:        #{pfe-color(surface--lightest)};
   --pfe-cta--Color--hover:              #{pfe-color(surface--base--text)};
 
-
   --pfe-cta--BackgroundColor--focus:    rgba(255, 255, 255, .95);
   --pfe-cta--Color--focus:              #{pfe-color(surface--darkest)};
 }
@@ -272,8 +270,7 @@ $pfe-cta__arrow-size: 0.313em;
 /// ===========================================================================
 /// COLOR=ACCENT
 
-// Primary omitted because it already uses accent
-
+// Primary omitted because it already uses the accent color
 
 :host([pfe-priority="secondary"][pfe-color="accent"]) {
   --pfe-cta--BackgroundColor:           transparent;
@@ -292,6 +289,7 @@ $pfe-cta__arrow-size: 0.313em;
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--accent)};
   --pfe-cta--Color--focus:              #{pfe-color(surface--accent)};
 }
+
 :host([pfe-priority="secondary"][pfe-color="accent"].focus-within) {
     --pfe-cta--Color--hover:            #{pfe-color(surface--accent)};
 }
@@ -335,8 +333,3 @@ $pfe-cta__arrow-size: 0.313em;
 :host([pfe-priority="secondary"][pfe-color="complement"].focus-within) {
     --pfe-cta--Color--hover:            #{pfe-color(surface--complement)};
 }
-
-
-
-
-

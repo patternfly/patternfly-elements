@@ -46,6 +46,7 @@ class PfeNavigation extends PFElement {
     this._observerHandler = this._observerHandler.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
+    this._closeAllNavigationItems = this._closeAllNavigationItems.bind(this);
     this._outsideListener = this._outsideListener.bind(this);
     this._observer = new MutationObserver(this._observerHandler);
 
@@ -78,6 +79,8 @@ class PfeNavigation extends PFElement {
         login: this.querySelector(`[slot="mobile-login"]`),
         language: this.querySelector(`[slot="mobile-language"]`)
       };
+
+      // Kick off the initialization of the light DOM elements
       this._initialized = this._init();
 
       // Listen for the toggled event on the navigation children
@@ -90,11 +93,10 @@ class PfeNavigation extends PFElement {
   }
 
   disconnectedCallback() {
-    this.removeEventListener(
-      "pfe-navigation-item:toggled",
-      this._toggledHandler
-    );
+    // Remove the custom listener for the toggled event
+    this.removeEventListener("pfe-navigation-item:toggled", this._toggledHandler);
 
+    // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("scroll", this._stickyHandler);
     window.removeEventListener("resize", this._resizeHandler);
     document.removeEventListener("click", this._outsideListener);
@@ -109,13 +111,15 @@ class PfeNavigation extends PFElement {
   }
 
   _resizeHandler(event) {
+    // If there is currently an active navigation element
     if(this._activeNavigationItem !== null) {
+      // Check if that active item is the mobile menu
       let isMenu = this._activeNavigationItem.getAttribute("pfe-icon") === "menu";
+      // Check if the window size is greater than 996px
       let isDesktop = window.outerWidth >= 996;
+      // If it's the menu item and we're at a desktop size, close the active item
       if(isDesktop && isMenu) {
-        this._activeNavigationItem.expanded = false;
-        this._activeNavigationItem = null;
-        this._overlay.setAttribute("hidden", true);
+        this._closeAllNavigationItems();
       }
     }
   }
@@ -166,18 +170,22 @@ class PfeNavigation extends PFElement {
   }
 
   _outsideListener(event) {
-    if ((event.target !== this && event.target.closest("pfe-navigation") === null) || event.path[0] === this._overlay) {
-      this.dispatchEvent(
-        new CustomEvent("pfe-navigation-item:toggled", {
-          detail: {
-            navigationItem: null,
-            expanded: false
-          },
-          bubbles: true,
-          composed: true
-        })
-      );
+    if ((event.target !== this && event.target.closest("pfe-navigation") === null) || event.path.length > 0 && event.path[0] === this._overlay) {
+      this._closeAllNavigationItems();
     }
+  }
+
+  _closeAllNavigationItems() {
+    this.dispatchEvent(
+      new CustomEvent("pfe-navigation-item:toggled", {
+        detail: {
+          navigationItem: null,
+          expanded: false
+        },
+        bubbles: true,
+        composed: true
+      })
+    );
   }
 
   _init() {

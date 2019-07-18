@@ -1,4 +1,4 @@
-# WIP 🐣: PFElements CTA Element
+# PFElements Call-to-action Element
 
 `pfe-cta` is a call-to-action (CTA) element, that stands out from regular hypertext links, and is used for linking users to webpages.
 
@@ -10,19 +10,19 @@ _Note: `pfe-cta` is not a button, though it may look like one visually._
   <a href="https://github.com/">GitHub</a>
 </pfe-cta>
 
-<pfe-cta priority="primary">
+<pfe-cta pfe-priority="primary">
   <a href="https://pfelements.github.io/">Learn more about PFElements</a>
 </pfe-cta>
 
-<pfe-cta priority="secondary">
+<pfe-cta pfe-priority="secondary">
   <a href="https://redhat.com/">Red Hat</a>
 </pfe-cta>
 
-<pfe-cta priority="primary" color="lightest">
+<pfe-cta pfe-priority="primary" pfe-color="lightest">
   <a href="https://pfelements.github.io/">Learn more about PFElements</a>
 </pfe-cta>
 
-<pfe-cta priority="secondary" color="complement">
+<pfe-cta pfe-priority="secondary" pfe-color="complement">
   <a href="https://redhat.com/">Red Hat</a>
 </pfe-cta>
 ```
@@ -33,23 +33,34 @@ _Note: `pfe-cta` is not a button, though it may look like one visually._
 
 We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe-cta` element.
 
-## Styling
+## Styling approach
 
-| Theme Var Hook | Description | Default |
-| -------------- | ----------- | ------- |
-| `--pfe-theme--color--ui-link` | Link color for default CTA | $pfe-color--ui-link |
-| `--pfe-theme--color--ui-link--hover` | Hover color for default CTA | $pfe-color--ui-link--hover |
-| `--pfe-theme--color--ui-link--focus` | Focus color for default CTA | $pfe-color--ui-link--focus |
-| `--pfe-theme--color--ui-accent` | Color for Primary CTA | $pfe-color--ui-accent |
-| `--pfe-theme--color--ui-accent--hover` | Hover color for Primary CTA | $pfe-color--ui-accent--hover |
-| `--pfe-theme--color--ui-accent--text` | Text color for Primary CTA | $pfe-color--ui-accent--text |
-| `--pfe-theme--color--ui-accent--text--hover` | Hover text color for Primary CTA | $pfe-color--ui-accent--text--hover |
-| `--pfe-theme--color--ui-base` | Border & text color for Secondary CTA | $pfe-color--ui-base |
-| `--pfe-theme--color--ui-base--hover` | Hover color for Secondary CTA | $pfe-color--ui-base--hover |
-| `--pfe-theme--color--ui-base--text` | Background color for Secondary CTA | $pfe-color--ui-base--text |
-| `--pfe-theme--color--ui-base--text--hover` | Hover text color for Secondary CTA | $pfe-color--ui-base--text--hover |
-| `--pfe-theme--color--text--on-dark` | Link color for default CTA with `on="dark"` | $pfe-color--text--on-dark |
-| `--pfe-theme--color--ui-link--on-dark--hover` | Hover color for default CTA with `on="dark"` | $pfe-color--ui-link--on-dark--hover |
+
+```
+    // 1. set up local vars equal to theme vars & fallbacks
+    :host {
+      --pfe-cta--Color: var(theme--ui-link, #06c);
+    }
+
+    // 2. Use color property once, map to local var value
+    :host(:not([priority]) {
+      ::slotted(a) {
+         //color: blue; CSS compiler will print this for IE11
+         color: var(--pfe-cta--Color, blue) !important;
+      }
+    }
+
+    // 3. Use broadcasted variables as needed, with theme fallback after other declarations
+    :host {
+      --pfe-cta--Color: var(broadcasted--ui-link, var(theme--ui-link, #06c));   
+    }
+
+    // 4. Override broadcasted last
+    [color=accent] {
+      --pfe-cta--Color: var(theme--surface-accent--ui-link);
+    }
+```
+
 
 ### Testing Theme Var Hooks
 

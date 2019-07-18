@@ -37,18 +37,14 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
       }
     }
 
-    // 3. Use broadcasted as value, with theme fallback after other declarations
+    // 3. Use broadcasted variables as needed, with theme fallback after other declarations
     :host {
       --pfe-cta--Color: var(broadcasted--ui-link, var(theme--ui-link, #06c));   
     }
 
     // 4. Override broadcasted last
-    [on=dark] {
-      --pfe-cta--Color: var(theme--ui-link--on-dark);
-    }
     [color=accent] {
       --pfe-cta--Color: var(theme--surface-accent--ui-link);
-    }
 ```
 
 

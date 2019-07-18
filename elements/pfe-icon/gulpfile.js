@@ -46,6 +46,6 @@ gulp.task("combineAndStuff", gulp.series("svgSprite", "stuffSprite"));
 
 // call the central gulp build, and pass in the custom tasks to be run pre-bundle
 gulpFactory({
-  ...pfelementPackage.pfelement,
+  ...pfelementPackage,
   prebundle: ["combineAndStuff"]
 });

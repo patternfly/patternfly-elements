@@ -52,8 +52,8 @@ $LOCAL: cta;
     }
   }
 }
-[class^="pfe-cta"][class="PFElement"][priority], //ie11
-[priority] .pfe-cta--wrapper {
+[class^="pfe-cta"][class="PFElement"][pfe-priority], //ie11
+[pfe-priority] .pfe-cta--wrapper {
   //background: pfe-local(
   //  $cssvar: BackgroundColor, $fallback: #{pfe-fallback(surface--darker--text)},
   //);
@@ -66,12 +66,12 @@ $LOCAL: cta;
 }
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
   pfe-cta.PFElement{
-    &[priority="primary"] { 
+    &[pfe-priority="primary"] { 
       a, a:visited, a:focus, a:hover {
         color:  #{pfe-fallback(ui-link--on-saturated)} !important;
       }
     }
-    &[priority="primary"][color="lightest"] { 
+    &[pfe-priority="primary"][pfe-color="lightest"] { 
       a, a:visited, a:focus, a:hover {
         color:  #{pfe-fallback(ui-link)} !important;
       }

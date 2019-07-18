@@ -98,68 +98,68 @@
 </head>
 
 <body unresolved>
-  <pfe-band pfe-color="complement" pfe-size="small">
+  <pfe-band pfe-pfe-color="complement" pfe-size="small">
     <h1 slot="pfe-band--header">&lt;pfe-cta&gt;</h1>
   </pfe-band>
 
 
-  <pfe-band pfe-color="lighter">
+  <pfe-band pfe-pfe-color="lighter">
       <h2 slot="pfe-band--header">CTAs in light PFE containers</h3>
       <div class="card-layout">
-        <pfe-card color="lightest">
+        <pfe-card pfe-color="lightest">
           <h3>No color attribute</h3>
           <div>
             <pfe-cta><a href="#">Default</a></pfe-cta>
             <pfe-cta><a href="#">Default cta with longer text in case it wraps</a></pfe-cta>
-            <pfe-cta priority="primary"><a href="#">Primary</a></pfe-cta>
-            <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
+            <pfe-cta pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
           </div>
         </pfe-card>
-        <pfe-card color="lightest">
-          <h3><code>color="complement"</code></h3>
+        <pfe-card pfe-color="lightest">
+          <h3><code>pfe-color="complement"</code></h3>
           <div>
-            <pfe-cta color="complement"><a href="#">Default</a></pfe-cta>
-            <pfe-cta priority="primary" color="complement"><a href="#">Primary</a></pfe-cta>
-            <pfe-cta priority="secondary" color="complement"><a href="#">Secondary</a></pfe-cta>
+            <pfe-cta pfe-color="complement"><a href="#">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="#">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="#">Secondary</a></pfe-cta>
           </div>
         </pfe-card>
-        <pfe-card color="lightest">
-          <h3><code>color="accent"</code></h3>
+        <pfe-card pfe-color="lightest">
+          <h3><code>pfe-color="accent"</code></h3>
           <div>
-            <pfe-cta color="accent"><a href="#">Default</a></pfe-cta>
-            <pfe-cta priority="primary" color="accent"><a href="#">Primary</a></pfe-cta>
-            <pfe-cta priority="secondary" color="accent"><a href="#">Secondary</a></pfe-cta>
+            <pfe-cta pfe-color="accent"><a href="#">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="#">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="#">Secondary</a></pfe-cta>
           </div>
         </pfe-card>
     </div>
   </pfe-band>
-  <pfe-band pfe-color="darker">
+  <pfe-band pfe-pfe-color="darker">
     <h2 slot="pfe-band--header">CTAs in dark PFE containers</h3>
       <div class="card-layout">
-      <pfe-card color="darkest">
+      <pfe-card pfe-color="darkest">
         <h3>No color attribute</h3>
         <div>
           <pfe-cta><a href="#">Default</a></pfe-cta>
           <pfe-cta><a href="#">Default cta with longer text in case it wraps</a></pfe-cta>
-          <pfe-cta priority="primary"><a href="#">Primary</a></pfe-cta>
-          <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
-          <pfe-cta priority="primary" color="lightest"><a href="#">Primary lightest</a></pfe-cta>
+          <pfe-cta pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
+          <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
+          <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="#">Primary lightest</a></pfe-cta>
         </div>
       </pfe-card>
-      <pfe-card color="darkest">
-        <h3><code>color="complement"</code></h3>
+      <pfe-card pfe-color="darkest">
+        <h3><code>pfe-color="complement"</code></h3>
         <div>
-          <pfe-cta color="complement"><a href="#">Default</a></pfe-cta>
-          <pfe-cta priority="primary" color="complement"><a href="#">Primary</a></pfe-cta>
-          <pfe-cta priority="secondary" color="complement"><a href="#">Secondary</a></pfe-cta>
+          <pfe-cta pfe-color="complement"><a href="#">Default</a></pfe-cta>
+          <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="#">Primary</a></pfe-cta>
+          <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="#">Secondary</a></pfe-cta>
         </div>
       </pfe-card>
-      <pfe-card color="darkest">
-        <h3><code>color="accent"</code></h3>
+      <pfe-card pfe-color="darkest">
+        <h3><code>pfe-color="accent"</code></h3>
         <div>
-          <pfe-cta color="accent"><a href="#">Default</a></pfe-cta>
-          <pfe-cta priority="primary" color="accent"><a href="#">Primary</a></pfe-cta>
-          <pfe-cta priority="secondary" color="accent"><a href="#">Secondary</a></pfe-cta>
+          <pfe-cta pfe-color="accent"><a href="#">Default</a></pfe-cta>
+          <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="#">Primary</a></pfe-cta>
+          <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="#">Secondary</a></pfe-cta>
         </div>
       </pfe-card>
       </div>
@@ -172,35 +172,35 @@
   <div class="custom-light-band ">
     <h2>Custom light band with broadcast vars</h2>
     <pfe-cta><a href="#">Default (color responsive)</a></pfe-cta>
-    <pfe-cta priority="primary"><a href="#">Primary: (color responsive)</a></pfe-cta>
-    <pfe-cta priority="secondary"><a href="#">Secondary: (color responsive)</a></pfe-cta>
-    <pfe-cta priority="primary" color="accent"><a href="#">Primary accent</a></pfe-cta>
-    <pfe-cta priority="secondary" color="accent"><a href="#">Secondary accent</a></pfe-cta>
-    <pfe-cta priority="primary" color="complement"><a href="#">Primary complement</a></pfe-cta>
-    <pfe-cta priority="secondary" color="complement"><a href="#">Secondary complement</a></pfe-cta>
-    <pfe-cta priority="primary" color="lightest"><a href="#">Primary lightest</a></pfe-cta>
+    <pfe-cta pfe-priority="primary"><a href="#">Primary: (color responsive)</a></pfe-cta>
+    <pfe-cta pfe-priority="secondary"><a href="#">Secondary: (color responsive)</a></pfe-cta>
+    <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="#">Primary accent</a></pfe-cta>
+    <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="#">Secondary accent</a></pfe-cta>
+    <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="#">Primary complement</a></pfe-cta>
+    <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="#">Secondary complement</a></pfe-cta>
+    <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="#">Primary lightest</a></pfe-cta>
   </div>
   <div class="custom-dark-band">
     <h2 style="color:white;">Custom dark band with broadcast vars</h2>
     <pfe-cta><a href="#">Default (color responsive)</a></pfe-cta>
-    <pfe-cta priority="primary"><a href="#">Primary (color responsive)</a></pfe-cta>
-    <pfe-cta priority="secondary"><a href="#">Secondary (color responsive)</a></pfe-cta>
-    <pfe-cta priority="primary" color="accent"><a href="#">Primary accent</a></pfe-cta>
-    <pfe-cta priority="secondary" color="accent"><a href="#">Secondary accent</a></pfe-cta>
-    <pfe-cta priority="primary" color="complement"><a href="#">Primary complement</a></pfe-cta>
-    <pfe-cta priority="secondary" color="complement"><a href="#">Secondary complement</a></pfe-cta>
-    <pfe-cta priority="primary" color="lightest"><a href="#">Primary lightest</a></pfe-cta>
+    <pfe-cta pfe-priority="primary"><a href="#">Primary (color responsive)</a></pfe-cta>
+    <pfe-cta pfe-priority="secondary"><a href="#">Secondary (color responsive)</a></pfe-cta>
+    <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="#">Primary accent</a></pfe-cta>
+    <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="#">Secondary accent</a></pfe-cta>
+    <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="#">Primary complement</a></pfe-cta>
+    <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="#">Secondary complement</a></pfe-cta>
+    <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="#">Primary lightest</a></pfe-cta>
   </div>
   <div class="custom-on-dark-band">
     <h2 style="color:white;">Custom band: <code>on=dark</code> (deprecated)</h2>
     <pfe-cta on="dark"><a href="#">Default: on dark (color responsive)</a></pfe-cta>
-    <pfe-cta on="dark" priority="primary"><a href="#">Primary: on dark</a></pfe-cta>
-    <pfe-cta on="dark" priority="secondary"><a href="#">Secondary: on dark (color responsive)</a></pfe-cta>
-    <pfe-cta priority="primary" color="accent"><a href="#">Primary accent</a></pfe-cta>
-    <pfe-cta priority="secondary" color="accent"><a href="#">Secondary accent</a></pfe-cta>
-    <pfe-cta priority="primary" color="complement"><a href="#">Primary complement</a></pfe-cta>
-    <pfe-cta priority="secondary" color="complement"><a href="#">Secondary complement</a></pfe-cta>
-    <pfe-cta priority="primary" color="lightest"><a href="#">Primary lightest</a></pfe-cta>
+    <pfe-cta on="dark" pfe-priority="primary"><a href="#">Primary: on dark</a></pfe-cta>
+    <pfe-cta on="dark" pfe-priority="secondary"><a href="#">Secondary: on dark (color responsive)</a></pfe-cta>
+    <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="#">Primary accent</a></pfe-cta>
+    <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="#">Secondary accent</a></pfe-cta>
+    <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="#">Primary complement</a></pfe-cta>
+    <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="#">Secondary complement</a></pfe-cta>
+    <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="#">Primary lightest</a></pfe-cta>
   </div>
 
 </body>

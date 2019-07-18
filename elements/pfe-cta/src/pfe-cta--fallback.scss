@@ -1,9 +1,0 @@
-@import "pfe-cta--global";
-
-@media screen {
-  @include pfe-cta-workarounds;
-}
-
-.pfe-cta {
-  border: orange solid 10px !important;
-}

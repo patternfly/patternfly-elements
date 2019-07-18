@@ -1,0 +1,81 @@
+@import "../../pfe-sass/pfe-sass";
+$LOCAL: cta;
+
+/* IE + EDGE only */
+[class^="pfe-cta"] {
+    display: inline-block;
+}
+
+/*************************/
+/** Set link tag styles for IE11 & EDGE **/
+[class^="pfe-cta"][class="PFElement"],
+.pfe-cta--wrapper {
+  a, a:visited {
+      font-family: $pfe-global--font-family;
+      display: inline;
+      color:  pfe-local(
+        $cssvar: Color, $fallback: #{pfe-fallback(ui-link)},
+      );
+  }
+  input:hover, button:hover, a:hover {
+      color: pfe-local(
+        $cssvar: Color--hover, $fallback: #{pfe-fallback(ui-link--hover)},
+      );
+  }
+  input:focus, button:focus, a:focus {
+      color: pfe-local(
+        $cssvar: Color--focus, $fallback: #{pfe-fallback(ui-link--focus)},
+      );
+  }
+  a:focus {
+    outline: none !important;
+
+    &::before {
+      content: "";
+      display: block;
+      box-sizing: border-box;
+      border: 1px solid;
+      border-color: pfe-local(
+        $cssvar: inner--BorderColor, $fallback: #{pfe-fallback(ui-link--on-dark)},
+      );
+      outline: none;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      bottom: 2px;
+      right: 2px;
+      border-radius: 2px;
+    }
+
+    .pfe-cta--arrow {
+      fill: pfe-local(Color--focus);
+    }
+  }
+}
+[class^="pfe-cta"][class="PFElement"][priority], //ie11
+[priority] .pfe-cta--wrapper {
+  //background: pfe-local(
+  //  $cssvar: BackgroundColor, $fallback: #{pfe-fallback(surface--darker--text)},
+  //);
+  a, input {
+    text-decoration: none;
+    padding: pfe-local(
+      $cssvar: Padding, $fallback: 16px 32px,
+    );
+  }
+}
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+  pfe-cta.PFElement{
+    &[priority="primary"] { 
+      a, a:visited, a:focus, a:hover {
+        color:  #{pfe-fallback(ui-link--on-saturated)} !important;
+      }
+    }
+    &[priority="primary"][color="lightest"] { 
+      a, a:visited, a:focus, a:hover {
+        color:  #{pfe-fallback(ui-link)} !important;
+      }
+    }
+  }
+}
+

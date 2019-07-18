@@ -1,0 +1,5 @@
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+  pfe-card {
+    background: #{pfe-fallback(surface--lighter)} !important;
+  }
+}

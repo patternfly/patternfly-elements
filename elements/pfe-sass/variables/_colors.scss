@@ -32,7 +32,7 @@ $pfe-color--ui-link--on-dark--visited:          lighten($pfe-color--ui-link--vis
 $pfe-color--ui-link--on-dark--hover:            lighten($pfe-color--ui-link--on-dark, 10%) !default; // Was #c0ecff
 $pfe-color--ui-link--on-dark--focus:            lighten($pfe-color--ui-link--on-dark, 10%) !default; // Was #c0ecff
 
-$pfe-color--ui-link--on-saturated:              lighten($pfe-color--ui-link, 40%) !default;               // Was #97daff
+$pfe-color--ui-link--on-saturated:              $pfe-color--white;               // Was #97daff
 $pfe-color--ui-link--on-saturated--visited:     lighten($pfe-color--ui-link--visited, 30%) !default;      // Was #d8c0ff
 $pfe-color--ui-link--on-saturated--hover:       lighten($pfe-color--ui-link--on-saturated, 10%) !default; // Was #c0ecff
 $pfe-color--ui-link--on-saturated--focus:       lighten($pfe-color--ui-link--on-saturated, 10%) !default; // Was #c0ecff

@@ -15,22 +15,24 @@ $LOCAL: cta;
       display: inline;
       color:  pfe-local(
         $cssvar: Color, $fallback: #{pfe-fallback(ui-link)},
-      );
+      ) !important;
   }
+  &:hover input, &:hover button, &:hover a, 
   input:hover, button:hover, a:hover {
       color: pfe-local(
         $cssvar: Color--hover, $fallback: #{pfe-fallback(ui-link--hover)},
-      );
+      ) !important;
   }
+  &:focus input, &:focus button, &:focus a, 
   input:focus, button:focus, a:focus {
       color: pfe-local(
         $cssvar: Color--focus, $fallback: #{pfe-fallback(ui-link--focus)},
-      );
+      ) !important;
   }
   a:focus {
     outline: none !important;
 
-    &::before {
+    &::before {  // Arrow after default CTA
       content: "";
       display: block;
       box-sizing: border-box;
@@ -54,14 +56,8 @@ $LOCAL: cta;
 }
 [class^="pfe-cta"][class="PFElement"][pfe-priority], //ie11
 [pfe-priority] .pfe-cta--wrapper {
-  //background: pfe-local(
-  //  $cssvar: BackgroundColor, $fallback: #{pfe-fallback(surface--darker--text)},
-  //);
   a, input {
     text-decoration: none;
-    padding: pfe-local(
-      $cssvar: Padding, $fallback: 16px 32px,
-    );
   }
 }
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {

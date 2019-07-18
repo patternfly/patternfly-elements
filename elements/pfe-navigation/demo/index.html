@@ -361,10 +361,10 @@
     </pfe-band>
   </body>
   <script>
-    document.addEventListener("pfe-navigation-item:toggled", event => {
+    document.addEventListener("pfe-navigation-item:toggled", function (event) {
       if (event.detail.slot === "language" && event.detail.content !== null) {
         const container = event.detail.content.querySelector(".container");
-        const newContent = `<p>Inject new content into the ${event.detail.slot} slot.</p>`;
+        const newContent = "<p>Inject new content into the " + event.detail.slot + " slot.</p>";
         if (container) {
           if (event.detail.expanded) {
             container.innerHTML = newContent;

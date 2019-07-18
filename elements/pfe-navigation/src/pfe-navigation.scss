@@ -45,14 +45,6 @@ $LOCAL: navigation;
   max-height: #{pfe-local(MinHeight)};
 }
 
-// ::slotted(:not([slot])) {
-//   display: none;
-//   @media (min-width: #{pfe-breakpoint(lg)}) {
-//     display: inline;
-//     display: contents;
-//   }
-// }
-
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
   color: var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
@@ -73,7 +65,6 @@ $LOCAL: navigation;
   &__container {
     margin: 0 auto;
     padding: 0 #{pfe-local(Padding--horizontal)};
-    // color: #{pfe-local(Color)};
     z-index: 2;
 
     display: flex;

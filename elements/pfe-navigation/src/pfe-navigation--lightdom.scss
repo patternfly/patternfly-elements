@@ -2,19 +2,27 @@
 
 $LOCAL: navigation-item;
 
-// Edge and IE11 styles
-// @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-    .pfe-navigation-item__trigger > *:not(.pfe-navigation-item__trigger--icon) {
-        margin: 0;
-        font-family: #{pfe-var(font-family)};
-        font-size: #{pfe-local($cssvar: FontSize, $fallback: 14px, $region: trigger)};
-        font-weight: #{pfe-local($cssvar: FontWeight, $fallback: 100, $region: trigger)};
-        color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
-    }
-    .pfe-navigation-item__tray {
-        padding: #{pfe-local($cssvar: Padding, $region: tray)};
-        max-height: calc(100vh - var(--pfe-navigation--Height, 90px));
-        overflow-x: hidden;
-        overflow-y: scroll;
-    }
-// }
+// Edge styles
+.pfe-navigation-item__trigger > *:not(.pfe-navigation-item__trigger--icon) {
+    margin: 0;
+    font-family: #{pfe-var(font-family)};
+    font-size: #{pfe-local($cssvar: FontSize, $fallback: 14px, $region: trigger)};
+    font-weight: #{pfe-local($cssvar: FontWeight, $fallback: 100, $region: trigger)};
+    color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
+}
+.pfe-navigation-item__tray {
+    padding: #{pfe-local($cssvar: Padding, $region: tray)};
+    max-height: calc(100vh - var(--pfe-navigation--Height, 90px));
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+// IE11
+@include browser-query(ie11) {
+    // pfe-navigation {
+    //     display: flex;
+    //     flex-flow: row nowrap;
+    //     align-items: center;
+    //     justify-content: center;
+    // }
+}

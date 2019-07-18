@@ -360,7 +360,9 @@
       </pfe-card>
     </pfe-band>
   </body>
-  <!--script>
+  <script>
+    // Listen for the toggled event and if the slot is the language slot, inject new content
+    // Replicates AJAX-like functionality
     document.addEventListener("pfe-navigation-item:toggled", function (event) {
       if (event.detail.slot === "language" && event.detail.content !== null) {
         const container = event.detail.content.querySelector(".container");
@@ -374,5 +376,23 @@
         }
       }
     });
-  </script-->
+
+    // Updating the mobile login slot
+    // NOTE: This is not updating
+    setTimeout( function () {
+      const mobileLogin = document.querySelector(`[slot="mobile-login"]`);
+      if (mobileLogin) {
+        mobileLogin.textContent = "Log in/Register";
+      }
+
+      // Updating the mobile search
+      const mobileSearch = document.querySelector("[pfe-navigation--mobile-search]");
+      if (mobileSearch) {
+        const cta = mobileSearch.querySelector("pfe-cta");
+        if (cta) {
+          cta.setAttribute("color", "complement");
+        }
+      }
+    }, 3000);
+  </script>
 </html>

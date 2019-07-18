@@ -4,7 +4,7 @@ $LOCAL: navigation-item;
 
 :host {
   --pfe-navigation-item--Color: #{pfe-color(text--on-dark)};
-  --pfe-navigation-item--BackgroundColor: #{pfe-color(surface--darkest)};
+  --pfe-navigation-item--BackgroundColor: var(--pfe-navigation--BackgroundColor, #{pfe-color(surface--darkest)});
   --pfe-navigation-item--BorderTopColor: transparent;
   --pfe-navigation-item--BorderColor: transparent;
   --pfe-navigation-item--Padding--vertical: calc(#{pfe-var(container-padding)} / 2);

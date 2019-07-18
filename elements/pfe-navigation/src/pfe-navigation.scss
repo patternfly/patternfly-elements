@@ -23,10 +23,6 @@ $LOCAL: navigation;
   }
 
   display: block;
-  background-color: #{map-get($pfe-colors, surface--darkest)};
-  background-color: #{pfe-local(BackgroundColor)};
-  color: #{pfe-local(Color)};
-
   z-index: 2;
   width: 100%;
 }
@@ -61,6 +57,10 @@ $LOCAL: navigation;
   &__wrapper {
     position: relative;
     z-index: 2;
+    
+    background-color: #{map-get($pfe-colors, surface--darkest)};
+    background-color: #{pfe-local(BackgroundColor)};
+    color: #{pfe-local(Color)};
   }
   &__container {
     margin: 0 auto;

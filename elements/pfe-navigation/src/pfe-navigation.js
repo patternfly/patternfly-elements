@@ -43,6 +43,7 @@ class PfeNavigation extends PFElement {
     this._init = this._init.bind(this);
     this._setupMobileNav = this._setupMobileNav.bind(this);
     this._setupMobileSearch = this._setupMobileSearch.bind(this);
+    this._setupMobileLinks = this._setupMobileLinks.bind(this);
     // -- handlers
     this._toggledHandler = this._toggledHandler.bind(this);
     this._observerHandler = this._observerHandler.bind(this);
@@ -98,11 +99,6 @@ class PfeNavigation extends PFElement {
   disconnectedCallback() {
     // Remove the custom listener for the toggled event
     this.removeEventListener("pfe-navigation-item:toggled", this._toggledHandler);
-    
-    // If the mobile search slot exists, remove it's listener
-    if(this.mobileSlot.search) {
-      this.mobileSlot.search.addEventListener("slotchange", this._setupMobileSearch);
-    }
 
     // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("scroll", this._stickyHandler);
@@ -250,29 +246,10 @@ class PfeNavigation extends PFElement {
       // If the slot exists, grab it's content and inject into the mobile slot in shadow DOM
       if (this.mobileSlot.search) {
         this._setupMobileSearch();
-        this.mobileSlot.search.addEventListener("slotchange", this._setupMobileSearch);
       }
 
       // Set up the mobile login and language links
-      ["login", "language"].forEach(type => {
-        let link = "#";
-        if(this.mobileSlot[type].hasAttribute("href")){
-          // Store the link value in a variable
-          link = this.mobileSlot[type].getAttribute("href");
-        } else {
-          // Find the link inside the slot
-          if(this.mobileSlot[type].querySelector("a")) {
-            link = this.mobileSlot[type].querySelector("a").getAttribute("href");
-          }
-        }
-
-        // Get the element to attach the link to
-        this.shadowRoot.querySelector(`[connect-to="mobile-${type}"]`).setAttribute("href", link);
-        this.shadowRoot.querySelector(`#pfe-navigation--mobile-${type}`).innerHTML = this.mobileSlot[type].innerText;
-        // Hide the slot
-        this.mobileSlot[type].setAttribute("hidden", true);
-        this.mobileSlot[type].style.display = "none";
-      });
+      this._setupMobileLinks();
 
       // Set up the mobile main menu
       triggers.forEach(trigger => {
@@ -314,6 +291,28 @@ class PfeNavigation extends PFElement {
     const searchClone = this.mobileSlot.search.cloneNode(true);
     searchClone.removeAttribute("pfe-navigation--mobile-search");
     this._mobileSlot.search.appendChild(searchClone);
+  }
+
+  _setupMobileLinks() {
+    ["login", "language"].forEach(type => {
+      let link = "";
+      if(this.mobileSlot[type].hasAttribute("href")){
+        // Store the link value in a variable
+        link = this.mobileSlot[type].getAttribute("href");
+      } else {
+        // Find the link inside the slot
+        if(this.mobileSlot[type].querySelector("a")) {
+          link = this.mobileSlot[type].querySelector("a").getAttribute("href");
+        }
+      }
+
+      // Get the element to attach the link to
+      this.shadowRoot.querySelector(`[connect-to="mobile-${type}"]`).setAttribute("href", link);
+      this.shadowRoot.querySelector(`#pfe-navigation--mobile-${type}`).innerHTML = this.mobileSlot[type].innerText;
+      // Hide the slot
+      this.mobileSlot[type].setAttribute("hidden", true);
+      this.mobileSlot[type].style.display = "none";
+    });
   }
 }
 

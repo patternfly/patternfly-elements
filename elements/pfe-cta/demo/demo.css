@@ -23,7 +23,7 @@
   pfe-card {
     display: grid;
     grid-gap: 15px;
-    --pfe-card--padding: 0;
+    --pfe-card--Padding: 10px;
   }
 
   pfe-cta {

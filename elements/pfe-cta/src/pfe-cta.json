@@ -39,6 +39,10 @@
           "items": {
             "oneOf": [{
               "$ref": "a"
+            }, {
+              "$ref": "input"
+            }, {
+              "$ref": "button"
             }]
           }
         }

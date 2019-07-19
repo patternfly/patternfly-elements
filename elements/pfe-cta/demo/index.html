@@ -11,6 +11,7 @@
   <link href="../../pfe-cta/pfe-cta--lightdom.css" rel="stylesheet">
   <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
   <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+  <link href="demo.css" rel="stylesheet">
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
   <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
@@ -28,73 +29,6 @@
   ])
 
   </script>
-  <style>
-  body {
-    margin: 0;
-  }
-
-  h1,
-  h2,
-  h3,
-  p {
-    font-family: Arial, sans-serif;
-  }
-
-  h1,
-  h2 {
-    margin: 15px 0 10px;
-  }
-
-  pfe-band {
-    --pfe-band--Padding--horizontal: 60px;
-    --pfe-band--Width: 100%;
-  }
-
-  pfe-card {
-    display: grid;
-    grid-gap: 15px;
-    --pfe-card--padding: 0;
-  }
-
-
-
-  .card-layout {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
-
-  pfe-cta {
-    margin-top: 10px;
-    margin-left: 20px;
-    --pfe-theme--color--surface--complement: #0066cc;
-  }
-
-  a {
-    color: #2290ff;
-  }
-
-  .custom-dark-band {
-    padding: 60px 15px;
-    background: #222;
-    --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark, yellow);
-    --pfe-broadcasted--color--ui-link: var(--pfe-theme--color--ui-link--on-dark, red);
-    --pfe-broadcasted--color--ui-link--hover: var(--pfe-theme--color--ui-link--on-dark--hover, orange);
-    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--ui-link--on-dark--visited, pink);
-    --pfe-broadcasted--color--ui-link--focus: var(--pfe-theme--color--ui-link--on-dark--focus, orange);
-  }
-
-  .custom-light-band {
-    padding: 60px 15px;
-    background: #cce7e8;
-  }
-
-  .custom-on-dark-band {
-    padding: 30px 15px;
-    background: #0d053e;
-  }
-
-  </style>
 </head>
 
 <body unresolved>
@@ -110,7 +44,7 @@
           <h3>No color attribute</h3>
           <div>
             <pfe-cta><a href="#">Default</a></pfe-cta>
-            <pfe-cta><a href="#">Default cta with longer text in case it wraps</a></pfe-cta>
+            <pfe-cta class="force-wrap"><a href="#">Default cta with longer text in case it wraps</a></pfe-cta>
             <pfe-cta pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
             <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
           </div>
@@ -140,7 +74,7 @@
         <h3>No color attribute</h3>
         <div>
           <pfe-cta><a href="#">Default</a></pfe-cta>
-          <pfe-cta><a href="#">Default cta with longer text in case it wraps</a></pfe-cta>
+          <pfe-cta class="force-wrap"><a href="#">Default cta with longer text in case it wraps</a></pfe-cta>
           <pfe-cta pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
           <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
           <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="#">Primary lightest</a></pfe-cta>

@@ -18,7 +18,7 @@ class PfeCta extends PFElement {
   }
 
   get defaultStyle() {
-    return this.hasAttribute("priority") ? false : true;
+    return this.hasAttribute("pfe-priority") ? false : true;
   }
 
   // Declare the type of this component

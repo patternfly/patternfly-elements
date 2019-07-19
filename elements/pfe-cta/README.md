@@ -35,11 +35,10 @@ We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe
 
 ## Styling approach
 
-
 ```
     // 1. set up local vars equal to theme vars & fallbacks
     :host {
-      --pfe-cta--Color: var(theme--ui-link, #06c);
+      --pfe-cta--Color: var(--pfe-theme--ui-link, #06c);
     }
 
     // 2. Use color property once, map to local var value
@@ -52,12 +51,12 @@ We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe
 
     // 3. Use broadcasted variables as needed, with theme fallback after other declarations
     :host {
-      --pfe-cta--Color: var(broadcasted--ui-link, var(theme--ui-link, #06c));   
+      --pfe-cta--Color: var(--pfe-broadcasted--ui-link, var(--pfe-theme--ui-link, #06c));
     }
 
     // 4. Override broadcasted last
-    [color=accent] {
-      --pfe-cta--Color: var(theme--surface-accent--ui-link);
+    [color="accent"] {
+      --pfe-cta--Color: var(--pfe-theme--ui-accent);
     }
 ```
 
@@ -69,10 +68,9 @@ If you'd like to checkout how theming is possible using our CSS Var hooks, try a
 ```html
 <style>
 :root {
-  --pfe-theme--color--surface--accent:         green;
-  --pfe-theme--color--ui-accent--hover:        darkgreen;
-  --pfe-theme--color--surface--accent--text:   white;
-  --pfe-theme--color--surface--accent--text:   white;
+  --pfe-theme--color--ui-accent:         green;
+  --pfe-theme--color--ui-accent--hover:  darkgreen;
+  --pfe-theme--color--ui-accent--text:   white;
 }
 </style>
 ```

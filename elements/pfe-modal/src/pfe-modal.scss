@@ -1,14 +1,24 @@
 @import "../../pfe-sass/pfe-sass";
+$LOCAL: modal;
+
 :host {
-  display: block;
-  background-color: white;
+	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
+
+	display: block;
+	background-color: white;
 }
 
-:host([hidden]) {
-  display: none;
+::slotted([slot="pfe-modal--header"]) {
+	margin-top: 0;
 }
-:host {
-    --pfe-modal__overlay--BackgroundColor: var(--pfe-theme--overlay--BackgroundColor, rgba(37, 37, 37, 0.5));
+
+::slotted(:not([slot])) {
+	max-width: 95%;
+}
+
+::slotted(:not([slot]):first-child) {
+	margin-top: 0;
+  	display: block;
 }
 
 .pfe-modal {
@@ -25,9 +35,12 @@
 		background-color: white;
 		padding: 32px;
 		box-shadow: 5px 5px rgba(21, 21, 21, 0.1);
+		&[hidden] {
+			display: none;
+		}
 	}
 
-	&__close-btn {
+	&__close {
 		position: absolute;
 		top: 32px;
 		right: 32px;
@@ -40,23 +53,17 @@
 	}
 
 	&__overlay {
-    display: block;
-    background-color: var(--pfe-modal__overlay--BackgroundColor);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1;
+		display: block;
+		background-color: #{pfe-local($cssvar: BackgroundColor, $region: overlay)};
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		z-index: 1;
+		&[hidden] {
+			display: none;
+		}
 	}
-}
-
-::slotted(:not([slot])) {
-	max-width: 95%;
-}
-
-::slotted(:not([slot]):first-child) {
-	margin-top: 0;
-  display: block;
 }
 

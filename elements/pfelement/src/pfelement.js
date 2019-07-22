@@ -38,6 +38,14 @@ class PFElement extends HTMLElement {
   get pfeType() {
     return this.getAttribute(`${prefix}type`);
   }
+  
+  get randomId() {
+    return Math.random().toString(36).substr(2, 9);
+  }
+
+  get focusableLight() {
+    return this.querySelectorAll(`a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]`);
+  }
 
   set pfeType(value) {
     this.setAttribute(`${prefix}type`, value);

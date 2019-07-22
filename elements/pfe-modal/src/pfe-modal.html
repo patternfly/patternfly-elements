@@ -1,6 +1,7 @@
-<section class="pfe-modal__container" tabindex="0" role="dialog" >
-	<button class="pfe-modal__close-btn" tabindex="-1">+</button>
+<slot name="pfe-modal--trigger"></slot>
+<section class="pfe-modal__container" tabindex="0" role="dialog" hidden>
 	<slot name="pfe-modal--header"></slot>
 	<slot></slot>
+	<button class="pfe-modal__close" aria-label="Close dialog">+</button>
 </section>
-<div class="pfe-modal__overlay"></div>
+<div class="pfe-modal__overlay" hidden></div>

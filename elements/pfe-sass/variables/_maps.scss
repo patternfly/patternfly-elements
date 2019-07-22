@@ -151,6 +151,7 @@ $pfe-colors: (
   feedback--default--lightest:        $pfe-color--feedback--default--lightest,
   feedback--default--darkest:         $pfe-color--feedback--default--darkest,
 
+  overlay:                            rgba($pfe-color--gray-900, .5)
 );
 
 

@@ -38,6 +38,12 @@ $pfe-icon--border-style:                     map-get($pfe-vars, border-style);
   @include pfe-icon-set-svg-size(1em);
   border-radius: 50%;
   background-color: var(--pfe-icon--color--bg);
+
+  @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
+    background-color: white;
+    padding: $pfe-icon--padding;
+  }
+
   border: $pfe-icon--border-width $pfe-icon--border-style var(--pfe-icon--color--border);
   position: relative;
 
@@ -52,8 +58,13 @@ $pfe-icon--border-style:                     map-get($pfe-vars, border-style);
   }
 
   svg {
-    image.load-failed {
+    image {
+      @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
+        filter: none;
+      }
+      &.load-failed {
         display: none;
+      }
     }
     filter feFlood {
       flood-color: var(--pfe-broadcasted--color--text);

@@ -10,7 +10,6 @@ $LOCAL: modal;
 	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
 
 	display: block;
-	background-color: white;
 }
 
 :host(:not([has_header])) {
@@ -23,12 +22,12 @@ $LOCAL: modal;
 
 ::slotted(:not([slot]):first-child) {
 	margin-top: 0;
-  	display: block;
+  display: block;
 }
 
 .pfe-modal {
 	&__wrapper {
-		position: absolute;
+		position: fixed;
 		z-index: 2;
 		top: calc(#{pfe-local(MaxHeight)} - 50vh);
 		left: 0;
@@ -67,7 +66,7 @@ $LOCAL: modal;
 	&__overlay {
 		display: block;
 		background-color: pfe-local($cssvar: BackgroundColor, $region: overlay);
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
 		width: 100%; // Fallback

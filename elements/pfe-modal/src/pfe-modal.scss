@@ -17,17 +17,13 @@ $LOCAL: modal;
 	margin-top: 0;
 }
 
-::slotted(:not([slot])) {
-	max-width: 95%;
-}
-
 ::slotted(:not([slot]):first-child) {
 	margin-top: 0;
   	display: block;
 }
 
 .pfe-modal {
-	&__container {
+	&__wrapper {
 		position: absolute;
 		z-index: 2;
 		top: calc(#{pfe-local(MaxHeight)} - 50vh);
@@ -38,22 +34,23 @@ $LOCAL: modal;
 		max-height: pfe-local(MaxHeight);
 		min-height: pfe-local(MinHeight);
 		margin: 0 auto;
+		box-shadow: pfe-var(box-shadow--lg);
 		background-color: pfe-color(surface--lightest);
+	}
+	&__container {
 		padding: pfe-local(Padding);
-		box-shadow: pfe-var(box-shadow--md); // 5px 5px rgba(21, 21, 21, 0.1);
+		max-width: calc(100% - #{pfe-var(ui--element--size)});
 		&[hidden] {
 			display: none;
 		}
 	}
 
 	&__close {
+		@include pfe-reset-button;
 		position: absolute;
 		top: calc(#{pfe-var(container-padding)} * 2);
 		right: calc(#{pfe-var(container-padding)} * 2);
 		cursor: pointer;
-		background-color: transparent;
-		border: none;
-		padding: 0;
 		line-height: .5;
 		> svg {
 			fill: pfe-radio(text);
@@ -68,9 +65,9 @@ $LOCAL: modal;
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 100%;
+		width: 100%; // Fallback
 		width: 100vw;
-		height: 100%;
+		height: 100%; // Fallback
 		height: 100vh;
 		z-index: 1;
 		&[hidden] {

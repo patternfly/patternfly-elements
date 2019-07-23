@@ -402,7 +402,7 @@ class PfeNavigationItem extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-    
+
     // If no slots have been assigned, assign it to the trigger slot
     const unassigned = [...this.children].filter(child => !child.hasAttribute("slot"));
     unassigned.map(item => item.setAttribute("slot", "trigger"));
@@ -530,10 +530,8 @@ class PfeNavigationMain extends PFElement {
   }
 }
 
+PFElement.create(PfeNavigation);
 PFElement.create(PfeNavigationItem);
 PFElement.create(PfeNavigationMain);
-PFElement.create(PfeNavigation);
 
 export default PfeNavigation;
-
-

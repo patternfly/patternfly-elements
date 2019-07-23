@@ -29,11 +29,12 @@ class PfeModal extends PFElement {
   openModal(event) {
     event.preventDefault();
 
+    this.trigger = event.target;
+
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:open`, {
         detail: {
-          open: true,
-          trigger: event.target
+          open: true
         },
         bubbles: true
       })
@@ -46,8 +47,7 @@ class PfeModal extends PFElement {
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:close`, {
         detail: {
-          open: false,
-          trigger: this.trigger
+          open: false
         },
         bubbles: true
       })
@@ -124,6 +124,13 @@ class PfeModal extends PFElement {
       this._modalContainer.setAttribute("aria-labelledby", this.header_id);
     } else {
       // @TODO Do something else to assign the label
+      const headings = this.body.filter(el => el.tagName.startsWith("H"));
+      if (headings.length > 0) {
+        headings[0].setAttribute("id", this.header_id);
+        this._modalContainer.setAttribute("aria-labelledby", this.header_id);
+      } else if (this.trigger) {
+        this._modalContainer.setAttribute("aria-label", this.trigger.innerText);
+      }
     }
 
     this._overlay.addEventListener("click", this.closeModal);
@@ -151,20 +158,20 @@ class PfeModal extends PFElement {
 
   _toggleModal(event) {
     if(event && event.detail) {
-      this.open = event.detail.open;
-
       if(event.detail.open) {
+        this.open = true;
         // Reveal the container and overlay
         this._modalContainer.removeAttribute("hidden");
         this._overlay.removeAttribute("hidden");
         // Set the focus to the container
         this._modalContainer.focus();
       } else {
+        this.open = false;
         // Hide the container and overlay
         this._modalContainer.setAttribute("hidden", true);
         this._overlay.setAttribute("hidden", true);
         // Move focus back to the trigger element
-        event.detail.trigger.focus();
+        this.trigger.focus();
       }
     }
   }

@@ -43,10 +43,6 @@ class PFElement extends HTMLElement {
     return Math.random().toString(36).substr(2, 9);
   }
 
-  get focusableLight() {
-    return this.querySelectorAll(`a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]`);
-  }
-
   set pfeType(value) {
     this.setAttribute(`${prefix}type`, value);
   }

@@ -2,6 +2,11 @@
 $LOCAL: modal;
 
 :host {
+	--pfe-modal--MaxWidth: 70vw;
+	--pfe-modal--MinWidth: 50vw;
+	--pfe-modal--MaxHeight: 70vh;
+	--pfe-modal--MinHeight: 40vh;
+	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2);
 	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
 
 	display: block;
@@ -25,16 +30,17 @@ $LOCAL: modal;
 	&__container {
 		position: absolute;
 		z-index: 2;
+		top: calc(#{pfe-local(MaxHeight)} - 50vh);
 		left: 0;
 		right: 0;
-		max-width: 70vw;
-		min-width: 50vw;
-		max-height: 70vh;
-		min-height: 40vh;
+		max-width: pfe-local(MaxWidth);
+		min-width: pfe-local(MinWidth);
+		max-height: pfe-local(MaxHeight);
+		min-height: pfe-local(MinHeight);
 		margin: 0 auto;
-		background-color: white;
-		padding: 32px;
-		box-shadow: 5px 5px rgba(21, 21, 21, 0.1);
+		background-color: pfe-color(surface--lightest);
+		padding: pfe-local(Padding);
+		box-shadow: pfe-var(box-shadow--md); // 5px 5px rgba(21, 21, 21, 0.1);
 		&[hidden] {
 			display: none;
 		}
@@ -42,23 +48,29 @@ $LOCAL: modal;
 
 	&__close {
 		position: absolute;
-		top: 32px;
-		right: 32px;
-		transform: rotate(45deg);
-		font-size: 40px;
-		line-height: 0.5;
+		top: calc(#{pfe-var(container-padding)} * 2);
+		right: calc(#{pfe-var(container-padding)} * 2);
 		cursor: pointer;
 		background-color: transparent;
 		border: none;
+		padding: 0;
+		line-height: .5;
+		> svg {
+			fill: pfe-radio(text);
+			height: pfe-var(ui--element--size);
+			width: pfe-var(ui--element--size);
+		}
 	}
 
 	&__overlay {
 		display: block;
-		background-color: #{pfe-local($cssvar: BackgroundColor, $region: overlay)};
+		background-color: pfe-local($cssvar: BackgroundColor, $region: overlay);
 		position: absolute;
 		top: 0;
 		left: 0;
+		width: 100%;
 		width: 100vw;
+		height: 100%;
 		height: 100vh;
 		z-index: 1;
 		&[hidden] {

@@ -13,6 +13,10 @@ $LOCAL: modal;
 	background-color: white;
 }
 
+:host(:not([has_header])) {
+	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 4) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);
+}
+
 ::slotted([slot="pfe-modal--header"]) {
 	margin-top: 0;
 }
@@ -36,6 +40,7 @@ $LOCAL: modal;
 		margin: 0 auto;
 		box-shadow: pfe-var(box-shadow--lg);
 		background-color: pfe-color(surface--lightest);
+		border-radius: #{pfe-var(ui--border-radius)};
 	}
 	&__container {
 		padding: pfe-local(Padding);
@@ -75,4 +80,3 @@ $LOCAL: modal;
 		}
 	}
 }
-

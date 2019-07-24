@@ -23,7 +23,7 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
   border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
 }
 
-:host([pfe-align="center"]) {
+:host(:not([vertical])[pfe-align="center"]) {
   .tabs {
     justify-content: center;
   }

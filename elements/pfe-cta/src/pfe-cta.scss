@@ -12,6 +12,7 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta__arrow--Padding:  0 .125rem 0 .375rem;
   --pfe-cta--BackgroundColor:         transparent;
   --pfe-cta--BackgroundColor--focus:  transparent;
+  --pfe-cta--SecondaryBackgroundColor--focus: rgba(21,21,21, .05);
   --pfe-cta--BorderColor:             transparent;
   --pfe-cta__inner--BorderColor:      transparent;
   --pfe-cta--Color:   pfe-color(ui-link);
@@ -169,18 +170,18 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta--BorderRadius:              #{pfe-var(ui--border-radius)};
   --pfe-cta__arrow--Display:            none;
   --pfe-cta--BackgroundColor:           transparent;
-  --pfe-cta--BorderColor:               var(--pfe-broadcasted--color--text, #{pfe-color(surface--darkest)});
+  --pfe-cta--BorderColor:               var(--pfe-broadcasted--color--text, #{pfe-color(ui-complement)});
   --pfe-cta__inner--BorderColor:        transparent;
-  --pfe-cta--Color:                     var(--pfe-broadcasted--color--text, #{pfe-color(surface--base--text)});
+  --pfe-cta--Color:                     var(--pfe-broadcasted--color--text, #{pfe-color(ui-complement)});
 
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(surface--darkest)};
-  --pfe-cta--BorderColor--hover:        var(--pfe-broadcasted--color--text, #{pfe-color(surface--darkest)}); //white, then black
-  --pfe-cta--Color--hover:              #{pfe-color(surface--darkest--text)};
+  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-complement)};
+  --pfe-cta--BorderColor--hover:        var(--pfe-broadcasted--color--text, #{pfe-color(ui-complement)}); //white, then black
+  --pfe-cta--Color--hover:              #{pfe-color(ui-complement--text)};
 
-  --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lighter)};
-  --pfe-cta--BorderColor--focus:        #{pfe-color(surface--darkest)};
-  --pfe-cta__inner--BorderColor--focus: var(--pfe-broadcasted--color--text, #{pfe-color(surface--darkest)});
-  --pfe-cta--Color--focus:              #{pfe-color(surface--base--text)};
+  --pfe-cta--BackgroundColor--focus:    #{pfe-local(SecondaryBackgroundColor--focus)};
+  --pfe-cta--BorderColor--focus:        #{pfe-color(ui-complement)};
+  --pfe-cta__inner--BorderColor--focus: var(--pfe-broadcasted--color--text, #{pfe-color(ui-complement)});
+  --pfe-cta--Color--focus:              #{pfe-color(ui-complement)};
 }
 
 

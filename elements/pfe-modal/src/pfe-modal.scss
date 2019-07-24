@@ -18,6 +18,7 @@ $LOCAL: modal;
 
 ::slotted([slot="pfe-modal--header"]) {
 	margin-top: 0;
+	width: 90%;
 }
 
 ::slotted(:not([slot]):first-child) {
@@ -44,19 +45,25 @@ $LOCAL: modal;
 	&__container {
 		padding: pfe-local(Padding);
 		max-width: calc(100% - #{pfe-var(ui--element--size)});
+
 		&[hidden] {
 			display: none;
+		}
+
+		&[no_header] {
+			padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 6) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);			
 		}
 	}
 
 	&__close {
 		@include pfe-reset-button;
 		position: absolute;
-		top: calc(#{pfe-var(container-padding)} * 2);
+		top: pfe-var(container-padding);
 		right: calc(#{pfe-var(container-padding)} * 2);
 		cursor: pointer;
 		line-height: .5;
 		> svg {
+			padding: 20px;
 			fill: pfe-radio(text);
 			height: pfe-var(ui--element--size);
 			width: pfe-var(ui--element--size);

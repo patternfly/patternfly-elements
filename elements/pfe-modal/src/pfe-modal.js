@@ -70,6 +70,7 @@ class PfeModal extends PFElement {
     this._modalWrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
     this._modalCloseButton = this.shadowRoot.querySelector(`.${this.tag}__close`);
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
+    this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
     
     this._observer = new MutationObserver(() => {
       this._mapSchemaToSlots(this.tag, this.slots);
@@ -124,6 +125,7 @@ class PfeModal extends PFElement {
       this._modalWrapper.setAttribute("aria-labelledby", this.header_id);
     } else {
       // @TODO Do something else to assign the label
+      this._container.setAttribute("no_header", "");
       const headings = this.body.filter(el => el.tagName.startsWith("H"));
       if (headings.length > 0) {
         headings[0].setAttribute("id", this.header_id);

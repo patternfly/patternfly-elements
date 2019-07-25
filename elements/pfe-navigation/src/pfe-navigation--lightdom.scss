@@ -3,26 +3,46 @@
 $LOCAL: navigation-item;
 
 // Edge styles
-.pfe-navigation-item__trigger > *:not(.pfe-navigation-item__trigger--icon) {
-    margin: 0;
-    font-family: #{pfe-var(font-family)};
-    font-size: #{pfe-local($cssvar: FontSize, $fallback: 14px, $region: trigger)};
-    font-weight: #{pfe-local($cssvar: FontWeight, $fallback: 100, $region: trigger)};
-    color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
+@include browser-query(ie11) {
+    .pfe-navigation-item__trigger.pfe-navigation-item {
+        .expanded & {
+            background-color: #{pfe-color(surface--lightest)};
+            border-top-color:  #{pfe-color(surface--accent)};
+        }
+        &:hover {
+            cursor: pointer;
+            border-top: 4px solid #{pfe-color(surface--accent)};
+        }
+    }
 }
+
+.pfe-navigation-item__trigger {
+    @include browser-query(ie11) {
+        > *.pfe-navigation-item__trigger--icon:first-child {
+            display: none;
+        }
+    }
+    > *:not(.pfe-navigation-item__trigger--icon) {
+        margin: 0;
+        font-family: #{pfe-var(font-family)};
+        font-size: #{pfe-local($cssvar: FontSize, $fallback: 14px, $region: trigger)};
+        font-weight: #{pfe-local($cssvar: FontWeight, $fallback: 100, $region: trigger)};
+        color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
+        @include browser-query(ie11) {
+            .expanded & {
+                color: #{pfe-color(text)};
+            }
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+        }
+    }
+}
+
 .pfe-navigation-item__tray {
-    padding: #{pfe-local($cssvar: Padding, $region: tray)};
+    padding: #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})};
     max-height: calc(100vh - var(--pfe-navigation--Height, 90px));
     overflow-x: hidden;
     overflow-y: scroll;
-}
-
-// IE11
-@include browser-query(ie11) {
-    // pfe-navigation {
-    //     display: flex;
-    //     flex-flow: row nowrap;
-    //     align-items: center;
-    //     justify-content: center;
-    // }
 }

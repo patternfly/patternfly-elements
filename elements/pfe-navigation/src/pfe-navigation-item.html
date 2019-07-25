@@ -1,6 +1,6 @@
 <div class="pfe-navigation-item__trigger" aria-expanded="false" tabindex="0">
     ${this.hasIcon ? `<span class="pfe-navigation-item__trigger--icon"></span>` : ""}
-    <slot name="trigger"></slot>
+    <slot name="trigger" class="pfe-navigation-item__trigger--slot"></slot>
     ${!this.hasIcon ? `<span class="pfe-navigation-item__trigger--icon"></span>` : ""}
 </div>
 <div class="pfe-navigation-item__tray">

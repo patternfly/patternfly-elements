@@ -7,54 +7,132 @@ $LOCAL: accordion;
 /// ===========================================================================
 
 :host {
-  @include  pfe-accordion-header;
+  --pfe-accordion__header--BorderRightColor: transparent;
+  --pfe-accordion__header--BorderTop:    0;
+  --pfe-accordion__header--BorderBottom: 0;
+
+  --pfe-accordion__header--TextDecoration: none;
+  --pfe-accordion__header--spacer: calc(#{pfe-var(container-spacer)} * 1.5);
+
+  display: block;
+
+  > * {
+    margin: 0;
+  }
 
   button {
-    @include pfe-trigger-color($component-name: accordion);
-    @include pfe-trigger-button;
+    -webkit-appearance: button;
 
-    &[aria-expanded="true"] {
-      @include pfe-trigger-color-expanded($component-name: accordion);
-      @include pfe-trigger-expanded;
-      &::after {
-        @include pfe-chevron-expanded;
-      }
+    margin: 0;
+    width: 100%;
+    height: auto;
+    z-index: 1;
+
+    position: relative;
+    display: block;
+
+    font-family: inherit;
+    font-weight: #{pfe-var(font-weight--bold)};
+    font-size:   calc(#{pfe-var(font-size)} * 1.1);
+    line-height: #{pfe-var(line-height)};
+    text-align: left;
+    cursor: pointer;
+
+    color: #{pfe-radio(color--text)};
+    background-color: #{pfe-local(BackgroundColor)};
+
+    border-top:       #{pfe-local($cssvar: BorderTop, $region: header)};
+    border-right:     #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-local($cssvar: BorderRightColor, $region: header)};
+    border-bottom:    #{pfe-local($cssvar: BorderBottom, $region: header)};
+    border-left:      #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(accent)};
+
+    padding: #{pfe-var(container-spacer)} 50px #{pfe-var(container-spacer)} #{pfe-local($cssvar: spacer, $region: header)};
+    text-decoration: #{pfe-local($cssvar: TextDecoration, $region: header)};
+
+    &:hover,
+    &:focus {
+      outline: none;
+      z-index: 2;
     }
 
-    &[aria-expanded="false"]::after {
-        @include pfe-chevron-expanded($state: false);
+    &:focus {
+      --pfe-accordion__header--TextDecoration: underline;
+      --pfe-accordion--accent: #{pfe-color(surface--lightest--link)};
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: calc(50% - .2em);
+      right: #{pfe-local($cssvar: spacer, $region: header)};
+
+      transition: transform 0.15s;
+      transform: rotate(45deg);
+      
+      display: block;
+      height: .4em;
+      width:  .4em;
+
+      text-align: center;
+
+      border-style: #{pfe-var(surface--border-style)};
+      border-width: .1em .1em 0 0;
+      border-bottom: 0;
+    }
+
+    &::-moz-focus-inner {
+        border: 0;
+    }
+
+    &[aria-expanded="true"] {
+      --pfe-accordion__header--BorderRightColor: #{pfe-color(surface--border)};
+      --pfe-accordion__header--BorderBottom: 0;
+
+      &::after {
+        transform: rotate(-45deg);
+      }
     }
   }
 }
 
-:host(:first-child) {
-  button {
-    @include pfe-trigger-button-first($theme: light);
-  }  
+:host(:first-child) button {
+  --pfe-accordion__header--BorderTop: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
+  // @TODO Support differences based on theme
 }
 
-
 // Add border bottom to the last button in an accordion set.
-:host(:last-of-type) {
-  button[aria-expanded="false"] {
-    @include pfe-trigger-button-last;
-  }  
+:host(:last-of-type) button[aria-expanded="false"] {
+  --pfe-accordion__header--BorderBottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
+  // @TODO Support differences based on theme
+}
+
+// Only show the bottom border after animation is complete
+:host(:not(.animating)) {
+  --pfe-accordion__header--BorderBottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)}
 }
 
 :host(.animating) {
   transition: transform 0.3s #{pfe-var(animation-timing)};
 }
 
-/// ===========================================================================
-/// CONTEXT STYLES, ON=DARK
-/// ===========================================================================
+:host(:hover),
+:host([aria-expanded="true"]),
+:host(.animating) {
+  --pfe-accordion--accent: #{pfe-color(surface--lightest--link)};
+}
 
-:host([on="dark"]) {
-  button {
-    @include pfe-trigger-color($theme: dark, $component-name: accordion);
+:host([on="dark"]:hover),
+:host([on="dark"][aria-expanded="true"]),
+:host([on="dark"].animating) {
+  --pfe-accordion--accent: #{pfe-color(surface--lightest)};
+}
 
-    &[aria-expanded="true"] {
-      @include pfe-trigger-color-expanded($theme: dark, $component-name: accordion);
-    }
-  }
+:host([on="dark"][aria-expanded="true"]) {
+  --pfe-accordion--accent: #{pfe-color(surface--lightest)};
+  --pfe-accordion--BackgroundColor: #{pfe-color(surface--darker)};
+  --pfe-broadcasted--color--text:               #{pfe-color(text--on-dark)};
+  --pfe-broadcasted--color--ui-link:            #{pfe-color(ui-link--on-dark)};
+  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(ui-link--on-dark--visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(ui-link--on-dark--hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(ui-link--on-dark--focus)};
 }

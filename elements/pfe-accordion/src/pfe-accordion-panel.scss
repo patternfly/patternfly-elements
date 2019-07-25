@@ -7,29 +7,72 @@ $LOCAL: accordion;
 /// ===========================================================================
 
 :host {
-   @include pfe-accordion-panel;
+  --pfe-accordion__panel--Display: none;
+  
+  --pfe-accordion__panel--BorderTop:    0;
+  --pfe-accordion__panel--BorderRight:  #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
+  --pfe-accordion__panel--BorderBottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
+  --pfe-accordion__panel--BorderLeft:   #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(accent)};
+
+  --pfe-accordion__panel--BoxShadow: 0 5px #{pfe-var(surface--border-width--heavy)} rgba(140, 140, 140, 0.35);
+
+  position: relative;
+
+  display: #{pfe-local($cssvar: Display, $region: panel)};
+  overflow: hidden;
+  will-change: height;
+  border-color: transparent;
+
+  color: #{pfe-radio(color--text)};
+  background-color: #{pfe-local(BackgroundColor)};
+
+  border-top:       #{pfe-local($cssvar: BorderTop, $region: panel)};
+  border-right:     #{pfe-local($cssvar: BorderRight, $region: panel)};
+  border-bottom:    #{pfe-local($cssvar: BorderBottom, $region: panel)};
+  border-left:      #{pfe-local($cssvar: BorderLeft, $region: panel)};
+
+  box-shadow: #{pfe-local($cssvar: BoxShadow, $region: panel)};
 }
 
 :host([expanded]) {
-   @include pfe-accordion-panel-expanded;
-   @include pfe-accordion-panel-expanded-style;
-}
- 
-:host([on="dark"][expanded]) {
-  @include pfe-theme($theme: "dark");
-  @include pfe-accordion-panel-expanded-style($theme: dark);
+  --pfe-accordion__panel--Display: block;
 }
 
 :host(.animating) {
-  display: block;
+  --pfe-accordion__panel--Display: block;
   transition: height 0.3s ease-in-out;
 }
 
 .container {
-  @include pfe-accordion-panel-container-inset($align: left);
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 3em #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 1.5);
 }
 
 :host(:last-of-type[expanded]) {
   margin-bottom: 0;
 }
 
+:host(:not([on="dark"])) {
+  --pfe-accordion--accent: transparent;
+}
+
+:host(:not([on="dark"])[expanded],:not([on="dark"]).animating) {
+  --pfe-accordion--accent: #{pfe-color(surface--lightest--link)};
+}
+
+:host([on="dark"][expanded],[on="dark"].animating) {
+  --pfe-accordion--accent: #{pfe-color(surface--darkest--text)};
+}
+
+:host([on="dark"][expanded]) {
+  --pfe-accordion--BackgroundColor: #{pfe-color(surface--darker)};
+  --pfe-broadcasted--color--text:               #{pfe-color(text--on-dark)};
+  --pfe-broadcasted--color--ui-link:            #{pfe-color(ui-link--on-dark)};
+  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(ui-link--on-dark--visited)};
+  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(ui-link--on-dark--hover)};
+  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(ui-link--on-dark--focus)};
+
+  --pfe-accordion__panel--BorderRight: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--darkest--text)};
+  --pfe-accordion__panel--BoxShadow: none;
+}

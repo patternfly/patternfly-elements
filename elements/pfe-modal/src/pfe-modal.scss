@@ -21,14 +21,15 @@ $pfe-modal--breakpoint--medium: 640px;
 }
 
 ::slotted([slot="pfe-modal--header"]) {
-	margin-top: 0;
+	margin-top: 0 !important;
 	width: 90%;
 }
 
-::slotted(:not([slot]):first-child) {
-	margin-top: 0;
-  display: block;
-}
+// ::slotted(*) {
+// 	margin-top: 0;
+//   display: block;
+//   background-color: green;
+// }
 
 .pfe-modal {
 	&__wrapper {
@@ -65,6 +66,11 @@ $pfe-modal--breakpoint--medium: 640px;
 		&[no_header] {
 			@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 				padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 6) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);			
+			}
+
+			// Remove margin-top on the first slotted element that is not the header.
+			::slotted(*:nth-child(2)) {
+				margin-top: 0 !important;
 			}
 		}
 	}

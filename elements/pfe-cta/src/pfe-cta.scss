@@ -178,7 +178,7 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta--BorderColor--hover:        var(--pfe-broadcasted--color--text, #{pfe-color(ui-complement)}); //white, then black
   --pfe-cta--Color--hover:              #{pfe-color(ui-complement--text)};
 
-  --pfe-cta--BackgroundColor--focus:    #{pfe-local(SecondaryBackgroundColor--focus)};
+  --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lighter)};
   --pfe-cta--BorderColor--focus:        #{pfe-color(ui-complement)};
   --pfe-cta__inner--BorderColor--focus: var(--pfe-broadcasted--color--text, #{pfe-color(ui-complement)});
   --pfe-cta--Color--focus:              #{pfe-color(ui-complement)};

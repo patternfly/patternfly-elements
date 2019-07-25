@@ -45,6 +45,13 @@ $pfe-modal--breakpoint--medium: 640px;
 		box-shadow: pfe-var(box-shadow--lg);
 		background-color: pfe-color(surface--lightest);
 		border-radius: #{pfe-var(ui--border-radius)};
+		overflow-y: scroll;
+		scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE 10+ */
+
+    &::-webkit-scrollbar {
+    	display: none;
+    }
 
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			max-width: pfe-local(MaxWidth);

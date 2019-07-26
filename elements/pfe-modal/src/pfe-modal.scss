@@ -7,7 +7,7 @@ $pfe-modal--breakpoint--medium: 640px;
 	--pfe-modal--MaxWidth: 70vw;
 	--pfe-modal--MinWidth: 50vw;
 	--pfe-modal--MaxWidth--mobile: 94vw;
-	--pfe-modal--MaxHeight: 70vh;
+	--pfe-modal--MaxHeight: none;
 	--pfe-modal--MinHeight: 40vh;
 	--pfe-modal--Padding--mobile: calc(#{pfe-var(container-padding)} * 1.25) calc(#{pfe-var(container-padding)} * 3) calc(#{pfe-var(container-padding)} * 1.25) calc(#{pfe-var(container-padding)} * 1.25);
 	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2);
@@ -25,17 +25,12 @@ $pfe-modal--breakpoint--medium: 640px;
 	width: 90%;
 }
 
-// ::slotted(*) {
-// 	margin-top: 0;
-//   display: block;
-//   background-color: green;
-// }
-
 .pfe-modal {
 	&__wrapper {
-		position: fixed;
+		position: absolute;
 		z-index: 2;
 		top: calc(#{pfe-local(MaxHeight)} - 50vh);
+		top: 10%;
 		left: 0;
 		right: 0;
 		max-width: pfe-local(MaxWidth--mobile);

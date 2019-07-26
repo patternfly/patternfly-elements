@@ -36,6 +36,19 @@ class PfeNavigation extends PFElement {
     return "pfe-navigation.json";
   }
 
+  closeAllNavigationItems() {
+    this.dispatchEvent(
+      new CustomEvent("pfe-navigation-item:close", {
+        detail: {
+          navigationItem: null,
+          expanded: false
+        },
+        bubbles: true,
+        composed: true
+      })
+    );
+  }
+
   constructor() {
     super(PfeNavigation);
 
@@ -50,7 +63,7 @@ class PfeNavigation extends PFElement {
     this._observerHandler = this._observerHandler.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
-    this._closeAllNavigationItems = this._closeAllNavigationItems.bind(this);
+    this.closeAllNavigationItems = this.closeAllNavigationItems.bind(this);
     this._outsideListener = this._outsideListener.bind(this);
     this._observer = new MutationObserver(this._observerHandler);
 
@@ -127,7 +140,7 @@ class PfeNavigation extends PFElement {
       let isDesktop = window.outerWidth >= 996;
       // If it's the menu item and we're at a desktop size, close the active item
       if(isDesktop && isMenu) {
-        this._closeAllNavigationItems();
+        this.closeAllNavigationItems();
       }
     }
   }
@@ -138,27 +151,21 @@ class PfeNavigation extends PFElement {
       this._activeNavigationItem = event.detail.navigationItem;
       // Add the overlay to the page
       this._overlay.removeAttribute("hidden");
+      // This prevents background scroll while nav is open
+      document.body.style.overflow = "hidden";
       return;
     }
 
-    // If the item clicked equals the currently active navigation item
-    if (this._activeNavigationItem === event.detail.navigationItem) {
-      if (this._activeNavigationItem !== null) {
+    // If the item clicked equals the currently active navigation item or no navigation item is provided
+    if (this._activeNavigationItem === event.detail.navigationItem || event.detail.navigationItem === null) {
+      if (this._activeNavigationItem !== null || event.detail.navigationItem === null) {
+        // Close any open navigation items
         this._activeNavigationItem.expanded = false;
       }
       // Close the navigation item and remove the overlay
       this._activeNavigationItem = null;
       this._overlay.setAttribute("hidden", true);
-      return;
-    }
-
-    // If no navigation item is provided
-    if (event.detail.navigationItem === null) {
-      // Close any open navigation items
-      this._activeNavigationItem.expanded = false;
-      // Set active to null and remove the overlay
-      this._activeNavigationItem = null;
-      this._overlay.setAttribute("hidden", true);
+      document.body.style.overflow = "auto";
       return;
     }
 
@@ -179,21 +186,8 @@ class PfeNavigation extends PFElement {
 
   _outsideListener(event) {
     if ((event.target !== this && event.target.closest("pfe-navigation") === null) || event.path.length > 0 && event.path[0] === this._overlay) {
-      this._closeAllNavigationItems();
+      this.closeAllNavigationItems();
     }
-  }
-
-  _closeAllNavigationItems() {
-    this.dispatchEvent(
-      new CustomEvent("pfe-navigation-item:close", {
-        detail: {
-          navigationItem: null,
-          expanded: false
-        },
-        bubbles: true,
-        composed: true
-      })
-    );
   }
 
   _init() {
@@ -244,9 +238,6 @@ class PfeNavigation extends PFElement {
       // Create a new pfe-accordion element
       const fragment = document.createDocumentFragment();
       const accordion = document.createElement("pfe-accordion");
-      if(window.innerWidth > 575) {
-        accordion.setAttribute("pfe-border-collapse", "top bottom");
-      }
 
       // Set up the mobile search, look for the mobile search flag in the search slot
       this.mobileSlot.search = this.querySelector(`[slot="search"] [pfe-navigation--mobile-search]`);
@@ -263,10 +254,6 @@ class PfeNavigation extends PFElement {
         const clone = trigger.cloneNode(true);
         const header = document.createElement("pfe-accordion-header");
         const panel = document.createElement("pfe-accordion-panel");
-
-        if(window.innerWidth > 575) {
-          header.setAttribute("pfe-border-collapse", "top bottom");
-        }
 
         if (!trigger.hasAttribute("slot")) {
           header.innerHTML = clone.outerHTML;

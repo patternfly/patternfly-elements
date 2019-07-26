@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"
+    />
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../pfe-collapsible.js"></script>
+  </head>
+  <body>
+    <pfe-collapsible>
+      <pfe-collapsible-toggle>Toggle</pfe-collapsible-toggle>
+      <pfe-collapsible-panel>Panel</pfe-collapsible-panel>
+    </pfe-collapsible>
+
+    <div id="outsidePfecollapsible">
+      <pfe-collapsible-toggle aria-controls="panel1"
+        >Toggle</pfe-collapsible-toggle
+      >
+      <pfe-collapsible-panel id="panel1">Panel</pfe-collapsible-panel>
+    </div>
+
+    <div id="standalonePanel">
+      <pfe-collapsible-panel>Panel</pfe-collapsible-panel>
+    </div>
+
+    <div id="toggleWithoutAssociatedPanel">
+      <pfe-collapsible-toggle>Toggle</pfe-collapsible-toggle>
+    </div>
+
+    <script>
+      suite("<pfe-collapsible>", () => {
+        test("it should upgrade", () => {
+          assert.instanceOf(
+            document.querySelector("pfe-collapsible"),
+            customElements.get(
+              "pfe-collapsible",
+              "pfe-collapsible should be an instance of pfeCollapsible"
+            )
+          );
+        });
+
+        test("it should initialize with the correct attributes", () => {
+          const collapsible = document.querySelector("pfe-collapsible");
+          const toggle = collapsible.querySelector("pfe-collapsible-toggle");
+          const panel = collapsible.querySelector("pfe-collapsible-panel");
+
+          assert.equal(toggle.getAttribute("aria-expanded"), "false");
+          assert.equal(toggle.getAttribute("role"), "button");
+          assert.equal(toggle.getAttribute("tabindex"), "0");
+          assert.equal(toggle.getAttribute("aria-controls"), panel.id);
+
+          assert.isNotTrue(panel.hasAttribute("pfe-expanded"));
+          assert.isTrue(panel.hasAttribute("id"));
+        });
+
+        test("it should toggle a panel inside pfe-collapsible on click", done => {
+          const collapsible = document.querySelector("pfe-collapsible");
+          const toggle = collapsible.querySelector("pfe-collapsible-toggle");
+          const panel = collapsible.querySelector("pfe-collapsible-panel");
+
+          assert.equal(toggle.getAttribute("aria-expanded"), "false");
+          assert.isNotTrue(panel.hasAttribute("pfe-expanded"));
+
+          toggle.click();
+
+          flush(() => {
+            assert.equal(toggle.getAttribute("aria-expanded"), "true");
+            assert.isTrue(panel.hasAttribute("pfe-expanded"));
+
+            toggle.click();
+
+            flush(() => {
+              assert.equal(toggle.getAttribute("aria-expanded"), "false");
+              assert.isNotTrue(panel.hasAttribute("pfe-expanded"));
+
+              done();
+            });
+          });
+        });
+
+        test("it should toggle a panel inside pfe-collapsible when the toggle method is called on pfe-collapsible", done => {
+          const collapsible = document.querySelector("pfe-collapsible");
+          const toggle = collapsible.querySelector("pfe-collapsible-toggle");
+          const panel = collapsible.querySelector("pfe-collapsible-panel");
+
+          collapsible.toggle();
+
+          flush(() => {
+            assert.equal(toggle.getAttribute("aria-expanded"), "true");
+            assert.isTrue(panel.hasAttribute("pfe-expanded"));
+
+            collapsible.toggle();
+
+            flush(() => {
+              assert.equal(toggle.getAttribute("aria-expanded"), "false");
+              assert.isNotTrue(panel.hasAttribute("pfe-expanded"));
+
+              done();
+            });
+          });
+        });
+
+        test("a pfe-collapsible-toggle should be able to control a pfe-collapsible-panel without being wrapped in a pfe-collapsible tag", done => {
+          const outsidePfecollapsible = document.querySelector(
+            "#outsidePfecollapsible"
+          );
+          const toggle = outsidePfecollapsible.querySelector(
+            "pfe-collapsible-toggle"
+          );
+          const panel = outsidePfecollapsible.querySelector(
+            "pfe-collapsible-panel"
+          );
+
+          toggle.click();
+
+          flush(() => {
+            assert.equal(toggle.getAttribute("aria-expanded"), "true");
+            assert.isTrue(panel.hasAttribute("pfe-expanded"));
+
+            done();
+          });
+        });
+
+        test("a pfe-collapsible-panel should be able to be controlled without a pfe-collapsible-toggle", done => {
+          const standalonePanel = document.querySelector("#standalonePanel");
+          const panel = standalonePanel.querySelector("pfe-collapsible-panel");
+
+          panel.expanded = true;
+
+          flush(() => {
+            assert.isTrue(panel.hasAttribute("pfe-expanded"));
+            panel.expanded = false;
+
+            flush(() => {
+              assert.isNotTrue(panel.hasAttribute("pfe-expanded"));
+              done();
+            });
+          });
+        });
+
+        test("it should log a warning if a pfe-collapsible-toggle doesn't have an associated pfe-collapsible-panel", () => {
+          const toggleWithoutAssociatedPanel = document.querySelector(
+            "#toggleWithoutAssociatedPanel"
+          );
+          const toggle = toggleWithoutAssociatedPanel.querySelector(
+            "pfe-collapsible-toggle"
+          );
+          const spy = sinon.spy(console, "warn");
+
+          toggle.click();
+
+          sinon.assert.calledWith(
+            spy,
+            `pfe-collapsible-toggle: This toggle doesn't have a pfe-collapsible-panel associated with it`
+          );
+        });
+      });
+    </script>
+  </body>
+</html>

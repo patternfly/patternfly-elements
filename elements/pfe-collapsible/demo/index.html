@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PatternFly Element | pfe-collapsible Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../pfe-collapsible.umd.js'])</script>
+  </head>
+  <body unresolved>
+    <h1>&lt;pfe-collapsible&gt;</h1>
+    <h2>Inside pfe-collapsible</h2>
+    <pfe-collapsible>
+      <pfe-collapsible-toggle>
+        <h3>Collapsible Toggle</h3>
+      </pfe-collapsible-toggle>
+      <pfe-collapsible-panel>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </pfe-collapsible-panel>
+    </pfe-collapsible>
+
+    <pfe-collapsible>
+      <pfe-collapsible-toggle aria-controls="panel1">
+        <h3>Collapsible Toggle with preset ID</h3>
+      </pfe-collapsible-toggle>
+      <pfe-collapsible-panel id="panel1">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </pfe-collapsible-panel>
+    </pfe-collapsible>
+
+    <hr>
+
+    <h2>Standalone toggle and panel</h2>
+    <pfe-collapsible-toggle aria-controls="panel">
+      Toggle the Standalone Panel
+    </pfe-collapsible-toggle>
+    <p>Other content:</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <pfe-collapsible-panel id="panel">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </pfe-collapsible-panel>
+
+    <hr>
+
+    <h2>Standalone Panel</h2>
+    <button>Toggle panel</button>
+    <pfe-collapsible-panel id="standalone-panel">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </pfe-collapsible-panel>
+
+    <hr>
+
+    <h2>Standalone Toggle without a Panel</h2>
+    <pfe-collapsible-toggle>
+      Toggle without a panel
+    </pfe-collapsible-toggle>
+
+    <script>
+      var collapsible = document.querySelector("#standalone-panel");
+
+      document.querySelector("button").addEventListener("click", function() {
+        collapsible.expanded = !collapsible.expanded;
+      });
+    </script>
+  </body>
+</html>

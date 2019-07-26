@@ -69,12 +69,13 @@ class PfeAccordion extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["on"];
+    return ["on", "pfe-border-collapse"];
   }
 
   static get cascadingAttributes() {
     return {
-      on: "pfe-accordion-header, pfe-accordion-panel"
+      on: "pfe-accordion-header, pfe-accordion-panel",
+      "pfe-border-collapse": "pfe-accordion-header"
     };
   }
 
@@ -87,6 +88,7 @@ class PfeAccordion extends PFElement {
     super(PfeAccordion, { type: PfeAccordion.PfeType });
 
     this._linkPanels = this._linkPanels.bind(this);
+    this._transitionEndHandler = this._transitionEndHandler.bind(this);
     this._observer = new MutationObserver(this._linkPanels);
   }
 
@@ -119,6 +121,15 @@ class PfeAccordion extends PFElement {
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
+  }
+
+  getHeaderById(id) {
+    let headers = this._allHeaders().filter(header => header.getAttribute("aria-controls") === id);
+    if (headers.length > 0) {
+      return headers[0];
+    } else {
+      console.warn(`No ${this.tag} header element could be found matching id: ${id}`);
+    }
   }
 
   toggle(index) {
@@ -215,8 +226,6 @@ class PfeAccordion extends PFElement {
     }
   }
 
-  _toggle(header, panel) {}
-
   _expandHeader(header) {
     header.expanded = true;
   }
@@ -258,13 +267,19 @@ class PfeAccordion extends PFElement {
   }
 
   _animate(panel, start, end) {
+    let header = this.getHeaderById(panel.getAttribute("pfe-id"));
+
     panel.classList.add("animating");
+    header.classList.add("animating");
+
     panel.style.height = `${start}px`;
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         panel.style.height = `${end}px`;
         panel.classList.add("animating");
+        header.classList.add("animating");
+        
         panel.addEventListener("transitionend", this._transitionEndHandler);
       });
     });
@@ -298,6 +313,10 @@ class PfeAccordion extends PFElement {
       case "End":
         newHeader = this._lastHeader();
         break;
+      // case "Escape":
+      //   newHeader = currentHeader;
+      //   this.collapseAll();
+      //   break;
       default:
         return;
     }
@@ -308,6 +327,10 @@ class PfeAccordion extends PFElement {
   _transitionEndHandler(evt) {
     evt.target.style.height = "";
     evt.target.classList.remove("animating");
+
+    let header = this.getHeaderById(evt.target.getAttribute("pfe-id"));
+    header.classList.remove("animating");
+
     evt.target.removeEventListener("transitionend", this._transitionEndHandler);
   }
 

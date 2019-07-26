@@ -323,7 +323,7 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta--BorderColor--hover:        #{pfe-color(ui-base)};
   --pfe-cta--Color--hover:              #{pfe-color(ui-base--text)};
 
-  --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lighter)};
+  --pfe-cta--BackgroundColor--focus:    #{$pfe-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-base)};
   --pfe-cta--BorderColor--focus:        #{pfe-color(ui-base)};
   --pfe-cta--Color--focus:              #{pfe-color(ui-base)};

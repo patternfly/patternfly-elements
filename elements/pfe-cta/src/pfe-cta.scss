@@ -262,6 +262,29 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta--Color--focus:              #{pfe-color(ui-accent)};
 }
 
+/// ===========================================================================
+/// COLOR=LIGHTEST
+
+// Secondary lightest variant is used on dark backgrounds.
+
+:host([pfe-priority="secondary"][pfe-color="lightest"]) {
+
+  --pfe-cta--BackgroundColor:           transparent;
+  --pfe-cta--BorderColor:               #{pfe-color(surface--lightest)};
+  --pfe-cta__inner--BorderColor:        transparent;
+  --pfe-cta--Color:                     #{pfe-color(surface--darkest--text)};
+
+  --pfe-cta--BackgroundColor--hover:    #{pfe-color(surface--lighter)};
+  --pfe-cta--BorderColor--hover:        #{pfe-color(surface--lighter)};
+  --pfe-cta--Color--hover:              #{pfe-color(surface--lightest--text)};
+
+  --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lightest)};
+  --pfe-cta--BorderColor--focus:        #{pfe-color(surface--lightest)};
+  --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--darkest)};
+  --pfe-cta--Color--focus:              #{pfe-color(surface--lightest--text)};
+
+}
+
 :host([pfe-priority="secondary"][pfe-color="accent"].focus-within) {
     --pfe-cta--Color--hover: #{pfe-color(ui-accent)};
 }

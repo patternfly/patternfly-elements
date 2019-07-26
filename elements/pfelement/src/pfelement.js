@@ -27,14 +27,13 @@ class PFElement extends HTMLElement {
     };
   }
 
-  static get KEYCODE() {
-    return {
-      ENTER: 13,
-      DOWN: 40,
-      UP: 38,
-      ESC: 27
-    }
-  };
+  static get version() {
+    return "{{version}}";
+  }
+
+  get version() {
+    return this._pfeClass.version;
+  }
 
   get pfeType() {
     return this.getAttribute(`${prefix}type`);
@@ -325,4 +324,3 @@ class PFElement extends HTMLElement {
 autoReveal(PFElement.log);
 
 export default PFElement;
-//# sourceMappingURL=PFElement.js.map

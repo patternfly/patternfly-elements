@@ -44,6 +44,7 @@ class PfeNavigation extends PFElement {
     this._setupMobileNav = this._setupMobileNav.bind(this);
     this._setupMobileSearch = this._setupMobileSearch.bind(this);
     this._setupMobileLinks = this._setupMobileLinks.bind(this);
+
     // -- handlers
     this._toggledHandler = this._toggledHandler.bind(this);
     this._observerHandler = this._observerHandler.bind(this);
@@ -88,7 +89,9 @@ class PfeNavigation extends PFElement {
       this._initialized = this._init();
 
       // Listen for the toggled event on the navigation children
-      this.addEventListener("pfe-navigation-item:toggled", this._toggledHandler);
+      this.addEventListener("pfe-navigation-item:open", this._toggledHandler);
+      this.addEventListener("pfe-navigation-item:close", this._toggledHandler);
+
       // Watch for screen resizing
       window.addEventListener("resize", this._resizeHandler);
     } else {
@@ -98,7 +101,8 @@ class PfeNavigation extends PFElement {
 
   disconnectedCallback() {
     // Remove the custom listener for the toggled event
-    this.removeEventListener("pfe-navigation-item:toggled", this._toggledHandler);
+    this.removeEventListener("pfe-navigation-item:open", this._toggledHandler);
+    this.removeEventListener("pfe-navigation-item:close", this._toggledHandler);
 
     // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("scroll", this._stickyHandler);
@@ -181,7 +185,7 @@ class PfeNavigation extends PFElement {
 
   _closeAllNavigationItems() {
     this.dispatchEvent(
-      new CustomEvent("pfe-navigation-item:toggled", {
+      new CustomEvent("pfe-navigation-item:close", {
         detail: {
           navigationItem: null,
           expanded: false
@@ -387,6 +391,40 @@ class PfeNavigationItem extends PFElement {
     }
   }
 
+  openNavigationItem(event) {
+    event.preventDefault();
+
+    this.dispatchEvent(
+      new CustomEvent(`${this.tag}:open`, {
+        detail: {
+          navigationItem: this,
+          expanded: this.expanded,
+          slot: this.getAttribute("slot"),
+          content: this.tray
+        },
+        bubbles: true,
+        composed: true
+      })
+    );
+  }
+
+  closeNavigationItem(event) {
+    event.preventDefault();
+
+    this.dispatchEvent(
+      new CustomEvent(`${this.tag}:close`, {
+        detail: {
+          navigationItem: this,
+          expanded: this.expanded,
+          slot: this.getAttribute("slot"),
+          content: this.tray
+        },
+        bubbles: true,
+        composed: true
+      })
+    );
+  }
+
   constructor() {
     super(PfeNavigationItem);
 
@@ -399,8 +437,11 @@ class PfeNavigationItem extends PFElement {
     this._tray = this.shadowRoot.querySelector(`.${this.tag}__tray`);
     this._icon = this.shadowRoot.querySelector(`.${this.tag}__trigger--icon`);
 
+    // Externally accessible events
+    this.closeNavigationItem = this.closeNavigationItem.bind(this);
+    this.openNavigationItem = this.openNavigationItem.bind(this);
+    
     this._init = this._init.bind(this);
-    this._closeMenu = this._closeMenu.bind(this);
     this._toggleMenu = this._toggleMenu.bind(this);
     this._keydownHandler = this._keydownHandler.bind(this);
     this._suppressLink = this._suppressLink.bind(this);
@@ -454,20 +495,6 @@ class PfeNavigationItem extends PFElement {
     }
   }
 
-  _closeMenu(event) {
-    event.preventDefault();
-    this.dispatchEvent(
-      new CustomEvent(`${this.tag}:toggled`, {
-        detail: {
-          navigationItem: null,
-          expanded: false
-        },
-        bubbles: true,
-        composed: true
-      })
-    );
-  }
-
   _suppressLink(event) {
     event.preventDefault();
   }
@@ -478,9 +505,13 @@ class PfeNavigationItem extends PFElement {
   }
 
   _toggleMenu(event) {
-    event.preventDefault();
     this.expanded = !this.expanded;
-    this._fireExpandToggledEvent();
+
+    if(this.expanded) {
+      this.openNavigationItem(event);
+    } else {
+      this.closeNavigationItem(event);
+    }
   }
 
   _keydownHandler(event) {
@@ -492,26 +523,11 @@ class PfeNavigationItem extends PFElement {
         break;
       case "Esc":
       case "Escape":
-        this._closeMenu(event);
+        this.closeNavigationItem(event);
         break;
       default:
         return;
     }
-  }
-
-  _fireExpandToggledEvent() {
-    this.dispatchEvent(
-      new CustomEvent(`${this.tag}:toggled`, {
-        detail: {
-          navigationItem: this,
-          expanded: this.expanded,
-          slot: this.getAttribute("slot"),
-          content: this.tray
-        },
-        bubbles: true,
-        composed: true
-      })
-    );
   }
 }
 

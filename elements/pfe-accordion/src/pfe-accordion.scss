@@ -3,32 +3,18 @@
 $LOCAL: accordion;
 
 :host {
-  --pfe-accordion--accent: transparent;
-
   display: block;
   position: relative;
   overflow: hidden;
   margin: 0;
-}
-
-:host(:not([on="dark"])) {
-  --pfe-accordion--BackgroundColor: #{pfe-color(surface--lightest)};
-  --pfe-broadcasted--color--text:               #{pfe-color(text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(ui-link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(ui-link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(ui-link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(ui-link--focus)};
+  color: #{pfe-radio(color--text)};
 }
 
 :host([on="dark"]) {
-  --pfe-accordion--BackgroundColor: transparent;
+  @include pfe-theme($theme: "dark");
 }
 
 :host([on="light"]) {
-  --pfe-accordion--BackgroundColor: #{pfe-color(surface--lightest)};
-  --pfe-broadcasted--color--text:               #{pfe-color(text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(ui-link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(ui-link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(ui-link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(ui-link--focus)};
+  @include pfe-theme($theme: "light");
 }
+

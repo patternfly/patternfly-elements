@@ -69,12 +69,13 @@ class PfeAccordion extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["on"];
+    return ["on", "pfe-border-collapse"];
   }
 
   static get cascadingAttributes() {
     return {
-      on: "pfe-accordion-header, pfe-accordion-panel"
+      on: "pfe-accordion-header, pfe-accordion-panel",
+      "pfe-border-collapse": "pfe-accordion-header"
     };
   }
 
@@ -205,8 +206,6 @@ class PfeAccordion extends PFElement {
 
       header.setAttribute("aria-controls", panel.pfeId);
       panel.setAttribute("aria-labelledby", header.pfeId);
-
-      // this.accordionSet(panel.pfeId);
     });
   }
 
@@ -314,10 +313,10 @@ class PfeAccordion extends PFElement {
       case "End":
         newHeader = this._lastHeader();
         break;
-      case "Escape":
-        newHeader = currentHeader;
-        this.collapseAll();
-        break;
+      // case "Escape":
+      //   newHeader = currentHeader;
+      //   this.collapseAll();
+      //   break;
       default:
         return;
     }

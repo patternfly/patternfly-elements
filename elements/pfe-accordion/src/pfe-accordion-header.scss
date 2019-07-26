@@ -95,22 +95,6 @@ $LOCAL: accordion;
   }
 }
 
-:host(:first-child) button {
-  --pfe-accordion__header--BorderTop: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
-  // @TODO Support differences based on theme
-}
-
-// Add border bottom to the last button in an accordion set.
-:host(:last-of-type) button[aria-expanded="false"] {
-  --pfe-accordion__header--BorderBottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
-  // @TODO Support differences based on theme
-}
-
-// Only show the bottom border after animation is complete
-:host(:not(.animating)) {
-  --pfe-accordion__header--BorderBottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)}
-}
-
 :host(.animating) {
   transition: transform 0.3s #{pfe-var(animation-timing)};
 }
@@ -119,6 +103,21 @@ $LOCAL: accordion;
 :host([aria-expanded="true"]),
 :host(.animating) {
   --pfe-accordion--accent: #{pfe-color(surface--lightest--link)};
+}
+
+:host(:first-child:not([pfe-border-collapse*="top"])) button {
+  --pfe-accordion__header--BorderTop: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
+}
+
+// Only show the bottom border after animation is complete
+:host(:not(.animating)),
+// Add border bottom to the last button in an accordion set.
+:host(:last-of-type:not([pfe-border-collapse*="bottom"])) button[aria-expanded="false"] {
+  --pfe-accordion__header--BorderBottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
+}
+
+:host([pfe-border-collapse*="bottom"]:last-of-type) {
+  --pfe-accordion__header--BorderBottom: 0;
 }
 
 :host([on="dark"]:hover),

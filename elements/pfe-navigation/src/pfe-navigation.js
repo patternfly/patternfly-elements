@@ -240,6 +240,9 @@ class PfeNavigation extends PFElement {
       // Create a new pfe-accordion element
       const fragment = document.createDocumentFragment();
       const accordion = document.createElement("pfe-accordion");
+      if(window.innerWidth > 575) {
+        accordion.setAttribute("pfe-border-collapse", "top bottom");
+      }
 
       // Set up the mobile search, look for the mobile search flag in the search slot
       this.mobileSlot.search = this.querySelector(`[slot="search"] [pfe-navigation--mobile-search]`);
@@ -256,6 +259,10 @@ class PfeNavigation extends PFElement {
         const clone = trigger.cloneNode(true);
         const header = document.createElement("pfe-accordion-header");
         const panel = document.createElement("pfe-accordion-panel");
+
+        if(window.innerWidth > 575) {
+          header.setAttribute("pfe-border-collapse", "top bottom");
+        }
 
         if (!trigger.hasAttribute("slot")) {
           header.innerHTML = clone.outerHTML;

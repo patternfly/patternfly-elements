@@ -256,7 +256,7 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta--BorderColor--hover:        #{pfe-color(ui-accent)};
   --pfe-cta--Color--hover:              #{pfe-color(ui-accent--text)};
 
-  --pfe-cta--BackgroundColor--focus:    #{pfe-color(ui-accent--text)};
+  --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lighter)};
   --pfe-cta--BorderColor--focus:        #{pfe-color(ui-accent)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-accent)};
   --pfe-cta--Color--focus:              #{pfe-color(ui-accent)};
@@ -323,7 +323,7 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta--BorderColor--hover:        #{pfe-color(ui-base)};
   --pfe-cta--Color--hover:              #{pfe-color(ui-base--text)};
 
-  --pfe-cta--BackgroundColor--focus:    #{pfe-color(ui-base--text)};
+  --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lighter)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-base)};
   --pfe-cta--BorderColor--focus:        #{pfe-color(ui-base)};
   --pfe-cta--Color--focus:              #{pfe-color(ui-base)};
@@ -368,7 +368,7 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta--BorderColor--hover:        #{pfe-color(ui-complement)};
   --pfe-cta--Color--hover:              #{pfe-color(ui-complement--text)};
 
-  --pfe-cta--BackgroundColor--focus:    #{pfe-color(ui-complement--text)};
+  --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lighter)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-complement)};
   --pfe-cta--BorderColor--focus:        #{pfe-color(ui-complement)};
   --pfe-cta--Color--focus:              #{pfe-color(ui-complement)};

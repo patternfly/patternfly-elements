@@ -27,7 +27,7 @@ stories.add(PfeCta.tag, () => {
     "pfe-color": {
       title: "Color",
       type: "string",
-      enum: ["complement", "accent", "lightest"]
+      enum: ["accent", "base", "complement", "lightest"]
     }
   };
 

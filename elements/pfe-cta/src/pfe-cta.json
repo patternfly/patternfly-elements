@@ -67,8 +67,9 @@
           "title": "Color",
           "type": "string",
           "enum": [
-            "complement",
             "accent",
+            "base",
+            "complement",
             "lightest"
           ],
           "observer": "_basicAttributeChanged"

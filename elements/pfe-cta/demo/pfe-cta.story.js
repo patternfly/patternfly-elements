@@ -103,6 +103,12 @@ stories.add("At a glance", () => {
       <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="#">Primary</a></pfe-cta>
       <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="#">Secondary</a></pfe-cta>
     </div>
+    <div>
+      <h3>Color: Base</h3>
+      <pfe-cta pfe-color="base"><a href="#">Default</a></pfe-cta>
+      <pfe-cta pfe-priority="primary" pfe-color="base"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta pfe-priority="secondary" pfe-color="base"><a href="#">Secondary</a></pfe-cta>
+    </div>
     <div style="background:#333;padding:20px">
       <h3 style="color:#fff">Color: Lightest</h3>
       <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="#">Primary</a></pfe-cta>

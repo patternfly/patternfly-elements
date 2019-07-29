@@ -66,6 +66,7 @@ $pfe-modal--breakpoint--medium: 640px;
 			}
 
 			// Remove margin-top on the first slotted element that is not the header.
+			::slotted(*:nth-child(1)),
 			::slotted(*:nth-child(2)) {
 				margin-top: 0 !important;
 			}

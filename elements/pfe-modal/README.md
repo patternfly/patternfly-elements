@@ -1,6 +1,40 @@
-# PatternFly Element | Modal Element
+# PatternFly Modal Element
 
-## Dependencies
+## Overview
+
+`pfe-modal` is a self-contained modal window that is hidden on page load and (when activated) restricts the user from interacting with content in the main window. 
+
+## Usage
+```html
+<pfe-modal>
+  <button slot="pfe-modal--trigger">Open modal</button>
+  <h2 slot="pfe-modal--header">Modal with a header</h2>
+  <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <pfe-cta>
+    <a href="#bar">Learn more</a>
+  </pfe-cta>
+</pfe-modal>
+```
+
+## Slots
+
+### Trigger
+The only part visible on page load, the trigger opens the modal window. The trigger can be a button, a cta or a link.
+
+### Header
+The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6). 
+
+### Default slot
+The default slot can contain any type of content. When the header is not present this unnamed slot appear at the top of the modal window (to the left of the close button). Otherwise it will appear beneath the header.
+
+## Events
+
+### openModal
+Fires when a user clicks on the trigger.
+
+### closeModal
+Fires when either a user clicks on either the close button or the overlay.
+
 
 Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
 

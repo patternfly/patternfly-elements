@@ -129,4 +129,4 @@ class PfeCta extends PFElement {
 
 PFElement.create(PfeCta);
 
-export { PfeCta as default };
+export default PfeCta;

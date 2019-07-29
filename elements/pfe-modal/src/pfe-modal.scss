@@ -14,6 +14,7 @@ $pfe-modal--breakpoint--medium: 640px;
 	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
 	--pfe-modal--CloseButtonSize: calc(#{pfe-var(ui--element--size)} - 4px);
 	display: block;
+	position: relative;
 }
 
 :host(:not([has_header])) {
@@ -29,7 +30,6 @@ $pfe-modal--breakpoint--medium: 640px;
 	&__wrapper {
 		position: absolute;
 		z-index: 2;
-		top: calc(#{pfe-local(MaxHeight)} - 50vh);
 		top: 10%;
 		left: 0;
 		right: 0;
@@ -84,6 +84,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		right: calc(#{pfe-var(container-padding)} * .5);
 		cursor: pointer;
 		line-height: .5;
+		padding: pfe-var(container-padding);
 
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			top: calc(#{pfe-var(container-padding)} * .75);
@@ -91,7 +92,6 @@ $pfe-modal--breakpoint--medium: 640px;
 		}
 
 		> svg {
-			padding: 20px;
 			fill: pfe-radio(text);
 			height: pfe-var(ui--element--size);
 			width: pfe-var(ui--element--size);

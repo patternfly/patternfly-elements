@@ -49,7 +49,7 @@ class PfeIcon extends PFElement {
     const { setName, set } = PfeIcon.getIconSet(iconName);
 
     if (set) {
-      const { iconPath } = set.parseIconName(iconName);
+      const { iconPath } = set.resolveIconName(iconName);
       this.image.setAttribute("xlink:href", iconPath);
     } else {
       console.warn(
@@ -70,14 +70,14 @@ class PfeIcon extends PFElement {
     return { setName, set };
   }
 
-  static addIconSet(name, path, parseIconName) {
+  static addIconSet(name, path, resolveIconName) {
     if (this._iconSets[name]) {
       throw new Error(
         `can't add icon set ${name}; a set with that name already exists.`
       );
     }
 
-    this._iconSets[name] = new PfeIconSet(name, path, parseIconName);
+    this._iconSets[name] = new PfeIconSet(name, path, resolveIconName);
   }
 }
 

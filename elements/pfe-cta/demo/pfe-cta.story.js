@@ -18,16 +18,16 @@ stories.add(PfeCta.tag, () => {
   // const props = PfeCta.properties;
   // Manually defining props but this can be done in a schema instead
   const props = {
-    priority: {
+    "pfe-priority": {
       title: "Priority",
       type: "string",
       enum: ["primary", "secondary"],
       default: "primary"
     },
-    color: {
+    "pfe-color": {
       title: "Color",
       type: "string",
-      enum: ["base", "complement", "accent"]
+      enum: ["accent", "base", "complement", "lightest"]
     }
   };
 
@@ -88,26 +88,30 @@ stories.add("At a glance", () => {
     <div>
       <h3>Defaults</h3>
       <pfe-cta><a href="#">Default</a></pfe-cta>
-      <pfe-cta priority="primary"><a href="#">Primary</a></pfe-cta>
-      <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
-    </div>
-    <div>
-      <h3>Color: Base</h3>
-      <pfe-cta color="base"><a href="#">Default</a></pfe-cta>
-      <pfe-cta priority="primary" color="base"><a href="#">Primary</a></pfe-cta>
-      <pfe-cta priority="secondary" color="base"><a href="#">Secondary</a></pfe-cta>
+      <pfe-cta pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
     </div>
     <div>
       <h3>Color: Complement</h3>
-      <pfe-cta color="complement"><a href="#">Default</a></pfe-cta>
-      <pfe-cta priority="primary" color="complement"><a href="#">Primary</a></pfe-cta>
-      <pfe-cta priority="secondary" color="complement"><a href="#">Secondary</a></pfe-cta>
+      <pfe-cta pfe-color="complement"><a href="#">Default</a></pfe-cta>
+      <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="#">Secondary</a></pfe-cta>
     </div>
     <div>
       <h3>Color: Accent</h3>
-      <pfe-cta color="accent"><a href="#">Default</a></pfe-cta>
-      <pfe-cta priority="primary" color="accent"><a href="#">Primary</a></pfe-cta>
-      <pfe-cta priority="secondary" color="accent"><a href="#">Secondary</a></pfe-cta>
+      <pfe-cta pfe-color="accent"><a href="#">Default</a></pfe-cta>
+      <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="#">Secondary</a></pfe-cta>
+    </div>
+    <div>
+      <h3>Color: Base</h3>
+      <pfe-cta pfe-color="base"><a href="#">Default</a></pfe-cta>
+      <pfe-cta pfe-priority="primary" pfe-color="base"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta pfe-priority="secondary" pfe-color="base"><a href="#">Secondary</a></pfe-cta>
+    </div>
+    <div style="background:#333;padding:20px">
+      <h3 style="color:#fff">Color: Lightest</h3>
+      <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="#">Primary</a></pfe-cta>
     </div>
   </section>
   `;

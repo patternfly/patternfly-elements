@@ -176,11 +176,14 @@ class PfeNavigation extends PFElement {
 
   _stickyHandler() {
     if(window.pageYOffset >= this.top) {
+      console.dir(this);
       this.classList.add("sticky");
-      this.style.setProperty("--pfe-navigation--Height", this.height + "px");
+      document.body.style.marginTop = this.clientHeight + "px";
+      this.style.setProperty("--pfe-navigation--offsetTop", this.offsetHeight + "px");
     } else {
       this.classList.remove("sticky");
-      this.style.setProperty("--pfe-navigation--Height", this.getBoundingClientRect().top + this.height + "px");
+      this.style.setProperty("--pfe-navigation--offsetTop", this.getBoundingClientRect().top + this.offsetHeight + "px");
+      document.body.style.marginTop = 0;
     }
   }
 
@@ -200,8 +203,6 @@ class PfeNavigation extends PFElement {
 
       // If the nav is set to sticky, inject the height of the nav to the next element in the DOM
       if(this.hasAttribute("sticky") && this.getAttribute("sticky") != "false") {
-        this.height = this.offsetHeight;
-
         // Run the sticky check on first page load
         this._stickyHandler();
 

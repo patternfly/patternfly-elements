@@ -118,7 +118,6 @@ $LOCAL: navigation-item;
     border-right: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
     border-bottom: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
     border-left: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
-    color: #{pfe-local(Color)};
 
     &:hover,
     :host([aria-current="location"]) {

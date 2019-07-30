@@ -19,6 +19,18 @@ class PfeCollapsibleToggle extends PFElement {
     return "pfe-collapsible-toggle.scss";
   }
 
+  get pfeId() {
+    return this.getAttribute("pfe-id");
+  }
+
+  set pfeId(id) {
+    if (!id) {
+      return;
+    }
+
+    this.setAttribute("pfe-id", id);
+  }
+
   get expanded() {
     return this.getAttribute("aria-expanded") === "true";
   }
@@ -32,21 +44,26 @@ class PfeCollapsibleToggle extends PFElement {
     return ["aria-controls"];
   }
 
-  constructor() {
-    super(PfeCollapsibleToggle);
+  constructor(pfeClass) {
+    super(pfeClass || PfeCollapsibleToggle);
 
-    this.expanded = false;
     this.controlledPanel = false;
 
     this.addEventListener("click", this._clickHandler);
-    this.addEventListener("keydown", this._keydownHandler);
+    // this.addEventListener("keydown", this._keydownHandler);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
+    this.expanded = false;
+
+    if (!this.pfeId) {
+      this.pfeId = `${PfeCollapsibleToggle.tag}-${generateId()}`;
+    }
+
     this.setAttribute("role", "button");
-    this.setAttribute("tabindex", 0);
+    // this.setAttribute("tabindex", 0);
   }
 
   disconnectedCallback() {
@@ -56,7 +73,12 @@ class PfeCollapsibleToggle extends PFElement {
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
-    this.controlledPanel = document.querySelector(`#${newVal}`);
+
+    if (!newVal) {
+      return;
+    }
+
+    this.controlledPanel = document.querySelector(`[pfe-id="${newVal}"]`);
   }
 
   toggle() {
@@ -66,9 +88,10 @@ class PfeCollapsibleToggle extends PFElement {
       this.controlledPanel.expanded = this.expanded;
 
       this.dispatchEvent(
-        new CustomEvent(`${PfeCollapsibleToggle.tag}:change`, {
+        new CustomEvent(`${PfeCollapsible.tag}:change`, {
           detail: {
             expanded: this.expanded,
+            toggle: this,
             panel: this.controlledPanel
           },
           bubbles: true
@@ -76,9 +99,7 @@ class PfeCollapsibleToggle extends PFElement {
       );
     } else {
       console.warn(
-        `${PfeCollapsibleToggle.tag}: This toggle doesn't have a ${
-          PfeCollapsiblePanel.tag
-        } associated with it`
+        `${this.tag}: This toggle doesn't have a panel associated with it`
       );
     }
   }
@@ -113,6 +134,18 @@ class PfeCollapsiblePanel extends PFElement {
     return "pfe-collapsible-panel.scss";
   }
 
+  get pfeId() {
+    return this.getAttribute("pfe-id");
+  }
+
+  set pfeId(id) {
+    if (!id) {
+      return;
+    }
+
+    this.setAttribute("pfe-id", id);
+  }
+
   get expanded() {
     return this.hasAttribute("pfe-expanded");
   }
@@ -127,16 +160,17 @@ class PfeCollapsiblePanel extends PFElement {
     }
   }
 
-  constructor() {
-    super(PfeCollapsiblePanel);
-    this.expanded = false;
+  constructor(pfeClass) {
+    super(pfeClass || PfeCollapsiblePanel);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    if (!this.id) {
-      this.id = `${PfeCollapsiblePanel.tag}-${generateId()}`;
+    this.expanded = false;
+
+    if (!this.pfeId) {
+      this.pfeId = `${PfeCollapsiblePanel.tag}-${generateId()}`;
     }
   }
 }
@@ -154,14 +188,18 @@ class PfeCollapsible extends PFElement {
     return "pfe-collapsible.scss";
   }
 
-  constructor() {
-    super(PfeCollapsible);
+  constructor(pfeClass) {
+    super(pfeClass || PfeCollapsible);
 
     this._toggle = null;
     this._panel = null;
+    this.animates = true;
 
     this._linkControls = this._linkControls.bind(this);
+    this._changeHandler = this._changeHandler.bind(this);
     this._observer = new MutationObserver(this._linkControls);
+
+    this.addEventListener(`${PfeCollapsible.tag}:change`, this._changeHandler);
   }
 
   connectedCallback() {
@@ -191,7 +229,45 @@ class PfeCollapsible extends PFElement {
     this._toggle = this.querySelector(PfeCollapsibleToggle.tag);
     this._panel = this.querySelector(PfeCollapsiblePanel.tag);
 
-    this._toggle.setAttribute("aria-controls", this._panel.id);
+    this._toggle.setAttribute("aria-controls", this._panel.pfeId);
+  }
+
+  _changeHandler(event) {
+    if (!this.animates) {
+      return;
+    }
+
+    const panel = event.detail.panel;
+    const expanded = event.detail.expanded;
+
+    if (expanded) {
+      const height = panel.getBoundingClientRect().height;
+      this._animate(panel, 0, height);
+    } else {
+      panel.expanded = true;
+      const height = panel.getBoundingClientRect().height;
+      panel.expanded = false;
+      this._animate(panel, height, 0);
+    }
+  }
+
+  _animate(panel, start, end) {
+    panel.classList.add("animating");
+    panel.style.height = `${start}px`;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        panel.style.height = `${end}px`;
+        panel.classList.add("animating");
+        panel.addEventListener("transitionend", this._transitionEndHandler);
+      });
+    });
+  }
+
+  _transitionEndHandler(event) {
+    event.target.style.height = "";
+    event.target.classList.remove("animating");
+    event.target.removeEventListener("transitionend", this._transitionEndHandler);
   }
 }
 
@@ -199,4 +275,8 @@ PFElement.create(PfeCollapsible);
 PFElement.create(PfeCollapsibleToggle);
 PFElement.create(PfeCollapsiblePanel);
 
-export default PfeCollapsible;
+export {
+  PfeCollapsible,
+  PfeCollapsibleToggle,
+  PfeCollapsiblePanel
+};

@@ -30,7 +30,7 @@ $LOCAL: accordion;
 :host(:first-child) {
   button {
     @include pfe-trigger-button-first($theme: light);
-  }  
+  }
 }
 
 
@@ -38,11 +38,16 @@ $LOCAL: accordion;
 :host(:last-of-type) {
   button[aria-expanded="false"] {
     @include pfe-trigger-button-last;
-  }  
+  }
 }
 
 :host(.animating) {
   transition: transform 0.3s #{pfe-var(animation-timing)};
+
+  button {
+    @include pfe-trigger-expanded;
+    @include pfe-trigger-color-expanded($theme: light, $component-name: accordion);
+  }
 }
 
 /// ===========================================================================
@@ -56,5 +61,11 @@ $LOCAL: accordion;
     &[aria-expanded="true"] {
       @include pfe-trigger-color-expanded($theme: dark, $component-name: accordion);
     }
+  }
+}
+
+:host([on="dark"].animating){
+  button {
+    @include pfe-trigger-color-expanded($theme: dark, $component-name: accordion);
   }
 }

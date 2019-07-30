@@ -1,4 +1,5 @@
 import PFElement from "../pfelement/pfelement.js";
+import { PfeCollapsible, PfeCollapsibleToggle, PfeCollapsiblePanel } from "../pfe-collapsible/pfe-collapsible.js";
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
@@ -51,7 +52,7 @@ function generateId() {
     .substr(2, 9);
 }
 
-class PfeAccordion extends PFElement {
+class PfeAccordion extends PfeCollapsible {
   static get tag() {
     return "pfe-accordion";
   }
@@ -61,33 +62,15 @@ class PfeAccordion extends PFElement {
   }
 
   get templateUrl() {
-    return "pfe-accordion.html";
-  }
-
-  get schemaUrl() {
-    return "pfe-accordion.json";
-  }
-
-  static get observedAttributes() {
-    return ["on"];
-  }
-
-  static get cascadingAttributes() {
-    return {
-      on: "pfe-accordion-header, pfe-accordion-panel"
-    };
-  }
-
-  // Declare the type of this component
-  static get PfeType() {
-    return PFElement.PfeTypes.Container;
+    return "pfe-accordion.html"
   }
 
   constructor() {
-    super(PfeAccordion, { type: PfeAccordion.PfeType });
+    super(PfeAccordion);
 
-    this._linkPanels = this._linkPanels.bind(this);
-    this._observer = new MutationObserver(this._linkPanels);
+    this._linkControls = this._linkControls.bind(this);
+    this._observer = new MutationObserver(this._linkControls);
+    this.addEventListener(`${PfeCollapsible.tag}:change`, this._changeHandler);
   }
 
   connectedCallback() {
@@ -96,29 +79,12 @@ class PfeAccordion extends PFElement {
     this.setAttribute("role", "presentation");
     this.setAttribute("defined", "");
 
-    this.addEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
     this.addEventListener("keydown", this._keydownHandler);
-
-    Promise.all([
-      customElements.whenDefined(PfeAccordionHeader.tag),
-      customElements.whenDefined(PfeAccordionPanel.tag)
-    ]).then(() => {
-      if (this.children.length) {
-        this._linkPanels();
-      }
-
-      this._observer.observe(this, { childList: true });
-    });
   }
 
   disconnectedCallback() {
-    this.removeEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
     this.removeEventListener("keydown", this._keydownHandler);
     this._observer.disconnect();
-  }
-
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(attr, oldVal, newVal);
   }
 
   toggle(index) {
@@ -139,6 +105,7 @@ class PfeAccordion extends PFElement {
       this._collapsePanel(panel);
     }
   }
+
 
   expand(index) {
     const headers = this._allHeaders();
@@ -184,7 +151,18 @@ class PfeAccordion extends PFElement {
     panels.forEach(panel => this._collapsePanel(panel));
   }
 
-  _linkPanels() {
+  _changeHandler(event) {
+    super._changeHandler(event);
+
+    this.dispatchEvent(
+      new CustomEvent(`${PfeAccordion.tag}:change`, {
+        detail: event.detail,
+        bubbles: true
+      })
+    );
+  }
+
+  _linkControls() {
     const headers = this._allHeaders();
     headers.forEach(header => {
       const panel = this._panelForHeader(header);
@@ -197,25 +175,6 @@ class PfeAccordion extends PFElement {
       panel.setAttribute("aria-labelledby", header.pfeId);
     });
   }
-
-  _changeHandler(evt) {
-    if (this.classList.contains("animating")) {
-      return;
-    }
-
-    const header = evt.target;
-    const panel = evt.target.nextElementSibling;
-
-    if (evt.detail.expanded) {
-      this._expandHeader(header);
-      this._expandPanel(panel);
-    } else {
-      this._collapseHeader(header);
-      this._collapsePanel(panel);
-    }
-  }
-
-  _toggle(header, panel) {}
 
   _expandHeader(header) {
     header.expanded = true;
@@ -232,9 +191,6 @@ class PfeAccordion extends PFElement {
     }
 
     panel.expanded = true;
-
-    const height = panel.getBoundingClientRect().height;
-    this._animate(panel, 0, height);
   }
 
   _collapseHeader(header) {
@@ -251,27 +207,60 @@ class PfeAccordion extends PFElement {
       return;
     }
 
-    const height = panel.getBoundingClientRect().height;
     panel.expanded = false;
-
-    this._animate(panel, height, 0);
   }
 
-  _animate(panel, start, end) {
-    panel.classList.add("animating");
-    panel.style.height = `${start}px`;
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        panel.style.height = `${end}px`;
-        panel.classList.add("animating");
-        panel.addEventListener("transitionend", this._transitionEndHandler);
-      });
-    });
+  _allHeaders() {
+    return [...this.querySelectorAll(PfeAccordionHeader.tag)];
   }
 
-  _keydownHandler(evt) {
-    const currentHeader = evt.target;
+  _allPanels() {
+    return [...this.querySelectorAll(PfeAccordionPanel.tag)];
+  }
+
+  _panelForHeader(header) {
+    const next = header.nextElementSibling;
+
+    if (!next) {
+      return;
+    }
+
+    if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
+      console.error(`${PfeAccordion.tag}: Sibling element to a header needs to be a panel`);
+      return;
+    }
+
+    return next;
+  }
+
+  _previousHeader() {
+    const headers = this._allHeaders();
+    let newIndex = headers.findIndex(header => header === document.activeElement) - 1;
+    return headers[(newIndex + headers.length) % headers.length];
+  }
+
+  _nextHeader() {
+    const headers = this._allHeaders();
+    let newIndex = headers.findIndex(header => header === document.activeElement) + 1;
+    return headers[newIndex % headers.length];
+  }
+
+  _firstHeader() {
+    const headers = this._allHeaders();
+    return headers[0];
+  }
+
+  _lastHeader() {
+    const headers = this._allHeaders();
+    return headers[headers.length - 1];
+  }
+
+  _isHeader(element) {
+    return element.tagName.toLowerCase() === PfeAccordionHeader.tag;
+  }
+
+  _keydownHandler(event) {
+    const currentHeader = event.target;
 
     if (!this._isHeader(currentHeader)) {
       return;
@@ -279,7 +268,7 @@ class PfeAccordion extends PFElement {
 
     let newHeader;
 
-    switch (evt.key) {
+    switch (event.key) {
       case "ArrowDown":
       case "Down":
       case "ArrowRight":
@@ -304,68 +293,9 @@ class PfeAccordion extends PFElement {
 
     newHeader.shadowRoot.querySelector("button").focus();
   }
-
-  _transitionEndHandler(evt) {
-    evt.target.style.height = "";
-    evt.target.classList.remove("animating");
-    evt.target.removeEventListener("transitionend", this._transitionEndHandler);
-  }
-
-  _allHeaders() {
-    return [...this.querySelectorAll(PfeAccordionHeader.tag)];
-  }
-
-  _allPanels() {
-    return [...this.querySelectorAll(PfeAccordionPanel.tag)];
-  }
-
-  _panelForHeader(header) {
-    const next = header.nextElementSibling;
-
-    if (!next) {
-      return;
-    }
-
-    if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
-      console.error(
-        `${PfeAccordion.tag}: Sibling element to a header needs to be a panel`
-      );
-      return;
-    }
-
-    return next;
-  }
-
-  _previousHeader() {
-    const headers = this._allHeaders();
-    let newIndex =
-      headers.findIndex(header => header === document.activeElement) - 1;
-    return headers[(newIndex + headers.length) % headers.length];
-  }
-
-  _nextHeader() {
-    const headers = this._allHeaders();
-    let newIndex =
-      headers.findIndex(header => header === document.activeElement) + 1;
-    return headers[newIndex % headers.length];
-  }
-
-  _firstHeader() {
-    const headers = this._allHeaders();
-    return headers[0];
-  }
-
-  _lastHeader() {
-    const headers = this._allHeaders();
-    return headers[headers.length - 1];
-  }
-
-  _isHeader(element) {
-    return element.tagName.toLowerCase() === PfeAccordionHeader.tag;
-  }
 }
 
-class PfeAccordionHeader extends PFElement {
+class PfeAccordionHeader extends PfeCollapsibleToggle {
   static get tag() {
     return "pfe-accordion-header";
   }
@@ -375,23 +305,23 @@ class PfeAccordionHeader extends PFElement {
   }
 
   get templateUrl() {
-    return "pfe-accordion-header.html";
+    return "pfe-accordion-header.html"
   }
 
-  get pfeId() {
-    return this.getAttribute("pfe-id");
+  get expanded() {
+    return super.expanded;
   }
 
-  set pfeId(id) {
-    if (!id) {
+  set expanded(val) {
+    super.expanded = val;
+
+    const value = Boolean(val);
+
+    if (!this.button) {
       return;
     }
 
-    this.setAttribute("pfe-id", id);
-  }
-
-  static get observedAttributes() {
-    return ["aria-expanded"];
+    this.button.setAttribute("aria-expanded", value);
   }
 
   constructor() {
@@ -400,7 +330,6 @@ class PfeAccordionHeader extends PFElement {
     this.button = this.shadowRoot.querySelector("button");
 
     this._init = this._init.bind(this);
-    this._clickHandler = this._clickHandler.bind(this);
     this._observer = new MutationObserver(this._init);
   }
 
@@ -411,29 +340,17 @@ class PfeAccordionHeader extends PFElement {
       this._init();
     }
 
-    this.addEventListener("click", this._clickHandler);
     this._observer.observe(this, { childList: true });
   }
 
   disconnectedCallback() {
-    this.removeEventListener("click", this._clickHandler);
     this._observer.disconnect();
   }
 
-  get expanded() {
-    return this.hasAttribute("aria-expanded");
-  }
+  attributeChangedCallback(attr, oldVal, newVal) {
+    super.attributeChangedCallback(attr, oldVal, newVal);
 
-  set expanded(val) {
-    val = Boolean(val);
-
-    if (val) {
-      this.setAttribute("aria-expanded", true);
-      this.button.setAttribute("aria-expanded", true);
-    } else {
-      this.removeAttribute("aria-expanded");
-      this.button.setAttribute("aria-expanded", false);
-    }
+    // console.log(newVal);
   }
 
   _init() {
@@ -441,13 +358,7 @@ class PfeAccordionHeader extends PFElement {
       this._observer.disconnect();
     }
 
-    if (!this.hasAttribute("role")) {
-      this.setAttribute("role", "header");
-    }
-
-    if (!this.pfeId) {
-      this.pfeId = `${PfeAccordionHeader.tag}-${generateId()}`;
-    }
+    this.setAttribute("role", "header");
 
     const child = this.children[0];
     let isHeaderTag = false;
@@ -476,27 +387,19 @@ class PfeAccordionHeader extends PFElement {
     if (!isHeaderTag) {
       console.warn(
         `${
-          PfeAccordionHeader.tag
+          this.tag
         }: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`
       );
     }
+
 
     if (window.ShadyCSS) {
       this._observer.observe(this, { childList: true });
     }
   }
-
-  _clickHandler(event) {
-    this.dispatchEvent(
-      new CustomEvent(`${PfeAccordion.tag}:change`, {
-        detail: { expanded: !this.expanded },
-        bubbles: true
-      })
-    );
-  }
 }
 
-class PfeAccordionPanel extends PFElement {
+class PfeAccordionPanel extends PfeCollapsiblePanel {
   static get tag() {
     return "pfe-accordion-panel";
   }
@@ -509,51 +412,19 @@ class PfeAccordionPanel extends PFElement {
     return "pfe-accordion-panel.html";
   }
 
-  get pfeId() {
-    return this.getAttribute("pfe-id");
-  }
-
-  set pfeId(id) {
-    if (!id) {
-      return;
-    }
-
-    this.setAttribute("pfe-id", id);
-  }
-
   constructor() {
     super(PfeAccordionPanel);
   }
 
   connectedCallback() {
     super.connectedCallback();
-
-    if (!this.hasAttribute("role")) {
-      this.setAttribute("role", "region");
-    }
-
-    if (!this.pfeId) {
-      this.pfeId = `${PfeAccordionPanel.tag}-${generateId()}`;
-    }
-  }
-
-  get expanded() {
-    return this.hasAttribute("expanded");
-  }
-
-  set expanded(val) {
-    const value = Boolean(val);
-
-    if (value) {
-      this.setAttribute("expanded", "");
-    } else {
-      this.removeAttribute("expanded");
-    }
+    this.setAttribute("role", "region");
   }
 }
 
-PFElement.create(PfeAccordionHeader);
-PFElement.create(PfeAccordionPanel);
 PFElement.create(PfeAccordion);
+PFElement.create(PfeAccordionPanel);
+PFElement.create(PfeAccordionHeader);
+
 
 export { PfeAccordion as default };

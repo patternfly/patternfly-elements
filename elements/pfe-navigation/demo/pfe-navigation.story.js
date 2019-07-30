@@ -3,6 +3,8 @@ import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeNavigation from "../pfe-navigation";
+import PfeCta from "../pfe-cta";
+import PfeCard from "../pfe-card";
 
 const stories = storiesOf("Navigation", module);
 
@@ -80,36 +82,36 @@ stories.add(PfeNavigation.tag, () => {
               <div class="container test-overflow">
                 <div columns="3">
                   <div stacked>
-                    <pfe-link-list>
-                      <h3 slot="pfe-link-list--header">
+                    <div class="link-list">
+                      <h3 class="link-list--header">
                         <a href="#">Platforms</a>
                       </h3>
-                      <ul slot="pfe-link-list--list">
+                      <ul class="link-list--list">
                         <li><a href="#">Red Hat Enterprise Linux</a></li>
                         <li><a href="#">Red Hat JBoss Enterprise Application Platform</a></li>
                         <li><a href="#">Red Hat OpenShift</a></li>
                         <li><a href="#">Red Hat OpenStack Platform</a></li>
                         <li><a href="#">Red Hat Virtualization</a></li>
                       </ul>
-                    </pfe-link-list>
+                    </div>
                     <pfe-cta><a href="#">Buy products online</a></pfe-cta>
                   </div>
-                  <pfe-link-list>
-                    <h3 slot="pfe-link-list--header">
+                  <div class="link-list">
+                    <h3 class="link-list--header">
                       <a href="#">Integration</a>
                     </h3>
-                    <ul slot="pfe-link-list--list">
+                    <ul class="link-list--list">
                       <li><a href="#">Red Hat 3scale API Management</a></li>
                       <li><a href="#">Red Hat AMQ</a></li>
                       <li><a href="#">Red Hat Fuse</a></li>
                       <li><a href="#">Red Hat Fuse Online</a></li>
                     </ul>
-                  </pfe-link-list>
-                  <pfe-link-list>
-                    <h3 slot="pfe-link-list--header">
+                  </div>
+                  <div class="link-list">
+                    <h3 class="link-list--header">
                       <a href="#">Cloud computing</a>
                     </h3>
-                    <ul slot="pfe-link-list--list">
+                    <ul class="link-list--list">
                       <li><a href="#" data-analytics="foo">Red Hat Cloud Infrastructure</a></li>
                       <li><a href="#">Red Hat Cloud Suite</a></li>
                       <li><a href="#">Red Hat CloudForms</a></li>
@@ -118,7 +120,7 @@ stories.add(PfeNavigation.tag, () => {
                       <li><a href="#">Red Hat OpenStack Platform</a></li>
                       <li><a href="#">Red Hat Quay</a></li>
                   </ul>
-                </pfe-link-list>
+                </div>
               </div>
               <pfe-card style="height: 300px;">
                 <h2>Promotional content</h2>

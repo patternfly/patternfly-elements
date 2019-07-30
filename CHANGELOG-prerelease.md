@@ -1,7 +1,11 @@
 ## Prerelease 18 ( TBD )
 Tag: [v1.0.0-prerelease.18](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.18)
 
-- 
+- daf5ca08 pfe-cta bug fixes + open brand styles (#353)
+- efd115b1 remove sourceMappingURL from src/pfelement.js (#464)
+- 7d5e78ff adding a version getter to each component (#453)
+- 88fb56a0 fixing the super call in the constructor of pfe-health-index (#454)
+- 4f9c7997 fix pfe-avatar in ie11
 
 ## Prerelease 17 ( 2019-06-24 )
 Tag: [v1.0.0-prerelease.17](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.17)

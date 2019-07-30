@@ -1,11 +1,11 @@
-## Prerelease 18 ( TBD )
+## Prerelease 18 ( 2019-07-30 )
 Tag: [v1.0.0-prerelease.18](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.18)
 
-- daf5ca08 pfe-cta bug fixes + open brand styles (#353)
-- efd115b1 remove sourceMappingURL from src/pfelement.js (#464)
-- 7d5e78ff adding a version getter to each component (#453)
-- 88fb56a0 fixing the super call in the constructor of pfe-health-index (#454)
-- 4f9c7997 fix pfe-avatar in ie11
+- [daf5ca08](https://github.com/patternfly/patternfly-elements/commit/daf5ca088b7e8e42c7df6944d05626327b4e38c7) pfe-cta bug fixes + open brand styles (#353)
+- [efd115b1](https://github.com/patternfly/patternfly-elements/commit/efd115b1ed956b5f7ee5872eecd571d988ce335b) remove sourceMappingURL from src/pfelement.js (#464)
+- [7d5e78ff](https://github.com/patternfly/patternfly-elements/commit/7d5e78ff11a7680a5888c18be5d0971e5706849c) adding a version getter to each component (#453)
+- [88fb56a0](https://github.com/patternfly/patternfly-elements/commit/88fb56a07f1346af4a520b90f7af679ae16d6ec6) fixing the super call in the constructor of pfe-health-index (#454)
+- [4f9c7997](https://github.com/patternfly/patternfly-elements/commit/4f9c79973be92eeabce3d53266f7b763c47a7336) fix pfe-avatar in ie11
 
 ## Prerelease 17 ( 2019-06-24 )
 Tag: [v1.0.0-prerelease.17](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.17)

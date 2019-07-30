@@ -32,7 +32,7 @@ $pfe-color--ui-link--on-dark--visited:          lighten($pfe-color--ui-link--vis
 $pfe-color--ui-link--on-dark--hover:            lighten($pfe-color--ui-link--on-dark, 10%) !default; // Was #c0ecff
 $pfe-color--ui-link--on-dark--focus:            lighten($pfe-color--ui-link--on-dark, 10%) !default; // Was #c0ecff
 
-$pfe-color--ui-link--on-saturated:              lighten($pfe-color--ui-link, 40%) !default;               // Was #97daff
+$pfe-color--ui-link--on-saturated:              $pfe-color--white;               // Was #97daff
 $pfe-color--ui-link--on-saturated--visited:     lighten($pfe-color--ui-link--visited, 30%) !default;      // Was #d8c0ff
 $pfe-color--ui-link--on-saturated--hover:       lighten($pfe-color--ui-link--on-saturated, 10%) !default; // Was #c0ecff
 $pfe-color--ui-link--on-saturated--focus:       lighten($pfe-color--ui-link--on-saturated, 10%) !default; // Was #c0ecff
@@ -44,23 +44,39 @@ $pfe-color--ui-link--on-saturated--focus:       lighten($pfe-color--ui-link--on-
 
 $pfe-color--ui-base:                            $pfelements--blue !default;
 $pfe-color--ui-base--hover:                     darken($pfelements--blue, 20%) !default;
+$pfe-color--ui-base--focus:                     darken($pfelements--blue, 20%) !default;
+$pfe-color--ui-base--visited:                   $pfelements--blue !default;
 $pfe-color--ui-base--text:                      $pfe-color--text--on-dark !default;
 $pfe-color--ui-base--text--hover:               $pfe-color--text--on-dark !default;
+$pfe-color--ui-base--text--focus:               $pfe-color--text--on-dark !default;
+$pfe-color--ui-base--text--visited:             $pfe-color--text--on-dark !default;
 
 $pfe-color--ui-complement:                      $pfe-color--gray-800 !default;
 $pfe-color--ui-complement--hover:               $pfe-color--gray-1000 !default;
+$pfe-color--ui-complement--focus:               $pfe-color--gray-1000 !default;
+$pfe-color--ui-complement--visited:             $pfe-color--gray-800 !default;
 $pfe-color--ui-complement--text:                $pfe-color--text--on-dark !default;
 $pfe-color--ui-complement--text--hover:         $pfe-color--text--on-dark !default;
+$pfe-color--ui-complement--text--focus:         $pfe-color--text--on-dark !default;
+$pfe-color--ui-complement--text--visited:       $pfe-color--text--on-dark !default;
 
 $pfe-color--ui-accent:                          $pfelements--orange !default;
 $pfe-color--ui-accent--hover:                   darken($pfelements--orange, 20%) !default;
+$pfe-color--ui-accent--focus:                   $pfelements--orange !default;
+$pfe-color--ui-accent--visited:                 $pfelements--orange !default;
 $pfe-color--ui-accent--text:                    $pfe-color--text--on-dark !default;
 $pfe-color--ui-accent--text--hover:             $pfe-color--text--on-dark !default;
+$pfe-color--ui-accent--text--focus:             $pfe-color--text--on-dark !default;
+$pfe-color--ui-accent--text--visited:           $pfe-color--text--on-dark !default;
 
 $pfe-color--ui-disabled:                        $pfelements--gray-light !default;
 $pfe-color--ui-disabled--hover:                 $pfelements--gray-light !default;
+$pfe-color--ui-disabled--focus:                 $pfelements--gray-light !default;
+$pfe-color--ui-disabled--visited:               $pfelements--gray-light !default;
 $pfe-color--ui-disabled--text:                  $pfelements--gray !default;
 $pfe-color--ui-disabled--text--hover:           $pfelements--gray !default;
+$pfe-color--ui-disabled--text--focus:           $pfelements--gray !default;
+$pfe-color--ui-disabled--text--visited:         $pfelements--gray !default;
 
 
 // ========================================================================
@@ -127,7 +143,7 @@ $pfe-color--surface--accent--link--focus:       $pfe-color--ui-link--on-dark--fo
 
 
 /* Palette of Border Colors */
-$pfe-color--surface--border:                    $pfelements--gray-light !default;  // Was #dfdfdf
+$pfe-color--surface--border:                    $pfe-color--gray-200 !default;  // Was #ccc
 $pfe-color--surface--border--lightest:          $pfe-color--gray-100 !default;  // Was #e7e7e7
 $pfe-color--surface--border--lighter:           $pfe-color--gray-100 !default;
 $pfe-color--surface--border--darkest:           $pfe-color--gray-800 !default;

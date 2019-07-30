@@ -44,13 +44,18 @@ class PfeCollapsibleToggle extends PFElement {
     return ["aria-controls"];
   }
 
-  constructor(pfeClass) {
+  constructor(pfeClass, { setTabIndex = true, addKeydownHandler = true } = {}) {
     super(pfeClass || PfeCollapsibleToggle);
 
     this.controlledPanel = false;
+    this._setTabIndex = setTabIndex;
+    this._addKeydownHandler = addKeydownHandler;
 
     this.addEventListener("click", this._clickHandler);
-    // this.addEventListener("keydown", this._keydownHandler);
+
+    if (addKeydownHandler) {
+      this.addEventListener("keydown", this._keydownHandler);
+    }
   }
 
   connectedCallback() {
@@ -58,12 +63,25 @@ class PfeCollapsibleToggle extends PFElement {
 
     this.expanded = false;
 
+    if (this.id) {
+      this.pfeId = this.id;
+    }
+
+    const generatedId = `${PfeCollapsibleToggle.tag}-${generateId()}`;
+
+    if (!this.id) {
+      this.id = generatedId;
+    }
+
     if (!this.pfeId) {
-      this.pfeId = `${PfeCollapsibleToggle.tag}-${generateId()}`;
+      this.pfeId = generatedId;
     }
 
     this.setAttribute("role", "button");
-    // this.setAttribute("tabindex", 0);
+
+    if (this._setTabIndex) {
+      this.setAttribute("tabindex", 0);
+    }
   }
 
   disconnectedCallback() {
@@ -78,7 +96,7 @@ class PfeCollapsibleToggle extends PFElement {
       return;
     }
 
-    this.controlledPanel = document.querySelector(`[pfe-id="${newVal}"]`);
+    this.controlledPanel = document.querySelector(`#${newVal}`);
   }
 
   toggle() {
@@ -169,8 +187,18 @@ class PfeCollapsiblePanel extends PFElement {
 
     this.expanded = false;
 
+    if (this.id) {
+      this.pfeId = this.id;
+    }
+
+    const generatedId = `${PfeCollapsiblePanel.tag}-${generateId()}`;
+
+    if (!this.id) {
+      this.id = generatedId;
+    }
+
     if (!this.pfeId) {
-      this.pfeId = `${PfeCollapsiblePanel.tag}-${generateId()}`;
+      this.pfeId = generatedId;
     }
   }
 }
@@ -267,7 +295,10 @@ class PfeCollapsible extends PFElement {
   _transitionEndHandler(event) {
     event.target.style.height = "";
     event.target.classList.remove("animating");
-    event.target.removeEventListener("transitionend", this._transitionEndHandler);
+    event.target.removeEventListener(
+      "transitionend",
+      this._transitionEndHandler
+    );
   }
 }
 
@@ -275,8 +306,4 @@ PFElement.create(PfeCollapsible);
 PFElement.create(PfeCollapsibleToggle);
 PFElement.create(PfeCollapsiblePanel);
 
-export {
-  PfeCollapsible,
-  PfeCollapsibleToggle,
-  PfeCollapsiblePanel
-};
+export { PfeCollapsible, PfeCollapsibleToggle, PfeCollapsiblePanel };

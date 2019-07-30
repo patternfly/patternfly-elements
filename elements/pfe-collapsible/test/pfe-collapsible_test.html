@@ -51,10 +51,10 @@
           assert.equal(toggle.getAttribute("aria-expanded"), "false");
           assert.equal(toggle.getAttribute("role"), "button");
           assert.equal(toggle.getAttribute("tabindex"), "0");
-          assert.equal(toggle.getAttribute("aria-controls"), panel.id);
+          assert.equal(toggle.getAttribute("aria-controls"), panel.pfeId);
 
           assert.isNotTrue(panel.hasAttribute("pfe-expanded"));
-          assert.isTrue(panel.hasAttribute("id"));
+          assert.isTrue(panel.hasAttribute("pfe-id"));
         });
 
         test("it should toggle a panel inside pfe-collapsible on click", done => {

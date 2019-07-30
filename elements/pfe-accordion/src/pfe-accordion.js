@@ -1,5 +1,9 @@
 import PFElement from "../pfelement/pfelement.js";
-import { PfeCollapsible, PfeCollapsibleToggle, PfeCollapsiblePanel } from "../pfe-collapsible/pfe-collapsible.js";
+import {
+  PfeCollapsible,
+  PfeCollapsibleToggle,
+  PfeCollapsiblePanel
+} from "../pfe-collapsible/pfe-collapsible.js";
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
@@ -62,7 +66,7 @@ class PfeAccordion extends PfeCollapsible {
   }
 
   get templateUrl() {
-    return "pfe-accordion.html"
+    return "pfe-accordion.html";
   }
 
   constructor() {
@@ -105,7 +109,6 @@ class PfeAccordion extends PfeCollapsible {
       this._collapsePanel(panel);
     }
   }
-
 
   expand(index) {
     const headers = this._allHeaders();
@@ -182,7 +185,9 @@ class PfeAccordion extends PfeCollapsible {
 
   _expandPanel(panel) {
     if (!panel) {
-      console.error(`${PfeAccordion.tag}: Trying to expand a panel that doesn't exist`);
+      console.error(
+        `${PfeAccordion.tag}: Trying to expand a panel that doesn't exist`
+      );
       return;
     }
 
@@ -199,7 +204,9 @@ class PfeAccordion extends PfeCollapsible {
 
   _collapsePanel(panel) {
     if (!panel) {
-      console.error(`${PfeAccordion.tag}: Trying to collapse a panel that doesn't exist`);
+      console.error(
+        `${PfeAccordion.tag}: Trying to collapse a panel that doesn't exist`
+      );
       return;
     }
 
@@ -226,7 +233,9 @@ class PfeAccordion extends PfeCollapsible {
     }
 
     if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
-      console.error(`${PfeAccordion.tag}: Sibling element to a header needs to be a panel`);
+      console.error(
+        `${PfeAccordion.tag}: Sibling element to a header needs to be a panel`
+      );
       return;
     }
 
@@ -235,13 +244,15 @@ class PfeAccordion extends PfeCollapsible {
 
   _previousHeader() {
     const headers = this._allHeaders();
-    let newIndex = headers.findIndex(header => header === document.activeElement) - 1;
+    let newIndex =
+      headers.findIndex(header => header === document.activeElement) - 1;
     return headers[(newIndex + headers.length) % headers.length];
   }
 
   _nextHeader() {
     const headers = this._allHeaders();
-    let newIndex = headers.findIndex(header => header === document.activeElement) + 1;
+    let newIndex =
+      headers.findIndex(header => header === document.activeElement) + 1;
     return headers[newIndex % headers.length];
   }
 
@@ -305,7 +316,7 @@ class PfeAccordionHeader extends PfeCollapsibleToggle {
   }
 
   get templateUrl() {
-    return "pfe-accordion-header.html"
+    return "pfe-accordion-header.html";
   }
 
   get expanded() {
@@ -325,7 +336,7 @@ class PfeAccordionHeader extends PfeCollapsibleToggle {
   }
 
   constructor() {
-    super(PfeAccordionHeader);
+    super(PfeAccordionHeader, { setTabIndex: false, addKeydownHandler: false });
 
     this.button = this.shadowRoot.querySelector("button");
 
@@ -386,12 +397,9 @@ class PfeAccordionHeader extends PfeCollapsibleToggle {
 
     if (!isHeaderTag) {
       console.warn(
-        `${
-          this.tag
-        }: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`
+        `${this.tag}: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`
       );
     }
-
 
     if (window.ShadyCSS) {
       this._observer.observe(this, { childList: true });
@@ -425,6 +433,5 @@ class PfeAccordionPanel extends PfeCollapsiblePanel {
 PFElement.create(PfeAccordion);
 PFElement.create(PfeAccordionPanel);
 PFElement.create(PfeAccordionHeader);
-
 
 export { PfeAccordion as default };

@@ -53,52 +53,6 @@ class PFElement extends HTMLElement {
     return [...this.querySelectorAll(`[slot='${name}']`)];
   }
 
-  // Copy the children of a slot into another container, default to appending to Shadow
-  to_shadowdom(slotName = "default", elementSelector) {
-    let _slot = null;
-    let _slotClone = null;
-    let _newSlot = null;
-    // Get the slot
-    if(slotName !== "default") {
-      _slot = this.shadowRoot.querySelector(`slot[name="${slotName}"]`);
-    } else {
-      _slot = this.shadowRoot.querySelector("slot");
-    }
-
-    if(_slot) {
-      let _slotChildren = _slot.assignedNodes();
-      let _slotClone = [];
-      _slotChildren.map(child => {
-        let clone = child.cloneNode(true);
-        _slotClone.push(clone);
-      });
-
-      // If an element is provided, this is where we're copying to
-      if(typeof elementSelector === "string") {
-        _newSlot = this.shadowRoot.querySelector(elementSelector);
-      } else if(typeof elementSelector === "object") {
-        _newSlot = elementSelector;
-      } else {
-        _newSlot = this.shadowRoot;
-      }
-
-      if(_newSlot) {
-        _slotClone.map(clone => {
-          clone.removeAttribute("slot");
-          _newSlot.appendChild(clone);
-        });
-      }
-
-      // After the content has been copied, hide the original slot
-      _slot.style.display = "none";
-      _slot.setAttribute("hidden", true);
-      
-      return true;
-    }
-
-    return false;
-  }
-
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
     super();
 

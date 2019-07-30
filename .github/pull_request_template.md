@@ -32,7 +32,7 @@ Your component should work in all of the following environments:
 
 Your repository infrastructure updates should work for at least:
 - [ ] Node v8.x
-- [ ] NPM v6.x
+- [ ] NPM v7.x
 
 ### Ready-for-merge Checklist
 

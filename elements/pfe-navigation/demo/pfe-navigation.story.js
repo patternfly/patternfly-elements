@@ -2,9 +2,12 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
+import "demo.css";
+import "../pfe-navigation--lightdom.css";
+
 import PfeNavigation from "../pfe-navigation";
-import PfeCta from "../pfe-cta";
-import PfeCard from "../pfe-card";
+import PfeCta from "../../pfe-cta/pfe-cta";
+import PfeCard from "../../pfe-card/pfe-card";
 
 const stories = storiesOf("Navigation", module);
 
@@ -16,6 +19,7 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeNavigation.tag, () => {
+
   let config = {};
   const props = PfeNavigation.properties;
 
@@ -64,7 +68,7 @@ stories.add(PfeNavigation.tag, () => {
   <h3 slot="trigger"><a href="#url-to-search-page">Search</a></h3>
   <div slot="tray" hidden>
     <div class="container">
-      <form>
+      <form pfe-navigation--mobile-search>
         <input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
         <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
       </form>
@@ -72,7 +76,7 @@ stories.add(PfeNavigation.tag, () => {
   </div>
 </pfe-navigation-item>` : "";
 
-  let main = `<nav slot="main" aria-label="Main">
+  let main = `<nav aria-label="Main">
   <pfe-navigation-main>
     <ul>
       <li>
@@ -177,10 +181,11 @@ stories.add(PfeNavigation.tag, () => {
   <h3 slot="trigger"><a href="/url-to-language-page">English</a></h3>
   <div slot="tray" hidden>
     <div class="container">
-      <p>Language switcher content</p>
+      <p>Language switcher</p>
     </div>
   </div>
-</pfe-navigation-item>`: "";
+</pfe-navigation-item>
+<a href="/url-to-language-page" slot="mobile-language" pfe-icon="user" hidden>English</a>`: "";
 
   let login = slotCheck.login ? `<pfe-navigation-item slot="login" pfe-icon="user">
   <h3 slot="trigger"><a href="/login">Log in</a></h3>
@@ -189,7 +194,8 @@ stories.add(PfeNavigation.tag, () => {
       <p>Log in content</p>
     </div>
   </div>
-</pfe-navigation-item>` : "";
+</pfe-navigation-item>
+<a href="/login" slot="mobile-login" pfe-icon="user" hidden>Login/Register</a>` : "";
 
   let siteSwitcher = slotCheck["site-switcher"] ? `<pfe-navigation-item slot="site-switcher" pfe-icon="bento">
   <h3 slot="trigger"><a href="/url-to-rh-websites-page">Websites</a></h3>
@@ -200,11 +206,8 @@ stories.add(PfeNavigation.tag, () => {
   </div>
 </pfe-navigation-item>` : "";
 
-  let mobileLogin = slotCheck.login ? `<a href="/login" slot="mobile-login" pfe-icon="user">Login/Register</a>` : "";
-  let mobileLanguage = slotCheck.language ? `<a href="/url-to-language-page" slot="mobile-language" pfe-icon="user">English</a>` : "";
-
   config.slots = [{
-    content: skip + logo + search + main + language + login + siteSwitcher + mobileLogin + mobileLanguage
+    content: skip + logo + search + main + language + login + siteSwitcher
   }];
 
   const render = template(config);

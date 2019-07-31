@@ -22,12 +22,26 @@ $pfe-modal--breakpoint--medium: 640px;
 }
 
 .pfe-modal {
-	&__wrapper {
-		position: absolute;
-		z-index: 2;
-		top: 10%;
+	&__overlay {
+		display: flex;
+		position: fixed;
+		height: 100%;
+		width: 100%;
+		top: 0;
 		left: 0;
-		right: 0;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		z-index: 2;
+		background-color: pfe-local($cssvar: BackgroundColor, $region: overlay);
+		cursor: pointer;
+
+		&[hidden] {
+			display: none;
+		}
+	}
+	&__wrapper {
+		z-index: 2;
 		max-width: pfe-local(MaxWidth--mobile);
 		min-width: pfe-local(MinWidth);
 		min-height: pfe-local(MinHeight);
@@ -35,13 +49,8 @@ $pfe-modal--breakpoint--medium: 640px;
 		box-shadow: pfe-var(box-shadow--lg);
 		background-color: pfe-color(surface--lightest);
 		border-radius: #{pfe-var(ui--border-radius)};
-		overflow-y: scroll;
-		scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE 10+ */
-
-    &::-webkit-scrollbar {
-    	display: none;
-    }
+		overflow-y: auto;
+		overscroll-behavior: contain;
 
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			max-width: pfe-local(MaxWidth);
@@ -49,6 +58,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		}
 	}
 	&__container {
+		position: relative;
 		padding: var(--pfe-modal--Padding--mobile);
 		max-width: calc(100% - #{pfe-var(ui--element--size)});
 
@@ -97,22 +107,6 @@ $pfe-modal--breakpoint--medium: 640px;
 			width: pfe-var(ui--element--size);
 			height: pfe-local(CloseButtonSize);
 			width: pfe-local(CloseButtonSize);
-		}
-	}
-
-	&__overlay {
-		display: block;
-		background-color: pfe-local($cssvar: BackgroundColor, $region: overlay);
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%; // Fallback
-		width: 100vw;
-		height: 100%; // Fallback
-		height: 100vh;
-		z-index: 1;
-		&[hidden] {
-			display: none;
 		}
 	}
 }

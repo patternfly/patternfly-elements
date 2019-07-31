@@ -74,7 +74,10 @@ class PfeAccordion extends PfeCollapsible {
 
     this._linkControls = this._linkControls.bind(this);
     this._observer = new MutationObserver(this._linkControls);
+
     this.addEventListener(`${PfeCollapsible.tag}:change`, this._changeHandler);
+    this.addEventListener(`${PfeCollapsiblePanel.tag}:animating`, this._animatingHandler);
+    this.addEventListener(`${PfeCollapsiblePanel.tag}:animation-complete`, this._animationCompleteHandler);
   }
 
   connectedCallback() {
@@ -89,6 +92,14 @@ class PfeAccordion extends PfeCollapsible {
   disconnectedCallback() {
     this.removeEventListener("keydown", this._keydownHandler);
     this._observer.disconnect();
+  }
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    super.attributeChangedCallback(attr, oldVal, newVal);
+
+    if (newVal !== "false" && newVal !== "true") {
+      return;
+    }
   }
 
   toggle(index) {
@@ -234,12 +245,29 @@ class PfeAccordion extends PfeCollapsible {
 
     if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
       console.error(
-        `${PfeAccordion.tag}: Sibling element to a header needs to be a panel`
+        `${PfeAccordion.tag}: Sibling element next to a header needs to be a panel`
       );
       return;
     }
 
     return next;
+  }
+
+  _headerForPanel(panel) {
+    const previous = panel.previousElementSibling;
+
+    if (!previous) {
+      return;
+    }
+
+    if (previous.tagName.toLowerCase() !== PfeAccordionHeader.tag) {
+      console.error(
+        `${PfeAccordion.tag}: Sibling element previous to a panel needs to be a header`
+      );
+      return;
+    }
+
+    return previous;
   }
 
   _previousHeader() {
@@ -304,6 +332,26 @@ class PfeAccordion extends PfeCollapsible {
 
     newHeader.shadowRoot.querySelector("button").focus();
   }
+
+  _animatingHandler(event) {
+    super._animatingHandler(event);
+
+    const header = this._headerForPanel(event.detail.panel);
+
+    if (header) {
+      header.button.classList.add("animating");
+    }
+  }
+
+  _animationCompleteHandler(event) {
+    super._animationCompleteHandler(event);
+
+    const header = this._headerForPanel(event.detail.panel);
+
+    if (header) {
+      header.button.classList.remove("animating");
+    }
+  }
 }
 
 class PfeAccordionHeader extends PfeCollapsibleToggle {
@@ -356,12 +404,6 @@ class PfeAccordionHeader extends PfeCollapsibleToggle {
 
   disconnectedCallback() {
     this._observer.disconnect();
-  }
-
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(attr, oldVal, newVal);
-
-    // console.log(newVal);
   }
 
   _init() {

@@ -8,6 +8,6 @@
 }
 
 :host([expanded]),
-:host([.animating]) {
+:host(.animating) {
   display: block;
 }

@@ -86,7 +86,10 @@ class PfeCollapsibleToggle extends PFElement {
 
   disconnectedCallback() {
     this.removeEventListener("click", this._clickHandler);
-    this.removeEventListener("keydown", this._keydownHandler);
+
+    if (this._addKeydownHandler) {
+      this.removeEventListener("keydown", this._keydownHandler);
+    }
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
@@ -164,6 +167,10 @@ class PfeCollapsiblePanel extends PFElement {
     this.setAttribute("pfe-id", id);
   }
 
+  get animates() {
+    return this.getAttribute("pfe-animation") === "false" ? false : true;
+  }
+
   get expanded() {
     return this.hasAttribute("pfe-expanded");
   }
@@ -173,8 +180,22 @@ class PfeCollapsiblePanel extends PFElement {
 
     if (value) {
       this.setAttribute("pfe-expanded", "");
+
+      if (this.animates) {
+        const height = this.getBoundingClientRect().height;
+        this._fireAnimationEvent("opening");
+        this._animate(0, height);
+      }
     } else {
-      this.removeAttribute("pfe-expanded");
+      if (this.hasAttribute("pfe-expanded")) {
+        const height = this.getBoundingClientRect().height;
+        this.removeAttribute("pfe-expanded");
+
+        if (this.animates) {
+          this._fireAnimationEvent("closing");
+          this._animate(height, 0);
+        }
+      }
     }
   }
 
@@ -201,6 +222,50 @@ class PfeCollapsiblePanel extends PFElement {
       this.pfeId = generatedId;
     }
   }
+
+  _animate(start, end) {
+    this.classList.add("animating");
+    this.style.height = `${start}px`;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        this.style.height = `${end}px`;
+        this.classList.add("animating");
+        this.addEventListener("transitionend", this._transitionEndHandler);
+      });
+    });
+  }
+
+  _transitionEndHandler(event) {
+    event.target.style.height = "";
+    event.target.classList.remove("animating");
+    event.target.removeEventListener(
+      "transitionend",
+      this._transitionEndHandler
+    );
+
+    this.dispatchEvent(
+      new CustomEvent(`${PfeCollapsiblePanel.tag}:animation-complete`, {
+        detail: {
+          expanded: this.expanded,
+          panel: this
+        },
+        bubbles: true
+      })
+    );
+  }
+
+  _fireAnimationEvent(state) {
+    this.dispatchEvent(
+      new CustomEvent(`${PfeCollapsiblePanel.tag}:animating`, {
+        detail: {
+          state: state,
+          panel: this
+        },
+        bubbles: true
+      })
+    );
+  }
 }
 
 class PfeCollapsible extends PFElement {
@@ -216,18 +281,26 @@ class PfeCollapsible extends PFElement {
     return "pfe-collapsible.scss";
   }
 
+  get animates() {
+    return this.getAttribute("pfe-animation") === "false" ? false : true;
+  }
+
+  static get observedAttributes() {
+    return ["pfe-animation"];
+  }
+
   constructor(pfeClass) {
     super(pfeClass || PfeCollapsible);
 
     this._toggle = null;
     this._panel = null;
-    this.animates = true;
-
     this._linkControls = this._linkControls.bind(this);
     this._changeHandler = this._changeHandler.bind(this);
     this._observer = new MutationObserver(this._linkControls);
 
     this.addEventListener(`${PfeCollapsible.tag}:change`, this._changeHandler);
+    this.addEventListener(`${PfeCollapsiblePanel.tag}:animating`, this._animatingHandler);
+    this.addEventListener(`${PfeCollapsiblePanel.tag}:animation-complete`, this._animationCompleteHandler);
   }
 
   connectedCallback() {
@@ -246,7 +319,26 @@ class PfeCollapsible extends PFElement {
   }
 
   disconnectedCallback() {
+    this.removeEventListener(`${PfeCollapsible.tag}:change`, this._changeHandler);
+    this.removeEventListener(`${PfeCollapsiblePanel.tag}:animating`, this._animatingHandler);
+    this.removeEventListener(`${PfeCollapsiblePanel.tag}:animation-complete`, this._animationCompleteHandler);
     this._observer.disconnect();
+  }
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    super.attributeChangedCallback(attr, oldVal, newVal);
+
+    if (!newVal) {
+      return;
+    }
+
+    if (newVal !== "false" && newVal !== "true") {
+      return;
+    }
+
+    if (this._panel) {
+      this._panel.setAttribute("pfe-animation", newVal);
+    }
   }
 
   toggle() {
@@ -260,45 +352,16 @@ class PfeCollapsible extends PFElement {
     this._toggle.setAttribute("aria-controls", this._panel.pfeId);
   }
 
+  _animatingHandler() {
+    this.classList.add("animating");
+  }
+
+  _animationCompleteHandler() {
+    this.classList.remove("animating");
+  }
+
   _changeHandler(event) {
-    if (!this.animates) {
-      return;
-    }
 
-    const panel = event.detail.panel;
-    const expanded = event.detail.expanded;
-
-    if (expanded) {
-      const height = panel.getBoundingClientRect().height;
-      this._animate(panel, 0, height);
-    } else {
-      panel.expanded = true;
-      const height = panel.getBoundingClientRect().height;
-      panel.expanded = false;
-      this._animate(panel, height, 0);
-    }
-  }
-
-  _animate(panel, start, end) {
-    panel.classList.add("animating");
-    panel.style.height = `${start}px`;
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        panel.style.height = `${end}px`;
-        panel.classList.add("animating");
-        panel.addEventListener("transitionend", this._transitionEndHandler);
-      });
-    });
-  }
-
-  _transitionEndHandler(event) {
-    event.target.style.height = "";
-    event.target.classList.remove("animating");
-    event.target.removeEventListener(
-      "transitionend",
-      this._transitionEndHandler
-    );
   }
 }
 

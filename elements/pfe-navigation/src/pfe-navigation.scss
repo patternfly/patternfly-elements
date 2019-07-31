@@ -80,8 +80,11 @@ $LOCAL: navigation;
     // Loop through the other breakpoints
     @each $size in (md, lg, xl) {
       @media screen and (min-width: pfe-breakpoint(#{$size})) {
+        // Set the variable for use in the tray region too
+        --pfe-navigation--Width: calc(#{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 2));
+
         width: calc(#{pfe-breakpoint(#{$size})} - 2rem); // IE11 fallback
-        width: calc(#{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 2));
+        width: #{pfe-local(Width)};
       }
     }
 

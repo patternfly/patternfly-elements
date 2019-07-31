@@ -50,7 +50,7 @@
       <pfe-navigation-item slot="search" icon="search">
         <h3 slot="trigger"><a href="#url-to-search-page">Search</a></h3>
         <div slot="tray" hidden>
-          <div class="container">
+          <div class="pfe-navigation-item__tray--container">
             <form pfe-navigation--mobile-search>
               <input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
               <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
@@ -66,22 +66,20 @@
               <pfe-navigation-item>
                 <h2 slot="trigger"><a href="#">Products</a></h2>
                 <div slot="tray" hidden>
-                    <div class="container test-overflow">
-                      <div columns="3">
-                        <div stacked>
-                          <div class="link-list">
-                            <h3 class="link-list--header">
-                              <a href="#">Platforms</a>
-                            </h3>
-                            <ul class="link-list--list">
-                              <li><a href="#">Red Hat Enterprise Linux</a></li>
-                              <li><a href="#">Red Hat JBoss Enterprise Application Platform</a></li>
-                              <li><a href="#">Red Hat OpenShift</a></li>
-                              <li><a href="#">Red Hat OpenStack Platform</a></li>
-                              <li><a href="#">Red Hat Virtualization</a></li>
-                            </ul>
-                          </div>
-                          <pfe-cta><a href="#">Buy products online</a></pfe-cta>
+                  <div class="pfe-navigation-item__tray--container pfe-l--text-align--left">
+                    <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
+                      <div class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-4-col pfe-m-all-1-col-on-xs pfe-m-9-col">
+                        <div class="link-list">
+                          <h3 class="link-list--header">
+                            <a href="#">Platforms</a>
+                          </h3>
+                          <ul class="link-list--list">
+                            <li><a href="#">Red Hat Enterprise Linux</a></li>
+                            <li><a href="#">Red Hat JBoss Enterprise Application Platform</a></li>
+                            <li><a href="#">Red Hat OpenShift</a></li>
+                            <li><a href="#">Red Hat OpenStack Platform</a></li>
+                            <li><a href="#">Red Hat Virtualization</a></li>
+                          </ul>
                         </div>
                         <div class="link-list">
                           <h3 class="link-list--header">
@@ -106,12 +104,20 @@
                             <li><a href="#">Red Hat OpenShift</a></li>
                             <li><a href="#">Red Hat OpenStack Platform</a></li>
                             <li><a href="#">Red Hat Quay</a></li>
-                        </ul>
+                          </ul>
+                        </div>
+                      </div>
+                      <pfe-card style="height: 300px;" class="pfe-m-3-col">
+                        <h3>Promotional content</h3>
+                      </pfe-card>
+                    </div>
+                    <div class="border-top pfe-l-grid pfe-m-gutters pfe-m-all-4-col pfe-l--text-align--left">
+                      <div class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-4-col pfe-m-all-1-col-on-xs pfe-m-9-col">
+                        <pfe-cta><a href="#">Buy products online</a></pfe-cta>
+                        <div></div>
+                        <pfe-cta><a href="#">Learn more</a></pfe-cta>
                       </div>
                     </div>
-                    <pfe-card style="height: 300px;">
-                      <h2>Promotional content</h2>
-                    </pfe-card>
                   </div>
                 </div>
               </pfe-navigation-item>
@@ -120,8 +126,9 @@
               <pfe-navigation-item aria-current="location">
                 <h2 slot="trigger"><a href="#">Solutions</a></h2>
                 <div slot="tray" hidden>
-                  <div class="container">
+                  <div class="pfe-navigation-item__tray--container test-overflow">
                     <p>Solutions tray content</p>
+                    <p>This tray tests the overflow by artificially applying height to this section.</p>
                   </div>
                 </div>
               </pfe-navigation-item>
@@ -130,7 +137,7 @@
               <pfe-navigation-item>
                 <h2 slot="trigger"><a href="/support">Services &amp; support</a></h2>
                 <div slot="tray" hidden>
-                  <div class="container">
+                  <div class="pfe-navigation-item__tray--container">
                     <p>Services tray content</p>
                   </div>
                 </div>
@@ -140,7 +147,7 @@
               <pfe-navigation-item>
                 <h2 slot="trigger"><a href="/resources">Resources</a></h2>
                 <div slot="tray" hidden>
-                  <div class="container">
+                  <div class="pfe-navigation-item__tray--container">
                     <p>Resources tray content</p>
                   </div>
                 </div>
@@ -158,7 +165,7 @@
       <pfe-navigation-item slot="language" icon="globe">
         <h3 slot="trigger"><a href="/url-to-language-page">English</a></h3>
         <div slot="tray" hidden>
-          <div class="container">
+          <div class="pfe-navigation-item__tray--container">
             <p>Language switcher</p>
           </div>
         </div>
@@ -168,7 +175,7 @@
       <pfe-navigation-item slot="login" icon="user">
         <h3 slot="trigger"><a href="/login">Log in</a></h3>
         <div slot="tray" hidden>
-          <div class="container">
+          <div class="pfe-navigation-item__tray--container">
             <p>Log in things</p>
           </div>
         </div>
@@ -178,7 +185,7 @@
       <pfe-navigation-item slot="site-switcher" icon="bento">
         <h3 slot="trigger"><a href="/url-to-rh-websites-page">Websites</a></h3>
         <div slot="tray" hidden>
-          <div class="container">
+          <div class="pfe-navigation-item__tray--container">
             <p>Site switcher things</p>
           </div>
         </div>
@@ -370,7 +377,7 @@
       // Replicates AJAX-like functionality
       document.addEventListener("pfe-navigation-item:toggled", function (event) {
         if (event.detail.slot === "language" && event.detail.content !== null) {
-          const container = event.detail.content.querySelector(".container");
+          const container = event.detail.content.querySelector(".pfe-navigation-item__tray--container");
           const newContent = "<p>Inject new content into the " + event.detail.slot + " slot.</p>";
           if (container) {
             if (event.detail.expanded) {

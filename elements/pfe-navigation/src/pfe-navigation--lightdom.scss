@@ -34,9 +34,18 @@ $LOCAL: navigation-item;
             }
             a {
                 text-decoration: none;
-                color: var(--pfe-navigation-item--Color,#fff);
+                color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
             }
         }
+    }
+}
+
+pfe-navigation [slot="logo"] > a {
+    color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
+    text-decoration: none;
+    &:focus {
+        outline: 1px dashed ;
+        outline: var(--pfe-theme--surface--border-width, 1px) dashed var(--pfe-theme--color--surface--lightest, #fff);
     }
 }
 
@@ -61,4 +70,25 @@ pfe-navigation-item [slot="trigger"] a {
     max-height: calc(100vh - var(--pfe-navigation--Height, 90px));
     overflow-x: hidden;
     overflow-y: scroll;
+}
+
+// This class is added manually inside the tray on the light DOM content
+.pfe-navigation-item__tray--container {
+  max-width: var(--pfe-navigation--Width);
+  margin: 0 auto;
+  a {
+    color: var(--pfe-broadcasted--color--ui-link, #{map-get($pfe-colors, 'ui-link')});
+    text-decoration: none;
+    &:visited {
+        color: var(--pfe-broadcasted--color--ui-link--visited, #{map-get($pfe-colors, 'ui-link--visited')});
+    }
+    &:hover {
+        color: var(--pfe-broadcasted--color--ui-link--hover, #{map-get($pfe-colors, 'ui-link--hover')});
+        text-decoration: none;
+    }
+    &:focus {
+        outline: none;
+        color: var(--pfe-broadcasted--color--ui-link--focus, #{map-get($pfe-colors, 'ui-link--focus')});
+    }
+  }
 }

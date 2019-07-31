@@ -235,6 +235,7 @@ class PfeNavigation extends PFElement {
       const triggers = [
         ...this.querySelectorAll("pfe-navigation-main pfe-navigation-item > *:first-child")
       ];
+
       // Create a new pfe-accordion element
       const fragment = document.createDocumentFragment();
       const accordion = document.createElement("pfe-accordion");
@@ -255,6 +256,7 @@ class PfeNavigation extends PFElement {
         const header = document.createElement("pfe-accordion-header");
         const panel = document.createElement("pfe-accordion-panel");
 
+        // If the trigger is not assigned to a slot
         if (!trigger.hasAttribute("slot")) {
           header.innerHTML = clone.outerHTML;
         } else {
@@ -277,8 +279,12 @@ class PfeNavigation extends PFElement {
 
       fragment.appendChild(accordion);
 
-      this._mobileSlot.menu.innerHTML = "";
-      this._mobileSlot.menu.appendChild(fragment);
+      // If there is at least 1 item in the accordion, add it to the menu
+      if (accordion.childElementCount > 0) {
+        // Add the fragment to the DOM
+        this._mobileSlot.menu.innerHTML = "";
+        this._mobileSlot.menu.appendChild(fragment);
+      }
     }
 
     return true;
@@ -288,7 +294,7 @@ class PfeNavigation extends PFElement {
     // If the slot exists, grab it's content and inject into the mobile slot in shadow DOM
     const searchClone = this.mobileSlot.search.cloneNode(true);
     searchClone.removeAttribute("pfe-navigation--mobile-search");
-    this._mobileSlot.search.appendChild(searchClone);
+    this._mobileSlot.search.innerHTML = searchClone.innerHTML;
   }
 
   _setupMobileLinks() {

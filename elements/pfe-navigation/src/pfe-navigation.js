@@ -158,7 +158,7 @@ class PfeNavigation extends PFElement {
 
     // If the item clicked equals the currently active navigation item or no navigation item is provided
     if (this._activeNavigationItem === event.detail.navigationItem || event.detail.navigationItem === null) {
-      if (this._activeNavigationItem !== null || event.detail.navigationItem === null) {
+      if (this._activeNavigationItem !== null) { // || event.detail.navigationItem === null) {
         // Close any open navigation items
         this._activeNavigationItem.expanded = false;
       }
@@ -439,6 +439,7 @@ class PfeNavigationItem extends PFElement {
     this._keydownHandler = this._keydownHandler.bind(this);
     this._suppressLink = this._suppressLink.bind(this);
     this._navigateToUrl = this._navigateToUrl.bind(this);
+    this._directLinkHandler = this._directLinkHandler.bind(this);
   }
 
   connectedCallback() {
@@ -474,17 +475,18 @@ class PfeNavigationItem extends PFElement {
     if (this.tray) {
       // Toggle the navigation when the trigger is clicked
       this._trigger.addEventListener("click", this._toggleMenu);
+
+      // Attaching to the parent element allows the exit key to work inside the tray too
+      this.addEventListener("keydown", this._keydownHandler);
       // Turn off the fallback link
       if (link) {
         link.setAttribute("tabindex", "-1");
         link.addEventListener("click", this._suppressLink);
       }
-
-      // Attaching to the parent element allows the exit key to work inside the tray too
-      this.addEventListener("keydown", this._keydownHandler);
     } else {
       this.linkUrl = link ? link.href : "#";
       this._trigger.addEventListener("click", this._navigateToUrl);
+      this._trigger.addEventListener("keydown", this._directLinkHandler);
     }
   }
 
@@ -495,6 +497,18 @@ class PfeNavigationItem extends PFElement {
   _navigateToUrl(event) {
     event.preventDefault();
     window.location.href = this.linkUrl;
+  }
+
+  _directLinkHandler(event) {
+    switch (event.key) {
+      case "Spacebar":
+      case "Enter":
+      case " ":
+        this._navigateToUrl(event);
+        break;
+      default:
+        return;
+    }
   }
 
   _toggleMenu(event) {

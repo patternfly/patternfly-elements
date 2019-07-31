@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+}
+
 [slot="logo"] > a {
   color: white;
   text-decoration: none;

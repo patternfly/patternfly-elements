@@ -7,7 +7,7 @@ $LOCAL: navigation;
 
   // Default spacing values
   --pfe-navigation--Padding--vertical: #{pfe-var(container-padding)};
-  --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} * 2);
+  --pfe-navigation--Padding--horizontal: #{pfe-var(container-padding)};
 
   --pfe-navigation--Padding: 0 #{pfe-local(Padding--horizontal)};
 
@@ -20,6 +20,10 @@ $LOCAL: navigation;
   // Reduce padding for print
   @media print {
     --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
+  }
+
+  @media screen and (min-width: pfe-breakpoint(sm)) {
+    --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} * 2);
   }
 
   display: block;
@@ -48,7 +52,7 @@ $LOCAL: navigation;
 }
 
 @each $icon in (user, globe) {
-  ::slotted([pfe-icon="#{$icon}"]) {
+  ::slotted([icon="#{$icon}"]) {
     --pfe-navigation__icon--Background: #{map-get($icons, #{$icon})} no-repeat;
   }
 }
@@ -126,7 +130,7 @@ $LOCAL: navigation;
     flex-flow: row nowrap;
     align-items: stretch;
     justify-content: flex-end;
-    > [pfe-icon="menu"] {
+    > [icon="menu"] {
       @media (min-width: #{pfe-breakpoint(lg)}) {
         display: none;
       }

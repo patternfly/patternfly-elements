@@ -33,10 +33,26 @@ $LOCAL: navigation-item;
                 color: #{pfe-color(text)};
             }
             a {
-                color: inherit;
                 text-decoration: none;
+                color: var(--pfe-navigation-item--Color,#fff);
             }
         }
+    }
+}
+
+pfe-navigation-item [slot="trigger"] a {
+    color: var(--pfe-broadcasted--color--ui-link, #{map-get($pfe-colors, 'ui-link')});
+    text-decoration: none;
+    &:visited {
+        color: var(--pfe-broadcasted--color--ui-link--visited, #{map-get($pfe-colors, 'ui-link--visited')});
+    }
+    &:hover {
+        color: var(--pfe-broadcasted--color--ui-link--hover, #{map-get($pfe-colors, 'ui-link--hover')});
+        text-decoration: none;
+    }
+    &:focus {
+        outline: none;
+        color: var(--pfe-broadcasted--color--ui-link--focus, #{map-get($pfe-colors, 'ui-link--focus')});
     }
 }
 

@@ -135,7 +135,7 @@ class PfeNavigation extends PFElement {
     // If there is currently an active navigation element
     if(this._activeNavigationItem !== null) {
       // Check if that active item is the mobile menu
-      let isMenu = this._activeNavigationItem.getAttribute("pfe-icon") === "menu";
+      let isMenu = this._activeNavigationItem.getAttribute("icon") === "menu";
       // Check if the window size is greater than 996px
       let isDesktop = window.outerWidth >= 996;
       // If it's the menu item and we're at a desktop size, close the active item
@@ -333,11 +333,11 @@ class PfeNavigationItem extends PFElement {
 
   // Used in the template to determine where to print the icon
   get hasIcon() {
-    return this.hasAttribute("pfe-icon");
+    return this.hasAttribute("icon");
   }
 
   static get observedAttributes() {
-    return ["pfe-icon"];
+    return ["icon"];
   }
 
   get expanded() {

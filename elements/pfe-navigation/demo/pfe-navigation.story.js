@@ -2,8 +2,6 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import "../pfe-navigation--lightdom.css";
-
 import PfeNavigation from "../pfe-navigation";
 import PfeCta from "../../pfe-cta/pfe-cta";
 import PfeCard from "../../pfe-card/pfe-card";
@@ -14,6 +12,38 @@ const stories = storiesOf("Navigation", module);
 const template = (data = {}) => {
   return tools.component(PfeNavigation.tag, data.prop, data.slots);
 };
+
+const createItem = (mySlot, icon, label, tray) => {
+  let mobile = "";
+  if(mySlot === "language" || mySlot === "login") {
+    mobile = tools.customTag({
+      tag: "a",
+      slot: `mobile-${mySlot}`,
+      attributes: {
+        href: `#url-to-${mySlot}-page`,
+        "pfe-icon": icon,
+        hidden: true
+      },
+      content: label
+    });
+  }
+
+  return tools.component("pfe-navigation-item", {
+    "slot": mySlot,
+    "pfe-icon": icon
+  }, [{
+    tag: "h3",
+    slot: "trigger",
+    content: `<a href="#url-to-${mySlot}-page">${label}</a>`
+  }, {
+    tag: "div",
+    slot: "tray",
+    attributes: {
+      hidden: true
+    },
+    content: tray ? tray : `<div class="container"><p>${mySlot} tray content</p></div>`
+  }]) + mobile;
+}
 
 stories.addDecorator(storybookBridge.withKnobs);
 
@@ -63,17 +93,13 @@ stories.add(PfeNavigation.tag, () => {
     })
   }) : "";
 
-  let search = slotCheck.search ? `<pfe-navigation-item slot="search" pfe-icon="search">
-  <h3 slot="trigger"><a href="#url-to-search-page">Search</a></h3>
-  <div slot="tray" hidden>
-    <div class="container">
-      <form pfe-navigation--mobile-search>
-        <input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
-        <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
-      </form>
-    </div>
-  </div>
-</pfe-navigation-item>` : "";
+
+  let search = slotCheck.search ? createItem("search", "search", "Search", `<div class="container">
+    <form pfe-navigation--mobile-search>
+      <input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
+      <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
+    </form>
+  </div>`) : "";
 
   let main = `<nav aria-label="Main">
   <pfe-navigation-main>
@@ -176,39 +202,18 @@ stories.add(PfeNavigation.tag, () => {
   </pfe-navigation-main>
 </nav>`;
 
-  let language = slotCheck.language ? `<pfe-navigation-item slot="language" pfe-icon="globe">
-  <h3 slot="trigger"><a href="/url-to-language-page">English</a></h3>
-  <div slot="tray" hidden>
-    <div class="container">
-      <p>Language switcher</p>
-    </div>
-  </div>
-</pfe-navigation-item>
-<a href="/url-to-language-page" slot="mobile-language" pfe-icon="user" hidden>English</a>`: "";
+  let language = slotCheck.language ? createItem("language", "globe", "English") : "";
 
-  let login = slotCheck.login ? `<pfe-navigation-item slot="login" pfe-icon="user">
-  <h3 slot="trigger"><a href="/login">Log in</a></h3>
-  <div slot="tray" hidden>
-    <div class="container">
-      <p>Log in content</p>
-    </div>
-  </div>
-</pfe-navigation-item>
-<a href="/login" slot="mobile-login" pfe-icon="user" hidden>Login/Register</a>` : "";
+  let login = slotCheck.login ? createItem("login", "user", "Log in") : "";
 
-  let siteSwitcher = slotCheck["site-switcher"] ? `<pfe-navigation-item slot="site-switcher" pfe-icon="bento">
-  <h3 slot="trigger"><a href="/url-to-rh-websites-page">Websites</a></h3>
-  <div slot="tray" hidden>
-    <div class="container">
-      <p>Site switcher content</p>
-    </div>
-  </div>
-</pfe-navigation-item>` : "";
+  let siteSwitcher = slotCheck["site-switcher"] ? createItem("site-switcher", "bento", "Websites") : "";
 
   config.slots = [{
     content: skip + logo + search + main + language + login + siteSwitcher
   }];
 
-  const render = template(config);
-  return tools.preview(render);
+  const render = `<link rel="stylesheet" type="text/css" href="/pfe-navigation/pfe-navigation--lightdom.css"></link>` +
+    template(config);
+  const warningMessage = `<p><strong>Please note</strong> that due to the experimental nature of this preview tool and the complexity of this component, we cannot show a preview of the rendered view at this time.  Please check out the repository and run the demo to preview the component.</p><p>In the meantime, please enjoy the markup preview below which can help you configure your markup correctly.</p>`;
+  return warningMessage + tools.code(render);
 });

@@ -5,7 +5,7 @@
     "type": "object",
     "tag": "pfe-navigation",
     "class": "pfe-navigation",
-    "category": "content",
+    "category": "container",
     "properties": {
       "slots": {
         "title": "Slots",
@@ -46,7 +46,7 @@
               "title": "Item",
               "oneOf": [
                 {
-                  "$ref": "raw"
+                  "$ref": "pfe-navigation-item"
                 }
               ]
             }
@@ -58,6 +58,9 @@
             "items": {
               "title": "Item",
               "oneOf": [
+                {
+                  "$ref": "nav"
+                },
                 {
                   "$ref": "raw"
                 }
@@ -72,7 +75,20 @@
               "title": "Item",
               "oneOf": [
                 {
-                  "$ref": "raw"
+                  "$ref": "pfe-navigation-item"
+                }
+              ]
+            }
+          },
+          "mobile-language": {
+            "title": "Mobile link to language page",
+            "type": "array",
+            "namedSlot": true,
+            "items": {
+              "title": "Item",
+              "oneOf": [
+                {
+                  "$ref": "a"
                 }
               ]
             }
@@ -85,7 +101,20 @@
               "title": "Item",
               "oneOf": [
                 {
-                  "$ref": "raw"
+                  "$ref": "pfe-navigation-item"
+                }
+              ]
+            }
+          },
+          "mobile-login": {
+            "title": "Mobile link to log in page",
+            "type": "array",
+            "namedSlot": true,
+            "items": {
+              "title": "Item",
+              "oneOf": [
+                {
+                  "$ref": "a"
                 }
               ]
             }
@@ -98,33 +127,7 @@
               "title": "Item",
               "oneOf": [
                 {
-                  "$ref": "raw"
-                }
-              ]
-            }
-          },
-          "mobile-login": {
-            "title": "Mobile login experience",
-            "type": "array",
-            "namedSlot": true,
-            "items": {
-              "title": "Item",
-              "oneOf": [
-                {
-                  "$ref": "raw"
-                }
-              ]
-            }
-          },
-          "mobile-language": {
-            "title": "Mobile language experience",
-            "type": "array",
-            "namedSlot": true,
-            "items": {
-              "title": "Item",
-              "oneOf": [
-                {
-                  "$ref": "raw"
+                  "$ref": "pfe-navigation-item"
                 }
               ]
             }
@@ -138,13 +141,15 @@
           "sticky": {
             "title": "Sticky navigation",
             "type": "boolean",
-            "default": true
+            "default": true,
+            "prefixed": false
           },
           "close-on-click": {
             "title": "Close navigation on click event",
             "type": "string",
             "enum": [ "external" ],
-            "default": "external"
+            "default": "external",
+            "prefixed": false
           }
         }
       }

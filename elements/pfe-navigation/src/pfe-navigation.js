@@ -147,7 +147,7 @@ class PfeNavigation extends PFElement {
 
   _toggledHandler(event) {
     // If there is no active navigation item at the moment, open the clicked element
-    if (!this._activeNavigationItem && event.detail.navigationItem !== null) {
+    if (!this._activeNavigationItem && event.detail.navigationItem !== null && !event.detail.expanded) {
       this._activeNavigationItem = event.detail.navigationItem;
       // Add the overlay to the page
       this._overlay.removeAttribute("hidden");
@@ -158,7 +158,7 @@ class PfeNavigation extends PFElement {
 
     // If the item clicked equals the currently active navigation item or no navigation item is provided
     if (this._activeNavigationItem === event.detail.navigationItem || event.detail.navigationItem === null) {
-      if (this._activeNavigationItem !== null) { // || event.detail.navigationItem === null) {
+      if (this._activeNavigationItem !== null) {
         // Close any open navigation items
         this._activeNavigationItem.expanded = false;
       }
@@ -168,10 +168,16 @@ class PfeNavigation extends PFElement {
       document.body.style.overflow = "auto";
       return;
     }
+    
+    // If the active item is not null, close the item, open the next one
+    if (this._activeNavigationItem !== null) {
+      this._activeNavigationItem.expanded = false;
+      this._activeNavigationItem = event.detail.navigationItem;
+      return;
+    }
 
-    // Otherwise, close the navigation item, open the next one
-    this._activeNavigationItem.expanded = false;
-    this._activeNavigationItem = event.detail.navigationItem;
+    // Otherwise, ensure active item is empty
+    this._activeNavigationItem = null;
   }
 
   _stickyHandler() {
@@ -391,7 +397,7 @@ class PfeNavigationItem extends PFElement {
       new CustomEvent(`${this.tag}:open`, {
         detail: {
           navigationItem: this,
-          expanded: this.expanded,
+          expanded: false,
           slot: this.getAttribute("slot"),
           content: this.tray
         },
@@ -408,7 +414,7 @@ class PfeNavigationItem extends PFElement {
       new CustomEvent(`${this.tag}:close`, {
         detail: {
           navigationItem: this,
-          expanded: this.expanded,
+          expanded: true,
           slot: this.getAttribute("slot"),
           content: this.tray
         },

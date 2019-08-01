@@ -22,7 +22,7 @@ $pfe-modal--breakpoint--medium: 640px;
 }
 
 .pfe-modal {
-	&__overlay {
+	&__outer {
 		display: flex;
 		position: fixed;
 		height: 100%;
@@ -33,6 +33,18 @@ $pfe-modal--breakpoint--medium: 640px;
 		align-items: center;
 		justify-content: center;
 		z-index: 2;
+
+		&[hidden] {
+			display: none;
+			z-index: 0;
+		}
+	}
+	&__overlay {
+		position: fixed;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
 		background-color: pfe-local($cssvar: BackgroundColor, $region: overlay);
 		cursor: pointer;
 
@@ -42,6 +54,7 @@ $pfe-modal--breakpoint--medium: 640px;
 	}
 	&__wrapper {
 		z-index: 2;
+		position: relative;
 		max-width: pfe-local(MaxWidth--mobile);
 		min-width: pfe-local(MinWidth);
 		min-height: pfe-local(MinHeight);

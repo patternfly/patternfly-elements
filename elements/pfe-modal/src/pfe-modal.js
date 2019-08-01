@@ -71,6 +71,7 @@ class PfeModal extends PFElement {
     this._modalCloseButton = this.shadowRoot.querySelector(`.${this.tag}__close`);
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
     this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
+    this._outer = this.shadowRoot.querySelector(`.${this.tag}__outer`);
     
     this._observer = new MutationObserver(() => {
       this._mapSchemaToSlots(this.tag, this.slots);
@@ -165,6 +166,7 @@ class PfeModal extends PFElement {
         // Reveal the container and overlay
         this._modalWrapper.removeAttribute("hidden");
         this._overlay.removeAttribute("hidden");
+        this._outer.removeAttribute("hidden");
         // Set the focus to the container
         this._modalWrapper.focus();
       } else {
@@ -172,6 +174,7 @@ class PfeModal extends PFElement {
         // Hide the container and overlay
         this._modalWrapper.setAttribute("hidden", true);
         this._overlay.setAttribute("hidden", true);
+        this._outer.setAttribute("hidden", true);
         // Move focus back to the trigger element
         this.trigger.focus();
       }

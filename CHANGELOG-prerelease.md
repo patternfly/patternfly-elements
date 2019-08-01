@@ -1,3 +1,11 @@
+## Prerelease 19 ( 2019-08-31 )
+Tag: [v1.0.0-prerelease.19](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.19)
+
+- [00389c2d](https://github.com/patternfly/patternfly-elements/commit/00389c2d581ed5f9b60dd744ab9db3d00f3bac13) adding type="button" to the button in the header ([#474](https://github.com/patternfly/patternfly-elements/pull/474))
+- [ddd6779e](https://github.com/patternfly/patternfly-elements/commit/ddd6779ed870ec1a22b5fbc9a4e279a6262c68f2) Pfe-tabs - add centered alignment ([#467](https://github.com/patternfly/patternfly-elements/pull/467))
+- [356079fc](https://github.com/patternfly/patternfly-elements/commit/356079fc1f33a625ae3ab99655022417bef8225e) Update CHANGELOG-prerelease.md ([#472](https://github.com/patternfly/patternfly-elements/pull/472))
+- [5d4752d8](https://github.com/patternfly/patternfly-elements/commit/5d4752d83f55edad87eb29a8f8736b85fab4d586) dev-pull-request-template  add testing instructions to PR template ([#463](https://github.com/patternfly/patternfly-elements/pull/463))
+
 ## Prerelease 18 ( 2019-07-30 )
 Tag: [v1.0.0-prerelease.18](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.18)
 

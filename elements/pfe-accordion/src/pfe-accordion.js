@@ -97,8 +97,12 @@ class PfeAccordion extends PfeCollapsible {
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
 
-    if (newVal !== "false" && newVal !== "true") {
-      return;
+    if (attr === "pfe-animation") {
+      if (newVal !== "false" && newVal !== "true") {
+        return;
+      }
+
+      this._allPanels().forEach(panel => panel.setAttribute(attr, newVal));
     }
   }
 

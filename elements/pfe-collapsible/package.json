@@ -4,7 +4,7 @@
     "className": "PfeCollapsible",
     "elementName": "pfe-collapsible"
   },
-  "version": "1.0.0-prerelease.17",
+  "version": "1.0.0-prerelease.19",
   "description": "Collapsible element for PatternFly Elements",
   "keywords": [
     "web-components",

@@ -67,7 +67,7 @@ class PfeModal extends PFElement {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
 
-    this._modalWrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
+    this._modalWindow = this.shadowRoot.querySelector(`.${this.tag}__window`);
     this._modalCloseButton = this.shadowRoot.querySelector(`.${this.tag}__close`);
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
     this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
@@ -123,16 +123,16 @@ class PfeModal extends PFElement {
 
     if (this.header) {
       this.header.setAttribute("id", this.header_id);
-      this._modalWrapper.setAttribute("aria-labelledby", this.header_id);
+      this._modalWindow.setAttribute("aria-labelledby", this.header_id);
     } else {
       // @TODO Do something else to assign the label
       this._container.setAttribute("no_header", "");
       const headings = this.body.filter(el => el.tagName.startsWith("H"));
       if (headings.length > 0) {
         headings[0].setAttribute("id", this.header_id);
-        this._modalWrapper.setAttribute("aria-labelledby", this.header_id);
+        this._modalWindow.setAttribute("aria-labelledby", this.header_id);
       } else if (this.trigger) {
-        this._modalWrapper.setAttribute("aria-label", this.trigger.innerText);
+        this._modalWindow.setAttribute("aria-label", this.trigger.innerText);
       }
     }
 
@@ -145,7 +145,7 @@ class PfeModal extends PFElement {
       case "Tab":
         if (event.target === this._modalCloseButton) {
           event.preventDefault();
-          this._modalWrapper.focus();
+          this._modalWindow.focus();
         }
         return;
       case "Escape":
@@ -164,15 +164,15 @@ class PfeModal extends PFElement {
       if(event.detail.open) {
         this.open = true;
         // Reveal the container and overlay
-        this._modalWrapper.removeAttribute("hidden");
+        this._modalWindow.removeAttribute("hidden");
         this._overlay.removeAttribute("hidden");
         this._outer.removeAttribute("hidden");
         // Set the focus to the container
-        this._modalWrapper.focus();
+        this._modalWindow.focus();
       } else {
         this.open = false;
         // Hide the container and overlay
-        this._modalWrapper.setAttribute("hidden", true);
+        this._modalWindow.setAttribute("hidden", true);
         this._overlay.setAttribute("hidden", true);
         this._outer.setAttribute("hidden", true);
         // Move focus back to the trigger element

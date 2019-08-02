@@ -51,7 +51,7 @@ $pfe-modal--breakpoint--medium: 640px;
 			display: none;
 		}
 	}
-	&__wrapper {
+	&__window {
 		position: relative;
 		max-width: pfe-local(MaxWidth--mobile);
 		min-width: pfe-local(MinWidth);
@@ -66,11 +66,8 @@ $pfe-modal--breakpoint--medium: 640px;
 	}
 	&__container {
 		position: relative;
-		padding: var(--pfe-modal--Padding--mobile);
 		max-width: calc(100% - #{pfe-var(ui--element--size)});
-		overflow-y: auto;
-		overscroll-behavior: contain;
-		max-height: pfe-local(MaxHeight);	
+		padding: var(--pfe-modal--Padding--mobile);
 
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			padding: pfe-local(Padding);
@@ -97,18 +94,24 @@ $pfe-modal--breakpoint--medium: 640px;
 		}
 	}
 
+	&__content {
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		max-height: pfe-local(MaxHeight);	
+	}
+
 	&__close {
 		@include pfe-reset-button;
 		position: absolute;
-		top: calc(#{pfe-var(container-padding)} * .5);
-		right: calc(#{pfe-var(container-padding)} * .5);
+		top: calc(#{pfe-var(container-padding)} * .25);
+		right: calc(#{pfe-var(container-padding)} * .25);
 		cursor: pointer;
 		line-height: .5;
 		padding: pfe-var(container-padding);
 
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
-			top: calc(#{pfe-var(container-padding)} * .75);
-			right: calc(#{pfe-var(container-padding)} * .75);
+			top: #{pfe-var(container-padding)};
+			right: #{pfe-var(container-padding)};
 		}
 
 		> svg {

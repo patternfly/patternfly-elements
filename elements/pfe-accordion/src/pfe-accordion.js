@@ -50,12 +50,6 @@ if (!Array.prototype.findIndex) {
   });
 }
 
-function generateId() {
-  return Math.random()
-    .toString(36)
-    .substr(2, 9);
-}
-
 class PfeAccordion extends PfeCollapsible {
   static get tag() {
     return "pfe-accordion";
@@ -67,6 +61,24 @@ class PfeAccordion extends PfeCollapsible {
 
   get templateUrl() {
     return "pfe-accordion.html";
+  }
+
+  get schemaUrl() {
+    return "pfe-accordion.json";
+  }
+
+  static get observedAttributes() {
+    return super.observedAttributes.concat("on");
+  }
+
+  static get cascadingAttributes() {
+    return {
+      on: "pfe-accordion-header, pfe-accordion-panel"
+    };
+  }
+
+  static get PfeType() {
+    return PFElement.PfeTypes.Container;
   }
 
   constructor() {

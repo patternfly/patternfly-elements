@@ -109,7 +109,7 @@ Animation of the panel defaults to true. Adding `pfe-animation` to the
 
 ## Events
 
-## pfe-collapsible:change
+### pfe-collapsible:change
 
 Fired when `pfe-collasible` is either expanded or collapsed.
 

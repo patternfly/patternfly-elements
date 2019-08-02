@@ -8,8 +8,7 @@ $pfe-modal--breakpoint--medium: 640px;
 	--pfe-modal--MinWidth: 50vw;
 	--pfe-modal--MaxWidth--mobile: 94vw;
 	--pfe-modal--MaxHeight: 90vh;
-	--pfe-modal--Padding--mobile: calc(#{pfe-var(container-padding)} * 1.25) calc(#{pfe-var(container-padding)} * 3) calc(#{pfe-var(container-padding)} * 1.25) calc(#{pfe-var(container-padding)} * 1.25);
-	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2);
+	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2) 0 calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);
 	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
 	--pfe-modal--CloseButtonSize: calc(#{pfe-var(ui--element--size)} - 4px);
 	display: block;
@@ -67,11 +66,7 @@ $pfe-modal--breakpoint--medium: 640px;
 	&__container {
 		position: relative;
 		max-width: calc(100% - #{pfe-var(ui--element--size)});
-		padding: var(--pfe-modal--Padding--mobile);
-
-		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
-			padding: pfe-local(Padding);
-		}
+		padding: var(--pfe-modal--Padding);
 
 		&[hidden] {
 			display: none;
@@ -98,6 +93,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		overflow-y: auto;
 		overscroll-behavior: contain;
 		max-height: pfe-local(MaxHeight);	
+		padding-right: calc(#{pfe-var(container-padding)} * 2);
 	}
 
 	&__close {

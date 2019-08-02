@@ -8,7 +8,6 @@ $pfe-modal--breakpoint--medium: 640px;
 	--pfe-modal--MinWidth: 50vw;
 	--pfe-modal--MaxWidth--mobile: 94vw;
 	--pfe-modal--MaxHeight: 90vh;
-	--pfe-modal--MaxHeight--mobile: 80vh;
 	--pfe-modal--Padding--mobile: calc(#{pfe-var(container-padding)} * 1.25) calc(#{pfe-var(container-padding)} * 3) calc(#{pfe-var(container-padding)} * 1.25) calc(#{pfe-var(container-padding)} * 1.25);
 	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2);
 	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
@@ -71,11 +70,10 @@ $pfe-modal--breakpoint--medium: 640px;
 		max-width: calc(100% - #{pfe-var(ui--element--size)});
 		overflow-y: auto;
 		overscroll-behavior: contain;
-		max-height: pfe-local(MaxHeight--mobile);	
+		max-height: pfe-local(MaxHeight);	
 
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			padding: pfe-local(Padding);
-			max-height: pfe-local(MaxHeight);
 		}
 
 		&[hidden] {

@@ -7,8 +7,8 @@ $pfe-modal--breakpoint--medium: 640px;
 	--pfe-modal--MaxWidth: 70vw;
 	--pfe-modal--MinWidth: 50vw;
 	--pfe-modal--MaxWidth--mobile: 94vw;
-	--pfe-modal--MaxHeight: none;
-	--pfe-modal--MinHeight: 40vh;
+	--pfe-modal--MaxHeight: 90vh;
+	--pfe-modal--MaxHeight--mobile: 80vh;
 	--pfe-modal--Padding--mobile: calc(#{pfe-var(container-padding)} * 1.25) calc(#{pfe-var(container-padding)} * 3) calc(#{pfe-var(container-padding)} * 1.25) calc(#{pfe-var(container-padding)} * 1.25);
 	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2);
 	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
@@ -32,7 +32,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		z-index: 2;
+		z-index: var(--pfe-z--modal, 2000);
 
 		&[hidden] {
 			display: none;
@@ -53,30 +53,29 @@ $pfe-modal--breakpoint--medium: 640px;
 		}
 	}
 	&__wrapper {
-		z-index: 2;
 		position: relative;
 		max-width: pfe-local(MaxWidth--mobile);
 		min-width: pfe-local(MinWidth);
-		min-height: pfe-local(MinHeight);
 		margin: 0 auto;
 		box-shadow: pfe-var(box-shadow--lg);
 		background-color: pfe-color(surface--lightest);
 		border-radius: #{pfe-var(ui--border-radius)};
-		overflow-y: auto;
-		overscroll-behavior: contain;
 
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			max-width: pfe-local(MaxWidth);
-			max-height: pfe-local(MaxHeight);	
 		}
 	}
 	&__container {
 		position: relative;
 		padding: var(--pfe-modal--Padding--mobile);
 		max-width: calc(100% - #{pfe-var(ui--element--size)});
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		max-height: pfe-local(MaxHeight--mobile);	
 
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			padding: pfe-local(Padding);
+			max-height: pfe-local(MaxHeight);
 		}
 
 		&[hidden] {

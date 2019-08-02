@@ -31,6 +31,13 @@
       <pfe-collapsible-toggle>Toggle</pfe-collapsible-toggle>
     </div>
 
+    <div id="animationComplete">
+      <pfe-collapsible>
+        <pfe-collapsible-toggle>Toggle</pfe-collapsible-toggle>
+        <pfe-collapsible-panel>Panel</pfe-collapsible-panel>
+      </pfe-collapsible>
+    </div>
+
     <script>
       suite("<pfe-collapsible>", () => {
         test("it should upgrade", () => {
@@ -140,6 +147,86 @@
               done();
             });
           });
+        });
+
+        test('it should fire a pfe-collapsible:change event when the element is expanded or collapsed', () => {
+          const collapsible = document.querySelector('pfe-collapsible');
+          const toggle = collapsible.querySelector('pfe-collapsible-toggle');
+          const panel = collapsible.querySelector("pfe-collapsible-panel");
+          const handlerSpy = sinon.spy();
+
+          document.addEventListener('pfe-collapsible:change', handlerSpy);
+
+          toggle.click();
+
+          const [event] = handlerSpy.getCall(0).args;
+
+          sinon.assert.calledOnce(handlerSpy);
+          assert.deepEqual(event.detail, {
+            expanded: true,
+            toggle: toggle,
+            panel: panel
+          });
+
+          // reset
+          document.removeEventListener('pfe-collapsible:change', handlerSpy);
+          toggle.click();
+        });
+
+        test('a pfe-collapsible-panel should fire a pfe-collapsible-panel:animating event when the panel is expanded or collapsed', () => {
+          const collapsible = document.querySelector('pfe-collapsible');
+          const toggle = collapsible.querySelector('pfe-collapsible-toggle');
+          const panel = collapsible.querySelector("pfe-collapsible-panel");
+          const handlerSpy = sinon.spy();
+
+          document.addEventListener('pfe-collapsible-panel:animating', handlerSpy);
+
+          toggle.click();
+
+          const [event] = handlerSpy.getCall(0).args;
+
+          sinon.assert.calledOnce(handlerSpy);
+          assert.deepEqual(event.detail, {
+            state: "opening",
+            panel: panel
+          });
+
+          // reset
+          document.removeEventListener('pfe-collapsible-panel:animating', handlerSpy);
+          toggle.click();
+        });
+
+        test('a pfe-collapsible-panel should fire a pfe-collapsible-panel:animation-complete event when the panel has finished expanding or collapsing', done => {
+          const collapsible = document.querySelector('#animationComplete pfe-collapsible');
+          const toggle = collapsible.querySelector('pfe-collapsible-toggle');
+          const panel = collapsible.querySelector("pfe-collapsible-panel");
+          const handlerSpy = sinon.spy();
+
+          document.querySelector("#animationComplete").addEventListener('pfe-collapsible-panel:animation-complete', handlerSpy);
+
+          toggle.click();
+
+          setTimeout(function() {
+            const [event] = handlerSpy.getCall(0).args;
+            sinon.assert.calledOnce(handlerSpy);
+            assert.deepEqual(event.detail, {
+              expanded: true,
+              panel: panel
+            });
+
+            // reset
+            document.querySelector("#animationComplete").removeEventListener('pfe-collapsible-panel:animation-complete', handlerSpy);
+            toggle.click();
+            done();
+          }, 350);
+        });
+
+        test("it should add a pfe-animation attribute to a pfe-collapsible-panel when the attribute is added to pfe-collapsible", () => {
+          const collapsible = document.querySelector("pfe-collapsible");
+          const panel = collapsible.querySelector("pfe-collapsible-panel");
+
+          collapsible.setAttribute("pfe-animation", "false");
+          assert.equal(panel.getAttribute("pfe-animation"), "false");
         });
 
         test("it should log a warning if a pfe-collapsible-toggle doesn't have an associated pfe-collapsible-panel", () => {

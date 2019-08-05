@@ -1,6 +1,6 @@
 # PFElements Progress Indicator Element
 
-`pfe-cta` is a call-to-action (CTA) element, that stands out from regular hypertext links, and is used for linking users to webpages.
+`pfe-progress-indicator` is a call-to-action (CTA) element, that stands out from regular hypertext links, and is used for linking users to webpages.
 
 ## Usage
 ```html

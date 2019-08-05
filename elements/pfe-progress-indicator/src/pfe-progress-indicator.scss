@@ -1,5 +1,8 @@
 @import "../../pfe-sass/pfe-sass";
 
+$pfe-progress-indicator--border-light: 4px solid rgba(0, 0, 0, 0.25);
+$pfe-progress-indicator--border-dark: 4px solid rgba(0, 0, 0, 0.75);
+
 :host([hidden]) {
   display: none;
 }
@@ -9,12 +12,12 @@
     -webkit-animation:spin 1s linear infinite;
     -moz-animation:spin 1s linear infinite;
 
-    border-bottom: 4px solid rgba(0,0,0,0.25);
-    border-left: 4px solid rgba(0,0,0,0.25);
+    border-bottom: $pfe-progress-indicator--border-light;
+    border-left: $pfe-progress-indicator--border-light;
+    border-right: $pfe-progress-indicator--border-light;
+    border-top: $pfe-progress-indicator--border-dark;
     border-radius: 100%;
-    border-right: 4px solid rgba(0,0,0,0.25);
-    border-top: 4px solid rgba(0,0,0,0.75);
-
+    
     display: inline-block;
     height: 2rem;
     margin: 0 auto;

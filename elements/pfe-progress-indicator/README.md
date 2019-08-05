@@ -1,14 +1,25 @@
-# PatternFly Element | Progress Element
+# PFElements Progress Indicator Element
 
-## Dependencies
+`pfe-cta` is a call-to-action (CTA) element, that stands out from regular hypertext links, and is used for linking users to webpages.
 
-Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
+## Usage
+```html
+<pfe-progress-indicator pfe-indeterminate>
+    <h1>My fallback loading message</h1>
+</pfe-progress-indicator>
+```
 
-    npm install -g polyserve web-component-tester
+## Slots
 
-## Dev
+Progress Indicator has one slot only. It is named `progress-message`.
 
-    npm start
+### Default slot
+
+We expect any html tag to be the first child inside `pfe-progress-indicator` element. The provided element should contain a fallback loading message if JavaScript should fail for any reason. When the element is connected, the loading message is visually hidden, and replaced by an animated "spinner".
+
+## Styling
+
+As of writing, the progress indicator element has only one style, but in the future it could be expanded to include many different types of progress indicators.
 
 ## Test
 
@@ -20,13 +31,14 @@ Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-compone
 
 ## Demo
 
-Run `npm start` and Polyserve will start a server and open your default browser to the demo page of the element.
+From the PFElements root directory, run:
+
+    npm start
 
 ## Code style
 
-Progress (and all PatternFly Elements) use [Prettier][prettier] to auto-format JS and JSON.  The style rules get applied when you commit a change.  If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
+Progress Indicator (and all PFElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
 
 [prettier]: https://github.com/prettier/prettier/
-[prettier-ed]: https://github.com/prettier/prettier/#editor-integration
-[polyserve]: https://github.com/Polymer/polyserve
+[prettier-ed]: https://prettier.io/docs/en/editors.html
 [web-component-tester]: https://github.com/Polymer/web-component-tester

@@ -13,9 +13,6 @@ class PfeProgressIndicator extends PFElement {
     return "pfe-progress-indicator.scss";
   }
 
-  // static get observedAttributes() {
-  //   return [];
-  // }
 
   constructor() {
     super(PfeProgressIndicator);
@@ -46,7 +43,6 @@ class PfeProgressIndicator extends PFElement {
     }
   }
 
-  // attributeChangedCallback(attr, oldValue, newValue) {}
 }
 
 PFElement.create(PfeProgressIndicator);

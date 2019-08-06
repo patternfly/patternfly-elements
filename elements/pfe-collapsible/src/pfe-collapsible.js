@@ -63,7 +63,7 @@ class PfeCollapsibleToggle extends PFElement {
 
     this.expanded = false;
 
-    if (this.id) {
+    if (this.id && this.id !== "") {
       this.pfeId = this.id;
     }
 
@@ -99,7 +99,13 @@ class PfeCollapsibleToggle extends PFElement {
       return;
     }
 
-    this.controlledPanel = document.querySelector(`#${newVal}`);
+    // this can be an issue if the pfe-collapsible is located within
+    // a shadow root
+    if (this.getRootNode) {
+      this.controlledPanel = this.getRootNode().querySelector(`#${newVal}`);
+    } else {
+      this.controlledPanel = document.querySelector(`#${newVal}`);
+    }
   }
 
   toggle() {
@@ -208,7 +214,7 @@ class PfeCollapsiblePanel extends PFElement {
 
     this.expanded = false;
 
-    if (this.id) {
+    if (this.id && this.id !== "") {
       this.pfeId = this.id;
     }
 

@@ -1,7 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
-$pfe-progress-indicator--border-light: 4px solid rgba(0, 0, 0, 0.25);
-$pfe-progress-indicator--border-dark: 4px solid rgba(0, 0, 0, 0.75);
+$pfe-progress-indicator--border-light: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} rgba(0, 0, 0, .25);
+$pfe-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} rgba(0, 0, 0, .75);
 
 :host([hidden]) {
   display: none;
@@ -19,35 +19,14 @@ $pfe-progress-indicator--border-dark: 4px solid rgba(0, 0, 0, 0.75);
     border-radius: 100%;
     
     display: inline-block;
-    height: 2rem;
+    height: var(--pfe-progress-indicator--height, 2rem);
     margin: 0 auto;
     position: relative;
-    width: 2rem;
+    width: var(--pfe-progress-indicator--width, 2rem);
     vertical-align: middle;
     visibility: visible;
 }
 
-@-ms-keyframes spin {
-    from {
-        -ms-transform: rotate(0deg);
-    } to {
-        -ms-transform: rotate(360deg);
-    }
-}
-@-moz-keyframes spin {
-    from {
-        -moz-transform: rotate(0deg);
-    } to {
-        -moz-transform: rotate(360deg);
-    }
-}
-@-webkit-keyframes spin {
-    from {
-        -webkit-transform: rotate(0deg);
-    } to {
-        -webkit-transform: rotate(360deg);
-    }
-}
 @keyframes spin {
     from {
         transform: rotate(0deg);
@@ -57,12 +36,5 @@ $pfe-progress-indicator--border-dark: 4px solid rgba(0, 0, 0, 0.75);
 }
 
   .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    border: 0;
+    @include pfe-sr-only;
   }

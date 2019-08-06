@@ -1,6 +1,6 @@
 # PFElements Progress Indicator Element
 
-`pfe-progress-indicator` is a call-to-action (CTA) element, that stands out from regular hypertext links, and is used for linking users to webpages.
+`pfe-progress-indicator` is a "loader" that indicates to the user that part of the web page is loading, or waiting on other http events to be ready to use.
 
 ## Usage
 ```html
@@ -8,6 +8,8 @@
     <h1>My fallback loading message</h1>
 </pfe-progress-indicator>
 ```
+
+At the time of writing there is only one style variant, `pfe-indeterminate` that spins without informing the user of where there are in the waiting process, only that http activity has not been resolved. This may change in the future as more style variants become available.
 
 ## Slots
 

@@ -287,6 +287,10 @@ class PfeCollapsible extends PFElement {
     return "pfe-collapsible.scss";
   }
 
+  get schemaUrl() {
+    return "pfe-collapsible.json";
+  }
+
   get animates() {
     return this.getAttribute("pfe-animation") === "false" ? false : true;
   }

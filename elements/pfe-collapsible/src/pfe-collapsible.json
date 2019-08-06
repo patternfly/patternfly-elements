@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Collapsible",
+  "description": "Collapsible element",
+  "type": "object",
+  "tag": "pfe-collapsible",
+  "class": "pfe-collapsible",
+  "category": "content",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "default": {
+          "title": "Default",
+          "type": "array",
+          "namedSlot": false,
+          "items": {
+            "oneOf": [{
+              "$ref": "pfe-collapsibe-toggle"
+            }, {
+              "$ref": "pfe-collapsible-panel"
+            }]
+          }
+        }
+      }
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

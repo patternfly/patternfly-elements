@@ -13,6 +13,9 @@ class PfeProgressIndicator extends PFElement {
     return "pfe-progress-indicator.scss";
   }
 
+  get schemaUrl() {
+    return "pfe-progress-indicator.json";
+  }
 
   constructor() {
     super(PfeProgressIndicator);

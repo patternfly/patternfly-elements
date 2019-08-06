@@ -40,7 +40,7 @@ class PfeNavigation extends PFElement {
     this.dispatchEvent(
       new CustomEvent("pfe-navigation-item:close", {
         detail: {
-          navigationItem: null,
+          navigationItem: this._activeNavigationItem,
           expanded: false
         },
         bubbles: true,
@@ -134,12 +134,23 @@ class PfeNavigation extends PFElement {
   _resizeHandler(event) {
     // If there is currently an active navigation element
     if(this._activeNavigationItem !== null) {
-      // Check if that active item is the mobile menu
+      // Check what the active item is
       let isMenu = this._activeNavigationItem.getAttribute("icon") === "menu";
-      // Check if the window size is greater than 996px
-      let isDesktop = window.outerWidth >= 996;
-      // If it's the menu item and we're at a desktop size, close the active item
-      if(isDesktop && isMenu) {
+      let isSwitcher = this._activeNavigationItem.getAttribute("icon") === "bento";
+      let isUtility = this._activeNavigationItem.hasAttribute("icon");
+
+      // Check the window size
+      let isDesktop = window.outerWidth >= 992;
+      let isTablet = window.outerWidth < 992 && window.outerWidth >= 576;
+      let isMobile = window.outerWidth < 576;
+      
+      // Check the logic for visible items on desktop, tablet, and mobile
+      let desktopCheck = isDesktop && isMenu;
+      let tabletCheck = isTablet && !isUtility;
+      let mobileCheck = isMobile && !(isMenu || isSwitcher);
+
+      // If any states are true, fire the close all event
+      if(desktopCheck || tabletCheck || mobileCheck) {
         this.closeAllNavigationItems();
       }
     }

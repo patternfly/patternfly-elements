@@ -60,7 +60,7 @@ $LOCAL: navigation;
 .pfe-navigation {
   &__wrapper {
     position: relative;
-    // z-index: 2;
+    z-index: #{pfe-var($cssvar: navigation, $map: $z-index)};
     
     background-color: #{map-get($pfe-colors, surface--darkest)};
     background-color: #{pfe-local(BackgroundColor)};
@@ -70,7 +70,6 @@ $LOCAL: navigation;
   &__container {
     margin: 0 auto;
     padding: 0 #{pfe-local(Padding--horizontal)};
-    // z-index: 2;
 
     display: flex;
     flex-flow: row nowrap;

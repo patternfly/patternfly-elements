@@ -3,8 +3,6 @@ import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeNavigation from "../pfe-navigation";
-import PfeCta from "../../pfe-cta/pfe-cta";
-import PfeCard from "../../pfe-card/pfe-card";
 
 const stories = storiesOf("Navigation", module);
 

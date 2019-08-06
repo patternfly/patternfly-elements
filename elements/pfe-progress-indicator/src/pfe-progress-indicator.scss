@@ -8,6 +8,9 @@ $pfe-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #
 }
 
 :host([pfe-indeterminate]) {
+    ::slotted(*) {
+        @include pfe-sr-only;
+    }
     animation: spin 1s linear infinite;
     -webkit-animation:spin 1s linear infinite;
     -moz-animation:spin 1s linear infinite;
@@ -34,7 +37,3 @@ $pfe-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #
         transform: rotate(360deg);
     }
 }
-
-  .sr-only {
-    @include pfe-sr-only;
-  }

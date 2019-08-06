@@ -219,3 +219,9 @@ $icons: (
   user: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="21px" height="20px" viewBox="0 -1 21 20" xml:space="preserve"><g stroke="black" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round"><g><path d="M0,19 C0,13.75 4.25,9.5 9.5,9.5 C14.75,9.5 19,13.75 19,19"></path><circle cx="9.5" cy="4.75" r="4.75"></circle></g></g></svg>'),
   user--on-dark: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="21px" height="20px" viewBox="0 -1 21 20" xml:space="preserve"><g stroke="white" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round"><g><path d="M0,19 C0,13.75 4.25,9.5 9.5,9.5 C14.75,9.5 19,13.75 19,19"></path><circle cx="9.5" cy="4.75" r="4.75"></circle></g></g></svg>')
 );
+
+$z-index: (
+  navigation: 99,
+  overlays: 98,
+  content: 0
+);

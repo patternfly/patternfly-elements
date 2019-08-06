@@ -23,7 +23,7 @@ $LOCAL: navigation-item;
     .pfe-navigation-item__trigger.pfe-navigation-item {
         .expanded & {
             background-color: #{pfe-color(surface--lightest)};
-            border-top-color:  #{pfe-color(surface--accent)};
+            border-top-color: #{pfe-color(surface--accent)};
         }
         &:hover {
             cursor: pointer;
@@ -47,9 +47,9 @@ $LOCAL: navigation-item;
     > *:not(.pfe-navigation-item__trigger--icon) {
         margin: 0;
         font-family: #{pfe-var(font-family)};
-        font-size: #{pfe-local($cssvar: FontSize, $fallback: 14px, $region: trigger)};
+        font-size:   #{pfe-local($cssvar: FontSize, $fallback: 14px, $region: trigger)};
         font-weight: #{pfe-local($cssvar: FontWeight, $fallback: 100, $region: trigger)};
-        color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
+        color:       #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
         @include browser-query(ie11) {
             color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
 
@@ -94,3 +94,11 @@ pfe-navigation-item [slot="trigger"] a,
         margin: 0 auto;
     }
 }
+
+pfe-navigation .pfe-link-link {
+    &--header > a {
+        @extend %link-styles;
+    }
+}
+
+

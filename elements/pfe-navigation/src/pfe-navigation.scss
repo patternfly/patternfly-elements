@@ -27,7 +27,7 @@ $LOCAL: navigation;
   }
 
   display: block;
-  z-index: 2;
+  z-index: #{pfe-var($cssvar: content, $map: $z-index)};
   width: 100%;
 }
 
@@ -36,7 +36,7 @@ $LOCAL: navigation;
   top: 0;
   left: 0;
   width: 100vw;
-  z-index: 99;
+  z-index: #{pfe-var($cssvar: navigation, $map: $z-index)};
 }
 
 // Note: These styles do not pick up in Edge
@@ -60,7 +60,7 @@ $LOCAL: navigation;
 .pfe-navigation {
   &__wrapper {
     position: relative;
-    z-index: 2;
+    // z-index: 2;
     
     background-color: #{map-get($pfe-colors, surface--darkest)};
     background-color: #{pfe-local(BackgroundColor)};
@@ -70,7 +70,7 @@ $LOCAL: navigation;
   &__container {
     margin: 0 auto;
     padding: 0 #{pfe-local(Padding--horizontal)};
-    z-index: 2;
+    // z-index: 2;
 
     display: flex;
     flex-flow: row nowrap;
@@ -100,7 +100,7 @@ $LOCAL: navigation;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 1;
+    z-index: #{pfe-var($cssvar: overlay, $category: 'zindex', $map: $z-index)};
     &[hidden] {
       display: none;
     }

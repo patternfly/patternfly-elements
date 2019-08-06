@@ -15,11 +15,11 @@
         "content": {
           "title": "Content",
           "type": "array",
-          "namedSlot": true,
+          "namedSlot": false,
           "items": {
             "oneOf": [
               {
-                "$ref": "progress-message"
+                "$ref": "raw"
               }
             ]
           }

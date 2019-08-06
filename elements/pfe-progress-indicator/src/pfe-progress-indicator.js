@@ -17,12 +17,12 @@ class PfeProgressIndicator extends PFElement {
   constructor() {
     super(PfeProgressIndicator);
     this._init = this._init.bind(this);
+    this._slot = this.shadowRoot.querySelector("slot");
+    this._slot.addEventListener("slotchange", this._init);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this._slot = this.shadowRoot.querySelector("slot");
-    this._slot.addEventListener("slotchange", this._init);
   }
 
   disconnectedCallback() {

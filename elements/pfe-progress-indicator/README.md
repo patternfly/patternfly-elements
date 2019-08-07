@@ -9,15 +9,30 @@
 </pfe-progress-indicator>
 ```
 
-At the time of writing there is only one style variant, `pfe-indeterminate` that spins without informing the user of where there are in the waiting process, only that http activity has not been resolved. This may change in the future as more style variants become available.
+At the time of writing there is only one style variant, `pfe-indeterminate` that spins without informing the user of where they are in the waiting process, only that http activity has not been resolved. This may change in the future as more style variants become available.
 
 ## Slots
 
-Progress Indicator has one slot only. It is named `progress-message`.
+Progress Indicator has one unnamed slot only.
 
 ### Default slot
 
 We expect any html tag to be the first child inside `pfe-progress-indicator` element. The provided element should contain a fallback loading message if JavaScript should fail for any reason. When the element is connected, the loading message is visually hidden, and replaced by an animated "spinner".
+
+E.g.
+
+```
+// The web component that upgrades to a "loader"
+<pfe-progress-indicator>
+
+// your custom message for JS failure AND a11y technologies
+<h1>
+  This text will be seen if JS fails, but will be hidden on upgrade.
+  Screen readers will still see it as a part of the DOM.
+</h1>
+
+</pfe-progress-indicator>
+```
 
 ## Styling
 

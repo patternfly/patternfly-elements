@@ -22,10 +22,10 @@ $pfe-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #
     border-radius: 100%;
     
     display: inline-block;
-    height: var(--pfe-progress-indicator--height, 2rem);
+    height: var(--pfe-progress-indicator--Height, 2rem);
     margin: 0 auto;
     position: relative;
-    width: var(--pfe-progress-indicator--width, 2rem);
+    width: var(--pfe-progress-indicator--Width, 2rem);
     vertical-align: middle;
     visibility: visible;
 }

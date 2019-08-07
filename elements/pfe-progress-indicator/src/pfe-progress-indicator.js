@@ -41,8 +41,6 @@ class PfeProgressIndicator extends PFElement {
         PfeProgressIndicator.tag
         }: You do not have a backup loading message.`
       );
-    } else {
-      // do nothing
     }
   }
 

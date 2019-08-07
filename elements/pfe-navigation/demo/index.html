@@ -35,10 +35,12 @@
 
   <body unresolved>
     <h1>&lt;pfe-navigation&gt;</h1>
-    <pfe-navigation sticky close-on-click="external">
+    <pfe-navigation pfe-sticky pfe-close-on-click="external">
       <!-- Skip navigation -->
       <div slot="skip">
-        <a href="#rh-main-content">Skip to content</a>
+        <ul>
+          <li><a href="#rh-main-content">Skip to content</a></li>
+        </ul>
       </div>
       <!-- Site logo -->
       <h2 slot="logo">
@@ -47,7 +49,7 @@
         </a>
       </h2>
       <!-- Search -->
-      <pfe-navigation-item slot="search" icon="search">
+      <pfe-navigation-item slot="search" pfe-icon="search">
         <h3 slot="trigger"><a href="#url-to-search-page">Search</a></h3>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">
@@ -162,7 +164,7 @@
         </pfe-navigation-main>
       </nav>
       <!-- Language -->
-      <pfe-navigation-item slot="language" icon="globe">
+      <pfe-navigation-item slot="language" pfe-icon="globe">
         <h3 slot="trigger"><a href="/url-to-language-page">English</a></h3>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">
@@ -170,9 +172,9 @@
           </div>
         </div>
       </pfe-navigation-item>
-      <a href="/url-to-language-page" slot="mobile-language" icon="user" hidden>English</a>
+      <a href="/url-to-language-page" slot="mobile-language" pfe-icon="user" hidden>English</a>
       <!-- Log in -->
-      <pfe-navigation-item slot="login" icon="user">
+      <pfe-navigation-item slot="login" pfe-icon="user">
         <h3 slot="trigger"><a href="/login">Log in</a></h3>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">
@@ -180,9 +182,9 @@
           </div>
         </div>
       </pfe-navigation-item>
-      <a href="/login" slot="mobile-login" icon="user" hidden>Login/Register</a>
+      <a href="/login" slot="mobile-login" pfe-icon="user" hidden>Login/Register</a>
       <!-- Site switcher -->
-      <pfe-navigation-item slot="site-switcher" icon="bento">
+      <pfe-navigation-item slot="site-switcher" pfe-icon="bento">
         <h3 slot="trigger"><a href="/url-to-rh-websites-page">Websites</a></h3>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">

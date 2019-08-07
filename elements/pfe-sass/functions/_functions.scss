@@ -321,12 +321,27 @@ $map: $pfe-colors) {
 /// @use -
 ///     ```
 ///     a:visited {
-///         color:       #{pfe-radio(  ui-link, visited  )};
+///         color:       #{pfe-radio(  color, ui-link, visited  )};
 ///     }
 ///     ```
 ///
-/// @returns - var(--pfe-broadcasted--ui-link--visited);
+/// @returns - var(--pfe-broadcasted--color--ui-link--visited);
 ///
 @function pfe-radio($cssvar...) {
-    @return var(--#{$repo}-broadcasted--#{to-string($cssvar, '--')});
+    $fallback: "";
+    $varname: #{to-string($cssvar, '--')};
+    @if str-starts-with($varname, "color") {
+        $cssvar: remove($cssvar, "color");
+        $fallback: map-get($pfe-colors, #{to-string($cssvar, '--')});
+    }
+    @else {
+        $fallback: map-get($pfe-vars, $varname);
+    }
+
+    @if $fallback != "" {
+        @return var(--#{$repo}-broadcasted--#{$varname}, $fallback);
+    }
+    @else {
+        @return var(--#{$repo}-broadcasted--#{$varname});
+    }
 }

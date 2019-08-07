@@ -3,18 +3,18 @@
 $LOCAL: navigation-item;
 
 %link-styles {
-    color: var(--pfe-broadcasted--color--ui-link, #{map-get($pfe-colors, 'ui-link')});
+    color: #{pfe-radio(color, ui-link)};
     text-decoration: none;
     &:visited {
-        color: var(--pfe-broadcasted--color--ui-link--visited, #{map-get($pfe-colors, 'ui-link--visited')});
+        color: #{pfe-radio(color, ui-link, visited)};
     }
     &:hover {
-        color: var(--pfe-broadcasted--color--ui-link--hover, #{map-get($pfe-colors, 'ui-link--hover')});
+        color: #{pfe-radio(color, ui-link, hover)};
         text-decoration: none;
     }
     &:focus {
         outline: none;
-        color: var(--pfe-broadcasted--color--ui-link--focus, #{map-get($pfe-colors, 'ui-link--focus')});
+        color: #{pfe-radio(color, ui-link, focus)}
     }
 }
 
@@ -27,14 +27,14 @@ $LOCAL: navigation-item;
         }
         &:hover {
             cursor: pointer;
-            border-top: 4px solid #{pfe-color(surface--accent)};
+            border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-color(surface--accent)};
         }
     }
     .pfe-navigation__utility--mobile > *:not(:last-child) {
-        margin-bottom: 15px;
+        margin-bottom: #{pfe-var(container-spacer)};
     }
     .pfe-navigation-item__tray--container {
-        padding-top: 15px;
+        padding-top: #{pfe-var(container-spacer)};
     }
 }
 
@@ -70,8 +70,7 @@ pfe-navigation [slot="logo"] > a {
     color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
     text-decoration: none;
     &:focus {
-        outline: 1px dashed ;
-        outline: var(--pfe-theme--surface--border-width, 1px) dashed var(--pfe-theme--color--surface--lightest, #fff);
+        outline: #{pfe-var(surface--border-width)} dashed #{pfe-color(surface--lightest)};
     }
 }
 

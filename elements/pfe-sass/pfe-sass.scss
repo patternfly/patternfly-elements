@@ -20,13 +20,9 @@
  * SOFTWARE.
  */
 
-//
-// PFElements SASS / Styles
-// This will no longer be "RH" for "Red Hat", but for "PFElement"
-//
-
 $repo: pfe !default;
 $pfe-global--font-size-root: 16 !default; // root for fonts and everything else
+$USE-FALLBACK: false; //default for usefallback is false
 
 @import "_functions";
 @import "_variables";

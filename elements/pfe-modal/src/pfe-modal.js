@@ -64,8 +64,9 @@ class PfeModal extends PFElement {
   constructor() {
     super(PfeModal, { type: PfeModal.PfeType });
 
-    this.open = false;
     this.header_id = this.randomId;
+
+    this.open = false;
 
     this._keydownHandler = this._keydownHandler.bind(this);
     this._toggleModal = this._toggleModal.bind(this);
@@ -179,6 +180,8 @@ class PfeModal extends PFElement {
         this._modalWindow.removeAttribute("hidden");
         this._overlay.removeAttribute("hidden");
         this._outer.removeAttribute("hidden");
+        // This prevents background scroll
+        document.body.style.overflow = "hidden";
         // Set the focus to the container
         this._modalWindow.focus();
       } else {
@@ -187,6 +190,8 @@ class PfeModal extends PFElement {
         this._modalWindow.setAttribute("hidden", true);
         this._overlay.setAttribute("hidden", true);
         this._outer.setAttribute("hidden", true);
+        // Return scrollability
+        document.body.style.overflow = "auto";
         // Move focus back to the trigger element
         this.trigger.focus();
       }

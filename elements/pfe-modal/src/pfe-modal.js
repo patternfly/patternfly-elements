@@ -1,5 +1,12 @@
 import PFElement from "../pfelement/pfelement.js";
 
+// StartsWith polyfill
+if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function(searchString, position){
+    return this.substr(position || 0, searchString.length) === searchString;
+};
+}
+
 class PfeModal extends PFElement {
   static get tag() {
     return "pfe-modal";
@@ -29,7 +36,7 @@ class PfeModal extends PFElement {
   openModal(event) {
     event.preventDefault();
 
-    this.trigger = event.target;
+    this.trigger = event ? event.target : window.event.srcElement;
 
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:open`, {
@@ -88,7 +95,9 @@ class PfeModal extends PFElement {
     this.addEventListener(`${this.tag}:close`, this._toggleModal);
 
     this.addEventListener("keydown", this._keydownHandler);
+    this._modalCloseButton.addEventListener("keydown", this._keydownHandler);
     this._modalCloseButton.addEventListener("click", this.closeModal);
+    this._overlay.addEventListener("click", this.closeModal);
 
     this._observer.observe(this, { childList: true });
   }
@@ -98,8 +107,9 @@ class PfeModal extends PFElement {
     this.removeEventListener(`${this.tag}:close`, this._toggleModal);
 
     this.removeEventListener("keydown", this._keydownHandler);
-
     this._modalCloseButton.removeEventListener("click", this.closeModal);
+    this._modalCloseButton.removeEventListener("click", this.closeModal);
+    this._overlay.removeEventListener("click", this.closeModal);
 
     if (this.trigger) {
       this.trigger.removeEventListener("click", this.openModal);
@@ -125,8 +135,7 @@ class PfeModal extends PFElement {
       this.header.setAttribute("id", this.header_id);
       this._modalWindow.setAttribute("aria-labelledby", this.header_id);
     } else {
-      // @TODO Do something else to assign the label
-      this._container.setAttribute("no_header", "");
+      // Get the first heading in the modal if it exists
       const headings = this.body.filter(el => el.tagName.startsWith("H"));
       if (headings.length > 0) {
         headings[0].setAttribute("id", this.header_id);
@@ -135,24 +144,27 @@ class PfeModal extends PFElement {
         this._modalWindow.setAttribute("aria-label", this.trigger.innerText);
       }
     }
-
-    this._overlay.addEventListener("click", this.closeModal);
-    this._modalCloseButton.addEventListener("keydown", this._keydownHandler);
   }
 
   _keydownHandler(event) {
-    switch (event.key) {
+    let target = event.target || window.event.srcElement;
+    let key = event.key || event.keyCode;
+    switch (key) {
       case "Tab":
-        if (event.target === this._modalCloseButton) {
+      case 9:
+        if (target === this._modalCloseButton) {
           event.preventDefault();
           this._modalWindow.focus();
         }
         return;
       case "Escape":
+      case "Esc":
+      case 27:
         this.closeModal(event);
         return;
       case "Enter":
-          if (event.target === this.trigger) {
+      case 13:
+          if (target === this.trigger) {
             this.openModal(event);
           }
           return;

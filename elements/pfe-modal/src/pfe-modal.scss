@@ -72,7 +72,7 @@ $pfe-modal--breakpoint--medium: 640px;
 			display: none;
 		}
 
-		&[no_header] {
+		:host(:not([has_header])) & {
 			@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 				padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 6) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);			
 			}

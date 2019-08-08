@@ -42,7 +42,5 @@ stories.add(PfeModal.tag, () => {
   }];
 
 	const render = template(config);
-  const output = tools.preview(render);
-  return output;
   return tools.preview(render);
 });

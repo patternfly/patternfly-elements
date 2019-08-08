@@ -131,9 +131,9 @@ $LOCAL: band;
           "aside" "body";
       }
       &[pfe-aside-desktop="left"] {
-        grid-template-areas:
-          "aside body";
         @media (min-width: #{pfe-breakpoint(md)}) {
+            grid-template-areas:
+              "aside body";
           --pfe-band--layout: #{pfe-local(Width__aside--sm)} 1fr;
         }
         @media (min-width: #{pfe-breakpoint(lg)}) {

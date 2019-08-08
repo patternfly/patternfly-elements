@@ -84,6 +84,10 @@ $pfe-modal--breakpoint--medium: 640px;
 				padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 6) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);			
 			}
 
+			@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
+				padding: 0 0 calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);			
+			}
+
 			// Remove margin-top on the first slotted element that is not the header.
 			::slotted(*:nth-child(1)),
 			::slotted(*:nth-child(2)) {
@@ -103,6 +107,11 @@ $pfe-modal--breakpoint--medium: 640px;
 		padding-right: calc(#{pfe-var(container-padding)} * 2);
 
 		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
+			box-sizing: border-box;
+			padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2) 0;
+		}
+
+		@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
 			box-sizing: border-box;
 			padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2) 0;
 		}

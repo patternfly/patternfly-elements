@@ -64,8 +64,9 @@ class PfeModal extends PFElement {
   constructor() {
     super(PfeModal, { type: PfeModal.PfeType });
 
-    this.open = false;
     this.header_id = this.randomId;
+
+    this.open = false;
 
     this._keydownHandler = this._keydownHandler.bind(this);
     this._toggleModal = this._toggleModal.bind(this);

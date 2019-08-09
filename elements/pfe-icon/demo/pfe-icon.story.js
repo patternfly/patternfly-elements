@@ -6,14 +6,19 @@ import {
   color,
   boolean
 } from "@storybook/addon-knobs/polymer";
-import "../pfe-icon";
+import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as tools from "../../../.storybook/utils.js";
+import PfeIcon from "../pfe-icon";
 
 const stories = storiesOf("Icon", module);
 stories.addDecorator(withKnobs);
 
+const template = (data = {}) => tools.component(PfeIcon.tag, data.prop, "");
+
 const validValues = {
   size: ["xl", "lg", "md", "sm", "2x", "3x", "4x"],
   color: [
+    "default",
     "base",
     "compliment",
     "accent",
@@ -21,8 +26,7 @@ const validValues = {
     "important",
     "moderate",
     "success",
-    "info",
-    "default"
+    "info"
   ],
   rhIcons: [
     "rh-aed",
@@ -272,10 +276,21 @@ const validValues = {
   ]
 };
 
-stories.add("pfe-icon", () => {
-  const iconName = select("Icon", validValues.rhIcons);
-  const color = select("Color", validValues.color, "default");
-  const size = select("Size", validValues.size, "xl");
+stories.add(PfeIcon.tag, () => {
+  // const iconName = select("Icon", validValues.rhIcons, validValues.rhIcons[0]);
+  // const color = select("Color", validValues.color, validValues.color[0]);
+  // const size = select("Size", validValues.size, validValues.size[0]);
+  //
+  // return `<pfe-icon pfe-icon="${iconName}" color="${color}" size="${size}"></pfe-icon>`;
+  let config = {};
 
-  return `<pfe-icon pfe-icon="${iconName}" color="${color}" size="${size}"></pfe-icon>`;
+  const props = PfeIcon.properties;
+  props["pfe-icon"] = validValues.rhIcons;
+
+  // Build the knobs and read in their selections
+  config.prop = tools.autoPropKnobs(props, storybookBridge);
+
+  let rendered = template(config);
+
+  return tools.preview(rendered);
 });

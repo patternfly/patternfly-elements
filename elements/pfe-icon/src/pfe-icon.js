@@ -15,6 +15,10 @@ class PfeIcon extends PFElement {
     return "pfe-icon.scss";
   }
 
+  get schemaUrl() {
+    return "pfe-icon.json";
+  }
+
   static get observedAttributes() {
     return ["pfe-icon"];
   }

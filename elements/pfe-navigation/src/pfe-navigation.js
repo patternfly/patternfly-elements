@@ -135,9 +135,9 @@ class PfeNavigation extends PFElement {
     // If there is currently an active navigation element
     if(this._activeNavigationItem !== null) {
       // Check what the active item is
-      let isMenu = this._activeNavigationItem.getAttribute("icon") === "menu";
-      let isSwitcher = this._activeNavigationItem.getAttribute("icon") === "bento";
-      let isUtility = this._activeNavigationItem.hasAttribute("icon");
+      let isMenu = this._activeNavigationItem.getAttribute("pfe-icon") === "menu";
+      let isSwitcher = this._activeNavigationItem.getAttribute("pfe-icon") === "bento";
+      let isUtility = this._activeNavigationItem.hasAttribute("pfe-icon");
 
       // Check the window size
       let isDesktop = window.outerWidth >= 992;
@@ -218,7 +218,7 @@ class PfeNavigation extends PFElement {
       }
 
       // If the nav is set to sticky, inject the height of the nav to the next element in the DOM
-      if(this.hasAttribute("sticky") && this.getAttribute("sticky") != "false") {
+      if(this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
         // Run the sticky check on first page load
         this._stickyHandler();
 
@@ -350,17 +350,21 @@ class PfeNavigationItem extends PFElement {
     return "pfe-navigation-item.scss";
   }
 
+  get schemaUrl() {
+    return "pfe-navigation-item.json";
+  }
+
   static get PfeType() {
     return PFElement.PfeTypes.Container;
   }
 
   // Used in the template to determine where to print the icon
   get hasIcon() {
-    return this.hasAttribute("icon");
+    return this.hasAttribute("pfe-icon");
   }
 
   static get observedAttributes() {
-    return ["icon"];
+    return ["pfe-icon"];
   }
 
   get expanded() {

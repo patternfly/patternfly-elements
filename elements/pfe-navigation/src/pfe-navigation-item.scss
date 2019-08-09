@@ -33,11 +33,11 @@ $LOCAL: navigation-item;
   justify-content: center;
 }
 
-:host([icon]) {
+:host([pfe-icon]) {
   display: flex;
 }
 
-:host(:not([icon="menu"]):not([icon="bento"])) {
+:host(:not([pfe-icon="menu"]):not([pfe-icon="bento"])) {
   display: none;
   @media screen and (min-width: pfe-breakpoint(sm)) {
     display: flex;
@@ -45,10 +45,10 @@ $LOCAL: navigation-item;
 }
 
 @each $icon in (bento, user, globe, search, menu) {
-  :host([icon="#{$icon}"]) {
+  :host([pfe-icon="#{$icon}"]) {
     --pfe-navigation-item__icon--Background: #{map-get($icons, #{$icon}--on-dark)} no-repeat;
   }
-  :host([icon="#{$icon}"].expanded) {
+  :host([pfe-icon="#{$icon}"].expanded) {
     --pfe-navigation-item__icon--Background: #{map-get($icons, #{$icon})} no-repeat;
   }
 }
@@ -140,7 +140,7 @@ $LOCAL: navigation-item;
       outline: none;  // removes outline for mouse users, preserves it for keyboard users
     }
   
-    :host([icon]) & {
+    :host([pfe-icon]) & {
       --pfe-navigation-item__trigger--FontSize: 12px;
     }
 
@@ -148,18 +148,22 @@ $LOCAL: navigation-item;
       display: flex;
       background: #{pfe-local($cssvar: Background, $region: icon)};
 
-      :host(:not([icon])) [aria-expanded="false"] & {
+      :host(:not([pfe-icon])) [aria-expanded="false"] & {
         visibility: hidden;
       }
 
-      :host(:not([icon])) & {
-        @include pfe-arrow(down, #{pfe-color(feedback--default)}, $width: 6px, $height: 6px) {
-          position: absolute;
-          bottom: 13px;
-        }
+      :host([has_tray]:not([pfe-icon]):hover) [aria-expanded="false"] & {
+        visibility: visible;
+        @include pfe-arrow-color(#{pfe-local(Color)});
       }
 
-      :host([icon]) & {
+      :host(:not([pfe-icon])) & {
+        @include pfe-arrow(down, #{pfe-color(feedback--default)}, $width: 6px, $height: 6px);
+        position: absolute;
+        bottom: #{pfe-var(container-spacer)};
+      }
+
+      :host([pfe-icon]) & {
         margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
         width: 21px;
         height: 21px;

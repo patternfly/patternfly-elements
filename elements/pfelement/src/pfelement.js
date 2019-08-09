@@ -213,7 +213,7 @@ class PFElement extends HTMLElement {
       let slotExists = false;
       // If it's a named slot, look for that slot definition
       if (slotObj.namedSlot) {
-        if (this.has_slots(`${tag}--${slot}`).length > 0) {
+        if (this.has_slots(`${tag}--${slot}`).length > 0 || this.has_slots(`${slot}`).length > 0) {
           slotExists = true;
         }
         // If it's the default slot, look for elements not assigned to a slot

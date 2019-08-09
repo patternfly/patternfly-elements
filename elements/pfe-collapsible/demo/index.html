@@ -80,12 +80,12 @@
         console.log(event);
       });
 
-      collapsible.addEventListener("pfe-collapsible-panel:animating", function (event) {
+      collapsible.addEventListener("pfe-collapsible-panel:animation-start", function (event) {
         animating.textContent = "true";
         state.textContent = event.detail.state;
       });
 
-      collapsible.addEventListener("pfe-collapsible-panel:animation-complete", function (event) {
+      collapsible.addEventListener("pfe-collapsible-panel:animation-end", function (event) {
         animating.textContent = "false";
         expanded.textContent = event.detail.expanded;
         state.textContent = "";

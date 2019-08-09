@@ -121,7 +121,7 @@ detail: {
 }
 ```
 
-### pfe-collapsible-panel:animating
+### pfe-collapsible-panel:animation-start
 
 Fired when `pfe-collapsible-panel` begins animating the expansion or collapse
 of the panel.
@@ -133,9 +133,9 @@ detail: {
 }
 ```
 
-### pfe-collapsible-panel:animation-complete
+### pfe-collapsible-panel:animation-end
 
-Fired when `pfe-collapsible-panel` begins animating the expansion or collapse
+Fired when `pfe-collapsible-panel` ends animating the expansion or collapse
 of the panel.
 
 ```

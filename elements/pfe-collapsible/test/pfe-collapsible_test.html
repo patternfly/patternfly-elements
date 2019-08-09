@@ -173,13 +173,13 @@
           toggle.click();
         });
 
-        test('a pfe-collapsible-panel should fire a pfe-collapsible-panel:animating event when the panel is expanded or collapsed', () => {
+        test('a pfe-collapsible-panel should fire a pfe-collapsible-panel:animation-start event when the panel is expanded or collapsed', () => {
           const collapsible = document.querySelector('pfe-collapsible');
           const toggle = collapsible.querySelector('pfe-collapsible-toggle');
           const panel = collapsible.querySelector("pfe-collapsible-panel");
           const handlerSpy = sinon.spy();
 
-          document.addEventListener('pfe-collapsible-panel:animating', handlerSpy);
+          document.addEventListener('pfe-collapsible-panel:animation-start', handlerSpy);
 
           toggle.click();
 
@@ -192,17 +192,17 @@
           });
 
           // reset
-          document.removeEventListener('pfe-collapsible-panel:animating', handlerSpy);
+          document.removeEventListener('pfe-collapsible-panel:animation-start', handlerSpy);
           toggle.click();
         });
 
-        test('a pfe-collapsible-panel should fire a pfe-collapsible-panel:animation-complete event when the panel has finished expanding or collapsing', done => {
+        test('a pfe-collapsible-panel should fire a pfe-collapsible-panel:animation-end event when the panel has finished expanding or collapsing', done => {
           const collapsible = document.querySelector('#animationComplete pfe-collapsible');
           const toggle = collapsible.querySelector('pfe-collapsible-toggle');
           const panel = collapsible.querySelector("pfe-collapsible-panel");
           const handlerSpy = sinon.spy();
 
-          document.querySelector("#animationComplete").addEventListener('pfe-collapsible-panel:animation-complete', handlerSpy);
+          document.querySelector("#animationComplete").addEventListener('pfe-collapsible-panel:animation-end', handlerSpy);
 
           toggle.click();
 
@@ -215,7 +215,7 @@
             });
 
             // reset
-            document.querySelector("#animationComplete").removeEventListener('pfe-collapsible-panel:animation-complete', handlerSpy);
+            document.querySelector("#animationComplete").removeEventListener('pfe-collapsible-panel:animation-end', handlerSpy);
             toggle.click();
             done();
           }, 350);

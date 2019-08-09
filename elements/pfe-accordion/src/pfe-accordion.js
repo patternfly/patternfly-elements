@@ -88,8 +88,8 @@ class PfeAccordion extends PfeCollapsible {
     this._observer = new MutationObserver(this._linkControls);
 
     this.addEventListener(`${PfeCollapsible.tag}:change`, this._changeHandler);
-    this.addEventListener(`${PfeCollapsiblePanel.tag}:animating`, this._animatingHandler);
-    this.addEventListener(`${PfeCollapsiblePanel.tag}:animation-complete`, this._animationCompleteHandler);
+    this.addEventListener(`${PfeCollapsiblePanel.tag}:animation-start`, this._animationStartHandler);
+    this.addEventListener(`${PfeCollapsiblePanel.tag}:animation-end`, this._animationEndHandler);
   }
 
   connectedCallback() {
@@ -349,8 +349,8 @@ class PfeAccordion extends PfeCollapsible {
     newHeader.shadowRoot.querySelector("button").focus();
   }
 
-  _animatingHandler(event) {
-    super._animatingHandler(event);
+  _animationStartHandler(event) {
+    super._animationStartHandler(event);
 
     const header = this._headerForPanel(event.detail.panel);
 
@@ -359,8 +359,8 @@ class PfeAccordion extends PfeCollapsible {
     }
   }
 
-  _animationCompleteHandler(event) {
-    super._animationCompleteHandler(event);
+  _animationEndHandler(event) {
+    super._animationEndHandler(event);
 
     const header = this._headerForPanel(event.detail.panel);
 

@@ -63,7 +63,8 @@ class PfeCollapsibleToggle extends PFElement {
 
     this.expanded = false;
 
-    if (this.id && this.id !== "") {
+    // if (this.id && this.id !== "") {
+    if (this.id) {
       this.pfeId = this.id;
     }
 
@@ -214,7 +215,8 @@ class PfeCollapsiblePanel extends PFElement {
 
     this.expanded = false;
 
-    if (this.id && this.id !== "") {
+    // if (this.id && this.id !== "") {
+    if (this.id) {
       this.pfeId = this.id;
     }
 
@@ -251,7 +253,7 @@ class PfeCollapsiblePanel extends PFElement {
     );
 
     this.dispatchEvent(
-      new CustomEvent(`${PfeCollapsiblePanel.tag}:animation-complete`, {
+      new CustomEvent(`${PfeCollapsiblePanel.tag}:animation-end`, {
         detail: {
           expanded: this.expanded,
           panel: this
@@ -263,7 +265,7 @@ class PfeCollapsiblePanel extends PFElement {
 
   _fireAnimationEvent(state) {
     this.dispatchEvent(
-      new CustomEvent(`${PfeCollapsiblePanel.tag}:animating`, {
+      new CustomEvent(`${PfeCollapsiblePanel.tag}:animation-start`, {
         detail: {
           state: state,
           panel: this
@@ -309,8 +311,8 @@ class PfeCollapsible extends PFElement {
     this._observer = new MutationObserver(this._linkControls);
 
     this.addEventListener(`${PfeCollapsible.tag}:change`, this._changeHandler);
-    this.addEventListener(`${PfeCollapsiblePanel.tag}:animating`, this._animatingHandler);
-    this.addEventListener(`${PfeCollapsiblePanel.tag}:animation-complete`, this._animationCompleteHandler);
+    this.addEventListener(`${PfeCollapsiblePanel.tag}:animation-start`, this._animationStartHandler);
+    this.addEventListener(`${PfeCollapsiblePanel.tag}:animation-end`, this._animationEndHandler);
   }
 
   connectedCallback() {
@@ -330,8 +332,8 @@ class PfeCollapsible extends PFElement {
 
   disconnectedCallback() {
     this.removeEventListener(`${PfeCollapsible.tag}:change`, this._changeHandler);
-    this.removeEventListener(`${PfeCollapsiblePanel.tag}:animating`, this._animatingHandler);
-    this.removeEventListener(`${PfeCollapsiblePanel.tag}:animation-complete`, this._animationCompleteHandler);
+    this.removeEventListener(`${PfeCollapsiblePanel.tag}:animation-start`, this._animationStartHandler);
+    this.removeEventListener(`${PfeCollapsiblePanel.tag}:animation-end`, this._animationEndHandler);
     this._observer.disconnect();
   }
 
@@ -362,11 +364,11 @@ class PfeCollapsible extends PFElement {
     this._toggle.setAttribute("aria-controls", this._panel.pfeId);
   }
 
-  _animatingHandler() {
+  _animationStartHandler() {
     this.classList.add("animating");
   }
 
-  _animationCompleteHandler() {
+  _animationEndHandler() {
     this.classList.remove("animating");
   }
 

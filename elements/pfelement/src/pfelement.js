@@ -278,4 +278,3 @@ class PFElement extends HTMLElement {
 autoReveal(PFElement.log);
 
 export default PFElement;
-//# sourceMappingURL=PFElement.js.map

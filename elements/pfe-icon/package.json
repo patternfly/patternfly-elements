@@ -4,7 +4,7 @@
     "className": "PfeIcon",
     "elementName": "pfe-icon"
   },
-  "version": "1.0.0-prerelease.17",
+  "version": "1.0.0-prerelease.19",
   "publishConfig": {
     "access": "public"
   },
@@ -24,9 +24,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.17",
-    "@patternfly/pfelement": "^1.0.0-prerelease.17",
-    "@redhat/rh-iconfont": "github:mwcz/rh-iconfont#package-svgs"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.19",
+    "@patternfly/pfelement": "^1.0.0-prerelease.19"
   },
   "generator-pfelement-version": "1.1.0"
 }

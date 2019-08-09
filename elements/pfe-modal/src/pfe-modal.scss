@@ -9,6 +9,7 @@ $pfe-modal--breakpoint--medium: 640px;
 	--pfe-modal--MaxWidth--mobile: 94vw;
 	--pfe-modal--MaxHeight: 90vh;
 	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2) 0 calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);
+	--pfe-modal--Padding--mobile: 0 0 0 calc(#{pfe-var(container-padding)} * 2);
 	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
 	--pfe-modal--CloseButtonSize: calc(#{pfe-var(ui--element--size)} - 4px);
 	display: block;
@@ -54,6 +55,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		position: relative;
 		max-width: pfe-local(MaxWidth--mobile);
 		min-width: pfe-local(MinWidth);
+		max-height: calc(100% + -32px);
 		margin: 0 auto;
 		box-shadow: pfe-var(box-shadow--lg);
 		background-color: pfe-color(surface--lightest);
@@ -66,7 +68,12 @@ $pfe-modal--breakpoint--medium: 640px;
 	&__container {
 		position: relative;
 		max-width: calc(100% - #{pfe-var(ui--element--size)});
+		max-height: inherit;
 		padding: var(--pfe-modal--Padding);
+
+		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
+			padding: var(--pfe-modal--Padding--mobile);
+		}
 
 		&[hidden] {
 			display: none;
@@ -75,6 +82,10 @@ $pfe-modal--breakpoint--medium: 640px;
 		:host(:not([has_header])) & {
 			@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 				padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 6) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);			
+			}
+
+			@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
+				padding: 0 0 calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);			
 			}
 
 			// Remove margin-top on the first slotted element that is not the header.
@@ -94,6 +105,16 @@ $pfe-modal--breakpoint--medium: 640px;
 		overscroll-behavior: contain;
 		max-height: pfe-local(MaxHeight);	
 		padding-right: calc(#{pfe-var(container-padding)} * 2);
+
+		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
+			box-sizing: border-box;
+			padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2) 0;
+		}
+
+		@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
+			box-sizing: border-box;
+			padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2) 0;
+		}
 	}
 
 	&__close {

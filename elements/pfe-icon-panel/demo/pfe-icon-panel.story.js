@@ -294,7 +294,7 @@ stories.add("pfe-icon-panel", () => {
     }
   }
 
-  let iconValue = ` pfe-icon="${iconSelect}"`;
+  let iconValue = ` icon="${iconSelect}"`;
 
   return `
 
@@ -325,19 +325,19 @@ stories.add("pfe-icon-panel", () => {
   </section>
   <section>
     <h2>At a glance</h2>
-    <pfe-icon-panel pfe-icon="rh-server-stack">
+    <pfe-icon-panel icon="rh-server-stack">
       <h3 slot="header">Default</h3>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </pfe-icon-panel>
-    <pfe-icon-panel pfe-icon="rh-server-stack" circled="dark">
+    <pfe-icon-panel icon="rh-server-stack" circled="dark">
       <h3 slot="header">Default and Circled</h3>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </pfe-icon-panel>
-    <pfe-icon-panel pfe-icon="rh-server-stack" stacked>
+    <pfe-icon-panel icon="rh-server-stack" stacked>
       <h3 slot="header">Stacked</h3>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </pfe-icon-panel>
-    <pfe-icon-panel pfe-icon="rh-server-stack" stacked centered>
+    <pfe-icon-panel icon="rh-server-stack" stacked centered>
       <h3 slot="header">Stacked and Centered</h3>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </pfe-icon-panel>

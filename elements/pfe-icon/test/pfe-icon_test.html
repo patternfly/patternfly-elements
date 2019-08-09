@@ -51,7 +51,7 @@
           async function test() {
             // wait for each test icon to be loaded, then move to the next one
             for (let iconName of testIcons) {
-              icon.setAttribute("pfe-icon", iconName);
+              icon.setAttribute("icon", iconName);
               await waitForLoad();
             }
             done();
@@ -98,7 +98,7 @@
         test('it should print helpful error when given an invalid icon set name', () => {
           const badIconName = "badiconset-iconname";
           const spy = sinon.spy(console, 'warn');
-          icon.setAttribute("pfe-icon", badIconName);
+          icon.setAttribute("icon", badIconName);
           sinon.assert.calledWith(spy,`icon "${badIconName}" was requested but no icon set "${badIconName.split('-')[0]}" is registered`);
           spy.restore();
         });
@@ -116,7 +116,7 @@
             icon.iconLoadError = oldLoadError;
             done();
           };
-          icon.setAttribute("pfe-icon", badIconName);
+          icon.setAttribute("icon", badIconName);
         });
       });
     </script>

@@ -13,7 +13,7 @@ import PfeIcon from "../pfe-icon";
 const stories = storiesOf("Icon", module);
 stories.addDecorator(withKnobs);
 
-const template = (data = {}) => tools.component(PfeIcon.tag, data.prop, "");
+const template = (data = {}) => tools.component(PfeIcon.tag, data.prop, [], true);
 
 const validValues = {
   size: ["xl", "lg", "md", "sm", "2x", "3x", "4x"],
@@ -277,15 +277,12 @@ const validValues = {
 };
 
 stories.add(PfeIcon.tag, () => {
-  // const iconName = select("Icon", validValues.rhIcons, validValues.rhIcons[0]);
-  // const color = select("Color", validValues.color, validValues.color[0]);
-  // const size = select("Size", validValues.size, validValues.size[0]);
-  //
-  // return `<pfe-icon pfe-icon="${iconName}" color="${color}" size="${size}"></pfe-icon>`;
   let config = {};
 
   const props = PfeIcon.properties;
-  props["pfe-icon"] = validValues.rhIcons;
+  props.icon.enum = validValues.rhIcons;
+  props.icon.default = validValues.rhIcons[0];
+  props.size.default = "xl";
 
   // Build the knobs and read in their selections
   config.prop = tools.autoPropKnobs(props, storybookBridge);

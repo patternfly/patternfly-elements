@@ -16,7 +16,7 @@ class PfeIcon extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-icon"];
+    return ["icon"];
   }
 
   constructor() {
@@ -34,7 +34,7 @@ class PfeIcon extends PFElement {
   iconLoadError() {
     console.warn(
       `icon named "${this.getAttribute(
-        "pfe-icon"
+        "icon"
       )}" failed to load from URL ${this.image.getAttribute("xlink:href")}`
     );
     this.image.classList.add("load-failed");

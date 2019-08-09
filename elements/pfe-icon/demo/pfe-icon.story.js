@@ -277,5 +277,5 @@ stories.add("pfe-icon", () => {
   const color = select("Color", validValues.color, "default");
   const size = select("Size", validValues.size, "xl");
 
-  return `<pfe-icon pfe-icon="${iconName}" color="${color}" size="${size}"></pfe-icon>`;
+  return `<pfe-icon icon="${iconName}" color="${color}" size="${size}"></pfe-icon>`;
 });

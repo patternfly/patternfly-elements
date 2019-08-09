@@ -1,10 +1,14 @@
 import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
+
 import PfeModal from "../pfe-modal";
+import PfeCta from "../../pfe-cta/pfe-cta";
 
 const stories = storiesOf("Modal", module	);
 
+const defaultHeader = tools.autoHeading();
+const defaultContent = tools.autoContent();
 
 // Define the template to be used
 const template = (data = {}) => {
@@ -23,14 +27,18 @@ stories.add(PfeModal.tag, () => {
 
   const slots = PfeModal.slots;
 
+  slots.trigger.default = "Launch modal";
+  slots.header.default = defaultHeader;
+  slots.body.default = defaultContent;
+
   // Trigger the auto generation of the knobs for slots
   config.has = tools.autoContentKnobs(slots, storybookBridge);
 
   // prettier-ignore
   config.slots = [{
-    slot: "pfe-card--trigger",
-    tag: "a",
-    content: "launch"
+    slot: "pfe-modal--trigger",
+    tag: "button",
+    content: config.has.trigger
   }, {
     slot: "pfe-modal--header",
     content: tools.customTag({
@@ -38,7 +46,15 @@ stories.add(PfeModal.tag, () => {
       content: config.has.header
     })
   }, {
-    content: config.has.body
+    content: config.has.body + tools.component(PfeCta.tag, {}, [{
+      content: tools.customTag({
+        tag: "a",
+        attributes: {
+          href: "#"
+        },
+        content: "Learn more"
+      })
+    }])
   }];
 
 	const render = template(config);

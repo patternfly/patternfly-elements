@@ -19,7 +19,7 @@
 ## Slots
 
 ### Trigger
-The only part visible on page load, the trigger opens the modal window. The trigger can be a button, a cta or a link.
+The only part visible on page load, the trigger opens the modal window. The trigger can be a button, a cta or a link. While it is part of the modal web component, it does not contain any intrinsic styles. 
 
 ### Header
 The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6). 
@@ -30,12 +30,12 @@ The default slot can contain any type of content. When the header is not present
 ## Events
 
 ### openModal
-Fires when a user clicks on the trigger.
+Fires when a user clicks on the trigger. openModal can be accessed from outside the web component by getting the modal that you want to fire and passing in the firing event: `document.querySelector("pfe-modal#custom-id").openModal(event).`
 
 ### closeModal
-Fires when either a user clicks on either the close button or the overlay.
+Fires when either a user clicks on either the close button or the overlay. closeModal can be accessed from outside the web component by getting the modal that you want to fire and passing in the firing event: `document.querySelector("pfe-modal#custom-id").closeModal(event).`
 
-
+### Dependencies
 Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
 
     npm install -g polyserve web-component-tester

@@ -9,15 +9,14 @@ $pfe-modal--breakpoint--medium: 640px;
 	--pfe-modal--MaxWidth--mobile: 94vw;
 	--pfe-modal--MaxHeight: 90vh;
 	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2) 0 calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);
-	--pfe-modal--Padding--mobile: 0 0 0 calc(#{pfe-var(container-padding)} * 2);
 	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
-	--pfe-modal--CloseButtonSize: calc(#{pfe-var(ui--element--size)} - 4px);
+	--pfe-modal--close--size: calc(#{pfe-var(ui--element--size)} - 4px);
 	display: block;
 	position: relative;
-}
 
-:host(:not([has_header])) {
-	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 4) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);
+   @media screen and (max-height: $pfe-modal--breakpoint--medium) {
+      --pfe-modal--Padding: 0 0 0 calc(#{pfe-var(container-padding)} * 2);
+   }
 }
 
 .pfe-modal {
@@ -69,24 +68,13 @@ $pfe-modal--breakpoint--medium: 640px;
 		position: relative;
 		max-width: calc(100% - #{pfe-var(ui--element--size)});
 		max-height: inherit;
-		padding: var(--pfe-modal--Padding);
-
-		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
-			padding: var(--pfe-modal--Padding--mobile);
-		}
+		padding: pfe-local(Padding);
 
 		&[hidden] {
 			display: none;
 		}
 
 		:host(:not([has_header])) & {
-			@media screen and (min-width: $pfe-modal--breakpoint--medium) {
-				padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 6) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);			
-			}
-
-			@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
-				padding: 0 0 calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);			
-			}
 
 			// Remove margin-top on the first slotted element that is not the header.
 			::slotted(*:nth-child(1)),
@@ -135,8 +123,8 @@ $pfe-modal--breakpoint--medium: 640px;
 			fill: pfe-radio(text);
 			height: pfe-var(ui--element--size);
 			width: pfe-var(ui--element--size);
-			height: pfe-local(CloseButtonSize);
-			width: pfe-local(CloseButtonSize);
+			height: pfe-local(close--size);
+			width: pfe-local(close--size);
 		}
 	}
 }

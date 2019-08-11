@@ -119,6 +119,10 @@ $LOCAL: navigation-item;
     border-bottom: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
     border-left: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
 
+    &:hover {
+      cursor: pointer;
+    }
+    
     &:hover,
     :host([aria-current="location"]) {
       --pfe-navigation-item--BorderTopColor:  #{pfe-color(surface--accent)};

@@ -32,7 +32,7 @@ $LOCAL: navigation;
 }
 
 :host(.sticky) {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100vw;
@@ -52,7 +52,7 @@ $LOCAL: navigation;
 }
 
 @each $icon in (user, globe) {
-  ::slotted([icon="#{$icon}"]) {
+  ::slotted([pfe-icon="#{$icon}"]) {
     --pfe-navigation__icon--Background: #{map-get($icons, #{$icon})} no-repeat;
   }
 }
@@ -132,7 +132,7 @@ $LOCAL: navigation;
     flex-flow: row nowrap;
     align-items: stretch;
     justify-content: flex-end;
-    > [icon="menu"] {
+    > [pfe-icon="menu"] {
       @media (min-width: #{pfe-breakpoint(lg)}) {
         display: none;
       }

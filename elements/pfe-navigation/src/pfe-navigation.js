@@ -194,12 +194,8 @@ class PfeNavigation extends PFElement {
   _stickyHandler() {
     if(window.pageYOffset >= this.top) {
       this.classList.add("sticky");
-      document.body.style.marginTop = this.clientHeight + "px";
-      this.style.setProperty("--pfe-navigation--offsetTop", this.offsetHeight + "px");
     } else {
       this.classList.remove("sticky");
-      this.style.setProperty("--pfe-navigation--offsetTop", this.getBoundingClientRect().top + this.offsetHeight + "px");
-      document.body.style.marginTop = 0;
     }
   }
 

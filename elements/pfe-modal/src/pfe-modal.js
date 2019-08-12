@@ -135,6 +135,7 @@ class PfeModal extends PFElement {
 
   toggle(event) {
     this.isOpen ? this.close(event) : this.open(event);
+    return this;
   }
 
   open(event) {
@@ -167,6 +168,8 @@ class PfeModal extends PFElement {
         bubbles: true
       })
     );
+
+    return this;
   }
 
   close(event) {
@@ -196,6 +199,8 @@ class PfeModal extends PFElement {
         bubbles: true
       })
     );
+
+    return this;
   }
 }
 

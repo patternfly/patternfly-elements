@@ -28,10 +28,12 @@
   "author": {
     "name": "cd"
   },
-  "contributors": [{
-    "name": "castastrophe",
-    "url": "https://github.com/castastrophe"
-  }],
+  "contributors": [
+    {
+      "name": "castastrophe",
+      "url": "https://github.com/castastrophe"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "@patternfly/pfe-sass": "1.0.0-prerelease.17",

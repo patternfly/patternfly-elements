@@ -36,11 +36,6 @@ class PfeIcon extends PFElement {
   }
 
   iconLoadError() {
-    console.warn(
-      `icon named "${this.getAttribute(
-        "icon"
-      )}" failed to load from URL ${this.image.getAttribute("xlink:href")}`
-    );
     this.image.classList.add("load-failed");
   }
 
@@ -49,17 +44,34 @@ class PfeIcon extends PFElement {
     this.updateIcon(newValue);
   }
 
-  updateIcon(iconName) {
+  updateIcon(iconName = this.getAttribute("icon")) {
     const { setName, set } = PfeIcon.getIconSet(iconName);
 
     if (set) {
       const { iconPath } = set.resolveIconName(iconName);
       this.image.setAttribute("xlink:href", iconPath);
     } else {
-      console.warn(
-        `icon "${iconName}" was requested but no icon set "${setName}" is registered`
+      // the icon set we want doesn't exist (yet?) so start listening for new icon sets
+      this._handleAddIconSet = this._createIconSetHandler(setName);
+
+      document.body.addEventListener(
+        PfeIcon.EVENTS.ADD_ICON_SET,
+        this._handleAddIconSet
       );
     }
+  }
+
+  _createIconSetHandler(setName) {
+    return ev => {
+      // if the set we're waiting for was added, run updateIcon again
+      if (setName === ev.detail.set.name) {
+        document.body.removeEventListener(
+          PfeIcon.EVENTS.ADD_ICON_SET,
+          this._handleAddIconSet
+        );
+        this.updateIcon();
+      }
+    };
   }
 
   /**
@@ -82,6 +94,21 @@ class PfeIcon extends PFElement {
     }
 
     this._iconSets[name] = new PfeIconSet(name, path, resolveIconName);
+
+    document.body.dispatchEvent(
+      new CustomEvent(this.EVENTS.ADD_ICON_SET, {
+        bubbles: false,
+        detail: {
+          set: this._iconSets[name]
+        }
+      })
+    );
+  }
+
+  static get EVENTS() {
+    return {
+      ADD_ICON_SET: `${this.tag}:add-icon-set`
+    };
   }
 }
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-`pfe-modal` is a self-contained modal window that is hidden on page load and (when activated) restricts the user from interacting with content in the main window. 
+`pfe-modal` is a self-contained modal window that is hidden on page load and (when activated) restricts the user from interacting with content in the main window.
 
 ## Usage
 ```html
@@ -19,30 +19,41 @@
 ## Slots
 
 ### Trigger
-The only part visible on page load, the trigger opens the modal window. The trigger can be a button, a cta or a link. While it is part of the modal web component, it does not contain any intrinsic styles. 
+The only part visible on page load, the trigger opens the modal window. The trigger can be a button, a cta or a link. While it is part of the modal web component, it does not contain any intrinsic styles.
 
 ### Header
-The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6). 
+The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6).
 
 ### Default slot
 The default slot can contain any type of content. When the header is not present this unnamed slot appear at the top of the modal window (to the left of the close button). Otherwise it will appear beneath the header.
 
+## API
+
+### open
+
+### close
+
+### toggle
+
 ## Events
 
-### openModal
-Fires when a user clicks on the trigger. openModal can be accessed from outside the web component by getting the modal that you want to fire and passing in the firing event: `document.querySelector("pfe-modal#custom-id").openModal(event).`
+### pfe-modal:open
+Fires when a user clicks on the trigger. open can be accessed from outside the web component by getting the modal that you want to fire and passing in the firing event: `document.querySelector("pfe-modal#custom-id").open(event).`
 
-### closeModal
-Fires when either a user clicks on either the close button or the overlay. closeModal can be accessed from outside the web component by getting the modal that you want to fire and passing in the firing event: `document.querySelector("pfe-modal#custom-id").closeModal(event).`
+```
+detail: {
+  open: true
+}
+```
 
-### Dependencies
-Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
+### pfe-modal:close
+Fires when either a user clicks on either the close button or the overlay. close can be accessed from outside the web component by getting the modal that you want to fire and passing in the firing event: `document.querySelector("pfe-modal#custom-id").close(event).`
 
-    npm install -g polyserve web-component-tester
-
-## Dev
-
-    npm start
+```
+detail: {
+  open: false
+}
+```
 
 ## Test
 
@@ -54,13 +65,14 @@ Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-compone
 
 ## Demo
 
-Run `npm start` and Polyserve will start a server and open your default browser to the demo page of the element.
+From the PFElements root directory, run:
+
+    npm start
 
 ## Code style
 
-Modal (and all PatternFly Elements) use [Prettier][prettier] to auto-format JS and JSON.  The style rules get applied when you commit a change.  If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
+Collapsible (and all PFElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
 
 [prettier]: https://github.com/prettier/prettier/
 [prettier-ed]: https://github.com/prettier/prettier/#editor-integration
-[polyserve]: https://github.com/Polymer/polyserve
 [web-component-tester]: https://github.com/Polymer/web-component-tester

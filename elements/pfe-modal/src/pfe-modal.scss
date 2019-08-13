@@ -8,9 +8,9 @@ $pfe-modal--breakpoint--medium: 640px;
 	--pfe-modal--MinWidth: 50vw;
 	--pfe-modal--MaxWidth--mobile: 94vw;
 	--pfe-modal--MaxHeight: 90vh;
-	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2) 0 calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);
+	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);
 	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
-	--pfe-modal--close--size: calc(#{pfe-var(ui--element--size)} - 4px);
+	--pfe-modal__close--size: calc(#{pfe-var(ui--element--size)} - 4px);
 	display: block;
 	position: relative;
 
@@ -30,11 +30,11 @@ $pfe-modal--breakpoint--medium: 640px;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		z-index: var(--pfe-z--modal, 2000);
+		z-index: #{pfe-var($cssvar: modal, $map: $z-index)};
 
 		&[hidden] {
 			display: none;
-			z-index: 0;
+			z-index: #{pfe-var($cssvar: content, $map: $z-index)};
 		}
 	}
 	&__overlay {
@@ -66,9 +66,7 @@ $pfe-modal--breakpoint--medium: 640px;
 	}
 	&__container {
 		position: relative;
-		max-width: calc(100% - #{pfe-var(ui--element--size)});
 		max-height: inherit;
-		padding: pfe-local(Padding);
 
 		&[hidden] {
 			display: none;
@@ -77,31 +75,29 @@ $pfe-modal--breakpoint--medium: 640px;
 		:host(:not([has_header])) & {
 
 			// Remove margin-top on the first slotted element that is not the header.
-			::slotted(*:nth-child(1)),
 			::slotted(*:nth-child(2)) {
 				margin-top: 0 !important;
 			}
 		}
 		::slotted([slot="pfe-modal--header"]) {
 			margin-top: 0 !important;
-			width: 90%;
 		}
 	}
 
 	&__content {
 		overflow-y: auto;
 		overscroll-behavior: contain;
-		max-height: pfe-local(MaxHeight);	
-		padding-right: calc(#{pfe-var(container-padding)} * 2);
+		max-height: pfe-local(MaxHeight);
+		padding: pfe-local(Padding);
 
 		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
 			box-sizing: border-box;
-			padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2) 0;
+			--pfe-modal--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2) #{pfe-var(container-padding)} #{pfe-var(container-padding)};
 		}
 
 		@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
 			box-sizing: border-box;
-			padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2) 0;
+			--pfe-modal--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 3) #{pfe-var(container-padding)} #{pfe-var(container-padding)};
 		}
 	}
 
@@ -119,12 +115,17 @@ $pfe-modal--breakpoint--medium: 640px;
 			right: #{pfe-var(container-padding)};
 		}
 
+		@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
+			top: calc(#{pfe-var(container-padding)} / 2);
+			right: calc(#{pfe-var(container-padding)} / 2);
+		}
+
 		> svg {
 			fill: pfe-radio(text);
 			height: pfe-var(ui--element--size);
 			width: pfe-var(ui--element--size);
-			height: pfe-local(close--size);
-			width: pfe-local(close--size);
+			height: pfe-local($cssvar: size, $region: close);
+			width: pfe-local($cssvar: size, $region: close);
 		}
 	}
 }

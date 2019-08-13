@@ -2,6 +2,44 @@ import PFElement from "../pfelement/pfelement.js";
 import PfeIconSet from "./pfe-icon-set.js";
 import { addBuiltIns } from "./pfe-builtin-icon-sets.js";
 
+/**
+ * Sets the id attribute on the <filter> element and points the CSS `filter` at that id.
+ */
+function setRandomFilterId(el) {
+  const randomId =
+    "filter-" +
+    Math.random()
+      .toString()
+      .slice(2, 10);
+
+  // set the CSS filter property to point at the given id
+  el.shadowRoot.querySelector("svg image").style.filter = `url(#${randomId})`;
+
+  // set the id attribute on the SVG filter element to match
+  el.shadowRoot.querySelector("svg filter").setAttribute("id", randomId);
+}
+
+function createIconSetHandler(el, setName) {
+  return ev => {
+    // if the set we're waiting for was added, run updateIcon again
+    if (setName === ev.detail.set.name) {
+      document.body.removeEventListener(
+        PfeIcon.EVENTS.ADD_ICON_SET,
+        el._handleAddIconSet
+      );
+      el.updateIcon();
+    }
+  };
+}
+
+function iconLoad(el) {
+  el.image.classList.remove("load-failed");
+}
+
+function iconLoadError(el) {
+  el.image.classList.add("load-failed");
+}
+
 class PfeIcon extends PFElement {
   static get tag() {
     return "pfe-icon";
@@ -27,16 +65,8 @@ class PfeIcon extends PFElement {
     super(PfeIcon);
 
     this.image = this.shadowRoot.querySelector("svg image");
-    this.image.addEventListener("load", () => this.iconLoad());
-    this.image.addEventListener("error", () => this.iconLoadError());
-  }
-
-  iconLoad() {
-    this.image.classList.remove("load-failed");
-  }
-
-  iconLoadError() {
-    this.image.classList.add("load-failed");
+    this.image.addEventListener("load", () => iconLoad(this));
+    this.image.addEventListener("error", () => iconLoadError(this));
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -50,6 +80,7 @@ class PfeIcon extends PFElement {
     if (set) {
       const { iconPath } = set.resolveIconName(iconName);
       this.image.setAttribute("xlink:href", iconPath);
+      setRandomFilterId(this);
     } else {
       // the icon set we want doesn't exist (yet?) so start listening for new icon sets
       this._handleAddIconSet = this._createIconSetHandler(setName);
@@ -59,19 +90,6 @@ class PfeIcon extends PFElement {
         this._handleAddIconSet
       );
     }
-  }
-
-  _createIconSetHandler(setName) {
-    return ev => {
-      // if the set we're waiting for was added, run updateIcon again
-      if (setName === ev.detail.set.name) {
-        document.body.removeEventListener(
-          PfeIcon.EVENTS.ADD_ICON_SET,
-          this._handleAddIconSet
-        );
-        this.updateIcon();
-      }
-    };
   }
 
   /**

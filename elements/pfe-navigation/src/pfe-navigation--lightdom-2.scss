@@ -1,21 +1,20 @@
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: navigation-item;
-$USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
 
 %link-styles {
-    color: #{pfe-radio(color, ui-link)};
+    color: var(--pfe-broadcasted--color--ui-link, #{map-get($pfe-colors, 'ui-link')});
     text-decoration: none;
     &:visited {
-        color: #{pfe-radio(color, ui-link, visited)};
+        color: var(--pfe-broadcasted--color--ui-link--visited, #{map-get($pfe-colors, 'ui-link--visited')});
     }
     &:hover {
-        color: #{pfe-radio(color, ui-link, hover)};
+        color: var(--pfe-broadcasted--color--ui-link--hover, #{map-get($pfe-colors, 'ui-link--hover')});
         text-decoration: none;
     }
     &:focus {
         outline: none;
-        color: #{pfe-radio(color, ui-link, focus)}
+        color: var(--pfe-broadcasted--color--ui-link--focus, #{map-get($pfe-colors, 'ui-link--focus')});
     }
 }
 
@@ -28,14 +27,14 @@ $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
         }
         &:hover {
             cursor: pointer;
-            border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-color(surface--accent)};
+            border-top: 4px solid #{pfe-color(surface--accent)};
         }
     }
     .pfe-navigation__utility--mobile > *:not(:last-child) {
-        margin-bottom: #{pfe-var(container-spacer)};
+        margin-bottom: 15px;
     }
     .pfe-navigation-item__tray--container {
-        padding-top: #{pfe-var(container-spacer)};
+        padding-top: 15px;
     }
 }
 
@@ -71,7 +70,8 @@ pfe-navigation [slot="logo"] > a {
     color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
     text-decoration: none;
     &:focus {
-        outline: #{pfe-var(surface--border-width)} dashed #{pfe-color(surface--lightest)};
+        outline: 1px dashed ;
+        outline: var(--pfe-theme--surface--border-width, 1px) dashed var(--pfe-theme--color--surface--lightest, #fff);
     }
 }
 
@@ -95,10 +95,52 @@ pfe-navigation-item [slot="trigger"] a,
     }
 }
 
-pfe-navigation .pfe-link-link {
-    &--header > a {
-        @extend %link-styles;
+pfe-navigation .pfe-link-list {
+    &--header {
+        margin: 0 0 8px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.75;
+        &:not(:nth-of-type(1)) {
+            margin-top: 24px;
+        }
+        a {
+          color: #151515;
+          text-decoration: underline;
+          &:visited {
+             color: var(--pfe-broadcasted--color--ui-link--visited, #{map-get($pfe-colors, 'ui-link--visited')});
+          }
+          &:hover {
+             color: var(--pfe-broadcasted--color--ui-link--hover, #{map-get($pfe-colors, 'ui-link--hover')});
+             text-decoration: underline;
+          }
+          &:focus {
+             outline: none;
+             color: var(--pfe-broadcasted--color--ui-link--focus, #{map-get($pfe-colors, 'ui-link--focus')});
+          }
+       }
+    }
+    &--group {
+        &-item > a {
+            @extend %link-styles;
+            font-size: 14px;
+            line-height: 2;
+        }
     }
 }
 
+:host {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  color: #{pfe-radio(color--text)};
+  border: 5px solid green;
+  font-weight: lighter;
+}
 
+.border-top {
+  border-top: 1px solid lightgray;
+  padding-top: 40px;
+  margin-top: 40px !important;
+}

@@ -8,12 +8,12 @@ $LOCAL: band;
     align-items: flex-start;
 }
 
-%grid-layout {
-  display: grid;
-  grid-row-gap: #{pfe-local(gutter--vertical)};
-  grid-column-gap: #{pfe-local(gutter--horizontal)};
-  margin-bottom: 0;
-}
+// %grid-layout {
+//   display: grid;
+//   grid-row-gap: #{pfe-local(gutter--vertical)};
+//   grid-column-gap: #{pfe-local(gutter--horizontal)};
+//   margin-bottom: 0;
+// }
 
 :host {
   display: block;
@@ -68,7 +68,8 @@ $LOCAL: band;
 
   // Wrapper sets padding and background visuals
   position: relative;
-  @extend %flex-fallback;
+  //Flex commented out/////////////
+  // @extend %flex-fallback;
 
   // Padding
   padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
@@ -280,23 +281,34 @@ $LOCAL: band;
     margin:    0 auto;
     width: 100%;
     max-width: #{pfe-local(Width)};
-    @extend %flex-fallback;
+    // @extend %flex-fallback;
 
     // Grid support styles
-    @supports (display: grid) {
-      @extend %grid-layout;
+    @supports (display: grid) and ( not (display:-ms-grid) ) {
+      // @extend %grid-layout;
+      display: grid;
+      grid-row-gap: #{pfe-local(gutter--vertical)};
+      grid-column-gap: #{pfe-local(gutter--horizontal)};
+      margin-bottom: 0;
       grid-template-columns: #{pfe-local(layout)};
       grid-template-rows:    max-content;
     }
-  }
+}
   // For each section in the band layout
   @each $section in (header, body, aside, footer) {
+       border: 3px solid red;
+       @extend %flex-fallback; // Add the flex fallback styles
+       //Edge isn't reading into this because it's in the shadow dom
     &__#{$section} { // i.e., pfe-band__header
-      @extend %flex-fallback; // Add the flex fallback styles
+         border: 10px solid green;
       margin-bottom: #{pfe-local(gutter--vertical)};
       // Apply the standard grid
       @supports (display: grid) {
-          @extend %grid-layout;
+          // @extend %grid-layout;
+          display: grid;
+          grid-row-gap: #{pfe-local(gutter--vertical)};
+          grid-column-gap: #{pfe-local(gutter--horizontal)};
+          margin-bottom: 0;
           // Apply the section as a named grid-area
           grid-area: #{$section};
           // Allow users to hook into the layout with custom columns

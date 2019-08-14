@@ -227,10 +227,3 @@ $pfe-vars: (
   animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),
   opacity:                       .3
 );
-
-$z-index: (
-  modal: 99,
-  navigation: 98,
-  overlay: 97,
-  content: 0
-);

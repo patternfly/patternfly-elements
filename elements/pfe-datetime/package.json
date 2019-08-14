@@ -34,6 +34,5 @@
   "dependencies": {
     "@patternfly/pfelement": "^1.0.0-prerelease.19"
   },
-  "generator-pfelement-version": "0.2.8",
-  "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
+  "generator-pfelement-version": "0.2.8"
 }

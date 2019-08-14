@@ -8,18 +8,51 @@
     <script type="module" src="../pfe-modal.js"></script>
   </head>
   <body>
-
     <pfe-modal>
-      This is the element content.
+      <button slot="pfe-modal--trigger">Open the modal</button>
+      <h2 slot="pfe-modal--header">Modal with a header</h2>
+      <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <pfe-cta>
+        <a href="#bar">Learn more</a>
+      </pfe-cta>
     </pfe-modal>
-
     <script>
       suite('<pfe-modal>', () => {
-        test('it should upgrade', () => {
-          assert.instanceOf(document.querySelector('pfe-modal'), customElements.get("pfe-modal", 'pfe-modal should be an instance of pfeModal'));
+        test('it should upgrade pfe-modal', () => {
+          assert.instanceOf(document.querySelector('pfe-modal'), customElements.get("pfe-modal", 'pfe-modal should be an instance of PfeModal'));
         });
 
-        // you need to write more tests!!!
+        test('it should add the proper attributes to the modal window', () => {
+          const pfeModal = document.querySelector('pfe-modal');
+          const outer = pfeModal.querySelector('pfe-modal__outer');
+          const modalWindow = pfeModal.querySelector('pfe-modal__window');
+          const button = pfeModal.querySelector('pfe-modal__close');
+
+          assert.isTrue(pfeModal.hasAttribute('has_trigger'));
+          assert.isTrue(pfeModal.hasAttribute('has_header'));
+          assert.isTrue(pfeModal.hasAttribute('has_body'));
+          assert.equal(modalWindow.getAttribute('tabindex'), '0');
+          assert.isTrue(modalWindow.hasAttribute('hidden'));
+          assert.equal(button.getAttribute('aria-label'), 'Close dialog');
+        });
+
+        test('it should open the modal window when the trigger is clicked', () => {
+          const pfeModal = document.querySelector('pfe-modal');
+          const outer = pfeModal.querySelector('pfe-modal__outer');
+          const modalWindow = pfeModal.querySelector('pfe-modal__window');
+          const button = pfeModal.querySelector('pfe-modal__close');
+          const trigger = pfeModal.querySelector('[slot=pfe-modal--trigger');
+
+          trigger.click();
+
+          assert.isNotTrue(modalWindow.hasAttribute('hidden'));
+
+          // reset
+          button.click();
+          assert.isTrue(modalWindow.hasAttribute('hidden'));
+
+        });
+
 
       });
     </script>

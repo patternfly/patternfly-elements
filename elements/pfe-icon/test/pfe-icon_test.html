@@ -8,20 +8,26 @@
   </head>
   <body>
 
-    <pfe-icon></pfe-icon>
+    <div id="icon-container"></div>
 
     <script type="module">
 
       import PfeIcon from "../pfe-icon.js";
 
-      const icon = document.body.querySelector('pfe-icon');
-      const image = icon.shadowRoot.querySelector("svg image");
-      const filter = icon.shadowRoot.querySelector("svg filter");
-      const feFlood = icon.shadowRoot.querySelector("svg filter feFlood");
-
-      const sizeAttr = "size"; // the name of the size attribute (unprefixed and likely to change)
+      let icon;
+      let image;
+      let filter;
+      let feFlood;
 
       suite('<pfe-icon>', () => {
+        setup(() => {
+          document.querySelector("#icon-container").innerHTML = "<pfe-icon></pfe-icon>";
+          icon = document.body.querySelector('pfe-icon');
+          image = icon.shadowRoot.querySelector("svg image");
+          filter = icon.shadowRoot.querySelector("svg filter");
+          feFlood = icon.shadowRoot.querySelector("svg filter feFlood");
+        });
+
         test('it should upgrade', () => {
           assert.instanceOf(document.querySelector('pfe-icon'), customElements.get("pfe-icon", 'pfe-icon should be an instance of pfeIcon'));
         });
@@ -37,6 +43,15 @@
         test('it should change icon when icon name is changed', done => {
           const image = icon.shadowRoot.querySelector("svg image");
           const testIcons = ["rh-aed", "rh-api", "rh-atom", "rh-bike"]
+
+          // replace the default built-in icon set resolveIconName function
+          // with one that loads local icons.  we don't want tests dependent on
+          // prod servers.
+          PfeIcon._iconSets.rh._resolveIconName = function (name, iconSetName, iconSetPath) {
+            return {
+              iconPath: `./${name.replace("rh", "rh-icon")}.svg`
+            };
+          };
 
           // a promise that triggers when a new image is loaded
           // note that the event listener is never removed, but that's okay
@@ -81,7 +96,7 @@
           function sizeCheck(sizes) {
             let lastSize = { width: 0, height: 0 };
             sizes.forEach(size => {
-              icon.setAttribute(sizeAttr, size);
+              icon.setAttribute("size", size);
               const { width, height } = icon.getBoundingClientRect();
               assert.isAbove(width, lastSize.width, `size "${size}" should be wider than the size below`);
               assert.isAbove(height, lastSize.height, `size "${size}" should be taller than the size below`);
@@ -95,31 +110,39 @@
           sizeCheck(["sm", "md", "lg", "xl"]);
         });
 
-        test('it should FOO fetch an icon even when the icon set is registered after the element upgrades', done => {
+        test('it should fetch an icon even when the icon set is registered after the element upgrades', done => {
           // set up an event handler to catch when the icon request is made
           // and use onerror because the icon set isn't real, but it will catch the request being made
-          icon.addEventListener("error", () => {
+          image.addEventListener("load", () => {
             done();
           })
 
-          icon.setAttribute("icon", "test-foo");
+          icon.setAttribute("icon", "asdfasdf-foo");
 
-          PfeIcon.addIconSet('test');
+          PfeIcon.addIconSet('asdfasdf', '', function() { return { iconPath: './rh-icon-bike.svg' } });
         });
 
-        test('it should FOO hide <image> when given an invalid icon or icon set', done => {
+        test('it should hide <image> when given a valid icon set but invalid icon name', done => {
           const badIconName = "rh-badiconname";
-          const oldLoadError = icon.iconLoadError;
-          icon.iconLoadError = () => {
-            // invoke the old load error handler as if it were still attached to the icon
-            oldLoadError.call(icon);
+          image.addEventListener("error", () => {
             // make sure the image is hidden
             const imageStyle = getComputedStyle(image);
             assert.equal(imageStyle.display, "none", "svg <image> should have display:none when icon load fails");
             // restore the old icon load error
-            icon.iconLoadError = oldLoadError;
             done();
-          };
+          });
+          icon.setAttribute("icon", badIconName);
+        });
+
+        test('it should hide <image> when given an invalid icon set', done => {
+          const badIconName = "sdfsdfsdf-asdfasdfsdf";
+          image.addEventListener("error", () => {
+            // make sure the image is hidden
+            const imageStyle = getComputedStyle(image);
+            assert.equal(imageStyle.display, "none", "svg <image> should have display:none when icon load fails");
+            // restore the old icon load error
+            done();
+          });
           icon.setAttribute("icon", badIconName);
         });
       });

@@ -5,7 +5,7 @@ import { addBuiltIns } from "./pfe-builtin-icon-sets.js";
 /**
  * Sets the id attribute on the <filter> element and points the CSS `filter` at that id.
  */
-function setRandomFilterId(el) {
+function _setRandomFilterId(el) {
   const randomId =
     "filter-" +
     Math.random()
@@ -19,7 +19,7 @@ function setRandomFilterId(el) {
   el.shadowRoot.querySelector("svg filter").setAttribute("id", randomId);
 }
 
-function createIconSetHandler(el, setName) {
+function _createIconSetHandler(el, setName) {
   return ev => {
     // if the set we're waiting for was added, run updateIcon again
     if (setName === ev.detail.set.name) {
@@ -32,11 +32,11 @@ function createIconSetHandler(el, setName) {
   };
 }
 
-function iconLoad(el) {
+function _iconLoad(el) {
   el.image.classList.remove("load-failed");
 }
 
-function iconLoadError(el) {
+function _iconLoadError(el) {
   el.image.classList.add("load-failed");
 }
 
@@ -65,8 +65,8 @@ class PfeIcon extends PFElement {
     super(PfeIcon);
 
     this.image = this.shadowRoot.querySelector("svg image");
-    this.image.addEventListener("load", () => iconLoad(this));
-    this.image.addEventListener("error", () => iconLoadError(this));
+    this.image.addEventListener("load", () => _iconLoad(this));
+    this.image.addEventListener("error", () => _iconLoadError(this));
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -80,10 +80,10 @@ class PfeIcon extends PFElement {
     if (set) {
       const { iconPath } = set.resolveIconName(iconName);
       this.image.setAttribute("xlink:href", iconPath);
-      setRandomFilterId(this);
+      _setRandomFilterId(this);
     } else {
       // the icon set we want doesn't exist (yet?) so start listening for new icon sets
-      this._handleAddIconSet = this._createIconSetHandler(setName);
+      this._handleAddIconSet = _createIconSetHandler(this, setName);
 
       document.body.addEventListener(
         PfeIcon.EVENTS.ADD_ICON_SET,

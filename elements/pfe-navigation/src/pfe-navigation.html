@@ -7,10 +7,24 @@
       <slot name="skip"></slot>
     </div>
     <div class="pfe-navigation__main">
-      <slot></slot>
+      <pfe-navigation-item pfe-icon="menu">
+        <span slot="trigger">
+          <slot name="mobile-menu--label" class="pfe-navigation__main--menu-label"></slot>
+        </span>
+        <div slot="tray" hidden>
+          <div class="pfe-navigation__main--mobile">
+            <slot name="mobile-search"></slot>
+            <slot></slot>
+            <div class="pfe-navigation__main--mobile--columns">
+              <slot name="mobile-login" class="pfe-navigation__main--mobile--item"></slot>
+              <slot name="mobile-language" class="pfe-navigation__main--mobile--item"></slot>
+            </div>
+          </div>
+        </div>
+      </pfe-navigation-item>
     </div>
     <div class="pfe-navigation__utility">
-      <pfe-navigation-item pfe-icon="menu">
+      <!-- pfe-navigation-item pfe-icon="menu" tabindex="-1">
         <h2 slot="trigger">Menu</h2>
         <div slot="tray" hidden>
           <div class="pfe-navigation__utility--mobile">
@@ -50,15 +64,15 @@
             </div>
           </div>
         </div>
-      </pfe-navigation-item>
+      </pfe-navigation-item-->
       <slot name="language"></slot>
-      <div id="pfe-navigation--language" class="pfe-navigation__utility-links"></div>
+      <!-- <div id="pfe-navigation--language" class="pfe-navigation__utility-links"></div> -->
       <slot name="search"></slot>
-      <div id="pfe-navigation--search" class="pfe-navigation__utility-links"></div>
+      <!-- <div id="pfe-navigation--search" class="pfe-navigation__utility-links"></div> -->
       <slot name="login"></slot>
-      <div id="pfe-navigation--login" class="pfe-navigation__utility-links"></div>
+      <!-- <div id="pfe-navigation--login" class="pfe-navigation__utility-links"></div> -->
       <slot name="site-switcher"></slot>
-      <div id="pfe-navigation--site-switcher" class="pfe-navigation__utility-links"></div>
+      <!-- <div id="pfe-navigation--site-switcher" class="pfe-navigation__utility-links"></div> -->
     </div>
   </div>
   <div class="pfe-navigation__end" hidden tabindex="-1"></div>

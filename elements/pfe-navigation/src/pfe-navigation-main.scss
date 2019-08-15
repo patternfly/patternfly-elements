@@ -8,8 +8,12 @@
   padding: 0;
   height: 100%;
   display: flex;
-  flex-flow: row nowrap;
-  align-items: stretch;
+  flex-flow: column nowrap;
+
+  @media (min-width: #{pfe-breakpoint(md)}) {
+    flex-flow: row nowrap;
+    align-items: stretch;
+  }
 }
 
 ::slotted(ul) {

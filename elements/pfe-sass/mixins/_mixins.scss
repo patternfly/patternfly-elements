@@ -7,7 +7,7 @@
     }
   }
 }
-
+ 
 // $boxSize = any box-sizing property, default is border-box
 @mixin pfe-box-sizing($boxSize: border-box) {
   *, *::before, *::after {
@@ -225,7 +225,7 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
 }
 
 @mixin pfe-trigger-button($align: left) {
-    -webkit-appearance: button;
+    // -webkit-appearance: button;
     margin: 0;
     width: 100%;
     height: auto;
@@ -415,4 +415,14 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
   @else {
     padding: 0 #{$pfe-expand_button--padding--wide} #{$pfe-expand_button--padding} #{$pfe-expand_chevron--padding};
   }
+}
+
+@mixin icon($path, $size: 10px) {
+  display: flex;
+  @if $path {
+      background: #{$path} no-repeat;
+  }
+  width: #{$size};
+  height: #{$size};
+  @content;
 }

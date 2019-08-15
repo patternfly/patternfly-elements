@@ -17,13 +17,39 @@ $LOCAL: navigation;
   --pfe-navigation--Border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
   --pfe-navigation--MinHeight: 72px;
 
+  // Variables for the border
+  --pfe-navigation--BorderTopColor: transparent;
+  --pfe-navigation--BorderColor: transparent;
+
+  // Variables for the trigger region
+  --pfe-navigation__trigger--FontSize: 16px;
+  --pfe-navigation__trigger--FontWeight: 100;
+  
+  // Variables for the trigger icons
+  --pfe-navigation--icon: none;
+
+  // Variables for the tray region
+  --pfe-navigation__tray--Padding: #{pfe-var(container-padding)};
+
   // Reduce padding for print
   @media print {
     --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
   }
 
+  // Increase horizontal padding for above mobile breakpoints
   @media screen and (min-width: pfe-breakpoint(sm)) {
     --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} * 2);
+  }
+
+  // Reduce horizontal padding at large breakpoint
+  @media screen and (min-width: pfe-breakpoint(lg)) {
+    --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} / 2);
+    --pfe-navigation__tray--Padding: calc(#{pfe-var(container-padding)} * 2);
+  }
+
+  // Increase horizontal padding at xl breakpoint
+  @media screen and (min-width: pfe-breakpoint(xl)) {
+    --pfe-navigation--Padding--horizontal: #{pfe-var(container-padding)};
   }
 
   display: block;
@@ -51,9 +77,39 @@ $LOCAL: navigation;
   text-decoration: var(--pfe-broadcasted--link--text-decoration, #{pfe-var(link--text-decoration)});
 }
 
-@each $icon in (user, globe) {
+::slotted([slot="mobile-menu--label"]),
+.pfe-navigation__main--menu-label {
+  @each $prop in (text-decoration, text-decoration--hover, text-decoration--focus) {
+    --pfe-theme--link--#{$prop}: none;
+  }
+
+  @each $prop in (text, ui-link, ui-link--hover, ui-link--visited, ui-link--focus) {
+    --pfe-broadcasted--color--#{$prop}: #{pfe-local(Color)};
+  }
+
+  // Enforce the font-size for the navigation regardless of h-level settings
+  @each $level in (alpha, beta, gamma) {
+    --pfe-theme--font-size--#{$level}:   14px;
+    --pfe-theme--font-weight--#{$level}: 100;
+  }
+
+  font-family: #{pfe-var(font-family)};
+  text-align:  center;
+  font-size:   14px;
+  font-weight: 100;
+  color: #{pfe-local(Color)};
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+
+@each $icon in (bento, user, globe, search, menu) {
+  [pfe-icon="#{$icon}"],
   ::slotted([pfe-icon="#{$icon}"]) {
-    --pfe-navigation__icon--Background: #{map-get($icons, #{$icon})} no-repeat;
+    --pfe-navigation--icon: #{map-get($icons, #{$icon}--on-dark)};
+  }
+  [pfe-icon="#{$icon}"].expanded,
+  ::slotted([pfe-icon="#{$icon}"].expanded) {
+    --pfe-navigation--icon: #{map-get($icons, #{$icon})};
   }
 }
 
@@ -94,7 +150,7 @@ $LOCAL: navigation;
   &__overlay {
     display: block;
     background-color: var(--pfe-navigation__overlay--BackgroundColor);
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
@@ -118,13 +174,23 @@ $LOCAL: navigation;
     @include pfe-sr-only;
   }
   &__main {
-    display: none;
-    @media (min-width: #{pfe-breakpoint(lg)}) {
-      flex-grow: 1;
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: stretch;
-      justify-content: flex-start;
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    // @media (min-width: #{pfe-breakpoint(lg)}) {
+    //   flex-grow: 1;
+    //   flex-flow: row nowrap;
+    //   align-items: stretch;
+    //   justify-content: flex-start;
+    // }
+    &--mobile {
+      display: grid;
+      grid-gap: #{pfe-var(container-spacer)};
+      &--columns {
+        display: grid;
+        grid-gap: #{pfe-var(container-spacer)};
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
     }
   }
   &__utility {
@@ -132,56 +198,9 @@ $LOCAL: navigation;
     flex-flow: row nowrap;
     align-items: stretch;
     justify-content: flex-end;
-    > [pfe-icon="menu"] {
-      @media (min-width: #{pfe-breakpoint(lg)}) {
+    ::slotted(:not([name="site-switcher"])) {
+      @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
         display: none;
-      }
-    }
-    &-links {
-      &:not([id$="site-switcher"]) {
-        @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-          display: none;
-        }
-      }
-    }
-    &--mobile {
-      display: grid;
-      grid-gap: #{pfe-var(container-spacer)};
-      &--top {
-        @media screen and (min-width: pfe-breakpoint(sm)) {
-          display: none;
-        }
-      }
-      &--columns {
-        display: flex;
-        flex-flow: row nowrap;
-        padding: calc(#{pfe-var(container-spacer)} * 2) 0;
-        @media screen and (min-width: pfe-breakpoint(sm)) {
-          display: none;
-        }
-      }
-      &--item {
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-        text-decoration: none;
-        color: var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
-        stroke: var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
-        &:not(:last-child) {
-          margin-right: calc(#{pfe-var(container-spacer)} * 2.5);
-        }
-        @each $state in (hover, focus, visited) {
-          &:#{$state} {
-            color: var(--pfe-broadcasted--color--ui-link--#{$state}, #{pfe-color(ui-link--#{$state})});
-            stroke: var(--pfe-broadcasted--color--ui-link--#{$state}, #{pfe-color(ui-link--#{$state})});
-          }
-        }
-      }
-      &--icon {
-        display: inline-block;
-        width: 1em;
-        height: 1em;
-        margin-right: #{pfe-var(container-spacer)};
       }
     }
   }

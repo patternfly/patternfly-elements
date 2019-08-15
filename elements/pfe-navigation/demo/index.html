@@ -52,8 +52,8 @@
       <pfe-navigation-item slot="search" pfe-icon="search">
         <h3 slot="trigger"><a href="#url-to-search-page">Search</a></h3>
         <div slot="tray" hidden>
-          <div class="pfe-navigation-item__tray--container">
-            <form pfe-navigation--mobile-search>
+          <div class="pfe-navigation-item__tray--container" pfe-navigation--mobile-search>
+            <form>
               <input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
               <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
             </form>
@@ -61,12 +61,13 @@
         </div>
       </pfe-navigation-item>
       <!-- Main navigation -->
+      <h2 slot="mobile-menu--label">Menu</h2>
       <nav aria-label="Main">
         <pfe-navigation-main>
           <ul>
             <li>
               <pfe-navigation-item>
-                <h2 slot="trigger"><a href="#">Products</a></h2>
+                <h3 slot="trigger"><a href="#">Products</a></h3>
                 <div slot="tray" hidden>
                   <div class="pfe-navigation-item__tray--container pfe-l--text-align--left">
                     <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
@@ -126,7 +127,7 @@
             </li>
             <li>
               <pfe-navigation-item aria-current="location">
-                <h2 slot="trigger"><a href="#">Solutions</a></h2>
+                <h3 slot="trigger"><a href="#">Solutions</a></h3>
                 <div slot="tray" hidden>
                   <div class="pfe-navigation-item__tray--container test-overflow">
                     <p>Solutions tray content</p>
@@ -137,7 +138,7 @@
             </li>
             <li>
               <pfe-navigation-item>
-                <h2 slot="trigger"><a href="/support">Services &amp; support</a></h2>
+                <h3 slot="trigger"><a href="/support">Services &amp; support</a></h3>
                 <div slot="tray" hidden>
                   <div class="pfe-navigation-item__tray--container">
                     <p>Services tray content</p>
@@ -147,7 +148,7 @@
             </li>
             <li>
               <pfe-navigation-item>
-                <h2 slot="trigger"><a href="/resources">Resources</a></h2>
+                <h3 slot="trigger"><a href="/resources">Resources</a></h3>
                 <div slot="tray" hidden>
                   <div class="pfe-navigation-item__tray--container">
                     <p>Resources tray content</p>
@@ -157,7 +158,7 @@
             </li>
             <li>
               <pfe-navigation-item>
-                <h2><a href="http://www.redhat.com/en/about">Red Hat &amp; open source</a></h2>
+                <h3><a href="http://www.redhat.com/en/about">Red Hat &amp; open source</a></h3>
               </pfe-navigation-item>
             </li>
           </ul>
@@ -172,7 +173,7 @@
           </div>
         </div>
       </pfe-navigation-item>
-      <a href="/url-to-language-page" slot="mobile-language" pfe-icon="user" hidden>English</a>
+      <a href="/url-to-language-page" slot="mobile-language" pfe-icon="user">English</a>
       <!-- Log in -->
       <pfe-navigation-item slot="login" pfe-icon="user">
         <h3 slot="trigger"><a href="/login">Log in</a></h3>
@@ -182,7 +183,7 @@
           </div>
         </div>
       </pfe-navigation-item>
-      <a href="/login" slot="mobile-login" pfe-icon="user" hidden>Login/Register</a>
+      <a href="/login" slot="mobile-login" pfe-icon="user">Login/Register</a>
       <!-- Site switcher -->
       <pfe-navigation-item slot="site-switcher" pfe-icon="bento">
         <h3 slot="trigger"><a href="/url-to-rh-websites-page">Websites</a></h3>

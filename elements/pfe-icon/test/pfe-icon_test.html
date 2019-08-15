@@ -95,15 +95,19 @@
           sizeCheck(["sm", "md", "lg", "xl"]);
         });
 
-        test('it should print helpful error when given an invalid icon set name', () => {
-          const badIconName = "badiconset-iconname";
-          const spy = sinon.spy(console, 'warn');
-          icon.setAttribute("icon", badIconName);
-          sinon.assert.calledWith(spy,`icon "${badIconName}" was requested but no icon set "${badIconName.split('-')[0]}" is registered`);
-          spy.restore();
+        test('it should FOO fetch an icon even when the icon set is registered after the element upgrades', done => {
+          // set up an event handler to catch when the icon request is made
+          // and use onerror because the icon set isn't real, but it will catch the request being made
+          icon.addEventListener("error", () => {
+            done();
+          })
+
+          icon.setAttribute("icon", "test-foo");
+
+          PfeIcon.addIconSet('test');
         });
 
-        test('it should hide <image> when given an invalid icon or icon set', done => {
+        test('it should FOO hide <image> when given an invalid icon or icon set', done => {
           const badIconName = "rh-badiconname";
           const oldLoadError = icon.iconLoadError;
           icon.iconLoadError = () => {

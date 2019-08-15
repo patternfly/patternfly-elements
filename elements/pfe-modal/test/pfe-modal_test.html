@@ -24,9 +24,9 @@
 
         test('it should add the proper attributes to the modal window', () => {
           const pfeModal = document.querySelector('pfe-modal');
-          const outer = pfeModal.querySelector('pfe-modal__outer');
-          const modalWindow = pfeModal.querySelector('pfe-modal__window');
-          const button = pfeModal.querySelector('pfe-modal__close');
+          const outer = pfeModal.shadowRoot.querySelector('.pfe-modal__outer');
+          const modalWindow = pfeModal.shadowRoot.querySelector('.pfe-modal__window');
+          const button = pfeModal.shadowRoot.querySelector('.pfe-modal__close');
 
           assert.isTrue(pfeModal.hasAttribute('has_trigger'));
           assert.isTrue(pfeModal.hasAttribute('has_header'));
@@ -38,9 +38,8 @@
 
         test('it should open the modal window when the trigger is clicked', () => {
           const pfeModal = document.querySelector('pfe-modal');
-          const outer = pfeModal.querySelector('pfe-modal__outer');
-          const modalWindow = pfeModal.querySelector('pfe-modal__window');
-          const button = pfeModal.querySelector('pfe-modal__close');
+          const modalWindow = pfeModal.shadowRoot.querySelector('.pfe-modal__window');
+          const button = pfeModal.shadowRoot.querySelector('.pfe-modal__close');
           const trigger = pfeModal.querySelector('[slot=pfe-modal--trigger');
 
           trigger.click();
@@ -50,7 +49,7 @@
           // reset
           button.click();
           assert.isTrue(modalWindow.hasAttribute('hidden'));
-
+        
         });
 
 

@@ -13,11 +13,17 @@
         </span>
         <div slot="tray" hidden>
           <div class="pfe-navigation__main--mobile">
-            <slot name="mobile-search"></slot>
+            <slot name="mobile-search" class="pfe-navigation__main--mobile-search"></slot>
             <slot></slot>
             <div class="pfe-navigation__main--mobile--columns">
-              <slot name="mobile-login" class="pfe-navigation__main--mobile--item"></slot>
-              <slot name="mobile-language" class="pfe-navigation__main--mobile--item"></slot>
+              <span class="pfe-navigation__main--mobile--item" pfe-icon="user">
+                <span class="pfe-navigation__main--icon"></span>
+                <slot name="mobile-login"></slot>
+              </span>
+              <span class="pfe-navigation__main--mobile--item" pfe-icon="globe">
+                <span class="pfe-navigation__main--icon"></span>
+                <slot name="mobile-language"></slot>
+              </span>
             </div>
           </div>
         </div>

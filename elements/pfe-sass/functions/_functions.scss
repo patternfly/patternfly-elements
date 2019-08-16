@@ -222,15 +222,18 @@
 ///           font-size:   #{pfe-var(  font-size  )};
 ///         }
 ///         ```
-@function pfe-var($cssvar, $category: '', $map: $pfe-vars) {
+@function pfe-var($cssvar, $category: '', $fallback: null, $map: $pfe-vars) {
     @if $category !="" {
         $category: "#{$category}--";
     }
     // Start building the variable declaration
     $var-declaration: "--#{$repo}-theme--#{$category}#{$cssvar}";
     // If a fallback is defined, pass that in too
-    @if map-get($map, $cssvar) != null {
-        $var-declaration: "#{$var-declaration}, #{map-get($map, $cssvar)}";
+    @if $fallback != null or map-get($map, $cssvar) != null {
+        @if $fallback == null {
+            $fallback: map-get($map, $cssvar);
+        }
+        $var-declaration: "#{$var-declaration}, #{$fallback}";
     }
     // Return the variable declaration string
     @return var(#{$var-declaration});
@@ -290,6 +293,7 @@
     // Return the variable declaration string
     @return var(#{$var-declaration});
 }
+
 @function pfe-fallback($cssvar, $category: 'color', $map: $pfe-colors) {
     @if $category !="" {
         $category: "#{$category}--";

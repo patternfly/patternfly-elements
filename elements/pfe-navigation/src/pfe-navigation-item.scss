@@ -1,6 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: navigation;
+$USE-FALLBACK: true;
 
 :host {
   height: 100%;
@@ -10,97 +11,104 @@ $LOCAL: navigation;
   justify-content: center;
 }
 
-:host([pfe-icon]) {
-  display: flex;
-}
-
-// :host(:not([pfe-icon="bento"]))
-:host(:not([slot="site-switcher"])) {
-  display: none;
-  @media screen and (min-width: pfe-breakpoint(sm)) {
-    display: flex;
-  }
-}
-
+// Let the main item or the tray be hidden with the attribute
 :host([hidden]),
 ::slotted([slot="tray"][hidden]) {
   display: none;
   visibility: hidden;
 }
 
+/* ----------------- */
+/*  TRIGGER STYLES   */
+/* ----------------- */
+$trigger--FontSize--fallback:   #{map-get($pfe-vars, font-size--heading--zeta)};
+$trigger--FontWeight--fallback: #{map-get($pfe-vars, font-size--heading--zeta)};
+$trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
+
 ::slotted([slot="trigger"]) {
+  @each $prop in (text-decoration, text-decoration--hover, text-decoration--focus) {
+    --pfe-theme--link--#{$prop}: none;
+  }
+
+  @each $prop in (text, ui-link, ui-link--hover, ui-link--visited, ui-link--focus) {
+    --pfe-broadcasted--color--#{$prop}: #{pfe-local($cssvar: Color, $fallback: #{$trigger--Color--fallback})};
+  }
+
+  // Enforce the font-size for the navigation regardless of h-level settings
+  @each $level in (alpha, beta, gamma) {
+    --pfe-theme--font-size--#{$level}:   #{pfe-local($cssvar: FontSize, $fallback: #{$trigger--FontSize--fallback})};
+    --pfe-theme--font-weight--#{$level}: #{pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback})};
+  }
+
+  // Typography styles
+  font-family: pfe-var(font-family);
+  font-size:   pfe-local($cssvar: FontSize, $fallback: #{$trigger--FontSize--fallback});
+  font-weight: pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback});
+  color:       pfe-local($cssvar: Color, $fallback: #{$trigger--Color--fallback});
+
   margin: 0;
-  font-family: #{pfe-var(font-family)};
-  font-size: #{pfe-local($cssvar: FontSize, $fallback: 14px, $region: trigger)};
-  font-weight: #{pfe-local($cssvar: FontWeight, $fallback: 100, $region: trigger)};
-  color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
+  
+  // At mobile if inside the main context, update the color to a text color
+  @media screen and (max-width: #{pfe-breakpoint($size: lg, $max: true)}) {
+    :host([context="main"]) & {
+      --pfe-navigation--Color: #{pfe-color(text)};
+    }
+  }
 }
 
+/* ----------------- */
+/*    TRAY STYLES    */
+/* ----------------- */
 ::slotted([slot="tray"]) {
-  :host(:not([context="main"])) & {
-    transition: all #{pfe-var(animation-timing)};
+  --pfe-navigation--Color: #{pfe-color(text)};
+  --pfe-navigation--FontWeight: #{pfe-color(text)};
 
+  transition: all #{pfe-var(animation-timing)};
+  box-sizing: border-box;
+
+  //  Main region styles
+  @media screen and (max-width: #{pfe-breakpoint($size: lg, $max: true)}) {
+    :host([context="main"]) & {
+      --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
+
+      @include pfe-container;
+    }
+  }
+
+  // Tray styles for other dropdowns
+  :host(:not([context="main"])) & {
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%;
 
     background-color: #{pfe-color(surface--lightest)};
     color: #{pfe-color(surface--lightest--text)};
 
-    box-sizing: border-box;
     padding: #{pfe-local($cssvar: Padding, $region: tray)};
+    width: 100%;
     max-height: calc(100vh - var(--pfe-navigation--Height, 84px));
     overflow-x: hidden;
     overflow-y: scroll;
   }
 
-  :host([context="main"]) & {
-    @include pfe-accordion-panel;
-  }
-
-  :host([context="main"].expanded) &,
-  :host([context="main"]) &[aria-expanded="true"] {
-    @include pfe-accordion-panel-expanded;
-    @include pfe-accordion-panel-expanded-style;
-  }
-
-  &.animating {
-    display: block;
-    transition: height 0.3s ease-in-out;
-  }
+  // &.animating {
+  //   display: block;
+  //   transition: height 0.3s ease-in-out;
+  // }
 }
 
 .pfe-navigation-item {
   &__trigger {
-    @each $prop in (text, ui-link, ui-link--hover, ui-link--visited, ui-link--focus) {
-      --pfe-broadcasted--color--#{$prop}: #{pfe-local(Color)};
-    }
-
-    // Enforce the font-size for the navigation regardless of h-level settings
-    @each $level in (alpha, beta, gamma) {
-      --pfe-theme--font-size--#{$level}:   #{pfe-local($cssvar: FontSize, $region: trigger)};
-      --pfe-theme--font-weight--#{$level}: #{pfe-local($cssvar: FontWeight, $region: trigger)};
-    }
-
-    font-family: #{pfe-var(font-family)};
-    font-size:   #{pfe-local($cssvar: FontSize, $region: trigger)};
-    font-weight: #{pfe-local($cssvar: FontWeight, $region: trigger)};
-
-    color: #{pfe-local(Color)};
-  
     border-top: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderTopColor)};
     border-right: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
     border-bottom: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
     border-left: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
 
     &:hover {
-      --pfe-navigation--BorderLeft: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderLeftColor--focus)};
-
       cursor: pointer;
     }
 
-    :host(:not([context="main"])) & {
+    // :host(:not([context="main"])) & {
       position: relative;
       flex-grow: 1;
 
@@ -145,6 +153,17 @@ $LOCAL: navigation;
         --pfe-navigation--BackgroundColor: #{pfe-color(surface--lightest)};
         --pfe-navigation--BorderTopColor:  #{pfe-color(surface--accent)};
       }
+    // }
+
+    @media screen and (max-width: #{pfe-breakpoint($size: lg, $max: true)}) {
+      :host([context="main"]) &:hover {
+        border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderLeftColor--focus)};
+      }
+      
+      :host([context="main"].expanded) &,
+      :host([context="main"]) &[aria-expanded="true"] {
+        @include pfe-trigger-expanded;
+      }
     }
   
     :host([pfe-icon]) & {
@@ -163,18 +182,24 @@ $LOCAL: navigation;
         bottom: #{pfe-var(container-spacer)};
       }
 
-      :host([context="main"]) [aria-expanded="false"] & {
-        visibility: visible;
-        @include pfe-chevron-expanded($state: false);
-      }
+      @media screen and (max-width: #{pfe-breakpoint($size: lg, $max: true)}) {
+        :host([context="main"]) [aria-expanded="false"] & {
+          visibility: visible;
+          @include pfe-chevron-expanded($state: false);
+        }
 
-      :host([context="main"]) [aria-expanded="true"] & {
-        visibility: visible;
-        @include pfe-chevron-expanded;
+        :host([context="main"]) [aria-expanded="true"] & {
+          visibility: visible;
+          @include pfe-chevron-expanded;
+        }
+
+        :host([context="main"]:not([has_tray])) & {
+          transform: rotate(-45deg);
+        }
       }
 
       :host([pfe-icon]) & {
-        @include icon(
+        @include pfe-icon(
           $path: #{pfe-local($cssvar: icon)},
           $size: 21px
         );
@@ -187,7 +212,19 @@ $LOCAL: navigation;
     }
   }
   &__tray {
-    
+    @media screen and (max-width: #{pfe-breakpoint($size: lg, $max: true)}) {
+      :host([context="main"]) & {
+        @include pfe-accordion-panel;
+        box-sizing: border-box;
+        width: 100%;
+      }
+
+      :host([context="main"].expanded) &,
+      :host([context="main"]) &[aria-expanded="true"] {
+        @include pfe-accordion-panel-expanded;
+        @include pfe-accordion-panel-expanded-style;
+      }
+    }
   }
 }
 
@@ -196,39 +233,45 @@ $LOCAL: navigation;
 }
 
 // Styles for navigation items appearing inside the mobile menu
-:host([context="main"]) {
-  --pfe-navigation__trigger--FontSize: 16px;
+@media screen and (max-width: #{pfe-breakpoint($size: lg, $max: true)}) {
+  :host([context="main"]) {
+    --pfe-navigation__trigger--FontSize: 16px;
+    --pfe-navigation--BackgroundColor: #{pfe-var(surface--lightest)};
+    --pfe-navigation--Color: #{pfe-var(surface--lightest--text)};
 
-  @include pfe-trigger-color($component-name: navigation);
+    @include pfe-trigger-color($component-name: navigation);
 
-  --pfe-navigation--BackgroundColor: #{pfe-var(surface--lightest)};
-  --pfe-navigation--Color: #{pfe-var(surface--lightest--text)};
+    align-items: flex-start;
 
-  align-items: flex-start;
+    .pfe-navigation-item__trigger {
+      @include pfe-trigger-button;
 
-  .pfe-navigation-item__trigger {
-    @include pfe-trigger-button;
+      box-sizing: border-box;
 
-    box-sizing: border-box;
-
-    &[aria-expanded="true"] {
-      @include pfe-trigger-color-expanded($component-name: navigation);
-      // @include pfe-trigger-expanded;
-      // &::after {
-      //   @include pfe-chevron-expanded;
-      // }
+      &[aria-expanded="true"] {
+        @include pfe-trigger-color-expanded($component-name: navigation);
+      }
     }
+  }
+  
+  :host([context="main"][first]) {
+    @include pfe-trigger-button-first($theme: light);
+  }
 
-    // &[aria-expanded="false"]::after {
-    //     @include pfe-chevron-expanded($state: false);
-    // }
+  :host([context="main"][last]) [aria-expanded="false"] {
+    @include pfe-trigger-button-last;
   }
 }
 
-:host([context="main"][first]) {
-  @include pfe-trigger-button-first($theme: light);
-}
 
-:host([context="main"][last]) [aria-expanded="false"] {
-  @include pfe-trigger-button-last;
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+  :host([pfe-icon="menu"]) {
+    .pfe-navigation-item__trigger {
+      display: none;
+    }
+    ::slotted([slot="tray"]) {
+      // display: contents;
+      position: relative;
+    }
+  }
 }

@@ -213,9 +213,15 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
     &--icon {
       visibility: hidden;
 
-      :host([has_tray]:not([pfe-icon])) [aria-expanded="false"]:hover & {
+      :host([has_tray]:not([pfe-icon]):not([is_nested])) [aria-expanded="false"]:hover & {
         visibility: visible;
         @include pfe-arrow-color(#{pfe-local(Color)});
+      }
+
+      @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+        :host([has_tray]:not([pfe-icon])) [aria-expanded="false"]:hover & {
+          visibility: visible;
+        }
       }
 
       :host [aria-expanded="true"] & {

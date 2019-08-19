@@ -49,8 +49,8 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
   margin: 0;
   
   // At mobile if inside the main context, update the color to a text color
-  @media screen and (max-width: #{pfe-breakpoint($size: lg, $max: true)}) {
-    :host([context="main"]) & {
+  @media screen and (max-width: #{pfe-breakpoint($size: xl, $max: true)}) {
+    :host([is_nested]) & {
       --pfe-navigation--Color: #{pfe-color(text)};
     }
   }
@@ -66,23 +66,37 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
   transition: all #{pfe-var(animation-timing)};
   box-sizing: border-box;
 
-  //  Main region styles
-  @media screen and (max-width: #{pfe-breakpoint($size: lg, $max: true)}) {
-    :host([context="main"]) & {
-      --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
+  // If this is the menu item
+  :host([pfe-icon="menu"]) & {
+    @media screen and (max-width: #{pfe-breakpoint($size: xl, $max: true)}) {
+      position: absolute;
+      top: 100%;
+      left: 0;
 
-      @include pfe-container;
+      background-color: #{pfe-color(surface--lightest)};
+      color: #{pfe-local(Color)};
+
+      padding: #{pfe-local($cssvar: Padding, $region: tray)};
+      width: 100%;
+      max-height: calc(100vh - var(--pfe-navigation--Height, 84px));
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+
+    @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+      display: flex;
+      visibility: visible;
     }
   }
 
-  // Tray styles for other dropdowns
-  :host(:not([context="main"])) & {
+  // If this is not the menu item or one of it's children
+  :host(:not([pfe-icon="menu"]):not([is_nested])) & {
     position: absolute;
     top: 100%;
     left: 0;
 
     background-color: #{pfe-color(surface--lightest)};
-    color: #{pfe-color(surface--lightest--text)};
+    color: #{pfe-local(Color)};
 
     padding: #{pfe-local($cssvar: Padding, $region: tray)};
     width: 100%;
@@ -91,78 +105,104 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
     overflow-y: scroll;
   }
 
-  // &.animating {
-  //   display: block;
-  //   transition: height 0.3s ease-in-out;
-  // }
+  //  Styles for the nested elements
+  :host([is_nested]) & {
+    @media screen and (max-width: #{pfe-breakpoint($size: xl, $max: true)}) {
+      --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
+
+      @include pfe-container;
+    }
+    
+    // Desktop styles for menu
+    @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+      position: absolute;
+      top: 100%;
+      left: 0;
+
+      background-color: #{pfe-color(surface--lightest)};
+      color: #{pfe-local(Color)};
+
+      padding: #{pfe-local($cssvar: Padding, $region: tray)};
+      width: 100%;
+      max-height: calc(100vh - var(--pfe-navigation--Height, 84px));
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+  }
 }
 
 .pfe-navigation-item {
   &__trigger {
+    --pfe-navigation--Color: #{pfe-color(text--on-dark)};
+
     border-top: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderTopColor)};
     border-right: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
     border-bottom: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
     border-left: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
 
+    position: relative;
+    flex-grow: 1;
+
+    @each $prop in (text-decoration, text-decoration--hover, text-decoration--focus) {
+      --pfe-theme--link--#{$prop}: none;
+    }
+
+    text-align:  center;
+    white-space: nowrap;
+    margin-bottom: 0;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+
+    transition: all #{pfe-var(animation-timing)};
+  
+    margin: 0;
+    outline: none;
+
+    background-color: #{pfe-local(BackgroundColor)};
+    padding: calc(#{pfe-var(container-padding)} / 2) #{pfe-var(container-padding)};
+
     &:hover {
       cursor: pointer;
     }
 
-    // :host(:not([context="main"])) & {
-      position: relative;
-      flex-grow: 1;
+    &:hover,
+    :host([aria-current="location"]) {
+      --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
+    }
 
-      @each $prop in (text-decoration, text-decoration--hover, text-decoration--focus) {
-        --pfe-theme--link--#{$prop}: none;
-      }
+    &:focus {
+      --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
+      --pfe-navigation--BorderColor: #{pfe-color(surface--lightest)};
+    }
 
-      text-align:  center;
-      white-space: nowrap;
-      margin-bottom: 0;
+    &:focus:not(:focus-visible) {
+      outline: none;  // removes outline for mouse users, preserves it for keyboard users
+    }
 
-      display: flex;
-      flex-flow: column nowrap;
-      align-items: center;
-      justify-content: center;
-  
-      transition: all #{pfe-var(animation-timing)};
-    
-      margin: 0;
-      outline: none;
-  
-      background-color: #{pfe-local(BackgroundColor)};
-      padding: calc(#{pfe-var(container-padding)} / 2) #{pfe-var(container-padding)};
-      
-      &:hover,
-      :host([aria-current="location"]) {
-        --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
-      }
-  
-      &:focus {
-        --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
-        --pfe-navigation--BorderColor: #{pfe-color(surface--lightest)};
-      }
-  
-      &:focus:not(:focus-visible) {
-        outline: none;  // removes outline for mouse users, preserves it for keyboard users
-      }
-  
-      &[aria-expanded="true"],
-      .expanded & {
-        --pfe-navigation--Color: #{pfe-color(text)};
-        --pfe-navigation--BackgroundColor: #{pfe-color(surface--lightest)};
-        --pfe-navigation--BorderTopColor:  #{pfe-color(surface--accent)};
-      }
-    // }
+    &[aria-expanded="true"],
+    .expanded & {
+      --pfe-navigation--Color: #{pfe-color(text)};
+      --pfe-navigation--BackgroundColor: #{pfe-color(surface--lightest)};
+      --pfe-navigation--BorderTopColor:  #{pfe-color(surface--accent)};
+    }
 
-    @media screen and (max-width: #{pfe-breakpoint($size: lg, $max: true)}) {
-      :host([context="main"]) &:hover {
+    @media screen and (max-width: #{pfe-breakpoint($size: xl, $max: true)}) {
+      :host([is_nested]) &:hover {
         border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderLeftColor--focus)};
       }
       
-      :host([context="main"].expanded) &,
-      :host([context="main"]) &[aria-expanded="true"] {
+      :host([is_nested].expanded) &,
+      :host([is_nested]) &[aria-expanded="true"] {
         @include pfe-trigger-expanded;
+      }
+    }
+
+    @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+      :host([pfe-icon="menu"]) & {
+        display: none;
       }
     }
   
@@ -171,34 +211,41 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
     }
 
     &--icon {
-      :host([has_tray]:not([pfe-icon]):hover) [aria-expanded="false"] & {
+      visibility: hidden;
+
+      :host([has_tray]:not([pfe-icon])) [aria-expanded="false"]:hover & {
         visibility: visible;
         @include pfe-arrow-color(#{pfe-local(Color)});
       }
 
-      :host(:not([pfe-icon],[context="main"])) & {
+      :host [aria-expanded="true"] & {
+        visibility: visible;
+      }
+
+      :host(:not([pfe-icon])) & {
         @include pfe-arrow(down, #{pfe-color(feedback--default)}, $width: 6px, $height: 6px);
         position: absolute;
         bottom: #{pfe-var(container-spacer)};
       }
 
-      @media screen and (max-width: #{pfe-breakpoint($size: lg, $max: true)}) {
-        :host([context="main"]) [aria-expanded="false"] & {
+      @media screen and (max-width: #{pfe-breakpoint($size: xl, $max: true)}) {
+        :host([is_nested]) [aria-expanded="false"] & {
           visibility: visible;
           @include pfe-chevron-expanded($state: false);
         }
 
-        :host([context="main"]) [aria-expanded="true"] & {
+        :host([is_nested]) [aria-expanded="true"] & {
           visibility: visible;
           @include pfe-chevron-expanded;
         }
 
-        :host([context="main"]:not([has_tray])) & {
+        :host([is_nested]:not([has_tray])) & {
           transform: rotate(-45deg);
         }
       }
 
       :host([pfe-icon]) & {
+        visibility: visible;
         @include pfe-icon(
           $path: #{pfe-local($cssvar: icon)},
           $size: 21px
@@ -206,23 +253,29 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
         margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
       }
 
-      :host(:not([pfe-icon],[context="main"])) [aria-expanded="false"] & {
+      :host(:not([pfe-icon],[is_nested])) [aria-expanded="false"] & {
         visibility: hidden;
       }
     }
   }
   &__tray {
-    @media screen and (max-width: #{pfe-breakpoint($size: lg, $max: true)}) {
-      :host([context="main"]) & {
+    @media screen and (max-width: #{pfe-breakpoint($size: xl, $max: true)}) {
+      :host([is_nested]) & {
         @include pfe-accordion-panel;
         box-sizing: border-box;
         width: 100%;
       }
 
-      :host([context="main"].expanded) &,
-      :host([context="main"]) &[aria-expanded="true"] {
+      :host([is_nested].expanded) &,
+      :host([is_nested]) &[aria-expanded="true"] {
         @include pfe-accordion-panel-expanded;
         @include pfe-accordion-panel-expanded-style;
+      }
+    }
+    @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+      :host([pfe-icon="menu"]) & {
+        display: flex;
+        flex-grow: 1;
       }
     }
   }
@@ -233,20 +286,19 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
 }
 
 // Styles for navigation items appearing inside the mobile menu
-@media screen and (max-width: #{pfe-breakpoint($size: lg, $max: true)}) {
-  :host([context="main"]) {
+@media screen and (max-width: #{pfe-breakpoint($size: xl, $max: true)}) {
+  :host([is_nested]) {
     --pfe-navigation__trigger--FontSize: 16px;
     --pfe-navigation--BackgroundColor: #{pfe-var(surface--lightest)};
     --pfe-navigation--Color: #{pfe-var(surface--lightest--text)};
 
     @include pfe-trigger-color($component-name: navigation);
 
-    align-items: flex-start;
-
     .pfe-navigation-item__trigger {
       @include pfe-trigger-button;
 
       box-sizing: border-box;
+      align-items: stretch;
 
       &[aria-expanded="true"] {
         @include pfe-trigger-color-expanded($component-name: navigation);
@@ -254,24 +306,11 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
     }
   }
   
-  :host([context="main"][first]) {
+  :host([is_nested][first]) {
     @include pfe-trigger-button-first($theme: light);
   }
 
-  :host([context="main"][last]) [aria-expanded="false"] {
+  :host([is_nested][last]) [aria-expanded="false"] {
     @include pfe-trigger-button-last;
-  }
-}
-
-
-@media screen and (min-width: #{pfe-breakpoint(md)}) {
-  :host([pfe-icon="menu"]) {
-    .pfe-navigation-item__trigger {
-      display: none;
-    }
-    ::slotted([slot="tray"]) {
-      // display: contents;
-      position: relative;
-    }
   }
 }

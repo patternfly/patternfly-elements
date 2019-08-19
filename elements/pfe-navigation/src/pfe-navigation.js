@@ -61,7 +61,7 @@ class PfeNavigation extends PFElement {
       document.body.style.overflow = "hidden";
     } else {
       // Remove the overlay from the page
-      this._overlay.setAttribute("hidden", true);
+      this._overlay.setAttribute("hidden", "");
       // Allow background to scroll again
       document.body.style.overflow = "auto";
 
@@ -392,7 +392,7 @@ class PfeNavigation extends PFElement {
       // this.shadowRoot.querySelector(`#pfe-navigation--mobile-${type}`).innerHTML = this.mobileSlot[type].innerText;
 
       // Hide the slot
-      // this.mobileSlot[type].setAttribute("hidden", true);
+      // this.mobileSlot[type].setAttribute("hidden", "");
       // this.mobileSlot[type].style.display = "none";
     });
   }
@@ -428,6 +428,22 @@ class PfeNavigationItem extends PFElement {
     return ["pfe-icon"];
   }
 
+  get nested() {
+    return this.hasAttribute("is_nested");
+  }
+
+  set nested(val) {
+    val = Boolean(val);
+
+    console.log("Nested? " + val);
+
+    if (val) {
+      this.setAttribute("is_nested", "");
+    } else {
+      this.removeAttribute("is_nested");
+    }
+  }
+
   get expanded() {
     return this.classList.contains("expanded");
   }
@@ -435,8 +451,8 @@ class PfeNavigationItem extends PFElement {
   set expanded(val) {
     val = Boolean(val);
 
-    console.log(val ? "open" : "close");
-    console.log(this);
+    // console.log(val ? "open" : "close");
+    // console.log(this);
 
     if (val) {
       this.classList.add("expanded");
@@ -460,7 +476,7 @@ class PfeNavigationItem extends PFElement {
       }
 
       if (this.tray) {
-        this.tray.setAttribute("hidden", true);
+        this.tray.setAttribute("hidden", "");
       }
 
       if (this._tray) {
@@ -506,6 +522,7 @@ class PfeNavigationItem extends PFElement {
   constructor() {
     super(PfeNavigationItem);
 
+    this.nested = false;
     this.expanded = false;
     this.trigger = null;
     this.tray = null;
@@ -584,11 +601,10 @@ class PfeNavigationItem extends PFElement {
   _init() {
     this.directLink = this.trigger.querySelector("a");
 
-    this.nestedItems.forEach(item => {
-      // Store the parentItem on this node and note that it's a nested component
-      item.parentItem = this;
-      item.setAttribute("nested", true);
-    });
+    // this.nestedItems.forEach(item => {
+    //   // Store the parentItem on this node and note that it's a nested component
+    //   item.parentItem = this;
+    // });
 
     // If there is a tray element, add click events
     if (this.tray) {
@@ -713,12 +729,12 @@ class PfeNavigationMain extends PFElement {
   _init() {
     // For each nested navigation item, tag it with context
     this.navItems.forEach(item => {
-      item.setAttribute("context", "main");
+      item.nested = true;
     });
 
     // Tag the first and last navigation items for styling in mobile
-    if (this.first) this.first.setAttribute("first", true);
-    if (this.last) this.last.setAttribute("last", true);
+    if (this.first) this.first.setAttribute("first", "");
+    if (this.last) this.last.setAttribute("last", "");
   }
 }
 

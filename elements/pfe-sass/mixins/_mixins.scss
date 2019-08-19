@@ -437,6 +437,7 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
   @if $path {
     background: #{$path} no-repeat;
     background-size: contain;
+    background-position: center;
   }
   width: #{$size};
   height: #{$size};

@@ -114,7 +114,7 @@ $variables: (
 
 .pfe-navigation {
   &__wrapper {
-    position: relative;
+    position: relative; // Ensures all navigation items are aligned relative to this wrapper
     z-index: #{pfe-var($cssvar: navigation, $map: $z-index)};
     
     background-color: #{map-get($pfe-colors, surface--darkest)};
@@ -176,7 +176,7 @@ $variables: (
     flex-grow: 1;
     display: flex;
     justify-content: flex-end;
-    @media (min-width: #{pfe-breakpoint(lg)}) {
+    @media (min-width: #{pfe-breakpoint(xl)}) {
       flex-grow: 1;
       flex-flow: row nowrap;
       align-items: stretch;
@@ -186,9 +186,8 @@ $variables: (
       display: grid;
       grid-gap: #{pfe-var(container-spacer)};
       height: 100%;
-      @media (min-width: #{pfe-breakpoint(md)}) {
-        &--columns,
-        &-search {
+      &-search {
+        @media (min-width: #{pfe-breakpoint(lg)}) {
           display: none;
         }
       }
@@ -196,6 +195,9 @@ $variables: (
         display: grid;
         grid-gap: #{pfe-var(container-spacer)};
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        @media (min-width: #{pfe-breakpoint(lg)}) {
+          display: none;
+        }
       }
       &--item {
         &[pfe-icon="user"] {

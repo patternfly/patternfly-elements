@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
     -->
-    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
+    <link rel="stylesheet" href="https://overpass-30e2.kxcdn.com/overpass.css" />
     <noscript>
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
@@ -16,8 +16,8 @@
 
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require([
 
@@ -229,6 +229,20 @@
       </pfe-accordion>
     </section>
 
+    <section>
+      <h2>&lt;pfe-accordion&gt; form test for ShadyCSS</h2>
+      <form id="form">
+        <pfe-accordion>
+          <pfe-accordion-header>
+            <h2>Header</h2>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </pfe-accordion-panel>
+        </pfe-accordion>
+      </form>
+    </section>
+
     <script>
       var btn = document.querySelector("#addTabAndPanelBtn");
       var pfeAccordion = document.querySelector("pfe-accordion");
@@ -245,6 +259,16 @@
         fragment.appendChild(header);
         fragment.appendChild(panel);
         pfeAccordion.appendChild(fragment);
+      });
+
+      /*
+       * because of the fix in commit c209e15, this form should
+       * never submit
+       */
+      var form = document.querySelector("#form");
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        alert("form submitted");
       });
     </script>
   </body>

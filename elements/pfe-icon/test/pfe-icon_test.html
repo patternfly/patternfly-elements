@@ -46,23 +46,23 @@
             'the <pfe-icon> should be an instance of RhPanel'
           );
         });
-        test('it should show the correct icon', () => {
-          const rhIcon = document.querySelector('pfe-icon#correct-icon');
-          const d = rhIcon.shadowRoot.querySelector('svg g path').getAttribute('d');
-
-          assert.equal(iconDefs.server, d, 'pfe-icon grab the d attribute from the requested icon svg');
-        });
-
-        test('it should update the icon if the icon attribute changes', () => {
-          const rhIcon = document.querySelector('pfe-icon#change-icon');
-          const newIcon = 'pfe-icon-server-stack';
-
-          rhIcon.setAttribute('icon', newIcon);
-
-          const d = rhIcon.shadowRoot.querySelector('svg g path').getAttribute('d');
-
-          assert.equal(iconDefs.serverStack, d, `pfe-icon compare the icon svg's \`d\` attribute to the expected ${newIcon} d attribute`);
-        });
+        // test('it should show the correct icon', () => {
+        //   const rhIcon = document.querySelector('pfe-icon#correct-icon');
+        //   const d = rhIcon.shadowRoot.querySelector('svg g path').getAttribute('d');
+        //
+        //   assert.equal(iconDefs.server, d, 'pfe-icon grab the d attribute from the requested icon svg');
+        // });
+        //
+        // test('it should update the icon if the icon attribute changes', () => {
+        //   const rhIcon = document.querySelector('pfe-icon#change-icon');
+        //   const newIcon = 'pfe-icon-server-stack';
+        //
+        //   rhIcon.setAttribute('icon', newIcon);
+        //
+        //   const d = rhIcon.shadowRoot.querySelector('svg g path').getAttribute('d');
+        //
+        //   assert.equal(iconDefs.serverStack, d, `pfe-icon compare the icon svg's \`d\` attribute to the expected ${newIcon} d attribute`);
+        // });
 
         test('it should fail gracefully if the requested icon does not exist', () => {
           const rhIcon = document.querySelector('pfe-icon#bad-icon');

@@ -39,16 +39,16 @@ export function hsl2rgb(_H, _S, _L) {
 
     a = 2 * L - b;
 
-    R = 255 * h2rgb(a, b, H + 1 / 3);
-    G = 255 * h2rgb(a, b, H);
-    B = 255 * h2rgb(a, b, H - 1 / 3);
+    R = Math.floor(255 * h2rgb(a, b, H + 1 / 3));
+    G = Math.floor(255 * h2rgb(a, b, H));
+    B = Math.floor(255 * h2rgb(a, b, H - 1 / 3));
   }
 
   return [R, G, B];
 }
 
 /**
- * Convert an RGBcolor to HSL .
+ * Convert an RGBcolor to HSL.
  *
  * @param {Number} R the red component
  * @param {Number} G the green component

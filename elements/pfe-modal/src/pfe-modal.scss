@@ -30,7 +30,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		z-index: #{pfe-var($cssvar: modal, $map: $z-index)};
+		z-index: #{pfe-var($cssvar: modal, $category: zindex, $map: $z-index)};
 
 		&[hidden] {
 			display: none;

@@ -38,7 +38,7 @@ $pfe-icon--border-style:                     map-get($pfe-vars, border-style);
 :host {
   --pfe-icon--Spacing:                 #{pfe-var(container-spacer)};
   --pfe-icon--Size:                    var(--pfe-theme--icon-size, 1em);
-  --pfe-icon--Color:                   var(--pfe-broadcasted--color--text, #{pfe-color(text)});
+  --pfe-icon--InternalColor:           var(--pfe-icon--Color, var(--pfe-broadcasted--color--text, #{pfe-color(text)}));
   --pfe-icon--BackgroundColor:         transparent;
   --pfe-icon--BorderColor:             transparent;
 
@@ -83,7 +83,7 @@ $pfe-icon--border-style:                     map-get($pfe-vars, border-style);
       }
     }
     filter feFlood {
-      flood-color: var(--pfe-icon--Color);
+      flood-color: var(--pfe-icon--InternalColor);
     }
   }
 }

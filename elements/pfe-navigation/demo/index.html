@@ -35,10 +35,12 @@
 
   <body unresolved>
     <h1>&lt;pfe-navigation&gt;</h1>
-    <pfe-navigation sticky close-on-click="external">
+    <pfe-navigation pfe-sticky pfe-close-on-click="external">
       <!-- Skip navigation -->
       <div slot="skip">
-        <a href="#rh-main-content">Skip to content</a>
+        <ul>
+          <li><a href="#rh-main-content">Skip to content</a></li>
+        </ul>
       </div>
       <!-- Site logo -->
       <h2 slot="logo">
@@ -47,11 +49,11 @@
         </a>
       </h2>
       <!-- Search -->
-      <pfe-navigation-item slot="search" icon="search">
+      <pfe-navigation-item slot="search" pfe-icon="search">
         <h3 slot="trigger"><a href="#url-to-search-page">Search</a></h3>
         <div slot="tray" hidden>
-          <div class="pfe-navigation-item__tray--container">
-            <form pfe-navigation--mobile-search>
+          <div class="pfe-navigation-item__tray--container" pfe-navigation--mobile-search>
+            <form>
               <input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
               <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
             </form>
@@ -59,12 +61,13 @@
         </div>
       </pfe-navigation-item>
       <!-- Main navigation -->
+      <h2 slot="mobile-menu--label">Menu</h2>
       <nav aria-label="Main">
         <pfe-navigation-main>
           <ul>
             <li>
               <pfe-navigation-item>
-                <h2 slot="trigger"><a href="#">Products</a></h2>
+                <h3 slot="trigger"><a href="#">Products</a></h3>
                 <div slot="tray" hidden>
                   <div class="pfe-navigation-item__tray--container pfe-l--text-align--left">
                     <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
@@ -143,7 +146,7 @@
             </li>
             <li>
               <pfe-navigation-item aria-current="location">
-                <h2 slot="trigger"><a href="#">Solutions</a></h2>
+                <h3 slot="trigger"><a href="#">Solutions</a></h3>
                 <div slot="tray" hidden>
                   <div class="pfe-navigation-item__tray--container">
                       <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
@@ -197,8 +200,8 @@
                         </div>
 
                       </div>
-                      <div class="border-top pfe-l-grid pfe-m-gutters pfe-m-all-4-col pfe-l--text-align--left">
-                        <div class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-3-col pfe-m-all-1-col-on-xs pfe-m-12-col">
+                      <div class="border-top pfe-l-grid pfe-m-gutters pfe-m-4-col pfe-l--text-align--left">
+                        <div class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-3-col-on-lg pfe-m-all-6-col pfe-m-all-1-col-on-xs pfe-m-12-col">
                           <pfe-cta priority="primary" class="PFElement"><a href="#">View all products</a></pfe-cta>
                           <pfe-cta><a href="#">Explore our portfolio</a></pfe-cta>
                         </div>
@@ -209,7 +212,7 @@
             </li>
             <li>
               <pfe-navigation-item>
-                <h2 slot="trigger"><a href="/support">Services &amp; support</a></h2>
+                <h3 slot="trigger"><a href="/support">Services &amp; support</a></h3>
                 <div slot="tray" hidden>
                     <div class="pfe-navigation-item__tray--container">
                         <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
@@ -273,7 +276,7 @@
             </li>
             <li>
               <pfe-navigation-item>
-                <h2 slot="trigger"><a href="/resources">Resources</a></h2>
+                <h3 slot="trigger"><a href="/resources">Resources</a></h3>
                 <div slot="tray" hidden>
                     <div class="pfe-navigation-item__tray--container">
                         <div class="pfe-l-grid pfe-m-gutters">
@@ -368,7 +371,7 @@
         </pfe-navigation-main>
       </nav>
       <!-- Language -->
-      <pfe-navigation-item slot="language" icon="globe">
+      <pfe-navigation-item slot="language" pfe-icon="globe">
         <h3 slot="trigger"><a href="/url-to-language-page">English</a></h3>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">
@@ -376,9 +379,9 @@
           </div>
         </div>
       </pfe-navigation-item>
-      <a href="/url-to-language-page" slot="mobile-language" icon="user" hidden>English</a>
+      <a href="/url-to-language-page" slot="mobile-language" pfe-icon="user">English</a>
       <!-- Log in -->
-      <pfe-navigation-item slot="login" icon="user">
+      <pfe-navigation-item slot="login" pfe-icon="user">
         <h3 slot="trigger"><a href="/login">Log in</a></h3>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">
@@ -386,9 +389,9 @@
           </div>
         </div>
       </pfe-navigation-item>
-      <a href="/login" slot="mobile-login" icon="user" hidden>Login/Register</a>
+      <a href="/login" slot="mobile-login" pfe-icon="user">Login/Register</a>
       <!-- Site switcher -->
-      <pfe-navigation-item slot="site-switcher" icon="bento">
+      <pfe-navigation-item slot="site-switcher" pfe-icon="bento">
         <h3 slot="trigger"><a href="/url-to-rh-websites-page">Websites</a></h3>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">

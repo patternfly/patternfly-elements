@@ -142,14 +142,14 @@
             "title": "Sticky navigation",
             "type": "boolean",
             "default": true,
-            "prefixed": false
+            "prefixed": true
           },
           "close-on-click": {
             "title": "Close navigation on click event",
             "type": "string",
             "enum": [ "external" ],
             "default": "external",
-            "prefixed": false
+            "prefixed": true
           }
         }
       }

@@ -40,13 +40,32 @@ class PfeNavigation extends PFElement {
     this.dispatchEvent(
       new CustomEvent("pfe-navigation-item:close", {
         detail: {
-          navigationItem: this._activeNavigationItem,
+          navigationItems: this._activeNavigationItems,
           expanded: false
         },
         bubbles: true,
         composed: true
       })
     );
+  }
+
+  get overlay() {
+    return !this._overlay.hasAttribute("hidden");
+  }
+
+  set overlay(state) {
+    if (state) {
+      // Add the overlay to the page
+      this._overlay.removeAttribute("hidden");
+      // This prevents background scroll while nav is open
+      document.body.style.overflow = "hidden";
+    } else {
+      // Remove the overlay from the page
+      this._overlay.setAttribute("hidden", "");
+      // Allow background to scroll again
+      document.body.style.overflow = "auto";
+
+    }
   }
 
   constructor() {
@@ -60,6 +79,7 @@ class PfeNavigation extends PFElement {
 
     // -- handlers
     this._toggledHandler = this._toggledHandler.bind(this);
+    this._closeAllNavigationItems = this._closeAllNavigationItems.bind(this);
     this._observerHandler = this._observerHandler.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
@@ -74,14 +94,13 @@ class PfeNavigation extends PFElement {
       search: this.shadowRoot.querySelector(`slot[name="mobile-search"]`)
     };
 
-    // Initialize active navigation item to null
-    this._activeNavigationItem = null;
+    // Initialize active navigation item to empty array
+    this._activeNavigationItems = [];
     // Set the state of this element to false until initialized
-    this._initialized = false;
-    // Initial height of the element is 0
-    this.height = 0;
+    this.initialized = false;
+    this.overlay = false;
     // Initial position of this element from the top of the screen
-    this.top    = this.getBoundingClientRect().top || 0;
+    this.top = this.getBoundingClientRect().top || 0;
     // Initialize light DOM and shadow DOM mobile slot objects
     this.mobileSlot = {};
 
@@ -99,7 +118,7 @@ class PfeNavigation extends PFElement {
       };
 
       // Kick off the initialization of the light DOM elements
-      this._initialized = this._init();
+      this.initialized = this._init();
 
       // Listen for the toggled event on the navigation children
       this.addEventListener("pfe-navigation-item:open", this._toggledHandler);
@@ -108,7 +127,7 @@ class PfeNavigation extends PFElement {
       // Watch for screen resizing
       window.addEventListener("resize", this._resizeHandler);
     } else {
-      console.warn("This component does not have any light DOM children.  Please check documentation for requirements.");
+      console.error("This component does not have any light DOM children.  Please check documentation for requirements.");
     }
   }
 
@@ -118,8 +137,8 @@ class PfeNavigation extends PFElement {
     this.removeEventListener("pfe-navigation-item:close", this._toggledHandler);
 
     // Remove the scroll, resize, and outside click event listeners
-    window.removeEventListener("scroll", this._stickyHandler);
     window.removeEventListener("resize", this._resizeHandler);
+    window.removeEventListener("scroll", this._stickyHandler);
     document.removeEventListener("click", this._outsideListener);
 
     this._observer.disconnect();
@@ -127,17 +146,22 @@ class PfeNavigation extends PFElement {
 
   _observerHandler(mutationsList) {
     // Reset the state to false, rerun the initializer
-    this._initialized = false;
-    this._initialized = this._init();
+    this.initialized = false;
+    this.initialized = this._init();
   }
 
   _resizeHandler(event) {
     // If there is currently an active navigation element
-    if(this._activeNavigationItem !== null) {
+    if(this._activeNavigationItems.length > 0) {
+      let isMenu = false,
+          isSwitcher = false,
+          isUtility = false;
       // Check what the active item is
-      let isMenu = this._activeNavigationItem.getAttribute("icon") === "menu";
-      let isSwitcher = this._activeNavigationItem.getAttribute("icon") === "bento";
-      let isUtility = this._activeNavigationItem.hasAttribute("icon");
+      this._activeNavigationItems.forEach(item => {
+        isMenu = isMenu ? isMenu : item.getAttribute("pfe-icon") === "menu";
+        isSwitcher = isSwitcher ? isSwitcher : item.getAttribute("slot") === "site-switcher";
+        isUtility = isUtility ? isUtility : item.hasAttribute("pfe-icon");
+      });
 
       // Check the window size
       let isDesktop = window.outerWidth >= 992;
@@ -156,50 +180,84 @@ class PfeNavigation extends PFElement {
     }
   }
 
+  _closeAllNavigationItems() {
+    // Close any open navigation items
+    this._activeNavigationItems.map(item => {
+      item.expanded = false
+    });
+  }
+
   _toggledHandler(event) {
-    // If there is no active navigation item at the moment, open the clicked element
-    if (!this._activeNavigationItem && event.detail.navigationItem !== null && !event.detail.expanded) {
-      this._activeNavigationItem = event.detail.navigationItem;
-      // Add the overlay to the page
-      this._overlay.removeAttribute("hidden");
-      // This prevents background scroll while nav is open
-      document.body.style.overflow = "hidden";
-      return;
-    }
+    let newItem = event.detail.navigationItem;
+    let currentItems = this._activeNavigationItems;
 
-    // If the item clicked equals the currently active navigation item or no navigation item is provided
-    if (this._activeNavigationItem === event.detail.navigationItem || event.detail.navigationItem === null) {
-      if (this._activeNavigationItem !== null) {
-        // Close any open navigation items
-        this._activeNavigationItem.expanded = false;
-      }
-      // Close the navigation item and remove the overlay
-      this._activeNavigationItem = null;
-      this._overlay.setAttribute("hidden", true);
-      document.body.style.overflow = "auto";
-      return;
-    }
+    // Checking various states
+    let isSelf = currentItems.includes(newItem);
+    let hasOpenItem = currentItems.length > 0;
+    let hasNewItem = newItem !== null;
+    let newIsOpen = event.detail.expanded;
+    let siblingItem = null;
     
-    // If the active item is not null, close the item, open the next one
-    if (this._activeNavigationItem !== null) {
-      this._activeNavigationItem.expanded = false;
-      this._activeNavigationItem = event.detail.navigationItem;
-      return;
+    // Check if the new item shares a parent with the current one
+    if (hasOpenItem) {
+      currentItems.map(item => {
+        // Capture the state if the parents match and both aren't null
+        if (hasNewItem && newItem.parentItem && item.parentItem && newItem.parentItem === item.parentItem) {
+          siblingItem = item;
+        }
+      });
     }
 
-    // Otherwise, ensure active item is empty
-    this._activeNavigationItem = null;
+    // Check if this item is inside another item or shares a parent node
+    if (currentItems.includes(newItem.parentItem) || siblingItem) {
+      // Expand the new item
+      newItem.expanded = true;
+      // If they share a parent, close the sibling
+      if (siblingItem) {
+        siblingItem.expanded = false;
+        this._activeNavigationItems = this._activeNavigationItems.filter(item => item !== siblingItem);
+      }
+      // Set the active item to the new item
+      this._activeNavigationItems.push(newItem);
+      // Don't do anything with the overlay because these are nested items
+      return;
+    } else {
+      // If there is no active navigation item at the moment, open the clicked element
+      if (!hasOpenItem && hasNewItem && !newIsOpen) {
+        this._activeNavigationItems.push(newItem);
+        this.overlay = true;
+        return;
+      }
+
+      // If the item clicked equals the currently active navigation item or no navigation item is provided
+      // or if the current item is not null, close the item, open the next one
+      if (isSelf || !hasNewItem || (hasOpenItem && hasNewItem)) {
+        if (hasOpenItem && !isSelf) {
+          this._closeAllNavigationItems();
+        }
+
+        if (hasNewItem && !isSelf) {
+          this._activeNavigationItems.push(newItem);
+        } else {
+          // Reset active elements the navigation items and remove the overlay
+          this._activeNavigationItems = [];
+          this.overlay = false;
+        }
+        return;
+      }
+
+      // Otherwise, ensure active item is empty and overlay is hidden
+      this._closeAllNavigationItems();
+      this._activeNavigationItems = [];
+      this.overlay = false;
+    }
   }
 
   _stickyHandler() {
     if(window.pageYOffset >= this.top) {
       this.classList.add("sticky");
-      document.body.style.marginTop = this.clientHeight + "px";
-      this.style.setProperty("--pfe-navigation--offsetTop", this.offsetHeight + "px");
     } else {
       this.classList.remove("sticky");
-      this.style.setProperty("--pfe-navigation--offsetTop", this.getBoundingClientRect().top + this.offsetHeight + "px");
-      document.body.style.marginTop = 0;
     }
   }
 
@@ -211,14 +269,14 @@ class PfeNavigation extends PFElement {
 
   _init() {
     let ret = false;
-    if(!this._initialized) {
+    if(!this.initialized) {
       // @IE11 This is necessary so the script doesn't become non-responsive
       if (window.ShadyCSS) {
         this._observer.disconnect();
       }
 
       // If the nav is set to sticky, inject the height of the nav to the next element in the DOM
-      if(this.hasAttribute("sticky") && this.getAttribute("sticky") != "false") {
+      if(this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
         // Run the sticky check on first page load
         this._stickyHandler();
 
@@ -230,7 +288,9 @@ class PfeNavigation extends PFElement {
       ret = this._setupMobileNav();
 
       // Listen for clicks outside the navigation element
-      document.addEventListener("click", this._outsideListener);
+      if(this.hasAttribute("pfe-close-on-click") && this.getAttribute("pfe-close-on-click") === "external") {
+        document.addEventListener("click", this._outsideListener);
+      }
 
       // @IE11 This is necessary so the script doesn't become non-responsive
       if (window.ShadyCSS) {
@@ -248,7 +308,7 @@ class PfeNavigation extends PFElement {
   }
 
   _setupMobileNav() {
-    if(!this._initialized) {
+    if(!this.initialized) {
       const triggers = [
         ...this.querySelectorAll("pfe-navigation-main pfe-navigation-item > *:first-child")
       ];
@@ -299,8 +359,8 @@ class PfeNavigation extends PFElement {
       // If there is at least 1 item in the accordion, add it to the menu
       if (accordion.childElementCount > 0) {
         // Add the fragment to the DOM
-        this._mobileSlot.menu.innerHTML = "";
-        this._mobileSlot.menu.appendChild(fragment);
+        // this._mobileSlot.menu.innerHTML = "";
+        // this._mobileSlot.menu.appendChild(fragment);
       }
     }
 
@@ -328,11 +388,12 @@ class PfeNavigation extends PFElement {
       }
 
       // Get the element to attach the link to
-      this.shadowRoot.querySelector(`[connect-to="mobile-${type}"]`).setAttribute("href", link);
-      this.shadowRoot.querySelector(`#pfe-navigation--mobile-${type}`).innerHTML = this.mobileSlot[type].innerText;
+      // this.shadowRoot.querySelector(`[connect-to="mobile-${type}"]`).setAttribute("href", link);
+      // this.shadowRoot.querySelector(`#pfe-navigation--mobile-${type}`).innerHTML = this.mobileSlot[type].innerText;
+
       // Hide the slot
-      this.mobileSlot[type].setAttribute("hidden", true);
-      this.mobileSlot[type].style.display = "none";
+      // this.mobileSlot[type].setAttribute("hidden", "");
+      // this.mobileSlot[type].style.display = "none";
     });
   }
 }
@@ -350,17 +411,37 @@ class PfeNavigationItem extends PFElement {
     return "pfe-navigation-item.scss";
   }
 
+  get schemaUrl() {
+    return "pfe-navigation-item.json";
+  }
+
   static get PfeType() {
     return PFElement.PfeTypes.Container;
   }
 
   // Used in the template to determine where to print the icon
   get hasIcon() {
-    return this.hasAttribute("icon");
+    return this.hasAttribute("pfe-icon");
   }
 
   static get observedAttributes() {
-    return ["icon"];
+    return ["pfe-icon"];
+  }
+
+  get nested() {
+    return this.hasAttribute("is_nested");
+  }
+
+  set nested(val) {
+    val = Boolean(val);
+
+    console.log("Nested? " + val);
+
+    if (val) {
+      this.setAttribute("is_nested", "");
+    } else {
+      this.removeAttribute("is_nested");
+    }
   }
 
   get expanded() {
@@ -369,6 +450,9 @@ class PfeNavigationItem extends PFElement {
 
   set expanded(val) {
     val = Boolean(val);
+
+    // console.log(val ? "open" : "close");
+    // console.log(this);
 
     if (val) {
       this.classList.add("expanded");
@@ -392,7 +476,7 @@ class PfeNavigationItem extends PFElement {
       }
 
       if (this.tray) {
-        this.tray.setAttribute("hidden", true);
+        this.tray.setAttribute("hidden", "");
       }
 
       if (this._tray) {
@@ -438,9 +522,12 @@ class PfeNavigationItem extends PFElement {
   constructor() {
     super(PfeNavigationItem);
 
+    this.nested = false;
     this.expanded = false;
     this.trigger = null;
     this.tray = null;
+    this.parentItem = null;
+    this.directLink = null;
     this.linkUrl = null;
 
     this._trigger = this.shadowRoot.querySelector(`.${this.tag}__trigger`);
@@ -454,6 +541,7 @@ class PfeNavigationItem extends PFElement {
     this._init = this._init.bind(this);
     this._toggleMenu = this._toggleMenu.bind(this);
     this._keydownHandler = this._keydownHandler.bind(this);
+    this._keydownHandlerTrigger = this._keydownHandlerTrigger.bind(this);
     this._suppressLink = this._suppressLink.bind(this);
     this._navigateToUrl = this._navigateToUrl.bind(this);
     this._directLinkHandler = this._directLinkHandler.bind(this);
@@ -470,6 +558,19 @@ class PfeNavigationItem extends PFElement {
     this.trigger = this.querySelector(`[slot="trigger"]`);
     this.tray = this.querySelector(`[slot="tray"]`);
 
+    // Check for any nested navigation items
+    this.nestedItems = [];
+    
+    // If a light DOM tray exists, check for descendents
+    if (this.tray) {
+      this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll(`${this.tag}`)]);
+      this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll("slot")].map(slot => {
+        return slot.assignedElements().map(node => {
+          return [...node.querySelectorAll(`${this.tag}`)];
+        });
+      }).flat(3));
+    }
+
     this._init();
 
     // Add a slotchange listener to the lightDOM trigger
@@ -481,27 +582,47 @@ class PfeNavigationItem extends PFElement {
   }
 
   disconnectedCallback() {
-    this._trigger.removeEventListener("click", this._clickHandler);
-    this._trigger.removeEventListener("keydown", this._keydownHandler);
+    this.trigger.removeEventListener("slotchange", this._init);
+
+    if (this.tray) {
+      this.removeEventListener("keydown", this._keydownHandler);
+
+      this._trigger.removeEventListener("click", this._toggleMenu);
+      this._trigger.removeEventListener("keydown", this._keydownHandlerTrigger);
+      if (this.directLink) {
+        this.directLink.removeEventListener("click", this._suppressLink);
+      }
+    } else {
+      this._trigger.removeEventListener("click", this._navigateToUrl);
+      this._trigger.removeEventListener("keydown", this._directLinkHandler);
+    }
   }
 
   _init() {
-    const link = this.trigger.querySelector("a");
+    this.directLink = this.trigger.querySelector("a");
+
+    // this.nestedItems.forEach(item => {
+    //   // Store the parentItem on this node and note that it's a nested component
+    //   item.parentItem = this;
+    // });
 
     // If there is a tray element, add click events
     if (this.tray) {
       // Toggle the navigation when the trigger is clicked
       this._trigger.addEventListener("click", this._toggleMenu);
+      // Assign the keyboard events to the light DOM trigger element
+      this.trigger.addEventListener("keydown", this._keydownHandlerTrigger);
 
       // Attaching to the parent element allows the exit key to work inside the tray too
       this.addEventListener("keydown", this._keydownHandler);
+
       // Turn off the fallback link
-      if (link) {
-        link.setAttribute("tabindex", "-1");
-        link.addEventListener("click", this._suppressLink);
+      if (this.directLink) {
+        this.directLink.setAttribute("tabindex", "-1");
+        this.directLink.addEventListener("click", this._suppressLink);
       }
     } else {
-      this.linkUrl = link ? link.href : "#";
+      this.linkUrl = this.directLink ? this.directLink.href : "#";
       this._trigger.addEventListener("click", this._navigateToUrl);
       this._trigger.addEventListener("keydown", this._directLinkHandler);
     }
@@ -540,6 +661,17 @@ class PfeNavigationItem extends PFElement {
 
   _keydownHandler(event) {
     switch (event.key) {
+      case "Esc":
+      case "Escape":
+        this.closeNavigationItem(event);
+        break;
+      default:
+        return;
+    }
+  }
+
+  _keydownHandlerTrigger(event) {
+    switch (event.key) {
       case "Spacebar":
       case "Enter":
       case " ":
@@ -574,6 +706,35 @@ class PfeNavigationMain extends PFElement {
 
   constructor() {
     super(PfeNavigationMain);
+    this.navItems = this.querySelectorAll("pfe-navigation-item");
+    this.first = this.navItems.item(0);
+    this.last = this.navItems.item(this.navItems.length - 1);
+
+    this._init = this._init.bind(this);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    this._init();
+
+    // Add a slotchange listener to the lightDOM trigger
+    this.addEventListener("slotchange", this._init);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener("slotchange", this._init);
+  }
+
+  _init() {
+    // For each nested navigation item, tag it with context
+    this.navItems.forEach(item => {
+      item.nested = true;
+    });
+
+    // Tag the first and last navigation items for styling in mobile
+    if (this.first) this.first.setAttribute("first", "");
+    if (this.last) this.last.setAttribute("last", "");
   }
 }
 

@@ -1,3 +1,5 @@
+@import "../../pfe-sass/pfe-sass";
+
 :host {
   display: block;
   height: 100%
@@ -8,10 +10,18 @@
   padding: 0;
   height: 100%;
   display: flex;
-  flex-flow: row nowrap;
-  align-items: stretch;
+  flex-flow: column nowrap;
+
+  @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+    flex-flow: row nowrap;
+    align-items: stretch;
+  }
 }
 
 ::slotted(ul) {
   list-style-type: none;
+  @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+    display: flex;
+    flex-flow: row nowrap;
+  }
 }

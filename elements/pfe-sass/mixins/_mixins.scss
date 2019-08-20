@@ -7,7 +7,7 @@
     }
   }
 }
-
+ 
 // $boxSize = any box-sizing property, default is border-box
 @mixin pfe-box-sizing($boxSize: border-box) {
   *, *::before, *::after {
@@ -43,6 +43,21 @@
   margin: -1px;
   padding: 0;
   border: 0;
+}
+
+@mixin print-variables-map($variables) {
+  @each $property, $value in $variables {
+    $name: "--#{$property}";
+    $styles: $value;
+    @if type-of($value) == "map" {
+      @each $prop, $v in $value {
+        $name: "__#{$property}--#{$prop}";
+        $styles: $v;
+      }
+    }
+
+    --pfe-#{$LOCAL}#{$name}: #{$styles};
+  }
 }
 
 /// ===========================================================================
@@ -225,7 +240,7 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
 }
 
 @mixin pfe-trigger-button($align: left) {
-    -webkit-appearance: button;
+    // -webkit-appearance: button;
     margin: 0;
     width: 100%;
     height: auto;
@@ -368,7 +383,7 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
   display: block;
   width: 100%;
 
-  padding: calc(#{pfe-local(padding--vertical)} / 2)  #{pfe-local(padding--horizontal)};
+  padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
 
   @media (min-width: #{pfe-breakpoint(sm)}) {
      padding: #{pfe-local(Padding)};
@@ -415,4 +430,16 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
   @else {
     padding: 0 #{$pfe-expand_button--padding--wide} #{$pfe-expand_button--padding} #{$pfe-expand_chevron--padding};
   }
+}
+
+@mixin pfe-icon($path, $display: flex, $size: 1em) {
+  display: #{$display};
+  @if $path {
+    background: #{$path} no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+  width: #{$size};
+  height: #{$size};
+  @content;
 }

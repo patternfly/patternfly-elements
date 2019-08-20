@@ -36,8 +36,8 @@ $pfe-icon--border-style:                     map-get($pfe-vars, border-style);
 }
 
 :host {
-  --pfe-icon--spacing:                 #{pfe-var(container-spacer)};
-  --pfe-icon--size:                    var(--pfe-theme--icon-size, 1em);
+  --pfe-icon--Spacing:                 #{pfe-var(container-spacer)};
+  --pfe-icon--Size:                    var(--pfe-theme--icon-size, 1em);
   --pfe-icon--Color:                   var(--pfe-broadcasted--color--text, #{pfe-color(text)});
   --pfe-icon--BackgroundColor:         transparent;
   --pfe-icon--BorderColor:             transparent;
@@ -65,8 +65,8 @@ $pfe-icon--border-style:                     map-get($pfe-vars, border-style);
 
   @at-root #{&}([data-block]) {
     display: block;
-    margin-bottom: var(--pfe-icon--spacing);
-    margin-top: var(--pfe-icon--spacing);
+    margin-bottom: var(--pfe-icon--Spacing);
+    margin-top: var(--pfe-icon--Spacing);
 
     &:first-child {
       margin-top: 0;

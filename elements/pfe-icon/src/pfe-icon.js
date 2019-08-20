@@ -78,7 +78,7 @@ class PfeIcon extends PFElement {
     const { setName, set } = PfeIcon.getIconSet(iconName);
 
     if (set) {
-      const { iconPath } = set.resolveIconName(iconName);
+      const iconPath = set.resolveIconName(iconName);
       this.image.setAttribute("xlink:href", iconPath);
       _setRandomFilterId(this);
     } else {

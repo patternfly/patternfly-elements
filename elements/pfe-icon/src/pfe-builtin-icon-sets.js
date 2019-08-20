@@ -7,12 +7,7 @@ function resolveIconName(name, iconSetName, iconSetPath) {
   const iconId = `${iconSetName}-icon-${iconName}`;
   const iconPath = `${iconSetPath}/${iconId}.svg`;
 
-  return {
-    iconSetName,
-    iconName,
-    iconId,
-    iconPath
-  };
+  return iconPath;
 }
 
 /**

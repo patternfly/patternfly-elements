@@ -53,7 +53,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		position: relative;
 		max-width: pfe-local(MaxWidth--mobile);
 		min-width: pfe-local(MinWidth);
-		max-height: calc(100% + -32px);
+		max-height: pfe-local(MaxHeight);
 		margin: 0 auto;
 		box-shadow: pfe-var(box-shadow--lg);
 		background-color: pfe-color(surface--lightest);
@@ -77,14 +77,9 @@ $pfe-modal--breakpoint--medium: 640px;
 		overscroll-behavior: contain;
 		max-height: pfe-local(MaxHeight);
 		padding: pfe-local(Padding);
+		box-sizing: border-box;
 
 		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
-			box-sizing: border-box;
-			--pfe-modal--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2) #{pfe-var(container-padding)} #{pfe-var(container-padding)};
-		}
-
-		@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
-			box-sizing: border-box;
 			--pfe-modal--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 3) #{pfe-var(container-padding)} #{pfe-var(container-padding)};
 		}
 

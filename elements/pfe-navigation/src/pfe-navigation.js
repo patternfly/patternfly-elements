@@ -76,6 +76,7 @@ class PfeNavigation extends PFElement {
     this._setupMobileNav = this._setupMobileNav.bind(this);
     this._setupMobileSearch = this._setupMobileSearch.bind(this);
     this._setupMobileLinks = this._setupMobileLinks.bind(this);
+    this._setVisibility = this._setVisibility.bind(this);
 
     // -- handlers
     this._toggledHandler = this._toggledHandler.bind(this);
@@ -89,6 +90,8 @@ class PfeNavigation extends PFElement {
 
     // Capture shadow elements
     this._overlay = this.shadowRoot.querySelector(".pfe-navigation__overlay");
+    this._main = this.shadowRoot.querySelector(".pfe-navigation__main");
+    this._menuItem = this.shadowRoot.querySelector("pfe-navigation-item[pfe-icon='menu']");
     this._mobileSlot = {
       menu: this.shadowRoot.querySelector(`slot[name="mobile-menu"]`),
       search: this.shadowRoot.querySelector(`slot[name="mobile-search"]`)
@@ -101,8 +104,6 @@ class PfeNavigation extends PFElement {
     this.overlay = false;
     // Initial position of this element from the top of the screen
     this.top = this.getBoundingClientRect().top || 0;
-    // Initialize light DOM and shadow DOM mobile slot objects
-    this.mobileSlot = {};
 
   }
 
@@ -111,10 +112,12 @@ class PfeNavigation extends PFElement {
 
     // If this element contains light DOM, initialize it
     if (this.children.length) {
-      this.mobileSlot = {
-        menu: this.querySelector(`[slot="menu-mobile"]`),
-        login: this.querySelector(`[slot="mobile-login"]`),
-        language: this.querySelector(`[slot="mobile-language"]`)
+      // If only one value exists in the array, it starts at that size and goes up
+      this.breakpoints = {
+        main: [0, 1199], // visible from 0 - 1199px
+        search: [768],   // visible from 768px +
+        language: [768],
+        login: [768]
       };
 
       // Kick off the initialization of the light DOM elements
@@ -151,6 +154,8 @@ class PfeNavigation extends PFElement {
   }
 
   _resizeHandler(event) {
+    this._setVisibility(screen.width);
+    
     // If there is currently an active navigation element
     if(this._activeNavigationItems.length > 0) {
       let isMenu = false,
@@ -199,17 +204,18 @@ class PfeNavigation extends PFElement {
     let siblingItem = null;
     
     // Check if the new item shares a parent with the current one
+    // Assumption: nested items are all children of the same parent
     if (hasOpenItem) {
       currentItems.map(item => {
-        // Capture the state if the parents match and both aren't null
-        if (hasNewItem && newItem.parentItem && item.parentItem && newItem.parentItem === item.parentItem) {
+        // Capture the state if they are both nested
+        if (hasNewItem && newItem.nested && item.nested) {
           siblingItem = item;
         }
       });
     }
 
     // Check if this item is inside another item or shares a parent node
-    if (currentItems.includes(newItem.parentItem) || siblingItem) {
+    if (currentItems.includes(this._menuItem) || siblingItem) {
       // Expand the new item
       newItem.expanded = true;
       // If they share a parent, close the sibling
@@ -267,6 +273,31 @@ class PfeNavigation extends PFElement {
     }
   }
 
+  _setVisibility(screenWidth) {
+    Object.entries(this.breakpoints).map(item => {
+      let label = item[0];
+      let bps = item[1];
+      let start = bps[0];
+      let end = bps[1];
+      let isVisible = false;
+      // If the slot exists, set attribute based on supported breakpoints
+      if (this.slots[label] && this.slots[label].nodes.length > 0) {
+        if (screenWidth > start && (end && screenWidth < end) || !end) {
+          isVisible = true;
+        }
+
+        this.slots[label].nodes.forEach(node => {
+          let attrName = "hidden";
+          if (label === "main") {
+            attrName = "show_content";
+          }
+
+          isVisible ? node.removeAttribute(attrName) : node.setAttribute(attrName, "");
+        });
+      }
+    });
+  }
+
   _init() {
     let ret = false;
     if(!this.initialized) {
@@ -274,6 +305,9 @@ class PfeNavigation extends PFElement {
       if (window.ShadyCSS) {
         this._observer.disconnect();
       }
+  
+      // Start by setting the visibility of the slots
+      this._setVisibility(screen.width);
 
       // If the nav is set to sticky, inject the height of the nav to the next element in the DOM
       if(this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
@@ -318,10 +352,10 @@ class PfeNavigation extends PFElement {
       const accordion = document.createElement("pfe-accordion");
 
       // Set up the mobile search, look for the mobile search flag in the search slot
-      this.mobileSlot.search = this.querySelector(`[slot="search"] [pfe-navigation--mobile-search]`);
+      let search = this.querySelector(`[slot="search"] [pfe-navigation--mobile-search]`);
       // If the slot exists, grab it's content and inject into the mobile slot in shadow DOM
-      if (this.mobileSlot.search) {
-        this._setupMobileSearch();
+      if (search) {
+        this._setupMobileSearch(search);
       }
 
       // Set up the mobile login and language links
@@ -367,25 +401,28 @@ class PfeNavigation extends PFElement {
     return true;
   }
 
-  _setupMobileSearch() {
+  _setupMobileSearch(search) {
     // If the slot exists, grab it's content and inject into the mobile slot in shadow DOM
-    const searchClone = this.mobileSlot.search.cloneNode(true);
+    const searchClone = search.cloneNode(true);
     searchClone.removeAttribute("pfe-navigation--mobile-search");
-    this._mobileSlot.search.innerHTML = searchClone.innerHTML;
+    search.innerHTML = searchClone.innerHTML;
   }
 
   _setupMobileLinks() {
     ["login", "language"].forEach(type => {
       let link = "";
-      if(this.mobileSlot[type].hasAttribute("href")){
-        // Store the link value in a variable
-        link = this.mobileSlot[type].getAttribute("href");
-      } else {
-        // Find the link inside the slot
-        if(this.mobileSlot[type].querySelector("a")) {
-          link = this.mobileSlot[type].querySelector("a").getAttribute("href");
+      this.slots[`mobile-${type}`].nodes.forEach(item => {
+        if (item.hasAttribute("href")) {
+          // Store the link value in a variable
+          link = item.getAttribute("href");
         }
-      }
+        else {
+          // Find the link inside the slot
+          if (item.querySelector("a")) {
+            link = item.querySelector("a").getAttribute("href");
+          }
+        }
+      });
 
       // Get the element to attach the link to
       // this.shadowRoot.querySelector(`[connect-to="mobile-${type}"]`).setAttribute("href", link);
@@ -435,8 +472,6 @@ class PfeNavigationItem extends PFElement {
   set nested(val) {
     val = Boolean(val);
 
-    console.log("Nested? " + val);
-
     if (val) {
       this.setAttribute("is_nested", "");
     } else {
@@ -450,9 +485,6 @@ class PfeNavigationItem extends PFElement {
 
   set expanded(val) {
     val = Boolean(val);
-
-    // console.log(val ? "open" : "close");
-    // console.log(this);
 
     if (val) {
       this.classList.add("expanded");
@@ -526,7 +558,6 @@ class PfeNavigationItem extends PFElement {
     this.expanded = false;
     this.trigger = null;
     this.tray = null;
-    this.parentItem = null;
     this.directLink = null;
     this.linkUrl = null;
 
@@ -600,11 +631,6 @@ class PfeNavigationItem extends PFElement {
 
   _init() {
     this.directLink = this.trigger.querySelector("a");
-
-    // this.nestedItems.forEach(item => {
-    //   // Store the parentItem on this node and note that it's a nested component
-    //   item.parentItem = this;
-    // });
 
     // If there is a tray element, add click events
     if (this.tray) {
@@ -704,10 +730,18 @@ class PfeNavigationMain extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
+  static get observedAttributes() {
+    return ["show_content"];
+  }
+
   constructor() {
     super(PfeNavigationMain);
+
+    // Get all the nested navigation items
     this.navItems = this.querySelectorAll("pfe-navigation-item");
+    // Find the first nested element
     this.first = this.navItems.item(0);
+    // Find the last nested element
     this.last = this.navItems.item(this.navItems.length - 1);
 
     this._init = this._init.bind(this);
@@ -727,6 +761,10 @@ class PfeNavigationMain extends PFElement {
   }
 
   _init() {
+    // Ensure the necessary a11y is set
+    this.setAttribute("role", "navigation");
+    this.setAttribute("aria-label", "Main");
+
     // For each nested navigation item, tag it with context
     this.navItems.forEach(item => {
       item.nested = true;

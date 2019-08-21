@@ -12,7 +12,7 @@ $USE-FALLBACK: true;
 }
 
 // Let the main item or the tray be hidden with the attribute
-:host([hidden]),
+:host([hidden]:not([pfe-icon="menu"])),
 ::slotted([slot="tray"][hidden]) {
   display: none;
   visibility: hidden;

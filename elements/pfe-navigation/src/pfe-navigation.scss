@@ -195,7 +195,7 @@ $variables: (
         display: grid;
         grid-gap: #{pfe-var(container-spacer)};
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        @media (min-width: #{pfe-breakpoint(lg)}) {
+        @media (min-width: #{pfe-breakpoint(md)}) {
           display: none;
         }
       }
@@ -222,10 +222,5 @@ $variables: (
     flex-flow: row nowrap;
     align-items: stretch;
     justify-content: flex-end;
-    ::slotted(:not([name="site-switcher"])) {
-      @media (max-width: #{pfe-breakpoint($size: lg, $max: true)}) {
-        display: none;
-      }
-    }
   }
 }

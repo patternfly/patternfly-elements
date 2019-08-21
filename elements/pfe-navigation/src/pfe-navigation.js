@@ -73,9 +73,6 @@ class PfeNavigation extends PFElement {
 
     // Attach functions for use below
     this._init = this._init.bind(this);
-    this._setupMobileNav = this._setupMobileNav.bind(this);
-    this._setupMobileSearch = this._setupMobileSearch.bind(this);
-    this._setupMobileLinks = this._setupMobileLinks.bind(this);
     this._setVisibility = this._setVisibility.bind(this);
 
     // -- handlers
@@ -116,8 +113,11 @@ class PfeNavigation extends PFElement {
       this.breakpoints = {
         main: [0, 1199], // visible from 0 - 1199px
         search: [768],   // visible from 768px +
+        "mobile-search": [0, 767],
         language: [768],
-        login: [768]
+        "mobile-language": [0, 767],
+        login: [768],
+        "mobile-login": [0, 767]
       };
 
       // Kick off the initialization of the light DOM elements
@@ -205,14 +205,15 @@ class PfeNavigation extends PFElement {
     
     // Check if the new item shares a parent with the current one
     // Assumption: nested items are all children of the same parent
-    if (hasOpenItem) {
-      currentItems.map(item => {
-        // Capture the state if they are both nested
-        if (hasNewItem && newItem.nested && item.nested) {
-          siblingItem = item;
-        }
-      });
-    }
+    currentItems.map(item => {
+      // Capture the state if they are both nested
+      if (hasNewItem && newItem.nested && item.nested) {
+        siblingItem = item;
+      }
+    });
+
+    console.log(currentItems);
+    console.log(this._menuItem);
 
     // Check if this item is inside another item or shares a parent node
     if (currentItems.includes(this._menuItem) || siblingItem) {
@@ -280,9 +281,15 @@ class PfeNavigation extends PFElement {
       let start = bps[0];
       let end = bps[1];
       let isVisible = false;
+
+      console.log(this.slots);
+
       // If the slot exists, set attribute based on supported breakpoints
       if (this.slots[label] && this.slots[label].nodes.length > 0) {
-        if (screenWidth > start && (end && screenWidth < end) || !end) {
+        console.log(label);
+        console.log(start);
+        console.log(`${screenWidth > start} && (${!end} || ${end && screenWidth < end})`);
+        if (screenWidth > start && (!end || (end && screenWidth < end))) {
           isVisible = true;
         }
 
@@ -292,6 +299,8 @@ class PfeNavigation extends PFElement {
             attrName = "show_content";
           }
 
+          console.log(node);
+          console.log(isVisible);
           isVisible ? node.removeAttribute(attrName) : node.setAttribute(attrName, "");
         });
       }
@@ -318,9 +327,6 @@ class PfeNavigation extends PFElement {
         window.addEventListener("scroll", this._stickyHandler);
       }
 
-      // Setup the mobile navigation region
-      ret = this._setupMobileNav();
-
       // Listen for clicks outside the navigation element
       if(this.hasAttribute("pfe-close-on-click") && this.getAttribute("pfe-close-on-click") === "external") {
         document.addEventListener("click", this._outsideListener);
@@ -338,100 +344,7 @@ class PfeNavigation extends PFElement {
       }
     }
 
-    return ret;
-  }
-
-  _setupMobileNav() {
-    if(!this.initialized) {
-      const triggers = [
-        ...this.querySelectorAll("pfe-navigation-main pfe-navigation-item > *:first-child")
-      ];
-
-      // Create a new pfe-accordion element
-      const fragment = document.createDocumentFragment();
-      const accordion = document.createElement("pfe-accordion");
-
-      // Set up the mobile search, look for the mobile search flag in the search slot
-      let search = this.querySelector(`[slot="search"] [pfe-navigation--mobile-search]`);
-      // If the slot exists, grab it's content and inject into the mobile slot in shadow DOM
-      if (search) {
-        this._setupMobileSearch(search);
-      }
-
-      // Set up the mobile login and language links
-      this._setupMobileLinks();
-
-      // Set up the mobile main menu
-      triggers.forEach(trigger => {
-        const clone = trigger.cloneNode(true);
-        const header = document.createElement("pfe-accordion-header");
-        const panel = document.createElement("pfe-accordion-panel");
-
-        // If the trigger is not assigned to a slot
-        if (!trigger.hasAttribute("slot")) {
-          header.innerHTML = clone.outerHTML;
-        } else {
-          header.innerHTML = trigger.outerHTML;
-          header.children[0].removeAttribute("slot");
-        }
-
-        if (
-          trigger.nextElementSibling &&
-          trigger.nextElementSibling.getAttribute("slot") === "tray"
-        ) {
-          panel.innerHTML = trigger.nextElementSibling.innerHTML;
-        } else {
-          panel.innerHTML = "";
-        }
-
-        accordion.appendChild(header);
-        accordion.appendChild(panel);
-      });
-
-      fragment.appendChild(accordion);
-
-      // If there is at least 1 item in the accordion, add it to the menu
-      if (accordion.childElementCount > 0) {
-        // Add the fragment to the DOM
-        // this._mobileSlot.menu.innerHTML = "";
-        // this._mobileSlot.menu.appendChild(fragment);
-      }
-    }
-
     return true;
-  }
-
-  _setupMobileSearch(search) {
-    // If the slot exists, grab it's content and inject into the mobile slot in shadow DOM
-    const searchClone = search.cloneNode(true);
-    searchClone.removeAttribute("pfe-navigation--mobile-search");
-    this._mobileSlot.search.innerHTML = searchClone.innerHTML;
-  }
-
-  _setupMobileLinks() {
-    ["login", "language"].forEach(type => {
-      let link = "";
-      this.slots[`mobile-${type}`].nodes.forEach(item => {
-        if (item.hasAttribute("href")) {
-          // Store the link value in a variable
-          link = item.getAttribute("href");
-        }
-        else {
-          // Find the link inside the slot
-          if (item.querySelector("a")) {
-            link = item.querySelector("a").getAttribute("href");
-          }
-        }
-      });
-
-      // Get the element to attach the link to
-      // this.shadowRoot.querySelector(`[connect-to="mobile-${type}"]`).setAttribute("href", link);
-      // this.shadowRoot.querySelector(`#pfe-navigation--mobile-${type}`).innerHTML = this.mobileSlot[type].innerText;
-
-      // Hide the slot
-      // this.mobileSlot[type].setAttribute("hidden", "");
-      // this.mobileSlot[type].style.display = "none";
-    });
   }
 }
 
@@ -515,6 +428,10 @@ class PfeNavigationItem extends PFElement {
         this._tray.setAttribute("aria-expanded", false);
       }
     }
+  }
+
+  get visible() {
+    return this.hasAttribute("");
   }
 
   openNavigationItem(event) {

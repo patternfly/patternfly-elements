@@ -52,7 +52,7 @@
       <pfe-navigation-item slot="search" pfe-icon="search">
         <h3 slot="trigger"><a href="#url-to-search-page">Search</a></h3>
         <div slot="tray" hidden>
-          <div class="pfe-navigation-item__tray--container" pfe-navigation--mobile-search>
+          <div class="pfe-navigation-item__tray--container">
             <form>
               <input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
               <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
@@ -60,6 +60,10 @@
           </div>
         </div>
       </pfe-navigation-item>
+      <form slot="mobile-search">
+        <input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
+        <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
+      </form>
       <!-- Main navigation -->
       <h2 slot="mobile-menu--label">Menu</h2>
       <pfe-navigation-main role="navigation" aria-label="Main">

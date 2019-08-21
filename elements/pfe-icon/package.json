@@ -9,11 +9,16 @@
     "access": "public"
   },
   "description": "Icon element for PatternFly Elements",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-icon"
   },
-  "main": "index.js",
+  "main": "pfe-icon.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

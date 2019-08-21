@@ -405,7 +405,7 @@ class PfeNavigation extends PFElement {
     // If the slot exists, grab it's content and inject into the mobile slot in shadow DOM
     const searchClone = search.cloneNode(true);
     searchClone.removeAttribute("pfe-navigation--mobile-search");
-    search.innerHTML = searchClone.innerHTML;
+    this._mobileSlot.search.innerHTML = searchClone.innerHTML;
   }
 
   _setupMobileLinks() {

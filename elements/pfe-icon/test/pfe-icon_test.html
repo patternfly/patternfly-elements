@@ -48,9 +48,7 @@
           // with one that loads local icons.  we don't want tests dependent on
           // prod servers.
           PfeIcon._iconSets.rh._resolveIconName = function (name, iconSetName, iconSetPath) {
-            return {
-              iconPath: `./${name.replace("rh", "rh-icon")}.svg`
-            };
+            return `./${name.replace("rh", "rh-icon")}.svg`;
           };
 
           // a promise that triggers when a new image is loaded
@@ -75,7 +73,22 @@
           test();
         });
 
-        test('it should change color when CSS var is changed', () => {
+        test('it should change color when pfe-icon\'s color CSS var is changed', () => {
+          // we can't get the exact color of the image, but we can make sure
+          // the feFlood element is getting `flood-color` from the appropriate
+          // CSS variable.
+          const newColor = "rgb(11, 12, 13)";
+
+          icon.style.setProperty("--pfe-icon--Color", newColor);
+
+          const { floodColor } = getComputedStyle(feFlood);
+
+          assert.equal(floodColor, newColor);
+
+          icon.style.removeProperty("--pfe-broadcasted--color--text");
+        });
+
+        test('it should change color when the broadcast CSS var is changed', () => {
           // we can't get the exact color of the image, but we can make sure
           // the feFlood element is getting `flood-color` from the appropriate
           // CSS variable.
@@ -119,7 +132,7 @@
 
           icon.setAttribute("icon", "asdfasdf-foo");
 
-          PfeIcon.addIconSet('asdfasdf', '', function() { return { iconPath: './rh-icon-bike.svg' } });
+          PfeIcon.addIconSet('asdfasdf', '', () => './rh-icon-bike.svg');
         });
 
         test('it should hide <image> when given a valid icon set but invalid icon name', done => {

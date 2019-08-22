@@ -118,12 +118,11 @@ class PfeNavigationItem extends PFElement {
   open(event) {
     if (event) event.preventDefault();
 
-    console.log("Open navigation item");
-
     this.dispatchEvent(
-      new CustomEvent(`${this.tag}:open`, {
+      new CustomEvent(`${this.tag}:toggle`, {
         detail: {
-          navigationItem: this
+          navigationItem: this,
+          action: "open"
         },
         bubbles: true,
         composed: true
@@ -134,10 +133,23 @@ class PfeNavigationItem extends PFElement {
   close(event) {
     if (event) event.preventDefault();
 
-    console.log("Close navigation item");
+    this.dispatchEvent(
+      new CustomEvent(`${this.tag}:toggle`, {
+        detail: {
+          navigationItem: this,
+          action: "close"
+        },
+        bubbles: true,
+        composed: true
+      })
+    );
+  }
+
+  toggle(event) {
+    if (event) event.preventDefault();
 
     this.dispatchEvent(
-      new CustomEvent(`${this.tag}:close`, {
+      new CustomEvent(`${this.tag}:toggle`, {
         detail: {
           navigationItem: this
         },
@@ -164,11 +176,10 @@ class PfeNavigationItem extends PFElement {
     // Externally accessible events
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
+    this.toggle = this.toggle.bind(this);
     
     this._init = this._init.bind(this);
-    this._toggleMenu = this._toggleMenu.bind(this);
     this._keydownHandler = this._keydownHandler.bind(this);
-    this._keydownHandlerTrigger = this._keydownHandlerTrigger.bind(this);
     this._suppressLink = this._suppressLink.bind(this);
     this._navigateToUrl = this._navigateToUrl.bind(this);
     this._directLinkHandler = this._directLinkHandler.bind(this);
@@ -214,8 +225,7 @@ class PfeNavigationItem extends PFElement {
     if (this.tray) {
       this.removeEventListener("keydown", this._keydownHandler);
 
-      this._trigger.removeEventListener("click", this._toggleMenu);
-      this._trigger.removeEventListener("keydown", this._keydownHandlerTrigger);
+      this._trigger.removeEventListener("click", this.toggle);
       if (this.directLink) {
         this.directLink.removeEventListener("click", this._suppressLink);
       }
@@ -231,10 +241,7 @@ class PfeNavigationItem extends PFElement {
     // If there is a tray element, add click events
     if (this.tray) {
       // Toggle the navigation when the trigger is clicked
-      this._trigger.addEventListener("click", this._toggleMenu);
-      // Assign the keyboard events to the light DOM trigger element
-      this.trigger.addEventListener("keydown", this._keydownHandlerTrigger);
-
+      this._trigger.addEventListener("click", this.toggle);
       // Attaching to the parent element allows the exit key to work inside the tray too
       this.addEventListener("keydown", this._keydownHandler);
 
@@ -271,33 +278,15 @@ class PfeNavigationItem extends PFElement {
     }
   }
 
-  _toggleMenu(event) {
-    this.expanded = !this.expanded;
-
-    if(this.expanded) {
-      this.open(event);
-    } else {
-      this.close(event);
-    }
-  }
-
-  _keydownHandler(event) {
-    switch (event.key) {
-      case "Esc":
-      case "Escape":
-        this.close(event);
-        break;
-      default:
-        return;
-    }
-  }
-
-  _keydownHandlerTrigger(event) {
+  _keydownHandler(event) {  
     switch (event.key) {
       case "Spacebar":
       case "Enter":
       case " ":
-        this._toggleMenu(event);
+        // Check that the event is on the trigger element
+        if (event && event.path && event.path[0] && event.path[0].classList.contains(`${this.tag}__trigger`)) {
+          this.toggle(event);
+        }
         break;
       case "Esc":
       case "Escape":
@@ -391,7 +380,10 @@ class PfeNavigation extends PFElement {
 
   closeAllNavigationItems() {
     this.dispatchEvent(
-      new CustomEvent("pfe-navigation-item:close", {
+      new CustomEvent("pfe-navigation-item:toggle", {
+        detail: {
+          action: "close"
+        },
         bubbles: true,
         composed: true
       })
@@ -468,8 +460,7 @@ class PfeNavigation extends PFElement {
       this.initialized = this._init();
 
       // Listen for the toggled event on the navigation children
-      this.addEventListener("pfe-navigation-item:open", this._toggledHandler);
-      this.addEventListener("pfe-navigation-item:close", this._toggledHandler);
+      this.addEventListener("pfe-navigation-item:toggle", this._toggledHandler);
 
       // Watch for screen resizing
       window.addEventListener("resize", this._resizeHandler);
@@ -480,8 +471,7 @@ class PfeNavigation extends PFElement {
 
   disconnectedCallback() {
     // Remove the custom listener for the toggled event
-    this.removeEventListener("pfe-navigation-item:open", this._toggledHandler);
-    this.removeEventListener("pfe-navigation-item:close", this._toggledHandler);
+    this.removeEventListener("pfe-navigation-item:toggle", this._toggledHandler);
 
     // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("resize", this._resizeHandler);
@@ -523,13 +513,14 @@ class PfeNavigation extends PFElement {
     // Close any open navigation items
     this._activeNavigationItems = this._activeNavigationItems.filter(item => {
       item.expanded = false;
-      return item;
+      return false;
     });
 
     this.overlay = this._activeNavigationItems.length > 0;
   }
 
   _toggledHandler(event) {
+    let close = event && event.detail ? event.detail.action === "close" : false;
     let newItem = event && event.detail ? event.detail.navigationItem : null;
     let currentItems = this._activeNavigationItems;
 
@@ -538,8 +529,8 @@ class PfeNavigation extends PFElement {
     let hasOpenParent = newItem && newItem.parent && newItem.parent.visible && currentItems.includes(newItem.parent);
     let isOpen = currentItems.includes(newItem);
 
-    // If there is a new item and it isn't visibly nested
-    if ((!newItem && currentItems.length > 0) || (newItem && newItem.visible && !hasOpenParent)) {
+    // If the action is specifically to close the item or there is a new item and it isn't visibly nested
+    if (close || (!newItem && currentItems.length > 0) || (newItem && newItem.visible && !hasOpenParent)) {
       // Close the items in the array and remove them
       currentItems.map(item => {
         item.expanded = false;
@@ -559,7 +550,7 @@ class PfeNavigation extends PFElement {
     }
 
     // If the clicked item is open, close itself
-    if (isOpen) {
+    if (close || isOpen) {
       newItem.expanded = false;
       // Remove this item from the active items
       this._activeNavigationItems = currentItems.filter(item => item !== newItem);
@@ -587,7 +578,7 @@ class PfeNavigation extends PFElement {
 
   _outsideListener(event) {
     if ((event.target !== this && event.target.closest("pfe-navigation") === null) || event.path.length > 0 && event.path[0] === this._overlay) {
-      this.closeAllNavigationItems();
+      this._closeAllNavigationItems();
     }
   }
 

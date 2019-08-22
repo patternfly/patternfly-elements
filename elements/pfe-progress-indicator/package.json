@@ -4,7 +4,7 @@
     "className": "PfeProgressIndicator",
     "elementName": "pfe-progress-indicator"
   },
-  "version": "1.0.0-prerelease.17",
+  "version": "1.0.0-prerelease.20",
   "description": "Progress element for PatternFly Elements",
   "repository": {
     "type": "git",

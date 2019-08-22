@@ -1,5 +1,6 @@
 import PFElement from "../pfelement/pfelement.js";
 import PfeAccordion from "../pfe-accordion/pfe-accordion.js";
+import { is } from "bluebird";
 
 if (!("path" in Event.prototype)) {
   Object.defineProperty(Event.prototype, "path", {
@@ -291,6 +292,7 @@ class PfeNavigationItem extends PFElement {
       case "Esc":
       case "Escape":
         this.close(event);
+        this.focus();
         break;
       default:
         return;
@@ -550,16 +552,18 @@ class PfeNavigation extends PFElement {
     }
 
     // If the clicked item is open, close itself
-    if (close || isOpen) {
+    if (isOpen) {
       newItem.expanded = false;
       // Remove this item from the active items
       this._activeNavigationItems = currentItems.filter(item => item !== newItem);
     }
     // If there are no open items and it's a visible element
-    else if(newItem && !isOpen) {
+    else if(newItem && !isOpen && !close) {
       // Open that item and add it to the active array
       newItem.expanded = true;
       this._activeNavigationItems.push(newItem);
+    } else {
+      this._closeAllNavigationItems();
     }
 
     // The overlay is open if any active items exist

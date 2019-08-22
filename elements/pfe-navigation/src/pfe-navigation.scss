@@ -106,9 +106,18 @@ $variables: (
     --pfe-navigation--icon: #{map-get($icons, #{$icon}--on-dark)};
   }
 
-  [pfe-icon="#{$icon}"].expanded,
-  ::slotted([pfe-icon="#{$icon}"].expanded) {
-    --pfe-navigation--icon: #{map-get($icons, #{$icon})};
+  @if $icon != "menu" {
+    [pfe-icon="#{$icon}"].expanded,
+    ::slotted([pfe-icon="#{$icon}"].expanded) {
+      --pfe-navigation--icon: #{map-get($icons, #{$icon})};
+    }
+  }
+  @else {
+    [pfe-icon="#{$icon}"].expanded,
+    ::slotted([pfe-icon="#{$icon}"].expanded) {
+      --pfe-navigation--icon: #{map-get($icons, "close")};
+    }
+
   }
 }
 

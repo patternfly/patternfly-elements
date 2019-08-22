@@ -155,7 +155,7 @@ module.exports = function factory({
     })
       .pipe(
         replace(
-          /extends\s+PFElement\s+{/g,
+          /extends\s+P[Ff][Ee][A-z0-9_$]*\s+{/g,
           (classStatement, character, jsFile) => {
             // Extract the urls for template, style, and schema
             // -- Would prefer to do this by require'ing and asking it directly, but without

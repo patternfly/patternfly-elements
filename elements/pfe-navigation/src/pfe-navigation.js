@@ -455,7 +455,7 @@ class PfeNavigation extends PFElement {
     if (this.children.length) {
       // If only one value exists in the array, it starts at that size and goes up
       this.breakpoints = {
-        main: [0, 1199], // visible from 0 - 1199px
+        main: [0, 1200], // visible from 0 - 1200px
         search: [768],   // visible from 768px +
         "mobile-search": [0, 767],
         language: [768],
@@ -505,47 +505,67 @@ class PfeNavigation extends PFElement {
     this._activeNavigationItems.forEach(item => {
       // If the item is open but not visible, update it to hidden
       if (item.expanded && !item.visible) {
-        // item.expanded = false;
-        item.close();
+        item.expanded = false;
+        this._activeNavigationItems = this._activeNavigationItems.filter(i => i !== item);
+      } else if (item.expanded && item.parent && item.parent.visible) {
+        item.parent.expanded = true; // Ensure the parent is open
+        // If the parent item doesn't exist in the active array, add it
+        if (!this._activeNavigationItems.includes(item.parent)) {
+          this._activeNavigationItems.push(item.parent);
+        }
       }
     });
+
+    this.overlay = this._activeNavigationItems.length > 0;
   }
 
   _closeAllNavigationItems() {
     // Close any open navigation items
-    this._activeNavigationItems.map(item => {
-      item.expanded = false
+    this._activeNavigationItems = this._activeNavigationItems.filter(item => {
+      item.expanded = false;
+      return item;
     });
 
-    this.overlay = false;
+    this.overlay = this._activeNavigationItems.length > 0;
   }
 
   _toggledHandler(event) {
-    let newItem = event.detail.navigationItem;
+    let newItem = event && event.detail ? event.detail.navigationItem : null;
     let currentItems = this._activeNavigationItems;
 
     // Check if the new item shares a parent with the current one and that the parent is visible
     let openSibling = currentItems.filter(item => newItem && newItem.parent && newItem.parent === item.parent && newItem.parent.visible);
-    let hasOpenParent = newItem.parent && newItem.parent.visible && currentItems.includes(newItem.parent);
+    let hasOpenParent = newItem && newItem.parent && newItem.parent.visible && currentItems.includes(newItem.parent);
+    let isOpen = currentItems.includes(newItem);
 
     // If there is a new item and it isn't visibly nested
-    if (newItem && newItem.visible && openSibling.length < 1 && !hasOpenParent) {
+    if ((!newItem && currentItems.length > 0) || (newItem && newItem.visible && !hasOpenParent)) {
       // Close the items in the array and remove them
       currentItems.map(item => {
         item.expanded = false;
-        this._activeNavigationItems = this._activeNavigationItems.filter(active => active !== item);
       });
-    };
+      this._activeNavigationItems = [];
+    }
+    // If there is a new item and it isn't visibly nested
+    else if (newItem && newItem.visible && hasOpenParent && openSibling.length > 0) {
+      // Close the items in the array and remove them
+      this._activeNavigationItems = currentItems.filter(item => {
+        if (item !== newItem.parent) {
+          item.expanded = false;
+        } else {
+          return item;
+        }
+      });
+    }
 
     // If the clicked item is open, close itself
-    if (currentItems.includes(newItem)) {
+    if (isOpen) {
       newItem.expanded = false;
       // Remove this item from the active items
       this._activeNavigationItems = currentItems.filter(item => item !== newItem);
     }
-
     // If there are no open items and it's a visible element
-    if(newItem && (!currentItems.includes(newItem) || openSibling.length > 0)) {
+    else if(newItem && !isOpen) {
       // Open that item and add it to the active array
       newItem.expanded = true;
       this._activeNavigationItems.push(newItem);
@@ -595,8 +615,6 @@ class PfeNavigation extends PFElement {
         });
       }
     });
-
-    // console.dir(this._menuItem.visible);
   }
 
   _init() {

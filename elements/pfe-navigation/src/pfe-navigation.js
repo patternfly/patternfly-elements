@@ -116,17 +116,14 @@ class PfeNavigationItem extends PFElement {
   }
 
   open(event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
 
     console.log("Open navigation item");
 
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:open`, {
         detail: {
-          navigationItem: this,
-          // expanded: false,
-          // slot: this.getAttribute("slot"),
-          // content: this.tray
+          navigationItem: this
         },
         bubbles: true,
         composed: true
@@ -135,17 +132,14 @@ class PfeNavigationItem extends PFElement {
   }
 
   close(event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
 
     console.log("Close navigation item");
 
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:close`, {
         detail: {
-          navigationItem: this,
-          // expanded: true,
-          // slot: this.getAttribute("slot"),
-          // content: this.tray
+          navigationItem: this
         },
         bubbles: true,
         composed: true
@@ -398,10 +392,6 @@ class PfeNavigation extends PFElement {
   closeAllNavigationItems() {
     this.dispatchEvent(
       new CustomEvent("pfe-navigation-item:close", {
-        detail: {
-          navigationItems: this._activeNavigationItems,
-          expanded: false
-        },
         bubbles: true,
         composed: true
       })
@@ -531,50 +521,35 @@ class PfeNavigation extends PFElement {
   }
 
   _toggledHandler(event) {
-    console.log(event);
-
     let newItem = event.detail.navigationItem;
     let currentItems = this._activeNavigationItems;
 
-    // Checking various states
-    let isSelf = currentItems.includes(newItem);
-    let hasOpenItem = currentItems.length > 0;
-    let hasNewItem = newItem !== null;
-    let nestedSibling = null;
-    let openParent = currentItems.includes(newItem.parent);
-    
-    // Check if the new item shares a parent with the current one
-    // Assumption: nested items are all children of the same parent
-    currentItems.map(item => {
-      // Capture the state if they are both nested
-      if (hasNewItem && newItem.nested && item.nested && newItem.parent === item.parent) {
-        nestedSibling = item;
-      }
-    });
+    // Check if the new item shares a parent with the current one and that the parent is visible
+    let openSibling = currentItems.filter(item => newItem && newItem.parent && newItem.parent === item.parent && newItem.parent.visible);
+    let hasOpenParent = newItem.parent && newItem.parent.visible && currentItems.includes(newItem.parent);
 
-    // If there is a new item and it isn't nested
-    if (hasNewItem && newItem.visible && !nestedSibling) {
+    // If there is a new item and it isn't visibly nested
+    if (newItem && newItem.visible && openSibling.length < 1 && !hasOpenParent) {
+      // Close the items in the array and remove them
       currentItems.map(item => {
         item.expanded = false;
         this._activeNavigationItems = this._activeNavigationItems.filter(active => active !== item);
       });
     };
 
-    // If there are no open items and it's a visible element
-    console.dir(`Is this item visible? ${newItem.visible}`);
-    if(hasNewItem && (!isSelf || nestedSibling)) {
-      newItem.expanded = true;
-      this._activeNavigationItems.push(newItem);
-    }
-
     // If the clicked item is open, close itself
-    if (isSelf) { // || !newItem.visible) {
+    if (currentItems.includes(newItem)) {
       newItem.expanded = false;
       // Remove this item from the active items
       this._activeNavigationItems = currentItems.filter(item => item !== newItem);
     }
 
-    console.log(this._activeNavigationItems);
+    // If there are no open items and it's a visible element
+    if(newItem && (!currentItems.includes(newItem) || openSibling.length > 0)) {
+      // Open that item and add it to the active array
+      newItem.expanded = true;
+      this._activeNavigationItems.push(newItem);
+    }
 
     // The overlay is open if any active items exist
     this.overlay = (this._activeNavigationItems.length > 0);
@@ -621,7 +596,7 @@ class PfeNavigation extends PFElement {
       }
     });
 
-    console.dir(this._menuItem.visible);
+    // console.dir(this._menuItem.visible);
   }
 
   _init() {

@@ -1,32 +1,46 @@
-# PatternFly Element | Icon Element
+# PatternFly Elements [![Build Status](https://travis-ci.org/patternfly/patternfly-elements.svg?branch=master)](https://travis-ci.org/patternfly/patternfly-elements)
 
-## Dependencies
+## Table of Contents
 
-Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
+1. [Getting started][getting-started]
+2. [Element catalog][catalog]
+3. [Creating components][creating]
+4. [Theming components][theming]
 
-    npm install -g polyserve web-component-tester
+[PatternFly Elements][pfe-home] is a collection of flexible and lightweight [Web Components][wc-org], and the tools to build them. PatternFly Elements are:
 
-## Dev
+- **Lightweight**: small file size, minimal boilerplate, no "framework-like" features.
+- **Universal**: write once, use everywhere. PatternFly Elements work in React, Vue, Angular, vanilla JS, anywhere HTML elements are used.
+- **Themable**: Make overrides as needed via attributes or CSS variables
 
-    npm start
+The result of these principles is that you can plug one set of components into a wide variety of applications; bringing UX consistency and developer familiarity to any web project.
 
-## Test
+A Yeoman generator is included for creating Web Components that meets these goals.
 
-    npm run test
+## Quick start
 
-## Build
+    git clone git@github.com:patternfly/patternfly-elements.git
+    cd patternfly-elements
+    npm install # this will take a while due to lerna bootstrap
+    npm run storybook
 
-    npm run build
+The storybook script will launch the interactive demo pages.
 
-## Demo
+_Note: You will need to use [Node](https://nodejs.org/en/) v.7 or higher._
 
-Run `npm start` and Polyserve will start a server and open your default browser to the demo page of the element.
+---
 
-## Code style
+[home][pfe-home] |
+[start][getting-started] |
+[develop][creating] |
+[theming][theming] |
+[storybook][catalog] |
+[web components][wc-org]
 
-Icon (and all PatternFly Elements) use [Prettier][prettier] to auto-format JS and JSON.  The style rules get applied when you commit a change.  If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
 
-[prettier]: https://github.com/prettier/prettier/
-[prettier-ed]: https://github.com/prettier/prettier/#editor-integration
-[polyserve]: https://github.com/Polymer/polyserve
-[web-component-tester]: https://github.com/Polymer/web-component-tester
+[pfe-home]: https://patternfly.github.io/patternfly-elements
+[getting-started]: https://patternfly.github.io/patternfly-elements/getting-started
+[catalog]: https://patternfly.github.io/patternfly-elements/demo
+[creating]: https://patternfly.github.io/patternfly-elements/develop
+[theming]: https://patternfly.github.io/patternfly-elements/theme
+[wc-org]: https://webcomponents.org

@@ -66,31 +66,14 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
   transition: all #{pfe-var(animation-timing)};
   box-sizing: border-box;
 
-  // If this is the menu item
-  :host([pfe-icon="menu"]) & {
-    @media screen and (max-width: #{pfe-breakpoint($size: xl, $max: true)}) {
-      position: absolute;
-      top: 100%;
-      left: 0;
-
-      background-color: #{pfe-color(surface--lightest)};
-      color: #{pfe-local(Color)};
-
-      padding: #{pfe-local($cssvar: Padding, $region: tray)};
-      width: 100%;
-      max-height: calc(100vh - var(--pfe-navigation--Height, 84px));
-      overflow-x: hidden;
-      overflow-y: scroll;
-    }
-
-    @media screen and (min-width: #{pfe-breakpoint(xl)}) {
-      display: flex;
-      visibility: visible;
-    }
+  :host([pfe-icon="menu"][hidden]) & {
+    display: flex;
+    visibility: visible;
   }
 
-  // If this is not the menu item or one of it's children
-  :host(:not([pfe-icon="menu"]):not([is_nested])) & {
+  :host([pfe-icon="menu"]:not([hidden])) &,
+  :host(:not([pfe-icon="menu"]):not([is_nested])) &,
+  :host([is_nested][parent_hidden]) & {
     position: absolute;
     top: 100%;
     left: 0;
@@ -106,27 +89,11 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
   }
 
   //  Styles for the nested elements
-  :host([is_nested]) & {
+  :host([is_nested]:not([parent_hidden])) & {
     @media screen and (max-width: #{pfe-breakpoint($size: xl, $max: true)}) {
       --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
 
       @include pfe-container;
-    }
-    
-    // Desktop styles for menu
-    @media screen and (min-width: #{pfe-breakpoint(xl)}) {
-      position: absolute;
-      top: 100%;
-      left: 0;
-
-      background-color: #{pfe-color(surface--lightest)};
-      color: #{pfe-local(Color)};
-
-      padding: #{pfe-local($cssvar: Padding, $region: tray)};
-      width: 100%;
-      max-height: calc(100vh - var(--pfe-navigation--Height, 84px));
-      overflow-x: hidden;
-      overflow-y: scroll;
     }
   }
 }

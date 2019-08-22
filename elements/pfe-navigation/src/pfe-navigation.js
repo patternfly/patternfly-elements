@@ -602,6 +602,7 @@ class PfeNavigation extends PFElement {
           } else {
             isVisible ? node.removeAttribute("show_content") : node.setAttribute("show_content", "");
             this._menuItem.visible = isVisible;
+            node.navItems.forEach(item => isVisible ? item.removeAttribute("parent_hidden") : item.setAttribute("parent_hidden", ""));
           }
         });
       }

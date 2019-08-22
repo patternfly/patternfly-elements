@@ -1,4 +1,11 @@
-## Prerelease 19 ( 2019-08-31 )
+## Prerelease 20 ( 2019-08-21 )
+Tag: [v1.0.0-prerelease.20](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.20)
+
+- [8a0f497](https://github.com/patternfly/patternfly-elements/commit/8a0f497f74f991d831c1a53b4f023ed36a349a63) created pfe-modal
+- [c549734](https://github.com/patternfly/patternfly-elements/commit/c54973446a84624f663c230982d670c748a64628) created pfe-progress-indicator
+- [569c592](https://github.com/patternfly/patternfly-elements/commit/569c5923f6a200502ee596585229ca5b0445ab3c) Netlify integration
+
+## Prerelease 19 ( 2019-07-31 )
 Tag: [v1.0.0-prerelease.19](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.19)
 
 - [00389c2d](https://github.com/patternfly/patternfly-elements/commit/00389c2d581ed5f9b60dd744ab9db3d00f3bac13) adding type="button" to the button in the header ([#474](https://github.com/patternfly/patternfly-elements/pull/474))

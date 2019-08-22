@@ -4,7 +4,7 @@
     "className": "PfeLayouts",
     "elementName": "pfe-layouts"
   },
-  "version": "1.0.0-prerelease.19",
+  "version": "1.0.0-prerelease.20",
   "publishConfig": {
     "access": "public"
   },
@@ -31,6 +31,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.19"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.20"
   }
 }

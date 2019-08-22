@@ -1,9 +1,4 @@
 import PFElement from "../pfelement/pfelement.js";
-import {
-  PfeCollapsible,
-  PfeCollapsibleToggle,
-  PfeCollapsiblePanel
-} from "../pfe-collapsible/pfe-collapsible.js";
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
@@ -50,7 +45,13 @@ if (!Array.prototype.findIndex) {
   });
 }
 
-class PfeAccordion extends PfeCollapsible {
+function generateId() {
+  return Math.random()
+    .toString(36)
+    .substr(2, 9);
+}
+
+class PfeAccordion extends PFElement {
   static get tag() {
     return "pfe-accordion";
   }
@@ -68,7 +69,7 @@ class PfeAccordion extends PfeCollapsible {
   }
 
   static get observedAttributes() {
-    return super.observedAttributes.concat("on");
+    return ["on"];
   }
 
   static get cascadingAttributes() {
@@ -77,19 +78,16 @@ class PfeAccordion extends PfeCollapsible {
     };
   }
 
+  // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Container;
   }
 
   constructor() {
-    super(PfeAccordion);
+    super(PfeAccordion, { type: PfeAccordion.PfeType });
 
-    this._linkControls = this._linkControls.bind(this);
-    this._observer = new MutationObserver(this._linkControls);
-
-    this.addEventListener(`${PfeCollapsible.tag}:change`, this._changeHandler);
-    this.addEventListener(`${PfeCollapsiblePanel.tag}:animation-start`, this._animationStartHandler);
-    this.addEventListener(`${PfeCollapsiblePanel.tag}:animation-end`, this._animationEndHandler);
+    this._linkPanels = this._linkPanels.bind(this);
+    this._observer = new MutationObserver(this._linkPanels);
   }
 
   connectedCallback() {
@@ -98,24 +96,29 @@ class PfeAccordion extends PfeCollapsible {
     this.setAttribute("role", "presentation");
     this.setAttribute("defined", "");
 
+    this.addEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
     this.addEventListener("keydown", this._keydownHandler);
+
+    Promise.all([
+      customElements.whenDefined(PfeAccordionHeader.tag),
+      customElements.whenDefined(PfeAccordionPanel.tag)
+    ]).then(() => {
+      if (this.children.length) {
+        this._linkPanels();
+      }
+
+      this._observer.observe(this, { childList: true });
+    });
   }
 
   disconnectedCallback() {
+    this.removeEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
     this.removeEventListener("keydown", this._keydownHandler);
     this._observer.disconnect();
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
-
-    if (attr === "pfe-animation") {
-      if (newVal !== "false" && newVal !== "true") {
-        return;
-      }
-
-      this._allPanels().forEach(panel => panel.setAttribute(attr, newVal));
-    }
   }
 
   toggle(index) {
@@ -181,18 +184,7 @@ class PfeAccordion extends PfeCollapsible {
     panels.forEach(panel => this._collapsePanel(panel));
   }
 
-  _changeHandler(event) {
-    super._changeHandler(event);
-
-    this.dispatchEvent(
-      new CustomEvent(`${PfeAccordion.tag}:change`, {
-        detail: event.detail,
-        bubbles: true
-      })
-    );
-  }
-
-  _linkControls() {
+  _linkPanels() {
     const headers = this._allHeaders();
     headers.forEach(header => {
       const panel = this._panelForHeader(header);
@@ -206,15 +198,32 @@ class PfeAccordion extends PfeCollapsible {
     });
   }
 
+  _changeHandler(evt) {
+    if (this.classList.contains("animating")) {
+      return;
+    }
+
+    const header = evt.target;
+    const panel = evt.target.nextElementSibling;
+
+    if (evt.detail.expanded) {
+      this._expandHeader(header);
+      this._expandPanel(panel);
+    } else {
+      this._collapseHeader(header);
+      this._collapsePanel(panel);
+    }
+  }
+
+  _toggle(header, panel) {}
+
   _expandHeader(header) {
     header.expanded = true;
   }
 
   _expandPanel(panel) {
     if (!panel) {
-      console.error(
-        `${PfeAccordion.tag}: Trying to expand a panel that doesn't exist`
-      );
+      console.error(`${PfeAccordion.tag}: Trying to expand a panel that doesn't exist`);
       return;
     }
 
@@ -223,6 +232,9 @@ class PfeAccordion extends PfeCollapsible {
     }
 
     panel.expanded = true;
+
+    const height = panel.getBoundingClientRect().height;
+    this._animate(panel, 0, height);
   }
 
   _collapseHeader(header) {
@@ -231,9 +243,7 @@ class PfeAccordion extends PfeCollapsible {
 
   _collapsePanel(panel) {
     if (!panel) {
-      console.error(
-        `${PfeAccordion.tag}: Trying to collapse a panel that doesn't exist`
-      );
+      console.error(`${PfeAccordion.tag}: Trying to collapse a panel that doesn't exist`);
       return;
     }
 
@@ -241,7 +251,64 @@ class PfeAccordion extends PfeCollapsible {
       return;
     }
 
+    const height = panel.getBoundingClientRect().height;
     panel.expanded = false;
+
+    this._animate(panel, height, 0);
+  }
+
+  _animate(panel, start, end) {
+    panel.classList.add("animating");
+    panel.style.height = `${start}px`;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        panel.style.height = `${end}px`;
+        panel.classList.add("animating");
+        panel.addEventListener("transitionend", this._transitionEndHandler);
+      });
+    });
+  }
+
+  _keydownHandler(evt) {
+    const currentHeader = evt.target;
+
+    if (!this._isHeader(currentHeader)) {
+      return;
+    }
+
+    let newHeader;
+
+    switch (evt.key) {
+      case "ArrowDown":
+      case "Down":
+      case "ArrowRight":
+      case "Right":
+        newHeader = this._nextHeader();
+        break;
+      case "ArrowUp":
+      case "Up":
+      case "ArrowLeft":
+      case "Left":
+        newHeader = this._previousHeader();
+        break;
+      case "Home":
+        newHeader = this._firstHeader();
+        break;
+      case "End":
+        newHeader = this._lastHeader();
+        break;
+      default:
+        return;
+    }
+
+    newHeader.shadowRoot.querySelector("button").focus();
+  }
+
+  _transitionEndHandler(evt) {
+    evt.target.style.height = "";
+    evt.target.classList.remove("animating");
+    evt.target.removeEventListener("transitionend", this._transitionEndHandler);
   }
 
   _allHeaders() {
@@ -261,29 +328,12 @@ class PfeAccordion extends PfeCollapsible {
 
     if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
       console.error(
-        `${PfeAccordion.tag}: Sibling element next to a header needs to be a panel`
+        `${PfeAccordion.tag}: Sibling element to a header needs to be a panel`
       );
       return;
     }
 
     return next;
-  }
-
-  _headerForPanel(panel) {
-    const previous = panel.previousElementSibling;
-
-    if (!previous) {
-      return;
-    }
-
-    if (previous.tagName.toLowerCase() !== PfeAccordionHeader.tag) {
-      console.error(
-        `${PfeAccordion.tag}: Sibling element previous to a panel needs to be a header`
-      );
-      return;
-    }
-
-    return previous;
   }
 
   _previousHeader() {
@@ -313,64 +363,9 @@ class PfeAccordion extends PfeCollapsible {
   _isHeader(element) {
     return element.tagName.toLowerCase() === PfeAccordionHeader.tag;
   }
-
-  _keydownHandler(event) {
-    const currentHeader = event.target;
-
-    if (!this._isHeader(currentHeader)) {
-      return;
-    }
-
-    let newHeader;
-
-    switch (event.key) {
-      case "ArrowDown":
-      case "Down":
-      case "ArrowRight":
-      case "Right":
-        newHeader = this._nextHeader();
-        break;
-      case "ArrowUp":
-      case "Up":
-      case "ArrowLeft":
-      case "Left":
-        newHeader = this._previousHeader();
-        break;
-      case "Home":
-        newHeader = this._firstHeader();
-        break;
-      case "End":
-        newHeader = this._lastHeader();
-        break;
-      default:
-        return;
-    }
-
-    newHeader.shadowRoot.querySelector("button").focus();
-  }
-
-  _animationStartHandler(event) {
-    super._animationStartHandler(event);
-
-    const header = this._headerForPanel(event.detail.panel);
-
-    if (header) {
-      header.button.classList.add("animating");
-    }
-  }
-
-  _animationEndHandler(event) {
-    super._animationEndHandler(event);
-
-    const header = this._headerForPanel(event.detail.panel);
-
-    if (header) {
-      header.button.classList.remove("animating");
-    }
-  }
 }
 
-class PfeAccordionHeader extends PfeCollapsibleToggle {
+class PfeAccordionHeader extends PFElement {
   static get tag() {
     return "pfe-accordion-header";
   }
@@ -383,28 +378,29 @@ class PfeAccordionHeader extends PfeCollapsibleToggle {
     return "pfe-accordion-header.html";
   }
 
-  get expanded() {
-    return super.expanded;
+  get pfeId() {
+    return this.getAttribute("pfe-id");
   }
 
-  set expanded(val) {
-    super.expanded = val;
-
-    const value = Boolean(val);
-
-    if (!this.button) {
+  set pfeId(id) {
+    if (!id) {
       return;
     }
 
-    this.button.setAttribute("aria-expanded", value);
+    this.setAttribute("pfe-id", id);
+  }
+
+  static get observedAttributes() {
+    return ["aria-expanded"];
   }
 
   constructor() {
-    super(PfeAccordionHeader, { setTabIndex: false, addKeydownHandler: false });
+    super(PfeAccordionHeader);
 
     this.button = this.shadowRoot.querySelector("button");
 
     this._init = this._init.bind(this);
+    this._clickHandler = this._clickHandler.bind(this);
     this._observer = new MutationObserver(this._init);
   }
 
@@ -415,11 +411,29 @@ class PfeAccordionHeader extends PfeCollapsibleToggle {
       this._init();
     }
 
+    this.addEventListener("click", this._clickHandler);
     this._observer.observe(this, { childList: true });
   }
 
   disconnectedCallback() {
+    this.removeEventListener("click", this._clickHandler);
     this._observer.disconnect();
+  }
+
+  get expanded() {
+    return this.hasAttribute("aria-expanded");
+  }
+
+  set expanded(val) {
+    val = Boolean(val);
+
+    if (val) {
+      this.setAttribute("aria-expanded", true);
+      this.button.setAttribute("aria-expanded", true);
+    } else {
+      this.removeAttribute("aria-expanded");
+      this.button.setAttribute("aria-expanded", false);
+    }
   }
 
   _init() {
@@ -427,7 +441,13 @@ class PfeAccordionHeader extends PfeCollapsibleToggle {
       this._observer.disconnect();
     }
 
-    this.setAttribute("role", "header");
+    if (!this.hasAttribute("role")) {
+      this.setAttribute("role", "header");
+    }
+
+    if (!this.pfeId) {
+      this.pfeId = `${PfeAccordionHeader.tag}-${generateId()}`;
+    }
 
     const child = this.children[0];
     let isHeaderTag = false;
@@ -455,7 +475,9 @@ class PfeAccordionHeader extends PfeCollapsibleToggle {
 
     if (!isHeaderTag) {
       console.warn(
-        `${this.tag}: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`
+        `${
+          PfeAccordionHeader.tag
+        }: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`
       );
     }
 
@@ -463,9 +485,18 @@ class PfeAccordionHeader extends PfeCollapsibleToggle {
       this._observer.observe(this, { childList: true });
     }
   }
+
+  _clickHandler(event) {
+    this.dispatchEvent(
+      new CustomEvent(`${PfeAccordion.tag}:change`, {
+        detail: { expanded: !this.expanded },
+        bubbles: true
+      })
+    );
+  }
 }
 
-class PfeAccordionPanel extends PfeCollapsiblePanel {
+class PfeAccordionPanel extends PFElement {
   static get tag() {
     return "pfe-accordion-panel";
   }
@@ -478,18 +509,51 @@ class PfeAccordionPanel extends PfeCollapsiblePanel {
     return "pfe-accordion-panel.html";
   }
 
+  get pfeId() {
+    return this.getAttribute("pfe-id");
+  }
+
+  set pfeId(id) {
+    if (!id) {
+      return;
+    }
+
+    this.setAttribute("pfe-id", id);
+  }
+
   constructor() {
     super(PfeAccordionPanel);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this.setAttribute("role", "region");
+
+    if (!this.hasAttribute("role")) {
+      this.setAttribute("role", "region");
+    }
+
+    if (!this.pfeId) {
+      this.pfeId = `${PfeAccordionPanel.tag}-${generateId()}`;
+    }
+  }
+
+  get expanded() {
+    return this.hasAttribute("expanded");
+  }
+
+  set expanded(val) {
+    const value = Boolean(val);
+
+    if (value) {
+      this.setAttribute("expanded", "");
+    } else {
+      this.removeAttribute("expanded");
+    }
   }
 }
 
-PFElement.create(PfeAccordion);
-PFElement.create(PfeAccordionPanel);
 PFElement.create(PfeAccordionHeader);
+PFElement.create(PfeAccordionPanel);
+PFElement.create(PfeAccordion);
 
 export { PfeAccordion as default };

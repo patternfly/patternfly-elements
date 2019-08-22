@@ -40,7 +40,6 @@
   "license": "MIT",
   "dependencies": {
     "@patternfly/pfe-sass": "^1.0.0-prerelease.20",
-    "@patternfly/pfe-collapsible": "^1.0.0-prerelease.20",
     "@patternfly/pfelement": "^1.0.0-prerelease.20"
   },
   "generator-pfelement-version": "0.5.5"

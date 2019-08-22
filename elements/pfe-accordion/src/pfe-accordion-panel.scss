@@ -10,14 +10,12 @@ $LOCAL: accordion;
    @include pfe-accordion-panel;
 }
 
-:host([pfe-expanded]),
-:host(.animating) {
+:host([expanded]) {
    @include pfe-accordion-panel-expanded;
    @include pfe-accordion-panel-expanded-style;
 }
-
-:host([on="dark"][pfe-expanded]),
-:host([on="dark"].animating) {
+ 
+:host([on="dark"][expanded]) {
   @include pfe-theme($theme: "dark");
   @include pfe-accordion-panel-expanded-style($theme: dark);
 }
@@ -31,6 +29,7 @@ $LOCAL: accordion;
   @include pfe-accordion-panel-container-inset($align: left);
 }
 
-:host(:last-of-type[pfe-expanded]) {
+:host(:last-of-type[expanded]) {
   margin-bottom: 0;
 }
+

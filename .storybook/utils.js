@@ -165,9 +165,9 @@ const renderSlots = (slots = []) =>
     .join("");
 
 // Creates a component dynamically based on inputs
-export function component(tag, attributes = {}, slots = []) {
+export function component(tag, attributes = {}, slots = [], noSlot = false) {
   return `<${tag}${listProperties(attributes)}>${
-    slots.length > 0 ? renderSlots(slots) : autoContent()
+    slots.length > 0 ? renderSlots(slots) : (!noSlot) ? autoContent() : ""
   }</${tag}>`;
 }
 

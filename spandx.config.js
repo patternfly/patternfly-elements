@@ -9,7 +9,10 @@ module.exports = {
     "/examples": "./examples",
     "/favicon.ico": "./favicon.ico",
     "/": "./node_modules",
-    "/themes": "./themes"
+    "/themes": "./themes",
+    "/webassets": {
+      host: "https://access.redhat.com"
+    }
   },
   bs: {
     watchOptions: {

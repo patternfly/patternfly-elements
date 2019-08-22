@@ -15,14 +15,20 @@ class PfeIconPanel extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["icon", "circled"];
+    return ["pfe-icon", "pfe-circled"];
   }
 
   static get cascadingAttributes() {
     return {
-      icon: "pfe-icon",
-      circled: "pfe-icon"
+      "pfe-icon": "pfe-icon",
+      "pfe-circled": "pfe-icon"
     };
+  }
+
+  attributeChangedCallback() {
+    super.attributeChangedCallback(...arguments);
+
+    console.log(`attr changed ${[...arguments]}`);
   }
 
   constructor() {

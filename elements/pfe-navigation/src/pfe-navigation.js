@@ -279,7 +279,8 @@ class PfeNavigationItem extends PFElement {
     }
   }
 
-  _keydownHandler(event) {  
+  _keydownHandler(event) {
+    // @TODO need to add fallback key mappings for other browsers
     switch (event.key) {
       case "Spacebar":
       case "Enter":

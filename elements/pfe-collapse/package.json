@@ -1,32 +1,36 @@
 {
-  "name": "@patternfly/pfe-progress-indicator",
+  "name": "@patternfly/pfe-collapse",
   "pfelement": {
-    "className": "PfeProgressIndicator",
-    "elementName": "pfe-progress-indicator"
+    "className": "PfeCollapse",
+    "elementName": "pfe-collapse"
   },
   "version": "1.0.0-prerelease.20",
-  "publishConfig": {
-    "access": "public"
-  },
-  "description": "Progress element for PatternFly Elements",
+  "description": "Collapse element for PatternFly Elements",
   "keywords": [
     "web-components",
     "html"
   ],
   "repository": {
     "type": "git",
-    "url": "github:patternfly/patternfly-elements",
-    "directory": "elements/pfe-progress-indicator"
+    "url": "",
+    "directory": "elements/pfe-collapse"
   },
-  "main": "pfe-progress-indicator.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "pfe-collapse.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-progress-indicator/test/"
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-collapse/test/"
   },
-  "author": {
-    "name": "Daniel Faucette"
-  },
+  "contributors": [
+    {
+      "name": "Kyle Buchanan",
+      "email": "kylebuch8@gmail.com",
+      "url": "https://github.com/kylebuch8"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "@patternfly/pfe-sass": "1.0.0-prerelease.20",

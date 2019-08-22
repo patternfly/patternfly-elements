@@ -200,13 +200,7 @@
           const collapsible = document.querySelector('#animationComplete pfe-collapsible');
           const toggle = collapsible.querySelector('pfe-collapsible-toggle');
           const panel = collapsible.querySelector("pfe-collapsible-panel");
-          const handlerSpy = sinon.spy();
-
-          document.querySelector("#animationComplete").addEventListener('pfe-collapsible-panel:animation-end', handlerSpy);
-
-          toggle.click();
-
-          setTimeout(function() {
+          const handlerSpy = sinon.spy(function() {
             const [event] = handlerSpy.getCall(0).args;
             sinon.assert.calledOnce(handlerSpy);
             assert.deepEqual(event.detail, {
@@ -218,7 +212,11 @@
             document.querySelector("#animationComplete").removeEventListener('pfe-collapsible-panel:animation-end', handlerSpy);
             toggle.click();
             done();
-          }, 350);
+          });
+
+          document.querySelector("#animationComplete").addEventListener('pfe-collapsible-panel:animation-end', handlerSpy);
+
+          toggle.click();
         });
 
         test("it should add a pfe-animation attribute to a pfe-collapsible-panel when the attribute is added to pfe-collapsible", () => {

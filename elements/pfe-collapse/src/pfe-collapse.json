@@ -1,10 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Collapsible",
-  "description": "Collapsible element",
+  "title": "Collapse",
+  "description": "Collapse element",
   "type": "object",
-  "tag": "pfe-collapsible",
-  "class": "pfe-collapsible",
+  "tag": "pfe-collapse",
+  "class": "pfe-collapse",
   "category": "content",
   "properties": {
     "slots": {
@@ -20,7 +20,7 @@
             "oneOf": [{
               "$ref": "pfe-collapsibe-toggle"
             }, {
-              "$ref": "pfe-collapsible-panel"
+              "$ref": "pfe-collapse-panel"
             }]
           }
         }

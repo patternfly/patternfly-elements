@@ -6,17 +6,17 @@ function generateId() {
     .substr(2, 9);
 }
 
-class PfeCollapsibleToggle extends PFElement {
+class PfeCollapseToggle extends PFElement {
   static get tag() {
-    return "pfe-collapsible-toggle";
+    return "pfe-collapse-toggle";
   }
 
   get templateUrl() {
-    return "pfe-collapsible-toggle.html";
+    return "pfe-collapse-toggle.html";
   }
 
   get styleUrl() {
-    return "pfe-collapsible-toggle.scss";
+    return "pfe-collapse-toggle.scss";
   }
 
   get pfeId() {
@@ -45,7 +45,7 @@ class PfeCollapsibleToggle extends PFElement {
   }
 
   constructor(pfeClass, { setTabIndex = true, addKeydownHandler = true } = {}) {
-    super(pfeClass || PfeCollapsibleToggle);
+    super(pfeClass || PfeCollapseToggle);
 
     this.controlledPanel = false;
     this._setTabIndex = setTabIndex;
@@ -68,7 +68,7 @@ class PfeCollapsibleToggle extends PFElement {
       this.pfeId = this.id;
     }
 
-    const generatedId = `${PfeCollapsibleToggle.tag}-${generateId()}`;
+    const generatedId = `${PfeCollapseToggle.tag}-${generateId()}`;
 
     if (!this.id) {
       this.id = generatedId;
@@ -100,7 +100,7 @@ class PfeCollapsibleToggle extends PFElement {
       return;
     }
 
-    // this can be an issue if the pfe-collapsible is located within
+    // this can be an issue if the pfe-collapse is located within
     // a shadow root
     if (this.getRootNode) {
       this.controlledPanel = this.getRootNode().querySelector(`#${newVal}`);
@@ -116,7 +116,7 @@ class PfeCollapsibleToggle extends PFElement {
       this.controlledPanel.expanded = this.expanded;
 
       this.dispatchEvent(
-        new CustomEvent(`${PfeCollapsible.tag}:change`, {
+        new CustomEvent(`${PfeCollapse.tag}:change`, {
           detail: {
             expanded: this.expanded,
             toggle: this,
@@ -149,17 +149,17 @@ class PfeCollapsibleToggle extends PFElement {
   }
 }
 
-class PfeCollapsiblePanel extends PFElement {
+class PfeCollapsePanel extends PFElement {
   static get tag() {
-    return "pfe-collapsible-panel";
+    return "pfe-collapse-panel";
   }
 
   get templateUrl() {
-    return "pfe-collapsible-panel.html";
+    return "pfe-collapse-panel.html";
   }
 
   get styleUrl() {
-    return "pfe-collapsible-panel.scss";
+    return "pfe-collapse-panel.scss";
   }
 
   get pfeId() {
@@ -207,7 +207,7 @@ class PfeCollapsiblePanel extends PFElement {
   }
 
   constructor(pfeClass) {
-    super(pfeClass || PfeCollapsiblePanel);
+    super(pfeClass || PfeCollapsePanel);
   }
 
   connectedCallback() {
@@ -220,7 +220,7 @@ class PfeCollapsiblePanel extends PFElement {
       this.pfeId = this.id;
     }
 
-    const generatedId = `${PfeCollapsiblePanel.tag}-${generateId()}`;
+    const generatedId = `${PfeCollapsePanel.tag}-${generateId()}`;
 
     if (!this.id) {
       this.id = generatedId;
@@ -253,7 +253,7 @@ class PfeCollapsiblePanel extends PFElement {
     );
 
     this.dispatchEvent(
-      new CustomEvent(`${PfeCollapsiblePanel.tag}:animation-end`, {
+      new CustomEvent(`${PfeCollapsePanel.tag}:animation-end`, {
         detail: {
           expanded: this.expanded,
           panel: this
@@ -265,7 +265,7 @@ class PfeCollapsiblePanel extends PFElement {
 
   _fireAnimationEvent(state) {
     this.dispatchEvent(
-      new CustomEvent(`${PfeCollapsiblePanel.tag}:animation-start`, {
+      new CustomEvent(`${PfeCollapsePanel.tag}:animation-start`, {
         detail: {
           state: state,
           panel: this
@@ -276,21 +276,21 @@ class PfeCollapsiblePanel extends PFElement {
   }
 }
 
-class PfeCollapsible extends PFElement {
+class PfeCollapse extends PFElement {
   static get tag() {
-    return "pfe-collapsible";
+    return "pfe-collapse";
   }
 
   get templateUrl() {
-    return "pfe-collapsible.html";
+    return "pfe-collapse.html";
   }
 
   get styleUrl() {
-    return "pfe-collapsible.scss";
+    return "pfe-collapse.scss";
   }
 
   get schemaUrl() {
-    return "pfe-collapsible.json";
+    return "pfe-collapse.json";
   }
 
   get animates() {
@@ -302,7 +302,7 @@ class PfeCollapsible extends PFElement {
   }
 
   constructor(pfeClass) {
-    super(pfeClass || PfeCollapsible);
+    super(pfeClass || PfeCollapse);
 
     this._toggle = null;
     this._panel = null;
@@ -310,17 +310,17 @@ class PfeCollapsible extends PFElement {
     this._changeHandler = this._changeHandler.bind(this);
     this._observer = new MutationObserver(this._linkControls);
 
-    this.addEventListener(`${PfeCollapsible.tag}:change`, this._changeHandler);
-    this.addEventListener(`${PfeCollapsiblePanel.tag}:animation-start`, this._animationStartHandler);
-    this.addEventListener(`${PfeCollapsiblePanel.tag}:animation-end`, this._animationEndHandler);
+    this.addEventListener(`${PfeCollapse.tag}:change`, this._changeHandler);
+    this.addEventListener(`${PfeCollapsePanel.tag}:animation-start`, this._animationStartHandler);
+    this.addEventListener(`${PfeCollapsePanel.tag}:animation-end`, this._animationEndHandler);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
     Promise.all([
-      customElements.whenDefined(PfeCollapsiblePanel.tag),
-      customElements.whenDefined(PfeCollapsibleToggle.tag)
+      customElements.whenDefined(PfeCollapsePanel.tag),
+      customElements.whenDefined(PfeCollapseToggle.tag)
     ]).then(() => {
       if (this.children.length) {
         this._linkControls();
@@ -331,9 +331,9 @@ class PfeCollapsible extends PFElement {
   }
 
   disconnectedCallback() {
-    this.removeEventListener(`${PfeCollapsible.tag}:change`, this._changeHandler);
-    this.removeEventListener(`${PfeCollapsiblePanel.tag}:animation-start`, this._animationStartHandler);
-    this.removeEventListener(`${PfeCollapsiblePanel.tag}:animation-end`, this._animationEndHandler);
+    this.removeEventListener(`${PfeCollapse.tag}:change`, this._changeHandler);
+    this.removeEventListener(`${PfeCollapsePanel.tag}:animation-start`, this._animationStartHandler);
+    this.removeEventListener(`${PfeCollapsePanel.tag}:animation-end`, this._animationEndHandler);
     this._observer.disconnect();
   }
 
@@ -358,8 +358,8 @@ class PfeCollapsible extends PFElement {
   }
 
   _linkControls() {
-    this._toggle = this.querySelector(PfeCollapsibleToggle.tag);
-    this._panel = this.querySelector(PfeCollapsiblePanel.tag);
+    this._toggle = this.querySelector(PfeCollapseToggle.tag);
+    this._panel = this.querySelector(PfeCollapsePanel.tag);
 
     this._toggle.setAttribute("aria-controls", this._panel.pfeId);
   }
@@ -377,8 +377,8 @@ class PfeCollapsible extends PFElement {
   }
 }
 
-PFElement.create(PfeCollapsible);
-PFElement.create(PfeCollapsibleToggle);
-PFElement.create(PfeCollapsiblePanel);
+PFElement.create(PfeCollapse);
+PFElement.create(PfeCollapseToggle);
+PFElement.create(PfeCollapsePanel);
 
-export { PfeCollapsible, PfeCollapsibleToggle, PfeCollapsiblePanel };
+export { PfeCollapse, PfeCollapseToggle, PfeCollapsePanel };

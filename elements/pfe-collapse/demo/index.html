@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PatternFly Element | pfe-collapsible Demo</title>
+    <title>PatternFly Element | pfe-collapse Demo</title>
 
     <noscript>
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
@@ -15,86 +15,86 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../pfe-collapsible.umd.js'])</script>
+    <script>require(['../pfe-collapse.umd.js'])</script>
   </head>
   <body unresolved>
-    <h1>&lt;pfe-collapsible&gt;</h1>
-    <h2>Inside pfe-collapsible</h2>
-    <pfe-collapsible>
-      <pfe-collapsible-toggle>
-        <h3>Collapsible Toggle</h3>
-      </pfe-collapsible-toggle>
-      <pfe-collapsible-panel>
+    <h1>&lt;pfe-collapse&gt;</h1>
+    <h2>Inside pfe-collapse</h2>
+    <pfe-collapse>
+      <pfe-collapse-toggle>
+        <h3>Collapse Toggle</h3>
+      </pfe-collapse-toggle>
+      <pfe-collapse-panel>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-collapsible-panel>
-    </pfe-collapsible>
+      </pfe-collapse-panel>
+    </pfe-collapse>
 
     <div>Animating: <span id="animating">false</span></div>
     <div>State: <span id="state"></span></div>
     <div>Expanded: <span id="expanded">false</span></div>
 
-    <pfe-collapsible>
-      <pfe-collapsible-toggle aria-controls="panel1">
-        <h3>Collapsible Toggle with preset ID</h3>
-      </pfe-collapsible-toggle>
-      <pfe-collapsible-panel id="panel1">
+    <pfe-collapse>
+      <pfe-collapse-toggle aria-controls="panel1">
+        <h3>Collapse Toggle with preset ID</h3>
+      </pfe-collapse-toggle>
+      <pfe-collapse-panel id="panel1">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-collapsible-panel>
-    </pfe-collapsible>
+      </pfe-collapse-panel>
+    </pfe-collapse>
 
     <hr>
 
     <h2>Standalone toggle and panel</h2>
-    <pfe-collapsible-toggle aria-controls="panel">
+    <pfe-collapse-toggle aria-controls="panel">
       Toggle the Standalone Panel
-    </pfe-collapsible-toggle>
+    </pfe-collapse-toggle>
     <p>Other content:</p>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    <pfe-collapsible-panel id="panel">
+    <pfe-collapse-panel id="panel">
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </pfe-collapsible-panel>
+    </pfe-collapse-panel>
 
     <hr>
 
     <h2>Standalone Panel</h2>
     <button>Toggle panel</button>
-    <pfe-collapsible-panel id="standalone-panel">
+    <pfe-collapse-panel id="standalone-panel">
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </pfe-collapsible-panel>
+    </pfe-collapse-panel>
 
     <hr>
 
     <h2>Standalone Toggle without a Panel</h2>
-    <pfe-collapsible-toggle>
+    <pfe-collapse-toggle>
       Toggle without a panel
-    </pfe-collapsible-toggle>
+    </pfe-collapse-toggle>
 
     <script>
-      var collapsible = document.querySelector("pfe-collapsible");
-      var panel = collapsible.querySelector("pfe-collapsible-panel");
+      var collapse = document.querySelector("pfe-collapse");
+      var panel = collapse.querySelector("pfe-collapse-panel");
       var animating = document.querySelector("#animating");
       var state = document.querySelector("#state");
       var expanded = document.querySelector("#expanded");
 
-      collapsible.addEventListener("pfe-collapsible:change", function (event) {
+      collapse.addEventListener("pfe-collapse:change", function (event) {
         console.log(event);
       });
 
-      collapsible.addEventListener("pfe-collapsible-panel:animation-start", function (event) {
+      collapse.addEventListener("pfe-collapse-panel:animation-start", function (event) {
         animating.textContent = "true";
         state.textContent = event.detail.state;
       });
 
-      collapsible.addEventListener("pfe-collapsible-panel:animation-end", function (event) {
+      collapse.addEventListener("pfe-collapse-panel:animation-end", function (event) {
         animating.textContent = "false";
         expanded.textContent = event.detail.expanded;
         state.textContent = "";
       });
 
-      var standaloneCollapsible = document.querySelector("#standalone-panel");
+      var standaloneCollapse = document.querySelector("#standalone-panel");
 
       document.querySelector("button").addEventListener("click", function() {
-        standaloneCollapsible.expanded = !standaloneCollapsible.expanded;
+        standaloneCollapse.expanded = !standaloneCollapse.expanded;
       });
     </script>
   </body>

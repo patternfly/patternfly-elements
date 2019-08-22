@@ -2,27 +2,27 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import { PfeCollapsible } from "../pfe-collapsible";
+import { PfeCollapse } from "../pfe-collapse";
 
-const stories = storiesOf("Collapsible", module);
+const stories = storiesOf("Collapse", module);
 
 stories.addDecorator(storybookBridge.withKnobs);
 
 const template = (data = {}) => {
-  return tools.component(PfeCollapsible.tag, data.prop, data.slots);
+  return tools.component(PfeCollapse.tag, data.prop, data.slots);
 };
 
-stories.add(PfeCollapsible.tag,  () => {
+stories.add(PfeCollapse.tag,  () => {
   let config = {};
 
-  const props = PfeCollapsible.properties;
-  const slots = PfeCollapsible.slots;
+  const props = PfeCollapse.properties;
+  const slots = PfeCollapse.slots;
 
   config.slots = [];
 
   config.slots.push({
     content:
-      tools.component("pfe-collapsible-toggle", {}, [
+      tools.component("pfe-collapse-toggle", {}, [
         {
           content: tools.customTag({
             tag: "h3",
@@ -30,7 +30,7 @@ stories.add(PfeCollapsible.tag,  () => {
           })
         }
       ]) +
-      tools.component("pfe-collapsible-panel", {}, [
+      tools.component("pfe-collapse-panel", {}, [
         {
           content: tools.autoContent(5, 3)
         }

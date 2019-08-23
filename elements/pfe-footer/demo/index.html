@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PatternFly Element | pfe-footer Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <style>
+    pfe-footer { margin-bottom: 4em; }
+    </style>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <link href="../pfe-footer-lightdom.css" rel="stylesheet" />
+    <link href="http://overpass-30e2.kxcdn.com/overpass.css" rel="stylesheet" />
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../pfe-footer.umd.js'])</script>
+  </head>
+  <body unresolved>
+    <h1>&lt;pfe-footer&gt;</h1>
+    <pfe-footer role="contentinfo" pfe-variant="gray" pfe-layout="left-aligned">
+      <section slot="pfe-footer-info">
+        <pfe-collapse>
+          <pfe-collapse-toggle>
+            <h3>Collapse Toggle</h3>
+          </pfe-collapse-toggle>
+          <pfe-collapse-panel>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </pfe-collapse-panel>
+        </pfe-collapse>
+        <h2>About</h2>
+        <p>Red Hat's Customer Portal Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel sapien ut metus pharetra commodo. Curabitur convallis ipsum in turpis gravida luctus. Vestibulum sapien massa, mollis vel augue et, dictum feugiat nibh. Nulla sed velit in nunc congue iaculis. Cras convallis non justo eu tincidunt. Aenean non pellentesque tortor. Morbi id feugiat arcu. Praesent aliquet nibh turpis, vel varius est lobortis nec.</p>
+        <ul>
+          <li><a href="/subscription-value">Red Hat Subscription Value</a></li>
+          <li><a href="https://www.redhat.com/about/">About Red Hat</a></li>
+          <li><a href="https://jobs.redhat.com">Red Hat Jobs</a></li>
+        </ul>
+      </section>
+      <div pfe-footer-links>
+        <section>
+          <h2>Quick Links</h2>
+          <ul>
+            <li><a href="/downloads/">Downloads</a></li>
+            <li><a href="/management/subscriptions/#active">Subscriptions</a></li>
+            <li><a href="/support">Support Cases</a></li>
+            <li><a href="/support/customer-service">Customer Service</a></li>
+            <li><a href="/documentation">Product Documentation</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2>Help</h2>
+          <ul>
+            <li><a href="/support/contact/">Contact Us</a></li>
+            <li><a href="/articles/33844">Customer Portal FAQ</a></li>
+            <li><a href="/help/login_assistance">Log-in Assistance</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2>Site Info</h2>
+          <ul>
+            <li><a href="/trust">Trust Red Hat</a></li>
+            <li><a href="/help/browsers/">Browser Support Policy</a></li>
+            <li><a href="/help/accessibility/">Accessibility</a></li>
+            <li><a href="/recognition/">Awards and Recognition</a></li>
+            <li><a href="/help/colophon/">Colophon</a></li>
+          </ul>
+        </section>
+      </div>
+      <section slot="pfe-footer-legal">
+        <small>Copyright &copy;2019 Red Hat, Inc.</small>
+        <ul>
+          <li><a href="https://www.redhat.com/en/about/privacy-policy">Privacy Statement</a></li>
+          <li><a href="/help/terms/">Customer Portal Terms of Use</a></li>
+          <li><a href="https://www.redhat.com/en/about/all-policies-guidelines">All Policies and Guidelines</a></li>
+        </ul>
+      </section>
+    </pfe-footer>
+
+    <pfe-footer role="contentinfo">
+      <section slot="pfe-footer-legal">
+        <small>Copyright &copy;2019 Red Hat, Inc.</small>
+        <ul>
+          <li><a href="/en/about/privacy-policy">Privacy Statement</a></li>
+          <li><a href="/help/terms/">Terms of Use</a></li>
+          <li><a href="/en/about/all-policies-guidelines">All Policies and Guidelines</a></li>
+        </ul>
+      </section>
+    </pfe-footer>
+  </body>
+</html>

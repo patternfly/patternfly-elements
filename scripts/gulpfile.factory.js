@@ -1,6 +1,6 @@
 module.exports = function factory({
-  elementName,
-  className,
+  version,
+  pfelement: { elementName, className },
   prebundle = []
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
@@ -118,11 +118,7 @@ module.exports = function factory({
 
   // Delete the temp directory
   task("clean", () => {
-    return src([
-      "*.{js,css,map}",
-      "!gulpfile.js",
-      "!rollup.config.js"
-    ], {
+    return src(["*.{js,css,map}", "!gulpfile.js", "!rollup.config.js"], {
       cwd: paths.compiled,
       read: false,
       allowEmpty: true
@@ -159,7 +155,7 @@ module.exports = function factory({
     })
       .pipe(
         replace(
-          /extends\s+PFElement\s+{/g,
+          /extends\s+P[Ff][Ee][A-z0-9_$]*\s+{/g,
           (classStatement, character, jsFile) => {
             // Extract the urls for template, style, and schema
             // -- Would prefer to do this by require'ing and asking it directly, but without
@@ -233,6 +229,10 @@ module.exports = function factory({
             }
 
             let template = classStatement;
+            template += `
+  static get version() {
+    return "${version}";
+  }`;
             if (cssResult || html) {
               template += `
 
@@ -261,24 +261,23 @@ module.exports = function factory({
       )
       .pipe(
         banner(
-          `/*\n * @license\n${fs
-            .readFileSync("LICENSE.txt", "utf8")
-            .split("\n")
-            .map(line => ` * ${line}\n`)
-            .join("")}*/\n\n`
+          `/*!
+ * PatternFly Elements: ${className} ${version}
+ * @license
+${fs
+  .readFileSync("LICENSE.txt", "utf8")
+  .split("\n")
+  .map(line => ` * ${line}\n`)
+  .join("")}*/\n\n`
         )
       )
       .pipe(dest(paths.compiled));
   });
 
   task("copy", () => {
-    return src([
-      "*.js",
-      `!${elementName}.js`
-    ], {
+    return src(["*.js", `!${elementName}.js`], {
       cwd: paths.source
-    })
-      .pipe(dest(paths.compiled));
+    }).pipe(dest(paths.compiled));
   });
 
   task("compile", () => {

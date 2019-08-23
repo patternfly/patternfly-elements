@@ -21,7 +21,8 @@ class PfeIconPanel extends PFElement {
   static get cascadingAttributes() {
     return {
       icon: "pfe-icon",
-      circled: "pfe-icon"
+      circled: "pfe-icon",
+      color: "pfe-icon"
     };
   }
 

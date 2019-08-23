@@ -23,6 +23,12 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
   border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
 }
 
+:host(:not([vertical])[pfe-tab-align="center"]) {
+  .tabs {
+    justify-content: center;
+  }
+}
+
 
 /// ===========================================================================
 /// VERTICAL ORIENTATION

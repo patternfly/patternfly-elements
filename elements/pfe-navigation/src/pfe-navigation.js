@@ -1,6 +1,5 @@
 import PFElement from "../pfelement/pfelement.js";
 import PfeAccordion from "../pfe-accordion/pfe-accordion.js";
-import { is } from "bluebird";
 
 if (!("path" in Event.prototype)) {
   Object.defineProperty(Event.prototype, "path", {
@@ -178,7 +177,7 @@ class PfeNavigationItem extends PFElement {
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
     this.toggle = this.toggle.bind(this);
-    
+
     this._init = this._init.bind(this);
     this._keydownHandler = this._keydownHandler.bind(this);
     this._suppressLink = this._suppressLink.bind(this);
@@ -199,7 +198,7 @@ class PfeNavigationItem extends PFElement {
 
     // Check for any nested navigation items
     this.nestedItems = [];
-    
+
     // If a light DOM tray exists, check for descendents
     if (this.tray) {
       this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll(`${this.tag}`)]);
@@ -493,7 +492,7 @@ class PfeNavigation extends PFElement {
   _resizeHandler(event) {
     // Set the visibility of items
     this._setVisibility(this.offsetWidth);
-    
+
     // Check what the active item is
     this._activeNavigationItems.forEach(item => {
       // If the item is open but not visible, update it to hidden
@@ -569,7 +568,7 @@ class PfeNavigation extends PFElement {
 
     // The overlay is open if any active items exist
     this.overlay = (this._activeNavigationItems.length > 0);
-    
+
     return;
   }
 
@@ -629,7 +628,7 @@ class PfeNavigation extends PFElement {
           item.parent = this._menuItem;
         });
       }
-  
+
       // Start by setting the visibility of the slots
       this._setVisibility(this.offsetWidth);
 

@@ -43,9 +43,9 @@
         </ul>
       </div>
       <!-- Site logo -->
-      <h2 slot="logo">
+      <h2 slot="logo" style="padding: 0 0 8px 0;line-height: 1;">
         <a href="https://redhat.com">
-          <img class="redhat-logo" src="https://static.redhat.com/libs/redhat/brand-assets/2.4.0/corp/logo--on-dark--200.png" class="screen" title="Red Hat" alt="Red Hat logo"/>
+          <img src="/profiles/rh/themes/redhatdotcom/img/logo.svg" class="screen" title="Red Hat" style="width: 135px; height: 100%;">
         </a>
       </h2>
       <!-- Search -->
@@ -69,18 +69,19 @@
               <pfe-navigation-item>
                 <h3 slot="trigger"><a href="#">Products</a></h3>
                 <div slot="tray" hidden>
-                  <div class="pfe-navigation-item__tray--container pfe-l--text-align--left">
-                    <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
-                      <div class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-3-col pfe-m-all-1-col-on-xs pfe-m-12-col">
+                  <div class="pfe-navigation-item__tray--container">
+                     <div class="pfe-nav--column-4--basic-tablet-breakpoint">
+                    <div class="column-1">
                         <div class="pfe-link-list">
-                          <h3 class="pfe-link-list--header">Platforms</a>
-                          </h3>
+                          <h3 class="pfe-link-list--header">Platforms</h3>
                           <ul class="pfe-link-list--group">
-                            <li class="pfe-link-list--group-item"><a href="#">Red Hat Enterprise Linux testing</a></li>
-                            <li class="pfe-link-list--group-item"><a href="#">Red Hat OpenShift</a></li>
-                            <li class="pfe-link-list--group-item"><a href="#">Red Hat OpenStack Platform</a></li>
-                            <li class="pfe-link-list--group-item"><a href="#">Red Hat Virtualization</a></li>
-                          </ul>
+                                <li class="pfe-link-list--group-item"><a href="#">Red Hat Enterprise Linux testing</a></li>
+                                <li class="pfe-link-list--group-item"><a href="#">Red Hat OpenShift</a></li>
+                                <li class="pfe-link-list--group-item"><a href="#">Red Hat OpenStack Platform</a></li>
+                                <li class="pfe-link-list--group-item"><a href="#">Red Hat Virtualization</a></li>
+                              </ul>
+                        </div>
+                        <div class="pfe-link-list">
                           <h3 class="pfe-link-list--header">Cloud computing</h3>
                           <ul class="pfe-link-list--group">
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat CloudForms</a></li>
@@ -92,11 +93,23 @@
                           </ul>
                         </div>
                         <div class="pfe-link-list">
+                          <h3 class="pfe-link-list--header">Testing column 1</h3>
+                          <ul class="pfe-link-list--group">
+                            <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                          </ul>
+                        </div>
+                    </div>
+                    <div class="column-2">
+                        <div class="pfe-link-list">
                           <h3 class="pfe-link-list--header">Integration</h3>
                           <ul class="pfe-link-list--group">
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat Data Virtualization</a></li>
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat Integration</a></li>
                           </ul>
+                      </div>
+                      <div class="pfe-link-list">
                           <h3 class="pfe-link-list--header">Automation and management</h3>
                           <ul class="pfe-link-list--group">
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat 3scale API Management</a></li>
@@ -105,7 +118,9 @@
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat Insights</a></li>
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat Satellite</a></li>
                           </ul>
-                        </div>
+                    </div>
+                </div>
+                    <div class="column-3">
                         <div class="pfe-link-list">
                           <h3 class="pfe-link-list--header">Application development</h3>
                           <ul class="pfe-link-list--group">
@@ -115,8 +130,18 @@
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat OpenShift</a></li>
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat Process Automation</a></li>
                           </ul>
-                        </div>
-                        <div class="pfe-link-list">
+                      </div>
+                      <div class="pfe-link-list">
+                        <h3 class="pfe-link-list--header">Testing column 3</h3>
+                        <ul class="pfe-link-list--group">
+                          <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                          <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                          <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                        </ul>
+                    </div>
+                      </div>
+                      <div class="column-4">
+                          <div class="pfe-link-list">
                           <h3 class="pfe-link-list--header">Storage</h3>
                           <ul class="pfe-link-list--group">
                             <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat Ceph Storage</a></li>
@@ -126,21 +151,19 @@
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat Hyperconverged</a></li>
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat OpenShift Container Storage</a></li>
                           </ul>
+                      </div>
                         </div>
-                      </div>
-                      <!-- <pfe-card style="height: 300px;" class="pfe-m-3-col">
-                        <h3>Promotional content</h3>
-                      </pfe-card> -->
+
                     </div>
-                    <div class="border-top pfe-l-grid pfe-m-gutters pfe-m-all-4-col pfe-l--text-align--left">
-                      <div class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-3-col pfe-m-all-1-col-on-xs pfe-m-12-col">
-                        <pfe-cta priority="primary" class="PFElement"><a href="#">View all products</a></pfe-cta>
-                        <pfe-cta><a href="#">Explore our portfolio</a></pfe-cta>
-                        <pfe-cta><a href="#">Buy products online</a></pfe-cta>
-                        <pfe-cta><a href="#">Subscription model</a></pfe-cta>
+                    <div class="border-top">
+                      <div class="pfe-nav--column-4--basic">
+                        <div class="pfe-align-vertical"><pfe-cta pfe-priority="primary" class="PFElement"><a href="#">View all products</a></pfe-cta></div>
+                        <div class="pfe-align-vertical"><pfe-cta class="PFElement"><a href="#">Explore our portfolio</a></pfe-cta></div>
+                        <div class="pfe-align-vertical"><pfe-cta class="PFElement"><a href="#">Buy products online</a></pfe-cta></div>
+                        <div class="pfe-align-vertical"><pfe-cta class="PFElement"><a href="#">Subscription model</a></pfe-cta></div>
                       </div>
                     </div>
-                  </div>
+                </div>
                 </div>
               </pfe-navigation-item>
             </li>
@@ -149,8 +172,8 @@
                 <h3 slot="trigger"><a href="#">Solutions</a></h3>
                 <div slot="tray" hidden>
                   <div class="pfe-navigation-item__tray--container">
-                      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
-                        <div class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-4-col pfe-m-all-1-col-on-xs pfe-m-12-col">
+                      <div class="pfe-nav--column-3--basic">
+                          <div class="column-1">
                           <div class="pfe-link-list">
                             <h3 class="pfe-link-list--header"><a href="#">Optimize the IT you have</a></h3>
                             <ul class="pfe-link-list--group">
@@ -160,12 +183,16 @@
                               <li class="pfe-link-list--group-item"><a href="#">Linux</a></li>
                               <li class="pfe-link-list--group-item"><a href="#">Virtualization</a></li>
                             </ul>
+                        </div>
+                            <div class="pfe-link-list">
                             <h3 class="pfe-link-list--header"><a href="#">Integrate apps, data and processes</a></h3>
                             <ul class="pfe-link-list--group">
                               <li class="pfe-link-list--group-item"><a href="#">APIs</a></li>
                               <li class="pfe-link-list--group-item"><a href="#">Integration</a></li>
                             </ul>
                           </div>
+                          </div>
+                          <div class="column-2">
                           <div class="pfe-link-list">
                             <h3 class="pfe-link-list--header"><a href="#">Add and manage cloud infrastructure</a></h3>
                             <ul class="pfe-link-list--group">
@@ -173,12 +200,16 @@
                               <li class="pfe-link-list--group-item"><a href="#">Cloud-native apps</a></li>
                               <li class="pfe-link-list--group-item"><a href="#">OpenStack</a></li>
                             </ul>
+                        </div>
+                            <div class="pfe-link-list">
                             <h3 class="pfe-link-list--header"><a href="#">Automate and manage IT</a></h3>
                             <ul class="pfe-link-list--group">
                               <li class="pfe-link-list--group-item"><a href="#">Automation</a></li>
                               <li class="pfe-link-list--group-item"><a href="#">IT management</a></li>
                             </ul>
                           </div>
+                      </div>
+                      <div class="column-3">
                           <div class="pfe-link-list">
                             <h3 class="pfe-link-list--header"><a href="#">Build more modern applications</a></h3>
                             <ul class="pfe-link-list--group">
@@ -188,6 +219,8 @@
                               <li class="pfe-link-list--group-item"><a href="#">Microservices</a></li>
                               <li class="pfe-link-list--group-item"><a href="#">Middleware</a></li>
                             </ul>
+                        </div>
+                        <div class="pfe-link">
                             <h3 class="pfe-link-list--header"><a href="#">Solutions by industry</a></h3>
                             <ul class="pfe-link-list--group">
                               <li class="pfe-link-list--group-item"><a href="#">Financial services</a></li>
@@ -196,14 +229,20 @@
                               <li class="pfe-link-list--group-item"><a href="#">Telecommunications</a></li>
                             </ul>
                           </div>
-
+                          <div class="pfe-link-list">
+                            <h3 class="pfe-link-list--header">Testing column 3</h3>
+                            <ul class="pfe-link-list--group">
+                              <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                            </ul>
                         </div>
-
                       </div>
-                      <div class="border-top pfe-l-grid pfe-m-gutters pfe-m-4-col pfe-l--text-align--left">
-                        <div class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-3-col-on-lg pfe-m-all-6-col pfe-m-all-1-col-on-xs pfe-m-12-col">
-                          <pfe-cta priority="primary" class="PFElement"><a href="#">View all products</a></pfe-cta>
-                          <pfe-cta><a href="#">Explore our portfolio</a></pfe-cta>
+                      </div>
+                      <div class="border-top">
+                        <div class="pfe-nav--column-4--basic">
+                          <div><pfe-cta pfe-priority="primary" class="PFElement"><a href="#">View all products</a></pfe-cta></div>
+                          <div class="pfe-align-vertical"><pfe-cta><a href="#">Explore our portfolio</a></pfe-cta></div>
                         </div>
                       </div>
                   </div>
@@ -215,8 +254,8 @@
                 <h3 slot="trigger"><a href="/support">Services &amp; support</a></h3>
                 <div slot="tray" hidden>
                     <div class="pfe-navigation-item__tray--container">
-                        <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
-                          <div class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-3-col pfe-m-all-1-col-on-xs pfe-m-12-col">
+                          <div class="pfe-nav--column-4--basic" >
+                              <div class="column-1">
                             <div class="pfe-link-list">
                               <h3 class="pfe-link-list--header"><a href="#">Support</a></h3>
                               <ul class="pfe-link-list--group">
@@ -229,6 +268,16 @@
                               </ul>
                             </div>
                             <div class="pfe-link-list">
+                              <h3 class="pfe-link-list--header">Testing column 1</h3>
+                              <ul class="pfe-link-list--group">
+                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                                <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                              </ul>
+                          </div>
+                        </div>
+                        <div class="column-2">
+                            <div class="pfe-link-list">
                               <h3 class="pfe-link-list--header"><a href="#">Services</a></h3>
                               <ul class="pfe-link-list--group">
                                 <li class="pfe-link-list--group-item"><a href="#">Consulting</a></li>
@@ -236,6 +285,16 @@
                                 <li class="pfe-link-list--group-item"><a href="#">Technical Account Management</a></li>
                               </ul>
                             </div>
+                            <div class="pfe-link-list">
+                              <h3 class="pfe-link-list--header">Testing column 2</h3>
+                              <ul class="pfe-link-list--group">
+                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                                <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                              </ul>
+                          </div>
+                        </div>
+                        <div class="column-3">
                             <div class="pfe-link-list">
                               <h3 class="pfe-link-list--header"><a href="#">Training and certification</a></h3>
                               <ul class="pfe-link-list--group">
@@ -250,6 +309,8 @@
                                 <li class="pfe-link-list--group-item"><a href="#">Contact Training & certification</a></li>
                               </ul>
                             </div>
+                        </div>
+                        <div class="column-4">
                             <div class="pfe-link-list">
                               <h3 class="pfe-link-list--header">Featured</h3>
                               <ul class="pfe-link-list--group">
@@ -261,14 +322,20 @@
                                 <li class="pfe-link-list--group-item"><a href="#">RHCE</a></li>
                               </ul>
                             </div>
-
+                            <div class="pfe-link-list">
+                              <h3 class="pfe-link-list--header">Testing column 4</h3>
+                              <ul class="pfe-link-list--group">
+                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                                <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                              </ul>
                           </div>
+                        </div>
+
 
                         </div>
-                        <div class="border-top pfe-l-grid pfe-m-gutters pfe-m-all-4-col pfe-l--text-align--left">
-                          <div class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-4-col pfe-m-all-1-col-on-xs pfe-m-12-col">
-                            <pfe-cta priority="primary" class="PFElement"><a href="#">Explore all services &amp; support</a></pfe-cta>
-                          </div>
+                        <div class="border-top">
+                            <pfe-cta pfe-priority="primary" class="PFElement"><a href="#">Explore all services &amp; support</a></pfe-cta>
                         </div>
                     </div>
                 </div>
@@ -279,9 +346,9 @@
                 <h3 slot="trigger"><a href="/resources">Resources</a></h3>
                 <div slot="tray" hidden>
                     <div class="pfe-navigation-item__tray--container">
-                        <div class="pfe-l-grid pfe-m-gutters">
-                          <div class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters">
-                            <div class="pfe-link-list pfe-l-grid__item pfe-m-6-col">
+                        <div class="pfe-nav--column-3--first-wide">
+                            <div class="column-1">
+                            <div class="pfe-link-list">
                               <h3 class="pfe-link-list--header">Articles</h3>
                               <ul class="pfe-link-list--group">
                                 <li class="pfe-link-list--group-item"><a href="#">Why choose Red Hat for containers?</a></li>
@@ -291,7 +358,9 @@
                                 <li class="pfe-link-list--group-item"><a href="#">What is Integration?</a></li>
                               </ul>
                             </div>
-                            <div class="pfe-link-list pfe-l-grid__item pfe-m-3-col">
+                        </div>
+                        <div class="column-2">
+                            <div class="pfe-link-list">
                               <h3 class="pfe-link-list--header">Success stories</h3>
                               <ul class="pfe-link-list--group">
                                 <li class="pfe-link-list--group-item"><a href="#">UPS</a></li>
@@ -301,7 +370,17 @@
                                 <li class="pfe-link-list--group-item"><a href="#">Lenovo</a></li>
                               </ul>
                             </div>
-                            <div class="pfe-link-list pfe-l-grid__item pfe-m-3-col">
+                            <div class="pfe-link-list">
+                              <h3 class="pfe-link-list--header">Testing column 2</h3>
+                              <ul class="pfe-link-list--group">
+                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                                <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                              </ul>
+                          </div>
+                        </div>
+                        <div class="column-3">
+                            <div class="pfe-link-list">
                               <h3 class="pfe-link-list--header"><a href="#">More to explore</a></h3>
                               <ul class="pfe-link-list--group">
                                 <li class="pfe-link-list--group-item"><a href="#">Blogs</a></li>
@@ -310,14 +389,14 @@
                                 <li class="pfe-link-list--group-item"><a href="#">Newsroom</a></li>
                               </ul>
                             </div>
-                          </div>
+                        </div>
 
                         </div>
-                        <div class="border-top pfe-l-grid pfe-m-gutters pfe-l--text-align--left">
-                          <div class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-1-col-on-xs pfe-m-12-col">
-                            <pfe-cta priority="primary" class="PFElement pfe-l-grid__item pfe-m-6-col"><a href="#">Explore all topics</a></pfe-cta>
-                            <pfe-cta class="PFElement pfe-l-grid__item pfe-m-3-col"><a href="#">Browse all success stories</a></pfe-cta>
-                            <pfe-cta class="PFElement pfe-l-grid__item pfe-m-3-col"><a href="#">Search resource library</a></pfe-cta>
+                        <div class="border-top">
+                          <div class="pfe-nav--column-3--first-wide">
+                            <div class="column-1"><div class="pfe-align-vertical"><pfe-cta pfe-priority="primary" class="PFElement"><a href="#">Explore all topics</a></pfe-cta></div></div>
+                            <div class="pfe-align-vertical"><pfe-cta class="PFElement"><a href="#">Browse all success stories</a></pfe-cta></div>
+                            <div class="pfe-align-vertical"><pfe-cta class="PFElement"><a href="#">Search resource library</a></pfe-cta></div>
                           </div>
                         </div>
                     </div>
@@ -329,7 +408,8 @@
                 <h2 slot="trigger"><a href="/open-source">Red Hat &amp; open source</a></h2>
                     <div slot="tray" hidden>
                         <div class="pfe-navigation-item__tray--container">
-                          <div class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-6-col pfe-m-all-4-col-on-md">
+                          <div class="pfe-nav--column-3--basic">
+                              <div class="column-1">
                             <div class="pfe-link-list">
                               <h3 class="pfe-link-list--header">About us</h3>
                               <ul class="pfe-link-list--group">
@@ -340,6 +420,16 @@
                               </ul>
                             </div>
                             <div class="pfe-link-list">
+                              <h3 class="pfe-link-list--header">Testing column 1</h3>
+                              <ul class="pfe-link-list--group">
+                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                                <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                              </ul>
+                          </div>
+                        </div>
+                        <div class="column-2">
+                            <div class="pfe-link-list">
                               <h3 class="pfe-link-list--header">Company details</h3>
                               <ul class="pfe-link-list--group">
                                 <li class="pfe-link-list--group-item"><a href="#">Newsroom</a></li>
@@ -349,6 +439,8 @@
                                 <li class="pfe-link-list--group-item"><a href="#">Jobs</a></li>
                               </ul>
                             </div>
+                        </div>
+                        <div class="column-3">
                             <div class="pfe-link-list">
                               <h3 class="pfe-link-list--header">Open source commitment</h3>
                               <ul class="pfe-link-list--group">
@@ -362,6 +454,7 @@
                                 <li class="pfe-link-list--group-item"><a href="#">Opensource.com</a></li>
                               </ul>
                             </div>
+                        </div>
                           </div>
                         </div>
                     </div>
@@ -557,7 +650,7 @@
         <h2>Complement band, layout classes</h2>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
       </header>
-      <article class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-6-col">
+      <article class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col">
         <pfe-card>
           <h3>Lorem ipsum</h3>
           <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>

@@ -1,4 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
+@import "../../pfe-layouts/src/layouts/_grid";
 
 $LOCAL: navigation-item;
 
@@ -13,9 +14,35 @@ $LOCAL: navigation-item;
         text-decoration: none;
     }
     &:focus {
-        outline: none;
-        color: var(--pfe-broadcasted--color--ui-link--focus, #{map-get($pfe-colors, 'ui-link--focus')});
+       outline-offset: 1px;
+       outline-style: dotted;
+       outline-width: 1px;
+       outline-color: var(--pfe-broadcasted--color--ui-link--focus, #{map-get($pfe-colors, 'ui-link--focus')});
     }
+}
+
+%base-col-grid {
+    @extend .pfe-l-grid;
+    @extend .pfe-m-gutters;
+    @extend .pfe-m-all-6-col;
+}
+.pfe-base-col-grid {
+    @extend .pfe-l-grid;
+    @extend .pfe-m-gutters;
+    @extend .pfe-m-all-6-col;
+}
+.pfe-base-3-col-item {
+    @extend .pfe-l-grid__item;
+    @extend .pfe-m-3-col-on-md;
+}
+.pfe-6-3-col-item {
+    @extend .pfe-base-3-col-item;
+    @extend .pfe-m-6-col-on-sm;
+    // @extend .pfe-m-startat-8-col-on-sm;
+}
+.pfe-base-6-col-item {
+    @extend .pfe-l-grid__item;
+    @extend .pfe-m-6-col;
 }
 
 // Edge styles
@@ -89,45 +116,161 @@ pfe-navigation-item [slot="trigger"] a,
     overflow-y: scroll;
 
     // This class is added manually inside the tray on the light DOM content
-    &--container {
-        max-width: var(--pfe-navigation--Width);
-        margin: 0 auto;
+    // &--container {
+    //     max-width: var(--pfe-navigation--Width);
+    //     margin: 0 auto;
+    // }
+}
+
+@for $col from 1 through 4 {
+  .column-#{$col} {
+    grid-area: column-#{$col};
+  }
+}
+[class^=column] {
+    display: contents;
+    @media (min-width: 1200px) {
+        display: block;
+    }
+}
+// 4 columns
+.pfe-nav--column-4--basic {
+    display: grid;
+    // display: -ms-grid;
+    grid-gap: 16px;
+    @media (min-width: 700px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-areas:
+       "column-1 column-2 column-3 column-4";
     }
 }
 
+.pfe-nav--column-4--basic-tablet-breakpoint {
+    display: grid;
+    // display: -ms-grid;
+    grid-gap: 16px;
+    @media (min-width: 700px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: 992px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-areas:
+       "column-1 column-2 column-3 column-4";
+    }
+}
+
+//opt in
+.pfe-nav--column-3--basic {
+    display: grid;
+    // display: -ms-grid;
+    grid-gap: 16px;
+    @media (min-width: 700px) and (max-width: 991px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: 992px) and (max-width: 1199px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-areas:
+       "column-1 column-2 column-3";
+    }
+}
+
+//(opt-in)
+.pfe-nav--column-3--first-wide {
+    display: grid;
+    // display: -ms-grid;
+    grid-gap: 16px;
+    @media (min-width: 560px) and (max-width: 991px) {
+        grid-template-columns: 2fr 1fr;
+        grid-gap: 32px;
+    }
+    @media (min-width: 768px) and (max-width: 1199px) {
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-gap: 16px;
+    }
+    @media (min-width: 1200px) {
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-areas:
+       "column-1 column-2 column-3";
+    }
+}
+
+
+
+
+
+
+
+
+// .pfe-navigation-4-col-tray-standard {
+//     @extend %base-col-grid;
+//     @extend .pfe-m-all-3-col-on-lg;
+// }
+//
+// .pfe-navigation-3-col-tray {
+//     @extend %base-col-grid;
+//     @extend .pfe-m-all-4-col-on-lg;
+// }
+
+@for $col from 1 through 4 {
+  .column-#{$col} > * {
+    &:not(:first-child) {
+        @media (min-width: 1200px) {
+            padding-top: 16px;
+        }
+    }
+  }
+}
+
+
+
 pfe-navigation .pfe-link-list {
     &--header {
-        margin: 0 0 8px;
-        font-size: 14px;
+        margin: 0;
+        font-size: 16px;
         font-weight: 400;
         line-height: 1.75;
-        &:not(:nth-of-type(1)) {
-            margin-top: 24px;
-        }
+        // &:not(:nth-of-type(1)) {
+        //     margin-top: 24px;
+        //     border: 2px solid black;
+        //     padding-top: 16px;
+        // }
         a {
           color: #151515;
           text-decoration: underline;
-          &:visited {
-             color: var(--pfe-broadcasted--color--ui-link--visited, #{map-get($pfe-colors, 'ui-link--visited')});
-          }
           &:hover {
-             color: var(--pfe-broadcasted--color--ui-link--hover, #{map-get($pfe-colors, 'ui-link--hover')});
-             text-decoration: underline;
+             color: #151515;
+             text-decoration: none;
           }
           &:focus {
-             outline: none;
-             color: var(--pfe-broadcasted--color--ui-link--focus, #{map-get($pfe-colors, 'ui-link--focus')});
+             outline-offset: 1px;
+             outline-style: dotted;
+             outline-width: 1px;
+             outline-color: var(--pfe-broadcasted--color--ui-link--focus, #{map-get($pfe-colors, 'ui-link--focus')});
           }
        }
     }
     &--group {
+        list-style: none;
+        padding: 0;
         &-item > a {
             @extend %link-styles;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 2;
         }
     }
 }
+
+
+
 
 :host {
   display: block;
@@ -143,4 +286,8 @@ pfe-navigation .pfe-link-list {
   border-top: 1px solid lightgray;
   padding-top: 40px;
   margin-top: 40px !important;
+}
+.pfe-align-vertical {
+    display: flex;
+    align-items: center;
 }

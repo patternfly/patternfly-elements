@@ -326,13 +326,6 @@ class PfeNavigationMain extends PFElement {
   constructor() {
     super(PfeNavigationMain);
 
-    // Get all the nested navigation items
-    this.navItems = this.querySelectorAll("pfe-navigation-item");
-    // Find the first nested element
-    this.first = this.navItems.item(0);
-    // Find the last nested element
-    this.last = this.navItems.item(this.navItems.length - 1);
-
     this._init = this._init.bind(this);
   }
 
@@ -350,6 +343,13 @@ class PfeNavigationMain extends PFElement {
   }
 
   _init() {
+    // Get all the nested navigation items
+    this.navItems = this.querySelectorAll("pfe-navigation-item");
+    // Find the first nested element
+    this.first = this.navItems.item(0);
+    // Find the last nested element
+    this.last = this.navItems.item(this.navItems.length - 1);
+
     // Ensure the necessary a11y is set
     this.setAttribute("role", "navigation");
     this.setAttribute("aria-label", "Main");

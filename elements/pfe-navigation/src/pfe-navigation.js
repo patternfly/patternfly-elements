@@ -598,17 +598,30 @@ class PfeNavigation extends PFElement {
 
       // If the slot exists, set attribute based on supported breakpoints
       if (this.slots[label] && this.slots[label].nodes.length > 0) {
-        if (width > start && (!end || (end && width < end))) {
+        if (width >= start && (!end || (end && width <= end))) {
           isVisible = true;
         }
 
         this.slots[label].nodes.forEach(node => {
-          if (label !== "main") {
-            node.visible = isVisible;
-          } else {
-            isVisible ? node.removeAttribute("show_content") : node.setAttribute("show_content", "");
-            this._menuItem.visible = isVisible;
-            node.navItems.forEach(item => isVisible ? item.removeAttribute("parent_hidden") : item.setAttribute("parent_hidden", ""));
+          switch(label) {
+            case "main":
+                isVisible ? node.removeAttribute("show_content") : node.setAttribute("show_content", "");
+                this._menuItem.visible = isVisible;
+                node.navItems.forEach(item => isVisible ? item.removeAttribute("parent_hidden") : item.setAttribute("parent_hidden", ""));
+                break;
+            case (label.match(/^mobile/) || {}).input:
+              if (isVisible) {
+                // Set an attribute to show this region (strip the mobile prefix)
+                this._menuItem.setAttribute(`show_${label.slice(7)}`, "");
+                node.removeAttribute("hidden");
+              } else {
+                this._menuItem.removeAttribute(`show_${label.slice(7)}`);
+                node.setAttribute("hidden", "");
+              }
+              break;
+            default:
+              node.visible = isVisible;
+              break;
           }
         });
       }

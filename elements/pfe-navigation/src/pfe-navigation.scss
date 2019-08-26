@@ -86,20 +86,6 @@ $variables: (
   max-height: pfe-local(MinHeight);
 }
 
-::slotted([slot="mobile-login"]),
-::slotted([slot="mobile-language"]) {
-  color: pfe-radio(color, ui-link);
-  text-decoration: pfe-radio(link, text-decoration);
-}
-
-::slotted([slot="mobile-menu--label"]) {
-  font-family: pfe-var(font-family);
-  font-size:   pfe-local(FontSize);
-  font-weight: pfe-local(FontWeight);
-  color: pfe-local(Color);
-  margin-bottom: 0;
-}
-
 @each $icon in (bento, user, globe, search, menu) {
   [pfe-icon="#{$icon}"],
   ::slotted([pfe-icon="#{$icon}"]) {
@@ -119,6 +105,38 @@ $variables: (
     }
 
   }
+}
+
+::slotted([slot="mobile-login"]) {
+  --pfe-navigation--icon: #{map-get($icons, user--as-link)};
+}
+
+::slotted([slot="mobile-language"]) {
+  --pfe-navigation--icon: #{map-get($icons, globe--as-link)};
+}
+
+::slotted([slot="mobile-login"]),
+::slotted([slot="mobile-language"]) {
+  color: pfe-radio(color, ui-link);
+  text-decoration: pfe-radio(link, text-decoration);
+  &::before {
+    @include pfe-icon(
+      $path: #{pfe-local($cssvar: icon)},
+      $display: inline-block
+    ) {
+      content: " ";
+    }
+    
+    margin-right: calc(#{pfe-var(container-spacer)} / 2);
+  }
+}
+
+::slotted([slot="mobile-menu--label"]) {
+  font-family: pfe-var(font-family);
+  font-size:   pfe-local(FontSize);
+  font-weight: pfe-local(FontWeight);
+  color: pfe-local(Color);
+  margin-bottom: 0;
 }
 
 .pfe-navigation {
@@ -193,37 +211,21 @@ $variables: (
     }
     &--mobile {
       display: grid;
-      grid-gap: #{pfe-var(container-spacer)};
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       height: 100%;
-      &-search {
-        @media (min-width: #{pfe-breakpoint(lg)}) {
-          display: none;
-        }
-      }
-      &--columns {
-        display: grid;
+      [show_search] &,
+      [show_login][show_language] & {
         grid-gap: #{pfe-var(container-spacer)};
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        @media (min-width: #{pfe-breakpoint(md)}) {
-          display: none;
-        }
       }
-      &--item {
-        &[pfe-icon="user"] {
-          --pfe-navigation--icon: #{map-get($icons, user--as-link)};
-        }
-        &[pfe-icon="globe"] {
-          --pfe-navigation--icon: #{map-get($icons, globe--as-link)};
-        }
+      [show_search] &-search,
+      &-main,
+      [show_login][show_language] &-item {
+        display: block;
       }
-    }
-    &--icon {
-      @include pfe-icon(
-        $path: #{pfe-local($cssvar: icon)},
-        $display: inline-block
-      );
-      
-      margin-right: calc(#{pfe-var(container-spacer)} / 2);
+      &-search,
+      &-main {
+        grid-column: 1 / -1;
+      }
     }
   }
   &__utility {

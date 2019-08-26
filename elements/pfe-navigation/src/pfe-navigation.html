@@ -14,71 +14,18 @@
         <div slot="tray" hidden>
           <div class="pfe-navigation__main--mobile">
             <slot name="mobile-search" class="pfe-navigation__main--mobile-search"></slot>
-            <slot></slot>
-            <div class="pfe-navigation__main--mobile--columns">
-              <span class="pfe-navigation__main--mobile--item" pfe-icon="user">
-                <span class="pfe-navigation__main--icon"></span>
-                <slot name="mobile-login"></slot>
-              </span>
-              <span class="pfe-navigation__main--mobile--item" pfe-icon="globe">
-                <span class="pfe-navigation__main--icon"></span>
-                <slot name="mobile-language"></slot>
-              </span>
-            </div>
+            <slot class="pfe-navigation__main--mobile-main"></slot>
+            <slot name="mobile-login" class="pfe-navigation__main--mobile-item" pfe-icon="user"></slot>
+            <slot name="mobile-language" class="pfe-navigation__main--mobile-item" pfe-icon="globe"></slot>
           </div>
         </div>
       </pfe-navigation-item>
     </div>
     <div class="pfe-navigation__utility">
-      <!-- pfe-navigation-item pfe-icon="menu" tabindex="-1">
-        <h2 slot="trigger">Menu</h2>
-        <div slot="tray" hidden>
-          <div class="pfe-navigation__utility--mobile">
-            <div class="pfe-navigation__utility--mobile--top">
-              <slot name="mobile-search"></slot>
-            </div>
-            <slot name="mobile-menu"></slot>
-            <div class="pfe-navigation__utility--mobile--columns">
-              <a class="pfe-navigation__utility--mobile--item" connect-to="mobile-login">
-                <svg class="pfe-navigation__utility--mobile--icon icon--user" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="21px" height="20px" viewBox="0 -1 21 20" xml:space="preserve">
-                  <g stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
-                    <g>
-                      <path d="M0,19 C0,13.75 4.25,9.5 9.5,9.5 C14.75,9.5 19,13.75 19,19"></path>
-                      <circle cx="9.5" cy="4.75" r="4.75"></circle>
-                    </g>
-                  </g>
-                </svg>
-                <slot name="mobile-login"></slot>
-                <span id="pfe-navigation--mobile-login"></span>
-              </a>
-              <a class="pfe-navigation__utility--mobile--item" connect-to="mobile-language">
-                <svg class="pfe-navigation__utility--mobile--icon icon--globe" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="21px" height="21px" viewBox="-1 -1 21 21" xml:space="preserve">
-                  <g stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g>
-                      <circle cx="9.5" cy="9.5" r="9.5"></circle>
-                      <ellipse cx="9.5" cy="9.5" rx="4.75" ry="9.5"></ellipse>
-                      <path d="M9.5,0 L9.5,19"></path>
-                      <path d="M1,14 L18,14"></path>
-                      <path d="M0,9.5 L19,9.5"></path>
-                      <path d="M1,5 L18,5"></path>
-                    </g>
-                  </g>
-                </svg>
-                <slot name="mobile-language"></slot>
-                <span id="pfe-navigation--mobile-language"></span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </pfe-navigation-item-->
       <slot name="language"></slot>
-      <!-- <div id="pfe-navigation--language" class="pfe-navigation__utility-links"></div> -->
       <slot name="search"></slot>
-      <!-- <div id="pfe-navigation--search" class="pfe-navigation__utility-links"></div> -->
       <slot name="login"></slot>
-      <!-- <div id="pfe-navigation--login" class="pfe-navigation__utility-links"></div> -->
       <slot name="site-switcher"></slot>
-      <!-- <div id="pfe-navigation--site-switcher" class="pfe-navigation__utility-links"></div> -->
     </div>
   </div>
   <div class="pfe-navigation__end" hidden tabindex="-1"></div>

@@ -4,7 +4,7 @@
     "className": "PFElement",
     "elementName": "pfelement"
   },
-  "version": "1.0.0-prerelease.19",
+  "version": "1.0.0-prerelease.21",
   "publishConfig": {
     "access": "public"
   },
@@ -39,6 +39,5 @@
     }
   ],
   "license": "MIT",
-  "generator-pfelement-version": "0.3.4",
-  "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
+  "generator-pfelement-version": "0.3.4"
 }

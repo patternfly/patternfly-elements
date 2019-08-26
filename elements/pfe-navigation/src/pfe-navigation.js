@@ -179,7 +179,7 @@ class PfeNavigationItem extends PFElement {
     this.toggle = this.toggle.bind(this);
 
     this._init = this._init.bind(this);
-    this._keydownHandler = this._keydownHandler.bind(this);
+    this._keyupHandler = this._keyupHandler.bind(this);
     this._suppressLink = this._suppressLink.bind(this);
     this._navigateToUrl = this._navigateToUrl.bind(this);
     this._directLinkHandler = this._directLinkHandler.bind(this);
@@ -223,7 +223,7 @@ class PfeNavigationItem extends PFElement {
     this.trigger.removeEventListener("slotchange", this._init);
 
     if (this.tray) {
-      this.removeEventListener("keydown", this._keydownHandler);
+      this.removeEventListener("keyup", this._keyupHandler);
 
       this._trigger.removeEventListener("click", this.toggle);
       if (this.directLink) {
@@ -231,7 +231,7 @@ class PfeNavigationItem extends PFElement {
       }
     } else {
       this._trigger.removeEventListener("click", this._navigateToUrl);
-      this._trigger.removeEventListener("keydown", this._directLinkHandler);
+      this._trigger.removeEventListener("keyup", this._directLinkHandler);
     }
   }
 
@@ -243,7 +243,7 @@ class PfeNavigationItem extends PFElement {
       // Toggle the navigation when the trigger is clicked
       this._trigger.addEventListener("click", this.toggle);
       // Attaching to the parent element allows the exit key to work inside the tray too
-      this.addEventListener("keydown", this._keydownHandler);
+      this.addEventListener("keyup", this._keyupHandler);
 
       // Turn off the fallback link
       if (this.directLink) {
@@ -253,7 +253,7 @@ class PfeNavigationItem extends PFElement {
     } else {
       this.linkUrl = this.directLink ? this.directLink.href : "#";
       this._trigger.addEventListener("click", this._navigateToUrl);
-      this._trigger.addEventListener("keydown", this._directLinkHandler);
+      this._trigger.addEventListener("keyup", this._directLinkHandler);
     }
   }
 
@@ -267,7 +267,8 @@ class PfeNavigationItem extends PFElement {
   }
 
   _directLinkHandler(event) {
-    switch (event.key) {
+    let key = event.key || event.keyCode;
+    switch (key) {
       case "Spacebar":
       case "Enter":
       case " ":
@@ -278,9 +279,9 @@ class PfeNavigationItem extends PFElement {
     }
   }
 
-  _keydownHandler(event) {
-    // @TODO need to add fallback key mappings for other browsers
-    switch (event.key) {
+  _keyupHandler(event) {
+    let key = event.key || event.keyCode;
+    switch (key) {
       case "Spacebar":
       case "Enter":
       case " ":
@@ -291,6 +292,7 @@ class PfeNavigationItem extends PFElement {
         break;
       case "Esc":
       case "Escape":
+      case 27:
         this.close(event);
         this.focus();
         break;

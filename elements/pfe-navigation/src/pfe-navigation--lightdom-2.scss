@@ -108,6 +108,16 @@ pfe-navigation-item [slot="trigger"] a,
     @extend %link-styles;
 }
 
+//accordion styles inside tertiary
+pfe-navigation-main pfe-navigation-item [slot="trigger"] {
+     font-size: 18px;
+     font-weight: normal;
+     margin: 0;
+     @media (min-width: 1200px){
+         font-size: 14px;
+     }
+}
+
 // This class is added by the shadow DOM or shady css
 .pfe-navigation-item__tray {
     padding: #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})};
@@ -116,10 +126,18 @@ pfe-navigation-item [slot="trigger"] a,
     overflow-y: scroll;
 
     // This class is added manually inside the tray on the light DOM content
-    // &--container {
-    //     max-width: var(--pfe-navigation--Width);
-    //     margin: 0 auto;
-    // }
+    &--container {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        min-height: 200px;
+        width: 100%;
+
+        @media (min-width: 1200px) {
+            max-width: var(--pfe-navigation--Width, 1140px);
+            margin: 0 auto;
+        }
+    }
 }
 
 @for $col from 1 through 4 {
@@ -133,15 +151,29 @@ pfe-navigation-item [slot="trigger"] a,
         display: block;
     }
 }
+.pfe-nav--column-3--basic,
+.pfe-nav--column-3--first-wide,
+.pfe-nav--column-4--basic,
+.pfe-nav--column-4--basic-tablet-breakpoint {
+    @media (min-width: 650px) {
+        column-count: 2;
+        column-gap: 32px;
+        flex: 1;
+    }
+}
+
 // 4 columns
 .pfe-nav--column-4--basic {
-    display: grid;
-    // display: -ms-grid;
-    grid-gap: 16px;
-    @media (min-width: 700px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    // display: grid;
+    // // display: -ms-grid;
+    // grid-gap: 16px;
+    // @media (min-width: 700px) {
+    //     grid-template-columns: repeat(2, 1fr);
+    // }
     @media (min-width: 1200px) {
+      display: grid;
+      // display: -ms-grid;
+      grid-gap: 16px;
       grid-template-columns: repeat(4, 1fr);
       grid-template-areas:
        "column-1 column-2 column-3 column-4";
@@ -149,16 +181,20 @@ pfe-navigation-item [slot="trigger"] a,
 }
 
 .pfe-nav--column-4--basic-tablet-breakpoint {
-    display: grid;
-    // display: -ms-grid;
-    grid-gap: 16px;
-    @media (min-width: 700px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    // display: grid;
+    // // display: -ms-grid;
+    // grid-gap: 16px;
+    // @media (min-width: 700px) {
+    //     grid-template-columns: repeat(2, 1fr);
+    // }
     @media (min-width: 992px) {
-        grid-template-columns: repeat(3, 1fr);
+        column-count: 3;
+        // grid-template-columns: repeat(3, 1fr);
     }
     @media (min-width: 1200px) {
+        display: grid;
+        // display: -ms-grid;
+        grid-gap: 16px;
       grid-template-columns: repeat(4, 1fr);
       grid-template-areas:
        "column-1 column-2 column-3 column-4";
@@ -167,16 +203,22 @@ pfe-navigation-item [slot="trigger"] a,
 
 //opt in
 .pfe-nav--column-3--basic {
-    display: grid;
-    // display: -ms-grid;
-    grid-gap: 16px;
-    @media (min-width: 700px) and (max-width: 991px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    @media (min-width: 992px) and (max-width: 1199px) {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    @media (min-width: 1200px) {
+    // display: grid;
+    // // display: -ms-grid;
+    // grid-gap: 16px;
+    // @media (min-width: 700px) and (max-width: 991px) {
+    //     grid-template-columns: repeat(2, 1fr);
+    // }
+    // @media (min-width: 992px) and (max-width: 1199px) {
+    //     column-count: 3;
+    // }
+    @media (min-width: 992px) {
+        [class^=column] {
+            display: block;
+        }
+        display: grid;
+        // display: -ms-grid;
+        grid-gap: 16px;
       grid-template-columns: repeat(3, 1fr);
       grid-template-areas:
        "column-1 column-2 column-3";
@@ -185,18 +227,21 @@ pfe-navigation-item [slot="trigger"] a,
 
 //(opt-in)
 .pfe-nav--column-3--first-wide {
-    display: grid;
-    // display: -ms-grid;
-    grid-gap: 16px;
-    @media (min-width: 560px) and (max-width: 991px) {
-        grid-template-columns: 2fr 1fr;
-        grid-gap: 32px;
-    }
-    @media (min-width: 768px) and (max-width: 1199px) {
-        grid-template-columns: 2fr 1fr 1fr;
-        grid-gap: 16px;
-    }
+    // display: grid;
+    // // display: -ms-grid;
+    // grid-gap: 16px;
+    // @media (min-width: 560px) and (max-width: 991px) {
+    //     grid-template-columns: 2fr 1fr;
+    //     grid-gap: 32px;
+    // }
+    // @media (min-width: 768px) and (max-width: 1199px) {
+    //     grid-template-columns: 2fr 1fr 1fr;
+    //     grid-gap: 16px;
+    // }
     @media (min-width: 1200px) {
+        display: grid;
+        // display: -ms-grid;
+        grid-gap: 16px;
       grid-template-columns: 2fr 1fr 1fr;
       grid-template-areas:
        "column-1 column-2 column-3";
@@ -233,11 +278,21 @@ pfe-navigation-item [slot="trigger"] a,
 
 
 pfe-navigation .pfe-link-list {
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 1em;
     &--header {
         margin: 0;
-        font-size: 16px;
+        font-size: 17px;
         font-weight: 400;
         line-height: 1.75;
+        @media (min-width: 1200px){
+            font-size: 16px;
+        }
         // &:not(:nth-of-type(1)) {
         //     margin-top: 24px;
         //     border: 2px solid black;
@@ -282,10 +337,22 @@ pfe-navigation .pfe-link-list {
   font-weight: lighter;
 }
 
-.border-top {
+.pfe-nav--item-footer {
   border-top: 1px solid lightgray;
   padding-top: 40px;
+  padding-bottom: calc(40px - #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})});
   margin-top: 40px !important;
+  // column-count: 2;
+  // column-gap: 32px;
+  // flex: 1;
+  > * {
+      &:not(:last-child) {
+          padding-bottom: 16px;
+          @media (min-width: 1200px) {
+              padding-bottom: 0;
+          }
+      }
+  }
 }
 .pfe-align-vertical {
     display: flex;

@@ -1,5 +1,4 @@
 import PFElement from "../pfelement/pfelement.js";
-import PfeAccordion from "../pfe-accordion/pfe-accordion.js";
 
 if (!("path" in Event.prototype)) {
   Object.defineProperty(Event.prototype, "path", {
@@ -118,8 +117,22 @@ class PfeNavigationItem extends PFElement {
   open(event) {
     if (event) event.preventDefault();
 
+    // Close the other active item(s) unless it's this item's parent
+    this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
+      let stayOpen = item === this.parent;
+      if (!stayOpen) item.close();
+      return stayOpen;
+    });
+
+    // Open that item and add it to the active array
+    this.navigationWrapper._activeNavigationItems.push(this);
+
+    this.expanded = true;
+    this.navigationWrapper.overlay = true;
+
+    // Dispatch the event
     this.dispatchEvent(
-      new CustomEvent(`${this.tag}:toggle`, {
+      new CustomEvent(`${this.tag}:open`, {
         detail: {
           navigationItem: this,
           action: "open"
@@ -133,8 +146,23 @@ class PfeNavigationItem extends PFElement {
   close(event) {
     if (event) event.preventDefault();
 
+    // Close the children elements
+    this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
+      let close = this.nestedItems && this.nestedItems.includes(item);
+      if (close) item.close();
+      return !close && item !== this;
+    });
+
+    this.expanded = false;
+
+    // Clear the overlay
+    this.navigationWrapper.overlay = this.navigationWrapper._activeNavigationItems.length > 0;
+
+    this.focus();
+
+    // Dispatch the event
     this.dispatchEvent(
-      new CustomEvent(`${this.tag}:toggle`, {
+      new CustomEvent(`${this.tag}:close`, {
         detail: {
           navigationItem: this,
           action: "close"
@@ -148,15 +176,12 @@ class PfeNavigationItem extends PFElement {
   toggle(event) {
     if (event) event.preventDefault();
 
-    this.dispatchEvent(
-      new CustomEvent(`${this.tag}:toggle`, {
-        detail: {
-          navigationItem: this
-        },
-        bubbles: true,
-        composed: true
-      })
-    );
+    if (this.visible && !this.expanded) {
+      this.open(event);
+      return;
+    }
+
+    this.close(event);
   }
 
   constructor() {
@@ -211,8 +236,9 @@ class PfeNavigationItem extends PFElement {
 
     this._init();
 
-    // Add a slotchange listener to the lightDOM trigger
-    this.trigger.addEventListener("slotchange", this._init);
+    // Add a slotchange listeners to the lightDOM elements
+    if (this.trigger) this.trigger.addEventListener("slotchange", this._init);
+    if (this.tray) this.tray.addEventListener("slotchange", this._init);
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -223,6 +249,7 @@ class PfeNavigationItem extends PFElement {
     this.trigger.removeEventListener("slotchange", this._init);
 
     if (this.tray) {
+      this.tray.removeEventListener("slotchange", this._init);
       this.removeEventListener("keyup", this._keyupHandler);
 
       this._trigger.removeEventListener("click", this.toggle);
@@ -294,7 +321,6 @@ class PfeNavigationItem extends PFElement {
       case "Escape":
       case 27:
         this.close(event);
-        this.focus();
         break;
       default:
         return;
@@ -382,18 +408,6 @@ class PfeNavigation extends PFElement {
     return "pfe-navigation.json";
   }
 
-  closeAllNavigationItems() {
-    this.dispatchEvent(
-      new CustomEvent("pfe-navigation-item:toggle", {
-        detail: {
-          action: "close"
-        },
-        bubbles: true,
-        composed: true
-      })
-    );
-  }
-
   get overlay() {
     return !this._overlay.hasAttribute("hidden");
   }
@@ -421,12 +435,9 @@ class PfeNavigation extends PFElement {
     this._setVisibility = this._setVisibility.bind(this);
 
     // -- handlers
-    this._toggledHandler = this._toggledHandler.bind(this);
-    this._closeAllNavigationItems = this._closeAllNavigationItems.bind(this);
     this._observerHandler = this._observerHandler.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
-    this.closeAllNavigationItems = this.closeAllNavigationItems.bind(this);
     this._outsideListener = this._outsideListener.bind(this);
     this._observer = new MutationObserver(this._observerHandler);
 
@@ -436,11 +447,10 @@ class PfeNavigation extends PFElement {
 
     // Initialize active navigation item to empty array
     this._activeNavigationItems = [];
+    
     // Set the state of this element to false until initialized
     this.initialized = false;
     this.overlay = false;
-    // Initial position of this element from the top of the screen
-    this.top = this.getBoundingClientRect().top || 0;
 
   }
 
@@ -463,9 +473,6 @@ class PfeNavigation extends PFElement {
       // Kick off the initialization of the light DOM elements
       this.initialized = this._init();
 
-      // Listen for the toggled event on the navigation children
-      this.addEventListener("pfe-navigation-item:toggle", this._toggledHandler);
-
       // Watch for screen resizing
       window.addEventListener("resize", this._resizeHandler);
     } else {
@@ -474,9 +481,6 @@ class PfeNavigation extends PFElement {
   }
 
   disconnectedCallback() {
-    // Remove the custom listener for the toggled event
-    this.removeEventListener("pfe-navigation-item:toggle", this._toggledHandler);
-
     // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("resize", this._resizeHandler);
     window.removeEventListener("scroll", this._stickyHandler);
@@ -513,67 +517,6 @@ class PfeNavigation extends PFElement {
     this.overlay = this._activeNavigationItems.length > 0;
   }
 
-  _closeAllNavigationItems() {
-    // Close any open navigation items
-    this._activeNavigationItems = this._activeNavigationItems.filter(item => {
-      item.expanded = false;
-      return false;
-    });
-
-    this.overlay = this._activeNavigationItems.length > 0;
-  }
-
-  _toggledHandler(event) {
-    let close = event && event.detail ? event.detail.action === "close" : false;
-    let newItem = event && event.detail ? event.detail.navigationItem : null;
-    let currentItems = this._activeNavigationItems;
-
-    // Check if the new item shares a parent with the current one and that the parent is visible
-    let openSibling = currentItems.filter(item => newItem && newItem.parent && newItem.parent === item.parent && newItem.parent.visible);
-    let hasOpenParent = newItem && newItem.parent && newItem.parent.visible && currentItems.includes(newItem.parent);
-    let isOpen = currentItems.includes(newItem);
-
-    // If the action is specifically to close the item or there is a new item and it isn't visibly nested
-    if (close || (!newItem && currentItems.length > 0) || (newItem && newItem.visible && !hasOpenParent)) {
-      // Close the items in the array and remove them
-      currentItems.map(item => {
-        item.expanded = false;
-      });
-      this._activeNavigationItems = [];
-    }
-    // If there is a new item and it isn't visibly nested
-    else if (newItem && newItem.visible && hasOpenParent && openSibling.length > 0) {
-      // Close the items in the array and remove them
-      this._activeNavigationItems = currentItems.filter(item => {
-        if (item !== newItem.parent) {
-          item.expanded = false;
-        } else {
-          return item;
-        }
-      });
-    }
-
-    // If the clicked item is open, close itself
-    if (isOpen) {
-      newItem.expanded = false;
-      // Remove this item from the active items
-      this._activeNavigationItems = currentItems.filter(item => item !== newItem);
-    }
-    // If there are no open items and it's a visible element
-    else if(newItem && !isOpen && !close) {
-      // Open that item and add it to the active array
-      newItem.expanded = true;
-      this._activeNavigationItems.push(newItem);
-    } else {
-      this._closeAllNavigationItems();
-    }
-
-    // The overlay is open if any active items exist
-    this.overlay = (this._activeNavigationItems.length > 0);
-
-    return;
-  }
-
   _stickyHandler() {
     if(window.pageYOffset >= this.top) {
       this.classList.add("sticky");
@@ -584,7 +527,7 @@ class PfeNavigation extends PFElement {
 
   _outsideListener(event) {
     if ((event.target !== this && event.target.closest("pfe-navigation") === null) || event.path.length > 0 && event.path[0] === this._overlay) {
-      this._closeAllNavigationItems();
+      this._activeNavigationItems.map(item => item.close());
     }
   }
 
@@ -635,6 +578,18 @@ class PfeNavigation extends PFElement {
       if (window.ShadyCSS) {
         this._observer.disconnect();
       }
+
+      // Initial position of this element from the top of the screen
+      this.top = this.getBoundingClientRect().top || 0;
+
+      // Get all nav items contained in this element
+      this.navItems = [...this.querySelectorAll("pfe-navigation-item")];
+      if (this._menuItem) this.navItems.push(this._menuItem);
+
+      // Attach a reference to the navigation container to the children
+      this.navItems.forEach(item => {
+        item.navigationWrapper = this;
+      });
 
       // Connect the shadow menu with the main component
       let mainNav = this.querySelector("pfe-navigation-main");

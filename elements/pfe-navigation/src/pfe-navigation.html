@@ -1,13 +1,9 @@
 <div class="pfe-navigation__wrapper">
   <div class="pfe-navigation__container">
-    <div class="pfe-navigation__logo">
-      <slot name="logo"></slot>
-    </div>
-    <div class="pfe-navigation__skip">
-      <slot name="skip"></slot>
-    </div>
+    <slot name="logo" class="pfe-navigation__logo" tabindex="2"></slot>
+    <slot name="skip" class="pfe-navigation__skip" tabindex="1"></slot>
     <div class="pfe-navigation__main">
-      <pfe-navigation-item pfe-icon="menu">
+      <pfe-navigation-item pfe-icon="menu" hidden>
         <span slot="trigger">
           <slot name="mobile-menu--label" class="pfe-navigation__main--menu-label"></slot>
         </span>
@@ -28,6 +24,5 @@
       <slot name="site-switcher"></slot>
     </div>
   </div>
-  <div class="pfe-navigation__end" hidden tabindex="-1"></div>
 </div>
 <div class="pfe-navigation__overlay" hidden></div>

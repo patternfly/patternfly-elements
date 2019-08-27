@@ -178,34 +178,43 @@ class PfeNavigationItem extends PFElement {
 
     if (this.visible && !this.expanded) {
       this.open(event);
-      return;
+    } else {
+      this.close(event);
     }
-
-    this.close(event);
   }
 
   constructor() {
     super(PfeNavigationItem);
 
+    // States
     this.nested = false;
     this.expanded = false;
+
+    // Objects
     this.trigger = null;
     this.tray = null;
     this.directLink = null;
     this.linkUrl = null;
 
+    // Lists
+    this.nestedItems = [];
+
+    // Shadow elements
     this._trigger = this.shadowRoot.querySelector(`.${this.tag}__trigger`);
     this._tray = this.shadowRoot.querySelector(`.${this.tag}__tray`);
-    this._icon = this.shadowRoot.querySelector(`.${this.tag}__trigger--icon`);
 
     // Externally accessible events
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
     this.toggle = this.toggle.bind(this);
 
-    this._init = this._init.bind(this);
+    // Initializers
+    this._init__trigger = this._init__trigger.bind(this);
+    this._init__tray = this._init__tray.bind(this);
+
+    // Event handlers
+    this._keydownHandler = this._keydownHandler.bind(this);
     this._keyupHandler = this._keyupHandler.bind(this);
-    this._suppressLink = this._suppressLink.bind(this);
     this._navigateToUrl = this._navigateToUrl.bind(this);
     this._directLinkHandler = this._directLinkHandler.bind(this);
   }
@@ -213,32 +222,12 @@ class PfeNavigationItem extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    // If no slots have been assigned, assign it to the trigger slot
-    const unassigned = [...this.children].filter(child => !child.hasAttribute("slot"));
-    unassigned.map(item => item.setAttribute("slot", "trigger"));
-
-    // Get the LightDOM trigger & tray content
-    this.trigger = this.querySelector(`[slot="trigger"]`);
-    this.tray = this.querySelector(`[slot="tray"]`);
-
-    // Check for any nested navigation items
-    this.nestedItems = [];
-
-    // If a light DOM tray exists, check for descendents
-    if (this.tray) {
-      this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll(`${this.tag}`)]);
-      this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll("slot")].map(slot => {
-        return slot.assignedElements().map(node => {
-          return [...node.querySelectorAll(`${this.tag}`)];
-        });
-      }).flat(3));
-    }
-
-    this._init();
+    this._init__trigger();
+    this._init__tray();
 
     // Add a slotchange listeners to the lightDOM elements
-    if (this.trigger) this.trigger.addEventListener("slotchange", this._init);
-    if (this.tray) this.tray.addEventListener("slotchange", this._init);
+    if (this.trigger) this.trigger.addEventListener("slotchange", this._init__trigger);
+    if (this.tray) this.tray.addEventListener("slotchange", this._init__tray);
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -250,42 +239,79 @@ class PfeNavigationItem extends PFElement {
 
     if (this.tray) {
       this.tray.removeEventListener("slotchange", this._init);
-      this.removeEventListener("keyup", this._keyupHandler);
+
+      this.removeEventListener("keydown", this._keydownHandler);
+      this.removeEventListener("keyup", this._exit);
 
       this._trigger.removeEventListener("click", this.toggle);
-      if (this.directLink) {
-        this.directLink.removeEventListener("click", this._suppressLink);
-      }
+      this._trigger.removeEventListener("keyup", this._keyupHandler);
     } else {
       this._trigger.removeEventListener("click", this._navigateToUrl);
       this._trigger.removeEventListener("keyup", this._directLinkHandler);
     }
   }
 
-  _init() {
+  _init__trigger() {
+    // If no slots have been assigned, assign it to the trigger slot
+    const unassigned = [...this.children].filter(child => !child.hasAttribute("slot"));
+    unassigned.map(item => item.setAttribute("slot", "trigger"));
+
+    // Get the LightDOM trigger & tray content
+    this.trigger = this.querySelector(`[slot="trigger"]`);
+
     this.directLink = this.trigger.querySelector("a");
+    this.linkUrl = this.directLink ? this.directLink.href : "#";
 
-    // If there is a tray element, add click events
+    // Turn off the fallback link
+    if (this.directLink) {
+      this.directLink.setAttribute("tabindex", "-1");
+    }
+
+    // Assume direct links until tray is processed
+    if (this.trigger) this.trigger.setAttribute("tabindex", 0);
+
+    this._trigger.addEventListener("click", this._navigateToUrl);
+    this._trigger.addEventListener("keyup", this._directLinkHandler);
+  }
+
+  _init__tray() {
+    // Get the LightDOM trigger & tray content
+    this.tray = this.querySelector(`[slot="tray"]`);
+
+    //-- Check for any nested navigation items
+    // If a light DOM tray exists, check for descendents
     if (this.tray) {
-      // Toggle the navigation when the trigger is clicked
-      this._trigger.addEventListener("click", this.toggle);
-      // Attaching to the parent element allows the exit key to work inside the tray too
-      this.addEventListener("keyup", this._keyupHandler);
+      this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll(`${this.tag}`)]);
+      this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll("slot")].map(slot => {
+        let ret = [];
+        if (!window.ShadyCSS) {
+          ret = slot.assignedElements().map(node => {
+            return [...node.querySelectorAll(`${this.tag}`)];
+          });
+        } else {
+          // something else
+          console.log(slot);
+        }
+      }).flat(3));
+    }
 
-      // Turn off the fallback link
-      if (this.directLink) {
-        this.directLink.setAttribute("tabindex", "-1");
-        this.directLink.addEventListener("click", this._suppressLink);
-      }
-    } else {
-      this.linkUrl = this.directLink ? this.directLink.href : "#";
-      this._trigger.addEventListener("click", this._navigateToUrl);
-      this._trigger.addEventListener("keyup", this._directLinkHandler);
+    if (this.tray) {
+      this._init__handlers();
     }
   }
 
-  _suppressLink(event) {
-    event.preventDefault();
+  _init__handlers() {
+    this._trigger.removeEventListener("click", this._navigateToUrl);
+    this._trigger.removeEventListener("keyup", this._directLinkHandler);
+
+    // Toggle the navigation when the trigger is clicked
+    this._trigger.addEventListener("click", this.toggle);
+
+    // Attaching to the parent element allows the exit key to work inside the tray too
+    this.addEventListener("keyup", this._exit);
+    this.addEventListener("keydown", this._keydownHandler);
+
+    this._trigger.addEventListener("keyup", this._keyupHandler);
   }
 
   _navigateToUrl(event) {
@@ -297,8 +323,10 @@ class PfeNavigationItem extends PFElement {
     let key = event.key || event.keyCode;
     switch (key) {
       case "Spacebar":
-      case "Enter":
       case " ":
+      case 32:
+      case "Enter":
+      case 13:
         this._navigateToUrl(event);
         break;
       default:
@@ -306,24 +334,51 @@ class PfeNavigationItem extends PFElement {
     }
   }
 
-  _keyupHandler(event) {
+  _keydownHandler(event) {
     let key = event.key || event.keyCode;
+    let clicked = event.path && event.path.length > 0 ? event.path[0] : this;
+
     switch (key) {
       case "Spacebar":
-      case "Enter":
       case " ":
-        // Check that the event is on the trigger element
-        if (event && event.path && event.path[0] && event.path[0].classList.contains(`${this.tag}__trigger`)) {
+      case 32:
+        if (!["INPUT", "TEXTAREA", "SELECT"].includes(clicked.tagName)) {
+          event.preventDefault();
+        }
+        break;
+    }
+  }
+
+  _keyupHandler(event) {
+    let key = event.key || event.keyCode;
+    let clicked = event.path && event.path.length > 0 ? event.path[0] : this;
+
+    switch (key) {
+      case "Spacebar":
+      case " ":
+      case 32:
+        if (!["INPUT", "TEXTAREA", "SELECT"].includes(clicked.tagName)) {
           this.toggle(event);
         }
         break;
+      case "Enter":
+      case 13:
+        if (!["A"].includes(clicked.tagName)) {
+          this.toggle(event);
+        }
+        break;
+    }
+  }
+
+  // Note: Escape will always exit the entire menu
+  _exit(event) {
+    let key = event.key || event.keyCode;
+    switch (key) {
       case "Esc":
       case "Escape":
       case 27:
         this.close(event);
         break;
-      default:
-        return;
     }
   }
 }
@@ -436,6 +491,7 @@ class PfeNavigation extends PFElement {
 
     // -- handlers
     this._observerHandler = this._observerHandler.bind(this);
+    this._keydownHandler = this._keydownHandler.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
     this._outsideListener = this._outsideListener.bind(this);
@@ -461,7 +517,7 @@ class PfeNavigation extends PFElement {
     if (this.children.length) {
       // If only one value exists in the array, it starts at that size and goes up
       this.breakpoints = {
-        main: [0, 1200], // visible from 0 - 1200px
+        main: [0, 1199], // visible from 0 - 1200px
         search: [768],   // visible from 768px +
         "mobile-search": [0, 767],
         language: [768],
@@ -472,6 +528,9 @@ class PfeNavigation extends PFElement {
 
       // Kick off the initialization of the light DOM elements
       this.initialized = this._init();
+
+      // Listen for tab events
+      this.addEventListener("keydown", this._keydownHandler);
 
       // Watch for screen resizing
       window.addEventListener("resize", this._resizeHandler);
@@ -571,6 +630,32 @@ class PfeNavigation extends PFElement {
     });
   }
 
+  _keydownHandler(event) {
+    let key = event.key || event.keyCode;
+    // let clicked = event.path && event.path.length > 0 ? event.path[0] : this;
+
+    switch(key) {
+      // @TODO Keep focus state from exiting the nav when overlay is active
+      case "Tab":
+      case 9:
+        // If the overlay is active, trap focus
+        console.log(document.activeElement);
+        if ( event.shiftKey ) /* shift + tab */ {
+          if (document.activeElement === this.firstItem && this.overlay) {
+            console.log("Focus on last item");
+            this.lastItem.focus();
+            event.preventDefault();
+          }
+        } else /* tab */ {
+            if (document.activeElement === this.lastItem && this.overlay) {
+              this.firstItem.focus();
+              event.preventDefault();
+            }
+        }
+        break;
+    }
+  }
+
   _init() {
     let ret = false;
     if(!this.initialized) {
@@ -584,6 +669,24 @@ class PfeNavigation extends PFElement {
 
       // Get all nav items contained in this element
       this.navItems = [...this.querySelectorAll("pfe-navigation-item")];
+
+      // Get the first and last focusable items in the navigation
+      if (this.has_slot("skip")) {
+        this.firstItem = this.slots.skip.nodes[0];
+        // Allow the items assigned to this slot to be focusable
+        this.slots.skip.nodes.forEach(item => item.setAttribute("tabindex", 0));
+      }
+      else if (this.has_slot("logo")) {
+        this.firstItem = this.slots.logo.nodes[0];
+      }
+      else {
+        this.firstItem = this.navItems[0];
+      }
+
+      this.lastItem = this.navItems[this.navItems.length - 1];
+
+      // Add the menu element to the list of navigation items
+      // do this manually because menu item is in the shadow dom
       if (this._menuItem) this.navItems.push(this._menuItem);
 
       // Attach a reference to the navigation container to the children

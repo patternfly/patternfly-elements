@@ -110,6 +110,10 @@ class PfeCollapseToggle extends PFElement {
   }
 
   toggle() {
+    if (this.hasAttribute("disabled")) {
+      return;
+    }
+
     this.expanded = !this.expanded;
 
     if (this.controlledPanel) {

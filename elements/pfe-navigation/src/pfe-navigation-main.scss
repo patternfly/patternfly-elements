@@ -12,7 +12,7 @@
   display: flex;
   flex-flow: column nowrap;
 
-  @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+  :host([show_content]) & {
     flex-flow: row nowrap;
     align-items: stretch;
   }
@@ -20,7 +20,7 @@
 
 ::slotted(ul) {
   list-style-type: none;
-  @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+  :host([show_content]) & {
     display: flex;
     flex-flow: row nowrap;
   }

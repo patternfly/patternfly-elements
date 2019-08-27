@@ -4,16 +4,21 @@
     "className": "PfeProgressIndicator",
     "elementName": "pfe-progress-indicator"
   },
-  "version": "1.0.0-prerelease.17",
-  "description": "Progress element for PatternFly Elements",
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
+  "version": "1.0.0-prerelease.21",
   "publishConfig": {
     "access": "public"
   },
-  "main": "index.js",
+  "description": "Progress element for PatternFly Elements",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-progress-indicator"
+  },
+  "main": "pfe-progress-indicator.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -24,8 +29,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "1.0.0-prerelease.17",
-    "@patternfly/pfelement": "1.0.0-prerelease.17"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.21",
+    "@patternfly/pfelement": "^1.0.0-prerelease.21"
   },
   "generator-pfelement-version": "1.1.0"
 }

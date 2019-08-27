@@ -30,6 +30,10 @@ class PFElement extends HTMLElement {
   static get version() {
     return "{{version}}";
   }
+  
+  static get randomId() {
+    return Math.random().toString(36).substr(2, 9);
+  }
 
   get version() {
     return this._pfeClass.version;
@@ -211,14 +215,27 @@ class PFElement extends HTMLElement {
     Object.keys(slots).forEach(slot => {
       let slotObj = slots[slot];
       let slotExists = false;
+      let result = [];
       // If it's a named slot, look for that slot definition
       if (slotObj.namedSlot) {
-        if (this.has_slots(`${tag}--${slot}`).length > 0 || this.has_slots(`${slot}`).length > 0) {
+        // Check prefixed slots
+        result = this.has_slots(`${tag}--${slot}`);
+        if (result.length > 0) {
+          slotObj.nodes = result;
           slotExists = true;
         }
-        // If it's the default slot, look for elements not assigned to a slot
+
+        // Check for unprefixed slots
+        result = this.has_slots(`${slot}`);
+        if (result.length > 0) {
+          slotObj.nodes = result;
+          slotExists = true;
+        }
+        // If it's the default slot, look for direct children not assigned to a slot
       } else {
-        if ([...this.querySelectorAll(":not([slot])")].length > 0) {
+        result = [...this.querySelectorAll(":scope > *:not([slot])")];
+        if (result.length > 0) {
+          slotObj.nodes = result;
           slotExists = true;
         }
       }

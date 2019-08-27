@@ -34,6 +34,13 @@
   padding: 0;
 }
 
+@mixin pfe-reset-button() {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
 @mixin pfe-sr-only() {
   position: absolute;
   overflow: hidden;
@@ -441,5 +448,4 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
   }
   width: #{$size};
   height: #{$size};
-  @content;
-}
+  @content;}

@@ -21,30 +21,6 @@ $LOCAL: navigation-item;
     }
 }
 
-%base-col-grid {
-    @extend .pfe-l-grid;
-    @extend .pfe-m-gutters;
-    @extend .pfe-m-all-6-col;
-}
-.pfe-base-col-grid {
-    @extend .pfe-l-grid;
-    @extend .pfe-m-gutters;
-    @extend .pfe-m-all-6-col;
-}
-.pfe-base-3-col-item {
-    @extend .pfe-l-grid__item;
-    @extend .pfe-m-3-col-on-md;
-}
-.pfe-6-3-col-item {
-    @extend .pfe-base-3-col-item;
-    @extend .pfe-m-6-col-on-sm;
-    // @extend .pfe-m-startat-8-col-on-sm;
-}
-.pfe-base-6-col-item {
-    @extend .pfe-l-grid__item;
-    @extend .pfe-m-6-col;
-}
-
 // Edge styles
 @include browser-query(ie11) {
     .pfe-navigation-item__trigger.pfe-navigation-item {
@@ -113,14 +89,20 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
      font-size: 18px;
      font-weight: normal;
      margin: 0;
-     @media (min-width: 1200px){
+     @media (min-width: $pfe-global--grid-breakpoint--xl) {
          font-size: 14px;
      }
 }
 
+[slot="tray"] {
+    @media (max-width: $pfe-global--grid-breakpoint--lg--max){
+        padding: 0;
+    }
+}
+
 // This class is added by the shadow DOM or shady css
 .pfe-navigation-item__tray {
-    padding: #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})};
+    // padding: #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})};
     max-height: calc(100vh - var(--pfe-navigation--Height, 90px));
     overflow-x: hidden;
     overflow-y: scroll;
@@ -132,8 +114,10 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
         flex-wrap: wrap;
         min-height: 200px;
         width: 100%;
-
-        @media (min-width: 1200px) {
+        @media (max-width: $pfe-global--grid-breakpoint--lg--max) {
+            padding: 0 calc(var(--pfe-theme--container-spacer,16px) * 1.5);
+        }
+        @media (min-width: $pfe-global--grid-breakpoint--xl) {
             max-width: var(--pfe-navigation--Width, 1140px);
             margin: 0 auto;
         }
@@ -143,14 +127,24 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
 @for $col from 1 through 4 {
   .column-#{$col} {
     grid-area: column-#{$col};
+    // > * {
+    //   &:not(:first-child) {
+    //       @media (min-width: $pfe-global--grid-breakpoint--xl) {
+    //           padding-top: 16px;
+    //       }
+    //   }
+    // }
   }
 }
+
+
 [class^=column] {
     display: contents;
-    @media (min-width: 1200px) {
+    @media (min-width: $pfe-global--grid-breakpoint--xl) {
         display: block;
     }
 }
+
 .pfe-nav--column-3--basic,
 .pfe-nav--column-3--first-wide,
 .pfe-nav--column-4--basic,
@@ -164,13 +158,7 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
 
 // 4 columns
 .pfe-nav--column-4--basic {
-    // display: grid;
-    // // display: -ms-grid;
-    // grid-gap: 16px;
-    // @media (min-width: 700px) {
-    //     grid-template-columns: repeat(2, 1fr);
-    // }
-    @media (min-width: 1200px) {
+    @media (min-width: $pfe-global--grid-breakpoint--xl) {
       display: grid;
       // display: -ms-grid;
       grid-gap: 16px;
@@ -181,17 +169,10 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
 }
 
 .pfe-nav--column-4--basic-tablet-breakpoint {
-    // display: grid;
-    // // display: -ms-grid;
-    // grid-gap: 16px;
-    // @media (min-width: 700px) {
-    //     grid-template-columns: repeat(2, 1fr);
-    // }
-    @media (min-width: 992px) {
+    @media (min-width: $pfe-global--grid-breakpoint--lg) {
         column-count: 3;
-        // grid-template-columns: repeat(3, 1fr);
     }
-    @media (min-width: 1200px) {
+    @media (min-width: $pfe-global--grid-breakpoint--xl) {
         display: grid;
         // display: -ms-grid;
         grid-gap: 16px;
@@ -203,16 +184,7 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
 
 //opt in
 .pfe-nav--column-3--basic {
-    // display: grid;
-    // // display: -ms-grid;
-    // grid-gap: 16px;
-    // @media (min-width: 700px) and (max-width: 991px) {
-    //     grid-template-columns: repeat(2, 1fr);
-    // }
-    // @media (min-width: 992px) and (max-width: 1199px) {
-    //     column-count: 3;
-    // }
-    @media (min-width: 992px) {
+    @media (min-width: $pfe-global--grid-breakpoint--lg) {
         [class^=column] {
             display: block;
         }
@@ -227,18 +199,7 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
 
 //(opt-in)
 .pfe-nav--column-3--first-wide {
-    // display: grid;
-    // // display: -ms-grid;
-    // grid-gap: 16px;
-    // @media (min-width: 560px) and (max-width: 991px) {
-    //     grid-template-columns: 2fr 1fr;
-    //     grid-gap: 32px;
-    // }
-    // @media (min-width: 768px) and (max-width: 1199px) {
-    //     grid-template-columns: 2fr 1fr 1fr;
-    //     grid-gap: 16px;
-    // }
-    @media (min-width: 1200px) {
+    @media (min-width: $pfe-global--grid-breakpoint--xl) {
         display: grid;
         // display: -ms-grid;
         grid-gap: 16px;
@@ -248,32 +209,6 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
     }
 }
 
-
-
-
-
-
-
-
-// .pfe-navigation-4-col-tray-standard {
-//     @extend %base-col-grid;
-//     @extend .pfe-m-all-3-col-on-lg;
-// }
-//
-// .pfe-navigation-3-col-tray {
-//     @extend %base-col-grid;
-//     @extend .pfe-m-all-4-col-on-lg;
-// }
-
-@for $col from 1 through 4 {
-  .column-#{$col} > * {
-    &:not(:first-child) {
-        @media (min-width: 1200px) {
-            padding-top: 16px;
-        }
-    }
-  }
-}
 
 
 
@@ -290,14 +225,9 @@ pfe-navigation .pfe-link-list {
         font-size: 17px;
         font-weight: 400;
         line-height: 1.75;
-        @media (min-width: 1200px){
+        @media (min-width: $pfe-global--grid-breakpoint--xl){
             font-size: 16px;
         }
-        // &:not(:nth-of-type(1)) {
-        //     margin-top: 24px;
-        //     border: 2px solid black;
-        //     padding-top: 16px;
-        // }
         a {
           color: #151515;
           text-decoration: underline;
@@ -325,8 +255,6 @@ pfe-navigation .pfe-link-list {
 }
 
 
-
-
 :host {
   display: block;
   position: relative;
@@ -338,21 +266,25 @@ pfe-navigation .pfe-link-list {
 }
 
 .pfe-nav--item-footer {
-  border-top: 1px solid lightgray;
-  padding-top: 40px;
-  padding-bottom: calc(40px - #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})});
   margin-top: 40px !important;
-  // column-count: 2;
-  // column-gap: 32px;
-  // flex: 1;
-  > * {
-      &:not(:last-child) {
+  border-top: 1px solid lightgray;
+  padding: 40px 0;
+  transform: translateX(0);
+  @media (min-width: $pfe-global--grid-breakpoint--xl) {
+      padding-bottom: calc(40px - #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})});
+
+  }
+  > *:not(:last-child) {
           padding-bottom: 16px;
-          @media (min-width: 1200px) {
+          @media (min-width: $pfe-global--grid-breakpoint--xl) {
               padding-bottom: 0;
           }
       }
-  }
+      [class^=column] {
+          @media (max-width: 649px) {
+              display: block;
+          }
+      }
 }
 .pfe-align-vertical {
     display: flex;

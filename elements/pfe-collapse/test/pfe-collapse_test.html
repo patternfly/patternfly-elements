@@ -43,6 +43,10 @@
       </pfe-collapse>
     </div>
 
+    <div id="latePanel">
+      <pfe-collapse-toggle aria-controls="latePanel1">Toggle</pfe-collapse-toggle>
+    </div>
+
     <script>
       suite("<pfe-collapse>", () => {
         test("it should upgrade", () => {
@@ -260,6 +264,23 @@
             assert.equal(toggle.getAttribute("aria-expanded"), "false");
             assert.isTrue(!panel.hasAttribute("pfe-expanded"));
 
+            done();
+          });
+        });
+
+        test("it should still be able to open a panel that is added to the DOM after the toggle has been added", done => {
+          const collapseContainer = document.querySelector('#latePanel');
+          const toggle = collapseContainer.querySelector('pfe-collapse-toggle');
+          const panel = document.createElement("pfe-collapse-panel");
+          panel.id = "latePanel1";
+          panel.innerText = "Panel";
+
+          collapseContainer.appendChild(panel);
+          toggle.click();
+
+          flush(() => {
+            assert.equal(toggle.getAttribute("aria-expanded"), "true");
+            assert.isTrue(panel.hasAttribute("pfe-expanded"));
             done();
           });
         });

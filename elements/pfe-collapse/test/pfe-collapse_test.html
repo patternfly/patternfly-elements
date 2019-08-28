@@ -36,6 +36,13 @@
       </pfe-collapse>
     </div>
 
+    <div id="disabled">
+      <pfe-collapse>
+        <pfe-collapse-toggle disabled="disabled">Toggle</pfe-collapse-toggle>
+        <pfe-collapse-panel>Panel</pfe-collapse-panel>
+      </pfe-collapse>
+    </div>
+
     <script>
       suite("<pfe-collapse>", () => {
         test("it should upgrade", () => {
@@ -240,6 +247,21 @@
             spy,
             `pfe-collapse-toggle: This toggle doesn't have a panel associated with it`
           );
+        });
+
+        test("it should not open the panel if the toggle has been disabled", done => {
+          const collapse = document.querySelector('#disabled pfe-collapse');
+          const toggle = collapse.querySelector('pfe-collapse-toggle');
+          const panel = collapse.querySelector("pfe-collapse-panel");
+
+          toggle.click();
+
+          flush(() => {
+            assert.equal(toggle.getAttribute("aria-expanded"), "false");
+            assert.isTrue(!panel.hasAttribute("pfe-expanded"));
+
+            done();
+          });
         });
       });
     </script>

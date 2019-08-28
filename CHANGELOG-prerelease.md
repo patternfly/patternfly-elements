@@ -1,10 +1,19 @@
-## Prerelease 20 ( 2019-08-23 )
+## Prerelease 22 ( 2019-08-23 )
+Tag: [v1.0.0-prerelease.22](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.22)
+
+- [587b2bd](https://github.com/patternfly/patternfly-elements/commit/587b2bdb91f4a564ace4ac35994351ab363751a8) remove PR template questions that are enforced by github ([#511](https://github.com/patternfly/patternfly-elements/pull/511))
+- [18bfc7e](https://github.com/patternfly/patternfly-elements/commit/18bfc7ecf2bd2e925227031db4b4129d4ed2e5aa) adding ability to disable a pfe-collapse-toggle button ([#518](https://github.com/patternfly/patternfly-elements/pull/518))
+- [0e0bd84](https://github.com/patternfly/patternfly-elements/commit/0e0bd84ef8efefc83e259dced85caa495cde861a) clean up scattered build files ([#510](https://github.com/patternfly/patternfly-elements/pull/510))
+- [2bfff25](https://github.com/patternfly/patternfly-elements/commit/2bfff25fa704aa4dc39da207839d3346819f1c0d) (issue-517) fixing issue in react where the pfe-collapse-toggle can't find the panel
+
+
+## Prerelease 21 ( 2019-08-23 )
 Tag: [v1.0.0-prerelease.21](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.21)
 
 - [bc48948](https://github.com/patternfly/patternfly-elements/commit/bc489485a229e561a1c09e37c97f2f564035b1ea) Update pfe-icon-panel demo
-- [dd1797d](https://github.com/patternfly/patternfly-elements/commit/dd1797d00a379e103f0008ffebc6ffbaee7bfed5) Restore pfe-icon readme 
+- [dd1797d](https://github.com/patternfly/patternfly-elements/commit/dd1797d00a379e103f0008ffebc6ffbaee7bfed5) Restore pfe-icon readme
 - [8e14fb1](https://github.com/patternfly/patternfly-elements/commit/8e14fb1fb07f1199a5d4521b55e7156473592692) Remove debugger statement from pfe-autocomplete
-- [5386bdd](https://github.com/patternfly/patternfly-elements/commit/5386bdd2b4cb9e2b684c7ad1eca5bcd44bede7b6) Issue-505: updating pfe-progress-indicator package.json 
+- [5386bdd](https://github.com/patternfly/patternfly-elements/commit/5386bdd2b4cb9e2b684c7ad1eca5bcd44bede7b6) Issue-505: updating pfe-progress-indicator package.json
 
 ## Prerelease 20 ( 2019-08-21 )
 Tag: [v1.0.0-prerelease.20](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.20)

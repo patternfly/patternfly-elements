@@ -286,9 +286,9 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     }
 
     @if $align == right {
-        padding: #{$pfe-expand_button--padding} #{$pfe-expand_button--padding--wide} #{$pfe-expand_button--padding} 50px;
+        padding: #{$pfe-expand_button--padding} #{$pfe-expand_button--padding--wide} #{$pfe-expand_button--padding} 50px !important;
     } @else {
-        padding: #{$pfe-expand_button--padding} 50px #{$pfe-expand_button--padding} #{$pfe-expand_button--padding--wide};
+        padding: #{$pfe-expand_button--padding} 50px #{$pfe-expand_button--padding} #{$pfe-expand_button--padding--wide} !important;
     }
 }
 

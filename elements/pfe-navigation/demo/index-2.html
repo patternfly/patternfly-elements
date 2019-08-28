@@ -50,9 +50,9 @@
       </h2>
       <!-- Search -->
       <pfe-navigation-item slot="search" pfe-icon="search">
-        <h3 slot="trigger"><a href="#url-to-search-page">Search</a></h3>
+        <p slot="trigger"><a href="#url-to-search-page">Search</a></p>
         <div slot="tray" hidden>
-          <div class="pfe-navigation-item__tray--container" pfe-navigation--mobile-search>
+          <div class="pfe-navigation-item__tray--container">
             <form>
               <input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
               <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
@@ -60,20 +60,23 @@
           </div>
         </div>
       </pfe-navigation-item>
+      <form slot="mobile-search">
+        <input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
+        <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
+      </form>
       <!-- Main navigation -->
       <h2 slot="mobile-menu--label">Menu</h2>
-      <nav aria-label="Main">
-        <pfe-navigation-main>
-          <ul>
-            <li>
-              <pfe-navigation-item>
-                <h3 slot="trigger"><a href="#">Products</a></h3>
+      <pfe-navigation-main role="navigation" aria-label="Main">
+        <ul>
+          <li>
+            <pfe-navigation-item>
+                <p slot="trigger"><a href="#" data-analytics-label="products" data-analytics-level="1">Products</a></p>
                 <div slot="tray" hidden>
                   <div class="pfe-navigation-item__tray--container">
                      <div class="pfe-nav--column-4--basic-tablet-breakpoint">
                     <div class="column-1">
                         <div class="pfe-link-list">
-                          <h3 class="pfe-link-list--header">Platforms</h3>
+                          <p class="pfe-link-list--header">Platforms</p>
                           <ul class="pfe-link-list--group">
                                 <li class="pfe-link-list--group-item"><a href="#">Red Hat Enterprise Linux testing</a></li>
                                 <li class="pfe-link-list--group-item"><a href="#">Red Hat OpenShift</a></li>
@@ -82,7 +85,7 @@
                               </ul>
                         </div>
                         <div class="pfe-link-list">
-                          <h3 class="pfe-link-list--header">Cloud computing</h3>
+                          <p class="pfe-link-list--header">Cloud computing</p>
                           <ul class="pfe-link-list--group">
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat CloudForms</a></li>
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat Cloud Infrastructure</a></li>
@@ -93,7 +96,7 @@
                           </ul>
                         </div>
                         <div class="pfe-link-list">
-                          <h3 class="pfe-link-list--header">Testing column 1</h3>
+                          <p class="pfe-link-list--header">Testing column 1</p>
                           <ul class="pfe-link-list--group">
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
@@ -103,14 +106,14 @@
                     </div>
                     <div class="column-2">
                         <div class="pfe-link-list">
-                          <h3 class="pfe-link-list--header">Integration</h3>
+                          <p class="pfe-link-list--header">Integration</p>
                           <ul class="pfe-link-list--group">
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat Data Virtualization</a></li>
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat Integration</a></li>
                           </ul>
                       </div>
                       <div class="pfe-link-list">
-                          <h3 class="pfe-link-list--header">Automation and management</h3>
+                          <p class="pfe-link-list--header">Automation and management</p>
                           <ul class="pfe-link-list--group">
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat 3scale API Management</a></li>
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat Ansible Automation</a></li>
@@ -122,7 +125,7 @@
                 </div>
                     <div class="column-3">
                         <div class="pfe-link-list">
-                          <h3 class="pfe-link-list--header">Application development</h3>
+                          <p class="pfe-link-list--header">Application development</p>
                           <ul class="pfe-link-list--group">
                             <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat Application Runtimes</a></li>
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat Integration</a></li>
@@ -132,7 +135,7 @@
                           </ul>
                       </div>
                       <div class="pfe-link-list">
-                        <h3 class="pfe-link-list--header">Testing column 3</h3>
+                        <p class="pfe-link-list--header">Testing column 3</p>
                         <ul class="pfe-link-list--group">
                           <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
                           <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
@@ -142,7 +145,7 @@
                       </div>
                       <div class="column-4">
                           <div class="pfe-link-list">
-                          <h3 class="pfe-link-list--header">Storage</h3>
+                          <p class="pfe-link-list--header">Storage</p>
                           <ul class="pfe-link-list--group">
                             <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat Ceph Storage</a></li>
                             <li class="pfe-link-list--group-item"><a href="#">Red Hat Data Grid</a></li>
@@ -162,73 +165,108 @@
                         <div class="pfe-align-vertical"><pfe-cta class="PFElement"><a href="#">Subscription model</a></pfe-cta></div>
                     </div>
                 </div>
-                </div>
-              </pfe-navigation-item>
-            </li>
-            <li>
-              <pfe-navigation-item aria-current="location">
-                <h3 slot="trigger"><a href="#">Solutions</a></h3>
-                <div slot="tray" hidden>
-                  <div class="pfe-navigation-item__tray--container">
-                      <div class="pfe-nav--column-3--basic">
-                          <div class="column-1">
-                          <div class="pfe-link-list">
-                            <h3 class="pfe-link-list--header"><a href="#">Optimize the IT you have</a></h3>
-                            <ul class="pfe-link-list--group">
-                              <li class="pfe-link-list--group-item"><a href="#">Automation</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">Containers</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">Data storage</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">Linux</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">Virtualization</a></li>
-                            </ul>
-                        </div>
-                            <div class="pfe-link-list">
-                            <h3 class="pfe-link-list--header"><a href="#">Integrate apps, data and processes</a></h3>
-                            <ul class="pfe-link-list--group">
-                              <li class="pfe-link-list--group-item"><a href="#">APIs</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">Integration</a></li>
-                            </ul>
-                          </div>
-                          </div>
-                          <div class="column-2">
-                          <div class="pfe-link-list">
-                            <h3 class="pfe-link-list--header"><a href="#">Add and manage cloud infrastructure</a></h3>
-                            <ul class="pfe-link-list--group">
-                              <li class="pfe-link-list--group-item"><a href="#">Cloud computing</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">Cloud-native apps</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">OpenStack</a></li>
-                            </ul>
-                        </div>
-                            <div class="pfe-link-list">
-                            <h3 class="pfe-link-list--header"><a href="#">Automate and manage IT</a></h3>
-                            <ul class="pfe-link-list--group">
-                              <li class="pfe-link-list--group-item"><a href="#">Automation</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">IT management</a></li>
-                            </ul>
-                          </div>
+            </pfe-navigation-item>
+          </li>
+          <li>
+            <pfe-navigation-item>
+              <p slot="trigger"><a href="#">Solutions</a></p>
+              <div slot="tray" hidden>
+                <div class="pfe-navigation-item__tray--container">
+                    <div class="pfe-nav--column-3--basic">
+                        <div class="column-1">
+                        <div class="pfe-link-list">
+                          <p class="pfe-link-list--header"><a href="#">Optimize the IT you have</a></p>
+                          <ul class="pfe-link-list--group">
+                            <li class="pfe-link-list--group-item"><a href="#">Automation</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Containers</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Data storage</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Linux</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Virtualization</a></li>
+                          </ul>
                       </div>
-                      <div class="column-3">
                           <div class="pfe-link-list">
-                            <h3 class="pfe-link-list--header"><a href="#">Build more modern applications</a></h3>
-                            <ul class="pfe-link-list--group">
-                              <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Cloud-native apps</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">Containers</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">DevOps</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">Microservices</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">Middleware</a></li>
-                            </ul>
+                          <p class="pfe-link-list--header"><a href="#">Integrate apps, data and processes</a></p>
+                          <ul class="pfe-link-list--group">
+                            <li class="pfe-link-list--group-item"><a href="#">APIs</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Integration</a></li>
+                          </ul>
+                        </div>
+                        </div>
+                        <div class="column-2">
+                        <div class="pfe-link-list">
+                          <p class="pfe-link-list--header"><a href="#">Add and manage cloud infrastructure</a></p>
+                          <ul class="pfe-link-list--group">
+                            <li class="pfe-link-list--group-item"><a href="#">Cloud computing</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Cloud-native apps</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">OpenStack</a></li>
+                          </ul>
+                      </div>
+                          <div class="pfe-link-list">
+                          <p class="pfe-link-list--header"><a href="#">Automate and manage IT</a></p>
+                          <ul class="pfe-link-list--group">
+                            <li class="pfe-link-list--group-item"><a href="#">Automation</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">IT management</a></li>
+                          </ul>
+                        </div>
+                    </div>
+                    <div class="column-3">
+                        <div class="pfe-link-list">
+                          <p class="pfe-link-list--header"><a href="#">Build more modern applications</a></p>
+                          <ul class="pfe-link-list--group">
+                            <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Cloud-native apps</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Containers</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">DevOps</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Microservices</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Middleware</a></li>
+                          </ul>
+                      </div>
+                      <div class="pfe-link-list">
+                          <p class="pfe-link-list--header"><a href="#">Solutions by industry</a></p>
+                          <ul class="pfe-link-list--group">
+                            <li class="pfe-link-list--group-item"><a href="#">Financial services</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Government</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Healthcare</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Telecommunications</a></li>
+                          </ul>
                         </div>
                         <div class="pfe-link-list">
-                            <h3 class="pfe-link-list--header"><a href="#">Solutions by industry</a></h3>
+                          <p class="pfe-link-list--header">Testing column 3</p>
+                          <ul class="pfe-link-list--group">
+                            <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                            <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                          </ul>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="pfe-nav--item-footer pfe-nav--column-3--basic">
+                        <div><pfe-cta pfe-priority="primary" class="PFElement"><a href="#">View all products</a></pfe-cta></div>
+                        <div class="pfe-align-vertical"><pfe-cta><a href="#">Explore our portfolio</a></pfe-cta></div>
+                    </div>
+                </div>
+              </div>
+            </pfe-navigation-item>
+          </li>
+          <li>
+            <pfe-navigation-item>
+              <p slot="trigger"><a href="/support">Services &amp; support</a></p>
+              <div slot="tray" hidden>
+                  <div class="pfe-navigation-item__tray--container">
+                        <div class="pfe-nav--column-4--basic" >
+                            <div class="column-1">
+                          <div class="pfe-link-list">
+                            <p class="pfe-link-list--header"><a href="#">Support</a></p>
                             <ul class="pfe-link-list--group">
-                              <li class="pfe-link-list--group-item"><a href="#">Financial services</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">Government</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">Healthcare</a></li>
-                              <li class="pfe-link-list--group-item"><a href="#">Telecommunications</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Troubleshoot a product issue</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Browse product documentation</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Manage subscriptions</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Manage support cases</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Contact customer service</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Value of Red Hat support</a></li>
                             </ul>
                           </div>
                           <div class="pfe-link-list">
-                            <h3 class="pfe-link-list--header">Testing column 3</h3>
+                            <p class="pfe-link-list--header">Testing column 1</p>
                             <ul class="pfe-link-list--group">
                               <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
                               <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
@@ -236,176 +274,140 @@
                             </ul>
                         </div>
                       </div>
+                      <div class="column-2">
+                          <div class="pfe-link-list">
+                            <p class="pfe-link-list--header"><a href="#">Services</a></p>
+                            <ul class="pfe-link-list--group">
+                              <li class="pfe-link-list--group-item"><a href="#">Consulting</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Open Innovation Labs</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Technical Account Management</a></li>
+                            </ul>
+                          </div>
+                          <div class="pfe-link-list">
+                            <p class="pfe-link-list--header">Testing column 2</p>
+                            <ul class="pfe-link-list--group">
+                              <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                            </ul>
+                        </div>
                       </div>
-                      <div class="pfe-nav--item-footer pfe-nav--column-3--basic">
-                          <div><pfe-cta pfe-priority="primary" class="PFElement"><a href="#">View all products</a></pfe-cta></div>
-                          <div class="pfe-align-vertical"><pfe-cta><a href="#">Explore our portfolio</a></pfe-cta></div>
+                      <div class="column-3">
+                          <div class="pfe-link-list">
+                            <p class="pfe-link-list--header"><a href="#">Training and certification</a></p>
+                            <ul class="pfe-link-list--group">
+                              <li class="pfe-link-list--group-item"><a href="#">All courses and exams</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">All certifications</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Verify a certification</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Skills assessment</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Learning subscription</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Learning community</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Red Hat Academy</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">FAQs</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Contact Training & certification</a></li>
+                            </ul>
+                          </div>
+                      </div>
+                      <div class="column-4">
+                          <div class="pfe-link-list">
+                            <p class="pfe-link-list--header">Featured</p>
+                            <ul class="pfe-link-list--group">
+                              <li class="pfe-link-list--group-item"><a href="#">RH124</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">DO707</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">DO280</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">RHCSA</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">RHCSA</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">RHCE</a></li>
+                            </ul>
+                          </div>
+                          <div class="pfe-link-list">
+                            <p class="pfe-link-list--header">Testing column 4</p>
+                            <ul class="pfe-link-list--group">
+                              <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                            </ul>
+                        </div>
+                      </div>
+
+
+                      </div>
+                      <div class="pfe-nav--item-footer">
+                          <pfe-cta pfe-priority="primary" class="PFElement"><a href="#">Explore all services &amp; support</a></pfe-cta>
                       </div>
                   </div>
-                </div>
-              </pfe-navigation-item>
-            </li>
-            <li>
-              <pfe-navigation-item>
-                <h3 slot="trigger"><a href="/support">Services &amp; support</a></h3>
-                <div slot="tray" hidden>
-                    <div class="pfe-navigation-item__tray--container">
-                          <div class="pfe-nav--column-4--basic" >
-                              <div class="column-1">
-                            <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header"><a href="#">Support</a></h3>
-                              <ul class="pfe-link-list--group">
-                                <li class="pfe-link-list--group-item"><a href="#">Troubleshoot a product issue</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Browse product documentation</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Manage subscriptions</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Manage support cases</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Contact customer service</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Value of Red Hat support</a></li>
-                              </ul>
-                            </div>
-                            <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header">Testing column 1</h3>
-                              <ul class="pfe-link-list--group">
-                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
-                              </ul>
+              </div>
+            </pfe-navigation-item>
+          </li>
+          <li>
+            <pfe-navigation-item>
+              <p slot="trigger"><a href="/resources">Resources</a></p>
+              <div slot="tray" hidden>
+                  <div class="pfe-navigation-item__tray--container">
+                      <div class="pfe-nav--column-3--first-wide">
+                          <div class="column-1">
+                          <div class="pfe-link-list">
+                            <p class="pfe-link-list--header">Articles</p>
+                            <ul class="pfe-link-list--group">
+                              <li class="pfe-link-list--group-item"><a href="#">Why choose Red Hat for containers?</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Why choose Red Hat for cloud-native development?</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Why choose Red Hat for API management?</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Why choose Red Hat for microservices?</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">What is Integration?</a></li>
+                            </ul>
                           </div>
-                        </div>
-                        <div class="column-2">
-                            <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header"><a href="#">Services</a></h3>
-                              <ul class="pfe-link-list--group">
-                                <li class="pfe-link-list--group-item"><a href="#">Consulting</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Open Innovation Labs</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Technical Account Management</a></li>
-                              </ul>
-                            </div>
-                            <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header">Testing column 2</h3>
-                              <ul class="pfe-link-list--group">
-                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
-                              </ul>
+                      </div>
+                      <div class="column-2">
+                          <div class="pfe-link-list">
+                            <p class="pfe-link-list--header">Success stories</p>
+                            <ul class="pfe-link-list--group">
+                              <li class="pfe-link-list--group-item"><a href="#">UPS</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Hilton</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Adobe</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">FICO</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Lenovo</a></li>
+                            </ul>
                           </div>
+                          <div class="pfe-link-list">
+                            <p class="pfe-link-list--header">Testing column 2</p>
+                            <ul class="pfe-link-list--group">
+                              <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
+                            </ul>
                         </div>
-                        <div class="column-3">
-                            <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header"><a href="#">Training and certification</a></h3>
-                              <ul class="pfe-link-list--group">
-                                <li class="pfe-link-list--group-item"><a href="#">All courses and exams</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">All certifications</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Verify a certification</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Skills assessment</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Learning subscription</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Learning community</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Red Hat Academy</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">FAQs</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Contact Training & certification</a></li>
-                              </ul>
-                            </div>
-                        </div>
-                        <div class="column-4">
-                            <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header">Featured</h3>
-                              <ul class="pfe-link-list--group">
-                                <li class="pfe-link-list--group-item"><a href="#">RH124</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">DO707</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">DO280</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">RHCSA</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">RHCSA</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">RHCE</a></li>
-                              </ul>
-                            </div>
-                            <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header">Testing column 4</h3>
-                              <ul class="pfe-link-list--group">
-                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
-                              </ul>
+                      </div>
+                      <div class="column-3">
+                          <div class="pfe-link-list">
+                            <p class="pfe-link-list--header"><a href="#">More to explore</a></p>
+                            <ul class="pfe-link-list--group">
+                              <li class="pfe-link-list--group-item"><a href="#">Blogs</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Events and webinars</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Training and certification</a></li>
+                              <li class="pfe-link-list--group-item"><a href="#">Newsroom</a></li>
+                            </ul>
                           </div>
-                        </div>
+                      </div>
 
-
-                        </div>
-                        <div class="pfe-nav--item-footer">
-                            <pfe-cta pfe-priority="primary" class="PFElement"><a href="#">Explore all services &amp; support</a></pfe-cta>
-                        </div>
-                    </div>
-                </div>
-              </pfe-navigation-item>
-            </li>
-            <li>
-              <pfe-navigation-item>
-                <h3 slot="trigger"><a href="/resources">Resources</a></h3>
-                <div slot="tray" hidden>
-                    <div class="pfe-navigation-item__tray--container">
-                        <div class="pfe-nav--column-3--first-wide">
-                            <div class="column-1">
-                            <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header">Articles</h3>
-                              <ul class="pfe-link-list--group">
-                                <li class="pfe-link-list--group-item"><a href="#">Why choose Red Hat for containers?</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Why choose Red Hat for cloud-native development?</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Why choose Red Hat for API management?</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Why choose Red Hat for microservices?</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">What is Integration?</a></li>
-                              </ul>
-                            </div>
-                        </div>
-                        <div class="column-2">
-                            <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header">Success stories</h3>
-                              <ul class="pfe-link-list--group">
-                                <li class="pfe-link-list--group-item"><a href="#">UPS</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Hilton</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Adobe</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">FICO</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Lenovo</a></li>
-                              </ul>
-                            </div>
-                            <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header">Testing column 2</h3>
-                              <ul class="pfe-link-list--group">
-                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Red Hat...</a></li>
-                              </ul>
-                          </div>
-                        </div>
-                        <div class="column-3">
-                            <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header"><a href="#">More to explore</a></h3>
-                              <ul class="pfe-link-list--group">
-                                <li class="pfe-link-list--group-item"><a href="#">Blogs</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Events and webinars</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Training and certification</a></li>
-                                <li class="pfe-link-list--group-item"><a href="#">Newsroom</a></li>
-                              </ul>
-                            </div>
-                        </div>
-
-                        </div>
-                        <div class="pfe-nav--item-footer pfe-nav--column-3--first-wide">
-                            <div class="column-1"><div class="pfe-align-vertical"><pfe-cta pfe-priority="primary" class="PFElement"><a href="#">Explore all topics</a></pfe-cta></div></div>
-                            <div class="pfe-align-vertical"><pfe-cta class="PFElement"><a href="#">Browse all success stories</a></pfe-cta></div>
-                            <div class="pfe-align-vertical"><pfe-cta class="PFElement"><a href="#">Search resource library</a></pfe-cta></div>
-                        </div>
-                    </div>
-                </div>
-              </pfe-navigation-item>
-            </li>
-            <li>
-              <pfe-navigation-item>
-                <h2 slot="trigger"><a href="/open-source">Red Hat &amp; open source</a></h2>
+                      </div>
+                      <div class="pfe-nav--item-footer pfe-nav--column-3--first-wide">
+                          <div class="column-1"><div class="pfe-align-vertical"><pfe-cta pfe-priority="primary" class="PFElement"><a href="#">Explore all topics</a></pfe-cta></div></div>
+                          <div class="pfe-align-vertical"><pfe-cta class="PFElement"><a href="#">Browse all success stories</a></pfe-cta></div>
+                          <div class="pfe-align-vertical"><pfe-cta class="PFElement"><a href="#">Search resource library</a></pfe-cta></div>
+                      </div>
+                  </div>
+              </div>
+            </pfe-navigation-item>
+          </li>
+          <li>
+            <pfe-navigation-item>
+                <p slot="trigger"><a href="/open-source">Red Hat &amp; open source</a></p>
                     <div slot="tray" hidden>
                         <div class="pfe-navigation-item__tray--container">
                           <div class="pfe-nav--column-3--basic">
                               <div class="column-1">
                             <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header">About us</h3>
+                              <p class="pfe-link-list--header">About us</p>
                               <ul class="pfe-link-list--group">
                                 <li class="pfe-link-list--group-item"><a href="#">Our company</a></li>
                                 <li class="pfe-link-list--group-item"><a href="#">How we work</a></li>
@@ -414,7 +416,7 @@
                               </ul>
                             </div>
                             <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header">Testing column 1</h3>
+                              <p class="pfe-link-list--header">Testing column 1</p>
                               <ul class="pfe-link-list--group">
                                 <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
                                 <li class="pfe-link-list--group-item"><a href="#" data-analytics="foo">Red Hat...</a></li>
@@ -424,7 +426,7 @@
                         </div>
                         <div class="column-2">
                             <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header">Company details</h3>
+                              <p class="pfe-link-list--header">Company details</p>
                               <ul class="pfe-link-list--group">
                                 <li class="pfe-link-list--group-item"><a href="#">Newsroom</a></li>
                                 <li class="pfe-link-list--group-item"><a href="#">Investor relations</a></li>
@@ -436,7 +438,7 @@
                         </div>
                         <div class="column-3">
                             <div class="pfe-link-list">
-                              <h3 class="pfe-link-list--header">Open source commitment</h3>
+                              <p class="pfe-link-list--header">Open source commitment</p>
                               <ul class="pfe-link-list--group">
                                 <li class="pfe-link-list--group-item"><a href="#">About open source</a></li>
                                 <li class="pfe-link-list--group-item"><a href="#">Open Source Stories</a></li>
@@ -452,24 +454,23 @@
                           </div>
                         </div>
                     </div>
-              </pfe-navigation-item>
-            </li>
-          </ul>
-        </pfe-navigation-main>
-      </nav>
+            </pfe-navigation-item>
+          </li>
+        </ul>
+      </pfe-navigation-main>
       <!-- Language -->
       <pfe-navigation-item slot="language" pfe-icon="globe">
-        <h3 slot="trigger"><a href="/url-to-language-page">English</a></h3>
+        <p slot="trigger"><a href="/url-to-language-page">English</a></p>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">
             <p>Language switcher</p>
           </div>
         </div>
       </pfe-navigation-item>
-      <a href="/url-to-language-page" slot="mobile-language" pfe-icon="user">English</a>
+      <a href="/url-to-language-page" slot="mobile-language" pfe-icon="globe">English</a>
       <!-- Log in -->
       <pfe-navigation-item slot="login" pfe-icon="user">
-        <h3 slot="trigger"><a href="/login">Log in</a></h3>
+        <p slot="trigger"><a href="/login">Log in</a></p>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">
             <p>Log in things</p>
@@ -479,7 +480,7 @@
       <a href="/login" slot="mobile-login" pfe-icon="user">Login/Register</a>
       <!-- Site switcher -->
       <pfe-navigation-item slot="site-switcher" pfe-icon="bento">
-        <h3 slot="trigger"><a href="/url-to-rh-websites-page">Websites</a></h3>
+        <p slot="trigger"><a href="/url-to-rh-websites-page">Websites</a></p>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">
             <p>Site switcher things</p>

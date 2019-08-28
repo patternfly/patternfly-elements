@@ -86,7 +86,7 @@ pfe-navigation-item [slot="trigger"] a,
 
 //accordion styles inside tertiary
 pfe-navigation-main pfe-navigation-item [slot="trigger"] {
-     font-size: 18px;
+     font-size: 20px;
      font-weight: normal;
      margin: 0;
      @media (min-width: $pfe-global--grid-breakpoint--xl) {
@@ -98,6 +98,10 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
     @media (max-width: $pfe-global--grid-breakpoint--lg--max){
         padding: 0;
     }
+}
+[slot="tray"][hidden] {
+    display: none;
+    visibility: hidden;
 }
 
 // This class is added by the shadow DOM or shady css
@@ -222,7 +226,7 @@ pfe-navigation .pfe-link-list {
     margin-bottom: 1em;
     &--header {
         margin: 0;
-        font-size: 17px;
+        font-size: 16px;
         font-weight: 400;
         line-height: 1.75;
         @media (min-width: $pfe-global--grid-breakpoint--xl){

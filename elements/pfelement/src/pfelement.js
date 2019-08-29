@@ -30,9 +30,11 @@ class PFElement extends HTMLElement {
   static get version() {
     return "{{version}}";
   }
-  
+
   static get randomId() {
-    return Math.random().toString(36).substr(2, 9);
+    return Math.random()
+      .toString(36)
+      .substr(2, 9);
   }
 
   get version() {
@@ -276,6 +278,26 @@ class PFElement extends HTMLElement {
 
   log(...msgs) {
     PFElement.log(`[${this.tag}]`, ...msgs);
+  }
+
+  emitEvent(
+    name,
+    { bubbles = true, cancelable = false, composed = false, detail = {} } = {}
+  ) {
+    console.log(`dispatching event ${this.tag}:${name} with`, {
+      bubbles,
+      cancelable,
+      composed,
+      detail
+    });
+    this.dispatchEvent(
+      new CustomEvent(name, {
+        bubbles,
+        cancelable,
+        composed,
+        detail
+      })
+    );
   }
 }
 

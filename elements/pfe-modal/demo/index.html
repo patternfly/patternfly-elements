@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>PatternFly Element | pfe-modal Demo</title>
 
+
     <noscript>
       <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
@@ -18,6 +19,10 @@
     <script>require(['../pfe-modal.umd.js'])</script>
   </head>
   <body unresolved>
+    <script charset="utf-8">
+      document.body.addEventListener("pfe-modal:open", () => console.log('modal opened') )
+      document.body.addEventListener("pfe-modal:close", () => console.log('modal closeed') )
+    </script>
     <h1>&lt;pfe-modal&gt;</h1>
     <section>
       <h2>Modal: Standard modal</h2>

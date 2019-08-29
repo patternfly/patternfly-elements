@@ -2,9 +2,9 @@ import PFElement from "../pfelement/pfelement.js";
 
 // StartsWith polyfill
 if (!String.prototype.startsWith) {
-  String.prototype.startsWith = function(searchString, position){
+  String.prototype.startsWith = function(searchString, position) {
     return this.substr(position || 0, searchString.length) === searchString;
-};
+  };
 }
 
 class PfeModal extends PFElement {
@@ -29,6 +29,13 @@ class PfeModal extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
+  static get events() {
+    return {
+      open: `${this.tag}:open`,
+      close: `${this.tag}:close`
+    };
+  }
+
   constructor() {
     super(PfeModal, { type: PfeModal.PfeType });
 
@@ -43,7 +50,9 @@ class PfeModal extends PFElement {
     this.close = this.close.bind(this);
 
     this._modalWindow = this.shadowRoot.querySelector(`.${this.tag}__window`);
-    this._modalCloseButton = this.shadowRoot.querySelector(`.${this.tag}__close`);
+    this._modalCloseButton = this.shadowRoot.querySelector(
+      `.${this.tag}__close`
+    );
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
     this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
     this._outer = this.shadowRoot.querySelector(`.${this.tag}__outer`);
@@ -126,10 +135,10 @@ class PfeModal extends PFElement {
         return;
       case "Enter":
       case 13:
-          if (target === this.trigger) {
-            this.open(event);
-          }
-          return;
+        if (target === this.trigger) {
+          this.open(event);
+        }
+        return;
     }
   }
 
@@ -162,12 +171,7 @@ class PfeModal extends PFElement {
     // Set the focus to the container
     this._modalWindow.focus();
 
-    this.dispatchEvent(
-      new CustomEvent(`${this.tag}:open`, {
-        detail: detail,
-        bubbles: true
-      })
-    );
+    this.emitEvent(PfeModal.events.open, { detail });
 
     return this;
   }
@@ -191,14 +195,11 @@ class PfeModal extends PFElement {
       this.trigger = null;
     }
 
-    this.dispatchEvent(
-      new CustomEvent(`${this.tag}:close`, {
-        detail: {
-          open: false
-        },
-        bubbles: true
-      })
-    );
+    this.emitEvent(PfeModal.events.close, {
+      detail: {
+        open: false
+      }
+    });
 
     return this;
   }

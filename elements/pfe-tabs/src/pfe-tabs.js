@@ -130,6 +130,13 @@ class PfeTabs extends PFElement {
     return ["vertical", "selected-index", "pfe-variant", "on"];
   }
 
+  static get events() {
+    return {
+      hiddenTab: `${this.tag}:hidden-tab`,
+      shownTab: `${this.tag}:shown-tab`
+    };
+  }
+
   get selectedIndex() {
     return this.getAttribute("selected-index");
   }
@@ -168,7 +175,9 @@ class PfeTabs extends PFElement {
 
   disconnectedCallback() {
     this.removeEventListener("keydown", this._onKeyDown);
-    this._allTabs().forEach(tab => tab.removeEventListener("click", this._onClick));
+    this._allTabs().forEach(tab =>
+      tab.removeEventListener("click", this._onClick)
+    );
     this._observer.disconnect();
   }
 
@@ -208,14 +217,10 @@ class PfeTabs extends PFElement {
 
       case "on":
         if (this.getAttribute("on") === "dark") {
-          this._allTabs().forEach(tab =>
-            tab.setAttribute("on", "dark")
-          );
-          this._allPanels().forEach(panel =>
-            panel.setAttribute("on", "dark")
-          );
-         }
-         break;
+          this._allTabs().forEach(tab => tab.setAttribute("on", "dark"));
+          this._allPanels().forEach(panel => panel.setAttribute("on", "dark"));
+        }
+        break;
 
       case "selected-index":
         Promise.all([
@@ -366,14 +371,11 @@ class PfeTabs extends PFElement {
     if (this.selected && this.selected !== newTab) {
       newTabSelected = true;
 
-      this.dispatchEvent(
-        new CustomEvent(`${PfeTabs.tag}:hidden-tab`, {
-          bubbles: true,
-          detail: {
-            tab: this.selected
-          }
-        })
-      );
+      this.emitEvent(PfeTabs.events.hiddenTab, {
+        detail: {
+          tab: this.selected
+        }
+      });
     }
 
     newTab.selected = true;
@@ -390,14 +392,11 @@ class PfeTabs extends PFElement {
     this.selected = newTab;
 
     if (newTabSelected) {
-      this.dispatchEvent(
-        new CustomEvent(`${PfeTabs.tag}:shown-tab`, {
-          bubbles: true,
-          detail: {
-            tab: this.selected
-          }
-        })
-      );
+      this.emitEvent(PfeTabs.events.shownTab, {
+        detail: {
+          tab: this.selected
+        }
+      });
     }
   }
 
@@ -519,7 +518,7 @@ class PfeTab extends PFElement {
       this._observer.disconnect();
     }
 
-    if  (!this.pfeId) {
+    if (!this.pfeId) {
       this.pfeId = `${PfeTab.tag}-${generateId()}`;
     }
 

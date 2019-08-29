@@ -45,6 +45,13 @@ class PfeAutocomplete extends PFElement {
     return "pfe-autocomplete.scss";
   }
 
+  static get events() {
+    return {
+      SEARCH: `pfe-search-event`,
+      SELECT: `pfe-option-selected`
+    };
+  }
+
   constructor() {
     super(PfeAutocomplete);
   }
@@ -87,17 +94,26 @@ class PfeAutocomplete extends PFElement {
     this.addEventListener("keyup", this._inputKeyUp.bind(this));
 
     // these two events, fire search
-    this.addEventListener("pfe-search-event", this._closeDroplist.bind(this));
     this.addEventListener(
-      "pfe-option-selected",
+      PfeAutocomplete.events.search,
+      this._closeDroplist.bind(this)
+    );
+    this.addEventListener(
+      PfeAutocomplete.events.select,
       this._optionSelected.bind(this)
     );
   }
 
   disconnectedCallback() {
     this.removeEventListener("keyup", this._inputKeyUp);
-    this.removeEventListener("pfe-search-event", this._closeDroplist);
-    this.removeEventListener("pfe-option-selected", this._optionSelected);
+    this.removeEventListener(
+      PfeAutocomplete.events.search,
+      this._closeDroplist
+    );
+    this.removeEventListener(
+      PfeAutocomplete.events.select,
+      this._optionSelected
+    );
     this._input.removeEventListener("input", this._inputChanged);
     this._input.removeEventListener("blur", this._closeDroplist);
     this._clearBtn.removeEventListener("click", this._clear);
@@ -261,13 +277,10 @@ class PfeAutocomplete extends PFElement {
   }
 
   _doSearch(searchQuery) {
-    this.dispatchEvent(
-      new CustomEvent("pfe-search-event", {
-        detail: { searchValue: searchQuery },
-        bubbles: true,
-        composed: true
-      })
-    );
+    this.emitEvent(PfeAutocomplete.events.search, {
+      detail: { searchValue: searchQuery },
+      composed: true
+    });
     this._reset();
     this.selectedValue = searchQuery;
   }
@@ -416,13 +429,10 @@ class PfeSearchDroplist extends PFElement {
 
   _optionSelected(e) {
     if (e.target.tagName === "LI") {
-      this.dispatchEvent(
-        new CustomEvent("pfe-option-selected", {
-          detail: { optionValue: e.target.innerText },
-          bubbles: true,
-          composed: true
-        })
-      );
+      this.emitEvent(PfeAutocomplete.events.select, {
+        detail: { optionValue: e.target.innerText },
+        composed: true
+      });
     }
   }
 
@@ -431,9 +441,7 @@ class PfeSearchDroplist extends PFElement {
 
     let options = this.data;
 
-    this._ariaAnnounce.innerHTML = `There are ${
-      options.length
-    } suggestions. Use the up and down arrows to browse.`;
+    this._ariaAnnounce.innerHTML = `There are ${options.length} suggestions. Use the up and down arrows to browse.`;
     this._ariaAnnounce.setAttribute("aria-live", "polite");
 
     this._ul.innerHTML = `${options

@@ -13,13 +13,6 @@ $USE-FALLBACK: true;
   justify-content: center;
 }
 
-// Let the main item or the tray be hidden with the attribute
-:host([hidden]:not([pfe-icon="menu"])),
-:host(:not([pfe-icon="menu"])) ::slotted([slot="tray"][hidden]) {
-  display: none;
-  visibility: hidden;
-}
-
 :host([pfe-icon="menu"][hidden]) {
   flex-grow: 1;
 }
@@ -284,6 +277,13 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
       flex-grow: 1;
     }
   }
+}
+
+// Let the main item or the tray be hidden with the attribute
+:host([hidden]:not([pfe-icon="menu"])),
+:host(:not([pfe-icon="menu"])) ::slotted([slot="tray"][hidden]) {
+  display: none;
+  visibility: hidden;
 }
 
 // @TODO set up tray opening animation?

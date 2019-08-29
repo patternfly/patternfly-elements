@@ -634,6 +634,7 @@ class PfeNavigation extends PFElement {
     let key = event.key || event.keyCode;
     // let clicked = event.path && event.path.length > 0 ? event.path[0] : this;
 
+    // @TODO escape should go here?
     switch(key) {
       // @TODO Keep focus state from exiting the nav when overlay is active
       case "Tab":

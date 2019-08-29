@@ -20,7 +20,7 @@ $variables: (
   BorderColor:    transparent,
   Border:         pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
 
-  MinHeight: 72px,
+  MaxHeight: 72px,
 
   // Variables for the trigger icon
   icon: none,
@@ -83,7 +83,7 @@ $variables: (
 // Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
   margin: 0;
-  max-height: pfe-local(MinHeight);
+  max-height: pfe-local(MaxHeight);
 }
 
 @each $icon in (bento, user, globe, search, menu) {
@@ -147,7 +147,7 @@ $variables: (
     background-color: #{map-get($pfe-colors, surface--darkest)};
     background-color: #{pfe-local(BackgroundColor)};
     color: #{pfe-local(Color)};
-    min-height: #{pfe-local(MinHeight)};
+    min-height: #{pfe-local(MaxHeight)};
   }
   &__container {
     margin: 0 auto;

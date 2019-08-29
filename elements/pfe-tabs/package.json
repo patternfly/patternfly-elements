@@ -4,7 +4,7 @@
     "className": "PfeTabs",
     "elementName": "pfe-tabs"
   },
-  "version": "1.0.0-prerelease.22",
+  "version": "1.0.0-prerelease.23",
   "publishConfig": {
     "access": "public"
   },
@@ -36,8 +36,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.22",
-    "@patternfly/pfelement": "^1.0.0-prerelease.22"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.23",
+    "@patternfly/pfelement": "^1.0.0-prerelease.23"
   },
   "generator-pfelement-version": "0.5.4"
 }

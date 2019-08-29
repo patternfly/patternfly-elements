@@ -80,7 +80,7 @@ class PfeAccordion extends PFElement {
 
   static get events() {
     return {
-      CHANGE: `${this.tag}:change`
+      change: `${this.tag}:change`
     };
   }
 

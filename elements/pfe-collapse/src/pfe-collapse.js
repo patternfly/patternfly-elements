@@ -44,14 +44,6 @@ class PfeCollapseToggle extends PFElement {
     return ["aria-controls"];
   }
 
-  static get events() {
-    return {
-      change: `${this.tag}:change`,
-      animationStart: `${this.tag}:animation-start`,
-      animationEnd: `${this.tag}:animation-end`
-    };
-  }
-
   constructor(pfeClass, { setTabIndex = true, addKeydownHandler = true } = {}) {
     super(pfeClass || PfeCollapseToggle);
 
@@ -176,6 +168,13 @@ class PfeCollapsePanel extends PFElement {
     return "pfe-collapse-panel";
   }
 
+  static get events() {
+    return {
+      animationStart: `${this.tag}:animation-start`,
+      animationEnd: `${this.tag}:animation-end`
+    };
+  }
+
   get templateUrl() {
     return "pfe-collapse-panel.html";
   }
@@ -274,7 +273,7 @@ class PfeCollapsePanel extends PFElement {
       this._transitionEndHandler
     );
 
-    this.emitEvent(PfeCollapse.events.animationEnd, {
+    this.emitEvent(PfeCollapsePanel.events.animationEnd, {
       detail: {
         expanded: this.expanded,
         panel: this
@@ -283,7 +282,7 @@ class PfeCollapsePanel extends PFElement {
   }
 
   _fireAnimationEvent(state) {
-    this.emitEvent(PfeCollapse.events.animationStart, {
+    this.emitEvent(PfeCollapsePanel.events.animationStart, {
       detail: {
         state: state,
         panel: this
@@ -315,6 +314,12 @@ class PfeCollapse extends PFElement {
 
   static get observedAttributes() {
     return ["pfe-animation"];
+  }
+
+  static get events() {
+    return {
+      change: `${this.tag}:change`
+    };
   }
 
   constructor(pfeClass) {

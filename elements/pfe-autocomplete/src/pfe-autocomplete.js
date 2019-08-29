@@ -47,8 +47,8 @@ class PfeAutocomplete extends PFElement {
 
   static get events() {
     return {
-      SEARCH: `pfe-search-event`,
-      SELECT: `pfe-option-selected`
+      search: `pfe-search-event`,
+      select: `pfe-option-selected`
     };
   }
 

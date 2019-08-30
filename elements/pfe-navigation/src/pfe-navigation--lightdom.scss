@@ -101,7 +101,7 @@ pfe-navigation .pfe-link-link {
     }
 }
 
-pfe-navigation-main[show_content] ul {
+pfe-navigation-main[show_content] > ul {
     display: flex;
     flex-flow: row nowrap;
 }

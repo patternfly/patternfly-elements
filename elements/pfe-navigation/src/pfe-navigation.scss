@@ -195,6 +195,7 @@ $variables: (
     padding-top: #{pfe-local(Padding--vertical)};
     padding-right: #{pfe-var(container-padding)};
     padding-bottom: #{pfe-local(Padding--vertical)};
+    // --pfe-theme--logo--svg
   }
   &__skip {
     display: block;

@@ -18,6 +18,45 @@ if (!("path" in Event.prototype)) {
   });
 }
 
+if (!Array.prototype.filter){
+  Array.prototype.filter = function(func, thisArg) {
+    'use strict';
+    if ( ! ((typeof func === 'Function' || typeof func === 'function') && this) )
+        throw new TypeError();
+   
+    var len = this.length >>> 0,
+        res = new Array(len), // preallocate array
+        t = this, c = 0, i = -1;
+
+    var kValue;
+    if (thisArg === undefined){
+      while (++i !== len){
+        // checks to see if the key was set
+        if (i in this){
+          kValue = t[i]; // in case t is changed in callback
+          if (func(t[i], i, t)){
+            res[c++] = kValue;
+          }
+        }
+      }
+    }
+    else{
+      while (++i !== len){
+        // checks to see if the key was set
+        if (i in this){
+          kValue = t[i];
+          if (func.call(thisArg, t[i], i, t)){
+            res[c++] = kValue;
+          }
+        }
+      }
+    }
+   
+    res.length = c; // shrink down array to proper size
+    return res;
+  };
+}
+
 class PfeNavigationItem extends PFElement {
   static get tag() {
     return "pfe-navigation-item";
@@ -37,11 +76,6 @@ class PfeNavigationItem extends PFElement {
 
   static get PfeType() {
     return PFElement.PfeTypes.Container;
-  }
-
-  // Used in the template to determine where to print the icon
-  get hasIcon() {
-    return this.hasAttribute("pfe-icon");
   }
 
   static get observedAttributes() {
@@ -118,25 +152,25 @@ class PfeNavigationItem extends PFElement {
     if (event) event.preventDefault();
 
     // Close the other active item(s) unless it's this item's parent
-    this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
-      let stayOpen = item === this.parent;
-      if (!stayOpen) item.close();
-      return stayOpen;
-    });
+    console.log(this.navigationWrapper);
+    if (this.navigationWrapper) {
+      this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
+        let stayOpen = item === this.parent;
+        if (!stayOpen) item.close();
+        return stayOpen;
+      });
 
-    // Open that item and add it to the active array
-    this.navigationWrapper._activeNavigationItems.push(this);
+      // Open that item and add it to the active array
+      this.navigationWrapper._activeNavigationItems.push(this);
 
-    this.expanded = true;
-    this.navigationWrapper.overlay = true;
+      this.expanded = true;
+      this.navigationWrapper.overlay = true;
+    }
 
     // Dispatch the event
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:open`, {
-        detail: {
-          navigationItem: this,
-          action: "open"
-        },
+        detail: {},
         bubbles: true,
         composed: true
       })
@@ -163,10 +197,7 @@ class PfeNavigationItem extends PFElement {
     // Dispatch the event
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:close`, {
-        detail: {
-          navigationItem: this,
-          action: "close"
-        },
+        detail: {},
         bubbles: true,
         composed: true
       })
@@ -221,6 +252,9 @@ class PfeNavigationItem extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+
+    console.log("Navigation item");
+    console.log(this);
 
     this._init__trigger();
     this._init__tray();
@@ -282,20 +316,23 @@ class PfeNavigationItem extends PFElement {
     // If a light DOM tray exists, check for descendents
     if (this.tray) {
       this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll(`${this.tag}`)]);
-      this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll("slot")].map(slot => {
-        let ret = [];
-        if (!window.ShadyCSS) {
-          ret = slot.assignedElements().map(node => {
-            return [...node.querySelectorAll(`${this.tag}`)];
-          });
-        } else {
-          // something else
-          console.log(slot);
-        }
-      }).flat(3));
-    }
+      let array = [];
 
-    if (this.tray) {
+      // Search the tray for nested slots
+      if (!window.ShadyCSS) {
+        [...this.tray.querySelectorAll("slot")].forEach(slot => {
+          [...slot.assignedElements()].forEach(node => {
+            array = array.concat([...node.querySelectorAll(`${this.tag}`)]);
+          });
+        });
+      }
+
+      this.nestedItems = this.nestedItems.concat(array.filter(el => {
+        return !this.nestedItems.includes(el);
+      }));
+
+      console.log(this.nestedItems);
+      
       this._init__handlers();
     }
   }
@@ -413,6 +450,8 @@ class PfeNavigationMain extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
+    console.log("Navigation main");
+
     this._init();
 
     // Add a slotchange listener to the lightDOM trigger
@@ -512,6 +551,8 @@ class PfeNavigation extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+
+    console.log("Navigation");
 
     // If this element contains light DOM, initialize it
     if (this.children.length) {
@@ -632,26 +673,23 @@ class PfeNavigation extends PFElement {
 
   _keydownHandler(event) {
     let key = event.key || event.keyCode;
-    // let clicked = event.path && event.path.length > 0 ? event.path[0] : this;
 
-    // @TODO escape should go here?
     switch(key) {
-      // @TODO Keep focus state from exiting the nav when overlay is active
       case "Tab":
       case 9:
         // If the overlay is active, trap focus
-        console.log(document.activeElement);
-        if ( event.shiftKey ) /* shift + tab */ {
-          if (document.activeElement === this.firstItem && this.overlay) {
-            console.log("Focus on last item");
-            this.lastItem.focus();
+        if ( event.shiftKey ) {
+          if ([this.firstItem, this.firstItem.trigger].includes(document.activeElement) && this.overlay) {
+            this.lastItem.trigger.focus();
             event.preventDefault();
           }
-        } else /* tab */ {
-            if (document.activeElement === this.lastItem && this.overlay) {
-              this.firstItem.focus();
-              event.preventDefault();
-            }
+        }
+        else {
+          if ([this.lastItem, this.lastItem.trigger].includes(document.activeElement) && this.overlay) {
+            if (this.firstItem.trigger) this.firstItem.trigger.focus();
+            else this.firstItem.focus();
+            event.preventDefault();
+          }
         }
         break;
     }

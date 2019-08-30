@@ -13,6 +13,7 @@
   box-sizing: border-box;
 }
 
+
 .pfe-footer-menus {
   display: flex;
   flex-wrap: wrap;
@@ -21,8 +22,8 @@
   .pfe-footer-links {
 
     h2 {
-      margin: 0 0 1.5rem;
-      font-size: 0.938rem;
+      margin: 0;
+      font-size: 0.875rem; // ~14px from 16px base
       line-height: 1.5em;
       text-transform: uppercase;
     }
@@ -39,65 +40,22 @@
       outline-color: #fff;
     }
 
-    .pfe-footer-links > section {
-      padding: 1rem;
-    }
-
-    @media screen and (min-width: 768px) {
-      .pfe-footer-links > section:first-child {
-        padding-top: 0;
-      }
-    }
-  }
-
-  .pfe-footer-info {
-    padding: 1.5rem 1rem 1rem;
-    background: #c00;
-    color: #fff;
-
-    @at-root :host([pfe-variant="gray"]) & {
-      background: #646464;
-    }
-
-    ul {
-      margin: 1.5rem 0 0;
-      padding: 0;
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    li {
-      width: 50%;
-    }
-
-    a,
-    a:visited {
-      color: #fff;
-      text-decoration: underline;
-    }
-
-    a:hover {
-      color: rgba(255,255,255,.8);
-      text-decoration: underline;
+    > section {
+      padding: 2rem 2rem 0;
     }
   }
 
   .pfe-footer-links {
     padding-bottom: 2rem;
-    width: 100%;
-
-    > section {
-      padding: 1rem;
-    }
 
     h2 {
       line-height: 1em;
 
+      pfe-collapse-toggle,
       button {
         display: block;
         margin: 0;
-        padding: 0.25rem 0 0.25rem 1.5rem;
+        padding: 0 0 0 1.5rem;
         width: 100%;
         text-align: left;
         border: 0;
@@ -110,6 +68,13 @@
         color: #fff;
         font-weight: 600;
 
+        &:focus {
+          outline-offset: 1px;
+          outline-style: dotted;
+          outline-width: 1px;
+          outline-color: #fff;
+        }
+
         &::before {
           // Draw chevron!
           position: relative;
@@ -121,7 +86,14 @@
           height: 0.5rem;
           border-right: 0.094rem solid #fff;
           border-bottom: 0.094rem solid #fff;
-          transform: rotate(45deg) translateY(0.125em);
+          transform: rotate(-45deg) translate(-0.1rem, 0.1rem);
+        }
+
+        &[aria-expanded="true"] {
+
+          &::before {
+            transform: rotate(45deg) translate(0, 0.1rem);
+          }
         }
 
         @media screen and (min-width: 992px) {
@@ -135,7 +107,7 @@
     }
 
     ul {
-      margin: 1.5rem 0 0 1.5rem;
+      margin: 1.125rem 0 0 1.5rem;
       padding: 0;
       list-style: none;
     }
@@ -157,24 +129,15 @@
 
     @media screen and (min-width: 768px) {
       order: -1;
-
-      > section:first-child {
-        padding-top: 0;
-      }
     }
 
     @media screen and (min-width: 992px) {
       display: flex;
       justify-content: space-between;
-      // padding-left: 2rem;
       padding-right: 2rem;
 
       ul {
         margin-left: 0;
-      }
-
-      > section {
-        padding-top: 0;
       }
 
       @supports (display: grid) {
@@ -184,20 +147,19 @@
     }
   }
 
-  .pfe-footer-links:first-child,
-  .pfe-footer-info:first-child + .pfe-footer-links {
-    padding-top: 1.5rem;
-  }
-
   @media screen and (min-width: 768px) {
     @supports (display: grid) {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-areas: "footerLinks siteInfo"
-                             "legalInfo legalInfo";
+                           "legalInfo legalInfo";
 
       slot[name="pfe-footer-legal"]::slotted(*) {
         grid-area: legalInfo;
+      }
+
+      .pfe-footer-info {
+        display: flex; // make BG stretch 100% height
       }
 
       slot[name="pfe-footer-info"]::slotted(*) {
@@ -255,14 +217,21 @@
 }
 
 .brand {
-  padding: 1rem 1rem 0;
+  padding: 2rem 2rem 0;
 
   @media screen and (min-width: 768px) {
-    padding: 1rem;
+    padding: 2rem;
   }
 
   a {
     display: block;
+
+    &:focus {
+      outline-offset: 1px;
+      outline-style: dotted;
+      outline-width: 1px;
+      outline-color: #fff;
+    }
   }
 
   svg {
@@ -271,14 +240,21 @@
 }
 
 .summit-logo {
-  padding: 0 1rem 1rem;
+  padding: 1rem 2rem 2rem;
 
   @media screen and (min-width: 768px) {
-    padding: 1rem;
+    padding: 2rem;
   }
 
   a {
     display: block;
+
+    &:focus {
+      outline-offset: 1px;
+      outline-style: dotted;
+      outline-width: 1px;
+      outline-color: #fff;
+    }
   }
 
   svg {

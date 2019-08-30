@@ -1,5 +1,6 @@
 import PFElement from "../pfelement/pfelement.js";
 import PfeCollapse from "../pfe-collapse/pfe-collapse.js";
+import PfeIcon from "../pfe-icon/pfe-icon.js";
 
 class PfeFooter extends PFElement {
   static get tag() {
@@ -14,32 +15,22 @@ class PfeFooter extends PFElement {
     return "pfe-footer.scss";
   }
 
-  get sectionExpanded() {
-    return this.hasAttribute("aria-expanded");
-  }
-
+  // Used in the template
   get hasFooterLinks() {
-    return this.querySelector("[pfe-footer-links]") !== null;
-  }
-
-  set sectionExpanded(val) {
-    const value = Boolean(val);
-
-    if (val) {
-      this.setAttribute("pfe-expanded", true);
-      this.querySelector('button').setAttribute("aria-expanded", true);
-    } else {
-      this.removeAttribute("pfe-expanded");
-      this.querySelector('button').setAttribute("aria-expanded", false);
-    }
+    return this.querySelector('[pfe-footer-links]') !== null;
   }
 
   static get observedAttributes() {
-    return ["aria-expanded"];
+    return ['aria-expanded'];
   }
 
   constructor() {
     super(PfeFooter, { delayRender: true });
+
+    this._initialLoad = true;
+    this._mqHandler = this._mqHandler.bind(this);
+    this.mq = window.matchMedia('(min-width: 992px)');
+    this.mq.addListener(this._mqHandler);
   }
 
   connectedCallback() {
@@ -51,48 +42,37 @@ class PfeFooter extends PFElement {
 
     // Render shadowDOM
     this.render();
+    this._mqHandler();
 
-    // this._makeFooterLinkSectionsCollapsible(this.shadowRoot.querySelector('.pfe-footer-links'));
-
-    this._moveSlotToShadowDom('pfe-footer-info', '.pfe-footer-info');
-
-  }
-
-  _moveSlotToShadowDom(slotName, toSelector) {
-    let slotted = [
-      ...this.querySelectorAll(`[slot='${slotName}']`) // floperator
-    ];
-    let shadowParent = this.shadowRoot.querySelector(toSelector);
-    slotted.forEach(slot => shadowParent.appendChild(slot));
-
-    // let windowWidth = window.innerWidth;
   }
 
   _makeFooterLinkSections(section) {
-    section.buttonText = section.querySelector("h2").innerHTML;
-    section.list = section.querySelector("ul").outerHTML;
+    section.buttonText = section.querySelector('h2').innerHTML;
+    section.list = section.querySelector('ul').outerHTML;
     // Add ARIA-labelledby from the ul and h2
+    console.log(this.shadowRoot.querySelector('.pfe-footer-links'));
   }
 
-  // _makeFooterLinkSectionsCollapsible(footerLinks) {
-  //   let sections = [
-  //     ...footerLinks.querySelectorAll("section")
-  //   ];
-  //     console.log(sections);
-  //   // sections.forEach(section => {
-  //   //   console.log(section);
-  //   //   section.setAttribute("pfe-expanded", true);
-  //   //   section.querySelector("button").setAttribute("aria-expanded", true);
-  //   // });
-  // }
+  _mqHandler() {
+    const panels = [...this.shadowRoot.querySelectorAll('pfe-collapse-panel')];
+    const toggles = [...this.shadowRoot.querySelectorAll('pfe-collapse-toggle')];
 
-  _clickHandler(event) {
-    this.dispatchEvent(
-      new CustomEvent(`${RhFooter.tag}:change`, {
-        detail: { expanded: !this.expanded },
-        bubbles: true
-      })
-    );
+    if (this.mq.matches) {
+      if (this._initialLoad) {
+        panels.forEach(panel => panel.setAttribute('pfe-animation', 'false'));
+      }
+
+      panels.forEach(panel => panel.expanded = true);
+      toggles.forEach(toggle => toggle.setAttribute('disabled', 'disabled'));
+
+      if (this._initialLoad) {
+        panels.forEach(panel => panel.removeAttribute('pfe-animation'));
+        this._initialLoad = false;
+      }
+    } else {
+      panels.forEach(panel => panel.expanded = false);
+      toggles.forEach(toggle => toggle.removeAttribute('disabled'));
+    }
   }
 
   // disconnectedCallback() {}

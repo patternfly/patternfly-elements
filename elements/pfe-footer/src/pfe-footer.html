@@ -11,8 +11,12 @@
       <div class="pfe-footer-links">
         ${this._sections.map(section => `
           <section>
-            <h2><button>${section.buttonText}</button></h2>
-            ${section.list}
+            <pfe-collapse>
+              <h2><pfe-collapse-toggle>${section.buttonText}</pfe-collapse-toggle></h2>
+              <pfe-collapse-panel>
+              ${section.list}
+              </pfe-collapse-panel>
+            </pfe-collapse>
           </section>
         `).join("\n")}
       </div>

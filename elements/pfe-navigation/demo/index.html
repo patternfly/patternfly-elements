@@ -24,7 +24,10 @@
     <script src="/requirejs/require.js"></script>
 
     <script>require([
-      '../pfe-navigation.umd.js'
+      '../pfe-navigation.umd.js',
+      '../../pfe-band/pfe-band.umd.js',
+      '../../pfe-card/pfe-card.umd.js',
+      '../../pfe-cta/pfe-cta.umd.js'
     ])</script>
 
     <!-- <script type="module" src="../pfe-navigation.js"></script> -->
@@ -193,7 +196,7 @@
 
 
 
-    <!--pfe-band pfe-color="lightest">
+    <pfe-band pfe-color="lightest">
       <header slot="pfe-band--header">
         <h1>Lightest band, header region</h1>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
@@ -370,7 +373,7 @@
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
-    </pfe-band-->
+    </pfe-band>
 
     <script>
       // Listen for the toggled event and if the slot is the language slot, inject new content

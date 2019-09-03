@@ -1,7 +1,11 @@
 <div class="pfe-navigation__wrapper">
   <div class="pfe-navigation__container">
-    <slot name="logo" class="pfe-navigation__logo" tabindex="2"></slot>
-    <slot name="skip" class="pfe-navigation__skip" tabindex="1"></slot>
+    <div class="pfe-navigation__logo">
+      <slot name="logo" tabindex="2"></slot>
+    </div>
+    <div class="pfe-navigation__skip">
+      <slot name="skip" tabindex="1"></slot>
+    </div>
     <div class="pfe-navigation__main">
       <pfe-navigation-item pfe-icon="menu" hidden>
         <span slot="trigger">

@@ -40,7 +40,7 @@ $USE-FALLBACK: true;
 /*  TRIGGER STYLES   */
 /* ----------------- */
 $trigger--FontSize--fallback:   #{map-get($pfe-vars, font-size--heading--zeta)};
-$trigger--FontWeight--fallback: #{map-get($pfe-vars, font-size--heading--zeta)};
+$trigger--FontWeight--fallback: #{map-get($pfe-vars, font-weight--light)};
 $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
 
 ::slotted([slot="trigger"]) {
@@ -98,7 +98,7 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
   :host(:not([pfe-icon])) &::after {
     display: block;
     content: " ";
-    visibility: pfe-local($cssvar: Visible, $region: trigger-icon);
+    visibility: pfe-local($cssvar: Visible, $region: trigger-icon, $fallback: hidden);
 
     @include pfe-arrow(down, #{pfe-color(feedback--default)}, $width: 6px, $height: 6px);
     position: absolute;

@@ -103,7 +103,6 @@ $variables: (
     ::slotted([pfe-icon="#{$icon}"].expanded) {
       --pfe-navigation--icon: #{map-get($icons, "close")};
     }
-
   }
 }
 
@@ -150,6 +149,8 @@ $variables: (
     min-height: #{pfe-local(MaxHeight)};
   }
   &__container {
+    max-width: #{pfe-local(Width)};
+    width: 100%;
     margin: 0 auto;
     padding: 0 #{pfe-local(Padding--horizontal)};
 
@@ -162,10 +163,7 @@ $variables: (
     @each $size in (md, lg, xl) {
       @media screen and (min-width: pfe-breakpoint(#{$size})) {
         // Set the variable for use in the tray region too
-        --pfe-navigation--Width: calc(#{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 2));
-
-        width: calc(#{pfe-breakpoint(#{$size})} - 2rem); // IE11 fallback
-        width: #{pfe-local(Width)};
+        --pfe-navigation--Width: calc(#{pfe-breakpoint(#{$size})});
       }
     }
 
@@ -195,7 +193,7 @@ $variables: (
     padding-top: #{pfe-local(Padding--vertical)};
     padding-right: #{pfe-var(container-padding)};
     padding-bottom: #{pfe-local(Padding--vertical)};
-    // --pfe-theme--logo--svg
+    // @TODO --pfe-theme--logo--svg?
   }
   &__skip {
     display: block;
@@ -215,7 +213,6 @@ $variables: (
     &--mobile {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      // height: 100%;
       [show_search] &,
       [show_login][show_language] & {
         grid-gap: #{pfe-var(container-spacer)};

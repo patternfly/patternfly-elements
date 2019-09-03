@@ -150,7 +150,7 @@ module.exports = function factory({
   };
 
   task("merge", () => {
-    return src(`${elementName}.js`, {
+    return src(`${elementName}*.js`, {
       cwd: paths.source
     })
       .pipe(
@@ -275,13 +275,13 @@ ${fs
   });
 
   task("copy", () => {
-    return src(["*.js", `!${elementName}.js`], {
+    return src(["*.js", `!${elementName}*.js`], {
       cwd: paths.source
     }).pipe(dest(paths.compiled));
   });
 
   task("compile", () => {
-    return src(`${elementName}.js`, {
+    return src(`${elementName}*.js`, {
       cwd: paths.compiled
     })
       .pipe(

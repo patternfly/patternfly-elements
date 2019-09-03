@@ -95,12 +95,6 @@ pfe-navigation-item [slot="trigger"] a,
     }
 }
 
-pfe-navigation .pfe-link-link {
-    &--header > a {
-        @extend %link-styles;
-    }
-}
-
 pfe-navigation-main[show_content] > ul {
     display: flex;
     flex-flow: row nowrap;

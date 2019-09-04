@@ -94,6 +94,16 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
      }
 }
 
+:host {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  color: #{pfe-radio(color--text)};
+  border: 5px solid green;
+  font-weight: lighter;
+}
+
 [slot="tray"] {
     @media (max-width: $pfe-global--grid-breakpoint--lg--max){
         padding: 0;
@@ -128,93 +138,23 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
     }
 }
 
-@for $col from 1 through 4 {
-  .column-#{$col} {
-    grid-area: column-#{$col};
-    // > * {
-    //   &:not(:first-child) {
-    //       @media (min-width: $pfe-global--grid-breakpoint--xl) {
-    //           padding-top: 16px;
-    //       }
-    //   }
-    // }
-  }
-}
-
-
-[class^=column] {
-    display: contents;
-    @media (min-width: $pfe-global--grid-breakpoint--xl) {
-        display: block;
-    }
-}
-
-.pfe-nav--column-3--basic,
-.pfe-nav--column-3--first-wide,
-.pfe-nav--column-4--basic,
-.pfe-nav--column-4--basic-tablet-breakpoint {
+.pfe-nav-grid {
     @media (min-width: 650px) {
         column-count: 2;
         column-gap: 32px;
         flex: 1;
     }
-}
-
-// 4 columns
-.pfe-nav--column-4--basic {
-    @media (min-width: $pfe-global--grid-breakpoint--xl) {
-      display: grid;
-      // display: -ms-grid;
-      grid-gap: 16px;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-areas:
-       "column-1 column-2 column-3 column-4";
-    }
-}
-
-.pfe-nav--column-4--basic-tablet-breakpoint {
-    @media (min-width: $pfe-global--grid-breakpoint--lg) {
-        column-count: 3;
-    }
     @media (min-width: $pfe-global--grid-breakpoint--xl) {
         display: grid;
         // display: -ms-grid;
-        grid-gap: 16px;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-areas:
-       "column-1 column-2 column-3 column-4";
+        grid-gap: 32px;
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
-//opt in
-.pfe-nav--column-3--basic {
-    @media (min-width: $pfe-global--grid-breakpoint--lg) {
-        [class^=column] {
-            display: block;
-        }
-        display: grid;
-        // display: -ms-grid;
-        grid-gap: 16px;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-areas:
-       "column-1 column-2 column-3";
-    }
+.span-2 {
+  grid-column: span 2;
 }
-
-//(opt-in)
-.pfe-nav--column-3--first-wide {
-    @media (min-width: $pfe-global--grid-breakpoint--xl) {
-        display: grid;
-        // display: -ms-grid;
-        grid-gap: 16px;
-      grid-template-columns: 2fr 1fr 1fr;
-      grid-template-areas:
-       "column-1 column-2 column-3";
-    }
-}
-
-
-
 
 pfe-navigation .pfe-link-list {
     -webkit-column-break-inside: avoid;
@@ -258,39 +198,22 @@ pfe-navigation .pfe-link-list {
     }
 }
 
-
-:host {
-  display: block;
-  position: relative;
-  overflow: hidden;
-  margin: 0;
-  color: #{pfe-radio(color--text)};
-  border: 5px solid green;
-  font-weight: lighter;
-}
-
 .pfe-nav--item-footer {
-  margin-top: 40px !important;
+    @extend .pfe-nav-grid;
+  margin: 40px 0 !important;
   border-top: 1px solid lightgray;
   padding: 40px 0;
-  transform: translateX(0);
+  // transform: translateX(0);
+  align-items: baseline;
+  justify-items: start;
   @media (min-width: $pfe-global--grid-breakpoint--xl) {
       padding-bottom: calc(40px - #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})});
 
   }
   > *:not(:last-child) {
-          padding-bottom: 16px;
+          margin-bottom: 16px;
           @media (min-width: $pfe-global--grid-breakpoint--xl) {
-              padding-bottom: 0;
+              margin-bottom: 0;
           }
       }
-      [class^=column] {
-          @media (max-width: 649px) {
-              display: block;
-          }
-      }
-}
-.pfe-align-vertical {
-    display: flex;
-    align-items: center;
 }

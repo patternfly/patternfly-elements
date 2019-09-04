@@ -114,6 +114,11 @@ class PfeCollapseToggle extends PFElement {
 
     this.expanded = !this.expanded;
 
+    // one last try to hook up a panel
+    if (!this.controlledPanel) {
+      this._connectPanel(this.getAttribute("aria-controls"));
+    }
+
     if (this.controlledPanel) {
       this.controlledPanel.expanded = this.expanded;
 

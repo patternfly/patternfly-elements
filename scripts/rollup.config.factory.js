@@ -7,6 +7,11 @@ import replace from "rollup-plugin-re";
 
 const importRegex = /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
 
+const babelSettings = {
+  presets: [["env", { modules: false }]],
+  plugins: ["external-helpers"]
+};
+
 function esmConfig({ elementName, className } = {}) {
   return {
     input: `${elementName}.js`,
@@ -40,7 +45,7 @@ function umdConfig({ elementName, className } = {}) {
       }),
       resolve(),
       commonjs(),
-      babel()
+      babel(babelSettings)
     ],
     external: id => id.startsWith("..")
   };
@@ -95,7 +100,7 @@ function umdMinConfig({ elementName, className } = {}) {
       }),
       resolve(),
       commonjs(),
-      babel(),
+      babel(babelSettings),
       uglify()
     ],
     external: id => id.startsWith("..")

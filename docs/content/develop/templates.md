@@ -59,48 +59,42 @@ One part of web components is the ability to utilize the Shadow DOM to store add
 
 ### **Cons**
 
-1. **Style limitations**
-    1. Web component styles can conflict with styles already on the page, and existing styles will probably be more specific than `::slotted`
-    2. You can only style direct descendants of the slot. 
-        - If you need to use nested elements in the web component, like list items and unordered list `<ul><li>...</li></ul>` you cannot actually style the list item. This means you would have to ship a light DOM stylesheet with the web component.
-    3. Internet Explorer & Edge
-        2. There are no slots in IE11 or Edge, so the polyfill WILL NOT style slotted elements.
-    4. The CSS for slotted items is low specificity
+1. Web component styles can conflict with styles already on the page, and existing styles will probably be more specific than `::slotted` foo
 
-        ```
-        ::slotted(a) {
-          color: foo !important;
-        }
-        ```
-        is more specific than  
-        
-		```
-		pfe-cta.PFElement a {
-		    color: foo;
-		}
-		```
-
-
-
-## Regular Light DOM stylesheet ( pfelements.css )
+    ```
+    // regular-styles.css
+    pfe-cta a {
+	    color: foo;
+    }
+    ```
+    
+    is more specific than  
+     
+	```
+	// web-component.css
+	::slotted(a) {
+      color: foo !important;
+   }
+   ```
+2. Internet Explorer & Edge
+    - There are no slots in IE11 or Edge, so the polyfill **will not**  style slotted elements.
+3. You can only style **direct** descendants of the slot. 
+    - If you need to use nested elements in the web component, like unordered lists & list items: `<ul><li>...</li></ul>` you cannot actually style the list item. This means you would have to ship a light DOM stylesheet with the web component:
 
 
 
-*   Opt-in
-*   Would it match or mirror regular patternfly styles?
+
+### Regular Light DOM stylesheet (i.e. pfe-cta--lightdom.css )
+
+Some web components ship with a light DOM stylesheet for IE / Edge support. These stylesheets are opt-in (they are not included in the JavaScript file for the web component).
+
 *   Includes 
     *   component fallback styles
-    *   basic class-based styles for typography (when pfe-text doesn't do the trick)
-*   Could include 
-    *   Reveal.css
-    *   font styles
-*   And put it on static.redhat.com
+    *   basic class-based styles for typography  
 
 
 
-
----
-
+<br/>
 
 
 ## Shadow DOM 
@@ -111,29 +105,17 @@ One part of web components is the ability to utilize the Shadow DOM to store add
 
 
 1. Styles are encapsulated, so there are no worries about conflicting styles or specificity battles from other stylesheets. 
-    1. Sometimes this is desirable, like links inside the pfe-cta component. We don't want those links to accept any external styles.
+    - Sometimes this is desirable, like links inside the pfe-cta component. We don't want those links to accept any external styles.
 2. Semantic markup
-    2. Would google see an H3 that a dev put in the pfe-hero component, or the h1 that the component upgrades it to?
+    - Would google see an H3 that a dev put in the pfe-hero component, or the h1 that the component upgrades it to?
 
 
 ### **Cons**
 
 
 
-1. Analytics
-    1. Analytics tools may not see links in the Shadow DOM
-        1. Bubble up events from our components?
-            1. Can we fire off generic events that analytics can watch for?
-        2. Connect directly to analytics API?
-        3. Can Adobe/Clicktale "listen" for clicks on the pfe-cta (etc.)?
-            2. Adobe needs to get this figured out. This is the way the web is going
-    2. Test
-        4. Quick test in Adobe Target shows that conversion events are not recognized from the Shadow DOM
-        5. Set up test in Clicktale, custom events that clicktale can listen for
-        6. Don’t forget Pendo
-        7. Other analytics tools??
+1. Analytics tools may not see links in the Shadow DOM. Therefore we must always bubble up custom events if there are interactive items in the shadow DOM.
 2. When content is moved to the shadow DOM on upgrade, it can slow down rendering as the page re-paints
-1. 
 
 
 

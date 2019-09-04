@@ -1,8 +1,21 @@
++++
+title = "JavaScript"
+description = ""
+weight = 3
+draft = false
+bref = ""
+toc = true
+menu = "start"
+tags = [ "start" ]
++++
+
+
+[TOC]
 
 
 ## Javascript
 
-
+** DRAFT **
 
 *   Web components and constructors
     *   [Web Components: The Constructor and PatternFly Elements](https://medium.com/@kylebuch8/web-components-the-constructor-and-patternfly-elements-606bc51938c9)
@@ -33,4 +46,4 @@
             *   Light dom is manipulated by Angular causing issues with mutation observers
 *   IE11 won't upgrade my component, what's up with that?
     *   Wrap everything in DOM content loader
-    *   
+ 

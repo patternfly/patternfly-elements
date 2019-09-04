@@ -83,6 +83,10 @@ class PfeCollapseToggle extends PFElement {
     if (this._setTabIndex) {
       this.setAttribute("tabindex", 0);
     }
+
+    if (!this.controlledPanel) {
+      this._connectPanel(this.getAttribute("aria-controls"));
+    }
   }
 
   disconnectedCallback() {
@@ -100,17 +104,20 @@ class PfeCollapseToggle extends PFElement {
       return;
     }
 
-    // this can be an issue if the pfe-collapse is located within
-    // a shadow root
-    if (this.getRootNode) {
-      this.controlledPanel = this.getRootNode().querySelector(`#${newVal}`);
-    } else {
-      this.controlledPanel = document.querySelector(`#${newVal}`);
-    }
+    this._connectPanel(newVal);
   }
 
   toggle() {
+    if (this.hasAttribute("disabled")) {
+      return;
+    }
+
     this.expanded = !this.expanded;
+
+    // one last try to hook up a panel
+    if (!this.controlledPanel) {
+      this._connectPanel(this.getAttribute("aria-controls"));
+    }
 
     if (this.controlledPanel) {
       this.controlledPanel.expanded = this.expanded;
@@ -145,6 +152,16 @@ class PfeCollapseToggle extends PFElement {
       case "Enter":
         this.toggle();
         break;
+    }
+  }
+
+  _connectPanel(id) {
+    // this can be an issue if the pfe-collapse is located within
+    // a shadow root
+    if (this.getRootNode) {
+      this.controlledPanel = this.getRootNode().querySelector(`#${id}`);
+    } else {
+      this.controlledPanel = document.querySelector(`#${id}`);
     }
   }
 }

@@ -72,7 +72,8 @@ commitIgnoredFiles() {
 
 gitTag() {
   log "creating a git tag"
-  git tag $TAG_NAME || exit 1
+  # create an annotated tag (lerna only picks up on annotated tags)
+  git tag -a -m "$TAG_NAME" $TAG_NAME || exit 1
 }
 
 removeIgnoredFiles() {

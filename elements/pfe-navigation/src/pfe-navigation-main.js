@@ -22,6 +22,7 @@ class PfeNavigationMain extends PFElement {
     }
   
     constructor() {
+      PFElement._debugLog = true;
       super(PfeNavigationMain);
   
       this._init = this._init.bind(this);
@@ -34,6 +35,7 @@ class PfeNavigationMain extends PFElement {
   
       // Add a slotchange listener to the lightDOM trigger
       this.addEventListener("slotchange", this._init);
+      PFElement._debugLog = false;
     }
   
     disconnectedCallback() {

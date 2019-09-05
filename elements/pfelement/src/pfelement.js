@@ -67,6 +67,8 @@ class PFElement extends HTMLElement {
     this.slots = pfeClass.slots;
     this._queue = [];
     this.template = document.createElement("template");
+    
+    this.log(`Constructing...`);
 
     this.attachShadow({ mode: "open" });
 
@@ -81,15 +83,22 @@ class PFElement extends HTMLElement {
     }
 
     if (!delayRender) {
+      this.log(`Render...`);
       this.render();
+      this.log(`Rendered.`);
     }
+    
+    this.log(`Constructed.`);
   }
 
   connectedCallback() {
     this.connected = true;
+    this.log(`Connecting...`);
 
     if (window.ShadyCSS) {
+      this.log(`Styling...`);
       window.ShadyCSS.styleElement(this);
+      this.log(`Styled.`);
     }
 
     // @TODO maybe we should use just the attribute instead of the class?
@@ -99,15 +108,19 @@ class PFElement extends HTMLElement {
 
     if (typeof this.props === "object") {
       this._mapSchemaToProperties(this.tag, this.props);
+      this.log(`Properties attached.`);
     }
 
     if (typeof this.slots === "object") {
       this._mapSchemaToSlots(this.tag, this.slots);
+      this.log(`Slots attached.`);
     }
 
     if (this._queue.length) {
       this._processQueue();
     }
+
+    this.log(`Connected.`);
   }
 
   disconnectedCallback() {
@@ -141,6 +154,7 @@ class PFElement extends HTMLElement {
   // @notice static getter of properties is built via tooling
   // to edit modify src/element.json
   _mapSchemaToProperties(tag, properties) {
+    this.log("Mapping properties...");
     // Loop over the properties provided by the schema
     Object.keys(properties).forEach(attr => {
       let data = properties[attr];
@@ -181,6 +195,8 @@ class PFElement extends HTMLElement {
         }
       }
     });
+
+    this.log("Properties mapped.");
   }
 
   // Test whether expected dependencies exist
@@ -215,6 +231,7 @@ class PFElement extends HTMLElement {
   // @notice static getter of properties is built via tooling
   // to edit modify src/element.json
   _mapSchemaToSlots(tag, slots) {
+    this.log("Validate slots...");
     // Loop over the properties provided by the schema
     Object.keys(slots).forEach(slot => {
       let slotObj = slots[slot];
@@ -256,6 +273,7 @@ class PFElement extends HTMLElement {
         }
       }
     });
+    this.log("Slots validated.")
   }
 
   _queueAction(action) {

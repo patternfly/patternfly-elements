@@ -78,6 +78,7 @@ class PfeNavigation extends PFElement {
   }
 
   constructor() {
+    PFElement._debugLog = true;
     super(PfeNavigation);
 
     // Attach functions for use below
@@ -127,6 +128,8 @@ class PfeNavigation extends PFElement {
     } else {
       console.error("This component does not have any light DOM children.  Please check documentation for requirements.");
     }
+    
+    PFElement._debugLog = false;
   }
 
   disconnectedCallback() {
@@ -175,9 +178,8 @@ class PfeNavigation extends PFElement {
   }
 
   _setVisibility(width) {
-    Object.entries(this.breakpoints).map(item => {
-      let label = item[0];
-      let bps = item[1];
+    Object.keys(this.breakpoints).forEach(label => {
+      let bps = this.breakpoints[label];
       let start = bps[0];
       let end = bps[1];
       let isVisible = false;
@@ -191,10 +193,10 @@ class PfeNavigation extends PFElement {
         this.slots[label].nodes.forEach(node => {
           switch(label) {
             case "main":
-                isVisible ? node.removeAttribute("show_content") : node.setAttribute("show_content", "");
-                this._menuItem.visible = isVisible;
-                node.navItems.forEach(item => isVisible ? item.removeAttribute("parent_hidden") : item.setAttribute("parent_hidden", ""));
-                break;
+              isVisible ? node.removeAttribute("show_content") : node.setAttribute("show_content", "");
+              this._menuItem.visible = isVisible;
+              node.navItems.forEach(item => isVisible ? item.removeAttribute("parent_hidden") : item.setAttribute("parent_hidden", ""));
+              break;
             case (label.match(/^mobile/) || {}).input:
               if (isVisible) {
                 // Set an attribute to show this region (strip the mobile prefix)

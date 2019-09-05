@@ -177,11 +177,11 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
     }
   }
 
-  @media screen and (min-width: #{pfe-breakpoint(xl)}) {
-    :host([pfe-icon="menu"]) & {
+  // @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+    :host([hidden]) & {
       display: none;
     }
-  }
+  // }
 }
 
 ::slotted([slot="trigger"]:hover) {
@@ -213,9 +213,9 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
   --pfe-navigation--BorderColor: #{pfe-color(surface--lightest)};
 }
 
-::slotted([slot="trigger"]:focus:not(:focus-visible)) {
-  outline: none;  // removes outline for mouse users, preserves it for keyboard users
-}
+// ::slotted([slot="trigger"]:focus:not(:focus-visible)) {
+//   outline: none;  // removes outline for mouse users, preserves it for keyboard users
+// }
 
 /* ----------------- */
 /*    TRAY STYLES    */

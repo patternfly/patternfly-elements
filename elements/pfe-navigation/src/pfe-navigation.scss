@@ -1,7 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
-
-$LOCAL: navigation;
-$USE-FALLBACK: true;
+@import "_shared-assets.scss";
 
 $overlay--BackgroundColor--fallback: rgba(37, 37, 37, 0.5);
 
@@ -86,33 +84,33 @@ $variables: (
   max-height: pfe-local(MaxHeight);
 }
 
-@each $icon in (bento, user, globe, search, menu) {
-  [pfe-icon="#{$icon}"],
-  ::slotted([pfe-icon="#{$icon}"]) {
-    --pfe-navigation--icon: #{map-get($icons, #{$icon}--on-dark)};
-  }
+// @each $icon in (bento, user, globe, search, menu) {
+//   [pfe-icon="#{$icon}"],
+//   ::slotted([pfe-icon="#{$icon}"]) {
+//     --pfe-navigation--icon: #{map-get($icons, #{$icon}--on-dark)};
+//   }
 
-  @if $icon != "menu" {
-    [pfe-icon="#{$icon}"].expanded,
-    ::slotted([pfe-icon="#{$icon}"].expanded) {
-      --pfe-navigation--icon: #{map-get($icons, #{$icon})};
-    }
-  }
-  @else {
-    [pfe-icon="#{$icon}"].expanded,
-    ::slotted([pfe-icon="#{$icon}"].expanded) {
-      --pfe-navigation--icon: #{map-get($icons, "close")};
-    }
-  }
-}
+//   @if $icon != "menu" {
+//     [pfe-icon="#{$icon}"].expanded,
+//     ::slotted([pfe-icon="#{$icon}"].expanded) {
+//       --pfe-navigation--icon: #{map-get($icons, #{$icon})};
+//     }
+//   }
+//   @else {
+//     [pfe-icon="#{$icon}"].expanded,
+//     ::slotted([pfe-icon="#{$icon}"].expanded) {
+//       --pfe-navigation--icon: #{map-get($icons, "close")};
+//     }
+//   }
+// }
 
-::slotted([slot="mobile-login"]) {
-  --pfe-navigation--icon: #{map-get($icons, user--as-link)};
-}
+// ::slotted([slot="mobile-login"]) {
+//   --pfe-navigation--icon: #{map-get($icons, user--as-link)};
+// }
 
-::slotted([slot="mobile-language"]) {
-  --pfe-navigation--icon: #{map-get($icons, globe--as-link)};
-}
+// ::slotted([slot="mobile-language"]) {
+//   --pfe-navigation--icon: #{map-get($icons, globe--as-link)};
+// }
 
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
@@ -143,7 +141,7 @@ $variables: (
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
     z-index: #{pfe-var($cssvar: navigation, $map: $z-index)};
     
-    background-color: #{map-get($pfe-colors, surface--darkest)};
+    // background-color: #{map-get($pfe-colors, surface--darkest)};
     background-color: #{pfe-local(BackgroundColor)};
     color: #{pfe-local(Color)};
     min-height: #{pfe-local(MaxHeight)};

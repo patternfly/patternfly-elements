@@ -71,24 +71,25 @@ class PfeFooter extends PFElement {
           isHeaderTag = true;
           break;
       }
+
+      // if there's no assigned ID and the first-child is a heading
+      if (!this.infoHeading.id && isHeaderTag) {
+        this.infoHeading.id = infoHeadingGeneratedId;
+
+      // if it's not a heading, give a warning
+      } else if (!isHeaderTag) {
+        console.warn(
+          `${
+            PfeFooter.tag
+          }: The first child in the light DOM of [slot="pfe-footer-info"] must be a heading level tag (h1, h2, h3, h4, h5, or h6)`
+        );
+      }
+
+      // add ARIA-labelledby to first UL in the info panel
+      const infoUL = this.querySelector('[slot="pfe-footer-info"] > ul');
+      this._labelInfoPanelUL(infoUL);
+      
     }
-
-    // if there's no assigned ID and the first-child is a heading
-    if (!this.infoHeading.id && isHeaderTag) {
-      this.infoHeading.id = infoHeadingGeneratedId;
-
-    // if it's not a heading, give a warning
-    } else if (!isHeaderTag) {
-      console.warn(
-        `${
-          PfeFooter.tag
-        }: The first child in the light DOM of [slot="pfe-footer-info"] must be a heading level tag (h1, h2, h3, h4, h5, or h6)`
-      );
-    }
-
-    // add ARIA-labelledby to first UL in the info panel
-    const infoUL = this.querySelector('[slot="pfe-footer-info"] > ul');
-    this._labelInfoPanelUL(infoUL);
   }
 
   // labels panel UL with ID from heading (ARIA-labelledby)

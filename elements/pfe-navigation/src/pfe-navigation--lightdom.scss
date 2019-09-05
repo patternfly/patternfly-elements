@@ -29,11 +29,11 @@ pfe-navigation [slot="logo"] > a {
     }
 }
 
-pfe-navigation-item [slot="trigger"] a,
-.pfe-navigation-item__trigger > *:not(.pfe-navigation-item__trigger--icon) a,
-.pfe-navigation-item__tray--container a {
-    @extend %link-styles;
-}
+// pfe-navigation-item [slot="trigger"] a,
+// .pfe-navigation-item__trigger > *:not(.pfe-navigation-item__trigger--icon) a,
+// .pfe-navigation-item__tray--container a {
+//     @extend %link-styles;
+// }
 
 @include browser-query(edge) {
     pfe-navigation-item {

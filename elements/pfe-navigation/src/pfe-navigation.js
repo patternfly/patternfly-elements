@@ -79,7 +79,6 @@ class PfeNavigation extends PFElement {
   }
 
   constructor() {
-    PFElement._debugLog = true;
     super(PfeNavigation);
 
     // Attach functions for use below
@@ -95,7 +94,12 @@ class PfeNavigation extends PFElement {
 
     // Capture shadow elements
     this._overlay = this.shadowRoot.querySelector(".pfe-navigation__overlay");
-    this._menuItem = this.shadowRoot.querySelector("pfe-navigation-item");
+    this._menuItem = this.shadowRoot.querySelector(".pfe-navigation__main > pfe-navigation-item");
+
+    this._slots = {
+      language: this.shadowRoot.querySelector(".pfe-navigation__main--mobile > pfe-navigation-item:first-of-type"),
+      login: this.shadowRoot.querySelector(".pfe-navigation__main--mobile > pfe-navigation-item:last-of-type")
+    };
 
     // Initialize active navigation item to empty array
     this._activeNavigationItems = [];
@@ -129,8 +133,6 @@ class PfeNavigation extends PFElement {
     } else {
       console.error("This component does not have any light DOM children.  Please check documentation for requirements.");
     }
-    
-    PFElement._debugLog = false;
   }
 
   disconnectedCallback() {
@@ -202,9 +204,11 @@ class PfeNavigation extends PFElement {
               if (isVisible) {
                 // Set an attribute to show this region (strip the mobile prefix)
                 this._menuItem.setAttribute(`show_${label.slice(7)}`, "");
+                if (this._slots[label.slice(7)]) this._slots[label.slice(7)].removeAttribute("hidden");
                 node.removeAttribute("hidden");
               } else {
                 this._menuItem.removeAttribute(`show_${label.slice(7)}`);
+                if (this._slots[label.slice(7)]) this._slots[label.slice(7)].setAttribute("hidden", "");
                 node.setAttribute("hidden", "");
               }
               break;
@@ -284,6 +288,15 @@ class PfeNavigation extends PFElement {
         item.parent = this._menuItem;
       });
     }
+
+    // Remove focusability from mobile links
+    Object.keys(this.slots).forEach(section => {
+      if (section.match(/^mobile-(login|language)/)) {
+        this.slots[section].nodes.forEach(node => {
+          node.setAttribute("tabindex", -1);
+        });
+      }
+    });
 
     // Start by setting the visibility of the slots
     this._setVisibility(this.offsetWidth);

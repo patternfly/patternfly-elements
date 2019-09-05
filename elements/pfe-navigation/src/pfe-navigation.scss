@@ -176,13 +176,20 @@ pfe-icon {
     &--mobile {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      &-item {
+      pfe-navigation-item {
+        --pfe-theme--link--text-decoration: none;
         --pfe-navigation--Color: #{pfe-radio(color, ui-link)};
 
-        display: none;
-        
-        pfe-icon {
-          margin-right: calc(#{pfe-var(container-spacer)} / 2);
+        line-height: 1;
+        padding: calc(#{pfe-var(container-spacer)} / 2) 0;
+
+        &:hover {
+          cursor: pointer;
+          --pfe-navigation--Color: #{pfe-radio(color, ui-link, hover)};
+        }
+
+        &:focus {
+          --pfe-navigation--Color: #{pfe-radio(color, ui-link, focus)};
         }
       }
       [show_search] &,
@@ -190,8 +197,7 @@ pfe-icon {
         grid-gap: #{pfe-var(container-spacer)};
       }
       [show_search] &-search,
-      &-main,
-      [show_login][show_language] &-item {
+      &-main {
         display: block;
       }
       &-search,

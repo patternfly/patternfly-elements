@@ -253,7 +253,6 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
         outline: none;
         z-index: 2;
         text-decoration: underline;
-        text-decoration-color: #{pfe-local(TextDecorationColor--focus)};
     }
 
     &::-moz-focus-inner {
@@ -289,7 +288,6 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     --pfe-#{$component-name}--main:         transparent;
     --pfe-#{$component-name}--aux:          #{pfe-color(surface--darkest--text)};
     --pfe-#{$component-name}--BorderLeftColor--focus: #{pfe-color(surface--lightest)};
-    --pfe-#{$component-name}--TextDecorationColor--focus: #{pfe-color(surface--darkest--text)};
   }
   @else {
     --pfe-#{$component-name}--main:         transparent;
@@ -298,7 +296,6 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
     --pfe-#{$component-name}--BorderLeft:  #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} transparent;
     --pfe-#{$component-name}--BorderRight: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
     --pfe-#{$component-name}--BorderBottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
-    --pfe-#{$component-name}--TextDecorationColor--focus: #{pfe-color(ui-link)};
 
     --pfe-#{$component-name}--BorderLeftColor--focus: #{pfe-color(surface--lightest--link)};
   }

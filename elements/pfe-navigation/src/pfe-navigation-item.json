@@ -47,7 +47,6 @@
           "icon": {
             "title": "Icon name",
             "type": "string",
-            "enum": ["bento", "user", "globe", "search", "menu"],
             "prefixed": true
           }
         }

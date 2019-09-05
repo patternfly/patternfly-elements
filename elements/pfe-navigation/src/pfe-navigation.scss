@@ -78,54 +78,20 @@ $variables: (
   z-index: pfe-var($cssvar: navigation, $category: zindex, $map: $z-index);
 }
 
+pfe-icon {
+  --pfe-icon--Color: #{pfe-local(Color)};
+}
+
 // Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
   margin: 0;
   max-height: pfe-local(MaxHeight);
 }
 
-// @each $icon in (bento, user, globe, search, menu) {
-//   [pfe-icon="#{$icon}"],
-//   ::slotted([pfe-icon="#{$icon}"]) {
-//     --pfe-navigation--icon: #{map-get($icons, #{$icon}--on-dark)};
-//   }
-
-//   @if $icon != "menu" {
-//     [pfe-icon="#{$icon}"].expanded,
-//     ::slotted([pfe-icon="#{$icon}"].expanded) {
-//       --pfe-navigation--icon: #{map-get($icons, #{$icon})};
-//     }
-//   }
-//   @else {
-//     [pfe-icon="#{$icon}"].expanded,
-//     ::slotted([pfe-icon="#{$icon}"].expanded) {
-//       --pfe-navigation--icon: #{map-get($icons, "close")};
-//     }
-//   }
-// }
-
-// ::slotted([slot="mobile-login"]) {
-//   --pfe-navigation--icon: #{map-get($icons, user--as-link)};
-// }
-
-// ::slotted([slot="mobile-language"]) {
-//   --pfe-navigation--icon: #{map-get($icons, globe--as-link)};
-// }
-
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
-  color: pfe-radio(color, ui-link);
-  text-decoration: pfe-radio(link, text-decoration);
-  &::before {
-    @include pfe-icon(
-      $path: #{pfe-local($cssvar: icon)},
-      $display: inline-block
-    ) {
-      content: " ";
-    }
-    
-    margin-right: calc(#{pfe-var(container-spacer)} / 2);
-  }
+  color: #{pfe-radio(color, ui-link)};
+  text-decoration: #{pfe-radio(link, text-decoration)};
 }
 
 ::slotted([slot="mobile-menu--label"]) {
@@ -148,7 +114,6 @@ $variables: (
   }
   &__container {
     max-width: #{pfe-local(Width)};
-    width: 100%;
     margin: 0 auto;
     padding: 0 #{pfe-local(Padding--horizontal)};
 
@@ -211,6 +176,15 @@ $variables: (
     &--mobile {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      &-item {
+        --pfe-navigation--Color: #{pfe-radio(color, ui-link)};
+
+        display: none;
+        
+        pfe-icon {
+          margin-right: calc(#{pfe-var(container-spacer)} / 2);
+        }
+      }
       [show_search] &,
       [show_login][show_language] & {
         grid-gap: #{pfe-var(container-spacer)};

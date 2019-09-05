@@ -81,6 +81,14 @@ class PfeNavigationItem extends PFElement {
     static get observedAttributes() {
       return ["pfe-icon"];
     }
+
+    get hasIcon() {
+      return this.hasAttribute("pfe-icon");
+    }
+
+    get iconName() {
+      return this.getAttribute("pfe-icon");
+    }
   
     get nested() {
       return this.hasAttribute("is_nested");
@@ -106,6 +114,10 @@ class PfeNavigationItem extends PFElement {
       if (isExpanded) {
         this.classList.add("expanded");
   
+        if (this.iconName === "web-mobile-menu") {
+          if (this._icon) this._icon.setAttribute("icon", "web-plus");
+        }
+
         if (this._trigger) {
           this._trigger.setAttribute("aria-expanded", true);
         }
@@ -119,6 +131,10 @@ class PfeNavigationItem extends PFElement {
         }
       } else {
         this.classList.remove("expanded");
+  
+        if (this.iconName === "web-mobile-menu") {
+          if (this._icon) this._icon.setAttribute("icon", "web-mobile-menu");
+        }
   
         if (this._trigger) {
           this._trigger.setAttribute("aria-expanded", false);
@@ -231,6 +247,7 @@ class PfeNavigationItem extends PFElement {
   
       // Shadow elements
       this._trigger = this.shadowRoot.querySelector(`.${this.tag}__trigger`);
+      this._icon = this.shadowRoot.querySelector("pfe-icon");
       this._tray = this.shadowRoot.querySelector(`.${this.tag}__tray`);
   
       // Externally accessible events
@@ -293,12 +310,7 @@ class PfeNavigationItem extends PFElement {
       this.linkUrl = this.directLink ? this.directLink.href : "#";
   
       // Turn off the fallback link
-      if (this.directLink) {
-        this.directLink.setAttribute("tabindex", "-1");
-      }
-  
-      // Assume direct links until tray is processed
-      if (this.trigger) this.trigger.setAttribute("tabindex", 0);
+      if (this.directLink) this.directLink.setAttribute("tabindex", "-1");
   
       this._trigger.addEventListener("click", this._navigateToUrl);
       this._trigger.addEventListener("keyup", this._directLinkHandler);

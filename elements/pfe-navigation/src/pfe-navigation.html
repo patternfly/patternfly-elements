@@ -7,7 +7,7 @@
       <slot name="skip" tabindex="1"></slot>
     </div>
     <div class="pfe-navigation__main">
-      <pfe-navigation-item pfe-icon="menu" hidden>
+      <pfe-navigation-item pfe-icon="web-mobile-menu" hidden>
         <span slot="trigger">
           <slot name="mobile-menu--label" class="pfe-navigation__main--menu-label"></slot>
         </span>
@@ -15,8 +15,14 @@
           <div class="pfe-navigation__main--mobile">
             <slot name="mobile-search" class="pfe-navigation__main--mobile-search"></slot>
             <slot class="pfe-navigation__main--mobile-main"></slot>
-            <slot name="mobile-login" class="pfe-navigation__main--mobile-item" pfe-icon="user"></slot>
-            <slot name="mobile-language" class="pfe-navigation__main--mobile-item" pfe-icon="globe"></slot>
+            <div class="pfe-navigation__main--mobile-item">
+              <pfe-icon icon="web-user"></pfe-icon>
+              <slot name="mobile-login"></slot>
+            </div>
+            <div class="pfe-navigation__main--mobile-item">
+              <pfe-icon icon="web-globe"></pfe-icon>
+              <slot name="mobile-language"></slot>
+            </div>
           </div>
         </div>
       </pfe-navigation-item>

@@ -46,23 +46,6 @@ pfe-navigation-item [slot="trigger"] a,
             font-weight: 300;
         }
 
-        @each $icon in (bento, user, globe, search, menu) {
-            &[pfe-icon="#{$icon}"] {
-                --pfe-navigation--icon: #{map-get($icons, #{$icon}--on-dark)};
-            }
-
-            @if $icon != "menu" {
-              &[pfe-icon="#{$icon}"].expanded {
-                --pfe-navigation--icon: #{map-get($icons, #{$icon})};
-              }
-            }
-            @else {
-              &[pfe-icon="#{$icon}"].expanded {
-                --pfe-navigation--icon: #{map-get($icons, "close")};
-              }
-            }
-        }
-
         &[is_nested].expanded [slot="trigger"],
         &[is_nested] [slot="trigger"]:hover::after {
             visibility: visible;

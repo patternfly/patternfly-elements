@@ -13,7 +13,7 @@ $USE-FALLBACK: true;
   justify-content: center;
 }
 
-:host([pfe-icon="menu"][hidden]) {
+:host([pfe-icon="web-mobile-menu"][hidden]) {
   flex-grow: 1;
 }
 
@@ -43,7 +43,7 @@ $trigger--FontSize--fallback:   #{map-get($pfe-vars, font-size--heading--zeta)};
 $trigger--FontWeight--fallback: #{map-get($pfe-vars, font-weight--light)};
 $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
 
-::slotted([slot="trigger"]) {
+.pfe-navigation-item__trigger {
   --pfe-navigation--Color: #{pfe-color(text--on-dark)};
 
   @each $prop in (text-decoration, text-decoration--hover, text-decoration--focus) {
@@ -64,12 +64,6 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
     --pfe-theme--link--#{$prop}: none;
   }
 
-  // Typography styles
-  font-family: pfe-var(font-family);
-  font-size:   pfe-local($cssvar: FontSize, $fallback: #{$trigger--FontSize--fallback});
-  font-weight: pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback});
-  color:       pfe-local($cssvar: Color, $fallback: #{$trigger--Color--fallback});
-
   border-top: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderTopColor)};
   border-right: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
   border-bottom: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
@@ -77,10 +71,7 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
 
   position: relative;
   flex-grow: 1;
-
-  text-align:  center;
-  white-space: nowrap;
-
+  
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -88,11 +79,43 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
 
   transition: all #{pfe-var(animation-timing)};
 
-  margin: 0;
   outline: none;
 
   background-color: #{pfe-local(BackgroundColor)};
   padding: calc(#{pfe-var(container-padding)} / 2) #{pfe-var(container-padding)} !important;
+
+  &:hover {
+    --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
+    --pfe-navigation__trigger-icon--Visible: visible;
+
+    cursor: pointer;
+
+    :host([has_tray]:not([pfe-icon]):not([is_nested]):not(.expanded)) & {
+      --pfe-navigation__trigger-icon--Visible: visible;
+      @include pfe-arrow-color(#{pfe-local(Color)});
+    }  
+
+    @media screen and (max-width: #{pfe-breakpoint($size: xl, $max: true)}) {
+      :host([is_nested]) & {
+        border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderLeftColor--focus)};
+      }
+    }
+
+    @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+      :host([has_tray]:not(.expanded)) & {
+        --pfe-navigation__trigger-icon--Visible: visible;
+      }
+    }
+  }
+
+  &:focus {
+    --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
+    --pfe-navigation--BorderColor: #{pfe-color(surface--lightest)};
+  }
+
+  // &:focus:not(:focus-visible) {
+  //   outline: none;  // removes outline for mouse users, preserves it for keyboard users
+  // }
 
   // After element is the filled-in dropdown caret
   :host(:not([pfe-icon])) &::after {
@@ -105,14 +128,14 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
     bottom: #{pfe-var(container-spacer)};
   }
 
-  :host([pfe-icon]) &::before {
-    content: " ";
-    @include pfe-icon(
-      $path: #{pfe-local($cssvar: icon)},
-      $size: 21px
-    );
-    margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
-  }
+  // :host([pfe-icon]) &::before {
+  //   content: " ";
+  //   @include pfe-icon(
+  //     $path: #{pfe-local($cssvar: icon)},
+  //     $size: 21px
+  //   );
+  //   margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
+  // }
 
   // Indicates this is the current section the user is visiting
   :host([aria-current="location"]) & {
@@ -177,45 +200,32 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
     }
   }
 
-  // @media screen and (min-width: #{pfe-breakpoint(xl)}) {
-    :host([hidden]) & {
-      display: none;
-    }
-  // }
-}
-
-::slotted([slot="trigger"]:hover) {
-  --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
-  --pfe-navigation__trigger-icon--Visible: visible;
-
-  cursor: pointer;
-
-  :host([has_tray]:not([pfe-icon]):not([is_nested]):not(.expanded)) & {
-    --pfe-navigation__trigger-icon--Visible: visible;
-    @include pfe-arrow-color(#{pfe-local(Color)});
-  }  
-
-  @media screen and (max-width: #{pfe-breakpoint($size: xl, $max: true)}) {
-    :host([is_nested]) & {
-      border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderLeftColor--focus)};
-    }
+  :host([hidden]) & {
+    display: none;
   }
 
-  @media screen and (min-width: #{pfe-breakpoint(xl)}) {
-    :host([has_tray]:not(.expanded)) & {
-      --pfe-navigation__trigger-icon--Visible: visible;
+  pfe-icon {
+    --pfe-icon--Color: #{pfe-local(Color)};
+
+    margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
+    
+    &[icon="web-plus"] {
+      transform: rotate(-45deg);
     }
   }
 }
 
-::slotted([slot="trigger"]:focus) {
-  --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
-  --pfe-navigation--BorderColor: #{pfe-color(surface--lightest)};
-}
+::slotted([slot="trigger"]) {
+  // Typography styles
+  font-family: pfe-var(font-family);
+  font-size:   pfe-local($cssvar: FontSize, $fallback: #{$trigger--FontSize--fallback});
+  font-weight: pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback});
+  color:       pfe-local($cssvar: Color, $fallback: #{$trigger--Color--fallback});
 
-// ::slotted([slot="trigger"]:focus:not(:focus-visible)) {
-//   outline: none;  // removes outline for mouse users, preserves it for keyboard users
-// }
+  white-space: nowrap;
+
+  margin: 0;
+}
 
 /* ----------------- */
 /*    TRAY STYLES    */
@@ -227,13 +237,13 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
   transition: all #{pfe-var(animation-timing)};
   box-sizing: border-box;
 
-  :host([pfe-icon="menu"][hidden]) & {
+  :host([pfe-icon="web-mobile-menu"][hidden]) & {
     display: flex;
     visibility: visible;
   }
 
-  :host([pfe-icon="menu"]:not([hidden])) &,
-  :host(:not([pfe-icon="menu"]):not([is_nested])) &,
+  :host([pfe-icon="web-mobile-menu"]:not([hidden])) &,
+  :host(:not([pfe-icon="web-mobile-menu"]):not([is_nested])) &,
   :host([is_nested][parent_hidden]) & {
     position: absolute;
     top: 100%;
@@ -272,7 +282,7 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
   }
 
   @media screen and (min-width: #{pfe-breakpoint(xl)}) {
-    :host([pfe-icon="menu"]) & {
+    :host([pfe-icon="web-mobile-menu"]) & {
       display: flex;
       flex-grow: 1;
     }
@@ -280,8 +290,8 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
 }
 
 // Let the main item or the tray be hidden with the attribute
-:host([hidden]:not([pfe-icon="menu"])),
-:host(:not([pfe-icon="menu"])) ::slotted([slot="tray"][hidden]) {
+:host([hidden]:not([pfe-icon="web-mobile-menu"])),
+:host(:not([pfe-icon="web-mobile-menu"])) ::slotted([slot="tray"][hidden]) {
   display: none;
   visibility: hidden;
 }

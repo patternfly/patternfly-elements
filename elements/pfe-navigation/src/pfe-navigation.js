@@ -1,4 +1,5 @@
 import PFElement from "../pfelement/pfelement.js";
+import PfeIcon from "../pfe-icon/pfe-icon.js";
 import PfeNavigationItem from "./pfe-navigation-item.js";
 import PfeNavigationMain from "./pfe-navigation-main.js";
 
@@ -94,7 +95,7 @@ class PfeNavigation extends PFElement {
 
     // Capture shadow elements
     this._overlay = this.shadowRoot.querySelector(".pfe-navigation__overlay");
-    this._menuItem = this.shadowRoot.querySelector("pfe-navigation-item[pfe-icon='menu']");
+    this._menuItem = this.shadowRoot.querySelector("pfe-navigation-item");
 
     // Initialize active navigation item to empty array
     this._activeNavigationItems = [];

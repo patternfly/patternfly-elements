@@ -1,25 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
+@import "_shared-assets.scss";
 
-$LOCAL: navigation-item;
-$USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
-
-%link-styles {
-    color: #{pfe-radio(color, ui-link)};
-    text-decoration: none;
-    &:visited {
-        color: #{pfe-radio(color, ui-link, visited)};
-    }
-    &:hover {
-        color: #{pfe-radio(color, ui-link, hover)};
-        text-decoration: none;
-    }
-    &:focus {
-        outline: none;
-        color: #{pfe-radio(color, ui-link, focus)}
-    }
-}
-
-// Edge styles
+// IE11 styles
 @include browser-query(ie11) {
     .pfe-navigation-item__trigger.pfe-navigation-item {
         .expanded & {
@@ -39,34 +21,6 @@ $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
     }
 }
 
-.pfe-navigation-item__trigger {
-    @include browser-query(ie11) {
-        > *.pfe-navigation-item__trigger--icon:first-child {
-            display: none;
-        }
-    }
-    > *:not(.pfe-navigation-item__trigger--icon) {
-        margin: 0;
-        font-family: #{pfe-var(font-family)};
-        font-size:   #{pfe-local($cssvar: FontSize, $fallback: 14px, $region: trigger)};
-        font-weight: #{pfe-local($cssvar: FontWeight, $fallback: 100, $region: trigger)};
-        color:       #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
-        @include browser-query(ie11) {
-            color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
-
-            .expanded & {
-                color: #{pfe-color(text)};
-            }
-
-            a,
-            a:hover,
-            a:visited {
-                color: inherit;
-            }
-        }
-    }
-}
-
 pfe-navigation [slot="logo"] > a {
     color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
     text-decoration: none;
@@ -75,10 +29,38 @@ pfe-navigation [slot="logo"] > a {
     }
 }
 
-pfe-navigation-item [slot="trigger"] a,
-.pfe-navigation-item__trigger > *:not(.pfe-navigation-item__trigger--icon) a,
-.pfe-navigation-item__tray--container a {
-    @extend %link-styles;
+// pfe-navigation-item [slot="trigger"] a,
+// .pfe-navigation-item__trigger > *:not(.pfe-navigation-item__trigger--icon) a,
+// .pfe-navigation-item__tray--container a {
+//     @extend %link-styles;
+// }
+
+@include browser-query(edge) {
+    pfe-navigation-item {
+        &[is_nested] [slot="trigger"]::after {
+            visibility: hidden;
+        }
+        
+        [slot="mobile-menu--label"] {
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        &[is_nested].expanded [slot="trigger"],
+        &[is_nested] [slot="trigger"]:hover::after {
+            visibility: visible;
+        }
+    }
+
+    pfe-navigation-main {
+        grid-column-start: 1;
+        grid-column-end: -1;
+    }
+
+    .pfe-navigation__main--mobile {
+        max-width: var(--pfe-navigation--Width);
+        margin: 0 auto;
+    }
 }
 
 // This class is added by the shadow DOM or shady css
@@ -95,13 +77,7 @@ pfe-navigation-item [slot="trigger"] a,
     }
 }
 
-pfe-navigation .pfe-link-link {
-    &--header > a {
-        @extend %link-styles;
-    }
-}
-
-pfe-navigation-main[show_content] ul {
+pfe-navigation-main[show_content] > ul {
     display: flex;
     flex-flow: row nowrap;
 }

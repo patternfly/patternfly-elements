@@ -50,8 +50,8 @@
         </a>
       </h2>
       <!-- Search -->
-      <pfe-navigation-item slot="search" pfe-icon="search">
-        <p slot="trigger"><a href="#url-to-search-page">Search</a></p>
+      <pfe-navigation-item slot="search" pfe-icon="web-search">
+        <h3 slot="trigger"><a href="#url-to-search-page">Search</a></h3>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">
             <form>
@@ -406,15 +406,15 @@
 
                       </div>
                       <div class="pfe-nav--item-footer">
-                          <!-- <div class="pfe-align-vertical"> -->
+                          <div class="column">
                               <pfe-cta pfe-priority="primary" class="PFElement span-2"><a href="#">Explore all topics</a></pfe-cta>
-                          <!-- </div> -->
-                          <!-- <div class="pfe-align-vertical"> -->
+                          </div>
+                          <div class="column">
                               <pfe-cta class="PFElement"><a href="#">Browse all success stories</a></pfe-cta>
-                          <!-- </div> -->
-                          <!-- <div class="pfe-align-vertical"> -->
+                          </div>
+                          <div class="column">
                               <pfe-cta class="PFElement"><a href="#">Search resource library</a></pfe-cta>
-                          <!-- </div> -->
+                          </div>
                       </div>
                   </div>
               </div>
@@ -480,28 +480,28 @@
         </ul>
       </pfe-navigation-main>
       <!-- Language -->
-      <pfe-navigation-item slot="language" pfe-icon="globe">
-        <p slot="trigger"><a href="/url-to-language-page">English</a></p>
+      <pfe-navigation-item slot="language" pfe-icon="web-globe">
+        <h3 slot="trigger"><a href="/url-to-language-page">English</a></h3>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">
             <p>Language switcher</p>
           </div>
         </div>
       </pfe-navigation-item>
-      <a href="/url-to-language-page" slot="mobile-language" pfe-icon="globe">English</a>
+      <a href="/url-to-language-page" slot="mobile-language" pfe-icon="web-globe">English</a>
       <!-- Log in -->
-      <pfe-navigation-item slot="login" pfe-icon="user">
-        <p slot="trigger"><a href="/login">Log in</a></p>
+      <pfe-navigation-item slot="login" pfe-icon="web-user">
+        <h3 slot="trigger"><a href="/login">Log in</a></h3>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">
             <p>Log in things</p>
           </div>
         </div>
       </pfe-navigation-item>
-      <a href="/login" slot="mobile-login" pfe-icon="user">Login/Register</a>
+      <a href="/login" slot="mobile-login" pfe-icon="web-user">Login/Register</a>
       <!-- Site switcher -->
-      <pfe-navigation-item slot="site-switcher" pfe-icon="bento">
-        <p slot="trigger"><a href="/url-to-rh-websites-page">Websites</a></p>
+      <pfe-navigation-item slot="site-switcher" pfe-icon="web-grid-3x3">
+        <h3 slot="trigger"><a href="/url-to-rh-websites-page">Websites</a></h3>
         <div slot="tray" hidden>
           <div class="pfe-navigation-item__tray--container">
             <p>Site switcher things</p>
@@ -690,10 +690,11 @@
         </pfe-cta>
       </pfe-card>
     </pfe-band>
+
     <script>
       // Listen for the toggled event and if the slot is the language slot, inject new content
       // Replicates AJAX-like functionality
-      document.addEventListener("pfe-navigation-item:toggled", function (event) {
+      document.addEventListener("pfe-navigation-item:open", function (event) {
         if (event.detail.slot === "language" && event.detail.content !== null) {
           const container = event.detail.content.querySelector(".pfe-navigation-item__tray--container");
           const newContent = "<p>Inject new content into the " + event.detail.slot + " slot.</p>";

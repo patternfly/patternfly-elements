@@ -1,0 +1,21 @@
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: navigation;
+$USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
+
+// -- Typography
+%link-styles {
+    color: #{pfe-radio(color, ui-link)};
+    text-decoration: none;
+    &:visited {
+        color: #{pfe-radio(color, ui-link, visited)};
+    }
+    &:hover {
+        color: #{pfe-radio(color, ui-link, hover)};
+        text-decoration: none;
+    }
+    &:focus {
+        outline: none;
+        color: #{pfe-radio(color, ui-link, focus)}
+    }
+}

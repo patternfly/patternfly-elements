@@ -1,9 +1,13 @@
 <div class="pfe-navigation__wrapper">
   <div class="pfe-navigation__container">
-    <slot name="logo" class="pfe-navigation__logo" tabindex="2"></slot>
-    <slot name="skip" class="pfe-navigation__skip" tabindex="1"></slot>
+    <div class="pfe-navigation__logo">
+      <slot name="logo" tabindex="2"></slot>
+    </div>
+    <div class="pfe-navigation__skip">
+      <slot name="skip" tabindex="1"></slot>
+    </div>
     <div class="pfe-navigation__main">
-      <pfe-navigation-item pfe-icon="menu" hidden>
+      <pfe-navigation-item pfe-icon="web-mobile-menu" hidden show_tray>
         <span slot="trigger">
           <slot name="mobile-menu--label" class="pfe-navigation__main--menu-label"></slot>
         </span>
@@ -11,8 +15,12 @@
           <div class="pfe-navigation__main--mobile">
             <slot name="mobile-search" class="pfe-navigation__main--mobile-search"></slot>
             <slot class="pfe-navigation__main--mobile-main"></slot>
-            <slot name="mobile-login" class="pfe-navigation__main--mobile-item" pfe-icon="user"></slot>
-            <slot name="mobile-language" class="pfe-navigation__main--mobile-item" pfe-icon="globe"></slot>
+            <pfe-navigation-item pfe-icon="web-user" variant="wind" hidden>
+              <slot name="mobile-login"></slot>
+            </pfe-navigation-item>
+            <pfe-navigation-item pfe-icon="web-globe" variant="wind" hidden>
+              <slot name="mobile-language"></slot>
+            </pfe-navigation-item>
           </div>
         </div>
       </pfe-navigation-item>

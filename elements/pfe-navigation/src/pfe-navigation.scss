@@ -1,7 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
-
-$LOCAL: navigation;
-$USE-FALLBACK: true;
+@import "_shared-assets.scss";
 
 $overlay--BackgroundColor--fallback: rgba(37, 37, 37, 0.5);
 
@@ -20,7 +18,7 @@ $variables: (
   BorderColor:    transparent,
   Border:         pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
 
-  MinHeight: 72px,
+  MaxHeight: 72px,
 
   // Variables for the trigger icon
   icon: none,
@@ -80,55 +78,20 @@ $variables: (
   z-index: pfe-var($cssvar: navigation, $category: zindex, $map: $z-index);
 }
 
+pfe-icon {
+  --pfe-icon--Color: #{pfe-local(Color)};
+}
+
 // Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
   margin: 0;
-  max-height: pfe-local(MinHeight);
-}
-
-@each $icon in (bento, user, globe, search, menu) {
-  [pfe-icon="#{$icon}"],
-  ::slotted([pfe-icon="#{$icon}"]) {
-    --pfe-navigation--icon: #{map-get($icons, #{$icon}--on-dark)};
-  }
-
-  @if $icon != "menu" {
-    [pfe-icon="#{$icon}"].expanded,
-    ::slotted([pfe-icon="#{$icon}"].expanded) {
-      --pfe-navigation--icon: #{map-get($icons, #{$icon})};
-    }
-  }
-  @else {
-    [pfe-icon="#{$icon}"].expanded,
-    ::slotted([pfe-icon="#{$icon}"].expanded) {
-      --pfe-navigation--icon: #{map-get($icons, "close")};
-    }
-
-  }
-}
-
-::slotted([slot="mobile-login"]) {
-  --pfe-navigation--icon: #{map-get($icons, user--as-link)};
-}
-
-::slotted([slot="mobile-language"]) {
-  --pfe-navigation--icon: #{map-get($icons, globe--as-link)};
+  max-height: pfe-local(MaxHeight);
 }
 
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
-  color: pfe-radio(color, ui-link);
-  text-decoration: pfe-radio(link, text-decoration);
-  &::before {
-    @include pfe-icon(
-      $path: #{pfe-local($cssvar: icon)},
-      $display: inline-block
-    ) {
-      content: " ";
-    }
-    
-    margin-right: calc(#{pfe-var(container-spacer)} / 2);
-  }
+  color: #{pfe-radio(color, ui-link)};
+  text-decoration: #{pfe-radio(link, text-decoration)};
 }
 
 ::slotted([slot="mobile-menu--label"]) {
@@ -144,12 +107,13 @@ $variables: (
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
     z-index: #{pfe-var($cssvar: navigation, $map: $z-index)};
     
-    background-color: #{map-get($pfe-colors, surface--darkest)};
+    // background-color: #{map-get($pfe-colors, surface--darkest)};
     background-color: #{pfe-local(BackgroundColor)};
     color: #{pfe-local(Color)};
-    min-height: #{pfe-local(MinHeight)};
+    min-height: #{pfe-local(MaxHeight)};
   }
   &__container {
+    max-width: #{pfe-local(Width)};
     margin: 0 auto;
     padding: 0 #{pfe-local(Padding--horizontal)};
 
@@ -162,10 +126,7 @@ $variables: (
     @each $size in (md, lg, xl) {
       @media screen and (min-width: pfe-breakpoint(#{$size})) {
         // Set the variable for use in the tray region too
-        --pfe-navigation--Width: calc(#{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 2));
-
-        width: calc(#{pfe-breakpoint(#{$size})} - 2rem); // IE11 fallback
-        width: #{pfe-local(Width)};
+        --pfe-navigation--Width: calc(#{pfe-breakpoint(#{$size})});
       }
     }
 
@@ -195,6 +156,7 @@ $variables: (
     padding-top: #{pfe-local(Padding--vertical)};
     padding-right: #{pfe-var(container-padding)};
     padding-bottom: #{pfe-local(Padding--vertical)};
+    // @TODO --pfe-theme--logo--svg?
   }
   &__skip {
     display: block;
@@ -214,14 +176,28 @@ $variables: (
     &--mobile {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      // height: 100%;
+      pfe-navigation-item {
+        --pfe-theme--link--text-decoration: none;
+        --pfe-navigation--Color: #{pfe-radio(color, ui-link)};
+
+        line-height: 1;
+        padding: calc(#{pfe-var(container-spacer)} / 2) 0;
+
+        &:hover {
+          cursor: pointer;
+          --pfe-navigation--Color: #{pfe-radio(color, ui-link, hover)};
+        }
+
+        &:focus {
+          --pfe-navigation--Color: #{pfe-radio(color, ui-link, focus)};
+        }
+      }
       [show_search] &,
       [show_login][show_language] & {
         grid-gap: #{pfe-var(container-spacer)};
       }
       [show_search] &-search,
-      &-main,
-      [show_login][show_language] &-item {
+      &-main {
         display: block;
       }
       &-search,

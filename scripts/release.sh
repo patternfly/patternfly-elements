@@ -79,7 +79,7 @@ gitTag() {
 removeIgnoredFiles() {
   log "removing the compiled bundles from release branch (they should only exist in the tag)"
    for e in elements/*; do find $e -maxdepth 1 \( -not -name "gulpfile.js" -not -name "rollup.config.js" \) \( -name "*.js" -or -name "*.css" -or -name "*.map" \) -exec git rm -f {} \; ;done
-   git commit -am "remove bundles from $NEW_VERSION" || exit 1
+   git commit -am "remove bundles after $NEW_VERSION tag" || exit 1
 }
 
 pushToOrigin() {

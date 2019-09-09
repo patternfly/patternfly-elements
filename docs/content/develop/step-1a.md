@@ -65,6 +65,15 @@ npm start
 
 From there you can change the URL to the demo page of the element you're working on. For example, if I ran `npm run dev` in the `/elements/pfe-card` directory, I'd navigate in the browser to `http://localhost:1234/elements/pfe-card/demo`.
 
+### Storybook
+
+Storybook is an interactive tool that allows consumers of the components to see how content can flow inside the components, as well as how variants affect style and layout. Please include a pfe-foo.storybook.js file in the /demo directory with your component. [You can learn more about the structure of these here](https://storybook.js.org/docs/basics/writing-stories/) 
+
+```
+npm run storybook
+```
+Storybook will launch at [http://localhost:9001](http://localhost:9001).
+
 ## Test
 
 From the directory of the element you're working on, run the test script in the package.json file and Web Component Tester will use Mocha and Chai to execute your tests in the browser.

@@ -10,12 +10,8 @@ NEW_VERSION=""
 TAG_NAME=""
 RELEASE_BRANCH=""
 
-trap ctrl_c INT
-
-ctrl_c() {
-  echo "ctrl-c detected"
-  exit 1
-}
+# abort script if any command fails
+set -e
 
 log() {
   echo "[RELEASE] $1"

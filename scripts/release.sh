@@ -12,6 +12,12 @@ RELEASE_BRANCH=""
 
 # abort script if any command fails
 set -e
+trap ctrl_c INT
+
+ctrl_c() {
+  echo "ctrl-c detected"
+  exit 1
+}
 
 log() {
   echo "[RELEASE] $1"

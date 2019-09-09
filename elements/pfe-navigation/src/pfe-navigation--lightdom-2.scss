@@ -100,7 +100,6 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
   overflow: hidden;
   margin: 0;
   color: #{pfe-radio(color--text)};
-  border: 5px solid green;
   font-weight: lighter;
 }
 
@@ -123,9 +122,6 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
 
     // This class is added manually inside the tray on the light DOM content
     &--container {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
         min-height: 200px;
         width: 100%;
         @media (max-width: $pfe-global--grid-breakpoint--lg--max) {
@@ -138,6 +134,7 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
     }
 }
 
+
 .pfe-nav-grid {
     @media (min-width: 650px) {
         column-count: 2;
@@ -146,13 +143,46 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
     }
     @media (min-width: $pfe-global--grid-breakpoint--xl) {
         display: grid;
-        // display: -ms-grid;
+        display: -ms-grid;
         grid-gap: 32px;
         grid-template-columns: repeat(4, 1fr);
+        -ms-grid-columns: 1fr 1fr 1fr 1fr;
+        .column:nth-child(1) {
+            -ms-grid-column: 1;
+        }
+        .column:nth-child(2) {
+            -ms-grid-column: 2;
+        }
+        .column:nth-child(3) {
+            -ms-grid-column: 3;
+        }
+        .column:nth-child(4) {
+            -ms-grid-column: 4;
+        }
     }
 }
 
+.pfe-nav--item-footer {
+  @extend .pfe-nav-grid;
+  margin: 40px 0 !important;
+  border-top: 1px solid lightgray;
+  padding: 40px 0;
+  transform: translateX(0);
+  align-items: baseline;
+  justify-items: start;
+  @media (min-width: $pfe-global--grid-breakpoint--xl) {
+      padding-bottom: calc(40px - #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})});
+  }
+  > *:not(:last-child) {
+          margin-bottom: 16px;
+          @media (min-width: $pfe-global--grid-breakpoint--xl) {
+              margin-bottom: 0;
+          }
+      }
+}
+
 .span-2 {
+  // intentinally not setting for IE prefix to prevent column overlap
   grid-column: span 2;
 }
 
@@ -196,24 +226,4 @@ pfe-navigation .pfe-link-list {
             line-height: 2;
         }
     }
-}
-
-.pfe-nav--item-footer {
-    @extend .pfe-nav-grid;
-  margin: 40px 0 !important;
-  border-top: 1px solid lightgray;
-  padding: 40px 0;
-  // transform: translateX(0);
-  align-items: baseline;
-  justify-items: start;
-  @media (min-width: $pfe-global--grid-breakpoint--xl) {
-      padding-bottom: calc(40px - #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})});
-
-  }
-  > *:not(:last-child) {
-          margin-bottom: 16px;
-          @media (min-width: $pfe-global--grid-breakpoint--xl) {
-              margin-bottom: 0;
-          }
-      }
 }

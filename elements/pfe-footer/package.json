@@ -24,10 +24,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "1.0.0-prerelease.16",
-    "@patternfly/pfelement": "1.0.0-prerelease.16",
-    "@patternfly/pfe-collapse": "1.0.0-prerelease.16",
-    "@patternfly/pfe-icon": "1.0.0-prerelease.16"
+    "@patternfly/pfe-sass": "1.0.0-prerelease.23",
+    "@patternfly/pfelement": "1.0.0-prerelease.23",
+    "@patternfly/pfe-collapse": "1.0.0-prerelease.23",
+    "@patternfly/pfe-icon": "1.0.0-prerelease.23"
   },
   "generator-pfelement-version": "1.1.0"
 }

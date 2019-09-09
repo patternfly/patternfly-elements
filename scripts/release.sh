@@ -10,6 +10,8 @@ NEW_VERSION=""
 TAG_NAME=""
 RELEASE_BRANCH=""
 
+# abort script if any command fails
+set -euo pipefail
 trap ctrl_c INT
 
 ctrl_c() {

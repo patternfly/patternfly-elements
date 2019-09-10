@@ -32,7 +32,7 @@ pfe-footer {
 
   // Info Block
   [slot="pfe-footer-info"] {
-    padding: 2rem;
+    padding: 1.5rem;
     background: #e00;
     color: #fff;
 
@@ -63,7 +63,7 @@ pfe-footer {
 
       li {
         width: auto;
-        padding-right: 2rem;
+        padding-right: 1.5rem;
       }
 
       pfe-icon {
@@ -82,10 +82,10 @@ pfe-footer {
 
   // Footer Links
   [pfe-footer-links] {
-    padding-bottom: 2rem;
+    padding-bottom: 1.5rem;
 
     > section {
-      padding: 2rem 2rem 0;
+      padding: 1.5rem 1.5rem 0;
     }
 
     ul {
@@ -115,7 +115,7 @@ pfe-footer {
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 1rem 2rem;
+    padding: 1rem 1.5rem;
     font-size: 0.750rem; // ~12px with 16px base
     line-height: 1.5em;
     background: #1a1a1a;
@@ -222,6 +222,10 @@ pfe-footer {
         padding-top: 0;
       }
     }
+
+    [slot="pfe-footer-legal"] {
+      padding: 1rem 1.5rem;
+    }
   }
 
   /* Grid looks best for browsers that support it */
@@ -272,6 +276,7 @@ pfe-footer {
 
     [slot="pfe-footer-legal"] {
       flex-direction: row;
+      padding: 1rem 1.5rem;
       justify-content: center;
       align-items: baseline;
 

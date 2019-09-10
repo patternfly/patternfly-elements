@@ -45,7 +45,7 @@
   }
 
   .pfe-footer-links {
-    padding-bottom: 2rem;
+    padding-bottom: 1.5rem;
 
     h2 {
       line-height: 1em;
@@ -133,7 +133,7 @@
     @media screen and (min-width: 992px) {
       display: flex;
       justify-content: space-between;
-      padding-right: 2rem;
+      padding-right: 1.5rem;
 
       ul {
         margin-left: 0;
@@ -211,15 +211,37 @@
   }
 }
 
+:host {
+  slot[name="pfe-footer-legal"]::slotted(*) {
+    // I hate doing this, but need to in order to override the slot styles from the lightDOM
+    padding: 1rem 1.5rem 0 !important;
+  }
+
+  @media screen and (min-width: 768px) {
+    slot[name="pfe-footer-legal"]::slotted(*) {
+      // I hate doing this, but need to in order to override the slot styles from the lightDOM
+      padding: 0 1.5rem !important;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    slot[name="pfe-footer-legal"]::slotted(*) {
+      // I hate doing this, but need to in order to override the slot styles from the lightDOM
+      flex-direction: column !important;
+      padding: 0 1.5rem 0 4rem !important;
+    }
+  }
+}
+
 .pfe-footer-universal {
   background: #1a1a1a;
 }
 
 .brand {
-  padding: 2rem 2rem 0;
+  padding: 1.5rem 1.5rem 0;
 
   @media screen and (min-width: 768px) {
-    padding: 2rem;
+    padding: 1.5rem;
   }
 
   a {
@@ -239,10 +261,10 @@
 }
 
 .summit-logo {
-  padding: 1rem 2rem 2rem;
+  padding: 1.5rem;
 
   @media screen and (min-width: 768px) {
-    padding: 2rem;
+    padding: 1.5rem;
   }
 
   a {

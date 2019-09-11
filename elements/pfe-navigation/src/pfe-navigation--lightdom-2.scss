@@ -163,21 +163,50 @@ pfe-navigation-main pfe-navigation-item [slot="trigger"] {
 }
 
 .pfe-nav--item-footer {
-  @extend .pfe-nav-grid;
   margin: 40px 0 !important;
   border-top: 1px solid lightgray;
-  padding: 40px 0;
-  transform: translateX(0);
-  align-items: baseline;
-  justify-items: start;
-  @media (min-width: $pfe-global--grid-breakpoint--xl) {
-      padding-bottom: calc(40px - #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})});
-  }
+  padding: 40px 0 0;
   > *:not(:last-child) {
-          margin-bottom: 16px;
-          @media (min-width: $pfe-global--grid-breakpoint--xl) {
-              margin-bottom: 0;
-          }
+       margin-bottom: 32px;
+  }
+  @media (min-width: 650px) {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      > *:not(:last-child) {
+           margin-bottom: 0;
+      }
+      > *:nth-child(3) {
+          margin-top: 32px;
+      }
+    }
+  @media (min-width: $pfe-global--grid-breakpoint--xl) {
+      padding-bottom: 0;
+      // padding-bottom: calc(40px - #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})});
+      display: grid;
+      display: -ms-grid;
+      grid-gap: 32px;
+      grid-template-columns: repeat(4, 1fr);
+      -ms-grid-columns: 1fr 1fr 1fr 1fr;
+      align-items: center;
+      .column:nth-child(1) {
+          -ms-grid-column: 1;
+      }
+      .column:nth-child(2) {
+          -ms-grid-column: 2;
+      }
+      .column:nth-child(3) {
+          -ms-grid-column: 3;
+      }
+      .column:nth-child(4) {
+          -ms-grid-column: 4;
+      }
+      > *:nth-child(3) {
+          margin-top: 0;
+      }
+  }
+   > * {
+       flex: 45%;
       }
 }
 
@@ -199,7 +228,7 @@ pfe-navigation .pfe-link-list {
         font-size: 16px;
         font-weight: 400;
         line-height: 1.75;
-        @media (min-width: $pfe-global--grid-breakpoint--xl){
+        @media (min-width: $pfe-global--grid-breakpoint--xl) {
             font-size: 16px;
         }
         a {

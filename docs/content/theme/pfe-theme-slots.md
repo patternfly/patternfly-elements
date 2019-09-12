@@ -336,7 +336,14 @@ Additionally it is recommended to create these "local" variables for properties 
            padding: #{pfe-var(container-padding)} calc( #{pfe-var(container-padding) } * 2)} 
        }
        ``` 
-    * Naming conventions.. BEM.. @TODO 
+    * We use the [BEM](https://css-tricks.com/using-sass-control-scope-bem-naming/) (block, element, modifier) naming convention for naming these local variables.
+
+        * `--pfe-navigation--BackgroundColor:` standard naming for a simple variable mapped to a specific property
+        * `--pfe-navigation--Padding--vertical:` standard naming for a variable mapped to a specific property but with a generic note about where it is being applied
+        (vertical vs. PaddingTop & PaddingBottom which would/should have the same values)
+        * `--pfe-navigation--icon:` generic naming for a thing mapped to different properties, descriptive but not the actual name of the property it is applied to
+        * `--pfe-navigation__overlay--BackgroundColor:` standard naming for a variable mapped to a specific property in a certain region of the component
+
 
 3.   Avoid use of !Important if possible
     *   ShadyCSS adds !important to styles, which means we generally should not add !important to our stylesheets. 

@@ -1,7 +1,7 @@
 +++
-title = "Theming Slots"
+title = "Create a themed PatternFly Element with Slots"
 description = ""
-weight = 5
+weight = 2
 draft = false
 bref = ""
 toc = true
@@ -10,7 +10,7 @@ tags = [ "theme" ]
 +++
 
 
-
+[TOC]
 
 
 ## Slots
@@ -251,9 +251,22 @@ The examples below would be inside the my-component.scss file:
 
 ### Theme variables, local variables + related functions
 
-1.   Theme variables exist so that when a user changes a system property such as color or font-size, they see the effects of that trickle through the system to nearly every component.
-    1.   Several functions exist in the `pfe-sass` component to make it easier to theme individual components you are building!
-    2. **Color**:  Rather than using only Sass variables `$red` or hexidecimal colors like `#c00`, please use the `pfe-color()` function along with a theme variable, i.e. `pfe-color(ui-link)`. Occasionally you may have to wrap interpolation syntax `#{ }` around the function to allow Sass to compile, i.e. `#{pfe-color(ui-link)}`. 
+When applying properties like color to your new component, it's important to reference CSS variables from the <a href="https://github.com/patternfly/patternfly-elements/blob/master/elements/pfe-sass/variables/_colors.scss" target="_blank">PatternFly Elements palette</a>. This way people using the components will be able to update all of them at once by changing the value of those palette variables.
+
+Theme variables exist so that when a user changes a system property such as color or font-size, they see the effects of that trickle through the system to nearly every component.
+
+  However, since it's also important for all CSS variables to have fallback values (should the variable not work), then the sass can become difficult to read and manage, since you now must input *two* colors (the variable and the fallback):
+
+  ```css
+  .lots-of-work {
+      color:             var(--pfe-theme--color--ui-link, #99ccff);
+      background-color:  var(--pfe-theme--color--ui-accent, #fe460d);
+  }
+  ```
+
+Not to worry! Several functions exist in the `pfe-sass` component to make it easier to theme individual components you are building!
+
+    1. **Color**:  Rather than using only Sass variables `$red` or hexidecimal colors like `#c00`, please use the `pfe-color()` function along with a theme variable, i.e. `pfe-color(ui-link)`. Occasionally you may have to wrap interpolation syntax `#{ }` around the function to allow Sass to compile, i.e. `#{pfe-color(ui-link)}`. 
        *   This function does some heavy-lifting by looking up the `$pfe-colors: ()` map and returning namespaced CSS variables for the [broadcasted color](#broadcasted) (should it be passed down from a dark container), the theme color, and then a fallback color in that order: 
   
        ```sass
@@ -278,7 +291,7 @@ The examples below would be inside the my-component.scss file:
           *   Accent
           *   Complement
        
-    3. **Other Properties**:   Similarly, the `pfe-var` function does the same work of looking up values from the `$pfe-vars: ()` map, and returning the variable name and the fallback value:
+    2. **Other Properties**:   Similarly, the `pfe-var` function does the same work of looking up values from the `$pfe-vars: ()` map, and returning the variable name and the fallback value:
       
        ```sass
        :host {
@@ -294,12 +307,17 @@ The examples below would be inside the my-component.scss file:
        }
        ```    
       
-2. It is recommended to create "local" variables for properties that developers are likely to override, such as color and sizing. You may use these functions that refer to theme variables to set the values of these local vars. Here's an example of some local variables you would find in the `pfe-cta.scss` file:
+## Local component variables
+
+In some cases, like the CTA (call-to-action) component, you might need to define a background color and a text color, as well as hover, focus, and visited states. That's a lot of colors! For this reason, it might be useful to create "local" variables for that particular component, and then redefine the values when different attributes come into play.
+
+Additionally it is recommended to create these "local" variables for properties that developers are likely to override, such as color and sizing, should they need the scope. You may use these functions that refer to theme variables to set the values of these local vars. Here's an example of some local variables you would find in the `pfe-cta.scss` file:
      
     ```sass
      :host {
          --pfe-cta--BorderRadius: 0;
          --pfe-cta--Color:  pfe-color(ui-link);
+         --pfe-cta--Color--hover:  pfe-color(ui-link--hover);
      }
     ```
        

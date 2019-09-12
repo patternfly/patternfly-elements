@@ -5,17 +5,12 @@ weight = 3
 draft = false
 bref = ""
 toc = true
-menu = "start"
-tags = [ "start" ]
+menu = "develop"
+tags = [ "develop" ]
 +++
 
 
-[TOC]
-
-
 ## Javascript
-
-
 
 *   Web components and constructors
     *   [Web Components: The Constructor and PatternFly Elements](https://medium.com/@kylebuch8/web-components-the-constructor-and-patternfly-elements-606bc51938c9)

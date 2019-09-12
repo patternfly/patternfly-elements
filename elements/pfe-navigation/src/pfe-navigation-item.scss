@@ -28,7 +28,6 @@
 /* ----------------- */
 /*  TRIGGER STYLES   */
 /* ----------------- */
-
 .pfe-navigation-item__trigger {
   @each $prop in (text-decoration, text-decoration--hover, text-decoration--focus) {
     --pfe-theme--link--#{$prop}: none;
@@ -178,10 +177,6 @@
     }
   }
 
-  :host([hidden]) & {
-    display: none;
-  }
-
   :host([variant="wind"]) & {
     --pfe-navigation--Color: #{pfe-color(ui-link)};
     --pfe-navigation--BackgroundColor: transparent !important;
@@ -276,15 +271,23 @@
 }
 
 // Let the main item or the tray be hidden with the attribute
-:host([hidden]),
-::slotted([slot="tray"][hidden]),
-.pfe-navigation-item__tray[aria-expanded="false"] {
+:host([hidden]:not([show_tray])),
+:host([hidden]) .pfe-navigation-item__trigger,
+:host([hidden]) .pfe-navigation-item__tray,
+:host(:not(.expanded)) .pfe-navigation-item__tray {
   display: none;
   visibility: hidden;
 }
 
+:host([show_tray][hidden]) ::slotted([slot="tray"][hidden]) {
+  display: flex;
+  visibility: visible;
+  flex-grow: 1;
+}
+
 :host([show_tray][hidden]) {
   display: flex;
+  visibility: visible;
   flex-grow: 1;
 }
 

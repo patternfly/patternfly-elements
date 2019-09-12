@@ -181,30 +181,37 @@ class PfeNavigation extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    // If this element contains light DOM, initialize it
-    if (this.children.length) {
-      // If only one value exists in the array, it starts at that size and goes up
-      this.breakpoints = {
-        main: [0, 1199], // visible from 0 - 1200px
-        search: [768],   // visible from 768px +
-        "mobile-search": [0, 767],
-        language: [768],
-        "mobile-language": [0, 767],
-        login: [768],
-        "mobile-login": [0, 767]
-      };
+    Promise.all([
+      customElements.whenDefined(PfeNavigationItem.tag),
+      customElements.whenDefined(PfeNavigationMain.tag)
+    ]).then(() => {
+      // If this element contains light DOM, initialize it
+      if (this.children.length) {
+        // If only one value exists in the array, it starts at that size and goes up
+        this.breakpoints = {
+          main: [0, 1199], // visible from 0 - 1200px
+          search: [768],   // visible from 768px +
+          "mobile-search": [0, 767],
+          language: [768],
+          "mobile-language": [0, 767],
+          login: [768],
+          "mobile-login": [0, 767]
+        };
 
-      // Kick off the initialization of the light DOM elements
-      this._init();
+        // Kick off the initialization of the light DOM elements
+        this._init();
 
-      // Listen for tab events
-      this.addEventListener("keydown", this._keydownHandler);
+        // Listen for tab events
+        this.addEventListener("keydown", this._keydownHandler);
 
-      // Watch for screen resizing
-      window.addEventListener("resize", this._resizeHandler);
-    } else {
-      console.error("This component does not have any light DOM children.  Please check documentation for requirements.");
-    }
+        // Watch for screen resizing
+        window.addEventListener("resize", this._resizeHandler);
+      } else {
+        console.error("This component does not have any light DOM children.  Please check documentation for requirements.");
+      }
+
+      this._observer.observe(this, { childList: true });
+    });
 
     PFElement.debugLog(false);
   }

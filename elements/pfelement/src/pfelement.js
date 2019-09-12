@@ -124,7 +124,11 @@ class PFElement extends HTMLElement {
   }
 
   disconnectedCallback() {
+    this.log(`Disconnecting...`);
+
     this.connected = false;
+    
+    this.log(`Disconnected.`);
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {

@@ -60,7 +60,10 @@ module.exports = function factory({
         )
         // Adds autoprefixing to the compiled sass
         .pipe(
-          postcss([postcssCustomProperties(), autoprefixer(browser_support)])
+          postcss([postcssCustomProperties(), autoprefixer({
+            grid: "autoplace",
+            overrideBrowserslist: browser_support
+          })])
         )
         // Write the sourcemap
         .pipe(sourcemaps.write(paths.compiled))

@@ -20,15 +20,20 @@
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/requirejs/require.js"></script>
 
     <script>require([
       '../pfe-navigation.umd.js',
+      '../../pfe-icon/pfe-icon.umd.js',
       '../../pfe-band/pfe-band.umd.js',
       '../../pfe-card/pfe-card.umd.js',
       '../../pfe-cta/pfe-cta.umd.js'
     ])</script>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
 
     <!-- <script type="module" src="../pfe-navigation.js"></script> -->
   </head>

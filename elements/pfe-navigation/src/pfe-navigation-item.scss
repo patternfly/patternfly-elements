@@ -1,7 +1,4 @@
-@import "../../pfe-sass/pfe-sass";
-
-$LOCAL: navigation;
-$USE-FALLBACK: true;
+@import "_shared-assets";
 
 :host {
   --pfe-navigation__trigger-icon--Visible: hidden;
@@ -31,9 +28,6 @@ $USE-FALLBACK: true;
 /* ----------------- */
 /*  TRIGGER STYLES   */
 /* ----------------- */
-$trigger--FontSize--fallback:   #{map-get($pfe-vars, font-size--heading--zeta)};
-$trigger--FontWeight--fallback: #{map-get($pfe-vars, font-weight--light)};
-$trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
 
 .pfe-navigation-item__trigger {
   @each $prop in (text-decoration, text-decoration--hover, text-decoration--focus) {
@@ -110,9 +104,9 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
     }
   }
 
-  // &:focus:not(:focus-visible) {
-  //   outline: none;  // removes outline for mouse users, preserves it for keyboard users
-  // }
+//   // &:focus:not(:focus-visible) {
+//   //   outline: none;  // removes outline for mouse users, preserves it for keyboard users
+//   // }
 
   // After element is the filled-in dropdown caret
   :host(:not([pfe-icon])) &::after {
@@ -216,27 +210,28 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
   }
 }
 
+// Typography styles
 ::slotted([slot="trigger"]) {
-  // Typography styles
-  font-family: pfe-var(font-family);
-  font-size:   pfe-local($cssvar: FontSize, $fallback: #{$trigger--FontSize--fallback});
-  font-weight: pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback});
-  color:       pfe-local($cssvar: Color, $fallback: #{$trigger--Color--fallback});
-
-  white-space: nowrap;
-
-  margin: 0;
+  @extend %trigger;
 }
 
 /* ----------------- */
 /*    TRAY STYLES    */
 /* ----------------- */
-::slotted([slot="tray"]) {
+.pfe-navigation-item__tray {
   --pfe-navigation--Color: #{pfe-color(text)};
   --pfe-navigation--FontWeight: #{pfe-color(text)};
 
   transition: all #{pfe-var(animation-timing)};
   box-sizing: border-box;
+
+  display: none;
+  visibility: hidden;
+  
+  &[aria-expanded="true"] {
+    display: block;
+    visibility: visible;
+  }
 
   :host([hidden]:not([parent_hidden])) & {
     flex-grow: 1;
@@ -282,7 +277,8 @@ $trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
 
 // Let the main item or the tray be hidden with the attribute
 :host([hidden]),
-::slotted([slot="tray"][hidden]) {
+::slotted([slot="tray"][hidden]),
+.pfe-navigation-item__tray[aria-expanded="false"] {
   display: none;
   visibility: hidden;
 }

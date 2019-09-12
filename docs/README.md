@@ -31,3 +31,7 @@ Build and pull in any updates before running the deploy script.
 ```
 ./deploy.sh
 ```
+
+### Preview the docs
+
+http://localhost:????/

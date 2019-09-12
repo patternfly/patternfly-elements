@@ -27,6 +27,18 @@ class PFElement extends HTMLElement {
     };
   }
 
+  static get version() {
+    return "{{version}}";
+  }
+  
+  static get randomId() {
+    return Math.random().toString(36).substr(2, 9);
+  }
+
+  get version() {
+    return this._pfeClass.version;
+  }
+
   get pfeType() {
     return this.getAttribute(`${prefix}type`);
   }
@@ -270,4 +282,3 @@ class PFElement extends HTMLElement {
 autoReveal(PFElement.log);
 
 export default PFElement;
-//# sourceMappingURL=PFElement.js.map

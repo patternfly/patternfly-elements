@@ -35,23 +35,39 @@ $pfe-colors: (
 
   ui-base:                            $pfe-color--ui-base,
   ui-base--hover:                     $pfe-color--ui-base--hover,
+  ui-base--focus:                     $pfe-color--ui-base--focus,
+  ui-base--visited:                   $pfe-color--ui-base--visited,
   ui-base--text:                      $pfe-color--ui-base--text,
   ui-base--text--hover:               $pfe-color--ui-base--text--hover,
+  ui-base--text--focus:               $pfe-color--ui-base--text--focus,
+  ui-base--text--visited:             $pfe-color--ui-base--text--visited,
 
   ui-complement:                      $pfe-color--ui-complement,
   ui-complement--hover:               $pfe-color--ui-complement--hover,
+  ui-complement--focus:               $pfe-color--ui-complement--focus,
+  ui-complement--visited:             $pfe-color--ui-complement--visited,
   ui-complement--text:                $pfe-color--ui-complement--text,
   ui-complement--text--hover:         $pfe-color--ui-complement--text--hover,
+  ui-complement--text--focus:         $pfe-color--ui-complement--text--focus,
+  ui-complement--text--visited:       $pfe-color--ui-complement--text--visited,
 
   ui-accent:                          $pfe-color--ui-accent,
   ui-accent--hover:                   $pfe-color--ui-accent--hover,
+  ui-accent--focus:                   $pfe-color--ui-accent--focus,
+  ui-accent--visited:                 $pfe-color--ui-accent--visited,
   ui-accent--text:                    $pfe-color--ui-accent--text,
   ui-accent--text--hover:             $pfe-color--ui-accent--text--hover,
+  ui-accent--text--focus:             $pfe-color--ui-accent--text--focus,
+  ui-accent--text--visited:           $pfe-color--ui-accent--text--visited,
 
   ui-disabled:                        $pfe-color--ui-disabled,
   ui-disabled--hover:                 $pfe-color--ui-disabled--hover,
+  ui-disabled--focus:                 $pfe-color--ui-disabled--focus,
+  ui-disabled--visited:               $pfe-color--ui-disabled--visited,
   ui-disabled--text:                  $pfe-color--ui-disabled--text,
   ui-disabled--text--hover:           $pfe-color--ui-disabled--text--hover,
+  ui-disabled--text--focus:           $pfe-color--ui-disabled--text--focus,
+  ui-disabled--text--visited:         $pfe-color--ui-disabled--text--visited,
 
   // ========================================================================
   // Base Surface Colors for Container elements
@@ -151,6 +167,7 @@ $pfe-colors: (
   feedback--default--lightest:        $pfe-color--feedback--default--lightest,
   feedback--default--darkest:         $pfe-color--feedback--default--darkest,
 
+  overlay:                            rgba($pfe-color--gray-900, .5)
 );
 
 
@@ -185,6 +202,9 @@ $pfe-vars: (
   surface--border-width--heavy:  3px,
   surface--border-style:         solid,
   surface--border-radius:        3px,
+
+  ui--element--size:             20px,
+
   ui--border-width:              1px,
   ui--border-style:              solid,
   ui--border-radius:             2px,
@@ -203,6 +223,14 @@ $pfe-vars: (
   box-shadow--lg:                '0  #{pfe-size-prem(3)}  #{pfe-size-prem(7)} #{pfe-size-prem(3)} rgba(#{$pfe-color--gray-1000}, .13), 0  #{pfe-size-prem(11)}  #{pfe-size-prem(24)} #{pfe-size-prem(16)} rgba(#{$pfe-color--gray-1000}, .12)',
   box-shadow--inset:             'inset 0 0 #{pfe-size-prem(10)} 0 rgba(#{$pfe-color--gray-1000}, .25)',
 
+  animation-speed:               0.3,
   animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),
   opacity:                       .3
+);
+
+$z-index: (
+  modal: 99,
+  navigation: 98,
+  overlay: 97,
+  content: 0
 );

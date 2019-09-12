@@ -4,7 +4,7 @@
     "className": "PfeNavigation",
     "elementName": "pfe-navigation"
   },
-  "version": "1.0.0-prerelease.21",
+  "version": "1.0.0-prerelease.23",
   "publishConfig": {
     "access": "public"
   },
@@ -35,8 +35,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "1.0.0-prerelease.21",
-    "@patternfly/pfelement": "1.0.0-prerelease.21"
+    "@patternfly/pfe-sass": "1.0.0-prerelease.23",
+    "@patternfly/pfelement": "1.0.0-prerelease.23"
   },
   "generator-pfelement-version": "1.1.0"
 }

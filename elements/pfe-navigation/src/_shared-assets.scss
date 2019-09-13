@@ -21,8 +21,11 @@ $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
         text-decoration: none;
     }
     &:focus {
-        outline: none;
-        color: #{pfe-radio(color, ui-link, focus)}
+        outline-offset: 1px;
+        outline-style: dotted;
+        outline-width: 1px;
+        outline-color: #{pfe-radio(color, ui-link, focus)};
+        color: #{pfe-radio(color, ui-link, focus)};
     }
 }
 

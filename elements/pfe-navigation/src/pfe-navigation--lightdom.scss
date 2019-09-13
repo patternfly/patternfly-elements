@@ -1,23 +1,42 @@
 @import "../../pfe-sass/pfe-sass";
 @import "_shared-assets.scss";
+@import "../../pfe-layouts/src/layouts/_grid";
 
 // IE11 styles
 @include browser-query(ie11) {
-    .pfe-navigation-item__trigger.pfe-navigation-item {
-        .expanded & {
-            background-color: #{pfe-color(surface--lightest)};
-            border-top-color: #{pfe-color(surface--accent)};
+    .pfe-navigation-item__trigger {
+        &.pfe-navigation-item {
+            .expanded & {
+                background-color: #{pfe-color(surface--lightest)};
+                border-top-color: #{pfe-color(surface--accent)};
+            }
+            &:hover {
+                cursor: pointer;
+                border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-color(surface--accent)};
+            }
         }
-        &:hover {
-            cursor: pointer;
-            border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-color(surface--accent)};
+        .pfe-navigation__utility--mobile > *:not(:last-child) {
+            margin-bottom: #{pfe-var(container-spacer)};
         }
-    }
-    .pfe-navigation__utility--mobile > *:not(:last-child) {
-        margin-bottom: #{pfe-var(container-spacer)};
-    }
-    .pfe-navigation-item__tray--container {
-        padding-top: #{pfe-var(container-spacer)};
+        .pfe-navigation-item__tray--container {
+            padding-top: #{pfe-var(container-spacer)};
+        }
+        > *.pfe-navigation-item__trigger--icon:first-child {
+            display: none;
+        }
+        > *:not(.pfe-navigation-item__trigger--icon) {
+            color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
+
+            .expanded & {
+                color: #{pfe-color(text)};
+            }
+
+            a,
+            a:hover,
+            a:visited {
+                color: inherit;
+            }
+        }
     }
 }
 
@@ -40,7 +59,7 @@ pfe-navigation [slot="logo"] > a {
         &[is_nested] [slot="trigger"]::after {
             visibility: hidden;
         }
-        
+
         [slot="mobile-menu--label"] {
             font-size: 14px;
             font-weight: 300;
@@ -63,18 +82,59 @@ pfe-navigation [slot="logo"] > a {
     }
 }
 
+pfe-navigation-item [slot="trigger"] a,
+.pfe-navigation-item__trigger > *:not(.pfe-navigation-item__trigger--icon) a,
+.pfe-navigation-item__tray--container a {
+    @extend %link-styles;
+}
+
+// Accordion styles inside tertiary
+pfe-navigation-main pfe-navigation-item [slot="trigger"] {
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0;
+    @media (min-width: $pfe-global--grid-breakpoint--xl) {
+        font-size: 14px;
+    }
+}
+
 // This class is added by the shadow DOM or shady css
+.pfe-navigation-item__trigger > *:not(.pfe-navigation-item__trigger--icon) {
+    margin: 0;
+    font-family: #{pfe-var(font-family)};
+    font-size:   #{pfe-local($cssvar: FontSize, $fallback: 14px, $region: trigger)};
+    font-weight: #{pfe-local($cssvar: FontWeight, $fallback: 100, $region: trigger)};
+    color:       #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
+}
+
 .pfe-navigation-item__tray {
-    padding: #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})};
-    max-height: calc(100vh - var(--pfe-navigation--Height, 90px));
+    // padding: #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})};
+    max-height: calc(100vh - #{pfe-local(Height)}, 90px);
     overflow-x: hidden;
     overflow-y: scroll;
 
     // This class is added manually inside the tray on the light DOM content
     &--container {
-        max-width: var(--pfe-navigation--Width);
-        margin: 0 auto;
+        min-height: 200px;
+        width: 100%;
+        @media (max-width: $pfe-global--grid-breakpoint--lg--max) {
+            padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
+        }
+        @media (min-width: $pfe-global--grid-breakpoint--xl) {
+            max-width: #{pfe-local($cssvar: Width, $fallback: 1140px)};
+            margin: 0 auto;
+        }
     }
+}
+
+[slot="tray"] {
+    @media (max-width: $pfe-global--grid-breakpoint--lg--max){
+        padding: 0;
+    }
+}
+[slot="tray"][hidden] {
+    display: none;
+    visibility: hidden;
 }
 
 pfe-navigation-main[show_content] > ul {
@@ -82,3 +142,134 @@ pfe-navigation-main[show_content] > ul {
     flex-flow: row nowrap;
 }
 
+.pfe-navigation-grid {
+    @media (min-width: $pfe-global--grid-breakpoint--sm) {
+        column-count: 2;
+        column-gap: 32px;
+        flex: 1;
+    }
+    @media (min-width: $pfe-global--grid-breakpoint--lg) {
+        column-count: 3;
+    }
+    @media (min-width: $pfe-global--grid-breakpoint--xl) {
+        /* autoprefixer grid: autoplace */
+        display: grid;
+        grid-gap: 32px;
+        grid-template-columns: repeat(4, 1fr);
+        -ms-grid-columns: 1fr 1fr 1fr 1fr;
+        .pfe-navigation--column:nth-child(1) {
+            -ms-grid-column: 1;
+        }
+        .pfe-navigation--column:nth-child(2) {
+            -ms-grid-column: 2;
+        }
+        .pfe-navigation--column:nth-child(3) {
+            -ms-grid-column: 3;
+        }
+        .pfe-navigation--column:nth-child(4) {
+            -ms-grid-column: 4;
+        }
+    }
+}
+
+.pfe-navigation {
+    &--column-span-2 {
+      // intentinally not setting for IE prefix to prevent column overlap
+      @media (min-width: $pfe-global--grid-breakpoint--xl) {
+          grid-column: span 2;
+        }
+    }
+    &--footer {
+      margin: 40px 0 !important;
+      border-top: 1px solid lightgray;
+      padding: 40px 0 0;
+      > *:not(:last-child) {
+           margin-bottom: 32px;
+      }
+      > * {
+          flex: 45%;
+         }
+      @media (min-width: $pfe-global--grid-breakpoint--sm) {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: baseline;
+          > *:not(:last-child) {
+               margin-bottom: 0;
+          }
+          > *:nth-child(3) {
+              margin-top: 32px;
+          }
+        }
+      @media (min-width: $pfe-global--grid-breakpoint--lg) {
+          // Not setting grid prefix here since IE doesn't support auto-flow
+          display: grid;
+          grid-gap: 32px;
+          grid-auto-flow: column;
+          > *:nth-child(3) {
+              margin-top: 0;
+          }
+      }
+      @media (min-width: $pfe-global--grid-breakpoint--xl) {
+          padding-bottom: 0;
+          display: -ms-grid;
+          grid-template-columns: repeat(4, 1fr);
+          -ms-grid-columns: 1fr 1fr 1fr 1fr;
+          align-items: center;
+          .pfe-navigation--column:nth-child(1) {
+              -ms-grid-column: 1;
+          }
+          .pfe-navigation--column:nth-child(2) {
+              -ms-grid-column: 2;
+          }
+          .pfe-navigation--column:nth-child(3) {
+              -ms-grid-column: 3;
+          }
+          .pfe-navigation--column:nth-child(4) {
+              -ms-grid-column: 4;
+          }
+      }
+  }
+
+}
+
+pfe-navigation .pfe-link-list {
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 1em;
+    &--header {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.75;
+        @media (min-width: $pfe-global--grid-breakpoint--xl) {
+            font-size: 16px;
+        }
+        a {
+          color: #151515;
+          text-decoration: underline;
+          &:hover {
+             color: #151515;
+             text-decoration: none;
+          }
+          &:focus {
+             outline-offset: 1px;
+             outline-style: dotted;
+             outline-width: 1px;
+             outline-color: var(--pfe-broadcasted--color--ui-link--focus, #{map-get($pfe-colors, 'ui-link--focus')});
+          }
+       }
+    }
+    &--group {
+        list-style: none;
+        padding: 0;
+        &-item > a {
+            @extend %link-styles;
+            font-size: 16px;
+            line-height: 2;
+        }
+    }
+}

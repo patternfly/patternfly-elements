@@ -157,78 +157,79 @@ pfe-navigation-main[show_content] > ul {
         grid-gap: 32px;
         grid-template-columns: repeat(4, 1fr);
         -ms-grid-columns: 1fr 1fr 1fr 1fr;
-        .pfe-navigation-column:nth-child(1) {
+        .pfe-navigation--column:nth-child(1) {
             -ms-grid-column: 1;
         }
-        .pfe-navigation-column:nth-child(2) {
+        .pfe-navigation--column:nth-child(2) {
             -ms-grid-column: 2;
         }
-        .pfe-navigation-column:nth-child(3) {
+        .pfe-navigation--column:nth-child(3) {
             -ms-grid-column: 3;
         }
-        .pfe-navigation-column:nth-child(4) {
+        .pfe-navigation--column:nth-child(4) {
             -ms-grid-column: 4;
         }
     }
 }
 
-.pfe-navigation-footer {
-  margin: 40px 0 !important;
-  border-top: 1px solid lightgray;
-  padding: 40px 0 0;
-  > *:not(:last-child) {
-       margin-bottom: 32px;
-  }
-  > * {
-      flex: 45%;
-     }
-  @media (min-width: $pfe-global--grid-breakpoint--sm) {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
+.pfe-navigation {
+    &--column-span-2 {
+      // intentinally not setting for IE prefix to prevent column overlap
+      @media (min-width: $pfe-global--grid-breakpoint--xl) {
+          grid-column: span 2;
+        }
+    }
+    &--footer {
+      margin: 40px 0 !important;
+      border-top: 1px solid lightgray;
+      padding: 40px 0 0;
       > *:not(:last-child) {
-           margin-bottom: 0;
+           margin-bottom: 32px;
       }
-      > *:nth-child(3) {
-          margin-top: 32px;
+      > * {
+          flex: 45%;
+         }
+      @media (min-width: $pfe-global--grid-breakpoint--sm) {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: baseline;
+          > *:not(:last-child) {
+               margin-bottom: 0;
+          }
+          > *:nth-child(3) {
+              margin-top: 32px;
+          }
+        }
+      @media (min-width: $pfe-global--grid-breakpoint--lg) {
+          // Not setting grid prefix here since IE doesn't support auto-flow
+          display: grid;
+          grid-gap: 32px;
+          grid-auto-flow: column;
+          > *:nth-child(3) {
+              margin-top: 0;
+          }
       }
-    }
-  @media (min-width: $pfe-global--grid-breakpoint--lg) {
-      // Not setting grid prefix here since IE doesn't support auto-flow
-      display: grid;
-      grid-gap: 32px;
-      grid-auto-flow: column;
-      > *:nth-child(3) {
-          margin-top: 0;
-      }
-  }
-  @media (min-width: $pfe-global--grid-breakpoint--xl) {
-      padding-bottom: 0;
-      display: -ms-grid;
-      grid-template-columns: repeat(4, 1fr);
-      -ms-grid-columns: 1fr 1fr 1fr 1fr;
-      align-items: center;
-      .pfe-navigation-column:nth-child(1) {
-          -ms-grid-column: 1;
-      }
-      .pfe-navigation-column:nth-child(2) {
-          -ms-grid-column: 2;
-      }
-      .pfe-navigation-column:nth-child(3) {
-          -ms-grid-column: 3;
-      }
-      .pfe-navigation-column:nth-child(4) {
-          -ms-grid-column: 4;
+      @media (min-width: $pfe-global--grid-breakpoint--xl) {
+          padding-bottom: 0;
+          display: -ms-grid;
+          grid-template-columns: repeat(4, 1fr);
+          -ms-grid-columns: 1fr 1fr 1fr 1fr;
+          align-items: center;
+          .pfe-navigation--column:nth-child(1) {
+              -ms-grid-column: 1;
+          }
+          .pfe-navigation--column:nth-child(2) {
+              -ms-grid-column: 2;
+          }
+          .pfe-navigation--column:nth-child(3) {
+              -ms-grid-column: 3;
+          }
+          .pfe-navigation--column:nth-child(4) {
+              -ms-grid-column: 4;
+          }
       }
   }
 
-}
-
-.pfe-navigation-span-2-columns {
-  // intentinally not setting for IE prefix to prevent column overlap
-  @media (min-width: $pfe-global--grid-breakpoint--xl) {
-      grid-column: span 2;
-    }
 }
 
 pfe-navigation .pfe-link-list {

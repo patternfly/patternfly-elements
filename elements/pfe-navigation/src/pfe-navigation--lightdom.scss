@@ -59,7 +59,7 @@ pfe-navigation [slot="logo"] > a {
         &[is_nested] [slot="trigger"]::after {
             visibility: hidden;
         }
-        
+
         [slot="mobile-menu--label"] {
             font-size: 14px;
             font-weight: 300;
@@ -142,41 +142,47 @@ pfe-navigation-main[show_content] > ul {
     flex-flow: row nowrap;
 }
 
-.pfe-nav-grid {
-    @media (min-width: 650px) {
+.pfe-navigation-grid {
+    @media (min-width: $pfe-global--grid-breakpoint--sm) {
         column-count: 2;
         column-gap: 32px;
         flex: 1;
     }
+    @media (min-width: $pfe-global--grid-breakpoint--lg) {
+        column-count: 3;
+    }
     @media (min-width: $pfe-global--grid-breakpoint--xl) {
+        /* autoprefixer grid: autoplace */
         display: grid;
-        display: -ms-grid;
         grid-gap: 32px;
         grid-template-columns: repeat(4, 1fr);
         -ms-grid-columns: 1fr 1fr 1fr 1fr;
-        .column:nth-child(1) {
+        .pfe-navigation-column:nth-child(1) {
             -ms-grid-column: 1;
         }
-        .column:nth-child(2) {
+        .pfe-navigation-column:nth-child(2) {
             -ms-grid-column: 2;
         }
-        .column:nth-child(3) {
+        .pfe-navigation-column:nth-child(3) {
             -ms-grid-column: 3;
         }
-        .column:nth-child(4) {
+        .pfe-navigation-column:nth-child(4) {
             -ms-grid-column: 4;
         }
     }
 }
 
-.pfe-nav--item-footer {
+.pfe-navigation-footer {
   margin: 40px 0 !important;
   border-top: 1px solid lightgray;
   padding: 40px 0 0;
   > *:not(:last-child) {
        margin-bottom: 32px;
   }
-  @media (min-width: 650px) {
+  > * {
+      flex: 45%;
+     }
+  @media (min-width: $pfe-global--grid-breakpoint--sm) {
       display: flex;
       flex-wrap: wrap;
       align-items: baseline;
@@ -187,39 +193,42 @@ pfe-navigation-main[show_content] > ul {
           margin-top: 32px;
       }
     }
-  @media (min-width: $pfe-global--grid-breakpoint--xl) {
-      padding-bottom: 0;
-      // padding-bottom: calc(40px - #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})});
+  @media (min-width: $pfe-global--grid-breakpoint--lg) {
+      // Not setting grid prefix here since IE doesn't support auto-flow
       display: grid;
-      display: -ms-grid;
       grid-gap: 32px;
-      grid-template-columns: repeat(4, 1fr);
-      -ms-grid-columns: 1fr 1fr 1fr 1fr;
-      align-items: center;
-      .column:nth-child(1) {
-          -ms-grid-column: 1;
-      }
-      .column:nth-child(2) {
-          -ms-grid-column: 2;
-      }
-      .column:nth-child(3) {
-          -ms-grid-column: 3;
-      }
-      .column:nth-child(4) {
-          -ms-grid-column: 4;
-      }
+      grid-auto-flow: column;
       > *:nth-child(3) {
           margin-top: 0;
       }
   }
-   > * {
-       flex: 45%;
+  @media (min-width: $pfe-global--grid-breakpoint--xl) {
+      padding-bottom: 0;
+      display: -ms-grid;
+      grid-template-columns: repeat(4, 1fr);
+      -ms-grid-columns: 1fr 1fr 1fr 1fr;
+      align-items: center;
+      .pfe-navigation-column:nth-child(1) {
+          -ms-grid-column: 1;
       }
+      .pfe-navigation-column:nth-child(2) {
+          -ms-grid-column: 2;
+      }
+      .pfe-navigation-column:nth-child(3) {
+          -ms-grid-column: 3;
+      }
+      .pfe-navigation-column:nth-child(4) {
+          -ms-grid-column: 4;
+      }
+  }
+
 }
 
-.span-2 {
+.pfe-navigation-span-2-columns {
   // intentinally not setting for IE prefix to prevent column overlap
-  grid-column: span 2;
+  @media (min-width: $pfe-global--grid-breakpoint--xl) {
+      grid-column: span 2;
+    }
 }
 
 pfe-navigation .pfe-link-list {
@@ -263,4 +272,3 @@ pfe-navigation .pfe-link-list {
         }
     }
 }
-

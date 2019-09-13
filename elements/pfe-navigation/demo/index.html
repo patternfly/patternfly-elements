@@ -46,7 +46,7 @@
       <!-- Site logo -->
       <h2 slot="logo" style="padding: 0 0 8px 0;line-height: 1;">
         <a href="https://redhat.com">
-          <img src="/profiles/rh/themes/redhatdotcom/img/logo.svg" class="screen" title="Red Hat" style="width: 135px; height: 100%;">
+          <img class="redhat-logo screen" src="https://via.placeholder.com/150x50.png" title="Red Hat"/>
         </a>
       </h2>
       <!-- Search -->
@@ -74,8 +74,8 @@
                 <p slot="trigger"><a href="#">Products</a></p>
                 <div slot="tray" hidden>
                   <div class="pfe-navigation-item__tray--container">
-                     <div class="pfe-nav-grid">
-                    <div class="column">
+                     <div class="pfe-navigation-grid">
+                    <div class="pfe-navigation-column">
                         <div class="pfe-link-list">
                           <p class="pfe-link-list--header">Platforms</p>
                           <ul class="pfe-link-list--group">
@@ -105,7 +105,7 @@
                           </ul>
                         </div>
                     </div>
-                    <div class="column">
+                    <div class="pfe-navigation-column">
                         <div class="pfe-link-list">
                           <p class="pfe-link-list--header">Integration</p>
                           <ul class="pfe-link-list--group">
@@ -124,7 +124,7 @@
                           </ul>
                     </div>
                 </div>
-                    <div class="column">
+                    <div class="pfe-navigation-column">
                         <div class="pfe-link-list">
                           <p class="pfe-link-list--header">Application development</p>
                           <ul class="pfe-link-list--group">
@@ -144,7 +144,7 @@
                         </ul>
                     </div>
                       </div>
-                      <div class="column">
+                      <div class="pfe-navigation-column">
                           <div class="pfe-link-list">
                           <p class="pfe-link-list--header">Storage</p>
                           <ul class="pfe-link-list--group">
@@ -159,18 +159,18 @@
                         </div>
 
                     </div>
-                    <div class="pfe-nav--item-footer">
-                        <div class="column">
-                            <pfe-cta pfe-priority="primary" class="PFElement"><a href="#">View all products</a></pfe-cta>
+                    <div class="pfe-navigation-footer">
+                        <div class="pfe-navigation-column">
+                            <pfe-cta pfe-priority="primary"><a href="#">View all products</a></pfe-cta>
                         </div>
-                        <div class="column">
-                            <pfe-cta class="PFElement"><a href="#">Explore our portfolio</a></pfe-cta>
+                        <div class="pfe-navigation-column">
+                            <pfe-cta><a href="#">Explore our portfolio</a></pfe-cta>
                         </div>
-                        <div class="column">
-                            <pfe-cta class="PFElement"><a href="#">Buy products online</a></pfe-cta>
+                        <div class="pfe-navigation-column">
+                            <pfe-cta><a href="#">Buy products online</a></pfe-cta>
                         </div>
-                        <div class="column">
-                            <pfe-cta class="PFElement"><a href="#">Subscription model</a></pfe-cta>
+                        <div class="pfe-navigation-column">
+                            <pfe-cta><a href="#">Subscription model</a></pfe-cta>
                         </div>
                     </div>
                 </div>
@@ -181,8 +181,8 @@
               <p slot="trigger"><a href="#">Solutions</a></p>
               <div slot="tray" hidden>
                 <div class="pfe-navigation-item__tray--container">
-                    <div class="pfe-nav-grid">
-                        <div class="column">
+                    <div class="pfe-navigation-grid">
+                        <div class="pfe-navigation-column">
                         <div class="pfe-link-list">
                           <p class="pfe-link-list--header"><a href="#">Optimize the IT you have</a></p>
                           <ul class="pfe-link-list--group">
@@ -201,7 +201,7 @@
                           </ul>
                         </div>
                         </div>
-                        <div class="column">
+                        <div class="pfe-navigation-column">
                         <div class="pfe-link-list">
                           <p class="pfe-link-list--header"><a href="#">Add and manage cloud infrastructure</a></p>
                           <ul class="pfe-link-list--group">
@@ -218,7 +218,7 @@
                           </ul>
                         </div>
                     </div>
-                    <div class="column">
+                    <div class="pfe-navigation-column">
                         <div class="pfe-link-list">
                           <p class="pfe-link-list--header"><a href="#">Build more modern applications</a></p>
                           <ul class="pfe-link-list--group">
@@ -248,12 +248,12 @@
                       </div>
                     </div>
                     </div>
-                    <div class="pfe-nav--item-footer">
-                        <div class="column">
-                            <pfe-cta pfe-priority="primary" class="PFElement"><a href="#">View all products</a></pfe-cta>
+                    <div class="pfe-navigation-footer">
+                        <div class="pfe-navigation-column">
+                            <pfe-cta pfe-priority="primary"><a href="#">View all products</a></pfe-cta>
                         </div>
-                        <div class="column">
-                            <pfe-cta class="PFElement pfe-align-vertical"><a href="#">Explore our portfolio</a></pfe-cta>
+                        <div class="pfe-navigation-column">
+                            <pfe-cta class="pfe-align-vertical"><a href="#">Explore our portfolio</a></pfe-cta>
                         </div>
                     </div>
                 </div>
@@ -265,8 +265,8 @@
               <p slot="trigger"><a href="/support">Services &amp; support</a></p>
               <div slot="tray" hidden>
                   <div class="pfe-navigation-item__tray--container">
-                        <div class="pfe-nav-grid" >
-                            <div class="column">
+                        <div class="pfe-navigation-grid" >
+                            <div class="pfe-navigation-column">
                           <div class="pfe-link-list">
                             <p class="pfe-link-list--header"><a href="#">Support</a></p>
                             <ul class="pfe-link-list--group">
@@ -287,7 +287,7 @@
                             </ul>
                         </div>
                       </div>
-                      <div class="column">
+                      <div class="pfe-navigation-column">
                           <div class="pfe-link-list">
                             <p class="pfe-link-list--header"><a href="#">Services</a></p>
                             <ul class="pfe-link-list--group">
@@ -305,7 +305,7 @@
                             </ul>
                         </div>
                       </div>
-                      <div class="column">
+                      <div class="pfe-navigation-column">
                           <div class="pfe-link-list">
                             <p class="pfe-link-list--header"><a href="#">Training and certification</a></p>
                             <ul class="pfe-link-list--group">
@@ -321,7 +321,7 @@
                             </ul>
                           </div>
                       </div>
-                      <div class="column">
+                      <div class="pfe-navigation-column">
                           <div class="pfe-link-list">
                             <p class="pfe-link-list--header">Featured</p>
                             <ul class="pfe-link-list--group">
@@ -345,9 +345,9 @@
 
 
                       </div>
-                      <div class="pfe-nav--item-footer">
-                          <div class="column span-2">
-                              <pfe-cta pfe-priority="primary" class="PFElement"><a href="#">Explore all services &amp; support</a></pfe-cta>
+                      <div class="pfe-navigation-footer">
+                          <div class="pfe-navigation-column pfe-navigation-span-2-columns">
+                              <pfe-cta pfe-priority="primary"><a href="#">Explore all services &amp; support</a></pfe-cta>
                           </div>
                       </div>
                   </div>
@@ -359,8 +359,8 @@
               <p slot="trigger"><a href="/resources">Resources</a></p>
               <div slot="tray" hidden>
                   <div class="pfe-navigation-item__tray--container">
-                      <div class="pfe-nav-grid">
-                          <div class="column span-2">
+                      <div class="pfe-navigation-grid">
+                          <div class="pfe-navigation-column pfe-navigation-span-2-columns">
                           <div class="pfe-link-list">
                             <p class="pfe-link-list--header">Articles</p>
                             <ul class="pfe-link-list--group">
@@ -372,7 +372,7 @@
                             </ul>
                           </div>
                       </div>
-                      <div class="column">
+                      <div class="pfe-navigation-column">
                           <div class="pfe-link-list">
                             <p class="pfe-link-list--header">Success stories</p>
                             <ul class="pfe-link-list--group">
@@ -392,7 +392,7 @@
                             </ul>
                         </div>
                       </div>
-                      <div class="column">
+                      <div class="pfe-navigation-column">
                           <div class="pfe-link-list">
                             <p class="pfe-link-list--header"><a href="#">More to explore</a></p>
                             <ul class="pfe-link-list--group">
@@ -405,15 +405,15 @@
                       </div>
 
                       </div>
-                      <div class="pfe-nav--item-footer">
-                          <div class="column span-2">
-                              <pfe-cta pfe-priority="primary" class="PFElement"><a href="#">Explore all topics</a></pfe-cta>
+                      <div class="pfe-navigation-footer">
+                          <div class="pfe-navigation-column pfe-navigation-span-2-columns">
+                              <pfe-cta pfe-priority="primary"><a href="#">Explore all topics</a></pfe-cta>
                           </div>
-                          <div class="column">
-                              <pfe-cta class="PFElement"><a href="#">Browse all success stories</a></pfe-cta>
+                          <div class="pfe-navigation-column">
+                              <pfe-cta><a href="#">Browse all success stories</a></pfe-cta>
                           </div>
-                          <div class="column">
-                              <pfe-cta class="PFElement"><a href="#">Search resource library</a></pfe-cta>
+                          <div class="pfe-navigation-column">
+                              <pfe-cta><a href="#">Search resource library</a></pfe-cta>
                           </div>
                       </div>
                   </div>
@@ -425,8 +425,8 @@
                 <p slot="trigger"><a href="/open-source">Red Hat &amp; open source</a></p>
                     <div slot="tray" hidden>
                         <div class="pfe-navigation-item__tray--container">
-                          <div class="pfe-nav-grid">
-                              <div class="column">
+                          <div class="pfe-navigation-grid">
+                              <div class="pfe-navigation-column">
                             <div class="pfe-link-list">
                               <p class="pfe-link-list--header">About us</p>
                               <ul class="pfe-link-list--group">
@@ -445,7 +445,7 @@
                               </ul>
                           </div>
                         </div>
-                        <div class="column">
+                        <div class="pfe-navigation-column">
                             <div class="pfe-link-list">
                               <p class="pfe-link-list--header">Company details</p>
                               <ul class="pfe-link-list--group">
@@ -457,7 +457,7 @@
                               </ul>
                             </div>
                         </div>
-                        <div class="column">
+                        <div class="pfe-navigation-column">
                             <div class="pfe-link-list">
                               <p class="pfe-link-list--header">Open source commitment</p>
                               <ul class="pfe-link-list--group">

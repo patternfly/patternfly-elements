@@ -2,6 +2,6 @@
     ${this.hasIcon ? `<pfe-icon icon="${this.iconName}"></pfe-icon>` : ""}
     <slot name="trigger"></slot>
 </div>
-<div class="pfe-navigation-item__tray">
+${ this.has_slot("tray") ? `<div class="pfe-navigation-item__tray">
     <slot name="tray"></slot>
-</div>
+</div>` : ""}

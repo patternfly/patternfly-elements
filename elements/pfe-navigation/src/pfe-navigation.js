@@ -219,8 +219,14 @@ class PfeNavigation extends PFElement {
   disconnectedCallback() {
     // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("resize", this._resizeHandler);
-    window.removeEventListener("scroll", this._stickyHandler);
-    document.removeEventListener("click", this._outsideListener);
+    
+    if(this.hasAttribute("pfe-close-on-click") && this.getAttribute("pfe-close-on-click") === "external") {
+      document.removeEventListener("click", this._outsideListener);
+    }
+
+    if(this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
+      window.removeEventListener("scroll", this._stickyHandler);
+    }
 
     this._observer.disconnect();
   }

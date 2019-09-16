@@ -1,8 +1,6 @@
-import PFElement from "../pfelement/pfelement.js";
-import PfeNavigationItem from "./pfe-navigation-item.js";
-import PfeNavigationMain from "./pfe-navigation-main.js";
+// -- @TODO Needing to manually add polyfills at the moment; check into why babel is not doing this
 
-// Filter polyfill
+// -- POLYFILL: Array.prototype.filter
 if (!Array.prototype.filter){
   Array.prototype.filter = function(func, thisArg) {
     'use strict';
@@ -42,13 +40,13 @@ if (!Array.prototype.filter){
   };
 }
 
-// Matches polyfill
+// -- POLYFILL: Element.prototype.matches
 if (!Element.prototype.matches) {
   Element.prototype.matches = Element.prototype.msMatchesSelector || 
                               Element.prototype.webkitMatchesSelector;
 }
 
-// Closest polyfill
+// -- POLYFILL: Element.prototype.closest
 if (!Element.prototype.closest) {
   Element.prototype.closest = function(s) {
     var el = this;
@@ -61,7 +59,7 @@ if (!Element.prototype.closest) {
   };
 }
 
-// Includes polyfill
+// -- POLYFILL: Array.prototype.includes
 if (!Array.prototype.includes) {
   Object.defineProperty(Array.prototype, 'includes', {
     value: function (searchElement, fromIndex) {
@@ -112,6 +110,29 @@ if (!Array.prototype.includes) {
     }
   });
 }
+
+// -- POLYFILL: Event.prototype.path
+if (!("path" in Event.prototype)) {
+    Object.defineProperty(Event.prototype, "path", {
+      get: function() {
+        var path = [];
+        var currentElem = this.target;
+        while (currentElem) {
+          path.push(currentElem);
+          currentElem = currentElem.parentElement;
+        }
+        if (path.indexOf(window) === -1 && path.indexOf(document) === -1)
+          path.push(document);
+        if (path.indexOf(window) === -1)
+          path.push(window);
+        return path;
+      }
+    });
+}
+
+import PFElement from "../pfelement/pfelement.js";
+import PfeNavigationItem from "./pfe-navigation-item.js";
+import PfeNavigationMain from "./pfe-navigation-main.js";
 
 class PfeNavigation extends PFElement {
   static get tag() {
@@ -219,7 +240,7 @@ class PfeNavigation extends PFElement {
   disconnectedCallback() {
     // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("resize", this._resizeHandler);
-    
+
     if(this.hasAttribute("pfe-close-on-click") && this.getAttribute("pfe-close-on-click") === "external") {
       document.removeEventListener("click", this._outsideListener);
     }

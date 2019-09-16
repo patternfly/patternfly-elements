@@ -10,6 +10,8 @@ NEW_VERSION=""
 TAG_NAME=""
 RELEASE_BRANCH=""
 
+# abort script if any command fails
+set -e
 trap ctrl_c INT
 
 ctrl_c() {
@@ -48,7 +50,7 @@ checkoutMaster() {
 bumpVersion() {
   log "bumping version"
   OLD_VERSION=$(node -e "console.log(require('./lerna.json').version)")
-  ./node_modules/.bin/lerna version --no-git-tag-version --no-push --preid="$PRERELEASE_PREFIX" || exit 1
+  ./node_modules/.bin/lerna version --include-merged-tags --no-git-tag-version --no-push --preid="$PRERELEASE_PREFIX" || exit 1
   NEW_VERSION=$(node -e "console.log(require('./lerna.json').version)")
 }
 

@@ -4,7 +4,7 @@
     "className": "PfeAccordion",
     "elementName": "pfe-accordion"
   },
-  "version": "1.0.0-prerelease.23",
+  "version": "1.0.0-prerelease.24",
   "publishConfig": {
     "access": "public"
   },
@@ -39,8 +39,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.23",
-    "@patternfly/pfelement": "^1.0.0-prerelease.23"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
+    "@patternfly/pfelement": "^1.0.0-prerelease.24"
   },
   "generator-pfelement-version": "0.5.5"
 }

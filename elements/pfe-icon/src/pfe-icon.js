@@ -1,6 +1,6 @@
 import PFElement from "../pfelement/pfelement.js";
-import PfeIconSet from "./pfe-icon-set.js";
-import { addBuiltIns } from "./pfe-builtin-icon-sets.js";
+import PfeIconSet from "./icon-set.js";
+import { addBuiltIns } from "./builtin-icon-sets.js";
 
 /**
  * Sets the id attribute on the <filter> element and points the CSS `filter` at that id.

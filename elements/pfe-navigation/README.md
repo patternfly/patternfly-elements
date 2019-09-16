@@ -1,4 +1,4 @@
-# PatternFly Element | Navigation Element
+# WIP: PatternFly Element | Navigation Element
 
 ## Navigation element
 
@@ -34,6 +34,8 @@ A navigation item is a single dropdown element; the navigation is composed of se
 - `pfe-icon`: Currently available icons are "bento", "user", "globe", "search", and "menu".  Adding this attribute renders that icon above the trigger.
 
 ## Dependencies
+
+- `<pfe-icon>`
 
 Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
 

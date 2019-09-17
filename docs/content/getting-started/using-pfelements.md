@@ -40,10 +40,6 @@ The beauty of web components is that they have much of the styling built-into th
 
 ### **1b. Container components (see 
 
-<p id="gdcalert7" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: undefined internal link (link text: "container"). Did you generate a TOC? </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert8">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-[container](#heading=h.2pji8rj06i0b) notes below)**
-
 
 ```
     <pfe-card pfe-color="darkest">

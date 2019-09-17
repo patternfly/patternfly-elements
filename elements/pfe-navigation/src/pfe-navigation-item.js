@@ -1,61 +1,5 @@
 import PFElement from "../pfelement/pfelement.js";
-
-if (!("path" in Event.prototype)) {
-    Object.defineProperty(Event.prototype, "path", {
-      get: function() {
-        var path = [];
-        var currentElem = this.target;
-        while (currentElem) {
-          path.push(currentElem);
-          currentElem = currentElem.parentElement;
-        }
-        if (path.indexOf(window) === -1 && path.indexOf(document) === -1)
-          path.push(document);
-        if (path.indexOf(window) === -1)
-          path.push(window);
-        return path;
-      }
-    });
-}
-
-if (!Array.prototype.filter){
-  Array.prototype.filter = function(func, thisArg) {
-    'use strict';
-    if ( ! ((typeof func === 'Function' || typeof func === 'function') && this) )
-        throw new TypeError();
-   
-    var len = this.length >>> 0,
-        res = new Array(len), // preallocate array
-        t = this, c = 0, i = -1;
-
-    var kValue;
-    if (thisArg === undefined){
-      while (++i !== len){
-        // checks to see if the key was set
-        if (i in this){
-          kValue = t[i]; // in case t is changed in callback
-          if (func(t[i], i, t)){
-            res[c++] = kValue;
-          }
-        }
-      }
-    }
-    else{
-      while (++i !== len){
-        // checks to see if the key was set
-        if (i in this){
-          kValue = t[i];
-          if (func.call(thisArg, t[i], i, t)){
-            res[c++] = kValue;
-          }
-        }
-      }
-    }
-   
-    res.length = c; // shrink down array to proper size
-    return res;
-  };
-}
+import PfeIcon from "../pfe-icon/pfe-icon.js";
 
 class PfeNavigationItem extends PFElement {
     static get tag() {
@@ -276,10 +220,6 @@ class PfeNavigationItem extends PFElement {
       // Add a slotchange listeners to the lightDOM elements
       if (this.trigger) this.trigger.addEventListener("slotchange", this._init__trigger);
       if (this.tray) this.tray.addEventListener("slotchange", this._init__tray);
-    }
-  
-    attributeChangedCallback(attr, oldValue, newValue) {
-      super.attributeChangedCallback(attr, oldValue, newValue);
     }
   
     disconnectedCallback() {

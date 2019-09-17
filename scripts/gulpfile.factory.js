@@ -1,6 +1,7 @@
 module.exports = function factory({
   version,
   pfelement: { elementName, className },
+  files = [],
   prebundle = []
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
@@ -15,7 +16,7 @@ module.exports = function factory({
   const paths = {
     source: "./src",
     compiled: "./",
-    temp: "./tmp"
+    temp: "./_temp"
   };
 
   // Tooling
@@ -23,6 +24,8 @@ module.exports = function factory({
   const path = require("path");
   const replace = require("gulp-replace");
   const clean = require("gulp-clean");
+  const gulpif = require("gulp-if");
+  const gulpmatch = require("gulp-match");
 
   // Rollup
   const shell = require("gulp-shell");
@@ -66,9 +69,9 @@ module.exports = function factory({
           })])
         )
         // Write the sourcemap
-        .pipe(sourcemaps.write(paths.compiled))
+        .pipe(sourcemaps.write())
         // Output the unminified file
-        .pipe(dest(paths.compiled))
+        .pipe(dest(paths.temp))
         // Minify the file
         .pipe(
           cleanCSS({
@@ -82,46 +85,13 @@ module.exports = function factory({
           })
         )
         // Output the minified file
-        .pipe(dest(paths.compiled))
+        .pipe(dest(paths.temp))
     );
   });
 
-  // @TODO commenting out the fallbacks for now
-  // task("fallback:css", () => {
-  //   const classRegex = new RegExp(`\.${elementName}__(\w+)(.*){`, "gi");
-  //   return (
-  //     src([`${elementName}.css`], {
-  //       cwd: paths.compiled
-  //     })
-  //       .pipe(replace(/,\s+\:/g, ",\n:"))
-  //       // Replace host and slot with fallbacks
-  //       .pipe(
-  //         replace(
-  //           /^\s*(:host(\(([^\)]*)\))?)?\s*(::slotted\(([^\)]+)\))?(\s*[{|,])/gim,
-  //           `${elementName}$3 $5$6`
-  //         )
-  //       )
-  //       // // Try to approximate class name to possible slot name
-  //       .pipe(
-  //         replace(
-  //           /\.([\w|-]+)__(\w+)(.*){/g,
-  //           `${elementName}[slot="$1--$2"]$3{`
-  //         )
-  //       )
-  //       // Add the .fallback suffix
-  //       .pipe(
-  //         rename({
-  //           suffix: "-fallback"
-  //         })
-  //       )
-  //       // Output the updated file
-  //       .pipe(dest(paths.compiled))
-  //   );
-  // });
-
   // Delete the temp directory
   task("clean", () => {
-    return src(["*.{js,css,map}", "!gulpfile.js", "!rollup.config.js"], {
+    return src(["*.{js,css,map}", "!gulpfile.js", "!rollup.config.js", paths.temp], {
       cwd: paths.compiled,
       read: false,
       allowEmpty: true
@@ -190,9 +160,9 @@ module.exports = function factory({
             );
             if (is_defined && file_exists) {
               let result = "";
-              // Get the compiled css styles from the source directory
+              // Get the compiled css styles from the temp directory
               let css_styles = path.join(
-                paths.compiled,
+                paths.temp,
                 `${path.basename(url.style, ".scss")}.min.css`
               );
               // Read in the content of the compiled file
@@ -274,18 +244,24 @@ ${fs
   .join("")}*/\n\n`
         )
       )
-      .pipe(dest(paths.compiled));
+      .pipe(dest(paths.temp));
   });
 
-  task("copy", () => {
+  task("copy:src", () => {
     return src(["*.js", `!${elementName}*.js`], {
       cwd: paths.source
-    }).pipe(dest(paths.compiled));
+    }).pipe(gulpif((file) => files.length > 0 && gulpmatch(file, files) || files.length === 0, dest(paths.compiled), dest(paths.temp)));
+  });
+
+  task("copy:compiled", () => {
+    return src(["*"], {
+      cwd: paths.temp
+    }).pipe(gulpif((file) => files.length > 0 && gulpmatch(file, files) || files.length === 0, dest(paths.compiled)));
   });
 
   task("compile", () => {
     return src(`${elementName}*.js`, {
-      cwd: paths.compiled
+      cwd: paths.temp
     })
       .pipe(
         replace(
@@ -298,7 +274,7 @@ ${fs
           suffix: ".umd"
         })
       )
-      .pipe(dest(paths.compiled));
+      .pipe(dest(paths.temp));
   });
 
   task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
@@ -311,7 +287,8 @@ ${fs
       // "fallback:css",
       // "minify:css",
       "merge",
-      "copy",
+      "copy:src",
+      "copy:compiled",
       ...prebundle,
       "compile",
       "bundle"

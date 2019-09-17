@@ -101,6 +101,7 @@ pfe-icon {
 
 .pfe-navigation {
   &__wrapper {
+    display: flex;
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
     z-index: #{pfe-var($cssvar: navigation, $map: $z-index)};
     
@@ -110,6 +111,7 @@ pfe-icon {
     min-height: #{pfe-local(MaxHeight)};
   }
   &__container {
+    width: 100%;
     max-width: #{pfe-local(Width)};
     margin: 0 auto;
     padding: 0 #{pfe-local(Padding--horizontal)};

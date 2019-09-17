@@ -31,7 +31,7 @@ $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
 
 %trigger {
     font-family: pfe-var(font-family);
-    font-size:   pfe-local($cssvar: FontSize, $fallback: #{$trigger--FontSize--fallback});
+    font-size:   pfe-local($cssvar: FontSize, $region: trigger, $fallback: #{$trigger--FontSize--fallback});
     font-weight: pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback});
     color:       pfe-local($cssvar: Color, $fallback: #{$trigger--Color--fallback});
 

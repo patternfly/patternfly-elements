@@ -39,7 +39,7 @@
 
   // Enforce the font-size for the navigation regardless of h-level settings
   @each $level in (alpha, beta, gamma) {
-    --pfe-theme--font-size--#{$level}:   #{pfe-local($cssvar: FontSize, $fallback: #{$trigger--FontSize--fallback})};
+    --pfe-theme--font-size--#{$level}:   #{pfe-local($cssvar: FontSize, $region: trigger, $fallback: #{$trigger--FontSize--fallback})};
     --pfe-theme--font-weight--#{$level}: #{pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback})};
   }
 

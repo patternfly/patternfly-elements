@@ -6,7 +6,7 @@
   },
   "version": "1.0.0-prerelease.23",
   "publishConfig": {
-    "access": "public"
+    "access": "private"
   },
   "description": "Navigation element for PatternFly Elements",
   "keywords": [

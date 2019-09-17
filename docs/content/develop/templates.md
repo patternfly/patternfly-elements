@@ -183,7 +183,7 @@ _**Note:** Elements that can be inserted into slots are known as slotable; when 
     ```
 
 
-*   Child elements within a custom tag don’t have to be the first child to be styled, they only have to be direct descendants of the component. Meaning once you nest something inside another tag, it can no longer receive styles targeted with the `::slotted` pseudo selector. Assuming the component has some basic styles on all slots like this:  `::slotted()  {border: red solid 1px;}` then both the div and H2 tag would recieve a red border:
+*   Child elements within a custom tag don’t have to be the first child to be styled, they only have to be direct descendants of the component. Meaning once you nest something inside another tag, it can no longer receive styles targeted with the `::slotted()` pseudo selector. Assuming the component has some basic styles on all slots like this:  `::slotted(*)  {border: red solid 1px;}` then both the div and H2 tag would recieve a red border:
 
     ```
     <pfe-cta priority="primary">

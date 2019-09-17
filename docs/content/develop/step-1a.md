@@ -67,7 +67,7 @@ From there you can change the URL to the demo page of the element you're working
 
 ### Storybook
 
-Storybook is an interactive tool that allows consumers of the components to see how content can flow inside the components, as well as how variants affect style and layout. Please include a pfe-foo.storybook.js file in the /demo directory with your component. [You can learn more about the structure of these here](https://storybook.js.org/docs/basics/writing-stories/) 
+Storybook is an interactive tool that allows consumers of the components to see how content can flow inside the components, as well as how variants affect style and layout. The `pfe-foo.storybook.js` file within the `/demo` directory of a component defines what appears in the Storybook preview. [You can learn more about the structure of these here](https://storybook.js.org/docs/basics/writing-stories/).
 
 ```
 npm run storybook

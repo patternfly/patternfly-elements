@@ -25,7 +25,7 @@ hugo server -D
 
 ### Preview the docs
 
-http://localhost:????/
+http://localhost:1313/patternfly-elements/
 
 
 ### Deploy!

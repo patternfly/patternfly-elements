@@ -63,7 +63,7 @@ One part of web components is the ability to utilize the Shadow DOM to store add
     ```
     // regular-styles.css
     pfe-cta a {
-	    color: foo;
+	    color: blue;
     }
     ```
     
@@ -72,9 +72,18 @@ One part of web components is the ability to utilize the Shadow DOM to store add
 	```
 	// web-component.css
 	::slotted(a) {
-      color: foo !important;
+      color: red;
    }
    ```
+   but you can win the specificity battle with !important
+     
+	```
+	// web-component.css
+	::slotted(a) {
+      color: purple !important;
+   }
+   ```
+   
 2. Internet Explorer & Edge
     - There are no slots in IE11 or Edge, so the polyfill **will not**  style slotted elements.
 3. You can only style **direct** descendants of the slot. 

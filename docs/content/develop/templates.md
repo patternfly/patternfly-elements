@@ -10,9 +10,8 @@ tags = [ "start" ]
 +++
 
 
-[TOC]
 
-# Light DOM vs. Shadow DOM
+## Light DOM vs. Shadow DOM
 
 The concept of light DOM is already familiar to any web developer. Basic HTML elements that you place into a `.html` file are light DOM. Tags like `<h1>`, `<div>` and `<aside>` are all simple light DOM. 
 
@@ -23,7 +22,7 @@ When building web components, you may choose whether to keep content in the ligh
 Consider the pros and cons for each approach, and remember that web components should still contain semantic markup and fail gracefully, so that users or search crawlers can still understand the content on the page.
 
 
-## Light DOM
+### Light DOM
 
 
 ```
@@ -49,7 +48,7 @@ Consider the pros and cons for each approach, and remember that web components s
 
 One part of web components is the ability to utilize the Shadow DOM to store additional markup. There are pros and cons to placing things in the Light DOM: 
 
-### **Pros**
+**Pros**
 
 1. Search engines can see content, resulting in better SEO
 2. Users with JavaScript disabled can see content
@@ -57,9 +56,9 @@ One part of web components is the ability to utilize the Shadow DOM to store add
     1. Sometimes this is desirable, in the case of paragraphs and links inside a pfe-tab panel for instance.
 
 
-### **Cons**
+**Cons**
 
-1. Web component styles can conflict with styles already on the page, and existing styles will probably be more specific than `::slotted` foo
+1. Web component styles can be overriden by styles already on the page. It's likely that existing styles will probably be more specific than styles associated with the `::slotted(*)` selector. 
 
     ```
     // regular-styles.css
@@ -84,7 +83,7 @@ One part of web components is the ability to utilize the Shadow DOM to store add
 
 
 
-### Regular Light DOM stylesheet (i.e. pfe-cta--lightdom.css )
+**Regular Light DOM stylesheet (i.e. pfe-cta--lightdom.css )**
 
 Some web components ship with a light DOM stylesheet for IE / Edge support. These stylesheets are opt-in (they are not included in the JavaScript file for the web component).
 
@@ -97,12 +96,10 @@ Some web components ship with a light DOM stylesheet for IE / Edge support. Thes
 <br/>
 
 
-## Shadow DOM 
+### Shadow DOM 
 
 
-### **Pros**
-
-
+**Pros**
 
 1. Styles are encapsulated, so there are no worries about conflicting styles or specificity battles from other stylesheets. 
     - Sometimes this is desirable, like links inside the pfe-cta component. We don't want those links to accept any external styles.
@@ -110,9 +107,7 @@ Some web components ship with a light DOM stylesheet for IE / Edge support. Thes
     - Would google see an H3 that a dev put in the pfe-hero component, or the h1 that the component upgrades it to?
 
 
-### **Cons**
-
-
+**Cons**
 
 1. Analytics tools may not see links in the Shadow DOM. Therefore we must always bubble up custom events if there are interactive items in the shadow DOM.
 2. When content is moved to the shadow DOM on upgrade, it can slow down rendering as the page re-paints
@@ -120,7 +115,7 @@ Some web components ship with a light DOM stylesheet for IE / Edge support. Thes
 
 
 
-# Understanding web component templates and slots
+## Understanding web component templates and slots
 
 _**Note:** Elements that can be inserted into slots are known as slotable; when an element has been inserted in a slot, it is said to be slotted._
 
@@ -128,14 +123,14 @@ _**Note:** Elements that can be inserted into slots are known as slotable; when 
 
 *   Slots are places to pass content or markup into specific regions within your web component template.
 
-    ```
-    // my-component.html:
-	<div class="custom">
-	    <slot name="header"></slot>
-	    <slot></slot>
-	    <slot name="footer"></slot>
-	</div>
-    ```
+```
+// my-component.html:
+<div class="custom">
+    <slot name="header"></slot>
+    <slot></slot>
+    <slot name="footer"></slot>
+</div>
+```
 
 
 *   If you put some content between the opening & closing tags of a web component without a slot name, it will put that markup into the unnamed slot.
@@ -143,34 +138,35 @@ _**Note:** Elements that can be inserted into slots are known as slotable; when 
     *   For this reason, it’s a good idea to leave one unnamed slot if general markup is allowed within that component. All PatternFly Element web components operate this way. 
 *   Whenever you add slot="something", you are telling the webcomponent where to put this information within the inner template.
 
-    ```
-    // my-web-page.html:
-	<pfe-card>
-	      <div slot="pfe-card--header">
-	          <h1>This heading text will appear in the card header region</h1>
-	      </div>
-	</pfe-card>
-    ```
+
+```
+// my-web-page.html:
+ <pfe-card>
+      <div slot="pfe-card--header">
+          <h1>This heading text will appear in the card header region</h1>
+      </div>
+ </pfe-card>
+```
 
 
 *   You can’t have nested slots _with the same name_, but when you use different names, the web component will pick up the content and put it where it belongs in the web component template, regardless of order in the light DOM.
 
-	```
-	// my-web-page.html:
-	<pfe-component>
-	  <div slot="header">
-	    <h1 slot="header">Nope, this is no good</h1>
-	  </div>
-	</pfe-component>
+```
+// my-web-page.html:
+<pfe-component>
+  <div slot="header">
+    <h1 slot="header">This is no good</h1>
+  </div>
+</pfe-component>
 	
-	// But...
-	<pfe-component>
-	  <div slot="header">
-	    <h1 slot="header__content">Yep, this will work</h1>
-	  </div>
-	</pfe-component>
+// But...
+<pfe-component>
+  <div slot="header">
+    <h1 slot="header__content">This will work</h1>
+  </div>
+</pfe-component>
 	
-	```
+```
 
 
 
@@ -178,12 +174,13 @@ _**Note:** Elements that can be inserted into slots are known as slotable; when 
 
     ```
     <pfe-cta priority="primary">
-      <a href="#">Primary</a>   <!-- this element is in the default slot -->
+      <a href="#">Primary</a>  
+      <!-- this link ^ is in the default slot -->
     </pfe-cta>
     ```
 
 
-*   Child elements within a custom tag don’t have to be the first child to be styled, they only have to be direct descendants of the component. Meaning once you nest something inside another tag, it can no longer receive styles targeted with the `::slotted()` pseudo selector. Assuming the component has some basic styles on all slots like this:  `::slotted(*)  {border: red solid 1px;}` then both the div and H2 tag would recieve a red border:
+*   Child elements within a custom tag don’t have to be the first child to be styled, they only have to be direct descendants of the component. Meaning once you nest something inside another tag, it can no longer receive styles targeted with the `::slotted` pseudo selector. Assuming the component has some basic styles on all slots like this:  `::slotted(*)  {border: red solid 1px;}` then both the div and H2 tag would recieve a red border:
 
     ```
     <pfe-cta priority="primary">
@@ -196,11 +193,12 @@ _**Note:** Elements that can be inserted into slots are known as slotable; when 
 
 
     ```
-    <rh-cta priority="primary">
+    <pfe-cta priority="primary">
       <div>
-        <a href="#">cannot receive styles, because it's nested</a>
+        <a href="#">This cannot receive styles 
+        from the web component, because it's nested</a>
       </div>
-    </rh-cta>
+    </pfe-cta>
 
     ```
 
@@ -233,7 +231,6 @@ Should you need to capture information via an attribute in your web component, s
 }
 
 // Example of web component template:
-
 <div class="content">
   <slot class="header" name="header">
     <h1>${this.numberBananas} Bananas</h1>

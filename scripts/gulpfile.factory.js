@@ -250,13 +250,13 @@ ${fs
   task("copy:src", () => {
     return src(["*.js", `!${elementName}*.js`], {
       cwd: paths.source
-    }).pipe(gulpif((file) => files.length > 0 && gulpmatch(file, files) || files.length === 0, dest(paths.compiled), dest(paths.temp)));
+    }).pipe(dest(paths.temp));
   });
 
   task("copy:compiled", () => {
     return src(["*"], {
       cwd: paths.temp
-    }).pipe(gulpif((file) => files.length > 0 && gulpmatch(file, files) || files.length === 0, dest(paths.compiled)));
+    }).pipe(gulpif((file) => (files.length > 0 && gulpmatch(file, files)) || files.length === 0, dest(paths.compiled)));
   });
 
   task("compile", () => {

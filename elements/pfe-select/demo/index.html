@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PatternFly Element | pfe-select Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../pfe-select.umd.js'])</script>
+  </head>
+  <body unresolved>
+    <h1>&lt;pfe-select&gt;</h1>
+    <pfe-select id="pfe-select-success">
+      <label slot="pfe-label" for="example1">Example one</label>
+      <select slot="pfe-select" id="example1">
+        <option disabled>Please select an option</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </pfe-select>
+    <h4>Selected Option: <span id="selectedOption"></span></h4>
+
+    <h1>&lt;pfe-select&gt; with error</h1>
+    <pfe-select id="pfe-select-error">
+      <label slot="pfe-label" for="example2">Example two</label>
+      <select slot="pfe-select" id="example2">
+        <option value="">Please select an option</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </pfe-select>
+    <script>
+      let select = document.querySelector("#pfe-select-success");
+      select.addEventListener("pfe-select:input", (event) => {
+        document.querySelector("#selectedOption").textContent = event.detail.value;
+      });
+
+      let selectWithError = document.querySelector("#pfe-select-error");
+      selectWithError.addEventListener("pfe-select:input", (event) => {
+        if (event.detail.value == "") {
+          event.target.setAttribute('pfe-invalid', 'true');
+        }
+      });
+    </script>
+  </body>
+</html>

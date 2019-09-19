@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../pfe-select.js"></script>
+  </head>
+  <body>
+
+    <pfe-select>
+      This is the element content.
+    </pfe-select>
+
+    <script>
+      suite('<pfe-select>', () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(document.querySelector('pfe-select'), customElements.get("pfe-select", 'pfe-select should be an instance of pfeSelect'));
+        });
+
+        // you need to write more tests!!!
+
+      });
+    </script>
+  </body>
+</html>

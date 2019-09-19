@@ -179,7 +179,6 @@ class PfeNavigation extends PFElement {
     this._setVisibility = this._setVisibility.bind(this);
 
     // -- handlers
-    this._keydownHandler = this._keydownHandler.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
     this._outsideListener = this._outsideListener.bind(this);
@@ -221,9 +220,6 @@ class PfeNavigation extends PFElement {
 
         // Kick off the initialization of the light DOM elements
         this._init();
-
-        // Listen for tab events
-        this.addEventListener("keydown", this._keydownHandler);
 
         // Watch for screen resizing
         window.addEventListener("resize", this._resizeHandler);
@@ -329,30 +325,6 @@ class PfeNavigation extends PFElement {
     });
   }
 
-  _keydownHandler(event) {
-    let key = event.key || event.keyCode;
-
-    switch(key) {
-      case "Tab":
-      case 9:
-        // If the overlay is active, trap focus
-        if ( event.shiftKey ) {
-          if ([this.firstItem, this.firstItem.trigger].includes(document.activeElement) && this.overlay) {
-            this.lastItem.trigger.focus();
-            event.preventDefault();
-          }
-        }
-        else {
-          if ([this.lastItem, this.lastItem.trigger].includes(document.activeElement) && this.overlay) {
-            if (this.firstItem.trigger) this.firstItem.trigger.focus();
-            else this.firstItem.focus();
-            event.preventDefault();
-          }
-        }
-        break;
-    }
-  }
-
   _init() {
     // @IE11 This is necessary so the script doesn't become non-responsive
     if (window.ShadyCSS) {
@@ -364,21 +336,6 @@ class PfeNavigation extends PFElement {
 
     // Get all nav items contained in this element
     this.navItems = [...this.querySelectorAll("pfe-navigation-item")];
-
-    // Get the first and last focusable items in the navigation
-    if (this.has_slot("skip")) {
-      this.firstItem = this.slots.skip.nodes[0];
-      // Allow the items assigned to this slot to be focusable
-      this.slots.skip.nodes.forEach(item => item.setAttribute("tabindex", 0));
-    }
-    else if (this.has_slot("logo")) {
-      this.firstItem = this.slots.logo.nodes[0];
-    }
-    else {
-      this.firstItem = this.navItems[0];
-    }
-
-    this.lastItem = this.navItems[this.navItems.length - 1];
 
     // Add the menu element to the list of navigation items
     // do this manually because menu item is in the shadow dom

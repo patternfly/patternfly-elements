@@ -9,6 +9,7 @@
     </noscript>
 
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <link href="../pfe-select--lightdom.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
@@ -17,9 +18,10 @@
     <script>require(['../pfe-select.umd.js'])</script>
   </head>
   <body unresolved>
+
     <h1>&lt;pfe-select&gt;</h1>
+    <label for="example1">Example one</label>
     <pfe-select id="pfe-select-success">
-      <label slot="pfe-label" for="example1">Example one</label>
       <select slot="pfe-select" id="example1">
         <option disabled>Please select an option</option>
         <option value="1">One</option>
@@ -27,11 +29,11 @@
         <option value="3">Three</option>
       </select>
     </pfe-select>
-    <h4>Selected Option: <span id="selectedOption"></span></h4>
+    <p>Selected Option: <span id="selectedOption"></span></p>
 
-    <h1>&lt;pfe-select&gt; with error</h1>
+    <h1>&lt;pfe-select&gt; with error check</h1>
+    <label slot="pfe-label" for="example2">Example two</label>
     <pfe-select id="pfe-select-error">
-      <label slot="pfe-label" for="example2">Example two</label>
       <select slot="pfe-select" id="example2">
         <option value="">Please select an option</option>
         <option value="1">One</option>
@@ -39,6 +41,18 @@
         <option value="3">Three</option>
       </select>
     </pfe-select>
+
+    <h1>&lt;pfe-select&gt; with JS options</h1>
+    <label slot="pfe-label" for="example3">Example three</label>
+    <pfe-select pfe-options="{['Please select an option',''],['One','1']}" pfe-select-id="example3"></pfe-select>
+    <!-- destroy's lightdom select if exist. innerHTML -->
+
+    <h1>&lt;pfe-select&gt; with add options via JS</h1>
+    <label slot="pfe-label" for="example4">Example four</label>
+    <pfe-select pfe-select-id="example4"></pfe-select>
+
+
+
     <script>
       let select = document.querySelector("#pfe-select-success");
       select.addEventListener("pfe-select:input", (event) => {
@@ -51,6 +65,10 @@
           event.target.setAttribute('pfe-invalid', 'true');
         }
       });
+
+      // get pfe-select[pfe-select-id="example4"]
+      // add options from object/array
+      // won't destroy select, but will build if it doens't exist
     </script>
   </body>
 </html>

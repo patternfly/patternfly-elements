@@ -49,18 +49,7 @@
 // }
 
 // Set all nested navigation links to listen for broadcasted variables
-pfe-navigation a {
-    @extend %link-styles;
-}
-
-pfe-navigation-main ul li {
-    display: flex;
-    flex-grow: 1;
-}
-
-// pfe-navigation-item [slot="trigger"] a,
-// .pfe-navigation-item__trigger > *:not(.pfe-navigation-item__trigger--icon) a,
-// .pfe-navigation-item__tray--container a {
+// pfe-navigation a {
 //     @extend %link-styles;
 // }
 
@@ -83,61 +72,6 @@ pfe-navigation-main ul li {
         }
     }
 }
-
-// Accordion styles inside tertiary
-// pfe-navigation-main pfe-navigation-item [slot="trigger"] {
-//     font-size: 20px;
-//     font-weight: normal;
-//     margin: 0;
-//     @media (min-width: $pfe-global--grid-breakpoint--xl) {
-//         font-size: 14px;
-//     }
-// }
-
-// This class is added by the shadow DOM or shady css
-// .pfe-navigation-item__trigger > *:not(.pfe-navigation-item__trigger--icon) {
-//     margin: 0;
-//     font-family: #{pfe-var(font-family)};
-//     font-size:   #{pfe-local($cssvar: FontSize, $fallback: 14px, $region: trigger)};
-//     font-weight: #{pfe-local($cssvar: FontWeight, $fallback: 100, $region: trigger)};
-//     color:       #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
-// }
-
-.pfe-navigation-item__tray {
-//     // padding: #{pfe-local($cssvar: Padding, $region: tray, $fallback: #{map-get($pfe-vars, container-padding)})};
-//     max-height: calc(100vh - #{pfe-local(Height)}, 90px);
-//     // overflow-x: hidden;
-//     // overflow-y: scroll;
-
-//     // This class is added manually inside the tray on the light DOM content
-    &--container {
-//         // @TODO why min-height on the navigation container?
-//         // min-height: 200px;
-        width: 100%;
-        @media (max-width: $pfe-global--grid-breakpoint--lg--max) {
-            padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
-        }
-        @media (min-width: $pfe-global--grid-breakpoint--xl) {
-            max-width: #{pfe-local($cssvar: Width, $fallback: 1140px)};
-            margin: 0 auto;
-        }
-    }
-}
-
-// [slot="tray"] {
-//     @media (max-width: $pfe-global--grid-breakpoint--lg--max){
-//         padding: 0;
-//     }
-// }
-// [slot="tray"][hidden] {
-//     display: none;
-//     visibility: hidden;
-// }
-
-// pfe-navigation-main[show_content] > ul {
-//     display: flex;
-//     flex-flow: row nowrap;
-// }
 
 .pfe-navigation {
     &-grid {
@@ -243,6 +177,20 @@ pfe-navigation-main ul li {
                 -ms-grid-column: 4;
             }
         }
+    }
+}
+
+// This class is added manually inside the tray on the light DOM content
+.pfe-navigation-item__tray--container {
+    // @TODO why min-height on the navigation container?
+    // min-height: 200px;
+    width: 100%;
+    @media (max-width: $pfe-global--grid-breakpoint--lg--max) {
+        padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
+    }
+    @media (min-width: $pfe-global--grid-breakpoint--xl) {
+        max-width: #{pfe-local($cssvar: Width, $fallback: 1140px)};
+        margin: 0 auto;
     }
 }
 

@@ -3,7 +3,7 @@
 @import "../../pfe-layouts/src/layouts/_grid";
 
 // IE11 styles
-// @include browser-query(ie11) {
+@include browser-query(ie11) {
 //     .pfe-navigation-item__trigger {
 //         &.pfe-navigation-item {
 //             .expanded & {
@@ -38,7 +38,7 @@
 //             }
 //         }
 //     }
-// }
+}
 
 // pfe-navigation [slot="logo"] > a {
 //     color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
@@ -53,39 +53,28 @@ pfe-navigation a {
     @extend %link-styles;
 }
 
+pfe-navigation-main ul li {
+    display: flex;
+    flex-grow: 1;
+}
+
 // pfe-navigation-item [slot="trigger"] a,
 // .pfe-navigation-item__trigger > *:not(.pfe-navigation-item__trigger--icon) a,
 // .pfe-navigation-item__tray--container a {
 //     @extend %link-styles;
 // }
 
-// @include browser-query(edge) {
-//     pfe-navigation-item {
-//         &[is_nested] [slot="trigger"]::after {
-//             visibility: hidden;
-//         }
-
-//         [slot="mobile-menu--label"] {
-//             font-size: 14px;
-//             font-weight: 300;
-//         }
-
-//         &[is_nested].expanded [slot="trigger"],
-//         &[is_nested] [slot="trigger"]:hover::after {
-//             visibility: visible;
-//         }
-//     }
-
-//     pfe-navigation-main {
-//         grid-column-start: 1;
-//         grid-column-end: -1;
-//     }
-
-//     .pfe-navigation__main--mobile {
-//         max-width: var(--pfe-navigation--Width);
-//         margin: 0 auto;
-//     }
-// }
+@include browser-query(edge) {
+    pfe-navigation-item {
+        [slot="trigger"] {
+            font-size: #{pfe-local($cssvar: FontSize, $region: trigger, $fallback: 14px)};
+        }
+        [slot="tray"] {
+            display: flex;
+            flex-grow: 1;
+        }
+    }
+}
 
 // Accordion styles inside tertiary
 // pfe-navigation-main pfe-navigation-item [slot="trigger"] {
@@ -290,7 +279,7 @@ pfe-navigation a {
         list-style: none;
         padding: 0;
 
-        &-item>a {
+        &-item > a {
             @extend %link-styles;
             font-size: 16px;
             line-height: 2;

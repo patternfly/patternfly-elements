@@ -314,6 +314,7 @@ class PfeNavigation extends PFElement {
                 node.setAttribute("show_content", "");
                 this._menuItem.setAttribute("show_links", "");
                 this._menuItem.expanded = false;
+                this._menuItem.tray.removeAttribute("hidden");
                 // Remove menuItem from active items
                 this._activeNavigationItems = this._activeNavigationItems.filter(item => item !== this._menuItem);
               }

@@ -10,8 +10,8 @@
       ${this.hasAttribute("pfe-menu-label") ? `<h2 slot="trigger" class="pfe-navigation__main--menu-label">${this.getAttribute("pfe-menu-label")}</h2>` : `<span slot="trigger"></span>`}
       <div slot="tray">
         <div class="pfe-navigation__main">
-          <slot name="mobile-search" class="pfe-navigation__main-search"></slot>
-          <slot class="pfe-navigation__main-primary-links"></slot>
+          <slot name="mobile-search"></slot>
+          <slot></slot>
           <pfe-navigation-item pfe-icon="web-user" variant="wind" hidden>
             <slot name="mobile-login"></slot>
           </pfe-navigation-item>

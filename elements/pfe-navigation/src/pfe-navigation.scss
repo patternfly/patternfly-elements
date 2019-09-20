@@ -135,7 +135,7 @@ pfe-icon {
       padding: 0;
     }
 
-    pfe-navigation-item:not([hidden]) {
+    > pfe-navigation-item:not([hidden]) {
       flex-grow: 1;
       align-items: flex-end;
     }
@@ -173,16 +173,16 @@ pfe-icon {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     height: 100%;
+    width: 100%;
+    &--menu-label {
+      color: #{pfe-local(Color)};
+    }
     [show_search] &,
     [show_login][show_language] & {
       grid-gap: #{pfe-var(container-spacer)};
     }
-    [show_search] &-search,
-    &-primary-links {
+    ::slotted(*:not([hidden])) {
       display: block;
-    }
-    &-search,
-    &-primary-links {
       grid-column: 1 / -1;
     }
   }

@@ -18,6 +18,7 @@ $variables: (
   flex-direction: column;
   
   height: 100%;
+  width: 100%;
 }
 
 // Indicates this is the current section the user is visiting
@@ -260,6 +261,11 @@ $variables: (
   }
 }
 
+::slotted([slot="tray"]) {
+  display: flex;
+  flex-grow: 1;
+}
+
 :host([is_nested]:not([parent_hidden])) {
   @include pfe-trigger-color($component-name: navigation);
 }
@@ -271,7 +277,7 @@ $variables: (
 
 // Let the main item or the tray be hidden with the attribute
 :host([hidden]:not([show_tray])),
-:host([show_links]) .pfe-navigation-item__trigger,
+:host([show_links]) > .pfe-navigation-item__trigger,
 :host([hidden]) .pfe-navigation-item__trigger,
 :host([hidden]) .pfe-navigation-item__tray,
 :host(:not(.expanded):not([show_links])) .pfe-navigation-item__tray {

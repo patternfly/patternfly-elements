@@ -67,7 +67,15 @@ pfe-navigation-main ul li {
 @include browser-query(edge) {
     pfe-navigation-item {
         [slot="trigger"] {
-            font-size: #{pfe-local($cssvar: FontSize, $region: trigger, $fallback: 14px)};
+            font-size: 16px;
+        }
+        &[pfe-icon] > .pfe-navigation-item__trigger {
+            > pfe-icon {
+                display: none;
+            }
+            > [slot="trigger"] {
+                font-size: 14px;
+            }
         }
         [slot="tray"] {
             display: flex;

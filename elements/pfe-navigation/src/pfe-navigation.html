@@ -6,23 +6,21 @@
     ${ this.has_slot("skip") ? `<div class="pfe-navigation__skip">
       <slot name="skip" tabindex="1"></slot>
     </div>` : ""}
-    <div class="pfe-navigation__main">
-      <pfe-navigation-item pfe-icon="web-mobile-menu" hidden show_tray>
-        ${this.hasAttribute("pfe-menu-label") ? `<h2 slot="trigger" class="pfe-navigation__main--menu-label">${this.getAttribute("pfe-menu-label")}</h2>` : `<span slot="trigger"></span>`}
-        <div slot="tray" hidden>
-          <div class="pfe-navigation__main--mobile">
-            <slot name="mobile-search" class="pfe-navigation__main--mobile-search"></slot>
-            <slot class="pfe-navigation__main--mobile-main"></slot>
-            <pfe-navigation-item pfe-icon="web-user" variant="wind" hidden>
-              <slot name="mobile-login"></slot>
-            </pfe-navigation-item>
-            <pfe-navigation-item pfe-icon="web-globe" variant="wind" hidden>
-              <slot name="mobile-language"></slot>
-            </pfe-navigation-item>
-          </div>
+    <pfe-navigation-item pfe-icon="web-mobile-menu">
+      ${this.hasAttribute("pfe-menu-label") ? `<h2 slot="trigger" class="pfe-navigation__main--menu-label">${this.getAttribute("pfe-menu-label")}</h2>` : `<span slot="trigger"></span>`}
+      <div slot="tray">
+        <div class="pfe-navigation__main">
+          <slot name="mobile-search" class="pfe-navigation__main-search"></slot>
+          <slot class="pfe-navigation__main-primary-links"></slot>
+          <pfe-navigation-item pfe-icon="web-user" variant="wind" hidden>
+            <slot name="mobile-login"></slot>
+          </pfe-navigation-item>
+          <pfe-navigation-item pfe-icon="web-globe" variant="wind" hidden>
+            <slot name="mobile-language"></slot>
+          </pfe-navigation-item>
         </div>
-      </pfe-navigation-item>
-    </div>
+      </div>
+    </pfe-navigation-item>
     ${ this.has_slot("language") || this.has_slot("search") || this.has_slot("login") || this.has_slot("site-switcher") ? `<div class="pfe-navigation__utility">
       <slot name="language"></slot>
       <slot name="search"></slot>

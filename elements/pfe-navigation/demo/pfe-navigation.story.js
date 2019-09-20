@@ -184,6 +184,5 @@ stories.add(PfeNavigation.tag, () => {
 
   const render = `<link rel="stylesheet" type="text/css" href="/pfe-navigation/pfe-navigation--lightdom.css"></link>` +
     template(config);
-  const warningMessage = `<p><strong>Please note</strong> that due to the experimental nature of this preview tool and the complexity of this component, we cannot show a preview of the rendered view at this time.  Please check out the repository and run the demo to preview the component.</p><p>In the meantime, please enjoy the markup preview below which can help you configure your markup correctly.</p>`;
   return tools.preview(render);
 });

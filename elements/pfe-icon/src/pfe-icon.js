@@ -33,11 +33,11 @@ function _createIconSetHandler(el, setName) {
 }
 
 function _iconLoad(el) {
-  el.image.classList.remove("load-failed");
+  el.classList.remove("load-failed");
 }
 
 function _iconLoadError(el) {
-  el.image.classList.add("load-failed");
+  el.classList.add("load-failed");
 }
 
 class PfeIcon extends PFElement {

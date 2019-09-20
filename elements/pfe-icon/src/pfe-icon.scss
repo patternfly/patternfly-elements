@@ -84,13 +84,14 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
         filter: none;
       }
     }
-    &.load-failed {
-      display: none;
-    }
   }
   filter feFlood {
     flood-color: #{pfe-local(Color)};
   }
+}
+
+:host(.load-failed) {
+  display: none;
 }
 
 :host([size="2x"]) {

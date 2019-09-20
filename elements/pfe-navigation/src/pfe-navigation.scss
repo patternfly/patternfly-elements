@@ -101,11 +101,13 @@ pfe-icon {
 
 .pfe-navigation {
   &__wrapper {
+    @each $prop in (text, ui-link, ui-link--hover, ui-link--visited, ui-link--focus) {
+      --pfe-broadcasted--color--#{$prop}: #{pfe-local($cssvar: Color, $fallback: #{pfe-color(surface--darkest--text)})};
+    }
     display: flex;
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
     z-index: #{pfe-var($cssvar: navigation, $map: $z-index)};
     
-    // background-color: #{map-get($pfe-colors, surface--darkest)};
     background-color: #{pfe-local(BackgroundColor)};
     color: #{pfe-local(Color)};
     min-height: #{pfe-local(MaxHeight)};
@@ -131,6 +133,11 @@ pfe-icon {
 
     @media (min-width: #{pfe-breakpoint(lg)}) {
       padding: 0;
+    }
+
+    pfe-navigation-item:not([hidden]) {
+      flex-grow: 1;
+      align-items: flex-end;
     }
   }
   &__overlay {
@@ -163,46 +170,20 @@ pfe-icon {
     margin: 0 -2em -1px -1px;
   }
   &__main {
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
-    @media (min-width: #{pfe-breakpoint(xl)}) {
-      flex-grow: 1;
-      flex-flow: row nowrap;
-      align-items: stretch;
-      justify-content: flex-start;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    height: 100%;
+    [show_search] &,
+    [show_login][show_language] & {
+      grid-gap: #{pfe-var(container-spacer)};
     }
-    &--mobile {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      pfe-navigation-item {
-        --pfe-theme--link--text-decoration: none;
-        --pfe-navigation--Color: #{pfe-radio(color, ui-link)};
-
-        line-height: 1;
-        padding: calc(#{pfe-var(container-spacer)} / 2) 0;
-
-        &:hover {
-          cursor: pointer;
-          --pfe-navigation--Color: #{pfe-radio(color, ui-link, hover)};
-        }
-
-        &:focus {
-          --pfe-navigation--Color: #{pfe-radio(color, ui-link, focus)};
-        }
-      }
-      [show_search] &,
-      [show_login][show_language] & {
-        grid-gap: #{pfe-var(container-spacer)};
-      }
-      [show_search] &-search,
-      &-main {
-        display: block;
-      }
-      &-search,
-      &-main {
-        grid-column: 1 / -1;
-      }
+    [show_search] &-search,
+    &-primary-links {
+      display: block;
+    }
+    &-search,
+    &-primary-links {
+      grid-column: 1 / -1;
     }
   }
   &__utility {

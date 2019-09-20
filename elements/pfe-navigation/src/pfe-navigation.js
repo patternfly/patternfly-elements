@@ -184,12 +184,12 @@ class PfeNavigation extends PFElement {
     this._observer = new MutationObserver(this._init);
 
     // Capture shadow elements
-    this._overlay = this.shadowRoot.querySelector(".pfe-navigation__overlay");
-    this._menuItem = this.shadowRoot.querySelector(".pfe-navigation__main > pfe-navigation-item");
+    this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
+    this._menuItem = this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[pfe-icon="web-mobile-menu"]`);
 
     this._slots = {
-      language: this.shadowRoot.querySelector(".pfe-navigation__main--mobile > pfe-navigation-item:first-of-type"),
-      login: this.shadowRoot.querySelector(".pfe-navigation__main--mobile > pfe-navigation-item:last-of-type")
+      language: this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[pfe-icon="web-user"]`),
+      login: this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[pfe-icon="web-globe"]`)
     };
 
     // Initialize active navigation item to empty array
@@ -264,6 +264,8 @@ class PfeNavigation extends PFElement {
       }
     });
 
+    console.log(this._activeNavigationItems);
+
     this.overlay = this._activeNavigationItems.length > 0;
   }
 
@@ -305,9 +307,23 @@ class PfeNavigation extends PFElement {
         this.slots[label].nodes.forEach(node => {
           switch(label) {
             case "main":
-              isVisible ? node.removeAttribute("show_content") : node.setAttribute("show_content", "");
-              this._menuItem.visible = isVisible;
-              node.navItems.forEach(item => isVisible ? item.removeAttribute("parent_hidden") : item.setAttribute("parent_hidden", ""));
+              if (isVisible) {
+                node.removeAttribute("show_content");
+                this._menuItem.removeAttribute("show_links");
+              } else {
+                node.setAttribute("show_content", "");
+                this._menuItem.setAttribute("show_links", "");
+                this._menuItem.expanded = false;
+                // Remove menuItem from active items
+                this._activeNavigationItems = this._activeNavigationItems.filter(item => item !== this._menuItem);
+              }
+              node.navItems.forEach(item => {
+                if (isVisible) {
+                  item.removeAttribute("parent_hidden");
+                 } else {
+                   item.setAttribute("parent_hidden", "");
+                 }
+                });
               break;
             case (label.match(/^mobile/) || {}).input:
               if (isVisible) {

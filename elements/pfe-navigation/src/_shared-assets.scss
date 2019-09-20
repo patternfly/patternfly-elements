@@ -12,13 +12,13 @@ $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
 // -- Typography
 %link-styles {
     color: #{pfe-radio(color, ui-link)};
-    text-decoration: none;
+    text-decoration: #{pfe-var(link, text-decoration)};
     &:visited {
         color: #{pfe-radio(color, ui-link, visited)};
     }
     &:hover {
         color: #{pfe-radio(color, ui-link, hover)};
-        text-decoration: none;
+        text-decoration: #{pfe-var(link, text-decoration, hover)};
     }
     &:focus {
         outline-offset: 1px;

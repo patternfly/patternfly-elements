@@ -1,3 +1,9 @@
+## Prerelease 26 ( TBD )
+
+Tag: [v1.0.0-prerelease.26](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.26)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) Update build tools to support the files array in package.json for each component
+
 ## Prerelease 25 ( 2019-09-10 )
 
 Tag: [v1.0.0-prerelease.25](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.25)

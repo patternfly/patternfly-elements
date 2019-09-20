@@ -59,7 +59,7 @@ const listProperties = (obj) =>
           }
         }
       }
-      return string.toLowerCase();
+      return string;
     })
     .join(" ");
 

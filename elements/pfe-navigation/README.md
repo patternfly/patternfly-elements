@@ -19,6 +19,7 @@ This element will give you a top-level navigation element (not for use as subnav
 
 - `pfe-sticky`: Allows the navigation to stick to the top of the page when the user scrolls down.
 - `pfe-close-on-click`: Currently only supports "external"; this means if a user clicks outside the component, the navigation items will close.
+- `pfe-menu-label`: Translation for the Menu label on the main navigation dropdown.
 
 ---
 

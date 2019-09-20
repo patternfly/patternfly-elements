@@ -54,7 +54,7 @@ class PfeNavigationItem extends PFElement {
   
     set expanded(isExpanded) {
       isExpanded = Boolean(isExpanded);
-  
+
       if (isExpanded) {
         this.classList.add("expanded");
   

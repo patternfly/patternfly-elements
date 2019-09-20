@@ -9,8 +9,6 @@
   <title>PatternFly Element | Navigation Demo</title>
 
   <link rel="stylesheet" href="../../pfe-layouts/pfe-base.css" />
-  <!-- <link rel="stylesheet" href="../../pfe-layouts/pfe-context.css" /> -->
-  <link rel="stylesheet" href="../../pfe-layouts/pfe-layouts.css" />
 
   <noscript>
     <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
@@ -18,7 +16,6 @@
 
   <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
   <link href="../pfe-navigation--lightdom.css" rel="stylesheet">
-  <link href="demo.css" rel="stylesheet" />
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
@@ -44,7 +41,7 @@
 
 <body unresolved>
   <h1>&lt;pfe-navigation&gt;</h1>
-  <pfe-navigation pfe-sticky pfe-close-on-click="external">
+  <pfe-navigation pfe-sticky pfe-close-on-click="external" pfe-menu-label="Menu">
     <!-- Skip navigation -->
     <div slot="skip">
       <ul>
@@ -53,8 +50,8 @@
     </div>
     <!-- Site logo -->
     <div slot="logo" style="padding: 0 0 8px 0;line-height: 1;">
-      <a href="https://redhat.com">
-        <img class="redhat-logo screen" src="https://via.placeholder.com/150x50.png" title="Red Hat" />
+      <a href="https://company.com">
+        <img class="logo" src="https://via.placeholder.com/150x50.png" title="Company logo" />
       </a>
     </div>
     <!-- Search -->
@@ -76,7 +73,7 @@
       <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
     </form>
     <!-- Main navigation -->
-    <h2 slot="mobile-menu--label" hidden>Menu</h2>
+    <!-- <h2 slot="mobile-menu--label" hidden>Menu</h2> -->
     <pfe-navigation-main role="navigation" aria-label="Main">
       <ul>
         <li>
@@ -553,7 +550,7 @@
       </pfe-cta>
     </pfe-card>
   </pfe-band>
-  
+
   <pfe-band pfe-color="lighter" pfe-aside-desktop="left">
     <header slot="pfe-band--header">
       <h2>Lighter band; no footer</h2>

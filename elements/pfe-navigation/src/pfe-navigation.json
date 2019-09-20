@@ -163,6 +163,12 @@
             "enum": [ "external" ],
             "default": "external",
             "prefixed": true
+          },
+          "menu-label": {
+            "title": "Mobile menu label",
+            "type": "string",
+            "default": "Menu",
+            "prefixed": true
           }
         }
       }

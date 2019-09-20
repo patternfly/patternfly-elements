@@ -8,9 +8,7 @@
     </div>` : ""}
     <div class="pfe-navigation__main">
       <pfe-navigation-item pfe-icon="web-mobile-menu" hidden show_tray>
-        <span slot="trigger">
-          <slot name="mobile-menu--label" class="pfe-navigation__main--menu-label"></slot>
-        </span>
+        ${this.hasAttribute("pfe-menu-label") ? `<h2 slot="trigger" class="pfe-navigation__main--menu-label">${this.getAttribute("pfe-menu-label")}</h2>` : `<span slot="trigger"></span>`}
         <div slot="tray" hidden>
           <div class="pfe-navigation__main--mobile">
             <slot name="mobile-search" class="pfe-navigation__main--mobile-search"></slot>

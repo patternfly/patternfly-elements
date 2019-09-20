@@ -143,6 +143,7 @@ class PfeBand extends PFElement {
     if (this.imageSrc) {
       this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
     }
+
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {

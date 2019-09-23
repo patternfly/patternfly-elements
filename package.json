@@ -110,6 +110,7 @@
     "yo": "^1.8.5"
   },
   "dependencies": {
+    "@patternfly/patternfly": "^2.33.0",
     "gh-pages": "^2.0.0"
   },
   "private": true

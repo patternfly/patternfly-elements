@@ -85,7 +85,16 @@ One part of web components is the ability to utilize the Shadow DOM to store add
    ```
    
 2. Internet Explorer & Edge
-    - There are no slots in IE11 or Edge, so the polyfill **will not**  style slotted elements.
+    
+    * @TODO finish notes below
+
+    * Shady CSS polyfills `::slotted()`. Its not really slotted but its a workaround so that you can use that selector
+
+    * IE11 gets complicated; if you add classes to elements in the component's template, you actually can style that class and it does work if the component upgrades correctly.
+
+    * It's really hard to detect because it doesn't show up well in the inspector but if you select a shadow-element that has a custom class on it, it will show up in the header region above the body and it does get styles.
+
+
 3. You can only style **direct** descendants of the slot. 
     - If you need to use nested elements in the web component, like unordered lists & list items: `<ul><li>...</li></ul>` you cannot actually style the list item. This means you would have to ship a light DOM stylesheet with the web component:
 

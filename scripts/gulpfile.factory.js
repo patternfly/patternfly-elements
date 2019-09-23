@@ -49,6 +49,18 @@ module.exports = function factory({
   const trim = require("trim");
   const decomment = require("decomment");
 
+  // Delete the temp directory
+  task("clean", () => {
+    return src([
+      paths.temp,
+      paths.compiled
+    ], {
+      cwd: paths.root,
+      read: false,
+      allowEmpty: true
+    }).pipe(clean());
+  });
+
   // Compile the sass into css, compress, autoprefix
   task("compile:styles", () => {
     return (
@@ -56,6 +68,9 @@ module.exports = function factory({
         cwd: paths.source
       })
         .pipe(sourcemaps.init())
+        .pipe(
+          sass().on('error', sass.logError)
+        )
         // Compile the Sass into CSS
         .pipe(
           sass({
@@ -70,9 +85,19 @@ module.exports = function factory({
           })])
         )
         // Write the sourcemap
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write("./"))
         // Output the unminified file
         .pipe(dest(paths.temp))
+    );
+  });
+
+  // Compile the sass into css, compress, autoprefix
+  task("minify:styles", () => {
+    return (
+      src("*.{scss,css}", {
+        cwd: paths.temp
+      })
+        .pipe(sourcemaps.init())
         // Minify the file
         .pipe(
           cleanCSS({
@@ -85,23 +110,11 @@ module.exports = function factory({
             suffix: ".min"
           })
         )
+        // Write the sourcemap
+        .pipe(sourcemaps.write("./"))
         // Output the minified file
         .pipe(dest(paths.temp))
     );
-  });
-
-  // Delete the temp directory
-  task("clean", () => {
-    return src([
-      "*.{js,css,map}",
-      "!{gulpfile,rollup.config}.js",
-      paths.temp,
-      paths.compiled
-    ], {
-      cwd: paths.root,
-      read: false,
-      allowEmpty: true
-    }).pipe(clean());
   });
 
   // Returns a string with the cleaned up HTML
@@ -288,17 +301,31 @@ ${fs
     shell.task("../../node_modules/.bin/rollup -c")
   ));
 
+  // Delete the temp directory
+  task("clean:post", () => {
+    return src([
+      "*.min.css",
+      "*.umd.js"
+    ], {
+      cwd: paths.temp,
+      read: false,
+      allowEmpty: true
+    }).pipe(clean());
+  });
+
   task(
     "build",
     series(
       "clean",
       "compile:styles",
+      "minify:styles",
       "merge",
       "copy:src",
       "copy:compiled",
       ...prebundle,
       "compile",
-      "bundle"
+      "bundle",
+      "clean:post"
     )
   );
 

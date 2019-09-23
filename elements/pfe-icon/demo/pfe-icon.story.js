@@ -8,7 +8,7 @@ import {
 } from "@storybook/addon-knobs/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
-import PfeIcon from "../pfe-icon";
+import PfeIcon from "../../pfe-icon";
 
 const stories = storiesOf("Icon", module);
 stories.addDecorator(withKnobs);

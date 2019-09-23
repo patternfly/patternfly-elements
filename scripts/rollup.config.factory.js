@@ -21,7 +21,7 @@ const paths = {
 
 function esmConfig({ elementName, className } = {}) {
   return {
-    input: `${paths.temp}/${elementName}.js`,
+    input: `${paths.compiled}/${elementName}.js`,
     output: {
       file: `${paths.compiled}/${elementName}.js`,
       format: "esm",
@@ -34,7 +34,7 @@ function esmConfig({ elementName, className } = {}) {
 
 function umdConfig({ elementName, className } = {}) {
   return {
-    input: `${paths.temp}/${elementName}.js`,
+    input: `${paths.compiled}/${elementName}.umd.js`,
     output: {
       file: `${paths.compiled}/${elementName}.umd.js`,
       format: "umd",
@@ -60,7 +60,7 @@ function umdConfig({ elementName, className } = {}) {
 
 function esmMinConfig({ elementName, className } = {}) {
   return {
-    input: `${paths.temp}/${elementName}.js`,
+    input: `${paths.compiled}/${elementName}.js`,
     output: {
       file: `${paths.compiled}/${elementName}.min.js`,
       format: "esm",
@@ -87,7 +87,7 @@ function esmMinConfig({ elementName, className } = {}) {
 
 function umdMinConfig({ elementName, className } = {}) {
   return {
-    input: `${paths.temp}/${elementName}.js`,
+    input: `${paths.compiled}/${elementName}.umd.js`,
     output: {
       file: `${paths.compiled}/${elementName}.umd.min.js`,
       format: "umd",

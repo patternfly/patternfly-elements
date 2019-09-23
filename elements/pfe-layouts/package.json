@@ -18,6 +18,13 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-layouts"
   },
+  "main": "./dist/pfe-layouts.css",
+  "files": [
+    "pfe-layouts.*css",
+    "pfe-layouts.*css.map",
+    "pfe-base.*css",
+    "pfe-base.*css.map"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp",
     "dev": "../../node_modules/.bin/gulp dev"

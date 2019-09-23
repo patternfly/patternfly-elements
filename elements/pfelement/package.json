@@ -18,10 +18,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfelement"
   },
-  "main": "pfelement.js",
+  "main": "./dist/pfelement.js",
   "files": [
-    "pfelement?(-noscript).*css",
-    "pfelement.*js"
+    "reveal.js",
+    "pfelement.*css",
+    "pfelement.*css.map",
+    "pfelement-noscript.*css",
+    "pfelement-noscript.*css.map",
+    "pfelement.*js",
+    "pfelement.*js.map"
   ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",

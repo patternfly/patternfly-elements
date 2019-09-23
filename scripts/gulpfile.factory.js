@@ -271,7 +271,7 @@ ${fs
     })
       .pipe(
         replace(
-          /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
+          /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
           "$1$2.umd$3"
         )
       )
@@ -280,7 +280,7 @@ ${fs
           suffix: ".umd"
         })
       )
-      .pipe(dest(paths.temp));
+      .pipe(dest(paths.compiled));
   });
 
   task("bundle", gulpif(
@@ -293,8 +293,6 @@ ${fs
     series(
       "clean",
       "compile:styles",
-      // "fallback:css",
-      // "minify:css",
       "merge",
       "copy:src",
       "copy:compiled",

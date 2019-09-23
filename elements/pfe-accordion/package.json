@@ -18,9 +18,10 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-accordion"
   },
-  "main": "pfe-accordion.js",
+  "main": "./dist/pfe-accordion.js",
   "files": [
-    "pfe-accordion.*js?(.map)"
+    "pfe-accordion.*js",
+    "pfe-accordion.*js.map"
   ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",

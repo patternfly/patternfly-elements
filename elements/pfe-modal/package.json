@@ -18,7 +18,11 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-modal"
   },
-  "main": "pfe-modal.umd.js",
+  "main": "./dist/pfe-modal.umd.js",
+  "files": [
+    "pfe-modal.*js",
+    "pfe-modal.*js.map"
+  ],
   "module": "pfe-modal.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",

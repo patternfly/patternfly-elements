@@ -1,5 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
-import "../pfe-icon/dist/pfe-icon.js";
+import "../../pfe-icon/dist/pfe-icon.js";
 
 class PfeIconPanel extends PFElement {
   static get tag() {

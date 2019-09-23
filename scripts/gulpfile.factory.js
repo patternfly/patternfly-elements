@@ -296,10 +296,7 @@ ${fs
       .pipe(dest(paths.temp));
   });
 
-  task("bundle", gulpif(
-    fs.existsSync(path.join(paths.root, "rollup.config.js")),
-    shell.task("../../node_modules/.bin/rollup -c")
-  ));
+  task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
   // Delete the temp directory
   task("clean:post", () => {
@@ -336,4 +333,24 @@ ${fs
   task("dev", parallel("build", "watch"));
 
   task("default", series("build"));
+
+  // Custom tasks for components with no JS to compile
+  task(
+    "build:nojs",
+    series(
+      "clean",
+      "compile:styles",
+      "minify:styles",
+      "copy:src",
+      "copy:compiled",
+      ...prebundle,
+      "clean:post"
+    )
+  );
+
+  task("watch:nojs", () => {
+    return watch(path.join(paths.source, "*"), series("build:nojs"));
+  });
+
+  task("dev:nojs", parallel("build:nojs", "watch:nojs"));
 };

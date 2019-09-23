@@ -20,7 +20,7 @@ hugo
 
 ### Watch for files locally
 ```
-hugo server -D
+cd docs && hugo server -D
 ```
 
 ### Preview the docs

@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeHealthIndex from "../../pfe-health-index";
+import PfeHealthIndex from "../dist/pfe-health-index";
 
 // import cpTheme from "../../../themes/cp-theme/cp-theme.js";
 

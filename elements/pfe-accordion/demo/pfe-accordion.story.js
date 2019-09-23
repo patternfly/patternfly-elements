@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeAccordion from "../../pfe-accordion";
+import PfeAccordion from "../dist/pfe-accordion";
 
 const stories = storiesOf("Accordion", module);
 

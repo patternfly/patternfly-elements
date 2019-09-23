@@ -5,7 +5,7 @@ import {
   select,
   boolean
 } from "@storybook/addon-knobs/polymer";
-import "../pfe-avatar";
+import "../dist/pfe-avatar";
 import { escapeHTML } from "../../../.storybook/utils.js";
 
 const stories = storiesOf("Avatar", module);

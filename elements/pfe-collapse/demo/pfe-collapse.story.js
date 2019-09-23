@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import { PfeCollapse } from "../../pfe-collapse";
+import { PfeCollapse } from "../dist/pfe-collapse";
 
 const stories = storiesOf("Collapse", module);
 

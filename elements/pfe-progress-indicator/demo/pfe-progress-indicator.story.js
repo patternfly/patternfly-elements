@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeProgressIndicator from "../../pfe-progress-indicator";
+import PfeProgressIndicator from "../dist/pfe-progress-indicator";
 
 const stories = storiesOf("Progress indicator", module);
 

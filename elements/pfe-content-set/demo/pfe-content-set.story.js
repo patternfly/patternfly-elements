@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeContentSet from "../../pfe-content-set";
+import PfeContentSet from "../dist/pfe-content-set";
 import PfeCta from "../../pfe-cta/dist/pfe-cta";
 
 const stories = storiesOf("Content set", module);

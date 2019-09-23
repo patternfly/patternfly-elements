@@ -40,6 +40,7 @@
     }
   },
   "devDependencies": {
+    "@patternfly/patternfly": "^2.33.0",
     "@polymer/iron-test-helpers": "^3.0.1",
     "@storybook/addon-actions": "^3.4.12",
     "@storybook/addon-knobs": "^3.4.12",

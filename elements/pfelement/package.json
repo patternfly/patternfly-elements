@@ -20,7 +20,6 @@
   },
   "main": "./dist/pfelement.js",
   "files": [
-    "reveal.js",
     "pfelement.*css",
     "pfelement.*css.map",
     "pfelement-noscript.*css",

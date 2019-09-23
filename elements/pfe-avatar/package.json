@@ -20,8 +20,6 @@
   },
   "main": "./dist/pfe-avatar.js",
   "files": [
-    "djb-hash.js",
-    "hslrgb.js",
     "pfe-avatar.*js",
     "pfe-avatar.*js.map"
   ],

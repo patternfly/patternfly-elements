@@ -280,7 +280,7 @@ ${fs
           suffix: ".umd"
         })
       )
-      .pipe(dest(paths.compiled));
+      .pipe(dest(paths.temp));
   });
 
   task("bundle", gulpif(

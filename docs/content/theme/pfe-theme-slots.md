@@ -300,19 +300,19 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
        
 2. **Other Properties**:   Similarly, the `pfe-var` function does the same work of looking up values from the `$pfe-vars: ()` map, and returning the variable name and the fallback value:
       
-       ```sass
-       :host {
-           font-size:   pfe-var(font-size);
-       }
-       ```
-      
-       returns:
-      
-       ```
-       :host {
-           font-size: var(--pfe-theme--font-size, 16px);
-       }
-       ```    
+    ```sass
+    :host {
+        font-size:   pfe-var(font-size);
+    }
+    ```
+    
+    returns:
+    
+    ```
+    :host {
+        font-size: var(--pfe-theme--font-size, 16px);
+    }
+    ```    
 
 ### Local variables & related functions     
 
@@ -354,9 +354,15 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
         * _It's worth noting that very time we surface something as a variable, we offer an opportunity to lean away from the design system. There's no need to create a local variable for all properties._
     3. Replace the values of local variables with functions that refer to the theme, `color: pfe-color(accent)` and `pfe-vars(padding)`
     4.  Add additional attributes to a component, to allow users to switch between variants without CSS overrides, i.e.  `<pfe card color="darkest">`
-        *   Any component that can change background colors MUST provide colors for the broadcast variables. The broadcast mixin is useful to loop through system colors:  `pfe-card { @include pfe-set-broadcast($color); } ` @TODO verify this in WIP broadcasted branch
-      * Use CSS property, such as `color:` once. If value needs to change based on variant, reset the value of the CSS variable rather than calling the property again.
+        * Any component that can change background colors MUST provide colors for the broadcast variables. The `pfe-theme` mixin is useful to loop through system colors:  
 
+            ```
+            pfe-card { 
+               @include pfe-theme; 
+            }
+            ```
+        
+        * Use CSS property, such as `color:` once. If value needs to change based on variant, reset the value of the CSS variable rather than calling the property again.
 
 
     #### Example of a Component Sass file
@@ -498,23 +504,25 @@ Then call theme mixin to flip colors of the on=dark on=light attributes. Default
 #### Problem: I expect that the pfe-cta should have a red background, but it does not. 
 
 1. **Inspect the element & look for the style property**
-    1. Check the light DOM**
+    1. Check the light DOM
     2. In the styles tab of web inspector, look for the CSS property `background`. Is the property present? Remember styles can be applied to `:host` as opposed to the actual component name, such as `pfe-cta`.
 
-    ![theme code block 1](/theme__code_block_1.png)
+        <img src="/theme__code_block_1.png" width="450px">
 
     3. What is the value of the property? Try changing the value to a funny color. If there's no change then…
 
 2. **Check the shadow DOM**
     1. Check to see if the property you expect is actually being applied elsewhere, like some other element in the shadow root: 
 
-    ![theme code block 2](/theme__code_block_2.png)
+        <img src="/theme__code_block_2.png" width="450px">
 
 
     2. What is the value of the property? Try changing the value to a funny color. If there's no change then…
 2. **Check to see if the property is overridden**
     1. If the styles are being applied to the light DOM, and if it's still the wrong color, it means something other style from elsewhere on the page is winning the specificity war. [Learn more about detecting overrides.](https://developers.google.com/web/tools/chrome-devtools/css/overrides)
-    ![theme code block 3](/theme__code_block_3.png)
+    
+        <img src="/theme__code_block_3.png" width="450px">
+
     2. Options:
         1. Remove the styles that are more specific than your styles (may not be a viable option)
         2. Adjust the web component so that the styles are targeting the component itself, rather than it's children. Use `:host { }`

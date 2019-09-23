@@ -13,8 +13,6 @@ tags = [ "start" ]
 # Using PFE Web Components in your project
 
 
-### **General**
-
 Check out the demo files within each component for examples of the attributes and possible variable overrides.  The readme files within the component directories should have descriptions about the variables for each component. 
 
 The list below is the recommended approach to using web components and overriding style properties, in order.
@@ -50,7 +48,7 @@ The beauty of web components is that they have much of the styling built-into th
 
 ## 2. Attributes
 
-Check out [storybook](https://patternfly.github.io/patternfly-elements/demo) to see what attributes are readily available
+Check out the [Storybook](https://patternfly.github.io/patternfly-elements/demo) to see what attributes are readily available
 
 ### General
 
@@ -95,11 +93,11 @@ Theme variables will impact all components on the page where this CSS is loaded.
 
 
 ```
-  your-page.css
-    :root {
-      --pfe-theme--color--ui-accent: green;
-  --pfe-theme--color--surface--darker: navy;
-    }
+// your-page.css
+:root {
+    --pfe-theme--color--ui-accent: green;
+    --pfe-theme--color--surface--darker: navy;
+}
 ```
 
 
@@ -131,9 +129,7 @@ As a last resort, you may choose to override variables with inline styles. This 
 ```
 
 
-
 ## FAQ
-
 
 ### Should I use on=dark or color=darkest on my container? What's the difference?
 
@@ -152,6 +148,49 @@ As a last resort, you may choose to override variables with inline styles. This 
   --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--ui-link--on-dark--hover, pink);
   --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--ui-link--on-dark--visited, pink);
   --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--ui-link--on-dark--focus, pink);
+}
+```
+
+In themes (like the advanced-theme.css file from the Red Hat Theme ) we apply broadcast variables to plain links, because they are light DOM and also have default colors applied by the browser. This CSS file not only includes variables but also styles for headlines and links on the page. It sets the colors for these elements using a CSS variable, which web components can change the value of.
+
+For example, advanced-theme.css includes
+
+```
+.PFElement a {
+color: var(--pfe-broadcasted--color--ui-link);
+}
+```
+
+We choose not to apply broadcast colors to text elements like paragraphs because it still would not be high enough specificity to override anything coming from pre-existing stylesheets, and paragraphs will inherit color from parents. 
+
+
+```
+// this would not really be helpful to add to cp-theme or redhat-theme
+h1, h2, h3, h4, h5, h6, p { 
+  color: var(--pfe-broadcasted--color--text);
+}
+// if there was some class like this in the theme, It would override it anyway. 
+body.editorial .body1.generic1 {
+    color: #646464;
+}
+```
+
+Instead, in the host of components, use:
+
+```
+:host {
+  color: var(--pfe-broadcasted--color--text);
+}
+```
+
+Then call theme mixin to flip colors of the on=dark on=light attributes. Default tags will use these colors. If devs implementing the component have more specific styles on their page, they will have to handle it.
+
+```
+:host([on="dark"]) {
+  @include pfe-theme($theme: "dark");
+}
+:host([on="light"]) {
+  @include pfe-theme($theme: "light");
 }
 ```
 

@@ -10,6 +10,8 @@ NEW_VERSION=""
 TAG_NAME=""
 RELEASE_BRANCH=""
 
+# abort script if any command fails
+set -e
 trap ctrl_c INT
 
 ctrl_c() {
@@ -48,7 +50,7 @@ checkoutMaster() {
 bumpVersion() {
   log "bumping version"
   OLD_VERSION=$(node -e "console.log(require('./lerna.json').version)")
-  ./node_modules/.bin/lerna version --no-git-tag-version --no-push --preid="$PRERELEASE_PREFIX" || exit 1
+  ./node_modules/.bin/lerna version --include-merged-tags --no-git-tag-version --no-push --preid="$PRERELEASE_PREFIX" || exit 1
   NEW_VERSION=$(node -e "console.log(require('./lerna.json').version)")
 }
 
@@ -72,13 +74,14 @@ commitIgnoredFiles() {
 
 gitTag() {
   log "creating a git tag"
-  git tag $TAG_NAME || exit 1
+  # create an annotated tag (lerna only picks up on annotated tags)
+  git tag -a -m "$TAG_NAME" $TAG_NAME || exit 1
 }
 
 removeIgnoredFiles() {
   log "removing the compiled bundles from release branch (they should only exist in the tag)"
    for e in elements/*; do find $e -maxdepth 1 \( -not -name "gulpfile.js" -not -name "rollup.config.js" \) \( -name "*.js" -or -name "*.css" -or -name "*.map" \) -exec git rm -f {} \; ;done
-   git commit -am "remove bundles from $NEW_VERSION" || exit 1
+   git commit -am "remove bundles after $NEW_VERSION tag" || exit 1
 }
 
 pushToOrigin() {

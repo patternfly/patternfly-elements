@@ -1,0 +1,31 @@
+[pfelement] {
+    font-family: var(--pfe-theme--font-family);
+    color: var(--pfe-broadcasted--color--text);
+}
+[pfelement] a {
+    color: var(--pfe-broadcasted--color--ui-link);
+}
+[pfelement] a:visited {
+    color: var(--pfe-broadcasted--color--ui-link--visited);
+}
+[pfelement] a:hover {
+    color: var(--pfe-broadcasted--color--ui-link--hover);
+}
+[pfelement] a:focus {
+    color: var(--pfe-broadcasted--color--ui-link--focus);
+}
+[pfelement] > *:first-child {
+    margin-top: 0;
+}
+[pfelement] h1,
+[pfelement] h2,
+[pfelement] h3,
+[pfelement] h4,
+[pfelement] h5,
+[pfelement] h6 {
+    font-family: var(--pfe-theme--font-family--heading);
+}
+[pfelement] pre,
+[pfelement] code {
+    font-family: var(--pfe-theme--font-family--code);
+}

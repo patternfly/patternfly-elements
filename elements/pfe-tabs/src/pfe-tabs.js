@@ -605,7 +605,9 @@ class PfeTabPanel extends PFElement {
       this.setAttribute("tabindex", 0);
     }
 
-    this.hidden = true;
+    if (this.previousElementSibling.getAttribute("aria-selected") !== "true") {
+      this.hidden = true;
+    }
 
     if (window.ShadyCSS) {
       this._observer.observe(this, { childList: true });

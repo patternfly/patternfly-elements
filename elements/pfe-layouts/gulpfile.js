@@ -39,10 +39,6 @@ const autoprefixer = require("autoprefixer");
 const cleanCSS = require("gulp-clean-css");
 const postcssCustomProperties = require("postcss-custom-properties");
 
-gulp.task("clean", () => {
-  return del(["*.css", "*.min.css"], {
-    cwd: "./dist"
-  });
 // Compile the sass into css, compress, autoprefix
 task("compile:sass", () => {
   return src("pfe-{base,layouts}.scss", {

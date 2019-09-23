@@ -26,6 +26,10 @@ class PfeAvatar extends PFElement {
     };
   }
 
+  static get defaultSize() {
+    return 128;
+  }
+
   static get defaultColors() {
     return "#67accf #448087 #709c6b #a35252 #826cbb";
   }
@@ -90,7 +94,9 @@ class PfeAvatar extends PFElement {
 
   _initCanvas() {
     this._canvas = this.shadowRoot.querySelector("canvas");
-    const size = this.var("--pfe-avatar--width").replace(/px$/, "");
+    const size =
+      this.var("--pfe-avatar--width").replace(/px$/, "") ||
+      PfeAvatar.defaultSize;
     this._canvas.width = size;
     this._canvas.height = size;
 

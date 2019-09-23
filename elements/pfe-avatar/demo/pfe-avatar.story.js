@@ -44,7 +44,7 @@ stories.add("pfe-avatar", () => {
     <h1>Dynamic example</h1>
     <h2>Use knobs to adjust!</h2>
 
-    <link rel="stylesheet" type="text/css" href="/pfe-layouts/pfe-layouts.css">
+    <link rel="stylesheet" type="text/css" href="/pfe-layouts/dist/pfe-layouts.css">
 
     <div class="rh-l-bullseye">
       <div class="rh-l-bullseye__item">

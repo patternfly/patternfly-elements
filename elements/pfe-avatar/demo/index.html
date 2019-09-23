@@ -5,22 +5,20 @@
     <title>PFElements: pfe-avatar Demo</title>
 
     <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <!-- <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script> -->
-    <!-- <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script> -->
-    <!-- <script>require(['../../pfelement/pfelement.umd.js', '../pfe-avatar.umd.js'], function(PFElement) { -->
-    <!--   PFElement.debugLog(true); -->
-    <!--   })</script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>require(['../dist/pfe-avatar.umd.js'])</script>
 
-    <script type="module" src="../pfe-avatar.js"></script>
+    <!-- <script type="module" src="../dist/pfe-avatar.js"></script> -->
 
     <style type="text/css" media="screen">
       /* :root {
@@ -47,7 +45,7 @@
     </ul>
 
     <script>
-      const app = new Vue({
+      var app = new Vue({
         el: "#app",
         data: {
           people: [

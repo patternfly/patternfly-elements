@@ -1,7 +1,7 @@
 +++
-title = "Create a themed PatternFly Element with Slots"
+title = "Theming Slots"
 description = ""
-weight = 2
+weight = 5
 draft = false
 bref = ""
 toc = true
@@ -11,48 +11,68 @@ tags = [ "theme" ]
 
 
 
-## Slots
 
-<blockquote>
-Elements that can be inserted into slots are known as <em>slotable</em>; when an element has been inserted in a slot, it is said to be <em>slotted</em>.
-</blockquote>
 
-At first glace, web components may seem tricky to theme, and there's a *lot* of [documentation](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots). Here’s a simplified guide with some basic code examples.
+## Slot basics
+
+**Vocab tip:** Elements that can be inserted into slots are known as _slotable_; when an element has been inserted in a slot, it is said to be _slotted_.
+
+At first glace, there seem to be lots of "gotchas" related to web components, and a *lot* of [documentation](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots). Here’s a simplified guide with some basic code examples.
+
 
 1. **Slots are places to pass content or markup into specific regions within your web component template.**
+
+
     ```
-	// pfe-card.html:
-	<slot name="pfe-card--header"></slot>
-	<slot></slot>
-	<slot name="pfe-card--footer"></slot>
-	```
+     // pfe-card.html:
+     <slot name="pfe-card--header"></slot>
+     <slot></slot>
+     <slot name="pfe-card--footer"></slot>
+    ```
 
 
-2. **You can’t nest slots.**
+2. **If you put content within a web component tag without a slot name, it will place that markup into the unnamed slot, if there is one.**
 
-	```
-	// my-web-page.html:
-	<pfe-card>
-	 <div>
-	   <h1 slot="pfe-card--header">This content will *not* render in the header slot of the card</h1>
-	 </div>
-	</pfe-card>
-	```
+    ```
+    <pfe-card>
+       This would appear in the unnamed slot
+    </pfe-card>
+    ```
+
+  * If there is no unnamed slot in the component, it will not render that content. For this reason, it’s perhaps a good idea to leave one unnamed slot if general markup is allowed.
+
+  * For example, the reason we are able to style links within the CTA component is because the `<a>` tag is being passed into the only unnamed slot in the CTA component. The link tag doesn’t need an explicit attribute like `slot="link"` because if a web component has one unnamed `<slot></slot>` then anything you put inside that custom component tag will be in that slot by default. 
+
+    ```
+    <pfe-cta priority="primary">
+    <a href="#">Primary</a>   <!-- this element is slotted by default -->
+    </pfe-cta>
+    ```
+
+
+3. **The slot attribute must be applied to direct descendant of the custom tag.**
+
+    ```
+    // my-web-page.html:
+    <pfe-card>
+     <div>
+       <h1 slot="pfe-card--header">This content will not render in the header slot of the card</h1>
+     </div>
+    </pfe-card>
+    ```
   
-  * Child elements within a web component must be direct descendants of the component. Once you nest something inside another tag, it can no longer be slotted.
+    Once you nest an element inside another element in a custom tag, it can no longer be slotted. This is true of named slots and the default unnamed slot.
   
-      For example, if we assume the `pfe-cta` web component has some basic styles on all slots like this:   `::slotted()  { color: red; }`
-  
-    Then both the div and link tag would be styled:
+    For example, if the `pfe-cta` web component has some basic styles on all slots like this: `::slotted()  { color: red; }` Then both the div and link tag would be styled red:
   
     ```
-     <pfe-cta pfe-priority="primary">
-       <div>styled!</div>
-       <a href="#">styled!</a>
-     </pfe-cta>
+    <pfe-cta pfe-priority="primary">
+        <div>styled!</div>
+        <a href="#">styled!</a>
+    </pfe-cta>
     ```
     
-    However, if the link tag is nested inside the div, then it would not receive styles because it’s not a direct child of the pfe-cta component.
+    However, if the link tag is nested inside the div, then it would not receive styles because it’s not a direct child of the pfe-cta component anymore.
     
     ```
      <pfe-cta pfe-priority="primary">
@@ -62,72 +82,49 @@ At first glace, web components may seem tricky to theme, and there's a *lot* of 
      </pfe-cta>
     ```
 
+4. **Whenever you add the attribute `slot="foo"` in your web component template, you are prescribing *where* elements will appear in the shadow DOM template.**
 
-3. **If you put content into a web component tag without a slot name, it will place that markup into the unnamed slot, if there is one.**
+    Using the pfe-card template example above, let's explore what would happen if we called the slots out of order: 
 
     ```
+    // my-web-page.html template
     <pfe-card>
-       This would appear in the unnamed slot
+        <div slot="pfe-card--footer">World</div>
+        <div slot="pfe-card--header">Hello</div>
     </pfe-card>
     ```
 
-    * If there is no unnamed slot in the component, it will not render that content. For this reason, it’s perhaps a good idea to leave one unnamed slot if general markup is allowed.
 
-	* For example, the reason we are able to style links within the CTA component is because the `<a>` tag is being passed into the only unnamed slot in the CTA component. The link tag doesn’t need an explicit attribute like `slot="link"` because if a web component has one unnamed `<slot></slot>` then anything you put inside that custom component tag will be in that slot by default. 
-	
-	```
-	<pfe-cta priority="primary">
-	  <a href="#">Primary</a>   
-	  <!-- this link ^ is slotted by default -->
-	</pfe-cta>
-	```
+    will render the content like this:
 
-4.  **Whenever you add the attribute `slot="foo"` in your web component template, you are prescribing *where* elements will appear, if they invoke the attribute `name="foo"`.**
-
-Using the pfe-card template example above, let's explore what would happen if we called the slots out of order:
-
-	```
-	// my-web-page.html template
-	<pfe-card>
-	    <div slot="pfe-card--footer">World</div>
-	    <div slot="pfe-card--header">Hello</div>
-	</pfe-card>
-	```
-will render the content like this:
-
-<br/>
-<div style="background:#eee;padding:30px;width: 250px;">
-    <div>Hello</div>
-    <div>World</div>
-</div>
+    <div style="background:#eee;padding:30px;width: 250px;">
+        <div>Hello</div>
+        <div>World</div>
+    </div>
 
 
 
-# Styling Slots 101
+## Styling Slots
 
 The lines blur between shadow DOM & light DOM when slots are involved. Basically if you add the attribute `slot=" "` to a regular HTML element inside a web component, you are opening a window to allow styles from the web component to style that thing. It only applies directly to the item with the slot name on it though, nothing nested inside it. 
 
-Note that slots should be direct descendants of the component tag, like so:
-
-```
-<pfe-card>
-	<h1 slot="pfe-card--header">
-	  <a>Yes!</a>
-	</h1>
-	<h1>
-	  <a slot="pfe-card--header">Nope.</a>
-	</h1>
-</pfe-card>
-```
-
-
-The examples below would be inside a `pfe-component.scss` file:
-
+    ```
+    <!--example-page.html-->
+    <pfe-card>
+        <h1 slot="pfe-card--header">
+          <a>Yes!</a>
+        </h1>
+        <h1>
+          <a slot="pfe-card--header">Nope.</a>
+        </h1>
+    </pfe-card>
+    ```
 
 
 1.   Style any slot. Probably way too general.
-
+    
     ```
+    /* my-component.scss */
     ::slotted()  {
       color: red;
     }
@@ -137,6 +134,7 @@ The examples below would be inside a `pfe-component.scss` file:
 2.   Style any link in any slot. Still too general.
 
     ```
+    /* my-component.scss */
     ::slotted(a)  {
       color: red;
     }
@@ -147,8 +145,8 @@ The examples below would be inside a `pfe-component.scss` file:
 
     For example, this CSS: 
 
-
     ```   
+    /* my-component.scss */
     [name="headline"]::slotted(*)  {
       color: red;
       text-decoration: none;
@@ -158,15 +156,15 @@ The examples below would be inside a `pfe-component.scss` file:
     will style the markup inside the web component accordingly:
 
 
+
     ```
+    <!--example-page.html-->
     <my-component>
       <header slot="headline">
         I will be red!
         <a href="#">I will be red too, but will keep the underline provided by the browser styles.</h2>
       </header>
-      
       <a slot="pfe-card--header">I shall have no underline.</a>
-
     </my-component>
     ```
 
@@ -174,12 +172,14 @@ The examples below would be inside a `pfe-component.scss` file:
 4.   Add further specificity, styling only `<h1>` tags with the attribute `slot="headline"`
 
     ```
+    /* my-component.scss */
     [name="headline"]::slotted(h1)  {
       color: red;
     }
     ```
     
     ```
+    <!--example-page.html-->
     <my-component>
       <h1 slot="headline">
         I will be red!
@@ -194,6 +194,7 @@ The examples below would be inside a `pfe-component.scss` file:
 5.  Nothing may follow the `::slotted()` selector, so these <span style="text-decoration:underline;">won’t</span> work
 
     ```
+    /* my-component.scss */
     ::slotted() iframe[name="video"] {}
     ::slotted() h2 {}
     ::slotted() [name="headline"] {}
@@ -206,7 +207,7 @@ The examples below would be inside a `pfe-component.scss` file:
 
 
 
-# Document styles vs. web component styles
+## Web component style specificity
 
 
 
@@ -249,42 +250,34 @@ The examples below would be inside a `pfe-component.scss` file:
     ```
 
 
-## Writing styles in the component sass file
+## Writing web component styles
 
-### Theme variables, local variables + related functions
+### Theme variables & related functions  
 
-When applying properties like color to your new component, it's important to reference CSS variables from the <a href="https://github.com/patternfly/patternfly-elements/blob/master/elements/pfe-sass/variables/_colors.scss" target="_blank">PatternFly Elements palette</a>. This way people using the components will be able to update all of them at once by changing the value of those palette variables.
+Theme variables exist so that when a user changes a system property such as color or font-size, they see the effects of that trickle through the system to nearly every component. 
 
-Theme variables exist so that when a user changes a system property such as color or font-size, they see the effects of that trickle through the system to nearly every component.
-
-  However, since it's also important for all CSS variables to have fallback values (should the variable not work), then the sass can become difficult to read and manage, since you now must input *two* colors (the variable and the fallback):
-
-```css
-.lots-of-work {
-  color:             var(--pfe-theme--color--ui-link, #99ccff);
-  background-color:  var(--pfe-theme--color--ui-accent, #fe460d);
-}
-```
-
-Not to worry! Several functions exist in the `pfe-sass` component to make it easier to theme individual components you are building!
-
+Several functions exist in the `pfe-sass` component to make it easier to theme individual components you are building!
+    
 1. **Color**:  Rather than using only Sass variables `$red` or hexidecimal colors like `#c00`, please use the `pfe-color()` function along with a theme variable, i.e. `pfe-color(ui-link)`. Occasionally you may have to wrap interpolation syntax `#{ }` around the function to allow Sass to compile, i.e. `#{pfe-color(ui-link)}`. 
-    *   This function does some heavy-lifting by looking up the `$pfe-colors: ()` map and returning namespaced CSS variables for the [broadcasted color](#broadcasted) (should it be passed down from a dark container), the theme color, and then a fallback color in that order: 
+    
+
+    * This function does some heavy-lifting by looking up the `$pfe-colors: ()` map and returning namespaced CSS variables for the [broadcasted color](#broadcasted) (should it be passed down from a dark container), the theme color, and then a fallback color in that order: 
+
+
+    ```
+    :host {
+       color: pfe-color(ui-link);
+    }
+    ```   
+
+     returns:
+
+     ```css
+     :host {
+         color: var(--pfe-broadcasted--color--ui-link, var(--pfe-theme--color--ui-link, #06c));
+     }
+     ```
   
-	```sass
-	:host {
-	   color: pfe-color(ui-link);
-	}
-	```     
-   
-    returns:
-  
-	```css
-	:host {
-	   color: var(--pfe-broadcasted--color--ui-link, var(--pfe-theme--color--ui-link, #06c));
-	}
-	```
-      
    *   Component color properties should almost always use [theme colors](https://static.redhat.com/libs/redhat/redhat-theme/2.0.0/advanced-theme.css) as values.  (Sidenote, there is no "light" or "dark" color, only "lighter"/ "darker", it's all relative to the base color, it can only get lighter or darker from there.
       *   Lightest
       *   Lighter
@@ -296,64 +289,55 @@ Not to worry! Several functions exist in the `pfe-sass` component to make it eas
        
 2. **Other Properties**:   Similarly, the `pfe-var` function does the same work of looking up values from the `$pfe-vars: ()` map, and returning the variable name and the fallback value:
       
-	```sass
-	:host {
-	   font-size:   pfe-var(font-size);
-	}
-	```
-	  
-	returns:
-	  
-	```
-	:host {
-	   font-size: var(--pfe-theme--font-size, 16px);
-	}
-	```    
+       ```sass
+       :host {
+           font-size:   pfe-var(font-size);
+       }
+       ```
       
-## Local component variables
+       returns:
+      
+       ```
+       :host {
+           font-size: var(--pfe-theme--font-size, 16px);
+       }
+       ```    
 
-In some cases, like the CTA (call-to-action) component, you might need to define a background color and a text color, as well as hover, focus, and visited states. That's a lot of colors! For this reason, it might be useful to create "local" variables for that particular component, and then redefine the values when different attributes come into play.
+### Local variables & related functions     
 
-Additionally it is recommended to create these "local" variables for properties that developers are likely to override, such as color and sizing, should they need the scope. You may use these functions that refer to theme variables to set the values of these local vars. Here's an example of some local variables you would find in the `pfe-cta.scss` file:
+2. It is recommended to create "local" variables for properties that developers are likely to override, such as color and sizing. You may use these functions that refer to theme variables to set the values of these local vars. Here's an example of some local variables you would find in the `pfe-cta.scss` file:
      
-```sass
- :host {
-     --pfe-cta--BorderRadius: 0;
-     --pfe-cta--Color:  pfe-color(ui-link);
-     --pfe-cta--Color--hover:  pfe-color(ui-link--hover);
- }
-```
+    ```
+    :host {
+         --pfe-cta--BorderRadius: 0;
+         --pfe-cta--Color:  pfe-color(ui-link);
+    }
+    ```
        
-  * When utilizing local variables, you can use the `pfe-local()` function to refer to them by the shorthand property name:
+    * When utilizing local variables, you can use the `pfe-local()` function to refer to them by the shorthand property name:
   
-	```sass
-	::slotted(*) {
-	   color: pfe-local(Color--hover);
-	}
-	```
+    ```
+    ::slotted(*) {
+       color: pfe-local(Color--hover);
+    }
+    ```
        
-   * If you are using the function to set multiple values, you will need to add the interpolation syntax:
+    * If you are using the function to set multiple values, you will need to add the interpolation syntax:
        
-   ```sass
-   :host([pfe-priority]) {
+    ```
+    :host([pfe-priority]) {
        padding: #{pfe-var(container-padding)} calc( #{pfe-var(container-padding) } * 2)} 
-   }
-   ``` 
-    * We use the [BEM](https://css-tricks.com/using-sass-control-scope-bem-naming/) (block, element, modifier) naming convention for naming these local variables.
+    }
+    ``` 
 
-        * `--pfe-navigation--BackgroundColor:` standard naming for a simple variable mapped to a specific property
-        * `--pfe-navigation--Padding--vertical:` standard naming for a variable mapped to a specific property but with a generic note about where it is being applied
-        (vertical vs. PaddingTop & PaddingBottom which would/should have the same values)
-        * `--pfe-navigation--icon:` generic naming for a thing mapped to different properties, descriptive but not the actual name of the property it is applied to
-        * `--pfe-navigation__overlay--BackgroundColor:` standard naming for a variable mapped to a specific property in a certain region of the component
+  * Naming conventions.. BEM.. @TODO 
 
-
-3.   Avoid use of !Important if possible
+3. Avoid use of !Important if possible
     *   ShadyCSS adds !important to styles, which means we generally should not add !important to our stylesheets. 
     *   @TODO is this still the case? pfe-cta uses important
 
     
-4.   Suggested easiest approach to theming: 
+4. Suggested easiest approach to theming: 
     1. Add properties with normal values first, `color: #c00`.
     2. Then go back and add / replace with local variables, `color: var(--pfe-cta--Color)` or use the local var function `pfe-local(Color)`.
         * _It's worth noting that very time we surface something as a variable, we offer an opportunity to lean away from the design system. There's no need to create a local variable for all properties._
@@ -367,45 +351,47 @@ Additionally it is recommended to create these "local" variables for properties 
     #### Example of a Component Sass file
 
 
-  ```sass
+    ```
+    // 1. Create local variable. Set value using color
+    // function to look up theme variables.
+    :host {
+      --pfe-local--Color: pfe-color(ui-link);
+    }
   
-      // 1. Create local variable. Set value using color function to look up theme variables.
-      :host {
-        --pfe-local--Color: pfe-color(ui-link);
+  
+    // 2. Use color property once, map to local var value
+    :host {
+      ::slotted(a) {
+         color: pfe-local(Color);
       }
+    }
   
+    // 3. Reset value of local variable for variants. 
+    // Continue to use theme functions.
+    :host([priority])
+      --pfe-local--Color: pfe-var(accent);   
+    }
   
-      // 2. Use color property once, map to local var value
-      
-      :host {
+    // 4. Override broadcasted last
+    [on="dark"] {
+      --pfe-local--Color: pfe-var(ui-link--on-dark);
+    }
+    [color="accent"] {
+      --pfe-local--Color: pfe-var(accent--ui-link);
+    }
+    ```
+
+    compiled css:
+       
+    ```
+    :host(:not([priority]) {
         ::slotted(a) {
-           color: pfe-local(Color);
+            //NOTE: the compiled CSS will print color twice for IE11 
+            // which sometimes trips over CSS variables.
+            //color: blue; 
+            color: var(--pfe-local--Color, blue) !important;
         }
-      }
-  
-      // 3. Reset value of local variable for variants. Continue to use theme functions.
-      :host([priority])
-        --pfe-local--Color: pfe-var(accent);   
-      }
-  
-      // 4. Override broadcasted last
-      [on="dark"] {
-        --pfe-local--Color: pfe-var(ui-link--on-dark);
-      }
-      [color="accent"] {
-        --pfe-local--Color: pfe-var(accent--ui-link);
-      }
-  ```
-  compiled css:
-  
-  ```
-        :host(:not([priority]) {
-        ::slotted(a) {
-            //NOTE: the compiled CSS will print color twice for IE11 which sometimes trips over CSS variables.
-           //color: blue; 
-           color: var(--pfe-local--Color, blue) !important;
-        }
-      }
+    }
     ```
 
 ----
@@ -418,8 +404,6 @@ If the container allows changes to background colors, then it should also influe
 
 ## Notes on using broadcast colors in pfe-components  
 
-
-
 1. Only define CSS color <span style="text-decoration:underline;">property</span> once per element 
 2. Set the value equal to local variable:   \
   `color: var(pfe-local--Color);`
@@ -429,9 +413,7 @@ If the container allows changes to background colors, then it should also influe
 
 
 
-### **Should I use on=dark or color=darkest on my container?  \
-What's the difference? **
-
+### Should I use on=dark or color=darkest on my container? What's the difference?
 
 
 *   The attribute `on=dark` is being deprecated. Instead, custom classes already on the page should set broadcast values.
@@ -465,29 +447,36 @@ For example, [advanced-theme.css](https://static.redhat.com/libs/redhat/redhat-t
 
 We choose not to apply broadcast colors to text elements like paragraphs because it still would not be high enough specificity to override anything coming from pre-existing stylesheets, and paragraphs will inherit color from parents. 
 
+#### Use case
 
 ```
-    Use case
-    // this would not really be helpful to add to cp-theme or redhat-theme
-    h1, h2, h3, h4, h5, h6, p { 
-      color: var(--pfe-broadcasted--color--text);
-    }
-    // if there was some class like this in the theme, It would override it anyway. 
-    body.editorial .body1.generic1 {
-        color: #646464;
-    }
+// this would not really be helpful to add to cp-theme or redhat-theme
+h1, h2, h3, h4, h5, h6, p { 
+  color: var(--pfe-broadcasted--color--text);
+}
+// if there was some class like this in the theme, It would override it anyway. 
+body.editorial .body1.generic1 {
+    color: #646464;
+}
+```
 
-    Instead, in the host of components, use:
-    :host {
-      color: var(--pfe-broadcasted--color--text);
-    }
-    Then call theme mixin to flip colors of the on=dark on=light attributes. Default tags will use these colors. If devs implementing the component have more specific styles on their page, they will have to handle it.
-    :host([on="dark"]) {
-      @include pfe-theme($theme: "dark");
-    }
-    :host([on="light"]) {
-      @include pfe-theme($theme: "light");
-    }
+Instead, in the host of components, use:
+
+```
+:host {
+  color: var(--pfe-broadcasted--color--text);
+}
+```
+
+Then call theme mixin to flip colors of the on=dark on=light attributes. Default tags will use these colors. If devs implementing the component have more specific styles on their page, they will have to handle it.
+
+```
+:host([on="dark"]) {
+  @include pfe-theme($theme: "dark");
+}
+:host([on="light"]) {
+  @include pfe-theme($theme: "light");
+}
 ```
 
 
@@ -497,30 +486,24 @@ We choose not to apply broadcast colors to text elements like paragraphs because
 
 #### Problem: I expect that the pfe-cta should have a red background, but it does not. 
 
-#### Troubleshooting steps:
-
 1. **Inspect the element & look for the style property**
     1. Check the light DOM**
     2. In the styles tab of web inspector, look for the CSS property `background`. Is the property present? Remember styles can be applied to `:host` as opposed to the actual component name, such as `pfe-cta`.
 
-    <!-- TODO get inline image from gdoc -->
+    ![theme code block 1](/theme__code_block_1.png)
 
     3. What is the value of the property? Try changing the value to a funny color. If there's no change then…
+
 2. **Check the shadow DOM**
     1. Check to see if the property you expect is actually being applied elsewhere, like some other element in the shadow root: 
 
-  <!-- TODO get inline image from gdoc -->
-  
-  
-  <!-- TODO get inline image from gdoc -->
+    ![theme code block 2](/theme__code_block_2.png)
 
 
     2. What is the value of the property? Try changing the value to a funny color. If there's no change then…
 2. **Check to see if the property is overridden**
     1. If the styles are being applied to the light DOM, and if it's still the wrong color, it means something other style from elsewhere on the page is winning the specificity war. [Learn more about detecting overrides.](https://developers.google.com/web/tools/chrome-devtools/css/overrides)
-
-  <!-- TODO get inline image from gdoc -->
-
+    ![theme code block 3](/theme__code_block_3.png)
     2. Options:
         1. Remove the styles that are more specific than your styles (may not be a viable option)
         2. Adjust the web component so that the styles are targeting the component itself, rather than it's children. Use `:host { }`
@@ -530,10 +513,10 @@ We choose not to apply broadcast colors to text elements like paragraphs because
 3. **Check to see if the value of the property set to a CSS variable**
     1. Sometimes CSS variables map to other CSS variables which have similar names, which can be confusing. Copy the exact name you are looking for and paste it into the [web inspector filter](https://developers.google.com/web/tools/chrome-devtools/css/reference#fiilter). Look for a plain hex value or RGBa value. For example:
 
-        ```
-        -pfe-cta--background: var(--pfe-theme--color--surface--accent, #fe460d);
-        --pfe-theme--color--surface--accent: #ee0000;
-        ```
+    ```
+    --pfe-cta--background: var(--pfe-theme--color--surface--accent, #fe460d);
+    --pfe-theme--color--surface--accent: #ee0000;
+    ```
 
-    7=2. And every time you hit a variable as the value, [change it to a funny color](http://www.giphy.com/gifs/hu1kdgZ1ObIGPcENJ0), so you can verify that is indeed the property you are looking for. 
+    2. And every time you hit a variable as the value, [change it to a funny color](http://www.giphy.com/gifs/hu1kdgZ1ObIGPcENJ0), so you can verify that is indeed the property you are looking for. 
 

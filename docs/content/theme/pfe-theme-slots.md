@@ -82,6 +82,17 @@ At first glace, there seem to be lots of "gotchas" related to web components, an
      </pfe-cta>
     ```
 
+    In the template, slots cannot have the same name, however you can put multiple elements inside a slot by assigning that slot multiple times in your light DOM code.
+
+    ```
+    <pfe-demo>
+        <h1 slot="foo">Bar</h1>
+        <p slot="foo">Testing slots</p>
+    </pfe-demo>
+    ```
+
+    Both the h1 and p tag in this example will render inside the "foo" slot of the component's template.
+
 4. **Whenever you add the attribute `slot="foo"` in your web component template, you are prescribing *where* elements will appear in the shadow DOM template.**
 
     Using the pfe-card template example above, let's explore what would happen if we called the slots out of order: 

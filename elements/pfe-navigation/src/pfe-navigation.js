@@ -264,8 +264,6 @@ class PfeNavigation extends PFElement {
       }
     });
 
-    console.log(this._activeNavigationItems);
-
     this.overlay = this._activeNavigationItems.length > 0;
   }
 
@@ -284,7 +282,7 @@ class PfeNavigation extends PFElement {
     let isChild = event.target.closest("pfe-navigation");
     let insideWrapper = event.target.tagName.includes("-") ? event.target.shadowRoot.querySelector("pfe-navigation") : null;
     // Check if the clicked element is the overlay object
-    let isOverlay = event.path.length > 0 && event.path[0] === this._overlay;
+    let isOverlay = event && event.path && event.path.length > 0 && event.path[0] === this._overlay;
     // Check states to determine if the navigation items should close
     if (isOverlay || (!isSelf && !(isChild || insideWrapper))) {
       this._activeNavigationItems.map(item => item.close());

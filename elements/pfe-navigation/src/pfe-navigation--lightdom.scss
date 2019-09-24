@@ -53,6 +53,11 @@
 //     @extend %link-styles;
 // }
 
+// Turn off internal link outline
+pfe-navigation-item [slot="trigger"] > a {
+    outline: none;
+}
+
 @include browser-query(edge) {
     pfe-navigation-item {
         [slot="trigger"] {

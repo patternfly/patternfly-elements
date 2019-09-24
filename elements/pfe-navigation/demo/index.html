@@ -765,8 +765,8 @@
     // Listen for the toggled event and if the slot is the language slot, inject new content
     // Replicates AJAX-like functionality
     document.addEventListener("pfe-navigation-item:open", function (event) {
-      if (event.detail.slot === "language" && event.detail.content !== null) {
-        const container = event.detail.content.querySelector(".pfe-navigation-item__tray--container");
+      if (event.target && event.target.slot === "language") {
+        const container = event.target.querySelector(".pfe-navigation-item__tray--container");
         const newContent = "<p>Inject new content into the " + event.detail.slot + " slot.</p>";
         if (container) {
           if (event.detail.expanded) {

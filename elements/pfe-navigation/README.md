@@ -36,6 +36,11 @@ A navigation item is a single dropdown element; the navigation is composed of se
 
 - `pfe-icon`: Currently available icons are "bento", "user", "globe", "search", and "menu".  Adding this attribute renders that icon above the trigger.
 
+### Events
+
+- `pfe-navigation-item:open`: On opening a navigation item, this event is fired.
+- `pfe-navigation-item:close`: On closing a navigation item, this event is fired.
+
 ### Dependencies
 
 - `<pfe-icon>`: By setting the `pfe-icon` attribute on your `pfe-navigation-item`, the template will pull in and render the icon using the `pfe-icon` component.

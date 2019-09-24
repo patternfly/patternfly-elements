@@ -174,8 +174,27 @@
           assert.instanceOf(document.querySelector('pfe-navigation'), customElements.get("pfe-navigation", 'pfe-navigation should be an instance of pfeNavigation'));
         });
 
-        // you need to write more tests!!!
-        // pfe-sticky pfe-close-on-click="external"
+        //-- PFE-NAVIGATION
+        // Test that it upgrades
+
+        //-- Test attributes
+          // pfe-sticky="true|false"
+          // pfe-close-on-click="external"
+          // pfe-menu-label="String"
+
+        //-- Test slots
+          // [ skip, logo, search, language, mobile-language, login, mobile-login, site-switcher ]
+
+        //-- PFE-NAVIGATION-ITEM
+        // Test that it upgrades
+        //-- Test attributes
+          // pfe-icon
+
+        //-- Test slots
+          // [ trigger, tray ]
+
+        //-- PFE-NAVIGATION-MAIN
+        // Test that it upgrades
 
       });
     </script>

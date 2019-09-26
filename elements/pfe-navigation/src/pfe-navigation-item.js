@@ -174,7 +174,6 @@ class PfeNavigationItem extends PFElement {
     }
   
     constructor() {
-      PFElement._debugLog = true;
       super(PfeNavigationItem);
   
       // States

@@ -49,7 +49,7 @@ pfe-layouts                 | yes| yes | yes | yes
 pfe-markdown                | yes| yes | yes | yes
 pfe-modal                   | yes| yes | yes | yes
 pfe-navigation              | yes| yes | yes | yes
-pfe-number				    | yes| no  | yes | yes
+pfe-number                  | yes| no  | yes | yes
 pfe-page-status             | yes| yes | yes | yes
 pfe-progress-indicator      | yes| yes | yes | yes
 pfe-sass                    | yes| yes | yes | yes

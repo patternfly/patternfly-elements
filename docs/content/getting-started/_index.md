@@ -67,7 +67,7 @@ The beauty of web components is that they have much of the styling built-into th
 <body>
     <pfe-card>
         <h2 slot="pfe-card--header">Light card</h2>
-        <pfe-cta>hello</pfe-cta>
+        <pfe-cta><a href="#">Learn more</a></pfe-cta>
     </pfe-card>
 </body>
 ```
@@ -79,7 +79,7 @@ The beauty of web components is that they have much of the styling built-into th
 ```
 <body>
     <pfe-card pfe-color="darkest">
-      <pfe-cta>hello</pfe-cta>
+      <pfe-cta><a href="#">Learn more</a></pfe-cta>
     </pfe-card>
 </body>
 ```

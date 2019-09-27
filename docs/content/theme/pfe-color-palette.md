@@ -1,5 +1,5 @@
 +++
-title = "PatternFly Elements color palette"
+title = "Color palette"
 description = ""
 weight = 3
 draft = false

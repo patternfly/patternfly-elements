@@ -31,8 +31,8 @@ _Note: You will need to use [Node](https://nodejs.org/en/) v.7 or higher._
 
 ## SUPPORT
 
-**web**            | **angular** | **react** | **vue**
------                    |----|-----|-----|
+**PFE component** | **web** | **angular** | **react** | **vue**
+-----                    |----|-----|-----|----|
 pfe-accordion            | yes| yes | yes | yes
 pfe-autocomplete         | yes| no  | yes | yes
 pfe-avatar               | yes| yes | yes | yes

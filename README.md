@@ -29,7 +29,10 @@ The storybook script will launch the interactive demo pages.
 _Note: You will need to use [Node](https://nodejs.org/en/) v.7 or higher._
 
 
-## SUPPORT
+## Support
+
+Though we have tested and verified general usability within these frameworks, PFE makes no guarantees about compatibility within specific sites & applications. Please test accordingly.
+
 
 **PFE component** | **web** | **angular** | **react** | **vue**
 -----                    |----|-----|-----|----|

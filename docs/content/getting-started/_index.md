@@ -128,7 +128,7 @@ class App extends Component {
 
 You may choose to add attributes such as `pfe-variant`, `pfe-priority` or `pfe-color` as needed to adjust usage of general theme, palette color, or priority. Check the readme file of a component to see what attributes are supported. Or check out the [Storybook](https://patternfly.github.io/patternfly-elements/demo) to preview how the attributes work.
 
-### General
+#### General
 
   Priority & variant attributes change style styles globally:
 
@@ -143,7 +143,7 @@ You may choose to add attributes such as `pfe-variant`, `pfe-priority` or `pfe-c
   *   `pfe-variant`
 
 
-### Specific
+#### Specific
 
 Color or align attributes change specific properties
 
@@ -160,10 +160,12 @@ Color or align attributes change specific properties
 *   `horizontal`
 
 
-## 5. CSS variables
+## 5. Use CSS variables as needed
+
+CSS variables are subject to the normal cascade, so consider where you want these overrides to propogate.
 
 
-### Page-level CSS, [theme](https://static.redhat.com/libs/redhat/redhat-theme/2/advanced-theme.css) variables
+#### Page-level CSS, [theme](https://static.redhat.com/libs/redhat/redhat-theme/2/advanced-theme.css) variables
 
 Theme variables will impact all components on the page where this CSS is loaded.
 
@@ -180,7 +182,7 @@ Theme variables will impact all components on the page where this CSS is loaded.
 _Note_: overriding local variables (i.e., --pfe-cta--foo) will not work at this level.  Those overrides can only be done on the component via tag name, class, or ID.
 
 
-### Page-level CSS, component variables
+#### Page-level CSS, component variables
 
 
 ```
@@ -195,7 +197,7 @@ pfe-band {
 
 
 
-### Component-level, inline CSS
+### Component-level inline CSS
 
 As a last resort, you may choose to override variables with inline styles. This could be desirable if you only need one component to deviate from the design system. Note that this incurs some level of risk, especially related to colors, as you are opting out of the color combinations in the system.
 
@@ -207,7 +209,7 @@ As a last resort, you may choose to override variables with inline styles. This 
 
 ## 6. Victory!
 
-Be sure to browser test within your own site or application.
+Be sure to browser test within your own site or application. If you run into any trouble, please file an issue in the [issue queue](https://github.com/patternfly/patternfly-elements/issues).
 
 <hr/>
 

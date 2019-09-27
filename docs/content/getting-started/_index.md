@@ -205,6 +205,13 @@ As a last resort, you may choose to override variables with inline styles. This 
 ```
 
 
+## 6. Victory!
+
+Be sure to browser test within your own site or application.
+
+<hr/>
+
+
 ## FAQ
 
 ### Should I use on=dark or color=darkest on my container? What's the difference?

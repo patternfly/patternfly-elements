@@ -28,6 +28,32 @@ The storybook script will launch the interactive demo pages.
 
 _Note: You will need to use [Node](https://nodejs.org/en/) v.7 or higher._
 
+
+## SUPPORT
+
+**web** | **angular** | **react** | **vue**
+-----|-----|-----|-----
+pfe-accordion               | yes| yes | yes | yes
+pfe-autocomplete            | yes| no | yes | yes
+pfe-avatar                  | yes| yes | yes | yes
+pfe-band                    | yes| yes | yes | yes
+pfe-card                    | yes| yes | yes | yes
+pfe-collapse                | yes| yes | yes | yes
+pfe-content-set             | yes| no | yes | yes
+pfe-cta                     | yes| yes | yes | yes
+pfe-datetime                | yes| no | yes | yes
+pfe-health-index            | yes| yes | yes | yes
+pfe-icon                    | yes| yes | yes | yes
+pfe-icon-panel              | yes| yes | yes | yes
+pfe-layouts                 | yes| yes | yes | yes
+pfe-markdown                | yes| yes | yes | yes
+pfe-modal                   | yes| yes | yes | yes
+pfe-navigation              | yes| yes | yes | yes
+pfe-number				    | yes| no  | yes | yes
+pfe-page-status             | yes| yes | yes | yes
+pfe-progress-indicator      | yes| yes | yes | yes
+pfe-sass                    | yes| yes | yes | yes
+pfe-tabs                    | yes| yes | yes | yes
 ---
 
 [home][pfe-home] |

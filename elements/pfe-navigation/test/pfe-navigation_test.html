@@ -502,41 +502,65 @@
         });
 
         //-- Test attributes
-          // pfe-sticky="true|false"
-          test(`it should add pfe-sticky="true" on upgrade`, () => {
-            assert.equal(pfeNavigation.getAttribute('pfe-sticky'), 'true');
-          });
-          // pfe-close-on-click="external"
-          test(`it should add pfe-close-on-click="external" on upgrade`, () => {
-            assert.equal(pfeNavigation.getAttribute('pfe-close-on-click'), 'external');
-          });
-          // pfe-menu-label="String"
-          const menuLabel = pfeNavigation.querySelector(".pfe-navigation__main--menu-label").innerText;
-          test(`it should inject the value of pfe-menu-label to the template`, () => {
-            assert.equal(pfeNavigation.getAttribute('pfe-menu-label'), menuLabel);
-          });
+        // pfe-sticky="true|false"
+        test(`it should add pfe-sticky="true" on upgrade`, () => {
+          assert.equal(pfeNavigation.getAttribute('pfe-sticky'), 'true');
+        });
+        // pfe-close-on-click="external"
+        test(`it should add pfe-close-on-click="external" on upgrade`, () => {
+          assert.equal(pfeNavigation.getAttribute('pfe-close-on-click'), 'external');
+        });
+        // pfe-menu-label="String"
+        test(`it should inject the value of pfe-menu-label to the template`, () => {
+          const menuLabel = pfeNavigation.shadowRoot.querySelector(".pfe-navigation__main--menu-label").innerText;
+          assert.equal(pfeNavigation.getAttribute('pfe-menu-label'), menuLabel);
+        });
 
         //-- Test slots
         slots.forEach(slot => {
           test(`it should render the ${slot} slot`, () => {
-            assert.exists(pfeNavigation.shadowRoot.querySelector(`[name="${slot}"]`));
+            assert.isNotNull(pfeNavigation.shadowRoot.querySelector(`[name="${slot}"]`));
           });
         });
 
 
         //-- Test applied a11y attributes
-
         test('it should add the proper attributes', () => {
           // Slot = logo -- tabindex = 2
           // Slot = skip -- tabindex = 1
-          assert.equal(pfeNavigation.getAttribute('role'), 'presentation');
-          assert.isTrue(pfeNavigation.hasAttribute('defined'));
-          assert.isTrue(header.hasAttribute('aria-controls'));
-          assert.equal(header.getAttribute('role'), 'header');
-          assert.isTrue(panel.hasAttribute('aria-labelledby'));
-          assert.equal(panel.getAttribute('role'), 'region');
-          assert.equal(header.pfeId, panel.getAttribute('aria-labelledby'));
-          assert.equal(panel.pfeId, header.getAttribute('aria-controls'));
+          assert.isTrue(pfeNavigation.hasAttribute("has_skip"));
+          assert.isTrue(pfeNavigation.hasAttribute("has_logo"));
+          assert.isTrue(pfeNavigation.hasAttribute("has_search"));
+          assert.isTrue(pfeNavigation.hasAttribute("has_mobile-search"));
+          assert.isTrue(pfeNavigation.hasAttribute("has_main"));
+          assert.isTrue(pfeNavigation.hasAttribute("has_language"));
+          assert.isTrue(pfeNavigation.hasAttribute("has_mobile-language"));
+          assert.isTrue(pfeNavigation.hasAttribute("has_login"));
+          assert.isTrue(pfeNavigation.hasAttribute("has_mobile-login"));
+          assert.isTrue(pfeNavigation.hasAttribute("has_site-switcher"));
+        });
+
+        test("it should close the navigation when the overlay is clicked", () => {
+          const pfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item");
+          const trigger = pfeNavigationItem.querySelector(`[slot="trigger"] a`);
+          const backdrop = pfeNavigation.shadowRoot.querySelector(".pfe-navigation__overlay");
+
+          trigger.click();
+          backdrop.click();
+
+          assert.isTrue(backdrop.hasAttribute("hidden"));
+        });
+
+        test("the document body should have overflow hidden when the nav is open", () => {
+          const pfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item");
+          const trigger = pfeNavigationItem.querySelector(`[slot="trigger"] a`);
+          const backdrop = pfeNavigation.shadowRoot.querySelector(".pfe-navigation__overlay");
+
+          trigger.click();
+          assert.equal(document.body.style.overflow, "hidden");
+
+          backdrop.click();
+          assert.isUndefined(document.body.style.overlay);
         });
       });
 
@@ -555,28 +579,120 @@
         //-- Test applied a11y attributes
 
         test('it should expand the tray when the trigger is selected', () => {
-          pfeNavigationItems.item(0).click();
+          const pfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item");
+          const trigger = pfeNavigationItem.querySelector(`[slot="trigger"] a`);
+          const tray = pfeNavigationItem.querySelector(`[slot="tray"]`);
+          const triggerContainer = pfeNavigationItem.shadowRoot.querySelector(".pfe-navigation-item__trigger");
+          const trayContainer = pfeNavigationItem.shadowRoot.querySelector(".pfe-navigation-item__tray");
 
-          assert.equal('true', header.getAttribute('aria-expanded'));
-          assert.isTrue(panel.hasAttribute('expanded'));
-          assert.isTrue(header.expanded);
-          assert.isTrue(panel.expanded);
+          trigger.click();
+          assert.isTrue(pfeNavigationItem.classList.contains("expanded"));
+          assert.isNotTrue(tray.hasAttribute("hidden"));
+          assert.equal(triggerContainer.getAttribute("aria-expanded"), "true");
+          assert.equal(trayContainer.getAttribute("aria-expanded"), "true");
 
           // reset
-          header.click();
+          trigger.click();
+          assert.isNotTrue(pfeNavigationItem.classList.contains("expanded"));
+          assert.isTrue(tray.hasAttribute("hidden"));
+          assert.equal(triggerContainer.getAttribute("aria-expanded"), "false");
+          assert.equal(trayContainer.getAttribute("aria-expanded"), "false");
         });
 
-        test('it should collapse a panel when an already expanded header is selected', () => {
-          // expand the first panel
-          header.click();
+        test('it should dispatch a pfe-navigation-item:open event when the nav item is selected', done => {
+          const pfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item");
+          const trigger = pfeNavigationItem.querySelector(`[slot="trigger"] a`);
 
-          // close it
-          header.click();
+          function openHandler(event) {
+            assert.equal(event.target, pfeNavigationItem);
+            document.removeEventListener("pfe-navigation-item:open", openHandler);
+            done();
+          }
 
-          assert.isNotTrue(header.hasAttribute('aria-expanded'));
-          assert.isNotTrue(panel.hasAttribute('expanded'));
-          assert.isNotTrue(header.expanded);
-          assert.isNotTrue(panel.expanded);
+          document.addEventListener("pfe-navigation-item:open", openHandler);
+          trigger.click();
+        });
+
+        test('it should dispatch a pfe-navigation-item:close event when the nav item is selected', done => {
+          const pfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item");
+          const trigger = pfeNavigationItem.querySelector(`[slot="trigger"] a`);
+
+          function closeHandler(event) {
+            assert.equal(event.target, pfeNavigationItem);
+            document.removeEventListener("pfe-navigation-item:close", closeHandler);
+            done();
+          }
+
+          document.addEventListener("pfe-navigation-item:close", closeHandler);
+          trigger.click();
+          trigger.click();
+        });
+
+        test("it should open the navigation item when the open API is called", () => {
+          const pfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item");
+          const trigger = pfeNavigationItem.querySelector(`[slot="trigger"] a`);
+          const tray = pfeNavigationItem.querySelector(`[slot="tray"]`);
+          const triggerContainer = pfeNavigationItem.shadowRoot.querySelector(".pfe-navigation-item__trigger");
+          const trayContainer = pfeNavigationItem.shadowRoot.querySelector(".pfe-navigation-item__tray");
+
+          pfeNavigationItem.open();
+          assert.isTrue(pfeNavigationItem.classList.contains("expanded"));
+          assert.isNotTrue(tray.hasAttribute("hidden"));
+          assert.equal(triggerContainer.getAttribute("aria-expanded"), "true");
+          assert.equal(trayContainer.getAttribute("aria-expanded"), "true");
+
+          // reset
+          trigger.click();
+        });
+
+        test("it should close the navigation item when the close API is called", () => {
+          const pfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item");
+          const trigger = pfeNavigationItem.querySelector(`[slot="trigger"] a`);
+          const tray = pfeNavigationItem.querySelector(`[slot="tray"]`);
+          const triggerContainer = pfeNavigationItem.shadowRoot.querySelector(".pfe-navigation-item__trigger");
+          const trayContainer = pfeNavigationItem.shadowRoot.querySelector(".pfe-navigation-item__tray");
+
+          trigger.click();
+
+          pfeNavigationItem.close();
+
+          assert.isNotTrue(pfeNavigationItem.classList.contains("expanded"));
+          assert.isTrue(tray.hasAttribute("hidden"));
+          assert.equal(triggerContainer.getAttribute("aria-expanded"), "false");
+          assert.equal(trayContainer.getAttribute("aria-expanded"), "false");
+        });
+
+        test("it should toggle the navigation item when the toggle API is called", () => {
+          const pfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item");
+          const trigger = pfeNavigationItem.querySelector(`[slot="trigger"] a`);
+          const tray = pfeNavigationItem.querySelector(`[slot="tray"]`);
+          const triggerContainer = pfeNavigationItem.shadowRoot.querySelector(".pfe-navigation-item__trigger");
+          const trayContainer = pfeNavigationItem.shadowRoot.querySelector(".pfe-navigation-item__tray");
+
+          pfeNavigationItem.toggle();
+
+          assert.isTrue(pfeNavigationItem.classList.contains("expanded"));
+          assert.isNotTrue(tray.hasAttribute("hidden"));
+          assert.equal(triggerContainer.getAttribute("aria-expanded"), "true");
+          assert.equal(trayContainer.getAttribute("aria-expanded"), "true");
+
+          pfeNavigationItem.toggle();
+
+          assert.isNotTrue(pfeNavigationItem.classList.contains("expanded"));
+          assert.isTrue(tray.hasAttribute("hidden"));
+          assert.equal(triggerContainer.getAttribute("aria-expanded"), "false");
+          assert.equal(trayContainer.getAttribute("aria-expanded"), "false");
+        });
+
+        test("it should replace the web-mobile-menu icon when expanded", () => {
+          const mobileNavigationItem = pfeNavigation.shadowRoot.querySelector(`pfe-navigation-item[pfe-icon="web-mobile-menu"]`);
+          const pfeIcon = mobileNavigationItem.shadowRoot.querySelector("pfe-icon");
+
+          mobileNavigationItem.open();
+          assert.equal(pfeIcon.getAttribute("icon"), "web-plus");
+
+          mobileNavigationItem.close();
+          assert.equal(pfeIcon.getAttribute("icon"), "web-mobile-menu");
         });
       });
 

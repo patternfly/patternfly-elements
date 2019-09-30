@@ -1,3 +1,30 @@
+## Prerelease 26 ( TBD )
+
+Tag: [v1.0.0-prerelease.26](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.26)
+
+- [f18aa6f](https://github.com/patternfly/patternfly-elements/commit/f18aa6ff05e510993baf0f1971a85e2e4715bcc4) Update build tools to support the files array in package.json for each component
+- [](https://github.com/patternfly/patternfly-elements/commit/) Add patternfly project as a dependency so that styles can be extended
+
+## Prerelease 25 ( 2019-09-10 )
+
+Tag: [v1.0.0-prerelease.25](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.25)
+
+- [13f32d3d](https://github.com/patternfly/patternfly-elements/commit/13f32d3d56c61ebb9cf0285cdc6ef44596df50e7) use bash 'strict mode' for release script
+- [e3e0a52d](https://github.com/patternfly/patternfly-elements/commit/e3e0a52d9b1e9aa5281f43eaf8dee0648b7a8db7) reintroduce ctrl+c exit 1
+- [4e0735bf](https://github.com/patternfly/patternfly-elements/commit/4e0735bf8f1b3b514da68439059bda80ada865e2) consider merged tags when evaluating changed components
+- [4a8e79a4](https://github.com/patternfly/patternfly-elements/commit/4a8e79a4be60995626855529705e623c86fb5601) abort release script if any command fails
+- [c4ed3255](https://github.com/patternfly/patternfly-elements/commit/c4ed3255074b81bc36d3acac645879d0a2f5e494) removing the chicken. we're vegan now
+
+## Prerelease 24 ( 2019-09-09 )
+
+Tag: [v1.0.0-prerelease.24](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.24)
+
+- [143b18a8](https://github.com/patternfly/patternfly-elements/commit/143b18a8838c99fdaf3516518a1b7699864c1e30) improve bundle removal commit message during release
+- [9a5eb60b](https://github.com/patternfly/patternfly-elements/commit/9a5eb60bcc2166f2b3a83b82a6b8e7f71a0d2d95) lerna.json: ignoreChanges on built assets
+- [c9bc32f2](https://github.com/patternfly/patternfly-elements/commit/c9bc32f24e4752539d1b6eed0d39a5bf39914a7a) create annotated tags
+- [12b87364](https://github.com/patternfly/patternfly-elements/commit/12b87364bb8c2691c8144eaac6939dc9729b43b3) issue-444 removed TextDecorationColor from accordion header mixins.
+- [bae3802e](https://github.com/patternfly/patternfly-elements/commit/bae3802e82c7505f81ac73802059280f0ef4fc98) issue-444: reverted dark theme border left hover color
+
 ## Prerelease 23 ( 2019-08-29 )
 Tag: [v1.0.0-prerelease.23](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.23)
 

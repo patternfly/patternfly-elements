@@ -1,4 +1,4 @@
-# WIP 🐣: PFElements Icon Panel Element
+# PFElements Icon Panel Element
 
 ## Usage
 

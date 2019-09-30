@@ -20,11 +20,13 @@ hugo
 
 ### Watch for files locally
 ```
-hugo server -D
+cd docs && hugo server -D
 ```
 
+### Preview the docs
 
-## Scripts
+http://localhost:1313/patternfly-elements/
+
 
 ### Deploy!
 Build and pull in any updates before running the deploy script.

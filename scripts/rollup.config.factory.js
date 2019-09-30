@@ -14,9 +14,9 @@ const babelSettings = {
 
 function esmConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.js`,
+    input: `_temp/${elementName}.js`,
     output: {
-      file: `${elementName}.js`,
+      file: `./${elementName}.js`,
       format: "esm",
       sourcemap: true
     },
@@ -27,9 +27,9 @@ function esmConfig({ elementName, className } = {}) {
 
 function umdConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.js`,
+    input: `_temp/${elementName}.js`,
     output: {
-      file: `${elementName}.umd.js`,
+      file: `./${elementName}.umd.js`,
       format: "umd",
       sourcemap: true,
       name: className
@@ -53,9 +53,9 @@ function umdConfig({ elementName, className } = {}) {
 
 function esmMinConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.js`,
+    input: `_temp/${elementName}.js`,
     output: {
-      file: `${elementName}.min.js`,
+      file: `./${elementName}.min.js`,
       format: "esm",
       sourcemap: true
     },
@@ -80,9 +80,9 @@ function esmMinConfig({ elementName, className } = {}) {
 
 function umdMinConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.js`,
+    input: `_temp/${elementName}.js`,
     output: {
-      file: `${elementName}.umd.min.js`,
+      file: `./${elementName}.umd.min.js`,
       format: "umd",
       sourcemap: true,
       name: className

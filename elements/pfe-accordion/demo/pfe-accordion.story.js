@@ -1,4 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
+import { withActions } from '@storybook/addon-actions';
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
@@ -28,6 +29,9 @@ const template = (data = {}) => {
 };
 
 stories.addDecorator(storybookBridge.withKnobs);
+
+// Log events
+stories.addDecorator(withActions("pfe-accordion:change"))
 
 stories.add(PfeAccordion.tag, () => {
   let config = {};

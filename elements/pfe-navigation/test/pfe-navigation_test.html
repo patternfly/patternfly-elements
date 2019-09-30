@@ -381,7 +381,7 @@
                         </ul>
                       </div>
                     </div>
-  
+
                   </div>
                   <div class="pfe-navigation--footer">
                     <div class="pfe-navigation--column pfe-navigation--column-span-2">
@@ -522,7 +522,7 @@
             assert.exists(pfeNavigation.shadowRoot.querySelector(`[name="${slot}"]`));
           });
         });
-          
+
 
         //-- Test applied a11y attributes
 
@@ -586,6 +586,22 @@
         });
 
         //-- Test applied a11y attributes
+        test('it should initialize with the proper aria', () => {
+          assert.equal(pfeNavigationMain.getAttribute("role"), "navigation");
+          assert.equal(pfeNavigationMain.getAttribute("aria-label"), "Main");
+        });
+
+        test("it should add a first attribute to the first navigation item", () => {
+          const firstPfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item[first]");
+          assert.isTrue(firstPfeNavigationItem.hasAttribute("first"));
+          assert.equal(firstPfeNavigationItem.querySelector(`[slot="trigger"] a`).textContent, "Products");
+        });
+
+        test("it should add a last attribute to the last navigation item", () => {
+          const lastPfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item[last]");
+          assert.isTrue(lastPfeNavigationItem.hasAttribute("last"));
+          assert.equal(lastPfeNavigationItem.querySelector(`[slot="trigger"] a`).textContent, "Red Hat & open source");
+        });
       });
     </script>
   </body>

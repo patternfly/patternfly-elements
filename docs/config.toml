@@ -27,6 +27,7 @@ canonifyURLs = true
     "Table of Contents",
     "SEO Site Verification"
   ]
+  pygmentsCodeFences = true
 
 [[menu.main]]
     name = "Getting Started"

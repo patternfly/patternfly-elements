@@ -120,6 +120,7 @@ $LOCAL: card;
 
 ::slotted(img) {
   max-width: 100%;
+  object-fit: cover; // Fix distortion
 }
 
 ::slotted(img[pfe-overflow~="right"]) {
@@ -173,11 +174,20 @@ $LOCAL: card;
   margin-bottom: #{pfe-local(spacing)};
 }
 
-::slotted([slot="pfe-card--footer"]) {
+// Flexbox
+// Fix: https://github.com/patternfly/patternfly-elements/issues/478
+.pfe-card__footer {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: row wrap;
   margin-top: auto; // This allows the footer to move to the very bottom
-  justify-self: flex-end;
+  margin-left: calc(calc(#{pfe-local(spacing)} / 2) * -1);
+  margin-right: calc(calc(#{pfe-local(spacing)} / 2) * -1);
+  align-items: baseline; // Make buttons and CTAs line up
+}
+
+::slotted([slot="pfe-card--footer"]) {
+  margin-left: calc(#{pfe-local(spacing)} / 2);
+  margin-right: calc(#{pfe-local(spacing)} / 2);
 }
 
 .pfe-card {

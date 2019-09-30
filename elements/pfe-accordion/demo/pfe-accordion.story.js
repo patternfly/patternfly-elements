@@ -6,6 +6,22 @@ import PfeAccordion from "../pfe-accordion";
 
 const stories = storiesOf("Accordion", module);
 
+// Add the documentation
+import about from "../docs/ABOUT.md";
+import slots from "../docs/SLOTS.md";
+import attributes from "../docs/ATTRIBUTES.md";
+import styling from "../docs/STYLING.md";
+import events from "../docs/EVENTS.md";
+stories.addParameters({
+  notes: {
+    About: about,
+    Slots: slots,
+    Attributes: attributes,
+    Events: events,
+    Styling: styling,
+  }
+});
+
 // Define the template to be used
 const template = (data = {}) => {
   return tools.component(PfeAccordion.tag, data.prop, data.slots);

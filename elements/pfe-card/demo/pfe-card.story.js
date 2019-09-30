@@ -19,6 +19,14 @@ import PfeCard from "../pfe-card";
 
 const stories = storiesOf("Card", module);
 
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 // Define the template to be used
 const template = (data = {}) => {
   return tools.component(PfeCard.tag, data.prop, data.slots);

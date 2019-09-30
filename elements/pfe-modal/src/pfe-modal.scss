@@ -1,0 +1,127 @@
+@import "../../pfe-sass/pfe-sass";
+$LOCAL: modal;
+
+$pfe-modal--breakpoint--medium: 640px;
+
+:host {
+	--pfe-modal--MaxWidth: 70vw;
+	--pfe-modal--MinWidth: 50vw;
+	--pfe-modal--MaxWidth--mobile: 94vw;
+	--pfe-modal--MaxHeight: 90vh;
+	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);
+	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
+	--pfe-modal__close--size: calc(#{pfe-var(ui--element--size)} - 4px);
+	display: block;
+	position: relative;
+
+   @media screen and (max-height: $pfe-modal--breakpoint--medium) {
+      --pfe-modal--Padding: 0 0 0 calc(#{pfe-var(container-padding)} * 2);
+   }
+}
+
+.pfe-modal {
+	&__outer {
+		display: flex;
+		position: fixed;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		z-index: #{pfe-var($cssvar: modal, $category: zindex, $map: $z-index)};
+
+		&[hidden] {
+			display: none;
+		}
+	}
+	&__overlay {
+		position: fixed;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		background-color: pfe-local($cssvar: BackgroundColor, $region: overlay);
+		cursor: pointer;
+
+		&[hidden] {
+			display: none;
+		}
+	}
+	&__window {
+		position: relative;
+		max-width: pfe-local(MaxWidth--mobile);
+		min-width: pfe-local(MinWidth);
+		max-height: pfe-local(MaxHeight);
+		margin: 0 auto;
+		box-shadow: pfe-var(box-shadow--lg);
+		background-color: pfe-color(surface--lightest);
+		border-radius: #{pfe-var(ui--border-radius)};
+
+		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
+			max-width: pfe-local(MaxWidth);
+		}
+	}
+	&__container {
+		position: relative;
+		max-height: inherit;
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	&__content {
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		max-height: pfe-local(MaxHeight);
+		padding: pfe-local(Padding);
+		box-sizing: border-box;
+
+		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
+			--pfe-modal--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 3) #{pfe-var(container-padding)} #{pfe-var(container-padding)};
+		}
+
+		:host(:not([has_header])) & {
+
+			// Remove margin-top on the first slotted element that is not the header.
+			::slotted(*:nth-child(2)),
+			::slotted(*:nth-child(1)) {
+				margin-top: 0 !important;
+			}
+		}
+
+		::slotted([slot="pfe-modal--header"]) {
+			margin-top: 0 !important;
+		}
+	}
+
+	&__close {
+		@include pfe-reset-button;
+		position: absolute;
+		top: calc(#{pfe-var(container-padding)} * .25);
+		right: calc(#{pfe-var(container-padding)} * .25);
+		cursor: pointer;
+		line-height: .5;
+		padding: pfe-var(container-padding);
+
+		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
+			top: #{pfe-var(container-padding)};
+			right: #{pfe-var(container-padding)};
+		}
+
+		@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
+			top: calc(#{pfe-var(container-padding)} / 2);
+			right: calc(#{pfe-var(container-padding)} / 2);
+		}
+
+		> svg {
+			fill: pfe-radio(text);
+			height: pfe-var(ui--element--size);
+			width: pfe-var(ui--element--size);
+			height: pfe-local($cssvar: size, $region: close);
+			width: pfe-local($cssvar: size, $region: close);
+		}
+	}
+}

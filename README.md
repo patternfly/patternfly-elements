@@ -1,5 +1,5 @@
-<img src="https://www.patternfly.org/patternfly-elements/img/logo/svg/pfelements-icon-blue-shaded.svg" alt="PatternFly Elements logo" width=100px />
-     
+# PatternFly Elements [![Build Status](https://travis-ci.org/patternfly/patternfly-elements.svg?branch=master)](https://travis-ci.org/patternfly/patternfly-elements)
+
 ## Table of Contents
 
 1. [Getting started][getting-started]
@@ -30,11 +30,11 @@ _Note: You will need to use [Node](https://nodejs.org/en/) v.7 or higher._
 
 ---
 
-[home][pfe-home] | 
-[start][getting-started] | 
-[develop][creating] | 
-[theming][theming] | 
-[storybook][catalog] | 
+[home][pfe-home] |
+[start][getting-started] |
+[develop][creating] |
+[theming][theming] |
+[storybook][catalog] |
 [web components][wc-org]
 
 

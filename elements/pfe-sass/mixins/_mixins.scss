@@ -24,6 +24,13 @@
   padding: 0;
 }
 
+@mixin pfe-reset-button() {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
 @mixin pfe-sr-only() {
   position: absolute;
   overflow: hidden;
@@ -246,7 +253,6 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
         outline: none;
         z-index: 2;
         text-decoration: underline;
-        text-decoration-color: #{pfe-color(surface--border--darker)};
     }
 
     &::-moz-focus-inner {
@@ -262,6 +268,7 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
 
 @mixin pfe-trigger-button-last($theme: light) {
   border-bottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
+  border-top: 0;
   // @TODO Support differences based on theme
 }
 
@@ -298,8 +305,8 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
   @if $theme == dark {
     --pfe-#{$component-name}--main:         #{pfe-color(surface--darker)};
     --pfe-#{$component-name}--aux:          #{pfe-color(surface--darkest--text)};
-    --pfe-#{$component-name}--BorderLeft:   #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
-    --pfe-#{$component-name}--BorderRight:  #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border-darkest)};
+    --pfe-#{$component-name}--BorderLeft:   #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
+    --pfe-#{$component-name}--BorderRight:  #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
 
     --pfe-#{$component-name}--BorderLeftColor--focus: #{pfe-color(surface--lightest)};
   }
@@ -370,11 +377,13 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
   overflow: hidden;
   will-change: height;
   border-color: transparent;
+  opacity: 0;
 }
 
 @mixin pfe-accordion-panel-expanded {
   display: block;
   position: relative;
+  opacity: 1;
 }
 
 @mixin pfe-accordion-panel-expanded-style($theme: light) {
@@ -383,8 +392,8 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
   @if $theme == dark {
     box-shadow: none;
     background-color: #{pfe-color(surface--darker)};
-    border-left-color: #{pfe-color(surface--darkest--text)};
-    border-right-color: #{pfe-color(surface--darkest--text)};
+    border-left-color: #{pfe-color(surface--border)};
+    border-right-color: #{pfe-color(surface--border)};
   }
   @else {
     box-shadow: 0 5px #{pfe-var(surface--border-width--heavy)} rgba(140, 140, 140, 0.35);

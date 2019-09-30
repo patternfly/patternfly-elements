@@ -288,7 +288,6 @@ class PfeAutocomplete extends PFElement {
   }
 
   _reset() {
-    debugger;
     this._dropdown.activeIndex = null;
     this._input.setAttribute("aria-activedescendant", "");
     this._dropdown.data = [];

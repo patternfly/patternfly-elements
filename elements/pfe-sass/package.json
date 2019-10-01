@@ -40,5 +40,8 @@
       "name": "cd"
     }
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

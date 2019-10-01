@@ -3,11 +3,6 @@
 $USE-FALLBACK: true;
 $LOCAL: icon;
 
-// svg {
-//     width: 80px;
-//     height: 80px;
-// }
-
 /// ===========================================================================
 /// Component Specific SASS Vars
 /// ===========================================================================
@@ -16,19 +11,6 @@ $LOCAL: icon;
 $pfe-icon--padding:       .05em;
 $pfe-icon--border-width:  #{pfe-var(ui--border-width)};
 $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
-
-
-/// ===========================================================================
-/// DEFUALT CTA
-/// ===========================================================================
-
-@mixin pfe-icon-set-svg-size($size: 1em) {
-  &,
-  & svg {
-    width: $size;
-    height: $size;
-  }
-}
 
 @mixin greyscale-fallback() {
   background-color: white !important;
@@ -46,27 +28,8 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   --pfe-icon--BackgroundColor:         transparent;
   --pfe-icon--BorderColor:             transparent;
 
-  display: inline-block;
-  vertical-align: middle;
-  border-radius: 50%;
-  background-color: #{pfe-local($cssvar: BackgroundColor, $fallback: transparent)};
-  border: #{$pfe-icon--border-width} #{$pfe-icon--border-style} #{pfe-local($cssvar: BorderColor, $fallback: transparent)};
   position: relative;
-  padding: #{pfe-local($cssvar: Padding, $fallback: 0)};
-
-  @include pfe-icon-set-svg-size(1em);
-
-  @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
-      @include greyscale-fallback();
-  }
-  @supports (-ms-accelerator:true) {
-      /* IE Edge 12+ CSS */ 
-      @include greyscale-fallback();
-  }
-  @supports (-ms-ime-align:auto) {
-      /* IE Edge 16+ CSS */ 
-      @include greyscale-fallback();
-  }
+  display: inline-block;
 
   @at-root #{&}([data-block]) {
     display: block;
@@ -79,48 +42,68 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   }
 
   svg {
-    image {
-      @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
-        filter: none;
-      }
+    width: #{pfe-local(Size)};
+    height:#{pfe-local(Size)};
+  }
+}
+
+:host(:not(.load-failed)) {
+  vertical-align: middle;
+  border-radius: 50%;
+  background-color: #{pfe-local($cssvar: BackgroundColor, $fallback: transparent)};
+  border: #{$pfe-icon--border-width} #{$pfe-icon--border-style} #{pfe-local($cssvar: BorderColor, $fallback: transparent)};
+  padding: #{pfe-local($cssvar: Padding, $fallback: 0)};
+
+  @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
+      @include greyscale-fallback();
+  }
+
+  @supports (-ms-accelerator:true) {
+      /* IE Edge 12+ CSS */ 
+      @include greyscale-fallback();
+  }
+
+  @supports (-ms-ime-align:auto) {
+      /* IE Edge 16+ CSS */ 
+      @include greyscale-fallback();
+  }
+
+  svg image {
+    @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
+      filter: none;
     }
   }
+
   filter feFlood {
     flood-color: #{pfe-local(Color)};
   }
+
+  .pfe-icon--fallback {
+    display: none;
+  }
 }
 
-:host(.load-failed) {
-  display: none;
-}
-
-:host([size="2x"]) {
-  @include pfe-icon-set-svg-size(2em);
-}
-
-:host([size="3x"]) {
-  @include pfe-icon-set-svg-size(3em);
-}
-
-:host([size="4x"]) {
-  @include pfe-icon-set-svg-size(4em);
+@for $num from 2 through 4 {
+  :host([size="#{$num}x"]) {
+    --pfe-icon--Size: #{$num}em;
+  }
 }
 
 // TODO: Sort out sizing
 :host([size="xl"]) {
-  @include pfe-icon-set-svg-size(100px);
+  --pfe-icon--Size: 100px;
 }
 
 :host([size="lg"]) {
-  @include pfe-icon-set-svg-size(64px);
+  --pfe-icon--Size: 64px;
 }
 
 :host([size="md"]) {
-  @include pfe-icon-set-svg-size(32px);
+  --pfe-icon--Size: 32px;
 }
 
 :host([size="sm"]) {
-  @include pfe-icon-set-svg-size(14px);
+  --pfe-icon--Size: 14px;
 }
 
 @each $color in (base, complement, accent) {
@@ -150,4 +133,31 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
     --pfe-icon--BorderColor:           transparent;
     --pfe-broadcasted--color--text:    #{pfe-color(surface--#{$color}--text)};
   }
+}
+
+:host(.load-failed) {
+  --pfe-icon--BackgroundColor: transparent;
+  --pfe-icon--BorderColor: transparent;
+  --pfe-icon--Padding: 0;
+  
+  ::slotted(*:first-child) {
+    margin-top: 0;
+  }
+  
+  ::slotted(*:last-child) {
+    margin-bottom: 0;
+  }
+
+  svg image {
+    display: none;
+  }
+}
+
+:host(.load-failed.has-fallback) svg,
+:host(.load-failed[on-fail="collapse"]) svg {
+  display: none;
+}
+
+:host(.load-failed[on-fail="collapse"]) {
+  --pfe-icon--Size: 0;
 }

@@ -38,6 +38,9 @@ function _iconLoad(el) {
 
 function _iconLoadError(el) {
   el.classList.add("load-failed");
+  if(el.has_fallback) {
+    el.classList.add("has-fallback");
+  }
 }
 
 class PfeIcon extends PFElement {
@@ -57,8 +60,12 @@ class PfeIcon extends PFElement {
     return "pfe-icon.json";
   }
 
+  get has_fallback() {
+    return this.children.length > 0 || this.innerText.length > 0;
+  }
+
   static get observedAttributes() {
-    return ["icon"];
+    return ["icon", "on-fail"];
   }
 
   constructor() {

@@ -1,4 +1,5 @@
 // -- @TODO Needing to manually add polyfills at the moment; check into why babel is not doing this
+// -- @TODO Set icons to hide if they all fail to load, else set them to preserve space
 
 // -- POLYFILL: Array.prototype.filter
 if (!Array.prototype.filter){

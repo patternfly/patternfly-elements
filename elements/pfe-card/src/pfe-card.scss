@@ -176,16 +176,21 @@ $LOCAL: card;
 
 // Flexbox
 // Fix: https://github.com/patternfly/patternfly-elements/issues/478
-.pfe-card__footer {
+[name="pfe-card--footer"] {
   display: flex;
   flex-flow: row wrap;
-  margin-top: auto; // This allows the footer to move to the very bottom
+  margin-bottom: calc(calc(#{pfe-local(spacing)} / 2) * -1);
   margin-left: calc(calc(#{pfe-local(spacing)} / 2) * -1);
   margin-right: calc(calc(#{pfe-local(spacing)} / 2) * -1);
   align-items: baseline; // Make buttons and CTAs line up
 }
 
+.pfe-card__footer {
+  margin-top: auto; // This allows the footer to move to the very bottom
+}
+
 ::slotted([slot="pfe-card--footer"]) {
+  margin-bottom: calc(#{pfe-local(spacing)} / 2);
   margin-left: calc(#{pfe-local(spacing)} / 2);
   margin-right: calc(#{pfe-local(spacing)} / 2);
 }

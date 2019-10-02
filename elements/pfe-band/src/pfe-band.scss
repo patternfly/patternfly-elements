@@ -268,7 +268,7 @@ $LOCAL: band;
     max-width: #{pfe-local(Width)};
 
     // Grid support styles
-    @supports (display: grid) and ( not (display:-ms-grid) ) {
+    @supports (display: grid) {
       display: grid;
       grid-row-gap: #{pfe-local(gutter--vertical)};
       grid-column-gap: #{pfe-local(gutter--horizontal)};

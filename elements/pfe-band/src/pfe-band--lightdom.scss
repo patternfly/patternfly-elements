@@ -1,0 +1,34 @@
+@import "../../pfe-sass/pfe-sass";
+
+//////// lightdom
+// pfe-band {
+//   // Layouts, grid layouts
+//   --pfe-band--layout:                           1fr;
+//   --pfe-band__header--layout:                   1fr;
+//   --pfe-band__body--layout:                     1fr;
+//   --pfe-band__footer--layout:                   1fr;
+//   --pfe-band__aside--layout:                    1fr;
+// }
+
+$LOCAL: band;
+  //
+  //
+  //
+  // // For each section in the band layout
+  @each $section in (aside, header, body, footer) {
+     [slot="pfe-band--#{$section}"] { // i.e., pfe-band__header
+      // margin-bottom: #{pfe-local(gutter--vertical)};
+      // Apply the standard grid
+      @supports (display: -ms-grid) {
+          border: 2px dashed purple;
+          // display: grid;
+          // grid-row-gap: #{pfe-local(gutter--vertical)};
+          // grid-column-gap: #{pfe-local(gutter--horizontal)};
+          // margin-bottom: 0;
+          // Apply the section as a named grid-area
+          grid-area: #{$section};
+          // Allow users to hook into the layout with custom columns
+          // grid-template-columns: var(--pfe-band__#{$section}--layout);
+      }
+    }
+  }

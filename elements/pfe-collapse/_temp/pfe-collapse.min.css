@@ -1,0 +1,1 @@
+:host{display:block}:host([hidden]){display:none}:host(.animating),:host([expanded]){display:block}

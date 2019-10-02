@@ -1,9 +1,0 @@
-:host {
-  display: block;
-}
-
-:host([hidden]) {
-  display: none;
-}
-
-/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBmZS1jb250ZW50LXNldC5zY3NzIiwicGZlLWNvbnRlbnQtc2V0LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGNBQWM7QUNDaEI7O0FERUE7RUFDRSxhQUFhO0FDQ2YiLCJmaWxlIjoicGZlLWNvbnRlbnQtc2V0LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIjpob3N0IHtcbiAgZGlzcGxheTogYmxvY2s7XG59XG5cbjpob3N0KFtoaWRkZW5dKSB7XG4gIGRpc3BsYXk6IG5vbmU7XG59XG4iLCI6aG9zdCB7XG4gIGRpc3BsYXk6IGJsb2NrO1xufVxuXG46aG9zdChbaGlkZGVuXSkge1xuICBkaXNwbGF5OiBub25lO1xufVxuIl19 */

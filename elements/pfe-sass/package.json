@@ -4,7 +4,7 @@
     "className": "PfeSass",
     "elementName": "pfe-sass"
   },
-  "version": "1.0.0-prerelease.19",
+  "version": "1.0.0-prerelease.24",
   "publishConfig": {
     "access": "public"
   },
@@ -40,5 +40,8 @@
       "name": "cd"
     }
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

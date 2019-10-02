@@ -4,7 +4,7 @@
     "className": "PfeDatetime",
     "elementName": "pfe-datetime"
   },
-  "version": "1.0.0-prerelease.19",
+  "version": "1.0.0-prerelease.24",
   "publishConfig": {
     "access": "public"
   },
@@ -32,7 +32,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.19"
+    "@patternfly/pfelement": "^1.0.0-prerelease.24"
   },
-  "generator-pfelement-version": "0.2.8"
+  "generator-pfelement-version": "0.2.8",
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

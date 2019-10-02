@@ -9,7 +9,7 @@
       "js": "src/pfe-band.js"
     }
   },
-  "version": "1.0.0-prerelease.19",
+  "version": "1.0.0-prerelease.24",
   "description": "Band container for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -37,8 +37,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.19",
-    "@patternfly/pfelement": "^1.0.0-prerelease.19"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
+    "@patternfly/pfelement": "^1.0.0-prerelease.24"
   },
-  "generator-rhelement-version": "0.6.8"
+  "generator-rhelement-version": "0.6.8",
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

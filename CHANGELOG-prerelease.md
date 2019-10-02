@@ -1,4 +1,61 @@
-## Prerelease 19 ( 2019-08-31 )
+## Prerelease 26 ( TBD )
+
+Tag: [v1.0.0-prerelease.26](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.26)
+
+- [f18aa6f](https://github.com/patternfly/patternfly-elements/commit/f18aa6ff05e510993baf0f1971a85e2e4715bcc4) Update build tools to support the files array in package.json for each component
+- [](https://github.com/patternfly/patternfly-elements/commit/) Add patternfly project as a dependency so that styles can be extended
+
+## Prerelease 25 ( 2019-09-10 )
+
+Tag: [v1.0.0-prerelease.25](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.25)
+
+- [13f32d3d](https://github.com/patternfly/patternfly-elements/commit/13f32d3d56c61ebb9cf0285cdc6ef44596df50e7) use bash 'strict mode' for release script
+- [e3e0a52d](https://github.com/patternfly/patternfly-elements/commit/e3e0a52d9b1e9aa5281f43eaf8dee0648b7a8db7) reintroduce ctrl+c exit 1
+- [4e0735bf](https://github.com/patternfly/patternfly-elements/commit/4e0735bf8f1b3b514da68439059bda80ada865e2) consider merged tags when evaluating changed components
+- [4a8e79a4](https://github.com/patternfly/patternfly-elements/commit/4a8e79a4be60995626855529705e623c86fb5601) abort release script if any command fails
+- [c4ed3255](https://github.com/patternfly/patternfly-elements/commit/c4ed3255074b81bc36d3acac645879d0a2f5e494) removing the chicken. we're vegan now
+
+## Prerelease 24 ( 2019-09-09 )
+
+Tag: [v1.0.0-prerelease.24](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.24)
+
+- [143b18a8](https://github.com/patternfly/patternfly-elements/commit/143b18a8838c99fdaf3516518a1b7699864c1e30) improve bundle removal commit message during release
+- [9a5eb60b](https://github.com/patternfly/patternfly-elements/commit/9a5eb60bcc2166f2b3a83b82a6b8e7f71a0d2d95) lerna.json: ignoreChanges on built assets
+- [c9bc32f2](https://github.com/patternfly/patternfly-elements/commit/c9bc32f24e4752539d1b6eed0d39a5bf39914a7a) create annotated tags
+- [12b87364](https://github.com/patternfly/patternfly-elements/commit/12b87364bb8c2691c8144eaac6939dc9729b43b3) issue-444 removed TextDecorationColor from accordion header mixins.
+- [bae3802e](https://github.com/patternfly/patternfly-elements/commit/bae3802e82c7505f81ac73802059280f0ef4fc98) issue-444: reverted dark theme border left hover color
+
+## Prerelease 23 ( 2019-08-29 )
+Tag: [v1.0.0-prerelease.23](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.23)
+
+- [0c810a3](https://github.com/patternfly/patternfly-elements/commit/0c810a3b5727d536498b9456043c8f5cf56c7240) adding one last check for a controlledPanel ([#523](https://github.com/patternfly/patternfly-elements/pull/523))
+- [491f53a](https://github.com/patternfly/patternfly-elements/commit/491f53abe86f3704e710768f92125c1991b451c8) move babelrc settings into rollup config; fixes storybook issue ([#521](https://github.com/patternfly/patternfly-elements/pull/521))
+
+## Prerelease 22 ( 2019-08-23 )
+Tag: [v1.0.0-prerelease.22](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.22)
+
+- [587b2bd](https://github.com/patternfly/patternfly-elements/commit/587b2bdb91f4a564ace4ac35994351ab363751a8) remove PR template questions that are enforced by github ([#511](https://github.com/patternfly/patternfly-elements/pull/511))
+- [18bfc7e](https://github.com/patternfly/patternfly-elements/commit/18bfc7ecf2bd2e925227031db4b4129d4ed2e5aa) adding ability to disable a pfe-collapse-toggle button ([#518](https://github.com/patternfly/patternfly-elements/pull/518))
+- [0e0bd84](https://github.com/patternfly/patternfly-elements/commit/0e0bd84ef8efefc83e259dced85caa495cde861a) clean up scattered build files ([#510](https://github.com/patternfly/patternfly-elements/pull/510))
+- [2bfff25](https://github.com/patternfly/patternfly-elements/commit/2bfff25fa704aa4dc39da207839d3346819f1c0d) (issue-517) fixing issue in react where the pfe-collapse-toggle can't find the panel
+
+
+## Prerelease 21 ( 2019-08-23 )
+Tag: [v1.0.0-prerelease.21](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.21)
+
+- [bc48948](https://github.com/patternfly/patternfly-elements/commit/bc489485a229e561a1c09e37c97f2f564035b1ea) Update pfe-icon-panel demo
+- [dd1797d](https://github.com/patternfly/patternfly-elements/commit/dd1797d00a379e103f0008ffebc6ffbaee7bfed5) Restore pfe-icon readme
+- [8e14fb1](https://github.com/patternfly/patternfly-elements/commit/8e14fb1fb07f1199a5d4521b55e7156473592692) Remove debugger statement from pfe-autocomplete
+- [5386bdd](https://github.com/patternfly/patternfly-elements/commit/5386bdd2b4cb9e2b684c7ad1eca5bcd44bede7b6) Issue-505: updating pfe-progress-indicator package.json
+
+## Prerelease 20 ( 2019-08-21 )
+Tag: [v1.0.0-prerelease.20](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.20)
+
+- [8a0f497](https://github.com/patternfly/patternfly-elements/commit/8a0f497f74f991d831c1a53b4f023ed36a349a63) created pfe-modal
+- [c549734](https://github.com/patternfly/patternfly-elements/commit/c54973446a84624f663c230982d670c748a64628) created pfe-progress-indicator
+- [569c592](https://github.com/patternfly/patternfly-elements/commit/569c5923f6a200502ee596585229ca5b0445ab3c) Netlify integration
+
+## Prerelease 19 ( 2019-07-31 )
 Tag: [v1.0.0-prerelease.19](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.19)
 
 - [00389c2d](https://github.com/patternfly/patternfly-elements/commit/00389c2d581ed5f9b60dd744ab9db3d00f3bac13) adding type="button" to the button in the header ([#474](https://github.com/patternfly/patternfly-elements/pull/474))

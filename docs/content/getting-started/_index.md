@@ -78,7 +78,7 @@ The beauty of web components is that they have much of the styling built-into th
 ```
 <body>
     <pfe-card pfe-color="darkest">
-        Hello world.
+        <p>Hello world.</p>
     </pfe-card>
 </body>
 ```

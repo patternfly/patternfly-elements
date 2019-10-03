@@ -1,0 +1,195 @@
+@import "_shared-assets";
+
+$variables: (
+  // Default spacing values
+  Padding--vertical: pfe-var(container-padding),
+  Padding--horizontal: pfe-var(container-padding),
+  Padding: 0 pfe-local(Padding--horizontal),
+
+  // Darkest is the default background color
+  BackgroundColor: pfe-color(surface--darkest),
+  Color:           pfe-color(surface--darkest--text),
+
+  // Variables for the border
+  BorderTopColor: transparent,
+  BorderColor:    transparent,
+  Border:         pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
+
+  MaxHeight: 72px,
+
+  // Variables for the trigger icon
+  icon: none,
+
+  // Overlay region
+  overlay: (
+    BackgroundColor: pfe-var($cssvar: overlay--BackgroundColor, $fallback: #{$overlay--BackgroundColor--fallback})
+  ),
+
+  // Trigger region
+  trigger: (
+    FontSize: 16px,
+    FontWeight: 100
+  ),
+
+  // Tray region
+  tray: (
+    Padding: pfe-var(container-padding)
+  )
+);
+
+:host {
+  // Print the variables to the DOM
+  @include print-variables-map($variables);
+
+  // Reduce padding for print
+  @media print {
+    --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
+  }
+
+  // Increase horizontal padding for above mobile breakpoints
+  @media screen and (min-width: pfe-breakpoint(sm)) {
+    --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} * 2);
+  }
+
+  // Reduce horizontal padding at large breakpoint
+  @media screen and (min-width: pfe-breakpoint(lg)) {
+    --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} / 2);
+    --pfe-navigation__tray--Padding: calc(#{pfe-var(container-padding)} * 2);
+  }
+
+  // Increase horizontal padding at xl breakpoint
+  @media screen and (min-width: pfe-breakpoint(xl)) {
+    --pfe-navigation--Padding--horizontal: #{pfe-var(container-padding)};
+  }
+
+  display: block;
+  z-index: pfe-var($cssvar: content, $category: zindex, $map: $z-index);
+  width: 100%;
+}
+
+:host(.sticky) {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: pfe-var($cssvar: navigation, $category: zindex, $map: $z-index);
+}
+
+pfe-icon {
+  --pfe-icon--Color: #{pfe-local(Color)};
+}
+
+// Note: These styles do not pick up in Edge
+::slotted([slot="logo"]) {
+  margin: 0;
+  max-height: pfe-local(MaxHeight);
+}
+
+::slotted([slot="mobile-login"]),
+::slotted([slot="mobile-language"]) {
+  color: #{pfe-radio(color, ui-link)};
+  text-decoration: #{pfe-radio(link, text-decoration)};
+}
+
+::slotted([slot="mobile-menu--label"]) {
+  font-family: pfe-var(font-family);
+  font-size:   pfe-local(FontSize);
+  font-weight: pfe-local(FontWeight);
+  color: pfe-local(Color);
+  margin-bottom: 0;
+}
+
+.pfe-navigation {
+  &__wrapper {
+    @each $prop in (text, ui-link, ui-link--hover, ui-link--visited, ui-link--focus) {
+      --pfe-broadcasted--color--#{$prop}: #{pfe-local($cssvar: Color, $fallback: #{pfe-color(surface--darkest--text)})};
+    }
+    display: flex;
+    position: relative; // Ensures all navigation items are aligned relative to this wrapper
+    z-index: #{pfe-var($cssvar: navigation, $map: $z-index)};
+    
+    background-color: #{pfe-local(BackgroundColor)};
+    color: #{pfe-local(Color)};
+    min-height: #{pfe-local(MaxHeight)};
+  }
+  &__container {
+    width: 100%;
+    max-width: #{pfe-local(Width)};
+    margin: 0 auto;
+    padding: 0 #{pfe-local(Padding--horizontal)};
+
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    justify-content: space-between;
+
+    // Loop through the other breakpoints
+    @each $size in (md, lg, xl) {
+      @media screen and (min-width: pfe-breakpoint(#{$size})) {
+        // Set the variable for use in the tray region too
+        --pfe-navigation--Width: calc(#{pfe-breakpoint(#{$size})});
+      }
+    }
+
+    @media (min-width: #{pfe-breakpoint(lg)}) {
+      padding: 0;
+    }
+
+    > pfe-navigation-item:not([hidden]) {
+      flex-grow: 1;
+      align-items: flex-end;
+    }
+  }
+  &__overlay {
+    display: block;
+    background-color: pfe-local($cssvar: BackgroundColor, $region: overlay, $fallback: #{$overlay--BackgroundColor--fallback});
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: #{pfe-var($cssvar: overlay, $category: 'zindex', $map: $z-index)};
+    &[hidden] {
+      display: none;
+    }
+  }
+  &__logo {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: center;
+    
+    padding-top: #{pfe-local(Padding--vertical)};
+    padding-right: #{pfe-var(container-padding)};
+    padding-bottom: #{pfe-local(Padding--vertical)};
+    // @TODO --pfe-theme--logo--svg?
+  }
+  &__skip {
+    display: block;
+    @include pfe-sr-only;
+    margin: 0 -2em -1px -1px;
+  }
+  &__main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    height: 100%;
+    width: 100%;
+    &--menu-label {
+      color: #{pfe-local(Color)};
+    }
+    [show_search] &,
+    [show_login][show_language] & {
+      grid-gap: #{pfe-var(container-spacer)};
+    }
+    ::slotted(*:not([hidden])) {
+      display: block;
+      grid-column: 1 / -1;
+    }
+  }
+  &__utility {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    justify-content: flex-end;
+  }
+}

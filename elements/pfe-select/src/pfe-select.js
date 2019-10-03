@@ -1,5 +1,36 @@
 import PFElement from "../pfelement/pfelement.js";
 
+// Object.assign needs a polyfill as its not supported in IE11
+if (typeof Object.assign !== 'function') {
+  // Must be writable: true, enumerable: false, configurable: true
+  Object.defineProperty(Object, "assign", {
+    value: function assign(target, varArgs) { // .length of function is 2
+      'use strict';
+      if (target === null || target === undefined) {
+        throw new TypeError('Cannot convert undefined or null to object');
+      }
+
+      var to = Object(target);
+
+      for (var index = 1; index < arguments.length; index++) {
+        var nextSource = arguments[index];
+
+        if (nextSource !== null && nextSource !== undefined) { 
+          for (var nextKey in nextSource) {
+            // Avoid bugs when hasOwnProperty is shadowed
+            if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+              to[nextKey] = nextSource[nextKey];
+            }
+          }
+        }
+      }
+      return to;
+    },
+    writable: true,
+    configurable: true
+  });
+}
+
 class PfeSelect extends PFElement {
   static get tag() {
     return "pfe-select";
@@ -39,7 +70,7 @@ class PfeSelect extends PFElement {
 
   constructor() {
     super(PfeSelect);
-    this._pfeOptions;
+    this._pfeOptions = null;
     this._init = this._init.bind(this);
     this._inputChanged = this._inputChanged.bind(this);
 
@@ -48,36 +79,25 @@ class PfeSelect extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();    
-    if (this._pfeOptions) {
-      this.modifyDOM()
-      this._init();
-    } else {
-      if (this.children.length) {
+    customElements.whenDefined(PfeSelect.tag).then(() => {
+      if (this.pfeOptions) {
+        this.modifyDOM();
         this._init();
+      } else {      
+        if (this.children.length) {
+          this._init();
+        } else {
+          console.warn(`${PfeSelect.tag}: The first child in the light DOM must be a supported select tag`);
+        }
       }
-    }
-    
+    });
     this.observer.observe(this, { childList: true });
-    if (this.pfeInvalid) {
-      this.pfeInvalid = this.pfeInvalid;
-    }
-    
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
-    // Strip the prefix form the attribute
-    attr = attr.replace("pfe-", "");
-    // If the observer is defined in the attribute properties
-    if (this[attr] && this[attr].observer) {
-      // Get the observer function
-      let observer = this[this[attr].observer].bind(this);
-      // If it's a function, allow it to run
-      if (typeof observer === "function") observer(attr, oldValue, newValue);
-    }
-
-    if (this.pfeInvalid) {
-      this.pfeInvalid = this.pfeInvalid;
+    if (!this.pfeInvalid) {
+      this.pfeInvalid = newValue;
     }
   }
 
@@ -88,12 +108,12 @@ class PfeSelect extends PFElement {
 
   addOptions(options) {
     // Reset the pfeOptions by concatenating newly added options with _pfeOptions
-    this.pfeOptions = this._pfeOptions.concat(options);
+    this._pfeOptions = this._pfeOptions ? this._pfeOptions.concat(options) : options;
   }
 
   handleMultipleSelectedValues(options) {
     // Warn if options array has more than one selected value set as true
-    console.warn("The first 'selected' option will take precedence over others incase of multiple 'selected' options");
+    console.warn(`${PfeSelect.tag}: The first 'selected' option will take precedence over others incase of multiple 'selected' options`);
     // Get the index of the first element with selected "true"
     const firstIndex = options.findIndex(el => el.selected);
     // Update the options array with precedence to first element with selected value as true
@@ -106,7 +126,6 @@ class PfeSelect extends PFElement {
   modifyDOM() {
     // Create select element
     let pfeSelect = document.createElement('select');
-    pfeSelect.setAttribute('slot', 'pfe-select');
     // Create option element for each element in _pfeOptions array
     this._pfeOptions.map(el => {
       const option = Object.assign(document.createElement('option') , el);      
@@ -125,14 +144,14 @@ class PfeSelect extends PFElement {
   _init() {
     this._input = this.querySelector("select");
     if (!this._input) {
-      console.warn("The first child needs to be a select element");
+      console.warn(`${PfeSelect.tag}: The first child needs to be a select element`);
       return;
     }
-    this._input.addEventListener("input", this._inputChanged);
+    this._input.addEventListener("change", this._inputChanged);
   }
 
   _inputChanged() {
-    this.dispatchEvent(new CustomEvent(`${this.tag}:input`, {
+    this.dispatchEvent(new CustomEvent(`${this.tag}:change`, {
       detail: { value: this._input.value },
       bubbles: true,
       composed: true

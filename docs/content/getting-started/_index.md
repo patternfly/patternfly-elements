@@ -52,7 +52,7 @@ There are a few options:
 
 ## 3. Use PatternFly Elements markup
 
-Different components have different intended uses. We tend to thing of them in 3 distinct groups:
+Different components have different intended uses. We tend to think of them in 3 distinct groups:
 
 - Content, such as a call-to-action: `pfe-cta`
 - Containers, such as a card: `pfe-card`
@@ -129,7 +129,7 @@ You may choose to add attributes such as `pfe-variant`, `pfe-priority` or `pfe-c
 
 #### General
 
-  Priority & variant attributes change style styles globally:
+  "Priority" & "variant" attributes will change various styles throughout the component, as a set:
 
   ```
   <pfe-cta pfe-priority="primary">...</pfe-cta>
@@ -144,7 +144,7 @@ You may choose to add attributes such as `pfe-variant`, `pfe-priority` or `pfe-c
 
 #### Specific
 
-Color or align attributes change specific properties
+"Color" and "align" attributes change those specific properties respectively, but do not alter the overall look & feel.
 
 ```
 <pfe-cta pfe-color="accent">...</pfe-cta>
@@ -218,7 +218,7 @@ Be sure to browser test within your own site or application. If you run into any
 ### Should I use on=dark or color=darkest on my container? What's the difference?
 
 *   `on=dark` is being deprecated. Instead, custom classes already on the page should set broadcast values.
-*   The original goal for `on=dark` was all about context. But instead of having to provide another attribute somewhere, the card or a band or another container will inform any nested components that the text color needs to change through the set of broadcast variables. Existing broadcast vars (defined in `$BROADCAST-VARS`)  include: `text`, `ui-link`, `ui-link--hover`, `ui-link--visited`, `ui-link--focus`.
+*   The original goal for `on=dark` was all about context, but instead of having to provide another attribute somewhere, the card or a band or another container will inform any nested components that the text color needs to change through the set of broadcast variables. Existing broadcast vars (defined in `$BROADCAST-VARS`)  include: `text`, `ui-link`, `ui-link--hover`, `ui-link--visited`, `ui-link--focus`.
 *   If your page has a custom background color for a band or card, you should set the background and also set the broadcast colors.
 
 
@@ -235,7 +235,7 @@ Be sure to browser test within your own site or application. If you run into any
 
 In themes (like the advanced-theme.css file from the Red Hat Theme ) we apply broadcast variables to plain links, because they are light DOM and also have default colors applied by the browser. This CSS file not only includes variables but also styles for headlines and links on the page. It sets the colors for these elements using a CSS variable, which web components can change the value of.
 
-For example, advanced-theme.css includes
+For example, advanced-theme.css includes:
 
 ```
 .PFElement a {
@@ -264,16 +264,3 @@ Instead, in the host of components, use:
   color: var(--pfe-broadcasted--color--text);
 }
 ```
-
-Then call theme mixin to flip colors of the on=dark on=light attributes. Default tags will use these colors. If devs implementing the component have more specific styles on their page, they will have to handle it.
-
-```
-:host([on="dark"]) {
-  @include pfe-theme($theme: "dark");
-}
-:host([on="light"]) {
-  @include pfe-theme($theme: "light");
-}
-```
-
-

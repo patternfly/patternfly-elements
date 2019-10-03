@@ -14,24 +14,18 @@
 
 
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-    pfe-band [slot="pfe-band--header"] {
-        display: block;
-        width: 100%;
-        margin-bottom: 30px;
+    pfe-band > * > * {  // target children of body area
+      width: 45%;
+      margin-right: 4.5%;
+      float: left;
     }
-    pfe-band [slot="pfe-band--aside"] {
-            width: 30%;
-            margin: 0;
-            float: right;
+    pfe-band [slot="pfe-band--header"],[slot="pfe-band--footer"] { // reset width of children in header & footer
+      width: 100%;
+      margin: 0;
     }
-    pfe-band article {
-        width: 60%;
-        float: left;
-        margin-right: 4%;
-    }
-    pfe-band [slot="pfe-band--footer"] {
-        margin-top: 30px;
-        width: 100%;
+    pfe-band [slot="pfe-band--aside"] { // reset width of children in header & footer
+      width: 30%;
+      float: right;
     }
     &::after {
        content: " ";
@@ -39,4 +33,5 @@
        height: 0;
        clear: both;
     }
+
 }

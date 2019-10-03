@@ -196,7 +196,7 @@ $LOCAL: card;
   ::slotted(:not([pfe-overflow~="bottom"])) {
     margin-bottom: calc(#{pfe-local($cssvar: spacing--horizontal, $region: footer)} * -1);
   }
-  
+
   ::slotted(:not([pfe-overflow~="right"])) {
     margin-right: calc(#{pfe-local($cssvar: spacing--horizontal, $region: footer)} * -1);
   }

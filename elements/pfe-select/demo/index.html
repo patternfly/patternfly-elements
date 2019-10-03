@@ -22,7 +22,7 @@
     <h1>&lt;pfe-select&gt;</h1>
     <label for="example1">Example one</label>
     <pfe-select id="pfe-select-success">
-      <select slot="pfe-select" id="example1">
+      <select id="example1">
         <option disabled>Please select an option</option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -34,7 +34,7 @@
     <h1>&lt;pfe-select&gt; with error check</h1>
     <label for="example2">Example two</label>
     <pfe-select id="pfe-select-error">
-      <select slot="pfe-select" id="example2">
+      <select id="example2">
         <option value="">Please select an option</option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -45,7 +45,7 @@
     <h1>&lt;pfe-select&gt; with JS options</h1>
     <label for="example3">Example three</label>
     <pfe-select id="pfe-select-with-js-options">
-      <select slot="pfe-select" id="example3">
+      <select id="example3">
         <option value="1">One</option>
         <option value="2">Two</option>
       </select>
@@ -53,22 +53,19 @@
 
     <script>
       let select = document.querySelector("#pfe-select-success");
-      select.addEventListener("pfe-select:input", (event) => {
+      select.addEventListener("pfe-select:change", (event) => {
         document.querySelector("#selectedOption").textContent = event.detail.value;
       });
 
       let selectWithError = document.querySelector("#pfe-select-error");
       // setting pfe-invalid to true initially to reflect in the demo example
       selectWithError.setAttribute('pfe-invalid', 'true');
-      selectWithError.addEventListener("pfe-select:input", (event) => {
+      selectWithError.addEventListener("pfe-select:change", (event) => {
         event.detail.value !== "" ? event.target.setAttribute('pfe-invalid', 'false') : event.target.setAttribute('pfe-invalid', 'true');
       });
 
       // won't destroy select, but will build if it doens't exist
       let pfeSelect = document.querySelector("#pfe-select-with-js-options");
-      /* ToDo - Find a way to do this without the customElement.whenDefined promise
-       * pfeOptions setter doesn't get triggered without customElement.whenDefined
-       */
       customElements.whenDefined("pfe-select").then(() => {
         // Default Options
         pfeSelect.pfeOptions = [

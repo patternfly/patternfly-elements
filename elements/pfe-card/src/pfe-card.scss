@@ -179,6 +179,9 @@ $LOCAL: card;
 // Targets the slot in the light DOM
 ::slotted([slot="pfe-card--footer"]:not([pfe-overflow~="bottom"])) {
   margin-bottom: pfe-local($cssvar: spacing--horizontal, $region: footer);
+}
+
+::slotted([slot="pfe-card--footer"]:not([pfe-overflow~="right"])) {
   margin-right:  pfe-local($cssvar: spacing--horizontal, $region: footer);
 }
 
@@ -189,8 +192,12 @@ $LOCAL: card;
   flex-wrap: #{pfe-local($cssvar: Wrap, $region: footer, $fallback: wrap)};
    // Aligns buttons and CTAs
   align-items: #{pfe-local($cssvar: AlignItems, $region: footer, $fallback: baseline)};
+
   ::slotted(:not([pfe-overflow~="bottom"])) {
     margin-bottom: calc(#{pfe-local($cssvar: spacing--horizontal, $region: footer)} * -1);
+  }
+  
+  ::slotted(:not([pfe-overflow~="right"])) {
     margin-right: calc(#{pfe-local($cssvar: spacing--horizontal, $region: footer)} * -1);
   }
 }

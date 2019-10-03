@@ -159,7 +159,7 @@ You may choose to add attributes such as `pfe-variant`, `pfe-priority` or `pfe-c
 *   `horizontal`
 
 
-## 5. Use CSS variables as needed
+## 5. Use CSS variables to provide hooks for customization or as a means of updating internal styles
 
 CSS variables are subject to the normal cascade, so consider where you want these overrides to propogate.
 

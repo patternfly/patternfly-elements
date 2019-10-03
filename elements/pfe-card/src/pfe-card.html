@@ -1,6 +1,10 @@
 <!-- pfe-card -->
-<slot class="pfe-card__header" name="pfe-card--header"></slot>
-<slot class="pfe-card__body"></slot>
+<div class="pfe-card__header">
+  <slot name="pfe-card--header"></slot>
+</div>
+<div class="pfe-card__body">
+  <slot></slot>
+</div>
 <div class="pfe-card__footer">
   <slot name="pfe-card--footer"></slot>
 </div>

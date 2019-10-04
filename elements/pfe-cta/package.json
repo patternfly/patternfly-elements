@@ -42,5 +42,8 @@
     "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
     "@patternfly/pfelement": "^1.0.0-prerelease.24"
   },
-  "generator-pfelement-version": "0.5.0"
+  "generator-pfelement-version": "0.5.0",
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

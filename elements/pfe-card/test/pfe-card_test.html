@@ -81,11 +81,10 @@
       const slots = {
         header: {
           name: "pfe-card--header",
-          class: "pfe-card__header",
           content: "Card 1"
         },
         body: {
-          class: "pfe-card__body",
+          name: "",
           content: "This is pfe-card."
         },
         footer: {
@@ -211,13 +210,14 @@
         Object.entries(slots).forEach(slot => {
           test(`${slot[0]} content is placed into correct slot`, () => {
             let selector = slot[0] !== "body" ? `[slot=${slot[1].name}]` : "p";
+            let shadowSelector = slot[0] !== "body" ? `[name="${slot[1].name}"]` : `slot:not([name])`;
             assert.equal(
               card[0].querySelector(selector).assignedSlot,
-              card[0].shadowRoot.querySelector(`.${slot[1].class}`)
+              card[0].shadowRoot.querySelector(shadowSelector)
             );
 
             const content = card[0].shadowRoot
-              .querySelector(`.${slot[1].class}`)
+              .querySelector(shadowSelector)
               .assignedNodes()
               .map(n => n.textContent)
               .join("")

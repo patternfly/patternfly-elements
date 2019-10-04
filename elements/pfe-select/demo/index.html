@@ -9,7 +9,6 @@
     </noscript>
 
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
-    <link href="../pfe-select--lightdom.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
@@ -31,7 +30,7 @@
     </pfe-select>
     <p>Selected Option: <span id="selectedOption"></span></p>
 
-    <h1>&lt;pfe-select&gt; with error check</h1>
+    <h1>&lt;pfe-select&gt; with error check using pfe-invalid attribute</h1>
     <label for="example2">Example two</label>
     <pfe-select id="pfe-select-error">
       <select id="example2">
@@ -53,6 +52,7 @@
 
     <script>
       let select = document.querySelector("#pfe-select-success");
+      document.querySelector("#selectedOption").textContent = select.children[0].value;
       select.addEventListener("pfe-select:change", (event) => {
         document.querySelector("#selectedOption").textContent = event.detail.value;
       });

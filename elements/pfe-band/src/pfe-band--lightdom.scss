@@ -1,7 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
-  // // For each section in the band layout
-  @each $section in (aside, header, body, footer) {
+// For each section in the band layout
+@each $section in (aside, header, body, footer) {
      [slot="pfe-band--#{$section}"] { // i.e., pfe-band--header
       // Other browsers are getting grid-area through shadow-dom
       // Only need to target edge in the lightdom
@@ -10,4 +10,28 @@
           grid-area: #{$section};
       }
     }
-  }
+}
+
+
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+    pfe-band > * > * {  // target children of body area
+      width: 45%;
+      margin-right: 4.5%;
+      float: left;
+    }
+    pfe-band [slot="pfe-band--header"],[slot="pfe-band--footer"] { // reset width of children in header & footer
+      width: 100%;
+      margin: 0;
+    }
+    pfe-band [slot="pfe-band--aside"] { // reset width of children in header & footer
+      width: 30%;
+      float: right;
+    }
+    &::after {
+       content: " ";
+       display: block;
+       height: 0;
+       clear: both;
+    }
+
+}

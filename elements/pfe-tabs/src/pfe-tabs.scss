@@ -10,7 +10,6 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 
 :host {
   display: block;
-  color: #{pfe-apply-broadcast(text)};
 
   .panels {
     padding: 0;
@@ -60,10 +59,11 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([vertical][pfe-variant="earth"]) {
+    padding-top: #{pfe-var(container-padding)};
+
     .tabs {
       padding-left: 0;
       padding-top: #{pfe-var(container-padding)};
-      padding-bottom: #{pfe-var(container-padding)};
     }
   }
 }
@@ -75,9 +75,29 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
     ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
       border-left: 0;
     }
-
-    ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type:hover) {
-      border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-    }
   }
 }
+
+:host([on="dark"]) {
+  @include pfe-theme($theme: "dark");
+}
+// TODO: address tabs on darker and darkest themes.
+// :host([color="darker"]) {
+//   @include pfe-theme($theme: "darker");
+// }
+// :host([color="darkest"]) {
+//   @include pfe-theme($theme: "darkest");
+// }
+
+
+:host([on="light"]) {
+  @include pfe-theme($theme: "light");
+}
+// TODO: address tabs on lighter and lightest themes.
+// :host([on="lighter"]) {
+//   @include pfe-theme($theme: "lighter");
+// }
+// :host([on="lightest"]) {
+//   @include pfe-theme($theme: "lightest");
+// }
+

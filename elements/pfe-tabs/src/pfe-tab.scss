@@ -9,68 +9,46 @@ $LOCAL: tabs;
 :host {
   --pfe-tabs--main:         transparent;
   --pfe-tabs--aux:          #{pfe-color(ui-disabled--text)}; 
-
-  --pfe-tabs--link:         #{pfe-apply-broadcast(ui-link)};
-  --pfe-tabs--focus:        #{pfe-apply-broadcast(ui-link--focus)};
+  --pfe-tabs--link:         #{pfe-color(surface--lightest--link)};
+  --pfe-tabs--focus:        #{pfe-color(surface--lightest--link--focus)};
   --pfe-tabs--highlight:    #{pfe-color(ui-accent)};
-
-  --pfe-tabs--BorderTop: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
-  --pfe-tabs--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
-  --pfe-tabs--BorderBottom: 0;
-  --pfe-tabs--BorderLeft: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
 
   position: relative;
   display: block;
-  overflow-x: auto;
-
-  transition: background-color .3s ease;
+  margin: 0 0 -1px;
 
   // Padding
   padding: calc(#{pfe-var(container-padding)} * .666) calc(#{pfe-var(container-padding)} * 1.5);
-
   // Border
-  border-top: #{pfe-local(BorderTop)};
-  border-right: #{pfe-local(BorderRight)};
-  border-bottom: #{pfe-local(BorderBottom)};
-  border-left: #{pfe-local(BorderLeft)};
-
+  border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
+  border-bottom: 0;
   // Inner style
-  background-color: #{pfe-local(main)};
-  color: #{pfe-local(aux)};
-
-  // Update the broadcasted variable to match the auxillary color
-  --pfe-broadcasted--color--text: #{pfe-local(aux)};
-
+  background-color: var(--pfe-tabs--main);
+  color: var(--pfe-tabs--aux);
   text-transform: var(--pfe-tabs__tab--TextTransform, none); // exposing this for RH
   font-weight: #{pfe-var(font-weight--normal)};
 
   cursor: pointer;
   text-align: center;
-
-  margin-bottom: calc(-1 * #{pfe-var(ui--border-width)});
 }
 
 // Active tab styles
 
 :host(:focus),
 :host(:focus-visible) {
-  outline: 1px solid #{pfe-var(ui-link--focus)};
+  outline: 1px solid #{$pfe-color--ui-link--focus};
   outline: #{pfe-var(ui--focus-outline-width)} #{pfe-var(ui--focus-outline-style)} #{pfe-local(focus)};
-  z-index: 2;
-}
-
-:host(:hover) {
-  --pfe-tabs--aux: #{pfe-apply-broadcast(text)};
 }
 
 :host([aria-selected="true"]) {
-  --pfe-tabs--aux:  #{pfe-apply-broadcast(text)};
-  --pfe-tabs--BorderBottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
-  z-index: 2;
+  --pfe-tabs--aux: #{$pfe-color--black};
+  // Border
+  border: transparent;
+  border-bottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
 }
 
-:host([aria-selected="false"]) {
-  z-index: 1;
+:host(:hover) {
+  --pfe-tabs--aux: #{pfe-color(text)};
 }
 
 /// ===========================================================================
@@ -79,21 +57,27 @@ $LOCAL: tabs;
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([vertical]) {
-    --pfe-tabs--BorderRight: 0;
-    --pfe-tabs--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
-
     text-align: left;
+    margin: 0 -1px 0 0;
     padding-left: calc(#{pfe-var(container-padding)} * .75);
+    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
+    border-right: 0;
     position: relative;
-
-    margin-bottom: 0;
-    margin-right: calc(-1 * #{pfe-var(ui--border-width)});
   }
 
   :host([vertical][aria-selected="true"]) {
-    --pfe-tabs--BorderTop: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
-    --pfe-tabs--BorderRight: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+    border-color-top: transparent;
+    border-right: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
   }
+}
+
+/// ===========================================================================
+/// WIND TAB VARIANTS
+/// ===========================================================================
+
+:host([pfe-variant="wind"][aria-selected="true"][on="dark"]),
+:host([pfe-variant="wind"][on="dark"]:hover) {
+  --pfe-tabs--aux: #{pfe-color(text--on-dark)};
 }
 
 /// ===========================================================================
@@ -101,28 +85,21 @@ $LOCAL: tabs;
 /// ===========================================================================
 
 :host([pfe-variant="earth"][aria-selected="false"]) {
+  border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  border-top: #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
   --pfe-tabs--main: #{pfe-color(surface--lighter)};
-  
-  --pfe-tabs--BorderTop: #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
-  --pfe-tabs--BorderBottom: 0;
-  --pfe-tabs--BorderLeft: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
 }
 
 :host([pfe-variant="earth"][aria-selected="true"]) {
   --pfe-tabs--main: #{pfe-color(surface--lightest)};
-  --pfe-tabs--aux:  #{pfe-color(surface--lightest--text)};
-
-  --pfe-tabs--BorderTop: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
-  --pfe-tabs--BorderBottom: 0;
-  --pfe-tabs--BorderLeft: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  border-top: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+  border-bottom: 0;
+  border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
 }
 
 :host([pfe-variant="earth"][aria-selected="true"]:last-of-type) {
-  --pfe-tabs--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-}
-
-:host([pfe-variant="earth"]:hover) {
-  --pfe-tabs--aux:  #{pfe-color(surface--lighter--text)}; 
+  border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
 }
 
 /// ===========================================================================
@@ -131,30 +108,26 @@ $LOCAL: tabs;
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([vertical][pfe-variant="earth"]) {
-    --pfe-tabs--BorderTop: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
   }
 
   :host([vertical][pfe-variant="earth"]:first-of-type) {
-    --pfe-tabs--BorderTop: 0;
+    border-top: 0;
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="true"]) {
-    --pfe-tabs--BorderTop: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-    --pfe-tabs--BorderRight: 0;
-    --pfe-tabs--BorderLeft: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
-  }
-  
-  :host([vertical][pfe-variant="earth"][aria-selected="true"]:first-of-type) {
-    --pfe-tabs--BorderTop: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-  }
-
-  :host([vertical][pfe-variant="earth"][aria-selected="true"]:last-of-type) {
-    --pfe-tabs--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    border-top: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    border-right: 0;
+    border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="false"]) {
-    --pfe-tabs--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-    --pfe-tabs--BorderBottom: 0;
-    --pfe-tabs--BorderLeft: #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
+    border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    border-bottom: 0;
+    border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
+  }
+
+  :host([vertical][pfe-variant="earth"][aria-selected="true"]:last-of-type) {
+    border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
   }
 }

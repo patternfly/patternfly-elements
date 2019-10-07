@@ -4,9 +4,11 @@ $LOCAL: tabs;
 
 :host {
   display: block;
-	margin: -1px 0 0;
-  width: 100%;
-  padding: #{pfe-var(container-spacer)} 0;
+  color: #{pfe-radio(color, text)};
+
+  [tabindex] {
+  	display: flex;
+  }
 }
 
 :host([hidden]) {

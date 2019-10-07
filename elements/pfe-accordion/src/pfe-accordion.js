@@ -257,13 +257,14 @@ class PfeAccordion extends PFElement {
   }
 
   _animate(panel, start, end) {
+    const header = panel.previousElementSibling;
     panel.classList.add("animating");
+    header.classList.add("animating");
     panel.style.height = `${start}px`;
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         panel.style.height = `${end}px`;
-        panel.classList.add("animating");
         panel.addEventListener("transitionend", this._transitionEndHandler);
       });
     });
@@ -305,6 +306,8 @@ class PfeAccordion extends PFElement {
   }
 
   _transitionEndHandler(evt) {
+    const header = evt.target.previousElementSibling;
+    header.classList.remove("animating");
     evt.target.style.height = "";
     evt.target.classList.remove("animating");
     evt.target.removeEventListener("transitionend", this._transitionEndHandler);

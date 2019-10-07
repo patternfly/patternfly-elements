@@ -105,12 +105,27 @@ $LOCAL: accordion;
   }
 }
 
-:host(.animating) {
-  transition: transform 0.3s #{pfe-var(animation-timing)};
+:host(:first-child) {
+  button {
+    @include pfe-trigger-button-first($theme: light);
+  }
 }
 
-:host(:first-child) button {
-  --pfe-accordion--BorderTopColor: #{pfe-color(surface--border)};
+
+// Add border bottom to the last button in an accordion set.
+:host(:last-of-type) {
+  button[aria-expanded="false"] {
+    @include pfe-trigger-button-last;
+  }
+}
+
+:host(.animating) {
+  transition: transform 0.3s #{pfe-var(animation-timing)};
+
+  button {
+    @include pfe-trigger-expanded;
+    @include pfe-trigger-color-expanded($theme: light, $component-name: accordion);
+  }
 }
 
 /// ===========================================================================
@@ -131,5 +146,11 @@ $LOCAL: accordion;
       --pfe-accordion--aux:     #{pfe-color(surface--darkest--text)};
       --pfe-accordion--accent:  #{pfe-color(surface--lightest)};
     }
+  }
+}
+
+:host([on="dark"].animating){
+  button {
+    @include pfe-trigger-color-expanded($theme: dark, $component-name: accordion);
   }
 }

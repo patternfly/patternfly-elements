@@ -12,36 +12,16 @@ $LOCAL: accordion;
   --pfe-accordion--BorderBottomColor:  #{pfe-color(surface--border)};
   --pfe-accordion--BorderLeftColor:    #{pfe-local(accent)};
 
-  --pfe-accordion--BorderLeft:    #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderLeftColor)};
-  --pfe-accordion--BorderRight:   #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-local(BorderRightColor)};
-  --pfe-accordion--BorderTop:     #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-local(BorderTopColor)};
-  --pfe-accordion--BorderBottom:  #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-local(BorderBottomColor)};
+:host([expanded]),
+:host(.animating) {
+   @include pfe-accordion-panel-expanded;
+   @include pfe-accordion-panel-expanded-style;
+}
 
-  --pfe-accordion--main: #{pfe-color(surface--lightest)};
-  --pfe-accordion--aux: #{pfe-color(surface--lightest--text)};
-
-  --pfe-accordion--BoxShadow: 0 5px #{pfe-var(surface--border-width--heavy)} rgba(140, 140, 140, 0.35);
-
-  display: none;
-  overflow: hidden;
-
-  margin-top: calc(-1 * #{pfe-var(surface--border-width)});
-
-  will-change: height;
-  transition: height 0.3s #{pfe-var(animation-timing)};
-
-  border-top:       #{pfe-local(BorderTop)};
-  border-left:      #{pfe-local(BorderLeft)};
-  border-bottom:    #{pfe-local(BorderBottom)};
-  border-right:     #{pfe-local(BorderRight)};
-
-  box-shadow: #{pfe-local(BoxShadow)};
-  background-color: #{pfe-local(main)};
-  color: #{pfe-local(aux)};
-
-  box-sizing: border-box;
-  width: 100%;
-  padding: 0 #{$pfe-expand_chevron--padding} #{$pfe-expand_button--padding} #{$pfe-expand_button--padding--wide};
+:host([on="dark"][expanded]),
+:host([on="dark"].animating){
+  @include pfe-theme($theme: "dark");
+  @include pfe-accordion-panel-expanded-style($theme: dark);
 }
 
 :host(.animating) {
@@ -77,4 +57,3 @@ $LOCAL: accordion;
 :host(:last-of-type[expanded]) {
   margin-bottom: 0;
 }
-

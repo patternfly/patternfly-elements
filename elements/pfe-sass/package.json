@@ -5,6 +5,10 @@
     "elementName": "pfe-sass"
   },
   "version": "1.0.0-prerelease.24",
+  "prestyled": ["sass:globbing", "copy:sass"],
+  "files": [
+    "pfe-sass.scss"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -17,6 +21,10 @@
     "type": "git",
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-sass"
+  },
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp",
+    "dev": "../../node_modules/.bin/gulp dev"
   },
   "contributors": [
     {

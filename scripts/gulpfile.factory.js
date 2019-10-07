@@ -2,6 +2,7 @@ module.exports = function factory({
   version,
   pfelement: { elementName, className },
   files = [],
+  prestyled = [],
   prebundle = []
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
@@ -277,20 +278,25 @@ ${fs
       .pipe(dest(paths.temp));
   });
 
-  task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
+  task("bundle", (done) => {
+    if (fs.existsSync(`${paths.temp}/${elementName}.js`)) {
+      shell.task("../../node_modules/.bin/rollup -c");
+    }
+
+    return done();
+  });
 
   task(
     "build",
     series(
       "clean",
+      ...prestyled,
       "compile:styles",
-      // "fallback:css",
-      // "minify:css",
       "merge",
       "copy:src",
       "copy:compiled",
-      ...prebundle,
       "compile",
+      ...prebundle,
       "bundle"
     )
   );

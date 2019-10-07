@@ -36,12 +36,12 @@ $LOCAL: tabs;
 
 :host(:focus),
 :host(:focus-visible) {
-  outline: 1px solid #{$pfe-color--ui-link--focus};
+  // outline: 1px solid #{$pfe-color--ui-link--focus};
   outline: #{pfe-var(ui--focus-outline-width)} #{pfe-var(ui--focus-outline-style)} #{pfe-local(focus)};
 }
 
 :host([aria-selected="true"]) {
-  --pfe-tabs--aux: #{$pfe-color--black};
+  // --pfe-tabs--aux: #{$pfe-color--black};
   // Border
   border: transparent;
   border-bottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};

@@ -36,7 +36,7 @@ $LOCAL: tabs;
 
 :host([on="dark"]) {
 	color: #{pfe-colors(text--on-dark)};
-  @include pfe-theme($theme: "dark");
+  // @include pfe-theme($theme: "dark");
 }
 
 /* Horizontal */

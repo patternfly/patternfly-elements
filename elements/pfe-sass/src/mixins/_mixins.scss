@@ -1,3 +1,21 @@
+@mixin browser-query($browser-list) {
+  @each $browser in $browser-list {
+    /* IE10+ */
+    @if $browser == ie11 {
+      @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+        @content;
+      }
+    }
+
+    /* Microsoft Edge Browser 12+ (All) */
+    @if $browser == edge {
+      @supports (-ms-ime-align:auto) {
+        @content;
+      }
+    }
+  }
+}
+ 
 // $boxSize = any box-sizing property, default is border-box
 @mixin pfe-box-sizing($boxSize: border-box) {
   *, *::before, *::after {

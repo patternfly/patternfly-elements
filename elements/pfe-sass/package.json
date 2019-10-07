@@ -5,6 +5,10 @@
     "elementName": "pfe-sass"
   },
   "version": "1.0.0-prerelease.24",
+  "prestyled": ["sass:globbing", "copy:sass"],
+  "files": [
+    "pfe-sass.scss"
+  ],
   "publishConfig": {
     "access": "public"
   },

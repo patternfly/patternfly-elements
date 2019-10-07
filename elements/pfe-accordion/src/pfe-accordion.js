@@ -252,8 +252,9 @@ class PfeAccordion extends PFElement {
     }
 
     const height = panel.getBoundingClientRect().height;
-    this._animate(panel, height, 0);
     panel.expanded = false;
+
+    this._animate(panel, height, 0);
   }
 
   _animate(panel, start, end) {

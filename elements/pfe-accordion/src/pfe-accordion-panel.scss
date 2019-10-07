@@ -7,10 +7,8 @@ $LOCAL: accordion;
 /// ===========================================================================
 
 :host {
-  --pfe-accordion--BorderTopColor:     transparent;
-  --pfe-accordion--BorderRightColor:   transparent;
-  --pfe-accordion--BorderBottomColor:  #{pfe-color(surface--border)};
-  --pfe-accordion--BorderLeftColor:    #{pfe-local(accent)};
+   @include pfe-accordion-panel;
+}
 
 :host([expanded]),
 :host(.animating) {
@@ -26,32 +24,11 @@ $LOCAL: accordion;
 
 :host(.animating) {
   display: block;
-  position: relative;
-  
   transition: height 0.3s ease-in-out;
 }
 
-:host([expanded]) {
-  --pfe-accordion--BorderRightColor: #{pfe-color(surface--border)};
-  --pfe-accordion--accent: #{pfe-color(surface--lightest--ui-link)};
-
-  display: block;
-  position: relative;
-}
- 
-:host([on="dark"]) {
-  --pfe-accordion--BoxShadow: none;
-  --pfe-accordion--main: transparent;
-  --pfe-accordion--aux: #{pfe-apply-broadcast(text)};
-  --pfe-accordion--accent: #{pfe-color(surface--darkest--text)};
-}
- 
-:host([on="dark"][expanded]) {
-  @include pfe-set-broadcast(darker);
-
-  --pfe-accordion--main: #{pfe-color(surface--darker)};
-  --pfe-accordion--aux: #{pfe-color(surface--darker--text)};
-  --pfe-accordion--accent: #{pfe-color(surface--darkest--text)};
+.container {
+  @include pfe-accordion-panel-container-inset($align: left);
 }
 
 :host(:last-of-type[expanded]) {

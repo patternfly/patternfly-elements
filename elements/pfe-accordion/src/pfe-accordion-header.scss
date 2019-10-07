@@ -7,93 +7,15 @@ $LOCAL: accordion;
 /// ===========================================================================
 
 :host {
-  display: block;
-  
-  transition: all 0.3s #{pfe-var(animation-timing)};
-
-  > * {
-    margin: 0;
-  }
+  @include  pfe-accordion-header;
 
   button {
-    --pfe-accordion--BorderTopColor:     transparent;
-    --pfe-accordion--BorderRightColor:   transparent;
-    --pfe-accordion--BorderBottomColor:  #{pfe-color(surface--border)};
-    --pfe-accordion--BorderLeftColor:    #{pfe-local(accent)};
-
-    --pfe-accordion--BorderLeft:    #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderLeftColor)};
-    --pfe-accordion--BorderRight:   #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-local(BorderRightColor)};
-    --pfe-accordion--BorderTop:     #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-local(BorderTopColor)};
-    --pfe-accordion--BorderBottom:  #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-local(BorderBottomColor)};
-
-    -webkit-appearance: button;
-    margin: 0;
-    width: 100%;
-    height: auto;
-    font-family: inherit;
-    font-weight: #{pfe-var(font-weight--bold)};
-    text-align: left;
-    cursor: pointer;
-    z-index: 1;
-    position: relative;
-
-    font-size:   calc(#{pfe-var(font-size)} * 1.1);
-    line-height: #{pfe-var(line-height)};
-
-    // IE11 Fallbacks
-    background-color: #{pfe-color(surface--lightest)};
-    color: #{pfe-color(surface--lightest--text)};
-
-    border-top:       1px solid #{pfe-color(surface--border)};
-    border-left:      3px solid #{pfe-local(accent)};
-    border-bottom:    1px solid #{pfe-color(surface--border)};
-    border-right:     1px solid transparent;
-
-    // Invoke the variables
-    color:            #{pfe-local(aux)};
-    background-color: #{pfe-local(main)};
-
-    border-top:       #{pfe-local(BorderTop)};
-    border-left:      #{pfe-local(BorderLeft)};
-    border-bottom:    #{pfe-local(BorderBottom)};
-    border-right:     #{pfe-local(BorderRight)};
-
-    padding: #{pfe-var(container-spacer)} 50px #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 1.5);
-
-    &:hover {
-      --pfe-accordion--accent: #{pfe-color(surface--lightest--ui-link)};
-    }
-
-    &:focus {
-      --pfe-accordion--accent: #{pfe-color(surface--lightest--ui-link)};
-
-      text-decoration: underline;
-      text-decoration-color: #{pfe-color(surface--border--darker)};
-    }
-
-    &:hover,
-    &:focus {
-      outline: none;
-      z-index: 2;
-    }
-
-    &::-moz-focus-inner {
-        border: 0;
-    }
+    @include pfe-trigger-color($component-name: accordion);
+    @include pfe-trigger-button;
 
     &[aria-expanded="true"] {
-      @include pfe-set-broadcast(lightest);
-
-      --pfe-accordion--main:              #{pfe-color(surface--lightest)};
-      --pfe-accordion--aux:               #{pfe-color(surface--lightest--text)};
-      --pfe-accordion--accent:            #{pfe-color(surface--lightest--ui-link)};
-      
-      --pfe-accordion--BorderRightColor:  #{pfe-color(surface--border)};
-      --pfe-accordion--BorderBottom: 0;
-
-      position: relative;
-      display: block;
-
+      @include pfe-trigger-color-expanded($component-name: accordion);
+      @include pfe-trigger-expanded;
       &::after {
         @include pfe-chevron-expanded;
       }
@@ -134,17 +56,10 @@ $LOCAL: accordion;
 
 :host([on="dark"]) {
   button {
-    &:hover,
-    &:focus {
-      --pfe-accordion--accent: #{pfe-color(surface--lightest)};
-    }
+    @include pfe-trigger-color($theme: dark, $component-name: accordion);
 
     &[aria-expanded="true"] {
-      @include pfe-set-broadcast(darker);
-
-      --pfe-accordion--main:    #{pfe-color(surface--darker)};
-      --pfe-accordion--aux:     #{pfe-color(surface--darkest--text)};
-      --pfe-accordion--accent:  #{pfe-color(surface--lightest)};
+      @include pfe-trigger-color-expanded($theme: dark, $component-name: accordion);
     }
   }
 }

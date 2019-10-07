@@ -1,8 +1,6 @@
-// rollup.config.js
-const gulpFactory = require("../../scripts/gulpfile.factory.js");
-const pfelementPackage = require("./package.json");
-
 const { task, src, dest, watch, parallel, series } = require("gulp");
+
+const pfelementPackage = require("./package.json");
 
 const paths = {
   source: "./src",
@@ -10,11 +8,18 @@ const paths = {
   temp: "./_temp"
 };
 
-const fs = require("fs");
+const clean = require("gulp-clean");
 const mergeStream = require("merge-stream");
 const globSass = require("gulp-sass-globbing");
 
-const banner = require("gulp-banner");
+// Delete the temp directory
+task("clean", () => {
+  return src(["*.{js,css,map}", "!gulpfile.js", "!rollup.config.js", paths.temp], {
+    cwd: paths.compiled,
+    read: false,
+    allowEmpty: true
+  }).pipe(clean());
+});
 
 // Custom gulp for sass globbing
 task("sass:globbing", () => {
@@ -23,6 +28,8 @@ task("sass:globbing", () => {
         stream.add(src(`${paths.source}/${folder}/_*.scss`)
             .pipe(globSass({
                 path: `__${folder}.scss`
+            }, {
+              signature: `// generated with sass globbing, v${pfelementPackage.version}`
             }))
             .pipe(dest(paths.compiled))
         );
@@ -37,4 +44,12 @@ task("copy:sass", () => {
   }).pipe(dest(paths.compiled));
 });
 
-gulpFactory(pfelementPackage);
+task("build", series("clean", "sass:globbing", "copy:sass"));
+
+task("watch", () => {
+  return watch(path.join(paths.source, "*"), series("build"));
+});
+
+task("dev", parallel("build", "watch"));
+
+task("default", series("build"));

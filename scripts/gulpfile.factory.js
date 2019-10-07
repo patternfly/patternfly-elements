@@ -278,9 +278,12 @@ ${fs
       .pipe(dest(paths.temp));
   });
 
+  task("rollup", shell.task("../../node_modules/.bin/rollup -c"));
+
   task("bundle", (done) => {
     if (fs.existsSync(`${paths.temp}/${elementName}.js`)) {
-      shell.task("../../node_modules/.bin/rollup -c");
+      series("rollup", shell.task("../../node_modules/.bin/rollup -c"));
+      done();
     }
 
     return done();
@@ -295,8 +298,8 @@ ${fs
       "merge",
       "copy:src",
       "copy:compiled",
-      "compile",
       ...prebundle,
+      "compile",
       "bundle"
     )
   );

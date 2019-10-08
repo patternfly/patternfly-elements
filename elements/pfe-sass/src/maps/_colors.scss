@@ -75,59 +75,59 @@ $pfe-colors: (
   // Lightest group
   surface--lightest:                  $pfe-color--surface--lightest,
   surface--lightest--text:            $pfe-color--surface--lightest--text,
-  surface--lightest--ui-link:            $pfe-color--surface--lightest--ui-link,
-  surface--lightest--ui-link--visited:   $pfe-color--surface--lightest--ui-link--visited,
-  surface--lightest--ui-link--hover:     $pfe-color--surface--lightest--ui-link--hover,
-  surface--lightest--ui-link--focus:     $pfe-color--surface--lightest--ui-link--focus,
+  surface--lightest--link:            $pfe-color--surface--lightest--link,
+  surface--lightest--link--visited:   $pfe-color--surface--lightest--link--visited,
+  surface--lightest--link--hover:     $pfe-color--surface--lightest--link--hover,
+  surface--lightest--link--focus:     $pfe-color--surface--lightest--link--focus,
 
   // Lighter group
   surface--lighter:                   $pfe-color--surface--lighter,
   surface--lighter--text:             $pfe-color--surface--lighter--text,
-  surface--lighter--ui-link:             $pfe-color--surface--lighter--ui-link,
-  surface--lighter--ui-link--visited:    $pfe-color--surface--lighter--ui-link--visited,
-  surface--lighter--ui-link--hover:      $pfe-color--surface--lighter--ui-link--hover,
-  surface--lighter--ui-link--focus:      $pfe-color--surface--lighter--ui-link--focus,
+  surface--lighter--link:             $pfe-color--surface--lighter--link,
+  surface--lighter--link--visited:    $pfe-color--surface--lighter--link--visited,
+  surface--lighter--link--hover:      $pfe-color--surface--lighter--link--hover,
+  surface--lighter--link--focus:      $pfe-color--surface--lighter--link--focus,
 
   // Base group
   surface--base:                      $pfe-color--surface--base,
   surface--base--text:                $pfe-color--surface--base--text,
-  surface--base--ui-link:                $pfe-color--surface--base--ui-link,
-  surface--base--ui-link--visited:       $pfe-color--surface--base--ui-link--visited,
-  surface--base--ui-link--hover:         $pfe-color--surface--base--ui-link--hover,
-  surface--base--ui-link--focus:         $pfe-color--surface--base--ui-link--focus,
+  surface--base--link:                $pfe-color--surface--base--link,
+  surface--base--link--visited:       $pfe-color--surface--base--link--visited,
+  surface--base--link--hover:         $pfe-color--surface--base--link--hover,
+  surface--base--link--focus:         $pfe-color--surface--base--link--focus,
 
   // Darker group
   surface--darker:                    $pfe-color--surface--darker,
   surface--darker--text:              $pfe-color--surface--darker--text,
-  surface--darker--ui-link:              $pfe-color--surface--darker--ui-link,
-  surface--darker--ui-link--visited:     $pfe-color--surface--darker--ui-link--visited,
-  surface--darker--ui-link--hover:       $pfe-color--surface--darker--ui-link--hover,
-  surface--darker--ui-link--focus:       $pfe-color--surface--darker--ui-link--focus,
+  surface--darker--link:              $pfe-color--surface--darker--link,
+  surface--darker--link--visited:     $pfe-color--surface--darker--link--visited,
+  surface--darker--link--hover:       $pfe-color--surface--darker--link--hover,
+  surface--darker--link--focus:       $pfe-color--surface--darker--link--focus,
 
   // Darkest group
   surface--darkest:                   $pfe-color--surface--darkest,
   surface--darkest--text:             $pfe-color--surface--darkest--text,
-  surface--darkest--ui-link:             $pfe-color--surface--darkest--ui-link,
-  surface--darkest--ui-link--visited:    $pfe-color--surface--darkest--ui-link--visited,
-  surface--darkest--ui-link--hover:      $pfe-color--surface--darkest--ui-link--hover,
-  surface--darkest--ui-link--focus:      $pfe-color--surface--darkest--ui-link--focus,
+  surface--darkest--link:             $pfe-color--surface--darkest--link,
+  surface--darkest--link--visited:    $pfe-color--surface--darkest--link--visited,
+  surface--darkest--link--hover:      $pfe-color--surface--darkest--link--hover,
+  surface--darkest--link--focus:      $pfe-color--surface--darkest--link--focus,
 
   // Complement group
   surface--complement:                $pfe-color--surface--complement,
   surface--complement--text:          $pfe-color--surface--complement--text,
-  surface--complement--ui-link:          $pfe-color--surface--complement--ui-link,
-  surface--complement--ui-link--visited: $pfe-color--surface--complement--ui-link--visited,
-  surface--complement--ui-link--hover:   $pfe-color--surface--complement--ui-link--hover,
-  surface--complement--ui-link--focus:   $pfe-color--surface--complement--ui-link--focus,
+  surface--complement--link:          $pfe-color--surface--complement--link,
+  surface--complement--link--visited: $pfe-color--surface--complement--link--visited,
+  surface--complement--link--hover:   $pfe-color--surface--complement--link--hover,
+  surface--complement--link--focus:   $pfe-color--surface--complement--link--focus,
 
 
   // Accent group
   surface--accent:                    $pfe-color--surface--accent,
   surface--accent--text:              $pfe-color--surface--accent--text,
-  surface--accent--ui-link:              $pfe-color--surface--accent--ui-link,
-  surface--accent--ui-link--visited:     $pfe-color--surface--accent--ui-link--visited,
-  surface--accent--ui-link--hover:       $pfe-color--surface--accent--ui-link--hover,
-  surface--accent--ui-link--focus:       $pfe-color--surface--accent--ui-link--focus,
+  surface--accent--link:              $pfe-color--surface--accent--link,
+  surface--accent--link--visited:     $pfe-color--surface--accent--link--visited,
+  surface--accent--link--hover:       $pfe-color--surface--accent--link--hover,
+  surface--accent--link--focus:       $pfe-color--surface--accent--link--focus,
 
 
   // Palette of Border Colors

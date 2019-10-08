@@ -29,7 +29,10 @@ task("clean", () => {
 task("sass:globbing", () => {
     let stream = mergeStream();
     ["extends", "functions", "maps", "mixins", "variables"].forEach((folder) => {
-        stream.add(src([`${folder}/_*.scss`])
+        stream.add(src([
+          `${folder}/_*.scss`
+          // `!${folder}/_deprecated*.scss`,
+        ])
           .pipe(globSass({
               path: `__${folder}.scss`
           }, {

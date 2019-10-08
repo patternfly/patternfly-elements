@@ -1,13 +1,6 @@
 # PFE SASS
 
-@Todo: Add All of the variables and mixins that are available to pfe-elements.
-
-
-
-
-## Containers & broadcast vars
-
-If the container allows changes to  background colors should influence the children:  pfe-set-broadcasted function
+Helper tools for building PatternFly Elements web components.
 
 
 ## Broadcast variables

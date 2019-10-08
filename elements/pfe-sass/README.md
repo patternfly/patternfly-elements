@@ -10,12 +10,13 @@
 If the container allows changes to  background colors should influence the children:  pfe-set-broadcasted function
 
 
-## Notes on using broadcast colors in components  
+## Broadcast variables
 
-1. Only define CSS color <span style="text-decoration:underline;">property</span> ( `color: ;` ) once per element 
-2. Set the value equal to local variable:  `color: var(pfe-pfe-local--Color);`
-3. In the pfe-component, do not set <span style="text-decoration:underline;">value</span> of the broadcasted variables, instead set local variable values equal to the value of broadcasted, then with fallback colors
-    1. Content components should never set the value of broadcasted vars, otherwise container components won't be able to pass them that information
+1. Only define CSS color <span style="text-decoration:underline;">property</span> ( `color` ) once per element 
+2. Set the value equal to local variable:  `color: var(--pfe-local--Color);`
+3. In the pfe-component, do not set <span style="text-decoration:underline;">value</span> of the broadcasted variables; instead, set local variables to look for the value of a broadcasted variable, followed by a fallback color.
+    * `--pfe-local--Color: var(--pfe-broadcasted--color--text, #444);`
+    * Unless a component sets it's own background color, it should never set the value of broadcasted vars; otherwise, container components won't be able to pass them that information.
 4. Reset local variable values as needed for color attribute overrides.
 
 
@@ -54,12 +55,12 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
 **Instead, custom classes already on the page should set broadcast values:**
 
 
-```
-.ux-card[data-ux-theme="dark"] {
- --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark);
- --pfe-broadcasted--color--ui-link:  var(--pfe-theme--color--ui-link--on-dark);
- --pfe-broadcasted--color--ui-link--hover: var(--pfe-theme--color--ui-link--on-dark--hover);
- --pfe-broadcasted--color--ui-link--visited:var(--pfe-theme--color--ui-link--on-dark--visited);
- --pfe-broadcasted--color--ui-link--focus: var(--pfe-theme--color--ui-link--on-dark--focus);
+```css
+.on-dark {
+ --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark, #fff);
+ --pfe-broadcasted--color--ui-link:  var(--pfe-theme--color--ui-link--on-dark, #73bcf7);
+ --pfe-broadcasted--color--ui-link--hover: var(--pfe-theme--color--ui-link--on-dark--hover, #2b9af3);
+ --pfe-broadcasted--color--ui-link--visited:var(--pfe-theme--color--ui-link--on-dark--visited, #73bcf7);
+ --pfe-broadcasted--color--ui-link--focus: var(--pfe-theme--color--ui-link--on-dark--focus, #2b9af3);
 }
-
+```

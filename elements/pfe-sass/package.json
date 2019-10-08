@@ -5,10 +5,6 @@
     "elementName": "pfe-sass"
   },
   "version": "1.0.0-prerelease.24",
-  "files": [
-    "__*.scss",
-    "pfe-sass.scss"
-  ],
   "publishConfig": {
     "access": "public"
   },

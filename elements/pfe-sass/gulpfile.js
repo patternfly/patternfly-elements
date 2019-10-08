@@ -16,24 +16,20 @@ const globSass = require("gulp-sass-globbing");
 
 // Delete the temp directory
 task("clean", () => {
-  return src(["*.scss", paths.temp], {
+  return src([
+    "__*.scss"
+  ], {
     cwd: paths.compiled,
     read: false,
     allowEmpty: true
   }).pipe(clean());
 });
 
-task("copy:sass", () => {
-  return src([`${elementName}.scss`], {
-    cwd: paths.source
-  }).pipe(dest(paths.compiled));
-});
-
 // Custom gulp for sass globbing
 task("sass:globbing", () => {
     let stream = mergeStream();
     ["extends", "functions", "maps", "mixins", "variables"].forEach((folder) => {
-        stream.add(src([`${paths.source}/${folder}/_*.scss`])
+        stream.add(src([`${folder}/_*.scss`])
           .pipe(globSass({
               path: `__${folder}.scss`
           }, {
@@ -46,10 +42,10 @@ task("sass:globbing", () => {
     return stream;
 });
 
-task("build", series("clean", "copy:sass", "sass:globbing"));
+task("build", series("clean", "sass:globbing"));
 
 task("watch", () => {
-  return watch(path.join(paths.source, "*"), series("build"));
+  return watch(path.join(paths.compiled, "*"), series("build"));
 });
 
 task("dev", parallel("build", "watch"));

@@ -32,10 +32,8 @@ task("copy:sass", () => {
 // Custom gulp for sass globbing
 task("sass:globbing", () => {
     let stream = mergeStream();
-    ["extends", "functions", "mixins", "variables"].forEach((folder) => {
-        stream.add(src([`${folder}/_*.scss`], {
-          cwd: paths.source
-        })
+    ["extends", "functions", "maps", "mixins", "variables"].forEach((folder) => {
+        stream.add(src([`${paths.source}/${folder}/_*.scss`])
           .pipe(globSass({
               path: `__${folder}.scss`
           }, {

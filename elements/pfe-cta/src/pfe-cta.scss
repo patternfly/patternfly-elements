@@ -113,7 +113,7 @@ $pfe-cta--Color--fallback: #003366;
     content: "";
     display: block;
     box-sizing: border-box;
-    border: 1px solid var(--pfe-cta__inner--BorderColor);;
+    border: 1px solid #{pfe-local($cssvar: BorderColor, $region: inner)};
     outline: none;
     position: absolute;
     top: 2px;

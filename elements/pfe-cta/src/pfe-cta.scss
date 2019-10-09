@@ -9,7 +9,7 @@ $pfe-cta--Color--fallback: #003366;
   // regular variables
   --pfe-cta--BorderRadius: 0;
   --pfe-cta__arrow--Display:  inline;
-  --pfe-cta__arrow--Padding:  8px;
+  --pfe-cta__arrow--Padding:  0 .125rem 0 .375rem;
   --pfe-cta--BackgroundColor:         transparent;
   --pfe-cta--BackgroundColor--focus:  transparent;
   --pfe-cta--SecondaryBackgroundColor--focus: rgba(21,21,21, .05);
@@ -46,13 +46,13 @@ $pfe-cta--Color--fallback: #003366;
 
   .pfe-cta--arrow {
     display: #{pfe-local($cssvar: arrow--Display, $region: arrow)};
-    padding: 0;
+    padding: pfe-local($cssvar: Padding, $region: arrow);
     fill: #{pfe-local(Color)};
     position: relative;
     top: .1rem; 
     width: 13px;
     height: 13px;
-    transition: .3s ease padding, .3s ease margin; // padding #{pfe-var(animation-timing)};
+    transition: .3s ease padding;
   }
 }
 
@@ -113,7 +113,7 @@ $pfe-cta--Color--fallback: #003366;
     content: "";
     display: block;
     box-sizing: border-box;
-    border: 1px solid transparent;
+    border: 1px solid var(--pfe-cta__inner--BorderColor);;
     outline: none;
     position: absolute;
     top: 2px;

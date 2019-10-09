@@ -62,8 +62,8 @@ $LOCAL: cta;
   }
 }
 
-[class^="pfe-cta"][class="PFElement"][pfe-priority], //ie11
-[pfe-priority] .pfe-cta--wrapper {
+[class^="pfe-cta"][class="PFElement"], //ie11 & edge
+.pfe-cta--wrapper {
   a,
   input {
     text-decoration: none;

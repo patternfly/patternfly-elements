@@ -22,6 +22,9 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta--BackgroundColor--hover:  transparent;
   --pfe-cta--BorderColor--hover: transparent;
   --pfe-cta--Color--hover:  pfe-color(ui-link--hover);
+  // Do I set a text decoration variable here?
+  --pfe-cta-TextDecoration--hover:   none;
+
 
   // focus variables
   --pfe-cta--BorderColor--focus: transparent;
@@ -49,7 +52,7 @@ $pfe-cta--Color--fallback: #003366;
     padding: pfe-local($cssvar: Padding, $region: arrow);
     fill: #{pfe-local(Color)};
     position: relative;
-    top: .1rem; 
+    top: .1rem;
     width: 13px;
     height: 13px;
     transition: .3s ease padding;
@@ -148,10 +151,10 @@ $pfe-cta--Color--fallback: #003366;
 /// BELOW THIS POINT, LOCAL VARIABLE OVERRIDES ONLY
 
 
-// Broadcast colors: The CTA is tuning into whatever colors the containers are offering up, per priority level 
+// Broadcast colors: The CTA is tuning into whatever colors the containers are offering up, per priority level
 
 // - The location of these styles in the doc is important for clarity (readable code FTW!)
-// - pfe-priority="primary" sets its own background colors, so it ignores broadcast 
+// - pfe-priority="primary" sets its own background colors, so it ignores broadcast
 // - if there is no broadcast variable available, these are still seen by the browser, so we also set fallbacks here!
 // - Fallback values should match whats above
 
@@ -165,7 +168,7 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta--BackgroundColor--focus: #{$pfe-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
   --pfe-cta--Color--focus: var(--pfe-broadcasted--color--ui-link--focus, #{pfe-color(ui-link--focus)});
 }
-  
+
 :host([pfe-priority="secondary"]) {
   --pfe-cta--BorderRadius:              #{pfe-var(ui--border-radius)};
   --pfe-cta__arrow--Display:            none;
@@ -186,14 +189,14 @@ $pfe-cta--Color--fallback: #003366;
 
 
 /// ===========================================================================
-/// PRIMARY CTAs  
+/// PRIMARY CTAs
 /// ===========================================================================
 :host([pfe-priority="primary"]) {
   // Button padding and border radius settings
   --pfe-cta--BorderRadius:              #{pfe-var(ui--border-radius)};
 
   // Arrow styles
-  --pfe-cta__arrow--Display:            none; 
+  --pfe-cta__arrow--Display:            none;
   --pfe-cta--BackgroundColor:           #{pfe-color(ui-accent)};
   --pfe-cta--BorderColor:               #{pfe-color(ui-accent)};
   --pfe-cta__inner--BorderColor:        transparent;
@@ -213,7 +216,7 @@ $pfe-cta--Color--fallback: #003366;
 /// ===========================================================================
 // COLOR ATTRIBUTE OVERRIDES
 //
-// Set values of local vars because more 
+// Set values of local vars because more
 // colors are needed than whats available in broadcast
 
 /// ===========================================================================
@@ -378,5 +381,24 @@ $pfe-cta--Color--fallback: #003366;
     --pfe-cta--Color--hover:            #{pfe-color(ui-complement)};
 }
 
+/// ===========================================================================
+/// WIND CTA VARIANTS
+/// ===========================================================================
 
+:host([pfe-priority="secondary"][pfe-variant="wind"]) {
+  --pfe-cta--BackgroundColor:           transparent;
+  --pfe-cta--BorderColor:               var(--pfe-theme--surface--border, #d2d2d2);
+  --pfe-cta--Color:                     var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
+  font-weight:                          #{pfe-var(font-weight--normal)};
 
+  --pfe-cta--BackgroundColor--hover:    var(--pfe-theme--surface--border-lightest, #ededed);
+  --pfe-cta--BorderColor--hover:        var(--pfe-theme--surface--border, #d2d2d2);
+  --pfe-cta--Color--hover:              #{pfe-color(ui-link--hover)};
+  // --pfe-cta--Color--hover: var(--pfe-broadcasted--color--ui-link--hover, #{pfe-color(ui-link--hover)}); // the dark fallback color doesn't work because the background changes to white
+
+  --pfe-cta--Color--focus:              #{pfe-color(ui-link--hover)};
+  --pfe-cta--BorderColor--focus:        var(--pfe-theme--surface--border, #d2d2d2);
+  --pfe-cta__inner--BorderColor--focus: var(--pfe-theme--surface--border, #d2d2d2);
+// Not working....
+  --pfe-cta-TextDecoration--hover:      #{pfe-var(link--text-decoration--hover)};
+}

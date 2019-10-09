@@ -19,7 +19,7 @@ $LOCAL: cta;
 
   &:hover input,
   &:hover button,
-  &:hover a, 
+  &:hover a,
   input:hover,
   button:hover,
   a:hover {
@@ -28,7 +28,7 @@ $LOCAL: cta;
 
   &:focus input,
   &:focus button,
-  &:focus a, 
+  &:focus a,
   input:focus,
   button:focus,
   a:focus {
@@ -86,7 +86,7 @@ $LOCAL: cta;
 
   &:hover input,
   &:hover button,
-  &:hover a, 
+  &:hover a,
   input:hover,
   button:hover,
   a:hover {
@@ -96,15 +96,37 @@ $LOCAL: cta;
 
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
   pfe-cta.PFElement{
-    &[pfe-priority="primary"] { 
+    &[pfe-priority="primary"] {
       a, a:visited, a:focus, a:hover {
         color:  #{pfe-fallback(ui-link--on-saturated)} !important;
       }
     }
-    &[pfe-priority="primary"][pfe-color="lightest"] { 
+    &[pfe-priority="primary"][pfe-color="lightest"] {
       a, a:visited, a:focus, a:hover {
         color:  #{pfe-fallback(ui-link)} !important;
       }
+    }
+    &[pfe-priority="secondary"][pfe-variant="wind"] {
+        a{
+            color:  #{pfe-fallback(ui-link)} !important;
+            &::before {  // inner border on priority CTAs
+              border-color: pfe-local(
+                $cssvar: inner--BorderColor, $fallback: #d2d2d2,
+              );
+          }
+        }
+            // a:focus {
+            //   &::before {  // inner border on priority CTAs
+            //     border-color: pfe-local(
+            //       $cssvar: inner--BorderColor, $fallback: #d2d2d2,
+            //     );
+            // }
+
+
+          a:visited, a:focus, a:hover {
+              color: pfe-local($cssvar: Color--hover, $fallback: #{pfe-fallback(ui-link--hover)}) !important;
+          }
+
     }
   }
 }

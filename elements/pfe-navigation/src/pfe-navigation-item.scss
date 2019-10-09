@@ -13,6 +13,7 @@ $variables: (
 
   --pfe-navigation__trigger-icon--Visible: hidden;
   --pfe-navigation__trigger--FontSize: 16px;
+  --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.75) !important;
 
   display: flex;
   flex-direction: column;
@@ -37,6 +38,7 @@ $variables: (
 
 :host([pfe-icon]) {
   --pfe-navigation__trigger--FontSize: 14px;
+  --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.625) !important;
 }
 
 :host(:not([has_tray])),
@@ -68,7 +70,7 @@ $variables: (
   border-bottom: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
   border-left: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
   background-color: #{pfe-local(BackgroundColor)};
-  padding: calc(#{pfe-var(container-padding)} / 2) #{pfe-var(container-padding)} !important;
+  padding: pfe-local($cssvar: Padding, $region: trigger, $fallback: #{pfe-var(container-padding)});
 
   position: relative;
   flex-grow: 1;
@@ -178,7 +180,7 @@ $variables: (
   pfe-icon {
     --pfe-icon--Color: #{pfe-local(Color)};
 
-    margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
+    // margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
 
     :host([variant="wind"]) & {
       margin-bottom: 0;

@@ -138,9 +138,9 @@
           
         });
 
-        test("it should call modifyDOM method if pfeOptions exist", () => {
+        test("it should call _modifyDOM method if pfeOptions exist", () => {
           const pfeSelect = document.createElement("pfe-select");
-          const spy = sinon.spy(pfeSelect, "modifyDOM");
+          const spy = sinon.spy(pfeSelect, "_modifyDOM");
           
           pfeSelect.pfeOptions = [
             { text: "Please select an Option", value: "", selected: true }, 
@@ -156,7 +156,7 @@
         
         test("it should replace lightDOM select (if exists) with pfeOptions", () => {
           const pfeSelect = document.querySelector("#pfe-select-with-js-options");
-          const spy = sinon.spy(pfeSelect, "modifyDOM");
+          const spy = sinon.spy(pfeSelect, "_modifyDOM");
           
           pfeSelect.pfeOptions = [
             { text: "Please select an Option", value: "", selected: true }, 

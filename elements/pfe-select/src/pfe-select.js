@@ -49,8 +49,8 @@ class PfeSelect extends PFElement {
   }
 
   set pfeOptions(options) {
-    this._pfeOptions = options.filter(el => el.selected).length > 1 ? this.handleMultipleSelectedValues(options) : options;
-    this.modifyDOM();
+    this._pfeOptions = options.filter(el => el.selected).length > 1 ? this._handleMultipleSelectedValues(options) : options;
+    this._modifyDOM();
   }
 
   get pfeInvalid() {
@@ -81,7 +81,7 @@ class PfeSelect extends PFElement {
     super.connectedCallback();    
     customElements.whenDefined(PfeSelect.tag).then(() => {
       if (this.pfeOptions) {
-        this.modifyDOM();
+        this._modifyDOM();
         this._init();
       } else {      
         if (this.children.length) {
@@ -96,9 +96,7 @@ class PfeSelect extends PFElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
-    if (!this.pfeInvalid) {
-      this.pfeInvalid = newValue;
-    }
+    this.pfeInvalid = newValue;
   }
 
   disconnectedCallback() {
@@ -111,7 +109,7 @@ class PfeSelect extends PFElement {
     this._pfeOptions = this._pfeOptions ? this._pfeOptions.concat(options) : options;
   }
 
-  handleMultipleSelectedValues(options) {
+  _handleMultipleSelectedValues(options) {
     // Warn if options array has more than one selected value set as true
     console.warn(`${PfeSelect.tag}: The first 'selected' option will take precedence over others incase of multiple 'selected' options`);
     // Get the index of the first element with selected "true"
@@ -121,24 +119,6 @@ class PfeSelect extends PFElement {
       el.selected = firstIndex == idx;
       return el;
     });
-  }
-
-  modifyDOM() {
-    // Create select element
-    let pfeSelect = document.createElement('select');
-    // Create option element for each element in _pfeOptions array
-    this._pfeOptions.map(el => {
-      const option = Object.assign(document.createElement('option') , el);      
-      pfeSelect.add(option, null);      
-    });
-    // if select already exists in the DOM then replace the old select with the new _pfeOptions array
-    if (this.children.length) {
-      const select = this.querySelector('select');
-      select.parentNode.replaceChild(pfeSelect, select);
-    } else {
-      // Otherwise create a new select element
-      this.appendChild(pfeSelect);
-    }
   }
 
   _init() {
@@ -156,6 +136,24 @@ class PfeSelect extends PFElement {
       bubbles: true,
       composed: true
     }));
+  }
+
+  _modifyDOM() {
+    // Create select element
+    let pfeSelect = document.createElement('select');
+    // Create option element for each element in _pfeOptions array
+    this._pfeOptions.map(el => {
+      const option = Object.assign(document.createElement('option') , el);      
+      pfeSelect.add(option, null);      
+    });
+    // if select already exists in the DOM then replace the old select with the new _pfeOptions array
+    if (this.children.length) {
+      const select = this.querySelector('select');
+      select.parentNode.replaceChild(pfeSelect, select);
+    } else {
+      // Otherwise create a new select element
+      this.appendChild(pfeSelect);
+    }
   }
 
 }

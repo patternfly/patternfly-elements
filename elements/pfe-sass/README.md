@@ -7,7 +7,7 @@ Helper tools for building PatternFly Elements web components.
 
 1. Try to map CSS __properties__ such as `color` only once. If updates to that property are needed, those should be done by updating the local variable.
 2. Set the value equal to local variable:  `color: var(--pfe-local--Color);`.  Note that no fallback is defined at this level as that is done when the local variable is declared.
-3. In the pfe-component, do not set	__value	__ of the broadcasted variables unless the component is influencing the background color; instead, set local variables to look for the value of a broadcasted variable, followed by a fallback color.  This provides a hook for containers to influence the color of the typography in the component so that it remains readable.
+3. In the pfe-component, do not set	__value__ of the broadcasted variables unless the component is influencing the background color; instead, set local variables to look for the value of a broadcasted variable, followed by a fallback color.  This provides a hook for containers to influence the color of the typography in the component so that it remains readable.
     * `--pfe-local--Color: var(--pfe-broadcasted--color--text, #444);`
     * If a component sets it's own background color, it can and should update the value of the broadcasted variables.
 4. Reset local variable values as needed for attribute overrides.

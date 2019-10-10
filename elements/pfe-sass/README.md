@@ -5,12 +5,12 @@ Helper tools for building PatternFly Elements web components.
 
 ## Broadcast variables
 
-1. Only define CSS color <span style="text-decoration:underline;">property</span> ( `color` ) once per element 
-2. Set the value equal to local variable:  `color: var(--pfe-local--Color);`
-3. In the pfe-component, do not set <span style="text-decoration:underline;">value</span> of the broadcasted variables; instead, set local variables to look for the value of a broadcasted variable, followed by a fallback color.
+1. Try to map CSS __properties__ such as `color` only once. If updates to that property are needed, those should be done by updating the local variable.
+2. Set the value equal to local variable:  `color: var(--pfe-local--Color);`.  Note that no fallback is defined at this level as that is done when the local variable is declared.
+3. In the pfe-component, do not set	__value	__ of the broadcasted variables unless the component is influencing the background color; instead, set local variables to look for the value of a broadcasted variable, followed by a fallback color.  This provides a hook for containers to influence the color of the typography in the component so that it remains readable.
     * `--pfe-local--Color: var(--pfe-broadcasted--color--text, #444);`
-    * Unless a component sets it's own background color, it should never set the value of broadcasted vars; otherwise, container components won't be able to pass them that information.
-4. Reset local variable values as needed for color attribute overrides.
+    * If a component sets it's own background color, it can and should update the value of the broadcasted variables.
+4. Reset local variable values as needed for attribute overrides.
 
 
 ### CSS Example
@@ -26,7 +26,7 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
     // 2. Use color property once, map to local var value
     :host(:not([priority]) {
       ::slotted(a) {
-         //color: blue; CSS compiler will print this for IE11
+         // color: blue; CSS compiler will print this for IE11
          color: var(--pfe-cta--Color, blue) !important;
       }
     }
@@ -37,8 +37,10 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
     }
 
     // 4. Override broadcasted last
-    [color=accent] {
+    :host([color="accent"]) {
+      --pfe-cta--BackgroundColor: var(theme--surface--accent);
       --pfe-cta--Color: var(theme--surface-accent--ui-link);
+    }
 ```
 
 
@@ -46,7 +48,6 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
 ### On=dark is being deprecated.
 
 **Instead, custom classes already on the page should set broadcast values:**
-
 
 ```css
 .on-dark {

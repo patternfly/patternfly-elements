@@ -1,6 +1,8 @@
 const { task, src, dest, watch, parallel, series } = require("gulp");
 
 const pfelementPackage = require("./package.json");
+const version = pfelementPackage.version;
+const elementName = pfelementPackage.pfelement.elementName;
 
 const paths = {
   source: "./src",
@@ -14,7 +16,9 @@ const globSass = require("gulp-sass-globbing");
 
 // Delete the temp directory
 task("clean", () => {
-  return src(["*.{js,css,map}", "!gulpfile.js", "!rollup.config.js", paths.temp], {
+  return src([
+    "__*.scss"
+  ], {
     cwd: paths.compiled,
     read: false,
     allowEmpty: true
@@ -25,29 +29,26 @@ task("clean", () => {
 task("sass:globbing", () => {
     let stream = mergeStream();
     ["extends", "functions", "maps", "mixins", "variables"].forEach((folder) => {
-        stream.add(src(`${paths.source}/${folder}/_*.scss`)
-            .pipe(globSass({
-                path: `__${folder}.scss`
-            }, {
-              signature: `// generated with sass globbing, v${pfelementPackage.version}`
-            }))
-            .pipe(dest(paths.compiled))
+        stream.add(src([
+          `${folder}/_*.scss`
+          // `!${folder}/_deprecated*.scss`,
+        ])
+          .pipe(globSass({
+              path: `__${folder}.scss`
+          }, {
+            signature: `// generated with sass globbing, v${version}`
+          }))
+          .pipe(dest(paths.compiled))
         );
     });
 
     return stream;
 });
 
-task("copy:sass", () => {
-  return src(["pfe-sass.scss"], {
-    cwd: paths.source
-  }).pipe(dest(paths.compiled));
-});
-
-task("build", series("clean", "sass:globbing", "copy:sass"));
+task("build", series("clean", "sass:globbing"));
 
 task("watch", () => {
-  return watch(path.join(paths.source, "*"), series("build"));
+  return watch(path.join(paths.compiled, "*"), series("build"));
 });
 
 task("dev", parallel("build", "watch"));

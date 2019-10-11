@@ -7,7 +7,7 @@ elements/*/_temp
 elements/*/*.js
 elements/*/*.map
 elements/*/*.css
-elements/*/*.scss
+elements/*/__*.scss
 # but don't ignore tooling files
 !elements/*/gulpfile.js
 !elements/*/rollup.config.js

@@ -62,15 +62,19 @@ $LOCAL: cta;
   }
 }
 
-[class^="pfe-cta"][class="PFElement"], //ie11 & edge
-.pfe-cta--wrapper {
+[class^="pfe-cta"][class="PFElement"][pfe-priority], //ie11
+[pfe-priority] .pfe-cta--wrapper {
   a,
   input {
     text-decoration: none;
   }
 }
 
-
+[class^="pfe-cta"][class="PFElement"][pfe-priority="secondary"]  { //ie11
+  background-color: pfe-local(
+    $cssvar: BackgroundColor, $fallback: #{pfe-fallback(surface--lightest)}
+  );
+}
 
 [class^="pfe-cta"][class="PFElement"][pfe-priority="secondary"], //ie11
 [pfe-priority="secondary"] .pfe-cta--wrapper {
@@ -91,9 +95,6 @@ $LOCAL: cta;
 }
 
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
-  pfe-cta[pfe-priority="secondary"]  { //ie11
-    background-color: pfe-local( $cssvar: BackgroundColor, $fallback: #{pfe-fallback(surface--lightest)} ) !important;
-  }
   pfe-cta.PFElement{
     &[pfe-priority="primary"] { 
       a, a:visited, a:focus, a:hover {

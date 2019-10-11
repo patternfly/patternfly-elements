@@ -53,6 +53,10 @@
         --pfe-card__header--BackgroundColor: #0477a4;
         --pfe-card__header--Color: #fff;
       }
+
+      a {
+        color: var(--pfe-broadcasted--color--ui-link);
+      }
     </style>
 
   </head>
@@ -144,7 +148,7 @@
       <pfe-card pfe-color="lighter" class="custom-header-background">
         <h2 slot="pfe-card--header">Imaged card with side overflow + header</h2>
         <img pfe-overflow="top right left" src="https://placekitten.com/500/250"/>
-        <p style="margin-top: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis, porro?</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis, porro?</p>
         <pfe-cta slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>

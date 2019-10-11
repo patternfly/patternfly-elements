@@ -284,8 +284,6 @@ ${fs
     series(
       "clean",
       "compile:styles",
-      // "fallback:css",
-      // "minify:css",
       "merge",
       "copy:src",
       "copy:compiled",

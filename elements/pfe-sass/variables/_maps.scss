@@ -131,7 +131,7 @@ $pfe-colors: (
   surface--accent--link--focus:       $pfe-color--surface--accent--link--focus,
 
 
-  /* Palette of Border Colors */
+  // Palette of Border Colors
   surface--border:                    $pfe-color--surface--border,
   surface--border--lightest:          $pfe-color--surface--border--lightest,
   surface--border--darkest:           $pfe-color--surface--border--darkest,
@@ -142,7 +142,7 @@ $pfe-colors: (
   // Base Feedback Colors for messaging, errors, etc.
   // ========================================================================
 
-  /* Palette of Feedback Colors */
+  // Palette of Feedback Colors
   feedback--critical:                 $pfe-color--feedback--critical,
   feedback--critical--lightest:       $pfe-color--feedback--critical--lightest,
   feedback--critical--darkest:        $pfe-color--feedback--critical--darkest,
@@ -172,9 +172,9 @@ $pfe-colors: (
 
 
 $pfe-vars: (
-  container-spacer:              pfe-size-prem(16px),
-  container-padding:             pfe-size-prem(16px),
-  content-spacer:                pfe-size-prem(16px),
+  container-spacer:              16px,
+  container-padding:             16px,
+  content-spacer:                24px,
 
   font-size:                     16px,
   line-height:                   1.5,
@@ -199,10 +199,12 @@ $pfe-vars: (
   link--text-decoration--hover:  underline,
 
   surface--border-width:         1px,
-  surface--border-width--heavy:  3px,
+  surface--border-width--heavy:  4px,
   surface--border-style:         solid,
   surface--border-radius:        3px,
 
+  icon-size:                     1em,
+  
   ui--element--size:             20px,
 
   ui--border-width:              1px,
@@ -232,5 +234,11 @@ $z-index: (
   modal: 99,
   navigation: 98,
   overlay: 97,
+  content: 0
+);
+
+$z-index: (
+  navigation: 99,
+  overlay: 98,
   content: 0
 );

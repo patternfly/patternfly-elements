@@ -1,0 +1,101 @@
+// -- String manipulation
+
+/// Replace `$search` with `$replace` in `$string`
+/// @author Hugo Giraudel
+/// @param {String} $string - Initial string
+/// @param {String} $search - Substring to replace
+/// @param {String} $replace ('') - New value
+/// @return {String} - Updated string
+@function str-replace($string, $search, $replace: "") {
+    @if type-of($string)=="string"and type-of($search)=="string" {
+        $index: str-index($string, $search);
+
+        @if $index {
+            @return str-slice($string, 1, $index - 1)+$replace+str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+        }
+    }
+
+    @return $string;
+}
+
+// https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions
+/// Return `$list` as a string connected by `$glue`
+/// @author Hugo Giraudel
+/// @param {String} $list - List of strings to combine
+/// @param {String} $glue ('') - Optional combinator
+/// @param {String} $is-nested (false) - Indicates if the list is nested, internal use-only
+/// @return {String} - Combined string of all list items
+@function to-string($list, $glue: '', $is-nested: false) {
+    $result: null;
+
+    @for $i from 1 through length($list) {
+        $e: nth($list, $i);
+
+        @if type-of($e) == list {
+            $result: $result#{to-string($e, $glue, true)};
+        }
+        @else {
+            $result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
+        }
+    }
+
+    @return $result;
+}
+
+@function str-split($string, $separator) {
+    // empty array/list
+    $split-arr: ();
+    // first index of separator in string
+    $index: str-index("#{$string}", $separator);
+
+    // loop through string
+    @while $index !=null {
+        // get the substring from the first character to the separator
+        $item: str-slice($string, 1, $index - 1);
+        // push item to array
+        $split-arr: append($split-arr, $item);
+        // remove item and separator from string
+        $string: str-slice($string, $index + 1);
+        // find new index of separator
+        $index: str-index($string, $separator);
+    }
+
+    // add the remaining string to list (the last item) and return
+    @return append($split-arr, $string);
+}
+
+// https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
+/// Remove all trailing and leading whitespaces from `$string`.
+/// @since 1.2.0
+/// @param {String} $string - string
+/// @return {String}
+
+@function str-trim($string) {
+    $start: 1;
+    $end: str-length($string);
+
+    @for $i from 1 through str-length($string) {
+        $first: str-slice($string, $i, $i);
+        $last: str-slice($string, -$i, -$i);
+
+        @if $first==" "and $i+1==$start+1 {
+            $start: $i + 1;
+        }
+
+        @if $last==" "and str-length($string) - $i==$end - 1 {
+            $end: str-length($string) - $i;
+        }
+    }
+
+    @return str-slice($string, $start, $end);
+}
+
+// https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
+/// Check whether `$string` stars with `$needle`.
+/// @param {String} $string - string to check
+/// @param {String} $needle - substring to check
+/// @return {Bool}
+
+@function str-starts-with($string, $needle) {
+    @return str-slice($string, 1, str-length($needle))==$needle;
+}

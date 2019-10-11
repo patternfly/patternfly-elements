@@ -1,0 +1,8 @@
+@import "../../pfe-sass/pfe-sass";
+$LOCAL: card;
+
+@include browser-query(ie11) {
+    pfe-card img {
+        max-width: 100%;
+    }
+}

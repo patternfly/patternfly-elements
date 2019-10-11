@@ -3,7 +3,11 @@
 Tag: [v1.0.0-prerelease.26](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.26)
 
 - [f18aa6f](https://github.com/patternfly/patternfly-elements/commit/f18aa6ff05e510993baf0f1971a85e2e4715bcc4) Update build tools to support the files array in package.json for each component
-- [](https://github.com/patternfly/patternfly-elements/commit/) Add patternfly project as a dependency so that styles can be extended
+- [9d9d41c](https://github.com/patternfly/patternfly-elements/commit/9d9d41c30883674d52cd1c29aa2300829c00693f) Add patternfly project as a dependency so that styles can be extended
+- [b13ef5b](https://github.com/patternfly/patternfly-elements/commit/b13ef5b2470770acc01638d4a55c1f90a2859bda) Support table
+- [274e35c](https://github.com/patternfly/patternfly-elements/commit/274e35cd4e8a08721888d8fad195b6fe37a525b7) Navigation component
+- [6b5db77](https://github.com/patternfly/patternfly-elements/commit/6b5db77c20358499f78b66811b73ea6be309318b) Update documentation
+- [](https://github.com/patternfly/patternfly-elements/commit/) Add automatic Sass globbing to pfe-sass
 
 ## Prerelease 25 ( 2019-09-10 )
 

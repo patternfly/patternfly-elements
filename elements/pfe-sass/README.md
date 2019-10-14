@@ -5,6 +5,12 @@ Helper tools for building PatternFly Elements web components.
 
 ## Broadcast variables
 
+## Containers & broadcast vars
+
+If the container allows changes to  background colors should influence the children:  pfe-set-broadcasted function
+
+## Notes on using broadcast colors in components 
+
 1. Try to map CSS __properties__ such as `color` only once. If updates to that property are needed, those should be done by updating the local variable.
 2. Set the value equal to local variable:  `color: var(--pfe-local--Color);`.  Note that no fallback is defined at this level as that is done when the local variable is declared.
 3. In the pfe-component, do not set __value__ of the broadcasted variables unless the component is influencing the background color; instead, set local variables to look for the value of a broadcasted variable, followed by a fallback color.  This provides a hook for containers to influence the color of the typography in the component so that it remains readable.

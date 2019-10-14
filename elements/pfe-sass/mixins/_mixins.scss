@@ -458,4 +458,47 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
   }
   width: #{$size};
   height: #{$size};
-  @content;}
+  @content;
+}
+
+// New broadcast mixin, for use with content components
+//  1st arg:  lookup surface value from theme
+//  2nd arg:  list of broadcast variable  (1 of 6) - optional
+//  3rd arg:  identify the color set, default is surface - optional
+//
+//  usage:
+//    :host {
+//      #{pfe-set-broadcast(base)};
+//    }
+//  result:
+//    :host {
+//      --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
+//      --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--ui-link)};
+//      --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--ui-link--visited)};
+//      --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--ui-link--hover)};
+//      --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--ui-link--focus)};
+//    }
+
+@mixin pfe-set-broadcast($color, $broadcast: $BROADCAST-VARS, $color-set: surface) {
+  @each $type in $broadcast {
+    $string: #{$color-set}-;
+    @if index((surface, feedback), $color-set) != null {
+      $string: #{$string}-;
+    }
+    @if index((ui, feedback), $color-set) != null {
+      $string: #{$string}#{$color};
+    }
+    @else {
+      $string: #{$string}#{$color}--#{$type};
+    }
+    @if not index($BROADCAST-VARS, $type) {
+      @error "--#{$repo}-broadcasted--color--#{$broadcast} variable is not currently supported.";
+    }
+    @else if type-of(map-get($pfe-colors, #{$string})) != "color" {
+      @error "#{$string} value does not currently exist.";
+    }
+    @else {
+      --#{$repo}-broadcasted--color--#{$type}: #{pfe-color($string)};
+    }
+  }
+}

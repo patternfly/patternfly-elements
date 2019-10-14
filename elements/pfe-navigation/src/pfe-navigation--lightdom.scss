@@ -1,6 +1,6 @@
 @import "../../pfe-sass/pfe-sass";
 @import "_shared-assets.scss";
-@import "../../pfe-layouts/src/layouts/_grid";
+@import "../../pfe-styles/src/layouts/_grid";
 
 // IE11 styles
 @include browser-query(ie11) {

@@ -18,6 +18,7 @@
 ///           background:  #{pfe-color(  surface--base )};
 ///         }
 ///         ```
+
 @function pfe-color($cssvar, $category: 'color', $map: $pfe-colors) {
     @if $category !="" {
         $category: "#{$category}--";
@@ -60,6 +61,7 @@
 ///           font-size:   #{pfe-var(  font-size  )};
 ///         }
 ///         ```
+
 @function pfe-var($cssvar, $category: '', $fallback: null, $map: $pfe-vars) {
     @if $category !="" {
         $category: "#{$category}--";
@@ -92,6 +94,7 @@
 ///         padding-bottom:   #{pfe-local(paddingBottom)};
 ///     }
 ///     ```
+
 @function pfe-local($cssvar, $fallback: null, $region: null) {
     // If a region value exists, build the region string
     @if $region != null {

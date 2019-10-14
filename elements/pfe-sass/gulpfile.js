@@ -49,7 +49,13 @@ task("sass:globbing", () => {
 task("build", series("clean", "sass:globbing"));
 
 task("watch", () => {
-  return watch(path.join(paths.compiled, "*"), series("build"));
+  return watch([
+    "**/_*.scss",
+    "!__*.scss",
+    "pfe-sass.scss"
+  ], {
+    cwd: paths.compiled
+  }, series("build"));
 });
 
 task("dev", parallel("build", "watch"));

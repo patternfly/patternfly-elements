@@ -17,6 +17,7 @@
 ///    --pfe-band--Width: #{pfe-breakpoint(sm) - $box-padding * 2};
 /// }
 /// ```
+
 @function pfe-breakpoint($size, $max: false) {
     $bp: map-get($pfe-vars, grid-breakpoint--#{$size});
     @if $max {

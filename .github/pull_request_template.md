@@ -37,11 +37,9 @@ Your repository infrastructure updates should work for at least:
 ### Ready-for-merge Checklist
 
 - [ ] Expected files: all files in this pull request are related to one feature request or issue (no stragglers)?
-- [ ] Did automated tests pass?
 - [ ] Did browser testing pass?
 - [ ] Did you update or add any necessary documentation (README.md, WHY.md, etc.)?
 - [ ] Was this feature demo'd and the design review approved?
-- [ ] Did it get a LGTM *after the last commit*?
 - [ ] Did you update the CHANGELOG.md file with a summary of this update?
 
 

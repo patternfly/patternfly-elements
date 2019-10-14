@@ -4,7 +4,7 @@
     "className": "PfeAccordion",
     "elementName": "pfe-accordion"
   },
-  "version": "1.0.0-prerelease.19",
+  "version": "1.0.0-prerelease.24",
   "publishConfig": {
     "access": "public"
   },
@@ -19,6 +19,9 @@
     "directory": "elements/pfe-accordion"
   },
   "main": "pfe-accordion.js",
+  "files": [
+    "pfe-accordion.*js?(.map)"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -39,8 +42,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.19",
-    "@patternfly/pfelement": "^1.0.0-prerelease.19"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
+    "@patternfly/pfelement": "^1.0.0-prerelease.24"
   },
-  "generator-pfelement-version": "0.5.5"
+  "generator-pfelement-version": "0.5.5",
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

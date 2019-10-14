@@ -15,7 +15,7 @@
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
   <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-loader.js"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script> -->
   <!-- IE11 test: use bundle + require with umd files -->
   <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
   <script src="/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
@@ -43,8 +43,8 @@
         <pfe-card pfe-color="lightest">
           <h3>No color attribute</h3>
           <div>
-            <pfe-cta><a href="#">Default</a></pfe-cta>
-            <pfe-cta class="force-wrap"><a href="#">Default cta with longer text in case it wraps</a></pfe-cta>
+            <pfe-cta class="force-wrap"><a href="#">Default</a></pfe-cta>
+            <pfe-cta class="force-wrap"><a href="#">Default cta with longer text</a></pfe-cta>
             <pfe-cta pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
             <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
           </div>
@@ -82,8 +82,9 @@
         <h3>No color attribute</h3>
         <div>
           <pfe-cta><a href="#">Default</a></pfe-cta>
-          <pfe-cta class="force-wrap"><a href="#">Default cta with longer text in case it wraps</a></pfe-cta>
+          <pfe-cta class="force-wrap"><a href="#">Default cta with longer text</a></pfe-cta>
           <pfe-cta pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
+          <pfe-cta pfe-priority="secondary"  ><a href="#">Secondary </a></pfe-cta>
           <pfe-cta pfe-priority="secondary" pfe-color="lightest"><a href="#">Secondary lightest</a></pfe-cta>
           <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="#">Primary lightest</a></pfe-cta>
         </div>
@@ -113,9 +114,11 @@
   <br />
   <div class="custom-light-band ">
     <h2>Custom light band with broadcast vars</h2>
-    <pfe-cta><a href="#">Default (color responsive)</a></pfe-cta>
-    <pfe-cta pfe-priority="primary"><a href="#">Primary: (color responsive)</a></pfe-cta>
-    <pfe-cta pfe-priority="secondary"><a href="#">Secondary: (color responsive)</a></pfe-cta>
+    <h3>Color responsive</h3>
+    <pfe-cta><a href="#">Default</a></pfe-cta>
+    <pfe-cta pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
+    <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
+    <h3>Color override</h3>
     <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="#">Primary accent</a></pfe-cta>
     <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="#">Secondary accent</a></pfe-cta>
     <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="#">Primary complement</a></pfe-cta>
@@ -123,10 +126,12 @@
     <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="#">Primary lightest</a></pfe-cta>
   </div>
   <div class="custom-dark-band">
-    <h2 style="color:white;">Custom dark band with broadcast vars</h2>
-    <pfe-cta><a href="#">Default (color responsive)</a></pfe-cta>
-    <pfe-cta pfe-priority="primary"><a href="#">Primary (color responsive)</a></pfe-cta>
-    <pfe-cta pfe-priority="secondary"><a href="#">Secondary (color responsive)</a></pfe-cta>
+    <h2 style="color:white;">Custom dark band with custom broadcast variables</h2>
+    <h3 style="color: white">Color responsive</h3>
+    <pfe-cta><a href="#">Default</a></pfe-cta>
+    <pfe-cta pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
+    <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
+    <h3 style="color: white">Color override</h3>
     <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="#">Primary accent</a></pfe-cta>
     <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="#">Secondary accent</a></pfe-cta>
     <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="#">Primary complement</a></pfe-cta>

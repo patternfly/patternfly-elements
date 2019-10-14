@@ -37,12 +37,11 @@ const listProperties = (obj) =>
         print = true;
       }
 
-      // If printing is allowed, the value exists and is not null and is not a slot
+      // If printing is allowed, the value exists and is not null
       if (
         print &&
         typeof v !== "undefined" &&
-        (v !== null && v !== "null") &&
-        p !== "slot"
+        (v !== null && v !== "null")
       ) {
         string += p;
         // If the value is a boolean and is false, or the value is not a string true
@@ -60,7 +59,7 @@ const listProperties = (obj) =>
           }
         }
       }
-      return string.toLowerCase();
+      return string;
     })
     .join(" ");
 
@@ -165,9 +164,9 @@ const renderSlots = (slots = []) =>
     .join("");
 
 // Creates a component dynamically based on inputs
-export function component(tag, attributes = {}, slots = []) {
+export function component(tag, attributes = {}, slots = [], noSlot = false) {
   return `<${tag}${listProperties(attributes)}>${
-    slots.length > 0 ? renderSlots(slots) : autoContent()
+    slots.length > 0 ? renderSlots(slots) : (!noSlot) ? autoContent() : ""
   }</${tag}>`;
 }
 

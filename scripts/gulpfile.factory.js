@@ -68,10 +68,10 @@ module.exports = function factory({
             overrideBrowserslist: browser_support
           })])
         )
-        // Write the sourcemap
-        .pipe(sourcemaps.write())
         // Output the unminified file
         .pipe(dest(paths.temp))
+        // Write the sourcemap
+        .pipe(sourcemaps.write())
         // Minify the file
         .pipe(
           cleanCSS({
@@ -284,8 +284,6 @@ ${fs
     series(
       "clean",
       "compile:styles",
-      // "fallback:css",
-      // "minify:css",
       "merge",
       "copy:src",
       "copy:compiled",

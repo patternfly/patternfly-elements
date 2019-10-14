@@ -60,21 +60,6 @@
   border: 0;
 }
 
-@mixin print-variables-map($variables) {
-  @each $property, $value in $variables {
-    $name: "--#{$property}";
-    $styles: $value;
-    @if type-of($value) == "map" {
-      @each $prop, $v in $value {
-        $name: "__#{$property}--#{$prop}";
-        $styles: $v;
-      }
-    }
-
-    --pfe-#{$LOCAL}#{$name}: #{$styles};
-  }
-}
-
 /// ===========================================================================
 /// Theme Color Vars   - use with on="dark" to affect light DOM
 /// ===========================================================================
@@ -233,222 +218,6 @@
   }
 }
 
-/// ===========================================================================
-/// Accordion Specific SASS Vars
-/// ===========================================================================
-
-$pfe-expand_button--LineHeight:      1.5;
-$pfe-expand_button--padding:         #{pfe-var(container-spacer)};
-$pfe-expand_button--padding--factor: .75;
-$pfe-expand_button--padding--wide:   calc(#{$pfe-expand_button--padding} * 1.5);
-
-$pfe-expand_chevron--size:           .4em;
-$pfe-expand_chevron--weight:         .1em;
-$pfe-expand_chevron--padding:        3em;
-$pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe-expand_chevron--size / 2};
-
-@mixin pfe-accordion-header {
-  display: block;
-  > * {
-    margin: 0;
-  }
-}
-
-@mixin pfe-trigger-button($align: left) {
-    // -webkit-appearance: button;
-    margin: 0;
-    width: 100%;
-    height: auto;
-    font-family: inherit;
-    font-weight: #{pfe-var(font-weight--bold)};
-    text-align: left;
-    cursor: pointer;
-    z-index: 1;
-    position: relative;
-
-    font-size:   calc(#{pfe-var(font-size)} * 1.1);
-    line-height: #{pfe-var(line-height)};
-
-    color:            #{pfe-local(aux)};
-    background-color: #{pfe-local(main)};
-    border-left:      #{pfe-local(BorderLeft)};
-    border-right:     #{pfe-local(BorderRight)};
-    border-bottom:    #{pfe-local(BorderBottom)};
-    border-top: 0;
-
-    &:hover {
-        outline: none;
-        border-left-color: #{pfe-local(BorderLeftColor--focus)};
-        z-index: 2;
-    }
-
-    &:focus {
-        outline: none;
-        z-index: 2;
-        text-decoration: underline;
-    }
-
-    &::-moz-focus-inner {
-        border: 0;
-    }
-
-    @if $align == right {
-        padding: #{$pfe-expand_button--padding} #{$pfe-expand_button--padding--wide} #{$pfe-expand_button--padding} 50px !important;
-    } @else {
-        padding: #{$pfe-expand_button--padding} 50px #{$pfe-expand_button--padding} #{$pfe-expand_button--padding--wide} !important;
-    }
-}
-
-@mixin pfe-trigger-button-last($theme: light) {
-  border-bottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
-  border-top: 0;
-  // @TODO Support differences based on theme
-}
-
-@mixin pfe-trigger-button-first($theme: light) {
-  border-top: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
-  // @TODO Support differences based on theme
-}
-
-@mixin pfe-trigger-expanded {
-    position: relative;
-    display: block;
-    border-bottom: 0;
-}
-
-@mixin pfe-trigger-color($component-name, $theme: light) {
-  @if $theme == dark {
-    --pfe-#{$component-name}--main:         transparent;
-    --pfe-#{$component-name}--aux:          #{pfe-color(surface--darkest--text)};
-    --pfe-#{$component-name}--BorderLeftColor--focus: #{pfe-color(surface--lightest)};
-  }
-  @else {
-    --pfe-#{$component-name}--main:         transparent;
-    --pfe-#{$component-name}--aux:          #{pfe-color(surface--lightest--text)};
-
-    --pfe-#{$component-name}--BorderLeft:  #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} transparent;
-    --pfe-#{$component-name}--BorderRight: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
-    --pfe-#{$component-name}--BorderBottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
-
-    --pfe-#{$component-name}--BorderLeftColor--focus: #{pfe-color(surface--lightest--link)};
-  }
-}
-
-@mixin pfe-trigger-color-expanded($component-name, $theme: light) {
-  @if $theme == dark {
-    --pfe-#{$component-name}--main:         #{pfe-color(surface--darker)};
-    --pfe-#{$component-name}--aux:          #{pfe-color(surface--darkest--text)};
-    --pfe-#{$component-name}--BorderLeft:   #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
-    --pfe-#{$component-name}--BorderRight:  #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
-
-    --pfe-#{$component-name}--BorderLeftColor--focus: #{pfe-color(surface--lightest)};
-  }
-  @else {
-    --pfe-#{$component-name}--main:              #{pfe-color(surface--lightest)};
-    --pfe-#{$component-name}--aux:               #{pfe-color(surface--lightest--text)};
-    --pfe-#{$component-name}--focus:             #{pfe-color(surface--lightest--link)};
-    --pfe-#{$component-name}--BorderLeft:        #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(surface--lightest--link)};
-    --pfe-#{$component-name}--BorderRight:       #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
-  }
-}
-
-/// ===========================================================================
-/// Accordion chevrons
-/// ===========================================================================
-
-@mixin pfe-chevron-expanded($state: true, $position: after) {
-  content: "";
-  position: absolute;
-  top: calc((#{pfe-var(container-spacer)} * #{$pfe-expand_button--padding--factor}) + #{$pfe-expand_chevron--placement} );
-  display: block;
-  border-style: #{pfe-var(surface--border-style)};
-  height: #{$pfe-expand_chevron--size};
-  width:  #{$pfe-expand_chevron--size};
-  text-align: center;
-  transition: transform 0.15s;
-  @if $state {
-    border-width: #{$pfe-expand_chevron--weight} #{$pfe-expand_chevron--weight} 0 0;
-    border-bottom: 0;
-    transform: rotate(-45deg);
-    @if $position == before {
-      left: #{$pfe-expand_button--padding--wide};
-    }
-    @else {
-      right: #{$pfe-expand_button--padding--wide};
-    }
-  }
-  @else {
-    border-width: 0 #{$pfe-expand_chevron--weight} #{$pfe-expand_chevron--weight} 0;
-    transform: rotate(45deg);
-    @if $position == before {
-      left: #{$pfe-expand_button--padding--wide};
-    }
-    @else {
-      right: #{$pfe-expand_button--padding--wide};
-    }
-  }
-}
-
-/// ===========================================================================
-/// Accordion panel
-/// ===========================================================================
-
-@mixin pfe-container {
-  position: relative;
-  display: block;
-  width: 100%;
-
-  padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
-
-  @media (min-width: #{pfe-breakpoint(sm)}) {
-     padding: #{pfe-local(Padding)};
-  }
-}
-
-@mixin pfe-accordion-panel {
-  display: none;
-  overflow: hidden;
-  will-change: height;
-  border-color: transparent;
-  opacity: 0;
-}
-
-@mixin pfe-accordion-panel-expanded {
-  display: block;
-  position: relative;
-  opacity: 1;
-}
-
-@mixin pfe-accordion-panel-expanded-style($theme: light) {
-  border-right: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
-  border-left: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} transparent;
-  @if $theme == dark {
-    box-shadow: none;
-    background-color: #{pfe-color(surface--darker)};
-    border-left-color: #{pfe-color(surface--border)};
-    border-right-color: #{pfe-color(surface--border)};
-  }
-  @else {
-    box-shadow: 0 5px #{pfe-var(surface--border-width--heavy)} rgba(140, 140, 140, 0.35);
-    border-left-color: #{pfe-color(surface--lightest--link)};
-    background-color: #{pfe-color(surface--lightest)};
-    border-right-color: #{pfe-color(surface--border)};
-    border-bottom: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(surface--border)};
-  }
-}
-
-@mixin pfe-accordion-panel-container-inset($align: left)  {
-  box-sizing: border-box;
-  width: 100%;
-
-  @if $align == left {
-    padding: 0 #{$pfe-expand_chevron--padding} #{$pfe-expand_button--padding} #{$pfe-expand_button--padding--wide};
-  }
-  @else {
-    padding: 0 #{$pfe-expand_button--padding--wide} #{$pfe-expand_button--padding} #{$pfe-expand_chevron--padding};
-  }
-}
-
 @mixin pfe-icon($path, $display: flex, $size: 1em) {
   display: #{$display};
   @if $path {
@@ -501,4 +270,42 @@ $pfe-expand_chevron--placement:      #{$pfe-expand_button--LineHeight / 2 - $pfe
       --#{$repo}-broadcasted--color--#{$type}: #{pfe-color($string)};
     }
   }
+}
+
+/// Define local variable
+///
+/// Returns CSS Variable for the local component-scoped variable
+///
+/// @param {String} $cssvar - Variable identifiers which are postfixed and combined using '--'
+/// @param {String} $value - The value of the css variable being defined
+/// @param {String} $region - Identifies the region or slot to which this is assigned
+/// @requires {String} $repo - Name of repo, which is "pfe"
+/// @requires {String} $LOCAL - Name of component, this is defined at the top of the sass file for the component
+/// @use -
+///     ```
+///     :host {
+///         padding-top:      #{pfe-local(paddingTop`)};
+///         padding-bottom:   #{pfe-local(paddingBottom)};
+///     }
+///     ```
+
+@mixin pfe-set-local($variables) {
+  @each $property, $value in $variables {
+    $name: "--#{$property}";
+    $styles: $value;
+    @if type-of($value) == "map" {
+      @each $prop, $v in $value {
+        $name: "__#{$property}--#{$prop}";
+        $styles: $v;
+      }
+    }
+
+    // Print the variable definition
+    --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
+  }
+}
+
+// Alias
+@mixin print-variables-map($variables) {
+  @include pfe-set-local($variables);
 }

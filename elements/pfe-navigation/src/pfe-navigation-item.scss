@@ -132,7 +132,7 @@ $variables: (
   :host([is_nested]:not([parent_hidden])) & {
     --pfe-navigation--Color: #{pfe-local(aux)};
 
-    @include pfe-trigger-button;
+    @include pfe-trigger-props;
 
     box-sizing: border-box;
     align-items: stretch;
@@ -140,7 +140,7 @@ $variables: (
 
   :host([is_nested].expanded:not([parent_hidden])) & {
     @include pfe-trigger-expanded;
-    @include pfe-trigger-color-expanded($component-name: navigation);
+    @include pfe-trigger-color($state: expanded);
   }
     
   // Chevron styles for the navigation accordion on mobile
@@ -272,7 +272,7 @@ $variables: (
 
 // Styles for navigation items appearing inside the mobile menu
 :host([is_nested][first]:not([parent_hidden])) {
-  @include pfe-trigger-button-first($theme: light);
+  @include pfe-trigger-first($theme: light);
 }
 
 // Let the main item or the tray be hidden with the attribute

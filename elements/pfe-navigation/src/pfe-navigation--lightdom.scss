@@ -78,6 +78,12 @@ pfe-navigation-item [slot="trigger"] > a {
     }
 }
 
+[slot="mobile-search"] {
+    input[type="text"] {
+        padding: 5px 10px;
+    }
+}
+
 .pfe-navigation {
     &-grid {
         @media (min-width: $pfe-global--grid-breakpoint--sm) {
@@ -196,6 +202,9 @@ pfe-navigation-item [slot="trigger"] > a {
     @media (min-width: $pfe-global--grid-breakpoint--xl) {
         max-width: #{pfe-local($cssvar: Width, $fallback: 1140px)};
         margin: 0 auto;
+    }
+    input[type="text"] {
+        padding: 5px 10px;
     }
 }
 

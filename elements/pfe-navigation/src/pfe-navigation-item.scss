@@ -39,6 +39,10 @@ $variables: (
 :host([pfe-icon]) {
   --pfe-navigation__trigger--FontSize: 14px;
   --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.625) !important;
+
+  @media screen and (max-height: 500px) {
+    --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 3) calc(#{pfe-var(container-padding)} *.5) !important;
+  }
 }
 
 :host(:not([has_tray])),

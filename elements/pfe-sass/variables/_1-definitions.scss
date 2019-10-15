@@ -1,0 +1,5 @@
+$repo: pfe !default;
+$pfe-global--font-size-root: 16 !default; // root for fonts and everything else
+
+$USE-FALLBACK: false; //default for usefallback is false
+$BROADCAST-VARS: 'text' 'ui-link' 'ui-link--hover' 'ui-link--visited' 'ui-link--focus';

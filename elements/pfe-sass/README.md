@@ -1,22 +1,16 @@
 # PFE SASS
 
-@Todo: Add All of the variables and mixins that are available to pfe-elements.
+Helper tools for building PatternFly Elements web components.
 
 
+## Broadcast variables
 
-
-## Containers & broadcast vars
-
-If the container allows changes to  background colors should influence the children:  pfe-set-broadcasted function
-
-
-## Notes on using broadcast colors in components  
-
-1. Only define CSS color <span style="text-decoration:underline;">property</span> ( `color: ;` ) once per element 
-2. Set the value equal to local variable:  `color: var(pfe-pfe-local--Color);`
-3. In the pfe-component, do not set <span style="text-decoration:underline;">value</span> of the broadcasted variables, instead set local variable values equal to the value of broadcasted, then with fallback colors
-    1. Content components should never set the value of broadcasted vars, otherwise container components won't be able to pass them that information
-4. Reset local variable values as needed for color attribute overrides.
+1. Try to map CSS __properties__ such as `color` only once. If updates to that property are needed, those should be done by updating the local variable.
+2. Set the value equal to local variable:  `color: var(--pfe-local--Color);`.  Note that no fallback is defined at this level as that is done when the local variable is declared.
+3. In the pfe-component, do not set __value__ of the broadcasted variables unless the component is influencing the background color; instead, set local variables to look for the value of a broadcasted variable, followed by a fallback color.  This provides a hook for containers to influence the color of the typography in the component so that it remains readable.
+    * `--pfe-local--Color: var(--pfe-broadcasted--color--text, #444);`
+    * If a component sets it's own background color, it can and should update the value of the broadcasted variables.
+4. Reset local variable values as needed for attribute overrides.
 
 
 ### CSS Example
@@ -32,7 +26,7 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
     // 2. Use color property once, map to local var value
     :host(:not([priority]) {
       ::slotted(a) {
-         //color: blue; CSS compiler will print this for IE11
+         // color: blue; CSS compiler will print this for IE11
          color: var(--pfe-cta--Color, blue) !important;
       }
     }
@@ -43,8 +37,10 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
     }
 
     // 4. Override broadcasted last
-    [color=accent] {
+    :host([color="accent"]) {
+      --pfe-cta--BackgroundColor: var(theme--surface--accent);
       --pfe-cta--Color: var(theme--surface-accent--ui-link);
+    }
 ```
 
 
@@ -53,13 +49,12 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
 
 **Instead, custom classes already on the page should set broadcast values:**
 
-
-```
-.ux-card[data-ux-theme="dark"] {
- --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark);
- --pfe-broadcasted--color--ui-link:  var(--pfe-theme--color--ui-link--on-dark);
- --pfe-broadcasted--color--ui-link--hover: var(--pfe-theme--color--ui-link--on-dark--hover);
- --pfe-broadcasted--color--ui-link--visited:var(--pfe-theme--color--ui-link--on-dark--visited);
- --pfe-broadcasted--color--ui-link--focus: var(--pfe-theme--color--ui-link--on-dark--focus);
+```css
+.on-dark {
+ --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark, #fff);
+ --pfe-broadcasted--color--ui-link:  var(--pfe-theme--color--ui-link--on-dark, #73bcf7);
+ --pfe-broadcasted--color--ui-link--hover: var(--pfe-theme--color--ui-link--on-dark--hover, #2b9af3);
+ --pfe-broadcasted--color--ui-link--visited:var(--pfe-theme--color--ui-link--on-dark--visited, #73bcf7);
+ --pfe-broadcasted--color--ui-link--focus: var(--pfe-theme--color--ui-link--on-dark--focus, #2b9af3);
 }
-
+```

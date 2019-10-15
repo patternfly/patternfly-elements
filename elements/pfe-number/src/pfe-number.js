@@ -15,6 +15,12 @@ const types = {
 // debugger;
 numeral.locales.en.delimiters.thousands = " ";
 
+// @IE11
+// polyfill from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN#Polyfill
+Number.isNaN = Number.isNaN || function(value) {
+  return value !== null && (value != value || +value != value);
+}
+
 class PfeNumber extends PFElement {
   static get tag() {
     return "pfe-number";
@@ -82,6 +88,14 @@ class PfeNumber extends PFElement {
   }
 
   _updateNumber(num, type) {
+    if (!num || Number.isNaN(parseFloat(num))) {
+      this.textContent = "";
+      this.shadowRoot.querySelector("span").textContent = "";
+
+      return;
+    }
+
+    this.textContent = num;
     this.shadowRoot.querySelector("span").textContent = this._format(num, type);
   }
 

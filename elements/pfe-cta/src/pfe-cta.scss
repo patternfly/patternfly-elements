@@ -394,11 +394,11 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta--BackgroundColor--hover:    var(--pfe-theme--surface--border-lightest, #ededed);
   --pfe-cta--BorderColor--hover:        var(--pfe-theme--surface--border, #d2d2d2);
   --pfe-cta--Color--hover:              #{pfe-color(ui-link--hover)};
-  // --pfe-cta--Color--hover: var(--pfe-broadcasted--color--ui-link--hover, #{pfe-color(ui-link--hover)}); // the dark fallback color doesn't work because the background changes to white
 
   --pfe-cta--Color--focus:              #{pfe-color(ui-link--hover)};
   --pfe-cta--BorderColor--focus:        var(--pfe-theme--surface--border, #d2d2d2);
   --pfe-cta__inner--BorderColor--focus: var(--pfe-theme--surface--border, #d2d2d2);
 // Not working....
   --pfe-cta-TextDecoration--hover:      #{pfe-var(link--text-decoration--hover)};
+
 }

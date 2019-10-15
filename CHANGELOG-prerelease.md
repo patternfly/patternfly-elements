@@ -7,7 +7,10 @@ Tag: [v1.0.0-prerelease.26](https://github.com/patternfly/patternfly-elements/re
 - [b13ef5b](https://github.com/patternfly/patternfly-elements/commit/b13ef5b2470770acc01638d4a55c1f90a2859bda) Support table
 - [274e35c](https://github.com/patternfly/patternfly-elements/commit/274e35cd4e8a08721888d8fad195b6fe37a525b7) Navigation component
 - [6b5db77](https://github.com/patternfly/patternfly-elements/commit/6b5db77c20358499f78b66811b73ea6be309318b) Update documentation
-- [](https://github.com/patternfly/patternfly-elements/commit/) Add automatic Sass globbing to pfe-sass
+- [d4600dd](https://github.com/patternfly/patternfly-elements/commit/d4600dd1c6e2abfcf8918d06b4eaacb8fb62d208) Add automatic Sass globbing to pfe-sass
+- [27a97e1](https://github.com/patternfly/patternfly-elements/commit/27a97e135986de37ede55504a1630bf974de0e0c) pfe-cta: fix functions & IE11 accessibility
+- [](https://github.com/patternfly/patternfly-elements/commit/) 
+Updating broadcast and how variables are applied
 
 ## Prerelease 25 ( 2019-09-10 )
 

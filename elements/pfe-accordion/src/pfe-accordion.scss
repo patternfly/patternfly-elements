@@ -2,7 +2,11 @@
 
 $LOCAL: accordion;
 
+// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
+
 :host {
+  @include pfe-accordion-variables;
+
   display: block;
   position: relative;
   overflow: hidden;
@@ -10,8 +14,22 @@ $LOCAL: accordion;
   color: #{pfe-radio(color, text)};
 }
 
+:host(.animating) {
+  @include pfe-accordion-variables($state: expanded);
+}
+
 :host([on="dark"]) {
-  @include pfe-theme($theme: "dark");
+  @include pfe-accordion-variables($theme: dark);
+  @include pfe-theme($theme: dark);
+}
+
+:host([on="saturated"]) {
+  @include pfe-accordion-variables($theme: saturated);
+  @include pfe-theme($theme: saturated);
+}
+
+:host([on="dark"].animating) {
+  @include pfe-accordion-variables($state: expanded, $theme: dark);
 }
 
 :host([on="light"]) {

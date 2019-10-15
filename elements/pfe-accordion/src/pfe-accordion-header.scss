@@ -9,82 +9,39 @@ $LOCAL: accordion;
 // NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
 
 :host {
-  @include pfe-trigger-color;
-
+  transition: transform 0.3s #{pfe-var(animation-timing)};
   display: block;
 
   > * {
     margin: 0;
   }
-
+ 
   button {
-    @include pfe-trigger-props;
+    @include pfe-trigger;
 
-    &[aria-expanded="true"] {
-      @include pfe-trigger-color($state: expanded);
-      @include pfe-trigger-expanded;
-      &::after {
-        @include pfe-chevron-expanded;
-      }
+    &[aria-expanded="true"]::after {
+      @include pfe-chevron($state: open);
     }
 
     &[aria-expanded="false"]::after {
-        @include pfe-chevron-expanded($state: false);
+        @include pfe-chevron($state: closed);
     }
   }
 }
 
-:host(:first-child) {
-  button {
-    @include pfe-trigger-first;
-  }
+:host button[aria-expanded="true"] {
+  @include pfe-accordion-variables($state: expanded);
 }
-
 
 // Add border bottom to the last button in an accordion set.
-:host(:last-of-type) {
-  button[aria-expanded="false"] {
-    @include pfe-trigger-last;
-  }
-}
-
-:host(.animating) {
-  transition: transform 0.3s #{pfe-var(animation-timing)};
-
-  button {
-    @include pfe-trigger-expanded;
-    @include pfe-trigger-color($state: expanded);
-  }
+:host(:last-of-type) button:not([aria-expanded="true"]) {
+  @include pfe-trigger-last;
 }
 
 /// ===========================================================================
 /// CONTEXT STYLES, ON=DARK
 /// ===========================================================================
 
-:host([on="dark"]) {
-  button {
-    @include pfe-trigger-color($theme: dark);
-
-    &[aria-expanded="true"] {
-      @include pfe-trigger-color($state: expanded, $theme: dark);
-    }
-  }
-}
-
-:host([on="dark"]:first-child) {
-  button {
-    @include pfe-trigger-first($theme: dark);
-  }
-}
-
-:host([on="dark"]:last-of-type) {
-  button[aria-expanded="false"] {
-    @include pfe-trigger-last($theme: dark);
-  }
-}
-
-:host([on="dark"].animating){
-  button {
-    @include pfe-trigger-color($state: expanded, $theme: dark);
-  }
+:host([on="dark"]) button[aria-expanded="true"] {
+  @include pfe-accordion-variables($state: expanded, $theme: dark);
 }

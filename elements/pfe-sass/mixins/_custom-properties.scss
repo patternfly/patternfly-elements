@@ -1,0 +1,164 @@
+// New broadcast mixin, for use with content components
+//  1st arg:  lookup surface value from theme
+//  2nd arg:  list of broadcast variable  (1 of 6) - optional
+//  3rd arg:  identify the color set, default is surface - optional
+//
+//  usage:
+//    :host {
+//      #{pfe-set-broadcast(base)};
+//    }
+//  result:
+//    :host {
+//      --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
+//      --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--ui-link)};
+//      --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--ui-link--visited)};
+//      --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--ui-link--hover)};
+//      --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--ui-link--focus)};
+//    }
+
+@mixin pfe-set-broadcast($color, $broadcast: $BROADCAST-VARS, $color-set: surface) {
+    @each $type in $broadcast {
+        $string: #{$color-set}-;
+
+        @if index((surface, feedback), $color-set) !=null {
+            $string: #{$string}-;
+        }
+
+        @if index((ui, feedback), $color-set) !=null {
+            $string: #{$string}#{$color};
+        }
+
+        @else {
+            $string: #{$string}#{$color}--#{$type};
+        }
+
+        @if not index($BROADCAST-VARS, $type) {
+            @error "--#{$repo}-broadcasted--color--#{$broadcast} variable is not currently supported.";
+        }
+
+        @else if type-of(map-get($pfe-colors, #{$string})) !="color" {
+            @error "#{$string} value does not currently exist.";
+        }
+
+        @else {
+            --#{$repo}-broadcasted--color--#{$type}: #{pfe-color($string)};
+        }
+    }
+}
+
+/// Define local variable
+///
+/// Returns CSS Variable for the local component-scoped variable
+///
+/// @param {String} $cssvar - Variable identifiers which are postfixed and combined using '--'
+/// @param {String} $value - The value of the css variable being defined
+/// @param {String} $region - Identifies the region or slot to which this is assigned
+/// @requires {String} $repo - Name of repo, which is "pfe"
+/// @requires {String} $LOCAL - Name of component, this is defined at the top of the sass file for the component
+/// @use -
+///     ```
+///     :host {
+///         padding-top:      #{pfe-local(paddingTop`)};
+///         padding-bottom:   #{pfe-local(paddingBottom)};
+///     }
+///     ```
+
+@mixin pfe-set-local($variables) {
+
+    @each $property,
+    $value in $variables {
+        $name: "--#{$property}";
+        $styles: $value;
+
+        @if type-of($value)=="map" {
+
+            @each $prop,
+            $v in $value {
+                $name: "__#{$property}--#{$prop}";
+                $styles: $v;
+            }
+        }
+
+        // Print the variable definition
+        --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
+    }
+}
+
+// Alias
+@mixin print-variables-map($variables) {
+    @include pfe-set-local($variables);
+}
+
+
+/// ===========================================================================
+/// Theme Color Vars   - use with on="dark" to affect light DOM
+/// ===========================================================================
+
+@mixin pfe-theme($theme) {
+
+    // GENERAL CONTEXT-BASED UPDATES, ON="DARK"
+    @if $theme==dark {
+        --pfe-broadcasted--color--text: #{pfe-color(text--on-dark)};
+        --pfe-broadcasted--color--ui-link: #{pfe-color(ui-link--on-dark)};
+        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(ui-link--on-dark--visited)};
+        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(ui-link--on-dark--hover)};
+        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(ui-link--on-dark--focus)};
+    }
+
+    @else if $theme==light {
+        --pfe-broadcasted--color--text: #{pfe-color(text)};
+        --pfe-broadcasted--color--ui-link: #{pfe-color(ui-link)};
+        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(ui-link--visited)};
+        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(ui-link--hover)};
+        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(ui-link--focus)};
+    }
+
+    // MORE SPECIFIC COLOR BASED UPDATES, COLOR="DARKER"
+    @else if $theme==darker {
+        --pfe-broadcasted--color--text: #{pfe-color(surface--darker--text)};
+        --pfe-broadcasted--color--ui-link: #{pfe-color(surface--darker--link)};
+        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--darker--link--visited)};
+        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--darker--link--hover)};
+        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--darker--link--focus)};
+    }
+
+    @else if $theme==darkest {
+        --pfe-broadcasted--color--text: #{pfe-color(surface--darkest--text)};
+        --pfe-broadcasted--color--ui-link: #{pfe-color(surface--darkest--link)};
+        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--darkest--link--visited)};
+        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--darkest--link--hover)};
+        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--darkest--link--focus)};
+    }
+
+    @else if $theme==accent {
+        --pfe-broadcasted--color--text: #{pfe-color(surface--accent--text)};
+        --pfe-broadcasted--color--ui-link: #{pfe-color(surface--accent--link)};
+        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--accent--link--visited)};
+        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--accent--link--hover)};
+        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--accent--link--focus)};
+    }
+
+    @else if $theme==complement {
+        --pfe-broadcasted--color--text: #{pfe-color(surface--complement--text)};
+        --pfe-broadcasted--color--ui-link: #{pfe-color(surface--complement--link)};
+        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--complement--link--visited)};
+        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--complement--link--hover)};
+        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--complement--link--focus)};
+    }
+
+    @else if $theme==lighter {
+        --pfe-broadcasted--color--text: #{pfe-color(surface--lighter--text)};
+        --pfe-broadcasted--color--ui-link: #{pfe-color(surface--lighter--link)};
+        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--lighter--link--visited)};
+        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--lighter--link--hover)};
+        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--lighter--link--focus)};
+    }
+
+    @else if $theme==lightest {
+        --pfe-broadcasted--color--text: #{pfe-color(surface--lightest--text)};
+        --pfe-broadcasted--color--ui-link: #{pfe-color(surface--lightest--link)};
+        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--lightest--link--visited)};
+        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--lightest--link--hover)};
+        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--lightest--link--focus)};
+    }
+}

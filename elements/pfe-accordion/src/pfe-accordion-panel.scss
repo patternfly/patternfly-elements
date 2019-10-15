@@ -6,20 +6,31 @@ $LOCAL: accordion;
 /// DEFAULT ACCORDION PANEL
 /// ===========================================================================
 
+// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
+
 :host {
-   @include pfe-accordion-panel;
+   @include pfe-collapsible($state: closed);
+   @include pfe-accordion-props;
+   @include pfe-box-sizing;
 }
 
 :host([expanded]),
 :host(.animating) {
-   @include pfe-accordion-panel-expanded;
-   @include pfe-accordion-panel-expanded-style;
+  @include pfe-accordion-variables($state: expanded);
+  @include pfe-collapsible($state: open);
+  @include pfe-panel;
 }
 
 :host([on="dark"][expanded]),
 :host([on="dark"].animating){
-  @include pfe-theme($theme: "dark");
-  @include pfe-accordion-panel-expanded-style($theme: dark);
+  @include pfe-accordion-variables($state: expanded, $theme: dark);
+  @include pfe-panel($theme: dark);
+}
+
+:host([on="saturated"][expanded]),
+:host([on="saturated"].animating){
+  @include pfe-accordion-variables($state: expanded, $theme: saturated);
+  @include pfe-panel($theme: saturated);
 }
 
 :host(.animating) {
@@ -28,7 +39,10 @@ $LOCAL: accordion;
 }
 
 .container {
-  @include pfe-accordion-panel-container-inset($align: left);
+  @extend %container;
+  padding-top: 0;
+  padding-right: 3em;
+  padding-left: calc(#{pfe-var(container-spacer)} * 1.5);
 }
 
 :host(:last-of-type[expanded]) {

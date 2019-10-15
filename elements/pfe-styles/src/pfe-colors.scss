@@ -1,0 +1,61 @@
+@import "../../pfe-sass/pfe-sass";
+
+:root {
+    @each $name, $color in $pfe-colors {
+        --theme--#{$name}: #{$color};
+    }
+}
+
+@function contexts($list, $index) {
+    @if str-starts-with(#{nth($list, $index)}, "-on") {
+        @return ".#{str-slice(#{nth($list, $index)}, 2)} ";
+    }
+    @return "";
+}
+
+@function states($list, $index) {
+    @each $s in (hover, focus, visited) {
+        @if str-starts-with(#{nth($list, $index)}, "-#{$s}") {
+            @return nth($list, $index);
+        }
+    }
+    @return "";
+}
+
+@each $name, $color in $pfe-colors {
+    $list: str-split($name, $separator: "--");
+    $property: background-color;
+    $context: "";
+    $state: "";
+
+    @if length($list) > 1 {
+        $context: #{contexts($list, 2)};
+        @if length($list) > 2 {
+            $state: #{states($list, 3)};
+        }
+
+        $state: #{states($list, 2)};
+
+        @if str-starts-with(#{nth($list, 2)}, "-text") {
+            $property: color;
+            @if length($list) > 2 {
+                $context: #{contexts($list, 3)};
+                $state: #{states($list, 3)};
+            }
+            @if length($list) > 3 {
+                $state: #{states($list, 4)};
+            }
+        }
+    }
+    
+    @if str-starts-with(#{first($list)}, "ui") and not (str-starts-with(#{first($list)}, "ui-link")) {
+        #{unquote($context)}.#{first($list)}#{$state} {
+            #{$property}: var(--theme--#{$name}, #{$color});
+            @if str-index($string: $name, $substring: "text") == null {
+                &::after {
+                    content: "#{$name}";
+                }
+            }
+        }
+    }
+}

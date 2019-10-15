@@ -5,6 +5,10 @@
     @include pfe-set-broadcast(darkest);
 }
 
+.on-saturated {
+    @include pfe-set-broadcast(complement);
+}
+
 .on-light {
     @include pfe-set-broadcast(lightest);
 }

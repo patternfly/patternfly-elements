@@ -96,7 +96,7 @@
 }
 
 // https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
-/// Check whether `$string` stars with `$needle`.
+/// Check whether `$string` starts with `$needle`.
 /// @param {String} $string - string to check
 /// @param {String} $needle - substring to check
 /// @return {Bool} - true if `$string` starts with `$needle`; false if not

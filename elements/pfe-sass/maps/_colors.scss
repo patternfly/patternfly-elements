@@ -42,6 +42,15 @@ $pfe-colors: (
   ui-base--text--focus:               $pfe-color--ui-base--text--focus,
   ui-base--text--visited:             $pfe-color--ui-base--text--visited,
 
+  ui-base--on-dark:                   $pfe-color--ui-base--on-dark,
+  ui-base--on-dark--hover:            $pfe-color--ui-base--on-dark--hover,
+  ui-base--on-dark--focus:            $pfe-color--ui-base--on-dark--focus,
+  ui-base--on-dark--visited:          $pfe-color--ui-base--on-dark--visited,
+  ui-base--text--on-dark:             $pfe-color--ui-base--text,
+  ui-base--text--on-dark--hover:      $pfe-color--ui-base--text--on-dark--hover,
+  ui-base--text--on-dark--focus:      $pfe-color--ui-base--text--on-dark--focus,
+  ui-base--text--on-dark--visited:    $pfe-color--ui-base--text--on-dark--visited,
+
   ui-complement:                      $pfe-color--ui-complement,
   ui-complement--hover:               $pfe-color--ui-complement--hover,
   ui-complement--focus:               $pfe-color--ui-complement--focus,

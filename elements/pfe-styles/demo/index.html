@@ -5,7 +5,9 @@
     <title>Layouts Demo</title>
 
     <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
-    <link rel="stylesheet" type="text/css" href="../pfe-layouts.min.css">
+    <link rel="stylesheet" type="text/css" href="../pfe-layouts.css">
+    <link rel="stylesheet" type="text/css" href="../pfe-context.css">
+    <link rel="stylesheet" type="text/css" href="../pfe-colors.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
@@ -17,17 +19,26 @@
         background: #e7e7e7;
       }
 
+      h1, h2, h3, h4, h5, h6, p, button {
+        color: var(--pfe-broadcasted--color--text, #252525);
+      }
+
+      button {
+        border: none;
+      }
+
       header h1 {
         margin-top: 0;
       }
 
-      section {
-        margin: 32px 0;
+      section,
+      section.pfe-m-gutters {
+        margin: 32px 0 !important;
       }
 
       section section {
         padding: 32px;
-        background: #fff;
+        background-color: #fff;
         box-shadow: 0 1px 3px rgba(0,0,0,.2);
       }
 
@@ -44,9 +55,28 @@
         /* border: 1px solid #dedede; */
       }
 
-      .pfe-l-grid > * {
+      .pfe-l-grid > div:not([class]) {
         background: #e0d7ee;
+      }
+
+      .pfe-l-grid > * {
         padding: 8px;
+      }
+
+      .on-light {
+        background-color: #fff;
+      }
+
+      button.on-light {
+        border: 1px solid lightgray;
+      }
+
+      .on-dark {
+        background-color: #252525;
+      }
+
+      .on-saturated {
+        background-color: #0477a4;
       }
 
       :not(pre)>code[class*=language-], pre[class*=language-] {
@@ -55,10 +85,9 @@
     </style>
   </head>
   <body>
-
     <article>
       <header>
-        <h1>RH Layouts</h1>
+        <h1>Layouts</h1>
       </header>
       <section>
         <h2>Grid</h2>
@@ -132,5 +161,70 @@
       </section>
     </article>
 
+    <article>
+      <header>
+        <h2>Color Palette</h2>
+      </header>
+      <section>
+        <section class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
+          <button class="themes on-light" name="light">Light theme</button>
+          <button class="themes on-dark" name="dark">Dark theme</button>
+          <button class="themes on-saturated" name="saturated">Saturated theme</button>
+        </section>
+        <section id="ui" class="pfe-l-grid pfe-m-gutters">
+          <h3>UI elements</h3>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+            <div class="ui-base"></div>
+            <div class="ui-complement"></div>
+            <div class="ui-accent"></div>
+            <div class="ui-disabled"></div>
+          </div>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+            <div class="ui-base-hover"></div>
+            <div class="ui-complement-hover"></div>
+            <div class="ui-accent-hover"></div>
+            <div class="ui-disabled-hover"></div>
+          </div>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+            <div class="ui-base-focus"></div>
+            <div class="ui-complement-focus"></div>
+            <div class="ui-accent-focus"></div>
+            <div class="ui-disabled-focus"></div>
+          </div>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+            <div class="ui-base-visited"></div>
+            <div class="ui-complement-visited"></div>
+            <div class="ui-accent-visited"></div>
+            <div class="ui-disabled-visited"></div>
+          </div>
+        </section>
+
+        <section>
+          <h3>Surface elements</h3>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-1-col">
+            <button class="ui-base"></button>
+            <button class="ui-complement"></button>
+            <button class="ui-accent"></button>
+            <button class="ui-disabled"></button>
+          </div>
+        </section>
+
+      </section>
+    </article>
   </body>
+
+  <script>
+    document.querySelectorAll("button.themes").forEach(function(item) {
+      item.addEventListener("click", function(event) {
+        var list = document.querySelector("#ui").className.split(" ");
+        var context = list.filter( function(c) {
+          return /on-.*/.test(c);
+        } );
+        if (context.length) {
+          document.querySelector("#ui").classList.remove(context);
+        }
+        document.querySelector("#ui").classList.add("on-" + event.target.name);
+      });
+    });
+  </script>
 </html>

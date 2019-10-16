@@ -62,6 +62,15 @@ class PfeScrollspyNav extends PFElement {
   // disconnectedCallback() {}
 
   // attributeChangedCallback(attr, oldValue, newValue) {}
+
+  scrollToNavTarget(top=0, left=0, smooth=true) {
+    let options = {
+      top: 100,
+      left: 100,
+      behavior: 'smooth'
+    }
+    window.scrollTo(options);
+  }
 }
 
 class PfeScrollspyPanel extends PFElement {

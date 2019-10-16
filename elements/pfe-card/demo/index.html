@@ -39,6 +39,13 @@
         min-width: 200px;
         width: calc(25% - 32px);
       }
+      .button-series {
+        display: inline-block;
+      }
+      .button-series > *:not(first-child) {
+        display: inline-block;
+        margin-left: 15px;
+      }
 
       h2[slot="pfe-card--header"] {
         font-size: 1.1em;
@@ -68,12 +75,14 @@
       <pfe-card pfe-color="lightest" class="custom-border">
         <h2 slot="pfe-card--header">Lightest card</h2>
         <p>This is the lightest pfe-card and <a href="#">a link</a>.</p>
-        <pfe-cta slot="pfe-card--footer" pfe-priority="primary">
-          <a href="#">Learn more</a>
-        </pfe-cta>
-        <pfe-cta slot="pfe-card--footer" pfe-priority="secondary">
-          <a href="#">More details</a>
-        </pfe-cta>
+        <div class="button-series" slot="pfe-card--footer">
+          <pfe-cta slot="pfe-card--footer" pfe-priority="secondary">
+            <a href="#">Try</a>
+          </pfe-cta>
+          <pfe-cta pfe-priority="primary">
+            <a href="#">Buy</a>
+          </pfe-cta>
+        </div>
       </pfe-card>
 
       <pfe-card pfe-color="lighter">
@@ -81,12 +90,11 @@
         <p>This is the light pfe-card and <a href="#">a link</a>.</p>
         <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
         <p>Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
-        <pfe-cta slot="pfe-card--footer" pfe-priority="primary">
-          <a href="#">Buy</a>
-        </pfe-cta>
-        <pfe-cta slot="pfe-card--footer">
-          <a href="#">Learn more</a>
-        </pfe-cta>
+        <div slot="pfe-card--footer">
+          <pfe-cta pfe-priority="primary">
+            <a href="#">Buy</a>
+          </pfe-cta>
+        </div>
       </pfe-card>
 
       <pfe-card>

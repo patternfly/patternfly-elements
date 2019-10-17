@@ -29,17 +29,26 @@ npm run new
 
 The generator will scaffold out a new PatternFly Element that will include an ES6 module version of your element as well as a version transpiled to ES5. These two files will live at the root of your new element. **DO NOT EDIT THESE TWO FILES**. These two files are the files that will be used when your element is distributed and they'll be overwritten during development and your build.
 
-Instead, do your development in the `/src` directory of your element. In the `/src` directory you'll find a Javascript file that extends the PFElement class that takes care of setting up a shadow root and ShadyCSS. The HTML file is where you'll add the HTML that will be cloned into the shadow root. And the CSS or SCSS file (depending on if you're using Sass) is where you'll add your styles. During the development and build tasks, a Gulp task will merge these three files together into the root of your element and will update the ES6 and ES5 versions.
+Instead, do your development in the `/src` directory of your element. In the `/src` directory you'll find a Javascript file that extends the PFElement class that takes care of setting up a shadow root and ShadyCSS. The HTML file is where you'll add the HTML that will be cloned into the shadow root. And the CSS or SCSS file (depending on if you're using Sass) is where you'll add your styles. During the development and build tasks, a Gulp task will merge these three files together into the root of your element and will update the ES6 and ES5 versions.  Be sure to specify the list of compiled assets in your package.json by using the `files` array.  In the `files` array, list out all the files you want available to end-users (you can use globbing syntax); for example:
+
+```
+"files": [
+    "pfelement?(-noscript).*css",
+    "pfelement.*js"
+]
+```
+
+This will add all pfelement css files (minified and ones postfixed with -noscript) and all the compiled versions of the pfelement.js file.
 
 ## Develop
 
 To watch for changes and run a build when changes are detected, run this from the PatternFly Elements root directory.
 
 ```
-npm run dev
+npm run live-demo
 ```
 
-You may find that you dislike watching all the elements at once.  It may start up too slowly, consume too many system resources, or your OS may run out of file descriptors from watching too many files.  If any of these are the case, you can shrink the set of elements being watched by using Lerna's [`--scope`](https://github.com/lerna/lerna/tree/master/core/filter-options#--scope-glob) flag.
+You may find that you dislike watching all the elements at once.  It may start up too slowly, consume too many system resources, or your OS may run out of file descriptors from watching too many files.  If any of these are the case, you can shrink the set of elements being watched by running `npm run dev (component-name)`.
 
 For example, to watch only `pfe-icon` and its dependencies:
 
@@ -57,13 +66,22 @@ npm run dev pfe-card pfe-cta
 
 ## Preview your changes
 
-From the root of the PatternFly Elements repository, run the start command which will open a browser to the `/doc` directory.
+From the root of the PatternFly Elements repository, run the live-demo command which will open a browser to a listing of all the demo files.
 
 ```
-npm start
+npm run live-demo
 ```
 
-From there you can change the URL to the demo page of the element you're working on. For example, if I ran `npm run dev` in the `/elements/pfe-card` directory, I'd navigate in the browser to `http://localhost:1234/elements/pfe-card/demo`.
+From there you can change the URL to the demo page of the element you're working on. For example, if I want to preview the `pfe-card` component, I'd navigate in the browser to `http://localhost:1234/elements/pfe-card/demo`.
+
+### Storybook
+
+Storybook is an interactive tool that allows consumers of the components to see how content can flow inside the components, as well as how variants affect style and layout. The `pfe-foo.storybook.js` file within the `/demo` directory of a component defines what appears in the Storybook preview. [You can learn more about the structure of these here](https://storybook.js.org/docs/basics/writing-stories/).
+
+```
+npm run storybook
+```
+Storybook will launch at [http://localhost:9001](http://localhost:9001).
 
 ## Test
 

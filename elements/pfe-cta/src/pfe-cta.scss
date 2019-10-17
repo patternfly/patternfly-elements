@@ -15,37 +15,37 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta--SecondaryBackgroundColor--focus: rgba(21,21,21, .05);
   --pfe-cta--BorderColor:             transparent;
   --pfe-cta__inner--BorderColor:      transparent;
-  --pfe-cta--Color:   pfe-color(ui-link);
+  --pfe-cta--Color:   #{pfe-color(ui-link)};
   --pfe-cta--Padding: .6rem 0;
 
   // hover variables
   --pfe-cta--BackgroundColor--hover:  transparent;
   --pfe-cta--BorderColor--hover: transparent;
-  --pfe-cta--Color--hover:  pfe-color(ui-link--hover);
+  --pfe-cta--Color--hover:  #{pfe-color(ui-link--hover)};
 
   // focus variables
   --pfe-cta--BorderColor--focus: transparent;
   --pfe-cta__inner--BorderColor--focus: transparent;
-  --pfe-cta--Color--focus:  pfe-color(ui-link--focus);
+  --pfe-cta--Color--focus:  #{pfe-color(ui-link--focus)};
 
   // properties
   display: inline-block;
-  font-family: pfe-var(font-family--heading);
-  font-size:   pfe-var(font-size);
-  font-weight: pfe-var(font-weight--bold);
-  line-height: pfe-var(line-height);
-  background-color: pfe-local(BackgroundColor);
-  border-color:     pfe-local(BorderColor);
+  font-family: #{pfe-var(font-family--heading)};
+  font-size:   #{pfe-var(font-size)};
+  font-weight: #{pfe-var(font-weight--bold)};
+  line-height: #{pfe-var(line-height)};
+  background-color: #{pfe-local(BackgroundColor)};
+  border-color:     #{pfe-local(BorderColor)};
   position: relative;
-  transition: .3s ease padding; // padding pfe-var(animation-timing);
+  transition: .3s ease padding; // padding #{pfe-var(animation-timing)};
   line-height: inherit;
   vertical-align:  middle;
-  background-color: pfe-local(BackgroundColor);
-  border-radius:    pfe-local(BorderRadius);
-  border:           pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
+  background-color: #{pfe-local(BackgroundColor)};
+  border-radius:    #{pfe-local(BorderRadius)};
+  border:           #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
 
   .pfe-cta--arrow {
-    display: pfe-local($cssvar: arrow--Display, $region: arrow);
+    display: #{pfe-local($cssvar: arrow--Display, $region: arrow)};
     padding: pfe-local($cssvar: Padding, $region: arrow);
     fill: #{pfe-local(Color)};
     position: relative;
@@ -57,17 +57,16 @@ $pfe-cta--Color--fallback: #003366;
 }
 
 :host(::after) {
-  margin-left:        calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
+  margin-left:      calc(#{pfe-var(content-spacer)} * 0.25); // 1/4 of the base `content-spacer`
 }
 
 :host(:hover) {
-  --pfe-cta__arrow--Padding: 0 0 0 .5rem;
-  background-color: pfe-local(BackgroundColor--hover);
-  border-color:     pfe-local(BorderColor--hover);
+  background-color: #{pfe-local(BackgroundColor--hover)};
+  border-color:     #{pfe-local(BorderColor--hover)};
   cursor:           pointer;
 
   ::slotted(*) {
-    color: pfe-local(Color--hover) !important; // because of redhat-theme styles on links
+    color: #{pfe-local(Color--hover)} !important; // because of redhat-theme styles on links
     &::before  {
       border: 1px solid pfe-local($cssvar: BorderColor--hover, $region: inner);
     }
@@ -80,15 +79,15 @@ $pfe-cta--Color--fallback: #003366;
 
 :host(.focus-within) {
   outline: none !important;
-  background-color: pfe-local(BackgroundColor--focus);
-  border-color:     pfe-local(BorderColor--focus);
+  background-color: #{pfe-local(BackgroundColor--focus)};
+  border-color:     #{pfe-local(BorderColor--focus)};
 
   ::slotted(*) {
-    color: pfe-local(Color--focus) !important; // because of redhat-theme styles on links
+    color: #{pfe-local(Color--focus)} !important; // because of redhat-theme styles on links
   }
 
   .pfe-cta--arrow {
-    fill:           pfe-local(Color--focus);
+    fill:           #{pfe-local(Color--focus)};
   }
 }
 
@@ -108,13 +107,13 @@ $pfe-cta--Color--fallback: #003366;
 
 ::slotted(*) {
   display: inline;
-  color: pfe-local(Color, $pfe-cta--Color--fallback) !important;  // because of redhat-theme styles on links
+  color: #{pfe-local(Color, $pfe-cta--Color--fallback)} !important;  // because of redhat-theme styles on links
   text-decoration: none;
   &::before {  // inner border on priority CTAs
     content: "";
     display: block;
     box-sizing: border-box;
-    border: 1px solid var(--pfe-cta__inner--BorderColor);
+    border: 1px solid #{pfe-local($cssvar: BorderColor, $region: inner)};
     outline: none;
     position: absolute;
     top: 2px;
@@ -126,19 +125,19 @@ $pfe-cta--Color--fallback: #003366;
 }
 
 ::slotted(:hover) {
-    color: pfe-local(Color--hover) !important; // @WHY redhat-theme styles on links
+    color: #{pfe-local(Color--hover)} !important; // @WHY redhat-theme styles on links
 }
 
 ::slotted(:focus) {
   outline: none !important;
-  color: pfe-local(Color--focus) !important;  // @WHY redhat-theme styles on links
+  color: #{pfe-local(Color--focus)} !important;  // @WHY redhat-theme styles on links
 
   &::before {
     border: 1px solid #{pfe-local($cssvar: BorderColor--focus, $region: inner)};
   }
 
   .pfe-cta--arrow {
-    fill: pfe-local(Color--focus);
+    fill: #{pfe-local(Color--focus)};
   }
 }
 

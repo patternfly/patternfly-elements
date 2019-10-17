@@ -6,6 +6,14 @@ import PfeDatetime from "../pfe-datetime";
 
 const stories = storiesOf("Datetime", module);
 
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 // Define the template to be used
 const template = (data = {}) => {
   return tools.component(PfeDatetime.tag, data.prop, data.slots);

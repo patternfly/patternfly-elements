@@ -6,6 +6,14 @@ import PfePageStatus from "../pfe-page-status.js";
 
 const stories = storiesOf("Page status", module);
 
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 stories.addDecorator(storybookBridge.withKnobs);
 
 const template = (data = {}) =>

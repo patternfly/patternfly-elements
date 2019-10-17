@@ -39,6 +39,16 @@
           "default": "default",
           "prefixed": true,
           "observer": "_basicAttributeChanged"
+        },
+        "size": {
+          "title": "Size",
+          "type": "string",
+          "enum": [
+            "sm",
+            "md",
+            "xl"
+          ],
+          "default": "md"
         }
       }
     }

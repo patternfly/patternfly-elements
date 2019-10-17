@@ -30,15 +30,11 @@
       "title": "Attributes",
       "type": "object",
       "properties": {
-        "status": {
+        "indeterminate": {
           "title": "Status",
-          "type": "string",
-          "enum": [
-            "indeterminate"
-          ],
-          "default": "default",
-          "prefixed": true,
-          "observer": "_basicAttributeChanged"
+          "type": "boolean",
+          "default": true,
+          "prefixed": true
         },
         "size": {
           "title": "Size",

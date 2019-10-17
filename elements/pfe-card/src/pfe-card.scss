@@ -91,46 +91,54 @@ $LOCAL: card;
   &__header,
   &__body,
   &__footer {
-    //-- Slotted styles specifically for img element
-    ::slotted(img) {
-      width: #{pfe-local($cssvar: MinWidth, $region: img, $fallback: auto)};
-    }
-
-    //-- Slotted styles for overflow attribute
-    ::slotted(img[pfe-overflow]) {
-      object-fit: cover; // Fix distortion
-    }
-
-    ::slotted([pfe-overflow]) {
-      margin-top:    #{pfe-local($cssvar: MarginTop, $region: overflow, $fallback: 0)};
-      margin-right:  #{pfe-local($cssvar: MarginRight, $region: overflow, $fallback: 0)};
-      margin-bottom: #{pfe-local($cssvar: MarginBottom, $region: overflow, $fallback: 0)};
-      margin-left:   #{pfe-local($cssvar: MarginLeft, $region: overflow, $fallback: 0)};
+    ::slotted([pfe-overflow~="top"]) {
+      z-index: 1;
+      margin-top: -2rem; //IE11 fallback
+      margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
+      :host([has_header]) & {
+        padding-top: #{pfe-local(spacing)};
+      }
     }
 
     ::slotted([pfe-overflow~="right"]) {
-      --pfe-card__overflow--MarginRight: calc(#{pfe-local(PaddingRight)} * -1);
-    }
-
-    ::slotted([pfe-overflow~="left"]) {
-      --pfe-card__overflow--MarginLeft: calc(#{pfe-local(PaddingLeft)} * -1);
+      margin-right: -2rem; //IE11 fallback
+      margin-right: calc(-1 * #{pfe-local(PaddingRight)});
     }
 
     ::slotted([pfe-overflow~="bottom"]) {
+      margin-bottom: -2rem; //IE11 fallback
+      margin-bottom: calc(-1 * calc(#{pfe-local(PaddingBottom)} + #{pfe-local(BorderRadius)}));
       align-self: flex-end;
     }
 
-    //-- Slotted styles for overflow attribute + img tag
+    ::slotted([pfe-overflow~="left"]) {
+      margin-left: -2rem; //IE11 fallback
+      margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
+    }
+
+    ::slotted(img) {
+      max-width: 100%;
+      align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
+    }
+
+    ::slotted(img[pfe-overflow]) {
+      object-fit: cover;
+      align-self: auto; //If overflow, let it stretch 100% (Undoing above ::slotted(img) rule)
+    }
+
     ::slotted(img[pfe-overflow~="right"]) {
-      --pfe-card__img--MinWidth: calc(100% + #{pfe-local(PaddingRight)});
+      max-width: calc(100% + 2rem); //IE11 fallback
+      max-width: calc(100% + #{pfe-local(PaddingRight)});
     }
 
     ::slotted(img[pfe-overflow~="left"]) {
-      --pfe-card__img--MinWidth: calc(100% + #{pfe-local(PaddingLeft)});
+      max-width: calc(100% + 2rem); //IE11 fallback
+      max-width: calc(100% + #{pfe-local(PaddingLeft)});
     }
 
     ::slotted(img[pfe-overflow~="right"][pfe-overflow~="left"]) {
-      --pfe-card__img--MinWidth: calc(100% + #{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)});
+      max-width: calc(100% + 4rem); //IE11 fallback
+      max-width: calc(100% + calc(#{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)}));
     }
   }
   &__header {

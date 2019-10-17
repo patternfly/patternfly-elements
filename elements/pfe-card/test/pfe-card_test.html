@@ -68,12 +68,10 @@
       // Themes and their expected hex values
       const colors = {
         base: "#dfdfdf",
-        dark: "#464646",
         darker: "#464646",
         darkest: "#131313",
         accent: "#fe460d",
         complement: "#0477a4",
-        light: "#ececec",
         lighter: "#ececec",
         lightest: "#ffffff"
       };
@@ -81,14 +79,16 @@
       const slots = {
         header: {
           name: "pfe-card--header",
+          class: "pfe-card__header",
           content: "Card 1"
         },
         body: {
-          name: "",
+          class: "pfe-card__body",
           content: "This is pfe-card."
         },
         footer: {
           name: "pfe-card--footer",
+          class: "pfe-card__footer",
           content: "Text in footer"
         }
       };
@@ -210,14 +210,13 @@
         Object.entries(slots).forEach(slot => {
           test(`${slot[0]} content is placed into correct slot`, () => {
             let selector = slot[0] !== "body" ? `[slot=${slot[1].name}]` : "p";
-            let shadowSelector = slot[0] !== "body" ? `[name="${slot[1].name}"]` : `slot:not([name])`;
             assert.equal(
               card[0].querySelector(selector).assignedSlot,
-              card[0].shadowRoot.querySelector(shadowSelector)
+              card[0].shadowRoot.querySelector(`.${slot[1].class} > *`)
             );
 
             const content = card[0].shadowRoot
-              .querySelector(shadowSelector)
+              .querySelector(`.${slot[1].class} > *`)
               .assignedNodes()
               .map(n => n.textContent)
               .join("")

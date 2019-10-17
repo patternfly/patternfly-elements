@@ -3,6 +3,15 @@ import { withKnobs, text } from "@storybook/addon-knobs/polymer";
 import "../pfe-number.js";
 
 const stories = storiesOf("Number", module);
+
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 stories.addDecorator(withKnobs);
 
 stories.add("pfe-number", () => {

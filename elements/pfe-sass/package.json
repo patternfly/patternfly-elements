@@ -18,6 +18,10 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-sass"
   },
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp",
+    "dev": "../../node_modules/.bin/gulp dev"
+  },
   "contributors": [
     {
       "name": "Kyle Buchanan",
@@ -40,5 +44,8 @@
       "name": "cd"
     }
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

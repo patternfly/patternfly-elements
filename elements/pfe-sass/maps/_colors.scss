@@ -131,7 +131,7 @@ $pfe-colors: (
   surface--accent--link--focus:       $pfe-color--surface--accent--link--focus,
 
 
-  /* Palette of Border Colors */
+  // Palette of Border Colors
   surface--border:                    $pfe-color--surface--border,
   surface--border--lightest:          $pfe-color--surface--border--lightest,
   surface--border--darkest:           $pfe-color--surface--border--darkest,
@@ -142,7 +142,7 @@ $pfe-colors: (
   // Base Feedback Colors for messaging, errors, etc.
   // ========================================================================
 
-  /* Palette of Feedback Colors */
+  // Palette of Feedback Colors
   feedback--critical:                 $pfe-color--feedback--critical,
   feedback--critical--lightest:       $pfe-color--feedback--critical--lightest,
   feedback--critical--darkest:        $pfe-color--feedback--critical--darkest,
@@ -168,69 +168,4 @@ $pfe-colors: (
   feedback--default--darkest:         $pfe-color--feedback--default--darkest,
 
   overlay:                            rgba($pfe-color--gray-900, .5)
-);
-
-
-$pfe-vars: (
-  container-spacer:              pfe-size-prem(16px),
-  container-padding:             pfe-size-prem(16px),
-  content-spacer:                pfe-size-prem(16px),
-
-  font-size:                     16px,
-  line-height:                   1.5,
-
-  font-family:                   '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
-  font-family--heading:          '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
-  font-family--code:             '"Overpass Mono", Consolas, Monaco, 'Andale Mono', monospace',
-
-  font-size--heading--alpha:     32px,
-  font-size--heading--beta:      24px,
-  font-size--heading--gamma:     21px,
-  font-size--heading--delta:     18px,
-  font-size--heading--epsilon:   16px,
-  font-size--heading--zeta:      14px,
-
-  font-weight--light:            300,
-  font-weight--normal:           500,
-  font-weight--semi-bold:        600,
-  font-weight--bold:             700,
-
-  link--text-decoration:         underline,
-  link--text-decoration--hover:  underline,
-
-  surface--border-width:         1px,
-  surface--border-width--heavy:  3px,
-  surface--border-style:         solid,
-  surface--border-radius:        3px,
-
-  ui--element--size:             20px,
-
-  ui--border-width:              1px,
-  ui--border-style:              solid,
-  ui--border-radius:             2px,
-
-  ui--focus-outline-width:       1px,
-  ui--focus-outline-style:       solid,
-
-  grid-breakpoint--xs:           0,
-  grid-breakpoint--sm:           576px,
-  grid-breakpoint--md:           768px,
-  grid-breakpoint--lg:           992px,
-  grid-breakpoint--xl:           1200px,
-
-  box-shadow--sm:                '0  #{pfe-size-prem(1)}  #{pfe-size-prem(2)} 0 rgba(#{$pfe-color--gray-1000}, .2)',
-  box-shadow--md:                '0  #{pfe-size-prem(2)}  #{pfe-size-prem(1)} #{pfe-size-prem(1)} rgba(#{$pfe-color--gray-1000}, .12), 0  #{pfe-size-prem(4)}  #{pfe-size-prem(11)} #{pfe-size-prem(6)} rgba(#{$pfe-color--gray-1000}, .05)',
-  box-shadow--lg:                '0  #{pfe-size-prem(3)}  #{pfe-size-prem(7)} #{pfe-size-prem(3)} rgba(#{$pfe-color--gray-1000}, .13), 0  #{pfe-size-prem(11)}  #{pfe-size-prem(24)} #{pfe-size-prem(16)} rgba(#{$pfe-color--gray-1000}, .12)',
-  box-shadow--inset:             'inset 0 0 #{pfe-size-prem(10)} 0 rgba(#{$pfe-color--gray-1000}, .25)',
-
-  animation-speed:               0.3,
-  animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),
-  opacity:                       .3
-);
-
-$z-index: (
-  modal: 99,
-  navigation: 98,
-  overlay: 97,
-  content: 0
 );

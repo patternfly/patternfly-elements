@@ -34,5 +34,8 @@
   "dependencies": {
     "@patternfly/pfelement": "^1.0.0-prerelease.24"
   },
-  "generator-pfelement-version": "0.2.8"
+  "generator-pfelement-version": "0.2.8",
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

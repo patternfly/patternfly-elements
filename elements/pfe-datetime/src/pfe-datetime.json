@@ -22,8 +22,7 @@
           "enum": [
             "indeterminate"
           ],
-          "default": "default",
-          "prefixed": true,
+          "default": "indeterminate",
           "observer": "_basicAttributeChanged"
         },
         "type": {
@@ -101,7 +100,8 @@
         "locale": {
           "title": "Locale",
           "description": "A locale code like en-US or en-GB",
-          "type": "string"
+          "type": "string",
+          "default": "en-US"
         }
       }
     }

@@ -6,11 +6,21 @@ import { PfeCollapse } from "../pfe-collapse";
 
 const stories = storiesOf("Collapse", module);
 
-stories.addDecorator(storybookBridge.withKnobs);
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
 
+// Define the template to be used
 const template = (data = {}) => {
   return tools.component(PfeCollapse.tag, data.prop, data.slots);
 };
+
+stories.addDecorator(storybookBridge.withKnobs);
+const defaultContent = tools.autoContent(5, 3);
 
 stories.add(PfeCollapse.tag,  () => {
   let config = {};
@@ -18,24 +28,22 @@ stories.add(PfeCollapse.tag,  () => {
   const props = PfeCollapse.properties;
   const slots = PfeCollapse.slots;
 
-  config.slots = [];
-
-  config.slots.push({
+  config.slots = [{
     content:
       tools.component("pfe-collapse-toggle", {}, [
         {
           content: tools.customTag({
             tag: "h3",
-            content: "Toggle Control"
+            content: "Click me!"
           })
         }
       ]) +
       tools.component("pfe-collapse-panel", {}, [
         {
-          content: tools.autoContent(5, 3)
+          content: defaultContent
         }
       ])
-  });
+  }];
 
   let rendered = template(config);
   return tools.preview(rendered);

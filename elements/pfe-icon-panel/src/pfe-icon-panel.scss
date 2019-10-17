@@ -16,7 +16,7 @@ $pfe-icon-panel__icon-padding:        .05em;
 :host {
   display: flex;
   align-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
 
   @media (min-width: $pfe-global--grid-breakpoint--sm) {

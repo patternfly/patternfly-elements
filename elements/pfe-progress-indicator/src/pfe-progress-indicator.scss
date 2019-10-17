@@ -30,6 +30,24 @@ $pfe-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #
     visibility: visible;
 }
 
+:host([size="sm"]) {
+    height: 1rem;
+    width: 1rem;
+    border-width: 3px;
+}
+
+:host([size="md"]) {
+    height: 2rem;
+    width: 2rem;
+    border-width: 4px;
+}
+
+:host([size="xl"]) {
+    height: 4rem;
+    width: 4rem;
+    border-width: 6px;
+}
+
 @keyframes spin {
     from {
         transform: rotate(0deg);

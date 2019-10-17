@@ -36,30 +36,11 @@ Add the content for your accordion panel here.
 
 ## Attributes
 
-**`color`**
-Changes the color of `<pfe-accordion-header>`
-
-| Value             | Description                                                               |
-| ----------------- | ------------------------------------------------------------------------- |
-| `striped`         | Alternates `light` and `lightest` theme colors on `<pfe-accordion-header>` |
-| `lightest`        | `lightest` theme color                                                    |
-| `light` (default) | `light` theme color                                                       |
-| `base`            | `base` theme color                                                        |
-| `dark`            | `dark` theme color                                                        |
-| `darkest`         | `darkest` theme color                                                     |
-| `complement`      | `complement`theme color                                                   |
-| `accent`          | `accent` theme color                                                      |
-
-## Styling
-
-| Var Hook                                        | Description                                               | Default                                     |
-| ----------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------- |
-| `--pfe-theme--color--surface--lighter`                 | Default `<pfe-accordion-header>` color                     | $pfe-color--surface--lighter                 |
-| `--pfe-theme--color--surface--base`                    | Base `<pfe-accordion-header>` color option                 | $pfe-color--surface--base                    |
-| `--pfe-theme--color--surface--darker`                  | Dark `<pfe-accordion-header>` color option                 | $pfe-color--surface--darker                  |
-| `--pfe-theme--color--surface--darkest`                 | Darkest `<pfe-accordion-header>` color option              | $pfe-color--surface--darkest                 |
-| `--pfe-theme--color--surface--complement`              | Complement `<pfe-accordion-header>` color option           | $pfe-color--surface--complement              |
-| `--pfe-theme--color--surface--accent`                  | Accent `<pfe-accordion-header>` color option               | $pfe-color--surface--accent                  |
+**`on`**
+Changes the context of the accordion to one of 3 possible themes:
+- `light` (default)
+- `dark`
+- `saturated`
 
 ## Events
 

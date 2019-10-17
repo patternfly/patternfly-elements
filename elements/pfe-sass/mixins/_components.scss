@@ -5,10 +5,10 @@
 @mixin pfe-accordion-variables($state: default, $theme: light) {
   // Currently supports light or dark theme
   $variables: ();
-  @if $theme != dark { // Light theme
+  @if $theme == dark { // Dark theme
     @if $state != expanded { // Default state
       $variables: (
-        accent:              #{pfe-color(ui-base)},
+        accent:              #{pfe-color(ui-base--on-dark)},
         BorderColor--accent: transparent,
         BorderColor:         #{pfe-color(surface--border)},
         BorderTopWidth:      #{pfe-var(surface--border-width)},
@@ -18,11 +18,10 @@
     }
     @else { // Expanded state
       $variables: (
-        BackgroundColor:     #{pfe-color(surface--lightest)},
-        Color:               #{pfe-color(surface--lightest--text)},
-        BorderColor:         #{pfe-color(surface--border)},
-        BorderColor--accent: #{pfe-color(ui-base)},
-        BorderRightWidth:    #{pfe-var(surface--border-width)}
+        BackgroundColor:  rgba(255, 255, 255, .1),
+        Color:            #{pfe-apply-broadcast(text)},
+        BorderColor:      #{pfe-color(surface--border)},
+        BorderColor--accent: #{pfe-color(ui-base--on-dark)}
       );
     }
   }
@@ -40,16 +39,16 @@
     @else { // Expanded state
       $variables: (
         BackgroundColor:  rgba(255, 255, 255, .1),
-        Color:            #{pfe-color(surface-darker--text)},
+        Color:            #{pfe-apply-broadcast(text)},
         BorderColor:      #{pfe-color(surface--border)},
         BorderColor--accent: #{pfe-color(ui-base--on-saturated)}
       );
     }
   }
-  @else { // Dark theme
+  @else { // Light theme
     @if $state != expanded { // Default state
       $variables: (
-        accent:              #{pfe-color(ui-base--on-dark)},
+        accent:              #{pfe-color(ui-base)},
         BorderColor--accent: transparent,
         BorderColor:         #{pfe-color(surface--border)},
         BorderTopWidth:      #{pfe-var(surface--border-width)},
@@ -59,10 +58,11 @@
     }
     @else { // Expanded state
       $variables: (
-        BackgroundColor:  rgba(255, 255, 255, .1), //#{pfe-color(surface--darker)},
-        Color:            #{pfe-color(surface-darker--text)},
-        BorderColor:      #{pfe-color(surface--border)},
-        BorderColor--accent: #{pfe-color(ui-base--on-dark)}
+        BackgroundColor:     rgba(255, 255, 255, 1),
+        Color:               #{pfe-apply-broadcast(text)},
+        BorderColor:         #{pfe-color(surface--border)},
+        BorderColor--accent: #{pfe-color(ui-base)},
+        BorderRightWidth:    #{pfe-var(surface--border-width)}
       );
     }
   }
@@ -77,7 +77,7 @@
   position: relative;
 
   // Since the default bg color is transparent, look to broadcast values
-  background-color: #{pfe-local(BackgroundColor)};
+  background-color: #{pfe-local($cssvar: BackgroundColor, $fallback: transparent)};
   color:            #{pfe-local($cssvar: Color, $fallback: #{pfe-apply-broadcast(text)})};
 
   // Border settings
@@ -148,10 +148,16 @@
 @mixin pfe-panel($theme: light) {
   $variables: ();
 
-  @if $theme != dark { // Light theme
+  @if $theme == "light" { // Light theme
     $variables: (
       BorderTopWidth: 0,
       BoxShadow: 0 5px #{pfe-var(surface--border-width--heavy)} rgba(140, 140, 140, 0.35)
+    );
+  }
+  @else {
+    $variables: (
+      BorderTopWidth: 0,
+      BoxShadow: none
     );
   }
 

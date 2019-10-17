@@ -28,20 +28,20 @@
         }
 
         @if $type == "link" {
-            $list: append($list, "#{$type}#{$context}");
+            $list: append($list, "#{$type}");
 
             @each $s in (hover, focus, visited) {
                 $state: "--#{$s}";
-                $string: "#{$type}#{$context}#{$state}";
+                $string: "#{$type}#{$state}";
 
                 @if not index($list, $string) {
-                    $list: append($list, "#{$type}#{$context}#{$state}");
+                    $list: append($list, "#{$type}#{$state}");
                 }
             }
         }
         @else {
             @if not index($list, $string) {
-                $list: append($list, "#{$type}#{$context}");
+                $list: append($list, "#{$type}");
             }
         }
         
@@ -53,7 +53,7 @@
                 @error "#{$item} value does not currently exist.";
             }
             @else {
-                --#{$repo}--broadcasted--color--#{$item}: #{pfe-color($item)};
+                --#{$repo}-broadcasted--color--#{$item}: #{pfe-color(#{$item}#{$context})};
             }
         }
     }

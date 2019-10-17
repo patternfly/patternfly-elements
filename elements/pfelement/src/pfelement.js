@@ -47,15 +47,15 @@ class PFElement extends HTMLElement {
     this.setAttribute(`${prefix}type`, value);
   }
 
-  get variable() {
+  getVariable(name, element = this) {
     return window
-        .getComputedStyle(this)
+        .getComputedStyle(element)
         .getPropertyValue(`--${name}`)
         .trim();
   }
 
-  setVariable(name, value) {
-    this.setProperty(name, value);
+  setVariable(name, value, element = this) {
+    element.setProperty(name, value);
   }
 
   // Returns a single element assigned to that slot; if multiple, it returns the first
@@ -118,7 +118,7 @@ class PFElement extends HTMLElement {
     this.setAttribute("pfelement", "");
     
     // Get the theme variable if it exists, set it as an attribute
-    if (this.variable(theme)) this.setAttribute("on", this.variable(theme));
+    if (this.getVariable("theme")) this.setAttribute("on", this.getVariable("theme"));
 
     if (typeof this.props === "object") {
       this._mapSchemaToProperties(this.tag, this.props);

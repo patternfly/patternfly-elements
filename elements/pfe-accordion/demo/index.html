@@ -38,9 +38,11 @@
       }
       .dark-background {
         background-color: #252525;
+        --theme: dark;
       }
       .saturated-background {
         background-color: #191e84;
+        --theme: saturated;
       }
       .white-background {
         background-color: #fff;
@@ -95,8 +97,8 @@
       <button id="addTabAndPanelBtn">Add Tab &amp; Panel</button>
     </section>
 
-    <section class="saturated-background on-dark" >
-      <h2>pfe-accordion  on=dark</h2><br/>
+    <section class="saturated-background" on="saturated">
+      <h2>pfe-accordion [on="saturated"]</h2><br/>
       <pfe-accordion on="dark">
         <pfe-accordion-header>
           <h3>Why do wizards need money if they could just create it?</h3>
@@ -131,7 +133,7 @@
         </pfe-accordion-panel>
       </pfe-accordion>
     </section>
-    <section class="dark-background on-dark">
+    <section class="dark-background" on="dark">
       <h2>&lt;pfe-accordion&gt; nested</h2><br/>
       <pfe-accordion on="dark">
         <pfe-accordion-header>

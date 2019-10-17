@@ -139,7 +139,7 @@ $variables: (
   }
 
   :host([is_nested].expanded:not([parent_hidden])) & {
-    @include pfe-trigger-expanded;
+    @include pfe-trigger; //($state: expanded);
     @include pfe-accordion-variables($state: expanded);
   }
     
@@ -250,13 +250,13 @@ $variables: (
   }
 
   :host([is_nested]:not([parent_hidden])) & {
-    @include pfe-accordion-panel;
+    // @include pfe-accordion-panel;
     box-sizing: border-box;
     width: 100%;
   }
 
   :host([is_nested].expanded:not([parent_hidden])) & {
-    @include pfe-accordion-panel-expanded;
+    // @include pfe-accordion-panel-expanded;
     @include pfe-panel;
   }
 }
@@ -267,7 +267,7 @@ $variables: (
 }
 
 :host([is_nested]:not([parent_hidden])) {
-  @include pfe-accordion-variables($component-name: navigation);
+  // @include pfe-accordion-variables($component-name: navigation);
 }
 
 // Styles for navigation items appearing inside the mobile menu

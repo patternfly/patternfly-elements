@@ -11,15 +11,15 @@ $pfe-colors: (
 
   text--on-dark:               $pfe-color--text--on-dark,
   link--on-dark:               $pfe-color--link--on-dark,
-  link--on-dark--visited:      $pfe-color--link--on-dark--visited,
-  link--on-dark--hover:        $pfe-color--link--on-dark--hover,
-  link--on-dark--focus:        $pfe-color--link--on-dark--focus,
+  link--visited--on-dark:      $pfe-color--link--visited--on-dark,
+  link--hover--on-dark:        $pfe-color--link--hover--on-dark,
+  link--focus--on-dark:        $pfe-color--link--focus--on-dark,
 
   text--on-saturated:          $pfe-color--text--on-saturated,
   link--on-saturated:          $pfe-color--link--on-saturated,
-  link--on-saturated--visited: $pfe-color--link--on-saturated--visited,
-  link--on-saturated--hover:   $pfe-color--link--on-saturated--hover,
-  link--on-saturated--focus:   $pfe-color--link--on-saturated--focus,
+  link--visited--on-saturated: $pfe-color--link--visited--on-saturated,
+  link--hover--on-saturated:   $pfe-color--link--hover--on-saturated,
+  link--focus--on-saturated:   $pfe-color--link--focus--on-saturated,
 
 
   // ========================================================================
@@ -35,18 +35,18 @@ $pfe-colors: (
   ui-base--text--focus:               $pfe-color--ui-base--text--focus,
 
   ui-base--on-dark:                   $pfe-color--ui-base--on-dark,
-  ui-base--on-dark--hover:            $pfe-color--ui-base--on-dark--hover,
-  ui-base--on-dark--focus:            $pfe-color--ui-base--on-dark--focus,
+  ui-base--hover--on-dark:            $pfe-color--ui-base--hover--on-dark,
+  ui-base--focus--on-dark:            $pfe-color--ui-base--focus--on-dark,
   ui-base--text--on-dark:             $pfe-color--ui-base--text--on-dark,
-  ui-base--text--on-dark--hover:      $pfe-color--ui-base--text--on-dark--hover,
-  ui-base--text--on-dark--focus:      $pfe-color--ui-base--text--on-dark--focus,
+  ui-base--text--hover--on-dark:      $pfe-color--ui-base--text--hover--on-dark,
+  ui-base--text--focus--on-dark:      $pfe-color--ui-base--text--focus--on-dark,
 
   ui-base--on-saturated:                   $pfe-color--ui-base--on-saturated,
-  ui-base--on-saturated--hover:            $pfe-color--ui-base--on-saturated--hover,
-  ui-base--on-saturated--focus:            $pfe-color--ui-base--on-saturated--focus,
+  ui-base--hover--on-saturated:            $pfe-color--ui-base--hover--on-saturated,
+  ui-base--focus--on-saturated:            $pfe-color--ui-base--focus--on-saturated,
   ui-base--text--on-saturated:             $pfe-color--ui-base--text--on-saturated,
-  ui-base--text--on-saturated--hover:      $pfe-color--ui-base--text--on-saturated--hover,
-  ui-base--text--on-saturated--focus:      $pfe-color--ui-base--text--on-saturated--focus,
+  ui-base--text--hover--on-saturated:      $pfe-color--ui-base--text--hover--on-saturated,
+  ui-base--text--focus--on-saturated:      $pfe-color--ui-base--text--focus--on-saturated,
 
   // Set of complement colors
   ui-complement:                      $pfe-color--ui-complement,
@@ -57,11 +57,11 @@ $pfe-colors: (
   ui-complement--text--focus:         $pfe-color--ui-complement--text--focus,
 
   ui-complement--on-dark:                      $pfe-color--ui-complement--on-dark,
-  ui-complement--on-dark--hover:               $pfe-color--ui-complement--on-dark--hover,
-  ui-complement--on-dark--focus:               $pfe-color--ui-complement--on-dark--focus,
+  ui-complement--hover--on-dark:               $pfe-color--ui-complement--hover--on-dark,
+  ui-complement--focus--on-dark:               $pfe-color--ui-complement--focus--on-dark,
   ui-complement--text--on-dark:                $pfe-color--ui-complement--text--on-dark,
-  ui-complement--text--on-dark--hover:         $pfe-color--ui-complement--text--on-dark--hover,
-  ui-complement--text--on-dark--focus:         $pfe-color--ui-complement--text--on-dark--focus,
+  ui-complement--text--hover--on-dark:         $pfe-color--ui-complement--text--hover--on-dark,
+  ui-complement--text--focus--on-dark:         $pfe-color--ui-complement--text--focus--on-dark,
 
   // Set of accent colors
   ui-accent:                          $pfe-color--ui-accent,
@@ -72,11 +72,11 @@ $pfe-colors: (
   ui-accent--text--focus:             $pfe-color--ui-accent--text--focus,
 
   ui-accent--on-saturated:                          $pfe-color--ui-accent--on-saturated,
-  ui-accent--on-saturated--hover:                   $pfe-color--ui-accent--on-saturated--hover,
-  ui-accent--on-saturated--focus:                   $pfe-color--ui-accent--on-saturated--focus,
+  ui-accent--hover--on-saturated:                   $pfe-color--ui-accent--hover--on-saturated,
+  ui-accent--focus--on-saturated:                   $pfe-color--ui-accent--focus--on-saturated,
   ui-accent--text--on-saturated:                    $pfe-color--ui-accent--text--on-saturated,
-  ui-accent--text--on-saturated--hover:             $pfe-color--ui-accent--text--on-saturated--hover,
-  ui-accent--text--on-saturated--focus:             $pfe-color--ui-accent--text--on-saturated--focus,
+  ui-accent--text--hover--on-saturated:             $pfe-color--ui-accent--text--hover--on-saturated,
+  ui-accent--text--focus--on-saturated:             $pfe-color--ui-accent--text--focus--on-saturated,
 
   // Set of disabled colors
   ui-disabled:                        $pfe-color--ui-disabled,

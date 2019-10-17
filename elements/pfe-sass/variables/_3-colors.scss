@@ -27,15 +27,15 @@ $pfe-color--link--focus:                     darken($pfe-color--link, 20%) !defa
 
 $pfe-color--text--on-dark:                      $pfe-color--white !default;
 $pfe-color--link--on-dark:                   lighten($pfe-color--link, 40%) !default;          // Was #97daff
-$pfe-color--link--on-dark--visited:          lighten($pfe-color--link--visited, 30%) !default; // Was #d8c0ff
-$pfe-color--link--on-dark--hover:            lighten($pfe-color--link--on-dark, 10%) !default; // Was #c0ecff
-$pfe-color--link--on-dark--focus:            lighten($pfe-color--link--on-dark, 10%) !default; // Was #c0ecff
+$pfe-color--link--visited--on-dark:          lighten($pfe-color--link--visited, 30%) !default; // Was #d8c0ff
+$pfe-color--link--hover--on-dark:            lighten($pfe-color--link--on-dark, 10%) !default; // Was #c0ecff
+$pfe-color--link--focus--on-dark:            lighten($pfe-color--link--on-dark, 10%) !default; // Was #c0ecff
 
 $pfe-color--text--on-saturated:                 $pfe-color--white !default;
 $pfe-color--link--on-saturated:              $pfe-color--white;               // Was #97daff
-$pfe-color--link--on-saturated--visited:     lighten($pfe-color--link--visited, 30%) !default;      // Was #d8c0ff
-$pfe-color--link--on-saturated--hover:       lighten($pfe-color--link--on-saturated, 10%) !default; // Was #c0ecff
-$pfe-color--link--on-saturated--focus:       lighten($pfe-color--link--on-saturated, 10%) !default; // Was #c0ecff
+$pfe-color--link--visited--on-saturated:     lighten($pfe-color--link--visited, 30%) !default;      // Was #d8c0ff
+$pfe-color--link--hover--on-saturated:       lighten($pfe-color--link--on-saturated, 10%) !default; // Was #c0ecff
+$pfe-color--link--focus--on-saturated:       lighten($pfe-color--link--on-saturated, 10%) !default; // Was #c0ecff
 
 
 // ========================================================================
@@ -50,25 +50,25 @@ $pfe-color--ui-base--text--hover:               $pfe-color--text--on-dark !defau
 $pfe-color--ui-base--text--focus:               $pfe-color--text--on-dark !default;
 
 $pfe-color--ui-base--on-dark:                   lighten($pfelements--blue, 40%) !default;
-$pfe-color--ui-base--on-dark--hover:            lighten($pfelements--blue, 20%) !default;
-$pfe-color--ui-base--on-dark--focus:            lighten($pfelements--blue, 20%) !default;
+$pfe-color--ui-base--hover--on-dark:            lighten($pfelements--blue, 20%) !default;
+$pfe-color--ui-base--focus--on-dark:            lighten($pfelements--blue, 20%) !default;
 $pfe-color--ui-base--text--on-dark:             $pfe-color--text !default;
-$pfe-color--ui-base--text--on-dark--hover:      $pfe-color--text !default;
-$pfe-color--ui-base--text--on-dark--focus:      $pfe-color--text !default;
+$pfe-color--ui-base--text--hover--on-dark:      $pfe-color--text !default;
+$pfe-color--ui-base--text--focus--on-dark:      $pfe-color--text !default;
 
 $pfe-color--ui-base--on-saturated:              $pfe-color--white !default;
-$pfe-color--ui-base--on-saturated--hover:       darken($pfe-color--white, 20%) !default;
-$pfe-color--ui-base--on-saturated--focus:       darken($pfe-color--white, 20%) !default;
+$pfe-color--ui-base--hover--on-saturated:       darken($pfe-color--white, 20%) !default;
+$pfe-color--ui-base--focus--on-saturated:       darken($pfe-color--white, 20%) !default;
 $pfe-color--ui-base--text--on-saturated:        $pfe-color--text !default;
-$pfe-color--ui-base--text--on-saturated--hover: $pfe-color--text !default;
-$pfe-color--ui-base--text--on-saturated--focus: $pfe-color--text !default;
+$pfe-color--ui-base--text--hover--on-saturated: $pfe-color--text !default;
+$pfe-color--ui-base--text--focus--on-saturated: $pfe-color--text !default;
 
 $pfe-color--ui-complement--on-dark:              $pfe-color--white !default;
-$pfe-color--ui-complement--on-dark--hover:       darken($pfe-color--white, 20%) !default;
-$pfe-color--ui-complement--on-dark--focus:       darken($pfe-color--white, 20%) !default;
+$pfe-color--ui-complement--hover--on-dark:       darken($pfe-color--white, 20%) !default;
+$pfe-color--ui-complement--focus--on-dark:       darken($pfe-color--white, 20%) !default;
 $pfe-color--ui-complement--text--on-dark:        $pfe-color--text !default;
-$pfe-color--ui-complement--text--on-dark--hover: $pfe-color--text !default;
-$pfe-color--ui-complement--text--on-dark--focus: $pfe-color--text !default;
+$pfe-color--ui-complement--text--hover--on-dark: $pfe-color--text !default;
+$pfe-color--ui-complement--text--focus--on-dark: $pfe-color--text !default;
 
 $pfe-color--ui-complement:                      $pfe-color--gray-800 !default;
 $pfe-color--ui-complement--hover:               $pfe-color--gray-1000 !default;
@@ -85,11 +85,11 @@ $pfe-color--ui-accent--text--hover:             $pfe-color--text--on-dark !defau
 $pfe-color--ui-accent--text--focus:             $pfe-color--text--on-dark !default;
 
 $pfe-color--ui-accent--on-saturated:              $pfe-color--white !default;
-$pfe-color--ui-accent--on-saturated--hover:       darken($pfe-color--white, 20%) !default;
-$pfe-color--ui-accent--on-saturated--focus:       darken($pfe-color--white, 20%) !default;
+$pfe-color--ui-accent--hover--on-saturated:       darken($pfe-color--white, 20%) !default;
+$pfe-color--ui-accent--focus--on-saturated:       darken($pfe-color--white, 20%) !default;
 $pfe-color--ui-accent--text--on-saturated:        $pfe-color--text !default;
-$pfe-color--ui-accent--text--on-saturated--hover: $pfe-color--text !default;
-$pfe-color--ui-accent--text--on-saturated--focus: $pfe-color--text !default;
+$pfe-color--ui-accent--text--hover--on-saturated: $pfe-color--text !default;
+$pfe-color--ui-accent--text--focus--on-saturated: $pfe-color--text !default;
 
 $pfe-color--ui-disabled:                        $pfelements--gray-light !default;
 $pfe-color--ui-disabled--hover:                 $pfelements--gray-light !default;

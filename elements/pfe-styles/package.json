@@ -13,6 +13,11 @@
     "web-components",
     "html"
   ],
+  "files": [
+    "pfe-base.*css",
+    "pfe-context.*css",
+    "pfe-layouts.*css"
+  ],
   "repository": {
     "type": "git",
     "url": "github:patternfly/patternfly-elements",

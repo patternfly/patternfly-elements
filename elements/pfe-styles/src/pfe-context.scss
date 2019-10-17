@@ -1,14 +1,9 @@
 @import "../../pfe-sass/pfe-sass";
 
-// Helper classes to aid in theming on custom pages
-.on-dark {
-    @include pfe-set-broadcast(darkest);
-}
-
-.on-saturated {
-    @include pfe-set-broadcast(complement);
-}
-
-.on-light {
-    @include pfe-set-broadcast(lightest);
+// Helper attributes to aid in theming on custom pages
+@each $theme in (dark, saturated, light) {
+    [on="#{$theme}"],
+    .on-#{$theme} {
+        @include pfe-set-broadcast($theme);
+    }
 }

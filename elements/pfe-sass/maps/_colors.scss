@@ -1,144 +1,122 @@
 $pfe-colors: (
-
   // ========================================================================
-  // Base Text Colors
-  // ========================================================================
-
-  text:                               $pfe-color--text,
-  text--on-dark:                      $pfe-color--text--on-dark,
-  text--on-saturated:                 $pfe-color--text--on-saturated,
-
-
-  // ========================================================================
-  // Base UI Link Colors to be used below
+  // Base text and link colors, basis of "theme"
   // ========================================================================
 
-  ui-link:                            $pfe-color--ui-link,
-  ui-link--visited:                   $pfe-color--ui-link--visited,
-  ui-link--hover:                     $pfe-color--ui-link--hover,
-  ui-link--focus:                     $pfe-color--ui-link--focus,
+  text:                        $pfe-color--text,
+  link:                        $pfe-color--link,
+  link--visited:               $pfe-color--link--visited,
+  link--hover:                 $pfe-color--link--hover,
+  link--focus:                 $pfe-color--link--focus,
 
-  ui-link--on-dark:                   $pfe-color--ui-link--on-dark,
-  ui-link--on-dark--visited:          $pfe-color--ui-link--on-dark--visited,
-  ui-link--on-dark--hover:            $pfe-color--ui-link--on-dark--hover,
-  ui-link--on-dark--focus:            $pfe-color--ui-link--on-dark--focus,
+  text--on-dark:               $pfe-color--text--on-dark,
+  link--on-dark:               $pfe-color--link--on-dark,
+  link--on-dark--visited:      $pfe-color--link--on-dark--visited,
+  link--on-dark--hover:        $pfe-color--link--on-dark--hover,
+  link--on-dark--focus:        $pfe-color--link--on-dark--focus,
 
-  ui-link--on-saturated:              $pfe-color--ui-link--on-saturated,
-  ui-link--on-saturated--visited:     $pfe-color--ui-link--on-saturated--visited,
-  ui-link--on-saturated--hover:       $pfe-color--ui-link--on-saturated--hover,
-  ui-link--on-saturated--focus:       $pfe-color--ui-link--on-saturated--focus,
+  text--on-saturated:          $pfe-color--text--on-saturated,
+  link--on-saturated:          $pfe-color--link--on-saturated,
+  link--on-saturated--visited: $pfe-color--link--on-saturated--visited,
+  link--on-saturated--hover:   $pfe-color--link--on-saturated--hover,
+  link--on-saturated--focus:   $pfe-color--link--on-saturated--focus,
 
 
   // ========================================================================
   // Base UI Colors for Buttons, CTAs, and actionable UI elements
   // ========================================================================
 
+  // Set of base colors
   ui-base:                            $pfe-color--ui-base,
   ui-base--hover:                     $pfe-color--ui-base--hover,
   ui-base--focus:                     $pfe-color--ui-base--focus,
-  ui-base--visited:                   $pfe-color--ui-base--visited,
   ui-base--text:                      $pfe-color--ui-base--text,
   ui-base--text--hover:               $pfe-color--ui-base--text--hover,
   ui-base--text--focus:               $pfe-color--ui-base--text--focus,
-  ui-base--text--visited:             $pfe-color--ui-base--text--visited,
 
   ui-base--on-dark:                   $pfe-color--ui-base--on-dark,
   ui-base--on-dark--hover:            $pfe-color--ui-base--on-dark--hover,
   ui-base--on-dark--focus:            $pfe-color--ui-base--on-dark--focus,
-  ui-base--on-dark--visited:          $pfe-color--ui-base--on-dark--visited,
-  ui-base--text--on-dark:             $pfe-color--ui-base--text,
+  ui-base--text--on-dark:             $pfe-color--ui-base--text--on-dark,
   ui-base--text--on-dark--hover:      $pfe-color--ui-base--text--on-dark--hover,
   ui-base--text--on-dark--focus:      $pfe-color--ui-base--text--on-dark--focus,
-  ui-base--text--on-dark--visited:    $pfe-color--ui-base--text--on-dark--visited,
 
+  ui-base--on-saturated:                   $pfe-color--ui-base--on-saturated,
+  ui-base--on-saturated--hover:            $pfe-color--ui-base--on-saturated--hover,
+  ui-base--on-saturated--focus:            $pfe-color--ui-base--on-saturated--focus,
+  ui-base--text--on-saturated:             $pfe-color--ui-base--text--on-saturated,
+  ui-base--text--on-saturated--hover:      $pfe-color--ui-base--text--on-saturated--hover,
+  ui-base--text--on-saturated--focus:      $pfe-color--ui-base--text--on-saturated--focus,
+
+  // Set of complement colors
   ui-complement:                      $pfe-color--ui-complement,
   ui-complement--hover:               $pfe-color--ui-complement--hover,
   ui-complement--focus:               $pfe-color--ui-complement--focus,
-  ui-complement--visited:             $pfe-color--ui-complement--visited,
   ui-complement--text:                $pfe-color--ui-complement--text,
   ui-complement--text--hover:         $pfe-color--ui-complement--text--hover,
   ui-complement--text--focus:         $pfe-color--ui-complement--text--focus,
-  ui-complement--text--visited:       $pfe-color--ui-complement--text--visited,
 
+  ui-complement--on-dark:                      $pfe-color--ui-complement--on-dark,
+  ui-complement--on-dark--hover:               $pfe-color--ui-complement--on-dark--hover,
+  ui-complement--on-dark--focus:               $pfe-color--ui-complement--on-dark--focus,
+  ui-complement--text--on-dark:                $pfe-color--ui-complement--text--on-dark,
+  ui-complement--text--on-dark--hover:         $pfe-color--ui-complement--text--on-dark--hover,
+  ui-complement--text--on-dark--focus:         $pfe-color--ui-complement--text--on-dark--focus,
+
+  // Set of accent colors
   ui-accent:                          $pfe-color--ui-accent,
   ui-accent--hover:                   $pfe-color--ui-accent--hover,
   ui-accent--focus:                   $pfe-color--ui-accent--focus,
-  ui-accent--visited:                 $pfe-color--ui-accent--visited,
   ui-accent--text:                    $pfe-color--ui-accent--text,
   ui-accent--text--hover:             $pfe-color--ui-accent--text--hover,
   ui-accent--text--focus:             $pfe-color--ui-accent--text--focus,
-  ui-accent--text--visited:           $pfe-color--ui-accent--text--visited,
 
+  ui-accent--on-saturated:                          $pfe-color--ui-accent--on-saturated,
+  ui-accent--on-saturated--hover:                   $pfe-color--ui-accent--on-saturated--hover,
+  ui-accent--on-saturated--focus:                   $pfe-color--ui-accent--on-saturated--focus,
+  ui-accent--text--on-saturated:                    $pfe-color--ui-accent--text--on-saturated,
+  ui-accent--text--on-saturated--hover:             $pfe-color--ui-accent--text--on-saturated--hover,
+  ui-accent--text--on-saturated--focus:             $pfe-color--ui-accent--text--on-saturated--focus,
+
+  // Set of disabled colors
   ui-disabled:                        $pfe-color--ui-disabled,
   ui-disabled--hover:                 $pfe-color--ui-disabled--hover,
   ui-disabled--focus:                 $pfe-color--ui-disabled--focus,
-  ui-disabled--visited:               $pfe-color--ui-disabled--visited,
   ui-disabled--text:                  $pfe-color--ui-disabled--text,
   ui-disabled--text--hover:           $pfe-color--ui-disabled--text--hover,
   ui-disabled--text--focus:           $pfe-color--ui-disabled--text--focus,
-  ui-disabled--text--visited:         $pfe-color--ui-disabled--text--visited,
 
   // ========================================================================
   // Base Surface Colors for Container elements
   // ========================================================================
 
   // Lightest group
-  surface--lightest:                  $pfe-color--surface--lightest,
-  surface--lightest--text:            $pfe-color--surface--lightest--text,
-  surface--lightest--ui-link:            $pfe-color--surface--lightest--ui-link,
-  surface--lightest--ui-link--visited:   $pfe-color--surface--lightest--ui-link--visited,
-  surface--lightest--ui-link--hover:     $pfe-color--surface--lightest--ui-link--hover,
-  surface--lightest--ui-link--focus:     $pfe-color--surface--lightest--ui-link--focus,
+  surface--lightest:        $pfe-color--surface--lightest,
+  surface--lightest--theme: $pfe-color--surface--lightest--theme,
 
   // Lighter group
-  surface--lighter:                   $pfe-color--surface--lighter,
-  surface--lighter--text:             $pfe-color--surface--lighter--text,
-  surface--lighter--ui-link:             $pfe-color--surface--lighter--ui-link,
-  surface--lighter--ui-link--visited:    $pfe-color--surface--lighter--ui-link--visited,
-  surface--lighter--ui-link--hover:      $pfe-color--surface--lighter--ui-link--hover,
-  surface--lighter--ui-link--focus:      $pfe-color--surface--lighter--ui-link--focus,
+  surface--lighter:         $pfe-color--surface--lighter,
+  surface--lighter--theme:  $pfe-color--surface--lighter--theme,
 
   // Base group
-  surface--base:                      $pfe-color--surface--base,
-  surface--base--text:                $pfe-color--surface--base--text,
-  surface--base--ui-link:                $pfe-color--surface--base--ui-link,
-  surface--base--ui-link--visited:       $pfe-color--surface--base--ui-link--visited,
-  surface--base--ui-link--hover:         $pfe-color--surface--base--ui-link--hover,
-  surface--base--ui-link--focus:         $pfe-color--surface--base--ui-link--focus,
+  surface--base:        $pfe-color--surface--base,
+  surface--base--theme: $pfe-color--surface--base--theme,
 
   // Darker group
-  surface--darker:                    $pfe-color--surface--darker,
-  surface--darker--text:              $pfe-color--surface--darker--text,
-  surface--darker--ui-link:              $pfe-color--surface--darker--ui-link,
-  surface--darker--ui-link--visited:     $pfe-color--surface--darker--ui-link--visited,
-  surface--darker--ui-link--hover:       $pfe-color--surface--darker--ui-link--hover,
-  surface--darker--ui-link--focus:       $pfe-color--surface--darker--ui-link--focus,
+  surface--darker:        $pfe-color--surface--darker,
+  surface--darker--theme: $pfe-color--surface--darker--theme,
 
   // Darkest group
-  surface--darkest:                   $pfe-color--surface--darkest,
-  surface--darkest--text:             $pfe-color--surface--darkest--text,
-  surface--darkest--ui-link:             $pfe-color--surface--darkest--ui-link,
-  surface--darkest--ui-link--visited:    $pfe-color--surface--darkest--ui-link--visited,
-  surface--darkest--ui-link--hover:      $pfe-color--surface--darkest--ui-link--hover,
-  surface--darkest--ui-link--focus:      $pfe-color--surface--darkest--ui-link--focus,
+  surface--darkest:        $pfe-color--surface--darkest,
+  surface--darkest--theme: $pfe-color--surface--darkest--theme,
 
   // Complement group
-  surface--complement:                $pfe-color--surface--complement,
-  surface--complement--text:          $pfe-color--surface--complement--text,
-  surface--complement--ui-link:          $pfe-color--surface--complement--ui-link,
-  surface--complement--ui-link--visited: $pfe-color--surface--complement--ui-link--visited,
-  surface--complement--ui-link--hover:   $pfe-color--surface--complement--ui-link--hover,
-  surface--complement--ui-link--focus:   $pfe-color--surface--complement--ui-link--focus,
-
+  surface--complement:        $pfe-color--surface--complement,
+  surface--complement--theme: $pfe-color--surface--complement--theme,
 
   // Accent group
-  surface--accent:                    $pfe-color--surface--accent,
-  surface--accent--text:              $pfe-color--surface--accent--text,
-  surface--accent--ui-link:              $pfe-color--surface--accent--ui-link,
-  surface--accent--ui-link--visited:     $pfe-color--surface--accent--ui-link--visited,
-  surface--accent--ui-link--hover:       $pfe-color--surface--accent--ui-link--hover,
-  surface--accent--ui-link--focus:       $pfe-color--surface--accent--ui-link--focus,
-
+  surface--accent:        $pfe-color--surface--accent,
+  surface--accent--theme: $pfe-color--surface--accent--theme,
 
   // Palette of Border Colors
   surface--border:                    $pfe-color--surface--border,

@@ -51,17 +51,19 @@
 @function str-split($string, $separator: ',') {
     // empty array/list
     $split-arr: ();
+    // length of separator
+    $sep-length: str-length($separator);
     // first index of separator in string
     $index: str-index("#{$string}", $separator);
 
     // loop through string
     @while $index != null {
         // get the substring from the first character to the separator
-        $item: str-slice($string, 1, $index - 1);
+        $item: str-slice($string, 1, ($index - 1));
         // push item to array
         $split-arr: append($split-arr, $item);
         // remove item and separator from string
-        $string: str-slice($string, $index + 1);
+        $string: str-slice($string, ($index + $sep-length));
         // find new index of separator
         $index: str-index($string, $separator);
     }

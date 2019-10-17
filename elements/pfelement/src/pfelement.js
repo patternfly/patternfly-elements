@@ -47,6 +47,17 @@ class PFElement extends HTMLElement {
     this.setAttribute(`${prefix}type`, value);
   }
 
+  get variable(name, element = document.body) {
+    return window
+        .getComputedStyle(element)
+        .getPropertyValue(`--${name}`)
+        .trim();
+  }
+
+  set variable(name, value, element = this) {
+    element.setProperty(name, value);
+  }
+
   // Returns a single element assigned to that slot; if multiple, it returns the first
   has_slot(name) {
     return this.querySelector(`[slot='${name}']`);
@@ -105,6 +116,9 @@ class PFElement extends HTMLElement {
     // https://github.com/angular/angular/issues/15399#issuecomment-318785677
     this.classList.add("PFElement");
     this.setAttribute("pfelement", "");
+    
+    // Get the theme variable if it exists, set it as an attribute
+    if (this.variable(theme)) this.setAttribute("on", this.variable(theme));
 
     if (typeof this.props === "object") {
       this._mapSchemaToProperties(this.tag, this.props);

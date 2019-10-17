@@ -25,6 +25,7 @@
 
       button {
         border: none;
+        cursor: pointer;
       }
 
       header h1 {
@@ -63,19 +64,19 @@
         padding: 8px;
       }
 
-      .on-light {
+      [on="light"] {
         background-color: #fff;
       }
 
-      button.on-light {
+      button[on="light"] {
         border: 1px solid lightgray;
       }
 
-      .on-dark {
+      [on="dark"] {
         background-color: #252525;
       }
 
-      .on-saturated {
+      [on="saturated"] {
         background-color: #0477a4;
       }
 
@@ -167,11 +168,11 @@
       </header>
       <section>
         <section class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
-          <button class="themes on-light" name="light">Light theme</button>
-          <button class="themes on-dark" name="dark">Dark theme</button>
-          <button class="themes on-saturated" name="saturated">Saturated theme</button>
+          <button class="themes" on="light" name="light">Light theme</button>
+          <button class="themes" on="dark" name="dark">Dark theme</button>
+          <button class="themes" on="saturated" name="saturated">Saturated theme</button>
         </section>
-        <section id="ui" class="pfe-l-grid pfe-m-gutters">
+        <section class="pfe-l-grid pfe-m-gutters context-container">
           <h3>UI elements</h3>
           <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
             <div class="ui-base"></div>
@@ -180,32 +181,29 @@
             <div class="ui-disabled"></div>
           </div>
           <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
-            <div class="ui-base-hover"></div>
-            <div class="ui-complement-hover"></div>
-            <div class="ui-accent-hover"></div>
-            <div class="ui-disabled-hover"></div>
+            <div class="ui-base--hover"></div>
+            <div class="ui-complement--hover"></div>
+            <div class="ui-accent--hover"></div>
+            <div class="ui-disabled--hover"></div>
           </div>
           <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
-            <div class="ui-base-focus"></div>
-            <div class="ui-complement-focus"></div>
-            <div class="ui-accent-focus"></div>
-            <div class="ui-disabled-focus"></div>
-          </div>
-          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
-            <div class="ui-base-visited"></div>
-            <div class="ui-complement-visited"></div>
-            <div class="ui-accent-visited"></div>
-            <div class="ui-disabled-visited"></div>
+            <div class="ui-base--focus"></div>
+            <div class="ui-complement--focus"></div>
+            <div class="ui-accent--focus"></div>
+            <div class="ui-disabled--focus"></div>
           </div>
         </section>
 
-        <section>
+        <section class="pfe-l-grid pfe-m-gutters context-container">
           <h3>Surface elements</h3>
-          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-1-col">
-            <button class="ui-base"></button>
-            <button class="ui-complement"></button>
-            <button class="ui-accent"></button>
-            <button class="ui-disabled"></button>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+            <button class="lightest"></button>
+            <button class="lighter"></button>
+            <button class="base"></button>
+            <button class="darker"></button>
+            <button class="darkest"></button>
+            <button class="complement"></button>
+            <button class="accent"></button>
           </div>
         </section>
 
@@ -214,16 +212,21 @@
   </body>
 
   <script>
+    var containers = document.querySelectorAll(".context-container");
+    var applyTheme = function(event) {
+      containers.forEach(function(item) {
+        item.style.setProperty("--theme", event.target.name);
+        item.setAttribute("on", event.target.name);
+      });
+    }
+
     document.querySelectorAll("button.themes").forEach(function(item) {
-      item.addEventListener("click", function(event) {
-        var list = document.querySelector("#ui").className.split(" ");
-        var context = list.filter( function(c) {
-          return /on-.*/.test(c);
-        } );
-        if (context.length) {
-          document.querySelector("#ui").classList.remove(context);
+      item.addEventListener("click", applyTheme);
+      item.addEventListener("keypress", function(event) {
+        var key = event.which || event.keyCode;
+        if (key === 13) { // 13 is enter
+          applyTheme(event);
         }
-        document.querySelector("#ui").classList.add("on-" + event.target.name);
       });
     });
   </script>

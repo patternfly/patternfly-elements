@@ -8,34 +8,34 @@
 //
 // ========================================================================
 
-
 // ========================================================================
-// Base Text Colors
+// Base text and link colors, basis of "theme"
 // ========================================================================
 
 $pfe-color--text:                               $pfelements--gray-dark !default;
+$pfe-color--link:                            #06c !default; //but #00538c for base/gray, how to do that?
+$pfe-color--link--visited:                   $pfelements--purple !default;             // Was #7551a6
+$pfe-color--link--hover:                     darken($pfe-color--link, 20%) !default; // Was #004080
+$pfe-color--link--focus:                     darken($pfe-color--link, 20%) !default; // Was #004080
+
+// Light gray?
+// $pfe-color--surface--base--text:                $pfe-color--text !default;
+// $pfe-color--surface--base--link:             #00538c !default;  // Contrast with $pfe-color--link doesn't meet WCAG2 AA
+// $pfe-color--surface--base--link--visited:    #7551a6 !default;
+// $pfe-color--surface--base--link--hover:      #00305b !default;
+// $pfe-color--surface--base--link--focus:      #00305b !default;
+
 $pfe-color--text--on-dark:                      $pfe-color--white !default;
+$pfe-color--link--on-dark:                   lighten($pfe-color--link, 40%) !default;          // Was #97daff
+$pfe-color--link--on-dark--visited:          lighten($pfe-color--link--visited, 30%) !default; // Was #d8c0ff
+$pfe-color--link--on-dark--hover:            lighten($pfe-color--link--on-dark, 10%) !default; // Was #c0ecff
+$pfe-color--link--on-dark--focus:            lighten($pfe-color--link--on-dark, 10%) !default; // Was #c0ecff
+
 $pfe-color--text--on-saturated:                 $pfe-color--white !default;
-
-
-// ========================================================================
-// Base UI Link Colors to be used below
-// ========================================================================
-
-$pfe-color--ui-link:                            #06c !default;
-$pfe-color--ui-link--visited:                   $pfelements--purple !default;             // Was #7551a6
-$pfe-color--ui-link--hover:                     darken($pfe-color--ui-link, 20%) !default; // Was #004080
-$pfe-color--ui-link--focus:                     darken($pfe-color--ui-link, 20%) !default; // Was #004080
-
-$pfe-color--ui-link--on-dark:                   lighten($pfe-color--ui-link, 40%) !default;          // Was #97daff
-$pfe-color--ui-link--on-dark--visited:          lighten($pfe-color--ui-link--visited, 30%) !default; // Was #d8c0ff
-$pfe-color--ui-link--on-dark--hover:            lighten($pfe-color--ui-link--on-dark, 10%) !default; // Was #c0ecff
-$pfe-color--ui-link--on-dark--focus:            lighten($pfe-color--ui-link--on-dark, 10%) !default; // Was #c0ecff
-
-$pfe-color--ui-link--on-saturated:              $pfe-color--white;               // Was #97daff
-$pfe-color--ui-link--on-saturated--visited:     lighten($pfe-color--ui-link--visited, 30%) !default;      // Was #d8c0ff
-$pfe-color--ui-link--on-saturated--hover:       lighten($pfe-color--ui-link--on-saturated, 10%) !default; // Was #c0ecff
-$pfe-color--ui-link--on-saturated--focus:       lighten($pfe-color--ui-link--on-saturated, 10%) !default; // Was #c0ecff
+$pfe-color--link--on-saturated:              $pfe-color--white;               // Was #97daff
+$pfe-color--link--on-saturated--visited:     lighten($pfe-color--link--visited, 30%) !default;      // Was #d8c0ff
+$pfe-color--link--on-saturated--hover:       lighten($pfe-color--link--on-saturated, 10%) !default; // Was #c0ecff
+$pfe-color--link--on-saturated--focus:       lighten($pfe-color--link--on-saturated, 10%) !default; // Was #c0ecff
 
 
 // ========================================================================
@@ -45,56 +45,58 @@ $pfe-color--ui-link--on-saturated--focus:       lighten($pfe-color--ui-link--on-
 $pfe-color--ui-base:                            $pfelements--blue !default;
 $pfe-color--ui-base--hover:                     darken($pfelements--blue, 20%) !default;
 $pfe-color--ui-base--focus:                     darken($pfelements--blue, 20%) !default;
-$pfe-color--ui-base--visited:                   $pfelements--blue !default;
 $pfe-color--ui-base--text:                      $pfe-color--text--on-dark !default;
 $pfe-color--ui-base--text--hover:               $pfe-color--text--on-dark !default;
 $pfe-color--ui-base--text--focus:               $pfe-color--text--on-dark !default;
-$pfe-color--ui-base--text--visited:             $pfe-color--text--on-dark !default;
 
 $pfe-color--ui-base--on-dark:                   lighten($pfelements--blue, 40%) !default;
 $pfe-color--ui-base--on-dark--hover:            lighten($pfelements--blue, 20%) !default;
 $pfe-color--ui-base--on-dark--focus:            lighten($pfelements--blue, 20%) !default;
-$pfe-color--ui-base--on-dark--visited:          $pfe-color--white !default;
 $pfe-color--ui-base--text--on-dark:             $pfe-color--text !default;
 $pfe-color--ui-base--text--on-dark--hover:      $pfe-color--text !default;
 $pfe-color--ui-base--text--on-dark--focus:      $pfe-color--text !default;
-$pfe-color--ui-base--text--on-dark--visited:    $pfe-color--text !default;
 
-$pfe-color--ui-base--on-saturated:                $pfe-color--white !default;
-$pfe-color--ui-base--on-saturated--hover:         darken($pfe-color--white, 20%) !default;
-$pfe-color--ui-base--on-saturated--focus:         darken($pfe-color--white, 20%) !default;
-$pfe-color--ui-base--on-saturated--visited:       $pfe-color--white !default;
-$pfe-color--ui-base--text--on-saturated:          $pfe-color--text !default;
-$pfe-color--ui-base--text--on-saturated--hover:   $pfe-color--text !default;
-$pfe-color--ui-base--text--on-saturated--focus:   $pfe-color--text !default;
-$pfe-color--ui-base--text--on-saturated--visited: $pfe-color--text !default;
+$pfe-color--ui-base--on-saturated:              $pfe-color--white !default;
+$pfe-color--ui-base--on-saturated--hover:       darken($pfe-color--white, 20%) !default;
+$pfe-color--ui-base--on-saturated--focus:       darken($pfe-color--white, 20%) !default;
+$pfe-color--ui-base--text--on-saturated:        $pfe-color--text !default;
+$pfe-color--ui-base--text--on-saturated--hover: $pfe-color--text !default;
+$pfe-color--ui-base--text--on-saturated--focus: $pfe-color--text !default;
+
+$pfe-color--ui-complement--on-dark:              $pfe-color--white !default;
+$pfe-color--ui-complement--on-dark--hover:       darken($pfe-color--white, 20%) !default;
+$pfe-color--ui-complement--on-dark--focus:       darken($pfe-color--white, 20%) !default;
+$pfe-color--ui-complement--text--on-dark:        $pfe-color--text !default;
+$pfe-color--ui-complement--text--on-dark--hover: $pfe-color--text !default;
+$pfe-color--ui-complement--text--on-dark--focus: $pfe-color--text !default;
 
 $pfe-color--ui-complement:                      $pfe-color--gray-800 !default;
 $pfe-color--ui-complement--hover:               $pfe-color--gray-1000 !default;
 $pfe-color--ui-complement--focus:               $pfe-color--gray-1000 !default;
-$pfe-color--ui-complement--visited:             $pfe-color--gray-800 !default;
 $pfe-color--ui-complement--text:                $pfe-color--text--on-dark !default;
 $pfe-color--ui-complement--text--hover:         $pfe-color--text--on-dark !default;
 $pfe-color--ui-complement--text--focus:         $pfe-color--text--on-dark !default;
-$pfe-color--ui-complement--text--visited:       $pfe-color--text--on-dark !default;
 
 $pfe-color--ui-accent:                          $pfelements--orange !default;
 $pfe-color--ui-accent--hover:                   darken($pfelements--orange, 20%) !default;
 $pfe-color--ui-accent--focus:                   $pfelements--orange !default;
-$pfe-color--ui-accent--visited:                 $pfelements--orange !default;
 $pfe-color--ui-accent--text:                    $pfe-color--text--on-dark !default;
 $pfe-color--ui-accent--text--hover:             $pfe-color--text--on-dark !default;
 $pfe-color--ui-accent--text--focus:             $pfe-color--text--on-dark !default;
-$pfe-color--ui-accent--text--visited:           $pfe-color--text--on-dark !default;
+
+$pfe-color--ui-accent--on-saturated:              $pfe-color--white !default;
+$pfe-color--ui-accent--on-saturated--hover:       darken($pfe-color--white, 20%) !default;
+$pfe-color--ui-accent--on-saturated--focus:       darken($pfe-color--white, 20%) !default;
+$pfe-color--ui-accent--text--on-saturated:        $pfe-color--text !default;
+$pfe-color--ui-accent--text--on-saturated--hover: $pfe-color--text !default;
+$pfe-color--ui-accent--text--on-saturated--focus: $pfe-color--text !default;
 
 $pfe-color--ui-disabled:                        $pfelements--gray-light !default;
 $pfe-color--ui-disabled--hover:                 $pfelements--gray-light !default;
 $pfe-color--ui-disabled--focus:                 $pfelements--gray-light !default;
-$pfe-color--ui-disabled--visited:               $pfelements--gray-light !default;
 $pfe-color--ui-disabled--text:                  $pfelements--gray !default;
 $pfe-color--ui-disabled--text--hover:           $pfelements--gray !default;
 $pfe-color--ui-disabled--text--focus:           $pfelements--gray !default;
-$pfe-color--ui-disabled--text--visited:         $pfelements--gray !default;
 
 
 // ========================================================================
@@ -102,61 +104,32 @@ $pfe-color--ui-disabled--text--visited:         $pfelements--gray !default;
 // ========================================================================
 
 // Lightest group
-$pfe-color--surface--lightest:                  $pfe-color--white !default;
-$pfe-color--surface--lightest--text:            $pfe-color--text !default;
-$pfe-color--surface--lightest--ui-link:            $pfe-color--ui-link !default;
-$pfe-color--surface--lightest--ui-link--visited:   $pfe-color--ui-link--visited !default;
-$pfe-color--surface--lightest--ui-link--hover:     $pfe-color--ui-link--hover !default;
-$pfe-color--surface--lightest--ui-link--focus:     $pfe-color--ui-link--focus !default;
+$pfe-color--surface--lightest:        $pfe-color--white !default;
+$pfe-color--surface--lightest--theme: light;
 
 // Lighter group
-$pfe-color--surface--lighter:                   $pfe-color--gray-100 !default;
-$pfe-color--surface--lighter--text:             $pfe-color--text !default;
-$pfe-color--surface--lighter--ui-link:             $pfe-color--ui-link !default;
-$pfe-color--surface--lighter--ui-link--visited:    $pfe-color--ui-link--visited !default;
-$pfe-color--surface--lighter--ui-link--hover:      $pfe-color--ui-link--hover !default;
-$pfe-color--surface--lighter--ui-link--focus:      $pfe-color--ui-link--focus !default;
+$pfe-color--surface--lighter:         $pfe-color--gray-100 !default;
+$pfe-color--surface--lighter--theme: light;
 
 // Base group
-$pfe-color--surface--base:                      $pfe-color--gray-200 !default;
-$pfe-color--surface--base--text:                $pfe-color--text !default;
-$pfe-color--surface--base--ui-link:                #00538c !default;  // Contrast with $pfe-color--ui-link doesn't meet WCAG2 AA
-$pfe-color--surface--base--ui-link--visited:       #7551a6 !default;
-$pfe-color--surface--base--ui-link--hover:         #00305b !default;
-$pfe-color--surface--base--ui-link--focus:         #00305b !default;
+$pfe-color--surface--base:            $pfe-color--gray-200 !default;
+$pfe-color--surface--base--theme: light;
 
 // Darker group
-$pfe-color--surface--darker:                    $pfe-color--gray-800 !default;
-$pfe-color--surface--darker--text:              $pfe-color--text--on-dark !default;
-$pfe-color--surface--darker--ui-link:              $pfe-color--ui-link--on-dark !default;
-$pfe-color--surface--darker--ui-link--visited:     $pfe-color--ui-link--on-dark--visited !default;
-$pfe-color--surface--darker--ui-link--hover:       $pfe-color--ui-link--on-dark--hover !default;
-$pfe-color--surface--darker--ui-link--focus:       $pfe-color--ui-link--on-dark--focus !default;
+$pfe-color--surface--darker:          $pfe-color--gray-800 !default;
+$pfe-color--surface--darker--theme: dark;
 
 // Darkest group
-$pfe-color--surface--darkest:                   $pfe-color--gray-1000 !default;
-$pfe-color--surface--darkest--text:             $pfe-color--text--on-dark !default;
-$pfe-color--surface--darkest--ui-link:             $pfe-color--ui-link--on-dark !default;
-$pfe-color--surface--darkest--ui-link--visited:    $pfe-color--ui-link--on-dark--visited !default;
-$pfe-color--surface--darkest--ui-link--hover:      $pfe-color--ui-link--on-dark--hover !default;
-$pfe-color--surface--darkest--ui-link--focus:      $pfe-color--ui-link--on-dark--focus !default;
+$pfe-color--surface--darkest:         $pfe-color--gray-1000 !default;
+$pfe-color--surface--darkest--theme: dark;
 
 // Complement group
-$pfe-color--surface--complement:                $pfelements--blue;
-$pfe-color--surface--complement--text:          $pfe-color--text--on-dark !default;
-$pfe-color--surface--complement--ui-link:          $pfe-color--ui-link--on-dark !default;
-$pfe-color--surface--complement--ui-link--visited: $pfe-color--ui-link--on-dark--visited !default;
-$pfe-color--surface--complement--ui-link--hover:   $pfe-color--ui-link--on-dark--hover !default;
-$pfe-color--surface--complement--ui-link--focus:   $pfe-color--ui-link--on-dark--focus !default;
-
+$pfe-color--surface--complement:      $pfelements--blue;
+$pfe-color--surface--complement--theme: saturated;
 
 // Accent group
-$pfe-color--surface--accent:                    $pfelements--orange;
-$pfe-color--surface--accent--text:              $pfe-color--text--on-dark !default;
-$pfe-color--surface--accent--ui-link:              $pfe-color--ui-link--on-dark !default;
-$pfe-color--surface--accent--ui-link--visited:     $pfe-color--ui-link--on-dark--visited !default;
-$pfe-color--surface--accent--ui-link--hover:       $pfe-color--ui-link--on-dark--hover !default;
-$pfe-color--surface--accent--ui-link--focus:       $pfe-color--ui-link--on-dark--focus !default;
+$pfe-color--surface--accent:          $pfelements--orange;
+$pfe-color--surface--accent--theme: saturated;
 
 
 // Palette of Border Colors

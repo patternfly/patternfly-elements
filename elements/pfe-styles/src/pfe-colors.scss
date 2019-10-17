@@ -6,17 +6,19 @@
     }
 }
 
-@function contexts($list, $index) {
-    @if str-starts-with(#{nth($list, $index)}, "-on") {
-        @return ".#{str-slice(#{nth($list, $index)}, 2)} ";
+@function contexts($list) {
+    @each $item in $list {
+        @if str-starts-with($item, "on") {
+            @return '[on="#{nth(str-split($item, "-"), 2)}"] ';
+        }
     }
     @return "";
 }
 
-@function states($list, $index) {
+@function states($list) {
     @each $s in (hover, focus, visited) {
-        @if str-starts-with(#{nth($list, $index)}, "-#{$s}") {
-            @return nth($list, $index);
+        @if index($list, $s) {
+            @return "--#{$s}";
         }
     }
     @return "";
@@ -25,31 +27,30 @@
 @each $name, $color in $pfe-colors {
     $list: str-split($name, $separator: "--");
     $property: background-color;
-    $context: "";
-    $state: "";
+    $context: #{contexts($list)};
+    $state: #{states($list)};
 
     @if length($list) > 1 {
-        $context: #{contexts($list, 2)};
-        @if length($list) > 2 {
-            $state: #{states($list, 3)};
-        }
-
-        $state: #{states($list, 2)};
-
-        @if str-starts-with(#{nth($list, 2)}, "-text") {
+        @if index($list, "text") {
             $property: color;
-            @if length($list) > 2 {
-                $context: #{contexts($list, 3)};
-                $state: #{states($list, 3)};
-            }
-            @if length($list) > 3 {
-                $state: #{states($list, 4)};
-            }
         }
     }
     
+    // UI styles, not ui-link
     @if str-starts-with(#{first($list)}, "ui") and not (str-starts-with(#{first($list)}, "ui-link")) {
-        #{unquote($context)}.#{first($list)}#{$state} {
+        #{unquote($context)}.#{first($list)}#{unquote($state)} {
+            #{$property}: var(--theme--#{$name}, #{$color});
+            @if str-index($string: $name, $substring: "text") == null {
+                &::after {
+                    content: "#{$name}";
+                }
+            }
+        }
+    }
+
+    // Surface styles
+    @if index($list, "surface") and not (index($list, "theme")) {
+        #{unquote($context)}.#{nth($list, 2)}#{unquote($state)} {
             #{$property}: var(--theme--#{$name}, #{$color});
             @if str-index($string: $name, $substring: "text") == null {
                 &::after {

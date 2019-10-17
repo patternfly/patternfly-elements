@@ -33,20 +33,21 @@ $pfe-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #
 :host([size="sm"]) {
     height: 1rem;
     width: 1rem;
-    border-width: 3px;
+   border-width: calc(#{pfe-var(surface--border-width--heavy)} * .75);
 }
 
 :host([size="md"]) {
     height: 2rem;
     width: 2rem;
-    border-width: 4px;
+    border-width: calc(#{pfe-var(surface--border-width--heavy)} * 1);
 }
 
 :host([size="xl"]) {
     height: 4rem;
     width: 4rem;
-    border-width: 6px;
+    border-width: calc(#{pfe-var(surface--border-width--heavy)} * 1.5);
 }
+
 
 @keyframes spin {
     from {

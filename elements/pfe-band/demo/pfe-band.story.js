@@ -14,6 +14,14 @@ let theme = "base";
 
 const stories = storiesOf("Band", module);
 
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 // Define the templates to be used
 const template = (data = {}) =>
   tools.component(PfeBand.tag, data.prop, data.slots);

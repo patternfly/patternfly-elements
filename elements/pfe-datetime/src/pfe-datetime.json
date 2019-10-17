@@ -38,7 +38,7 @@
           "type": "string"
         },
         "weekday": {
-          "title": "",
+          "title": "Weekday",
           "type": "string",
           "enum": [
             "narrow",

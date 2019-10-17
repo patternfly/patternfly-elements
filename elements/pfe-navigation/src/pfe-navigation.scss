@@ -87,7 +87,7 @@ pfe-icon {
 
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
-  color: #{pfe-radio(color, ui-link)};
+  color: #{pfe-radio(color, link)};
   text-decoration: #{pfe-radio(link, text-decoration)};
 }
 
@@ -101,7 +101,7 @@ pfe-icon {
 
 .pfe-navigation {
   &__wrapper {
-    @each $prop in (text, ui-link, ui-link--hover, ui-link--visited, ui-link--focus) {
+    @each $prop in (text, link, link--hover, link--visited, link--focus) {
       --pfe-broadcasted--color--#{$prop}: #{pfe-local($cssvar: Color, $fallback: #{pfe-color(surface--darkest--text)})};
     }
     display: flex;

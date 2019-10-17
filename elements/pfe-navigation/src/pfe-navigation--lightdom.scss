@@ -231,7 +231,7 @@ pfe-navigation-item [slot="trigger"] > a {
                 outline-offset: 1px;
                 outline-style: dotted;
                 outline-width: 1px;
-                outline-color: var(--pfe-broadcasted--color--ui-link--focus, #{map-get($pfe-colors, 'ui-link--focus')});
+                outline-color: var(--pfe-broadcasted--color--link--focus, #{map-get($pfe-colors, 'link--focus')});
             }
         }
     }

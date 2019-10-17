@@ -9,8 +9,8 @@ $LOCAL: tabs;
 :host {
   --pfe-tabs--main:         transparent;
   --pfe-tabs--aux:          #{pfe-color(ui-disabled--text)}; 
-  --pfe-tabs--link:         #{pfe-color(surface--lightest--ui-link)};
-  --pfe-tabs--focus:        #{pfe-color(surface--lightest--ui-link--focus)};
+  --pfe-tabs--link:         #{pfe-color(surface--lightest--link)};
+  --pfe-tabs--focus:        #{pfe-color(surface--lightest--link--focus)};
   --pfe-tabs--highlight:    #{pfe-color(ui-accent)};
 
   position: relative;
@@ -36,7 +36,7 @@ $LOCAL: tabs;
 
 :host(:focus),
 :host(:focus-visible) {
-  // outline: 1px solid #{$pfe-color--ui-link--focus};
+  // outline: 1px solid #{$pfe-color--link--focus};
   outline: #{pfe-var(ui--focus-outline-width)} #{pfe-var(ui--focus-outline-style)} #{pfe-local(focus)};
 }
 

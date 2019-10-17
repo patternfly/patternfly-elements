@@ -47,15 +47,15 @@ class PFElement extends HTMLElement {
     this.setAttribute(`${prefix}type`, value);
   }
 
-  get variable(name, element = document.body) {
+  get variable() {
     return window
-        .getComputedStyle(element)
+        .getComputedStyle(this)
         .getPropertyValue(`--${name}`)
         .trim();
   }
 
-  set variable(name, value, element = this) {
-    element.setProperty(name, value);
+  setVariable(name, value) {
+    this.setProperty(name, value);
   }
 
   // Returns a single element assigned to that slot; if multiple, it returns the first

@@ -1,19 +1,19 @@
 // New broadcast mixin, for use with content components
 //  1st arg:  lookup surface value from theme
-//  2nd arg:  list of broadcast variable  (1 of 6) - optional
+//  2nd arg:  list of broadcast variable - optional
 //  3rd arg:  identify the color set, default is surface - optional
 //
 //  usage:
 //    :host {
-//      #{pfe-set-broadcast(base)};
+//      #{pfe-set-broadcast(dark)};
 //    }
 //  result:
 //    :host {
-//      --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
-//      --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--ui-link)};
-//      --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--ui-link--visited)};
-//      --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--ui-link--hover)};
-//      --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--ui-link--focus)};
+//      --pfe-broadcasted--color--text:            #{pfe-color(text--on-dark)};
+//      --pfe-broadcasted--color--link:            #{pfe-color(link--on-dark)};
+//      --pfe-broadcasted--color--link--visited:   #{pfe-color(link--on-dark--visited)};
+//      --pfe-broadcasted--color--link--hover:     #{pfe-color(link--on-dark--hover)};
+//      --pfe-broadcasted--color--link--focus:     #{pfe-color(link--on-dark--focus)};
 //    }
 
 @mixin pfe-set-broadcast($color, $broadcast: $BROADCAST-VARS) {
@@ -112,66 +112,66 @@
     // GENERAL CONTEXT-BASED UPDATES, ON="DARK"
     @if $theme==dark {
         --pfe-broadcasted--color--text: #{pfe-color(text--on-dark)};
-        --pfe-broadcasted--color--ui-link: #{pfe-color(ui-link--on-dark)};
-        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(ui-link--on-dark--visited)};
-        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(ui-link--on-dark--hover)};
-        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(ui-link--on-dark--focus)};
+        --pfe-broadcasted--color--link: #{pfe-color(link--on-dark)};
+        --pfe-broadcasted--color--link--visited: #{pfe-color(link--on-dark--visited)};
+        --pfe-broadcasted--color--link--hover: #{pfe-color(link--on-dark--hover)};
+        --pfe-broadcasted--color--link--focus: #{pfe-color(link--on-dark--focus)};
     }
 
     @else if $theme==light {
         --pfe-broadcasted--color--text: #{pfe-color(text)};
-        --pfe-broadcasted--color--ui-link: #{pfe-color(ui-link)};
-        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(ui-link--visited)};
-        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(ui-link--hover)};
-        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(ui-link--focus)};
+        --pfe-broadcasted--color--link: #{pfe-color(link)};
+        --pfe-broadcasted--color--link--visited: #{pfe-color(link--visited)};
+        --pfe-broadcasted--color--link--hover: #{pfe-color(link--hover)};
+        --pfe-broadcasted--color--link--focus: #{pfe-color(link--focus)};
     }
 
     // MORE SPECIFIC COLOR BASED UPDATES, COLOR="DARKER"
     @else if $theme==darker {
         --pfe-broadcasted--color--text: #{pfe-color(surface--darker--text)};
-        --pfe-broadcasted--color--ui-link: #{pfe-color(surface--darker--link)};
-        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--darker--link--visited)};
-        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--darker--link--hover)};
-        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--darker--link--focus)};
+        --pfe-broadcasted--color--link: #{pfe-color(surface--darker--link)};
+        --pfe-broadcasted--color--link--visited: #{pfe-color(surface--darker--link--visited)};
+        --pfe-broadcasted--color--link--hover: #{pfe-color(surface--darker--link--hover)};
+        --pfe-broadcasted--color--link--focus: #{pfe-color(surface--darker--link--focus)};
     }
 
     @else if $theme==darkest {
         --pfe-broadcasted--color--text: #{pfe-color(surface--darkest--text)};
-        --pfe-broadcasted--color--ui-link: #{pfe-color(surface--darkest--link)};
-        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--darkest--link--visited)};
-        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--darkest--link--hover)};
-        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--darkest--link--focus)};
+        --pfe-broadcasted--color--link: #{pfe-color(surface--darkest--link)};
+        --pfe-broadcasted--color--link--visited: #{pfe-color(surface--darkest--link--visited)};
+        --pfe-broadcasted--color--link--hover: #{pfe-color(surface--darkest--link--hover)};
+        --pfe-broadcasted--color--link--focus: #{pfe-color(surface--darkest--link--focus)};
     }
 
     @else if $theme==accent {
         --pfe-broadcasted--color--text: #{pfe-color(surface--accent--text)};
-        --pfe-broadcasted--color--ui-link: #{pfe-color(surface--accent--link)};
-        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--accent--link--visited)};
-        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--accent--link--hover)};
-        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--accent--link--focus)};
+        --pfe-broadcasted--color--link: #{pfe-color(surface--accent--link)};
+        --pfe-broadcasted--color--link--visited: #{pfe-color(surface--accent--link--visited)};
+        --pfe-broadcasted--color--link--hover: #{pfe-color(surface--accent--link--hover)};
+        --pfe-broadcasted--color--link--focus: #{pfe-color(surface--accent--link--focus)};
     }
 
     @else if $theme==complement {
         --pfe-broadcasted--color--text: #{pfe-color(surface--complement--text)};
-        --pfe-broadcasted--color--ui-link: #{pfe-color(surface--complement--link)};
-        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--complement--link--visited)};
-        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--complement--link--hover)};
-        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--complement--link--focus)};
+        --pfe-broadcasted--color--link: #{pfe-color(surface--complement--link)};
+        --pfe-broadcasted--color--link--visited: #{pfe-color(surface--complement--link--visited)};
+        --pfe-broadcasted--color--link--hover: #{pfe-color(surface--complement--link--hover)};
+        --pfe-broadcasted--color--link--focus: #{pfe-color(surface--complement--link--focus)};
     }
 
     @else if $theme==lighter {
         --pfe-broadcasted--color--text: #{pfe-color(surface--lighter--text)};
-        --pfe-broadcasted--color--ui-link: #{pfe-color(surface--lighter--link)};
-        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--lighter--link--visited)};
-        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--lighter--link--hover)};
-        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--lighter--link--focus)};
+        --pfe-broadcasted--color--link: #{pfe-color(surface--lighter--link)};
+        --pfe-broadcasted--color--link--visited: #{pfe-color(surface--lighter--link--visited)};
+        --pfe-broadcasted--color--link--hover: #{pfe-color(surface--lighter--link--hover)};
+        --pfe-broadcasted--color--link--focus: #{pfe-color(surface--lighter--link--focus)};
     }
 
     @else if $theme==lightest {
         --pfe-broadcasted--color--text: #{pfe-color(surface--lightest--text)};
-        --pfe-broadcasted--color--ui-link: #{pfe-color(surface--lightest--link)};
-        --pfe-broadcasted--color--ui-link--visited: #{pfe-color(surface--lightest--link--visited)};
-        --pfe-broadcasted--color--ui-link--hover: #{pfe-color(surface--lightest--link--hover)};
-        --pfe-broadcasted--color--ui-link--focus: #{pfe-color(surface--lightest--link--focus)};
+        --pfe-broadcasted--color--link: #{pfe-color(surface--lightest--link)};
+        --pfe-broadcasted--color--link--visited: #{pfe-color(surface--lightest--link--visited)};
+        --pfe-broadcasted--color--link--hover: #{pfe-color(surface--lightest--link--hover)};
+        --pfe-broadcasted--color--link--focus: #{pfe-color(surface--lightest--link--focus)};
     }
 }

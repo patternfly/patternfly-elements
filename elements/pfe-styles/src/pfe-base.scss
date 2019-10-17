@@ -91,20 +91,20 @@ body {
 
 // Links styles
 a {
-  color: var(--pfe-broadcasted--color--ui-link, #{map-get($pfe-colors, 'ui-link')});
+  color: var(--pfe-broadcasted--color--link, #{map-get($pfe-colors, 'link')});
   text-decoration: #{pfe-var(link--text-decoration)};
 
   &:visited {
-    color: var(--pfe-broadcasted--color--ui-link--visited, #{map-get($pfe-colors, 'ui-link--visited')});
+    color: var(--pfe-broadcasted--color--link--visited, #{map-get($pfe-colors, 'link--visited')});
   }
 
   &:hover {
-    color: var(--pfe-broadcasted--color--ui-link--hover, #{map-get($pfe-colors, 'ui-link--hover')});
+    color: var(--pfe-broadcasted--color--link--hover, #{map-get($pfe-colors, 'link--hover')});
     text-decoration: #{pfe-var(link--text-decoration--hover)};
   }
 
   &:focus {
-    color: var(--pfe-broadcasted--color--ui-link--focus, #{map-get($pfe-colors, 'ui-link--focus')});
+    color: var(--pfe-broadcasted--color--link--focus, #{map-get($pfe-colors, 'link--focus')});
   }
 }
 

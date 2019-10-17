@@ -116,8 +116,8 @@
 //  usage:   color: #{pfe-apply-broadcast(ui-base--hover)};
 //  result:  Error: --pfe-broadcasted--color--ui-base--hover variable is not currently supported.";
 //
-//  usage:   color: #{pfe-apply-broadcast(ui-link)};
-//  result:  color: var(--pfe-broadcasted--color--ui-link);
+//  usage:   color: #{pfe-apply-broadcast(link)};
+//  result:  color: var(--pfe-broadcasted--color--link);
 
 @function pfe-apply-broadcast($broadcast, $fallback: #{pfe-color(#{to-string($broadcast,'--')})}) {
     @if not index($BROADCAST-VARS, $broadcast) {

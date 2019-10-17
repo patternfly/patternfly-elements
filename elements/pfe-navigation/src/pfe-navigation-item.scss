@@ -53,7 +53,7 @@ $variables: (
     --pfe-theme--link--#{$prop}: none;
   }
 
-  @each $prop in (text, ui-link, ui-link--hover, ui-link--visited, ui-link--focus) {
+  @each $prop in (text, link, link--hover, link--visited, link--focus) {
     --pfe-broadcasted--color--#{$prop}: #{pfe-local($cssvar: Color, $fallback: #{$trigger--Color--fallback})};
   }
 
@@ -89,7 +89,7 @@ $variables: (
     cursor: pointer;
 
     :host([variant="wind"]) & {
-      --pfe-navigation--Color: #{pfe-color(ui-link--hover)};
+      --pfe-navigation--Color: #{pfe-color(link--hover)};
     }
 
     :host([has_tray]:not([pfe-icon]):not([is_nested]):not(.expanded)) & {
@@ -113,7 +113,7 @@ $variables: (
     --pfe-navigation--BorderColor: #{pfe-color(surface--lightest)};
 
     :host([variant="wind"]) & {
-      --pfe-navigation--Color: #{pfe-color(ui-link--focus)};
+      --pfe-navigation--Color: #{pfe-color(link--focus)};
     }
   }
 
@@ -164,7 +164,7 @@ $variables: (
   }
 
   :host([variant="wind"]) & {
-    --pfe-navigation--Color: #{pfe-color(ui-link)};
+    --pfe-navigation--Color: #{pfe-color(link)};
     --pfe-navigation--BackgroundColor: transparent !important;
 
     flex-direction: row;
@@ -203,7 +203,7 @@ $variables: (
   --pfe-navigation--Color: #{pfe-color(text)};
   --pfe-navigation--FontWeight: #{pfe-color(text)};
 
-  @each $prop in (text, ui-link, ui-link--hover, ui-link--visited, ui-link--focus) {
+  @each $prop in (text, link, link--hover, link--visited, link--focus) {
     --pfe-broadcasted--color--#{$prop}: #{pfe-color($prop)};
   }
 

@@ -36,8 +36,8 @@
         }
     }
     
-    // UI styles, not ui-link
-    @if str-starts-with(#{first($list)}, "ui") and not (str-starts-with(#{first($list)}, "ui-link")) {
+    // UI styles, not link
+    @if str-starts-with(#{first($list)}, "ui") and not (str-starts-with(#{first($list)}, "link")) {
         #{unquote($context)}.#{first($list)}#{unquote($state)} {
             #{$property}: var(--theme--#{$name}, #{$color});
             @if str-index($string: $name, $substring: "text") == null {

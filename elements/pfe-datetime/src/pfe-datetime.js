@@ -5,6 +5,10 @@ class PfeDatetime extends PFElement {
     return "pfe-datetime";
   }
 
+  get schemaUrl() {
+    return "pfe-datetime.json";
+  }
+
   get styleUrl() {
     return "pfe-datetime.scss";
   }

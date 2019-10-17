@@ -23,8 +23,67 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeDatetime.tag, () => {
   let config = {};
-  const props = PfeDatetime.properties;
+  // const props = PfeCta.properties;
+  // Manually defining props but this can be done in a schema instead
 
+  const props = {
+    datetime: {
+      title: "Datetime",
+      type: "string",
+      default: "January 9, 2019",
+      required: true
+    },
+    type: {
+      title: "Type",
+      type: "string",
+      enum: ["local", "relative"],
+      default: "local",
+      required: true
+    },
+    weekday: {
+      title: "Weekday",
+      type: "string",
+      enum: ["short", "long"]
+    },
+    day: {
+      title: "Day",
+      type: "string",
+      enum: ["numeric", "2-digit"],
+      default: "numeric"
+    },
+    month: {
+      title: "Month",
+      type: "string",
+      enum: ["short", "long"],
+      default: "long"
+    },
+    year: {
+      title: "Year",
+      type: "string",
+      enum: ["numeric", "2-digit"],
+      default: "numeric"
+    },
+    hour: {
+      title: "Hour",
+      type: "string",
+      enum: ["numeric", "2-digit"]
+    },
+    minute: {
+      title: "Minute",
+      type: "string",
+      enum: ["numeric", "2-digit"]
+    },
+    second: {
+      title: "Second",
+      type: "string",
+      enum: ["numeric", "2-digit"]
+    },
+    locale: {
+      title: "Timezone",
+      type: "string",
+      default: "en-US"
+    }
+  };
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);

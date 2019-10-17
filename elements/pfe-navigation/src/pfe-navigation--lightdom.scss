@@ -4,6 +4,25 @@
 
 // IE11 styles
 @include browser-query(ie11) {
+
+    pfe-navigation {
+        max-height: 80px;
+    }
+    pfe-navigation-item {
+        [slot="trigger"] {
+            font-size: 16px;
+
+            a {
+                color: #fff;
+            }
+        }
+
+        &[pfe-icon] {
+            > [slot="trigger"] a {
+                font-size: 12px;
+            }
+        }
+    }
 //     .pfe-navigation-item__trigger {
 //         &.pfe-navigation-item {
 //             .expanded & {
@@ -56,6 +75,11 @@
 // Turn off internal link outline
 pfe-navigation-item [slot="trigger"] > a {
     outline: none;
+
+    &:hover,
+    &:focus {
+        text-decoration: none; //Override bootstrap.
+    }
 }
 
 @include browser-query(edge) {
@@ -190,6 +214,14 @@ pfe-navigation-item [slot="trigger"] > a {
         }
     }
 }
+
+// @media screen and (max-width: 1199px) {
+//     pfe-navigation-main {
+//         ul li {
+//             flex: 1;
+//         }
+//     }
+// }
 
 // This class is added manually inside the tray on the light DOM content
 .pfe-navigation-item__tray--container {

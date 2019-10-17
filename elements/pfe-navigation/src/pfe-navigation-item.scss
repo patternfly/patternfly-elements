@@ -15,11 +15,18 @@ $variables: (
   --pfe-navigation__trigger--FontSize: 16px;
   --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.75) !important;
 
+  // @media screen and (min-width: 1024px) and (max-width: 1199px) {
+  //   --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.5) !important;
+  // }
+
   display: flex;
   flex-direction: column;
+  text-align: center;
+  line-height: 1.25;
   
   height: 100%;
   width: 100%;
+  min-width: var(--pfe-nav-item--MinWidth, auto);
 }
 
 // Indicates this is the current section the user is visiting
@@ -37,11 +44,16 @@ $variables: (
 }
 
 :host([pfe-icon]) {
-  --pfe-navigation__trigger--FontSize: 14px;
-  --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.625) !important;
+  --pfe-navigation__trigger--FontSize: 12px;
+  --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.5) !important;
+  --pfe-nav-item--MinWidth: 50px;
 
   @media screen and (max-height: 500px) {
     --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 3) calc(#{pfe-var(container-padding)} *.5) !important;
+  }
+
+  @media screen and (max-width: 639px) {
+    padding-left: calc(#{pfe-var(container-spacer)} * 1.5);
   }
 }
 
@@ -200,6 +212,12 @@ $variables: (
 // Typography styles
 ::slotted([slot="trigger"]) {
   @extend %trigger;
+}
+
+// Override bootstrap styles
+::slotted(*) {
+  font-size: inherit !important;
+  font-weight: pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback}) !important;
 }
 
 /* ----------------- */

@@ -18,7 +18,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/pfe-avatar.js",
+  "main": "pfe-avatar.js",
   "files": [
     "pfe-avatar.*js",
     "pfe-avatar.*js.map"

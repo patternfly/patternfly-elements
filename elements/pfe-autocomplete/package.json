@@ -18,7 +18,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/pfe-autocomplete.js",
+  "main": "pfe-autocomplete.js",
   "files": [
     "pfe-autocomplete.*js",
     "pfe-autocomplete.*js.map"

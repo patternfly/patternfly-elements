@@ -18,7 +18,7 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-card"
   },
-  "main": "./dist/pfe-card.js",
+  "main": "pfe-card.js",
   "files": [
     "pfe-card.*js",
     "pfe-card.*js.map"

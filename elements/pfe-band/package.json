@@ -23,7 +23,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/pfe-band.js",
+  "main": "pfe-band.js",
   "files": [
     "pfe-band*.js",
     "pfe-band*.js.map"

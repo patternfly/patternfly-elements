@@ -18,7 +18,7 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-accordion"
   },
-  "main": "./dist/pfe-accordion.js",
+  "main": "pfe-accordion.js",
   "files": [
     "pfe-accordion.*js",
     "pfe-accordion.*js.map"

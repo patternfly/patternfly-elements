@@ -6,6 +6,14 @@ import PfeProgressIndicator from "../pfe-progress-indicator";
 
 const stories = storiesOf("Progress indicator", module);
 
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 // Define the template to be used
 const template = (data = {}) => {
   return tools.component(PfeProgressIndicator.tag, data.prop, data.slots);

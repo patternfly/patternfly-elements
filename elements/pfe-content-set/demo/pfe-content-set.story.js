@@ -7,6 +7,14 @@ import PfeCta from "../../pfe-cta/pfe-cta";
 
 const stories = storiesOf("Content set", module);
 
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 // Define the template to be used
 const template = (data = {}) => {
   return tools.component(PfeContentSet.tag, data.prop, data.slots);

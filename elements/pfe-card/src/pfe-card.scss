@@ -26,7 +26,7 @@ $LOCAL: card;
   --pfe-card--BackgroundPosition: center center;
 
   // Broadcasted values set to match background color
-  @include pfe-set-broadcast(base);
+  @include pfe-set-broadcast(light);
 
   --pfe-card__header--BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)});
   --pfe-card__header--Color:           #{pfe-apply-broadcast(text)};
@@ -71,8 +71,7 @@ $LOCAL: card;
   :host([color="#{$label}"]),
   :host([pfe-color="#{$label}"]) {
     --pfe-card--BackgroundColor:                  #{pfe-color(surface--#{$color})};
-    @include pfe-set-broadcast($color);
-
+    @include pfe-set-broadcast(#{map-get($pfe-colors, "surface--#{$color}--theme")});
   }
 }
 

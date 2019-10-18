@@ -30,15 +30,21 @@
       "title": "Attributes",
       "type": "object",
       "properties": {
-        "status": {
+        "indeterminate": {
           "title": "Status",
+          "type": "boolean",
+          "default": true,
+          "prefixed": true
+        },
+        "size": {
+          "title": "Size",
           "type": "string",
           "enum": [
-            "indeterminate"
+            "sm",
+            "md",
+            "xl"
           ],
-          "default": "default",
-          "prefixed": true,
-          "observer": "_basicAttributeChanged"
+          "default": "md"
         }
       }
     }

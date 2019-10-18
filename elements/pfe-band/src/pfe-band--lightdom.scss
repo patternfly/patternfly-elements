@@ -1,25 +1,34 @@
 @import "../../pfe-sass/pfe-sass";
 
 // For each section in the band layout
-@each $section in (aside, header, body, footer) {
-     [slot="pfe-band--#{$section}"] { // i.e., pfe-band--header
-      // Other browsers are getting grid-area through shadow-dom
-      // Only need to target edge in the lightdom
-      @supports (display: -ms-grid) {
-          // Apply the section as a named grid-area
-          grid-area: #{$section};
-      }
+@include browser-query(edge) {
+    @each $section in (aside, header, body, footer) {
+         [slot="pfe-band--#{$section}"] { // i.e., pfe-band--header
+              // Other browsers are getting grid-area through shadow-dom
+              // Only need to target edge in the lightdom
+              // Apply the section as a named grid-area
+              grid-area: #{$section};
+        }
     }
 }
 
+// This gets it rendering correctly on FF 60
+@include browser-query(firefox) {
+    @each $section in (aside, header, body, footer) {
+         [slot="pfe-band--#{$section}"] { // i.e., pfe-band--header
+              grid-area: #{$section};
+        }
+    }
+}
 
-@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+@include browser-query(ie11) {
     pfe-band > * > * {  // target children of body area
       width: 51%; // over 50% so if multiple items in body they will stack
       margin-right: 4.5%;
       float: left;
     }
-    pfe-band [slot="pfe-band--header"],[slot="pfe-band--footer"] { // reset width of children in header & footer
+    pfe-band [slot="pfe-band--header"],
+    pfe-band [slot="pfe-band--footer"] { // reset width of children in header & footer
       width: 55%; // This prevents asides aligned with header from display above the entire band
       margin: 0;
     }
@@ -27,7 +36,7 @@
       width: 30%;
       float: right;
     }
-    &::after {
+    pfe-band::after {
        content: " ";
        display: block;
        height: 0;

@@ -100,7 +100,6 @@ $LOCAL: band;
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
     --pfe-band_region--width: calc(calc(1fr - #{pfe-local(Width__aside--sm)}) - #{pfe-local(gutter--horizontal)});
-    // --pfe-band--gridTemplateArea_mobile: "body";
     grid-template-areas: "body";
     // Styles for the different combination of regions
     &[pfe-has-aside] {

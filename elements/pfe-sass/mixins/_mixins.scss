@@ -13,9 +13,14 @@
         @content;
       }
     }
+    @if $browser == firefox {
+        @-moz-document url-prefix() {
+            @content;
+        }
+    }
   }
 }
- 
+
 // $boxSize = any box-sizing property, default is border-box
 @mixin pfe-box-sizing($boxSize: border-box) {
   *, *::before, *::after {

@@ -9,6 +9,7 @@ Tag: [v1.0.0-prerelease.26](https://github.com/patternfly/patternfly-elements/re
 - [6b5db77](https://github.com/patternfly/patternfly-elements/commit/6b5db77c20358499f78b66811b73ea6be309318b) Update documentation
 - [d4600dd](https://github.com/patternfly/patternfly-elements/commit/d4600dd1c6e2abfcf8918d06b4eaacb8fb62d208) Add automatic Sass globbing to pfe-sass
 - [](https://github.com/patternfly/patternfly-elements/commit/) pfe-cta: fix functions & IE11 accessibility
+- [US228968](https://github.com/patternfly/patternfly-elements/pull/566) pfe-cta: add pfe-variant="wind" to match design system brick links
 
 ## Prerelease 25 ( 2019-09-10 )
 

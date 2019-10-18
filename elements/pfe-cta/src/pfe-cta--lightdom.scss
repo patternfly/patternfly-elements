@@ -111,24 +111,5 @@ $LOCAL: cta;
         color:  #{pfe-fallback(ui-link)} !important;
       }
     }
-    // &[pfe-priority="secondary"][pfe-variant="wind"] {
-        // a {
-        //    color:  #{pfe-fallback(ui-link)} !important;
-        //    &::before {  // inner border on priority CTAs
-        //       border-color: pfe-local($cssvar: inner--BorderColor, $fallback: #d2d2d2);
-        //    }
-        // }
-        // a:focus {
-        //   &::before {  // inner border on priority CTAs
-        //     border-color: pfe-local($cssvar: inner--BorderColor, $fallback: #d2d2d2) !important;
-        // }
-        // a:visited, a:focus, a:hover {
-        //    color: pfe-local($cssvar: Color--hover, $fallback: #{pfe-fallback(ui-link--hover)}) !important;
-        // }
-        // a:focus[dark] {
-        //   border: 3px solid pink;
-        //   pfe-theme
-        // }
-      // }
-    }
+  }
 }

@@ -21,14 +21,8 @@ $pfe-cta--Color--fallback: #003366;
   // hover variables
   --pfe-cta--BackgroundColor--hover:  transparent;
   --pfe-cta--BorderColor--hover: transparent;
-<<<<<<< HEAD
   --pfe-cta--Color--hover:  pfe-color(ui-link--hover);
-  // Do I set a text decoration variable here?
-  --pfe-cta-TextDecoration--hover:   none;
-
-=======
-  --pfe-cta--Color--hover:  #{pfe-color(ui-link--hover)};
->>>>>>> 27a97e135986de37ede55504a1630bf974de0e0c
+  --pfe-cta--TextDecoration--hover:   none;
 
   // focus variables
   --pfe-cta--BorderColor--focus: transparent;
@@ -68,6 +62,7 @@ $pfe-cta--Color--fallback: #003366;
 }
 
 :host(:hover) {
+  text-decoration: #{pfe-local(TextDecoration--hover)} !important;
   background-color: #{pfe-local(BackgroundColor--hover)};
   border-color:     #{pfe-local(BorderColor--hover)};
   cursor:           pointer;
@@ -400,8 +395,6 @@ $pfe-cta--Color--fallback: #003366;
 
   --pfe-cta--Color--focus:              #{pfe-color(ui-link--hover)};
   --pfe-cta--BorderColor--focus:        var(--pfe-theme--surface--border, #d2d2d2);
-  --pfe-cta__inner--BorderColor--focus: var(--pfe-theme--surface--border, #d2d2d2);
-// Not working....
-  --pfe-cta-TextDecoration--hover:      #{pfe-var(link--text-decoration--hover)};
-
+  --pfe-cta__inner--BorderColor--focus: #{pfe-local(BorderColor--focus)};
+  --pfe-cta--TextDecoration--hover:      #{pfe-var(link--text-decoration--hover)};
 }

@@ -18,6 +18,10 @@ _Note: `pfe-cta` is not a button, though it may look like one visually._
   <a href="https://redhat.com/">Red Hat</a>
 </pfe-cta>
 
+<pfe-cta pfe-priority="secondary" pfe-variant="wind">
+  <a href="https://redhat.com/">Red Hat</a>
+</pfe-cta>
+
 <pfe-cta pfe-priority="primary" pfe-color="lightest">
   <a href="https://pfelements.github.io/">Learn more about PFElements</a>
 </pfe-cta>
@@ -58,6 +62,15 @@ We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe
     [color="accent"] {
       --pfe-cta--Color: var(--pfe-theme--ui-accent);
     }
+```
+
+#### Variants
+
+<pfe-priority="secondary"> has a wind variant that can be applied to change the style of the secondary cta.
+```html
+<pfe-cta pfe-priority="secondary" pfe-variant="wind">
+    <a href="#">[wind]</a>
+</pfe-cta>
 ```
 
 

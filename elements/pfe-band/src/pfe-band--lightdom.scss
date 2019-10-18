@@ -15,12 +15,12 @@
 
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
     pfe-band > * > * {  // target children of body area
-      width: 45%;
+      width: 51%; // over 50% so if multiple items in body they will stack
       margin-right: 4.5%;
       float: left;
     }
     pfe-band [slot="pfe-band--header"],[slot="pfe-band--footer"] { // reset width of children in header & footer
-      width: 100%;
+      width: 55%; // This prevents asides aligned with header from display above the entire band
       margin: 0;
     }
     pfe-band [slot="pfe-band--aside"] { // reset width of children in header & footer
@@ -33,5 +33,4 @@
        height: 0;
        clear: both;
     }
-
 }

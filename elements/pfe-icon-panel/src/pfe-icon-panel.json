@@ -60,11 +60,13 @@
       "properties": {
         "icon": {
           "title": "Icon",
-          "type": "string"
+          "type": "string",
+          "prefixed": false
         },
         "color": {
           "title": "Background color of circle",
           "type": "string",
+          "prefixed": false,
           "enum": [
             "lightest",
             "lighter",
@@ -78,17 +80,20 @@
         },
         "centered": {
           "title": "Centered",
-          "type": "Boolean",
+          "type": "boolean",
+          "prefixed": false,
           "default": false
         },
         "stacked": {
           "title": "Stacked",
-          "type": "Boolean",
+          "type": "boolean",
+          "prefixed": false,
           "default": false
         },
         "circled": {
           "title": "Circled",
-          "type": "Boolean",
+          "type": "boolean",
+          "prefixed": false,
           "default": false
         }
       }

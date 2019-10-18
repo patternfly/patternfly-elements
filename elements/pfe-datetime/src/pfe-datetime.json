@@ -99,6 +99,14 @@
           "description": "A locale code like en-US or en-GB",
           "type": "string",
           "default": "en-US"
+        },
+        "timeZoneName": {
+          "title": "Time Zone",
+          "type": "string",
+          "enum": [
+            "short",
+            "long"
+          ]
         }
       }
     }

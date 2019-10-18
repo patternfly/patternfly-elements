@@ -80,44 +80,7 @@ class PfeDatetime extends PFElement {
   }
 
   _getOptions() {
-    const props = {
-      weekday: {
-        short: "short",
-        long: "long",
-        narrow: "narrow"
-      },
-      day: {
-        numeric: "numeric",
-        "2-digit": "2-digit"
-      },
-      month: {
-        numeric: "numeric",
-        "2-digit": "2-digit",
-        narrow: "narrow",
-        short: "short",
-        long: "long"
-      },
-      year: {
-        numeric: "numeric",
-        "2-digit": "2-digit"
-      },
-      hour: {
-        numeric: "numeric",
-        "2-digit": "2-digit"
-      },
-      minute: {
-        numeric: "numeric",
-        "2-digit": "2-digit"
-      },
-      second: {
-        numeric: "numeric",
-        "2-digit": "2-digit"
-      },
-      timeZoneName: {
-        short: "short",
-        long: "long"
-      }
-    };
+    const props = PfeDatetime.properties;
 
     let options = {};
 

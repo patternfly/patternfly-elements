@@ -75,18 +75,6 @@ class PfeScrollspyNav extends PFElement {
   }
 
   // attributeChangedCallback(attr, oldValue, newValue) {}
-  handleClick(e) {
-    e.preventDefault();
-    console.log(e.target);
-    // (function(e) {
-    //   let options = {
-    //     top: 100,
-    //     left: 100,
-    //     behavior: 'smooth'
-    //   }
-    //   window.scrollTo(options);
-    // })();
-  }
 }
 
 class PfeScrollspyPanel extends PFElement {

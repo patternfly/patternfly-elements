@@ -1,6 +1,16 @@
 import { storiesOf } from "@storybook/polymer";
 
-storiesOf("Layouts", module).add(
+const stories = storiesOf("Layouts", module);
+
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
+stories.add(
   "pfe-layouts",
   () => `
   <link rel="stylesheet" type="text/css" href="/pfe-layouts/pfe-base.css">

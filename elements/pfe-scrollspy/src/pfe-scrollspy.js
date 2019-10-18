@@ -121,8 +121,9 @@ class PfeScrollspyPanel extends PFElement {
 
     let currentActive = 0;
     window.addEventListener("scroll", function () {
-      const current = sections.length - [...sections].reverse().findIndex((section) => window.scrollY >= section.offsetTop - sectionMargin) - 1;
-
+      const sectionArr = [...sections];
+      const matches = sectionArr.filter(section => window.scrollY >= section.offsetTop - sectionMargin).reverse();
+      const current = sectionArr.indexOf(matches[0]);
       if (current !== currentActive) {
         removeAllActive();
         currentActive = current;

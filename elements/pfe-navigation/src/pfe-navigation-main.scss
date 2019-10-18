@@ -25,3 +25,9 @@
     flex-flow: row nowrap;
   }
 }
+
+:host {
+  ul li {
+    flex: 1;
+  }
+}

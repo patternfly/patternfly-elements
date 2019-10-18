@@ -34,6 +34,9 @@ $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
     font-size:   pfe-local($cssvar: FontSize, $region: trigger, $fallback: #{$trigger--FontSize--fallback}) !important;
     font-weight: pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback});
     color:       pfe-local($cssvar: Color, $fallback: #{$trigger--Color--fallback});
+    background:  #{pfe-local($cssvar: Cover, $region: trigger, $fallback: turquoise)};
+    text-align: center;
+    z-index: 2;
 
     @media screen and (min-width: 1200px) {
         white-space: nowrap;

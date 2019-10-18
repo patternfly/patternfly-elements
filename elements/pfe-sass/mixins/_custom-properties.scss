@@ -11,9 +11,9 @@
 //    :host {
 //      --pfe-broadcasted--color--text:            #{pfe-color(text--on-dark)};
 //      --pfe-broadcasted--color--link:            #{pfe-color(link--on-dark)};
-//      --pfe-broadcasted--color--link--visited:   #{pfe-color(link--on-dark--visited)};
-//      --pfe-broadcasted--color--link--hover:     #{pfe-color(link--on-dark--hover)};
-//      --pfe-broadcasted--color--link--focus:     #{pfe-color(link--on-dark--focus)};
+//      --pfe-broadcasted--color--link--visited:   #{pfe-color(link--visited--on-dark)};
+//      --pfe-broadcasted--color--link--hover:     #{pfe-color(link--hover--on-dark)};
+//      --pfe-broadcasted--color--link--focus:     #{pfe-color(link--focus--on-dark)};
 //    }
 
 @mixin pfe-set-broadcast($color, $broadcast: $BROADCAST-VARS) {
@@ -113,9 +113,9 @@
     @if $theme==dark {
         --pfe-broadcasted--color--text: #{pfe-color(text--on-dark)};
         --pfe-broadcasted--color--link: #{pfe-color(link--on-dark)};
-        --pfe-broadcasted--color--link--visited: #{pfe-color(link--on-dark--visited)};
-        --pfe-broadcasted--color--link--hover: #{pfe-color(link--on-dark--hover)};
-        --pfe-broadcasted--color--link--focus: #{pfe-color(link--on-dark--focus)};
+        --pfe-broadcasted--color--link--visited: #{pfe-color(link--visited--on-dark)};
+        --pfe-broadcasted--color--link--hover: #{pfe-color(link--hover--on-dark)};
+        --pfe-broadcasted--color--link--focus: #{pfe-color(link--focus--on-dark)};
     }
 
     @else if $theme==light {

@@ -23,7 +23,7 @@
         },
         "type": {
           "title": "Type",
-          "description": "A formatted time for the indicated locale, or a relative time (1 hour ago)",         ",
+          "description": "A formatted time for the indicated locale, or a relative time (1 hour ago)",
           "type": "string",
           "enum": [
             "local",

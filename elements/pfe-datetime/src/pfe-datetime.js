@@ -94,7 +94,7 @@ class PfeDatetime extends PFElement {
         "2-digit": "2-digit",
         narrow: "narrow",
         short: "short",
-        long: "long",
+        long: "long"
       },
       year: {
         numeric: "numeric",

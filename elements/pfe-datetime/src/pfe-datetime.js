@@ -83,7 +83,8 @@ class PfeDatetime extends PFElement {
     const props = {
       weekday: {
         short: "short",
-        long: "long"
+        long: "long",
+        narrow: "narrow"
       },
       day: {
         numeric: "numeric",

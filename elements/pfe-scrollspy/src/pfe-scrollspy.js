@@ -56,21 +56,36 @@ class PfeScrollspyNav extends PFElement {
   }
 
   connectedCallback() {
-    console.log("Called connected callback")
     super.connectedCallback();
+    this.addEventListener("click", function(e) {
+      e.preventDefault();
+      let el = document.getElementById(e.target.dataset.target);
+      el = el.offsetTop;
+      let options = {
+        top: el,
+        left: 0,
+        behavior: 'smooth'
+      }
+      window.scrollTo(options);
+    })
   }
 
-  // disconnectedCallback() {}
+  disconnectedCallback() {
+    this.removeEventListener("click")
+  }
 
   // attributeChangedCallback(attr, oldValue, newValue) {}
-
-  scrollToNavTarget(top=0, left=0, smooth=true) {
-    let options = {
-      top: 100,
-      left: 100,
-      behavior: 'smooth'
-    }
-    window.scrollTo(options);
+  handleClick(e) {
+    e.preventDefault();
+    console.log(e.target);
+    // (function(e) {
+    //   let options = {
+    //     top: 100,
+    //     left: 100,
+    //     behavior: 'smooth'
+    //   }
+    //   window.scrollTo(options);
+    // })();
   }
 }
 

@@ -1,9 +1,17 @@
 @import "../../pfe-sass/pfe-sass";
 :host {
   display: block;
+  position: sticky;
+  top: 60px;
   
 }
 
 :host([hidden]) {
   display: none;
+}
+
+::slotted(){
+  .pfe-scrollspy-nav__item {
+    color: green;
+  }
 }

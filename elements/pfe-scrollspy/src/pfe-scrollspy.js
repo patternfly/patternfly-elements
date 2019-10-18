@@ -27,6 +27,7 @@ class PfeScrollspy extends PFElement {
     super.connectedCallback();
   }
 
+  
   // disconnectedCallback() {}
 
   // attributeChangedCallback(attr, oldValue, newValue) {}
@@ -42,7 +43,7 @@ class PfeScrollspyNav extends PFElement {
   }
 
   get styleUrl() {
-    return "pfe-scrollspy.scss";
+    return "pfe-scrollspy-nav.scss";
   }
 
   // static get observedAttributes() {
@@ -83,7 +84,7 @@ class PfeScrollspyPanel extends PFElement {
   }
 
   get styleUrl() {
-    return "pfe-scrollspy.scss";
+    return "pfe-scrollspy-panel.scss";
   }
 
   // static get observedAttributes() {
@@ -92,11 +93,43 @@ class PfeScrollspyPanel extends PFElement {
 
   constructor(pfeClass) {
     super(pfeClass || PfeScrollspyPanel);
-
   }
 
   connectedCallback() {
     super.connectedCallback();
+
+    const sections = document.querySelectorAll(".pfe-scrollspy-panel__section");
+    const menu_links = document.querySelectorAll(".pfe-scrollspy-nav__item");
+
+    // functions to add and remove the active class from links as appropriate
+    // const makeActive = (link) => menu_links[link].classList.add("pfe-active");
+    const makeActive = (link) => menu_links[link].setAttribute("active", "");
+    // const removeActive = (link) => menu_links[link].classList.remove("pfe-active");
+    const removeActive = (link) => menu_links[link].removeAttribute("active");
+    const removeAllActive = () => [...Array(sections.length).keys()].forEach((link) => removeActive(link));
+
+    // change the active link a bit above the actual section
+    // this way it will change as you're approaching the section rather
+    // than waiting until the section has passed the top of the screen
+    const sectionMargin = 200;
+
+    // keep track of the currently active link
+    // use this so as not to change the active link over and over
+    // as the user scrolls but rather only change when it becomes
+    // necessary because the user is in a new section of the page
+    let currentActive = 0;
+    window.addEventListener("scroll", function () {
+      // console.log(sections);
+      // console.log(menu_links);
+      const current = sections.length - [...sections].reverse().findIndex((section) => window.scrollY >= section.offsetTop - sectionMargin) - 1;
+      console.log(current);
+
+      if (current !== currentActive) {
+        removeAllActive();
+        currentActive = current;
+        makeActive(current);
+      }
+    });
   }
 
   // disconnectedCallback() {}

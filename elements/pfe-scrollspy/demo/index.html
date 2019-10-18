@@ -17,17 +17,30 @@
     <script>require(['../pfe-scrollspy.umd.js'])</script>
   </head>
   <body unresolved>
+
+    <style>
+      .pfe-scrollspy-nav__item[active] {
+        color: green;
+        background-color: #acacac;
+      }  
+    </style>
     <h1>&lt;pfe-scrollspy&gt;</h1>
     <div style="display:flex;">
       <div style="display: block; width: 25%;">
         <pfe-scrollspy-nav>
-          <a>Link1</a>
+          <ul>
+            <li><a class="pfe-scrollspy-nav__item" href="#" data-target="section1">Section 1</a></li>
+            <li><a class="pfe-scrollspy-nav__item"  href="#" data-target="section2">Section 2</a></li>
+            <li><a class="pfe-scrollspy-nav__item"  href="#" data-target="section3">Section 3</a></li>
+            <li><a  class="pfe-scrollspy-nav__item" href="#" data-target="section4">Section 4</a></li>
+            <li><a  class="pfe-scrollspy-nav__item" href="#" data-target="section5">Section 5</a></li>
+          </ul>
         </pfe-scrollspy-nav>
       </div>
       <div style="display: block; width: 75%;">
         <pfe-scrollspy-panel>
           <div>
-            <h1>Some watched content</h1>
+            <h1 class="pfe-scrollspy-panel__section">Section 1</h1>
             <p>Lorem ipsum dolor amet umami vaporware actually church-key keytar, hell of roof party unicorn helvetica lomo
               pop-up fam
               taxidermy food truck dolore. Crucifix quinoa af eiusmod try-hard velit aesthetic freegan seitan readymade vinyl
@@ -85,7 +98,7 @@
                   bushwick pok pok. Esse voluptate cillum, cred skateboard ethical forage aliqua master cleanse 90's cornhole. Id
                   ut
                   raclette swag ad keytar polaroid synth sunt williamsburg butcher woke lorem whatever squid.</p>
-            <h1>Some watched content</h1>
+            <h1 class="pfe-scrollspy-panel__section">Section 2</h1>
             <p>Lorem ipsum dolor amet umami vaporware actually church-key keytar, hell of roof party unicorn helvetica lomo
               pop-up fam
               taxidermy food truck dolore. Crucifix quinoa af eiusmod try-hard velit aesthetic freegan seitan readymade vinyl
@@ -143,7 +156,7 @@
                   bushwick pok pok. Esse voluptate cillum, cred skateboard ethical forage aliqua master cleanse 90's cornhole. Id
                   ut
                   raclette swag ad keytar polaroid synth sunt williamsburg butcher woke lorem whatever squid.</p>
-              <h1>Some watched content</h1>
+              <h1 class="pfe-scrollspy-panel__section">Section 3</h1>
               <p>Lorem ipsum dolor amet umami vaporware actually church-key keytar, hell of roof party unicorn helvetica lomo
                 pop-up fam
                 taxidermy food truck dolore. Crucifix quinoa af eiusmod try-hard velit aesthetic freegan seitan readymade vinyl
@@ -201,7 +214,7 @@
                     bushwick pok pok. Esse voluptate cillum, cred skateboard ethical forage aliqua master cleanse 90's cornhole. Id
                     ut
                     raclette swag ad keytar polaroid synth sunt williamsburg butcher woke lorem whatever squid.</p>
-                <h1>Some watched content</h1>
+                <h1 class="pfe-scrollspy-panel__section">Section 4</h1>
                 <p>Lorem ipsum dolor amet umami vaporware actually church-key keytar, hell of roof party unicorn helvetica lomo
                   pop-up fam
                   taxidermy food truck dolore. Crucifix quinoa af eiusmod try-hard velit aesthetic freegan seitan readymade vinyl
@@ -259,7 +272,7 @@
                       bushwick pok pok. Esse voluptate cillum, cred skateboard ethical forage aliqua master cleanse 90's cornhole. Id
                       ut
                       raclette swag ad keytar polaroid synth sunt williamsburg butcher woke lorem whatever squid.</p>
-                  <h1>Some watched content</h1>
+                  <h1 class="pfe-scrollspy-panel__section">Section 5</h1>
                   <p>Lorem ipsum dolor amet umami vaporware actually church-key keytar, hell of roof party unicorn helvetica lomo
                     pop-up fam
                     taxidermy food truck dolore. Crucifix quinoa af eiusmod try-hard velit aesthetic freegan seitan readymade vinyl

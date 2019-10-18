@@ -17,16 +17,13 @@
       "type": "object",
       "properties": {
         "datetime": {
-          "title": "Status",
+          "title": "Date & Time",
           "type": "string",
-          "enum": [
-            "indeterminate"
-          ],
-          "default": "indeterminate",
           "observer": "_basicAttributeChanged"
         },
         "type": {
           "title": "Type",
+          "description": "A formatted time for the indicated locale, or a relative time (1 hour ago)",         ",
           "type": "string",
           "enum": [
             "local",

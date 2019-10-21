@@ -6,6 +6,14 @@ import PfeCta from "../dist/pfe-cta";
 
 const stories = storiesOf("Call to action", module);
 
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 // Define the template to be used
 const template = (data = {}) => {
   return tools.component(PfeCta.tag, data.prop, data.slots);

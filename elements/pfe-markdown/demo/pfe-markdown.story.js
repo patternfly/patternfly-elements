@@ -6,6 +6,14 @@ import PfeMarkdown from "../dist/pfe-markdown.js";
 
 const stories = storiesOf("Markdown", module);
 
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 // Define the templates to be used
 const template = (data = {}) =>
   tools.component(PfeMarkdown.tag, data.prop, data.slots);

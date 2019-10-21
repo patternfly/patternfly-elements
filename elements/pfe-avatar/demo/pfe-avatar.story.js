@@ -9,6 +9,15 @@ import "../dist/pfe-avatar";
 import { escapeHTML } from "../../../.storybook/utils.js";
 
 const stories = storiesOf("Avatar", module);
+
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 stories.addDecorator(withKnobs);
 
 stories.add("pfe-avatar", () => {

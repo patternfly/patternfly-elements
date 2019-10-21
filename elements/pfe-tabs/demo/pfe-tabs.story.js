@@ -7,6 +7,14 @@ import PfeCta from "../../pfe-cta/dist/pfe-cta.js";
 
 const stories = storiesOf("Tabs", module);
 
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 // prettier-ignore
 const defaultCTA = tools.component("pfe-cta", {}, [{
   content: "<a href='#'>Learn more</a>"

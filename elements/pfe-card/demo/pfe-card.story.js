@@ -19,12 +19,20 @@ import PfeCard from "../dist/pfe-card";
 
 const stories = storiesOf("Card", module);
 
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 // Define the template to be used
 const template = (data = {}) => {
   return tools.component(PfeCard.tag, data.prop, data.slots);
 };
 
-stories.addDecorator(storybookBridge.withKnobs);
+stories.addDecorator(storybookBridge.withKnobs({ escapeHTML: false }));
 
 const defaultHeading = tools.autoHeading(true);
 const defaultBody = tools.autoContent(1, 2);

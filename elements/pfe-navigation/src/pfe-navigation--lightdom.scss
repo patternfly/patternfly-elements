@@ -28,7 +28,7 @@
                 border-top-color: #{pfe-color(surface--accent)};
 
                 a {
-                    color: #333;
+                    color: #{pfe-color(surface--lightest--text)};
                 }
             }
         }
@@ -132,10 +132,6 @@ pfe-navigation-item [slot="trigger"] > a {
         [slot="tray"] {
             display: flex;
             flex-grow: 1;
-        }
-        &.expanded {
-            background-color: #{pfe-color(surface--lightest)};
-            border-top-color: #{pfe-color(surface--accent)};
         }
     }
     .pfe-navigation-item__trigger {
@@ -260,14 +256,6 @@ pfe-navigation-item [slot="trigger"] > a {
         }
     }
 }
-
-// @media screen and (max-width: 1199px) {
-//     pfe-navigation-main {
-//         ul li {
-//             flex: 1;
-//         }
-//     }
-// }
 
 // This class is added manually inside the tray on the light DOM content
 .pfe-navigation-item__tray--container {

@@ -35,7 +35,7 @@ _Note: `pfe-cta` is not necessarily a button, though it may look like one visual
 
 ### Default slot
 
-We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe-cta` element. Less preferred but allowed for specific use-cases include: `<button>` and `<input>`.
+We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe-cta` element. Less preferred but allowed for specific use-cases include: `<button>`.
 
 ## Styling approach
 
@@ -95,6 +95,8 @@ Available hooks for styling calls-to-action include:
 | `--pfe-cta--TextDecoration` | none |
 | `--pfe-cta--TextDecoration--hover` | none |
 | `--pfe-cta--TextDecoration--focus` | none |
+| `--pfe-cta--LineHeight` | var(--pfe-theme--line-height, 1.5); |
+| `--pfe-cta--FontFamily` | var(--pfe-theme--font-family--heading, "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif); |
 | `--pfe-cta--FontWeight` | var(--pfe-theme--font-weight--bold, 700); |
 | `--pfe-cta__inner--BorderColor` | transparent | inner border |
 | `--pfe-cta__inner--BorderColor--focus` | transparent | inner border |

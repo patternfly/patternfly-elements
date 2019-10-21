@@ -13,7 +13,7 @@
             font-size: 16px;
 
             a {
-                color: #fff;
+                color: #{pfe-color(surface--darkest--text)};
             }
         }
 
@@ -24,7 +24,8 @@
         }
         &.expanded {
             @media screen and (min-width: 992px) {
-                background-color: #fff;
+                background-color: #{pfe-color(surface--lightest)};
+                border-top-color: #{pfe-color(surface--accent)};
 
                 a {
                     color: #333;
@@ -33,22 +34,29 @@
         }
     }
     .pfe-navigation__container {
-        @media screen and (min-width: 768px) {
+        @media screen and (min-width: $pfe-global--grid-breakpoint--md) {
             max-width: 768px;
         }
-        @media screen and (min-width: 992px) {
+        @media screen and (min-width: $pfe-global--grid-breakpoint--lg) {
             max-width: 992px;
         }
-        @media screen and (min-width: 1200px) {
+        @media screen and (min-width: $pfe-global--grid-breakpoint--xl) {
             max-width: 1140px;
         }
     }
     [slot="tray"] {
         width: 100%;
     }
+    .pfe-icon-1 {
+        display: none;
+    }
     .pfe-navigation-item__tray--container {
         margin: 0 auto;
     }
+    .pfe-navigation-item-1 .pfe-navigation-item__trigger.pfe-navigation-item {
+        margin-left: 20px;
+    }
+
 //     .pfe-navigation-item__trigger {
 //         &.pfe-navigation-item {
 //             .expanded & {
@@ -125,9 +133,14 @@ pfe-navigation-item [slot="trigger"] > a {
             display: flex;
             flex-grow: 1;
         }
+        &.expanded {
+            background-color: #{pfe-color(surface--lightest)};
+            border-top-color: #{pfe-color(surface--accent)};
+        }
     }
     .pfe-navigation-item__trigger {
         --pfe-navigation__trigger-icon--Visible: hidden;
+        text-align: center;
 
         &:hover {
             --pfe-navigation__trigger-icon--Visible: visible;

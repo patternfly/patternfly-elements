@@ -29,7 +29,8 @@ class PfeCta extends PFElement {
   static get observedAttributes() {
     return [
       "pfe-priority",
-      "pfe-color"
+      "pfe-color",
+      "pfe-variant"
     ];
   }
 
@@ -84,7 +85,7 @@ class PfeCta extends PFElement {
   _init() {
     // Get the first child of the web component (light DOM)
     const firstChild = this.children[0];
-    const supportedTags = ["a", "button", "input"];
+    const supportedTags = ["a", "button"]; // add input later
     let supportedTag = false;
 
     // If the first child does not exist or that child is not a supported tag
@@ -100,7 +101,7 @@ class PfeCta extends PFElement {
       console.warn(
         `${
           PfeCta.tag
-        }:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>, <input>)`
+        }:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)`
       );
     } else {
       // Capture the first child as the CTA element

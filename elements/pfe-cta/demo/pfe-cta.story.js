@@ -23,42 +23,48 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeCta.tag, () => {
   let config = {};
-  // const props = PfeCta.properties;
-  // Manually defining props but this can be done in a schema instead
-  const props = {
-    "pfe-priority": {
-      title: "Priority",
-      type: "string",
-      enum: ["primary", "secondary"],
-      default: "primary"
-    },
-    "pfe-color": {
-      title: "Color",
-      type: "string",
-      enum: ["accent", "base", "complement", "lightest"]
-    }
-  };
+
+  const props = PfeCta.properties;
+  props.priority.default = "primary";
+
+  // Pull out variant
+  // let priority = props.priority;
+  let color = props.color;
+  let variant = props.variant;
+  // Remove it from the options list
+  delete props.variant;
+  delete props.color;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 
-  // const slots = PfeCard.slots;
-  // Manually defining the slots but this can be done in a schema instead
-  const slots = {
-    text: {
-      title: "Text"
-    },
-    link: {
-      title: "Link"
-    }
-  };
+  if (config.prop["pfe-priority"] === "secondary") {
+    // Add back variant options
+    props.variant = variant;
+  }
+  
+  // Rerender select boxes
+  config.prop = tools.autoPropKnobs(props, storybookBridge);
+
+  if (!(config.prop["pfe-priority"] === "secondary" && config.prop["pfe-variant"] === "wind")) {
+    // Add back colors
+    props.color = color;
+  }
+
+  // Rerender select boxes
+  config.prop = tools.autoPropKnobs(props, storybookBridge);
+
+  const slots = PfeCta.slots;
 
   //-- Add default content to slot objects
-
   // Build the default text content
-  slots.text.default = "Become a member";
+  slots.text = {
+    title: "Link text",
+    default: "Become a member"
+  };
 
   // Build the default link content
+  slots.link.title = "URL";
   slots.link.default = "https://www.redhat.com";
 
   // Trigger the auto generation of the knobs for slots

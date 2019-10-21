@@ -10,44 +10,45 @@
 }
 
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+  @extend %sr-only;
 }
 
-#input-box-wrapper ::slotted(input) {
-  width: 100%;
-  flex: 1;
-  box-shadow: inset 0 0px 0px rgba(0,0,0,0.075) !important;
-  padding-left: 10px;
-  padding-right: 30px;
-  border-radius: 0;
-  background-color: #fff;
-  border: 1px solid #{pfe-color( surface--border)};
-  font-size: 16px; /*1rem*/
-  height: 40px;
-  transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
-  opacity: 1;
-  outline: 0;
+#input-box-wrapper {
+  ::slotted(input) {
+    width: 100%;
+    flex: 1;
+    box-shadow: #{pfe-var(box-shadow--inset)} !important;
+    padding-left: 10px;
+    padding-right: 30px;
+    border-radius: 0;
+    background-color: #fff;
+    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    font-size: #{pfe-var(font-size)};
+    height: calc(#{pfe-var(ui--element--size)} * 2);
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    opacity: 1;
+    outline: 0;
+  }
+  button:focus,
+  ::slotted(input:focus) {
+    border-color: #{pfe-color(feedback--info)};
+    outline: 0;
+  }
+  ::slotted([type="search"]::-ms-clear) {
+    display: none;
+  }
+  ::slotted(input[type="search"]::-webkit-search-cancel-button),
+  ::slotted(input[type="search"]::-webkit-search-decoration) {
+    -webkit-appearance: none;
+  }
 }
 
 #input-box-wrapper ::slotted(input:disabled),
 button:disabled {
   cursor: not-allowed;
   background-color: transparent;
-  color: #ccc;
+  color: #{pfe-color(feedback--default)};
   opacity: 0.5;
-}
-
-#input-box-wrapper button:focus,
-#input-box-wrapper ::slotted(input:focus) {
-  border-color: #66afe9;
-  outline: 0;
 }
 
 #input-box-wrapper ::slotted(input),
@@ -55,71 +56,53 @@ button {
   -webkit-appearance: none;
 }
 
-#input-box-wrapper ::slotted([type="search"]::-ms-clear) {
-  display: none;
-}
-
-#input-box-wrapper ::slotted(input[type="search"]::-webkit-search-cancel-button),
-#input-box-wrapper ::slotted(input[type="search"]::-webkit-search-decoration) {
-  -webkit-appearance: none;
-}
-
 button {
-  color: #cccccc;
-  background-color: transparent;
-  border: none;
+  @extend %reset-button;
+  color: #{pfe-color(feedback--default)};
   position: absolute;
-  top: 0px;
-  bottom: 0px;
-  padding: 0px;
-  margin: 0px;
+  top: 0;
+  bottom: 0;
   cursor: pointer;
-}
 
-button.clear-search {
-  right: 30px;
-  width: 20px;
-  margin: 2px 1px;
-  background-color: #fff;
-}
+  &.clear-search {
+    background-color: #{pfe-color(surface--lightest)};
+    right: 30px;
+    width: 20px;
+    margin: 2px 1px;
+    &:hover {
+      color: #{pfe-color(feedback--default)};
+    }
+    svg {
+      width: 12px;
+      stroke: #{pfe-color(feedback--default)};
+    }
+    &:hover svg,
+    &:focus svg {
+      opacity: 1;
+      stroke: #{pfe-color(feedback--info)};
+    }
+  }
 
-button.clear-search svg {
-  width: 12px;
-  stroke: #ccc;
-}
+  &[disabled].clear-search:hover svg,
+  &[disabled].clear-search:focus svg {
+    stroke: #{pfe-color(feedback--default)};
+  }
 
-button.clear-search:hover svg,
-button.clear-search:focus svg {
-  opacity: 1;
-  stroke: #06c;
-}
-
-button[disabled].clear-search:hover svg,
-button[disabled].clear-search:focus svg {
-  stroke: #ccc ;
-}
-
-button.search-button {
-  right: 1px;
-  width: 30px;
-}
-
-button.search-button svg {
-  fill: #06c;
-  width: 16px;
-}
-
-button.search-button:hover svg,
-button.search-button:focus svg {
-  fill: #004080;
-}
-
-button.clear-search:hover {
-  color: #ccc;
-}
-
-button.search-button:disabled svg {
-  fill: #ccc;
+  &.search-button {
+    right: 1px;
+    width: 30px;
+    &:disabled svg {
+      fill: #{pfe-color(feedback--default)};
+    }
+    svg {
+      fill: #{pfe-color(feedback--info)};
+      width: 16px;
+    }
+    &:hover svg,
+    &:focus svg {
+      fill: #004080;
+    }
+  }
 }
 
 .loading {
@@ -128,9 +111,8 @@ button.search-button:disabled svg {
   right: 52px;
   top: 0px;
   bottom: 0px;
-}
-
-.loading svg {
-  width: 26px;
-  padding-top: 7px;
+  svg {
+    width: 26px;
+    padding-top: 7px;
+  }
 }

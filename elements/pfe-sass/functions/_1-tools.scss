@@ -136,10 +136,24 @@
     $collection: ();
 
     @each $map in $maps {
-        $collection: map-merge($collection, $map);
+        $collection: map-deep-merge($collection, $map);
     }
 
     @return $collection;
+}
+
+// https://medium.com/@pentzzsolt/a-non-destructive-map-merge-function-for-sass-f91637f87b2e
+@function map-deep-merge($parent-map, $child-map) {
+	$result: $parent-map;
+	@each $key, $value in $child-map {
+		@if (not map-has-key($result, $key)) or (type-of(map-get($result, $key)) != type-of($value)) or (not (type-of(map-get($result, $key)) == map and type-of($value) == map)) {
+			$result: map-merge($result, ($key: $value));
+		}
+		@else {
+			$result: map-merge($result, ($key: map-deep-merge(map-get($result, $key), $value)));
+		}
+	}
+	@return $result;
 }
 
 

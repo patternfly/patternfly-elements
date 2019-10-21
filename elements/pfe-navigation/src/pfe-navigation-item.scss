@@ -1,9 +1,9 @@
 @import "_shared-assets";
 
-$variables: (
-  BackgroundColor: pfe-color(surface--darkest),
-  Color:           pfe-color(surface--darkest--text)
-);
+// $variables: (
+//   BackgroundColor: pfe-color(surface--darkest),
+//   Color:           pfe-color(surface--darkest--text)
+// );
 
 :host {
   --pfe-navigation--BackgroundColor: transparent;
@@ -132,6 +132,7 @@ $variables: (
   :host([is_nested]:not([parent_hidden])) & {
     --pfe-navigation--Color: #{pfe-local(aux)};
 
+    @include pfe-accordion-variables;
     @include pfe-accordion-props;
 
     box-sizing: border-box;
@@ -246,7 +247,7 @@ $variables: (
   :host([is_nested]:not([parent_hidden])) & {
     --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
 
-    @extend %pfe-container;
+    // @extend %pfe-container;
   }
 
   :host([is_nested]:not([parent_hidden])) & {
@@ -257,7 +258,7 @@ $variables: (
 
   :host([is_nested].expanded:not([parent_hidden])) & {
     // @include pfe-accordion-panel-expanded;
-    @include pfe-panel;
+    // @include pfe-panel;
   }
 }
 
@@ -272,7 +273,7 @@ $variables: (
 
 // Styles for navigation items appearing inside the mobile menu
 :host([is_nested][first]:not([parent_hidden])) {
-  @include pfe-trigger-first($theme: light);
+  // @include pfe-trigger-first($theme: light);
 }
 
 // Let the main item or the tray be hidden with the attribute

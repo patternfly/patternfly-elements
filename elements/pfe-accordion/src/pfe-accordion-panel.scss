@@ -14,37 +14,33 @@ $LOCAL: accordion;
    @include pfe-box-sizing;
 }
 
-:host([expanded]),
-:host(.animating) {
-  @include pfe-accordion-variables($state: expanded);
-  @include pfe-collapsible($state: open);
-  @include pfe-panel;
-}
-
-:host([on="dark"][expanded]),
-:host([on="dark"].animating){
-  @include pfe-accordion-variables($state: expanded, $theme: dark);
-  @include pfe-panel($theme: dark);
-}
-
-:host([on="saturated"][expanded]),
-:host([on="saturated"].animating){
-  @include pfe-accordion-variables($state: expanded, $theme: saturated);
-  @include pfe-panel($theme: saturated);
-}
-
 :host(.animating) {
   display: block;
   transition: height 0.3s ease-in-out;
 }
 
 .container {
-  @extend %container;
-  padding-top: 0;
-  padding-right: 3em;
-  padding-left: calc(#{pfe-var(container-spacer)} * 1.5);
+  @include pfe-panel-container;
 }
 
 :host(:last-of-type[expanded]) {
   margin-bottom: 0;
+}
+
+/// ===========================================================================
+/// EXPANDED STYLES
+/// ===========================================================================
+
+:host([expanded]),
+:host(.animating) {
+  @include pfe-accordion-variables($state: expanded);
+  @include pfe-collapsible($state: open);
+  @include pfe-panel-variables;
+}
+
+@each $context in $THEMES {
+  :host([on="#{$context}"][expanded]),
+  :host([on="#{$context}"].animating){
+    @include pfe-accordion-variables($state: expanded, $theme: #{$context});
+  }
 }

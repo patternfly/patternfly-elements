@@ -3,67 +3,60 @@
 /// ===========================================================================
 
 @mixin pfe-accordion-variables($state: default, $theme: light) {
-  // Currently supports light or dark theme
+  // Shared variables for all themes
   $variables: ();
-  @if $theme == dark { // Dark theme
-    @if $state != expanded { // Default state
-      $variables: (
-        accent:              #{pfe-color(ui-base--on-dark)},
-        BorderColor--accent: transparent,
-        BorderColor:         #{pfe-color(surface--border)},
-        BorderTopWidth:      #{pfe-var(surface--border-width)},
-        BorderRightWidth:    0,
-        BorderBottomWidth:   #{pfe-var(surface--border-width)}
-      );
+
+  @if $state != expanded { // Default state
+    // Shared variables for all themes
+    $variables: (
+      BorderColor--accent: transparent,
+      BorderColor:         #{pfe-color(surface--border)},
+      BorderTopWidth:      #{pfe-var(surface--border-width)},
+      BorderRightWidth:    0,
+      BorderBottomWidth:   #{pfe-var(surface--border-width)}
+    );
+
+    @if $theme == dark { // Dark theme
+      $variables: map-merge($variables, (
+        accent: #{pfe-color(ui-base--on-dark)}
+        ));
     }
-    @else { // Expanded state
-      $variables: (
-        BackgroundColor:  rgba(255, 255, 255, .1),
-        Color:            #{pfe-apply-broadcast(text)},
-        BorderColor:      #{pfe-color(surface--border)},
+    @else if $theme == saturated { // Saturated theme
+      $variables: map-merge($variables, (
+        accent: #{pfe-color(ui-base--on-saturated)}
+        ));
+    }
+    @else { // Light theme
+      $variables: map-merge($variables, (
+        accent: #{pfe-color(ui-base)}
+      ));
+    }
+  }
+  @else { // Expanded state
+    // Shared variables for all themes
+    $variables: (
+      Color:               #{pfe-apply-broadcast(text)},
+      BorderColor:         #{pfe-color(surface--border)},
+      BorderRightWidth:    #{pfe-var(surface--border-width)}
+    );
+
+    @if $theme == dark { // Dark theme
+      $variables: map-merge($variables, (
+        BackgroundColor:  rgba(247, 247, 249, .1),
         BorderColor--accent: #{pfe-color(ui-base--on-dark)}
-      );
+      ));
     }
-  }
-  @else if $theme == saturated {
-    @if $state != expanded { // Default state
-      $variables: (
-        accent:              #{pfe-color(ui-base--on-saturated)},
-        BorderColor--accent: transparent,
-        BorderColor:         #{pfe-color(surface--border)},
-        BorderTopWidth:      #{pfe-var(surface--border-width)},
-        BorderRightWidth:    0,
-        BorderBottomWidth:   #{pfe-var(surface--border-width)}
-      );
-    }
-    @else { // Expanded state
-      $variables: (
-        BackgroundColor:  rgba(255, 255, 255, .1),
-        Color:            #{pfe-apply-broadcast(text)},
-        BorderColor:      #{pfe-color(surface--border)},
+    @else if $theme == saturated { // Saturated theme
+      $variables: map-merge($variables, (
+        BackgroundColor:  rgba(0, 0, 0, 0.2),
         BorderColor--accent: #{pfe-color(ui-base--on-saturated)}
-      );
+      ));
     }
-  }
-  @else { // Light theme
-    @if $state != expanded { // Default state
-      $variables: (
-        accent:              #{pfe-color(ui-base)},
-        BorderColor--accent: transparent,
-        BorderColor:         #{pfe-color(surface--border)},
-        BorderTopWidth:      #{pfe-var(surface--border-width)},
-        BorderRightWidth:    0,
-        BorderBottomWidth:   #{pfe-var(surface--border-width)}
-      );
-    }
-    @else { // Expanded state
-      $variables: (
+    @else { // Light theme
+      $variables: map-merge($variables, (
         BackgroundColor:     rgba(255, 255, 255, 1),
-        Color:               #{pfe-apply-broadcast(text)},
-        BorderColor:         #{pfe-color(surface--border)},
-        BorderColor--accent: #{pfe-color(ui-base)},
-        BorderRightWidth:    #{pfe-var(surface--border-width)}
-      );
+        BorderColor--accent: #{pfe-color(ui-base)}
+      ));
     }
   }
 
@@ -145,23 +138,33 @@
 }
 
 //-- Panel-specific properties
-@mixin pfe-panel($theme: light) {
-  $variables: ();
+@mixin pfe-panel-variables($theme: light) {
+  $variables: (
+    BorderTopWidth: 0
+  );
 
   @if $theme == "light" { // Light theme
-    $variables: (
-      BorderTopWidth: 0,
+    $variables: map-merge($variables, (
       BoxShadow: 0 5px #{pfe-var(surface--border-width--heavy)} rgba(140, 140, 140, 0.35)
-    );
+    ));
   }
   @else {
-    $variables: (
-      BorderTopWidth: 0,
+    $variables: map-merge($variables, (
       BoxShadow: none
-    );
+    ));
   }
 
   @include pfe-set-local($variables);
+}
+
+@mixin pfe-panel-container() {
+  // Ensure the box shadow does not propagate to nest accordions
+  @include pfe-set-local( ( BoxShadow: none ) );
+
+  @extend %container;
+  padding-top: 0;
+  padding-right: 3em;
+  padding-left: calc(#{pfe-var(container-spacer)} * 1.5);
 }
 
 /// ===========================================================================

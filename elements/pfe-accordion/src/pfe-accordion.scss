@@ -14,25 +14,9 @@ $LOCAL: accordion;
   color: #{pfe-apply-broadcasted(color, text)};
 }
 
-:host(.animating) {
-  @include pfe-accordion-variables($state: expanded);
+@each $context in $THEMES {
+  :host([on="#{$context}"]) {
+    @include pfe-accordion-variables($theme: #{$context});
+    @include pfe-theme($theme: #{$context});
+  }
 }
-
-:host([on="dark"]) {
-  @include pfe-accordion-variables($theme: dark);
-  @include pfe-theme($theme: dark);
-}
-
-:host([on="saturated"]) {
-  @include pfe-accordion-variables($theme: saturated);
-  @include pfe-theme($theme: saturated);
-}
-
-:host([on="dark"].animating) {
-  @include pfe-accordion-variables($state: expanded, $theme: dark);
-}
-
-:host([on="light"]) {
-  @include pfe-theme($theme: "light");
-}
-

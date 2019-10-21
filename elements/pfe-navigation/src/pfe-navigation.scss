@@ -166,7 +166,7 @@ pfe-icon {
   }
   &__skip {
     display: block;
-    @include pfe-sr-only;
+    @extend %pfe-sr-only;
     margin: 0 -2em -1px -1px;
   }
   &__main {

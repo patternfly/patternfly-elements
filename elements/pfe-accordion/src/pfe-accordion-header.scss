@@ -12,6 +12,7 @@ $LOCAL: accordion;
   transition: transform 0.3s #{pfe-var(animation-timing)};
   display: block;
 
+  // Shadow template styles
   > * {
     margin: 0;
   }
@@ -29,23 +30,23 @@ $LOCAL: accordion;
   }
 }
 
-:host button[aria-expanded="true"] {
-  @include pfe-accordion-variables($state: expanded);
-}
-
 // Add border bottom to the last button in an accordion set.
 :host(:last-of-type) button:not([aria-expanded="true"]) {
   @include pfe-trigger-last;
 }
 
 /// ===========================================================================
-/// CONTEXT STYLES
+/// EXPANDED STYLES
 /// ===========================================================================
 
-:host([on="dark"]) button[aria-expanded="true"] {
-  @include pfe-accordion-variables($state: expanded, $theme: dark);
+// Default styles
+:host button[aria-expanded="true"] {
+  @include pfe-accordion-variables($state: expanded);
 }
 
-:host([on="saturated"]) button[aria-expanded="true"] {
-  @include pfe-accordion-variables($state: expanded, $theme: saturated);
+// Styles contextual to theme
+@each $context in $THEMES {
+  :host([on="#{$context}"]) button[aria-expanded="true"] {
+    @include pfe-accordion-variables($state: expanded, $theme: #{$context});
+  }
 }

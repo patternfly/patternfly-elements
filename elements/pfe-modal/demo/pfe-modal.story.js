@@ -5,7 +5,15 @@ import * as tools from "../../../.storybook/utils.js";
 import PfeModal from "../pfe-modal";
 import PfeCta from "../../pfe-cta/pfe-cta";
 
-const stories = storiesOf("Modal", module	);
+const stories = storiesOf("Modal", module);
+
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
 
 const defaultHeader = tools.autoHeading();
 const defaultContent = tools.autoContent();

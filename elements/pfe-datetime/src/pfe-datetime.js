@@ -5,10 +5,6 @@ class PfeDatetime extends PFElement {
     return "pfe-datetime";
   }
 
-  get schemaUrl() {
-    return "pfe-datetime.json";
-  }
-
   get styleUrl() {
     return "pfe-datetime.scss";
   }
@@ -80,7 +76,40 @@ class PfeDatetime extends PFElement {
   }
 
   _getOptions() {
-    const props = PfeDatetime.properties;
+    const props = {
+      weekday: {
+        short: "short",
+        long: "long"
+      },
+      day: {
+        numeric: "numeric",
+        "2-digit": "2-digit"
+      },
+      month: {
+        short: "short",
+        long: "long"
+      },
+      year: {
+        numeric: "numeric",
+        "2-digit": "2-digit"
+      },
+      hour: {
+        numeric: "numeric",
+        "2-digit": "2-digit"
+      },
+      minute: {
+        numeric: "numeric",
+        "2-digit": "2-digit"
+      },
+      second: {
+        numeric: "numeric",
+        "2-digit": "2-digit"
+      },
+      timeZoneName: {
+        short: "short",
+        long: "long"
+      }
+    };
 
     let options = {};
 

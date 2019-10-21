@@ -2,7 +2,7 @@
 
 `pfe-cta` is a call-to-action (CTA) element, that stands out from regular hypertext links, and is used for linking users to webpages.
 
-_Note: `pfe-cta` is not a button, though it may look like one visually._
+_Note: `pfe-cta` is not necessarily a button, though it may look like one visually._
 
 ## Usage
 ```html
@@ -35,7 +35,7 @@ _Note: `pfe-cta` is not a button, though it may look like one visually._
 
 ### Default slot
 
-We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe-cta` element.
+We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe-cta` element. Less preferred but allowed for specific use-cases include: `<button>` and `<input>`.
 
 ## Styling approach
 
@@ -66,15 +66,41 @@ We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe
 
 #### Variants
 
-<pfe-priority="secondary"> has a wind variant that can be applied to change the style of the secondary cta.
+`pfe-priority="secondary"` has a `wind` variant that can be applied to change the style of the secondary cta.
+
 ```html
 <pfe-cta pfe-priority="secondary" pfe-variant="wind">
-    <a href="#">[wind]</a>
+    <a href="#">Wind variant</a>
 </pfe-cta>
 ```
 
 
-### Testing Theme Var Hooks
+### Variable hooks
+
+Available hooks for styling calls-to-action include:
+
+| Variable name | Default value | Region |
+| --- | --- | --- |
+| `--pfe-cta--Padding` | .6rem 0 |
+| `--pfe-cta--BorderRadius` | 0 |
+| `--pfe-cta--BackgroundColor` | transparent |
+| `--pfe-cta--BackgroundColor--hover` | transparent |
+| `--pfe-cta--BackgroundColor--focus` | transparent |
+| `--pfe-cta--BorderColor` | transparent |
+| `--pfe-cta--BorderColor--hover` | transparent |
+| `--pfe-cta--BorderColor--focus` | transparent |
+| `--pfe-cta--Color` | var(--pfe-theme--color--ui-link, #06c) |
+| `--pfe-cta--Color--hover` | var(--pfe-theme--color--ui-link--hover, #003366) |
+| `--pfe-cta--Color--focus` | var(--pfe-theme--color--ui-link--focus, #003366) |
+| `--pfe-cta--TextDecoration` | none |
+| `--pfe-cta--TextDecoration--hover` | none |
+| `--pfe-cta--TextDecoration--focus` | none |
+| `--pfe-cta--FontWeight` | var(--pfe-theme--font-weight--bold, 700); |
+| `--pfe-cta__inner--BorderColor` | transparent | inner border |
+| `--pfe-cta__inner--BorderColor--focus` | transparent | inner border |
+| `--pfe-cta__arrow--Display` | inline | arrow element |
+| `--pfe-cta__arrow--Padding` | 0 .125rem 0 .375rem | arrow element |
+| `--pfe-cta__arrow--MarginLeft` | calc(var(--pfe-theme--content-spacer, 24px) * 0.25) | arrow element |
 
 If you'd like to checkout how theming is possible using our CSS Var hooks, try adding the following to the `<head>` of `./demo/index.html` before running `npm run test`. Feel free to customize the colors too!
 

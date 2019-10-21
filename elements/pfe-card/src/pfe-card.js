@@ -99,9 +99,7 @@ class PfeCard extends PFElement {
   }
 
   get backgroundColor() {
-    return (
-      this.getAttribute("pfe-color") || this.getAttribute("color") || "base"
-    );
+    return this.getAttribute("pfe-color") || "base";
   }
 
   static get observedAttributes() {

@@ -29,6 +29,13 @@ $pfe-health--color-f: #a30000;
   display: none;
 }
 
+:host([size="lg"]) {
+  .box {
+    width: $pfe-health--width * 2;
+    height: $pfe-health--height * 2;
+  }
+}
+
 .box-container {
   display: flex;
   border: 1px solid #{pfe-color(surface--border)};

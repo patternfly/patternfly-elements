@@ -79,7 +79,9 @@ function esmMinConfig({ elementName, className } = {}) {
         output: {
           comments: /@preserve|@license|@cc_on/i
         }
-      })
+      }),
+      resolve(),
+      commonjs()
     ],
     external: id => id.startsWith("..")
   };

@@ -15,6 +15,10 @@ const types = {
 // debugger;
 numeral.locales.en.delimiters.thousands = " ";
 
+// @IE11
+// non-mutating polyfill from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN#Polyfill
+const isNaN = Number.isNaN || (n => n !== null && (n != n || +n != n));
+
 class PfeNumber extends PFElement {
   static get tag() {
     return "pfe-number";
@@ -59,10 +63,8 @@ class PfeNumber extends PFElement {
   }
 
   _setInitialNumber() {
-    const numberAttrDefined = !Number.isNaN(
-      parseFloat(this.getAttribute("number"))
-    );
-    const numberContentDefined = !Number.isNaN(parseFloat(this.textContent));
+    const numberAttrDefined = !isNaN(parseFloat(this.getAttribute("number")));
+    const numberContentDefined = !isNaN(parseFloat(this.textContent));
 
     if (numberAttrDefined) {
       this.setAttribute("number", this.getAttribute("number"));
@@ -82,6 +84,14 @@ class PfeNumber extends PFElement {
   }
 
   _updateNumber(num, type) {
+    if (!num || isNaN(parseFloat(num))) {
+      this.textContent = "";
+      this.shadowRoot.querySelector("span").textContent = "";
+
+      return;
+    }
+
+    this.textContent = num;
     this.shadowRoot.querySelector("span").textContent = this._format(num, type);
   }
 

@@ -36,37 +36,51 @@ class PfeHealthIndex extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["health-index"];
+    return ["health-index", "size"];
   }
 
   constructor() {
-    super(PfeHealthIndex);
+    super(PfeHealthIndex, { delayRender: true });
+    this.size = null;
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
-    const healthIndex = newValue.toLowerCase();
-    const healthIndexUpperCase = newValue.toUpperCase();
-    const boxes = [...this.shadowRoot.querySelectorAll(".box")];
+    switch (attr) {
+      case "size":
+        this.size = newValue;
+        this.render();
+        break;
+      case "health-index":
+        this.render();
+        const healthIndex = newValue.toLowerCase();
+        const healthIndexUpperCase = newValue.toUpperCase();
+        const boxes = [...this.shadowRoot.querySelectorAll(".box")];
+        this.innerHTML = healthIndexUpperCase;
+        
+        boxes.forEach(box => {
+          if (box.classList.contains(healthIndex)) {
+            console.log(this);
+            box.classList.add("active");
+            console.log(box);
+          } else {
+            box.classList.remove("active");
+          }
+        });
 
-    this.innerHTML = healthIndexUpperCase;
-    this.shadowRoot.querySelector(
-      "#healthIndex"
-    ).innerText = healthIndexUpperCase;
+        if (this.size !== "lg") {
+          this.shadowRoot.querySelector(
+            "#healthIndex"
+          ).innerText = healthIndexUpperCase;
+        }
 
-    boxes.forEach(box => {
-      if (box.classList.contains(healthIndex)) {
-        box.classList.add("active");
-      } else {
-        box.classList.remove("active");
-      }
-    });
-
-    if (!this.shadowRoot.querySelector(".box.active")) {
-      console.warn(
-        `${
-          PfeHealthIndex.tag
-        }: a valid health-index was not provided. Please use A, B, C, D, E, or F`
-      );
+        if (!this.shadowRoot.querySelector(".box.active")) {
+          console.warn(
+            `${
+            PfeHealthIndex.tag
+            }: a valid health-index was not provided. Please use A, B, C, D, E, or F`
+          );
+        }
+      default:
     }
   }
 }

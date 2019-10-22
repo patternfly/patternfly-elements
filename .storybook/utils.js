@@ -32,6 +32,11 @@ const listProperties = (obj) =>
       let v = set[1];
       let print = set[2];
 
+      // exit if the value is a boolean and is false
+      if (typeof v === "boolean" && !v) {
+        return;
+      }
+
       // If no print value is provided, default to true
       if (typeof print === "undefined") {
         print = true;
@@ -44,11 +49,8 @@ const listProperties = (obj) =>
         (v !== null && v !== "null")
       ) {
         string += p;
-        // If the value is a boolean and is false, or the value is not a string true
-        if (
-          (typeof v === "string" && v !== "true") ||
-          (typeof v === "boolean" && !v)
-        ) {
+        // If the value is a string and the value is not equal to the string "true"
+        if (typeof v === "string" && v !== "true") {
           string += "=";
           if (typeof v === "string") {
             // If it's a string, use quotation marks around it

@@ -23,18 +23,67 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeDatetime.tag, () => {
   let config = {};
+  // const props = PfeCta.properties;
+  // Manually defining props but this can be done in a schema instead
 
-  const props = PfeDatetime.properties;
-  const slots = PfeDatetime.slots;
-
-  // -- Customize the default selection for the preview
-  props.datetime.default = "January 9, 2019";
-  props.type.default = "local";
-  props.day.default = "numeric";
-  props.month.default = "long";
-  props.year.default = "numeric";
-  props.locale.default = "en-US";
-
+  const props = {
+    datetime: {
+      title: "Datetime",
+      type: "string",
+      default: "January 9, 2019",
+      required: true
+    },
+    type: {
+      title: "Type",
+      type: "string",
+      enum: ["local", "relative"],
+      default: "local",
+      required: true
+    },
+    weekday: {
+      title: "Weekday",
+      type: "string",
+      enum: ["short", "long"]
+    },
+    day: {
+      title: "Day",
+      type: "string",
+      enum: ["numeric", "2-digit"],
+      default: "numeric"
+    },
+    month: {
+      title: "Month",
+      type: "string",
+      enum: ["short", "long"],
+      default: "long"
+    },
+    year: {
+      title: "Year",
+      type: "string",
+      enum: ["numeric", "2-digit"],
+      default: "numeric"
+    },
+    hour: {
+      title: "Hour",
+      type: "string",
+      enum: ["numeric", "2-digit"]
+    },
+    minute: {
+      title: "Minute",
+      type: "string",
+      enum: ["numeric", "2-digit"]
+    },
+    second: {
+      title: "Second",
+      type: "string",
+      enum: ["numeric", "2-digit"]
+    },
+    locale: {
+      title: "Timezone",
+      type: "string",
+      default: "en-US"
+    }
+  };
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);
@@ -42,7 +91,7 @@ stories.add(PfeDatetime.tag, () => {
   // Fallback date is the "content" for this component
   config.slots = [
     {
-      content: props.datetime.default
+      content: config.prop.datetime
     }
   ];
 

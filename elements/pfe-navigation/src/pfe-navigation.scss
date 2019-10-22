@@ -16,6 +16,7 @@ $variables: (
   Border:         pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
 
   MaxHeight: 72px,
+  MobileMenuHeight: 60px,
 
   // Variables for the trigger icon
   icon: none,
@@ -112,7 +113,7 @@ pfe-icon {
     color: #{pfe-local(Color)};
     min-height: #{pfe-local(MaxHeight)};
     @media only screen and (max-height: 500px) {
-      min-height: 60px;
+      min-height: #{pfe-local(MobileMenuHeight)};
     }
   }
   &__container {

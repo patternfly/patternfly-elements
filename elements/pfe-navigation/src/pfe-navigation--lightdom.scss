@@ -16,12 +16,6 @@
                 color: #{pfe-color(surface--darkest--text)};
             }
         }
-
-        &[pfe-icon] {
-            > [slot="trigger"] a {
-                font-size: 12px;
-            }
-        }
         &.expanded {
             @media screen and (min-width: 992px) {
                 background-color: #{pfe-color(surface--lightest)};

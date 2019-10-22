@@ -16,13 +16,9 @@ $variables: (
   --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.75) !important;
   --pfe-navigation__trigger--Cover:  transparent;
 
-  // @media screen and (min-width: 1024px) and (max-width: 1199px) {
-  //   --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.5) !important;
-  // }
-
   display: flex;
   flex-direction: column;
-  line-height: 1.25;
+  line-height: 1.3;
   
   height: 100%;
   width: 100%;

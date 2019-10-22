@@ -4,9 +4,15 @@ import * as tools from "../../../.storybook/utils.js";
 
 import PfeHealthIndex from "../pfe-health-index";
 
-// import cpTheme from "../../../themes/cp-theme/cp-theme.js";
-
 const stories = storiesOf("Health Index", module);
+
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
 
 // Define the template to be used
 const template = (data = {}) => {

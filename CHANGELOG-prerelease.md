@@ -3,7 +3,20 @@
 Tag: [v1.0.0-prerelease.26](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.26)
 
 - [f18aa6f](https://github.com/patternfly/patternfly-elements/commit/f18aa6ff05e510993baf0f1971a85e2e4715bcc4) Update build tools to support the files array in package.json for each component
-- [](https://github.com/patternfly/patternfly-elements/commit/) Add patternfly project as a dependency so that styles can be extended
+- [9d9d41c](https://github.com/patternfly/patternfly-elements/commit/9d9d41c30883674d52cd1c29aa2300829c00693f) Add patternfly project as a dependency so that styles can be extended
+- [b13ef5b](https://github.com/patternfly/patternfly-elements/commit/b13ef5b2470770acc01638d4a55c1f90a2859bda) Support table
+- [274e35c](https://github.com/patternfly/patternfly-elements/commit/274e35cd4e8a08721888d8fad195b6fe37a525b7) Navigation component
+- [6b5db77](https://github.com/patternfly/patternfly-elements/commit/6b5db77c20358499f78b66811b73ea6be309318b) Update documentation
+- [d4600dd](https://github.com/patternfly/patternfly-elements/commit/d4600dd1c6e2abfcf8918d06b4eaacb8fb62d208) Add automatic Sass globbing to pfe-sass
+- [27a97e1](https://github.com/patternfly/patternfly-elements/commit/27a97e135986de37ede55504a1630bf974de0e0c) pfe-cta: fix functions & IE11 accessibility
+- [9a39ae3](https://github.com/patternfly/patternfly-elements/commit/9a39ae3b7d0b8d129a3aea3b58e71dab5013c721) fix: Adding object-fit to resolve image distortion in cards, #417
+- [980203b](https://github.com/patternfly/patternfly-elements/commit/980203b2768d1d9d8813f386bb0f0bf37d3732ab) feat: Upgrade to latest version of storybook (#366)
+- [ab5bc0e](https://github.com/patternfly/patternfly-elements/commit/ab5bc0e66b1e0f2f4ba180ff80d24b84d0db3260) feat: added sm md and xl sizes for pfe-progress-indicator (#575)
+- [fc51ba](https://github.com/patternfly/patternfly-elements/commit/fc51baf1cb4313ca117cc505ba9c0e99dd44d0e9) feat: Add pfe-number schema (#576)
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-card: storybook issue with incorrect attribute (#573)
+- []() Upgrade to latest version of storybook (#366)
+- [](https://github.com/patternfly/patternfly-elements/commit/) pfe-datetime: adding a json schema
+- [](https://github.com/patternfly/patternfly-elements/commit/) pfe-icon-panel: maintain icon height in flex display
 
 ## Prerelease 25 ( 2019-09-10 )
 

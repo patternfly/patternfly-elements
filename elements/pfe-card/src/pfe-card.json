@@ -76,6 +76,7 @@
             "accent"
           ],
           "default": "base",
+          "prefixed": true,
           "observer": "_colorChanged"
         },
         "img-src": {

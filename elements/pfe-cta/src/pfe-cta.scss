@@ -58,10 +58,10 @@ $pfe-cta--Color--fallback: #003366;
     display: inline;
 
     color:           #{pfe-local(Color, $pfe-cta--Color--fallback)} !important;
-    font-family: #{pfe-local($cssvar: FontFamily, $fallback: #{pfe-var(font-family--heading)})};
-    font-size:   #{pfe-local($cssvar: FontSize, $fallback: #{pfe-var(font-size)})};
-    font-weight: #{pfe-local(FontWeight)};
-    line-height: #{pfe-local($cssvar: LineHeight, $fallback: #{pfe-var(line-height)})};
+    font-family:     #{pfe-local($cssvar: FontFamily, $fallback: #{pfe-var(font-family--heading)})};
+    font-size:       #{pfe-local($cssvar: FontSize, $fallback: #{pfe-var(font-size)})};
+    font-weight:     #{pfe-local(FontWeight)};
+    line-height:     #{pfe-local($cssvar: LineHeight, $fallback: #{pfe-var(line-height)})};
     text-decoration: #{pfe-local(TextDecoration)} !important;
     
     &::before {  // inner border on priority CTAs

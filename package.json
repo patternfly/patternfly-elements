@@ -118,8 +118,7 @@
     "yo": "^1.8.5"
   },
   "dependencies": {
-    "gh-pages": "^2.1.1",
-    "opn": "^6.0.0"
+    "gh-pages": "^2.1.1"
   },
   "private": true
 }

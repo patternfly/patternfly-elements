@@ -10,6 +10,7 @@ const paths = {
   temp: "./_temp"
 };
 
+const path = require("path");
 const clean = require("gulp-clean");
 const mergeStream = require("merge-stream");
 const globSass = require("gulp-sass-globbing");

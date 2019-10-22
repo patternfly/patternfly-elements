@@ -103,11 +103,20 @@ class PfeScrollspyPanel extends PFElement {
   }
   
   _init() {
+    //@TODO use element attribute to get the variables
     this.sections = document.querySelectorAll(".pfe-scrollspy-panel__section");
     this.menu_links = document.querySelectorAll(".pfe-scrollspy-nav__item");
     this.makeActive = (link) => {
       if (this.menu_links[link]) {
         this.menu_links[link].setAttribute("active", "");
+        this.dispatchEvent(
+          new CustomEvent(`${PfeScrollspyPanel.tag}:active-section`, {
+            detail: {
+              activeNavItem: this.menu_links[link]
+            },
+            bubbles: true
+          })
+        );
       }
     }
     this.removeActive = (link) => {

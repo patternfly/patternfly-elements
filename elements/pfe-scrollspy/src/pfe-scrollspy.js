@@ -103,14 +103,19 @@ class PfeScrollspyPanel extends PFElement {
   }
   
   _init() {
-    //@TODO use element attribute to get the variables
-    this.sections = document.querySelectorAll(".pfe-scrollspy-panel__section");
-    this.menu_links = document.querySelectorAll(".pfe-scrollspy-nav__item");
+    //This is the panel
+    this.scrollTarget = this.getAttribute('scrolltarget');
+    this.scrollspyNav = document.querySelector(`#${this.scrollTarget}`);
+    this.sections = this.querySelectorAll(".pfe-scrollspy-panel__section");
+    // This fails when outside the if statement when the component sets up the slot...?
+    if(this.scrollspyNav) {
+      this.menu_links = this.scrollspyNav.querySelectorAll(".pfe-scrollspy-nav__item");
+    }
     this.makeActive = (link) => {
       if (this.menu_links[link]) {
         this.menu_links[link].setAttribute("active", "");
         this.dispatchEvent(
-          new CustomEvent(`${PfeScrollspyPanel.tag}:active-section`, {
+          new CustomEvent(`${PfeScrollspyPanel.tag}:active-nav-item`, {
             detail: {
               activeNavItem: this.menu_links[link]
             },
@@ -140,12 +145,12 @@ class PfeScrollspyPanel extends PFElement {
       let sectionMargin;
       let currentActive;
       if (!this.sections) {
-        this.sections = document.querySelectorAll(".pfe-scrollspy-panel__section");
+        this.sections = this.querySelectorAll(".pfe-scrollspy-panel__section");
       } else {
         sections = this.sections;
       }
       if (!this.menu_links) {
-        this.menu_links = document.querySelectorAll(".pfe-scrollspy-nav__item");
+        this.menu_links = this.scrollspyNav.querySelectorAll(".pfe-scrollspy-nav__item");
         menu_links = this.menu_links;
       }
       if (!this.sectionMargin) {

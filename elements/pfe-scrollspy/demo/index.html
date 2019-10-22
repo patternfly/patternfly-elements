@@ -42,7 +42,7 @@
     <h1>&lt;pfe-scrollspy&gt;</h1>
     <div style="display:flex;">
       <div style="display: block; width: 25%;">
-        <pfe-scrollspy-nav>
+        <pfe-scrollspy-nav id="scrollspy1">
           <ul>
             <li><a class="pfe-scrollspy-nav__item" href="#section1" data-target="section1" active>Section 1</a></li>
             <li><a class="pfe-scrollspy-nav__item"  href="#section2" data-target="section2">Section 2</a></li>
@@ -53,7 +53,7 @@
         </pfe-scrollspy-nav>
       </div>
       <div style="display: block; width: 75%;">
-        <pfe-scrollspy-panel>
+        <pfe-scrollspy-panel scrolltarget="scrollspy1">
           <div>
             <h1 class="pfe-scrollspy-panel__section" id="section1">Section 1</h1>
             <p>Lorem ipsum dolor amet umami vaporware actually church-key keytar, hell of roof party unicorn helvetica lomo

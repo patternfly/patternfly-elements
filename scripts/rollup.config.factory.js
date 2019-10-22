@@ -5,7 +5,7 @@ import { uglify } from "rollup-plugin-uglify";
 import { terser } from "rollup-plugin-terser";
 import replace from "rollup-plugin-re";
 
-const importRegex = /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
+const importRegex = /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
 
 const babelSettings = {
   presets: [["env", { modules: false }]],

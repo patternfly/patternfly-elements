@@ -41,7 +41,8 @@ const listProperties = (obj) =>
       if (
         print &&
         typeof v !== "undefined" &&
-        (v !== null && v !== "null")
+        (v !== null && v !== "null") &&
+        (typeof v === "boolean" && v)
       ) {
         string += p;
         // If the value is a boolean and is false, or the value is not a string true

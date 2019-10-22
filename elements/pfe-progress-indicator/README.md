@@ -5,7 +5,7 @@
 ## Usage
 ```html
 <pfe-progress-indicator pfe-indeterminate>
-    <h1>My fallback loading message</h1>
+  <h1>My fallback loading message</h1>
 </pfe-progress-indicator>
 ```
 
@@ -21,18 +21,26 @@ We expect any html tag to be the first child inside `pfe-progress-indicator` ele
 
 E.g.
 
-```
+```html
 // The web component that upgrades to a "loader"
-<pfe-progress-indicator>
-
-// your custom message for JS failure AND a11y technologies
-<h1>
-  This text will be seen if JS fails, but will be hidden on upgrade.
-  Screen readers will still see it as a part of the DOM.
-</h1>
-
+<pfe-progress-indicator pfe-indeterminate>
+  // your custom message for JS failure AND a11y technologies
+  <h1>
+    This text will be seen if JS fails, but will be hidden on upgrade.
+    Screen readers will still see it as a part of the DOM.
+  </h1>
 </pfe-progress-indicator>
 ```
+
+## Attributes
+
+### pfe-indeterminate
+
+Uses the spinner style display. Currently this is on the only supported display.
+
+### size
+
+Possible values: `sm`, `md`, `xl`
 
 ## Styling
 

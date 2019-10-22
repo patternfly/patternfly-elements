@@ -100,7 +100,7 @@
           "type": "string",
           "default": "en-US"
         },
-        "timeZoneName": {
+        "time_zone_name": {
           "title": "Time Zone",
           "type": "string",
           "enum": [

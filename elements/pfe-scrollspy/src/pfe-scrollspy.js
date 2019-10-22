@@ -23,7 +23,6 @@ class PfeScrollspy extends PFElement {
   }
 
   connectedCallback() {
-    console.log("Called connected callback")
     super.connectedCallback();
   }
 
@@ -98,42 +97,68 @@ class PfeScrollspyPanel extends PFElement {
 
   constructor(pfeClass) {
     super(pfeClass || PfeScrollspyPanel);
+
+    this._slot = this.shadowRoot.querySelector("slot");
+    this._slot.addEventListener("slotchange", this._init);
+  }
+  
+  _init() {
+    this.sections = document.querySelectorAll(".pfe-scrollspy-panel__section");
+    this.menu_links = document.querySelectorAll(".pfe-scrollspy-nav__item");
+    this.makeActive = (link) => {
+      if (this.menu_links[link]) {
+        this.menu_links[link].setAttribute("active", "");
+      }
+    }
+    this.removeActive = (link) => {
+      if (this.menu_links[link]) {
+        this.menu_links[link].removeAttribute("active");
+      }
+    }
+    this.removeAllActive = () => [...Array(this.sections.length).keys()].forEach((link) => this.removeActive(link));
+
+    this.sectionMargin = 200;
+
+    this.currentActive = 0;
   }
 
   connectedCallback() {
     super.connectedCallback();
-
-    const sections = document.querySelectorAll(".pfe-scrollspy-panel__section");
-    const menu_links = document.querySelectorAll(".pfe-scrollspy-nav__item");
-    const makeActive = (link) => {
-      if(menu_links[link]) {
-        menu_links[link].setAttribute("active", "");
+    this._init();
+    this._scrollCallback = function(){
+      let sections;
+      let menu_links;
+      let sectionMargin;
+      let currentActive;
+      if (!this.sections) {
+        this.sections = document.querySelectorAll(".pfe-scrollspy-panel__section");
+      } else {
+        sections = this.sections;
       }
-    }
-    const removeActive = (link) => {
-      if (menu_links[link]){
-        menu_links[link].removeAttribute("active");
+      if (!this.menu_links) {
+        this.menu_links = document.querySelectorAll(".pfe-scrollspy-nav__item");
+        menu_links = this.menu_links;
       }
-    }
-    const removeAllActive = () => [...Array(sections.length).keys()].forEach((link) => removeActive(link));
-
-    const sectionMargin = 200;
-
-    let currentActive = 0;
-    window.addEventListener("scroll", function () {
+      if (!this.sectionMargin) {
+        sectionMargin = 200;
+      } else {
+        sectionMargin = this.sectionMargin;
+      }
       const sectionArr = [...sections];
       const matches = sectionArr.filter(section => window.scrollY >= section.offsetTop - sectionMargin).reverse();
       const current = sectionArr.indexOf(matches[0]);
       if (current !== currentActive) {
-        removeAllActive();
-        currentActive = current;
-        makeActive(current);
+        this.removeAllActive();
+        this.currentActive = current;
+        this.makeActive(current);
       }
-    });
+    }
+    window.addEventListener("scroll", this._scrollCallback.bind(this));
   }
 
   disconnectedCallback() {
     window.removeEventListener("scroll");
+    this._slot.removeEventListener("slotchange", this._init);
   }
 
   // attributeChangedCallback(attr, oldValue, newValue) {}

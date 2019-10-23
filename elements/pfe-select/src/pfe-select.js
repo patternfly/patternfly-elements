@@ -1,4 +1,4 @@
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 
 // Object.assign needs a polyfill as its not supported in IE11
 if (typeof Object.assign !== 'function') {
@@ -15,7 +15,7 @@ if (typeof Object.assign !== 'function') {
       for (var index = 1; index < arguments.length; index++) {
         var nextSource = arguments[index];
 
-        if (nextSource !== null && nextSource !== undefined) { 
+        if (nextSource !== null && nextSource !== undefined) {
           for (var nextKey in nextSource) {
             // Avoid bugs when hasOwnProperty is shadowed
             if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
@@ -78,12 +78,12 @@ class PfeSelect extends PFElement {
   }
 
   connectedCallback() {
-    super.connectedCallback();    
+    super.connectedCallback();
     customElements.whenDefined(PfeSelect.tag).then(() => {
       if (this.pfeOptions) {
         this._modifyDOM();
         this._init();
-      } else {      
+      } else {
         if (this.children.length) {
           this._init();
         } else {
@@ -143,8 +143,8 @@ class PfeSelect extends PFElement {
     let pfeSelect = document.createElement('select');
     // Create option element for each element in _pfeOptions array
     this._pfeOptions.map(el => {
-      const option = Object.assign(document.createElement('option') , el);      
-      pfeSelect.add(option, null);      
+      const option = Object.assign(document.createElement('option') , el);
+      pfeSelect.add(option, null);
     });
     // if select already exists in the DOM then replace the old select with the new _pfeOptions array
     if (this.children.length) {

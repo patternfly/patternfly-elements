@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../pfe-select.js"></script>
+    <script type="module" src="../dist/pfe-select.js"></script>
   </head>
   <body>
 
@@ -49,13 +49,13 @@
             spy.restore();
             done();
           });
-          
+
         });
 
         test("it should log a warning if select tag is not the first child of pfe-select element", done => {
           const spy = sinon.spy(console, 'warn');
           const pfeSelect = document.createElement("pfe-select");
-          
+
           // creating div as first child element
           const div = document.createElement("div");
           pfeSelect.appendChild(div);
@@ -67,7 +67,7 @@
             spy.restore();
             done();
           });
-          
+
         });
 
         test("it should set the aria-invalid to true if pfe-invalid attribute is set to true", () => {
@@ -86,7 +86,7 @@
             const [event] = handlerSpy.getCall(0).args;
             sinon.assert.calledOnce(handlerSpy);
             assert.equal(event.detail.value, "2");
-            
+
             // reset
             pfeSelect.removeEventListener('pfe-select:change', handlerSpy);
             pfeSelect.children[0].value = "1";
@@ -101,10 +101,10 @@
         test("it should log a warning if multiple options exist with selected field set as true", () => {
           const spy = sinon.spy(console, 'warn');
           const pfeSelect = document.createElement("pfe-select");
-          
+
           // setting JS options using setter method
           pfeSelect.pfeOptions = [
-            { text: "Please select an Option", value: "", selected: true }, 
+            { text: "Please select an Option", value: "", selected: true },
             { text: 'One', value: '1', selected: true },
             { text: 'Two', value: '2', selected: false },
             { text: 'Three', value: '3', selected: false}
@@ -120,14 +120,14 @@
           const pfeSelect = document.createElement("pfe-select");
 
           const options = [
-            { text: "Please select an Option", value: "", selected: true }, 
+            { text: "Please select an Option", value: "", selected: true },
             { text: 'One', value: '1', selected: false },
             { text: 'Two', value: '2', selected: false },
             { text: 'Three', value: '3', selected: false}
           ];
 
           document.body.appendChild(pfeSelect);
-          
+
           // setting JS options using addOptions API
           pfeSelect.addOptions(options);
 
@@ -135,15 +135,15 @@
             assert.equal(pfeSelect.children[0].options.length, options.length);
             done();
           });
-          
+
         });
 
         test("it should call _modifyDOM method if pfeOptions exist", () => {
           const pfeSelect = document.createElement("pfe-select");
           const spy = sinon.spy(pfeSelect, "_modifyDOM");
-          
+
           pfeSelect.pfeOptions = [
-            { text: "Please select an Option", value: "", selected: true }, 
+            { text: "Please select an Option", value: "", selected: true },
             { text: 'One', value: '1', selected: false },
             { text: 'Two', value: '2', selected: false },
             { text: 'Three', value: '3', selected: false}
@@ -153,13 +153,13 @@
           assert(spy.called);
           assert.equal(pfeSelect.children[0].options.length, pfeSelect.pfeOptions.length);
         });
-        
+
         test("it should replace lightDOM select (if exists) with pfeOptions", () => {
           const pfeSelect = document.querySelector("#pfe-select-with-js-options");
           const spy = sinon.spy(pfeSelect, "_modifyDOM");
-          
+
           pfeSelect.pfeOptions = [
-            { text: "Please select an Option", value: "", selected: true }, 
+            { text: "Please select an Option", value: "", selected: true },
             { text: 'One', value: '1', selected: false },
             { text: 'Two', value: '2', selected: false },
             { text: 'Three', value: '3', selected: false}
@@ -167,7 +167,7 @@
 
           document.body.appendChild(pfeSelect);
           assert(spy.called);
-          // checking if lightDOM select inside #pfe-select-with-js-options got replaced with new select   
+          // checking if lightDOM select inside #pfe-select-with-js-options got replaced with new select
           assert.equal(document.querySelector("#example3"), null);
           assert.equal(pfeSelect.children[0].options.length, pfeSelect.pfeOptions.length);
         });

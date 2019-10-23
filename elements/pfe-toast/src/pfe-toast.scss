@@ -9,12 +9,29 @@
 
 .pfe-toast {
   &__container {
-    
+    background-color: #fff;
+    box-shadow: rgba(3, 3, 3, 0.13) 0px 3px 7px 3px, rgba(3, 3, 3, 0.12) 0px 11px 24px 16px;
+    color: #151515;
+    flex-grow: 1;
+    position: relative;
   }
   &__content {
-
+    box-sizing: border-box;
+    padding: 16px;
   }
   &__close {
-    
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    line-height: .5;
+    margin: 0;
+    padding: 12px;
+    position: absolute;
+		top: 8px;
+    right: 8px;
+    & > svg {
+			height: 12px;
+			width: 12px;
+		}
   }
 }

@@ -16,17 +16,44 @@
   <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
   <script>require(['../pfe-toast.umd.js'])</script>
+
+  <style>
+    body {
+      font-family:"Red Hat Text", Overpass, Helvetica, sans-serif;
+    }
+
+    .preview {
+      width: 50%;
+      margin-bottom: 2rem;
+      margin-right: 2rem;
+    }
+  </style>
 </head>
 
 <body unresolved>
   <h1>&lt;pfe-toast&gt;</h1>
-  <pfe-toast>
-    This is pfe-toast
-  </pfe-toast>
 
-  <pfe-toast>
-    This is pfe-toast
-  </pfe-toast>
+  <div class="preview">
+    <pfe-toast>
+      This is pfe-toast
+    </pfe-toast>
+  </div>
+
+  <div class="preview">
+    <pfe-toast>
+      <h1>Get toasty!</h1>
+      <p>Because everyone else is doing it!</p>
+    </pfe-toast>
+  </div>
+
+  <div class="preview">
+      <pfe-toast>
+        <p>Do you feel toasted?</p>
+        <button>Yes. I'm burnt!</button>
+        <button>Mmmm. Toast.</button>
+      </pfe-toast>
+    </div>
+
 </body>
 
 </html>

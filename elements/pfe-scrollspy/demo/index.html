@@ -19,6 +19,9 @@
   <body unresolved>
 
     <style>
+      body {
+        margin: 0;
+      }
       ul {
           list-style: none;
       }
@@ -36,11 +39,21 @@
         color: blue;
         border-left: 2px solid blue;
         background-color: #acacac;
+      }
+      pfe-scrollspy-nav[horizontal] {
+        position: fixed;
+        position: sticky;
+        top: 0;
+        background-color: white;
+        box-shadow: 0px 10px 12px 0px rgba(0, 0, 0, .2);
+      }
+      pfe-scrollspy-nav[horizontal] ul li {
+        display: inline-block;
       }  
         
     </style>
     <h1>&lt;pfe-scrollspy&gt;</h1>
-    <div style="display:flex;">
+    <div style="display:flex; margin-bottom: 400px;">
       <div style="display: block; width: 25%;">
         <pfe-scrollspy-nav id="scrollspy2">
           <ul>
@@ -349,9 +362,8 @@
         </pfe-scrollspy-panel>
       </div>
     </div>
-    <div style="display:flex;">
-      <div style="display: block; width: 25%;">
-        <pfe-scrollspy-nav id="scrollspy1">
+    <!-- <div>
+        <pfe-scrollspy-nav horizontal id="scrollspy1">
           <ul>
             <li><a class="pfe-scrollspy-nav__item" href="#section1" data-target="section1" active>Section 1</a></li>
             <li><a class="pfe-scrollspy-nav__item" href="#section2" data-target="section2">Section 2</a></li>
@@ -360,8 +372,6 @@
             <li><a class="pfe-scrollspy-nav__item" href="#section5" data-target="section5">Section 5</a></li>
           </ul>
         </pfe-scrollspy-nav>
-      </div>
-      <div style="display: block; width: 75%;">
         <pfe-scrollspy-panel scrolltarget="scrollspy1">
           <div>
             <h1 class="pfe-scrollspy-panel__section" id="section1">Section 1</h1>
@@ -701,7 +711,7 @@
               raclette swag ad keytar polaroid synth sunt williamsburg butcher woke lorem whatever squid.</p>
           </div>
         </pfe-scrollspy-panel>
-      </div>
+      </div> -->
     </div>
   </body>
 </html>

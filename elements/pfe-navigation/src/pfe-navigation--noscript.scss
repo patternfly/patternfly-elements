@@ -1,0 +1,25 @@
+@import "../../pfe-sass/pfe-sass";
+
+pfe-navigation-main {
+	display: block;
+	background-color: #151515;
+
+	ul {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+	}
+}
+
+pfe-navigation-item {
+	> * {
+		margin-bottom: 0;
+	}
+	a {
+		color: #fff;
+		text-decoration: none;
+		&:visited {
+			color: white;
+		}
+	}
+}

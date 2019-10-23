@@ -17,6 +17,7 @@ Tag: [v1.0.0-prerelease.26](https://github.com/patternfly/patternfly-elements/re
 - [c01a97f8](https://github.com/patternfly/patternfly-elements/commit/c01a97f87f3ca84344842c75b9b60f50a6fb6f3f) pfe-datetime: adding a json schema
 - [f3bf2b2](https://github.com/patternfly/patternfly-elements/commit/f3bf2b2ea82b61ad80f59cf1b2dca3f74c58e920) fix: making pfe-number compatible with angular and IE11 (#570)
 - [](https://github.com/patternfly/patternfly-elements/commit/)  Move compilation to a dist directory
+- []() Add larger size to health-index
 
 ## Prerelease 25 ( 2019-09-10 )
 

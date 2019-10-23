@@ -27,6 +27,10 @@ class PfeHealthIndex extends PFElement {
     return "pfe-health-index";
   }
 
+  get schemaUrl() {
+    return "pfe-health-index.json";
+  }
+
   get templateUrl() {
     return "pfe-health-index.html";
   }
@@ -36,22 +40,35 @@ class PfeHealthIndex extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["health-index"];
+    return ["health-index", "size"];
   }
 
   constructor() {
-    super(PfeHealthIndex);
+    super(PfeHealthIndex, { delayRender: true });
+    this.size = null;
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
-    const healthIndex = newValue.toLowerCase();
-    const healthIndexUpperCase = newValue.toUpperCase();
-    const boxes = [...this.shadowRoot.querySelectorAll(".box")];
+    switch (attr) {
+      case "size":
+        this.size = newValue;
+        this.render();
+        this.updateHealthIndex(this.getAttribute("health-index"));
+        break;
+      case "health-index":
+        this.render();
+        this.updateHealthIndex(newValue);
+        break;
+      default:
+        break;
+    }
+  }
 
+  updateHealthIndex(grade) {
+    const healthIndex = grade.toLowerCase();
+    const healthIndexUpperCase = grade.toUpperCase();
+    const boxes = [...this.shadowRoot.querySelectorAll(".box")];
     this.innerHTML = healthIndexUpperCase;
-    this.shadowRoot.querySelector(
-      "#healthIndex"
-    ).innerText = healthIndexUpperCase;
 
     boxes.forEach(box => {
       if (box.classList.contains(healthIndex)) {
@@ -61,10 +78,16 @@ class PfeHealthIndex extends PFElement {
       }
     });
 
+    if (this.size !== "lg") {
+      this.shadowRoot.querySelector(
+        "#healthIndex"
+      ).innerText = healthIndexUpperCase;
+    }
+
     if (!this.shadowRoot.querySelector(".box.active")) {
       console.warn(
         `${
-          PfeHealthIndex.tag
+        PfeHealthIndex.tag
         }: a valid health-index was not provided. Please use A, B, C, D, E, or F`
       );
     }

@@ -19,6 +19,7 @@
     <pfe-health-index id="D" health-index="D">D</pfe-health-index>
     <pfe-health-index id="E" health-index="E">E</pfe-health-index>
     <pfe-health-index id="F" health-index="F">F</pfe-health-index>
+    <pfe-health-index id="largeSize" health-index="A">A</pfe-health-index>
 
     <script>
       suite('<pfe-health-index>', () => {
@@ -152,6 +153,19 @@
           assert.equal(healthIndexTextContent, "F");
           assert.isTrue(activeBox.classList.contains('f'));
           assert.equal(shadowRootTextContent, "F");
+        });
+
+        test("it should increase in size if size attribute is set to lg", () => {
+          const healthIndex = document.querySelector('#largeSize');
+          let activeBox = healthIndex.shadowRoot.querySelector(".box.active");
+          const defaultWidth = activeBox.offsetWidth;
+          const defaultHeight = activeBox.offsetHeight;
+
+          healthIndex.setAttribute("size", "lg");
+          activeBox = healthIndex.shadowRoot.querySelector(".box.active");
+        
+          assert.isTrue(defaultWidth < activeBox.offsetWidth);
+          assert.isTrue(defaultHeight < activeBox.offsetHeight);
         });
       });
     </script>

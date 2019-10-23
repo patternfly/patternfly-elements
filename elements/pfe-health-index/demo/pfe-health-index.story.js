@@ -23,17 +23,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeHealthIndex.tag, () => {
   let config = {};
-  // const props = PfeCta.properties;
-  // Manually defining props but this can be done in a schema instead
-  const props = {
-    "health-index": {
-      title: "Health Index",
-      type: "string",
-      enum: ["A", "B", "C", "D", "E", "F"],
-      default: "A",
-      required: true
-    }
-  };
+  const props = PfeHealthIndex.properties;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);

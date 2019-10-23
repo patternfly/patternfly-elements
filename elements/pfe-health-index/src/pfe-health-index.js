@@ -27,6 +27,10 @@ class PfeHealthIndex extends PFElement {
     return "pfe-health-index";
   }
 
+  get schemaUrl() {
+    return "pfe-health-index.json";
+  }
+
   get templateUrl() {
     return "pfe-health-index.html";
   }
@@ -65,7 +69,7 @@ class PfeHealthIndex extends PFElement {
     const healthIndexUpperCase = grade.toUpperCase();
     const boxes = [...this.shadowRoot.querySelectorAll(".box")];
     this.innerHTML = healthIndexUpperCase;
-    
+
     boxes.forEach(box => {
       if (box.classList.contains(healthIndex)) {
         box.classList.add("active");

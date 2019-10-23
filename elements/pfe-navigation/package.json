@@ -18,7 +18,7 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-navigation"
   },
-  "main": "pfe-navigation.js",
+  "main": "./dist/pfe-navigation.js",
   "files": [
     "pfe-navigation.*js",
     "pfe-navigation.*js.map",

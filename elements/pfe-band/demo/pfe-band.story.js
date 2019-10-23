@@ -4,11 +4,11 @@ import * as tools from "../../../.storybook/utils.js";
 
 const cleaner = require("clean-html");
 
-import PfeBand from "../pfe-band.js";
+import PfeBand from "../dist/pfe-band.js";
 // -- @TODO We can import properties from these
 // -- to allow dynamic field generation
-// import PfeCta from "../pfe-cta.js";
-// import PfeCard from "../pfe-card.js";
+// import PfeCta from "../dist/pfe-cta.js";
+// import PfeCard from "../dist/pfe-card.js";
 
 let theme = "base";
 

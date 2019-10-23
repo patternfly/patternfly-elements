@@ -10,14 +10,14 @@
     }
     pfe-navigation-item {
         [slot="trigger"] {
-            font-size: 16px;
+            font-size: 12px;
 
             a {
                 color: #{pfe-color(surface--darkest--text)};
             }
         }
         &.expanded {
-            @media screen and (min-width: 992px) {
+            @media screen and (min-width: $pfe-global--grid-breakpoint--lg) {
                 background-color: #{pfe-color(surface--lightest)};
                 border-top-color: #{pfe-color(surface--accent)};
 
@@ -29,10 +29,10 @@
     }
     .pfe-navigation__container {
         @media screen and (min-width: $pfe-global--grid-breakpoint--md) {
-            max-width: 768px;
+            max-width: $pfe-global--grid-breakpoint--md;
         }
         @media screen and (min-width: $pfe-global--grid-breakpoint--lg) {
-            max-width: 992px;
+            max-width: $pfe-global--grid-breakpoint--lg;
         }
         @media screen and (min-width: $pfe-global--grid-breakpoint--xl) {
             max-width: 1140px;
@@ -47,44 +47,41 @@
     .pfe-navigation-item__tray--container {
         margin: 0 auto;
     }
-    .pfe-navigation-item-1 .pfe-navigation-item__trigger.pfe-navigation-item {
-        margin-left: 20px;
+
+    .pfe-navigation-item__trigger {
+        &.pfe-navigation-item {
+            .expanded & {
+                background-color: #{pfe-color(surface--lightest)};
+                border-top-color: #{pfe-color(surface--accent)};
+            }
+            &:hover {
+                cursor: pointer;
+                border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-color(surface--accent)};
+            }
+        }
+        .pfe-navigation__utility--mobile > *:not(:last-child) {
+            margin-bottom: #{pfe-var(container-spacer)};
+        }
+        .pfe-navigation-item__tray--container {
+            padding-top: #{pfe-var(container-spacer)};
+        }
+        > *.pfe-navigation-item__trigger--icon:first-child {
+            display: none;
+        }
+        > *:not(.pfe-navigation-item__trigger--icon) {
+            color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
+
+            .expanded & {
+                color: #{pfe-color(text)};
+            }
+
+            a,
+            a:hover,
+            a:visited {
+                color: inherit;
+            }
+        }
     }
-
-//     .pfe-navigation-item__trigger {
-//         &.pfe-navigation-item {
-//             .expanded & {
-//                 background-color: #{pfe-color(surface--lightest)};
-//                 border-top-color: #{pfe-color(surface--accent)};
-//             }
-//             &:hover {
-//                 cursor: pointer;
-//                 border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-color(surface--accent)};
-//             }
-//         }
-//         .pfe-navigation__utility--mobile > *:not(:last-child) {
-//             margin-bottom: #{pfe-var(container-spacer)};
-//         }
-//         .pfe-navigation-item__tray--container {
-//             padding-top: #{pfe-var(container-spacer)};
-//         }
-//         > *.pfe-navigation-item__trigger--icon:first-child {
-//             display: none;
-//         }
-//         > *:not(.pfe-navigation-item__trigger--icon) {
-//             color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
-
-//             .expanded & {
-//                 color: #{pfe-color(text)};
-//             }
-
-//             a,
-//             a:hover,
-//             a:visited {
-//                 color: inherit;
-//             }
-//         }
-//     }
 }
 
 // pfe-navigation [slot="logo"] > a {
@@ -101,12 +98,14 @@
 // }
 
 // Turn off internal link outline
-pfe-navigation-item [slot="trigger"] > a {
-    outline: none;
+pfe-navigation-item {
+    [slot="trigger"] > a {
+        outline: none;
 
-    &:hover,
-    &:focus {
-        text-decoration: none; //Override bootstrap.
+        &:hover,
+        &:focus {
+            text-decoration: none; //Override bootstrap.
+        }
     }
 }
 
@@ -115,13 +114,15 @@ pfe-navigation-item [slot="trigger"] > a {
         [slot="trigger"] {
             font-size: 16px;
         }
-        &[pfe-icon] > .pfe-navigation-item__trigger {
-            > pfe-icon {
-                display: none;
-            }
-            > [slot="trigger"] {
-                font-size: 14px;
-            }
+        &[pfe-icon] {
+            > .pfe-navigation-item__trigger {
+                > pfe-icon {
+                    display: none;
+                }
+                > [slot="trigger"] {
+                    font-size: 14px;
+                }
+            }            
         }
         [slot="tray"] {
             display: flex;

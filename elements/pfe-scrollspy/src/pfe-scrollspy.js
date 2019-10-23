@@ -98,76 +98,17 @@ class PfeScrollspyPanel extends PFElement {
   constructor(pfeClass) {
     super(pfeClass || PfeScrollspyPanel);
 
+    this._init = this._init.bind(this);
     this._slot = this.shadowRoot.querySelector("slot");
     this._slot.addEventListener("slotchange", this._init);
-  }
-  
-  _init() {
-    //This is the panel
-    this.scrollTarget = this.getAttribute('scrolltarget');
-    this.scrollspyNav = document.querySelector(`#${this.scrollTarget}`);
-    this.sections = this.querySelectorAll(".pfe-scrollspy-panel__section");
-    // This fails when outside the if statement when the component sets up the slot...?
-    if(this.scrollspyNav) {
-      this.menu_links = this.scrollspyNav.querySelectorAll(".pfe-scrollspy-nav__item");
-    }
-    this.makeActive = (link) => {
-      if (this.menu_links[link]) {
-        this.menu_links[link].setAttribute("active", "");
-        this.dispatchEvent(
-          new CustomEvent(`${PfeScrollspyPanel.tag}:active-nav-item`, {
-            detail: {
-              activeNavItem: this.menu_links[link]
-            },
-            bubbles: true
-          })
-        );
-      }
-    }
-    this.removeActive = (link) => {
-      if (this.menu_links[link]) {
-        this.menu_links[link].removeAttribute("active");
-      }
-    }
-    this.removeAllActive = () => [...Array(this.sections.length).keys()].forEach((link) => this.removeActive(link));
-
-    this.sectionMargin = 200;
-
-    this.currentActive = 0;
-  }
+    this._scrollCallback = this._scrollCallback.bind(this);
+  }  
 
   connectedCallback() {
     super.connectedCallback();
     this._init();
-    this._scrollCallback = function(){
-      let sections;
-      let menu_links;
-      let sectionMargin;
-      let currentActive;
-      if (!this.sections) {
-        this.sections = this.querySelectorAll(".pfe-scrollspy-panel__section");
-      } else {
-        sections = this.sections;
-      }
-      if (!this.menu_links) {
-        this.menu_links = this.scrollspyNav.querySelectorAll(".pfe-scrollspy-nav__item");
-        menu_links = this.menu_links;
-      }
-      if (!this.sectionMargin) {
-        sectionMargin = 200;
-      } else {
-        sectionMargin = this.sectionMargin;
-      }
-      const sectionArr = [...sections];
-      const matches = sectionArr.filter(section => window.scrollY >= section.offsetTop - sectionMargin).reverse();
-      const current = sectionArr.indexOf(matches[0]);
-      if (current !== currentActive) {
-        this.removeAllActive();
-        this.currentActive = current;
-        this.makeActive(current);
-      }
-    }
-    window.addEventListener("scroll", this._scrollCallback.bind(this));
+    
+    window.addEventListener("scroll", this._scrollCallback);
   }
 
   disconnectedCallback() {
@@ -176,7 +117,70 @@ class PfeScrollspyPanel extends PFElement {
   }
 
   // attributeChangedCallback(attr, oldValue, newValue) {}
+
+_init() {
+  //This is the panel
+  this.scrollTarget = this.getAttribute('scrolltarget');
+  this.scrollspyNav = document.querySelector(`#${this.scrollTarget}`);
+  this.sections = this.querySelectorAll(".pfe-scrollspy-panel__section");
+  if (this.scrollspyNav) {
+    this.menu_links = this.scrollspyNav.querySelectorAll(".pfe-scrollspy-nav__item");
+  }
+  this.makeActive = (link) => {
+    if (this.menu_links[link]) {
+      this.menu_links[link].setAttribute("active", "");
+      this.dispatchEvent(
+        new CustomEvent(`${PfeScrollspyPanel.tag}:active-nav-item`, {
+          detail: {
+            activeNavItem: this.menu_links[link]
+          },
+          bubbles: true
+        })
+      );
+    }
+  }
+  this.removeActive = (link) => {
+    if (this.menu_links[link]) {
+      this.menu_links[link].removeAttribute("active");
+    }
+  }
+  this.removeAllActive = () => [...Array(this.sections.length).keys()].forEach((link) => this.removeActive(link));
+
+  this.sectionMargin = 200;
+
+  this.currentActive = 0;
 }
+  _scrollCallback() {
+    let sections;
+    let menu_links;
+    let sectionMargin;
+    let currentActive;
+    if (!this.sections) {
+      this.sections = this.querySelectorAll(".pfe-scrollspy-panel__section");
+    } else {
+      sections = this.sections;
+    }
+    if (!this.menu_links) {
+      this.menu_links = this.scrollspyNav.querySelectorAll(".pfe-scrollspy-nav__item");
+      menu_links = this.menu_links;
+    }
+    if (!this.sectionMargin) {
+      sectionMargin = 200;
+    } else {
+      sectionMargin = this.sectionMargin;
+    }
+    const sectionArr = [...sections];
+    const matches = sectionArr.filter(section => window.scrollY >= section.offsetTop - sectionMargin).reverse();
+    const current = sectionArr.indexOf(matches[0]);
+    if (current !== currentActive) {
+      this.removeAllActive();
+      this.currentActive = current;
+      this.makeActive(current);
+    }
+  }
+}
+
+
 
 
 PFElement.create(PfeScrollspy);

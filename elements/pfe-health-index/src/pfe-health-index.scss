@@ -46,6 +46,7 @@ $pfe-health--color-f: #a30000;
       }
   
       &.active {
+
         &.a {
           background-color: $pfe-health--color-a;
         }
@@ -142,6 +143,5 @@ $pfe-health--color-f: #a30000;
       &.f > .bottom, &.f.active .grade {
         background-color: $pfe-health--color-f;
       }
-
     }
   }

@@ -119,7 +119,6 @@ class PfeScrollspyPanel extends PFElement {
   // attributeChangedCallback(attr, oldValue, newValue) {}
 
 _init() {
-  //This is the panel
   this.scrollTarget = this.getAttribute('scrolltarget');
   this.scrollspyNav = document.querySelector(`#${this.scrollTarget}`);
   this.sections = this.querySelectorAll(".pfe-scrollspy-panel__section");
@@ -129,10 +128,11 @@ _init() {
   this.makeActive = (link) => {
     if (this.menu_links[link]) {
       this.menu_links[link].setAttribute("active", "");
+      let activeLink = this.scrollspyNav.querySelector('[active]');
       this.dispatchEvent(
-        new CustomEvent(`${PfeScrollspyPanel.tag}:active-nav-item`, {
+        new CustomEvent(`pfe-scrollspy-panel:active-nav-item`, {
           detail: {
-            activeNavItem: this.menu_links[link]
+            activeNavItem: activeLink
           },
           bubbles: true
         })
@@ -154,7 +154,7 @@ _init() {
     let sections;
     let menu_links;
     let sectionMargin;
-    let currentActive;
+    
     if (!this.sections) {
       this.sections = this.querySelectorAll(".pfe-scrollspy-panel__section");
     } else {
@@ -172,16 +172,13 @@ _init() {
     const sectionArr = [...sections];
     const matches = sectionArr.filter(section => window.scrollY >= section.offsetTop - sectionMargin).reverse();
     const current = sectionArr.indexOf(matches[0]);
-    if (current !== currentActive) {
+    if (current !== this.currentActive) {
       this.removeAllActive();
       this.currentActive = current;
       this.makeActive(current);
     }
   }
 }
-
-
-
 
 PFElement.create(PfeScrollspy);
 PFElement.create(PfeScrollspyNav);

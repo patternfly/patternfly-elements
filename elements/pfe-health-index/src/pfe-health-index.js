@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeHealthIndex extends PFElement {
   static get tag() {

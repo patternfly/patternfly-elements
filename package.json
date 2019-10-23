@@ -109,7 +109,7 @@
     "rollup-plugin-re": "^1.0.7",
     "rollup-plugin-terser": "^4.0.2",
     "rollup-plugin-uglify": "^4.0.0",
-    "spandx": "^1.0.3",
+    "spandx": "^2.0.1",
     "strip-css-comments": "^3.0.0",
     "trim": "0.0.1",
     "wct-browser-legacy": "^1.0.1",

@@ -12,6 +12,12 @@
 
 Sets the value for the health index in the UI.
 
+### size (observed)
+
+Changes the size.
+
+Possible values: `lg`
+
 ## Test
 
     npm run test

@@ -157,12 +157,13 @@
 
         test("it should increase in size if size attribute is set to lg", () => {
           const healthIndex = document.querySelector('#largeSize');
-          const activeBox = healthIndex.shadowRoot.querySelector(".box.active");
+          let activeBox = healthIndex.shadowRoot.querySelector(".box.active");
           const defaultWidth = activeBox.offsetWidth;
           const defaultHeight = activeBox.offsetHeight;
 
           healthIndex.setAttribute("size", "lg");
-
+          activeBox = healthIndex.shadowRoot.querySelector(".box.active");
+        
           assert.isTrue(defaultWidth < activeBox.offsetWidth);
           assert.isTrue(defaultHeight < activeBox.offsetHeight);
         });

@@ -44,12 +44,6 @@ class PfeHealthIndex extends PFElement {
     this.size = null;
   }
 
-  connectCallback(){
-    super.connectCallback();
-    this.size = this.getAttribute("size");
-    this.render();
-  }
-
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
       case "size":

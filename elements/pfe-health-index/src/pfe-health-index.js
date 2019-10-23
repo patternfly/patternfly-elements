@@ -49,38 +49,43 @@ class PfeHealthIndex extends PFElement {
       case "size":
         this.size = newValue;
         this.render();
+        this.updateHealthIndex(this.getAttribute("health-index"));
         break;
       case "health-index":
         this.render();
-        const healthIndex = newValue.toLowerCase();
-        const healthIndexUpperCase = newValue.toUpperCase();
-        const boxes = [...this.shadowRoot.querySelectorAll(".box")];
-        this.innerHTML = healthIndexUpperCase;
-        
-        boxes.forEach(box => {
-          if (box.classList.contains(healthIndex)) {
-            console.log(this);
-            box.classList.add("active");
-            console.log(box);
-          } else {
-            box.classList.remove("active");
-          }
-        });
-
-        if (this.size !== "lg") {
-          this.shadowRoot.querySelector(
-            "#healthIndex"
-          ).innerText = healthIndexUpperCase;
-        }
-
-        if (!this.shadowRoot.querySelector(".box.active")) {
-          console.warn(
-            `${
-            PfeHealthIndex.tag
-            }: a valid health-index was not provided. Please use A, B, C, D, E, or F`
-          );
-        }
+        this.updateHealthIndex(newValue);
+        break;
       default:
+        break;
+    }
+  }
+
+  updateHealthIndex(grade) {
+    const healthIndex = grade.toLowerCase();
+    const healthIndexUpperCase = grade.toUpperCase();
+    const boxes = [...this.shadowRoot.querySelectorAll(".box")];
+    this.innerHTML = healthIndexUpperCase;
+    
+    boxes.forEach(box => {
+      if (box.classList.contains(healthIndex)) {
+        box.classList.add("active");
+      } else {
+        box.classList.remove("active");
+      }
+    });
+
+    if (this.size !== "lg") {
+      this.shadowRoot.querySelector(
+        "#healthIndex"
+      ).innerText = healthIndexUpperCase;
+    }
+
+    if (!this.shadowRoot.querySelector(".box.active")) {
+      console.warn(
+        `${
+        PfeHealthIndex.tag
+        }: a valid health-index was not provided. Please use A, B, C, D, E, or F`
+      );
     }
   }
 }

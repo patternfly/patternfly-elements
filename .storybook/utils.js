@@ -239,11 +239,11 @@ export function autoPropKnobs(properties, bridge) {
 
         // If this is not a required field, add a null option
         if (!required) {
-          opts.null = "-- Not selected --";
+          opts["-- Not selected --"] = null;
         }
 
         // Convert the array into an object
-        options.map(item => (opts[item] = item));
+        options.map(item => (opts[item.sentenceCase()] = item));
 
         // If the default value is not defined, use the new null option as the default
         if (defaultValue === "" || defaultValue === null) {

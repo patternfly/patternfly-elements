@@ -133,9 +133,6 @@ pfe-navigation-item {
         }
         &[pfe-icon] {
             > .pfe-navigation-item__trigger {
-                // > pfe-icon {
-                //     display: none;
-                // }
                 > [slot="trigger"] {
                     font-size: 14px;
                 }
@@ -147,6 +144,15 @@ pfe-navigation-item {
         }
         [slot="trigger"] {
             margin: 0;
+        }
+        pfe-icon {
+            margin-bottom: 10px;
+        }
+        .pfe-navigation-item__trigger::after {
+            display: none !important;
+        }
+        [aria-expanded=true].pfe-navigation-item__trigger::after {
+            display: block !important;
         }
     }
     .pfe-navigation-item__trigger {

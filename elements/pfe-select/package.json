@@ -13,7 +13,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "index.js",
+  "main": "./dist/pfe-select.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

@@ -1,6 +1,7 @@
 module.exports = function factory({
   version,
   pfelement: { elementName, className },
+  files = [],
   prebundle = []
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
@@ -13,9 +14,10 @@ module.exports = function factory({
   ];
 
   const paths = {
+    root: "./",
     source: "./src",
-    compiled: "./",
-    temp: "./tmp"
+    compiled: "./dist",
+    temp: "./_temp"
   };
 
   // Tooling
@@ -23,6 +25,8 @@ module.exports = function factory({
   const path = require("path");
   const replace = require("gulp-replace");
   const clean = require("gulp-clean");
+  const gulpif = require("gulp-if");
+  const gulpmatch = require("gulp-match");
 
   // Rollup
   const shell = require("gulp-shell");
@@ -45,6 +49,18 @@ module.exports = function factory({
   const trim = require("trim");
   const decomment = require("decomment");
 
+  // Delete the temp directory
+  task("clean", () => {
+    return src([
+      paths.temp,
+      paths.compiled
+    ], {
+      cwd: paths.root,
+      read: false,
+      allowEmpty: true
+    }).pipe(clean());
+  });
+
   // Compile the sass into css, compress, autoprefix
   task("compile:styles", () => {
     return (
@@ -52,6 +68,9 @@ module.exports = function factory({
         cwd: paths.source
       })
         .pipe(sourcemaps.init())
+        .pipe(
+          sass().on('error', sass.logError)
+        )
         // Compile the Sass into CSS
         .pipe(
           sass({
@@ -60,12 +79,25 @@ module.exports = function factory({
         )
         // Adds autoprefixing to the compiled sass
         .pipe(
-          postcss([postcssCustomProperties(), autoprefixer(browser_support)])
+          postcss([postcssCustomProperties(), autoprefixer({
+            grid: "autoplace",
+            overrideBrowserslist: browser_support
+          })])
         )
         // Write the sourcemap
-        .pipe(sourcemaps.write(paths.compiled))
+        .pipe(sourcemaps.write("./"))
         // Output the unminified file
-        .pipe(dest(paths.compiled))
+        .pipe(dest(paths.temp))
+    );
+  });
+
+  // Compile the sass into css, compress, autoprefix
+  task("minify:styles", () => {
+    return (
+      src("*.{scss,css}", {
+        cwd: paths.temp
+      })
+        .pipe(sourcemaps.init())
         // Minify the file
         .pipe(
           cleanCSS({
@@ -78,51 +110,11 @@ module.exports = function factory({
             suffix: ".min"
           })
         )
+        // Write the sourcemap
+        .pipe(sourcemaps.write("./"))
         // Output the minified file
-        .pipe(dest(paths.compiled))
+        .pipe(dest(paths.temp))
     );
-  });
-
-  // @TODO commenting out the fallbacks for now
-  // task("fallback:css", () => {
-  //   const classRegex = new RegExp(`\.${elementName}__(\w+)(.*){`, "gi");
-  //   return (
-  //     src([`${elementName}.css`], {
-  //       cwd: paths.compiled
-  //     })
-  //       .pipe(replace(/,\s+\:/g, ",\n:"))
-  //       // Replace host and slot with fallbacks
-  //       .pipe(
-  //         replace(
-  //           /^\s*(:host(\(([^\)]*)\))?)?\s*(::slotted\(([^\)]+)\))?(\s*[{|,])/gim,
-  //           `${elementName}$3 $5$6`
-  //         )
-  //       )
-  //       // // Try to approximate class name to possible slot name
-  //       .pipe(
-  //         replace(
-  //           /\.([\w|-]+)__(\w+)(.*){/g,
-  //           `${elementName}[slot="$1--$2"]$3{`
-  //         )
-  //       )
-  //       // Add the .fallback suffix
-  //       .pipe(
-  //         rename({
-  //           suffix: "-fallback"
-  //         })
-  //       )
-  //       // Output the updated file
-  //       .pipe(dest(paths.compiled))
-  //   );
-  // });
-
-  // Delete the temp directory
-  task("clean", () => {
-    return src(["*.{js,css,map}", "!gulpfile.js", "!rollup.config.js"], {
-      cwd: paths.compiled,
-      read: false,
-      allowEmpty: true
-    }).pipe(clean());
   });
 
   // Returns a string with the cleaned up HTML
@@ -150,7 +142,7 @@ module.exports = function factory({
   };
 
   task("merge", () => {
-    return src(`${elementName}.js`, {
+    return src(`${elementName}*.js`, {
       cwd: paths.source
     })
       .pipe(
@@ -187,9 +179,9 @@ module.exports = function factory({
             );
             if (is_defined && file_exists) {
               let result = "";
-              // Get the compiled css styles from the source directory
+              // Get the compiled css styles from the temp directory
               let css_styles = path.join(
-                paths.compiled,
+                paths.temp,
                 `${path.basename(url.style, ".scss")}.min.css`
               );
               // Read in the content of the compiled file
@@ -271,22 +263,28 @@ ${fs
   .join("")}*/\n\n`
         )
       )
-      .pipe(dest(paths.compiled));
+      .pipe(dest(paths.temp));
   });
 
-  task("copy", () => {
-    return src(["*.js", `!${elementName}.js`], {
+  task("copy:src", () => {
+    return src(["*.js", `!${elementName}*.js`], {
       cwd: paths.source
-    }).pipe(dest(paths.compiled));
+    }).pipe(dest(paths.temp));
+  });
+
+  task("copy:compiled", () => {
+    return src(["*"], {
+      cwd: paths.temp
+    }).pipe(gulpif((file) => (files.length > 0 && gulpmatch(file, files)) || files.length === 0, dest(paths.compiled)));
   });
 
   task("compile", () => {
-    return src(`${elementName}.js`, {
-      cwd: paths.compiled
+    return src(`${elementName}*.js`, {
+      cwd: paths.temp
     })
       .pipe(
         replace(
-          /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
+          /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
           "$1$2.umd$3"
         )
       )
@@ -295,23 +293,36 @@ ${fs
           suffix: ".umd"
         })
       )
-      .pipe(dest(paths.compiled));
+      .pipe(dest(paths.temp));
   });
 
   task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
+
+  // Delete the temp directory
+  task("clean:post", () => {
+    return src([
+      "*.min.css",
+      "*.umd.js"
+    ], {
+      cwd: paths.temp,
+      read: false,
+      allowEmpty: true
+    }).pipe(clean());
+  });
 
   task(
     "build",
     series(
       "clean",
       "compile:styles",
-      // "fallback:css",
-      // "minify:css",
+      "minify:styles",
       "merge",
-      "copy",
+      "copy:src",
+      "copy:compiled",
       ...prebundle,
       "compile",
-      "bundle"
+      "bundle",
+      "clean:post"
     )
   );
 
@@ -322,4 +333,24 @@ ${fs
   task("dev", parallel("build", "watch"));
 
   task("default", series("build"));
+
+  // Custom tasks for components with no JS to compile
+  task(
+    "build:nojs",
+    series(
+      "clean",
+      "compile:styles",
+      "minify:styles",
+      "copy:src",
+      "copy:compiled",
+      ...prebundle,
+      "clean:post"
+    )
+  );
+
+  task("watch:nojs", () => {
+    return watch(path.join(paths.source, "*"), series("build:nojs"));
+  });
+
+  task("dev:nojs", parallel("build:nojs", "watch:nojs"));
 };

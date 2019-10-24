@@ -49,6 +49,11 @@
           ],
           "default": "default",
           "prefixed": false
+        },
+        "circled": {
+          "title": "Circled",
+          "type": "boolean",
+          "prefixed": false
         }
       }
     }

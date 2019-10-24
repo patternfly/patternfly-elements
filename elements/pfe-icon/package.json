@@ -18,7 +18,11 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-icon"
   },
-  "main": "pfe-icon.js",
+  "main": "./dist/pfe-icon.js",
+  "files": [
+    "pfe-icon.*js",
+    "pfe-icon.*js.map"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -32,5 +36,8 @@
     "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
     "@patternfly/pfelement": "^1.0.0-prerelease.24"
   },
-  "generator-pfelement-version": "1.1.0"
+  "generator-pfelement-version": "1.1.0",
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

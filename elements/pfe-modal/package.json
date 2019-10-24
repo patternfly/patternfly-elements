@@ -18,7 +18,11 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-modal"
   },
-  "main": "pfe-modal.umd.js",
+  "main": "./dist/pfe-modal.umd.js",
+  "files": [
+    "pfe-modal.*js",
+    "pfe-modal.*js.map"
+  ],
   "module": "pfe-modal.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
@@ -39,5 +43,8 @@
     "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
     "@patternfly/pfelement": "^1.0.0-prerelease.24"
   },
-  "generator-pfelement-version": "1.1.0"
+  "generator-pfelement-version": "1.1.0",
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

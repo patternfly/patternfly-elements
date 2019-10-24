@@ -14,7 +14,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "pfe-markdown.js",
+  "main": "./dist/pfe-markdown.js",
+  "files": [
+    "pfe-markdown.*js",
+    "pfe-markdown.*js.map"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -37,5 +41,8 @@
     "@patternfly/pfelement": "^1.0.0-prerelease.24",
     "marked": "^0.6.1"
   },
-  "generator-pfelement-version": "1.1.0"
+  "generator-pfelement-version": "1.1.0",
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

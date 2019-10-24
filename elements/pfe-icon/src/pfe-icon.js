@@ -1,6 +1,6 @@
-import PFElement from "../pfelement/pfelement.js";
-import PfeIconSet from "./pfe-icon-set.js";
-import { addBuiltIns } from "./pfe-builtin-icon-sets.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
+import PfeIconSet from "./icon-set.js";
+import { addBuiltIns } from "./builtin-icon-sets.js";
 
 /**
  * Sets the id attribute on the <filter> element and points the CSS `filter` at that id.
@@ -33,11 +33,14 @@ function _createIconSetHandler(el, setName) {
 }
 
 function _iconLoad(el) {
-  el.image.classList.remove("load-failed");
+  el.classList.remove("load-failed");
 }
 
 function _iconLoadError(el) {
-  el.image.classList.add("load-failed");
+  el.classList.add("load-failed");
+  if(el.has_fallback) {
+    el.classList.add("has-fallback");
+  }
 }
 
 class PfeIcon extends PFElement {
@@ -57,8 +60,12 @@ class PfeIcon extends PFElement {
     return "pfe-icon.json";
   }
 
+  get has_fallback() {
+    return this.children.length > 0 || this.innerText.length > 0;
+  }
+
   static get observedAttributes() {
-    return ["icon"];
+    return ["icon", "on-fail"];
   }
 
   constructor() {

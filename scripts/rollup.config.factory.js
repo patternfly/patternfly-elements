@@ -5,18 +5,25 @@ import { uglify } from "rollup-plugin-uglify";
 import { terser } from "rollup-plugin-terser";
 import replace from "rollup-plugin-re";
 
-const importRegex = /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
+const importRegex = /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
 
 const babelSettings = {
   presets: [["env", { modules: false }]],
   plugins: ["external-helpers"]
 };
 
+const paths = {
+  root: "./",
+  source: "./src",
+  compiled: "./dist",
+  temp: "./_temp"
+};
+
 function esmConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.js`,
+    input: `${paths.temp}/${elementName}.js`,
     output: {
-      file: `${elementName}.js`,
+      file: `${paths.compiled}/${elementName}.js`,
       format: "esm",
       sourcemap: true
     },
@@ -27,9 +34,9 @@ function esmConfig({ elementName, className } = {}) {
 
 function umdConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.js`,
+    input: `${paths.temp}/${elementName}.umd.js`,
     output: {
-      file: `${elementName}.umd.js`,
+      file: `${paths.compiled}/${elementName}.umd.js`,
       format: "umd",
       sourcemap: true,
       name: className
@@ -53,9 +60,9 @@ function umdConfig({ elementName, className } = {}) {
 
 function esmMinConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.js`,
+    input: `${paths.temp}/${elementName}.js`,
     output: {
-      file: `${elementName}.min.js`,
+      file: `${paths.compiled}/${elementName}.min.js`,
       format: "esm",
       sourcemap: true
     },
@@ -72,7 +79,9 @@ function esmMinConfig({ elementName, className } = {}) {
         output: {
           comments: /@preserve|@license|@cc_on/i
         }
-      })
+      }),
+      resolve(),
+      commonjs()
     ],
     external: id => id.startsWith("..")
   };
@@ -80,9 +89,9 @@ function esmMinConfig({ elementName, className } = {}) {
 
 function umdMinConfig({ elementName, className } = {}) {
   return {
-    input: `${elementName}.js`,
+    input: `${paths.temp}/${elementName}.umd.js`,
     output: {
-      file: `${elementName}.umd.min.js`,
+      file: `${paths.compiled}/${elementName}.umd.min.js`,
       format: "umd",
       sourcemap: true,
       name: className

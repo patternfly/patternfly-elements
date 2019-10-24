@@ -23,7 +23,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "pfe-band.js",
+  "main": "./dist/pfe-band.js",
+  "files": [
+    "pfe-band*.js",
+    "pfe-band*.js.map"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -40,5 +44,8 @@
     "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
     "@patternfly/pfelement": "^1.0.0-prerelease.24"
   },
-  "generator-rhelement-version": "0.6.8"
+  "generator-rhelement-version": "0.6.8",
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

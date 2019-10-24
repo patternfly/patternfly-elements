@@ -18,7 +18,11 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-number"
   },
-  "main": "pfe-number.js",
+  "main": "./dist/pfe-number.js",
+  "files": [
+    "pfe-number.*js",
+    "pfe-number.*js.map"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -34,5 +38,8 @@
     "@patternfly/pfelement": "^1.0.0-prerelease.24",
     "numeral": "^2.0.6"
   },
-  "generator-pfelement-version": "0.2.9"
+  "generator-pfelement-version": "0.2.9",
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

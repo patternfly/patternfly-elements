@@ -18,7 +18,11 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-tabs"
   },
-  "main": "pfe-tabs.js",
+  "main": "./dist/pfe-tabs.js",
+  "files": [
+    "pfe-tabs.*js",
+    "pfe-tabs.*js.map"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -39,5 +43,8 @@
     "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
     "@patternfly/pfelement": "^1.0.0-prerelease.24"
   },
-  "generator-pfelement-version": "0.5.4"
+  "generator-pfelement-version": "0.5.4",
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

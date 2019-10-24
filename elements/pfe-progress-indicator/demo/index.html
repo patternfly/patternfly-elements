@@ -6,21 +6,27 @@
   <title>PatternFly Element | pfe-progress-indicator Demo</title>
 
   <noscript>
-    <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
   </noscript>
 
-  <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
   <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-  <script>require(['../pfe-progress-indicator.umd.js'])</script>
+  <script>require(['../dist/pfe-progress-indicator.umd.js'])</script>
 </head>
 
 <body unresolved>
   <h1>&lt;pfe-progress-indicator&gt;</h1>
-  <pfe-progress-indicator pfe-indeterminate>
+  <pfe-progress-indicator pfe-indeterminate size="sm">
+    <h1>My fallback loading message</h1>
+  </pfe-progress-indicator>
+  <pfe-progress-indicator pfe-indeterminate size="md">
+    <h1>My fallback loading message</h1>
+  </pfe-progress-indicator>
+  <pfe-progress-indicator pfe-indeterminate size="xl">
     <h1>My fallback loading message</h1>
   </pfe-progress-indicator>
 </body>

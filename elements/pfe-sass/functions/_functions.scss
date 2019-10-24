@@ -356,6 +356,9 @@
             $cssvar: remove($cssvar, "color");
             $fallback: map-get($pfe-colors, #{to-string($cssvar, '--')});
         }
+        @else if str-starts-with($varname, "ui") {
+            $fallback: map-get($pfe-colors, #{to-string($cssvar, '--')});
+        }
         @else {
             $fallback: map-get($pfe-vars, $varname);
         }

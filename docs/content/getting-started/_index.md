@@ -37,8 +37,8 @@ There are a few options:
 2. Include the PatternFly Element and its dependencies on the page(s) or within the app.
 
 	```html
-	import '@patternfly/pfe-card/pfe-card.js';
-	import '@patternfly/pfe-cta/pfe-cta.js';
+	import '@patternfly/pfe-card/dist/pfe-card.js';
+	import '@patternfly/pfe-cta/dist/pfe-cta.js';
 	```
 
 3. Use [require.js](https://requirejs.org/) JavaScript file and module loader.
@@ -90,8 +90,8 @@ You can use PatternFly Elements alongside other standard HTML markup in your app
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import '@patternfly/pfe-card/pfe-card.js';
-import '@patternfly/pfe-cta/pfe-cta.js';
+import '@patternfly/pfe-card/dist/pfe-card.js';
+import '@patternfly/pfe-cta/dist/pfe-cta.js';
 
 class App extends Component {
   render() {

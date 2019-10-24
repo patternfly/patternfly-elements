@@ -18,9 +18,10 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-icon"
   },
-  "main": "pfe-icon.js",
+  "main": "./dist/pfe-icon.js",
   "files": [
-    "pfe-icon.*js?(.map)"
+    "pfe-icon.*js",
+    "pfe-icon.*js.map"
   ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",

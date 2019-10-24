@@ -1,4 +1,4 @@
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfePageStatus extends PFElement {
   static get tag() {

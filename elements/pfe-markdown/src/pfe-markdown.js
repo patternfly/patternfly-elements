@@ -1,4 +1,4 @@
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 import marked from "marked/marked.min.js";
 
 class PfeMarkdown extends PFElement {

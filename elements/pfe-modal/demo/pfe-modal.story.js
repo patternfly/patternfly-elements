@@ -2,8 +2,8 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeModal from "../pfe-modal";
-import PfeCta from "../../pfe-cta/pfe-cta";
+import PfeModal from "../dist/pfe-modal";
+import PfeCta from "../../pfe-cta/dist/pfe-cta";
 
 const stories = storiesOf("Modal", module);
 

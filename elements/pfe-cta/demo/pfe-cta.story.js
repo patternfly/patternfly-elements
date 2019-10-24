@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeCta from "../pfe-cta";
+import PfeCta from "../dist/pfe-cta";
 
 const stories = storiesOf("Call to action", module);
 

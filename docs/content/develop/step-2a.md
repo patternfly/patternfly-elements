@@ -34,7 +34,7 @@ You're off to a good start! You have a new custom element that extends the base 
 Let's take a look at the pfe-cool-element.js file in the `/src` directory to see what we have.
 
 ```
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../pfelement/dist/pfelement.js";
 
 class PfeCoolElement extends PFElement {
   static get tag() {
@@ -74,7 +74,7 @@ export default PfeCoolElement;
 First, notice how we're using ES6 module imports and that we import the PFElement base element.
 
 ```
-import PFElement from '../pfelement/pfelement.js';
+import PFElement from '../pfelement/dist/pfelement.js';
 ```
 
 Second, we define the string for the HTML tag that we want to use.

@@ -2,22 +2,26 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PatternFly Element | pfe-icon Demo</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
-    <link rel="stylesheet" href="https://overpass-30e2.kxcdn.com/overpass.css" />
+    <title>PatternFly Element | pfe-icon Demo</title>
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../pfe-icon.umd.js'])</script>
+    
+    <script>require([
+      '../dist/pfe-icon.umd.js',
+      '../../pfe-card/dist/pfe-card.umd.js'
+    ])</script>
 
     <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfe-layouts/dist/pfe-layouts.min.css" rel="stylesheet">
 
     <style type="text/css" media="screen">
       body {
@@ -324,5 +328,25 @@
     <pfe-icon size="md" icon="web-user"></pfe-icon>
     <pfe-icon size="md" icon="web-youtube2"></pfe-icon>
     <pfe-icon size="md" icon="web-youtube"></pfe-icon>
+
+    <h2>Fail to load tests</h2>
+    <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-on-xs pfe-m-all-3-col">
+      <pfe-card pfe-color="light">
+        <h3 slot="pfe-card--header">Fail with fallback text, no tags.</h3>
+        <pfe-icon size="xl"  icon="rh-foo-bar">Icon failed to load.</pfe-icon>
+      </pfe-card>
+      <pfe-card>
+        <h3 slot="pfe-card--header">Fail with fallback text, p tag.</h3>
+        <pfe-icon size="xl"  icon="rh-foo-bar"><p>Icon failed to load.</p></pfe-icon>
+      </pfe-card>
+      <pfe-card>
+        <h3 slot="pfe-card--header">Fail with preserve space on.</h3>
+        <pfe-icon size="xl"  icon="foo-bar" style="border: 1px solid hotpink;"></pfe-icon>
+      </pfe-card>
+      <pfe-card>
+        <h3 slot="pfe-card--header">Fail with collapse blank space.</h3>
+        <pfe-icon size="xl"  icon="foo-bar" style="border: 1px solid hotpink;" on-fail="collapse"></pfe-icon>
+      </pfe-card>
+    </div>
   </body>
 </html>

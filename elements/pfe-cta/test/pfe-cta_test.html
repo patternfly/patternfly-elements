@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../pfe-cta.js"></script>
+    <script type="module" src="../dist/pfe-cta.js"></script>
   </head>
   <body>
 
@@ -64,7 +64,7 @@
           document.body.appendChild(pfeCta);
 
           flush(() => {
-            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>, <input>)');
+            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)');
             spy.restore();
             done();
           });
@@ -78,7 +78,7 @@
           document.body.appendChild(pfeCta);
 
           flush(() => {
-            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>, <input>)');
+            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)');
             spy.restore();
             done();
           });

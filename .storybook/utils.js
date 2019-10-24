@@ -32,24 +32,25 @@ const listProperties = (obj) =>
       let v = set[1];
       let print = set[2];
 
+      // exit if the value is a boolean and is false
+      if (typeof v === "boolean" && !v) {
+        return;
+      }
+
       // If no print value is provided, default to true
       if (typeof print === "undefined") {
         print = true;
       }
 
-      // If printing is allowed, the value exists and is not null and is not a slot
+      // If printing is allowed, the value exists and is not null
       if (
         print &&
         typeof v !== "undefined" &&
-        (v !== null && v !== "null") &&
-        p !== "slot"
+        (v !== null && v !== "null")
       ) {
         string += p;
-        // If the value is a boolean and is false, or the value is not a string true
-        if (
-          (typeof v === "string" && v !== "true") ||
-          (typeof v === "boolean" && !v)
-        ) {
+        // If the value is a string and the value is not equal to the string "true"
+        if (typeof v === "string" && v !== "true") {
           string += "=";
           if (typeof v === "string") {
             // If it's a string, use quotation marks around it
@@ -60,7 +61,7 @@ const listProperties = (obj) =>
           }
         }
       }
-      return string.toLowerCase();
+      return string;
     })
     .join(" ");
 
@@ -238,11 +239,11 @@ export function autoPropKnobs(properties, bridge) {
 
         // If this is not a required field, add a null option
         if (!required) {
-          opts.null = "-- Not selected --";
+          opts["-- Not selected --"] = null;
         }
 
         // Convert the array into an object
-        options.map(item => (opts[item] = item));
+        options.map(item => (opts[item.sentenceCase()] = item));
 
         // If the default value is not defined, use the new null option as the default
         if (defaultValue === "" || defaultValue === null) {

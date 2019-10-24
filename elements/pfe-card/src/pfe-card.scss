@@ -119,12 +119,11 @@ $LOCAL: card;
     ::slotted(img) {
       max-width: 100%;
       align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
-  object-fit: cover; // Fix distortion
+      object-fit: cover; // Fix distortion
     }
 
-    ::slotted(img[pfe-overflow]) {
-      object-fit: cover;
-      align-self: auto; //If overflow, let it stretch 100% (Undoing above ::slotted(img) rule)
+    ::slotted(img:not[pfe-overflow]) {
+      align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
     }
 
     ::slotted(img[pfe-overflow~="right"]) {

@@ -1,4 +1,4 @@
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 
 // -- Polyfill for supporting Element.closest
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
@@ -99,9 +99,7 @@ class PfeCard extends PFElement {
   }
 
   get backgroundColor() {
-    return (
-      this.getAttribute("pfe-color") || this.getAttribute("color") || "base"
-    );
+    return this.getAttribute("pfe-color") || "base";
   }
 
   static get observedAttributes() {

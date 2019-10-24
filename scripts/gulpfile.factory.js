@@ -14,8 +14,9 @@ module.exports = function factory({
   ];
 
   const paths = {
+    root: "./",
     source: "./src",
-    compiled: "./",
+    compiled: "./dist",
     temp: "./_temp"
   };
 
@@ -48,6 +49,18 @@ module.exports = function factory({
   const trim = require("trim");
   const decomment = require("decomment");
 
+  // Delete the temp directory
+  task("clean", () => {
+    return src([
+      paths.temp,
+      paths.compiled
+    ], {
+      cwd: paths.root,
+      read: false,
+      allowEmpty: true
+    }).pipe(clean());
+  });
+
   // Compile the sass into css, compress, autoprefix
   task("compile:styles", () => {
     return (
@@ -55,6 +68,9 @@ module.exports = function factory({
         cwd: paths.source
       })
         .pipe(sourcemaps.init())
+        .pipe(
+          sass().on('error', sass.logError)
+        )
         // Compile the Sass into CSS
         .pipe(
           sass({
@@ -68,10 +84,20 @@ module.exports = function factory({
             overrideBrowserslist: browser_support
           })])
         )
+        // Write the sourcemap
+        .pipe(sourcemaps.write("./"))
         // Output the unminified file
         .pipe(dest(paths.temp))
-        // Write the sourcemap
-        .pipe(sourcemaps.write())
+    );
+  });
+
+  // Compile the sass into css, compress, autoprefix
+  task("minify:styles", () => {
+    return (
+      src("*.{scss,css}", {
+        cwd: paths.temp
+      })
+        .pipe(sourcemaps.init())
         // Minify the file
         .pipe(
           cleanCSS({
@@ -84,18 +110,11 @@ module.exports = function factory({
             suffix: ".min"
           })
         )
+        // Write the sourcemap
+        .pipe(sourcemaps.write("./"))
         // Output the minified file
         .pipe(dest(paths.temp))
     );
-  });
-
-  // Delete the temp directory
-  task("clean", () => {
-    return src(["*.{js,css,map}", "!gulpfile.js", "!rollup.config.js", paths.temp], {
-      cwd: paths.compiled,
-      read: false,
-      allowEmpty: true
-    }).pipe(clean());
   });
 
   // Returns a string with the cleaned up HTML
@@ -265,7 +284,7 @@ ${fs
     })
       .pipe(
         replace(
-          /^(import .*?)(['"]\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
+          /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
           "$1$2.umd$3"
         )
       )
@@ -279,17 +298,31 @@ ${fs
 
   task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
+  // Delete the temp directory
+  task("clean:post", () => {
+    return src([
+      "*.min.css",
+      "*.umd.js"
+    ], {
+      cwd: paths.temp,
+      read: false,
+      allowEmpty: true
+    }).pipe(clean());
+  });
+
   task(
     "build",
     series(
       "clean",
       "compile:styles",
+      "minify:styles",
       "merge",
       "copy:src",
       "copy:compiled",
       ...prebundle,
       "compile",
-      "bundle"
+      "bundle",
+      "clean:post"
     )
   );
 
@@ -300,4 +333,24 @@ ${fs
   task("dev", parallel("build", "watch"));
 
   task("default", series("build"));
+
+  // Custom tasks for components with no JS to compile
+  task(
+    "build:nojs",
+    series(
+      "clean",
+      "compile:styles",
+      "minify:styles",
+      "copy:src",
+      "copy:compiled",
+      ...prebundle,
+      "clean:post"
+    )
+  );
+
+  task("watch:nojs", () => {
+    return watch(path.join(paths.source, "*"), series("build:nojs"));
+  });
+
+  task("dev:nojs", parallel("build:nojs", "watch:nojs"));
 };

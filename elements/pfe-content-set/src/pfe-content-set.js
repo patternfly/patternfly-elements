@@ -99,7 +99,7 @@ class PfeContentSet extends PFElement {
 
     // Pass the theme property down to the accordion component
     if (this.on) {
-      accordion.setAttribute("on", this.on);
+      accordion.setAttribute("on", this.on.value);
     }
 
     if (!existingAccordion) {

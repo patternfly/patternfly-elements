@@ -1,37 +1,65 @@
 @import "../../pfe-sass/pfe-sass";
+
 :host {
+  // local variables
+  --pfe-toast--Top: 50px;
+  --pfe-toast--MaxWidth: 500px;
+  --pfe-toast--MinWidth: 250px;
+  --pfe-toast--Right--offset: 50px;
+  --pfe-toast__container--BackgroundColor: #fff;
+  --pfe-toast__container--BoxShadow: rgba(3, 3, 3, 0.13) 0px 3px 7px 3px, rgba(3, 3, 3, 0.12) 0px 11px 24px 16px;
+  --pfe-toast__container--Color: #151515;
+  --pfe-toast__container--Padding: 1rem;
+  --pfe-toast__close--svg--Height: 12px;
+  --pfe-toast__close--svg--Width: 12px;
+
+  // flex
+  align-content: stretch;
+  align-items: stretch;
   display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  
+  // animation
+  position: absolute;
+  right: calc(-1 * (var(--pfe-toast--MaxWidth) + var(--pfe-toast--Right--offset)));
+  top: var(--pfe-toast--Top);
+  transition: right 0.3s ease-in-out;
+  will-change: right;
+  
+  max-width: var(--pfe-toast--MaxWidth); // media queries?
+  min-width: var(--pfe-toast--MinWidth);
 }
 
 :host([hidden]) {
   display: none;
 }
 
+::slotted(:first-child) {
+  margin-top: 0;
+}
+
 .pfe-toast {
   &__container {
-    background-color: #fff;
-    box-shadow: rgba(3, 3, 3, 0.13) 0px 3px 7px 3px, rgba(3, 3, 3, 0.12) 0px 11px 24px 16px;
-    color: #151515;
-    flex-grow: 1;
-    position: relative;
-  }
-  &__content {
-    box-sizing: border-box;
-    padding: 16px;
+    // flex
+    align-self: flex-start;
+    flex: 1 1 auto;
+
+    background-color: var(--pfe-toast__container--BackgroundColor);
+    box-shadow: var(--pfe-toast__container--BoxShadow);
+    color: var(--pfe-toast__container--Color);
+    padding: var(--pfe-toast__container--Padding);
+    width: 100%;
   }
   &__close {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    line-height: .5;
+    float: right;
     margin: 0;
-    padding: 12px;
-    position: absolute;
-		top: 8px;
-    right: 8px;
     & > svg {
-			height: 12px;
-			width: 12px;
+			height: var(--pfe-toast__close--svg--Height);
+			width: var(--pfe-toast__close--svg--Width);
 		}
   }
 }

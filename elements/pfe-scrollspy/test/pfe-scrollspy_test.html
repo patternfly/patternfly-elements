@@ -370,38 +370,45 @@
           assert.instanceOf(document.querySelector('pfe-scrollspy-panel'), customElements.get("pfe-scrollspy-panel", 'pfe-scrollspy-panel should be an instance of pfeScrollspyPanel'));
         });
 
-        test('it should fire a pfe-scrollspy-panel:active-nav-item event when the panel changes the nav link to active', () => {
-          // const container = document.querySelector('pfe-scrollspy');
+        test('its .makeActive() method should add an active attribute to its target', () => {
+          // const nav = document.querySelector('pfe-scrollspy-nav');
+          const panel = document.querySelector('pfe-scrollspy-panel');
+          panel.makeActive(3);
+          let testNavItem = document.querySelector('[data-target="section4"]');
+          // Assert that the event sends activeNavItem
+          assert(testNavItem.hasAttribute('active'));
+        });
+
+        test('its .removeAllActive() method should remove [active] attributes from all nav items', () => {
           const nav = document.querySelector('pfe-scrollspy-nav');
-          // const panel = document.querySelector('pfe-scrollspy-panel');
-          const targetForScroll = document.querySelector('#section2');
-          // const targetScrollPosition = targetForScroll.offsetTop;
+          const panel = document.querySelector('pfe-scrollspy-panel');
+          panel.makeActive(0);
+          panel.makeActive(1);
+          panel.makeActive(2);
+          panel.makeActive(3);
+          panel.makeActive(4);
+          panel.removeAllActive();
+          let testNavItems = nav.querySelectorAll('.pfe-scrollspy-nav__item');
+          let testNavItemsArr = [];
+          // Assert that the event sends activeNavItem
+          [...testNavItems].forEach(item => testNavItemsArr.push(item.hasAttribute('active')));
+          assert(!testNavItemsArr.includes(true));
+        });
+
+        test('it should fire a pfe-scrollspy-panel:active-nav-item when makeActive() is called', () => {
+          const nav = document.querySelector('pfe-scrollspy-nav');
+          const panel = document.querySelector('pfe-scrollspy-panel');
           const handlerSpy = sinon.spy();
 
           window.addEventListener('pfe-scrollspy-panel:active-nav-item', handlerSpy);
-          // targetForScroll.scrollIntoView();
-          // window.scrollTo(0, 0);
-          // window.scrollTo(0, 2000)
-          // js.executeScript("arguments[0].scrollIntoView(true);", targetForScroll);
-          // driver.executeScript("window.scrollTo(0, targetForScroll)");
-
-          // const [event] = handlerSpy.getCall(0).args;
-
-          // assertTrue(handlerSpy.called);
-          handlerSpy();
+          panel.makeActive(0);
+          const [event] = handlerSpy.getCall(0).args;
           sinon.assert.calledOnce(handlerSpy);
-          // assert.deepEqual(event.detail, {
-          //   detail: {
-          //     activeNavItem: '<a class="pfe-scrollspy-nav__item" href="#section2" data-target="section2">Section 2</a>'
-          //   },
-          //   bubbles: true
-          // });
-
+          // Assert that the event sends activeNavItem
+          assert(event.detail.activeNavItem);
           // reset
           document.removeEventListener('pfe-scrollspy-panel:active-nav-item', handlerSpy);
         });
-
-
       });
 
       suite('<pfe-scrollspy-nav>', () => {

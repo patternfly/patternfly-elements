@@ -19,7 +19,8 @@ Tag: [v1.0.0-prerelease.26](https://github.com/patternfly/patternfly-elements/re
 - [93c5e99](https://github.com/patternfly/patternfly-elements/commit/93c5e99428fc57514ef4571caacb1dba199f5303) pfe-icon-panel: maintain icon height in flex display
 - [d2b16b8](https://github.com/patternfly/patternfly-elements/commit/d2b16b806327bf99e09ca4e7ed0d4aeeeaa37a90) Add larger size to health-index
 - [a77f5ff](https://github.com/patternfly/patternfly-elements/commit/a77f5ffb6066a6be4778f48ddec05b6759e219ff) feat: compile assets to a dist directory
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-cta add wind variant styles
+- [1f9ec10](https://github.com/patternfly/patternfly-elements/commit/1f9ec10488a4a879d230705c2ea3d783d2df45f6) feat: pfe-cta add wind variant styles
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-card cta alignment #560
 
 ## Prerelease 25 ( 2019-09-10 )
 

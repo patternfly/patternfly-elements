@@ -15,7 +15,7 @@ const styles = `<style>
   }
 </style>`;
 
-import PfeCard from "../pfe-card";
+import PfeCard from "../dist/pfe-card";
 
 const stories = storiesOf("Card", module);
 

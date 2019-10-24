@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from '@storybook/addon-knobs/polymer';
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeMarkdown from "../pfe-markdown.js";
+import PfeMarkdown from "../dist/pfe-markdown.js";
 
 const stories = storiesOf("Markdown", module);
 

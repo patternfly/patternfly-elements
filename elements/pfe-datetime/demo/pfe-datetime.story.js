@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeDatetime from "../pfe-datetime";
+import PfeDatetime from "../dist/pfe-datetime";
 
 const stories = storiesOf("Datetime", module);
 

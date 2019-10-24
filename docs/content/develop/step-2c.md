@@ -71,7 +71,7 @@ A couple of things to note:
 Now that our demo page is updated, let's take a look at what happened to the ES6 version of the element in the root of our element's directory.
 
 ```
-import PFElement from '../pfelement/pfelement.js';
+import PFElement from '../pfelement/dist/pfelement.js';
 
 class PfeCoolElement extends PFElement {
   get html() {

@@ -30,6 +30,7 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 
   position: relative;
   display: inline-block;
+  line-height: 0;
 
   @at-root #{&}([data-block]) {
     display: block;
@@ -59,12 +60,12 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   }
 
   @supports (-ms-accelerator:true) {
-      /* IE Edge 12+ CSS */ 
+      /* IE Edge 12+ CSS */
       @include greyscale-fallback();
   }
 
   @supports (-ms-ime-align:auto) {
-      /* IE Edge 16+ CSS */ 
+      /* IE Edge 16+ CSS */
       @include greyscale-fallback();
   }
 
@@ -139,11 +140,11 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   --pfe-icon--BackgroundColor: transparent;
   --pfe-icon--BorderColor: transparent;
   --pfe-icon--Padding: 0;
-  
+
   ::slotted(*:first-child) {
     margin-top: 0;
   }
-  
+
   ::slotted(*:last-child) {
     margin-bottom: 0;
   }

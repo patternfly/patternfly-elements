@@ -4,7 +4,7 @@
     "className": "PfeCard",
     "elementName": "pfe-card"
   },
-  "version": "1.0.0-prerelease.24",
+  "version": "1.0.0-prerelease.27",
   "publishConfig": {
     "access": "public"
   },
@@ -46,11 +46,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
-    "@patternfly/pfelement": "^1.0.0-prerelease.24"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.27",
+    "@patternfly/pfelement": "^1.0.0-prerelease.27"
   },
   "generator-pfelement-version": "0.5.0",
   "bugs": {
-    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
   }
 }

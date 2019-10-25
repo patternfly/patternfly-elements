@@ -123,6 +123,14 @@ pfe-navigation-item {
         &:focus {
             text-decoration: none; //Override bootstrap.
         }
+        &.active {
+            color: #fff;
+        }
+    }
+    &.expanded {
+        [slot="trigger"] > a.active {
+            color: #333;
+        }
     }
 }
 

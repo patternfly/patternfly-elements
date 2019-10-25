@@ -1,0 +1,2 @@
+:host{display:none;overflow:hidden;will-change:height}:host([pfe-expanded]){display:block;position:relative}:host(.animating){display:block;-webkit-transition:height .3s ease-in-out;transition:height .3s ease-in-out}
+/*# sourceMappingURL=pfe-collapse-panel.min.css.map */

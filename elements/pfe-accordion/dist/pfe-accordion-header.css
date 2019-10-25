@@ -1,0 +1,167 @@
+:host {
+  display: block;
+}
+
+:host > * {
+  margin: 0;
+}
+
+:host button {
+  --pfe-accordion--main:         transparent;
+  --pfe-accordion--aux:          var(--pfe-theme--color--surface--lightest--text, #333);
+  --pfe-accordion--BorderLeft:  var(--pfe-theme--surface--border-width--heavy, 4px) var(--pfe-theme--surface--border-style, solid) transparent;
+  --pfe-accordion--BorderRight: var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) transparent;
+  --pfe-accordion--BorderBottom: var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) var(--pfe-theme--color--surface--border, #d2d2d2);
+  --pfe-accordion--BorderLeftColor--focus: var(--pfe-theme--color--surface--lightest--link, #06c);
+  margin: 0;
+  width: 100%;
+  height: auto;
+  font-family: inherit;
+  font-weight: 700;
+  font-weight: var(--pfe-theme--font-weight--bold, 700);
+  text-align: left;
+  cursor: pointer;
+  z-index: 1;
+  position: relative;
+  font-size: calc(16px * 1.1);
+  font-size: calc(var(--pfe-theme--font-size, 16px) * 1.1);
+  line-height: 1.5;
+  line-height: var(--pfe-theme--line-height, 1.5);
+  color: var(--pfe-accordion--aux);
+  background-color: var(--pfe-accordion--main);
+  border-left: var(--pfe-accordion--BorderLeft);
+  border-right: var(--pfe-accordion--BorderRight);
+  border-bottom: var(--pfe-accordion--BorderBottom);
+  border-top: 0;
+  padding: 16px 50px 16px calc(16px * 1.5) !important;
+  padding: var(--pfe-theme--container-spacer, 16px) 50px var(--pfe-theme--container-spacer, 16px) calc(var(--pfe-theme--container-spacer, 16px) * 1.5) !important;
+}
+
+:host button:hover {
+  outline: none;
+  border-left-color: var(--pfe-accordion--BorderLeftColor--focus);
+  z-index: 2;
+}
+
+:host button:focus {
+  outline: none;
+  z-index: 2;
+  text-decoration: underline;
+}
+
+:host button::-moz-focus-inner {
+  border: 0;
+}
+
+:host button[aria-expanded="true"] {
+  --pfe-accordion--main:              var(--pfe-theme--color--surface--lightest, #fff);
+  --pfe-accordion--aux:               var(--pfe-theme--color--surface--lightest--text, #333);
+  --pfe-accordion--focus:             var(--pfe-theme--color--surface--lightest--link, #06c);
+  --pfe-accordion--BorderLeft:        var(--pfe-theme--surface--border-width--heavy, 4px) var(--pfe-theme--surface--border-style, solid) var(--pfe-theme--color--surface--lightest--link, #06c);
+  --pfe-accordion--BorderRight:       var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) var(--pfe-theme--color--surface--border, #d2d2d2);
+  position: relative;
+  display: block;
+  border-bottom: 0;
+}
+
+:host button[aria-expanded="true"]::after {
+  content: "";
+  position: absolute;
+  top: calc((16px * 0.75) + 0.5935em);
+  top: calc((var(--pfe-theme--container-spacer, 16px) * 0.75) + 0.5935em);
+  display: block;
+  border-style: solid;
+  border-style: var(--pfe-theme--surface--border-style, solid);
+  height: 0.313em;
+  width: 0.313em;
+  text-align: center;
+  -webkit-transition: -webkit-transform 0.15s;
+  transition: -webkit-transform 0.15s;
+  transition: transform 0.15s;
+  transition: transform 0.15s, -webkit-transform 0.15s;
+  border-width: 0.15em 0.15em 0 0;
+  border-bottom: 0;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  right: calc(16px * 1.5);
+  right: calc(var(--pfe-theme--container-spacer, 16px) * 1.5);
+}
+
+:host button[aria-expanded="false"]::after {
+  content: "";
+  position: absolute;
+  top: calc((16px * 0.75) + 0.5935em);
+  top: calc((var(--pfe-theme--container-spacer, 16px) * 0.75) + 0.5935em);
+  display: block;
+  border-style: solid;
+  border-style: var(--pfe-theme--surface--border-style, solid);
+  height: 0.313em;
+  width: 0.313em;
+  text-align: center;
+  -webkit-transition: -webkit-transform 0.15s;
+  transition: -webkit-transform 0.15s;
+  transition: transform 0.15s;
+  transition: transform 0.15s, -webkit-transform 0.15s;
+  border-width: 0 0.15em 0.15em 0;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  right: calc(16px * 1.5);
+  right: calc(var(--pfe-theme--container-spacer, 16px) * 1.5);
+}
+
+:host(:first-child) button {
+  border-top: 1px solid #d2d2d2;
+  border-top: var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) var(--pfe-theme--color--surface--border, #d2d2d2);
+}
+
+:host(:last-of-type) button[aria-expanded="false"] {
+  border-bottom: 1px solid #d2d2d2;
+  border-bottom: var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) var(--pfe-theme--color--surface--border, #d2d2d2);
+  border-top: 0;
+}
+
+:host(.animating) {
+  -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+  transition: -webkit-transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+  transition: transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+  transition: transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946), -webkit-transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+  -webkit-transition: -webkit-transform 0.3s var(--pfe-theme--animation-timing, cubic-bezier(0.465, 0.183, 0.153, 0.946));
+  transition: -webkit-transform 0.3s var(--pfe-theme--animation-timing, cubic-bezier(0.465, 0.183, 0.153, 0.946));
+  transition: transform 0.3s var(--pfe-theme--animation-timing, cubic-bezier(0.465, 0.183, 0.153, 0.946));
+  transition: transform 0.3s var(--pfe-theme--animation-timing, cubic-bezier(0.465, 0.183, 0.153, 0.946)), -webkit-transform 0.3s var(--pfe-theme--animation-timing, cubic-bezier(0.465, 0.183, 0.153, 0.946));
+}
+
+:host(.animating) button {
+  position: relative;
+  display: block;
+  border-bottom: 0;
+  --pfe-accordion--main:              var(--pfe-theme--color--surface--lightest, #fff);
+  --pfe-accordion--aux:               var(--pfe-theme--color--surface--lightest--text, #333);
+  --pfe-accordion--focus:             var(--pfe-theme--color--surface--lightest--link, #06c);
+  --pfe-accordion--BorderLeft:        var(--pfe-theme--surface--border-width--heavy, 4px) var(--pfe-theme--surface--border-style, solid) var(--pfe-theme--color--surface--lightest--link, #06c);
+  --pfe-accordion--BorderRight:       var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) var(--pfe-theme--color--surface--border, #d2d2d2);
+}
+
+:host([on="dark"]) button {
+  --pfe-accordion--main:         transparent;
+  --pfe-accordion--aux:          var(--pfe-theme--color--surface--darkest--text, #fff);
+  --pfe-accordion--BorderLeftColor--focus: var(--pfe-theme--color--surface--lightest, #fff);
+}
+
+:host([on="dark"]) button[aria-expanded="true"] {
+  --pfe-accordion--main:         var(--pfe-theme--color--surface--darker, #464646);
+  --pfe-accordion--aux:          var(--pfe-theme--color--surface--darkest--text, #fff);
+  --pfe-accordion--BorderLeft:   var(--pfe-theme--surface--border-width--heavy, 4px) var(--pfe-theme--surface--border-style, solid) var(--pfe-theme--color--surface--border, #d2d2d2);
+  --pfe-accordion--BorderRight:  var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) var(--pfe-theme--color--surface--border, #d2d2d2);
+  --pfe-accordion--BorderLeftColor--focus: var(--pfe-theme--color--surface--lightest, #fff);
+}
+
+:host([on="dark"].animating) button {
+  --pfe-accordion--main:         var(--pfe-theme--color--surface--darker, #464646);
+  --pfe-accordion--aux:          var(--pfe-theme--color--surface--darkest--text, #fff);
+  --pfe-accordion--BorderLeft:   var(--pfe-theme--surface--border-width--heavy, 4px) var(--pfe-theme--surface--border-style, solid) var(--pfe-theme--color--surface--border, #d2d2d2);
+  --pfe-accordion--BorderRight:  var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) var(--pfe-theme--color--surface--border, #d2d2d2);
+  --pfe-accordion--BorderLeftColor--focus: var(--pfe-theme--color--surface--lightest, #fff);
+}
+
+/*# sourceMappingURL=pfe-accordion-header.css.map */

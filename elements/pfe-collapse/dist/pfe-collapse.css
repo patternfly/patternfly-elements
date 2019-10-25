@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:host([expanded]),
+:host(.animating) {
+  display: block;
+}
+
+/*# sourceMappingURL=pfe-collapse.css.map */

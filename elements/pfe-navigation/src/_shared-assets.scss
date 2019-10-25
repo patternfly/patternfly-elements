@@ -2,9 +2,9 @@
 
 $overlay--BackgroundColor--fallback: rgba(37, 37, 37, 0.5);
 
-$trigger--FontSize--fallback:   #{map-get($pfe-vars, font-size--heading--zeta)};
-$trigger--FontWeight--fallback: #{map-get($pfe-vars, font-weight--light)};
-$trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
+$trigger--FontSize--fallback:   #{pfe-var(font-size--heading--zeta)};
+$trigger--FontWeight--fallback: #{pfe-var(font-weight--light)};
+$trigger--Color--fallback: #{pfe-color(text--on-dark)};
 
 $LOCAL: navigation;
 $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
@@ -31,10 +31,24 @@ $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
 
 %trigger {
     font-family: pfe-var(font-family);
-    font-size:   pfe-local($cssvar: FontSize, $region: trigger, $fallback: #{$trigger--FontSize--fallback}) !important;
-    font-weight: pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback});
-    color:       pfe-local($cssvar: Color, $fallback: #{$trigger--Color--fallback});
-    background:  #{pfe-local($cssvar: Cover, $region: trigger, $fallback:  #{pfe-color(surface--darkest)})};
+    font-size: #{pfe-local(
+            $cssvar: FontSize, 
+            $region: trigger, 
+            $fallback: #{$trigger--FontSize--fallback}
+        )} !important;
+    font-weight: #{pfe-local(
+            $cssvar: FontWeight,
+            $fallback: #{$trigger--FontWeight--fallback}
+        )};
+    color: #{pfe-local(
+            $cssvar: Color,
+            $fallback: #{$trigger--Color--fallback}
+        )};
+    background: #{pfe-local(
+            $cssvar: Cover,
+            $region: trigger,
+            $fallback: 16px
+        )};
     z-index: 2;
 
     @media screen and (min-width: 1024px) {

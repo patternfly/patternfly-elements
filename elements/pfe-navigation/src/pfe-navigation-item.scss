@@ -74,13 +74,23 @@ $variables: (
   }
 
   @each $prop in (text, ui-link, ui-link--hover, ui-link--visited, ui-link--focus) {
-    --pfe-broadcasted--color--#{$prop}: #{pfe-local($cssvar: Color, $fallback: #{$trigger--Color--fallback})};
+    --pfe-broadcasted--color--#{$prop}: #{pfe-local(
+      $cssvar: Color,
+      $fallback: #{$trigger--Color--fallback}
+    )};
   }
 
   // Enforce the font-size for the navigation regardless of h-level settings
   @each $level in (alpha, beta, gamma) {
-    --pfe-theme--font-size--#{$level}:   #{pfe-local($cssvar: FontSize, $region: trigger, $fallback: #{$trigger--FontSize--fallback})};
-    --pfe-theme--font-weight--#{$level}: #{pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback})};
+    --pfe-theme--font-size--#{$level}: #{pfe-local(
+      $cssvar: FontSize,
+      $region: trigger,
+      $fallback: #{$trigger--FontSize--fallback}
+    )};
+    --pfe-theme--font-weight--#{$level}: #{pfe-local(
+      $cssvar: FontWeight,
+      $fallback: #{$trigger--FontWeight--fallback}
+    )};
   }
 
   border-top: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderTopColor)};

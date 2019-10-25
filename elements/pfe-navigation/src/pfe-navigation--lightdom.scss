@@ -105,12 +105,15 @@
 // pfe-navigation a {
 //     @extend %link-styles;
 // }
-pfe-navigation [slot="logo"] > a {
-    display: flex;
-    align-items: center;
+pfe-navigation [slot="logo"] {
+    margin: 0;
+    > a {
+        display: flex;
+        align-items: center;
 
-    > * {
-        max-height: 32px;
+        > * {
+            max-height: 32px;
+        }
     }
 }
 
@@ -162,6 +165,14 @@ pfe-navigation-item {
         [aria-expanded=true].pfe-navigation-item__trigger::after {
             display: block !important;
         }
+        &.expanded {
+            background-color: #fff;
+            .pfe-navigation-item__trigger {
+                pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
+                    flood-color: #151515 !important;
+                }
+            }
+        }
     }
     .pfe-navigation-item__trigger {
         --pfe-navigation__trigger-icon--Visible: hidden;
@@ -178,13 +189,7 @@ pfe-navigation-item {
             flood-color: #fff !important;
         }
     }
-    &.expanded {
-        .pfe-navigation-item__trigger {
-            pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
-                flood-color: #151515 !important;
-            }
-        }
-    }
+
     // [pfe-icon=web-mobile-menu]:not([show_links]).pfe-navigation-item-3 .pfe-navigation__main .pfe-navigation-item__tray.pfe-navigation-item {
     //     top: 0 !important;
     // }

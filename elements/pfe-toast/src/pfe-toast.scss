@@ -39,6 +39,16 @@
   margin-top: 0;
 }
 
+::slotted(button) {
+  background: none;
+  border-radius: 0;
+  display: inline-block;
+  margin-bottom: 0;
+  margin-right: 1rem;
+  padding: .5rem .75rem;
+  text-align: center;
+}
+
 .pfe-toast {
   &__container {
     // flex child props

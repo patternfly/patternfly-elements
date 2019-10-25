@@ -22,7 +22,7 @@ class PfeToast extends PFElement {
   }
 
   static get observedAttributes() {
-    return [];
+    return ["auto-dismiss"];
   }
 
   constructor() {
@@ -30,9 +30,11 @@ class PfeToast extends PFElement {
 
     // state
     this.isOpen = false;
+    this.doesAutoDismiss = false;
 
     // elements
     this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
+    this._content = this.shadowRoot.querySelector(`.${this.tag}__content`);
     this._toastCloseButton = this.shadowRoot.querySelector(`.${this.tag}__close`);
     
     // events
@@ -42,13 +44,23 @@ class PfeToast extends PFElement {
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldVal, newVal);
+    this.doesAutoDismiss = !!newValue;
+    if (!this.doesAutoDismiss) {
+      this._content.setAttribute("role", "alertdialog");
+      this.setAttribute("aria-label", "alert dialog"); // need a better description
+      this.setAttribute("aria-describedby", `${this.tag}__content`);
+    } else {
+      this._content.setAttribute("role", "status");
+      this.removeAttribute("aria-label");
+      this.removeAttribute("aria-describedby");
+    }
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    // add attributes
+    // get/set state
+    this.doesAutoDismiss = this.hasAttribute("auto-dismiss");
     this.setAttribute("hidden", true);
 
     // attach listeners
@@ -64,7 +76,7 @@ class PfeToast extends PFElement {
       event.preventDefault();
     }
     this.isOpen = true;
-    this.setAttribute("role", "alert");
+    this.isAutoDismiss ? this.setAttribute("role", "status") : this.setAttribute("role", "alertdialog");
     this.removeAttribute("hidden");
     setTimeout(() => {
       this.classList.add("open");

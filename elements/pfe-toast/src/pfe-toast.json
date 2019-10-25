@@ -12,19 +12,31 @@
       "description": "Definition of the supported slots",
       "type": "object",
       "properties": {
-        "default": {
-          "title": "Default",
+        "content": {
+          "title": "Content",
           "type": "array",
           "namedSlot": false,
           "items": {
-            "oneOf": [{
-              "$ref": "raw" 
-            }]
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
           }
+        }
+      }
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "auto-dismiss": {
+          "title": "Automatically dismiss",
+          "type": "string"     
         }
       }
     }
   },
-  "required": ["slots"],
+  "required": ["slots", "attributes"],
   "additionalProperties": false
 }

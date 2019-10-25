@@ -22,9 +22,22 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeToast.tag, () => {
   let config = {};
+  const props = PfeToast.properties;
+
+  // Trigger the auto generation of the knobs for attributes
+  config.prop = tools.autoPropKnobs(props, storybookBridge);
+
   config.slots = [{
-    content: "Get toasted!"
+    content: tools.customTag({
+      tag: "p",
+      content: "Let's get toasty!"
+    })
   }];
+
   const render = template(config);
-  return tools.preview(render);
+
+  return `
+  <button onclick="document.querySelector('pfe-toast').toggle()">Toggle toast</button>
+  ${tools.preview(render)}
+  `
 });

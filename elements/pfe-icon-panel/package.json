@@ -19,10 +19,6 @@
     "directory": "elements/pfe-icon-panel"
   },
   "main": "./dist/pfe-icon-panel.js",
-  "files": [
-    "pfe-icon-panel.*js",
-    "pfe-icon-panel.*js.map"
-  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

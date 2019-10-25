@@ -19,12 +19,6 @@
     "directory": "elements/pfe-cta"
   },
   "main": "./dist/pfe-cta.js",
-  "files": [
-    "pfe-cta--lightdom.*css",
-    "pfe-cta--lightdom.*css.map",
-    "pfe-cta.*js",
-    "pfe-cta.*js.map"
-  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

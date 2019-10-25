@@ -15,10 +15,6 @@
     "access": "public"
   },
   "main": "./dist/pfe-markdown.js",
-  "files": [
-    "pfe-markdown.*js",
-    "pfe-markdown.*js.map"
-  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

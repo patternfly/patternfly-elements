@@ -15,10 +15,6 @@
     "directory": "elements/pfe-datetime"
   },
   "main": "./dist/pfe-datetime.js",
-  "files": [
-    "pfe-datetime*.js",
-    "pfe-datetime*.js.map"
-  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

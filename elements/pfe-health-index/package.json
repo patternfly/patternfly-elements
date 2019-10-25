@@ -19,10 +19,6 @@
     "directory": "elements/pfe-health-index"
   },
   "main": "./dist/pfe-health-index.js",
-  "files": [
-    "pfe-health-index*.js",
-    "pfe-health-index*.js.map"
-  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

@@ -19,10 +19,6 @@
     "directory": "elements/pfe-progress-indicator"
   },
   "main": "./dist/pfe-progress-indicator.js",
-  "files": [
-    "pfe-progress-indicator.*js",
-    "pfe-progress-indicator.*js.map"
-  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

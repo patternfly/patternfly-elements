@@ -67,9 +67,8 @@ class PfeToast extends PFElement {
     this.setAttribute("role", "alert");
     this.removeAttribute("hidden");
     setTimeout(() => {
-      this.style.right = "50px";
+      this.classList.add("open");
     }, 500);
-     // to update
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:open`, {
         detail: {},
@@ -85,7 +84,7 @@ class PfeToast extends PFElement {
     }
     this.isOpen = false;
     this.removeAttribute("role");
-    this.style.right = `-${this.getBoundingClientRect().width + 25}px`; // to update
+    this.classList.remove("open");
     setTimeout(() => {
       this.setAttribute("hidden", true);
     }, 500);

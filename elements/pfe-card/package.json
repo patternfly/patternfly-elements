@@ -19,6 +19,12 @@
     "directory": "elements/pfe-card"
   },
   "main": "./dist/pfe-card.js",
+  "files": [
+    "pfe-card.*js",
+    "pfe-card.*js.map",
+    "pfe-card--lightdom.*css",
+    "pfe-card--lightdom.*css.map"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -29,6 +35,13 @@
       "name": "Mark Caron",
       "email": "mark@redhat.com",
       "url": "https://github.com/markcaron"
+    },
+    {
+      "name": "Kendall Totten"
+    },
+    {
+      "name": "castastrophe",
+      "url": "https://www.github.com/castastrophe"
     }
   ],
   "license": "MIT",

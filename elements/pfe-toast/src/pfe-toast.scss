@@ -15,7 +15,6 @@
   --pfe-toast__close--svg--Width: 12px;
 
   // flex parent props
-  align-content: stretch;
   align-items: stretch;
   display: flex;
   flex-flow: row wrap;
@@ -46,17 +45,28 @@
     align-self: flex-start;
     flex: 1 1 auto;
 
+    // flex parent props
+    align-items: flex-start;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+
     background-color: var(--pfe-toast__container--BackgroundColor);
     box-shadow: var(--pfe-toast__container--BoxShadow);
     color: var(--pfe-toast__container--Color);
     padding: var(--pfe-toast__container--Padding);
-    width: 100%;
+  }
+  &__content {
+    // flex child props
+    flex: 1 1 auto;
   }
   &__close {
+    // flex child props
+    flex: 0 0 auto;
+
     background-color: transparent;
     border: none;
     cursor: pointer;
-    float: right;
     margin: 0;
     & > svg {
 			height: var(--pfe-toast__close--svg--Height);

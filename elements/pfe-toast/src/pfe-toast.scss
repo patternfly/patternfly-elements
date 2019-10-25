@@ -5,7 +5,8 @@
   --pfe-toast--Top: 50px;
   --pfe-toast--MaxWidth: 500px;
   --pfe-toast--MinWidth: 250px;
-  --pfe-toast--Right--offset: 50px;
+  --pfe-toast--Right: 50px;
+  --pfe-toast--Right--offset: 50px; // needed with box-shadow
   --pfe-toast__container--BackgroundColor: #fff;
   --pfe-toast__container--BoxShadow: rgba(3, 3, 3, 0.13) 0px 3px 7px 3px, rgba(3, 3, 3, 0.12) 0px 11px 24px 16px;
   --pfe-toast__container--Color: #151515;
@@ -13,7 +14,7 @@
   --pfe-toast__close--svg--Height: 12px;
   --pfe-toast__close--svg--Width: 12px;
 
-  // flex
+  // flex parent props
   align-content: stretch;
   align-items: stretch;
   display: flex;
@@ -24,7 +25,7 @@
   position: absolute;
   right: calc(-1 * (var(--pfe-toast--MaxWidth) + var(--pfe-toast--Right--offset)));
   top: var(--pfe-toast--Top);
-  transition: right 0.3s ease-in-out;
+  transition: right 0.5s ease-in-out;
   will-change: right;
   
   max-width: var(--pfe-toast--MaxWidth); // media queries?
@@ -41,7 +42,7 @@
 
 .pfe-toast {
   &__container {
-    // flex
+    // flex child props
     align-self: flex-start;
     flex: 1 1 auto;
 

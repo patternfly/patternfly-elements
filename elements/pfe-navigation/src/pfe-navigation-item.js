@@ -1,5 +1,5 @@
-import PFElement from "../pfelement/pfelement.js";
-import PfeIcon from "../pfe-icon/pfe-icon.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
+import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 
 class PfeNavigationItem extends PFElement {
     static get tag() {

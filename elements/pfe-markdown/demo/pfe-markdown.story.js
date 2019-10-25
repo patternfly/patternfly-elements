@@ -2,9 +2,17 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from '@storybook/addon-knobs/polymer';
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeMarkdown from "../pfe-markdown.js";
+import PfeMarkdown from "../dist/pfe-markdown.js";
 
 const stories = storiesOf("Markdown", module);
+
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
 
 // Define the templates to be used
 const template = (data = {}) =>

@@ -33,10 +33,10 @@ We'll also need to update `/demo/index.html` so that the user's name is passed i
     <title>PatternFly Element | pfe-cool-element Demo</title>
 
     <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
@@ -64,7 +64,7 @@ Remember that any changes we make in the `/src` directory are being watched whil
 The ES6 version should now look like this:
 
 ```
-import PFElement from '../pfelement/pfelement.js';
+import PFElement from '../pfelement/dist/pfelement.js';
 
 class PfeCoolElement extends PFElement {
   get html() {

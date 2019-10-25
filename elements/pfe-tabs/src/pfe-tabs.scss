@@ -9,18 +9,32 @@ $LOCAL: tabs;
 $pfe-tabs__panel--PaddingLeft-factor:  2;
 
 :host {
-  display: block;
+  --pfe-tabs__tabs--BorderColor:  #{pfe-color(surface--border)};
+
+  display: #{pfe-local($cssvar: Display, $fallback: block)};
+  padding: #{pfe-local($cssvar: Padding, $fallback: 0)};
+
+  .tabs {  
+    display: flex;
+    flex-direction: #{pfe-local($cssvar: FlexDirection, $region: tabs, $fallback: row)};
+    width: #{pfe-local($cssvar: Width, $region: tabs, $fallback: auto)};
+
+    border-top:    #{pfe-local($cssvar: BorderTop, $region: tabs, $fallback: 0)};
+    border-right:  #{pfe-local($cssvar: BorderRight, $region: tabs, $fallback: 0)};
+    border-bottom: #{pfe-local($cssvar: BorderBottom, $region: tabs, $fallback: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local($cssvar: BorderColor, $region: tabs)} )};
+    border-left:   #{pfe-local($cssvar: BorderLeft, $region: tabs, $fallback: 0)};
+
+    padding: #{pfe-local($cssvar: Padding, $region: tabs, $fallback: 0)};
+  }
 
   .panels {
-    padding: 0;
-  }
-}
+    width: #{pfe-local($cssvar: Width, $region: panels, $fallback: auto)};
 
-.tabs {
-  --pfe-tabs--BorderColor: #{pfe-color(surface--border)};
-  display: flex;
-  border: 0;
-  border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
+    padding-top: #{pfe-local($cssvar: PaddingTop, $region: panels, $fallback: 0)};
+    padding-right: #{pfe-local($cssvar: PaddingRight, $region: panels, $fallback: 0)};
+    padding-bottom: #{pfe-local($cssvar: PaddingBottom, $region: panels, $fallback: 0)};
+    padding-left: #{pfe-local($cssvar: PaddingLeft, $region: panels, $fallback: 0)};
+  }
 }
 
 :host(:not([vertical])[pfe-tab-align="center"]) {
@@ -36,20 +50,15 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([vertical]) {
-    display: flex; // Sets tabs to appear to the left of the panels.
+    --pfe-tabs--Display: flex; // Sets tabs to appear to the left of the panels
+    --pfe-tabs__tabs--FlexDirection: column;
+    --pfe-tabs__tabs--Width: 22.22%;
 
-    .tabs {
-      flex-direction: column;
-      width: 22.22%;
-      border: 0;
-      border-right: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
-    }
+    --pfe-tabs__tabs--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
+    --pfe-tabs__tabs--BorderBottom: 0;
 
-    .panels {
-      padding: 0;
-      width: 77.78%;
-      padding-right: #{pfe-var(container-padding)};
-    }
+    --pfe-tabs__panels--Width: 77.78%;
+    --pfe-tabs__panels--PaddingRight: #{pfe-var(container-padding)};
   }
 }
 
@@ -59,45 +68,27 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([vertical][pfe-variant="earth"]) {
-    padding-top: #{pfe-var(container-padding)};
-
-    .tabs {
-      padding-left: 0;
-      padding-top: #{pfe-var(container-padding)};
-    }
+    --pfe-tabs__tabs--Padding: #{pfe-var(container-padding)} 0 0 0;
   }
 }
 
 :host([pfe-variant="earth"]) {
-  .tabs {
-    padding-left: #{pfe-var(container-padding)};
+  --pfe-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
 
-    ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
-      border-left: 0;
-    }
+  .tabs ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
+    border-left: 0;
   }
 }
 
+
+/// ===========================================================================
+/// THEMING
+/// ===========================================================================
 :host([on="dark"]) {
   @include pfe-theme($theme: "dark");
 }
-// TODO: address tabs on darker and darkest themes.
-// :host([color="darker"]) {
-//   @include pfe-theme($theme: "darker");
-// }
-// :host([color="darkest"]) {
-//   @include pfe-theme($theme: "darkest");
-// }
-
 
 :host([on="light"]) {
   @include pfe-theme($theme: "light");
 }
-// TODO: address tabs on lighter and lightest themes.
-// :host([on="lighter"]) {
-//   @include pfe-theme($theme: "lighter");
-// }
-// :host([on="lightest"]) {
-//   @include pfe-theme($theme: "lightest");
-// }
 

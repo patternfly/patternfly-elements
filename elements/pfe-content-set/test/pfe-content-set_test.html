@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../pfe-content-set.js"></script>
+    <script type="module" src="../dist/pfe-content-set.js"></script>
   </head>
   <body>
     <div style="width: 1024px;">
@@ -53,6 +53,20 @@
           <p pfe-content-set--panel>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.</p>
           <h2 pfe-content-set--header>heading 3</h2>
           <p pfe-content-set--panel>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
+      </pfe-content-set>
+    </div>
+
+    <div style="width: 1024px;">
+      <pfe-content-set id="dynamicTabs">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <p pfe-content-set--panel>Panel 1</p>
+      </pfe-content-set>
+    </div>
+
+    <div style="width: 600px">
+      <pfe-content-set id="dynamicAccordion">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <p pfe-content-set--panel>Panel 1</p>
       </pfe-content-set>
     </div>
 
@@ -111,6 +125,43 @@
           assert.equal(firstHeader.getAttribute('tabindex'), '0');
           assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
           assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
+        });
+
+        test("it should properly initialize any dynamically added headers and panels", done => {
+          const pfeContentSetTabs = document.querySelector("#dynamicTabs");
+          const pfeContentSetAccordion = document.querySelector("#dynamicAccordion");
+          const documentFragment = document.createDocumentFragment();
+
+          var newHeader = document.createElement("h2");
+          newHeader.setAttribute("pfe-content-set--header", true);
+          newHeader.setAttribute("pfe-id", "newHeader");
+          newHeader.textContent = "New Heading";
+
+          var newPanel = document.createElement("div");
+          newPanel.setAttribute("pfe-content-set--panel", true);
+          newPanel.setAttribute("pfe-id", "newPanel");
+          newPanel.textContent = "New Panel";
+
+          documentFragment.appendChild(newHeader);
+          documentFragment.appendChild(newPanel);
+
+          const tabsDocumentFragment = documentFragment.cloneNode(true);
+          const accordionDocumentFragment = documentFragment.cloneNode(true);
+
+          pfeContentSetTabs.appendChild(tabsDocumentFragment);
+          pfeContentSetAccordion.appendChild(accordionDocumentFragment);
+
+          flush(() => {
+            const pfeTabs = pfeContentSetTabs.querySelector("pfe-tabs");
+            const pfeAccordion = pfeContentSetAccordion.querySelector("pfe-accordion");
+
+            assert.isNotNull(pfeTabs.querySelector('[pfe-id="newHeader"]'));
+            assert.isNotNull(pfeTabs.querySelector('[pfe-id="newPanel"]'));
+            assert.isNotNull(pfeAccordion.querySelector('[pfe-id="newHeader"]'));
+            assert.isNotNull(pfeAccordion.querySelector('[pfe-id="newPanel"]'));
+
+            done();
+          });
         });
       });
     </script>

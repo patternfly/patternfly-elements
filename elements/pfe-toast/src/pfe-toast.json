@@ -31,7 +31,7 @@
       "type": "object",
       "properties": {
         "auto-dismiss": {
-          "title": "Automatically dismiss",
+          "title": "Auto dismiss (milliseconds)",
           "type": "string"     
         }
       }

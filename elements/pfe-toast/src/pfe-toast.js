@@ -46,13 +46,17 @@ class PfeToast extends PFElement {
   attributeChangedCallback(attr, oldValue, newValue) {
     this.doesAutoDismiss = newValue === null ? false : true;
     if (!this.doesAutoDismiss) {
+      this.removeAttribute("aria-live");
+      this.removeAttribute("aria-atomic");
       this.setAttribute("role", "alertdialog");
       this.setAttribute("aria-label", "alert dialog"); // need a better description
       this.setAttribute("aria-describedby", `${this.tag}__content`);
     } else {
-      this.setAttribute("role", "status");
       this.removeAttribute("aria-label");
       this.removeAttribute("aria-describedby");
+      this.setAttribute("role", "alert");
+      this.setAttribute("aria-live", "polite");
+      this.setAttribute("aria-atomic", "true"); 
     }
   }
 
@@ -118,6 +122,7 @@ class PfeToast extends PFElement {
         bubbles: true
       })
     );
+    
     return this;
   }
 

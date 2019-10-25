@@ -68,7 +68,7 @@ npmInstall() {
 
 commitIgnoredFiles() {
   log "committing compiled bundles to release branch"
-  git add elements/*/*.{js,map,css} -f || exit 1
+  git add elements/*/dist/ -f || exit 1
   git commit -am "v$NEW_VERSION" || exit 1
 }
 
@@ -80,7 +80,8 @@ gitTag() {
 
 removeIgnoredFiles() {
   log "removing the compiled bundles from release branch (they should only exist in the tag)"
-   for e in elements/*; do find $e -maxdepth 1 \( -not -name "gulpfile.js" -not -name "rollup.config.js" \) \( -name "*.js" -or -name "*.css" -or -name "*.map" \) -exec git rm -f {} \; ;done
+   # for e in elements/*; do find $e -maxdepth 1 \( -not -name "gulpfile.js" -not -name "rollup.config.js" \) \( -name "*.js" -or -name "*.css" -or -name "*.map" \) -exec git rm -f {} \; ;done
+   git rm -rf elements/*/dist
    git commit -am "remove bundles after $NEW_VERSION tag" || exit 1
 }
 

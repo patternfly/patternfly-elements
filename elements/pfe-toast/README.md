@@ -2,7 +2,7 @@
 
 ## Overview
 
-`pfe-toast` is a self-contained, non-focused alert that is hidden on page load and slides in/out of the view when programmatically opened/closed.
+`pfe-toast` is a self-contained alert that is hidden on page load and slides in/out of the view when programmatically opened/closed.
 
 ## Usage
 

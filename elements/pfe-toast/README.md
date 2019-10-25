@@ -17,6 +17,17 @@
 ### Default slot
 The default slot can contain any type of content.
 
+## Attributes
+
+- `auto-dismiss`: Optionally dismiss the toast alert after the number of milliseconds provided. For example, `auto-dismiss="3000"` will dismiss the toast alert after three seconds.
+
+## Variables
+
+- Max width: Allows you to specify the maximum width of the component. **Variable name:** `--pfe-toast--MaxWidth`.
+- Min width: Allows you to specify the minimum width of the component. **Variable name:** `--pfe-toast--MinWidth`.
+- Top: Allows you to customize the space between the component and the top of its container. **Variable name:** `--pfe-toast--Top`.
+- Right: Allows you to customize the space between the component and the right of its container. **Variable name:** ` --pfe-toast--Right`.
+
 ## API
 
 ### open

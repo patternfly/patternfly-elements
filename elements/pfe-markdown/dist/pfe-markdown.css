@@ -1,9 +1,0 @@
-:host {
-  display: block;
-}
-
-:host([hidden]) {
-  display: none;
-}
-
-/*# sourceMappingURL=pfe-markdown.css.map */

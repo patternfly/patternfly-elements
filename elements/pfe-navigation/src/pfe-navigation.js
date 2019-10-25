@@ -2,7 +2,7 @@
 // -- @TODO Set icons to hide if they all fail to load, else set them to preserve space
 
 // -- POLYFILL: Array.prototype.filter
-import filter from "core-js/features/array/filter";
+import "core-js/features/array/filter";
 
 // -- POLYFILL: Array.prototype.includes
 // import "core-js/features/array/includes";

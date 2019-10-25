@@ -4,13 +4,8 @@ tmp
 
 # ignore js, map, and css in element dirs
 elements/*/_temp
-elements/*/*.js
-elements/*/*.map
-elements/*/*.css
+elements/*/dist
 elements/*/__*.scss
-# but don't ignore tooling files
-!elements/*/gulpfile.js
-!elements/*/rollup.config.js
 
 # Compiled index
 doc/index.html

@@ -16,17 +16,21 @@
 
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet" />
     
-    <link rel="stylesheet" href="../../pfe-styles/pfe-base.css" />
-    <link rel="stylesheet" href="../../pfe-styles/pfe-context.css" />
-    <link rel="stylesheet" href="../../pfe-styles/pfe-layouts.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require([
-      '../pfe-icon-panel.umd.js'
-    ])</script>
+    <script>require(['../dist/pfe-icon-panel.umd.js'])</script>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
   </head>
   <body unresolved>
     <pfe-icon-panel icon="rh-server" circled color="critical">

@@ -24,11 +24,19 @@
     @return "";
 }
 
+@function themes($list, $color) {
+    @if index($list, theme) {
+        @return $color;
+    }
+    @return "";
+}
+
 @each $name, $color in $pfe-colors {
     $list: str-split($name, $separator: "--");
     $property: background-color;
     $context: #{contexts($list)};
     $state: #{states($list)};
+    $theme: #{themes($list, $color)};
 
     @if length($list) > 1 {
         @if index($list, "text") {
@@ -49,9 +57,15 @@
     }
 
     // Surface styles
-    @if index($list, "surface") and not (index($list, "theme")) {
+    @if index($list, "surface") {
         #{unquote($context)}.#{nth($list, 2)}#{unquote($state)} {
-            #{$property}: var(--theme--#{$name}, #{$color});
+            @if $theme != "" and $theme != light {
+                color: #{pfe-color(text--on-#{$theme})};
+            } @else if $theme == light {
+                color: #{pfe-color(text)};
+            } @else {
+                #{$property}: var(--theme--#{$name}, #{$color});
+            }
             @if str-index($string: $name, $substring: "text") == null {
                 &::after {
                     content: "#{$name}";

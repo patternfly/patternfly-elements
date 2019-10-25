@@ -12,29 +12,29 @@ $LOCAL: cta;
 .pfe-cta--wrapper {
   a,
   a:visited {
-      font-family: $pfe-global--font-family;
+      font-family: #{$pfe-global--font-family};
       display: inline;
-      color:  pfe-local($cssvar: Color, $fallback: #{pfe-fallback(link)}) !important;
+      color:  #{pfe-local($cssvar: Color, $fallback: #{pfe-fallback(ui-link)})} !important;
   }
 
   &:hover input,
   &:hover button,
-  &:hover a, 
+  &:hover a,
   input:hover,
   button:hover,
   a:hover {
-      color: pfe-local($cssvar: Color--hover, $fallback: #{pfe-fallback(link--hover)}) !important;
+      color: #{pfe-local($cssvar: Color--hover, $fallback: #{pfe-fallback(ui-link--hover)})} !important;
   }
 
   &:focus input,
   &:focus button,
-  &:focus a, 
+  &:focus a,
   input:focus,
   button:focus,
   a:focus {
-      color: pfe-local(
-        $cssvar: Color--focus, $fallback: #{pfe-fallback(link--focus)},
-      ) !important;
+      color: #{pfe-local(
+        $cssvar: Color--focus, $fallback: #{pfe-fallback(ui-link--focus)},
+      )} !important;
   }
 
   a:focus {
@@ -44,9 +44,9 @@ $LOCAL: cta;
       display: block;
       box-sizing: border-box;
       border: 1px solid;
-      border-color: pfe-local(
-        $cssvar: inner--BorderColor, $fallback: #{pfe-fallback(link--on-dark)},
-      );
+      border-color: #{pfe-local(
+        $cssvar: inner--BorderColor, $fallback: #{pfe-fallback(ui-link--on-dark)},
+      )};
       outline: none;
       position: absolute;
       top: 2px;
@@ -57,7 +57,7 @@ $LOCAL: cta;
     }
 
     .pfe-cta--arrow {
-      fill: pfe-local(Color--focus);
+      fill: #{pfe-local(Color--focus)};
     }
   }
 }
@@ -71,9 +71,9 @@ $LOCAL: cta;
 }
 
 [class^="pfe-cta"][class="PFElement"][pfe-priority="secondary"]  { //ie11
-  background-color: pfe-local(
+  background-color: #{pfe-local(
     $cssvar: BackgroundColor, $fallback: #{pfe-fallback(surface--lightest)}
-  );
+  )};
 }
 
 [class^="pfe-cta"][class="PFElement"][pfe-priority="secondary"], //ie11
@@ -81,27 +81,28 @@ $LOCAL: cta;
   input,
   button,
   a {
-      color: pfe-local($cssvar: Color, $fallback: #{pfe-fallback(surface--base--text)}) !important;
+      color: #{pfe-local($cssvar: Color, $fallback: #{pfe-fallback(surface--base--text)})} !important;
   }
 
   &:hover input,
   &:hover button,
-  &:hover a, 
+  &:hover a,
   input:hover,
   button:hover,
   a:hover {
-      color: pfe-local($cssvar: Color--hover, $fallback: #{pfe-fallback(link--on-saturated)}) !important;
+      color: #{pfe-local($cssvar: Color--hover, $fallback: #{pfe-fallback(ui-link--on-saturated)})} !important;
   }
 }
 
-@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
+@include browser-query(ie11) {
   pfe-cta.PFElement{
-    &[pfe-priority="primary"] { 
+    &[pfe-priority="primary"] {
       a, a:visited, a:focus, a:hover {
         color:  #{pfe-fallback(link--on-saturated)} !important;
       }
     }
-    &[pfe-priority="primary"][pfe-color="lightest"] { 
+    &[pfe-priority="primary"][pfe-color="lightest"],
+    &[pfe-priority="secondary"][pfe-variant="wind"] {
       a, a:visited, a:focus, a:hover {
         color:  #{pfe-fallback(link)} !important;
       }

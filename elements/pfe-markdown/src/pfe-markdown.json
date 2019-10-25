@@ -37,7 +37,6 @@
             "light",
             "dark"
           ],
-          "default": "light",
           "prefixed": false
         }
       }

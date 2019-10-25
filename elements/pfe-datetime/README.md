@@ -103,6 +103,12 @@ Possible values: `numeric`, `2-digit`
 
 Possible values: `numeric`, `2-digit`
 
+## Known Issues
+
+The JSON schema with this component is not being compiled into the component because of naming conflicts in the JSON schema and the getters and setters in the component.
+
+The issue is tracked in [#583](https://github.com/patternfly/patternfly-elements/issues/583).
+
 ## Test
 
     npm run test

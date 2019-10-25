@@ -8,7 +8,7 @@ $variables: (
 
   // Darkest is the default background color
   BackgroundColor: pfe-color(surface--darkest),
-  Color:           pfe-color(surface--darkest--text),
+  Color:           pfe-color(text--on-dark),
 
   // Variables for the border
   BorderTopColor: transparent,
@@ -102,7 +102,7 @@ pfe-icon {
 .pfe-navigation {
   &__wrapper {
     @each $prop in (text, link, link--hover, link--visited, link--focus) {
-      --pfe-broadcasted--color--#{$prop}: #{pfe-local($cssvar: Color, $fallback: #{pfe-color(surface--darkest--text)})};
+      --pfe-broadcasted--color--#{$prop}: #{pfe-local($cssvar: Color, $fallback: #{pfe-color(text--on-dark)})};
     }
     display: flex;
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
@@ -166,7 +166,7 @@ pfe-icon {
   }
   &__skip {
     display: block;
-    @extend %pfe-sr-only;
+    @extend %sr-only;
     margin: 0 -2em -1px -1px;
   }
   &__main {

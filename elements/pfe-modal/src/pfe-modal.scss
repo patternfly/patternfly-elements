@@ -98,7 +98,7 @@ $pfe-modal--breakpoint--medium: 640px;
 	}
 
 	&__close {
-		@extend %pfe-reset-button;
+		@extend %reset-button;
 		position: absolute;
 		top: calc(#{pfe-var(container-padding)} * .25);
 		right: calc(#{pfe-var(container-padding)} * .25);

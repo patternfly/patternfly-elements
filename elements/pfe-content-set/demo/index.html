@@ -12,15 +12,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
     -->
     
-    <link rel="stylesheet" href="../../pfe-styles/pfe-base.css" />
-    <link rel="stylesheet" href="../../pfe-styles/pfe-context.css" />
-    <link rel="stylesheet" href="../../pfe-styles/pfe-layouts.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
     <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
@@ -28,10 +28,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>
       require([
-        "../pfe-content-set.umd.js",
-        "../../pfe-cta/pfe-cta.umd.js"
+        "../dist/pfe-content-set.umd.js",
+        "../../pfe-cta/dist/pfe-cta.umd.js"
       ])
     </script>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
     <style>
       .faux-container {
         border: 1px dashed #ccc;
@@ -63,8 +67,6 @@
         border-bottom: 1px solid var(--pfe-broadcasted--color--text);
       }
     </style>
-
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
   </head>
   <body unresolved>
     <h1>&lt;pfe-content-set&gt;</h1>

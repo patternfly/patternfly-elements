@@ -55,9 +55,9 @@
     --pfe-broadcasted--color--ui-link--focus: var(--pfe-theme--color--ui-link--on-dark--focus, orange);
   }
 
-  .custom-light-band {
+  .custom-saturated-band {
     padding: 60px 15px;
-    background: #cce7e8;
+    background: #0c8488;
   }
 
   .custom-on-dark-band {

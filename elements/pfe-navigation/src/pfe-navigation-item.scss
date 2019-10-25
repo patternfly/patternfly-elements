@@ -2,12 +2,12 @@
 
 // $variables: (
 //   BackgroundColor: pfe-color(surface--darkest),
-//   Color:           pfe-color(surface--darkest--text)
+//   Color:           pfe-color(text--on-dark)
 // );
 
 :host {
   --pfe-navigation--BackgroundColor: transparent;
-  --pfe-navigation--Color:           #{pfe-color(surface--darkest--text)};
+  --pfe-navigation--Color:           #{pfe-color(text--on-dark)};
   --pfe-navigation--BorderColor:     transparent;
   --pfe-navigation--BorderTopColor:  transparent;
 
@@ -32,7 +32,7 @@
   --pfe-navigation--BorderTopColor:  #{pfe-color(surface--accent)};
   
   --pfe-navigation--BackgroundColor: #{pfe-color(surface--lightest)};
-  --pfe-navigation--Color: #{pfe-color(surface--lightest--text)};
+  --pfe-navigation--Color: #{pfe-color(text)};
 }
 
 :host([pfe-icon]) {

@@ -50,8 +50,7 @@ task("build", series("clean", "sass:globbing"));
 
 task("watch", () => {
   return watch([
-    "**/_*.scss",
-    "!__*.scss",
+    "{extends,functions,maps,mixins,variables}/_*.scss",
     "pfe-sass.scss"
   ], {
     cwd: paths.compiled

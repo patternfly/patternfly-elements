@@ -1,31 +1,37 @@
 {
   "name": "@patternfly/pfe-styles",
   "pfelement": {
-    "className": "PfeLayouts",
+    "className": "PfeStyles",
     "elementName": "pfe-styles"
   },
   "version": "1.0.0-prerelease.24",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Layouts helper classes for PatternFly Elements",
+  "description": "Helper classes for PatternFly Elements",
   "keywords": [
     "web-components",
     "html"
-  ],
-  "files": [
-    "pfe-base.*css",
-    "pfe-context.*css",
-    "pfe-layouts.*css"
   ],
   "repository": {
     "type": "git",
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-styles"
   },
+  "main": "./dist/pfe-layouts.css",
+  "files": [
+    "pfe-base.*css",
+    "pfe-base.*css.map",
+    "pfe-colors.*css",
+    "pfe-colors.*css.map",
+    "pfe-context.*css",
+    "pfe-context.*css.map",
+    "pfe-layouts.*css",
+    "pfe-layouts.*css.map"
+  ],
   "scripts": {
-    "build": "../../node_modules/.bin/gulp",
-    "dev": "../../node_modules/.bin/gulp dev"
+    "build": "../../node_modules/.bin/gulp build:nojs && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev:nojs"
   },
   "contributors": [
     {

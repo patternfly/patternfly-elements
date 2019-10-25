@@ -45,6 +45,7 @@ class PfeToast extends PFElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     this.doesAutoDismiss = newValue === null ? false : true;
+    
     if (!this.doesAutoDismiss) {
       this.removeAttribute("aria-live");
       this.removeAttribute("aria-atomic");

@@ -2,8 +2,8 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeNavigation from "../pfe-navigation";
-import PfeCta from "../../pfe-cta/pfe-cta";
+import PfeNavigation from "../dist/pfe-navigation";
+import PfeCta from "../../pfe-cta/dist/pfe-cta";
 
 const stories = storiesOf("Navigation", module);
 

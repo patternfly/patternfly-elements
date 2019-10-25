@@ -1,3 +1,4 @@
+${this.size !== "lg" ? `
 <div id="healthIndex"></div>
 <div class="box-container">
   <div class="box a"></div>
@@ -7,3 +8,31 @@
   <div class="box e"></div>
   <div class="box f"></div>
 </div>
+` : `
+<div class="box-container">
+  <div class="box a">
+    <div class="grade">A</div>
+    <div class="bottom"></div>
+  </div>
+  <div class="box b">
+    <div class="grade">B</div>
+    <div class="bottom"></div>
+  </div>
+  <div class="box c">
+    <div class="grade">C</div>
+    <div class="bottom"></div>
+  </div>
+  <div class="box d">
+    <div class="grade">D</div>
+    <div class="bottom"></div>
+  </div>
+  <div class="box e">
+    <div class="grade">E</div>
+    <div class="bottom"></div>
+  </div>
+  <div class="box f">
+    <div class="grade">F</div>
+    <div class="bottom"></div>
+  </div>
+</div>
+`}

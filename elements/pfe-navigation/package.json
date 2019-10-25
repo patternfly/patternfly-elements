@@ -4,10 +4,11 @@
     "className": "PfeNavigation",
     "elementName": "pfe-navigation"
   },
-  "version": "1.0.0-prerelease.24",
+  "version": "1.0.0-prerelease.27",
   "publishConfig": {
     "access": "restricted"
   },
+  "private": true,
   "description": "Navigation element for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -18,13 +19,7 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-navigation"
   },
-  "main": "pfe-navigation.js",
-  "files": [
-    "pfe-navigation.*js",
-    "pfe-navigation.*js.map",
-    "pfe-navigation--lightdom.*css",
-    "pfe-navigation--lightdom.*css.map"
-  ],
+  "main": "./dist/pfe-navigation.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -41,9 +36,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "1.0.0-prerelease.24",
-    "@patternfly/pfelement": "1.0.0-prerelease.24",
-    "@patternfly/pfe-icon": "1.0.0-prerelease.24"
+    "@patternfly/pfe-icon": "^1.0.0-prerelease.27",
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.27",
+    "@patternfly/pfelement": "^1.0.0-prerelease.27"
   },
   "generator-pfelement-version": "1.1.0"
 }

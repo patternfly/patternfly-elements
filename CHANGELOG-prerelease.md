@@ -1,16 +1,34 @@
-## Prerelease 26 ( TBD )
+## Prerelease 28 ()
 
-Tag: [v1.0.0-prerelease.26](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.26)
+Tag: [v1.0.0-prerelease.28](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.28)
+
+- []() fix: adding a mutation observer to pfe-content-set so it works in Angular
+- []() feat: adding a schema to pfe-icon-panel #572
+- []() pfe-band layout rendering fix for bug in IE and Edge
+
+## Prerelease 27 ( 2019-10-25 )
+
+Tag: [v1.0.0-prerelease.27](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.27)
 
 - [f18aa6f](https://github.com/patternfly/patternfly-elements/commit/f18aa6ff05e510993baf0f1971a85e2e4715bcc4) Update build tools to support the files array in package.json for each component
-- [9d9d41c](https://github.com/patternfly/patternfly-elements/commit/9d9d41c30883674d52cd1c29aa2300829c00693f) Add patternfly project as a dependency so that styles can be extended
+- [9d9d41c](https://github.com/patternfly/patternfly-elements/commit/9d9d41c30883674d52cd1c29aa2300829c00693f) feat: Add patternfly project as a dependency so that styles can be extended
 - [b13ef5b](https://github.com/patternfly/patternfly-elements/commit/b13ef5b2470770acc01638d4a55c1f90a2859bda) Support table
 - [274e35c](https://github.com/patternfly/patternfly-elements/commit/274e35cd4e8a08721888d8fad195b6fe37a525b7) Navigation component
-- [6b5db77](https://github.com/patternfly/patternfly-elements/commit/6b5db77c20358499f78b66811b73ea6be309318b) Update documentation
-- [d4600dd](https://github.com/patternfly/patternfly-elements/commit/d4600dd1c6e2abfcf8918d06b4eaacb8fb62d208) Add automatic Sass globbing to pfe-sass
-- [27a97e1](https://github.com/patternfly/patternfly-elements/commit/27a97e135986de37ede55504a1630bf974de0e0c) pfe-cta: fix functions & IE11 accessibility
-- []() Upgrade to latest version of storybook #366
-- [US212678](https://github.com/patternfly/patternfly-elements/commit/)pfe-band layout rendering fix for bug in IE and Edge
+- [6b5db77](https://github.com/patternfly/patternfly-elements/commit/6b5db77c20358499f78b66811b73ea6be309318b) doc: Update documentation
+- [d4600dd](https://github.com/patternfly/patternfly-elements/commit/d4600dd1c6e2abfcf8918d06b4eaacb8fb62d208) feat: Add automatic Sass globbing to pfe-sass
+- [27a97e1](https://github.com/patternfly/patternfly-elements/commit/27a97e135986de37ede55504a1630bf974de0e0c) fix: pfe-cta - functions & IE11 accessibility
+- [9a39ae3](https://github.com/patternfly/patternfly-elements/commit/9a39ae3b7d0b8d129a3aea3b58e71dab5013c721) fix: Adding object-fit to resolve image distortion in cards, #417
+- [980203b](https://github.com/patternfly/patternfly-elements/commit/980203b2768d1d9d8813f386bb0f0bf37d3732ab) feat: Upgrade to latest version of storybook (#366)
+- [ab5bc0e](https://github.com/patternfly/patternfly-elements/commit/ab5bc0e66b1e0f2f4ba180ff80d24b84d0db3260) feat: added sm md and xl sizes for pfe-progress-indicator (#575)
+- [fc51ba](https://github.com/patternfly/patternfly-elements/commit/fc51baf1cb4313ca117cc505ba9c0e99dd44d0e9) feat: Add pfe-number schema (#576)
+- [19a5975](https://github.com/patternfly/patternfly-elements/commit/19a5975c6e5e710e8e36e22384bb0125ab52059c) fix: pfe-card: storybook issue with incorrect attribute (#573)
+- [f3bf2b2](https://github.com/patternfly/patternfly-elements/commit/f3bf2b2ea82b61ad80f59cf1b2dca3f74c58e920) fix: making pfe-number compatible with angular and IE11 (#570)
+- [c01a97f](https://github.com/patternfly/patternfly-elements/commit/c01a97f87f3ca84344842c75b9b60f50a6fb6f3f) pfe-datetime: adding a json schema
+- [93c5e99](https://github.com/patternfly/patternfly-elements/commit/93c5e99428fc57514ef4571caacb1dba199f5303) pfe-icon-panel: maintain icon height in flex display
+- [d2b16b8](https://github.com/patternfly/patternfly-elements/commit/d2b16b806327bf99e09ca4e7ed0d4aeeeaa37a90) Add larger size to health-index
+- [a77f5ff](https://github.com/patternfly/patternfly-elements/commit/a77f5ffb6066a6be4778f48ddec05b6759e219ff) feat: compile assets to a dist directory
+- [1f9ec10](https://github.com/patternfly/patternfly-elements/commit/1f9ec10488a4a879d230705c2ea3d783d2df45f6) feat: pfe-cta add wind variant styles
+- [a162a43](https://github.com/patternfly/patternfly-elements/commit/a162a431923d037bf33a8ba0ef77edd9d059a39c) fix: bug in pfe-tab-panel
 
 ## Prerelease 25 ( 2019-09-10 )
 

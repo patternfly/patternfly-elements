@@ -1,11 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Card",
+  "title": "Icon Panel",
   "description": "This element creates a header, body, and footer region in which to place content or other components.",
   "type": "object",
-  "tag": "pfe-card",
-  "class": "pfe-card",
-  "category": "container",
+  "tag": "pfe-icon-panel",
+  "class": "pfe-icon-panel",
+  "category": "combo",
   "properties": {
     "slots": {
       "title": "Slots",
@@ -16,9 +16,8 @@
           "title": "Header",
           "type": "array",
           "namedSlot": true,
-          "maxItems": 3,
           "items": {
-            "title": "Body item",
+            "title": "Header item",
             "oneOf": [
               {
                 "$ref": "raw"
@@ -31,10 +30,8 @@
           "type": "array",
           "namedSlot": false,
           "items": {
+            "title": "Body item",
             "oneOf": [
-              {
-                "$ref": "pfe-card"
-              },
               {
                 "$ref": "raw"
               }
@@ -47,10 +44,8 @@
           "namedSlot": true,
           "maxItems": 3,
           "items": {
+            "title": "Footer item",
             "oneOf": [
-              {
-                "$ref": "pfe-cta"
-              },
               {
                 "$ref": "raw"
               }
@@ -63,9 +58,15 @@
       "title": "Attributes",
       "type": "object",
       "properties": {
-        "color": {
-          "title": "Background color",
+        "icon": {
+          "title": "Icon",
           "type": "string",
+          "prefixed": false
+        },
+        "color": {
+          "title": "Background color of circle",
+          "type": "string",
+          "prefixed": false,
           "enum": [
             "lightest",
             "lighter",
@@ -75,20 +76,25 @@
             "complement",
             "accent"
           ],
-          "default": "base",
-          "prefixed": true,
-          "observer": "_colorChanged"
+          "default": "base"
         },
-        "img-src": {
-          "title": "Background image",
-          "type": "string",
-          "observer": "_imgSrcChanged"
+        "centered": {
+          "title": "Centered",
+          "type": "boolean",
+          "prefixed": false,
+          "default": false
         },
-        "size": {
-          "title": "Padding size",
-          "type": "string",
-          "enum": ["small"],
-          "observer": "_basicAttributeChanged"
+        "stacked": {
+          "title": "Stacked",
+          "type": "boolean",
+          "prefixed": false,
+          "default": false
+        },
+        "circled": {
+          "title": "Circled",
+          "type": "boolean",
+          "prefixed": false,
+          "default": false
         }
       }
     }

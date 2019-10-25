@@ -1,4 +1,4 @@
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeIconSet from "./icon-set.js";
 import { addBuiltIns } from "./builtin-icon-sets.js";
 

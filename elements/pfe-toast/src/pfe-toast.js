@@ -9,9 +9,9 @@ class PfeToast extends PFElement {
     return "pfe-toast.html";
   }
 
-  // get schemaUrl() {
-  //   return "pfe-toast.json"; //TO DO
-  // }
+  get schemaUrl() {
+    return "pfe-toast.json";
+  }
 
   get styleUrl() {
     return "pfe-toast.scss";
@@ -27,6 +27,7 @@ class PfeToast extends PFElement {
 
   constructor() {
     super(PfeToast);
+
     // state
     this.isOpen = false;
 
@@ -47,6 +48,9 @@ class PfeToast extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
+    // add attributes
+    this.setAttribute("hidden", true);
+
     // attach listeners
     this._toastCloseButton.addEventListener("click", this.close);
   }
@@ -63,7 +67,7 @@ class PfeToast extends PFElement {
     this.setAttribute("role", "alert");
     this.removeAttribute("hidden");
     setTimeout(() => {
-      this.style.right = "25px";
+      this.style.right = "50px";
     }, 500);
      // to update
     this.dispatchEvent(

@@ -8,6 +8,7 @@
   "publishConfig": {
     "access": "restricted"
   },
+  "private": true,
   "description": "Navigation element for PatternFly Elements",
   "keywords": [
     "web-components",

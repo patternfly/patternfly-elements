@@ -44,8 +44,7 @@ class PfeToast extends PFElement {
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
-    this.doesAutoDismiss = !newValue;
-
+    this.doesAutoDismiss = newValue === null ? false : true;
     if (!this.doesAutoDismiss) {
       this._content.setAttribute("role", "alertdialog");
       this.setAttribute("aria-label", "alert dialog"); // need a better description
@@ -79,10 +78,11 @@ class PfeToast extends PFElement {
 
     this.isOpen = true;
 
+    console.log(this.isAutoDismiss);
     if (this.isAutoDismiss) {
-      this.setAttribute("role", "status")
+      this._content.setAttribute("role", "status")
     } else {
-      this.setAttribute("role", "alertdialog");
+      this._content.setAttribute("role", "alertdialog");
       this._content.focus();
     } 
 

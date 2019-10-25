@@ -1,4 +1,56 @@
-# PatternFly Element | Toast Element
+# PFElements Toast Element
+
+## Overview
+
+`pfe-toast` is a self-contained, non-focused alert that is hidden on page load and slides in/out of the view when programmatically opened/closed.
+
+## Usage
+
+```html
+<pfe-toast>
+    <p>You've been successfully toasted!</p>
+</pfe-toast>
+```
+
+## Slots
+
+### Default slot
+The default slot can contain any type of content.
+
+## API
+
+### open
+
+Manually opens a toast. Return the toast that has been opened.
+
+```
+document.querySelector("pfe-toast").open();
+```
+
+### close
+
+Manually closes a toast. Returns the toast that has been closed.
+
+```
+document.querySelector("pfe-toast").close();
+```
+
+### toggle
+
+Manually toggles a toast. Returns the toast that has been toggled.
+
+```
+document.querySelector("pfe-toast").toggle();
+```
+
+## Events
+
+### pfe-toast:open
+Fires when a toast is manually openned.
+
+
+### pfe-toast:close
+Fires when a toast is manually closed.
 
 ## Test
 

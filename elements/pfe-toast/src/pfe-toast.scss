@@ -35,6 +35,14 @@
   display: none;
 }
 
+:host(.open) {
+  right: var(--pfe-toast--Right);
+}
+
+:host(:not(.open)){
+  right: calc(-1 * (var(--pfe-toast--MaxWidth) + var(--pfe-toast--Right--offset)));
+}
+
 ::slotted(:first-child) {
   margin-top: 0;
 }

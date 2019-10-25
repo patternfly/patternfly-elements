@@ -4,7 +4,7 @@
     "className": "PfeIconPanel",
     "elementName": "pfe-icon-panel"
   },
-  "version": "1.0.0-prerelease.25",
+  "version": "1.0.0-prerelease.26",
   "publishConfig": {
     "access": "public"
   },
@@ -37,11 +37,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
-    "@patternfly/pfelement": "^1.0.0-prerelease.24"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.26",
+    "@patternfly/pfelement": "^1.0.0-prerelease.26"
   },
   "generator-pfelement-version": "0.5.0",
   "bugs": {
-    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
   }
 }

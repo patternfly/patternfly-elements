@@ -4,7 +4,7 @@
     "className": "PFElement",
     "elementName": "pfelement"
   },
-  "version": "1.0.0-prerelease.24",
+  "version": "1.0.0-prerelease.26",
   "publishConfig": {
     "access": "public"
   },
@@ -49,6 +49,6 @@
   "license": "MIT",
   "generator-pfelement-version": "0.3.4",
   "bugs": {
-    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
   }
 }

@@ -1,0 +1,2 @@
+body{--pfe-reveal-duration:0.1618s;--pfe-reveal-delay:2s;-webkit-transition:opacity var(--pfe-reveal-duration) ease-in-out;transition:opacity var(--pfe-reveal-duration) ease-in-out}body[unresolved]{opacity:0;-webkit-animation:reveal var(--pfe-reveal-duration) var(--pfe-reveal-delay) 1 forwards;animation:reveal var(--pfe-reveal-duration) var(--pfe-reveal-delay) 1 forwards}@-webkit-keyframes reveal{from{opacity:0}to{opacity:1}}@keyframes reveal{from{opacity:0}to{opacity:1}}
+/*# sourceMappingURL=pfelement.min.css.map */

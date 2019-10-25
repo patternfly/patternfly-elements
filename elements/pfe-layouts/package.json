@@ -4,7 +4,7 @@
     "className": "PfeLayouts",
     "elementName": "pfe-layouts"
   },
-  "version": "1.0.0-prerelease.24",
+  "version": "1.0.0-prerelease.26",
   "publishConfig": {
     "access": "public"
   },
@@ -38,9 +38,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.24"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.26"
   },
   "bugs": {
-    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
   }
 }

@@ -76,7 +76,12 @@ class PfeToast extends PFElement {
       event.preventDefault();
     }
     this.isOpen = true;
-    this.isAutoDismiss ? this.setAttribute("role", "status") : this.setAttribute("role", "alertdialog");
+    if (this.isAutoDismiss) {
+      this.setAttribute("role", "status")
+    } else {
+      this.setAttribute("role", "alertdialog");
+      this._content.focus();
+    } 
     this.removeAttribute("hidden");
     setTimeout(() => {
       this.classList.add("open");

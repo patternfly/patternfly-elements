@@ -1,3 +1,9 @@
+## Prerelease 28 ()
+
+Tag: [v1.0.0-prerelease.28](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.28)
+
+- []() fix: adding a mutation observer to pfe-content-set so it works in Angular
+
 ## Prerelease 27 ( 2019-10-25 )
 
 Tag: [v1.0.0-prerelease.27](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.27)

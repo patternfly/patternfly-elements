@@ -25,8 +25,8 @@ The default slot can contain any type of content.
 
 - Max width: Allows you to specify the maximum width of the component. **Variable name:** `--pfe-toast--MaxWidth`.
 - Min width: Allows you to specify the minimum width of the component. **Variable name:** `--pfe-toast--MinWidth`.
-- Top: Allows you to customize the space between the component and the top of its container. **Variable name:** `--pfe-toast--Top`.
-- Right: Allows you to customize the space between the component and the right of its container. **Variable name:** ` --pfe-toast--Right`.
+- Top: Allows you to customize the distance between the component and the top of its container. **Variable name:** `--pfe-toast--Top`.
+- Right: Allows you to customize the distance between the component and the right of its container. **Variable name:** ` --pfe-toast--Right`.
 
 ## API
 

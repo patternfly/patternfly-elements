@@ -78,14 +78,6 @@ class PfeToast extends PFElement {
 
     this.isOpen = true;
 
-    console.log(this.isAutoDismiss);
-    if (this.isAutoDismiss) {
-      this._content.setAttribute("role", "status")
-    } else {
-      this._content.setAttribute("role", "alertdialog");
-      this._content.focus();
-    } 
-
     this.removeAttribute("hidden");
     setTimeout(() => {
       this.classList.add("open");
@@ -97,6 +89,13 @@ class PfeToast extends PFElement {
         bubbles: true
       })
     );
+
+    if(this.doesAutoDismiss){
+      setTimeout(() => {
+        this.close();
+      }, 3000);
+    }
+
     return this;
   }
 
@@ -106,8 +105,6 @@ class PfeToast extends PFElement {
     }
 
     this.isOpen = false;
-
-    this.removeAttribute("role");
 
     this.classList.remove("open");
     setTimeout(() => {

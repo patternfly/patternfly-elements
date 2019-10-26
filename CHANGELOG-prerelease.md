@@ -13,10 +13,11 @@ Tag: [v1.0.0-prerelease.26](https://github.com/patternfly/patternfly-elements/re
 - [980203b](https://github.com/patternfly/patternfly-elements/commit/980203b2768d1d9d8813f386bb0f0bf37d3732ab) feat: Upgrade to latest version of storybook (#366)
 - [ab5bc0e](https://github.com/patternfly/patternfly-elements/commit/ab5bc0e66b1e0f2f4ba180ff80d24b84d0db3260) feat: added sm md and xl sizes for pfe-progress-indicator (#575)
 - [fc51ba](https://github.com/patternfly/patternfly-elements/commit/fc51baf1cb4313ca117cc505ba9c0e99dd44d0e9) feat: Add pfe-number schema (#576)
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-card: storybook issue with incorrect attribute (#573)
-- []() Upgrade to latest version of storybook (#366)
-- [](https://github.com/patternfly/patternfly-elements/commit/) pfe-datetime: adding a json schema
-- [](https://github.com/patternfly/patternfly-elements/commit/) pfe-icon-panel: maintain icon height in flex display
+- [19a5975](https://github.com/patternfly/patternfly-elements/commit/19a5975c6e5e710e8e36e22384bb0125ab52059c) fix: pfe-card: storybook issue with incorrect attribute (#573)
+- [980203b2](https://github.com/patternfly/patternfly-elements/commit/980203b2768d1d9d8813f386bb0f0bf37d3732ab) Upgrade to latest version of storybook (#366)
+- [c01a97f](https://github.com/patternfly/patternfly-elements/commit/c01a97f87f3ca84344842c75b9b60f50a6fb6f3f) pfe-datetime: adding a json schema
+- [93c5e99](https://github.com/patternfly/patternfly-elements/commit/93c5e99428fc57514ef4571caacb1dba199f5303) pfe-icon-panel: maintain icon height in flex display
+- [] (https://github.com/patternfly/patternfly-elements/commit/) pfe-toast: new component creation
 
 ## Prerelease 25 ( 2019-09-10 )
 

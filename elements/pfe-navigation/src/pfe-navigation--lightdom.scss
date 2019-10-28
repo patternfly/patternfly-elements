@@ -348,11 +348,11 @@ pfe-navigation-item {
         }
 
         a {
-            color: #151515;
+            color: var(--pfe-theme--color--text, #151515);
             text-decoration: underline;
 
             &:hover {
-                color: #151515;
+                color: var(--pfe-theme--color--text, #151515);
                 text-decoration: none;
             }
 

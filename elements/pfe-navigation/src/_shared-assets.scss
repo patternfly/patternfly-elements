@@ -44,11 +44,6 @@ $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
             $cssvar: Color,
             $fallback: #{$trigger--Color--fallback}
         )};
-    background: #{pfe-local(
-            $cssvar: Cover,
-            $region: trigger,
-            $fallback: 16px
-        )};
     z-index: 2;
 
     @media screen and (min-width: 1024px) {

@@ -44,9 +44,8 @@ There are a few options:
 3. Use [require.js](https://requirejs.org/) JavaScript file and module loader.
 	- Learn more about [Polyfills](/getting-started/polyfills)
 3. Load individual PatternFly Element scripts, but bundle the polyfills with the base `pfelement.js` file.
-	1.  All elements are based off of pfelement.js so including the polyfills with this one file would mean you only need to include the pfelement.js file before you include anything else.
+	1.  All elements are based off of `pfelement.js` so including the polyfills with this one file would mean you only need to include the `pfelement.js` file before you include anything else.
 4. Bundle all of the scripts together into one rollup, and include that.
-
 
 
 

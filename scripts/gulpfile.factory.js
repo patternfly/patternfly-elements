@@ -1,7 +1,6 @@
 module.exports = function factory({
   version,
-  pfelement: { elementName, className },
-  files = [],
+  pfelement: { elementName, className, assets = [] },
   prebundle = []
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
@@ -19,6 +18,18 @@ module.exports = function factory({
     compiled: "./dist",
     temp: "./_temp"
   };
+
+  // Append a set of default files for publication
+  let files = assets.concat([
+    `${elementName}.js`,
+    `${elementName}--*.css`,
+    `${elementName}--*.min.css`,
+    `${elementName}--*.min.css.map`,
+    `${elementName}.json`
+  ]);
+  
+  // Dedupe any items
+  files = files.filter((item,index) => files.indexOf(item) === index);
 
   // Tooling
   const fs = require("fs");
@@ -267,7 +278,7 @@ ${fs
   });
 
   task("copy:src", () => {
-    return src(["*.js", `!${elementName}*.js`], {
+    return src(["*.js", "*.json", `!${elementName}*.js`], {
       cwd: paths.source
     }).pipe(dest(paths.temp));
   });

@@ -2,7 +2,12 @@
   "name": "@patternfly/pfe-tabs",
   "pfelement": {
     "className": "PfeTabs",
-    "elementName": "pfe-tabs"
+    "elementName": "pfe-tabs",
+    "assets": [
+      "pfe-tabs.js",
+      "pfe-tab.js",
+      "pfe-tab-panel.js"
+    ]
   },
   "version": "1.0.0-prerelease.27",
   "publishConfig": {

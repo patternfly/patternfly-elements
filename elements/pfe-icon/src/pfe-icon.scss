@@ -30,7 +30,9 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 
   position: relative;
   display:  inline-block;
-  width:    fit-content !important; // Preserves aspect ratio despite layout
+  // Supports sizing while preserving aspect ratio (despite layout)
+  width:    fit-content !important;
+  height:   fit-content !important;
   line-height: 0;
 
   @at-root #{&}([data-block]) {

@@ -68,7 +68,7 @@ class PfeToast extends PFElement {
 
     // get/set state
     this.doesAutoDismiss = this.hasAttribute("auto-dismiss");
-    this.autoDismissDelay = this.doesAutoDismiss ? this.getAttribute("auto-dismiss") : null;
+    this.autoDismissDelay = this.getAttribute("auto-dismiss") ? this.getAttribute("auto-dismiss") : '3000';
     this.setAttribute("hidden", "");
 
     // attach listeners

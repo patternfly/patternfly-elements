@@ -90,7 +90,7 @@ export function customTag(obj) {
     start += obj.attributes ? listProperties(obj.attributes || {}) : "";
     start += !selfClosing.includes(obj.tag) ? ">" : "/>";
   }
-  return `${start}${obj.content}${end}`;
+    return `${start}${typeof obj.content !== "undefined" ? obj.content || autoContent() : ""}${end}`;
 }
 
 const parseMarkup = string => {

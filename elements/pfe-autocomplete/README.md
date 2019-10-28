@@ -14,7 +14,7 @@ import '@patternfly/pfe-autocomplete.umd.js';
 ```
 
 ## Usage
-```
+```html
 <pfe-autocomplete debounce="500" init-value="uni">
     <input placeholder="Enter Your Search Term"/>
 </pfe-autocomplete>

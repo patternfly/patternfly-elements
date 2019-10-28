@@ -47,6 +47,11 @@ class PfeAutocomplete extends PFElement {
 
   constructor() {
     super(PfeAutocomplete);
+
+    this._slotchangeHandler = this._slotchangeHandler.bind(this);
+
+    this._slot = this.shadowRoot.querySelector("slot");
+    this._slot.addEventListener("slotchange", this._slotchangeHandler);
   }
 
   connectedCallback() {
@@ -54,22 +59,6 @@ class PfeAutocomplete extends PFElement {
 
     this.loading = false;
     this.debounce = this.debounce || 300;
-
-    // input box
-    let slotNodes = this.shadowRoot.querySelector("slot").assignedNodes();
-    let slotElems = slotNodes.filter(n => n.nodeType === Node.ELEMENT_NODE);
-    this._input = slotElems[0];
-    this._input.addEventListener("input", this._inputChanged.bind(this));
-    this._input.addEventListener("blur", this._closeDroplist.bind(this));
-    this._input.setAttribute("role", "combobox");
-    this._input.setAttribute("aria-label", "Search");
-    this._input.setAttribute("aria-autocomplete", "both");
-    this._input.setAttribute("aria-haspopup", "true");
-    this._input.setAttribute("type", "search");
-    this._input.setAttribute("autocomplete", "off");
-    this._input.setAttribute("autocorrect", "off");
-    this._input.setAttribute("autocapitalize", "off");
-    this._input.setAttribute("spellcheck", "false");
 
     // clear button
     this._clearBtn = this.shadowRoot.querySelector(".clear-search");
@@ -98,8 +87,13 @@ class PfeAutocomplete extends PFElement {
     this.removeEventListener("keyup", this._inputKeyUp);
     this.removeEventListener("pfe-search-event", this._closeDroplist);
     this.removeEventListener("pfe-option-selected", this._optionSelected);
-    this._input.removeEventListener("input", this._inputChanged);
-    this._input.removeEventListener("blur", this._closeDroplist);
+    this._slot.removeEventListener("slotchange", this._slotchangeHandler);
+
+    if (this._input) {
+      this._input.removeEventListener("input", this._inputChanged);
+      this._input.removeEventListener("blur", this._closeDroplist);
+    }
+
     this._clearBtn.removeEventListener("click", this._clear);
     this._searchBtn.removeEventListener("click", this._search);
   }
@@ -202,6 +196,43 @@ class PfeAutocomplete extends PFElement {
 
   set debounce(val) {
     this.setAttribute("debounce", val);
+  }
+
+  _slotchangeHandler() {
+    // input box
+    let slotNodes = this.shadowRoot.querySelector("slot").assignedNodes();
+    let slotElems = slotNodes.filter(n => n.nodeType === Node.ELEMENT_NODE);
+
+    if (slotElems.length === 0) {
+      console.warn(
+        `${PfeAutocomplete.tag}: There must be a input tag in the light DOM`
+      );
+
+      return;
+    }
+
+    this._input = slotElems[0];
+
+    if (this._input.tagName.toLowerCase() !== "input") {
+      console.warn(
+        `${PfeAutocomplete.tag}: The only child in the light DOM must be an input tag`
+      );
+
+      return;
+    }
+
+    this._input.addEventListener("input", this._inputChanged.bind(this));
+    this._input.addEventListener("blur", this._closeDroplist.bind(this));
+
+    this._input.setAttribute("role", "combobox");
+    this._input.setAttribute("aria-label", "Search");
+    this._input.setAttribute("aria-autocomplete", "both");
+    this._input.setAttribute("aria-haspopup", "true");
+    this._input.setAttribute("type", "search");
+    this._input.setAttribute("autocomplete", "off");
+    this._input.setAttribute("autocorrect", "off");
+    this._input.setAttribute("autocapitalize", "off");
+    this._input.setAttribute("spellcheck", "false");
   }
 
   _inputChanged() {
@@ -431,9 +462,7 @@ class PfeSearchDroplist extends PFElement {
 
     let options = this.data;
 
-    this._ariaAnnounce.innerHTML = `There are ${
-      options.length
-    } suggestions. Use the up and down arrows to browse.`;
+    this._ariaAnnounce.innerHTML = `There are ${options.length} suggestions. Use the up and down arrows to browse.`;
     this._ariaAnnounce.setAttribute("aria-live", "polite");
 
     this._ul.innerHTML = `${options

@@ -2,69 +2,351 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>PFElements: pfe-icon Demo</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
-    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
-    <!-- <link rel="stylesheet" href="../../../themes/cp-theme/cp-theme.css" /> -->
+    <title>PatternFly Element | pfe-icon Demo</title>
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../pfe-icon.umd.js'])</script>
+    
+    <script>require([
+      '../dist/pfe-icon.umd.js',
+      '../../pfe-card/dist/pfe-card.umd.js'
+    ])</script>
 
     <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfe-layouts/dist/pfe-layouts.min.css" rel="stylesheet">
 
-    <style>
-    .icons {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .icons li {
-      width: 10%;
-    }
+    <style type="text/css" media="screen">
+      body {
+        --pfe-icon--Color: orange;
+      }
     </style>
+
   </head>
   <body unresolved>
     <h1>&lt;pfe-icon&gt;</h1>
+    <h2>built-in rh icons</h2>
 
-    <ul class="icons">
-      <li>
-        <pfe-icon icon="pfe-icon-server" size="4x"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-alt1" size="4x" color="base"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-alt2" size="4x" color="complement"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-deploy" size="4x" color="accent"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-stack" size="4x" color="critical"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-stack-alt1" size="4x" color="important"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-stack-alt2" size="4x" color="moderate"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-vintage" size="4x" color="success"></pfe-icon>
-      </li>
-      <li>
-        <pfe-icon icon="pfe-icon-server-vintage-alt1" size="4x" color="info"></pfe-icon>
-      </li>
-    </ul>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-aed"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-alert-downtime"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-api"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-app-b"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-application-alt"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-application-mobile"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-application"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-application-window"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-arrows-simplify"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-atom"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-award-ribbon"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-bar-graph"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-battery"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-beer-glasses"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-bike"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-blueprint"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-book"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-box-open"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-bus-front-view"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-bus-side-view"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-calculator"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-calendar"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-can"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-cardboardrecycling"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-catalog-selfservice"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-cd-disk"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-check-yes"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-circle-sphere"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-circuit"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-clock"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-clock-time-pass"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-cloud-admin"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-cloud-mobile"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-cloud"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-code"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-collaboration"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-command"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-compass"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-competitive-analysis"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-complexity"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-construction-hard-hat"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-container-library"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-control-panel"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-create-cloud"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-credit-card"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-cube"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-customer-snapshot"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-datacenter-alt1"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-datacenter"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-data"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-desktop"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-development-model"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-devops"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-dna"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-download"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-eBook"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-electrical"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-elevator-up-down"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-email"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-emergency-use-stairs"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-enclave2"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-enclave"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-envelope-back"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-ewaste-recycling"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-ex-no"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-fan"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-fast-car"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-fast-jet"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-feather"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-finance"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-fire-extinguisher"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-folder-open"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-frame"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-funnel"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-gears"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-gear"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-glass-bottle"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-glass-recycling"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-global-ecosystem"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-globe-atlantic"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-globe-pacific"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-government"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-handicapped-accessible"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-health-vertical"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-heart-monitor"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-help-desk"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-hosting-support"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-host"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-icecaps-mountain"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-increase-productivity"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-industry"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-info-alt"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-info"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-instructor"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-insurance"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-interoperable-cross-platform"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-key"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-kiosk"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-lab-flask"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-lab"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-laptop"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-leaf"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-lifestyle"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-lightbulb-energy-efficient"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-lightbulb-traditional"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-locked"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-lock"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-mail"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-mainframe"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-management-checklist"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-map-treasure"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-media-clapboard"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-megaphone"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-message-oriented-middleware"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-mobile-devices"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-mobile-user"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-monitor"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-mothers-room"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-moving"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-network-community"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-network-personal"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-network"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-network-switch"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-noise-isolation"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-noise"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-no-smoking"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-notepad"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-odor"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-office-building-smb"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-office-chair"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-office-desk"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-office-mobility"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-office-reception"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-ohc-cloud-apps"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-ohc-hybrid-cloud"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-ohc-iaas"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-ohc-paas"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-ohc-private-cloud"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-ohc-public-cloud"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-orchestration"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-organization"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-packing"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-paper-case-study"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-paper-infographic"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-paper-lined"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-paperrecycling"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-paper-solution"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-paper"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-parking"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-partner-map"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-phone-land-line"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-phone-mobile"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-photo-frame-family"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-piggy-bank"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-plastic-bottle"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-podium-speakers"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-policy"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-price-label"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-printer-3d"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-printer-copier"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-process-improvement"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-processor"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-process"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-protected"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-puzzle-complete"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-puzzle-piece"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-pyramid"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-radio-podcast"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-recycle-cans"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-recycle-plastic"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-recycle"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-restrooms"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-safety-warning-alert"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-scalable"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-scale-grow"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-scale-shrink"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-search"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-security"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-server-alt1"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-server-alt2"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-server-deploy"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-server-stack-alt1"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-server-stack-alt2"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-server-stack"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-server"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-server-vintage-alt1"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-server-vintage"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-shipping-container-rail"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-shipping-container-ship"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-shipping-container"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-shipping-container-truck"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-shopping-bag"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-shopping-cart"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-smart-phone"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-software-container"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-space-rocket"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-speedometer"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-sports-play"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-stairs-step-by-step"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-star"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-stopwatch"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-stopwatch-time-pass"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-storage-brick"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-storage-stack"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-sun"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-tachometer"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-talk-bubble-conversation"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-talk-bubble-lined"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-talk-bubble"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-telecom-vertical"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-thumbs-up"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-toolbox"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-tools-drafting"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-tools"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-transportation"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-trash"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-trophy"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-upload"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-user-1"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-user-2"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-user-3"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-user-4"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-user-5"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-user-access"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-user-checklist"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-user-schedule"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-utensils"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-utility-meter"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-venn-diagram"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-video"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-virtual-datacenter"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-virtual-server"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-virtual-stack"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-virtual-storage-brick"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-virtual-storage-stack"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-volume-mute"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-volume-up"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-vulnerability"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-water-droplet"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-water-faucet"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-waveform"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-webinar"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-workplace-strategy"></pfe-icon>
+    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-wrench-mechanical"></pfe-icon>
 
+    <h2>web icons</h2>
+
+    <pfe-icon size="md" icon="web-arrow-right"></pfe-icon>
+    <pfe-icon size="md" icon="web-call"></pfe-icon>
+    <pfe-icon size="md" icon="web-caret-down"></pfe-icon>
+    <pfe-icon size="md" icon="web-caret-left"></pfe-icon>
+    <pfe-icon size="md" icon="web-caret-right"></pfe-icon>
+    <pfe-icon size="md" icon="web-caret-thin-down"></pfe-icon>
+    <pfe-icon size="md" icon="web-caret-thin-left"></pfe-icon>
+    <pfe-icon size="md" icon="web-caret-thin-right"></pfe-icon>
+    <pfe-icon size="md" icon="web-caret-thin-up"></pfe-icon>
+    <pfe-icon size="md" icon="web-caret-up"></pfe-icon>
+    <pfe-icon size="md" icon="web-cart"></pfe-icon>
+    <pfe-icon size="md" icon="web-check"></pfe-icon>
+    <pfe-icon size="md" icon="web-chevron"></pfe-icon>
+    <pfe-icon size="md" icon="web-close"></pfe-icon>
+    <pfe-icon size="md" icon="web-contact2"></pfe-icon>
+    <pfe-icon size="md" icon="web-contact"></pfe-icon>
+    <pfe-icon size="md" icon="web-copy"></pfe-icon>
+    <pfe-icon size="md" icon="web-dashboard"></pfe-icon>
+    <pfe-icon size="md" icon="web-envelope"></pfe-icon>
+    <pfe-icon size="md" icon="web-facebook"></pfe-icon>
+    <pfe-icon size="md" icon="web-fax"></pfe-icon>
+    <pfe-icon size="md" icon="web-globe"></pfe-icon>
+    <pfe-icon size="md" icon="web-gplus"></pfe-icon>
+    <pfe-icon size="md" icon="web-grid-3x3"></pfe-icon>
+    <pfe-icon size="md" icon="web-grid"></pfe-icon>
+    <pfe-icon size="md" icon="web-instagram"></pfe-icon>
+    <pfe-icon size="md" icon="web-key"></pfe-icon>
+    <pfe-icon size="md" icon="web-laptop"></pfe-icon>
+    <pfe-icon size="md" icon="web-linkedin"></pfe-icon>
+    <pfe-icon size="md" icon="web-link"></pfe-icon>
+    <pfe-icon size="md" icon="web-list-form"></pfe-icon>
+    <pfe-icon size="md" icon="web-list"></pfe-icon>
+    <pfe-icon size="md" icon="web-mobile-menu"></pfe-icon>
+    <pfe-icon size="md" icon="web-new-window"></pfe-icon>
+    <pfe-icon size="md" icon="web-open-quote"></pfe-icon>
+    <pfe-icon size="md" icon="web-open"></pfe-icon>
+    <pfe-icon size="md" icon="web-plus"></pfe-icon>
+    <pfe-icon size="md" icon="web-print"></pfe-icon>
+    <pfe-icon size="md" icon="web-reddit"></pfe-icon>
+    <pfe-icon size="md" icon="web-rss"></pfe-icon>
+    <pfe-icon size="md" icon="web-search"></pfe-icon>
+    <pfe-icon size="md" icon="web-tumblr"></pfe-icon>
+    <pfe-icon size="md" icon="web-twitter"></pfe-icon>
+    <pfe-icon size="md" icon="web-upload"></pfe-icon>
+    <pfe-icon size="md" icon="web-user"></pfe-icon>
+    <pfe-icon size="md" icon="web-youtube2"></pfe-icon>
+    <pfe-icon size="md" icon="web-youtube"></pfe-icon>
+
+    <h2>Fail to load tests</h2>
+    <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-on-xs pfe-m-all-3-col">
+      <pfe-card pfe-color="light">
+        <h3 slot="pfe-card--header">Fail with fallback text, no tags.</h3>
+        <pfe-icon size="xl"  icon="rh-foo-bar">Icon failed to load.</pfe-icon>
+      </pfe-card>
+      <pfe-card>
+        <h3 slot="pfe-card--header">Fail with fallback text, p tag.</h3>
+        <pfe-icon size="xl"  icon="rh-foo-bar"><p>Icon failed to load.</p></pfe-icon>
+      </pfe-card>
+      <pfe-card>
+        <h3 slot="pfe-card--header">Fail with preserve space on.</h3>
+        <pfe-icon size="xl"  icon="foo-bar" style="border: 1px solid hotpink;"></pfe-icon>
+      </pfe-card>
+      <pfe-card>
+        <h3 slot="pfe-card--header">Fail with collapse blank space.</h3>
+        <pfe-icon size="xl"  icon="foo-bar" style="border: 1px solid hotpink;" on-fail="collapse"></pfe-icon>
+      </pfe-card>
+    </div>
   </body>
 </html>

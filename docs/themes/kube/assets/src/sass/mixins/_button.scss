@@ -1,0 +1,52 @@
+@mixin make-button($color-back, $color-text) {
+    color: $color-text;
+   	background-color: $color-back;
+
+	&:hover {
+	    color: $color-text;
+	    background-color: lighten($color-back, 10%);
+	}
+    &:disabled,
+    &.is-disabled {
+        color: #fff;
+    	background-color: rgba($color-black, .5);
+    }
+    &.is-secondary {
+        background: none;
+        border: $button-secondary-border-width solid $color-back;
+        color: $color-back;
+        &:hover {
+            color: rgba($color-text, .95);
+            background-color: $color-back;
+            border-color: $color-back;
+        }
+        &:disabled,
+        &.is-disabled {
+            color: rgba($color-black, .5);
+            border-color: rgba($color-black, .3);
+        }
+	    &.is-loading:hover:before {
+    	    border-color: rgba($color-text, .25);
+    	    border-bottom-color: $color-text;
+	    }
+    }
+    &.is-tertiary {
+        background: none;
+        color: $color-back;
+        &:hover {
+            color: $color-black;
+        }
+        &:disabled,
+        &.is-disabled {
+            text-decoration: none;
+            color: rgba($color-black, .5);
+        }
+    }
+    &.is-secondary,
+    &.is-tertiary {
+        &.is-loading:before {
+        	border-color: rgba($color-back, 0.25);
+    	    border-bottom-color: $color-back;
+	    }
+    }
+}

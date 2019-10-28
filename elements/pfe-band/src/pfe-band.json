@@ -92,11 +92,13 @@
             "accent"
           ],
           "default": "base",
+          "prefixed": true,
           "observer": "_colorChanged"
         },
         "img-src": {
           "title": "Background image",
           "type": "string",
+          "prefixed": true,
           "observer": "_imgSrcChanged"
         },
         "aside-desktop": {
@@ -104,6 +106,7 @@
           "type": "string",
           "default": "right",
           "enum": ["right", "left"],
+          "prefixed": true,
           "observer": "_basicAttributeChanged",
           "options": {
             "dependencies": [
@@ -119,6 +122,7 @@
           "type": "string",
           "default": "bottom",
           "enum": ["top", "bottom"],
+          "prefixed": true,
           "observer": "_basicAttributeChanged",
           "options": {
             "dependencies": [
@@ -134,6 +138,7 @@
           "type": "string",
           "default": "body",
           "enum": ["full", "body"],
+          "prefixed": true,
           "observer": "_basicAttributeChanged",
           "options": {
             "dependencies": [

@@ -5,17 +5,23 @@
     <title>PFElements: pfe-health-index Demo</title>
 
     <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../pfe-health-index.umd.js'])</script>
+    <script>require(['../dist/pfe-health-index.umd.js'])</script>
     <style>
+      body {
+        font-family:"Red Hat Text", Overpass, Helvetica, sans-serif;
+        font-size: 1rem;
+        line-height: 1.5rem;
+        font-weight: 400;
+      }
       div {
         margin-bottom: 8px;
       }
@@ -24,6 +30,7 @@
   </head>
   <body unresolved>
     <h1>&lt;pfe-health-index&gt;</h1>
+    <h2>Default</h2>
     <div>
       <pfe-health-index health-index="A">A</pfe-health-index>
     </div>
@@ -41,6 +48,26 @@
     </div>
     <div>
       <pfe-health-index health-index="F">F</pfe-health-index>
+    </div>
+
+    <h2>Large</h2>
+    <div>
+      <pfe-health-index health-index="A" size="lg">A</pfe-health-index>
+    </div>
+    <div>
+      <pfe-health-index health-index="B" size="lg">B</pfe-health-index>
+    </div>
+    <div>
+      <pfe-health-index health-index="C" size="lg">C</pfe-health-index>
+    </div>
+    <div>
+      <pfe-health-index health-index="D" size="lg">D</pfe-health-index>
+    </div>
+    <div>
+      <pfe-health-index health-index="E" size="lg">E</pfe-health-index>
+    </div>
+    <div>
+      <pfe-health-index health-index="F" size="lg">F</pfe-health-index>
     </div>
   </body>
 </html>

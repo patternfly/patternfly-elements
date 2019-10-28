@@ -4,19 +4,27 @@ import * as tools from "../../../.storybook/utils.js";
 
 const cleaner = require("clean-html");
 
-import PfeBand from "../pfe-band.js";
+import PfeBand from "../dist/pfe-band.js";
 // -- @TODO We can import properties from these
 // -- to allow dynamic field generation
-// import PfeCta from "../pfe-cta.js";
-// import PfeCard from "../pfe-card.js";
+// import PfeCta from "../dist/pfe-cta.js";
+// import PfeCard from "../dist/pfe-card.js";
 
 let theme = "base";
 
 const stories = storiesOf("Band", module);
 
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 // Define the templates to be used
 const template = (data = {}) =>
-  tools.component(PfeBand.tag, data.prop, data.slots, "pfe");
+  tools.component(PfeBand.tag, data.prop, data.slots);
 
 // prettier-ignore
 const defaultContent = {
@@ -66,35 +74,39 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeBand.tag, () => {
   let config = {};
+
   const props = PfeBand.properties;
+
+  // -- Customize the default selection for the preview
+  props.color.default = "lightest";
+
+  // Set required fields for storybook interface
+  props.color.required = true;
+  props["aside-desktop"].required = true;
+  props["aside-mobile"].required = true;
+  props["aside-height"].required = true;
+
+  // Build the knobs and read in their selections
+  config.prop = tools.autoPropKnobs(props, storybookBridge);
+
   const slots = PfeBand.slots;
 
-  //-- Add default content to slot objects
-  Object.entries(slots).forEach(slot => {
-    let supportedComponents = [];
-    if (slot[1].type === "array") {
-      slot[1].items.oneOf.forEach(item =>
-        supportedComponents.push(
-          Object.entries(item)
-            .map(i => i[1])
-            .join("")
-        )
-      );
-    }
-    slot[1].canContain = supportedComponents;
-  });
+  // Ask user if they want to add any custom content
+  const customContent = storybookBridge.boolean(
+    "Use custom content?",
+    false,
+    "Content"
+  );
 
   // -- Attach the default content for that region
   ["header", "body", "aside", "footer"].forEach(region => {
     slots[region].default = defaultContent[region];
+    if(customContent) {
+      slots[region].value = storybookBridge.text(`${region.replace(/^\w/, c => c.toUpperCase())}`, "", `${region}`);
+    }
   });
 
-  // -- Customize the default selection for the preview
-  props.color.default = "light";
-
-  // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
-  config.has = tools.autoContentKnobs(slots, storybookBridge);
+  // config.has = tools.autoContentKnobs(slots, storybookBridge);
 
   // Don't print the attribute in the example if it's the default value
   ["color", "aside-desktop", "aside-mobile", "aside-height"].forEach(p => {
@@ -106,15 +118,15 @@ stories.add(PfeBand.tag, () => {
   // prettier-ignore
   config.slots = [{
     slot: "pfe-band--header",
-    content: config.has.header
+    content: customContent ? slots.header.value : slots.header.default
   }, {
-    content: config.has.body
+    content: customContent ? slots.body.value : slots.body.default
   }, {
     slot: "pfe-band--footer",
-    content: config.has.footer
+    content: customContent ? slots.footer.value : slots.footer.default
   }, {
     slot: "pfe-band--aside",
-    content: config.has.aside
+    content: customContent ? slots.aside.value : slots.aside.default
   }];
 
   let rendered = template(config);

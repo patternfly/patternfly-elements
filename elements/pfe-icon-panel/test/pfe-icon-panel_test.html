@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../pfe-icon-panel.js"></script>
+    <script type="module" src="../dist/pfe-icon-panel.js"></script>
   </head>
   <body>
 
@@ -32,9 +32,13 @@
             'the <pfe-icon-panel> should be an instance of PfeIconPanel'
           );
         });
-        test('it should show an icon', () => {
-          const svgD = panel1.shadowRoot.querySelector("pfe-icon").shadowRoot.querySelector('svg g path').getAttribute('d');
-          assert.isOk(svgD, "the panel's internal pfe-icon has an svg with a path");
+        test('it should show an icon', done => {
+          const icon = panel1.shadowRoot.querySelector("pfe-icon");
+          const image = icon.shadowRoot.querySelector("svg image");
+          image.addEventListener("load", () => {
+            done();
+          });
+          icon.setAttribute("icon", "rh-bike");
         });
 
         test("header, body, and footer are placed into correct slot", () => {

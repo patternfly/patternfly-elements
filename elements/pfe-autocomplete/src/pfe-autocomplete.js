@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 
 const KEYCODE = {
   ENTER: 13,
@@ -288,7 +288,6 @@ class PfeAutocomplete extends PFElement {
   }
 
   _reset() {
-    debugger;
     this._dropdown.activeIndex = null;
     this._input.setAttribute("aria-activedescendant", "");
     this._dropdown.data = [];

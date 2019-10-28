@@ -5,11 +5,19 @@ import {
   select,
   boolean
 } from "@storybook/addon-knobs/polymer";
-import "../pfe-avatar";
-import cpTheme from "../../../themes/cp-theme/cp-theme.js";
+import "../dist/pfe-avatar";
 import { escapeHTML } from "../../../.storybook/utils.js";
 
 const stories = storiesOf("Avatar", module);
+
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 stories.addDecorator(withKnobs);
 
 stories.add("pfe-avatar", () => {
@@ -45,7 +53,7 @@ stories.add("pfe-avatar", () => {
     <h1>Dynamic example</h1>
     <h2>Use knobs to adjust!</h2>
 
-    <link rel="stylesheet" type="text/css" href="/pfe-layouts/pfe-layouts.css">
+    <link rel="stylesheet" type="text/css" href="/pfe-layouts/dist/pfe-layouts.css">
 
     <div class="rh-l-bullseye">
       <div class="rh-l-bullseye__item">

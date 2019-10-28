@@ -1,0 +1,40 @@
+// OFFCANVAS
+// ---------------------------------------------------------------------------
+
+.is-offcanvasTransition {
+    transition: transform .5s ease-in-out;
+}
+.is-offcanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: auto;
+    overflow-y: scroll;
+    z-index: $z-over-page;
+    min-height: 100vh;
+    width: $offcanvas-width;
+    padding: $space-16 $space-20;
+    background-color: $color-black;
+    font-size: $font-size-ui;
+    color: #fff;
+
+    &.is-offcanvas-right {
+        left: auto;
+        right: 0;
+    }
+    &.is-offcanvas-push {
+        left: -$offcanvas-width;
+        right: auto;
+    }
+    &.is-offcanvas-push.is-offcanvas-right {
+        right: -$offcanvas-width;
+        left: auto;
+    }
+    & a {
+        color: #fff;
+    }
+    & a:hover {
+        @include transition;
+        color: rgba(#fff, .6);
+    }
+}

@@ -1,4 +1,4 @@
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 import { hash } from "./djb-hash.js";
 import { hsl2rgb, rgb2hsl } from "./hslrgb.js";
 
@@ -24,6 +24,10 @@ class PfeAvatar extends PFElement {
       triangles: "triangles",
       squares: "squares"
     };
+  }
+
+  static get defaultSize() {
+    return 128;
   }
 
   static get defaultColors() {
@@ -90,7 +94,9 @@ class PfeAvatar extends PFElement {
 
   _initCanvas() {
     this._canvas = this.shadowRoot.querySelector("canvas");
-    const size = this.var("--pfe-avatar--width").replace(/px$/, "");
+    const size =
+      this.var("--pfe-avatar--width").replace(/px$/, "") ||
+      PfeAvatar.defaultSize;
     this._canvas.width = size;
     this._canvas.height = size;
 

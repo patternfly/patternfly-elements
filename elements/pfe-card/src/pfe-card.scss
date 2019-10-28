@@ -1,127 +1,230 @@
 @import "../../pfe-sass/pfe-sass";
 
+$LOCAL: card;
+
 :host {
-  --pfe-card--padding:                          calc(#{pfe-var(container-spacer)} * 2); // 2x `container-spacer`
-  --pfe-card_header--size:                      #{pfe-var(font-size--heading--gamma)};
-  --pfe-card--bg:                               #{pfe-color(surface--base)};
+  // Individual padding overrides available
+  --pfe-card--PaddingTop: calc(#{pfe-var(container-spacer)} * 2);
+  --pfe-card--PaddingRight: calc(#{pfe-var(container-spacer)} * 2);
+  --pfe-card--PaddingBottom: calc(#{pfe-var(container-spacer)} * 2);
+  --pfe-card--PaddingLeft: calc(#{pfe-var(container-spacer)} * 2);
+
+  // Combine above variables or allow single override point via variable
+  --pfe-card--Padding: #{pfe-local(PaddingTop)} #{pfe-local(PaddingRight)} #{pfe-local(PaddingBottom)} #{pfe-local(PaddingLeft)};
+
+
+  --pfe-card--spacing: #{pfe-var(container-spacer)};
+
+  // Internal spacing; elements inside the card (header, body, footer regions)
+  --pfe-card--spacing--vertical: #{pfe-local(spacing)};
+  --pfe-card__footer--spacing--horizontal: calc(#{pfe-var(container-spacer)} / 2);
+
+  //-- Border settings
+  --pfe-card--BorderRadius: #{pfe-var(surface--border-radius)};
+
+  //-- Border variable encompasses width, style, and color
+  --pfe-card--Border: #{pfe-local(BorderWeight, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)};
+
+  //-- Color properties
+  --pfe-card--BackgroundColor: #{pfe-color(surface--base)};
+  --pfe-card--BackgroundPosition: center center;
+
+  // Broadcasted values set to match background color
   --pfe-broadcasted--color--text:               #{pfe-color(surface--base--text)};
   --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--base--link)};
   --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--base--link--visited)};
   --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--base--link--hover)};
   --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--base--link--focus)};
 
+  --pfe-card__header--BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)});
+  --pfe-card__header--Color:           var(--pfe-broadcasted--color--text);
+
+  // Add backward support for previous variable naming
+  // @TODO deprecate padding and bg in favor of BEM naming
+  --pfe-card--padding:      #{pfe-local(Padding)};
+  --pfe-card--bg:           #{pfe-local(BackgroundColor)};
+
+  // Start of style declarations for host element
   display: flex;
   flex-direction: column;
   justify-items: flex-start;
+  // This allows the card to fill it's container if necessary
+  align-self: stretch;
 
-  padding: var(--pfe-card--padding);
-  border: pfe-var(surface--border-width)
-          pfe-var(surface--border-style)
-          transparent;
-  border-radius: pfe-var(surface--border-radius);
+  padding:       #{pfe-local(Padding)};
+  border:        #{pfe-local(Border)};
+  border-radius: #{pfe-local(BorderRadius)};
+
+  // This property ensures that children in the slots do no overflow
+  // the border-radius being set on the container
+  overflow: hidden;
 
   // Base colors
-  background: var(--pfe-card--bg);
-  color: var(--pfe-broadcasted--color--text);
+  background-color:    #{pfe-local(BackgroundColor)};
+  background-position: #{pfe-local(BackgroundPosition)};
+  color:               #{pfe-radio(color, text)} !important;
 }
 
-a {
-  color: var(--pfe-broadcasted--color--ui-link);
+// @TODO Deprecate "dark" and "light" in favor of "darker" and "lighter"
+@each $color in (darker, darkest, lighter, lightest, complement, accent) {
+  $label: $color;
+  // Update variable values to match provided attribute
+  :host([pfe-color="#{$label}"]) {
+    --pfe-card--BackgroundColor:                  #{pfe-color(surface--#{$color})};
+    --pfe-broadcasted--color--text:               #{pfe-color(surface--#{$color}--text)};
+    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--#{$color}--link)};
+    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--#{$color}--link--visited)};
+    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--#{$color}--link--hover)};
+    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--#{$color}--link--focus)};
+  }
 }
 
-a:visited {
-  color: var(--pfe-broadcasted--color--ui-link--visited);
+:host([pfe-size="small"]) {
+  --pfe-card--PaddingTop:     #{pfe-var(container-spacer)};
+  --pfe-card--PaddingRight:   #{pfe-var(container-spacer)};
+  --pfe-card--PaddingBottom:  #{pfe-var(container-spacer)};
+  --pfe-card--PaddingLeft:    #{pfe-var(container-spacer)};
 }
 
-a:hover {
-  color: var(--pfe-broadcasted--color--ui-link--hover);
-}
+// Targets the wrappers in the shadow DOM
+.pfe-card {
+  &__header,
+  &__body,
+  &__footer {
+    ::slotted([pfe-overflow~="top"]) {
+      z-index: 1;
+      margin-top: -2rem; //IE11 fallback
+      margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
+      :host([has_header]) & {
+        padding-top: #{pfe-local(spacing)};
+      }
+    }
 
-a:focus {
-  color: var(--pfe-broadcasted--color--ui-link--focus);
-}
+    ::slotted([pfe-overflow~="right"]) {
+      margin-right: -2rem; //IE11 fallback
+      margin-right: calc(-1 * #{pfe-local(PaddingRight)});
+    }
 
-:host([color="dark"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--darker)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--darker--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darker--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darker--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darker--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darker--link--focus)};
-}
+    ::slotted([pfe-overflow~="bottom"]) {
+      margin-bottom: -2rem; //IE11 fallback
+      margin-bottom: calc(-1 * calc(#{pfe-local(PaddingBottom)} + #{pfe-local(BorderRadius)}));
+      align-self: flex-end;
+    }
 
-:host([color="darkest"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--darkest)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--darkest--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--darkest--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--darkest--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--darkest--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--darkest--link--focus)};
-}
+    ::slotted([pfe-overflow~="left"]) {
+      margin-left: -2rem; //IE11 fallback
+      margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
+    }
 
-:host([color="light"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--lighter)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--lighter--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lighter--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--lighter--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--lighter--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--lighter--link--focus)};
-}
+    ::slotted(img) {
+      max-width: 100%;
+      align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
+      object-fit: cover; // Fix distortion
+    }
 
-:host([color="lightest"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--lightest)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--lightest--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--lightest--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--lightest--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--lightest--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--lightest--link--focus)};
-}
+    ::slotted(img:not[pfe-overflow]) {
+      align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
+    }
 
-:host([color="complement"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--complement)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--complement--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--complement--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--complement--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--complement--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--complement--link--focus)};
-}
+    ::slotted(img[pfe-overflow~="right"]) {
+      max-width: calc(100% + 2rem); //IE11 fallback
+      max-width: calc(100% + #{pfe-local(PaddingRight)});
+    }
 
-:host([color="accent"]) {
-  --pfe-card--bg:                               #{pfe-color(surface--accent)};
-  --pfe-broadcasted--color--text:               #{pfe-color(surface--accent--text)};
-  --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--accent--link)};
-  --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--accent--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--accent--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--accent--link--focus)};
-}
+    ::slotted(img[pfe-overflow~="left"]) {
+      max-width: calc(100% + 2rem); //IE11 fallback
+      max-width: calc(100% + #{pfe-local(PaddingLeft)});
+    }
 
-:host([size="small"]) {
-  --pfe-card--padding:        #{pfe-var(container-spacer)};
-}
+    ::slotted(img[pfe-overflow~="right"][pfe-overflow~="left"]) {
+      max-width: calc(100% + 4rem); //IE11 fallback
+      max-width: calc(100% + calc(#{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)}));
+    }
+  }
+  &__header {
+    z-index: 2;
+    // Declare the header background color
+    background-color: #{pfe-local($cssvar: BackgroundColor, $region: header)};
+    color:            #{pfe-local($cssvar: Color, $region: header)};
 
-.pfe-card__header,
-.pfe-card__body,
-.pfe-card__footer {
-  display: block;
-  margin: 0;
-}
+    // Margin styles on header region
+    margin-top:    calc(#{pfe-local(PaddingTop)} * -1) !important;
+    margin-right:  calc(#{pfe-local(PaddingRight)} * -1);
+    margin-bottom: #{pfe-local(spacing--vertical)};
+    margin-left:   calc(#{pfe-local(PaddingLeft)} * -1);
 
-.pfe-card__header::slotted(h1:first-child),
-.pfe-card__header::slotted(h2:first-child),
-.pfe-card__header::slotted(h3:first-child),
-.pfe-card__header::slotted(h4:first-child),
-.pfe-card__header::slotted(h5:first-child),
-.pfe-card__header::slotted(h6:first-child) {
-  margin-top: 0 !important; // Specificity issue. Why?!
-  font-size: var(--pfe-card_header--size);
-}
+    // Padding for the header region
+    padding-top:    #{pfe-local(spacing--vertical)};
+    padding-right:  #{pfe-local(PaddingRight)};
+    padding-left:   #{pfe-local(PaddingLeft)};
+    padding-bottom: #{pfe-local(spacing--vertical)};
 
-.pfe-card__body::slotted(*:nth-child(2)) { // child pseudo-selectors appear to be based on slotted code before upgrade.
-  margin-top: 0 !important;
-}
+    :host(:not([has_body],[has_footer])) & {
+      margin-bottom: #{pfe-local(PaddingBottom)};
+    }
 
-.pfe-card__footer {
-  // margin-top: pfe-var(container-spacer);
-  margin-top: auto; // This allows the footer to move to the very bottom
-  justify-self: flex-end;
+    ::slotted([pfe-overflow~="top"]) {
+      --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
+    }
+
+    :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
+      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
+    }
+
+    ::slotted([pfe-overflow~="bottom"]) {
+      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
+    }
+
+    @each $tag in (h1, h2, h3, h4, h5, h6) {
+      ::slotted(#{$tag}) {
+        margin-bottom: 0;
+      }
+    }
+  }
+  &__body {
+    :host(:not([has_header])) & ::slotted([pfe-overflow~="top"]) {
+      --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
+    }
+
+    ::slotted([pfe-overflow~="top"]) {
+      z-index: 1;
+      --pfe-card__overflow--MarginTop: calc(#{pfe-local(spacing--vertical)} * -1);
+    }
+
+    ::slotted([pfe-overflow~="bottom"]) {
+      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
+    }
+
+    :host([has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
+      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
+    }
+  }
+  &__footer {
+    margin-top: auto; // This allows the footer to move to the very bottom
+
+    display: flex;
+    flex-direction: #{pfe-local($cssvar: Row, $region: footer, $fallback: row)};
+    flex-wrap: #{pfe-local($cssvar: Wrap, $region: footer, $fallback: wrap)};
+    // Aligns buttons and CTAs
+    align-items: #{pfe-local($cssvar: AlignItems, $region: footer, $fallback: baseline)};
+
+    ::slotted([pfe-overflow~="bottom"]) {
+      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
+    }
+  }
+  &__header,
+  &__body {
+    &:not(:last-child) {
+      margin-bottom: #{pfe-local(spacing--vertical)};
+    }
+
+    //-- Slotted styles for typography
+    // Remove margins from typography inside the slots
+    @each $tag in (p, h1, h2, h3, h4, h5, h6) {
+      ::slotted(#{$tag}:first-child) {
+        // Remove top margins
+        margin-top: 0;
+      }
+    }
+  }
 }

@@ -3,7 +3,7 @@
 
 ## Overview
 
-`pfe-content-set` is a combo component, which brings together the utilities of the accordion and tabs components. Effectively both of these components do the same job, which is to encapsulate chunks of information under headings for easier browsing. Hiding some information and allowing the user to toggle through the headings to show other bits of information. 
+`pfe-content-set` is a combo component, which brings together the utilities of the accordion and tabs components. Effectively both of these components do the same job, which is to encapsulate chunks of information under headings for easier browsing. Hiding some information and allowing the user to toggle through the headings to show other bits of information.
 
 Since tabs can pose a layout issue on mobile because of the lack of horizontal space, this component will first assess the width of the parent container. If the width is less than 768px, the component will render the content within the `<pfe-accordion>` component. If it is larger than this value, the content will be rendered inside the `<pfe-tabs>` component.
 
@@ -11,27 +11,18 @@ Since tabs can pose a layout issue on mobile because of the lack of horizontal s
 
 Requires both the `pfe-accordion` and `pfe-tabs` components, as well as the base `pfelement`.
 
-
 ## Usage
 
-You must wrap each chunk of information (heading + content) in a `<pfe-content-set-group>` tag. 
-
-You must also apply the `pfe-heading` to the HTML heading element, like an H2 or H3. Otherwise content within the component will not be rendered.
+Each header must have an attribute of `pfe-content-set--header` and each panel must have an attribute of `pfe-content-set--panel`. Each header must be immediately followed by a panel.
 
 ```html
 <pfe-content-set>
-  <pfe-content-set-group>
-    <h2 pfe-heading>Heading 1</h2>
-    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
-  </pfe-content-set-group>
-  <pfe-content-set-group>
-    <h2 pfe-heading>Heading 2</h2>
-    <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam volu et jen, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-  </pfe-content-set-group>
-  <pfe-content-set-group>
-    <h2 pfe-heading>Heading 3</h2>
-    <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-  </pfe-content-set-group>
+  <h2 pfe-content-set--header>Heading 1</h2>
+  <p pfe-content-set--panel>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
+  <h2 pfe-content-set--header>Heading 2</h2>
+  <p pfe-content-set--panel>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam volu et jen, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+  <h2 pfe-content-set--header>Heading 3</h2>
+  <p pfe-content-set--panel>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
 </pfe-content-set>
 
 ```
@@ -48,7 +39,7 @@ You must also apply the `pfe-heading` to the HTML heading element, like an H2 or
     - Tabs: Borders are removed, only an indicator appears under the active heading.
 - `pfe-variant="secondary"`
     - Accordion: Headings are on a dark background, text color is reversed.
-    - Tabs: Headings are encased in a block. The active heading is solid, with a caret pointing downward towards the content. Other headings have a border with no fill. 
+    - Tabs: Headings are encased in a block. The active heading is solid, with a caret pointing downward towards the content. Other headings have a border with no fill.
 - `vertical`
     - Accordion: No effect.
     - Tabs: Headings stack on the left, content pane is shown on the right.

@@ -1,0 +1,58 @@
+@import "../../pfe-sass/pfe-sass";
+
+$pfe-progress-indicator--border-light: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} rgba(0, 0, 0, .25);
+$pfe-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} rgba(0, 0, 0, .75);
+
+:host([hidden]) {
+  display: none;
+}
+
+:host([pfe-indeterminate]) {
+    ::slotted(*) {
+        @include pfe-sr-only;
+    }
+    animation: spin 1s linear infinite;
+    -webkit-animation:spin 1s linear infinite;
+    -moz-animation:spin 1s linear infinite;
+
+    border-bottom: $pfe-progress-indicator--border-light;
+    border-left: $pfe-progress-indicator--border-light;
+    border-right: $pfe-progress-indicator--border-light;
+    border-top: $pfe-progress-indicator--border-dark;
+    border-radius: 100%;
+    
+    display: inline-block;
+    height: var(--pfe-progress-indicator--Height, 2rem);
+    margin: 0 auto;
+    position: relative;
+    width: var(--pfe-progress-indicator--Width, 2rem);
+    vertical-align: middle;
+    visibility: visible;
+}
+
+:host([size="sm"]) {
+    height: 1rem;
+    width: 1rem;
+   border-width: calc(#{pfe-var(surface--border-width--heavy)} * .75);
+}
+
+:host([size="md"]) {
+    height: 2rem;
+    width: 2rem;
+    border-width: calc(#{pfe-var(surface--border-width--heavy)} * 1);
+}
+
+:host([size="xl"]) {
+    height: 4rem;
+    width: 4rem;
+    border-width: calc(#{pfe-var(surface--border-width--heavy)} * 1.5);
+}
+
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}

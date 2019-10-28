@@ -4,11 +4,24 @@
     "className": "PfeSass",
     "elementName": "pfe-sass"
   },
-  "version": "1.0.0-prerelease.9",
+  "version": "1.0.0-prerelease.27",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Sass variables and mixins for pfe-elements",
+  "description": "Sass variables and mixins for PatternFly Elements",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-sass"
+  },
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp",
+    "dev": "../../node_modules/.bin/gulp dev"
+  },
   "contributors": [
     {
       "name": "Kyle Buchanan",
@@ -19,8 +32,20 @@
       "name": "Mark Caron",
       "email": "mark@redhat.com",
       "url": "https://github.com/markcaron"
+    },
+    {
+      "name": "castastrophe",
+      "url": "https://github.com/castastrophe"
+    },
+    {
+      "name": "Kendall Totten"
+    },
+    {
+      "name": "cd"
     }
   ],
   "license": "MIT",
-  "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

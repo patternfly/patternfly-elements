@@ -1,42 +1,40 @@
 import { storiesOf } from "@storybook/polymer";
-import { withKnobs, text, select } from "@storybook/addon-knobs/polymer";
-import "../pfe-health-index.js";
+import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as tools from "../../../.storybook/utils.js";
+
+import PfeHealthIndex from "../dist/pfe-health-index";
 
 const stories = storiesOf("Health Index", module);
-stories.addDecorator(withKnobs);
 
-stories.add("pfe-health-index", () => {
-  const grades = ["A", "B", "C", "D", "E", "F"];
-  const healthIndexValue = select("Health Index", grades, grades[0]);
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
 
-  return `
-    <style>
-      div {
-        margin-bottom: 16px;
-      }
-    </style>
+// Define the template to be used
+const template = (data = {}) => {
+  return tools.component(PfeHealthIndex.tag, data.prop, data.slots);
+};
 
-    <section>
-      <h2>Your PFElement</h2>
-      <pfe-health-index health-index="${healthIndexValue}">${healthIndexValue}</pfe-health-index>
-    </section>
-    <section>
-      <h2>Markup</h2>
-      <pre style="margin-left:15px;">
-<code>&lt;pfe-health-index health-index="${healthIndexValue}"&gt;${healthIndexValue}&lt;/pfe-health-index&gt;</code>
-      </pre>
-    </section>
-    <section>
-      <h2>At a glance</h2>
-      ${grades
-        .map(grade =>
-          `
-          <div>
-            <pfe-health-index health-index="${grade}">${grade}</pfe-health-index>
-          </div>
-      `.trim()
-        )
-        .join("\n")}
-    </section>
-  `;
+stories.addDecorator(storybookBridge.withKnobs);
+
+stories.add(PfeHealthIndex.tag, () => {
+  let config = {};
+  const props = PfeHealthIndex.properties;
+
+  // Trigger the auto generation of the knobs for attributes
+  config.prop = tools.autoPropKnobs(props, storybookBridge);
+
+  // Fallback date is the "content" for this component
+  config.slots = [
+    {
+      content: config.prop["health-index"]
+    }
+  ];
+
+  const render = template(config);
+  return tools.preview(render);
 });

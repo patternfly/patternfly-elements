@@ -1,0 +1,100 @@
+// SLIDER
+// ---------------------------------------------------------------------------
+@import '../vars';
+@import '../mixins';
+
+// VARS
+$slider-height: 4px !default;
+$slider-background-color: rgba($color-black, .1) !default;
+$slider-box-shadow: 0 1px 2px rgba($color-black, .2) inset !default;
+$slider-border-radius: $border-radius !default;
+$slider-border-width: 0 !default;
+$slider-border-style: solid !default;
+$slider-border-color: transparent !default;
+
+// fill
+$slider-fill-background-color: rgba($color-focus, .7) !default;
+
+// handle
+$slider-handle-width: 14px !default;
+$slider-handle-height: 14px !default;
+$slider-handle-background-color: #fff !default;
+$slider-handle-box-shadow: 0 1px 3px rgba($color-black, 1) !default;
+$slider-handle-border-width: 0 !default;
+$slider-handle-border-style: solid !default;
+$slider-handle-border-color: transparent !default;
+$slider-handle-border-radius: 50% !default;
+
+// ticks
+$slider-ticks-height: 6px !default;
+$slider-ticks-color: rgba($color-black, .3) !default;
+$slider-ticks-font-size: 10px !default;
+$slider-ticks-text-color: rgba($color-black, .5) !default;
+$slider-ticks-line-height: 1.3 !default;
+
+// SCSS
+.slider {
+    min-height: $slider-handle-height;
+    &:disabled,
+    &.is-disabled {
+
+        opacity: .6;
+
+        & .slider-track,
+        & .slider-handle,
+        & .slider-ticks {
+            cursor: default;
+        }
+        & .slider-fill {
+            background-color: rgba($color-black, .2);
+        }
+    }
+}
+.slider-track {
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    height: $slider-height;
+    box-shadow: $slider-box-shadow;
+    background-color: $slider-background-color;
+    border: $slider-border-width $slider-border-style $slider-border-color;
+    border-radius: $slider-border-radius;
+}
+.slider-fill {
+    position: absolute;
+    height: $slider-height;
+    background-color: $slider-fill-background-color;
+    border-radius: $slider-border-radius;
+    box-shadow: $slider-box-shadow;
+}
+.slider-handle {
+    cursor: pointer;
+    position: absolute;
+    z-index: 2;
+    width: $slider-handle-width;
+    height: $slider-handle-height;
+    margin-top: -$slider-handle-height/2 + $slider-height/2;
+    background-color: $slider-handle-background-color;
+    box-shadow: $slider-handle-box-shadow;
+    border: $slider-handle-border-width $slider-handle-border-style $slider-handle-border-color;
+    border-radius: $slider-handle-border-radius;
+}
+.slider-ticks {
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    min-height: $slider-ticks-height + 4;
+    margin-bottom: .7rem;
+
+    & span {
+        position: absolute;
+        border-left: 1px solid $slider-ticks-color;
+        height: $slider-ticks-height;
+        margin-top: 3px;
+        padding-top: $slider-ticks-height;
+        font-size: $slider-ticks-font-size;
+        text-align: center;
+        line-height: $slider-ticks-line-height;
+        color: $slider-ticks-text-color;
+    }
+}

@@ -1,7 +1,7 @@
 const path = require("path");
 
-module.exports = (baseConfig, env, defaultConfig) => {
-  defaultConfig.resolve.alias = {
+module.exports = async ({ config, mode }) => {
+  config.resolve.alias = {
     "../../whatwg-fetch/fetch.js": path.join(
       __dirname,
       "../node_modules/whatwg-fetch/fetch.js"
@@ -20,5 +20,5 @@ module.exports = (baseConfig, env, defaultConfig) => {
     )
   };
 
-  return defaultConfig;
+  return config;
 };

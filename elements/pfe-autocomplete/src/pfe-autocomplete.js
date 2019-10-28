@@ -37,6 +37,10 @@ class PfeAutocomplete extends PFElement {
     return "pfe-autocomplete";
   }
 
+  get schemaUrl() {
+    return "pfe-autocomplete.json";
+  }
+
   get templateUrl() {
     return "pfe-autocomplete.html";
   }

@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Autocomplete",
+  "description": "Autocomplete provides options in a dropdown list as user types in an input box by showing result from an api call.",
+  "type": "object",
+  "tag": "pfe-autocomplete",
+  "class": "pfe-autocomplete",
+  "category": "content",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Content",
+          "type": "array",
+          "namedSlot": false,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "debounceTimer": {
+          "title": "Debounce",
+          "description": "The amount of time that should pass before the next API call is made",
+          "type": "string",
+          "prefixed": false
+        },
+        "init-value": {
+          "title": "Initial value",
+          "description": "An initial value to show in the input field",
+          "type": "string",
+          "prefixed": false
+        },
+        "is-disabled": {
+          "title": "Is disabled",
+          "description": "Disable the input",
+          "type": "boolean",
+          "prefixed": false
+        }
+      }
+    }
+  },
+  "required": [
+    "slots",
+    "attributes"
+  ],
+  "additionalProperties": false
+}

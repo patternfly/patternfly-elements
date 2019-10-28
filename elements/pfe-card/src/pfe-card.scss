@@ -39,15 +39,17 @@ $LOCAL: card;
   --pfe-card__header--BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)});
   --pfe-card__header--Color:           var(--pfe-broadcasted--color--text);
 
+  // Add backward support for previous variable naming
+  // @TODO deprecate padding and bg in favor of BEM naming
+  --pfe-card--padding:      #{pfe-local(Padding)};
+  --pfe-card--bg:           #{pfe-local(BackgroundColor)};
+
   // Start of style declarations for host element
   display: flex;
   flex-direction: column;
-  justify-items:    #{pfe-local($cssvar: JustifyItems, $fallback: flex-start)};
-  // Optional hooks, no default styles
-  justify-content:  #{pfe-local(JustifyContent)};
-  align-items:      #{pfe-local(AlignItems)};
+  justify-items: flex-start;
   // This allows the card to fill it's container if necessary
-  align-self:       #{pfe-local($cssvar: AlignSelf, $fallback: stretch)};
+  align-self: stretch;
 
   padding:       #{pfe-local(Padding)};
   border:        #{pfe-local(Border)};
@@ -56,22 +58,11 @@ $LOCAL: card;
   // This property ensures that children in the slots do no overflow
   // the border-radius being set on the container
   overflow: hidden;
-  position: relative;
 
   // Base colors
-  background-image:       #{pfe-local(BackgroundImage)};
-  background-color:       #{pfe-local(BackgroundColor)};
-  background-position:    #{pfe-local(BackgroundPosition)};
-  background-repeat:      #{pfe-local(BackgroundRepeat)};
-  background-size:        #{pfe-local(BackgroundSize)};
-  background-attachment:  #{pfe-local(BackgroundAttachment)};
-  color:                  #{pfe-radio(color, text)} !important;
-
-  @include print-media {
-    background-color: #fff !important;
-    background-image: none !important;
-    box-shadow: none !important;
-  }
+  background-color:    #{pfe-local(BackgroundColor)};
+  background-position: #{pfe-local(BackgroundPosition)};
+  color:               #{pfe-radio(color, text)} !important;
 }
 
 // @TODO Deprecate "dark" and "light" in favor of "darker" and "lighter"

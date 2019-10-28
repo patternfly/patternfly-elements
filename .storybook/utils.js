@@ -24,7 +24,7 @@ String.prototype.sentenceCase = function() {
 };
 
 // Print attributes based on an object
-const listProperties = (obj) =>
+export const listProperties = (obj) =>
   Object.entries(obj)
     .map(set => {
       let string = " ";

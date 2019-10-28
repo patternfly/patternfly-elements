@@ -19,26 +19,28 @@
     ])</script>
   </head>
   <body unresolved>
-    <h1>&lt;pfe-autocomplete&gt;</h1>
-    <h2>Static Data</h2>
-    <p>Uses an array of strings.</p>
+    <h1 class="pfe-headline-1">&lt;pfe-autocomplete&gt;</h1>
+    <h2 class="pfe-headline-2">Static Data</h2>
+    <p class="pfe-text">Uses an array of strings.</p>
     <div>
       <pfe-autocomplete id="static" debounce="300">
         <input placeholder="Enter Your Search Term"/>
       </pfe-autocomplete>
     </div>
-    <h4>Static Selected Value: <span id="staticSelectedValue"></span></h4>
+    <h4 class="pfe-headline-4">Static Selected Value: <span style="color:var(--pfe-theme--color--ui-accent)" id="staticSelectedValue"></span></h4>
 
-    <h2>Lazy Loading with init-value</h2>
-    <p>Makes an ajax call, filters the response and sends the filtered data to the component.</p>
+<hr>
+    <h2 class="pfe-headline-2">Lazy Loading with init-value</h2>
+    <p class="pfe-text">Makes an ajax call, filters the response and sends the filtered data to the component.</p>
     <div>
       <pfe-autocomplete id="search-lazy-loading" debounce="500" init-value="uni">
         <input placeholder="Enter Your Search Term"/>
       </pfe-autocomplete>
     </div>
-    <h4>Ajax Selected Value: <span id="ajaxSelectedValue"></span></h4>
+    <h4 class="pfe-headline-4">Ajax Selected Value: <span id="ajaxSelectedValue"></span></h4>
 
-    <h2>Disabled</h2>
+<hr>
+    <h2 class="pfe-headline-2">Disabled</h2>
     <div>
       <pfe-autocomplete is-disabled init-value="uni"><input placeholder="Enter Your Search Term"/></pfe-autocomplete>
     </div>

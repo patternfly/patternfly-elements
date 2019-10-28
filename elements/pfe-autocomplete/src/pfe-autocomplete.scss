@@ -2,11 +2,12 @@
 :host {
   display: block;
   position: relative;
+  font-family: var(--pfe-theme--font-family);
 }
 
 .input-box-wrapper {
   position: relative;
-  display:flex;
+  display: flex;
 }
 
 .sr-only {
@@ -26,7 +27,7 @@
   box-shadow: inset 0 0px 0px rgba(0,0,0,0.075) !important;
   padding-left: 10px;
   padding-right: 30px;
-  border-radius: 0;
+  border-radius: pfe-var(border-radius);
   background-color: #fff;
   border: 1px solid #{pfe-color( surface--border)};
   font-size: 16px; /*1rem*/
@@ -80,23 +81,23 @@ button.clear-search {
   right: 30px;
   width: 20px;
   margin: 2px 1px;
-  background-color: #fff;
+  background-color: pfe-color(surface--lightest);
 }
 
 button.clear-search svg {
   width: 12px;
-  stroke: #ccc;
+  stroke: pfe-color(surface--border);
 }
 
 button.clear-search:hover svg,
 button.clear-search:focus svg {
   opacity: 1;
-  stroke: #06c;
+  stroke: pfe-color(ui-link);
 }
 
 button[disabled].clear-search:hover svg,
 button[disabled].clear-search:focus svg {
-  stroke: #ccc ;
+  stroke: pfe-color(surface--border);
 }
 
 button.search-button {
@@ -105,21 +106,21 @@ button.search-button {
 }
 
 button.search-button svg {
-  fill: #06c;
+  fill: pfe-color(ui-link);
   width: 16px;
 }
 
 button.search-button:hover svg,
 button.search-button:focus svg {
-  fill: #004080;
+  fill: pfe-color(ui-link--hover);
 }
 
 button.clear-search:hover {
-  color: #ccc;
+  color: pfe-color(ui-complement);
 }
 
 button.search-button:disabled svg {
-  fill: #ccc;
+  fill: pfe-color(ui-disabled);
 }
 
 .loading {

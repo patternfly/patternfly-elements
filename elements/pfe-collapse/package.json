@@ -4,7 +4,7 @@
     "className": "PfeCollapse",
     "elementName": "pfe-collapse"
   },
-  "version": "1.0.0-prerelease.24",
+  "version": "1.0.0-prerelease.27",
   "description": "Collapse element for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -18,7 +18,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "pfe-collapse.js",
+  "main": "./dist/pfe-collapse.umd.js",
+  "module": "./dist/pfe-collapse.js",
+  "unpkg": "./dist/pfe-collapse.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -33,11 +38,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
-    "@patternfly/pfelement": "^1.0.0-prerelease.24"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.27",
+    "@patternfly/pfelement": "^1.0.0-prerelease.27"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {
-    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
   }
 }

@@ -19,7 +19,7 @@ npm install
 
 ## Generating a PatternFly Element
 
-Using the [generator-rhelement](https://github.com/RHElements/generator-rhelement), which is installed as a dev dependency, the generator will ask you a few questions that will help with the scaffolding. Make sure you are in the root directory of the PatternFly Elements repository.
+Using the [generator-pfelement](https://github.com/patternfly/generator-pfelement), which is installed as a dev dependency, the generator will ask you a few questions that will help with the scaffolding. Make sure you are in the root directory of the PatternFly Elements repository.
 
 ```
 npm run new
@@ -27,18 +27,37 @@ npm run new
 
 ## Scaffolding Structure
 
-The generator will scaffold out a new PatternFly Element that will include an ES6 module version of your element as well as a version transpiled to ES5. These two files will live at the root of your new element. **DO NOT EDIT THESE TWO FILES**. These two files are the files that will be used when your element is distributed and they'll be overwritten during development and your build.
+The generator will scaffold out a new PatternFly Element that will include an ES6 module version of your element as well as a version transpiled to ES5. These compiled assets will live in the `dist` directory for your new element. **DO NOT EDIT COMPILED ASSETS**. They are the files that will be used when your element is distributed and they'll be overwritten during development and your build.
 
-Instead, do your development in the `/src` directory of your element. In the `/src` directory you'll find a Javascript file that extends the PFElement class that takes care of setting up a shadow root and ShadyCSS. The HTML file is where you'll add the HTML that will be cloned into the shadow root. And the CSS or SCSS file (depending on if you're using Sass) is where you'll add your styles. During the development and build tasks, a Gulp task will merge these three files together into the root of your element and will update the ES6 and ES5 versions.  Be sure to specify the list of compiled assets in your package.json by using the `files` array.  In the `files` array, list out all the files you want available to end-users (you can use globbing syntax); for example:
+Do your development work inside in the `src` directory of your element. In the `src` directory, you'll find:
+
+- A Javascript file that extends the PFElement class that takes care of setting up a shadow root and ShadyCSS.
+- An HTML file where you'll add the semantic markup that will be used as your template inside the shadow root.
+- A CSS or SCSS file (depending on if you're using Sass) where you'll add your styles.
+- A JSON schema used to define the attributes and slots available in this web component.
+
+During the development and build tasks, a Gulp task will merge these three files together into the root of your element and will update the ES6 and ES5 versions.
+
+There are a few additional supported files you can add inside your `src` directory:
+
+- Fallback styles, typically targeted to Edge and/or IE11. This file uses a standard naming convention of `pfe-foo--lightdom`.
+- No-script styles which load in situations where JavaScript is not available.  This file uses a standard naming convention of `pfe-foo--noscript`.
+
+If you wish to include any compiled assets beyond those listed above, please add them to your package.json inside the `pfelement` object as an `assets` array:
 
 ```
-"files": [
-    "pfelement?(-noscript).*css",
-    "pfelement.*js"
-]
+"pfelement": {
+    "className": "PfeAccordion",
+    "elementName": "pfe-accordion",
+    "assets": [
+      "pfe-accordion.js",
+      "pfe-accordion-header.js",
+      "pfe-accordion-panel.js"
+    ]
+}
 ```
 
-This will add all pfelement css files (minified and ones postfixed with -noscript) and all the compiled versions of the pfelement.js file.
+This will add these additional files to the standard set that is being served to the `dist` directory for developers to use on their page.  Globbing syntax is supported but you only need to specify the name of the `src` asset that you want included, and do not need to specify the minified versions for example.
 
 ## Develop
 

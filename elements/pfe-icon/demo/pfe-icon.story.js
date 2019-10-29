@@ -8,9 +8,18 @@ import {
 } from "@storybook/addon-knobs/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
-import PfeIcon from "../pfe-icon";
+import PfeIcon from "../dist/pfe-icon";
 
 const stories = storiesOf("Icon", module);
+
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 stories.addDecorator(withKnobs);
 
 const template = (data = {}) =>

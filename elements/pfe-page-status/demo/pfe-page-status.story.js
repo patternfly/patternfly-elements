@@ -2,9 +2,17 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfePageStatus from "../pfe-page-status.js";
+import PfePageStatus from "../dist/pfe-page-status.js";
 
 const stories = storiesOf("Page status", module);
+
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
 
 stories.addDecorator(storybookBridge.withKnobs);
 

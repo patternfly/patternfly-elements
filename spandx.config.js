@@ -16,7 +16,7 @@ module.exports = {
   bs: {
     watchOptions: {
       ignoreInitial: true,
-      ignored: ["node_modules"]
+      ignored: ["node_modules", "_temp"]
     },
     middleware: [require("compression")()]
   }

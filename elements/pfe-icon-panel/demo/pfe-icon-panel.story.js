@@ -5,9 +5,18 @@ import {
   select,
   boolean
 } from "@storybook/addon-knobs/polymer";
-import "../pfe-icon-panel.js";
+import "../dist/pfe-icon-panel.js";
 
 const stories = storiesOf("Icon", module);
+
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 stories.addDecorator(withKnobs);
 
 stories.add("pfe-icon-panel", () => {

@@ -1,4 +1,4 @@
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.find
 if (!Array.prototype.find) {
@@ -168,7 +168,9 @@ class PfeTabs extends PFElement {
 
   disconnectedCallback() {
     this.removeEventListener("keydown", this._onKeyDown);
-    this._allTabs().forEach(tab => tab.removeEventListener("click", this._onClick));
+    this._allTabs().forEach(tab =>
+      tab.removeEventListener("click", this._onClick)
+    );
     this._observer.disconnect();
   }
 
@@ -208,14 +210,10 @@ class PfeTabs extends PFElement {
 
       case "on":
         if (this.getAttribute("on") === "dark") {
-          this._allTabs().forEach(tab =>
-            tab.setAttribute("on", "dark")
-          );
-          this._allPanels().forEach(panel =>
-            panel.setAttribute("on", "dark")
-          );
-         }
-         break;
+          this._allTabs().forEach(tab => tab.setAttribute("on", "dark"));
+          this._allPanels().forEach(panel => panel.setAttribute("on", "dark"));
+        }
+        break;
 
       case "selected-index":
         Promise.all([
@@ -258,7 +256,7 @@ class PfeTabs extends PFElement {
     this._selectTab(tab);
   }
 
-  _init() {
+  _init(mutationsList) {
     if (this.getAttribute("role") !== "tablist") {
       this.setAttribute("role", "tablist");
     }
@@ -269,6 +267,23 @@ class PfeTabs extends PFElement {
 
     this._linked = false;
     this._linkPanels();
+
+    if (mutationsList) {
+      for (let mutation of mutationsList) {
+        if (mutation.type === "childList" && mutation.addedNodes.length) {
+          mutation.addedNodes.forEach(addedNode => {
+            if (
+              addedNode.tagName.toLowerCase() === PfeTab.tag ||
+              addedNode.tagName.toLowerCase() === PfeTabPanel.tag
+            ) {
+              if (this.variant.value) {
+                addedNode.setAttribute("pfe-variant", this.variant.value);
+              }
+            }
+          });
+        }
+      }
+    }
   }
 
   _linkPanels() {
@@ -519,7 +534,7 @@ class PfeTab extends PFElement {
       this._observer.disconnect();
     }
 
-    if  (!this.pfeId) {
+    if (!this.pfeId) {
       this.pfeId = `${PfeTab.tag}-${generateId()}`;
     }
 

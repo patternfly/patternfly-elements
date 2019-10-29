@@ -131,7 +131,7 @@ if (!("path" in Event.prototype)) {
     });
 }
 
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeNavigationItem from "./pfe-navigation-item.js";
 import PfeNavigationMain from "./pfe-navigation-main.js";
 

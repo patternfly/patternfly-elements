@@ -9,7 +9,7 @@
       "js": "src/pfe-band.js"
     }
   },
-  "version": "1.0.0-prerelease.24",
+  "version": "1.0.0-prerelease.27",
   "description": "Band container for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -23,7 +23,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "pfe-band.js",
+  "private": true,
+  "main": "./dist/pfe-band.umd.js",
+  "module": "./dist/pfe-band.js",
+  "unpkg": "./dist/pfe-band.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -37,11 +43,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
-    "@patternfly/pfelement": "^1.0.0-prerelease.24"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.27",
+    "@patternfly/pfelement": "^1.0.0-prerelease.27"
   },
   "generator-rhelement-version": "0.6.8",
   "bugs": {
-    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
   }
 }

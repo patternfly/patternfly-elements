@@ -1,0 +1,55 @@
+:host {
+  --pfe-avatar--width: 128px;
+  display: block;
+  position: relative;
+  width: var(--pfe-avatar--width);
+  height: var(--pfe-avatar--width);
+}
+
+:host canvas {
+  width: 100%;
+  height: 100%;
+  image-rendering: optimizeSpeed;
+  /* Older versions of FF          */
+  image-rendering: -moz-crisp-edges;
+  /* FF 6.0+                       */
+  image-rendering: -webkit-optimize-contrast;
+  /* Safari                        */
+  image-rendering: -o-crisp-edges;
+  /* OS X & Windows Opera (12.02+) */
+  image-rendering: -o-pixelated;
+  image-rendering: pixelated;
+  /* Awesome future-browsers       */
+  -ms-interpolation-mode: nearest-neighbor;
+  /* IE                            */
+}
+
+:host([pfe-shape="rounded"]) img,
+:host([pfe-shape="rounded"]) canvas {
+  border-radius: calc(var(--pfe-avatar--width) / 8 + 1px);
+}
+
+:host([pfe-shape="circle"]) img,
+:host([pfe-shape="circle"]) canvas {
+  border-radius: 50%;
+}
+
+:host([pfe-src]) canvas {
+  display: none;
+}
+
+:host([pfe-src]) img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+:host(:not([pfe-src])) img {
+  display: none;
+}
+
+:host([hidden]) {
+  display: none;
+}

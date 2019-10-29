@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../pfe-card.js"></script>
+    <script type="module" src="../dist/pfe-card.js"></script>
   </head>
   <body>
     <style>
@@ -68,12 +68,10 @@
       // Themes and their expected hex values
       const colors = {
         base: "#dfdfdf",
-        dark: "#464646",
         darker: "#464646",
         darkest: "#131313",
         accent: "#fe460d",
         complement: "#0477a4",
-        light: "#ececec",
         lighter: "#ececec",
         lightest: "#ffffff"
       };
@@ -214,11 +212,11 @@
             let selector = slot[0] !== "body" ? `[slot=${slot[1].name}]` : "p";
             assert.equal(
               card[0].querySelector(selector).assignedSlot,
-              card[0].shadowRoot.querySelector(`.${slot[1].class}`)
+              card[0].shadowRoot.querySelector(`.${slot[1].class} > *`)
             );
 
             const content = card[0].shadowRoot
-              .querySelector(`.${slot[1].class}`)
+              .querySelector(`.${slot[1].class} > *`)
               .assignedNodes()
               .map(n => n.textContent)
               .join("")

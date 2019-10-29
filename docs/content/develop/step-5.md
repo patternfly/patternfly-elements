@@ -38,7 +38,7 @@ tags = [ "develop" ]
 
 
 
-7. `git log --oneline --decorate --no-merges v1.0.0-prerelease.20`
+7. `git log --oneline --decorate --no-merges v$(node -e 'console.log(require("./lerna.json").version)')..`
     10. See the diffs of what was merged between now & the last release
     11. Or look at PR merged list with "last-updated" sort order: \
 [https://github.com/patternfly/patternfly-elements/pulls?q=is%3Apr+is%3Aclosed+sort%3Aupdated-desc](https://github.com/patternfly/patternfly-elements/pulls?q=is%3Apr+is%3Aclosed+sort%3Aupdated-desc)

@@ -31,7 +31,9 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   position: relative;
   display:  inline-block;
   // Supports sizing while preserving aspect ratio (despite layout)
+  width:    calc(#{pfe-local(Size)} + #{pfe-local(Padding)}) !important;
   width:    fit-content !important;
+  height:    calc(#{pfe-local(Size)} + #{pfe-local(Padding)}) !important;
   height:   fit-content !important;
   line-height: 0;
 
@@ -58,22 +60,18 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   border: #{$pfe-icon--border-width} #{$pfe-icon--border-style} #{pfe-local($cssvar: BorderColor, $fallback: transparent)};
   padding: #{pfe-local($cssvar: Padding, $fallback: 0)};
 
-  @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
+  @include browser-query(ie11) {
       @include greyscale-fallback();
   }
 
-  @supports (-ms-accelerator:true) {
-      /* IE Edge 12+ CSS */
-      @include greyscale-fallback();
-  }
 
-  @supports (-ms-ime-align:auto) {
-      /* IE Edge 16+ CSS */
+  // Edge 12+ CSS
+  @include browser-query(edge12) {
       @include greyscale-fallback();
   }
 
   svg image {
-    @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
+    @include browser-query(ie11) {
       filter: none;
     }
   }

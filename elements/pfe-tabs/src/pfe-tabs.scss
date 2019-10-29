@@ -59,6 +59,22 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 
     --pfe-tabs__panels--Width: 77.78%;
     --pfe-tabs__panels--PaddingRight: #{pfe-var(container-padding)};
+
+    @include browser-query(ie11) {
+      display: flex;
+      .tabs {
+        flex-direction: column;
+        width: 22.22%;
+        border-right: 1px solid #{pfe-local(BorderColor)};
+        border-bottom: 0;
+      }
+
+      .panels {
+        width: 77.8%;
+        padding-right: 1em;
+      }
+
+    }
   }
 }
 
@@ -69,11 +85,23 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([vertical][pfe-variant="earth"]) {
     --pfe-tabs__tabs--Padding: #{pfe-var(container-padding)} 0 0 0;
+    
+    @include browser-query(ie11) {
+      .tabs {
+        padding: 1em 0 0 0;
+      }
+    }
   }
 }
 
 :host([pfe-variant="earth"]) {
   --pfe-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
+    
+  @include browser-query(ie11) {
+    .tabs {
+      padding-left: 1em;
+    }
+  }
 
   .tabs ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
     border-left: 0;

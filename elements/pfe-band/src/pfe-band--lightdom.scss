@@ -12,8 +12,9 @@
     }
 }
 
-// This gets it rendering correctly on FF 60
-@include browser-query(firefox) {
+// This gets it rendering correctly on FF 62 and earlier
+// Do not want it applying to all FF, the double defined grid-area messes the styles
+@supports not (shape-outside: none) {
     @each $section in (aside, header, body, footer) {
          [slot="pfe-band--#{$section}"] { // i.e., pfe-band--header
               grid-area: #{$section};

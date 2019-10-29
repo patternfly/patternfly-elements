@@ -2,7 +2,12 @@
   "name": "@patternfly/pfe-accordion",
   "pfelement": {
     "className": "PfeAccordion",
-    "elementName": "pfe-accordion"
+    "elementName": "pfe-accordion",
+    "assets": [
+      "pfe-accordion.js",
+      "pfe-accordion-header.js",
+      "pfe-accordion-panel.js"
+    ]
   },
   "version": "1.0.0-prerelease.27",
   "publishConfig": {
@@ -18,7 +23,12 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-accordion"
   },
-  "main": "./dist/pfe-accordion.js",
+  "main": "./dist/pfe-accordion.umd.js",
+  "module": "./dist/pfe-accordion.js",
+  "unpkg": "./dist/pfe-accordion.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

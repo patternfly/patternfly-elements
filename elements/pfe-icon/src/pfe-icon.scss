@@ -31,9 +31,9 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   position: relative;
   display:  inline-block;
   // Supports sizing while preserving aspect ratio (despite layout)
-  width:    calc(#{pfe-local(Size)} + #{pfe-local(Padding)}) !important;
+  max-width:    calc(#{pfe-local(Size)} + (#{pfe-local(Padding)} * 2));
   width:    fit-content !important;
-  height:    calc(#{pfe-local(Size)} + #{pfe-local(Padding)}) !important;
+  max-height:    calc(#{pfe-local(Size)} + (#{pfe-local(Padding)} * 2));
   height:   fit-content !important;
   line-height: 0;
 

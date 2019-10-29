@@ -87,7 +87,7 @@ tags = [ "develop" ]
 2. `npm run build`
 3. Need to test the docs first?
     2. `cd /docs`
-    3. `hugo server -D`
+    3. `hugo server`
 4. `npm run deploy-docs`
     4. Create compiled assets
     5. Builds & deploys storybook to [https://patternfly.org/patternfly-elements/demo](https://patternfly.org/patternfly-elements/demo)

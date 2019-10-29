@@ -86,7 +86,7 @@
         -ms-grid-column-span: 1 !important;
     }
     :not([pfe-icon=web-mobile-menu]):not([is_nested]).pfe-navigation-item-1 .pfe-navigation-item__tray.pfe-navigation-item {
-        color: #151515 !important;
+        color: #{pfe-color(ui-complement)} !important;
     }
     [pfe-icon=web-mobile-menu]:not([show_links]).pfe-navigation-item-3 .pfe-navigation__main .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0 !important;
@@ -132,11 +132,11 @@ pfe-navigation-item {
 @media (min-width: 1039px) {
     pfe-navigation-item {
         [slot="trigger"] > a.active {
-            color: #fff;
+            color: #{pfe-color(ui-base--text)} !important;
         }
         &.expanded {
             [slot="trigger"] > a.active {
-                color: #333;
+                color: #{pfe-color(surface--lightest--text)};
             }
         }
     }
@@ -173,7 +173,7 @@ pfe-navigation-item {
         &.expanded {
             .pfe-navigation-item__trigger {
                 pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
-                    flood-color: #151515 !important;
+                    flood-color: #{pfe-color(ui-complement)} !important;
                 }
             }
         }
@@ -190,7 +190,7 @@ pfe-navigation-item {
             max-height: 20px;
         }
         pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
-            flood-color: #fff !important;
+            flood-color: #{pfe-color(surface--lightest)} !important;
         }
     }
 
@@ -352,11 +352,11 @@ pfe-navigation-item {
         }
 
         a {
-            color: var(--pfe-theme--color--text, #151515);
+            color: #{pfe-color(ui-complement)};
             text-decoration: underline;
 
             &:hover {
-                color: var(--pfe-theme--color--text, #151515);
+                color: #{pfe-color(ui-complement)};
                 text-decoration: none;
             }
 

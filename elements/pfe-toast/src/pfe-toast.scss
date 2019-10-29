@@ -11,8 +11,14 @@
   --pfe-toast__container--BoxShadow: rgba(3, 3, 3, 0.13) 0px 3px 7px 3px, rgba(3, 3, 3, 0.12) 0px 11px 24px 16px;
   --pfe-toast__container--Color: #151515;
   --pfe-toast__container--Padding: 1rem;
+  --pfe-toast__close--svg--Fill: #151515;
+  --pfe-toast__close--svg--hover--Fill: #151515;
   --pfe-toast__close--svg--Height: 12px;
   --pfe-toast__close--svg--Width: 12px;
+  --pfe-toast__close--PaddingTop: 0;
+  --pfe-toast__close--PaddingRight: 0;
+  --pfe-toast__close--PaddingBottom: 0;
+  --pfe-toast__close--PaddingLeft: 0;
 
   // flex parent props
   align-items: stretch;
@@ -86,9 +92,16 @@
     border: none;
     cursor: pointer;
     margin: 0;
+    padding: var(--pfe-toast__close--PaddingTop) var(--pfe-toast__close--PaddingRight) var(--pfe-toast__close--PaddingBottom) var(--pfe-toast__close--PaddingLeft); 
+    
     & > svg {
+      fill: var(--pfe-toast__close--svg--Fill);
 			height: var(--pfe-toast__close--svg--Height);
-			width: var(--pfe-toast__close--svg--Width);
+      width: var(--pfe-toast__close--svg--Width);
+
+      &:hover {
+        fill: var(--pfe-toast__close--svg--hover--Fill);
+      }
 		}
   }
 }

@@ -98,10 +98,12 @@
       fill: var(--pfe-toast__close--svg--Fill);
 			height: var(--pfe-toast__close--svg--Height);
       width: var(--pfe-toast__close--svg--Width);
-
-      &:hover {
+    }
+    
+    &:hover {
+      & > svg {
         fill: var(--pfe-toast__close--svg--hover--Fill);
       }
-		}
+    }
   }
 }

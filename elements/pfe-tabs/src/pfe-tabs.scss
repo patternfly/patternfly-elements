@@ -65,7 +65,7 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
       .tabs {
         flex-direction: column;
         width: 22.22%;
-        border-right: 1px solid #{pfe-local(BorderColor)};
+        border-right: 1px solid #{pfe-color(surface--border)};
         border-bottom: 0;
       }
 

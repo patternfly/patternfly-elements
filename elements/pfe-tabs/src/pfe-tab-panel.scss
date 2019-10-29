@@ -19,6 +19,9 @@ $LOCAL: tabs;
     border-right:  #{pfe-local($cssvar: BorderRight, $region: panel, $fallback: 0)};
     border-bottom: #{pfe-local($cssvar: BorderBottom, $region: panel, $fallback: 0)};
     border-left:   #{pfe-local($cssvar: BorderLeft, $region: panel, $fallback: 0)};
+    @include browser-query(ie11) {
+      padding: 1em;
+    }
   }
 }
 
@@ -51,12 +54,16 @@ $LOCAL: tabs;
 /// ===========================================================================
 :host([on="dark"]) {
   @include pfe-theme($theme: "dark");
-	color: #{pfe-colors(text--on-dark)};
+  @include browser-query(ie11) {
+    color: #{pfe-color(text--on-dark)};
+  }
 }
 
 :host([on="light"]) {
   @include pfe-theme($theme: "light");
-	color: #{pfe-colors(text)};
+  @include browser-query(ie11) {
+    color: #{pfe-color(text)};
+  }
 }
 
 :host([hidden]) {

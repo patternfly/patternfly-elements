@@ -47,7 +47,7 @@ tags = [ "develop" ]
 
 <img src="/version_storybook.png" width="450"/>
 
-10. `git add * && git commit -m "Changelog, bump version in docs"`
+10. `git add * && git commit -m "chore(bump): bump version in docs"`
     12. Commit changes, don't push
 
 

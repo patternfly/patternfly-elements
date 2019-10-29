@@ -190,7 +190,7 @@ pfe-navigation-item {
             max-height: 20px;
         }
         pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
-            flood-color: #{pfe-color(surface--lightest)} !important;
+            flood-color: #{pfe-color(surface--darkest--text)} !important;
         }
     }
 

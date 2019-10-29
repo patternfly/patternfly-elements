@@ -126,13 +126,18 @@ pfe-navigation-item {
         &:focus {
             text-decoration: none; //Override bootstrap.
         }
-        &.active {
+
+    }
+}
+@media (min-width: 1039px) {
+    pfe-navigation-item {
+        [slot="trigger"] > a.active {
             color: #fff;
         }
-    }
-    &.expanded {
-        [slot="trigger"] > a.active {
-            color: #333;
+        &.expanded {
+            [slot="trigger"] > a.active {
+                color: #333;
+            }
         }
     }
 }
@@ -166,7 +171,6 @@ pfe-navigation-item {
             display: block !important;
         }
         &.expanded {
-            background-color: #fff;
             .pfe-navigation-item__trigger {
                 pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
                     flood-color: #151515 !important;

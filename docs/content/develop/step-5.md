@@ -74,7 +74,7 @@ tags = [ "develop" ]
 
 1. Create a PR
 2. Get someone to review 
-3. Merge the release branch [pull request](https://github.com/patternfly/patternfly-elements/pulls) into master
+3. Merge the release branch [pull request](https://github.com/patternfly/patternfly-elements/pulls) into master.  Note: this must be a regular merge.  _Do not squash!_
 4. **Add release notes to the [tag](https://github.com/patternfly/patternfly-elements/releases) in Github**
 
 

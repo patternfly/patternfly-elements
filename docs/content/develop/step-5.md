@@ -59,7 +59,7 @@ tags = [ "develop" ]
 
     1. Create release branch
     2. Create compiled assets and commit them
-    3. Uses learna to guess at what the next release will be
+    3. Uses [lerna](https://lerna.js.org) to guess at what the next release will be
         1. **Choose "custom prerelease" (for now)**
         2. It bumps the version numbers inside the package.json files in the components (currently all components are bumped, will fix)
     4. Pushes the branch

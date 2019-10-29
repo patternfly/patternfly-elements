@@ -18,7 +18,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/pfe-page-status.js",
+  "main": "./dist/pfe-page-status.umd.js",
+  "module": "./dist/pfe-page-status.js",
+  "unpkg": "./dist/pfe-page-status.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

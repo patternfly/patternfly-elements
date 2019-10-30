@@ -45,4 +45,4 @@ If there is time, these features are nice-to-haves.
 These are some things we would like to add later to enhance this component.
 - Improve mobile experience
 - Slot for icon
-- Color/style varients via attributes
+- Color/style variants via attributes

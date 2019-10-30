@@ -34,6 +34,22 @@
             </pfe-autocomplete>
           </template>
         </test-fixture>
+
+        <test-fixture id="hasAriaLabel">
+          <template>
+            <pfe-autocomplete>
+              <input placeholder="Enter your search term" aria-label="Buscar" />
+            </pfe-autocomplete>
+          </template>
+        </test-fixture>
+
+        <test-fixture id="hasAlternateAriaAnnounceTemplate">
+          <template>
+            <pfe-autocomplete aria-announce-template="Hey! There are ${numOptions} options.">
+              <input placeholder="Enter your search term" />
+            </pfe-autocomplete>
+          </template>
+        </test-fixture>
     </div>
     <script type="module">
     import * as MockInteractions from "/components/@polymer/iron-test-helpers/mock-interactions.js";
@@ -212,26 +228,61 @@
         });
 
         it("should trigger a console warning if there is no light DOM", done => {
-          const spy = sinon.spy(console, "warn");
+          const spy = sinon.spy(console, "error");
           const autocompleteNoLightDOM = fixture('nolightdom');
           autocompleteNoLightDOM.innerHTML = "";
 
           flush(() => {
             sinon.assert.calledWith(spy,`pfe-autocomplete: There must be a input tag in the light DOM`);
-            console.warn.restore();
+            console.error.restore();
             done();
           });
         });
 
         it("should trigger a console warning if there isn't a input as the first child of the light DOM", done => {
-          const spy = sinon.spy(console, "warn");
+          const spy = sinon.spy(console, "error");
           const autocompleteBadLightDOM = fixture("badlightdom");
 
           flush(() => {
             sinon.assert.calledWith(spy, `pfe-autocomplete: The only child in the light DOM must be an input tag`);
-            console.warn.restore();
+            console.error.restore();
             done();
           })
+        });
+
+        it("should use the provided aria-label instead of the fallback in the component", done => {
+          const autocompleteHasAriaLabel = fixture("hasAriaLabel");
+
+          flush(() => {
+            const input = autocompleteHasAriaLabel._input;
+            expect(input.getAttribute("aria-label")).to.eql("Buscar");
+            done();
+          });
+        });
+
+        it("should allow an alternate aria-announce-template", done => {
+          const hasAlternateAriaAnnounceTemplate = fixture("hasAlternateAriaAnnounceTemplate");
+          const templateText = hasAlternateAriaAnnounceTemplate.getAttribute("aria-announce-template");
+
+          flush(() => {
+            const input = hasAlternateAriaAnnounceTemplate._input;
+            const droplistElem = hasAlternateAriaAnnounceTemplate._dropdown;
+
+            droplistElem.data = ['option 1', 'option 2'];
+            droplistElem.reflow = true;
+            droplistElem.open = true;
+            input.focus();
+
+            input.addEventListener('keyup', (e) => {
+              window.setTimeout(() => {
+                const ariaAnnounceText = droplistElem.shadowRoot.querySelector(".suggestions-aria-help.sr-only").textContent;
+                expect(ariaAnnounceText).to.be.eql("Hey! There are 2 options.");
+                done();
+              }, 0);
+            });
+
+            MockInteractions.keyUpOn(input, 40);
+          });
         });
       });
     </script>

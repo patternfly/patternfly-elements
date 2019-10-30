@@ -6,8 +6,8 @@ $LOCAL: toast;
   --pfe-toast--Top: 50px;
   --pfe-toast--MaxWidth: 500px;
   --pfe-toast--MinWidth: 250px;
-  --pfe-toast--Right: 50px;
   --pfe-toast--Right--offset: 50px; // needed with box-shadow
+  --pfe-toast--Right: calc(-1 * (#{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)}));
   --pfe-toast__container--BackgroundColor: #{pfe-color(surface--lightest)};
   // --pfe-toast__container--BoxShadow: pfe-var(box-shadow--lg);
   --pfe-toast__container--BoxShadow: rgba(3, 3, 3, 0.13) 0px 3px 7px 3px, rgba(3, 3, 3, 0.12) 0px 11px 24px 16px;
@@ -31,8 +31,9 @@ $LOCAL: toast;
   
   // animation
   position: absolute;
-  right: calc(-1 * (#{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)}));
+  right: #{pfe-local(Right)};
   top: #{pfe-local(Top)};
+  //transition: right #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
   transition: right 0.5s ease-in-out;
   will-change: right;
   
@@ -45,11 +46,11 @@ $LOCAL: toast;
 }
 
 :host(.open) {
-  right: #{pfe-local(Right)};
+  --pfe-toast--Right: 50px;
 }
 
 :host(:not(.open)){
-  right: calc(-1 * (#{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)}));
+  --pfe-toast--Right: calc(-1 * (#{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)}));
 }
 
 ::slotted(:first-child) {
@@ -98,14 +99,14 @@ $LOCAL: toast;
     padding: pfe-local($cssvar: Padding, $region: close);
     
     & > svg {
-      fill: var(--pfe-toast__close--svg--Fill);
-      height: var(--pfe-toast__close--svg--Height);
-      width: var(--pfe-toast__close--svg--Width);
+      fill: pfe-local($cssvar: svg--Fill, $region: close);
+      height: pfe-local($cssvar: svg--Height, $region: close);
+      width: pfe-local($cssvar: svg--Width, $region: close);
     }
     
     &:hover {
       & > svg {
-        fill: var(--pfe-toast__close--svg--hover--Fill);
+        fill: pfe-local($cssvar: svg--Fill--hover, $region: close);
       }
     }
   }

@@ -68,7 +68,6 @@ class PfeToast extends PFElement {
 
     // get/set state
     this.doesAutoDismiss = this.hasAttribute("auto-dismiss");
-    this.autoDismissDelay = this.getAttribute("auto-dismiss") ? this.getAttribute("auto-dismiss") : '3000';
     this.setAttribute("hidden", "");
 
     // attach listeners
@@ -101,7 +100,7 @@ class PfeToast extends PFElement {
     if(this.doesAutoDismiss){
       setTimeout(() => {
         this.close();
-      }, this.autoDismissDelay);
+      }, PfeToast.toMilliseconds(this.getAttribute("auto-dismiss")));
     }
 
     return this;
@@ -133,6 +132,13 @@ class PfeToast extends PFElement {
     this.isOpen ? this.close(event) : this.open(event);
     return this;
   }
+
+  static toMilliseconds(value){
+    // set default if time not provided
+    const digits = value.match(/\d+/g) || [8000];
+    const unit = value.match(/\D+/g) || [];
+    return unit[0] === 's' ? digits[0] * 1000 : digits[0];
+  } 
 }
 
 PFElement.create(PfeToast);

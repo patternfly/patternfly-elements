@@ -2,10 +2,12 @@
 
 Tag: [v1.0.0-prerelease.28](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.28)
 
-- []() fix: adding a mutation observer to pfe-content-set so it works in Angular
-- []() feat: adding a schema to pfe-icon-panel #572
-- []() pfe-band layout rendering fix for bug in IE and Edge
-- []() fix: pfe-card cta alignment #560
+- [732ca3e](https://github.com/patternfly/patternfly-elements/commit/732ca3e6b3a5ba5756bcdd9696c05e7b1f9ed8be) fix: adding a mutation observer to pfe-content-set so it works in Angular
+- [5ca613d](https://github.com/patternfly/patternfly-elements/commit/5ca613d255f337abf84768fa1b965a52c785ac50) feat: adding a schema to pfe-icon-panel #572
+- [79614bc](https://github.com/patternfly/patternfly-elements/commit/79614bca9d3158b2c367251b1b17af6666894e27) fix: pfe-card cta alignment #560
+- [5800171](https://github.com/patternfly/patternfly-elements/commit/5800171f9f6afc95f832a01bce7f4eeb5c6717d7) fix: set pfe-band to private, until frameworks + ie11 support (#589)
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: build tasks and packages to represent new dist architecture
+- [](https://github.com/patternfly/patternfly-elements/commit/) pfe-band layout rendering fix for bug in IE and Edge (#470)
 
 ## Prerelease 27 ( 2019-10-25 )
 

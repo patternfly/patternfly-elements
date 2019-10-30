@@ -19,7 +19,12 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-navigation"
   },
-  "main": "./dist/pfe-navigation.js",
+  "main": "./dist/pfe-navigation.umd.js",
+  "module": "./dist/pfe-navigation.js",
+  "unpkg": "./dist/pfe-navigation.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

@@ -18,7 +18,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/pfe-collapse.js",
+  "main": "./dist/pfe-collapse.umd.js",
+  "module": "./dist/pfe-collapse.js",
+  "unpkg": "./dist/pfe-collapse.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

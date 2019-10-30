@@ -18,7 +18,12 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfelement"
   },
-  "main": "./dist/pfelement.js",
+  "main": "./dist/pfelement.umd.js",
+  "module": "./dist/pfelement.js",
+  "unpkg": "./dist/pfelement.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

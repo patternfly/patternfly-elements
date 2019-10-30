@@ -208,7 +208,7 @@ class PfeAutocomplete extends PFElement {
     let slotElems = slotNodes.filter(n => n.nodeType === Node.ELEMENT_NODE);
 
     if (slotElems.length === 0) {
-      console.warn(
+      console.error(
         `${PfeAutocomplete.tag}: There must be a input tag in the light DOM`
       );
 
@@ -218,7 +218,7 @@ class PfeAutocomplete extends PFElement {
     this._input = slotElems[0];
 
     if (this._input.tagName.toLowerCase() !== "input") {
-      console.warn(
+      console.error(
         `${PfeAutocomplete.tag}: The only child in the light DOM must be an input tag`
       );
 

@@ -1,4 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
+$LOCAL: toast;
 
 :host {
   // local variables
@@ -28,13 +29,13 @@
   
   // animation
   position: absolute;
-  right: calc(-1 * (var(--pfe-toast--MaxWidth) + var(--pfe-toast--Right--offset)));
-  top: var(--pfe-toast--Top);
+  right: calc(-1 * (#{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)}));
+  top: #{pfe-local(Top)};
   transition: right 0.5s ease-in-out;
   will-change: right;
   
-  max-width: var(--pfe-toast--MaxWidth); // media queries?
-  min-width: var(--pfe-toast--MinWidth);
+  max-width: #{pfe-local(MaxWidth)}; // media queries?
+  min-width: #{pfe-local(MinWidth)};
 }
 
 :host([hidden]) {
@@ -42,11 +43,11 @@
 }
 
 :host(.open) {
-  right: var(--pfe-toast--Right);
+  right: #{pfe-local(Right)};
 }
 
 :host(:not(.open)){
-  right: calc(-1 * (var(--pfe-toast--MaxWidth) + var(--pfe-toast--Right--offset)));
+  right: calc(-1 * (#{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)}));
 }
 
 ::slotted(:first-child) {
@@ -75,10 +76,10 @@
     flex-flow: row nowrap;
     justify-content: flex-start;
 
-    background-color: var(--pfe-toast__container--BackgroundColor);
-    box-shadow: var(--pfe-toast__container--BoxShadow);
-    color: var(--pfe-toast__container--Color);
-    padding: var(--pfe-toast__container--Padding);
+    background-color: pfe-local($cssvar: BackgroundColor, $region: container);
+    box-shadow: pfe-local($cssvar: BoxShadow, $region: container);
+    color: pfe-local($cssvar: Color, $region: container);
+    padding: pfe-local($cssvar: Padding, $region: container);
   }
   &__content {
     // flex child props
@@ -96,7 +97,7 @@
     
     & > svg {
       fill: var(--pfe-toast__close--svg--Fill);
-			height: var(--pfe-toast__close--svg--Height);
+      height: var(--pfe-toast__close--svg--Height);
       width: var(--pfe-toast__close--svg--Width);
     }
     

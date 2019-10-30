@@ -63,6 +63,7 @@ class PfeAutocomplete extends PFElement {
 
     this.loading = false;
     this.debounce = this.debounce || 300;
+    this._ariaAnnounceTemplate = "There are ${numOptions} suggestions. Use the up and down arrows to browse.";
 
     // clear button
     this._clearBtn = this.shadowRoot.querySelector(".clear-search");
@@ -229,7 +230,11 @@ class PfeAutocomplete extends PFElement {
     this._input.addEventListener("blur", this._closeDroplist.bind(this));
 
     this._input.setAttribute("role", "combobox");
-    this._input.setAttribute("aria-label", "Search");
+
+    if (!this._input.hasAttribute("aria-label")) {
+      this._input.setAttribute("aria-label", "Search");
+    }
+
     this._input.setAttribute("aria-autocomplete", "both");
     this._input.setAttribute("aria-haspopup", "true");
     this._input.setAttribute("type", "search");
@@ -237,6 +242,8 @@ class PfeAutocomplete extends PFElement {
     this._input.setAttribute("autocorrect", "off");
     this._input.setAttribute("autocapitalize", "off");
     this._input.setAttribute("spellcheck", "false");
+
+    this._dropdown._ariaAnnounceTemplate = this.getAttribute("aria-announce-template") || this._ariaAnnounceTemplate;
   }
 
   _inputChanged() {
@@ -465,8 +472,13 @@ class PfeSearchDroplist extends PFElement {
     this.reflow = "";
 
     let options = this.data;
+    let ariaAnnounceText = "";
 
-    this._ariaAnnounce.innerHTML = `There are ${options.length} suggestions. Use the up and down arrows to browse.`;
+    if (this._ariaAnnounceTemplate) {
+      ariaAnnounceText = this._ariaAnnounceTemplate.replace("${numOptions}", options.length);
+    }
+
+    this._ariaAnnounce.textContent = ariaAnnounceText;
     this._ariaAnnounce.setAttribute("aria-live", "polite");
 
     this._ul.innerHTML = `${options

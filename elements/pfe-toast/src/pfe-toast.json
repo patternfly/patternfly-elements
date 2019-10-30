@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Toast",
-  "description": "This element renders slotted content in a toast alert.",
+  "description": "This element renders slotted content in a container that slides in from the right of the screen.",
   "type": "object",
   "tag": "pfe-toast",
   "class": "pfe-toast",

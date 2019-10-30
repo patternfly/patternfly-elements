@@ -9,7 +9,7 @@
   --pfe-toast--Right--offset: 50px; // needed with box-shadow
   --pfe-toast__container--BackgroundColor: #fff;
   --pfe-toast__container--BoxShadow: rgba(3, 3, 3, 0.13) 0px 3px 7px 3px, rgba(3, 3, 3, 0.12) 0px 11px 24px 16px;
-  --pfe-toast__container--Color: #151515;
+  --pfe-toast__container--Color: #{pfe-color(text)};
   --pfe-toast__container--Padding: 1rem;
   --pfe-toast__close--svg--Fill: #{pfe-color(feedback--default--darkest)};
   --pfe-toast__close--svg--hover--Fill: #151515;

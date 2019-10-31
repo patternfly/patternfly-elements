@@ -1,0 +1,61 @@
+@import "../../pfe-sass/pfe-sass";
+
+pfe-navigation {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #{pfe-color(surface--darkest)} !important;
+    padding: 1em;
+
+    @media screen and (min-width: 960px) {
+        flex-direction: row;
+        align-items: center;
+
+        > pfe-navigation-item {
+            margin-left: 1em;
+        }
+    }
+
+    [slot="skip"] {
+        display: none;  
+    }
+    a {
+        color: #{pfe-color(ui-base--text)} !important;
+        text-decoration: none;
+        &:visited {
+            color: #{pfe-color(ui-base--text)} !important;
+        }
+    }
+    [slot="mobile-language"],
+    [slot="mobile-login"] {
+        display: none;
+    }
+}
+
+pfe-navigation-main {
+    display: block;
+    flex-grow: 1;
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        padding-left: 0;
+        margin: 0;
+
+        @media screen and (min-width: 960px) {
+            justify-content: space-around;
+            flex-direction: row;
+        }
+    }
+    li{
+        list-style-type: none;
+    }
+}
+
+pfe-navigation-item {
+    > * {
+        font-size: 16px;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+}

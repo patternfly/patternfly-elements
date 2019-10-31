@@ -37,8 +37,13 @@ $LOCAL: toast;
   transition: right 0.5s ease-in-out;
   will-change: right;
   
-  max-width: #{pfe-local(MaxWidth)}; // media queries?
+  max-width: #{pfe-local(MaxWidth)};
   min-width: #{pfe-local(MinWidth)};
+
+  @media only screen and (max-width: $pfe-global--grid-breakpoint--sm) {
+		max-width: calc(#{pfe-local(MaxWidth)} / 2);
+    min-width: calc(#{pfe-local(MinWidth)} / 2);
+  }
 }
 
 :host([hidden]) {

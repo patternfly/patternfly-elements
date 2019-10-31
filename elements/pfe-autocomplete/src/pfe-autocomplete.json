@@ -31,7 +31,7 @@
       "title": "Attributes",
       "type": "object",
       "properties": {
-        "debounceTimer": {
+        "debounce_timer": {
           "title": "Debounce",
           "description": "The amount of time that should pass before the next API call is made",
           "type": "string",

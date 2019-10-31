@@ -227,7 +227,7 @@
           }, 1000);
         });
 
-        it("should trigger a console warning if there is no light DOM", done => {
+        it("should trigger a console error if there is no light DOM", done => {
           const spy = sinon.spy(console, "error");
           const autocompleteNoLightDOM = fixture('nolightdom');
           autocompleteNoLightDOM.innerHTML = "";
@@ -239,7 +239,7 @@
           });
         });
 
-        it("should trigger a console warning if there isn't a input as the first child of the light DOM", done => {
+        it("should trigger a console error if there isn't a input as the first child of the light DOM", done => {
           const spy = sinon.spy(console, "error");
           const autocompleteBadLightDOM = fixture("badlightdom");
 

@@ -8,14 +8,14 @@
 
   <title>PatternFly Element | Navigation Demo</title>
 
-  <link rel="stylesheet" href="../../pfe-layouts/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-layouts/dist/pfe-base.css" />
 
   <noscript>
-    <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
   </noscript>
 
-  <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
-  <link href="../pfe-navigation--lightdom.css" rel="stylesheet">
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <link href="../dist/pfe-navigation--lightdom.css" rel="stylesheet">
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
@@ -24,19 +24,22 @@
 
   <script>
     require([
-      '../pfe-navigation.umd.js',
-      '../../pfe-band/pfe-band.umd.js',
-      '../../pfe-card/pfe-card.umd.js',
-      '../../pfe-cta/pfe-cta.umd.js'
+      '../dist/pfe-navigation.umd.js',
+      '../../pfe-band/dist/pfe-band.umd.js',
+      '../../pfe-card/dist/pfe-card.umd.js',
+      '../../pfe-cta/dist/pfe-cta.umd.js'
     ])
 
   </script>
+  <!-- <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" media="all" /> -->
+
 
   <noscript>
     <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    <link href="../pfe-navigation--noscript.css" rel="stylesheet">
   </noscript>
 
-  <!-- <script type="module" src="../pfe-navigation.js"></script> -->
+  <!-- <script type="module" src="../dist/pfe-navigation.js"></script> -->
 </head>
 
 <body unresolved>
@@ -49,9 +52,10 @@
       </ul>
     </div>
     <!-- Site logo -->
-    <div slot="logo" style="padding: 0 0 8px 0;line-height: 1;">
+    <div slot="logo">
       <a href="https://company.com">
         <img class="logo" src="https://via.placeholder.com/150x50.png" title="Company logo" />
+        <!-- <img class="logo" src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/logo.svg" width="200" title="Company logo" /> -->
       </a>
     </div>
     <!-- Search -->

@@ -15,16 +15,17 @@
     -->
     <script>
         require([
-          '../../pfe-cta/pfe-cta.umd.js',
-          '../pfe-card.umd.js'
+          '../../pfe-cta/dist/pfe-cta.umd.js',
+          '../dist/pfe-card.umd.js'
         ]);
     </script>
 
     <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+    <link href="../dist/pfe-card--lightdom.css" rel="stylesheet">
 
     <style>
       /* For demo only */
@@ -37,6 +38,13 @@
         margin: 0 16px 32px;
         min-width: 200px;
         width: calc(25% - 32px);
+      }
+      .button-series {
+        display: inline-block;
+      }
+      .button-series > *:not(first-child) {
+        display: inline-block;
+        margin-left: 15px;
       }
 
       h2[slot="pfe-card--header"] {
@@ -53,6 +61,10 @@
         --pfe-card__header--BackgroundColor: #0477a4;
         --pfe-card__header--Color: #fff;
       }
+
+      a {
+        color: var(--pfe-broadcasted--color--ui-link);
+      }
     </style>
 
   </head>
@@ -63,9 +75,14 @@
       <pfe-card pfe-color="lightest" class="custom-border">
         <h2 slot="pfe-card--header">Lightest card</h2>
         <p>This is the lightest pfe-card and <a href="#">a link</a>.</p>
-        <pfe-cta slot="pfe-card--footer">
-          <a href="#">Learn more</a>
-        </pfe-cta>
+        <div class="button-series" slot="pfe-card--footer">
+          <pfe-cta slot="pfe-card--footer" pfe-priority="secondary">
+            <a href="#">Try</a>
+          </pfe-cta>
+          <pfe-cta pfe-priority="primary">
+            <a href="#">Buy</a>
+          </pfe-cta>
+        </div>
       </pfe-card>
 
       <pfe-card pfe-color="lighter">
@@ -73,9 +90,11 @@
         <p>This is the light pfe-card and <a href="#">a link</a>.</p>
         <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
         <p>Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
-        <pfe-cta slot="pfe-card--footer">
-          <a href="#">Learn more</a>
-        </pfe-cta>
+        <div slot="pfe-card--footer">
+          <pfe-cta pfe-priority="primary">
+            <a href="#">Buy</a>
+          </pfe-cta>
+        </div>
       </pfe-card>
 
       <pfe-card>
@@ -138,7 +157,7 @@
       <pfe-card pfe-color="lighter" class="custom-header-background">
         <h2 slot="pfe-card--header">Imaged card with side overflow + header</h2>
         <img pfe-overflow="top right left" src="https://placekitten.com/500/250"/>
-        <p style="margin-top: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis, porro?</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis, porro?</p>
         <pfe-cta slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>

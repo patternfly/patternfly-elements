@@ -131,7 +131,7 @@ if (!("path" in Event.prototype)) {
     });
 }
 
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeNavigationItem from "./pfe-navigation-item.js";
 import PfeNavigationMain from "./pfe-navigation-main.js";
 
@@ -209,13 +209,13 @@ class PfeNavigation extends PFElement {
       if (this.children.length) {
         // If only one value exists in the array, it starts at that size and goes up
         this.breakpoints = {
-          main: [0, 1199], // visible from 0 - 1200px
-          search: [768],   // visible from 768px +
-          "mobile-search": [0, 767],
-          language: [768],
-          "mobile-language": [0, 767],
-          login: [768],
-          "mobile-login": [0, 767]
+          main: [0, 1023], // visible from 0 - 1200px
+          search: [640],   // visible from 768px +
+          "mobile-search": [0, 639],
+          language: [640],
+          "mobile-language": [0, 639],
+          login: [640],
+          "mobile-login": [0, 639]
         };
 
         // Kick off the initialization of the light DOM elements

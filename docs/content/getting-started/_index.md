@@ -37,16 +37,15 @@ There are a few options:
 2. Include the PatternFly Element and its dependencies on the page(s) or within the app.
 
 	```html
-	import '@patternfly/pfe-card/pfe-card.js';
-	import '@patternfly/pfe-cta/pfe-cta.js';
+	import '@patternfly/pfe-card/dist/pfe-card.js';
+	import '@patternfly/pfe-cta/dist/pfe-cta.js';
 	```
 
 3. Use [require.js](https://requirejs.org/) JavaScript file and module loader.
 	- Learn more about [Polyfills](/getting-started/polyfills)
 3. Load individual PatternFly Element scripts, but bundle the polyfills with the base `pfelement.js` file.
-	1.  All elements are based off of pfelement.js so including the polyfills with this one file would mean you only need to include the pfelement.js file before you include anything else.
+	1.  All elements are based off of `pfelement.js` so including the polyfills with this one file would mean you only need to include the `pfelement.js` file before you include anything else.
 4. Bundle all of the scripts together into one rollup, and include that.
-
 
 
 
@@ -90,8 +89,8 @@ You can use PatternFly Elements alongside other standard HTML markup in your app
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import '@patternfly/pfe-card/pfe-card.js';
-import '@patternfly/pfe-cta/pfe-cta.js';
+import '@patternfly/pfe-card/dist/pfe-card.js';
+import '@patternfly/pfe-cta/dist/pfe-cta.js';
 
 class App extends Component {
   render() {

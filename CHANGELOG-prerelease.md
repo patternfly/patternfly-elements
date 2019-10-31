@@ -6,7 +6,8 @@ Tag: [v1.0.0-prerelease.28](https://github.com/patternfly/patternfly-elements/re
 - [5ca613d](https://github.com/patternfly/patternfly-elements/commit/5ca613d255f337abf84768fa1b965a52c785ac50) feat: adding a schema to pfe-icon-panel #572
 - [79614bc](https://github.com/patternfly/patternfly-elements/commit/79614bca9d3158b2c367251b1b17af6666894e27) fix: pfe-card cta alignment #560
 - [5800171](https://github.com/patternfly/patternfly-elements/commit/5800171f9f6afc95f832a01bce7f4eeb5c6717d7) fix: set pfe-band to private, until frameworks + ie11 support (#589)
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: build tasks and packages to represent new dist architecture
+- [a4b2c27](https://github.com/patternfly/patternfly-elements/commit/a4b2c2751840265831329729ed577651b7099388) fix: build tasks and packages to represent new dist architecture
+- [5103c95](https://github.com/patternfly/patternfly-elements/commit/5103c950d8d0df1769ffe2291a46f1c867dc0b8a) feat: pfe-navigation style updates
 - []() fix: pfe-tabs in IE11
 
 ## Prerelease 27 ( 2019-10-25 )

@@ -36,7 +36,7 @@ class PfeToast extends PFElement {
     this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
     this._content = this.shadowRoot.querySelector(`.${this.tag}__content`);
     this._toastCloseButton = this.shadowRoot.querySelector(`.${this.tag}__close`);
-    
+
     // events
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
@@ -59,7 +59,7 @@ class PfeToast extends PFElement {
 
       this.setAttribute("role", "alert");
       this.setAttribute("aria-live", "polite");
-      this.setAttribute("aria-atomic", "true"); 
+      this.setAttribute("aria-atomic", "true");
     }
   }
 
@@ -72,10 +72,12 @@ class PfeToast extends PFElement {
 
     // attach listeners
     this._toastCloseButton.addEventListener("click", this.close);
+    this.addEventListener("keydown", this._keydownHandler);
   }
 
   disconnectedCallback() {
     this._toastCloseButton.removeEventListener("click", this.close);
+    this.removeEventListener("keydown", this._keydownHandler);
   }
 
   open(event) {
@@ -87,9 +89,9 @@ class PfeToast extends PFElement {
 
     this.removeAttribute("hidden");
     setTimeout(() => {
-      this.classList.add("open");     
+      this.classList.add("open");
     }, 500);
-    
+
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:open`, {
         detail: {},
@@ -97,10 +99,10 @@ class PfeToast extends PFElement {
       })
     );
 
-    if(this.doesAutoDismiss){
+    if (this.doesAutoDismiss) {
       setTimeout(() => {
         this.close();
-      }, PfeToast.toMilliseconds(this.getAttribute("auto-dismiss")));
+      }, this._toMilliseconds(this.getAttribute("auto-dismiss")));
     }
 
     return this;
@@ -124,7 +126,7 @@ class PfeToast extends PFElement {
         bubbles: true
       })
     );
-    
+
     return this;
   }
 
@@ -133,12 +135,32 @@ class PfeToast extends PFElement {
     return this;
   }
 
-  static toMilliseconds(value){
-    // set default if time not provided
-    const digits = value.match(/\d+/g) || [8000];
-    const unit = value.match(/\D+/g) || [];
-    return unit[0] === 's' ? digits[0] * 1000 : digits[0];
-  } 
+  _toMilliseconds(value) {
+    // set default delay if none provided
+    const digits = value.match(/\d+/) || [8000];
+    const unit = value.match(/\D+/) || '';
+    return unit[0] === 's' ? (digits[0] * 1000) : digits[0];
+  }
+
+  _keydownHandler(event) {
+    let target = event.target || window.event.srcElement;
+    let key = event.key || event.keyCode;
+    switch (key) {
+      case "Escape":
+      case "Esc":
+      case 27:
+        this.close(event);
+        break;
+      case "Enter":
+      case 13:
+        if (target === this._toastCloseButton) {
+          this.close(event);
+        }
+        break;
+      default:
+        break;
+    }
+  }
 }
 
 PFElement.create(PfeToast);

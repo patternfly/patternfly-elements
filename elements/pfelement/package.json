@@ -3,7 +3,10 @@
   "pfelement": {
     "className": "PFElement",
     "elementName": "pfelement",
-    "assets": [ "pfelement.css" ]
+    "assets": [
+      "pfelement.*css",
+      "pfelement.*css.map"
+    ]
   },
   "version": "1.0.0-prerelease.27",
   "publishConfig": {

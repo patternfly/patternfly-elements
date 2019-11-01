@@ -33,7 +33,7 @@ We'll also need to update `/demo/index.html` so that the user's name is passed i
     <title>PatternFly Element | pfe-cool-element Demo</title>
 
     <noscript>
-      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
     </noscript>
 
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">

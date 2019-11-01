@@ -2,7 +2,11 @@
   "name": "@patternfly/pfelement",
   "pfelement": {
     "className": "PFElement",
-    "elementName": "pfelement"
+    "elementName": "pfelement",
+    "assets": [
+      "pfelement.*css",
+      "pfelement.*css.map"
+    ]
   },
   "version": "1.0.0-prerelease.27",
   "publishConfig": {

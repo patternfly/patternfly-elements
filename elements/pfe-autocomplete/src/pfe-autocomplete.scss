@@ -7,7 +7,7 @@
 
   display: block;
   position: relative;
-  font-family: var(--pfe-theme--font-family);
+  font-family: #{pfe-var(font-family)};
 }
 
 .sr-only {

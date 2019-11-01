@@ -10,9 +10,6 @@ $LOCAL: autocomplete;
   position: relative;
   font-family: #{pfe-var(font-family)};
 }
-.test {
-  color: map-get($pfe-vars, ui--border-width);
-}
 
 .sr-only {
   @include pfe-sr-only;

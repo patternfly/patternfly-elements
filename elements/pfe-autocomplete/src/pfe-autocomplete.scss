@@ -22,7 +22,7 @@
     padding-left: 10px;
     padding-right: 30px;
     border-radius: pfe-var(border-radius);
-    background-color: #fff;
+    background-color: #{pfe-local(BackgroundColor)};
     border: 1px solid #{pfe-color( surface--border)};
     font-size: 16px; /*1rem*/
     height: 40px;

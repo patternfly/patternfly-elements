@@ -45,13 +45,19 @@ class PfeToast extends PFElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     this.doesAutoDismiss = !!newValue;
+    this._setAccessibility();
+  }
 
+  _setAccessibility() {
     if (!this.doesAutoDismiss) {
       this.removeAttribute("aria-live");
       this.removeAttribute("aria-atomic");
 
       this.setAttribute("role", "alertdialog");
-      this.setAttribute("aria-label", "alert dialog"); // need a better description
+      // default if none provided
+      if (!this.hasAttribute("aria-label")) {
+        this.setAttribute("aria-label", "Alert dialog");
+      }
       this.setAttribute("aria-describedby", `${this.tag}__content`);
     } else {
       this.removeAttribute("aria-label");
@@ -68,6 +74,7 @@ class PfeToast extends PFElement {
 
     // get/set state
     this.doesAutoDismiss = this.hasAttribute("auto-dismiss");
+    this._setAccessibility();
     this.setAttribute("hidden", "");
 
     // attach listeners

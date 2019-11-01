@@ -17,12 +17,16 @@ class PfeToast extends PFElement {
     return "pfe-toast.scss";
   }
 
+  get closeLabel() {
+    return this.getAttribute("close-label") || "Close";
+  }
+
   static get PfeType() {
     return PFElement.PfeTypes.Container;
   }
 
   static get observedAttributes() {
-    return ["auto-dismiss"];
+    return ["auto-dismiss", "close-label"];
   }
 
   constructor() {
@@ -44,8 +48,15 @@ class PfeToast extends PFElement {
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
-    this.doesAutoDismiss = !!newValue;
-    this._setAccessibility();
+    switch (attr) {
+      case 'close-label':
+        this._toastCloseButton.setAttribute("aria-label", this.closeLabel);
+      case 'auto-dismiss':
+        this.doesAutoDismiss = !!newValue;
+        this._setAccessibility();
+      default:
+        break;
+    }
   }
 
   _setAccessibility() {
@@ -74,6 +85,7 @@ class PfeToast extends PFElement {
 
     // get/set state
     this.doesAutoDismiss = this.hasAttribute("auto-dismiss");
+    this._toastCloseButton.setAttribute("aria-label", this.closeLabel);
     this._setAccessibility();
     this.setAttribute("hidden", "");
 

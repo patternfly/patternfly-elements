@@ -1,13 +1,17 @@
 @import "../../pfe-sass/pfe-sass";
+$LOCAL: autocomplete;
 
 :host {
   --pfe-autocomplete--BoxShadow: pfe-var(box-shadow, inset);
   --pfe-autocomplete--BackgroundColor: pfe-color(surface--lightest);
-  --pfe-autocomplete--Border: #{pfe-var(ui, border-width)} #{pfe-var(ui, border-style)} #{pfe-color(surface--border)};
+  --pfe-autocomplete--Border:  #{pfe-var(border-width, ui)}  #{pfe-var(border-style, ui)}  #{pfe-color(surface--border)};
 
   display: block;
   position: relative;
   font-family: #{pfe-var(font-family)};
+}
+.test {
+  color: map-get($pfe-vars, ui--border-width);
 }
 
 .sr-only {

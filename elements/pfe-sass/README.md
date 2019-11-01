@@ -26,7 +26,7 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
 ```
     // 1. set up local vars equal to theme vars & fallbacks
     :host {
-      --pfe-cta--Color: var(theme--ui-link, #06c);
+      --pfe-cta--Color: var(theme--link, #06c);
     }
 
     // 2. Use color property once, map to local var value
@@ -39,13 +39,13 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
 
     // 3. Use broadcasted variables as needed, with theme fallback after other declarations
     :host {
-      --pfe-cta--Color: var(broadcasted--ui-link, var(theme--ui-link, #06c));   
+      --pfe-cta--Color: var(broadcasted--link, var(theme--link, #06c));   
     }
 
     // 4. Override broadcasted last
     :host([color="accent"]) {
       --pfe-cta--BackgroundColor: var(theme--surface--accent);
-      --pfe-cta--Color: var(theme--surface-accent--ui-link);
+      --pfe-cta--Color: var(theme--surface-accent--link);
     }
 ```
 
@@ -58,9 +58,9 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
 ```css
 .on-dark {
  --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark, #fff);
- --pfe-broadcasted--color--ui-link:  var(--pfe-theme--color--ui-link--on-dark, #73bcf7);
- --pfe-broadcasted--color--ui-link--hover: var(--pfe-theme--color--ui-link--on-dark--hover, #2b9af3);
- --pfe-broadcasted--color--ui-link--visited:var(--pfe-theme--color--ui-link--on-dark--visited, #73bcf7);
- --pfe-broadcasted--color--ui-link--focus: var(--pfe-theme--color--ui-link--on-dark--focus, #2b9af3);
+ --pfe-broadcasted--color--link:  var(--pfe-theme--color--link--on-dark, #73bcf7);
+ --pfe-broadcasted--color--link--hover: var(--pfe-theme--color--link--on-dark--hover, #2b9af3);
+ --pfe-broadcasted--color--link--visited:var(--pfe-theme--color--link--on-dark--visited, #73bcf7);
+ --pfe-broadcasted--color--link--focus: var(--pfe-theme--color--link--on-dark--focus, #2b9af3);
 }
 ```

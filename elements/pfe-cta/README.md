@@ -42,7 +42,7 @@ We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe
 ```
     // 1. set up local vars equal to theme vars & fallbacks
     :host {
-      --pfe-cta--Color: var(--pfe-theme--ui-link, #06c);
+      --pfe-cta--Color: var(--pfe-theme--link, #06c);
     }
 
     // 2. Use color property once, map to local var value
@@ -55,7 +55,7 @@ We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe
 
     // 3. Use broadcasted variables as needed, with theme fallback after other declarations
     :host {
-      --pfe-cta--Color: var(--pfe-broadcasted--ui-link, var(--pfe-theme--ui-link, #06c));
+      --pfe-cta--Color: var(--pfe-broadcasted--link, var(--pfe-theme--link, #06c));
     }
 
     // 4. Override broadcasted last
@@ -89,9 +89,9 @@ Available hooks for styling calls-to-action include:
 | `--pfe-cta--BorderColor` | transparent |
 | `--pfe-cta--BorderColor--hover` | transparent |
 | `--pfe-cta--BorderColor--focus` | transparent |
-| `--pfe-cta--Color` | var(--pfe-theme--color--ui-link, #06c) |
-| `--pfe-cta--Color--hover` | var(--pfe-theme--color--ui-link--hover, #003366) |
-| `--pfe-cta--Color--focus` | var(--pfe-theme--color--ui-link--focus, #003366) |
+| `--pfe-cta--Color` | var(--pfe-theme--color--link, #06c) |
+| `--pfe-cta--Color--hover` | var(--pfe-theme--color--link--hover, #003366) |
+| `--pfe-cta--Color--focus` | var(--pfe-theme--color--link--focus, #003366) |
 | `--pfe-cta--TextDecoration` | none |
 | `--pfe-cta--TextDecoration--hover` | none |
 | `--pfe-cta--TextDecoration--focus` | none |

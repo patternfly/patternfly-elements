@@ -49,10 +49,10 @@
     padding: 60px 15px;
     background: #222;
     --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark, yellow);
-    --pfe-broadcasted--color--ui-link: var(--pfe-theme--color--ui-link--on-dark, red);
-    --pfe-broadcasted--color--ui-link--hover: var(--pfe-theme--color--ui-link--on-dark--hover, orange);
-    --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--ui-link--on-dark--visited, pink);
-    --pfe-broadcasted--color--ui-link--focus: var(--pfe-theme--color--ui-link--on-dark--focus, orange);
+    --pfe-broadcasted--color--link: var(--pfe-theme--color--link--on-dark, red);
+    --pfe-broadcasted--color--link--hover: var(--pfe-theme--color--link--on-dark--hover, orange);
+    --pfe-broadcasted--color--link--visited: var(--pfe-theme--color--link--on-dark--visited, pink);
+    --pfe-broadcasted--color--link--focus: var(--pfe-theme--color--link--on-dark--focus, orange);
   }
 
   .custom-saturated-band {

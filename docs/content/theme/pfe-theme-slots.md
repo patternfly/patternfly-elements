@@ -269,7 +269,7 @@ Theme variables exist so that when a user changes a system property such as colo
 
 Several functions exist in the `pfe-sass` component to make it easier to theme individual components you are building!
     
-1. **Color**:  Rather than using only Sass variables `$red` or hexidecimal colors like `#c00`, please use the `pfe-color()` function along with a theme variable, i.e. `pfe-color(ui-link)`. Occasionally you may have to wrap interpolation syntax `#{ }` around the function to allow Sass to compile, i.e. `#{pfe-color(ui-link)}`. 
+1. **Color**:  Rather than using only Sass variables `$red` or hexidecimal colors like `#c00`, please use the `pfe-color()` function along with a theme variable, i.e. `pfe-color(link)`. Occasionally you may have to wrap interpolation syntax `#{ }` around the function to allow Sass to compile, i.e. `#{pfe-color(link)}`. 
     
 
     * This function does some heavy-lifting by looking up the `$pfe-colors: ()` map and returning namespaced CSS variables for the [broadcasted color](#broadcasted) (should it be passed down from a dark container), the theme color, and then a fallback color in that order: 
@@ -277,7 +277,7 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
 
     ```
     :host {
-       color: pfe-color(ui-link);
+       color: pfe-color(link);
     }
     ```   
 
@@ -285,7 +285,7 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
 
      ```css
      :host {
-         color: var(--pfe-broadcasted--color--ui-link, var(--pfe-theme--color--ui-link, #06c));
+         color: var(--pfe-broadcasted--color--link, var(--pfe-theme--color--link, #06c));
      }
      ```
   
@@ -321,7 +321,7 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
     ```
     :host {
          --pfe-cta--BorderRadius: 0;
-         --pfe-cta--Color:  pfe-color(ui-link);
+         --pfe-cta--Color:  pfe-color(link);
     }
     ```
        
@@ -372,7 +372,7 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
     // 1. Create local variable. Set value using color
     // function to look up theme variables.
     :host {
-      --pfe-local--Color: pfe-color(ui-link);
+      --pfe-local--Color: pfe-color(link);
     }
   
   
@@ -391,10 +391,10 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
   
     // 4. Override broadcasted last
     [on="dark"] {
-      --pfe-local--Color: pfe-var(ui-link--on-dark);
+      --pfe-local--Color: pfe-var(link--on-dark);
     }
     [color="accent"] {
-      --pfe-local--Color: pfe-var(accent--ui-link);
+      --pfe-local--Color: pfe-var(accent--link);
     }
     ```
 
@@ -434,7 +434,7 @@ If the container allows changes to background colors, then it should also influe
 
 
 *   The attribute `on=dark` is being deprecated. Instead, custom classes already on the page should set broadcast values.
-*   The original goal for `on=dark` was all about context. But instead of having to provide another attribute somewhere, the card or a band or another container will inform any nested components that the text color needs to change through the set of broadcast variables. Existing broadcast vars (defined in $BROADCAST-VARS)  include: text, ui-link, ui-link--hover, ui-link--visited, ui-link--focus.
+*   The original goal for `on=dark` was all about context. But instead of having to provide another attribute somewhere, the card or a band or another container will inform any nested components that the text color needs to change through the set of broadcast variables. Existing broadcast vars (defined in $BROADCAST-VARS)  include: text, link, link--hover, link--visited, link--focus.
 *   If your page has a custom background color for a band or card, you should set the background and also set the broadcast colors.
 
 
@@ -442,10 +442,10 @@ If the container allows changes to background colors, then it should also influe
 .custom-dark-band {
   background: black;
   --pfe-broadcasted--color--text:             var(--pfe-theme--color--text--on-dark, #fff);
-  --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--ui-link--on-dark, #73bcf7);
-  --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--ui-link--on-dark--hover, pink);
-  --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--ui-link--on-dark--visited, pink);
-  --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--ui-link--on-dark--focus, pink);
+  --pfe-broadcasted--color--link:          var(--pfe-theme--color--link--on-dark, #73bcf7);
+  --pfe-broadcasted--color--link--hover:   var(--pfe-theme--color--link--on-dark--hover, pink);
+  --pfe-broadcasted--color--link--visited: var(--pfe-theme--color--link--on-dark--visited, pink);
+  --pfe-broadcasted--color--link--focus:   var(--pfe-theme--color--link--on-dark--focus, pink);
 }
 ```
 
@@ -457,7 +457,7 @@ For example, [advanced-theme.css](https://static.redhat.com/libs/redhat/redhat-t
 
 ```
 .PFElement a {
-  color: var(--pfe-broadcasted--color--ui-link);
+  color: var(--pfe-broadcasted--color--link);
 }
 ```
 

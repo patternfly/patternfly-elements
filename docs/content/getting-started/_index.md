@@ -217,7 +217,7 @@ Be sure to browser test within your own site or application. If you run into any
 ### Should I use on=dark or color=darkest on my container? What's the difference?
 
 *   `on=dark` is being deprecated. Instead, custom classes already on the page should set broadcast values.
-*   The original goal for `on=dark` was all about context, but instead of having to provide another attribute somewhere, the card or a band or another container will inform any nested components that the text color needs to change through the set of broadcast variables. Existing broadcast vars (defined in `$BROADCAST-VARS`)  include: `text`, `ui-link`, `ui-link--hover`, `ui-link--visited`, `ui-link--focus`.
+*   The original goal for `on=dark` was all about context, but instead of having to provide another attribute somewhere, the card or a band or another container will inform any nested components that the text color needs to change through the set of broadcast variables. Existing broadcast vars (defined in `$BROADCAST-VARS`)  include: `text`, `link`, `link--hover`, `link--visited`, `link--focus`.
 *   If your page has a custom background color for a band or card, you should set the background and also set the broadcast colors.
 
 
@@ -225,10 +225,10 @@ Be sure to browser test within your own site or application. If you run into any
 .custom-dark-band {
   background: black;
   --pfe-broadcasted--color--text:             var(--pfe-theme--color--text--on-dark, #fff);
-  --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--ui-link--on-dark, #73bcf7);
-  --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--ui-link--on-dark--hover, pink);
-  --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--ui-link--on-dark--visited, pink);
-  --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--ui-link--on-dark--focus, pink);
+  --pfe-broadcasted--color--link:          var(--pfe-theme--color--link--on-dark, #73bcf7);
+  --pfe-broadcasted--color--link--hover:   var(--pfe-theme--color--link--on-dark--hover, pink);
+  --pfe-broadcasted--color--link--visited: var(--pfe-theme--color--link--on-dark--visited, pink);
+  --pfe-broadcasted--color--link--focus:   var(--pfe-theme--color--link--on-dark--focus, pink);
 }
 ```
 
@@ -238,7 +238,7 @@ For example, advanced-theme.css includes:
 
 ```
 .PFElement a {
-color: var(--pfe-broadcasted--color--ui-link);
+color: var(--pfe-broadcasted--color--link);
 }
 ```
 

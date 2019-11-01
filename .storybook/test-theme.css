@@ -3,16 +3,16 @@
     color: var(--pfe-broadcasted--color--text);
 }
 [pfelement] a {
-    color: var(--pfe-broadcasted--color--ui-link);
+    color: var(--pfe-broadcasted--color--link);
 }
 [pfelement] a:visited {
-    color: var(--pfe-broadcasted--color--ui-link--visited);
+    color: var(--pfe-broadcasted--color--link--visited);
 }
 [pfelement] a:hover {
-    color: var(--pfe-broadcasted--color--ui-link--hover);
+    color: var(--pfe-broadcasted--color--link--hover);
 }
 [pfelement] a:focus {
-    color: var(--pfe-broadcasted--color--ui-link--focus);
+    color: var(--pfe-broadcasted--color--link--focus);
 }
 [pfelement] > *:first-child {
     margin-top: 0;

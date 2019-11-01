@@ -268,16 +268,43 @@
       </pfe-content-set>
     </section>
 
-    <section>
-      <h2>This content set's markup is incorrect.</h2>
-      <pfe-content-set>
-        <h2>Heading 1</h2>
-        <div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-        </div>
-        <h2>Heading 2</h2>
-        <div>Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</div>
-      </pfe-content-set>
-    </section>
+    <h2>This content set's markup is incorrect.</h2>
+    <pfe-content-set>
+      <h2>Heading 1</h2>
+      <div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+      </div>
+      <h2>Heading 2</h2>
+      <div>Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</div>
+    </pfe-content-set>
+
+    <h2>Dynamically Add Headers and Panels</h2>
+    <pfe-content-set id="dynamic">
+      <h2 pfe-content-set--header>Heading 1</h2>
+      <div pfe-content-set--panel>Panel 1</div>
+    </pfe-content-set>
+
+    <button id="addHeaderAndPanelBtn">Add Header &amp; Panel</button>
+
+    <script>
+      var btn = document.querySelector("#addHeaderAndPanelBtn");
+      var pfeContentSet = document.querySelector("#dynamic");
+
+      btn.addEventListener("click", function () {
+        var fragment = document.createDocumentFragment();
+
+        var header = document.createElement("h2");
+        header.setAttribute("pfe-content-set--header", true);
+        header.textContent = "New Heading";
+
+        var panel = document.createElement("div");
+        panel.setAttribute("pfe-content-set--panel", true);
+        panel.textContent = "New Panel";
+
+        fragment.appendChild(header);
+        fragment.appendChild(panel);
+        pfeContentSet.appendChild(fragment);
+      });
+    </script>
   </body>
 </html>

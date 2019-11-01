@@ -1,11 +1,25 @@
-## Prerelease 26 ( TBD )
+## Prerelease 28 ()
 
-Tag: [v1.0.0-prerelease.26](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.26)
+Tag: [v1.0.0-prerelease.28](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.28)
 
-- [f18aa6f](https://github.com/patternfly/patternfly-elements/commit/f18aa6ff05e510993baf0f1971a85e2e4715bcc4) Update build tools to support the files array in package.json for each component
+- [732ca3e](https://github.com/patternfly/patternfly-elements/commit/732ca3e6b3a5ba5756bcdd9696c05e7b1f9ed8be) fix: adding a mutation observer to pfe-content-set so it works in Angular
+- [5ca613d](https://github.com/patternfly/patternfly-elements/commit/5ca613d255f337abf84768fa1b965a52c785ac50) feat: adding a schema to pfe-icon-panel #572
+- [79614bc](https://github.com/patternfly/patternfly-elements/commit/79614bca9d3158b2c367251b1b17af6666894e27) fix: pfe-card cta alignment #560
+- [5800171](https://github.com/patternfly/patternfly-elements/commit/5800171f9f6afc95f832a01bce7f4eeb5c6717d7) fix: set pfe-band to private, until frameworks + ie11 support (#589)
+- [a4b2c27](https://github.com/patternfly/patternfly-elements/commit/a4b2c2751840265831329729ed577651b7099388) fix: build tasks and packages to represent new dist architecture
+- [5103c95](https://github.com/patternfly/patternfly-elements/commit/5103c950d8d0df1769ffe2291a46f1c867dc0b8a) pfe-navigation style updates
+- [6ddbcff](https://github.com/patternfly/patternfly-elements/commit/6ddbcffa50bb277a3e48c7b729becd1db646425e) fix: pfe-tabs in IE11
+- [782f8e9](https://github.com/patternfly/patternfly-elements/commit/782f8e9ec9cf1e1961acd6bb9bc406d715837706) fix: updating pfe-card story so image overflow works #599
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-icon stretch
+
+## Prerelease 27 ( 2019-10-25 )
+
+Tag: [v1.0.0-prerelease.27](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.27)
+
+- [f18aa6f](https://github.com/patternfly/patternfly-elements/commit/f18aa6ff05e510993baf0f1971a85e2e4715bcc4) fix: Update build tools to support the files array in package.json for each component
 - [9d9d41c](https://github.com/patternfly/patternfly-elements/commit/9d9d41c30883674d52cd1c29aa2300829c00693f) feat: Add patternfly project as a dependency so that styles can be extended
-- [b13ef5b](https://github.com/patternfly/patternfly-elements/commit/b13ef5b2470770acc01638d4a55c1f90a2859bda) Support table
-- [274e35c](https://github.com/patternfly/patternfly-elements/commit/274e35cd4e8a08721888d8fad195b6fe37a525b7) Navigation component
+- [b13ef5b](https://github.com/patternfly/patternfly-elements/commit/b13ef5b2470770acc01638d4a55c1f90a2859bda) docs: Support table
+- [274e35c](https://github.com/patternfly/patternfly-elements/commit/274e35cd4e8a08721888d8fad195b6fe37a525b7) feat: Navigation component
 - [6b5db77](https://github.com/patternfly/patternfly-elements/commit/6b5db77c20358499f78b66811b73ea6be309318b) doc: Update documentation
 - [d4600dd](https://github.com/patternfly/patternfly-elements/commit/d4600dd1c6e2abfcf8918d06b4eaacb8fb62d208) feat: Add automatic Sass globbing to pfe-sass
 - [27a97e1](https://github.com/patternfly/patternfly-elements/commit/27a97e135986de37ede55504a1630bf974de0e0c) fix: pfe-cta - functions & IE11 accessibility
@@ -19,9 +33,10 @@ Tag: [v1.0.0-prerelease.26](https://github.com/patternfly/patternfly-elements/re
 - [93c5e99](https://github.com/patternfly/patternfly-elements/commit/93c5e99428fc57514ef4571caacb1dba199f5303) pfe-icon-panel: maintain icon height in flex display
 - [d2b16b8](https://github.com/patternfly/patternfly-elements/commit/d2b16b806327bf99e09ca4e7ed0d4aeeeaa37a90) Add larger size to health-index
 - [a77f5ff](https://github.com/patternfly/patternfly-elements/commit/a77f5ffb6066a6be4778f48ddec05b6759e219ff) feat: compile assets to a dist directory
-- [1f9ec1](https://github.com/patternfly/patternfly-elements/commit/1f9ec10488a4a879d230705c2ea3d783d2df45f6) feat: pfe-cta add wind variant styles
+- [1f9ec10](https://github.com/patternfly/patternfly-elements/commit/1f9ec10488a4a879d230705c2ea3d783d2df45f6) feat: pfe-cta add wind variant styles
 - [a162a43](https://github.com/patternfly/patternfly-elements/commit/a162a431923d037bf33a8ba0ef77edd9d059a39c) fix: bug in pfe-tab-panel
 - [](https://github.com/patternfly/patternfly-elements/commit/) Updating broadcast and how variables are applied #392
+
 
 ## Prerelease 25 ( 2019-09-10 )
 

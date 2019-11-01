@@ -22,6 +22,10 @@ $LOCAL: tabs;
     border-right:  #{pfe-local($cssvar: BorderRight, $region: panel, $fallback: 0)};
     border-bottom: #{pfe-local($cssvar: BorderBottom, $region: panel, $fallback: 0)};
     border-left:   #{pfe-local($cssvar: BorderLeft, $region: panel, $fallback: 0)};
+
+    @include browser-query(ie11) {
+      padding: 1em;
+    }
   }
 }
 
@@ -34,6 +38,16 @@ $LOCAL: tabs;
   --pfe-tabs__panel--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
   --pfe-tabs__panel--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
   --pfe-tabs__panel--BorderLeft: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+
+
+  @include browser-query(ie11) {
+    .container {
+      padding: 1em;
+      border-right: 1px solid #{pfe-color(surface--border)};
+      border-bottom: 1px solid #{pfe-color(surface--border)};
+      border-left: 1px solid #{pfe-color(surface--border)};
+    }
+  }
 }
 
 /// ===========================================================================
@@ -42,10 +56,22 @@ $LOCAL: tabs;
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([pfe-variant="wind"][vertical]) {
     --pfe-tabs__panel--Padding: #{pfe-var(container-spacer)} 0 #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 2);
+
+    @include browser-query(ie11) {
+      .container {
+        padding: 1em 0 1em 2em;
+      }
+    }
 	}
 
 	:host([pfe-variant="earth"][vertical]) {
     --pfe-tabs__panel--BorderTop:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+
+    @include browser-query(ie11) {
+      .container {
+        border-top: 1px solid #{pfe-color(surface--border)};
+      }
+    }
 	}
 }
 
@@ -54,12 +80,18 @@ $LOCAL: tabs;
 /// ===========================================================================
 :host([on="dark"]) {
   @include pfe-theme($theme: "dark");
-	color: #{pfe-colors(text--on-dark)};
+
+  @include browser-query(ie11) {
+    color: #{pfe-color(text--on-dark)};
+  }
 }
 
 :host([on="light"]) {
   @include pfe-theme($theme: "light");
-	color: #{pfe-colors(text)};
+
+  @include browser-query(ie11) {
+    color: #{pfe-color(text)};
+  }
 }
 
 :host([hidden]) {

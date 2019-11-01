@@ -4,7 +4,7 @@
     "className": "PfePageStatus",
     "elementName": "pfe-page-status"
   },
-  "version": "1.0.0-prerelease.24",
+  "version": "1.0.0-prerelease.27",
   "description": "Page element for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -18,10 +18,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/pfe-page-status.js",
+  "main": "./dist/pfe-page-status.umd.js",
+  "module": "./dist/pfe-page-status.js",
+  "unpkg": "./dist/pfe-page-status.umd.min.js",
   "files": [
-    "pfe-page-status.*js",
-    "pfe-page-status.*js.map"
+    "dist"
   ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
@@ -37,11 +38,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
-    "@patternfly/pfelement": "^1.0.0-prerelease.24"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.27",
+    "@patternfly/pfelement": "^1.0.0-prerelease.27"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {
-    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
   }
 }

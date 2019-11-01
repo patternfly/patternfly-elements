@@ -4,7 +4,7 @@
     "className": "PfeCard",
     "elementName": "pfe-card"
   },
-  "version": "1.0.0-prerelease.24",
+  "version": "1.0.0-prerelease.27",
   "publishConfig": {
     "access": "public"
   },
@@ -18,10 +18,17 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-card"
   },
-  "main": "./dist/pfe-card.js",
+  "main": "./dist/pfe-card.umd.js",
+  "module": "./dist/pfe-card.js",
+  "unpkg": "./dist/pfe-card.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "files": [
     "pfe-card.*js",
-    "pfe-card.*js.map"
+    "pfe-card.*js.map",
+    "pfe-card--lightdom.*css",
+    "pfe-card--lightdom.*css.map"
   ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
@@ -33,15 +40,22 @@
       "name": "Mark Caron",
       "email": "mark@redhat.com",
       "url": "https://github.com/markcaron"
+    },
+    {
+      "name": "Kendall Totten"
+    },
+    {
+      "name": "castastrophe",
+      "url": "https://www.github.com/castastrophe"
     }
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
-    "@patternfly/pfelement": "^1.0.0-prerelease.24"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.27",
+    "@patternfly/pfelement": "^1.0.0-prerelease.27"
   },
   "generator-pfelement-version": "0.5.0",
   "bugs": {
-    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
   }
 }

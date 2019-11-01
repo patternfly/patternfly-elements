@@ -7,8 +7,8 @@ $LOCAL: tabs;
 /// ===========================================================================
 
 :host {
-  --pfe-tabs--main:         transparent;
-  --pfe-tabs--aux:          #{pfe-color(ui-disabled--text)}; 
+  --pfe-tabs--BackgroundColor:         transparent;
+  --pfe-tabs--Color:          #{pfe-color(ui-disabled--text)}; 
   --pfe-tabs--link:         #{pfe-color(link)};
   --pfe-tabs--focus:        #{pfe-color(link--focus)};
   --pfe-tabs--highlight:    #{pfe-color(ui-accent)};
@@ -32,7 +32,8 @@ $LOCAL: tabs;
   border-left:    #{pfe-local($cssvar: BorderLeft, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local($cssvar: BorderColor, $region: tab, $fallback: transparent)} )};
 
   // Inner style
-  background-color: #{pfe-local(main)};
+  background-color: #{pfe-local(BackgroundColor)};
+  color: #{pfe-local(Color)};
 
   // Exposing this for customization
   text-transform: #{pfe-local($cssvar: TextTransform, $region: tab, $fallback: none)};
@@ -42,25 +43,36 @@ $LOCAL: tabs;
   text-align: #{pfe-local($cssvar: TextAlign, $region: tab, $fallback: center)};
   
   ::slotted(*) {
-    color: #{pfe-local(aux)} !important;
+    color: #{pfe-local(Color)} !important;
   }
 }
 
 :host(:hover) {
-  --pfe-tabs--aux: #{pfe-color(text)};
+  --pfe-tabs--Color: #{pfe-color(text)};
 }
 
 // Active tab styles
 :host(:focus),
 :host(:focus-visible) {
-  --pfe-tabs--aux: #{pfe-color(text)};
+  --pfe-tabs--Color: #{pfe-color(text)};
   outline: #{pfe-var(ui--focus-outline-width)} #{pfe-var(ui--focus-outline-style)} #{pfe-local(focus)};
 }
 
 :host([aria-selected="true"]) {
-  --pfe-tabs--aux: #{$pfe-color--black};
+  --pfe-tabs--Color: #{$pfe-color--black};
   --pfe-tabs__tab--BorderColor: transparent;
   --pfe-tabs__tab--BorderBottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+  @include browser-query(ie11) {
+    color: #{$pfe-color--black};
+    border-bottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(ui-accent)};
+  }
+}
+
+:host(:hover) {
+  --pfe-tabs--Color: #{pfe-color(text)};
+  @include browser-query(ie11) {
+    color: #{pfe-color(text)};
+  }
 }
 
 /// ===========================================================================
@@ -76,11 +88,25 @@ $LOCAL: tabs;
     --pfe-tabs__tab--Margin: 0 -1px 0 0;
     --pfe-tabs__tab--PadingLeft: calc(#{pfe-var(container-padding)} * .75);
     --pfe-tabs__tab--TextAlign: left;
+
+    @include browser-query(ie11) {
+      border: 1px solid transparent;
+      border-right: 0;
+      margin: 0 -1px 0 0;
+      padding-left: 12px;
+      text-align: left;
+    }
   }
 
   :host([vertical][aria-selected="true"]) {
     --pfe-tabs__tab--BorderTopColor: transparent;
     --pfe-tabs__tab--BorderRight: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+
+    @include browser-query(ie11) {
+      // color: #{$pfe-color--black};
+      border-top-color: transparent;
+      border-right: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(ui-accent)};
+    }
   }
 }
 
@@ -92,7 +118,11 @@ $LOCAL: tabs;
 :host([on="dark"]:hover),
 :host([pfe-variant="wind"][aria-selected="true"][on="dark"]),
 :host([pfe-variant="wind"][on="dark"]:hover) {
-  --pfe-tabs--aux: #{pfe-color(text--on-dark)};
+  --pfe-tabs--Color: #{pfe-color(text--on-dark)};
+
+  @include browser-query(ie11) {
+    color: #{pfe-color(text--on-dark)};
+  }
 }
 
 /// ===========================================================================
@@ -100,24 +130,45 @@ $LOCAL: tabs;
 /// ===========================================================================
 
 :host([pfe-variant="earth"][aria-selected="false"]) {
-  --pfe-tabs--main: #{pfe-color(surface--lighter)};
+  --pfe-tabs--BackgroundColor: #{pfe-color(surface--lighter)};
 
   --pfe-tabs__tab--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
   --pfe-tabs__tab--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
   --pfe-tabs__tab--BorderTop:    #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
+
+  @include browser-query(ie11) {
+    background-color: #{pfe-color(surface--lighter)};
+
+    border-top: 3px solid #{pfe-color(surface--lighter)};
+    border-bottom: 1px solid #{pfe-color(surface--border)};
+    border-left: 1px solid #{pfe-color(surface--border)};
+  }
 }
 
 :host([pfe-variant="earth"][aria-selected="true"]) {
-  --pfe-tabs--main: #{pfe-color(surface--lightest)};
-  --pfe-tabs--aux: #{pfe-color(text)};
+  --pfe-tabs--BackgroundColor: #{pfe-color(surface--lightest)};
+  --pfe-tabs--Color: #{pfe-color(text)};
 
   --pfe-tabs__tab--BorderTop:    #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
   --pfe-tabs__tab--BorderBottom: 0;
   --pfe-tabs__tab--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+
+  @include browser-query(ie11) {
+    background-color: #{pfe-color(surface--lightest)};
+    color: #{pfe-color(text)};
+
+    border-top: 3px solid #{pfe-local(highlight)};
+    border-bottom: 0;
+    border-left: 1px solid #{pfe-color(surface--border)};
+  }
 }
 
 :host([pfe-variant="earth"][aria-selected="true"]:last-of-type) {
   --pfe-tabs__tab--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+
+  @include browser-query(ie11) {
+    border-right: 1px solid #{pfe-color(surface--border)};
+  }
 }
 
 /// ===========================================================================
@@ -127,25 +178,49 @@ $LOCAL: tabs;
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([vertical][pfe-variant="earth"]) {
     --pfe-tabs__tab--BorderTop: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+
+    @include browser-query(ie11) {
+      border-top: 1px solid #{pfe-color(surface--border)};
+    }
   }
 
   :host([vertical][pfe-variant="earth"]:first-of-type) {
     --pfe-tabs__tab--BorderTop: 0;
+
+    @include browser-query(ie11) {
+      border-top: 0;
+    }
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="true"]) {
     --pfe-tabs__tab--BorderTop:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
     --pfe-tabs__tab--BorderRight: 0;
     --pfe-tabs__tab--BorderLeft:  #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+
+    @include browser-query(ie11) {
+      border-top: 1px solid #{pfe-color(surface--border)};
+      border-right: 0;
+      border-left: 3px solid #{pfe-local(highlight)};
+    }
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="false"]) {
     --pfe-tabs__tab--BorderRight:  #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
     --pfe-tabs__tab--BorderBottom: 0;
     --pfe-tabs__tab--BorderLeft:   #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
+
+    @include browser-query(ie11) {
+      border-right: 1px solid #{pfe-color(surface--border)};
+      border-bottom: 0;
+      border-left: 3px solid #{pfe-color(surface--lighter)};
+    }
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="true"]:last-of-type) {
     --pfe-tabs__tab--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+
+    @include browser-query(ie11) {
+      border-bottom: 1px solid #{pfe-color(surface--border)};
+    }
   }
 }

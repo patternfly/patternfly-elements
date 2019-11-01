@@ -24,7 +24,7 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   --pfe-icon--Spacing:                 #{pfe-var(container-spacer)};
   --pfe-icon--Size:                    #{pfe-var(icon-size)};
   --pfe-icon--Padding:                 0;
-  --pfe-icon--Color:                   #{pfe-radio(color, text)};
+  --pfe-icon--Color:                   #{pfe-apply-broadcast(text)};
   --pfe-icon--BackgroundColor:         transparent;
   --pfe-icon--BorderColor:             transparent;
 

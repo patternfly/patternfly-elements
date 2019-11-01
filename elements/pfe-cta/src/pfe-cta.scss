@@ -26,9 +26,9 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta__inner--BorderColor:        transparent;
   --pfe-cta__inner--BorderColor--focus: transparent;
 
-  --pfe-cta--Color:          #{pfe-radio(ui-link)};
-  --pfe-cta--Color--hover:   #{pfe-radio(ui-link, hover)};
-  --pfe-cta--Color--focus:   #{pfe-radio(ui-link, focus)};
+  --pfe-cta--Color:          #{pfe-apply-broadcast(ui-link)};
+  --pfe-cta--Color--hover:   #{pfe-apply-broadcast(ui-link, hover)};
+  --pfe-cta--Color--focus:   #{pfe-apply-broadcast(ui-link, focus)};
 
   --pfe-cta--TextDecoration:          none;
   --pfe-cta--TextDecoration--hover:   none;

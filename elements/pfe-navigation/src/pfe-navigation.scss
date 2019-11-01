@@ -88,8 +88,8 @@ pfe-icon {
 
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
-  color: #{pfe-radio(color, link)};
-  text-decoration: #{pfe-radio(link, text-decoration)};
+  color: #{pfe-apply-broadcast(color, link)};
+  text-decoration: #{pfe-apply-broadcast(link, text-decoration)};
 }
 
 ::slotted([slot="mobile-menu--label"]) {

@@ -11,7 +11,7 @@ Tag: [v1.0.0-prerelease.28](https://github.com/patternfly/patternfly-elements/re
 - [6ddbcff](https://github.com/patternfly/patternfly-elements/commit/6ddbcffa50bb277a3e48c7b729becd1db646425e) fix: pfe-tabs in IE11
 - [782f8e9](https://github.com/patternfly/patternfly-elements/commit/782f8e9ec9cf1e1961acd6bb9bc406d715837706) fix: updating pfe-card story so image overflow works #599
 - [f111593](https://github.com/patternfly/patternfly-elements/commit/f111593805390b1395c284d5905a2e530f829e01) fix: pfe-icon stretch
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfelement compilation of css assets
+- [](https://github.com/patternfly/patternfly-elements/commit/) Updating broadcast and how variables are applied #392
 
 ## Prerelease 27 ( 2019-10-25 )
 
@@ -36,7 +36,6 @@ Tag: [v1.0.0-prerelease.27](https://github.com/patternfly/patternfly-elements/re
 - [a77f5ff](https://github.com/patternfly/patternfly-elements/commit/a77f5ffb6066a6be4778f48ddec05b6759e219ff) feat: compile assets to a dist directory
 - [1f9ec10](https://github.com/patternfly/patternfly-elements/commit/1f9ec10488a4a879d230705c2ea3d783d2df45f6) feat: pfe-cta add wind variant styles
 - [a162a43](https://github.com/patternfly/patternfly-elements/commit/a162a431923d037bf33a8ba0ef77edd9d059a39c) fix: bug in pfe-tab-panel
-- [](https://github.com/patternfly/patternfly-elements/commit/) Updating broadcast and how variables are applied #392
 
 
 ## Prerelease 25 ( 2019-09-10 )

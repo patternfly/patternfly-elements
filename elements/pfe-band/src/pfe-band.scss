@@ -296,6 +296,26 @@ $LOCAL: band;
   }
 
   &__aside {
-    align-self: stretch;
+    align-self: flex-start;
+  }
+
+  @include browser-query(ie11) {
+    &__body {
+        width: 60%;
+        float: left;
+    }
+    &__aside {
+      float: left;
+      width: 35%;
+      margin: 0 2.5%;
+    }
+    &__footer {
+       clear: both;
+    }
+     &__container::after {
+       content: " ";
+       display: block;
+       clear: both;
+     }
   }
 }

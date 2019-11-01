@@ -45,6 +45,7 @@ $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
             $fallback: #{$trigger--Color--fallback}
         )};
     z-index: 2;
+    line-height: 1.1;
 
     @media screen and (min-width: 1055px) {
         text-align: center;

@@ -22,6 +22,10 @@ $variables: (
   height: 100%;
   width: 100%;
   min-width: var(--pfe-nav-item--MinWidth, auto);
+
+  @media screen and (min-width: 500px) {
+    --pfe-navigation__trigger--Padding: #{pfe-var(container-padding)} !important;
+  }
 }
 
 // Indicates this is the current section the user is visiting
@@ -218,6 +222,12 @@ $variables: (
 // Typography styles
 ::slotted([slot="trigger"]) {
   @extend %trigger;
+}
+
+:host([pfe-icon]) {
+  ::slotted([slot="trigger"]) {
+    margin: 0.25em 0 0 0 !important;
+  }
 }
 
 // Override bootstrap styles

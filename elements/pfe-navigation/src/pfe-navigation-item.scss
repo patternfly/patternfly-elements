@@ -248,8 +248,6 @@ $variables: (
 /*    TRAY STYLES    */
 /* ----------------- */
 .pfe-navigation-item__tray {
-  // --pfe-navigation__tray--BackgroundColor:  #{pfe-color(surface--lightest)};
-  // --pfe-navigation__tray--Color:            #{pfe-color(text)};
   --pfe-navigation--FontWeight:             #{pfe-color(text)};
 
   @include pfe-set-broadcast(light);

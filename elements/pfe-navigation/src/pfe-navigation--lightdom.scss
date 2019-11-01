@@ -317,12 +317,11 @@ pfe-navigation-item {
 
 // This class is added manually inside the tray on the light DOM content
 .pfe-navigation-item__tray--container {
-    // @TODO why min-height on the navigation container?
-    // min-height: 200px;
     width: 100%;
-    @media (max-width: $pfe-global--grid-breakpoint--lg--max) {
-        padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
-    }
+    // @TODO This is adding extra padding to the accordion panel - desirable?
+    // @media (max-width: $pfe-global--grid-breakpoint--lg--max) {
+        // padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
+    // }
     @media (min-width: $pfe-global--grid-breakpoint--xl) {
         max-width: #{pfe-local($cssvar: Width, $fallback: 1140px)};
         margin: 0 auto;

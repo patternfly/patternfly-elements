@@ -24,7 +24,7 @@
     border-radius: pfe-var(border-radius);
     background-color: #{pfe-local(BackgroundColor)};
     border: #{pfe-local(Border)};
-    font-size: 16px; /*1rem*/
+    font-size: #{pfe-var(font-size)};
     height: 40px;
     transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
     opacity: 1;

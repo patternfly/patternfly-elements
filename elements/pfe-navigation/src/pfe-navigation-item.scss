@@ -13,12 +13,15 @@ $variables: (
 
   --pfe-navigation__trigger-icon--Visible: hidden;
   --pfe-navigation__trigger--FontSize: 16px;
+  --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.75) !important;
 
   display: flex;
   flex-direction: column;
+  line-height: 1.2;
   
   height: 100%;
   width: 100%;
+  min-width: var(--pfe-nav-item--MinWidth, auto);
 }
 
 // Indicates this is the current section the user is visiting
@@ -36,13 +39,24 @@ $variables: (
 }
 
 :host([pfe-icon]) {
-  --pfe-navigation__trigger--FontSize: 14px;
+  --pfe-navigation__trigger--FontSize: 12px;
+  --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.5) !important;
+  --pfe-nav-item--MinWidth: 50px;
+
+  @media screen and (max-height: 500px) {
+    --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 3) calc(#{pfe-var(container-padding)} *.5) !important;
+  }
 }
 
 :host(:not([has_tray])),
 :host([pfe-icon]),
 :host(:not([pfe-icon]):not([is_nested]):not(.expanded)) {
   --pfe-navigation__trigger-icon--Visible: hidden;
+}
+:host([pfe-icon]:not([has_tray])) {
+  @media screen and (max-width: 639px) {
+    padding-left: calc(#{pfe-var(container-spacer)} * 1.5);
+  }
 }
 
 /* ----------------- */
@@ -54,13 +68,23 @@ $variables: (
   }
 
   @each $prop in (text, ui-link, ui-link--hover, ui-link--visited, ui-link--focus) {
-    --pfe-broadcasted--color--#{$prop}: #{pfe-local($cssvar: Color, $fallback: #{$trigger--Color--fallback})};
+    --pfe-broadcasted--color--#{$prop}: #{pfe-local(
+      $cssvar: Color,
+      $fallback: #{$trigger--Color--fallback}
+    )};
   }
 
   // Enforce the font-size for the navigation regardless of h-level settings
   @each $level in (alpha, beta, gamma) {
-    --pfe-theme--font-size--#{$level}:   #{pfe-local($cssvar: FontSize, $region: trigger, $fallback: #{$trigger--FontSize--fallback})};
-    --pfe-theme--font-weight--#{$level}: #{pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback})};
+    --pfe-theme--font-size--#{$level}: #{pfe-local(
+      $cssvar: FontSize,
+      $region: trigger,
+      $fallback: #{$trigger--FontSize--fallback}
+    )};
+    --pfe-theme--font-weight--#{$level}: #{pfe-local(
+      $cssvar: FontWeight,
+      $fallback: #{$trigger--FontWeight--fallback}
+    )};
   }
 
   border-top: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderTopColor)};
@@ -68,7 +92,7 @@ $variables: (
   border-bottom: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
   border-left: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
   background-color: #{pfe-local(BackgroundColor)};
-  padding: calc(#{pfe-var(container-padding)} / 2) #{pfe-var(container-padding)} !important;
+  padding: pfe-local($cssvar: Padding, $region: trigger, $fallback: #{pfe-var(container-padding)});
 
   position: relative;
   flex-grow: 1;
@@ -117,7 +141,7 @@ $variables: (
     }
   }
 
-  // After element is the filled-in dropdown caret
+  // After element is the filled-in dropdown caret.
   :host(:not([pfe-icon])) &::after {
     display: block;
     content: " ";
@@ -125,7 +149,7 @@ $variables: (
 
     @include pfe-arrow(down, #{pfe-color(feedback--default)}, $width: 6px, $height: 6px);
     position: absolute;
-    bottom: #{pfe-var(container-spacer)};
+    bottom: calc(#{pfe-var(container-spacer)} / 2) ;
   }
 
   // At mobile if inside the main context, update the color to a text color
@@ -178,7 +202,7 @@ $variables: (
   pfe-icon {
     --pfe-icon--Color: #{pfe-local(Color)};
 
-    margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
+    // margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
 
     :host([variant="wind"]) & {
       margin-bottom: 0;
@@ -194,6 +218,12 @@ $variables: (
 // Typography styles
 ::slotted([slot="trigger"]) {
   @extend %trigger;
+}
+
+// Override bootstrap styles
+::slotted(*) {
+  font-size: inherit !important;
+  font-weight: pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback}) !important;
 }
 
 /* ----------------- */

@@ -180,7 +180,7 @@ $variables: (
     @include pfe-accordion-variables($state: expanded);
   }
 
-  :host([is_nested]:not(.expanded):not([parent_hidden])) & {
+  :host([is_nested][last]:not(.expanded):not([parent_hidden])) & {
     @include pfe-trigger-last;
   }
     
@@ -311,11 +311,6 @@ $variables: (
   display: flex;
   flex-grow: 1;
 }
-
-// Styles for navigation items appearing inside the mobile menu
-// :host([is_nested][last]:not([parent_hidden])) {
-  // @include pfe-trigger-last;
-// }
 
 // Let the main item or the tray be hidden with the attribute
 :host([hidden]:not([show_tray])),

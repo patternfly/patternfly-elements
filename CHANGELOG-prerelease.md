@@ -9,7 +9,8 @@ Tag: [v1.0.0-prerelease.28](https://github.com/patternfly/patternfly-elements/re
 - [a4b2c27](https://github.com/patternfly/patternfly-elements/commit/a4b2c2751840265831329729ed577651b7099388) fix: build tasks and packages to represent new dist architecture
 - [5103c95](https://github.com/patternfly/patternfly-elements/commit/5103c950d8d0df1769ffe2291a46f1c867dc0b8a) pfe-navigation style updates
 - [6ddbcff](https://github.com/patternfly/patternfly-elements/commit/6ddbcffa50bb277a3e48c7b729becd1db646425e) fix: pfe-tabs in IE11
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: updating pfe-card story so Image overflow works #599
+- [782f8e9](https://github.com/patternfly/patternfly-elements/commit/782f8e9ec9cf1e1961acd6bb9bc406d715837706) fix: updating pfe-card story so image overflow works #599
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-icon stretch
 
 ## Prerelease 27 ( 2019-10-25 )
 

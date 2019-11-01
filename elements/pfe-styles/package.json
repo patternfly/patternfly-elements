@@ -2,7 +2,17 @@
   "name": "@patternfly/pfe-styles",
   "pfelement": {
     "className": "PfeStyles",
-    "elementName": "pfe-styles"
+    "elementName": "pfe-styles",
+    "assets": [
+      "pfe-base.*css",
+      "pfe-base.*css.map",
+      "pfe-colors.*css",
+      "pfe-colors.*css.map",
+      "pfe-context.*css",
+      "pfe-context.*css.map",
+      "pfe-layouts.*css",
+      "pfe-layouts.*css.map"
+    ]
   },
   "version": "1.0.0-prerelease.27",
   "publishConfig": {

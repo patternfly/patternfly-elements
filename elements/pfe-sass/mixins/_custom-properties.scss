@@ -110,20 +110,12 @@
 @mixin pfe-theme($theme) {
 
     // GENERAL CONTEXT-BASED UPDATES, ON="DARK"
-    @if $theme==dark {
-        --pfe-broadcasted--color--text: #{pfe-color(text--on-dark)};
-        --pfe-broadcasted--color--link: #{pfe-color(link--on-dark)};
-        --pfe-broadcasted--color--link--visited: #{pfe-color(link--visited--on-dark)};
-        --pfe-broadcasted--color--link--hover: #{pfe-color(link--hover--on-dark)};
-        --pfe-broadcasted--color--link--focus: #{pfe-color(link--focus--on-dark)};
+    @if $theme == dark {
+        @include pfe-set-broadcast(dark);
     }
 
-    @else if $theme==light {
-        --pfe-broadcasted--color--text: #{pfe-color(text)};
-        --pfe-broadcasted--color--link: #{pfe-color(link)};
-        --pfe-broadcasted--color--link--visited: #{pfe-color(link--visited)};
-        --pfe-broadcasted--color--link--hover: #{pfe-color(link--hover)};
-        --pfe-broadcasted--color--link--focus: #{pfe-color(link--focus)};
+    @else if $theme == light {
+        @include pfe-set-broadcast(light);
     }
 
     // MORE SPECIFIC COLOR BASED UPDATES, COLOR="DARKER"

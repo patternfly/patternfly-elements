@@ -24,15 +24,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
     <script>require([
       '../dist/pfe-accordion.umd.js',
       '../../pfe-band/dist/pfe-band.umd.js'
     ])</script>
 
     <style>
-      body {
-        padding: 16px 32px 32px;
-      }
       section {
         padding: 2rem;
       }
@@ -46,9 +44,11 @@
       }
       .white-background {
         background-color: #fff;
+        --theme: light;
       }
       .light-gray-background {
         background-color: #f8f8f8;
+        --theme: light;
       }
       h2 {
         color: var(--pfe-broadcasted--color--text, #252525);
@@ -110,9 +110,9 @@
       <button id="addTabAndPanelBtn">Add Tab &amp; Panel</button>
     </section>
 
-    <section class="saturated-background" on="saturated">
+    <section class="saturated-background on-saturated">
       <h2>pfe-accordion [on="saturated"]</h2><br/>
-      <pfe-accordion on="dark">
+      <pfe-accordion>
         <pfe-accordion-header>
           <h3>Why do wizards need money if they could just create it?</h3>
         </pfe-accordion-header>
@@ -146,14 +146,14 @@
         </pfe-accordion-panel>
       </pfe-accordion>
     </section>
-    <section class="dark-background" on="dark">
+    <section class="dark-background on-dark">
       <h2>&lt;pfe-accordion&gt; nested</h2><br/>
-      <pfe-accordion on="dark">
+      <pfe-accordion">
         <pfe-accordion-header>
           <h3>Why do wizards need money if they could just create it?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
-          <pfe-accordion on="dark">
+          <pfe-accordion>
             <pfe-accordion-header>
               <h3>Why do wizards need money if they could just create it?</h3>
             </pfe-accordion-header>
@@ -212,7 +212,7 @@
           <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily Prophet.</p>
           <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a></p>
         </pfe-accordion-panel>
-      </pfe-accordion>
+      </pfe-accordion">
     </section>
 
     <section>

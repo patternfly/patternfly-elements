@@ -110,13 +110,13 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 
 @each $color in (base, complement, accent) {
   :host([color="#{$color}"]) {
-    --pfe-broadcasted--color--text:      #{pfe-color(ui-#{$color})};
+    @include pfe-set-broadcast(ui-#{$color});
   }
 }
 
 @each $level in (critical, important, moderate, success, info, default) {
   :host([color="#{$level}"]) {
-    --pfe-broadcasted--color--text:      #{pfe-color(feedback--#{$level})};
+    @include pfe-set-broadcast(feedback--#{$level});
   }
 }
 
@@ -133,7 +133,7 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   :host([circled="#{$name}"]) {
     --pfe-icon--BackgroundColor:       #{pfe-color(surface--#{$color})};
     --pfe-icon--BorderColor:           transparent;
-    --pfe-broadcasted--color--text:    #{pfe-color(surface--#{$color}--text)};
+    @include pfe-set-broadcast(#{map-get($pfe-colors, "surface--#{$color}--theme")});
   }
 }
 

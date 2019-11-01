@@ -1,4 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
+@include include-contexts; // imports on="light" etc support
 
 $LOCAL: accordion;
 
@@ -11,12 +12,11 @@ $LOCAL: accordion;
   position: relative;
   overflow: hidden;
   margin: 0;
-  color: #{pfe-apply-broadcasted(text)};
+  color: #{pfe-apply-broadcast(text)};
 }
 
 @each $context in $THEMES {
   :host([on="#{$context}"]) {
     @include pfe-accordion-variables($theme: #{$context});
-    @include pfe-theme($theme: #{$context});
   }
 }

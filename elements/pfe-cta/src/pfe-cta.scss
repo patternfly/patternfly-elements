@@ -1,39 +1,48 @@
 @import "../../pfe-sass/pfe-sass";
+@include include-contexts; // imports on="light" etc support
 
 $USE-FALLBACK: true;
 $LOCAL: cta;
 
 $pfe-cta__arrow-size: 0.313em;
-$pfe-cta--BackgroundColor--focus: rgba(40,151,240, .2);
+$pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, .2);
 $pfe-cta--Color--fallback: #003366;
 
-:host {
-  --pfe-cta--Padding:      .6rem 0;
-  --pfe-cta--BorderRadius: 0;
-
-  --pfe-cta__arrow--Display:     inline;
-  --pfe-cta__arrow--Padding:     0 .125rem 0 .375rem;
-  --pfe-cta__arrow--MarginLeft:  calc(#{pfe-var(content-spacer)} * 0.25);
+$variables: (
+  Padding:      .6rem 0,
+  BorderRadius: 0,
   
-  --pfe-cta--BackgroundColor:         transparent;
-  --pfe-cta--BackgroundColor--hover:  transparent;
-  --pfe-cta--BackgroundColor--focus:  transparent;
+  BackgroundColor:        transparent,
+  BackgroundColor--hover: transparent,
+  BackgroundColor--focus: transparent,
 
-  --pfe-cta--BorderColor:           transparent;
-  --pfe-cta--BorderColor--hover:    transparent;
-  --pfe-cta--BorderColor--focus:    transparent;
+  BorderColor:        transparent,
+  BorderColor--hover: transparent,
+  BorderColor--focus: transparent,
 
-  --pfe-cta__inner--BorderColor:        transparent;
-  --pfe-cta__inner--BorderColor--focus: transparent;
+  Color:        #{pfe-apply-broadcast(link)},
+  Color--hover: #{pfe-apply-broadcast(link, hover)},
+  Color--focus: #{pfe-apply-broadcast(link, focus)},
 
-  --pfe-cta--Color:          #{pfe-apply-broadcast(link)};
-  --pfe-cta--Color--hover:   #{pfe-apply-broadcast(link, hover)};
-  --pfe-cta--Color--focus:   #{pfe-apply-broadcast(link, focus)};
+  TextDecoration:        none,
+  TextDecoration--hover: none,
+  TextDecoration--focus: none,
+  FontWeight:            #{pfe-var(font-weight--bold)},
 
-  --pfe-cta--TextDecoration:          none;
-  --pfe-cta--TextDecoration--hover:   none;
-  --pfe-cta--TextDecoration--focus:   none;
-  --pfe-cta--FontWeight:              #{pfe-var(font-weight--bold)};
+  arrow: (
+    Display:    inline,
+    Padding:    0 .125rem 0 .375rem,
+    MarginLeft: calc(#{pfe-var(content-spacer)} * 0.25)
+  ),
+
+  inner: (
+    BorderColor:        transparent,
+    BorderColor--focus: transparent
+  )
+);
+
+:host {
+  @include print-variables-map($variables);
 
   // properties
   display:         inline-block;
@@ -104,7 +113,7 @@ $pfe-cta--Color--fallback: #003366;
 
   ::slotted(:focus) {
     outline: none !important;
-    color: #{pfe-local(Color--focus)} !important;
+    color:   #{pfe-local(Color--focus)} !important;
     text-decoration: #{pfe-local(TextDecoration--focus)} !important;
 
     &::before {

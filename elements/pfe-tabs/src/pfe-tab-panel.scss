@@ -75,25 +75,6 @@ $LOCAL: tabs;
 	}
 }
 
-/// ===========================================================================
-/// THEMING
-/// ===========================================================================
-:host([on="dark"]) {
-  @include pfe-theme($theme: "dark");
-
-  @include browser-query(ie11) {
-    color: #{pfe-color(text--on-dark)};
-  }
-}
-
-:host([on="light"]) {
-  @include pfe-theme($theme: "light");
-
-  @include browser-query(ie11) {
-    color: #{pfe-color(text)};
-  }
-}
-
 :host([hidden]) {
   display: none;
 }

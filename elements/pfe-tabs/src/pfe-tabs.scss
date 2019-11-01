@@ -1,4 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
+@include include-contexts; // imports on="light" etc support
 
 $LOCAL: tabs;
 
@@ -107,16 +108,3 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
     border-left: 0;
   }
 }
-
-
-/// ===========================================================================
-/// THEMING
-/// ===========================================================================
-:host([on="dark"]) {
-  @include pfe-theme($theme: "dark");
-}
-
-:host([on="light"]) {
-  @include pfe-theme($theme: "light");
-}
-

@@ -93,7 +93,7 @@ $LOCAL: band;
 @each $color in (darker, darkest, accent, complement, lighter, lightest) {
   :host([pfe-color="#{$color}"]) {
     --pfe-band--BackgroundColor: #{pfe-color(surface--#{$color})};
-    @include pfe-set-broadcast(#{map-get($pfe-colors, "surface--#{$color}--theme")});
+    @include pfe-set-broadcast(#{pfe-get-theme(surface--#{$color}--theme)});
   }
 }
 

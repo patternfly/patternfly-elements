@@ -67,7 +67,7 @@ $LOCAL: card;
   // Update variable values to match provided attribute
   :host([pfe-color="#{$label}"]) {
     --pfe-card--BackgroundColor:                  #{pfe-color(surface--#{$color})};
-    @include pfe-set-broadcast(#{map-get($pfe-colors, "surface--#{$color}--theme")});
+    @include pfe-set-broadcast(#{pfe-get-theme(surface--#{$color}--theme)});
   }
 }
 

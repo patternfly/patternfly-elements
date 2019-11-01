@@ -119,60 +119,33 @@
 @mixin pfe-theme($theme) {
 
     // GENERAL CONTEXT-BASED UPDATES, ON="DARK"
-    @if $theme == dark {
+    @if $theme in (dark, darker, darkest) {
         @include pfe-set-broadcast(dark);
     }
 
-    @else if $theme == light {
+    @else if $theme in (accent, complement) {
+        @include pfe-set-broadcast(saturated);
+    }
+
+    @else if $theme in (light, lighter, lightest) {
         @include pfe-set-broadcast(light);
     }
+}
 
-    // MORE SPECIFIC COLOR BASED UPDATES, COLOR="DARKER"
-    @else if $theme==darker {
-        --pfe-broadcasted--color--text: #{pfe-color(text--on-dark)};
-        --pfe-broadcasted--color--link: #{pfe-color(link--on-dark)};
-        --pfe-broadcasted--color--link--visited: #{pfe-color(link--on-dark--visited)};
-        --pfe-broadcasted--color--link--hover: #{pfe-color(link--on-dark--hover)};
-        --pfe-broadcasted--color--link--focus: #{pfe-color(link--on-dark--focus)};
-    }
 
-    @else if $theme==darkest {
-        --pfe-broadcasted--color--text: #{pfe-color(text--on-dark)};
-        --pfe-broadcasted--color--link: #{pfe-color(link--on-dark)};
-        --pfe-broadcasted--color--link--visited: #{pfe-color(link--on-dark--visited)};
-        --pfe-broadcasted--color--link--hover: #{pfe-color(link--on-dark--hover)};
-        --pfe-broadcasted--color--link--focus: #{pfe-color(link--on-dark--focus)};
-    }
-
-    @else if $theme==accent {
-        --pfe-broadcasted--color--text: #{pfe-color(text--on-saturated)};
-        --pfe-broadcasted--color--link: #{pfe-color(link--on-saturated)};
-        --pfe-broadcasted--color--link--visited: #{pfe-color(link--on-saturated--visited)};
-        --pfe-broadcasted--color--link--hover: #{pfe-color(link--on-saturated--hover)};
-        --pfe-broadcasted--color--link--focus: #{pfe-color(link--on-saturated--focus)};
-    }
-
-    @else if $theme==complement {
-        --pfe-broadcasted--color--text: #{pfe-color(text--on-saturated)};
-        --pfe-broadcasted--color--link: #{pfe-color(link--on-saturated)};
-        --pfe-broadcasted--color--link--visited: #{pfe-color(link--on-saturated--visited)};
-        --pfe-broadcasted--color--link--hover: #{pfe-color(link--on-saturated--hover)};
-        --pfe-broadcasted--color--link--focus: #{pfe-color(link--on-saturated--focus)};
-    }
-
-    @else if $theme==lighter {
-        --pfe-broadcasted--color--text: #{pfe-color(text)};
-        --pfe-broadcasted--color--link: #{pfe-color(link)};
-        --pfe-broadcasted--color--link--visited: #{pfe-color(link--visited)};
-        --pfe-broadcasted--color--link--hover: #{pfe-color(link--hover)};
-        --pfe-broadcasted--color--link--focus: #{pfe-color(link--focus)};
-    }
-
-    @else if $theme==lightest {
-        --pfe-broadcasted--color--text: #{pfe-color(text)};
-        --pfe-broadcasted--color--link: #{pfe-color(link)};
-        --pfe-broadcasted--color--link--visited: #{pfe-color(link--visited)};
-        --pfe-broadcasted--color--link--hover: #{pfe-color(link--hover)};
-        --pfe-broadcasted--color--link--focus: #{pfe-color(link--focus)};
+@mixin include-contexts() {
+    // Helper attributes to aid in theming
+    @each $theme in $THEMES {
+        :host([on="#{$theme}"]) {
+            @include pfe-set-broadcast($theme);
+            @include browser-query(ie11) {
+                @if $theme == "light" {
+                    color: #{pfe-color(text)};
+                }
+                @else {
+                    color: #{pfe-color(text--on-#{$theme})};
+                }
+            }
+        }
     }
 }

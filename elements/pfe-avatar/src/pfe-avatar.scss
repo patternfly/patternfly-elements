@@ -1,4 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
+@include include-contexts; // imports on="light" etc support
 
 :host {
   --pfe-avatar--width: 128px;

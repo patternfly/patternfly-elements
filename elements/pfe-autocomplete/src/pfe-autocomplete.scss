@@ -1,4 +1,6 @@
 @import "../../pfe-sass/pfe-sass";
+@include include-contexts; // imports on="light" etc support
+
 :host {
   display: block;
   position: relative;

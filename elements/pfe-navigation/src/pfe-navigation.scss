@@ -64,7 +64,7 @@ $variables: (
   }
 
   display: block;
-  z-index: pfe-var($cssvar: content, $category: zindex, $map: $z-index);
+  z-index: #{pfe-var($cssvar: content, $category: zindex, $map: $z-index)};
   width: 100%;
 }
 
@@ -73,7 +73,7 @@ $variables: (
   top: 0;
   left: 0;
   width: 100vw;
-  z-index: pfe-var($cssvar: navigation, $category: zindex, $map: $z-index);
+  z-index: #{pfe-var($cssvar: navigation, $category: zindex, $map: $z-index)};
 }
 
 pfe-icon {
@@ -83,7 +83,7 @@ pfe-icon {
 // Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
   margin: 0 !important;
-  max-height: pfe-local(MaxHeight);
+  max-height: #{pfe-local(MaxHeight)};
 }
 
 ::slotted([slot="mobile-login"]),
@@ -93,10 +93,10 @@ pfe-icon {
 }
 
 ::slotted([slot="mobile-menu--label"]) {
-  font-family: pfe-var(font-family);
-  font-size:   pfe-local(FontSize);
-  font-weight: pfe-local(FontWeight);
-  color: pfe-local(Color);
+  font-family: #{pfe-local(font-family)};
+  font-size:   #{pfe-local(FontSize)};
+  font-weight: #{pfe-local(FontWeight)};
+  color: #{pfe-local(Color)};
   margin-bottom: 0;
 }
 

@@ -23,10 +23,6 @@
         $context: "";
         $state: "";
 
-        @if $color != "light" {
-            $context: "--on-#{$color}";
-        }
-
         @if $type == "link" {
             $list: append($list, "#{$type}");
 
@@ -44,6 +40,12 @@
                 $list: append($list, "#{$type}");
             }
         }
+
+        @if index($THEMES, $color) != null {
+            @if $color != "light" {
+                $context: "--on-#{$color}";
+            }
+        }
         
         @each $item in $list {
             @if not index($BROADCAST-VARS, $type) {
@@ -53,7 +55,12 @@
                 @error "#{$item} value does not currently exist.";
             }
             @else {
-                --#{$repo}-broadcasted--color--#{$item}: #{pfe-color(#{$item}#{$context})};
+                @if index($THEMES, $color) != null {
+                    --#{$repo}-broadcasted--color--#{$item}: #{pfe-color(#{$item}#{$context})};
+                }
+                @else {
+                    --#{$repo}-broadcasted--color--#{$item}: #{$color};
+                }
             }
         }
     }
@@ -83,17 +90,19 @@
         $name: "--#{$property}";
         $styles: $value;
 
-        @if type-of($value)=="map" {
-
-            @each $prop,
-            $v in $value {
+        @if type-of($value) == "map" {
+            @each $prop, $v in $value {
                 $name: "__#{$property}--#{$prop}";
                 $styles: $v;
+
+                // Print the variable definition
+                --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
             }
         }
-
-        // Print the variable definition
-        --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
+        @else {
+            // Print the variable definition
+            --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
+        }
     }
 }
 

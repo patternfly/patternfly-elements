@@ -34,13 +34,14 @@ $LOCAL: accordion;
 :host([expanded]),
 :host(.animating) {
   @include pfe-accordion-variables($state: expanded);
-  @include pfe-collapsible($state: open);
   @include pfe-panel-variables;
+  @include pfe-collapsible($state: open);
 }
 
 @each $context in $THEMES {
   :host([on="#{$context}"][expanded]),
   :host([on="#{$context}"].animating){
     @include pfe-accordion-variables($state: expanded, $theme: #{$context});
+    @include pfe-panel-variables($theme: #{$context});
   }
 }

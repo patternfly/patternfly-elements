@@ -2,8 +2,8 @@
 $LOCAL: autocomplete;
 
 :host {
-  --pfe-autocomplete--BoxShadow: pfe-var(box-shadow, inset);
-  --pfe-autocomplete--BackgroundColor: pfe-color(surface--lightest);
+  --pfe-autocomplete--BoxShadow: #{pfe-var(box-shadow--inset)};
+  --pfe-autocomplete--BackgroundColor: #{pfe-color(surface--lightest)};
   --pfe-autocomplete--Border:  #{pfe-var(border-width, ui)}  #{pfe-var(border-style, ui)}  #{pfe-color(surface--border)};
 
   display: block;

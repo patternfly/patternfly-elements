@@ -31,8 +31,12 @@
       "type": "object",
       "properties": {
         "auto_dismiss": {
-          "title": "Auto dismiss (milliseconds)",
+          "title": "Auto dismiss",
           "type": "string"     
+        },
+        "close-label": {
+          "title": "Close label",
+          "type": "string"
         }
       }
     }

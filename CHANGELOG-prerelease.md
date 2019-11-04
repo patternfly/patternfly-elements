@@ -11,7 +11,8 @@ Tag: [v1.0.0-prerelease.28](https://github.com/patternfly/patternfly-elements/re
 - [6ddbcff](https://github.com/patternfly/patternfly-elements/commit/6ddbcffa50bb277a3e48c7b729becd1db646425e) fix: pfe-tabs in IE11
 - [782f8e9](https://github.com/patternfly/patternfly-elements/commit/782f8e9ec9cf1e1961acd6bb9bc406d715837706) fix: updating pfe-card story so image overflow works #599
 - [f111593](https://github.com/patternfly/patternfly-elements/commit/f111593805390b1395c284d5905a2e530f829e01) fix: pfe-icon stretch
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfelement compilation of css assets
+- [b2a099d](https://github.com/patternfly/patternfly-elements/commit/b2a099d0fa1cb1bed8cc7d054ffa1138613e4408) fix: pfelement compilation of css assets
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-toast component
 
 ## Prerelease 27 ( 2019-10-25 )
 
@@ -19,7 +20,7 @@ Tag: [v1.0.0-prerelease.27](https://github.com/patternfly/patternfly-elements/re
 
 - [f18aa6f](https://github.com/patternfly/patternfly-elements/commit/f18aa6ff05e510993baf0f1971a85e2e4715bcc4) fix: Update build tools to support the files array in package.json for each component
 - [9d9d41c](https://github.com/patternfly/patternfly-elements/commit/9d9d41c30883674d52cd1c29aa2300829c00693f) feat: Add patternfly project as a dependency so that styles can be extended
-- [b13ef5b](https://github.com/patternfly/patternfly-elements/commit/b13ef5b2470770acc01638d4a55c1f90a2859bda) docs: Support table
+- [b13ef5b](https://github.com/patternfly/patternfly-elements/commit/b13ef5b2470770acc01638d4a55c1f90a2859bda) doc: Support table
 - [274e35c](https://github.com/patternfly/patternfly-elements/commit/274e35cd4e8a08721888d8fad195b6fe37a525b7) feat: Navigation component
 - [6b5db77](https://github.com/patternfly/patternfly-elements/commit/6b5db77c20358499f78b66811b73ea6be309318b) doc: Update documentation
 - [d4600dd](https://github.com/patternfly/patternfly-elements/commit/d4600dd1c6e2abfcf8918d06b4eaacb8fb62d208) feat: Add automatic Sass globbing to pfe-sass

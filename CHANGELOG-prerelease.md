@@ -3,6 +3,7 @@
 Tag: [v1.0.0-prerelease.29](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.29)
 
 - [5bef4ed6](https://github.com/patternfly/patternfly-elements/commit/5bef4ed6b9f47412361cb8687f0b4618069a49ea) fix: pfe-card's published package now includes the intended assets
+- []() fix: updating the location of the toast file in the story #606
 
 ## Prerelease 28 ( 2019-11-04 )
 

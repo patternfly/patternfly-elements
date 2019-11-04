@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../pfe-layouts/dist/pfe-base.css" />
 
   <noscript>
-    <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
   </noscript>
 
   <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
@@ -31,9 +31,12 @@
     ])
 
   </script>
+  <!-- <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" media="all" /> -->
+
 
   <noscript>
-    <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+    <link href="../../pfelement/pfelement--noscript.min.css" rel="stylesheet">
+    <link href="../pfe-navigation--noscript.css" rel="stylesheet">
   </noscript>
 
   <!-- <script type="module" src="../dist/pfe-navigation.js"></script> -->
@@ -49,9 +52,10 @@
       </ul>
     </div>
     <!-- Site logo -->
-    <div slot="logo" style="padding: 0 0 8px 0;line-height: 1;">
+    <div slot="logo">
       <a href="https://company.com">
         <img class="logo" src="https://via.placeholder.com/150x50.png" title="Company logo" />
+        <!-- <img class="logo" src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/logo.svg" width="200" title="Company logo" /> -->
       </a>
     </div>
     <!-- Search -->

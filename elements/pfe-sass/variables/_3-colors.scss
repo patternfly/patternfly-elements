@@ -73,7 +73,7 @@ $pfe-color--ui-disabled:                        $pfelements--gray-light !default
 $pfe-color--ui-disabled--hover:                 $pfelements--gray-light !default;
 $pfe-color--ui-disabled--focus:                 $pfelements--gray-light !default;
 $pfe-color--ui-disabled--visited:               $pfelements--gray-light !default;
-$pfe-color--ui-disabled--text:                  $pfe-color--gray-600;
+$pfe-color--ui-disabled--text:                  $pfe-color--gray-600 !default;
 $pfe-color--ui-disabled--text--hover:           $pfelements--gray !default;
 $pfe-color--ui-disabled--text--focus:           $pfelements--gray !default;
 $pfe-color--ui-disabled--text--visited:         $pfelements--gray !default;

@@ -64,10 +64,10 @@ $pfe-color--ui-accent:                          $pfelements--red !default;
 $pfe-color--ui-accent--hover:                   darken($pfelements--red, 20%) !default;
 $pfe-color--ui-accent--focus:                   $pfelements--red !default;
 $pfe-color--ui-accent--visited:                 $pfelements--red !default;
-$pfe-color--ui-accent--text:                    $pfe-color--text--on-dark !default;
-$pfe-color--ui-accent--text--hover:             $pfe-color--text--on-dark !default;
-$pfe-color--ui-accent--text--focus:             $pfe-color--text--on-dark !default;
-$pfe-color--ui-accent--text--visited:           $pfe-color--text--on-dark !default;
+$pfe-color--ui-accent--text:                    $pfe-color--text--on-saturated !default;
+$pfe-color--ui-accent--text--hover:             $pfe-color--text--on-saturated !default;
+$pfe-color--ui-accent--text--focus:             $pfe-color--text--on-saturated !default;
+$pfe-color--ui-accent--text--visited:           $pfe-color--text--on-saturated !default;
 
 $pfe-color--ui-disabled:                        $pfelements--gray-light !default;
 $pfe-color--ui-disabled--hover:                 $pfelements--gray-light !default;
@@ -124,21 +124,21 @@ $pfe-color--surface--darkest--link--hover:      $pfe-color--ui-link--on-dark--ho
 $pfe-color--surface--darkest--link--focus:      $pfe-color--ui-link--on-dark--focus !default;
 
 // Complement group
-$pfe-color--surface--complement:                $pfelements--blue;
-$pfe-color--surface--complement--text:          $pfe-color--text--on-dark !default;
-$pfe-color--surface--complement--link:          $pfe-color--ui-link--on-dark !default;
-$pfe-color--surface--complement--link--visited: $pfe-color--ui-link--on-dark--visited !default;
-$pfe-color--surface--complement--link--hover:   $pfe-color--ui-link--on-dark--hover !default;
-$pfe-color--surface--complement--link--focus:   $pfe-color--ui-link--on-dark--focus !default;
+$pfe-color--surface--complement:                $pfelements--blue !default;
+$pfe-color--surface--complement--text:          $pfe-color--text--on-saturated !default;
+$pfe-color--surface--complement--link:          $pfe-color--ui-link--on-saturated !default;
+$pfe-color--surface--complement--link--visited: $pfe-color--ui-link--on-saturated--visited !default;
+$pfe-color--surface--complement--link--hover:   $pfe-color--ui-link--on-saturated--hover !default;
+$pfe-color--surface--complement--link--focus:   $pfe-color--ui-link--on-saturated--focus !default;
 
 
 // Accent group
-$pfe-color--surface--accent:                    $pfelements--orange;
-$pfe-color--surface--accent--text:              $pfe-color--text--on-dark !default;
-$pfe-color--surface--accent--link:              $pfe-color--ui-link--on-dark !default;
-$pfe-color--surface--accent--link--visited:     $pfe-color--ui-link--on-dark--visited !default;
-$pfe-color--surface--accent--link--hover:       $pfe-color--ui-link--on-dark--hover !default;
-$pfe-color--surface--accent--link--focus:       $pfe-color--ui-link--on-dark--focus !default;
+$pfe-color--surface--accent:                    $pfelements--red-darkest !default;
+$pfe-color--surface--accent--text:              $pfe-color--text--on-saturated !default;
+$pfe-color--surface--accent--link:              $pfe-color--ui-link--on-saturated !default;
+$pfe-color--surface--accent--link--visited:     $pfe-color--ui-link--on-saturated--visited !default;
+$pfe-color--surface--accent--link--hover:       $pfe-color--ui-link--on-saturated--hover !default;
+$pfe-color--surface--accent--link--focus:       $pfe-color--ui-link--on-saturated--focus !default;
 
 
 // Palette of Border Colors

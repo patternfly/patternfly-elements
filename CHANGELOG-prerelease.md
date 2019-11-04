@@ -11,7 +11,9 @@ Tag: [v1.0.0-prerelease.28](https://github.com/patternfly/patternfly-elements/re
 - [6ddbcff](https://github.com/patternfly/patternfly-elements/commit/6ddbcffa50bb277a3e48c7b729becd1db646425e) fix: pfe-tabs in IE11
 - [782f8e9](https://github.com/patternfly/patternfly-elements/commit/782f8e9ec9cf1e1961acd6bb9bc406d715837706) fix: updating pfe-card story so image overflow works #599
 - [f111593](https://github.com/patternfly/patternfly-elements/commit/f111593805390b1395c284d5905a2e530f829e01) fix: pfe-icon stretch
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfelement compilation of css assets
+- [b2a099d](https://github.com/patternfly/patternfly-elements/commit/b2a099d0fa1cb1bed8cc7d054ffa1138613e4408) fix: pfelement compilation of css assets
+- [10ea169](https://github.com/patternfly/patternfly-elements/commit/10ea169cb4a714851b7de2b330793ef6602a51bd) fix: Pfe autocomplete updates (#591)
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: update accent color to red
 
 ## Prerelease 27 ( 2019-10-25 )
 

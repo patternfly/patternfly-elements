@@ -18,12 +18,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "pfe-toast.umd.js",
+  "main": "./dist/pfe-toast.umd.js",
+  "module": "./dist/pfe-toast.js",
   "unpkg": "./dist/pfe-toast.umd.min.js",
   "files": [
     "dist"
   ],
-  "module": "pfe-toast.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",

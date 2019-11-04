@@ -20,6 +20,7 @@ The default slot can contain any type of content.
 ## Attributes
 
 - `auto-dismiss`: Optionally dismiss the toast alert after the number of milliseconds provided. For example, `auto-dismiss="3000"` will dismiss the toast alert after three seconds.
+- `close-label`: This is an optional attribute string that you can provide that sets the aria-label on the close button in the shadow DOM. The aria-label attribute will default to "Close".
 
 ## Variables
 

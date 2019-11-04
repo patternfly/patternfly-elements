@@ -34,7 +34,7 @@
           "title": "Auto dismiss",
           "type": "string"     
         },
-        "close-label": {
+        "close_label": {
           "title": "Close label",
           "type": "string"
         }

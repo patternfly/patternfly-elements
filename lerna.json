@@ -8,6 +8,9 @@
   "ignoreChanges": [
     "elements/*/*.css",
     "elements/*/*.js",
-    "elements/*/*.map"
+    "elements/*/*.map",
+    "elements/*/dist/*.css",
+    "elements/*/dist/*.js",
+    "elements/*/dist/*.map"
   ]
 }

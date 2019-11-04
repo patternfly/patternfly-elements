@@ -22,10 +22,7 @@
   "module": "./dist/pfe-card.js",
   "unpkg": "./dist/pfe-card.umd.min.js",
   "files": [
-    "pfe-card.*js",
-    "pfe-card.*js.map",
-    "pfe-card--lightdom.*css",
-    "pfe-card--lightdom.*css.map"
+    "dist"
   ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",

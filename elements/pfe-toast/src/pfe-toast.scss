@@ -33,6 +33,7 @@ $LOCAL: toast;
   position: absolute;
   right: #{pfe-local(Right)};
   top: #{pfe-local(Top)};
+
   //transition: right #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
   transition: right 0.5s ease-in-out;
   will-change: right;
@@ -84,10 +85,10 @@ $LOCAL: toast;
     flex-flow: row nowrap;
     justify-content: flex-start;
 
-    background-color: pfe-local($cssvar: BackgroundColor, $region: container);
-    box-shadow: pfe-local($cssvar: BoxShadow, $region: container);
-    color: pfe-local($cssvar: Color, $region: container);
-    padding: pfe-local($cssvar: Padding, $region: container);
+    background-color: #{pfe-local($cssvar: BackgroundColor, $region: container)};
+    box-shadow: #{pfe-local($cssvar: BoxShadow, $region: container)};
+    color: #{pfe-local($cssvar: Color, $region: container)};
+    padding: #{pfe-local($cssvar: Padding, $region: container)};
   }
   &__content {
     // flex child props
@@ -101,17 +102,17 @@ $LOCAL: toast;
     border: none;
     cursor: pointer;
     margin: 0;
-    padding: pfe-local($cssvar: Padding, $region: close);
+    padding: #{pfe-local($cssvar: Padding, $region: close)};
     
     & > svg {
-      fill: pfe-local($cssvar: svg--Fill, $region: close);
-      height: pfe-local($cssvar: svg--Height, $region: close);
-      width: pfe-local($cssvar: svg--Width, $region: close);
+      fill: #{pfe-local($cssvar: svg--Fill, $region: close)};
+      height: #{pfe-local($cssvar: svg--Height, $region: close)};
+      width: #{pfe-local($cssvar: svg--Width, $region: close)};
     }
     
     &:hover {
       & > svg {
-        fill: pfe-local($cssvar: svg--Fill--hover, $region: close);
+        fill: #{pfe-local($cssvar: svg--Fill--hover, $region: close)};
       }
     }
   }

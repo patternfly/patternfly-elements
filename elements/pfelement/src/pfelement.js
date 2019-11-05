@@ -118,7 +118,8 @@ class PFElement extends HTMLElement {
     this.setAttribute("pfelement", "");
     
     // Get the theme variable if it exists, set it as an attribute
-    if (this.getVariable("theme")) this.setAttribute("on", this.getVariable("theme"));
+    // Unless the on attribute has been manually set by the user, then keep that
+    if (this.getVariable("theme") && !this.getAttribute("on")) this.setAttribute("on", this.getVariable("theme"));
 
     if (typeof this.props === "object") {
       this._mapSchemaToProperties(this.tag, this.props);

@@ -22,9 +22,6 @@
   "module": "./dist/pfe-card.js",
   "unpkg": "./dist/pfe-card.umd.min.js",
   "files": [
-    "dist"
-  ],
-  "files": [
     "pfe-card.*js",
     "pfe-card.*js.map",
     "pfe-card--lightdom.*css",

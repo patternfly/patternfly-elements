@@ -272,7 +272,7 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
 1. **Color**:  Rather than using only Sass variables `$red` or hexidecimal colors like `#c00`, please use the `pfe-color()` function along with a theme variable, i.e. `pfe-color(link)`. Occasionally you may have to wrap interpolation syntax `#{ }` around the function to allow Sass to compile, i.e. `#{pfe-color(link)}`. 
     
 
-    * This function does some heavy-lifting by looking up the `$pfe-colors: ()` map and returning namespaced CSS variables for the [broadcasted color](#broadcasted) (should it be passed down from a dark container), the theme color, and then a fallback color in that order: 
+    * This function does some heavy-lifting by looking up the `$pfe-colors: ()` map and returning namespaced CSS variables for the theme and fallback color, in that order: 
 
 
     ```
@@ -285,7 +285,7 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
 
      ```css
      :host {
-         color: var(--pfe-broadcasted--color--link, var(--pfe-theme--color--link, #06c));
+         color: var(--pfe-theme--color--link, #06c));
      }
      ```
   
@@ -298,7 +298,7 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
       *   Accent
       *   Complement
        
-2. **Other Properties**:   Similarly, the `pfe-var` function does the same work of looking up values from the `$pfe-vars: ()` map, and returning the variable name and the fallback value:
+2. **Non-color Properties**:   Similarly, the `pfe-var` function does the same work of looking up values from the `$pfe-vars: ()` map, and returning the variable name and the fallback value:
       
     ```sass
     :host {
@@ -313,6 +313,79 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
         font-size: var(--pfe-theme--font-size, 16px);
     }
     ```    
+
+3. **Broadcast Variables**: These variables are designed to cascade and influence the text or link styles of content components nested inside container components.  Typically container components are opinionated about background color and thus need to communicate this to their children so that text and link colors can be adjusted for usability.
+
+Inside the stylesheet for a container component, the following snippet will allow that component to broadcast it's context to it's children. The surfaces and theme-contexts mixins can be found in `pfe-sass/mixins/_custom-properties.scss`.  For these to work, please ensure you are importing pfe-sass and have the $LOCAL variable set to the name of your component at the top of your Sass file.
+
+**In your container component:**
+```
+  @import "../../pfe-sass/pfe-sass";
+
+  $LOCAL: band;
+
+  // Pull in pfe-color settings for all supported surface colors
+  @include surfaces;
+```
+
+This mixin will expand to the following in your compiled CSS, one entry for each supported surface color (darkest, darker, base, lighter, lightest, accent, complement):
+```
+:host([pfe-color="darker"]) {
+  --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
+  --theme: dark;
+  --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark, #fff);
+  --pfe-broadcasted--color--link: var(--pfe-theme--color--link--on-dark, #99ccff);
+  --pfe-broadcasted--color--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
+  --pfe-broadcasted--color--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
+  --pfe-broadcasted--color--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
+}
+```
+
+You can optionally customize this set by passing in a list of just the surfaces you would like added; you can also optionally use a different attribute name should you prefer.
+```
+  @import "../../pfe-sass/pfe-sass";
+
+  $LOCAL: band;
+
+  // Pull in pfe-color settings for all supported surface colors
+  @include surfaces($surfaces: (lightest, darkest), $attr-name: pfe-background);
+```
+
+Inside the stylesheet for a content component, the following snippet will allow that component to opt-into the broadcast styles coming from it's parent.
+
+**In your content component:**
+```
+  @import "../../pfe-sass/pfe-sass";
+
+  // Pull in all themes with broadcast variables
+  @include theme-contexts;
+```
+
+This mixin will expand to the following in your compiled CSS, one entry for each supported theme context (light, dark, saturated):
+```
+:host([on="dark"]) {
+  --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark, #fff);
+  --pfe-broadcasted--color--link: var(--pfe-theme--color--link--on-dark, #99ccff);
+  --pfe-broadcasted--color--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
+  --pfe-broadcasted--color--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
+  --pfe-broadcasted--color--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
+}
+
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+  :host([on="dark"]) {
+    color: #fff;
+    color: var(--pfe-theme--color--text--on-dark, #fff);
+  }
+}
+```
+
+You can optionally customize this set by passing in a list of just the themes you would like supported; you can also optionally turn off fallback support for older browsers.
+```
+  @import "../../pfe-sass/pfe-sass";
+
+  // Pull in all themes with broadcast variables
+  @include theme-contexts($themes: (light, dark), $fallback: false);
+```
 
 ### Local variables & related functions     
 

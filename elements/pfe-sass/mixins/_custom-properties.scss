@@ -85,8 +85,7 @@
 
 @mixin pfe-set-local($variables) {
 
-    @each $property,
-    $value in $variables {
+    @each $property, $value in $variables {
         $name: "--#{$property}";
         $styles: $value;
 
@@ -106,7 +105,7 @@
     }
 }
 
-// Alias
+// Alias for pfe-set-local
 @mixin print-variables-map($variables) {
     @include pfe-set-local($variables);
 }
@@ -115,9 +114,7 @@
 /// ===========================================================================
 /// Theme Color Vars   - use with on="dark" to affect light DOM
 /// ===========================================================================
-
 @mixin pfe-theme($theme) {
-
     // GENERAL CONTEXT-BASED UPDATES, ON="DARK"
     @if $theme in (dark, darker, darkest) {
         @include pfe-set-broadcast(dark);
@@ -132,18 +129,44 @@
     }
 }
 
+/// ===========================================================================
+/// Surface properties   - prints pfe-color attributes + theme context
+/// - Optional inputs:
+///  * surfaces - defaults to the global $SURFACES list of all supported colors
+///  * attr-name - defaults to pfe-color
+/// ===========================================================================
+@mixin surfaces($surfaces: $SURFACE, $attr-name: pfe-color) {
+    @each $color in $surfaces {
+        $theme: #{pfe-get-theme(surface--#{$color}--theme)};
+        :host([#{$attr-name}="#{$color}"]) {
+            @include pfe-set-local(
+                ( BackgroundColor: #{pfe-color(surface--#{$color})} )
+            );
+            --theme: #{$theme};
+            @include pfe-set-broadcast(#{$theme});
+        }
+    }
+}
 
-@mixin include-contexts() {
+/// ===========================================================================
+/// Context properties   - prints the on attributes with IE11 fallbacks
+/// - Optional inputs:
+///  * themes - defaults to the global $THEMES list of all supported contexts
+///  * fallback - defaults to true, prints IE11 fallbacks
+/// ===========================================================================
+@mixin theme-contexts($themes: $THEMES, $fallback: true) {
     // Helper attributes to aid in theming
-    @each $theme in $THEMES {
+    @each $theme in $themes {
         :host([on="#{$theme}"]) {
             @include pfe-set-broadcast($theme);
-            @include browser-query(ie11) {
-                @if $theme == "light" {
-                    color: #{pfe-color(text)};
-                }
-                @else {
-                    color: #{pfe-color(text--on-#{$theme})};
+            @if $fallback {
+                @include browser-query(ie11) {
+                    @if $theme == "light" {
+                        color: #{pfe-color(text)};
+                    }
+                    @else {
+                        color: #{pfe-color(text--on-#{$theme})};
+                    }
                 }
             }
         }

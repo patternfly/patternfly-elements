@@ -90,12 +90,8 @@ $LOCAL: band;
   }
 }
 
-@each $color in (darker, darkest, accent, complement, lighter, lightest) {
-  :host([pfe-color="#{$color}"]) {
-    --pfe-band--BackgroundColor: #{pfe-color(surface--#{$color})};
-    @include pfe-set-broadcast(#{pfe-get-theme(surface--#{$color}--theme)});
-  }
-}
+// Pull in pfe-color settings for all supported surface colors
+@include surfaces;
 
 // thinner padding on top & bottom
 :host([pfe-size="small"]) {

@@ -1,5 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
-@include include-contexts; // imports on="light" etc support
+@include theme-contexts; // imports on="light" etc support
 
 $USE-FALLBACK: true;
 $LOCAL: cta;

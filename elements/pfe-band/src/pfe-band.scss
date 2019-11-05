@@ -46,6 +46,9 @@ $LOCAL: band;
   @each $size in (md, lg, xl) {
     @media screen and (min-width: pfe-breakpoint(#{$size})) {
       --pfe-band--Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) );
+
+      --pfe-band--body--gutter--vertical:   #{ pfe-var(grid-gutter--#{$size} ) };
+      --pfe-band--body--gutter--horizontal: #{ pfe-var(grid-gutter--#{$size} ) };
     }
   }
   // Reduce padding for print
@@ -284,8 +287,8 @@ $LOCAL: band;
       // Apply the standard grid
       @supports (display: grid) {
           display: grid;
-          grid-row-gap: #{pfe-local(gutter--vertical)};
-          grid-column-gap: #{pfe-local(gutter--horizontal)};
+          grid-row-gap: #{pfe-local(body--gutter--vertical)};
+          grid-column-gap: #{pfe-local(body--gutter--horizontal)};
           margin-bottom: 0;
           // Apply the section as a named grid-area
           grid-area: #{$section};

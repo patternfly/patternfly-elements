@@ -6,6 +6,8 @@
     "assets": [
       "pfe-base.*css",
       "pfe-base.*.map",
+      "pfe-context.*css",
+      "pfe-context.*.map",
       "pfe-layouts.*css",
       "pfe-layouts.*.map"
     ]

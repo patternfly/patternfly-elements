@@ -139,9 +139,15 @@ class PfeBand extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+
     // Initialize the background image attachment
     if (this.imageSrc) {
       this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
+    }
+
+    // Trigger a context update if necessary
+    if (this.hasAttribute("pfe-color")) {
+      this.context_update();
     }
   }
 
@@ -165,6 +171,9 @@ class PfeBand extends PFElement {
   // Update the color attribute and contexts
   _colorChanged(attr, oldValue, newValue) {
     this[attr].value = newValue;
+    // Update it's own context
+    this.context_set();
+    // Trigger an update in nested components
     this.context_update();
   }
 

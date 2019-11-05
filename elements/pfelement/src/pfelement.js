@@ -84,7 +84,7 @@ class PFElement extends HTMLElement {
   context_set(event) {
     console.log("Set context fired.");
     console.log(this);
-    console.log(`Theme of parent: ${event.detail.theme}`);
+    if (event && event.detail) console.log(`Theme of parent: ${event.detail.theme}`);
     // Get the theme variable if it exists, set it as an attribute
     // Unless the on attribute has been manually set by the user, then keep that
     if (this.getVariable("theme")) {

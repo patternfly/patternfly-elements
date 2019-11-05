@@ -387,6 +387,7 @@ You can optionally customize this set by passing in a list of just the themes yo
   @include theme-contexts($themes: (light, dark), $fallback: false);
 ```
 
+
 ### Local variables & related functions     
 
 2. It is recommended to create "local" variables for properties that developers are likely to override, such as color and sizing. You may use these functions that refer to theme variables to set the values of these local vars. Here's an example of some local variables you would find in the `pfe-cta.scss` file:

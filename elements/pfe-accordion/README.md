@@ -42,6 +42,8 @@ Changes the context of the accordion to one of 3 possible themes:
 - `dark`
 - `saturated`
 
+This will be automatically added if a parent element sets the `--theme` variable.
+
 ## Events
 
 ### pfe-accordion:change

@@ -225,7 +225,7 @@ When setting a background color from outside of a web component, set the `--them
 }
 ```
 
-The `on="dark"` attribute will be automatically added by the web component upon detecting this theme varible.  
+The `on="dark"` attribute will be automatically added by the web component upon detecting this theme variable.  
 
 You can optionally customize your broadcast variables individually if you have very specific needs.  These are a list of the existing broadcast variables (also defined in `$BROADCAST-VARS`):
 

@@ -68,42 +68,28 @@ class PFElement extends HTMLElement {
     return [...this.querySelectorAll(`[slot='${name}']`)];
   }
 
+  // Update the theme context for self and children
   context_update() {
     const theme = this.getVariable("theme");
-    console.log("Update context fired.");
-    console.log(this);
-    this.dispatchEvent(
-      new CustomEvent("pfe-theme:update", {
-        detail: {
-          theme: theme
-        }
-      })
-    );
+    const children = this.querySelectorAll("[on]");
+    // Update theme for self
+    this.context_set();
+    // For each nested element containing an "on" attribute
+    [...children].map(child => {
+      if (child.getAttribute("on") !== theme) {
+        // Set the context based on the child's value of --theme
+        // Note: this prevents contexts from parents overriding
+        // the child's context should it exist
+        child.context_set();
+      }
+    });
   }
 
-  context_set(event) {
-    console.log("Set context fired.");
-    console.log(this);
-    if (event && event.detail) console.log(`Theme of parent: ${event.detail.theme}`);
-    // Get the theme variable if it exists, set it as an attribute
-    // Unless the on attribute has been manually set by the user, then keep that
+  // Get the theme variable if it exists, set it as an attribute
+  context_set() {
     if (this.getVariable("theme")) {
-      console.log(`Set context to: ${this.getVariable("theme")}`);
-      console.log(this);
       this.setAttribute("on", this.getVariable("theme"));
     }
-  }
-
-  context_listen() {
-    this.contextual = true;
-    // Attach an event listener to all elements to update the context
-    this.addEventListener("pfe-theme:update", this.context_set);
-  }
-
-  context_detatch() {
-    this.contextual = false;
-    // Remove the event listener to all elements to update the context
-    this.removeEventListener("pfe-theme:update", this.context_set);
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
@@ -114,7 +100,6 @@ class PFElement extends HTMLElement {
     this.tag = pfeClass.tag;
     this.props = pfeClass.properties;
     this.slots = pfeClass.slots;
-    this.contextual = false;
     this._queue = [];
     this.template = document.createElement("template");
     
@@ -156,8 +141,11 @@ class PFElement extends HTMLElement {
     this.classList.add("PFElement");
     this.setAttribute("pfelement", "");
 
-    if (this.getVariable("theme") && !this.getAttribute("on")) {
-      this.setAttribute("on", this.getVariable("theme"));
+    // Initialize the on attribute if a theme variable is set
+    // do not update the on attribute if a user has manually added it
+    if (!this.getAttribute("on")) {
+      this.context_set();
+      // this.setAttribute("on", this.getVariable("theme"));
     }
 
     if (typeof this.props === "object") {

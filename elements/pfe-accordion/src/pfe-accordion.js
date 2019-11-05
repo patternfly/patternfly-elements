@@ -98,8 +98,6 @@ class PfeAccordion extends PFElement {
 
     this.addEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
     this.addEventListener("keydown", this._keydownHandler);
-    
-    this.context_listen();
 
     Promise.all([
       customElements.whenDefined(PfeAccordionHeader.tag),
@@ -117,8 +115,6 @@ class PfeAccordion extends PFElement {
     this.removeEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
     this.removeEventListener("keydown", this._keydownHandler);
     this._observer.disconnect();
-    
-    this.context_detatch();
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {

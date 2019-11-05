@@ -52,6 +52,7 @@ $pfe-modal--breakpoint--medium: 640px;
 	}
 	&__window {
 		@include pfe-set-broadcast("light");
+		--theme: light;
 
 		position: relative;
 		max-width: #{pfe-local(MaxWidth--mobile)};

@@ -85,10 +85,10 @@ stories.add("pfe-avatar", () => {
         .map(
           ex => `
             <pfe-card color="light">
-              <h2 slot="header">${ex.name}</h2>
+              <h2 slot="pfe-card--header">${ex.name}</h2>
               <p>
                 <pfe-avatar
-                  slot="header"
+                  slot="pfe-card--header"
                   ${
                     ex.src ? `pfe-src=${ex.src}` : `pfe-pattern="${ex.pattern}"`
                   }

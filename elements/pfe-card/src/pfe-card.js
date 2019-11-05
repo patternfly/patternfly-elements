@@ -125,6 +125,8 @@ class PfeCard extends PFElement {
     if (this.imageSrc) {
       this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
     }
+    
+    this.context_update();
 
     this._observer.observe(this, { childList: true });
   }

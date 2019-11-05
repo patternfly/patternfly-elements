@@ -68,6 +68,40 @@ class PFElement extends HTMLElement {
     return [...this.querySelectorAll(`[slot='${name}']`)];
   }
 
+  context_update() {
+    console.log("Update context fired.");
+    console.log(this);
+    this.dispatchEvent(
+      new CustomEvent(`pfe-theme:update`, {
+        theme: this.getVariable("theme")
+      })
+    );
+  }
+
+  context_set(event) {
+    console.log("Set context fired.");
+    console.log(`Theme of parent: ${event.theme}`);
+    // Get the theme variable if it exists, set it as an attribute
+    // Unless the on attribute has been manually set by the user, then keep that
+    if (this.getVariable("theme")) {
+      console.log(`Set context to: ${this.getVariable("theme")}`);
+      console.log(this);
+      this.setAttribute("on", this.getVariable("theme"));
+    }
+  }
+
+  context_listen() {
+    this.contextual = true;
+    // Attach an event listener to all elements to update the context
+    this.addEventListener(`pfe-theme:update`, this.context_set);
+  }
+
+  context_detatch() {
+    this.contextual = false;
+    // Remove the event listener to all elements to update the context
+    this.removeEventListener(`pfe-theme:update`, this.context_set);
+  }
+
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
     super();
 
@@ -76,6 +110,7 @@ class PFElement extends HTMLElement {
     this.tag = pfeClass.tag;
     this.props = pfeClass.properties;
     this.slots = pfeClass.slots;
+    this.contextual = false;
     this._queue = [];
     this.template = document.createElement("template");
     
@@ -116,10 +151,10 @@ class PFElement extends HTMLElement {
     // https://github.com/angular/angular/issues/15399#issuecomment-318785677
     this.classList.add("PFElement");
     this.setAttribute("pfelement", "");
-    
-    // Get the theme variable if it exists, set it as an attribute
-    // Unless the on attribute has been manually set by the user, then keep that
-    if (this.getVariable("theme") && !this.getAttribute("on")) this.setAttribute("on", this.getVariable("theme"));
+
+    if (this.getVariable("theme") && !this.getAttribute("on")) {
+      this.setAttribute("on", this.getVariable("theme"));
+    }
 
     if (typeof this.props === "object") {
       this._mapSchemaToProperties(this.tag, this.props);

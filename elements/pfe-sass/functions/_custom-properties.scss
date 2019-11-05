@@ -118,6 +118,7 @@
 //
 //  usage:   color: #{pfe-apply-broadcast(link)};
 //  result:  color: var(--pfe-broadcasted--color--link);
+//  Was: pfe-radio!
 
 @function pfe-apply-broadcast($broadcast, $fallback: #{pfe-color(#{to-string($broadcast,'--')})}) {
     @if not index($BROADCAST-VARS, $broadcast) {

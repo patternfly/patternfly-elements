@@ -40,7 +40,7 @@ $variables: (
 
 :host {
   // Print the variables to the DOM
-  @include pfe-set-local($variables);
+  @include print-variables-map($variables);
 
   // Reduce padding for print
   @media print {

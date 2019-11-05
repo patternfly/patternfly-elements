@@ -84,7 +84,6 @@
 ///     ```
 
 @mixin pfe-set-local($variables) {
-
     @each $property, $value in $variables {
         $name: "--#{$property}";
         $styles: $value;

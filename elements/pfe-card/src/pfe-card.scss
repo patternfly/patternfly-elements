@@ -61,15 +61,10 @@ $LOCAL: card;
   color: #{pfe-apply-broadcast(text)};
 }
 
-// @TODO Deprecate "dark" and "light" in favor of "darker" and "lighter"
-@each $color in (darker, darkest, lighter, lightest, complement, accent) {
-  $label: $color;
-  // Update variable values to match provided attribute
-  :host([pfe-color="#{$label}"]) {
-    --pfe-card--BackgroundColor:                  #{pfe-color(surface--#{$color})};
-    @include pfe-set-broadcast(#{pfe-get-theme(surface--#{$color}--theme)});
-  }
-}
+// Pull in pfe-color settings for all supported surface colors
+@include surfaces;
+
+@include theme-contexts; // imports on="light" etc support
 
 :host([pfe-size="small"]) {
   --pfe-card--PaddingTop:     #{pfe-var(container-spacer)};

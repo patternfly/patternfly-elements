@@ -89,11 +89,11 @@ $LOCAL: band;
     box-sizing: border-box;
   }
 }
+// Use-case for transparent backgrounds
+@include theme-contexts; // imports on="light" etc support
 
 // Pull in pfe-color settings for all supported surface colors
 @include surfaces;
-
-@include theme-contexts; // imports on="light" etc support
 
 // thinner padding on top & bottom
 :host([pfe-size="small"]) {

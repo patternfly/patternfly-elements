@@ -1,14 +1,16 @@
 @import "../../pfe-sass/pfe-sass";
+$LOCAL: autocomplete;
+
 @include theme-contexts; // imports on="light" etc support
 
 :host {
+  --pfe-autocomplete--BoxShadow: #{pfe-var(box-shadow--inset)};
+  --pfe-autocomplete--BackgroundColor: #{pfe-color(surface--lightest)};
+  --pfe-autocomplete--Border:  #{pfe-var(border-width, ui)}  #{pfe-var(border-style, ui)}  #{pfe-color(surface--border)};
+
   display: block;
   position: relative;
-}
-
-.input-box-wrapper {
-  position: relative;
-  display:flex;
+  font-family: #{pfe-var(font-family)};
 }
 
 .sr-only {
@@ -19,91 +21,101 @@
   ::slotted(input) {
     width: 100%;
     flex: 1;
-    box-shadow: #{pfe-var(box-shadow--inset)} !important;
+    box-shadow: #{pfe-local(BoxShadow)} !important;
     padding-left: 10px;
     padding-right: 30px;
-    border-radius: 0;
-    background-color: #fff;
-    border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    border-radius: pfe-var(border-radius);
+    background-color: #{pfe-local(BackgroundColor)};
+    border: #{pfe-local(Border)};
     font-size: #{pfe-var(font-size)};
     height: calc(#{pfe-var(ui--element--size)} * 2);
-    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
     opacity: 1;
     outline: 0;
   }
+    border-color: #{pfe-color(feedback--info)};
+
+  ::slotted(input:disabled),
+  button:disabled {
+    cursor: not-allowed;
+    background-color: transparent;
+    color: #ccc;
+    opacity: 0.5;
+  }
+
   button:focus,
   ::slotted(input:focus) {
-    border-color: #{pfe-color(feedback--info)};
     outline: 0;
   }
+
+  ::slotted(input),
+  button {
+    -webkit-appearance: none;
+  }
+
   ::slotted([type="search"]::-ms-clear) {
     display: none;
   }
+
   ::slotted(input[type="search"]::-webkit-search-cancel-button),
   ::slotted(input[type="search"]::-webkit-search-decoration) {
     -webkit-appearance: none;
   }
 }
 
-#input-box-wrapper ::slotted(input:disabled),
-button:disabled {
-  cursor: not-allowed;
+button {
+  color: pfe-color(ui-complement);
   background-color: transparent;
-  color: #{pfe-color(feedback--default)};
-  opacity: 0.5;
-}
-
-#input-box-wrapper ::slotted(input),
-button {
-  -webkit-appearance: none;
-}
-
-button {
-  @extend %reset-button;
-  color: #{pfe-color(feedback--default)};
+  border: none;
   position: absolute;
   top: 0;
   bottom: 0;
   cursor: pointer;
 
   &.clear-search {
-    background-color: #{pfe-color(surface--lightest)};
     right: 30px;
     width: 20px;
     margin: 2px 1px;
-    &:hover {
-      color: #{pfe-color(feedback--default)};
-    }
-    svg {
-      width: 12px;
-      stroke: #{pfe-color(feedback--default)};
-    }
-    &:hover svg,
-    &:focus svg {
-      opacity: 1;
-      stroke: #{pfe-color(feedback--info)};
-    }
+    background-color: pfe-color(surface--lightest);
+  }
+
+  &.clear-search svg {
+    width: 12px;
+    stroke: pfe-color(surface--border);
+  }
+
+  &.clear-search:hover svg,
+  &.clear-search:focus svg {
+    opacity: 1;
+    stroke: pfe-color(ui-link);
   }
 
   &[disabled].clear-search:hover svg,
   &[disabled].clear-search:focus svg {
-    stroke: #{pfe-color(feedback--default)};
+    stroke: pfe-color(surface--border);
   }
 
   &.search-button {
     right: 1px;
     width: 30px;
-    &:disabled svg {
-      fill: #{pfe-color(feedback--default)};
-    }
-    svg {
-      fill: #{pfe-color(feedback--info)};
-      width: 16px;
-    }
-    &:hover svg,
-    &:focus svg {
-      fill: #004080;
-    }
+  }
+
+  &.search-button svg {
+    fill: pfe-color(ui-link);
+    width: 16px;
+  }
+
+  &.search-button:hover svg,
+  &.search-button:focus svg {
+    fill: pfe-color(ui-link--hover);
+  }
+
+  &.clear-search:hover {
+    color: pfe-color(ui-complement);
+  }
+
+  &.search-button:disabled svg {
+    fill: pfe-color(ui-disabled);
   }
 }
 

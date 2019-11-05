@@ -2,9 +2,15 @@
   "name": "@patternfly/pfe-layouts",
   "pfelement": {
     "className": "PfeLayouts",
-    "elementName": "pfe-layouts"
+    "elementName": "pfe-layouts",
+    "assets": [
+      "pfe-base.*css",
+      "pfe-base.*.map",
+      "pfe-layouts.*css",
+      "pfe-layouts.*.map"
+    ]
   },
-  "version": "1.0.0-prerelease.27",
+  "version": "1.0.0-prerelease.28",
   "publishConfig": {
     "access": "public"
   },
@@ -12,6 +18,9 @@
   "keywords": [
     "web-components",
     "html"
+  ],
+  "files": [
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -32,7 +41,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.27"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.28"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

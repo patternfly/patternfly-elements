@@ -55,8 +55,192 @@
       }
     </style>
   </head>
-  <body unresolved>
+  <body unresolved>  
+    <style>
+      .border-card {
+          --pfe-card--Border: 1px solid var(--pfe-theme--surface--border, #d2d2d2);
+      }
+      .border-card h3 {
+          margin-top: 0;
+      }
+      
+      .resource-card [slot="pfe-card--header"] {
+        text-transform: uppercase;
+      }
+      
+      .custom-styles {
+          --pfe-card--BackgroundPosition: bottom right;
+          --pfe-card--BackgroundColor: #e00;
+          --pfe-broadcasted--color--text: #fff;
+          --pfe-broadcasted--color--ui-link: #fff;
+          --pfe-broadcasted--color--ui-link--hover: #eee;
+          --pfe-broadcasted--color--ui-link--focus: #fff;
+      }
+      
+      .custom-styles h3 {
+          margin-top: 0;
+      }
+    </style>
 
+    <pfe-band pfe-color="lightest">
+      <header slot="pfe-band--header">
+        <h2>Accordion component</h2>
+      </header>
+      <article>
+        <pfe-accordion>
+          <pfe-accordion-header>
+            <h3>Nested panel example</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <pfe-accordion>
+              <pfe-accordion-header>
+                <h3>Panel with multiple paragraphs</h3>
+              </pfe-accordion-header>
+              <pfe-accordion-panel>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum.</p>
+                <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                  sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              </pfe-accordion-panel>
+            </pfe-accordion>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Panel with links</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
+              repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+              they depict. A portrait of his parents would not be of much help to Harry.</p>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Panel with CTA</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            </p>
+            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+          </pfe-accordion-panel>
+        </pfe-accordion>
+      </article>
+    </pfe-band>
+
+    <pfe-band pfe-color="darkest">
+      <header slot="pfe-band--header">
+        <h2>Accordion component on dark</h2>
+      </header>
+      <article>
+        <pfe-accordion>
+          <pfe-accordion-header>
+            <h3>Nested panel example</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <pfe-accordion>
+              <pfe-accordion-header>
+                <h3>Panel with multiple paragraphs</h3>
+              </pfe-accordion-header>
+              <pfe-accordion-panel>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum.</p>
+                <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                  sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              </pfe-accordion-panel>
+            </pfe-accordion>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Panel with links</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
+              repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+              they depict. A portrait of his parents would not be of much help to Harry.</p>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Panel with CTA</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            </p>
+            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+          </pfe-accordion-panel>
+        </pfe-accordion>
+      </article>
+    </pfe-band>
+
+    <pfe-band pfe-color="complement">
+      <header slot="pfe-band--header">
+        <h2>Accordion component on saturated</h2>
+      </header>
+      <article>
+        <pfe-accordion>
+          <pfe-accordion-header>
+            <h3>Nested panel example</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <pfe-accordion>
+              <pfe-accordion-header>
+                <h3>Panel with multiple paragraphs</h3>
+              </pfe-accordion-header>
+              <pfe-accordion-panel>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum.</p>
+                <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                  sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              </pfe-accordion-panel>
+            </pfe-accordion>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Panel with links</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
+              repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+              they depict. A portrait of his parents would not be of much help to Harry.</p>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Panel with CTA</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            </p>
+            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+          </pfe-accordion-panel>
+        </pfe-accordion>
+      </article>
+    </pfe-band>
+        
     <section class="light-gray-background">
       <h2>&lt;pfe-accordion&gt;</h2><br/>
       <pfe-accordion>
@@ -146,6 +330,7 @@
         </pfe-accordion-panel>
       </pfe-accordion>
     </section>
+
     <section class="dark-background on-dark">
       <h2>&lt;pfe-accordion&gt; nested</h2><br/>
       <pfe-accordion>

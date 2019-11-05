@@ -69,18 +69,22 @@ class PFElement extends HTMLElement {
   }
 
   context_update() {
+    const theme = this.getVariable("theme");
     console.log("Update context fired.");
     console.log(this);
     this.dispatchEvent(
-      new CustomEvent(`pfe-theme:update`, {
-        theme: this.getVariable("theme")
+      new CustomEvent("pfe-theme:update", {
+        detail: {
+          theme: theme
+        }
       })
     );
   }
 
   context_set(event) {
     console.log("Set context fired.");
-    console.log(`Theme of parent: ${event.theme}`);
+    console.log(this);
+    console.log(`Theme of parent: ${event.detail.theme}`);
     // Get the theme variable if it exists, set it as an attribute
     // Unless the on attribute has been manually set by the user, then keep that
     if (this.getVariable("theme")) {
@@ -93,13 +97,13 @@ class PFElement extends HTMLElement {
   context_listen() {
     this.contextual = true;
     // Attach an event listener to all elements to update the context
-    this.addEventListener(`pfe-theme:update`, this.context_set);
+    this.addEventListener("pfe-theme:update", this.context_set);
   }
 
   context_detatch() {
     this.contextual = false;
     // Remove the event listener to all elements to update the context
-    this.removeEventListener(`pfe-theme:update`, this.context_set);
+    this.removeEventListener("pfe-theme:update", this.context_set);
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {

@@ -43,7 +43,7 @@ Each header must have an attribute of `pfe-content-set--header` and each panel m
 - `vertical`
     - Accordion: No effect.
     - Tabs: Headings stack on the left, content pane is shown on the right.
-- `align="center"`
+- `pfe-align="center"`
     - Accordion: No effect.
     - Tabs: Tabs are centered.
 

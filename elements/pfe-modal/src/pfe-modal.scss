@@ -12,6 +12,7 @@ $pfe-modal--breakpoint--medium: 640px;
 	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);
 	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
 	--pfe-modal__close--size: calc(#{pfe-var(ui--element--size)} - 4px);
+
 	display: block;
 	position: relative;
 
@@ -63,7 +64,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		background-color: #{pfe-color(surface--lightest)};
 		color: #{pfe-apply-broadcast(text)};
 		border-radius: #{pfe-var(ui--border-radius)};
-
+		
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			max-width: pfe-local(MaxWidth);
 		}

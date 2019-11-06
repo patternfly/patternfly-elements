@@ -143,13 +143,6 @@ class PFElement extends HTMLElement {
     this.classList.add("PFElement");
     this.setAttribute("pfelement", "");
 
-    // Initialize the on attribute if a theme variable is set
-    // do not update the on attribute if a user has manually added it
-    if (!this.getAttribute("on")) {
-      this.context_set();
-      // this.setAttribute("on", this.getVariable("theme"));
-    }
-
     if (typeof this.props === "object") {
       this._mapSchemaToProperties(this.tag, this.props);
       this.log(`Properties attached.`);
@@ -163,6 +156,15 @@ class PFElement extends HTMLElement {
     if (this._queue.length) {
       this._processQueue();
     }
+
+    // Initialize the on attribute if a theme variable is set
+    // do not update the on attribute if a user has manually added it
+    if (!this.getAttribute("on")) {
+      this.context_set();
+    }
+
+    // Trigger an update in nested components
+    this.context_update();
 
     this.log(`Connected.`);
   }

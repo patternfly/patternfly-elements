@@ -64,9 +64,6 @@ class PfeModal extends PFElement {
     this._modalCloseButton.addEventListener("click", this.close);
     this._overlay.addEventListener("click", this.close);
 
-    // Trigger an update in nested components
-    this.context_update();
-
     this._observer.observe(this, { childList: true });
   }
 

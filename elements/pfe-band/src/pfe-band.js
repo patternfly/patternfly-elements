@@ -144,11 +144,6 @@ class PfeBand extends PFElement {
     if (this.imageSrc) {
       this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
     }
-
-    // Trigger a context update if necessary
-    if (this.hasAttribute("pfe-color")) {
-      this.context_update();
-    }
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {

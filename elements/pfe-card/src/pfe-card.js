@@ -126,11 +126,6 @@ class PfeCard extends PFElement {
       this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
     }
 
-    // Trigger a context update if necessary
-    if (this.hasAttribute("pfe-color")) {
-      this.context_update();
-    }
-
     this._observer.observe(this, { childList: true });
   }
 

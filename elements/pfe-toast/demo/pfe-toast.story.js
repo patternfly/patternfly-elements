@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
-import PfeToast from "../pfe-toast";
+import PfeToast from "../dist/pfe-toast";
 
 const stories = storiesOf("Toast", module);
 

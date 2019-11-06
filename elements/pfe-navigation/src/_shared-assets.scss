@@ -47,10 +47,6 @@ $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
     z-index: 2;
     line-height: 1.1;
 
-    @media screen and (min-width: 1055px) {
-        text-align: center;
-    }
-
     @media screen and (min-width: 1200px) {
         white-space: nowrap;
     }

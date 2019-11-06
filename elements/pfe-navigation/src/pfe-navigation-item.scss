@@ -332,6 +332,9 @@ $variables: (
   flex-grow: 1;
 }
 
+:host([is_nested]) [slot="trigger"] > a {
+  color: #{pfe-color(ui-complement)} !important;
+}
 // @TODO set up tray opening animation?
 // :host(.animating) {
 //   transition: transform 0.3s #{pfe-var(animation-timing)};

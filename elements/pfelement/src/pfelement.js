@@ -31,7 +31,7 @@ class PFElement extends HTMLElement {
     return "{{version}}";
   }
   
-  static get randomId() {
+  get randomId() {
     return Math.random().toString(36).substr(2, 9);
   }
 
@@ -89,6 +89,8 @@ class PFElement extends HTMLElement {
   context_set() {
     if (this.getVariable("theme")) {
       this.setAttribute("on", this.getVariable("theme"));
+    } else {
+      this.setAttribute("on", "light");
     }
   }
 

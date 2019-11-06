@@ -31,6 +31,7 @@ $LOCAL: band;
 
   // Text colors
   @include pfe-set-broadcast(light);
+  --theme: light;
 
   // Band width logic
   // Initialize at mobile breakpoint

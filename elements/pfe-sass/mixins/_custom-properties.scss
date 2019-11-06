@@ -16,7 +16,7 @@
 //      --pfe-broadcasted--color--link--focus:     #{pfe-color(link--focus--on-dark)};
 //    }
 
-@mixin pfe-set-broadcast($color, $broadcast: $BROADCAST-VARS) {
+@mixin pfe-set-broadcast($theme, $broadcast: $BROADCAST-VARS) {
     @each $type in $broadcast {
         $list: ();
         $string: "";
@@ -41,9 +41,9 @@
             }
         }
 
-        @if index($THEMES, $color) != null {
-            @if $color != "light" {
-                $context: "--on-#{$color}";
+        @if index($THEMES, $theme) != null {
+            @if $theme != "light" {
+                $context: "--on-#{$theme}";
             }
         }
         
@@ -55,11 +55,11 @@
                 @error "#{$item} value does not currently exist.";
             }
             @else {
-                @if index($THEMES, $color) != null {
+                @if index($THEMES, $theme) != null {
                     --#{$repo}-broadcasted--color--#{$item}: #{pfe-color(#{$item}#{$context})};
                 }
                 @else {
-                    --#{$repo}-broadcasted--color--#{$item}: #{$color};
+                    --#{$repo}-broadcasted--color--#{$item}: #{$theme};
                 }
             }
         }

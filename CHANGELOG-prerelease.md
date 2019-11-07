@@ -1,8 +1,9 @@
-## Prerelease 29 ()
+## Prerelease 29 ( 2019-11-04 )
 
 Tag: [v1.0.0-prerelease.29](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.29)
 
-- [5bef4ed6](https://github.com/patternfly/patternfly-elements/commit/5bef4ed6b9f47412361cb8687f0b4618069a49ea) fix: pfe-card's published package now includes the intended assets
+- [5bef4ed6](https://github.com/patternfly/patternfly-elements/commit/5bef4ed6b9f47412361cb8687f0b4618069a49ea) fix: pfe-card's published package now includes the intended assets #605
+- [5f049bf](https://github.com/patternfly/patternfly-elements/commit/5f049bfa4f9595819f704ff14bd7e609c32d796a) fix: updating the location of the toast file in the story #606
 - [99fce5d](https://github.com/patternfly/patternfly-elements/commit/99fce5d8fce6f08c901e3ce2398a572d0ae8b6d5) fix: updating pfe-layouts package.json for distribution fixes #607
 - [5f049bf](https://github.com/patternfly/patternfly-elements/commit/5f049bfa4f9595819f704ff14bd7e609c32d796a) fix: updating the location of the toast file in the story #606
 - [a666fc4](https://github.com/patternfly/patternfly-elements/commit/a666fc4f8e6e9669ee849d01d11ca77798824cc7) pfe-band layout rendering fix for bug in IE and Edge (#470)

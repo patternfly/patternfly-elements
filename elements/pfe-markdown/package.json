@@ -4,7 +4,7 @@
     "className": "PfeMarkdown",
     "elementName": "pfe-markdown"
   },
-  "version": "1.0.0-prerelease.28",
+  "version": "1.0.0-prerelease.29",
   "description": "Markdown element for PatternFly Elements",
   "repository": {
     "type": "git",

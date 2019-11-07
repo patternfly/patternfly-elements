@@ -10,7 +10,7 @@
       "pfe-layouts.*.map"
     ]
   },
-  "version": "1.0.0-prerelease.28",
+  "version": "1.0.0-prerelease.29",
   "publishConfig": {
     "access": "public"
   },

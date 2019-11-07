@@ -82,7 +82,7 @@ $variables: (
     --pfe-theme--link--#{$prop}: none;
   }
 
-  @include pfe-set-broadcast(#{pfe-local(Color)});
+  @include pfe-set-broadcast-theme(#{pfe-local(Color)});
 
   // Enforce the font-size for the navigation regardless of h-level settings
   @each $level in (alpha, beta, gamma) {
@@ -250,7 +250,7 @@ $variables: (
 .pfe-navigation-item__tray {
   --pfe-navigation--FontWeight:             #{pfe-color(text)};
 
-  @include pfe-set-broadcast(light);
+  @include pfe-set-broadcast-theme(light);
 
   transition: all #{pfe-var(animation-timing)};
   box-sizing: border-box;

@@ -30,7 +30,7 @@ $LOCAL: card;
   --pfe-card--BackgroundPosition: center center;
 
   // Broadcasted values set to match background color
-  @include pfe-set-broadcast(light);
+  @include pfe-set-broadcast-theme(light);
   --theme: light;
 
   --pfe-card__header--BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)});

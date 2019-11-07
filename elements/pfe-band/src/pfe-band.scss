@@ -30,7 +30,7 @@ $LOCAL: band;
   --pfe-band--gutter--horizontal:               calc(#{pfe-var(container-spacer)} * 3);
 
   // Text colors
-  @include pfe-set-broadcast(light);
+  @include pfe-set-broadcast-theme(light);
   --theme: light;
 
   // Band width logic

@@ -63,15 +63,19 @@
 ///         ```
 
 @function pfe-var($cssvar, $category: '', $fallback: null, $map: $pfe-vars) {
+    $css-var-with-cat: $cssvar;
+
     @if $category !="" {
         $category: "#{$category}--";
+        $css-var-with-cat: "#{$category}#{$cssvar}";
     }
     // Start building the variable declaration
     $var-declaration: "--#{$repo}-theme--#{$category}#{$cssvar}";
+
     // If a fallback is defined, pass that in too
-    @if $fallback != null or map-get($map, $cssvar) != null {
+    @if $fallback = null and map-get($map, $cssvar) != null {
         @if $fallback == null {
-            $fallback: map-get($map, $cssvar);
+            $fallback: map-get($map, $css-var-with-cat);
         }
         $var-declaration: "#{$var-declaration}, #{$fallback}";
     }

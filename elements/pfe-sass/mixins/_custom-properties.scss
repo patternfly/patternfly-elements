@@ -5,7 +5,7 @@
 //
 //  usage:
 //    :host {
-//      #{pfe-set-broadcast(dark)};
+//      #{pfe-set-broadcast-theme(dark)};
 //    }
 //  result:
 //    :host {
@@ -16,7 +16,7 @@
 //      --pfe-broadcasted--color--link--focus:     #{pfe-color(link--focus--on-dark)};
 //    }
 
-@mixin pfe-set-broadcast($theme, $broadcast: $BROADCAST-VARS) {
+@mixin pfe-set-broadcast-theme($theme, $broadcast: $BROADCAST-VARS) {
     @each $type in $broadcast {
         $list: ();
         $string: "";
@@ -116,15 +116,15 @@
 @mixin pfe-theme($theme) {
     // GENERAL CONTEXT-BASED UPDATES, ON="DARK"
     @if $theme in (dark, darker, darkest) {
-        @include pfe-set-broadcast(dark);
+        @include pfe-set-broadcast-theme(dark);
     }
 
     @else if $theme in (accent, complement) {
-        @include pfe-set-broadcast(saturated);
+        @include pfe-set-broadcast-theme(saturated);
     }
 
     @else if $theme in (light, lighter, lightest) {
-        @include pfe-set-broadcast(light);
+        @include pfe-set-broadcast-theme(light);
     }
 }
 
@@ -156,7 +156,7 @@
     // Helper attributes to aid in theming
     @each $theme in $themes {
         :host([on="#{$theme}"]) {
-            @include pfe-set-broadcast($theme);
+            @include pfe-set-broadcast-theme($theme);
             @if $fallback {
                 @include browser-query(ie11) {
                     @if $theme == "light" {

@@ -111,13 +111,13 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 
 @each $color in (base, complement, accent) {
   :host([color="#{$color}"]) {
-    @include pfe-set-broadcast(ui-#{$color});
+    @include pfe-set-broadcast-theme(ui-#{$color});
   }
 }
 
 @each $level in (critical, important, moderate, success, info, default) {
   :host([color="#{$level}"]) {
-    @include pfe-set-broadcast(feedback--#{$level});
+    @include pfe-set-broadcast-theme(feedback--#{$level});
   }
 }
 
@@ -134,7 +134,7 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   :host([circled="#{$name}"]) {
     --pfe-icon--BackgroundColor:       #{pfe-color(surface--#{$color})};
     --pfe-icon--BorderColor:           transparent;
-    @include pfe-set-broadcast(#{pfe-get-theme(surface--#{$color}--theme)});
+    @include pfe-set-broadcast-theme(#{pfe-get-theme(surface--#{$color}--theme)});
   }
 }
 

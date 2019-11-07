@@ -3,6 +3,6 @@
 // Helper classes to aid in theming on custom pages
 @each $theme in (dark, saturated, light) {
     .on-#{$theme} {
-        @include pfe-set-broadcast($theme);
+        @include pfe-set-broadcast-theme($theme);
     }
 }

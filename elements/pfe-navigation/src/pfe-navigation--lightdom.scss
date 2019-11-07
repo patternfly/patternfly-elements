@@ -5,11 +5,8 @@
 // IE11 styles
 @include browser-query(ie11) {
 
-    pfe-navigation {
-        max-height: 80px;
-    }
-
     pfe-navigation-item {
+
         [slot="trigger"] {
             font-size: 12px; 
 
@@ -46,11 +43,15 @@
     [slot="tray"] {
         width: 100%;
         min-height: 60px;
-        padding: 1em 0;
     }
 
     [slot="trigger"] {
         margin: 0;
+    }
+
+    // Override grid so that CTAs do not overlap.
+    .pfe-navigation--footer {
+        display: block !important;
     }
 
     @media screen and (min-width: $pfe-global--grid-breakpoint--lg) {
@@ -59,28 +60,54 @@
         }
     }
 
+    [is_nested][parent_hidden] .pfe-navigation-item__tray {
+        max-height: none;
+        overflow: visible;
+    }
+
     @media screen and (max-width: 1023px) {
         .pfe-navigation__main {
             display: block !important;
         }
-        .pfe-navigation-item__tray .pfe-navigation-item__trigger[aria-expanded=true] {
-            // border-left: 4px solid #06c !important;
-            // border-right: 1px solid #d2d2d2 !important;
-            border-left-width: var(--pfe-theme--surface--border-width--heavy, 4px);
-            border-left-color: var(--pfe-theme--color--surface--lightest--link, #06c);
-            border-left-style: solid;
-            border-right-width: 1px;
-            border-right-style: solid;
-            border-right-color: var(--pfe-theme--color--surface--border, #d2d2d2);
-            border-bottom: none !important;
+
+        .pfe-navigation-item__tray {
+            max-height: none !important;
+            
+            .pfe-navigation-item__trigger[aria-expanded=true] {
+                border-left-width: #{pfe-var(surface--border-width--heavy)};
+                border-left-color: #{pfe-color(surface--lightest--link)};
+                border-left-style: solid;
+                border-right-width: 1px;
+                border-right-style: solid;
+                border-right-color: #{pfe-color(surface--border)};
+                border-bottom: none !important;
+            }
         }
 
-        .pfe-navigation-item__tray .pfe-navigation-item__trigger {
-            border-bottom: 1px solid #d2d2d2 !important;
+        [pfe-icon=web-mobile-menu]:not([show_links]) {
+            border-bottom: none;
+
+            // Set max-height for nested accordions so that they can scroll.
+            .pfe-navigation-item__tray.pfe-navigation-item .pfe-navigation-item__tray.pfe-navigation-item {
+                max-height: 500px !important;
+                overflow-y: scroll;
+            }
+
+            .pfe-navigation-item__tray.pfe-navigation-item  .pfe-navigation-item__trigger.pfe-navigation-item {
+                border-bottom: 1px solid #{pfe-color(surface--border)};
+            }
         }
 
-        pfe-navigation-main {
-            margin-top: 1em;
+        [pfe-icon=web-user],
+        [pfe-icon=web-globe] {
+            padding-left: 0 !important;
+
+            .pfe-navigation-item__trigger a {
+                font-size: 12px;
+            }
+            .pfe-navigation-item__trigger.pfe-navigation-item  {
+                border-bottom: none !important;
+            }
         }
     }
 
@@ -195,9 +222,6 @@
                 }
             }
         }
-    }
-    .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded=true] {
-        background-color: white;
     }
 
     .pfe-navigation-item__trigger {
@@ -414,9 +438,9 @@ pfe-navigation-item {
     // @TODO why min-height on the navigation container?
     // min-height: 200px;
     width: 100%;
-    @media (max-width: $pfe-global--grid-breakpoint--lg--max) {
-        padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
-    }
+    // @media (max-width: $pfe-global--grid-breakpoint--lg--max) {
+    //     padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
+    // }
     @media (min-width: $pfe-global--grid-breakpoint--xl) {
         max-width: #{pfe-local($cssvar: Width, $fallback: 1140px)};
         margin: 0 auto;
@@ -440,6 +464,7 @@ pfe-navigation-item {
         font-size: 16px;
         font-weight: 400;
         line-height: 1.75;
+        color: #{pfe-color(ui-complement)};
 
         @media (min-width: $pfe-global--grid-breakpoint--xl) {
             font-size: 16px;

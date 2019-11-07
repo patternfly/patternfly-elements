@@ -271,10 +271,8 @@ $variables: (
     position: absolute;
     top: 100%;
     left: 0;
-
     background-color: #{pfe-color(surface--lightest)};
     color: #{pfe-local(Color)};
-
     padding: #{pfe-local($cssvar: Padding, $region: tray)};
     width: 100%;
     max-height: calc(100vh - var(--pfe-navigation--Height, 84px));

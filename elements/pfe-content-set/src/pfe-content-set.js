@@ -155,6 +155,10 @@ class PfeContentSet extends PFElement {
       tabs.setAttribute("on", this.on.value);
     }
 
+    if (this.align.value) {
+      tabs.setAttribute("pfe-tab-align", this.align.value);
+    }
+
     if (!existingTabs) {
       this.appendChild(fragment);
     }

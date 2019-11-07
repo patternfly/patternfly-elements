@@ -70,6 +70,11 @@
       </pfe-content-set>
     </div>
 
+    <pfe-content-set id="align" pfe-align="center">
+      <h2 pfe-content-set--header>Heading 1</h2>
+      <p pfe-content-set--panel>Panel 1</p>
+    </pfe-content-set>
+
     <script>
       suite('<pfe-content-set>', () => {
         test('it should have the proper attributes for tabs', () => {
@@ -162,6 +167,15 @@
 
             done();
           });
+        });
+
+        test("it should set pfe-tab-align on the tabs if the pfe-align attribute is present on pfe-content-set", () => {
+          const pfeContentSet = document.querySelector("#align");
+          const pfeTabs = pfeContentSet.querySelector("pfe-tabs");
+          const alignValue = pfeContentSet.getAttribute("pfe-align");
+          const pfeTabAlignValue = pfeTabs.getAttribute("pfe-tab-align");
+
+          assert.equal(alignValue, pfeTabAlignValue);
         });
       });
     </script>

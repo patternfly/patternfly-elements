@@ -5,10 +5,10 @@ Tag: [v1.0.0-prerelease.29](https://github.com/patternfly/patternfly-elements/re
 - [5bef4ed6](https://github.com/patternfly/patternfly-elements/commit/5bef4ed6b9f47412361cb8687f0b4618069a49ea) fix: pfe-card's published package now includes the intended assets
 - [99fce5d](https://github.com/patternfly/patternfly-elements/commit/99fce5d8fce6f08c901e3ce2398a572d0ae8b6d5) fix: updating pfe-layouts package.json for distribution fixes #607
 - [5f049bf](https://github.com/patternfly/patternfly-elements/commit/5f049bfa4f9595819f704ff14bd7e609c32d796a) fix: updating the location of the toast file in the story #606
-- [a666fc4](https://github.com/patternfly/patternfly-elements/commit/a666fc4f8e6e9669ee849d01d11ca77798824cc7) pfe-band layout rendering fix for bug in IE and Edge (#470)
+- [a666fc4](https://github.com/patternfly/patternfly-elements/commit/a666fc4f8e6e9669ee849d01d11ca77798824cc7) fix: pfe-band layout rendering fix for bug in IE and Edge (#470)
 - [2143c84](https://github.com/patternfly/patternfly-elements/commit/2143c84d207076c0c8016c960d6edd447e4048eb) feat: add align attribute to pass down to tabs on render (#610)
 - [392399b](https://github.com/patternfly/patternfly-elements/commit/392399b3eb240290e67873a51122459985dbbe7f) fix: pfe-cta svgs removed from tab order in ie11
-- [](https://github.com/patternfly/patternfly-elements/commit/) pfe-band grid setting updates
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-band grid setting updates
 
 ## Prerelease 28 ( 2019-11-04 )
 
@@ -25,7 +25,6 @@ Tag: [v1.0.0-prerelease.28](https://github.com/patternfly/patternfly-elements/re
 - [f111593](https://github.com/patternfly/patternfly-elements/commit/f111593805390b1395c284d5905a2e530f829e01) fix: pfe-icon stretch
 - [b2a099d](https://github.com/patternfly/patternfly-elements/commit/b2a099d0fa1cb1bed8cc7d054ffa1138613e4408) fix: pfelement compilation of css assets
 - [d16ab0c](https://github.com/patternfly/patternfly-elements/commit/d16ab0ce81268cd32df69bb168dc7e32118a9912) feat: pfe-toast component
-- [](https://github.com/patternfly/patternfly-elements/commit/) pfe-band layout rendering fix for bug in IE and Edge (#470)
 
 ## Prerelease 27 ( 2019-10-25 )
 

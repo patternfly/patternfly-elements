@@ -1,5 +1,5 @@
 // New broadcast mixin, for use with content components
-//  1st arg:  lookup surface value from theme
+//  1st arg:  Look up values from theme contexts, i.e. "light" or "saturated"
 //  2nd arg:  list of broadcast variable - optional
 //  3rd arg:  identify the color set, default is surface - optional
 //

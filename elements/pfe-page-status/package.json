@@ -4,7 +4,7 @@
     "className": "PfePageStatus",
     "elementName": "pfe-page-status"
   },
-  "version": "1.0.0-prerelease.28",
+  "version": "1.0.0-prerelease.29",
   "description": "Page element for PatternFly Elements",
   "keywords": [
     "web-components",

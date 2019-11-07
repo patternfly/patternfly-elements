@@ -1,7 +1,6 @@
 // New broadcast mixin, for use with content components
-//  1st arg:  lookup surface value from theme
-//  2nd arg:  list of broadcast variable - optional
-//  3rd arg:  identify the color set, default is surface - optional
+//  1st arg:  Look up values from theme contexts, i.e. "light" or "saturated"
+//  2nd arg:  Optionally specify only one broadcast variable instead of the whole set, i.e. "text"
 //
 //  usage:
 //    :host {
@@ -49,7 +48,7 @@
         
         @each $item in $list {
             @if not index($BROADCAST-VARS, $type) {
-                @error "--#{$repo}-broadcasted--color--#{$item} variable is not currently supported.";
+                @error "--#{$repo}-broadcasted--color--#{$item} variable is not in the $BROADCAST-VARS list.
             }
             @else if type-of(map-get($pfe-colors, #{$item})) != "color" {
                 @error "#{$item} value does not currently exist.";

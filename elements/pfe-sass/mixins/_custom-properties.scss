@@ -48,7 +48,7 @@
         
         @each $item in $list {
             @if not index($BROADCAST-VARS, $type) {
-                @error "--#{$repo}-broadcasted--color--#{$item} variable is not currently supported.";
+                @error "--#{$repo}-broadcasted--color--#{$item} variable is not in the $BROADCAST-VARS list.
             }
             @else if type-of(map-get($pfe-colors, #{$item})) != "color" {
                 @error "#{$item} value does not currently exist.";

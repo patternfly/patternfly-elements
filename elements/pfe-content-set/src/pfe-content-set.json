@@ -41,6 +41,12 @@
           "default": "wind",
           "prefixed": true
         },
+        "align": {
+          "title": "Align",
+          "type": "string",
+          "enum": ["center"],
+          "prefixed": true
+        },
         "on": {
           "title": "Context",
           "type": "string",

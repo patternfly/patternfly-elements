@@ -19,12 +19,12 @@
     @if $theme == dark { // Dark theme
       $variables: map-merge($variables, (
         accent: #{pfe-color(ui-base--on-dark)}
-        ));
+      ));
     }
     @else if $theme == saturated { // Saturated theme
       $variables: map-merge($variables, (
         accent: #{pfe-color(ui-base--on-saturated)}
-        ));
+      ));
     }
     @else { // Light theme
       $variables: map-merge($variables, (
@@ -35,26 +35,28 @@
   @else { // Expanded state
     // Shared variables for all themes
     $variables: (
-      Color:               #{pfe-apply-broadcast(text)},
       BorderColor:         #{pfe-color(surface--border)},
       BorderRightWidth:    #{pfe-var(surface--border-width)}
     );
 
     @if $theme == dark { // Dark theme
       $variables: map-merge($variables, (
-        BackgroundColor:  rgba(247, 247, 249, .1),
+        BackgroundColor:    rgba(247, 247, 249, .1),
+        Color:               #{pfe-apply-broadcast(text)},
         BorderColor--accent: #{pfe-color(ui-base--on-dark)}
       ));
     }
     @else if $theme == saturated { // Saturated theme
       $variables: map-merge($variables, (
-        BackgroundColor:  rgba(0, 0, 0, 0.2),
+        BackgroundColor:    rgba(0, 0, 0, 0.2),
+        Color:               #{pfe-apply-broadcast(text)},
         BorderColor--accent: #{pfe-color(ui-base--on-saturated)}
       ));
     }
     @else { // Light theme
       $variables: map-merge($variables, (
         BackgroundColor:     rgba(255, 255, 255, 1),
+        Color:               #{pfe-color(text)},
         BorderColor--accent: #{pfe-color(ui-base)}
       ));
       --theme: light;
@@ -72,7 +74,7 @@
 
   // Since the default bg color is transparent, look to broadcast values
   background-color: #{pfe-local($cssvar: BackgroundColor, $fallback: transparent)};
-  color:            #{pfe-local($cssvar: Color, $fallback: #{pfe-apply-broadcast(text)})};
+  color:            #{pfe-local($cssvar: Color)};
 
   // Border settings
   border-top:       #{pfe-local($cssvar: BorderTopWidth, $fallback: #{pfe-var(surface--border-width)}) pfe-var(surface--border-style) pfe-local($cssvar: BorderColor, $fallback: #{pfe-color(surface--border)})};

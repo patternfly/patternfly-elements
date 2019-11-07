@@ -68,10 +68,6 @@ class PfeAccordion extends PFElement {
     return "pfe-accordion.json";
   }
 
-  static get observedAttributes() {
-    return ["on"];
-  }
-
   static get cascadingAttributes() {
     return {
       on: "pfe-accordion-header, pfe-accordion-panel"
@@ -235,6 +231,10 @@ class PfeAccordion extends PFElement {
 
     const height = panel.getBoundingClientRect().height;
     this._animate(panel, 0, height);
+
+    // Update the theme context when the panel is opened
+    this.context_set();
+    this.context_update();
   }
 
   _collapseHeader(header) {

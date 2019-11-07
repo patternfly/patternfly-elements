@@ -89,8 +89,6 @@ class PFElement extends HTMLElement {
   context_set() {
     if (this.getVariable("theme")) {
       this.setAttribute("on", this.getVariable("theme"));
-    } else {
-      this.setAttribute("on", "light");
     }
   }
 

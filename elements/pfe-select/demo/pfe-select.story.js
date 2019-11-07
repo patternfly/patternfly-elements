@@ -2,9 +2,28 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeSelect from "../pfe-select";
+import PfeSelect from "../dist/pfe-select";
 
 const stories = storiesOf("Select", module);
+
+// Add the documentation
+import about from "../docs/ABOUT.md";
+import slots from "../docs/SLOTS.md";
+import attributes from "../docs/ATTRIBUTES.md";
+import styling from "../docs/STYLING.md";
+import events from "../docs/EVENTS.md";
+import usage from "../docs/USAGE.md";
+
+stories.addParameters({
+  notes: {
+    About: about,
+    Slots: slots,
+    Attributes: attributes,
+    Events: events,
+    Styling: styling,
+    Usage: usage
+  }
+});
 
 stories.addDecorator(storybookBridge.withKnobs);
 
@@ -53,27 +72,27 @@ stories.add(PfeSelect.tag, () => {
   if (isCustomOptions) {  
     const data = [];
     // Let the user determine number of options
-    let optionsCount = storybookBridge.number("Count", 3, {
+    let optionsCount = storybookBridge.number("Count", 2, {
       min: 1,
       max: 10
-    }, "Options Array");
+    }, "Content");
     
     for (let i = 0; i < optionsCount; i++) {
-      data[i] = {text: "", value: "", selected: false};
+      data[i] = { text: `Option ${i}`, value: `${i}`, selected: false };
     }
-    customOptions = storybookBridge.object('Options', { data }, "Options Array");
+    customOptions = storybookBridge.object('Options', { data }, "Content");
   }
 
   if (isAppendOptions) {  
     const data = [];
     // Let the user determine number of options
-    let appendCount = storybookBridge.number("Append Count", 3, {
+    let appendCount = storybookBridge.number("Append Count", 2, {
       min: 1,
       max: 10
     }, "API");
     
     for (let i = 0; i < appendCount; i++) {
-      data[i] = {text: "", value: "", selected: false};
+      data[i] = { text: `Option ${i}`, value: `${i}`, selected: false };
     }
     appendOptions = storybookBridge.object('Options', { data }, "API");
   }

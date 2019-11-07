@@ -14,7 +14,7 @@ $LOCAL: accordion;
   color: #{pfe-apply-broadcast(text)};
 }
 
-@include theme-contexts; // imports on="light" etc support
+@include pfe-theme-contexts; // imports on="light" etc support
 
 @each $context in $THEMES {
   :host([on="#{$context}"]) {

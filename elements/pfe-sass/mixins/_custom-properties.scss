@@ -4,7 +4,7 @@
 //
 //  usage:
 //    :host {
-//      #{pfe-set-broadcast-theme(dark)};
+//      @include pfe-set-broadcast-theme(dark);
 //    }
 //  result:
 //    :host {
@@ -133,7 +133,7 @@
 ///  * surfaces - defaults to the global $SURFACES list of all supported colors
 ///  * attr-name - defaults to pfe-color
 /// ===========================================================================
-@mixin surfaces($surfaces: $SURFACE, $attr-name: pfe-color) {
+@mixin pfe-surfaces($surfaces: $SURFACE, $attr-name: pfe-color) {
     @each $color in $surfaces {
         $theme: #{pfe-get-theme(surface--#{$color}--theme)};
         :host([#{$attr-name}="#{$color}"]) {
@@ -151,7 +151,7 @@
 ///  * themes - defaults to the global $THEMES list of all supported contexts
 ///  * fallback - defaults to true, prints IE11 fallbacks
 /// ===========================================================================
-@mixin theme-contexts($themes: $THEMES, $fallback: true) {
+@mixin pfe-theme-contexts($themes: $THEMES, $fallback: true) {
     // Helper attributes to aid in theming
     @each $theme in $themes {
         :host([on="#{$theme}"]) {

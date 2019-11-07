@@ -63,9 +63,9 @@ $LOCAL: card;
 }
 
 // Pull in pfe-color settings for all supported surface colors
-@include surfaces;
+@include pfe-surfaces;
 
-@include theme-contexts; // imports on="light" etc support
+@include pfe-theme-contexts; // imports on="light" etc support
 
 :host([pfe-size="small"]) {
   --pfe-card--PaddingTop:     #{pfe-var(container-spacer)};

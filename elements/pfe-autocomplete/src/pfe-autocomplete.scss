@@ -1,7 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 $LOCAL: autocomplete;
 
-@include theme-contexts; // imports on="light" etc support
+@include pfe-theme-contexts; // imports on="light" etc support
 
 :host {
   --pfe-autocomplete--BoxShadow: #{pfe-var(box-shadow--inset)};

@@ -1,3 +1,4 @@
+// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: accordion;
@@ -5,9 +6,6 @@ $LOCAL: accordion;
 /// ===========================================================================
 /// DEFAULT ACCORDION HEADING
 /// ===========================================================================
-
-// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
-
 :host {
   transition: transform 0.3s #{pfe-var(animation-timing)};
   display: block;

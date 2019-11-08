@@ -7,7 +7,7 @@ $trigger--FontWeight--fallback: #{pfe-var(font-weight--light)};
 $trigger--Color--fallback: #{pfe-color(text--on-dark)};
 
 $LOCAL: navigation;
-$USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
+ // turn on automatic fallbacks for broadcasted variables
 
 // -- Typography
 %link-styles {

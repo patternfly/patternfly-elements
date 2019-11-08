@@ -1,8 +1,7 @@
+// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: accordion;
-
-// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
 
 :host {
   @include pfe-accordion-variables;
@@ -14,10 +13,11 @@ $LOCAL: accordion;
   color: #{pfe-apply-broadcast(text)};
 }
 
-@include pfe-theme-contexts; // imports on="light" etc support
+// @include pfe-theme-contexts; // imports on="light" etc support
 
 @each $context in $THEMES {
   :host([on="#{$context}"]) {
     @include pfe-accordion-variables($theme: #{$context});
+    @include pfe-set-broadcast-theme($context);
   }
 }

@@ -24,18 +24,20 @@
     // Start building the variable declaration
     $var-declaration: "--#{$repo}-theme--";
     // If the category exists, inject that into the string
-    @if $category {
+    @if $category != "" {
         $var-declaration: "#{$var-declaration}#{$category}--";
     }
     // Append the key to the string
     $var-declaration: "#{$var-declaration}#{$key}";
 
     // If the fallback is not provided but use-fallback is set to true
-    @if $fallback == null and $USE-FALLBACK {
+    @if $fallback == null and $USE-FALLBACK and map-get($map, $key) != null {
         $fallback: map-get($map, $key);
     }
-    // Create the variable declaration
-    $var-declaration: "#{$var-declaration}, #{$fallback}";
+    @if $fallback != null {
+        // Create the variable declaration
+        $var-declaration: "#{$var-declaration}, #{$fallback}";
+    }
 
     // Return the variable declaration string
     @return var(#{$var-declaration});   

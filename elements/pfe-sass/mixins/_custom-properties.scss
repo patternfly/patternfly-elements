@@ -68,10 +68,15 @@
             }
             @else {
                 @if index($THEMES, $theme) != null {
-                    --#{$repo}-broadcasted--#{$item}: #{map-get($pfe-broadcast, #{$item}#{$context})};
+                    @if map-get($pfe-colors, $item) != null {
+                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--color--#{$item}, #{map-get($pfe-broadcast, #{$item}#{$context})});
+                    }
+                    @else {
+                        --#{$repo}-broadcasted--#{$item}: #{map-get($pfe-broadcast, #{$item}#{$context})};
+                    }
                 }
                 @else {
-                    --#{$repo}-broadcasted--#{$item}: #{$theme};
+                    @error "The #{$theme} context does not appear to be part of a supported theme.";
                 }
             }
         }

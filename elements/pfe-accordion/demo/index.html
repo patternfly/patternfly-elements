@@ -27,7 +27,8 @@
 
     <script>require([
       '../dist/pfe-accordion.umd.js',
-      '../../pfe-band/dist/pfe-band.umd.js'
+      '../../pfe-band/dist/pfe-band.umd.js',
+      '../../pfe-cta/dist/pfe-cta.umd.js'
     ])</script>
   </head>
   <body unresolved>  
@@ -69,10 +70,10 @@
       
       .custom-styles {
           background-color: #e00;
-          --pfe-broadcasted--text: #fff;
-          --pfe-broadcasted--link: #fff;
+          --pfe-broadcasted--text: pink;
+          --pfe-broadcasted--link: green;
           --pfe-broadcasted--link--hover: #eee;
-          --pfe-broadcasted--slink--focus: #fff;
+          --pfe-broadcasted--link--focus: #fff;
       }
 
       .custom-styles pfe-accordion {
@@ -118,7 +119,7 @@
           </pfe-accordion-header>
           <pfe-accordion-panel>
             <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
-              repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+              repeat common phrases or serve as a general representation of the individual
               they depict. A portrait of his parents would not be of much help to Harry.</p>
           </pfe-accordion-panel>
           <pfe-accordion-header>

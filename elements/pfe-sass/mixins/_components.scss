@@ -59,6 +59,7 @@
         Color:               #{pfe-color(text)},
         BorderColor--accent: #{pfe-color(ui-base)}
       ));
+      @include pfe-set-broadcast-theme(light);
       --theme: light;
     }
   }

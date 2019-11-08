@@ -2,6 +2,7 @@
 
 $LOCAL: band;
 
+
 $variables: (
 
   // Default spacing values
@@ -40,10 +41,6 @@ $variables: (
 
 :host {
   @include pfe-print-variables($variables);
-
-  display: block;
-
-  // Text colors
   @include pfe-set-broadcast-theme(light);
   --theme: light;
 
@@ -59,11 +56,13 @@ $variables: (
   }
 
   // Wrapper sets padding and background visuals
+  display: block;
   position: relative;
 
-  // Padding
+  // Custom padding on mobile
   padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
 
+  // Variable padding on desktop
   @media (min-width: #{pfe-breakpoint(sm)}) {
     padding: #{pfe-local(Padding)};
   }

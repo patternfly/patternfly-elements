@@ -1,3 +1,4 @@
+// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: accordion;
@@ -5,8 +6,6 @@ $LOCAL: accordion;
 /// ===========================================================================
 /// DEFAULT ACCORDION PANEL
 /// ===========================================================================
-
-// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
 
 :host {
    @include pfe-collapsible($state: closed);

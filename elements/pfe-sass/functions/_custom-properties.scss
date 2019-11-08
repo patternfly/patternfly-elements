@@ -19,7 +19,7 @@
 ///         }
 ///         ```
 
-@function pfe-color($cssvar, $category: 'color', $map: $pfe-colors) {
+@function pfe-color($cssvar, $category: 'color', $map: map-merge($pfe-colors, $pfe-broadcast)) {
     @if $category !="" {
         $category: "#{$category}--";
     }
@@ -125,17 +125,21 @@
 //  1st arg:            lookup broadcast variable  (1 of 6)
 //
 //  usage:   color: #{pfe-apply-broadcast(ui-base--hover)};
-//  result:  Error: --pfe-broadcasted--color--ui-base--hover variable is not currently supported.";
+//  result:  Error: --pfe-broadcasted--ui-base--hover variable is not currently supported.";
 //
 //  usage:   color: #{pfe-apply-broadcast(link)};
-//  result:  color: var(--pfe-broadcasted--color--link);
+//  result:  color: var(--pfe-broadcasted--link);
 //  Was: pfe-radio!
 
-@function pfe-apply-broadcast($broadcast, $fallback: #{pfe-color(#{to-string($broadcast,'--')})}) {
-    @if not index($BROADCAST-VARS, $broadcast) {
-      @error "--#{$repo}-broadcasted--color--#{$broadcast} variable is not currently supported.";
+@function pfe-apply-broadcast($broadcast) {
+    $fallback: "";
+    @if $USE-FALLBACK {
+        $fallback: ", #{map-get($pfe-broadcast, #{to-string($broadcast,'--')})}";
+    }
+    @if not index($BROADCAST-VARS, first(str-split($broadcast, '--'))) {
+      @error "--#{$repo}-broadcasted--#{$broadcast} variable is not currently supported.";
     }
     @else {
-      @return var(--#{$repo}-broadcasted--color--#{to-string($broadcast,'--')}, $fallback);
+      @return var(--#{$repo}-broadcasted--#{to-string($broadcast,'--')}#{unquote($fallback)});
     }
 }

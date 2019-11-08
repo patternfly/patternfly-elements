@@ -8,11 +8,11 @@
 //    }
 //  result:
 //    :host {
-//      --pfe-broadcasted--color--text:            #{pfe-color(text--on-dark)};
-//      --pfe-broadcasted--color--link:            #{pfe-color(link--on-dark)};
-//      --pfe-broadcasted--color--link--visited:   #{pfe-color(link--visited--on-dark)};
-//      --pfe-broadcasted--color--link--hover:     #{pfe-color(link--hover--on-dark)};
-//      --pfe-broadcasted--color--link--focus:     #{pfe-color(link--focus--on-dark)};
+//      --pfe-broadcasted--text:            #{pfe-color(text--on-dark)};
+//      --pfe-broadcasted--link:            #{pfe-color(link--on-dark)};
+//      --pfe-broadcasted--link--visited:   #{pfe-color(link--visited--on-dark)};
+//      --pfe-broadcasted--link--hover:     #{pfe-color(link--hover--on-dark)};
+//      --pfe-broadcasted--link--focus:     #{pfe-color(link--focus--on-dark)};
 //    }
 
 @mixin pfe-set-broadcast-theme($theme, $broadcast: $BROADCAST-VARS) {
@@ -22,7 +22,7 @@
         $context: "";
         $state: "";
 
-        @if $type == "link" {
+        @if str-starts-with($type, "link") {
             $list: append($list, "#{$type}");
 
             @each $s in (hover, focus, visited) {
@@ -48,17 +48,17 @@
         
         @each $item in $list {
             @if not index($BROADCAST-VARS, $type) {
-                @error "--#{$repo}-broadcasted--color--#{$item} variable is not in the $BROADCAST-VARS list.";
+                @warn "--#{$repo}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
             }
-            @else if type-of(map-get($pfe-colors, #{$item})) != "color" {
-                @error "#{$item} value does not currently exist.";
+            @else if not map-has-key($pfe-broadcast, #{$item}#{$context}) {
+                @warn "#{$item}#{$context} value does not currently exist.";
             }
             @else {
                 @if index($THEMES, $theme) != null {
-                    --#{$repo}-broadcasted--color--#{$item}: #{pfe-color(#{$item}#{$context})};
+                    --#{$repo}-broadcasted--#{$item}: #{map-get($pfe-broadcast, #{$item}#{$context})};
                 }
                 @else {
-                    --#{$repo}-broadcasted--color--#{$item}: #{$theme};
+                    --#{$repo}-broadcasted--#{$item}: #{$theme};
                 }
             }
         }
@@ -104,7 +104,7 @@
 }
 
 // Alias for pfe-set-local
-@mixin print-variables-map($variables) {
+@mixin pfe-print-variables($variables) {
     @include pfe-set-local($variables);
 }
 
@@ -201,11 +201,11 @@
 /// will return
 /// ```
 /// :host([on="dark"]) {
-///   --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark, #fff);
-///   --pfe-broadcasted--color--link: var(--pfe-theme--color--link--on-dark, #99ccff);
-///   --pfe-broadcasted--color--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
-///   --pfe-broadcasted--color--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
-///   --pfe-broadcasted--color--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
+///   --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
+///   --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #99ccff);
+///   --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
+///   --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
+///   --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
 ///   /* IE10+ */
 ///   /* Microsoft Edge Browser 12+ */
 ///   /* Microsoft Edge Browser 16+ (All) */

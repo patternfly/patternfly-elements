@@ -229,10 +229,10 @@ The `on="dark"` attribute will be automatically added by the web component upon 
 
 You can optionally customize your broadcast variables individually if you have very specific needs.  These are a list of the existing broadcast variables (also defined in `$BROADCAST-VARS`):
 
-* `--pfe-broadcasted--color--text`
-* `--pfe-broadcasted--color--link`
-* `--pfe-broadcasted--color--link--hover`
-* `--pfe-broadcasted--color--link--visited`
-* `--pfe-broadcasted--color--link--focus`
+* `--pfe-broadcasted--text`
+* `--pfe-broadcasted--link`
+* `--pfe-broadcasted--link--hover`
+* `--pfe-broadcasted--link--visited`
+* `--pfe-broadcasted--link--focus`
 
 If you include the `pfe-base.css` stylesheet, it will include application of these broadcast variables to links; this is helpful because links are often nested inside of p tags in the content and thus inaccessible to the stylesheet of the web component.

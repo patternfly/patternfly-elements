@@ -1,18 +1,18 @@
 [pfelement] {
     font-family: var(--pfe-theme--font-family);
-    color: var(--pfe-broadcasted--color--text);
+    color: var(--pfe-broadcasted--text);
 }
 [pfelement] a {
-    color: var(--pfe-broadcasted--color--link);
+    color: var(--pfe-broadcasted--link);
 }
 [pfelement] a:visited {
-    color: var(--pfe-broadcasted--color--link--visited);
+    color: var(--pfe-broadcasted--link--visited);
 }
 [pfelement] a:hover {
-    color: var(--pfe-broadcasted--color--link--hover);
+    color: var(--pfe-broadcasted--link--hover);
 }
 [pfelement] a:focus {
-    color: var(--pfe-broadcasted--color--link--focus);
+    color: var(--pfe-broadcasted--link--focus);
 }
 [pfelement] > *:first-child {
     margin-top: 0;

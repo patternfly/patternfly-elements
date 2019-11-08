@@ -17,24 +17,23 @@
             }
         }
         &.expanded {
-            @media screen and (min-width: $pfe-global--grid-breakpoint--lg) {
+            @media screen and (min-width: #{pfe-breakpoint(lg)}) {
                 background-color: #{pfe-color(surface--lightest)};
                 border-top-color: #{pfe-color(surface--accent)};
 
                 a {
-                    color: #{pfe-color(surface--lightest--text)};
+                    color: #{pfe-color(text)};
                 }
             }
         }
     }
     .pfe-navigation__container {
-        @media screen and (min-width: $pfe-global--grid-breakpoint--md) {
-            max-width: $pfe-global--grid-breakpoint--md;
+        @each $size in (md, lg) {
+            @media screen and (min-width: #{pfe-breakpoint(#{$size})}) {
+                max-width:#{pfe-breakpoint(#{$size})};
+            }
         }
-        @media screen and (min-width: $pfe-global--grid-breakpoint--lg) {
-            max-width: $pfe-global--grid-breakpoint--lg;
-        }
-        @media screen and (min-width: $pfe-global--grid-breakpoint--xl) {
+        @media screen and (min-width: #{pfe-breakpoint(xl)}) {
             max-width: 1140px;
         }
     }
@@ -136,7 +135,7 @@ pfe-navigation-item {
         }
         &.expanded {
             [slot="trigger"] > a.active {
-                color: #{pfe-color(surface--lightest--text)};
+                color: #{pfe-color(text)};
             }
         }
     }
@@ -190,7 +189,7 @@ pfe-navigation-item {
             max-height: 20px;
         }
         pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
-            flood-color: #{pfe-color(surface--darkest--text)} !important;
+            flood-color: #{pfe-color(text--on-dark)} !important;
         }
     }
 
@@ -210,17 +209,17 @@ pfe-navigation-item {
 
 .pfe-navigation {
     &-grid {
-        @media (min-width: $pfe-global--grid-breakpoint--sm) {
+        @media (min-width: #{pfe-breakpoint(sm)}) {
             column-count: 2;
             column-gap: 32px;
             flex: 1;
         }
 
-        @media (min-width: $pfe-global--grid-breakpoint--lg) {
+        @media (min-width: #{pfe-breakpoint(lg)}) {
             column-count: 3;
         }
 
-        @media (min-width: $pfe-global--grid-breakpoint--xl) {
+        @media (min-width: #{pfe-breakpoint(xl)}) {
             /* autoprefixer grid: autoplace */
             display: grid;
             grid-gap: 32px;
@@ -247,7 +246,7 @@ pfe-navigation-item {
     &--column-span-2 {
 
         // intentinally not setting for IE prefix to prevent column overlap
-        @media (min-width: $pfe-global--grid-breakpoint--xl) {
+        @media (min-width: #{pfe-breakpoint(xl)}) {
             grid-column: span 2;
         }
     }
@@ -264,7 +263,7 @@ pfe-navigation-item {
             flex: 45%;
         }
 
-        @media (min-width: $pfe-global--grid-breakpoint--sm) {
+        @media (min-width: #{pfe-breakpoint(sm)}) {
             display: flex;
             flex-wrap: wrap;
             align-items: baseline;
@@ -278,7 +277,7 @@ pfe-navigation-item {
             }
         }
 
-        @media (min-width: $pfe-global--grid-breakpoint--lg) {
+        @media (min-width: #{pfe-breakpoint(lg)}) {
             // Not setting grid prefix here since IE doesn't support auto-flow
             display: grid;
             grid-gap: 32px;
@@ -289,7 +288,7 @@ pfe-navigation-item {
             }
         }
 
-        @media (min-width: $pfe-global--grid-breakpoint--xl) {
+        @media (min-width: #{pfe-breakpoint(xl)}) {
             padding-bottom: 0;
             display: -ms-grid;
             grid-template-columns: repeat(4, 1fr);
@@ -322,7 +321,7 @@ pfe-navigation-item {
     // @media (max-width: $pfe-global--grid-breakpoint--lg--max) {
         // padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
     // }
-    @media (min-width: $pfe-global--grid-breakpoint--xl) {
+    @media (min-width: #{pfe-breakpoint(xl)}) {
         max-width: #{pfe-local($cssvar: Width, $fallback: 1140px)};
         margin: 0 auto;
     }
@@ -346,7 +345,7 @@ pfe-navigation-item {
         font-weight: 400;
         line-height: 1.75;
 
-        @media (min-width: $pfe-global--grid-breakpoint--xl) {
+        @media (min-width: #{pfe-breakpoint(xl)}) {
             font-size: 16px;
         }
 
@@ -363,7 +362,7 @@ pfe-navigation-item {
                 outline-offset: 1px;
                 outline-style: dotted;
                 outline-width: 1px;
-                outline-color: var(--pfe-broadcasted--color--link--focus, #{map-get($pfe-colors, 'link--focus')});
+                outline-color: #{pfe-apply-broadcast(link--focus)};
             }
         }
     }

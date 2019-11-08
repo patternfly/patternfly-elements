@@ -1,5 +1,4 @@
 @import "../../pfe-sass/pfe-sass";
-@include pfe-theme-contexts; // imports on="light" etc support
 
 $LOCAL: tabs;
 
@@ -9,8 +8,14 @@ $LOCAL: tabs;
 
 $pfe-tabs__panel--PaddingLeft-factor:  2;
 
+$variables: (
+  tabs: (
+    BorderColor: pfe-color(surface--border)
+  )
+);
+
 :host {
-  --pfe-tabs__tabs--BorderColor:  #{pfe-color(surface--border)};
+  @include pfe-print-variables($variables);
 
   display: #{pfe-local($cssvar: Display, $fallback: block)};
   padding: #{pfe-local($cssvar: Padding, $fallback: 0)};
@@ -108,3 +113,5 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
     border-left: 0;
   }
 }
+
+@include pfe-theme-contexts; // imports on="light" etc support

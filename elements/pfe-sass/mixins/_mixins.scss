@@ -1,23 +1,20 @@
 @mixin browser-query($browser-list) {
   @each $browser in $browser-list {
 
-    /* IE10+ */
     @if $browser == ie11 {
-      @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+      @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { /* IE10+ */
         @content;
       }
     }
 
-    /* Microsoft Edge Browser 12+ */
     @if $browser == edge12 {
-      @supports (-ms-accelerator: true) {
+      @supports (-ms-accelerator: true) { /* Microsoft Edge Browser 12+ */
         @content;
     }
   }
 
-    /* Microsoft Edge Browser 16+ (All) */
     @if $browser == edge {
-      @supports (-ms-ime-align: auto) {
+      @supports (-ms-ime-align: auto) { /* Microsoft Edge Browser 16+ (All) */
         @content;
       }
     }

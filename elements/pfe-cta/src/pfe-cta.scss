@@ -21,8 +21,8 @@ $variables: (
   BorderColor--focus: transparent,
 
   Color:        #{pfe-apply-broadcast(link)},
-  Color--hover: #{pfe-apply-broadcast(link, hover)},
-  Color--focus: #{pfe-apply-broadcast(link, focus)},
+  Color--hover: #{pfe-apply-broadcast(link--hover)},
+  Color--focus: #{pfe-apply-broadcast(link--focus)},
 
   TextDecoration:        none,
   TextDecoration--hover: none,
@@ -42,7 +42,7 @@ $variables: (
 );
 
 :host {
-  @include print-variables-map($variables);
+  @include pfe-print-variables($variables);
 
   // properties
   display:         inline-block;
@@ -188,30 +188,30 @@ $variables: (
 
 // default link background focus color
 :host(:not([pfe-priority])) {
-  --pfe-cta--Color: var(--pfe-broadcasted--color--link, #{pfe-color(link)});
+  --pfe-cta--Color: var(--pfe-broadcasted--link, #{pfe-color(link)});
 
-  --pfe-cta--inner--BorderColor--hover: var(--pfe-broadcasted--color--link--hover, #{pfe-color(link--hover)});
-  --pfe-cta--Color--hover: var(--pfe-broadcasted--color--link--hover, #{pfe-color(link--hover)});
+  --pfe-cta--inner--BorderColor--hover: var(--pfe-broadcasted--link--hover, #{pfe-color(link--hover)});
+  --pfe-cta--Color--hover: var(--pfe-broadcasted--link--hover, #{pfe-color(link--hover)});
 
   --pfe-cta--BackgroundColor--focus: #{$pfe-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
-  --pfe-cta--Color--focus: var(--pfe-broadcasted--color--link--focus, #{pfe-color(link--focus)});
+  --pfe-cta--Color--focus: var(--pfe-broadcasted--link--focus, #{pfe-color(link--focus)});
 }
 
 :host([pfe-priority="secondary"]) {
   --pfe-cta--BorderRadius:              #{pfe-var(ui--border-radius)};
   --pfe-cta__arrow--Display:            none;
   --pfe-cta--BackgroundColor:           transparent;
-  --pfe-cta--BorderColor:               var(--pfe-broadcasted--color--text, #{pfe-color(ui-complement)});
+  --pfe-cta--BorderColor:               var(--pfe-broadcasted--text, #{pfe-color(ui-complement)});
   --pfe-cta__inner--BorderColor:        transparent;
-  --pfe-cta--Color:                     var(--pfe-broadcasted--color--text, #{pfe-color(ui-complement)});
+  --pfe-cta--Color:                     var(--pfe-broadcasted--text, #{pfe-color(ui-complement)});
 
   --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-complement)};
-  --pfe-cta--BorderColor--hover:        var(--pfe-broadcasted--color--text, #{pfe-color(ui-complement)}); //white, then black
+  --pfe-cta--BorderColor--hover:        var(--pfe-broadcasted--text, #{pfe-color(ui-complement)}); //white, then black
   --pfe-cta--Color--hover:              #{pfe-color(ui-complement--text)};
 
   --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lighter)};
   --pfe-cta--BorderColor--focus:        #{pfe-color(ui-complement)};
-  --pfe-cta__inner--BorderColor--focus: var(--pfe-broadcasted--color--text, #{pfe-color(ui-complement)});
+  --pfe-cta__inner--BorderColor--focus: var(--pfe-broadcasted--text, #{pfe-color(ui-complement)});
   --pfe-cta--Color--focus:              #{pfe-color(ui-complement)};
 }
 
@@ -416,7 +416,7 @@ $variables: (
 :host([pfe-priority="secondary"][pfe-variant="wind"]) {
   --pfe-cta--BackgroundColor:           transparent;
   --pfe-cta--BorderColor:               #{pfe-color(surface--border)};
-  --pfe-cta--Color:                     var(--pfe-broadcasted--color--link, #{pfe-color(link)});
+  --pfe-cta--Color:                     var(--pfe-broadcasted--link, #{pfe-color(link)});
   --pfe-cta--FontWeight:                #{pfe-var(font-weight--normal)};
 
   --pfe-cta--BackgroundColor--hover:    #{pfe-color(surface--border--lightest)};
@@ -426,5 +426,5 @@ $variables: (
   --pfe-cta--Color--focus:               #{pfe-color(link--hover)};
   --pfe-cta--BorderColor--focus:         #{pfe-color(surface--border)};
   --pfe-cta__inner--BorderColor--focus:  #{pfe-local(BorderColor--focus)};
-  --pfe-cta--TextDecoration--hover:      #{pfe-var(link--text-decoration--hover)};
+  --pfe-cta--TextDecoration--hover:      #{pfe-var(link-decoration--hover)};
 }

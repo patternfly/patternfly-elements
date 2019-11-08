@@ -12,20 +12,20 @@ $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
 // -- Typography
 %link-styles {
     color: #{pfe-apply-broadcast(link)};
-    text-decoration: #{pfe-var(link, text-decoration)};
+    text-decoration: #{pfe-apply-broadcast(link-decoration)};
     &:visited {
-        color: #{pfe-apply-broadcast(link, visited)};
+        color: #{pfe-apply-broadcast(link--visited)};
     }
     &:hover {
-        color: #{pfe-apply-broadcast(link, hover)};
-        text-decoration: #{pfe-var(link, text-decoration, hover)};
+        color: #{pfe-apply-broadcast(link--hover)};
+        text-decoration: #{pfe-apply-broadcast(link-decoration--hover)};
     }
     &:focus {
         outline-offset: 1px;
         outline-style: dotted;
         outline-width: 1px;
-        outline-color: #{pfe-apply-broadcast(link, focus)};
-        color: #{pfe-apply-broadcast(link, focus)};
+        outline-color: #{pfe-apply-broadcast(link--focus)};
+        color: #{pfe-apply-broadcast(link--focus)};
     }
 }
 

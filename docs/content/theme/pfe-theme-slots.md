@@ -333,11 +333,11 @@ This mixin will expand to the following in your compiled CSS, one entry for each
 :host([pfe-color="darker"]) {
   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
   --theme: dark;
-  --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark, #fff);
-  --pfe-broadcasted--color--link: var(--pfe-theme--color--link--on-dark, #99ccff);
-  --pfe-broadcasted--color--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
-  --pfe-broadcasted--color--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
-  --pfe-broadcasted--color--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
+  --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
+  --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #99ccff);
+  --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
+  --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
+  --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
 }
 ```
 
@@ -364,11 +364,11 @@ Inside the stylesheet for a content component, the following snippet will allow 
 This mixin will expand to the following in your compiled CSS, one entry for each supported theme context (light, dark, saturated):
 ```
 :host([on="dark"]) {
-  --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark, #fff);
-  --pfe-broadcasted--color--link: var(--pfe-theme--color--link--on-dark, #99ccff);
-  --pfe-broadcasted--color--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
-  --pfe-broadcasted--color--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
-  --pfe-broadcasted--color--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
+  --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
+  --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #99ccff);
+  --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
+  --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
+  --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
 }
 
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {

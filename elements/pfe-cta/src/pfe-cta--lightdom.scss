@@ -12,7 +12,7 @@ $LOCAL: cta;
 .pfe-cta--wrapper {
   a,
   a:visited {
-      font-family: #{$pfe-global--font-family};
+      font-family: #{pfe-var(font-family)};
       display: inline;
       color:  #{pfe-local($cssvar: Color, $fallback: #{pfe-fallback(link)})} !important;
   }

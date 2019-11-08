@@ -40,7 +40,7 @@ $variables: (
 
 :host {
   // Print the variables to the DOM
-  @include print-variables-map($variables);
+  @include pfe-print-variables($variables);
 
   // Reduce padding for print
   @media print {
@@ -89,7 +89,7 @@ pfe-icon {
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
   color: #{pfe-apply-broadcast(link)};
-  text-decoration: #{pfe-apply-broadcast(link, text-decoration)};
+  text-decoration: #{pfe-apply-broadcast(link-decoration)};
 }
 
 ::slotted([slot="mobile-menu--label"]) {
@@ -102,9 +102,8 @@ pfe-icon {
 
 .pfe-navigation {
   &__wrapper {
-    @each $prop in (text, link, link--hover, link--visited, link--focus) {
-      --pfe-broadcasted--color--#{$prop}: #{pfe-local($cssvar: Color, $fallback: #{pfe-color(text--on-dark)})};
-    }
+    @include pfe-set-broadcast-theme(dark);
+    
     display: flex;
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
     z-index: #{pfe-var(

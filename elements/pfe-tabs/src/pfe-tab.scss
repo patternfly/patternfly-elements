@@ -2,21 +2,26 @@
 
 $LOCAL: tabs;
 
+$variables: (
+  BackgroundColor: transparent,
+  Color:           pfe-color(ui-disabled--text),
+  link:            pfe-color(link),
+  focus:           pfe-color(link--focus),
+  highlight:       pfe-color(ui-accent),
+  tab: (
+    PaddingTop:     calc(#{pfe-var(container-padding)} * .666),
+    PaddingRight:   calc(#{pfe-var(container-padding)} * 1.5),
+    PaddingBottom:  calc(#{pfe-var(container-padding)} * .666),
+    PaddingLeft:    calc(#{pfe-var(container-padding)} * 1.5),
+  )
+);
+
 /// ===========================================================================
 /// HORIZONTAL TAB ORIENTATION
 /// ===========================================================================
 
 :host {
-  --pfe-tabs--BackgroundColor:         transparent;
-  --pfe-tabs--Color:          #{pfe-color(ui-disabled--text)}; 
-  --pfe-tabs--link:         #{pfe-color(link)};
-  --pfe-tabs--focus:        #{pfe-color(link--focus)};
-  --pfe-tabs--highlight:    #{pfe-color(ui-accent)};
-
-  --pfe-tabs__tab--PaddingTop:    calc(#{pfe-var(container-padding)} * .666);
-  --pfe-tabs__tab--PaddingRight:  calc(#{pfe-var(container-padding)} * 1.5);
-  --pfe-tabs__tab--PaddingBottom: calc(#{pfe-var(container-padding)} * .666);
-  --pfe-tabs__tab--PaddingLeft:   calc(#{pfe-var(container-padding)} * 1.5);
+  @include pfe-print-variables($variables);
 
   position: relative;
   display: block;

@@ -21,7 +21,7 @@ $variables: (
 );
 
 :host {
-  @include print-variables-map($variables);
+  @include pfe-print-variables($variables);
 
   display: flex;
   flex-direction: column;
@@ -166,7 +166,7 @@ $variables: (
     --pfe-navigation--Color: #{pfe-color(text)};
 
     @each $prop in $BROADCAST-VARS {
-      --pfe-broadcasted--color--#{$prop}: #{pfe-local($cssvar: Color, $region: tray)};
+      --pfe-broadcasted--#{$prop}: #{pfe-local($cssvar: Color, $region: tray)};
     }
 
     @include pfe-accordion-variables;

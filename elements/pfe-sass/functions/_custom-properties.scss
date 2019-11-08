@@ -121,7 +121,7 @@
     @return var(#{$var-declaration});
 }
 
-// Apply broadcast function, for use with content components
+// Apply broadcast function, for use with text & links. It requests that the color property look for a broadcasted variable (from a container component) first if there is one, and if not, use a theme variable, with the hex color fallback.
 //  1st arg:            lookup broadcast variable  (1 of 6)
 //
 //  usage:   color: #{pfe-apply-broadcast(ui-base--hover)};

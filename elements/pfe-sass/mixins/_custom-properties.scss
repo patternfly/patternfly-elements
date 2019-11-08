@@ -1,8 +1,8 @@
-// New broadcast mixin, for use with content components
+// New broadcast mixin, for use with container components. This will print all the broadcast variables, and set the value to the theme of your choosing, like on-dark or on-saturated.
 //  1st arg:  Look up values from theme contexts, i.e. "light" or "saturated"
 //  2nd arg:  Optionally specify only one broadcast variable instead of the whole set, i.e. "text"
 //
-//  usage:
+//  container usage, i.e. pfe-card:
 //    :host {
 //      @include pfe-set-broadcast-theme(dark);
 //    }
@@ -128,10 +128,54 @@
 }
 
 /// ===========================================================================
-/// Surface properties   - prints pfe-color attributes + theme context
+/// Surface properties  
+/// This mixin creates `pfe-color` attributes for all the surface colors, then prints the local background color variable for the component, with the correct theme colors. 
 /// - Optional inputs:
 ///  * surfaces - defaults to the global $SURFACES list of all supported colors
 ///  * attr-name - defaults to pfe-color
+///
+/// @use -- 
+/// ```
+/// $LOCAL: band;
+/// @include surfaces;
+/// ```
+/// returns
+/// ```
+/// :host([pfe-color="darker"]) {
+///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
+///   --theme: dark;
+/// }
+/// 
+/// :host([pfe-color="darkest"]) {
+///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darkest, #131313);
+///   --theme: dark;
+/// }
+/// 
+/// :host([pfe-color="base"]) {
+///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--base, #dfdfdf);
+///   --theme: light;
+/// }
+/// 
+/// :host([pfe-color="lighter"]) {
+///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lighter, #ececec);
+///   --theme: light;
+/// }
+/// 
+/// :host([pfe-color="lightest"]) {
+///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lightest, #fff);
+///   --theme: light;
+/// }
+/// 
+/// :host([pfe-color="accent"]) {
+///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--accent, #fe460d);
+///   --theme: saturated;
+/// }
+/// 
+/// :host([pfe-color="complement"]) {
+///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--complement, #0477a4);
+///   --theme: saturated;
+/// }
+/// ```
 /// ===========================================================================
 @mixin pfe-surfaces($surfaces: $SURFACE, $attr-name: pfe-color) {
     @each $color in $surfaces {
@@ -150,6 +194,31 @@
 /// - Optional inputs:
 ///  * themes - defaults to the global $THEMES list of all supported contexts
 ///  * fallback - defaults to true, prints IE11 fallbacks
+/// @use --
+/// ```
+///   @include theme-contexts; // imports on="light" etc support
+/// ```
+/// will return
+/// ```
+/// :host([on="dark"]) {
+///   --pfe-broadcasted--color--text: var(--pfe-theme--color--text--on-dark, #fff);
+///   --pfe-broadcasted--color--link: var(--pfe-theme--color--link--on-dark, #99ccff);
+///   --pfe-broadcasted--color--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
+///   --pfe-broadcasted--color--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
+///   --pfe-broadcasted--color--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
+///   /* IE10+ */
+///   /* Microsoft Edge Browser 12+ */
+///   /* Microsoft Edge Browser 16+ (All) */
+/// }
+/// 
+/// @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+///   :host([on="dark"]) {
+///     color: #fff;
+///     color: var(--pfe-theme--color--text--on-dark, #fff);
+///   }
+/// }
+/// ```
+/// as well as all the values for :host([on="saturated"])  and  :host([on="light"]) 
 /// ===========================================================================
 @mixin pfe-theme-contexts($themes: $THEMES, $fallback: true) {
     // Helper attributes to aid in theming

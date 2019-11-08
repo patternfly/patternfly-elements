@@ -25,7 +25,23 @@
     }
     @return $bp;
 }
-
+/// Get Theme
+///
+/// This utility function will return the correct theme 
+/// when you pass it a variable from the $pfe-colors map
+///
+/// @use -
+/// ```
+/// .my-custom-red-container {
+///   --theme: #{ pfe-get-theme(surface--accent--theme) };
+/// }
+/// ```
+/// will return
+/// ```
+/// .my-custom-red-container {
+///   --theme: saturated;
+/// }
+/// ```
 @function pfe-get-theme($context) {
     @return #{map-get($pfe-colors, $context)};
 }

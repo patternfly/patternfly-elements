@@ -316,19 +316,20 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
 
 3. **Broadcast Variables**: These variables are designed to cascade and influence the text or link styles of [content components nested inside container components](/getting-started/#3-use-patternfly-elements-markup).  Typically container components come with background colors, and thus need to communicate this to their children so that text and link colors can be adjusted for usability. 
 
-Inside the stylesheet for a container component, the following snippet will allow that component to broadcast it's context to it's children. The surfaces and theme-contexts mixins can be found in `pfe-sass/mixins/_custom-properties.scss`.  For these to work, please ensure you are importing pfe-sass and have the $LOCAL variable set to the name of your component at the top of your Sass file.
+Inside the stylesheet for a container component, the following snippet will allow that component to broadcast its context to its children. The `surfaces` and `theme-contexts` mixins can be found in `pfe-sass/mixins/_custom-properties.scss`.  For these to work, please ensure you are importing pfe-sass and have the $LOCAL variable set to the name of your component at the top of your Sass file as shown below.
 
 **In your container component:**
 ```
   @import "../../pfe-sass/pfe-sass";
 
+ // name of the component, minus the pfe prefix:
   $LOCAL: band;
 
   // Pull in pfe-color settings for all supported surface colors
   @include surfaces;
 ```
 
-This mixin will expand to the following in your compiled CSS, one entry for each supported surface color (darkest, darker, base, lighter, lightest, accent, complement):
+This mixin will compile to the following CSS, one entry for each supported surface color (darkest, darker, base, lighter, lightest, accent, complement):
 ```
 :host([pfe-color="darker"]) {
   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);

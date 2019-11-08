@@ -61,6 +61,13 @@
 ///           font-size:   #{pfe-var(  font-size  )};
 ///         }
 ///         ```
+///     3. which will return
+///         ```
+///         .my-element {
+///            padding: var(--pfe-theme--container-spacer, 16px);
+///            font-size: var(--pfe-theme--font-size, 16px);
+///         }
+///         ```
 
 @function pfe-var($cssvar, $category: '', $fallback: null, $map: $pfe-vars) {
     $css-var-with-cat: $cssvar;

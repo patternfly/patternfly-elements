@@ -4,7 +4,7 @@
     "className": "PfeAutocomplete",
     "elementName": "pfe-autocomplete"
   },
-  "version": "1.0.0-prerelease.28",
+  "version": "1.0.0-prerelease.29",
   "description": "Autocomplete element for PatternFly Elements",
   "keywords": [
     "web-components",

@@ -18,12 +18,12 @@ $pfe-color--link--visited:                   $pfelements--purple !default;      
 $pfe-color--link--hover:                     darken($pfe-color--link, 20%) !default; // Was #004080
 $pfe-color--link--focus:                     darken($pfe-color--link, 20%) !default; // Was #004080
 
-// Light gray?
-// $pfe-color--surface--base--text:             $pfe-color--text !default;
-// $pfe-color--surface--base--link:             #00538c !default;  // Contrast with $pfe-color--link doesn't meet WCAG2 AA
-// $pfe-color--surface--base--link--visited:    #7551a6 !default;
-// $pfe-color--surface--base--link--hover:      #00305b !default;
-// $pfe-color--surface--base--link--focus:      #00305b !default;
+// Light gray? Not yet supported
+// $pfe-color--text--on-gray:             $pfe-color--text !default;
+// $pfe-color--link--on-gray:             #00538c !default;  // Contrast with $pfe-color--link doesn't meet WCAG2 AA
+// $pfe-color--link--visited--on-gray:    #7551a6 !default;
+// $pfe-color--link--hover--on-gray:      #00305b !default;
+// $pfe-color--link--focus--on-gray:      #00305b !default;
 
 $pfe-color--text--on-dark:                   $pfe-color--white !default;
 $pfe-color--link--on-dark:                   lighten($pfe-color--link, 40%) !default;          // Was #97daff

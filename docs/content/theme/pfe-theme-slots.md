@@ -333,11 +333,6 @@ This mixin will expand to the following in your compiled CSS, one entry for each
 :host([pfe-color="darker"]) {
   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
   --theme: dark;
-  --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
-  --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #99ccff);
-  --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
-  --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
-  --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
 }
 ```
 
@@ -369,6 +364,10 @@ This mixin will expand to the following in your compiled CSS, one entry for each
   --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
   --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
   --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
+  --pfe-broadcasted--link-decoration: none;
+  --pfe-broadcasted--link-decoration--hover: underline;
+  --pfe-broadcasted--link-decoration--focus: underline;
+  --pfe-broadcasted--link-decoration--visited: none;
 }
 
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
@@ -432,7 +431,7 @@ You can optionally customize this set by passing in a list of just the themes yo
 
             ```
             pfe-card { 
-               @include pfe-theme; 
+               @include pfe-set-broadcast-theme(light); 
             }
             ```
         

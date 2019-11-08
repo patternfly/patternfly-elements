@@ -6,7 +6,7 @@ $LOCAL: autocomplete;
 :host {
   --pfe-autocomplete--BoxShadow: #{pfe-var(box-shadow--inset)};
   --pfe-autocomplete--BackgroundColor: #{pfe-color(surface--lightest)};
-  --pfe-autocomplete--Border:  #{pfe-var(border-width, ui)}  #{pfe-var(border-style, ui)}  #{pfe-color(surface--border)};
+  --pfe-autocomplete--Border:  #{pfe-var(ui--border-width)}  #{pfe-var(ui--border-style)}  #{pfe-color(surface--border)};
 
   display: block;
   position: relative;
@@ -24,7 +24,7 @@ $LOCAL: autocomplete;
     box-shadow: #{pfe-local(BoxShadow)} !important;
     padding-left: 10px;
     padding-right: 30px;
-    border-radius: pfe-var(border-radius);
+    border-radius: pfe-var(ui--border-radius);
     background-color: #{pfe-local(BackgroundColor)};
     border: #{pfe-local(Border)};
     font-size: #{pfe-var(font-size)};
@@ -87,7 +87,7 @@ button {
   &.clear-search:hover svg,
   &.clear-search:focus svg {
     opacity: 1;
-    stroke: pfe-color(ui-link);
+    stroke: pfe-color(link);
   }
 
   &[disabled].clear-search:hover svg,
@@ -101,13 +101,13 @@ button {
   }
 
   &.search-button svg {
-    fill: pfe-color(ui-link);
+    fill: pfe-color(link);
     width: 16px;
   }
 
   &.search-button:hover svg,
   &.search-button:focus svg {
-    fill: pfe-color(ui-link--hover);
+    fill: pfe-color(link--hover);
   }
 
   &.clear-search:hover {

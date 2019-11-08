@@ -234,5 +234,8 @@ You can optionally customize your broadcast variables individually if you have v
 * `--pfe-broadcasted--link--hover`
 * `--pfe-broadcasted--link--visited`
 * `--pfe-broadcasted--link--focus`
+* `--pfe-broadcasted--link-decoration--hover`
+* `--pfe-broadcasted--link-decoration--visited`
+* `--pfe-broadcasted--link-decoration--focus`
 
 If you include the `pfe-base.css` stylesheet, it will include application of these broadcast variables to links; this is helpful because links are often nested inside of p tags in the content and thus inaccessible to the stylesheet of the web component.

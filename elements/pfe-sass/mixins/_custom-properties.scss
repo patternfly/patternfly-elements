@@ -1,20 +1,33 @@
-// New broadcast mixin, for use with container components. This will print all the broadcast variables, and set the value to the theme of your choosing, like on-dark or on-saturated.
-//  1st arg:  Look up values from theme contexts, i.e. "light" or "saturated"
-//  2nd arg:  Optionally specify only one broadcast variable instead of the whole set, i.e. "text"
-//
-//  container usage, i.e. pfe-card:
-//    :host {
-//      @include pfe-set-broadcast-theme(dark);
-//    }
-//  result:
-//    :host {
-//      --pfe-broadcasted--text:            #{pfe-color(text--on-dark)};
-//      --pfe-broadcasted--link:            #{pfe-color(link--on-dark)};
-//      --pfe-broadcasted--link--visited:   #{pfe-color(link--visited--on-dark)};
-//      --pfe-broadcasted--link--hover:     #{pfe-color(link--hover--on-dark)};
-//      --pfe-broadcasted--link--focus:     #{pfe-color(link--focus--on-dark)};
-//    }
-
+/// ===========================================================================
+/// Broadcast mixin, for use with container components.
+///
+/// This will print all the broadcast variables, and set the value to the theme of your choosing, like on-dark or on-saturated.
+/// @param {String} $theme - Look up values from theme contexts, i.e. "light" or "saturated"
+/// @param {List | String} $broadcast [$BROADCAST-VARS] -  Optionally specify only one broadcast variable instead of the whole set, i.e. "text"
+/// @requires {String} $repo - Name of repo, which is "pfe"
+/// @requires {String} $BROADCAST-VARS - Default list of supported broadcast variables
+///
+/// @example Usage in a container component, i.e. pfe-card:
+/// ```
+///    :host {
+///      @include pfe-set-broadcast-theme(dark);
+///    }
+/// ```
+/// @output:
+/// ```
+///    :host {
+///   --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
+///   --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #99ccff);
+///   --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
+///   --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
+///   --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
+///   --pfe-broadcasted--link-decoration: none;
+///   --pfe-broadcasted--link-decoration--hover: underline;
+///   --pfe-broadcasted--link-decoration--focus: underline;
+///   --pfe-broadcasted--link-decoration--visited: none;
+///    }
+/// ```
+/// ===========================================================================
 @mixin pfe-set-broadcast-theme($theme, $broadcast: $BROADCAST-VARS) {
     @each $type in $broadcast {
         $list: ();
@@ -65,6 +78,7 @@
     }
 }
 
+/// ===========================================================================
 /// Define local variable
 ///
 /// Returns CSS Variable for the local component-scoped variable
@@ -77,11 +91,11 @@
 /// @use -
 ///     ```
 ///     :host {
-///         padding-top:      #{pfe-local(paddingTop`)};
+///         padding-top:      #{pfe-local(paddingTop)};
 ///         padding-bottom:   #{pfe-local(paddingBottom)};
 ///     }
 ///     ```
-
+/// ===========================================================================
 @mixin pfe-set-local($variables) {
     @each $property, $value in $variables {
         $name: "--#{$property}";
@@ -103,43 +117,26 @@
     }
 }
 
-// Alias for pfe-set-local
+/// ===========================================================================
+/// @alias pfe-set-local
+/// ===========================================================================
 @mixin pfe-print-variables($variables) {
     @include pfe-set-local($variables);
 }
 
-
-/// ===========================================================================
-/// Theme Color Vars   - use with on="dark" to affect light DOM
-/// ===========================================================================
-@mixin pfe-theme($theme) {
-    // GENERAL CONTEXT-BASED UPDATES, ON="DARK"
-    @if $theme in (dark, darker, darkest) {
-        @include pfe-set-broadcast-theme(dark);
-    }
-
-    @else if $theme in (accent, complement) {
-        @include pfe-set-broadcast-theme(saturated);
-    }
-
-    @else if $theme in (light, lighter, lightest) {
-        @include pfe-set-broadcast-theme(light);
-    }
-}
-
 /// ===========================================================================
 /// Surface properties  
-/// This mixin creates `pfe-color` attributes for all the surface colors, then prints the local background color variable for the component, with the correct theme colors. 
-/// - Optional inputs:
-///  * surfaces - defaults to the global $SURFACES list of all supported colors
-///  * attr-name - defaults to pfe-color
+/// This mixin creates an attribute for all the surface colors, then prints the local background color variable for the component, with the correct theme colors. 
+/// @param {List | String} $surfaces [$SURFACES] - defaults to the global $SURFACES list of all supported colors
+/// @param {String} $attr-name [pfe-color] - defaults to pfe-color, optionally pass in a custom name for the data attribute
 ///
-/// @use -- 
+/// @example 
 /// ```
 /// $LOCAL: band;
 /// @include surfaces;
 /// ```
-/// returns
+///
+/// @output
 /// ```
 /// :host([pfe-color="darker"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
@@ -177,7 +174,7 @@
 /// }
 /// ```
 /// ===========================================================================
-@mixin pfe-surfaces($surfaces: $SURFACE, $attr-name: pfe-color) {
+@mixin pfe-surfaces($surfaces: $SURFACE, $attr-name: #{$repo}-color) {
     @each $color in $surfaces {
         $theme: #{pfe-get-theme(surface--#{$color}--theme)};
         :host([#{$attr-name}="#{$color}"]) {
@@ -190,15 +187,18 @@
 }
 
 /// ===========================================================================
-/// Context properties   - prints the on attributes with IE11 fallbacks
-/// - Optional inputs:
-///  * themes - defaults to the global $THEMES list of all supported contexts
-///  * fallback - defaults to true, prints IE11 fallbacks
-/// @use --
+/// Context properties
+///
+/// Prints the `on` attribute with IE11 fallbacks
+///
+/// @param {List} themes [$THEMES] - defaults to the global $THEMES list of all supported contexts
+/// @param {Boolean} ie-fallback [true] - defaults to true, prints IE11 fallbacks
+/// @example
 /// ```
 ///   @include theme-contexts; // imports on="light" etc support
 /// ```
-/// will return
+///
+/// @output
 /// ```
 /// :host([on="dark"]) {
 ///   --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
@@ -206,26 +206,27 @@
 ///   --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
 ///   --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
 ///   --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
-///   /* IE10+ */
-///   /* Microsoft Edge Browser 12+ */
-///   /* Microsoft Edge Browser 16+ (All) */
+///   --pfe-broadcasted--link-decoration: none;
+///   --pfe-broadcasted--link-decoration--hover: underline;
+///   --pfe-broadcasted--link-decoration--focus: underline;
+///   --pfe-broadcasted--link-decoration--visited: none;
 /// }
 /// 
-/// @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+/// @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { /* IE10+ */
 ///   :host([on="dark"]) {
 ///     color: #fff;
 ///     color: var(--pfe-theme--color--text--on-dark, #fff);
 ///   }
 /// }
 /// ```
-/// as well as all the values for :host([on="saturated"])  and  :host([on="light"]) 
+/// ...as well as all the values for :host([on="saturated"])  and  :host([on="light"]) 
 /// ===========================================================================
-@mixin pfe-theme-contexts($themes: $THEMES, $fallback: true) {
+@mixin pfe-theme-contexts($themes: $THEMES, $ie-fallback: true) {
     // Helper attributes to aid in theming
     @each $theme in $themes {
         :host([on="#{$theme}"]) {
             @include pfe-set-broadcast-theme($theme);
-            @if $fallback {
+            @if $ie-fallback {
                 @include browser-query(ie11) {
                     @if $theme == "light" {
                         color: #{pfe-color(text)};

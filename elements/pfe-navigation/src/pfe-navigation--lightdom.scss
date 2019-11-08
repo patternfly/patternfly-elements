@@ -13,7 +13,7 @@
             font-size: 12px;
 
             a {
-                color: #{pfe-color(surface--darkest--text)};
+                color: #{pfe-color(text--on-dark)};
             }
         }
         &.expanded {

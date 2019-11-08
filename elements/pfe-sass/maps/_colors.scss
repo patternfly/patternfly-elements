@@ -1,4 +1,27 @@
 $pfe-colors: (
+
+  // ========================================================================
+  // Base text and link colors, basis of "theme"
+  // ========================================================================
+
+  text:                        $pfe-color--text,
+  link:                        $pfe-color--link,
+  link--visited:               $pfe-color--link--visited,
+  link--hover:                 $pfe-color--link--hover,
+  link--focus:                 $pfe-color--link--focus,
+
+  text--on-dark:               $pfe-color--text--on-dark,
+  link--on-dark:               $pfe-color--link--on-dark,
+  link--visited--on-dark:      $pfe-color--link--visited--on-dark,
+  link--hover--on-dark:        $pfe-color--link--hover--on-dark,
+  link--focus--on-dark:        $pfe-color--link--focus--on-dark,
+
+  text--on-saturated:          $pfe-color--text--on-saturated,
+  link--on-saturated:          $pfe-color--link--on-saturated,
+  link--visited--on-saturated: $pfe-color--link--visited--on-saturated,
+  link--hover--on-saturated:   $pfe-color--link--hover--on-saturated,
+  link--focus--on-saturated:   $pfe-color--link--focus--on-saturated,
+
   // ========================================================================
   // Base UI Colors for Buttons, CTAs, and actionable UI elements
   // ========================================================================

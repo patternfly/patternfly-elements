@@ -23,7 +23,7 @@ $variables: (
 
   // Overlay region
   overlay: (
-    BackgroundColor: pfe-var($cssvar: overlay--BackgroundColor, $fallback: #{$overlay--BackgroundColor--fallback})
+    BackgroundColor: pfe-color(overlay, #{$overlay--BackgroundColor--fallback})
   ),
 
   // Trigger region
@@ -64,7 +64,7 @@ $variables: (
   }
 
   display: block;
-  z-index: #{pfe-var($cssvar: content, $category: zindex, $map: $z-index)};
+  z-index: #{pfe-zindex(content)};
   width: 100%;
 }
 
@@ -73,7 +73,7 @@ $variables: (
   top: 0;
   left: 0;
   width: 100vw;
-  z-index: #{pfe-var($cssvar: navigation, $category: zindex, $map: $z-index)};
+  z-index: #{pfe-zindex(navigation)};
 }
 
 pfe-icon {
@@ -106,10 +106,7 @@ pfe-icon {
     
     display: flex;
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
-    z-index: #{pfe-var(
-      $cssvar: navigation,
-      $map: $z-index
-    )};
+    z-index: #{pfe-zindex(navigation)};
     
     background-color: #{pfe-local(BackgroundColor)};
     color: #{pfe-local(Color)};
@@ -152,21 +149,13 @@ pfe-icon {
   }
   &__overlay {
     display: block;
-    background-color: #{pfe-local(
-      $cssvar: BackgroundColor,
-      $region: overlay,
-      $fallback: #{$overlay--BackgroundColor--fallback}
-    )};
+    background-color: #{pfe-local($region: overlay, $cssvar: BackgroundColor)};
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: #{pfe-var(
-      $cssvar: overlay,
-      $category: 'zindex',
-      $map: $z-index
-    )};
+    z-index: #{pfe-zindex(overlay)};
     &[hidden] {
       display: none;
     }

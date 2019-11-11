@@ -1,8 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
 :host {
-  // display: block;
-  height: 100%
+  height: 100%;
 }
   
 ::slotted(*) {

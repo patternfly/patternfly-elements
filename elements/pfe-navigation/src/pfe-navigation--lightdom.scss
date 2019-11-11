@@ -2,6 +2,11 @@
 @import "_shared-assets.scss";
 @import "../../pfe-layouts/src/layouts/_grid";
 
+
+#main-menu {
+    background: transparent !important; // Remove this.
+}
+
 // IE11 styles
 @include browser-query(ie11) {
 
@@ -73,15 +78,15 @@
         .pfe-navigation-item__tray {
             max-height: none !important;
             
-            .pfe-navigation-item__trigger[aria-expanded=true] {
-                border-left-width: #{pfe-var(surface--border-width--heavy)};
-                border-left-color: #{pfe-color(surface--lightest--link)};
-                border-left-style: solid;
-                border-right-width: 1px;
-                border-right-style: solid;
-                border-right-color: #{pfe-color(surface--border)};
-                border-bottom: none !important;
-            }
+            // .pfe-navigation-item__trigger[aria-expanded=true] {
+            //     border-left-width: #{pfe-var(surface--border-width--heavy)};
+            //     border-left-color: #{pfe-color(surface--lightest--link)};
+            //     border-left-style: solid;
+            //     border-right-width: 1px;
+            //     border-right-style: solid;
+            //     border-right-color: #{pfe-color(surface--border)};
+            //     border-bottom: none !important;
+            // }
         }
 
         [pfe-icon=web-mobile-menu]:not([show_links]) {
@@ -193,10 +198,6 @@
             margin-bottom: 10px;
         }
 
-        .pfe-navigation-item__trigger::after {
-            display: none !important;
-        }
-
         [aria-expanded=true].pfe-navigation-item__trigger {
             &::after {
                 display: block !important;
@@ -211,7 +212,6 @@
             }
 
             @media screen and (min-width: $pfe-global--grid-breakpoint--lg) {
-                // background-color: #{pfe-color(surface--lightest)};
                 border-top-color: #{pfe-color(surface--accent)};
 
             }
@@ -221,6 +221,12 @@
                     color: #{pfe-color(surface--lightest--text)} !important;
                 }
             }
+        }
+    }
+
+    @media screen and (max-width: 1023px) {
+        pfe-navigation-item.expanded[pfe-icon=web-mobile-menu]:not([has_tray]) {
+            background-color: #{pfe-color(surface--lightest)};
         }
     }
 
@@ -250,19 +256,11 @@
         }
     }
 
-    // pfe-navigation-item([is_nested]:not(.expanded):not([parent_hidden])) .pfe-navigation-item__trigger::after {
-    //     display: block;
-    //     background-color: pink;
-    // }
-
     pfe-navigation-main[show_content] .expanded:not([has_trigger]),
     pfe-navigation-main[show_content] .expanded  {
         background-color: #{pfe-color(surface--lightest)};                
     }
 
-    // [pfe-icon=web-mobile-menu]:not([show_links]).pfe-navigation-item-3 .pfe-navigation__main .pfe-navigation-item__tray.pfe-navigation-item {
-    //     top: 0 !important;
-    // }
     pfe-navigation-item:not([parent_hidden])[is_nested].expanded .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0;
     }
@@ -279,6 +277,27 @@ pfe-navigation [slot="logo"] {
         }
     }
 }
+
+@media screen and (max-width: 1023px) {
+    .pfe-navigation-item__tray {
+        
+        .pfe-navigation-item__trigger[aria-expanded=true] {
+            // border-left-width: #{pfe-var(surface--border-width--heavy)} !important;
+            // border-left-color: #{pfe-color(surface--lightest--link)} !important;
+            // border-left-style: solid !important;
+            // border-right-width: 1px;
+            // border-right-style: solid;
+            // border-right-color: #{pfe-color(surface--border)};
+            // border-bottom: none !important;
+            // --pfe-navigation--BorderLeft: 4px solid orange;
+        }
+    }
+    pfe-navigation([is_nested].expanded:not([parent_hidden])) pfe-navigation-item.expanded .pfe-navigation-item__trigger[aria-expanded=true] {
+        --pfe-navigation--BorderLeft: 4px solid orange;
+        // --pfe-navigation--BorderLeft--focus: green;
+    }
+}
+
 
 pfe-navigation-main {
     &:not([show_content]) pfe-navigation-item [slot="trigger"] > a {

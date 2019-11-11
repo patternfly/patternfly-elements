@@ -55,7 +55,7 @@ class PFElement extends HTMLElement {
   }
 
   setVariable(name, value, element = this) {
-    element.setProperty(name, value);
+    element.style.setProperty(`--${name}`, value);
   }
 
   // Returns a single element assigned to that slot; if multiple, it returns the first
@@ -70,16 +70,26 @@ class PFElement extends HTMLElement {
 
   // Update the theme context for self and children
   context_update() {
-    const theme = this.getVariable("theme");
-    const children = this.querySelectorAll("[on]");
+    let children = this.querySelectorAll("[on]");
+    let theme = this.getVariable("theme");
+    
+    // Manually adding `pfe-theme` overrides the css variable
+    if (this.hasAttribute("pfe-theme")) {
+      theme = this.getAttribute("pfe-theme");
+      // Update the css variable to match the data attribute
+      this.setVariable("theme", theme);
+    }
+    
     // Update theme for self
     this.context_set();
+
     // For each nested element containing an "on" attribute
-    [...children].map(child => {
+    children = [...children].filter(child => child.tagName.startsWith("PFE-"));
+    // Set the context based on the child's value of --theme
+    // Note: this prevents contexts from parents overriding
+    // the child's context should it exist
+    children.map(child => {
       if (child.getAttribute("on") !== theme) {
-        // Set the context based on the child's value of --theme
-        // Note: this prevents contexts from parents overriding
-        // the child's context should it exist
         child.context_set();
       }
     });
@@ -87,9 +97,11 @@ class PFElement extends HTMLElement {
 
   // Get the theme variable if it exists, set it as an attribute
   context_set() {
-    if (this.getVariable("theme")) {
-      this.setAttribute("on", this.getVariable("theme"));
+    if (this.id.startsWith("test")) {
+      console.log(this);
+      console.log(`--theme: ${this.getVariable("theme")};`);
     }
+    this.setAttribute("on", this.getVariable("theme"));
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
@@ -157,11 +169,7 @@ class PFElement extends HTMLElement {
 
     // Initialize the on attribute if a theme variable is set
     // do not update the on attribute if a user has manually added it
-    if (!this.getAttribute("on")) {
-      this.context_set();
-    }
-
-    // Trigger an update in nested components
+    // then trigger an update in nested components
     this.context_update();
 
     this.log(`Connected.`);

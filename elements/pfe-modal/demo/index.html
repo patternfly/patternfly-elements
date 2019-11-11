@@ -30,6 +30,7 @@
 
   <body unresolved>
     <h1>&lt;pfe-modal&gt;</h1>
+
     <pfe-band pfe-color="lightest">
       <h2 slot="pfe-band--header">Modal: Standard modal</h2>
       <pfe-modal>
@@ -43,7 +44,8 @@
         </pfe-cta>
       </pfe-modal>
     </pfe-band>
-    <pfe-band pfe-color="darkest">
+
+    <pfe-band pfe-color="darkest" id="test-dark">
       <h2 slot="pfe-band--header">Modal: No header region</h2>
       <pfe-modal>
         <pfe-cta pfe-priority="secondary" slot="pfe-modal--trigger">
@@ -51,7 +53,7 @@
         </pfe-cta>
         <h3>This has no header region</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <pfe-cta>
+        <pfe-cta id="test-dark-child">
           <a href="#">Call-to-action</a>
         </pfe-cta>
       </pfe-modal>

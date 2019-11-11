@@ -82,7 +82,12 @@ $variables: (
     --pfe-theme--link--#{$prop}: none;
   }
 
-  @include pfe-set-broadcast-theme(#{pfe-local(Color)});
+  --pfe-broadcasted--text: #{pfe-local(Color)};
+  --pfe-broadcasted--link: #{pfe-local(Color)};
+  @each $state in (hover, focus, visited) {
+    --pfe-broadcasted--link--#{$state}: #{pfe-local(Color)};
+
+  }
 
   // Enforce the font-size for the navigation regardless of h-level settings
   @each $level in (alpha, beta, gamma) {

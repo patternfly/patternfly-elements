@@ -70,7 +70,7 @@ class PFElement extends HTMLElement {
 
   // Update the theme context for self and children
   context_update() {
-    let children = this.querySelectorAll("[on]");
+    const children = this.querySelectorAll("[pfelement]");
     let theme = this.getVariable("theme");
     
     // Manually adding `pfe-theme` overrides the css variable
@@ -83,12 +83,11 @@ class PFElement extends HTMLElement {
     // Update theme for self
     this.context_set();
 
-    // For each nested element containing an "on" attribute
-    children = [...children].filter(child => child.tagName.startsWith("PFE-"));
-    // Set the context based on the child's value of --theme
+    // For each nested, already upgraded component
+    // set the context based on the child's value of --theme
     // Note: this prevents contexts from parents overriding
     // the child's context should it exist
-    children.map(child => {
+    [...children].map(child => {
       if (child.getAttribute("on") !== theme) {
         child.context_set();
       }

@@ -111,13 +111,13 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 
 @each $color in (base, complement, accent) {
   :host([color="#{$color}"]) {
-    @include pfe-set-broadcast-theme(ui-#{$color});
+    --pfe-broadcasted--text: #{pfe-color(ui-#{$color})};
   }
 }
 
 @each $level in (critical, important, moderate, success, info, default) {
   :host([color="#{$level}"]) {
-    @include pfe-set-broadcast-theme(feedback--#{$level});
+    --pfe-broadcasted--text: #{(feedback--#{$level})};
   }
 }
 

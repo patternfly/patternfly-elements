@@ -247,16 +247,6 @@ class PfeNavigation extends PFElement {
       });
     }
 
-    // Remove focusability from mobile links
-    // Object.keys(this.slots).forEach(section => {
-    //   if (section.match(/^mobile-(login|language)/)) {
-    //     this.slots[section].nodes.forEach(node => {
-    //       node.setAttribute("tabindex", -1);
-
-    //     });
-    //   }
-    // });
-
     // Start by setting the visibility of the slots
     this._setVisibility(this.offsetWidth);
 

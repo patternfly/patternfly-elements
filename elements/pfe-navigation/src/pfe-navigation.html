@@ -13,10 +13,10 @@
           <slot name="mobile-search"></slot>
           <slot></slot>
           ${ this.has_slot("mobile-login") ? `<pfe-navigation-item pfe-icon="web-user" variant="wind" hidden>
-            <slot name="mobile-login" slot="trigger"></slot>
+            <slot name="mobile-login"></slot>
           </pfe-navigation-item>` : ``}
           ${ this.has_slot("mobile-language") ? `<pfe-navigation-item pfe-icon="web-globe" variant="wind" hidden>
-            <slot name="mobile-language" slot="trigger"></slot>
+            <slot name="mobile-language"></slot>
           </pfe-navigation-item>` : ``}
         </div>
       </div>

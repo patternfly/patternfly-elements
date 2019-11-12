@@ -240,8 +240,8 @@ class PfeNavigationItem extends PFElement {
   
     _init__trigger() {
       // If no slots have been assigned, assign it to the trigger slot
-      // const unassigned = [...this.children].filter(child => !child.hasAttribute("slot"));
-      // unassigned.map(item => item.setAttribute("slot", "trigger"));
+      const unassigned = [...this.children].filter(child => !child.hasAttribute("slot"));
+      unassigned.map(item => item.setAttribute("slot", "trigger"));
   
       // Get the LightDOM trigger & tray content
       this.trigger = this.querySelector(`[slot="trigger"]`);

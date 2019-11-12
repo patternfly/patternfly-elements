@@ -109,6 +109,39 @@
 }
 
 /// ===========================================================================
+/// Z-Index fetch
+///
+/// Returns CSS variable stack with exposed theme variable and respective fallback
+///
+/// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme
+/// @requires {Map} $pfe-broadcasted - SASS Map of broadcasted values
+/// @example -
+///
+///     1. To look up a value: /elements/pfe-sass/src/maps/_broadcasted.scss
+///     2. Use like this:
+///         ```
+///         .my-element {
+///           z-index:     #{pfe-broadcasted( link-decoration )};
+///         }
+///         ```
+///     3. Which will return:
+///         ```
+///         .my-element {
+///            z-index: var(--pfe-theme--link-decoration, none);
+///         }
+///         ```
+/// ===========================================================================
+@function pfe-broadcasted($cssvar) {
+    $var-name: to-string($cssvar, "--");
+    @if map-get($pfe-broadcasted, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
+    }
+    @else {
+        @error "The key for #{$var-name} could not be found in the $pfe-broadcasted map.";
+    }
+}
+
+/// ===========================================================================
 /// Variable fetch
 ///
 /// Returns CSS variable stack with exposed theme variable and respective fallback
@@ -192,7 +225,7 @@
 @function pfe-apply-broadcast($broadcast) {
     $fallback: "";
     @if $USE-FALLBACK {
-        $fallback: ", #{map-get($pfe-broadcast, #{to-string($broadcast,'--')})}";
+        $fallback: ", #{map-get($pfe-broadcasted, #{to-string($broadcast,'--')})}";
     }
     @if not index($BROADCAST-VARS, first(str-split($broadcast, '--'))) {
       @error "--#{$repo}-broadcasted--#{$broadcast} variable is not currently supported.";

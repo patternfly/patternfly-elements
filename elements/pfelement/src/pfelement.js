@@ -87,11 +87,7 @@ class PFElement extends HTMLElement {
     // set the context based on the child's value of --theme
     // Note: this prevents contexts from parents overriding
     // the child's context should it exist
-    [...children].map(child => {
-      if (child.getAttribute("on") !== theme) {
-        child.context_set();
-      }
-    });
+    [...children].map(child => child.context_set());
   }
 
   // Get the theme variable if it exists, set it as an attribute

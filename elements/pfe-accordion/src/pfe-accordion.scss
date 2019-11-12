@@ -3,6 +3,8 @@
 
 $LOCAL: accordion;
 
+@include pfe-theme-contexts; // imports on="light" etc support
+
 :host {
   @include pfe-accordion-variables;
 
@@ -13,11 +15,8 @@ $LOCAL: accordion;
   color: #{pfe-apply-broadcast(text)};
 }
 
-// @include pfe-theme-contexts; // imports on="light" etc support
-
 @each $context in $THEMES {
   :host([on="#{$context}"]) {
     @include pfe-accordion-variables($theme: #{$context});
-    @include pfe-set-broadcast-theme($context);
   }
 }

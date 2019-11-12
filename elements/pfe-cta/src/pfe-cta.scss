@@ -424,5 +424,5 @@ $variables: (
   --pfe-cta--Color--focus:               #{pfe-color(link--hover)};
   --pfe-cta--BorderColor--focus:         #{pfe-color(surface--border)};
   --pfe-cta__inner--BorderColor--focus:  #{pfe-local(BorderColor--focus)};
-  --pfe-cta--TextDecoration--hover:      #{pfe-var(link-decoration--hover)};
+  --pfe-cta--TextDecoration--hover:      #{pfe-broadcasted(link-decoration--hover)};
 }

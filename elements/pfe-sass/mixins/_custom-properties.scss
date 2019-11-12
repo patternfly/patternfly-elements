@@ -63,16 +63,19 @@
             @if not index($BROADCAST-VARS, $type) {
                 @warn "--#{$repo}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
             }
-            @else if not map-has-key($pfe-broadcast, #{$item}#{$context}) {
+            @else if not map-has-key($pfe-broadcasted, #{$item}#{$context}) {
                 @warn "#{$item}#{$context} value does not currently exist.";
             }
             @else {
                 @if index($THEMES, $theme) != null {
                     @if map-get($pfe-colors, $item) != null {
-                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--color--#{$item}, #{map-get($pfe-broadcast, #{$item}#{$context})});
+                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--color--#{$item}#{$context}, #{map-get($pfe-broadcasted, #{$item}#{$context})});
+                    }
+                    @else if map-get($pfe-vars, $item) {
+                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--#{$item}#{$context}, #{map-get($pfe-broadcasted, #{$item}#{$context})});
                     }
                     @else {
-                        --#{$repo}-broadcasted--#{$item}: #{map-get($pfe-broadcast, #{$item}#{$context})};
+                        --#{$repo}-broadcasted--#{$item}: #{map-get($pfe-broadcasted, #{$item}#{$context})};
                     }
                 }
                 @else {

@@ -267,7 +267,7 @@ $LOCAL: band;
     position:  relative;
     margin:    0 auto;
     width: 100%;
-    max-width: #{pfe-local(Width)};
+    max-width: #{pfe-local(Width, 1140px)};
 
     // Grid support styles
     @supports (display: grid) {

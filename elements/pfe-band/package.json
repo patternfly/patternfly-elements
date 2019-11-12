@@ -23,7 +23,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "private": true,
   "main": "./dist/pfe-band.umd.js",
   "module": "./dist/pfe-band.js",
   "unpkg": "./dist/pfe-band.umd.min.js",

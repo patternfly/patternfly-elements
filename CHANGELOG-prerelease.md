@@ -8,6 +8,7 @@ Tag: [v1.0.0-prerelease.30](https://github.com/patternfly/patternfly-elements/re
 - [567523a](https://github.com/patternfly/patternfly-elements/commit/567523aeac3504d2d67b922b1f1e4fe51a122a05) docs: Fix hugo nav scroll issue (#612)
 - [94ff217](https://github.com/patternfly/patternfly-elements/commit/94ff21768e3b1a8b90e284059f322e091c2d56ae) fix: pfe-content-set: wrapping the observer reconnect in a setTimeout #611 
 - [94ff217](https://github.com/patternfly/patternfly-elements/commit/94ff21768e3b1a8b90e284059f322e091c2d56ae) fix: ignore compiled assets when determining version bumps #613
+- [0537a54](https://github.com/patternfly/patternfly-elements/commit/0537a54c5b02f99c0b53c9199223281ded99062f) chore: making pfe-band public
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Updating broadcast and how variables are applied #392
 
 ## Prerelease 29 ( 2019-11-04 )

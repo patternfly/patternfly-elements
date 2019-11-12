@@ -240,20 +240,31 @@ class PfeNavigationItem extends PFElement {
   
     _init__trigger() {
       // If no slots have been assigned, assign it to the trigger slot
-      const unassigned = [...this.children].filter(child => !child.hasAttribute("slot"));
-      unassigned.map(item => item.setAttribute("slot", "trigger"));
+      // const unassigned = [...this.children].filter(child => !child.hasAttribute("slot"));
+      // unassigned.map(item => item.setAttribute("slot", "trigger"));
   
       // Get the LightDOM trigger & tray content
       this.trigger = this.querySelector(`[slot="trigger"]`);
   
-      this.directLink = this.trigger.querySelector("a");
-      this.linkUrl = this.directLink ? this.directLink.href : "#";
-  
-      // Turn off the fallback link
-      if (this.directLink) this.directLink.setAttribute("tabindex", "-1");
-  
-      this._trigger.addEventListener("click", this._navigateToUrl);
-      this._trigger.addEventListener("keyup", this._directLinkHandler);
+      // Check the light dom for the link
+      if (this.trigger) {
+        this.directLink = this.trigger.querySelector("a");
+        // Check the slotted content for the link if it can't be found
+        if (!this.directLink && this.trigger.tagName === "SLOT") {
+          let slottedContent = this.trigger.assignedNodes();
+          if (slottedContent.length > 0 && slottedContent[0].tagName === "A") {
+            this.directLink = slottedContent[0];
+          }
+        }
+
+        this.linkUrl = this.directLink ? this.directLink.href : "#";
+    
+        // Turn off the fallback link if the tray does not exist
+        if (this.directLink) this.directLink.setAttribute("tabindex", "-1");
+    
+        this._trigger.addEventListener("click", this._navigateToUrl);
+        this._trigger.addEventListener("keyup", this._directLinkHandler);
+      }
     }
   
     _init__tray() {

@@ -72,7 +72,6 @@ $variables: (
   position: sticky;
   top: 0;
   left: 0;
-  // width: 100vw;
   z-index: pfe-var($cssvar: navigation, $category: zindex, $map: $z-index);
 }
 

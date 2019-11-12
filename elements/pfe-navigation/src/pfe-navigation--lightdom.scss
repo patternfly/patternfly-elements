@@ -11,9 +11,9 @@
 @include browser-query(ie11) {
 
     pfe-navigation-item {
-
         [slot="trigger"] {
             font-size: 12px; 
+            margin: 0;
 
             a {
                 color: #{pfe-color(surface--darkest--text)};
@@ -50,12 +50,8 @@
         min-height: 60px;
     }
 
-    [slot="trigger"] {
-        margin: 0;
-    }
-
     // Override grid so that CTAs do not overlap.
-    .pfe-navigation--footer {
+    .pfe-navigation--footer:not(:empty) {
         display: block !important;
     }
 
@@ -77,16 +73,6 @@
 
         .pfe-navigation-item__tray {
             max-height: none !important;
-            
-            // .pfe-navigation-item__trigger[aria-expanded=true] {
-            //     border-left-width: #{pfe-var(surface--border-width--heavy)};
-            //     border-left-color: #{pfe-color(surface--lightest--link)};
-            //     border-left-style: solid;
-            //     border-right-width: 1px;
-            //     border-right-style: solid;
-            //     border-right-color: #{pfe-color(surface--border)};
-            //     border-bottom: none !important;
-            // }
         }
 
         [pfe-icon=web-mobile-menu]:not([show_links]) {
@@ -174,9 +160,6 @@
 
 @include browser-query(edge) {
     pfe-navigation-item {
-        [slot="trigger"] {
-            font-size: 16px;
-        }
         &[pfe-icon] {
             > .pfe-navigation-item__trigger {
                 > [slot="trigger"] {
@@ -191,6 +174,7 @@
         }
 
         [slot="trigger"] {
+            font-size: 16px;
             margin: 0;
         }
 
@@ -198,7 +182,7 @@
             margin-bottom: 10px;
         }
 
-        [aria-expanded=true].pfe-navigation-item__trigger {
+        .pfe-navigation-item__trigger[aria-expanded=true] {
             &::after {
                 display: block !important;
             }
@@ -213,7 +197,6 @@
 
             @media screen and (min-width: $pfe-global--grid-breakpoint--lg) {
                 border-top-color: #{pfe-color(surface--accent)};
-
             }
 
             [slot="trigger"] {
@@ -221,6 +204,12 @@
                     color: #{pfe-color(surface--lightest--text)} !important;
                 }
             }
+        }
+        &.expanded .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="true"] {
+            background-color: white !important;
+        }
+        .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="false"] {
+            background-color: transparent !important;
         }
     }
 
@@ -230,19 +219,22 @@
         }
     }
 
+    // Hide the carets on desktop.
+    @media screen and (min-width: 1024px) {
+        .pfe-navigation-item__trigger::after {
+            display: none !important;
+        }
+        .pfe-navigation-item__trigger:hover::after {
+            display: block !important;
+        }
+    }
+
     .pfe-navigation-item__trigger {
         --pfe-navigation__trigger-icon--Visible: hidden;
         text-align: center;
 
         &:hover {
             --pfe-navigation__trigger-icon--Visible: visible;
-        }
-        pfe-icon {
-            background-color: transparent !important;
-            max-height: 20px;
-        }
-        pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
-            flood-color: #{pfe-color(surface--darkest--text)} !important;
         }
         &.pfe-navigation-item {
             &[aria-expanded=true] {
@@ -254,12 +246,20 @@
                 border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-color(surface--accent)};
             }
         }
+        pfe-icon {
+            max-height: 20px;
+        }
+        pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
+            flood-color: #{pfe-color(surface--darkest--text)} !important;
+        }
     }
 
-    pfe-navigation-main[show_content] .expanded:not([has_trigger]),
-    pfe-navigation-main[show_content] .expanded  {
-        background-color: #{pfe-color(surface--lightest)};                
-    }
+    pfe-navigation-main[show_content] {
+        .expanded:not([has_trigger]),
+        .expanded  {
+            background-color: #{pfe-color(surface--lightest)};                
+        }
+    } 
 
     pfe-navigation-item:not([parent_hidden])[is_nested].expanded .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0;
@@ -277,27 +277,6 @@ pfe-navigation [slot="logo"] {
         }
     }
 }
-
-@media screen and (max-width: 1023px) {
-    .pfe-navigation-item__tray {
-        
-        .pfe-navigation-item__trigger[aria-expanded=true] {
-            // border-left-width: #{pfe-var(surface--border-width--heavy)} !important;
-            // border-left-color: #{pfe-color(surface--lightest--link)} !important;
-            // border-left-style: solid !important;
-            // border-right-width: 1px;
-            // border-right-style: solid;
-            // border-right-color: #{pfe-color(surface--border)};
-            // border-bottom: none !important;
-            // --pfe-navigation--BorderLeft: 4px solid orange;
-        }
-    }
-    pfe-navigation([is_nested].expanded:not([parent_hidden])) pfe-navigation-item.expanded .pfe-navigation-item__trigger[aria-expanded=true] {
-        --pfe-navigation--BorderLeft: 4px solid orange;
-        // --pfe-navigation--BorderLeft--focus: green;
-    }
-}
-
 
 pfe-navigation-main {
     &:not([show_content]) pfe-navigation-item [slot="trigger"] > a {
@@ -388,7 +367,7 @@ pfe-navigation-item {
             grid-column: span 2;
         }
     }
-    &--footer {
+    &--footer:not(:empty) {
         margin: 40px 0 !important;
         border-top: 1px solid lightgray;
         padding: 40px 0 0;
@@ -457,9 +436,6 @@ pfe-navigation-item {
     // @TODO why min-height on the navigation container?
     // min-height: 200px;
     width: 100%;
-    // @media (max-width: $pfe-global--grid-breakpoint--lg--max) {
-    //     padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
-    // }
     @media (min-width: $pfe-global--grid-breakpoint--xl) {
         max-width: #{pfe-local($cssvar: Width, $fallback: 1140px)};
         margin: 0 auto;

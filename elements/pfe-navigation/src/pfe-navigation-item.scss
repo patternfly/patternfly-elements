@@ -283,7 +283,6 @@ $variables: (
   //  Styles for the nested elements
   :host([is_nested]:not([parent_hidden])) & {
     --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
-
     @include pfe-container;
   }
 

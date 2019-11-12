@@ -223,19 +223,22 @@
 ///         }
 ///         ```
 @function pfe-var($cssvar, $category: '', $fallback: null, $map: $pfe-vars) {
-    $css-var-with-cat: $cssvar;
+    $cssvar-with-cat: $cssvar;
 
     @if $category !="" {
         $category: "#{$category}--";
-        $css-var-with-cat: "#{$category}#{$cssvar}";
+        $cssvar-with-cat: "#{$category}#{$cssvar}";
     }
     // Start building the variable declaration
     $var-declaration: "--#{$repo}-theme--#{$category}#{$cssvar}";
 
     // If a fallback is defined, pass that in too
-    @if $fallback = null and map-get($map, $cssvar) != null {
-        @if $fallback == null {
-            $fallback: map-get($map, $css-var-with-cat);
+    @if $fallback == null {
+        @if map-get($map, $cssvar-with-cat) != null {
+            $fallback: map-get($map, $cssvar-with-cat);
+        }
+        @else if map-get($map, $cssvar) != null {
+            $fallback: map-get($map, $cssvar);
         }
         $var-declaration: "#{$var-declaration}, #{$fallback}";
     }

@@ -97,7 +97,10 @@ $LOCAL: cta;
 @include browser-query(ie11) {
   pfe-cta.PFElement{
     button {
-      @extend %reset-button;
+      background-color: transparent !important;
+      border: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
     &[pfe-priority="primary"] {
       a, a:visited, a:focus, a:hover {

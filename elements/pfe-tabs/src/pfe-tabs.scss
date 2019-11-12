@@ -102,15 +102,15 @@ $variables: (
 
 :host([pfe-variant="earth"]) {
   --pfe-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
-    
-  @include browser-query(ie11) {
-    .tabs {
-      padding-left: 1em;
-    }
-  }
 
   .tabs ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
     border-left: 0;
+  }
+}
+    
+@include browser-query(ie11) {
+  :host([pfe-variant="earth"]) .tabs {
+    padding-left: 1em;
   }
 }
 

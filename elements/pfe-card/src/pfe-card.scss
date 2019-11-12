@@ -72,6 +72,13 @@ $variables: (
 @include pfe-surfaces;
 
 @include pfe-theme-contexts; // imports on="light" etc support
+@include browser-query(ie11) {
+  :host([on]) {
+    background-image: none !important;
+    border-radius: #{map-get($pfe-vars, surface--border-radius)};
+    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
+  }
+}
 
 :host([pfe-size="small"]) {
   --pfe-card--PaddingTop:     #{pfe-var(container-spacer)};
@@ -140,6 +147,10 @@ $variables: (
     // Declare the header background color
     background-color: #{pfe-local($cssvar: BackgroundColor, $region: header)};
     color:            #{pfe-local($cssvar: Color, $region: header)};
+    @include browser-query(ie11) {
+      background-color: #{map-get($pfe-colors, surface--lighter)} !important;
+      color: #{pfe-color(text)} !important;
+    }
 
     // Margin styles on header region
     margin-top:    calc(#{pfe-local(PaddingTop)} * -1) !important;

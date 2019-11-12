@@ -234,14 +234,12 @@
     @each $theme in $themes {
         :host([on="#{$theme}"]) {
             @include pfe-set-broadcast-theme($theme);
-            @if $ie-fallback {
-                @include browser-query(ie11) {
-                    @if $theme == "light" {
-                        color: #{pfe-color(text)};
-                    }
-                    @else {
-                        color: #{pfe-color(text--on-#{$theme})};
-                    }
+        }
+        @if $ie-fallback {
+            @include browser-query(ie11) {
+                :host([on]) {
+                    background-color: #{map-get($pfe-colors, surface--lightest)} !important;
+                    color: #{pfe-color(text)} !important;
                 }
             }
         }

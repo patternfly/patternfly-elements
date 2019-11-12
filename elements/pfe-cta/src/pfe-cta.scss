@@ -171,7 +171,18 @@ $variables: (
   }
 }
 
-@include pfe-theme-contexts; // imports on="light" etc support
+// @include pfe-theme-contexts; // imports on="light" etc support
+@each $theme in $THEMES {
+  :host([on="#{$theme}"]:not([pfe-priority])) {
+      @include pfe-set-broadcast-theme($theme);
+  }
+  @include browser-query(ie11) {
+      :host([on]:not([pfe-priority])) {
+          background-color: white !important;
+          color: #{pfe-color(text)} !important;
+      }
+  }
+}
 
 /// ===========================================================================
 /// BELOW THIS POINT, LOCAL VARIABLE OVERRIDES ONLY

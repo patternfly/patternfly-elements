@@ -92,10 +92,6 @@ class PFElement extends HTMLElement {
 
   // Get the theme variable if it exists, set it as an attribute
   context_set() {
-    if (this.id.startsWith("test")) {
-      console.log(this);
-      console.log(`--theme: ${this.getVariable("theme")};`);
-    }
     this.setAttribute("on", this.getVariable("theme"));
   }
 

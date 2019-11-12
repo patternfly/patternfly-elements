@@ -4,7 +4,7 @@
     "className": "PfeToast",
     "elementName": "pfe-toast"
   },
-  "version": "1.0.0-prerelease.28",
+  "version": "1.0.0-prerelease.29",
   "description": "Toast element for PatternFly Elements",
   "keywords": [
     "web-components",

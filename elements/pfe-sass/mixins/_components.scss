@@ -2,7 +2,7 @@
 /// Accordion-specific SASS Vars
 /// ===========================================================================
 
-@mixin pfe-accordion-variables($state: default, $theme: light) {
+@mixin pfe-accordion-variables($state: default, $theme: default) {
   // Shared variables for all themes
   $variables: ();
 
@@ -53,12 +53,17 @@
         BorderColor--accent: #{pfe-color(ui-base--on-saturated)}
       ));
     }
-    @else { // Light theme
+    @else { // Defaults for light theme
       $variables: map-merge($variables, (
         BackgroundColor:     rgba(255, 255, 255, 1),
         Color:               #{pfe-color(text)},
         BorderColor--accent: #{pfe-color(ui-base)}
       ));
+    }
+
+    @if $theme == light { // Explicitly defined light theme
+      // Clear the map since this uses the same as the default variables
+      $variables: ();
       @include pfe-set-broadcast-theme(light);
       --theme: light;
     }

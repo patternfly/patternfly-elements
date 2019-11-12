@@ -64,7 +64,9 @@ class PfeContentSet extends PFElement {
     this.render();
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      setTimeout(() => {
+        this._observer.observe(this, { childList: true });
+      }, 0);
     }
   }
 

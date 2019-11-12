@@ -96,6 +96,9 @@ $LOCAL: cta;
 
 @include browser-query(ie11) {
   pfe-cta.PFElement{
+    button {
+      @extend %reset-button;
+    }
     &[pfe-priority="primary"] {
       a, a:visited, a:focus, a:hover {
         color:  #{pfe-color(link--on-saturated)} !important;

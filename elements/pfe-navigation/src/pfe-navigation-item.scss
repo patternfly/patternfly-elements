@@ -149,7 +149,7 @@ $variables: (
   :host(:not([pfe-icon])) &::after {
     display: block;
     content: " ";
-    visibility: pfe-local($cssvar: Visible, $region: trigger-icon, $fallback: hidden);
+    visibility: #{pfe-local($cssvar: Visible, $region: trigger-icon, $fallback: hidden)};
 
     @include pfe-arrow(down, #{pfe-color(feedback--default)}, $width: 6px, $height: 6px);
     position: absolute;

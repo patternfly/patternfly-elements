@@ -6,22 +6,11 @@ import PfeSelect from "../dist/pfe-select";
 
 const stories = storiesOf("Select", module);
 
-// Add the documentation
-import about from "../docs/ABOUT.md";
-import slots from "../docs/SLOTS.md";
-import attributes from "../docs/ATTRIBUTES.md";
-import styling from "../docs/STYLING.md";
-import events from "../docs/EVENTS.md";
-import usage from "../docs/USAGE.md";
-
+// Add the readme
+import readme from "../README.md";
 stories.addParameters({
   notes: {
-    About: about,
-    Slots: slots,
-    Attributes: attributes,
-    Events: events,
-    Styling: styling,
-    Usage: usage
+    markdown: readme
   }
 });
 
@@ -45,7 +34,7 @@ stories.add(PfeSelect.tag, () => {
     { text: "One", value: "1" },
     { text: "Two", value: "2" }
   ];
-  
+
   const props = {
     "invalid": {
       title: "pfe-invalid",
@@ -61,7 +50,7 @@ stories.add(PfeSelect.tag, () => {
     false,
     "Content"
   );
-  
+
   // Ask user if they want to append any options via addOptions API
   const isAppendOptions = storybookBridge.boolean(
     "Append custom options via addOptions API?",
@@ -69,28 +58,28 @@ stories.add(PfeSelect.tag, () => {
     "API"
   );
 
-  if (isCustomOptions) {  
+  if (isCustomOptions) {
     const data = [];
     // Let the user determine number of options
     let optionsCount = storybookBridge.number("Count", 2, {
       min: 1,
       max: 10
     }, "Content");
-    
+
     for (let i = 0; i < optionsCount; i++) {
       data[i] = { text: `Option ${i}`, value: `${i}`, selected: false };
     }
     customOptions = storybookBridge.object('Options', { data }, "Content");
   }
 
-  if (isAppendOptions) {  
+  if (isAppendOptions) {
     const data = [];
     // Let the user determine number of options
     let appendCount = storybookBridge.number("Append Count", 2, {
       min: 1,
       max: 10
     }, "API");
-    
+
     for (let i = 0; i < appendCount; i++) {
       data[i] = { text: `Option ${i}`, value: `${i}`, selected: false };
     }
@@ -107,7 +96,7 @@ stories.add(PfeSelect.tag, () => {
 
   // build htmlOptions
   for (let i = 0; i < options.length; i++) {
-    htmlOptions = htmlOptions + 
+    htmlOptions = htmlOptions +
       tools.customTag({
         tag: "option",
         attributes: {
@@ -117,7 +106,7 @@ stories.add(PfeSelect.tag, () => {
         content: options[i].text
       })
   }
-  
+
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 
   config.slots = [{

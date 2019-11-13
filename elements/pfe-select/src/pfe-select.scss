@@ -59,6 +59,9 @@
 }
 
 :host ::slotted(select) {
+  // text-rendering: auto !important is necessary because of a Safari bug
+  // https://bugs.webkit.org/show_bug.cgi?id=202198
+  text-rendering: auto !important;
   background-color: var(--pfe-select--BackgroundColor);
   color: var(--pfe-select--Color);
   border-radius: 0;

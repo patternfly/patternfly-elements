@@ -12,7 +12,7 @@
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require(['../dist/pfe-select.umd.js'])</script>
   </head>
@@ -59,20 +59,20 @@
     <script>
       let select = document.querySelector("#pfe-select-success");
       document.querySelector("#selectedOption").textContent = select.children[0].value;
-      select.addEventListener("pfe-select:change", (event) => {
+      select.addEventListener("pfe-select:change", function (event) {
         document.querySelector("#selectedOption").textContent = event.detail.value;
       });
 
       let selectWithError = document.querySelector("#pfe-select-error");
       // setting pfe-invalid to true initially to reflect in the demo example
       selectWithError.setAttribute('pfe-invalid', 'true');
-      selectWithError.addEventListener("pfe-select:change", (event) => {
+      selectWithError.addEventListener("pfe-select:change", function(event) {
         event.detail.value !== "" ? event.target.setAttribute('pfe-invalid', 'false') : event.target.setAttribute('pfe-invalid', 'true');
       });
 
       // won't destroy select, but will build if it doens't exist
       let selectWithJSOptions = document.querySelector("#pfe-select-with-js-options");
-      customElements.whenDefined("pfe-select").then(() => {
+      customElements.whenDefined("pfe-select").then(function() {
         // Default Options
         selectWithJSOptions.pfeOptions = [
           { text: "Please select an Option", value: "", selected: true },
@@ -86,7 +86,7 @@
 
       // will create select, and build options passed with pfeOptions
       let selectWithJSOptionsOnly = document.querySelector("#pfe-select-with-js-options-only");
-      customElements.whenDefined("pfe-select").then(() => {
+      customElements.whenDefined("pfe-select").then(function() {
         // Default Options
         selectWithJSOptionsOnly.pfeOptions = [
           { text: "Please select an Option", value: "", selected: true },

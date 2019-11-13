@@ -189,6 +189,8 @@
         }
 
         &.expanded {
+            background-color: #fff !important;
+
             .pfe-navigation-item__trigger {
                 pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
                     flood-color: #{pfe-color(ui-complement)} !important;
@@ -208,13 +210,11 @@
        .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="true"] {
             background-color: rgba(255, 255, 255, 1) !important;
             --pfe-navigation--BackgroundColor: rgba(255, 255, 255, 1) !important;
-            // margin: auto;
         }
         .pfe-navigation-item__trigger.pfe-navigation-item,
         .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="false"] {
             background-color: rgba(255, 255, 255, 0) !important;
             --pfe-navigation--BackgroundColor: rgba(255, 255, 255, 0) !important;
-            // margin: auto;
         }
     }
 
@@ -382,7 +382,6 @@ pfe-navigation-item {
         }
     }
     &--column-span-2 {
-
         // intentinally not setting for IE prefix to prevent column overlap
         @media (min-width: $pfe-global--grid-breakpoint--xl) {
             grid-column: span 2;

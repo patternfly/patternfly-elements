@@ -6,8 +6,8 @@ Tag: [v1.0.0-prerelease.30](https://github.com/patternfly/patternfly-elements/re
 - [2143c84](https://github.com/patternfly/patternfly-elements/commit/2143c84d207076c0c8016c960d6edd447e4048eb) feat: add align attribute to pass down to tabs on render (#610)
 - [392399b](https://github.com/patternfly/patternfly-elements/commit/392399b3eb240290e67873a51122459985dbbe7f) fix: pfe-cta svgs removed from tab order in ie11
 - [94ff217](https://github.com/patternfly/patternfly-elements/commit/94ff21768e3b1a8b90e284059f322e091c2d56ae) fix: pfe-content-set: wrapping the observer reconnect in a setTimeout #611
-- []() fix: ignore compiled assets when determining version bumps #613
-- []() chore: making pfe-band public
+- [0c33cd6](https://github.com/patternfly/patternfly-elements/commit/0c33cd6637473fb8765c06150811db2884e90e24) fix: ignore compiled assets when determining version bumps #613
+- [0537a54](https://github.com/patternfly/patternfly-elements/commit/0537a54c5b02f99c0b53c9199223281ded99062f) chore: making pfe-band public
 
 ## Prerelease 29 ( 2019-11-04 )
 

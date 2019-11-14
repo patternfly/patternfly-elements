@@ -190,6 +190,10 @@
                 ( BackgroundColor: #{pfe-color(surface--#{$color})} )
             );
             --theme: #{$theme};
+            @include browser-query(ie11) {
+                background-color: #{map-get($pfe-colors, surface--lightest)} !important;
+                color: #{pfe-color(text)} !important;
+            }
         }
     }
 }
@@ -237,7 +241,7 @@
         }
         @if $ie-fallback {
             @include browser-query(ie11) {
-                :host([on]) {
+                :host {
                     background-color: #{map-get($pfe-colors, surface--lightest)} !important;
                     color: #{pfe-color(text)} !important;
                 }

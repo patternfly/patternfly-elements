@@ -78,6 +78,17 @@ $variables: (
   // Remove background color for print
   @include pfe-no-print-background;
 
+  // Add the border to the card for print
+  @include pfe-print-media {
+    border-radius: #{map-get($pfe-vars, surface--border-radius)};
+    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
+  }
+
+  @include browser-query(ie11) {
+    background-image: none !important;
+    padding: calc(#{pfe-var(container-spacer)});
+  }
+
   // Tag element styles
   *, *::before, *::after {
     box-sizing: border-box;

@@ -66,19 +66,28 @@ $variables: (
   background-color:    #{pfe-local(BackgroundColor)};
   background-position: #{pfe-local(BackgroundPosition)};
   color: #{pfe-apply-broadcast(text)};
+
+  // Remove background color for print
+  @include pfe-no-print-background;
+
+  // Add the border to the card for print
+  @include pfe-print-media {
+    border-radius: #{map-get($pfe-vars, surface--border-radius)};
+    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
+  }
+
+  @include browser-query(ie11) {
+    background-image: none !important;
+    border-radius: #{map-get($pfe-vars, surface--border-radius)};
+    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
+    padding: calc(#{pfe-var(container-spacer)});
+  }
 }
 
 // Pull in pfe-color settings for all supported surface colors
 @include pfe-surfaces;
 
 @include pfe-theme-contexts; // imports on="light" etc support
-@include browser-query(ie11) {
-  :host([on]) {
-    background-image: none !important;
-    border-radius: #{map-get($pfe-vars, surface--border-radius)};
-    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
-  }
-}
 
 :host([pfe-size="small"]) {
   --pfe-card--PaddingTop:     #{pfe-var(container-spacer)};

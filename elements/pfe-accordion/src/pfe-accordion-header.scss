@@ -25,6 +25,11 @@ $LOCAL: accordion;
     &[aria-expanded="false"]::after {
         @include pfe-chevron($state: closed);
     }
+    @include browser-query(ie11) {
+      &:hover {
+        border-left-color: #{pfe-color(ui-base)};
+      }
+    }
   }
 }
 
@@ -40,6 +45,10 @@ $LOCAL: accordion;
 // Default styles
 :host button[aria-expanded="true"] {
   @include pfe-accordion-variables($state: expanded);
+  @include browser-query(ie11) {
+    border-bottom-width: 0;
+    border-left-color: #{pfe-color(ui-base)};
+  }
 }
 
 // Styles contextual to theme

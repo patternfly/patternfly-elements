@@ -35,6 +35,10 @@ $LOCAL: accordion;
   @include pfe-accordion-variables($state: expanded);
   @include pfe-panel-variables;
   @include pfe-collapsible($state: open);
+  @include browser-query(ie11) {
+    border-top-width: 0;
+    border-left-color: #{pfe-color(ui-base)};
+  }
 }
 
 @each $context in $THEMES {

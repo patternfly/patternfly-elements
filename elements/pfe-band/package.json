@@ -9,7 +9,7 @@
       "js": "src/pfe-band.js"
     }
   },
-  "version": "1.0.0-prerelease.29",
+  "version": "1.0.0-prerelease.30",
   "description": "Band container for PatternFly Elements",
   "keywords": [
     "web-components",

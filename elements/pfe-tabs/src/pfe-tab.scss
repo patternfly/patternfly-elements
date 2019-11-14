@@ -115,6 +115,13 @@ $variables: (
   }
 }
 
+:host([pfe-variant="earth"]) {
+  @include browser-query(ie11) {
+    background-color: #{pfe-color(surface--lighter)};
+    color: #{pfe-color(text)};
+  }
+}
+
 /// ===========================================================================
 /// WIND TAB VARIANTS / DEFAULT
 /// ===========================================================================
@@ -124,10 +131,6 @@ $variables: (
 :host([pfe-variant="wind"][aria-selected="true"][on="dark"]),
 :host([pfe-variant="wind"][on="dark"]:hover) {
   --pfe-tabs--Color: #{pfe-color(text--on-dark)};
-
-  @include browser-query(ie11) {
-    color: #{pfe-color(text--on-dark)};
-  }
 }
 
 /// ===========================================================================
@@ -142,8 +145,6 @@ $variables: (
   --pfe-tabs__tab--BorderTop:    #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
 
   @include browser-query(ie11) {
-    background-color: #{pfe-color(surface--lighter)};
-
     border-top: 3px solid #{pfe-color(surface--lighter)};
     border-bottom: 1px solid #{pfe-color(surface--border)};
     border-left: 1px solid #{pfe-color(surface--border)};

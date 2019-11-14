@@ -242,7 +242,6 @@
         @if $ie-fallback {
             @include browser-query(ie11) {
                 :host {
-                    background-color: #{map-get($pfe-colors, surface--lightest)} !important;
                     color: #{pfe-color(text)} !important;
                 }
             }

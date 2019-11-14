@@ -77,6 +77,8 @@ $variables: (
   }
 
   @include browser-query(ie11) {
+    background-color: #{pfe-color(surface--lightest)} !important;
+    color: #{pfe-color(text)} !important;
     background-image: none !important;
     border-radius: #{map-get($pfe-vars, surface--border-radius)};
     border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};

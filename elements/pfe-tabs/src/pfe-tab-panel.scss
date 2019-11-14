@@ -25,6 +25,8 @@ $LOCAL: tabs;
 
     @include browser-query(ie11) {
       padding: 1em;
+      background-color: #{map-get($pfe-colors, surface--lightest)} !important;
+      color: #{pfe-color(text)} !important;
     }
   }
 }

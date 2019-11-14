@@ -13,6 +13,11 @@ $LOCAL: accordion;
   overflow: hidden;
   margin: 0;
   color: #{pfe-apply-broadcast(text)};
+
+  @include browser-query(ie11) {
+    background-color: #{pfe-color(surface--lightest)} !important;
+    color: #{pfe-color(text)} !important;
+  }
 }
 
 @each $context in $THEMES {

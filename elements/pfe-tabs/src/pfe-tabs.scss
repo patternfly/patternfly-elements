@@ -100,6 +100,13 @@ $variables: (
   }
 }
 
+:host(:not([pfe-variant="earth"])) {
+  @include browser-query(ie11) {
+    background-color: #{pfe-color(surface--lightest)};
+    color: #{pfe-color(text)};
+  }
+}
+
 :host([pfe-variant="earth"]) {
   --pfe-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
 

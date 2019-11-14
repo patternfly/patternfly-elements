@@ -50,10 +50,6 @@ $variables: (
       --pfe-band--Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) );
     }
   }
-  // Reduce padding for print
-  @media print {
-    --pfe-band--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
-  }
 
   // Wrapper sets padding and background visuals
   display: block;
@@ -78,13 +74,17 @@ $variables: (
   // Remove background color for print
   @include pfe-no-print-background;
 
-  // Add the border to the card for print
   @include pfe-print-media {
+    // Add the border to the card for print
     border-radius: #{map-get($pfe-vars, surface--border-radius)};
     border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
+    // Reduce padding for print
+    padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
   }
 
   @include browser-query(ie11) {
+    background-color: #{pfe-color(surface--lightest)} !important;
+    color: #{pfe-color(text)} !important;
     background-image: none !important;
     padding: calc(#{pfe-var(container-spacer)});
   }

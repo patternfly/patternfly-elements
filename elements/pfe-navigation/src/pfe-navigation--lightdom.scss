@@ -207,14 +207,16 @@
                 }
             }
         }
+
        .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="true"] {
-            background-color: rgba(255, 255, 255, 1) !important;
-            --pfe-navigation--BackgroundColor: rgba(255, 255, 255, 1) !important;
+            background-color: white !important;
+            --pfe-navigation--BackgroundColor: white !important;
         }
+
         .pfe-navigation-item__trigger.pfe-navigation-item,
         .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="false"] {
-            background-color: rgba(255, 255, 255, 0) !important;
-            --pfe-navigation--BackgroundColor: rgba(255, 255, 255, 0) !important;
+            background-color: transparent !important;
+            --pfe-navigation--BackgroundColor: transparent !important;
         }
     }
 

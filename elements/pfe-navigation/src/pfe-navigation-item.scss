@@ -39,6 +39,7 @@ $variables: (
   --pfe-navigation--BorderTopColor:  #{pfe-color(surface--accent)};
   
   --pfe-navigation--BackgroundColor: #{pfe-color(surface--lightest)};
+  // --pfe-navigation--BackgroundColor: white;
   --pfe-navigation--Color: #{pfe-color(surface--lightest--text)};
 }
 
@@ -96,6 +97,7 @@ $variables: (
   border-bottom: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
   border-left: #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
   background-color: #{pfe-local(BackgroundColor)};
+  // background-color: var(--pfe-navigation--BackgroundColor);
   padding: pfe-local($cssvar: Padding, $region: trigger, $fallback: #{pfe-var(container-padding)});
 
   position: relative;

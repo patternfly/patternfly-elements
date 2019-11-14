@@ -160,14 +160,15 @@ class PfeNavigation extends PFElement {
     if (state) {
       // Add the overlay to the page
       this._overlay.removeAttribute("hidden");
+      this._wrapper.setAttribute("open", "");
       // This prevents background scroll while nav is open
       document.body.style.overflow = "hidden";
     } else {
       // Remove the overlay from the page
       this._overlay.setAttribute("hidden", "");
+      this._wrapper.removeAttribute("open");
       // Allow background to scroll again
       document.body.style.overflow = "auto";
-
     }
   }
 
@@ -186,6 +187,7 @@ class PfeNavigation extends PFElement {
 
     // Capture shadow elements
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
+    this._wrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
     this._menuItem = this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[pfe-icon="web-mobile-menu"]`);
 
     this._slots = {

@@ -120,6 +120,10 @@ pfe-icon {
     @media only screen and (max-height: 500px) {
       min-height: #{pfe-local(MobileMenuHeight)};
     }
+
+    &[open] {
+      padding-right: 17px;
+    }
   }
   &__container {
     width: 100%;

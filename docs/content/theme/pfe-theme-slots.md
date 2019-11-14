@@ -269,7 +269,7 @@ Theme variables exist so that when a user changes a system property such as colo
 
 Several functions exist in the `pfe-sass` component to make it easier to theme individual components you are building!
     
-1. **Color**:  Rather than using only Sass variables `$red` or hexidecimal colors like `#c00`, please use the `pfe-color()` function along with a theme variable, i.e. `pfe-color(link)`. Occasionally you may have to wrap interpolation syntax `#{ }` around the function to allow Sass to compile, i.e. `#{pfe-color(link)}`. 
+1. **Color**:  Rather than using only Sass variables `$red` or hexidecimal colors like `#c00`, please use the `pfe-color()` function along with a theme variable, i.e. `pfe-color(ui-base)`. Occasionally you may have to wrap interpolation syntax `#{ }` around the function to allow Sass to compile, i.e. `#{pfe-color(ui-base)}`. 
     
 
     * This function does some heavy-lifting by looking up the `$pfe-colors: ()` map and returning namespaced CSS variables for the theme and fallback color, in that order: 
@@ -277,7 +277,7 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
 
     ```
     :host {
-       color: pfe-color(link);
+       background-color: #{pfe-color(ui-base)};
     }
     ```   
 
@@ -285,7 +285,7 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
 
      ```css
      :host {
-         color: var(--pfe-theme--color--link, #06c));
+        background-color: var(--pfe-theme--color--ui-base, #0477a4));
      }
      ```
   
@@ -302,7 +302,7 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
       
     ```sass
     :host {
-        font-size:   pfe-var(font-size);
+        font-size:   #{pfe-var(font-size)};
     }
     ```
     
@@ -395,15 +395,15 @@ You can optionally customize this set by passing in a list of just the themes yo
     ```
     :host {
          --pfe-cta--BorderRadius: 0;
-         --pfe-cta--Color:  pfe-color(link);
+         --pfe-cta--Color:  #{pfe-apply-broadcast(link)};
     }
     ```
-       
-    * When utilizing local variables, you can use the `pfe-local()` function to refer to them by the shorthand property name:
+
+    * When utilizing variables which are scoped to the component, you can use the `pfe-local()` function to refer to them by the shorthand property name:
   
     ```
     ::slotted(*) {
-       color: pfe-local(Color--hover);
+       color: #{pfe-local(Color--hover)};
     }
     ```
        

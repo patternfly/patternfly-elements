@@ -258,17 +258,21 @@ class PfeAccordion extends PFElement {
   }
 
   _animate(panel, start, end) {
-    const header = panel.previousElementSibling;
-    panel.classList.add("animating");
-    header.classList.add("animating");
-    panel.style.height = `${start}px`;
+    if (panel) {
+      const header = panel.previousElementSibling;
+      if (header) {
+        header.classList.add("animating");
+      }
+      panel.classList.add("animating");
+      panel.style.height = `${start}px`;
 
-    requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        panel.style.height = `${end}px`;
-        panel.addEventListener("transitionend", this._transitionEndHandler);
+        requestAnimationFrame(() => {
+          panel.style.height = `${end}px`;
+          panel.addEventListener("transitionend", this._transitionEndHandler);
+        });
       });
-    });
+    }
   }
 
   _keydownHandler(evt) {

@@ -12,8 +12,9 @@ Note: pfe-select component can also be used in places where dropdowns are needed
 
 ## Usage
 
+With `<select>` element:
+
 ```html
-With <select> element
 <pfe-select>
   <select>
     <option disabled>Please select an option</option>
@@ -23,16 +24,16 @@ With <select> element
   </select>
 </pfe-select>
 ```
+Without `<select>` element:
 
 ```html
-Without <select> element
-<pfe-select id="pfe-select">
-</pfe-select>
-For custom options, use pfeOptions setter function to set the options as shown in snippet below
+<pfe-select></pfe-select>
 ```
 
+For custom options, use the `pfeOptions` setter function to set the options as shown in snippet below:
+
 ```js
- let selectWithJSOptionsOnly = document.querySelector("#pfe-select");
+ let selectWithJSOptionsOnly = document.querySelector("pfe-select");
   customElements.whenDefined("pfe-select").then(() => {
     selectWithJSOptionsOnly.pfeOptions = [
       { text: "Please select an Option", value: "", selected: true },

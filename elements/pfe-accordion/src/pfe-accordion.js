@@ -1,6 +1,6 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 
-// https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
+// Polyfill: findIndex -- https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
   Object.defineProperty(Array.prototype, "findIndex", {
     value: function(predicate) {
@@ -44,6 +44,29 @@ if (!Array.prototype.findIndex) {
     }
   });
 }
+
+// Polyfill: previousElementSibling -- https://github.com/jserz/js_piece/blob/master/DOM/NonDocumentTypeChildNode/previousElementSibling/previousElementSibling.md
+(function (arr) {
+  arr.forEach(function (item) {
+    if (item.hasOwnProperty('previousElementSibling')) {
+      return;
+    }
+    Object.defineProperty(item, 'previousElementSibling', {
+      configurable: true,
+      enumerable: true,
+      get: function () {
+        let el = this;
+        while (el = el.previousSibling) {
+          if (el.nodeType === 1) {
+            return el;
+          }
+        }
+        return null;
+      },
+      set: undefined
+    });
+  });
+})([Element.prototype, CharacterData.prototype]);
 
 function generateId() {
   return Math.random()
@@ -312,7 +335,9 @@ class PfeAccordion extends PFElement {
 
   _transitionEndHandler(evt) {
     const header = evt.target.previousElementSibling;
-    header.classList.remove("animating");
+    if (header) {
+      header.classList.remove("animating");
+    }
     evt.target.style.height = "";
     evt.target.classList.remove("animating");
     evt.target.removeEventListener("transitionend", this._transitionEndHandler);

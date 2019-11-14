@@ -256,11 +256,14 @@ class PfeNavigationItem extends PFElement {
             this.directLink = slottedContent[0];
           }
         }
-
-        this.linkUrl = this.directLink ? this.directLink.href : "#";
     
         // Turn off the fallback link if the tray does not exist
-        if (this.directLink) this.directLink.setAttribute("tabindex", "-1");
+        if (this.directLink) {
+          this.directLink.setAttribute("tabindex", "-1");
+          this.linkUrl = this.directLink.href;
+        } else {
+          this.linkUrl = "#";
+        }
     
         this._trigger.addEventListener("click", this._navigateToUrl);
         this._trigger.addEventListener("keyup", this._directLinkHandler);

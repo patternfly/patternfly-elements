@@ -45,29 +45,6 @@ if (!Array.prototype.findIndex) {
   });
 }
 
-// Polyfill: previousElementSibling -- https://github.com/jserz/js_piece/blob/master/DOM/NonDocumentTypeChildNode/previousElementSibling/previousElementSibling.md
-(function (arr) {
-  arr.forEach(function (item) {
-    if (item.hasOwnProperty('previousElementSibling')) {
-      return;
-    }
-    Object.defineProperty(item, 'previousElementSibling', {
-      configurable: true,
-      enumerable: true,
-      get: function () {
-        let el = this;
-        while (el = el.previousSibling) {
-          if (el.nodeType === 1) {
-            return el;
-          }
-        }
-        return null;
-      },
-      set: undefined
-    });
-  });
-})([Element.prototype, CharacterData.prototype]);
-
 function generateId() {
   return Math.random()
     .toString(36)

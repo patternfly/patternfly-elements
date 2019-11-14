@@ -47,15 +47,12 @@ class PFElement extends HTMLElement {
     this.setAttribute(`${prefix}type`, value);
   }
 
-  getVariable(name, element = this) {
-    return window
-        .getComputedStyle(element)
-        .getPropertyValue(`--${name}`)
-        .trim();
-  }
-
-  setVariable(name, value, element = this) {
-    element.style.setProperty(`--${name}`, value);
+  cssVariable( name, value, element = this ) {
+    name = (name.substr(0, 2) !== "--") ? "--" + name : name;
+    if (value) {
+      element.style.setProperty(name, value);
+    }
+    return window.getComputedStyle(element).getPropertyValue(name).trim();
   }
 
   // Returns a single element assigned to that slot; if multiple, it returns the first
@@ -71,28 +68,37 @@ class PFElement extends HTMLElement {
   // Update the theme context for self and children
   context_update() {
     const children = this.querySelectorAll("[pfelement]");
-    let theme = this.getVariable("theme");
+    let theme = this.cssVariable("theme");
     
     // Manually adding `pfe-theme` overrides the css variable
     if (this.hasAttribute("pfe-theme")) {
       theme = this.getAttribute("pfe-theme");
       // Update the css variable to match the data attribute
-      this.setVariable("theme", theme);
+      this.cssVariable("theme", theme);
     }
     
     // Update theme for self
-    this.context_set();
+    this.context_set(theme);
 
     // For each nested, already upgraded component
     // set the context based on the child's value of --theme
     // Note: this prevents contexts from parents overriding
     // the child's context should it exist
-    [...children].map(child => child.context_set());
+    [...children].map(child => child.context_set(theme));
   }
 
   // Get the theme variable if it exists, set it as an attribute
-  context_set() {
-    this.setAttribute("on", this.getVariable("theme"));
+  context_set(fallback) {
+    let theme = this.cssVariable("theme");
+    if (!theme) {
+      theme = this.getAttribute("pfe-theme");
+    }
+    if (!theme && fallback) {
+      theme = fallback;
+    }
+    if (theme) {
+      this.setAttribute("on", theme);
+    }
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {

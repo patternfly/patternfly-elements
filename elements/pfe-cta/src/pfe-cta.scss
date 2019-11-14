@@ -99,6 +99,7 @@ $pfe-cta--Color--fallback: #003366;
 
   ::slotted(:hover) {
     --pfe-cta__arrow--Padding:     0 0 0 .5rem;
+    
     color: #{pfe-local(Color--hover)} !important;
     text-decoration: #{pfe-local(TextDecoration--hover)} !important;
   }

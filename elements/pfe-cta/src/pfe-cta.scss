@@ -105,10 +105,12 @@ $variables: (
   transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
 }
 
-::slotted(:hover) {
+  ::slotted(:hover) {
+    --pfe-cta__arrow--Padding:     0 0 0 .5rem;
+    
     color: #{pfe-local(Color--hover)} !important;
     text-decoration: #{pfe-local(TextDecoration--hover)} !important;
-}
+  }
 
 ::slotted(:focus) {
   outline: none !important;
@@ -129,6 +131,8 @@ $variables: (
 }
 
 :host(:hover) {
+  --pfe-cta__arrow--Padding:     0 0 0 .5rem;
+  
   background-color: #{pfe-local(BackgroundColor--hover)};
   border-color:     #{pfe-local(BorderColor--hover)};
 

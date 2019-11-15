@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import  PfeBadge from "../pfe-badge";
+import  PfeBadge from "../dist/pfe-badge";
 
 storiesOf("Badge", module).add(
   PfeBadge.tag,

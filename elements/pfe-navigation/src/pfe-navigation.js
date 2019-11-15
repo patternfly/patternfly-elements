@@ -160,13 +160,13 @@ class PfeNavigation extends PFElement {
     if (state) {
       // Add the overlay to the page
       this._overlay.removeAttribute("hidden");
-      this._wrapper.setAttribute("open", "");
+      this._wrapper.setAttribute("expanded", "");
       // This prevents background scroll while nav is open
       document.body.style.overflow = "hidden";
     } else {
       // Remove the overlay from the page
       this._overlay.setAttribute("hidden", "");
-      this._wrapper.removeAttribute("open");
+      this._wrapper.removeAttribute("expanded");
       // Allow background to scroll again
       document.body.style.overflow = "auto";
     }

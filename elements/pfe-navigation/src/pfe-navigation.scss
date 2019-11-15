@@ -121,7 +121,7 @@ pfe-icon {
       min-height: #{pfe-local(MobileMenuHeight)};
     }
 
-    &[open] {
+    &[expanded] {
       padding-right: 17px;
     }
   }

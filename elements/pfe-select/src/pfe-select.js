@@ -64,16 +64,6 @@ class PfeSelect extends PFElement {
     this.querySelector('select').setAttribute('aria-invalid', invalidAttr);
   }
 
-  // On focus, add a class
-  _focusHandler(event) {
-    this.classList.add("focus-within");
-  }
-
-  // On focus out, remove that class
-  _blurHandler(event) {
-    this.classList.remove("focus-within");
-  }
-
   static get observedAttributes() {
     return ["pfe-invalid"];
   }
@@ -82,10 +72,7 @@ class PfeSelect extends PFElement {
     super(PfeSelect);
     this._pfeOptions = null;
     this._init = this._init.bind(this);
-
     this._inputChanged = this._inputChanged.bind(this);
-    this._focusHandler = this._focusHandler.bind(this);
-    this._blurHandler = this._blurHandler.bind(this);
 
     this.observer = new MutationObserver(this._init);
   }
@@ -115,8 +102,6 @@ class PfeSelect extends PFElement {
   disconnectedCallback() {
     this.observer.disconnect();
     this._input.removeEventListener("input", this._inputChanged);
-    this._input.removeEventListener("focus", this._focusHandler);
-    this._input.removeEventListener("blur", this._blurHandler);
   }
 
   addOptions(options) {
@@ -143,8 +128,6 @@ class PfeSelect extends PFElement {
       return;
     }
     this._input.addEventListener("change", this._inputChanged);
-    this._input.addEventListener("focus", this._focusHandler);
-    this._input.addEventListener("blur", this._blurHandler);
   }
 
   _inputChanged() {

@@ -61,7 +61,7 @@ $variables: (
     border-bottom: #{pfe-local(BorderBottom--hover)};
   }
 
-  @at-root #{&}(.focus-within) {
+  @at-root #{&}(:focus-within) {
       border-bottom-width: calc(#{pfe-var(surface--border-width--heavy)} / 2);
       border-bottom-color: #{pfe-local(BorderBottomColor--hover)};
       ::slotted(select) {

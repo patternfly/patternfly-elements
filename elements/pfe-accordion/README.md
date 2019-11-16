@@ -36,13 +36,13 @@ Add the content for your accordion panel here.
 
 ## Attributes
 
-**`on`**
+**`pfe-theme`**
 Changes the context of the accordion to one of 3 possible themes:
 - `light` (default)
 - `dark`
 - `saturated`
 
-This will be automatically added if a parent element sets the `--theme` variable.
+This will override any context being passed from a parent component and will add a style attribute setting the `--theme` variable.
 
 ## Events
 

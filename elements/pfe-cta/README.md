@@ -64,16 +64,29 @@ We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe
     }
 ```
 
+## Attributes
+
+**`pfe-theme`**
+Changes the context of the call-to-action to one of 3 possible themes:
+- `light` (default)
+- `dark`
+- `saturated`
+
+This will override any context being passed from a parent component and will add a style attribute setting the `--theme` variable.
+
+**`pfe-priority`**
+Indicates the importance of this call-to-action in the context of the page.  Will also influence how the call-to-action is styled.
+
 #### Variants
 
-`pfe-priority="secondary"` has a `wind` variant that can be applied to change the style of the secondary cta.
+**`pfe-variant`**
+Note: `pfe-priority="secondary"` has a `wind` variant (`pfe-variant="wind"`) that can be applied to change the style of the secondary call-to-action.
 
 ```html
 <pfe-cta pfe-priority="secondary" pfe-variant="wind">
     <a href="#">Wind variant</a>
 </pfe-cta>
 ```
-
 
 ### Variable hooks
 

@@ -130,10 +130,6 @@ class PfeAccordion extends PFElement {
     if (!header.expanded) {
       this._expandHeader(header);
       this._expandPanel(panel);
-
-      // Update the theme context when the panel is opened
-      this.context_set();
-      this.context_update();
     } else {
       this._collapseHeader(header);
       this._collapsePanel(panel);

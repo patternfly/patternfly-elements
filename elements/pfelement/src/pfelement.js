@@ -30,6 +30,10 @@ class PFElement extends HTMLElement {
   static get version() {
     return "{{version}}";
   }
+
+  static get observedAttributes() {
+    return ["pfe-theme"];
+  }
   
   get randomId() {
     return Math.random().toString(36).substr(2, 9);
@@ -84,7 +88,11 @@ class PFElement extends HTMLElement {
     // set the context based on the child's value of --theme
     // Note: this prevents contexts from parents overriding
     // the child's context should it exist
-    [...children].map(child => child.context_set(theme));
+    [...children].map(child => {
+      if (child.connected) {
+        child.context_set(theme);
+      }
+    });
   }
 
   // Get the theme variable if it exists, set it as an attribute
@@ -188,6 +196,10 @@ class PFElement extends HTMLElement {
     const cascadeTo = this._pfeClass.cascadingAttributes[attr];
     if (cascadeTo) {
       this._copyAttribute(attr, cascadeTo);
+    }
+
+    if (attr === "pfe-theme") {
+      this.context_update();
     }
   }
 

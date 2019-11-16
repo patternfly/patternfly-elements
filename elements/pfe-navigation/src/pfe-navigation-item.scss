@@ -32,7 +32,6 @@ $variables: (
   min-width: #{pfe-local(MinWidth)};
 }
 
-
 // ---------------------//
 // -- STATES
 // ---------------------//
@@ -72,6 +71,14 @@ $variables: (
 :host(:not([has_tray])),
 :host(:not([pfe-icon]):not([is_nested]):not(.expanded)) {
   --pfe-navigation__trigger-icon--Visible: hidden;
+}
+
+// Mobile menu experience
+:host([is_nested]:not([parent_hidden])) {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  max-width: #{pfe-local($cssvar: Width, $fallback: 100%)};
 }
 
 /* ----------------- */
@@ -295,13 +302,11 @@ $variables: (
   //  Styles for the nested elements
   :host([is_nested]:not([parent_hidden])) & {
     --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
-  }
-
-  :host([is_nested]:not([parent_hidden])) & {
-   @include pfe-collapsible($state: closed);
-   @include pfe-accordion-props;
-   @include pfe-box-sizing;
-   @include pfe-panel-container;
+    
+    @include pfe-collapsible($state: closed);
+    @include pfe-accordion-props;
+    @include pfe-box-sizing;
+    @include pfe-panel-container;
     width: 100%;
   }
 

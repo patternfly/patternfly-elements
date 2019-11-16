@@ -116,7 +116,6 @@ class PfeBand extends PFElement {
       "pfe-aside-mobile",
       "pfe-aside-height",
       "pfe-color",
-      "pfe-theme",
       "pfe-img-src"
     ];
   }

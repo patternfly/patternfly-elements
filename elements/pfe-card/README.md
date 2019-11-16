@@ -43,13 +43,13 @@ There are several attributes available for customizing the visual treatment of t
 
     | color | hex |
     |-------|-----|
+    | lightest | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
+    | lighter | <span class="color-preview" style="--bg:#ececec"></span> #ececec |
     | default | <span class="color-preview" style="--bg:#dfdfdf"></span> #dfdfdf |
     | darker | <span class="color-preview" style="--bg:#464646"></span> #464646 |
     | darkest | <span class="color-preview" style="--bg:#131313"></span> #131313 |
     | accent | <span class="color-preview" style="--bg:#fe460d"></span> #fe460d |
     | complement | <span class="color-preview" style="--bg:#0477a4"></span> #0477a4 |
-    | lighter | <span class="color-preview" style="--bg:#ececec"></span> #ececec |
-    | lightest | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
 
 - `pfe-img-src`: Optional background image applied to the entire card container.  Alignment of this image can be managed using the `--pfe-card--BackgroundPosition` variable which is set to `center center` by default.
 - `pfe-size`: Optionally adjusts the padding on the container.  Accepts: `small`.
@@ -58,10 +58,10 @@ There are several attributes available for customizing the visual treatment of t
 ## Variables
 There are several powerful variables available to hook into and override default styles.
 
-- Background color: Though using the `pfe-color` attribute is strongly recommended when setting the background color for the band, you can also use completely custom colors by updating the `--pfe-card--BackgroundColor` variable.  If you update this value manually, you should also update the `--pfe-broadcasted--text`, `--pfe-broadcasted--link`[--visited, --hover, --focus] at the same time so that the text and links rendered on this background color show up correctly.
-- Background position: This is designed for use with the `pfe-img-src` attribute to allow you to align your background image.  Default value is `center center`. **Variable name:** `--pfe-card--BackgroundPosition`.
-- Border: This allows the customization of a border around the entire container.  There is a variable for the entire border shorthand (transparent by default) or you can hook into the individual properties. **Variable name:** `--pfe-card--BorderRadius` and `--pfe-card--Border` or `--pfe-card--BorderWeight`, `--pfe-card--BorderStyle`, `--pfe-card--BorderColor`.
-- Padding: You can customize the padding around the outside of the card container by connecting to either the shortcut padding variable or just one or more of the individual padding regions. **Variable names:** `--pfe-card--Padding` or `--pfe-card--PaddingTop`, `--pfe-card--PaddingRight`, `--pfe-card--PaddingBottom`, `--pfe-card--PaddingLeft`.
+- **Background color**: Though using the `pfe-color` attribute is strongly recommended when setting the background color for the band, you can also use completely custom colors by updating the `--pfe-band--BackgroundColor` variable.  If you update this value manually, you should also update the `--theme` context variable to invoke the right theme on it and it's child elements.  Supported themes include: `light`, `dark`, and `saturated`.
+- **Background position**: This is designed for use with the `pfe-img-src` attribute to allow you to align your background image.  Default value is `center center`. **Variable name:** `--pfe-card--BackgroundPosition`.
+- **Border**: This allows the customization of a border around the entire container.  There is a variable for the entire border shorthand (transparent by default) or you can hook into the individual properties. **Variable name:** `--pfe-card--BorderRadius` and `--pfe-card--Border` or `--pfe-card--BorderWeight`, `--pfe-card--BorderStyle`, `--pfe-card--BorderColor`.
+- **Padding**: You can customize the padding around the outside of the card container by connecting to either the shortcut padding variable or just one or more of the individual padding regions. **Variable names:** `--pfe-card--Padding` or `--pfe-card--PaddingTop`, `--pfe-card--PaddingRight`, `--pfe-card--PaddingBottom`, `--pfe-card--PaddingLeft`.
 
 ## Test
 

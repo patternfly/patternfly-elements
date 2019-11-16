@@ -126,11 +126,13 @@ $variables: (
 /// WIND TAB VARIANTS / DEFAULT
 /// ===========================================================================
 
-:host([aria-selected="true"][on="dark"]),
-:host([on="dark"]:hover),
-:host([pfe-variant="wind"][aria-selected="true"][on="dark"]),
-:host([pfe-variant="wind"][on="dark"]:hover) {
-  --pfe-tabs--Color: #{pfe-color(text--on-dark)};
+@each $theme in THEMES { // dark, saturated, and light
+  :host([aria-selected="true"][on="#{$theme}"]),
+  :host([on="#{$theme}"]:hover),
+  :host([pfe-variant="wind"][aria-selected="true"][on="#{$theme}"]),
+  :host([pfe-variant="wind"][on="#{$theme}"]:hover) {
+    --pfe-tabs--Color: #{pfe-color(text--on-#{$theme})};
+  }
 }
 
 /// ===========================================================================

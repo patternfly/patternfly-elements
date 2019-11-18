@@ -75,7 +75,6 @@
             "complement",
             "accent"
           ],
-          "default": "base",
           "prefixed": true,
           "observer": "_colorChanged"
         },

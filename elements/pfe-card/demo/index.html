@@ -62,6 +62,10 @@
         --pfe-card__header--Color: #fff;
       }
 
+      .custom-overlay {
+        --pfe-card__overlay--BackgroundColor: rgba(0, 0, 0, 0.3);
+      }
+
       a {
         color: var(--pfe-broadcasted--color--ui-link);
       }
@@ -105,7 +109,7 @@
         </pfe-cta>
       </pfe-card>
 
-      <pfe-card pfe-color="darker" pfe-img-src="https://www.redhat.com/files/webux/img/bandbg/bg-infrastructure-management-pattern-transparent-tile.png" style="--pfe-card__header--BackgroundColor: rgba(45,45,45,.7);">
+      <pfe-card class="custom-overlay" pfe-color="darker" pfe-img-src="https://www.redhat.com/files/webux/img/bandbg/bg-infrastructure-management-pattern-transparent-tile.png" style="--pfe-card__header--BackgroundColor: rgba(45,45,45,.7);">
         <h2 slot="pfe-card--header">Dark Card</h2>
         <p>This is the dark pfe-card and <a href="#">a link</a>.</p>
         <pfe-cta slot="pfe-card--footer">

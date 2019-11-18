@@ -23,7 +23,8 @@ $LOCAL: card;
   --pfe-card--BorderRadius: #{pfe-var(surface--border-radius)};
 
   //-- Border variable encompasses width, style, and color
-  --pfe-card--Border: #{pfe-local(BorderWeight, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)};
+  --pfe-card--BorderTop: #{pfe-local(BorderWeight, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)};
+  --pfe-card--Border:    #{pfe-local(BorderWeight, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)};
 
   //-- Color properties
   --pfe-card--BackgroundColor: #{pfe-color(surface--base)};
@@ -48,9 +49,11 @@ $LOCAL: card;
   align-items:      #{pfe-local(AlignItems)};
   // This allows the card to fill it's container if necessary
   align-self:       #{pfe-local($cssvar: AlignSelf, $fallback: stretch)};
+  position:         relative;
 
   padding:       #{pfe-local(Padding)};
   border:        #{pfe-local(Border)};
+  border-top:    #{pfe-local(BorderTop)};
   border-radius: #{pfe-local(BorderRadius)};
 
   // This property ensures that children in the slots do no overflow
@@ -67,7 +70,7 @@ $LOCAL: card;
   background-attachment:  #{pfe-local(BackgroundAttachment)};
   color:                  #{pfe-radio(color, text)} !important;
 
-  @include print-media {
+  @include pfe-print-media {
     background-color: #fff !important;
     background-image: none !important;
     box-shadow: none !important;
@@ -97,6 +100,17 @@ $LOCAL: card;
 
 // Targets the wrappers in the shadow DOM
 .pfe-card {
+  &--overlay {
+      background-color: #{pfe-local($cssvar: BackgroundColor, $region: overlay)};
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      left: 0;
+      height: 100%;
+      z-index: 0;
+  }
   &__header,
   &__body,
   &__footer {
@@ -191,6 +205,7 @@ $LOCAL: card;
     }
   }
   &__body {
+    z-index: 1;
     :host(:not([has_header])) & ::slotted([pfe-overflow~="top"]) {
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
@@ -209,6 +224,7 @@ $LOCAL: card;
     }
   }
   &__footer {
+    z-index: 1;
     margin-top: auto; // This allows the footer to move to the very bottom
 
     display: flex;

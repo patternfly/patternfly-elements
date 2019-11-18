@@ -8,6 +8,24 @@
     <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.min.css">
     <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
     <link rel="stylesheet" type="text/css" href="../_temp/pfe-colors.css">
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet" />
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
+  
+    <link href="../../pfe-cta/dist/pfe-cta--lightdom.css" rel="stylesheet" />
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>
+    require([
+      '../../pfe-cta/dist/pfe-cta.umd.js'
+    ])
+    </script>
     
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.min.css">
 
@@ -24,11 +42,6 @@
         color: var(--pfe-broadcasted--text, #252525);
       }
 
-      button {
-        border: none;
-        cursor: pointer;
-      }
-
       header h1 {
         margin-top: 0;
       }
@@ -42,6 +55,23 @@
         padding: 32px;
         background-color: #fff;
         box-shadow: 0 1px 3px rgba(0,0,0,.2);
+      }
+
+      .context-buttons {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .context-container.on-light {
+        background-color: #fff;
+      }
+
+      .context-container.on-dark {
+        background-color: #444;
+      }
+
+      .context-container.on-saturated {
+        background-color: #0477a4;
       }
 
       section section > h3 {
@@ -63,22 +93,6 @@
 
       .pfe-l-grid > * {
         padding: 8px;
-      }
-
-      [on="light"] {
-        background-color: #fff;
-      }
-
-      button[on="light"] {
-        border: 1px solid lightgray;
-      }
-
-      [on="dark"] {
-        background-color: #252525;
-      }
-
-      [on="saturated"] {
-        background-color: #0477a4;
       }
 
       :not(pre)>code[class*=language-], pre[class*=language-] {
@@ -168,12 +182,19 @@
         <h2>Color Palette</h2>
       </header>
       <section>
-        <section class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
-          <button class="themes" on="light" name="light">Light theme</button>
-          <button class="themes" on="dark" name="dark">Dark theme</button>
-          <button class="themes" on="saturated" name="saturated">Saturated theme</button>
-        </section>
         <section class="pfe-l-grid pfe-m-gutters context-container">
+          <p>Click the buttons below to change the theme context of the container:</p>
+          <div class="context-buttons">
+            <pfe-cta pfe-priority="secondary" class="themes light">
+              <button name="light">Light theme</button>
+            </pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="complement" class="themes dark">
+              <button name="dark">Dark theme</button>
+            </pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="base" class="themes saturated">
+              <button name="saturated">Saturated theme</button>
+            </pfe-cta>
+          </div>
           <h3>UI elements</h3>
           <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
             <div class="ui-base"></div>
@@ -214,14 +235,21 @@
 
   <script>
     var containers = document.querySelectorAll(".context-container");
+    var ctas = document.querySelectorAll(".themes");
+
     var applyTheme = function(event) {
+      var button = event.target;
+      ctas.forEach( function( cta ) {
+        cta.context_set(button.name);
+      });
       containers.forEach(function(item) {
-        item.style.setProperty("--theme", event.target.name);
-        item.setAttribute("on", event.target.name);
+        var prevClass = [...item.classList].find(value => /^on-(.*?)/.test(value));
+        if (prevClass) item.classList.remove(prevClass);
+        item.classList.add(`on-${button.name}`);
       });
     }
 
-    document.querySelectorAll("button.themes").forEach(function(item) {
+    ctas.forEach(function(item) {
       item.addEventListener("click", applyTheme);
       item.addEventListener("keypress", function(event) {
         var key = event.which || event.keyCode;

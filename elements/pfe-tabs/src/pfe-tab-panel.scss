@@ -2,8 +2,18 @@
 
 $LOCAL: tabs;
 
+$variables: (
+  focus:  pfe-color(link)
+);
+
 :host {
+  @include pfe-print-variables($variables);
+
   display: block;
+
+  @at-root #{&}(:focus) {
+    outline: none;
+  }
 
   ::slotted(*) {
     color: #{pfe-apply-broadcast(text)};

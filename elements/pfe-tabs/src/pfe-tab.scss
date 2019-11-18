@@ -50,33 +50,39 @@ $variables: (
   ::slotted(*) {
     color: #{pfe-local(Color)} !important;
   }
-}
-
-:host(:hover) {
-  --pfe-tabs--Color: #{pfe-color(text)};
-}
-
-// Active tab styles
-// TODO: ShadyCSS falls flat on this pseudo element in IE11 `:host(:focus-visible)`, add back when we drop ShadyCSS
-:host(:focus) {
-  --pfe-tabs--Color: #{pfe-color(text)};
-  outline: #{pfe-var(ui--focus-outline-width)} #{pfe-var(ui--focus-outline-style)} #{pfe-local(focus)};
-}
-
-:host([aria-selected="true"]) {
-  --pfe-tabs--Color: #{$pfe-color--black};
-  --pfe-tabs__tab--BorderColor: transparent;
-  --pfe-tabs__tab--BorderBottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
-  @include browser-query(ie11) {
-    color: #{$pfe-color--black};
-    border-bottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(ui-accent)};
+  
+  @at-root #{&}(:hover) {
+    --pfe-tabs--Color: #{pfe-color(text)};
+    @include browser-query(ie11) {
+      color: #{pfe-color(text)};
+    }
   }
-}
 
-:host(:hover) {
-  --pfe-tabs--Color: #{pfe-color(text)};
-  @include browser-query(ie11) {
-    color: #{pfe-color(text)};
+  // Active tab styles
+  // TODO: ShadyCSS falls flat on this pseudo element in IE11 `:host(:focus-visible)`, add back when we drop ShadyCSS
+  @at-root #{&}(:focus) {
+    --pfe-tabs--Color: #{pfe-color(text)};
+    outline: #{pfe-var(ui--focus-outline-width)} outset #{pfe-local(focus)};
+  }
+
+  @at-root #{&}([on="dark"]) {
+    --pfe-tabs--focus: #{pfe-color(link--focus--on-dark)};
+  }
+
+  @at-root #{&}([on="saturated"]) {
+    --pfe-tabs--Color: #{darken($pfe-color--white, 20%)};
+    --pfe-tabs--focus: #{pfe-color(link--focus--on-saturated)};
+    --pfe-tabs--highlight: #{pfe-color(text--on-saturated)};
+  }
+
+  @at-root #{&}([aria-selected="true"]) {
+    --pfe-tabs--Color: #{$pfe-color--black};
+    --pfe-tabs__tab--BorderColor: transparent;
+    --pfe-tabs__tab--BorderBottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+    @include browser-query(ie11) {
+      color: #{$pfe-color--black};
+      border-bottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(ui-accent)};
+    }
   }
 }
 
@@ -126,12 +132,17 @@ $variables: (
 /// WIND TAB VARIANTS / DEFAULT
 /// ===========================================================================
 
-@each $theme in THEMES { // dark, saturated, and light
+@each $theme in $THEMES { // dark, saturated, and light
   :host([aria-selected="true"][on="#{$theme}"]),
   :host([on="#{$theme}"]:hover),
   :host([pfe-variant="wind"][aria-selected="true"][on="#{$theme}"]),
   :host([pfe-variant="wind"][on="#{$theme}"]:hover) {
-    --pfe-tabs--Color: #{pfe-color(text--on-#{$theme})};
+    @if $theme != "light" {
+      --pfe-tabs--Color: #{pfe-color(text--on-#{$theme})};
+    }
+    @else {
+      --pfe-tabs--Color: #{pfe-color(text)};
+    }
   }
 }
 

@@ -4,5 +4,6 @@
 @each $theme in (dark, saturated, light) {
     .on-#{$theme} {
         @include pfe-set-broadcast-theme($theme);
+        --theme: #{$theme};
     }
 }

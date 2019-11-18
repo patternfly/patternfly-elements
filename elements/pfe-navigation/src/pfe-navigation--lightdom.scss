@@ -189,16 +189,10 @@
         }
 
         &.expanded {
-            background-color: #fff !important;
-
             .pfe-navigation-item__trigger {
                 pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
                     flood-color: #{pfe-color(ui-complement)} !important;
                 }
-            }
-
-            @media screen and (min-width: $pfe-global--grid-breakpoint--lg) {
-                border-top-color: #{pfe-color(surface--accent)};
             }
 
             [slot="trigger"] {
@@ -207,17 +201,10 @@
                 }
             }
         }
+    }
 
-       .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="true"] {
-            background-color: white !important;
-            --pfe-navigation--BackgroundColor: white !important;
-        }
-
-        .pfe-navigation-item__trigger.pfe-navigation-item,
-        .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="false"] {
-            background-color: transparent !important;
-            --pfe-navigation--BackgroundColor: transparent !important;
-        }
+    .pfe-navigation-item__trigger {
+        transition: none !important;
     }
 
     @media screen and (max-width: 1023px) {
@@ -252,13 +239,8 @@
             --pfe-navigation__trigger-icon--Visible: visible;
         }
         &.pfe-navigation-item {
-            // border: 1px solid transparent;
             box-sizing: border-box;
 
-            // &[aria-expanded=true] {
-            //     background-color: #{pfe-color(surface--lightest)};
-            //     border-top-color: #{pfe-color(surface--accent)};
-            // }
             &:hover {
                 cursor: pointer;
                 border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-color(surface--accent)};
@@ -271,18 +253,6 @@
             flood-color: #{pfe-color(surface--darkest--text)} !important;
         }
     }
-
-    // pfe-navigation-main[show_content] {
-    //     .expanded:not([has_trigger]),
-    //     .expanded  {
-    //         background-color: #{pfe-color(surface--lightest)};                
-    //     }
-    // } 
-    // .expanded:not([has_trigger]) .pfe-navigation-item__trigger,
-    // .expanded .pfe-navigation-item__trigger {
-    //     background-color: #{pfe-color(surface--lightest)};
-    //     border-top: 3px solid red;           
-    // }
 
     pfe-navigation-item:not([parent_hidden])[is_nested].expanded .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0;

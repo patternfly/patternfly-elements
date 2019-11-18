@@ -445,7 +445,7 @@ class PfeAccordionHeader extends PFElement {
     }
 
     if (!this.hasAttribute("role")) {
-      this.setAttribute("role", "header");
+      this.setAttribute("role", "heading");
     }
 
     if (!this.pfeId) {

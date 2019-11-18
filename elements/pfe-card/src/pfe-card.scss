@@ -23,8 +23,8 @@ $LOCAL: card;
   --pfe-card--BorderRadius: #{pfe-var(surface--border-radius)};
 
   //-- Border variable encompasses width, style, and color
-  --pfe-card--BorderTop: #{pfe-local(BorderWeight, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)};
-  --pfe-card--Border:    #{pfe-local(BorderWeight, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)};
+  --pfe-card--Border:    #{pfe-local(BorderWidth, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)};
+  --pfe-card--BorderTop: #{pfe-local(Border)};
 
   //-- Color properties
   --pfe-card--BackgroundColor: #{pfe-color(surface--base)};

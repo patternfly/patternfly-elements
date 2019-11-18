@@ -93,7 +93,7 @@ class PfeAccordion extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.setAttribute("role", "presentation");
+    this.setAttribute("role", "tablist");
     this.setAttribute("defined", "");
 
     this.addEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);

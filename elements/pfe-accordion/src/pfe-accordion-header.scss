@@ -14,21 +14,27 @@ $LOCAL: accordion;
   > * {
     margin: 0;
   }
+}
  
-  button {
-    @include pfe-trigger;
+button {
+  @include pfe-trigger;
 
-    &[aria-expanded="true"]::after {
-      @include pfe-chevron($state: open);
-    }
+  &[aria-expanded="true"]::after {
+    @include pfe-chevron($state: open);
+  }
 
-    &[aria-expanded="false"]::after {
-        @include pfe-chevron($state: closed);
-    }
-    @include browser-query(ie11) {
-      &:hover {
-        border-left-color: #{pfe-color(ui-base)};
-      }
+  &[aria-expanded="false"]::after {
+      @include pfe-chevron($state: closed);
+  }
+
+  // @TODO workaround, can we get the variables working?
+  @include browser-query(edge) {
+    text-align: left;
+  }
+
+  @include browser-query(ie11) {
+    &:hover {
+      border-left-color: #{pfe-color(ui-base)};
     }
   }
 }
@@ -43,7 +49,7 @@ $LOCAL: accordion;
 /// ===========================================================================
 
 // Default styles
-:host button[aria-expanded="true"] {
+button[aria-expanded="true"] {
   @include pfe-accordion-variables($state: expanded);
   @include browser-query(ie11) {
     border-bottom-width: 0;

@@ -13,7 +13,9 @@
       BorderColor:         #{pfe-color(surface--border)},
       BorderTopWidth:      #{pfe-var(surface--border-width)},
       BorderRightWidth:    0,
-      BorderBottomWidth:   #{pfe-var(surface--border-width)}
+      BorderBottomWidth:   #{pfe-var(surface--border-width)},
+      Color:               #{pfe-apply-broadcast(text)},
+      TextAlign:           left
     );
 
     @if $theme == dark { // Dark theme
@@ -188,7 +190,6 @@
   border-style: #{pfe-var(surface--border-style)};
   height: #{$size};
   width:  #{$size};
-  text-align: center;
   transition: transform 0.15s;
   @if $state == open {
     border-width: .1em .1em 0 0;

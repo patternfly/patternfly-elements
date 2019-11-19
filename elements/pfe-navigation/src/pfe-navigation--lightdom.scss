@@ -278,12 +278,6 @@ pfe-navigation [slot="logo"] {
             max-height: 32px;
         }
     }
-}x
-
-pfe-navigation-main {
-    pfe-navigation-item:not([parent_hidden]) [slot="trigger"] > a {
-        color: #{pfe-color(ui-complement)} !important;
-    }
 }
 
 // Turn off internal link outline
@@ -317,6 +311,11 @@ pfe-navigation-item {
     }
     &[parent_hidden] [slot="trigger"] {
         text-align: center;
+    }
+
+    // Style main menu links when in the tray.
+    &:not([parent_hidden])[is_nested] [slot="trigger"] > a {
+        color: #{pfe-color(ui-complement)} !important;
     }
 }
 

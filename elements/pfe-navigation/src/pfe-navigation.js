@@ -272,9 +272,9 @@ class PfeNavigation extends PFElement {
 
   _stickyHandler() {
     if(window.pageYOffset >= this.top) {
-      this.classList.add("sticky");
+      this.classList.add("pfe-sticky");
     } else {
-      this.classList.remove("sticky");
+      this.classList.remove("pfe-sticky");
     }
   }
 

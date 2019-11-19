@@ -204,7 +204,7 @@ $LOCAL: card;
 
     @each $tag in (h1, h2, h3, h4, h5, h6) {
       ::slotted(#{$tag}) {
-        margin-bottom: 0;
+        margin-bottom: 0 !important; // Helps overcome standard browser, bootstrap, or normalize styles
       }
     }
   }
@@ -252,7 +252,7 @@ $LOCAL: card;
     @each $tag in (p, h1, h2, h3, h4, h5, h6) {
       ::slotted(#{$tag}:first-child) {
         // Remove top margins
-        margin-top: 0;
+        margin-top: 0 !important; // Helps overcome standard browser, bootstrap, or normalize styles
       }
     }
   }

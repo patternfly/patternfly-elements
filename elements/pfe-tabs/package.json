@@ -2,9 +2,14 @@
   "name": "@patternfly/pfe-tabs",
   "pfelement": {
     "className": "PfeTabs",
-    "elementName": "pfe-tabs"
+    "elementName": "pfe-tabs",
+    "assets": [
+      "pfe-tabs.js",
+      "pfe-tab.js",
+      "pfe-tab-panel.js"
+    ]
   },
-  "version": "1.0.0-prerelease.27",
+  "version": "1.0.0-prerelease.29",
   "publishConfig": {
     "access": "public"
   },
@@ -18,7 +23,12 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-tabs"
   },
-  "main": "./dist/pfe-tabs.js",
+  "main": "./dist/pfe-tabs.umd.js",
+  "module": "./dist/pfe-tabs.js",
+  "unpkg": "./dist/pfe-tabs.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -36,8 +46,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.27",
-    "@patternfly/pfelement": "^1.0.0-prerelease.27"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.28",
+    "@patternfly/pfelement": "^1.0.0-prerelease.28"
   },
   "generator-pfelement-version": "0.5.4",
   "bugs": {

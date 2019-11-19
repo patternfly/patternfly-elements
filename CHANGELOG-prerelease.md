@@ -3,6 +3,7 @@
 Tag: [v1.0.0-prerelease.31](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.31)
 
 - [f144b6f](https://github.com/patternfly/patternfly-elements/commit/f144b6f33dd6a8b615ac2a63cec6b29f3bf70d32) feat: pfe-select component
+- [67fa1fb](https://github.com/patternfly/patternfly-elements/commit/67fa1fb3f29ec3e48a6d0767b6c08eb008e56655) fix: pfe-navigation mobile login/language links working
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Updating broadcast and how variables are applied #392
 
 ## Prerelease 30 ( 2019-11-08 )

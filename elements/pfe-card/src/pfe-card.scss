@@ -110,6 +110,10 @@ $LOCAL: card;
       left: 0;
       height: 100%;
       z-index: 0;
+
+      @include pfe-print-media {
+        display: none;
+      }
   }
   &__header,
   &__body,

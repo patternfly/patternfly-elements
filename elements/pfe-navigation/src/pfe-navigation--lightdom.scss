@@ -206,10 +206,10 @@
                 }
             }
         }
-        &[is_nested]:not(.expanded):not([parent_hidden]) .pfe-navigation-item__trigger.pfe-navigation-item::after {
-            height: .5em;
-            width: .5em;
-            top: 22px;
+        &[is_nested]:not([parent_hidden]) .pfe-navigation-item__trigger.pfe-navigation-item::after {
+            height: .5em !important;
+            width: .5em !important;
+            top: 22px !important;
         }
     }
 

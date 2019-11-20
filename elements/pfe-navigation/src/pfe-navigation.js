@@ -169,22 +169,27 @@ class PfeNavigation extends PFElement {
   }
 
   set overlay(state) {
+    const parent = this.parentElement;
+    const hasScrollbar = this.scrollbarWidth > 0;
     if (state) {
-      this.setAttribute("expanded", true);
       // Add the overlay to the page
       this._overlay.removeAttribute("hidden");
       // Lock the background from scrolling
-      this.parentElement.style.overflow = "hidden";
-      this.parentElement.style.paddingRight = this.scrollbarWidth + "px";
-      if (this.connected) this._wrapper.style.paddingRight = this.scrollbarWidth + "px";
+      parent.style.overflow = "hidden";
+      parent.style.position = "relative";
+      parent.style.paddingRight = this.scrollbarWidth + "px";
+      if (this.connected && hasScrollbar) {
+        this._wrapper.style.paddingRight = this.scrollbarWidth + "px";
+      }
     } else {
-      this.removeAttribute("expanded");
       // Remove the overlay from the page
       this._overlay.setAttribute("hidden", "");
       // Release the background for scrolling
-      this.parentElement.style.overflow = null;
-      this.parentElement.style.paddingRight = null;
-      if (this.connected) this._wrapper.style.paddingRight = null;
+      parent.style.overflow = null;
+      parent.style.paddingRight = null;
+      if (this.connected && hasScrollbar) {
+        this._wrapper.style.paddingRight = null;
+      }
     }
   }
 

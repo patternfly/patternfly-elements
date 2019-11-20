@@ -164,7 +164,7 @@ pfe-icon {
       $region: overlay,
       $fallback: #{$overlay--BackgroundColor--fallback}
     )};
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100vw;

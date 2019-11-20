@@ -121,9 +121,9 @@ pfe-icon {
       min-height: #{pfe-local(MobileMenuHeight)};
     }
 
-    :host([expanded]) & {
-      width: 100%;
-    }
+    // :host([expanded]) & {
+    //   width: 100%;
+    // }
   }
   &__container {
     width: 100%;
@@ -164,7 +164,7 @@ pfe-icon {
       $region: overlay,
       $fallback: #{$overlay--BackgroundColor--fallback}
     )};
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;

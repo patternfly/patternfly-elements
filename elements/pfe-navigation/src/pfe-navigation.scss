@@ -120,6 +120,10 @@ pfe-icon {
     @media only screen and (max-height: 500px) {
       min-height: #{pfe-local(MobileMenuHeight)};
     }
+
+    :host([expanded]) & {
+      width: 100%;
+    }
   }
   &__container {
     width: 100%;
@@ -160,12 +164,11 @@ pfe-icon {
       $region: overlay,
       $fallback: #{$overlay--BackgroundColor--fallback}
     )};
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
-    overflow-y: scroll;
     z-index: #{pfe-var(
       $cssvar: overlay,
       $category: 'zindex',

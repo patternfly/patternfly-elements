@@ -32,10 +32,18 @@ class PfeNavigation extends PFElement {
     if (state) {
       // Add the overlay to the page
       this._overlay.removeAttribute("hidden");
+
+      // This prevents background scroll while nav is open
+      // document.body.style.overflow = "hidden";
+
       this._wrapper.setAttribute("expanded", "");
     } else {
       // Remove the overlay from the page
       this._overlay.setAttribute("hidden", "");
+
+      // Allow background to scroll again
+      // document.body.style.overflow = "auto";
+
       this._wrapper.removeAttribute("expanded");
     }
   }
@@ -69,10 +77,7 @@ class PfeNavigation extends PFElement {
   }
 
   connectedCallback() {
-    super.connectedCallback();
-
-    // Store the width of the scrollbar, if it exists
-    this.scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    super.connectedCallback()
 
     Promise.all([
       customElements.whenDefined(PfeNavigationItem.tag),
@@ -147,7 +152,6 @@ class PfeNavigation extends PFElement {
     } else {
       this.classList.remove("pfe-sticky");
     }
-    // this.stuck = window.pageYOffset >= this.top;
   }
 
   _outsideListener(event) {

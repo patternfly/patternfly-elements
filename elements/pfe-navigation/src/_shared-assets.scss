@@ -45,10 +45,7 @@ $LOCAL: navigation;
             $fallback: #{$trigger--Color--fallback}
         )};
     z-index: 2;
-
-    @media screen and (min-width: 1024px) {
-        text-align: center;
-    }
+    line-height: 1.1;
 
     @media screen and (min-width: 1200px) {
         white-space: nowrap;

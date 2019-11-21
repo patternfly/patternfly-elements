@@ -30,6 +30,10 @@ $variables: (
   height: 100%;
   width: 100%;
   min-width: #{pfe-local(MinWidth)};
+
+  @media screen and (min-width: 500px) {
+    --pfe-navigation__trigger--Padding: #{pfe-var(container-padding)} !important;
+  }
 }
 
 // ---------------------//
@@ -166,7 +170,7 @@ $variables: (
   :host(:not([pfe-icon])) &::after {
     display: block;
     content: " ";
-    visibility: pfe-local($cssvar: Visible, $region: trigger-icon, $fallback: hidden);
+    visibility: #{pfe-local($cssvar: Visible, $region: trigger-icon, $fallback: hidden)};
 
     @include pfe-arrow(down, #{pfe-color(feedback--default)}, $width: 6px, $height: 6px);
     position: absolute;
@@ -204,6 +208,7 @@ $variables: (
 
     :host([is_nested]:not(.expanded):not([parent_hidden])) & {
       @include pfe-chevron($state: closed);
+      // top: calc((var(--pfe-theme--container-spacer,16px) * .5) + .5935em)
     }
 
     :host([is_nested]:not([parent_hidden])) & {
@@ -248,6 +253,12 @@ $variables: (
 // Typography styles
 ::slotted([slot="trigger"]) {
   @extend %trigger;
+}
+
+:host([pfe-icon]) {
+  ::slotted([slot="trigger"]) {
+    margin: 0.25em 0 0 0 !important;
+  }
 }
 
 // Override bootstrap styles
@@ -307,7 +318,6 @@ $variables: (
     @include pfe-accordion-props;
     @include pfe-box-sizing;
     @include pfe-panel-container;
-    width: 100%;
   }
 
   :host([is_nested].expanded:not([parent_hidden])) & {
@@ -337,6 +347,10 @@ $variables: (
   display: flex;
   visibility: visible;
   flex-grow: 1;
+}
+
+:host([is_nested]) [slot="trigger"] > a {
+  color: #{pfe-color(ui-complement)} !important;
 }
 
 // @TODO set up tray opening animation?

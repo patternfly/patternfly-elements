@@ -77,6 +77,7 @@
 @mixin pfe-accordion-props($align: left) {
   margin: 0;
   width: #{pfe-local($cssvar: Width, $fallback: 100%)};
+  max-width: 100%;
   height: auto;
   position: relative;
 
@@ -185,7 +186,7 @@
 @mixin pfe-chevron($state: open, $position: after, $size: .4em) {
   content: "";
   position: absolute;
-  top: calc((#{pfe-var(container-spacer)} * .75) + #{$size});
+  top: calc((#{pfe-var(container-spacer)} * .5) + #{$size});
   display: block;
   border-style: #{pfe-var(surface--border-style)};
   height: #{$size};

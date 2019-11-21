@@ -208,7 +208,6 @@ $variables: (
 
     :host([is_nested]:not(.expanded):not([parent_hidden])) & {
       @include pfe-chevron($state: closed);
-      // top: calc((var(--pfe-theme--container-spacer,16px) * .5) + .5935em)
     }
 
     :host([is_nested]:not([parent_hidden])) & {

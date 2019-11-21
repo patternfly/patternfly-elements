@@ -32,14 +32,19 @@ class PfeNavigation extends PFElement {
     if (state) {
       // Add the overlay to the page
       this._overlay.removeAttribute("hidden");
+
       // This prevents background scroll while nav is open
-      document.body.style.overflow = "hidden";
+      // document.body.style.overflow = "hidden";
+
+      this._wrapper.setAttribute("expanded", "");
     } else {
       // Remove the overlay from the page
       this._overlay.setAttribute("hidden", "");
-      // Allow background to scroll again
-      document.body.style.overflow = "auto";
 
+      // Allow background to scroll again
+      // document.body.style.overflow = "auto";
+
+      this._wrapper.removeAttribute("expanded");
     }
   }
 
@@ -58,6 +63,7 @@ class PfeNavigation extends PFElement {
 
     // Capture shadow elements
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
+    this._wrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
     this._menuItem = this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[pfe-icon="web-mobile-menu"]`);
 
     this._slots = {
@@ -142,9 +148,9 @@ class PfeNavigation extends PFElement {
 
   _stickyHandler() {
     if(window.pageYOffset >= this.top) {
-      this.classList.add("sticky");
+      this.classList.add("pfe-sticky");
     } else {
-      this.classList.remove("sticky");
+      this.classList.remove("pfe-sticky");
     }
   }
 

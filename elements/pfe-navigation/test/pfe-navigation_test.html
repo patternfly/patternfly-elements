@@ -551,17 +551,18 @@
           assert.isTrue(backdrop.hasAttribute("hidden"));
         });
 
-        test("the document body should have overflow hidden when the nav is open", () => {
-          const pfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item");
-          const trigger = pfeNavigationItem.querySelector(`[slot="trigger"] a`);
-          const backdrop = pfeNavigation.shadowRoot.querySelector(".pfe-navigation__overlay");
+        // @NOTE Removed this, possibily temporarily
+        // test("the document body should have overflow hidden when the nav is open", () => {
+        //   const pfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item");
+        //   const trigger = pfeNavigationItem.querySelector(`[slot="trigger"] a`);
+        //   const backdrop = pfeNavigation.shadowRoot.querySelector(".pfe-navigation__overlay");
 
-          trigger.click();
-          assert.equal(document.body.style.overflow, "hidden");
+        //   trigger.click();
+        //   assert.equal(document.body.style.overflow, "hidden");
 
-          backdrop.click();
-          assert.isUndefined(document.body.style.overlay);
-        });
+        //   backdrop.click();
+        //   assert.isUndefined(document.body.style.overlay);
+        // });
       });
 
 

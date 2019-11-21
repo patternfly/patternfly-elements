@@ -1,4 +1,53 @@
 @import "../../pfe-sass/pfe-sass";
+$LOCAL: badge;
+
+:host {
+  display: inline-block;
+  text-align: center;
+
+  // local vars
+  // @TODO update this to use pfe-sass variables
+  --pfe-badge__container--MinWidth: 2rem;
+  --pfe-badge__container--BorderRadius: 30em;
+  --pfe-badge__container--PaddingRight: .5rem;
+  --pfe-badge__container--PaddingLeft: .5rem;
+  --pfe-badge__container--FontSize: .75rem;
+  --pfe-badge__container--FontWeight: 700;
+  --pfe-badge__container--Color--read: #151515;
+  --pfe-badge__container--BackgroundColor--read: #ededed;
+  --pfe-badge__container--Color--unread: #fff;
+  --pfe-badge__container--BackgroundColor--unread: #06c;
+}
+
+// @TODO better strategy for applying these styles
+:host([read]) {
+  .pfe-badge {
+    &__container {
+      color: #{pfe-local($cssvar: Color--read, $region: container)};
+      background-color: #{pfe-local($cssvar: BackgroundColor--read, $region: container)};
+    }
+  }
+}
+
+:host([unread]) {
+  .pfe-badge {
+    &__container {
+      color: #{pfe-local($cssvar: Color--unread, $region: container)};
+      background-color: #{pfe-local($cssvar: BackgroundColor--unread, $region: container)};
+    }
+  }
+}
+
+.pfe-badge {
+  &__container {
+    min-width: #{pfe-local($cssvar: MinWidth, $region: container)};
+    border-radius: #{pfe-local($cssvar: BorderRadius, $region: container)};
+    padding-right: #{pfe-local($cssvar: PaddingRight, $region: container)};
+    padding-left: #{pfe-local($cssvar: PaddingLeft, $region: container)};
+    font-size: #{pfe-local($cssvar: FontSize, $region: container)};
+    font-weight: #{pfe-local($cssvar: FontWeight, $region: container)};
+  }
+}
 
 /// ===========================================================================
 /// Component Specific SASS Vars
@@ -12,31 +61,31 @@ $pfe-badge__padding--lg:                                        .4rem .85rem;
 /// DEFUALT BADGE
 /// ===========================================================================
 
-:host {
-  --pfe-badge--base--bg:           #{pfe-color(feedback--default--lightest)};
-  --pfe-badge--base--color:                               #{pfe-color(text)};
-  --pfe-badge--base--font-size:                        #{pfe-var(font-size)};
-  // --pfe-badge--base--padding:                            $pfe-badge__padding;
+// :host {
+//   --pfe-badge--base--bg:           #{pfe-color(feedback--default--lightest)};
+//   --pfe-badge--base--color:                               #{pfe-color(text)};
+//   --pfe-badge--base--font-size:                        #{pfe-var(font-size)};
+//   // --pfe-badge--base--padding:                            $pfe-badge__padding;
   
-  display: inline-block;
-  padding: $pfe-badge__padding;
-  border: 1px solid transparent;
-  border-radius: 20px !important;
-  background-color: var(--pfe-badge--base--bg) !important;
-  color: var(--pfe-badge--base--color) !important;
-  font-size: calc(var(--pfe-badge--base--font-size) * 0.8);
-  font-weight: #{pfe-var(font-weight--bold)};
-  // text-transform: uppercase;
-  line-height: 1.1;
+//   display: inline-block;
+//   padding: $pfe-badge__padding;
+//   border: 1px solid transparent;
+//   border-radius: 20px !important;
+//   background-color: var(--pfe-badge--base--bg) !important;
+//   color: var(--pfe-badge--base--color) !important;
+//   font-size: calc(var(--pfe-badge--base--font-size) * 0.8);
+//   font-weight: #{pfe-var(font-weight--bold)};
+//   // text-transform: uppercase;
+//   line-height: 1.1;
   
-  ::slotted(*) {
-    display: inline-block;
-    border-radius: 20px !important;
-    background-color: var(--pfe-badge--base--bg) !important;
-    color: var(--pfe-badge--base--color) !important;
-    vertical-align: middle;
-  }
-}
+//   ::slotted(*) {
+//     display: inline-block;
+//     border-radius: 20px !important;
+//     background-color: var(--pfe-badge--base--bg) !important;
+//     color: var(--pfe-badge--base--color) !important;
+//     vertical-align: middle;
+//   }
+// }
 
 /// ===========================================================================
 /// SIZE OVERRIDE

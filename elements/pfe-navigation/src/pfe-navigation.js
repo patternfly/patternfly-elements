@@ -24,44 +24,19 @@ class PfeNavigation extends PFElement {
     return "pfe-navigation.json";
   }
 
-  get stuck() {
-    return this.classList.contains("pfe-sticky");
-  }
-
-  set stuck(state) {
-    if(state) {
-      this.classList.add("pfe-sticky");
-    } else {
-      this.classList.remove("pfe-sticky");
-    }
-  }
-
   get overlay() {
     return !this._overlay.hasAttribute("hidden");
   }
 
   set overlay(state) {
-    const parent = this.parentElement;
-    const hasScrollbar = this.scrollbarWidth > 0;
     if (state) {
       // Add the overlay to the page
       this._overlay.removeAttribute("hidden");
-      // Lock the background from scrolling
-      parent.style.overflow = "hidden";
-      parent.style.position = "relative";
-      parent.style.paddingRight = this.scrollbarWidth + "px";
-      if (this.connected && hasScrollbar) {
-        this._wrapper.style.paddingRight = this.scrollbarWidth + "px";
-      }
+      this._wrapper.setAttribute("expanded", "");
     } else {
       // Remove the overlay from the page
       this._overlay.setAttribute("hidden", "");
-      // Release the background for scrolling
-      parent.style.overflow = null;
-      parent.style.paddingRight = null;
-      if (this.connected && hasScrollbar) {
-        this._wrapper.style.paddingRight = null;
-      }
+      this._wrapper.removeAttribute("expanded");
     }
   }
 
@@ -167,7 +142,12 @@ class PfeNavigation extends PFElement {
   }
 
   _stickyHandler() {
-    this.stuck = window.pageYOffset >= this.top;
+    if(window.pageYOffset >= this.top) {
+      this.classList.add("pfe-sticky");
+    } else {
+      this.classList.remove("pfe-sticky");
+    }
+    // this.stuck = window.pageYOffset >= this.top;
   }
 
   _outsideListener(event) {

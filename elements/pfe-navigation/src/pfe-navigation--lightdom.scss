@@ -117,10 +117,6 @@
 
     .pfe-navigation-item__trigger {
         &.pfe-navigation-item {
-            // &[aria-expanded=true] {
-            //     background-color: #{pfe-color(surface--lightest)};
-            //     border-top-color: #{pfe-color(surface--accent)};
-            // }
             &:hover {
                 cursor: pointer;
                 border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-color(surface--accent)};
@@ -209,6 +205,11 @@
                     color: #{pfe-color(surface--lightest--text)} !important;
                 }
             }
+        }
+        &[is_nested]:not([parent_hidden]) .pfe-navigation-item__trigger.pfe-navigation-item::after {
+            height: .5em !important;
+            width: .5em !important;
+            top: 22px !important;
         }
     }
 

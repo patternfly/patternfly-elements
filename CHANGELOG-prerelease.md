@@ -17,6 +17,10 @@ Tag: [v1.0.0-prerelease.30](https://github.com/patternfly/patternfly-elements/re
 - [0c33cd6](https://github.com/patternfly/patternfly-elements/commit/0c33cd6637473fb8765c06150811db2884e90e24) fix: ignore compiled assets when determining version bumps #613
 - [0537a54](https://github.com/patternfly/patternfly-elements/commit/0537a54c5b02f99c0b53c9199223281ded99062f) chore: making pfe-band public
 - [cdcdddf](https://github.com/patternfly/patternfly-elements/commit/cdcdddfa6858953727a3b6d7dcb9add7a61adf93) fix: Bring back pfe-cta hover animation effect #623
+<<<<<<< HEAD
+=======
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-navigation add styles for when JS is not loaded
+>>>>>>> bf2222acdd783e65b73b75bddfe87539995ba2bd
 
 ## Prerelease 29 ( 2019-11-04 )
 

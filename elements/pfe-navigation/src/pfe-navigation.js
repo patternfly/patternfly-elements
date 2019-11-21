@@ -77,7 +77,7 @@ class PfeNavigation extends PFElement {
   }
 
   connectedCallback() {
-    super.connectedCallback()
+    super.connectedCallback();
 
     Promise.all([
       customElements.whenDefined(PfeNavigationItem.tag),

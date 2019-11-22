@@ -9,7 +9,7 @@
       "pfe-tab-panel.js"
     ]
   },
-  "version": "1.0.0-prerelease.27",
+  "version": "1.0.0-prerelease.29",
   "publishConfig": {
     "access": "public"
   },
@@ -46,8 +46,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.27",
-    "@patternfly/pfelement": "^1.0.0-prerelease.27"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.28",
+    "@patternfly/pfelement": "^1.0.0-prerelease.28"
   },
   "generator-pfelement-version": "0.5.4",
   "bugs": {

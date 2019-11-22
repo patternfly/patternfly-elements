@@ -22,6 +22,10 @@ $variables: (
   height: 100%;
   width: 100%;
   min-width: var(--pfe-nav-item--MinWidth, auto);
+
+  @media screen and (min-width: 500px) {
+    --pfe-navigation__trigger--Padding: #{pfe-var(container-padding)} !important;
+  }
 }
 
 // Indicates this is the current section the user is visiting
@@ -145,7 +149,7 @@ $variables: (
   :host(:not([pfe-icon])) &::after {
     display: block;
     content: " ";
-    visibility: pfe-local($cssvar: Visible, $region: trigger-icon, $fallback: hidden);
+    visibility: #{pfe-local($cssvar: Visible, $region: trigger-icon, $fallback: hidden)};
 
     @include pfe-arrow(down, #{pfe-color(feedback--default)}, $width: 6px, $height: 6px);
     position: absolute;
@@ -171,6 +175,7 @@ $variables: (
   &::after {
     :host([is_nested]:not(.expanded):not([parent_hidden])) & {
       @include pfe-chevron-expanded($state: false);
+      top: calc((var(--pfe-theme--container-spacer,16px) * .5) + .5935em)
     }
 
     :host([is_nested].expanded:not([parent_hidden])) & {
@@ -220,6 +225,12 @@ $variables: (
   @extend %trigger;
 }
 
+:host([pfe-icon]) {
+  ::slotted([slot="trigger"]) {
+    margin: 0.25em 0 0 0 !important;
+  }
+}
+
 // Override bootstrap styles
 ::slotted(*) {
   font-size: inherit !important;
@@ -261,10 +272,8 @@ $variables: (
     position: absolute;
     top: 100%;
     left: 0;
-
     background-color: #{pfe-color(surface--lightest)};
     color: #{pfe-local(Color)};
-
     padding: #{pfe-local($cssvar: Padding, $region: tray)};
     width: 100%;
     max-height: calc(100vh - var(--pfe-navigation--Height, 84px));
@@ -275,7 +284,6 @@ $variables: (
   //  Styles for the nested elements
   :host([is_nested]:not([parent_hidden])) & {
     --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
-
     @include pfe-container;
   }
 
@@ -320,6 +328,10 @@ $variables: (
   display: flex;
   visibility: visible;
   flex-grow: 1;
+}
+
+:host([is_nested]) [slot="trigger"] > a {
+  color: #{pfe-color(ui-complement)} !important;
 }
 
 // @TODO set up tray opening animation?

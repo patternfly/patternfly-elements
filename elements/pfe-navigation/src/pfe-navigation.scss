@@ -68,11 +68,10 @@ $variables: (
   width: 100%;
 }
 
-:host(.sticky) {
+:host(.pfe-sticky) {
   position: sticky;
   top: 0;
   left: 0;
-  width: 100vw;
   z-index: pfe-var($cssvar: navigation, $category: zindex, $map: $z-index);
 }
 
@@ -121,6 +120,10 @@ pfe-icon {
     @media only screen and (max-height: 500px) {
       min-height: #{pfe-local(MobileMenuHeight)};
     }
+
+    // :host([expanded]) & {
+    //   width: 100%;
+    // }
   }
   &__container {
     width: 100%;

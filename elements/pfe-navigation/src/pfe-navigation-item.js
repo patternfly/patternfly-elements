@@ -95,7 +95,7 @@ class PfeNavigationItem extends PFElement {
     }
   
     get visible() {
-      return !this.hasAttribute("hidden");
+      return !this.hasAttribute("hidden") && !this.hasAttribute("show_links");
     }
   
     set visible(isVisible) {
@@ -110,6 +110,8 @@ class PfeNavigationItem extends PFElement {
   
     open(event) {
       if (event) event.preventDefault();
+
+      console.log("Open");
   
       // Close the other active item(s) unless it's this item's parent
       if (this.navigationWrapper) {
@@ -121,6 +123,14 @@ class PfeNavigationItem extends PFElement {
   
         // Open that item and add it to the active array
         this.navigationWrapper._activeNavigationItems.push(this);
+
+        // Add the parent element to the active items if it exists
+        if (this.parent) {
+          this.parent.expanded = true;
+          if (!this.navigationWrapper._activeNavigationItems.includes(this.parent)) {
+            this.navigationWrapper._activeNavigationItems.push(this.parent);
+          }
+        }
   
         this.expanded = true;
         this.navigationWrapper.overlay = true;
@@ -138,15 +148,26 @@ class PfeNavigationItem extends PFElement {
   
     close(event) {
       if (event) event.preventDefault();
+
+      console.log("Close");
   
       // Close the children elements
       this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
+        console.log(this.nestedItems);
         let close = this.nestedItems && this.nestedItems.includes(item);
         if (close) item.close();
         return !close && item !== this;
       });
   
       this.expanded = false;
+
+      // Remove the parent element from the active items if it exists and is visible
+      if (this.parent && !this.parent.visible) {
+        this.parent.close();
+        this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => item !== this.parent);
+      }
+
+      console.log(this.navigationWrapper._activeNavigationItems);
   
       // Clear the overlay
       this.navigationWrapper.overlay = this.navigationWrapper._activeNavigationItems.length > 0;
@@ -281,7 +302,7 @@ class PfeNavigationItem extends PFElement {
         let array = [];
   
         // Search the tray for nested slots
-        if (!window.ShadyCSS) {
+        if (window.ShadyCSS) {
           [...this.tray.querySelectorAll("slot")].forEach(slot => {
             [...slot.assignedElements()].forEach(node => {
               array = array.concat([...node.querySelectorAll(`${this.tag}`)]);

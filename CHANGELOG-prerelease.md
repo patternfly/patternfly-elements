@@ -2,7 +2,9 @@
 
 Tag: [v1.0.0-prerelease.31](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.31)
 
-- []() feat: pfe-select component
+- [f144b6f](https://github.com/patternfly/patternfly-elements/commit/f144b6f33dd6a8b615ac2a63cec6b29f3bf70d32) feat: pfe-select component
+- [67fa1fb](https://github.com/patternfly/patternfly-elements/commit/67fa1fb3f29ec3e48a6d0767b6c08eb008e56655) fix: pfe-navigation mobile login/language links working
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-navigation add styles for when JS is not loaded
 
 ## Prerelease 30 ( 2019-11-08 )
 
@@ -14,7 +16,7 @@ Tag: [v1.0.0-prerelease.30](https://github.com/patternfly/patternfly-elements/re
 - [94ff217](https://github.com/patternfly/patternfly-elements/commit/94ff21768e3b1a8b90e284059f322e091c2d56ae) fix: pfe-content-set: wrapping the observer reconnect in a setTimeout #611
 - [0c33cd6](https://github.com/patternfly/patternfly-elements/commit/0c33cd6637473fb8765c06150811db2884e90e24) fix: ignore compiled assets when determining version bumps #613
 - [0537a54](https://github.com/patternfly/patternfly-elements/commit/0537a54c5b02f99c0b53c9199223281ded99062f) chore: making pfe-band public
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Bring back pfe-cta hover animation effect #623
+- [cdcdddf](https://github.com/patternfly/patternfly-elements/commit/cdcdddfa6858953727a3b6d7dcb9add7a61adf93) fix: Bring back pfe-cta hover animation effect #623
 
 ## Prerelease 29 ( 2019-11-04 )
 

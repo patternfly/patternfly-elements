@@ -82,12 +82,8 @@ $pfe-cta--Color--fallback: #003366;
     }
   }
 
-  ::slotted(*:not(:disabled)) {
-    cursor: pointer;
-  }
-
   .pfe-cta--arrow {
-    display: #{pfe-local($cssvar: arrow--Display, $region: arrow)};
+    display: #{pfe-local($cssvar: Display, $region: arrow)};
     padding: #{pfe-local($cssvar: Padding, $region: arrow)};
     fill:    #{pfe-local(Color)};
     position: relative;
@@ -117,6 +113,14 @@ $pfe-cta--Color--fallback: #003366;
       fill: #{pfe-local(Color--focus)};
     }
   }
+}
+  
+:host(:not([aria-disabled="true"])) ::slotted(*:not(:disabled)) {
+  cursor: pointer;
+}
+
+:host([aria-disabled="true"]) ::slotted(*) {
+  cursor: default;
 }
 
 :host(::after) {
@@ -158,7 +162,7 @@ $pfe-cta--Color--fallback: #003366;
 }
 
 
-:host([pfe-priority]) {
+:host([pfe-priority],[aria-disabled="true"]) {
   --pfe-cta--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
 
   .pfe-cta--wrapper {
@@ -182,7 +186,7 @@ $pfe-cta--Color--fallback: #003366;
 // - Fallback values should match whats above
 
 // default link background focus color
-:host(:not([pfe-priority])) {
+:host(:not([pfe-priority]):not([aria-disabled="true"])) {
   --pfe-cta--Color: var(--pfe-broadcasted--color--ui-link, #{pfe-color(ui-link)});
 
   --pfe-cta--inner--BorderColor--hover: var(--pfe-broadcasted--color--ui-link--hover, #{pfe-color(ui-link--hover)});
@@ -422,4 +426,24 @@ $pfe-cta--Color--fallback: #003366;
   --pfe-cta--BorderColor--focus:         #{pfe-color(surface--border)};
   --pfe-cta__inner--BorderColor--focus:  #{pfe-local(BorderColor--focus)};
   --pfe-cta--TextDecoration--hover:      #{pfe-var(link--text-decoration--hover)};
+}
+
+/// ===========================================================================
+/// DISABLED CTA VARIANTS
+/// ===========================================================================
+:host([aria-disabled="true"]) {
+  --pfe-cta__arrow--Display:            none;
+  --pfe-cta--BackgroundColor:           #{pfe-color(ui-disabled)};
+  --pfe-cta--BorderColor:               #{pfe-color(ui-disabled)};
+  --pfe-cta__inner--BorderColor:        transparent;
+  --pfe-cta--Color:                     #{pfe-color(ui-disabled--text)};
+
+  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-disabled--hover)}; //#0057ad;
+  --pfe-cta--BorderColor--hover:        #{pfe-color(ui-disabled--hover)};
+  --pfe-cta--Color--hover:              #{pfe-color(ui-disabled--text)};
+
+  --pfe-cta--BackgroundColor--focus:    #{pfe-color(ui-disabled)};
+  --pfe-cta__inner--BorderColor--focus: transparent;
+  --pfe-cta--BorderColor--focus:        transparent;
+  --pfe-cta--Color--focus:              #{pfe-color(ui-disabled--text)};
 }

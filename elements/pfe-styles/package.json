@@ -1,11 +1,13 @@
 {
-  "name": "@patternfly/pfe-layouts",
+  "name": "@patternfly/pfe-styles",
   "pfelement": {
     "className": "PfeLayouts",
     "elementName": "pfe-layouts",
     "assets": [
       "pfe-base.*css",
       "pfe-base.*.map",
+      "pfe-context.*css",
+      "pfe-context.*.map",
       "pfe-layouts.*css",
       "pfe-layouts.*.map"
     ]
@@ -14,7 +16,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "Layouts helper classes for PatternFly Elements",
+  "description": "Helper classes for PatternFly Elements",
   "keywords": [
     "web-components",
     "html"
@@ -25,7 +27,7 @@
   "repository": {
     "type": "git",
     "url": "github:patternfly/patternfly-elements",
-    "directory": "elements/pfe-layouts"
+    "directory": "elements/pfe-styles"
   },
   "main": "./dist/pfe-layouts.css",
   "scripts": {

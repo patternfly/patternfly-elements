@@ -1,3 +1,4 @@
+// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: accordion;
@@ -5,67 +6,60 @@ $LOCAL: accordion;
 /// ===========================================================================
 /// DEFAULT ACCORDION HEADING
 /// ===========================================================================
-
 :host {
-  @include  pfe-accordion-header;
+  transition: transform 0.3s #{pfe-var(animation-timing)};
+  display: block;
 
-  button {
-    @include pfe-trigger-color($component-name: accordion);
-    @include pfe-trigger-button;
+  // Shadow template styles
+  > * {
+    margin: 0;
+  }
+}
+ 
+button {
+  @include pfe-trigger;
 
-    &[aria-expanded="true"] {
-      @include pfe-trigger-color-expanded($component-name: accordion);
-      @include pfe-trigger-expanded;
-      &::after {
-        @include pfe-chevron-expanded;
-      }
-    }
+  &[aria-expanded="true"]::after {
+    @include pfe-chevron($state: open);
+  }
 
-    &[aria-expanded="false"]::after {
-        @include pfe-chevron-expanded($state: false);
+  &[aria-expanded="false"]::after {
+      @include pfe-chevron($state: closed);
+  }
+
+  // @TODO workaround, can we get the variables working?
+  @include browser-query(edge) {
+    text-align: left;
+  }
+
+  @include browser-query(ie11) {
+    &:hover {
+      border-left-color: #{pfe-color(ui-base)};
     }
   }
 }
-
-:host(:first-child) {
-  button {
-    @include pfe-trigger-button-first($theme: light);
-  }
-}
-
 
 // Add border bottom to the last button in an accordion set.
-:host(:last-of-type) {
-  button[aria-expanded="false"] {
-    @include pfe-trigger-button-last;
-  }
-}
-
-:host(.animating) {
-  transition: transform 0.3s #{pfe-var(animation-timing)};
-
-  button {
-    @include pfe-trigger-expanded;
-    @include pfe-trigger-color-expanded($theme: light, $component-name: accordion);
-  }
+:host(:last-of-type) button:not([aria-expanded="true"]) {
+  @include pfe-trigger-last;
 }
 
 /// ===========================================================================
-/// CONTEXT STYLES, ON=DARK
+/// EXPANDED STYLES
 /// ===========================================================================
 
-:host([on="dark"]) {
-  button {
-    @include pfe-trigger-color($theme: dark, $component-name: accordion);
-
-    &[aria-expanded="true"] {
-      @include pfe-trigger-color-expanded($theme: dark, $component-name: accordion);
-    }
+// Default styles
+button[aria-expanded="true"] {
+  @include pfe-accordion-variables($state: expanded);
+  @include browser-query(ie11) {
+    border-bottom-width: 0;
+    border-left-color: #{pfe-color(ui-base)};
   }
 }
 
-:host([on="dark"].animating){
-  button {
-    @include pfe-trigger-color-expanded($theme: dark, $component-name: accordion);
+// Styles contextual to theme
+@each $context in $THEMES {
+  :host([on="#{$context}"]) button[aria-expanded="true"] {
+    @include pfe-accordion-variables($state: expanded, $theme: #{$context});
   }
 }

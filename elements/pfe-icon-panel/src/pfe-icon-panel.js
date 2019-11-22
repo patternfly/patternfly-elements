@@ -15,7 +15,7 @@ class PfeIconPanel extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["icon", "circled"];
+    return ["icon", "circled", "color"];
   }
 
   static get cascadingAttributes() {

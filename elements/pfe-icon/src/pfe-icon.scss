@@ -1,6 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
+@include pfe-theme-contexts; // imports on="light" etc support
 
-$USE-FALLBACK: true;
+
 $LOCAL: icon;
 
 /// ===========================================================================
@@ -24,7 +25,7 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   --pfe-icon--Spacing:                 #{pfe-var(container-spacer)};
   --pfe-icon--Size:                    #{pfe-var(icon-size)};
   --pfe-icon--Padding:                 0;
-  --pfe-icon--Color:                   #{pfe-radio(color, text)};
+  --pfe-icon--Color:                   #{pfe-apply-broadcast(text)};
   --pfe-icon--BackgroundColor:         transparent;
   --pfe-icon--BorderColor:             transparent;
 
@@ -110,13 +111,13 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 
 @each $color in (base, complement, accent) {
   :host([color="#{$color}"]) {
-    --pfe-broadcasted--color--text:      #{pfe-color(ui-#{$color})};
+    --pfe-broadcasted--text: #{pfe-color(ui-#{$color})};
   }
 }
 
 @each $level in (critical, important, moderate, success, info, default) {
   :host([color="#{$level}"]) {
-    --pfe-broadcasted--color--text:      #{pfe-color(feedback--#{$level})};
+    --pfe-broadcasted--text: #{(feedback--#{$level})};
   }
 }
 
@@ -133,7 +134,7 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   :host([circled="#{$name}"]) {
     --pfe-icon--BackgroundColor:       #{pfe-color(surface--#{$color})};
     --pfe-icon--BorderColor:           transparent;
-    --pfe-broadcasted--color--text:    #{pfe-color(surface--#{$color}--text)};
+    @include pfe-set-broadcast-theme(#{pfe-get-theme(surface--#{$color}--theme)});
   }
 }
 

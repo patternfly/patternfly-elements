@@ -1,6 +1,9 @@
 @import "../../pfe-sass/pfe-sass";
+@include pfe-theme-contexts; // imports on="light" etc support
+
 :host {
   display: block;
+  color: #{pfe-apply-broadcast(text)};
 }
 
 :host([hidden]) {

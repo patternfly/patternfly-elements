@@ -14,7 +14,7 @@
 | `--pfe-theme--color--surface--darker--text`            | Dark `<pfe-accordion-header>` text color option            | $pfe-color--surface--darker--text            |
 | `--pfe-theme--color--surface--darker--link--focus`     | Focus border color for dark `<pfe-accordion-header>`       | $pfe-color--surface--darker--link--focus     |
 | `--pfe-theme--color--surface--darkest`                 | Darkest `<pfe-accordion-header>` color option              | $pfe-color--surface--darkest                 |
-| `--pfe-theme--color--surface--darkest--text`           | Darkest `<pfe-accordion-header>` text color option         | $pfe-color--surface--darkest--text           |
+| `--pfe-theme--color--text--on-dark`           | Darkest `<pfe-accordion-header>` text color option         | $pfe-color--text--on-dark           |
 | `--pfe-theme--color--surface--darkest--link--focus`    | Focus border color for darkest `<pfe-accordion-header>`    | $pfe-color--surface--darkest--link--focus    |
 | `--pfe-theme--color--surface--complement`              | Complement `<pfe-accordion-header>` color option           | $pfe-color--surface--complement              |
 | `--pfe-theme--color--surface--complement--text`        | Complement `<pfe-accordion-header>` text color option      | $pfe-color--surface--complement--text        |

@@ -153,7 +153,8 @@ class PfeCard extends PFElement {
   // Update the color attribute and contexts
   _colorChanged(attr, oldValue, newValue) {
     this[attr].value = newValue;
-
+    // Trigger an update in nested components
+    this.context_update();
   }
 
   // Update the background image

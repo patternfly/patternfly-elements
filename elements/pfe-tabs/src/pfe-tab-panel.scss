@@ -2,9 +2,22 @@
 
 $LOCAL: tabs;
 
+$variables: (
+  focus:  pfe-color(link)
+);
+
 :host {
+  @include pfe-print-variables($variables);
+
   display: block;
-  color: #{pfe-radio(color, text)};
+
+  @at-root #{&}(:focus) {
+    outline: none;
+  }
+
+  ::slotted(*) {
+    color: #{pfe-apply-broadcast(text)};
+  }
 
   [tabindex] {
   	display: flex;
@@ -22,6 +35,8 @@ $LOCAL: tabs;
 
     @include browser-query(ie11) {
       padding: 1em;
+      background-color: #{map-get($pfe-colors, surface--lightest)} !important;
+      color: #{pfe-color(text)} !important;
     }
   }
 }
@@ -70,25 +85,6 @@ $LOCAL: tabs;
       }
     }
 	}
-}
-
-/// ===========================================================================
-/// THEMING
-/// ===========================================================================
-:host([on="dark"]) {
-  @include pfe-theme($theme: "dark");
-
-  @include browser-query(ie11) {
-    color: #{pfe-color(text--on-dark)};
-  }
-}
-
-:host([on="light"]) {
-  @include pfe-theme($theme: "light");
-
-  @include browser-query(ie11) {
-    color: #{pfe-color(text)};
-  }
 }
 
 :host([hidden]) {

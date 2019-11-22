@@ -266,6 +266,11 @@
     pfe-navigation-item:not([parent_hidden])[is_nested].expanded .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0;
     }
+
+    pfe-navigation-item.expanded pfe-navigation-item:not(.expanded) [slot="trigger"] > a,
+    pfe-navigation-item.expanded pfe-navigation-item:not(.expanded) [slot="trigger"] > a.active {
+        color: #fff !important;
+    }
 }
 
 pfe-navigation [slot="logo"] {

@@ -329,6 +329,7 @@ $variables: (
 ::slotted([slot="tray"]) {
   display: flex;
   flex-grow: 1;
+  justify-content: center;
 }
 
 // Let the main item or the tray be hidden with the attribute

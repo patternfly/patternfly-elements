@@ -436,8 +436,6 @@ pfe-navigation-item {
     width: 100%;
     @media (min-width: #{pfe-breakpoint(xl)}) {
         max-width: #{pfe-local($cssvar: Width, $fallback: 1140px)};
-        margin: 0 auto;
-        display: block;
     }
     input[type="text"] {
         padding: 5px 10px;
@@ -505,19 +503,22 @@ pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [
 }
 
 // Override trigger font-size on older browsers.
-[slot=trigger],
-[slot=trigger] > a {
+[slot="trigger"],
+[slot="trigger"] > a {
     font-size: 16px;
 }
 
-[pfe-icon] [slot=trigger],
-[pfe-icon] [slot=trigger] > a {
+[pfe-icon] [slot="trigger"],
+[pfe-icon] [slot="trigger"] > a {
     font-size: 12px;
 }
 
-// [slot=tray] {
-//     position: relative;
-// }
+// Apply flexbox styles to older browsers that don't support ShadowDOM.
+[slot="tray"] {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
 
 @media screen and (max-width: 1023px) {
     .pfe-navigation__main .pfe-navigation-item__tray {

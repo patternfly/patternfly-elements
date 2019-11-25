@@ -266,11 +266,6 @@
     pfe-navigation-item:not([parent_hidden])[is_nested].expanded .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0;
     }
-
-    pfe-navigation-item.expanded pfe-navigation-item:not(.expanded) [slot="trigger"] > a,
-    pfe-navigation-item.expanded pfe-navigation-item:not(.expanded) [slot="trigger"] > a.active {
-        color: #fff !important;
-    }
 }
 
 pfe-navigation [slot="logo"] {
@@ -442,6 +437,7 @@ pfe-navigation-item {
     @media (min-width: #{pfe-breakpoint(xl)}) {
         max-width: #{pfe-local($cssvar: Width, $fallback: 1140px)};
         margin: 0 auto;
+        display: block;
     }
     input[type="text"] {
         padding: 5px 10px;
@@ -499,5 +495,33 @@ pfe-navigation-item {
             @extend %link-styles;
             font-size: 16px;
         }
+    }
+}
+
+// Set collapsed trigger links to always appear white.
+pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [slot="trigger"] > a,
+pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [slot="trigger"] > a.active {
+    color: #fff !important;
+}
+
+// Override trigger font-size on older browsers.
+[slot=trigger],
+[slot=trigger] > a {
+    font-size: 16px;
+}
+
+[pfe-icon] [slot=trigger],
+[pfe-icon] [slot=trigger] > a {
+    font-size: 12px;
+}
+
+// [slot=tray] {
+//     position: relative;
+// }
+
+@media screen and (max-width: 1023px) {
+    .pfe-navigation__main .pfe-navigation-item__tray {
+        position: relative;
+        top: 0 !important;
     }
 }

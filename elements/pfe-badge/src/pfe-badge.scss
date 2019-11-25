@@ -14,7 +14,7 @@ $LOCAL: badge;
   --pfe-badge__container--FontSize: calc(var(--pfe-theme-font-size, 1rem) * 0.75);
   --pfe-badge__container--FontWeight: calc(var(--pfe-theme-font-weight--semi-bold, 600));
   --pfe-badge__container--Color--unread: #{pfe-color(text--on-dark)};
-  --pfe-badge__container--BackgroundColor--unread: #{pfe-color(ui-link)};
+  --pfe-badge__container--BackgroundColor--unread: #{pfe-color(link)};
   // @TODO : Add these colors to _3-colors.scss
   --pfe-badge__container--Color--read: #151515;
   --pfe-badge__container--BackgroundColor--read: #ededed;

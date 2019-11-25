@@ -13,21 +13,21 @@ class PfeBadge extends PFElement {
     return "pfe-badge.scss";
   }
 
-  // static get observedAttributes() {
-  //   return [];
-  // }
+  static get observedAttributes() {
+    return ["threshold"];
+  }
+
+  get pfeThreshold() {
+    return this.getAttribute('threshold');
+  }
 
   constructor() {
     super(PfeBadge);
+    if (this.pfeThreshold) {
+      // TODO: Confirm the logic
+      this.textContent = this.pfeThreshold <= this.textContent ? `${this.pfeThreshold}+` : this.textContent;
+    }
   }
-
-  // connectedCallback() {
-  //   super.connectedCallback();
-  // }
-
-  // disconnectedCallback() {}
-
-  // attributeChangedCallback(attr, oldValue, newValue) {}
 }
 
 PFElement.create(PfeBadge);

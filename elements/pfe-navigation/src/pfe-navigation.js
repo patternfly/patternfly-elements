@@ -132,11 +132,16 @@ class PfeNavigation extends PFElement {
     this._activeNavigationItems.forEach(item => {
       // If the item is open but not visible, update it to hidden
       if (item.expanded && !item.visible) {
-        item.close();
+        item.expanded = false;
+        this._activeNavigationItems = this._activeNavigationItems.filter(i => i !== item);
+      } else if (item.expanded && item.parent && item.parent.visible) {
+        item.parent.expanded = true; // Ensure the parent is open
+        // If the parent item doesn't exist in the active array, add it
+        if (!this._activeNavigationItems.includes(item.parent)) {
+          this._activeNavigationItems.push(item.parent);
+        }
       }
     });
-
-    console.log(this._activeNavigationItems.length);
 
     this.overlay = this._activeNavigationItems.length > 0;
   }

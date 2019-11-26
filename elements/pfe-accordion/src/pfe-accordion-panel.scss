@@ -48,3 +48,7 @@ $LOCAL: accordion;
     @include pfe-panel-variables($theme: #{$context});
   }
 }
+
+:host([pfe-disclosure="true"][expanded]) {
+  --pfe-accordion--BorderLeftWidth: 4px;
+}

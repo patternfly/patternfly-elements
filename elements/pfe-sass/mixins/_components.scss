@@ -186,7 +186,7 @@
 @mixin pfe-chevron($state: open, $position: after, $size: .4em) {
   content: "";
   position: absolute;
-  top: calc((#{pfe-var(container-spacer)} * .5) + #{$size});
+  top: calc(#{pfe-var(container-spacer)} + #{$size});
   display: block;
   border-style: #{pfe-var(surface--border-style)};
   height: #{$size};

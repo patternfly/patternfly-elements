@@ -25,3 +25,10 @@ $LOCAL: accordion;
     @include pfe-accordion-variables($theme: #{$context});
   }
 }
+
+
+:host([pfe-disclosure="true"]) {
+  --pfe-accordion--BorderColor--accent: #{pfe-color(surface--border)};
+  --pfe-accordion--BorderRightWidth: 1px;
+  --pfe-accordion--BorderLeftWidth: 1px;
+}

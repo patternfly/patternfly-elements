@@ -12,7 +12,7 @@ tags = [ "theme" ]
 
 ## Theming 101
 
-Every PatternFly Element is built to automatically utilize the colors defined in the palette, which you control! Generally speaking, the only thing you will need to do is re-define the CSS variables to match your brand and you're done.
+Every PatternFly Element is built to automatically utilize the colors defined in the [palette](/theme/_3_pfe-color-palette/), which you control! Generally speaking, the only thing you will need to do is re-define the CSS variables to match your brand and you're done.
 
 Often components will make decisions about how to best utilize those colors, which is "baked in". For example, a standard CTA, or call-to-action component, uses the standard link color in its default state. But, if you set the `priority` attribute value to `primary`, the CTA will make use of the accent color from the palette.
 

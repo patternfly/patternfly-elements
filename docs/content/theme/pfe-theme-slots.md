@@ -415,14 +415,12 @@ You can optionally customize this set by passing in a list of just the themes yo
     }
     ```
 
-  * Naming conventions.. BEM.. @TODO
+  * Naming conventions follow the same approach as outlined on the [PatternFly Global Variables documentation.](https://www.patternfly.org/v4/documentation/overview/global-css-variables).
 
-3. Avoid use of !Important if possible
-    *   ShadyCSS adds !important to styles, which means we generally should not add !important to our stylesheets.
-    *   @TODO is this still the case? pfe-cta uses important
+3. Avoid use of `!important` if possible
 
 
-4. Suggested easiest approach to theming:
+4. Suggested easiest approach to theming your component:
     1. Add properties with normal values first, `color: #c00`.
     2. Then go back and add / replace with local variables, `color: var(--pfe-cta--Color)` or use the local var function `pfe-local(Color)`.
         * _It's worth noting that very time we surface something as a variable, we offer an opportunity to lean away from the design system. There's no need to create a local variable for all properties._

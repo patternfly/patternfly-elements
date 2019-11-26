@@ -95,6 +95,8 @@ class PfeAccordion extends PFElement {
     this.addEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
     this.addEventListener("keydown", this._keydownHandler);
 
+    let numberItems = this.querySelectorAll('pfe-accordion > pfe-accordion-header');
+
     Promise.all([
       customElements.whenDefined(PfeAccordionHeader.tag),
       customElements.whenDefined(PfeAccordionPanel.tag)
@@ -105,6 +107,10 @@ class PfeAccordion extends PFElement {
 
       this._observer.observe(this, { childList: true });
     });
+
+    if ( numberItems.length === 1 ) {
+      this.setAttribute("disclosure", "");
+    };
   }
 
   disconnectedCallback() {

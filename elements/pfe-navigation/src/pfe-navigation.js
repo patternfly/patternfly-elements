@@ -59,6 +59,7 @@ class PfeNavigation extends PFElement {
     this._resizeHandler = this._resizeHandler.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
     this._outsideListener = this._outsideListener.bind(this);
+    this._menuItemCloseHandler = this._menuItemCloseHandler.bind(this);
     this._observer = new MutationObserver(this._init);
 
     // Capture shadow elements
@@ -74,6 +75,10 @@ class PfeNavigation extends PFElement {
     // Initialize active navigation item to empty array
     this._activeNavigationItems = [];
     this.overlay = false;
+
+    // make sure we close all of the nav items and hide the overlay when
+    // the mobile menu button fires a close event
+    this._menuItem.addEventListener(`${PfeNavigationItem.tag}:close`, this._menuItemCloseHandler);
   }
 
   connectedCallback() {
@@ -120,6 +125,8 @@ class PfeNavigation extends PFElement {
     if(this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       window.removeEventListener("scroll", this._stickyHandler);
     }
+
+    this._menuItem.removeEventListener(`${PfeNavigationItem.tag}:close`, this._menuItemCloseHandler);
 
     this._observer.disconnect();
   }
@@ -280,6 +287,11 @@ class PfeNavigation extends PFElement {
         });
       }, 0);
     }
+  }
+
+  _menuItemCloseHandler(event) {
+    this._activeNavigationItems.map(item => item.close());
+    this.overlay = false;
   }
 }
 

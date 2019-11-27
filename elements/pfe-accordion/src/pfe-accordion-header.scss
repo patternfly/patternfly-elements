@@ -31,21 +31,6 @@ button {
   }
 }
 
-:host([pfe-disclosure="true"]) {
-  button {
-    @include pfe-trigger($align: right);    
-  }
-  button[aria-expanded="true"]::before {
-    @include pfe-chevron($state: open, $position: before);
-  }
-  button[aria-expanded="false"]::before {
-    @include pfe-chevron($state: closed, $position: before);
-  }
-  button[aria-expanded="true"] {
-    --pfe-accordion--BorderLeftWidth: 4px;
-  }
-}
-
 :host(:not([pfe-disclosure="true"])) {
   button[aria-expanded="true"]::after {
     @include pfe-chevron($state: open);
@@ -81,7 +66,36 @@ button[aria-expanded="true"] {
 }
 
 /// ===========================================================================
-/// DISCLOSURE
+/// DISCLOSURE STYLES
 /// ===========================================================================
+
+:host([pfe-disclosure="true"]) {
+  button {
+    @include pfe-trigger($align: right);
+
+    &[aria-expanded="true"] {
+      --pfe-accordion--BorderLeftWidth: 4px;
+      padding-left: 47px !important;
+
+      &::before {
+        @include pfe-chevron($state: open, $position: before);
+        left: 21px;
+      }
+    }
+    &[aria-expanded="false"]::before {
+      @include pfe-chevron($state: closed, $position: before);
+    }
+
+    // Adjust contents position on hover.
+    &:hover {
+      border-left-width: 4px;
+      padding-left: 47px !important;
+
+      &::before {
+        left: 21px;
+      }
+    }
+  }
+}
 
 

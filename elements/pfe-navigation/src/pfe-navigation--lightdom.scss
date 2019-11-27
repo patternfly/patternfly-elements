@@ -508,13 +508,14 @@ pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [
 // Override trigger font-size on older browsers.
 [slot="trigger"],
 [slot="trigger"] > a {
+    font-size: 12px;
+}
+
+pfe-navigation-main [slot="trigger"],
+pfe-navigation-main [slot="trigger"] > a {
     font-size: 16px;
 }
 
-[pfe-icon] [slot="trigger"],
-[pfe-icon] [slot="trigger"] > a {
-    font-size: 12px;
-}
 
 // Apply flexbox styles to older browsers that don't support ShadowDOM.
 [slot="tray"] {

@@ -1,4 +1,5 @@
 import { autoReveal } from "./reveal.js";
+import { nothing, html } from "lit-html";
 const prefix = "pfe-";
 
 class PFElement extends HTMLElement {
@@ -370,7 +371,7 @@ class PFElement extends HTMLElement {
 
   render() {
     this.shadowRoot.innerHTML = "";
-    this.template.innerHTML = this.html;
+    this.template.innerHTML = html`${this.html}`;
 
     if (window.ShadyCSS) {
       window.ShadyCSS.prepareTemplate(this.template, this.tag);

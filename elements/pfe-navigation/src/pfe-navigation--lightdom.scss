@@ -182,10 +182,6 @@
             margin: 0;
         }
 
-        pfe-icon {
-            margin-bottom: 10px;
-        }
-
         .pfe-navigation-item__trigger[aria-expanded=true] {
             &::after {
                 display: block !important;
@@ -242,7 +238,6 @@
 
     .pfe-navigation-item__trigger {
         --pfe-navigation__trigger-icon--Visible: hidden;
-        text-align: center;
 
         &:hover {
             --pfe-navigation__trigger-icon--Visible: visible;

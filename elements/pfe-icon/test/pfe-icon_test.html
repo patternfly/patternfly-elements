@@ -89,7 +89,7 @@
 
           assert.equal(floodColor, newColor);
 
-          icon.style.removeProperty("--pfe-broadcasted--color--text");
+          icon.style.removeProperty("--pfe-broadcasted--text");
         });
 
         test('it should change color when the broadcast CSS var is changed', () => {
@@ -98,13 +98,13 @@
           // CSS variable.
           const newColor = "rgb(10, 11, 12)";
 
-          icon.style.setProperty("--pfe-broadcasted--color--text", newColor);
+          icon.style.setProperty("--pfe-broadcasted--text", newColor);
 
           const { floodColor } = getComputedStyle(feFlood);
 
           assert.equal(floodColor, newColor);
 
-          icon.style.removeProperty("--pfe-broadcasted--color--text");
+          icon.style.removeProperty("--pfe-broadcasted--text");
         });
 
         test('it should change size based on the relative size attribute values', () => {

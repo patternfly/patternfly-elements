@@ -4,6 +4,7 @@ body {
 
   transition: opacity var(--pfe-reveal-duration) ease-in-out;
 }
+
 body[unresolved] {
   opacity: 0;
   animation: reveal var(--pfe-reveal-duration) var(--pfe-reveal-delay) 1

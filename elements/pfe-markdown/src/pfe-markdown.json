@@ -29,18 +29,7 @@
     "attributes": {
       "title": "Attributes",
       "type": "object",
-      "properties": {
-        "on": {
-          "title": "Context",
-          "type": "string",
-          "enum": [
-            "light",
-            "dark"
-          ],
-          "default": "light",
-          "prefixed": false
-        }
-      }
+      "properties": {}
     }
   },
   "required": ["slots", "attributes"],

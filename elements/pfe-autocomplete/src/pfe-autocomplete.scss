@@ -1,10 +1,12 @@
 @import "../../pfe-sass/pfe-sass";
 $LOCAL: autocomplete;
 
+@include pfe-theme-contexts; // imports on="light" etc support
+
 :host {
   --pfe-autocomplete--BoxShadow: #{pfe-var(box-shadow--inset)};
   --pfe-autocomplete--BackgroundColor: #{pfe-color(surface--lightest)};
-  --pfe-autocomplete--Border:  #{pfe-var(border-width, ui)}  #{pfe-var(border-style, ui)}  #{pfe-color(surface--border)};
+  --pfe-autocomplete--Border:  #{pfe-var(ui--border-width)}  #{pfe-var(ui--border-style)}  #{pfe-color(surface--border)};
 
   display: block;
   position: relative;
@@ -12,7 +14,7 @@ $LOCAL: autocomplete;
 }
 
 .sr-only {
-  @include pfe-sr-only;
+  @extend %sr-only;
 }
 
 #input-box-wrapper {
@@ -22,7 +24,7 @@ $LOCAL: autocomplete;
     box-shadow: #{pfe-local(BoxShadow)} !important;
     padding-left: 10px;
     padding-right: 30px;
-    border-radius: pfe-var(border-radius);
+    border-radius: pfe-var(ui--border-radius);
     background-color: #{pfe-local(BackgroundColor)};
     border: #{pfe-local(Border)};
     font-size: #{pfe-var(font-size)};
@@ -31,6 +33,7 @@ $LOCAL: autocomplete;
     opacity: 1;
     outline: 0;
   }
+    border-color: #{pfe-color(feedback--info)};
 
   ::slotted(input:disabled),
   button:disabled {
@@ -42,7 +45,6 @@ $LOCAL: autocomplete;
 
   button:focus,
   ::slotted(input:focus) {
-    border-color: #66afe9;
     outline: 0;
   }
 
@@ -66,10 +68,8 @@ button {
   background-color: transparent;
   border: none;
   position: absolute;
-  top: 0px;
-  bottom: 0px;
-  padding: 0px;
-  margin: 0px;
+  top: 0;
+  bottom: 0;
   cursor: pointer;
 
   &.clear-search {
@@ -87,7 +87,7 @@ button {
   &.clear-search:hover svg,
   &.clear-search:focus svg {
     opacity: 1;
-    stroke: pfe-color(ui-link);
+    stroke: pfe-color(link);
   }
 
   &[disabled].clear-search:hover svg,
@@ -101,13 +101,13 @@ button {
   }
 
   &.search-button svg {
-    fill: pfe-color(ui-link);
+    fill: pfe-color(link);
     width: 16px;
   }
 
   &.search-button:hover svg,
   &.search-button:focus svg {
-    fill: pfe-color(ui-link--hover);
+    fill: pfe-color(link--hover);
   }
 
   &.clear-search:hover {

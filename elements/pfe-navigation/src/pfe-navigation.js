@@ -59,7 +59,7 @@ class PfeNavigation extends PFElement {
     this._resizeHandler = this._resizeHandler.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
     this._outsideListener = this._outsideListener.bind(this);
-    this._menuItemCloseHandler = this._menuItemCloseHandler.bind(this);
+    this._menuItemClickHandler = this._menuItemClickHandler.bind(this);
     this._observer = new MutationObserver(this._init);
 
     // Capture shadow elements
@@ -77,8 +77,8 @@ class PfeNavigation extends PFElement {
     this.overlay = false;
 
     // make sure we close all of the nav items and hide the overlay when
-    // the mobile menu button fires a close event
-    this._menuItem.addEventListener(`${PfeNavigationItem.tag}:close`, this._menuItemCloseHandler);
+    // the mobile menu button is closed
+    this._menuItem.shadowRoot.querySelector(".pfe-navigation-item__trigger").addEventListener("click", this._menuItemClickHandler);
   }
 
   connectedCallback() {
@@ -126,7 +126,7 @@ class PfeNavigation extends PFElement {
       window.removeEventListener("scroll", this._stickyHandler);
     }
 
-    this._menuItem.removeEventListener(`${PfeNavigationItem.tag}:close`, this._menuItemCloseHandler);
+    this._menuItem.shadowRoot.querySelector(".pfe-navigation-item__trigger").removeEventListener("click", this._menuItemClickHandler);
 
     this._observer.disconnect();
   }
@@ -289,9 +289,11 @@ class PfeNavigation extends PFElement {
     }
   }
 
-  _menuItemCloseHandler(event) {
-    this._activeNavigationItems.map(item => item.close());
-    this.overlay = false;
+  _menuItemClickHandler(event) {
+    if (event.currentTarget.getAttribute("aria-expanded") === "false") {
+      this._activeNavigationItems.map(item => item.close());
+      this.overlay = false;
+    }
   }
 }
 

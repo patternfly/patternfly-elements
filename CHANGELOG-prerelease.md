@@ -1,4 +1,10 @@
-## Prerelease 31 ( 2019-11-25)
+## Prerelease 32 ( TBD )
+
+Tag: [v1.0.0-prerelease.32](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.32)
+
+- []() DE21128 Add support for theme hooks within surface colors mixin 
+
+## Prerelease 31 ( 2019-11-25 )
 
 Tag: [v1.0.0-prerelease.31](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.31)
 

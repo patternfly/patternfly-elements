@@ -60,6 +60,7 @@ class PfeNavigation extends PFElement {
     this._stickyHandler = this._stickyHandler.bind(this);
     this._outsideListener = this._outsideListener.bind(this);
     this._menuItemClickHandler = this._menuItemClickHandler.bind(this);
+    this._overlayClickHandler = this._overlayClickHandler.bind(this);
     this._observer = new MutationObserver(this._init);
 
     // Capture shadow elements
@@ -79,6 +80,10 @@ class PfeNavigation extends PFElement {
     // make sure we close all of the nav items and hide the overlay when
     // the mobile menu button is closed
     this._menuItem.shadowRoot.querySelector(".pfe-navigation-item__trigger").addEventListener("click", this._menuItemClickHandler);
+
+    // make sure we close all of the nav items and hide the overlay
+    // when it's clicked
+    this._overlay.addEventListener("click", this._overlayClickHandler);
   }
 
   connectedCallback() {
@@ -127,6 +132,7 @@ class PfeNavigation extends PFElement {
     }
 
     this._menuItem.shadowRoot.querySelector(".pfe-navigation-item__trigger").removeEventListener("click", this._menuItemClickHandler);
+    this._overlay.removeEventListener("click", this._overlayClickHandler);
 
     this._observer.disconnect();
   }
@@ -167,10 +173,9 @@ class PfeNavigation extends PFElement {
     // Check if the clicked element contains or is contained by the navigation element
     let isChild = event.target.closest("pfe-navigation");
     let insideWrapper = event.target.tagName.includes("-") ? event.target.shadowRoot.querySelector("pfe-navigation") : null;
-    // Check if the clicked element is the overlay object
-    let isOverlay = event && event.path && event.path.length > 0 && event.path[0] === this._overlay;
+    
     // Check states to determine if the navigation items should close
-    if (isOverlay || (!isSelf && !(isChild || insideWrapper))) {
+    if (!isSelf && !(isChild || insideWrapper)) {
       this._activeNavigationItems.map(item => item.close());
     }
   }
@@ -294,6 +299,11 @@ class PfeNavigation extends PFElement {
       this._activeNavigationItems.map(item => item.close());
       this.overlay = false;
     }
+  }
+
+  _overlayClickHandler(event) {
+    this._activeNavigationItems.map(item => item.close());
+    this.overlay = false;
   }
 }
 

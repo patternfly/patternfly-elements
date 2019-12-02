@@ -1,6 +1,6 @@
 // -- @TODO Set icons to hide if they all fail to load, else set them to preserve space
 
-// Import polyfills
+// Import polyfills: filter, matches, closest, includes, path
 import "./polyfills--pfe-navigation.js";
 
 import PFElement from "../../pfelement/dist/pfelement.js";

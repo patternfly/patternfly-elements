@@ -9,7 +9,7 @@ $pfe-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #
 
 :host([pfe-indeterminate]) {
     ::slotted(*) {
-        @include pfe-sr-only;
+        @extend %sr-only;
     }
     animation: spin 1s linear infinite;
     -webkit-animation:spin 1s linear infinite;

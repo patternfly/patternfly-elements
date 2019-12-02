@@ -1,4 +1,4 @@
-# WIP: PatternFly Element | Navigation Element
+# PatternFly Element | Navigation Element
 
 ## Navigation element
 

@@ -2,45 +2,47 @@
 
 $LOCAL: band;
 
-:host {
-  display: block;
+
+$variables: (
 
   // Default spacing values
-  --pfe-band--Padding--vertical:               calc( #{pfe-var(container-spacer)} * 4);
-  --pfe-band--Padding--horizontal:             calc( #{pfe-var(container-spacer)} * 1);
+  Padding--vertical:    calc( #{pfe-var(container-spacer)} * 4),
+  Padding--horizontal:  calc( #{pfe-var(container-spacer)} * 1),
+
   // Bring them together for ease of use below
-  --pfe-band--Padding:                         #{pfe-local(Padding--vertical)}  #{pfe-local(Padding--horizontal)};
+  Padding: #{pfe-local(Padding--vertical)}  #{pfe-local(Padding--horizontal)},
 
   // Surface colors
-  --pfe-band--BackgroundColor:                 #{pfe-color(surface--base)};
-  --pfe-band--BackgroundPosition:              center center;
+  BackgroundColor:    #{pfe-color(surface--base)},
+  BackgroundPosition: center center,
 
   // Border settings
-  --pfe-band--Border:                          #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
+  Border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent,
 
   // Layouts, grid layouts
-  --pfe-band--layout:                           1fr;
-  --pfe-band__header--layout:                   1fr;
-  --pfe-band__body--layout:                     1fr;
-  --pfe-band__footer--layout:                   1fr;
-  --pfe-band__aside--layout:                    1fr;
+  layout: 1fr,
+  
+  header: ( layout: 1fr ),
+  body:   ( layout: 1fr ),
+  footer: ( layout: 1fr ),
+  aside:  ( layout: 1fr ),
 
   // Vertical spacing
-  --pfe-band--gutter--vertical:                 #{pfe-var(container-spacer)};
-  --pfe-band--gutter--horizontal:               calc(#{pfe-var(container-spacer)} * 3);
-
-  // Text colors
-  --pfe-broadcasted--color--text:              #{pfe-color(surface--base--text)};
-  --pfe-broadcasted--color--ui-link:           #{pfe-color(surface--base--link)};
-  --pfe-broadcasted--color--ui-link--visited:  #{pfe-color(surface--base--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:    #{pfe-color(surface--base--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:    #{pfe-color(surface--base--link--focus)};
+  gutter--vertical:   #{pfe-var(container-spacer)},
+  gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3),
 
   // Band width logic
   // Initialize at mobile breakpoint
-  --pfe-band--Width: auto;
-  --pfe-band--Width__aside--sm: 240px;
-  --pfe-band--Width__aside--lg: 300px;
+  Width: auto,
+  Width__aside--sm: 240px,
+  Width__aside--lg: 300px,
+
+);
+
+:host {
+  @include pfe-print-variables($variables);
+  @include pfe-set-broadcast-theme(light);
+  --theme: light;
 
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
@@ -48,17 +50,15 @@ $LOCAL: band;
       --pfe-band--Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) );
     }
   }
-  // Reduce padding for print
-  @media print {
-    --pfe-band--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
-  }
 
   // Wrapper sets padding and background visuals
+  display: block;
   position: relative;
 
-  // Padding
+  // Custom padding on mobile
   padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
 
+  // Variable padding on desktop
   @media (min-width: #{pfe-breakpoint(sm)}) {
     padding: #{pfe-local(Padding)};
   }
@@ -69,10 +69,25 @@ $LOCAL: band;
   // Base colors
   background-color:      #{pfe-local(BackgroundColor)};
   background-position:   #{pfe-local(BackgroundPosition)};
-  color:                 #{pfe-radio(color, text)};
+  color:                 #{pfe-apply-broadcast(text)};
 
   // Remove background color for print
   @include pfe-no-print-background;
+
+  @include pfe-print-media {
+    // Add the border to the card for print
+    border-radius: #{map-get($pfe-vars, surface--border-radius)};
+    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
+    // Reduce padding for print
+    padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
+  }
+
+  @include browser-query(ie11) {
+    background-color: #{pfe-color(surface--lightest)} !important;
+    color: #{pfe-color(text)} !important;
+    background-image: none !important;
+    padding: calc(#{pfe-var(container-spacer)});
+  }
 
   // Tag element styles
   *, *::before, *::after {
@@ -80,20 +95,15 @@ $LOCAL: band;
   }
 }
 
-@each $color in (darker, darkest, accent, complement, lighter, lightest) {
-  :host([pfe-color="#{$color}"]) {
-    --pfe-band--BackgroundColor:                  #{pfe-color(surface--#{$color})};
-    --pfe-broadcasted--color--text:               #{pfe-color(surface--#{$color}--text)};
-    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--#{$color}--link)};
-    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--#{$color}--link--visited)};
-    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--#{$color}--link--hover)};
-    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--#{$color}--link--focus)};
-  }
-}
+// Use-case for transparent backgrounds
+@include pfe-theme-contexts; // imports on="light" etc support
+
+// Pull in pfe-color settings for all supported surface colors
+@include pfe-surfaces;
 
 // thinner padding on top & bottom
 :host([pfe-size="small"]) {
-  --pfe-band--Padding:   calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
+  --pfe-band--Padding: calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
 }
 
 .pfe-band {

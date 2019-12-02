@@ -8,7 +8,7 @@ $variables: (
 
   // Darkest is the default background color
   BackgroundColor: pfe-color(surface--darkest),
-  Color:           pfe-color(surface--darkest--text),
+  Color:           pfe-color(text--on-dark),
 
   // Variables for the border
   BorderTopColor: transparent,
@@ -23,7 +23,7 @@ $variables: (
 
   // Overlay region
   overlay: (
-    BackgroundColor: pfe-var($cssvar: overlay--BackgroundColor, $fallback: #{$overlay--BackgroundColor--fallback})
+    BackgroundColor: pfe-color(overlay, #{$overlay--BackgroundColor--fallback})
   ),
 
   // Trigger region
@@ -40,7 +40,7 @@ $variables: (
 
 :host {
   // Print the variables to the DOM
-  @include print-variables-map($variables);
+  @include pfe-print-variables($variables);
 
   // Reduce padding for print
   @media print {
@@ -64,16 +64,15 @@ $variables: (
   }
 
   display: block;
-  z-index: pfe-var($cssvar: content, $category: zindex, $map: $z-index);
+  z-index: #{pfe-zindex(content)};
   width: 100%;
 }
 
-:host(.sticky) {
+:host(.pfe-sticky) {
   position: sticky;
   top: 0;
   left: 0;
-  width: 100vw;
-  z-index: pfe-var($cssvar: navigation, $category: zindex, $map: $z-index);
+  z-index: #{pfe-zindex(navigation)};
 }
 
 pfe-icon {
@@ -83,37 +82,30 @@ pfe-icon {
 // Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
   margin: 0 !important;
-  max-height: pfe-local(MaxHeight);
+  max-height: #{pfe-local(MaxHeight)};
 }
 
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
-  color: #{pfe-radio(color, ui-link)};
-  text-decoration: #{pfe-radio(link, text-decoration)};
+  color: #{pfe-apply-broadcast(link)};
+  text-decoration: #{pfe-apply-broadcast(link-decoration)};
 }
 
 ::slotted([slot="mobile-menu--label"]) {
-  font-family: pfe-var(font-family);
-  font-size:   pfe-local(FontSize);
-  font-weight: pfe-local(FontWeight);
-  color: pfe-local(Color);
+  font-family: #{pfe-local(font-family)};
+  font-size:   #{pfe-local(FontSize)};
+  font-weight: #{pfe-local(FontWeight)};
+  color: #{pfe-local(Color)};
   margin-bottom: 0;
 }
 
 .pfe-navigation {
   &__wrapper {
-    @each $prop in (text, ui-link, ui-link--hover, ui-link--visited, ui-link--focus) {
-      --pfe-broadcasted--color--#{$prop}: #{pfe-local(
-        $cssvar: Color,
-        $fallback: #{pfe-color(surface--darkest--text)}
-      )};
-    }
+    @include pfe-set-broadcast-theme(dark);
+    
     display: flex;
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
-    z-index: #{pfe-var(
-      $cssvar: navigation,
-      $map: $z-index
-    )};
+    z-index: #{pfe-zindex(navigation)};
     
     background-color: #{pfe-local(BackgroundColor)};
     color: #{pfe-local(Color)};
@@ -156,21 +148,13 @@ pfe-icon {
   }
   &__overlay {
     display: block;
-    background-color: #{pfe-local(
-      $cssvar: BackgroundColor,
-      $region: overlay,
-      $fallback: #{$overlay--BackgroundColor--fallback}
-    )};
+    background-color: #{pfe-local($region: overlay, $cssvar: BackgroundColor)};
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: #{pfe-var(
-      $cssvar: overlay,
-      $category: 'zindex',
-      $map: $z-index
-    )};
+    z-index: #{pfe-zindex(overlay)};
     &[hidden] {
       display: none;
     }
@@ -196,7 +180,7 @@ pfe-icon {
   }
   &__skip {
     display: block;
-    @include pfe-sr-only;
+    @extend %sr-only;
     margin: 0 -2em -1px -1px;
   }
   &__main {

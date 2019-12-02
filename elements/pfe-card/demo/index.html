@@ -4,6 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PFElements: pfe-card Demo</title>
+
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+    
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
@@ -67,7 +83,7 @@
       }
 
       a {
-        color: var(--pfe-broadcasted--color--ui-link);
+        color: var(--pfe-broadcasted--link);
       }
     </style>
 
@@ -150,7 +166,7 @@
       </pfe-card>
 
       <pfe-card pfe-color="lighter">
-        <img pfe-overflow="top right left" src="https://placekitten.com/600/300"/>
+        <img pfe-overflow="top right left" src="https://placekitten.com/900/300"/>
         <h2>Imaged card with top & side overflow</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis, porro?</p>
         <pfe-cta slot="pfe-card--footer">
@@ -169,7 +185,7 @@
 
       <pfe-card pfe-color="lighter">
         <h2>Imaged card with side overflow</h2>
-        <img pfe-overflow="right left" src="https://placekitten.com/450/250"/>
+        <img pfe-overflow="right left" src="https://placekitten.com/650/250"/>
         <pfe-cta slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>

@@ -7,25 +7,25 @@ $trigger--FontWeight--fallback: #{pfe-var(font-weight--light)};
 $trigger--Color--fallback: #{pfe-color(text--on-dark)};
 
 $LOCAL: navigation;
-$USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
+ // turn on automatic fallbacks for broadcasted variables
 
 // -- Typography
 %link-styles {
-    color: #{pfe-radio(color, ui-link)};
-    text-decoration: #{pfe-var(link, text-decoration)};
+    color: #{pfe-apply-broadcast(link)};
+    text-decoration: #{pfe-apply-broadcast(link-decoration)};
     &:visited {
-        color: #{pfe-radio(color, ui-link, visited)};
+        color: #{pfe-apply-broadcast(link--visited)};
     }
     &:hover {
-        color: #{pfe-radio(color, ui-link, hover)};
-        text-decoration: #{pfe-var(link, text-decoration, hover)};
+        color: #{pfe-apply-broadcast(link--hover)};
+        text-decoration: #{pfe-apply-broadcast(link-decoration--hover)};
     }
     &:focus {
         outline-offset: 1px;
         outline-style: dotted;
         outline-width: 1px;
-        outline-color: #{pfe-radio(color, ui-link, focus)};
-        color: #{pfe-radio(color, ui-link, focus)};
+        outline-color: #{pfe-apply-broadcast(link--focus)};
+        color: #{pfe-apply-broadcast(link--focus)};
     }
 }
 
@@ -45,10 +45,7 @@ $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
             $fallback: #{$trigger--Color--fallback}
         )};
     z-index: 2;
-
-    @media screen and (min-width: 1024px) {
-        text-align: center;
-    }
+    line-height: 1.1;
 
     @media screen and (min-width: 1200px) {
         white-space: nowrap;

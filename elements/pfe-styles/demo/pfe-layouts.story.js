@@ -11,10 +11,10 @@ stories.addParameters({
 });
 
 stories.add(
-  "pfe-layouts",
+  "pfe-styles",
   () => `
-  <link rel="stylesheet" type="text/css" href="/pfe-layouts/dist/pfe-base.css">
-  <link rel="stylesheet" type="text/css" href="/pfe-layouts/dist/pfe-layouts.css">
+  <link rel="stylesheet" type="text/css" href="/pfe-styles/dist/pfe-base.css">
+  <link rel="stylesheet" type="text/css" href="/pfe-styles/dist/pfe-layouts.css">
   <style>
   body {
     padding: 32px;

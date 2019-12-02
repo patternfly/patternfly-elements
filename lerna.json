@@ -4,10 +4,8 @@
     "elements/*",
     "themes/*"
   ],
-  "version": "1.0.0-prerelease.27",
+  "version": "1.0.0-prerelease.30",
   "ignoreChanges": [
-    "elements/*/*.css",
-    "elements/*/*.js",
-    "elements/*/*.map"
+    "elements/*/dist/**/*"
   ]
 }

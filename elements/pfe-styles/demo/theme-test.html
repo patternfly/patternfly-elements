@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>PatternFly Element | pfe-modal Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+    <script>
+      require([
+        '../../pfe-accordion/dist/pfe-accordion.umd.js',
+        '../../pfe-tabs/dist/pfe-tabs.umd.js',
+        '../../pfe-modal/dist/pfe-modal.umd.js',
+        '../../pfe-band/dist/pfe-band.umd.js',
+        '../../pfe-card/dist/pfe-card.umd.js',
+        '../../pfe-cta/dist/pfe-cta.umd.js'
+      ])
+
+    </script>
+
+  </head>
+
+  <body>
+    <pfe-band pfe-color="lightest">
+      <header slot="pfe-band--header">
+        <h2>Accordion component</h2>
+      </header>
+      <article>
+        <pfe-accordion>
+          <pfe-accordion-header>
+            <h3>Nested panel example</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <pfe-accordion>
+              <pfe-accordion-header>
+                <h3>Panel with multiple paragraphs</h3>
+              </pfe-accordion-header>
+              <pfe-accordion-panel>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum.</p>
+                <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                  sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              </pfe-accordion-panel>
+            </pfe-accordion>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Panel with links</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
+              repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+              they depict. A portrait of his parents would not be of much help to Harry.</p>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Panel with CTA</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            </p>
+            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <pfe-cta>
+          </pfe-accordion-panel>
+        </pfe-accordion>
+      </article>
+    </pfe-band>
+
+    <pfe-band pfe-color="darkest">
+      <header slot="pfe-band--header">
+        <h2>Accordion component on dark</h2>
+      </header>
+      <article>
+        <pfe-accordion>
+          <pfe-accordion-header>
+            <h3>Nested panel example</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <pfe-accordion>
+              <pfe-accordion-header>
+                <h3>Panel with multiple paragraphs</h3>
+              </pfe-accordion-header>
+              <pfe-accordion-panel>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum.</p>
+                <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                  sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              </pfe-accordion-panel>
+            </pfe-accordion>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Panel with links</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
+              repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+              they depict. A portrait of his parents would not be of much help to Harry.</p>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Panel with CTA</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            </p>
+            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <pfe-cta>
+          </pfe-accordion-panel>
+        </pfe-accordion>
+      </article>
+    </pfe-band>
+
+
+    <pfe-band pfe-color="complement">
+      <header slot="pfe-band--header">
+        <h2>Accordion component on saturated</h2>
+      </header>
+      <article>
+        <pfe-accordion>
+          <pfe-accordion-header>
+            <h3>Nested panel example</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <pfe-accordion>
+              <pfe-accordion-header>
+                <h3>Panel with multiple paragraphs</h3>
+              </pfe-accordion-header>
+              <pfe-accordion-panel>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum.</p>
+                <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                  sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              </pfe-accordion-panel>
+            </pfe-accordion>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Panel with links</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
+              repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+              they depict. A portrait of his parents would not be of much help to Harry.</p>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Panel with CTA</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            </p>
+            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <pfe-cta>
+          </pfe-accordion-panel>
+        </pfe-accordion>
+      </article>
+    </pfe-band> <!-- Pattern | raw_html -->
+
+    <pfe-band>
+      <header slot="pfe-band--header">
+        <h2>Band component</h2>
+        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+          sed diam voluptua.</p>
+      </header>
+      <article>
+        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+          takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+          diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+          accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+          dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+          invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+          dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+      </article>
+      <pfe-card pfe-color="accent" slot="pfe-band--aside">
+        <h3 slot="header">Card component</h3>
+        <p>Ut wisi enim ad minim veniam.</p>
+        <pfe-cta slot="footer">
+          <a href="#">Call-to-action component</a>
+        </pfe-cta>
+      </pfe-card>
+      <pfe-cta pfe-priority="primary" slot="pfe-band--footer">
+        <a href="#">Call-to-action component</a>
+      </pfe-cta>
+    </pfe-band>
+
+    <pfe-band pfe-color="darkest">
+      <header slot="pfe-band--header">
+        <h2>Band component</h2>
+        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+          sed diam voluptua.</p>
+      </header>
+      <article style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 15px;">
+        <pfe-card pfe-color="lightest">
+          <h3 slot="header">Card component</h3>
+          <p>Ut wisi enim ad minim veniam.</p>
+          <pfe-cta slot="pfe-card--footer">
+            <a href="#">Call-to-action component</a>
+          </pfe-cta>
+        </pfe-card>
+        <pfe-card pfe-color="accent">
+          <h3 slot="header">Card component</h3>
+          <p>Ut wisi enim ad minim veniam.</p>
+          <pfe-cta slot="pfe-card--footer">
+            <a href="#">Call-to-action component</a>
+          </pfe-cta>
+        </pfe-card>
+        <pfe-card>
+          <h3 slot="header">Card component</h3>
+          <p>Ut wisi enim ad minim veniam.</p>
+          <pfe-cta slot="pfe-card--footer">
+            <a href="#">Call-to-action component</a>
+          </pfe-cta>
+        </pfe-card>
+      </article>
+    </pfe-band>
+
+    <pfe-band pfe-color="complement">
+      <header slot="pfe-band--header">
+        <h2>Band component</h2>
+        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+          sed diam voluptua.</p>
+      </header>
+      <article style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 15px;">
+        <pfe-card pfe-color="lightest">
+          <h3 slot="header">Card component</h3>
+          <p>Ut wisi enim ad minim veniam.</p>
+          <pfe-cta slot="pfe-card--footer">
+            <a href="#">Call-to-action component</a>
+          </pfe-cta>
+        </pfe-card>
+        <pfe-card pfe-color="darkest">
+          <h3 slot="header">Card component</h3>
+          <p>Ut wisi enim ad minim veniam.</p>
+          <pfe-cta slot="pfe-card--footer">
+            <a href="#">Call-to-action component</a>
+          </pfe-cta>
+        </pfe-card>
+        <pfe-card>
+          <h3 slot="header">Card component</h3>
+          <p>Ut wisi enim ad minim veniam.</p>
+          <pfe-cta slot="pfe-card--footer">
+            <a href="#">Call-to-action component</a>
+          </pfe-cta>
+        </pfe-card>
+      </article>
+    </pfe-band> <!-- Pattern | raw_html -->
+
+    <pfe-band pfe-color="lightest">
+      <header slot="pfe-band--header">
+        <h2>Tab component</h2>
+      </header>
+      <pfe-tabs>
+        <pfe-tab role="tab" slot="tab"><h2>Tab 1</h2></pfe-tab>
+        <pfe-tab-panel role="tabpanel" slot="panel">
+          <h2>Content 1</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+        </pfe-tab-panel>
+        <pfe-tab role="tab" slot="tab"><h2>Tab 2</h2></pfe-tab>
+        <pfe-tab-panel role="tabpanel" slot="panel">
+          <h2>Content 2</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+        </pfe-tab-panel>
+        <pfe-tab role="tab" slot="tab"><h2>Tab 3</h2></pfe-tab>
+        <pfe-tab-panel role="tabpanel" slot="panel">
+          <h2>Content 3</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+        </pfe-tab-panel>
+      </pfe-tabs>
+    </pfe-band>
+
+    <pfe-band pfe-color="darkest">
+      <header slot="pfe-band--header">
+        <h2>Tab component</h2>
+      </header>
+      <pfe-tabs>
+        <pfe-tab role="tab" slot="tab"><h2>Tab 1</h2></pfe-tab>
+        <pfe-tab-panel role="tabpanel" slot="panel">
+          <h2>Content 1</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+        </pfe-tab-panel>
+        <pfe-tab role="tab" slot="tab"><h2>Tab 2</h2></pfe-tab>
+        <pfe-tab-panel role="tabpanel" slot="panel">
+          <h2>Content 2</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+        </pfe-tab-panel>
+        <pfe-tab role="tab" slot="tab"><h2>Tab 3</h2></pfe-tab>
+        <pfe-tab-panel role="tabpanel" slot="panel">
+          <h2>Content 3</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+        </pfe-tab-panel>
+      </pfe-tabs>
+    </pfe-band>
+
+    <pfe-band pfe-color="complement">
+      <header slot="pfe-band--header">
+        <h2>Tab component</h2>
+      </header>
+      <pfe-tabs>
+        <pfe-tab role="tab" slot="tab"><h2>Tab 1</h2></pfe-tab>
+        <pfe-tab-panel role="tabpanel" slot="panel">
+          <h2>Content 1</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+        </pfe-tab-panel>
+        <pfe-tab role="tab" slot="tab"><h2>Tab 2</h2></pfe-tab>
+        <pfe-tab-panel role="tabpanel" slot="panel">
+          <h2>Content 2</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+        </pfe-tab-panel>
+        <pfe-tab role="tab" slot="tab"><h2>Tab 3</h2></pfe-tab>
+        <pfe-tab-panel role="tabpanel" slot="panel">
+          <h2>Content 3</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+        </pfe-tab-panel>
+      </pfe-tabs>
+    </pfe-band> <!-- Pattern | raw_html -->
+
+    <pfe-band pfe-color="lightest">
+      <header slot="pfe-band--header" style="text-align: center">
+        <h2>Call-to-action component</h2>
+      </header>
+      <article style="display: flex; flex-flow: row wrap; align-items: center; justify-content: center;">
+        <pfe-cta style="margin-right: 10px;"><a href="#">Default</a></pfe-cta>
+        <pfe-cta style="margin-right: 10px;" pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
+        <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
+      </article>
+    </pfe-band>
+
+    <pfe-band pfe-color="darkest">
+      <header slot="pfe-band--header" style="text-align: center">
+        <h2>Call-to-action component</h2>
+      </header>
+      <article style="display: flex; flex-flow: row wrap; align-items: center; justify-content: center;">
+        <pfe-cta style="margin-right: 10px;"><a href="#">Default</a></pfe-cta>
+        <pfe-cta style="margin-right: 10px;" pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
+        <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
+        </pfe-cta>
+      </article>
+    </pfe-band>
+    <pfe-band pfe-color="complement">
+      <header slot="pfe-band--header" style="text-align: center">
+        <h2>Call-to-action component</h2>
+      </header>
+      <article style="display: flex; flex-flow: row wrap; align-items: center; justify-content: center;">
+        <pfe-cta style="margin-right: 10px;"><a href="#">Default</a></pfe-cta>
+        <pfe-cta style="margin-right: 10px;" pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
+        <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
+      </article>
+    </pfe-band> <!-- Pattern | raw_html -->
+
+    <style>
+      .border-card {
+        --pfe-card--Border: 1px solid var(--pfe-theme--surface--border, #d2d2d2);
+      }
+
+      .border-card h3 {
+        margin-top: 0;
+      }
+
+      .resource-card [slot="pfe-card--header"] {
+        text-transform: uppercase;
+      }
+
+      .custom-styles {
+        --pfe-card--BackgroundPosition: bottom right;
+        --pfe-card--BackgroundColor: #e00;
+        --pfe-broadcasted--color--text: #fff;
+        --pfe-broadcasted--color--ui-link: #fff;
+        --pfe-broadcasted--color--ui-link--hover: #eee;
+        --pfe-broadcasted--color--ui-link--focus: #fff;
+      }
+
+      .custom-styles h3 {
+        margin-top: 0;
+      }
+
+    </style>
+
+    <pfe-band pfe-color="lightest">
+      <header slot="pfe-band--header">
+        <h2>Band component</h2>
+      </header>
+      <article style="display: grid; grid-gap: 20px; grid-template-columns: repeat(3, 1fr);">
+        <pfe-card pfe-color="lightest" class="border-card PFElement" pfelement="" has_body="" has_footer="" pfe-type="container" on="light">
+          <img src="https://web-dev-drupal-carobert.dev.a1.vary.redhat.com/cms/managed-files/placeholder.jpg"
+            pfe-overflow="top right left" style="max-height: 200px;">
+          <h3 class="pfe-headline-3">Card component</h3>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.</p>
+          <pfe-cta slot="pfe-card--footer"><a href="#">Call-to-action component</a></pfe-cta>
+        </pfe-card>
+
+        <pfe-card pfe-color="complement" pfe-size="small" class="resource-card PFElement" pfelement="" has_header="" has_body="" has_footer="" pfe-type="container" on="saturated">
+          <h3 slot="pfe-card--header">
+            <span>Card heading</span>
+          </h3>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <div slot="pfe-card--footer">
+            <pfe-cta pfe-priority="secondary"><a href="#">Learn more</a></pfe-cta>
+          </div>
+        </pfe-card>
+
+        <pfe-card pfe-color="accent"
+          pfe-img-src="https://web-dev-drupal-carobert.dev.a1.vary.redhat.com/cms/managed-files/bkgd-training-value-2000x727.png"
+          class="custom-styles PFElement" pfelement="" has_body="" has_footer="" pfe-type="container" on="saturated"
+          style="background-image: url(&quot;https://web-dev-drupal-carobert.dev.a1.vary.redhat.com/cms/managed-files/bkgd-training-value-2000x727.png&quot;);">
+          <pfe-icon icon="rh-atom" circled="lightest" size="lg">
+          <h3 class="pfe-headline-3">Card heading</h3>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <div slot="pfe-card--footer">
+            <pfe-cta><a href="#">Learn more</a></pfe-cta>
+          </div>
+        </pfe-card>
+      </article>
+    </pfe-band> <!-- Pattern | raw_html -->
+
+    <pfe-band pfe-color="lighter">
+      <h3 class="pfe-headline-2" slot="pfe-band--header">Modal demo</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 15px;">
+        <pfe-card pfe-color="darkest">
+          <pfe-modal id="test-modal-1">
+            <pfe-cta pfe-priority="secondary" slot="pfe-modal--trigger"><a>Open modal</a></pfe-cta>
+            <h2 slot="pfe-modal--header">Modal with a header</h2>
+            <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+              laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+              esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+              qui officia deserunt mollit anim id est laborum.</p>
+            <pfe-cta id="test-modal-1-cta"><a href="#">Learn more</a></pfe-cta>
+          </pfe-modal>
+        </pfe-card>
+        <pfe-card pfe-color="lightest">
+          <pfe-modal id="test-modal-2">
+            <pfe-cta pfe-priority="secondary" slot="pfe-modal--trigger"><a>Open modal</a></pfe-cta>
+            <h2 slot="pfe-modal--header">Modal with a header</h2>
+            <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+              laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+              esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+              qui officia deserunt mollit anim id est laborum.</p>
+            <pfe-cta id="test-modal-2-cta"><a href="#">Learn more</a></pfe-cta>
+          </pfe-modal>
+        </pfe-card>
+        <pfe-card pfe-color="complement">
+          <pfe-modal id="test-modal-3">
+            <pfe-cta pfe-priority="secondary" slot="pfe-modal--trigger"><a>Open modal</a></pfe-cta>
+            <h2 slot="pfe-modal--header">Modal with a header</h2>
+            <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+              laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+              esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+              qui officia deserunt mollit anim id est laborum.</p>
+            <pfe-cta id="test-modal-3-cta"><a href="#">Learn more</a></pfe-cta>
+          </pfe-modal>
+        </pfe-card>
+      </div>
+    </pfe-band>
+
+  </body>
+
+</html>

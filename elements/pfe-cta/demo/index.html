@@ -3,20 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <title>PFElements: pfe-cta Demo</title>
+  <title>PatternFly Elements: pfe-cta demo</title>
+
+  <!-- Stylesheets for testing light DOM styles.
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+  -->
+    
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
   <noscript>
-    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet" />
   </noscript>
 
-  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
-  <link href="../../pfe-layouts/dist/pfe-layouts.css" rel="stylesheet">
+  <link href="../../pfelement/pfelement.min.css" rel="stylesheet" />
 
-  <link href="../../pfe-cta/dist/pfe-cta--lightdom.css" rel="stylesheet">
-
-  <link rel="stylesheet" href="https://overpass-30e2.kxcdn.com/overpass.css" />
-
-  <link href="demo.css" rel="stylesheet">
+  <link href="../../pfe-cta/dist/pfe-cta--lightdom.css" rel="stylesheet" />
+  <link href="demo.css" rel="stylesheet" />
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
@@ -39,14 +44,12 @@
   ]);
   </script>
 </head>
-
 <body unresolved>
-  <pfe-band pfe-pfe-color="complement" pfe-size="small">
+  <pfe-band pfe-color="complement" pfe-size="small">
     <h1 slot="pfe-band--header">&lt;pfe-cta&gt;</h1>
   </pfe-band>
 
-
-  <pfe-band pfe-pfe-color="lighter">
+  <pfe-band pfe-color="lighter">
       <h2 slot="pfe-band--header">CTAs in light PFE containers</h3>
       <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-3-col-on-lg">
         <pfe-card pfe-color="lightest">
@@ -89,8 +92,8 @@
         </pfe-card>
     </div>
   </pfe-band>
-
-  <pfe-band pfe-pfe-color="darker">
+  
+  <pfe-band pfe-color="darker">
     <h2 slot="pfe-band--header">CTAs in dark PFE containers</h3>
       <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-3-col-on-lg">
       <pfe-card pfe-color="darkest">
@@ -136,8 +139,8 @@
   <br />
   <h1>Old school testing (custom backgrounds)</h1>
   <br />
-  <div class="custom-light-band ">
-    <h2>Custom light band with broadcast vars</h2>
+  <div class="custom-saturated-band on-saturated">
+    <h2>Custom saturated band with broadcast vars</h2>
     <h3>Color responsive</h3>
     <pfe-cta><a href="#">Default</a></pfe-cta>
     <pfe-cta pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
@@ -150,7 +153,7 @@
     <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="#">Primary lightest</a></pfe-cta>
     <pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="#">Secondary wind</a></pfe-cta>
   </div>
-  <div class="custom-dark-band">
+  <div class="custom-dark-band on-dark">
     <h2 style="color:white;">Custom dark band with custom broadcast variables</h2>
     <h3 style="color: white">Color responsive</h3>
     <pfe-cta><a href="#">Default</a></pfe-cta>

@@ -6,6 +6,27 @@
 
     <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
     <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.min.css">
+    <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
+    <link rel="stylesheet" type="text/css" href="../_temp/pfe-colors.css">
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet" />
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
+  
+    <link href="../../pfe-cta/dist/pfe-cta--lightdom.css" rel="stylesheet" />
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>
+    require([
+      '../../pfe-cta/dist/pfe-cta.umd.js'
+    ])
+    </script>
+    
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
@@ -17,18 +38,40 @@
         background: #e7e7e7;
       }
 
+      h1, h2, h3, h4, h5, h6, p, button {
+        color: var(--pfe-broadcasted--text, #252525);
+      }
+
       header h1 {
         margin-top: 0;
       }
 
-      section {
-        margin: 32px 0;
+      section,
+      section.pfe-m-gutters {
+        margin: 32px 0 !important;
       }
 
       section section {
         padding: 32px;
-        background: #fff;
+        background-color: #fff;
         box-shadow: 0 1px 3px rgba(0,0,0,.2);
+      }
+
+      .context-buttons {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .context-container.on-light {
+        background-color: #fff;
+      }
+
+      .context-container.on-dark {
+        background-color: #444;
+      }
+
+      .context-container.on-saturated {
+        background-color: #0477a4;
       }
 
       section section > h3 {
@@ -44,8 +87,11 @@
         /* border: 1px solid #dedede; */
       }
 
-      .pfe-l-grid > * {
+      .pfe-l-grid > div:not([class]) {
         background: #e0d7ee;
+      }
+
+      .pfe-l-grid > * {
         padding: 8px;
       }
 
@@ -55,10 +101,9 @@
     </style>
   </head>
   <body>
-
     <article>
       <header>
-        <h1>RH Layouts</h1>
+        <h1>Layouts</h1>
       </header>
       <section>
         <h2>Grid</h2>
@@ -132,5 +177,86 @@
       </section>
     </article>
 
+    <article>
+      <header>
+        <h2>Color Palette</h2>
+      </header>
+      <section>
+        <section class="pfe-l-grid pfe-m-gutters context-container">
+          <p>Click the buttons below to change the theme context of the container:</p>
+          <div class="context-buttons">
+            <pfe-cta pfe-priority="secondary" class="themes light">
+              <button name="light">Light theme</button>
+            </pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="complement" class="themes dark">
+              <button name="dark">Dark theme</button>
+            </pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="base" class="themes saturated">
+              <button name="saturated">Saturated theme</button>
+            </pfe-cta>
+          </div>
+          <h3>UI elements</h3>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+            <div class="ui-base"></div>
+            <div class="ui-complement"></div>
+            <div class="ui-accent"></div>
+            <div class="ui-disabled"></div>
+          </div>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+            <div class="ui-base--hover"></div>
+            <div class="ui-complement--hover"></div>
+            <div class="ui-accent--hover"></div>
+            <div class="ui-disabled--hover"></div>
+          </div>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+            <div class="ui-base--focus"></div>
+            <div class="ui-complement--focus"></div>
+            <div class="ui-accent--focus"></div>
+            <div class="ui-disabled--focus"></div>
+          </div>
+        </section>
+
+        <section class="pfe-l-grid pfe-m-gutters">
+          <h3>Surface elements</h3>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+            <button class="lightest"></button>
+            <button class="lighter"></button>
+            <button class="base"></button>
+            <button class="darker"></button>
+            <button class="darkest"></button>
+            <button class="complement"></button>
+            <button class="accent"></button>
+          </div>
+        </section>
+
+      </section>
+    </article>
   </body>
+
+  <script>
+    var containers = document.querySelectorAll(".context-container");
+    var ctas = document.querySelectorAll(".themes");
+
+    var applyTheme = function(event) {
+      var button = event.target;
+      ctas.forEach( function( cta ) {
+        cta.context_set(button.name);
+      });
+      containers.forEach(function(item) {
+        var prevClass = [...item.classList].find(value => /^on-(.*?)/.test(value));
+        if (prevClass) item.classList.remove(prevClass);
+        item.classList.add(`on-${button.name}`);
+      });
+    }
+
+    ctas.forEach(function(item) {
+      item.addEventListener("click", applyTheme);
+      item.addEventListener("keypress", function(event) {
+        var key = event.which || event.keyCode;
+        if (key === 13) { // 13 is enter
+          applyTheme(event);
+        }
+      });
+    });
+  </script>
 </html>

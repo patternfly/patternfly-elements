@@ -2,43 +2,55 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PFElements: pfe-autocomplete Demo</title>
 
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+    
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
     <noscript>
-      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
     </noscript>
 
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require([
       '../dist/pfe-autocomplete.umd.js'
     ])</script>
   </head>
   <body unresolved>
-    <h1>&lt;pfe-autocomplete&gt;</h1>
-    <h2>Static Data</h2>
-    <p>Uses an array of strings.</p>
+    <h1 class="pfe-headline-1">&lt;pfe-autocomplete&gt;</h1>
+    <h2 class="pfe-headline-2">Static Data</h2>
+    <p class="pfe-text">Uses an array of strings.</p>
     <div>
       <pfe-autocomplete id="static" debounce="300">
         <input placeholder="Enter Your Search Term"/>
       </pfe-autocomplete>
     </div>
-    <h4>Static Selected Value: <span id="staticSelectedValue"></span></h4>
+    <h4 class="pfe-headline-4">Static Selected Value: <span style="color:var(--pfe-theme--color--ui-accent)" id="staticSelectedValue"></span></h4>
 
-    <h2>Lazy Loading with init-value</h2>
-    <p>Makes an ajax call, filters the response and sends the filtered data to the component.</p>
+<hr>
+    <h2 class="pfe-headline-2">Lazy Loading with init-value</h2>
+    <p class="pfe-text">Makes an ajax call, filters the response and sends the filtered data to the component.</p>
     <div>
       <pfe-autocomplete id="search-lazy-loading" debounce="500" init-value="uni">
         <input placeholder="Enter Your Search Term"/>
       </pfe-autocomplete>
     </div>
-    <h4>Ajax Selected Value: <span id="ajaxSelectedValue"></span></h4>
+    <h4 class="pfe-headline-4">Ajax Selected Value: <span id="ajaxSelectedValue"></span></h4>
 
-    <h2>Disabled</h2>
+<hr>
+    <h2 class="pfe-headline-2">Disabled</h2>
     <div>
       <pfe-autocomplete is-disabled init-value="uni"><input placeholder="Enter Your Search Term"/></pfe-autocomplete>
     </div>
@@ -65,7 +77,9 @@
 
       staticAutocomplete.autocompleteRequest = function(params, callback) {
         const regx = new RegExp("\^" + params.query, "i");
-        callback(items.filter(item => regx.test(item)));
+        callback(items.filter(function (item) {
+          return regx.test(item);
+        }));
       };
 
       staticAutocomplete.addEventListener('pfe-search-event', function(e) {

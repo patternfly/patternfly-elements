@@ -31,7 +31,7 @@ Place the `pfe-tab` and `pfe-tab-panel` elements here.
 
 ### Default slot in pfe-tab
 
-Add the text for your tab here.
+Add the heading for your tab here.
 
 ### Default slot in pfe-tab-panel
 
@@ -39,7 +39,7 @@ Add the content for your tab panel here.
 
 ## Attributes
 
-### vertical (observed)
+**`vertical`** (observed)
 
 Orients the tabs vertically on the left and pushes the content panes to the right.
 
@@ -49,7 +49,7 @@ Orients the tabs vertically on the left and pushes the content panes to the righ
 </pfe-tabs>
 ```
 
-### selected-index (observed)
+**`selected-index`** (observed)
 
 Sets and reflects the currently selected tab index.
 
@@ -58,6 +58,15 @@ Sets and reflects the currently selected tab index.
   ...
 </pfe-tabs>
 ```
+
+**`pfe-theme`** (observed)
+
+Changes the context of the call-to-action to one of 3 possible themes:
+- `light` (default)
+- `dark`
+- `saturated`
+
+This will override any context being passed from a parent component and will add a style attribute setting the `--theme` variable.
 
 ## Events
 

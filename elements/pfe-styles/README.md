@@ -1,20 +1,42 @@
-# PFElements Layouts
+# PatternFly Elements Styles
 
 ## Usage
 
-PFElements Layouts, like Bootstrap, is based on a 12 column grid with similar breakpoints available. We've just made the usage simpler.
+PatternFly Elements Styles is available to provide helper styles that can be directly included on your page.  This current includes css for layouts, context, and our flavor of "normalize".
 
-### Including pfe-layouts
+PatternFly Elements Layouts, like Bootstrap, is based on a 12 column grid with similar breakpoints available. We've just made the usage simpler.
 
-To get started, included a link to `pfe-layouts.css`
+### Including pfe-styles
+
+To get started, include a link to the css file of your choice: `pfe-base.css`, `pfe-context.css`, or `pfe-layouts.css`.
 
 ```
 <link rel="stylesheet" type="text/css" href="/path/to/pfe-layouts.min.css">
 ```
 
-### Grid
+Since PatternFly Elements Styles are not web components, their classes can be applied to any element, giving you lots of control over where and how you utilize them.
 
-Since PFElements Layouts is not a Web Component, its classes can be applied to any element, giving you lots of control over where and how you utilize its layouts.
+### Base
+
+This is the PatternFly Elements flavor of normalize and provides styles that will cancel out a lot of the more meddlesome browser defaults.
+
+### Context
+
+This set is available to help in updating the broadcast variables for pages where your might be setting the background color yourself with custom styles.  If you manually set a background color to #000, you can add the `.on-dark` class to your element and it will load the broadcast variables for a dark context to make your life a little easier.
+
+```css
+.dark-background {
+  background-color: #000;
+}
+```
+
+```html
+<div class="dark-background on-dark">...</div>
+```
+
+### Layouts
+
+#### Grid
 
 If you want a simple 3 column grid with gutters, use the following:
 
@@ -28,7 +50,7 @@ If you want a simple 3 column grid with gutters, use the following:
 </div>
 ```
 
-#### Grid Layout Classes &amp; Modifiers
+##### Grid Layout Classes &amp; Modifiers
 
 **Parent Grid Element classes:**
 
@@ -62,7 +84,7 @@ Example:
 </div>
 ```
 
-#### Breakpoints
+##### Breakpoints
 
 ```css
 // Small devices
@@ -78,7 +100,7 @@ Example:
 @media (min-width: 1200px) { ... }
 ```
 
-### Bullseye
+#### Bullseye
 
 Use a bullseye layout when there is a single child element, and that child is centered both vertically and horizontally in the parent.
 
@@ -94,7 +116,7 @@ Exampe:
 </div>
 ```
 
-### Text Alignment
+#### Text Alignment
 
 Text alignment helper classes can also be applied to any block-level element.
 
@@ -117,13 +139,13 @@ Text alignment helper classes can also be applied to any block-level element.
 
 ### Demo
 
-From the PFElements root directory, run:
+From the PatternFly Elements root directory, run:
 
     npm start
 
 ### Code style
 
-Card (and all PFElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
+Card (and all PatternFly Elements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
 
 [prettier]: https://github.com/prettier/prettier/
 [prettier-ed]: https://prettier.io/docs/en/editors.html

@@ -1,4 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
+// @include pfe-theme-contexts; // imports on="light" etc support
 
 /// ===========================================================================
 /// Component Specific SASS Vars
@@ -19,7 +20,7 @@ $pfe-icon-panel__icon-padding:        .05em;
   align-items: flex-start;
   flex-direction: column;
 
-  @media (min-width: $pfe-global--grid-breakpoint--sm) {
+  @media (min-width: #{pfe-breakpoint(sm)}) {
 		flex-direction: row;
 	}
 }

@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PatternFly Elements: pfe-tabs Demo</title>
 
     <link rel="stylesheet" href="https://overpass-30e2.kxcdn.com/overpass.css" />
@@ -9,7 +10,17 @@
     <!--
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
-    <link rel="stylesheet" href="../../../themes/cp-theme/cp-theme.css" /> -->
+    -->
+    
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
@@ -20,12 +31,6 @@
     ])</script>
 
     <style>
-      body {
-        font-family: Overpass;
-        padding: 0;
-        margin: 0;
-      }
-
       .example,
       .subsection {
         margin: 32px 0px;
@@ -38,16 +43,18 @@
         padding-bottom: 0;
         margin-bottom: 0;
       }
-      h2 {
-        margin-top: 0 !important;
-      }
+
       section {
-        margin-bottom: 3rem;
+        padding: 2rem;
+      }
+
+      .dark-background {
+        background-color: #000;
       }
     </style>
 
     <noscript>
-      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
     </noscript>
 
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
@@ -314,7 +321,7 @@
         var tab = document.createElement("pfe-tab");
         tab.setAttribute("role", "heading");
         tab.setAttribute("slot", "tab");
-        tab.textContent = "New Tab";
+        tab.textContent = "New tab";
 
         var panel = document.createElement("pfe-tab-panel");
         panel.setAttribute("role", "region");

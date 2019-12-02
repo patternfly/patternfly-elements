@@ -14,7 +14,7 @@ import '@patternfly/pfe-autocomplete.umd.js';
 ```
 
 ## Usage
-```
+```html
 <pfe-autocomplete debounce="500" init-value="uni">
     <input placeholder="Enter Your Search Term"/>
 </pfe-autocomplete>
@@ -70,6 +70,18 @@ Set this attribute when you want to set a value in input box when web component 
 
 **`is-disabled`**
 is-disabled is a boolean attribute. Add this attribute to element when you want to make the element disabled. By adding this attribute input box and buttons become disabled.
+
+**`aria-announce-template`**
+aria-announce-template is an optional attribute string you provide so you can provide a translated string for the aria live region that will politely announce that the number of options the user can select from as the autocomplete displays options. This string defaults to "There are ${numOptions} suggestions. Use the up and down arrows to browse." ${numOptions} will be dynamically replaced with the number of options that are shown.
+
+**`aria-label`**
+This is an optional attribute string that you can provide on the input tag in the light DOM of pfe-autocomplete. The aria-label attribute will default to "Search".
+
+```html
+<pfe-autocomplete>
+  <input placeholder="Search" aria-label="Buscar" />
+</pfe-autocomplete>
+```
 
 ## Get selected item
 User can select an item by clicking on search button, type press enter or select an item by using keyboard and press enter. The selected item can be captured by listening to an event(`pfe-search-event`) or observing attribute(`selected-value`) change.

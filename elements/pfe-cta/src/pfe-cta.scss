@@ -47,6 +47,7 @@ $variables: (
   position:        relative;
   max-width:       max-content;
   vertical-align:  middle;
+  transition:      padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
   max-width:       #{pfe-local($cssvar: MaxWidth, $fallback: max-content)};
 
   background-color: #{pfe-local(BackgroundColor)};

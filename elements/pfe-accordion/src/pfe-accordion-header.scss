@@ -3,7 +3,7 @@
 
 $LOCAL: accordion;
 
-/// ===========================================================================
+/// =======================================================x===================
 /// DEFAULT ACCORDION HEADING
 /// ===========================================================================
 :host {
@@ -66,10 +66,17 @@ button[aria-expanded="true"] {
 }
 
 /// ===========================================================================
-/// DISCLOSURE STYLES
-/// ===========================================================================
-
+/// DISCLOSURE STYLES===========
+/// ================================================================
+// :host([pfe-disclosure="true"]) {
+//   --pfe-accordion--BorderColor--accent: #{pfe-color(surface--border)};
+//   --pfe-accordion--BorderRightWidth: 1px;
+//   --pfe-accordion--BorderLeftWidth: 1px;
+// }
 :host([pfe-disclosure="true"]) {
+  --pfe-accordion--BorderColor--accent: #{pfe-color(surface--border)};
+  --pfe-accordion--BorderRightWidth: 1px;
+  --pfe-accordion--BorderLeftWidth: 1px;
   button {
     @include pfe-trigger($align: right);
 
@@ -79,7 +86,7 @@ button[aria-expanded="true"] {
 
       &::before {
         @include pfe-chevron($state: open, $position: before);
-        left: 21px;
+        left: calc( #{pfe-var(container-spacer)} * 1.3 );
       }
     }
     &[aria-expanded="false"]::before {
@@ -92,7 +99,7 @@ button[aria-expanded="true"] {
       padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
 
       &::before {
-        left: 21px;
+        left: calc( #{pfe-var(container-spacer)} * 1.3 );
       }
     }
   }

@@ -107,8 +107,12 @@ class PfeAccordion extends PFElement {
     });
     if ((!this.hasAttribute("pfe-disclosure")) && ( this._allHeaders().length === 1 )) {
       this.setAttribute("pfe-disclosure", "true");
-      this._firstHeader().setAttribute("pfe-disclosure", "true");
-      this._firstPanel().setAttribute("pfe-disclosure", "true");
+      this._allHeaders().forEach(function(headers) {
+        headers.setAttribute("pfe-disclosure", "true");
+      });
+      this._allPanels().forEach(function(panels) {
+        panels.setAttribute("pfe-disclosure", "true");
+      });
     };
   }
 
@@ -372,11 +376,6 @@ class PfeAccordion extends PFElement {
 
   _isHeader(element) {
     return element.tagName.toLowerCase() === PfeAccordionHeader.tag;
-  }
-
-  _firstPanel() {
-    const panels = this._allPanels();
-    return panels[0];
   }
 }
 

@@ -196,6 +196,7 @@
     border-width: .1em .1em 0 0;
     border-bottom: 0;
     transform: rotate(-45deg);
+    top: calc(#{pfe-var(container-spacer)} + .6em);
     @if $position == before {
       left: calc(#{pfe-var(container-spacer)} * 1.5);
     }

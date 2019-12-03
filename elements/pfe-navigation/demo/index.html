@@ -46,7 +46,7 @@
 
 <body unresolved>
   <h1>&lt;pfe-navigation&gt;</h1>
-  <pfe-navigation pfe-sticky pfe-close-on-click="external" pfe-menu-label="Menu">
+  <pfe-navigation style="--pfe-navigation__logo--MinWidth:150px;" pfe-sticky pfe-close-on-click="external" pfe-menu-label="Menu">
     <!-- Skip navigation -->
     <div slot="skip">
       <ul>
@@ -54,12 +54,11 @@
       </ul>
     </div>
     <!-- Site logo -->
-    <div slot="logo">
-      <a href="https://company.com">
+
+      <a slot="logo" href="https://company.com">
         <img class="logo" src="https://via.placeholder.com/150x50.png" title="Company logo" />
         <!-- <img class="logo" src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/logo.svg" width="200" title="Company logo" /> -->
       </a>
-    </div>
     <!-- Search -->
     <pfe-navigation-item slot="search" pfe-icon="web-search">
       <h2 slot="trigger"><a href="#url-to-search-page">Search</a></h2>

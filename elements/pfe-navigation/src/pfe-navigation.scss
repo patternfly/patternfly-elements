@@ -35,6 +35,11 @@ $variables: (
   // Tray region
   tray: (
     Padding: pfe-var(container-padding)
+  ),
+  
+  // Logo
+  logo: (
+    MinWidth: 135px
   )
 );
 
@@ -83,6 +88,8 @@ pfe-icon {
 ::slotted([slot="logo"]) {
   margin: 0 !important;
   max-height: #{pfe-local(MaxHeight)};
+  min-width:  #{pfe-local($region: logo, $cssvar: MinWidth)};
+  display: block;
 }
 
 ::slotted([slot="mobile-login"]),
@@ -164,6 +171,7 @@ pfe-icon {
     flex-flow: column nowrap;
     align-items: flex-start;
     justify-content: center;
+    min-width: #{pfe-local($region: logo, $cssvar: MinWidth)};
     
     padding-top: #{pfe-local(Padding--vertical)};
     padding-right: #{pfe-var(container-padding)};

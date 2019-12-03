@@ -2,7 +2,7 @@
 /// Accordion-specific SASS Vars
 /// ===========================================================================
 
-@mixin pfe-accordion-variables($state: default, $theme: default) {
+@mixin pfe-accordion-variables($state: default, $theme: default, $variant: default) {
   // Shared variables for all themes
   $variables: ();
 
@@ -33,6 +33,13 @@
         accent: #{pfe-color(ui-base)}
       ));
     }
+    @if $variant == disclosure {
+      $variables: (
+        BorderRightWidth: 1px,
+        BorderLeftWidth: 1px,
+        BorderColor--accent: #{pfe-color(surface--border)}
+      );
+    }
   }
   @else { // Expanded state
     // Shared variables for all themes
@@ -62,6 +69,12 @@
         BorderColor--accent: #{pfe-color(ui-base)}
       ));
     }
+    @if $variant == disclosure {
+      $variables: (
+        BorderLeftWidth: 4px,
+        BorderColor--accent: #{pfe-color(ui-base)}
+      );
+    }
 
     @if $theme == light { // Explicitly defined light theme
       // Clear the map since this uses the same as the default variables
@@ -74,7 +87,7 @@
   @include pfe-set-local($variables);
 }
 
-@mixin pfe-accordion-props($align: left) {
+@mixin pfe-accordion-props($align: left, $variant: default) {
   margin: 0;
   width: #{pfe-local($cssvar: Width, $fallback: 100%)};
   max-width: 100%;
@@ -97,6 +110,17 @@
     @include pfe-set-local((
       BorderColor--accent: #{pfe-local(accent)}
     ));
+  }
+
+  @if $variant == disclosure-closed {
+    $variables: (
+      BorderLeftWidth: 0
+    );
+  }
+  @if $variant == disclosure-open {
+    $variables: (
+      BorderLeftWidth: 4px
+    );
   }
 }
 
@@ -178,6 +202,8 @@
   padding-right: 3em;
   padding-left: calc(#{pfe-var(container-spacer)} * 1.5);
 }
+
+
 
 /// ===========================================================================
 /// Accordion chevrons

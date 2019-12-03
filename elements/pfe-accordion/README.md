@@ -44,6 +44,9 @@ Changes the context of the accordion to one of 3 possible themes:
 
 This will override any context being passed from a parent component and will add a style attribute setting the `--theme` variable.
 
+**`pfe-disclosure`**
+If `pfe-accordion` has one `pfe-accordion-header`, it will get tagged with `pfe-disclosure="true"`. This applies a slightly different set of styles: chevron appears on the left side, the header has a single border on all four sides.
+
 ## Events
 
 ### pfe-accordion:change

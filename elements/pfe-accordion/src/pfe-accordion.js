@@ -95,8 +95,6 @@ class PfeAccordion extends PFElement {
     this.addEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
     this.addEventListener("keydown", this._keydownHandler);
 
-    let numberItems = this.querySelectorAll('pfe-accordion > pfe-accordion-header');
-
     Promise.all([
       customElements.whenDefined(PfeAccordionHeader.tag),
       customElements.whenDefined(PfeAccordionPanel.tag)

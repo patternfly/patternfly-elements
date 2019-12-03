@@ -75,7 +75,7 @@ button[aria-expanded="true"] {
 
     &[aria-expanded="true"] {
       --pfe-accordion--BorderLeftWidth: 4px;
-      padding-left: 47px !important;
+      padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
 
       &::before {
         @include pfe-chevron($state: open, $position: before);
@@ -88,8 +88,8 @@ button[aria-expanded="true"] {
 
     // Adjust contents position on hover.
     &:hover {
-      border-left-width: 4px;
-      padding-left: 47px !important;
+      --pfe-accordion--BorderLeftWidth: 4px;
+      padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
 
       &::before {
         left: 21px;

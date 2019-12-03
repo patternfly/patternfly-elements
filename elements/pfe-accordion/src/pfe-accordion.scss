@@ -26,7 +26,6 @@ $LOCAL: accordion;
   }
 }
 
-
 :host([pfe-disclosure="true"]) {
   --pfe-accordion--BorderColor--accent: #{pfe-color(surface--border)};
   --pfe-accordion--BorderRightWidth: 1px;

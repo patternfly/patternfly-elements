@@ -2,8 +2,8 @@
 
 Tag: [v1.0.0-prerelease.32](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.32)
 
-- []() Fix: Add support for theme hooks within surface colors mixin 
-- []() Fix: z-index function now correctly prints variable names 
+- []() DE21128 Fix: Add support for theme hooks within surface colors mixin 
+- []() DE21423 Fix: z-index function now correctly prints variable names 
 
 ## Prerelease 31 ( 2019-11-25 )
 

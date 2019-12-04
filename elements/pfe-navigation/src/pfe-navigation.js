@@ -148,10 +148,14 @@ class PfeNavigation extends PFElement {
         item.expanded = false;
         this._activeNavigationItems = this._activeNavigationItems.filter(i => i !== item);
       } else if (item.expanded && item.parent && item.parent.visible) {
-        item.parent.expanded = true; // Ensure the parent is open
-        // If the parent item doesn't exist in the active array, add it
-        if (!this._activeNavigationItems.includes(item.parent)) {
-          this._activeNavigationItems.push(item.parent);
+        // if the parent is the mobile menu item and the size of the window is within
+        // the main breakpoint, make sure that the mobile menu is expanded
+        if (item.parent === this._menuItem && window.innerWidth <= this.breakpoints.main[1]) {
+          item.parent.expanded = true; // Ensure the parent is open
+          // If the parent item doesn't exist in the active array, add it
+          if (!this._activeNavigationItems.includes(item.parent)) {
+            this._activeNavigationItems.push(item.parent);
+          }
         }
       }
     });
@@ -173,7 +177,7 @@ class PfeNavigation extends PFElement {
     // Check if the clicked element contains or is contained by the navigation element
     let isChild = event.target.closest("pfe-navigation");
     let insideWrapper = event.target.tagName.includes("-") ? event.target.shadowRoot.querySelector("pfe-navigation") : null;
-    
+
     // Check states to determine if the navigation items should close
     if (!isSelf && !(isChild || insideWrapper)) {
       this._activeNavigationItems.map(item => item.close());

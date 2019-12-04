@@ -432,6 +432,9 @@ pfe-navigation-item {
 // This class is added manually inside the tray on the light DOM content
 .pfe-navigation-item__tray--container {
     width: 100%;
+    @media (min-width: #{pfe-breakpoint(lg)}) {
+        max-width: #{pfe-local($cssvar: Width, $fallback: 992px)};
+    }
     @media (min-width: #{pfe-breakpoint(xl)}) {
         max-width: #{pfe-local($cssvar: Width, $fallback: 1140px)};
     }
@@ -508,7 +511,7 @@ pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [
 
 pfe-navigation-main [slot="trigger"],
 pfe-navigation-main [slot="trigger"] > a {
-    font-size: 16px;
+    font-size: $trigger--FontSize--fallback;
 }
 
 

@@ -65,6 +65,7 @@ $variables: (
   --pfe-navigation__trigger--FontSize: 12px;
   --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.5);
   --pfe-navigation__trigger-icon--Visible: hidden;
+  flex: 1 0 50px;
 
   @media screen and (max-height: 500px) {
     --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 3) calc(#{pfe-var(container-padding)} *.5);

@@ -4,7 +4,7 @@ $variables: (
   // Default spacing values
   Padding--vertical: pfe-var(container-padding),
   Padding--horizontal: pfe-var(container-padding),
-  Padding: 0 pfe-local(Padding--horizontal),
+  Padding: 0 pfe-local(Padding--horizontal),    
 
   // Darkest is the default background color
   BackgroundColor: pfe-color(surface--darkest),
@@ -159,8 +159,8 @@ pfe-icon {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     z-index: #{pfe-zindex(overlay)};
     &[hidden] {
       display: none;
@@ -169,6 +169,7 @@ pfe-icon {
   &__logo {
     display: flex;
     flex-flow: column nowrap;
+    flex-shrink: 0; // Prevent flexbox from collapsing the padding.
     align-items: flex-start;
     justify-content: center;
     min-width: #{pfe-local($region: logo, $cssvar: MinWidth)};

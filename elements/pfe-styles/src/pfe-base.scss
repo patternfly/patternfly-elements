@@ -1,8 +1,12 @@
+//@TODO, pull from https://github.com/patternfly/patternfly-next/blob/master/src/patternfly/_globals.scss#L90
 @import "../../pfe-sass/pfe-sass";
 $LOCAL: pfelement;
 
-body {
-  @include pfe-set-broadcast-theme(light);
+// NORMALIZE
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html,
@@ -71,14 +75,10 @@ th {
   text-align: left;
 }
 
-// Patternfly base styles
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+// PatternFly Styles
 
 html {
+  @include pfe-set-broadcast-theme(light);
   font-family: sans-serif;
   line-height: #{pfe-var(line-height)};
 }
@@ -111,3 +111,5 @@ button,
 a {
   cursor: pointer;
 }
+
+

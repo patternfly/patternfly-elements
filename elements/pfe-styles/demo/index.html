@@ -40,10 +40,6 @@
         color: #1a1a1a;
       }
 
-      h1, h2, h3, h4, h5, h6, p, button {
-        color: var(--pfe-broadcasted--text, #252525);
-      }
-
       header h1 {
         margin-top: 0;
       }
@@ -52,7 +48,7 @@
       section.pfe-m-gutters {
         margin: 32px 0 !important;
       }
-
+      .white-box,
       section section {
         padding: 32px;
         background-color: #fff;
@@ -100,15 +96,10 @@
       :not(pre)>code[class*=language-], pre[class*=language-] {
         background: #f2f2f2;
       }
-      :root {
-        --pfe-theme--color--link: green;
-      }
     </style>
   </head>
   <body>
-    <div>
-      <p>basic text with a basic <a href="https://foofdsa.com">link</a> </p>
-    </div>
+
     <article>
       <header>
         <h1>Layouts</h1>
@@ -238,6 +229,26 @@
         </section>
 
       </section>
+    </article>
+    <article>
+      <header>
+        <h2>Text & link</h2>
+      </header>
+      <div class="white-box">
+
+        <h1>This is 1st level heading</h1>
+        <p>This is a test paragraph.</p>
+        <h2>This is 2nd level heading</h2>
+        <p>This is a test paragraph.</p>
+        <h3>This is 3rd level heading</h3>
+        <p>This is a test paragraph.</p>
+        <h4>This is 4th level heading</h4>
+        <p>This is a test paragraph.</p>
+        <h5>This is 5th level heading</h5>
+        <p>This is a test paragraph.</p>
+        <h6>This is 6th level heading</h6>
+        <p>This is a test paragraph with a <a href="https://foofdsa.com">link</a> </p>
+      </div>
     </article>
   </body>
 

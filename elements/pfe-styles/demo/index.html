@@ -5,6 +5,7 @@
     <title>Layouts Demo</title>
 
     <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+    <link rel="stylesheet" type="text/css" href="../dist/pfe-base.min.css">
     <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.min.css">
     <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
     <link rel="stylesheet" type="text/css" href="../_temp/pfe-colors.css">
@@ -14,7 +15,7 @@
     </noscript>
 
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
-  
+
     <link href="../../pfe-cta/dist/pfe-cta--lightdom.css" rel="stylesheet" />
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
@@ -26,7 +27,7 @@
       '../../pfe-cta/dist/pfe-cta.umd.js'
     ])
     </script>
-    
+
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
@@ -36,6 +37,7 @@
       body {
         padding: 32px;
         background: #e7e7e7;
+        color: #1a1a1a;
       }
 
       h1, h2, h3, h4, h5, h6, p, button {
@@ -98,9 +100,15 @@
       :not(pre)>code[class*=language-], pre[class*=language-] {
         background: #f2f2f2;
       }
+      :root {
+        --pfe-theme--color--link: green;
+      }
     </style>
   </head>
   <body>
+    <div>
+      <p>basic text with a basic <a href="https://foofdsa.com">link</a> </p>
+    </div>
     <article>
       <header>
         <h1>Layouts</h1>

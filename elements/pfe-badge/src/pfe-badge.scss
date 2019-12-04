@@ -1,222 +1,53 @@
 @import "../../pfe-sass/pfe-sass";
 $LOCAL: badge;
 
+$variables: (
+  BackgroundColor:  #{pfe-color(feedback--default--lightest)},
+  BorderRadius: calc(#{pfe-var(ui--border-radius)} * 30),
+
+  Color: #{pfe-color(text)},
+
+  FontSize: calc(#{pfe-var(font-size)} * 0.75),
+  FontWeight: #{pfe-var(font-weight--semi-bold)},
+
+  MinWidth: calc(#{pfe-var(ui--border-width)} * 2),
+
+  PaddingLeft: calc(#{pfe-var(container-padding)} * 0.5),
+  PaddingRight: calc(#{pfe-var(container-padding)} * 0.5),
+);
+
 :host {
+  @include pfe-print-variables($variables);
+
   display: inline-block;
+  line-height: calc(var(--pfe-theme-line-height, 1.5) * 0.75);
   text-align: center;
   text-rendering: optimizelegibility;
-  line-height: calc(var(--pfe-theme-line-height, 1.5) * 0.75);
-  // local vars
-  --pfe-badge__container--MinWidth: calc(var(--pfe-theme-container-spacer, 1rem) * 2);
-  --pfe-badge__container--BorderRadius: calc(var(--pfe-theme-border-radius, 1em) * 30);
-  --pfe-badge__container--PaddingRight: calc(var(--pfe-theme-container-padding, 1rem) * 0.5);
-  --pfe-badge__container--PaddingLeft: calc(var(--pfe-theme-container-padding, 1rem) * 0.5);
-  --pfe-badge__container--FontSize: calc(var(--pfe-theme-font-size, 1rem) * 0.75);
-  --pfe-badge__container--FontWeight: calc(var(--pfe-theme-font-weight--semi-bold, 600));
-  --pfe-badge__container--Color--unread: #{pfe-color(text--on-dark)};
-  --pfe-badge__container--BackgroundColor--unread: #{pfe-color(link)};
-  // @TODO : Add these colors to _3-colors.scss
-  --pfe-badge__container--Color--read: #151515;
-  --pfe-badge__container--BackgroundColor--read: #ededed;
-}
-
-// @TODO better strategy for applying these styles
-
-:host([read]) {
-  .pfe-badge {
-    &__container {
-      color: #{pfe-local($cssvar: Color--read, $region: container)};
-      background-color: #{pfe-local($cssvar: BackgroundColor--read, $region: container)};
-    }
-  }
-}
-
-:host([unread]) {
-  .pfe-badge {
-    &__container {
-      color: #{pfe-local($cssvar: Color--unread, $region: container)};
-      background-color: #{pfe-local($cssvar: BackgroundColor--unread, $region: container)};
-    }
-  }
 }
 
 .pfe-badge {
   &__container {
-    min-width: #{pfe-local($cssvar: MinWidth, $region: container)};
-    border-radius: #{pfe-local($cssvar: BorderRadius, $region: container)};
-    padding-right: #{pfe-local($cssvar: PaddingRight, $region: container)};
-    padding-left: #{pfe-local($cssvar: PaddingLeft, $region: container)};
-    font-size: #{pfe-local($cssvar: FontSize, $region: container)};
-    font-weight: #{pfe-local($cssvar: FontWeight, $region: container)};
+    background-color: #{pfe-local(BackgroundColor)};
+    border-radius:    #{pfe-local(BorderRadius)};
+    color:            #{pfe-local(Color)};
+    font-size:        #{pfe-local(FontSize)};
+    font-weight:      #{pfe-local(FontWeight)};
+    min-width:        #{pfe-local(MinWidth)};
+    padding-left:     #{pfe-local(PaddingLeft)};
+    padding-right:    #{pfe-local(PaddingRight)};
   }
 }
 
-/// ===========================================================================
-/// Component Specific SASS Vars
-/// ===========================================================================
-
-$pfe-badge__padding--sm:                                         .3rem .7rem;
-$pfe-badge__padding:                                            .35rem .8rem;
-$pfe-badge__padding--lg:                                        .4rem .85rem;
-
-/// ===========================================================================
-/// DEFUALT BADGE
-/// ===========================================================================
-
-// :host {
-//   --pfe-badge--base--bg:           #{pfe-color(feedback--default--lightest)};
-//   --pfe-badge--base--color:                               #{pfe-color(text)};
-//   --pfe-badge--base--font-size:                        #{pfe-var(font-size)};
-//   // --pfe-badge--base--padding:                            $pfe-badge__padding;
-  
-//   display: inline-block;
-//   padding: $pfe-badge__padding;
-//   border: 1px solid transparent;
-//   border-radius: 20px !important;
-//   background-color: var(--pfe-badge--base--bg) !important;
-//   color: var(--pfe-badge--base--color) !important;
-//   font-size: calc(var(--pfe-badge--base--font-size) * 0.8);
-//   font-weight: #{pfe-var(font-weight--bold)};
-//   // text-transform: uppercase;
-//   line-height: 1.1;
-  
-//   ::slotted(*) {
-//     display: inline-block;
-//     border-radius: 20px !important;
-//     background-color: var(--pfe-badge--base--bg) !important;
-//     color: var(--pfe-badge--base--color) !important;
-//     vertical-align: middle;
-//   }
-// }
-
-/// ===========================================================================
-/// SIZE OVERRIDE
-/// ===========================================================================
-
-:host([size="sm"]) {
-  padding:  $pfe-badge__padding--sm;
-  font-size: calc(var(--pfe-badge--base--font-size) * 0.7);
-  font-weight: #{pfe-var(font-weight--bold)};
-}
-
-:host([size="md"]){
-  padding:  $pfe-badge__padding;
-  font-size: calc(var(--pfe-badge--base--font-size) * 0.8);
-}
-
-:host([size="lg"]) {
-  padding:  $pfe-badge__padding--lg;
-  font-size: calc(var(--pfe-badge--base--font-size) * .9);
-  line-height: 1.2;
-}
-
-/// ===========================================================================
-/// COLOR OVERRIDE
-/// ===========================================================================
-
-:host([color="white"]) {
-  --pfe-badge--base--bg:                     #{pfe-color(feedback--default)};
-  --pfe-badge--base--color:                               #{pfe-color(text)};
-  
-  background-color: var(--pfe-badge--base--bg) !important;
-  color: var(--pfe-badge--base--color) !important;
-  
-  ::slotted(*) {
-    background-color: var(--pfe-badge--base--bg) !important;
-    color: var(--pfe-badge--base--color) !important;
+@each $state in (moderate, important, critical, success, info) {
+  :host([pfe-state="#{$state}"]) {
+    .pfe-badge {
+      &__container {
+        --pfe-badge--BackgroundColor: #{pfe-color(feedback--#{$state})};
+        --pfe-badge--Color: #{pfe-color(text--on-dark)};
+      }
+    }
   }
 }
-
-:host([color="grey"]),
-:host([color="gray"]),
-:host([priority="default"]) {
-  --pfe-badge--base--bg:                     #{pfe-color(feedback--default)};
-  --pfe-badge--base--color:                               #{pfe-color(text)};
-  
-  background-color: var(--pfe-badge--base--bg) !important;
-  color: var(--pfe-badge--base--color) !important;
-  
-  ::slotted(*) {
-    background-color: var(--pfe-badge--base--bg) !important;
-    color: var(--pfe-badge--base--color) !important;
-  }
-}
-
-:host([color="slate"]),
-:host([priority="normal"]) {
-  --pfe-badge--base--bg:            #{pfe-color(feedback--default--darkest)};
-  --pfe-badge--base--color:                      #{pfe-color(text--on-dark)};
-  
-  background-color: var(--pfe-badge--base--bg) !important;
-  color: var(--pfe-badge--base--color) !important;
-  font-weight: #{pfe-var(font-weight--semi-bold)};
-  
-  ::slotted(*) {
-    background-color: var(--pfe-badge--base--bg) !important;
-    color: var(--pfe-badge--base--color) !important;
-  }
-}
-
-:host([color="blue"]),
-:host([priority="info"]) {
-  --pfe-badge--base--bg:                       #{pfe-color(feedback--info)};
-  --pfe-badge--base--color:                     #{pfe-color(text--on-dark)};
-  
-  background-color: var(--pfe-badge--base--bg) !important;
-  color: var(--pfe-badge--base--color) !important;
-  font-weight: #{pfe-var(font-weight--semi-bold)};
-  
-  ::slotted(*) {
-    background-color: var(--pfe-badge--base--bg) !important;
-    color: var(--pfe-badge--base--color) !important;
-  }
-}
-
-:host([color="green"]),
-:host([priority="success"]) {
-  --pfe-badge--base--bg:                    #{pfe-color(feedback--success)};
-  --pfe-badge--base--color:                     #{pfe-color(text--on-dark)};
-  
-  background-color: var(--pfe-badge--base--bg) !important;
-  color: var(--pfe-badge--base--color) !important;
-  font-weight: #{pfe-var(font-weight--semi-bold)};
-  
-  ::slotted(*) {
-    background-color: var(--pfe-badge--base--bg) !important;
-    color: var(--pfe-badge--base--color) !important;
-  }
-}
-
-:host([color="orange"]),
-:host([priority="warning"]) {
-  --pfe-badge--base--bg:                  #{pfe-color(feedback--important)};
-  --pfe-badge--base--color:                     #{pfe-color(text--on-dark)};
-  
-  background-color: var(--pfe-badge--base--bg) !important;
-  color: var(--pfe-badge--base--color) !important;
-  font-weight: #{pfe-var(font-weight--semi-bold)};
-  
-  ::slotted(*) {
-    background-color: var(--pfe-badge--base--bg) !important;
-    color: var(--pfe-badge--base--color) !important;
-  }
-}
-
-:host([color="red"]),
-:host([priority="critical"]) {
-  --pfe-badge--base--bg:                   #{pfe-color(feedback--critical)};
-  --pfe-badge--base--color:                     #{pfe-color(text--on-dark)};
-  
-  background-color: var(--pfe-badge--base--bg) !important;
-  color: var(--pfe-badge--base--color) !important;
-  font-weight: #{pfe-var(font-weight--semi-bold)};
-  
-  ::slotted(*) {
-    background-color: var(--pfe-badge--base--bg) !important;
-    color: var(--pfe-badge--base--color) !important;
-  }
-}
-
 
 :host([hidden]) {
   display: none;

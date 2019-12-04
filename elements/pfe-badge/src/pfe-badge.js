@@ -14,18 +14,37 @@ class PfeBadge extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["threshold"];
+    return ["number", "text", "pfe-state", "pfe-threshold"];
   }
 
-  get pfeThreshold() {
-    return this.getAttribute('threshold');
+  get threshold() {
+    return this.getAttribute('pfe-threshold');
   }
 
   constructor() {
-    super(PfeBadge);
-    if (this.pfeThreshold) {
-      // TODO: Confirm the logic
-      this.textContent = this.pfeThreshold <= this.textContent ? `${this.pfeThreshold}+` : this.textContent;
+    super(PfeBadge);   
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+  }
+
+  attributeChangedCallback(attr, oldVal, newVal) {   
+    switch(attr) {
+      case "pfe-threshold":
+        this.textContent = this.threshold < this.textContent ? `${this.threshold}+` : this.textContent;
+        break;
+      case "number":
+        this.textContent = this.threshold && Number(this.threshold) < Number(newVal) ? `${this.threshold}+` : newVal;
+        break;
+      case "text":      
+        if (this.threshold) {
+          console.warn("`pfe-threshold` attribute shouldn't be used with `text` value");
+        }
+        this.textContent = newVal;
+        break;
+      default:
+        return;
     }
   }
 }

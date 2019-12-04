@@ -4,7 +4,7 @@ Tag: [v1.0.0-prerelease.32](https://github.com/patternfly/patternfly-elements/re
 
 - []() DE21128 Fix: Add support for theme hooks within surface colors mixin 
 - []() DE21423 Fix: z-index function now correctly prints variable names 
-- []() DE21491 Fix: Add default broadcast variables
+- []() DE21491 Fix: Add default broadcast variables to pfe-base.css
 
 ## Prerelease 31 ( 2019-11-25 )
 

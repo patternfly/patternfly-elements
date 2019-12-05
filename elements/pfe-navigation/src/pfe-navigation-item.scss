@@ -28,9 +28,12 @@ $variables: (
   line-height: 1.2;
   
   height: 100%;
-  width: 100%;
+  //width: 100%;
   min-width: #{pfe-local(MinWidth)};
 
+  @media screen and (max-width: #{pfe-breakpoint(xl)}) {
+    width: 100%;
+  }
   @media screen and (min-width: 500px) {
     --pfe-navigation__trigger--Padding: #{pfe-var(container-padding)} !important;
   }

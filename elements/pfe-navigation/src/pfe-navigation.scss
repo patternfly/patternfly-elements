@@ -149,7 +149,7 @@ pfe-icon {
     }
 
     > pfe-navigation-item:not([hidden]) {
-      flex-grow: 1;
+      //flex-grow: 1;
       align-items: flex-end;
     }
   }

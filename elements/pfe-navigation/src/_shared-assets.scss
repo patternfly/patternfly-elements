@@ -30,6 +30,7 @@ $LOCAL: navigation;
 }
 
 %trigger {
+    --max-trigger: 100%;
     font-family: pfe-var(font-family);
     font-size: #{pfe-local(
             $cssvar: FontSize, 
@@ -46,6 +47,15 @@ $LOCAL: navigation;
         )};
     z-index: 2;
     line-height: 1.1;
-
     margin: 0 !important;
+    text-align: center;
+
+    max-width: var(--max-trigger);
+        
+    @media screen and (min-width: 1000px) {
+        --max-trigger: 100px;
+    }
+    @media screen and (min-width: 1200px) {
+        --max-trigger: 120px;
+    }
 }

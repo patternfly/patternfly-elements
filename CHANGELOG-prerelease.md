@@ -1,10 +1,11 @@
-## Prerelease 32 ( TBD )
+## Prerelease 32 ( 2019-12-05 )
 
 Tag: [v1.0.0-prerelease.32](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.32)
 
-- []() DE21128 Fix: Add support for theme hooks within surface colors mixin 
-- []() DE21423 Fix: z-index function now correctly prints variable names 
-- []() DE21491 Fix: Add default broadcast variables to pfe-base.css
+- [ed919e](https://github.com/patternfly/patternfly-elements/commit/ed919ed15bffc03ee8de4539090c5de075f9ba7d) DE21128 Fix: Add support for theme hooks within surface colors mixin 
+- [288322](https://github.com/patternfly/patternfly-elements/commit/2883224d927c26af3c7c9b92a9f8a3d2d852edaf) DE21423 Fix: z-index function now correctly prints variable names 
+- [959281](https://github.com/patternfly/patternfly-elements/commit/95928118095d235695526d5dd5da9688ebc92fef) DE21491 Fix: Add default broadcast variables to pfe-base.css
+
 
 ## Prerelease 31 ( 2019-11-25 )
 

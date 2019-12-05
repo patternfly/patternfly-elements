@@ -4,7 +4,7 @@
     "className": "PfeModal",
     "elementName": "pfe-modal"
   },
-  "version": "1.0.0-prerelease.31",
+  "version": "1.0.0-prerelease.32",
   "publishConfig": {
     "access": "public"
   },
@@ -40,7 +40,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.31",
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.32",
     "@patternfly/pfelement": "^1.0.0-prerelease.31"
   },
   "generator-pfelement-version": "1.1.0",

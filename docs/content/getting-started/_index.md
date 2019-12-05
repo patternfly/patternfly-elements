@@ -163,7 +163,7 @@ You may choose to add attributes such as `pfe-variant`, `pfe-priority` or `pfe-c
 CSS variables are subject to the normal cascade, so consider where you want these overrides to propogate.
 
 
-#### Page-level CSS, [theme](https://static.redhat.com/libs/redhat/redhat-theme/2/advanced-theme.css) variables
+#### Page-level CSS, [theme](https://raw.githubusercontent.com/starryeyez024/patternfly-theme/prerelease-1.0/dist/advanced-theme.css) variables
 
 Theme variables will impact all components on the page where this CSS is loaded.
 

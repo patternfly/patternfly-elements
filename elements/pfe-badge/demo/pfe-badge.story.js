@@ -18,7 +18,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeBadge.tag, () => {
   const number = storybookBridge.number("number", 50);
-  const state = storybookBridge.select("pfe-state", ["moderate", "important", "critical", "success", "info"], "");
+  const state = storybookBridge.select("pfe-state", ["default","moderate", "important", "critical", "success", "info"], "default");
   const threshold = storybookBridge.number("pfe-threshold", 100);
 
   const staticTextExamples = [
@@ -66,7 +66,7 @@ stories.add(PfeBadge.tag, () => {
     },
   ];
 
-  const customBadge = `<pfe-badge pfe-state="${state}" pfe-threshold="${threshold}" number="${number}">${number}</pfe-badge>`;
+  const customBadge = `<pfe-badge pfe-state="${state}" pfe-threshold="${threshold}" number="${number}"></pfe-badge>`;
 
   return `
     <h1>Dynamic example</h1>

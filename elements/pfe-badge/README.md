@@ -9,21 +9,21 @@ With `number` attribute:
 
 ```html
 <section>
-    <pfe-badge number="1"></pfe-badge>
-    <pfe-badge number="17"></pfe-badge>
-    <pfe-badge number="900"></pfe-badge>
+    <pfe-badge number="1">1</pfe-badge>
+    <pfe-badge number="17">17</pfe-badge>
+    <pfe-badge number="900">900</pfe-badge>
 </section>
 ```
 With `text` attribute and `<pfe-state>` attribute:
 
 ```html
 <section>
-    <pfe-badge pfe-state="info" text="inprogress"></pfe-badge>
-    <pfe-badge pfe-state="success" text="success"></pfe-badge>
-    <pfe-badge pfe-state="moderate" text="moderate"></pfe-badge>
-    <pfe-badge pfe-state="important" text="important"></pfe-badge>
-    <pfe-badge pfe-state="critical" text="critical"></pfe-badge>
-    <pfe-badge pfe-state="default" text="default"></pfe-badge>
+    <pfe-badge pfe-state="info" text="inprogress">inprogress</pfe-badge>
+    <pfe-badge pfe-state="success" text="success">success</pfe-badge>
+    <pfe-badge pfe-state="moderate" text="moderate">moderate</pfe-badge>
+    <pfe-badge pfe-state="important" text="important">important</pfe-badge>
+    <pfe-badge pfe-state="critical" text="critical">critical</pfe-badge>
+    <pfe-badge pfe-state="default" text="default">default</pfe-badge>
 </section>
 ```
 

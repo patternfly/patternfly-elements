@@ -66,7 +66,7 @@ stories.add(PfeBadge.tag, () => {
     },
   ];
 
-  const customBadge = `<pfe-badge pfe-state="${state}" pfe-threshold="${threshold}" number="${number}"></pfe-badge>`;
+  const customBadge = `<pfe-badge pfe-state="${state}" pfe-threshold="${threshold}" number="${number}">${number}</pfe-badge>`;
 
   return `
     <h1>Dynamic example</h1>
@@ -83,7 +83,7 @@ stories.add(PfeBadge.tag, () => {
     ${staticNumberExamples
       .map(
         ex => `
-          <pfe-badge pfe-state="${ex.state}" number="${ex.number}" pfe-threshold="${ex.threshold}"></pfe-badge>
+          <pfe-badge pfe-state="${ex.state}" number="${ex.number}" pfe-threshold="${ex.threshold}">${number}</pfe-badge>
         `
       )
       .join("\n")}
@@ -92,7 +92,7 @@ stories.add(PfeBadge.tag, () => {
     ${staticTextExamples
       .map(
         ex => `
-          <pfe-badge pfe-state="${ex.state}" text="${ex.text}"></pfe-badge>
+          <pfe-badge pfe-state="${ex.state}" text="${ex.text}">${ex.text}</pfe-badge>
         `
       )
       .join("\n")}

@@ -23,10 +23,7 @@ class PfeBadge extends PFElement {
 
   constructor() {
     super(PfeBadge);   
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
+    this._textContainer = this.shadowRoot.querySelector("span");    
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {   
@@ -46,7 +43,7 @@ class PfeBadge extends PFElement {
       default:
         return;
     }
-    this.shadowRoot.querySelector("span").textContent = this.textContent;
+    this._textContainer.textContent = this.textContent;
   }
 }
 

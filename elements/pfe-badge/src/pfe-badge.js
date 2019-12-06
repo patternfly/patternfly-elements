@@ -46,6 +46,7 @@ class PfeBadge extends PFElement {
       default:
         return;
     }
+    this.shadowRoot.querySelector("span").textContent = this.textContent;
   }
 }
 

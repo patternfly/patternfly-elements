@@ -71,8 +71,8 @@ button[aria-expanded="true"] {
 
 :host([pfe-disclosure="true"]) {
   button {
-    @include pfe-trigger($align: right);
     @include pfe-accordion-variables($variant: disclosure);
+    padding: #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 1.5) #{pfe-var(container-spacer)} 50px !important;
 
     &[aria-expanded="true"] {
       @include pfe-accordion-variables($state: expanded, $variant: disclosure);

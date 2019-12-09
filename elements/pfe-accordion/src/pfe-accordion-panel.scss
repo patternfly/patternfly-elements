@@ -60,6 +60,7 @@ $LOCAL: accordion;
 
 :host([pfe-disclosure="true"]:not([expanded])) {
   @include pfe-accordion-props($variant: disclosure-closed);
+  border-left-color: transparent;
 
   .container {
     opacity: 0;

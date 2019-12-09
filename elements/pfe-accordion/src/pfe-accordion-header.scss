@@ -3,7 +3,7 @@
 
 $LOCAL: accordion;
 
-/// =======================================================x===================
+/// ===========================================================================
 /// DEFAULT ACCORDION HEADING
 /// ===========================================================================
 :host {
@@ -71,11 +71,9 @@ button[aria-expanded="true"] {
 
 :host([pfe-disclosure="true"]) {
   button {
-    @include pfe-accordion-variables($variant: disclosure);
-    padding: #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 1.5) #{pfe-var(container-spacer)} 50px !important;
+    --pfe-accordion--triggerPadding: #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 1.5) #{pfe-var(container-spacer)} calc((#{pfe-var(container-spacer)} * 3) + 2px) !important;
 
     &[aria-expanded="true"] {
-      @include pfe-accordion-variables($state: expanded, $variant: disclosure);
       padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
 
       &::before {
@@ -89,8 +87,8 @@ button[aria-expanded="true"] {
 
     // Adjust contents position on hover.
     &:hover {
-      @include pfe-accordion-variables($state: expanded, $variant: disclosure);
       padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
+      --pfe-accordion--BorderLeftWidth: 4px;
 
       &::before {
         left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px.

@@ -14,6 +14,7 @@
       BorderTopWidth:      #{pfe-var(surface--border-width)},
       BorderRightWidth:    0,
       BorderBottomWidth:   #{pfe-var(surface--border-width)},
+      BorderLeftWidth:     #{pfe-var(surface--border-width--heavy)},
       Color:               #{pfe-apply-broadcast(text)},
       TextAlign:           left
     );
@@ -35,8 +36,8 @@
     }
     @if $variant == disclosure {
       $variables: (
-        BorderRightWidth: 1px,
-        BorderLeftWidth: 1px,
+        BorderRightWidth: #{pfe-var(surface--border-width)},
+        BorderLeftWidth: #{pfe-var(surface--border-width)},
         BorderColor--accent: #{pfe-color(surface--border)}
       );
     }
@@ -45,7 +46,8 @@
     // Shared variables for all themes
     $variables: (
       BorderColor:         #{pfe-color(surface--border)},
-      BorderRightWidth:    #{pfe-var(surface--border-width)}
+      BorderRightWidth:    #{pfe-var(surface--border-width)},
+      BorderLeftWidth:     #{pfe-var(surface--border-width--heavy)}
     );
 
     @if $theme == dark { // Dark theme
@@ -87,7 +89,7 @@
   @include pfe-set-local($variables);
 }
 
-@mixin pfe-accordion-props($align: left, $variant: default) {
+@mixin pfe-accordion-props($variant: default) {
   margin: 0;
   width: #{pfe-local($cssvar: Width, $fallback: 100%)};
   max-width: 100%;
@@ -111,29 +113,19 @@
       BorderColor--accent: #{pfe-local(accent)}
     ));
   }
-
-  @if $variant == disclosure-closed {
-    $variables: (
-      BorderLeftWidth: 0
-    );
-  }
-  @if $variant == disclosure-open {
-    $variables: (
-      BorderLeftWidth: 4px
-    );
-  }
 }
 
 //-- Trigger-specific properties
-@mixin pfe-trigger($align: left) {
+@mixin pfe-trigger {
   $chevron--spacing: 50px;
 
   $variables: (
-    BorderBottomWidth: 0
+    BorderBottomWidth: 0,
+    triggerPadding: #{pfe-var(container-spacer)} #{$chevron--spacing} #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 1.5) !important
   );
 
   @include pfe-set-local($variables);
-  @include pfe-accordion-props($align: #{$align});
+  @include pfe-accordion-props;
 
   // -webkit-appearance: button;
   cursor: pointer;
@@ -144,12 +136,7 @@
   font-weight: #{pfe-var(font-weight--bold)};
   text-align:  #{pfe-local($cssvar: TextAlign, $fallback: left)};
   line-height: #{pfe-var(line-height)};
-
-  @if $align == right {
-      padding: #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 1.5) #{pfe-var(container-spacer)} #{$chevron--spacing} !important;
-  } @else {
-      padding: #{pfe-var(container-spacer)} #{$chevron--spacing} #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 1.5) !important;
-  }
+  padding:     #{pfe-local(triggerPadding)};
 
   &:hover {
     outline: none;
@@ -202,8 +189,6 @@
   padding-right: 3em;
   padding-left: calc(#{pfe-var(container-spacer)} * 1.5);
 }
-
-
 
 /// ===========================================================================
 /// Accordion chevrons

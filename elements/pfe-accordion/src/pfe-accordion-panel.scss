@@ -50,19 +50,18 @@ $LOCAL: accordion;
 }
 
 :host([pfe-disclosure="true"][expanded]) {
-  @include pfe-accordion-props($variant: disclosure-open);
-
   .container {
     padding-left: calc((#{pfe-var(container-spacer)} * 1.5) - 4px);
     opacity: 1;
   }
 }
 
-:host([pfe-disclosure="true"]:not([expanded])) {
-  @include pfe-accordion-props($variant: disclosure-closed);
-  border-left-color: transparent;
-
+:host(:not([expanded])) {
   .container {
     opacity: 0;
   }
+}
+
+:host([pfe-disclosure="true"]:not([expanded])) {
+  border-left-color: transparent;
 }

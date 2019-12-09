@@ -97,6 +97,8 @@ $variables: (
 /*  TRIGGER STYLES   */
 /* ----------------- */
 .pfe-navigation-item__trigger {
+  // border: 1px dashed white !important;
+
   @each $prop in (text-decoration, text-decoration--hover, text-decoration--focus) {
     --pfe-theme--link--#{$prop}: none;
   }
@@ -359,6 +361,17 @@ $variables: (
 
 :host([is_nested]) [slot="trigger"] > a {
   color: #{pfe-color(ui-complement)} !important;
+}
+
+:host([pfe-icon=web-mobile-menu]) {
+  align-items: flex-end;
+
+  @media screen and (min-width: 640px) {
+    flex: 0 1 30%;
+  }
+  @media screen and (min-width: 1024px) {
+    flex: 0 1 60%;
+  }
 }
 
 // @TODO set up tray opening animation?

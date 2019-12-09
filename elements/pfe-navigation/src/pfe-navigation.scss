@@ -173,7 +173,7 @@ pfe-icon {
       padding-top: calc(#{pfe-local(Padding--vertical) / 2});
       padding-bottom: calc(#{pfe-local(Padding--vertical) / 2});
     }
-    @media screen and (min-width: 640px) {
+    @media screen and (min-width: 680px) {
         flex: 0 1 10%;
     }
     > * {
@@ -184,7 +184,7 @@ pfe-icon {
   &__skip {
     display: block;
     @extend %sr-only;
-    margin: 0 -2em -1px -1px;
+    margin: 0 -2em -1px -1px; 
   }
   &__main {
     display: grid;
@@ -208,9 +208,10 @@ pfe-icon {
     flex-flow: row nowrap;
     align-items: stretch;
     justify-content: flex-end;
+    flex: 0 1 20%;
 
-    @media screen and (min-width: 640px) {
-        flex: 0 1 50%;
+    @media screen and (min-width: 680px) {
+        flex: 0 1 40%;
     }
     @media screen and (min-width: 1024px) {
         flex: 0 1 30%;

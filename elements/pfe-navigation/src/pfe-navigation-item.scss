@@ -364,9 +364,10 @@ $variables: (
 
 :host([pfe-icon=web-mobile-menu]) {
   align-items: flex-end;
+  flex: 0 1 60%;
 
-  @media screen and (min-width: 640px) {
-    flex: 0 1 30%;
+  @media screen and (min-width: 680px) {
+    flex: 0 1 40%;
   }
   @media screen and (min-width: 1024px) {
     flex: 0 1 60%;

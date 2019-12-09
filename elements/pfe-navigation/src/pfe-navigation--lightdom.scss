@@ -174,7 +174,6 @@
 
         [slot="tray"] {
             display: flex;
-            flex-grow: 1;
         }
 
         [slot="trigger"] {
@@ -528,19 +527,3 @@ pfe-navigation-main [slot="trigger"] > a {
         top: 0 !important;
     }
 }
-
-// // Set flex-basis to control display.
-// @media screen and (min-width: 640px) {
-//     .pfe-navigation__logo {
-
-//     }
-//     .pfe-navigation__utility {
-//         flex: 0 1 40%;
-//         border: 1px solid white !important;
-//     }
-
-//     pfe-navigation-item[pfe-icon=web-mobile-menu] {
-//         flex: 0 1 40%;
-//         border: 1px solid white !important;
-//     }
-// }

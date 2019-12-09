@@ -143,10 +143,6 @@ pfe-icon {
         --pfe-navigation--Width: 1140px;
       }
     }
-
-    @media (min-width: #{pfe-breakpoint(lg)}) {
-      padding: 0;
-    }
   }
   &__overlay {
     display: block;
@@ -194,6 +190,7 @@ pfe-icon {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     height: 100%;
+    width: 100%;
     &--menu-label {
       color: #{pfe-local(Color)};
     }
@@ -211,13 +208,13 @@ pfe-icon {
     flex-flow: row nowrap;
     align-items: stretch;
     justify-content: flex-end;
-    margin-left: auto;
 
     @media screen and (min-width: 640px) {
         flex: 0 1 50%;
     }
     @media screen and (min-width: 1024px) {
         flex: 0 1 30%;
+        margin-left: auto;
     }
   }
 }

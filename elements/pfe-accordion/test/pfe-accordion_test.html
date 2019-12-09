@@ -272,11 +272,13 @@
             assert.isTrue(newHeaderElement.hasAttribute("pfe-id"));
             assert.isTrue(newHeaderElement.hasAttribute("aria-controls"));
             assert.equal(newHeaderElement.getAttribute("aria-controls"), newPanelElement.getAttribute("pfe-id"));
+            assert.equal(newHeaderElement.getAttribute('pfe-disclosure'), 'true');
 
             assert.equal(newPanelElement.getAttribute("role"), "region");
             assert.isTrue(newPanelElement.hasAttribute("pfe-id"));
             assert.isTrue(newPanelElement.hasAttribute("aria-labelledby"));
             assert.equal(newPanelElement.getAttribute("aria-labelledby"), newHeaderElement.getAttribute("pfe-id"));
+            assert.equal(newPanelElement.getAttribute('pfe-disclosure'), 'true');
 
             done();
           });

@@ -14,7 +14,7 @@ class PfeBadge extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["number", "text", "pfe-state", "pfe-threshold"];
+    return ["number", "text", "pfe-threshold"];
   }
 
   get threshold() {

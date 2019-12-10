@@ -17,9 +17,9 @@ stories.addParameters({
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeBadge.tag, () => {
-  const number = storybookBridge.number("number", 50);
-  const state = storybookBridge.select("pfe-state", ["default","moderate", "important", "critical", "success", "info"], "default");
-  const threshold = storybookBridge.number("pfe-threshold", 100);
+  const number = storybookBridge.number('Numerical Value', 50);
+  const state = storybookBridge.select('Background Color', ["default","moderate", "important", "critical", "success", "info"], "default");
+  const threshold = storybookBridge.number('Threshold Value', 100);
 
   const staticTextExamples = [
     {

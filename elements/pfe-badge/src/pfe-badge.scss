@@ -25,26 +25,22 @@ $variables: (
   text-rendering: optimizelegibility;
 }
 
-.pfe-badge {
-  &__container {
-    background-color: #{pfe-local(BackgroundColor)};
-    border-radius:    #{pfe-local(BorderRadius)};
-    color:            #{pfe-local(Color)};
-    font-size:        #{pfe-local(FontSize)};
-    font-weight:      #{pfe-local(FontWeight)};
-    min-width:        #{pfe-local(MinWidth)};
-    padding-left:     #{pfe-local(PaddingLeft)};
-    padding-right:    #{pfe-local(PaddingRight)};
-  }
+span {
+  background-color: #{pfe-local(BackgroundColor)};
+  border-radius:    #{pfe-local(BorderRadius)};
+  color:            #{pfe-local(Color)};
+  font-size:        #{pfe-local(FontSize)};
+  font-weight:      #{pfe-local(FontWeight)};
+  min-width:        #{pfe-local(MinWidth)};
+  padding-left:     #{pfe-local(PaddingLeft)};
+  padding-right:    #{pfe-local(PaddingRight)};
 }
 
 @each $state in (moderate, important, critical, success, info) {
   :host([pfe-state="#{$state}"]) {
-    .pfe-badge {
-      &__container {
-        --pfe-badge--BackgroundColor: #{pfe-color(feedback--#{$state})};
-        --pfe-badge--Color: #{pfe-color(text--on-dark)};
-      }
+    span {
+      --pfe-badge--BackgroundColor: #{pfe-color(feedback--#{$state})};
+      --pfe-badge--Color: #{pfe-color(text--on-dark)};
     }
   }
 }

@@ -36,7 +36,7 @@ class PfeBadge extends PFElement {
         break;
       case "text":      
         if (this.threshold) {
-          console.warn("`pfe-threshold` attribute shouldn't be used with `text` value");
+          console.warn(`${PfeBadge.tag}: attribute 'pfe-threshold' shouldn't be used with 'text' value`);
         }
         this.textContent = newVal;
         break;

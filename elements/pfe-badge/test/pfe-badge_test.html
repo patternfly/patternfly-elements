@@ -9,18 +9,52 @@
   </head>
   <body>
 
-    <pfe-badge>
-      This is the element content.
-    </pfe-badge>
-
+    <pfe-badge number="1">1</pfe-badge>
+    
     <script>
       suite('<pfe-badge>', () => {
         test('it should upgrade', () => {
           assert.instanceOf(document.querySelector('pfe-badge'), customElements.get("pfe-badge", 'pfe-badge should be an instance of pfeBadge'));
         });
 
-        // you need to write more tests!!!
+        test("it should log a warning if the pfe-threshold is provided with text value", done => {
+          const spy = sinon.spy(console, 'warn');
+          const pfeBadge = document.createElement("pfe-badge");
+          pfeBadge.setAttribute("pfe-threshold", 100);
+          pfeBadge.setAttribute("text", "inprogress");
+          pfeBadge.textContent = "inprogress";
+          document.body.appendChild(pfeBadge);
+          flush(() => {
+            sinon.assert.calledWith(spy, `pfe-badge: attribute 'pfe-threshold' shouldn't be used with 'text' value`);
+            spy.restore();
+            done();
+          });
+        });
 
+        test("it should set or reset textContent equivalent to the number attribute", () => {
+          const pfeBadge = document.createElement("pfe-badge");
+          pfeBadge.setAttribute("number", 100);
+          pfeBadge.nodeValue = "10";
+          document.body.appendChild(pfeBadge);
+          assert.equal(pfeBadge.textContent, 100);
+        });
+
+        test("it should set or reset textContent equivalent to the text attribute", () => {
+          const pfeBadge = document.createElement("pfe-badge");
+          pfeBadge.setAttribute("text", "inprogress");
+          pfeBadge.nodeValue = "10";
+          document.body.appendChild(pfeBadge);
+          assert.equal(pfeBadge.textContent, "inprogress");
+        });
+
+        test("it should add '+' sign if value exceeds the threshold", () => {
+          const pfeBadge = document.createElement("pfe-badge");
+          pfeBadge.setAttribute("number", 900);
+          pfeBadge.setAttribute("pfe-threshold", 100);
+          pfeBadge.nodeValue = "900";
+          document.body.appendChild(pfeBadge);
+          assert.equal(pfeBadge.textContent, "100+");
+        });
       });
     </script>
   </body>

@@ -49,11 +49,11 @@ $LOCAL: navigation;
     line-height: 1.1;
     margin: 0 !important;
     max-width: var(--max-trigger);
-        
+  
     @media screen and (min-width: 1000px) {
         --max-trigger: 100px;
     }
     @media screen and (min-width: 1200px) {
-        --max-trigger: 120px;
+        --max-trigger: 165px;
     }
 }

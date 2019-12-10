@@ -12,7 +12,7 @@ $variables: (
   ),
   trigger: (
     FontSize: 16px,
-    Padding:  calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.75)
+    Padding:  calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} * .5)
   ),
   tray: (
     BackgroundColor:  #{pfe-color(surface--lightest)},
@@ -62,20 +62,26 @@ $variables: (
 // -- CONTEXTS
 // ---------------------//
 
-// If the navigation item has an icon
+// If the navigation item has an icon, i.e. a utility link
 :host([pfe-icon]) {
   --pfe-navigation--MinWidth: 50px;
   --pfe-navigation__trigger--FontSize: 12px;
   --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.5);
   --pfe-navigation__trigger-icon--Visible: hidden;
-  flex: 1 0 22%;
+  flex: auto;// 1 0 22%;
+  width: auto;
+  min-width: 65px;
 
+  // when utilities are shown in the black bar
+  @media screen and (min-width: 640px) {
+    width: 70px;
+  }
   @media screen and (max-height: 500px) {
     --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 3) calc(#{pfe-var(container-padding)} *.5);
   }
 
   @media screen and (min-width: 1024px) {
-    flex: 1 0 26%;
+    flex: auto;// 1 0 26%;
   }
 }
 
@@ -131,8 +137,10 @@ $variables: (
   background-color: #{pfe-local(BackgroundColor)};
   color:            #{pfe-local(Color)};
   
-  padding: #{pfe-local($cssvar: Padding, $region: trigger, $fallback: #{pfe-var(container-padding)})} !important;
-
+  padding: 10px;//#{pfe-local(Padding)};
+  :host(:not([pfe-icon])) {
+    padding: 15px;//#{pfe-local(Padding)};
+  }
   position: relative;
   flex-grow: 1;
   
@@ -364,14 +372,14 @@ $variables: (
 
 :host([pfe-icon=web-mobile-menu]) {
   align-items: flex-end;
-  flex: 0 1 60%;
+  flex: 0 1 99%;//0 1 60%;
 
-  @media screen and (min-width: 680px) {
-    flex: 0 1 40%;
-  }
-  @media screen and (min-width: 1024px) {
-    flex: 0 1 60%;
-  }
+  //@media screen and (min-width: 680px) {
+  //  flex: 0 1 40%;
+  //}
+  //@media screen and (min-width: 1024px) {
+  //  flex: 0 1 60%;
+  //}
 }
 
 // @TODO set up tray opening animation?

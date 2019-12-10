@@ -511,6 +511,9 @@ pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [
 pfe-navigation-main [slot="trigger"],
 pfe-navigation-main [slot="trigger"] > a {
     font-size: $trigger--FontSize--fallback;
+    @media screen and (min-width: 1040px) and (max-width: 1200px) {
+        font-size: 14px;
+    }  
 }
 
 

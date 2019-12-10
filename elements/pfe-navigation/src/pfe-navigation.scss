@@ -208,13 +208,13 @@ pfe-icon {
     flex-flow: row nowrap;
     align-items: stretch;
     justify-content: flex-end;
-    flex: 0 1 20%;
+    flex: auto; //0 1 20%;
 
     @media screen and (min-width: 680px) {
-        flex: 0 1 40%;
+        flex: auto; //0 1 40%;
     }
     @media screen and (min-width: 1024px) {
-        flex: 0 1 30%;
+        flex: auto; //0 1 30%;
         margin-left: auto;
     }
   }

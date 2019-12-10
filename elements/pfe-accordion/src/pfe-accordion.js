@@ -114,6 +114,14 @@ class PfeAccordion extends PFElement {
         panels.setAttribute("pfe-disclosure", "true");
       });
     };
+    if ((!this.hasAttribute("pfe-disclosure=false"))) {
+      this._allHeaders().forEach(function(headers) {
+        headers.setAttribute("pfe-disclosure", "false");
+      });
+      this._allPanels().forEach(function(panels) {
+        panels.setAttribute("pfe-disclosure", "false");
+      });
+    };
   }
 
   disconnectedCallback() {

@@ -124,16 +124,6 @@ class PfeAccordion extends PFElement {
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
-    
-    if ( this.getAttribute("pfe-disclosure") === "false" ) {
-      this._allHeaders().forEach(function(headers) {
-        headers.setAttribute("pfe-disclosure", "false");
-        console.log("headers!");
-      });
-      this._allPanels().forEach(function(panels) {
-        panels.setAttribute("pfe-disclosure", "false");
-      });
-    };
   }
 
   toggle(index) {

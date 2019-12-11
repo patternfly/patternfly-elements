@@ -22,19 +22,19 @@ class PfeBadge extends PFElement {
   }
 
   constructor() {
-    super(PfeBadge);   
-    this._textContainer = this.shadowRoot.querySelector("span");    
+    super(PfeBadge);
+    this._textContainer = this.shadowRoot.querySelector("span");
   }
 
-  attributeChangedCallback(attr, oldVal, newVal) {   
-    switch(attr) {
+  attributeChangedCallback(attr, oldVal, newVal) {
+    switch (attr) {
       case "pfe-threshold":
-        this.textContent = this.threshold < this.textContent ? `${this.threshold}+` : this.textContent;
+        this.textContent = Number(this.threshold) < Number(this.textContent) ? `${this.threshold}+` : this.textContent;
         break;
       case "number":
         this.textContent = this.threshold && Number(this.threshold) < Number(newVal) ? `${this.threshold}+` : newVal;
         break;
-      case "text":      
+      case "text":
         if (this.threshold) {
           console.warn(`${PfeBadge.tag}: attribute 'pfe-threshold' shouldn't be used with 'text' value`);
         }

@@ -55,6 +55,16 @@
           document.body.appendChild(pfeBadge);
           assert.equal(pfeBadge.textContent, "100+");
         });
+
+        test("it shouldn't add a '+' sign if the value doesn't exceed the threshold", () => {
+          const pfeBadge = document.createElement("pfe-badge");
+          pfeBadge.setAttribute("number", 900);
+          pfeBadge.setAttribute("pfe-threshold", 1000);
+          pfeBadge.nodeValue = "900";
+          document.body.appendChild(pfeBadge);
+
+          assert.equal(pfeBadge.textContent, "900");
+        });
       });
     </script>
   </body>

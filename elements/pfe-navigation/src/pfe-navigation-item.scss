@@ -138,8 +138,8 @@ $variables: (
   color:            #{pfe-local(Color)};
   
   padding: 10px;//#{pfe-local(Padding)};
-  :host(:not([pfe-icon])) {
-    padding: 15px;//#{pfe-local(Padding)};
+  :host(:not([pfe-icon])) & {
+    padding: 12px ;//#{pfe-local(Padding)};
   }
   position: relative;
   flex-grow: 1;

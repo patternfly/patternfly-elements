@@ -79,6 +79,10 @@ class PfeAccordion extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
+  static get observedAttributes() {
+    return ["pfe-disclosure"]
+  }
+
   constructor() {
     super(PfeAccordion, { type: PfeAccordion.PfeType });
 
@@ -105,15 +109,6 @@ class PfeAccordion extends PFElement {
 
       this._observer.observe(this, { childList: true });
     });
-    if ((!this.hasAttribute("pfe-disclosure")) && ( this._allHeaders().length === 1 )) {
-      this.setAttribute("pfe-disclosure", "true");
-      this._allHeaders().forEach(function(headers) {
-        headers.setAttribute("pfe-disclosure", "true");
-      });
-      this._allPanels().forEach(function(panels) {
-        panels.setAttribute("pfe-disclosure", "true");
-      });
-    };
   }
 
   disconnectedCallback() {
@@ -124,16 +119,16 @@ class PfeAccordion extends PFElement {
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
-    
-    if ( this.getAttribute("pfe-disclosure") === "false" ) {
-      this._allHeaders().forEach(function(headers) {
-        headers.setAttribute("pfe-disclosure", "false");
-        console.log("headers!");
-      });
-      this._allPanels().forEach(function(panels) {
-        panels.setAttribute("pfe-disclosure", "false");
-      });
-    };
+
+    if (attr === "pfe-disclosure") {
+      if (newVal === "true") {
+        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "true"));
+        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "true"));
+      } else {
+        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "false"));
+        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "false"));
+      }
+    }
   }
 
   toggle(index) {
@@ -211,6 +206,20 @@ class PfeAccordion extends PFElement {
       header.setAttribute("aria-controls", panel.pfeId);
       panel.setAttribute("aria-labelledby", header.pfeId);
     });
+
+    if (headers.length === 1) {
+      if (this.hasAttribute("pfe-disclosure") && this.getAttribute("pfe-disclosure") === "false") {
+        return;
+      }
+
+      this.setAttribute("pfe-disclosure", "true");
+    }
+
+    if (headers.length > 1) {
+      if (this.hasAttribute("pfe-disclosure")) {
+        this.removeAttribute("pfe-disclosure");
+      }
+    }
   }
 
   _changeHandler(evt) {

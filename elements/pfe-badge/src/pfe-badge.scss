@@ -2,7 +2,7 @@
 $LOCAL: badge;
 
 $variables: (
-  BackgroundColor:  #{pfe-color(feedback--default--lightest)},
+  BackgroundColor: #{pfe-color(feedback--default--lightest)},
   BorderRadius: calc(#{pfe-var(ui--border-radius)} * 30),
 
   Color: #{pfe-color(text)},
@@ -13,7 +13,7 @@ $variables: (
   MinWidth: calc(#{pfe-var(ui--border-width)} * 2),
 
   PaddingLeft: calc(#{pfe-var(container-padding)} * 0.5),
-  PaddingRight: calc(#{pfe-var(container-padding)} * 0.5),
+  PaddingRight: calc(#{pfe-var(container-padding)} * 0.5)
 );
 
 :host {

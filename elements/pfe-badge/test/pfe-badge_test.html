@@ -12,50 +12,36 @@
     <pfe-badge number="1">1</pfe-badge>
     
     <script>
-    // Background colors for the various states
-    const states = {
-      default: "#ececec",
-      info: "#0277bd",
-      success: "#2e7d32",
-      important: "#d73401",
-      moderate: "#ffc024",
-      critical: "#bb0000",
-    };
+      // Background colors for the various states
+      const states = {
+        default: "#ececec",
+        info: "#0277bd",
+        success: "#2e7d32",
+        important: "#d73401",
+        moderate: "#ffc024",
+        critical: "#bb0000",
+      };
 
-    // Converts a hex value to RGBA
-    const hexToRgb = hex => {
-      const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/.exec(hex);
-      return [
-        parseInt(r, 16),
-        parseInt(g, 16),
-        parseInt(b, 16)
-      ];
-    };
+      // Converts a hex value to RGBA
+      const hexToRgb = hex => {
+        const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/.exec(hex);
+        return [
+          parseInt(r, 16),
+          parseInt(g, 16),
+          parseInt(b, 16)
+        ];
+      };
 
-    // Gets the rgba value from an element
-    const getColor = (el, prop) => {
-      const [, r, g, b] = getComputedStyle(el, null)[prop].match(/rgba?\((\d+),\s+(\d+),\s+(\d+).*\)/)
-        .map(n => +n);
-      return [r, g, b];
-    };
+      // Gets the rgba value from an element
+      const getColor = (el, prop) => {
+        const [, r, g, b] = getComputedStyle(el, null)[prop].match(/rgba?\((\d+),\s+(\d+),\s+(\d+).*\)/)
+          .map(n => +n);
+        return [r, g, b];
+      };
 
       suite('<pfe-badge>', () => {
         test('it should upgrade', () => {
           assert.instanceOf(document.querySelector('pfe-badge'), customElements.get("pfe-badge", 'pfe-badge should be an instance of pfeBadge'));
-        });
-
-        test("it should log a warning if the pfe-threshold is provided with text value", done => {
-          const spy = sinon.spy(console, 'warn');
-          const pfeBadge = document.createElement("pfe-badge");
-          pfeBadge.setAttribute("pfe-threshold", 100);
-          pfeBadge.setAttribute("text", "inprogress");
-          pfeBadge.textContent = "inprogress";
-          document.body.appendChild(pfeBadge);
-          flush(() => {
-            sinon.assert.calledWith(spy, `pfe-badge: attribute 'pfe-threshold' shouldn't be used with 'text' value`);
-            spy.restore();
-            done();
-          });
         });
 
         test("it should set or reset textContent equivalent to the number attribute", () => {
@@ -64,14 +50,6 @@
           pfeBadge.nodeValue = "10";
           document.body.appendChild(pfeBadge);
           assert.equal(pfeBadge.textContent, 100);
-        });
-
-        test("it should set or reset textContent equivalent to the text attribute", () => {
-          const pfeBadge = document.createElement("pfe-badge");
-          pfeBadge.setAttribute("text", "inprogress");
-          pfeBadge.nodeValue = "10";
-          document.body.appendChild(pfeBadge);
-          assert.equal(pfeBadge.textContent, "inprogress");
         });
 
         test("it should add '+' sign if value exceeds the threshold", () => {

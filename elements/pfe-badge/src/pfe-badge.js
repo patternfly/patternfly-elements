@@ -14,7 +14,7 @@ class PfeBadge extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["number", "text", "pfe-threshold"];
+    return ["number", "pfe-threshold"];
   }
 
   get threshold() {
@@ -33,12 +33,6 @@ class PfeBadge extends PFElement {
         break;
       case "number":
         this.textContent = this.threshold && Number(this.threshold) < Number(newVal) ? `${this.threshold}+` : newVal;
-        break;
-      case "text":
-        if (this.threshold) {
-          console.warn(`${PfeBadge.tag}: attribute 'pfe-threshold' shouldn't be used with 'text' value`);
-        }
-        this.textContent = newVal;
         break;
       default:
         return;

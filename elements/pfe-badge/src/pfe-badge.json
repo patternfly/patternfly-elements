@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Badge",
-  "description": "This element creates a badge with numerical or text value.",
+  "description": "This element creates a badge with a numerical value.",
   "type": "object",
   "tag": "pfe-badge",
   "class": "pfe-badge",

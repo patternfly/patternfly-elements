@@ -17,12 +17,39 @@
 ///    --pfe-band--Width: #{pfe-breakpoint(sm) - $box-padding * 2};
 /// }
 /// ```
+///
+/// Set $map to false if you need supplemental breakpoints in a component  
+/// Use:
+/// ```
+/// $variables: (
+///    lg-mobile:         640,
+///    sm-desktop:        1024,
+/// );
+/// ```
+///
+/// ```
+/// @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { }
+/// ```
+/// which returns:
+/// ```
+/// @media screen and (min-width: var(--pfe-navigation--breakpoint-lg-mobile, 640)) { }
+/// ```
 
-@function pfe-breakpoint($size, $max: false) {
-    $bp: map-get($pfe-vars, grid-breakpoint--#{$size});
-    @if $max {
-        $bp: (pfe-strip-unit($bp) - 1) * 1px;
+
+@function pfe-breakpoint($size, $max: false, $map: false) {
+    $bp: 1px;
+    @if $map == true {
+    	$bp: map-get($pfe-vars, grid-breakpoint--#{$size});
+    	@if $max {
+    	    $bp: (pfe-strip-unit($bp) - 1) * 1px;
+    	}
     }
+    @else {
+        $bp: #{pfe-local(breakpoint-#{$size},  map-get($variables, #{$size}) )};
+	    @if $max {
+	        $bp: (pfe-strip-unit($bp) - 1) * 1px;
+	    }
+	}
     @return $bp;
 }
 /// Get Theme

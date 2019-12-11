@@ -34,7 +34,7 @@ $variables: (
   @media screen and (max-width: #{pfe-breakpoint(xl)}) {
     width: 100%;
   }
-  @media screen and (min-width: 500px) {
+  @media screen and (min-width: pfe-breakpoint(sm-mobile, $map: false)) { 
     --pfe-navigation__trigger--Padding: #{pfe-var(container-padding)} !important;
   }
 }

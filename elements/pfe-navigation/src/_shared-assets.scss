@@ -7,7 +7,23 @@ $trigger--FontWeight--fallback: #{pfe-var(font-weight--light)};
 $trigger--Color--fallback: #{pfe-color(text--on-dark)};
 
 $LOCAL: navigation;
- // turn on automatic fallbacks for broadcasted variables
+$variables: (
+
+// Supplemental breakpoints,   
+// Usage:  @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { 
+
+//  grid-breakpoint--xs:           0,
+    sm-mobile:                     500,
+//  grid-breakpoint--sm:           576px,
+    lg-mobile:                     640,
+//  grid-breakpoint--md:           768px,
+//  grid-breakpoint--lg:           992px,
+    sm-desktop:                    1024,
+//  grid-breakpoint--xl:           1200px,
+);
+
+
+// turn on automatic fallbacks for broadcasted variables
 
 // -- Typography
 %link-styles {

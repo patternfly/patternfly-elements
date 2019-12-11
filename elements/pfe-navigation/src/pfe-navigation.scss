@@ -168,7 +168,8 @@ pfe-icon {
     padding-top: #{pfe-local(Padding--vertical)};
     padding-bottom: #{pfe-local(Padding--vertical)};
     padding-right: 48px; // ensure gap between main menu links and logo
-    @media screen and (min-width: 680px) {
+
+    @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { // was 680
         padding-right: 20px;
     }
 
@@ -176,7 +177,7 @@ pfe-icon {
       padding-top: calc(#{pfe-local(Padding--vertical) / 2});
       padding-bottom: calc(#{pfe-local(Padding--vertical) / 2});
     }
-    @media screen and (min-width: 680px) {
+    @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { // was 680
         flex: 0 1 10%;
     }
     > * {
@@ -213,10 +214,7 @@ pfe-icon {
     justify-content: flex-end;
     flex: auto; //0 1 20%;
 
-    @media screen and (min-width: 680px) {
-      flex: auto; //0 1 40%;
-    }
-    @media screen and (min-width: 1024px) {
+      @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) {
         flex: auto; //0 1 30%;
         margin-left: auto;
         padding-left: 48px; // ensure gap between main menu links and utility links

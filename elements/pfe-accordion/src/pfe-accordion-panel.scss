@@ -54,9 +54,3 @@ $LOCAL: accordion;
     padding-left: calc((#{pfe-var(container-spacer)} * 1.5) - 4px);
   }
 }
-
-:host([pfe-disclosure="true"].animating) {
-  @include pfe-panel-variables;
-  border-left-color: #{pfe-color(ui-base)};
-  border-left-width: #{pfe-var(surface--border-width--heavy)};
-}

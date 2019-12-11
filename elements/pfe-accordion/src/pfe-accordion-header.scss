@@ -45,7 +45,7 @@ button {
   @include pfe-trigger-last;
 }
 :host(:last-of-type.animating) button {
-  border-bottom-color: transparent;
+  border-bottom-width: 0;
 }
 
 /// ===========================================================================

@@ -366,6 +366,11 @@ $variables: (
   flex-grow: 1;
 }
 
+// Left-align text in accordions on mobile.
+:host([is_nested]) ::slotted([slot="trigger"]) {
+  text-align: left;
+}
+
 :host([is_nested]) [slot="trigger"] > a {
   color: #{pfe-color(ui-complement)} !important;
 }

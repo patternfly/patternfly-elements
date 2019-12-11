@@ -26,7 +26,7 @@ button {
 
   @include browser-query(ie11) {
     &:hover {
-      border-left-color: #{pfe-color(ui-base)};
+      --pfe-accordion--BorderColor--accent: #{pfe-color(ui-base)};
     }
   }
 }
@@ -45,7 +45,7 @@ button {
   @include pfe-trigger-last;
 }
 :host(:last-of-type.animating) button {
-  border-bottom-width: 0;
+  --pfe-accordion--BorderBottomWidth: 0;
 }
 
 /// ===========================================================================
@@ -56,8 +56,8 @@ button {
 button[aria-expanded="true"] {
   @include pfe-accordion-variables($state: expanded);
   @include browser-query(ie11) {
-    border-bottom-width: 0;
-    border-left-color: #{pfe-color(ui-base)};
+    --pfe-accordion--BorderBottomWidth: 0;
+    --pfe-accordion--BorderColor--accent: #{pfe-color(ui-base)};
   }
 }
 
@@ -91,7 +91,7 @@ button[aria-expanded="true"] {
     // Adjust contents position on hover.
     &:hover {
       padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
-      --pfe-accordion--BorderLeftWidth: 4px;
+      --pfe-accordion--BorderLeftWidth: #{pfe-var(surface--border-width--heavy)};
 
       &::before {
         left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px.
@@ -100,9 +100,10 @@ button[aria-expanded="true"] {
   }
 }
 
+// Set the header border while animating. 
 :host([pfe-disclosure="true"].animating) {
-  border-left-color: #{pfe-color(ui-base)};
-  border-left-width: #{pfe-var(surface--border-width--heavy)};
+  --pfe-accordion--BorderColor--accent: #{pfe-color(ui-base)};
+  --pfe-accordion--BorderLeftWidth: #{pfe-var(surface--border-width--heavy)};
 }
 
 

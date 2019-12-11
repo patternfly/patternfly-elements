@@ -73,7 +73,7 @@
     }
     @if $variant == disclosure {
       $variables: (
-        BorderLeftWidth: 4px,
+        BorderLeftWidth: #{pfe-var(surface--border-width--heavy)},
         BorderColor--accent: #{pfe-color(ui-base)}
       );
     }

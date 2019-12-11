@@ -49,19 +49,14 @@ $LOCAL: accordion;
   }
 }
 
-:host([pfe-disclosure="true"][expanded]) {
+:host([pfe-disclosure="true"]) {
   .container {
     padding-left: calc((#{pfe-var(container-spacer)} * 1.5) - 4px);
-    opacity: 1;
   }
 }
 
-:host(:not([expanded])) {
-  .container {
-    opacity: 0;
-  }
-}
-
-:host([pfe-disclosure="true"]:not([expanded])) {
-  border-left-color: transparent;
+:host([pfe-disclosure="true"].animating) {
+  @include pfe-panel-variables;
+  border-left-color: #{pfe-color(ui-base)};
+  border-left-width: #{pfe-var(surface--border-width--heavy)};
 }

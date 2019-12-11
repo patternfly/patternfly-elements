@@ -44,6 +44,9 @@ button {
 :host(:last-of-type) button:not([aria-expanded="true"]) {
   @include pfe-trigger-last;
 }
+:host(:last-of-type.animating) button {
+  border-bottom-color: transparent;
+}
 
 /// ===========================================================================
 /// EXPANDED STYLES
@@ -95,6 +98,11 @@ button[aria-expanded="true"] {
       }
     }
   }
+}
+
+:host([pfe-disclosure="true"].animating) {
+  border-left-color: #{pfe-color(ui-base)};
+  border-left-width: #{pfe-var(surface--border-width--heavy)};
 }
 
 

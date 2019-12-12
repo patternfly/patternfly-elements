@@ -170,6 +170,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
             > .pfe-navigation-item__trigger {
                 > [slot="trigger"] {
                     font-size: 12px;
+                    text-align: center;
                 }
             }            
         }
@@ -261,6 +262,9 @@ $variables: map-merge($variables, $nav-light-dom-variables);
 
     pfe-navigation-item:not([parent_hidden])[is_nested].expanded .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0;
+    }
+    .pfe-navigation__logo {
+        margin-right: 20px; // Account for collapsed padding-right: 20px;
     }
 }
 

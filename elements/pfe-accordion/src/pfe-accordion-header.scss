@@ -26,7 +26,6 @@ button {
 
   @include browser-query(ie11) {
     padding: 16px 24px;
-    border-right-color: #{pfe-color(surface--border)};
     &:hover {
       border-left-color: #{pfe-color(ui-base)};
     }
@@ -60,6 +59,7 @@ button[aria-expanded="true"] {
   @include browser-query(ie11) {
     border-bottom-width: 0;
     border-left-color: #{pfe-color(ui-base)};
+    border-right-color: #{pfe-color(surface--border)};
   }
 }
 
@@ -79,10 +79,15 @@ button[aria-expanded="true"] {
     --pfe-accordion--triggerPadding: #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 1.5) #{pfe-var(container-spacer)} calc((#{pfe-var(container-spacer)} * 3) + 2px) !important;
     @include browser-query(ie11) {
       padding: 16px 24px 16px 47px;
+      border-right-color: #{pfe-color(surface--border)};
+      border-left-color: #{pfe-color(surface--border)};
+      border-left-width: #{pfe-var(surface--border-width)};
     }
 
     &[aria-expanded="true"] {
       padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
+      border-left-color: #{pfe-color(ui-base)};
+      border-left-width: #{pfe-var(surface--border-width--heavy)};
 
       &::before {
         @include pfe-chevron($state: open, $position: before);

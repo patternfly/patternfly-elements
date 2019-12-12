@@ -25,8 +25,10 @@ button {
   }
 
   @include browser-query(ie11) {
+    padding: 16px 24px;
+    border-right-color: #{pfe-color(surface--border)};
     &:hover {
-      --pfe-accordion--BorderColor--accent: #{pfe-color(ui-base)};
+      border-left-color: #{pfe-color(ui-base)};
     }
   }
 }
@@ -56,8 +58,8 @@ button {
 button[aria-expanded="true"] {
   @include pfe-accordion-variables($state: expanded);
   @include browser-query(ie11) {
-    --pfe-accordion--BorderBottomWidth: 0;
-    --pfe-accordion--BorderColor--accent: #{pfe-color(ui-base)};
+    border-bottom-width: 0;
+    border-left-color: #{pfe-color(ui-base)};
   }
 }
 
@@ -75,6 +77,9 @@ button[aria-expanded="true"] {
 :host([pfe-disclosure="true"]) {
   button {
     --pfe-accordion--triggerPadding: #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 1.5) #{pfe-var(container-spacer)} calc((#{pfe-var(container-spacer)} * 3) + 2px) !important;
+    @include browser-query(ie11) {
+      padding: 16px 24px 16px 47px;
+    }
 
     &[aria-expanded="true"] {
       padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
@@ -104,6 +109,14 @@ button[aria-expanded="true"] {
 :host([pfe-disclosure="true"].animating) {
   --pfe-accordion--BorderColor--accent: #{pfe-color(ui-base)};
   --pfe-accordion--BorderLeftWidth: #{pfe-var(surface--border-width--heavy)};
+
+  button {
+    padding-left: calc((var(--pfe-theme--container-spacer,16px) * 3) - 1px)!important;
+
+    &::before {
+      left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px.
+    }
+  }
 }
 
 

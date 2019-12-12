@@ -5,7 +5,7 @@ Users can provide a number or a string with threshold value.
 
 ## Usage
 
-With `number` attribute:
+With the `number` attribute:
 
 ```html
 <section>
@@ -14,7 +14,7 @@ With `number` attribute:
     <pfe-badge number="900">900</pfe-badge>
 </section>
 ```
-With `text` attribute and `<pfe-state>` attribute:
+With the `text` attribute and the `<pfe-state>` attribute:
 
 ```html
 <section>
@@ -41,11 +41,11 @@ With `text` attribute and `<pfe-state>` attribute:
 
 There are several attributes available for customizing the visual treatment of pfe-badge.
 
-- `number`: Sets a numeric value for a badge. You can pair it with `pfe-threshold` attribute to add `+` sign if the number exceeds threshold value.
+- `number`: Sets a numeric value for a badge. You can pair it with `pfe-threshold` attribute to add a `+` sign if the number exceeds the threshold value.
 
 - `text`: Sets a string value for a badge.
 
-- `pfe-threshold`: Sets a threshold for numeric value and adds `+` sign if the value exceeds the threshold value.
+- `pfe-threshold`: Sets a threshold for the numeric value and adds `+` sign if the numeric value exceeds the threshold value.
 
 - `pfe-state`: Options include moderate, important, critical, success, info. The badge has a default 
 `background-color`: <span class="color-preview" style="background-color:#b5b5b5"></span> #b5b5b5 and

@@ -58,7 +58,7 @@ button[aria-expanded="true"] {
   @include pfe-accordion-variables($state: expanded);
   @include browser-query(ie11) {
     border-bottom-width: 0;
-    border-left-color: #{pfe-color(ui-base)};
+    --pfe-accordion--BorderColor--accent: #{pfe-color(ui-base)};
     border-right-color: #{pfe-color(surface--border)};
   }
 }
@@ -76,7 +76,7 @@ button[aria-expanded="true"] {
 
 :host([pfe-disclosure="true"]) {
   button {
-    --pfe-accordion--triggerPadding: #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 1.5) #{pfe-var(container-spacer)} calc((#{pfe-var(container-spacer)} * 3) + 2px) !important;
+    --pfe-accordion--Trigger--padding: #{pfe-local(PaddingBase)} calc(#{pfe-local(PaddingBase)} * 1.5) #{pfe-local(PaddingBase)} calc((#{pfe-local(PaddingBase)} * 3) + 2px) !important;
     @include browser-query(ie11) {
       padding: 16px 24px 16px 47px;
       border-right-color: #{pfe-color(surface--border)};
@@ -86,7 +86,6 @@ button[aria-expanded="true"] {
 
     &[aria-expanded="true"] {
       padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
-      border-left-color: #{pfe-color(ui-base)};
       border-left-width: #{pfe-var(surface--border-width--heavy)};
 
       &::before {
@@ -112,8 +111,8 @@ button[aria-expanded="true"] {
 
 // Set the header border while animating. 
 :host([pfe-disclosure="true"].animating) {
-  --pfe-accordion--BorderColor--accent: #{pfe-color(ui-base)};
   --pfe-accordion--BorderLeftWidth: #{pfe-var(surface--border-width--heavy)};
+  --pfe-accordion--BorderColor--accent: #{pfe-color(ui-base)}; // set border-left color while animating.
 
   button {
     padding-left: calc((var(--pfe-theme--container-spacer,16px) * 3) - 1px)!important;
@@ -121,6 +120,13 @@ button[aria-expanded="true"] {
     &::before {
       left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px.
     }
+  }
+}
+
+// Override border-left color for different themes.
+@each $context in $THEMES {
+  :host([pfe-disclosure="true"][on="#{$context}"].animating) {
+    @include pfe-accordion-variables($state: expanded, $theme: #{$context});
   }
 }
 

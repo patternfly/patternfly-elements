@@ -1,7 +1,9 @@
 @import "../../pfe-sass/pfe-sass";
 @import "_shared-assets.scss";
 @import "../../pfe-styles/src/layouts/_grid";
-
+$nav-light-dom-variables: (
+);
+$variables: map-merge($variables, $nav-light-dom-variables);
 
 #main-menu {
     background: transparent !important; // Remove this.
@@ -211,7 +213,7 @@
         transition: none !important;
     }
 
-    @media screen and (max-width: 1023px) {
+    @media screen and (max-width: pfe-breakpoint("sm-desktop", $max: true, $map: false)) {
         pfe-navigation-item.expanded[pfe-icon=web-mobile-menu]:not([has_tray]) {
             background-color: #{pfe-color(surface--lightest)};
         }
@@ -511,11 +513,12 @@ pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [
 pfe-navigation-main [slot="trigger"],
 pfe-navigation-main [slot="trigger"] > a {
     font-size: $trigger--FontSize--fallback;
-    @media screen and (min-width: 1040px) and (max-width: 1200px) {
+
+    @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false) )
+                  and (max-width: pfe-breakpoint("xl", $max: true) ) {
         font-size: 14px;
     }  
 }
-
 
 // Apply flexbox styles to older browsers that don't support ShadowDOM.
 [slot="tray"] {
@@ -524,7 +527,7 @@ pfe-navigation-main [slot="trigger"] > a {
   justify-content: center;
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: pfe-breakpoint("sm-desktop", $max: true, $map: false) ) {
     .pfe-navigation__main .pfe-navigation-item__tray {
         position: relative;
         top: 0 !important;

@@ -1,6 +1,6 @@
 @import "_shared-assets";
 
-$variables: (
+$nav-variables: (
   // Default spacing values
   Padding--vertical: pfe-var(container-padding),
   Padding--horizontal: pfe-var(container-padding),
@@ -42,6 +42,7 @@ $variables: (
     MinWidth: 135px
   )
 );
+$variables: map-merge($variables, $nav-variables);
 
 :host {
   // Print the variables to the DOM
@@ -169,7 +170,7 @@ pfe-icon {
     padding-bottom: #{pfe-local(Padding--vertical)};
     padding-right: 48px; // ensure gap between main menu links and logo
 
-    @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { // was 680
+    @media screen and (min-width: pfe-breakpoint("lg-mobile", $map: false)) { // was 680
         padding-right: 20px;
     }
 
@@ -177,7 +178,7 @@ pfe-icon {
       padding-top: calc(#{pfe-local(Padding--vertical) / 2});
       padding-bottom: calc(#{pfe-local(Padding--vertical) / 2});
     }
-    @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { // was 680
+    @media screen and (min-width: pfe-breakpoint("lg-mobile", $map: false)) { // was 680
         flex: 0 1 10%;
     }
     > * {
@@ -214,7 +215,7 @@ pfe-icon {
     justify-content: flex-end;
     flex: auto; //0 1 20%;
 
-      @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) {
+      @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false)) {
         flex: auto; //0 1 30%;
         margin-left: auto;
         padding-left: 48px; // ensure gap between main menu links and utility links

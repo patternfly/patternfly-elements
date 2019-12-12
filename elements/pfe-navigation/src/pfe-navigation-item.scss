@@ -1,6 +1,6 @@
 @import "_shared-assets";
 
-$variables: (
+$nav-item-variables: (
   BackgroundColor: transparent,
   Color:           #{pfe-color(text--on-dark)},
   BorderColor:     transparent,
@@ -19,6 +19,7 @@ $variables: (
     Color:            #{pfe-color(text)}
   )
 );
+$variables: map-merge($variables, $nav-item-variables);
 
 :host {
   @include pfe-print-variables($variables);

@@ -58,7 +58,7 @@ button[aria-expanded="true"] {
   @include pfe-accordion-variables($state: expanded);
   @include browser-query(ie11) {
     border-bottom-width: 0;
-    --pfe-accordion--BorderColor--accent: #{pfe-color(ui-base)};
+    border-left-color: #{pfe-color(ui-base)};
     border-right-color: #{pfe-color(surface--border)};
   }
 }
@@ -87,6 +87,7 @@ button[aria-expanded="true"] {
     &[aria-expanded="true"] {
       padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
       border-left-width: #{pfe-var(surface--border-width--heavy)};
+      border-left-color: #{pfe-color(ui-base)};
 
       &::before {
         @include pfe-chevron($state: open, $position: before);

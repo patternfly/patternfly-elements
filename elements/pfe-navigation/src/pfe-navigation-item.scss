@@ -35,7 +35,7 @@ $variables: map-merge($variables, $nav-item-variables);
   @media screen and (max-width: #{pfe-breakpoint(xl)}) {
     width: 100%;
   }
-  @media screen and (min-width: pfe-breakpoint(sm-mobile, $map: false)) { 
+  @media screen and (min-width: pfe-breakpoint("sm-mobile", $map: false)) { 
     --pfe-navigation__trigger--Padding: #{pfe-var(container-padding)} !important;
   }
 }
@@ -379,13 +379,6 @@ $variables: map-merge($variables, $nav-item-variables);
 :host([pfe-icon=web-mobile-menu]) {
   align-items: flex-end;
   flex: 0 1 99%;//0 1 60%;
-
-  //@media screen and (min-width: 680px) {
-  //  flex: 0 1 40%;
-  //}
-  //@media screen and (min-width: 1024px) {
-  //  flex: 0 1 60%;
-  //}
 }
 
 // @TODO set up tray opening animation?

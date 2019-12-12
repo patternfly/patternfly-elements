@@ -34,13 +34,11 @@
         "number": {
           "title": "Numeric Value",
           "type": "number",
-          "default": 50,
           "prefixed": false
         },
         "pfe-threshold": {
           "title": "Threshold Value",
           "type": "number",
-          "default": 100,
           "prefixed": false
         }
       }

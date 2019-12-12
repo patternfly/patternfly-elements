@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import { escapeHTML } from "../../../.storybook/utils.js";
 
-import  PfeBadge from "../dist/pfe-badge";
+import PfeBadge from "../dist/pfe-badge";
 
 const stories = storiesOf("Badge", module);
 
@@ -17,14 +17,31 @@ stories.addParameters({
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeBadge.tag, () => {
-  const number = storybookBridge.number('Numerical Value', 50);
-  const state = storybookBridge.select('Background Color', ["default","moderate", "important", "critical", "success", "info"], "default");
-  const threshold = storybookBridge.number('Threshold Value', 100);
+  const number = storybookBridge.number(PfeBadge.properties.number.title, 50);
+  const state = storybookBridge.select(PfeBadge.properties.state.title, PfeBadge.properties.state.enum, PfeBadge.properties.state.default);
+  const threshold = storybookBridge.number(PfeBadge.properties["pfe-threshold"].title, 100);
+
+  const staticNumberExamples = [
+    {
+      number: 1,
+      state: "info",
+      threshold: null
+    },
+    {
+      number: 17,
+      state: "info",
+      threshold: 10
+    },
+    {
+      number: 900,
+      state: "info",
+      threshold: 100
+    }
+  ];
 
   const staticTextExamples = [
     {
-      text: "default",
-      state: ""
+      text: "default"
     },
     {
       text: "info",
@@ -45,25 +62,7 @@ stories.add(PfeBadge.tag, () => {
     {
       text: "moderate",
       state: "moderate"
-    },
-  ];
-
-  const staticNumberExamples = [
-    {
-      number: 1,
-      state: "info",
-      threshold: null
-    },
-    {
-      number: 17,
-      state: "info",
-      threshold: 10
-    },
-    {
-      number: 900,
-      state: "info",
-      threshold: 100
-    },
+    }
   ];
 
   const customBadge = `<pfe-badge pfe-state="${state}" pfe-threshold="${threshold}" number="${number}">${number}</pfe-badge>`;
@@ -79,6 +78,7 @@ stories.add(PfeBadge.tag, () => {
       <pre><code>${escapeHTML(customBadge)}</code>
       </pre>
     </section>
+    
     <h1>Static examples with numbers</h1>
     ${staticNumberExamples
       .map(

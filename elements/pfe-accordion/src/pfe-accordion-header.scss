@@ -87,7 +87,6 @@ button[aria-expanded="true"] {
     &[aria-expanded="true"] {
       padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
       border-left-width: #{pfe-var(surface--border-width--heavy)};
-      border-left-color: #{pfe-color(ui-base)};
 
       &::before {
         @include pfe-chevron($state: open, $position: before);

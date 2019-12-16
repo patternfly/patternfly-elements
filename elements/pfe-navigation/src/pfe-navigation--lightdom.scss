@@ -285,6 +285,10 @@ pfe-navigation-item {
     [slot="trigger"] {
         margin: .25em 0 0 0!important;
     }
+    // Utility links.
+    pfe-icon + [slot="trigger"] > a {
+        font-size: 12px;
+    }
     [slot="trigger"] > a {
         outline: none;
         text-decoration: none;

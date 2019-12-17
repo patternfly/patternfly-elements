@@ -191,7 +191,7 @@ $variables: (
 }
 
 @each $theme in $THEMES {
-  :host([on="#{$theme}"]:not([pfe-priority])) {
+  :host([on="#{$theme}"]) {
       @include pfe-set-broadcast-theme($theme);
   }
   @include browser-query(ie11) {

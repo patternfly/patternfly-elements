@@ -4,7 +4,7 @@
     "className": "PfeDatetime",
     "elementName": "pfe-datetime"
   },
-  "version": "1.0.0-prerelease.29",
+  "version": "1.0.0-prerelease.31",
   "publishConfig": {
     "access": "public"
   },
@@ -37,7 +37,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.28"
+    "@patternfly/pfelement": "^1.0.0-prerelease.31"
   },
   "generator-pfelement-version": "0.2.8",
   "bugs": {

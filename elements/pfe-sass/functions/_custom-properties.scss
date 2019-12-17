@@ -167,7 +167,7 @@
 @function pfe-zindex($cssvar) {
     $var-name: to-string($cssvar, "--");
     @if map-get($pfe-zindex, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-zindex);
+        @return pfe-get-from-map("zindex", $var-name, $pfe-zindex);
     }
     @else {
         @error "The key for #{$var-name} could not be found in the $pfe-zindex map.";

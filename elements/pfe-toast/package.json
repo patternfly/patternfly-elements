@@ -4,7 +4,7 @@
     "className": "PfeToast",
     "elementName": "pfe-toast"
   },
-  "version": "1.0.0-prerelease.29",
+  "version": "1.0.0-prerelease.32",
   "description": "Toast element for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -34,8 +34,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.28",
-    "@patternfly/pfelement": "^1.0.0-prerelease.28"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.32",
+    "@patternfly/pfelement": "^1.0.0-prerelease.31"
   },
   "generator-pfelement-version": "1.3.0"
 }

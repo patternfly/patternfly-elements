@@ -40,7 +40,12 @@ span {
   :host([pfe-state="#{$state}"]) {
     span {
       --pfe-badge--BackgroundColor: #{pfe-color(feedback--#{$state})};
-      --pfe-badge--Color: #{pfe-color(text--on-dark)};
+      @if ($state == 'moderate') {
+        --pfe-badge--Color: #{pfe-color(text)};
+      }
+      @else {
+        --pfe-badge--Color: #{pfe-color(text--on-dark)};
+      }
     }
   }
 }

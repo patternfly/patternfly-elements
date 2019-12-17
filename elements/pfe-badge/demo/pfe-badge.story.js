@@ -39,28 +39,28 @@ stories.add(PfeBadge.tag, () => {
     }
   ];
 
-  const staticTextExamples = [
+  const staticStateExamples = [
     {
-      text: "default"
+      number: 10
     },
     {
-      text: "info",
+      number: 20,
       state: "info"
     },
     {
-      text: "important",
+      number: 30,
       state: "important"
     },
     {
-      text: "success",
+      number: 40,
       state: "success"
     },
     {
-      text: "critical",
+      number: 50,
       state: "critical"
     },
     {
-      text: "moderate",
+      number: 60,
       state: "moderate"
     }
   ];
@@ -79,7 +79,7 @@ stories.add(PfeBadge.tag, () => {
       </pre>
     </section>
     
-    <h1>Static examples with numbers</h1>
+    <h1>Static examples with 'pfe-threshold'</h1>
     ${staticNumberExamples
       .map(
         ex => `
@@ -88,11 +88,11 @@ stories.add(PfeBadge.tag, () => {
       )
       .join("\n")}
 
-    <h1>Static examples with text and color options</h1>
-    ${staticTextExamples
+    <h1>Static examples with multiple 'pfe-state' options</h1>
+    ${staticStateExamples
       .map(
         ex => `
-          <pfe-badge pfe-state="${ex.state}" text="${ex.text}">${ex.text}</pfe-badge>
+          <pfe-badge pfe-state="${ex.state}" number="${ex.number}">${ex.number}</pfe-badge>
         `
       )
       .join("\n")}

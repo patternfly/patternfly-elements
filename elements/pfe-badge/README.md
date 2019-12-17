@@ -1,29 +1,28 @@
 # PatternFly Element | Badge Element
 
-The badge component provides a way to have small status descriptors for UI elements.
-Users can provide a number or a string with threshold value.
+The badge component provides a way to have small numerical descriptors for UI elements.
 
 ## Usage
 
-With the `number` attribute:
+With the `pfe-threshold` attribute:
 
 ```html
 <section>
-    <pfe-badge number="1">1</pfe-badge>
-    <pfe-badge number="17">17</pfe-badge>
-    <pfe-badge number="900">900</pfe-badge>
+    <pfe-badge number="1" pfe-threshold="10">1</pfe-badge>
+    <pfe-badge number="17" pfe-threshold="20">17</pfe-badge>
+    <pfe-badge number="900" pfe-threshold="100">900</pfe-badge>
 </section>
 ```
-With the `text` attribute and the `<pfe-state>` attribute:
+With multiple state options for the `pfe-state` attribute:
 
 ```html
 <section>
-    <pfe-badge pfe-state="info" text="inprogress">inprogress</pfe-badge>
-    <pfe-badge pfe-state="success" text="success">success</pfe-badge>
-    <pfe-badge pfe-state="moderate" text="moderate">moderate</pfe-badge>
-    <pfe-badge pfe-state="important" text="important">important</pfe-badge>
-    <pfe-badge pfe-state="critical" text="critical">critical</pfe-badge>
-    <pfe-badge pfe-state="default" text="default">default</pfe-badge>
+    <pfe-badge pfe-state="info" number="10">10</pfe-badge>
+    <pfe-badge pfe-state="success" number="20">20</pfe-badge>
+    <pfe-badge pfe-state="moderate" number="30">30</pfe-badge>
+    <pfe-badge pfe-state="important" number="40">40</pfe-badge>
+    <pfe-badge pfe-state="critical" number="50">50</pfe-badge>
+    <pfe-badge pfe-state="default" number="60">60</pfe-badge>
 </section>
 ```
 
@@ -42,8 +41,6 @@ With the `text` attribute and the `<pfe-state>` attribute:
 There are several attributes available for customizing the visual treatment of pfe-badge.
 
 - `number`: Sets a numeric value for a badge. You can pair it with `pfe-threshold` attribute to add a `+` sign if the number exceeds the threshold value.
-
-- `text`: Sets a string value for a badge.
 
 - `pfe-threshold`: Sets a threshold for the numeric value and adds `+` sign if the numeric value exceeds the threshold value.
 

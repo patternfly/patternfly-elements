@@ -1,6 +1,6 @@
 # PatternFly Element | Badge Element
 
-The badge component provides a way to have small numerical descriptors for UI elements. To provide context to your badge, it's a highly encouraged that you also include an `aria-label` attribute in your markup.
+The badge component provides a way to have small numerical descriptors for UI elements. To provide context to your badge, it is highly encouraged that you also include an `aria-label` attribute in your markup.
 
 ```html
 <section>

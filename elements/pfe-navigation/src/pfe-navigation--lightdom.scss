@@ -49,6 +49,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
     [slot="tray"] {
         width: 100%;
         min-height: 60px;
+        flex-direction: column;
     }
 
     // Override grid so that CTAs do not overlap.

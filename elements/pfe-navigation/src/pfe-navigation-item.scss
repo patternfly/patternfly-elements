@@ -12,7 +12,8 @@ $nav-item-variables: (
   ),
   trigger: (
     FontSize: 16px,
-    Padding:  calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} * .5)
+    Padding:  calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} * .5),
+    MaxWidth: 100%
   ),
   tray: (
     BackgroundColor:  #{pfe-color(surface--lightest)},

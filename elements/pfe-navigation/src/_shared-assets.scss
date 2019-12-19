@@ -45,7 +45,6 @@ $variables: (
 }
 
 %trigger {
-
     font-family: pfe-var(font-family);
     font-size: #{pfe-local(
             $cssvar: FontSize, 
@@ -63,16 +62,20 @@ $variables: (
     z-index: 2;
     line-height: 1.1;
     margin: 0 !important;
-
-    max-width: var(--max-trigger);
+    max-width: 100%; // added
     text-align: center;
+    // max-width: #{pfe-local($cssvar: MaxWidth, $region: trigger, $fallback: 100%)};
+
     @media screen and (min-width: pfe-breakpoint(xs) ) {
-        --max-trigger: 100%;
+        // --pfe-navigation__trigger--MaxWidth: 100%; // added
+        max-width: 100%;
     }
     @media screen and (min-width: pfe-breakpoint(sm-desktop, $map: false) ) {
-        --max-trigger: 100px;
+        // --pfe-navigation__trigger--MaxWidth: 100px; // added
+        max-width: 100px;
     }
     @media screen and (min-width: pfe-breakpoint(xl) ) {
-        --max-trigger: 190px;
+        // --pfe-navigation__trigger--MaxWidth: 190px; // added
+        max-width: 190px;
     }
 }

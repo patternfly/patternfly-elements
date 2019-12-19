@@ -1,6 +1,14 @@
 # PatternFly Element | Badge Element
 
-The badge component provides a way to have small numerical descriptors for UI elements.
+The badge component provides a way to have small numerical descriptors for UI elements. To provide context to your badge, it's a highly encouraged that you also include an `aria-label` attribute in your markup.
+
+```html
+<section>
+    <pfe-badge arial-label="2 unread messages" number="2" pfe-threshold="10">2</pfe-badge>
+</section>
+```
+
+Please refer to the [specification](https://www.w3.org/TR/wai-aria/#aria-label) for additional details.
 
 ## Usage
 

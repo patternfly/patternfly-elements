@@ -9,7 +9,7 @@ $pfe-cta--Color--fallback: #003366;
 $variables: (
   Padding:      .6rem 0,
   BorderRadius: 0,
-  
+
   BackgroundColor:        transparent,
   BackgroundColor--hover: transparent,
   BackgroundColor--focus: transparent,
@@ -55,7 +55,7 @@ $variables: (
   background-color: #{pfe-local(BackgroundColor)};
   border-radius:    #{pfe-local(BorderRadius)};
   border:           #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
-  padding:          #{pfe-local($cssvar: Padding)} !important;
+  // padding:          #{pfe-local($cssvar: Padding)} !important;
 }
 
 ::slotted(button),
@@ -65,6 +65,8 @@ $variables: (
 
 ::slotted(*) {
   display: inline;
+  // look at more, might be breaking the default cta, link isn't applied to arrow.
+  padding:         #{pfe-local($cssvar: Padding)} !important;
 
   color:           #{pfe-local(Color, $pfe-cta--Color--fallback)} !important;
   font-family:     #{pfe-local($cssvar: FontFamily, $fallback: #{pfe-var(font-family--heading)})};
@@ -72,7 +74,7 @@ $variables: (
   font-weight:     #{pfe-local(FontWeight)};
   line-height:     #{pfe-local($cssvar: LineHeight, $fallback: #{pfe-var(line-height)})};
   text-decoration: #{pfe-local(TextDecoration)} !important;
-  
+
   &::before {  // inner border on priority CTAs
     content: "";
 
@@ -86,7 +88,7 @@ $variables: (
 
     border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-local($cssvar: BorderColor, $region: inner)};
     border-radius: 2px;
-    
+
     outline: none;
   }
 }
@@ -108,7 +110,7 @@ $variables: (
 
   ::slotted(:hover) {
     --pfe-cta__arrow--Padding:     0 0 0 .5rem;
-    
+
     color: #{pfe-local(Color--hover)} !important;
     text-decoration: #{pfe-local(TextDecoration--hover)} !important;
   }
@@ -133,7 +135,7 @@ $variables: (
 
 :host(:hover) {
   --pfe-cta__arrow--Padding:     0 0 0 .5rem;
-  
+
   background-color: #{pfe-local(BackgroundColor--hover)};
   border-color:     #{pfe-local(BorderColor--hover)};
 

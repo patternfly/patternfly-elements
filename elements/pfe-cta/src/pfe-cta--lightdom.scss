@@ -68,6 +68,12 @@ $LOCAL: cta;
   input {
     text-decoration: none;
   }
+  // IE11 & Edge have span wrapping a href making link unclickable
+  a {
+      z-index: 1; // whatever it needs to be. I guess this can't be higher than navigation?
+      position: relative;
+      border: 2px dashed pink;
+  }
 }
 
 [class^="pfe-cta"][class="PFElement"][pfe-priority="secondary"]  { //ie11

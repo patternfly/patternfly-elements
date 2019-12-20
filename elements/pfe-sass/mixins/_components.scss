@@ -2,7 +2,7 @@
 /// Accordion-specific SASS Vars
 /// ===========================================================================
 
-@mixin pfe-accordion-variables($state: default, $theme: default) {
+@mixin pfe-accordion-variables($state: default, $theme: default, $variant: default) {
   // Shared variables for all themes
   $variables: ();
 
@@ -14,8 +14,10 @@
       BorderTopWidth:      #{pfe-var(surface--border-width)},
       BorderRightWidth:    0,
       BorderBottomWidth:   #{pfe-var(surface--border-width)},
+      BorderLeftWidth:     #{pfe-var(surface--border-width--heavy)},
       Color:               #{pfe-apply-broadcast(text)},
-      TextAlign:           left
+      TextAlign:           left,
+      PaddingBase:         #{pfe-var(container-spacer)}
     );
 
     @if $theme == dark { // Dark theme
@@ -33,12 +35,20 @@
         accent: #{pfe-color(ui-base)}
       ));
     }
+    @if $variant == disclosure {
+      $variables: (
+        BorderRightWidth: #{pfe-var(surface--border-width)},
+        BorderLeftWidth: #{pfe-var(surface--border-width)},
+        BorderColor--accent: #{pfe-color(surface--border)}
+      );
+    }
   }
   @else { // Expanded state
     // Shared variables for all themes
     $variables: (
       BorderColor:         #{pfe-color(surface--border)},
-      BorderRightWidth:    #{pfe-var(surface--border-width)}
+      BorderRightWidth:    #{pfe-var(surface--border-width)},
+      BorderLeftWidth:     #{pfe-var(surface--border-width--heavy)}
     );
 
     @if $theme == dark { // Dark theme
@@ -62,6 +72,12 @@
         BorderColor--accent: #{pfe-color(ui-base)}
       ));
     }
+    @if $variant == disclosure {
+      $variables: (
+        BorderLeftWidth: #{pfe-var(surface--border-width--heavy)},
+        BorderColor--accent: #{pfe-color(ui-base)}
+      );
+    }
 
     @if $theme == light { // Explicitly defined light theme
       // Clear the map since this uses the same as the default variables
@@ -74,7 +90,7 @@
   @include pfe-set-local($variables);
 }
 
-@mixin pfe-accordion-props($align: left) {
+@mixin pfe-accordion-props($variant: default) {
   margin: 0;
   width: #{pfe-local($cssvar: Width, $fallback: 100%)};
   max-width: 100%;
@@ -101,15 +117,16 @@
 }
 
 //-- Trigger-specific properties
-@mixin pfe-trigger($align: left) {
+@mixin pfe-trigger {
   $chevron--spacing: 50px;
 
   $variables: (
-    BorderBottomWidth: 0
+    BorderBottomWidth: 0,
+    Trigger--padding: #{pfe-local(PaddingBase)} #{$chevron--spacing} #{pfe-local(PaddingBase)} calc(#{pfe-local(PaddingBase)} * 1.5) !important
   );
 
   @include pfe-set-local($variables);
-  @include pfe-accordion-props($align: #{$align});
+  @include pfe-accordion-props;
 
   // -webkit-appearance: button;
   cursor: pointer;
@@ -120,12 +137,7 @@
   font-weight: #{pfe-var(font-weight--bold)};
   text-align:  #{pfe-local($cssvar: TextAlign, $fallback: left)};
   line-height: #{pfe-var(line-height)};
-
-  @if $align == right {
-      padding: #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 1.5) #{pfe-var(container-spacer)} #{$chevron--spacing} !important;
-  } @else {
-      padding: #{pfe-var(container-spacer)} #{$chevron--spacing} #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 1.5) !important;
-  }
+  padding:     #{pfe-local(Trigger--padding)};
 
   &:hover {
     outline: none;
@@ -174,9 +186,7 @@
   @include pfe-set-local( ( BoxShadow: none ) );
 
   @extend %container;
-  padding-top: 0;
-  padding-right: 3em;
-  padding-left: calc(#{pfe-var(container-spacer)} * 1.5);
+  padding: #{pfe-local(PanelContainer--padding)};
 }
 
 /// ===========================================================================
@@ -186,7 +196,7 @@
 @mixin pfe-chevron($state: open, $position: after, $size: .4em) {
   content: "";
   position: absolute;
-  top: calc((#{pfe-var(container-spacer)} * .5) + #{$size});
+  top: calc(#{pfe-var(container-spacer)} + #{$size});
   display: block;
   border-style: #{pfe-var(surface--border-style)};
   height: #{$size};
@@ -196,6 +206,7 @@
     border-width: .1em .1em 0 0;
     border-bottom: 0;
     transform: rotate(-45deg);
+    top: calc(#{pfe-var(container-spacer)} + .6em);
     @if $position == before {
       left: calc(#{pfe-var(container-spacer)} * 1.5);
     }

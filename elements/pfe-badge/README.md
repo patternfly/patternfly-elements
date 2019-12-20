@@ -4,7 +4,7 @@ The badge component provides a way to have small numerical descriptors for UI el
 
 ```html
 <section>
-    <pfe-badge arial-label="2 unread messages" number="2" pfe-threshold="10">2</pfe-badge>
+    <pfe-badge aria-label="2 unread messages" number="2" pfe-threshold="10">2</pfe-badge>
 </section>
 ```
 
@@ -52,7 +52,7 @@ There are several attributes available for customizing the visual treatment of p
 
 - `pfe-threshold`: Sets a threshold for the numeric value and adds `+` sign if the numeric value exceeds the threshold value.
 
-- `pfe-state`: Options include moderate, important, critical, success, info. The badge has a default 
+- `pfe-state`: Options include moderate, important, critical, success, info. The badge has a default
 `background-color`: <span class="color-preview" style="background-color:#b5b5b5"></span> #b5b5b5 and
 `color`: <span class="color-preview" style="background-color:#333"></span> #333333
 

@@ -8,10 +8,22 @@ $LOCAL: cta;
 
 /*************************/
 /** Set link tag styles for IE11 & EDGE **/
+
+[class^="pfe-cta"][class="PFElement"][pfe-priority],
+.pfe-cta--wrapper {
+  a,
+  a:visited {
+      padding: #{pfe-local($cssvar: Padding, $fallback: 16px 32px)} !important;
+  }
+}
+
 [class^="pfe-cta"][class="PFElement"],
 .pfe-cta--wrapper {
   a,
   a:visited {
+      z-index: 1; // IE & Edge need this for the link to be clickable
+      position: relative;
+
       font-family: #{pfe-var(font-family)};
       display: inline;
       color:  #{pfe-local($cssvar: Color, $fallback: #{pfe-color(link)})} !important;
@@ -62,17 +74,15 @@ $LOCAL: cta;
   }
 }
 
+.pfe-cta--wrapper {
+    padding: 0 !important;
+}
+
 [class^="pfe-cta"][class="PFElement"][pfe-priority], //ie11
 [pfe-priority] .pfe-cta--wrapper {
   a,
   input {
     text-decoration: none;
-  }
-  // IE11 & Edge have span wrapping a href making link unclickable
-  a {
-      z-index: 1; // whatever it needs to be. I guess this can't be higher than navigation?
-      position: relative;
-      border: 2px dashed pink;
   }
 }
 

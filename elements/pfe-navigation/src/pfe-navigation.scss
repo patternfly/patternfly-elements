@@ -69,7 +69,10 @@ $variables: map-merge($variables, $nav-variables);
     --pfe-navigation--Padding--horizontal: #{pfe-var(container-padding)};
   }
 
-  display: block;
+  --pfe-accordion--PaddingBase: var(--pfe-theme--container-spacer, 16px);
+  --pfe-accordion--PanelContainer--padding: 0 calc(var(--pfe-accordion--PaddingBase) * 3) var(--pfe-accordion--PaddingBase) calc(var(--pfe-accordion--PaddingBase) * 1.5);
+  --pfe-navigation--PanelContainer--padding: var(--pfe-accordion--PanelContainer--padding); 
+  
   z-index: #{pfe-zindex(content)};
   width: 100%;
 }

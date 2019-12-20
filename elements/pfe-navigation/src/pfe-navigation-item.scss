@@ -30,7 +30,6 @@ $variables: map-merge($variables, $nav-item-variables);
   line-height: 1.2;
   
   height: 100%;
-  //width: 100%;
   min-width: #{pfe-local(MinWidth)};
 
   @media screen and (max-width: #{pfe-breakpoint(xl)}) {
@@ -105,7 +104,6 @@ $variables: map-merge($variables, $nav-item-variables);
 /*  TRIGGER STYLES   */
 /* ----------------- */
 .pfe-navigation-item__trigger {
-  // border: 1px dashed white !important;
 
   @each $prop in (text-decoration, text-decoration--hover, text-decoration--focus) {
     --pfe-theme--link--#{$prop}: none;
@@ -255,8 +253,6 @@ $variables: map-merge($variables, $nav-item-variables);
 
   pfe-icon {
     --pfe-icon--Color: #{pfe-local(Color)};
-
-    // margin-bottom: calc(#{pfe-var(container-spacer)} / 2);
 
     :host([variant="wind"]) & {
       margin-bottom: 0;

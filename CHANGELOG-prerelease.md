@@ -1,3 +1,9 @@
+## Prerelease 34 ( 2019-12-20 )
+
+Tag: [v1.0.0-prerelease.34](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.34)
+
+- [c2833e3](https://github.com/patternfly/patternfly-elements/commit/c2833e3ef9caa87edbbc56fa22471525d453b7d3) feat: pfe-badge (#625)
+
 ## Prerelease 33 ( 2019-12-18 )
 
 Tag: [v1.0.0-prerelease.33](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.33)
@@ -9,8 +15,8 @@ Tag: [v1.0.0-prerelease.33](https://github.com/patternfly/patternfly-elements/re
 
 Tag: [v1.0.0-prerelease.32](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.32)
 
-- [ed919e](https://github.com/patternfly/patternfly-elements/commit/ed919ed15bffc03ee8de4539090c5de075f9ba7d) DE21128 Fix: Add support for theme hooks within surface colors mixin 
-- [288322](https://github.com/patternfly/patternfly-elements/commit/2883224d927c26af3c7c9b92a9f8a3d2d852edaf) DE21423 Fix: z-index function now correctly prints variable names 
+- [ed919e](https://github.com/patternfly/patternfly-elements/commit/ed919ed15bffc03ee8de4539090c5de075f9ba7d) DE21128 Fix: Add support for theme hooks within surface colors mixin
+- [288322](https://github.com/patternfly/patternfly-elements/commit/2883224d927c26af3c7c9b92a9f8a3d2d852edaf) DE21423 Fix: z-index function now correctly prints variable names
 - [959281](https://github.com/patternfly/patternfly-elements/commit/95928118095d235695526d5dd5da9688ebc92fef) DE21491 Fix: Add default broadcast variables to pfe-base.css
 
 ## Prerelease 31 ( 2019-11-25 )
@@ -34,7 +40,7 @@ Tag: [v1.0.0-prerelease.30](https://github.com/patternfly/patternfly-elements/re
 - [2143c84](https://github.com/patternfly/patternfly-elements/commit/2143c84d207076c0c8016c960d6edd447e4048eb) feat: add align attribute to pass down to tabs on render (#610)
 - [392399b](https://github.com/patternfly/patternfly-elements/commit/392399b3eb240290e67873a51122459985dbbe7f) fix: pfe-cta svgs removed from tab order in ie11
 - [567523a](https://github.com/patternfly/patternfly-elements/commit/567523aeac3504d2d67b922b1f1e4fe51a122a05) docs: Fix hugo nav scroll issue (#612)
-- [94ff217](https://github.com/patternfly/patternfly-elements/commit/94ff21768e3b1a8b90e284059f322e091c2d56ae) fix: pfe-content-set: wrapping the observer reconnect in a setTimeout #611 
+- [94ff217](https://github.com/patternfly/patternfly-elements/commit/94ff21768e3b1a8b90e284059f322e091c2d56ae) fix: pfe-content-set: wrapping the observer reconnect in a setTimeout #611
 - [94ff217](https://github.com/patternfly/patternfly-elements/commit/94ff21768e3b1a8b90e284059f322e091c2d56ae) fix: ignore compiled assets when determining version bumps #613
 - [0537a54](https://github.com/patternfly/patternfly-elements/commit/0537a54c5b02f99c0b53c9199223281ded99062f) chore: making pfe-band public
 

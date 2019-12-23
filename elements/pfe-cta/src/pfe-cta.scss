@@ -55,7 +55,6 @@ $variables: (
   background-color: #{pfe-local(BackgroundColor)};
   border-radius:    #{pfe-local(BorderRadius)};
   border:           #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
-  // padding:          #{pfe-local($cssvar: Padding)} !important;
 }
 
 ::slotted(button),
@@ -65,9 +64,7 @@ $variables: (
 
 ::slotted(*) {
   display: inline;
-  // look at more, might be breaking the default cta, link isn't applied to arrow.
   padding:         #{pfe-local($cssvar: Padding)} !important;
-
   color:           #{pfe-local(Color, $pfe-cta--Color--fallback)} !important;
   font-family:     #{pfe-local($cssvar: FontFamily, $fallback: #{pfe-var(font-family--heading)})};
   font-size:       #{pfe-local($cssvar: FontSize, $fallback: #{pfe-var(font-size)})};
@@ -441,4 +438,11 @@ $variables: (
   --pfe-cta--BorderColor--focus:         #{pfe-color(surface--border)};
   --pfe-cta__inner--BorderColor--focus:  #{pfe-local(BorderColor--focus)};
   --pfe-cta--TextDecoration--hover:      #{pfe-broadcasted(link-decoration--hover)};
+}
+
+/// ===========================================================================
+/// MODALS
+/// ===========================================================================
+:host([slot="pfe-modal--trigger"]) {
+    padding: #{pfe-local($cssvar: Padding)} !important;
 }

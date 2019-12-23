@@ -9,21 +9,12 @@ $LOCAL: cta;
 /*************************/
 /** Set link tag styles for IE11 & EDGE **/
 
-[class^="pfe-cta"][class="PFElement"][pfe-priority],
-.pfe-cta--wrapper {
-  a,
-  a:visited {
-      padding: #{pfe-local($cssvar: Padding, $fallback: 16px 32px)} !important;
-  }
-}
-
-[class^="pfe-cta"][class="PFElement"],
 .pfe-cta--wrapper {
   a,
   a:visited {
       z-index: 1; // IE & Edge need this for the link to be clickable
       position: relative;
-
+      padding: #{pfe-local($cssvar: Padding, $fallback: 16px 32px)} !important;
       font-family: #{pfe-var(font-family)};
       display: inline;
       color:  #{pfe-local($cssvar: Color, $fallback: #{pfe-color(link)})} !important;
@@ -86,7 +77,7 @@ $LOCAL: cta;
   }
 }
 
-[class^="pfe-cta"][class="PFElement"][pfe-priority="secondary"]  { //ie11
+[class^="pfe-cta"][class="PFElement"][pfe-priority="secondary"] { //ie11
   background-color: #{pfe-local(
     $cssvar: BackgroundColor, $fallback: #{pfe-color(surface--lightest)}
   )};
@@ -128,6 +119,14 @@ $LOCAL: cta;
       a, a:visited, a:focus, a:hover {
         color:  #{pfe-color(link)} !important;
       }
+    }
+    // This isn't working.. it's applying the green border to all links
+    &:not([pfe-priority="primary"]),
+    &:not([pfe-priority="secondary"]) {
+        .pfe-cta--wrapper {
+            padding: 0 !important;
+            border: 3px dashed green;
+        }
     }
   }
 }

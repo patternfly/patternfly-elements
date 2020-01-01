@@ -8,8 +8,19 @@ import replace from "rollup-plugin-re";
 const importRegex = /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
 
 const babelSettings = {
-  presets: [["env", { modules: false }]],
-  plugins: ["external-helpers"]
+  presets: [
+    [
+      "@babel/preset-env", {
+        "targets": {
+          "browsers": [
+            "last 2 versions",
+            "Firefox > 23",
+            "iOS > 5"]
+        }
+      }
+    ]
+  ],
+  plugins: []
 };
 
 const paths = {

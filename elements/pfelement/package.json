@@ -2,9 +2,13 @@
   "name": "@patternfly/pfelement",
   "pfelement": {
     "className": "PFElement",
-    "elementName": "pfelement"
+    "elementName": "pfelement",
+    "assets": [
+      "pfelement.*css",
+      "pfelement.*css.map"
+    ]
   },
-  "version": "1.0.0-prerelease.17",
+  "version": "1.0.0-prerelease.31",
   "publishConfig": {
     "access": "public"
   },
@@ -18,7 +22,12 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfelement"
   },
-  "main": "pfelement.js",
+  "main": "./dist/pfelement.umd.js",
+  "module": "./dist/pfelement.js",
+  "unpkg": "./dist/pfelement.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -40,5 +49,7 @@
   ],
   "license": "MIT",
   "generator-pfelement-version": "0.3.4",
-  "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

@@ -27,12 +27,36 @@ class PFElement extends HTMLElement {
     };
   }
 
+  static get version() {
+    return "{{version}}";
+  }
+
+  static get observedAttributes() {
+    return ["pfe-theme"];
+  }
+  
+  get randomId() {
+    return Math.random().toString(36).substr(2, 9);
+  }
+
+  get version() {
+    return this._pfeClass.version;
+  }
+
   get pfeType() {
     return this.getAttribute(`${prefix}type`);
   }
 
   set pfeType(value) {
     this.setAttribute(`${prefix}type`, value);
+  }
+
+  cssVariable( name, value, element = this ) {
+    name = (name.substr(0, 2) !== "--") ? "--" + name : name;
+    if (value) {
+      element.style.setProperty(name, value);
+    }
+    return window.getComputedStyle(element).getPropertyValue(name).trim();
   }
 
   // Returns a single element assigned to that slot; if multiple, it returns the first
@@ -45,6 +69,46 @@ class PFElement extends HTMLElement {
     return [...this.querySelectorAll(`[slot='${name}']`)];
   }
 
+  // Update the theme context for self and children
+  context_update() {
+    const children = this.querySelectorAll("[pfelement]");
+    let theme = this.cssVariable("theme");
+    
+    // Manually adding `pfe-theme` overrides the css variable
+    if (this.hasAttribute("pfe-theme")) {
+      theme = this.getAttribute("pfe-theme");
+      // Update the css variable to match the data attribute
+      this.cssVariable("theme", theme);
+    }
+    
+    // Update theme for self
+    this.context_set(theme);
+
+    // For each nested, already upgraded component
+    // set the context based on the child's value of --theme
+    // Note: this prevents contexts from parents overriding
+    // the child's context should it exist
+    [...children].map(child => {
+      if (child.connected) {
+        child.context_set(theme);
+      }
+    });
+  }
+
+  // Get the theme variable if it exists, set it as an attribute
+  context_set(fallback) {
+    let theme = this.cssVariable("theme");
+    if (!theme) {
+      theme = this.getAttribute("pfe-theme");
+    }
+    if (!theme && fallback) {
+      theme = fallback;
+    }
+    if (theme) {
+      this.setAttribute("on", theme);
+    }
+  }
+
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
     super();
 
@@ -55,6 +119,8 @@ class PFElement extends HTMLElement {
     this.slots = pfeClass.slots;
     this._queue = [];
     this.template = document.createElement("template");
+    
+    this.log(`Constructing...`);
 
     this.attachShadow({ mode: "open" });
 
@@ -69,37 +135,57 @@ class PFElement extends HTMLElement {
     }
 
     if (!delayRender) {
+      this.log(`Render...`);
       this.render();
+      this.log(`Rendered.`);
     }
+    
+    this.log(`Constructed.`);
   }
 
   connectedCallback() {
     this.connected = true;
+    this.log(`Connecting...`);
 
     if (window.ShadyCSS) {
+      this.log(`Styling...`);
       window.ShadyCSS.styleElement(this);
+      this.log(`Styled.`);
     }
 
-    // maybe we should use just the attribute instead of the class?
+    // @TODO maybe we should use just the attribute instead of the class?
     // https://github.com/angular/angular/issues/15399#issuecomment-318785677
     this.classList.add("PFElement");
     this.setAttribute("pfelement", "");
 
     if (typeof this.props === "object") {
       this._mapSchemaToProperties(this.tag, this.props);
+      this.log(`Properties attached.`);
     }
 
     if (typeof this.slots === "object") {
       this._mapSchemaToSlots(this.tag, this.slots);
+      this.log(`Slots attached.`);
     }
 
     if (this._queue.length) {
       this._processQueue();
     }
+
+    // Initialize the on attribute if a theme variable is set
+    // do not update the on attribute if a user has manually added it
+    // then trigger an update in nested components
+    this.context_update();
+
+    this.log(`Connected.`);
   }
 
   disconnectedCallback() {
+    this.log(`Disconnecting...`);
+
     this.connected = false;
+    
+    this.log(`Disconnected.`);
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
@@ -110,6 +196,10 @@ class PFElement extends HTMLElement {
     const cascadeTo = this._pfeClass.cascadingAttributes[attr];
     if (cascadeTo) {
       this._copyAttribute(attr, cascadeTo);
+    }
+
+    if (attr === "pfe-theme") {
+      this.context_update();
     }
   }
 
@@ -129,42 +219,49 @@ class PFElement extends HTMLElement {
   // @notice static getter of properties is built via tooling
   // to edit modify src/element.json
   _mapSchemaToProperties(tag, properties) {
+    this.log("Mapping properties...");
     // Loop over the properties provided by the schema
     Object.keys(properties).forEach(attr => {
       let data = properties[attr];
-      // Prefix default is true
-      let hasPrefix = true;
-      let attrName = attr;
-      // Set the attribute's property equal to the schema input
-      this[attr] = data;
-      // Initialize the value to null
-      this[attr].value = null;
 
-      if (typeof this[attr].prefixed !== "undefined") {
-        hasPrefix = this[attr].prefixed;
-      }
+      // Only attach the information if the data provided is a schema object
+      if (typeof data === "object") {
+        // Prefix default is true
+        let hasPrefix = true;
+        let attrName = attr;
+        // Set the attribute's property equal to the schema input
+        this[attr] = data;
+        // Initialize the value to null
+        this[attr].value = null;
 
-      if (hasPrefix) {
-        attrName = `${prefix}${attr}`;
-      }
+        if (typeof this[attr].prefixed !== "undefined") {
+          hasPrefix = this[attr].prefixed;
+        }
 
-      // If the attribute exists on the host
-      if (this.hasAttribute(attrName)) {
-        // Set property value based on the existing attribute
-        this[attr].value = this.getAttribute(attrName);
-      }
-      // Otherwise, look for a default and use that instead
-      else if (data.default) {
-        const dependency_exists = this._hasDependency(tag, data.options);
-        const no_dependencies =
-          !data.options || (data.options && !data.options.dependencies.length);
-        // If the dependency exists or there are no dependencies, set the default
-        if (dependency_exists || no_dependencies) {
-          this.setAttribute(attrName, data.default);
-          this[attr].value = data.default;
+        if (hasPrefix) {
+          attrName = `${prefix}${attr}`;
+        }
+
+        // If the attribute exists on the host
+        if (this.hasAttribute(attrName)) {
+          // Set property value based on the existing attribute
+          this[attr].value = this.getAttribute(attrName);
+        }
+        // Otherwise, look for a default and use that instead
+        else if (data.default) {
+          const dependency_exists = this._hasDependency(tag, data.options);
+          const no_dependencies =
+            !data.options || (data.options && !data.options.dependencies.length);
+          // If the dependency exists or there are no dependencies, set the default
+          if (dependency_exists || no_dependencies) {
+            this.setAttribute(attrName, data.default);
+            this[attr].value = data.default;
+          }
         }
       }
     });
+
+    this.log("Properties mapped.");
   }
 
   // Test whether expected dependencies exist
@@ -199,29 +296,49 @@ class PFElement extends HTMLElement {
   // @notice static getter of properties is built via tooling
   // to edit modify src/element.json
   _mapSchemaToSlots(tag, slots) {
+    this.log("Validate slots...");
     // Loop over the properties provided by the schema
     Object.keys(slots).forEach(slot => {
       let slotObj = slots[slot];
-      let slotExists = false;
-      // If it's a named slot, look for that slot definition
-      if (slotObj.namedSlot) {
-        if (this.has_slots(`${tag}--${slot}`).length > 0) {
-          slotExists = true;
-        }
-        // If it's the default slot, look for elements not assigned to a slot
-      } else {
-        if ([...this.querySelectorAll(":not([slot])")].length > 0) {
-          slotExists = true;
-        }
-      }
 
-      // If the slot exists, attach an attribute to the parent to indicate that
-      if (slotExists) {
-        this.setAttribute(`has_${slot}`, "");
-      } else {
-        this.removeAttribute(`has_${slot}`);
+      // Only attach the information if the data provided is a schema object
+      if (typeof slotObj === "object") {
+        let slotExists = false;
+        let result = [];
+        // If it's a named slot, look for that slot definition
+        if (slotObj.namedSlot) {
+          // Check prefixed slots
+          result = this.has_slots(`${tag}--${slot}`);
+          if (result.length > 0) {
+            slotObj.nodes = result;
+            slotExists = true;
+          }
+
+          // Check for unprefixed slots
+          result = this.has_slots(`${slot}`);
+          if (result.length > 0) {
+            slotObj.nodes = result;
+            slotExists = true;
+          }
+          // If it's the default slot, look for direct children not assigned to a slot
+        } else {
+          result = [...this.children].filter(child => !child.hasAttribute("slot"));
+          
+          if (result.length > 0) {
+            slotObj.nodes = result;
+            slotExists = true;
+          }
+        }
+
+        // If the slot exists, attach an attribute to the parent to indicate that
+        if (slotExists) {
+          this.setAttribute(`has_${slot}`, "");
+        } else {
+          this.removeAttribute(`has_${slot}`);
+        }
       }
     });
+    this.log("Slots validated.")
   }
 
   _queueAction(action) {
@@ -270,4 +387,3 @@ class PFElement extends HTMLElement {
 autoReveal(PFElement.log);
 
 export default PFElement;
-//# sourceMappingURL=PFElement.js.map

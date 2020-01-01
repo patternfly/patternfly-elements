@@ -6,20 +6,20 @@
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
 
-    <script type="module" src="../../pfe-card/pfe-card.js"></script>
+    <script type="module" src="../../pfe-card/dist/pfe-card.js"></script>
 
     <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
   </head>
   <body unresolved>
 
     <pfe-card>
-      <h2 slot="header">Card 1</h2>This is pfe-card.
-      <div slot="footer">Text in footer</div>
+      <h2 slot="pfe-card--header">Card 1</h2>This is pfe-card.
+      <div slot="pfe-card--footer">Text in footer</div>
     </pfe-card>
 
     <script>

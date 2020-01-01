@@ -1,0 +1,26 @@
+@import "../../pfe-sass/pfe-sass";
+
+:host {
+  height: 100%;
+}
+  
+::slotted(*) {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+
+  :host([show_content]) & {
+    flex-flow: row nowrap;
+    align-items: stretch;
+  }
+}
+
+::slotted(ul) {
+  list-style-type: none;
+  :host([show_content]) & {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+}

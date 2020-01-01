@@ -4,7 +4,7 @@
     "className": "PfeAutocomplete",
     "elementName": "pfe-autocomplete"
   },
-  "version": "1.0.0-prerelease.17",
+  "version": "1.0.0-prerelease.33",
   "description": "Autocomplete element for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -18,7 +18,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "pfe-autocomplete.js",
+  "main": "./dist/pfe-autocomplete.umd.js",
+  "module": "./dist/pfe-autocomplete.js",
+  "unpkg": "./dist/pfe-autocomplete.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -31,8 +36,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.17",
-    "@patternfly/pfelement": "^1.0.0-prerelease.17"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.33",
+    "@patternfly/pfelement": "^1.0.0-prerelease.31"
   },
-  "generator-pfelement-version": "0.5.5"
+  "generator-pfelement-version": "0.5.5",
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

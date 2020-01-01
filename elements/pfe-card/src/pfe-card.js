@@ -1,4 +1,4 @@
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 
 // -- Polyfill for supporting Element.closest
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
@@ -99,9 +99,7 @@ class PfeCard extends PFElement {
   }
 
   get backgroundColor() {
-    return (
-      this.getAttribute("pfe-color") || this.getAttribute("color") || "base"
-    );
+    return this.getAttribute("pfe-color") || "base";
   }
 
   static get observedAttributes() {
@@ -126,10 +124,6 @@ class PfeCard extends PFElement {
     // Initialize the background image attachment
     if (this.imageSrc) {
       this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
-    }
-    // Initialize the context setting for the children elements
-    if (this.backgroundColor) {
-      this._updateContext(this.backgroundColor);
     }
 
     this._observer.observe(this, { childList: true });
@@ -159,8 +153,8 @@ class PfeCard extends PFElement {
   // Update the color attribute and contexts
   _colorChanged(attr, oldValue, newValue) {
     this[attr].value = newValue;
-    // If the new value has a dark background, update children elements
-    this._updateContext(newValue);
+    // Trigger an update in nested components
+    this.context_update();
   }
 
   // Update the background image
@@ -169,22 +163,6 @@ class PfeCard extends PFElement {
     this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
   }
 
-  // Set the children's context if parent background is dark
-  _updateContext(context) {
-    if (
-      ["darkest", "darker", "dark", "complement", "accent"].includes(context)
-    ) {
-      ["pfe-cta"].forEach(elementName => {
-        const els = [...this.querySelectorAll(`${elementName}`)];
-        els.forEach(el => {
-          const myContainer = el.closest("[pfe-type=container]");
-          if (myContainer === this || myContainer === null) {
-            el.setAttribute("on", "dark");
-          }
-        });
-      });
-    }
-  }
 }
 
 PFElement.create(PfeCard);

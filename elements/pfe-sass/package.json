@@ -4,7 +4,7 @@
     "className": "PfeSass",
     "elementName": "pfe-sass"
   },
-  "version": "1.0.0-prerelease.17",
+  "version": "1.0.0-prerelease.33",
   "publishConfig": {
     "access": "public"
   },
@@ -17,6 +17,10 @@
     "type": "git",
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-sass"
+  },
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp",
+    "dev": "../../node_modules/.bin/gulp dev"
   },
   "contributors": [
     {
@@ -41,5 +45,7 @@
     }
   ],
   "license": "MIT",
-  "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

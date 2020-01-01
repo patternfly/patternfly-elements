@@ -1,0 +1,57 @@
+{
+  "name": "@patternfly/pfe-navigation",
+  "pfelement": {
+    "className": "PfeNavigation",
+    "elementName": "pfe-navigation",
+    "assets": [
+      "pfe-navigation--lightdom.*css",
+      "pfe-navigation--lightdom.*css.map",
+      "pfe-navigation--noscript.*css",
+      "pfe-navigation--noscript.*css.map"
+    ]
+  },
+  "version": "1.0.0-prerelease.33",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Navigation element for PatternFly Elements",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-navigation"
+  },
+  "main": "./dist/pfe-navigation.umd.js",
+  "module": "./dist/pfe-navigation.js",
+  "unpkg": "./dist/pfe-navigation.umd.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-navigation/test/"
+  },
+  "contributors": [
+    {
+      "name": "Kyle Buchanan"
+    },
+    {
+      "name": "castastrophe",
+      "url": "https://www.github.com/castastrophe"
+    },
+    {
+      "name": "cd"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@patternfly/pfe-icon": "^1.0.0-prerelease.33",
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.33",
+    "@patternfly/pfelement": "^1.0.0-prerelease.31"
+  },
+  "generator-pfelement-version": "1.1.0"
+}

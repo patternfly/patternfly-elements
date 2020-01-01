@@ -1,5 +1,5 @@
-import PFElement from "../pfelement/pfelement.js";
-import "../pfe-icon/pfe-icon.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
+import "../../pfe-icon/dist/pfe-icon.js";
 
 class PfeIconPanel extends PFElement {
   static get tag() {
@@ -15,13 +15,14 @@ class PfeIconPanel extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["icon", "circled"];
+    return ["icon", "circled", "color"];
   }
 
   static get cascadingAttributes() {
     return {
       icon: "pfe-icon",
-      circled: "pfe-icon"
+      circled: "pfe-icon",
+      color: "pfe-icon"
     };
   }
 

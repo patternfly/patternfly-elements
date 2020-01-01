@@ -407,7 +407,7 @@ main {
           }
         }
         li~li {
-          margin-top: 1.5rem;
+          margin-top: 1rem;
         }
       }
       img {
@@ -419,10 +419,10 @@ main {
     h2 {
       margin-top: 3rem;
       margin-bottom: 1.4rem;
-      font-size: 1.6rem;
-      font-weight: 400;
+      font-size: 1.7rem;
+      font-weight: 800 !important;
       letter-spacing: .4px;
-      color: #4d4d4d;
+      color: #094774;
       
       &:first-child {
         margin-top: 0;
@@ -523,7 +523,7 @@ main {
     }
     
     .inner-toc {
-      position: sticky;
+      //position: sticky; The nav is too long for this
       top: 20px;
     }
     

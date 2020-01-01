@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PatternFly Element | pfe-icon Demo</title>
+  </head>
+  <body>
+    <h1>&lt;pfe-icon&gt;</h1>
+    <h2>img element+svg test</h2>
+
+<svg class="defs-only">
+  <filter id="duotone" color-interpolation-filters="sRGB"
+          x="0" y="0" height="100%" width="100%">
+  <feComponentTransfer>
+    <feFuncR type="linear" slope="0.5" intercept="1"></feFuncR>
+    <feFuncG type="linear" slope="0.5" intercept="0"></feFuncG>
+    <feFuncB type="linear" slope="0.5" intercept="0"></feFuncB>
+  </feComponentTransfer>
+    <!-- <feColorMatrix type="matrix" -->
+    <!--   values="0.95 0 0 0  0.05 -->
+    <!--           0.65 0 0 0  0.15 -->
+    <!--           0.15 0 0 0  0.50 -->
+    <!--             0  0 0 1  0" /> -->
+  </filter>
+</svg>
+
+    <style type="text/css" media="screen">
+      body {
+      }
+      .pfe-icon {
+        z-index: 1;
+        width: 604px;
+        height: 604px;
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+        /* background-color: red; */
+        /* background-blend-mode: multiply; */
+        /* mix-blend-mode: multiply; */
+      }
+
+      .pfe-icon-filter {
+        filter: url(#duotone);
+        -ms-filter: url(#duotone);
+      }
+
+      .pfe-icon-bg {
+        background-image: url(https://access.redhat.com/webassets/avalon/j/lib/rh-iconfont-svgs/rh-icon-aed.svg);
+        background-size: contain;
+      }
+      /* .pfe-icon::after { */
+      /*   content: "hello"; */
+      /*   position: absolute; */
+      /*   display: block; */
+      /*   top: 0; */
+      /*   left: 0; */
+      /*   right: 0; */
+      /*   bottom: 0; */
+      /*   filter: invert(1.0); */
+      /*   background-color: red; */
+      /*   mix-blend-mode: multiply; */
+      /*   z-index: 1000; */
+      /* } */
+    </style>
+
+    <h3>css background-image</h3>
+    <div class="pfe-icon pfe-icon-filter pfe-icon-bg"></div>
+
+    <h3>img tag</h3>
+    <img class="pfe-icon pfe-icon-filter" src="https://access.redhat.com/webassets/avalon/j/lib/rh-iconfont-svgs/rh-icon-aed.svg">
+
+
+    <h3>embedded svg</h3>
+    <svg class="pfe-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="rh-icon-aed"><path filter="url(#duotone)" d="M14.22 22.14c.07-.01.12-.06.15-.12l2.39-5.43c.03-.06.02-.14-.02-.2a.21.21 0 0 0-.18-.1l-2.47-.01 3.93-5.11-1.44 4.1c-.02.06-.01.14.03.19.04.06.1.09.17.09l2.63.01-4.54 6.99c-.06.09-.05.21.04.28l.09.08c.36.31.51.43.95.8.04.03.09.05.13.05.05 0 .1-.02.13-.05 6.27-5.2 7.37-7.27 7.48-7.49 1.4-2.14 1.08-3.91.57-5.03a5.5 5.5 0 0 0-1.47-1.92c-.92-.68-1.87-1.02-2.82-1.02-2.05 0-3.49 1.57-3.98 2.19-.49-.62-1.94-2.19-3.99-2.19-.95 0-1.89.34-2.82 1.02-.03.03-.89.68-1.43 1.87-.5 1.1-.82 2.87.54 5.08.07.14 1.02 1.78 5.75 5.88.04.04.11.05.18.04zm-5.57-6.13c0-.01-.01-.01-.01-.01-1.01-1.64-1.18-3.21-.52-4.67.5-1.1 1.31-1.72 1.31-1.72.85-.62 1.72-.94 2.57-.94 2.26 0 3.79 2.21 3.8 2.23.04.06.1.09.18.09.07 0 .14-.03.17-.09.02-.02 1.54-2.23 3.8-2.23.85 0 1.72.31 2.57.93.01.01.84.66 1.35 1.77.67 1.48.49 3.03-.55 4.62-.01.01-.01.02-.02.03-.01.02-.96 2.02-7.24 7.24-.32-.27-.47-.4-.75-.63l4.66-7.16c.05-.06.05-.15.01-.22a.214.214 0 0 0-.19-.11l-2.73-.01 1.73-4.93c.03-.1-.01-.2-.09-.25a.216.216 0 0 0-.27.05l-4.97 6.36c-.05.06-.06.15-.03.22s.11.12.19.12l2.6.01-2.14 4.88c-4.55-3.99-5.42-5.57-5.43-5.58z"/></svg>
+  </body>
+</html>

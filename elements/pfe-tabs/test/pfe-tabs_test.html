@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../pfe-tabs.js"></script>
+    <script type="module" src="../dist/pfe-tabs.js"></script>
   </head>
   <body>
 
@@ -100,6 +100,16 @@
     <pfe-tabs id="dynamic">
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">Tab 1 Content</pfe-tab-panel>
+    </pfe-tabs>
+
+    <pfe-tabs id="initialVariant" pfe-variant="earth">
+      <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+    </pfe-tabs>
+
+    <pfe-tabs id="variantChange">
+      <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
     </pfe-tabs>
     <script>
       suite('<pfe-tabs>', () => {
@@ -306,15 +316,40 @@
             assert.isTrue(newTabElement.hasAttribute("pfe-id"));
             assert.isTrue(newTabElement.hasAttribute("aria-controls"));
             assert.equal(newTabElement.getAttribute("aria-controls"), newPanelElement.getAttribute("pfe-id"));
+            assert.equal(newTabElement.getAttribute("pfe-variant"), "wind");
 
             assert.equal(newPanelElement.getAttribute("role"), "tabpanel");
             assert.isTrue(newPanelElement.hasAttribute("pfe-id"));
             assert.isTrue(newPanelElement.hasAttribute("aria-labelledby"));
             assert.isTrue(newPanelElement.hasAttribute("hidden"));
             assert.equal(newPanelElement.getAttribute("aria-labelledby"), newTabElement.getAttribute("pfe-id"));
+            assert.equal(newPanelElement.getAttribute("pfe-variant"), "wind");
 
             done();
           });
+        });
+
+        test("it should honor a pfe-variant attribute value other than the default pfe-variant", () => {
+          const rhTabs = document.querySelector('#initialVariant');
+          const tab = rhTabs.querySelector('pfe-tab');
+          const panel = rhTabs.querySelector('pfe-tab-panel');
+
+          assert.equal(tab.getAttribute("pfe-variant"), "earth");
+          assert.equal(panel.getAttribute("pfe-variant"), "earth");
+        });
+
+        test("it should update the tabs and panels pfe-variant attribute if the tabs pfe-variant value changes", () => {
+          const rhTabs = document.querySelector('#variantChange');
+          const tab = rhTabs.querySelector('pfe-tab');
+          const panel = rhTabs.querySelector('pfe-tab-panel');
+
+          assert.equal(tab.getAttribute("pfe-variant"), "wind");
+          assert.equal(panel.getAttribute("pfe-variant"), "wind");
+
+          rhTabs.setAttribute("pfe-variant", "earth");
+
+          assert.equal(tab.getAttribute("pfe-variant"), "earth");
+          assert.equal(panel.getAttribute("pfe-variant"), "earth");
         });
       });
     </script>

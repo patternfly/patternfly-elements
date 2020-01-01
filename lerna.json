@@ -4,5 +4,8 @@
     "elements/*",
     "themes/*"
   ],
-  "version": "1.0.0-prerelease.17"
+  "version": "1.0.0-prerelease.34",
+  "ignoreChanges": [
+    "elements/*/dist/**/*"
+  ]
 }

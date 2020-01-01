@@ -1,6 +1,6 @@
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 
-// https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
+// Polyfill: findIndex -- https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
   Object.defineProperty(Array.prototype, "findIndex", {
     value: function(predicate) {
@@ -68,10 +68,6 @@ class PfeAccordion extends PFElement {
     return "pfe-accordion.json";
   }
 
-  static get observedAttributes() {
-    return ["on"];
-  }
-
   static get cascadingAttributes() {
     return {
       on: "pfe-accordion-header, pfe-accordion-panel"
@@ -81,6 +77,10 @@ class PfeAccordion extends PFElement {
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Container;
+  }
+
+  static get observedAttributes() {
+    return ["pfe-disclosure"]
   }
 
   constructor() {
@@ -119,6 +119,16 @@ class PfeAccordion extends PFElement {
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
+
+    if (attr === "pfe-disclosure") {
+      if (newVal === "true") {
+        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "true"));
+        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "true"));
+      } else {
+        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "false"));
+        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "false"));
+      }
+    }
   }
 
   toggle(index) {
@@ -196,6 +206,20 @@ class PfeAccordion extends PFElement {
       header.setAttribute("aria-controls", panel.pfeId);
       panel.setAttribute("aria-labelledby", header.pfeId);
     });
+
+    if (headers.length === 1) {
+      if (this.hasAttribute("pfe-disclosure") && this.getAttribute("pfe-disclosure") === "false") {
+        return;
+      }
+
+      this.setAttribute("pfe-disclosure", "true");
+    }
+
+    if (headers.length > 1) {
+      if (this.hasAttribute("pfe-disclosure")) {
+        this.removeAttribute("pfe-disclosure");
+      }
+    }
   }
 
   _changeHandler(evt) {
@@ -258,16 +282,21 @@ class PfeAccordion extends PFElement {
   }
 
   _animate(panel, start, end) {
-    panel.classList.add("animating");
-    panel.style.height = `${start}px`;
+    if (panel) {
+      const header = panel.previousElementSibling;
+      if (header) {
+        header.classList.add("animating");
+      }
+      panel.classList.add("animating");
+      panel.style.height = `${start}px`;
 
-    requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        panel.style.height = `${end}px`;
-        panel.classList.add("animating");
-        panel.addEventListener("transitionend", this._transitionEndHandler);
+        requestAnimationFrame(() => {
+          panel.style.height = `${end}px`;
+          panel.addEventListener("transitionend", this._transitionEndHandler);
+        });
       });
-    });
+    }
   }
 
   _keydownHandler(evt) {
@@ -306,6 +335,10 @@ class PfeAccordion extends PFElement {
   }
 
   _transitionEndHandler(evt) {
+    const header = evt.target.previousElementSibling;
+    if (header) {
+      header.classList.remove("animating");
+    }
     evt.target.style.height = "";
     evt.target.classList.remove("animating");
     evt.target.removeEventListener("transitionend", this._transitionEndHandler);

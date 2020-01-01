@@ -22,7 +22,7 @@ First, we'll go ahead and listen for click events on the button. The best place 
 Since our base PFElement that we extended already sets up a shadow root, all we'll need to do is set up an event listener.
 
 ```
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../pfelement/dist/pfelement.js";
 
 class PfeCoolElement extends PFElement {
   static get tag() {
@@ -231,7 +231,7 @@ That's all it takes, folks! To summarize, we built a web component that extends 
 For your reference, here's the final Javascript code for `pfe-cool-element`:
 
 ```
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../pfelement/dist/pfelement.js";
 
 class PfeCoolElement extends PFElement {
   static get tag() {

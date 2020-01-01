@@ -4,7 +4,7 @@
     "className": "PfeCta",
     "elementName": "pfe-cta"
   },
-  "version": "1.0.0-prerelease.17",
+  "version": "1.0.0-prerelease.33",
   "publishConfig": {
     "access": "public"
   },
@@ -18,7 +18,12 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-cta"
   },
-  "main": "pfe-cta.js",
+  "main": "./dist/pfe-cta.umd.js",
+  "module": "./dist/pfe-cta.js",
+  "unpkg": "./dist/pfe-cta.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -33,9 +38,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.17",
-    "@patternfly/pfelement": "^1.0.0-prerelease.17"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.33",
+    "@patternfly/pfelement": "^1.0.0-prerelease.31"
   },
   "generator-pfelement-version": "0.5.0",
-  "gitHead": "dfa74e0495c556ebdd1edb61c6d406621d1b6421"
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
+  }
 }

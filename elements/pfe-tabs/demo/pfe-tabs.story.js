@@ -2,10 +2,18 @@ import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeTabs from "../pfe-tabs.js";
-import PfeCta from "../../pfe-cta/pfe-cta.js";
+import PfeTabs from "../dist/pfe-tabs.js";
+import PfeCta from "../../pfe-cta/dist/pfe-cta.js";
 
 const stories = storiesOf("Tabs", module);
+
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
 
 // prettier-ignore
 const defaultCTA = tools.component("pfe-cta", {}, [{

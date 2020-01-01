@@ -11,23 +11,23 @@
     <script></script>
 
     <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
   </head>
   <body unresolved>
 
     <pfe-card>
-      <h2 slot="header">Card 1</h2>This is pfe-card.
-      <div slot="footer">Text in footer</div>
+      <h2 slot="pfe-card--header">Card 1</h2>This is pfe-card.
+      <div slot="pfe-card--footer">Text in footer</div>
     </pfe-card>
 
     <script>
       suite("using PFElements as AMD Modules", () => {
         test('it should upgrade', done => {
-          require(['../../pfe-card/pfe-card.umd.js'], () => {
+          require(['../../pfe-card/dist/pfe-card.umd.js'], () => {
             assert.instanceOf(
               document.querySelector('pfe-card'),
               customElements.get('pfe-card'),

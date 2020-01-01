@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../pfe-cta.js"></script>
+    <script type="module" src="../dist/pfe-cta.js"></script>
   </head>
   <body>
 
@@ -14,8 +14,41 @@
     </pfe-cta>
 
     <script>
+      const cta = [...document.querySelectorAll("pfe-cta")];
+
+      // Priority states and one of the properties they influence for testing
+      // property should be the one that gets the main color pop
+      // const priorities = {
+      //   default: "color",
+      //   primary: "background-color",
+      //   secondary: "color"
+      // };
+
+      // Themes and their expected hex values
+      // const color_bgs = {
+      //   default: "#0477a4",
+      //   complement: "#464646",
+      //   accent: "#fe460d"
+      // };
+      
+      // Converts a hex value to RGBA
+      const hexToRgb = hex => {
+        const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/.exec(hex);
+          return [
+              parseInt(r, 16),
+              parseInt(g, 16),
+              parseInt(b, 16)
+           ];
+      };
+      // Gets the rgba value from an element
+      const getColor = (el, prop) => {
+        const [, r, g, b] = getComputedStyle(el, null)[prop].match(/rgba?\((\d+),\s+(\d+),\s+(\d+).*\)/)
+          .map(n => +n);
+        return [r, g, b];
+      };
+
       suite('<pfe-cta>', () => {
-        test('it should upgrade', () => {
+        test('should upgrade', () => {
           assert.instanceOf(
             document.querySelector('pfe-cta'),
             customElements.get('pfe-cta'),
@@ -31,7 +64,7 @@
           document.body.appendChild(pfeCta);
 
           flush(() => {
-            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be an anchor tag (<a>)');
+            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)');
             spy.restore();
             done();
           });
@@ -45,7 +78,7 @@
           document.body.appendChild(pfeCta);
 
           flush(() => {
-            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be an anchor tag (<a>)');
+            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)');
             spy.restore();
             done();
           });
@@ -53,12 +86,12 @@
 
         test("it should properly initialize when the contents of the slot change", done => {
           const pfeCta = document.querySelector("pfe-cta");
-          assert.equal(pfeCta.link.getAttribute("href"), "https://redhat.com");
+          assert.equal(pfeCta.cta.getAttribute("href"), "https://redhat.com");
 
           pfeCta.innerHTML = `<a href="https://access.redhat.com">Customer Portal</a>`;
 
           flush(() => {
-            assert.equal(pfeCta.link.getAttribute("href"), "https://access.redhat.com");
+            assert.equal(pfeCta.cta.getAttribute("href"), "https://access.redhat.com");
             done();
           });
         });

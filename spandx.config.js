@@ -9,12 +9,14 @@ module.exports = {
     "/examples": "./examples",
     "/favicon.ico": "./favicon.ico",
     "/": "./node_modules",
-    "/themes": "./themes"
+    "/webassets": {
+      host: "https://access.redhat.com"
+    }
   },
   bs: {
     watchOptions: {
       ignoreInitial: true,
-      ignored: ["node_modules"]
+      ignored: ["node_modules", "_temp"]
     },
     middleware: [require("compression")()]
   }

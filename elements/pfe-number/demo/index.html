@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>PatternFly Element: Number Demo</title>
+        <title>PatternFly Elements: Number Demo</title>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
-        <link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="utf-8">
 
         <noscript>
-            <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+          <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
         </noscript>
+    
+        <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
-        <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
-        <link rel="stylesheet" href="../../../themes/cp-theme/cp-theme.css" />
+        <!-- Stylesheets for testing light DOM styles.
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+        -->
 
-        <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
-        <!-- <link href="../../pfe-layouts/pfe-layouts.css" rel="stylesheet"> -->
+        <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+        <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+        <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
         <!-- uncomment the es5-adapter if you're using the umd version -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-        <!-- <script type=module src=../dist/pfe-number.js></script> -->
-        <script>require(['../dist/pfe-number.umd.js'])</script>
-        <link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="utf-8">
-    <noscript>
-      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-    </noscript>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 
-    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+        <!-- <script type=module src=../dist/pfe-number.js></script> -->
+
+        <script>require([
+            '../dist/pfe-number.umd.js'
+        ])</script>
+        
+        <link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="utf-8">
     </head>
     <body unresolved>
         <div id="app">

@@ -5,13 +5,6 @@ module.exports = function factory({
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
 
-  const browser_support = [
-    "last 2 versions",
-    "Firefox >= 51",
-    "iOS >= 8",
-    "ie 11"
-  ];
-
   const paths = {
     root: "./",
     source: "./src",
@@ -91,8 +84,7 @@ module.exports = function factory({
         // Adds autoprefixing to the compiled sass
         .pipe(
           postcss([postcssCustomProperties(), autoprefixer({
-            grid: "autoplace",
-            overrideBrowserslist: browser_support
+            grid: "autoplace"
           })])
         )
         // Write the sourcemap

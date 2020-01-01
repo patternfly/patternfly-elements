@@ -9,16 +9,7 @@ const importRegex = /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
 
 const babelSettings = {
   presets: [
-    [
-      "@babel/preset-env", {
-        "targets": {
-          "browsers": [
-            "last 2 versions",
-            "Firefox > 23",
-            "iOS > 5"]
-        }
-      }
-    ]
+    [ "@babel/preset-env" ]
   ],
   plugins: []
 };

@@ -14,6 +14,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
 
     pfe-navigation-item {
         [slot="trigger"] {
+            width: 100%;
             font-size: 12px; 
             margin: 0;
 
@@ -44,6 +45,9 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         @media screen and (min-width: #{pfe-breakpoint(xl)}) {
             max-width: 1140px;
         }
+    }
+    .pfe-navigation-item__tray--container {
+        padding: 1em 0;
     }
 
     [slot="tray"] {

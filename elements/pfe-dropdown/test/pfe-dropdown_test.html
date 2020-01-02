@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../pfe-dropdown.js"></script>
+  </head>
+  <body>
+
+    <pfe-dropdown>
+      This is the element content.
+    </pfe-dropdown>
+
+    <script>
+      suite('<pfe-dropdown>', () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(document.querySelector('pfe-dropdown'), customElements.get("pfe-dropdown", 'pfe-dropdown should be an instance of pfeDropdown'));
+        });
+
+        // you need to write more tests!!!
+
+      });
+    </script>
+  </body>
+</html>

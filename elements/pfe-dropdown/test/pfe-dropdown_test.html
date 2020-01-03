@@ -5,12 +5,18 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../pfe-dropdown.js"></script>
+    <script type="module" src="../dist/pfe-dropdown.js"></script>
   </head>
   <body>
 
     <pfe-dropdown>
-      This is the element content.
+      <button>
+        <span>Dropdown</span>
+      </button>
+      <ul>
+        <li>Option 1</li>
+        <li>Option 2</li>
+      </ul>
     </pfe-dropdown>
 
     <script>

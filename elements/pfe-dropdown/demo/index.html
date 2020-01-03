@@ -26,52 +26,25 @@
       </ul>
     </pfe-dropdown>
     
-    <!-- <h1>&lt;pfe-dropdown&gt; with options provided by JS</h1>
-    <pfe-dropdown>
-      This is pfe-dropdown
-    </pfe-dropdown> -->
+    <h1>&lt;pfe-dropdown&gt; with dynamic list items</h1>
+    <pfe-dropdown id="dynamic">
+      <button>
+        <span>Dynamic dropdown</span>
+      </button>
+    </pfe-dropdown>
 
-    <!-- <script>
-      let select = document.querySelector("#pfe-select-success");
-      document.querySelector("#selectedOption").textContent = select.children[0].value;
-      select.addEventListener("pfe-select:change", function (event) {
-        document.querySelector("#selectedOption").textContent = event.detail.value;
-      });
-
-      let selectWithError = document.querySelector("#pfe-select-error");
-      // setting pfe-invalid to true initially to reflect in the demo example
-      selectWithError.setAttribute('pfe-invalid', 'true');
-      selectWithError.addEventListener("pfe-select:change", function(event) {
-        event.detail.value !== "" ? event.target.setAttribute('pfe-invalid', 'false') : event.target.setAttribute('pfe-invalid', 'true');
-      });
-
-      // won't destroy select, but will build if it doens't exist
-      let selectWithJSOptions = document.querySelector("#pfe-select-with-js-options");
-      customElements.whenDefined("pfe-select").then(function() {
+    <script>
+      let dynamicDropdown = document.querySelector("#dynamic");
+      customElements.whenDefined("pfe-dropdown").then(function() {
         // Default Options
-        selectWithJSOptions.pfeOptions = [
-          { text: "Please select an Option", value: "", selected: true },
-          { text: 'One', value: '1', selected: false },
-          { text: 'Two', value: '2', selected: false },
-          { text: 'Three', value: '3', selected: false}
-        ];
+        dynamicDropdown.addItems([
+          { textContent: 'One'  },
+          { textContent: 'Two' },
+          { textContent: 'Three' }
+        ]);
         // Options passed via addOptions() method
-        selectWithJSOptions.addOptions([{ text: "Four", value: "4", selected: false }]);
+        dynamicDropdown.addItems([{ textContent: "Four" }]);
       });
-
-      // will create select, and build options passed with pfeOptions
-      let selectWithJSOptionsOnly = document.querySelector("#pfe-select-with-js-options-only");
-      customElements.whenDefined("pfe-select").then(function() {
-        // Default Options
-        selectWithJSOptionsOnly.pfeOptions = [
-          { text: "Please select an Option", value: "", selected: true },
-          { text: 'One', value: '1', selected: false },
-          { text: 'Two', value: '2', selected: false },
-          { text: 'Three', value: '3', selected: false}
-        ];
-      });
-
-    </script> -->
-
+    </script>
   </body>
 </html>

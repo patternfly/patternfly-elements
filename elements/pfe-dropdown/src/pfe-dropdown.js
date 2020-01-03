@@ -1,5 +1,36 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 
+// Object.assign needs a polyfill as its not supported in IE11
+if (typeof Object.assign !== 'function') {
+  // Must be writable: true, enumerable: false, configurable: true
+  Object.defineProperty(Object, "assign", {
+    value: function assign(target, varArgs) { // .length of function is 2
+      'use strict';
+      if (target === null || target === undefined) {
+        throw new TypeError('Cannot convert undefined or null to object');
+      }
+
+      var to = Object(target);
+
+      for (var index = 1; index < arguments.length; index++) {
+        var nextSource = arguments[index];
+
+        if (nextSource !== null && nextSource !== undefined) {
+          for (var nextKey in nextSource) {
+            // Avoid bugs when hasOwnProperty is shadowed
+            if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+              to[nextKey] = nextSource[nextKey];
+            }
+          }
+        }
+      }
+      return to;
+    },
+    writable: true,
+    configurable: true
+  });
+}
+
 class PfeDropdown extends PFElement {
   static get tag() {
     return "pfe-dropdown";
@@ -13,10 +44,6 @@ class PfeDropdown extends PFElement {
     return "pfe-dropdown.scss";
   }
 
-  // static get observedAttributes() {
-  //   return [];
-  // }
-
   constructor() {
     super(PfeDropdown);
 
@@ -24,9 +51,9 @@ class PfeDropdown extends PFElement {
     this.isOpen = false;
 
     // elements
-    this.button = this.querySelector('button');
-    this.list = this.querySelector('ul');
-    this.items = this.list.querySelectorAll('li');
+    this._button = this.querySelector('button');
+    this._list = this.querySelector('ul');
+    this._items = null;
 
     // events
     this.open = this.open.bind(this);
@@ -38,20 +65,45 @@ class PfeDropdown extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.button.addEventListener("click", this.toggle);
-    this.items.forEach(item => item.addEventListener('click', this._itemSelected));
+    this._button.addEventListener("click", this.toggle);
+
+    customElements.whenDefined(PfeDropdown.tag).then(() => {
+      if (this._items) {
+        this._modifyDOM();
+        this._list = this.querySelector('ul');
+        this._list.querySelectorAll('li').forEach(item => item.addEventListener('click', this._itemSelected));
+      }
+    });
   }
 
-  // disconnectedCallback() {}
-
-  // attributeChangedCallback(attr, oldValue, newValue) {}
-
-  _itemSelected(e) {
+  _itemSelected(event) {
     this.dispatchEvent(new CustomEvent(`${this.tag}:click`, {
-      detail: { value: e },
+      detail: { value: event },
       bubbles: true,
       composed: true
     }));
+  }
+
+  _modifyDOM() {
+    // create a new list of HTML list items
+    let newList = document.createElement('ul');
+    this._items.map(el => {
+      const item = Object.assign(document.createElement('li') , el);
+      newList.appendChild(item);
+    });
+
+    // if a list already exists, replace, otherwise add newlist to the dropdown
+    let existingList = this.querySelector('ul');
+    if (existingList) {
+      existingList.parentNode.replaceChild(newList, existingList);
+    } else {
+      this.appendChild(newList);
+    }
+  }
+
+  addItems(items) {
+    this._items = this._items ? this._items.concat(items) : items;
+    this._modifyDOM();
   }
 
   open(event) {
@@ -59,7 +111,7 @@ class PfeDropdown extends PFElement {
       event.preventDefault();
     }
     this.isOpen = true;
-    this.list.classList.add("open");
+    this._list.classList.add("open");
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:open`, {
         detail: {},
@@ -74,7 +126,7 @@ class PfeDropdown extends PFElement {
       event.preventDefault();
     }
     this.isOpen = false;
-    this.list.classList.remove("open");
+    this._list.classList.remove("open");
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:close`, {
         detail: {},

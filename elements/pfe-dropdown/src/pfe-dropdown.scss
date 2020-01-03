@@ -1,4 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
+
+$LOCAL: dropdown;
+
 :host {
   display: block;
 }
@@ -6,3 +9,12 @@
 :host([hidden]) {
   display: none;
 }
+
+::slotted(ul) {
+  display: none;
+}
+
+::slotted(ul.open) {
+  display: block;
+}
+

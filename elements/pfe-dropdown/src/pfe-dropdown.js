@@ -20,26 +20,39 @@ class PfeDropdown extends PFElement {
   constructor() {
     super(PfeDropdown);
 
-    this.button = this.querySelector('button');
-    this.list = this.querySelector('ul');
     // state
     this.isOpen = false;
+
+    // elements
+    this.button = this.querySelector('button');
+    this.list = this.querySelector('ul');
+    this.items = this.list.querySelectorAll('li');
 
     // events
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-    this.toggle = this.toggle.bind(this); 
+    this.toggle = this.toggle.bind(this);
+    this._itemSelected = this._itemSelected.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
     this.button.addEventListener("click", this.toggle);
+    this.items.forEach(item => item.addEventListener('click', this._itemSelected));
   }
 
   // disconnectedCallback() {}
 
   // attributeChangedCallback(attr, oldValue, newValue) {}
+
+  _itemSelected(e) {
+    this.dispatchEvent(new CustomEvent(`${this.tag}:click`, {
+      detail: { value: e },
+      bubbles: true,
+      composed: true
+    }));
+  }
 
   open(event) {
     if (event) {

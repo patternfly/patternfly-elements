@@ -1,0 +1,38 @@
+// TODO: Reconcile with _maps.scss so there's only one file and no middleman.
+
+// ========================================================================
+// COLORS for PFElements
+//
+// Context-based colors to be used in styling PFElements along with _maps.scss
+// @requires _crayola.scss
+//
+// ========================================================================
+
+// ========================================================================
+// Base text and link colors, basis of "theme"
+// ========================================================================
+
+$pfe-color--text:                            $pfelements--gray-dark !default;
+$pfe-color--link:                            #06c !default;                        //but #00538c for base/gray, how to do that?
+$pfe-color--link--visited:                   $pfelements--purple !default;           // Was #7551a6
+$pfe-color--link--hover:                     darken($pfe-color--link, 20%) !default; // Was #004080
+$pfe-color--link--focus:                     darken($pfe-color--link, 20%) !default; // Was #004080
+
+// Light gray? Not yet supported
+// $pfe-color--text--on-gray:             $pfe-color--text !default;
+// $pfe-color--link--on-gray:             #00538c !default;  // Contrast with $pfe-color--link doesn't meet WCAG2 AA
+// $pfe-color--link--visited--on-gray:    #7551a6 !default;
+// $pfe-color--link--hover--on-gray:      #00305b !default;
+// $pfe-color--link--focus--on-gray:      #00305b !default;
+
+$pfe-color--text--on-dark:                   $pfe-color--white !default;
+$pfe-color--link--on-dark:                   lighten($pfe-color--link, 40%) !default;          // Was #97daff
+$pfe-color--link--visited--on-dark:          lighten($pfe-color--link--visited, 30%) !default; // Was #d8c0ff
+$pfe-color--link--hover--on-dark:            lighten($pfe-color--link--on-dark, 10%) !default; // Was #c0ecff
+$pfe-color--link--focus--on-dark:            lighten($pfe-color--link--on-dark, 10%) !default; // Was #c0ecff
+
+$pfe-color--text--on-saturated:              $pfe-color--white !default;
+$pfe-color--link--on-saturated:              $pfe-color--white;               // Was #97daff
+$pfe-color--link--visited--on-saturated:     lighten($pfe-color--link--visited, 30%) !default;      // Was #d8c0ff
+$pfe-color--link--hover--on-saturated:       lighten($pfe-color--link--on-saturated, 10%) !default; // Was #c0ecff
+$pfe-color--link--focus--on-saturated:       lighten($pfe-color--link--on-saturated, 10%) !default; // Was #c0ecff

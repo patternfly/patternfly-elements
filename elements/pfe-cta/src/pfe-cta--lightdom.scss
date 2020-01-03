@@ -16,6 +16,7 @@ $LOCAL: cta;
       display: inline;
       color:  #{pfe-local($cssvar: Color, $fallback: #{pfe-color(link)})} !important;
       z-index: 1; // IE & Edge need this for the link to be clickable
+      position: relative;
   }
 
   &:hover input,

@@ -3,6 +3,7 @@
 Tag: [v1.0.0-prerelease.34](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.34)
 
 - [c2833e3](https://github.com/patternfly/patternfly-elements/commit/c2833e3ef9caa87edbbc56fa22471525d453b7d3) feat: pfe-badge (#625)
+- []() fix: Restore clickability of pfe-cta links
 
 ## Prerelease 33 ( 2019-12-18 )
 

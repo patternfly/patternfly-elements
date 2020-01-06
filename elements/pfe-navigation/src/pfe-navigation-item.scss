@@ -326,13 +326,12 @@ $variables: map-merge($variables, $nav-item-variables);
   }
 
   //  Styles for the nested elements
-  :host([is_nested]:not([parent_hidden])) & {
-    --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
-    
+  :host([is_nested]:not([parent_hidden])) & {    
     @include pfe-collapsible($state: closed);
     @include pfe-accordion-props;
     @include pfe-box-sizing;
     @include pfe-panel-container;
+    padding: calc(#{pfe-local(Padding--vertical)} / 2)  calc(#{pfe-local(Padding--horizontal)} * .75);
   }
 
   :host([is_nested].expanded:not([parent_hidden])) & {

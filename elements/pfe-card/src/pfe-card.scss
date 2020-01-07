@@ -112,6 +112,11 @@ $variables: (
   --pfe-card--PaddingLeft:    #{pfe-var(container-spacer)};
 }
 
+:host([pfe-border]) {
+  --pfe-card--BorderColor:    #{map-get($pfe-colors, surface--border)};
+  --pfe-card--BorderWeight:   #{map-get($pfe-vars, surface--border-width)};
+}
+
 // Targets the wrappers in the shadow DOM
 .pfe-card {
   &--overlay {

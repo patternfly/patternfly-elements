@@ -54,9 +54,11 @@
         min-width: 200px;
         width: calc(25% - 32px);
       }
+
       .button-series {
         margin-left: -15px;
       }
+
       .button-series > *:not(first-child) {
         display: inline-block;
         margin-left: 15px;
@@ -91,9 +93,22 @@
     <h1>&lt;pfe-card&gt;</h1>
     <div class="demo-cards">
 
-      <pfe-card pfe-color="lightest" class="custom-border">
+      <pfe-card pfe-border pfe-color="lightest">
         <h2 slot="pfe-card--header">Lightest card</h2>
-        <p>This is the lightest pfe-card and <a href="#">a link</a>.</p>
+        <p>This is the lightest pfe-card with a pfe-border and <a href="#">a link</a>.</p>
+        <div class="button-series" slot="pfe-card--footer">
+          <pfe-cta slot="pfe-card--footer" pfe-priority="secondary">
+            <a href="#">Try</a>
+          </pfe-cta>
+          <pfe-cta pfe-priority="primary">
+            <a href="#">Buy</a>
+          </pfe-cta>
+        </div>
+      </pfe-card>
+
+      <pfe-card pfe-color="lightest" class="custom-border">
+        <h2 slot="pfe-card--header">Lightest card with custom border</h2>
+        <p>This is the lightest pfe-card with a custom border and <a href="#">a link</a>.</p>
         <div class="button-series" slot="pfe-card--footer">
           <pfe-cta slot="pfe-card--footer" pfe-priority="secondary">
             <a href="#">Try</a>

@@ -51,8 +51,8 @@ class PfeDropdown extends PFElement {
     this.isOpen = false;
 
     // elements
-    this._button = this.querySelector('button');
-    this._list = this.querySelector('ul');
+    this._toggle = this.querySelector('[slot=toggle]');
+    this._list = this.querySelector('[slot=list]');
     this._items = null;
 
     // events
@@ -65,13 +65,13 @@ class PfeDropdown extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this._button.addEventListener("click", this.toggle);
+    this._toggle.addEventListener("click", this.toggle);
 
     customElements.whenDefined(PfeDropdown.tag).then(() => {
       if (this._items) {
         this._modifyDOM();
-        this._list = this.querySelector('ul');
-        this._list.querySelectorAll('li').forEach(item => item.addEventListener('click', this._itemSelected));
+        this._list = this.querySelector('[slot=list]');
+        this._list.querySelectorAll('[slot=item]').forEach(item => item.addEventListener('click', this._itemSelected));
       }
     });
   }
@@ -87,13 +87,15 @@ class PfeDropdown extends PFElement {
   _modifyDOM() {
     // create a new list of HTML list items
     let newList = document.createElement('ul');
+    newList.setAttribute("slot", "list");
     this._items.map(el => {
       const item = Object.assign(document.createElement('li') , el);
+      item.setAttribute("slot", "item");
       newList.appendChild(item);
     });
 
     // if a list already exists, replace, otherwise add newlist to the dropdown
-    let existingList = this.querySelector('ul');
+    let existingList = this.querySelector('[slot=list]');
     if (existingList) {
       existingList.parentNode.replaceChild(newList, existingList);
     } else {

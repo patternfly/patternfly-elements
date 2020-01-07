@@ -88,6 +88,11 @@
           "type": "string",
           "enum": ["small"],
           "observer": "_basicAttributeChanged"
+        },
+        "border": {
+          "title": "Default border",
+          "type": "boolean",
+          "prefixed": true
         }
       }
     }

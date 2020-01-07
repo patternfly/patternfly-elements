@@ -17,18 +17,18 @@
   <body unresolved>
     <h1>&lt;pfe-dropdown&gt;</h1>
     <pfe-dropdown>
-      <button>
+      <button slot="toggle">
         <span>Dropdown</span>
       </button>
-      <ul>
-        <li>Option 1</li>
-        <li>Option 2</li>
+      <ul slot="list">
+        <li slot="item">Option 1</li>
+        <li slot="item">Option 2</li>
       </ul>
     </pfe-dropdown>
     
     <h1>&lt;pfe-dropdown&gt; with dynamic list items</h1>
     <pfe-dropdown id="dynamic">
-      <button>
+      <button slot="toggle">
         <span>Dynamic dropdown</span>
       </button>
     </pfe-dropdown>

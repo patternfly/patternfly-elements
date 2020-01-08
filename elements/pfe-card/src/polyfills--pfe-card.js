@@ -1,4 +1,4 @@
-// -- POLYFILL: Element.matches
+// @POLYFILL  Element.matches
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
 if (!Element.prototype.matches) {
     Element.prototype.matches =
@@ -6,7 +6,7 @@ if (!Element.prototype.matches) {
       Element.prototype.webkitMatchesSelector;
 }
 
-// -- POLYFILL: Element.closest
+// @POLYFILL  Element.closest
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
 if (!Element.prototype.closest) {
 Element.prototype.closest = function(s) {
@@ -19,7 +19,7 @@ Element.prototype.closest = function(s) {
 };
 }
   
-  // -- POLYFILL: Array.includes
+  // @POLYFILL  Array.includes
   // https://tc39.github.io/ecma262/#sec-array.prototype.includes
   if (!Array.prototype.includes) {
     Object.defineProperty(Array.prototype, "includes", {

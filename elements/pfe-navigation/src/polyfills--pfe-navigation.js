@@ -1,4 +1,4 @@
-// -- POLYFILL: Array.prototype.filter
+// @POLYFILL  Array.prototype.filter
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
 if (!Array.prototype.filter){
     Array.prototype.filter = function(func, thisArg) {
@@ -39,14 +39,14 @@ if (!Array.prototype.filter){
     };
 }
   
-// -- POLYFILL: Element.prototype.matches
+// @POLYFILL  Element.prototype.matches
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
 if (!Element.prototype.matches) {
   Element.prototype.matches = Element.prototype.msMatchesSelector || 
                               Element.prototype.webkitMatchesSelector;
 }
   
-// -- POLYFILL: Element.prototype.closest
+// @POLYFILL  Element.prototype.closest
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
 if (!Element.prototype.closest) {
   Element.prototype.closest = function(s) {
@@ -60,7 +60,7 @@ if (!Element.prototype.closest) {
   };
 }
   
-// -- POLYFILL: Array.prototype.includes
+// @POLYFILL  Array.prototype.includes
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
 if (!Array.prototype.includes) {
   Object.defineProperty(Array.prototype, 'includes', {
@@ -113,7 +113,7 @@ if (!Array.prototype.includes) {
   });
 }
 
-// -- POLYFILL: Event.prototype.path
+// @POLYFILL  Event.prototype.path
 // https://stackoverflow.com/questions/36845515/mouseevent-path-equivalent-in-firefox-safari
 if (!("path" in Event.prototype)) {
     Object.defineProperty(Event.prototype, "path", {

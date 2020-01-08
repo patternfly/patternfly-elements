@@ -80,6 +80,6 @@ import "polyfills--<component-name>.js";
 In your polyfills file, please prefix each addition with the name of the polyfill and the URL from which it was copied.  Please use the following syntax so that we can easily report on/grep for these values:
 
 ```js
-// -- POLYFILL: Array.prototype.find
+// @POLYFILL  Array.prototype.find
 // https://tc39.github.io/ecma262/#sec-array.prototype.find
 ```

@@ -12,14 +12,13 @@ $LOCAL: cta;
 .pfe-cta--wrapper {
   a,
   a:visited {
-      z-index: 1; // IE & Edge need this for the link to be clickable
-      position: relative;
-      padding: #{pfe-local($cssvar: Padding, $fallback: 16px 32px)} !important;
-      font-family: #{pfe-var(font-family)};
-      display: inline;
-      color:  #{pfe-local($cssvar: Color, $fallback: #{pfe-color(link)})} !important;
-      z-index: 1; // IE & Edge need this for the link to be clickable
-      position: relative;
+      // z-index: 1; // IE & Edge need this for the link to be clickable
+      // position: relative;
+      // font-family: #{pfe-var(font-family)};
+      // display: inline;
+      // color:  #{pfe-local($cssvar: Color, $fallback: #{pfe-color(link)})} !important;
+      // z-index: 1; // IE & Edge need this for the link to be clickable
+      // position: relative;
   }
 
   &:hover input,
@@ -67,15 +66,22 @@ $LOCAL: cta;
   }
 }
 
+// targeting default cta's to have padding
 .pfe-cta--wrapper {
+    padding: #{pfe-local($cssvar: Padding, $fallback: 4px 8px)} !important;
+}
+
+[pfe-priority] .pfe-cta--wrapper {
     padding: 0 !important;
 }
+
 
 [class^="pfe-cta"][class="PFElement"][pfe-priority], //ie11
 [pfe-priority] .pfe-cta--wrapper {
   a,
   input {
     text-decoration: none;
+    padding: #{pfe-local($cssvar: Padding, $fallback: 16px 32px)} !important;
   }
 }
 
@@ -103,7 +109,20 @@ $LOCAL: cta;
   }
 }
 
+@include browser-query(edge) {
+  .pfe-cta--arrow.pfe-cta {
+      top:    .25rem;
+      width:  16px;
+      height: 16px;
+  }
+}
+
 @include browser-query(ie11) {
+  [class^="pfe-cta"] .pfe-cta--arrow.pfe-cta {
+      top:    .35rem;
+      width:  16px;
+      height: 20px;
+  }
   pfe-cta.PFElement{
     button {
       background-color: transparent !important;
@@ -121,14 +140,6 @@ $LOCAL: cta;
       a, a:visited, a:focus, a:hover {
         color:  #{pfe-color(link)} !important;
       }
-    }
-    // This isn't working.. it's applying the green border to all links
-    &:not([pfe-priority="primary"]),
-    &:not([pfe-priority="secondary"]) {
-        .pfe-cta--wrapper {
-            padding: 0 !important;
-            border: 3px dashed green;
-        }
     }
   }
 }

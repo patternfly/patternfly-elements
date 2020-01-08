@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>PatternFly Element | pfe-badge Demo</title>
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <script>require(['../dist/pfe-badge.umd.js'])</script>
+
+  <style>
+    body {
+      font-family: "Red Hat Text", Overpass, Helvetica, sans-serif;
+    }
+  </style>
+</head>
+
+<body class="new-theme" unresolved>
+  <h4>&lt;pfe-badge&gt; with [pfe-state="default"]</h4>
+  <section>
+    <pfe-badge number="1">1</pfe-badge>
+    <pfe-badge number="17">17</pfe-badge>
+    <pfe-badge pfe-threshold="100" number="900">900</pfe-badge>
+  </section>
+
+  <h4>&lt;pfe-badge&gt; with [pfe-state="info"]</h4>
+  <section>
+    <pfe-badge pfe-state="info" number="1">1</pfe-badge>
+    <pfe-badge pfe-state="info" pfe-threshold="10" number="17">17</pfe-badge>
+    <pfe-badge pfe-state="info" number="900">900</pfe-badge>
+  </section>
+
+  <h4>&lt;pfe-badge&gt; with [pfe-state="success"]</h4>
+  <section>
+    <pfe-badge pfe-state="success" number="1">1</pfe-badge>
+    <pfe-badge pfe-state="success" pfe-threshold="10" number="17">17</pfe-badge>
+    <pfe-badge pfe-state="success" number="900">900</pfe-badge>
+  </section>
+
+  <h4>&lt;pfe-badge&gt; with [pfe-state="important"]</h4>
+  <section>
+    <pfe-badge pfe-state="important" number="1">1</pfe-badge>
+    <pfe-badge pfe-state="important" pfe-threshold="10" number="17">17</pfe-badge>
+    <pfe-badge pfe-state="important" number="900">900</pfe-badge>
+  </section>
+
+  <h4>&lt;pfe-badge&gt; with [pfe-state="moderate"]</h4>
+  <section>
+    <pfe-badge pfe-state="moderate" number="1">1</pfe-badge>
+    <pfe-badge pfe-state="moderate" pfe-threshold="10" number="17">17</pfe-badge>
+    <pfe-badge pfe-state="moderate" number="900">900</pfe-badge>
+  </section>
+
+  <h4>&lt;pfe-badge&gt; with [pfe-state="critical"]</h4>
+  <section>
+    <pfe-badge pfe-state="critical" number="1">1</pfe-badge>
+    <pfe-badge pfe-state="critical" pfe-threshold="10" number="17">17</pfe-badge>
+    <pfe-badge pfe-state="critical" number="900">900</pfe-badge>
+  </section>
+
+</body>
+
+</html>

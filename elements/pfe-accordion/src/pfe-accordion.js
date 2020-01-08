@@ -37,6 +37,10 @@ class PfeAccordion extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
+  static get observedAttributes() {
+    return ["pfe-disclosure"]
+  }
+
   constructor() {
     super(PfeAccordion, { type: PfeAccordion.PfeType });
 
@@ -73,6 +77,16 @@ class PfeAccordion extends PFElement {
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
+
+    if (attr === "pfe-disclosure") {
+      if (newVal === "true") {
+        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "true"));
+        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "true"));
+      } else {
+        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "false"));
+        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "false"));
+      }
+    }
   }
 
   toggle(index) {
@@ -150,6 +164,20 @@ class PfeAccordion extends PFElement {
       header.setAttribute("aria-controls", panel.pfeId);
       panel.setAttribute("aria-labelledby", header.pfeId);
     });
+
+    if (headers.length === 1) {
+      if (this.hasAttribute("pfe-disclosure") && this.getAttribute("pfe-disclosure") === "false") {
+        return;
+      }
+
+      this.setAttribute("pfe-disclosure", "true");
+    }
+
+    if (headers.length > 1) {
+      if (this.hasAttribute("pfe-disclosure")) {
+        this.removeAttribute("pfe-disclosure");
+      }
+    }
   }
 
   _changeHandler(evt) {

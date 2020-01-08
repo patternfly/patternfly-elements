@@ -9,7 +9,6 @@ $pfe-cta--Color--fallback: #003366;
 $variables: (
   Padding:      .6rem 0,
   BorderRadius: 0,
-
   BackgroundColor:        transparent,
   BackgroundColor--hover: transparent,
   BackgroundColor--focus: transparent,
@@ -71,7 +70,6 @@ $variables: (
   font-weight:     #{pfe-local(FontWeight)};
   line-height:     #{pfe-local($cssvar: LineHeight, $fallback: #{pfe-var(line-height)})};
   text-decoration: #{pfe-local(TextDecoration)} !important;
-
   &::before {  // inner border on priority CTAs
     content: "";
 
@@ -85,7 +83,6 @@ $variables: (
 
     border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-local($cssvar: BorderColor, $region: inner)};
     border-radius: 2px;
-
     outline: none;
   }
 }
@@ -132,7 +129,6 @@ $variables: (
 
 :host(:hover) {
   --pfe-cta__arrow--Padding:     0 0 0 .5rem;
-
   background-color: #{pfe-local(BackgroundColor--hover)};
   border-color:     #{pfe-local(BorderColor--hover)};
 
@@ -222,7 +218,7 @@ $variables: (
 
   --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lighter)};
   --pfe-cta--BorderColor--focus:        #{pfe-color(ui-complement)};
-  --pfe-cta__inner--BorderColor--focus: var(--pfe-broadcasted--text, #{pfe-color(ui-complement)});
+  --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-complement)};
   --pfe-cta--Color--focus:              #{pfe-color(ui-complement)};
 }
 
@@ -334,10 +330,10 @@ $variables: (
 /// ===========================================================================
 /// COLOR=BASE
 
-// :host(:not([pfe-priority])[pfe-color="complement"]) {
-//   --pfe-cta--Color:        #{pfe-color(ui-base)};
-//   --pfe-cta--Color--hover: #{pfe-color(ui-base--hover)};
-// }
+:host(:not([pfe-priority])[pfe-color="complement"]) {
+  --pfe-cta--Color:        #{pfe-color(ui-base)};
+  --pfe-cta--Color--hover: #{pfe-color(ui-base--hover)};
+}
 
 :host([pfe-priority="primary"][pfe-color="base"]) {
   --pfe-cta--BackgroundColor:           #{pfe-color(ui-base)};
@@ -407,6 +403,7 @@ $variables: (
   --pfe-cta--Color:                     #{pfe-color(ui-complement)};
 
   --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-complement)};
+  // --pfe-cta--BackgroundColor--hover:    #{pfe-color(surface--lighter)};
   --pfe-cta--BorderColor--hover:        #{pfe-color(ui-complement)};
   --pfe-cta--Color--hover:              #{pfe-color(ui-complement--text)};
 

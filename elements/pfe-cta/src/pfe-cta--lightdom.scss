@@ -12,13 +12,11 @@ $LOCAL: cta;
 .pfe-cta--wrapper {
   a,
   a:visited {
-      // z-index: 1; // IE & Edge need this for the link to be clickable
-      // position: relative;
-      // font-family: #{pfe-var(font-family)};
-      // display: inline;
-      // color:  #{pfe-local($cssvar: Color, $fallback: #{pfe-color(link)})} !important;
-      // z-index: 1; // IE & Edge need this for the link to be clickable
-      // position: relative;
+      font-family: #{pfe-var(font-family)};
+      display: inline;
+      color:  #{pfe-local($cssvar: Color, $fallback: #{pfe-color(link)})} !important;
+      z-index: 1; // IE & Edge need this for the link to be clickable
+      position: relative;
   }
 
   &:hover input,
@@ -34,8 +32,7 @@ $LOCAL: cta;
   &:focus button,
   &:focus a,
   input:focus,
-  button:focus,
-  a:focus {
+  button:focus {
       color: #{pfe-local(
         $cssvar: Color--focus, $fallback: #{pfe-color(link--focus)},
       )} !important;
@@ -43,13 +40,16 @@ $LOCAL: cta;
 
   a:focus {
     outline: none !important;
+    color: #{pfe-local(
+      $cssvar: Color--focus, $fallback: #{pfe-color(link--focus)},
+    )} !important;
     &::before {  // inner border on priority CTAs
       content: "";
       display: block;
       box-sizing: border-box;
       border: 1px solid;
       border-color: #{pfe-local(
-        $cssvar: inner--BorderColor, $fallback: #{pfe-color(link--on-dark)},
+        $cssvar: inner--BorderColor, $fallback: (Color),
       )};
       outline: none;
       position: absolute;
@@ -85,35 +85,11 @@ $LOCAL: cta;
   }
 }
 
-[class^="pfe-cta"][class="PFElement"][pfe-priority="secondary"] { //ie11
-  background-color: #{pfe-local(
-    $cssvar: BackgroundColor, $fallback: #{pfe-color(surface--lightest)}
-  )};
-}
-
-[class^="pfe-cta"][class="PFElement"][pfe-priority="secondary"], //ie11
-[pfe-priority="secondary"] .pfe-cta--wrapper {
-  input,
-  button,
-  a {
-      color: #{pfe-local($cssvar: Color, $fallback: #{pfe-color(text)})} !important;
-  }
-
-  &:hover input,
-  &:hover button,
-  &:hover a,
-  input:hover,
-  button:hover,
-  a:hover {
-      color: #{pfe-local($cssvar: Color--hover, $fallback: #{pfe-color(link--on-saturated)})} !important;
-  }
-}
-
 @include browser-query(edge) {
   .pfe-cta--arrow.pfe-cta {
       top:    .25rem;
-      width:  16px;
-      height: 16px;
+      width:  18px;
+      height: 18px;
   }
 }
 
@@ -129,17 +105,6 @@ $LOCAL: cta;
       border: none !important;
       margin: 0 !important;
       padding: 0 !important;
-    }
-    &[pfe-priority="primary"] {
-      a, a:visited, a:focus, a:hover {
-        color:  #{pfe-color(link--on-saturated)} !important;
-      }
-    }
-    &[pfe-priority="primary"][pfe-color="lightest"],
-    &[pfe-priority="secondary"][pfe-variant="wind"] {
-      a, a:visited, a:focus, a:hover {
-        color:  #{pfe-color(link)} !important;
-      }
     }
   }
 }

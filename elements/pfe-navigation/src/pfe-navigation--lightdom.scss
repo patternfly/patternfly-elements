@@ -15,6 +15,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
     pfe-navigation-item {
         [slot="trigger"] {
             width: 100%;
+            max-width: 130px;
             font-size: 12px; 
             margin: 0;
 

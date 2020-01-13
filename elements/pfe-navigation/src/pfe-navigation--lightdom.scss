@@ -58,9 +58,9 @@ $variables: map-merge($variables, $nav-light-dom-variables);
     }
 
     // Override grid so that CTAs do not overlap.
-    .pfe-navigation--footer:not(:empty) {
-        display: block !important;
-    }
+    //.pfe-navigation--footer:not(:empty) {
+    //    display: block !important;
+    //}
 
     @media screen and (min-width: #{pfe-breakpoint(lg)}) {
         .pfe-navigation-item__tray--container {

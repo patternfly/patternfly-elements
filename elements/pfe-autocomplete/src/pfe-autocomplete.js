@@ -31,7 +31,7 @@ class PfeAutocomplete extends PFElement {
     return {
       search: `pfe-search-event`,
       select: `pfe-option-selected`,
-      slotchange, `slotchange`
+      slotchange: `slotchange`
     };
   }
 

@@ -357,6 +357,7 @@ class PFElement extends HTMLElement {
     this[name] = value;
   }
 
+  // @TODO This is a duplicate function to cssVariable above, combine them
   static var(name, element = document.body) {
     return window
       .getComputedStyle(element)

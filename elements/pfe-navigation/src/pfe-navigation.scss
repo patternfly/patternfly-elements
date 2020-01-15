@@ -34,7 +34,7 @@ $nav-variables: (
 
   // Tray region
   tray: (
-    Padding: pfe-var(container-padding)
+    Padding: calc( 16px * 4)  // 64px
   ),
   
   // Logo
@@ -54,20 +54,17 @@ $variables: map-merge($variables, $nav-variables);
   }
 
   // Increase horizontal padding for above mobile breakpoints
-  @media screen and (min-width: pfe-breakpoint(sm)) {
-    --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} * 2);
-  }
+  //@media screen and (min-width: pfe-breakpoint(sm)) {
+  //  --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} * 2);
+  //}
 
   // Reduce horizontal padding at large breakpoint
-  @media screen and (min-width: pfe-breakpoint(lg)) {
-    --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} / 2);
-    --pfe-navigation__tray--Padding: calc(#{pfe-var(container-padding)} * 2);
-  }
-
-  // Increase horizontal padding at xl breakpoint
-  @media screen and (min-width: pfe-breakpoint(xl)) {
-    --pfe-navigation--Padding--horizontal: #{pfe-var(container-padding)};
-  }
+  //@media screen and (min-width: pfe-breakpoint(lg)) {
+  //  --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} / 2);
+  //}
+  //@media screen and (min-width: pfe-breakpoint(xl)) {
+  //  --pfe-navigation--Padding--horizontal: #{pfe-var(container-padding)};
+  //}
 
   display: block;
   --pfe-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
@@ -127,7 +124,7 @@ pfe-icon {
   }
   &__container {
     width: 100%;
-    max-width: #{pfe-local(Width)};
+    //max-width: #{pfe-local(Width)};
     margin: 0 auto;
     padding: 0 #{pfe-local(Padding--horizontal)};
 
@@ -136,16 +133,27 @@ pfe-icon {
     align-items: stretch;
     justify-content: flex-start;
 
-    // Loop through the other breakpoints
-    @each $size in (md, lg) {
-      @media screen and (min-width: pfe-breakpoint(#{$size})) {
-        // Set the variable for use in the tray region too
-        --pfe-navigation--Width: calc(#{pfe-breakpoint(#{$size})});
-      }
+  // stop using padding, start using max width at medium breakpoint
+  @media screen and (min-width: pfe-breakpoint(md)) {
+    padding: 0;
+    max-width: var(--pfe-navigation--Width);
+  }
 
-      @media screen and (min-width: #{pfe-breakpoint(xl)}) {
-        --pfe-navigation--Width: 1140px;
-      }
+
+// Set the variable for use in the tray region too
+
+    @media screen and (min-width: pfe-breakpoint("md") ) {
+      --pfe-navigation--Width: calc(#{pfe-breakpoint("md")} - #{pfe-local(Padding, $region: tray)});
+    }
+    @media screen and (min-width: pfe-breakpoint("lg")) {
+      --pfe-navigation--Width: calc(#{pfe-breakpoint("lg")} - #{pfe-local(Padding, $region: tray)});
+    }
+    @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false)) {
+      --pfe-navigation--Width: calc(#{pfe-breakpoint("sm-desktop", $map: false)} - #{pfe-local(Padding, $region: tray)} );
+    }
+    @media screen and (min-width: pfe-breakpoint("xl") ) {
+      border: pink solid 1px;
+      --pfe-navigation--Width: calc(#{pfe-breakpoint("xl")} - #{pfe-local(Padding, $region: tray)} );
     }
   }
   &__overlay {

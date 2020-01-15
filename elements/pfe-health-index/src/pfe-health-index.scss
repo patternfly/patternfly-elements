@@ -1,4 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
+// @include pfe-theme-contexts; // imports on="light" etc support
 
 /// ===========================================================================
 /// Component Specific SASS Vars
@@ -29,45 +30,119 @@ $pfe-health--color-f: #a30000;
   display: none;
 }
 
-.box-container {
-  display: flex;
-  border: 1px solid #{pfe-color(surface--border)};
-  margin-left: calc(#{pfe-var(container-spacer)} * 0.5);
-
-  .box {
-    background: $pfe-health--color-bg;
-    width: $pfe-health--width;
-    height: $pfe-health--height;
-    border-right: 1px solid #{pfe-color(surface--border)};
-
-    &:last-child {
-      border-right: 0;
-    }
-
-    &.active {
-      &.a {
-        background-color: $pfe-health--color-a;
+:host(:not([size="lg"])) {
+  .box-container {
+    display: flex;
+    border: 1px solid #{pfe-color(surface--border)};
+    margin-left: calc(#{pfe-var(container-spacer)} * 0.5);
+  
+    .box {
+      background: $pfe-health--color-bg;
+      width: $pfe-health--width;
+      height: $pfe-health--height;
+      border-right: 1px solid #{pfe-color(surface--border)};
+  
+      &:last-child {
+        border-right: 0;
       }
+  
+      &.active {
 
-      &.b {
-        background-color: $pfe-health--color-b;
-      }
-
-      &.c {
-        background-color: $pfe-health--color-c;
-      }
-
-      &.d {
-        background-color: $pfe-health--color-d;
-      }
-
-      &.e {
-        background-color: $pfe-health--color-e;
-      }
-
-      &.f {
-        background-color: $pfe-health--color-f;
+        &.a {
+          background-color: $pfe-health--color-a;
+        }
+  
+        &.b {
+          background-color: $pfe-health--color-b;
+        }
+  
+        &.c {
+          background-color: $pfe-health--color-c;
+        }
+  
+        &.d {
+          background-color: $pfe-health--color-d;
+        }
+  
+        &.e {
+          background-color: $pfe-health--color-e;
+        }
+  
+        &.f {
+          background-color: $pfe-health--color-f;
+        }
       }
     }
   }
 }
+
+:host([size="lg"]) {
+    .box-container {
+      display: flex;
+      border: none;
+      margin-left: 0;
+    }
+
+    .grade {
+      padding: 6px 10px;
+    }
+
+    .box {
+      background: $pfe-health--color-bg;
+      color: #777;
+      border-top: 2px solid #ececec;
+
+      &:first-child {
+        margin-left: 0;
+        border-left: 2px solid #ececec;
+      }
+
+      &.active:first-child {
+        border-left: none;
+      }
+
+      &:last-child {
+        margin-right: 0;
+        border-right: 2px solid #ececec;
+      }
+
+      &.active:last-child {
+        border-right: none;
+      }
+
+      & > .bottom {
+        height: 8px;
+        margin: 0 0.5px;
+      }
+
+      &.active .grade {
+        color: #fff;
+        margin: -2px 0.5px 0 0.5px;
+        padding-top: 8px;
+      }
+
+      &.a > .bottom, &.a.active .grade {
+        background-color: $pfe-health--color-a;
+      }
+
+      &.b > .bottom, &.b.active .grade {
+        background-color: $pfe-health--color-b;
+      }
+
+      &.c > .bottom, &.c.active .grade {
+        background-color: $pfe-health--color-c;
+      }
+
+      &.d > .bottom, &.d.active .grade {
+        background-color: $pfe-health--color-d;
+      }
+
+      &.e > .bottom, &.e.active .grade {
+        background-color: $pfe-health--color-e;
+      }
+
+      &.f > .bottom, &.f.active .grade {
+        background-color: $pfe-health--color-f;
+      }
+    }
+  }

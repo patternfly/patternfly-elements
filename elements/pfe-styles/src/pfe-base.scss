@@ -1,0 +1,115 @@
+//@TODO, pull from https://github.com/patternfly/patternfly-next/blob/master/src/patternfly/_globals.scss#L90
+@import "../../pfe-sass/pfe-sass";
+$LOCAL: pfelement;
+
+// NORMALIZE
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin-top: 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+input,
+select,
+textarea {
+  margin: 0;
+}
+
+img,
+embed,
+iframe,
+object,
+audio,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+iframe {
+  border: 0;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 0;
+  text-align: left;
+}
+
+// PatternFly Styles
+
+html {
+  @include pfe-set-broadcast-theme(light);
+  font-family: sans-serif;
+  line-height: #{pfe-var(line-height)};
+}
+
+
+body {
+  font-family: #{pfe-var(font-family)};
+  font-size: #{pfe-var(font-size)};
+  font-weight: #{pfe-var(font-weight--normal)};
+  line-height: #{pfe-var(line-height)};
+  color: #{pfe-color(text)};
+  text-align: left;
+  margin: 0;
+}
+
+// Links styles
+a {
+  color: #{pfe-apply-broadcast(link)};
+  text-decoration: #{pfe-apply-broadcast(link-decoration)};
+
+  @each $state in (hover, focus, visited) {
+    &:#{$state} {
+      color: #{pfe-apply-broadcast(link--#{$state})};
+      text-decoration: #{pfe-apply-broadcast(link-decoration--#{$state})};
+    }
+  }
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+

@@ -24,8 +24,8 @@ Before getting started, it's important to note that because this is a library, e
     - If it is a `content` component,  then its slots and inputs should focus largely on typography. These tend to be heavier on styles than markup or functionality. Examples include: `pfe-header`
     - If it is a `container` component, then it should focus on creating sections in which components can be placed. These will handle surface colors, padding, some layout, but no typography styles. Examples include: `pfe-card`, `pfe-band`
     - If it is a `combo` component, then it should not contain any styles of its own (exception: you might need to set the display value of the host) but rather, it will pull together other components into a set that is logical for content editors or developers. These components can also make decisions about the way the children components are laid out or which components are called based on built-in logic for that combo.
-3. Components should be context aware, if possible
-    - `Content` components should be equipped with styles for the `on="dark"` attribute, so that they can be used on both light and dark backgrounds. 
+3. Components should be context aware, if possible.
+    - `Content` components should be equipped with styles for the `on="dark"` attribute, so that they can be used on both light and dark backgrounds.
 4. Framework agnostic
     - A PatternFly Element should "just work" when you drop it onto any page (provided the proper polyfills are there). It should have ALL the styles it needs, when coupled with a PFE Theme.
 

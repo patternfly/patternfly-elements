@@ -4,7 +4,7 @@
     "className": "PfeAvatar",
     "elementName": "pfe-avatar"
   },
-  "version": "1.0.0-prerelease.24",
+  "version": "1.0.0-prerelease.33",
   "description": "Avatar for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -18,7 +18,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "pfe-avatar.js",
+  "main": "./dist/pfe-avatar.umd.js",
+  "module": "./dist/pfe-avatar.js",
+  "unpkg": "./dist/pfe-avatar.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -31,11 +36,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
-    "@patternfly/pfelement": "^1.0.0-prerelease.24"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.33",
+    "@patternfly/pfelement": "^1.0.0-prerelease.31"
   },
   "generator-pfelement-version": "0.6.8",
   "bugs": {
-    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
   }
 }

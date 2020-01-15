@@ -1,0 +1,55 @@
+@import "../../pfe-sass/pfe-sass";
+$LOCAL: badge;
+
+$variables: (
+  BackgroundColor: #{pfe-color(feedback--default--lightest)},
+  BorderRadius: calc(#{pfe-var(ui--border-radius)} * 30),
+
+  Color: #{pfe-color(text)},
+
+  FontSize: calc(#{pfe-var(font-size)} * 0.75),
+  FontWeight: #{pfe-var(font-weight--semi-bold)},
+
+  MinWidth: calc(#{pfe-var(ui--border-width)} * 2),
+
+  PaddingLeft: calc(#{pfe-var(container-padding)} * 0.5),
+  PaddingRight: calc(#{pfe-var(container-padding)} * 0.5)
+);
+
+:host {
+  @include pfe-print-variables($variables);
+
+  display: inline-block;
+  line-height: calc(var(--pfe-theme-line-height, 1.5) * 0.75);
+  text-align: center;
+  text-rendering: optimizelegibility;
+}
+
+span {
+  background-color: #{pfe-local(BackgroundColor)};
+  border-radius:    #{pfe-local(BorderRadius)};
+  color:            #{pfe-local(Color)};
+  font-size:        #{pfe-local(FontSize)};
+  font-weight:      #{pfe-local(FontWeight)};
+  min-width:        #{pfe-local(MinWidth)};
+  padding-left:     #{pfe-local(PaddingLeft)};
+  padding-right:    #{pfe-local(PaddingRight)};
+}
+
+@each $state in (moderate, important, critical, success, info) {
+  :host([pfe-state="#{$state}"]) {
+    span {
+      --pfe-badge--BackgroundColor: #{pfe-color(feedback--#{$state})};
+      @if ($state == 'moderate') {
+        --pfe-badge--Color: #{pfe-color(text)};
+      }
+      @else {
+        --pfe-badge--Color: #{pfe-color(text--on-dark)};
+      }
+    }
+  }
+}
+
+:host([hidden]) {
+  display: none;
+}

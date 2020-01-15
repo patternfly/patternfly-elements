@@ -8,7 +8,7 @@ $variables: (
 
   // Darkest is the default background color
   BackgroundColor: pfe-color(surface--darkest),
-  Color:           pfe-color(surface--darkest--text),
+  Color:           pfe-color(text--on-dark),
 
   // Variables for the border
   BorderTopColor: transparent,
@@ -16,13 +16,14 @@ $variables: (
   Border:         pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
 
   MaxHeight: 72px,
+  MobileMenuHeight: 60px,
 
   // Variables for the trigger icon
   icon: none,
 
   // Overlay region
   overlay: (
-    BackgroundColor: pfe-var($cssvar: overlay--BackgroundColor, $fallback: #{$overlay--BackgroundColor--fallback})
+    BackgroundColor: pfe-color(overlay, #{$overlay--BackgroundColor--fallback})
   ),
 
   // Trigger region
@@ -39,7 +40,7 @@ $variables: (
 
 :host {
   // Print the variables to the DOM
-  @include print-variables-map($variables);
+  @include pfe-print-variables($variables);
 
   // Reduce padding for print
   @media print {
@@ -63,16 +64,15 @@ $variables: (
   }
 
   display: block;
-  z-index: pfe-var($cssvar: content, $category: zindex, $map: $z-index);
+  z-index: #{pfe-zindex(content)};
   width: 100%;
 }
 
-:host(.sticky) {
+:host(.pfe-sticky) {
   position: sticky;
   top: 0;
   left: 0;
-  width: 100vw;
-  z-index: pfe-var($cssvar: navigation, $category: zindex, $map: $z-index);
+  z-index: #{pfe-zindex(navigation)};
 }
 
 pfe-icon {
@@ -81,36 +81,38 @@ pfe-icon {
 
 // Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
-  margin: 0;
-  max-height: pfe-local(MaxHeight);
+  margin: 0 !important;
+  max-height: #{pfe-local(MaxHeight)};
 }
 
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
-  color: #{pfe-radio(color, ui-link)};
-  text-decoration: #{pfe-radio(link, text-decoration)};
+  color: #{pfe-apply-broadcast(link)};
+  text-decoration: #{pfe-apply-broadcast(link-decoration)};
 }
 
 ::slotted([slot="mobile-menu--label"]) {
-  font-family: pfe-var(font-family);
-  font-size:   pfe-local(FontSize);
-  font-weight: pfe-local(FontWeight);
-  color: pfe-local(Color);
+  font-family: #{pfe-local(font-family)};
+  font-size:   #{pfe-local(FontSize)};
+  font-weight: #{pfe-local(FontWeight)};
+  color: #{pfe-local(Color)};
   margin-bottom: 0;
 }
 
 .pfe-navigation {
   &__wrapper {
-    @each $prop in (text, ui-link, ui-link--hover, ui-link--visited, ui-link--focus) {
-      --pfe-broadcasted--color--#{$prop}: #{pfe-local($cssvar: Color, $fallback: #{pfe-color(surface--darkest--text)})};
-    }
+    @include pfe-set-broadcast-theme(dark);
+    
     display: flex;
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
-    z-index: #{pfe-var($cssvar: navigation, $map: $z-index)};
+    z-index: #{pfe-zindex(navigation)};
     
     background-color: #{pfe-local(BackgroundColor)};
     color: #{pfe-local(Color)};
     min-height: #{pfe-local(MaxHeight)};
+    @media only screen and (max-height: 500px) {
+      min-height: #{pfe-local(MobileMenuHeight)};
+    }
   }
   &__container {
     width: 100%;
@@ -124,10 +126,14 @@ pfe-icon {
     justify-content: space-between;
 
     // Loop through the other breakpoints
-    @each $size in (md, lg, xl) {
+    @each $size in (md, lg) {
       @media screen and (min-width: pfe-breakpoint(#{$size})) {
         // Set the variable for use in the tray region too
         --pfe-navigation--Width: calc(#{pfe-breakpoint(#{$size})});
+      }
+
+      @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+        --pfe-navigation--Width: 1140px;
       }
     }
 
@@ -142,13 +148,13 @@ pfe-icon {
   }
   &__overlay {
     display: block;
-    background-color: pfe-local($cssvar: BackgroundColor, $region: overlay, $fallback: #{$overlay--BackgroundColor--fallback});
+    background-color: #{pfe-local($region: overlay, $cssvar: BackgroundColor)};
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: #{pfe-var($cssvar: overlay, $category: 'zindex', $map: $z-index)};
+    z-index: #{pfe-zindex(overlay)};
     &[hidden] {
       display: none;
     }
@@ -162,11 +168,19 @@ pfe-icon {
     padding-top: #{pfe-local(Padding--vertical)};
     padding-right: #{pfe-var(container-padding)};
     padding-bottom: #{pfe-local(Padding--vertical)};
+
+    @media screen and (max-height: 500px) {
+      padding-top: calc(#{pfe-local(Padding--vertical) / 2});
+      padding-bottom: calc(#{pfe-local(Padding--vertical) / 2});
+    }
+    > * {
+      display: flex;
+    }
     // @TODO --pfe-theme--logo--svg?
   }
   &__skip {
     display: block;
-    @include pfe-sr-only;
+    @extend %sr-only;
     margin: 0 -2em -1px -1px;
   }
   &__main {

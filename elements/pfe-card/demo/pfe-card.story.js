@@ -15,7 +15,7 @@ const styles = `<style>
   }
 </style>`;
 
-import PfeCard from "../pfe-card";
+import PfeCard from "../dist/pfe-card";
 
 const stories = storiesOf("Card", module);
 
@@ -71,11 +71,11 @@ stories.add(PfeCard.tag, () => {
   // If they do, prompt them for the image properties
   if (imageValue) {
     let overflow = storybookBridge.select("Image overflow?", {
-      null: "no overflow",
-      top: "top & sides",
-      bottom: "bottom & sides",
-      sides: "sides only"
-    }, "no overflow", "Image");
+      "no overflow": null,
+      "top & sides": "top",
+      "bottom & sides": "bottom",
+      "sides only": "sides"
+    }, null, "Image");
 
     // Create the overflow attribute value based on user selections
     switch(overflow) {
@@ -96,12 +96,7 @@ stories.add(PfeCard.tag, () => {
         break;
     }
 
-    image = `<img src=\"https://placekitten.com/1000/300\" ${overflowAttr.length > 0 ? ` pfe-overflow=\"${overflowAttr.join(" ")}\"` : ""}/>`;
-    if(region === "footer") {
-      slots.footer.default = image;
-    } else {
-      slots.body.default = image + slots.body.default;
-    }
+    image = `<img src=\"https://placekitten.com/1000/300\" ${overflowAttr.length > 0 ? `pfe-overflow=\"${overflowAttr.join(" ")}\"` : ""}/>`;
   }
 
   // Create an object for the footer attributes
@@ -158,10 +153,10 @@ stories.add(PfeCard.tag, () => {
       content: config.has.header
     })
   }, {
-    content: config.has.body
+    content: (region !== "footer") ? image + config.has.body : config.has.body
   }, {
     slot: "pfe-card--footer",
-    content: config.has.footer
+    content: (region === "footer") ? image : config.has.footer
   }];
 
   // Some attribute values don't need to be included in the markup

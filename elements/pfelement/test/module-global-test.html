@@ -7,21 +7,21 @@
     <script src="/components/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
 
-    <script src="../../pfelement/pfelement.umd.js"></script>
-    <script src="../../pfe-card/pfe-card.umd.js"></script>
+    <script src="../../pfelement/dist/pfelement.umd.js"></script>
+    <script src="../../pfe-card/dist/pfe-card.umd.js"></script>
 
     <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
   </head>
   <body unresolved>
 
     <pfe-card>
-      <h2 slot="header">Card 1</h2>This is pfe-card.
-      <div slot="footer">Text in footer</div>
+      <h2 slot="pfe-card--header">Card 1</h2>This is pfe-card.
+      <div slot="pfe-card--footer">Text in footer</div>
     </pfe-card>
 
     <script>

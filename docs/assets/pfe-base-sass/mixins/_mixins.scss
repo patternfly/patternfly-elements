@@ -80,7 +80,7 @@
 }
 // scss-lint:disable ImportantRule
 @mixin pfe-no-print-background {
-  @include print-media {
+  @include pfe-print-media {
     background-color: white !important;
     background-image: none !important;
     box-shadow: none !important;

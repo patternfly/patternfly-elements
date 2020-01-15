@@ -5,183 +5,88 @@
     <title>PatternFly Element | pfe-content-set Demo</title>
     <link rel="stylesheet" href="https://overpass-30e2.kxcdn.com/overpass.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>PatternFly Element | pfe-content-set Demo</title>
+
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+    
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>
       require([
-        "../pfe-content-set.umd.js"
+        "../dist/pfe-content-set.umd.js",
+        "../../pfe-cta/dist/pfe-cta.umd.js"
       ])
     </script>
 
     <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
     </noscript>
     <style>
-      body {
-        font-family: Overpass;
-        padding: 0;
-        margin: 0;
-      }
-
       .faux-container {
         border: 1px dashed #ccc;
         padding: 30px;
       }
-      h1, h2 {
-        margin-bottom: .3em;
-        margin-top: 0;
-      }
       h2 {
         font-size: 1.2em;
-      }
-      h2 a {
-        color: inherit;
-        cursor: pointer;
+        color: var(--pfe-broadcasted--text);
       }
       h3 {
         font-size: 1.4em;
-        color: var(--pfe-theme--color--ui-complement, #464646);
-      }
-      p {
-        margin-top: 0 !important;
+        color: var(--pfe-broadcasted--text);
       }
       hr {
         margin: 40px 10px;
         border-color: transparent;
         border-bottom-color: #ccc;
       }
+
+      section {
+        padding: 2rem;
+      }
+
       .dark-background {
         background-color: #000;
-        padding: 2rem 0;
-      }
-      .cta a {
-        display: inline-block;
-        background-color: #c00;
-        padding: 1rem 4rem;
-        text-transform: uppercase;
-        text-decoration: none;
-        color: white;
       }
 
-      .cta a:visited {
-        color: white;
+      .border-bottom {
+        border-bottom: 1px solid var(--pfe-broadcasted--text);
       }
     </style>
-
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
   </head>
   <body unresolved>
     <h1>&lt;pfe-content-set&gt;</h1>
+
     <p>This component will render your content in either an <a href="#accordions">accordion</a> or a <a href="#tabs">tabset</a> depending on the available space.</p>
     <p>Note: <em>On mobile ( &lt;768px ), all examples should render as an Accordion.</em></p>
+
     <br>
-    <h2>On desktop, example below should render as accordion on a light theme:</h2>
-    <h3>Container max: 500px</h3>
-    <div style="max-width: 500px">
-      <pfe-content-set pfe-variant="wind">
-        <h2 pfe-content-set--header>Heading 1</h2>
-        <div pfe-content-set--panel>
-          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-          <div class="cta">
-            <a href="https://redhat.com">Primary CTA</a>
-          </div>
-        </div>
-        <h2 pfe-content-set--header>Heading 2</h2>
-        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
-        <h2 pfe-content-set--header>Heading 3</h2>
-        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
-      </pfe-content-set>
-    </div>
 
-    <h2>On desktop, example below should render as accordion on a dark theme:</h2>
-    <h3>Container max: 500px</h3>
-    <div class="dark-background">
+    <section>
+      <h2>On desktop, example below should render as accordion on a light theme:</h2>
+      <h3>Container max: 500px</h3>
       <div style="max-width: 500px">
-        <pfe-content-set pfe-variant="earth" on="dark">
+        <pfe-content-set pfe-variant="wind">
           <h2 pfe-content-set--header>Heading 1</h2>
           <div pfe-content-set--panel>
             <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-            <div class="cta">
+            <pfe-cta>
               <a href="https://redhat.com">Primary CTA</a>
-            </div>
-          </div>
-          <h2 pfe-content-set--header>Heading 2</h2>
-          <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
-          <h2 pfe-content-set--header>Heading 3</h2>
-          <div pfe-content-set--panel>Content for heading 3. </div>
-        </pfe-content-set>
-      </div>
-    </div>
-
-    <hr>
-
-    <h2>On desktop, example below should render as tabs (wind style) on a dark background:</h2>
-    <div class="dark-background">
-      <pfe-content-set pfe-variant="wind" on="dark">
-        <h2 pfe-content-set--header>Heading 1</h2>
-        <div pfe-content-set--panel>
-          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-          <div class="cta">
-            <a href="https://redhat.com">Primary CTA</a>
-          </div>
-        </div>
-        <h2 pfe-content-set--header>Heading 2</h2>
-        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
-        <h2 pfe-content-set--header>Heading 3</h2>
-        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
-      </pfe-content-set>
-    </div>
-
-    <hr>
-    <h2>On desktop, example below should render as tabs (wind style):</h2>
-    <div>
-      <pfe-content-set pfe-variant="wind">
-        <h2 pfe-content-set--header>Heading 1</h2>
-        <div pfe-content-set--panel>
-          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-          <div class="cta">
-            <a href="https://redhat.com">Primary CTA</a>
-          </div>
-        </div>
-        <h2 pfe-content-set--header>Heading 2</h2>
-        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
-        <h2 pfe-content-set--header>Heading 3</h2>
-        <div pfe-content-set--panel>Content for heading 3. </div>
-      </pfe-content-set>
-    </div>
-
-    <hr>
-
-    <h2>On desktop, example below should render as tabs (earth style):</h2>
-    <div>
-      <pfe-content-set pfe-variant="earth">
-        <h2 pfe-content-set--header>Heading 1</h2>
-        <div pfe-content-set--panel>
-          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-          <div class="cta">
-            <a href="https://redhat.com">Primary CTA</a>
-          </div>
-        </div>
-        <h2 pfe-content-set--header>Heading 2</h2>
-        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
-        <h2 pfe-content-set--header>Heading 3</h2>
-        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
-      </pfe-content-set>
-    </div>
-
-    <hr>
-    <h2>On desktop, example below should render as tabs on a dark theme:</h2>
-    <div class="dark-background">
-      <div>
-        <pfe-content-set pfe-variant="earth" on="dark">
-          <h2 pfe-content-set--header>Heading 1</h2>
-          <div pfe-content-set--panel>
-            <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-            <div class="cta">
-              <a href="https://redhat.com">Primary CTA</a>
-            </div>
+            </pfe-cta>
           </div>
           <h2 pfe-content-set--header>Heading 2</h2>
           <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
@@ -189,83 +94,184 @@
           <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
         </pfe-content-set>
       </div>
-    </div>
+    </section>
 
-    <hr>
+    <section class="dark-background on-dark border-bottom">
+      <h2>On desktop, example below should render as accordion on a dark theme:</h2>
+      <h3>Container max: 500px</h3>
+      <div style="max-width: 500px">
+        <pfe-content-set pfe-variant="earth" on="dark">
+          <h2 pfe-content-set--header>Heading 1</h2>
+          <div pfe-content-set--panel>
+            <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+            <pfe-cta>
+              <a href="https://redhat.com">Primary CTA</a>
+            </pfe-cta>
+          </div>
+          <h2 pfe-content-set--header>Heading 2</h2>
+          <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+          <h2 pfe-content-set--header>Heading 3</h2>
+          <div pfe-content-set--panel>Content for heading 3. </div>
+        </pfe-content-set>
+      </div>
+    </section>
 
-    <h2>On desktop, example below should render as vertical tabs (wind style):</h2>
-    <div>
+    <section class="dark-background on-dark border-bottom">
+      <h2>On desktop, example below should render as tabs (wind style) on a dark background:</h2>
+      <pfe-content-set pfe-variant="wind" on="dark">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <div pfe-content-set--panel>
+          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          <pfe-cta>
+            <a href="https://redhat.com">Primary CTA</a>
+          </pfe-cta>
+        </div>
+        <h2 pfe-content-set--header>Heading 2</h2>
+        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+        <h2 pfe-content-set--header>Heading 3</h2>
+        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
+      </pfe-content-set>
+    </section>
+
+    <section class="border-bottom">
+      <h2>On desktop, example below should render as tabs (wind style):</h2>
+      <div>
+        <pfe-content-set pfe-variant="wind">
+          <h2 pfe-content-set--header>Heading 1</h2>
+          <div pfe-content-set--panel>
+            <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+            <pfe-cta>
+              <a href="https://redhat.com">Primary CTA</a>
+            </pfe-cta>
+          </div>
+          <h2 pfe-content-set--header>Heading 2</h2>
+          <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+          <h2 pfe-content-set--header>Heading 3</h2>
+          <div pfe-content-set--panel>Content for heading 3. </div>
+        </pfe-content-set>
+      </div>
+    </section>
+
+    <section class="border-bottom">
+      <h2>On desktop, example below should render as tabs (earth style):</h2>
+      <pfe-content-set pfe-variant="earth">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <div pfe-content-set--panel>
+          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          <pfe-cta>
+            <a href="https://redhat.com">Primary CTA</a>
+          </pfe-cta>
+        </div>
+        <h2 pfe-content-set--header>Heading 2</h2>
+        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+        <h2 pfe-content-set--header>Heading 3</h2>
+        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
+      </pfe-content-set>
+    </section>
+
+    <section class="dark-background on-dark border-bottom">
+      <h2>On desktop, example below should render as tabs on a dark theme:</h2>
+      <pfe-content-set pfe-variant="earth" on="dark">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <div pfe-content-set--panel>
+          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          <pfe-cta>
+            <a href="https://redhat.com">Primary CTA</a>
+          </pfe-cta>
+        </div>
+        <h2 pfe-content-set--header>Heading 2</h2>
+        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+        <h2 pfe-content-set--header>Heading 3</h2>
+        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
+      </pfe-content-set>
+    </section>
+
+    <section class="border-bottom">
+      <h2>On desktop, example below should render as vertical tabs (wind style):</h2>
       <pfe-content-set vertical pfe-variant="wind">
         <h2 pfe-content-set--header>Heading 1</h2>
         <div pfe-content-set--panel>
           <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-          <div class="cta">
+          <pfe-cta>
             <a href="https://redhat.com">Primary CTA</a>
-          </div>
+          </pfe-cta>
         </div>
         <h2 pfe-content-set--header>Heading 2</h2>
         <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
         <h2 pfe-content-set--header>Heading 3</h2>
         <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
       </pfe-content-set>
-    </div>
+    </section>
 
-    <hr>
-    <h2>On desktop, example below should render as vertical tabs (wind style) on a dark background:</h2>
-    <div class="dark-background">
+    <section class="dark-background on-dark border-bottom">
+      <h2>On desktop, example below should render as vertical tabs (wind style) on a dark background:</h2>
       <pfe-content-set vertical pfe-variant="wind" on="dark">
         <h2 pfe-content-set--header>Heading 1</h2>
         <div pfe-content-set--panel>
           <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-          <div class="cta">
+          <pfe-cta>
             <a href="https://redhat.com">Primary CTA</a>
-          </div>
+          </pfe-cta>
         </div>
         <h2 pfe-content-set--header>Heading 2</h2>
         <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
         <h2 pfe-content-set--header>Heading 3</h2>
         <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
       </pfe-content-set>
-    </div>
+    </section>
 
-    <hr>
-    <h2>On desktop, example below should render as vertical tabs (earth style):</h2>
-    <div>
+    <section class="border-bottom">
+      <h2>On desktop, example below should render as vertical tabs (earth style):</h2>
       <pfe-content-set vertical pfe-variant="earth">
         <h2 pfe-content-set--header>Heading 1</h2>
         <div pfe-content-set--panel>
           <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-          <div class="cta">
+          <pfe-cta>
             <a href="https://redhat.com">Primary CTA</a>
-          </div>
+          </pfe-cta>
         </div>
         <h2 pfe-content-set--header>Heading 2</h2>
         <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
         <h2 pfe-content-set--header>Heading 3</h2>
         <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
       </pfe-content-set>
-    </div>
+    </section>
 
-    <hr>
-    <h2>On desktop, example below should render as vertical tabs (earth style):</h2>
-    <div class="dark-background">
+    <section class="dark-background on-dark border-bottom">
+      <h2>On desktop, example below should render as vertical tabs (earth style):</h2>
       <pfe-content-set vertical pfe-variant="earth" on="dark">
         <h2 pfe-content-set--header>Heading 1</h2>
         <div pfe-content-set--panel>
           <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-          <div class="cta">
+          <pfe-cta>
             <a href="https://redhat.com">Primary CTA</a>
-          </div>
+          </pfe-cta>
         </div>
         <h2 pfe-content-set--header>Heading 2</h2>
         <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
         <h2 pfe-content-set--header>Heading 3</h2>
         <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
       </pfe-content-set>
-    </div>
+    </section>
+
+    <section>
+      <pfe-content-set pfe-variant="wind">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <div pfe-content-set--panel>
+          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          <pfe-cta>
+            <a href="https://redhat.com">Primary CTA</a>
+          </pfe-cta>
+        </div>
+        <h2 pfe-content-set--header>Heading 2</h2>
+        <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+      </pfe-content-set>
+    </section>
 
     <hr>
-    <pfe-content-set pfe-variant="wind">
+
+    <h2>Align: center</h2>
+    <pfe-content-set pfe-align="center">
       <h2 pfe-content-set--header>Heading 1</h2>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
@@ -275,8 +281,11 @@
       </div>
       <h2 pfe-content-set--header>Heading 2</h2>
       <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.</div>
+      <h2 pfe-content-set--header>Heading 3</h2>
+      <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</div>
     </pfe-content-set>
 
+    <hr>
     <h2>This content set's markup is incorrect.</h2>
     <pfe-content-set>
       <h2>Heading 1</h2>
@@ -286,5 +295,34 @@
       <h2>Heading 2</h2>
       <div>Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</div>
     </pfe-content-set>
+
+    <h2>Dynamically Add Headers and Panels</h2>
+    <pfe-content-set id="dynamic">
+      <h2 pfe-content-set--header>Heading 1</h2>
+      <div pfe-content-set--panel>Panel 1</div>
+    </pfe-content-set>
+
+    <button id="addHeaderAndPanelBtn">Add Header &amp; Panel</button>
+
+    <script>
+      var btn = document.querySelector("#addHeaderAndPanelBtn");
+      var pfeContentSet = document.querySelector("#dynamic");
+
+      btn.addEventListener("click", function () {
+        var fragment = document.createDocumentFragment();
+
+        var header = document.createElement("h2");
+        header.setAttribute("pfe-content-set--header", true);
+        header.textContent = "New Heading";
+
+        var panel = document.createElement("div");
+        panel.setAttribute("pfe-content-set--panel", true);
+        panel.textContent = "New Panel";
+
+        fragment.appendChild(header);
+        fragment.appendChild(panel);
+        pfeContentSet.appendChild(fragment);
+      });
+    </script>
   </body>
 </html>

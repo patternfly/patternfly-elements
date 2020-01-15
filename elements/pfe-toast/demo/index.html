@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PatternFly Element | pfe-toast Demo</title>
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <script>require(['../dist/pfe-toast.umd.js'])</script>
+
+  <style>
+    body {
+      font-family: "Red Hat Text", Overpass, Helvetica, sans-serif;
+      position: relative;
+    }
+
+    /* example client overrides */
+    pfe-toast {
+      /* --pfe-toast--Top: 25px;
+      --pfe-toast--MaxWidth: 250px; */
+    }
+  </style>
+</head>
+
+<body unresolved>
+  <h1>&lt;pfe-toast&gt;</h1>
+
+  <pfe-toast auto-dismiss="3s" id="1">
+    <p>Let's get toasted!</p>
+  </pfe-toast>
+
+  <pfe-toast id="2">
+    <p>Do you feel toasted?</p>
+    <button>Yes. I'm burnt!</button>
+    <button>Mmmm. Toast.</button>
+  </pfe-toast>
+
+  <pfe-toast id="3" aria-label="Custom alert dialog" close-label="Cerrar">
+    <h1>Do you feel toasted?</h1>
+    <p>Biodiesel wolf franzen, jean shorts pabst lomo cloud bread gentrify cronut af migas vinyl four dollar toast
+      scenester twee. Twee synth hammock hella activated charcoal keffiyeh, farm-to-table cray try-hard tofu fixie
+      truffaut leggings actually. Tote bag poutine kale chips intelligentsia health goth, thundercats affogato tofu
+      literally vegan umami slow-carb VHS chillwave.</p>
+    <button>Yes. I'm burnt!</button>
+    <button>Mmmm. Toast.</button>
+  </pfe-toast>
+
+  <button id="example1">Toggle example one</button>
+  <button id="example2">Toggle example two</button>
+  <button id="example3">Toggle example three</button>
+
+  <script>
+    document.getElementById("example1").addEventListener("click", function (event) {
+      document.getElementById("1").toggle();
+    });
+
+    document.getElementById("example2").addEventListener("click", function (event) {
+      document.getElementById("2").toggle();
+    });
+
+    document.getElementById("example3").addEventListener("click", function (event) {
+      document.getElementById("3").toggle();
+    });
+  </script>
+</body>
+
+</html>

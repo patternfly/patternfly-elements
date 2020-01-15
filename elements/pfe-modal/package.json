@@ -4,7 +4,7 @@
     "className": "PfeModal",
     "elementName": "pfe-modal"
   },
-  "version": "1.0.0-prerelease.24",
+  "version": "1.0.0-prerelease.33",
   "publishConfig": {
     "access": "public"
   },
@@ -18,8 +18,12 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-modal"
   },
-  "main": "pfe-modal.umd.js",
+  "main": "./dist/pfe-modal.umd.umd.js",
   "module": "pfe-modal.js",
+  "unpkg": "./dist/pfe-modal.umd.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -36,11 +40,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.24",
-    "@patternfly/pfelement": "^1.0.0-prerelease.24"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.33",
+    "@patternfly/pfelement": "^1.0.0-prerelease.31"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {
-    "url" : "https://github.com/patternfly/patternfly-elements/issues"
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
   }
 }

@@ -8,35 +8,40 @@
 
   <title>PatternFly Element | Navigation Demo</title>
 
-  <link rel="stylesheet" href="../../pfe-layouts/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
 
   <noscript>
-    <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
   </noscript>
 
-  <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
-  <link href="../pfe-navigation--lightdom.css" rel="stylesheet">
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <link href="../dist/pfe-navigation--lightdom.css" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-theme/2/advanced-theme.css" media="all" />
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-loader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
 
   <script>
     require([
-      '../pfe-navigation.umd.js',
-      '../../pfe-band/pfe-band.umd.js',
-      '../../pfe-card/pfe-card.umd.js',
-      '../../pfe-cta/pfe-cta.umd.js'
+      '../dist/pfe-navigation.umd.js',
+      '../../pfe-band/dist/pfe-band.umd.js',
+      '../../pfe-card/dist/pfe-card.umd.js',
+      '../../pfe-cta/dist/pfe-cta.umd.js'
     ])
 
   </script>
+  <!-- <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" media="all" /> -->
+
 
   <noscript>
-    <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+    <link href="../dist/pfe-navigation--noscript.css" rel="stylesheet">
   </noscript>
 
-  <!-- <script type="module" src="../pfe-navigation.js"></script> -->
+  <!-- <script type="module" src="../dist/pfe-navigation.js"></script> -->
 </head>
 
 <body unresolved>
@@ -49,9 +54,10 @@
       </ul>
     </div>
     <!-- Site logo -->
-    <div slot="logo" style="padding: 0 0 8px 0;line-height: 1;">
+    <div slot="logo">
       <a href="https://company.com">
         <img class="logo" src="https://via.placeholder.com/150x50.png" title="Company logo" />
+        <!-- <img class="logo" src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/logo.svg" width="200" title="Company logo" /> -->
       </a>
     </div>
     <!-- Search -->
@@ -70,7 +76,7 @@
     <form slot="mobile-search" hidden>
       <input type="text" name="search" value="" placeholder="Enter your search term"
         style="height: 30px; width: 60%; margin-right: 10px;">
-      <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
+      <pfe-cta priority="primary"><a href="http://www.google.com">Search</a></pfe-cta>
     </form>
     <!-- Main navigation -->
     <!-- <h2 slot="mobile-menu--label" hidden>Menu</h2> -->
@@ -491,27 +497,27 @@
     </pfe-navigation-main>
     <!-- Language -->
     <pfe-navigation-item slot="language" pfe-icon="web-globe">
-      <h2 slot="trigger"><a href="/url-to-language-page">English</a></h2>
+      <h2 slot="trigger"><a href="http://www.foo.com">English</a></h2>
       <div slot="tray" hidden>
         <div class="pfe-navigation-item__tray--container">
           <p>Language switcher</p>
         </div>
       </div>
     </pfe-navigation-item>
-    <a href="/url-to-language-page" slot="mobile-language" pfe-icon="web-globe">English</a>
+    <a href="http://www.foo.com" slot="mobile-language" pfe-icon="web-globe">English</a>
     <!-- Log in -->
     <pfe-navigation-item slot="login" pfe-icon="web-user">
-      <h2 slot="trigger"><a href="/login">Log in</a></h2>
+      <h2 slot="trigger"><a href="http://www.bar.com">Log in</a></h2>
       <div slot="tray" hidden>
         <div class="pfe-navigation-item__tray--container">
           <p>Log in things</p>
         </div>
       </div>
     </pfe-navigation-item>
-    <a href="/login" slot="mobile-login" pfe-icon="web-user">Login/Register</a>
+    <a href="http://www.bar.com" slot="mobile-login" pfe-icon="web-user">Login/Register</a>
     <!-- Site switcher -->
     <pfe-navigation-item slot="site-switcher" pfe-icon="web-grid-3x3">
-      <h2 slot="trigger"><a href="/url-to-rh-websites-page">Websites</a></h2>
+      <h2 slot="trigger"><a href="http://www.bat.com">Websites</a></h2>
       <div slot="tray" hidden>
         <div class="pfe-navigation-item__tray--container">
           <h3>Site switcher things</h3>
@@ -520,8 +526,6 @@
       </div>
     </pfe-navigation-item>
   </pfe-navigation>
-
-
 
   <pfe-band pfe-color="lightest">
     <header slot="pfe-band--header">
@@ -543,9 +547,9 @@
       <a href="#">Learn more</a>
     </pfe-cta>
     <pfe-card color="base" slot="pfe-band--aside">
-      <h3 slot="header">Aside: right body bottom</h3>
+      <h3 slot="pfe-card--header">Aside: right body bottom</h3>
       <p>Ut wisi enim ad minim veniam.</p>
-      <pfe-cta slot="footer" priority="tertiary">
+      <pfe-cta slot="pfe-card--footer" priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </pfe-card>
@@ -571,9 +575,9 @@
       </pfe-cta>
     </article>
     <pfe-card color="complement" slot="pfe-band--aside">
-      <h3 slot="header">Aside: left body bottom</h3>
+      <h3 slot="pfe-card--header">Aside: left body bottom</h3>
       <p>Ut wisi enim ad minim veniam.</p>
-      <pfe-cta slot="footer" priority="tertiary">
+      <pfe-cta slot="pfe-card--footer" priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </pfe-card>
@@ -604,7 +608,7 @@
       <p>Ut wisi enim ad minim veniam. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
         tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
         dolores et ea rebum.</p>
-      <pfe-cta slot="footer" priority="tertiary">
+      <pfe-cta slot="pfe-card--footer" priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </pfe-card>
@@ -631,11 +635,11 @@
       <a href="#">Learn more</a>
     </pfe-cta>
     <pfe-card color="dark" slot="pfe-band--aside">
-      <h3 slot="header">Aside: left full bottom</h3>
+      <h3 slot="pfe-card--header">Aside: left full bottom</h3>
       <p>Ut wisi enim ad minim veniam. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
         tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
         dolores et ea rebum.</p>
-      <pfe-cta slot="footer" priority="tertiary">
+      <pfe-cta slot="pfe-card--footer" priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </pfe-card>
@@ -661,11 +665,11 @@
       </pfe-cta>
     </section>
     <pfe-card color="dark" slot="pfe-band--aside">
-      <h3 slot="header">Aside: right full top</h3>
+      <h3 slot="pfe-card--header"d--header">Aside: right full top</h3>
       <p>Ut wisi enim ad minim veniam. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
         tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
         dolores et ea rebum.</p>
-      <pfe-cta slot="footer" priority="tertiary">
+      <pfe-cta slot="pfe-card--footer" priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </pfe-card>
@@ -690,9 +694,9 @@
       <a href="#">Learn more</a>
     </pfe-cta>
     <pfe-card color="lightest" slot="pfe-band--aside">
-      <h3 slot="header">Aside: left body top</h3>
+      <h3 slot="pfe-card--header">Aside: left body top</h3>
       <p>Ut wisi enim ad minim veniam.</p>
-      <pfe-cta slot="footer" priority="tertiary">
+      <pfe-cta slot="pfe-card--footer" priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </pfe-card>
@@ -714,9 +718,9 @@
       <a href="#">Learn more</a>
     </pfe-cta>
     <pfe-card color="lightest" slot="pfe-band--aside">
-      <h3 slot="header">Aside: left body top</h3>
+      <h3 slot="pfe-card--header">Aside: left body top</h3>
       <p>Ut wisi enim ad minim veniam.</p>
-      <pfe-cta slot="footer" priority="tertiary">
+      <pfe-cta slot="pfe-card--footer" priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </pfe-card>
@@ -738,7 +742,7 @@
         <h3>Lorem ipsum</h3>
         <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
           sed diam voluptua.</p>
-        <pfe-cta slot="footer" priority="tertiary">
+        <pfe-cta slot="pfe-card--footer" priority="tertiary">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
@@ -746,16 +750,16 @@
         <h3>Lorem ipsum</h3>
         <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
           est Lorem ipsum dolor sit amet.</p>
-        <pfe-cta slot="footer" priority="tertiary">
+        <pfe-cta slot="pfe-card--footer" priority="tertiary">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
     </article>
     <pfe-card color="dark" slot="pfe-band--aside">
-      <h3 slot="header">Aside: right body bottom</h3>
+      <h3 slot="pfe-card--header">Aside: right body bottom</h3>
       <p>Ut wisi enim ad minim veniam. At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit
         amet.</p>
-      <pfe-cta slot="footer" priority="tertiary">
+      <pfe-cta slot="pfe-card--footer" priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </pfe-card>

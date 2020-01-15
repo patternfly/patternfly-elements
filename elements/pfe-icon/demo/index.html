@@ -6,22 +6,28 @@
 
     <title>PatternFly Element | pfe-icon Demo</title>
 
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/requirejs/require.js"></script>
-    
-    <script>require([
-      '../pfe-icon.umd.js',
-      '../../pfe-card/pfe-card.umd.js'
-    ])</script>
-
     <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
     </noscript>
 
     <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
-    <link href="../../pfe-layouts/pfe-layouts.min.css" rel="stylesheet">
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    
+    <script>require([
+      '../dist/pfe-icon.umd.js',
+      '../../pfe-card/dist/pfe-card.umd.js'
+    ])</script>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfe-styles/dist/pfe-layouts.min.css" rel="stylesheet">
 
     <style type="text/css" media="screen">
       body {
@@ -34,15 +40,15 @@
     <h1>&lt;pfe-icon&gt;</h1>
     <h2>built-in rh icons</h2>
 
-    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-aed"></pfe-icon>
-    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-alert-downtime"></pfe-icon>
-    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-api"></pfe-icon>
-    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-app-b"></pfe-icon>
-    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-application-alt"></pfe-icon>
-    <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-application-mobile"></pfe-icon>
-    <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-application"></pfe-icon>
-    <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-application-window"></pfe-icon>
-    <pfe-icon size="xl"  style="--pfe-icon--Color: #75a117" icon="rh-arrows-simplify"></pfe-icon>
+    <pfe-icon size="xl"  color="base" icon="rh-aed"></pfe-icon>
+    <pfe-icon size="xl"  color="complement" icon="rh-alert-downtime"></pfe-icon>
+    <pfe-icon size="xl"  color="accent" icon="rh-api"></pfe-icon>
+    <pfe-icon size="xl"  color="critical" icon="rh-app-b"></pfe-icon>
+    <pfe-icon size="xl"  color="important" icon="rh-application-alt"></pfe-icon>
+    <pfe-icon size="xl"  color="moderate" icon="rh-application-mobile"></pfe-icon>
+    <pfe-icon size="xl"  color="success" icon="rh-application"></pfe-icon>
+    <pfe-icon size="xl"  color="info" icon="rh-application-window"></pfe-icon>
+    <pfe-icon size="xl"  color="default" icon="rh-arrows-simplify"></pfe-icon>
     <pfe-icon size="xl"  style="--pfe-icon--Color: #7551a6" icon="rh-atom"></pfe-icon>
     <pfe-icon size="xl"  style="--pfe-icon--Color: #820000" icon="rh-award-ribbon"></pfe-icon>
     <pfe-icon size="xl"  style="--pfe-icon--Color: #004080" icon="rh-bar-graph"></pfe-icon>
@@ -329,21 +335,41 @@
     <pfe-icon size="md" icon="web-youtube2"></pfe-icon>
     <pfe-icon size="md" icon="web-youtube"></pfe-icon>
 
+    <h2>Circled icons</h2>
+    <pfe-icon size="xl" circled="complement" icon="rh-aed"></pfe-icon>
+    <pfe-icon size="xl" circled="accent" icon="rh-alert-downtime"></pfe-icon>
+    <pfe-icon size="xl" circled="darkest" icon="rh-api"></pfe-icon>
+    <pfe-icon size="xl" circled="dark" icon="rh-app-b"></pfe-icon>
+    <pfe-icon size="xl" circled icon="rh-application-alt"></pfe-icon>
+    <pfe-icon size="xl" circled="light" icon="rh-application-mobile"></pfe-icon>
+    <pfe-icon size="xl" circled="lightest" icon="rh-application"></pfe-icon>
+
+    <h2>Circled icons: forced stretch</h2>
+    <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-on-xs pfe-m-all-3-col">
+      <pfe-icon size="xl" circled="complement" icon="rh-aed"></pfe-icon>
+      <pfe-icon size="lg" circled="accent" icon="rh-alert-downtime"></pfe-icon>
+      <pfe-icon size="md" circled="darkest" icon="rh-api"></pfe-icon>
+      <pfe-icon size="sm" circled="dark" icon="rh-app-b"></pfe-icon>
+      <pfe-icon size="2x" circled icon="rh-application-alt"></pfe-icon>
+      <pfe-icon size="3x" circled="light" icon="rh-application-mobile"></pfe-icon>
+      <pfe-icon size="4x" circled="lightest" icon="rh-application"></pfe-icon>
+    </div>
+
     <h2>Fail to load tests</h2>
     <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-on-xs pfe-m-all-3-col">
-      <pfe-card pfe-color="light">
+      <pfe-card pfe-color="lighter">
         <h3 slot="pfe-card--header">Fail with fallback text, no tags.</h3>
         <pfe-icon size="xl"  icon="rh-foo-bar">Icon failed to load.</pfe-icon>
       </pfe-card>
-      <pfe-card>
+      <pfe-card pfe-color="lighter">
         <h3 slot="pfe-card--header">Fail with fallback text, p tag.</h3>
         <pfe-icon size="xl"  icon="rh-foo-bar"><p>Icon failed to load.</p></pfe-icon>
       </pfe-card>
-      <pfe-card>
+      <pfe-card pfe-color="lighter">
         <h3 slot="pfe-card--header">Fail with preserve space on.</h3>
         <pfe-icon size="xl"  icon="foo-bar" style="border: 1px solid hotpink;"></pfe-icon>
       </pfe-card>
-      <pfe-card>
+      <pfe-card pfe-color="lighter">
         <h3 slot="pfe-card--header">Fail with collapse blank space.</h3>
         <pfe-icon size="xl"  icon="foo-bar" style="border: 1px solid hotpink;" on-fail="collapse"></pfe-icon>
       </pfe-card>

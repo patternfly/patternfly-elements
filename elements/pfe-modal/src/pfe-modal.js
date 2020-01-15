@@ -1,11 +1,7 @@
-import PFElement from "../pfelement/pfelement.js";
+// Import polyfills: startsWith
+import "./polyfills--pfe-modal.js";
 
-// StartsWith polyfill
-if (!String.prototype.startsWith) {
-  String.prototype.startsWith = function(searchString, position) {
-    return this.substr(position || 0, searchString.length) === searchString;
-  };
-}
+import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeModal extends PFElement {
   static get tag() {
@@ -94,8 +90,8 @@ class PfeModal extends PFElement {
   }
 
   _init() {
-    this.trigger = this.querySelector(`[slot="pfe-modal--trigger"]`);
-    this.header = this.querySelector(`[slot="pfe-modal--header"]`);
+    this.trigger = this.querySelector(`[slot="${this.tag}--trigger"]`);
+    this.header = this.querySelector(`[slot="${this.tag}--header"]`);
     this.body = [...this.querySelectorAll(`*:not([slot])`)];
 
     if (this.trigger) {

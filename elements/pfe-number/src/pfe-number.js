@@ -1,4 +1,7 @@
-import PFElement from "../pfelement/pfelement.js";
+// Import polyfills: isNaN
+import "./polyfills--pfe-number.js";
+
+import PFElement from "../../pfelement/dist/pfelement.js";
 import numeral from "numeral";
 
 // easy aliases for common format strings
@@ -14,10 +17,6 @@ const types = {
 // use thin spaces to separate thousands chunks
 // debugger;
 numeral.locales.en.delimiters.thousands = " ";
-
-// @IE11
-// non-mutating polyfill from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN#Polyfill
-const isNaN = Number.isNaN || (n => n !== null && (n != n || +n != n));
 
 class PfeNumber extends PFElement {
   static get tag() {

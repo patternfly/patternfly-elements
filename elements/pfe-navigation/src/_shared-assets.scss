@@ -2,40 +2,54 @@
 
 $overlay--BackgroundColor--fallback: rgba(37, 37, 37, 0.5);
 
-$trigger--FontSize--fallback:   #{map-get($pfe-vars, font-size--heading--zeta)};
-$trigger--FontWeight--fallback: #{map-get($pfe-vars, font-weight--light)};
-$trigger--Color--fallback: #{map-get($pfe-colors, text--on-dark)};
+$trigger--FontSize--fallback:   #{pfe-var(font-size--heading--epsilon)};
+$trigger--FontWeight--fallback: #{pfe-var(font-weight--light)};
+$trigger--Color--fallback: #{pfe-color(text--on-dark)};
 
 $LOCAL: navigation;
-$USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
+ // turn on automatic fallbacks for broadcasted variables
 
 // -- Typography
 %link-styles {
-    color: #{pfe-radio(color, ui-link)};
-    text-decoration: #{pfe-var(link, text-decoration)};
+    color: #{pfe-apply-broadcast(link)};
+    text-decoration: #{pfe-apply-broadcast(link-decoration)};
     &:visited {
-        color: #{pfe-radio(color, ui-link, visited)};
+        color: #{pfe-apply-broadcast(link--visited)};
     }
     &:hover {
-        color: #{pfe-radio(color, ui-link, hover)};
-        text-decoration: #{pfe-var(link, text-decoration, hover)};
+        color: #{pfe-apply-broadcast(link--hover)};
+        text-decoration: #{pfe-apply-broadcast(link-decoration--hover)};
     }
     &:focus {
         outline-offset: 1px;
         outline-style: dotted;
         outline-width: 1px;
-        outline-color: #{pfe-radio(color, ui-link, focus)};
-        color: #{pfe-radio(color, ui-link, focus)};
+        outline-color: #{pfe-apply-broadcast(link--focus)};
+        color: #{pfe-apply-broadcast(link--focus)};
     }
 }
 
 %trigger {
     font-family: pfe-var(font-family);
-    font-size:   pfe-local($cssvar: FontSize, $region: trigger, $fallback: #{$trigger--FontSize--fallback});
-    font-weight: pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback});
-    color:       pfe-local($cssvar: Color, $fallback: #{$trigger--Color--fallback});
+    font-size: #{pfe-local(
+            $cssvar: FontSize, 
+            $region: trigger, 
+            $fallback: #{$trigger--FontSize--fallback}
+        )} !important;
+    font-weight: #{pfe-local(
+            $cssvar: FontWeight,
+            $fallback: #{$trigger--FontWeight--fallback}
+        )};
+    color: #{pfe-local(
+            $cssvar: Color,
+            $fallback: #{$trigger--Color--fallback}
+        )};
+    z-index: 2;
+    line-height: 1.1;
 
-    white-space: nowrap;
+    @media screen and (min-width: 1200px) {
+        white-space: nowrap;
+    }
 
     margin: 0 !important;
 }

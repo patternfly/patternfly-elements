@@ -2,11 +2,17 @@
   "name": "@patternfly/pfe-navigation",
   "pfelement": {
     "className": "PfeNavigation",
-    "elementName": "pfe-navigation"
+    "elementName": "pfe-navigation",
+    "assets": [
+      "pfe-navigation--lightdom.*css",
+      "pfe-navigation--lightdom.*css.map",
+      "pfe-navigation--noscript.*css",
+      "pfe-navigation--noscript.*css.map"
+    ]
   },
-  "version": "1.0.0-prerelease.24",
+  "version": "1.0.0-prerelease.33",
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   },
   "description": "Navigation element for PatternFly Elements",
   "keywords": [
@@ -18,12 +24,11 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-navigation"
   },
-  "main": "pfe-navigation.js",
+  "main": "./dist/pfe-navigation.umd.js",
+  "module": "./dist/pfe-navigation.js",
+  "unpkg": "./dist/pfe-navigation.umd.min.js",
   "files": [
-    "pfe-navigation.*js",
-    "pfe-navigation.*js.map",
-    "pfe-navigation--lightdom.*css",
-    "pfe-navigation--lightdom.*css.map"
+    "dist"
   ],
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
@@ -37,13 +42,16 @@
     {
       "name": "castastrophe",
       "url": "https://www.github.com/castastrophe"
+    },
+    {
+      "name": "cd"
     }
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "1.0.0-prerelease.24",
-    "@patternfly/pfelement": "1.0.0-prerelease.24",
-    "@patternfly/pfe-icon": "1.0.0-prerelease.24"
+    "@patternfly/pfe-icon": "^1.0.0-prerelease.33",
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.33",
+    "@patternfly/pfelement": "^1.0.0-prerelease.31"
   },
   "generator-pfelement-version": "1.1.0"
 }

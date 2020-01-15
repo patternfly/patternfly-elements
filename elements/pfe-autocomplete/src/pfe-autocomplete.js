@@ -1,26 +1,4 @@
-/*
- * Copyright 2018 Red Hat, Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
-import PFElement from "../pfelement/pfelement.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 
 const KEYCODE = {
   ENTER: 13,
@@ -37,6 +15,10 @@ class PfeAutocomplete extends PFElement {
     return "pfe-autocomplete";
   }
 
+  get schemaUrl() {
+    return "pfe-autocomplete.json";
+  }
+
   get templateUrl() {
     return "pfe-autocomplete.html";
   }
@@ -48,12 +30,18 @@ class PfeAutocomplete extends PFElement {
   static get events() {
     return {
       search: `pfe-search-event`,
-      select: `pfe-option-selected`
+      select: `pfe-option-selected`,
+      slotchange, `slotchange`
     };
   }
 
   constructor() {
     super(PfeAutocomplete);
+
+    this._slotchangeHandler = this._slotchangeHandler.bind(this);
+
+    this._slot = this.shadowRoot.querySelector("slot");
+    this._slot.addEventListener("slotchange", this._slotchangeHandler);
   }
 
   connectedCallback() {
@@ -61,22 +49,7 @@ class PfeAutocomplete extends PFElement {
 
     this.loading = false;
     this.debounce = this.debounce || 300;
-
-    // input box
-    let slotNodes = this.shadowRoot.querySelector("slot").assignedNodes();
-    let slotElems = slotNodes.filter(n => n.nodeType === Node.ELEMENT_NODE);
-    this._input = slotElems[0];
-    this._input.addEventListener("input", this._inputChanged.bind(this));
-    this._input.addEventListener("blur", this._closeDroplist.bind(this));
-    this._input.setAttribute("role", "combobox");
-    this._input.setAttribute("aria-label", "Search");
-    this._input.setAttribute("aria-autocomplete", "both");
-    this._input.setAttribute("aria-haspopup", "true");
-    this._input.setAttribute("type", "search");
-    this._input.setAttribute("autocomplete", "off");
-    this._input.setAttribute("autocorrect", "off");
-    this._input.setAttribute("autocapitalize", "off");
-    this._input.setAttribute("spellcheck", "false");
+    this._ariaAnnounceTemplate = "There are ${numOptions} suggestions. Use the up and down arrows to browse.";
 
     // clear button
     this._clearBtn = this.shadowRoot.querySelector(".clear-search");
@@ -106,6 +79,7 @@ class PfeAutocomplete extends PFElement {
 
   disconnectedCallback() {
     this.removeEventListener("keyup", this._inputKeyUp);
+
     this.removeEventListener(
       PfeAutocomplete.events.search,
       this._closeDroplist
@@ -114,8 +88,15 @@ class PfeAutocomplete extends PFElement {
       PfeAutocomplete.events.select,
       this._optionSelected
     );
-    this._input.removeEventListener("input", this._inputChanged);
-    this._input.removeEventListener("blur", this._closeDroplist);
+    this._slot.removeEventListener(
+      PfeAutocomplete.events.slotchange,
+      this._slotchangeHandler
+    );
+    if (this._input) {
+      this._input.removeEventListener("input", this._inputChanged);
+      this._input.removeEventListener("blur", this._closeDroplist);
+    }
+
     this._clearBtn.removeEventListener("click", this._clear);
     this._searchBtn.removeEventListener("click", this._search);
   }
@@ -218,6 +199,49 @@ class PfeAutocomplete extends PFElement {
 
   set debounce(val) {
     this.setAttribute("debounce", val);
+  }
+
+  _slotchangeHandler() {
+    // input box
+    let slotNodes = this.shadowRoot.querySelector("slot").assignedNodes();
+    let slotElems = slotNodes.filter(n => n.nodeType === Node.ELEMENT_NODE);
+
+    if (slotElems.length === 0) {
+      console.error(
+        `${PfeAutocomplete.tag}: There must be a input tag in the light DOM`
+      );
+
+      return;
+    }
+
+    this._input = slotElems[0];
+
+    if (this._input.tagName.toLowerCase() !== "input") {
+      console.error(
+        `${PfeAutocomplete.tag}: The only child in the light DOM must be an input tag`
+      );
+
+      return;
+    }
+
+    this._input.addEventListener("input", this._inputChanged.bind(this));
+    this._input.addEventListener("blur", this._closeDroplist.bind(this));
+
+    this._input.setAttribute("role", "combobox");
+
+    if (!this._input.hasAttribute("aria-label")) {
+      this._input.setAttribute("aria-label", "Search");
+    }
+
+    this._input.setAttribute("aria-autocomplete", "both");
+    this._input.setAttribute("aria-haspopup", "true");
+    this._input.setAttribute("type", "search");
+    this._input.setAttribute("autocomplete", "off");
+    this._input.setAttribute("autocorrect", "off");
+    this._input.setAttribute("autocapitalize", "off");
+    this._input.setAttribute("spellcheck", "false");
+
+    this._dropdown._ariaAnnounceTemplate = this.getAttribute("aria-announce-template") || this._ariaAnnounceTemplate;
   }
 
   _inputChanged() {
@@ -440,8 +464,13 @@ class PfeSearchDroplist extends PFElement {
     this.reflow = "";
 
     let options = this.data;
+    let ariaAnnounceText = "";
 
-    this._ariaAnnounce.innerHTML = `There are ${options.length} suggestions. Use the up and down arrows to browse.`;
+    if (this._ariaAnnounceTemplate) {
+      ariaAnnounceText = this._ariaAnnounceTemplate.replace("${numOptions}", options.length);
+    }
+
+    this._ariaAnnounce.textContent = ariaAnnounceText;
     this._ariaAnnounce.setAttribute("aria-live", "polite");
 
     this._ul.innerHTML = `${options

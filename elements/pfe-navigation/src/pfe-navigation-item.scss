@@ -306,6 +306,7 @@ $variables: map-merge($variables, $nav-item-variables);
     display: flex;
     visibility: visible;
     width: 100%;
+    padding-right: 48px; // ensure gap between main menu links and utility links
   }
 
   :host([pfe-icon="web-mobile-menu"]:not([show_links])) &,

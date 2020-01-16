@@ -210,7 +210,7 @@ pfe-icon {
       @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false)) {
         flex: auto; //0 1 30%;
         margin-left: auto;
-        padding-left: 48px; // ensure gap between main menu links and utility links
+        // padding-left: 48px; // ensure gap between main menu links and utility links
     }
   }
 }

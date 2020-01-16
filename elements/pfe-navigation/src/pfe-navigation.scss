@@ -38,7 +38,7 @@ $nav-variables: (
 
   // Tray region
   tray: (
-    Padding: calc( #{pfe-var(container-padding)} * 4) // 64px
+    Padding: pfe-var(container-padding)
   ),
   
   // Logo

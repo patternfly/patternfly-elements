@@ -12,7 +12,7 @@ $nav-item-variables: (
   ),
   trigger: (
     FontSize: 16px,
-    Padding:  calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} * .5),
+    Padding:  calc(#{pfe-var(container-padding)} * .5),
     MaxWidth: 100%
   ),
   tray: (
@@ -36,7 +36,7 @@ $variables: map-merge($variables, $nav-item-variables);
     width: 100%;
   }
   @media screen and (min-width: pfe-breakpoint("sm-mobile", $map: false)) { 
-    --pfe-navigation__trigger--Padding: #{pfe-var(container-padding)} !important;
+    --pfe-navigation__trigger--Padding: #{pfe-var(container-padding)};
   }
 }
 
@@ -67,7 +67,7 @@ $variables: map-merge($variables, $nav-item-variables);
 :host([pfe-icon]) {
   --pfe-navigation--MinWidth: 50px;
   --pfe-navigation__trigger--FontSize: 12px;
-  --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-padding)} *.5);
+  --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} * .625);
   --pfe-navigation__trigger-icon--Visible: hidden;
   flex: auto;// 1 0 22%;
   width: auto;
@@ -84,6 +84,10 @@ $variables: map-merge($variables, $nav-item-variables);
   @media screen and (min-width: 1024px) {
     flex: auto;// 1 0 26%;
   }
+}
+
+:host(:not([pfe-icon])) {
+  --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} * .75);
 }
 
 // Hide the icon if there is no tray
@@ -129,31 +133,23 @@ $variables: map-merge($variables, $nav-item-variables);
     )};
   }
 
-  border-top:     #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderTopColor)};
-  border-right:   #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
-  border-bottom:  #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
-  border-left:    #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
-
-  background-color: #{pfe-local(BackgroundColor)};
-  color:            #{pfe-local(Color)};
-  
-  padding: 10px;//#{pfe-local(Padding)};
-  :host(:not([pfe-icon])) & {
-    padding: 12px ;//#{pfe-local(Padding)};
-  }
-  position: relative;
-  flex-grow: 1;
-  
-  display:         flex;
-  flex-direction:  column;
-  flex-wrap:       nowrap;
-  align-items:     center;
-  justify-content: center;
-
-  transition: all #{pfe-var(animation-timing)};
-
-  outline: none;
-  cursor: pointer;
+  border-top:         #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderTopColor)};
+  border-right:       #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
+  border-bottom:      #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
+  border-left:        #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
+  background-color:   #{pfe-local(BackgroundColor)};
+  color:              #{pfe-local(Color)};
+  padding:            #{pfe-local($cssvar: Padding, $region: trigger)}; 
+  position:           relative;
+  display:            flex;
+  flex-grow:          1;
+  flex-direction:     column;
+  flex-wrap:          nowrap;
+  align-items:        center;
+  justify-content:    center;
+  transition:         all #{pfe-var(animation-timing)};
+  outline:            none;
+  cursor:             pointer;
 
   &:hover {
     --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};

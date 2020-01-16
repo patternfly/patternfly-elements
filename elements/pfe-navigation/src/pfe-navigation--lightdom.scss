@@ -57,11 +57,6 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         flex-direction: column;
     }
 
-    // Override grid so that CTAs do not overlap.
-    //.pfe-navigation--footer:not(:empty) {
-    //    display: block !important;
-    //}
-
     @media screen and (min-width: #{pfe-breakpoint(lg)}) {
         .pfe-navigation-item__tray--container {
             margin: 0 auto;
@@ -381,9 +376,9 @@ pfe-navigation-item {
         }
     }
     &--footer:not(:empty) {
-        margin: 40px 0 10px !important;
+        margin:   calc(#{pfe-var(container-spacer, $fallback: 16px)} * 2) 0 10px !important;
         border-top: 1px solid lightgray;
-        padding: 40px 0 0;
+        padding:   calc(#{pfe-var(container-spacer, $fallback: 16px)} * 2) 0 0;
 
         >*:not(:last-child) {
             margin-bottom: 32px;
@@ -540,7 +535,7 @@ pfe-navigation-main [slot="trigger"] > a {
 
     @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false) )
                   and (max-width: pfe-breakpoint("xl", $max: true) ) {
-        font-size: 14px;
+        font-size: 13px;
     }  
 }
 

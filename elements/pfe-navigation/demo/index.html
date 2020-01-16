@@ -676,7 +676,7 @@
     document.addEventListener("pfe-navigation-item:open", function (event) {
       if (event.target && event.target.slot === "language") {
         const container = event.target.querySelector(".pfe-navigation-item__tray--container");
-        const newContent = "<p>Inject new content into the " + event.detail.slot + " slot.</p>";
+        const newContent = "<p>Inject new content into the " + event.detail.slot + " slot. Adding more words and text here, to show where the tray wraps.</p>";
         if (container) {
           if (event.target.expanded) {
             setTimeout(function () {

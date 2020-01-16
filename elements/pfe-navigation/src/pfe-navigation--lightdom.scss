@@ -447,11 +447,17 @@ pfe-navigation-item {
 // This class is added manually inside the tray on the light DOM content
 .pfe-navigation-item__tray--container {
     width: 100%;
-    @media (min-width: #{pfe-breakpoint(lg)}) {
-        max-width: #{pfe-local($cssvar: Width, $fallback: 992px)};
+
+    // stop using padding, start using max width at medium breakpoint
+    @media screen and (min-width: pfe-breakpoint(md)) {
+      padding: 0;
+      max-width: var(--pfe-navigation--Width);
     }
-    @media (min-width: #{pfe-breakpoint(xl)}) {
-        max-width: #{pfe-local($cssvar: Width, $fallback: 1140px)};
+    // Loop through the other breakpoints
+    @each $size in ("md", "lg", "xl") {
+      @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
+        --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+      }
     }
     input[type="text"] {
         padding: 5px 10px;

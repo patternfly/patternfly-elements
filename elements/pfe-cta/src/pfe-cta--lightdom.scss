@@ -171,3 +171,17 @@ $LOCAL: cta;
     }
   }
 }
+
+// Fallback styles for safari to read a border on focus
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    ::-webkit-full-page-media, _:future, :root,
+        a {
+          border: 1px solid transparent;
+        }
+        [pfe-priority] {
+        a:focus {
+            border-color: #{pfe-local($cssvar: BorderColor--focus, $region: inner)};
+            border-radius: 2px;
+        }
+    }
+}

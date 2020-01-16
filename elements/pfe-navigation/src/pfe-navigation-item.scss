@@ -220,14 +220,14 @@ $variables: map-merge($variables, $nav-item-variables);
     
   // Chevron styles for the navigation accordion on mobile
   &::after {
-    :host([is_nested].expanded:not([parent_hidden])) & {
-      @include pfe-chevron($state: open);
-    }
-
+    // closed:
     :host([is_nested]:not(.expanded):not([parent_hidden])) & {
-      @include pfe-chevron($state: closed);
+      @include pfe-chevron($state: closed, $position: 0px);
     }
-
+    // open:
+    :host([is_nested].expanded:not([parent_hidden])) & {
+      @include pfe-chevron($state: open, $position: 4px);
+    }
     :host([is_nested]:not([parent_hidden])) & {
       --pfe-navigation__trigger-icon--Visible: visible;
       border-color: #{pfe-local(Color)};
@@ -306,6 +306,7 @@ $variables: map-merge($variables, $nav-item-variables);
     display: flex;
     visibility: visible;
     width: 100%;
+    padding-right: 40px; // ensure gap between main menu links and utility links
   }
 
   :host([pfe-icon="web-mobile-menu"]:not([show_links])) &,
@@ -317,12 +318,13 @@ $variables: map-merge($variables, $nav-item-variables);
 
     background-color: #{pfe-local($cssvar: BackgroundColor, $region: tray)};
     color:            #{pfe-local($cssvar: Color, $region: tray)};
-
+    //mobile tray padding
     padding: #{pfe-local($cssvar: Padding, $region: tray)};
     width: 100%;
     max-height: calc(100vh - #{pfe-local(Height)});
     overflow-x: hidden;
     overflow-y: scroll;
+    padding-right: 9px; // OFFSET SCROLLBAR HACK
   }
 
   //  Styles for the nested elements
@@ -331,7 +333,8 @@ $variables: map-merge($variables, $nav-item-variables);
     @include pfe-accordion-props;
     @include pfe-box-sizing;
     @include pfe-panel-container;
-    padding: calc(#{pfe-local(Padding--vertical)} / 2)  calc(#{pfe-local(Padding--horizontal)} * .75);
+     //mobile tray padding
+    padding: calc(#{pfe-local(Padding--vertical)} / 2)  calc(#{pfe-local(Padding--horizontal)} * 1.75);
   }
 
   :host([is_nested].expanded:not([parent_hidden])) & {

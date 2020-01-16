@@ -18,6 +18,9 @@ $nav-variables: (
   MaxHeight: 72px,
   MobileMenuHeight: 60px,
 
+  // Nav content width
+  MaxWidth: calc(#{pfe-var(container-padding)} * 4), // 64px
+
   // Variables for the trigger icon
   icon: none,
 
@@ -31,6 +34,7 @@ $nav-variables: (
     FontSize: 16px,
     FontWeight: 100
   ),
+
 
   // Tray region
   tray: (
@@ -51,22 +55,6 @@ $variables: map-merge($variables, $nav-variables);
   // Reduce padding for print
   @media print {
     --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
-  }
-
-  // Increase horizontal padding for above mobile breakpoints
-  @media screen and (min-width: pfe-breakpoint(sm)) {
-    --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} * 2);
-  }
-
-  // Reduce horizontal padding at large breakpoint
-  @media screen and (min-width: pfe-breakpoint(lg)) {
-    --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} / 2);
-    --pfe-navigation__tray--Padding: calc(#{pfe-var(container-padding)} * 2);
-  }
-
-  // Increase horizontal padding at xl breakpoint
-  @media screen and (min-width: pfe-breakpoint(xl)) {
-    --pfe-navigation--Padding--horizontal: #{pfe-var(container-padding)};
   }
 
   display: block;
@@ -127,7 +115,7 @@ pfe-icon {
   }
   &__container {
     width: 100%;
-    max-width: #{pfe-local(Width)};
+    //max-width: #{pfe-local(Width)};
     margin: 0 auto;
     padding: 0 #{pfe-local(Padding--horizontal)};
 
@@ -136,15 +124,16 @@ pfe-icon {
     align-items: stretch;
     justify-content: flex-start;
 
+    // stop using padding, start using max width at medium breakpoint
+    @media screen and (min-width: pfe-breakpoint(md)) {
+      padding: 0;
+      max-width: var(--pfe-navigation--Width);
+    }
+   // Set the variable for use in the tray region too
     // Loop through the other breakpoints
-    @each $size in (md, lg) {
-      @media screen and (min-width: pfe-breakpoint(#{$size})) {
-        // Set the variable for use in the tray region too
-        --pfe-navigation--Width: calc(#{pfe-breakpoint(#{$size})});
-      }
-
-      @media screen and (min-width: #{pfe-breakpoint(xl)}) {
-        --pfe-navigation--Width: 1140px;
+    @each $size in ("md", "lg", "xl") {
+      @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
+        --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
       }
     }
   }
@@ -221,7 +210,7 @@ pfe-icon {
       @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false)) {
         flex: auto; //0 1 30%;
         margin-left: auto;
-        padding-left: 48px; // ensure gap between main menu links and utility links
+        // padding-left: 48px; // ensure gap between main menu links and utility links
     }
   }
 }

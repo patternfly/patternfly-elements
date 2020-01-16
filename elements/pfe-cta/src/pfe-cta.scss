@@ -87,27 +87,46 @@ $variables: (
   }
 }
 
+
 ::slotted(*:not(:disabled)) {
   cursor: pointer;
 }
 
-.pfe-cta--arrow {
-  display: #{pfe-local($cssvar: arrow--Display, $region: arrow)};
-  padding: #{pfe-local($cssvar: Padding, $region: arrow)};
-  fill:    #{pfe-local(Color)};
-  position: relative;
-  top:    .1rem;
-  width:  13px;
-  height: 13px;
-  transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
+$arrow-width: 30px;
+// ARROW 
+:host(:not([pfe-priority])) {
+  ::slotted(*) {
+    margin-right: ($arrow-width + 15px);
+    //border: orange solid 1px;
+    &::after {
+      // invisible home for the arrow to live
+      content: "___";
+      position: relative;
+      display: inline;
+      color: transparent;
+      margin-right: (($arrow-width + 8px) * -1);
+    }
+  }
+  .pfe-cta--arrow {
+    display: #{pfe-local($cssvar: arrow--Display, $region: arrow)};
+    padding: #{pfe-local($cssvar: Padding, $region: arrow)};
+    fill: #{pfe-local(Color)};
+    position: relative;
+    top: .1rem;
+    width: 13px;
+    height: 13px;
+    transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
+    width: 13px;
+    margin-left: ($arrow-width * -1);
+  }
 }
 
-  ::slotted(:hover) {
-    --pfe-cta__arrow--Padding:     0 0 0 .5rem;
+::slotted(:hover) {
+  --pfe-cta__arrow--Padding:     0 0 0 .5rem;
 
-    color: #{pfe-local(Color--hover)} !important;
-    text-decoration: #{pfe-local(TextDecoration--hover)} !important;
-  }
+  color: #{pfe-local(Color--hover)} !important;
+  text-decoration: #{pfe-local(TextDecoration--hover)} !important;
+}
 
 ::slotted(:focus) {
   outline: none !important;

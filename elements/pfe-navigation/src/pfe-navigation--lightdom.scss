@@ -451,13 +451,17 @@ pfe-navigation-item {
     // stop using padding, start using max width at medium breakpoint
     @media screen and (min-width: pfe-breakpoint(md)) {
       padding: 0;
-      max-width: var(--pfe-navigation--Width);
+      max-width: #{pfe-local(Width, $fallback: 1140px)};
     }
     // Loop through the other breakpoints
     @each $size in ("md", "lg", "xl") {
       @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
         --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
       }
+    }
+    @include browser-query(ie11) {
+        padding-top: 1.5em;
+        padding-bottom: 1.5em
     }
     input[type="text"] {
         padding: 5px 10px;

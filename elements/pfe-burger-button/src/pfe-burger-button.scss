@@ -1,0 +1,105 @@
+@import "../../pfe-sass/pfe-sass";
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+///
+// Burger icon
+///
+@mixin css-art--burger(
+  $color: #000,
+  $inner-selector: 'span',
+  $button-size: 60px,
+) {
+  $size-ratio: $button-size / 60px;
+  display: block;
+  width: $button-size;
+  height: #{$size-ratio * 36px};
+  overflow: hidden;
+
+  &:before,
+  &:after,
+  #{$inner-selector} {
+    content: '';
+    position: absolute;
+    box-sizing: border-box;
+    display: block;
+    border-top: 4px solid $color;
+    width: $button-size;
+    height: 0;
+    // sass-lint:disable indentation
+    transition:
+      opacity 0.25s,
+      transform 0.25s;
+    // sass-lint:enable indentation
+  }
+
+  &:before {
+    top: 0;
+    left: 0;
+    height: 0;
+    transform: none;
+    transform-origin: left top;
+  }
+
+  &:after {
+    bottom: 0;
+    left: 0;
+  }
+
+  #{$inner-selector} {
+    top: 50%;
+    left: #{$size-ratio * 12px};
+    transform: translate(0, -50%);
+    transform-origin: right top;
+  }
+}
+
+@mixin css-art--burger--close(
+  $color: #000,
+  $inner-selector: 'span',
+  $button-size: 60px,
+) {
+  $size-ratio: $button-size / 60px;
+  height: #{$size-ratio * 46px};
+
+  &:before {
+    transform: translate(#{$size-ratio * -6px}) rotate(-45deg);
+    transform-origin: right top;
+  }
+
+  &:after {
+    transform: translate(#{$size-ratio * -6px}) rotate(45deg);
+    transform-origin: right bottom;
+  }
+
+  #{$inner-selector} {
+    opacity: 0;
+    transform: rotate(45deg);
+    transform-origin: right top;
+  }
+}
+
+button {
+  position: relative;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.assistive-text {
+  @include screenreader-only;
+}
+
+.burger {
+  @include css-art--burger;
+}
+
+button[active] .burger {
+  @include css-art--burger--close;
+}

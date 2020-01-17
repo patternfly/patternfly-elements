@@ -1,0 +1,49 @@
+{
+  "name": "@patternfly/pfe-burger-button",
+  "description": "Burger element for PatternFly Elements",
+  "pfelement": {
+    "className": "PfeBurgerButton",
+    "elementName": "pfe-burger-button",
+    "files": {
+      "styles": "./src/pfe-burger-button.scss",
+      "template": "./src/pfe-burger-button.html",
+      "js": "./src/pfe-burger-button.js"
+    },
+    "assets": []
+  },
+  "version": "1.0.0-prerelease.31",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-burger-button"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/pfe-burger-button.umd.js",
+  "module": "./dist/pfe-burger-button.js",
+  "unpkg": "./dist/pfe-burger-button.umd.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-burger-button/test/"
+  },
+  "contributors": [
+    {
+      "name": "Wes Ruvalcaba"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@patternfly/pfe-sass": "1.0.0-prerelease.33",
+    "@patternfly/pfelement": "1.0.0-prerelease.31"
+  },
+  "generator-pfelement-version": "1.5.0"
+}

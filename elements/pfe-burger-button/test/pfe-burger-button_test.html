@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../dist/pfe-burger-button.js"></script>
+  </head>
+  <body>
+
+    <pfe-burger-button>
+      This is the element content.
+    </pfe-burger-button>
+
+    <script>
+      suite('<pfe-burger-button>', () => {
+        test('it should upgrade', () => {
+          assert.instanceOf(document.querySelector('pfe-burger-button'), customElements.get("pfe-burger-button", 'pfe-burger-button should be an instance of pfeBurgerButton'));
+        });
+
+        // you need to write more tests!!!
+
+      });
+    </script>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 module.exports = {
-  host: "localhost",
+  host: "bricknovo.com",
   port: "auto",
   open: true,
   startPath: "/examples",

@@ -92,7 +92,7 @@ $variables: (
 }
 
 .pfe-cta--arrow {
-    display: #{pfe-local($cssvar: Display, $region: arrow)};
+  display: #{pfe-local($cssvar: Display, $region: arrow)};
   padding: #{pfe-local($cssvar: Padding, $region: arrow)};
   fill:    #{pfe-local(Color)};
   position: relative;
@@ -100,6 +100,16 @@ $variables: (
   width:  13px;
   height: 13px;
   transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
+  @include browser-query(edge) {
+    top:    .25rem;
+    width:  18px;
+    height: 18px;
+  }
+  @include browser-query(ie11) {
+    top:    .35rem;
+    width:  16px;
+    height: 20px;
+  }
 }
 
 ::slotted(:hover) {
@@ -130,8 +140,6 @@ $variables: (
 :host([aria-disabled="true"]) ::slotted(*) {
   cursor: default !important;
 }
-
-
 
 :host(::after) {
   margin-left: #{pfe-local($cssvar: MarginLeft, $region: arrow)};
@@ -170,7 +178,8 @@ $variables: (
   }
 }
 
-:host([pfe-priority],[aria-disabled="true"]) {
+:host([pfe-priority]),
+:host([aria-disabled="true"]) {
   --pfe-cta--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
 
   .pfe-cta--wrapper {
@@ -191,11 +200,6 @@ $variables: (
 @each $theme in $THEMES {
   :host([on="#{$theme}"]) {
       @include pfe-set-broadcast-theme($theme);
-  }
-  @include browser-query(ie11) {
-      :host([on]:not([pfe-priority])) {
-          color: #{pfe-broadcasted(link)} !important;
-      }
   }
 }
 
@@ -218,6 +222,12 @@ $variables: (
 
   --pfe-cta--BackgroundColor--focus: #{$pfe-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
   --pfe-cta--Color--focus: #{pfe-apply-broadcast(link--focus)};
+
+  @include browser-query(ie11) {
+    ::slotted(*)::before {
+      border: none;
+    }
+  }
 }
 
 :host([pfe-priority="secondary"]) {
@@ -262,7 +272,6 @@ $variables: (
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-accent--text)};
   --pfe-cta--Color--focus:              #{pfe-color(ui-accent--text)};
 }
-
 
 /// ===========================================================================
 // COLOR ATTRIBUTE OVERRIDES
@@ -470,6 +479,6 @@ $variables: (
 
 /// MODALS
 /// ===========================================================================
-:host([slot="pfe-modal--trigger"]) {
-    padding: #{pfe-local($cssvar: Padding)} !important;
-}
+// :host([slot="pfe-modal--trigger"]) {
+//   padding: #{pfe-local($cssvar: Padding)} !important;
+// }

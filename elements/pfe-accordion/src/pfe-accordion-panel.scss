@@ -20,7 +20,7 @@ $LOCAL: accordion;
 
 .container {
   @include pfe-panel-container;
-  --pfe-accordion--PanelContainer--padding: 0 calc(#{pfe-local(PaddingBase)} * 3) #{pfe-local(PaddingBase)} calc(#{pfe-local(PaddingBase)} * 1.5);
+  --pfe-accordion--panel-container--Padding: 0 calc(#{pfe-local(base--Padding)} * 3) #{pfe-local(base--Padding)} calc(#{pfe-local(base--Padding)} * 1.5);
 }
 
 :host(:last-of-type[expanded]) {
@@ -53,6 +53,6 @@ $LOCAL: accordion;
 
 :host([pfe-disclosure="true"]) {
   .container {
-    --pfe-accordion--PanelContainer--padding: 0 calc(#{pfe-local(PaddingBase)} * 3) #{pfe-local(PaddingBase)} calc((#{pfe-local(PaddingBase)} * 1.5) - 4px);
+    --pfe-accordion--panel-container--padding: 0 calc(#{pfe-local(base--Padding)} * 3) #{pfe-local(base--Padding)} calc((#{pfe-local(base--Padding)} * 1.5) - 4px);
   }
 }

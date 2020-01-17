@@ -177,6 +177,7 @@ $variables: (
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    height: 100%;
   }
 }
 
@@ -462,7 +463,7 @@ $variables: (
   --pfe-cta--Color--hover:              #{pfe-color(ui-disabled--text)} !important;
 
   --pfe-cta--BackgroundColor--focus:    #{pfe-color(ui-disabled)};
-  --pfe-cta__inner--BorderColor--focus: #{$pfe-color--gray-500};
+  --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-disabled--focus)};
   --pfe-cta--BorderColor--focus:        transparent;
   --pfe-cta--Color--focus:              #{pfe-color(ui-disabled--text)} !important;
 }

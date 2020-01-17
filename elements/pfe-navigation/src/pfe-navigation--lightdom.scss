@@ -1,7 +1,9 @@
 @import "../../pfe-sass/pfe-sass";
 @import "_shared-assets.scss";
 @import "../../pfe-styles/src/layouts/_grid";
-
+$nav-light-dom-variables: (
+);
+$variables: map-merge($variables, $nav-light-dom-variables);
 
 #main-menu {
     background: transparent !important; // Remove this.
@@ -12,6 +14,8 @@
 
     pfe-navigation-item {
         [slot="trigger"] {
+            width: 100%;
+            max-width: 130px;
             font-size: 12px; 
             margin: 0;
 
@@ -43,15 +47,14 @@
             max-width: 1140px;
         }
     }
+    .pfe-navigation-item__tray--container {
+        padding: 1em 0;
+    }
 
     [slot="tray"] {
         width: 100%;
         min-height: 60px;
-    }
-
-    // Override grid so that CTAs do not overlap.
-    .pfe-navigation--footer:not(:empty) {
-        display: block !important;
+        flex-direction: column;
     }
 
     @media screen and (min-width: #{pfe-breakpoint(lg)}) {
@@ -167,23 +170,19 @@
         &[pfe-icon] {
             > .pfe-navigation-item__trigger {
                 > [slot="trigger"] {
-                    font-size: 14px;
+                    font-size: 12px;
+                    text-align: center;
                 }
             }            
         }
 
         [slot="tray"] {
             display: flex;
-            flex-grow: 1;
         }
 
         [slot="trigger"] {
             font-size: 16px;
             margin: 0;
-        }
-
-        pfe-icon {
-            margin-bottom: 10px;
         }
 
         .pfe-navigation-item__trigger[aria-expanded=true] {
@@ -216,7 +215,7 @@
         transition: none !important;
     }
 
-    @media screen and (max-width: 1023px) {
+    @media screen and (max-width: pfe-breakpoint("sm-desktop", $max: true, $map: false)) {
         pfe-navigation-item.expanded[pfe-icon=web-mobile-menu]:not([has_tray]) {
             background-color: #{pfe-color(surface--lightest)};
         }
@@ -242,7 +241,6 @@
 
     .pfe-navigation-item__trigger {
         --pfe-navigation__trigger-icon--Visible: hidden;
-        text-align: center;
 
         &:hover {
             --pfe-navigation__trigger-icon--Visible: visible;
@@ -266,6 +264,9 @@
     pfe-navigation-item:not([parent_hidden])[is_nested].expanded .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0;
     }
+    .pfe-navigation__logo {
+        margin-right: 20px; // Account for collapsed padding-right: 20px;
+    }
 }
 
 pfe-navigation [slot="logo"] {
@@ -282,6 +283,13 @@ pfe-navigation [slot="logo"] {
 
 // Turn off internal link outline
 pfe-navigation-item {
+    [slot="trigger"] {
+        margin: .25em 0 0 0!important;
+    }
+    // Utility links.
+    pfe-icon + [slot="trigger"] > a {
+        font-size: 12px;
+    }
     [slot="trigger"] > a {
         outline: none;
         text-decoration: none;
@@ -368,9 +376,9 @@ pfe-navigation-item {
         }
     }
     &--footer:not(:empty) {
-        margin: 40px 0 !important;
+        margin:   calc(#{pfe-var(container-spacer, $fallback: 16px)} * 2) 0 10px !important;
         border-top: 1px solid lightgray;
-        padding: 40px 0 0;
+        padding:   calc(#{pfe-var(container-spacer, $fallback: 16px)} * 2) 0 0;
 
         >*:not(:last-child) {
             margin-bottom: 32px;
@@ -434,9 +442,21 @@ pfe-navigation-item {
 // This class is added manually inside the tray on the light DOM content
 .pfe-navigation-item__tray--container {
     width: 100%;
-    @media (min-width: #{pfe-breakpoint(xl)}) {
-        max-width: #{pfe-local($cssvar: Width, $fallback: 1140px)};
-        margin: 0 auto;
+
+    // stop using padding, start using max width at medium breakpoint
+    @media screen and (min-width: pfe-breakpoint(md)) {
+      padding: 0;
+      max-width: #{pfe-local(Width, $fallback: 1140px)};
+    }
+    // Loop through the other breakpoints
+    @each $size in ("md", "lg", "xl") {
+      @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
+        --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+      }
+    }
+    @include browser-query(ie11) {
+        padding-top: 1.5em;
+        padding-bottom: 1.5em
     }
     input[type="text"] {
         padding: 5px 10px;
@@ -494,5 +514,41 @@ pfe-navigation-item {
             @extend %link-styles;
             font-size: 16px;
         }
+    }
+}
+
+// Set collapsed trigger links to always appear white.
+pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [slot="trigger"] > a,
+pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [slot="trigger"] > a.active {
+    color: #fff !important;
+}
+
+// Override trigger font-size on older browsers.
+[slot="trigger"],
+[slot="trigger"] > a {
+    font-size: 12px;
+}
+
+pfe-navigation-main [slot="trigger"],
+pfe-navigation-main [slot="trigger"] > a {
+    font-size: $trigger--FontSize--fallback;
+
+    @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false) )
+                  and (max-width: pfe-breakpoint("xl", $max: true) ) {
+        font-size: 13px;
+    }  
+}
+
+// Apply flexbox styles to older browsers that don't support ShadowDOM.
+[slot="tray"] {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+@media screen and (max-width: pfe-breakpoint("sm-desktop", $max: true, $map: false) ) {
+    .pfe-navigation__main .pfe-navigation-item__tray {
+        position: relative;
+        top: 0 !important;
     }
 }

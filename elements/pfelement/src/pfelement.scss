@@ -1,8 +1,13 @@
+@import "../../pfe-sass/pfe-sass";
+$LOCAL: pfelement;
+
 body {
   --pfe-reveal-duration: 0.1618s;
   --pfe-reveal-delay: 2s;
 
   transition: opacity var(--pfe-reveal-duration) ease-in-out;
+  
+  @include pfe-set-broadcast-theme(light);
 }
 
 body[unresolved] {

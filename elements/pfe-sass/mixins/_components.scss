@@ -193,7 +193,7 @@
 /// Accordion chevrons
 /// ===========================================================================
 
-@mixin pfe-chevron($state: open, $position: after, $size: .4em, $offset: $size) {
+@mixin pfe-chevron($state: open, $position: after, $size: .5em, $offset: $size) {
 
   content: "";
   position: absolute;

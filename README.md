@@ -9,11 +9,6 @@
 
 [PatternFly Elements][pfe-home] is a work-in-progress collection of flexible and lightweight Web Components based on the Unified Design Kit. The repo also includes a generator to build new components. PatternFly Elements are:
 
-- Lightweight: small file size, minimal boilerplate, no "framework-like" features.
-- Universal: write once, use everywhere. PatternFly Elements work in React, Vue, Angular, vanilla JS, anywhere HTML elements are used. [Please see the support chart for more details](https://patternfly.github.io/patternfly-elements/getting-started/component-status/)
-- Themable: Make overrides as needed through the theme layer, data attributes or CSS variables
-- The result of these principles is that you can plug one set of components into a wide variety of applications; bringing UX consistency and developer familiarity to any web project.
-
 - **Lightweight**: small file size, minimal boilerplate, no "framework-like" features.
 - **Universal**: write once, use everywhere. PatternFly Elements work in React, Vue, Angular, vanilla JS, anywhere HTML elements are used.
 - **Themable**: Make overrides as needed via attributes or CSS variables

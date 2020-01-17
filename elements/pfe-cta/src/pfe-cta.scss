@@ -9,7 +9,6 @@ $pfe-cta--Color--fallback: #003366;
 $variables: (
   Padding:      .6rem 0,
   BorderRadius: 0,
-  
   BackgroundColor:        transparent,
   BackgroundColor--hover: transparent,
   BackgroundColor--focus: transparent,
@@ -55,7 +54,6 @@ $variables: (
   background-color: #{pfe-local(BackgroundColor)};
   border-radius:    #{pfe-local(BorderRadius)};
   border:           #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
-  padding:          #{pfe-local($cssvar: Padding)} !important;
 }
 
 ::slotted(button),
@@ -65,14 +63,13 @@ $variables: (
 
 ::slotted(*) {
   display: inline;
-
+  padding:         #{pfe-local($cssvar: Padding)} !important;
   color:           #{pfe-local(Color, $pfe-cta--Color--fallback)} !important;
   font-family:     #{pfe-local($cssvar: FontFamily, $fallback: #{pfe-var(font-family--heading)})};
   font-size:       #{pfe-local($cssvar: FontSize, $fallback: #{pfe-var(font-size)})};
   font-weight:     #{pfe-local(FontWeight)};
   line-height:     #{pfe-local($cssvar: LineHeight, $fallback: #{pfe-var(line-height)})};
   text-decoration: #{pfe-local(TextDecoration)} !important;
-  
   &::before {  // inner border on priority CTAs
     content: "";
 
@@ -86,7 +83,6 @@ $variables: (
 
     border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-local($cssvar: BorderColor, $region: inner)};
     border-radius: 2px;
-    
     outline: none;
   }
 }
@@ -108,7 +104,7 @@ $variables: (
 
   ::slotted(:hover) {
     --pfe-cta__arrow--Padding:     0 0 0 .5rem;
-    
+
     color: #{pfe-local(Color--hover)} !important;
     text-decoration: #{pfe-local(TextDecoration--hover)} !important;
   }
@@ -127,13 +123,14 @@ $variables: (
   }
 }
 
+
+
 :host(::after) {
   margin-left: #{pfe-local($cssvar: MarginLeft, $region: arrow)};
 }
 
 :host(:hover) {
   --pfe-cta__arrow--Padding:     0 0 0 .5rem;
-  
   background-color: #{pfe-local(BackgroundColor--hover)};
   border-color:     #{pfe-local(BorderColor--hover)};
 
@@ -223,7 +220,7 @@ $variables: (
 
   --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lighter)};
   --pfe-cta--BorderColor--focus:        #{pfe-color(ui-complement)};
-  --pfe-cta__inner--BorderColor--focus: var(--pfe-broadcasted--text, #{pfe-color(ui-complement)});
+  --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-complement)};
   --pfe-cta--Color--focus:              #{pfe-color(ui-complement)};
 }
 
@@ -335,10 +332,10 @@ $variables: (
 /// ===========================================================================
 /// COLOR=BASE
 
-// :host(:not([pfe-priority])[pfe-color="complement"]) {
-//   --pfe-cta--Color:        #{pfe-color(ui-base)};
-//   --pfe-cta--Color--hover: #{pfe-color(ui-base--hover)};
-// }
+:host(:not([pfe-priority])[pfe-color="complement"]) {
+  --pfe-cta--Color:        #{pfe-color(ui-base)};
+  --pfe-cta--Color--hover: #{pfe-color(ui-base--hover)};
+}
 
 :host([pfe-priority="primary"][pfe-color="base"]) {
   --pfe-cta--BackgroundColor:           #{pfe-color(ui-base)};
@@ -439,4 +436,11 @@ $variables: (
   --pfe-cta--BorderColor--focus:         #{pfe-color(surface--border)};
   --pfe-cta__inner--BorderColor--focus:  #{pfe-local(BorderColor--focus)};
   --pfe-cta--TextDecoration--hover:      #{pfe-broadcasted(link-decoration--hover)};
+}
+
+/// ===========================================================================
+/// MODALS
+/// ===========================================================================
+:host([slot="pfe-modal--trigger"]) {
+    padding: #{pfe-local($cssvar: Padding)} !important;
 }

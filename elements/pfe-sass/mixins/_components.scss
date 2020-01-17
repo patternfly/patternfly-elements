@@ -17,7 +17,7 @@
       BorderLeftWidth:     #{pfe-var(surface--border-width--heavy)},
       Color:               #{pfe-apply-broadcast(text)},
       TextAlign:           left,
-      PaddingBase:         #{pfe-var(container-spacer)}
+      base--Padding:         #{pfe-var(container-spacer)}
     );
 
     @if $theme == dark { // Dark theme
@@ -122,7 +122,7 @@
 
   $variables: (
     BorderBottomWidth: 0,
-    Trigger--padding: #{pfe-local(PaddingBase)} #{$chevron--spacing} #{pfe-local(PaddingBase)} calc(#{pfe-local(PaddingBase)} * 1.5) !important
+    Trigger--padding: #{pfe-local(base--Padding)} #{$chevron--spacing} #{pfe-local(base--Padding)} calc(#{pfe-local(base--Padding)} * 1.5) !important
   );
 
   @include pfe-set-local($variables);
@@ -186,17 +186,18 @@
   @include pfe-set-local( ( BoxShadow: none ) );
 
   @extend %container;
-  padding: #{pfe-local(PanelContainer--padding)};
+  padding: #{pfe-local(panel-container--Padding)};
 }
 
 /// ===========================================================================
 /// Accordion chevrons
 /// ===========================================================================
 
-@mixin pfe-chevron($state: open, $position: after, $size: .4em) {
+@mixin pfe-chevron($state: open, $position: after, $size: .4em, $position: $size) {
+
   content: "";
   position: absolute;
-  top: calc(#{pfe-var(container-spacer)} + #{$size});
+  top: calc(#{pfe-var(container-spacer)} + #{$position});
   display: block;
   border-style: #{pfe-var(surface--border-style)};
   height: #{$size};
@@ -206,7 +207,7 @@
     border-width: .1em .1em 0 0;
     border-bottom: 0;
     transform: rotate(-45deg);
-    top: calc(#{pfe-var(container-spacer)} + .6em);
+    top: calc(#{pfe-var(container-spacer)} + #{$position});
     @if $position == before {
       left: calc(#{pfe-var(container-spacer)} * 1.5);
       top: calc(#{pfe-var(container-spacer)} + .25em);

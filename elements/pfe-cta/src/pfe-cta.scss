@@ -96,15 +96,18 @@ $arrow-width: 30px;
 // ARROW 
 :host(:not([pfe-priority])) {
   ::slotted(*) {
-    margin-right: ($arrow-width + 15px);
+    //margin-right: ($arrow-width + 15px);
     //border: orange solid 1px;
     &::after {
       // invisible home for the arrow to live
       content: "___";
+      font-size: 15px;
       position: relative;
       display: inline;
       color: transparent;
-      margin-right: (($arrow-width + 8px) * -1);
+      //margin-right: (($arrow-width + 8px) * -1);
+
+      //border: orange solid 1px;
     }
   }
   .pfe-cta--arrow {
@@ -113,11 +116,16 @@ $arrow-width: 30px;
     fill: #{pfe-local(Color)};
     position: relative;
     top: .1rem;
-    width: 13px;
+
     height: 13px;
     transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
-    width: 13px;
     margin-left: ($arrow-width * -1);
+
+    width: 17px;
+    margin-left: -16px;
+    padding: 0;
+    box-sizing: border-box;
+    //border: blue solid 1px;
   }
 }
 

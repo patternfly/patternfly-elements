@@ -12,6 +12,7 @@ Tag: [v1.0.0-prerelease.33](https://github.com/patternfly/patternfly-elements/re
 
 - [5ad398](https://github.com/patternfly/patternfly-elements/commit/5ad3983b9ead73cf2db30fd0bc52aada334c6961) Disclosure accordion variant
 - [3ccec6](https://github.com/patternfly/patternfly-elements/commit/3ccec6c82efc52aae67b74072b6c0b8ff1b47f23) Update pfe-cta to include broadcast variables for all variants [#659](https://github.com/patternfly/patternfly-elements/issues/658)
+- [](https://github.com/patternfly/patternfly-elements/commit/) chore: Pull polyfills out into separate files for easier parsing/reporting
 
 ## Prerelease 32 ( 2019-12-05 )
 
@@ -26,11 +27,11 @@ Tag: [v1.0.0-prerelease.32](https://github.com/patternfly/patternfly-elements/re
 Tag: [v1.0.0-prerelease.31](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.31)
 
 - [cdcdddf](https://github.com/patternfly/patternfly-elements/commit/cdcdddfa6858953727a3b6d7dcb9add7a61adf93) fix: Bring back pfe-cta hover animation effect [#624](https://github.com/patternfly/patternfly-elements/pull/624)
-- [32b138e](https://github.com/patternfly/patternfly-elements/commit/32b138e64223031fd70ed2e525ee98cd5bb7f954) Update Travis tests
+- [32b138e](https://github.com/patternfly/patternfly-elements/commit/32b138e64223031fd70ed2e525ee98cd5bb7f954) fix: Update Travis tests
 - [67fa1fb](https://github.com/patternfly/patternfly-elements/commit/67fa1fb3f29ec3e48a6d0767b6c08eb008e56655) fix: pfe-navigation mobile login/language links working [#620](https://github.com/patternfly/patternfly-elements/pull/620)
 - [4ebcbcc](https://github.com/patternfly/patternfly-elements/commit/4ebcbcccaf50247c27a242a944dd4a5a654aeb80) fix: pfe-navigation add styles for when JavaScript does not load [#600](https://github.com/patternfly/patternfly-elements/pull/600))
 - [27ef3ec](https://github.com/patternfly/patternfly-elements/commit/27ef3ec08371ec32c9a9376904163ef48148affa) feat: Updating broadcast and how variables are applied [#392](https://github.com/patternfly/patternfly-elements/pull/392)
-- [a78ea1f]() Speed up Travis tests  [#621](https://github.com/patternfly/patternfly-elements/issues/621)
+- [a78ea1f](https://github.com/patternfly/patternfly-elements/commit/a78ea1fc5e114856ede20e459d35875697410b56) fix: Speed up Travis tests  [#621](https://github.com/patternfly/patternfly-elements/issues/621)
 - [f144b6f](https://github.com/patternfly/patternfly-elements/commit/f144b6f33dd6a8b615ac2a63cec6b29f3bf70d32) feat: pfe-select component [#553](https://github.com/patternfly/patternfly-elements/pull/553)
 
 

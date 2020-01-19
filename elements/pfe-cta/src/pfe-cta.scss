@@ -180,9 +180,7 @@ $variables: (
     }
 
     @include browser-query(ie11) {
-      top:    .35rem;
       width:  16px;
-      height: 20px;
     }
     
   }

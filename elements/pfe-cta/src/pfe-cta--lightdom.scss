@@ -1,6 +1,4 @@
-@import "../../pfe-sass/pfe-sass";
-$LOCAL: cta;
-
+// ShadyCSS fallback styles
 pfe-cta a {
   color: inherit !important;
   :not([pfe-variant="wind"]) > &:hover,
@@ -10,12 +8,4 @@ pfe-cta a {
   &:focus {
     outline: none !important;
   }
-}
-
-.pfe-cta.pfe-cta--arrow {
-  position: absolute;
-  top:    .25rem;
-  right:  0;
-  height: 18px;
-  width:  18px;
 }

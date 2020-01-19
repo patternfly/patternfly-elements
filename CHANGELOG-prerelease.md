@@ -13,9 +13,6 @@ Tag: [v1.0.0-prerelease.35](https://github.com/patternfly/patternfly-elements/re
 Tag: [v1.0.0-prerelease.34](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.34)
 
 - [c2833e3](https://github.com/patternfly/patternfly-elements/commit/c2833e3ef9caa87edbbc56fa22471525d453b7d3) feat: pfe-badge (#625)
-- [9d9e001](https://github.com/patternfly/patternfly-elements/commit/9d9e00169fe949f78c31211c5d0a4bf3af1dbe9e) fix: Restore clickability of pfe-cta links
-- [90855bb](https://github.com/patternfly/patternfly-elements/commit/90855bbc01b800de3280691ee67e61887fd7fe4d) chore: Update license from 2019 to 2020
-- [f20063d](https://github.com/patternfly/patternfly-elements/commit/f20063d0aa390e02039bc2ac40739c33fd881d96) chore: Pull polyfills out into separate files for easier parsing/reporting
 
 ## Prerelease 33 ( 2019-12-18 )
 

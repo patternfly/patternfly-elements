@@ -218,11 +218,11 @@ $variables: map-merge($variables, $nav-item-variables);
   &::after {
     // closed:
     :host([is_nested]:not(.expanded):not([parent_hidden])) & {
-      @include pfe-chevron($state: closed, $position: 0px);
+      @include pfe-chevron($state: closed, $offset: 0px);
     }
     // open:
     :host([is_nested].expanded:not([parent_hidden])) & {
-      @include pfe-chevron($state: open, $position: 4px);
+      @include pfe-chevron($state: open, $offset: 4px);
     }
     :host([is_nested]:not([parent_hidden])) & {
       --pfe-navigation__trigger-icon--Visible: visible;

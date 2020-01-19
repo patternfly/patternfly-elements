@@ -1,6 +1,20 @@
-// @import "../../pfe-sass/pfe-sass";
-// $LOCAL: cta;
+@import "../../pfe-sass/pfe-sass";
+$LOCAL: cta;
 
 a {
   color: inherit !important;
+  :not([pfe-variant="wind"]) > &:hover,
+  :not([pfe-variant="wind"]) > &:focus {
+    text-decoration: none !important;
+  }
+  &:focus {
+    outline: none !important;
+  }
+}
+
+@include browser-query(edge) {
+  .pfe-cta.pfe-cta--arrow {
+    position: absolute;
+    right: 0;
+  }
 }

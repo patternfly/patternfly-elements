@@ -1,7 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 $LOCAL: cta;
 
-a {
+pfe-cta a {
   color: inherit !important;
   :not([pfe-variant="wind"]) > &:hover,
   :not([pfe-variant="wind"]) > &:focus {
@@ -12,9 +12,10 @@ a {
   }
 }
 
-@include browser-query(edge) {
-  .pfe-cta.pfe-cta--arrow {
-    position: absolute;
-    right: 0;
-  }
+.pfe-cta.pfe-cta--arrow {
+  position: absolute;
+  top:    .25rem;
+  right:  0;
+  height: 18px;
+  width:  18px;
 }

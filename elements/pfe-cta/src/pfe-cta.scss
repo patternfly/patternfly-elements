@@ -163,10 +163,11 @@ $variables: (
     padding: #{pfe-local($cssvar: Padding, $region: arrow)};
     fill:    #{pfe-local(Color)};
     position: relative;
-    top:    .1rem;
+    top:    .3em;
     width:  #{pfe-local($cssvar: size, $region: arrow)};
     height: #{pfe-local($cssvar: size, $region: arrow)};
     transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
+    float: right;
 
     margin-left: calc((#{pfe-local($cssvar: size, $region: arrow)} + #{pfe-local($cssvar: MarginLeft, $region: arrow)} + .375rem) * -1);
 
@@ -176,13 +177,6 @@ $variables: (
 
     :host(.focus-within) & {
       fill: #{pfe-local(Color--focus)};
-    }
-
-    @include browser-query(edge) {
-      --pfe-cta__arrow--size: 18px;
-      top:    .25rem;
-      // width:  18px;
-      // height: 18px;
     }
 
     @include browser-query(ie11) {

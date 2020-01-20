@@ -96,7 +96,8 @@ $variables: (
   padding: #{pfe-local($cssvar: Padding, $region: arrow)};
   fill:    #{pfe-local(Color)};
   position: relative;
-  top:    .1rem;
+  vertical-align: middle;
+  top:    -1px;
   width:  13px;
   height: 13px;
   transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};

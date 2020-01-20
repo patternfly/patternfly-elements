@@ -76,7 +76,7 @@ button[aria-expanded="true"] {
 
 :host([pfe-disclosure="true"]) {
   button {
-    --pfe-accordion--Trigger--padding: #{pfe-local(PaddingBase)} calc(#{pfe-local(PaddingBase)} * 1.5) #{pfe-local(PaddingBase)} calc((#{pfe-local(PaddingBase)} * 3) + 2px) !important;
+    --pfe-accordion--Trigger--padding: #{pfe-local(base--Padding)} calc(#{pfe-local(base--Padding)} * 1.5) #{pfe-local(base--Padding)} calc((#{pfe-local(base--Padding)} * 3) + 2px) !important;
     @include browser-query(ie11) {
       padding: 16px 24px 16px 47px;
       border-right-color: #{pfe-color(surface--border)};

@@ -1,10 +1,17 @@
+## Prerelease 35 ( 2020-01-17 )
+
+Tag: [v1.0.0-prerelease.35](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.35)
+
+- [9d9e001](https://github.com/patternfly/patternfly-elements/commit/9d9e00169fe949f78c31211c5d0a4bf3af1dbe9e) fix: Restore clickability of pfe-cta links
+- [90855bb](https://github.com/patternfly/patternfly-elements/commit/90855bbc01b800de3280691ee67e61887fd7fe4d) chore: Update license from 2019 to 2020
+- [88b26ed](https://github.com/patternfly/patternfly-elements/commit/88b26ed90616651a994890454172be5b4e78db7d) fix: pfe-navigation: Trigger link color, font-size, logo min-width, spacing (#631)
+- [ea25cd0](https://github.com/patternfly/patternfly-elements/commit/ea25cd0c87fa853784ffc15329796bda49d192f1) Change direction of disclosure carets (#674) (https://github.com/patternfly/patternfly-elements/issues/662)
+
 ## Prerelease 34 ( 2019-12-20 )
 
 Tag: [v1.0.0-prerelease.34](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.34)
 
 - [c2833e3](https://github.com/patternfly/patternfly-elements/commit/c2833e3ef9caa87edbbc56fa22471525d453b7d3) feat: pfe-badge (#625)
-- [9d9e001](https://github.com/patternfly/patternfly-elements/commit/9d9e00169fe949f78c31211c5d0a4bf3af1dbe9e) fix: Restore clickability of pfe-cta links
-- [](https://github.com/patternfly/patternfly-elements/commit/) chore: Update license from 2019 to 2020
 
 ## Prerelease 33 ( 2019-12-18 )
 

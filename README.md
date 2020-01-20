@@ -7,7 +7,7 @@
 3. [Creating components][creating]
 4. [Theming components][theming]
 
-[PatternFly Elements][pfe-home] is a collection of flexible and lightweight [Web Components][wc-org], and the tools to build them. PatternFly Elements are:
+[PatternFly Elements][pfe-home] is a work-in-progress collection of flexible and lightweight Web Components based on the Unified Design Kit. The repo also includes a generator to build new components. PatternFly Elements are:
 
 - **Lightweight**: small file size, minimal boilerplate, no "framework-like" features.
 - **Universal**: write once, use everywhere. PatternFly Elements work in React, Vue, Angular, vanilla JS, anywhere HTML elements are used.

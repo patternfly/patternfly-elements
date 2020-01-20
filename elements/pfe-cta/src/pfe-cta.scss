@@ -98,8 +98,8 @@ $variables: (
   position: relative;
   vertical-align: middle;
   top:    -1px;
-  width:  13px;
-  height: 13px;
+  width: 0.9em;
+  height: 0.9em;
   transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
 }
 

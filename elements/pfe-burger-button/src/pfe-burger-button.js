@@ -28,11 +28,11 @@ class PfeBurgerButton extends PFElement {
     const button = this.shadowRoot.querySelector('button');
     if (button !== null) {
       button.addEventListener('click', () => {
-        if (button.hasAttribute('active')) {
-          button.removeAttribute('active');
+        if (button.hasAttribute('pfe-active')) {
+          button.removeAttribute('pfe-active');
         }
         else {
-          button.setAttribute('active', 'true');
+          button.setAttribute('pfe-active', 'true');
         }
       });
     }

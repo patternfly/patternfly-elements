@@ -19,7 +19,17 @@
           assert.instanceOf(document.querySelector('pfe-burger-button'), customElements.get("pfe-burger-button", 'pfe-burger-button should be an instance of pfeBurgerButton'));
         });
 
-        // you need to write more tests!!!
+        test('it should get active attribute when clicked', () => {
+          const element = document.querySelector('pfe-burger-button');
+          element.button.click();
+          assert.isTrue(element.hasAttribute('pfe-active'));
+        });
+
+        test('it should lose active attribute when clicked', () => {
+          const element = document.querySelector('pfe-burger-button');
+          element.button.click();
+          assert.isNotTrue(element.hasAttribute('pfe-active'));
+        });
 
       });
     </script>

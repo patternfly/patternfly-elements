@@ -1,3 +1,9 @@
+## Prerelease 36 ( TBD )
+
+Tag: [v1.0.0-prerelease.36](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.36)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: update accent color to red
+
 ## Prerelease 35 ( 2020-01-17 )
 
 Tag: [v1.0.0-prerelease.35](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.35)

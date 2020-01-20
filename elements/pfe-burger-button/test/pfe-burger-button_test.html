@@ -21,14 +21,16 @@
 
         test('it should get active attribute when clicked', () => {
           const element = document.querySelector('pfe-burger-button');
-          element.button.click();
-          assert.isTrue(element.hasAttribute('pfe-active'));
+          const shadowButton = element.shadowRoot.querySelector('button');
+          shadowButton.click();
+          assert.isTrue(shadowButton.hasAttribute('pfe-active'));
         });
 
         test('it should lose active attribute when clicked', () => {
           const element = document.querySelector('pfe-burger-button');
-          element.button.click();
-          assert.isNotTrue(element.hasAttribute('pfe-active'));
+          const shadowButton = element.shadowRoot.querySelector('button');
+          shadowButton.click();
+          assert.isNotTrue(shadowButton.hasAttribute('pfe-active'));
         });
 
       });

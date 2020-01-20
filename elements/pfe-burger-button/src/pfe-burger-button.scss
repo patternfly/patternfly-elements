@@ -8,7 +8,7 @@
 }
 
 ///
-// Burger icon
+// Burger icon mixin
 ///
 @mixin css-art--burger(
   $color: #000,
@@ -60,6 +60,9 @@
   }
 }
 
+///
+// Mixin to convert a burger to a close icon
+///
 @mixin css-art--burger--close(
   $color: #000,
   $inner-selector: 'span',

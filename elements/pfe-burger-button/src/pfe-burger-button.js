@@ -25,14 +25,15 @@ class PfeBurgerButton extends PFElement {
     super.connectedCallback();
 
     // Add click listener to burger button
-    const button = this.shadowRoot.querySelector('button');
-    if (button !== null) {
-      button.addEventListener('click', () => {
-        if (button.hasAttribute('pfe-active')) {
-          button.removeAttribute('pfe-active');
+    const $button = this.shadowRoot.querySelector('button');
+    if ($button !== null) {
+      $button.addEventListener('click', () => {
+        // Toggle an active attribute on click
+        if ($button.hasAttribute('pfe-active')) {
+          $button.removeAttribute('pfe-active');
         }
         else {
-          button.setAttribute('pfe-active', 'true');
+          $button.setAttribute('pfe-active', 'true');
         }
       });
     }

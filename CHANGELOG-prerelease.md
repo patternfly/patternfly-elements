@@ -13,6 +13,7 @@ Tag: [v1.0.0-prerelease.35](https://github.com/patternfly/patternfly-elements/re
 - [90855bb](https://github.com/patternfly/patternfly-elements/commit/90855bbc01b800de3280691ee67e61887fd7fe4d) chore: Update license from 2019 to 2020
 - [88b26ed](https://github.com/patternfly/patternfly-elements/commit/88b26ed90616651a994890454172be5b4e78db7d) fix: pfe-navigation: Trigger link color, font-size, logo min-width, spacing (#631)
 - [ea25cd0](https://github.com/patternfly/patternfly-elements/commit/ea25cd0c87fa853784ffc15329796bda49d192f1) Change direction of disclosure carets (#674) (https://github.com/patternfly/patternfly-elements/issues/662)
+- [](https://github.com/patternfly/patternfly-elements/commit/)  feat: Add emit events to pfelement base class
 
 ## Prerelease 34 ( 2019-12-20 )
 

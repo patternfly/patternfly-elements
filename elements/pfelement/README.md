@@ -125,6 +125,44 @@ If a theme value is defined at any point of this flow, an `on` attribute will be
 
 The `context_update` function will use much the same logic except it updates the theme context for the component calling the function and triggers an update for all of it's pfelement children.
 
+### Log
+
+Prints a message to the console log in a standardized format when debugging is turned on: `[pfe-band]: This is my console message.`.  To invoke this inside an element, you can add `this.log("This is my console message");` to your JS file.
+
+### Emit event
+
+This allows you to dispatch an event in a standardized way.  The function accepts the name of the event and an object containing details about that event.  That object supports the following configuration:
+
+| Event setting | Default value |
+| --- | --- |
+| bubbles | true |
+| cancelable | true |
+| composed | false | 
+| detail | {} |
+
+
+Elements should contain an events object which lists all the event names:
+
+```
+static get events() {
+  return {
+    change: `${this.tag}:change`
+  };
+}
+```
+
+And then reference that object in the following way to invoke those events:
+
+```
+this.emitEvent(
+  PfeAccordion.events.change, {
+    detail: {
+      expanded: !this.expanded
+    }
+  }
+);
+```
+
 ## Test
 
     npm run test

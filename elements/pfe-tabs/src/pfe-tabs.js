@@ -39,6 +39,13 @@ class PfeTabs extends PFElement {
     return ["vertical", "selected-index", "pfe-variant", "on"];
   }
 
+  static get events() {
+    return {
+      hiddenTab: `${this.tag}:hidden-tab`,
+      shownTab: `${this.tag}:shown-tab`
+    };
+  }
+
   get selectedIndex() {
     return this.getAttribute("selected-index");
   }
@@ -290,14 +297,11 @@ class PfeTabs extends PFElement {
     if (this.selected && this.selected !== newTab) {
       newTabSelected = true;
 
-      this.dispatchEvent(
-        new CustomEvent(`${PfeTabs.tag}:hidden-tab`, {
-          bubbles: true,
-          detail: {
-            tab: this.selected
-          }
-        })
-      );
+      this.emitEvent(PfeTabs.events.hiddenTab, {
+        detail: {
+          tab: this.selected
+        }
+      });
     }
 
     newTab.selected = true;
@@ -314,14 +318,11 @@ class PfeTabs extends PFElement {
     this.selected = newTab;
 
     if (newTabSelected) {
-      this.dispatchEvent(
-        new CustomEvent(`${PfeTabs.tag}:shown-tab`, {
-          bubbles: true,
-          detail: {
-            tab: this.selected
-          }
-        })
-      );
+      this.emitEvent(PfeTabs.events.shownTab, {
+        detail: {
+          tab: this.selected
+        }
+      });
     }
   }
 

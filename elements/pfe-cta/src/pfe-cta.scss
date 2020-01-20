@@ -162,6 +162,11 @@ $variables: (
   }
 }
 
+// Set svg to none so it won't render in nav on iOS versions 12>
+:host([pfe-priority]) svg { 
+  display:none; 
+}
+
 
 :host([pfe-priority]) {
   --pfe-cta--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);

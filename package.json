@@ -122,7 +122,6 @@
     "yo": "^1.8.5"
   },
   "dependencies": {
-    "@patternfly/generator-pfelement": "^1.5.0",
     "gh-pages": "^2.1.1"
   },
   "private": true

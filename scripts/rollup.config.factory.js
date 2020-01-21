@@ -4,8 +4,36 @@ import commonjs from "rollup-plugin-commonjs";
 import { uglify } from "rollup-plugin-uglify";
 import { terser } from "rollup-plugin-terser";
 import replace from "rollup-plugin-re";
+import { readdirSync } from "fs";
 
 const importRegex = /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
+
+const elementPackages = readdirSync("../../elements", { withFileTypes: true })
+  .filter(dirent => dirent.isDirectory())
+  .map(dirent => require(`../../elements/${dirent.name}/package.json`));
+
+/**
+ * This function map moduleIds to global variable names.  Sometimes the module
+ * id is an absolute directory path to the JS file, like
+ * "/home/user/projects/patternfly-elements/elements/pfelement/dist/pfelement.js"
+ * but fortunately, Node's require module resolution algorithm seems to support
+ * ".." after a filename, which allows us jump up to the package.json, and from
+ * there we can grab the pfelement.className property.  That className doubles
+ * as the global variable name.
+ *
+ * Globals are only used in the UMD build.  UMD makes each element available as
+ * an AMD module, a CJS module, and a global variable.  In the latter case,
+ * this function determines what to name the global variable.
+ */
+function globals(moduleId) {
+  // u don't think this work like it be but it do
+  const pkg = require(`${moduleId}/../../package.json`);
+  if (pkg.pfelement) {
+    return pkg.pfelement.className || [];
+  } else {
+    return [];
+  }
+}
 
 const babelSettings = {
   presets: [["env", { modules: false }]],
@@ -38,6 +66,7 @@ function umdConfig({ elementName, className } = {}) {
     output: {
       file: `${paths.compiled}/${elementName}.umd.js`,
       format: "umd",
+      globals,
       sourcemap: true,
       name: className
     },
@@ -94,6 +123,7 @@ function umdMinConfig({ elementName, className } = {}) {
       file: `${paths.compiled}/${elementName}.umd.min.js`,
       format: "umd",
       sourcemap: true,
+      globals,
       name: className
     },
     plugins: [

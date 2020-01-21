@@ -4,7 +4,7 @@
     "className": "PfeAvatar",
     "elementName": "pfe-avatar"
   },
-  "version": "1.0.0-prerelease.32",
+  "version": "1.0.0-prerelease.35",
   "description": "Avatar for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -36,8 +36,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.32",
-    "@patternfly/pfelement": "^1.0.0-prerelease.31"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.35",
+    "@patternfly/pfelement": "^1.0.0-prerelease.35"
   },
   "generator-pfelement-version": "0.6.8",
   "bugs": {

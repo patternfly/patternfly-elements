@@ -1,49 +1,7 @@
+// Import polyfills: findIndex
+import "./polyfills--pfe-accordion.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
-
-// Polyfill: findIndex -- https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
-if (!Array.prototype.findIndex) {
-  Object.defineProperty(Array.prototype, "findIndex", {
-    value: function(predicate) {
-      // 1. Let O be ? ToObject(this value).
-      if (this == null) {
-        throw new TypeError('"this" is null or not defined');
-      }
-
-      var o = Object(this);
-
-      // 2. Let len be ? ToLength(? Get(O, "length")).
-      var len = o.length >>> 0;
-
-      // 3. If IsCallable(predicate) is false, throw a TypeError exception.
-      if (typeof predicate !== "function") {
-        throw new TypeError("predicate must be a function");
-      }
-
-      // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
-      var thisArg = arguments[1];
-
-      // 5. Let k be 0.
-      var k = 0;
-
-      // 6. Repeat, while k < len
-      while (k < len) {
-        // a. Let Pk be ! ToString(k).
-        // b. Let kValue be ? Get(O, Pk).
-        // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
-        // d. If testResult is true, return k.
-        var kValue = o[k];
-        if (predicate.call(thisArg, kValue, k, o)) {
-          return k;
-        }
-        // e. Increase k by 1.
-        k++;
-      }
-
-      // 7. Return -1.
-      return -1;
-    }
-  });
-}
 
 function generateId() {
   return Math.random()
@@ -74,9 +32,19 @@ class PfeAccordion extends PFElement {
     };
   }
 
+  static get events() {
+    return {
+      change: `${this.tag}:change`
+    };
+  }
+
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Container;
+  }
+
+  static get observedAttributes() {
+    return ["pfe-disclosure"]
   }
 
   constructor() {
@@ -92,7 +60,7 @@ class PfeAccordion extends PFElement {
     this.setAttribute("role", "tablist");
     this.setAttribute("defined", "");
 
-    this.addEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
+    this.addEventListener(PfeAccordion.events.change, this._changeHandler);
     this.addEventListener("keydown", this._keydownHandler);
 
     Promise.all([
@@ -108,13 +76,23 @@ class PfeAccordion extends PFElement {
   }
 
   disconnectedCallback() {
-    this.removeEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
+    this.removeEventListener(PfeAccordion.events.change, this._changeHandler);
     this.removeEventListener("keydown", this._keydownHandler);
     this._observer.disconnect();
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
+
+    if (attr === "pfe-disclosure") {
+      if (newVal === "true") {
+        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "true"));
+        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "true"));
+      } else {
+        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "false"));
+        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "false"));
+      }
+    }
   }
 
   toggle(index) {
@@ -192,6 +170,20 @@ class PfeAccordion extends PFElement {
       header.setAttribute("aria-controls", panel.pfeId);
       panel.setAttribute("aria-labelledby", header.pfeId);
     });
+
+    if (headers.length === 1) {
+      if (this.hasAttribute("pfe-disclosure") && this.getAttribute("pfe-disclosure") === "false") {
+        return;
+      }
+
+      this.setAttribute("pfe-disclosure", "true");
+    }
+
+    if (headers.length > 1) {
+      if (this.hasAttribute("pfe-disclosure")) {
+        this.removeAttribute("pfe-disclosure");
+      }
+    }
   }
 
   _changeHandler(evt) {
@@ -219,7 +211,9 @@ class PfeAccordion extends PFElement {
 
   _expandPanel(panel) {
     if (!panel) {
-      console.error(`${PfeAccordion.tag}: Trying to expand a panel that doesn't exist`);
+      console.error(
+        `${PfeAccordion.tag}: Trying to expand a panel that doesn't exist`
+      );
       return;
     }
 
@@ -239,7 +233,9 @@ class PfeAccordion extends PFElement {
 
   _collapsePanel(panel) {
     if (!panel) {
-      console.error(`${PfeAccordion.tag}: Trying to collapse a panel that doesn't exist`);
+      console.error(
+        `${PfeAccordion.tag}: Trying to collapse a panel that doesn't exist`
+      );
       return;
     }
 
@@ -480,9 +476,7 @@ class PfeAccordionHeader extends PFElement {
 
     if (!isHeaderTag) {
       console.warn(
-        `${
-          PfeAccordionHeader.tag
-        }: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`
+        `${PfeAccordionHeader.tag}: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`
       );
     }
 
@@ -492,12 +486,9 @@ class PfeAccordionHeader extends PFElement {
   }
 
   _clickHandler(event) {
-    this.dispatchEvent(
-      new CustomEvent(`${PfeAccordion.tag}:change`, {
-        detail: { expanded: !this.expanded },
-        bubbles: true
-      })
-    );
+    this.emitEvent(PfeAccordion.events.change, {
+      detail: { expanded: !this.expanded }
+    });
   }
 }
 

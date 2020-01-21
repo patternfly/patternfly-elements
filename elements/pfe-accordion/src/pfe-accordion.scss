@@ -25,3 +25,7 @@ $LOCAL: accordion;
     @include pfe-accordion-variables($theme: #{$context});
   }
 }
+
+:host([pfe-disclosure="true"]) {
+  @include pfe-accordion-variables($variant: disclosure);
+}

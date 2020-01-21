@@ -4,7 +4,7 @@
     "className": "PfeIcon",
     "elementName": "pfe-icon"
   },
-  "version": "1.0.0-prerelease.29",
+  "version": "1.0.0-prerelease.35",
   "publishConfig": {
     "access": "public"
   },
@@ -34,8 +34,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.28",
-    "@patternfly/pfelement": "^1.0.0-prerelease.28"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.35",
+    "@patternfly/pfelement": "^1.0.0-prerelease.35"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

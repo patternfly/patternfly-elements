@@ -20,6 +20,7 @@ $LOCAL: accordion;
 
 .container {
   @include pfe-panel-container;
+  --pfe-accordion--panel-container--Padding: 0 calc(#{pfe-local(base--Padding)} * 3) #{pfe-local(base--Padding)} calc(#{pfe-local(base--Padding)} * 1.5);
 }
 
 :host(:last-of-type[expanded]) {
@@ -38,6 +39,7 @@ $LOCAL: accordion;
   @include browser-query(ie11) {
     border-top-width: 0;
     border-left-color: #{pfe-color(ui-base)};
+    border-right-color: #{pfe-color(surface--border)};
   }
 }
 
@@ -46,5 +48,11 @@ $LOCAL: accordion;
   :host([on="#{$context}"].animating){
     @include pfe-accordion-variables($state: expanded, $theme: #{$context});
     @include pfe-panel-variables($theme: #{$context});
+  }
+}
+
+:host([pfe-disclosure="true"]) {
+  .container {
+    --pfe-accordion--panel-container--padding: 0 calc(#{pfe-local(base--Padding)} * 3) #{pfe-local(base--Padding)} calc((#{pfe-local(base--Padding)} * 1.5) - 4px);
   }
 }

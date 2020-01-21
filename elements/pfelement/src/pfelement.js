@@ -357,6 +357,7 @@ class PFElement extends HTMLElement {
     this[name] = value;
   }
 
+  // @TODO This is a duplicate function to cssVariable above, combine them
   static var(name, element = document.body) {
     return window
       .getComputedStyle(element)
@@ -381,6 +382,20 @@ class PFElement extends HTMLElement {
 
   log(...msgs) {
     PFElement.log(`[${this.tag}]`, ...msgs);
+  }
+
+  emitEvent(
+    name,
+    { bubbles = true, cancelable = false, composed = false, detail = {} } = {}
+  ) {
+    this.dispatchEvent(
+      new CustomEvent(name, {
+        bubbles,
+        cancelable,
+        composed,
+        detail
+      })
+    );
   }
 }
 

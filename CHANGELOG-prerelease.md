@@ -1,3 +1,12 @@
+## Prerelease 36 ( TBD )
+
+Tag: [v1.0.0-prerelease.36](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.36)
+
+- [082467](https://github.com/patternfly/patternfly-elements/commit/08246701a3de80ea0539facce1f1338de4316be0) fix: arrow from rendering on nav priority cta's when on iOS 12>
+- [886be52](https://github.com/patternfly/patternfly-elements/commit/886be5222f6020d904d26a54f3a3332dfc907cc2) feat: update accent color to red
+- [5511404](https://github.com/patternfly/patternfly-elements/commit/55114047ab4e9e324e12a52cb9f8bf85cbe56940)  feat: Add emit events to pfelement base class
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-cta add support for disabled button
+
 ## Prerelease 35 ( 2020-01-17 )
 
 Tag: [v1.0.0-prerelease.35](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.35)
@@ -6,7 +15,6 @@ Tag: [v1.0.0-prerelease.35](https://github.com/patternfly/patternfly-elements/re
 - [90855bb](https://github.com/patternfly/patternfly-elements/commit/90855bbc01b800de3280691ee67e61887fd7fe4d) chore: Update license from 2019 to 2020
 - [88b26ed](https://github.com/patternfly/patternfly-elements/commit/88b26ed90616651a994890454172be5b4e78db7d) fix: pfe-navigation: Trigger link color, font-size, logo min-width, spacing (#631)
 - [ea25cd0](https://github.com/patternfly/patternfly-elements/commit/ea25cd0c87fa853784ffc15329796bda49d192f1) Change direction of disclosure carets (#674) (https://github.com/patternfly/patternfly-elements/issues/662)
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-cta add support for disabled button
 
 ## Prerelease 34 ( 2019-12-20 )
 

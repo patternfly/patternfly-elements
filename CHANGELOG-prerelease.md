@@ -1,9 +1,9 @@
-## Prerelease 36 ( TBD )
+## Prerelease 36 ( 2020-01-20 )
 
 Tag: [v1.0.0-prerelease.36](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.36)
 
 - [082467](https://github.com/patternfly/patternfly-elements/commit/08246701a3de80ea0539facce1f1338de4316be0) fix: arrow from rendering on nav priority cta's when on iOS 12>
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: update accent color to red
+- [36ceb1](https://github.com/patternfly/patternfly-elements/commit/36ceb13f31548dfb703bd812d8524844668c1df2) feat: update accent color to red
 
 ## Prerelease 35 ( 2020-01-17 )
 

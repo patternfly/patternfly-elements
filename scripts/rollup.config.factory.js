@@ -5,6 +5,7 @@ import { uglify } from "rollup-plugin-uglify";
 import { terser } from "rollup-plugin-terser";
 import replace from "rollup-plugin-re";
 import { readdirSync } from "fs";
+import { get } from "lodash";
 
 const importRegex = /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
 
@@ -13,25 +14,33 @@ const elementPackages = readdirSync("../../elements", { withFileTypes: true })
   .map(dirent => require(`../../elements/${dirent.name}/package.json`));
 
 /**
- * This function map moduleIds to global variable names.  Sometimes the module
- * id is an absolute directory path to the JS file, like
+ * This function map moduleIds to global variable names.  This is used when the
+ * element currently being built imports another element (commonly pfelement),
+ * so rollup needs to know what global variable PFElement uses.
+ *
+ * Sometimes the moduleId is an absolute directory path to the JS file, like
  * "/home/user/projects/patternfly-elements/elements/pfelement/dist/pfelement.js"
  * but fortunately, Node's require module resolution algorithm seems to support
  * ".." after a filename, which allows us jump up to the package.json, and from
  * there we can grab the pfelement.className property.  That className doubles
  * as the global variable name.
  *
- * Globals are only used in the UMD build.  UMD makes each element available as
- * an AMD module, a CJS module, and a global variable.  In the latter case,
- * this function determines what to name the global variable.
+ * Note: global variables are _only_ used in the UMD build.  UMD makes each
+ * element available as an AMD module, a CJS module, and a global variable.  In
+ * the latter case, this function determines what to name the global variable.
  */
 function globals(moduleId) {
-  // u don't think this work like it be but it do
-  const pkg = require(`${moduleId}/../../package.json`);
-  if (pkg.pfelement) {
-    return pkg.pfelement.className || [];
+  const isFilepath = moduleId.includes("/");
+
+  if (isFilepath) {
+    // if it's a filepath, look up the pfelement className
+
+    // u don't think this work like it be but it do
+    const pkg = require(`${moduleId}/../../package.json`);
+    return get(pkg, "pfelement.className");
   } else {
-    return [];
+    // if it's not a filepath, it's probably already a className, so just return it
+    return moduleId;
   }
 }
 

@@ -9,10 +9,6 @@ import { get } from "lodash";
 
 const importRegex = /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
 
-const elementPackages = readdirSync("../../elements", { withFileTypes: true })
-  .filter(dirent => dirent.isDirectory())
-  .map(dirent => require(`../../elements/${dirent.name}/package.json`));
-
 /**
  * This function map moduleIds to global variable names.  This is used when the
  * element currently being built imports another element (commonly pfelement),

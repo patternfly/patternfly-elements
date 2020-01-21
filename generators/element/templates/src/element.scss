@@ -1,0 +1,41 @@
+<% if (sassLibraryLocation) { %>// Please see the pfe-sass README for guidance on using these tools
+@import "<%= sassLibraryLocation %>";
+<% } %>
+
+$LOCAL: <%= _.trimStart(elementName, "pfe-") %>;
+
+:host {
+  // Example local variable, using BEM format
+  // --<%= elementName %>--Property: value;
+
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}<% if (attributes.length > 0) { %>
+
+//-- Custom styles applied by attributes
+<%_ for(let i = 0; i < attributes.length; i++) { %>
+// @each $option in () {
+//   :host([<% if (isPfelement) { %>pfe-<% } %><%= attributes[i] %>="#{$option}"]) {
+//     // Add styles here
+//   }
+}<% } %><% } _%>
+
+<%_ if (slots.length > 0) { %>
+//-- Custom styles applied to slot
+<%_ for(let i = 0; i < slots.length; i++) { %>
+::slotted([slot="<%= elementName %>--<%= slots[i] %>"]) {
+  // Add styles here
+}
+<% } } %>
+
+<% if (slots.length > 0) { %>.<%= elementName %> {
+  //-- Custom styles applied to slot's shadow element
+  <%_ for(let i = 0; i < slots.length; i++) { _%>
+  &__<%= slots[i] %> {
+    // Add styles here
+  }
+}
+<% } } _%>

@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "<%= readmeName %>",
+    "description": "<%= description %>",
+    "type": "object",
+    "tag": "<%= elementName %>",
+    "class": "<%= elementClassName %>",
+    "category": "<%= template_type %>",
+    "properties": {
+      "slots": {
+        "title": "Slots",
+        "description": "Definition of the supported slots",
+        "type": "object",
+        "properties": {
+          "default": {
+            "title": "Default slot",
+            "type": "array",
+            "namedSlot": false,
+            "items": {
+              "oneOf": [{
+                "$ref": "raw"
+              }]
+            }            
+          }<% for(let i = 0; i < slots.length; i++) { %>,
+          "<%= slots[i] %>": {
+            "title": "<%= _.capitalize(slots[i]) %>",
+            "type": "array",
+            "namedSlot": true,
+            "items": {
+              "title": "<%= _.capitalize(slots[i]) %> item",
+              "oneOf": [{
+                "$ref": "raw"
+              }]
+            }
+          }<% } %>
+        },
+        "required": [ "default" ]
+      },
+      "attributes": {
+        "title": "Attributes",
+        "type": "object",
+        "properties": {<% for(let i = 0; i < attributes.length; i++) { %>
+          "<%= attributes[i] %>": {
+            "title": "<%= _.capitalize(attributes[i]) %>",
+            "type": "string",
+            "enum": [],
+            "default": "",
+            "prefixed": <% if (isPfelement) { %>true<% } else { %>false<% } %>
+          }<% if(attributes.length > 1 && i < attributes.length - 1) { %>, <% } } %>
+        }<% if(attributes.length > 1) { %>,
+        "required": [ "<%= attributes[0] %>" ]<% } %>
+      }
+    },
+    "required": [ "slots", "attributes" ],
+    "additionalProperties": false
+  }
+  

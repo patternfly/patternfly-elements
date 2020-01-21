@@ -7,7 +7,22 @@ $trigger--FontWeight--fallback: #{pfe-var(font-weight--light)};
 $trigger--Color--fallback: #{pfe-color(text--on-dark)};
 
 $LOCAL: navigation;
- // turn on automatic fallbacks for broadcasted variables
+$variables: (
+
+// Supplemental breakpoints,   
+// Usage:  @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { 
+
+//  grid-breakpoint--xs:           0,
+    sm-mobile:                     500px,
+//  grid-breakpoint--sm:           576px,
+    lg-mobile:                     640px,
+//  grid-breakpoint--md:           768px,
+//  grid-breakpoint--lg:           992px,
+    sm-desktop:                    1024px,
+//  grid-breakpoint--xl:           1200px,
+);
+
+// turn on automatic fallbacks for broadcasted variables
 
 // -- Typography
 %link-styles {
@@ -46,10 +61,21 @@ $LOCAL: navigation;
         )};
     z-index: 2;
     line-height: 1.1;
-
-    @media screen and (min-width: 1200px) {
-        white-space: nowrap;
-    }
-
     margin: 0 !important;
+    max-width: 100%; // added
+    text-align: center;
+    // max-width: #{pfe-local($cssvar: MaxWidth, $region: trigger, $fallback: 100%)};
+
+    @media screen and (min-width: pfe-breakpoint(xs) ) {
+        // --pfe-navigation__trigger--MaxWidth: 100%; // added
+        max-width: 100%;
+    }
+    @media screen and (min-width: pfe-breakpoint(sm-desktop, $map: false) ) {
+        // --pfe-navigation__trigger--MaxWidth: 100px; // added
+        max-width: 100px;
+    }
+    @media screen and (min-width: pfe-breakpoint(xl) ) {
+        // --pfe-navigation__trigger--MaxWidth: 190px; // added
+        max-width: 190px;
+    }
 }

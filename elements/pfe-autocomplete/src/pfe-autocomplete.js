@@ -1,25 +1,3 @@
-/*
- * Copyright 2018 Red Hat, Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 const KEYCODE = {
@@ -47,6 +25,14 @@ class PfeAutocomplete extends PFElement {
 
   get styleUrl() {
     return "pfe-autocomplete.scss";
+  }
+
+  static get events() {
+    return {
+      search: `pfe-search-event`,
+      select: `pfe-option-selected`,
+      slotchange: `slotchange`
+    };
   }
 
   constructor() {
@@ -81,19 +67,31 @@ class PfeAutocomplete extends PFElement {
     this.addEventListener("keyup", this._inputKeyUp.bind(this));
 
     // these two events, fire search
-    this.addEventListener("pfe-search-event", this._closeDroplist.bind(this));
     this.addEventListener(
-      "pfe-option-selected",
+      PfeAutocomplete.events.search,
+      this._closeDroplist.bind(this)
+    );
+    this.addEventListener(
+      PfeAutocomplete.events.select,
       this._optionSelected.bind(this)
     );
   }
 
   disconnectedCallback() {
     this.removeEventListener("keyup", this._inputKeyUp);
-    this.removeEventListener("pfe-search-event", this._closeDroplist);
-    this.removeEventListener("pfe-option-selected", this._optionSelected);
-    this._slot.removeEventListener("slotchange", this._slotchangeHandler);
 
+    this.removeEventListener(
+      PfeAutocomplete.events.search,
+      this._closeDroplist
+    );
+    this.removeEventListener(
+      PfeAutocomplete.events.select,
+      this._optionSelected
+    );
+    this._slot.removeEventListener(
+      PfeAutocomplete.events.slotchange,
+      this._slotchangeHandler
+    );
     if (this._input) {
       this._input.removeEventListener("input", this._inputChanged);
       this._input.removeEventListener("blur", this._closeDroplist);
@@ -303,13 +301,10 @@ class PfeAutocomplete extends PFElement {
   }
 
   _doSearch(searchQuery) {
-    this.dispatchEvent(
-      new CustomEvent("pfe-search-event", {
-        detail: { searchValue: searchQuery },
-        bubbles: true,
-        composed: true
-      })
-    );
+    this.emitEvent(PfeAutocomplete.events.search, {
+      detail: { searchValue: searchQuery },
+      composed: true
+    });
     this._reset();
     this.selectedValue = searchQuery;
   }
@@ -458,13 +453,10 @@ class PfeSearchDroplist extends PFElement {
 
   _optionSelected(e) {
     if (e.target.tagName === "LI") {
-      this.dispatchEvent(
-        new CustomEvent("pfe-option-selected", {
-          detail: { optionValue: e.target.innerText },
-          bubbles: true,
-          composed: true
-        })
-      );
+      this.emitEvent(PfeAutocomplete.events.select, {
+        detail: { optionValue: e.target.innerText },
+        composed: true
+      });
     }
   }
 

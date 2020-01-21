@@ -64,9 +64,9 @@ $pfe-colors: (
   ui-complement--text--focus--on-dark:         $pfe-color--text,
 
   // Set of accent colors
-  ui-accent:                          $pfelements--orange,
-  ui-accent--hover:                   darken($pfelements--orange, 20%),
-  ui-accent--focus:                   darken($pfelements--orange, 20%),
+  ui-accent:                          $pfelements--red,
+  ui-accent--hover:                   darken($pfelements--red, 20%),
+  ui-accent--focus:                   darken($pfelements--red, 20%),
   ui-accent--text:                    $pfe-color--text--on-dark,
   ui-accent--text--hover:             $pfe-color--text--on-dark,
   ui-accent--text--focus:             $pfe-color--text--on-dark,
@@ -115,7 +115,7 @@ $pfe-colors: (
   surface--complement--theme: saturated,
 
   // Accent group
-  surface--accent:        $pfelements--orange,
+  surface--accent:        $pfelements--red,
   surface--accent--theme: saturated,
 
   // Palette of Border Colors

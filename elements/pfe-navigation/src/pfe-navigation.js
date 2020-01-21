@@ -1,6 +1,6 @@
 // -- @TODO Set icons to hide if they all fail to load, else set them to preserve space
 
-// Import polyfills
+// Import polyfills: filter, matches, closest, includes, path
 import "./polyfills--pfe-navigation.js";
 
 import PFElement from "../../pfelement/dist/pfelement.js";
@@ -59,6 +59,8 @@ class PfeNavigation extends PFElement {
     this._resizeHandler = this._resizeHandler.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
     this._outsideListener = this._outsideListener.bind(this);
+    this._menuItemClickHandler = this._menuItemClickHandler.bind(this);
+    this._overlayClickHandler = this._overlayClickHandler.bind(this);
     this._observer = new MutationObserver(this._init);
 
     // Capture shadow elements
@@ -74,6 +76,14 @@ class PfeNavigation extends PFElement {
     // Initialize active navigation item to empty array
     this._activeNavigationItems = [];
     this.overlay = false;
+
+    // make sure we close all of the nav items and hide the overlay when
+    // the mobile menu button is closed
+    this._menuItem.shadowRoot.querySelector(".pfe-navigation-item__trigger").addEventListener("click", this._menuItemClickHandler);
+
+    // make sure we close all of the nav items and hide the overlay
+    // when it's clicked
+    this._overlay.addEventListener("click", this._overlayClickHandler);
   }
 
   connectedCallback() {
@@ -121,6 +131,9 @@ class PfeNavigation extends PFElement {
       window.removeEventListener("scroll", this._stickyHandler);
     }
 
+    this._menuItem.shadowRoot.querySelector(".pfe-navigation-item__trigger").removeEventListener("click", this._menuItemClickHandler);
+    this._overlay.removeEventListener("click", this._overlayClickHandler);
+
     this._observer.disconnect();
   }
 
@@ -135,10 +148,14 @@ class PfeNavigation extends PFElement {
         item.expanded = false;
         this._activeNavigationItems = this._activeNavigationItems.filter(i => i !== item);
       } else if (item.expanded && item.parent && item.parent.visible) {
-        item.parent.expanded = true; // Ensure the parent is open
-        // If the parent item doesn't exist in the active array, add it
-        if (!this._activeNavigationItems.includes(item.parent)) {
-          this._activeNavigationItems.push(item.parent);
+        // if the parent is the mobile menu item and the size of the window is within
+        // the main breakpoint, make sure that the mobile menu is expanded
+        if (item.parent === this._menuItem && window.innerWidth <= this.breakpoints.main[1]) {
+          item.parent.expanded = true; // Ensure the parent is open
+          // If the parent item doesn't exist in the active array, add it
+          if (!this._activeNavigationItems.includes(item.parent)) {
+            this._activeNavigationItems.push(item.parent);
+          }
         }
       }
     });
@@ -160,10 +177,9 @@ class PfeNavigation extends PFElement {
     // Check if the clicked element contains or is contained by the navigation element
     let isChild = event.target.closest("pfe-navigation");
     let insideWrapper = event.target.tagName.includes("-") ? event.target.shadowRoot.querySelector("pfe-navigation") : null;
-    // Check if the clicked element is the overlay object
-    let isOverlay = event && event.path && event.path.length > 0 && event.path[0] === this._overlay;
+
     // Check states to determine if the navigation items should close
-    if (isOverlay || (!isSelf && !(isChild || insideWrapper))) {
+    if (!isSelf && !(isChild || insideWrapper)) {
       this._activeNavigationItems.map(item => item.close());
     }
   }
@@ -280,6 +296,18 @@ class PfeNavigation extends PFElement {
         });
       }, 0);
     }
+  }
+
+  _menuItemClickHandler(event) {
+    if (event.currentTarget.getAttribute("aria-expanded") === "false") {
+      this._activeNavigationItems.map(item => item.close());
+      this.overlay = false;
+    }
+  }
+
+  _overlayClickHandler(event) {
+    this._activeNavigationItems.map(item => item.close());
+    this.overlay = false;
   }
 }
 

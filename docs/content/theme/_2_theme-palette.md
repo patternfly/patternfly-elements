@@ -37,9 +37,9 @@ These variables are global hooks to override colors, fonts, spacing and more thr
 | `--pfe-theme--color--ui-complement--text` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
 | `--pfe-theme--color--ui-complement--hover` | Color | <span class="color-preview" style="--bg:#131313"></span> #131313 |
 | `--pfe-theme--color--ui-complement--text--hover` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--ui-accent` | Color | <span class="color-preview" style="--bg:#fe460d"></span> #fe460d |
-| `--pfe-theme--color--ui-accent--hover` | Color | <span class="color-preview" style="--bg:#a42701"></span> #a42701 |
-| `--pfe-theme--color--ui-accent--focus` | Color | <span class="color-preview" style="--bg:#a42701"></span> #a42701 |
+| `--pfe-theme--color--ui-accent` | Color | <span class="color-preview" style="--bg:#e00"></span> #e00 |
+| `--pfe-theme--color--ui-accent--hover` | Color | <span class="color-preview" style="--bg:#880000"></span> #880000 |
+| `--pfe-theme--color--ui-accent--focus` | Color | <span class="color-preview" style="--bg:#880000"></span> #880000 |
 | `--pfe-theme--color--ui-accent--text` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
 | `--pfe-theme--color--ui-accent--text--hover` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
 | `--pfe-theme--color--ui-accent--text--focus` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
@@ -60,7 +60,7 @@ These variables are global hooks to override colors, fonts, spacing and more thr
 | `--pfe-theme--color--surface--darkest--theme` | Theme descriptions | dark |
 | `--pfe-theme--color--surface--complement` | Color | <span class="color-preview" style="--bg:#0477a4"></span> #0477a4 |
 | `--pfe-theme--color--surface--complement--theme` | Theme descriptions | saturated |
-| `--pfe-theme--color--surface--accent` | Color | <span class="color-preview" style="--bg:#fe460d"></span> #fe460d |
+| `--pfe-theme--color--surface--accent` | Color | <span class="color-preview" style="--bg:#e00"></span> #e00 |
 | `--pfe-theme--color--surface--accent--theme` | Theme descriptions | saturated |
 | `--pfe-theme--ui--border-width` | Size | 1px |
 | `--pfe-theme--ui--border-style` | Border settings | solid |

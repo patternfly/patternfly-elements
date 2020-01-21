@@ -13,7 +13,10 @@ const yosay = require("yosay");
 const packageJson = require("../../package.json");
 
 // Check for a config file to look for defaults
-let config = require("../../project.conf.json");
+let config = {};
+if (fs.existsSync("../project.conf.json")) {
+  config = require("../../project.conf.json");
+}
 
 let isPfelement = false;
 let demoTemplatePath;
@@ -38,8 +41,6 @@ module.exports = class extends Generator {
 
   async prompting() {
     const done = this.async();
-    // @TODO this is not rendering in the right order
-    // asciify("PatternFly Elements", { font: "standard", color: "gray" }, (err, res) => this.log("\n" + res + "\n\n"));
     this.log( yosay(`Welcome to the ${ chalk.red( "PatternFly Elements" ) } generator!`) );
 
     this.prompt([
@@ -113,7 +114,7 @@ module.exports = class extends Generator {
         type: "list",
         name: "sassLibrary",
         when: answers => {
-          return answers.useSass; // && !config.has("sassLibrary")
+          return answers.useSass && typeof config.sassLibrary === "undefined";
         },
         message: "Do want to use existing Sass dependencies?",
         choices: [
@@ -221,7 +222,7 @@ module.exports = class extends Generator {
           readmeName: _.upperFirst(name),
           lowerCaseName: name,
           camelCaseName: _.camelCase(answers.name),
-          useSass: answers.useSass,
+          useSass: config.useSass || answers.useSass,
           sassLibraryPkg: false,
           sassLibraryLocation: false,
           generatorPfelementVersion: packageJson.version,
@@ -237,12 +238,14 @@ module.exports = class extends Generator {
           testFileLocation: testFileLocation
         };
 
-        if (answers.useSass) {
-          if (answers.sassLibrary && answers.sassLibrary.pkg) {
-            this.props.sassLibraryPkg = answers.sassLibrary.pkg;
+        let useSass = config.useSass || answers.useSass;
+        if (useSass) {
+          let sassLibrary = config.sassLibrary || answers.sassLibrary;
+          if (sassLibrary && sassLibrary.pkg) {
+            this.props.sassLibraryPkg = sassLibrary.pkg;
           }
 
-          if (answers.sassLibrary && answers.sassLibrary.path) {
+          if (sassLibrary && sassLibrary.path) {
             this.props.sassLibraryLocation = isPfelement
               ? "../../pfe-sass/pfe-sass"
               : "../node_modules/@patternfly/pfe-sass/pfe-sass";

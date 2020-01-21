@@ -43,13 +43,13 @@
     <<%= elementName %>>
       <h2>This is <%= elementName %></h2>
       <% if(slots.length > 0 ) { %><!-- Slots --><% for(let i = 0; i < slots.length; i++) { %>
-      <div slot="<%= slots[i] %>"><%= slots[i] %> slot</div><% } } %>
+      <div slot="<%= elementName %>--<%= slots[i] %>"><%= _.capitalize(slots[i]) %> slot</div><% } } %>
     </<%= elementName %>>
 
     <% if (attributes.length > 0) { %><!-- Preview different properties --><% for(let i = 0; i < attributes.length; i++) { %>
-    <<%= elementName %> <%= attributes[i] %>>
+    <<%= elementName %> pfe-<%= attributes[i] %>>
       <h2>This is <%= elementName %></h2><% for(let i = 0; i < slots.length; i++) { %>
-      <div slot="<%= slots[i] %>"><%= slots[i] %> slot</div><% } %>
+      <div slot="<%= elementName %>--<%= slots[i] %>"><%= _.capitalize(slots[i]) %> slot</div><% } %>
     </<%= elementName %>>
     <% } } %>
   </body>

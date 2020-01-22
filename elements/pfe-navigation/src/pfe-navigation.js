@@ -192,7 +192,11 @@ class PfeNavigation extends PFElement {
       let isVisible = false;
 
       // If the slot exists, set attribute based on supported breakpoints
-      if (this.slots[label] && this.slots[label].nodes.length > 0) {
+      if (
+        this.slots[label] &&
+        this.slots[label].nodes &&
+        this.slots[label].nodes.length > 0
+      ) {
         if (width >= start && (!end || (end && width <= end))) {
           isVisible = true;
         }

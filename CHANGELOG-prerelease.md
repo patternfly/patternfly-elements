@@ -1,3 +1,9 @@
+## Prerelease 37 ( TBD )
+
+Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.37)
+
+- [27aa87d3](https://github.com/patternfly/patternfly-elements/commit/082467) fix: reference error when slot is missing in pfe-navigation
+
 ## Prerelease 36 ( 2020-01-20 )
 
 Tag: [v1.0.0-prerelease.36](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.36)

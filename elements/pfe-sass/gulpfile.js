@@ -13,8 +13,9 @@ const paths = {
 const clean = require("gulp-clean");
 const mergeStream = require("merge-stream");
 const globSass = require("gulp-sass-globbing");
+const StyleDictionary = require("style-dictionary");
 
-const variables = require("style-dictionary").extend({
+const variables = StyleDictionary.extend({
   source: [
     "../../tokens/color/*.json"
   ],
@@ -31,21 +32,19 @@ const variables = require("style-dictionary").extend({
   }
 });
 
-const theme = require("style-dictionary").extend({
+const theme = StyleDictionary.extend({
   source: [
-    "../../tokens/typography/color.json"
-  ],
-  include: [
-    "../../tokens/color/*.json"
+    "../../tokens/typography/broadcasted.json"
   ],
   platforms: {
     scss: {
-      prefix: "pf",
-      buildPath: "variables/",
+      prefix: "pfe-color",
+      buildPath: "maps/",
       transformGroup: "scss",
       files: [{
-        destination: "_broadcast.scss",
-        format: "css/variables"
+        destination: "_broadcasted.scss",
+        format: "scss/map-deep",
+        "mapName": "pfe-broadcasted"
       }]
     }
   }

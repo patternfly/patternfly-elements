@@ -1,0 +1,37 @@
+{
+    "text": { "value": "$pf-color-black-800" },
+    "text--on-dark": { "value": "$pf-color-white" },
+    "text--on-saturated": { "value": "$pf-color-white" },
+
+    "link": { "value": "$pf-color-blue-400" },
+    "link--on-dark": { "value": "$pf-color-blue-100" },
+    "link--on-saturated": { "value": "$pf-color-white" },
+
+    "link--visited": { "value": "$pf-color-purple-600" },
+    "link--visited--on-dark": { "value": "$pf-color-purple-300" },
+    "link--visited--on-saturated": { "value": "$pf-color-purple-300" },
+
+    "link--hover": { "value": "$pf-color-blue-500" },
+    "link--hover--on-dark": { "value": "$pf-color-blue-50" },
+    "link--hover--on-saturated": { "value": "$pf-color-white" },
+
+    "link--focus": { "value": "$pf-color-blue-500" },
+    "link--focus--on-dark": { "value": "$pf-color-blue-50" },
+    "link--focus--on-saturated": { "value": "$pf-color-white" },
+
+    "link-decoration": { "value": "none" },
+    "link-decoration--on-dark": { "value": "none" },
+    "link-decoration--on-saturated": { "value": "underline" },
+
+    "link-decoration--visited": { "value": "none" },
+    "link-decoration--visited--on-dark": { "value": "none" },
+    "link-decoration--visited--on-saturated": { "value": "underline" },
+
+    "link-decoration--hover": { "value": "underline" },
+    "link-decoration--hover--on-dark": { "value": "underline" },
+    "link-decoration--hover--on-saturated": { "value": "underline" },
+
+    "link-decoration--focus": { "value": "underline" },
+    "link-decoration--focus--on-dark": { "value": "underline" },
+    "link-decoration--focus--on-saturated": { "value": "underline" }
+}

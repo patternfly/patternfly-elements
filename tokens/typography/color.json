@@ -1,0 +1,59 @@
+{
+    "color": {
+        "text": {
+            "default": {
+                "value": "{color.black.800.value}"
+            },
+            "on-dark": {
+                "value": "{color.white.value}"
+            },
+            "on-saturated": {
+                "value": "{color.white.value}"
+            }
+        },
+        "link": {
+            "default": {
+                "value": "{color.blue.400.value}"
+            },
+            "on-dark": {
+                "value": "{color.blue.100.value}"
+            },
+            "on-saturated": {
+                "value": "{color.white.value}"
+            },
+            "visited": {
+                "default": {
+                    "value": "{color.purple.600.value}"
+                },
+                "on-dark": {
+                    "value": "{color.purple.300.value}"
+                },
+                "on-saturated": {
+                    "value": "{color.purple.300.value}"
+                }
+            },
+            "hover": {
+                "default": {
+                    "value": "{color.blue.500.value}"
+                },
+                "on-dark": {
+                    "value": "{color.blue.50.value}"
+                },
+                "on-saturated": {
+                    "value": "{color.white.value}"
+                }
+            },
+            "focus": {
+                "default": {
+                    "value": "{color.blue.500.value}"
+                },
+                "on-dark": {
+                    "value": "{color.blue.50.value}"
+                },
+                "on-saturated": {
+                    "value": "{color.white.value}"
+                }
+            }
+        }
+    }
+}

@@ -10,10 +10,46 @@ const paths = {
   temp: "./_temp"
 };
 
-const path = require("path");
 const clean = require("gulp-clean");
 const mergeStream = require("merge-stream");
 const globSass = require("gulp-sass-globbing");
+
+const variables = require("style-dictionary").extend({
+  source: [
+    "../../tokens/color/*.json"
+  ],
+  platforms: {
+    scss: {
+      prefix: "pf",
+      buildPath: "variables/",
+      transformGroup: "scss",
+      files: [{
+        destination: "_tokens.scss",
+        format: "scss/variables"
+      }]
+    }
+  }
+});
+
+const theme = require("style-dictionary").extend({
+  source: [
+    "../../tokens/typography/color.json"
+  ],
+  include: [
+    "../../tokens/color/*.json"
+  ],
+  platforms: {
+    scss: {
+      prefix: "pf",
+      buildPath: "variables/",
+      transformGroup: "scss",
+      files: [{
+        destination: "_broadcast.scss",
+        format: "css/variables"
+      }]
+    }
+  }
+});
 
 // Delete the temp directory
 task("clean", () => {
@@ -26,13 +62,19 @@ task("clean", () => {
   }).pipe(clean());
 });
 
+// Build design tokens
+task("tokens", (cb) => {
+  variables.buildPlatform("scss");
+  theme.buildPlatform("scss");
+  return cb();
+});
+
 // Custom gulp for sass globbing
 task("sass:globbing", () => {
     let stream = mergeStream();
     ["extends", "functions", "maps", "mixins", "variables"].forEach((folder) => {
         stream.add(src([
           `${folder}/_*.scss`
-          // `!${folder}/_deprecated*.scss`,
         ])
           .pipe(globSass({
               path: `__${folder}.scss`
@@ -46,7 +88,7 @@ task("sass:globbing", () => {
     return stream;
 });
 
-task("build", series("clean", "sass:globbing"));
+task("build", series("clean", "tokens", "sass:globbing"));
 
 task("watch", () => {
   return watch([

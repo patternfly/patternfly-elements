@@ -4,23 +4,23 @@ $pfe-broadcasted: (
   // Base text and link colors, basis of "theme"
   // ========================================================================
 
-  text:                        $pfe-color--text,
-  link:                        $pfe-color--link,
-  link--visited:               $pfe-color--link--visited,
-  link--hover:                 $pfe-color--link--hover,
-  link--focus:                 $pfe-color--link--focus,
+  text:                        {color.text.value},
+  link:                        {color.link.value},
+  link--visited:               {color.link.visited.value},
+  link--hover:                 {color.link.hover.value},
+  link--focus:                 {color.link.focus.value},
 
-  text--on-dark:               $pfe-color--text--on-dark,
-  link--on-dark:               $pfe-color--link--on-dark,
-  link--visited--on-dark:      $pfe-color--link--visited--on-dark,
-  link--hover--on-dark:        $pfe-color--link--hover--on-dark,
-  link--focus--on-dark:        $pfe-color--link--focus--on-dark,
+  text--on-dark:               {color.text.on-dark.value},
+  link--on-dark:               {color.link.on-dark.value},
+  link--visited--on-dark:      {color.link.visited.on-dark.value},
+  link--hover--on-dark:        {color.link.hover.on-dark.value},
+  link--focus--on-dark:        {color.link.focus.on-dark.value},
 
-  text--on-saturated:          $pfe-color--text--on-saturated,
-  link--on-saturated:          $pfe-color--link--on-saturated,
-  link--visited--on-saturated: $pfe-color--link--visited--on-saturated,
-  link--hover--on-saturated:   $pfe-color--link--hover--on-saturated,
-  link--focus--on-saturated:   $pfe-color--link--focus--on-saturated,
+  text--on-saturated:          {color.text.on-saturated.value},
+  link--on-saturated:          {color.link.on-saturated.value},
+  link--visited--on-saturated: {color.link.visited.on-saturated.value},
+  link--hover--on-saturated:   {color.link.hover.on-saturated.value},
+  link--focus--on-saturated:   {color.link.focus.on-saturated.value},
 
   link-decoration:            none,
   link-decoration--visited:   none,

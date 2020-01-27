@@ -60,6 +60,22 @@ module.exports = function factory({
   const trim = require("trim");
   const decomment = require("decomment");
 
+  // const StyleDictionary = require("style-dictionary").extend({
+  //   source: [
+  //     "tokens/color/*.json",
+  //     "tokens/typography/color.json"
+  //   ],
+  //   platforms: {
+  //     scss: {
+  //       transformGroup: "scss",
+  //       files: [{
+  //         destination: "elements/pfe-sass/variables/_tokens.scss",
+  //         format: "scss/variables"
+  //       }]
+  //     }
+  //   }
+  // });
+
   // Delete the temp directory
   task("clean", () => {
     return src([

@@ -1,0 +1,64 @@
+{
+    "color": {
+        "brand": {
+            "red": { "value": "#e00" }
+        },
+        "text": {
+            "value": "{color.black.800.value}",
+            "on-dark": {
+                "value": "{color.white.value}"
+            },
+            "on-saturated": {
+                "value": "{color.white.value}"
+            }
+        },
+        "link": {
+            "value": "{color.blue.400.value}",
+            "on-dark": {
+                "value": "{color.blue.100.value}"
+            },
+            "on-saturated": {
+                "value": "{color.white.value}"
+            },
+            "visited": {
+                "value": "{color.purple.600.value}",
+                "on-dark": {
+                    "value": "{color.purple.300.value}"
+                },
+                "on-saturated": {
+                    "value": "{color.purple.300.value}"
+                }
+            },
+            "hover": {
+                "value": "{color.blue.500.value}",
+                "on-dark": {
+                    "value": "{color.blue.50.value}"
+                },
+                "on-saturated": {
+                    "value": "{color.white.value}"
+                }
+            },
+            "focus": {
+                "value": "{color.blue.500.value}",
+                "on-dark": {
+                    "value": "{color.blue.50.value}"
+                },
+                "on-saturated": {
+                    "value": "{color.white.value}"
+                }
+            }
+        },
+        "red": {
+            "50": { "value": "#ffeeee" }
+        },
+        "orange": {
+            "50": { "value": "#ffe1d8" }
+        },
+        "yellow": {
+            "50": { "value": "#fffbf0" }
+        },
+        "green": {
+            "50": { "value": "#f7fcec" }
+        }
+    }
+}

@@ -122,7 +122,8 @@
     "yo": "^1.8.5"
   },
   "dependencies": {
-    "gh-pages": "^2.2.0"
+    "gh-pages": "^2.2.0",
+    "style-dictionary": "^2.8.3"
   },
   "private": true
 }

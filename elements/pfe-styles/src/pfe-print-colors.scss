@@ -1,0 +1,99 @@
+
+@import "../../pfe-sass/pfe-sass";
+
+.pfelements--orange { background-color: $pfelements--orange; }
+.pfelements--orange-dark { background-color: $pfelements--orange-dark; }
+.pfelements--orange-darkest { background-color: $pfelements--orange-darkest; }
+
+.pfelements--blue { background-color: $pfelements--blue; }
+.pfelements--blue-dark { background-color: $pfelements--blue-dark; }
+.pfelements--blue-darkest { background-color: $pfelements--blue-darkest; }
+
+.pfelements--green { background-color: $pfelements--green; }
+.pfelements--green-dark { background-color: $pfelements--green-dark; }
+.pfelements--green-darkest { background-color: $pfelements--green-darkest; }
+
+.pfelements--gray { background-color: $pfelements--gray; }
+
+.pfelements--gray-dark { background-color: $pfelements--gray-dark; }
+
+
+.pfelements--red  { background-color: $pfelements--red ; }
+
+.pfelements--cyan { background-color: $pfelements--cyan; }
+
+
+.pfe-color--gray-50 { background-color: $pfe-color--gray-50; }
+.pfe-color--gray-100 { background-color: $pfe-color--gray-100; }
+.pfe-color--gray-200 { background-color: $pfe-color--gray-200; }
+.pfe-color--gray-250 { background-color: $pfe-color--gray-250; }
+.pfe-color--gray-300 { background-color: $pfe-color--gray-300; }
+.pfe-color--gray-400 { background-color: $pfe-color--gray-400; }
+.pfe-color--gray-500 { background-color: $pfe-color--gray-500; }
+.pfe-color--gray-600 { background-color: $pfe-color--gray-600; }
+.pfe-color--gray-700 { background-color: $pfe-color--gray-700; }
+.pfe-color--gray-800 { background-color: $pfe-color--gray-800; }
+.pfe-color--gray-900 { background-color: $pfe-color--gray-900; }
+.pfe-color--gray-1000 { background-color: $pfe-color--gray-1000; }
+.pfe-color--black { background-color: $pfe-color--black; }
+
+
+.pfe-color--red-50 { background-color: $pfe-color--red-50; }
+.pfe-color--red-100 { background-color: $pfe-color--red-100; }
+.pfe-color--red-200 { background-color: $pfe-color--red-200; }
+.pfe-color--red-300 { background-color: $pfe-color--red-300; }
+.pfe-color--red-400 { background-color: $pfe-color--red-400; }
+.pfe-color--red-500 { background-color: $pfe-color--red-500; }
+.pfe-color--red-600 { background-color: $pfe-color--red-600; }
+.pfe-color--red-700 { background-color: $pfe-color--red-700; }
+.pfe-color--red-800 { background-color: $pfe-color--red-800; }
+
+.pfe-color--orange-50 { background-color: $pfe-color--orange-50; }
+.pfe-color--orange-100 { background-color: $pfe-color--orange-100; }
+.pfe-color--orange-200 { background-color: $pfe-color--orange-200; }
+.pfe-color--orange-300 { background-color: $pfe-color--orange-300; }
+.pfe-color--orange-400 { background-color: $pfe-color--orange-400; }
+.pfe-color--orange-500 { background-color: $pfe-color--orange-500; }
+.pfe-color--orange-600 { background-color: $pfe-color--orange-600; }
+.pfe-color--orange-700 { background-color: $pfe-color--orange-700; }
+.pfe-color--orange-800 { background-color: $pfe-color--orange-800; }
+
+.pfe-color--yellow-50 { background-color: $pfe-color--yellow-50; }
+.pfe-color--yellow-100 { background-color: $pfe-color--yellow-100; }
+.pfe-color--yellow-200 { background-color: $pfe-color--yellow-200; }
+.pfe-color--yellow-300 { background-color: $pfe-color--yellow-300; }
+.pfe-color--yellow-400 { background-color: $pfe-color--yellow-400; }
+.pfe-color--yellow-500 { background-color: $pfe-color--yellow-500; }
+.pfe-color--yellow-600 { background-color: $pfe-color--yellow-600; }
+.pfe-color--yellow-700 { background-color: $pfe-color--yellow-700; }
+.pfe-color--yellow-800 { background-color: $pfe-color--yellow-800; }
+
+.pfe-color--green-50 { background-color: $pfe-color--green-50; }
+.pfe-color--green-100 { background-color: $pfe-color--green-100; }
+.pfe-color--green-200 { background-color: $pfe-color--green-200; }
+.pfe-color--green-300 { background-color: $pfe-color--green-300; }
+.pfe-color--green-400 { background-color: $pfe-color--green-400; }
+.pfe-color--green-500 { background-color: $pfe-color--green-500; }
+.pfe-color--green-600 { background-color: $pfe-color--green-600; }
+.pfe-color--green-700 { background-color: $pfe-color--green-700; }
+.pfe-color--green-800 { background-color: $pfe-color--green-800; }
+
+.pfe-color--cyan-50 { background-color: $pfe-color--cyan-50; }
+.pfe-color--cyan-100 { background-color: $pfe-color--cyan-100; }
+.pfe-color--cyan-200 { background-color: $pfe-color--cyan-200; }
+.pfe-color--cyan-300 { background-color: $pfe-color--cyan-300; }
+.pfe-color--cyan-400 { background-color: $pfe-color--cyan-400; }
+.pfe-color--cyan-500 { background-color: $pfe-color--cyan-500; }
+.pfe-color--cyan-600 { background-color: $pfe-color--cyan-600; }
+.pfe-color--cyan-700 { background-color: $pfe-color--cyan-700; }
+.pfe-color--cyan-800 { background-color: $pfe-color--cyan-800; }
+
+.pfe-color--blue-50 { background-color: $pfe-color--blue-50; }
+.pfe-color--blue-100 { background-color: $pfe-color--blue-100; }
+.pfe-color--blue-200 { background-color: $pfe-color--blue-200; }
+.pfe-color--blue-300 { background-color: $pfe-color--blue-300; }
+.pfe-color--blue-400 { background-color: $pfe-color--blue-400; }
+.pfe-color--blue-500 { background-color: $pfe-color--blue-500; }
+.pfe-color--blue-600 { background-color: $pfe-color--blue-600; }
+.pfe-color--blue-700 { background-color: $pfe-color--blue-700; }
+.pfe-color--blue-800 { background-color: $pfe-color--blue-800; }

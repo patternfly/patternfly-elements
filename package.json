@@ -114,6 +114,7 @@
     "rollup-plugin-uglify": "^4.0.0",
     "spandx": "^2.0.1",
     "strip-css-comments": "^3.0.0",
+    "style-dictionary": "^2.8.3",
     "through2": "^3.0.1",
     "trim": "0.0.1",
     "wct-browser-legacy": "^1.0.1",
@@ -122,8 +123,7 @@
     "yo": "^1.8.5"
   },
   "dependencies": {
-    "gh-pages": "^2.2.0",
-    "style-dictionary": "^2.8.3"
+    "gh-pages": "^2.2.0"
   },
   "private": true
 }

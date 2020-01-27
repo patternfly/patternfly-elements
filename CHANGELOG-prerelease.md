@@ -1,10 +1,16 @@
-## Prerelease 36 ( TBD )
+## Prerelease 37 ( TBD )
+
+Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.37)
+
+- [6a41811](https://github.com/patternfly/patternfly-elements/commit/6a418112668ba580918ac4a8b4b54e8df05c1155) fix: reference error when slot is missing in pfe-navigation
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: accordion accessibility improvements; aria-roles corrected
+
+## Prerelease 36 ( 2020-01-20 )
 
 Tag: [v1.0.0-prerelease.36](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.36)
 
 - [082467](https://github.com/patternfly/patternfly-elements/commit/08246701a3de80ea0539facce1f1338de4316be0) fix: arrow from rendering on nav priority cta's when on iOS 12>
-- [886be52](https://github.com/patternfly/patternfly-elements/commit/886be5222f6020d904d26a54f3a3332dfc907cc2) feat: update accent color to red
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: accordion accessibility improvements; aria-roles corrected
+- [36ceb1](https://github.com/patternfly/patternfly-elements/commit/36ceb13f31548dfb703bd812d8524844668c1df2) feat: update accent color to red
 
 ## Prerelease 35 ( 2020-01-17 )
 

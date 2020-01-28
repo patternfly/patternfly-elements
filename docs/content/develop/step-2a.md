@@ -9,21 +9,23 @@ menu = "develop"
 tags = [ "develop" ]
 +++
 
-Run the watch process from the root of the repo by typing `npm run dev` then the name of your component, e.g.:
-
+Run this command from the project root to start the build, watch, and server processes, see others in the project README.
+```shell
+npm run live-demo
 ```
+
+If you prefer to only watch specific component (this can be quicker), you'll need two terminal processes, start the watch process with:
+``shell
+# Replace pfe-cool-element with your component's name
 npm run dev pfe-cool-element
 ```
 
-This will watch for changes in your component files and reload the local server appropriately. You can also watch multiple components by listing multiple component names.
-
-Next you'll need to run another script that will run the local web server:
-
-```
+Then run this to start the server:
+```shell
 npm start
 ```
 
-This will start a simple HTTP server that reloads the browser as you update your element.
+The server will load on `localhost:8000` by default.
 
 ![npm start command](/pfe-cool-element-start.png)
 

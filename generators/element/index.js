@@ -155,6 +155,16 @@ module.exports = class extends Generator {
           // remove whitespace, split on comma, and remove empty entries
           return response.replace(/\s/g, "").split(",").filter(s => s.length);
         }
+      },
+      {
+        type: "input",
+        name: "events",
+        message: "List any events you want registered for the element, separated by commas (i.e., change, click)",
+        // validate: function(answer) {},
+        filter: function(response) {
+          // remove whitespace, split on comma, and remove empty entries
+          return response.replace(/\s/g, "").split(",").filter(s => s.length);
+        }
       }
     ]).then(answers => {
       if (Object.keys(answers).length > 0) {
@@ -237,6 +247,7 @@ module.exports = class extends Generator {
           rollupConfigLocation: rollupConfigLocation,
           attributes: answers.attributes,
           slots: answers.slots,
+          events: answers.events,
           testFileLocation: testFileLocation
         };
 

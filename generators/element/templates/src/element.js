@@ -5,20 +5,32 @@ class <%= elementClassName %> extends PFElement {
     return "<%= elementName %>";
   }
 
-  get schemaUrl() {
-    return "<%= elementName %>.json";
-  }
-
-  get templateUrl() {
-    return "<%= elementName %>.html";
-  }
-
   get styleUrl() {
 <%_ if (useSass) { _%>
     return "<%= elementName %>.scss";
 <%_ } else { _%>
     return "<%= elementName %>.css";
 <%_ } _%>
+  }
+
+  get templateUrl() {
+    return "<%= elementName %>.html";
+  }
+
+  get schemaUrl() {
+    return "<%= elementName %>.json";
+  }
+
+<%_ if (events.length > 0) { _%>
+  static get events() {
+    return {<% for(let i = 0; i < events.length; i++) { %>
+      <%= events[i] %>: `${this.tag}:<%= events[i] %>`<% if (i < (events.length - 1)) { %>,<% } } %>
+    };
+  }<% } %>
+
+  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.<%= _.capitalize(template_type) %>;
   }
 
 <%_ if (attributes.length > 0) { _%>
@@ -30,11 +42,6 @@ class <%= elementClassName %> extends PFElement {
   //   return [];
   // }
 <%_ } _%>
-
-  // Declare the type of this component
-  static get PfeType() {
-    return PFElement.PfeTypes.<%= _.capitalize(template_type) %>;
-  }
 
   constructor() {
     super(<%= elementClassName %>, { type: <%= elementClassName %>.PfeType });
@@ -56,9 +63,17 @@ class <%= elementClassName %> extends PFElement {
     // this.<%= slots[i] %>.addEventListener("slotchange", this._init);
     <%_ } _%>
     <%_ } _%>
+
+    <%_ for(let i = 0; i < events.length; i++) { _%>
+    this.addEventListener(<%= elementClassName %>.events.<%= events[i] %>, this._<%= events[i] %>Handler);
+    <%_ } _%>
   }
 
-  // disconnectedCallback() {}
+  disconnectedCallback() {
+    <%_ for(let i = 0; i < events.length; i++) { _%>
+    this.removeEventListener(<%= elementClassName %>.events.<%= events[i] %>, this._<%= events[i] %>Handler);
+    <%_ } _%>
+  }
 
 <%_ if (attributes.length > 0) { _%>
   // Process the attribute change
@@ -67,6 +82,10 @@ class <%= elementClassName %> extends PFElement {
   }
 <%_ } else { _%>
   // attributeChangedCallback(attr, oldValue, newValue) {}
+<%_ } _%>
+
+<%_ for(let i = 0; i < events.length; i++) { %>
+  _<%= events[i] %>Handler(evt) {}
 <%_ } _%>
 }
 

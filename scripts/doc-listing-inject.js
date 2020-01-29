@@ -48,7 +48,7 @@ glob(`${elementsDir}/*/src/*.js`, (er, files) => {
       (markup += `\n\t\t\t\t<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/${element}/demo">${element}</a></pfe-cta>`)
   );
 
-  markup += "\n";
+  markup += "\n\t\t\t";
 
   // Read and interpolate template
   const tmpl = fs.readFileSync(wrapper, "utf8");

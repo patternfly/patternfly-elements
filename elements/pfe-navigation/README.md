@@ -14,10 +14,10 @@ This element will give you a top-level navigation element (not for use as subnav
     </div>
     ```
 
-- `logo`: This slot should contain the site's main logo. Example: 
+- `logo`: This slot should contain the site's main logo. Note that there is also a CSS variable for the width of the logo, `--pfe-navigation__logo--MinWidth`. Example: 
 
     ```
-    <a slot="logo" href="https://company.com"><img class="logo" src="https://via.placeholder.com/150x50.png" title="Company logo" /></a>
+    <a style="--pfe-navigation__logo--MinWidth: 160px" slot="logo" href="https://company.com"><img class="logo" src="https://via.placeholder.com/150x50.png" title="Company logo" /></a>
     ```
 
 - `search`: This slot, when assigned to a navigation-item component, renders a dropdown in the navigation for the search functionality. Inside the tray for the slot, we recommend tagging the search form or search functionality that includes the input and submit button with the attribute `pfe-navigation--mobile-search`. The element inside the search slot that is tagged with this attribute will be copied into the mobile menu and appear above the accordion for the main navigation. Example: 

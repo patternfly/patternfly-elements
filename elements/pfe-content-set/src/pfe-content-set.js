@@ -24,9 +24,17 @@ class PfeContentSet extends PFElement {
   }
 
   get isTab() {
-    return this.parentNode
-      ? this.parentNode.offsetWidth > 768
-      : window.outerWidth > 768;
+    if (this.hasAttribute('pfe-breakpoint')) {
+      var breakpointValue = this.getAttributeNode('pfe-breakpoint').value;
+      breakpointValue = breakpointValue.replace(/\D/g,'');
+      return this.parentNode
+        ? this.parentNode.offsetWidth > breakpointValue
+        : window.outerWidth > breakpointValue;
+    } else {
+      return this.parentNode
+        ? this.parentNode.offsetWidth > 768
+        : window.outerWidth > 768;
+    }
   }
 
   constructor() {

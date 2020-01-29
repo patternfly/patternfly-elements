@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
     -->
-    
+
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
@@ -80,7 +80,7 @@
       <h2>On desktop, example below should render as accordion on a light theme:</h2>
       <h3>Container max: 500px</h3>
       <div style="max-width: 500px">
-        <pfe-content-set pfe-variant="wind">
+        <pfe-content-set pfe-variant="wind" pfe-breakpoint="600px">
           <h2 pfe-content-set--header>Heading 1</h2>
           <div pfe-content-set--panel>
             <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
@@ -100,7 +100,7 @@
       <h2>On desktop, example below should render as accordion on a dark theme:</h2>
       <h3>Container max: 500px</h3>
       <div style="max-width: 500px">
-        <pfe-content-set pfe-variant="earth" on="dark">
+        <pfe-content-set pfe-variant="earth" on="dark" pfe-breakpoint="400">
           <h2 pfe-content-set--header>Heading 1</h2>
           <div pfe-content-set--panel>
             <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
@@ -118,7 +118,7 @@
 
     <section class="dark-background on-dark border-bottom">
       <h2>On desktop, example below should render as tabs (wind style) on a dark background:</h2>
-      <pfe-content-set pfe-variant="wind" on="dark">
+      <pfe-content-set pfe-variant="wind" on="dark" pfe-breakpoint="1010">
         <h2 pfe-content-set--header>Heading 1</h2>
         <div pfe-content-set--panel>
           <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
@@ -136,7 +136,7 @@
     <section class="border-bottom">
       <h2>On desktop, example below should render as tabs (wind style):</h2>
       <div>
-        <pfe-content-set pfe-variant="wind">
+        <pfe-content-set pfe-variant="wind" pfe-breakpoint="800">
           <h2 pfe-content-set--header>Heading 1</h2>
           <div pfe-content-set--panel>
             <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
@@ -154,7 +154,7 @@
 
     <section class="border-bottom">
       <h2>On desktop, example below should render as tabs (earth style):</h2>
-      <pfe-content-set pfe-variant="earth">
+      <pfe-content-set pfe-variant="earth" pfe-breakpoint="1010">
         <h2 pfe-content-set--header>Heading 1</h2>
         <div pfe-content-set--panel>
           <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
@@ -171,7 +171,7 @@
 
     <section class="dark-background on-dark border-bottom">
       <h2>On desktop, example below should render as tabs on a dark theme:</h2>
-      <pfe-content-set pfe-variant="earth" on="dark">
+      <pfe-content-set pfe-variant="earth" on="dark" pfe-breakpoint="910">
         <h2 pfe-content-set--header>Heading 1</h2>
         <div pfe-content-set--panel>
           <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
@@ -188,7 +188,7 @@
 
     <section class="border-bottom">
       <h2>On desktop, example below should render as vertical tabs (wind style):</h2>
-      <pfe-content-set vertical pfe-variant="wind">
+      <pfe-content-set vertical pfe-variant="wind" pfe-breakpoint="100">
         <h2 pfe-content-set--header>Heading 1</h2>
         <div pfe-content-set--panel>
           <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>

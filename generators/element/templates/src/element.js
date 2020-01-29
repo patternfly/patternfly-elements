@@ -49,7 +49,7 @@ class <%= elementClassName %> extends PFElement {
     // If you need to initialize any attributes, do that here
     <%_ if (slots.length > 0) { %>
     <%_ for(let i = 0; i < slots.length; i++) { _%>
-    this.<%= slots[i] %> = this.querySelector(`[slot="<%= slots[i] %>"]`);
+    this.<%= slots[i] %> = this.querySelector(`[slot="${this.tag}--<%= slots[i] %>"]`);
     <%_ } _%>
     <%_ for(let i = 0; i < slots.length; i++) { %>
     // Add a slotchange listener to the lightDOM trigger

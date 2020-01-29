@@ -26,17 +26,17 @@ module.exports = class extends Generator {
   constructor(args, opts) {
       super(args, opts);
 
-      this.option("type", {
-          desc: "The element type, either 'standalone' or 'pfelement'.  Standalone elements will have all build tooling included, whereas 'pfelement' elements will expect to get their build tooling from the PatternFly Elements monorepo.",
-          type: (val) => {
-              if (!["standalone", "pfelement"].includes(val)) {
-                  throw new Error("Type must be either 'standalone' or 'pfelement'");
-              }
-              return val;
-          },
-          alias: "t",
-          default: "standalone"
-      });
+      // this.option("type", {
+      //     desc: "The element type, either 'standalone' or 'pfelement'.  Standalone elements will have all build tooling included, whereas 'pfelement' elements will expect to get their build tooling from the PatternFly Elements monorepo.",
+      //     type: (val) => {
+      //         if (!["standalone", "pfelement"].includes(val)) {
+      //             throw new Error("Type must be either 'standalone' or 'pfelement'");
+      //         }
+      //         return val;
+      //     },
+      //     alias: "t",
+      //     default: "standalone"
+      // });
   }
 
   async prompting() {
@@ -58,15 +58,15 @@ module.exports = class extends Generator {
             value: "standalone"
           }
         ],
-        default: this.options.type,
-        when: () => !this.options.type
+        default: this.options.type || config.type,
+        when: () => !this.options.type && !config.type
       },
       {
         type: "list",
         name: "template_type",
         message: "What would you like to create?",
-        choices: [ "component", "container", "combo" ],
-        default: "component"
+        choices: [ "content", "container", "combo" ],
+        default: "container"
       },
       {
         type: "input",
@@ -228,6 +228,8 @@ module.exports = class extends Generator {
           generatorPfelementVersion: packageJson.version,
           pfelementVersion,
           pfeSassVersion,
+          dependencies: packageJson.dependencies,
+          devDependencies: packageJson.devDependencies,
           pfeElementLocation: pfeElementLocation,
           isPfelement: isPfelement,
           packageName: packageName,

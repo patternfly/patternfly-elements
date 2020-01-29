@@ -27,7 +27,7 @@
     "build-storybook": "build-storybook -c .storybook -o .storybook_out",
     "gh-pages-storybook": "storybook-to-ghpages",
     "deploy-storybook": "npm run build-storybook && npm run gh-pages-storybook",
-    "new": "cd elements && yo --no-insight --no-update-notifier ../generators/element --force --type=pfelement && npm run post-new",
+    "new": "cd elements && yo --no-insight --no-update-notifier ../generators/element --type=pfelement && npm run post-new",
     "post-new": "npm run test-suite-inject && npm run doc-listing-inject && npm run bootstrap",
     "leftover-check": "bash scripts/leftover-check.sh",
     "demo": "npm run build && npm run start",

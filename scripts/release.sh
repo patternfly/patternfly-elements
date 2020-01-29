@@ -32,7 +32,7 @@ checkDir() {
     fi
   fi
 
-  echo "Error: publish must be run from the root directory.  Use \`npm run publish-elements\`"
+  echo "Error: release must be run from the repository's root directory."
   exit 1
 }
 

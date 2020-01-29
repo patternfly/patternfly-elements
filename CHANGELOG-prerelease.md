@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Prerelease 38 ( TBD )
 Tag: [v1.0.0-prerelease.38](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.38)
 
@@ -9,14 +8,6 @@ Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/re
 
 - [6a41811](https://github.com/patternfly/patternfly-elements/commit/6a418112668ba580918ac4a8b4b54e8df05c1155) fix: reference error when slot is missing in pfe-navigation
 - [ff859a](https://github.com/patternfly/patternfly-elements/commit/ff859a5c2b62ae24225f0031f69b5bc050c59470) fix: accordion accessibility improvements; aria-roles corrected
-=======
-## Prerelease 37 ( TBD )
-
-Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.37)
-
-- [6a41811](https://github.com/patternfly/patternfly-elements/commit/6a418112668ba580918ac4a8b4b54e8df05c1155) fix: reference error when slot is missing in pfe-navigation
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: accordion accessibility improvements; aria-roles corrected
->>>>>>> b76d3c7f288eb42c2131502ce9ca41a38245242f
 
 ## Prerelease 36 ( 2020-01-20 )
 

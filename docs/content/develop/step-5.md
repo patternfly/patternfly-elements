@@ -100,7 +100,7 @@ tags = [ "develop" ]
 ```
 Greetings! 
 
-There is a new release tag for PatternFly Elements,  [v1.0.0-prerelease.20](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.20), which includes
+There is a new release tag for PatternFly Elements,  [v1.0.0-prerelease.36](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.36), which includes
 
 
 

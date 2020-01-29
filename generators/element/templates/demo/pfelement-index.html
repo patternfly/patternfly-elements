@@ -42,7 +42,8 @@
 
     <<%= elementName %>>
       <h2>This is <%= elementName %></h2>
-      <% if(slots.length > 0 ) { %><!-- Slots --><% for(let i = 0; i < slots.length; i++) { %>
+      <%- if(slots.length > 0 ) { %>
+      <!-- Slots --><% for(let i = 0; i < slots.length; i++) { %>
       <div slot="<%= elementName %>--<%= slots[i] %>"><%= _.capitalize(slots[i]) %> slot</div><% } } %>
     </<%= elementName %>>
 

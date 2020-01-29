@@ -6,9 +6,9 @@
   display: none;
 }
 <% for(let i = 0; i < attributes.length; i++) { %>
-:host([<%= attributes[i] %>=""]) {
+// :host([<%= attributes[i] %>=""]) {
   // Custom styles applied by this attribute
-}
+// }
 <% } %>
 
 <% for(let i = 0; i < slots.length; i++) { %>

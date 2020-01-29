@@ -39,6 +39,11 @@ Explain how this component meets accessibility standards.
 ## Events
 Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.
 
+<%_ for(let i = 0; i < events.length; i++) { _%>
+### <%= elementName %>:<%= events[i] %>
+
+<%_ } _%>
+
 ## Dependencies
 Describe any dependent elements or libraries here too.
 

@@ -85,7 +85,11 @@ class <%= elementClassName %> extends PFElement {
 <%_ } _%>
 
 <%_ for(let i = 0; i < events.length; i++) { %>
-  _<%= events[i] %>Handler(evt) {}
+  _<%= events[i] %>Handler(event) {
+    this.emitEvent(<%= elementClassName %>.events.<%= events[i] %>, {
+      detail: {}
+    });
+  }
 <%_ } _%>
 }
 

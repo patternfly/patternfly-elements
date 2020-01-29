@@ -84,7 +84,7 @@ class <%= elementClassName %> extends PFElement {
   // attributeChangedCallback(attr, oldValue, newValue) {}
 <%_ } _%>
 
-<%_ for(let i = 0; i < events.length; i++) { %>
+<%_ for(let i = 0; i < events.length; i++) { _%>
   _<%= events[i] %>Handler(event) {
     this.emitEvent(<%= elementClassName %>.events.<%= events[i] %>, {
       detail: {}

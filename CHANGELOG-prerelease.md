@@ -2,6 +2,7 @@
 Tag: [v1.0.0-prerelease.38](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.38)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Move generator into the monorepo
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add events to the generator
 
 ## Prerelease 37 ( 2020-01-28 )
 Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.37)

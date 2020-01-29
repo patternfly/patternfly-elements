@@ -1,3 +1,22 @@
+## Prerelease 38 ( TBD )
+Tag: [v1.0.0-prerelease.38](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.38)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Adding variable hooks for pfe-card, overlay region
+
+## Prerelease 37 ( 2020-01-28 )
+
+Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.37)
+
+- [6a41811](https://github.com/patternfly/patternfly-elements/commit/6a418112668ba580918ac4a8b4b54e8df05c1155) fix: reference error when slot is missing in pfe-navigation
+- [ff859a](https://github.com/patternfly/patternfly-elements/commit/ff859a5c2b62ae24225f0031f69b5bc050c59470) fix: accordion accessibility improvements; aria-roles corrected
+
+## Prerelease 36 ( 2020-01-20 )
+
+Tag: [v1.0.0-prerelease.36](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.36)
+
+- [082467](https://github.com/patternfly/patternfly-elements/commit/08246701a3de80ea0539facce1f1338de4316be0) fix: arrow from rendering on nav priority cta's when on iOS 12>
+- [36ceb1](https://github.com/patternfly/patternfly-elements/commit/36ceb13f31548dfb703bd812d8524844668c1df2) feat: update accent color to red
+
 ## Prerelease 35 ( 2020-01-17 )
 
 Tag: [v1.0.0-prerelease.35](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.35)
@@ -6,7 +25,7 @@ Tag: [v1.0.0-prerelease.35](https://github.com/patternfly/patternfly-elements/re
 - [90855bb](https://github.com/patternfly/patternfly-elements/commit/90855bbc01b800de3280691ee67e61887fd7fe4d) chore: Update license from 2019 to 2020
 - [88b26ed](https://github.com/patternfly/patternfly-elements/commit/88b26ed90616651a994890454172be5b4e78db7d) fix: pfe-navigation: Trigger link color, font-size, logo min-width, spacing (#631)
 - [ea25cd0](https://github.com/patternfly/patternfly-elements/commit/ea25cd0c87fa853784ffc15329796bda49d192f1) Change direction of disclosure carets (#674) (https://github.com/patternfly/patternfly-elements/issues/662)
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Adding variable hooks for pfe-card, overlay region
+- [5511404](https://github.com/patternfly/patternfly-elements/commit/55114047ab4e9e324e12a52cb9f8bf85cbe56940)  feat: Add emit events to pfelement base class
 
 ## Prerelease 34 ( 2019-12-20 )
 
@@ -28,6 +47,7 @@ Tag: [v1.0.0-prerelease.32](https://github.com/patternfly/patternfly-elements/re
 - [ed919e](https://github.com/patternfly/patternfly-elements/commit/ed919ed15bffc03ee8de4539090c5de075f9ba7d) DE21128 Fix: Add support for theme hooks within surface colors mixin
 - [288322](https://github.com/patternfly/patternfly-elements/commit/2883224d927c26af3c7c9b92a9f8a3d2d852edaf) DE21423 Fix: z-index function now correctly prints variable names
 - [959281](https://github.com/patternfly/patternfly-elements/commit/95928118095d235695526d5dd5da9688ebc92fef) DE21491 Fix: Add default broadcast variables to pfe-base.css
+- [3ccec6](3ccec6c82efc52aae67b74072b6c0b8ff1b47f23) Update pfe-cta to include broadcast variables for all variants [#659](https://github.com/patternfly/patternfly-elements/issues/658)
 
 ## Prerelease 31 ( 2019-11-25 )
 

@@ -9,21 +9,23 @@ menu = "develop"
 tags = [ "develop" ]
 +++
 
-Run the dev command found in the package.json file at the root of your element to start watching for changes to any files located in the `/src` directory. This will build pfe-cool-element.js and pfe-cool-element.umd.js whenever you save changes.
-
-```
-# from the root of your element
-npm run dev
+Run this command from the project root to start the build, watch, and server processes, see others in the project README.
+```shell
+npm run live-demo
 ```
 
-After running the dev command, start a server at the root of the PatternFly Elements repository to view it in the browser.
-
+If you prefer to only watch specific component (this can be quicker), you'll need two terminal processes, start the watch process with:
+``shell
+# Replace pfe-cool-element with your component's name
+npm run dev pfe-cool-element
 ```
-# from the root of the PatternFly Elements repository
+
+Then run this to start the server:
+```shell
 npm start
 ```
 
-This will start a simple HTTP server that reloads the browser as you update your element.
+The server will load on `localhost:8000` by default.
 
 ![npm start command](/pfe-cool-element-start.png)
 

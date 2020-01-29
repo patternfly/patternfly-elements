@@ -27,6 +27,14 @@ class PfeAutocomplete extends PFElement {
     return "pfe-autocomplete.scss";
   }
 
+  static get events() {
+    return {
+      search: `pfe-search-event`,
+      select: `pfe-option-selected`,
+      slotchange: `slotchange`
+    };
+  }
+
   constructor() {
     super(PfeAutocomplete);
 
@@ -59,19 +67,31 @@ class PfeAutocomplete extends PFElement {
     this.addEventListener("keyup", this._inputKeyUp.bind(this));
 
     // these two events, fire search
-    this.addEventListener("pfe-search-event", this._closeDroplist.bind(this));
     this.addEventListener(
-      "pfe-option-selected",
+      PfeAutocomplete.events.search,
+      this._closeDroplist.bind(this)
+    );
+    this.addEventListener(
+      PfeAutocomplete.events.select,
       this._optionSelected.bind(this)
     );
   }
 
   disconnectedCallback() {
     this.removeEventListener("keyup", this._inputKeyUp);
-    this.removeEventListener("pfe-search-event", this._closeDroplist);
-    this.removeEventListener("pfe-option-selected", this._optionSelected);
-    this._slot.removeEventListener("slotchange", this._slotchangeHandler);
 
+    this.removeEventListener(
+      PfeAutocomplete.events.search,
+      this._closeDroplist
+    );
+    this.removeEventListener(
+      PfeAutocomplete.events.select,
+      this._optionSelected
+    );
+    this._slot.removeEventListener(
+      PfeAutocomplete.events.slotchange,
+      this._slotchangeHandler
+    );
     if (this._input) {
       this._input.removeEventListener("input", this._inputChanged);
       this._input.removeEventListener("blur", this._closeDroplist);
@@ -281,13 +301,10 @@ class PfeAutocomplete extends PFElement {
   }
 
   _doSearch(searchQuery) {
-    this.dispatchEvent(
-      new CustomEvent("pfe-search-event", {
-        detail: { searchValue: searchQuery },
-        bubbles: true,
-        composed: true
-      })
-    );
+    this.emitEvent(PfeAutocomplete.events.search, {
+      detail: { searchValue: searchQuery },
+      composed: true
+    });
     this._reset();
     this.selectedValue = searchQuery;
   }
@@ -436,13 +453,10 @@ class PfeSearchDroplist extends PFElement {
 
   _optionSelected(e) {
     if (e.target.tagName === "LI") {
-      this.dispatchEvent(
-        new CustomEvent("pfe-option-selected", {
-          detail: { optionValue: e.target.innerText },
-          bubbles: true,
-          composed: true
-        })
-      );
+      this.emitEvent(PfeAutocomplete.events.select, {
+        detail: { optionValue: e.target.innerText },
+        composed: true
+      });
     }
   }
 

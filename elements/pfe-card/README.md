@@ -48,7 +48,7 @@ There are several attributes available for customizing the visual treatment of t
     | default | <span class="color-preview" style="--bg:#dfdfdf"></span> #dfdfdf |
     | darker | <span class="color-preview" style="--bg:#464646"></span> #464646 |
     | darkest | <span class="color-preview" style="--bg:#131313"></span> #131313 |
-    | accent | <span class="color-preview" style="--bg:#fe460d"></span> #fe460d |
+    | accent | <span class="color-preview" style="--bg:#ee0000"></span> #ee0000 |
     | complement | <span class="color-preview" style="--bg:#0477a4"></span> #0477a4 |
 
 - `pfe-img-src`: Optional background image applied to the entire card container.  Alignment of this image can be managed using the `--pfe-card--BackgroundPosition` variable which is set to `center center` by default.

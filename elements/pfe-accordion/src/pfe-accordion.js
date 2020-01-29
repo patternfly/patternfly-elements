@@ -32,6 +32,12 @@ class PfeAccordion extends PFElement {
     };
   }
 
+  static get events() {
+    return {
+      change: `${this.tag}:change`
+    };
+  }
+
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Container;
@@ -51,10 +57,10 @@ class PfeAccordion extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.setAttribute("role", "presentation");
+    this.setAttribute("role", "tablist");
     this.setAttribute("defined", "");
 
-    this.addEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
+    this.addEventListener(PfeAccordion.events.change, this._changeHandler);
     this.addEventListener("keydown", this._keydownHandler);
 
     Promise.all([
@@ -70,7 +76,7 @@ class PfeAccordion extends PFElement {
   }
 
   disconnectedCallback() {
-    this.removeEventListener(`${PfeAccordion.tag}:change`, this._changeHandler);
+    this.removeEventListener(PfeAccordion.events.change, this._changeHandler);
     this.removeEventListener("keydown", this._keydownHandler);
     this._observer.disconnect();
   }
@@ -205,7 +211,9 @@ class PfeAccordion extends PFElement {
 
   _expandPanel(panel) {
     if (!panel) {
-      console.error(`${PfeAccordion.tag}: Trying to expand a panel that doesn't exist`);
+      console.error(
+        `${PfeAccordion.tag}: Trying to expand a panel that doesn't exist`
+      );
       return;
     }
 
@@ -225,7 +233,9 @@ class PfeAccordion extends PFElement {
 
   _collapsePanel(panel) {
     if (!panel) {
-      console.error(`${PfeAccordion.tag}: Trying to collapse a panel that doesn't exist`);
+      console.error(
+        `${PfeAccordion.tag}: Trying to collapse a panel that doesn't exist`
+      );
       return;
     }
 
@@ -433,7 +443,7 @@ class PfeAccordionHeader extends PFElement {
     }
 
     if (!this.hasAttribute("role")) {
-      this.setAttribute("role", "header");
+      this.setAttribute("role", "heading");
     }
 
     if (!this.pfeId) {
@@ -466,9 +476,7 @@ class PfeAccordionHeader extends PFElement {
 
     if (!isHeaderTag) {
       console.warn(
-        `${
-          PfeAccordionHeader.tag
-        }: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`
+        `${PfeAccordionHeader.tag}: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`
       );
     }
 
@@ -478,12 +486,9 @@ class PfeAccordionHeader extends PFElement {
   }
 
   _clickHandler(event) {
-    this.dispatchEvent(
-      new CustomEvent(`${PfeAccordion.tag}:change`, {
-        detail: { expanded: !this.expanded },
-        bubbles: true
-      })
-    );
+    this.emitEvent(PfeAccordion.events.change, {
+      detail: { expanded: !this.expanded }
+    });
   }
 }
 

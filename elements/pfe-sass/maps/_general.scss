@@ -22,9 +22,6 @@ $pfe-vars: (
   font-weight--semi-bold:        600,
   font-weight--bold:             700,
 
-  link--text-decoration:         underline,
-  link--text-decoration--hover:  underline,
-
   surface--border-width:         1px,
   surface--border-width--heavy:  4px,
   surface--border-style:         solid,
@@ -47,19 +44,12 @@ $pfe-vars: (
   grid-breakpoint--lg:           992px,
   grid-breakpoint--xl:           1200px,
 
-  box-shadow--sm:                '0  #{pfe-size-prem(1)}  #{pfe-size-prem(2)} 0 rgba(#{$pfe-color--gray-1000}, .2)',
-  box-shadow--md:                '0  #{pfe-size-prem(2)}  #{pfe-size-prem(1)} #{pfe-size-prem(1)} rgba(#{$pfe-color--gray-1000}, .12), 0  #{pfe-size-prem(4)}  #{pfe-size-prem(11)} #{pfe-size-prem(6)} rgba(#{$pfe-color--gray-1000}, .05)',
-  box-shadow--lg:                '0  #{pfe-size-prem(3)}  #{pfe-size-prem(7)} #{pfe-size-prem(3)} rgba(#{$pfe-color--gray-1000}, .13), 0  #{pfe-size-prem(11)}  #{pfe-size-prem(24)} #{pfe-size-prem(16)} rgba(#{$pfe-color--gray-1000}, .12)',
-  box-shadow--inset:             'inset 0 0 #{pfe-size-prem(10)} 0 rgba(#{$pfe-color--gray-1000}, .25)',
+  box-shadow--sm:                #{0  #{pfe-size-prem(1)}  #{pfe-size-prem(2)} 0 rgba($pfe-color--gray-1000, .2)},
+  box-shadow--md:                #{0  #{pfe-size-prem(2)}  #{pfe-size-prem(1)} #{pfe-size-prem(1)} rgba($pfe-color--gray-1000, .12), 0  #{pfe-size-prem(4)}  #{pfe-size-prem(11)} #{pfe-size-prem(6)} rgba($pfe-color--gray-1000, .05)},
+  box-shadow--lg:                #{0  #{pfe-size-prem(3)}  #{pfe-size-prem(7)} #{pfe-size-prem(3)} rgba($pfe-color--gray-1000, .13), 0  #{pfe-size-prem(11)}  #{pfe-size-prem(24)} #{pfe-size-prem(16)} rgba($pfe-color--gray-1000, .12)},
+  box-shadow--inset:             #{inset 0 0 #{pfe-size-prem(10)} 0 $pfe-color--gray-50},
 
   animation-speed:               .3s,
   animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),
   opacity:                       .3
-);
-
-$z-index: (
-  modal: 99,
-  navigation: 98,
-  overlay: 97,
-  content: 0
 );

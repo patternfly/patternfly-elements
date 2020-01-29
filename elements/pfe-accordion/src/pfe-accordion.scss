@@ -1,20 +1,31 @@
+// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: accordion;
 
+@include pfe-theme-contexts; // imports on="light" etc support
+
 :host {
+  @include pfe-accordion-variables;
+
   display: block;
   position: relative;
   overflow: hidden;
   margin: 0;
-  color: #{pfe-radio(color, text)};
+  color: #{pfe-local(Color)};
+
+  @include browser-query(ie11) {
+    background-color: #{pfe-color(surface--lightest)} !important;
+    color: #{pfe-color(text)} !important;
+  }
 }
 
-:host([on="dark"]) {
-  @include pfe-theme($theme: "dark");
+@each $context in $THEMES {
+  :host([on="#{$context}"]) {
+    @include pfe-accordion-variables($theme: #{$context});
+  }
 }
 
-:host([on="light"]) {
-  @include pfe-theme($theme: "light");
+:host([pfe-disclosure="true"]) {
+  @include pfe-accordion-variables($variant: disclosure);
 }
-

@@ -1,3 +1,4 @@
+// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: accordion;
@@ -5,67 +6,128 @@ $LOCAL: accordion;
 /// ===========================================================================
 /// DEFAULT ACCORDION HEADING
 /// ===========================================================================
-
 :host {
-  @include  pfe-accordion-header;
+  transition: transform 0.3s #{pfe-var(animation-timing)};
+  display: block;
 
-  button {
-    @include pfe-trigger-color($component-name: accordion);
-    @include pfe-trigger-button;
+  // Shadow template styles
+  > * {
+    margin: 0;
+  }
+}
+ 
+button {
+  @include pfe-trigger;
 
-    &[aria-expanded="true"] {
-      @include pfe-trigger-color-expanded($component-name: accordion);
-      @include pfe-trigger-expanded;
-      &::after {
-        @include pfe-chevron-expanded;
-      }
-    }
+  // @TODO workaround, can we get the variables working?
+  @include browser-query(edge) {
+    text-align: left;
+  }
 
-    &[aria-expanded="false"]::after {
-        @include pfe-chevron-expanded($state: false);
+  @include browser-query(ie11) {
+    padding: 16px 24px;
+    &:hover {
+      border-left-color: #{pfe-color(ui-base)};
     }
   }
 }
 
-:host(:first-child) {
-  button {
-    @include pfe-trigger-button-first($theme: light);
+:host(:not([pfe-disclosure="true"])) {
+  button[aria-expanded="true"]::after {
+    @include pfe-chevron($state: open);
+  }
+  button[aria-expanded="false"]::after {
+    @include pfe-chevron($state: closed);
   }
 }
-
 
 // Add border bottom to the last button in an accordion set.
-:host(:last-of-type) {
-  button[aria-expanded="false"] {
-    @include pfe-trigger-button-last;
+:host(:last-of-type) button:not([aria-expanded="true"]) {
+  @include pfe-trigger-last;
+}
+:host(:last-of-type.animating) button {
+  --pfe-accordion--BorderBottomWidth: 0;
+}
+
+/// ===========================================================================
+/// EXPANDED STYLES
+/// ===========================================================================
+
+// Default styles
+button[aria-expanded="true"] {
+  @include pfe-accordion-variables($state: expanded);
+  @include browser-query(ie11) {
+    border-bottom-width: 0;
+    border-left-color: #{pfe-color(ui-base)};
+    border-right-color: #{pfe-color(surface--border)};
   }
 }
 
-:host(.animating) {
-  transition: transform 0.3s #{pfe-var(animation-timing)};
-
-  button {
-    @include pfe-trigger-expanded;
-    @include pfe-trigger-color-expanded($theme: light, $component-name: accordion);
+// Styles contextual to theme
+@each $context in $THEMES {
+  :host([on="#{$context}"]) button[aria-expanded="true"] {
+    @include pfe-accordion-variables($state: expanded, $theme: #{$context});
   }
 }
 
 /// ===========================================================================
-/// CONTEXT STYLES, ON=DARK
+/// DISCLOSURE STYLES
 /// ===========================================================================
 
-:host([on="dark"]) {
+:host([pfe-disclosure="true"]) {
   button {
-    @include pfe-trigger-color($theme: dark, $component-name: accordion);
+    --pfe-accordion--Trigger--padding: #{pfe-local(base--Padding)} calc(#{pfe-local(base--Padding)} * 1.5) #{pfe-local(base--Padding)} calc((#{pfe-local(base--Padding)} * 3) + 2px) !important;
+    @include browser-query(ie11) {
+      padding: 16px 24px 16px 47px;
+      border-right-color: #{pfe-color(surface--border)};
+      border-left-color: #{pfe-color(surface--border)};
+      border-left-width: #{pfe-var(surface--border-width)};
+    }
 
     &[aria-expanded="true"] {
-      @include pfe-trigger-color-expanded($theme: dark, $component-name: accordion);
+      padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
+      border-left-width: #{pfe-var(surface--border-width--heavy)};
+
+      &::before {
+        @include pfe-chevron($state: open, $position: before);
+        left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px.
+      }
+    }
+    &[aria-expanded="false"]::before {
+      @include pfe-chevron($state: closed, $position: before);
+    }
+
+    // Adjust contents position on hover.
+    &:hover {
+      padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
+      --pfe-accordion--BorderLeftWidth: #{pfe-var(surface--border-width--heavy)};
+
+      &::before {
+        left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px.
+      }
     }
   }
 }
 
-:host([on="dark"].animating){
+// Set the header border while animating. 
+:host([pfe-disclosure="true"].animating) {
+  --pfe-accordion--BorderLeftWidth: #{pfe-var(surface--border-width--heavy)};
+  --pfe-accordion--BorderColor--accent: #{pfe-color(ui-base)}; // set border-left color while animating.
+
   button {
-    @include pfe-trigger-color-expanded($theme: dark, $component-name: accordion);
+    padding-left: calc((var(--pfe-theme--container-spacer,16px) * 3) - 1px)!important;
+
+    &::before {
+      left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px.
+    }
   }
 }
+
+// Override border-left color for different themes.
+@each $context in $THEMES {
+  :host([pfe-disclosure="true"][on="#{$context}"].animating) {
+    @include pfe-accordion-variables($state: expanded, $theme: #{$context});
+  }
+}
+
+

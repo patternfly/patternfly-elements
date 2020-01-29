@@ -163,7 +163,7 @@ You may choose to add attributes such as `pfe-variant`, `pfe-priority` or `pfe-c
 CSS variables are subject to the normal cascade, so consider where you want these overrides to propogate.
 
 
-#### Page-level CSS, [theme](https://static.redhat.com/libs/redhat/redhat-theme/2/advanced-theme.css) variables
+#### Page-level CSS, [theme](https://raw.githubusercontent.com/starryeyez024/patternfly-theme/prerelease-1.0/dist/advanced-theme.css) variables
 
 Theme variables will impact all components on the page where this CSS is loaded.
 
@@ -214,52 +214,28 @@ Be sure to browser test within your own site or application. If you run into any
 
 ## FAQ
 
-### Should I use on=dark or color=darkest on my container? What's the difference?
+### How should I indicate context for my components, for example, a change in background color that would need a lighter text color?
 
-*   `on=dark` is being deprecated. Instead, custom classes already on the page should set broadcast values.
-*   The original goal for `on=dark` was all about context, but instead of having to provide another attribute somewhere, the card or a band or another container will inform any nested components that the text color needs to change through the set of broadcast variables. Existing broadcast vars (defined in `$BROADCAST-VARS`)  include: `text`, `ui-link`, `ui-link--hover`, `ui-link--visited`, `ui-link--focus`.
-*   If your page has a custom background color for a band or card, you should set the background and also set the broadcast colors.
-
+When setting a background color from outside of a web component, set the `--theme` variable to `light`, `dark`, or `saturated`.  This will tell the web components to attach the `on` attribute and allow them to set text and link colors appropriately.  Saturated themes tend to be red or blue tones (blue links don't work on these contexts typically).
 
 ```
 .custom-dark-band {
   background: black;
-  --pfe-broadcasted--color--text:             var(--pfe-theme--color--text--on-dark, #fff);
-  --pfe-broadcasted--color--ui-link:          var(--pfe-theme--color--ui-link--on-dark, #73bcf7);
-  --pfe-broadcasted--color--ui-link--hover:   var(--pfe-theme--color--ui-link--on-dark--hover, pink);
-  --pfe-broadcasted--color--ui-link--visited: var(--pfe-theme--color--ui-link--on-dark--visited, pink);
-  --pfe-broadcasted--color--ui-link--focus:   var(--pfe-theme--color--ui-link--on-dark--focus, pink);
+  --theme: dark;
 }
 ```
 
-In themes (like the advanced-theme.css file from the Red Hat Theme ) we apply broadcast variables to plain links, because they are light DOM and also have default colors applied by the browser. This CSS file not only includes variables but also styles for headlines and links on the page. It sets the colors for these elements using a CSS variable, which web components can change the value of.
+The `on="dark"` attribute will be automatically added by the web component upon detecting this theme variable.  
 
-For example, advanced-theme.css includes:
+You can optionally customize your broadcast variables individually if you have very specific needs.  These are a list of the existing broadcast variables (also defined in `$BROADCAST-VARS`):
 
-```
-.PFElement a {
-color: var(--pfe-broadcasted--color--ui-link);
-}
-```
+* `--pfe-broadcasted--text`
+* `--pfe-broadcasted--link`
+* `--pfe-broadcasted--link--hover`
+* `--pfe-broadcasted--link--visited`
+* `--pfe-broadcasted--link--focus`
+* `--pfe-broadcasted--link-decoration--hover`
+* `--pfe-broadcasted--link-decoration--visited`
+* `--pfe-broadcasted--link-decoration--focus`
 
-We choose not to apply broadcast colors to text elements like paragraphs because it still would not be high enough specificity to override anything coming from pre-existing stylesheets, and paragraphs will inherit color from parents. 
-
-
-```
-// this would not really be helpful to add to cp-theme or redhat-theme
-h1, h2, h3, h4, h5, h6, p { 
-  color: var(--pfe-broadcasted--color--text);
-}
-// if there was some class like this in the theme, It would override it anyway. 
-body.editorial .body1.generic1 {
-    color: #646464;
-}
-```
-
-Instead, in the host of components, use:
-
-```
-:host {
-  color: var(--pfe-broadcasted--color--text);
-}
-```
+If you include the `pfe-base.css` stylesheet, it will include application of these broadcast variables to links; this is helpful because links are often nested inside of p tags in the content and thus inaccessible to the stylesheet of the web component.

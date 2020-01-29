@@ -8,8 +8,14 @@ $LOCAL: tabs;
 
 $pfe-tabs__panel--PaddingLeft-factor:  2;
 
+$variables: (
+  tabs: (
+    BorderColor: pfe-color(surface--border)
+  )
+);
+
 :host {
-  --pfe-tabs__tabs--BorderColor:  #{pfe-color(surface--border)};
+  @include pfe-print-variables($variables);
 
   display: #{pfe-local($cssvar: Display, $fallback: block)};
   padding: #{pfe-local($cssvar: Padding, $fallback: 0)};
@@ -59,6 +65,22 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 
     --pfe-tabs__panels--Width: 77.78%;
     --pfe-tabs__panels--PaddingRight: #{pfe-var(container-padding)};
+
+    @include browser-query(ie11) {
+      display: flex;
+      .tabs {
+        flex-direction: column;
+        width: 22.22%;
+        border-right: 1px solid #{pfe-color(surface--border)};
+        border-bottom: 0;
+      }
+
+      .panels {
+        width: 77.8%;
+        padding-right: 1em;
+      }
+
+    }
   }
 }
 
@@ -69,6 +91,19 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([vertical][pfe-variant="earth"]) {
     --pfe-tabs__tabs--Padding: #{pfe-var(container-padding)} 0 0 0;
+    
+    @include browser-query(ie11) {
+      .tabs {
+        padding: 1em 0 0 0;
+      }
+    }
+  }
+}
+
+:host(:not([pfe-variant="earth"])) {
+  @include browser-query(ie11) {
+    background-color: #{pfe-color(surface--lightest)};
+    color: #{pfe-color(text)};
   }
 }
 
@@ -79,16 +114,11 @@ $pfe-tabs__panel--PaddingLeft-factor:  2;
     border-left: 0;
   }
 }
-
-
-/// ===========================================================================
-/// THEMING
-/// ===========================================================================
-:host([on="dark"]) {
-  @include pfe-theme($theme: "dark");
+    
+@include browser-query(ie11) {
+  :host([pfe-variant="earth"]) .tabs {
+    padding-left: 1em;
+  }
 }
 
-:host([on="light"]) {
-  @include pfe-theme($theme: "light");
-}
-
+@include pfe-theme-contexts; // imports on="light" etc support

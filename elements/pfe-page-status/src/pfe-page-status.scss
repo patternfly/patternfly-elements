@@ -4,12 +4,12 @@ $LOCAL: status;
 
 :host {
   --pfe-status--BackgroundColor:  #{pfe-color(feedback--default)};
-  --pfe-broadcasted--color--text: #{pfe-color(feedback--default--lightest)};
+  --pfe-broadcasted--text: #{pfe-color(feedback--default--lightest)};
 
   --pfe-status--TextTransform: uppercase;
 
   background-color: #{pfe-local(BackgroundColor)};
-  color: var(--pfe-broadcasted--color--text);
+  color: var(--pfe-broadcasted--text);
 
   position: fixed;
   right: 0;
@@ -44,23 +44,23 @@ $LOCAL: status;
 @each $state in (moderate, important, critical, success, info) {
   :host([pfe-status="#{$state}"]) {
     --pfe-status--BackgroundColor:  #{pfe-color(feedback--#{$state})};
-    --pfe-broadcasted--color--text: #{pfe-color(feedback--#{$state}--lightest)};
+    --pfe-broadcasted--text: #{pfe-color(feedback--#{$state}--lightest)};
   }
 }
 
 :host([pfe-status="warning"]) {
   --pfe-status--BackgroundColor:  #{pfe-color(feedback--moderate)};
-  --pfe-broadcasted--color--text: #{pfe-color(feedback--moderate--darkest)};
+  --pfe-broadcasted--text: #{pfe-color(feedback--moderate--darkest)};
 }
 
 :host([pfe-status="normal"]) {
   --pfe-status--BackgroundColor: #{pfe-color(ui-base)};
-  --pfe-broadcasted--color--text: #{pfe-color(ui-base--text)};
+  --pfe-broadcasted--text: #{pfe-color(ui-base--text)};
 }
 
 @each $color in (complement, accent) {
   :host([pfe-status="#{$color}"]) {
     --pfe-status--BackgroundColor: #{pfe-color(ui-#{$color})};
-    --pfe-broadcasted--color--text: #{pfe-color(ui-#{$color}--text)};
+    --pfe-broadcasted--text: #{pfe-color(ui-#{$color}--text)};
   }
 }

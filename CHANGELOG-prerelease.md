@@ -1,4 +1,87 @@
-## Prerelease 28 ()
+## Prerelease 37 ( TBD )
+
+Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.37)
+
+- [6a41811](https://github.com/patternfly/patternfly-elements/commit/6a418112668ba580918ac4a8b4b54e8df05c1155) fix: reference error when slot is missing in pfe-navigation
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: accordion accessibility improvements; aria-roles corrected
+
+## Prerelease 36 ( 2020-01-20 )
+
+Tag: [v1.0.0-prerelease.36](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.36)
+
+- [082467](https://github.com/patternfly/patternfly-elements/commit/08246701a3de80ea0539facce1f1338de4316be0) fix: arrow from rendering on nav priority cta's when on iOS 12>
+- [36ceb1](https://github.com/patternfly/patternfly-elements/commit/36ceb13f31548dfb703bd812d8524844668c1df2) feat: update accent color to red
+
+## Prerelease 35 ( 2020-01-17 )
+
+Tag: [v1.0.0-prerelease.35](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.35)
+
+- [9d9e001](https://github.com/patternfly/patternfly-elements/commit/9d9e00169fe949f78c31211c5d0a4bf3af1dbe9e) fix: Restore clickability of pfe-cta links
+- [90855bb](https://github.com/patternfly/patternfly-elements/commit/90855bbc01b800de3280691ee67e61887fd7fe4d) chore: Update license from 2019 to 2020
+- [88b26ed](https://github.com/patternfly/patternfly-elements/commit/88b26ed90616651a994890454172be5b4e78db7d) fix: pfe-navigation: Trigger link color, font-size, logo min-width, spacing (#631)
+- [ea25cd0](https://github.com/patternfly/patternfly-elements/commit/ea25cd0c87fa853784ffc15329796bda49d192f1) Change direction of disclosure carets (#674) (https://github.com/patternfly/patternfly-elements/issues/662)
+- [](https://github.com/patternfly/patternfly-elements/commit/)  feat: Add emit events to pfelement base class
+
+## Prerelease 34 ( 2019-12-20 )
+
+Tag: [v1.0.0-prerelease.34](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.34)
+
+- [c2833e3](https://github.com/patternfly/patternfly-elements/commit/c2833e3ef9caa87edbbc56fa22471525d453b7d3) feat: pfe-badge (#625)
+
+## Prerelease 33 ( 2019-12-18 )
+
+Tag: [v1.0.0-prerelease.33](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.33)
+
+- [5ad398](https://github.com/patternfly/patternfly-elements/commit/5ad3983b9ead73cf2db30fd0bc52aada334c6961) Disclosure accordion variant
+- [3ccec6](https://github.com/patternfly/patternfly-elements/commit/3ccec6c82efc52aae67b74072b6c0b8ff1b47f23) Update pfe-cta to include broadcast variables for all variants [#659](https://github.com/patternfly/patternfly-elements/issues/658)
+- [](https://github.com/patternfly/patternfly-elements/commit/) chore: Pull polyfills out into separate files for easier parsing/reporting
+
+## Prerelease 32 ( 2019-12-05 )
+
+Tag: [v1.0.0-prerelease.32](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.32)
+
+- [ed919e](https://github.com/patternfly/patternfly-elements/commit/ed919ed15bffc03ee8de4539090c5de075f9ba7d) DE21128 Fix: Add support for theme hooks within surface colors mixin
+- [288322](https://github.com/patternfly/patternfly-elements/commit/2883224d927c26af3c7c9b92a9f8a3d2d852edaf) DE21423 Fix: z-index function now correctly prints variable names
+- [959281](https://github.com/patternfly/patternfly-elements/commit/95928118095d235695526d5dd5da9688ebc92fef) DE21491 Fix: Add default broadcast variables to pfe-base.css
+- [3ccec6](3ccec6c82efc52aae67b74072b6c0b8ff1b47f23) Update pfe-cta to include broadcast variables for all variants [#659](https://github.com/patternfly/patternfly-elements/issues/658)
+
+## Prerelease 31 ( 2019-11-25 )
+
+Tag: [v1.0.0-prerelease.31](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.31)
+
+- [cdcdddf](https://github.com/patternfly/patternfly-elements/commit/cdcdddfa6858953727a3b6d7dcb9add7a61adf93) fix: Bring back pfe-cta hover animation effect [#624](https://github.com/patternfly/patternfly-elements/pull/624)
+- [32b138e](https://github.com/patternfly/patternfly-elements/commit/32b138e64223031fd70ed2e525ee98cd5bb7f954) fix: Update Travis tests
+- [67fa1fb](https://github.com/patternfly/patternfly-elements/commit/67fa1fb3f29ec3e48a6d0767b6c08eb008e56655) fix: pfe-navigation mobile login/language links working [#620](https://github.com/patternfly/patternfly-elements/pull/620)
+- [4ebcbcc](https://github.com/patternfly/patternfly-elements/commit/4ebcbcccaf50247c27a242a944dd4a5a654aeb80) fix: pfe-navigation add styles for when JavaScript does not load [#600](https://github.com/patternfly/patternfly-elements/pull/600))
+- [27ef3ec](https://github.com/patternfly/patternfly-elements/commit/27ef3ec08371ec32c9a9376904163ef48148affa) feat: Updating broadcast and how variables are applied [#392](https://github.com/patternfly/patternfly-elements/pull/392)
+- [a78ea1f](https://github.com/patternfly/patternfly-elements/commit/a78ea1fc5e114856ede20e459d35875697410b56) fix: Speed up Travis tests  [#621](https://github.com/patternfly/patternfly-elements/issues/621)
+- [f144b6f](https://github.com/patternfly/patternfly-elements/commit/f144b6f33dd6a8b615ac2a63cec6b29f3bf70d32) feat: pfe-select component [#553](https://github.com/patternfly/patternfly-elements/pull/553)
+
+
+## Prerelease 30 ( 2019-11-08 )
+
+Tag: [v1.0.0-prerelease.30](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.30)
+
+- [a666fc4](https://github.com/patternfly/patternfly-elements/commit/a666fc4f8e6e9669ee849d01d11ca77798824cc7) pfe-band layout rendering fix for bug in IE and Edge (#470)
+- [2143c84](https://github.com/patternfly/patternfly-elements/commit/2143c84d207076c0c8016c960d6edd447e4048eb) feat: add align attribute to pass down to tabs on render (#610)
+- [392399b](https://github.com/patternfly/patternfly-elements/commit/392399b3eb240290e67873a51122459985dbbe7f) fix: pfe-cta svgs removed from tab order in ie11
+- [567523a](https://github.com/patternfly/patternfly-elements/commit/567523aeac3504d2d67b922b1f1e4fe51a122a05) docs: Fix hugo nav scroll issue (#612)
+- [94ff217](https://github.com/patternfly/patternfly-elements/commit/94ff21768e3b1a8b90e284059f322e091c2d56ae) fix: pfe-content-set: wrapping the observer reconnect in a setTimeout #611
+- [94ff217](https://github.com/patternfly/patternfly-elements/commit/94ff21768e3b1a8b90e284059f322e091c2d56ae) fix: ignore compiled assets when determining version bumps #613
+- [0537a54](https://github.com/patternfly/patternfly-elements/commit/0537a54c5b02f99c0b53c9199223281ded99062f) chore: making pfe-band public
+
+
+## Prerelease 29 ( 2019-11-04 )
+
+Tag: [v1.0.0-prerelease.29](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.29)
+
+- [5bef4ed6](https://github.com/patternfly/patternfly-elements/commit/5bef4ed6b9f47412361cb8687f0b4618069a49ea) fix: pfe-card's published package now includes the intended assets #605
+- [5f049bf](https://github.com/patternfly/patternfly-elements/commit/5f049bfa4f9595819f704ff14bd7e609c32d796a) fix: updating the location of the toast file in the story #606
+- [99fce5d](https://github.com/patternfly/patternfly-elements/commit/99fce5d8fce6f08c901e3ce2398a572d0ae8b6d5) fix: updating pfe-layouts package.json for distribution fixes #607
+- [5f049bf](https://github.com/patternfly/patternfly-elements/commit/5f049bfa4f9595819f704ff14bd7e609c32d796a) fix: updating the location of the toast file in the story #606
+- [260c54c](https://github.com/patternfly/patternfly-elements/commit/260c54c3206972bf6f8b954c88a3728c81ab4817) fix: updating lerna.json ignoreChanges
+
+## Prerelease 28 ( 2019-11-04 )
 
 Tag: [v1.0.0-prerelease.28](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.28)
 
@@ -7,16 +90,21 @@ Tag: [v1.0.0-prerelease.28](https://github.com/patternfly/patternfly-elements/re
 - [79614bc](https://github.com/patternfly/patternfly-elements/commit/79614bca9d3158b2c367251b1b17af6666894e27) fix: pfe-card cta alignment #560
 - [5800171](https://github.com/patternfly/patternfly-elements/commit/5800171f9f6afc95f832a01bce7f4eeb5c6717d7) fix: set pfe-band to private, until frameworks + ie11 support (#589)
 - [a4b2c27](https://github.com/patternfly/patternfly-elements/commit/a4b2c2751840265831329729ed577651b7099388) fix: build tasks and packages to represent new dist architecture
-- [](https://github.com/patternfly/patternfly-elements/commit/) pfe-navigation style updates
+- [5103c95](https://github.com/patternfly/patternfly-elements/commit/5103c950d8d0df1769ffe2291a46f1c867dc0b8a) feat: pfe-navigation style updates
+- [6ddbcff](https://github.com/patternfly/patternfly-elements/commit/6ddbcffa50bb277a3e48c7b729becd1db646425e) fix: pfe-tabs in IE11
+- [782f8e9](https://github.com/patternfly/patternfly-elements/commit/782f8e9ec9cf1e1961acd6bb9bc406d715837706) fix: updating pfe-card story so image overflow works #599
+- [f111593](https://github.com/patternfly/patternfly-elements/commit/f111593805390b1395c284d5905a2e530f829e01) fix: pfe-icon stretch
+- [b2a099d](https://github.com/patternfly/patternfly-elements/commit/b2a099d0fa1cb1bed8cc7d054ffa1138613e4408) fix: pfelement compilation of css assets
+- [d16ab0c](https://github.com/patternfly/patternfly-elements/commit/d16ab0ce81268cd32df69bb168dc7e32118a9912) feat: pfe-toast component
 
 ## Prerelease 27 ( 2019-10-25 )
 
 Tag: [v1.0.0-prerelease.27](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.27)
 
-- [f18aa6f](https://github.com/patternfly/patternfly-elements/commit/f18aa6ff05e510993baf0f1971a85e2e4715bcc4) Update build tools to support the files array in package.json for each component
+- [f18aa6f](https://github.com/patternfly/patternfly-elements/commit/f18aa6ff05e510993baf0f1971a85e2e4715bcc4) fix: Update build tools to support the files array in package.json for each component
 - [9d9d41c](https://github.com/patternfly/patternfly-elements/commit/9d9d41c30883674d52cd1c29aa2300829c00693f) feat: Add patternfly project as a dependency so that styles can be extended
-- [b13ef5b](https://github.com/patternfly/patternfly-elements/commit/b13ef5b2470770acc01638d4a55c1f90a2859bda) Support table
-- [274e35c](https://github.com/patternfly/patternfly-elements/commit/274e35cd4e8a08721888d8fad195b6fe37a525b7) Navigation component
+- [b13ef5b](https://github.com/patternfly/patternfly-elements/commit/b13ef5b2470770acc01638d4a55c1f90a2859bda) doc: Support table
+- [274e35c](https://github.com/patternfly/patternfly-elements/commit/274e35cd4e8a08721888d8fad195b6fe37a525b7) feat: Navigation component
 - [6b5db77](https://github.com/patternfly/patternfly-elements/commit/6b5db77c20358499f78b66811b73ea6be309318b) doc: Update documentation
 - [d4600dd](https://github.com/patternfly/patternfly-elements/commit/d4600dd1c6e2abfcf8918d06b4eaacb8fb62d208) feat: Add automatic Sass globbing to pfe-sass
 - [27a97e1](https://github.com/patternfly/patternfly-elements/commit/27a97e135986de37ede55504a1630bf974de0e0c) fix: pfe-cta - functions & IE11 accessibility

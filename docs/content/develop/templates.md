@@ -13,9 +13,9 @@ tags = [ "start" ]
 
 ## Light DOM vs. Shadow DOM
 
-The concept of light DOM is already familiar to any web developer. Basic HTML elements that you place into a `.html` file are light DOM. Tags like `<h1>`, `<div>` and `<aside>` are all simple light DOM. 
+The concept of light DOM is already familiar to any web developer. Basic HTML elements that you place into a `.html` file are light DOM. Tags like `<h1>`, `<div>` and `<aside>` are all simple light DOM.
 
-However, when you add a tag to the light DOM such as `select`, the browser has additional styles that are invoked from within the Shadow DOM. 
+However, when you add a tag to the light DOM such as `select`, the browser has additional styles that are invoked from within the Shadow DOM.
 
 When building web components, you may choose whether to keep content in the light DOM (i.e. pfe-tab), or to copy it from the light DOM into the shadow DOM (i.e. pfe-accordion-header), or to place it in the shadow DOM only (i.e. close button on pfe-modal).
 
@@ -42,11 +42,11 @@ Consider the pros and cons for each approach, and remember that web components s
     <option value="php">PHP</option>
     <option value="js">JavaScript</option>
  </select>
-  
- 
+
+
 ![HTML select tag](/HTML__select__Tag.jpg)
 
-One part of web components is the ability to utilize the Shadow DOM to store additional markup. There are pros and cons to placing things in the Light DOM: 
+One part of web components is the ability to utilize the Shadow DOM to store additional markup. There are pros and cons to placing things in the Light DOM:
 
 **Pros**
 
@@ -58,7 +58,7 @@ One part of web components is the ability to utilize the Shadow DOM to store add
 
 **Cons**
 
-1. Web component styles can be overriden by styles already on the page. It's likely that existing styles will probably be more specific than styles associated with the `::slotted(*)` selector. 
+1. Web component styles can be overriden by styles already on the page. It's likely that existing styles will probably be more specific than styles associated with the `::slotted(*)` selector.
 
     ```
     // regular-styles.css
@@ -66,9 +66,9 @@ One part of web components is the ability to utilize the Shadow DOM to store add
 	    color: blue;
     }
     ```
-    
+
     is more specific than  
-     
+
 	```
 	// web-component.css
 	::slotted(a) {
@@ -76,16 +76,16 @@ One part of web components is the ability to utilize the Shadow DOM to store add
    }
    ```
    but you can win the specificity battle with !important
-     
+
 	```
 	// web-component.css
 	::slotted(a) {
       color: purple !important;
    }
    ```
-   
+
 2. Internet Explorer & Edge
-    
+
     * @TODO finish notes below
 
     * Shady CSS polyfills `::slotted()`. Its not really slotted but its a workaround so that you can use that selector
@@ -95,7 +95,7 @@ One part of web components is the ability to utilize the Shadow DOM to store add
     * It's really hard to detect because it doesn't show up well in the inspector but if you select a shadow-element that has a custom class on it, it will show up in the header region above the body and it does get styles.
 
 
-3. You can only style **direct** descendants of the slot. 
+3. You can only style **direct** descendants of the slot.
     - If you need to use nested elements in the web component, like unordered lists & list items: `<ul><li>...</li></ul>` you cannot actually style the list item. This means you would have to ship a light DOM stylesheet with the web component:
 
 
@@ -105,7 +105,7 @@ One part of web components is the ability to utilize the Shadow DOM to store add
 
 Some web components ship with a light DOM stylesheet for IE / Edge support. These stylesheets are opt-in (they are not included in the JavaScript file for the web component).
 
-*   Includes 
+*   Includes
     *   component fallback styles
     *   basic class-based styles for typography  
 
@@ -114,12 +114,12 @@ Some web components ship with a light DOM stylesheet for IE / Edge support. Thes
 <br/>
 
 
-### Shadow DOM 
+### Shadow DOM
 
 
 **Pros**
 
-1. Styles are encapsulated, so there are no worries about conflicting styles or specificity battles from other stylesheets. 
+1. Styles are encapsulated, so there are no worries about conflicting styles or specificity battles from other stylesheets.
     - Sometimes this is desirable, like links inside the pfe-cta component. We don't want those links to accept any external styles.
 2. Semantic markup
     - Would google see an H3 that a dev put in the pfe-hero component, or the h1 that the component upgrades it to?
@@ -152,8 +152,8 @@ _**Note:** Elements that can be inserted into slots are known as slotable; when 
 
 
 *   If you put some content between the opening & closing tags of a web component without a slot name, it will put that markup into the unnamed slot.
-    *   If there is no unnamed slot, it will _not_ render that content. 
-    *   For this reason, it’s a good idea to leave one unnamed slot if general markup is allowed within that component. All PatternFly Element web components operate this way. 
+    *   If there is no unnamed slot, it will _not_ render that content.
+    *   For this reason, it’s a good idea to leave one unnamed slot if general markup is allowed within that component. All PatternFly Element web components operate this way.
 *   Whenever you add slot="something", you are telling the webcomponent where to put this information within the inner template.
 
 
@@ -176,22 +176,22 @@ _**Note:** Elements that can be inserted into slots are known as slotable; when 
     <h1 slot="header">This is no good</h1>
   </div>
 </pfe-component>
-	
+
 // But...
 <pfe-component>
   <div slot="header">
     <h1 slot="header__content">This will work</h1>
   </div>
 </pfe-component>
-	
+
 ```
 
 
 
-*   The direct descendant inside a slot in the light DOM will accept styles from the web component. For example, we are able to style links within the CTA component because the `<a>` tag is being passed into the unnamed slot in the CTA component. The link tag doesn’t need an explicit attribute like` slot="link"` because if a web component has one unnamed `<slot></slot>`, then anything you put inside that custom component tag will be in that slot by default. 
+*   The direct descendant inside a slot in the light DOM will accept styles from the web component. For example, we are able to style links within the CTA component because the `<a>` tag is being passed into the unnamed slot in the CTA component. The link tag doesn’t need an explicit attribute like` slot="link"` because if a web component has one unnamed `<slot></slot>`, then anything you put inside that custom component tag will be in that slot by default.
 
     ```
-    <pfe-cta priority="primary">
+    <pfe-cta pfe-priority="primary">
       <a href="#">Primary</a>  
       <!-- this link ^ is in the default slot -->
     </pfe-cta>
@@ -201,7 +201,7 @@ _**Note:** Elements that can be inserted into slots are known as slotable; when 
 *   Child elements within a custom tag don’t have to be the first child to be styled, they only have to be direct descendants of the component. Meaning once you nest something inside another tag, it can no longer receive styles targeted with the `::slotted` pseudo selector. Assuming the component has some basic styles on all slots like this:  `::slotted(*)  {border: red solid 1px;}` then both the div and H2 tag would recieve a red border:
 
     ```
-    <pfe-cta priority="primary">
+    <pfe-cta pfe-priority="primary">
       <div>styled!</div>
       <h2 href="#">styled!</h2>
     </pfe-cta>
@@ -211,9 +211,9 @@ _**Note:** Elements that can be inserted into slots are known as slotable; when 
 
 
     ```
-    <pfe-cta priority="primary">
+    <pfe-cta pfe-priority="primary">
       <div>
-        <a href="#">This cannot receive styles 
+        <a href="#">This cannot receive styles
         from the web component, because it's nested</a>
       </div>
     </pfe-cta>
@@ -292,4 +292,3 @@ If you want to loop over a set of data, you can do so by utilizing the construct
 	`).join('\n')}
 </ul>
 ```
-

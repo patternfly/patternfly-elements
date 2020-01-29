@@ -2,58 +2,47 @@
 
 $LOCAL: band;
 
-%flex-fallback {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: flex-start;
-}
 
-%grid-layout {
-  display: grid;
-  grid-row-gap: #{pfe-local(gutter--vertical)};
-  grid-column-gap: #{pfe-local(gutter--horizontal)};
-  margin-bottom: 0;
-}
-
-:host {
-  display: block;
+$variables: (
 
   // Default spacing values
-  --pfe-band--Padding--vertical:               calc( #{pfe-var(container-spacer)} * 4);
-  --pfe-band--Padding--horizontal:             calc( #{pfe-var(container-spacer)} * 1);
+  Padding--vertical:    calc( #{pfe-var(container-spacer)} * 4),
+  Padding--horizontal:  calc( #{pfe-var(container-spacer)} * 1),
+
   // Bring them together for ease of use below
-  --pfe-band--Padding:                         #{pfe-local(Padding--vertical)}  #{pfe-local(Padding--horizontal)};
+  Padding: #{pfe-local(Padding--vertical)}  #{pfe-local(Padding--horizontal)},
 
   // Surface colors
-  --pfe-band--BackgroundColor:                 #{pfe-color(surface--base)};
-  --pfe-band--BackgroundPosition:              center center;
+  BackgroundColor:    #{pfe-color(surface--base)},
+  BackgroundPosition: center center,
 
   // Border settings
-  --pfe-band--Border:                          #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
+  Border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent,
 
   // Layouts, grid layouts
-  --pfe-band--layout:                           1fr;
-  --pfe-band__header--layout:                   1fr;
-  --pfe-band__body--layout:                     1fr;
-  --pfe-band__footer--layout:                   1fr;
-  --pfe-band__aside--layout:                    1fr;
+  layout: 1fr,
+  
+  header: ( layout: 1fr ),
+  body:   ( layout: 1fr ),
+  footer: ( layout: 1fr ),
+  aside:  ( layout: 1fr ),
 
   // Vertical spacing
-  --pfe-band--gutter--vertical:                 #{pfe-var(container-spacer)};
-  --pfe-band--gutter--horizontal:               calc(#{pfe-var(container-spacer)} * 3);
-
-  // Text colors
-  --pfe-broadcasted--color--text:              #{pfe-color(surface--base--text)};
-  --pfe-broadcasted--color--ui-link:           #{pfe-color(surface--base--link)};
-  --pfe-broadcasted--color--ui-link--visited:  #{pfe-color(surface--base--link--visited)};
-  --pfe-broadcasted--color--ui-link--hover:    #{pfe-color(surface--base--link--hover)};
-  --pfe-broadcasted--color--ui-link--focus:    #{pfe-color(surface--base--link--focus)};
+  gutter--vertical:   #{pfe-var(container-spacer)},
+  gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3),
 
   // Band width logic
   // Initialize at mobile breakpoint
-  --pfe-band--Width: auto;
-  --pfe-band--Width__aside--sm: 240px;
-  --pfe-band--Width__aside--lg: 300px;
+  Width: auto,
+  Width__aside--sm: 240px,
+  Width__aside--lg: 300px,
+
+);
+
+:host {
+  @include pfe-print-variables($variables);
+  @include pfe-set-broadcast-theme(light);
+  --theme: light;
 
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
@@ -61,18 +50,15 @@ $LOCAL: band;
       --pfe-band--Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) );
     }
   }
-  // Reduce padding for print
-  @media print {
-    --pfe-band--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
-  }
 
   // Wrapper sets padding and background visuals
+  display: block;
   position: relative;
-  @extend %flex-fallback;
 
-  // Padding 
+  // Custom padding on mobile
   padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
 
+  // Variable padding on desktop
   @media (min-width: #{pfe-breakpoint(sm)}) {
     padding: #{pfe-local(Padding)};
   }
@@ -83,10 +69,25 @@ $LOCAL: band;
   // Base colors
   background-color:      #{pfe-local(BackgroundColor)};
   background-position:   #{pfe-local(BackgroundPosition)};
-  color:                 #{pfe-radio(color, text)};
+  color:                 #{pfe-apply-broadcast(text)};
 
   // Remove background color for print
   @include pfe-no-print-background;
+
+  @include pfe-print-media {
+    // Add the border to the card for print
+    border-radius: #{map-get($pfe-vars, surface--border-radius)};
+    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
+    // Reduce padding for print
+    padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
+  }
+
+  @include browser-query(ie11) {
+    background-color: #{pfe-color(surface--lightest)} !important;
+    color: #{pfe-color(text)} !important;
+    background-image: none !important;
+    padding: calc(#{pfe-var(container-spacer)});
+  }
 
   // Tag element styles
   *, *::before, *::after {
@@ -94,33 +95,26 @@ $LOCAL: band;
   }
 }
 
-@each $color in (darker, darkest, accent, complement, lighter, lightest) {
-  :host([pfe-color="#{$color}"]) {
-    --pfe-band--BackgroundColor:                  #{pfe-color(surface--#{$color})};
-    --pfe-broadcasted--color--text:               #{pfe-color(surface--#{$color}--text)};
-    --pfe-broadcasted--color--ui-link:            #{pfe-color(surface--#{$color}--link)};
-    --pfe-broadcasted--color--ui-link--visited:   #{pfe-color(surface--#{$color}--link--visited)};
-    --pfe-broadcasted--color--ui-link--hover:     #{pfe-color(surface--#{$color}--link--hover)};
-    --pfe-broadcasted--color--ui-link--focus:     #{pfe-color(surface--#{$color}--link--focus)};
-  }
-}
+// Use-case for transparent backgrounds
+@include pfe-theme-contexts; // imports on="light" etc support
+
+// Pull in pfe-color settings for all supported surface colors
+@include pfe-surfaces;
 
 // thinner padding on top & bottom
 :host([pfe-size="small"]) {
-  --pfe-band--Padding:   calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
+  --pfe-band--Padding: calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
 }
 
 .pfe-band {
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
     --pfe-band_region--width: calc(calc(1fr - #{pfe-local(Width__aside--sm)}) - #{pfe-local(gutter--horizontal)});
-    --pfe-band--gridTemplateArea_mobile: "body";
+    grid-template-areas: "body";
     // Styles for the different combination of regions
     &[pfe-has-aside] {
-      --pfe-band--gridTemplateArea_mobile:
+      grid-template-areas:
         "body" "aside";
-      --pfe-band--gridTemplateArea_desktop:
-        "body aside";
       @media (min-width: #{pfe-breakpoint(md)}) {
         --pfe-band--layout: 1fr #{pfe-local(Width__aside--sm)};
       }
@@ -128,13 +122,13 @@ $LOCAL: band;
         --pfe-band--layout: 1fr #{pfe-local(Width__aside--lg)};
       }
       &[pfe-aside-mobile="top"] {
-        --pfe-band--gridTemplateArea_mobile:
+        grid-template-areas:
           "aside" "body";
       }
       &[pfe-aside-desktop="left"] {
-        --pfe-band--gridTemplateArea_desktop:
-          "aside body";
         @media (min-width: #{pfe-breakpoint(md)}) {
+            grid-template-areas:
+              "aside body";
           --pfe-band--layout: #{pfe-local(Width__aside--sm)} 1fr;
         }
         @media (min-width: #{pfe-breakpoint(lg)}) {
@@ -143,113 +137,137 @@ $LOCAL: band;
       }
     }
     &[pfe-has-header] {
-      --pfe-band--gridTemplateArea_mobile:
+      grid-template-areas:
         "header" "body";
       &[pfe-has-aside] {
-        --pfe-band--gridTemplateArea_mobile:  
-          "header" 
+        grid-template-areas:
+          "header"
           "body" "aside";
-        --pfe-band--gridTemplateArea_desktop: 
-          "header header" 
-          "body aside";
+          @media (min-width: #{pfe-breakpoint(md)}) {
+            grid-template-areas:
+              "header header"
+              "body aside";
+         }
       }
       &[pfe-aside-mobile="top"] {
-        --pfe-band--gridTemplateArea_mobile:  
-          "aside" 
-          "header" 
+        grid-template-areas:
+          "aside"
+          "header"
           "body";
       }
       &[pfe-aside-height="full"] {
-        --pfe-band--gridTemplateArea_desktop:
-          "header aside"
-          "body aside";
+          @media (min-width: #{pfe-breakpoint(md)}) {
+            grid-template-areas:
+              "header aside"
+              "body aside";
+          }
       }
       &[pfe-aside-desktop="left"] {
-        --pfe-band--gridTemplateArea_desktop:
-          "header header"
-          "aside body";
-        &[pfe-aside-height="full"] {
-          --pfe-band--gridTemplateArea_desktop:
-            "aside header"
-            "aside body";
+          @media (min-width: #{pfe-breakpoint(md)}) {
+            grid-template-areas:
+              "header header"
+              "aside body";
+          }
+          &[pfe-aside-height="full"] {
+              @media (min-width: #{pfe-breakpoint(md)}) {
+                  grid-template-areas:
+                  "aside header"
+                  "aside body";
+              }
+            }
         }
-      }
     }
     &[pfe-has-footer] {
-      --pfe-band--gridTemplateArea_mobile:
+      grid-template-areas:
         "body"
         "footer";
       &[pfe-has-aside] {
-        --pfe-band--gridTemplateArea_mobile:
+        grid-template-areas:
           "body"
           "aside"
           "footer";
-        --pfe-band--gridTemplateArea_desktop:
-          "body aside"
-          "footer footer";
+          @media (min-width: #{pfe-breakpoint(md)}) {
+             grid-template-areas:
+                "body aside"
+                "footer footer";
+          }
       }
       &[pfe-aside-mobile="top"] {
-        --pfe-band--gridTemplateArea_mobile:
+        grid-template-areas:
           "aside"
           "body"
           "footer";
       }
       &[pfe-aside-height="full"] {
-        --pfe-band--gridTemplateArea_desktop:
-          "body aside"
-          "footer aside" ;
+         @media (min-width: #{pfe-breakpoint(md)}) {
+            grid-template-areas:
+               "body aside"
+               "footer aside" ;
+         }
       }
       &[pfe-aside-desktop="left"] {
-        --pfe-band--gridTemplateArea_desktop:
-          "aside body"
-          "footer footer";
-        &[pfe-aside-height="full"] {
-          --pfe-band--gridTemplateArea_desktop:
-            "aside body"
-            "aside footer";
-        }
+          @media (min-width: #{pfe-breakpoint(md)}) {
+             grid-template-areas:
+             "aside body"
+             "footer footer";
+          }
+          &[pfe-aside-height="full"] {
+              @media (min-width: #{pfe-breakpoint(md)}) {
+                 grid-template-areas:
+                 "aside body"
+                 "aside footer";
+              }
+          }
       }
     }
     &[pfe-has-header][pfe-has-footer] {
-      --pfe-band--gridTemplateArea_mobile:
+      grid-template-areas:
         "header"
         "body"
         "footer";
       &[pfe-has-aside] {
-        --pfe-band--gridTemplateArea_mobile:
+        grid-template-areas:
           "header"
           "body"
           "footer"
           "aside";
-        --pfe-band--gridTemplateArea_desktop:
-          "header header"
-          "body aside"
-          "footer footer";
+        @media (min-width: #{pfe-breakpoint(md)}) {
+            grid-template-areas:
+            "header header"
+            "body aside"
+            "footer footer";
+        }
       }
       &[pfe-aside-mobile="top"] {
-        --pfe-band--gridTemplateArea_mobile:
+        grid-template-areas:
           "aside"
           "header"
           "body"
           "footer";
       }
       &[pfe-aside-height="full"] {
-        --pfe-band--gridTemplateArea_desktop:
-          "header aside"
-          "body aside"
-          "footer aside" ;
+          @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas:
+             "header aside"
+             "body aside"
+             "footer aside" ;
+          }
       }
       &[pfe-aside-desktop="left"] {
-        --pfe-band--gridTemplateArea_desktop:
-          "header header"
-          "aside body"
-          "footer footer";
-        &[pfe-aside-height="full"] {
-          --pfe-band--gridTemplateArea_desktop:
-            "aside header"
-            "aside body"
-            "aside footer";
-        }
+         @media (min-width: #{pfe-breakpoint(md)}) {
+             grid-template-areas:
+               "header header"
+               "aside body"
+               "footer footer";
+         }
+         &[pfe-aside-height="full"] {
+            @media (min-width: #{pfe-breakpoint(md)}) {
+                grid-template-areas:
+                "aside header"
+                "aside body"
+                "aside footer";
+            }
+         }
       }
     }
 
@@ -257,27 +275,28 @@ $LOCAL: band;
     margin:    0 auto;
     width: 100%;
     max-width: #{pfe-local(Width)};
-    @extend %flex-fallback;
 
     // Grid support styles
     @supports (display: grid) {
-      @extend %grid-layout;
+      display: grid;
+      grid-row-gap: #{pfe-local(gutter--vertical)};
+      grid-column-gap: #{pfe-local(gutter--horizontal)};
+      margin-bottom: 0;
       grid-template-columns: #{pfe-local(layout)};
       grid-template-rows:    max-content;
-      grid-template-areas:   var(--pfe-band--gridTemplateArea_mobile);
-      @media (min-width: #{pfe-breakpoint(md)}) {
-        grid-template-areas: var(--pfe-band--gridTemplateArea_desktop);
-      }
     }
-  }
+}
+
   // For each section in the band layout
   @each $section in (header, body, aside, footer) {
     &__#{$section} { // i.e., pfe-band__header
-      @extend %flex-fallback; // Add the flex fallback styles
       margin-bottom: #{pfe-local(gutter--vertical)};
       // Apply the standard grid
       @supports (display: grid) {
-          @extend %grid-layout;
+          display: grid;
+          grid-row-gap: #{pfe-local(gutter--vertical)};
+          grid-column-gap: #{pfe-local(gutter--horizontal)};
+          margin-bottom: 0;
           // Apply the section as a named grid-area
           grid-area: #{$section};
           // Allow users to hook into the layout with custom columns
@@ -287,6 +306,26 @@ $LOCAL: band;
   }
 
   &__aside {
-    align-self: stretch;
+    align-self: flex-start;
+  }
+
+  @include browser-query(ie11) {
+    &__body {
+        width: 60%;
+        float: left;
+    }
+    &__aside {
+      float: left;
+      width: 35%;
+      margin: 0 2.5%;
+    }
+    &__footer {
+       clear: both;
+    }
+     &__container::after {
+       content: " ";
+       display: block;
+       clear: both;
+     }
   }
 }

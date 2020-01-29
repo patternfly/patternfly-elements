@@ -64,7 +64,9 @@ class PfeContentSet extends PFElement {
     this.render();
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      setTimeout(() => {
+        this._observer.observe(this, { childList: true });
+      }, 0);
     }
   }
 
@@ -153,6 +155,10 @@ class PfeContentSet extends PFElement {
     // Pass the theme property down to the tabs component
     if (this.on.value) {
       tabs.setAttribute("on", this.on.value);
+    }
+
+    if (this.align.value) {
+      tabs.setAttribute("pfe-tab-align", this.align.value);
     }
 
     if (!existingTabs) {

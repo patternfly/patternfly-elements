@@ -1,4 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
+
 $LOCAL: modal;
 
 $pfe-modal--breakpoint--medium: 640px;
@@ -11,6 +12,7 @@ $pfe-modal--breakpoint--medium: 640px;
 	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);
 	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
 	--pfe-modal__close--size: calc(#{pfe-var(ui--element--size)} - 4px);
+
 	display: block;
 	position: relative;
 
@@ -30,7 +32,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		z-index: #{pfe-var($cssvar: modal, $category: zindex, $map: $z-index)};
+		z-index: #{pfe-zindex(modal)};
 
 		&[hidden] {
 			display: none;
@@ -42,7 +44,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		width: 100%;
 		top: 0;
 		left: 0;
-		background-color: pfe-local($cssvar: BackgroundColor, $region: overlay);
+		background-color: #{pfe-local($cssvar: BackgroundColor, $region: overlay)};
 		cursor: pointer;
 
 		&[hidden] {
@@ -50,15 +52,19 @@ $pfe-modal--breakpoint--medium: 640px;
 		}
 	}
 	&__window {
-		position: relative;
-		max-width: pfe-local(MaxWidth--mobile);
-		min-width: pfe-local(MinWidth);
-		max-height: pfe-local(MaxHeight);
-		margin: 0 auto;
-		box-shadow: pfe-var(box-shadow--lg);
-		background-color: pfe-color(surface--lightest);
-		border-radius: #{pfe-var(ui--border-radius)};
+		@include pfe-set-broadcast-theme(light);
+		--theme: light;
 
+		position: relative;
+		max-width: #{pfe-local(MaxWidth--mobile)};
+		min-width: #{pfe-local(MinWidth)};
+		max-height: #{pfe-local(MaxHeight)};
+		margin: 0 auto;
+		box-shadow: #{pfe-var(box-shadow--lg)};
+		background-color: #{pfe-color(surface--lightest)};
+		color: #{pfe-apply-broadcast(text)};
+		border-radius: #{pfe-var(ui--border-radius)};
+		
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			max-width: pfe-local(MaxWidth);
 		}
@@ -98,30 +104,30 @@ $pfe-modal--breakpoint--medium: 640px;
 	}
 
 	&__close {
-		@include pfe-reset-button;
+		@extend %reset-button;
 		position: absolute;
-		top: calc(#{pfe-var(container-padding)} * .25);
-		right: calc(#{pfe-var(container-padding)} * .25);
+		top: 	calc(#{pfe-var(container-padding)} * .25);
+		right: 	calc(#{pfe-var(container-padding)} * .25);
 		cursor: pointer;
 		line-height: .5;
-		padding: pfe-var(container-padding);
+		padding: #{pfe-var(container-padding)};
 
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
-			top: #{pfe-var(container-padding)};
-			right: #{pfe-var(container-padding)};
+			top: 	#{pfe-var(container-padding)};
+			right: 	#{pfe-var(container-padding)};
 		}
 
 		@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
-			top: calc(#{pfe-var(container-padding)} / 2);
-			right: calc(#{pfe-var(container-padding)} / 2);
+			top: 	calc(#{pfe-var(container-padding)} / 2);
+			right: 	calc(#{pfe-var(container-padding)} / 2);
 		}
 
 		> svg {
-			fill: pfe-radio(text);
-			height: pfe-var(ui--element--size);
-			width: pfe-var(ui--element--size);
-			height: pfe-local($cssvar: size, $region: close);
-			width: pfe-local($cssvar: size, $region: close);
+			fill: 	#{pfe-apply-broadcast(text)};
+			height: #{pfe-var(ui--element--size)};
+			width: 	#{pfe-var(ui--element--size)};
+			height: #{pfe-local($cssvar: size, $region: close)};
+			width: 	#{pfe-local($cssvar: size, $region: close)};
 		}
 	}
 }

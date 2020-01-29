@@ -19,6 +19,12 @@ class PfeAvatar extends PFElement {
     return ["pfe-name", "pfe-pattern", "pfe-src", "pfe-shape"];
   }
 
+  static get events() {
+    return {
+      connected: `${this.tag}:connected`
+    };
+  }
+
   static get patterns() {
     return {
       triangles: "triangles",
@@ -75,11 +81,9 @@ class PfeAvatar extends PFElement {
 
     this._initCanvas();
 
-    this.dispatchEvent(
-      new CustomEvent(`${PfeAvatar.tag}:connected`, {
-        bubbles: false
-      })
-    );
+    this.emitEvent(PfeAvatar.events.connected, {
+      bubbles: false
+    });
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -88,7 +92,7 @@ class PfeAvatar extends PFElement {
     if (this.connected) {
       this.update();
     } else {
-      this.addEventListener(`${PfeAvatar.tag}:connected`, () => this.update());
+      this.addEventListener(PfeAvatar.events.connected, () => this.update());
     }
   }
 

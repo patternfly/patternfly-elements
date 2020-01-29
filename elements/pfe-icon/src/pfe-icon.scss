@@ -1,6 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
+@include pfe-theme-contexts; // imports on="light" etc support
 
-$USE-FALLBACK: true;
+
 $LOCAL: icon;
 
 /// ===========================================================================
@@ -24,12 +25,17 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   --pfe-icon--Spacing:                 #{pfe-var(container-spacer)};
   --pfe-icon--Size:                    #{pfe-var(icon-size)};
   --pfe-icon--Padding:                 0;
-  --pfe-icon--Color:                   #{pfe-radio(color, text)};
+  --pfe-icon--Color:                   #{pfe-apply-broadcast(text)};
   --pfe-icon--BackgroundColor:         transparent;
   --pfe-icon--BorderColor:             transparent;
 
   position: relative;
-  display: inline-block;
+  display:  inline-block;
+  // Supports sizing while preserving aspect ratio (despite layout)
+  max-width:    calc(#{pfe-local(Size)} + (#{pfe-local(Padding)} * 2));
+  width:    fit-content !important;
+  max-height:    calc(#{pfe-local(Size)} + (#{pfe-local(Padding)} * 2));
+  height:   fit-content !important;
   line-height: 0;
 
   @at-root #{&}([data-block]) {
@@ -55,22 +61,18 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   border: #{$pfe-icon--border-width} #{$pfe-icon--border-style} #{pfe-local($cssvar: BorderColor, $fallback: transparent)};
   padding: #{pfe-local($cssvar: Padding, $fallback: 0)};
 
-  @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
+  @include browser-query(ie11) {
       @include greyscale-fallback();
   }
 
-  @supports (-ms-accelerator:true) {
-      /* IE Edge 12+ CSS */
-      @include greyscale-fallback();
-  }
 
-  @supports (-ms-ime-align:auto) {
-      /* IE Edge 16+ CSS */
+  // Edge 12+ CSS
+  @include browser-query(edge12) {
       @include greyscale-fallback();
   }
 
   svg image {
-    @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { //ie11
+    @include browser-query(ie11) {
       filter: none;
     }
   }
@@ -109,13 +111,13 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 
 @each $color in (base, complement, accent) {
   :host([color="#{$color}"]) {
-    --pfe-broadcasted--color--text:      #{pfe-color(ui-#{$color})};
+    --pfe-broadcasted--text: #{pfe-color(ui-#{$color})};
   }
 }
 
 @each $level in (critical, important, moderate, success, info, default) {
   :host([color="#{$level}"]) {
-    --pfe-broadcasted--color--text:      #{pfe-color(feedback--#{$level})};
+    --pfe-broadcasted--text: #{(feedback--#{$level})};
   }
 }
 
@@ -132,7 +134,7 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   :host([circled="#{$name}"]) {
     --pfe-icon--BackgroundColor:       #{pfe-color(surface--#{$color})};
     --pfe-icon--BorderColor:           transparent;
-    --pfe-broadcasted--color--text:    #{pfe-color(surface--#{$color}--text)};
+    @include pfe-set-broadcast-theme(#{pfe-get-theme(surface--#{$color}--theme)});
   }
 }
 

@@ -6,67 +6,100 @@
     <title>PatternFly Element | pfe-modal Demo</title>
 
     <noscript>
-      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
     </noscript>
 
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../dist/pfe-modal.umd.js'])</script>
+
+    <script>require([
+      '../dist/pfe-modal.umd.js',
+      '../../pfe-band/dist/pfe-band.umd.js',
+      '../../pfe-card/dist/pfe-card.umd.js',
+      '../../pfe-cta/dist/pfe-cta.umd.js'
+    ])</script>
   </head>
+
   <body unresolved>
     <h1>&lt;pfe-modal&gt;</h1>
-    <section>
-      <h2>Modal: Standard modal</h2>
+
+    <pfe-band pfe-color="lightest">
+      <h2 slot="pfe-band--header">Modal: Standard modal</h2>
       <pfe-modal>
-        <button slot="pfe-modal--trigger">Open modal</button>
+        <pfe-cta  slot="pfe-modal--trigger">
+          <button>Open modal</button>
+        </pfe-cta>
         <h2 slot="pfe-modal--header">Modal with a header</h2>
         <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         <pfe-cta>
           <a href="#bar">Learn more</a>
         </pfe-cta>
       </pfe-modal>
-    </section>
-    <section>
-      <h2>Modal: No header region</h2>
+    </pfe-band>
+
+    <pfe-band pfe-color="darkest" id="test-dark">
+      <h2 slot="pfe-band--header">Modal: No header region</h2>
       <pfe-modal>
-        <button slot="pfe-modal--trigger">Open modal</button>
+        <pfe-cta pfe-priority="secondary" slot="pfe-modal--trigger">
+          <button>Open modal</button>
+        </pfe-cta>
         <h3>This has no header region</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <pfe-cta id="test-dark-child">
+          <a href="#">Call-to-action</a>
+        </pfe-cta>
       </pfe-modal>
-    </section>
-    <section>
+    </pfe-band>
+
+    <pfe-band pfe-color="complement">
       <h2>Modal: No headings</h2>
       <pfe-modal>
         <button slot="pfe-modal--trigger">Open modal</button>
         <p>This modal doesn't have any headings. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-modal>
-    </section>
-    <section>
-      <h2>Modal: External trigger</h2>
-      <button id="custom-trigger">Custom open modal</button>
-      <pfe-modal id="custom-modal">
-        <h2 slot="pfe-modal--header">Custom open modal</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-modal>
-    </section>
-    <section>
-      <h2>Modal: a lot of content</h2>
-      <pfe-modal>
-        <button slot="pfe-modal--trigger">Open modal</button>
-        <h2 slot="pfe-modal--header">Modal with a header with a super duper long title and a lot of content</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Sed posuere consectetur est at lobortis. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur blandit tempus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur blandit tempus porttitor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Curabitur blandit tempus porttitor.</p>
-        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui. Maecenas faucibus mollis interdum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
         <pfe-cta>
-          <a href="#bar">Learn more</a>
+          <a href="#">Call-to-action</a>
         </pfe-cta>
       </pfe-modal>
-    </section>
+    </pfe-band>
+    
+    <pfe-band pfe-color="lightest">
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col">
+        <pfe-card pfe-color="darkest">
+          <h2 slot="pfe-card--header">Modal: External trigger</h2>
+          <pfe-cta><button id="custom-trigger">Custom open modal</button></pfe-cta>
+          <pfe-modal id="custom-modal">
+            <h2 slot="pfe-modal--header">Custom open modal</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <pfe-cta>
+              <a href="#bar">Learn more</a>
+            </pfe-cta>
+          </pfe-modal>
+        </pfe-card>
+
+        <pfe-card pfe-color="complement">
+          <h2 slot="pfe-card--header">Modal: a lot of content</h2>
+          <pfe-modal>
+            <pfe-cta slot="pfe-modal--trigger"><button>Open modal</button></pfe-cta>
+            <h2 slot="pfe-modal--header">Modal with a header with a super duper long title and a lot of content</h2>
+            <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Sed posuere consectetur est at lobortis. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur blandit tempus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur blandit tempus porttitor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Curabitur blandit tempus porttitor.</p>
+            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui. Maecenas faucibus mollis interdum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+            <pfe-cta>
+              <a href="#bar">Learn more</a>
+            </pfe-cta>
+          </pfe-modal>
+        </pfe-card>
+      </div>
+    </pfe-band>
     <script>
       document.querySelector("#custom-trigger").addEventListener("click", function (event) {
         document.querySelector("#custom-modal").open(event);

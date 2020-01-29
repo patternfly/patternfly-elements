@@ -2,10 +2,20 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>PatternFly Element | pfe-markdown Demo</title>
 
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+    
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
     <noscript>
-      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
     </noscript>
 
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
@@ -14,8 +24,8 @@
     <link href="https://static.redhat.com/libs/redhat/redhat-theme/latest/advanced-theme.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require(['../dist/pfe-markdown.umd.min.js'])</script>
     <!-- <script type="module" src="../dist/pfe-markdown.min.js"></script> -->
@@ -25,17 +35,11 @@
 
     <style>
       section {
-        margin-bottom: 32px;
+        padding: 2rem;
         border-bottom: 1px solid #ececec;
       }
-
-      a {
-        color: red;
-        font-family: cursive;
-      }
-
-      a:visited {
-        color: teal;
+      .dark-background {
+        background-color: #000;
       }
     </style>
 
@@ -76,11 +80,21 @@
   </head>
   <body unresolved>
     <h1>&lt;pfe-markdown&gt;</h1>
+
     <section>
       <pfe-markdown>
-        <div pfe-markdown-container># This is a heading</div>
+        <div pfe-markdown-container># This is a heading
+Paragraph text.</div>
       </pfe-markdown>
     </section>
+
+    <section class="dark-background on-dark">
+      <pfe-markdown>
+        <div pfe-markdown-container># This is a heading on dark
+Paragraph text.</div>
+      </pfe-markdown>
+    </section>
+
     <section>
       <h2>Using markdown in the light dom</h2>
       <pfe-markdown>
@@ -90,18 +104,21 @@
 This is pretty easy too. You just need to worry about indentation.</div>
       </pfe-markdown>
     </section>
+
     <section>
       <h2>Updating the pfe-markdown tag dynamically</h2>
       <pfe-markdown>
         <div pfe-markdown-container id="markdownTag"></div>
       </pfe-markdown>
     </section>
+
     <section>
       <h2>Updating the pfe-markdown tag dynamically (a second time)</h2>
       <pfe-markdown>
         <div pfe-markdown-container id="markdownTagSecondTime"></div>
       </pfe-markdown>
     </section>
+    
     <section>
       <h2>Changing the light dom to show that pfe-markdown updates the markdown</h2>
       <pfe-markdown>

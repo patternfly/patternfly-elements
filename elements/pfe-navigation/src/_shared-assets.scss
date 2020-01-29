@@ -7,25 +7,40 @@ $trigger--FontWeight--fallback: #{pfe-var(font-weight--light)};
 $trigger--Color--fallback: #{pfe-color(text--on-dark)};
 
 $LOCAL: navigation;
-$USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
+$variables: (
+
+// Supplemental breakpoints,   
+// Usage:  @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { 
+
+//  grid-breakpoint--xs:           0,
+    sm-mobile:                     500px,
+//  grid-breakpoint--sm:           576px,
+    lg-mobile:                     640px,
+//  grid-breakpoint--md:           768px,
+//  grid-breakpoint--lg:           992px,
+    sm-desktop:                    1024px,
+//  grid-breakpoint--xl:           1200px,
+);
+
+// turn on automatic fallbacks for broadcasted variables
 
 // -- Typography
 %link-styles {
-    color: #{pfe-radio(color, ui-link)};
-    text-decoration: #{pfe-var(link, text-decoration)};
+    color: #{pfe-apply-broadcast(link)};
+    text-decoration: #{pfe-apply-broadcast(link-decoration)};
     &:visited {
-        color: #{pfe-radio(color, ui-link, visited)};
+        color: #{pfe-apply-broadcast(link--visited)};
     }
     &:hover {
-        color: #{pfe-radio(color, ui-link, hover)};
-        text-decoration: #{pfe-var(link, text-decoration, hover)};
+        color: #{pfe-apply-broadcast(link--hover)};
+        text-decoration: #{pfe-apply-broadcast(link-decoration--hover)};
     }
     &:focus {
         outline-offset: 1px;
         outline-style: dotted;
         outline-width: 1px;
-        outline-color: #{pfe-radio(color, ui-link, focus)};
-        color: #{pfe-radio(color, ui-link, focus)};
+        outline-color: #{pfe-apply-broadcast(link--focus)};
+        color: #{pfe-apply-broadcast(link--focus)};
     }
 }
 
@@ -45,14 +60,22 @@ $USE-FALLBACK: true; // turn on automatic fallbacks for broadcasted variables
             $fallback: #{$trigger--Color--fallback}
         )};
     z-index: 2;
-
-    @media screen and (min-width: 1024px) {
-        text-align: center;
-    }
-
-    @media screen and (min-width: 1200px) {
-        white-space: nowrap;
-    }
-
+    line-height: 1.1;
     margin: 0 !important;
+    max-width: 100%; // added
+    text-align: center;
+    // max-width: #{pfe-local($cssvar: MaxWidth, $region: trigger, $fallback: 100%)};
+
+    @media screen and (min-width: pfe-breakpoint(xs) ) {
+        // --pfe-navigation__trigger--MaxWidth: 100%; // added
+        max-width: 100%;
+    }
+    @media screen and (min-width: pfe-breakpoint(sm-desktop, $map: false) ) {
+        // --pfe-navigation__trigger--MaxWidth: 100px; // added
+        max-width: 100px;
+    }
+    @media screen and (min-width: pfe-breakpoint(xl) ) {
+        // --pfe-navigation__trigger--MaxWidth: 190px; // added
+        max-width: 190px;
+    }
 }

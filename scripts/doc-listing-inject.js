@@ -45,8 +45,10 @@ glob(`${elementsDir}/*/src/*.js`, (er, files) => {
   let markup = "";
   elementNames.forEach(
     element =>
-      (markup += `<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/${element}/demo">${element}</a></pfe-cta>`)
+      (markup += `\n\t\t\t\t<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/${element}/demo">${element}</a></pfe-cta>`)
   );
+
+  markup += "\n";
 
   // Read and interpolate template
   const tmpl = fs.readFileSync(wrapper, "utf8");

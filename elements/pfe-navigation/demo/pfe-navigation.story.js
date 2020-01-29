@@ -92,7 +92,7 @@ stories.add(PfeNavigation.tag, () => {
     })
   }) : "";
 
-  let search = slotCheck.search ? createItem("search", "search", "Search", `<div class="pfe-navigation-item__tray--container">
+  let search = slotCheck.search ? createItem("search", "web-search", "Search", `<div class="pfe-navigation-item__tray--container">
   <form>
     <input type="text" name="search" value="" placeholder="Enter your search term"
       style="height: 30px; width: 60%; margin-right: 10px;">
@@ -172,11 +172,11 @@ stories.add(PfeNavigation.tag, () => {
   </pfe-navigation-main>
 </nav>`;
 
-  let language = slotCheck.language ? createItem("language", "globe", "English") : "";
+  let language = slotCheck.language ? createItem("language", "web-globe", "English") : "";
 
-  let login = slotCheck.login ? createItem("login", "user", "Log in") : "";
+  let login = slotCheck.login ? createItem("login", "web-user", "Log in") : "";
 
-  let siteSwitcher = slotCheck["site-switcher"] ? createItem("site-switcher", "bento", "Websites") : "";
+  let siteSwitcher = slotCheck["site-switcher"] ? createItem("site-switcher", "web-grid-3x3", "Websites") : "";
 
   config.slots = [{
     content: skip + logo + search + main + language + login + siteSwitcher

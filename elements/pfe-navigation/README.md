@@ -6,14 +6,59 @@ This element will give you a top-level navigation element (not for use as subnav
 
 ### Slots
 
-- `skip`: This slot contains all the content for the skip navigation. Best practice is to use an unordered list with link tags that link to anchors on the page relevant to the users. These anchors can include things like: "main content", "registration form", "contact us", etc. Currently this is only available to screen-readers.
-- `logo`: This slot should contain the site's main logo.
-- `search`: This slot, when assigned to a navigation-item component, renders a dropdown in the navigation for the search functionality. Inside the tray for the slot, we recommend tagging the search form or search functionality that includes the input and submit button with the attribute `pfe-navigation--mobile-search`. The element inside the search slot that is tagged with this attribute will be copied into the mobile menu and appear above the accordion for the main navigation.
-- `language`: This slot, when assigned to a navigation-item component, renders the dropdown for the user to select the site language.
-- `mobile-language`: A simple link to a landing page containing language switching information.  Set the hidden attribute on it so that it is not visible by default. Example: `<a href="/url-to-language-page" slot="mobile-language" pfe-icon="user" hidden>English</a>`.
-- `login`: This slot, when assigned to a navigation-item component, renders the dropdown for the user to log into the site.
-- `mobile-login`: A simple link to a landing page containing a log in form.  Set the hidden attribute on it so that it is not visible by default. Example: `<a href="/login" slot="mobile-login" pfe-icon="user" hidden>Login/Register</a>`.
-- `site-switcher`: This slot, when assigned to a navigation-item component, renders the dropdown for the site switcher, allowing the user to navigate an ecosystem of websites.
+- `skip`: This slot contains all the content for the skip navigation. Best practice is to use an unordered list with link tags that link to anchors on the page relevant to the users. These anchors can include things like: "main content", "registration form", "contact us", etc. Currently this is only available to screen-readers. Example:
+
+    ```
+    <div slot="skip">
+       <a href="#rh-main-content">Skip to content</a>
+    </div>
+    ```
+
+- `logo`: This slot should contain the site's main logo. Example: 
+
+    ```
+    <a slot="logo" href="https://company.com"><img class="logo" src="https://via.placeholder.com/150x50.png" title="Company logo" /></a>
+    ```
+
+- `search`: This slot, when assigned to a navigation-item component, renders a dropdown in the navigation for the search functionality. Inside the tray for the slot, we recommend tagging the search form or search functionality that includes the input and submit button with the attribute `pfe-navigation--mobile-search`. The element inside the search slot that is tagged with this attribute will be copied into the mobile menu and appear above the accordion for the main navigation. Example: 
+
+    ```
+    <pfe-navigation-item slot="search" pfe-icon="web-search">
+      <h2 slot="trigger"><a href="#url-to-search-page">Search</a></h2>
+    </pfe-navigation-item>
+    ```
+
+- `language`: This slot, when assigned to a navigation-item component, renders the dropdown for the user to select the site language. Example: 
+
+    ```
+    <pfe-navigation-item slot="language" pfe-icon="web-globe" slot="trigger">
+      <a href="http://www.foo.com">English</a>
+    </pfe-navigation-item>
+    ```
+- `mobile-language`: A simple link to a landing page containing language switching information.  Set the hidden attribute on it so that it is not visible by default. Example: 
+
+    ```
+    <a href="/url-to-language-page" slot="mobile-language" pfe-icon="web-globe" hidden>English</a>
+    ```
+- `login`: This slot, when assigned to a navigation-item component, renders the dropdown for the user to log into the site. Example: 
+
+    ```
+    <pfe-navigation-item slot="login" pfe-icon="web-user">
+      <h2 slot="trigger"><a href="http://www.bar.com">Log in</a></h2>
+    </pfe-navigation-item>
+    ```
+- `mobile-login`: A simple link to a landing page containing a log in form.  Set the hidden attribute on it so that it is not visible by default. Example: 
+    ```
+    <a href="/login" slot="mobile-login" pfe-icon="web-user" hidden>Login/Register</a>
+    ```
+
+- `site-switcher`: This slot, when assigned to a navigation-item component, renders the dropdown for the site switcher, allowing the user to navigate an ecosystem of websites. Example: 
+
+    ```
+    <pfe-navigation-item slot="site-switcher" pfe-icon="web-grid-3x3">
+      <h2 slot="trigger"><a href="http://www.bat.com">Websites</a></h2>
+    </pfe-navigation-item>
+    ```
 
 ### Attributes
 

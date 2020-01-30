@@ -85,12 +85,6 @@ pfe-icon {
   display: block;
 }
 
-@media (max-width: 440px) {
-    [slot="logo"] {
-      min-width: 150px;
-  }
-}
-
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
   color: #{pfe-apply-broadcast(link)};
@@ -165,7 +159,7 @@ pfe-icon {
     align-items: flex-start;
     justify-content: center;
     width: #{pfe-local($region: logo, $cssvar: MinWidth)};
-    flex: 0 0 var(--pfe-navigation__logo--MinWidth);
+    flex: 0 0 #{pfe-local($region: logo, $cssvar: MinWidth)};
     
     padding-top: #{pfe-local(Padding--vertical)};
     padding-bottom: #{pfe-local(Padding--vertical)};

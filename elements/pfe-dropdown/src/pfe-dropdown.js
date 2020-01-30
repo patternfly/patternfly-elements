@@ -114,6 +114,7 @@ class PfeDropdown extends PFElement {
     }
     this.isOpen = true;
     this._list.classList.add("open");
+    this._toggle.setAttribute("aria-expanded", true);
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:open`, {
         detail: {},
@@ -129,6 +130,7 @@ class PfeDropdown extends PFElement {
     }
     this.isOpen = false;
     this._list.classList.remove("open");
+    this._toggle.removeAttribute("aria-expanded");
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:close`, {
         detail: {},

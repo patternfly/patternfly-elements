@@ -83,7 +83,6 @@ pfe-icon {
   max-height: #{pfe-local(MaxHeight)};
   min-width:  #{pfe-local($region: logo, $cssvar: MinWidth)};
   display: block;
-  border: yellow solid 1px;
 }
 
 @media (max-width: 440px) {
@@ -171,7 +170,6 @@ pfe-icon {
     padding-top: #{pfe-local(Padding--vertical)};
     padding-bottom: #{pfe-local(Padding--vertical)};
     padding-right: 20px; // ensure gap between main menu links and logo
-    border: pink solid 1px;
 
     //@media screen and (max-width: pfe-breakpoint("lg-mobile", $map: false)) {
     //  padding-right: 20px;

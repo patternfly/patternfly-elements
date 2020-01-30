@@ -1,4 +1,11 @@
-<slot name="toggle"></slot>
-<slot name="list">
-    <slot name="item"></slot>
+<slot name="toggle" aria-haspopup="listbox" id="pfe-toggle">
+    <slot name="toggle-text"></slot>
+    <slot name="toggle-icon" aria-hidden="true"></slot>
+</slot>
+<!-- @TODO: tabindex="-1" - JS add when open -->
+<slot name="list" role="listbox" aria-labelledby="pfe-toggle">
+    <!-- @TODO: aria-activedescendant="ID_REF" -->
+    <!-- @TODO: aria-selected="true" - apply to item that is visually styled as selected -->
+    <slot name="item" role="option"></slot>
+    <!-- <slot name="separator" role="separator"></slot> -->
 </slot>

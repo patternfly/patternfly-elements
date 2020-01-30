@@ -17,19 +17,22 @@
   <body unresolved>
     <h1>&lt;pfe-dropdown&gt;</h1>
     <pfe-dropdown>
-      <button slot="toggle">
-        <span>Dropdown</span>
+      <button slot="toggle" type="button" value="Persian">
+        <span slot="toggle-text">Cat dropdown</span>
       </button>
       <ul slot="list">
-        <li slot="item">Option 1</li>
-        <li slot="item">Option 2</li>
+        <li slot="item">Persian</li>
+        <li slot="item">Bengal</li>
+        <li slot="item">Maine Coon</li>
+        <li slot="item">Siamese</li>
+        <li slot="item">Sphynx</li>
       </ul>
     </pfe-dropdown>
     
     <h1>&lt;pfe-dropdown&gt; with dynamic list items</h1>
     <pfe-dropdown id="dynamic">
       <button slot="toggle">
-        <span>Dynamic dropdown</span>
+        <span slot="toggle-text">Dynamic cat dropdown</span>
       </button>
     </pfe-dropdown>
 
@@ -38,12 +41,12 @@
       customElements.whenDefined("pfe-dropdown").then(function() {
         // Default Options
         dynamicDropdown.addItems([
-          { textContent: 'One'  },
-          { textContent: 'Two' },
-          { textContent: 'Three' }
+          { textContent: 'Persian'  },
+          { textContent: 'Bengal' },
+          { textContent: 'Maine Coon' }
         ]);
         // Options passed via addOptions() method
-        dynamicDropdown.addItems([{ textContent: "Four" }]);
+        dynamicDropdown.addItems([{ textContent: "Siamese" }]);
       });
     </script>
   </body>

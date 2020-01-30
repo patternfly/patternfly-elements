@@ -284,7 +284,7 @@ pfe-navigation [slot="logo"] {
 // Turn off internal link outline
 pfe-navigation-item {
     [slot="trigger"] {
-        font-family: var(--pfe-theme--font-family);
+        font-family: #{pfe-var(font-family)};
         margin: .25em 0 0 0!important;
     }
     // Utility links.
@@ -474,7 +474,7 @@ pfe-navigation-item {
     margin-bottom: 1em;
 
     &--header {
-        font-family: var(--pfe-theme--font-family);
+        font-family: #{pfe-var(font-family)};
         margin: 0 0 .75em 0;
         font-size: 16px;
         font-weight: 400;

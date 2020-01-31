@@ -158,7 +158,7 @@ pfe-icon {
     flex-shrink: 0; // Prevent flexbox from collapsing the padding.
     align-items: flex-start;
     justify-content: center;
-    width: #{pfe-local($region: logo, $cssvar: MinWidth)};
+    width: #{pfe-local($region: logo, $cssvar: MinWidth, $fallback: 155px)};
     flex: 0 0 #{pfe-local($region: logo, $cssvar: MinWidth)};
     
     padding-top: #{pfe-local(Padding--vertical)};

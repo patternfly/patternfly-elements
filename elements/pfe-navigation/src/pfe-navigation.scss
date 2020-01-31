@@ -163,10 +163,10 @@ pfe-icon {
     
     padding-top: #{pfe-local(Padding--vertical)};
     padding-bottom: #{pfe-local(Padding--vertical)};
-    padding-right: 25px; // ensure gap between main menu links and logo
+    padding-right: calc( #{pfe-var(container-padding)} + 9px ); // ensure gap between main menu links and logo
 
     @media screen and (min-width: pfe-breakpoint("grid-breakpoint--md")) {
-        padding-right: 48px;
+        padding-right: calc( #{pfe-var(container-padding)} * 3 );
     }
 
     @media screen and (max-height: 500px) {
@@ -180,7 +180,7 @@ pfe-icon {
       display: flex;
     }
     @include browser-query(ie11) {
-      flex: 1 0 10%;
+      flex: 1 0 15%;
     }
     // @TODO --pfe-theme--logo--svg?
   }

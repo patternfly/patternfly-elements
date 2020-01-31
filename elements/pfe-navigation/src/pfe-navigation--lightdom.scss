@@ -163,6 +163,9 @@ $variables: map-merge($variables, $nav-light-dom-variables);
     [pfe-icon=web-mobile-menu]:not([show_links]).pfe-navigation-item-3 .pfe-navigation__main .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0 !important;
     }
+    pfe-navigation [slot="logo"] {
+        max-width: 100%;
+    }
 }
 
 @include browser-query(edge) {

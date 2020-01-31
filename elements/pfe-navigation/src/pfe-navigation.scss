@@ -179,6 +179,9 @@ pfe-icon {
     > * {
       display: flex;
     }
+    @include browser-query(ie11) {
+      flex: 1 0 10%;
+    }
     // @TODO --pfe-theme--logo--svg?
   }
   &__skip {

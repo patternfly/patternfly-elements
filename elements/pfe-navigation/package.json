@@ -10,7 +10,7 @@
       "pfe-navigation--noscript.*css.map"
     ]
   },
-  "version": "1.0.0-prerelease.37",
+  "version": "1.0.0-prerelease.38",
   "publishConfig": {
     "access": "public"
   },
@@ -49,7 +49,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-icon": "^1.0.0-prerelease.37",
+    "@patternfly/pfe-icon": "^1.0.0-prerelease.38",
     "@patternfly/pfe-sass": "^1.0.0-prerelease.37",
     "@patternfly/pfelement": "^1.0.0-prerelease.36"
   },

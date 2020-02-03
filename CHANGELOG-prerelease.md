@@ -1,10 +1,14 @@
-## Prerelease 37 ( TBD )
+## Prerelease 37 ( 2020-02-03 )
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-nav & pfe-cta hotfixes
+
+
+## Prerelease 37 ( 2020-01-08 )
 
 Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.37)
 
 - [6a41811](https://github.com/patternfly/patternfly-elements/commit/6a418112668ba580918ac4a8b4b54e8df05c1155) fix: reference error when slot is missing in pfe-navigation
 - [ff859a5](https://github.com/patternfly/patternfly-elements/commit/ff859a5c2b62ae24225f0031f69b5bc050c59470) fix: accordion accessibility improvements; aria-roles corrected
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-nav & pfe-cta hotfixes
 
 ## Prerelease 36 ( 2020-01-20 )
 

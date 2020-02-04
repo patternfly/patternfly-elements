@@ -1,53 +1,76 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>PatternFly Element | pfe-dropdown Demo</title>
 
-    <noscript>
-      <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
-    </noscript>
+<head>
+  <meta charset="utf-8">
+  <title>PatternFly Element | pfe-dropdown Demo</title>
 
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../dist/pfe-dropdown.umd.js'])</script>
-  </head>
-  <body unresolved>
-    <h1>&lt;pfe-dropdown&gt;</h1>
-    <pfe-dropdown>
-      <button slot="toggle" type="button" value="Persian">
+  <noscript>
+    <link href="../../pfelement/pfelement-noscript.min.css" rel="stylesheet">
+  </noscript>
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <script>require(['../dist/pfe-dropdown.umd.js'])</script>
+</head>
+
+<body unresolved>
+  <h1>&lt;pfe-dropdown&gt;</h1>
+  <pfe-dropdown>
+    <button slot="toggle" type="button">
+      <span>Cat dropdown</span>
+    </button>
+    <ul slot="menu">
+      <pfe-dropdown-item>
+        <li slot="link-item">
+          <a slot="link" href="https://bit.ly/3b9wvWg">Persian</a>
+        </li>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item>
+        <li slot="link-item">
+          <a href="https://bit.ly/2OHLa1x">Bengal</a>
+        </li>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item>
+        <li slot="action-item">
+          <button>Buy a Maine Coon!</button>
+        </li>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item>
+        <li slot="action-item">
+          <button>Buy a Siamese!</button>
+        </li>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item>
+        <li slot="action-item">
+          <button>Buy a Sphynx!</button>
+        </li>
+      </pfe-dropdown-item>
+    </ul>
+  </pfe-dropdown>
+
+  <!-- <h1>&lt;pfe-dropdown&gt; with dynamic list items</h1>
+    <pfe-dropdown id="dynamic">
+      <button slot="toggle" type="button">
         <span slot="toggle-text">Cat dropdown</span>
       </button>
-      <ul slot="list">
-        <li slot="item">Persian</li>
-        <li slot="item">Bengal</li>
-        <li slot="item">Maine Coon</li>
-        <li slot="item">Siamese</li>
-        <li slot="item">Sphynx</li>
-      </ul>
-    </pfe-dropdown>
-    
-    <h1>&lt;pfe-dropdown&gt; with dynamic list items</h1>
-    <pfe-dropdown id="dynamic">
-      <button slot="toggle">
-        <span slot="toggle-text">Dynamic cat dropdown</span>
-      </button>
-    </pfe-dropdown>
+    </pfe-dropdown> -->
 
-    <script>
+  <!-- <script>
       let dynamicDropdown = document.querySelector("#dynamic");
       customElements.whenDefined("pfe-dropdown").then(function() {
         // Default Options
         dynamicDropdown.addItems([
-          { textContent: 'Persian'  },
+          { textContent: 'Persian' },
           { textContent: 'Bengal' },
           { textContent: 'Maine Coon' }
         ]);
         // Options passed via addOptions() method
         dynamicDropdown.addItems([{ textContent: "Siamese" }]);
       });
-    </script>
-  </body>
+    </script> -->
+</body>
+
 </html>

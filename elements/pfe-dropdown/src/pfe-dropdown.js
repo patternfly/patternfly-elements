@@ -1,4 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
+import PfeDropdownItem from './pfe-dropdown-item.js';
 
 // Object.assign needs a polyfill as its not supported in IE11
 if (typeof Object.assign !== 'function') {
@@ -52,7 +53,7 @@ class PfeDropdown extends PFElement {
 
     // elements
     this._toggle = this.querySelector('[slot=toggle]');
-    this._list = this.querySelector('[slot=list]');
+    this._menu = this.querySelector('[slot=menu]');
     this._items = null;
 
     // events
@@ -68,10 +69,10 @@ class PfeDropdown extends PFElement {
     this._toggle.addEventListener("click", this.toggle);
 
     customElements.whenDefined(PfeDropdown.tag).then(() => {
-      if (this._items) {
-        this._modifyDOM();
-        this._list = this.querySelector('[slot=list]');
-        this._list.querySelectorAll('[slot=item]').forEach(item => item.addEventListener('click', this._itemSelected));
+      if (this._menu) {
+        // this._modifyDOM();
+        this._menu = this.querySelector('[slot=menu]');
+        //this._list.querySelectorAll('[slot=*-item]').forEach(item => item.addEventListener('click', this._itemSelected));
       }
     });
   }
@@ -87,15 +88,15 @@ class PfeDropdown extends PFElement {
   _modifyDOM() {
     // create a new list of HTML list items
     let newList = document.createElement('ul');
-    newList.setAttribute("slot", "list");
+    newList.setAttribute("slot", "menu");
     this._items.map(el => {
       const item = Object.assign(document.createElement('li') , el);
-      item.setAttribute("slot", "item");
+      item.setAttribute("slot", "action-item"); //add property to object
       newList.appendChild(item);
     });
 
     // if a list already exists, replace, otherwise add newlist to the dropdown
-    let existingList = this.querySelector('[slot=list]');
+    let existingList = this.querySelector('[slot=menu]');
     if (existingList) {
       existingList.parentNode.replaceChild(newList, existingList);
     } else {
@@ -113,7 +114,7 @@ class PfeDropdown extends PFElement {
       event.preventDefault();
     }
     this.isOpen = true;
-    this._list.classList.add("open");
+    this._menu.classList.add("open");
     this._toggle.setAttribute("aria-expanded", true);
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:open`, {
@@ -129,7 +130,7 @@ class PfeDropdown extends PFElement {
       event.preventDefault();
     }
     this.isOpen = false;
-    this._list.classList.remove("open");
+    this._menu.classList.remove("open");
     this._toggle.removeAttribute("aria-expanded");
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:close`, {
@@ -145,7 +146,7 @@ class PfeDropdown extends PFElement {
     return this;
   }
 }
-
+PFElement.create(PfeDropdownItem);
 PFElement.create(PfeDropdown);
 
 export default PfeDropdown;

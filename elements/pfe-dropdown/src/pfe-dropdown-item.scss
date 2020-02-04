@@ -1,0 +1,23 @@
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: dropdown;
+
+slot[name="link-item"],
+slot[name="action-item"] {
+  &::slotted(*) {
+    display: block;
+    width: 100%;
+    padding-top: 0.5rem;
+    padding-right: 1rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #151515;
+    text-align: left;
+    white-space: nowrap;
+    background-color: transparent;
+    border: none;
+  }
+}

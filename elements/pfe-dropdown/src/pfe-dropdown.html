@@ -1,21 +1,7 @@
 <!-- navigation/action menu button design pattern -->
 <div class="pfe-dropdown__container">
     <!-- menu toggle -->
-    <slot name="toggle" aria-haspopup="menu" aria-controls="pfe-dropdown-menu" id="pfe-dropdown-toggle">
-        <slot name="toggle-text"></slot>
-        <!-- TODO: add svg icon -->
-    </slot>
+    <slot name="toggle" aria-haspopup="menu" aria-controls="pfe-dropdown-menu" id="pfe-dropdown-toggle" class="pfe-dropdown__toggle"></slot>
     <!-- menu -->
-    <slot name="menu" role="menu" aria-labelledby="pfe-dropdown-toggle" id="pfe-dropdown-menu">
-        <!-- link as menuitem -->
-        <slot name="link-item" role="none">
-            <slot name="link" role="menuitem" tabindex="-1"></slot>
-        </slot>
-        <!-- action as menuitem -->
-        <slot name="action-item" role="menuitem">
-            <slot name="action" tabindex="-1"></slot>
-        </slot>
-        <!-- menuitem seperator -->
-        <slot name="separator" role="separator"></slot>
-    </slot>
+    <slot name="menu" role="menu" aria-labelledby="pfe-dropdown-toggle" id="pfe-dropdown-menu" class="pfe-dropdown__menu"></slot>
 </div>

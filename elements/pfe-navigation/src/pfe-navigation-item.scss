@@ -261,7 +261,8 @@ $variables: map-merge($variables, $nav-item-variables);
   }
 }
 
-// Typography styles
+// Typography styles need specificity over bootstrap
+
 ::slotted([slot="trigger"]) {
   @extend %trigger;
 }

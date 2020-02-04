@@ -4,7 +4,7 @@ $nav-variables: (
   // Default spacing values
   Padding--vertical: pfe-var(container-padding),
   Padding--horizontal: pfe-var(container-padding),
-  Padding: 0 pfe-local(Padding--horizontal),    
+  Padding: 0 pfe-local(Padding--horizontal),
 
   // Darkest is the default background color
   BackgroundColor: pfe-color(surface--darkest),
@@ -40,7 +40,7 @@ $nav-variables: (
   tray: (
     Padding: pfe-var(container-padding)
   ),
-  
+
   // Logo
   logo: (
     MinWidth: 135px
@@ -60,7 +60,7 @@ $variables: map-merge($variables, $nav-variables);
   display: block;
   --pfe-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
   --pfe-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
-  
+
   z-index: #{pfe-zindex(content)};
   width: 100%;
 }
@@ -70,6 +70,24 @@ $variables: map-merge($variables, $nav-variables);
   top: 0;
   left: 0;
   z-index: #{pfe-zindex(navigation)};
+}
+
+:host([pfe-full-width]) {
+  .pfe-navigation {
+    &__container {
+      @each $size in ("md", "lg", "xl") {
+        @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
+          @if ($size == 'md') {
+            --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
+          } @else if ($size == 'lg') {
+            --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
+          } @else if ($size == 'xl') {
+            --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
+          }
+        }
+      }
+    }
+  }
 }
 
 pfe-icon {
@@ -101,11 +119,11 @@ pfe-icon {
 .pfe-navigation {
   &__wrapper {
     @include pfe-set-broadcast-theme(dark);
-    
+
     display: flex;
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
     z-index: #{pfe-zindex(navigation)};
-    
+
     background-color: #{pfe-local(BackgroundColor)};
     color: #{pfe-local(Color)};
     min-height: #{pfe-local(MaxHeight)};
@@ -157,7 +175,7 @@ pfe-icon {
     align-items: flex-start;
     justify-content: center;
     min-width: #{pfe-local($region: logo, $cssvar: MinWidth)};
-    
+
     padding-top: #{pfe-local(Padding--vertical)};
     padding-bottom: #{pfe-local(Padding--vertical)};
     padding-right: 48px; // ensure gap between main menu links and logo
@@ -170,7 +188,7 @@ pfe-icon {
       padding-top: calc(#{pfe-local(Padding--vertical) / 2});
       padding-bottom: calc(#{pfe-local(Padding--vertical) / 2});
     }
-    @media screen and (min-width: pfe-breakpoint("lg-mobile", $map: false)) { 
+    @media screen and (min-width: pfe-breakpoint("lg-mobile", $map: false)) {
         flex: 0 1 10%;
     }
     > * {
@@ -181,7 +199,7 @@ pfe-icon {
   &__skip {
     display: block;
     @extend %sr-only;
-    margin: 0 -2em -1px -1px; 
+    margin: 0 -2em -1px -1px;
   }
   &__main {
     display: grid;

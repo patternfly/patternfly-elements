@@ -48,7 +48,7 @@
           "prefixed": true
         },
         "on": {
-          "title": "Context foo",
+          "title": "Context",
           "type": "string",
           "enum": [
             "light",

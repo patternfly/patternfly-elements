@@ -1,7 +1,11 @@
-<!-- navigation/action menu button design pattern -->
-<div class="pfe-dropdown__container">
-    <!-- menu toggle -->
-    <slot name="toggle" aria-haspopup="menu" aria-controls="pfe-dropdown-menu" id="pfe-dropdown-toggle" class="pfe-dropdown__toggle"></slot>
-    <!-- menu -->
-    <slot name="menu" role="menu" aria-labelledby="pfe-dropdown-toggle" id="pfe-dropdown-menu" class="pfe-dropdown__menu"></slot>
-</div>
+<!-- menu toggle -->
+<slot name="toggle"></slot>
+
+<!-- menu -->
+<slot name="menu"></slot>
+
+<!-- item as link -->
+<slot name="link-item"></slot>
+
+<!-- item as action -->
+<slot name="action-item"></slot>

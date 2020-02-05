@@ -15,40 +15,53 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
   <script>require(['../dist/pfe-dropdown.umd.js'])</script>
 </head>
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+</style>
 
 <body unresolved>
   <h1>&lt;pfe-dropdown&gt;</h1>
+
   <pfe-dropdown>
+
+    <!-- toggle -->
     <button slot="toggle" type="button">
-      <span>Cat dropdown</span>
+      <!-- toggle-text -->
+      <span>Expanded dropdown</span>
     </button>
+    
+    <!-- menu -->
     <ul slot="menu">
-      <pfe-dropdown-item>
-        <li slot="link-item">
-          <a slot="link" href="https://bit.ly/3b9wvWg">Persian</a>
-        </li>
-      </pfe-dropdown-item>
-      <pfe-dropdown-item>
-        <li slot="link-item">
-          <a href="https://bit.ly/2OHLa1x">Bengal</a>
-        </li>
-      </pfe-dropdown-item>
-      <pfe-dropdown-item>
-        <li slot="action-item">
-          <button>Buy a Maine Coon!</button>
-        </li>
-      </pfe-dropdown-item>
-      <pfe-dropdown-item>
-        <li slot="action-item">
-          <button>Buy a Siamese!</button>
-        </li>
-      </pfe-dropdown-item>
-      <pfe-dropdown-item>
-        <li slot="action-item">
-          <button>Buy a Sphynx!</button>
-        </li>
-      </pfe-dropdown-item>
+      <li slot="link-item">
+        <!-- dropdown-item -->
+        <pfe-dropdown-item>
+          <a slot="link" href="https://bit.ly/3b9wvWg">Link 1</a>
+        </pfe-dropdown-item>
+      </li>
+      <li slot="link-item">
+        <pfe-dropdown-item>
+          <a slot="link" href="https://bit.ly/2OHLa1x">Link 2</a>
+        </pfe-dropdown-item>
+      </li>
+      <li slot="action-item">
+        <pfe-dropdown-item>
+          <button slot="action">Action 1</button>
+        </pfe-dropdown-item>
+      </li>
+      <li slot="action-item">
+        <pfe-dropdown-item>
+          <button slot="action">Action 2</button>
+        </pfe-dropdown-item>
+      </li>
+      <li slot="action-item">
+        <pfe-dropdown-item>
+          <button slot="action">Action 3</button>
+        </pfe-dropdown-item>
+      </li>
     </ul>
+    
   </pfe-dropdown>
 
   <!-- <h1>&lt;pfe-dropdown&gt; with dynamic list items</h1>

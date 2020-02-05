@@ -54,59 +54,37 @@ class PfeDropdown extends PFElement {
     // elements
     this._toggle = this.querySelector('[slot=toggle]');
     this._menu = this.querySelector('[slot=menu]');
-    this._items = null;
+    this._link_items = this.querySelectorAll('[slot=link-item]');
+    this._action_items = this.querySelectorAll('[slot=action-item]');
 
     // events
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
     this.toggle = this.toggle.bind(this);
-    this._itemSelected = this._itemSelected.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    this._toggle.addEventListener("click", this.toggle);
-
     customElements.whenDefined(PfeDropdown.tag).then(() => {
-      if (this._menu) {
-        // this._modifyDOM();
-        this._menu = this.querySelector('[slot=menu]');
-        //this._list.querySelectorAll('[slot=*-item]').forEach(item => item.addEventListener('click', this._itemSelected));
-      }
+      this._toggle.addEventListener("click", this.toggle);
+      
+      this._setAccessibility();  
     });
   }
 
-  _itemSelected(event) {
-    this.dispatchEvent(new CustomEvent(`${this.tag}:click`, {
-      detail: { value: event },
-      bubbles: true,
-      composed: true
-    }));
-  }
+  _setAccessibility() {
+    this._toggle.setAttribute('aria-haspopup', 'menu');
+    this._toggle.setAttribute('aria-controls', 'pfe-dropdown-menu');
+    this._toggle.setAttribute('id', 'pfe-dropdown-toggle');
 
-  _modifyDOM() {
-    // create a new list of HTML list items
-    let newList = document.createElement('ul');
-    newList.setAttribute("slot", "menu");
-    this._items.map(el => {
-      const item = Object.assign(document.createElement('li') , el);
-      item.setAttribute("slot", "action-item"); //add property to object
-      newList.appendChild(item);
-    });
+    this._menu.setAttribute('role', 'menu');
+    this._menu.setAttribute('aria-labelledby', 'pfe-dropdown-toggle');
+    this._menu.setAttribute('id', 'pfe-dropdown-menu');
 
-    // if a list already exists, replace, otherwise add newlist to the dropdown
-    let existingList = this.querySelector('[slot=menu]');
-    if (existingList) {
-      existingList.parentNode.replaceChild(newList, existingList);
-    } else {
-      this.appendChild(newList);
-    }
-  }
+    this._link_items.forEach(item => item.setAttribute('role', 'none'));
 
-  addItems(items) {
-    this._items = this._items ? this._items.concat(items) : items;
-    this._modifyDOM();
+    this._action_items.forEach(item => item.setAttribute('role', 'menuitem'));
   }
 
   open(event) {
@@ -146,6 +124,7 @@ class PfeDropdown extends PFElement {
     return this;
   }
 }
+
 PFElement.create(PfeDropdownItem);
 PFElement.create(PfeDropdown);
 

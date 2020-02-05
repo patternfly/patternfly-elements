@@ -59,13 +59,15 @@ If you wish to include any compiled assets beyond those listed above, please add
 
 This will add these additional files to the standard set that is being served to the `dist` directory for developers to use on their page.  Globbing syntax is supported but you only need to specify the name of the `src` asset that you want included, and do not need to specify the minified versions for example.
 
-## Develop
+## Compile & preview
 
-To watch for changes and run a build when changes are detected, run this from the PatternFly Elements root directory.
+To watch for changes on all components and compile the code when changes are detected, run this from the PatternFly Elements root directory. This command will also launch the preview of the demo files.
 
 ```
 npm run live-demo
 ```
+
+## Compile
 
 You may find that you dislike watching all the elements at once.  It may start up too slowly, consume too many system resources, or your OS may run out of file descriptors from watching too many files.  If any of these are the case, you can shrink the set of elements being watched by running `npm run dev (component-name)`.
 
@@ -85,15 +87,17 @@ npm run dev pfe-card pfe-cta
 
 ## Preview your changes
 
-From the root of the PatternFly Elements repository, run the live-demo command which will open a browser to a listing of all the demo files.
+Remember that you may want to simultaneously run compile commands to watch for changes to your code. From the root of the PatternFly Elements repository, run the live-demo command which will open a browser to a listing of all the demo files.
 
 ```
 npm run live-demo
 ```
 
-From there you can change the URL to the demo page of the element you're working on. For example, if I want to preview the `pfe-card` component, I'd navigate in the browser to `http://localhost:1234/elements/pfe-card/demo`.
+From there you can change the URL to the demo page of the element you're working on. For example, if you want to preview the `pfe-card` component, then navigate in the browser to `http://localhost:1234/elements/pfe-card/demo`.
 
-### Storybook
+
+
+#### Storybook
 
 Storybook is an interactive tool that allows consumers of the components to see how content can flow inside the components, as well as how variants affect style and layout. The `pfe-foo.storybook.js` file within the `/demo` directory of a component defines what appears in the Storybook preview. [You can learn more about the structure of these here](https://storybook.js.org/docs/basics/writing-stories/).
 

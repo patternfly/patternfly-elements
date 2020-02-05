@@ -5,7 +5,7 @@
 
 `pfe-content-set` is a combo component, which brings together the utilities of the accordion and tabs components. Effectively both of these components do the same job, which is to encapsulate chunks of information under headings for easier browsing. Hiding some information and allowing the user to toggle through the headings to show other bits of information.
 
-Since tabs can pose a layout issue on mobile because of the lack of horizontal space, this component will first assess the width of the parent container. If the width is less than 768px, the component will render the content within the `<pfe-accordion>` component. If it is larger than this value, the content will be rendered inside the `<pfe-tabs>` component.
+Since tabs can pose a layout issue on mobile because of the lack of horizontal space, this component will first assess the width of the parent container. If the width is less than 700px, the component will render the content within the `<pfe-accordion>` component. If it is larger than this value, the content will be rendered within the `<pfe-tabs>` component.
 
 ## Dependencies
 
@@ -46,7 +46,9 @@ Each header must have an attribute of `pfe-content-set--header` and each panel m
 - `pfe-align="center"`
     - Accordion: No effect.
     - Tabs: Tabs are centered.
-
+- `pfe-breakpoint="500px`
+    - You may set a custom breakpoint at which the content set upgrade to tabs above that number and accordions below.
+    - The value can contain the `px` suffix or not
 
 
 ## Styling

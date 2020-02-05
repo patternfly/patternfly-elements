@@ -41,12 +41,6 @@
     <link href="https://static.redhat.com/libs/redhat/redhat-theme/latest/advanced-theme.css" rel="stylesheet">
   </noscript>
   <style>
-    .faux-container {
-      border: 1px dashed #ccc;
-      padding: 30px;
-      margin: 0 0 30px 30px;
-    }
-
     hr {
       margin: 40px 10px;
       border-color: transparent;
@@ -63,17 +57,19 @@
       padding: 2rem;
     }
 
-    .dark-background {
-      background-color: #000;
+    section h1 {
+      font-size: 30px;
     }
-
-    .border-bottom {
-      border-bottom: 1px solid var(--pfe-broadcasted--text);
-    }
-
-    .intro {
-      margin: 30px;
+    section h3 {
+      font-size: 20px;
       max-width: 1000px;
+    }
+
+    .faux-container {
+      border: 1px dashed #ccc;
+      padding: 30px;
+      margin: 0 0 30px 30px;
+      max-width: 1200px;
     }
 
     .label {
@@ -98,14 +94,14 @@
 </head>
 
 <body unresolved>
-  <div class="intro">
+  <section>
     <h1>&lt;pfe-content-set&gt;</h1>
     <h3>This combo component will render the contents as either an <a href="#accordions">accordion</a> or a <a
         href="#tabs">tab set</a> depending on the available space. The default breakpoint is 700px. If the size of the
       pfe-content-set container is larger than 700px it will upgrade to <code>pfe-tabs</code>. If not, it will upgrade
       to <code>pfe-accordion</code>.</h3>
     <h3>It will also pass variants on to the upgraded component, such as <code>pfe-variant</code>.</h3>
-  </div>
+  </section>
 
   <section class="faux-container" style="width: 600px">
     <h4 class="label">Default pfe-content-set in a 600px container</h4>
@@ -153,8 +149,8 @@
   </section>
 
   <section>
-    <h3>These next pfe-content-set examples have a custom attribute <code>pfe-breakpoint="500"</code>. The containers
-      are the same sizes as
+    <h3>These next pfe-content-set examples have a custom attribute <code>pfe-breakpoint="500"</code>.
+      You can set the value with or without the <code>px</code> suffix.The containers are the same sizes as
       above, 600px and 800px. However the pfe-content set should now upgrade to pfe-tabs in both instances.
     </h3>
   </section>
@@ -239,7 +235,8 @@
   </pfe-band>
 
   <section>
-    <h3>Note: on a dark band, you must manually add the attribute <code>on=dark</code> to the pfe-content-set for now.</h3>
+    <h3>Note: on a dark band, you must manually add the attribute <code>on=dark</code> to the pfe-content-set for now.
+    </h3>
   </section>
   <pfe-band pfe-color="darkest">
 
@@ -297,7 +294,9 @@
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
           amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
-          varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod. Faucibus mollis
+          interdum. Maecenas sed diam eget risus varius blandit sit
+          amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
       </div>
       <h4 pfe-content-set--header>Heading 2</h4>
       <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
@@ -336,13 +335,21 @@
 
   </section>
 
+
   <section>
+    <h3>The pfe-content-set comes with a mutation observer so that you may dynamically add headers and panels.</h3>
+  </section>
+
+  <section class="faux-container">
     <div class="build-a-panel">
       <button id="addHeaderAndPanelBtn">Add Header &amp; Panel</button>
-      <h3>The pfe-content-set comes with a mutation observer so that you may dynamically add headers and panels.</h3>
+      <h2 class="label">Click the button to see it in action!</code></h2>
+
       <pfe-content-set id="dynamic">
         <h4 pfe-content-set--header>Heading 1</h4>
-        <div pfe-content-set--panel>Panel 1</div>
+        <div pfe-content-set--panel>Panel 1. Donec id elit non mi
+          porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+          mollis interdum.</div>
       </pfe-content-set>
     </div>
   </section>

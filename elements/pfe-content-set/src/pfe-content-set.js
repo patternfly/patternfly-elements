@@ -29,7 +29,7 @@ class PfeContentSet extends PFElement {
       breakpointValue = this.getAttributeNode('pfe-breakpoint').value;
       breakpointValue = breakpointValue.replace(/\D/g,'');
     } else {
-      breakpointValue = 768;
+      breakpointValue = 700;
     }
     return this.parentNode
       ? this.parentNode.offsetWidth > breakpointValue

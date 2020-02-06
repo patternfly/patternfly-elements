@@ -99,10 +99,6 @@ $variables: (
   line-height:     #{pfe-local($cssvar: LineHeight, $fallback: #{pfe-var(line-height)})};
   text-decoration: #{pfe-local(TextDecoration)} !important;
 
-  :host(:not([pfe-priority],[aria-disabled="true"])) & {
-    padding-right: calc(#{pfe-local($cssvar: size, $region: arrow)} + #{pfe-local($cssvar: MarginLeft, $region: arrow)} + .375rem) !important;
-  }
-
   :host(:hover) & {
     color:   #{pfe-local(Color--hover)} !important;
     text-decoration: #{pfe-local(TextDecoration--hover)} !important;
@@ -133,6 +129,7 @@ $variables: (
       input {
         @extend %reset-button;
       }
+      position: relative;
     }
   }
   &--inner {  // inner border on priority CTAs
@@ -162,24 +159,8 @@ $variables: (
     display: #{pfe-local($cssvar: Display, $region: arrow)};
     padding: #{pfe-local($cssvar: Padding, $region: arrow)};
     fill:    #{pfe-local(Color)};
-    // position: relative;
-    // vertical-align: middle;
-    // top:    -2px;
-    // width: 0.9em;
-    // height: 0.9em;
-    // top:    .3em;
     width:  #{pfe-local($cssvar: size, $region: arrow)};
     height: #{pfe-local($cssvar: size, $region: arrow)};
-    // transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
-    // float: right;
-    // float: inherit;
-
-    margin-left: calc((#{pfe-local($cssvar: size, $region: arrow)} + #{pfe-local($cssvar: MarginLeft, $region: arrow)} + .375rem) * -1);
-
-
-    position: absolute;
-    top: 6px;
-    right: 1px;
 
     :host(:hover) & {
       fill: #{pfe-local(Color--hover)};
@@ -190,6 +171,9 @@ $variables: (
     }
 
     @include browser-query(ie11) {
+      width:  16px;
+    }
+    @include browser-query(edge) {
       width:  16px;
     }
 
@@ -476,6 +460,6 @@ $variables: (
 
 /// MODALS
 /// ===========================================================================
-// :host([slot="pfe-modal--trigger"]) {
-//   padding: #{pfe-local($cssvar: Padding)} !important;
-// }
+:host([slot="pfe-modal--trigger"]) {
+  padding: #{pfe-local($cssvar: Padding)} !important;
+}

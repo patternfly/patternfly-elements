@@ -1,11 +1,4 @@
-<!-- menu toggle -->
-<slot name="toggle"></slot>
-
-<!-- menu -->
-<slot name="menu"></slot>
-
-<!-- item as link -->
-<slot name="link-item"></slot>
-
-<!-- item as action -->
-<slot name="action-item"></slot>
+<button type="button" aria-haspopup="menu" aria-controls="pfe-dropdown-menu" id="pfe-dropdown-toggle"></button>
+<ul role="menu" aria-labelledby="pfe-dropdown-toggle" id="pfe-dropdown-menu">
+  <slot></slot>
+</ul>

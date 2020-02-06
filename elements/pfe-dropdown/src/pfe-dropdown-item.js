@@ -13,27 +13,46 @@ class PfeDropdownItem extends PFElement {
     return "pfe-dropdown-item.scss";
   }
 
+  static get observedAttributes() {
+    return ["pfe-type"];
+  }
+
   constructor() {
     super(PfeDropdownItem);
 
-    this._links = this.querySelectorAll('[slot=link]');
-    this._actions = this.querySelectorAll('[slot=action]');
+    this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
+    this._item = this.shadowRoot.querySelector("slot").assignedNodes()[1];
+  }
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    switch (attr) {
+      case "pfe-type":
+        this._setAccessibility();
+      default:
+        break;
+    }
   }
 
   connectedCallback() {
     super.connectedCallback();
-    customElements.whenDefined(PfeDropdownItem.tag).then(() => {
-      this._setAccessibility();
-    });
   }
 
   _setAccessibility() {
-    this._links.forEach(link => {
-      link.setAttribute('role', 'menuitem');
-      link.setAttribute('tabindex', '-1');
-    });
-    
-    this._actions.forEach(action => action.setAttribute('tabindex', '-1'));
+    if (this.isLink()) {
+      this._container.setAttribute("role", "none");
+      this._item.setAttribute("role", "menuitem");
+    } else if (this.isAction()) {
+      this._container.setAttribute("role", "menuitem");
+      this._item.removeAttribute("role");
+    }
+  }
+
+  isLink() {
+    return this.getAttribute("pfe-type") === "link";
+  }
+
+  isAction() {
+    return this.getAttribute("pfe-type") === "action";
   }
 }
 

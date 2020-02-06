@@ -45,6 +45,10 @@ class PfeDropdown extends PFElement {
     return "pfe-dropdown.scss";
   }
 
+  static get observedAttributes() {
+    return ["pfe-label"];
+  }
+
   constructor() {
     super(PfeDropdown);
 
@@ -52,10 +56,8 @@ class PfeDropdown extends PFElement {
     this.isOpen = false;
 
     // elements
-    this._toggle = this.querySelector('[slot=toggle]');
-    this._menu = this.querySelector('[slot=menu]');
-    this._link_items = this.querySelectorAll('[slot=link-item]');
-    this._action_items = this.querySelectorAll('[slot=action-item]');
+    this._toggle = this.shadowRoot.querySelector("#pfe-dropdown-toggle");
+    this._menu = this.shadowRoot.querySelector("#pfe-dropdown-menu");
 
     // events
     this.open = this.open.bind(this);
@@ -63,28 +65,21 @@ class PfeDropdown extends PFElement {
     this.toggle = this.toggle.bind(this);
   }
 
+  attributeChangedCallback(attr, oldValue, newValue) {
+    switch (attr) {
+      case "pfe-label":
+        this._toggle.textContent = newValue;
+      default:
+        break;
+    }
+  }
+
   connectedCallback() {
     super.connectedCallback();
 
     customElements.whenDefined(PfeDropdown.tag).then(() => {
       this._toggle.addEventListener("click", this.toggle);
-      
-      this._setAccessibility();  
     });
-  }
-
-  _setAccessibility() {
-    this._toggle.setAttribute('aria-haspopup', 'menu');
-    this._toggle.setAttribute('aria-controls', 'pfe-dropdown-menu');
-    this._toggle.setAttribute('id', 'pfe-dropdown-toggle');
-
-    this._menu.setAttribute('role', 'menu');
-    this._menu.setAttribute('aria-labelledby', 'pfe-dropdown-toggle');
-    this._menu.setAttribute('id', 'pfe-dropdown-menu');
-
-    this._link_items.forEach(item => item.setAttribute('role', 'none'));
-
-    this._action_items.forEach(item => item.setAttribute('role', 'menuitem'));
   }
 
   open(event) {

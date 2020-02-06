@@ -17,73 +17,25 @@
 </head>
 <style>
   body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Red Hat Text", Overpass, Helvetica, sans-serif;
+    position: relative;
   }
 </style>
 
 <body unresolved>
   <h1>&lt;pfe-dropdown&gt;</h1>
 
-  <pfe-dropdown>
-
-    <!-- toggle -->
-    <button slot="toggle" type="button">
-      <!-- toggle-text -->
-      <span>Expanded dropdown</span>
-    </button>
-    
-    <!-- menu -->
-    <ul slot="menu">
-      <li slot="link-item">
-        <!-- dropdown-item -->
-        <pfe-dropdown-item>
-          <a slot="link" href="https://bit.ly/3b9wvWg">Link 1</a>
-        </pfe-dropdown-item>
-      </li>
-      <li slot="link-item">
-        <pfe-dropdown-item>
-          <a slot="link" href="https://bit.ly/2OHLa1x">Link 2</a>
-        </pfe-dropdown-item>
-      </li>
-      <li slot="action-item">
-        <pfe-dropdown-item>
-          <button slot="action">Action 1</button>
-        </pfe-dropdown-item>
-      </li>
-      <li slot="action-item">
-        <pfe-dropdown-item>
-          <button slot="action">Action 2</button>
-        </pfe-dropdown-item>
-      </li>
-      <li slot="action-item">
-        <pfe-dropdown-item>
-          <button slot="action">Action 3</button>
-        </pfe-dropdown-item>
-      </li>
-    </ul>
-    
+  <pfe-dropdown pfe-label="Dropdown">
+    <pfe-dropdown-item pfe-type="link">
+      <a href="https://bit.ly/3b9wvWg">Link 1</a>
+    </pfe-dropdown-item>
+    <pfe-dropdown-item pfe-type="link">
+      <a href="https://bit.ly/3b9wvWg">Link 2</a>
+    </pfe-dropdown-item>
+    <pfe-dropdown-item pfe-type="action">
+      <button>Action 1</button>
+    </pfe-dropdown-item>
   </pfe-dropdown>
 
-  <!-- <h1>&lt;pfe-dropdown&gt; with dynamic list items</h1>
-    <pfe-dropdown id="dynamic">
-      <button slot="toggle" type="button">
-        <span slot="toggle-text">Cat dropdown</span>
-      </button>
-    </pfe-dropdown> -->
-
-  <!-- <script>
-      let dynamicDropdown = document.querySelector("#dynamic");
-      customElements.whenDefined("pfe-dropdown").then(function() {
-        // Default Options
-        dynamicDropdown.addItems([
-          { textContent: 'Persian' },
-          { textContent: 'Bengal' },
-          { textContent: 'Maine Coon' }
-        ]);
-        // Options passed via addOptions() method
-        dynamicDropdown.addItems([{ textContent: "Siamese" }]);
-      });
-    </script> -->
 </body>
-
 </html>

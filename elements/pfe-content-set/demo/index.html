@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>PatternFly Element | pfe-content-set Demo</title>
   <link rel="stylesheet" href="https://overpass-30e2.kxcdn.com/overpass.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
   <title>PatternFly Element | pfe-content-set Demo</title>
 
   <!-- Stylesheets for testing light DOM styles.
@@ -68,8 +68,13 @@
     .faux-container {
       border: 1px dashed #ccc;
       padding: 30px;
-      margin: 0 0 30px 30px;
+      margin: 0 10px 30px 10px;
       max-width: 1200px;
+    }
+    @media (min-width: 768px) {
+        .faux-container {
+            margin: 0 30px 30px 30px;
+        }
     }
 
     .label {

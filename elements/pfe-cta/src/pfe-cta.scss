@@ -125,7 +125,7 @@ $variables: (
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
-      height: 100%;      
+      height: 100%;
     }
 
     @include browser-query(edge) {
@@ -162,14 +162,24 @@ $variables: (
     display: #{pfe-local($cssvar: Display, $region: arrow)};
     padding: #{pfe-local($cssvar: Padding, $region: arrow)};
     fill:    #{pfe-local(Color)};
-    position: relative;
-    top:    .3em;
+    // position: relative;
+    // vertical-align: middle;
+    // top:    -2px;
+    // width: 0.9em;
+    // height: 0.9em;
+    // top:    .3em;
     width:  #{pfe-local($cssvar: size, $region: arrow)};
     height: #{pfe-local($cssvar: size, $region: arrow)};
-    transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
-    float: right;
+    // transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
+    // float: right;
+    // float: inherit;
 
     margin-left: calc((#{pfe-local($cssvar: size, $region: arrow)} + #{pfe-local($cssvar: MarginLeft, $region: arrow)} + .375rem) * -1);
+
+
+    position: absolute;
+    top: 6px;
+    right: 1px;
 
     :host(:hover) & {
       fill: #{pfe-local(Color--hover)};
@@ -182,13 +192,13 @@ $variables: (
     @include browser-query(ie11) {
       width:  16px;
     }
-    
+
   }
 }
 
 // Set svg to none so it won't render in nav on iOS versions 12>
-:host([pfe-priority]) svg { 
-  display:none; 
+:host([pfe-priority]) svg {
+  display:none;
 }
 
 :host([pfe-priority]),

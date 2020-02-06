@@ -17,11 +17,11 @@ export function addBuiltIns(PfeIcon) {
   [
     {
       name: "web",
-      path: "https://access.redhat.com/webassets/avalon/j/lib/rh-iconfont-svgs"
+      path: "https://static.redhat.com/libs/redhat/rh-iconfont/latest/svg"
     },
     {
       name: "rh",
-      path: "https://access.redhat.com/webassets/avalon/j/lib/rh-iconfont-svgs"
+      path: "https://static.redhat.com/libs/redhat/rh-iconfont/latest/svg"
     }
   ].forEach(set => PfeIcon.addIconSet(set.name, set.path, resolveIconName));
 }

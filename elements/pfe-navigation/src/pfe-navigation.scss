@@ -79,6 +79,7 @@ pfe-icon {
 // Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
   margin: 0 !important;
+  max-width: 100%;
   max-height: #{pfe-local(MaxHeight)};
   min-width:  #{pfe-local($region: logo, $cssvar: MinWidth)};
   display: block;
@@ -123,6 +124,7 @@ pfe-icon {
     flex-flow: row nowrap;
     align-items: stretch;
     justify-content: flex-start;
+    box-sizing: border-box;
 
     // stop using padding, start using max width at medium breakpoint
     @media screen and (min-width: pfe-breakpoint(md)) {
@@ -156,14 +158,15 @@ pfe-icon {
     flex-shrink: 0; // Prevent flexbox from collapsing the padding.
     align-items: flex-start;
     justify-content: center;
-    min-width: #{pfe-local($region: logo, $cssvar: MinWidth)};
+    width: #{pfe-local($region: logo, $cssvar: MinWidth, $fallback: 155px)};
+    flex: 0 0 #{pfe-local($region: logo, $cssvar: MinWidth)};
     
     padding-top: #{pfe-local(Padding--vertical)};
     padding-bottom: #{pfe-local(Padding--vertical)};
-    padding-right: 48px; // ensure gap between main menu links and logo
+    padding-right: calc( #{pfe-var(container-padding)} + 9px ); // ensure gap between main menu links and logo
 
-    @media screen and (min-width: pfe-breakpoint("lg-mobile", $map: false)) {
-        padding-right: 20px;
+    @media screen and (min-width: pfe-breakpoint("grid-breakpoint--md")) {
+        padding-right: calc( #{pfe-var(container-padding)} * 3 );
     }
 
     @media screen and (max-height: 500px) {
@@ -175,6 +178,9 @@ pfe-icon {
     }
     > * {
       display: flex;
+    }
+    @include browser-query(ie11) {
+      flex: 1 0 15%;
     }
     // @TODO --pfe-theme--logo--svg?
   }

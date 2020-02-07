@@ -196,6 +196,11 @@ $variables: (
   }
 }
 
+/// Buttons in CTAs
+:host(:not([pfe-priority])) ::slotted(button) {
+  padding:  0 !important;
+}
+
 /// ===========================================================================
 /// BELOW THIS POINT, LOCAL VARIABLE OVERRIDES ONLY
 
@@ -456,10 +461,4 @@ $variables: (
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-disabled--focus)};
   --pfe-cta--BorderColor--focus:        transparent;
   --pfe-cta--Color--focus:              #{pfe-color(ui-disabled--text)} !important;
-}
-
-/// MODALS
-/// ===========================================================================
-:host([slot="pfe-modal--trigger"]) {
-  padding: #{pfe-local($cssvar: Padding)} !important;
 }

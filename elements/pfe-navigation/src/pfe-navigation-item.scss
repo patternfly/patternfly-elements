@@ -297,10 +297,6 @@ $variables: map-merge($variables, $nav-item-variables);
     display: block;
     visibility: visible;
   }
-  // full width tray
-  :host([is_nested][parent_hidden][pfe-full-width]) & {
-      padding: #{pfe-local($cssvar: Padding, $region: tray)} 0 #{pfe-local($cssvar: Padding, $region: tray)} 0;
-  }
 
   :host([show_links]:not([parent_hidden])) & {
     flex-grow: 1;
@@ -382,6 +378,11 @@ $variables: map-merge($variables, $nav-item-variables);
   flex: 0 1 99%;//0 1 60%;
 }
 
+:host([is_nested][parent_hidden][pfe-full-width]) {
+  .pfe-navigation-item__tray {
+    padding: #{pfe-local($cssvar: Padding, $region: tray)} 0 #{pfe-local($cssvar: Padding, $region: tray)} 0;
+  }
+}
 
 // @TODO set up tray opening animation?
 // :host(.animating) {

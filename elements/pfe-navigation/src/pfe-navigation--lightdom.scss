@@ -8,10 +8,6 @@ $variables: map-merge($variables, $nav-light-dom-variables);
 #main-menu {
     background: transparent !important; // Remove this.
 }
-[slot=logo] > img {
-    display: block;
-    max-height: 100%;
-}
 
 // IE11 styles
 @include browser-query(ie11) {

@@ -163,6 +163,9 @@ $variables: map-merge($variables, $nav-light-dom-variables);
     [pfe-icon=web-mobile-menu]:not([show_links]).pfe-navigation-item-3 .pfe-navigation__main .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0 !important;
     }
+    pfe-navigation [slot="logo"] {
+        max-width: 100%;
+    }
 }
 
 @include browser-query(edge) {
@@ -284,6 +287,7 @@ pfe-navigation [slot="logo"] {
 // Turn off internal link outline
 pfe-navigation-item {
     [slot="trigger"] {
+        font-family: #{pfe-var(font-family)};
         margin: .25em 0 0 0!important;
     }
     // Utility links.
@@ -463,7 +467,7 @@ pfe-navigation-item {
     }
 }
 
-.pfe-link-list {
+pfe-navigation-item .pfe-link-list {
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid;
     break-inside: avoid;
@@ -473,6 +477,7 @@ pfe-navigation-item {
     margin-bottom: 1em;
 
     &--header {
+        font-family: #{pfe-var(font-family)};
         margin: 0 0 .75em 0;
         font-size: 16px;
         font-weight: 400;
@@ -551,4 +556,10 @@ pfe-navigation-main [slot="trigger"] > a {
         position: relative;
         top: 0 !important;
     }
+}
+
+@media screen and (max-width: 1023px) {
+  .pfe-navigation-item .pfe-navigation-item__tray {
+    max-height: none !important;
+  }
 }

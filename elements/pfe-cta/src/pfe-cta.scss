@@ -99,10 +99,6 @@ $variables: (
   line-height:     #{pfe-local($cssvar: LineHeight, $fallback: #{pfe-var(line-height)})};
   text-decoration: #{pfe-local(TextDecoration)} !important;
 
-  :host(:not([pfe-priority],[aria-disabled="true"])) & {
-    padding-right: calc(#{pfe-local($cssvar: size, $region: arrow)} + #{pfe-local($cssvar: MarginLeft, $region: arrow)} + .375rem) !important;
-  }
-
   :host(:hover) & {
     color:   #{pfe-local(Color--hover)} !important;
     text-decoration: #{pfe-local(TextDecoration--hover)} !important;
@@ -125,7 +121,7 @@ $variables: (
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
-      height: 100%;      
+      height: 100%;
     }
 
     @include browser-query(edge) {
@@ -133,6 +129,7 @@ $variables: (
       input {
         @extend %reset-button;
       }
+      position: relative;
     }
   }
   &--inner {  // inner border on priority CTAs
@@ -167,8 +164,6 @@ $variables: (
     width:  #{pfe-local($cssvar: size, $region: arrow)};
     height: #{pfe-local($cssvar: size, $region: arrow)};
     transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
-
-    margin-left: calc((#{pfe-local($cssvar: size, $region: arrow)} + #{pfe-local($cssvar: MarginLeft, $region: arrow)} + .375rem) * -1);
 
     :host(:hover) & {
       fill: #{pfe-local(Color--hover)};
@@ -205,6 +200,11 @@ $variables: (
   :host([on="#{$theme}"]) {
       @include pfe-set-broadcast-theme($theme);
   }
+}
+
+/// Buttons in CTAs
+:host(:not([pfe-priority])) ::slotted(button) {
+  padding:  0 !important;
 }
 
 /// ===========================================================================
@@ -468,9 +468,3 @@ $variables: (
   --pfe-cta--BorderColor--focus:        transparent;
   --pfe-cta--Color--focus:              #{pfe-color(ui-disabled--text)};
 }
-
-/// MODALS
-/// ===========================================================================
-// :host([slot="pfe-modal--trigger"]) {
-//   padding: #{pfe-local($cssvar: Padding)} !important;
-// }

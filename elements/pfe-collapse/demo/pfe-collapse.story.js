@@ -33,8 +33,11 @@ stories.add(PfeCollapse.tag,  () => {
       tools.component("pfe-collapse-toggle", {}, [
         {
           content: tools.customTag({
-            tag: "h3",
-            content: "Click me!"
+            tag: "button",
+            attributes: {
+              type: "button"
+            },
+            content: "Toggle Control"
           })
         }
       ]) +

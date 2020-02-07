@@ -179,7 +179,7 @@ $LOCAL: cta;
 
 // Fallback styles for safari to read a border on focus
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    ::-webkit-full-page-media, _:future, :root, a {
+    ::-webkit-full-page-media, _:future, a {
        border: 1px solid transparent;
     }
     [pfe-priority] {

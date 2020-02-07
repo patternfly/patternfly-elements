@@ -75,6 +75,21 @@
       <p pfe-content-set--panel>Panel 1</p>
     </pfe-content-set>
 
+    <div style="width: 500px">
+      <pfe-content-set id="accordionBreakpoint" pfe-breakpoint="550">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <p pfe-content-set--panel>Panel 1</p>
+      </pfe-content-set>
+    </div>
+
+
+    <div style="width: 600px">
+      <pfe-content-set id="tabsBreakpoint" pfe-breakpoint="550">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <p pfe-content-set--panel>Panel 1</p>
+      </pfe-content-set>
+    </div>
+
     <script>
       suite('<pfe-content-set>', () => {
         test('it should have the proper attributes for tabs', () => {
@@ -176,6 +191,22 @@
           const pfeTabAlignValue = pfeTabs.getAttribute("pfe-tab-align");
 
           assert.equal(alignValue, pfeTabAlignValue);
+        });
+
+        test("it should put content into an accordion if the pfe-breakpoint attribute is present and greater than the width of pfe-content-set parent", () => {
+          const pfeContentSet = document.querySelector('#accordionBreakpoint');
+          const pfeAccordion = pfeContentSet.querySelector("pfe-accordion");
+
+          assert.isTrue(pfeContentSet.hasAttribute('pfe-breakpoint'));
+          assert.isNotNull(pfeAccordion);
+        });
+
+        test("it should put content into tabs if the pfe-breakpoint attribute is present and less than the width of pfe-content-set parent", () => {
+          const pfeContentSet = document.querySelector('#tabsBreakpoint');
+          const pfeTabs = pfeContentSet.querySelector("pfe-tabs");
+
+          assert.isTrue(pfeContentSet.hasAttribute('pfe-breakpoint'));
+          assert.isNotNull(pfeTabs);
         });
       });
     </script>

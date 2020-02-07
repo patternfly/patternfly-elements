@@ -120,19 +120,13 @@ $variables: (
 // Targets the wrappers in the shadow DOM
 .pfe-card {
   &--overlay {
-      background-color: #{pfe-local($cssvar: BackgroundColor, $region: overlay)};
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      left: 0;
-      height: 100%;
-      z-index: 0;
+    @extend %overlay;
+    background-color: #{pfe-local($cssvar: BackgroundColor, $region: overlay)};
+    z-index: 0;
 
-      @include pfe-print-media {
-        display: none;
-      }
+    @include pfe-print-media {
+      display: none;
+    }
   }
   &__header,
   &__body,

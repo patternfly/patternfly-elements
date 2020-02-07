@@ -1,5 +1,13 @@
+// If we have a .env file respect the LOCALHOST setting
+// If not default to localhost
+require('dotenv').config();
+let localhost = 'localhost';
+if (typeof process.env === 'object' && typeof process.env.LOCALHOST !== 'undefined') {
+  localhost = process.env.LOCALHOST;
+}
+
 module.exports = {
-  host: "localhost",
+  host: localhost,
   port: "auto",
   open: true,
   startPath: "/examples",

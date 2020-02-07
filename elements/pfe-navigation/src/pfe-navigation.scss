@@ -15,7 +15,6 @@ $nav-variables: (
   BorderColor:    transparent,
   Border:         pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
 
-  MaxHeight: 72px,
   MobileMenuHeight: 60px,
 
   // Nav content width
@@ -35,7 +34,6 @@ $nav-variables: (
     FontWeight: 100
   ),
 
-
   // Tray region
   tray: (
     Padding: pfe-var(container-padding)
@@ -43,7 +41,8 @@ $nav-variables: (
 
   // Logo
   logo: (
-    MinWidth: 135px
+    MinWidth: 135px,
+    MaxHeight: 50px,
   )
 );
 $variables: map-merge($variables, $nav-variables);
@@ -98,9 +97,9 @@ pfe-icon {
 ::slotted([slot="logo"]) {
   margin: 0 !important;
   max-width: 100%;
-  max-height: #{pfe-local(MaxHeight)};
-  min-width:  #{pfe-local($region: logo, $cssvar: MinWidth)};
   display: block;
+  min-width:  #{pfe-local($region: logo, $cssvar: MinWidth)};
+  height: #{pfe-local($region: logo, $cssvar: MaxHeight, $fallback: 70px)};
 }
 
 ::slotted([slot="mobile-login"]),
@@ -176,9 +175,9 @@ pfe-icon {
     flex-shrink: 0; // Prevent flexbox from collapsing the padding.
     align-items: flex-start;
     justify-content: center;
-    width: #{pfe-local($region: logo, $cssvar: MinWidth, $fallback: 155px)};
     flex: 0 0 #{pfe-local($region: logo, $cssvar: MinWidth)};
-    
+    width: #{pfe-local($region: logo, $cssvar: MinWidth, $fallback: 155px)};
+    max-height: #{pfe-local($region: logo, $cssvar: MaxHeight, $fallback: 70px)};
     padding-top: #{pfe-local(Padding--vertical)};
     padding-bottom: #{pfe-local(Padding--vertical)};
     padding-right: calc( #{pfe-var(container-padding)} + 9px ); // ensure gap between main menu links and logo
@@ -192,7 +191,7 @@ pfe-icon {
       padding-bottom: calc(#{pfe-local(Padding--vertical) / 2});
     }
     @media screen and (min-width: pfe-breakpoint("lg-mobile", $map: false)) {
-        flex: 0 1 10%;
+        flex: 0 1 #{pfe-local($region: logo, $cssvar: MinWidth, $fallback: 135px)};
     }
     > * {
       display: flex;

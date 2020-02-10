@@ -4,7 +4,8 @@ Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/re
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) Update pfe-content-set to accept custom container queries
 - [6a41811](https://github.com/patternfly/patternfly-elements/commit/6a418112668ba580918ac4a8b4b54e8df05c1155) fix: reference error when slot is missing in pfe-navigation
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: accordion accessibility improvements; aria-roles corrected
+- [ff859a5](https://github.com/patternfly/patternfly-elements/commit/ff859a5c2b62ae24225f0031f69b5bc050c59470) fix: accordion accessibility improvements; aria-roles corrected
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-nav & pfe-cta hotfixes aria-roles corrected
 
 ## Prerelease 36 ( 2020-01-20 )
 

@@ -159,8 +159,11 @@ $variables: (
     display: #{pfe-local($cssvar: Display, $region: arrow)};
     padding: #{pfe-local($cssvar: Padding, $region: arrow)};
     fill:    #{pfe-local(Color)};
+    position: relative;
+    top:    calc(.9em - #{pfe-local($cssvar: size, $region: arrow)});
     width:  #{pfe-local($cssvar: size, $region: arrow)};
     height: #{pfe-local($cssvar: size, $region: arrow)};
+    transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
 
     :host(:hover) & {
       fill: #{pfe-local(Color--hover)};
@@ -171,18 +174,21 @@ $variables: (
     }
 
     @include browser-query(ie11) {
-      width:  16px;
-    }
-    @include browser-query(edge) {
-      width:  16px;
+      width:  18px;
     }
 
+    @include browser-query(edge) {
+      top: .3em;
+      width:  18px;
+      float: right;
+    }
+    
   }
 }
 
 // Set svg to none so it won't render in nav on iOS versions 12>
-:host([pfe-priority]) svg {
-  display:none;
+:host([pfe-priority]) svg { 
+  display: none; 
 }
 
 :host([pfe-priority]),
@@ -313,7 +319,7 @@ $variables: (
   --pfe-cta--BorderColor:               #{pfe-color(ui-base)};
   --pfe-cta--Color:                     #{pfe-color(ui-base--text)};
 
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-base--hover)}; //#0057ad;
+  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-base--hover)};
   --pfe-cta--BorderColor--hover:        #{pfe-color(ui-base--hover)};
   --pfe-cta--Color--hover:              #{pfe-color(ui-base--text)};
 
@@ -357,7 +363,7 @@ $variables: (
   --pfe-cta--BorderColor:               #{pfe-color(ui-complement)};
   --pfe-cta--Color:                     #{pfe-color(ui-complement--text)};
 
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-complement--hover)}; //#0057ad;
+  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-complement--hover)};
   --pfe-cta--BorderColor--hover:        #{pfe-color(ui-complement--hover)};
   --pfe-cta--Color--hover:              #{pfe-color(ui-complement--text)};
 
@@ -453,12 +459,12 @@ $variables: (
   --pfe-cta--BorderColor:               #{pfe-color(ui-disabled)};
   --pfe-cta--Color:                     #{pfe-color(ui-disabled--text)} !important;
 
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-disabled--hover)}; //#0057ad;
+  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-disabled--hover)};
   --pfe-cta--BorderColor--hover:        #{pfe-color(ui-disabled--hover)};
-  --pfe-cta--Color--hover:              #{pfe-color(ui-disabled--text)} !important;
+  --pfe-cta--Color--hover:              #{pfe-color(ui-disabled--text)};
 
   --pfe-cta--BackgroundColor--focus:    #{pfe-color(ui-disabled)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-disabled--focus)};
   --pfe-cta--BorderColor--focus:        transparent;
-  --pfe-cta--Color--focus:              #{pfe-color(ui-disabled--text)} !important;
+  --pfe-cta--Color--focus:              #{pfe-color(ui-disabled--text)};
 }

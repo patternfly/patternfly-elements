@@ -83,6 +83,13 @@
       </pfe-content-set>
     </pfe-band>
 
+    <pfe-band id="accordionBand" pfe-color="darkest" style="width: 600px;">
+      <pfe-content-set>
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <p pfe-content-set--panel>Panel 1</p>
+      </pfe-content-set>
+    </pfe-band>
+
     <script>
       suite('<pfe-content-set>', () => {
         test('it should have the proper attributes for tabs', () => {
@@ -189,7 +196,7 @@
         test("it should set the correct \"on\" attribute from a parent component that has a pfe-color attribute", done => {
           const band = document.querySelector("#band");
           const contentSet = band.querySelector("pfe-content-set");
-          const tabs = band.querySelector("pfe-tabs");
+          const tabs = contentSet.querySelector("pfe-tabs");
           const tab = tabs.querySelector("pfe-tab");
           const panel = tabs.querySelector("pfe-tab-panel");
 
@@ -198,13 +205,30 @@
           assert.equal(tab.getAttribute("on"), "dark");
           assert.equal(panel.getAttribute("on"), "dark");
 
+          const accordionBand = document.querySelector("#accordionBand");
+          const accordionContentSet = accordionBand.querySelector("pfe-content-set");
+          const accordion = accordionContentSet.querySelector("pfe-accordion");
+          const accordionHeader = accordion.querySelector("pfe-accordion-header");
+          const accordionPanel = accordion.querySelector("pfe-accordion-panel");
+
+          assert.equal(accordionContentSet.getAttribute("on"), "dark");
+          assert.equal(accordion.getAttribute("on"), "dark");
+          assert.equal(accordionHeader.getAttribute("on"), "dark");
+          assert.equal(accordionPanel.getAttribute("on"), "dark");
+
           band.removeAttribute("pfe-color");
+          accordionBand.removeAttribute("pfe-color");
 
           flush(() => {
             assert.equal(contentSet.getAttribute("on"), "light");
             assert.equal(tabs.getAttribute("on"), "light")
             assert.equal(tab.getAttribute("on"), "light");
             assert.equal(panel.getAttribute("on"), "light");
+
+            assert.equal(accordionContentSet.getAttribute("on"), "light");
+            assert.equal(accordion.getAttribute("on"), "light");
+            assert.equal(accordionHeader.getAttribute("on"), "light");
+            assert.equal(accordionPanel.getAttribute("on"), "light");
 
             done();
           });

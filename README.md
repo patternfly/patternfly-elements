@@ -29,24 +29,46 @@ The storybook script will launch the interactive demo pages.
 _Note: You will need to use [Node](https://nodejs.org/en/) v.7 or higher._
 
 ## Command Line Helper Scripts
-Many commands have an optional argument of a component name, if left off it will assume it should run on all components.
+Many commands have an optional argument of a component name, if left off it will assume it should run on all components. These should run from the project root.
 
-These should run from the project root.
+### Compile
+
 ```shell
-# Runs build, watch, and server processes
-npm run live-demo
+# Run, watch, and build all components
+npm run dev
+
+# Run, watch, and build one component
+npm run dev [component-name]
+```
+
+### Preview
+
+```shell
+# Runs server process to preview files
+npm start
+
+# Runs storybook preview tool
+npm run storybook
 
 # Runs build and server (but doesn't watch)
 npm run demo
+```
 
-# Run watch and build processes
-npm run dev [component-name]
+### Compile & Preview
 
-# Run tests
+```shell
+# Runs build, watch, and server processes
+npm run live-demo
+```
+
+### Testing
+
+```shell
+# Run tests on all components
+npm run test 
+
+# Run tests on one component
 npm run test [component-name]
-
-# Runs server process
-npm start
 ```
 
 ## Support

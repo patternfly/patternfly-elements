@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../../pfe-band/dist/pfe-band.js"></script>
     <script type="module" src="../dist/pfe-content-set.js"></script>
   </head>
   <body>
@@ -74,6 +75,13 @@
       <h2 pfe-content-set--header>Heading 1</h2>
       <p pfe-content-set--panel>Panel 1</p>
     </pfe-content-set>
+
+    <pfe-band id="band" pfe-color="darkest">
+      <pfe-content-set>
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <p pfe-content-set--panel>Panel 1</p>
+      </pfe-content-set>
+    </pfe-band>
 
     <script>
       suite('<pfe-content-set>', () => {
@@ -176,6 +184,30 @@
           const pfeTabAlignValue = pfeTabs.getAttribute("pfe-tab-align");
 
           assert.equal(alignValue, pfeTabAlignValue);
+        });
+
+        test("it should set the correct \"on\" attribute from a parent component that has a pfe-color attribute", done => {
+          const band = document.querySelector("#band");
+          const contentSet = band.querySelector("pfe-content-set");
+          const tabs = band.querySelector("pfe-tabs");
+          const tab = tabs.querySelector("pfe-tab");
+          const panel = tabs.querySelector("pfe-tab-panel");
+
+          assert.equal(contentSet.getAttribute("on"), "dark");
+          assert.equal(tabs.getAttribute("on"), "dark")
+          assert.equal(tab.getAttribute("on"), "dark");
+          assert.equal(panel.getAttribute("on"), "dark");
+
+          band.removeAttribute("pfe-color");
+
+          flush(() => {
+            assert.equal(contentSet.getAttribute("on"), "light");
+            assert.equal(tabs.getAttribute("on"), "light")
+            assert.equal(tab.getAttribute("on"), "light");
+            assert.equal(panel.getAttribute("on"), "light");
+
+            done();
+          });
         });
       });
     </script>

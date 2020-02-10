@@ -55,6 +55,10 @@ class PfeContentSet extends PFElement {
       this._observer.disconnect();
     }
 
+    if (this.hasAttribute("on")) {
+      this.on.value = this.getAttribute("on");
+    }
+
     if (this.isTab) {
       this._buildTabs();
     } else {
@@ -153,7 +157,7 @@ class PfeContentSet extends PFElement {
     }
 
     // Pass the theme property down to the tabs component
-    if (this.on.value) {
+    if (this.on) {
       tabs.setAttribute("on", this.on.value);
     }
 

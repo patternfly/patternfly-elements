@@ -25,9 +25,9 @@ class PfeContentSet extends PFElement {
 
   get isTab() {
     var breakpointValue;
-    if (this.hasAttribute('pfe-breakpoint')) {
-      breakpointValue = this.getAttributeNode('pfe-breakpoint').value;
-      breakpointValue = breakpointValue.replace(/\D/g,'');
+    if (this.hasAttribute("pfe-breakpoint")) {
+      breakpointValue = this.getAttributeNode("pfe-breakpoint").value;
+      breakpointValue = breakpointValue.replace(/\D/g,"");
     } else {
       breakpointValue = 700;
     }

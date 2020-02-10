@@ -194,18 +194,18 @@
         });
 
         test("it should put content into an accordion if the pfe-breakpoint attribute is present and greater than the width of pfe-content-set parent", () => {
-          const pfeContentSet = document.querySelector('#accordionBreakpoint');
+          const pfeContentSet = document.querySelector("#accordionBreakpoint");
           const pfeAccordion = pfeContentSet.querySelector("pfe-accordion");
 
-          assert.isTrue(pfeContentSet.hasAttribute('pfe-breakpoint'));
+          assert.isTrue(pfeContentSet.hasAttribute("pfe-breakpoint"));
           assert.isNotNull(pfeAccordion);
         });
 
         test("it should put content into tabs if the pfe-breakpoint attribute is present and less than the width of pfe-content-set parent", () => {
-          const pfeContentSet = document.querySelector('#tabsBreakpoint');
+          const pfeContentSet = document.querySelector("#tabsBreakpoint");
           const pfeTabs = pfeContentSet.querySelector("pfe-tabs");
 
-          assert.isTrue(pfeContentSet.hasAttribute('pfe-breakpoint'));
+          assert.isTrue(pfeContentSet.hasAttribute("pfe-breakpoint"));
           assert.isNotNull(pfeTabs);
         });
       });

@@ -129,7 +129,6 @@ $variables: (
       input {
         @extend %reset-button;
       }
-      position: relative;
     }
   }
   &--inner {  // inner border on priority CTAs
@@ -159,8 +158,6 @@ $variables: (
     display: #{pfe-local($cssvar: Display, $region: arrow)};
     padding: #{pfe-local($cssvar: Padding, $region: arrow)};
     fill:    #{pfe-local(Color)};
-    position: relative;
-    top:    calc(.9em - #{pfe-local($cssvar: size, $region: arrow)});
     width:  #{pfe-local($cssvar: size, $region: arrow)};
     height: #{pfe-local($cssvar: size, $region: arrow)};
     transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
@@ -178,17 +175,15 @@ $variables: (
     }
 
     @include browser-query(edge) {
-      top: .3em;
       width:  18px;
-      float: right;
     }
-    
+
   }
 }
 
 // Set svg to none so it won't render in nav on iOS versions 12>
-:host([pfe-priority]) svg { 
-  display: none; 
+:host([pfe-priority]) svg {
+  display: none;
 }
 
 :host([pfe-priority]),

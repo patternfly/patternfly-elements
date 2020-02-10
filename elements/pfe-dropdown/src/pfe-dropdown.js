@@ -57,6 +57,7 @@ class PfeDropdown extends PFElement {
 
     // elements
     this._toggle = this.shadowRoot.querySelector("#pfe-dropdown-toggle");
+    this._toggle_text = this._toggle.querySelector(".pfe-dropdown__toggle-text");
     this._menu = this.shadowRoot.querySelector("#pfe-dropdown-menu");
 
     // events
@@ -68,7 +69,7 @@ class PfeDropdown extends PFElement {
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
       case "pfe-label":
-        this._toggle.textContent = newValue;
+       this._toggle_text.textContent = newValue;
       default:
         break;
     }

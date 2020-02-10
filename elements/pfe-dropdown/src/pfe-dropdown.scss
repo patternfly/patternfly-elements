@@ -46,3 +46,13 @@ $LOCAL: dropdown;
 #pfe-dropdown-menu.open {
   display: block;
 }
+
+.pfe-dropdown {
+  &__container { }
+  &__toggle {
+    &-text { }
+    &-icon {
+      vertical-align: -0.125em;
+    }
+  }
+}

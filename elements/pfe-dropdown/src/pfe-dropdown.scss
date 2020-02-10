@@ -2,7 +2,29 @@
 
 $LOCAL: dropdown;
 
+$variables: (
+  toggle: (
+    Position:         relative,
+    Display:          flex,
+    AlignItems:       center,
+    JustifyContent:   space-between,
+    MinWidth:         calc(#{pfe-var(container-spacer)} * 2),
+    MaxWidth:         100%,
+    PaddingTop:       calc(#{pfe-var(container-padding)} * 0.375),
+    PaddingRight:     calc(#{pfe-var(container-padding)} * 0.5),
+    PaddingBottom:    calc(#{pfe-var(container-padding)} * 0.375),
+    PaddingLeft:      calc(#{pfe-var(container-padding)} * 0.5),
+    FontSize:         #{pfe-var(font-size)},
+    FontWeight:       400,
+    LineHeight:       #{pfe-var(line-height)},
+    Color:            #{pfe-color(text)},
+    BackgroundColor:  transparent,
+    Border:           none,
+  )
+);
+
 :host {
+  @include pfe-print-variables($variables);
   position: relative;
   display: inline-block;
   max-width: 100%;
@@ -10,19 +32,6 @@ $LOCAL: dropdown;
 
 :host([hidden]) {
   display: none;
-}
-
-#pfe-dropdown-toggle  {
-  position: relative;
-  min-width: 44px;
-  max-width: 100%;
-  padding: 0.375rem 0.5rem 0.375rem 0.5rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #000;
-  background-color: transparent;
-  font-family: inherit;
 }
 
 #pfe-dropdown-menu {
@@ -48,11 +57,57 @@ $LOCAL: dropdown;
 }
 
 .pfe-dropdown {
-  &__container { }
   &__toggle {
-    &-text { }
+    position:         #{pfe-local($cssvar: Position, $region: toggle)};
+    display:          #{pfe-local($cssvar: Display, $region: toggle)};
+    align-items:      #{pfe-local($cssvar: AlignItems, $region: toggle)};
+    justify-content:  #{pfe-local($cssvar: JustifyContent, $region: toggle)};
+    min-width:        #{pfe-local($cssvar: MinWidth, $region: toggle)};
+    max-width:        #{pfe-local($cssvar: MaxWidth, $region: toggle)};
+    padding-top:      #{pfe-local($cssvar: PaddingTop, $region: toggle)};
+    padding-right:    #{pfe-local($cssvar: PaddingRight, $region: toggle)};
+    padding-bottom:   #{pfe-local($cssvar: PaddingBottom, $region: toggle)};
+    padding-left:     #{pfe-local($cssvar: PaddingLeft, $region: toggle)};
+    font-size:        #{pfe-local($cssvar: FontSize, $region: toggle)};
+    font-weight:      #{pfe-local($cssvar: FontWeight, $region: toggle)};
+    line-height:      #{pfe-local($cssvar: LineHeight, $region: toggle)};
+    color:            #{pfe-local($cssvar: Color, $region: toggle)};
+    background-color: #{pfe-local($cssvar: BackgroundColor, $region: toggle)};
+    border:           #{pfe-local($cssvar: Border, $region: toggle)};
+    
+    &:hover, &:active, &:focus {
+      &:before {
+        border-bottom-color: #0066cc;
+      }
+    }
+    &:active, &:focus {
+      &:before {
+        border-width: 2px;
+      }
+    }
+    &:before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      content: "";
+      border: 1px solid;
+      border-color: #ededed #ededed #8a8d90 #ededed;
+    }
+    &-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     &-icon {
       vertical-align: -0.125em;
+      fill: currentColor;
+      height: 1em;
+      width: 1em;
+      margin-right: 0.5rem;
+      margin-left: 1rem;
+      line-height: 1.5;
     }
   }
 }

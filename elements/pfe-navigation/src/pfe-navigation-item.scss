@@ -317,7 +317,6 @@ $variables: map-merge($variables, $nav-item-variables);
     color:            #{pfe-local($cssvar: Color, $region: tray)};
     //mobile tray padding
     padding: #{pfe-local($cssvar: Padding, $region: tray)};
-    // padding: 64px;
     width: 100%;
     max-height: calc(100vh - #{pfe-local(Height)});
     overflow-x: hidden;

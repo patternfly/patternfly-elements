@@ -454,7 +454,7 @@ pfe-navigation-item {
     }
     // Loop through the other breakpoints
 
-    &pfe-navigation-item:not([pfe-full-width]) {
+    pfe-navigation-item:not([pfe-full-width]) & {
       @each $size in ("md", "lg", "xl") {
         @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
           --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});

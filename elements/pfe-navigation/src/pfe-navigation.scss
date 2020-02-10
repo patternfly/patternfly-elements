@@ -72,19 +72,13 @@ $variables: map-merge($variables, $nav-variables);
   z-index: #{pfe-zindex(navigation)};
 }
 
-:host([pfe-full-width]) {
-  .pfe-navigation {
-    &__container {
-      @each $size in ("md", "lg", "xl") {
-        @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-          @if ($size == 'md') {
-            --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
-          } @else if ($size == 'lg') {
-            --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
-          } @else if ($size == 'xl') {
-            --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
-          }
-        }
+:host([pfe-full-width]) .pfe-navigation__container {
+  @each $size in ("md", "lg", "xl") {
+    @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
+      @if ($size == "md" or $size == "lg") {
+        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
+      } @else if ($size == "xl") {
+        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
       }
     }
   }
@@ -178,7 +172,7 @@ pfe-icon {
     justify-content: center;
     width: #{pfe-local($region: logo, $cssvar: MinWidth, $fallback: 155px)};
     flex: 0 0 #{pfe-local($region: logo, $cssvar: MinWidth)};
-    
+
     padding-top: #{pfe-local(Padding--vertical)};
     padding-bottom: #{pfe-local(Padding--vertical)};
     padding-right: calc( #{pfe-var(container-padding)} + 9px ); // ensure gap between main menu links and logo

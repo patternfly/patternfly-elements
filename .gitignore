@@ -15,6 +15,7 @@ lerna-debug.log
 npm-debug.log*
 
 # Local files
+.env
 *.local.umd.js
 *.local.js
 

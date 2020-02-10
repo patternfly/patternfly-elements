@@ -4,7 +4,7 @@
     "className": "PfeCollapse",
     "elementName": "pfe-collapse"
   },
-  "version": "1.0.0-prerelease.37",
+  "version": "1.0.0-prerelease.38",
   "description": "Collapse element for PatternFly Elements",
   "keywords": [
     "web-components",

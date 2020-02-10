@@ -4,7 +4,7 @@
     "className": "PfeCta",
     "elementName": "pfe-cta"
   },
-  "version": "1.0.0-prerelease.37",
+  "version": "1.0.0-prerelease.38",
   "publishConfig": {
     "access": "public"
   },

@@ -2,7 +2,7 @@
 
 Tag: [v1.0.0-prerelease.39](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.39)
 
-- 
+- []() fix: cascading the "on" attribute on pfe-content-set #730
 
 ## Prerelease 38 ( 2020-02-03 )
 

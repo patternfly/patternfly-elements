@@ -1,14 +1,23 @@
-## Prerelease 38 ( TBD )
+## Prerelease 39 ( TBD )
+
+Tag: [v1.0.0-prerelease.39](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.39)
+
+- [f93af30](https://github.com/patternfly/patternfly-elements/commit/f93af30cc7eef3e7728effb7cedb4773f54a5f43) feat: adding the ability for pfe-navigation to use the full width of the viewport (#718)
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Move generator into the monorepo
+
+## Prerelease 38 ( 2020-02-03 )
+
 Tag: [v1.0.0-prerelease.38](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.38)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Move generator into the monorepo
+- [9716f5c](https://github.com/patternfly/patternfly-elements/commit/9716f5c01abb4f1358bcc5b512b3136c3ce9ee0d) fix: pfe-nav & pfe-cta hotfixes
+- [ad1b5b5](https://github.com/patternfly/patternfly-elements/commit/ad1b5b505896ee8016173c7faa146d24c861cf7a) docs:  Update shell commands
+- [5585188](https://github.com/patternfly/patternfly-elements/commit/558518849087bd9b348c2827549acfe081d8ed96) docs: switching pfe-collapse story from heading tag to button
 
 ## Prerelease 37 ( 2020-01-28 )
 Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.37)
 
 - [6a41811](https://github.com/patternfly/patternfly-elements/commit/6a418112668ba580918ac4a8b4b54e8df05c1155) fix: reference error when slot is missing in pfe-navigation
 - [ff859a5](https://github.com/patternfly/patternfly-elements/commit/ff859a5c2b62ae24225f0031f69b5bc050c59470) fix: accordion accessibility improvements; aria-roles corrected
-- [9716f5c](https://github.com/patternfly/patternfly-elements/commit/9716f5c01abb4f1358bcc5b512b3136c3ce9ee0d) fix: pfe-nav & pfe-cta hotfixes
 
 ## Prerelease 36 ( 2020-01-20 )
 

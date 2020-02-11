@@ -157,6 +157,12 @@
             "default": true,
             "prefixed": true
           },
+          "full-width": {
+            "title": "Full width navigation",
+            "type": "boolean",
+            "default": false,
+            "prefixed": true
+          },
           "close-on-click": {
             "title": "Close navigation on click event",
             "type": "string",

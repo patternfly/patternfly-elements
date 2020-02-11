@@ -2,7 +2,7 @@
 
 Tag: [v1.0.0-prerelease.39](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.39)
 
-- []() feat: adding the ability for pfe-navigation to use the full width of the viewport (#718)
+- [f93af30](https://github.com/patternfly/patternfly-elements/commit/f93af30cc7eef3e7728effb7cedb4773f54a5f43) feat: adding the ability for pfe-navigation to use the full width of the viewport (#718)
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-cta add support for disabled button
 
 ## Prerelease 38 ( 2020-02-03 )

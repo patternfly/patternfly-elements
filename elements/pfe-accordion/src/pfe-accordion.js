@@ -44,7 +44,7 @@ class PfeAccordion extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-disclosure", "on"]
+    return ["pfe-disclosure"]
   }
 
   constructor() {

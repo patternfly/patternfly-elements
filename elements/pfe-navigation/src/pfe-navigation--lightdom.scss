@@ -16,7 +16,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         [slot="trigger"] {
             width: 100%;
             max-width: 130px;
-            font-size: 12px; 
+            font-size: 12px;
             margin: 0;
 
             a {
@@ -176,7 +176,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
                     font-size: 12px;
                     text-align: center;
                 }
-            }            
+            }
         }
 
         [slot="tray"] {
@@ -453,9 +453,12 @@ pfe-navigation-item {
       max-width: #{pfe-local(Width, $fallback: 1140px)};
     }
     // Loop through the other breakpoints
-    @each $size in ("md", "lg", "xl") {
-      @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-        --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+
+    pfe-navigation-item:not([pfe-full-width]) & {
+      @each $size in ("md", "lg", "xl") {
+        @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
+          --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+        }
       }
     }
     @include browser-query(ie11) {
@@ -541,7 +544,7 @@ pfe-navigation-main [slot="trigger"] > a {
     @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false) )
                   and (max-width: pfe-breakpoint("xl", $max: true) ) {
         font-size: 13px;
-    }  
+    }
 }
 
 // Apply flexbox styles to older browsers that don't support ShadowDOM.

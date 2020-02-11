@@ -14,13 +14,13 @@ This element will give you a top-level navigation element (not for use as subnav
     </div>
     ```
 
-- `logo`: This slot should contain the site's main logo. Note that there is also a CSS variable for the width of the logo, `--pfe-navigation__logo--MinWidth`. Example: 
+- `logo`: This slot should contain the site's main logo. Note that there is also a CSS variable for the width of the logo, `--pfe-navigation__logo--MinWidth`. Example:
 
     ```
     <a style="--pfe-navigation__logo--MinWidth: 160px" slot="logo" href="https://company.com"><img class="logo" src="https://via.placeholder.com/150x50.png" title="Company logo" /></a>
     ```
 
-- `search`: This slot, when assigned to a navigation-item component, renders a dropdown in the navigation for the search functionality. Inside the tray for the slot, we recommend tagging the search form or search functionality that includes the input and submit button with the attribute `pfe-navigation--mobile-search`. The element inside the search slot that is tagged with this attribute will be copied into the mobile menu and appear above the accordion for the main navigation. Example: 
+- `search`: This slot, when assigned to a navigation-item component, renders a dropdown in the navigation for the search functionality. Inside the tray for the slot, we recommend tagging the search form or search functionality that includes the input and submit button with the attribute `pfe-navigation--mobile-search`. The element inside the search slot that is tagged with this attribute will be copied into the mobile menu and appear above the accordion for the main navigation. Example:
 
     ```
     <pfe-navigation-item slot="search" pfe-icon="web-search">
@@ -28,31 +28,31 @@ This element will give you a top-level navigation element (not for use as subnav
     </pfe-navigation-item>
     ```
 
-- `language`: This slot, when assigned to a navigation-item component, renders the dropdown for the user to select the site language. Example: 
+- `language`: This slot, when assigned to a navigation-item component, renders the dropdown for the user to select the site language. Example:
 
     ```
     <pfe-navigation-item slot="language" pfe-icon="web-globe" slot="trigger">
       <a href="http://www.foo.com">English</a>
     </pfe-navigation-item>
     ```
-- `mobile-language`: A simple link to a landing page containing language switching information.  Set the hidden attribute on it so that it is not visible by default. Example: 
+- `mobile-language`: A simple link to a landing page containing language switching information.  Set the hidden attribute on it so that it is not visible by default. Example:
 
     ```
     <a href="/url-to-language-page" slot="mobile-language" pfe-icon="web-globe" hidden>English</a>
     ```
-- `login`: This slot, when assigned to a navigation-item component, renders the dropdown for the user to log into the site. Example: 
+- `login`: This slot, when assigned to a navigation-item component, renders the dropdown for the user to log into the site. Example:
 
     ```
     <pfe-navigation-item slot="login" pfe-icon="web-user">
       <h2 slot="trigger"><a href="http://www.bar.com">Log in</a></h2>
     </pfe-navigation-item>
     ```
-- `mobile-login`: A simple link to a landing page containing a log in form.  Set the hidden attribute on it so that it is not visible by default. Example: 
+- `mobile-login`: A simple link to a landing page containing a log in form.  Set the hidden attribute on it so that it is not visible by default. Example:
     ```
     <a href="/login" slot="mobile-login" pfe-icon="web-user" hidden>Login/Register</a>
     ```
 
-- `site-switcher`: This slot, when assigned to a navigation-item component, renders the dropdown for the site switcher, allowing the user to navigate an ecosystem of websites. Example: 
+- `site-switcher`: This slot, when assigned to a navigation-item component, renders the dropdown for the site switcher, allowing the user to navigate an ecosystem of websites. Example:
 
     ```
     <pfe-navigation-item slot="site-switcher" pfe-icon="web-grid-3x3">
@@ -65,6 +65,7 @@ This element will give you a top-level navigation element (not for use as subnav
 - `pfe-sticky`: Allows the navigation to stick to the top of the page when the user scrolls down.
 - `pfe-close-on-click`: Currently only supports "external"; this means if a user clicks outside the component, the navigation items will close.
 - `pfe-menu-label`: Translation for the Menu label on the main navigation dropdown.
+- `pfe-full-width`: Allows the navigation to span the full width of the viewport.
 
 ---
 

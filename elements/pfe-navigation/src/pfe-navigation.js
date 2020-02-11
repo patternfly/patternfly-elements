@@ -55,7 +55,7 @@ class PfeNavigation extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-full-width"];
+    return ["pfe-full-width", "id"];
   }
 
   constructor() {
@@ -165,6 +165,15 @@ class PfeNavigation extends PFElement {
     this._observer.disconnect();
   }
 
+  attributeChangedCallback(name, oldValue, newValue) {
+    super.attributeChangedCallback(name, oldValue, newValue);
+    switch (name) {
+      case "id":
+        this._reportHeight();
+        break;
+    }
+  }
+
   _resizeHandler(event) {
     // Set the visibility of items
     this._setVisibility(this.offsetWidth);
@@ -194,6 +203,9 @@ class PfeNavigation extends PFElement {
     });
 
     this.overlay = this._activeNavigationItems.length > 0;
+
+    // update the reported height
+    this._reportHeight();
   }
 
   _stickyHandler() {
@@ -335,6 +347,9 @@ class PfeNavigation extends PFElement {
       document.addEventListener("click", this._outsideListener);
     }
 
+    // report the height of this pfe-navigation element
+    this._reportHeight();
+
     // @IE11 This is necessary so the script doesn't become non-responsive
     if (window.ShadyCSS) {
       setTimeout(() => {
@@ -357,6 +372,25 @@ class PfeNavigation extends PFElement {
   _overlayClickHandler(event) {
     this._activeNavigationItems.map(item => item.close());
     this.overlay = false;
+  }
+
+  /**
+   * Set a global CSS variable reporting the height of this navigation item.
+   * Used to position sticky subnavigation items under this.
+   *
+   * The name of the global CSS variable is `--pfe-navigation--ReportedHeight`.
+   * If this nav has an `id` attribute, the id will be appended to the variable
+   * name to distinguish it from other pfe-navigation items on the page
+   * (unlikely, but imagine a demo page with 20 example pfe-navigation elements
+   * in different states, and one genuine pfe-navigation element at the top
+   * used for actual navigation).
+   */
+  _reportHeight() {
+    const cssVarName =
+      `--pfe-navigation--ReportedHeight` + (this.id ? `-${this.id}` : "");
+    const height = this.clientHeight;
+    console.log(cssVarName, height);
+    document.body.style.setProperty(cssVarName, height);
   }
 }
 

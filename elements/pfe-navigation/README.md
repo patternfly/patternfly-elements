@@ -67,6 +67,11 @@ This element will give you a top-level navigation element (not for use as subnav
 - `pfe-menu-label`: Translation for the Menu label on the main navigation dropdown.
 - `pfe-full-width`: Allows the navigation to span the full width of the viewport.
 
+### CSS Variables
+
+ - `--pfe-navigation--ReportedHeight`: when pfe-navigation initializes, it will create a global (on `body`) CSS variable that contains the height of the pfe-navigation item.  The primary uses for this is calculating the offset for anchor links, and for positioning a sticky sub-header below the pfe-navigation.  Note that multiple pfe-navigation elements will write the same variable, unless...
+ - `--pfe-navigation--ReportedHeight-${ID}`: like the previous varaible, but if the pfe-navigation has an `id` attribute, it will be appended to the CSS variable name.  This makes it possible to distinguish the heights of multiple pfe-navigation elements on the same page.
+
 ---
 
 ## Navigation item

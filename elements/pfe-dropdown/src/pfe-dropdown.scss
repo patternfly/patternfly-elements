@@ -4,22 +4,45 @@ $LOCAL: dropdown;
 
 $variables: (
   toggle: (
-    Position:         relative,
-    Display:          flex,
-    AlignItems:       center,
-    JustifyContent:   space-between,
-    MinWidth:         calc(#{pfe-var(container-spacer)} * 2),
-    MaxWidth:         100%,
-    PaddingTop:       calc(#{pfe-var(container-padding)} * 0.375),
-    PaddingRight:     calc(#{pfe-var(container-padding)} * 0.5),
-    PaddingBottom:    calc(#{pfe-var(container-padding)} * 0.375),
-    PaddingLeft:      calc(#{pfe-var(container-padding)} * 0.5),
-    FontSize:         #{pfe-var(font-size)},
-    FontWeight:       400,
-    LineHeight:       #{pfe-var(line-height)},
-    Color:            #{pfe-color(text)},
-    BackgroundColor:  transparent,
-    Border:           none,
+    Position: relative,
+    Display: flex,
+    AlignItems: center,
+    JustifyContent: space-between,
+    MinWidth: calc(#{pfe-var(container-spacer)} * 2),
+    MaxWidth: 100%,
+    PaddingTop: calc(#{pfe-var(container-padding)} * 0.375),
+    PaddingRight: calc(#{pfe-var(container-padding)} * 0.5),
+    PaddingBottom: calc(#{pfe-var(container-padding)} * 0.375),
+    PaddingLeft: calc(#{pfe-var(container-padding)} * 0.5),
+    FontSize: #{pfe-var(font-size)},
+    FontWeight: 400,
+    LineHeight: #{pfe-var(line-height)},
+    Color: #{pfe-color(text)},
+    BackgroundColor: transparent,
+    Border: none,
+    // @TODO find corresponding color in map
+    BorderBottomColor--before: #8a8d90,
+    BorderBottomColor--before--hover: #{pfe-color(link)},
+    BorderWidth--before: #{pfe-var(ui--border-width)},
+    BorderWidth--before--hover: calc(#{pfe-var(ui--border-width)} * 2),
+    // @TODO find corresponding color in map
+    BorderTopColor--before: #ededed,
+    BorderRightColor--before: #ededed,
+    BorderLeftColor--before: #ededed,
+    BorderStyle--before: solid
+  ),
+  toggle-text: (
+    Overflow: hidden,
+    TextOverflow: ellipsis,
+    WhiteSpace: nowrap
+  ),
+  toggle-icon: (
+    VerticalAlign: calc(#{pfe-var(container-spacer)} * -0.125),
+    Height: #{pfe-var(icon-size)},
+    Width: #{pfe-var(icon-size)},
+    MarginRight: calc(#{pfe-var(container-spacer)} * 0.5),
+    MarginLeft: #{pfe-var(container-spacer)},
+    LineHeight: #{pfe-var(line-height)}
   )
 );
 
@@ -58,31 +81,33 @@ $variables: (
 
 .pfe-dropdown {
   &__toggle {
-    position:         #{pfe-local($cssvar: Position, $region: toggle)};
-    display:          #{pfe-local($cssvar: Display, $region: toggle)};
-    align-items:      #{pfe-local($cssvar: AlignItems, $region: toggle)};
-    justify-content:  #{pfe-local($cssvar: JustifyContent, $region: toggle)};
-    min-width:        #{pfe-local($cssvar: MinWidth, $region: toggle)};
-    max-width:        #{pfe-local($cssvar: MaxWidth, $region: toggle)};
-    padding-top:      #{pfe-local($cssvar: PaddingTop, $region: toggle)};
-    padding-right:    #{pfe-local($cssvar: PaddingRight, $region: toggle)};
-    padding-bottom:   #{pfe-local($cssvar: PaddingBottom, $region: toggle)};
-    padding-left:     #{pfe-local($cssvar: PaddingLeft, $region: toggle)};
-    font-size:        #{pfe-local($cssvar: FontSize, $region: toggle)};
-    font-weight:      #{pfe-local($cssvar: FontWeight, $region: toggle)};
-    line-height:      #{pfe-local($cssvar: LineHeight, $region: toggle)};
-    color:            #{pfe-local($cssvar: Color, $region: toggle)};
+    position: #{pfe-local($cssvar: Position, $region: toggle)};
+    display: #{pfe-local($cssvar: Display, $region: toggle)};
+    align-items: #{pfe-local($cssvar: AlignItems, $region: toggle)};
+    justify-content: #{pfe-local($cssvar: JustifyContent, $region: toggle)};
+    min-width: #{pfe-local($cssvar: MinWidth, $region: toggle)};
+    max-width: #{pfe-local($cssvar: MaxWidth, $region: toggle)};
+    padding-top: #{pfe-local($cssvar: PaddingTop, $region: toggle)};
+    padding-right: #{pfe-local($cssvar: PaddingRight, $region: toggle)};
+    padding-bottom: #{pfe-local($cssvar: PaddingBottom, $region: toggle)};
+    padding-left: #{pfe-local($cssvar: PaddingLeft, $region: toggle)};
+    font-size: #{pfe-local($cssvar: FontSize, $region: toggle)};
+    font-weight: #{pfe-local($cssvar: FontWeight, $region: toggle)};
+    line-height: #{pfe-local($cssvar: LineHeight, $region: toggle)};
+    color: #{pfe-local($cssvar: Color, $region: toggle)};
     background-color: #{pfe-local($cssvar: BackgroundColor, $region: toggle)};
-    border:           #{pfe-local($cssvar: Border, $region: toggle)};
-    
-    &:hover, &:active, &:focus {
+    border: #{pfe-local($cssvar: Border, $region: toggle)};
+    &:hover,
+    &:active,
+    &:focus {
       &:before {
-        border-bottom-color: #0066cc;
+        border-bottom-color: #{pfe-local($cssvar: BorderBottomColor--before--hover, $region: toggle)};
       }
     }
-    &:active, &:focus {
+    &:active,
+    &:focus {
       &:before {
-        border-width: 2px;
+        border-width: #{pfe-local($cssvar: BorderWidth--before--hover, $region: toggle)};
       }
     }
     &:before {
@@ -92,22 +117,26 @@ $variables: (
       bottom: 0;
       left: 0;
       content: "";
-      border: 1px solid;
-      border-color: #ededed #ededed #8a8d90 #ededed;
+      border-width: #{pfe-local($cssvar: BorderWidth--before, $region: toggle)};
+      border-style: #{pfe-local($cssvar: BorderStyle--before, $region: toggle)};
+      border-top-color: #{pfe-local($cssvar: BorderTopColor--before, $region: toggle)};
+      border-right-color: #{pfe-local($cssvar: BorderRightColor--before, $region: toggle)};
+      border-bottom-color: #{pfe-local($cssvar: BorderBottomColor--before, $region: toggle)};
+      border-left-color: #{pfe-local($cssvar: BorderLeftColor--before, $region: toggle)};
     }
     &-text {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      overflow: #{pfe-local($cssvar: Overflow, $region: toggle-text)};
+      text-overflow: #{pfe-local($cssvar: TextOverflow, $region: toggle-text)};
+      white-space: #{pfe-local($cssvar: WhiteSpace, $region: toggle-text)};
     }
     &-icon {
-      vertical-align: -0.125em;
+      vertical-align: #{pfe-local($cssvar: VerticalAlign, $region: toggle-icon)};
       fill: currentColor;
-      height: 1em;
-      width: 1em;
-      margin-right: 0.5rem;
-      margin-left: 1rem;
-      line-height: 1.5;
+      height: #{pfe-local($cssvar: Height, $region: toggle-icon)};
+      width: #{pfe-local($cssvar: Width, $region: toggle-icon)};
+      margin-right: #{pfe-local($cssvar: MarginRight, $region: toggle-icon)};
+      margin-left: #{pfe-local($cssvar: MarginLeft, $region: toggle-icon)};
+      line-height: #{pfe-local($cssvar: LineHeight, $region: toggle-icon)};
     }
   }
 }

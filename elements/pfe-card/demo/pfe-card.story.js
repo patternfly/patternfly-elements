@@ -70,15 +70,20 @@ stories.add(PfeCard.tag, () => {
 
   // If they do, prompt them for the image properties
   if (imageValue) {
-    let overflow = storybookBridge.select("Image overflow?", {
-      "no overflow": null,
-      "top & sides": "top",
-      "bottom & sides": "bottom",
-      "sides only": "sides"
-    }, null, "Image");
+    let overflow = storybookBridge.select(
+      "Image overflow?",
+      {
+        "no overflow": null,
+        "top & sides": "top",
+        "bottom & sides": "bottom",
+        "sides only": "sides"
+      },
+      null,
+      "Image"
+    );
 
     // Create the overflow attribute value based on user selections
-    switch(overflow) {
+    switch (overflow) {
       case "top":
         overflowAttr.push("top");
         overflowAttr.push("right");
@@ -96,13 +101,17 @@ stories.add(PfeCard.tag, () => {
         break;
     }
 
-    image = `<img src=\"https://placekitten.com/1000/300\" ${overflowAttr.length > 0 ? `pfe-overflow=\"${overflowAttr.join(" ")}\"` : ""}/>`;
+    image = `<img src=\"https://placekitten.com/1000/300\" ${
+      overflowAttr.length > 0
+        ? `pfe-overflow=\"${overflowAttr.join(" ")}\"`
+        : ""
+    }/>`;
   }
 
   // Create an object for the footer attributes
   let footerAttrs = {};
 
-  if (!imageValue || imageValue && !overflowAttr.includes("bottom")) {
+  if (!imageValue || (imageValue && !overflowAttr.includes("bottom"))) {
     let ctaText;
     let ctaLink;
 

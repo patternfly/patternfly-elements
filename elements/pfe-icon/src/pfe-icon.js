@@ -38,7 +38,7 @@ function _iconLoad(el) {
 
 function _iconLoadError(el) {
   el.classList.add("load-failed");
-  if(el.has_fallback) {
+  if (el.has_fallback) {
     el.classList.add("has-fallback");
   }
 }

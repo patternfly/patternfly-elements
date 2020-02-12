@@ -17,9 +17,11 @@
           "type": "array",
           "namedSlot": false,
           "items": {
-            "oneOf": [{
-              "$ref": "raw"
-            }]
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
           }
         }
       }
@@ -50,10 +52,7 @@
         "on": {
           "title": "Context",
           "type": "string",
-          "enum": [
-            "light",
-            "dark"
-          ],
+          "enum": ["light", "dark"],
           "default": "light",
           "prefixed": false
         },

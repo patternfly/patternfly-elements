@@ -27,7 +27,7 @@ class PfeContentSet extends PFElement {
     var breakpointValue;
     if (this.hasAttribute("pfe-breakpoint")) {
       breakpointValue = this.getAttributeNode("pfe-breakpoint").value;
-      breakpointValue = breakpointValue.replace(/\D/g,"");
+      breakpointValue = breakpointValue.replace(/\D/g, "");
     } else {
       breakpointValue = 700;
     }
@@ -83,7 +83,8 @@ class PfeContentSet extends PFElement {
     // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();
     // Use the existing accordion or create the accordion wrapper component
-    const accordion = existingAccordion || document.createElement("pfe-accordion");
+    const accordion =
+      existingAccordion || document.createElement("pfe-accordion");
 
     // Iterate over each element in the light DOM
     [...this.children].forEach(child => {

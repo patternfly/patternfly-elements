@@ -59,17 +59,7 @@ $variables: (
   border:           #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
 }
 
-:host(:hover),
-:host(:hover) ::slotted(*),
-::slotted(:hover) {
-  --pfe-cta__arrow--Padding: 0 0 0 .5rem;
-}
-
-:host(:hover) {
-  background-color: #{pfe-local(BackgroundColor--hover)};
-  border-color:     #{pfe-local(BorderColor--hover)};
-}
-
+// Note: Focus states need to be defined before hover states
 :host(:focus),
 :host(.focus-within) {
   outline: none !important;
@@ -82,6 +72,23 @@ $variables: (
   outline: none !important;
   color:   #{pfe-local(Color--focus)} !important;
   text-decoration: #{pfe-local(TextDecoration--focus)} !important;
+}
+
+// Note: Hover states need to be defined after focus states
+:host(:hover),
+:host(:hover) ::slotted(*),
+::slotted(:hover) {
+  --pfe-cta__arrow--Padding: 0 0 0 .5rem;
+}
+
+:host(:hover) {
+  background-color: #{pfe-local(BackgroundColor--hover)};
+  border-color:     #{pfe-local(BorderColor--hover)};
+}
+
+:host(:hover),
+:host(:hover) ::slotted(*) {
+  color: #{pfe-local(Color--hover)} !important;
 }
 
 ::slotted(button),
@@ -146,12 +153,12 @@ $variables: (
     border-radius: 2px;
     outline: none;
 
-    :host(:hover) & {
-      border-color: #{pfe-local($cssvar: BorderColor--hover, $region: inner)};
-    }
-
     :host(.focus-within) & {
       border-color: #{pfe-local($cssvar: BorderColor--focus, $region: inner)};
+    }
+
+    :host(:hover) & {
+      border-color: #{pfe-local($cssvar: BorderColor--hover, $region: inner)};
     }
   }
   &--arrow {
@@ -162,12 +169,12 @@ $variables: (
     height: #{pfe-local($cssvar: size, $region: arrow)};
     transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
 
-    :host(:hover) & {
-      fill: #{pfe-local(Color--hover)};
-    }
-
     :host(.focus-within) & {
       fill: #{pfe-local(Color--focus)};
+    }
+
+    :host(:hover) & {
+      fill: #{pfe-local(Color--hover)};
     }
 
     @include browser-query(ie11) {
@@ -302,7 +309,7 @@ $variables: (
 }
 
 :host([pfe-priority="secondary"][pfe-color="accent"].focus-within) {
-    --pfe-cta--Color--hover: #{pfe-color(ui-accent)};
+    --pfe-cta--Color--hover: #{pfe-color(ui-accent--text)};
 }
 
 /// ===========================================================================
@@ -340,7 +347,7 @@ $variables: (
 }
 
 :host([pfe-priority="secondary"][pfe-color="base"].focus-within) {
-    --pfe-cta--Color--hover:            #{pfe-color(ui-base)};
+    --pfe-cta--Color--hover: #{pfe-color(ui-base--text)};
 }
 
 
@@ -384,7 +391,7 @@ $variables: (
 }
 
 :host([pfe-priority="secondary"][pfe-color="complement"].focus-within) {
-    --pfe-cta--Color--hover:            #{pfe-color(ui-complement)};
+    --pfe-cta--Color--hover: #{pfe-color(ui-complement--text)};
 }
 
 /// ===========================================================================
@@ -405,6 +412,10 @@ $variables: (
   --pfe-cta--BorderColor--focus:         #{pfe-color(surface--border)};
   --pfe-cta__inner--BorderColor--focus:  #{pfe-local(BorderColor--focus)};
   --pfe-cta--TextDecoration--hover:      #{pfe-broadcasted(link-decoration--hover)};
+}
+
+:host([pfe-priority="secondary"][pfe-variant="wind"].focus-within) {
+    --pfe-cta--Color--hover: #{pfe-color(link--hover)};
 }
 
 /// ===========================================================================

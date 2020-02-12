@@ -24,9 +24,16 @@ class PfeContentSet extends PFElement {
   }
 
   get isTab() {
+    var breakpointValue;
+    if (this.hasAttribute("pfe-breakpoint")) {
+      breakpointValue = this.getAttributeNode("pfe-breakpoint").value;
+      breakpointValue = breakpointValue.replace(/\D/g,"");
+    } else {
+      breakpointValue = 700;
+    }
     return this.parentNode
-      ? this.parentNode.offsetWidth > 768
-      : window.outerWidth > 768;
+      ? this.parentNode.offsetWidth > breakpointValue
+      : window.outerWidth > breakpointValue;
   }
 
   constructor() {
@@ -62,6 +69,7 @@ class PfeContentSet extends PFElement {
     }
 
     this.render();
+    this.context_update();
 
     if (window.ShadyCSS) {
       setTimeout(() => {
@@ -97,11 +105,6 @@ class PfeContentSet extends PFElement {
 
     if (!existingAccordion) {
       fragment.appendChild(accordion);
-    }
-
-    // Pass the theme property down to the accordion component
-    if (this.on) {
-      accordion.setAttribute("on", this.on.value);
     }
 
     if (!existingAccordion) {
@@ -150,11 +153,6 @@ class PfeContentSet extends PFElement {
     // Pass the variant attribute down to the tabs component
     if (this.variant.value !== this.variant.default) {
       tabs.setAttribute("pfe-variant", this.variant.value);
-    }
-
-    // Pass the theme property down to the tabs component
-    if (this.on.value) {
-      tabs.setAttribute("on", this.on.value);
     }
 
     if (this.align.value) {

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
     -->
-    
+
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
@@ -29,7 +29,8 @@
     <script>
       require([
         "../dist/pfe-content-set.umd.js",
-        "../../pfe-cta/dist/pfe-cta.umd.js"
+        "../../pfe-cta/dist/pfe-cta.umd.js",
+        "../../pfe-band/dist/pfe-band.umd.js"
       ])
     </script>
 
@@ -268,6 +269,29 @@
       </pfe-content-set>
     </section>
 
+    <section>
+      <h2>Using pfe-color to control the theme: pfe-color="darkest"</h2>
+      <h3>Tabs</h3>
+      <pfe-band pfe-color="darkest">
+        <pfe-content-set>
+          <h2 pfe-content-set--header>Heading 1</h2>
+          <div pfe-content-set--panel>Panel 1</div>
+          <h2 pfe-content-set--header>Heading 2</h2>
+          <div pfe-content-set--panel>Panel 2</div>
+        </pfe-content-set>
+      </pfe-band>
+
+      <h3>Accordion</h3>
+      <pfe-band pfe-color="darkest" style="width: 600px">
+        <pfe-content-set>
+          <h2 pfe-content-set--header>Heading 1</h2>
+          <div pfe-content-set--panel>Panel 1</div>
+          <h2 pfe-content-set--header>Heading 2</h2>
+          <div pfe-content-set--panel>Panel 2</div>
+        </pfe-content-set>
+      </pfe-band>
+    </section>
+
     <hr>
 
     <h2>Align: center</h2>
@@ -286,15 +310,17 @@
     </pfe-content-set>
 
     <hr>
-    <h2>This content set's markup is incorrect.</h2>
-    <pfe-content-set>
-      <h2>Heading 1</h2>
-      <div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-      </div>
-      <h2>Heading 2</h2>
-      <div>Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</div>
-    </pfe-content-set>
+    <section>
+      <h2>This content set's markup is incorrect.</h2>
+      <pfe-content-set>
+        <h2>Heading 1</h2>
+        <div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+        </div>
+        <h2>Heading 2</h2>
+        <div>Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</div>
+      </pfe-content-set>
+    </section>
 
     <h2>Dynamically Add Headers and Panels</h2>
     <pfe-content-set id="dynamic">

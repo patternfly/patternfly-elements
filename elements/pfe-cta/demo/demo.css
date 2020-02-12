@@ -20,19 +20,19 @@
     --pfe-card--Border: 1px solid rgba(45, 45, 45, .3);
   }
 
-  pfe-cta {
+  .card-layout pfe-cta {
     margin-top: 10px;
     margin-left: 20px;
   }
 
   .force-wrap {
-      max-width: 208px;
+      max-width: 227px;
   }
 
   .card-layout {
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
   }
 
   a {

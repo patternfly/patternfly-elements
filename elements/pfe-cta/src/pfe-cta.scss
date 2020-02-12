@@ -98,7 +98,7 @@ $variables: (
 }
 
 ::slotted(*) {
-  white-space: normal !important;
+  white-space: normal;
   display: inline;
   padding:         #{pfe-local($cssvar: Padding)} !important;
   color:           #{pfe-local(Color, $pfe-cta--Color--fallback)} !important;
@@ -129,7 +129,7 @@ $variables: (
 
 .pfe-cta {
   &--wrapper {
-    white-space: nowrap;
+    white-space: nowrap ;
     :host([pfe-priority]) &,
     :host([aria-disabled="true"]) & {
       display: flex;

@@ -20,3 +20,11 @@ pfe-cta a {
     padding: #{pfe-local($cssvar: Padding, $fallback: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2))} !important;
   }
 }
+// Edge 17 & 18 arrow wrap
+.pfe-cta--wrapper {
+    white-space: nowrap;
+}
+.pfe-cta--wrapper > a,
+.pfe-cta--wrapper>button {
+    white-space: normal;
+}

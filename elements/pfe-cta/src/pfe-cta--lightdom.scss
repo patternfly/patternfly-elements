@@ -1,3 +1,7 @@
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: cta;
+
 // ShadyCSS fallback styles
 pfe-cta a {
   color: inherit !important;
@@ -7,5 +11,12 @@ pfe-cta a {
   }
   &:focus {
     outline: none !important;
+  }
+}
+
+@include browser-query(ie11) {
+  pfe-cta[pfe-priority] a,
+  pfe-cta[aria-disabled="true"] a {
+    padding: #{pfe-local($cssvar: Padding, $fallback: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2))} !important;
   }
 }

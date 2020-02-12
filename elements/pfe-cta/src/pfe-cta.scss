@@ -106,6 +106,10 @@ $variables: (
   line-height:     #{pfe-local($cssvar: LineHeight, $fallback: #{pfe-var(line-height)})};
   text-decoration: #{pfe-local(TextDecoration)} !important;
 
+  @include browser-query(ie11) {
+    padding: 0 !important;
+  }
+  
   :host(:hover) & {
     color:   #{pfe-local(Color--hover)} !important;
     text-decoration: #{pfe-local(TextDecoration--hover)} !important;

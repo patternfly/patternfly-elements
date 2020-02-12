@@ -5,6 +5,7 @@ $LOCAL: cta;
 $pfe-cta__arrow-size: 0.313em;
 $pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, .2);
 $pfe-cta--Color--fallback: #003366;
+$non-breaking-space-width: .5ch;
 
 $variables: (
   Padding:      .6rem 0,
@@ -28,7 +29,7 @@ $variables: (
 
   arrow: (
     Display:    inline,
-    Padding:    0 .125rem 0 calc(.375rem - .5ch),
+    Padding:    0 .125rem 0 calc(.375rem - $non-breaking-space-width),
     size:       13px,
     MarginLeft: calc(#{pfe-var(content-spacer)} * 0.25)
   ),
@@ -78,7 +79,7 @@ $variables: (
 :host(:hover),
 :host(:hover) ::slotted(*),
 ::slotted(:hover) {
-  --pfe-cta__arrow--Padding: 0 0 0 calc(.5rem - .5ch);
+  --pfe-cta__arrow--Padding: 0 0 0 calc(.5rem - $non-breaking-space-width);
 }
 
 :host(:hover) {

@@ -41,8 +41,10 @@ class PfeDropdownItem extends PFElement {
     if (this.isLink()) {
       this._container.setAttribute("role", "none");
       this._item.setAttribute("role", "menuitem");
+      this._item.setAttribute("tabindex", "-1");
     } else if (this.isAction()) {
       this._container.setAttribute("role", "menuitem");
+      this._container.setAttribute("tabindex", "-1");
       this._item.removeAttribute("role");
     }
   }

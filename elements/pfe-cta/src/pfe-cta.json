@@ -37,11 +37,14 @@
           "maxItems": 1,
           "namedSlot": false,
           "items": {
-            "oneOf": [{
-              "$ref": "a"
-            }, {
-              "$ref": "button"
-            }]
+            "oneOf": [
+              {
+                "$ref": "a"
+              },
+              {
+                "$ref": "button"
+              }
+            ]
           }
         }
       },
@@ -55,31 +58,21 @@
           "title": "Priority",
           "type": "string",
           "prefixed": true,
-          "enum": [
-            "primary",
-            "secondary"
-          ],
+          "enum": ["primary", "secondary"],
           "observer": "_basicAttributeChanged"
         },
         "color": {
           "title": "Color",
           "type": "string",
           "prefixed": true,
-          "enum": [
-            "accent",
-            "base",
-            "complement",
-            "lightest"
-          ],
+          "enum": ["accent", "base", "complement", "lightest"],
           "observer": "_basicAttributeChanged"
         },
         "variant": {
           "title": "Style variant",
           "type": "string",
           "prefixed": true,
-          "enum": [
-            "wind"
-          ],
+          "enum": ["wind"],
           "observer": "_basicAttributeChanged"
         }
       }

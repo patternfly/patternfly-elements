@@ -25,7 +25,6 @@ const template = (data = {}) => {
 
 stories.addDecorator(storybookBridge.withKnobs);
 
-
 stories.add(PfeModal.tag, () => {
   let config = {};
   const props = PfeModal.properties;
@@ -65,6 +64,6 @@ stories.add(PfeModal.tag, () => {
     }])
   }];
 
-	const render = template(config);
+  const render = template(config);
   return tools.preview(render);
 });

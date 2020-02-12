@@ -56,6 +56,11 @@
           ],
           "default": "light",
           "prefixed": false
+        },
+        "breakpoint": {
+          "title": "Custom breakpoint",
+          "type": "string",
+          "prefixed": true
         }
       },
       "required": ["orientation", "variant", "on"]

@@ -36,6 +36,16 @@
       <button>Action 1</button>
     </pfe-dropdown-item>
   </pfe-dropdown>
+  <p id="action">Selected Action: <span id="selectedAction"></span></p>
+
+  <script>
+      let dropdown = document.querySelector("pfe-dropdown");
+      document.querySelector("#action").style.display = "none";
+      dropdown.addEventListener("pfe-dropdown:change", function (event) {
+        document.querySelector('#selectedAction').textContent = event.detail.action;
+        document.querySelector("#action").style.display = "block";
+      });
+  </script>
 
 </body>
 </html>

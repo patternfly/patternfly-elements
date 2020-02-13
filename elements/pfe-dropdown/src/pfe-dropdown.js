@@ -1,5 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
-import PfeDropdownItem from './pfe-dropdown-item.js';
+import PfeDropdownItem from "./pfe-dropdown-item.js";
 
 const KEYCODE = {
   DOWN: 40,
@@ -10,45 +10,8 @@ const KEYCODE = {
   LEFT: 37,
   RIGHT: 39,
   SPACE: 0 || 32,
-  UP: 38,
+  UP: 38
 };
-
-function generateId() {
-  return Math.random()
-    .toString(36)
-    .substr(2, 9);
-}
-
-// Object.assign needs a polyfill as its not supported in IE11
-if (typeof Object.assign !== 'function') {
-  // Must be writable: true, enumerable: false, configurable: true
-  Object.defineProperty(Object, "assign", {
-    value: function assign(target, varArgs) { // .length of function is 2
-      'use strict';
-      if (target === null || target === undefined) {
-        throw new TypeError('Cannot convert undefined or null to object');
-      }
-
-      var to = Object(target);
-
-      for (var index = 1; index < arguments.length; index++) {
-        var nextSource = arguments[index];
-
-        if (nextSource !== null && nextSource !== undefined) {
-          for (var nextKey in nextSource) {
-            // Avoid bugs when hasOwnProperty is shadowed
-            if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
-              to[nextKey] = nextSource[nextKey];
-            }
-          }
-        }
-      }
-      return to;
-    },
-    writable: true,
-    configurable: true
-  });
-}
 
 class PfeDropdown extends PFElement {
   static get tag() {
@@ -74,27 +37,32 @@ class PfeDropdown extends PFElement {
     this.isOpen = false;
 
     // elements
+    this._container = this.shadowRoot.querySelector("#pfe-dropdown-container");
     this._toggle = this.shadowRoot.querySelector("#pfe-dropdown-toggle");
-    this._toggle_text = this._toggle.querySelector(".pfe-dropdown__toggle-text");
+    this._toggle_text = this._toggle.querySelector(
+      ".pfe-dropdown__toggle-text"
+    );
     this._menu = this.shadowRoot.querySelector("#pfe-dropdown-menu");
 
     // events
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-  
+
     this._clickHandler = this._clickHandler.bind(this);
-    this._toggleKeyDownHandler = this._toggleKeyDownHandler.bind(this);
-    this._itemKeyDownHandler = this._itemKeyDownHandler.bind(this);
+    this._toggleKeydownHandler = this._toggleKeydownHandler.bind(this);
+    this._itemKeydownHandler = this._itemKeydownHandler.bind(this);
+    this._outsideClickHandler = this._outsideClickHandler.bind(this);
   }
 
   connectedCallback() {
-    super.connectedCallback();    
+    super.connectedCallback();
     if (this.children.length) {
       customElements.whenDefined(PfeDropdown.tag).then(() => {
+        document.addEventListener("click", this._outsideClickHandler);
         this._toggle.addEventListener("click", this._clickHandler);
-        this._toggle.addEventListener("keydown", this._toggleKeyDownHandler);
+        this._toggle.addEventListener("keydown", this._toggleKeydownHandler);
         this._allItems().forEach(item => {
-          item.addEventListener("keydown", this._itemKeyDownHandler);
+          item.addEventListener("keydown", this._itemKeydownHandler);
         });
       });
     }
@@ -103,7 +71,7 @@ class PfeDropdown extends PFElement {
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
       case "pfe-label":
-       this._toggle_text.textContent = newValue;
+        this._toggle_text.textContent = newValue;
       default:
         break;
     }
@@ -134,24 +102,22 @@ class PfeDropdown extends PFElement {
     return this;
   }
 
-  _toggleKeyDownHandler(event) {
-
+  _toggleKeydownHandler(event) {
     // open menu when "keydown" event occurs on initial focus
     this.open(event);
 
     let newItem;
 
     switch (event.keyCode) {
-
-      case KEYCODE.ESC :
+      case KEYCODE.ESC:
         this.close(event);
         break;
 
-      case KEYCODE.DOWN :
-        newItem = this._nextItem();
+      case KEYCODE.DOWN:
+        newItem = this._firstItem();
         break;
 
-      default :
+      default:
         break;
     }
 
@@ -161,38 +127,39 @@ class PfeDropdown extends PFElement {
     return this;
   }
 
-  _itemKeyDownHandler(event) {
-    
+  _itemKeydownHandler(event) {
     let newItem;
+    const pfeType = event.target.parentElement.attributes["pfe-type"].value;
     switch (event.keyCode) {
-
-      case KEYCODE.ENTER :
-        this._selectItem(event);
+      case KEYCODE.ENTER:
+        if (pfeType === "action") {
+          this._selectItem(event);
+        }
         break;
 
-      case KEYCODE.ESC :
+      case KEYCODE.ESC:
         this.close(event);
         break;
 
       case KEYCODE.RIGHT:
-      case KEYCODE.DOWN :
+      case KEYCODE.DOWN:
         newItem = this._nextItem();
         break;
 
       case KEYCODE.LEFT:
-      case KEYCODE.UP :
+      case KEYCODE.UP:
         newItem = this._prevItem();
         break;
 
-      case KEYCODE.HOME :
+      case KEYCODE.HOME:
         newItem = this._firstItem();
         break;
 
-      case KEYCODE.END :
+      case KEYCODE.END:
         newItem = this._lastItem();
         break;
 
-      default :
+      default:
         break;
     }
     if (newItem) {
@@ -200,8 +167,18 @@ class PfeDropdown extends PFElement {
     }
   }
 
+  // TODO: This logic doesn't work as the (this._container.contains(path[0])) always return false
+  // _outsideClickHandler(event) {
+  //   const path = event.path || (event.composedPath && event.composedPath());
+  //   if (!this._container.contains(path[0])) {
+  //     this.close(event);
+  //   }
+  // }
+
   _allItems() {
-    return [...this.querySelectorAll("pfe-dropdown-item")];
+    return [...this.querySelectorAll("pfe-dropdown-item")].map(
+      item => item.children[0]
+    );
   }
 
   _prevItem() {
@@ -221,29 +198,20 @@ class PfeDropdown extends PFElement {
   }
 
   _nextItem() {
-    const items = this._allItems();    
+    const items = this._allItems();
     let newIdx = items.findIndex(item => item === document.activeElement) + 1;
     return items[newIdx % items.length];
   }
 
   _selectItem(event) {
-    const pfeType = event.target.attributes['pfe-type'].value;
-    
-    if (pfeType === 'action') {
-      this.dispatchEvent(
-        new CustomEvent(`${PfeDropdown.tag}:change`, {
-          bubbles: true,
-          detail: {
-            action: event.target.innerText
-          }
-        })
-      );
-    } else if (pfeType === 'link') {
-      // todo: add checks for href i.e it should display a warning if href is not present in <a> tag
-      window.location.assign(event.target.children[0].href);
-    }
-
-    // close menu once an item link or action is clicked/selected
+    this.dispatchEvent(
+      new CustomEvent(`${PfeDropdown.tag}:change`, {
+        bubbles: true,
+        detail: {
+          action: event.target.innerText
+        }
+      })
+    );
     this.close(event);
   }
 }

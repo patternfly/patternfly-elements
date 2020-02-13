@@ -22,9 +22,6 @@ class PfeDropdownItem extends PFElement {
 
     this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
     this._item = this.shadowRoot.querySelector("slot").assignedNodes()[1];
-    if (!this.hasAttribute("tabindex")) {
-      this.setAttribute("tabindex", -1);
-    }
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {

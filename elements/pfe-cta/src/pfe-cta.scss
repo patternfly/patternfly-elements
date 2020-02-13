@@ -88,13 +88,12 @@ $variables: (
   color: #{pfe-local(Color--hover)} !important;
 }
 
-::slotted(button),
-::slotted(input) {
+::slotted(button) {
   @extend %reset-button;
 }
 
 ::slotted(*) {
-  white-space: normal;
+  // white-space: normal;
   display: inline;
 
   padding: #{pfe-local($cssvar: Padding)} !important;
@@ -181,7 +180,6 @@ $variables: (
 .pfe-cta {
   &--wrapper {
     display: inline-block;
-    white-space: nowrap;
 
     :host([pfe-semantic-type="link"]:not([pfe-priority], [aria-disabled="true"]))
       & {
@@ -194,13 +192,6 @@ $variables: (
       flex-flow: row nowrap;
       align-items: center;
       height: 100%;
-    }
-
-    @include browser-query(edge) {
-      button,
-      input {
-        @extend %reset-button;
-      }
     }
   }
   &--inner {

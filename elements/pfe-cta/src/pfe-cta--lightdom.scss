@@ -26,13 +26,4 @@ pfe-cta {
               )} * 2)
       )} !important;
   }
-
-  // Edge 17 & 18 arrow wrap
-  .pfe-cta--wrapper {
-    white-space: nowrap;
-    > a,
-    > button {
-      white-space: normal;
-    }
-  }
 }

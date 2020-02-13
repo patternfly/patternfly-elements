@@ -51,7 +51,7 @@ class PfeDropdown extends PFElement {
     this._clickHandler = this._clickHandler.bind(this);
     this._toggleKeydownHandler = this._toggleKeydownHandler.bind(this);
     this._itemKeydownHandler = this._itemKeydownHandler.bind(this);
-    this._outsideClickHandler = this._outsideClickHandler.bind(this);
+    //this._outsideClickHandler = this._outsideClickHandler.bind(this);
   }
 
   connectedCallback() {

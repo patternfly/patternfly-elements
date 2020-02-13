@@ -30,9 +30,9 @@ pfe-cta {
   // Edge 17 & 18 arrow wrap
   .pfe-cta--wrapper {
     white-space: nowrap;
-  }
-  .pfe-cta--wrapper > a,
-  .pfe-cta--wrapper > button {
-    white-space: normal;
+    > a,
+    > button {
+      white-space: normal;
+    }
   }
 }

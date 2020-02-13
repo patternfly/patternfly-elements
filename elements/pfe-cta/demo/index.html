@@ -355,35 +355,35 @@
       <hr />
 
       <h3>Force wrap to test arrow line-wrap</h3>
-      <pfe-cta class="force-wrap"
-        ><a href="https://www.redhat.com"
-          >Default cta with longer text</a
-        ></pfe-cta
-      >
+      <div class="card-layout">
+        <pfe-cta style="max-width: 220px"
+          ><a href="https://www.redhat.com"
+            >Default link cta with longer text</a
+          ></pfe-cta
+        >
+        <pfe-cta style="max-width: 278px"
+          ><button>Default button cta with longer text</button></pfe-cta
+        >
+      </div>
 
       <hr />
 
-      <h3>Link, button, and input styles</h3>
-      <div class="card-layout">
-        <div>
-          <pfe-cta><a href="https://www.redhat.com">Link</a></pfe-cta>
-          <pfe-cta><button>Button</button></pfe-cta>
-          <pfe-cta><input type="button" value="Input"/></pfe-cta>
-        </div>
+      <h3>Link and button styles (displayed inline)</h3>
+      <div>
+        <pfe-cta style="outline: 1px dashed darkgray;"
+          ><a href="https://www.redhat.com">Link</a></pfe-cta
+        >
+        <pfe-cta style="outline: 1px dashed darkgray;"
+          ><button>Button</button></pfe-cta
+        >
         <pfe-cta pfe-priority="primary"
           ><a href="https://www.redhat.com">Link</a></pfe-cta
         >
         <pfe-cta pfe-priority="primary"><button>Button</button></pfe-cta>
-        <pfe-cta pfe-priority="primary"
-          ><input type="button" value="Input"
-        /></pfe-cta>
         <pfe-cta pfe-priority="secondary"
           ><a href="https://www.redhat.com">Link</a></pfe-cta
         >
         <pfe-cta pfe-priority="secondary"><button>Button</button></pfe-cta>
-        <pfe-cta pfe-priority="secondary"
-          ><input type="button" value="Input"
-        /></pfe-cta>
       </div>
     </pfe-band>
 
@@ -408,6 +408,7 @@
         >
       </div>
 
+      <br />
       <h3 style="color:white;">Color override</h3>
       <div class="card-layout">
         <pfe-cta pfe-priority="primary" pfe-color="accent"
@@ -446,6 +447,8 @@
           ><a href="https://www.redhat.com">Secondary</a></pfe-cta
         >
       </div>
+
+      <br />
       <h3 style="color: white">Color override</h3>
       <div class="card-layout">
         <pfe-cta pfe-priority="primary" pfe-color="accent"

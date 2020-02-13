@@ -2,7 +2,6 @@
 
 $LOCAL: cta;
 
-$pfe-cta__arrow-size: 0.313em;
 $pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
 $pfe-cta--Color--fallback: #003366;
 
@@ -24,9 +23,9 @@ $variables: (
   FontWeight: #{pfe-var(font-weight--bold)},
   arrow: (
     Display: inline,
-    Padding: 0 0.125rem 0 0.375rem,
-    size: 13px,
-    MarginLeft: calc(#{pfe-var(content-spacer)} * 0.25)
+    Padding: 0 0.125em 0 0.375em,
+    size: 0.7em,
+    MarginLeft: 0.3ch
   ),
   inner: (
     BorderColor: transparent,
@@ -54,6 +53,10 @@ $variables: (
   border: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(
       BorderColor
     )};
+
+  @include browser-query(ie11 edge) {
+    padding: 0 !important;
+  }
 }
 
 // Note: Focus states need to be defined before hover states
@@ -75,7 +78,8 @@ $variables: (
 :host(:hover),
 :host(:hover) ::slotted(*),
 ::slotted(:hover) {
-  --pfe-cta__arrow--Padding: 0 0 0 0.5rem;
+  --pfe-cta__arrow--Padding: 0 0 0 0.5em;
+  --pfe-cta__arrow--Marginleft: 0.5ch;
 }
 
 :host(:hover) {
@@ -111,8 +115,46 @@ $variables: (
     )};
   text-decoration: #{pfe-local(TextDecoration)} !important;
 
-  @include browser-query(ie11 edge) {
-    padding: 0 !important;
+  // DEFAULT ONLY STYLES FOR SLOTTED CONTENT
+  :host(:not([pfe-priority], [aria-disabled="true"])) & {
+    text-align: left;
+    &::after {
+      content: "";
+      mask-image: url('data:image/svg+xml; utf8, <svg height=".7em" width=".7em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.56 31.56" focusable="false"><path d="M15.78 0l-3.1 3.1 10.5 10.49H0v4.38h23.18l-10.5 10.49 3.1 3.1 15.78-15.78L15.78 0z"/></svg>');
+      mask-repeat: no-repeat;
+      mask-position: center left;
+      background-color: #{pfe-local(Color)};
+
+      display: #{pfe-local($cssvar: Display, $region: arrow)};
+      padding: 0 1em 0 0;
+      margin-left: #{pfe-local($cssvar: MarginLeft, $region: arrow)};
+
+      transition: mask-position #{pfe-var(animation-speed)} #{pfe-var(
+          animation-timing
+        )};
+
+      @include browser-query(ie11 edge) {
+        display: inline-block;
+        content: "\\2794";
+        content: url('data:image/svg+xml; utf8, <svg height=".7em" width=".7em" fill="#{map-get($pfe-colors, link)}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.56 31.56" focusable="false"><path d="M15.78 0l-3.1 3.1 10.5 10.49H0v4.38h23.18l-10.5 10.49 3.1 3.1 15.78-15.78L15.78 0z"/></svg>');
+        background-color: transparent !important;
+        mask: unset;
+        margin: 0;
+        padding: #{pfe-local($cssvar: Padding, $region: arrow)};
+        transition: padding #{pfe-var(animation-speed)} #{pfe-var(
+            animation-timing
+          )};
+      }
+    }
+  }
+
+  :host(.focus-within:not([pfe-priority])) &::after {
+    background-color: #{pfe-local(Color--focus)};
+  }
+
+  :host(:not([pfe-priority], [aria-disabled="true"]):hover) &::after {
+    mask-position: center right;
+    background-color: #{pfe-local(Color--hover)};
   }
 
   :host(:hover) & {
@@ -132,7 +174,13 @@ $variables: (
 
 .pfe-cta {
   &--wrapper {
+    display: inline-block;
     white-space: nowrap;
+
+    :host([pfe-semantic-type="link"]:not([pfe-priority], [aria-disabled="true"]))
+      & {
+      padding: #{pfe-local($cssvar: Padding)};
+    }
 
     :host([pfe-priority]) &,
     :host([aria-disabled="true"]) & {
@@ -174,26 +222,27 @@ $variables: (
       border-color: #{pfe-local($cssvar: BorderColor--hover, $region: inner)};
     }
   }
-  &--arrow {
-    display: #{pfe-local($cssvar: Display, $region: arrow)};
-    padding: #{pfe-local($cssvar: Padding, $region: arrow)};
-    fill: #{pfe-local(Color)};
-    width: #{pfe-local($cssvar: size, $region: arrow)};
-    height: #{pfe-local($cssvar: size, $region: arrow)};
-    transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
+  // &--arrow {
+  //   display: #{pfe-local($cssvar: Display, $region: arrow)};
+  //   padding: #{pfe-local($cssvar: Padding, $region: arrow)};
+  //   margin-left: #{pfe-local($cssvar: MarginLeft, $region: arrow)};
+  //   fill: #{pfe-local(Color)};
+  //   width: #{pfe-local($cssvar: size, $region: arrow)};
+  //   height: #{pfe-local($cssvar: size, $region: arrow)};
+  //   transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
 
-    :host(.focus-within) & {
-      fill: #{pfe-local(Color--focus)};
-    }
+  //   :host(.focus-within) & {
+  //     fill: #{pfe-local(Color--focus)};
+  //   }
 
-    :host(:hover) & {
-      fill: #{pfe-local(Color--hover)};
-    }
+  //   :host(:hover) & {
+  //     fill: #{pfe-local(Color--hover)};
+  //   }
 
-    @include browser-query(ie11 edge) {
-      width: 18px;
-    }
-  }
+  //   @include browser-query(ie11 edge) {
+  //     width: 18px;
+  //   }
+  // }
 }
 
 // Set svg to none so it won't render in nav on iOS versions 12>

@@ -20,13 +20,11 @@ $variables: (
     Color: #{pfe-color(text)},
     BackgroundColor: transparent,
     Border: none,
-    // @TODO find corresponding color in map
-      BorderBottomColor--before: #8a8d90,
+    BorderBottomColor--before: #8a8d90,
     BorderBottomColor--before--hover: #{pfe-color(link)},
     BorderWidth--before: #{pfe-var(ui--border-width)},
     BorderWidth--before--hover: calc(#{pfe-var(ui--border-width)} * 2),
-    // @TODO find corresponding color in map
-      BorderTopColor--before: #ededed,
+    BorderTopColor--before: #ededed,
     BorderRightColor--before: #ededed,
     BorderLeftColor--before: #ededed,
     BorderStyle--before: solid

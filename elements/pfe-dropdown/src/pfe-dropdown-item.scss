@@ -48,3 +48,15 @@ $variables: (
   color: #{pfe-local(Color--hover)};
   background-color: #{pfe-local(BackgroundColor--hover)};
 }
+
+:host([pfe-type="seperator"]) {
+  .pfe-dropdown-item {
+    &__container {
+      height: 1px;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      background-color: #d2d2d2;
+      border: 0;
+    }
+  }
+}

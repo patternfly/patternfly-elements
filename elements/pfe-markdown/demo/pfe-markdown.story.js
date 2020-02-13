@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as storybookBridge from '@storybook/addon-knobs/polymer';
+import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeMarkdown from "../dist/pfe-markdown.js";
@@ -37,15 +37,17 @@ And a [link](https://redhat.com)`;
   config.prop = tools.autoPropKnobs(props, storybookBridge);
   config.has = tools.autoContentKnobs(slots, storybookBridge);
 
-  config.slots = [{
-    content: tools.customTag({
-      tag: "div",
-      attributes: {
-        "pfe-markdown-container": true
-      },
-      content: config.has.default
-    })
-  }];
+  config.slots = [
+    {
+      content: tools.customTag({
+        tag: "div",
+        attributes: {
+          "pfe-markdown-container": true
+        },
+        content: config.has.default
+      })
+    }
+  ];
 
   let rendered = template(config);
   return tools.preview(rendered);

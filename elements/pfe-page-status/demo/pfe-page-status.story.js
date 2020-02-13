@@ -19,9 +19,9 @@ stories.addDecorator(storybookBridge.withKnobs);
 const template = (data = {}) =>
   tools.component(PfePageStatus.tag, data.prop, data.slots);
 
-stories.add(PfePageStatus.tag,  () => {
+stories.add(PfePageStatus.tag, () => {
   let config = {};
-  
+
   const props = PfePageStatus.properties;
   const slots = PfePageStatus.slots;
 
@@ -37,9 +37,11 @@ stories.add(PfePageStatus.tag,  () => {
   // Build the knobs and read in their selections
   config.has = tools.autoContentKnobs(slots, storybookBridge);
 
-  config.slots = [{
-    content: config.has.content
-  }];
+  config.slots = [
+    {
+      content: config.has.content
+    }
+  ];
 
   let rendered = template(config);
 

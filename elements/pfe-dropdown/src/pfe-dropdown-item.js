@@ -46,6 +46,8 @@ class PfeDropdownItem extends PFElement {
       this._container.setAttribute("role", "menuitem");
       this._container.setAttribute("tabindex", "-1");
       this._item.removeAttribute("role");
+    } else if (this.isSeperator()) {
+      this._container.setAttribute("role", "seperator");
     }
   }
 
@@ -55,6 +57,10 @@ class PfeDropdownItem extends PFElement {
 
   isAction() {
     return this.getAttribute("pfe-type") === "action";
+  }
+
+  isSeperator() {
+    return this.getAttribute("pfe-type") === "seperator";
   }
 }
 

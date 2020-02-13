@@ -95,7 +95,7 @@ $variables: (
 
 ::slotted(*) {
   white-space: normal;
-  display: inline-block;
+  display: inline;
 
   padding: #{pfe-local($cssvar: Padding)} !important;
   color: #{pfe-local(Color, $pfe-cta--Color--fallback)} !important;

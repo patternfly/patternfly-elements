@@ -33,7 +33,8 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
 }
 
-.card-layout > pfe-cta {
+.card-layout > pfe-cta,
+.cta-align > pfe-cta {
   margin-top: 10px;
   margin-left: 20px;
 }

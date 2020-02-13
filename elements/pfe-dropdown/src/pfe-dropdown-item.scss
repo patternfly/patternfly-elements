@@ -2,27 +2,49 @@
 
 $LOCAL: dropdown-item;
 
+$variables: (
+  PaddingTop: calc(#{pfe-var(container-padding)} * 0.5),
+  PaddingRight: #{pfe-var(container-padding)},
+  PaddingBottom: calc(#{pfe-var(container-padding)} * 0.5),
+  PaddingLeft: #{pfe-var(container-padding)},
+  FontSize: #{pfe-var(font-size)},
+  FontWeight: 400,
+  LineHeight: #{pfe-var(line-height)},
+  // @TODO find corresponding color in map Color: #151515,
+  Color--hover: #151515,
+  TextAlign: left,
+  WhiteSpace: nowrap,
+  BackgroundColor: transparent,
+  // @TODO find corresponding color in map BackgroundColor--hover: #ededed,
+  Border: none,
+  BoxSizing: border-box,
+  TextDecoration: none
+);
+
+:host {
+  @include pfe-print-variables($variables);
+}
+
 ::slotted(*) {
   display: block;
   width: 100%;
-  padding-top: 0.5rem;
-  padding-right: 1rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #151515;
-  text-align: left;
-  white-space: nowrap;
-  background-color: transparent;
-  border: none;
-  box-sizing: border-box;
-  text-decoration: none;
-  font-family: inherit;
+  padding-top: #{pfe-local(PaddingTop)};
+  padding-right: #{pfe-local(PaddingRight)};
+  padding-bottom: #{pfe-local(PaddingBottom)};
+  padding-left: #{pfe-local(PaddingLeft)};
+  font-size: #{pfe-local(FontSize)};
+  font-weight: #{pfe-local(FontWeight)};
+  line-height: #{pfe-local(LineHeight)};
+  color: #{pfe-local(Color)};
+  text-align: #{pfe-local(TextAlign)};
+  white-space: #{pfe-local(WhiteSpace)};
+  background-color: #{pfe-local(BackgroundColor)};
+  border: #{pfe-local(Border)};
+  box-sizing: #{pfe-local(BoxSizing)};
+  text-decoration: #{pfe-local(TextDecoration)};
 }
 
 ::slotted(*:hover) {
-  color: #151515;
-  background-color: #ededed;
+  color: #{pfe-local(Color--hover)};
+  background-color: #{pfe-local(BackgroundColor--hover)};
 }

@@ -37,12 +37,10 @@ class PfeDropdown extends PFElement {
     this.isOpen = false;
 
     // elements
-    this._container = this.shadowRoot.querySelector("#pfe-dropdown-container");
-    this._toggle = this.shadowRoot.querySelector("#pfe-dropdown-toggle");
-    this._toggle_text = this._toggle.querySelector(
-      ".pfe-dropdown__toggle-text"
-    );
-    this._menu = this.shadowRoot.querySelector("#pfe-dropdown-menu");
+    this._container = this.shadowRoot.querySelector(`#${this.tag}-container`);
+    this._toggle = this.shadowRoot.querySelector(`#${this.tag}-toggle`);
+    this._toggle_text = this._toggle.querySelector(`.${this.tag}__toggle-text`);
+    this._menu = this.shadowRoot.querySelector(`#${this.tag}-menu`);
 
     // events
     this.open = this.open.bind(this);
@@ -58,7 +56,7 @@ class PfeDropdown extends PFElement {
     super.connectedCallback();
     if (this.children.length) {
       customElements.whenDefined(PfeDropdown.tag).then(() => {
-        document.addEventListener("click", this._outsideClickHandler);
+        //document.addEventListener("click", this._outsideClickHandler);
         this._toggle.addEventListener("click", this._clickHandler);
         this._toggle.addEventListener("keydown", this._toggleKeydownHandler);
         this._allItems().forEach(item => {
@@ -176,9 +174,9 @@ class PfeDropdown extends PFElement {
   // }
 
   _allItems() {
-    return [...this.querySelectorAll("pfe-dropdown-item")].map(
-      item => item.children[0]
-    );
+    return [
+      ...this.querySelectorAll(`${this.tag}:not([pfe-type='seperator'])`)
+    ].map(item => item.children[0]);
   }
 
   _prevItem() {

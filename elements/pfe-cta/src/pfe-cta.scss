@@ -222,27 +222,6 @@ $variables: (
       border-color: #{pfe-local($cssvar: BorderColor--hover, $region: inner)};
     }
   }
-  // &--arrow {
-  //   display: #{pfe-local($cssvar: Display, $region: arrow)};
-  //   padding: #{pfe-local($cssvar: Padding, $region: arrow)};
-  //   margin-left: #{pfe-local($cssvar: MarginLeft, $region: arrow)};
-  //   fill: #{pfe-local(Color)};
-  //   width: #{pfe-local($cssvar: size, $region: arrow)};
-  //   height: #{pfe-local($cssvar: size, $region: arrow)};
-  //   transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
-
-  //   :host(.focus-within) & {
-  //     fill: #{pfe-local(Color--focus)};
-  //   }
-
-  //   :host(:hover) & {
-  //     fill: #{pfe-local(Color--hover)};
-  //   }
-
-  //   @include browser-query(ie11 edge) {
-  //     width: 18px;
-  //   }
-  // }
 }
 
 // Set svg to none so it won't render in nav on iOS versions 12>

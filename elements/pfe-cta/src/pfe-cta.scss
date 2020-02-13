@@ -25,8 +25,9 @@ $variables: (
   FontWeight: #{pfe-var(font-weight--bold)},
   arrow: (
     Display: inline,
-    Padding: 0 0.125rem 0 calc(0.375rem - #{$non-breaking-space-width}),
-    size: 13px,
+    Padding: 0 0.125rem 0 0,
+    // Padding: 0 0.125rem 0 calc(0.375rem - #{$non-breaking-space-width}),
+      size: 13px,
     MarginLeft: calc(#{pfe-var(content-spacer)} * 0.25)
   ),
   inner: (
@@ -76,7 +77,8 @@ $variables: (
 :host(:hover),
 :host(:hover) ::slotted(*),
 ::slotted(:hover) {
-  --pfe-cta__arrow--Padding: 0 0 0 calc(0.5rem - #{$non-breaking-space-width});
+  --pfe-cta__arrow--Padding: 0 0 0 0.125rem;
+  // --pfe-cta__arrow--Padding: 0 0 0 calc(0.5rem - #{$non-breaking-space-width});
 }
 
 :host(:hover) {

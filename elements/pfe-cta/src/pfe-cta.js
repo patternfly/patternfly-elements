@@ -95,7 +95,15 @@ class PfeCta extends PFElement {
 
     if (!firstChild || !supportedTag) {
       console.warn(
-        `${PfeCta.tag}:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)`
+        `${PfeCta.tag}: The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)`
+      );
+    } else if (
+      firstChild.tagName.toLowerCase() === "button" &&
+      this.props.priority.value === null &&
+      this.getAttribute("aria-disabled") !== "true"
+    ) {
+      console.warn(
+        `${PfeCta.tag}: Button tag is not supported semantically by the default link styles`
       );
     } else {
       // Capture the first child as the CTA element

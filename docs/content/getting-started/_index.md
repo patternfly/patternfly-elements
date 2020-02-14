@@ -63,7 +63,7 @@ Different components have different intended uses. We tend to think of them in 3
 The beauty of web components is that they have much of the styling built-into the tag itself. Start with the tags first.
 
 ```
-<body>
+<body unresolved>
     <pfe-cta>
         <a href="#">Learn more</a>
     </pfe-cta>
@@ -75,7 +75,7 @@ The beauty of web components is that they have much of the styling built-into th
 ### Container components (see also container notes below)
 
 ```
-<body>
+<body unresolved>
     <pfe-card pfe-color="darkest">
         <p>Hello world.</p>
     </pfe-card>
@@ -239,3 +239,8 @@ You can optionally customize your broadcast variables individually if you have v
 * `--pfe-broadcasted--link-decoration--focus`
 
 If you include the `pfe-base.css` stylesheet, it will include application of these broadcast variables to links; this is helpful because links are often nested inside of p tags in the content and thus inaccessible to the stylesheet of the web component.
+
+### Avoiding FOUC (Flash of Unstyled Content) with the body unresolved attribute?
+
+PFElements provides a stylesheet that causes the body[unresolved] attribute to avoid FOUC (Flash of Unstyled Content).
+Add the unresolved attribute to the `body` tag will hide the whole page until all elements have upgraded, or 2 seconds have passed, whichever happens first. the noscript.css file will reveal the page immediately on pages without js. the reveal animation is configurable with `--pfe-reveal-delay` (how long to wait until revealing the page, default 2 seconds) and `--pfe-reveal-duration` (how long the reveal animation takes, default 0.1618 seconds).

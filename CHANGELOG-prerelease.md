@@ -4,7 +4,8 @@ Tag: [v1.0.0-prerelease.39](https://github.com/patternfly/patternfly-elements/re
 
 - [34e54f5](https://github.com/patternfly/patternfly-elements/commit/34e54f56bebc949f5df32726251a100c6350503f) fix: cascading the "on" attribute on pfe-content-set #730
 - [f93af30](https://github.com/patternfly/patternfly-elements/commit/f93af30cc7eef3e7728effb7cedb4773f54a5f43) feat: adding the ability for pfe-navigation to use the full width of the viewport (#718)
-- [aac992](https://github.com/patternfly/patternfly-elements/commit/aac992563a61495128c00d53f637d656bbe614dd) Update pfe-content-set to accept custom container queries
+- [aac9925](https://github.com/patternfly/patternfly-elements/commit/aac992563a61495128c00d53f637d656bbe614dd) Update pfe-content-set to accept custom container queries
+- [6e45ab4](https://github.com/patternfly/patternfly-elements/commit/6e45ab42617086fb7e229af3b0953ff6912c0273) feat: pfe-cta add support for disabled button, reduce lightdom needs
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Move generator into the monorepo
 
 ## Prerelease 38 ( 2020-02-03 )

@@ -2,9 +2,6 @@
 node_modules
 tmp
 
-# Generator config file
-project.conf.json
-
 # ignore js, map, and css in element dirs
 elements/*/_temp
 elements/*/dist
@@ -18,7 +15,6 @@ lerna-debug.log
 npm-debug.log*
 
 # Local files
-.env
 *.local.umd.js
 *.local.js
 

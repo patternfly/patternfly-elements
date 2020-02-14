@@ -2,6 +2,8 @@ test
 package.json
 package-lock.json
 
+generators/element/templates/*
+
 # Package JS file ignores, variant 1
 #
 # These ignore paths are for when prettier runs :ia 'lerna run' which cd's into

@@ -70,7 +70,7 @@
           });
         });
 
-        test("it should log a warning if the first child in the light DOM is not an anchor", done => {
+        test("it should log a warning if the first child in the light DOM is not an anchor or button", done => {
           const spy = sinon.spy(console, 'warn');
           const pfeCta = document.createElement("pfe-cta");
           pfeCta.innerHTML = `<p>Something</p><a href="#">A link</a>`;
@@ -78,7 +78,21 @@
           document.body.appendChild(pfeCta);
 
           flush(() => {
-            sinon.assert.calledWith(spy, 'pfe-cta:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)');
+            sinon.assert.calledWith(spy, 'pfe-cta: The first child in the light DOM must be a supported call-to-action tag (<button>, <button>)');
+            spy.restore();
+            done();
+          });
+        });
+
+        test("it should log a warning if the first child in the light DOM is a default style button", done => {
+          const spy = sinon.spy(console, 'warn');
+          const pfeCta = document.createElement("pfe-cta");
+          pfeCta.innerHTML = `<button>A button</button>`;
+
+          document.body.appendChild(pfeCta);
+
+          flush(() => {
+            sinon.assert.calledWith(spy, 'pfe-cta: Button tag is not supported semantically by the default link styles');
             spy.restore();
             done();
           });

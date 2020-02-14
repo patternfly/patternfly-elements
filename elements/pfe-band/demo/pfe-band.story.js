@@ -101,8 +101,12 @@ stories.add(PfeBand.tag, () => {
   // -- Attach the default content for that region
   ["header", "body", "aside", "footer"].forEach(region => {
     slots[region].default = defaultContent[region];
-    if(customContent) {
-      slots[region].value = storybookBridge.text(`${region.replace(/^\w/, c => c.toUpperCase())}`, "", `${region}`);
+    if (customContent) {
+      slots[region].value = storybookBridge.text(
+        `${region.replace(/^\w/, c => c.toUpperCase())}`,
+        "",
+        `${region}`
+      );
     }
   });
 

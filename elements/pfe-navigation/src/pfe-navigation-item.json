@@ -1,57 +1,57 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Navigation item",
-    "description": "This element renders a single dropdown navigation element.",
-    "type": "object",
-    "tag": "pfe-navigation-item",
-    "class": "pfe-navigation-item",
-    "category": "container",
-    "properties": {
-      "slots": {
-        "title": "Slots",
-        "description": "Definition of the supported slots",
-        "type": "object",
-        "properties": {
-          "trigger": {
-            "title": "Navigation trigger",
-            "type": "array",
-            "namedSlot": true,
-            "items": {
-              "title": "Item",
-              "oneOf": [
-                {
-                  "$ref": "raw"
-                }
-              ]
-            }
-          },
-          "tray": {
-            "title": "Navigation tray",
-            "type": "array",
-            "namedSlot": true,
-            "items": {
-              "title": "Item",
-              "oneOf": [
-                {
-                  "$ref": "raw"
-                }
-              ]
-            }
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Navigation item",
+  "description": "This element renders a single dropdown navigation element.",
+  "type": "object",
+  "tag": "pfe-navigation-item",
+  "class": "pfe-navigation-item",
+  "category": "container",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "trigger": {
+          "title": "Navigation trigger",
+          "type": "array",
+          "namedSlot": true,
+          "items": {
+            "title": "Item",
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
           }
-        }
-      },
-      "attributes": {
-        "title": "Attributes",
-        "type": "object",
-        "properties": {
-          "icon": {
-            "title": "Icon name",
-            "type": "string",
-            "prefixed": true
+        },
+        "tray": {
+          "title": "Navigation tray",
+          "type": "array",
+          "namedSlot": true,
+          "items": {
+            "title": "Item",
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
           }
         }
       }
     },
-    "required": ["slots", "attributes"],
-    "additionalProperties": false
-  }
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "icon": {
+          "title": "Icon name",
+          "type": "string",
+          "prefixed": true
+        }
+      }
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

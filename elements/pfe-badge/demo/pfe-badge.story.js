@@ -18,8 +18,15 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeBadge.tag, () => {
   const number = storybookBridge.number(PfeBadge.properties.number.title, 50);
-  const state = storybookBridge.select(PfeBadge.properties.state.title, PfeBadge.properties.state.enum, PfeBadge.properties.state.default);
-  const threshold = storybookBridge.number(PfeBadge.properties["pfe-threshold"].title, 100);
+  const state = storybookBridge.select(
+    PfeBadge.properties.state.title,
+    PfeBadge.properties.state.enum,
+    PfeBadge.properties.state.default
+  );
+  const threshold = storybookBridge.number(
+    PfeBadge.properties["pfe-threshold"].title,
+    100
+  );
 
   const staticNumberExamples = [
     {

@@ -1,12 +1,12 @@
 %reset-box {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 %reset-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 %reset-button {
@@ -14,24 +14,25 @@
   border: none;
   margin: 0;
   padding: 0;
+  text-align: left;
 }
 
 %container {
-    position: relative;
-    display: block;
-    width: 100%;
-    padding: #{pfe-var(container-spacer)};
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: #{pfe-var(container-spacer)};
 }
 
 %sr-only {
-    position: absolute;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    height: 1px;
-    width: 1px;
-    margin: -1px;
-    padding: 0;
-    border: 0;
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
 }
 
 %overlay {

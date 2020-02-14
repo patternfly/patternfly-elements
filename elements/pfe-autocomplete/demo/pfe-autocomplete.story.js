@@ -45,7 +45,7 @@ function subscribe() {
     const staticAutocomplete = document.querySelector("pfe-autocomplete");
 
     staticAutocomplete.autocompleteRequest = function(params, callback) {
-      const regx = new RegExp("\^" + params.query, "i");
+      const regx = new RegExp("^" + params.query, "i");
       callback(items.filter(item => regx.test(item)));
     };
   }, 0);
@@ -55,18 +55,18 @@ stories.add("pfe-autocomplete", () => {
   let config = {};
   let props = {
     "init-value": {
-      "title": "Initial value",
-      "description": "An initial value to show in the input field",
-      "type": "string",
-      "prefixed": false
+      title: "Initial value",
+      description: "An initial value to show in the input field",
+      type: "string",
+      prefixed: false
     },
     "is-disabled": {
-      "title": "Is disabled",
-      "description": "Disable the input",
-      "type": "boolean",
-      "prefixed": false
+      title: "Is disabled",
+      description: "Disable the input",
+      type: "boolean",
+      prefixed: false
     }
-  }
+  };
 
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 

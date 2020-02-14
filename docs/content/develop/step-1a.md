@@ -19,10 +19,27 @@ npm install
 
 ## Generating a PatternFly Element
 
-Using the [generator-pfelement](https://github.com/patternfly/generator-pfelement), which is installed as a dev dependency, the generator will ask you a few questions that will help with the scaffolding. Make sure you are in the root directory of the PatternFly Elements repository.
+The easiest way to build a new component from scratch is to use the generator. The generator will ask you a few questions that will help with the scaffolding. Make sure you are in the root directory of the PatternFly Elements repository.
 
 ```
 npm run new
+```
+
+When creating your new components, you may find you are entering the same answers over and over again.  To prevent this, you can add a `project.conf.json` file with some of your preferences stored.  Here is a template for that file:
+
+```json
+{
+    "type": "pfelement",
+    "useSass": true,
+    "sassLibrary": {        
+        "pkg": "@patternfly/pfe-sass",
+        "path": "pfe-sass/pfe-sass"
+    },
+    "author": {
+        "name": "johnsmith",
+        "url": "https://www.github.com/johnsmith"
+    }
+}
 ```
 
 ## Scaffolding Structure

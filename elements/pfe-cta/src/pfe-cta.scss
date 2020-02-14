@@ -180,6 +180,7 @@ $variables: (
 .pfe-cta {
   &--wrapper {
     display: inline-block;
+    // white-space: nowrap;
 
     :host([pfe-semantic-type="link"]:not([pfe-priority], [aria-disabled="true"]))
       & {

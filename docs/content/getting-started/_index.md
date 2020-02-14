@@ -242,5 +242,5 @@ If you include the `pfe-base.css` stylesheet, it will include application of the
 
 ### Avoiding FOUC (Flash of Unstyled Content) with the body unresolved attribute?
 
-PFElements provides a stylesheet that causes the body[unresolved] attribute to avoid FOUC (Flash of Unstyled Content).
+PatternFly Elements provides a stylesheet that causes the `body[unresolved]` attribute to avoid the Flash of Unstyled Content (FOUC).
 Adding the unresolved attribute to the `body` tag will hide the entire page until all elements have upgraded or 2 seconds have passed, whichever happens first.  By including the `pfelement--noscript.css` file (wrapped in a `noscript` tag), all content will be revealed immediately for pages without JavaScript turned on.  To customize the wait time, update the value of the `--pfe-reveal-delay` variable (default 2 second delay) and the `--pfe-reveal-duration` variable (how long the reveal animation takes, default 0.1618 seconds).

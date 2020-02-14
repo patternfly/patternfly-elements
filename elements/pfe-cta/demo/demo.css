@@ -1,21 +1,11 @@
 h1,
-h2,
-h3,
-p {
-  font-family: var(
-    --pfe-theme--font-family,
-    "Overpass",
-    Overpass,
-    Helvetica,
-    helvetica,
-    arial,
-    sans-serif
-  );
-}
-
-h1,
 h2 {
   margin: 15px 0 10px;
+}
+
+hr {
+  border-bottom: 1px solid #ddd;
+  width: 100%;
 }
 
 pfe-band {
@@ -27,24 +17,34 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   --pfe-card--Border: 1px solid rgba(45, 45, 45, 0.3);
 }
 
+.resize {
+  display: flex;
+  flex-flow: row nowrap;
+  resize: horizontal;
+  overflow: auto;
+  border: 1px solid #ddd;
+  width: 500px;
+  padding: 10px;
+}
+
+.resize > pfe-cta:first-child {
+  margin-right: 20px;
+}
+
 .card-layout {
+  display: flex;
+  flex-flow: row wrap;
   display: grid;
   grid-gap: 10px;
   grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
+  margin-top: -10px;
+  margin-left: -20px;
 }
 
 .card-layout > pfe-cta,
-.cta-align > pfe-cta {
+.card-layout .cta-align > pfe-cta {
   margin-top: 10px;
   margin-left: 20px;
-}
-
-.force-wrap {
-  max-width: 227px;
-}
-
-a {
-  color: #2290ff;
 }
 
 .custom-dark-band {

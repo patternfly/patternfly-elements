@@ -9,9 +9,9 @@
     <title>PatternFly Elements: pfe-cta demo</title>
 
     <!-- Stylesheets for testing light DOM styles.
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
-  -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
 
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
@@ -49,11 +49,7 @@
     <pfe-band pfe-color="lightest">
       <h2>CTAs in light containers</h2>
       <div class="card-layout">
-        <pfe-card
-          style="resize:horizontal;"
-          pfe-color="lightest"
-          pfe-size="small"
-        >
+        <pfe-card pfe-color="lightest" pfe-size="small">
           <h3 slot="pfe-card--header">No color attribute</h3>
           <div class="cta-align">
             <pfe-cta><a href="https://www.redhat.com">Default</a></pfe-cta>
@@ -150,7 +146,9 @@
         </pfe-card>
       </div>
 
+      <br />
       <hr />
+      <br />
 
       <h2>CTAs in dark containers</h2>
       <div class="card-layout">
@@ -251,7 +249,9 @@
         </pfe-card>
       </div>
 
+      <br />
       <hr />
+      <br />
 
       <h3>CTAs in saturated containers</h3>
       <div class="card-layout">
@@ -352,38 +352,47 @@
         </pfe-card>
       </div>
 
+      <br />
       <hr />
+      <br />
 
       <h3>Force wrap to test arrow line-wrap</h3>
-      <pfe-cta class="force-wrap"
-        ><a href="https://www.redhat.com"
-          >Default cta with longer text</a
-        ></pfe-cta
-      >
+      <div class="resize">
+        <pfe-cta
+          ><a href="https://www.redhat.com"
+            >Default link cta with longer text</a
+          ></pfe-cta
+        >
+        <pfe-cta><button>Default button cta with longer text</button></pfe-cta>
+      </div>
 
+      <br />
       <hr />
+      <br />
 
-      <h3>Link, button, and input styles</h3>
-      <div class="card-layout">
-        <div>
-          <pfe-cta><a href="https://www.redhat.com">Link</a></pfe-cta>
-          <pfe-cta><button>Button</button></pfe-cta>
-          <pfe-cta><input type="button" value="Input"/></pfe-cta>
-        </div>
+      <h3>Link and button styles (displayed inline)</h3>
+      <div>
+        <pfe-cta style="outline: 1px dashed darkgray;"
+          ><a href="https://www.redhat.com">Link</a></pfe-cta
+        >
+        <pfe-cta style="outline: 1px dashed darkgray;"
+          ><button>Button</button></pfe-cta
+        >
+
         <pfe-cta pfe-priority="primary"
           ><a href="https://www.redhat.com">Link</a></pfe-cta
         >
         <pfe-cta pfe-priority="primary"><button>Button</button></pfe-cta>
-        <pfe-cta pfe-priority="primary"
-          ><input type="button" value="Input"
-        /></pfe-cta>
+
         <pfe-cta pfe-priority="secondary"
           ><a href="https://www.redhat.com">Link</a></pfe-cta
         >
         <pfe-cta pfe-priority="secondary"><button>Button</button></pfe-cta>
-        <pfe-cta pfe-priority="secondary"
-          ><input type="button" value="Input"
-        /></pfe-cta>
+
+        <pfe-cta aria-disabled="true"
+          ><a href="https://www.redhat.com">Link</a></pfe-cta
+        >
+        <pfe-cta aria-disabled="true"><button>Button</button></pfe-cta>
       </div>
     </pfe-band>
 
@@ -393,8 +402,10 @@
 
     <h1>Old school testing (custom backgrounds)</h1>
     <br />
+
     <div class="custom-saturated-band">
       <h2 style="color:white;">Custom saturated band with broadcast vars</h2>
+
       <h3 style="color:white;">Color responsive</h3>
       <div class="card-layout">
         <pfe-cta pfe-theme="saturated"
@@ -407,6 +418,8 @@
           ><a href="https://www.redhat.com">Secondary</a></pfe-cta
         >
       </div>
+
+      <br />
 
       <h3 style="color:white;">Color override</h3>
       <div class="card-layout">
@@ -432,10 +445,12 @@
         >
       </div>
     </div>
+
     <div class="custom-dark-band">
       <h2 style="color:white;">
         Custom dark band with custom broadcast variables
       </h2>
+
       <h3 style="color: white">Color responsive</h3>
       <div class="card-layout">
         <pfe-cta><a href="https://www.redhat.com">Default</a></pfe-cta>
@@ -446,6 +461,9 @@
           ><a href="https://www.redhat.com">Secondary</a></pfe-cta
         >
       </div>
+
+      <br />
+
       <h3 style="color: white">Color override</h3>
       <div class="card-layout">
         <pfe-cta pfe-priority="primary" pfe-color="accent"

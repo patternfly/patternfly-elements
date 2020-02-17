@@ -616,7 +616,7 @@
           // should also create a namespaced var if the nav has an ID
           pfeNavigation.setAttribute("id", "ABCDEFG");
 
-          const reportedHeightNamespaced = document.body.style.getPropertyValue("--pfe-navigation__ABCDEFG--Height--actual");
+          const reportedHeightNamespaced = document.body.style.getPropertyValue("--pfe-navigation__ABCDEFG--Height--actual").replace("px", "");
 
           assert.isDefined(reportedHeightNamespaced, "pfe-navigation with id reports height to namespaced css variable");
           assert.equal(pfeNavigation.clientHeight.toString(), reportedHeightNamespaced, "pfe-navigation with id reports the correct height");

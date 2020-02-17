@@ -606,7 +606,7 @@
         test("it should report its height via a global CSS variable", () => {
           const pfeNavigation = document.querySelector('pfe-navigation');
 
-          const reportedHeight = document.body.style.getPropertyValue("--pfe-navigation--Height--actual");
+          const reportedHeight = document.body.style.getPropertyValue("--pfe-navigation__Height--actual");
 
           // there are multiple pfe-navigations on this page, so don't try to
           // check the exact height (race condition over which writes its var
@@ -616,7 +616,7 @@
           // should also create a namespaced var if the nav has an ID
           pfeNavigation.setAttribute("id", "ABCDEFG");
 
-          const reportedHeightNamespaced = document.body.style.getPropertyValue("--pfe-navigation--ABCDEFG--Height--actual");
+          const reportedHeightNamespaced = document.body.style.getPropertyValue("--pfe-navigation__ABCDEFG--Height--actual");
 
           assert.isDefined(reportedHeightNamespaced, "pfe-navigation with id reports height to namespaced css variable");
           assert.equal(pfeNavigation.clientHeight.toString(), reportedHeightNamespaced, "pfe-navigation with id reports the correct height");

@@ -63,11 +63,9 @@ Different components have different intended uses. We tend to think of them in 3
 The beauty of web components is that they have much of the styling built-into the tag itself. Start with the tags first.
 
 ```
-<body unresolved>
-    <pfe-cta>
-        <a href="#">Learn more</a>
-    </pfe-cta>
-</body>
+<pfe-cta>
+    <a href="#">Learn more</a>
+</pfe-cta>
 ```
 
 
@@ -75,11 +73,9 @@ The beauty of web components is that they have much of the styling built-into th
 ### Container components (see also container notes below)
 
 ```
-<body unresolved>
-    <pfe-card pfe-color="darkest">
-        <p>Hello world.</p>
-    </pfe-card>
-</body>
+<pfe-card pfe-color="darkest">
+    <p>Hello world.</p>
+</pfe-card>
 ```
 
 

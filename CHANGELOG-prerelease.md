@@ -2,9 +2,12 @@
 
 Tag: [v1.0.0-prerelease.39](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.39)
 
-
-- []() feat(pfe-navigation): report pfe-nav's height in a global CSS variable (#732)
+- [34e54f5](https://github.com/patternfly/patternfly-elements/commit/34e54f56bebc949f5df32726251a100c6350503f) fix: cascading the "on" attribute on pfe-content-set #730
 - [f93af30](https://github.com/patternfly/patternfly-elements/commit/f93af30cc7eef3e7728effb7cedb4773f54a5f43) feat: adding the ability for pfe-navigation to use the full width of the viewport (#718)
+- [aac9925](https://github.com/patternfly/patternfly-elements/commit/aac992563a61495128c00d53f637d656bbe614dd) Update pfe-content-set to accept custom container queries
+- [6e45ab4](https://github.com/patternfly/patternfly-elements/commit/6e45ab42617086fb7e229af3b0953ff6912c0273) feat: pfe-cta add support for disabled button, reduce lightdom needs
+- [582ffc8](https://github.com/patternfly/patternfly-elements/commit/582ffc87fcbf2ef29aecf01967d19834a7aff116) feat: Move generator into the monorepo
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat(pfe-navigation): report pfe-nav's height in a global CSS variable (#732)
 
 ## Prerelease 38 ( 2020-02-03 )
 
@@ -15,12 +18,10 @@ Tag: [v1.0.0-prerelease.38](https://github.com/patternfly/patternfly-elements/re
 - [5585188](https://github.com/patternfly/patternfly-elements/commit/558518849087bd9b348c2827549acfe081d8ed96) docs: switching pfe-collapse story from heading tag to button
 
 ## Prerelease 37 ( 2020-01-28 )
-
 Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.37)
 
 - [6a41811](https://github.com/patternfly/patternfly-elements/commit/6a418112668ba580918ac4a8b4b54e8df05c1155) fix: reference error when slot is missing in pfe-navigation
 - [ff859a5](https://github.com/patternfly/patternfly-elements/commit/ff859a5c2b62ae24225f0031f69b5bc050c59470) fix: accordion accessibility improvements; aria-roles corrected
-
 
 ## Prerelease 36 ( 2020-01-20 )
 
@@ -37,7 +38,7 @@ Tag: [v1.0.0-prerelease.35](https://github.com/patternfly/patternfly-elements/re
 - [90855bb](https://github.com/patternfly/patternfly-elements/commit/90855bbc01b800de3280691ee67e61887fd7fe4d) chore: Update license from 2019 to 2020
 - [88b26ed](https://github.com/patternfly/patternfly-elements/commit/88b26ed90616651a994890454172be5b4e78db7d) fix: pfe-navigation: Trigger link color, font-size, logo min-width, spacing (#631)
 - [ea25cd0](https://github.com/patternfly/patternfly-elements/commit/ea25cd0c87fa853784ffc15329796bda49d192f1) Change direction of disclosure carets (#674) (https://github.com/patternfly/patternfly-elements/issues/662)
-- [](https://github.com/patternfly/patternfly-elements/commit/)  feat: Add emit events to pfelement base class
+- [5511404](https://github.com/patternfly/patternfly-elements/commit/55114047ab4e9e324e12a52cb9f8bf85cbe56940)  feat: Add emit events to pfelement base class
 
 ## Prerelease 34 ( 2019-12-20 )
 
@@ -51,7 +52,6 @@ Tag: [v1.0.0-prerelease.33](https://github.com/patternfly/patternfly-elements/re
 
 - [5ad398](https://github.com/patternfly/patternfly-elements/commit/5ad3983b9ead73cf2db30fd0bc52aada334c6961) Disclosure accordion variant
 - [3ccec6](https://github.com/patternfly/patternfly-elements/commit/3ccec6c82efc52aae67b74072b6c0b8ff1b47f23) Update pfe-cta to include broadcast variables for all variants [#659](https://github.com/patternfly/patternfly-elements/issues/658)
-- [](https://github.com/patternfly/patternfly-elements/commit/) chore: Pull polyfills out into separate files for easier parsing/reporting
 
 ## Prerelease 32 ( 2019-12-05 )
 

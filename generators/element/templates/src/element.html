@@ -1,0 +1,2 @@
+<slot></slot><% for(let i = 0; i < slots.length; i++) { %>
+<slot name="<%= elementName %>--<%= slots[i] %>" class="<%= elementName %>__<%= slots[i] %>"><%= slots[i] %> slot</slot><% } %>

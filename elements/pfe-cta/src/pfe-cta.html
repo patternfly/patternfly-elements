@@ -1,4 +1,13 @@
 <span class="pfe-cta--wrapper">
-    <slot></slot>
-    ${this.defaultStyle ? `<svg class="pfe-cta--arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.56 31.56" focusable="false"><path d="M15.78 0l-3.1 3.1 10.5 10.49H0v4.38h23.18l-10.5 10.49 3.1 3.1 15.78-15.78L15.78 0z"/></svg>` : ``}
+  <slot></slot>${this.defaultStyle ? `<svg
+    class="pfe-cta--arrow"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 31.56 31.56"
+    focusable="false"
+  >
+    <path
+      d="M15.78 0l-3.1 3.1 10.5 10.49H0v4.38h23.18l-10.5 10.49 3.1 3.1 15.78-15.78L15.78 0z"
+    /></svg
+  >` : ``}
+  <span class="pfe-cta--inner"></span>
 </span>

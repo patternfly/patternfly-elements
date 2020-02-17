@@ -49,7 +49,8 @@ class PfeAutocomplete extends PFElement {
 
     this.loading = false;
     this.debounce = this.debounce || 300;
-    this._ariaAnnounceTemplate = "There are ${numOptions} suggestions. Use the up and down arrows to browse.";
+    this._ariaAnnounceTemplate =
+      "There are ${numOptions} suggestions. Use the up and down arrows to browse.";
 
     // clear button
     this._clearBtn = this.shadowRoot.querySelector(".clear-search");
@@ -241,7 +242,8 @@ class PfeAutocomplete extends PFElement {
     this._input.setAttribute("autocapitalize", "off");
     this._input.setAttribute("spellcheck", "false");
 
-    this._dropdown._ariaAnnounceTemplate = this.getAttribute("aria-announce-template") || this._ariaAnnounceTemplate;
+    this._dropdown._ariaAnnounceTemplate =
+      this.getAttribute("aria-announce-template") || this._ariaAnnounceTemplate;
   }
 
   _inputChanged() {
@@ -467,7 +469,10 @@ class PfeSearchDroplist extends PFElement {
     let ariaAnnounceText = "";
 
     if (this._ariaAnnounceTemplate) {
-      ariaAnnounceText = this._ariaAnnounceTemplate.replace("${numOptions}", options.length);
+      ariaAnnounceText = this._ariaAnnounceTemplate.replace(
+        "${numOptions}",
+        options.length
+      );
     }
 
     this._ariaAnnounce.textContent = ariaAnnounceText;

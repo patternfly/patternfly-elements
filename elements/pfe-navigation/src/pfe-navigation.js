@@ -378,7 +378,7 @@ class PfeNavigation extends PFElement {
    * Set a global CSS variable reporting the height of this navigation item.
    * Used to position sticky subnavigation items under this.
    *
-   * The name of the global CSS variable is `--pfe-navigation--ReportedHeight`.
+   * The name of the global CSS variable is `--pfe-navigation--Height--actual`.
    * If this nav has an `id` attribute, the id will be appended to the variable
    * name to distinguish it from other pfe-navigation items on the page
    * (unlikely, but imagine a demo page with 20 example pfe-navigation elements
@@ -386,10 +386,10 @@ class PfeNavigation extends PFElement {
    * used for actual navigation).
    */
   _reportHeight() {
-    const cssVarName =
-      `--pfe-navigation--${this.id ? `${this.id}--` : ""}Height--actual`;
+    const cssVarName = `--pfe-navigation__${
+      this.id ? `${this.id}--` : ""
+    }Height--actual`;
     const height = this.clientHeight;
-    console.log(cssVarName, height);
     document.body.style.setProperty(cssVarName, height);
   }
 }

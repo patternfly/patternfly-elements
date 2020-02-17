@@ -27,11 +27,7 @@ class PfeCta extends PFElement {
   }
 
   static get observedAttributes() {
-    return [
-      "pfe-priority",
-      "pfe-color",
-      "pfe-variant"
-    ];
+    return ["pfe-priority", "pfe-color", "pfe-variant"];
   }
 
   constructor() {
@@ -62,7 +58,7 @@ class PfeCta extends PFElement {
     this._slot.removeEventListener("slotchange", this._init);
 
     // Remove the focus state listeners
-    if(this.cta) {
+    if (this.cta) {
       this.cta.removeEventListener("focus", this._focusHandler);
       this.cta.removeEventListener("blur", this._blurHandler);
     }
@@ -99,9 +95,15 @@ class PfeCta extends PFElement {
 
     if (!firstChild || !supportedTag) {
       console.warn(
-        `${
-          PfeCta.tag
-        }:The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)`
+        `${PfeCta.tag}: The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)`
+      );
+    } else if (
+      firstChild.tagName.toLowerCase() === "button" &&
+      this.props.priority.value === null &&
+      this.getAttribute("aria-disabled") !== "true"
+    ) {
+      console.warn(
+        `${PfeCta.tag}: Button tag is not supported semantically by the default link styles`
       );
     } else {
       // Capture the first child as the CTA element

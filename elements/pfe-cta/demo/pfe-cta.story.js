@@ -42,11 +42,16 @@ stories.add(PfeCta.tag, () => {
     // Add back variant options
     props.variant = variant;
   }
-  
+
   // Rerender select boxes
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 
-  if (!(config.prop["pfe-priority"] === "secondary" && config.prop["pfe-variant"] === "wind")) {
+  if (
+    !(
+      config.prop["pfe-priority"] === "secondary" &&
+      config.prop["pfe-variant"] === "wind"
+    )
+  ) {
     // Add back colors
     props.color = color;
   }

@@ -387,9 +387,9 @@ class PfeNavigation extends PFElement {
    */
   _reportHeight() {
     const cssVarName = `--pfe-navigation${
-      this.id ? `__${this.id}` : "--"
+      this.id ? `__${this.id}--` : "--"
     }Height--actual`;
-    const height = this.clientHeight;
+    const height = this.clientHeight + "px";
     document.body.style.setProperty(cssVarName, height);
   }
 }

@@ -15,24 +15,24 @@ $variables: (
   Padding: #{pfe-local(PaddingTop)} #{pfe-local(PaddingRight)} #{pfe-local(PaddingBottom)} #{pfe-local(PaddingLeft)},
 
   //-- Border settings
-  BorderRadius: pfe-var(surface--border-radius),
+  BorderRadius: #{pfe-var(surface--border-radius)},
 
   //-- Border variable encompasses width, style, and color
-  Border: #{pfe-local(BorderWeight, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)},
+  Border: #{pfe-local(BorderWidth, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)},
   BorderTop: #{pfe-local(Border)},
 
   //-- Color properties
-  BackgroundColor: pfe-color(surface--base),
+  BackgroundColor: #{pfe-color(surface--base)},
   BackgroundPosition: center center,
 
   spacing: pfe-var(container-spacer),
 
   // Internal spacing; elements inside the card (header, body, footer regions)
-  spacing--vertical: pfe-local(spacing),
+  spacing--vertical: #{pfe-local(spacing)},
 
   header: (
     BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)}),
-    Color:           pfe-apply-broadcast(text)
+    Color:           #{pfe-apply-broadcast(text)}
   ),
 
   footer: (
@@ -113,8 +113,8 @@ $variables: (
 }
 
 :host([pfe-border]) {
-  --pfe-card--BorderColor:    #{map-get($pfe-colors, surface--border)};
-  --pfe-card--BorderWeight:   #{map-get($pfe-vars, surface--border-width)};
+  --pfe-card--BorderColor:   #{map-get($pfe-colors, surface--border)};
+  --pfe-card--BorderWidth:   #{map-get($pfe-vars, surface--border-width)};
 }
 
 // Targets the wrappers in the shadow DOM

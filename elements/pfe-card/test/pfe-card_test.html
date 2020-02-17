@@ -67,15 +67,16 @@
 
       // Themes and their expected hex values
       const colors = {
+        lightest: "#ffffff",
+        lighter: "#ececec",
         base: "#dfdfdf",
         darker: "#464646",
         darkest: "#131313",
         accent: "#ee0000",
-        complement: "#0477a4",
-        lighter: "#ececec",
-        lightest: "#ffffff"
+        complement: "#0477a4"
       };
 
+      // Supported slots
       const slots = {
         header: {
           name: "pfe-card--header",
@@ -93,6 +94,7 @@
         }
       };
 
+      // Supported overflow attributes
       const overflow = {
         top: "",
         right: "",
@@ -100,6 +102,7 @@
         left: ""
       };
 
+      // Supported hooks on the host element
       const customProperties = {
         paddingTop: {
           variable: "--pfe-card--PaddingTop",
@@ -143,11 +146,23 @@
           default:  "0 solid transparent",
           custom: "1px solid #eee"
         },
+        borderTop: {
+          variable: "--pfe-card--BorderTop",
+          css: "border-top",
+          default:  "0 solid transparent",
+          custom: "4px solid #ee0000"
+        },
         backgroundColor: {
           variable: "--pfe-card--BackgroundColor",
           css: "background-color",
           default:  "#dfdfdf",
           custom: "hotpink"
+        },
+        backgroundPosition: {
+          variable: "--pfe-card--BackgroundPosition",
+          css: "background-position",
+          default:  "center center",
+          custom: "top right"
         }
       };
 
@@ -204,6 +219,12 @@
         test("it should have reduced padding when pfe-size is small", () => {
           card[0].setAttribute("pfe-size", "small");
           assert.equal(getComputedStyle(card[0], null)["padding"], "16px");
+        });
+
+        test("it should have a standard border when pfe-border is set", () => {
+          card[0].setAttribute("pfe-border", "");
+          assert.deepEqual(getColor(card[0], "border-color"), hexToRgb("#d2d2d2"));
+          assert.equal(getComputedStyle(card[0], null)["border-width"], "1px");
         });
 
         // Iterate over the slots object to test expected results

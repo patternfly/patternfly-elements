@@ -372,7 +372,7 @@ class PfeNavigation extends PFElement {
    * The name of the global CSS variable is `--pfe-navigation--Height--actual`.
    */
   _reportHeight() {
-    const cssVarName = `--pfe-navigation--Height--actual`;
+    const cssVarName = `--${this.tag}--Height--actual`;
     const height = this.clientHeight + "px";
     document.body.style.setProperty(cssVarName, height);
   }

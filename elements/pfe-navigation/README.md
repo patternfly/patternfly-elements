@@ -68,7 +68,7 @@ All slots are optional and can be left off if not needed. Slots prefixed with `m
 
 ### CSS Variables
 
- - `--pfe-navigation--Height--actual`: when pfe-navigation initializes, it will create a global (on `body`) CSS variable that contains the height of the pfe-navigation item.  The primary uses for this is calculating the offset for anchor links, and for positioning a sticky sub-header below the pfe-navigation.  Note that multiple pfe-navigation elements will write the same variable
+ - `--pfe-navigation--Height--actual`: When `pfe-navigation` initializes, it will create a global (on `body`) CSS variable that contains the height of the `pfe-navigation` element. Possible uses include calculating the offset for anchor links or positioning a sticky sub-header below the `pfe-navigation`.  Note that multiple `pfe-navigation` elements will write the same variable.
 
 ---
 

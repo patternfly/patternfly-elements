@@ -612,14 +612,6 @@
           // check the exact height (race condition over which writes its var
           // last).  Just check that the var was created.
           assert.isDefined(reportedHeight, "pfe-navigation without id reports height to default css variable");
-
-          // should also create a namespaced var if the nav has an ID
-          pfeNavigation.setAttribute("id", "ABCDEFG");
-
-          const reportedHeightNamespaced = document.body.style.getPropertyValue("--pfe-navigation__ABCDEFG--Height--actual").replace("px", "");
-
-          assert.isDefined(reportedHeightNamespaced, "pfe-navigation with id reports height to namespaced css variable");
-          assert.equal(pfeNavigation.clientHeight.toString(), reportedHeightNamespaced, "pfe-navigation with id reports the correct height");
         });
       });
 

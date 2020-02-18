@@ -55,7 +55,7 @@ class PfeNavigation extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-full-width", "id"];
+    return ["pfe-full-width"];
   }
 
   constructor() {
@@ -163,15 +163,6 @@ class PfeNavigation extends PFElement {
     this._overlay.removeEventListener("click", this._overlayClickHandler);
 
     this._observer.disconnect();
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    super.attributeChangedCallback(name, oldValue, newValue);
-    switch (name) {
-      case "id":
-        this._reportHeight();
-        break;
-    }
   }
 
   _resizeHandler(event) {
@@ -379,16 +370,9 @@ class PfeNavigation extends PFElement {
    * Used to position sticky subnavigation items under this.
    *
    * The name of the global CSS variable is `--pfe-navigation--Height--actual`.
-   * If this nav has an `id` attribute, the id will be appended to the variable
-   * name to distinguish it from other pfe-navigation items on the page
-   * (unlikely, but imagine a demo page with 20 example pfe-navigation elements
-   * in different states, and one genuine pfe-navigation element at the top
-   * used for actual navigation).
    */
   _reportHeight() {
-    const cssVarName = `--pfe-navigation${
-      this.id ? `__${this.id}--` : "--"
-    }Height--actual`;
+    const cssVarName = `--pfe-navigation--Height--actual`;
     const height = this.clientHeight + "px";
     document.body.style.setProperty(cssVarName, height);
   }

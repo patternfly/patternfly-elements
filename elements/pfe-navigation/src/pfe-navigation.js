@@ -55,7 +55,7 @@ class PfeNavigation extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-full-width", "id"];
+    return ["pfe-full-width"];
   }
 
   constructor() {
@@ -163,15 +163,6 @@ class PfeNavigation extends PFElement {
     this._overlay.removeEventListener("click", this._overlayClickHandler);
 
     this._observer.disconnect();
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    super.attributeChangedCallback(name, oldValue, newValue);
-    switch (name) {
-      case "id":
-        this._reportHeight();
-        break;
-    }
   }
 
   _resizeHandler(event) {

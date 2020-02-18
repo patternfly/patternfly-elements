@@ -21,14 +21,14 @@ All slots are optional and can be left off if not needed. Slots prefixed with `m
     ```
     <a style="--pfe-navigation__logo--MinWidth: 160px" slot="logo" href="https://company.com"><img class="logo" src="https://via.placeholder.com/150x50.png" title="Company logo" /></a>
     ```
-- `search`: This slot can accept any html mark-up, however the `pfe-navigation-item` is recommended. When assigned to a navigation-item component, this slot renders a dropdown in the navigation for the search functionality. Inside the tray for the slot, we recommend tagging the search form or search functionality that includes the input and submit button with the attribute `pfe-navigation--mobile-search`. The element inside the search slot that is tagged with this attribute will be copied into the mobile menu and appear above the accordion for the main navigation. Example: 
+- `search`: This slot can accept any html mark-up, however the `pfe-navigation-item` is recommended. When assigned to a navigation-item component, this slot renders a dropdown in the navigation for the search functionality. Inside the tray for the slot, we recommend tagging the search form or search functionality that includes the input and submit button with the attribute `pfe-navigation--mobile-search`. The element inside the search slot that is tagged with this attribute will be copied into the mobile menu and appear above the accordion for the main navigation. Example:
 
     ```
     <pfe-navigation-item slot="search" pfe-icon="web-search">
       <h2 slot="trigger"><a href="#url-to-search-page">Search</a></h2>
     </pfe-navigation-item>
     ```
-- `language`: This slot can accept any html mark-up, however the `pfe-navigation-item` is recommended. When assigned to a navigation-item component, this slot renders the dropdown for the user to select the site language. Example: 
+- `language`: This slot can accept any html mark-up, however the `pfe-navigation-item` is recommended. When assigned to a navigation-item component, this slot renders the dropdown for the user to select the site language. Example:
 
     ```
     <pfe-navigation-item slot="language" pfe-icon="web-globe" slot="trigger">
@@ -40,7 +40,7 @@ All slots are optional and can be left off if not needed. Slots prefixed with `m
     ```
     <a href="/url-to-language-page" slot="mobile-language" pfe-icon="web-globe" hidden>English</a>
     ```
-- `login`: This slot can accept any html mark-up, however the `pfe-navigation-item` is recommended. When assigned to a navigation-item component, this slot renders the dropdown for the user to log into the site. Example: 
+- `login`: This slot can accept any html mark-up, however the `pfe-navigation-item` is recommended. When assigned to a navigation-item component, this slot renders the dropdown for the user to log into the site. Example:
 
     ```
     <pfe-navigation-item slot="login" pfe-icon="web-user">
@@ -51,7 +51,7 @@ All slots are optional and can be left off if not needed. Slots prefixed with `m
     ```
     <a href="/login" slot="mobile-login" pfe-icon="web-user" hidden>Login/Register</a>
     ```
-- `site-switcher`: This slot can accept any html mark-up, however the `pfe-navigation-item` is recommended. When assigned to a navigation-item component, this slot renders the dropdown for the site switcher, allowing the user to navigate an ecosystem of websites. Example: 
+- `site-switcher`: This slot can accept any html mark-up, however the `pfe-navigation-item` is recommended. When assigned to a navigation-item component, this slot renders the dropdown for the site switcher, allowing the user to navigate an ecosystem of websites. Example:
 
     ```
     <pfe-navigation-item slot="site-switcher" pfe-icon="web-grid-3x3">
@@ -65,6 +65,10 @@ All slots are optional and can be left off if not needed. Slots prefixed with `m
 - `pfe-close-on-click`: Currently only supports "external"; this means if a user clicks outside the component, the navigation items will close.
 - `pfe-menu-label`: Translation for the Menu label on the main navigation dropdown.
 - `pfe-full-width`: Allows the navigation to span the full width of the viewport.
+
+### CSS Variables
+
+ - `--pfe-navigation--Height--actual`: When `pfe-navigation` initializes, it will create a global (on `body`) CSS variable that contains the height of the `pfe-navigation` element. Possible uses include calculating the offset for anchor links or positioning a sticky sub-header below the `pfe-navigation`.  Note that multiple `pfe-navigation` elements will write the same variable.
 
 ---
 

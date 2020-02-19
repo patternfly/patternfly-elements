@@ -1,13 +1,20 @@
-## Prerelease 39 ( TBD )
+## Prerelease 39 ( 2020-02-19 )
 
 Tag: [v1.0.0-prerelease.39](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.39)
 
-- [34e54f5](https://github.com/patternfly/patternfly-elements/commit/34e54f56bebc949f5df32726251a100c6350503f) fix: cascading the "on" attribute on pfe-content-set #730
 - [f93af30](https://github.com/patternfly/patternfly-elements/commit/f93af30cc7eef3e7728effb7cedb4773f54a5f43) feat: adding the ability for pfe-navigation to use the full width of the viewport (#718)
-- [aac9925](https://github.com/patternfly/patternfly-elements/commit/aac992563a61495128c00d53f637d656bbe614dd) Update pfe-content-set to accept custom container queries
 - [6e45ab4](https://github.com/patternfly/patternfly-elements/commit/6e45ab42617086fb7e229af3b0953ff6912c0273) feat: pfe-cta add support for disabled button, reduce lightdom needs
+- [aac9925](https://github.com/patternfly/patternfly-elements/commit/aac992563a61495128c00d53f637d656bbe614dd) feat: Update pfe-content-set to accept custom container queries
 - [582ffc8](https://github.com/patternfly/patternfly-elements/commit/582ffc87fcbf2ef29aecf01967d19834a7aff116) feat: Move generator into the monorepo
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat(pfe-navigation): report pfe-nav's height in a global CSS variable (#732)
+- [3fa441f](https://github.com/patternfly/patternfly-elements/commit/3fa441f9f49f09744ff3fc825be29837921f9933) feat: pfe-navigation - report pfe-nav's height in a global CSS variable (#732)
+- [1a7ff6a](https://github.com/patternfly/patternfly-elements/commit/1a7ff6aedf46dfd36011fd8c0ba3020f374ebdc8) feat: Adding ability to configure the localhost domain (#708)
+- [afd7d6e](https://github.com/patternfly/patternfly-elements/commit/afd7d6e6d1decc18bcfd88de069a391a3a61ba00) fix: remove navigation report height for specific id (#746)
+- [34e54f5](https://github.com/patternfly/patternfly-elements/commit/34e54f56bebc949f5df32726251a100c6350503f) fix: cascading the "on" attribute on pfe-content-set #730
+- [422baf4](https://github.com/patternfly/patternfly-elements/commit/422baf4ffb05e74d502521e768ffa926d062e634) fix: run prettier only on js and json (#743)
+- [abbbd8f](https://github.com/patternfly/patternfly-elements/commit/abbbd8f2d33da444c4a70eac007939e133cb86bb) docs: Add FOUC docs to getting started README FAQ (#549) (#742)
+- [1abe9d7](https://github.com/patternfly/patternfly-elements/commit/1abe9d722ac7d0cc01e77097f920dc9d24e3ca3f) docs: Update name of pfe-colors mixin in docs (#744)
+- [ad1b5b5](https://github.com/patternfly/patternfly-elements/commit/ad1b5b505896ee8016173c7faa146d24c861cf7a) docs: Update docs for shell commands (#721)
+- [27184d0](https://github.com/patternfly/patternfly-elements/commit/27184d00c310bdb324a9ea1a76645a344ad09814) style: simplify the dotenv check in spandx.config.js (#725)
 
 ## Prerelease 38 ( 2020-02-03 )
 

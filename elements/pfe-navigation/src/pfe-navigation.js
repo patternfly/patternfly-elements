@@ -194,6 +194,9 @@ class PfeNavigation extends PFElement {
     });
 
     this.overlay = this._activeNavigationItems.length > 0;
+
+    // update the reported height
+    this._reportHeight();
   }
 
   _stickyHandler() {
@@ -335,6 +338,9 @@ class PfeNavigation extends PFElement {
       document.addEventListener("click", this._outsideListener);
     }
 
+    // report the height of this pfe-navigation element
+    this._reportHeight();
+
     // @IE11 This is necessary so the script doesn't become non-responsive
     if (window.ShadyCSS) {
       setTimeout(() => {
@@ -357,6 +363,18 @@ class PfeNavigation extends PFElement {
   _overlayClickHandler(event) {
     this._activeNavigationItems.map(item => item.close());
     this.overlay = false;
+  }
+
+  /**
+   * Set a global CSS variable reporting the height of this navigation item.
+   * Used to position sticky subnavigation items under this.
+   *
+   * The name of the global CSS variable is `--pfe-navigation--Height--actual`.
+   */
+  _reportHeight() {
+    const cssVarName = `--${this.tag}--Height--actual`;
+    const height = this.clientHeight + "px";
+    document.body.style.setProperty(cssVarName, height);
   }
 }
 

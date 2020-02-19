@@ -78,7 +78,7 @@ Inside the stylesheet for a container component, the following snippet will allo
   $LOCAL: band;
 
   // Pull in pfe-color settings for all supported surface colors
-  @include surfaces;
+  @include pfe-surfaces;
 ```
 
 This mixin will compile to the following CSS, one entry for each supported surface color (darkest, darker, base, lighter, lightest, accent, complement):

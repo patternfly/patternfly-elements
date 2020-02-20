@@ -26,22 +26,17 @@ class <%= elementClassName %> extends PFElement {
     return {<% for(let i = 0; i < events.length; i++) { %>
       <%= events[i] %>: `${this.tag}:<%= events[i] %>`<% if (i < (events.length - 1)) { %>,<% } } %>
     };
-  }<% } %>
+  }
+<%_ } _%>
 
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.<%= _.capitalize(template_type) %>;
   }
 
-<%_ if (attributes.length > 0) { _%>
-  static get observedAttributes() {
-    return [<% if (isPfelement) { %><%- _.join(attributes.map(item => `"pfe-${item}"`), ", ") %><% } else { %><%- _.join(attributes.map(item => `"${item}"`), ", ") %><% } %>];
-  }
-<%_ } else { _%>
-  // static get observedAttributes() {
-  //   return [];
-  // }
-<%_ } _%>
+  <% if (attributes.length > 0) { %>// <% } %>static get observedAttributes() {
+    <% if (attributes.length > 0) { %>// <% } %>return [<% if (isPfelement) { %><%- _.join(attributes.map(item => `"pfe-${item}"`), ", ") %><% } else { %><%- _.join(attributes.map(item => `"${item}"`), ", ") %><% } %>];
+  <% if (attributes.length > 0) { %>// <% } %>}
 
   // Declare the type of this component
   static get PfeType() {
@@ -82,11 +77,9 @@ class <%= elementClassName %> extends PFElement {
 
 <%_ if (attributes.length > 0) { _%>
   // Process the attribute change
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
-  }
-<%_ } else { _%>
-  // attributeChangedCallback(attr, oldValue, newValue) {}
+  <% if (attributes.length > 0) { %>// <% } %>attributeChangedCallback(attr, oldValue, newValue) {
+    <% if (attributes.length > 0) { %>// <% } %>super.attributeChangedCallback(attr, oldValue, newValue);
+    <% if (attributes.length > 0) { %>// <% } %>}
 <%_ } _%>
 
 <%_ for(let i = 0; i < events.length; i++) { _%>

@@ -34,9 +34,9 @@ class <%= elementClassName %> extends PFElement {
     return PFElement.PfeTypes.<%= _.capitalize(template_type) %>;
   }
 
-  <% if (attributes.length > 0) { %>// <% } %>static get observedAttributes() {
-    <% if (attributes.length > 0) { %>// <% } %>return [<% if (isPfelement) { %><%- _.join(attributes.map(item => `"pfe-${item}"`), ", ") %><% } else { %><%- _.join(attributes.map(item => `"${item}"`), ", ") %><% } %>];
-  <% if (attributes.length > 0) { %>// <% } %>}
+  <% if (attributes.length < 1) { %>// <% } %>static get observedAttributes() {
+    <% if (attributes.length < 1) { %>// <% } %>return [<% if (isPfelement) { %><%- _.join(attributes.map(item => `"pfe-${item}"`), ", ") %><% } else { %><%- _.join(attributes.map(item => `"${item}"`), ", ") %><% } %>];
+  <% if (attributes.length < 1) { %>// <% } %>}
 
   constructor() {
     super(<%= elementClassName %>, { type: <%= elementClassName %>.PfeType });
@@ -72,9 +72,9 @@ class <%= elementClassName %> extends PFElement {
 
 <%_ if (attributes.length > 0) { _%>
   // Process the attribute change
-  <% if (attributes.length > 0) { %>// <% } %>attributeChangedCallback(attr, oldValue, newValue) {
-    <% if (attributes.length > 0) { %>// <% } %>super.attributeChangedCallback(attr, oldValue, newValue);
-    <% if (attributes.length > 0) { %>// <% } %>}
+  <% if (attributes.length < 1) { %>// <% } %>attributeChangedCallback(attr, oldValue, newValue) {
+    <% if (attributes.length < 1) { %>// <% } %>super.attributeChangedCallback(attr, oldValue, newValue);
+    <% if (attributes.length < 1) { %>// <% } %>}
 <%_ } _%>
 
 <%_ for(let i = 0; i < events.length; i++) { _%>

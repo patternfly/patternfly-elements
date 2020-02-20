@@ -1,6 +1,15 @@
+# Ignore these files and file-types, regardless of where they are in the
+# directory tree.
+
 test
 package.json
 package-lock.json
+*.scss
+*.css
+*.html
+*.md
+
+generators/element/templates/*
 
 # Package JS file ignores, variant 1
 #

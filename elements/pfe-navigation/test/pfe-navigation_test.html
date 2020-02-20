@@ -602,6 +602,17 @@
         //   backdrop.click();
         //   assert.isUndefined(document.body.style.overlay);
         // });
+
+        test("it should report its height via a global CSS variable", () => {
+          const pfeNavigation = document.querySelector('pfe-navigation');
+
+          const reportedHeight = document.body.style.getPropertyValue("--pfe-navigation--Height--actual");
+
+          // there are multiple pfe-navigations on this page, so don't try to
+          // check the exact height (race condition over which writes its var
+          // last).  Just check that the var was created.
+          assert.isDefined(reportedHeight, "pfe-navigation without id reports height to default css variable");
+        });
       });
 
 

@@ -29,14 +29,14 @@ class <%= elementClassName %> extends PFElement {
   }
 <%_ } _%>
 
-  <% if (attributes.length > 0) { %>// <% } %>static get observedAttributes() {
-    <% if (attributes.length > 0) { %>// <% } %>return [<% if (isPfelement) { %><%- _.join(attributes.map(item => `"pfe-${item}"`), ", ") %><% } else { %><%- _.join(attributes.map(item => `"${item}"`), ", ") %><% } %>];
-  <% if (attributes.length > 0) { %>// <% } %>}
-
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.<%= _.capitalize(template_type) %>;
   }
+
+  <% if (attributes.length > 0) { %>// <% } %>static get observedAttributes() {
+    <% if (attributes.length > 0) { %>// <% } %>return [<% if (isPfelement) { %><%- _.join(attributes.map(item => `"pfe-${item}"`), ", ") %><% } else { %><%- _.join(attributes.map(item => `"${item}"`), ", ") %><% } %>];
+  <% if (attributes.length > 0) { %>// <% } %>}
 
   constructor() {
     super(<%= elementClassName %>, { type: <%= elementClassName %>.PfeType });

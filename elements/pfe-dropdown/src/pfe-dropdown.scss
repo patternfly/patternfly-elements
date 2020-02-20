@@ -105,6 +105,7 @@ $variables: (
     color: #{pfe-local($cssvar: Color, $region: toggle)};
     background-color: #{pfe-local($cssvar: BackgroundColor, $region: toggle)};
     border: #{pfe-local($cssvar: Border, $region: toggle)};
+    font-family: inherit;
     &:hover,
     &:active,
     &:focus {

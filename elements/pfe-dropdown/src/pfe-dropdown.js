@@ -175,7 +175,7 @@ class PfeDropdown extends PFElement {
 
   _allItems() {
     return [
-      ...this.querySelectorAll(`${this.tag}:not([pfe-type='seperator'])`)
+      ...this.querySelectorAll(`${this.tag}-item:not([pfe-type='seperator'])`)
     ].map(item => item.children[0]);
   }
 

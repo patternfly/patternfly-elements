@@ -18,7 +18,10 @@ $variables: (
   BackgroundColor--hover: #ededed,
   Border: none,
   BoxSizing: border-box,
-  TextDecoration: none
+  TextDecoration: none,
+  Height: 1px,
+  MarginTop: 0.5rem,
+  MarginBottom: 0.5rem
 );
 
 :host {
@@ -52,11 +55,21 @@ $variables: (
 :host([pfe-type="seperator"]) {
   .pfe-dropdown-item {
     &__container {
-      height: 1px;
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
+      height: #{pfe-local(Height)};
+      margin-top: #{pfe-local(MarginTop)};
+      margin-bottom: #{pfe-local(MarginBottom)};
       background-color: #d2d2d2;
       border: 0;
+    }
+  }
+}
+
+:host([disabled]) {
+  .pfe-dropdown-item {
+    &__container {
+      pointer-events: none;
+      --pfe-dropdown-item--Color: #737679;
+      --pfe-dropdown-item--BackgroundColor: transparent;
     }
   }
 }

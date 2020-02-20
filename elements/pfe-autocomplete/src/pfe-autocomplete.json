@@ -52,9 +52,6 @@
       }
     }
   },
-  "required": [
-    "slots",
-    "attributes"
-  ],
+  "required": ["slots", "attributes"],
   "additionalProperties": false
 }

@@ -43,6 +43,11 @@ class <%= elementClassName %> extends PFElement {
   // }
 <%_ } _%>
 
+  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.<%= _.capitalize(template_type) %>;
+  }
+
   constructor() {
     super(<%= elementClassName %>, { type: <%= elementClassName %>.PfeType });
     <%_ if (slots.length > 0) { %>

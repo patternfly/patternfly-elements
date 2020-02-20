@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../../pfe-band/dist/pfe-band.js"></script>
     <script type="module" src="../dist/pfe-content-set.js"></script>
   </head>
   <body>
@@ -74,6 +75,36 @@
       <h2 pfe-content-set--header>Heading 1</h2>
       <p pfe-content-set--panel>Panel 1</p>
     </pfe-content-set>
+
+
+    <div style="width: 500px">
+      <pfe-content-set id="accordionBreakpoint" pfe-breakpoint="550">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <p pfe-content-set--panel>Panel 1</p>
+      </pfe-content-set>
+    </div>
+
+
+    <div style="width: 600px">
+      <pfe-content-set id="tabsBreakpoint" pfe-breakpoint="550">
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <p pfe-content-set--panel>Panel 1</p>
+      </pfe-content-set>
+    </div>
+
+    <pfe-band id="band" pfe-color="darkest">
+      <pfe-content-set>
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <p pfe-content-set--panel>Panel 1</p>
+      </pfe-content-set>
+    </pfe-band>
+
+    <pfe-band id="accordionBand" pfe-color="darkest" style="width: 600px;">
+      <pfe-content-set>
+        <h2 pfe-content-set--header>Heading 1</h2>
+        <p pfe-content-set--panel>Panel 1</p>
+      </pfe-content-set>
+    </pfe-band>
 
     <script>
       suite('<pfe-content-set>', () => {
@@ -176,6 +207,64 @@
           const pfeTabAlignValue = pfeTabs.getAttribute("pfe-tab-align");
 
           assert.equal(alignValue, pfeTabAlignValue);
+        });
+
+        test("it should put content into an accordion if the pfe-breakpoint attribute is present and greater than the width of pfe-content-set parent", () => {
+          const pfeContentSet = document.querySelector("#accordionBreakpoint");
+          const pfeAccordion = pfeContentSet.querySelector("pfe-accordion");
+
+          assert.isTrue(pfeContentSet.hasAttribute("pfe-breakpoint"));
+          assert.isNotNull(pfeAccordion);
+        });
+
+        test("it should put content into tabs if the pfe-breakpoint attribute is present and less than the width of pfe-content-set parent", () => {
+          const pfeContentSet = document.querySelector("#tabsBreakpoint");
+          const pfeTabs = pfeContentSet.querySelector("pfe-tabs");
+
+          assert.isTrue(pfeContentSet.hasAttribute("pfe-breakpoint"));
+          assert.isNotNull(pfeTabs);
+
+        });
+      
+        test("it should set the correct \"on\" attribute from a parent component that has a pfe-color attribute", done => {
+          const band = document.querySelector("#band");
+          const contentSet = band.querySelector("pfe-content-set");
+          const tabs = contentSet.querySelector("pfe-tabs");
+          const tab = tabs.querySelector("pfe-tab");
+          const panel = tabs.querySelector("pfe-tab-panel");
+
+          assert.equal(contentSet.getAttribute("on"), "dark");
+          assert.equal(tabs.getAttribute("on"), "dark")
+          assert.equal(tab.getAttribute("on"), "dark");
+          assert.equal(panel.getAttribute("on"), "dark");
+
+          const accordionBand = document.querySelector("#accordionBand");
+          const accordionContentSet = accordionBand.querySelector("pfe-content-set");
+          const accordion = accordionContentSet.querySelector("pfe-accordion");
+          const accordionHeader = accordion.querySelector("pfe-accordion-header");
+          const accordionPanel = accordion.querySelector("pfe-accordion-panel");
+
+          assert.equal(accordionContentSet.getAttribute("on"), "dark");
+          assert.equal(accordion.getAttribute("on"), "dark");
+          assert.equal(accordionHeader.getAttribute("on"), "dark");
+          assert.equal(accordionPanel.getAttribute("on"), "dark");
+
+          band.removeAttribute("pfe-color");
+          accordionBand.removeAttribute("pfe-color");
+
+          flush(() => {
+            assert.equal(contentSet.getAttribute("on"), "light");
+            assert.equal(tabs.getAttribute("on"), "light")
+            assert.equal(tab.getAttribute("on"), "light");
+            assert.equal(panel.getAttribute("on"), "light");
+
+            assert.equal(accordionContentSet.getAttribute("on"), "light");
+            assert.equal(accordion.getAttribute("on"), "light");
+            assert.equal(accordionHeader.getAttribute("on"), "light");
+            assert.equal(accordionPanel.getAttribute("on"), "light");
+
+            done();
+          });
         });
       });
     </script>

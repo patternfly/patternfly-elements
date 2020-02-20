@@ -1,51 +1,53 @@
 // @POLYFILL  Array.prototype.filter
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
-if (!Array.prototype.filter){
-    Array.prototype.filter = function(func, thisArg) {
-      'use strict';
-      if ( ! ((typeof func === 'Function' || typeof func === 'function') && this) )
-          throw new TypeError();
-     
-      var len = this.length >>> 0,
-          res = new Array(len), // preallocate array
-          t = this, c = 0, i = -1;
-  
-      var kValue;
-      if (thisArg === undefined){
-        while (++i !== len){
-          // checks to see if the key was set
-          if (i in this){
-            kValue = t[i]; // in case t is changed in callback
-            if (func(t[i], i, t)){
-              res[c++] = kValue;
-            }
+if (!Array.prototype.filter) {
+  Array.prototype.filter = function(func, thisArg) {
+    "use strict";
+    if (!((typeof func === "Function" || typeof func === "function") && this))
+      throw new TypeError();
+
+    var len = this.length >>> 0,
+      res = new Array(len), // preallocate array
+      t = this,
+      c = 0,
+      i = -1;
+
+    var kValue;
+    if (thisArg === undefined) {
+      while (++i !== len) {
+        // checks to see if the key was set
+        if (i in this) {
+          kValue = t[i]; // in case t is changed in callback
+          if (func(t[i], i, t)) {
+            res[c++] = kValue;
           }
         }
       }
-      else{
-        while (++i !== len){
-          // checks to see if the key was set
-          if (i in this){
-            kValue = t[i];
-            if (func.call(thisArg, t[i], i, t)){
-              res[c++] = kValue;
-            }
+    } else {
+      while (++i !== len) {
+        // checks to see if the key was set
+        if (i in this) {
+          kValue = t[i];
+          if (func.call(thisArg, t[i], i, t)) {
+            res[c++] = kValue;
           }
         }
       }
-     
-      res.length = c; // shrink down array to proper size
-      return res;
-    };
+    }
+
+    res.length = c; // shrink down array to proper size
+    return res;
+  };
 }
-  
+
 // @POLYFILL  Element.prototype.matches
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
 if (!Element.prototype.matches) {
-  Element.prototype.matches = Element.prototype.msMatchesSelector || 
-                              Element.prototype.webkitMatchesSelector;
+  Element.prototype.matches =
+    Element.prototype.msMatchesSelector ||
+    Element.prototype.webkitMatchesSelector;
 }
-  
+
 // @POLYFILL  Element.prototype.closest
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
 if (!Element.prototype.closest) {
@@ -59,13 +61,12 @@ if (!Element.prototype.closest) {
     return null;
   };
 }
-  
+
 // @POLYFILL  Array.prototype.includes
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
 if (!Array.prototype.includes) {
-  Object.defineProperty(Array.prototype, 'includes', {
-    value: function (searchElement, fromIndex) {
-
+  Object.defineProperty(Array.prototype, "includes", {
+    value: function(searchElement, fromIndex) {
       // 1. Let O be ? ToObject(this value).
       if (this == null) {
         throw new TypeError('"this" is null or not defined');
@@ -93,7 +94,13 @@ if (!Array.prototype.includes) {
       var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
       function sameValueZero(x, y) {
-        return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+        return (
+          x === y ||
+          (typeof x === "number" &&
+            typeof y === "number" &&
+            isNaN(x) &&
+            isNaN(y))
+        );
       }
 
       // 7. Repeat, while k < len
@@ -116,19 +123,18 @@ if (!Array.prototype.includes) {
 // @POLYFILL  Event.prototype.path
 // https://stackoverflow.com/questions/36845515/mouseevent-path-equivalent-in-firefox-safari
 if (!("path" in Event.prototype)) {
-    Object.defineProperty(Event.prototype, "path", {
-      get: function() {
-        var path = [];
-        var currentElem = this.target;
-        while (currentElem) {
-          path.push(currentElem);
-          currentElem = currentElem.parentElement;
-        }
-        if (path.indexOf(window) === -1 && path.indexOf(document) === -1)
-          path.push(document);
-        if (path.indexOf(window) === -1)
-          path.push(window);
-        return path;
+  Object.defineProperty(Event.prototype, "path", {
+    get: function() {
+      var path = [];
+      var currentElem = this.target;
+      while (currentElem) {
+        path.push(currentElem);
+        currentElem = currentElem.parentElement;
       }
-    });
+      if (path.indexOf(window) === -1 && path.indexOf(document) === -1)
+        path.push(document);
+      if (path.indexOf(window) === -1) path.push(window);
+      return path;
+    }
+  });
 }

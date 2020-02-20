@@ -17,11 +17,14 @@
           "type": "array",
           "namedSlot": false,
           "items": {
-            "oneOf": [{
-              "$ref": "pfe-collapsibe-toggle"
-            }, {
-              "$ref": "pfe-collapse-panel"
-            }]
+            "oneOf": [
+              {
+                "$ref": "pfe-collapsibe-toggle"
+              },
+              {
+                "$ref": "pfe-collapse-panel"
+              }
+            ]
           }
         }
       }

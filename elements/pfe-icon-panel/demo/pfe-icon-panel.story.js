@@ -290,7 +290,9 @@ stories.add("pfe-icon-panel", () => {
   if (circledBoolean != false) {
     circledSelect = select("Circle Color", circledOptions, "default");
     circled =
-      circledSelect != "default" ? ` circled color="${circledSelect}"` : " circled";
+      circledSelect != "default"
+        ? ` circled color="${circledSelect}"`
+        : " circled";
   }
 
   const stackedBoolean = boolean("Stacked", false);

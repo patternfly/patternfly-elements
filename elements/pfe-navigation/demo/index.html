@@ -42,11 +42,25 @@
   </noscript>
 
   <!-- <script type="module" src="../dist/pfe-navigation.js"></script> -->
+    <!-- emulate custom logo overrides -->
+  <style>
+  pfe-navigation {
+     --pfe-navigation__logo--MinWidth: 280px;
+  }
+  @media (max-width: 440px) {
+    pfe-navigation {
+       --pfe-navigation__logo--MinWidth: 160px;
+    }
+  }
+    img {
+    max-height: 100%;
+  }
+  </style>
 </head>
 
 <body unresolved>
 
-  <pfe-navigation style="--pfe-navigation__logo--MinWidth:150px;" pfe-sticky pfe-close-on-click="external" pfe-menu-label="Menu">
+  <pfe-navigation pfe-sticky pfe-close-on-click="external" pfe-menu-label="Menu">
     <!-- Skip navigation -->
     <div slot="skip">
       <ul>
@@ -55,8 +69,8 @@
     </div>
     <!-- Site logo -->
 
-      <a style="--pfe-navigation__logo--MinWidth: 220px"  slot="logo" href="https://company.com">
-        <img class="logo" src="https://via.placeholder.com/150x50.png" title="Company logo" />
+      <a slot="logo" href="https://company.com">
+        <img class="logo" src="https://via.placeholder.com/300x100.png" title="Company logo" />
         <!-- <img class="logo" src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/logo.svg" width="200" title="Company logo" /> -->
       </a>
     <!-- Search -->
@@ -644,7 +658,7 @@
     </pfe-card>
   </pfe-band>
 
-  
+
   <pfe-band pfe-aside-desktop="left" pfe-aside-mobile="top">
     <header slot="pfe-band--header">
       <h2>Short content band</h2>
@@ -667,9 +681,6 @@
       </ol>
     </footer>
   </pfe-band>
-
-
-
   <script>
     // Listen for the toggled event and if the slot is the language slot, inject new content
     // Replicates AJAX-like functionality

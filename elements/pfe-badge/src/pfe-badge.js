@@ -15,14 +15,14 @@ class PfeBadge extends PFElement {
 
   get schemaUrl() {
     return "pfe-badge.json";
-  } 
+  }
 
   static get observedAttributes() {
     return ["number", "pfe-threshold"];
   }
 
   get threshold() {
-    return this.getAttribute('pfe-threshold');
+    return this.getAttribute("pfe-threshold");
   }
 
   constructor() {
@@ -33,10 +33,16 @@ class PfeBadge extends PFElement {
   attributeChangedCallback(attr, oldVal, newVal) {
     switch (attr) {
       case "pfe-threshold":
-        this.textContent = Number(this.threshold) < Number(this.textContent) ? `${this.threshold}+` : this.textContent;
+        this.textContent =
+          Number(this.threshold) < Number(this.textContent)
+            ? `${this.threshold}+`
+            : this.textContent;
         break;
       case "number":
-        this.textContent = this.threshold && Number(this.threshold) < Number(newVal) ? `${this.threshold}+` : newVal;
+        this.textContent =
+          this.threshold && Number(this.threshold) < Number(newVal)
+            ? `${this.threshold}+`
+            : newVal;
         break;
       default:
         return;

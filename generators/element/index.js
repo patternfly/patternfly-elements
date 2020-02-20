@@ -24,24 +24,14 @@ let readmePath;
 
 module.exports = class extends Generator {
   constructor(args, opts) {
-      super(args, opts);
-
-      // this.option("type", {
-      //     desc: "The element type, either 'standalone' or 'pfelement'.  Standalone elements will have all build tooling included, whereas 'pfelement' elements will expect to get their build tooling from the PatternFly Elements monorepo.",
-      //     type: (val) => {
-      //         if (!["standalone", "pfelement"].includes(val)) {
-      //             throw new Error("Type must be either 'standalone' or 'pfelement'");
-      //         }
-      //         return val;
-      //     },
-      //     alias: "t",
-      //     default: "standalone"
-      // });
+    super(args, opts);
   }
 
   async prompting() {
     const done = this.async();
-    this.log( yosay(`Welcome to the ${ chalk.red( "PatternFly Elements" ) } generator!`) );
+    this.log(
+      yosay(`Welcome to the ${chalk.red("PatternFly Elements")} generator!`)
+    );
 
     this.prompt([
       {
@@ -65,7 +55,7 @@ module.exports = class extends Generator {
         type: "list",
         name: "template_type",
         message: "What would you like to create?",
-        choices: [ "content", "container", "combo" ],
+        choices: ["content", "container", "combo"],
         default: "container"
       },
       {
@@ -73,14 +63,14 @@ module.exports = class extends Generator {
         name: "name",
         message: "Element name (i.e. pfe-card)",
         validate: function(answer) {
-            let parts = _.words(answer);
-            if (answer.length < 1) {
-                return "I get it, naming is hard; but it must have a name. You can always change it later.";
-            } else if (parts.length < 2) {
-              return "Elements should always have at least two parts. Check that you included the prefix for the name; for example, pfe-cta.";
-            } else {
-              return true;
-            }
+          let parts = _.words(answer);
+          if (answer.length < 1) {
+            return "I get it, naming is hard; but it must have a name. You can always change it later.";
+          } else if (parts.length < 2) {
+            return "Elements should always have at least two parts. Check that you included the prefix for the name; for example, pfe-cta.";
+          } else {
+            return true;
+          }
         },
         filter: function(response) {
           // Ensure it is passed to the results in kebab case
@@ -97,7 +87,6 @@ module.exports = class extends Generator {
           if (config.author) {
             ret = typeof config.author.name === "undefined";
           }
-          
           return ret;
         }
       },
@@ -139,31 +128,43 @@ module.exports = class extends Generator {
       {
         type: "input",
         name: "attributes",
-        message: "List any attributes for the element, separated by commas (i.e., color, priority)",
+        message:
+          "List any attributes for the element, separated by commas (i.e., color, priority)",
         // validate: function(answer) {},
         filter: function(response) {
           // Strip any pfe prefixes, these are added dynamically, and remove any empty entries
-          return response.replace(/pfe-/g, "").split(",").filter(s => s.length);
+          return response
+            .replace(/pfe-/g, "")
+            .split(",")
+            .filter(s => s.length);
         }
       },
       {
         type: "input",
         name: "slots",
-        message: "List any named slots for the element, separated by commas (i.e., header, footer)",
+        message:
+          "List any named slots for the element, separated by commas (i.e., header, footer)",
         // validate: function(answer) {},
         filter: function(response) {
           // remove whitespace, split on comma, and remove empty entries
-          return response.replace(/\s/g, "").split(",").filter(s => s.length);
+          return response
+            .replace(/\s/g, "")
+            .split(",")
+            .filter(s => s.length);
         }
       },
       {
         type: "input",
         name: "events",
-        message: "List any events you want registered for the element, separated by commas (i.e., change, click)",
+        message:
+          "List any events you want registered for the element, separated by commas (i.e., change, click)",
         // validate: function(answer) {},
         filter: function(response) {
           // remove whitespace, split on comma, and remove empty entries
-          return response.replace(/\s/g, "").split(",").filter(s => s.length);
+          return response
+            .replace(/\s/g, "")
+            .split(",")
+            .filter(s => s.length);
         }
       }
     ]).then(answers => {
@@ -178,54 +179,60 @@ module.exports = class extends Generator {
         // Trim the whitespace
         name = name.trim();
 
-      const { version: pfelementVersion } = fs.existsSync(
-        this.destinationPath("pfelement/package.json")
-      )
-        ? require(this.destinationPath("pfelement/package.json"))
-        : "";
+        const { version: pfelementVersion } = fs.existsSync(
+          this.destinationPath("pfelement/package.json")
+        )
+          ? require(this.destinationPath("pfelement/package.json"))
+          : "";
 
-      const { version: pfeSassVersion } = fs.existsSync(
-        this.destinationPath("pfe-sass/package.json")
-      )
-        ? require(this.destinationPath("pfe-sass/package.json"))
-        : "";
+        const { version: pfeSassVersion } = fs.existsSync(
+          this.destinationPath("pfe-sass/package.json")
+        )
+          ? require(this.destinationPath("pfe-sass/package.json"))
+          : "";
 
-      isPfelement = this.options.type === "pfelement" || config.type === "pfelement" || answers.type === "pfelement";
-      demoTemplatePath = isPfelement
-        ? "demo/pfelement-index.html"
-        : "demo/standalone-index.html";
-      readmePath = isPfelement
-        ? "./pfelement-README.md"
-        : "./standalone-README.md";
-      const pfeElementLocation = isPfelement
-        ? "../../pfelement/dist/pfelement.js"
-        : "../../@patternfly/pfelement/dist/pfelement.js";
-      const packageName = isPfelement
-        ? `@patternfly/${answers.name}`
-        : `${answers.name}`;
-      const gulpFactoryLocation = isPfelement
-        ? "../../scripts/gulpfile.factory.js"
-        : "./scripts/gulpfile.factory.js";
-      const rollupConfigLocation = isPfelement
-        ? "../../scripts/rollup.config.factory.js"
-        : "./scripts/rollup.config.factory.js";
-      const testFileLocation = isPfelement
-        ? `../dist/${answers.name}.js`
-        : `../node_modules/${answers.name}/dist/${answers.name}.js`;
+        isPfelement =
+          this.options.type === "pfelement" ||
+          config.type === "pfelement" ||
+          answers.type === "pfelement";
+        demoTemplatePath = isPfelement
+          ? "demo/pfelement-index.html"
+          : "demo/standalone-index.html";
+        readmePath = isPfelement
+          ? "./pfelement-README.md"
+          : "./standalone-README.md";
+        const pfeElementLocation = isPfelement
+          ? "../../pfelement/dist/pfelement.js"
+          : "../../@patternfly/pfelement/dist/pfelement.js";
+        const packageName = isPfelement
+          ? `@patternfly/${answers.name}`
+          : `${answers.name}`;
+        const gulpFactoryLocation = isPfelement
+          ? "../../scripts/gulpfile.factory.js"
+          : "./scripts/gulpfile.factory.js";
+        const rollupConfigLocation = isPfelement
+          ? "../../scripts/rollup.config.factory.js"
+          : "./scripts/rollup.config.factory.js";
+        const testFileLocation = isPfelement
+          ? `../dist/${answers.name}.js`
+          : `../node_modules/${answers.name}/dist/${answers.name}.js`;
 
         this.props = {
           _: _,
           author: {
-            name: config.author && config.author.name ? config.author.name : answers.authorName,
-            email: config.author && config.author.email ? config.author.email : "",
+            name:
+              config.author && config.author.name
+                ? config.author.name
+                : answers.authorName,
+            email:
+              config.author && config.author.email ? config.author.email : "",
             url: config.author && config.author.url ? config.author.url : ""
           },
           template_type: answers.template_type,
           name: answers.name,
           description: answers.description,
           elementName: answers.name,
-          elementClassName: _
-            .chain(answers.name)
+          elementClassName: _.chain(answers.name)
             .camelCase()
             .upperFirst()
             .value(),
@@ -267,7 +274,7 @@ module.exports = class extends Generator {
 
         mkdirp.sync(this.props.elementName);
       } else {
-        console.error( "Prompting was existed without storing results." );
+        console.error("Prompting was existed without storing results.");
       }
 
       done();
@@ -275,46 +282,60 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    const files = [{
-      template: "package.json",
-      path: `${this.props.elementName}/package.json`
-    }, {
-      template: "DISCOVERY.md",
-      path: `${this.props.elementName}/DISCOVERY.md`
-    }, {
-      template: readmePath,
-      path: `${this.props.elementName}/README.md`
-    }, {
-      template: "LICENSE.txt",
-      path: `${this.props.elementName}/LICENSE.txt`
-    }, {
-      template: "CHANGELOG.md",
-      path: `${this.props.elementName}/CHANGELOG.md`
-    }, {
-      template: "gulpfile.js",
-      path: `${this.props.elementName}/gulpfile.js`
-    }, {
-      template: "rollup.config.js",
-      path: `${this.props.elementName}/rollup.config.js`
-    }, {
-      template: demoTemplatePath,
-      path: `${this.props.elementName}/demo/index.html`
-    }, {
-      template: "src/element.js",
-      path: `${this.props.elementName}/src/${this.props.elementName}.js`
-    }, {
-      template: "src/element.html",
-      path: `${this.props.elementName}/src/${this.props.elementName}.html`
-    }, {
-      template: "src/element.json",
-      path: `${this.props.elementName}/src/${this.props.elementName}.json`
-    }, {
-      template: "test/element_test.html",
-      path: `${this.props.elementName}/test/${this.props.elementName}_test.html`
-    }, {
-      template: "test/element.html",
-      path: `${this.props.elementName}/test/index.html`
-    }];
+    const files = [
+      {
+        template: "package.json",
+        path: `${this.props.elementName}/package.json`
+      },
+      {
+        template: "DISCOVERY.md",
+        path: `${this.props.elementName}/DISCOVERY.md`
+      },
+      {
+        template: readmePath,
+        path: `${this.props.elementName}/README.md`
+      },
+      {
+        template: "LICENSE.txt",
+        path: `${this.props.elementName}/LICENSE.txt`
+      },
+      {
+        template: "CHANGELOG.md",
+        path: `${this.props.elementName}/CHANGELOG.md`
+      },
+      {
+        template: "gulpfile.js",
+        path: `${this.props.elementName}/gulpfile.js`
+      },
+      {
+        template: "rollup.config.js",
+        path: `${this.props.elementName}/rollup.config.js`
+      },
+      {
+        template: demoTemplatePath,
+        path: `${this.props.elementName}/demo/index.html`
+      },
+      {
+        template: "src/element.js",
+        path: `${this.props.elementName}/src/${this.props.elementName}.js`
+      },
+      {
+        template: "src/element.html",
+        path: `${this.props.elementName}/src/${this.props.elementName}.html`
+      },
+      {
+        template: "src/element.json",
+        path: `${this.props.elementName}/src/${this.props.elementName}.json`
+      },
+      {
+        template: "test/element_test.html",
+        path: `${this.props.elementName}/test/${this.props.elementName}_test.html`
+      },
+      {
+        template: "test/element.html",
+        path: `${this.props.elementName}/test/index.html`
+      }
+    ];
 
     if (Object.keys(this.props).length > 0) {
       try {
@@ -336,7 +357,7 @@ module.exports = class extends Generator {
             this.templatePath("src/element.scss"),
             this.destinationPath(
               `${this.props.elementName}/src/${this.props.elementName}.scss`
-          ),
+            ),
             this.props
           );
         } else if (fs.existsSync(this.templatePath("src/element.css"))) {
@@ -344,9 +365,9 @@ module.exports = class extends Generator {
             this.templatePath("src/element.css"),
             this.destinationPath(
               `${this.props.elementName}/src/${this.props.elementName}.css`
-          ),
-          this.props
-        );
+            ),
+            this.props
+          );
         }
 
         if (isPfelement) {
@@ -377,15 +398,14 @@ module.exports = class extends Generator {
             this.destinationPath(`${this.props.elementName}`)
           );
         }
-      }
-      catch ( error ) {
-        console.log( error );
-        console.log( "//------ Properties set by yeoman:\n" );
-        console.log( util.inspect( this.props, { showHidden: false, depth: 4 } ) );
-        console.log( "-------------------------------------------//\n" );
+      } catch (error) {
+        console.log(error);
+        console.log("//------ Properties set by yeoman:\n");
+        console.log(util.inspect(this.props, { showHidden: false, depth: 4 }));
+        console.log("-------------------------------------------//\n");
       }
     } else {
-      console.error( "Prompting was exited without storing values." );
+      console.error("Prompting was exited without storing values.");
     }
   }
 

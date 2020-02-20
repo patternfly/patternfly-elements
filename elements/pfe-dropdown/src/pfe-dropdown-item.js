@@ -14,7 +14,7 @@ class PfeDropdownItem extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-type"];
+    return ["pfe-type", "disabled"];
   }
 
   constructor() {
@@ -28,6 +28,10 @@ class PfeDropdownItem extends PFElement {
     switch (attr) {
       case "pfe-type":
         this._setAccessibility();
+        break;
+      case "disabled":
+        this._setDisabled();
+        break;
       default:
         break;
     }
@@ -38,29 +42,35 @@ class PfeDropdownItem extends PFElement {
   }
 
   _setAccessibility() {
-    if (this.isLink()) {
-      this._container.setAttribute("role", "none");
-      this._item.setAttribute("role", "menuitem");
-      this._item.setAttribute("tabindex", "-1");
-    } else if (this.isAction()) {
-      this._container.setAttribute("role", "menuitem");
-      this._container.setAttribute("tabindex", "-1");
-      this._item.removeAttribute("role");
-    } else if (this.isSeperator()) {
-      this._container.setAttribute("role", "seperator");
+    const type = this.getAttribute("pfe-type");
+    switch (type) {
+      case "link":
+        this._container.setAttribute("role", "none");
+        this._item.setAttribute("role", "menuitem");
+        this._item.setAttribute("tabindex", "-1");
+        break;
+      case "action":
+        this._container.setAttribute("role", "menuitem");
+        this._container.setAttribute("tabindex", "-1");
+        this._item.removeAttribute("role");
+        break;
+      case "seperator":
+        this._container.setAttribute("role", "seperator");
+      default:
+        break;
     }
   }
 
-  isLink() {
-    return this.getAttribute("pfe-type") === "link";
-  }
-
-  isAction() {
-    return this.getAttribute("pfe-type") === "action";
-  }
-
-  isSeperator() {
-    return this.getAttribute("pfe-type") === "seperator";
+  _setDisabled() {
+    const isDisabled = this.hasAttribute("disabled");
+    if (isDisabled) {
+      this.removeAttribute("tabindex");
+      this.setAttribute("aria-disabled", "true");
+    } else {
+      this.removeAttribute("disabled");
+      this.setAttribute("tabindex", "0");
+      this.setAttribute("aria-disabled", "false");
+    }
   }
 }
 

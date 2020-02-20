@@ -47,10 +47,6 @@ Describe any events that are accessible external to the web component. There is 
 ## Dependencies
 Describe any dependent elements or libraries here too.
 
-Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
-
-    `npm install -g polyserve web-component-tester`
-
 ## Dev
 
     `npm start`

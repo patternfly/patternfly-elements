@@ -5,20 +5,20 @@ class <%= elementClassName %> extends PFElement {
     return "<%= elementName %>";
   }
 
-  get styleUrl() {
-<%_ if (useSass) { _%>
-    return "<%= elementName %>.scss";
-<%_ } else { _%>
-    return "<%= elementName %>.css";
-<%_ } _%>
+  get schemaUrl() {
+    return "<%= elementName %>.json";
   }
 
   get templateUrl() {
     return "<%= elementName %>.html";
   }
 
-  get schemaUrl() {
-    return "<%= elementName %>.json";
+  get styleUrl() {
+<%_ if (useSass) { _%>
+    return "<%= elementName %>.scss";
+<%_ } else { _%>
+    return "<%= elementName %>.css";
+<%_ } _%>
   }
 
 <%_ if (events.length > 0) { _%>

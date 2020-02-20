@@ -27,7 +27,7 @@ class PfeDropdown extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-label"];
+    return ["pfe-label", "disabled"];
   }
 
   constructor() {
@@ -70,8 +70,24 @@ class PfeDropdown extends PFElement {
     switch (attr) {
       case "pfe-label":
         this._toggle_text.textContent = newValue;
+        break;
+      case "disabled":
+        this._setDisabled();
+        break;
       default:
         break;
+    }
+  }
+
+  _setDisabled() {
+    const isDisabled = this.hasAttribute("disabled");
+    if (isDisabled) {
+      this.removeAttribute("tabindex");
+      this.setAttribute("aria-disabled", "true");
+    } else {
+      this.removeAttribute("disabled");
+      this.setAttribute("tabindex", "0");
+      this.setAttribute("aria-disabled", "false");
     }
   }
 

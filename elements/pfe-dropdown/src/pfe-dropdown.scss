@@ -73,6 +73,20 @@ $variables: (
   display: none;
 }
 
+:host([disabled]) {
+  .pfe-dropdown {
+    &__container {
+      pointer-events: none;
+    }
+    &__toggle {
+      --pfe-dropdown__toggle--BackgroundColor: #ededed;
+      &::before {
+        border: none;
+      }
+    }
+  }
+}
+
 .pfe-dropdown {
   &__toggle {
     position: #{pfe-local($cssvar: Position, $region: toggle)};

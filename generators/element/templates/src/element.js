@@ -38,11 +38,6 @@ class <%= elementClassName %> extends PFElement {
     <% if (attributes.length > 0) { %>// <% } %>return [<% if (isPfelement) { %><%- _.join(attributes.map(item => `"pfe-${item}"`), ", ") %><% } else { %><%- _.join(attributes.map(item => `"${item}"`), ", ") %><% } %>];
   <% if (attributes.length > 0) { %>// <% } %>}
 
-  // Declare the type of this component
-  static get PfeType() {
-    return PFElement.PfeTypes.<%= _.capitalize(template_type) %>;
-  }
-
   constructor() {
     super(<%= elementClassName %>, { type: <%= elementClassName %>.PfeType });
     <%_ if (slots.length > 0) { %>

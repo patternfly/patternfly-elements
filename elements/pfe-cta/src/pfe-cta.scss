@@ -76,7 +76,7 @@ $variables: (
 :host(:hover) ::slotted(*),
 ::slotted(:hover) {
   --pfe-cta__arrow--Padding: 0 0 0 0.5em;
-  --pfe-cta__arrow--Marginleft: 0.5ch;
+  --pfe-cta__arrow--MarginLeft: 0.5ch;
 }
 
 :host(:hover) {
@@ -166,16 +166,6 @@ $variables: (
       content: url('data:image/svg+xml; utf8, <svg height=".7em" width=".7em" fill="#{map-get($pfe-colors, link--hover)}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.56 31.56" focusable="false"><path d="M15.78 0l-3.1 3.1 10.5 10.49H0v4.38h23.18l-10.5 10.49 3.1 3.1 15.78-15.78L15.78 0z"/></svg>');
     }
   }
-  &--inner {
-    // inner border on priority CTAs
-    display: block;
-    height: calc(100% - 4px);
-    width: calc(100% - 4px);
-
-  :host(:hover) & {
-    color: #{pfe-local(Color--hover)} !important;
-    text-decoration: #{pfe-local(TextDecoration--hover)} !important;
-  }
 }
 
 :host(:not([aria-disabled="true"])) ::slotted(*:not(:disabled)),
@@ -228,6 +218,8 @@ $variables: (
 
     :host(:hover) & {
       border-color: #{pfe-local($cssvar: BorderColor--hover, $region: inner)};
+      color: #{pfe-local(Color--hover)} !important;
+      text-decoration: #{pfe-local(TextDecoration--hover)} !important;
     }
   }
 }

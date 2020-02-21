@@ -81,7 +81,7 @@ class PfeCta extends PFElement {
   _init() {
     // Get the first child of the web component (light DOM)
     const firstChild = this.children[0];
-    const supportedTags = ["a", "button"];
+    const supportedTags = ["a", "button"]; // add input later
     let supportedTag = false;
 
     // If the first child does not exist or that child is not a supported tag
@@ -89,7 +89,6 @@ class PfeCta extends PFElement {
       supportedTags.forEach(tag => {
         if (firstChild.tagName.toLowerCase() === tag) {
           supportedTag = true;
-          this.setAttribute("pfe-semantic-type", tag !== "a" ? tag : "link");
         }
       });
     }

@@ -2,6 +2,7 @@
 
 $LOCAL: cta;
 
+$pfe-cta__arrow-size: 0.313em;
 $pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
 $pfe-cta--Color--fallback: #003366;
 
@@ -112,6 +113,10 @@ $variables: (
 
   @include browser-query(ie11 edge) {
     padding: 0 !important;
+
+  :host(:hover) & {
+    color: #{pfe-local(Color--hover)} !important;
+    text-decoration: #{pfe-local(TextDecoration--hover)} !important;
   }
 
   // DEFAULT ONLY STYLES FOR SLOTTED CONTENT
@@ -161,6 +166,11 @@ $variables: (
       content: url('data:image/svg+xml; utf8, <svg height=".7em" width=".7em" fill="#{map-get($pfe-colors, link--hover)}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.56 31.56" focusable="false"><path d="M15.78 0l-3.1 3.1 10.5 10.49H0v4.38h23.18l-10.5 10.49 3.1 3.1 15.78-15.78L15.78 0z"/></svg>');
     }
   }
+  &--inner {
+    // inner border on priority CTAs
+    display: block;
+    height: calc(100% - 4px);
+    width: calc(100% - 4px);
 
   :host(:hover) & {
     color: #{pfe-local(Color--hover)} !important;

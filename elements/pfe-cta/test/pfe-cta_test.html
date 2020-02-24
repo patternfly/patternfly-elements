@@ -108,29 +108,54 @@
           });
         });
 
-        // test("it should register an event when clicked", done => {
-        //   const pfeCta = document.querySelector("pfe-cta");
+        test("it should register an event when clicked", done => {
+          const pfeCta = document.querySelector("pfe-cta");
+          const spy = sinon.spy(pfeCta, "click");
+          const event = new Event("click");
 
-        //   document.addEventListener("pfe-cta:select", function(event) {
-        //     // Stop the link navigation
-        //     event.detail.event.preventDefault();
-        //     assert.isTrue(true);
-        //   });
+          pfeCta.dispatchEvent(event);
 
-        //   pfeCta.click();
-        // });
+          flush(() => {
+            setTimeout(function () {
+              expect(spy.callCount).to.equal(1);
+            }, 2000);
+            spy.restore();
+            done();
+          });
+        });
 
-        // test("it should register an event when enter key is pressed", done => {
-        //   const pfeCta = document.querySelector("pfe-cta");
+        test("it should register an event when enter key is pressed", done => {
+          const pfeCta = document.querySelector("pfe-cta");
+          const spy = sinon.spy(pfeCta, "click");
+          const event = new KeyboardEvent("keyup", {
+            key: "Enter"
+          });
 
-        //   document.addEventListener("pfe-cta:select", function(event) {
-        //     // Stop the link navigation
-        //     event.detail.event.preventDefault();
-        //     assert.isTrue(true);
-        //   });
-          
-        //   pfeCta.click();
-        // });
+          pfeCta.dispatchEvent(event);
+
+          flush(() => {
+            setTimeout(function () {
+              expect(spy.callCount).to.equal(1);
+            }, 2000);
+            spy.restore();
+            done();
+          });
+        });
+
+        test("it should register an event when the click function is run", done => {
+          const pfeCta = document.querySelector("pfe-cta");
+          const spy = sinon.spy(pfeCta, "click");
+
+          pfeCta.click();
+
+          flush(() => {
+            setTimeout(function () {
+              expect(spy.callCount).to.equal(1);
+            }, 2000);
+            spy.restore();
+            done();
+          });
+        });
       });
     </script>
   </body>

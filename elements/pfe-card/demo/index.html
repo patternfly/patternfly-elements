@@ -58,7 +58,7 @@
       @supports (display: grid) {
         .demo-cards {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(calc(25% - 32px), 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
           grid-row-gap: 32px;
           grid-column-gap: 16px;
         }
@@ -152,7 +152,7 @@
         </pfe-cta>
       </pfe-card>
 
-      <pfe-card class="custom-overlay" pfe-color="darker" pfe-img-src="https://placekitten.com/800/400" style="--pfe-card__header--BackgroundColor: rgba(45,45,45,.7);">
+      <pfe-card class="custom-overlay" pfe-color="darker" pfe-img-src="https://placekitten.com/800/500" style="--pfe-card__header--BackgroundColor: rgba(45,45,45,.7);">
         <h2 slot="pfe-card--header">Dark Card</h2>
         <p>This is the darker pfe-card and <a href="#">a link</a>.</p>
         <pfe-cta slot="pfe-card--footer">

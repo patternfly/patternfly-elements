@@ -290,10 +290,11 @@
 
     <script>
       document.addEventListener("pfe-cta:select", function(event) {
+        var ctaEvent = event.detail.event;
         // Cancel the propogation of the CTA
-        event.detail.event.preventDefault();
+        ctaEvent.preventDefault ? ctaEvent.preventDefault() : (ctaEvent.returnValue = false);
         // Note the URL in the console for the demo page
-        console.log(`Click event registered to URL: ${event.detail.link}`);
+        console.log("Click event registered to URL: " + event.detail.link);
       });
     </script>
   </body>

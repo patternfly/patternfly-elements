@@ -26,8 +26,24 @@ class PfeCta extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
+  static get events() {
+    return {
+      select: `${this.tag}:select`
+    };
+  }
+
   static get observedAttributes() {
     return ["pfe-priority", "pfe-color", "pfe-variant"];
+  }
+
+  click(event) {
+    this.emitEvent(PfeCta.events.select, {
+      detail: {
+        value: this.cta,
+        event: event,
+        link: this.cta.href
+      }
+    });
   }
 
   constructor() {
@@ -37,6 +53,8 @@ class PfeCta extends PFElement {
     this._init = this._init.bind(this);
     this._focusHandler = this._focusHandler.bind(this);
     this._blurHandler = this._blurHandler.bind(this);
+    this._clickHandler = this._clickHandler.bind(this);
+    this._keyupHandler = this._keyupHandler.bind(this);
   }
 
   connectedCallback() {
@@ -61,6 +79,8 @@ class PfeCta extends PFElement {
     if (this.cta) {
       this.cta.removeEventListener("focus", this._focusHandler);
       this.cta.removeEventListener("blur", this._blurHandler);
+      this.cta.removeEventListener("click", this._clickHandler);
+      this.cta.removeEventListener("keyup", this._keyupHandler);
     }
   }
 
@@ -112,6 +132,10 @@ class PfeCta extends PFElement {
       // Watch the light DOM link for focus and blur events
       this.cta.addEventListener("focus", this._focusHandler);
       this.cta.addEventListener("blur", this._blurHandler);
+
+      // Attach the click listener
+      this.cta.addEventListener("click", this._clickHandler);
+      this.cta.addEventListener("keyup", this._keyupHandler);
     }
   }
 
@@ -123,6 +147,25 @@ class PfeCta extends PFElement {
   // On focus out, remove that class
   _blurHandler(event) {
     this.classList.remove("focus-within");
+  }
+
+  // On focus out, remove that class
+  _keyupHandler(event) {
+    let key = event.key || event.keyCode;
+    switch (key) {
+      case "Enter":
+      case 13:
+        this.click(event);
+    }
+  }
+
+  // On focus out, remove that class
+  _clickHandler(event) {
+    // event.preventDefault();
+
+    this.click(event);
+
+    // window.location.href = this.cta.href;
   }
 
   _basicAttributeChanged(attr, oldValue, newValue) {

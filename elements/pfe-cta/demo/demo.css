@@ -3,11 +3,6 @@ h2 {
   margin: 15px 0 10px;
 }
 
-hr {
-  border-bottom: 1px solid #ddd;
-  width: 100%;
-}
-
 pfe-band {
   --pfe-band--Padding--horizontal: 60px;
   --pfe-band--Width: 100%;
@@ -17,20 +12,24 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   --pfe-card--Border: 1px solid rgba(45, 45, 45, 0.3);
 }
 
-.resize {
+.default-link-test {
   display: flex;
   flex-flow: row nowrap;
-  resize: horizontal;
-  overflow: auto;
   border: 1px solid #ddd;
   width: 500px;
   padding: 10px;
+}
+
+.resize {
+  resize: horizontal;
+  overflow: auto;
 }
 
 .resize > pfe-cta:first-child {
   margin-right: 20px;
 }
 
+.cta-layout,
 .card-layout {
   display: flex;
   flex-flow: row wrap;
@@ -41,20 +40,25 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   margin-left: -20px;
 }
 
+.cta-layout > pfe-cta,
 .card-layout > pfe-cta,
 .card-layout .cta-align > pfe-cta {
   margin-top: 10px;
   margin-left: 20px;
 }
 
+.cta-layout {
+  grid-template-columns: repeat(auto-fill, minmax(max-content, 1fr));
+}
+
 .custom-dark-band {
-  padding: 60px 15px;
+  padding: 15px;
   background: #222;
   --theme: dark;
 }
 
 .custom-saturated-band {
-  padding: 60px 15px;
+  padding: 15px;
   background: #0c8488;
   --theme: saturated;
 }

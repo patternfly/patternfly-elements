@@ -14,8 +14,6 @@
     </pfe-cta>
 
     <script>
-      const cta = [...document.querySelectorAll("pfe-cta")];
-
       // Priority states and one of the properties they influence for testing
       // property should be the one that gets the main color pop
       // const priorities = {
@@ -47,52 +45,52 @@
         return [r, g, b];
       };
 
-      suite('<pfe-cta>', () => {
-        test('should upgrade', () => {
+      suite("<pfe-cta>", () => {
+        test("should upgrade", () => {
           assert.instanceOf(
-            document.querySelector('pfe-cta'),
-            customElements.get('pfe-cta'),
-            'the <pfe-cta> should be an instance of PfeCta'
+            document.querySelector("pfe-cta"),
+            customElements.get("pfe-cta"),
+            "the <pfe-cta> should be an instance of PfeCta"
           );
         });
 
         test("it should log a warning if there are no children in the light DOM", done => {
-          const spy = sinon.spy(console, 'warn');
+          const spy = sinon.spy(console, "warn");
           const pfeCta = document.createElement("pfe-cta");
           pfeCta.textContent = "This is wrong";
 
           document.body.appendChild(pfeCta);
 
           flush(() => {
-            sinon.assert.calledWith(spy, 'pfe-cta: The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)');
+            sinon.assert.calledWith(spy, "pfe-cta: The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)");
             spy.restore();
             done();
           });
         });
 
         test("it should log a warning if the first child in the light DOM is not an anchor", done => {
-          const spy = sinon.spy(console, 'warn');
+          const spy = sinon.spy(console, "warn");
           const pfeCta = document.createElement("pfe-cta");
           pfeCta.innerHTML = `<p>Something</p><a href="#">A link</a>`;
 
           document.body.appendChild(pfeCta);
 
           flush(() => {
-            sinon.assert.calledWith(spy, 'pfe-cta: The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)');
+            sinon.assert.calledWith(spy, "pfe-cta: The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)");
             spy.restore();
             done();
           });
         });
 
         test("it should log a warning if the first child in the light DOM is a default style button", done => {
-          const spy = sinon.spy(console, 'warn');
+          const spy = sinon.spy(console, "warn");
           const pfeCta = document.createElement("pfe-cta");
           pfeCta.innerHTML = `<button>A button</button>`;
 
           document.body.appendChild(pfeCta);
 
           flush(() => {
-            sinon.assert.calledWith(spy, 'pfe-cta: Button tag is not supported semantically by the default link styles');
+            sinon.assert.calledWith(spy, "pfe-cta: Button tag is not supported semantically by the default link styles");
             spy.restore();
             done();
           });
@@ -109,6 +107,30 @@
             done();
           });
         });
+
+        // test("it should register an event when clicked", done => {
+        //   const pfeCta = document.querySelector("pfe-cta");
+
+        //   document.addEventListener("pfe-cta:select", function(event) {
+        //     // Stop the link navigation
+        //     event.detail.event.preventDefault();
+        //     assert.isTrue(true);
+        //   });
+
+        //   pfeCta.click();
+        // });
+
+        // test("it should register an event when enter key is pressed", done => {
+        //   const pfeCta = document.querySelector("pfe-cta");
+
+        //   document.addEventListener("pfe-cta:select", function(event) {
+        //     // Stop the link navigation
+        //     event.detail.event.preventDefault();
+        //     assert.isTrue(true);
+        //   });
+          
+        //   pfeCta.click();
+        // });
       });
     </script>
   </body>

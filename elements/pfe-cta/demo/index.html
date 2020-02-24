@@ -292,6 +292,7 @@
       document.addEventListener("pfe-cta:select", function(event) {
         // Cancel the propogation of the CTA
         event.detail.event.preventDefault();
+        // Note the URL in the console for the demo page
         console.log(`Click event registered to URL: ${event.detail.link}`);
       });
     </script>

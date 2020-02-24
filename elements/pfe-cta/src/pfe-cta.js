@@ -161,11 +161,7 @@ class PfeCta extends PFElement {
 
   // On focus out, remove that class
   _clickHandler(event) {
-    // event.preventDefault();
-
     this.click(event);
-
-    // window.location.href = this.cta.href;
   }
 
   _basicAttributeChanged(attr, oldValue, newValue) {

@@ -13,3 +13,31 @@
     text-decoration: underline;
     text-decoration-skip: ink;
 }
+
+/// ===========================================================================
+/// Print clear styles for slotted tags
+///
+/// Returns slotted tags with clear properties to counteract standard browser, bootstrap, or normalize styles
+///
+/// @param {List} $properties [(margin, padding)] - 
+/// @param {List} $tags [(p, h1, h2, h3, h4, h5, h6)]- 
+/// @param {Boolean} $important [false] - 
+/// @param {String} $selector [null] - 
+/// @use -
+///     ```
+///     :host {
+///         @include pfe-clear-spacing($properties: margin-bottom, $important: true);
+///     }
+///     ```
+/// ===========================================================================
+@mixin pfe-clear-spacing($properties: (margin, padding), $tags: (p, h1, h2, h3, h4, h5, h6), $important: false, $selector: null) {
+    // Iterate over provided html tags, attach selector if provided
+    @each $tag in $tags {
+        ::slotted(#{$tag}#{if($selector, unquote(":#{$selector}"), null)}) {
+            // Iterate over provided properties, default is margin and padding
+            @each $prop in $properties {
+                #{$prop}: 0#{if($important, unquote(" !important"), null)};
+            }
+        }
+    }
+}

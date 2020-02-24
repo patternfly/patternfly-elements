@@ -71,7 +71,7 @@
 
       .custom-border {
         --pfe-card--BorderColor: #eee;
-        --pfe-card--BorderWeight: 1px;
+        --pfe-card--BorderWidth: 1px;
       }
 
       .custom-header-background {
@@ -80,7 +80,7 @@
       }
 
       .custom-overlay {
-        --pfe-card__overlay--BackgroundColor: rgba(0, 0, 0, 0.3);
+        --pfe-card__overlay--BackgroundColor: rgba(0, 0, 0, 0.4);
       }
 
       a {
@@ -94,7 +94,7 @@
     <div class="demo-cards">
 
       <pfe-card pfe-border pfe-color="lightest">
-        <h2 slot="pfe-card--header">Lightest card</h2>
+        <h2 slot="pfe-card--header">Lightest card with <code>pfe-border</code> attribute</h2>
         <p>This is the lightest pfe-card with a pfe-border and <a href="#">a link</a>.</p>
         <div class="button-series" slot="pfe-card--footer">
           <pfe-cta slot="pfe-card--footer" pfe-priority="secondary">
@@ -107,7 +107,7 @@
       </pfe-card>
 
       <pfe-card pfe-color="lightest" class="custom-border">
-        <h2 slot="pfe-card--header">Lightest card with custom border</h2>
+        <h2 slot="pfe-card--header">Lightest card with custom css border</h2>
         <p>This is the lightest pfe-card with a custom border and <a href="#">a link</a>.</p>
         <div class="button-series" slot="pfe-card--footer">
           <pfe-cta slot="pfe-card--footer" pfe-priority="secondary">
@@ -139,7 +139,7 @@
         </pfe-cta>
       </pfe-card>
 
-      <pfe-card class="custom-overlay" pfe-color="darker" pfe-img-src="https://www.redhat.com/files/webux/img/bandbg/bg-infrastructure-management-pattern-transparent-tile.png" style="--pfe-card__header--BackgroundColor: rgba(45,45,45,.7);">
+      <pfe-card class="custom-overlay" pfe-color="darker" pfe-img-src="https://placekitten.com/800/400" style="--pfe-card__header--BackgroundColor: rgba(45,45,45,.7);">
         <h2 slot="pfe-card--header">Dark Card</h2>
         <p>This is the darker pfe-card and <a href="#">a link</a>.</p>
         <pfe-cta slot="pfe-card--footer">

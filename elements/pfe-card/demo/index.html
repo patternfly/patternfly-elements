@@ -55,13 +55,29 @@
         width: calc(25% - 32px);
       }
 
+      @supports (display: grid) {
+        .demo-cards {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(calc(25% - 32px), 1fr));
+          grid-row-gap: 32px;
+          grid-column-gap: 16px;
+        }
+
+        .demo-cards > * {
+          margin: 0;
+          width: auto;
+        }
+      }
+
       .button-series {
+        margin-top: -15px;
         margin-left: -15px;
         width: 100%;
       }
 
       .button-series > *:not(first-child) {
         display: inline-block;
+        margin-top: 15px;
         margin-left: 15px;
       }
 
@@ -82,10 +98,6 @@
 
       .custom-overlay {
         --pfe-card__overlay--BackgroundColor: rgba(0, 0, 0, 0.4);
-      }
-
-      a {
-        color: var(--pfe-broadcasted--link);
       }
     </style>
 
@@ -168,9 +180,7 @@
         <h2 slot="pfe-card--header">Accent Card</h2>
         <p>This is the accent pfe-card and <a href="#">a link</a>. Leverage agile frameworks to provide a robust synopsis for high level overviews.</p>
       </pfe-card>
-    </div>
-
-    <div class="demo-cards">
+      
       <pfe-card pfe-color="lighter">
         <img src="https://placekitten.com/200/150"/>
         <h2>Imaged card with no overflow</h2>
@@ -191,7 +201,7 @@
 
       <pfe-card pfe-color="lighter" class="custom-header-background">
         <h2 slot="pfe-card--header">Imaged card with side overflow + header</h2>
-        <img pfe-overflow="top right left" src="https://placekitten.com/500/250"/>
+        <img pfe-overflow="top right left" src="https://placekitten.com/700/400"/>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis, porro?</p>
         <pfe-cta slot="pfe-card--footer">
           <a href="#">Learn more</a>
@@ -200,7 +210,7 @@
 
       <pfe-card pfe-color="lighter">
         <h2>Imaged card with side overflow</h2>
-        <img pfe-overflow="right left" src="https://placekitten.com/650/250"/>
+        <img pfe-overflow="right left" src="https://placekitten.com/700/200"/>
         <pfe-cta slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>
@@ -209,7 +219,7 @@
       <pfe-card pfe-color="lighter">
         <h2>Imaged card with side & bottom overflow</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta rerum tempore natus alias! Cumque illum provident corrupti voluptates.</p>
-        <img pfe-overflow="right left bottom" src="https://placekitten.com/400/250" slot="pfe-card--footer"/>
+        <img pfe-overflow="right left bottom" src="https://placekitten.com/700/450" slot="pfe-card--footer"/>
       </pfe-card>
     </div>
   </body>

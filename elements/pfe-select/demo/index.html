@@ -4,57 +4,86 @@
     <meta charset="utf-8">
     <title>PatternFly Element | pfe-select Demo</title>
 
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+    <script>
+      require([
+        '../../pfe-band/dist/pfe-band.umd.js',
+        '../dist/pfe-select.umd.js'
+      ]);
+    </script>
+
     <noscript>
       <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../dist/pfe-select.umd.js'])</script>
+    <style>
+      /* For demo only */
+      label {
+        font-size: 20px;
+        font-weight: 800;
+      }
+    </style>
   </head>
   <body unresolved>
+    <pfe-band>
+      <h1 slot="pfe-band--header"><code>&lt;pfe-select&gt;</code></h1>
+      <label for="example1">Example one</label>
+      <pfe-select id="pfe-select-success">
+        <select id="example1">
+          <option disabled>Please select an option</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </pfe-select>
+      <p slot="pfe-band--footer"><strong>Selected option:</strong> <span id="selectedOption"></span></p>
+    </pfe-band>
 
-    <h1>&lt;pfe-select&gt;</h1>
-    <label for="example1">Example one</label>
-    <pfe-select id="pfe-select-success">
-      <select id="example1">
-        <option disabled>Please select an option</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
-    </pfe-select>
-    <p>Selected Option: <span id="selectedOption"></span></p>
+    <pfe-band pfe-color="lighter">
+      <h1 slot="pfe-band--header"><code>&lt;pfe-select&gt;</code> with error check using <code>pfe-invalid</code> attribute</h1>
+      <label for="example2">Example two</label>
+      <pfe-select id="pfe-select-error">
+        <select id="example2">
+          <option value="">Please select an option</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </pfe-select>
+    </pfe-band>
 
-    <h1>&lt;pfe-select&gt; with error check using pfe-invalid attribute</h1>
-    <label for="example2">Example two</label>
-    <pfe-select id="pfe-select-error">
-      <select id="example2">
-        <option value="">Please select an option</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
-    </pfe-select>
+    <pfe-band pfe-color="lightest">
+      <h1 slot="pfe-band--header"><code>&lt;pfe-select&gt;</code> with JS options and <code>&lt;select&gt;</code> element</h1>
+      <p>In this case, the existing select element will be destroyed and options will be created through custom options array</p>
+      <label for="example3">Example three</label>
+      <pfe-select id="pfe-select-with-js-options">
+        <select id="example3">
+          <option value="1">One</option>
+          <option value="2">Two</option>
+        </select>
+      </pfe-select>
+    </pfe-band>
 
-    <h1>&lt;pfe-select&gt; with JS options and &lt;select&gt; element</h1>
-    <p>In this case, the existing select element will be destroyed and options will be created through custom options array</p>
-    <label for="example3">Example three</label>
-    <pfe-select id="pfe-select-with-js-options">
-      <select id="example3">
-        <option value="1">One</option>
-        <option value="2">Two</option>
-      </select>
-    </pfe-select>
-
-    <h1>&lt;pfe-select&gt; with only JS options</h1>
-    <label for="example4">Example Four</label>
-    <pfe-select id="pfe-select-with-js-options-only">
-    </pfe-select>
+    <pfe-band pfe-color="lighter">
+      <h1 slot="pfe-band--header"><code>&lt;pfe-select&gt;</code> with only JS options</h1>
+      <label for="example4">Example Four</label>
+      <pfe-select id="pfe-select-with-js-options-only"></pfe-select>
+    </pfe-band>
 
     <script>
       let select = document.querySelector("#pfe-select-success");
@@ -95,7 +124,6 @@
           { text: 'Three', value: '3', selected: false}
         ];
       });
-
     </script>
   </body>
 </html>

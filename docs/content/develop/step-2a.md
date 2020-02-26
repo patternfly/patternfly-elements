@@ -15,7 +15,7 @@ npm run live-demo
 ```
 
 If you prefer to only watch specific component (this can be quicker), you'll need two terminal processes, start the watch process with:
-``shell
+```shell
 # Replace pfe-cool-element with your component's name
 npm run dev pfe-cool-element
 ```

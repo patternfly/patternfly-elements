@@ -52,6 +52,7 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
 }
 
 .event-registry {
+  flex-grow: 1;
   display: flex;
   align-items: center;
   font-size: var(--pfe-theme--font-size--zeta, 14px);

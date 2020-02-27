@@ -17,7 +17,7 @@ class PfeCta extends PFElement {
     return "pfe-cta.json";
   }
 
-  get defaultStyle() {
+  get isDefault() {
     return this.hasAttribute("pfe-priority") ? false : true;
   }
 
@@ -38,11 +38,9 @@ class PfeCta extends PFElement {
 
   click(event) {
     this.emitEvent(PfeCta.events.select, {
-      detail: {
-        value: this.cta,
-        event: event,
-        link: this.cta.href
-      }
+      detail: Object.assign(this.data, {
+        originEvent: event
+      })
     });
   }
 
@@ -99,26 +97,24 @@ class PfeCta extends PFElement {
 
   // Initialize the component
   _init() {
-    // Get the first child of the web component (light DOM)
-    const firstChild = this.children[0];
     const supportedTags = ["a", "button"]; // add input later
     let supportedTag = false;
 
     // If the first child does not exist or that child is not a supported tag
-    if (firstChild) {
+    if (this.firstElementChild) {
       supportedTags.forEach(tag => {
-        if (firstChild.tagName.toLowerCase() === tag) {
+        if (this.firstElementChild.tagName.toLowerCase() === tag) {
           supportedTag = true;
         }
       });
     }
 
-    if (!firstChild || !supportedTag) {
+    if (!this.firstElementChild || !supportedTag) {
       console.warn(
         `${PfeCta.tag}: The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)`
       );
     } else if (
-      firstChild.tagName.toLowerCase() === "button" &&
+      this.firstElementChild.tagName.toLowerCase() === "button" &&
       this.props.priority.value === null &&
       this.getAttribute("aria-disabled") !== "true"
     ) {
@@ -127,7 +123,32 @@ class PfeCta extends PFElement {
       );
     } else {
       // Capture the first child as the CTA element
-      this.cta = firstChild;
+      this.cta = this.firstChild;
+
+      this.data = {
+        href: this.cta.href,
+        text: this.cta.text,
+        title: this.cta.title,
+        color: this.props.color.value
+      };
+
+      // Set the value for the priority property
+      this.props.priority.value = this.isDefault
+        ? "default"
+        : this.getAttribute("pfe-priority");
+
+      // Add the priority value to the data set for the event
+      this.data.type = this.props.priority.value;
+
+      // Append the variant to the data type
+      if (this.props.variant.value) {
+        this.data.type = `${this.data.type} ${this.props.variant.value}`;
+      }
+
+      // Override type if set to disabled
+      if (this.getAttribute("aria-disabled")) {
+        this.data.type = "disabled";
+      }
 
       // Watch the light DOM link for focus and blur events
       this.cta.addEventListener("focus", this._focusHandler);

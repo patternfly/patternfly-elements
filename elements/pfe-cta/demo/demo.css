@@ -51,6 +51,35 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   grid-template-columns: repeat(auto-fill, minmax(max-content, 1fr));
 }
 
+.event-registry {
+  display: flex;
+  align-items: center;
+  font-size: var(--pfe-theme--font-size--zeta, 14px);
+}
+
+.event-registry:not(:empty) {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+pfe-card:not([on="light"]) .event-registry:not(:empty) {
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.event-registry span {
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+.event-registry pfe-icon {
+  --pfe-icon--Color: #444;
+  float: left;
+}
+
+.event-registry pfe-icon:not([on="light"]) {
+  --pfe-icon--Color: #fff;
+  float: left;
+}
+
 .custom-dark-band {
   padding: 15px;
   background: #222;

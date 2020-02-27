@@ -35,7 +35,7 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   flex-flow: row wrap;
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   margin-top: -10px;
   margin-left: -20px;
 }
@@ -48,7 +48,7 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
 }
 
 .cta-layout {
-  grid-template-columns: repeat(auto-fill, minmax(max-content, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(max-content, 1fr));
 }
 
 .event-registry {
@@ -56,14 +56,6 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   display: flex;
   align-items: center;
   font-size: var(--pfe-theme--font-size--zeta, 14px);
-}
-
-.event-registry:not(:empty) {
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-pfe-card:not([on="light"]) .event-registry:not(:empty) {
-  border-top: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .event-registry span {

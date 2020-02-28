@@ -1,0 +1,164 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+$LOCAL: switch;
+
+// Setting all toggle sizing vars
+// will be converted to em in styles so the graphic elments scale with type
+$font-size:             pfe-var(font-size);
+$toggle-width:          42px;
+$toggle-knob-diameter:  14px;
+$toggle-knob-offset:    5px;
+
+// Variables based on PF Next Switch
+$variables: (
+  toggle-knob: (
+    BackgroundColor: pfe-color(surface--lightest),
+    BackgroundColor--disabled: pfe-color(ui-disabled),
+    BoxShadow: '0 0.0625rem 0.0625rem 0rem rgba(3, 3, 3, 0.05), 0 0.25rem 0.5rem 0.25rem rgba(3, 3, 3, 0.06)',
+  ),
+  toggle: (
+    BackgroundColor: #d2d2d2, // @todo - didn't find a great color to match PF4
+    BackgroundColor--checked: pfe-color(ui-base),
+    BackgroundColor--disabled: pfe-color(ui-disabled--text),
+  ),
+  label: (
+    Color--default: pfe-color(text),
+    Color--checked: pfe-color(ui-disabled--text),
+    Color--disabled: pfe-color(ui-disabled--text),
+  ),
+);
+
+:host {
+  @include pfe-set-local($variables);
+  display: inline-block;
+  margin: 0 1.5em 0 0;
+  overflow: hidden;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.pfe-switch {
+  position: relative;
+}
+
+::slotted(input) {
+  @extend %sr-only;
+}
+
+::slotted(.sr-only),
+.sr-only {
+  text-indent: -9999em;
+}
+
+::slotted(label) {
+  position: relative;
+  display: block;
+  // Width of the switch + some white space
+  padding-left: #{pfe-size-pem($toggle-width) + 0.5em};
+  font-size: $font-size;
+  line-height: pfe-var(line-height);
+  color: #{pfe-local(Color--default, $region: label)};
+  cursor: pointer;
+
+  // Toggle container
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: pfe-size-pem($toggle-width);
+    height: calc(#{pfe-var(line-height)} * 1em);
+    border-radius: calc(#{pfe-var(line-height)} * 0.5em);
+    background: #{pfe-local(BackgroundColor, $region: toggle)};
+    transition: background-color 0.25s;
+  }
+
+  // Toggle knob
+  &:after {
+    content: '';
+    position: absolute;
+    top: $toggle-knob-offset;
+    left: $toggle-knob-offset;
+    display: block;
+    width: pfe-size-pem($toggle-knob-diameter);
+    height: pfe-size-pem($toggle-knob-diameter);
+    border-radius: 50%;
+    background: #{pfe-local(BackgroundColor, $region: toggle-knob)};
+    box-shadow: #{pfe-local(BoxShadow, $region: toggle-knob)};
+    transition: transform 0.25s cubic-bezier(0.21, 0.84, 0.56, 1.55);
+  }
+}
+
+:host([checked])  {
+  --pfe-switch__label--Color: #{pfe-local($cssvar: Color--checked, $region: label)};
+  --pfe-switch__toggle--BackgroundColor: #{pfe-local($cssvar: BackgroundColor--checked, $region: toggle)};
+
+  ::slotted(label) {
+    // Toggle knob
+    &:after {
+      // First transform gets the right bound,
+      // the second moves the knob back behind the edge
+      transform:
+        translate(#{$toggle-width - ($toggle-knob-offset * 2)})
+        translate(-100%);
+    }
+  }
+}
+
+:host([disabled]) {
+  --pfe-switch__label--Color: #{pfe-local($cssvar: Color--disabled, $region: label)};
+  --pfe-switch__toggle--BackgroundColor: #{pfe-local($cssvar: BackgroundColor--disabled, $region: toggle)};
+  --pfe-switch__toggle-knob--BackgroundColor: #{pfe-local($cssvar: BackgroundColor--disabled, $region: toggle-knob)};
+}
+
+.pfe-switch__checkmark {
+  // Checkmark is built with CSS instead of using an image
+  $checkmark-width: 6px;
+  // 1.64 is the ratio of the check's height/width
+  $checkmark-height: $checkmark-width * 1.636;
+  $scale: 6;
+  // 0.364 is the ratio of the stroke to the check width
+  // 4 is because we're going to shrink the icon with transform for anti-aliasing
+  $border-width: $checkmark-width * 0.4 * $scale;
+  position: absolute;
+  top: 50%;
+  left: pfe-size-pem($toggle-knob-offset * -1);
+  display: block;
+  width: $scale * $checkmark-width;
+  height: $scale * $checkmark-height;
+  transform:
+    translate(0, -50%)
+    scale(#{ 1 / $scale })
+    translate(#{pfe-size-pem(-4px)}, #{pfe-size-pem(20px)});
+  transform-origin: center center;
+  pointer-events: none;
+
+  &:before {
+    content: '';
+    display: block;
+    box-sizing: border-box;
+    width: $checkmark-width * $scale;
+    height: $checkmark-height * $scale;
+    border-color: #{pfe-local(BackgroundColor, $region: toggle-knob)};
+    border-style: solid;
+    border-width: 0 $border-width $border-width 0;
+    transform:
+      translate(0, -50%)
+      rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.25s;
+
+    :host([checked]) & {
+      opacity: 1;
+    }
+
+    :host([disabled]) & {
+      border-color: #{pfe-local(BackgroundColor--disabled, $region: toggle-knob)};
+    }
+  }
+}

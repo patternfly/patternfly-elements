@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>PatternFly Element | pfe-switch Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+
+    <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-loader.js"></script> -->
+
+    <!-- IE11 test: use bundle + require with umd files -->
+    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+
+    <!-- Tests require pulling in the UMD version of the files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+    <script>require([
+      "../dist/pfe-switch.umd.js"
+    ])</script>
+  </head>
+  <body unresolved style="padding: 3em 5em">
+    <h1><code>pfe-switch</code></h1>
+
+    <h2>With on and off messages</h2>
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input type="checkbox" id="switch-with-label-1" aria-labelledby="switch-with-label-1-on" name="switchExample1" checked>
+      <label for="switch-with-label-1">
+        Fallback label
+      </label>
+    </pfe-switch>
+
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input type="checkbox" id="switch-with-label-2" aria-labelledby="switch-with-label-2-on" name="switchExample2">
+      <label for="switch-with-label-2">
+        Fallback label
+      </label>
+    </pfe-switch>
+
+    <h2 style="margin-top: 2em;">
+      Hidden Labels
+    </h2>
+    <pfe-switch pfe-hide-label="true">
+      <input type="checkbox" id="switch-hidden-label-1" aria-labelledby="switch-hidden-label-1-on" name="switchExample3" checked>
+      <label for="switch-hidden-label-1">
+        Hidden Label
+      </label>
+    </pfe-switch>
+
+    <pfe-switch pfe-hide-label="true">
+      <input type="checkbox" id="switch-hidden-label-2" aria-labelledby="switch-hidden-label-2-on" name="switchExample4">
+      <label for="switch-hidden-label-2">
+        Hidden Label
+      </label>
+    </pfe-switch>
+
+    <h2 style="margin-top: 2em;">
+      Disabled
+    </h2>
+    <p>Disabled property should go on the <code>input</code> element</p>
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input disabled type="checkbox" id="switch-diabled-1" aria-labelledby="switch-diabled-1-on" name="switchExample5" checked>
+      <label for="switch-diabled-1">
+        Fallback Label
+      </label>
+    </pfe-switch>
+
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input disabled type="checkbox" id="switch-diabled-2" aria-labelledby="switch-diabled-2-on" name="switchExample6">
+      <label for="switch-diabled-2">
+        Fallback Label
+      </label>
+    </pfe-switch>
+
+    <br><br><br>
+
+    <pfe-switch pfe-hide-label="true">
+      <input disabled type="checkbox" id="switch-diabled-1" aria-labelledby="switch-diabled-1-on" name="switchExample7" checked>
+      <label for="switch-diabled-1">
+        Fallback Label
+      </label>
+    </pfe-switch>
+
+    <pfe-switch pfe-hide-label="true">
+      <input disabled type="checkbox" id="switch-diabled-2" aria-labelledby="switch-diabled-2-on" name="switchExample8">
+      <label for="switch-diabled-2">
+        Fallback Label
+      </label>
+    </pfe-switch>
+
+    <h2 style="margin-top: 2em;">
+      Invalid markup
+    </h2>
+    <p>Console will throw a warning if there isn't a <code>label</code> with text in it</p>
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input type="checkbox" id="invalid-switch-1" aria-labelledby="invalid-switch-1-on" name="brokenSwitchExample1" checked>
+      <label for="switch-disabled-1">
+      </label>
+    </pfe-switch>
+
+    <p>Console will throw an error if there isn't a <code>label</code></p>
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input type="checkbox" id="invalid-switch-2" aria-labelledby="invalid-switch-2-on" name="brokenSwitchExample2" checked>
+    </pfe-switch>
+
+    <p>Console will throw an error if the <code>label</code>'s <code>for</code> attribute doesn't match an <code>id</code> and styles the element as disabled</p>
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input type="checkbox" id="invalid-switch-3" aria-labelledby="invalid-switch-3-on" name="brokenSwitchExample3" checked>
+      <label for="rut-roh">
+        Invalid <code>label</code> <code>for</code> attribute
+      </label>
+    </pfe-switch>
+
+  </body>
+</html>

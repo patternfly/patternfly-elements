@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../dist/pfe-switch.js"></script>
+  </head>
+  <body style="padding: 3em 4em">
+
+    <h2>With on and off messages</h2>
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input type="checkbox" id="switch-with-label-1" aria-labelledby="switch-with-label-1-on" name="switchExample1" checked>
+      <label for="switch-with-label-1">
+        Fallback label
+      </label>
+    </pfe-switch>
+
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input type="checkbox" id="switch-with-label-2" aria-labelledby="switch-with-label-2-on" name="switchExample2">
+      <label for="switch-with-label-2">
+        Fallback label
+      </label>
+    </pfe-switch>
+
+    <h2 style="margin-top: 2em;">
+      Hidden Labels
+    </h2>
+    <pfe-switch pfe-hide-label="true">
+      <input type="checkbox" id="switch-hidden-label-1" aria-labelledby="switch-hidden-label-1-on" name="switchExample3" checked>
+      <label for="switch-hidden-label-1">
+        Hidden Label
+      </label>
+    </pfe-switch>
+
+    <pfe-switch pfe-hide-label="true">
+      <input type="checkbox" id="switch-hidden-label-2" aria-labelledby="switch-hidden-label-2-on" name="switchExample4">
+      <label for="switch-hidden-label-2">
+        Hidden Label
+      </label>
+    </pfe-switch>
+
+    <h2 style="margin-top: 2em;">
+      Disabled
+    </h2>
+    <p>Disabled property should go on the <code>input</code> element</p>
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input disabled type="checkbox" id="switch-diabled-1" aria-labelledby="switch-diabled-1-on" name="switchExample5" checked>
+      <label for="switch-diabled-1">
+        Fallback Label
+      </label>
+    </pfe-switch>
+
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input disabled type="checkbox" id="switch-diabled-2" aria-labelledby="switch-diabled-2-on" name="switchExample6">
+      <label for="switch-diabled-2">
+        Fallback Label
+      </label>
+    </pfe-switch>
+
+    <br><br><br>
+
+    <pfe-switch pfe-hide-label="true">
+      <input disabled type="checkbox" id="switch-diabled-1" aria-labelledby="switch-diabled-1-on" name="switchExample7" checked>
+      <label for="switch-diabled-1">
+        Fallback Label
+      </label>
+    </pfe-switch>
+
+    <pfe-switch pfe-hide-label="true">
+      <input disabled type="checkbox" id="switch-diabled-2" aria-labelledby="switch-diabled-2-on" name="switchExample8">
+      <label for="switch-diabled-2">
+        Fallback Label
+      </label>
+    </pfe-switch>
+
+    <h2 style="margin-top: 2em;">
+      Invalid markup
+    </h2>
+    <p>Console will throw a warning if there isn't a <code>label</code> with text in it</p>
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input type="checkbox" id="invalid-switch-1" aria-labelledby="invalid-switch-1-on" name="brokenSwitchExample1" checked>
+      <label for="switch-disabled-1">
+      </label>
+    </pfe-switch>
+
+    <p>Console will throw an error if there isn't a <code>label</code></p>
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input type="checkbox" id="invalid-switch-2" aria-labelledby="invalid-switch-2-on" name="brokenSwitchExample2" checked>
+    </pfe-switch>
+
+    <p>Console will throw an error if the <code>label</code>'s <code>for</code> attribute doesn't match an <code>id</code> and styles the element as disabled</p>
+    <pfe-switch pfe-message-on="Message when on" pfe-message-off="Message when off">
+      <input type="checkbox" id="invalid-switch-3" aria-labelledby="invalid-switch-3-on" name="brokenSwitchExample3" checked>
+      <label for="rut-roh">
+        Invalid <code>label</code> <code>for</code> attribute
+      </label>
+    </pfe-switch>
+
+
+    <script>
+      const elements = [...document.querySelectorAll("pfe-switch")];
+
+      suite("<pfe-switch>", () => {
+        test("it should upgrade", () => {
+          assert.instanceOf(
+            document.querySelector("pfe-switch"),
+            customElements.get("pfe-switch"),
+            "pfe-switch should be an instance of pfeSwitch"
+          );
+        });
+
+        // Write tests for each attribute
+        test("form attribute is applied correctly", () => {
+          // Test that the attribute applied correctly
+          // assert.equal();
+        });
+
+      });
+    </script>
+  </body>
+</html>

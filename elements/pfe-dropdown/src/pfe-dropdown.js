@@ -109,7 +109,7 @@ class PfeDropdown extends PFElement {
     }
     this.isOpen = false;
     this._menu.classList.remove("open");
-    this._toggle.removeAttribute("aria-expanded");
+    this._toggle.setAttribute("aria-expanded", false);
     return this;
   }
 

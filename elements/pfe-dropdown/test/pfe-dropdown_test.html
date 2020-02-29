@@ -44,6 +44,24 @@
           assert.equal(toggleText, "Test dropdown");
         });
 
+        test('it should toggle the menu open and closed when clicked', () => {
+          const element = document.querySelector('pfe-dropdown');
+          const toggle = element.shadowRoot.querySelector('button');
+          const list = element.shadowRoot.querySelector('ul');
+          
+          // open
+          toggle.click();
+
+          assert.equal(toggle.getAttribute("aria-expanded"), "true");
+          assert.equal(list.classList[1], "open");
+
+          // close
+          toggle.click();
+
+          assert.equal(toggle.getAttribute("aria-expanded"), "false");
+          assert.notEqual(list.classList[1], "open");
+        });
+
         test('it should set the appropriate a11y attributes when pfe-type is "link"', () => {
           const element = document.querySelector('pfe-dropdown');
           const listItem = element.querySelector("[pfe-type=link]").shadowRoot.querySelector("li");

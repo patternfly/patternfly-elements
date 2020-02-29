@@ -9,14 +9,20 @@
   </head>
   <body>
 
-    <pfe-dropdown>
-      <button slot="toggle">
-        <span>Dropdown</span>
-      </button>
-      <ul slot="list">
-        <li slot="item">Option 1</li>
-        <li slot="item">Option 2</li>
-      </ul>
+    <pfe-dropdown pfe-label="Dropdown">
+      <pfe-dropdown-item pfe-type="link">
+        <a href="#">Link 1</a>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-type="link">
+        <a href="#">Link 2</a>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-type="seperator"></pfe-dropdown-item>
+      <pfe-dropdown-item pfe-type="action">
+        <button>Action 1</button>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-type="action" disabled>
+        <button>Action 2</button>
+      </pfe-dropdown-item>
     </pfe-dropdown>
 
     <script>

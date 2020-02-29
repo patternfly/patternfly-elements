@@ -71,9 +71,11 @@ class PfeDropdown extends PFElement {
       case "pfe-label":
         this._toggle_text.textContent = newValue;
         break;
+
       case "disabled":
         this._setDisabled();
         break;
+
       default:
         break;
     }
@@ -82,11 +84,9 @@ class PfeDropdown extends PFElement {
   _setDisabled() {
     const isDisabled = this.hasAttribute("disabled");
     if (isDisabled) {
-      this.removeAttribute("tabindex");
       this.setAttribute("aria-disabled", "true");
     } else {
       this.removeAttribute("disabled");
-      this.setAttribute("tabindex", "0");
       this.setAttribute("aria-disabled", "false");
     }
   }
@@ -95,9 +95,11 @@ class PfeDropdown extends PFElement {
     if (event) {
       event.preventDefault();
     }
+
     this.isOpen = true;
     this._menu.classList.add("open");
     this._toggle.setAttribute("aria-expanded", true);
+
     return this;
   }
 
@@ -113,6 +115,7 @@ class PfeDropdown extends PFElement {
 
   _clickHandler(event) {
     this.isOpen ? this.close(event) : this.open(event);
+
     return this;
   }
 
@@ -138,12 +141,15 @@ class PfeDropdown extends PFElement {
     if (newItem) {
       newItem.focus();
     }
+
     return this;
   }
 
   _itemKeydownHandler(event) {
     let newItem;
+
     const pfeType = event.target.parentElement.attributes["pfe-type"].value;
+
     switch (event.keyCode) {
       case KEYCODE.ENTER:
         if (pfeType === "action") {
@@ -176,6 +182,7 @@ class PfeDropdown extends PFElement {
       default:
         break;
     }
+
     if (newItem) {
       newItem.focus();
     }

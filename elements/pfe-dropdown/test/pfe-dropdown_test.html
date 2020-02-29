@@ -9,7 +9,7 @@
   </head>
   <body>
 
-    <pfe-dropdown pfe-label="Dropdown">
+    <pfe-dropdown pfe-label="Test dropdown">
       <pfe-dropdown-item pfe-type="link">
         <a href="#">Link 1</a>
       </pfe-dropdown-item>
@@ -20,8 +20,14 @@
       <pfe-dropdown-item pfe-type="action">
         <button>Action 1</button>
       </pfe-dropdown-item>
-      <pfe-dropdown-item pfe-type="action" disabled>
+      <pfe-dropdown-item pfe-type="action" id="disabledItem" disabled>
         <button>Action 2</button>
+      </pfe-dropdown-item>
+    </pfe-dropdown>
+
+    <pfe-dropdown pfe-label="Test disabled dropdown" id="disabledDropdown" disabled>
+      <pfe-dropdown-item pfe-type="link">
+        <a href="#">Link 1</a>
       </pfe-dropdown-item>
     </pfe-dropdown>
 
@@ -31,7 +37,63 @@
           assert.instanceOf(document.querySelector('pfe-dropdown'), customElements.get("pfe-dropdown", 'pfe-dropdown should be an instance of pfeDropdown'));
         });
 
-        // you need to write more tests!!!
+        test('it should set the toggle text to the value of the pfe-label attribute', () => {
+          const element = document.querySelector('pfe-dropdown');
+          const toggleText = element.shadowRoot.querySelector('button').textContent.trim();
+          
+          assert.equal(toggleText, "Test dropdown");
+        });
+
+        test('it should set the appropriate a11y attributes when pfe-type is "link"', () => {
+          const element = document.querySelector('pfe-dropdown');
+          const listItem = element.querySelector("[pfe-type=link]").shadowRoot.querySelector("li");
+          const listItemRole = listItem.getAttribute("role");
+          const link = listItem.querySelector('slot').assignedNodes()[1];
+          const linkRole = link.getAttribute("role");
+          const linkTabIndex = link.getAttribute("tabindex");
+
+          assert.equal(listItemRole, "none");
+          assert.equal(linkRole, "menuitem");
+          assert.equal(linkTabIndex, "-1");
+        });
+
+        test('it should set the appropriate a11y attributes when pfe-type is "action"', () => {
+          const element = document.querySelector('pfe-dropdown');
+          const listItem = element.querySelector("[pfe-type=action]").shadowRoot.querySelector("li");
+          const listItemRole = listItem.getAttribute("role");
+          const listTabIndex = listItem.getAttribute("tabindex");
+
+          assert.equal(listItemRole, "menuitem");
+          assert.equal(listTabIndex, "-1");
+        });
+
+        test('it should set a11y attributes when pfe-type is "seperator"', () => {
+          const element = document.querySelector('pfe-dropdown');
+          const listItem = element.querySelector("[pfe-type=seperator]").shadowRoot.querySelector("li");
+          const listItemRole = listItem.getAttribute("role");
+
+          assert.equal(listItemRole, "seperator");
+        });
+
+        test('it should set a11y attributes when the disabled attribute is present on the dropdown', () => {
+          const element = document.getElementById('disabledDropdown');
+          
+          assert.equal(element.getAttribute("aria-disabled"), "true");
+
+          element.removeAttribute("disabled");
+
+          assert.equal(element.getAttribute("aria-disabled"), "false");
+        });
+
+        test('it should set a11y attributes when the disabled attribute is present on a dropdown item', () => {
+          const disabledItem = document.getElementById('disabledItem');
+
+          assert.equal(disabledItem.getAttribute("aria-disabled"), "true");
+
+          disabledItem.removeAttribute("disabled");
+
+          assert.equal(disabledItem.getAttribute("aria-disabled"), "false");
+        });
 
       });
     </script>

@@ -380,9 +380,9 @@ pfe-navigation-item {
         }
     }
     &--footer:not(:empty) {
-        margin:   calc(#{pfe-var(container-spacer, $fallback: 16px)} * 2) 0 0;
+        margin:   calc(#{pfe-var(container-padding, $fallback: 16px)} * 2) 0 calc(#{pfe-var(container-padding, $fallback: 16px)} * 1.5);
         border-top: 1px solid lightgray;
-        padding:   calc(#{pfe-var(container-spacer, $fallback: 16px)} * 2.5) 0 calc(#{pfe-var(container-spacer, $fallback: 16px)} * 1.5);
+        padding:   calc(#{pfe-var(container-padding, $fallback: 16px)} * 2.5) 0 0;
 
         >*:not(:last-child) {
             margin-bottom: 32px;

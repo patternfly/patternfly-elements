@@ -389,13 +389,14 @@ pfe-navigation-item {
         }
 
         >* {
-            flex: 45%;
+            flex: 0 1 45%;
         }
 
         @media (min-width: #{pfe-breakpoint(sm)}) {
             display: flex;
             flex-wrap: wrap;
-            align-items: baseline;
+            align-items: center;
+            justify-content: space-between;
 
             >*:not(:last-child) {
                 margin-bottom: 0;
@@ -406,24 +407,21 @@ pfe-navigation-item {
             }
         }
 
+        @media (min-width: #{pfe-breakpoint(md)}) {
+            justify-content: flex-start;
+        }
+
         @media (min-width: #{pfe-breakpoint(lg)}) {
             // Not setting grid prefix here since IE doesn't support auto-flow
             display: grid;
             grid-gap: 32px;
             grid-auto-flow: column;
+            -ms-grid-columns: 1fr 1fr 1fr;
+            -ms-grid-rows: 1fr 1fr;
 
             >*:nth-child(3) {
                 margin-top: 0;
             }
-        }
-
-        @media (min-width: #{pfe-breakpoint(xl)}) {
-            padding-bottom: 0;
-            display: -ms-grid;
-            grid-template-columns: repeat(4, 1fr);
-            -ms-grid-columns: 1fr 1fr 1fr 1fr;
-            align-items: center;
-
             .pfe-navigation--column:nth-child(1) {
                 -ms-grid-column: 1;
             }
@@ -437,7 +435,24 @@ pfe-navigation-item {
             }
 
             .pfe-navigation--column:nth-child(4) {
-                -ms-grid-column: 4;
+                -ms-grid-column: 1;
+                -ms-grid-row: 2;
+            }
+        }
+
+        @media (min-width: #{pfe-breakpoint(xl)}) {
+            padding-bottom: 0;
+            display: -ms-grid;
+            grid-template-columns: repeat(4, 1fr);
+            -ms-grid-columns: 1fr 1fr 1fr 1fr;
+            align-items: center;
+        }
+    }
+    &--column {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+            @include browser-query(ie11) {
+                display: flex;
+                align-items: center;
             }
         }
     }

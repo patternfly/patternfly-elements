@@ -160,17 +160,17 @@ class PfeCta extends PFElement {
     }
   }
 
-  // On focus, add a class
+  // On focus, add a focus class
   _focusHandler(event) {
     this.classList.add("focus-within");
   }
 
-  // On focus out, remove that class
+  // On focus out, remove the focus class
   _blurHandler(event) {
     this.classList.remove("focus-within");
   }
 
-  // On focus out, remove that class
+  // On enter press, trigger click event
   _keyupHandler(event) {
     let key = event.key || event.keyCode;
     switch (key) {
@@ -180,7 +180,7 @@ class PfeCta extends PFElement {
     }
   }
 
-  // On focus out, remove that class
+  // On click, trigger click event
   _clickHandler(event) {
     this.click(event);
   }

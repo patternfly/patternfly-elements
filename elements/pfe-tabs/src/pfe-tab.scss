@@ -47,6 +47,8 @@ $variables: (
   cursor: pointer;
   text-align: #{pfe-local($cssvar: TextAlign, $region: tab, $fallback: center)};
   
+  @include pfe-clear-spacing($properties: margin-bottom, $important: true);
+  
   ::slotted(*) {
     color: #{pfe-local(Color)} !important;
   }

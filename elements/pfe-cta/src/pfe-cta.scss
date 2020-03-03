@@ -2,7 +2,7 @@
 
 $LOCAL: cta;
 
-$pfe-cta__arrow-size: 0.313em;
+ 
 $pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
 $pfe-cta--Color--fallback: #003366;
 
@@ -94,9 +94,8 @@ $variables: (
 }
 
 ::slotted(*) {
-  white-space: normal;
-  display: inline;
-
+  white-space: normal; 
+  display: inline; 
   padding: #{pfe-local($cssvar: Padding)} !important;
   color: #{pfe-local(Color, $pfe-cta--Color--fallback)} !important;
   font-family: #{pfe-local(
@@ -130,8 +129,18 @@ $variables: (
   cursor: default !important;
 }
 
+// Default CTA fix for Firefox + arrow
+:host( :not([pfe-priority]):not([aria-disabled="true"]) ) {
+  .pfe-cta--wrapper {
+    @include browser-query(firefox) {
+      max-width: calc(100% - 8px - #{pfe-local($cssvar: size, $region: arrow)});
+    }
+  }
+}
+
 .pfe-cta {
   &--wrapper {
+    display: block; 
     white-space: nowrap;
 
     :host([pfe-priority]) &,

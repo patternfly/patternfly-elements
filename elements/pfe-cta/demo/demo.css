@@ -24,16 +24,12 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   padding: 10px;
 }
 
-.resize > pfe-cta:first-child {
-  margin-right: 20px;
-}
-
 .card-layout {
   display: flex;
   flex-flow: row wrap;
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
+  grid-template-columns: repeat(auto-fit, minmax(280px, max-content));
   margin-top: -10px;
   margin-left: -20px;
 }
@@ -41,7 +37,7 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
 .card-layout > pfe-cta,
 .card-layout .cta-align > pfe-cta {
   margin-top: 10px;
-  margin-left: 20px;
+  display: block;
 }
 
 .custom-dark-band {

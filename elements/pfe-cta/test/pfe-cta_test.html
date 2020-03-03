@@ -98,12 +98,12 @@
 
         test("it should properly initialize when the contents of the slot change", done => {
           const pfeCta = document.querySelector("pfe-cta");
-          assert.equal(pfeCta.data.href, "https://redhat.com");
+          assert.equal(pfeCta.data.href, "https://redhat.com/");
 
           pfeCta.innerHTML = `<a href="https://access.redhat.com">Customer Portal</a>`;
 
           flush(() => {
-            assert.equal(pfeCta.data.href, "https://access.redhat.com");
+            assert.equal(pfeCta.data.href, "https://access.redhat.com/");
             done();
           });
         });

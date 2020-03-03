@@ -103,7 +103,7 @@ class PfeSwitch extends PFElement {
         console.error(
           `pfe-switch: Label element does not have a corresponding checkbox, label's for attribute is ${labelFor}`
         );
-        this.setAttribute("disabled", "");
+        this.setAttribute("pfe-disabled", "");
         return;
       } else if (labelFor === null || !labelFor.length) {
         // There isn't a for attribute
@@ -125,15 +125,15 @@ class PfeSwitch extends PFElement {
       if (this.checkbox !== null) {
         // Update disabled status
         if (this.checkbox.getAttribute("disabled") !== null) {
-          this.setAttribute("disabled", "");
+          this.setAttribute("pfe-disabled", "");
         } else {
-          this.removeAttribute("disabled");
+          this.removeAttribute("pfe-disabled");
         }
 
         // Update checked status
         if (this.checkbox.checked) {
           this.checked = true;
-          this.setAttribute("checked", "");
+          this.setAttribute("pfe-checked", "");
           if (settings["message-on"] || settings["message-off"]) {
             if (settings["message-on"]) {
               this.label.textContent = settings["message-on"];
@@ -143,7 +143,7 @@ class PfeSwitch extends PFElement {
           }
         } else {
           this.checked = false;
-          this.removeAttribute("checked");
+          this.removeAttribute("pfe-checked");
           if (settings["message-on"] || settings["message-off"]) {
             if (settings["message-off"]) {
               this.label.textContent = settings["message-off"];

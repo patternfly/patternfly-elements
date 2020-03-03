@@ -94,7 +94,7 @@ $variables: (
   }
 }
 
-:host([checked])  {
+:host([pfe-checked])  {
   --pfe-switch__label--Color: #{pfe-local($cssvar: Color--checked, $region: label)};
   --pfe-switch__toggle--BackgroundColor: #{pfe-local($cssvar: BackgroundColor--checked, $region: toggle)};
 
@@ -110,7 +110,7 @@ $variables: (
   }
 }
 
-:host([disabled]) {
+:host([pfe-disabled]) {
   --pfe-switch__label--Color: #{pfe-local($cssvar: Color--disabled, $region: label)};
   --pfe-switch__toggle--BackgroundColor: #{pfe-local($cssvar: BackgroundColor--disabled, $region: toggle)};
   --pfe-switch__toggle-knob--BackgroundColor: #{pfe-local($cssvar: BackgroundColor--disabled, $region: toggle-knob)};
@@ -153,11 +153,11 @@ $variables: (
     opacity: 0;
     transition: opacity 0.25s;
 
-    :host([checked]) & {
+    :host([pfe-checked]) & {
       opacity: 1;
     }
 
-    :host([disabled]) & {
+    :host([pfe-disabled]) & {
       border-color: #{pfe-local(BackgroundColor--disabled, $region: toggle-knob)};
     }
   }

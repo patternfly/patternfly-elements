@@ -1,3 +1,10 @@
+## Prerelease 39 ( TBD )
+
+Tag: [v1.0.0-prerelease.40](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.40)
+
+- [ ]( ) fix: Prevent default pfe-cta arrow from wrapping to a new line by itself (#679)
+
+
 ## Prerelease 39 ( 2020-02-19 )
 
 Tag: [v1.0.0-prerelease.39](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.39)

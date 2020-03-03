@@ -123,7 +123,7 @@ class PfeCta extends PFElement {
       );
     } else {
       // Capture the first child as the CTA element
-      this.cta = this.firstChild;
+      this.cta = this.firstElementChild;
 
       this.data = {
         href: this.cta.href,

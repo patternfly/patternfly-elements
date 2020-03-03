@@ -1,3 +1,9 @@
+## Prerelease 40 ( TBD )
+
+Tag: [v1.0.0-prerelease.40](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.40)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Generator needs to convert slot-name to camelCase in js file if dash exists
+
 ## Prerelease 39 ( 2020-02-19 )
 
 Tag: [v1.0.0-prerelease.39](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.39)

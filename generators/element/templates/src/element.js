@@ -40,7 +40,7 @@ class <%= elementClassName %> extends PFElement {
     super(<%= elementClassName %>, { type: <%= elementClassName %>.PfeType });
     <%_ if (slots.length > 0) { %>
     <%_ for(let i = 0; i < slots.length; i++) { _%>
-    this._<%= slots[i] %> = this.shadowRoot.querySelector(`.${this.tag}__<%= slots[i] %>`);
+    this._<%= _.camelCase(slots[i]) %> = this.shadowRoot.querySelector(`.${this.tag}__<%= slots[i] %>`);
     <%_ } } _%>
   }
 
@@ -49,11 +49,11 @@ class <%= elementClassName %> extends PFElement {
     // If you need to initialize any attributes, do that here
     <%_ if (slots.length > 0) { %>
     <%_ for(let i = 0; i < slots.length; i++) { _%>
-    this.<%= slots[i] %> = this.querySelector(`[slot="${this.tag}--<%= slots[i] %>"]`);
+    this.<%= _.camelCase(slots[i]) %> = this.querySelector(`[slot="${this.tag}--<%= slots[i] %>"]`);
     <%_ } _%>
     <%_ for(let i = 0; i < slots.length; i++) { %>
     // Add a slotchange listener to the lightDOM trigger
-    // this.<%= slots[i] %>.addEventListener("slotchange", this._init);
+    // this.<%= _.camelCase(slots[i]) %>.addEventListener("slotchange", this._init);
     <%_ } _%>
     <%_ } _%>
   }

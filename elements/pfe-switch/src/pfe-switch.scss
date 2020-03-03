@@ -49,14 +49,16 @@ $variables: (
   @extend %sr-only;
 }
 
-::slotted(.sr-only),
-.sr-only {
+::slotted(.pfe-sr-only),
+.pfe-sr-only {
   text-indent: -9999em;
 }
 
 ::slotted(label) {
   position: relative;
   display: block;
+  // In case of parent dom styles, make sure we have enough height
+  min-height: calc(#{pfe-var(line-height)} * 1em);
   // Width of the switch + some white space
   padding-left: #{pfe-size-pem($toggle-width) + 0.5em};
   font-size: $font-size;
@@ -94,6 +96,10 @@ $variables: (
   }
 }
 
+::slotted(.pfe-sr-only) {
+  min-width: $toggle-width;
+}
+
 :host([pfe-checked])  {
   --pfe-switch__label--Color: #{pfe-local($cssvar: Color--checked, $region: label)};
   --pfe-switch__toggle--BackgroundColor: #{pfe-local($cssvar: BackgroundColor--checked, $region: toggle)};
@@ -126,7 +132,7 @@ $variables: (
   // 4 is because we're going to shrink the icon with transform for anti-aliasing
   $border-width: $checkmark-width * 0.4 * $scale;
   position: absolute;
-  top: 50%;
+  top: calc(#{pfe-var(line-height)} * 0.5em);
   left: pfe-size-pem($toggle-knob-offset * -1);
   display: block;
   width: $scale * $checkmark-width;
@@ -140,6 +146,9 @@ $variables: (
 
   &:before {
     content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     display: block;
     box-sizing: border-box;
     width: $checkmark-width * $scale;

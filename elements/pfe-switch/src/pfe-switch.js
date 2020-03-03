@@ -17,8 +17,10 @@ class PfeSwitch extends PFElement {
     return "pfe-switch.scss";
   }
 
-  static get observedAttributes() {
-    return ["pfe-form"];
+  static get events() {
+    return {
+      change: `${this.tag}:change`
+    };
   }
 
   get pfeChecked() {
@@ -32,6 +34,8 @@ class PfeSwitch extends PFElement {
 
   constructor() {
     super(PfeSwitch, { type: PfeSwitch.PfeType });
+    this._updateSwitchState = this._updateSwitchState.bind(this);
+    this.settings = {};
   }
 
   connectedCallback() {
@@ -45,11 +49,10 @@ class PfeSwitch extends PFElement {
       "pfe-message-off",
       "pfe-hide-label"
     ];
-    const settings = {};
     for (let index = 0; index < settingAttributes.length; index++) {
       const settingAttribute = settingAttributes[index];
       // Adds settings to an object and lops of `data-` from the index
-      settings[settingAttribute.substr(4)] = this.getAttribute(
+      this.settings[settingAttribute.substr(4)] = this.getAttribute(
         settingAttribute
       );
     }
@@ -74,11 +77,11 @@ class PfeSwitch extends PFElement {
 
     if (this.label) {
       // Get the fallback text and store it as a var
-      settings["fallback-text"] = this.label.textContent;
+      this.settings["fallback-text"] = this.label.textContent;
 
       // Hide the label if necessary
-      if (settings["hide-label"]) {
-        this.label.classList.add("sr-only");
+      if (this.settings["hide-label"]) {
+        this.label.classList.add("pfe-sr-only");
         const switchIcon = document.createElement("span");
         switchIcon.classList.add("pfe-switch__checkmark");
         $pfeSwitch.appendChild(switchIcon);
@@ -120,46 +123,11 @@ class PfeSwitch extends PFElement {
       return;
     }
 
-    // Check the state of the checkbox and update everything accordingly
-    const updateSwitchState = () => {
-      if (this.checkbox !== null) {
-        // Update disabled status
-        if (this.checkbox.getAttribute("disabled") !== null) {
-          this.setAttribute("pfe-disabled", "");
-        } else {
-          this.removeAttribute("pfe-disabled");
-        }
-
-        // Update checked status
-        if (this.checkbox.checked) {
-          this.checked = true;
-          this.setAttribute("pfe-checked", "");
-          if (settings["message-on"] || settings["message-off"]) {
-            if (settings["message-on"]) {
-              this.label.textContent = settings["message-on"];
-            } else {
-              this.label.textContent = settings["fallback-text"];
-            }
-          }
-        } else {
-          this.checked = false;
-          this.removeAttribute("pfe-checked");
-          if (settings["message-on"] || settings["message-off"]) {
-            if (settings["message-off"]) {
-              this.label.textContent = settings["message-off"];
-            } else {
-              this.label.textContent = settings["fallback-text"];
-            }
-          }
-        }
-      }
-    };
-
     // Resolve switch state when connected
-    updateSwitchState();
+    this._updateSwitchState();
 
     // Resolve switch state if the checkboxes changes
-    this.checkbox.addEventListener("change", () => updateSwitchState());
+    this.checkbox.addEventListener("change", this._updateSwitchState);
   }
 
   // disconnectedCallback() {}
@@ -167,6 +135,41 @@ class PfeSwitch extends PFElement {
   // Process the attribute change
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
+  }
+
+  // Check the state of the checkbox and update everything accordingly
+  _updateSwitchState(event) {
+    if (this.checkbox !== null) {
+      // Update disabled status
+      if (this.checkbox.getAttribute("disabled") !== null) {
+        this.setAttribute("pfe-disabled", "");
+      } else {
+        this.removeAttribute("pfe-disabled");
+      }
+
+      // Update checked status
+      if (this.checkbox.checked) {
+        this.checked = true;
+        this.setAttribute("pfe-checked", "");
+        if (this.settings["message-on"] || this.settings["message-off"]) {
+          if (this.settings["message-on"]) {
+            this.label.textContent = this.settings["message-on"];
+          } else {
+            this.label.textContent = this.settings["fallback-text"];
+          }
+        }
+      } else {
+        this.checked = false;
+        this.removeAttribute("pfe-checked");
+        if (this.settings["message-on"] || this.settings["message-off"]) {
+          if (this.settings["message-off"]) {
+            this.label.textContent = this.settings["message-off"];
+          } else {
+            this.label.textContent = this.settings["fallback-text"];
+          }
+        }
+      }
+    }
   }
 }
 

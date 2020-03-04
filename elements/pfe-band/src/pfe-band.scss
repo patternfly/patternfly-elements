@@ -49,8 +49,8 @@ $variables: (
     @media screen and (min-width: pfe-breakpoint(#{$size})) {
       --pfe-band--Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) );
 
-      --pfe-band--body--gutter--vertical:   #{ pfe-var(grid-gutter--#{$size} ) };
-      --pfe-band--body--gutter--horizontal: #{ pfe-var(grid-gutter--#{$size} ) };
+      --pfe-band__body--gutter--vertical:   #{ pfe-var(grid-gutter--#{$size} ) };
+      --pfe-band__body--gutter--horizontal: #{ pfe-var(grid-gutter--#{$size} ) };
     }
   }
 
@@ -297,8 +297,8 @@ $variables: (
       // Apply the standard grid
       @supports (display: grid) {
           display: grid;
-          grid-row-gap: #{pfe-local(body--gutter--vertical)};
-          grid-column-gap: #{pfe-local(body--gutter--horizontal)};
+          grid-row-gap: #{pfe-local($cssvar: gutter--vertical, $region: body)};
+          grid-column-gap: #{pfe-local($cssvar: gutter--horizontal, $region: body)};
           margin-bottom: 0;
           // Apply the section as a named grid-area
           grid-area: #{$section};

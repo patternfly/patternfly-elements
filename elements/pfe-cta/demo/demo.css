@@ -33,6 +33,9 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   margin-top: -10px;
   margin-left: -20px;
 }
+.padding {
+  padding: 16px;
+}
 
 .card-layout > pfe-cta,
 .card-layout .cta-align > pfe-cta {

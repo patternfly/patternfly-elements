@@ -297,8 +297,8 @@ $variables: (
       // Apply the standard grid
       @supports (display: grid) {
           display: grid;
-          grid-row-gap: #{pfe-local(body--gutter--vertical)};
-          grid-column-gap: #{pfe-local(body--gutter--horizontal)};
+          grid-row-gap: #{pfe-local($cssvar: gutter--vertical, $region: body)};
+          grid-column-gap: #{pfe-local($cssvar: gutter--horizontal, $region: body)};
           margin-bottom: 0;
           // Apply the section as a named grid-area
           grid-area: #{$section};

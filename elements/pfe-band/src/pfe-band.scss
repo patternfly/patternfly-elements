@@ -44,13 +44,16 @@ $variables: (
   @include pfe-set-broadcast-theme(light);
   --theme: light;
 
+  --pfe-band__body--gutter--vertical:   #{ pfe-var(grid-gutter--md ) };
+  --pfe-band__body--gutter--horizontal: #{ pfe-var(grid-gutter--md ) };
+
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
     @media screen and (min-width: pfe-breakpoint(#{$size})) {
       --pfe-band--Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) );
 
-      --pfe-band__body--gutter--vertical:   #{ pfe-var(grid-gutter--#{$size} ) };
-      --pfe-band__body--gutter--horizontal: #{ pfe-var(grid-gutter--#{$size} ) };
+      // --pfe-band__body--gutter--vertical:   #{ pfe-var(grid-gutter--#{$size} ) };
+      // --pfe-band__body--gutter--horizontal: #{ pfe-var(grid-gutter--#{$size} ) };
     }
   }
 
@@ -73,6 +76,12 @@ $variables: (
   background-color:      #{pfe-local(BackgroundColor)};
   background-position:   #{pfe-local(BackgroundPosition)};
   color:                 #{pfe-apply-broadcast(text)};
+
+  // Default typography
+  font-family: pfe-var(font-family);
+  font-size:   pfe-var(font-size);
+  font-weight: pfe-var(font-size);
+  line-height: pfe-var(line-height);
 
   // Remove background color for print
   @include pfe-no-print-background;
@@ -98,6 +107,12 @@ $variables: (
   }
 }
 
+@include pfe-slotted-typography();
+
+::slotted(*:last-child) {
+  margin-bottom: 0;
+}
+
 // Use-case for transparent backgrounds
 @include pfe-theme-contexts; // imports on="light" etc support
 
@@ -119,7 +134,8 @@ $variables: (
     // Grid support styles
     @supports (display: grid) {
       display: grid;
-      grid-template-areas: "body";
+      grid-template-areas:
+        "body";
       grid-row-gap: #{pfe-local(gutter--vertical)};
       grid-column-gap: #{pfe-local(gutter--horizontal)};
       margin-bottom: 0;
@@ -143,8 +159,8 @@ $variables: (
       }
       &[pfe-aside-desktop="left"] {
         @media (min-width: #{pfe-breakpoint(md)}) {
-            grid-template-areas:
-              "aside body";
+          grid-template-areas:
+            "aside body";
           --pfe-band--layout: #{pfe-local(Width__aside--sm)} 1fr;
         }
         @media (min-width: #{pfe-breakpoint(lg)}) {
@@ -172,26 +188,26 @@ $variables: (
           "body";
       }
       &[pfe-aside-height="full"] {
-          @media (min-width: #{pfe-breakpoint(md)}) {
-            grid-template-areas:
-              "header aside"
-              "body aside";
-          }
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas:
+            "header aside"
+            "body aside";
+        }
       }
       &[pfe-aside-desktop="left"] {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas:
+            "header header"
+            "aside body";
+        }
+        &[pfe-aside-height="full"] {
           @media (min-width: #{pfe-breakpoint(md)}) {
             grid-template-areas:
-              "header header"
+              "aside header"
               "aside body";
           }
-          &[pfe-aside-height="full"] {
-              @media (min-width: #{pfe-breakpoint(md)}) {
-                  grid-template-areas:
-                  "aside header"
-                  "aside body";
-              }
-            }
         }
+      }
     }
     &[pfe-has-footer] {
       grid-template-areas:
@@ -202,11 +218,11 @@ $variables: (
           "body"
           "aside"
           "footer";
-          @media (min-width: #{pfe-breakpoint(md)}) {
-             grid-template-areas:
-                "body aside"
-                "footer footer";
-          }
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas:
+            "body aside"
+            "footer footer";
+        }
       }
       &[pfe-aside-mobile="top"] {
         grid-template-areas:
@@ -215,25 +231,25 @@ $variables: (
           "footer";
       }
       &[pfe-aside-height="full"] {
-         @media (min-width: #{pfe-breakpoint(md)}) {
-            grid-template-areas:
-               "body aside"
-               "footer aside" ;
-         }
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas:
+            "body aside"
+            "footer aside" ;
+        }
       }
       &[pfe-aside-desktop="left"] {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas:
+            "aside body"
+            "footer footer";
+        }
+        &[pfe-aside-height="full"] {
           @media (min-width: #{pfe-breakpoint(md)}) {
-             grid-template-areas:
-             "aside body"
-             "footer footer";
+            grid-template-areas:
+              "aside body"
+              "aside footer";
           }
-          &[pfe-aside-height="full"] {
-              @media (min-width: #{pfe-breakpoint(md)}) {
-                 grid-template-areas:
-                 "aside body"
-                 "aside footer";
-              }
-          }
+        }
       }
     }
     &[pfe-has-header][pfe-has-footer] {
@@ -248,7 +264,7 @@ $variables: (
           "footer"
           "aside";
         @media (min-width: #{pfe-breakpoint(md)}) {
-            grid-template-areas:
+          grid-template-areas:
             "header header"
             "body aside"
             "footer footer";
@@ -262,46 +278,51 @@ $variables: (
           "footer";
       }
       &[pfe-aside-height="full"] {
-          @media (min-width: #{pfe-breakpoint(md)}) {
+        @media (min-width: #{pfe-breakpoint(md)}) {
           grid-template-areas:
-             "header aside"
-             "body aside"
-             "footer aside" ;
-          }
+            "header aside"
+            "body aside"
+            "footer aside" ;
+        }
       }
       &[pfe-aside-desktop="left"] {
-         @media (min-width: #{pfe-breakpoint(md)}) {
-             grid-template-areas:
-               "header header"
-               "aside body"
-               "footer footer";
-         }
-         &[pfe-aside-height="full"] {
-            @media (min-width: #{pfe-breakpoint(md)}) {
-                grid-template-areas:
-                "aside header"
-                "aside body"
-                "aside footer";
-            }
-         }
+        @media (min-width: #{pfe-breakpoint(md)}) {
+          grid-template-areas:
+            "header header"
+            "aside body"
+            "footer footer";
+        }
+        &[pfe-aside-height="full"] {
+          @media (min-width: #{pfe-breakpoint(md)}) {
+            grid-template-areas:
+              "aside header"
+              "aside body"
+              "aside footer";
+          }
+        }
       }
     }
   }
+  
 
   // For each section in the band layout
   @each $section in (header, body, aside, footer) {
     &__#{$section} { // i.e., pfe-band__header
       margin-bottom: #{pfe-local(gutter--vertical)};
+
       // Apply the standard grid
       @supports (display: grid) {
-          display: grid;
-          grid-row-gap: #{pfe-local($cssvar: gutter--vertical, $region: $section)};
-          grid-column-gap: #{pfe-local($cssvar: gutter--horizontal, $region: $section)};
-          margin-bottom: 0;
-          // Apply the section as a named grid-area
-          grid-area: #{$section};
-          // Allow users to hook into the layout with custom columns
-          grid-template-columns: var(--pfe-band__#{$section}--layout);
+        // Apply the section as a named grid-area
+        grid-area: #{$section};
+
+        // Nested grid settings
+        display: grid;
+        // Allow users to hook into the layout with custom columns
+        grid-template-columns: var(--pfe-band__#{$section}--layout);
+        grid-row-gap: #{pfe-local($cssvar: gutter--vertical, $region: $section, $fallback: #{map-get($pfe-vars, grid-gutter--sm)})};
+        grid-column-gap: #{pfe-local($cssvar: gutter--horizontal, $region: $section)};
+
+        margin-bottom: 0;
       }
     }
   }
@@ -312,8 +333,8 @@ $variables: (
 
   @include browser-query(ie11) {
     &__body {
-        width: 60%;
-        float: left;
+      width: 60%;
+      float: left;
     }
     &__aside {
       float: left;
@@ -321,12 +342,12 @@ $variables: (
       margin: 0 2.5%;
     }
     &__footer {
-       clear: both;
+      clear: both;
     }
-     &__container::after {
-       content: " ";
-       display: block;
-       clear: both;
-     }
+    &__container::after {
+      content: " ";
+      display: block;
+      clear: both;
+    }
   }
 }

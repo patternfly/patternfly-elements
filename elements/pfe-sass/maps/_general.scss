@@ -1,5 +1,4 @@
 $pfe-vars: (
-
   grid-gutter--md:               18px,
   grid-gutter--lg:               24px,
   grid-gutter--xl:               30.5px,
@@ -11,9 +10,9 @@ $pfe-vars: (
   font-size:                     16px,
   line-height:                   1.5,
 
-  font-family:                   '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
-  font-family--heading:          '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
-  font-family--code:             '"Overpass Mono", Consolas, Monaco, 'Andale Mono', monospace',
+  font-family:                   "\"RedHatText\", \"Overpass\", Overpass, Helvetica, Arial, sans-serif",
+  font-family--heading:          "\"RedHatDisplay\", \"Overpass\", Overpass, Helvetica, Arial, sans-serif",
+  font-family--code:             "\"Overpass Mono\", Consolas, Monaco, Andale Mono, monospace",
 
   font-size--heading--alpha:     32px,
   font-size--heading--beta:      24px,
@@ -57,5 +56,5 @@ $pfe-vars: (
   animation-speed:               .3s,
   animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),
   opacity:                       .3
-  
+
 );

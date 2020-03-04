@@ -13,3 +13,71 @@
     text-decoration: underline;
     text-decoration-skip: ink;
 }
+
+/// ===========================================================================
+/// Print clear styles for slotted tags
+///
+/// Returns slotted tags with clear properties to counteract standard browser, bootstrap, or normalize styles
+///
+/// @param {List} $properties [(margin, padding)] - 
+/// @param {List} $tags [(p, h1, h2, h3, h4, h5, h6)]- 
+/// @param {Boolean} $important [false] - 
+/// @param {String} $selector [null] - 
+/// @use -
+///     ```
+///     :host {
+///         @include pfe-clear-spacing($properties: margin-bottom, $important: true);
+///     }
+///     ```
+/// ===========================================================================
+@mixin pfe-clear-spacing($properties: (margin, padding), $tags: (p, h1, h2, h3, h4, h5, h6), $important: false, $selector: null) {
+    // Iterate over provided html tags, attach selector if provided
+    @each $tag in $tags {
+        ::slotted(#{$tag}#{if($selector, unquote(":#{$selector}"), null)}) {
+            // Iterate over provided properties, default is margin and padding
+            @each $prop in $properties {
+                #{$prop}: 0#{if($important, unquote(" !important"), null)};
+            }
+        }
+    }
+}
+
+/// ===========================================================================
+/// Print typography styles for slotted tags
+///
+/// Returns slotted tags with typography properties to counteract standard browser, bootstrap, or normalize styles
+///
+/// @param {List} $tags [(p, h1, h2, h3, h4, h5, h6)]- 
+/// @param {Boolean} $important [false] - 
+/// @use -
+///     ```
+///     :host {
+///         @include pfe-slotted-typography();
+///     }
+///     ```
+/// ===========================================================================
+@mixin pfe-slotted-typography($tags: (p, h1, h2, h3, h4, h5, h6)) {
+    @if p in $tags {
+        ::slotted(p) {
+            font-family: pfe-var(font-family);
+            font-size:   pfe-var(font-size);
+            font-weight: pfe-var(font-size);
+            line-height: pfe-var(line-height);
+            margin-top:  0;
+        }
+    }
+
+    $tag-level: 1;
+    @each $level in (alpha, beta, gamma) {
+        @if h#{$tag-level} in $tags {
+            ::slotted(h#{$tag-level}) {
+                font-family: pfe-var(font-family--heading);
+                font-size:   pfe-var(font-size--heading--#{$level});
+                font-weight: var(--pfe-theme--font-weight--#{$level}, #{map-get($pfe-vars, font-weight--normal)});
+                line-height: var(--pfe-theme--line-height--#{$level}, #{map-get($pfe-vars, line-height)});
+                margin-top: 0;
+            }
+        }
+        $tag-level: #{$tag-level + 1};
+    }
+}

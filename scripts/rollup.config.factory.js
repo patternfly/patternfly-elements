@@ -4,7 +4,6 @@ import commonjs from "rollup-plugin-commonjs";
 import { uglify } from "rollup-plugin-uglify";
 import { terser } from "rollup-plugin-terser";
 import replace from "rollup-plugin-re";
-import { readdirSync } from "fs";
 import { get } from "lodash";
 
 const importRegex = /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;

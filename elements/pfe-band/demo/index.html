@@ -80,6 +80,14 @@
     }
     */
 
+    #test-custom {
+      --pfe-band--BackgroundColor: green;
+      --theme: saturated;
+      
+      --pfe-band__body--layout: repeat(auto-fill, minmax(200px, 1fr));
+      --pfe-band__body--gutter--horizontal: 10px;
+    }
+
     /* Set typography styles using a class */
     .custom-band-summary {
         font-size: 20px;
@@ -317,7 +325,7 @@
       </footer>
     </pfe-band>
 
-    <pfe-band style="--pfe-band--BackgroundColor: green; --theme: saturated; --pfe-band__body--layout: repeat(auto-fill, minmax(200px, 1fr));" id="test-custom" pfe-aside-full-height>
+    <pfe-band id="test-custom">
       <header slot="pfe-band--header">
         <h2>Custom properties band</h2>
         <p class="custom-band-summary">Header region, consetetur sadluptua.</p>

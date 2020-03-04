@@ -286,7 +286,7 @@ $variables: (
          }
       }
     }
-}
+  }
 
   // For each section in the band layout
   @each $section in (header, body, aside, footer) {
@@ -295,8 +295,8 @@ $variables: (
       // Apply the standard grid
       @supports (display: grid) {
           display: grid;
-          grid-row-gap: #{pfe-local($cssvar: gutter--vertical, $region: body)};
-          grid-column-gap: #{pfe-local($cssvar: gutter--horizontal, $region: body)};
+          grid-row-gap: #{pfe-local($cssvar: gutter--vertical, $region: $section)};
+          grid-column-gap: #{pfe-local($cssvar: gutter--horizontal, $region: $section)};
           margin-bottom: 0;
           // Apply the section as a named grid-area
           grid-area: #{$section};

@@ -1,0 +1,48 @@
+%pfe-headline-1 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--alpha);
+    font-weight: var(--pfe-theme--font-weight--alpha, map-get($pfe-vars, font-weight--normal));
+    line-height: var(--pfe-theme--line-height--alpha, map-get($pfe-vars, line-height));
+}
+
+%pfe-headline-2 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--beta);
+    font-weight: var(--pfe-theme--font-weight--beta, map-get($pfe-vars, font-weight--normal));
+    line-height: var(--pfe-theme--line-height--beta, map-get($pfe-vars, line-height));
+}
+
+%pfe-headline-3 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--gamma);
+    font-weight: var(--pfe-theme--font-weight--gamma, map-get($pfe-vars, font-weight--normal));
+    line-height: var(--pfe-theme--line-height--gamma, map-get($pfe-vars, line-height));
+}
+
+%pfe-headline-4 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--delta);
+    font-weight: var(--pfe-theme--font-weight--delta, map-get($pfe-vars, font-weight--normal));
+    line-height: var(--pfe-theme--line-height--delta, map-get($pfe-vars, line-height));
+}
+
+%pfe-headline-5 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--epsilon);
+    font-weight: var(--pfe-theme--font-weight--epsilon, map-get($pfe-vars, font-weight--normal));
+    line-height: var(--pfe-theme--line-height--epsilon, map-get($pfe-vars, line-height));
+}
+
+%pfe-headline-6 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--zeta);
+    font-weight: var(--pfe-theme--font-weight--zeta, map-get($pfe-vars, font-weight--normal));
+    line-height: var(--pfe-theme--line-height--zeta, map-get($pfe-vars, line-height));
+}
+
+%pfe-text {
+    font-family: pfe-var(font-family);
+    font-size:   pfe-var(font-size);
+    font-weight: pfe-var(font-size);
+    line-height: pfe-var(line-height);
+}

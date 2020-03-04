@@ -61,14 +61,14 @@
         ::slotted(p) {
             font-family: pfe-var(font-family);
             font-size:   pfe-var(font-size);
-            font-weight: pfe-var(font-size);
+            font-weight: pfe-var(font-weight--normal);
             line-height: pfe-var(line-height);
             margin-top:  0;
         }
     }
 
     $tag-level: 1;
-    @each $level in (alpha, beta, gamma) {
+    @each $level in (alpha, beta, gamma, delta, epsilon, zeta) {
         @if h#{$tag-level} in $tags {
             ::slotted(h#{$tag-level}) {
                 font-family: pfe-var(font-family--heading);
@@ -78,6 +78,6 @@
                 margin-top: 0;
             }
         }
-        $tag-level: #{$tag-level + 1};
+        $tag-level: ($tag-level + 1);
     }
 }

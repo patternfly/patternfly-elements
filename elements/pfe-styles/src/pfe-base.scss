@@ -89,6 +89,7 @@ body {
   font-size: #{pfe-var(font-size)};
   font-weight: #{pfe-var(font-weight--normal)};
   line-height: #{pfe-var(line-height)};
+
   color: #{pfe-color(text)};
   text-align: left;
   margin: 0;
@@ -112,4 +113,16 @@ a {
   cursor: pointer;
 }
 
+$tag-level: 1;
+@each $level in (alpha, beta, gamma, delta, epsilon, zeta) {
+  h#{$tag-level},
+  .pfe-headline-#{$tag-level} {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--#{$level});
+    font-weight: var(--pfe-theme--font-weight--#{$level}, #{map-get($pfe-vars, font-weight--normal)});
+    line-height: var(--pfe-theme--line-height--#{$level}, #{map-get($pfe-vars, line-height)});
+    margin-top: 0;
+  }
+  $tag-level: ($tag-level + 1);
+}
 

@@ -61,6 +61,12 @@ class PfeBand extends PFElement {
 
   constructor() {
     super(PfeBand, { type: PfeBand.PfeType });
+
+    this._observer = new MutationObserver(() => {
+      this._mapSchemaToSlots(this.tag, this.slots);
+    });
+
+    this._init = this._init.bind(this);
   }
 
   connectedCallback() {
@@ -70,6 +76,16 @@ class PfeBand extends PFElement {
     if (this.imageSrc) {
       this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
     }
+
+    if (this.children.length) {
+      this._init();
+    }
+
+    this._observer.observe(this, { childList: true });
+  }
+
+  disconnectedCallback() {
+    this._observer.disconnect();
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -100,6 +116,25 @@ class PfeBand extends PFElement {
   _imgSrcChanged(attr, oldValue, newValue) {
     // Set the image as the background image
     this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
+  }
+
+  _init() {
+    // If the body element contains typography elements, set the grid-layout to false
+    let typography = false;
+    if (!this.props["grid-layout"].value) {
+      if (this.slots.body) {
+        this.slots.body.nodes.map(node => {
+          typography =
+            typography ||
+            ["P", "H1", "H2", "H3", "H4", "H5", "H6", "PFE-CTA"].includes(
+              node.tagName
+            );
+        });
+      }
+    }
+
+    this.props["grid-layout"].value = !typography;
+    this.setAttribute("pfe-grid-layout", !typography);
   }
 }
 

@@ -44,16 +44,21 @@ $variables: (
   @include pfe-set-broadcast-theme(light);
   --theme: light;
 
-  --pfe-band__body--gutter--vertical:   #{ pfe-var(grid-gutter--md ) };
-  --pfe-band__body--gutter--horizontal: #{ pfe-var(grid-gutter--md ) };
+  // Default gutter if a grid-layout is not required
+  --pfe-band__body--gutter--vertical:   0;
+  --pfe-band__body--gutter--horizontal: 0;
 
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
+    @at-root #{&}([pfe-grid-layout="true"]) {
+      @media screen and (min-width: pfe-breakpoint(#{$size})) {
+        --pfe-band__body--gutter--vertical:   #{ pfe-var(grid-gutter--#{$size} ) };
+        --pfe-band__body--gutter--horizontal: #{ pfe-var(grid-gutter--#{$size} ) };
+      }
+    }
+
     @media screen and (min-width: pfe-breakpoint(#{$size})) {
       --pfe-band--Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) );
-
-      // --pfe-band__body--gutter--vertical:   #{ pfe-var(grid-gutter--#{$size} ) };
-      // --pfe-band__body--gutter--horizontal: #{ pfe-var(grid-gutter--#{$size} ) };
     }
   }
 

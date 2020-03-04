@@ -148,6 +148,11 @@
               }
             ]
           }
+        },
+        "grid-layout": {
+          "title": "Grid layout",
+          "type": "boolean",
+          "prefixed": true
         }
       }
     }

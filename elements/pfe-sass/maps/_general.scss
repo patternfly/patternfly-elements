@@ -1,7 +1,9 @@
 $pfe-vars: (
-  grid-gutter--xl:               30.5px,
-  grid-gutter--lg:               24px,
+
   grid-gutter--md:               18px,
+  grid-gutter--lg:               24px,
+  grid-gutter--xl:               30.5px,
+
   container-spacer:              16px,
   container-padding:             16px,
   content-spacer:                24px,
@@ -55,4 +57,5 @@ $pfe-vars: (
   animation-speed:               .3s,
   animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),
   opacity:                       .3
+  
 );

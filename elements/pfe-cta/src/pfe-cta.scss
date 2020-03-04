@@ -43,6 +43,8 @@ $variables: (
   position: relative;
   z-index: 0;
   max-width: max-content;
+  height: fit-content;
+  
   vertical-align: middle;
   transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
 

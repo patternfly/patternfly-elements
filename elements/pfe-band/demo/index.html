@@ -153,7 +153,7 @@
       </pfe-card>
     </pfe-band>
 
-    <pfe-band pfe-aside-height="full">
+    <pfe-band pfe-aside-height="full" style="--pfe-card--AlignSelf: flex-start;">
       <header slot="pfe-band--header">
         <h2 class="pfe-headline-2">Default band</h2>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
@@ -194,7 +194,7 @@
       </pfe-card>
     </pfe-band>
 
-    <pfe-band pfe-color="darkest" pfe-aside-mobile="top" pfe-aside-height="full">
+    <pfe-band pfe-color="darkest" pfe-aside-mobile="top" pfe-aside-height="full" style="--pfe-card--AlignSelf: flex-start;">
       <header slot="pfe-band--header">
         <h2 class="pfe-headline-2">Darkest band with header tag</h2>
         <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
@@ -253,7 +253,7 @@
       <pfe-card pfe-color="lightest" slot="pfe-band--aside">
         <h3 slot="header">Aside: left body top</h3>
         <p>Ut wisi enim ad minim veniam.</p>
-        <pfe-cta slot="footer" priority="tertiary">
+        <pfe-cta slot="pfe-card--footer" priority="tertiary">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
@@ -317,15 +317,11 @@
       </footer>
     </pfe-band>
 
-    <pfe-band pfe-theme="saturated" style="--pfe-band--BackgroundColor: green" id="test-custom">
+    <pfe-band style="--pfe-band--BackgroundColor: green; --theme: saturated; --pfe-band__body--layout: repeat(auto-fill, minmax(200px, 1fr));" id="test-custom" pfe-aside-full-height>
       <header slot="pfe-band--header">
-        <h2>Short content band</h2>
+        <h2>Custom properties band</h2>
         <p class="custom-band-summary">Header region, consetetur sadluptua.</p>
       </header>
-      <p>Short content sadipscing elitra.</p>
-      <pfe-cta pfe-priority="primary" id="test-cta">
-        <a href="#">Learn more</a>
-      </pfe-cta>
       <pfe-card pfe-color="lightest" slot="pfe-band--aside">
         <h3 slot="pfe-card--header">Aside: left body top</h3>
         <p>Ut wisi enim ad minim veniam.</p>
@@ -333,39 +329,39 @@
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
-      <pfe-card pfe-color="darker">
-        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-        <pfe-cta priority="tertiary" slot="footer">
+      <pfe-card pfe-color="lightest">
+        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor.</p>
+        <pfe-cta priority="tertiary" slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
-      <pfe-card pfe-color="darker">
-        <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-        <pfe-cta priority="tertiary" slot="footer">
+      <pfe-card pfe-color="lightest">
+        <p>At vero eos et accusam et justo duo dolores et ea rebum.</p>
+        <pfe-cta priority="tertiary" slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
-      <pfe-card pfe-color="darker">
-        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-        <pfe-cta priority="tertiary" slot="footer">
+      <pfe-card pfe-color="lightest">
+        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor.</p>
+        <pfe-cta priority="tertiary" slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
-      <pfe-card pfe-color="darker">
-        <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-        <pfe-cta priority="tertiary" slot="footer">
+      <pfe-card pfe-color="lightest">
+        <p>At vero eos et accusam et justo duo dolores et ea rebum.</p>
+        <pfe-cta priority="tertiary" slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
-      <pfe-card pfe-color="darker">
-        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-        <pfe-cta priority="tertiary" slot="footer">
+      <pfe-card pfe-color="lightest">
+        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor.</p>
+        <pfe-cta priority="tertiary" slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
-      <pfe-card pfe-color="darker">
-        <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-        <pfe-cta priority="tertiary" slot="footer">
+      <pfe-card pfe-color="lightest">
+        <p>At vero eos et accusam et justo duo dolores et ea rebum.</p>
+        <pfe-cta priority="tertiary" slot="pfe-card--footer">
           <a href="#">Learn more</a>
         </pfe-cta>
       </pfe-card>
@@ -379,7 +375,7 @@
     <div style="max-width: 1170px;margin:auto;"> <!-- arbitrary restricting container -->
       <pfe-band pfe-color="lighter" style="--pfe-band__body--layout: repeat(auto-fit, minmax(250px, 1fr));">
         <header slot="pfe-band--header">
-          <h2>Layout variables; no aside, max-width set;</h2>
+          <h2>Layout variables; no aside, max-width set</h2>
           <p class="custom-band-summary"> Max width is being set inline. Sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
         </header>
         <pfe-card pfe-color="darker">

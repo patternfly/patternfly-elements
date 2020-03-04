@@ -7,7 +7,7 @@ $variables: (
 
   // Default spacing values
   Padding--vertical:    calc( #{pfe-var(container-spacer)} * 4),
-  Padding--horizontal:  calc( #{pfe-var(container-spacer)} * 1),
+  Padding--horizontal:  #{pfe-var(container-spacer)},
 
   // Bring them together for ease of use below
   Padding: #{pfe-local(Padding--vertical)}  #{pfe-local(Padding--horizontal)},
@@ -111,9 +111,22 @@ $variables: (
 
 .pfe-band {
   &__container {
-    // Does not need to be wrapped in @supports because it updates variables
-    --pfe-band_region--width: calc(calc(1fr - #{pfe-local(Width__aside--sm)}) - #{pfe-local(gutter--horizontal)});
-    grid-template-areas: "body";
+    position:  relative;
+    margin:    0 auto;
+    width: 100%;
+    max-width: #{pfe-local(Width)};
+
+    // Grid support styles
+    @supports (display: grid) {
+      display: grid;
+      grid-template-areas: "body";
+      grid-row-gap: #{pfe-local(gutter--vertical)};
+      grid-column-gap: #{pfe-local(gutter--horizontal)};
+      margin-bottom: 0;
+      grid-template-columns: #{pfe-local(layout)};
+      grid-template-rows:    max-content;
+    }
+ 
     // Styles for the different combination of regions
     &[pfe-has-aside] {
       grid-template-areas:
@@ -273,21 +286,6 @@ $variables: (
          }
       }
     }
-
-    position:  relative;
-    margin:    0 auto;
-    width: 100%;
-    max-width: #{pfe-local(Width, 1140px)};
-
-    // Grid support styles
-    @supports (display: grid) {
-      display: grid;
-      grid-row-gap: #{pfe-local(gutter--vertical)};
-      grid-column-gap: #{pfe-local(gutter--horizontal)};
-      margin-bottom: 0;
-      grid-template-columns: #{pfe-local(layout)};
-      grid-template-rows:    max-content;
-    }
 }
 
   // For each section in the band layout
@@ -309,7 +307,7 @@ $variables: (
   }
 
   &__aside {
-    align-self: flex-start;
+    align-self: stretch;
   }
 
   @include browser-query(ie11) {

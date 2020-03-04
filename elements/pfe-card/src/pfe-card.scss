@@ -4,8 +4,7 @@ $LOCAL: card;
 
 
 $variables: (
-
-  // Individual padding overrides available
+  //-- Individual padding overrides
   PaddingTop: calc(#{pfe-var(container-spacer)} * 2),
   PaddingRight: calc(#{pfe-var(container-spacer)} * 2),
   PaddingBottom: calc(#{pfe-var(container-spacer)} * 2),
@@ -52,7 +51,7 @@ $variables: (
   flex-direction: column;
   justify-items: flex-start;
   // This allows the card to fill it's container if necessary
-  align-self: stretch;
+  align-self: #{pfe-local($cssvar: AlignSelf, $fallback: stretch)};
 
   padding:       #{pfe-local(Padding)};
   border:        #{pfe-local(Border)};

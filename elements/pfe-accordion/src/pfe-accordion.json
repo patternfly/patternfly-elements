@@ -17,11 +17,14 @@
           "type": "array",
           "namedSlot": false,
           "items": {
-            "oneOf": [{
-              "$ref": "pfe-accordion-header"
-            }, {
-              "$ref": "pfe-accordion-panel"
-            }]
+            "oneOf": [
+              {
+                "$ref": "pfe-accordion-header"
+              },
+              {
+                "$ref": "pfe-accordion-panel"
+              }
+            ]
           }
         }
       }
@@ -29,19 +32,7 @@
     "attributes": {
       "title": "Attributes",
       "type": "object",
-      "properties": {
-        "on": {
-          "title": "Context",
-          "type": "string",
-          "enum": [
-            "light",
-            "dark"
-          ],
-          "default": "light",
-          "prefixed": false
-        }
-      },
-      "required": ["on"]
+      "properties": {}
     }
   },
   "required": ["slots", "attributes"],

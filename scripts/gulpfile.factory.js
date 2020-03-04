@@ -27,9 +27,9 @@ module.exports = function factory({
     `${elementName}--*.min.css.map`,
     `${elementName}.json`
   ]);
-  
+
   // Dedupe any items
-  files = files.filter((item,index) => files.indexOf(item) === index);
+  files = files.filter((item, index) => files.indexOf(item) === index);
 
   // Tooling
   const fs = require("fs");
@@ -62,10 +62,7 @@ module.exports = function factory({
 
   // Delete the temp directory
   task("clean", () => {
-    return src([
-      paths.temp,
-      paths.compiled
-    ], {
+    return src([paths.temp, paths.compiled], {
       cwd: paths.root,
       read: false,
       allowEmpty: true
@@ -79,9 +76,7 @@ module.exports = function factory({
         cwd: paths.source
       })
         .pipe(sourcemaps.init())
-        .pipe(
-          sass().on('error', sass.logError)
-        )
+        .pipe(sass().on("error", sass.logError))
         // Compile the Sass into CSS
         .pipe(
           sass({
@@ -90,10 +85,13 @@ module.exports = function factory({
         )
         // Adds autoprefixing to the compiled sass
         .pipe(
-          postcss([postcssCustomProperties(), autoprefixer({
-            grid: "autoplace",
-            overrideBrowserslist: browser_support
-          })])
+          postcss([
+            postcssCustomProperties(),
+            autoprefixer({
+              grid: "autoplace",
+              overrideBrowserslist: browser_support
+            })
+          ])
         )
         // Write the sourcemap
         .pipe(sourcemaps.write("./"))
@@ -286,7 +284,13 @@ ${fs
   task("copy:compiled", () => {
     return src(["*"], {
       cwd: paths.temp
-    }).pipe(gulpif((file) => (files.length > 0 && gulpmatch(file, files)) || files.length === 0, dest(paths.compiled)));
+    }).pipe(
+      gulpif(
+        file =>
+          (files.length > 0 && gulpmatch(file, files)) || files.length === 0,
+        dest(paths.compiled)
+      )
+    );
   });
 
   task("compile", () => {
@@ -311,10 +315,7 @@ ${fs
 
   // Delete the temp directory
   task("clean:post", () => {
-    return src([
-      "*.min.css",
-      "*.umd.js"
-    ], {
+    return src(["*.min.css", "*.umd.js"], {
       cwd: paths.temp,
       read: false,
       allowEmpty: true

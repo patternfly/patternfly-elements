@@ -122,16 +122,13 @@ class PfeCollapseToggle extends PFElement {
     if (this.controlledPanel) {
       this.controlledPanel.expanded = this.expanded;
 
-      this.dispatchEvent(
-        new CustomEvent(`${PfeCollapse.tag}:change`, {
-          detail: {
-            expanded: this.expanded,
-            toggle: this,
-            panel: this.controlledPanel
-          },
-          bubbles: true
-        })
-      );
+      this.emitEvent(PfeCollapse.events.change, {
+        detail: {
+          expanded: this.expanded,
+          toggle: this,
+          panel: this.controlledPanel
+        }
+      });
     } else {
       console.warn(
         `${this.tag}: This toggle doesn't have a panel associated with it`
@@ -169,6 +166,13 @@ class PfeCollapseToggle extends PFElement {
 class PfeCollapsePanel extends PFElement {
   static get tag() {
     return "pfe-collapse-panel";
+  }
+
+  static get events() {
+    return {
+      animationStart: `${this.tag}:animation-start`,
+      animationEnd: `${this.tag}:animation-end`
+    };
   }
 
   get templateUrl() {
@@ -269,27 +273,21 @@ class PfeCollapsePanel extends PFElement {
       this._transitionEndHandler
     );
 
-    this.dispatchEvent(
-      new CustomEvent(`${PfeCollapsePanel.tag}:animation-end`, {
-        detail: {
-          expanded: this.expanded,
-          panel: this
-        },
-        bubbles: true
-      })
-    );
+    this.emitEvent(PfeCollapsePanel.events.animationEnd, {
+      detail: {
+        expanded: this.expanded,
+        panel: this
+      }
+    });
   }
 
   _fireAnimationEvent(state) {
-    this.dispatchEvent(
-      new CustomEvent(`${PfeCollapsePanel.tag}:animation-start`, {
-        detail: {
-          state: state,
-          panel: this
-        },
-        bubbles: true
-      })
-    );
+    this.emitEvent(PfeCollapsePanel.events.animationStart, {
+      detail: {
+        state: state,
+        panel: this
+      }
+    });
   }
 }
 
@@ -318,6 +316,12 @@ class PfeCollapse extends PFElement {
     return ["pfe-animation"];
   }
 
+  static get events() {
+    return {
+      change: `${this.tag}:change`
+    };
+  }
+
   constructor(pfeClass) {
     super(pfeClass || PfeCollapse);
 
@@ -327,9 +331,15 @@ class PfeCollapse extends PFElement {
     this._changeHandler = this._changeHandler.bind(this);
     this._observer = new MutationObserver(this._linkControls);
 
-    this.addEventListener(`${PfeCollapse.tag}:change`, this._changeHandler);
-    this.addEventListener(`${PfeCollapsePanel.tag}:animation-start`, this._animationStartHandler);
-    this.addEventListener(`${PfeCollapsePanel.tag}:animation-end`, this._animationEndHandler);
+    this.addEventListener(PfeCollapse.events.change, this._changeHandler);
+    this.addEventListener(
+      PfeCollapse.events.animationStart,
+      this._animationStartHandler
+    );
+    this.addEventListener(
+      PfeCollapse.events.animationEnd,
+      this._animationEndHandler
+    );
   }
 
   connectedCallback() {
@@ -348,9 +358,15 @@ class PfeCollapse extends PFElement {
   }
 
   disconnectedCallback() {
-    this.removeEventListener(`${PfeCollapse.tag}:change`, this._changeHandler);
-    this.removeEventListener(`${PfeCollapsePanel.tag}:animation-start`, this._animationStartHandler);
-    this.removeEventListener(`${PfeCollapsePanel.tag}:animation-end`, this._animationEndHandler);
+    this.removeEventListener(PfeCollapse.events.change, this._changeHandler);
+    this.removeEventListener(
+      PfeCollapse.events.animationStart,
+      this._animationStartHandler
+    );
+    this.removeEventListener(
+      PfeCollapse.events.animationEnd,
+      this._animationEndHandler
+    );
     this._observer.disconnect();
   }
 
@@ -389,9 +405,7 @@ class PfeCollapse extends PFElement {
     this.classList.remove("animating");
   }
 
-  _changeHandler(event) {
-
-  }
+  _changeHandler(event) {}
 }
 
 PFElement.create(PfeCollapse);

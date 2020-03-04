@@ -18,8 +18,8 @@
   <body unresolved>
 
     <pfe-card>
-      <h2 slot="header">Card 1</h2>This is pfe-card.
-      <div slot="footer">Text in footer</div>
+      <h2 slot="pfe-card--header">Card 1</h2>This is pfe-card.
+      <div slot="pfe-card--footer">Text in footer</div>
     </pfe-card>
 
     <script>
@@ -29,7 +29,7 @@
 
         A note about these tests.  PFElements provides a stylesheet that causes
         the body[unresolved] attribute to hide the page.  It's very similar to
-        Polymer's approach.  The Web Component Tester automatically injets
+        Polymer's approach.  The Web Component Tester automatically injects
         Polymer's CSS into this page.  That means that both PFElements' and
         Polymer's CSS is present on this page.  Be cautious of that when
         writing tests.

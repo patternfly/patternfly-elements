@@ -1,0 +1,78 @@
+/* DEMO FILE ONLY, NOT FOR PRODUCTION USE */
+
+@import "../../pfe-sass/pfe-sass";
+
+:root {
+    @each $name, $color in $pfe-colors {
+        --theme--#{$name}: #{$color};
+    }
+}
+
+@function contexts($list) {
+    @each $item in $list {
+        @if str-starts-with($item, "on") {
+            @return '[on="#{nth(str-split($item, "-"), 2)}"] ';
+        }
+    }
+    @return "";
+}
+
+@function states($list) {
+    @each $s in (hover, focus, visited) {
+        @if index($list, $s) {
+            @return "--#{$s}";
+        }
+    }
+    @return "";
+}
+
+@function themes($list, $color) {
+    @if index($list, theme) {
+        @return $color;
+    }
+    @return "";
+}
+
+@each $name, $color in $pfe-colors {
+    $list: str-split($name, $separator: "--");
+    $property: background-color;
+    $context: #{contexts($list)};
+    $state: #{states($list)};
+    $theme: #{themes($list, $color)};
+
+    @if length($list) > 1 {
+        @if index($list, "text") {
+            $property: color;
+        }
+    }
+    
+    // UI styles, not link
+    @if str-starts-with(#{first($list)}, "ui") and not (str-starts-with(#{first($list)}, "link")) {
+        #{unquote($context)}.#{first($list)}#{unquote($state)} {
+            #{$property}: var(--theme--#{$name}, #{$color});
+            @if str-index($string: $name, $substring: "text") == null {
+                &::after {
+                    content: "#{$name}";
+                }
+            }
+        }
+    }
+
+    // Surface styles
+    @if index($list, "surface") {
+        #{unquote($context)}.#{nth($list, 2)}#{unquote($state)} {
+            @if $theme != "" and $theme != light {
+                color: #{pfe-color(text--on-#{$theme})};
+            } @else if $theme == light {
+                color: #{pfe-color(text)};
+            } @else {
+                #{$property}: var(--theme--#{$name}, #{$color});
+            }
+            @if str-index($string: $name, $substring: "text") == null {
+                &::after {
+                    content: "#{$name}";
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,232 @@
+/// ===========================================================================
+/// Accordion-specific SASS Vars
+/// ===========================================================================
+
+@mixin pfe-accordion-variables($state: default, $theme: default, $variant: default) {
+  // Shared variables for all themes
+  $variables: ();
+
+  @if $state != expanded { // Default state
+    // Shared variables for all themes
+    $variables: (
+      BorderColor--accent: transparent,
+      BorderColor:         #{pfe-color(surface--border)},
+      BorderTopWidth:      #{pfe-var(surface--border-width)},
+      BorderRightWidth:    0,
+      BorderBottomWidth:   #{pfe-var(surface--border-width)},
+      BorderLeftWidth:     #{pfe-var(surface--border-width--heavy)},
+      Color:               #{pfe-apply-broadcast(text)},
+      TextAlign:           left,
+      base--Padding:         #{pfe-var(container-spacer)}
+    );
+
+    @if $theme == dark { // Dark theme
+      $variables: map-merge($variables, (
+        accent: #{pfe-color(ui-base--on-dark)}
+      ));
+    }
+    @else if $theme == saturated { // Saturated theme
+      $variables: map-merge($variables, (
+        accent: #{pfe-color(ui-base--on-saturated)}
+      ));
+    }
+    @else { // Light theme
+      $variables: map-merge($variables, (
+        accent: #{pfe-color(ui-base)}
+      ));
+    }
+    @if $variant == disclosure {
+      $variables: (
+        BorderRightWidth: #{pfe-var(surface--border-width)},
+        BorderLeftWidth: #{pfe-var(surface--border-width)},
+        BorderColor--accent: #{pfe-color(surface--border)}
+      );
+    }
+  }
+  @else { // Expanded state
+    // Shared variables for all themes
+    $variables: (
+      BorderColor:         #{pfe-color(surface--border)},
+      BorderRightWidth:    #{pfe-var(surface--border-width)},
+      BorderLeftWidth:     #{pfe-var(surface--border-width--heavy)}
+    );
+
+    @if $theme == dark { // Dark theme
+      $variables: map-merge($variables, (
+        BackgroundColor:    rgba(247, 247, 249, .1),
+        Color:               #{pfe-apply-broadcast(text)},
+        BorderColor--accent: #{pfe-color(ui-base--on-dark)}
+      ));
+    }
+    @else if $theme == saturated { // Saturated theme
+      $variables: map-merge($variables, (
+        BackgroundColor:    rgba(0, 0, 0, 0.2),
+        Color:               #{pfe-apply-broadcast(text)},
+        BorderColor--accent: #{pfe-color(ui-base--on-saturated)}
+      ));
+    }
+    @else { // Defaults for light theme
+      $variables: map-merge($variables, (
+        BackgroundColor:     rgba(255, 255, 255, 1),
+        Color:               #{pfe-color(text)},
+        BorderColor--accent: #{pfe-color(ui-base)}
+      ));
+    }
+    @if $variant == disclosure {
+      $variables: (
+        BorderLeftWidth: #{pfe-var(surface--border-width--heavy)},
+        BorderColor--accent: #{pfe-color(ui-base)}
+      );
+    }
+
+    @if $theme == light { // Explicitly defined light theme
+      // Clear the map since this uses the same as the default variables
+      $variables: ();
+      @include pfe-set-broadcast-theme(light);
+      --theme: light;
+    }
+  }
+
+  @include pfe-set-local($variables);
+}
+
+@mixin pfe-accordion-props($variant: default) {
+  margin: 0;
+  width: #{pfe-local($cssvar: Width, $fallback: 100%)};
+  max-width: 100%;
+  height: auto;
+  position: relative;
+
+  // Since the default bg color is transparent, look to broadcast values
+  background-color: #{pfe-local($cssvar: BackgroundColor, $fallback: transparent)};
+  color:            #{pfe-local($cssvar: Color)};
+
+  // Border settings
+  border-top:       #{pfe-local($cssvar: BorderTopWidth, $fallback: #{pfe-var(surface--border-width)}) pfe-var(surface--border-style) pfe-local($cssvar: BorderColor, $fallback: #{pfe-color(surface--border)})};
+  border-right:     #{pfe-local($cssvar: BorderRightWidth, $fallback: #{pfe-var(surface--border-width)}) pfe-var(surface--border-style) pfe-local($cssvar: BorderColor, $fallback: transparent)};
+  border-bottom:    #{pfe-local($cssvar: BorderBottomWidth, $fallback: #{pfe-var(surface--border-width)}) pfe-var(surface--border-style) pfe-local($cssvar: BorderColor, $fallback: #{pfe-color(surface--border)})};
+  border-left:      #{pfe-local($cssvar: BorderLeftWidth, $fallback: #{pfe-var(surface--border-width--heavy)}) pfe-var(surface--border-style) pfe-local($cssvar: (BorderColor, accent), $fallback: transparent)};
+
+  box-shadow: #{pfe-local(BoxShadow)};
+
+  &:hover {
+    @include pfe-set-local((
+      BorderColor--accent: #{pfe-local(accent)}
+    ));
+  }
+}
+
+//-- Trigger-specific properties
+@mixin pfe-trigger {
+  $chevron--spacing: 50px;
+
+  $variables: (
+    BorderBottomWidth: 0,
+    Trigger--padding: #{pfe-local(base--Padding)} #{$chevron--spacing} #{pfe-local(base--Padding)} calc(#{pfe-local(base--Padding)} * 1.5) !important
+  );
+
+  @include pfe-set-local($variables);
+  @include pfe-accordion-props;
+
+  // -webkit-appearance: button;
+  cursor: pointer;
+  z-index: 1;
+
+  font-family: inherit;
+  font-size:   #{pfe-local($cssvar: FontSize--header, $fallback: calc(#{pfe-var(font-size)} * 1.1))};
+  font-weight: #{pfe-var(font-weight--bold)};
+  text-align:  #{pfe-local($cssvar: TextAlign, $fallback: left)};
+  line-height: #{pfe-var(line-height)};
+  padding:     #{pfe-local(Trigger--padding)};
+
+  &:hover {
+    outline: none;
+    z-index: 2;
+  }
+
+  &:focus {
+      outline: none;
+      z-index: 2;
+      text-decoration: underline;
+  }
+
+  &::-moz-focus-inner {
+      border: 0;
+  }
+}
+
+@mixin pfe-trigger-last($theme: light) {
+  @include pfe-set-local((
+    BorderBottomWidth: #{pfe-var(surface--border-width)}
+  ));
+}
+
+//-- Panel-specific properties
+@mixin pfe-panel-variables($theme: light) {
+  $variables: (
+    BorderTopWidth: 0
+  );
+
+  @if $theme == "light" { // Light theme
+    $variables: map-merge($variables, (
+      BoxShadow: 0 5px #{pfe-var(surface--border-width--heavy)} rgba(140, 140, 140, 0.35)
+    ));
+  }
+  @else {
+    $variables: map-merge($variables, (
+      BoxShadow: none
+    ));
+  }
+
+  @include pfe-set-local($variables);
+}
+
+@mixin pfe-panel-container() {
+  // Ensure the box shadow does not propagate to nest accordions
+  @include pfe-set-local( ( BoxShadow: none ) );
+
+  @extend %container;
+  padding: #{pfe-local(panel-container--Padding)};
+}
+
+/// ===========================================================================
+/// Accordion chevrons
+/// ===========================================================================
+
+@mixin pfe-chevron($state: open, $position: after, $size: .4em, $offset: $size) {
+
+  content: "";
+  position: absolute;
+  top: calc(#{pfe-var(container-spacer)} + #{$offset});
+
+  display: block;
+  border-style: #{pfe-var(surface--border-style)};
+  height: #{$size};
+  width:  #{$size};
+  transition: transform 0.15s;
+  @if $state == open {
+    border-width: .1em .1em 0 0;
+    border-bottom: 0;
+    transform: rotate(-45deg);
+    top: calc(#{pfe-var(container-spacer)} + #{$offset});
+    @if $position == before {
+      left: calc(#{pfe-var(container-spacer)} * 1.5);
+      top: calc(#{pfe-var(container-spacer)} + .25em);
+      transform: rotate(135deg);
+    }
+    @else {
+      right: calc(#{pfe-var(container-spacer)} * 1.5);
+    }
+  }
+  @else {
+    border-width: 0 .1em .1em 0;
+    transform: rotate(45deg);
+    @if $position == before {
+      left: calc(#{pfe-var(container-spacer)} * 1.5);
+      transform: rotate(-45deg);
+    }
+    @else {
+      right: calc(#{pfe-var(container-spacer)} * 1.5);
+    }
+  }
+}

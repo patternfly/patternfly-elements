@@ -14,7 +14,7 @@ const template = (data = {}) => {
 
 const createItem = (mySlot, icon, label, tray) => {
   let mobile = "";
-  if(mySlot === "language" || mySlot === "login") {
+  if (mySlot === "language" || mySlot === "login") {
     mobile = tools.customTag({
       tag: "a",
       slot: `mobile-${mySlot}`,
@@ -27,27 +27,37 @@ const createItem = (mySlot, icon, label, tray) => {
     });
   }
 
-  return tools.component("pfe-navigation-item", {
-    "slot": mySlot,
-    "pfe-icon": icon
-  }, [{
-    tag: "h3",
-    slot: "trigger",
-    content: `<a href="#url-to-${mySlot}-page">${label}</a>`
-  }, {
-    tag: "div",
-    slot: "tray",
-    attributes: {
-      hidden: true
-    },
-    content: tray ? tray : `<div class="container"><p>${mySlot} tray content</p></div>`
-  }]) + mobile;
-}
+  return (
+    tools.component(
+      "pfe-navigation-item",
+      {
+        slot: mySlot,
+        "pfe-icon": icon
+      },
+      [
+        {
+          tag: "h3",
+          slot: "trigger",
+          content: `<a href="#url-to-${mySlot}-page">${label}</a>`
+        },
+        {
+          tag: "div",
+          slot: "tray",
+          attributes: {
+            hidden: true
+          },
+          content: tray
+            ? tray
+            : `<div class="container"><p>${mySlot} tray content</p></div>`
+        }
+      ]
+    ) + mobile
+  );
+};
 
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeNavigation.tag, () => {
-
   let config = {};
   const props = PfeNavigation.properties;
 
@@ -58,7 +68,7 @@ stories.add(PfeNavigation.tag, () => {
 
   let slotCheck = {};
   Object.keys(slots).forEach(slot => {
-    if(!slot.startsWith("mobile-") && !slot.startsWith("main")) {
+    if (!slot.startsWith("mobile-") && !slot.startsWith("main")) {
       slotCheck[slot] = storybookBridge.boolean(`${slots[slot].title}`, true);
     }
   });
@@ -68,45 +78,57 @@ stories.add(PfeNavigation.tag, () => {
 
   config.slots = [];
 
-  let skip = slotCheck.skip ? tools.customTag({
-    tag: "div",
-    slot: "skip",
-    content: tools.customTag({
-      tag: "a",
-      attributes: {
-        href: "#rh-main-content"
-      },
-      content: "Skip to content"
-    })
-  }) : "";
+  let skip = slotCheck.skip
+    ? tools.customTag({
+        tag: "div",
+        slot: "skip",
+        content: tools.customTag({
+          tag: "a",
+          attributes: {
+            href: "#rh-main-content"
+          },
+          content: "Skip to content"
+        })
+      })
+    : "";
 
-  let logo = slotCheck.logo ? tools.customTag({
-    tag: "div",
-    slot: "logo",
-    content: tools.customTag({
-      tag: "a",
-      attributes: {
-        href: "#"
-      },
-      content: `<img src="https://via.placeholder.com/150x50.png" title="Company logo"/>`
-    })
-  }) : "";
+  let logo = slotCheck.logo
+    ? tools.customTag({
+        tag: "div",
+        slot: "logo",
+        content: tools.customTag({
+          tag: "a",
+          attributes: {
+            href: "#"
+          },
+          content: `<img src="https://via.placeholder.com/150x50.png" title="Company logo"/>`
+        })
+      })
+    : "";
 
-  let search = slotCheck.search ? createItem("search", "search", "Search", `<div class="pfe-navigation-item__tray--container">
+  let search = slotCheck.search
+    ? createItem(
+        "search",
+        "web-search",
+        "Search",
+        `<div class="pfe-navigation-item__tray--container">
   <form>
     <input type="text" name="search" value="" placeholder="Enter your search term"
       style="height: 30px; width: 60%; margin-right: 10px;">
     <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
   </form>
-</div>`) + tools.customTag({
-      tag: "form",
-      slot: "mobile-search",
-      attributes: {
-        "hidden": true
-      },
-      content: `<input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
+</div>`
+      ) +
+      tools.customTag({
+        tag: "form",
+        slot: "mobile-search",
+        attributes: {
+          hidden: true
+        },
+        content: `<input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
         <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>`
-  }) : "";
+      })
+    : "";
 
   let main = `<pfe-navigation-main role="navigation" aria-label="Main">
     <ul>
@@ -172,17 +194,24 @@ stories.add(PfeNavigation.tag, () => {
   </pfe-navigation-main>
 </nav>`;
 
-  let language = slotCheck.language ? createItem("language", "globe", "English") : "";
+  let language = slotCheck.language
+    ? createItem("language", "web-globe", "English")
+    : "";
 
-  let login = slotCheck.login ? createItem("login", "user", "Log in") : "";
+  let login = slotCheck.login ? createItem("login", "web-user", "Log in") : "";
 
-  let siteSwitcher = slotCheck["site-switcher"] ? createItem("site-switcher", "bento", "Websites") : "";
+  let siteSwitcher = slotCheck["site-switcher"]
+    ? createItem("site-switcher", "web-grid-3x3", "Websites")
+    : "";
 
-  config.slots = [{
-    content: skip + logo + search + main + language + login + siteSwitcher
-  }];
+  config.slots = [
+    {
+      content: skip + logo + search + main + language + login + siteSwitcher
+    }
+  ];
 
-  const render = `<link rel="stylesheet" type="text/css" href="/pfe-navigation/pfe-navigation--lightdom.css"></link>` +
+  const render =
+    `<link rel="stylesheet" type="text/css" href="/pfe-navigation/pfe-navigation--lightdom.css"></link>` +
     template(config);
   return tools.preview(render);
 });

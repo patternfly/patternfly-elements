@@ -489,6 +489,26 @@
       </pfe-navigation-item>
     </pfe-navigation>
 
+    <pfe-navigation pfe-menu-label="Menu" pfe-full-width>
+      <pfe-navigation-item slot="search">
+        <h3 slot="trigger">Stuff</h3>
+      </pfe-navigation-item>
+      <pfe-navigation-main role="navigation" aria-label="Main">
+        <ul>
+          <li>
+            <pfe-navigation-item>
+              <h3 slot="trigger"><a href="#">Products</a></h3>
+              <div slot="tray">
+                <div class="pfe-navigation-item__tray--container">
+                  Tray
+                </div>
+              </div>
+            </pfe-navigation-item>
+          </li>
+        </ul>
+      </pfe-navigation-main>
+    </pfe-navigation>
+
     <script>
       const slots = [ "skip", "logo", "search", "language", "mobile-language", "login", "mobile-login", "site-switcher" ];
 
@@ -551,16 +571,47 @@
           assert.isTrue(backdrop.hasAttribute("hidden"));
         });
 
-        test("the document body should have overflow hidden when the nav is open", () => {
-          const pfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item");
-          const trigger = pfeNavigationItem.querySelector(`[slot="trigger"] a`);
-          const backdrop = pfeNavigation.shadowRoot.querySelector(".pfe-navigation__overlay");
+        test("it should cascade pfe-full-width if the pfe-full-width attribute is present on pfe-navigation", () => {
+          const navigationFullWidth = document.querySelector("pfe-navigation[pfe-full-width]");
+          const item = navigationFullWidth.querySelector("pfe-navigation-item");
+          const itemInPfeNavigationMain = navigationFullWidth.querySelector("pfe-navigation-main pfe-navigation-item");
+          const navigationItemTray = itemInPfeNavigationMain.shadowRoot.querySelector(".pfe-navigation-item__tray");
 
-          trigger.click();
-          assert.equal(document.body.style.overflow, "hidden");
+          assert.isTrue(navigationFullWidth.hasAttribute("pfe-full-width"));
+          assert.isTrue(item.hasAttribute("pfe-full-width"));
+          assert.isTrue(itemInPfeNavigationMain.hasAttribute("pfe-full-width"));
+          assert.isTrue(navigationItemTray.hasAttribute("pfe-full-width"));
 
-          backdrop.click();
-          assert.isUndefined(document.body.style.overlay);
+          navigationFullWidth.removeAttribute("pfe-full-width");
+
+          assert.isFalse(navigationFullWidth.hasAttribute("pfe-full-width"));
+          assert.isFalse(item.hasAttribute("pfe-full-width"));
+          assert.isFalse(itemInPfeNavigationMain.hasAttribute("pfe-full-width"));
+          assert.isFalse(navigationItemTray.hasAttribute("pfe-full-width"));
+        });
+
+        // @NOTE Removed this, possibily temporarily
+        // test("the document body should have overflow hidden when the nav is open", () => {
+        //   const pfeNavigationItem = pfeNavigationMain.querySelector("pfe-navigation-item");
+        //   const trigger = pfeNavigationItem.querySelector(`[slot="trigger"] a`);
+        //   const backdrop = pfeNavigation.shadowRoot.querySelector(".pfe-navigation__overlay");
+
+        //   trigger.click();
+        //   assert.equal(document.body.style.overflow, "hidden");
+
+        //   backdrop.click();
+        //   assert.isUndefined(document.body.style.overlay);
+        // });
+
+        test("it should report its height via a global CSS variable", () => {
+          const pfeNavigation = document.querySelector('pfe-navigation');
+
+          const reportedHeight = document.body.style.getPropertyValue("--pfe-navigation--Height--actual");
+
+          // there are multiple pfe-navigations on this page, so don't try to
+          // check the exact height (race condition over which writes its var
+          // last).  Just check that the var was created.
+          assert.isDefined(reportedHeight, "pfe-navigation without id reports height to default css variable");
         });
       });
 

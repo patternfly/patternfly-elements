@@ -53,7 +53,7 @@ stories.add("pfe-avatar", () => {
     <h1>Dynamic example</h1>
     <h2>Use knobs to adjust!</h2>
 
-    <link rel="stylesheet" type="text/css" href="/pfe-layouts/dist/pfe-layouts.css">
+    <link rel="stylesheet" type="text/css" href="/pfe-styles/dist/pfe-layouts.css">
 
     <div class="rh-l-bullseye">
       <div class="rh-l-bullseye__item">
@@ -73,6 +73,10 @@ stories.add("pfe-avatar", () => {
         flex-wrap: wrap;
       }
 
+      pfe-card > h3 {
+        margin: 0;
+      }
+
       .demo-cards > pfe-card {
         margin: 0 16px 32px;
         width: 168px;
@@ -84,23 +88,16 @@ stories.add("pfe-avatar", () => {
       ${staticExamples
         .map(
           ex => `
-            <pfe-card color="light">
-              <h2 slot="header">${ex.name}</h2>
-              <p>
-                <pfe-avatar
-                  slot="header"
-                  ${
-                    ex.src ? `pfe-src=${ex.src}` : `pfe-pattern="${ex.pattern}"`
-                  }
-                  pfe-shape="${ex.shape}"
-                  pfe-name="${ex.name}">
-                </pfe-avatar>
-                Avatar for "${ex.name}"
-                with ${
-                  ex.src ? `a user-selected image` : `patterned ${ex.pattern}`
-                },
-                ${ex.shape} shape.
-               </p>
+            <pfe-card pfe-color="lighter">
+              <h3 slot="pfe-card--header">${ex.name}</h3>
+              <pfe-avatar
+                ${ex.src ? `pfe-src=${ex.src}` : `pfe-pattern="${ex.pattern}"`}
+                pfe-shape="${ex.shape}"
+                pfe-name="${ex.name}">
+              </pfe-avatar>
+              <p>Avatar for "${ex.name}" with ${
+            ex.src ? `a user-selected image` : `patterned ${ex.pattern}`
+          }, ${ex.shape} shape.</p>
             </pfe-card>
           `
         )

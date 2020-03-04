@@ -290,7 +290,9 @@ stories.add("pfe-icon-panel", () => {
   if (circledBoolean != false) {
     circledSelect = select("Circle Color", circledOptions, "default");
     circled =
-      circledSelect != "default" ? ` circled="${circledSelect}"` : " circled";
+      circledSelect != "default"
+        ? ` circled color="${circledSelect}"`
+        : " circled";
   }
 
   const stackedBoolean = boolean("Stacked", false);
@@ -321,14 +323,14 @@ stories.add("pfe-icon-panel", () => {
   <section>
     <h2>Your PFElement</h2>
     <pfe-icon-panel${iconValue}${circled}${stackedValue}${centeredValue}>
-      <h3 slot="header">Panel Header</h3>
+      <h3 slot="header">Panel header</h3>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </pfe-icon-panel>
   </section>
   <section>
     <h2>Markup</h2>
     <pre><code>&lt;pfe-icon-panel${iconValue}${circled}${stackedValue}${centeredValue}&gt;
-    &lt;h3 slot="header"&gt;Panel Header&lt;/h3&gt;
+    &lt;h3 slot="header"&gt;Panel header&lt;/h3&gt;
     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 &lt;/pfe-icon-panel&gt;</code></pre>
   </section>

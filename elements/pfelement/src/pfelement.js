@@ -30,9 +30,15 @@ class PFElement extends HTMLElement {
   static get version() {
     return "{{version}}";
   }
-  
-  static get randomId() {
-    return Math.random().toString(36).substr(2, 9);
+
+  static get observedAttributes() {
+    return ["pfe-theme"];
+  }
+
+  get randomId() {
+    return Math.random()
+      .toString(36)
+      .substr(2, 9);
   }
 
   get version() {
@@ -47,6 +53,17 @@ class PFElement extends HTMLElement {
     this.setAttribute(`${prefix}type`, value);
   }
 
+  cssVariable(name, value, element = this) {
+    name = name.substr(0, 2) !== "--" ? "--" + name : name;
+    if (value) {
+      element.style.setProperty(name, value);
+    }
+    return window
+      .getComputedStyle(element)
+      .getPropertyValue(name)
+      .trim();
+  }
+
   // Returns a single element assigned to that slot; if multiple, it returns the first
   has_slot(name) {
     return this.querySelector(`[slot='${name}']`);
@@ -55,6 +72,46 @@ class PFElement extends HTMLElement {
   // Returns an array with all elements assigned to that slot
   has_slots(name) {
     return [...this.querySelectorAll(`[slot='${name}']`)];
+  }
+
+  // Update the theme context for self and children
+  context_update() {
+    const children = this.querySelectorAll("[pfelement]");
+    let theme = this.cssVariable("theme");
+
+    // Manually adding `pfe-theme` overrides the css variable
+    if (this.hasAttribute("pfe-theme")) {
+      theme = this.getAttribute("pfe-theme");
+      // Update the css variable to match the data attribute
+      this.cssVariable("theme", theme);
+    }
+
+    // Update theme for self
+    this.context_set(theme);
+
+    // For each nested, already upgraded component
+    // set the context based on the child's value of --theme
+    // Note: this prevents contexts from parents overriding
+    // the child's context should it exist
+    [...children].map(child => {
+      if (child.connected) {
+        child.context_set(theme);
+      }
+    });
+  }
+
+  // Get the theme variable if it exists, set it as an attribute
+  context_set(fallback) {
+    let theme = this.cssVariable("theme");
+    if (!theme) {
+      theme = this.getAttribute("pfe-theme");
+    }
+    if (!theme && fallback) {
+      theme = fallback;
+    }
+    if (theme) {
+      this.setAttribute("on", theme);
+    }
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
@@ -67,7 +124,7 @@ class PFElement extends HTMLElement {
     this.slots = pfeClass.slots;
     this._queue = [];
     this.template = document.createElement("template");
-    
+
     this.log(`Constructing...`);
 
     this.attachShadow({ mode: "open" });
@@ -87,7 +144,7 @@ class PFElement extends HTMLElement {
       this.render();
       this.log(`Rendered.`);
     }
-    
+
     this.log(`Constructed.`);
   }
 
@@ -120,6 +177,11 @@ class PFElement extends HTMLElement {
       this._processQueue();
     }
 
+    // Initialize the on attribute if a theme variable is set
+    // do not update the on attribute if a user has manually added it
+    // then trigger an update in nested components
+    this.context_update();
+
     this.log(`Connected.`);
   }
 
@@ -127,7 +189,7 @@ class PFElement extends HTMLElement {
     this.log(`Disconnecting...`);
 
     this.connected = false;
-    
+
     this.log(`Disconnected.`);
   }
 
@@ -139,6 +201,10 @@ class PFElement extends HTMLElement {
     const cascadeTo = this._pfeClass.cascadingAttributes[attr];
     if (cascadeTo) {
       this._copyAttribute(attr, cascadeTo);
+    }
+
+    if (attr === "pfe-theme") {
+      this.context_update();
     }
   }
 
@@ -190,7 +256,8 @@ class PFElement extends HTMLElement {
         else if (data.default) {
           const dependency_exists = this._hasDependency(tag, data.options);
           const no_dependencies =
-            !data.options || (data.options && !data.options.dependencies.length);
+            !data.options ||
+            (data.options && !data.options.dependencies.length);
           // If the dependency exists or there are no dependencies, set the default
           if (dependency_exists || no_dependencies) {
             this.setAttribute(attrName, data.default);
@@ -261,8 +328,10 @@ class PFElement extends HTMLElement {
           }
           // If it's the default slot, look for direct children not assigned to a slot
         } else {
-          result = [...this.children].filter(child => !child.hasAttribute("slot"));
-          
+          result = [...this.children].filter(
+            child => !child.hasAttribute("slot")
+          );
+
           if (result.length > 0) {
             slotObj.nodes = result;
             slotExists = true;
@@ -277,7 +346,7 @@ class PFElement extends HTMLElement {
         }
       }
     });
-    this.log("Slots validated.")
+    this.log("Slots validated.");
   }
 
   _queueAction(action) {
@@ -296,6 +365,7 @@ class PFElement extends HTMLElement {
     this[name] = value;
   }
 
+  // @TODO This is a duplicate function to cssVariable above, combine them
   static var(name, element = document.body) {
     return window
       .getComputedStyle(element)
@@ -320,6 +390,20 @@ class PFElement extends HTMLElement {
 
   log(...msgs) {
     PFElement.log(`[${this.tag}]`, ...msgs);
+  }
+
+  emitEvent(
+    name,
+    { bubbles = true, cancelable = false, composed = false, detail = {} } = {}
+  ) {
+    this.dispatchEvent(
+      new CustomEvent(name, {
+        bubbles,
+        cancelable,
+        composed,
+        detail
+      })
+    );
   }
 }
 

@@ -1,111 +1,38 @@
 @import "../../pfe-sass/pfe-sass";
+
 $LOCAL: cta;
 
-/* IE + EDGE only */
-[class^="pfe-cta"] {
-    display: inline-block;
+// ShadyCSS fallback styles
+pfe-cta {
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+    &:focus {
+      outline: none !important;
+    }
+  }
+  &[pfe-variant="wind"] a:hover {
+    text-decoration: underline !important;
+  }
 }
 
-/*************************/
-/** Set link tag styles for IE11 & EDGE **/
-[class^="pfe-cta"][class="PFElement"],
-.pfe-cta--wrapper {
-  a,
-  a:visited {
-      font-family: #{$pfe-global--font-family};
-      display: inline;
-      color:  #{pfe-local($cssvar: Color, $fallback: #{pfe-fallback(ui-link)})} !important;
-  }
-
-  &:hover input,
-  &:hover button,
-  &:hover a,
-  input:hover,
-  button:hover,
-  a:hover {
-      color: #{pfe-local($cssvar: Color--hover, $fallback: #{pfe-fallback(ui-link--hover)})} !important;
-  }
-
-  &:focus input,
-  &:focus button,
-  &:focus a,
-  input:focus,
-  button:focus,
-  a:focus {
-      color: #{pfe-local(
-        $cssvar: Color--focus, $fallback: #{pfe-fallback(ui-link--focus)},
+@include browser-query(ie11 edge) {
+  pfe-cta[pfe-priority] a,
+  pfe-cta[aria-disabled="true"] a {
+    padding: #{pfe-local(
+        $cssvar: Padding,
+        $fallback: #{pfe-var(container-padding)} calc(#{pfe-var(
+                container-padding
+              )} * 2)
       )} !important;
   }
 
-  a:focus {
-    outline: none !important;
-    &::before {  // inner border on priority CTAs
-      content: "";
-      display: block;
-      box-sizing: border-box;
-      border: 1px solid;
-      border-color: #{pfe-local(
-        $cssvar: inner--BorderColor, $fallback: #{pfe-fallback(ui-link--on-dark)},
-      )};
-      outline: none;
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      bottom: 2px;
-      right: 2px;
-      border-radius: 2px;
-    }
-
-    .pfe-cta--arrow {
-      fill: #{pfe-local(Color--focus)};
-    }
+  // Edge 17 & 18 arrow wrap
+  .pfe-cta--wrapper {
+    white-space: nowrap;
   }
-}
-
-[class^="pfe-cta"][class="PFElement"][pfe-priority], //ie11
-[pfe-priority] .pfe-cta--wrapper {
-  a,
-  input {
-    text-decoration: none;
-  }
-}
-
-[class^="pfe-cta"][class="PFElement"][pfe-priority="secondary"]  { //ie11
-  background-color: #{pfe-local(
-    $cssvar: BackgroundColor, $fallback: #{pfe-fallback(surface--lightest)}
-  )};
-}
-
-[class^="pfe-cta"][class="PFElement"][pfe-priority="secondary"], //ie11
-[pfe-priority="secondary"] .pfe-cta--wrapper {
-  input,
-  button,
-  a {
-      color: #{pfe-local($cssvar: Color, $fallback: #{pfe-fallback(surface--base--text)})} !important;
-  }
-
-  &:hover input,
-  &:hover button,
-  &:hover a,
-  input:hover,
-  button:hover,
-  a:hover {
-      color: #{pfe-local($cssvar: Color--hover, $fallback: #{pfe-fallback(ui-link--on-saturated)})} !important;
-  }
-}
-
-@include browser-query(ie11) {
-  pfe-cta.PFElement{
-    &[pfe-priority="primary"] {
-      a, a:visited, a:focus, a:hover {
-        color:  #{pfe-fallback(ui-link--on-saturated)} !important;
-      }
-    }
-    &[pfe-priority="primary"][pfe-color="lightest"],
-    &[pfe-priority="secondary"][pfe-variant="wind"] {
-      a, a:visited, a:focus, a:hover {
-        color:  #{pfe-fallback(ui-link)} !important;
-      }
-    }
+  .pfe-cta--wrapper > a,
+  .pfe-cta--wrapper > button {
+    white-space: normal;
   }
 }

@@ -1,7 +1,7 @@
 +++
 title = "Non-Supported Browsers"
 description = ""
-weight = 20
+weight = 9
 draft = true
 bref = ""
 toc = true

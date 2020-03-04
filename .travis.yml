@@ -1,18 +1,17 @@
 language: node_js
 sudo: false
 node_js:
-    - "9"
+  - "12"
 os:
-    - linux
-    - osx
+  - linux
 addons:
-    firefox: latest
-    chrome: stable
+  firefox: latest
+  chrome: stable
 script:
-    - npm test -- --verbose
+  - npm test -- --verbose
 cache:
-    directories:
-        - node_modules
+  directories:
+    - node_modules
 # matrix:
 #     exclude:
 #         - os: osx # skip this because on Travis, node.js segfaults on osx+node 9

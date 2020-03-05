@@ -1,4 +1,4 @@
-## Prerelease 39 ( TBD )
+## Prerelease 40 ( TBD )
 
 Tag: [v1.0.0-prerelease.40](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.40)
 

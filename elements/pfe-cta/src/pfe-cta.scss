@@ -129,15 +129,6 @@ $variables: (
   cursor: default !important;
 }
 
-// Default CTA fix for Firefox + arrow
-:host( :not([pfe-priority]):not([aria-disabled="true"]) ) {
-  .pfe-cta--wrapper {
-    @include browser-query(firefox) {
-      max-width: calc(100% - 8px - #{pfe-local($cssvar: size, $region: arrow)});
-    }
-  }
-}
-
 .pfe-cta {
   &--wrapper {
     display: block; 
@@ -150,7 +141,12 @@ $variables: (
       align-items: center;
       height: 100%;
     }
-
+    // Default CTA arrow wrap fix for Firefox
+    :host( :not([pfe-priority]):not([aria-disabled="true"])) & {
+      @include browser-query(firefox) {
+        max-width: calc(100% - 8px - #{pfe-local($cssvar: size, $region: arrow)});
+      }
+    }
     @include browser-query(edge) {
       button,
       input {

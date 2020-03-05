@@ -25,16 +25,13 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
 }
 
 .card-layout {
-  display: flex;
-  flex-flow: row wrap;
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, max-content));
+  width: 100%;
+  display: block;
+
 }
 
-.card-layout > pfe-cta,
-.card-layout .cta-align > pfe-cta {
-  margin-top: 10px;
+.card-layout > * {
+  margin-bottom: 20px;
 }
 
 .custom-dark-band {

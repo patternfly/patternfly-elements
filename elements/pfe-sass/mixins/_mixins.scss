@@ -15,7 +15,7 @@
         @content;
       }
     }
-    @if $browser==firefox {
+    @if $browser == firefox {
       @media all and (min--moz-device-pixel-ratio:0) { /* Mozilla Firefox (All) */
         @content;
       }

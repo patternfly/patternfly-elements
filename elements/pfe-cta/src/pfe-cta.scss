@@ -142,7 +142,7 @@ $variables: (
       height: 100%;
     }
     // Default CTA arrow wrap fix for Firefox
-    :host( :not([pfe-priority]):not([aria-disabled="true"])) & {
+    :host(:not([pfe-priority]):not([aria-disabled="true"])) & {
       @include browser-query(firefox) {
         max-width: calc(100% - 8px - #{pfe-local($cssvar: size, $region: arrow)});
       }

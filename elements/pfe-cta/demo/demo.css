@@ -18,20 +18,33 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
 }
 
 .resize {
+  display: flex;
+  flex-flow: row nowrap;
   resize: horizontal;
   overflow: auto;
   border: 1px solid #ddd;
+  width: 500px;
   padding: 10px;
 }
 
-.card-layout {
-  width: 100%;
-  display: block;
-
+.resize>pfe-cta:first-child {
+  margin-right: 20px;
 }
 
-.card-layout > * {
-  margin-bottom: 20px;
+.card-layout {
+  display: flex;
+  flex-flow: row wrap;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
+  margin-top: -10px;
+  margin-left: -20px;
+}
+
+.card-layout>pfe-cta,
+.card-layout .cta-align>pfe-cta {
+  margin-top: 10px;
+  margin-left: 20px;
 }
 
 .custom-dark-band {

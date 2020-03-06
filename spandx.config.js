@@ -1,6 +1,6 @@
 // If we have a .env file respect the LOCALHOST setting
 // If not default to localhost
-require('dotenv').config();
+require("dotenv").config();
 
 module.exports = {
   host: process.env.LOCALHOST || "localhost",

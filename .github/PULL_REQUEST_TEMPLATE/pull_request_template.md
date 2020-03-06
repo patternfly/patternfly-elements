@@ -47,10 +47,12 @@ Your repository infrastructure updates should work for at least:
 
 ### Ready-for-merge Checklist
 
-- [ ] Expected files: all files in this pull request are related to one request or issue (no stragglers or scope-creep)?
+Check off items as they are completed.  Feel free to delete items if they are not applicable to your PR.
+
+- [ ] Expected files: all files in this pull request are related to one request or issue (no stragglers or scope-creep).
 - [ ] Tests have been updated to cover these changes.
 - [ ] Browser testing passed.
-- [ ] Documentation (README.md, WHY.md, etc.) updated or added if necessary.
+- [ ] Documentation (README.md, WHY.md, etc.) updated or added.
 - [ ] Link to the demo recording: []()
 - [ ] Approved by designer.
 

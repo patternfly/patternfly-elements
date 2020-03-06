@@ -1,0 +1,23 @@
+name: automerge
+on:
+  pull_request:
+    types:
+      - labeled
+      - edited
+      - synchronized
+  status: {}
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: automerge
+        uses: "pascalgn/automerge-action@ccae530ae13b6af67a7a2009c266fe925844e658"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_LABELS: "Ready to merge, !work in progress, !needs discussion, !needs more info, !needs discovery, !needs code updates, !needs code review, !needs changelog, !needs browser testing, !needs branch testing, !Needs AT updates, !merge conflicts"
+          MERGE_REMOVE_LABELS: "Ready to merge"
+          MERGE_METHOD: "squash"
+          MERGE_COMMIT_MESSAGE: "Auto merge {pullRequest.number}"
+          MERGE_DELETE_BRANCH: "true"
+          UPDATE_LABELS: "Ready to merge"
+          UPDATE_METHOD: "rebase"

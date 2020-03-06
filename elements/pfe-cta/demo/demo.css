@@ -27,7 +27,7 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   padding: 10px;
 }
 
-.resize > pfe-cta:first-child {
+.resize>pfe-cta:first-child {
   margin-right: 20px;
 }
 
@@ -41,8 +41,8 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   margin-left: -20px;
 }
 
-.card-layout > pfe-cta,
-.card-layout .cta-align > pfe-cta {
+.card-layout>pfe-cta,
+.card-layout .cta-align>pfe-cta {
   margin-top: 10px;
   margin-left: 20px;
 }

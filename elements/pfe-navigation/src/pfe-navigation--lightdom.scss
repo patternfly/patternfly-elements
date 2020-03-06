@@ -166,6 +166,12 @@ $variables: map-merge($variables, $nav-light-dom-variables);
     pfe-navigation [slot="logo"] {
         max-width: 100%;
     }
+    .pfe-navigation--footer .pfe-navigation--column {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+            display: flex;
+            align-items: center;
+        }
+    }
 }
 
 @include browser-query(edge) {
@@ -269,6 +275,12 @@ $variables: map-merge($variables, $nav-light-dom-variables);
     }
     .pfe-navigation__logo {
         margin-right: 20px; // Account for collapsed padding-right: 20px;
+    }
+    .pfe-navigation--footer .pfe-navigation--column {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+            display: flex;
+            align-items: center;
+        }
     }
 }
 
@@ -446,20 +458,6 @@ pfe-navigation-item {
             display: -ms-grid;
             grid-template-columns: repeat(4, 1fr);
             -ms-grid-columns: 1fr 1fr 1fr 1fr;
-            align-items: center;
-        }
-    }
-    &--column {
-        @media (min-width: #{pfe-breakpoint(md)}) {
-            @include browser-query(ie11) {
-                display: flex;
-                align-items: center;
-            }
-        }
-        @media (min-width: #{pfe-breakpoint(lg)}) {
-            @include browser-query(ie11) {
-                display: block;
-            }
         }
     }
 }

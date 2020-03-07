@@ -1,0 +1,49 @@
+{
+  "name": "@patternfly/pfe-chip",
+  "description": "Chip element for PatternFly Elements",
+  "pfelement": {
+    "className": "PfeChip",
+    "elementName": "pfe-chip",
+    "files": {
+      "styles": "./src/pfe-chip.scss",
+      "template": "./src/pfe-chip.html",
+      "js": "./src/pfe-chip.js"
+    },
+    "assets": []
+  },
+  "version": "1.0.0-prerelease.39",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-chip"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/pfe-chip.umd.js",
+  "module": "./dist/pfe-chip.js",
+  "unpkg": "./dist/pfe-chip.umd.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-chip/test/"
+  },
+  "contributors": [
+    {
+      "name": "castastrophe"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@patternfly/pfe-sass": "1.0.0-prerelease.39",
+    "@patternfly/pfelement": "1.0.0-prerelease.39",
+    "gh-pages": "^2.2.0"
+  }
+}

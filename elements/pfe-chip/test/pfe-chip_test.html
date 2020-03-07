@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../dist/pfe-chip.js"></script>
+  </head>
+  <body>
+    <pfe-chip>
+      <!-- Default slot -->
+      <h2>This is pfe-chip</h2>
+      <!-- Named slots -->
+      <div slot="badge">BADGE slot</div>
+    </pfe-chip>
+
+    <!-- Preview different properties -->
+    <pfe-chip aria-label>
+      <h2>This is pfe-chip</h2>
+      <div slot="badge">BADGE slot</div>
+    </pfe-chip>
+
+    <pfe-chip  aria-labelledby>
+      <h2>This is pfe-chip</h2>
+      <div slot="badge">BADGE slot</div>
+    </pfe-chip>
+
+    <pfe-chip  aria-hidden>
+      <h2>This is pfe-chip</h2>
+      <div slot="badge">BADGE slot</div>
+    </pfe-chip>
+
+    <pfe-chip  read-only>
+      <h2>This is pfe-chip</h2>
+      <div slot="badge">BADGE slot</div>
+    </pfe-chip>
+
+    <pfe-chip  variant>
+      <h2>This is pfe-chip</h2>
+      <div slot="badge">BADGE slot</div>
+    </pfe-chip>
+
+    <script>
+      const elements = [...document.querySelectorAll("pfe-chip")];
+
+      suite("<pfe-chip>", () => {
+        test("it should upgrade", () => {
+          assert.instanceOf(
+            document.querySelector("pfe-chip"),
+            customElements.get("pfe-chip"),
+            "pfe-chip should be an instance of pfeChip"
+          );
+        });
+
+        // Write tests for each attribute
+        test("aria-label attribute is applied correctly", () => {
+          // Test that the attribute applied correctly
+          // assert.equal();
+        });
+        test(" aria-labelledby attribute is applied correctly", () => {
+          // Test that the attribute applied correctly
+          // assert.equal();
+        });
+        test(" aria-hidden attribute is applied correctly", () => {
+          // Test that the attribute applied correctly
+          // assert.equal();
+        });
+        test(" read-only attribute is applied correctly", () => {
+          // Test that the attribute applied correctly
+          // assert.equal();
+        });
+        test(" variant attribute is applied correctly", () => {
+          // Test that the attribute applied correctly
+          // assert.equal();
+        });
+
+        // Write tests for each slot
+        test("badge slot is working correctly", () => {
+          // Test that the attribute applied correctly
+          // assert.equal();
+        });
+
+      });
+    </script>
+  </body>
+</html>

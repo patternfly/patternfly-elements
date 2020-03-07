@@ -1,9 +1,25 @@
 $pfe-vars: (
   container-spacer:              16px,
   container-padding:             16px,
+
   content-spacer:                24px,
 
+  // Form spacer - only used in forms
+  form-spacer:  pfe-size-prem(6px),
+
+  // General spacers (from PatternFly)
+  spacer--xs:   pfe-size-prem(4px),
+  spacer--sm:   pfe-size-prem(8px),
+  spacer--md:   pfe-size-prem(16px),
+  spacer--lg:   pfe-size-prem(24px),
+  spacer--xl:   pfe-size-prem(32px),
+  spacer--2xl:  pfe-size-prem(48px),
+  spacer--3xl:  pfe-size-prem(64px),
+
   font-size:                     16px,
+  font-size--sm:                 14px,
+  font-size--xs:                 12px,
+
   line-height:                   1.5,
 
   font-family:                   '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',

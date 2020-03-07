@@ -24,6 +24,15 @@
   padding: #{pfe-var(container-spacer)};
 }
 
+%pseudo-alignment {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 %sr-only {
   position: absolute;
   overflow: hidden;

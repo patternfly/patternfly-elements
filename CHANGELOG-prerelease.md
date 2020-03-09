@@ -2,7 +2,8 @@
 
 Tag: [v1.0.0-prerelease.40](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.40)
 
-- [ ]( ) fix: Prevent default pfe-cta arrow from wrapping to a new line by itself (#679)
+- [7deb9bb](https://github.com/patternfly/patternfly-elements/commit/7deb9bb6227c0560b60a665ecd43b450db0f90e1) fix: Prevent default pfe-cta arrow from wrapping to a new line by itself (#679)
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-navigation cta overlap bug in IE11 (#766)
 
 
 ## Prerelease 39 ( 2020-02-19 )

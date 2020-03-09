@@ -52,8 +52,7 @@
         },
         "overflow": {
           "title": "Overflow",
-          "type": "boolean",
-          "default": false,
+          "type": "number",
           "prefixed": true
         }
       }

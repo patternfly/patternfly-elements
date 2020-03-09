@@ -1,25 +1,22 @@
 // Please see the pfe-sass README for guidance on using these tools
 @import "../../pfe-sass/pfe-sass";
 
-.pf-c-chip {
-  --pf-global--Color--200: var(--pf-global--Color--dark-200); // #737679
-  --pf-global--BorderColor--100: var(--pf-global--BorderColor--dark-100); // #d2d2d2
-  --pf-global--primary-color--100: var(--pf-global--primary-color--dark-100); // #06c
-  --pf-global--link--Color: var(--pf-global--link--Color--dark); // #06c
-  --pf-global--link--Color--hover: var(--pf-global--link--Color--dark--hover); // #004080
-  --pf-global--BackgroundColor--100: var(--pf-global--BackgroundColor--light-100); // #fff
-}
+// @TODO add disabled states?
 
 $LOCAL: chip;
 
 $variables: (
-  PaddingLeft:     pfe-var(spacer--sm),          // 8px --pf-global--spacer--sm
-  BackgroundColor: pfe-color(surface--lightest), // #fff --pf-global--Color--light-100
-  BorderColor:     pfe-color(surface--border--darkest), // #737679 --pf-global--secondary-color--100
-  BorderWidth:     pfe-var(ui--border-width),     // 1px --pf-global--BorderWidth--sm
-  BorderRadius:    pfe-var(ui--border-radius),    // 3px --pf-global--BorderRadius--sm
+  PaddingTop:      0,
+  PaddingRight:    0,
+  PaddingBottom:   0,
+  PaddingLeft:     pfe-var(spacer--sm), // 8px --pf-global--spacer--sm
 
-  BackgroundColor--overflow: var(--pf-global--BackgroundColor--300), // #ededed --pf-global--BackgroundColor--300
+  BackgroundColor: pfe-color(surface--lightest),        // #fff --pf-global--Color--light-100
+  BorderColor:     pfe-color(surface--border--darkest),  // #737679 --pf-global--secondary-color--100
+  BorderWidth:     pfe-var(ui--border-width),           // 1px --pf-global--BorderWidth--sm
+  BorderRadius:    pfe-var(ui--border-radius),          // 3px --pf-global--BorderRadius--sm
+
+  BackgroundColor--overflow: pfe-color(surface--lighter), // #ededed --pf-global--BackgroundColor--300
   PaddingLeft--overflow:     0,
   BorderWidth--overflow:     0,
 
@@ -28,29 +25,33 @@ $variables: (
   PaddingBottom--readonly:  pfe-var(form-spacer), // 6px --pf-global--spacer--form-element
   
   text: (
-    FontSize: pfe-var(font-size--xs), // 12px --pf-global--FontSize--xs
-    Color:    pfe-broadcasted(text),  // #151515 --pf-global--Color--100 aka --pf-global--Color--dark-100
+    FontSize: pfe-var(font-size--xs),   // 12px --pf-global--FontSize--xs
+    LineHeight: pfe-var(line-height),
+    Color:    pfe-broadcasted(text),    // #151515 --pf-global--Color--100 aka --pf-global--Color--dark-100
     MaxWidth: 7.5rem
   ),
 
   button : (
-    PaddingLeft:  pfe-var(spacer--sm),    // 8px --pf-global--spacer--sm
-    PaddingRight: pfe-var(spacer--sm),    // 8px --pf-global--spacer--sm
-    FontSize:     pfe-var(font-size--xs), // 12px --pf-global--FontSize--xs
+    PaddingTop:     pfe-var(form-spacer),
+    PaddingRight:   pfe-var(spacer--sm),    // 8px --pf-global--spacer--sm
+    PaddingBottom:  pfe-var(form-spacer),
+    PaddingLeft:    pfe-var(spacer--sm),    // 8px --pf-global--spacer--sm
+    
+    size:           pfe-var(font-size--xs), // 12px --pf-global--FontSize--xs
 
-  	BorderRadius--overflow: pfe-var(ui--border-radius), // 3px --pf-global--BorderRadius--sm
-  	BorderWidth--overflow:  0,
-  	PaddingLeft--overflow:  pfe-var(spacer--sm), // 8px --pf-global--spacer--sm
-    PaddingRight--overflow: pfe-var(spacer--sm), // 8px --pf-global--spacer--sm
+    BackgroundColor:           $pfelements--gray, // pfe-color(ui-complement),
+    BackgroundColor--hover:    pfe-color(ui-complement--hover),
+    BackgroundColor--focus:    pfe-color(ui-complement--hover),
+    BackgroundColor--active:   pfe-color(ui-complement--hover),
+    BackgroundColor--disabled: pfe-color(ui-disabled),
     
-  	BorderWidth--overflow--hover:   pfe-var(ui--border-width), // 1px --pf-global--BorderWidth--sm
-    BorderColor--overflow--hover:   pfe-color(surface--border--darkest), // #737679 --pf-global--secondary-color--100
-    
-  	BorderWidth--overflow--active:  pfe-var(ui--border-width), // 1px --pf-global--BorderWidth--sm
-    BorderColor--overflow--active:  pfe-color(surface--border--darkest), // #737679 --pf-global--secondary-color--100
-    
-  	BorderWidth--overflow--focus:   pfe-var(ui--border-width), // 1px --pf-global--BorderWidth--sm
-    BorderColor--overflow--focus:   pfe-color(surface--border--darkest) // #737679 --pf-global--secondary-color--100
+    BorderWidth:  0,
+    BorderColor:  pfe-color(surface--border--darkest), // #737679 --pf-global--secondary-color--100
+    BorderRadius: pfe-var(ui--border-radius), // 3px --pf-global--BorderRadius--sm
+
+    BorderWidth--overflow--hover:   pfe-var(ui--border-width), // 1px --pf-global--BorderWidth--sm
+    BorderWidth--overflow--active:  pfe-var(ui--border-width), // 1px --pf-global--BorderWidth--sm
+    BorderWidth--overflow--focus:   pfe-var(ui--border-width), // 1px --pf-global--BorderWidth--sm
   ),
 
   badge: (
@@ -64,9 +65,10 @@ $variables: (
   display: inline-flex;
   position: relative;
   align-items: center;
+  min-width: fit-content;
 
   color: pfe-broadcasted(text); // #151515 --pf-global--Color--100 aka --pf-global--Color--dark-100
-  padding-left: pfe-local(PaddingLeft);
+  padding: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft);
   list-style: none;
   background-color: pfe-local(BackgroundColor);
   border-radius: pfe-local(BorderRadius);
@@ -83,6 +85,11 @@ $variables: (
   display: none;
 }
 
+:host([on="dark"]),
+:host([on="saturated"]) {
+  --pfe-chip--BorderWidth: 0;
+}
+
 //-- Custom styles applied to slot's shadow element
 .pfe-chip {
   &__text {
@@ -93,46 +100,71 @@ $variables: (
   
     max-width: pfe-local($cssvar: MaxWidth, $region: text);
     font-size: pfe-local($cssvar: FontSize, $region: text);
+    line-height: pfe-local($cssvar: LineHeight, $region: text);
     color:     pfe-local($cssvar: Color, $region: text);    
   }
   &__badge {
     margin-left: pfe-local($cssvar: MarginLeft, $region: badge);
   }
-  &__button {
-    padding-right:  pfe-local($cssvar: PaddingRight, $region: button);
-    padding-left:   pfe-local($cssvar: PaddingLeft, $region: button);
-    font-size:      pfe-local($cssvar: FontSize, $region: button);
+  &__button,
+  &__close {
+    @extend %reset-button;
+
+    position: relative;
+    display:  inline-block;
+    text-align:  center;
+    white-space: nowrap;
+    user-select: none;
+
+    padding: pfe-local($cssvar: PaddingTop, $region: button) pfe-local($cssvar: PaddingRight, $region: button) pfe-local($cssvar: PaddingBottom, $region: button) pfe-local($cssvar: PaddingLeft, $region: button);
+
+    &::after {
+      @extend %pseudo-alignment;
+
+      border: pfe-local($cssvar: BorderWidth, $region: button) pfe-var(ui--border-style) pfe-local($cssvar: BorderColor, $region: button);
+      border-radius: pfe-local($cssvar: BorderRadius, $region: button);
+    }
+
+    // Close icon
+    svg {
+      display: inline-block;
+      height: calc(#{pfe-local($cssvar: size, $region: button)} * 1.5);
+      width: pfe-local($cssvar: size, $region: button);
+      line-height: 1;
+      vertical-align: -.125em;
+      fill: pfe-local($cssvar: BackgroundColor, $region: button);
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    @each $state in (hover, active, focus) {
+      &:#{$state} {
+        --pfe-chip__button--BorderWidth: #{pfe-local($cssvar: BorderWidth--#{$state}, $region: button)};
+        --pfe-chip__button--BackgroundColor: #{pfe-local($cssvar: BackgroundColor--#{$state}, $region: button)};
+        
+        // @TODO need a way to show state on dark contexts
+        :host([on="dark"]) &::after {
+          margin: 1px;
+        }
+      }
+    }
   }
-}
-
-:host([pfe-overflow]) {
-  --pfe-chip--PaddingLeft:     #{pfe-local(PaddingLeft--overflow)};
-  --pfe-chip--BackgroundColor: #{pfe-local(BackgroundColor--overflow)};
-  --pfe-chip--BorderWidth:     #{pfe-local(BorderWidth--overflow)};
-
-  --pfe-chip__button--PaddingRight: #{pfe-local($cssvar: PaddingRight--overflow, $region: button)};
-  --pfe-chip__button--PaddingLeft:  #{pfe-local($cssvar: PaddingLeft--overflow, $region: button)};
-  --pfe-chip__button--Border:       #{pfe-local($cssvar: BorderWidth--overflow, $region: button)} solid #{pfe-local($cssvar: BorderColor--overflow--active, $region: button)};
-  --pfe-chip__button--BorderRadius: #{pfe-local($cssvar: BorderRadius--overflow, $region: button)};
-}
-
-:host([pfe-overflow]:hover) {
-  --pfe-chip__button--BorderWidth--overflow: #{pfe-local($cssvar: BorderWidth--overflow--hover, $region: button)};
-  --pfe-chip__button--BorderColor--overflow: #{pfe-local($cssvar: BorderColor--overflow--hover, $region: button)};
-}
-
-:host([pfe-overflow]:active) {
-  --pfe-chip__button--BorderWidth--overflow: #{pfe-local($cssvar: BorderWidth--overflow--active, $region: button)};
-  --pfe-chip__button--BorderColor--overflow: #{pfe-local($cssvar: BorderColor--overflow--active, $region: button)};
-}
-
-:host([pfe-overflow]:focus) {
-  --pfe-chip__button--BorderWidth--overflow: #{pfe-local($cssvar: BorderWidth--overflow--focus, $region: button)};
-  --pfe-chip__button--BorderColor--overflow: #{pfe-local($cssvar: BorderColor--overflow--focus, $region: button)};
 }
 
 :host([pfe-read-only]) {
   --pfe-chip--PaddingTop:     #{pfe-local(PaddingTop--readonly)};
   --pfe-chip--PaddingRight:   #{pfe-local(PaddingRight--readonly)};
   --pfe-chip--PaddingBottom:  #{pfe-local(PaddingBottom--readonly)};
+}
+
+:host([pfe-overflow]) {
+  --pfe-chip--PaddingLeft:     #{pfe-local(PaddingLeft--overflow)};
+  --pfe-chip--BackgroundColor: #{pfe-local(BackgroundColor--overflow)};
+  --pfe-chip--BorderWidth:     #{pfe-local(BorderWidth--overflow)};
+  
+  @each $state in (hover, active, focus) {
+    --pfe-chip__button--BorderWidth--#{$state}: #{pfe-local($cssvar: BorderWidth--overflow--#{$state}, $region: button)};
+  }
 }

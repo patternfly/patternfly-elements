@@ -1,5 +1,6 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeBadge from "../../pfe-badge/dist/pfe-badge.js";
+import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 
 class PfeChip extends PFElement {
   static get tag() {
@@ -18,8 +19,31 @@ class PfeChip extends PFElement {
     return "pfe-chip.scss";
   }
 
+  get printCloseButton() {
+    return !this.props["read-only"].value && !this.props["overflow"].value;
+  }
+
+  hide() {
+    this.setAttribute("hidden", "");
+  }
+
+  show() {
+    this.removeAttribute("hidden");
+  }
+
+  delete() {
+    this.parentNode.removeChild(this);
+  }
+
+  static get events() {
+    return {
+      close: `${this.tag}:close`,
+      load: `${this.tag}:load`
+    };
+  }
+
   static get observedAttributes() {
-    return ["pfe-read-only", "pfe-variant"];
+    return ["pfe-read-only", "pfe-overflow"];
   }
 
   // Declare the type of this component
@@ -30,31 +54,44 @@ class PfeChip extends PFElement {
   constructor() {
     super(PfeChip, { type: PfeChip.PfeType });
 
-    this._badge = this.shadowRoot.querySelector(`.${this.tag}__badge`);
+    this._text = this.shadowRoot.querySelector(`.${this.tag}__text`);
+    this._badge = this.shadowRoot.querySelector(`pfe-badge`);
+    this._close = this.shadowRoot.querySelector(`.${this.tag}__close`);
+    this._add = this.shadowRoot.querySelector(`.${this.tag}__button`);
 
     this._init = this._init.bind(this);
+    this._clickHandler = this._clickHandler.bind(this);
+    this._keyupHandler = this._keyupHandler.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    // If you need to initialize any attributes, do that here
-
     this.badge = this.querySelector(`[slot="${this.tag}--badge"]`);
-    this._pfeBadge = this.shadowRoot.querySelector(`pfe-badge`);
 
     // Add a slotchange listener to the lightDOM trigger
     if (this.badge) {
       this.badge.addEventListener("slotchange", this._init);
     }
 
-    this._init();
-  }
+    // @TODO load icon using pfe-icon instead of hardcoding SVG
+    // Promise.all([
+    //   customElements.whenDefined(PfeIcon.tag)
+    // ]).then(() => {
+    //   // Set up font-awesome icon set
+    //   if(!PfeIcon._iconSets["fas"]) {
+    //     PfeIcon.addIconSet(
+    //       "fas",
+    //       "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid",
+    //       (iconName, setName, path) => {
+    //         const name = iconName.replace("fas-", "");
+    //         return `${path}/${name}.svg`;
+    //       }
+    //     );
+    //   }
+    // });
 
-  disconnectedCallback() {
-    if (this.badge) {
-      this.badge.removeEventListener("slotchange", this._init);
-    }
+    this._init();
   }
 
   // Process the attribute change
@@ -63,13 +100,73 @@ class PfeChip extends PFElement {
   }
 
   _init() {
+    // Capture the text content and move it to the Shadow DOM
+    if (this.firstChild && this.firstChild.textContent.trim()) {
+      this._text.textContent = this.firstChild.textContent.trim();
+    } else if (
+      this.firstElementChild &&
+      this.firstElementChild.textContent.trim()
+    ) {
+      this._text.textContent = this.firstElementChild.textContent.trim();
+    }
+
+    // If the badge element exists, check that it's value is numeric
     if (this.badge) {
       const badgeContent = this.badge.textContent;
       if (isNaN(badgeContent)) {
         console.warn(`${this.tag}: The badge content must be numeric.`);
       } else {
-        this._pfeBadge.setAttribute("number", this.badge.textContent);
+        this._badge.setAttribute("number", this.badge.textContent);
       }
+    }
+
+    // If this is not a read-only chip, attach event listeners
+    if (this._close) {
+      this._close.addEventListener("click", this._clickHandler);
+      this._close.addEventListener("keyup", this._keyupHandler);
+    }
+
+    // If this is not a read-only chip, attach event listeners
+    if (this._add) {
+      this._add.addEventListener("click", this._clickHandler);
+      this._add.addEventListener("keyup", this._keyupHandler);
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.badge) {
+      this.badge.removeEventListener("slotchange", this._init);
+    }
+
+    if (this._close) {
+      this._close.removeEventListener("click", this._clickHandler);
+      this._close.removeEventListener("keyup", this._keyupHandler);
+    }
+
+    if (this._add) {
+      this._add.removeEventListener("click", this._clickHandler);
+      this._add.removeEventListener("keyup", this._keyupHandler);
+    }
+  }
+
+  _clickHandler(event) {
+    if (!this.props.overflow) {
+      this.emitEvent(PfeChip.events.close);
+    } else {
+      this.emitEvent(PfeChip.events.load);
+    }
+  }
+
+  _keyupHandler(event) {
+    let key = event.key || event.keyCode;
+    switch (key) {
+      case "Enter":
+      case 13:
+        if (!this.props.overflow) {
+          this.emitEvent(PfeChip.events.close);
+        } else {
+          this.emitEvent(PfeChip.events.load);
+        }
     }
   }
 }

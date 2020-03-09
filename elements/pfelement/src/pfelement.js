@@ -139,6 +139,16 @@ class PFElement extends HTMLElement {
       });
     }
 
+    if (typeof this.props === "object") {
+      this._mapSchemaToProperties(this.tag, this.props);
+      this.log(`Properties attached.`);
+    }
+
+    if (typeof this.slots === "object") {
+      this._mapSchemaToSlots(this.tag, this.slots);
+      this.log(`Slots attached.`);
+    }
+
     if (!delayRender) {
       this.log(`Render...`);
       this.render();
@@ -162,16 +172,6 @@ class PFElement extends HTMLElement {
     // https://github.com/angular/angular/issues/15399#issuecomment-318785677
     this.classList.add("PFElement");
     this.setAttribute("pfelement", "");
-
-    if (typeof this.props === "object") {
-      this._mapSchemaToProperties(this.tag, this.props);
-      this.log(`Properties attached.`);
-    }
-
-    if (typeof this.slots === "object") {
-      this._mapSchemaToSlots(this.tag, this.slots);
-      this.log(`Slots attached.`);
-    }
 
     if (this._queue.length) {
       this._processQueue();
@@ -233,11 +233,17 @@ class PFElement extends HTMLElement {
       if (typeof data === "object") {
         // Prefix default is true
         let hasPrefix = true;
+        let isBoolean = data.type && data.type.toUpperCase() === "BOOLEAN";
         let attrName = attr;
         // Set the attribute's property equal to the schema input
         this[attr] = data;
-        // Initialize the value to null
-        this[attr].value = null;
+
+        // Initialize the value
+        if (isBoolean) {
+          this[attr].value = data.default || false;
+        } else {
+          this[attr].value = null;
+        }
 
         if (typeof this[attr].prefixed !== "undefined") {
           hasPrefix = this[attr].prefixed;
@@ -250,7 +256,16 @@ class PFElement extends HTMLElement {
         // If the attribute exists on the host
         if (this.hasAttribute(attrName)) {
           // Set property value based on the existing attribute
-          this[attr].value = this.getAttribute(attrName);
+          let value = this.getAttribute(attrName);
+          if (isBoolean) {
+            if (value === "" || value === "true" || value === true) {
+              this[attr].value = true;
+            } else {
+              this[attr].value = false;
+            }
+          } else {
+            this[attr].value = value;
+          }
         }
         // Otherwise, look for a default and use that instead
         else if (data.default) {

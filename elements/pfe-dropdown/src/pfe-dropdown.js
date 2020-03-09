@@ -30,6 +30,10 @@ class PfeDropdown extends PFElement {
     return ["pfe-label", "disabled"];
   }
 
+  get disabled() {
+    return this.hasAttribute("disabled");
+  }
+
   constructor() {
     super(PfeDropdown);
 
@@ -54,16 +58,21 @@ class PfeDropdown extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-    if (this.children.length) {
-      customElements.whenDefined(PfeDropdown.tag).then(() => {
-        //document.addEventListener("click", this._outsideClickHandler);
-        this._toggle.addEventListener("click", this._clickHandler);
-        this._toggle.addEventListener("keydown", this._toggleKeydownHandler);
-        this._allItems().forEach(item => {
-          item.addEventListener("keydown", this._itemKeydownHandler);
-        });
-      });
-    }
+
+    Promise.all([
+      customElements.whenDefined(PfeDropdown.tag),
+      customElements.whenDefined(PfeDropdownItem.tag)
+    ]).then(() => {
+      if (this.children.length) {
+        if (!this.disabled) {
+          this._toggle.addEventListener("click", this._clickHandler);
+          this._toggle.addEventListener("keydown", this._toggleKeydownHandler);
+          this._allItems().forEach(item => {
+            item.addEventListener("keydown", this._itemKeydownHandler);
+          });
+        }
+      }
+    });
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -139,6 +148,10 @@ class PfeDropdown extends PFElement {
     }
 
     if (newItem) {
+      if (newItem.hasAttribute("disabled")) {
+        newItem = this._skipItem();
+      }
+      newItem.setAttribute("tabindex", "-1");
       newItem.focus();
     }
 
@@ -147,13 +160,14 @@ class PfeDropdown extends PFElement {
 
   _itemKeydownHandler(event) {
     let newItem;
-
-    const pfeType = event.target.parentElement.attributes["pfe-type"].value;
+    const pfeType = event.target.attributes["pfe-type"].value;
 
     switch (event.keyCode) {
       case KEYCODE.ENTER:
         if (pfeType === "action") {
           this._selectItem(event);
+        } else {
+          event.target.children[0].click();
         }
         break;
 
@@ -184,8 +198,13 @@ class PfeDropdown extends PFElement {
     }
 
     if (newItem) {
+      if (newItem.hasAttribute("disabled")) {
+        newItem = this._skipItem();
+      }
+      newItem.setAttribute("tabindex", "-1");
       newItem.focus();
     }
+    return this;
   }
 
   // TODO: This logic doesn't work as the (this._container.contains(path[0])) always return false
@@ -199,7 +218,7 @@ class PfeDropdown extends PFElement {
   _allItems() {
     return [
       ...this.querySelectorAll(`${this.tag}-item:not([pfe-type='seperator'])`)
-    ].map(item => item.children[0]);
+    ];
   }
 
   _prevItem() {
@@ -222,6 +241,12 @@ class PfeDropdown extends PFElement {
     const items = this._allItems();
     let newIdx = items.findIndex(item => item === document.activeElement) + 1;
     return items[newIdx % items.length];
+  }
+
+  _skipItem() {
+    const items = this._allItems();
+    let newIdx = items.findIndex(item => item === document.activeElement) + 1;
+    return items[(newIdx % items.length) + 1];
   }
 
   _selectItem(event) {

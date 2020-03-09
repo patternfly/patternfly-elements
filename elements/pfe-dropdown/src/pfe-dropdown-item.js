@@ -47,11 +47,9 @@ class PfeDropdownItem extends PFElement {
       case "link":
         this._container.setAttribute("role", "none");
         this._item.setAttribute("role", "menuitem");
-        this._item.setAttribute("tabindex", "-1");
         break;
       case "action":
         this._container.setAttribute("role", "menuitem");
-        this._container.setAttribute("tabindex", "-1");
         this._item.removeAttribute("role");
         break;
       case "seperator":

@@ -62,6 +62,24 @@ class PfeTabs extends PFElement {
     this._onClick = this._onClick.bind(this);
     this._linkPanels = this._linkPanels.bind(this);
     this._observer = new MutationObserver(this._init);
+
+    // window.addEventListener("popstate", e => {
+    //   let urlParams;
+    //
+    //   if (window.URLSearchParams) {
+    //     urlParams = new URLSearchParams(window.location.search);
+    //   }
+    //
+    //   if (urlParams && urlParams.has(this.id)) {
+    //     const tabIndex = this._allTabs().findIndex(
+    //       tab => tab.id === urlParams.get(this.id)
+    //     );
+    //
+    //     this.selectedIndex = tabIndex !== -1 ? tabIndex : 0;
+    //   } else if (!this.hasAttribute("selected-index")) {
+    //     this.selectedIndex = 0;
+    //   }
+    // });
   }
 
   connectedCallback() {
@@ -169,6 +187,14 @@ class PfeTabs extends PFElement {
       return;
     }
 
+    console.log("update the url");
+    // rebuild the url
+    const pathname = window.location.pathname;
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("tabsetOne", tab.id);
+    const hash = window.location.hash;
+    history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
+
     this._selectTab(tab);
   }
 
@@ -177,7 +203,21 @@ class PfeTabs extends PFElement {
       this.setAttribute("role", "tablist");
     }
 
-    if (!this.hasAttribute("selected-index")) {
+    let urlParams;
+
+    // @IE11 doesn't support URLSearchParams
+    // https://caniuse.com/#search=urlsearchparams
+    if (window.URLSearchParams) {
+      urlParams = new URLSearchParams(window.location.search);
+    }
+
+    if (urlParams && urlParams.has(this.id)) {
+      const tabIndex = this._allTabs().findIndex(
+        tab => tab.id === urlParams.get(this.id)
+      );
+
+      this.selectedIndex = tabIndex !== -1 ? tabIndex : 0;
+    } else if (!this.hasAttribute("selected-index")) {
       this.selectedIndex = 0;
     }
 

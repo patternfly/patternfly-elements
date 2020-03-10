@@ -166,6 +166,12 @@ $variables: map-merge($variables, $nav-light-dom-variables);
     pfe-navigation [slot="logo"] {
         max-width: 100%;
     }
+    .pfe-navigation--footer .pfe-navigation--column {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+            display: flex;
+            align-items: center;
+        }
+    }
 }
 
 @include browser-query(edge) {
@@ -269,6 +275,12 @@ $variables: map-merge($variables, $nav-light-dom-variables);
     }
     .pfe-navigation__logo {
         margin-right: 20px; // Account for collapsed padding-right: 20px;
+    }
+    .pfe-navigation--footer .pfe-navigation--column {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+            display: flex;
+            align-items: center;
+        }
     }
 }
 
@@ -380,30 +392,36 @@ pfe-navigation-item {
         }
     }
     &--footer:not(:empty) {
-        margin:   calc(#{pfe-var(container-spacer, $fallback: 16px)} * 2) 0 10px !important;
+        margin:   calc(#{pfe-var(container-padding, $fallback: 16px)} * 2) 0 calc(#{pfe-var(container-padding, $fallback: 16px)} * 1.5);
         border-top: 1px solid lightgray;
-        padding:   calc(#{pfe-var(container-spacer, $fallback: 16px)} * 2) 0 0;
+        padding:   calc(#{pfe-var(container-padding, $fallback: 16px)} * 2.5) 0 0;
 
         >*:not(:last-child) {
             margin-bottom: 32px;
         }
 
         >* {
-            flex: 45%;
+            flex: 0 1 45%;
         }
 
         @media (min-width: #{pfe-breakpoint(sm)}) {
             display: flex;
             flex-wrap: wrap;
-            align-items: baseline;
+            align-items: center;
+            justify-content: space-between;
 
             >*:not(:last-child) {
                 margin-bottom: 0;
             }
 
-            >*:nth-child(3) {
+            >*:nth-child(3),
+            >*:nth-child(4) {
                 margin-top: 32px;
             }
+        }
+
+        @media (min-width: #{pfe-breakpoint(md)}) {
+            justify-content: flex-start;
         }
 
         @media (min-width: #{pfe-breakpoint(lg)}) {
@@ -411,18 +429,7 @@ pfe-navigation-item {
             display: grid;
             grid-gap: 32px;
             grid-auto-flow: column;
-
-            >*:nth-child(3) {
-                margin-top: 0;
-            }
-        }
-
-        @media (min-width: #{pfe-breakpoint(xl)}) {
-            padding-bottom: 0;
-            display: -ms-grid;
-            grid-template-columns: repeat(4, 1fr);
             -ms-grid-columns: 1fr 1fr 1fr 1fr;
-            align-items: center;
 
             .pfe-navigation--column:nth-child(1) {
                 -ms-grid-column: 1;
@@ -438,7 +445,19 @@ pfe-navigation-item {
 
             .pfe-navigation--column:nth-child(4) {
                 -ms-grid-column: 4;
+            }               
+
+            >*:nth-child(3),
+            >*:nth-child(4) {
+                margin-top: 0;
             }
+        }
+
+        @media (min-width: #{pfe-breakpoint(xl)}) {
+            padding-bottom: 0;
+            display: -ms-grid;
+            grid-template-columns: repeat(4, 1fr);
+            -ms-grid-columns: 1fr 1fr 1fr 1fr;
         }
     }
 }

@@ -111,8 +111,14 @@ class PfeChip extends PFElement {
     }
 
     // If the badge element exists, check that it's value is numeric
+    let badgeContent = "";
     if (this.badge) {
-      const badgeContent = this.badge.textContent;
+      badgeContent = this.badge.textContent;
+    } else if (this.props.badge) {
+      badgeContent = this.props.badge.value;
+    }
+
+    if (badgeContent) {
       if (isNaN(badgeContent)) {
         console.warn(`${this.tag}: The badge content must be numeric.`);
       } else {

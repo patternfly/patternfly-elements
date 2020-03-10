@@ -6,29 +6,36 @@ import PfeChip from "../dist/pfe-chip";
 
 const stories = storiesOf("Chip", module);
 
+// Add the documentation
+import about from "../README.md";
+
+stories.addParameters({
+  notes: {
+    About: about
+  }
+});
+
 // Define the template to be used
 const template = (data = {}) => {
   return tools.component(PfeChip.tag, data.prop, data.slots);
 };
 
-// Use these to get dynamically generated content
-// const defaultHeading = tools.autoHeading(true);
-const defaultContent = tools.autoContent(1, 2);
+let defaultContent = "Chip";
 
 stories.addDecorator(bridge.withKnobs);
 
 stories.add(PfeChip.tag, () => {
   let config = {};
-  const props = PfeChip.properties;
 
-  //-- Set any custom defaults just for storybook here
+  const props = PfeChip.properties;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, bridge);
 
   const slots = PfeChip.slots;
 
-  //-- Set any custom content for the slots here
+  slots.badge.title = "Optional badge count";
+  slots.badge.type = "number";
 
   // Trigger the auto generation of the knobs for slots
   config.has = tools.autoContentKnobs(slots, bridge);
@@ -36,13 +43,8 @@ stories.add(PfeChip.tag, () => {
   //-- Build your slots here using config.has["badge"] to get user content
   // prettier-ignore
   config.slots = [{
-    content: defaultContent
+    content: config.has.default || defaultContent
   }];
-
-  //-- Reset default values show they don't render in the markup
-  // if (config.prop["aria-label"] === "default") {
-  //   config.prop["aria-label"] = "";
-  // }
 
   const rendered = template(config);
   return tools.preview(rendered);

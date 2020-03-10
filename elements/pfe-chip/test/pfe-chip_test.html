@@ -12,31 +12,21 @@
       <!-- Default slot -->
       <h2>This is pfe-chip</h2>
       <!-- Named slots -->
-      <div slot="badge">BADGE slot</div>
+      <div slot="pfe-chip--badge">7</div>
     </pfe-chip>
 
     <!-- Preview different properties -->
-    <pfe-chip aria-label>
+    <pfe-chip pfe-read-only>
       <h2>This is pfe-chip</h2>
       <div slot="badge">BADGE slot</div>
     </pfe-chip>
 
-    <pfe-chip  aria-labelledby>
+    <pfe-chip pfe-overflow="4">
       <h2>This is pfe-chip</h2>
       <div slot="badge">BADGE slot</div>
     </pfe-chip>
 
-    <pfe-chip  aria-hidden>
-      <h2>This is pfe-chip</h2>
-      <div slot="badge">BADGE slot</div>
-    </pfe-chip>
-
-    <pfe-chip  read-only>
-      <h2>This is pfe-chip</h2>
-      <div slot="badge">BADGE slot</div>
-    </pfe-chip>
-
-    <pfe-chip  variant>
+    <pfe-chip pfe-badge="7">
       <h2>This is pfe-chip</h2>
       <div slot="badge">BADGE slot</div>
     </pfe-chip>
@@ -54,23 +44,15 @@
         });
 
         // Write tests for each attribute
-        test("aria-label attribute is applied correctly", () => {
+        test("pfe-read-only attribute is applied correctly", () => {
           // Test that the attribute applied correctly
           // assert.equal();
         });
-        test(" aria-labelledby attribute is applied correctly", () => {
+        test("pfe-overflow attribute is applied correctly", () => {
           // Test that the attribute applied correctly
           // assert.equal();
         });
-        test(" aria-hidden attribute is applied correctly", () => {
-          // Test that the attribute applied correctly
-          // assert.equal();
-        });
-        test(" read-only attribute is applied correctly", () => {
-          // Test that the attribute applied correctly
-          // assert.equal();
-        });
-        test(" variant attribute is applied correctly", () => {
+        test("pfe-badge attribute is applied correctly", () => {
           // Test that the attribute applied correctly
           // assert.equal();
         });

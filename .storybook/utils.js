@@ -24,7 +24,7 @@ String.prototype.sentenceCase = function() {
 };
 
 // Print attributes based on an object
-export const listProperties = (obj) =>
+export const listProperties = obj =>
   Object.entries(obj)
     .map(set => {
       let string = " ";
@@ -43,22 +43,11 @@ export const listProperties = (obj) =>
       }
 
       // If printing is allowed, the value exists and is not null
-      if (
-        print &&
-        typeof v !== "undefined" &&
-        (v !== null && v !== "null")
-      ) {
+      if (print && typeof v !== "undefined" && v !== null && v !== "null") {
         string += p;
-        // If the value is a string and the value is not equal to the string "true"
-        if (typeof v === "string" && v !== "true") {
-          string += "=";
-          if (typeof v === "string") {
-            // If it's a string, use quotation marks around it
-            string += `"${v}"`;
-          } else {
-            // Use, use it raw
-            string += v;
-          }
+        // If the value is not a boolean and the value is not equal to the string "true"
+        if (typeof v !== "boolean" && v !== "true") {
+          string += `="${v}"`;
         }
       }
       return string;
@@ -81,7 +70,7 @@ export function customTag(obj) {
     // If a tag is defined, use that, else use a div
     if (obj.tag) {
       start += `<${obj.tag}`;
-      end   += !selfClosing.includes(obj.tag) ? `</${obj.tag}>` : "";
+      end += !selfClosing.includes(obj.tag) ? `</${obj.tag}>` : "";
     } else {
       start += "<div";
       end += "</div>";
@@ -90,7 +79,9 @@ export function customTag(obj) {
     start += obj.attributes ? listProperties(obj.attributes || {}) : "";
     start += !selfClosing.includes(obj.tag) ? ">" : "/>";
   }
-    return `${start}${typeof obj.content !== "undefined" ? obj.content || autoContent() : ""}${end}`;
+  return `${start}${
+    typeof obj.content !== "undefined" ? obj.content || autoContent() : ""
+  }${end}`;
 }
 
 const parseMarkup = string => {
@@ -154,7 +145,7 @@ const renderSlots = (slots = []) =>
         let parsed = parseMarkup(slot.content);
         Object.assign(slot, parsed);
       }
-      return slot.content || slot.tag && selfClosing.includes(slot.tag)
+      return slot.content || (slot.tag && selfClosing.includes(slot.tag))
         ? customTag({
             tag: slot.tag,
             slot: slot.slot,
@@ -168,7 +159,7 @@ const renderSlots = (slots = []) =>
 // Creates a component dynamically based on inputs
 export function component(tag, attributes = {}, slots = [], noSlot = false) {
   return `<${tag}${listProperties(attributes)}>${
-    slots.length > 0 ? renderSlots(slots) : (!noSlot) ? autoContent() : ""
+    slots.length > 0 ? renderSlots(slots) : !noSlot ? autoContent() : ""
   }</${tag}>`;
 }
 
@@ -221,7 +212,7 @@ export function autoPropKnobs(properties, bridge) {
       prefixed = false;
     }
 
-    if(prefixed) {
+    if (prefixed) {
       attr = `pfe-${attr}`;
     }
 
@@ -253,8 +244,12 @@ export function autoPropKnobs(properties, bridge) {
         // Create the knob
         binding[attr] = bridge.select(title, opts, defaultValue, "Attributes");
       } else {
-        // Create the knob
-        binding[attr] = bridge[method](title, defaultValue, "Attributes");
+        if (method === "number") {
+          binding[attr] = bridge[method](title, defaultValue, {}, "Attributes");
+        } else {
+          // Create the knob
+          binding[attr] = bridge[method](title, defaultValue, "Attributes");
+        }
       }
     }
   });
@@ -266,7 +261,16 @@ export function autoContentKnobs(slots, bridge) {
   let binding = {};
 
   Object.entries(slots).forEach(slot => {
-    binding[slot[0]] = bridge.text(slot[1].title, slot[1].default, "Content");
+    if (slot[1].type === "number") {
+      binding[slot[0]] = bridge.number(
+        slot[1].title,
+        slot[1].default,
+        {},
+        "Content"
+      );
+    } else {
+      binding[slot[0]] = bridge.text(slot[1].title, slot[1].default, "Content");
+    }
   });
 
   return binding;

@@ -54,6 +54,11 @@
           "title": "Overflow",
           "type": "number",
           "prefixed": true
+        },
+        "badge": {
+          "title": "Badge",
+          "type": "number",
+          "prefixed": true
         }
       }
     }

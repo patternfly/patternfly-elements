@@ -1,14 +1,12 @@
-# Project name
-_NOTE:_ Please convert this file to WHY.md and save it in the folder for the elements it references (i.e., `elements/pfe-cta/WHY.md`).
+# PatternFly 4 Chip component
 
 |  |  |
 | --- | --- |
-| **Brief description of the project** |  | 
-| **Design wireframes / mock-ups** |  | 
-| **Relavant project management links** |  | 
+| **Brief description of the project** | Convert the chip component from PatternFly 4 into a web component. | 
+| **Design wireframes / mock-ups** | [PatternFly 4 Chip component](https://pf4.patternfly.org/documentation/core/components/chip) | 
 
 ## MVP Requirements
-This project's primary goal is to...
+This project's primary goal is to create a chip component based on the mark-up and styles of PatternFly 4.
 
 ## Questions to answer
 - What **existing** components do we need to **update** to accomplish this project's main goal?
@@ -18,10 +16,7 @@ This project's primary goal is to...
     3. Combo components:
 
 ## Notes about styles
-* [Check w/ Design System Collaborative for Designs](https://github.com/patternfly/patternfly-unified-design-kit/projects/1)
-* [Check PF4](https://docs.google.com/spreadsheets/d/1P9iYwguDy2EnIS-Iw5ynX1Dn6FdKOR8GeZNaXGI_LNA/edit#gid=289588122)
-
-The styles for this component should...
+* [PatternFly 4 Chip component](https://pf4.patternfly.org/documentation/core/components/chip)
 
 ## Accessibility requirements
 As a screen-reader user, this component should...

@@ -1,9 +1,17 @@
-## Prerelease 40 ( TBD )
+## Prerelease 41 ( TBD )
+
+Tag: [v1.0.0-prerelease.41](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.41)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Generator needs to convert slot-name to camelCase in js file if dash exists
+
+## Prerelease 40 ( 2020-03-10 )
 
 Tag: [v1.0.0-prerelease.40](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.40)
 
-- [7deb9bb](https://github.com/patternfly/patternfly-elements/commit/7deb9bb6227c0560b60a665ecd43b450db0f90e1) fix: Prevent default pfe-cta arrow from wrapping to a new line by itself (#679)
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Generator needs to convert slot-name to camelCase in js file if dash exists
+- [d0c2a45](https://github.com/patternfly/patternfly-elements/commit/d0c2a4526ec3fc15339bd4ec393364486a260c84) fix: pfe-navigation cta overlap bug in IE11 (#766)
+- [eb4a9f6](https://github.com/patternfly/patternfly-elements/commit/eb4a9f63514ad9635d1b195e89d596c3feaf2201) chore: Prettier updates (#770) 
+- [7deb9bb](https://github.com/patternfly/patternfly-elements/commit/7deb9bb6227c0560b60a665ecd43b450db0f90e1) fix: Prevent default pfe-cta arrow from wrapping to a new line by itself #679 (#765)
+- [ba9d8b2](https://github.com/patternfly/patternfly-elements/commit/ba9d8b2cfed50580671041778d3d00cb5d5741d1) chore: Fixed invalid Markdown, was missing a back tic (#762)
 
 ## Prerelease 39 ( 2020-02-19 )
 

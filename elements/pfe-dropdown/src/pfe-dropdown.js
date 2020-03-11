@@ -34,11 +34,17 @@ class PfeDropdown extends PFElement {
     return this.hasAttribute("disabled");
   }
 
+  set pfeDropdownOptions(options) {
+    this._modifyDOM(options);
+  }
+
   constructor() {
     super(PfeDropdown);
 
     // state
     this.isOpen = false;
+
+    this._init = this._init.bind(this);
 
     // elements
     this._container = this.shadowRoot.querySelector(`#${this.tag}-container`);
@@ -64,16 +70,7 @@ class PfeDropdown extends PFElement {
       customElements.whenDefined(PfeDropdown.tag),
       customElements.whenDefined(PfeDropdownItem.tag)
     ]).then(() => {
-      if (this.children.length) {
-        if (!this.disabled) {
-          this._toggle.addEventListener("click", this._clickHandler);
-          this._toggle.addEventListener("keydown", this._toggleKeydownHandler);
-          this._allItems().forEach(item => {
-            item.addEventListener("keydown", this._itemKeydownHandler);
-            item.addEventListener("click", this._itemClickHandler);
-          });
-        }
-      }
+      this._init();
     });
   }
 
@@ -101,43 +98,27 @@ class PfeDropdown extends PFElement {
     }
   }
 
-  _setDisabled() {
-    const isDisabled = this.hasAttribute("disabled");
-    if (isDisabled) {
-      this.setAttribute("aria-disabled", "true");
-    } else {
-      this.removeAttribute("disabled");
-      this.setAttribute("aria-disabled", "false");
+  _init() {
+    if (this.children.length) {
+      if (!this.disabled) {
+        this._toggle.addEventListener("click", this._clickHandler);
+        this._toggle.addEventListener("keydown", this._toggleKeydownHandler);
+        this._allItems().forEach(item => {
+          item.addEventListener("keydown", this._itemKeydownHandler);
+          item.addEventListener("click", this._itemClickHandler);
+        });
+      }
     }
   }
 
-  open(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.isOpen = true;
-    this._menu.classList.add("open");
-    this._toggle.setAttribute("aria-expanded", true);
-
-    return this;
-  }
-
-  close(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.isOpen = false;
-    this._menu.classList.remove("open");
-    this._toggle.setAttribute("aria-expanded", false);
-    return this;
-  }
-
+  // Event handler for click event on Dropdown button
   _clickHandler(event) {
     this.isOpen ? this.close(event) : this.open(event);
 
     return this;
   }
 
+  // Event handler for click event on Dropdown Item
   _itemClickHandler(event) {
     let pfeType;
 
@@ -149,36 +130,7 @@ class PfeDropdown extends PFElement {
     return this;
   }
 
-  _toggleKeydownHandler(event) {
-    // open menu when "keydown" event occurs on initial focus
-    this.open(event);
-
-    let newItem;
-
-    switch (event.keyCode) {
-      case KEYCODE.ESC:
-        this.close(event);
-        break;
-
-      case KEYCODE.DOWN:
-        newItem = this._firstItem();
-        break;
-
-      default:
-        break;
-    }
-
-    if (newItem) {
-      if (newItem.hasAttribute("disabled")) {
-        newItem = this._skipItem();
-      }
-      newItem.setAttribute("tabindex", "-1");
-      newItem.focus();
-    }
-
-    return this;
-  }
-
+  // Event handler for keydown events on Dropdown Menu
   _itemKeydownHandler(event) {
     let newItem;
     let pfeType;
@@ -198,12 +150,16 @@ class PfeDropdown extends PFElement {
 
       case KEYCODE.RIGHT:
       case KEYCODE.DOWN:
-        newItem = this._nextItem();
+        newItem = this._nextItem().hasAttribute("disabled")
+          ? this._skipItem(1)
+          : this._nextItem();
         break;
 
       case KEYCODE.LEFT:
       case KEYCODE.UP:
-        newItem = this._prevItem();
+        newItem = this._prevItem().hasAttribute("disabled")
+          ? this._skipItem(-1)
+          : this._prevItem();
         break;
 
       case KEYCODE.HOME:
@@ -219,9 +175,6 @@ class PfeDropdown extends PFElement {
     }
 
     if (newItem) {
-      if (newItem.hasAttribute("disabled")) {
-        newItem = this._skipItem();
-      }
       newItem.setAttribute("tabindex", "-1");
       newItem.focus();
     }
@@ -229,6 +182,7 @@ class PfeDropdown extends PFElement {
     return this;
   }
 
+  // Event handler for click event outside the Dropdown element
   _outsideClickHandler(event) {
     // Check if the clicked element is the dropdown object
     let isSelf = event.target === this;
@@ -241,6 +195,62 @@ class PfeDropdown extends PFElement {
     // Check states to determine if the dropdown menu should close
     if (!isSelf && !(isChild || insideWrapper)) {
       this.close(event);
+    }
+  }
+
+  // Event handler for keydown event on Dropdown
+  _toggleKeydownHandler(event) {
+    if (event.keyCode === KEYCODE.DOWN || event.keyCode === KEYCODE.ENTER) {
+      this.open(event);
+      let newItem = this._firstItem();
+      if (newItem) {
+        if (newItem.hasAttribute("disabled")) {
+          newItem = this._skipItem(1);
+        }
+        newItem.setAttribute("tabindex", "-1");
+        newItem.focus();
+      }
+    }
+    return this;
+  }
+
+  // modify DOM if custom options are passed in an array
+  _modifyDOM(options) {
+    options.forEach(el => {
+      let item;
+      switch (el.type) {
+        case "link":
+          item = document.createElement("a");
+          item.setAttribute("href", el.href ? el.href : "#");
+          break;
+
+        case "action":
+          item = document.createElement("button");
+          break;
+
+        default:
+          break;
+      }
+      const option = document.createElement("pfe-dropdown-item");
+      option.setAttribute("pfe-type", el.type);
+      if (el.disabled) {
+        option.setAttribute("disabled", el.disabled);
+      }
+      if (item) {
+        item.innerText = el.text ? el.text : "";
+        option.appendChild(item);
+      }
+      this.appendChild(option);
+    });
+  }
+
+  _setDisabled() {
+    const isDisabled = this.hasAttribute("disabled");
+    if (isDisabled) {
+      this.setAttribute("aria-disabled", "true");
+    } else {
+      this.removeAttribute("disabled");
+      this.setAttribute("aria-disabled", "false");
     }
   }
 
@@ -272,10 +282,11 @@ class PfeDropdown extends PFElement {
     return items[newIdx % items.length];
   }
 
-  _skipItem() {
+  _skipItem(direction) {
     const items = this._allItems();
-    let newIdx = items.findIndex(item => item === document.activeElement) + 1;
-    return items[(newIdx % items.length) + 1];
+    let newIdx =
+      items.findIndex(item => item === document.activeElement) + direction;
+    return items[(newIdx % items.length) + direction];
   }
 
   _selectItem(item, type) {
@@ -292,6 +303,31 @@ class PfeDropdown extends PFElement {
     } else {
       item.click();
     }
+  }
+
+  addDropdownOptions(options) {
+    this._modifyDOM(options);
+  }
+
+  open(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.isOpen = true;
+    this._menu.classList.add("open");
+    this._toggle.setAttribute("aria-expanded", true);
+
+    return this;
+  }
+
+  close(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.isOpen = false;
+    this._menu.classList.remove("open");
+    this._toggle.setAttribute("aria-expanded", false);
+    return this;
   }
 }
 

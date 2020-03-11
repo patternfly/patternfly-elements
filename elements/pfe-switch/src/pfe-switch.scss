@@ -27,13 +27,16 @@ $variables: (
     Color--default: pfe-color(text),
     Color--checked: pfe-color(ui-disabled--text),
     Color--disabled: pfe-color(ui-disabled--text),
+    Outline--focused: pfe-color(ui-base),
   ),
 );
 
 :host {
   @include pfe-set-local($variables);
+  position: relative;
   display: inline-block;
   margin: 0 1.5em 0 0;
+  // To hide any negative indented text
   overflow: hidden;
 }
 
@@ -41,16 +44,19 @@ $variables: (
   display: none;
 }
 
-.pfe-switch {
-  position: relative;
+:host(.pfe-focused) {
+  outline: 2px solid #{pfe-local(Outline--focused, $region: label)};
+  outline-offset: 0.25em;
 }
 
 ::slotted(input) {
+  // Completely hides the element
   @extend %sr-only;
 }
 
 ::slotted(.pfe-sr-only),
 .pfe-sr-only {
+  // Only hides the text
   text-indent: -9999em;
 }
 
@@ -94,6 +100,16 @@ $variables: (
     box-shadow: #{pfe-local(BoxShadow, $region: toggle-knob)};
     transition: transform 0.25s cubic-bezier(0.21, 0.84, 0.56, 1.55);
   }
+
+  &,
+  :host([pfe-hide-label='false']) {
+    padding-left: #{pfe-size-pem($toggle-width) + 0.5em};
+  }
+
+  :host([pfe-hide-label]) & {
+    padding-left: pfe-size-pem($toggle-width);
+  }
+
 }
 
 ::slotted(.pfe-sr-only) {

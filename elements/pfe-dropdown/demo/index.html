@@ -52,8 +52,12 @@
         <a href="https://bit.ly/3b9wvWg">Link 4</a>
       </pfe-dropdown-item>
     </pfe-dropdown>
+    <p id="example-dropdown-1">Selected Action: <span id="example-action-1"></span></p>
 
-    <p id="action">Selected Action: <span id="selectedAction"></span></p>
+    <h2>Dropdown with custom dropdown options</h2>
+    <pfe-dropdown pfe-label="Dropdown" id="dropdown-with-custom-options">
+    </pfe-dropdown>
+    <p id="example-dropdown-2">Selected Action: <span id="example-action-2"></span></p>
 
     <h2>Disabled dropdown</h2>
 
@@ -75,11 +79,36 @@
 
     <script>
       let dropdown = document.querySelector("pfe-dropdown");
-      document.querySelector("#action").style.display = "none";
+      document.querySelector("#example-dropdown-1").style.display = "none";
       dropdown.addEventListener("pfe-dropdown:change", function(event) {
-        document.querySelector("#selectedAction").textContent =
+        document.querySelector("#example-action-1").textContent =
           event.detail.action;
-        document.querySelector("#action").style.display = "block";
+        document.querySelector("#example-dropdown-1").style.display = "block";
+      });
+
+      let dropdownWithCustomOptions = document.querySelector("#dropdown-with-custom-options");
+      customElements.whenDefined("pfe-dropdown").then(function() {
+        // Default Options
+        dropdownWithCustomOptions.pfeDropdownOptions = [
+          { href: "https://bit.ly/3b9wvWg", text: "Link 1", type: "link", disabled: false },
+          { href: "https://bit.ly/3b9wvWg", text: "Link 2", type: "link", disabled: false },
+          { href: "https://bit.ly/3b9wvWg", text: "Link 3", type: "link", disabled: true },
+          { type: "seperator" },
+          { text: "Action 1", type: "action", disabled: false },
+          { text: "Action 2", type: "action", disabled: true }
+        ];
+        // Options passed via addDropdownOptions() method
+        dropdownWithCustomOptions.addDropdownOptions(
+          [
+            { href: "https://bit.ly/3b9wvWg", text: "Link 4", type: "link", disabled: false }
+          ]
+        );
+      });
+      document.querySelector("#example-dropdown-2").style.display = "none";
+      dropdownWithCustomOptions.addEventListener("pfe-dropdown:change", function(event) {
+        document.querySelector("#example-action-2").textContent =
+          event.detail.action;
+        document.querySelector("#example-dropdown-2").style.display = "block";
       });
     </script>
   </body>

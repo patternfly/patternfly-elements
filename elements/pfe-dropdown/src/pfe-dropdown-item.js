@@ -42,20 +42,24 @@ class PfeDropdownItem extends PFElement {
   }
 
   _setAccessibility() {
-    const type = this.getAttribute("pfe-type");
-    switch (type) {
-      case "link":
-        this._container.setAttribute("role", "none");
-        this._item.setAttribute("role", "menuitem");
-        break;
-      case "action":
-        this._container.setAttribute("role", "menuitem");
-        this._item.removeAttribute("role");
-        break;
-      case "seperator":
-        this._container.setAttribute("role", "seperator");
-      default:
-        break;
+    if (this._container && this._item) {
+      const type = this.getAttribute("pfe-type");
+      if (type) {
+        switch (type) {
+          case "link":
+            this._container.setAttribute("role", "none");
+            this._item.setAttribute("role", "menuitem");
+            break;
+          case "action":
+            this._container.setAttribute("role", "menuitem");
+            this._item.removeAttribute("role");
+            break;
+          case "seperator":
+            this._container.setAttribute("role", "seperator");
+          default:
+            break;
+        }
+      }
     }
   }
 

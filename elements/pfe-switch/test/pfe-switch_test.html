@@ -169,6 +169,7 @@
          * Test to make sure errors are working
          */
         const spy = sinon.spy(console, 'error');
+
         test("if the input doesn't have a label with a corresponding for attribute, should get an error", () => {
 
           document.body.innerHTML += `

@@ -82,10 +82,6 @@ class PfeSwitch extends PFElement {
     if (this.label) {
       // Get the fallback text and store it as a var
       this.settings["pfe-fallback-text"] = this.label.textContent;
-      // Make the label focusable if it isn't already
-      if (!this.label.hasAttribute("tab-index")) {
-        this.label.setAttribute("tab-index", 0);
-      }
 
       // Hide the label if necessary
       if (this.settings["pfe-hide-label"]) {
@@ -144,6 +140,8 @@ class PfeSwitch extends PFElement {
   disconnectedCallback() {
     if (this.checkbox) {
       this.checkbox.removeEventListener("change", this._updateSwitchState);
+      this.checkbox.removeEventListener("focus", this._inputFocusHandler);
+      this.checkbox.removeEventListener("blur", this._inputBlurHandler);
     }
   }
 

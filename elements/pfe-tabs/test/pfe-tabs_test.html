@@ -111,6 +111,13 @@
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
     </pfe-tabs>
+
+    <pfe-tabs id="history" pfe-tab-history>
+      <pfe-tab role="heading" slot="tab" id="historyTab1">Tab 1</pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab" id="historyTab2">Tab 1</pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+    </pfe-tabs>
     <script>
       suite('<pfe-tabs>', () => {
         setup(() => {
@@ -350,6 +357,98 @@
 
           assert.equal(tab.getAttribute("pfe-variant"), "earth");
           assert.equal(panel.getAttribute("pfe-variant"), "earth");
+        });
+      });
+
+      suite('<pfe-tabs> Tab History', () => {
+        test("it should show the correct tab if there is a querystring parameter in the URL", done => {
+          // the parameter should be equal to the id of the tabset
+          // the value should be equal to the id of the tab you want opened
+          const searchParams = new URLSearchParams(window.location.search)
+          searchParams.set("fromQueryString", "fromQueryStringTab2");
+          var newPath = window.location.pathname + '?' + searchParams.toString();
+          history.pushState(null, '', newPath);
+
+          const fragment = document.createRange().createContextualFragment(`
+            <pfe-tabs id="fromQueryString">
+              <pfe-tab role="heading" slot="tab" id="fromQueryStringTab1">Tab 1</pfe-tab>
+              <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+              <pfe-tab role="heading" slot="tab" id="fromQueryStringTab2">Tab 2</pfe-tab>
+              <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+            </pfe-tabs>
+          `);
+
+          document.body.appendChild(fragment);
+
+          flush(() => {
+            const tabs = document.querySelector("#fromQueryString");
+            const tab2 = tabs.querySelector("#fromQueryStringTab2");
+            assert.equal(tabs.selectedIndex, 1);
+            assert.isTrue(tab2.hasAttribute("aria-selected"));
+
+            document.body.removeChild(tabs);
+            done();
+          });
+        });
+
+        test("it should open the first tab if the querystring in the URL doesn't match the id of any of the tabs", done => {
+          const searchParams = new URLSearchParams(window.location.search)
+          searchParams.set("fromQueryString", "iDontExist");
+          var newPath = window.location.pathname + '?' + searchParams.toString();
+          history.pushState(null, '', newPath);
+
+          const fragment = document.createRange().createContextualFragment(`
+            <pfe-tabs id="fromQueryString">
+              <pfe-tab role="heading" slot="tab" id="fromQueryStringTab1">Tab 1</pfe-tab>
+              <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+              <pfe-tab role="heading" slot="tab" id="fromQueryStringTab2">Tab 2</pfe-tab>
+              <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+            </pfe-tabs>
+          `);
+
+          document.body.appendChild(fragment);
+
+          flush(() => {
+            const tabs = document.querySelector("#fromQueryString");
+            const tab1 = tabs.querySelector("#fromQueryStringTab1");
+            assert.equal(tabs.selectedIndex, 0);
+            assert.isTrue(tab1.hasAttribute("aria-selected"));
+
+            document.body.removeChild(tabs);
+            done();
+          });
+        });
+
+        test("it should update the URL on tab selection if the pfe-tab-history attribute is present", done => {
+          const tabs = document.querySelector("#history");
+          const tab2 = tabs.querySelector("#historyTab2");
+
+          tab2.click();
+
+          flush(() => {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            assert.equal(urlSearchParams.get("history"), "historyTab2");
+            assert.equal(tabs.selectedIndex, 1);
+            assert.isTrue(tab2.hasAttribute("aria-selected"));
+            done();
+          });
+        });
+
+        test("it should stop updating the URL if the pfe-tab-history attribute is removed", done => {
+          // this test builds on the previous test
+          const tabs = document.querySelector("#history");
+          const tab1 = tabs.querySelector("#historyTab1");
+
+          tabs.removeAttribute("pfe-tab-history");
+          tab1.click();
+
+          flush(() => {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            assert.equal(urlSearchParams.get("history"), "historyTab2");
+            assert.equal(tabs.selectedIndex, 0);
+            assert.isTrue(tab1.hasAttribute("aria-selected"));
+            done();
+          });
         });
       });
     </script>

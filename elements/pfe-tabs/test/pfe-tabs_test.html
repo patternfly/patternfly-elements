@@ -365,7 +365,7 @@
           // the parameter should be equal to the id of the tabset
           // the value should be equal to the id of the tab you want opened
           const searchParams = new URLSearchParams(window.location.search)
-          searchParams.set("fromQueryString", "fromQueryStringTab2");
+          searchParams.set("pfe-fromQueryString", "fromQueryStringTab2");
           var newPath = window.location.pathname + '?' + searchParams.toString();
           history.pushState(null, '', newPath);
 
@@ -393,7 +393,7 @@
 
         test("it should open the first tab if the querystring in the URL doesn't match the id of any of the tabs", done => {
           const searchParams = new URLSearchParams(window.location.search)
-          searchParams.set("fromQueryString", "iDontExist");
+          searchParams.set("pfe-fromQueryString", "iDontExist");
           var newPath = window.location.pathname + '?' + searchParams.toString();
           history.pushState(null, '', newPath);
 
@@ -427,7 +427,7 @@
 
           flush(() => {
             const urlSearchParams = new URLSearchParams(window.location.search);
-            assert.equal(urlSearchParams.get("history"), "historyTab2");
+            assert.equal(urlSearchParams.get("pfe-history"), "historyTab2");
             assert.equal(tabs.selectedIndex, 1);
             assert.isTrue(tab2.hasAttribute("aria-selected"));
             done();
@@ -444,7 +444,7 @@
 
           flush(() => {
             const urlSearchParams = new URLSearchParams(window.location.search);
-            assert.equal(urlSearchParams.get("history"), "historyTab2");
+            assert.equal(urlSearchParams.get("pfe-history"), "historyTab2");
             assert.equal(tabs.selectedIndex, 0);
             assert.isTrue(tab1.hasAttribute("aria-selected"));
             done();

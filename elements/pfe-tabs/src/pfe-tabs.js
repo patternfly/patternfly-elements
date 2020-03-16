@@ -12,6 +12,10 @@ const KEYCODE = {
   END: 35
 };
 
+// @IE11 doesn't support URLSearchParams
+// https://caniuse.com/#search=urlsearchparams
+const CAN_USE_URLSEARCHPARAMS = window.URLSearchParams ? true : false;
+
 function generateId() {
   return Math.random()
     .toString(36)
@@ -74,9 +78,6 @@ class PfeTabs extends PFElement {
     this._popstateEventHandler = this._popstateEventHandler.bind(this);
     this._observer = new MutationObserver(this._init);
     this._updateHistory = true;
-    // @IE11 doesn't support URLSearchParams
-    // https://caniuse.com/#search=urlsearchparams
-    this._canUseURLSearchParams = window.URLSearchParams ? true : false;
   }
 
   connectedCallback() {
@@ -203,14 +204,14 @@ class PfeTabs extends PFElement {
       this.selected &&
       this.tabHistory &&
       this._updateHistory &&
-      this._canUseURLSearchParams
+      CAN_USE_URLSEARCHPARAMS
     ) {
       // rebuild the url
       const pathname = window.location.pathname;
       const urlParams = new URLSearchParams(window.location.search);
       const hash = window.location.hash;
 
-      urlParams.set(this.id, tab.id);
+      urlParams.set(`pfe-${this.id}`, tab.id);
       history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
     }
 
@@ -226,7 +227,7 @@ class PfeTabs extends PFElement {
 
     // @IE11 doesn't support URLSearchParams
     // https://caniuse.com/#search=urlsearchparams
-    if (this._canUseURLSearchParams) {
+    if (CAN_USE_URLSEARCHPARAMS) {
       urlParams = new URLSearchParams(window.location.search);
     }
 
@@ -438,13 +439,13 @@ class PfeTabs extends PFElement {
 
     // @IE11 doesn't support URLSearchParams
     // https://caniuse.com/#search=urlsearchparams
-    if (window.URLSearchParams) {
+    if (CAN_USE_URLSEARCHPARAMS) {
       urlParams = new URLSearchParams(window.location.search);
     }
 
-    if (urlParams && urlParams.has(this.id)) {
+    if (urlParams && urlParams.has(`pfe-${this.id}`)) {
       tabIndex = this._allTabs().findIndex(
-        tab => tab.id === urlParams.get(this.id)
+        tab => tab.id === urlParams.get(`pfe-${this.id}`)
       );
     }
 

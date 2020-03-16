@@ -3,6 +3,7 @@
 Tag: [v1.0.0-prerelease.41](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.41)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: adding event to pfe-cta component
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add events to the generator
 
 ## Prerelease 40 ( 2020-03-10 )
 
@@ -40,6 +41,7 @@ Tag: [v1.0.0-prerelease.38](https://github.com/patternfly/patternfly-elements/re
 - [5585188](https://github.com/patternfly/patternfly-elements/commit/558518849087bd9b348c2827549acfe081d8ed96) docs: switching pfe-collapse story from heading tag to button
 
 ## Prerelease 37 ( 2020-01-28 )
+
 Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.37)
 
 - [6a41811](https://github.com/patternfly/patternfly-elements/commit/6a418112668ba580918ac4a8b4b54e8df05c1155) fix: reference error when slot is missing in pfe-navigation

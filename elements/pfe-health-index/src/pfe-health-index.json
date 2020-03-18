@@ -27,7 +27,7 @@
         "size": {
           "title": "Size",
           "type": "string",
-          "enum": ["lg"],
+          "enum": ["mini", "lg"],
           "default": null,
           "prefixed": false
         }

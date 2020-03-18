@@ -1,13 +1,21 @@
-${this.size !== "lg" ? `
-<div id="healthIndex"></div>
-<div class="box-container">
-  <div class="box a"></div>
-  <div class="box b"></div>
-  <div class="box c"></div>
-  <div class="box d"></div>
-  <div class="box e"></div>
-  <div class="box f"></div>
-</div>
+${this.props.size.value !== "lg" ? `
+  ${this.props.size.value === "mini" ? `
+    <div class="box-container">
+      <div class="box">
+        <div class="grade" id="healthIndex"></div>
+      </div>
+    </div>
+  ` : `
+    <div id="healthIndex"></div>
+    <div class="box-container">
+      <div class="box a"></div>
+      <div class="box b"></div>
+      <div class="box c"></div>
+      <div class="box d"></div>
+      <div class="box e"></div>
+      <div class="box f"></div>
+    </div>
+  `}
 ` : `
 <div class="box-container">
   <div class="box a">

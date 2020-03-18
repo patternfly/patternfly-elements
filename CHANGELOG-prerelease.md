@@ -2,8 +2,9 @@
 
 Tag: [v1.0.0-prerelease.41](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.41)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add events to the generator
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-health-index size="mini" version #789
+- [fdfd6fc](https://github.com/patternfly/patternfly-elements/commit/fdfd6fcb25cf01a8a107cb4947864e30da06d087) feat: Add events to the generator
+- [e2ba182](https://github.com/patternfly/patternfly-elements/commit/e2ba18204fb751f8dd434ceb18d6ccdbc05b4081) feat: pfe-health-index size="mini" version #789
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: set consistent line-height for pfe-nav triggers  #790
 
 ## Prerelease 40 ( 2020-03-10 )
 

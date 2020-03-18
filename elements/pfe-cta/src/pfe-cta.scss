@@ -136,7 +136,7 @@ $variables: (
   &--wrapper {
     display: block; 
     white-space: nowrap;
-    min-width: calc(100%);
+    min-width: 100%;
 
     :host([pfe-priority]) &,
     :host([aria-disabled="true"]) & {

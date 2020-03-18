@@ -20,6 +20,7 @@
     <pfe-health-index id="E" health-index="E">E</pfe-health-index>
     <pfe-health-index id="F" health-index="F">F</pfe-health-index>
     <pfe-health-index id="largeSize" health-index="A">A</pfe-health-index>
+    <pfe-health-index id="miniSize" health-index="A" size="mini">A></pfe-health-index>
 
     <script>
       suite('<pfe-health-index>', () => {
@@ -163,9 +164,15 @@
 
           healthIndex.setAttribute("size", "lg");
           activeBox = healthIndex.shadowRoot.querySelector(".box.active");
-        
+
           assert.isTrue(defaultWidth < activeBox.offsetWidth);
           assert.isTrue(defaultHeight < activeBox.offsetHeight);
+        });
+
+        test("it should only show a single box if the size attribute is set to mini", () => {
+          const healthIndex = document.querySelector("#miniSize");
+          const boxes = healthIndex.shadowRoot.querySelectorAll(".box");
+          assert.equal(boxes.length, 1);
         });
       });
     </script>

@@ -4,6 +4,7 @@ Tag: [v1.0.0-prerelease.41](https://github.com/patternfly/patternfly-elements/re
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add events to the generator
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-tabs keep history on tab click and open tab based on url parameters #786
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-health-index size="mini" version #789
 
 ## Prerelease 40 ( 2020-03-10 )
 

@@ -108,7 +108,6 @@ $variables: (
       $fallback: #{pfe-var(line-height)}
     )};
   text-decoration: #{pfe-local(TextDecoration)} !important;
-  text-align: center;
 
   @include browser-query(ie11 edge) {
     padding: 0 !important;
@@ -117,6 +116,10 @@ $variables: (
   :host(:hover) & {
     color: #{pfe-local(Color--hover)} !important;
     text-decoration: #{pfe-local(TextDecoration--hover)} !important;
+  }
+
+  :host([pfe-priority]) & {
+    text-align: center;
   }
 }
 

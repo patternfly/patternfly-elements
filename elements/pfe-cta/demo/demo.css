@@ -12,6 +12,10 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   --pfe-card--Border: 1px solid rgba(45, 45, 45, 0.3);
 }
 
+[hidden] {
+  display: none !important;
+}
+
 .default-link-test {
   display: flex;
   flex-flow: row nowrap;

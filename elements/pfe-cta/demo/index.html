@@ -32,7 +32,8 @@
     require([
       "../dist/pfe-cta.umd.js",
       "../../pfe-band/dist/pfe-band.umd.js",
-      "../../pfe-card/dist/pfe-card.umd.js"
+      "../../pfe-card/dist/pfe-card.umd.js",
+      "../../pfe-icon/dist/pfe-icon.umd.js"
     ]);
   </script>
 </head>
@@ -237,6 +238,24 @@
     </div>
   </pfe-band>
 
+  <pfe-band>
+    <h2 slot="pfe-band--header">CTA Events</h2>
+    <div class="card-layout">
+      <pfe-card pfe-size="small">
+        <div id="events" class="cta-align">
+          <pfe-cta><a href="https://www.redhat.com">Visit redhat.com</a></pfe-cta>
+          <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com">Primary Link</a></pfe-cta>
+          <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com">Secondary Link</a></pfe-cta>
+        </div>
+        <div id="events-footer" class="event-registry" slot="pfe-card--footer" pfe-overflow="right left bottom" hidden>
+          <pfe-icon icon="rh-safety-warning-alert" size="lg"></pfe-icon>
+          <span>"pfe-cta:select" event registered on call-to-action.</span>
+          See console for details.
+        </div>
+      </pfe-card>
+    </div>
+  </pfe-band>
+
   <br />
   <hr />
   <br />
@@ -301,7 +320,22 @@
       </pfe-cta>
     </div>
   </div>
+  <script>
+    const eventsFooter = document.querySelector("#events-footer");
+
+    document.querySelector("#events").addEventListener("pfe-cta:select", function (event) {
+      event.preventDefault();
+      eventsFooter.removeAttribute("hidden");
+      console.log(event);
+    });
+
+    const ctas = document.querySelectorAll("#events pfe-cta");
+    for (var i = 0; i < ctas.length; i++) {
+      ctas[i].addEventListener("click", function (event) {
+        event.preventDefault();
+      });
+    }
+  </script>
 </body>
 
 </html>
-

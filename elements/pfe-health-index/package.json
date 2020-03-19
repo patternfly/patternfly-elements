@@ -4,7 +4,7 @@
     "className": "PfeHealthIndex",
     "elementName": "pfe-health-index"
   },
-  "version": "1.0.0-prerelease.40",
+  "version": "1.0.0-prerelease.41",
   "publishConfig": {
     "access": "public"
   },

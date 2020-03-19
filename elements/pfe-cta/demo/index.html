@@ -1,341 +1,326 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>PatternFly Elements: pfe-cta demo</title>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
-  <title>PatternFly Elements: pfe-cta demo</title>
-
-  <!-- Stylesheets for testing light DOM styles.
+    <!-- Stylesheets for testing light DOM styles.
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
     -->
 
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-  <noscript>
-    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet" />
-  </noscript>
+    <noscript>
+      <link
+        href="../../pfelement/dist/pfelement--noscript.min.css"
+        rel="stylesheet"
+      />
+    </noscript>
 
-  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
 
-  <link href="../../pfe-cta/dist/pfe-cta--lightdom.css" rel="stylesheet" />
-  <link href="demo.css" rel="stylesheet" />
+    <link href="../../pfe-cta/dist/pfe-cta--lightdom.css" rel="stylesheet" />
+    <link href="demo.css" rel="stylesheet" />
 
-  <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-  <script>
-    require([
-      "../dist/pfe-cta.umd.js",
-      "../../pfe-band/dist/pfe-band.umd.js",
-      "../../pfe-card/dist/pfe-card.umd.js",
-      "../../pfe-icon/dist/pfe-icon.umd.js"
-    ]);
-  </script>
-</head>
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>
+      require([
+        "../dist/pfe-cta.umd.js",
+        "../../pfe-band/dist/pfe-band.umd.js",
+        "../../pfe-card/dist/pfe-card.umd.js",
+        "../../pfe-icon/dist/pfe-icon.umd.js"
+      ]);
+    </script>
+  </head>
+  <body unresolved>
+    <pfe-band pfe-color="complement" pfe-size="small">
+      <h1 slot="pfe-band--header"><code>&lt;pfe-cta&gt;</code> demo page</h1>
+    </pfe-band>
 
-<body unresolved>
-  <pfe-band pfe-color="complement" pfe-size="small">
-    <h1 slot="pfe-band--header"><code>&lt;pfe-cta&gt;</code> demo page</h1>
-  </pfe-band>
+    <pfe-band pfe-color="lightest" style="--pfe-band--Border: 1px solid #ddd">
+      <h2 slot="pfe-band--header">CTAs in light containers</h2>
+      <div class="card-layout">
+        <pfe-card pfe-color="lightest" pfe-size="small">
+          <h3 slot="pfe-card--header">No color attribute</h3>
+          <div class="cta-align">
+            <pfe-cta><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
+            <pfe-cta aria-disabled="true"><a href="https://www.redhat.com#disabled" disabled>Disabled</a></pfe-cta>
+          </div>
+          <div class="event-registry" slot="pfe-card--footer"></div>
+        </pfe-card>
+        <pfe-card pfe-color="lightest" pfe-size="small">
+          <h3 slot="pfe-card--header"><code>pfe-color="base"</code></h3>
+          <div class="cta-align">
+            <pfe-cta pfe-color="base"><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="base"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-color="base"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
+            <pfe-cta
+              pfe-priority="secondary"
+              pfe-color="base"
+              pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
+            <pfe-cta aria-disabled="true" pfe-color="base"><a href="https://www.redhat.com#disabled" disabled>Disabled</a></pfe-cta>
+          </div>
+          <div class="event-registry" slot="pfe-card--footer"></div>
+        </pfe-card>
+        <pfe-card pfe-color="lighter" pfe-size="small">
+          <h3 slot="pfe-card--header"><code>pfe-color="accent"</code></h3>
+          <div class="cta-align">
+            <pfe-cta pfe-color="accent"><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
+            <pfe-cta
+              pfe-priority="secondary"
+              pfe-color="accent"
+              pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
+            <pfe-cta aria-disabled="true" pfe-color="accent"><a href="https://www.redhat.com#disabled" disabled>Disabled</a></pfe-cta>
+          </div>
+          <div class="event-registry" slot="pfe-card--footer"></div>
+        </pfe-card>
+        <pfe-card pfe-color="lighter" pfe-size="small">
+          <h3 slot="pfe-card--header"><code>pfe-color="complement"</code></h3>
+          <div class="cta-align">
+            <pfe-cta pfe-color="complement"><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
+            <pfe-cta
+              pfe-priority="secondary"
+              pfe-color="complement"
+              pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
+            <pfe-cta aria-disabled="true" pfe-color="complement"><a href="https://www.redhat.com#disabled" disabled>Disabled</a></pfe-cta>
+          </div>
+          <div class="event-registry" slot="pfe-card--footer"></div>
+        </pfe-card>
+      </div>
+    </pfe-band>
 
-  <pfe-band pfe-color="lightest">
-    <h2>CTAs in light containers</h2>
-    <div class="card-layout">
-      <pfe-card pfe-color="lightest" pfe-size="small">
-        <h3 slot="pfe-card--header">No color attribute</h3>
-        <div class="cta-align">
-          <pfe-cta><a href="https://www.redhat.com">Default</a></pfe-cta>
-          <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com">Secondary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="https://www.redhat.com">Secondary + wind
-              variant</a></pfe-cta>
-          <pfe-cta aria-disabled="true"><a href="https://www.redhat.com" disabled>Disabled</a></pfe-cta>
+    <pfe-band pfe-color="lightest" style="--pfe-band--Border: 1px solid #ddd">
+      <h2 slot="pfe-band--header">CTAs in dark containers</h2>
+      <div class="card-layout">
+        <pfe-card pfe-color="darkest" pfe-size="small">
+          <h3 slot="pfe-card--header">No color attribute</h3>
+          <div class="cta-align">
+            <pfe-cta><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
+            <pfe-cta aria-disabled="true"><a href="https://www.redhat.com#disabled" disabled>Disabled</a></pfe-cta>
+          </div>
+          <div class="event-registry" slot="pfe-card--footer"></div>
+        </pfe-card>
+        <pfe-card pfe-color="darkest" pfe-size="small">
+          <h3 slot="pfe-card--header"><code>pfe-color="base"</code></h3>
+          <div class="cta-align">
+            <pfe-cta pfe-color="base"><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="base"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-color="base"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
+            <pfe-cta
+              pfe-priority="secondary"
+              pfe-color="base"
+              pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
+            <pfe-cta aria-disabled="true" pfe-color="base"><a href="https://www.redhat.com#disabled" disabled>Disabled</a></pfe-cta>
+          </div>
+          <div class="event-registry" slot="pfe-card--footer"></div>
+        </pfe-card>
+        <pfe-card pfe-color="darker" pfe-size="small">
+          <h3 slot="pfe-card--header"><code>pfe-color="accent"</code></h3>
+          <div class="cta-align">
+            <pfe-cta pfe-color="accent"><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
+            <pfe-cta
+              pfe-priority="secondary"
+              pfe-color="accent"
+              pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
+            <pfe-cta aria-disabled="true" pfe-color="accent"><a href="https://www.redhat.com#disabled" disabled>Disabled</a></pfe-cta>
+          </div>
+          <div class="event-registry" slot="pfe-card--footer"></div>
+        </pfe-card>
+        <pfe-card pfe-color="darker" pfe-size="small">
+          <h3 slot="pfe-card--header"><code>pfe-color="complement"</code></h3>
+          <div class="cta-align">
+            <pfe-cta pfe-color="complement"><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
+            <pfe-cta
+              pfe-priority="secondary"
+              pfe-color="complement"
+              pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
+            <pfe-cta aria-disabled="true" pfe-color="complement"><a href="https://www.redhat.com#disabled" disabled>Disabled</a></pfe-cta>
+          </div>
+          <div class="event-registry" slot="pfe-card--footer"></div>
+        </pfe-card>
+      </div>
+    </pfe-band>
+
+    <pfe-band pfe-color="lightest" style="--pfe-band--Border: 1px solid #ddd">
+      <h2 slot="pfe-band--header">CTAs in saturated containers</h2>
+      <div class="card-layout">
+        <pfe-card pfe-color="complement" pfe-size="small">
+          <h3 slot="pfe-card--header">No color attribute</h3>
+          <div class="cta-align">
+            <pfe-cta><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
+            <pfe-cta aria-disabled="true"><a href="https://www.redhat.com#disabled" disabled>Disabled</a></pfe-cta>
+          </div>
+          <div class="event-registry" slot="pfe-card--footer"></div>
+        </pfe-card>
+        <pfe-card pfe-color="complement" pfe-size="small">
+          <h3 slot="pfe-card--header"><code>pfe-color="base"</code></h3>
+          <div class="cta-align">
+            <pfe-cta pfe-color="base"><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="base"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-color="base"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
+            <pfe-cta
+              pfe-priority="secondary"
+              pfe-color="base"
+              pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
+            <pfe-cta aria-disabled="true" pfe-color="base"><a href="https://www.redhat.com#disabled" disabled>Disabled</a></pfe-cta>
+          </div>
+          <div class="event-registry" slot="pfe-card--footer"></div>
+        </pfe-card>
+        <pfe-card pfe-color="accent" pfe-size="small">
+          <h3 slot="pfe-card--header"><code>pfe-color="accent"</code></h3>
+          <div class="cta-align">
+            <pfe-cta pfe-color="accent"><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
+            <pfe-cta
+              pfe-priority="secondary"
+              pfe-color="accent"
+              pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
+            <pfe-cta aria-disabled="true" pfe-color="accent"><a href="https://www.redhat.com#disabled" disabled>Disabled</a></pfe-cta>
+          </div>
+          <div class="event-registry" slot="pfe-card--footer"></div>
+        </pfe-card>
+        <pfe-card pfe-color="accent" pfe-size="small">
+          <h3 slot="pfe-card--header"><code>pfe-color="complement"</code></h3>
+          <div class="cta-align">
+            <pfe-cta pfe-color="complement"><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+            <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
+            <pfe-cta
+              pfe-priority="secondary"
+              pfe-color="complement"
+              pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
+            <pfe-cta aria-disabled="true" pfe-color="complement"><a href="https://www.redhat.com#disabled" disabled>Disabled</a></pfe-cta>
+          </div>
+          <div class="event-registry" slot="pfe-card--footer"></div>
+        </pfe-card>
+      </div>
+    </pfe-band>
+
+    <pfe-band pfe-color="lightest" style="--pfe-band--Border: 1px solid #ddd">
+      <h2 slot="pfe-band--header">Force wrap to test arrow line-wrap</h2>
+      <div class="default-link-test resize">
+        <pfe-cta><a href="https://www.redhat.com#default">Default link cta with longer text</a></pfe-cta>
+        <pfe-cta><button>Default button cta with longer text</button></pfe-cta>
+      </div>
+    </pfe-band>
+
+    <pfe-band pfe-color="lightest" style="--pfe-band--Border: 1px solid #ddd">
+      <h2 slot="pfe-band--header">Link and button styles (displayed inline)</h2>
+      <div>
+        <pfe-cta style="outline: 1px dashed darkgray;"><a href="https://www.redhat.com">Link</a></pfe-cta>
+        <pfe-cta style="outline: 1px dashed darkgray;"><button>Button</button></pfe-cta>
+
+        <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com">Link</a></pfe-cta>
+        <pfe-cta pfe-priority="primary"><button>Button</button></pfe-cta>
+
+        <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com">Link</a></pfe-cta>
+        <pfe-cta pfe-priority="secondary"><button>Button</button></pfe-cta>
+
+        <pfe-cta aria-disabled="true"><a href="https://www.redhat.com">Link</a></pfe-cta>
+        <pfe-cta aria-disabled="true"><button>Button</button></pfe-cta>
+      </div>
+    </pfe-band>
+
+    <pfe-band pfe-color="lightest">
+      <h2 slot="pfe-band--header">Old school testing (custom backgrounds)</h2>
+
+      <div class="custom-saturated-band resize">
+        <h3 style="color:white;">Custom saturated band with broadcast vars</h3>
+
+        <h4 style="color:white;">Color responsive</h4>
+        <div class="cta-layout">
+          <pfe-cta pfe-theme="saturated"><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+          <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+          <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
         </div>
-      </pfe-card>
-      <pfe-card pfe-color="lightest" pfe-size="small">
-        <h3 slot="pfe-card--header"><code>pfe-color="base"</code></h3>
-        <div class="cta-align">
-          <pfe-cta pfe-color="base"><a href="https://www.redhat.com">Default</a></pfe-cta>
-          <pfe-cta pfe-priority="primary" pfe-color="base"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="base"><a href="https://www.redhat.com">Secondary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="base" pfe-variant="wind"><a
-              href="https://www.redhat.com">Secondary + wind variant</a></pfe-cta>
-          <pfe-cta aria-disabled="true" pfe-color="base"><a href="https://www.redhat.com" disabled>Disabled</a>
-          </pfe-cta>
+
+        <br />
+
+        <h4 style="color:white;">Color override</h4>
+        <div class="cta-layout">
+          <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="https://www.redhat.com#primary">Primary accent</a></pfe-cta>
+          <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="https://www.redhat.com#secondary">Secondary accent</a></pfe-cta>
+          <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="https://www.redhat.com#primary">Primary complement</a></pfe-cta>
+          <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="https://www.redhat.com#secondary">Secondary complement</a></pfe-cta>
+          <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="https://www.redhat.com#primary">Primary lightest</a></pfe-cta>
+          <pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
         </div>
-      </pfe-card>
-      <pfe-card pfe-color="lighter" pfe-size="small">
-        <h3 slot="pfe-card--header"><code>pfe-color="accent"</code></h3>
-        <div class="cta-align">
-          <pfe-cta pfe-color="accent"><a href="https://www.redhat.com">Default</a></pfe-cta>
-          <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="https://www.redhat.com">Secondary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="accent" pfe-variant="wind"><a
-              href="https://www.redhat.com">Secondary + wind variant</a></pfe-cta>
-          <pfe-cta aria-disabled="true" pfe-color="accent"><a href="https://www.redhat.com" disabled>Disabled</a>
-          </pfe-cta>
+      </div>
+
+      <div class="custom-dark-band resize">
+        <h3 style="color:white;">
+          Custom dark band with custom broadcast variables
+        </h3>
+
+        <h4 style="color: white">Color responsive</h4>
+        <div class="card-layout">
+          <pfe-cta><a href="https://www.redhat.com#default">Default</a></pfe-cta>
+          <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com#primary">Primary</a></pfe-cta>
+          <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com#secondary">Secondary</a></pfe-cta>
         </div>
-      </pfe-card>
-      <pfe-card pfe-color="lighter" pfe-size="small">
-        <h3 slot="pfe-card--header"><code>pfe-color="complement"</code></h3>
-        <div class="cta-align">
-          <pfe-cta pfe-color="complement"><a href="https://www.redhat.com">Default</a></pfe-cta>
-          <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="https://www.redhat.com">Secondary</a>
-          </pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="complement" pfe-variant="wind"><a
-              href="https://www.redhat.com">Secondary + wind variant</a></pfe-cta>
-          <pfe-cta aria-disabled="true" pfe-color="complement"><a href="https://www.redhat.com" disabled>Disabled</a>
-          </pfe-cta>
+
+        <br />
+
+        <h4 style="color: white">Color override</h4>
+        <div class="card-layout">
+          <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="https://www.redhat.com#primary">Primary accent</a></pfe-cta>
+          <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="https://www.redhat.com#secondary">Secondary accent</a></pfe-cta>
+          <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="https://www.redhat.com#primary">Primary complement</a></pfe-cta>
+          <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="https://www.redhat.com#secondary">Secondary complement</a></pfe-cta>
+          <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="https://www.redhat.com#primary">Primary lightest</a></pfe-cta>
+          <pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="https://www.redhat.com#secondary-wind">Secondary + wind variant</a></pfe-cta>
         </div>
-      </pfe-card>
-    </div>
+      </div>
+    </pfe-band>
 
-    <br />
-    <hr />
-    <br />
+    <script>
+      var activeRegistry = null;
 
-    <h2>CTAs in dark containers</h2>
-    <div class="card-layout">
-      <pfe-card pfe-color="darkest" pfe-size="small">
-        <h3 slot="pfe-card--header">No color attribute</h3>
-        <div class="cta-align">
-          <pfe-cta><a href="https://www.redhat.com">Default</a></pfe-cta>
-          <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com">Secondary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="https://www.redhat.com">Secondary + wind
-              variant</a></pfe-cta>
-          <pfe-cta aria-disabled="true"><a href="https://www.redhat.com" disabled>Disabled</a></pfe-cta>
-        </div>
-      </pfe-card>
-      <pfe-card pfe-color="darkest" pfe-size="small">
-        <h3 slot="pfe-card--header"><code>pfe-color="base"</code></h3>
-        <div class="cta-align">
-          <pfe-cta pfe-color="base"><a href="https://www.redhat.com">Default</a></pfe-cta>
-          <pfe-cta pfe-priority="primary" pfe-color="base"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="base"><a href="https://www.redhat.com">Secondary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="base" pfe-variant="wind"><a
-              href="https://www.redhat.com">Secondary + wind variant</a></pfe-cta>
-          <pfe-cta aria-disabled="true" pfe-color="base"><a href="https://www.redhat.com" disabled>Disabled</a>
-          </pfe-cta>
-        </div>
-      </pfe-card>
-      <pfe-card pfe-color="darker" pfe-size="small">
-        <h3 slot="pfe-card--header"><code>pfe-color="accent"</code></h3>
-        <div class="cta-align">
-          <pfe-cta pfe-color="accent"><a href="https://www.redhat.com">Default</a></pfe-cta>
-          <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="https://www.redhat.com">Secondary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="accent" pfe-variant="wind"><a
-              href="https://www.redhat.com">Secondary + wind variant</a></pfe-cta>
-          <pfe-cta aria-disabled="true" pfe-color="accent"><a href="https://www.redhat.com" disabled>Disabled</a>
-          </pfe-cta>
-        </div>
-      </pfe-card>
-      <pfe-card pfe-color="darker" pfe-size="small">
-        <h3 slot="pfe-card--header"><code>pfe-color="complement"</code></h3>
-        <div class="cta-align">
-          <pfe-cta pfe-color="complement"><a href="https://www.redhat.com">Default</a></pfe-cta>
-          <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="https://www.redhat.com">Secondary</a>
-          </pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="complement" pfe-variant="wind"><a
-              href="https://www.redhat.com">Secondary + wind variant</a></pfe-cta>
-          <pfe-cta aria-disabled="true" pfe-color="complement"><a href="https://www.redhat.com" disabled>Disabled</a>
-          </pfe-cta>
-        </div>
-      </pfe-card>
-    </div>
+      document.addEventListener("pfe-cta:select", function(event) {
+        var originEvent = event.detail.originEvent;
 
-    <br />
-    <hr />
-    <br />
+        // Cancel the propogation of the CTA
+        originEvent.preventDefault ? originEvent.preventDefault() : (originEvent.returnValue = false);
 
-    <h3>CTAs in saturated containers</h3>
-    <div class="card-layout">
-      <pfe-card pfe-color="complement" pfe-size="small">
-        <h3 slot="pfe-card--header">No color attribute</h3>
-        <div class="cta-align">
-          <pfe-cta><a href="https://www.redhat.com">Default</a></pfe-cta>
-          <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com">Secondary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="https://www.redhat.com">Secondary + wind
-              variant</a></pfe-cta>
-          <pfe-cta aria-disabled="true"><a href="https://www.redhat.com" disabled>Disabled</a></pfe-cta>
-        </div>
-      </pfe-card>
-      <pfe-card pfe-color="complement" pfe-size="small">
-        <h3 slot="pfe-card--header"><code>pfe-color="base"</code></h3>
-        <div class="cta-align">
-          <pfe-cta pfe-color="base"><a href="https://www.redhat.com">Default</a></pfe-cta>
-          <pfe-cta pfe-priority="primary" pfe-color="base"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="base"><a href="https://www.redhat.com">Secondary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="base" pfe-variant="wind"><a
-              href="https://www.redhat.com">Secondary + wind variant</a></pfe-cta>
-          <pfe-cta aria-disabled="true" pfe-color="base"><a href="https://www.redhat.com" disabled>Disabled</a>
-          </pfe-cta>
-        </div>
-      </pfe-card>
-      <pfe-card pfe-color="accent" pfe-size="small">
-        <h3 slot="pfe-card--header"><code>pfe-color="accent"</code></h3>
-        <div class="cta-align">
-          <pfe-cta pfe-color="accent"><a href="https://www.redhat.com">Default</a></pfe-cta>
-          <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="https://www.redhat.com">Secondary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="accent" pfe-variant="wind"><a
-              href="https://www.redhat.com">Secondary + wind variant</a></pfe-cta>
-          <pfe-cta aria-disabled="true" pfe-color="accent"><a href="https://www.redhat.com" disabled>Disabled</a>
-          </pfe-cta>
-        </div>
-      </pfe-card>
-      <pfe-card pfe-color="accent" pfe-size="small">
-        <h3 slot="pfe-card--header"><code>pfe-color="complement"</code></h3>
-        <div class="cta-align">
-          <pfe-cta pfe-color="complement"><a href="https://www.redhat.com">Default</a></pfe-cta>
-          <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="https://www.redhat.com">Secondary</a>
-          </pfe-cta>
-          <pfe-cta pfe-priority="secondary" pfe-color="complement" pfe-variant="wind"><a
-              href="https://www.redhat.com">Secondary + wind variant</a></pfe-cta>
-          <pfe-cta aria-disabled="true" pfe-color="complement"><a href="https://www.redhat.com" disabled>Disabled</a>
-          </pfe-cta>
-        </div>
-      </pfe-card>
-    </div>
+        // Note the URL in the console for the demo page
+        console.info(event.detail);
 
-    <br />
-    <hr />
-    <br />
-
-    <h3>Force wrap to test arrow line-wrap</h3>
-    <div class="resize">
-      <pfe-cta><a href="https://www.redhat.com">Default link cta with longer text</a></pfe-cta>
-      <pfe-cta><button>Default button cta with longer text</button></pfe-cta>
-    </div>
-
-    <br />
-    <hr />
-    <br />
-
-    <h3>Link and button styles (displayed inline)</h3>
-    <div>
-      <pfe-cta style="outline: 1px dashed darkgray;"><a href="https://www.redhat.com">Link</a></pfe-cta>
-      <pfe-cta style="outline: 1px dashed darkgray;"><button>Button</button></pfe-cta>
-
-      <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com">Link</a></pfe-cta>
-      <pfe-cta pfe-priority="primary"><button>Button</button></pfe-cta>
-
-      <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com">Link</a></pfe-cta>
-      <pfe-cta pfe-priority="secondary"><button>Button</button></pfe-cta>
-
-      <pfe-cta aria-disabled="true"><a href="https://www.redhat.com">Link</a></pfe-cta>
-      <pfe-cta aria-disabled="true"><button>Button</button></pfe-cta>
-    </div>
-  </pfe-band>
-
-  <pfe-band>
-    <h2 slot="pfe-band--header">CTA Events</h2>
-    <div class="card-layout">
-      <pfe-card pfe-size="small">
-        <div id="events" class="cta-align">
-          <pfe-cta><a href="https://www.redhat.com">Visit redhat.com</a></pfe-cta>
-          <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com">Primary Link</a></pfe-cta>
-          <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com">Secondary Link</a></pfe-cta>
-        </div>
-        <div id="events-footer" class="event-registry" slot="pfe-card--footer" pfe-overflow="right left bottom" hidden>
-          <pfe-icon icon="rh-safety-warning-alert" size="lg"></pfe-icon>
-          <span>"pfe-cta:select" event registered on call-to-action.</span>
-          See console for details.
-        </div>
-      </pfe-card>
-    </div>
-  </pfe-band>
-
-  <br />
-  <hr />
-  <br />
-
-  <h1>Old school testing (custom backgrounds)</h1>
-  <br />
-
-  <div class="custom-saturated-band">
-    <h2 style="color:white;">Custom saturated band with broadcast vars</h2>
-
-    <h3 style="color:white;">Color responsive</h3>
-    <div class="card-layout">
-      <pfe-cta pfe-theme="saturated"><a href="https://www.redhat.com">Default</a></pfe-cta>
-      <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-      <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com">Secondary</a></pfe-cta>
-    </div>
-
-    <br />
-
-    <h3 style="color:white;">Color override</h3>
-    <div class="card-layout">
-      <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="https://www.redhat.com">Primary accent</a></pfe-cta>
-      <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="https://www.redhat.com">Secondary accent</a>
-      </pfe-cta>
-      <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="https://www.redhat.com">Primary complement</a>
-      </pfe-cta>
-      <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="https://www.redhat.com">Secondary complement</a>
-      </pfe-cta>
-      <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="https://www.redhat.com">Primary lightest</a>
-      </pfe-cta>
-      <pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="https://www.redhat.com">Secondary + wind variant</a>
-      </pfe-cta>
-    </div>
-  </div>
-
-  <div class="custom-dark-band">
-    <h2 style="color:white;">
-      Custom dark band with custom broadcast variables
-    </h2>
-
-    <h3 style="color: white">Color responsive</h3>
-    <div class="card-layout">
-      <pfe-cta><a href="https://www.redhat.com">Default</a></pfe-cta>
-      <pfe-cta pfe-priority="primary"><a href="https://www.redhat.com">Primary</a></pfe-cta>
-      <pfe-cta pfe-priority="secondary"><a href="https://www.redhat.com">Secondary</a></pfe-cta>
-    </div>
-
-    <br />
-
-    <h3 style="color: white">Color override</h3>
-    <div class="card-layout">
-      <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="https://www.redhat.com">Primary accent</a></pfe-cta>
-      <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="https://www.redhat.com">Secondary accent</a>
-      </pfe-cta>
-      <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="https://www.redhat.com">Primary complement</a>
-      </pfe-cta>
-      <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="https://www.redhat.com">Secondary complement</a>
-      </pfe-cta>
-      <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="https://www.redhat.com">Primary lightest</a>
-      </pfe-cta>
-      <pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="https://www.redhat.com">Secondary + wind variant</a>
-      </pfe-cta>
-    </div>
-  </div>
-  <script>
-    const eventsFooter = document.querySelector("#events-footer");
-
-    document.querySelector("#events").addEventListener("pfe-cta:select", function (event) {
-      event.preventDefault();
-      eventsFooter.removeAttribute("hidden");
-      console.log(event);
-    });
-
-    const ctas = document.querySelectorAll("#events pfe-cta");
-    for (var i = 0; i < ctas.length; i++) {
-      ctas[i].addEventListener("click", function (event) {
-        event.preventDefault();
+        // Register the event in the card
+        var registry = event.target.closest("pfe-card").querySelector(".event-registry");
+        if (registry) {
+          if (activeRegistry) activeRegistry.innerHTML = "";
+          activeRegistry = registry;
+          registry.innerHTML = "<pfe-icon icon=\"rh-safety-warning-alert\" size=\"lg\"></pfe-icon><span>Event registered on <strong>" + event.detail.type + "</strong> call-to-action. See console for details.</span>";
+        }
       });
-    }
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

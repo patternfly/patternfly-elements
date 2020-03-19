@@ -1,9 +1,21 @@
-## Prerelease 40 ( TBD )
+## Prerelease 41 ( 2020-03-19 )
+
+Tag: [v1.0.0-prerelease.41](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.41)
+
+- [7a8149e](https://github.com/patternfly/patternfly-elements/commit/7a8149e74fac2792d9968edf7ae0ec4a7a5968c6) fix: pfe-cta text wrapping issues (#791)
+- [9f83786](https://github.com/patternfly/patternfly-elements/commit/9f837862e38001e6a1a4d7e2ca735073443c9e7c) feat: pfe-tabs keep history on tab click and open tab based on url parameters (#786)
+- [e2ba182](https://github.com/patternfly/patternfly-elements/commit/e2ba18204fb751f8dd434ceb18d6ccdbc05b4081) feat: pfe-health-index size="mini" version (#789)
+- [fdfd6fc](https://github.com/patternfly/patternfly-elements/commit/fdfd6fcb25cf01a8a107cb4947864e30da06d087) feat: Add events to the generator (#707)
+- [384c314](https://github.com/patternfly/patternfly-elements/commit/384c31407a01939c0877ad214d9290c50ffd2ef7) docs: PR template updates (#776)
+
+## Prerelease 40 ( 2020-03-10 )
 
 Tag: [v1.0.0-prerelease.40](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.40)
 
-- [ ]( ) fix: Prevent default pfe-cta arrow from wrapping to a new line by itself (#679)
-
+- [d0c2a45](https://github.com/patternfly/patternfly-elements/commit/d0c2a4526ec3fc15339bd4ec393364486a260c84) fix: pfe-navigation cta overlap bug in IE11 (#766)
+- [eb4a9f6](https://github.com/patternfly/patternfly-elements/commit/eb4a9f63514ad9635d1b195e89d596c3feaf2201) chore: Prettier updates (#770)
+- [7deb9bb](https://github.com/patternfly/patternfly-elements/commit/7deb9bb6227c0560b60a665ecd43b450db0f90e1) fix: Prevent default pfe-cta arrow from wrapping to a new line by itself #679 (#765)
+- [ba9d8b2](https://github.com/patternfly/patternfly-elements/commit/ba9d8b2cfed50580671041778d3d00cb5d5741d1) chore: Fixed invalid Markdown, was missing a back tic (#762)
 
 ## Prerelease 39 ( 2020-02-19 )
 
@@ -32,6 +44,7 @@ Tag: [v1.0.0-prerelease.38](https://github.com/patternfly/patternfly-elements/re
 - [5585188](https://github.com/patternfly/patternfly-elements/commit/558518849087bd9b348c2827549acfe081d8ed96) docs: switching pfe-collapse story from heading tag to button
 
 ## Prerelease 37 ( 2020-01-28 )
+
 Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.37)
 
 - [6a41811](https://github.com/patternfly/patternfly-elements/commit/6a418112668ba580918ac4a8b4b54e8df05c1155) fix: reference error when slot is missing in pfe-navigation

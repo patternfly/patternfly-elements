@@ -2,7 +2,7 @@
 
 Tag: [v1.0.0-prerelease.42](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.42)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: set consistent line-height for pfe-nav triggers  #790
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: set consistent line-height for pfe-nav triggers (#773)
 
 
 ## Prerelease 41 ( 2020-03-19 )

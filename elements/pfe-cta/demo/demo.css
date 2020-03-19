@@ -35,12 +35,24 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   flex-flow: row wrap;
   margin-top: -10px;
   margin-left: -20px;
+  @supports (display: grid) {
+    display: grid;
+    grid-row-gap: 10px;
+    grid-column-gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    margin-top: 0;
+    margin-left: 0;
+  }
 }
 
 .cta-layout > *:not([class~="layout"]),
 .card-layout .cta-align > * {
   margin-top: 10px;
   margin-left: 20px;
+  @supports (display: grid) {
+    margin-top: 0;
+    margin-left: 0;
+  }
 }
 
 .card-layout > *:not([class~="layout"]) {

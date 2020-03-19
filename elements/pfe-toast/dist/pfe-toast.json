@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Toast",
+  "description": "This element renders slotted content in a container that slides in from the right of the screen.",
+  "type": "object",
+  "tag": "pfe-toast",
+  "class": "pfe-toast",
+  "category": "container",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Content",
+          "type": "array",
+          "namedSlot": false,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "auto_dismiss": {
+          "title": "Auto dismiss",
+          "type": "string"
+        },
+        "close_label": {
+          "title": "Close label",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

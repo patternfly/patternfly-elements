@@ -21,6 +21,7 @@ $variables: (
 
   [tabindex] {
   	display: flex;
+    height: 100%;
   }
 
   .container {
@@ -78,7 +79,8 @@ $variables: (
 
 	:host([pfe-variant="earth"][vertical]) {
     --pfe-tabs__panel--BorderTop:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-
+    height: 100%;
+    
     @include browser-query(ie11) {
       .container {
         border-top: 1px solid #{pfe-color(surface--border)};

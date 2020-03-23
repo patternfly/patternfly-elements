@@ -27,6 +27,59 @@ Each header must have an attribute of `pfe-content-set--header` and each panel m
 
 ```
 
+## Attributes
+
+**`pfe-tab-history`** (observed)
+
+If `pfe-content-set` renders as `pfe-tabs`, the `pfe-tab-history` attribute
+enables the component to update window.history and the URL to create sharable
+links. With the `pfe-tab-history` attribute, the tabs and each tab *must* have
+an `id`.
+
+The URL pattern will be `?pfe-{id-of-tabs}={id-of-selected-tab}`. In the example
+below, selecting "Heading 2" will update the URL as follows:
+`?pfe-my-content-set=heading2`.
+
+```html
+<pfe-content-set pfe-id="my-content-set" pfe-tab-history>
+  <h2 pfe-content-set--header pfe-id="heading1">Heading 1</h2>
+  <p pfe-content-set--panel>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
+  <h2 pfe-content-set--header pfe-id="heading2">Heading 2</h2>
+  <p pfe-content-set--panel>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam volu et jen, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+  <h2 pfe-content-set--header pfe-ide="heading3">Heading 3</h2>
+  <p pfe-content-set--panel>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+</pfe-content-set>
+```
+
+*Note:* This feature is not supported in IE11.
+
+## Using the URL to open a specific tab
+
+If `pfe-content-set` renders as `pfe-tabs`, by default, `pfe-tabs` will read
+the URL and look for a query string parameter that matches the id of a
+`pfe-tabs` component and a value of a specific `pfe-tab`.
+
+For example, `?pfe-my-content-set=heading2` would open the second tab in the
+code sample below. "my-content-set" is equal to the id of the `pfe-tabs`
+component and "heading2" is equal to the id of the second tab in the tab set.
+
+```html
+<pfe-content-set pfe-id="my-content-set">
+  <h2 pfe-content-set--header pfe-id="heading1">Heading 1</h2>
+  <p pfe-content-set--panel>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
+  <h2 pfe-content-set--header pfe-id="heading2">Heading 2</h2>
+  <p pfe-content-set--panel>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam volu et jen, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+  <h2 pfe-content-set--header pfe-ide="heading3">Heading 3</h2>
+  <p pfe-content-set--panel>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+</pfe-content-set>
+```
+
+In the event that a tab with the supplied id in the URL does not exist,
+`pfe-tabs` will fall back to the `selected-index` attribute if one is supplied
+in the markup, or the first tab if `selected-index` is not provided.
+
+*Note:* This feature is not supported in IE11.
+
 ## Variants
 
 ### Style

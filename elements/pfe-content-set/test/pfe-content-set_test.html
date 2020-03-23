@@ -106,6 +106,18 @@
       </pfe-content-set>
     </pfe-band>
 
+    <pfe-content-set pfe-id="my-content-set">
+      <h2 pfe-content-set--header pfe-id="my-content-set-header">Heading 1</h2>
+      <p pfe-content-set--panel pfe-id="my-content-set-panel">Panel 1</p>
+    </pfe-content-set>
+
+    <pfe-content-set pfe-id="my-content-set-history" pfe-tab-history>
+      <h2 pfe-content-set--header pfe-id="my-content-set-header">Heading 1</h2>
+      <p pfe-content-set--panel pfe-id="my-content-set-panel">Panel 1</p>
+      <h2 pfe-content-set--header pfe-id="historyTab2">Heading 2</h2>
+      <p pfe-content-set--panel>Panel 2</p>
+    </pfe-content-set>
+
     <script>
       suite('<pfe-content-set>', () => {
         test('it should have the proper attributes for tabs', () => {
@@ -225,7 +237,7 @@
           assert.isNotNull(pfeTabs);
 
         });
-      
+
         test("it should set the correct \"on\" attribute from a parent component that has a pfe-color attribute", done => {
           const band = document.querySelector("#band");
           const contentSet = band.querySelector("pfe-content-set");
@@ -263,6 +275,97 @@
             assert.equal(accordionHeader.getAttribute("on"), "light");
             assert.equal(accordionPanel.getAttribute("on"), "light");
 
+            done();
+          });
+        });
+      });
+
+      suite("<pfe-content-set> with history", () => {
+        test("it should add ids to pfe-tabs, pfe-tab, and pfe-tab-panel if pfe-id attributes are set on pfe-content-set, pfe-content-set--header, and pfe-content-set--panel", () => {
+          const pfeContentSet = document.querySelector('[pfe-id="my-content-set"]');
+          const header = pfeContentSet.querySelector("[pfe-content-set--header]");
+          const content = pfeContentSet.querySelector("[pfe-content-set--panel]");
+
+          const tabs = pfeContentSet.querySelector("pfe-tabs");
+          const tab1 = tabs.querySelector("pfe-tab");
+          const panel1 = tabs.querySelector("pfe-tab-panel");
+
+          assert.equal(pfeContentSet.getAttribute("pfe-id"), tabs.id);
+          assert.equal(header.getAttribute("pfe-id"), tab1.id);
+          assert.equal(content.getAttribute("pfe-id"), panel1.id);
+        });
+
+        test("if pfe-content-set displays as tabs, it should show the correct tab if there is a querystring parameter in the URL", done => {
+          // the parameter should be equal to the id of the tabset
+          // the value should be equal to the id of the tab you want opened
+          const searchParams = new URLSearchParams(window.location.search)
+          searchParams.set("pfe-fromQueryString", "fromQueryStringTab2");
+          var newPath = window.location.pathname + '?' + searchParams.toString();
+          history.pushState(null, '', newPath);
+
+          const fragment = document.createRange().createContextualFragment(`
+            <pfe-content-set pfe-id="fromQueryString">
+              <h2 pfe-content-set--header pfe-id="tab1">Tab 1</h2>
+              <p pfe-content-set--panel>Panel 1</p>
+              <h2 pfe-content-set--header pfe-id="fromQueryStringTab2">Tab 2</h2>
+              <p pfe-content-set--panel>Panel 2</p>
+            </pfe-content-set>
+          `);
+
+          document.body.appendChild(fragment);
+
+          flush(() => {
+            const contentSet = document.querySelector('[pfe-id="fromQueryString"]');
+            const tabs = document.querySelector("#fromQueryString");
+            const tab2 = tabs.querySelector("#fromQueryStringTab2");
+            assert.equal(tabs.selectedIndex, 1);
+            assert.isTrue(tab2.hasAttribute("aria-selected"));
+
+            document.body.removeChild(contentSet);
+            done();
+          });
+        });
+
+        test("if pfe-content-set displays as tabs, it should open the first tab if the querystring in the URL doesn't match the id of any of the tabs", done => {
+          const searchParams = new URLSearchParams(window.location.search)
+          searchParams.set("pfe-fromQueryString", "iDontExist");
+          var newPath = window.location.pathname + '?' + searchParams.toString();
+          history.pushState(null, '', newPath);
+
+          const fragment = document.createRange().createContextualFragment(`
+            <pfe-content-set pfe-id="fromQueryString">
+              <h2 pfe-content-set--header pfe-id="tab1">Tab 1</h2>
+              <p pfe-content-set--panel>Panel 1</p>
+              <h2 pfe-content-set--header pfe-id="fromQueryStringTab2">Tab 2</h2>
+              <p pfe-content-set--panel>Panel 2</p>
+            </pfe-content-set>
+          `);
+
+          document.body.appendChild(fragment);
+
+          flush(() => {
+            const contentSet = document.querySelector('[pfe-id="fromQueryString"]');
+            const tabs = document.querySelector("#fromQueryString");
+            const tab1 = tabs.querySelector("#tab1");
+            assert.equal(tabs.selectedIndex, 0);
+            assert.isTrue(tab1.hasAttribute("aria-selected"));
+
+            document.body.removeChild(contentSet);
+            done();
+          });
+        });
+
+        test("if pfe-content-set displays as tabs, it should update the URL on tab selection if the pfe-tab-history attribute is present", done => {
+          const tabs = document.querySelector("#my-content-set-history");
+          const tab2 = tabs.querySelector("#historyTab2");
+
+          tab2.click();
+
+          flush(() => {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            assert.equal(urlSearchParams.get("pfe-my-content-set-history"), "historyTab2");
+            assert.equal(tabs.selectedIndex, 1);
+            assert.isTrue(tab2.hasAttribute("aria-selected"));
             done();
           });
         });

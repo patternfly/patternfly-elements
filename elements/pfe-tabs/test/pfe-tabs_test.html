@@ -112,6 +112,11 @@
       <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
     </pfe-tabs>
 
+    <pfe-tabs id="onAttribute" on="dark">
+      <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+    </pfe-tabs>
+
     <pfe-tabs id="history" pfe-tab-history>
       <pfe-tab role="heading" slot="tab" id="historyTab1">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
@@ -357,6 +362,20 @@
 
           assert.equal(tab.getAttribute("pfe-variant"), "earth");
           assert.equal(panel.getAttribute("pfe-variant"), "earth");
+        });
+
+        test("it should cascade the on attribute to pfe-tab and pfe-tab-panel from pfe-tabs", () => {
+          const tabs = document.querySelector("#onAttribute");
+          const tab = tabs.querySelector("pfe-tab");
+          const panel = tabs.querySelector("pfe-tab-panel");
+
+          assert.equal(tab.getAttribute("on"), tabs.getAttribute("on"));
+          assert.equal(panel.getAttribute("on"), tabs.getAttribute("on"));
+
+          tabs.setAttribute("on", "light");
+
+          assert.equal(tab.getAttribute("on"), tabs.getAttribute("on"));
+          assert.equal(panel.getAttribute("on"), tabs.getAttribute("on"));
         });
       });
 

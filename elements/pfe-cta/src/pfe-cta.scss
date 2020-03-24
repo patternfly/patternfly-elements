@@ -5,6 +5,7 @@ $LOCAL: cta;
  
 $pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
 $pfe-cta--Color--fallback: #003366;
+$pfe-cta--FontSize--default: calc(#{pfe-local($cssvar: FontSize)} * 1.125);
 
 $variables: (
   Padding: 0.6rem 0,
@@ -101,7 +102,7 @@ $variables: (
       $cssvar: FontFamily,
       $fallback: #{pfe-var(font-family--heading)}
     )};
-  font-size: #{pfe-local($cssvar: FontSize, $fallback: #{pfe-var(font-size)})};
+  font-size: #{pfe-local($cssvar: FontSize--default, $fallback: #{pfe-var(font-size)})};
   font-weight: #{pfe-local(FontWeight)};
   line-height: #{pfe-local(
       $cssvar: LineHeight,
@@ -120,6 +121,7 @@ $variables: (
 
   :host([pfe-priority]) & {
     text-align: center;
+    font-size: #{pfe-local($cssvar: FontSize, $fallback: #{pfe-var(font-size)})};
   }
 }
 

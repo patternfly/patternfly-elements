@@ -101,7 +101,7 @@ $variables: (
       $cssvar: FontFamily,
       $fallback: #{pfe-var(font-family--heading)}
     )};
-  font-size: #{pfe-local($cssvar: FontSize--default, $fallback: #{pfe-var(font-size)})};
+  font-size: #{pfe-local($cssvar: FontSize, $fallback: #{pfe-var(font-size)})};
   font-weight: #{pfe-local(FontWeight)};
   line-height: #{pfe-local(
       $cssvar: LineHeight,
@@ -120,7 +120,7 @@ $variables: (
 
   :host([pfe-priority]) & {
     text-align: center;
-    font-size: #{pfe-local($cssvar: FontSize, $fallback: #{pfe-var(font-size)})};
+    font-size: #{pfe-local($cssvar: FontSize--priority, $fallback: #{pfe-var(font-size)})};
   }
 }
 

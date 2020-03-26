@@ -2,6 +2,7 @@
 
 Tag: [v1.0.0-prerelease.42](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.42)
 
+- [fbc251b](https://github.com/patternfly/patternfly-elements/commit/fbc251b5180684da26a57c0941235d57f961990e) fix: set consistent line-height for pfe-nav triggers (#773)
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: adding event to pfe-cta component
 
 ## Prerelease 41 ( 2020-03-19 )

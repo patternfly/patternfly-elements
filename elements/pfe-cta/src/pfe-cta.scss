@@ -22,6 +22,8 @@ $variables: (
   TextDecoration--hover: none,
   TextDecoration--focus: none,
   FontWeight: #{pfe-var(font-weight--bold)},
+  FontSize:  #{pfe-var(font-size)},
+  FontSize--priority: calc(#{pfe-local($cssvar: FontSize) / 1.125}),
   arrow: (
     Display: inline,
     Padding: 0 0.125rem 0 0.375rem,

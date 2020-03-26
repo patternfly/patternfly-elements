@@ -3,7 +3,7 @@
 Tag: [v1.0.0-prerelease.42](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.42)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: set consistent line-height for pfe-nav triggers (#773)
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: set pfe-cta's with the priority attribute to font-size: 16px
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: set pfe-cta's with the priority attribute relative to theme font-size
 
 
 ## Prerelease 41 ( 2020-03-19 )

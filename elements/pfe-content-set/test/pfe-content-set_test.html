@@ -106,15 +106,15 @@
       </pfe-content-set>
     </pfe-band>
 
-    <pfe-content-set pfe-id="my-content-set">
-      <h2 pfe-content-set--header pfe-id="my-content-set-header">Heading 1</h2>
-      <p pfe-content-set--panel pfe-id="my-content-set-panel">Panel 1</p>
+    <pfe-content-set pfe-clone-id="my-content-set">
+      <h2 pfe-content-set--header pfe-clone-id="my-content-set-header">Heading 1</h2>
+      <p pfe-content-set--panel pfe-clone-id="my-content-set-panel">Panel 1</p>
     </pfe-content-set>
 
-    <pfe-content-set pfe-id="my-content-set-history" pfe-tab-history>
-      <h2 pfe-content-set--header pfe-id="my-content-set-header">Heading 1</h2>
-      <p pfe-content-set--panel pfe-id="my-content-set-panel">Panel 1</p>
-      <h2 pfe-content-set--header pfe-id="historyTab2">Heading 2</h2>
+    <pfe-content-set pfe-clone-id="my-content-set-history" pfe-tab-history>
+      <h2 pfe-content-set--header pfe-clone-id="my-content-set-header">Heading 1</h2>
+      <p pfe-content-set--panel pfe-clone-id="my-content-set-panel">Panel 1</p>
+      <h2 pfe-content-set--header pfe-clone-id="historyTab2">Heading 2</h2>
       <p pfe-content-set--panel>Panel 2</p>
     </pfe-content-set>
 
@@ -282,7 +282,7 @@
 
       suite("<pfe-content-set> with history", () => {
         test("it should add ids to pfe-tabs, pfe-tab, and pfe-tab-panel if pfe-id attributes are set on pfe-content-set, pfe-content-set--header, and pfe-content-set--panel", () => {
-          const pfeContentSet = document.querySelector('[pfe-id="my-content-set"]');
+          const pfeContentSet = document.querySelector('[pfe-clone-id="my-content-set"]');
           const header = pfeContentSet.querySelector("[pfe-content-set--header]");
           const content = pfeContentSet.querySelector("[pfe-content-set--panel]");
 
@@ -290,24 +290,24 @@
           const tab1 = tabs.querySelector("pfe-tab");
           const panel1 = tabs.querySelector("pfe-tab-panel");
 
-          assert.equal(pfeContentSet.getAttribute("pfe-id"), tabs.id);
-          assert.equal(header.getAttribute("pfe-id"), tab1.id);
-          assert.equal(content.getAttribute("pfe-id"), panel1.id);
+          assert.equal(pfeContentSet.getAttribute("pfe-clone-id"), tabs.id);
+          assert.equal(header.getAttribute("pfe-clone-id"), tab1.id);
+          assert.equal(content.getAttribute("pfe-clone-id"), panel1.id);
         });
 
         test("if pfe-content-set displays as tabs, it should show the correct tab if there is a querystring parameter in the URL", done => {
           // the parameter should be equal to the id of the tabset
           // the value should be equal to the id of the tab you want opened
           const searchParams = new URLSearchParams(window.location.search)
-          searchParams.set("pfe-fromQueryString", "fromQueryStringTab2");
+          searchParams.set("fromQueryString", "fromQueryStringTab2");
           var newPath = window.location.pathname + '?' + searchParams.toString();
           history.pushState(null, '', newPath);
 
           const fragment = document.createRange().createContextualFragment(`
-            <pfe-content-set pfe-id="fromQueryString">
-              <h2 pfe-content-set--header pfe-id="tab1">Tab 1</h2>
+            <pfe-content-set pfe-clone-id="fromQueryString">
+              <h2 pfe-content-set--header pfe-clone-id="tab1">Tab 1</h2>
               <p pfe-content-set--panel>Panel 1</p>
-              <h2 pfe-content-set--header pfe-id="fromQueryStringTab2">Tab 2</h2>
+              <h2 pfe-content-set--header pfe-clone-id="fromQueryStringTab2">Tab 2</h2>
               <p pfe-content-set--panel>Panel 2</p>
             </pfe-content-set>
           `);
@@ -315,7 +315,7 @@
           document.body.appendChild(fragment);
 
           flush(() => {
-            const contentSet = document.querySelector('[pfe-id="fromQueryString"]');
+            const contentSet = document.querySelector('[pfe-clone-id="fromQueryString"]');
             const tabs = document.querySelector("#fromQueryString");
             const tab2 = tabs.querySelector("#fromQueryStringTab2");
             assert.equal(tabs.selectedIndex, 1);
@@ -328,15 +328,15 @@
 
         test("if pfe-content-set displays as tabs, it should open the first tab if the querystring in the URL doesn't match the id of any of the tabs", done => {
           const searchParams = new URLSearchParams(window.location.search)
-          searchParams.set("pfe-fromQueryString", "iDontExist");
+          searchParams.set("fromQueryString", "iDontExist");
           var newPath = window.location.pathname + '?' + searchParams.toString();
           history.pushState(null, '', newPath);
 
           const fragment = document.createRange().createContextualFragment(`
-            <pfe-content-set pfe-id="fromQueryString">
-              <h2 pfe-content-set--header pfe-id="tab1">Tab 1</h2>
+            <pfe-content-set pfe-clone-id="fromQueryString">
+              <h2 pfe-content-set--header pfe-clone-id="tab1">Tab 1</h2>
               <p pfe-content-set--panel>Panel 1</p>
-              <h2 pfe-content-set--header pfe-id="fromQueryStringTab2">Tab 2</h2>
+              <h2 pfe-content-set--header pfe-clone-id="fromQueryStringTab2">Tab 2</h2>
               <p pfe-content-set--panel>Panel 2</p>
             </pfe-content-set>
           `);
@@ -344,7 +344,7 @@
           document.body.appendChild(fragment);
 
           flush(() => {
-            const contentSet = document.querySelector('[pfe-id="fromQueryString"]');
+            const contentSet = document.querySelector('[pfe-clone-id="fromQueryString"]');
             const tabs = document.querySelector("#fromQueryString");
             const tab1 = tabs.querySelector("#tab1");
             assert.equal(tabs.selectedIndex, 0);
@@ -363,7 +363,7 @@
 
           flush(() => {
             const urlSearchParams = new URLSearchParams(window.location.search);
-            assert.equal(urlSearchParams.get("pfe-my-content-set-history"), "historyTab2");
+            assert.equal(urlSearchParams.get("my-content-set-history"), "historyTab2");
             assert.equal(tabs.selectedIndex, 1);
             assert.isTrue(tab2.hasAttribute("aria-selected"));
             done();

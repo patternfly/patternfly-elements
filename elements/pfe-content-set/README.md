@@ -33,20 +33,50 @@ Each header must have an attribute of `pfe-content-set--header` and each panel m
 
 If `pfe-content-set` renders as `pfe-tabs`, the `pfe-tab-history` attribute
 enables the component to update window.history and the URL to create sharable
-links. With the `pfe-tab-history` attribute, the tabs and each tab *must* have
-an `id`.
+links.
 
-The URL pattern will be `?pfe-{id-of-tabs}={id-of-selected-tab}`. In the example
-below, selecting "Heading 2" will update the URL as follows:
-`?pfe-my-content-set=heading2`.
+#### Using `pfe-clone-id` to set an id
+
+With the `pfe-tab-history` attribute, the tabs and each tab *must* have
+an `id`. To prevent creating duplicate ids, use the `pfe-clone-id` attribute
+to set an `id` on `pfe-tabs`, `pfe-tab`, and `pfe-tab-panel`.
+
+##### Example Markup
+```html
+<pfe-content-set pfe-clone-id="my-content-set" pfe-tab-history>
+  <h2 pfe-content-set--header pfe-clone-id="heading1">Heading 1</h2>
+  <p pfe-content-set--panel pfe-clone-id="panel1">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
+</pfe-content-set>
+```
+
+becomes
 
 ```html
-<pfe-content-set pfe-id="my-content-set" pfe-tab-history>
-  <h2 pfe-content-set--header pfe-id="heading1">Heading 1</h2>
+<pfe-content-set pfe-clone-id="my-content-set" pfe-tab-history>
+  <pfe-tabs id="my-content-set">
+    <pfe-tab id="heading1">
+      <h2 pfe-content-set--header pfe-clone-id="heading1">Heading 1</h2>
+    </pfe-tab>
+    <pfe-tab-panel id="panel1">
+      <p pfe-content-set--panel pfe-clone-ide="panel1">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
+    </pfe-tab-panel>
+  </pfe-tabs>
+</pfe-content-set>
+```
+
+#### URL Pattern
+
+The URL pattern will be `?{id-of-tabs}={id-of-selected-tab}`. In the example
+below, selecting "Heading 2" will update the URL as follows:
+`?my-content-set=heading2`.
+
+```html
+<pfe-content-set pfe-clone-id="my-content-set" pfe-tab-history>
+  <h2 pfe-content-set--header pfe-clone-id="heading1">Heading 1</h2>
   <p pfe-content-set--panel>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
-  <h2 pfe-content-set--header pfe-id="heading2">Heading 2</h2>
+  <h2 pfe-content-set--header pfe-clone-id="heading2">Heading 2</h2>
   <p pfe-content-set--panel>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam volu et jen, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-  <h2 pfe-content-set--header pfe-ide="heading3">Heading 3</h2>
+  <h2 pfe-content-set--header pfe-clone-id="heading3">Heading 3</h2>
   <p pfe-content-set--panel>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
 </pfe-content-set>
 ```
@@ -59,17 +89,46 @@ If `pfe-content-set` renders as `pfe-tabs`, by default, `pfe-tabs` will read
 the URL and look for a query string parameter that matches the id of a
 `pfe-tabs` component and a value of a specific `pfe-tab`.
 
-For example, `?pfe-my-content-set=heading2` would open the second tab in the
+#### Using `pfe-clone-id` to set an id
+
+Tabs and each tab *must* have an `id`. To prevent creating duplicate ids, use
+the `pfe-clone-id` attributeto set an `id` on `pfe-tabs`, `pfe-tab`, and
+`pfe-tab-panel`.
+
+##### Example Markup
+```html
+<pfe-content-set pfe-clone-id="my-content-set" pfe-tab-history>
+  <h2 pfe-content-set--header pfe-clone-id="heading1">Heading 1</h2>
+  <p pfe-content-set--panel pfe-clone-id="panel1">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
+</pfe-content-set>
+```
+
+becomes
+
+```html
+<pfe-content-set pfe-clone-id="my-content-set" pfe-tab-history>
+  <pfe-tabs id="my-content-set">
+    <pfe-tab id="heading1">
+      <h2 pfe-content-set--header pfe-clone-id="heading1">Heading 1</h2>
+    </pfe-tab>
+    <pfe-tab-panel id="panel1">
+      <p pfe-content-set--panel pfe-clone-ide="panel1">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
+    </pfe-tab-panel>
+  </pfe-tabs>
+</pfe-content-set>
+```
+
+For example, `?my-content-set=heading2` would open the second tab in the
 code sample below. "my-content-set" is equal to the id of the `pfe-tabs`
 component and "heading2" is equal to the id of the second tab in the tab set.
 
 ```html
-<pfe-content-set pfe-id="my-content-set">
-  <h2 pfe-content-set--header pfe-id="heading1">Heading 1</h2>
+<pfe-content-set pfe-clone-id="my-content-set">
+  <h2 pfe-content-set--header pfe-clone-id="heading1">Heading 1</h2>
   <p pfe-content-set--panel>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
-  <h2 pfe-content-set--header pfe-id="heading2">Heading 2</h2>
+  <h2 pfe-content-set--header pfe-clone-id="heading2">Heading 2</h2>
   <p pfe-content-set--panel>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam volu et jen, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-  <h2 pfe-content-set--header pfe-ide="heading3">Heading 3</h2>
+  <h2 pfe-content-set--header pfe-clone-ide="heading3">Heading 3</h2>
   <p pfe-content-set--panel>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
 </pfe-content-set>
 ```

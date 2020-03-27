@@ -131,6 +131,12 @@ If you'd like to checkout how theming is possible using our CSS Var hooks, try a
 </style>
 ```
 
+## Events
+
+### pfe-cta:select
+
+This event is fired when a link is clicked and serves as a way to capture click events if necessary.
+
 ## Test
 
     npm run test

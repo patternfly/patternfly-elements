@@ -124,15 +124,16 @@ $variables: (
     text-align: center;
     font-size: #{pfe-local($cssvar: FontSize--priority, $fallback: #{pfe-var(font-size)})};
   }
+
+  :host([aria-disabled="true"]) & {
+    cursor: default !important;
+    font-size: #{pfe-local($cssvar: FontSize--priority, $fallback: #{pfe-var(font-size)})};
+  }
 }
 
 :host(:not([aria-disabled="true"])) ::slotted(*:not(:disabled)),
 :host ::slotted(*:not(:disabled)) {
   cursor: pointer;
-}
-
-:host([aria-disabled="true"]) ::slotted(*) {
-  cursor: default !important;
 }
 
 .pfe-cta {

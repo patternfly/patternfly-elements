@@ -4,7 +4,8 @@ Tag: [v1.0.0-prerelease.42](https://github.com/patternfly/patternfly-elements/re
 
 - [fbc251b](https://github.com/patternfly/patternfly-elements/commit/fbc251b5180684da26a57c0941235d57f961990e) fix: set consistent line-height for pfe-nav triggers (#773)
 - [29780ab](https://github.com/patternfly/patternfly-elements/commit/29780abfab1074aa05a021a43d79bee00afed31b) feat: adding event to pfe-cta component
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: set pfe-cta's with the priority attribute relative to theme font-size
+- [dad975f](https://github.com/patternfly/patternfly-elements/commit/dad975fc009e8cd4a26d5a481556c94d143b8686) fix: set pfe-cta's with the priority attribute relative to theme font-size
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add a warning if the `on` attribute is manually added to markup
 
 ## Prerelease 41 ( 2020-03-19 )
 

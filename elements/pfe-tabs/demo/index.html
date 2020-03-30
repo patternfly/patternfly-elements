@@ -323,6 +323,31 @@
     </section>
 
     <section class="example">
+      <h2>Tabs in Tabs</h2>
+      <pfe-tabs>
+        <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
+        <pfe-tab-panel role="region" slot="panel">
+          <pfe-tabs id="subtabset">
+            <pfe-tab role="heading" slot="tab">Sub Tab 1</pfe-tab>
+            <pfe-tab-panel role="region" slot="panel">
+              <h2>Content for Sub Tab 1</h2>
+            </pfe-tab-panel>
+            <pfe-tab role="heading" slot="tab">Sub Tab 2</pfe-tab>
+            <pfe-tab-panel role="region" slot="panel">
+              <h2>Content for Sub Tab 2</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </pfe-tab-panel>
+          </pfe-tabs>
+        </pfe-tab-panel>
+        <pfe-tab role="heading" slot="tab">Tab 2</pfe-tab>
+        <pfe-tab-panel role="region" slot="panel">
+          <h1>Tab 2 Content</h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </pfe-tab-panel>
+      </pfe-tabs>
+    </section>
+
+    <section class="example">
 
       <h2>Dynamically Adding a Tab and Tab Panel</h2>
       <pfe-tabs id="dynamic">

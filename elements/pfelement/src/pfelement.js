@@ -139,6 +139,15 @@ class PFElement extends HTMLElement {
       });
     }
 
+    // Throw a warning if the on attribute was manually added
+    if (this.hasAttribute("on")) {
+      console.warn(
+        `${this.tag}${
+          this.id ? `[#${this.id}]` : ``
+        }: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`
+      );
+    }
+
     if (!delayRender) {
       this.log(`Render...`);
       this.render();

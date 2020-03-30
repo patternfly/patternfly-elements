@@ -40,13 +40,7 @@ class PfeTabs extends PFElement {
   }
 
   static get observedAttributes() {
-    return [
-      "vertical",
-      "selected-index",
-      "pfe-variant",
-      "on",
-      "pfe-tab-history"
-    ];
+    return ["vertical", "selected-index", "pfe-variant", "pfe-tab-history"];
   }
 
   static get events() {
@@ -141,13 +135,6 @@ class PfeTabs extends PFElement {
           this.removeAttribute("aria-orientation");
           this._allPanels().forEach(panel => panel.removeAttribute("vertical"));
           this._allTabs().forEach(tab => tab.removeAttribute("vertical"));
-        }
-        break;
-
-      case "on":
-        if (this.getAttribute("on") === "dark") {
-          this._allTabs().forEach(tab => tab.setAttribute("on", "dark"));
-          this._allPanels().forEach(panel => panel.setAttribute("on", "dark"));
         }
         break;
 

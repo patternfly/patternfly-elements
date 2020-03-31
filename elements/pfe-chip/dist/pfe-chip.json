@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Chip",
+  "description": "A Chip is used to display items that have been filtered or selected from a larger group. They comprise of a text element and a button component that is used to remove the chip from selection. When the text overflows it is truncated using ellipses. A chip can be grouped by using the &#34;chip-group&#34; layout.",
+  "type": "object",
+  "tag": "pfe-chip",
+  "class": "PfeChip",
+  "category": "content",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "default": {
+          "title": "Default slot",
+          "type": "array",
+          "namedSlot": false,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        },
+        "badge": {
+          "title": "Badge",
+          "type": "array",
+          "namedSlot": true,
+          "items": {
+            "title": "Badge item",
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        }
+      },
+      "required": ["default"]
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "read-only": {
+          "title": "Read only",
+          "type": "boolean",
+          "default": false,
+          "prefixed": true
+        },
+        "overflow": {
+          "title": "Overflow",
+          "type": "number",
+          "prefixed": true
+        },
+        "badge": {
+          "title": "Badge",
+          "type": "number",
+          "prefixed": true
+        }
+      }
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

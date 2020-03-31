@@ -4,7 +4,7 @@
     "className": "PfeSelect",
     "elementName": "pfe-select"
   },
-  "version": "1.0.0-prerelease.40",
+  "version": "1.0.0-prerelease.42",
   "description": "Select element for PatternFly Elements",
   "repository": {
     "type": "git",

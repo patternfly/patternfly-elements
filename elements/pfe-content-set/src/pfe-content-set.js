@@ -138,8 +138,8 @@ class PfeContentSet extends PFElement {
 
         header.setAttribute("slot", "tab");
 
-        if (child.hasAttribute("pfe-clone-id")) {
-          header.id = child.getAttribute("pfe-clone-id");
+        if (child.id) {
+          header.setAttribute("pfe-id", child.id);
         }
 
         header.appendChild(child);
@@ -151,8 +151,8 @@ class PfeContentSet extends PFElement {
 
         panel.setAttribute("slot", "panel");
 
-        if (child.hasAttribute("pfe-clone-id")) {
-          panel.id = child.getAttribute("pfe-clone-id");
+        if (child.id) {
+          panel.setAttribute("pfe-id", child.id);
         }
 
         panel.appendChild(child);
@@ -178,8 +178,8 @@ class PfeContentSet extends PFElement {
       tabs.setAttribute("pfe-tab-align", this.align.value);
     }
 
-    if (this.hasAttribute("pfe-clone-id")) {
-      tabs.id = this.getAttribute("pfe-clone-id");
+    if (this.id) {
+      tabs.setAttribute("pfe-id", this.id);
     }
 
     if (this.hasAttribute("pfe-tab-history")) {

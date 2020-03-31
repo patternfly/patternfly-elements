@@ -106,15 +106,15 @@
       </pfe-content-set>
     </pfe-band>
 
-    <pfe-content-set pfe-clone-id="my-content-set">
-      <h2 pfe-content-set--header pfe-clone-id="my-content-set-header">Heading 1</h2>
-      <p pfe-content-set--panel pfe-clone-id="my-content-set-panel">Panel 1</p>
+    <pfe-content-set id="my-content-set">
+      <h2 pfe-content-set--header id="my-content-set-header">Heading 1</h2>
+      <p pfe-content-set--panel id="my-content-set-panel">Panel 1</p>
     </pfe-content-set>
 
-    <pfe-content-set pfe-clone-id="my-content-set-history" pfe-tab-history>
-      <h2 pfe-content-set--header pfe-clone-id="my-content-set-header">Heading 1</h2>
-      <p pfe-content-set--panel pfe-clone-id="my-content-set-panel">Panel 1</p>
-      <h2 pfe-content-set--header pfe-clone-id="historyTab2">Heading 2</h2>
+    <pfe-content-set id="my-content-set-history" pfe-tab-history>
+      <h2 pfe-content-set--header id="my-content-set-header">Heading 1</h2>
+      <p pfe-content-set--panel id="my-content-set-panel">Panel 1</p>
+      <h2 pfe-content-set--header id="historyTab2">Heading 2</h2>
       <p pfe-content-set--panel>Panel 2</p>
     </pfe-content-set>
 
@@ -282,7 +282,7 @@
 
       suite("<pfe-content-set> with history", () => {
         test("it should add ids to pfe-tabs, pfe-tab, and pfe-tab-panel if pfe-id attributes are set on pfe-content-set, pfe-content-set--header, and pfe-content-set--panel", () => {
-          const pfeContentSet = document.querySelector('[pfe-clone-id="my-content-set"]');
+          const pfeContentSet = document.querySelector('#my-content-set');
           const header = pfeContentSet.querySelector("[pfe-content-set--header]");
           const content = pfeContentSet.querySelector("[pfe-content-set--panel]");
 
@@ -290,9 +290,9 @@
           const tab1 = tabs.querySelector("pfe-tab");
           const panel1 = tabs.querySelector("pfe-tab-panel");
 
-          assert.equal(pfeContentSet.getAttribute("pfe-clone-id"), tabs.id);
-          assert.equal(header.getAttribute("pfe-clone-id"), tab1.id);
-          assert.equal(content.getAttribute("pfe-clone-id"), panel1.id);
+          assert.equal(pfeContentSet.id, tabs.getAttribute("pfe-id"));
+          assert.equal(header.id, tab1.getAttribute("pfe-id"));
+          assert.equal(content.id, panel1.getAttribute("pfe-id"));
         });
 
         test("if pfe-content-set displays as tabs, it should show the correct tab if there is a querystring parameter in the URL", done => {
@@ -304,10 +304,10 @@
           history.pushState(null, '', newPath);
 
           const fragment = document.createRange().createContextualFragment(`
-            <pfe-content-set pfe-clone-id="fromQueryString">
-              <h2 pfe-content-set--header pfe-clone-id="tab1">Tab 1</h2>
+            <pfe-content-set id="fromQueryString">
+              <h2 pfe-content-set--header id="tab1">Tab 1</h2>
               <p pfe-content-set--panel>Panel 1</p>
-              <h2 pfe-content-set--header pfe-clone-id="fromQueryStringTab2">Tab 2</h2>
+              <h2 pfe-content-set--header id="fromQueryStringTab2">Tab 2</h2>
               <p pfe-content-set--panel>Panel 2</p>
             </pfe-content-set>
           `);
@@ -315,9 +315,9 @@
           document.body.appendChild(fragment);
 
           flush(() => {
-            const contentSet = document.querySelector('[pfe-clone-id="fromQueryString"]');
-            const tabs = document.querySelector("#fromQueryString");
-            const tab2 = tabs.querySelector("#fromQueryStringTab2");
+            const contentSet = document.querySelector('#fromQueryString');
+            const tabs = document.querySelector('[pfe-id="fromQueryString"]');
+            const tab2 = tabs.querySelector('[pfe-id="fromQueryStringTab2"]');
             assert.equal(tabs.selectedIndex, 1);
             assert.isTrue(tab2.hasAttribute("aria-selected"));
 
@@ -333,10 +333,10 @@
           history.pushState(null, '', newPath);
 
           const fragment = document.createRange().createContextualFragment(`
-            <pfe-content-set pfe-clone-id="fromQueryString">
-              <h2 pfe-content-set--header pfe-clone-id="tab1">Tab 1</h2>
+            <pfe-content-set id="fromQueryString">
+              <h2 pfe-content-set--header id="tab1">Tab 1</h2>
               <p pfe-content-set--panel>Panel 1</p>
-              <h2 pfe-content-set--header pfe-clone-id="fromQueryStringTab2">Tab 2</h2>
+              <h2 pfe-content-set--header id="fromQueryStringTab2">Tab 2</h2>
               <p pfe-content-set--panel>Panel 2</p>
             </pfe-content-set>
           `);
@@ -344,9 +344,9 @@
           document.body.appendChild(fragment);
 
           flush(() => {
-            const contentSet = document.querySelector('[pfe-clone-id="fromQueryString"]');
-            const tabs = document.querySelector("#fromQueryString");
-            const tab1 = tabs.querySelector("#tab1");
+            const contentSet = document.querySelector("#fromQueryString");
+            const tabs = document.querySelector('[pfe-id="fromQueryString"]');
+            const tab1 = tabs.querySelector('[pfe-id="tab1"]');
             assert.equal(tabs.selectedIndex, 0);
             assert.isTrue(tab1.hasAttribute("aria-selected"));
 
@@ -356,8 +356,8 @@
         });
 
         test("if pfe-content-set displays as tabs, it should update the URL on tab selection if the pfe-tab-history attribute is present", done => {
-          const tabs = document.querySelector("#my-content-set-history");
-          const tab2 = tabs.querySelector("#historyTab2");
+          const tabs = document.querySelector('[pfe-id="my-content-set-history"]');
+          const tab2 = tabs.querySelector('[pfe-id="historyTab2"]');
 
           tab2.click();
 

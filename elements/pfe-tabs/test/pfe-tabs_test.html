@@ -420,7 +420,38 @@
         test("it should show the correct tab if there is a querystring parameter in the URL", done => {
           // the parameter should be equal to the id of the tabset
           // the value should be equal to the id of the tab you want opened
-          const searchParams = new URLSearchParams(window.location.search)
+          const searchParams = new URLSearchParams();
+          searchParams.set("fromQueryString", "fromQueryStringTab2");
+          var newPath = window.location.pathname + '?' + searchParams.toString();
+          history.pushState(null, '', newPath);
+
+          const fragment = document.createRange().createContextualFragment(`
+            <pfe-tabs id="fromQueryString">
+              <pfe-tab role="heading" slot="tab" id="fromQueryStringTab1">Tab 1</pfe-tab>
+              <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+              <pfe-tab role="heading" slot="tab" id="fromQueryStringTab2">Tab 2</pfe-tab>
+              <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+            </pfe-tabs>
+          `);
+
+          document.body.appendChild(fragment);
+
+          flush(() => {
+            const tabs = document.querySelector("#fromQueryString");
+            const tab2 = tabs.querySelector("#fromQueryStringTab2");
+            assert.equal(tabs.selectedIndex, 1);
+            assert.isTrue(tab2.hasAttribute("aria-selected"));
+
+            document.body.removeChild(tabs);
+            done();
+          });
+        });
+
+        test("it should continue to support the \"pfe-\" prefix in the URL and show the correct tab if there is a querystring parameter in the URL", done => {
+          // this supports any tabs that are currently using the "pfe-" prefix
+          // in the URL to open to a specific tab. the "pfe-" prefix has been
+          // deprecated and should no longer be used
+          const searchParams = new URLSearchParams();
           searchParams.set("pfe-fromQueryString", "fromQueryStringTab2");
           var newPath = window.location.pathname + '?' + searchParams.toString();
           history.pushState(null, '', newPath);
@@ -483,7 +514,7 @@
 
           flush(() => {
             const urlSearchParams = new URLSearchParams(window.location.search);
-            assert.equal(urlSearchParams.get("pfe-history"), "historyTab2");
+            assert.equal(urlSearchParams.get("history"), "historyTab2");
             assert.equal(tabs.selectedIndex, 1);
             assert.isTrue(tab2.hasAttribute("aria-selected"));
             done();
@@ -500,7 +531,7 @@
 
           flush(() => {
             const urlSearchParams = new URLSearchParams(window.location.search);
-            assert.equal(urlSearchParams.get("pfe-history"), "historyTab2");
+            assert.equal(urlSearchParams.get("history"), "historyTab2");
             assert.equal(tabs.selectedIndex, 0);
             assert.isTrue(tab1.hasAttribute("aria-selected"));
             done();

@@ -211,7 +211,7 @@ class PfeTabs extends PFElement {
       const urlParams = new URLSearchParams(window.location.search);
       const hash = window.location.hash;
 
-      urlParams.set(`pfe-${this.id}`, tab.id);
+      urlParams.set(`${this.id}`, tab.id);
       history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
     }
 
@@ -447,10 +447,17 @@ class PfeTabs extends PFElement {
       urlParams = new URLSearchParams(window.location.search);
     }
 
-    if (urlParams && urlParams.has(`pfe-${this.id}`)) {
-      tabIndex = this._allTabs().findIndex(
-        tab => tab.id === urlParams.get(`pfe-${this.id}`)
-      );
+    // @DEPRECATED
+    // the "pfe-" prefix has been deprecated but we'll continue to support it
+    // we'll give priority to the urlParams.has(`${this.id}`) attribute first
+    // and fallback to urlParams.has(`pfe-${this.id}`) if it exists. We should
+    // be able to remove the || part of the if statement in the future
+    if (
+      urlParams &&
+      (urlParams.has(`${this.id}`) || urlParams.has(`pfe-${this.id}`))
+    ) {
+      const id = urlParams.get(`${this.id}`) || urlParams.get(`pfe-${this.id}`);
+      tabIndex = this._allTabs().findIndex(tab => tab.id === id);
     }
 
     return tabIndex;

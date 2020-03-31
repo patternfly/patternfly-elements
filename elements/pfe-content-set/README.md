@@ -44,6 +44,8 @@ to work.
 <pfe-content-set id="my-content-set" pfe-tab-history>
   <h2 pfe-content-set--header id="heading1">Heading 1</h2>
   <p pfe-content-set--panel id="panel1">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
+  <h2 pfe-content-set--header id="heading2">Heading 2</h2>
+  <p pfe-content-set--panel id="panel2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
 </pfe-content-set>
 ```
 
@@ -58,33 +60,26 @@ becomes
     <pfe-tab-panel pfe-id="panel1">
       <p pfe-content-set--panel id="panel1">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
     </pfe-tab-panel>
+    <pfe-tab pfe-id="heading2">
+      <h2 pfe-content-set--header id="heading2">Heading 1</h2>
+    </pfe-tab>
+    <pfe-tab-panel pfe-id="panel2">
+      <p pfe-content-set--panel id="panel2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
+    </pfe-tab-panel>
   </pfe-tabs>
 </pfe-content-set>
 ```
+
 Note how the `id` attributes from `pfe-content-set` and elements with the
 `pfe-content-set--header` attribute pass the value of the `id` attribute to
 its corresponding tab element and sets the `pfe-id` attribute.
 
-#### URL Pattern
+#### How to use a URL pattern to open a specific tab
 
 The URL pattern will be `?{id-of-tabs}={id-of-selected-tab}`. In the example
-below, selecting "Heading 2" will update the URL as follows:
+above, selecting "Heading 2" will update the URL as follows:
 `?my-content-set=heading2`.
 
-```html
-<pfe-content-set id="my-content-set" pfe-tab-history>
-  <h2 pfe-content-set--header id="heading1">Heading 1</h2>
-  <p pfe-content-set--panel>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
-  <h2 pfe-content-set--header id="heading2">Heading 2</h2>
-  <p pfe-content-set--panel>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam volu et jen, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-  <h2 pfe-content-set--header id="heading3">Heading 3</h2>
-  <p pfe-content-set--panel>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-</pfe-content-set>
-```
-
-*Note:* This feature is not supported in IE11.
-
-## Using the URL to open a specific tab
 
 If `pfe-content-set` renders as `pfe-tabs`, by default, `pfe-tabs` will read
 the URL and look for a query string parameter that matches the `pfe-id` of a
@@ -95,16 +90,18 @@ the URL and look for a query string parameter that matches the `pfe-id` of a
 
 ##### Example Markup
 ```html
-<pfe-content-set id="my-content-set" pfe-tab-history>
+<pfe-content-set id="my-content-set">
   <h2 pfe-content-set--header id="heading1">Heading 1</h2>
   <p pfe-content-set--panel id="panel1">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
+  <h2 pfe-content-set--header id="heading2">Heading 2</h2>
+  <p pfe-content-set--panel id="panel2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
 </pfe-content-set>
 ```
 
 becomes
 
 ```html
-<pfe-content-set id="my-content-set" pfe-tab-history>
+<pfe-content-set id="my-content-set">
   <pfe-tabs pfe-id="my-content-set">
     <pfe-tab pfe-id="heading1">
       <h2 pfe-content-set--header id="heading1">Heading 1</h2>
@@ -112,25 +109,20 @@ becomes
     <pfe-tab-panel pfe-id="panel1">
       <p pfe-content-set--panel id="panel1">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
     </pfe-tab-panel>
+    <pfe-tab pfe-id="heading2">
+      <h2 pfe-content-set--header id="heading2">Heading 1</h2>
+    </pfe-tab>
+    <pfe-tab-panel pfe-id="panel2">
+      <p pfe-content-set--panel id="panel2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
+    </pfe-tab-panel>
   </pfe-tabs>
 </pfe-content-set>
 ```
 
 For example, `?my-content-set=heading2` would open the second tab in the
-code sample below. "my-content-set" is equal to the `pfe-id` of the `pfe-tabs`
+code sample above. "my-content-set" is equal to the `pfe-id` of the `pfe-tabs`
 component and "heading2" is equal to the `pfe-id` of the second tab in the tab
 set.
-
-```html
-<pfe-content-set id="my-content-set">
-  <h2 pfe-content-set--header id="heading1">Heading 1</h2>
-  <p pfe-content-set--panel>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
-  <h2 pfe-content-set--header id="heading2">Heading 2</h2>
-  <p pfe-content-set--panel>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam volu et jen, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-  <h2 pfe-content-set--header id="heading3">Heading 3</h2>
-  <p pfe-content-set--panel>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-</pfe-content-set>
-```
 
 In the event that a tab with the supplied id in the URL does not exist,
 `pfe-tabs` will fall back to the `selected-index` attribute if one is supplied

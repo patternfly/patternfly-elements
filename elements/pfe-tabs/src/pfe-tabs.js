@@ -297,11 +297,11 @@ class PfeTabs extends PFElement {
   }
 
   _allPanels() {
-    return [...this.querySelectorAll("pfe-tab-panel")];
+    return [...this.children].filter(child => child.matches("pfe-tab-panel"));
   }
 
   _allTabs() {
-    return [...this.querySelectorAll("pfe-tab")];
+    return [...this.children].filter(child => child.matches("pfe-tab"));
   }
 
   _panelForTab(tab) {
@@ -388,6 +388,8 @@ class PfeTabs extends PFElement {
   }
 
   _onKeyDown(event) {
+    event.stopPropagation();
+
     if (event.target.getAttribute("role") !== "tab") {
       return;
     }
@@ -428,6 +430,8 @@ class PfeTabs extends PFElement {
   }
 
   _onClick(event) {
+    event.stopPropagation();
+
     if (event.currentTarget.getAttribute("role") !== "tab") {
       return;
     }

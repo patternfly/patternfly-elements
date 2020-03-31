@@ -3,6 +3,7 @@
 Tag: [v1.0.0-prerelease.42](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.42)
 
 - [fbc251b](https://github.com/patternfly/patternfly-elements/commit/fbc251b5180684da26a57c0941235d57f961990e) fix: set consistent line-height for pfe-nav triggers (#773)
+- []() fix: make it so pfe-tabs inside pfe-tabs works
 - [29780ab](https://github.com/patternfly/patternfly-elements/commit/29780abfab1074aa05a021a43d79bee00afed31b) feat: adding event to pfe-cta component
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: set pfe-cta's with the priority attribute relative to theme font-size
 

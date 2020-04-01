@@ -54,8 +54,8 @@ class PfeDropdownItem extends PFElement {
             this._container.setAttribute("role", "menuitem");
             this._item.removeAttribute("role");
             break;
-          case "seperator":
-            this._container.setAttribute("role", "seperator");
+          case "separator":
+            this._container.setAttribute("role", "separator");
           default:
             break;
         }

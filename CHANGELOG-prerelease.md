@@ -1,3 +1,7 @@
+## Prerelease 43 ( TBD )
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add a warning about updating the on attribute before upgrade #809
+
 ## Prerelease 42 ( 2020-03-31 )
 
 Tag: [v1.0.0-prerelease.42](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.42)
@@ -9,7 +13,6 @@ Tag: [v1.0.0-prerelease.42](https://github.com/patternfly/patternfly-elements/re
 - [dad975f](https://github.com/patternfly/patternfly-elements/commit/dad975fc009e8cd4a26d5a481556c94d143b8686) fix: set priority pfe-cta font-size as smaller, relative to default pfe-cta font-size (#801)
 - [fbc251b](https://github.com/patternfly/patternfly-elements/commit/fbc251b5180684da26a57c0941235d57f961990e) fix: set consistent line-height for pfe-nav triggers (#790)
 - [d67c8bf](https://github.com/patternfly/patternfly-elements/commit/d67c8bf4bd58b4c6653a7efc1b53d894535ca3d3) fix: Add support for font family to select options (#794)
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add a warning if the `on` attribute is manually added to markup
 
 ## Prerelease 41 ( 2020-03-19 )
 

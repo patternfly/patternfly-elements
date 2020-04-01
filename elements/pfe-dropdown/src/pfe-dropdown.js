@@ -38,6 +38,12 @@ class PfeDropdown extends PFElement {
     this._modifyDOM(options);
   }
 
+  static get events() {
+    return {
+      change: `${this.tag}:change`
+    };
+  }
+
   constructor() {
     super(PfeDropdown);
 
@@ -291,14 +297,10 @@ class PfeDropdown extends PFElement {
 
   _selectItem(item, type) {
     if (type === "action") {
-      this.dispatchEvent(
-        new CustomEvent(`${PfeDropdown.tag}:change`, {
-          bubbles: true,
-          detail: {
-            action: item.innerText
-          }
-        })
-      );
+      this.emitEvent(PfeDropdown.events.change, {
+        detail: { action: item.innerText }
+      });
+
       this.close(event);
     } else {
       item.click();

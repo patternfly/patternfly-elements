@@ -10,7 +10,7 @@
       "pfe-navigation--noscript.*css.map"
     ]
   },
-  "version": "1.0.0-prerelease.40",
+  "version": "1.0.0-prerelease.42",
   "publishConfig": {
     "access": "public"
   },

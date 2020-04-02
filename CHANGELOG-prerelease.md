@@ -1,3 +1,9 @@
+## Prerelease 43 ( TBD )
+
+Tag: [v1.0.0-prerelease.43](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.43)
+
+- []() fix: removing stopPropagation from pfe-tabs click and keydown events #817
+
 ## Prerelease 42 ( 2020-03-31 )
 
 Tag: [v1.0.0-prerelease.42](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.42)

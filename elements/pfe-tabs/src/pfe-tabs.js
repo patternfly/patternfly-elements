@@ -388,9 +388,10 @@ class PfeTabs extends PFElement {
   }
 
   _onKeyDown(event) {
-    event.stopPropagation();
+    const tabs = this._allTabs();
+    const foundTab = tabs.find(tab => tab === event.target);
 
-    if (event.target.getAttribute("role") !== "tab") {
+    if (!foundTab) {
       return;
     }
 
@@ -430,13 +431,14 @@ class PfeTabs extends PFElement {
   }
 
   _onClick(event) {
-    event.stopPropagation();
+    const tabs = this._allTabs();
+    const foundTab = tabs.find(tab => tab === event.target);
 
-    if (event.currentTarget.getAttribute("role") !== "tab") {
+    if (!foundTab) {
       return;
     }
 
-    this.selectedIndex = this._getTabIndex(event.currentTarget);
+    this.selectedIndex = this._getTabIndex(foundTab);
   }
 
   _getTabIndexFromURL() {

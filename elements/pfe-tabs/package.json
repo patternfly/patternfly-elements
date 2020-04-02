@@ -9,7 +9,7 @@
       "pfe-tab-panel.js"
     ]
   },
-  "version": "1.0.0-prerelease.42",
+  "version": "1.0.0-prerelease.43",
   "publishConfig": {
     "access": "public"
   },

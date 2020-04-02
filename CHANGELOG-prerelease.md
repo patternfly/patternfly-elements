@@ -1,3 +1,9 @@
+## Prerelease 44 ( 2020-04-02 )
+
+Tag: [v1.0.0-prerelease.44](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.44)
+
+- []() fix: pfe-tabs urlParms fix for IE11 #821
+
 ## Prerelease 43 ( 2020-04-02 )
 
 Tag: [v1.0.0-prerelease.43](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.43)

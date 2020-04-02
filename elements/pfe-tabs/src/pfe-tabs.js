@@ -438,7 +438,7 @@ class PfeTabs extends PFElement {
       return;
     }
 
-    this.selectedIndex = this._getTabIndex(event.currentTarget);
+    this.selectedIndex = this._getTabIndex(foundTab);
   }
 
   _getTabIndexFromURL() {

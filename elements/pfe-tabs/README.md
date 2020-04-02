@@ -39,6 +39,12 @@ Add the content for your tab panel here.
 
 ## Attributes
 
+**`pfe-variant="wind"`** (observed)
+    - Accordion: No effect.
+    - Tabs: Borders are removed, only an accent colored indicator appears under the active heading.
+**`pfe-variant="earth"`** (observed)
+    - Accordion: No effect.
+    - Tabs: Headings are encased in a block. The active heading has an accent colored border on one side.
 **`vertical`** (observed)
 
 Orients the tabs vertically on the left and pushes the content panes to the right.

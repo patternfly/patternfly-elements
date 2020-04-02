@@ -2,7 +2,7 @@
 
 Tag: [v1.0.0-prerelease.44](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.44)
 
-- []() fix: pfe-tabs urlParms fix for IE11 #821
+- [76b1ee1](https://github.com/patternfly/patternfly-elements/commit/76b1ee1abbb5892e03a2c5c435d181324fdbcff7) fix: pfe-tabs urlParms fix for IE11 #821
 
 ## Prerelease 43 ( 2020-04-02 )
 

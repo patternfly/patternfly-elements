@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Icon",
+  "description": "This element renders an icon",
+  "type": "object",
+  "tag": "pfe-icon",
+  "class": "pfe-icon",
+  "category": "content",
+  "properties": {
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "icon": {
+          "title": "Icon",
+          "type": "string",
+          "prefixed": false
+        },
+        "size": {
+          "title": "Size",
+          "type": "string",
+          "enum": ["default", "xl", "lg", "md", "sm", "2x", "3x", "4x"],
+          "default": "default",
+          "prefixed": false
+        },
+        "color": {
+          "title": "Color",
+          "type": "string",
+          "enum": [
+            "default",
+            "base",
+            "compliment",
+            "accent",
+            "critical",
+            "important",
+            "moderate",
+            "success",
+            "info"
+          ],
+          "default": "default",
+          "prefixed": false
+        },
+        "circled": {
+          "title": "Circled",
+          "type": "boolean",
+          "prefixed": false
+        }
+      }
+    }
+  },
+  "required": ["attributes"],
+  "additionalProperties": false
+}

@@ -1,0 +1,40 @@
+.on-dark {
+  --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
+  --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #99ccff);
+  --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
+  --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
+  --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
+  --pfe-broadcasted--link-decoration: none;
+  --pfe-broadcasted--link-decoration--hover: underline;
+  --pfe-broadcasted--link-decoration--focus: underline;
+  --pfe-broadcasted--link-decoration--visited: none;
+  --theme: dark;
+}
+
+.on-saturated {
+  --pfe-broadcasted--text: var(--pfe-theme--color--text--on-saturated, #fff);
+  --pfe-broadcasted--link: var(--pfe-theme--color--link--on-saturated, #fff);
+  --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-saturated, white);
+  --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-saturated, white);
+  --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-saturated, #b38cd9);
+  --pfe-broadcasted--link-decoration: underline;
+  --pfe-broadcasted--link-decoration--hover: underline;
+  --pfe-broadcasted--link-decoration--focus: underline;
+  --pfe-broadcasted--link-decoration--visited: underline;
+  --theme: saturated;
+}
+
+.on-light {
+  --pfe-broadcasted--text: var(--pfe-theme--color--text, #333);
+  --pfe-broadcasted--link: var(--pfe-theme--color--link, #06c);
+  --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover, #003366);
+  --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus, #003366);
+  --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited, rebeccapurple);
+  --pfe-broadcasted--link-decoration: none;
+  --pfe-broadcasted--link-decoration--hover: underline;
+  --pfe-broadcasted--link-decoration--focus: underline;
+  --pfe-broadcasted--link-decoration--visited: none;
+  --theme: light;
+}
+
+/*# sourceMappingURL=pfe-context.css.map */

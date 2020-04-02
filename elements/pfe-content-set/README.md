@@ -137,12 +137,10 @@ in the markup, or the first tab if `selected-index` is not provided.
 - default (no extra attributes)
     - Accordion: On the heading, there is a caret pointing to the right, on the left edge. When expanded, a border appears around the whole content set and the caret points downward.
     - Tabs: A border appears which includes the active tab and excludes the inactive tabs. There is a colored indicator on the active tab, and a monochromatic indicator on the inactive tabs.
-- `pfe-variant="primary"`  
-    - Accordion: A tint appears behind every other heading, to achieve a zebra striping pattern across the stack of headings. Carets and borders from the default style still apply.
-    - Tabs: Borders are removed, only an indicator appears under the active heading.
-- `pfe-variant="secondary"`
-    - Accordion: Headings are on a dark background, text color is reversed.
-    - Tabs: Headings are encased in a block. The active heading is solid, with a caret pointing downward towards the content. Other headings have a border with no fill.
+- `pfe-variant="wind"`  
+    - Tabs: Borders are removed, only an accent colored indicator appears under the active heading.
+- `pfe-variant="earth"`
+    - Tabs: Headings are encased in a block. The active heading has an accent colored border on one side.
 - `vertical`
     - Accordion: No effect.
     - Tabs: Headings stack on the left, content pane is shown on the right.

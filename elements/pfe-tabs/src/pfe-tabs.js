@@ -432,13 +432,13 @@ class PfeTabs extends PFElement {
 
   _onClick(event) {
     const tabs = this._allTabs();
-    const foundTab = tabs.find(tab => tab === event.target);
+    const foundTab = tabs.find(tab => tab === event.currentTarget);
 
     if (!foundTab) {
       return;
     }
 
-    this.selectedIndex = this._getTabIndex(foundTab);
+    this.selectedIndex = this._getTabIndex(event.currentTarget);
   }
 
   _getTabIndexFromURL() {

@@ -41,7 +41,7 @@ Add the content for your tab panel here.
 **`pfe-variant`** (observed)
 
 Possible values are:
-- `wind`
+- `wind`: Borders are removed, only an accent colored indicator appears under the active heading.
   - Accordion: No effect.
   - Tabs: Borders are removed, only an accent colored indicator appears under the active heading.
 - `earth`

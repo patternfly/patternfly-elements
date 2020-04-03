@@ -1,9 +1,9 @@
 <div class="pfe-navigation__wrapper">
   <div class="pfe-navigation__container">
-    ${ this.has_slot("logo") ? `<div class="pfe-navigation__logo">
+    ${ this.has_slots("logo") ? `<div class="pfe-navigation__logo">
       <slot name="logo" tabindex="2"></slot>
     </div>` : ""}
-    ${ this.has_slot("skip") ? `<div class="pfe-navigation__skip">
+    ${ this.has_slots("skip") ? `<div class="pfe-navigation__skip">
       <slot name="skip" tabindex="1"></slot>
     </div>` : ""}
     <pfe-navigation-item pfe-icon="web-mobile-menu">
@@ -12,16 +12,16 @@
         <div class="pfe-navigation__main">
           <slot name="mobile-search"></slot>
           <slot></slot>
-          ${ this.has_slot("mobile-login") ? `<pfe-navigation-item pfe-icon="web-user" variant="wind" hidden>
+          ${ this.has_slots("mobile-login") ? `<pfe-navigation-item pfe-icon="web-user" variant="wind" hidden>
             <slot name="mobile-login"></slot>
           </pfe-navigation-item>` : ``}
-          ${ this.has_slot("mobile-language") ? `<pfe-navigation-item pfe-icon="web-globe" variant="wind" hidden>
+          ${ this.has_slots("mobile-language") ? `<pfe-navigation-item pfe-icon="web-globe" variant="wind" hidden>
             <slot name="mobile-language"></slot>
           </pfe-navigation-item>` : ``}
         </div>
       </div>
     </pfe-navigation-item>
-    ${ this.has_slot("language") || this.has_slot("search") || this.has_slot("login") || this.has_slot("site-switcher") ? `<div class="pfe-navigation__utility">
+    ${ this.has_slots("language") || this.has_slots("search") || this.has_slots("login") || this.has_slots("site-switcher") ? `<div class="pfe-navigation__utility">
       <slot name="language"></slot>
       <slot name="search"></slot>
       <slot name="login"></slot>

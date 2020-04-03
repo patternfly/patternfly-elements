@@ -64,11 +64,6 @@ class PFElement extends HTMLElement {
       .trim();
   }
 
-  // Returns a single element assigned to that slot; if multiple, it returns the first
-  has_slot(name) {
-    return this.querySelector(`[slot='${name}']`);
-  }
-
   // Returns an array with all elements assigned to that slot
   has_slots(name) {
     return [...this.querySelectorAll(`[slot='${name}']`)];

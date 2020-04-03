@@ -2,7 +2,7 @@
 
 ## Usage
 
-```
+```html
 <pfe-tabs>
   <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
   <pfe-tab-panel role="region" slot="panel">
@@ -38,6 +38,17 @@ Add the heading for your tab here.
 Add the content for your tab panel here.
 
 ## Attributes
+**`pfe-variant`** (observed)
+
+Possible values are:
+- `wind`: Borders are removed, only an accent colored indicator appears under the active heading.
+- `earth`: Headings are encased in a block. The active heading has an accent colored border on one side.
+
+```html
+<pfe-tabs pfe-variant="wind">
+  ...
+</pfe-tabs>
+```
 
 **`vertical`** (observed)
 

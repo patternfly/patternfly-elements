@@ -388,9 +388,10 @@ class PfeTabs extends PFElement {
   }
 
   _onKeyDown(event) {
-    event.stopPropagation();
+    const tabs = this._allTabs();
+    const foundTab = tabs.find(tab => tab === event.target);
 
-    if (event.target.getAttribute("role") !== "tab") {
+    if (!foundTab) {
       return;
     }
 
@@ -430,9 +431,10 @@ class PfeTabs extends PFElement {
   }
 
   _onClick(event) {
-    event.stopPropagation();
+    const tabs = this._allTabs();
+    const foundTab = tabs.find(tab => tab === event.currentTarget);
 
-    if (event.currentTarget.getAttribute("role") !== "tab") {
+    if (!foundTab) {
       return;
     }
 
@@ -447,28 +449,28 @@ class PfeTabs extends PFElement {
     // https://caniuse.com/#search=urlsearchparams
     if (CAN_USE_URLSEARCHPARAMS) {
       urlParams = new URLSearchParams(window.location.search);
-    }
 
-    // @DEPRECATED
-    // the "pfe-" prefix has been deprecated but we'll continue to support it
-    // we'll give priority to the urlParams.has(`${this.id}`) attribute first
-    // and fallback to urlParams.has(`pfe-${this.id}`) if it exists. We should
-    // be able to remove the || part of the if statement in the future
-    const tabsetInUrl =
-      urlParams.has(`${this.id}`) ||
-      urlParams.has(this.getAttribute("pfe-id")) ||
-      urlParams.has(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+      // @DEPRECATED
+      // the "pfe-" prefix has been deprecated but we'll continue to support it
+      // we'll give priority to the urlParams.has(`${this.id}`) attribute first
+      // and fallback to urlParams.has(`pfe-${this.id}`) if it exists. We should
+      // be able to remove the || part of the if statement in the future
+      const tabsetInUrl =
+        urlParams.has(`${this.id}`) ||
+        urlParams.has(this.getAttribute("pfe-id")) ||
+        urlParams.has(`pfe-${this.id}`); // remove this condition when it's no longer used in production
 
-    if (urlParams && tabsetInUrl) {
-      const id =
-        urlParams.get(`${this.id}`) ||
-        urlParams.get(this.getAttribute("pfe-id")) ||
-        urlParams.get(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+      if (urlParams && tabsetInUrl) {
+        const id =
+          urlParams.get(`${this.id}`) ||
+          urlParams.get(this.getAttribute("pfe-id")) ||
+          urlParams.get(`pfe-${this.id}`); // remove this condition when it's no longer used in production
 
-      tabIndex = this._allTabs().findIndex(tab => {
-        const tabId = tab.id || tab.getAttribute("pfe-id");
-        return tabId === id;
-      });
+        tabIndex = this._allTabs().findIndex(tab => {
+          const tabId = tab.id || tab.getAttribute("pfe-id");
+          return tabId === id;
+        });
+      }
     }
 
     return tabIndex;

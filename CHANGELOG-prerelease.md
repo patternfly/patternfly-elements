@@ -1,15 +1,47 @@
-## Prerelease 41 ( TBD )
+## Prerelese 45 ( TBD )
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: add event emission to pfe-select
+
+## Prerelease 44 ( 2020-04-02 )
+
+Tag: [v1.0.0-prerelease.44](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.44)
+
+- [76b1ee1](https://github.com/patternfly/patternfly-elements/commit/76b1ee1abbb5892e03a2c5c435d181324fdbcff7) fix: pfe-tabs urlParms fix for IE11 #821
+
+## Prerelease 43 ( 2020-04-02 )
+
+Tag: [v1.0.0-prerelease.43](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.43)
+
+- [eb64d81](https://github.com/patternfly/patternfly-elements/commit/eb64d819038c904a94e03058e98bf5d5a8e4afed) fix: removing stopPropagation from pfe-tabs click and keydown events #817
+
+## Prerelease 42 ( 2020-03-31 )
+
+Tag: [v1.0.0-prerelease.42](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.42)
+
+- [6b93a6a](https://github.com/patternfly/patternfly-elements/commit/6b93a6a71e515f9f5c32ef82f7691e527a01ed34) feat: history on tab click and open tab based on url parameters on pfe-content-set (#797)
+- [40c8ffa](https://github.com/patternfly/patternfly-elements/commit/40c8ffa47899305fbd783c7726184a9a62a66e2a) feat: Remove the "pfe-" prefix from the history feature in pfe-tabs (#808)
+- [29780ab](https://github.com/patternfly/patternfly-elements/commit/29780abfab1074aa05a021a43d79bee00afed31b) feat: Add event emission to pfe-cta (#741)
+- [36d31bf](https://github.com/patternfly/patternfly-elements/commit/36d31bf34befcbc49a55e74fb79f6887ddd94934) fix: make it so pfe-tabs inside pfe-tabs works (#806)
+- [dad975f](https://github.com/patternfly/patternfly-elements/commit/dad975fc009e8cd4a26d5a481556c94d143b8686) fix: set priority pfe-cta font-size as smaller, relative to default pfe-cta font-size (#801)
+- [fbc251b](https://github.com/patternfly/patternfly-elements/commit/fbc251b5180684da26a57c0941235d57f961990e) fix: set consistent line-height for pfe-nav triggers (#790)
+- [d67c8bf](https://github.com/patternfly/patternfly-elements/commit/d67c8bf4bd58b4c6653a7efc1b53d894535ca3d3) fix: Add support for font family to select options (#794)
+
+## Prerelease 41 ( 2020-03-19 )
 
 Tag: [v1.0.0-prerelease.41](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.41)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: add event emission to pfe-select
+- [7a8149e](https://github.com/patternfly/patternfly-elements/commit/7a8149e74fac2792d9968edf7ae0ec4a7a5968c6) fix: pfe-cta text wrapping issues (#791)
+- [9f83786](https://github.com/patternfly/patternfly-elements/commit/9f837862e38001e6a1a4d7e2ca735073443c9e7c) feat: pfe-tabs keep history on tab click and open tab based on url parameters (#786)
+- [e2ba182](https://github.com/patternfly/patternfly-elements/commit/e2ba18204fb751f8dd434ceb18d6ccdbc05b4081) feat: pfe-health-index size="mini" version (#789)
+- [fdfd6fc](https://github.com/patternfly/patternfly-elements/commit/fdfd6fcb25cf01a8a107cb4947864e30da06d087) feat: Add events to the generator (#707)
+- [384c314](https://github.com/patternfly/patternfly-elements/commit/384c31407a01939c0877ad214d9290c50ffd2ef7) docs: PR template updates (#776)
 
 ## Prerelease 40 ( 2020-03-10 )
 
 Tag: [v1.0.0-prerelease.40](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.40)
 
 - [d0c2a45](https://github.com/patternfly/patternfly-elements/commit/d0c2a4526ec3fc15339bd4ec393364486a260c84) fix: pfe-navigation cta overlap bug in IE11 (#766)
-- [eb4a9f6](https://github.com/patternfly/patternfly-elements/commit/eb4a9f63514ad9635d1b195e89d596c3feaf2201) chore: Prettier updates (#770) 
+- [eb4a9f6](https://github.com/patternfly/patternfly-elements/commit/eb4a9f63514ad9635d1b195e89d596c3feaf2201) chore: Prettier updates (#770)
 - [7deb9bb](https://github.com/patternfly/patternfly-elements/commit/7deb9bb6227c0560b60a665ecd43b450db0f90e1) fix: Prevent default pfe-cta arrow from wrapping to a new line by itself #679 (#765)
 - [ba9d8b2](https://github.com/patternfly/patternfly-elements/commit/ba9d8b2cfed50580671041778d3d00cb5d5741d1) chore: Fixed invalid Markdown, was missing a back tic (#762)
 
@@ -40,6 +72,7 @@ Tag: [v1.0.0-prerelease.38](https://github.com/patternfly/patternfly-elements/re
 - [5585188](https://github.com/patternfly/patternfly-elements/commit/558518849087bd9b348c2827549acfe081d8ed96) docs: switching pfe-collapse story from heading tag to button
 
 ## Prerelease 37 ( 2020-01-28 )
+
 Tag: [v1.0.0-prerelease.37](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.37)
 
 - [6a41811](https://github.com/patternfly/patternfly-elements/commit/6a418112668ba580918ac4a8b4b54e8df05c1155) fix: reference error when slot is missing in pfe-navigation

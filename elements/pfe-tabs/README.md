@@ -68,6 +68,62 @@ Changes the context of the call-to-action to one of 3 possible themes:
 
 This will override any context being passed from a parent component and will add a style attribute setting the `--theme` variable.
 
+**`pfe-tab-history`** (observed)
+
+Updates window.history and the URL to create sharable links. With the
+`pfe-tab-history` attribute, the tabs and each tab *must* have an `id`.
+
+The URL pattern will be `?{id-of-tabs}={id-of-selected-tab}`. In the example
+below, selecting "Tab 2" will update the URL as follows: `?my-tabs=tab2`.
+
+```html
+<pfe-tabs pfe-tab-history id="my-tabs">
+  <pfe-tab role="heading" slot="tab" id="tab1">Tab 1</pfe-tab>
+  <pfe-tab-panel role="region" slot="panel">
+    <h2>Content 1</h2>
+    <p>Tab 1 panel content.</p>
+  </pfe-tab-panel>
+  <pfe-tab role="heading" slot="tab" id="tab2">Tab 2</pfe-tab>
+  <pfe-tab-panel role="region" slot="panel">
+    <h2>Content 2</h2>
+    <p>Tab 2 panel content.</p>
+  </pfe-tab-panel>
+</pfe-tabs>
+```
+
+*Note:* This feature is not supported in IE11.
+
+## Using the URL to open a specific tab
+
+By default, `pfe-tabs` will read the URL and look for a query string parameter
+that matches the id of a `pfe-tabs` component and a value of a specific
+`pfe-tab`.
+
+For example, `?my-tabs=tab2` would open the second tab in the code sample below.
+"my-tabs" is equal to the id of the `pfe-tabs` component and "tab2" is equal to
+the id of the second tab in the tab set.
+
+```html
+<pfe-tabs id="my-tabs">
+  <pfe-tab role="heading" slot="tab" id="tab1">Tab 1</pfe-tab>
+  <pfe-tab-panel role="region" slot="panel">
+    <h2>Content 1</h2>
+    <p>Tab 1 panel content.</p>
+  </pfe-tab-panel>
+  <pfe-tab role="heading" slot="tab" id="tab2">Tab 2</pfe-tab>
+  <pfe-tab-panel role="region" slot="panel">
+    <h2>Content 2</h2>
+    <p>Tab 2 panel content.</p>
+  </pfe-tab-panel>
+</pfe-tabs>
+```
+
+In the event that a tab with the supplied id in the URL does not exist,
+`pfe-tabs` will fall back to the `selected-index` attribute if one is supplied
+in the markup, or the first tab if `selected-index` is not provided.
+
+*Note:* This feature is not supported in IE11.
+
 ## Events
 
 ### pfe-tabs:shown-tab

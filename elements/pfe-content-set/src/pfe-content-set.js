@@ -23,6 +23,16 @@ class PfeContentSet extends PFElement {
     return PFElement.pfeType.combo;
   }
 
+  static get cascadingAttributes() {
+    return {
+      "pfe-tab-history": "pfe-tabs"
+    };
+  }
+
+  static get observedAttributes() {
+    return ["pfe-tab-history"];
+  }
+
   get isTab() {
     var breakpointValue;
     if (this.hasAttribute("pfe-breakpoint")) {
@@ -127,8 +137,12 @@ class PfeContentSet extends PFElement {
         const header = document.createElement("pfe-tab");
 
         header.setAttribute("slot", "tab");
-        header.appendChild(child);
 
+        if (child.id) {
+          header.setAttribute("pfe-id", child.id);
+        }
+
+        header.appendChild(child);
         tabs.appendChild(header);
       }
 
@@ -136,8 +150,12 @@ class PfeContentSet extends PFElement {
         const panel = document.createElement("pfe-tab-panel");
 
         panel.setAttribute("slot", "panel");
-        panel.appendChild(child);
 
+        if (child.id) {
+          panel.setAttribute("pfe-id", child.id);
+        }
+
+        panel.appendChild(child);
         tabs.appendChild(panel);
       }
     });
@@ -158,6 +176,14 @@ class PfeContentSet extends PFElement {
 
     if (this.align.value) {
       tabs.setAttribute("pfe-tab-align", this.align.value);
+    }
+
+    if (this.id) {
+      tabs.setAttribute("pfe-id", this.id);
+    }
+
+    if (this.hasAttribute("pfe-tab-history")) {
+      tabs.setAttribute("pfe-tab-history", true);
     }
 
     if (!existingTabs) {

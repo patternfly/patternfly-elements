@@ -1,3 +1,7 @@
+## Prerelese 45 ( TBD )
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: add event emission to pfe-select
+
 ## Prerelease 44 ( 2020-04-02 )
 
 Tag: [v1.0.0-prerelease.44](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.44)

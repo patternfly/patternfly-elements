@@ -1,6 +1,19 @@
-## Prerelease 43 ( TBD )
+## Prerelese 45 ( TBD )
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add a warning about updating the on attribute before upgrade #809
+- [eb74cb8](https://github.com/patternfly/patternfly-elements/commit/eb74cb8f989048164fbb6ed1508c502659a752ed) feat: add event emission to pfe-select
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add a warning about updating the on attribute before upgrade
+
+## Prerelease 44 ( 2020-04-02 )
+
+Tag: [v1.0.0-prerelease.44](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.44)
+
+- [76b1ee1](https://github.com/patternfly/patternfly-elements/commit/76b1ee1abbb5892e03a2c5c435d181324fdbcff7) fix: pfe-tabs urlParms fix for IE11 #821
+
+## Prerelease 43 ( 2020-04-02 )
+
+Tag: [v1.0.0-prerelease.43](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.43)
+
+- [eb64d81](https://github.com/patternfly/patternfly-elements/commit/eb64d819038c904a94e03058e98bf5d5a8e4afed) fix: removing stopPropagation from pfe-tabs click and keydown events #817
 
 ## Prerelease 42 ( 2020-03-31 )
 

@@ -34,9 +34,9 @@ As a developer, you will need to make sure you include the necessary polyfills. 
     <title>PatternFly Elements</title>
 
     <!-- uncomment the es5-adapter if you're using the compiled version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.4/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
     <!-- webcomponents-bundle.js includes all of the polyfills -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.4/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
   </head>
   <body>
 
@@ -58,8 +58,8 @@ There's only a difference of the web component file that's being downloaded, but
     <title>PatternFly Elements</title>
 
     <!-- uncomment the es5-adapter if you're using the compiled version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.4/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.4/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-loader.js"></script>
   </head>
   <body>
     <script>
@@ -78,7 +78,7 @@ For a more in-depth explanation, view the [example on GitHub](https://github.com
 The two examples above also include the `custom-elements-es5-adapter.js` file before the web component polyfill. In the case that you need to support ES5, you need to include this polyfill. According to the spec, custom elements must be written as ES6 classes. However, in our build step we transpile our ES6 components to ES5 which makes it necessary for us to include the adapter to get our components to work.
 
 ```
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.4/custom-elements-es5-adapter.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
 ```
 
 For more documentation, check out the [custom-elements-es5-adapter.js section](https://github.com/WebComponents/webcomponentsjs#custom-elements-es5-adapterjs) on GitHub.

@@ -22,28 +22,33 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 const defaultContent = tools.autoContent(5, 3);
 
-stories.add(PfeCollapse.tag,  () => {
+stories.add(PfeCollapse.tag, () => {
   let config = {};
 
   const props = PfeCollapse.properties;
   const slots = PfeCollapse.slots;
 
-  config.slots = [{
-    content:
-      tools.component("pfe-collapse-toggle", {}, [
-        {
-          content: tools.customTag({
-            tag: "h3",
-            content: "Click me!"
-          })
-        }
-      ]) +
-      tools.component("pfe-collapse-panel", {}, [
-        {
-          content: defaultContent
-        }
-      ])
-  }];
+  config.slots = [
+    {
+      content:
+        tools.component("pfe-collapse-toggle", {}, [
+          {
+            content: tools.customTag({
+              tag: "button",
+              attributes: {
+                type: "button"
+              },
+              content: "Toggle Control"
+            })
+          }
+        ]) +
+        tools.component("pfe-collapse-panel", {}, [
+          {
+            content: defaultContent
+          }
+        ])
+    }
+  ];
 
   let rendered = template(config);
   return tools.preview(rendered);

@@ -17,9 +17,11 @@
           "type": "array",
           "namedSlot": true,
           "items": {
-            "oneOf": [{
-              "$ref": "raw"
-            }]
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
           }
         },
         "panel": {
@@ -27,9 +29,11 @@
           "type": "array",
           "namedSlot": true,
           "items": {
-            "oneOf": [{
-              "$ref": "raw"
-            }]
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
           }
         }
       }
@@ -54,12 +58,15 @@
         "on": {
           "title": "Context",
           "type": "string",
-          "enum": [
-            "light",
-            "dark"
-          ],
+          "enum": ["light", "dark"],
           "default": "light",
           "prefixed": false
+        },
+        "tab-history": {
+          "title": "Tab history",
+          "type": "boolean",
+          "default": false,
+          "prefixed": true
         }
       }
     }

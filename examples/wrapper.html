@@ -1,14 +1,57 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
         <title>PatternFly Elements</title>
+        
+        <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-base.css" />
+        <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-layouts.css" />
 
-        <link href="../elements/pfelement/dist/pfelement.min.css" rel="stylesheet">
+        <noscript>
+            <link href="../../elements/pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+        </noscript>
+
+        <link href="../../elements/pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+        <!-- uncomment the es5-adapter if you're using the umd version -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+        <script>require([
+            '../../elements/pfe-band/dist/pfe-band.umd.min.js',
+            '../../elements/pfe-cta/dist/pfe-cta.umd.min.js',
+            '../../elements/pfe-markdown/dist/pfe-markdown.umd.min.js'
+        ])</script>
+        <style>
+            #demos pfe-cta {
+                max-width: 100%;
+                text-align: center;
+            }
+            #demos pfe-cta a {
+                width: 100%;
+            }
+            table tr th, table tr td {
+                padding: 3px 10px;
+                border: 1px solid gray;
+            }
+            table + h3 {
+                margin-top: 50px;
+            }
+        </style>
     </head>
     <body>
-        <h1>Demos</h1>
-        <ul id="demos"><!-- Inject list --></ul>
+        <pfe-band pfe-color="lightest">
+            <h1>Demo pages</h1>
+
+            <div id="demos" class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-2-col"><%= components %></div>
+        </pfe-band>
+
+        <pfe-band>
+            <pfe-markdown>
+                <div pfe-markdown-container><%= todo %></div>
+            </pfe-markdown>
+        </pfe-band>
     </body>
 </html>

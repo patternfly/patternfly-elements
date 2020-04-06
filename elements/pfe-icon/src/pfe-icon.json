@@ -19,16 +19,7 @@
         "size": {
           "title": "Size",
           "type": "string",
-          "enum": [
-            "default",
-            "xl",
-            "lg",
-            "md",
-            "sm",
-            "2x",
-            "3x",
-            "4x"
-          ],
+          "enum": ["default", "xl", "lg", "md", "sm", "2x", "3x", "4x"],
           "default": "default",
           "prefixed": false
         },

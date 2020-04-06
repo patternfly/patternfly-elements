@@ -20,23 +20,14 @@
         "health-index": {
           "title": "Health Index",
           "type": "string",
-          "enum": [
-            "A",
-            "B",
-            "C",
-            "D",
-            "E",
-            "F"
-          ],
+          "enum": ["A", "B", "C", "D", "E", "F"],
           "default": "A",
           "prefixed": false
         },
         "size": {
           "title": "Size",
           "type": "string",
-          "enum": [
-            "lg"
-          ],
+          "enum": ["mini", "lg"],
           "default": null,
           "prefixed": false
         }
@@ -44,9 +35,6 @@
       "required": ["health-index"]
     }
   },
-  "required": [
-    "slots",
-    "attributes"
-  ],
+  "required": ["slots", "attributes"],
   "additionalProperties": false
 }

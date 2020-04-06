@@ -63,11 +63,9 @@ Different components have different intended uses. We tend to think of them in 3
 The beauty of web components is that they have much of the styling built-into the tag itself. Start with the tags first.
 
 ```
-<body>
-    <pfe-cta>
-        <a href="#">Learn more</a>
-    </pfe-cta>
-</body>
+<pfe-cta>
+    <a href="#">Learn more</a>
+</pfe-cta>
 ```
 
 
@@ -75,11 +73,9 @@ The beauty of web components is that they have much of the styling built-into th
 ### Container components (see also container notes below)
 
 ```
-<body>
-    <pfe-card pfe-color="darkest">
-        <p>Hello world.</p>
-    </pfe-card>
-</body>
+<pfe-card pfe-color="darkest">
+    <p>Hello world.</p>
+</pfe-card>
 ```
 
 
@@ -163,7 +159,7 @@ You may choose to add attributes such as `pfe-variant`, `pfe-priority` or `pfe-c
 CSS variables are subject to the normal cascade, so consider where you want these overrides to propogate.
 
 
-#### Page-level CSS, [theme](https://static.redhat.com/libs/redhat/redhat-theme/2/advanced-theme.css) variables
+#### Page-level CSS, [theme](https://raw.githubusercontent.com/starryeyez024/patternfly-theme/prerelease-1.0/dist/advanced-theme.css) variables
 
 Theme variables will impact all components on the page where this CSS is loaded.
 
@@ -239,3 +235,8 @@ You can optionally customize your broadcast variables individually if you have v
 * `--pfe-broadcasted--link-decoration--focus`
 
 If you include the `pfe-base.css` stylesheet, it will include application of these broadcast variables to links; this is helpful because links are often nested inside of p tags in the content and thus inaccessible to the stylesheet of the web component.
+
+### How to avoid FOUC (Flash of Unstyled Content) with the body unresolved attribute
+
+PatternFly Elements provides a stylesheet that causes the `body[unresolved]` attribute to avoid the Flash of Unstyled Content (FOUC).
+Adding the unresolved attribute to the `body` tag will hide the entire page until all elements have upgraded or 2 seconds have passed, whichever happens first.  By including the `pfelement--noscript.css` file (wrapped in a `noscript` tag), all content will be revealed immediately for pages without JavaScript turned on.  To customize the wait time, update the value of the `--pfe-reveal-delay` variable (default 2 second delay) and the `--pfe-reveal-duration` variable (how long the reveal animation takes, default 0.1618 seconds).

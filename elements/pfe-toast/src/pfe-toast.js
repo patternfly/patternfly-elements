@@ -39,7 +39,9 @@ class PfeToast extends PFElement {
     // elements
     this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
     this._content = this.shadowRoot.querySelector(`.${this.tag}__content`);
-    this._toastCloseButton = this.shadowRoot.querySelector(`.${this.tag}__close`);
+    this._toastCloseButton = this.shadowRoot.querySelector(
+      `.${this.tag}__close`
+    );
 
     // events
     this.open = this.open.bind(this);
@@ -49,9 +51,9 @@ class PfeToast extends PFElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
-      case 'close-label':
+      case "close-label":
         this._toastCloseButton.setAttribute("aria-label", this.closeLabel);
-      case 'auto-dismiss':
+      case "auto-dismiss":
         this.doesAutoDismiss = !!newValue;
         this._setAccessibility();
       default:
@@ -157,8 +159,8 @@ class PfeToast extends PFElement {
   _toMilliseconds(value) {
     // set default delay if none provided
     const digits = value.match(/\d+/) || [8000];
-    const unit = value.match(/\D+/) || '';
-    return unit[0] === 's' ? (digits[0] * 1000) : digits[0];
+    const unit = value.match(/\D+/) || "";
+    return unit[0] === "s" ? digits[0] * 1000 : digits[0];
   }
 
   _keydownHandler(event) {

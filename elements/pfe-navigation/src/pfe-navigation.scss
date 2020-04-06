@@ -1,6 +1,6 @@
 @import "_shared-assets";
 
-$variables: (
+$nav-variables: (
   // Default spacing values
   Padding--vertical: pfe-var(container-padding),
   Padding--horizontal: pfe-var(container-padding),
@@ -18,6 +18,9 @@ $variables: (
   MaxHeight: 72px,
   MobileMenuHeight: 60px,
 
+  // Nav content width
+  MaxWidth: calc(#{pfe-var(container-padding)} * 4), // 64px
+
   // Variables for the trigger icon
   icon: none,
 
@@ -32,11 +35,18 @@ $variables: (
     FontWeight: 100
   ),
 
+
   // Tray region
   tray: (
     Padding: pfe-var(container-padding)
+  ),
+
+  // Logo
+  logo: (
+    MinWidth: 135px
   )
 );
+$variables: map-merge($variables, $nav-variables);
 
 :host {
   // Print the variables to the DOM
@@ -47,23 +57,10 @@ $variables: (
     --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
   }
 
-  // Increase horizontal padding for above mobile breakpoints
-  @media screen and (min-width: pfe-breakpoint(sm)) {
-    --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} * 2);
-  }
-
-  // Reduce horizontal padding at large breakpoint
-  @media screen and (min-width: pfe-breakpoint(lg)) {
-    --pfe-navigation--Padding--horizontal: calc(#{pfe-var(container-padding)} / 2);
-    --pfe-navigation__tray--Padding: calc(#{pfe-var(container-padding)} * 2);
-  }
-
-  // Increase horizontal padding at xl breakpoint
-  @media screen and (min-width: pfe-breakpoint(xl)) {
-    --pfe-navigation--Padding--horizontal: #{pfe-var(container-padding)};
-  }
-
   display: block;
+  --pfe-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
+  --pfe-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
+
   z-index: #{pfe-zindex(content)};
   width: 100%;
 }
@@ -75,6 +72,18 @@ $variables: (
   z-index: #{pfe-zindex(navigation)};
 }
 
+:host([pfe-full-width]) .pfe-navigation__container {
+  @each $size in ("md", "lg", "xl") {
+    @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
+      @if ($size == "md" or $size == "lg") {
+        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
+      } @else if ($size == "xl") {
+        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
+      }
+    }
+  }
+}
+
 pfe-icon {
   --pfe-icon--Color: #{pfe-local(Color)};
 }
@@ -82,7 +91,10 @@ pfe-icon {
 // Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
   margin: 0 !important;
+  max-width: 100%;
   max-height: #{pfe-local(MaxHeight)};
+  min-width:  #{pfe-local($region: logo, $cssvar: MinWidth)};
+  display: block;
 }
 
 ::slotted([slot="mobile-login"]),
@@ -102,11 +114,11 @@ pfe-icon {
 .pfe-navigation {
   &__wrapper {
     @include pfe-set-broadcast-theme(dark);
-    
+
     display: flex;
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
     z-index: #{pfe-zindex(navigation)};
-    
+
     background-color: #{pfe-local(BackgroundColor)};
     color: #{pfe-local(Color)};
     min-height: #{pfe-local(MaxHeight)};
@@ -116,34 +128,27 @@ pfe-icon {
   }
   &__container {
     width: 100%;
-    max-width: #{pfe-local(Width)};
+    //max-width: #{pfe-local(Width)};
     margin: 0 auto;
     padding: 0 #{pfe-local(Padding--horizontal)};
 
     display: flex;
     flex-flow: row nowrap;
     align-items: stretch;
-    justify-content: space-between;
+    justify-content: flex-start;
+    box-sizing: border-box;
 
-    // Loop through the other breakpoints
-    @each $size in (md, lg) {
-      @media screen and (min-width: pfe-breakpoint(#{$size})) {
-        // Set the variable for use in the tray region too
-        --pfe-navigation--Width: calc(#{pfe-breakpoint(#{$size})});
-      }
-
-      @media screen and (min-width: #{pfe-breakpoint(xl)}) {
-        --pfe-navigation--Width: 1140px;
-      }
-    }
-
-    @media (min-width: #{pfe-breakpoint(lg)}) {
+    // stop using padding, start using max width at medium breakpoint
+    @media screen and (min-width: pfe-breakpoint(md)) {
       padding: 0;
+      max-width: var(--pfe-navigation--Width);
     }
-
-    > pfe-navigation-item:not([hidden]) {
-      flex-grow: 1;
-      align-items: flex-end;
+   // Set the variable for use in the tray region too
+    // Loop through the other breakpoints
+    @each $size in ("md", "lg", "xl") {
+      @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
+        --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+      }
     }
   }
   &__overlay {
@@ -152,8 +157,8 @@ pfe-icon {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     z-index: #{pfe-zindex(overlay)};
     &[hidden] {
       display: none;
@@ -162,19 +167,32 @@ pfe-icon {
   &__logo {
     display: flex;
     flex-flow: column nowrap;
+    flex-shrink: 0; // Prevent flexbox from collapsing the padding.
     align-items: flex-start;
     justify-content: center;
-    
+    width: #{pfe-local($region: logo, $cssvar: MinWidth, $fallback: 155px)};
+    flex: 0 0 #{pfe-local($region: logo, $cssvar: MinWidth)};
+
     padding-top: #{pfe-local(Padding--vertical)};
-    padding-right: #{pfe-var(container-padding)};
     padding-bottom: #{pfe-local(Padding--vertical)};
+    padding-right: calc( #{pfe-var(container-padding)} + 9px ); // ensure gap between main menu links and logo
+
+    @media screen and (min-width: pfe-breakpoint("grid-breakpoint--md")) {
+        padding-right: calc( #{pfe-var(container-padding)} * 3 );
+    }
 
     @media screen and (max-height: 500px) {
       padding-top: calc(#{pfe-local(Padding--vertical) / 2});
       padding-bottom: calc(#{pfe-local(Padding--vertical) / 2});
     }
+    @media screen and (min-width: pfe-breakpoint("lg-mobile", $map: false)) {
+        flex: 0 1 10%;
+    }
     > * {
       display: flex;
+    }
+    @include browser-query(ie11) {
+      flex: 1 0 15%;
     }
     // @TODO --pfe-theme--logo--svg?
   }
@@ -205,5 +223,12 @@ pfe-icon {
     flex-flow: row nowrap;
     align-items: stretch;
     justify-content: flex-end;
+    flex: auto; //0 1 20%;
+
+      @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false)) {
+        flex: auto; //0 1 30%;
+        margin-left: auto;
+        // padding-left: 48px; // ensure gap between main menu links and utility links
+    }
   }
 }

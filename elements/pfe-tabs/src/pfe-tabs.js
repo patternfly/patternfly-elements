@@ -1,98 +1,7 @@
+// Import polyfills: find, findIndex
+import "./polyfills--pfe-tabs.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
-
-// https://tc39.github.io/ecma262/#sec-array.prototype.find
-if (!Array.prototype.find) {
-  Object.defineProperty(Array.prototype, "find", {
-    value: function(predicate) {
-      // 1. Let O be ? ToObject(this value).
-      if (this == null) {
-        throw new TypeError('"this" is null or not defined');
-      }
-
-      var o = Object(this);
-
-      // 2. Let len be ? ToLength(? Get(O, "length")).
-      var len = o.length >>> 0;
-
-      // 3. If IsCallable(predicate) is false, throw a TypeError exception.
-      if (typeof predicate !== "function") {
-        throw new TypeError("predicate must be a function");
-      }
-
-      // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
-      var thisArg = arguments[1];
-
-      // 5. Let k be 0.
-      var k = 0;
-
-      // 6. Repeat, while k < len
-      while (k < len) {
-        // a. Let Pk be ! ToString(k).
-        // b. Let kValue be ? Get(O, Pk).
-        // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
-        // d. If testResult is true, return kValue.
-        var kValue = o[k];
-        if (predicate.call(thisArg, kValue, k, o)) {
-          return kValue;
-        }
-        // e. Increase k by 1.
-        k++;
-      }
-
-      // 7. Return undefined.
-      return undefined;
-    },
-    configurable: true,
-    writable: true
-  });
-}
-
-// https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
-if (!Array.prototype.findIndex) {
-  Object.defineProperty(Array.prototype, "findIndex", {
-    value: function(predicate) {
-      // 1. Let O be ? ToObject(this value).
-      if (this == null) {
-        throw new TypeError('"this" is null or not defined');
-      }
-
-      var o = Object(this);
-
-      // 2. Let len be ? ToLength(? Get(O, "length")).
-      var len = o.length >>> 0;
-
-      // 3. If IsCallable(predicate) is false, throw a TypeError exception.
-      if (typeof predicate !== "function") {
-        throw new TypeError("predicate must be a function");
-      }
-
-      // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
-      var thisArg = arguments[1];
-
-      // 5. Let k be 0.
-      var k = 0;
-
-      // 6. Repeat, while k < len
-      while (k < len) {
-        // a. Let Pk be ! ToString(k).
-        // b. Let kValue be ? Get(O, Pk).
-        // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
-        // d. If testResult is true, return k.
-        var kValue = o[k];
-        if (predicate.call(thisArg, kValue, k, o)) {
-          return k;
-        }
-        // e. Increase k by 1.
-        k++;
-      }
-
-      // 7. Return -1.
-      return -1;
-    },
-    configurable: true,
-    writable: true
-  });
-}
 
 const KEYCODE = {
   DOWN: 40,
@@ -102,6 +11,10 @@ const KEYCODE = {
   HOME: 36,
   END: 35
 };
+
+// @IE11 doesn't support URLSearchParams
+// https://caniuse.com/#search=urlsearchparams
+const CAN_USE_URLSEARCHPARAMS = window.URLSearchParams ? true : false;
 
 function generateId() {
   return Math.random()
@@ -127,7 +40,20 @@ class PfeTabs extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["vertical", "selected-index", "pfe-variant", "on"];
+    return [
+      "vertical",
+      "selected-index",
+      "pfe-variant",
+      "on",
+      "pfe-tab-history"
+    ];
+  }
+
+  static get events() {
+    return {
+      hiddenTab: `${this.tag}:hidden-tab`,
+      shownTab: `${this.tag}:shown-tab`
+    };
   }
 
   get selectedIndex() {
@@ -138,6 +64,10 @@ class PfeTabs extends PFElement {
     this.setAttribute("selected-index", value);
   }
 
+  get tabHistory() {
+    return this.hasAttribute("pfe-tab-history");
+  }
+
   constructor() {
     super(PfeTabs);
 
@@ -145,7 +75,9 @@ class PfeTabs extends PFElement {
     this._init = this._init.bind(this);
     this._onClick = this._onClick.bind(this);
     this._linkPanels = this._linkPanels.bind(this);
+    this._popstateEventHandler = this._popstateEventHandler.bind(this);
     this._observer = new MutationObserver(this._init);
+    this._updateHistory = true;
   }
 
   connectedCallback() {
@@ -172,6 +104,10 @@ class PfeTabs extends PFElement {
       tab.removeEventListener("click", this._onClick)
     );
     this._observer.disconnect();
+
+    if (this.tabHistory) {
+      window.removeEventListener("popstate", this._popstateEventHandler);
+    }
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -222,7 +158,16 @@ class PfeTabs extends PFElement {
         ]).then(() => {
           this._linkPanels();
           this.selectIndex(newValue);
+          this._updateHistory = true;
         });
+        break;
+
+      case "pfe-tab-history":
+        if (newValue === null) {
+          window.removeEventListener("popstate", this._popstateEventHandler);
+        } else {
+          window.addEventListener("popstate", this._popstateEventHandler);
+        }
     }
   }
 
@@ -253,6 +198,25 @@ class PfeTabs extends PFElement {
       return;
     }
 
+    // @IE11 doesn't support URLSearchParams
+    // https://caniuse.com/#search=urlsearchparams
+    if (
+      this.selected &&
+      this.tabHistory &&
+      this._updateHistory &&
+      CAN_USE_URLSEARCHPARAMS
+    ) {
+      // rebuild the url
+      const pathname = window.location.pathname;
+      const urlParams = new URLSearchParams(window.location.search);
+      const hash = window.location.hash;
+      const property = this.id || this.getAttribute("pfe-id");
+      const value = tab.id || tab.getAttribute("pfe-id");
+
+      urlParams.set(property, value);
+      history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
+    }
+
     this._selectTab(tab);
   }
 
@@ -261,7 +225,20 @@ class PfeTabs extends PFElement {
       this.setAttribute("role", "tablist");
     }
 
-    if (!this.hasAttribute("selected-index")) {
+    let urlParams;
+
+    // @IE11 doesn't support URLSearchParams
+    // https://caniuse.com/#search=urlsearchparams
+    if (CAN_USE_URLSEARCHPARAMS) {
+      urlParams = new URLSearchParams(window.location.search);
+    }
+
+    const tabIndexFromURL = this._getTabIndexFromURL();
+
+    if (tabIndexFromURL > -1) {
+      this._setFocus = true;
+      this.selectedIndex = tabIndexFromURL;
+    } else if (!this.hasAttribute("selected-index")) {
       this.selectedIndex = 0;
     }
 
@@ -320,11 +297,11 @@ class PfeTabs extends PFElement {
   }
 
   _allPanels() {
-    return [...this.querySelectorAll("pfe-tab-panel")];
+    return [...this.children].filter(child => child.matches("pfe-tab-panel"));
   }
 
   _allTabs() {
-    return [...this.querySelectorAll("pfe-tab")];
+    return [...this.children].filter(child => child.matches("pfe-tab"));
   }
 
   _panelForTab(tab) {
@@ -381,14 +358,11 @@ class PfeTabs extends PFElement {
     if (this.selected && this.selected !== newTab) {
       newTabSelected = true;
 
-      this.dispatchEvent(
-        new CustomEvent(`${PfeTabs.tag}:hidden-tab`, {
-          bubbles: true,
-          detail: {
-            tab: this.selected
-          }
-        })
-      );
+      this.emitEvent(PfeTabs.events.hiddenTab, {
+        detail: {
+          tab: this.selected
+        }
+      });
     }
 
     newTab.selected = true;
@@ -405,19 +379,19 @@ class PfeTabs extends PFElement {
     this.selected = newTab;
 
     if (newTabSelected) {
-      this.dispatchEvent(
-        new CustomEvent(`${PfeTabs.tag}:shown-tab`, {
-          bubbles: true,
-          detail: {
-            tab: this.selected
-          }
-        })
-      );
+      this.emitEvent(PfeTabs.events.shownTab, {
+        detail: {
+          tab: this.selected
+        }
+      });
     }
   }
 
   _onKeyDown(event) {
-    if (event.target.getAttribute("role") !== "tab") {
+    const tabs = this._allTabs();
+    const foundTab = tabs.find(tab => tab === event.target);
+
+    if (!foundTab) {
       return;
     }
 
@@ -457,11 +431,57 @@ class PfeTabs extends PFElement {
   }
 
   _onClick(event) {
-    if (event.currentTarget.getAttribute("role") !== "tab") {
+    const tabs = this._allTabs();
+    const foundTab = tabs.find(tab => tab === event.currentTarget);
+
+    if (!foundTab) {
       return;
     }
 
     this.selectedIndex = this._getTabIndex(event.currentTarget);
+  }
+
+  _getTabIndexFromURL() {
+    let urlParams;
+    let tabIndex = -1;
+
+    // @IE11 doesn't support URLSearchParams
+    // https://caniuse.com/#search=urlsearchparams
+    if (CAN_USE_URLSEARCHPARAMS) {
+      urlParams = new URLSearchParams(window.location.search);
+
+      // @DEPRECATED
+      // the "pfe-" prefix has been deprecated but we'll continue to support it
+      // we'll give priority to the urlParams.has(`${this.id}`) attribute first
+      // and fallback to urlParams.has(`pfe-${this.id}`) if it exists. We should
+      // be able to remove the || part of the if statement in the future
+      const tabsetInUrl =
+        urlParams.has(`${this.id}`) ||
+        urlParams.has(this.getAttribute("pfe-id")) ||
+        urlParams.has(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+
+      if (urlParams && tabsetInUrl) {
+        const id =
+          urlParams.get(`${this.id}`) ||
+          urlParams.get(this.getAttribute("pfe-id")) ||
+          urlParams.get(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+
+        tabIndex = this._allTabs().findIndex(tab => {
+          const tabId = tab.id || tab.getAttribute("pfe-id");
+          return tabId === id;
+        });
+      }
+    }
+
+    return tabIndex;
+  }
+
+  _popstateEventHandler() {
+    const tabIndexFromURL = this._getTabIndexFromURL();
+
+    this._setFocus = true;
+    this._updateHistory = false;
+    this.selectedIndex = tabIndexFromURL > -1 ? tabIndexFromURL : 0;
   }
 }
 

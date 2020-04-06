@@ -61,6 +61,12 @@
           "enum": ["light", "dark"],
           "default": "light",
           "prefixed": false
+        },
+        "tab-history": {
+          "title": "Tab history",
+          "type": "boolean",
+          "default": false,
+          "prefixed": true
         }
       }
     }

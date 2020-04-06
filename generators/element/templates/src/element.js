@@ -21,20 +21,20 @@ class <%= elementClassName %> extends PFElement {
 <%_ } _%>
   }
 
-<%_ if (attributes.length > 0) { _%>
-  static get observedAttributes() {
-    return [<% if (isPfelement) { %><%- _.join(attributes.map(item => `"pfe-${item}"`), ", ") %><% } else { %><%- _.join(attributes.map(item => `"${item}"`), ", ") %><% } %>];
-  }
-<%_ } else { _%>
-  // static get observedAttributes() {
-  //   return [];
-  // }
-<%_ } _%>
+  <% if (events.length < 1) { %>// <% } %>static get events() {
+  <% if (events.length < 1) { %>//   <% } %>return {<% for(let i = 0; i < events.length; i++) { %>
+      <%= events[i] %>: `${this.tag}:<%= events[i] %>`<% if (i < (events.length - 1)) { %>,<% } } %>
+    <% if (events.length < 1) { %>//   <% } %>};
+  <% if (events.length < 1) { %>// <% } %>}
 
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.<%= _.capitalize(template_type) %>;
   }
+
+  <% if (attributes.length < 1) { %>// <% } %>static get observedAttributes() {
+    <% if (attributes.length < 1) { %>//   <% } %>return [<% if (isPfelement) { %><%- _.join(attributes.map(item => `"pfe-${item}"`), ", ") %><% } else { %><%- _.join(attributes.map(item => `"${item}"`), ", ") %><% } %>];
+  <% if (attributes.length < 1) { %>// <% } %>}
 
   constructor() {
     super(<%= elementClassName %>, { type: <%= elementClassName %>.PfeType });
@@ -56,17 +56,31 @@ class <%= elementClassName %> extends PFElement {
     // this.<%= _.camelCase(slots[i]) %>.addEventListener("slotchange", this._init);
     <%_ } _%>
     <%_ } _%>
+
+    <%_ for(let i = 0; i < events.length; i++) { _%>
+    this.addEventListener(<%= elementClassName %>.events.<%= events[i] %>, this._<%= events[i] %>Handler);
+    <%_ } _%>
   }
 
-  // disconnectedCallback() {}
+  disconnectedCallback() {
+    <%_ for(let i = 0; i < events.length; i++) { _%>
+    this.removeEventListener(<%= elementClassName %>.events.<%= events[i] %>, this._<%= events[i] %>Handler);
+    <%_ } _%>
+  }
 
 <%_ if (attributes.length > 0) { _%>
   // Process the attribute change
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
+  <% if (attributes.length < 1) { %>// <% } %>attributeChangedCallback(attr, oldValue, newValue) {
+    <% if (attributes.length < 1) { %>//   <% } %>super.attributeChangedCallback(attr, oldValue, newValue);
+    <% if (attributes.length < 1) { %>//   <% } %>}
+<%_ } _%>
+
+<%_ for(let i = 0; i < events.length; i++) { _%>
+  _<%= events[i] %>Handler(event) {
+    this.emitEvent(<%= elementClassName %>.events.<%= events[i] %>, {
+      detail: {}
+    });
   }
-<%_ } else { _%>
-  // attributeChangedCallback(attr, oldValue, newValue) {}
 <%_ } _%>
 }
 

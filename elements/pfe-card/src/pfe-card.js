@@ -1,8 +1,8 @@
 // Import polyfills: matches, closest, includes
 import "./polyfills--pfe-card.js";
 
-import { html, nothing } from "lit-html";
 import PFElement from "../../pfelement/dist/pfelement.js";
+import { template } from "./pfe-card.html";
 
 class PfeCard extends PFElement {
   static get tag() {
@@ -39,7 +39,7 @@ class PfeCard extends PFElement {
   }
 
   constructor() {
-    super(PfeCard, { type: PfeCard.PfeType });
+    super(PfeCard, { type: PfeCard.PfeType }, template);
     this._observer = new MutationObserver(() => {
       this._mapSchemaToSlots(this.tag, this.slots);
     });

@@ -1,5 +1,5 @@
 import { autoReveal } from "./reveal.js";
-import { render } from "lit-html"; // /lib/shady-render <-- issue with rollup
+import { render, html } from "lit-html"; // /lib/shady-render <-- issue with rollup
 const prefix = "pfe-";
 
 class PFElement extends HTMLElement {
@@ -115,10 +115,11 @@ class PFElement extends HTMLElement {
     }
   }
 
-  constructor(pfeClass, { type = null, delayRender = false } = {}) {
+  constructor(pfeClass, { type = null, delayRender = false } = {}, template) {
     super();
 
     this.connected = false;
+    this._template = template;
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this.props = pfeClass.properties;
@@ -137,6 +138,11 @@ class PFElement extends HTMLElement {
           value: type
         }
       });
+    }
+
+    if (typeof this.slots === "object") {
+      this._mapSchemaToSlots(this.tag, this.slots);
+      this.log(`Slots attached.`);
     }
 
     if (!delayRender) {
@@ -168,11 +174,6 @@ class PFElement extends HTMLElement {
       this.log(`Properties attached.`);
     }
 
-    if (typeof this.slots === "object") {
-      this._mapSchemaToSlots(this.tag, this.slots);
-      this.log(`Slots attached.`);
-    }
-
     if (this._queue.length) {
       this._processQueue();
     }
@@ -186,9 +187,21 @@ class PFElement extends HTMLElement {
   }
 
   render() {
-    render(this.html(), this.shadowRoot, {
-      scopeName: this.tagName.toLowerCase()
-    });
+    render(
+      this._template({
+        values: {
+          tag: this.tag,
+          styles: this.styles,
+          slots: this.slots,
+          attributes: this.attributes
+        },
+        html
+      }),
+      this.shadowRoot,
+      {
+        scopeName: this.tagName.toLowerCase()
+      }
+    );
 
     // this.shadowRoot.innerHTML = "";
     // this.template.innerHTML = html`
@@ -354,6 +367,8 @@ class PFElement extends HTMLElement {
             slotExists = true;
           }
         }
+
+        this.slots[slot].isDefined = slotExists;
 
         // If the slot exists, attach an attribute to the parent to indicate that
         if (slotExists) {

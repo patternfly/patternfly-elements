@@ -4,8 +4,8 @@ import commonjs from "rollup-plugin-commonjs";
 import { uglify } from "rollup-plugin-uglify";
 import { terser } from "rollup-plugin-terser";
 import replace from "rollup-plugin-re";
-import { readdirSync } from "fs";
 import { get } from "lodash";
+import litHtml from "rollup-plugin-lit-html";
 
 const importRegex = /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
 
@@ -60,7 +60,7 @@ function esmConfig({ elementName, className } = {}) {
       format: "esm",
       sourcemap: true
     },
-    plugins: [resolve(), commonjs()],
+    plugins: [resolve(), litHtml(), commonjs()],
     external: id => id.startsWith("..")
   };
 }
@@ -85,6 +85,7 @@ function umdConfig({ elementName, className } = {}) {
         ]
       }),
       resolve(),
+      litHtml(),
       commonjs(),
       babel(babelSettings)
     ],
@@ -115,6 +116,7 @@ function esmMinConfig({ elementName, className } = {}) {
         }
       }),
       resolve(),
+      litHtml(),
       commonjs()
     ],
     external: id => id.startsWith("..")
@@ -143,6 +145,7 @@ function umdMinConfig({ elementName, className } = {}) {
         ]
       }),
       resolve(),
+      litHtml(),
       commonjs(),
       babel(babelSettings),
       uglify()

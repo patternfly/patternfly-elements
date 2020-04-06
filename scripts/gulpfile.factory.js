@@ -203,7 +203,7 @@ module.exports = function factory({
               }
               // If the string is not empty, add to the results variable
               if (result.toString() !== "") {
-                cssResult = `<style>${result}</style>`;
+                cssResult = result;
               }
             }
 
@@ -237,8 +237,8 @@ module.exports = function factory({
             if (cssResult || html) {
               template += `
 
-  html(slots, attributes) {
-    return html\`${html}\`;
+  get styles() {
+    return \`${cssResult}\`;
   }`;
             }
             if (properties) {
@@ -276,7 +276,7 @@ ${fs
   });
 
   task("copy:src", () => {
-    return src(["*.js", "*.json", `!${elementName}*.js`], {
+    return src(["*.js", "*.html", "*.json", `!${elementName}*.js`], {
       cwd: paths.source
     }).pipe(dest(paths.temp));
   });

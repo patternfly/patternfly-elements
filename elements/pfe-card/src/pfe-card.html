@@ -1,10 +1,10 @@
-<!-- pfe-card -->
-${ this.has_slot("pfe-card--header") ? `<div class="pfe-card__header">
-  <slot name="pfe-card--header"></slot>
-</div>` : ``}
-<div class="pfe-card__body">
+<style>${ styles }</style>
+${ slots.header.isDefined ? html`<div class="${ tag }__header">
+  <slot name="${ tag }--header"></slot>
+</div>` : ""}
+<div class="${ tag }__body">
   <slot></slot>
 </div>
-${ this.has_slot("pfe-card--footer") ? `<div class="pfe-card__footer">
-  <slot name="pfe-card--footer"></slot>
-</div>` : ``}
+${ slots.footer.isDefined ? html`<div class="${ tag }__footer">
+  <slot name="${ tag }--footer"></slot>
+</div>` : ""}

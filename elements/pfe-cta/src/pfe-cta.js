@@ -1,3 +1,4 @@
+import { html } from "lit-html";
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeCta extends PFElement {
@@ -59,10 +60,10 @@ class PfeCta extends PFElement {
     super.connectedCallback();
 
     // Get the slot
-    this._slot = this.shadowRoot.querySelector("slot");
+    // this._slot = this.shadowRoot.querySelector("slot");
 
     // Attach the slotchange listener
-    this._slot.addEventListener("slotchange", this._init);
+    // this._slot.addEventListener("slotchange", this._init);
 
     if (this.children.length) {
       this._init();
@@ -71,7 +72,7 @@ class PfeCta extends PFElement {
 
   disconnectedCallback() {
     // Remove the slot change listeners
-    this._slot.removeEventListener("slotchange", this._init);
+    // this._slot.removeEventListener("slotchange", this._init);
 
     // Remove the focus state listeners
     if (this.cta) {

@@ -1,6 +1,7 @@
 // Import polyfills: matches, closest, includes
 import "./polyfills--pfe-card.js";
 
+import { html, nothing } from "lit-html";
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeCard extends PFElement {

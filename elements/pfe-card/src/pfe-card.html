@@ -1,8 +1,10 @@
 <!-- pfe-card -->
-${["header", "body", "footer"].map((region) =>
-  this.has_slot("pfe-card--header") ?
-    html`<div class="pfe-card__${region}">
-      <slot ${ region !== "body" ? html`name="pfe-card--${region}"` : nothing }></slot>
-    </div>` :
-    nothing
-)}
+<div class="pfe-card__header>
+  <slot name="pfe-card--header"></slot>
+</div>
+<div class="pfe-card__body">
+  <slot></slot>
+</div>
+<div class="pfe-card__footer">
+  <slot name="pfe-card--footer"></slot>
+</div>

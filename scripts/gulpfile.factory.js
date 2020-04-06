@@ -237,8 +237,8 @@ module.exports = function factory({
             if (cssResult || html) {
               template += `
 
-  get html() {
-    return \`${cssResult}${html}\`;
+  html(slots, attributes) {
+    return html\`${html}\`;
   }`;
             }
             if (properties) {

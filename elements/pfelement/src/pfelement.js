@@ -1,5 +1,5 @@
 import { autoReveal } from "./reveal.js";
-import { nothing, html } from "lit-html";
+import { render } from "lit-html"; // /lib/shady-render <-- issue with rollup
 const prefix = "pfe-";
 
 class PFElement extends HTMLElement {
@@ -124,10 +124,9 @@ class PFElement extends HTMLElement {
     this.props = pfeClass.properties;
     this.slots = pfeClass.slots;
     this._queue = [];
-    this.template = document.createElement("template");
+    // this.template = document.createElement("template");
 
     this.log(`Constructing...`);
-
     this.attachShadow({ mode: "open" });
 
     if (type) {
@@ -153,11 +152,11 @@ class PFElement extends HTMLElement {
     this.connected = true;
     this.log(`Connecting...`);
 
-    if (window.ShadyCSS) {
-      this.log(`Styling...`);
-      window.ShadyCSS.styleElement(this);
-      this.log(`Styled.`);
-    }
+    // if (window.ShadyCSS) {
+    //   this.log(`Styling...`);
+    //   window.ShadyCSS.styleElement(this);
+    //   this.log(`Styled.`);
+    // }
 
     // @TODO maybe we should use just the attribute instead of the class?
     // https://github.com/angular/angular/issues/15399#issuecomment-318785677
@@ -184,6 +183,23 @@ class PFElement extends HTMLElement {
     this.context_update();
 
     this.log(`Connected.`);
+  }
+
+  render() {
+    render(this.html(), this.shadowRoot, {
+      scopeName: this.tagName.toLowerCase()
+    });
+
+    // this.shadowRoot.innerHTML = "";
+    // this.template.innerHTML = html`
+    //   ${this.html}
+    // `;
+
+    // if (window.ShadyCSS) {
+    //   window.ShadyCSS.prepareTemplate(this.template, this.tag);
+    // }
+
+    // this.shadowRoot.appendChild(this.template.content.cloneNode(true));
   }
 
   disconnectedCallback() {
@@ -376,19 +392,6 @@ class PFElement extends HTMLElement {
 
   var(name) {
     return PFElement.var(name, this);
-  }
-
-  render() {
-    this.shadowRoot.innerHTML = "";
-    this.template.innerHTML = html`
-      ${this.html}
-    `;
-
-    if (window.ShadyCSS) {
-      window.ShadyCSS.prepareTemplate(this.template, this.tag);
-    }
-
-    this.shadowRoot.appendChild(this.template.content.cloneNode(true));
   }
 
   log(...msgs) {

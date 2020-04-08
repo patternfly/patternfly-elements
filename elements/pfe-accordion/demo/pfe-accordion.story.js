@@ -34,9 +34,13 @@ stories.addDecorator(storybookBridge.withKnobs);
 stories.addDecorator(withActions("pfe-accordion:change"));
 
 stories.add(PfeAccordion.tag, () => {
+  tools.theming(storybookBridge);
+
   let config = {};
   let headings = [];
   let panels = [];
+
+  const props = PfeAccordion.properties;
 
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 

@@ -40,6 +40,12 @@
         <p>This is pfe-card.</p>
         <div slot="pfe-card--footer">Text in footer</div>
       </pfe-card>
+
+      <pfe-card id="card5" pfe-border pfe-color="lightest">
+        <h2 slot="pfe-card--header">Card 4</h2>
+        <p>This is pfe-card.</p>
+        <div slot="pfe-card--footer">Text in footer</div>
+      </pfe-card>
     </div>
 
     <script>
@@ -155,7 +161,7 @@
         backgroundColor: {
           variable: "--pfe-card--BackgroundColor",
           css: "background-color",
-          default:  "#dfdfdf",
+          default:  "#d2d2d2",
           custom: "hotpink"
         },
         backgroundPosition: {
@@ -223,8 +229,8 @@
 
         test("it should have a standard border when pfe-border is set", () => {
           card[0].setAttribute("pfe-border", "");
-          assert.deepEqual(getColor(card[0], "border-color"), hexToRgb("#d2d2d2"));
-          assert.equal(getComputedStyle(card[0], null)["border-width"], "1px");
+          assert.deepEqual(getColor(card[0], "border-left-color"), hexToRgb("#d2d2d2"));
+          assert.equal(getComputedStyle(card[0], null)["border-left-width"], "1px");
         });
 
         // Iterate over the slots object to test expected results

@@ -3,11 +3,6 @@ h2 {
   margin: 15px 0 10px;
 }
 
-hr {
-  border-bottom: 1px solid #ddd;
-  width: 100%;
-}
-
 pfe-band {
   --pfe-band--Padding--horizontal: 60px;
   --pfe-band--Width: 100%;
@@ -17,44 +12,91 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   --pfe-card--Border: 1px solid rgba(45, 45, 45, 0.3);
 }
 
-.resize {
+.default-link-test {
   display: flex;
   flex-flow: row nowrap;
-  resize: horizontal;
-  overflow: auto;
   border: 1px solid #ddd;
-  width: 500px;
+  width: 305px;
   padding: 10px;
 }
 
-.resize>pfe-cta:first-child {
+.resize {
+  resize: horizontal;
+  overflow: auto;
+}
+
+.resize > pfe-cta:first-child {
   margin-right: 20px;
 }
 
+.cta-layout,
 .card-layout {
   display: flex;
   flex-flow: row wrap;
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
   margin-top: -10px;
   margin-left: -20px;
+  @supports (display: grid) {
+    display: grid;
+    grid-row-gap: 10px;
+    grid-column-gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    margin-top: 0;
+    margin-left: 0;
+  }
 }
 
-.card-layout>pfe-cta,
-.card-layout .cta-align>pfe-cta {
+.cta-layout > *:not([class~="layout"]),
+.card-layout .cta-align > * {
+  margin-top: 10px;
+  margin-left: 20px;
+  @supports (display: grid) {
+    margin-top: 0;
+    margin-left: 0;
+  }
+}
+
+.card-layout > *:not([class~="layout"]) {
+  width: min-content;
+  min-width: 350px;
+  flex-grow: 1;
   margin-top: 10px;
   margin-left: 20px;
 }
 
+.cta-layout {
+  grid-template-columns: repeat(auto-fit, minmax(max-content, 1fr));
+}
+
+.event-registry {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  font-size: var(--pfe-theme--font-size--zeta, 14px);
+}
+
+.event-registry span {
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+.event-registry pfe-icon {
+  --pfe-icon--Color: #444;
+  float: left;
+}
+
+.event-registry pfe-icon:not([on="light"]) {
+  --pfe-icon--Color: #fff;
+  float: left;
+}
+
 .custom-dark-band {
-  padding: 60px 15px;
+  padding: 15px;
   background: #222;
   --theme: dark;
 }
 
 .custom-saturated-band {
-  padding: 60px 15px;
+  padding: 15px;
   background: #0c8488;
   --theme: saturated;
 }

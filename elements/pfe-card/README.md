@@ -60,9 +60,31 @@ There are several attributes available for customizing the visual treatment of t
 There are several powerful variables available to hook into and override default styles.
 
 - **Background color**: Though using the `pfe-color` attribute is strongly recommended when setting the background color for the band, you can also use completely custom colors by updating the `--pfe-band--BackgroundColor` variable.  If you update this value manually, you should also update the `--theme` context variable to invoke the right theme on it and it's child elements.  Supported themes include: `light`, `dark`, and `saturated`.
-- **Background position**: This is designed for use with the `pfe-img-src` attribute to allow you to align your background image.  Default value is `center center`. **Variable name:** `--pfe-card--BackgroundPosition`.
-- **Border**: This allows the customization of a border around the entire container.  There is a variable for the entire border shorthand (transparent by default) or you can hook into the individual properties. **Variable name:** `--pfe-card--BorderRadius` and `--pfe-card--Border` or `--pfe-card--BorderWeight`, `--pfe-card--BorderStyle`, `--pfe-card--BorderColor`.
-- **Padding**: You can customize the padding around the outside of the card container by connecting to either the shortcut padding variable or just one or more of the individual padding regions. **Variable names:** `--pfe-card--Padding` or `--pfe-card--PaddingTop`, `--pfe-card--PaddingRight`, `--pfe-card--PaddingBottom`, `--pfe-card--PaddingLeft`.
+- **Background position**: This is designed for use with the `pfe-img-src` attribute to allow you to align your background image.  Default value is `center center`.
+- **Border**: This allows the customization of a border around the entire container.  There is a variable for the entire border shorthand (transparent by default) or you can hook into the individual properties.
+- **Padding**: You can customize the padding around the outside of the card container by connecting to either the shortcut padding variable or just one or more of the individual padding regions.
+
+| Variable name | Type       | Fallback |
+| ------------- | ---------- | --- |
+| `--pfe-card--PaddingTop` | Size | `calc(--pfe-theme--container-spacer, 16px) * 2` |
+| `--pfe-card--PaddingRight` | Size | `calc(--pfe-theme--container-spacer, 16px) * 2)` |
+| `--pfe-card--PaddingBottom` | Size | `calc(--pfe-theme--container-spacer, 16px) * 2)` |
+| `--pfe-card--PaddingLeft` | Size | `calc(--pfe-theme--container-spacer, 16px) * 2)` |
+| `--pfe-card--Padding` | Size | Combines the options above |
+| `--pfe-card--BorderRadius` | Size | `--pfe-theme--surface--border-radius` |
+| `--pfe-card--BorderWidth` | Size | 0 |
+| `--pfe-card--BorderStyle` | Style | solid |
+| `--pfe-card--BorderColor` | Color | transparent |
+| `--pfe-card--Border` | Size | `--pfe-card--BorderWidth`, `--pfe-card--BorderStyle`, `--pfe-card--BorderColor` |
+| `--pfe-card--BorderTop` | Size | `--pfe-card--Border` |
+| `--pfe-card--BackgroundColor` | Size | `--pfe-theme--surface--base` |
+| `--pfe-card--BackgroundPosition` | position | center center |
+| `--pfe-card--spacing` | Size | `--pfe-theme--container-spacer` |
+| `--pfe-card--spacing--vertical` | Size | `--pfe-card--spacing` |
+| `--pfe-card__header--BackgroundColor` | Color | `rgba(45, 45, 45, var(--pfe-theme--opacity, 0.7))` |
+| `--pfe-card__header--Color` | Color | `--pfe-broadcasted--text` |
+| 
+
 
 ## Test
 

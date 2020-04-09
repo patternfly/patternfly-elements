@@ -188,11 +188,39 @@ $variables: (
   --pfe-switch__label--Color: #{pfe-local($cssvar: Color--checked, $region: label)};
   --pfe-switch__toggle--BackgroundColor: #{pfe-local($cssvar: BackgroundColor--checked, $region: toggle)};
 
+  #switch-container {
+    @include browser-query(ie11) {
+      background: pfe-color(ui-base);
+    }
+  }
+
   #knob {
     // First transform gets the right bound,
     // the second moves the knob back behind the edge
     transform:
       translate(#{$toggle-width - ($toggle-knob-offset * 2)})
       translate(-100%);
+  }
+}
+
+:host([pfe-disabled]) {
+  #switch-container {
+    @include browser-query(ie11) {
+      background: pfe-color(ui-disabled--text);
+    }
+  }
+
+  #knob {
+    @include browser-query(ie11) {
+      background: pfe-color(ui-disabled);
+    }
+  }
+}
+
+:host([pfe-checked][pfe-disabled]) {
+  #switch-container {
+    @include browser-query(ie11) {
+      background: pfe-color(ui-base);
+    }
   }
 }

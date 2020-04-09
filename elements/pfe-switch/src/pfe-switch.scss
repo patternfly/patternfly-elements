@@ -72,35 +72,6 @@ $variables: (
   color: #{pfe-local(Color--default, $region: label)};
   cursor: pointer;
 
-  // Toggle container
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: pfe-size-pem($toggle-width);
-    height: calc(#{pfe-var(line-height)} * 1em);
-    border-radius: calc(#{pfe-var(line-height)} * 0.5em);
-    background: #{pfe-local(BackgroundColor, $region: toggle)};
-    transition: background-color 0.25s;
-  }
-
-  // Toggle knob
-  &:after {
-    content: '';
-    position: absolute;
-    top: $toggle-knob-offset;
-    left: $toggle-knob-offset;
-    display: block;
-    width: pfe-size-pem($toggle-knob-diameter);
-    height: pfe-size-pem($toggle-knob-diameter);
-    border-radius: 50%;
-    background: #{pfe-local(BackgroundColor, $region: toggle-knob)};
-    box-shadow: #{pfe-local(BoxShadow, $region: toggle-knob)};
-    transition: transform 0.25s cubic-bezier(0.21, 0.84, 0.56, 1.55);
-  }
-
   &,
   :host([pfe-hide-label='false']) {
     padding-left: #{pfe-size-pem($toggle-width) + 0.5em};
@@ -185,5 +156,43 @@ $variables: (
     :host([pfe-disabled]) & {
       border-color: #{pfe-local(BackgroundColor--disabled, $region: toggle-knob)};
     }
+  }
+}
+
+#switch-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: pfe-size-pem($toggle-width);
+  height: calc(#{pfe-var(line-height)} * 1em);
+  border-radius: calc(#{pfe-var(line-height)} * 0.5em);
+  background: #{pfe-local(BackgroundColor, $region: toggle)};
+  transition: background-color 0.25s;
+}
+
+#knob {
+  position: absolute;
+  top: $toggle-knob-offset;
+  left: $toggle-knob-offset;
+  display: block;
+  width: pfe-size-pem($toggle-knob-diameter);
+  height: pfe-size-pem($toggle-knob-diameter);
+  border-radius: 50%;
+  background: #{pfe-local(BackgroundColor, $region: toggle-knob)};
+  box-shadow: #{pfe-local(BoxShadow, $region: toggle-knob)};
+  transition: transform 0.25s cubic-bezier(0.21, 0.84, 0.56, 1.55);
+}
+
+:host([pfe-checked])  {
+  --pfe-switch__label--Color: #{pfe-local($cssvar: Color--checked, $region: label)};
+  --pfe-switch__toggle--BackgroundColor: #{pfe-local($cssvar: BackgroundColor--checked, $region: toggle)};
+
+  #knob {
+    // First transform gets the right bound,
+    // the second moves the knob back behind the edge
+    transform:
+      translate(#{$toggle-width - ($toggle-knob-offset * 2)})
+      translate(-100%);
   }
 }

@@ -30,22 +30,24 @@
     "attributes": {
       "title": "Attributes",
       "type": "object",
-      "properties": {}
-    },
-    "events": {
-      "title": "Events",
-      "description": "Definition of the supported events",
-      "type": "object",
       "properties": {
-        "change": {
-          "title": "Change",
+        "language": {
+          "title": "Codeblock Language",
           "type": "string",
-          "default": "pfe-codeblock:change"
-        },
-        "click": {
-          "title": "Click",
-          "type": "string",
-          "default": "pfe-codeblock:click"
+          "enum": [
+            "html",
+            "xml",
+            "markup",
+            "ja",
+            "javascript",
+            "clike",
+            "css",
+            "svg",
+            "mathml"
+          ],
+          "default": "html",
+          "prefixed": true,
+          "observer": "_langChanges"
         }
       }
     }

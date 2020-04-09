@@ -39,11 +39,36 @@
   </head>
   <body unresolved>
     <h1><code>pfe-codeblock</code></h1>
-
-    <pfe-codeblock>
-      <h2>This is pfe-codeblock</h2>
-    </pfe-codeblock>
-
-    
+    <pfe-codeblock pfe-language="html">
+      <div pfe-codeblock-container>
+        constructor() {
+          super(PfeCodeblock, { type: PfeCodeblock.PfeType });
+      
+          this._codeblock = null;
+          this._codeblockRender = null;
+          this._codeblockContainer = null;
+          this._observerConfig = { childList: true, subtree: true };
+          this._readyStateChangeHandler = this._readyStateChangeHandler.bind(this);
+      
+          this.observer = new MutationObserver((mutationList, observer) => {
+            if (!this._codeblockContainer.textContent) {
+              this._codeblockRender.innerHTML = "";
+              return;
+            }
+      
+            // TODO: when we stop supporting IE11, the need to disconnect and
+            // then reconnect will no longer be needed
+            observer.disconnect();
+            this.codeblock = this._codeblockContainer.textContent;
+            this._muationObserve();
+          });
+        }
+      </div>
+    </pfe-codeblock> 
+    <pfe-codeblock pfe-language="js">
+      <div pfe-codeblock-container>
+        var test=null;
+      </div>
+    </pfe-codeblock> 
   </body>
 </html>

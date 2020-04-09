@@ -93,3 +93,9 @@ if (!Array.prototype.findIndex) {
     writable: true
   });
 }
+
+// @POLYFILL Element.prototype.matches
+// https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill
+if (!Element.prototype.matches) {
+  Element.prototype.matches = Element.prototype.msMatchesSelector;
+}

@@ -2,7 +2,7 @@
 
 ## Usage
 
-```
+```html
 <pfe-tabs>
   <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
   <pfe-tab-panel role="region" slot="panel">
@@ -38,6 +38,17 @@ Add the heading for your tab here.
 Add the content for your tab panel here.
 
 ## Attributes
+**`pfe-variant`** (observed)
+
+Possible values are:
+- `wind`: Borders are removed, only an accent colored indicator appears under the active heading.
+- `earth`: Headings are encased in a block. The active heading has an accent colored border on one side.
+
+```html
+<pfe-tabs pfe-variant="wind">
+  ...
+</pfe-tabs>
+```
 
 **`vertical`** (observed)
 
@@ -73,8 +84,8 @@ This will override any context being passed from a parent component and will add
 Updates window.history and the URL to create sharable links. With the
 `pfe-tab-history` attribute, the tabs and each tab *must* have an `id`.
 
-The URL pattern will be `?pfe-{id-of-tabs}={id-of-selected-tab}`. In the example
-below, selecting "Tab 2" will update the URL as follows: `?pfe-my-tabs=tab2`.
+The URL pattern will be `?{id-of-tabs}={id-of-selected-tab}`. In the example
+below, selecting "Tab 2" will update the URL as follows: `?my-tabs=tab2`.
 
 ```html
 <pfe-tabs pfe-tab-history id="my-tabs">
@@ -99,7 +110,7 @@ By default, `pfe-tabs` will read the URL and look for a query string parameter
 that matches the id of a `pfe-tabs` component and a value of a specific
 `pfe-tab`.
 
-For example, `?pfe-my-tabs=tab2` would open the second tab in the code sample below.
+For example, `?my-tabs=tab2` would open the second tab in the code sample below.
 "my-tabs" is equal to the id of the `pfe-tabs` component and "tab2" is equal to
 the id of the second tab in the tab set.
 

@@ -23,8 +23,20 @@ class PfeSwitch extends PFElement {
     };
   }
 
-  get pfeChecked() {
+  get checked() {
     return this.getAttribute("pfe-checked");
+  }
+
+  set checked(val) {
+    val = Boolean(val);
+
+    if (val) {
+      this.checkbox.setAttribute("checked", "");
+      this.setAttribute("pfe-checked", "");
+    } else {
+      this.checkbox.removeAttribute("checked");
+      this.removeAttribute("pfe-checked");
+    }
   }
 
   // Declare the type of this component
@@ -163,7 +175,7 @@ class PfeSwitch extends PFElement {
       // Update checked status
       if (this.checkbox.checked) {
         this.checked = true;
-        this.setAttribute("pfe-checked", "");
+
         if (
           this.settings["pfe-message-on"] ||
           this.settings["pfe-message-off"]
@@ -176,7 +188,7 @@ class PfeSwitch extends PFElement {
         }
       } else {
         this.checked = false;
-        this.removeAttribute("pfe-checked");
+
         if (
           this.settings["pfe-message-on"] ||
           this.settings["pfe-message-off"]

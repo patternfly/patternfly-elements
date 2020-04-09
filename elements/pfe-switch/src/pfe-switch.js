@@ -64,17 +64,15 @@ class PfeSwitch extends PFElement {
     // Get a reference to the checkbox and label that should be slotted
     this.checkbox = null;
     this.label = null;
-    const assignedElements = this.shadowRoot
-      .querySelector("slot")
-      .assignedElements();
-    for (let index = 0; index < assignedElements.length; index++) {
-      const assignedElement = assignedElements[index];
-      switch (assignedElement.tagName) {
+    const assignedNodes = this.shadowRoot.querySelector("slot").assignedNodes();
+    for (let index = 0; index < assignedNodes.length; index++) {
+      const assignedNode = assignedNodes[index];
+      switch (assignedNode.tagName) {
         case "LABEL":
-          this.label = assignedElement;
+          this.label = assignedNode;
           break;
         case "INPUT":
-          this.checkbox = assignedElement;
+          this.checkbox = assignedNode;
           break;
       }
     }

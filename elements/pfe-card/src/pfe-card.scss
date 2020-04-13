@@ -3,38 +3,66 @@
 $LOCAL: card;
 
 
-$variables: (
+$VARIABLES: (
+  FlexDirection: column,
+  AlignSelf: stretch,
+
   // Individual padding overrides available
   PaddingTop: calc(#{pfe-var(container-spacer)} * 2),
   PaddingRight: calc(#{pfe-var(container-spacer)} * 2),
   PaddingBottom: calc(#{pfe-var(container-spacer)} * 2),
   PaddingLeft: calc(#{pfe-var(container-spacer)} * 2),
 
-  spacing: pfe-var(container-spacer)
+  BorderWidth: 0,
+  BorderStyle: solid,
+  BorderColor: transparent,
+  BorderRadius: pfe-var(surface--border-radius),
+
+  spacing: pfe-var(container-spacer),
+
+  BackgroundColor: pfe-color(surface--base),
+  BackgroundPosition: center center,
+
+  header: (
+    Display: block,
+    BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)}),
+    Color: pfe-apply-broadcast(text)
+  ),
+
+  footer: (
+    AlignItems: baseline,
+    FlexDirection: row,
+    FlexWrap: wrap
+  )
 );
 
-:host {
-  @include pfe-print-variables($variables);
-  
+// Note: For combination variables to resolve, they must be added at the end
+$VARIABLES: map-collect($VARIABLES, (
+  Padding: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft),
+  Border: pfe-local(BorderWidth) pfe-local(BorderStyle) pfe-local(BorderColor),
+  spacing--vertical: pfe-local(spacing)
+));
+
+:host {  
   // Broadcasted values set to match background color
   @include pfe-set-broadcast-theme(light);
 
   // Start of style declarations for host element
   display: flex;
-  flex-direction: #{pfe-local($cssvar: FlexDirection, $fallback: column)};
+  flex-direction: #{pfe-local(FlexDirection)};
 
   // Optional hooks, no default styles
   justify-content:  #{pfe-local(JustifyContent)};
   align-items:      #{pfe-local(AlignItems)};
 
   // This allows the card to fill it's container if necessary
-  align-self:       #{pfe-local($cssvar: AlignSelf, $fallback: stretch)};
+  align-self:       #{pfe-local(AlignSelf)};
   position:         relative;
 
-  padding:       #{pfe-local($cssvar: Padding, $fallback: #{pfe-local($cssvar: PaddingTop, $fallback: calc(#{pfe-var(container-spacer)} * 2))} #{pfe-local($cssvar: PaddingRight, $fallback: calc(#{pfe-var(container-spacer)} * 2))} #{pfe-local($cssvar: PaddingBottom, $fallback: calc(#{pfe-var(container-spacer)} * 2))} #{pfe-local($cssvar: PaddingLeft, $fallback: calc(#{pfe-var(container-spacer)} * 2))} )};
-  border:        #{pfe-local($cssvar: Border, $fallback: (#{pfe-local(BorderWidth, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)}) )};
-  border-top:    #{pfe-local($cssvar: BorderTop)};
-  border-radius: #{pfe-local($cssvar: BorderRadius, $fallback: #{pfe-var(surface--border-radius)})};
+  padding:       #{pfe-local(Padding)};
+  border:        #{pfe-local(Border)};
+  border-top:    #{pfe-local(BorderTop)};
+  border-radius: #{pfe-local(BorderRadius)};
 
   // This property ensures that children in the slots do no overflow
   // the border-radius being set on the container
@@ -43,8 +71,8 @@ $variables: (
 
   // Base colors
   background-image:       #{pfe-local(BackgroundImage)};
-  background-color:       #{pfe-local($cssvar: BackgroundColor, $fallback: #{pfe-color(surface--base)})};
-  background-position:    #{pfe-local($cssvar: BackgroundPosition, $fallback: center center)};
+  background-color:       #{pfe-local(BackgroundColor)};
+  background-position:    #{pfe-local(BackgroundPosition)};
   background-repeat:      #{pfe-local(BackgroundRepeat)};
   background-size:        #{pfe-local(BackgroundSize)};
   background-attachment:  #{pfe-local(BackgroundAttachment)};
@@ -109,7 +137,7 @@ $variables: (
       margin-top: -2rem; //IE11 fallback
       margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
       :host([has_header]) & {
-        padding-top: #{pfe-local($cssvar: spacing, $fallback: pfe-var(container-spacer))};
+        padding-top: #{pfe-local(spacing)};
       }
     }
 
@@ -155,11 +183,11 @@ $variables: (
     }
   }
   &__header {
-    display: #{pfe-local($cssvar: Display, $region: header, $fallback: block)};
+    display: #{pfe-local($cssvar: Display, $region: header)};
     z-index: 2;
     // Declare the header background color
-    background-color: #{pfe-local($cssvar: BackgroundColor, $region: header, $fallback: rgba(45, 45, 45, #{pfe-var(opacity)}))};
-    color:            #{pfe-local($cssvar: Color, $region: header, $fallback: #{pfe-apply-broadcast(text)})};
+    background-color: #{pfe-local($cssvar: BackgroundColor, $region: header)};
+    color:            #{pfe-local($cssvar: Color, $region: header)};
     @include browser-query(ie11) {
       background-color: #{map-get($pfe-colors, surface--lighter)} !important;
       color: #{pfe-color(text)} !important;
@@ -168,50 +196,26 @@ $variables: (
     // Margin styles on header region
     margin-top:    calc(#{pfe-local(PaddingTop)} * -1) !important;
     margin-right:  calc(#{pfe-local(PaddingRight)} * -1);
-    margin-bottom: #{pfe-local($cssvar: spacing--vertical, $fallback: #{pfe-local(spacing)})};
+    margin-bottom: #{pfe-local(spacing--vertical)};
     margin-left:   calc(#{pfe-local(PaddingLeft)} * -1);
 
     // Padding for the header region
-    padding-top:    #{pfe-local($cssvar: spacing--vertical, $fallback: #{pfe-local(spacing)})};
+    padding-top:    #{pfe-local(spacing--vertical)};
     padding-right:  #{pfe-local(PaddingRight)};
     padding-left:   #{pfe-local(PaddingLeft)};
-    padding-bottom: #{pfe-local($cssvar: spacing--vertical, $fallback: #{pfe-local(spacing)})};
+    padding-bottom: #{pfe-local(spacing--vertical)};
 
     :host(:not([has_body],[has_footer])) & {
       margin-bottom: #{pfe-local(PaddingBottom)};
-    }
-
-    ::slotted([pfe-overflow~="top"]) {
-      --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
-    }
-
-    :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local($cssvar: spacing--vertical, $fallback: #{pfe-local(spacing)})} * -1);
-    }
-
-    ::slotted([pfe-overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
     @include pfe-clear-spacing($properties: margin-bottom, $important: true);
   }
   &__body {
     z-index: 1;
-    :host(:not([has_header])) & ::slotted([pfe-overflow~="top"]) {
-      --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
-    }
 
     ::slotted([pfe-overflow~="top"]) {
       z-index: 1;
-      --pfe-card__overflow--MarginTop: calc(#{pfe-local($cssvar: spacing--vertical, $fallback: #{pfe-local(spacing)})} * -1);
-    }
-
-    ::slotted([pfe-overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
-    }
-
-    :host([has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local($cssvar: spacing--vertical, $fallback: #{pfe-local(spacing)})} * -1);
     }
   }
   &__footer {
@@ -219,19 +223,15 @@ $variables: (
     margin-top: auto; // This allows the footer to move to the very bottom
 
     display: flex;
-    flex-direction: #{pfe-local($cssvar: Row, $region: footer, $fallback: row)};
-    flex-wrap: #{pfe-local($cssvar: Wrap, $region: footer, $fallback: wrap)};
+    flex-direction: #{pfe-local($cssvar: FlexDirection, $region: footer)};
+    flex-wrap: #{pfe-local($cssvar: FlexWrap, $region: footer)};
     // Aligns buttons and CTAs
-    align-items: #{pfe-local($cssvar: AlignItems, $region: footer, $fallback: baseline)};
-
-    ::slotted([pfe-overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
-    }
+    align-items: #{pfe-local($cssvar: AlignItems, $region: footer)};
   }
   &__header,
   &__body {
     &:not(:last-child) {
-      margin-bottom: #{pfe-local($cssvar: spacing--vertical, $fallback: #{pfe-local(spacing)})};
+      margin-bottom: #{pfe-local(spacing--vertical)};
     }
 
     //-- Slotted styles for typography

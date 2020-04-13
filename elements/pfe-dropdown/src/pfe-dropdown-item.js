@@ -13,6 +13,10 @@ class PfeDropdownItem extends PFElement {
     return "pfe-dropdown-item.scss";
   }
 
+  get schemaUrl() {
+    return "pfe-dropdown-item.json";
+  }
+
   static get observedAttributes() {
     return ["pfe-item-type", "disabled"];
   }

@@ -26,12 +26,12 @@ class PfeDropdown extends PFElement {
     return "pfe-dropdown.scss";
   }
 
-  static get observedAttributes() {
-    return ["pfe-label", "disabled"];
+  get schemaUrl() {
+    return "pfe-dropdown.json";
   }
 
-  get disabled() {
-    return this.hasAttribute("disabled");
+  static get observedAttributes() {
+    return ["pfe-label", "disabled"];
   }
 
   set pfeDropdownOptions(options) {
@@ -106,7 +106,7 @@ class PfeDropdown extends PFElement {
 
   _init() {
     if (this.children.length) {
-      if (!this.disabled) {
+      if (!this.hasAttribute("disabled")) {
         this._toggle.addEventListener("click", this._clickHandler);
         this._toggle.addEventListener("keydown", this._toggleKeydownHandler);
         this._allItems().forEach(item => {

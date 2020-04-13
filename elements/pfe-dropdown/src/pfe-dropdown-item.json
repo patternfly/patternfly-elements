@@ -1,10 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Dropdown",
-  "description": "Provides a dropdown list of actions and/or links",
+  "title": "Dropdown item",
+  "description": "Action, link, or separator in a dropdown",
   "type": "object",
-  "tag": "pfe-dropdown",
-  "class": "pfe-dropdown",
+  "tag": "pfe-dropdown-item",
+  "class": "pfe-dropdown-item",
   "category": "content",
   "properties": {
     "slots": {
@@ -17,20 +17,15 @@
       "title": "Attributes",
       "type": "object",
       "properties": {
-        "label": {
-          "title": "Menu button label",
+        "item-type": {
+          "title": "List item type",
           "type": "string",
-          "default": "Dropdown",
+          "enum": ["link", "action", "separator"],
+          "default": null,
           "prefixed": true
-        },
-        "disabled": {
-          "title": "Disable menu button",
-          "type": "boolean",
-          "default": false,
-          "prefixed": false
         }
       },
-      "required": ["pfe-label"]
+      "required": ["pfe-item-type"]
     }
   },
   "required": ["slots", "attributes"],

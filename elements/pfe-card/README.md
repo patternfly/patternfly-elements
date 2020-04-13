@@ -81,6 +81,7 @@ There are several powerful variables available to hook into and override default
 | `--pfe-card--BackgroundPosition` | position | center center |
 | `--pfe-card--spacing` | Size | `--pfe-theme--container-spacer` |
 | `--pfe-card--spacing--vertical` | Size | `--pfe-card--spacing` |
+| `--pfe-card__header--Display` | display | `block` |
 | `--pfe-card__header--BackgroundColor` | Color | `rgba(45, 45, 45, var(--pfe-theme--opacity, 0.7))` |
 | `--pfe-card__header--Color` | Color | `--pfe-broadcasted--text` |
 | 

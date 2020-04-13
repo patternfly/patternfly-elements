@@ -46,15 +46,20 @@
         <p>This is pfe-card.</p>
         <div slot="pfe-card--footer">Text in footer</div>
       </pfe-card>
+
+      <pfe-card id="card6">
+        <h2 slot="pfe-card--header">Card 1</h2>
+        <p>This is pfe-card.</p>
+        <div slot="pfe-card--footer">Text in footer</div>
+      </pfe-card>
     </div>
 
     <script>
       const card = [...document.querySelectorAll("pfe-card")];
 
       // Returns the luminance value from rgb
-      const luminance = (r, g, b) => {
-        return (0.2126*r/255 + 0.7152*g/255 + 0.0722*b/255);
-      }
+      const luminance = (r, g, b) => (0.2126*r/255 + 0.7152*g/255 + 0.0722*b/255);
+
       // Converts a hex value to RGBA
       const hexToRgb = hex => {
         const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/.exec(hex);
@@ -70,6 +75,8 @@
           .map(n => +n);
         return [r, g, b];
       };
+
+      const updateVariable = (el, variable, value) => el.style.setProperty(variable, value);
 
       // Themes and their expected hex values
       const colors = {
@@ -137,8 +144,8 @@
         padding: {
           variable: "--pfe-card--Padding",
           css: "padding",
-          default:  "32px 32px 32px 32px",
-          custom: "20px 10px 20px 10px"
+          default:  "32px",
+          custom: "20px 10px 20px 5px"
         },
         borderRadius: {
           variable: "--pfe-card--BorderRadius",
@@ -148,27 +155,48 @@
         },
         border: {
           variable: "--pfe-card--Border",
-          css: "border",
-          default:  "0 solid transparent",
-          custom: "1px solid #eee"
+          css: "border-bottom",
+          default:  "0px solid rgba(0, 0, 0, 0)",
+          custom: "1px solid rgb(238, 238, 238)"
         },
         borderTop: {
           variable: "--pfe-card--BorderTop",
           css: "border-top",
-          default:  "0 solid transparent",
-          custom: "4px solid #ee0000"
+          default:  "0px none rgb(51, 51, 51)",
+          custom: "4px solid rgb(238, 0, 0)"
         },
         backgroundColor: {
           variable: "--pfe-card--BackgroundColor",
           css: "background-color",
-          default:  "#d2d2d2",
-          custom: "hotpink"
+          default:  "rgb(223, 223, 223)",
+          custom: "rgb(255, 105, 180)"
         },
         backgroundPosition: {
           variable: "--pfe-card--BackgroundPosition",
           css: "background-position",
-          default:  "center center",
-          custom: "top right"
+          default:  "50% 50%",
+          custom: "100% 0%"
+        }
+      };
+
+      const customProperties_header = {
+        display: {
+          variable: "--pfe-card__header--Display",
+          css: "display",
+          default:  "block",
+          custom: "none"
+        },
+        backgroundColor: {
+          variable: "--pfe-card__header--BackgroundColor",
+          css: "background-color",
+          default:  "rgba(45, 45, 45, 0.3)",
+          custom: "rgb(255, 105, 180)"
+        },
+        color: {
+          variable: "--pfe-card__header--Color",
+          css: "color",
+          default:  "rgb(51, 51, 51)",
+          custom: "rgb(255, 105, 180)"
         }
       };
 
@@ -274,20 +302,41 @@
           }, 50);
         });
 
+        // @TODO these return false positives
         // Iterate over the custom properties to test overrides work
         Object.entries(customProperties).forEach(set => {
-          let property = set[1];
-          test(`Test that ${property.variable} allows user customization`, () => {
+          Promise.all([customElements.whenDefined("pfe-card")]).then( () => {
+            let property = set[1];
+
             // Test default value
-            setTimeout(function(){
+            test(`${property.variable} picks up the default value`, () => {
               assert.equal(getComputedStyle(card[0], null)[property.css], property.default, `${property.css} should equal ${property.default}`);
-            }, 50);
+            });
+
             // Update the variable
-            card[0].style.setProperty(property.variable, property.custom);
-            // Test the update worked
-            setTimeout(function(){
-              assert.equal(getComputedStyle(card[0], null)[property.css], property.custom, `${property.css} should equal ${property.custom}`);
-            }, 50);
+            test(`${property.variable} allows user customization`, () => {
+              updateVariable(card[5], property.variable, property.custom);
+              assert.equal(getComputedStyle(card[5], null)[property.css], property.custom, `${property.css} should equal ${property.custom}`);
+            });
+          });
+        });
+
+        // Iterate over the custom properties to test overrides work
+        Object.entries(customProperties_header).forEach(set => {
+          Promise.all([customElements.whenDefined("pfe-card")]).then( () => {
+            let header = card[5].shadowRoot.querySelector(".pfe-card__header");
+            let property = set[1];
+
+            // Test default value
+            test(`${property.variable} picks up the default value`, () => {
+              assert.equal(getComputedStyle(header, null)[property.css], property.default, `${property.css} should equal ${property.default}`);
+            });
+
+            // Update the variable
+            test(`${property.variable} allows user customization`, () => {
+              updateVariable(card[5], property.variable, property.custom);
+              assert.equal(getComputedStyle(header, null)[property.css], property.custom, `${property.css} should equal ${property.custom}`);
+            });
           });
         });
       });

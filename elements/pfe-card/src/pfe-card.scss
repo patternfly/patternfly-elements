@@ -31,9 +31,9 @@ $variables: (
   align-self:       #{pfe-local($cssvar: AlignSelf, $fallback: stretch)};
   position:         relative;
 
-  padding:       #{pfe-local($cssvar: PaddingTop, $fallback: calc(#{pfe-var(container-spacer)} * 2))} #{pfe-local($cssvar: PaddingRight, $fallback: calc(#{pfe-var(container-spacer)} * 2))} #{pfe-local($cssvar: PaddingBottom, $fallback: calc(#{pfe-var(container-spacer)} * 2))} #{pfe-local($cssvar: PaddingLeft, $fallback: calc(#{pfe-var(container-spacer)} * 2))};
-  border:        #{pfe-local($cssvar: Border, $fallback: #{pfe-local(BorderWidth, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)})};
-  border-top:    #{pfe-local($cssvar: BorderTop, $fallback: #{pfe-local(BorderTop)})};
+  padding:       #{pfe-local($cssvar: Padding, $fallback: #{pfe-local($cssvar: PaddingTop, $fallback: calc(#{pfe-var(container-spacer)} * 2))} #{pfe-local($cssvar: PaddingRight, $fallback: calc(#{pfe-var(container-spacer)} * 2))} #{pfe-local($cssvar: PaddingBottom, $fallback: calc(#{pfe-var(container-spacer)} * 2))} #{pfe-local($cssvar: PaddingLeft, $fallback: calc(#{pfe-var(container-spacer)} * 2))} )};
+  border:        #{pfe-local($cssvar: Border, $fallback: (#{pfe-local(BorderWidth, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)}) )};
+  border-top:    #{pfe-local($cssvar: BorderTop)};
   border-radius: #{pfe-local($cssvar: BorderRadius, $fallback: #{pfe-var(surface--border-radius)})};
 
   // This property ensures that children in the slots do no overflow
@@ -155,6 +155,7 @@ $variables: (
     }
   }
   &__header {
+    display: #{pfe-local($cssvar: Display, $region: header, $fallback: block)};
     z-index: 2;
     // Declare the header background color
     background-color: #{pfe-local($cssvar: BackgroundColor, $region: header, $fallback: rgba(45, 45, 45, #{pfe-var(opacity)}))};

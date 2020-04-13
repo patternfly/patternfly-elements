@@ -53,7 +53,7 @@ $variables: (
   background-color: #{pfe-local(BackgroundColor--hover)};
 }
 
-:host([pfe-type="separator"]) {
+:host([pfe-item-type="separator"]) {
   .pfe-dropdown-item {
     &__container {
       height: #{pfe-local(Height)};

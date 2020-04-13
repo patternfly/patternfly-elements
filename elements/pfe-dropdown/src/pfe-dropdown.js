@@ -128,8 +128,8 @@ class PfeDropdown extends PFElement {
   _itemClickHandler(event) {
     let pfeType;
 
-    if (event.target.parentElement.attributes["pfe-type"]) {
-      pfeType = event.target.parentElement.attributes["pfe-type"].value;
+    if (event.target.parentElement.attributes["pfe-item-type"]) {
+      pfeType = event.target.parentElement.attributes["pfe-item-type"].value;
     }
 
     this._selectItem(event.target, pfeType);
@@ -141,8 +141,8 @@ class PfeDropdown extends PFElement {
     let newItem;
     let pfeType;
 
-    if (event.target.attributes["pfe-type"]) {
-      pfeType = event.target.attributes["pfe-type"].value;
+    if (event.target.attributes["pfe-item-type"]) {
+      pfeType = event.target.attributes["pfe-item-type"].value;
     }
 
     switch (event.keyCode) {
@@ -238,7 +238,7 @@ class PfeDropdown extends PFElement {
           break;
       }
       const option = document.createElement("pfe-dropdown-item");
-      option.setAttribute("pfe-type", el.type);
+      option.setAttribute("pfe-item-type", el.type);
       if (el.disabled) {
         option.setAttribute("disabled", el.disabled);
       }
@@ -262,7 +262,9 @@ class PfeDropdown extends PFElement {
 
   _allItems() {
     return [
-      ...this.querySelectorAll(`${this.tag}-item:not([pfe-type='separator'])`)
+      ...this.querySelectorAll(
+        `${this.tag}-item:not([pfe-item-type='separator'])`
+      )
     ];
   }
 

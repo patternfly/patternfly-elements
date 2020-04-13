@@ -14,7 +14,7 @@ class PfeDropdownItem extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-type", "disabled"];
+    return ["pfe-item-type", "disabled"];
   }
 
   constructor() {
@@ -26,7 +26,7 @@ class PfeDropdownItem extends PFElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
-      case "pfe-type":
+      case "pfe-item-type":
         this._setAccessibility();
         break;
       case "disabled":
@@ -43,7 +43,7 @@ class PfeDropdownItem extends PFElement {
 
   _setAccessibility() {
     if (this._container && this._item) {
-      const type = this.getAttribute("pfe-type");
+      const type = this.getAttribute("pfe-item-type");
       if (type) {
         switch (type) {
           case "link":

@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Dropdown",
+  "description": "Provides a dropdown list of actions and/or links",
+  "type": "object",
+  "tag": "pfe-dropdown",
+  "class": "pfe-dropdown",
+  "category": "content",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {}
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "label": {
+          "title": "Menu button label",
+          "type": "string",
+          "defaultx": null,
+          "prefixed": true
+        },
+        "item-type": {
+          "title": "List item type",
+          "type": "string",
+          "enum": ["link", "action", "separator"],
+          "default": null,
+          "prefixed": true
+        },
+        "disabled": {
+          "title": "Disable menu button",
+          "type": "boolean",
+          "default": false,
+          "prefixed": false
+        }
+      },
+      "required": ["pfe-label", "pfe-item-type"]
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

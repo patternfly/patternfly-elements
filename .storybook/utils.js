@@ -1,4 +1,5 @@
 // This is a collection of functions to reuse within PFElements stories.
+import { RESET } from "@storybook/core-events";
 
 // Automatic content generation
 // https://www.npmjs.com/package/lorem-ipsum
@@ -262,23 +263,38 @@ export function autoPropKnobs(properties, bridge) {
 }
 
 export function theming(bridge) {
-  let theme = bridge.select(
-    "Theme",
-    ["light", "dark", "saturated"],
-    "light",
-    "Attributes"
+  let themes = [
+    {
+      label: "light",
+      color: "#fff"
+    },
+    {
+      label: "dark",
+      color: "#252525"
+    },
+    {
+      label: "saturated",
+      color: "#007a87"
+    }
+  ];
+
+  let theme = bridge.select("Theme", themes, "light", "Theming");
+  let customColor = bridge.color(
+    "Custom background color",
+    theme.color,
+    "Theming"
   );
 
-  if (theme === "dark") {
-    document.querySelector("body").style.backgroundColor = "#252525";
-    document.querySelector("body").style.setProperty("--theme", "dark");
-  } else if (theme === "saturated") {
-    document.querySelector("body").style.backgroundColor = "#007a87";
-    document.querySelector("body").style.setProperty("--theme", "saturated");
-  } else {
-    document.querySelector("body").style.backgroundColor = "#fff";
-    document.querySelector("body").style.setProperty("--theme", "light");
-  }
+  // @TODO work on the reset functionality; this is hard :/
+  // let resetColor = bridge.button("Reset", () => {
+  //   theme = { label: "light", color: "#fff" };
+  //   customColor = theme.color;
+  //   return false;
+  // }, "Theming");
+
+  document.querySelector("body").style.backgroundColor =
+    customColor || theme.color;
+  document.querySelector("body").style.setProperty("--theme", theme.label);
 }
 
 // Create knobs to render input fields for the slots

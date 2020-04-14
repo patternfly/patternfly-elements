@@ -285,13 +285,6 @@ export function theming(bridge) {
     "Theming"
   );
 
-  // @TODO work on the reset functionality; this is hard :/
-  // let resetColor = bridge.button("Reset", () => {
-  //   theme = { label: "light", color: "#fff" };
-  //   customColor = theme.color;
-  //   return false;
-  // }, "Theming");
-
   document.querySelector("body").style.backgroundColor =
     customColor || theme.color;
   document.querySelector("body").style.setProperty("--theme", theme.label);

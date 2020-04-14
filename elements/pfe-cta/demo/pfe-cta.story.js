@@ -22,8 +22,6 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeCta.tag, () => {
-  tools.theming(storybookBridge);
-
   let config = {};
 
   const props = PfeCta.properties;

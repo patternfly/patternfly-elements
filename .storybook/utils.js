@@ -193,7 +193,6 @@ export function autoContent(max = 5, min = 1, short = false) {
 // Return Storybook knobs based on an object containing property definitions for the component
 export function autoPropKnobs(properties, bridge) {
   var binding = {};
-
   Object.entries(properties).forEach(prop => {
     let attr = prop[0];
     let title = prop[1].title || attr;
@@ -257,28 +256,7 @@ export function autoPropKnobs(properties, bridge) {
       }
     }
   });
-
   return binding;
-}
-
-export function theming(bridge) {
-  let theme = bridge.select(
-    "Theme",
-    ["light", "dark", "saturated"],
-    "light",
-    "Attributes"
-  );
-
-  if (theme === "dark") {
-    document.querySelector("body").style.backgroundColor = "#252525";
-    document.querySelector("body").style.setProperty("--theme", "dark");
-  } else if (theme === "saturated") {
-    document.querySelector("body").style.backgroundColor = "#007a87";
-    document.querySelector("body").style.setProperty("--theme", "saturated");
-  } else {
-    document.querySelector("body").style.backgroundColor = "#fff";
-    document.querySelector("body").style.setProperty("--theme", "light");
-  }
 }
 
 // Create knobs to render input fields for the slots

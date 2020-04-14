@@ -28,6 +28,8 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeTabs.tag, () => {
+  tools.theming(storybookBridge);
+
   let config = {};
   let tabs = [];
   let panels = [];

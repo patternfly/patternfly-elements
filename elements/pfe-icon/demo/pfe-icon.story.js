@@ -273,6 +273,8 @@ const validIcons = [
 ];
 
 stories.add(PfeIcon.tag, () => {
+  tools.theming(storybookBridge);
+
   let config = {};
 
   const props = PfeIcon.properties;

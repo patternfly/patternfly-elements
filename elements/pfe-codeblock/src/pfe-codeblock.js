@@ -22,6 +22,14 @@ class PfeCodeblock extends PFElement {
     return this.getAttribute("pfe-language") || "base";
   }
 
+  get codePrismLanguage() {
+    return "language-" + this.codeLanguage;
+  }
+
+  get codePrismLanguageLoad() {
+    return Prism.languages[this.codeLanguage];
+  }
+
   static get observedAttributes() {
     return ["pfe-language"];
   }
@@ -49,12 +57,13 @@ class PfeCodeblock extends PFElement {
   }
 
   constructor() {
-    console.log("constructor");
     super(PfeCodeblock, { type: PfeCodeblock.PfeType });
 
     this._codeblock = null;
     this._codeblockRender = null;
+    this._codeblockRenderOuterPreTag = null;
     this._codeblockContainer = null;
+
     this._observerConfig = { childList: true, subtree: true };
     this._readyStateChangeHandler = this._readyStateChangeHandler.bind(this);
 
@@ -73,12 +82,15 @@ class PfeCodeblock extends PFElement {
   }
 
   connectedCallback() {
-    console.log("connectedCallback");
     super.connectedCallback();
 
-    this._codeblockRender = document.createElement("div");
+    this._codeblockRenderOuterPreTag = document.createElement("pre");
+    this._codeblockRender = document.createElement("code");
     this._codeblockRender.setAttribute("pfe-codeblock-render", "");
-    this.appendChild(this._codeblockRender);
+    this._codeblockRender.setAttribute("class", this.codePrismLanguage);
+
+    this._codeblockRenderOuterPreTag.appendChild(this._codeblockRender);
+    this.appendChild(this._codeblockRenderOuterPreTag);
 
     this.shadowRoot.querySelector("slot").addEventListener("slotchange", () => {
       if (!this._codeblockContainer) {
@@ -93,12 +105,10 @@ class PfeCodeblock extends PFElement {
   }
 
   disconnectedCallback() {
-    console.log("disconnectedCallback");
     this.observer.disconnect();
   }
 
   _readyStateChangeHandler(event) {
-    console.log("_readyStateChangeHandler");
     if (event.target.readyState === "complete") {
       document.removeEventListener(
         "readystatechange",
@@ -109,21 +119,22 @@ class PfeCodeblock extends PFElement {
   }
 
   _init() {
-    console.log("_init");
     if (this._codeblockContainer.textContent) {
-      this._codeblock = this._codeblockContainer.textContent;
+      this.codeblock = this._codeblockContainer.textContent;
     }
 
     this._muationObserve();
   }
 
   renderCodeblock() {
-    console.log("renderCodeblock");
-    this._codeblockRender.innerHTML = Prism.highlight(this.codeblock);
+    this._codeblockRender.innerHTML = Prism.highlight(
+      this._codeblock,
+      this.codePrismLanguageLoad,
+      this.codePrismLanguage
+    );
   }
 
   _muationObserve() {
-    console.log("_muationObserve");
     this.observer.observe(this._codeblockContainer, this._observerConfig);
   }
 }

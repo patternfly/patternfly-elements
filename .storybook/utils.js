@@ -285,8 +285,10 @@ export function theming(bridge) {
     "Theming"
   );
 
-  // @TODO add theming logic
+  // @TODO add dynamic theming logic for custom colors
   // let customColor = new Color(userColor);
+  // let text = new Color("rgba(0,0,0,1)");
+  // console.log(customColor.accessible(text));
 
   document.querySelector("body").style.backgroundColor =
     userColor || theme.color;

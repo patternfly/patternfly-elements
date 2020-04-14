@@ -1,5 +1,4 @@
 // This is a collection of functions to reuse within PFElements stories.
-import { RESET } from "@storybook/core-events";
 
 // Automatic content generation
 // https://www.npmjs.com/package/lorem-ipsum

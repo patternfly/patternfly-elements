@@ -1,4 +1,5 @@
 // This is a collection of functions to reuse within PFElements stories.
+import { Color } from "./color.js";
 
 // Automatic content generation
 // https://www.npmjs.com/package/lorem-ipsum
@@ -278,14 +279,17 @@ export function theming(bridge) {
   ];
 
   let theme = bridge.select("Theme", themes, "light", "Theming");
-  let customColor = bridge.color(
+  let userColor = bridge.color(
     "Custom background color",
     theme.color,
     "Theming"
   );
 
+  // @TODO add theming logic
+  // let customColor = new Color(userColor);
+
   document.querySelector("body").style.backgroundColor =
-    customColor || theme.color;
+    userColor || theme.color;
   document.querySelector("body").style.setProperty("--theme", theme.label);
 }
 

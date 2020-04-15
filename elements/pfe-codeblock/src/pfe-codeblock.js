@@ -18,18 +18,6 @@ class PfeCodeblock extends PFElement {
     return "pfe-codeblock.scss";
   }
 
-  get codeLanguage() {
-    return this.getAttribute("pfe-language") || "base";
-  }
-
-  get codePrismLanguage() {
-    return "language-" + this.codeLanguage;
-  }
-
-  get codePrismLanguageLoad() {
-    return Prism.languages[this.codeLanguage];
-  }
-
   static get observedAttributes() {
     return ["pfe-language"];
   }
@@ -45,6 +33,37 @@ class PfeCodeblock extends PFElement {
 
     this._codeblock = text;
     this.renderCodeblock();
+  }
+
+  //return a valid prism.js language type
+  get codeLanguage() {
+    let validLangs = [
+      "markup",
+      "html",
+      "xml",
+      "svg",
+      "mathml",
+      "css",
+      "clike",
+      "javascript",
+      "js"
+    ];
+    let returnVal = "markup";
+    let testVal = this.getAttribute("pfe-language") || "markup";
+    if (validLangs.includes(testVal)) {
+      returnVal = testVal;
+    }
+    return returnVal;
+  }
+
+  //return a valid prism.js language css class
+  get codePrismLanguage() {
+    return "language-" + this.codeLanguage;
+  }
+
+  //return a prism.js language lib
+  get codePrismLanguageLoad() {
+    return Prism.languages[this.codeLanguage];
   }
 
   // Declare the type of this component
@@ -77,19 +96,26 @@ class PfeCodeblock extends PFElement {
       observer.disconnect();
       this.codeblock = this._codeblockContainer.textContent;
       this._muationObserve();
+      copyCodeblock();
     });
   }
 
   connectedCallback() {
     super.connectedCallback();
 
+    //create dom elements and attach language styles
     this._codeblockRenderOuterPreTag = document.createElement("pre");
     this._codeblockRender = document.createElement("code");
     this._codeblockRender.setAttribute("pfe-codeblock-render", "");
     this._codeblockRender.setAttribute("class", this.codePrismLanguage);
-
+    this._codeblockRenderOuterPreTag.setAttribute(
+      "class",
+      this.codePrismLanguage
+    );
     this._codeblockRenderOuterPreTag.appendChild(this._codeblockRender);
-    this.appendChild(this._codeblockRenderOuterPreTag);
+
+    //Add to shadow-root
+    this.shadowRoot.appendChild(this._codeblockRenderOuterPreTag);
 
     this.shadowRoot.querySelector("slot").addEventListener("slotchange", () => {
       if (!this._codeblockContainer) {
@@ -121,7 +147,6 @@ class PfeCodeblock extends PFElement {
     if (this._codeblockContainer.textContent) {
       this.codeblock = this._codeblockContainer.textContent;
     }
-
     this._muationObserve();
   }
 

@@ -1,6 +1,7 @@
 ## Prerelese 45 ( TBD )
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: add event emission to pfe-select
+- [eb74cb8](https://github.com/patternfly/patternfly-elements/commit/eb74cb8f989048164fbb6ed1508c502659a752ed) feat: add event emission to pfe-select
+- [f9c2813](https://github.com/patternfly/patternfly-elements/commit/f9c2813892eace5e600d168d876ecc4ffd46b472) fix: Add a warning about updating the on attribute before upgrade
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Adding variable hooks for pfe-card, overlay region
 
 ## Prerelease 44 ( 2020-04-02 )

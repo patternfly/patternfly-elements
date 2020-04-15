@@ -158,6 +158,15 @@ class PFElement extends HTMLElement {
       this.log(`Styled.`);
     }
 
+    // Throw a warning if the on attribute was manually added before upgrade
+    if (!this.hasAttribute("pfelement") && this.hasAttribute("on")) {
+      console.warn(
+        `${this.tag}${
+          this.id ? `[#${this.id}]` : ``
+        }: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`
+      );
+    }
+
     // @TODO maybe we should use just the attribute instead of the class?
     // https://github.com/angular/angular/issues/15399#issuecomment-318785677
     this.classList.add("PFElement");

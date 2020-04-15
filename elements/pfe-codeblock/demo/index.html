@@ -40,35 +40,39 @@
   <body unresolved>
     <h1><code>pfe-codeblock</code></h1>
     <pfe-codeblock pfe-language="javascript">
-      <div pfe-codeblock-container>
-        constructor() {
-          super(PfeCodeblock, { type: PfeCodeblock.PfeType });
-      
-          this._codeblock = null;
-          this._codeblockRender = null;
-          this._codeblockContainer = null;
-          this._observerConfig = { childList: true, subtree: true };
-          this._readyStateChangeHandler = this._readyStateChangeHandler.bind(this);
-      
-          this.observer = new MutationObserver((mutationList, observer) => {
-            if (!this._codeblockContainer.textContent) {
-              this._codeblockRender.innerHTML = "";
-              return;
-            }
-      
-            // TODO: when we stop supporting IE11, the need to disconnect and
-            // then reconnect will no longer be needed
-            observer.disconnect();
-            this.codeblock = this._codeblockContainer.textContent;
-            this._muationObserve();
-          });
-        }
-      </div>
+      <pre pfe-codeblock-container>
+        <code>
+          constructor() {
+            super(PfeCodeblock, { type: PfeCodeblock.PfeType });
+        
+            this._codeblock = null;
+            this._codeblockRender = null;
+            this._codeblockContainer = null;
+            this._observerConfig = { childList: true, subtree: true };
+            this._readyStateChangeHandler = this._readyStateChangeHandler.bind(this);
+        
+            this.observer = new MutationObserver((mutationList, observer) => {
+              if (!this._codeblockContainer.textContent) {
+                this._codeblockRender.innerHTML = "";
+                return;
+              }
+        
+              // TODO: when we stop supporting IE11, the need to disconnect and
+              // then reconnect will no longer be needed
+              observer.disconnect();
+              this.codeblock = this._codeblockContainer.textContent;
+              this._muationObserve();
+            });
+          }
+        </code>
+      </pre>
     </pfe-codeblock> 
     <pfe-codeblock pfe-language="javascript">
-      <div pfe-codeblock-container>
-        var test=null;
-      </div>
+      <pre pfe-codeblock-container>
+        <code>
+          var test=null;
+        </code>
+      </pre>
     </pfe-codeblock> 
   </body>
 </html>

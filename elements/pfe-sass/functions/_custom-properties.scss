@@ -193,12 +193,12 @@
 /// ===========================================================================
 @function pfe-local($cssvar, $fallback: null, $region: null) {
     // If a fallback is defined, skip using the global variables map
-    @if $fallback == null and $VARIABLES != null {
+    @if $fallback == null and $LOCAL-VARIABLES != null {
         @if $region == null {
-            $fallback: map-get($VARIABLES, $cssvar);
+            $fallback: map-get($LOCAL-VARIABLES, $cssvar);
         }
         @else {
-            $submap: map-get($VARIABLES, $region);
+            $submap: map-get($LOCAL-VARIABLES, $region);
             @if type-of($submap) == "map" {
                 $fallback: map-get($submap, $cssvar);
             }

@@ -3,7 +3,7 @@
 $LOCAL: card;
 
 
-$VARIABLES: (
+$LOCAL-VARIABLES: (
   FlexDirection: column,
   AlignSelf: stretch,
 
@@ -43,7 +43,7 @@ $combos: (
   BorderTop: pfe-local(BorderWidth) pfe-local(BorderStyle) pfe-local(BorderColor)
 );
 
-$VARIABLES: map-collect($VARIABLES, $combos);
+$LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
 
 :host {  
   // Broadcasted values set to match background color
@@ -124,7 +124,7 @@ $VARIABLES: map-collect($VARIABLES, $combos);
 .pfe-card {
   &--overlay {
     @extend %overlay;
-    background-color: #{pfe-local($cssvar: BackgroundColor, $region: overlay)};
+    background-color: #{pfe-local($region: overlay, $cssvar: BackgroundColor)};
     z-index: 0;
 
     @include pfe-print-media {
@@ -167,12 +167,12 @@ $VARIABLES: map-collect($VARIABLES, $combos);
   &__header {
     @include pfe-clear-spacing($properties: margin-bottom, $important: true);
 
-    display: #{pfe-local($cssvar: Display, $region: header)};
+    display: #{pfe-local($region: header, $cssvar: Display)};
     z-index: 2;
     
     // Declare the header background color
-    background-color: #{pfe-local($cssvar: BackgroundColor, $region: header)};
-    color:            #{pfe-local($cssvar: Color, $region: header)};
+    background-color: #{pfe-local($region: header, $cssvar: BackgroundColor)};
+    color:            #{pfe-local($region: header, $cssvar: Color)};
     
     @include browser-query(ie11) {
       background-color: #{map-get($pfe-colors, surface--lighter)} !important;
@@ -243,11 +243,11 @@ $VARIABLES: map-collect($VARIABLES, $combos);
     margin-top: auto; // This allows the footer to move to the very bottom
 
     display: flex;
-    flex-direction: #{pfe-local($cssvar: FlexDirection, $region: footer)};
-    flex-wrap: #{pfe-local($cssvar: FlexWrap, $region: footer)};
+    flex-direction: #{pfe-local($region: footer, $cssvar: FlexDirection)};
+    flex-wrap: #{pfe-local($region: footer, $cssvar: FlexWrap)};
 
     // Aligns buttons and CTAs
-    align-items: #{pfe-local($cssvar: AlignItems, $region: footer)};
+    align-items: #{pfe-local($region: footer, $cssvar: AlignItems)};
 
     // Padding for the footer region
     padding-top:    #{pfe-local(spacing--vertical)};

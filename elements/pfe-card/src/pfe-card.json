@@ -93,6 +93,11 @@
           "title": "Default border",
           "type": "boolean",
           "prefixed": true
+        },
+        "overlay": {
+          "title": "Default overlay",
+          "type": "boolean",
+          "prefixed": true
         }
       }
     }

@@ -63,7 +63,7 @@ There are several powerful variables available to hook into and override default
 - **Background position**: This is designed for use with the `pfe-img-src` attribute to allow you to align your background image.  Default value is `center center`.
 - **Border**: This allows the customization of a border around the entire container.  There is a variable for the entire border shorthand (transparent by default) or you can hook into the individual properties.
 - **Padding**: You can customize the padding around the outside of the card container by connecting to either the shortcut padding variable or just one or more of the individual padding regions.
-- **Spacing**: Spacing controls the internal padding between regions of the card (header, body, footer).
+- **Spacing**: Spacing controls the internal padding for the card.  There is a `spacing--vertical` property which controls spacing between regions of the card (header, body, footer) and a `spacing--horizontal` which controls spacing between items in the footer region.
 
 | Variable name | Type       | Fallback |
 | ------------- | ---------- | --- |

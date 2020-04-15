@@ -302,7 +302,6 @@
           }, 50);
         });
 
-        // @TODO these return false positives
         // Iterate over the custom properties to test overrides work
         Object.entries(customProperties).forEach(set => {
           Promise.all([customElements.whenDefined("pfe-card")]).then( () => {

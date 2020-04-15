@@ -106,6 +106,12 @@
     @return str-slice($string, 1, str-length($needle))==$needle;
 }
 
+// https://gist.github.com/pascalduez/10011785
+@function str-capitalize($string) {
+    @return to-upper-case(str-slice($string, 1, 1)) + str-slice($string, 2);
+}
+  
+
 
 // ########################## //
 //      MAP FUNCTIONS         //

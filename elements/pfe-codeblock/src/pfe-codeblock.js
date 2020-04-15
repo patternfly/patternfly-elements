@@ -63,7 +63,6 @@ class PfeCodeblock extends PFElement {
     this._codeblockRender = null;
     this._codeblockRenderOuterPreTag = null;
     this._codeblockContainer = null;
-
     this._observerConfig = { childList: true, subtree: true };
     this._readyStateChangeHandler = this._readyStateChangeHandler.bind(this);
 

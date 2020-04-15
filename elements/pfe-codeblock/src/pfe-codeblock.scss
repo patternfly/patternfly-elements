@@ -6,9 +6,10 @@
 $LOCAL: codeblock;
 
 :host {
+  @extend .token;
   // Example local variable, using BEM format
   // --pfe-codeblock--Property: value;
-
+  
   display: block;
 }
 

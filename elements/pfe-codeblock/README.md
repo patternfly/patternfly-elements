@@ -5,11 +5,13 @@ A component to display formatted and prettified code
 Describe how best to use this web component along with best practices.
 
 ```html
-<pfe-codeblock>
-    <!-- Default slot -->
-    <h2>This is pfe-codeblock</h2>
-    
-</pfe-codeblock>
+<pfe-codeblock pfe-language="markup">
+    <pre pfe-codeblock-container>
+    <code>
+       Code to be styled in the codeblock is here!
+    </code>
+    </pre>
+</pfe-codeblock> 
 ```
 
 ### Accessibility
@@ -17,22 +19,26 @@ Explain how this component meets accessibility standards.
 
 ## Slots
 
-- `namedSlot`: Describe each available slot and best practices around what markup it can contain.
+There is a default slot but it is just used to capture the light DOM and hide it.
 
 ## Attributes
 
-- `attr`: Describe each available attribute and what function is serves.
-
-## Events
-Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.
-
-### pfe-codeblock:change
-
-### pfe-codeblock:click
+- `pfe-language`: Passed to Prism.js to be used to correctly format code, valid values are [
+      "markup",
+      "html",
+      "xml",
+      "svg",
+      "mathml",
+      "css",
+      "clike",
+      "javascript",
+      "js"
+    ]
+- `pfe-codeblock-container`: Used on the pre tag to denote content to format is inside in a code block
 
 
 ## Dependencies
-Describe any dependent elements or libraries here too.
+Prism.js is used to format and style the codeblock, https://prismjs.com/
 
 ## Dev
 

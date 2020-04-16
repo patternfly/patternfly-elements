@@ -4,6 +4,7 @@ $LOCAL: card;
 
 
 $LOCAL-VARIABLES: (
+  Display: flex,
   FlexDirection: column,
   AlignSelf: stretch,
 
@@ -50,7 +51,7 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
   @include pfe-set-broadcast-theme(light);
 
   // Start of style declarations for host element
-  display: flex;
+  display: #{pfe-local(Display)};
   flex-direction: #{pfe-local(FlexDirection)};
 
   // Optional hooks, no default styles

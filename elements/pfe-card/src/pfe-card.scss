@@ -163,6 +163,11 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
       max-width: calc(100% + 4rem) !important; //IE11 fallback
       max-width: calc(100% + calc(#{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)})) !important;
     }
+    
+    // Target the last item in the slot, injected using JS on upgrade
+    ::slotted([last]) {
+      margin-bottom: 0 !important;
+    }
   }
   &__header {
     @include pfe-clear-spacing($properties: margin-bottom, $important: true);
@@ -196,8 +201,6 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     }
   }
   &__body {
-    @include pfe-clear-spacing($properties: margin-bottom, $important: true, $selector: last-child);
-
     padding-top:    #{pfe-local(spacing--vertical)};
     padding-bottom:    #{pfe-local(spacing--vertical)};
 

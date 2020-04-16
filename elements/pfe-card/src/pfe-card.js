@@ -39,6 +39,9 @@ class PfeCard extends PFElement {
 
   constructor() {
     super(PfeCard, { type: PfeCard.PfeType });
+
+    this._init = this._init.bind(this);
+
     this._observer = new MutationObserver(() => {
       this._mapSchemaToSlots(this.tag, this.slots);
     });
@@ -47,12 +50,27 @@ class PfeCard extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
+    this._init();
+
+    this._observer.observe(this, { childList: true });
+  }
+
+  _init() {
+    // Get the last child in each slot and apply an attribute to it
+    Object.keys(this.slots).map(region => {
+      let slot = this.slots[region];
+      if (slot.nodes && slot.nodes.length > 0) {
+        let last = slot.nodes.length - 1;
+        let lastNode = slot.nodes[last];
+        console.log(lastNode);
+        lastNode.setAttribute("last", "");
+      }
+    });
+
     // Initialize the background image attachment
     if (this.imageSrc) {
       this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
     }
-
-    this._observer.observe(this, { childList: true });
   }
 
   disconnectedCallback() {

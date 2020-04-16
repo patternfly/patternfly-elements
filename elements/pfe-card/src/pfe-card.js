@@ -60,10 +60,9 @@ class PfeCard extends PFElement {
     Object.keys(this.slots).map(region => {
       let slot = this.slots[region];
       if (slot.nodes && slot.nodes.length > 0) {
-        let last = slot.nodes.length - 1;
-        let lastNode = slot.nodes[last];
-        console.log(lastNode);
-        lastNode.setAttribute("last", "");
+        let lastIdx = slot.nodes.length - 1;
+        let lastNode = slot.nodes[lastIdx];
+        if (lastNode) lastNode.setAttribute("last", "");
       }
     });
 

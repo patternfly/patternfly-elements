@@ -183,13 +183,7 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     padding-top:    #{pfe-local(spacing--vertical)};
     padding-bottom: #{pfe-local(spacing--vertical)};
 
-    &:not(:last-child) {
-      margin-bottom: #{pfe-local(spacing--vertical)};
-    }
-
-    :host(:not([has_body],[has_footer])) & {
-      margin-bottom: #{pfe-local(PaddingBottom)};
-    }
+    margin-bottom: #{pfe-local(spacing--vertical)};
 
     ::slotted([pfe-overflow~="top"]) {
       margin-top: -2rem; //IE11 fallback
@@ -204,20 +198,15 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
   &__body {
     @include pfe-clear-spacing($properties: margin-bottom, $important: true, $selector: last-child);
 
-    // Padding for the header region
-    padding-top:    #{pfe-local(PaddingTop)};
-    padding-bottom: #{pfe-local(PaddingBotom)};
+    padding-top:    #{pfe-local(spacing--vertical)};
+    padding-bottom:    #{pfe-local(spacing--vertical)};
 
-    &:not(:last-child) {
-      margin-bottom: #{pfe-local(spacing--vertical)};
+    :host(:not([has_header])) & {
+      padding-top:    #{pfe-local(PaddingTop)};
     }
 
-    :host([has_header]) & {
-      padding-top:    #{pfe-local(spacing--vertical)};
-    }
-
-    :host([has_footer]) & {
-      padding-bottom:    #{pfe-local(spacing--vertical)};
+    :host(:not([has_footer])) & {
+      padding-bottom:    #{pfe-local(PaddingBottom)};
     }
 
     ::slotted([pfe-overflow~="top"]) {

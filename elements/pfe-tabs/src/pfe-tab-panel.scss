@@ -90,3 +90,7 @@ $variables: (
 :host([hidden]) {
   display: none;
 }
+
+.clearfix {
+  @include pfe-clearfix;
+}

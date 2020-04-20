@@ -23,6 +23,10 @@ $LOCAL: accordion;
   --pfe-accordion--panel-container--Padding: 0 calc(#{pfe-local(base--Padding)} * 3) #{pfe-local(base--Padding)} calc(#{pfe-local(base--Padding)} * 1.5);
 }
 
+.clearfix {
+  @include pfe-clearfix;
+}
+
 :host(:last-of-type[expanded]) {
   margin-bottom: 0;
 }

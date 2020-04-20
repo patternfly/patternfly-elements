@@ -13,16 +13,16 @@
 ```
 
 ## Slots
-All slots are optional.  If the slot is not defined, the content will be added to the `body` region of the card.
+All slots are optional. If the slot is not defined, the content will be added to the `body` region of the card.
 
 ### Header
-If this slot is used, we expect a heading level tag (h1, h2, h3, h4, h5, h6).  An icon, svg, or use of the icon component are also valid in this region.
+If this slot is used, we expect a heading level tag (h1, h2, h3, h4, h5, h6). An icon, svg, or use of the icon component are also valid in this region.
 
 ### Default slot (body)
 Any content that is not designated for the `header` or `footer` slot, will go to this slot.
 
 ### Footer
-Use this slot for anything that you want to be stuck to the base of the card.  This region is bottom-aligned.
+Use this slot for anything that you want to be stuck to the base of the card. This region is bottom-aligned.
 
 ## Attributes
 
@@ -39,7 +39,7 @@ Use this slot for anything that you want to be stuck to the base of the card.  T
 
 There are several attributes available for customizing the visual treatment of this container.
 
-- `pfe-color`: Options include darkest, darker, accent, complement, lighter, lightest.  The card has a default value of `#dfdfdf`. Your theme will influence these colors so check there first if you are seeing inconsistencies.
+- `pfe-color`: Options include darkest, darker, accent, complement, lighter, lightest. The card has a default value of `#dfdfdf`. Your theme will influence these colors so check there first if you are seeing inconsistencies.
 
     | color | hex |
     |-------|-----|
@@ -51,40 +51,67 @@ There are several attributes available for customizing the visual treatment of t
     | accent | <span class="color-preview" style="--bg:#ee0000"></span> #ee0000 |
     | complement | <span class="color-preview" style="--bg:#0477a4"></span> #0477a4 |
 
-- `pfe-img-src`: Optional background image applied to the entire card container.  Alignment of this image can be managed using the `--pfe-card--BackgroundPosition` variable which is set to `center center` by default.
-- `pfe-size`: Optionally adjusts the padding on the container.  Accepts: `small`.
+- `pfe-img-src`: Optional background image applied to the entire card container. Alignment of this image can be managed using the `--pfe-card--BackgroundPosition` variable which is set to `center center` by default.
+- `pfe-size`: Optionally adjusts the padding on the container. Accepts: `small`.
 - `pfe-overflow`: Optionally allows an image or element to overflow the padding on the container. This property should be added to the direct child of the slotm such as on an image tag; should be added to the element that you want to overflow the container. Accepts: `top`, `right`, `bottom`, `left`.
 - `pfe-border`: Optionally apply a border color and weight to the entire card container. The default color and weight is `#d2d2d2` and `1px`, respectively.
 
 ## Variables
 There are several powerful variables available to hook into and override default styles.
 
-- **Background color**: Though using the `pfe-color` attribute is strongly recommended when setting the background color for the band, you can also use completely custom colors by updating the `--pfe-band--BackgroundColor` variable.  If you update this value manually, you should also update the `--theme` context variable to invoke the right theme on it and it's child elements.  Supported themes include: `light`, `dark`, and `saturated`.
-- **Background position**: This is designed for use with the `pfe-img-src` attribute to allow you to align your background image.  Default value is `center center`.
-- **Border**: This allows the customization of a border around the entire container.  There is a variable for the entire border shorthand (transparent by default) or you can hook into the individual properties.
-- **Padding**: You can customize the padding around the outside of the card container by connecting to either the shortcut padding variable or just one or more of the individual padding regions.
-- **Spacing**: Spacing controls the internal padding for the card.  There is a `spacing--vertical` property which controls spacing between regions of the card (header, body, footer) and a `spacing--horizontal` which controls spacing between items in the footer region.
+- **Background color**: Though using the `pfe-color` attribute is strongly recommended when setting the background color for the band, you can also use completely custom colors by updating the `--pfe-band--BackgroundColor` variable. If you update this value manually, you should also update the `--theme` context variable to invoke the right theme on it and it's child elements. Supported themes include: `light`, `dark`, and `saturated`.
+- **Background position**: This is designed for use with the `pfe-img-src` attribute to allow you to align your background image. Default value is `center center`.
+- **Border**: This allows the customization of a border around the entire container. There is a variable for the entire border shorthand (transparent by default) or you can hook into the individual properties. There is also a separate `border-top` property which is available to add an emphasis border at the top of the card; typically that would consist of setting the variable as follows: `--pfe-card--BorderTop: 4px solid #ee00`.
+- **Padding**: You can customize the padding around the outside of the card container by connecting to either the shortcut padding variable or just one or more of the individual padding regions. If you add a header slot to the card, note that the `padding-top` value will not be used, but rather, the `spacing--vertical` value; this is to maintain consistent padding around the text inside the card header.
+- **Spacing**: Spacing controls the internal padding for the card. There is a `spacing--vertical` property which controls spacing between regions of the card (header, body, footer) and a `spacing--horizontal` which controls spacing between items in the footer region.
 
-| Variable name | Type       | Fallback |
-| ------------- | ---------- | --- |
-| `--pfe-card--PaddingTop` | Size | `calc(--pfe-theme--container-spacer, 16px) * 2` |
-| `--pfe-card--PaddingRight` | Size | `calc(--pfe-theme--container-spacer, 16px) * 2)` |
-| `--pfe-card--PaddingBottom` | Size | `calc(--pfe-theme--container-spacer, 16px) * 2)` |
-| `--pfe-card--PaddingLeft` | Size | `calc(--pfe-theme--container-spacer, 16px) * 2)` |
-| `--pfe-card--BorderRadius` | Size | `--pfe-theme--surface--border-radius` |
-| `--pfe-card--BorderWidth` | Size | 0 |
-| `--pfe-card--BorderStyle` | Style | solid |
-| `--pfe-card--BorderColor` | Color | transparent |
-| `--pfe-card--Border` | Size | `--pfe-card--BorderWidth`, `--pfe-card--BorderStyle`, `--pfe-card--BorderColor` |
-| `--pfe-card--BorderTop` | Size | `--pfe-card--Border` |
-| `--pfe-card--BackgroundColor` | Size | `--pfe-theme--surface--base` |
-| `--pfe-card--BackgroundPosition` | position | center center |
-| `--pfe-card--spacing` | Size | `--pfe-theme--container-spacer` |
-| `--pfe-card__header--Display` | display | `block` |
-| `--pfe-card__header--BackgroundColor` | Color | `rgba(45, 45, 45, var(--pfe-theme--opacity, 0.7))` |
-| `--pfe-card__header--Color` | Color | `--pfe-broadcasted--text` |
+| Variable name | Fallback |
+| --- | --- |
+| **Display properties** |
+| `--pfe-card--Display` | flex |
+| `--pfe-card--FlexDirection` | column |
+| `--pfe-card--JustifyContent` | |
+| `--pfe-card--AlignItems` | |
+| `--pfe-card--AlignSelf` | stretch |
+| **Padding/spacing properties** |
+| `--pfe-card--PaddingTop` | `calc(--pfe-theme--container-spacer, 16px) * 2` |
+| `--pfe-card--PaddingRight` | `calc(--pfe-theme--container-spacer, 16px) * 2)` |
+| `--pfe-card--PaddingBottom` | `calc(--pfe-theme--container-spacer, 16px) * 2)` |
+| `--pfe-card--PaddingLeft` | `calc(--pfe-theme--container-spacer, 16px) * 2)` |
+| `--pfe-card--Padding` | Combination of the top, right, bottom, and left properties above |
+| `--pfe-card--spacing--vertical` | `--pfe-theme--container-spacer` |
+| `--pfe-card--spacing--horizontal` | `--pfe-theme--container-spacer` |
+| **Border properties** |
+| `--pfe-card--BorderRadius` | `--pfe-theme--surface--border-radius` |
+| `--pfe-card--BorderWidth` | 0 |
+| `--pfe-card--BorderStyle` | solid |
+| `--pfe-card--BorderColor` | transparent |
+| `--pfe-card--Border` | `--pfe-card--BorderWidth`, `--pfe-card--BorderStyle`, `--pfe-card--BorderColor` |
+| `--pfe-card--BorderTop` | `--pfe-card--Border` |
+| **Background properties** |
+| `--pfe-card--BackgroundColor` | `--pfe-theme--surface--base` |
+| `--pfe-card--BackgroundImage` | |
+| `--pfe-card--BackgroundAttachment` | |
+| `--pfe-card--BackgroundPosition` | center center |
+| `--pfe-card--BackgroundRepeat` | |
+| `--pfe-card--BackgroundSize` | |
+| **Overlay properties** |
+| `--pfe-card__overlay--BackgroundColor` | |
+| **Header region properties** |
+| `--pfe-card__header--Display` | `block` |
+| `--pfe-card__header--BackgroundColor` | `rgba(45, 45, 45, var(--pfe-theme--opacity, 0.7))` |
+| `--pfe-card__header--Color` | `--pfe-broadcasted--text` |
+| **Footer region properties** |
+| `--pfe-card__footer--AlignItems` | `baseline` |
+| `--pfe-card__footer--FlexDirection` | `row` |
+| `--pfe-card__footer--FlexWrap` | `wrap` |
 | 
 
+### Usage notes
+
+#### Header region
+* The display property for the header region is very helpful in situations where you need to have the header content present in the DOM but want it visibly hidden from view. You can do that by setting that property to: `--pfe-card__header--Display: none`.
+* If you set the `background-color` of the header region to a color that requires a different theme than the rest of the card, please be sure you update the value of the `--pfe-card__header--Color` property to use a font color that works for that `background-color`. There is no `--theme` variable for this region at this time.
 
 ## Test
 

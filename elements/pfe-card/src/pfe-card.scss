@@ -6,6 +6,7 @@ $LOCAL: card;
 $LOCAL-VARIABLES: (
   Display: flex,
   FlexDirection: column,
+  JustifyContent: null,
   AlignSelf: stretch,
 
   // Individual padding overrides available
@@ -23,7 +24,12 @@ $LOCAL-VARIABLES: (
   spacing--vertical:   pfe-var(container-spacer),
 
   BackgroundColor: pfe-color(surface--base),
+  theme: light,
+  BackgroundImage: null,
+  BackgroundAttachment: null,
   BackgroundPosition: center center,
+  BackgroundRepeat: null,
+  BackgroundSize: null,
 
   header: (
     Display: block,
@@ -47,10 +53,9 @@ $combos: (
 
 $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
 
-:host {  
-  // Broadcasted values set to match background color
-  @include pfe-set-broadcast-theme(light);
-
+:host {
+  --theme: #{pfe-local(theme)};
+  
   // Start of style declarations for host element
   display: #{pfe-local(Display)};
   flex-direction: #{pfe-local(FlexDirection)};

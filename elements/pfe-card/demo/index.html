@@ -104,13 +104,16 @@
         <pfe-card pfe-color="accent" id="accent-card">
           <h3 slot="pfe-card--header">Accent Card</h3>
           <p>This is the accent pfe-card and <a href="#">a link</a>.</p>
+          <pfe-cta slot="pfe-card--footer">
+            <a href="#">Learn more</a>
+          </pfe-cta>
         </pfe-card>
       </div>
     </pfe-band>
 
     <pfe-band>
       <h2 slot="pfe-band--header">Cards with images using <code>pfe-overflow</code> settings</h2>
-      <div class="demo-cards">
+      <div class="demo-cards-sm">
         <pfe-card pfe-color="lightest" id="img-overflow-none">
           <img src="https://placekitten.com/200/150"/>
           <h3>Imaged card with no overflow</h3>
@@ -236,11 +239,8 @@
           <h4>Default Card</h4>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
           <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, <a href="#">no sea takimata sanctus est</a>.</p>
-          <pfe-cta pfe-priority="secondary" slot="pfe-card--footer">
-            <a href="#">Try</a>
-          </pfe-cta>
-          <pfe-cta pfe-priority="primary" slot="pfe-card--footer">
-            <a href="#">Buy</a>
+          <pfe-cta pfe-priority="secondary" id="show-header" slot="pfe-card--footer">
+            <a>Show header</a>
           </pfe-cta>
         </pfe-card>
 
@@ -297,15 +297,19 @@
       </div>
     </pfe-band>
 
-    <script>    
-    const card = document.querySelector("#lightest-card");
-    
-    Promise.all([customElements.whenDefined("pfe-card")]).then( () => {
-      // console.dir(card.slots);
-      Object.keys(card.slots).forEach(slotName => {
-        // console.log(slotName);
+    <script>
+      document.querySelector("#show-header").addEventListener("click", function(evt) {
+        let card = evt.target.parentElement.parentElement;
+        if (evt.target.text == "Show header") {
+          card.style.setProperty("--pfe-card__header--Display", "block");
+          card.querySelector("h3:not([slot])").style.setProperty("text-decoration", "line-through");
+          evt.target.text = "Hide header";
+        } else {
+          card.style.setProperty("--pfe-card__header--Display", "none");
+          card.querySelector("h3:not([slot])").style.setProperty("text-decoration", "none");
+          evt.target.text = "Show header";
+        }
       });
-    });
     </script>
   </body>
 </html>

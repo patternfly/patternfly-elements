@@ -8,26 +8,44 @@
       }
 
       /* For demo only */
-      .demo-cards {
+      .demo-cards,
+      .demo-cards-sm {
         display: flex;
         flex-wrap: wrap;
       }
 
-      .demo-cards > * {
+      .demo-cards > *,
+      .demo-cards-sm > * {
         margin: 0 16px 32px;
         min-width: 200px;
+      }
+
+      .demo-cards > * {
         width: calc(25% - 32px);
       }
 
+      .demo-cards-sm > * {
+        width: calc(33% - 32px);
+      }
+
       @supports (display: grid) {
-        .demo-cards {
+        .demo-cards,
+        .demo-cards-sm {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
           grid-row-gap: 32px;
           grid-column-gap: 16px;
         }
 
-        .demo-cards > * {
+        .demo-cards {
+          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        }
+
+        .demo-cards-sm {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+
+        .demo-cards > *,
+        .demo-cards-sm > * {
           margin: 0;
           width: auto;
         }
@@ -38,13 +56,13 @@
         --pfe-card--Padding: 25px 15px;
         --pfe-card--spacing--vertical: 10px;
         --pfe-card--spacing--horizontal: 10px;
+
+        --pfe-card--BackgroundColor: papayawhip;
+        --theme: light;
       }
 
-      /* Still suggest scoping background color to the card itself */
-      #custom pfe-card {
-        --pfe-card--BackgroundColor: papayawhip;
+      #custom pfe-card:not([pfe-color]) {
         --pfe-card__header--BackgroundColor: rgb(233, 176, 85);
-        --theme: light;
       }
 
       #custom pfe-cta[pfe-priority] {

@@ -8,58 +8,35 @@
     <script type="module" src="../dist/pfe-card.js"></script>
   </head>
   <body>
-    <style>
-      .grid {
-        display: grid;
-        grid-gap: 10px;
-        grid-template-columns: repeat(3, 1fr);
-      }
-      h2 {
-        margin-bottom: 0;
-      }
-    </style>
-    <div class="grid">
+    <test-fixture id="card">
+      <template>
+        <pfe-card>
+          <h3 slot="pfe-card--header">Card header</h3>
+          <p>This is pfe-card.</p>
+          <div slot="pfe-card--footer">
+            <p>Text in footer</p>
+          </div>
+        </pfe-card>
+      </template>
+    </test-fixture>
 
-      <pfe-card id="card1">
-        <h2 slot="pfe-card--header">Card 1</h2>
-        <p>This is pfe-card.</p>
-        <div slot="pfe-card--footer">Text in footer</div>
-      </pfe-card>
+    <test-fixture id="simple-card">
+      <template>
+        <pfe-card>
+          <p>This is pfe-card.</p>
+        </pfe-card>
+      </template>
+    </test-fixture>
 
-      <pfe-card id="card2">
-        <img src="https://placekitten.com/200/150"/>
-      </pfe-card>
-
-      <pfe-card id="card3">
-        <h2 slot="pfe-card--header">Card 3</h2>
-        <img src="https://placekitten.com/1000/500" pfe-overflow="top right bottom left"/>
-      </pfe-card>
-
-      <pfe-card id="card4">
-        <h2 slot="pfe-card--header">Card 4</h2>
-        <p>This is pfe-card.</p>
-        <div slot="pfe-card--footer">Text in footer</div>
-      </pfe-card>
-
-      <pfe-card id="card5" pfe-border pfe-color="lightest">
-        <h2 slot="pfe-card--header">Card 4</h2>
-        <p>This is pfe-card.</p>
-        <div slot="pfe-card--footer">Text in footer</div>
-      </pfe-card>
-
-      <pfe-card id="card6">
-        <h2 slot="pfe-card--header">Card 1</h2>
-        <p>This is pfe-card.</p>
-        <div slot="pfe-card--footer">Text in footer</div>
-      </pfe-card>
-    </div>
+    <test-fixture id="image-card">
+      <template>
+        <pfe-card>
+          <img src="https://placekitten.com/200/150"/>
+        </pfe-card>
+      </template>
+    </test-fixture>
 
     <script>
-      const card = [...document.querySelectorAll("pfe-card")];
-
-      // Returns the luminance value from rgb
-      const luminance = (r, g, b) => (0.2126*r/255 + 0.7152*g/255 + 0.0722*b/255);
-
       // Converts a hex value to RGBA
       const hexToRgb = hex => {
         const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/.exec(hex);
@@ -75,8 +52,30 @@
           .map(n => +n);
         return [r, g, b];
       };
-
+      // Updates the value of a custom property
       const updateVariable = (el, variable, value) => el.style.setProperty(variable, value);
+
+      //-- Describe the component
+      // Supported regions
+      const regions = {
+        header: {
+          name: "pfe-card--header",
+          class: "pfe-card__header",
+          content: "Card header"
+        },
+        body: {
+          class: "pfe-card__body",
+          content: "This is pfe-card."
+        },
+        footer: {
+          name: "pfe-card--footer",
+          class: "pfe-card__footer",
+          content: "Text in footer"
+        },
+        overlay: {
+          class: "pfe-card__overlay"
+        }
+      };
 
       // Themes and their expected hex values
       const colors = {
@@ -89,63 +88,22 @@
         complement: "#0477a4"
       };
 
-      // Supported slots
-      const slots = {
-        header: {
-          name: "pfe-card--header",
-          class: "pfe-card__header",
-          content: "Card 1"
-        },
-        body: {
-          class: "pfe-card__body",
-          content: "This is pfe-card."
-        },
-        footer: {
-          name: "pfe-card--footer",
-          class: "pfe-card__footer",
-          content: "Text in footer"
-        }
-      };
-
       // Supported overflow attributes
-      const overflow = {
-        top: "",
-        right: "",
-        bottom: "",
-        left: ""
-      };
+      const overflow = ["top", "right", "bottom", "left"];
 
       // Supported hooks on the host element
       const customProperties = {
-        paddingTop: {
-          variable: "--pfe-card--PaddingTop",
-          css: "padding-top",
-          default:  "32px",
-          custom: "28px"
+        display: {
+          variable: "--pfe-card--Display",
+          css: "display",
+          default:  "flex",
+          custom: "inline-block"
         },
-        paddingRight: {
-          variable: "--pfe-card--PaddingRight",
-          css: "padding-right",
-          default:  "32px",
-          custom: "28px"
-        },
-        paddingBottom: {
-          variable: "--pfe-card--PaddingBottom",
-          css: "padding-bottom",
-          default:  "32px",
-          custom: "28px"
-        },
-        paddingLeft: {
-          variable: "--pfe-card--PaddingLeft",
-          css: "padding-left",
-          default:  "32px",
-          custom: "28px"
-        },
-        padding: {
-          variable: "--pfe-card--Padding",
-          css: "padding",
-          default:  "32px",
-          custom: "20px 10px 20px 5px"
+        flexDirection: {
+          variable: "--pfe-card--FlexDirection",
+          css: "flex-direction",
+          default:  "column",
+          custom: "row"
         },
         borderRadius: {
           variable: "--pfe-card--BorderRadius",
@@ -162,7 +120,7 @@
         borderTop: {
           variable: "--pfe-card--BorderTop",
           css: "border-top",
-          default:  "0px none rgb(51, 51, 51)",
+          default:  "0px solid rgba(0, 0, 0, 0)",
           custom: "4px solid rgb(238, 0, 0)"
         },
         backgroundColor: {
@@ -200,7 +158,50 @@
         }
       };
 
+      const customProperties_body = {
+        paddingTop: {
+            variable: "--pfe-card--PaddingTop",
+            css: "padding-top",
+            default:  "32px",
+            custom: "28px"
+          },
+          paddingRight: {
+            variable: "--pfe-card--PaddingRight",
+            css: "padding-right",
+            default:  "32px",
+            custom: "28px"
+          },
+          paddingBottom: {
+            variable: "--pfe-card--PaddingBottom",
+            css: "padding-bottom",
+            default:  "32px",
+            custom: "28px"
+          },
+          paddingLeft: {
+            variable: "--pfe-card--PaddingLeft",
+            css: "padding-left",
+            default:  "32px",
+            custom: "28px"
+          },
+          // padding: {
+          //   variable: "--pfe-card--Padding",
+          //   css: "padding",
+          //   default:  "32px",
+          //   custom: "20px 10px 20px 5px"
+          // },
+      };
+
       suite("<pfe-card>", () => {
+        let cards = {};
+        let card;
+
+        setup(() => {
+          // Instantiate the card templates
+          cards.default = fixture("card");
+          cards.simple = fixture("simple-card");
+          cards.image = fixture("image-card");
+        });
+        
         test("it should upgrade", () => {
           assert.instanceOf(
             document.querySelector("pfe-card"),
@@ -209,132 +210,254 @@
           );
         });
 
-        test("it should add or remove has_body, has_header, has_footer attributes if the slots exist", done => {
-          const card = document.querySelector("#card4");
-          assert.isTrue(card.hasAttribute("has_header"));
-          assert.isTrue(card.hasAttribute("has_body"));
-          assert.isTrue(card.hasAttribute("has_footer"));
+        // Check the schema for supported slots
+        ["header", "footer"].forEach(slot => {
+          // Iterate over the slots object to test expected results
+          test(`${slot} content is placed into correct slot`, () => {
+            card = cards.default;
+            let className = regions[slot].class;
+            let expected = regions[slot].content;
+            
+            // Check that the right elements are assigned to the slots            
+            assert.equal(
+              card.querySelector(`[slot="pfe-card--${slot}"]`).assignedSlot,
+              card.shadowRoot.querySelector(`.${className} > *`)
+            );
 
-          card.querySelector("h2").remove();
-          card.querySelector("div").remove();
+            let content = card.shadowRoot
+              .querySelector(`.${className} > *`)
+              .assignedNodes()
+              .map(n => n.textContent)
+              .join("")
+              .trim();
 
-          flush(() => {
-            assert.isFalse(card.hasAttribute("has_header"));
-            assert.isFalse(card.hasAttribute("has_footer"));
-            done();
-          })
+            // Check that the expected content is in the right slot
+            assert.equal(content, expected);
+          });
+          
+          test(`it should add has_${slot} if the slot exist`, () => {
+            card = cards.default;
+            assert.isTrue(cards.default.hasAttribute(`has_${slot}`));
+          });
+          
+          test(`it should remove has_${slot} if the slot does not exist`, () => {
+            card = cards.simple;
+            assert.isFalse(card.hasAttribute(`has_${slot}`));
+          });
+        });
+
+        test(`body content is placed into correct slot`, () => {
+          card = cards.default;
+          let className = regions.body.class;
+          let expected = regions.body.content;
+
+          // Check that the right elements are assigned to the slots
+          assert.equal(
+            card.querySelector("p").assignedSlot,
+            card.shadowRoot.querySelector(`.${className} > *`)
+          );
+
+          let content = card.shadowRoot
+            .querySelector(`.${className} > *`)
+            .assignedNodes()
+            .map(n => n.textContent)
+            .join("")
+            .trim();
+
+          // Check that the expected content is in the right slot
+          assert.equal(content, expected);
         });
 
         // Iterate over the colors object to test expected background color results
         Object.entries(colors).forEach(set => {
-          test(`it should have a background color of ${set[1]} when pfe-color is ${set[0]}`, () => {
+          let label = set[0];
+          let color = set[1];
+
+          test(`it should have a background color of ${color} when pfe-color is ${label}`, () => {
+            card = cards.default;
+
             // If this is not the default theme, update the color attribute
-            if(set[0] !== "default") {
-              card[0].setAttribute("pfe-color", set[0]);
+            if(label !== "default") {
+              card.setAttribute("pfe-color", label);
             }
+
             // Get the background color value
-            const [r, g, b] = getColor(card[0], "background-color");
+            const [r, g, b] = getColor(card, "background-color");
+
             // Test that the color is rendering as expected
-            assert.deepEqual([r, g, b], hexToRgb(set[1]));
+            assert.deepEqual([r, g, b], hexToRgb(color));
+
             // Test that the theme is working
-            if(["dark", "darker", "darkest", "complement", "accent"].includes(set[0])) {
-              assert.isBelow(luminance(r, g, b), 0.5);
+            if(["dark", "darker", "darkest"].includes(label)) {
+              assert.equal(card.getAttribute("on"), "dark");
+            }
+            else if(["complement", "accent"].includes(label)) {
+              assert.equal(card.getAttribute("on"), "saturated");
             }
             else {
-              assert.isAbove(luminance(r, g, b), 0.5);
+              assert.equal(card.getAttribute("on"), "light");
             }
           });
         });
 
         test("it should have standard padding when pfe-size is not set", () => {
-          assert.equal(getComputedStyle(card[0], null)["padding"], "32px");
+          let body;
+          card = cards.simple;
+          body = card.shadowRoot.querySelector(`.${regions.body.class}`);
+          assert.equal(getComputedStyle(body, null)["padding"], "32px");
         });
 
-        test("it should have reduced padding when pfe-size is small", () => {
-          card[0].setAttribute("pfe-size", "small");
-          assert.equal(getComputedStyle(card[0], null)["padding"], "16px");
+        test("it should have reduced padding when pfe-size is small", done => {
+          let body;
+          card = cards.simple;
+          body = card.shadowRoot.querySelector(`.${regions.body.class}`);
+
+          // Set the size attribute
+          card.setAttribute("pfe-size", "small");
+
+          flush(() => {
+            assert.equal(getComputedStyle(body, null)["padding"], "16px");
+            done();
+          });
         });
 
-        test("it should have a standard border when pfe-border is set", () => {
-          card[0].setAttribute("pfe-border", "");
-          assert.deepEqual(getColor(card[0], "border-left-color"), hexToRgb("#d2d2d2"));
-          assert.equal(getComputedStyle(card[0], null)["border-left-width"], "1px");
-        });
+        test("it should have a standard border when pfe-border is set", done => {
+          card = cards.default;
 
-        // Iterate over the slots object to test expected results
-        Object.entries(slots).forEach(slot => {
-          test(`${slot[0]} content is placed into correct slot`, () => {
-            let selector = slot[0] !== "body" ? `[slot=${slot[1].name}]` : "p";
-            assert.equal(
-              card[0].querySelector(selector).assignedSlot,
-              card[0].shadowRoot.querySelector(`.${slot[1].class} > *`)
-            );
+          // Set the border attribute
+          card.setAttribute("pfe-border", "");
 
-            const content = card[0].shadowRoot
-              .querySelector(`.${slot[1].class} > *`)
-              .assignedNodes()
-              .map(n => n.textContent)
-              .join("")
-              .trim();
-            assert.equal(content, slot[1].content);
+          flush(() => {
+            assert.deepEqual(getColor(cards.default, "border-left-color"), hexToRgb("#d2d2d2"));
+            assert.equal(getComputedStyle(cards.default, null)["border-left-width"], "1px");
+            done();
           });
         });
 
         // Iterate over possibilities for images
-        Object.entries(overflow).forEach(direction => {
-          test(`image should overflow to the ${direction}`, () => {
-            let image = card[1].querySelector("img");
+        overflow.forEach(direction => {
+          test(`image should overflow to the ${direction}`, done => {
+            let image;
+            card = cards.image;
+            image = card.querySelector("img");
+
+            // Set overflow property
             image.setAttribute("pfe-overflow", direction);
-            setTimeout(function(){
-              let margin = direction !== "bottom" ? "-32px" : "-35px";
-              assert.equal(getComputedStyle(image, null)[`margin-${direction}`], margin);
-            }, 50);
+
+            flush(() => {
+              assert.equal(getComputedStyle(image, null)[`margin-${direction}`], "-32px");
+              done();
+            });
           });
         });
 
-        test("image should overflow all padding", () => {
-          let image = card[2].querySelector("img");
-          setTimeout(function(){
-            assert.equal(getComputedStyle(image, null)["margin-top"], "-16px");
+        test("image should overflow all padding", done => {
+          let image;
+          card = cards.image;
+          image = card.querySelector("img");
+
+          // Set overflow property
+          image.setAttribute("pfe-overflow", "top right bottom left");
+
+          flush(() => {
+            assert.equal(getComputedStyle(image, null)["margin-top"], "-32px");
             assert.equal(getComputedStyle(image, null)["margin-right"], "-32px");
-            assert.equal(getComputedStyle(image, null)["margin-bottom"], "-35px");
+            assert.equal(getComputedStyle(image, null)["margin-bottom"], "-32px");
             assert.equal(getComputedStyle(image, null)["margin-left"], "-32px");
-          }, 50);
+            done();
+          });
         });
 
         // Iterate over the custom properties to test overrides work
         Object.entries(customProperties).forEach(set => {
-          Promise.all([customElements.whenDefined("pfe-card")]).then( () => {
-            let property = set[1];
+          const property = set[1];
 
-            // Test default value
-            test(`${property.variable} picks up the default value`, () => {
-              assert.equal(getComputedStyle(card[0], null)[property.css], property.default, `${property.css} should equal ${property.default}`);
-            });
+          // Test default value
+          test(`${property.variable} picks up the default value`, () => {            
+            assert.equal(getComputedStyle(cards.default, null)[property.css], property.default, `${property.css} should equal ${property.default}`);
+          });
 
-            // Update the variable
-            test(`${property.variable} allows user customization`, () => {
-              updateVariable(card[5], property.variable, property.custom);
-              assert.equal(getComputedStyle(card[5], null)[property.css], property.custom, `${property.css} should equal ${property.custom}`);
+          // Update the variable
+          test(`${property.variable} allows user customization`, done => {
+            updateVariable(cards.default, property.variable, property.custom);
+
+            flush(() => {
+              Promise.all([customElements.whenDefined("pfe-card")]).then( () => {
+                assert.equal(getComputedStyle(cards.default, null)[property.css], property.custom, `${property.css} should equal ${property.custom}`);
+              });
+              done();
             });
+          });
+        });
+
+        // Iterate over the custom properties to test overrides work
+        Object.entries(customProperties_body).forEach(set => {
+          let property = set[1];
+          let body;
+
+          // Test default value
+          test(`${property.variable} picks up the default value`, () => {
+            card = cards.simple;
+            body = card.shadowRoot.querySelector(`.${regions.body.class}`);
+
+            assert.equal(getComputedStyle(body, null)[property.css], property.default, `${property.css} should equal ${property.default}`);
+          });
+
+          // Update the variable
+          test(`${property.variable} allows user customization`, done => {
+            card = cards.simple;
+            body = card.shadowRoot.querySelector(`.${regions.body.class}`);
+            
+            updateVariable(card, property.variable, property.custom);
+
+            flush(() => {
+              assert.equal(getComputedStyle(body, null)[property.css], property.custom, `${property.css} should equal ${property.custom}`);
+              done();
+            });
+          });
+        });
+
+        // Test that the general Padding property works
+        test(`--pfe-card--Padding allows user customization`, done => {
+          let body;
+          card = cards.simple;
+          body = card.shadowRoot.querySelector(`.${regions.body.class}`);
+          
+          updateVariable(card, "--pfe-card--Padding", "10px 5px");
+          card.updateVariables();
+
+          flush(() => {
+            assert.equal(getComputedStyle(body, null)["padding-top"], "10px", "padding-top should equal 10px");
+            assert.equal(getComputedStyle(body, null)["padding-right"], "5px", "padding-right should equal 5px");
+            assert.equal(getComputedStyle(body, null)["padding-bottom"], "10px", "padding-bottom should equal 10px");
+            assert.equal(getComputedStyle(body, null)["padding-left"], "5px", "padding-left should equal 5px");
+            done();
           });
         });
 
         // Iterate over the custom properties to test overrides work
         Object.entries(customProperties_header).forEach(set => {
-          Promise.all([customElements.whenDefined("pfe-card")]).then( () => {
-            let header = card[5].shadowRoot.querySelector(".pfe-card__header");
-            let property = set[1];
+          let property = set[1];
+          let header;
 
-            // Test default value
-            test(`${property.variable} picks up the default value`, () => {
-              assert.equal(getComputedStyle(header, null)[property.css], property.default, `${property.css} should equal ${property.default}`);
-            });
+          // Test default value
+          test(`${property.variable} picks up the default value`, () => {
+            card = cards.default;
+            header = card.shadowRoot.querySelector(`.${regions.header.class}`);
 
-            // Update the variable
-            test(`${property.variable} allows user customization`, () => {
-              updateVariable(card[5], property.variable, property.custom);
+            assert.equal(getComputedStyle(header, null)[property.css], property.default, `${property.css} should equal ${property.default}`);
+          });
+
+          // Update the variable
+          test(`${property.variable} allows user customization`, done => {
+            card = cards.default;
+            header = card.shadowRoot.querySelector(`.${regions.header.class}`);
+            
+            updateVariable(card, property.variable, property.custom);
+
+            flush(() => {
               assert.equal(getComputedStyle(header, null)[property.css], property.custom, `${property.css} should equal ${property.custom}`);
+              done();
             });
           });
         });

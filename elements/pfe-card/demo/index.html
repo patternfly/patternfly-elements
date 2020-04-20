@@ -52,7 +52,7 @@
     <pfe-band pfe-color="lightest">
       <h2 slot="pfe-band--header"><code>pfe-color</code></h2>
       <div class="demo-cards">
-        <pfe-card pfe-color="lightest">
+        <pfe-card pfe-color="lightest" id="lightest-card">
           <h3 slot="pfe-card--header">Lightest card</h3>
           <p>This is the lightest pfe-card.</p>
           <p>It has a pfe-border and <a href="#">a link</a>.</p>
@@ -61,7 +61,7 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card pfe-color="lighter">
+        <pfe-card pfe-color="lighter" id="lighter-card">
           <h3 slot="pfe-card--header">Lighter card</h3>
           <p>This is the lighter pfe-card and <a href="#">a link</a>.</p>
           <pfe-cta slot="pfe-card--footer">
@@ -69,7 +69,7 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card>
+        <pfe-card id="default-card">
           <h3 slot="pfe-card--header">Default card</h3>
           <p>This is the default pfe-card and <a href="#">a link</a>.</p>
           <pfe-cta slot="pfe-card--footer">
@@ -77,7 +77,7 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card pfe-color="darker">
+        <pfe-card pfe-color="darker" id="darker-card">
           <h3 slot="pfe-card--header">Darker Card</h3>
           <p>This is the darker pfe-card and <a href="#">a link</a>.</p>
           <pfe-cta slot="pfe-card--footer">
@@ -85,7 +85,7 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card pfe-color="darkest">
+        <pfe-card pfe-color="darkest" id="darkest-card">
           <h3 slot="pfe-card--header">Darkest Card</h3>
           <p>This is the darkest pfe-card and <a href="#">a link</a>.</p>
           <pfe-cta slot="pfe-card--footer">
@@ -93,7 +93,7 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card pfe-color="complement">
+        <pfe-card pfe-color="complement" id="complement-card">
           <h3 slot="pfe-card--header">Complement Card</h3>
           <p>This is the complement pfe-card and <a href="#">a link</a>.</p>
           <pfe-cta slot="pfe-card--footer">
@@ -101,7 +101,7 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card pfe-color="accent">
+        <pfe-card pfe-color="accent" id="accent-card">
           <h3 slot="pfe-card--header">Accent Card</h3>
           <p>This is the accent pfe-card and <a href="#">a link</a>.</p>
         </pfe-card>
@@ -111,30 +111,30 @@
     <pfe-band>
       <h2 slot="pfe-band--header">Cards with images using <code>pfe-overflow</code> settings</h2>
       <div class="demo-cards">
-        <pfe-card pfe-color="lightest">
+        <pfe-card pfe-color="lightest" id="img-overflow-none">
           <img src="https://placekitten.com/200/150"/>
           <h3>Imaged card with no overflow</h3>
         </pfe-card>
 
-        <pfe-card pfe-color="lightest">
+        <pfe-card pfe-color="lightest" id="img-overflow-top-sides">
           <img pfe-overflow="top right left" src="https://placekitten.com/900/300"/>
           <h3><code>pfe-overflow="top right left"</code></h3>
           <h4>Imaged card with top & side overflow</h4>
         </pfe-card>
 
-        <pfe-card pfe-color="lightest">
+        <pfe-card pfe-color="lightest" id="img-overflow-top-sides-header">
           <h3 slot="pfe-card--header"><code>pfe-overflow="top right left"</code></h3>
           <img pfe-overflow="top right left" src="https://placekitten.com/700/400"/>
           <h3>Imaged card with side overflow + header</h3>
         </pfe-card>
 
-        <pfe-card pfe-color="lightest">
+        <pfe-card pfe-color="lightest" id="img-overflow-sides">
           <h3 slot="pfe-card--header"><code>pfe-overflow="right left"</code></h3>
           <h3>Imaged card with side overflow</h3>
           <img pfe-overflow="right left" src="https://placekitten.com/700/200"/>
         </pfe-card>
 
-        <pfe-card pfe-color="lightest">
+        <pfe-card pfe-color="lightest" id="img-overflow-sides-bottom">
           <h3 slot="pfe-card--header"><code>pfe-overflow="right left bottom"</code></h3>
           <h3>Imaged card with side & bottom overflow</h3>
           <img pfe-overflow="right left bottom" src="https://placekitten.com/600/300" slot="pfe-card--footer"/>
@@ -145,7 +145,7 @@
     <pfe-band pfe-color="lightest">
       <h2 slot="pfe-band--header">Cards with various attributes</h2>
       <div class="demo-cards">
-        <pfe-card pfe-color="lightest" pfe-border>
+        <pfe-card pfe-color="lightest" pfe-border id="border-footer">
           <h3><code>pfe-border</code></h3>
           <p>Card with body and footer only.</p>
           <pfe-cta slot="pfe-card--footer">
@@ -153,19 +153,19 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card pfe-color="lighter" pfe-border>
+        <pfe-card pfe-color="lighter" pfe-border id="border-header">
           <h3 slot="pfe-card--header"><code>pfe-border</code></h3>
           <h4>Card with header and body only</h4>
           <p>This is the lighter pfe-card and <a href="#">a link</a>.</p>
         </pfe-card>
 
-        <pfe-card pfe-border>
+        <pfe-card pfe-border id="border-body-only">
           <h3><code>pfe-border</code></h3>
           <h4>Card with no header or footer</h4>
           Unwrapped item. This is the default pfe-card and <a href="#">a link</a>.
         </pfe-card>
 
-        <pfe-card pfe-color="darker" pfe-size="small">
+        <pfe-card pfe-color="darker" pfe-size="small" id="size-small-footer">
           <h3><code>pfe-size="small"</code></h3>
           <p>Card with body and footer only.</p>
           <pfe-cta slot="pfe-card--footer">
@@ -173,17 +173,17 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card pfe-color="darkest" pfe-size="small">
+        <pfe-card pfe-color="darkest" pfe-size="small" id="size-small-header">
           <h3 slot="pfe-card--header"><code>pfe-size="small"</code></h3>
           <p>Card with header and body.</p>
         </pfe-card>
 
-        <pfe-card pfe-color="complement" pfe-size="small">
+        <pfe-card pfe-color="complement" pfe-size="small" id="size-small-body-only">
           <h3><code>pfe-size="small"</code></h3>
           <p>Card with body only.</p>
         </pfe-card>
 
-        <pfe-card pfe-color="accent" pfe-size="small">
+        <pfe-card pfe-color="accent" pfe-size="small" id="size-small-header-footer">
           <h3 slot="pfe-card--header"><code>pfe-size="small"</code></h3>
           <p>Header, body, and footer.</p>
           <pfe-cta slot="pfe-card--footer">
@@ -191,7 +191,7 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card pfe-color="darkest" pfe-overlay pfe-img-src="https://placekitten.com/400/300">
+        <pfe-card pfe-color="darkest" pfe-overlay pfe-img-src="https://placekitten.com/400/300" id="img-src">
           <h3 slot="pfe-card--header"><code>pfe-img</code> + <code>pfe-overlay</code></h3>
           <p>Header, body, and footer.</p>
           <pfe-cta slot="pfe-card--footer">
@@ -204,7 +204,7 @@
     <pfe-band>
       <h2 slot="pfe-band--header">Customize cards with ID-scoped variables</h2>
       <div class="demo-cards" id="custom">
-        <pfe-card pfe-color="lightest">
+        <pfe-card pfe-color="lightest" id="custom-global">
           <h3 slot="pfe-card--header"><code>#custom</code></h3>
           <h4>Lightest card</h4>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
@@ -217,8 +217,8 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card pfe-color="lighter" class="custom-image">
-          <h3 slot="pfe-card--header"><code>#custom &gt; .custom-image</code></h3>
+        <pfe-card pfe-color="lighter" id="custom-image">
+          <h3 slot="pfe-card--header"><code>#custom &gt; #custom-image</code></h3>
           <h4>Lighter card</h4>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
           <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, <a href="#">no sea takimata sanctus est</a>.</p>
@@ -230,7 +230,7 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card class="hide-header">
+        <pfe-card class="hide-header" id="custom-header">
           <h3 slot="pfe-card--header"><code>#custom &gt; .hide-header</code></h3>
           <h3><code>#custom &gt; .hide-header</code></h3>
           <h4>Default Card</h4>
@@ -244,8 +244,8 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card pfe-color="darker" class="custom-spacing">
-          <h3 slot="pfe-card--header"><code>#custom &gt; .custom-spacing</code></h3>
+        <pfe-card pfe-color="darker" id="custom-spacing">
+          <h3 slot="pfe-card--header"><code>#custom &gt; #custom-spacing</code></h3>
           <h4>Darker Card</h4>
           <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, <a href="#">no sea takimata sanctus est</a>.</p>
           <pfe-cta pfe-priority="secondary" slot="pfe-card--footer">
@@ -256,8 +256,8 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card pfe-color="darkest" class="custom-border">
-          <h3 slot="pfe-card--header"><code>#custom &gt; .custom-border</code></h3>
+        <pfe-card pfe-color="darkest" id="custom-border">
+          <h3 slot="pfe-card--header"><code>#custom &gt; #custom-border</code></h3>
           <h4>Darkest Card</h4>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
           <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, <a href="#">no sea takimata sanctus est</a>.</p>
@@ -269,8 +269,8 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card pfe-color="complement" class="custom-header">
-          <h3 slot="pfe-card--header"><code>#custom &gt; .custom-header</code></h3>
+        <pfe-card pfe-color="complement" id="custom-header">
+          <h3 slot="pfe-card--header"><code>#custom &gt; #custom-header</code></h3>
           <h4>Complement card</h4>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
           <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, <a href="#">no sea takimata sanctus est</a>.</p>
@@ -282,8 +282,8 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card pfe-color="accent" class="custom-overlay">
-          <h3 slot="pfe-card--header"><code>#custom &gt; .custom-overlay</code></h3>
+        <pfe-card pfe-color="accent" id="custom-overlay">
+          <h3 slot="pfe-card--header"><code>#custom &gt; #custom-overlay</code></h3>
           <h4>Accent card</h4>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
           <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, <a href="#">no sea takimata sanctus est</a>.</p>
@@ -297,5 +297,15 @@
       </div>
     </pfe-band>
 
+    <script>    
+    const card = document.querySelector("#lightest-card");
+    
+    Promise.all([customElements.whenDefined("pfe-card")]).then( () => {
+      // console.dir(card.slots);
+      Object.keys(card.slots).forEach(slotName => {
+        // console.log(slotName);
+      });
+    });
+    </script>
   </body>
 </html>

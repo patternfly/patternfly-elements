@@ -35,10 +35,7 @@
 
       /* Use this to test updating variables using global scope */
       #custom {
-        --pfe-card--PaddingTop: 25px;
-        --pfe-card--PaddingRight: 15px;
-        --pfe-card--PaddingBottom: 25px;
-        --pfe-card--PaddingLeft: 15px;
+        --pfe-card--Padding: 25px 15px;
         --pfe-card--spacing--vertical: 10px;
         --pfe-card--spacing--horizontal: 10px;
       }
@@ -54,7 +51,7 @@
         --pfe-cta--Padding: 8px 16px;
       }
 
-      #custom .custom-image {
+      #custom #custom-image {
         --pfe-card--BackgroundImage: url("https://placekitten.com/150/100");
         --pfe-card--BackgroundPosition: calc(100% - 10px) calc(100% - 10px);
         --pfe-card--BackgroundRepeat: no-repeat;
@@ -64,24 +61,22 @@
         --pfe-card__header--Display: none;
       }
 
-      #custom .custom-spacing {
+      #custom #custom-spacing {
         --pfe-card--spacing--vertical: 20px;
         --pfe-card--spacing--horizontal: 40px;
       }
 
-      #custom .custom-border {
+      #custom #custom-border {
         --pfe-card--BorderColor: #151515;
         --pfe-card--BorderWidth: 2px;
         --pfe-card--BorderRadius: 20px;
       }
 
-      #custom .custom-header {
+      #custom #custom-header {
         --pfe-card__header--BackgroundColor: #0477a4;
         --pfe-card__header--Color: #fff;
       }
 
-      
-
-      #custom .custom-overlay {
+      #custom #custom-overlay {
         --pfe-card__overlay--BackgroundColor: rgba(180, 82, 43, 0.1);
       }

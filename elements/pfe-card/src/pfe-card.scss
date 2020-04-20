@@ -41,7 +41,8 @@ $LOCAL-VARIABLES: (
 // Note: For combination variables to resolve, they must be added at the end
 $combos: (
   Border: pfe-local(BorderWidth) pfe-local(BorderStyle) pfe-local(BorderColor),
-  BorderTop: pfe-local(BorderWidth) pfe-local(BorderStyle) pfe-local(BorderColor)
+  BorderTop: pfe-local(BorderWidth) pfe-local(BorderStyle) pfe-local(BorderColor),
+  Padding: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft)
 );
 
 $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
@@ -123,7 +124,7 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
 
 // Targets the wrappers in the shadow DOM
 .pfe-card {
-  &--overlay {
+  &__overlay {
     @extend %overlay;
     background-color: #{pfe-local($region: overlay, $cssvar: BackgroundColor)};
     z-index: 0;
@@ -167,7 +168,7 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     
     // Target the last item in the slot, injected using JS on upgrade
     ::slotted([last]) {
-      margin-bottom: 0 !important;
+      margin-bottom: 0;
     }
   }
   &__header {

@@ -28,6 +28,26 @@ class PfeCard extends PFElement {
     return this.getAttribute("pfe-color") || "base";
   }
 
+  updateVariables() {
+    // If the general padding property is set, split it out and set it on the card
+    // Why? Padding needs to be used distinctly in each region, separate from each other
+    let padding = this.cssVariable("--pfe-card--Padding");
+    if (padding) {
+      let actual = this.getComputedValue(
+        {
+          padding: padding
+        },
+        ["padding-top", "padding-right", "padding-bottom", "padding-left"]
+      );
+
+      Object.entries(actual).forEach(item => {
+        let prop = this.toBEM(item[0]),
+          value = item[1];
+        this.cssVariable(`--${this.tag}--${prop}`, value);
+      });
+    }
+  }
+
   static get observedAttributes() {
     return ["pfe-color", "pfe-img-src", "pfe-size"];
   }
@@ -41,9 +61,14 @@ class PfeCard extends PFElement {
     super(PfeCard, { type: PfeCard.PfeType });
 
     this._init = this._init.bind(this);
+    this.updateVariables = this.updateVariables.bind(this);
 
     this._observer = new MutationObserver(() => {
+      this._init();
       this._mapSchemaToSlots(this.tag, this.slots);
+
+      // Note: need to re-render if the mark-up changes to pick up template changes
+      this.render();
     });
   }
 
@@ -56,7 +81,10 @@ class PfeCard extends PFElement {
   }
 
   _init() {
+    this.updateVariables();
+
     // Get the last child in each slot and apply an attribute to it
+    // Why? This allows us to apply last-child styles to light DOM
     Object.keys(this.slots).map(region => {
       let slot = this.slots[region];
       if (slot.nodes && slot.nodes.length > 0) {

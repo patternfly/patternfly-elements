@@ -64,6 +64,60 @@ class PFElement extends HTMLElement {
       .trim();
   }
 
+  // This fetches the computed value by attaching a temporary element to the DOM
+  getComputedValue(set, props = []) {
+    let style,
+      result = {};
+    const temp = document.createElement("div");
+    const child = document.createElement("div");
+
+    // Make sure the element is not visible
+    temp.style.setProperty("position", "absolute");
+    temp.style.setProperty("left", "-110vw");
+
+    temp.appendChild(child);
+
+    // Attach styles to child element
+    Object.entries(set).forEach(item => {
+      child.style.setProperty(item[0], item[1]);
+    });
+
+    // Attach element to DOM
+    document.querySelector("body").appendChild(temp);
+
+    // Get the computed style
+    style = window.getComputedStyle(child, temp);
+    if (typeof props === "object") {
+      props.map(prop => {
+        let obj = {};
+        obj[prop] = style[prop];
+        // Add the object to the overall result
+        Object.assign(result, obj);
+      });
+    } else if (typeof props === "string") {
+      let obj = {};
+      obj[props] = style[props];
+      // Add the object to the overall result
+      Object.assign(result, obj);
+    }
+
+    // Clean up the DOM
+    temp.remove();
+
+    return result;
+  }
+
+  // This converts property  names such as background-color into BEM format (i.e., BackgroundColor)
+  toBEM(property) {
+    // Capitalize the first letter
+    property = `${property.charAt(0).toUpperCase()}${property.slice(1)}`;
+    // Replace dash with uppercase letter
+    property = property.replace(/\-([a-z])/g, (match, letter) => {
+      return `${letter.toUpperCase()}`;
+    });
+    return property;
+  }
+
   // Returns a single element assigned to that slot; if multiple, it returns the first
   has_slot(name) {
     return this.querySelector(`[slot='${name}']`);

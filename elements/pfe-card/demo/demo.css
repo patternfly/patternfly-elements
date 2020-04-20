@@ -70,7 +70,7 @@
       }
 
       #custom #custom-image {
-        --pfe-card--BackgroundImage: url("https://placekitten.com/150/100");
+        --pfe-card--BackgroundImage: url("https://placekitten.com/150/80");
         --pfe-card--BackgroundPosition: calc(100% - 10px) calc(100% - 10px);
         --pfe-card--BackgroundRepeat: no-repeat;
       }

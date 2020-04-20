@@ -4,9 +4,10 @@ $LOCAL: card;
 
 
 $LOCAL-VARIABLES: (
-  Display: flex,
-  FlexDirection: column,
-  JustifyContent: null,
+  // These get applied to each region
+  TextAlign: left,
+  
+  // This only applies when the card is inside a flex layout
   AlignSelf: stretch,
 
   // Individual padding overrides available
@@ -32,15 +33,25 @@ $LOCAL-VARIABLES: (
   BackgroundSize: null,
 
   header: (
-    Display: block,
+    Display: flex,
+    JustifyContent: null,
+    AlignItems: null,
     BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)}),
     Color: pfe-apply-broadcast(text)
   ),
 
+  body: (
+    FlexDirection: column,
+    FlexWrap: nowrap,
+    JustifyContent: null,
+    AlignItems: null
+  ),
+
   footer: (
-    AlignItems: baseline,
     FlexDirection: row,
-    FlexWrap: wrap
+    FlexWrap: wrap,
+    JustifyContent: null,
+    AlignItems: null
   )
 );
 
@@ -55,15 +66,10 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
 
 :host {
   --theme: #{pfe-local(theme)};
-  
-  // Start of style declarations for host element
-  display: #{pfe-local(Display)};
-  flex-direction: #{pfe-local(FlexDirection)};
 
-  // Optional hooks, no default styles
-  justify-content:  #{pfe-local(JustifyContent)};
-  align-items:      #{pfe-local(AlignItems)};
-
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
   // This allows the card to fill it's container if necessary
   align-self:       #{pfe-local(AlignSelf)};
   position:         relative;
@@ -146,6 +152,9 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
   &__body,
   &__footer {
     z-index: 1;
+
+    text-align: #{pfe-local(TextAlign)};
+
     // Left and right padding are consistent throughout the card
     padding-right:  #{pfe-local(PaddingRight)};
     padding-left:   #{pfe-local(PaddingLeft)};
@@ -179,7 +188,10 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
   &__header {
     @include pfe-clear-spacing($properties: margin-bottom, $important: true);
 
-    display: #{pfe-local($region: header, $cssvar: Display)};
+    display:     #{pfe-local($region: header, $cssvar: Display)};
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: #{pfe-local($region: header, $cssvar: JustifyContent)};
     z-index: 2;
     
     // Declare the header background color
@@ -196,6 +208,11 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     padding-bottom: #{pfe-local(spacing--vertical)};
 
     margin-bottom: #{pfe-local(spacing--vertical)};
+    margin-left: calc(#{pfe-local(spacing--horizontal)} * -1);
+
+    ::slotted(*) {
+      margin-left: #{pfe-local(spacing--horizontal)};
+    }
 
     ::slotted([pfe-overflow~="top"]) {
       margin-top: -2rem; //IE11 fallback
@@ -208,6 +225,17 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     }
   }
   &__body {
+    flex-grow: 1;
+
+    // Start of style declarations for host element
+    display: flex;
+    flex-direction: #{pfe-local($region: body, $cssvar: FlexDirection)};
+    flex-wrap: #{pfe-local($region: body, $cssvar: FlexWrap)};
+  
+    // Optional hooks, no default styles
+    justify-content:  #{pfe-local($region: body, $cssvar: JustifyContent)};
+    align-items:      #{pfe-local($region: body, $cssvar: AlignItems)};
+
     padding-top:    #{pfe-local(spacing--vertical)};
     padding-bottom:    #{pfe-local(spacing--vertical)};
 
@@ -239,14 +267,15 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     @include pfe-clear-spacing($properties: margin-bottom, $important: true, $selector: last-child);
 
     z-index: 1;
-    margin-top: auto; // This allows the footer to move to the very bottom
+    // margin-top: auto; // This allows the footer to move to the very bottom
 
     display: flex;
     flex-direction: #{pfe-local($region: footer, $cssvar: FlexDirection)};
     flex-wrap: #{pfe-local($region: footer, $cssvar: FlexWrap)};
 
     // Aligns buttons and CTAs
-    align-items: #{pfe-local($region: footer, $cssvar: AlignItems)};
+    // align-items: #{pfe-local($region: footer, $cssvar: AlignItems)};
+    justify-content: #{pfe-local($region: footer, $cssvar: AlignItems)};
 
     // Padding for the footer region
     padding-top:    #{pfe-local(spacing--vertical)};

@@ -68,10 +68,6 @@ There are several powerful variables available to hook into and override default
 | Variable name | Fallback |
 | --- | --- |
 | **Display properties** |
-| `--pfe-card--Display` | flex |
-| `--pfe-card--FlexDirection` | column |
-| `--pfe-card--JustifyContent` | |
-| `--pfe-card--AlignItems` | |
 | `--pfe-card--AlignSelf` | stretch |
 | **Padding/spacing properties** |
 | `--pfe-card--PaddingTop` | `calc(--pfe-theme--container-spacer, 16px) * 2` |
@@ -95,16 +91,24 @@ There are several powerful variables available to hook into and override default
 | `--pfe-card--BackgroundPosition` | center center |
 | `--pfe-card--BackgroundRepeat` | |
 | `--pfe-card--BackgroundSize` | |
+| **General properties** |
+| `--pfe-card--TextAlign` | left |
 | **Overlay properties** |
 | `--pfe-card__overlay--BackgroundColor` | |
 | **Header region properties** |
-| `--pfe-card__header--Display` | `block` |
+| `--pfe-card__header--Display` | `flex` |
+| `--pfe-card__header--JustifyContent` | |
 | `--pfe-card__header--BackgroundColor` | `rgba(45, 45, 45, var(--pfe-theme--opacity, 0.7))` |
 | `--pfe-card__header--Color` | `--pfe-broadcasted--text` |
+| **Body region properties** |
+| `--pfe-card__body--FlexDirection` | column |
+| `--pfe-card__body--JustifyContent` | |
+| `--pfe-card__body--AlignItems` | `--pfe-card--AlignItems` |
 | **Footer region properties** |
 | `--pfe-card__footer--AlignItems` | `baseline` |
 | `--pfe-card__footer--FlexDirection` | `row` |
 | `--pfe-card__footer--FlexWrap` | `wrap` |
+| `--pfe-card__footer--JustifyContent` | |
 | 
 
 ### Usage notes

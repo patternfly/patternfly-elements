@@ -89,6 +89,13 @@
       color: white;
       float: right;
     }
+    .floating-card {
+      float: left;
+      width:48%;
+      margin-right:2%;
+      border: #eee solid 1px;
+      padding: 20px;
+    }
 
   </style>
 </head>
@@ -118,13 +125,16 @@
         porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
         mollis interdum.</div>
       <h4 pfe-content-set--header>Heading 3</h4>
-      <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
-        ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
-        quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
-        fermentum.</div>
+      <div pfe-content-set--panel>
+          <div class="floating-card">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+          <div class="floating-card">
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+      </div>
     </pfe-content-set>
   </section>
-
 
   <section class="faux-container" style="max-width: 800px">
     <h4 class="label">Default pfe-content-set in a 800px container</h4>
@@ -366,26 +376,6 @@
       </div>
     </pfe-content-set>
   </section>
-
-    <section class="example">
-      <h2>Content set with floating content</h2>
-      <pfe-content-set pfe-variant="earth" pfe-breakpoint="2000">
-        <h4 pfe-content-set--header role="heading" >Tab 1</h4>
-        <div pfe-content-set--panel role="region" >
-          <div style="float: left;width:48%;margin-right:2%;border: #eee solid 1px; padding: 20px;">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-          <div style="float: left;width:48%;margin-right:2%;border: #eee solid 1px; padding: 20px;">
-            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-        </div>
-        <h4 pfe-content-set--header role="heading" >Tab 2</h4>
-        <div pfe-content-set--panel role="region" >
-          <h1>Tab 2 Content</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-      </pfe-content-set>
-    </section>
 
   <section>
     <h3>The pfe-content-set comes with a mutation observer so that you may dynamically add headers and panels.</h3>

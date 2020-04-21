@@ -1,0 +1,108 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+$LOCAL: button;
+
+:host {
+  // Example local variable, using BEM format
+  // --pfe-button--Property: value;
+
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+button {
+  background-color: #06c;
+  color: #fff;
+  font-size: 16px;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  border: 0;
+  position: relative;
+
+  &:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+  }
+
+  &:hover,
+  &:focus {
+    background-color: #004080;
+  }
+}
+
+:host([pfe-variant="secondary"]) {
+  button {
+    background-color: transparent;
+    color: #06c;
+
+    &:after {
+      border: 1px solid #06c;
+      border-radius: 3px;
+    }
+
+    &:hover,
+    &:focus {
+      &:after {
+        border: 2px solid #06c;
+      }
+    }
+  }
+}
+
+:host([pfe-variant="tertiary"]) {
+  button {
+    background-color: transparent;
+    color: #151515;
+
+    &:after {
+      border: 1px solid #151515;
+      border-radius: 3px;
+    }
+
+    &:hover,
+    &:focus {
+      &:after {
+        border: 2px solid #151515;
+      }
+    }
+  }
+}
+
+:host([pfe-variant="danger"]) {
+  button {
+    background-color: #c9190b;
+    color: #fff;
+
+    &:hover,
+    &:focus {
+      background-color: #a30000;
+    }
+  }
+}
+
+:host([disabled]) {
+  button {
+    background-color: #d2d2d2;
+    color: #737679;
+    pointer-events: none;
+
+    &:hover,
+    &:focus {
+      background-color: #d2d2d2;
+
+      &:after {
+        border: 0;
+      }
+    }
+  }
+}

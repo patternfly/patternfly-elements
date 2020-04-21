@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>PatternFly Element | pfe-button Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+
+    <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-loader.js"></script> -->
+
+    <!-- IE11 test: use bundle + require with umd files -->
+    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+
+    <!-- Tests require pulling in the UMD version of the files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+    <script>require([
+      "../dist/pfe-button.umd.js",
+      "../../pfe-band/dist/pfe-band.umd.min.js"
+    ])</script>
+
+    <style>
+      input {
+        font-size: 16px;
+        border: 0;
+        border-radius: 3px;
+        padding: 8px;
+      }
+
+      #disablers-container {
+        display: flex;
+      }
+
+      #disablers-container > div {
+        display: flex;
+        flex-direction: column;
+        padding-right: 16px;
+      }
+    </style>
+  </head>
+  <body unresolved>
+    <pfe-band pfe-color="lightest">
+      <header slot="pfe-band--header">
+        <h2>&lt;pfe-button&gt;</h2>
+      </header>
+      <article>
+        <pfe-button>
+          <button disabled>Primary</button>
+        </pfe-button>
+        <pfe-button pfe-variant="secondary">
+          <button>Secondary</button>
+        </pfe-button>
+        <pfe-button pfe-variant="tertiary">
+          <button>Tertiary</button>
+        </pfe-button>
+        <pfe-button pfe-variant="danger">
+          <button>Danger</button>
+        </pfe-button>
+      </article>
+    </pfe-band>
+
+    <pfe-band>
+      <header slot="pfe-band--header">
+        <h2>&lt;pfe-button&gt; in a form</h2>
+      </header>
+      <article>
+        <form id="form">
+          <input type="text" placeholder="name" />
+          <pfe-button>
+            <button>Submit</button>
+          </pfe-button>
+        </form>
+        <div id="formSubmittedMessage" hidden>The form was submitted</div>
+      </article>
+    </pfe-band>
+
+    <pfe-band pfe-color="lightest">
+      <header slot="pfe-band--header">
+        <h2>&lt;pfe-button&gt; Disabled</h2>
+      </header>
+      <article id="disablers-container">
+        <div>
+          <pfe-button>
+            <button>Primary</button>
+          </pfe-button>
+          <label>
+            <input type="checkbox"> Disable
+          </label>
+        </div>
+        <div>
+          <pfe-button pfe-variant="secondary">
+            <button>Secondary</button>
+          </pfe-button>
+          <label>
+            <input type="checkbox"> Disable
+          </label>
+        </div>
+        <div>
+          <pfe-button pfe-variant="tertiary">
+            <button>Tertiary</button>
+          </pfe-button>
+          <label>
+            <input type="checkbox"> Disable
+          </label>
+        </div>
+        <div>
+          <pfe-button pfe-variant="danger">
+            <button>Danger</button>
+          </pfe-button>
+          <label>
+            <input type="checkbox"> Disable
+          </label>
+        </div>
+      </article>
+    </pfe-band>
+
+    <pfe-band>
+      <header slot="pfe-band--header">
+        <h2>&lt;pfe-button&gt; Dynamic text</h2>
+      </header>
+      <article>
+        <input type="text" id="dynamicTextBtnInput" value="My Button">
+        <pfe-button>
+          <button id="dynamicTextBtn">My Button</button>
+        </pfe-button>
+      </article>
+    </pfe-band>
+
+    <script>
+      var form = document.querySelector("#form");
+      var formSubmittedMessage = document.querySelector("#formSubmittedMessage");
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        formSubmittedMessage.removeAttribute("hidden");
+      });
+
+      var disablers = document.querySelectorAll("#disablers-container input");
+
+      for (var i = 0; i < disablers.length; i++) {
+        var disabler = disablers[i];
+
+        disabler.addEventListener("change", function (event) {
+          var btn = this.parentElement.parentElement.querySelector("pfe-button");
+
+          if (this.checked) {
+            btn.setAttribute("disabled", "");
+          } else {
+            btn.removeAttribute("disabled");
+          }
+        });
+      }
+
+      var dynamicTextBtn = document.querySelector("#dynamicTextBtn");
+      var dynamicTextBtnInput = document.querySelector("#dynamicTextBtnInput");
+
+      dynamicTextBtnInput.addEventListener("keyup", function (event) {
+        dynamicTextBtn.textContent = dynamicTextBtnInput.value;
+      });
+    </script>
+  </body>
+</html>

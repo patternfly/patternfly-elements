@@ -2,6 +2,7 @@
 
 - [eb74cb8](https://github.com/patternfly/patternfly-elements/commit/eb74cb8f989048164fbb6ed1508c502659a752ed) feat: add event emission to pfe-select
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add a warning about updating the on attribute before upgrade
+- []() fix: Add clearfix within tab and accordion panels
 
 ## Prerelease 44 ( 2020-04-02 )
 

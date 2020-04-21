@@ -16,6 +16,11 @@ const KEYCODE = {
 // https://caniuse.com/#search=urlsearchparams
 const CAN_USE_URLSEARCHPARAMS = window.URLSearchParams ? true : false;
 
+const TABS_MUTATION_CONFIG = {
+  childList: true,
+  subtree: true
+};
+
 function generateId() {
   return Math.random()
     .toString(36)
@@ -88,7 +93,7 @@ class PfeTabs extends PFElement {
         this._init();
       }
 
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TABS_MUTATION_CONFIG);
     });
   }
 
@@ -235,7 +240,7 @@ class PfeTabs extends PFElement {
     if (mutationsList) {
       for (let mutation of mutationsList) {
         if (mutation.type === "childList" && mutation.addedNodes.length) {
-          mutation.addedNodes.forEach(addedNode => {
+          [...mutation.addedNodes].forEach(addedNode => {
             if (
               addedNode.tagName.toLowerCase() === PfeTab.tag ||
               addedNode.tagName.toLowerCase() === PfeTabPanel.tag
@@ -279,7 +284,7 @@ class PfeTabs extends PFElement {
     this._linked = true;
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TABS_MUTATION_CONFIG);
     }
   }
 

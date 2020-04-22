@@ -84,20 +84,43 @@
   <body unresolved>
     <h1>&lt;pfe-tabs&gt;</h1>
 
+  <div>
+    <h2>Open links in new window:</h2>
+    <ul>
+        <li><a target="_blank" href="#one">Heading One</a></li>
+        <li><a target="_blank" href="#two">Heading Two</a></li>
+        <li><a target="_blank" href="#tab-heading">Tab heading</a></li>
+        <li><a target="_blank" href="#tabs">Tab set</a>
+          <ul>
+            <li><a target="_blank" href="?tabs=tab-2">Tab #2 query only</a></li>
+            <li><a target="_blank" href="?tabs=tab-3">Tab #3 query only</a></li>
+            <li><a target="_blank" href="?tabs=tab-2#tabs">Tab #2 query + hash</a></li>
+            <li><a target="_blank" href="?tabs=tab-3#tabs">Tab #3 query + hash</a></li>
+          </ul>
+        </li>
+        <li><a target="_blank" href="#three">Heading Three</a></li>
+    </ul>
+  </div>
+
+<br/>
+
   <div id="toc">
+    <h4>Jump links</h4>
     <ul>
         <li><a href="#one">Heading One</a></li>
         <li><a href="#two">Heading Two</a></li>
         <li><a href="#tab-heading">Tab heading</a></li>
-        <li><a href="#tabs">Tab set</a></li>
-        <li><a href="?tabs=tab-2">Tab #2 query only</a></li>
-        <li><a href="?tabs=tab-3">Tab #3 query only</a></li>
-        <li><a href="?tabs=tab-2#tabs">Tab #2 query + hash</a></li>
-        <li><a href="?tabs=tab-3#tabs">Tab #3 query + hash</a></li>
+        <li><a target="_blank" href="#tabs">Tab set</a>
+          <ul>
+            <li><a href="?tabs=tab-2">Tab #2 query only</a></li>
+            <li><a href="?tabs=tab-3">Tab #3 query only</a></li>
+            <li><a href="?tabs=tab-2#tabs">Tab #2 query + hash</a></li>
+            <li><a href="?tabs=tab-3#tabs">Tab #3 query + hash</a></li>
+          </ul>
+        </li>
         <li><a href="#three">Heading Three</a></li>
     </ul>
   </div>
-
   <h2 id="one">Heading one</a></h2>
   <p>Elit nisi in a nulla integer nisi penatibus dis vestibulum suspendisse at parturient et dignissim mi ligula turpis condimentum quam ullamcorper venenatis eu condimentum at curae. Vitae sed volutpat curabitur hac leo luctus lobortis habitant a accumsan class a convallis curabitur ullamcorper at porta dignissim a convallis scelerisque porta. Duis suspendisse eu molestie ante ligula a convallis sociosqu ante aptent class conubia himenaeos suscipit lorem convallis habitasse interdum ac leo montes mus mauris a condimentum dui mi. Non sodales a ullamcorper vestibulum velit auctor mus sodales semper ad a auctor iaculis sagittis ad. Amet faucibus netus justo a sem vitae non penatibus magna parturient adipiscing adipiscing scelerisque a luctus nibh tincidunt ullamcorper inceptos scelerisque imperdiet. Congue ullamcorper a molestie curabitur parturient vestibulum mollis elementum suscipit a ullamcorper est diam netus class fusce condimentum consectetur suspendisse condimentum ante. </p>
   <p>Venenatis at a ligula condimentum facilisis adipiscing ad dui ad torquent a inceptos vehicula accumsan orci nunc a parturient eu convallis suscipit dis ullamcorper at. Donec metus a felis leo vel gravida a etiam vel erat parturient facilisis phasellus senectus neque parturient molestie ad donec. A non cursus dolor eu massa parturient a sagittis augue gravida consequat vestibulum parturient eu eu est eu accumsan pretium a dis ad. Vestibulum vestibulum posuere vivamus nibh a id class eget neque malesuada in dictum ornare a scelerisque in. A vestibulum scelerisque turpis venenatis suspendisse enim hendrerit suspendisse vestibulum consectetur velit libero dui lobortis placerat aliquam neque. </p>
@@ -125,7 +148,7 @@
         </pfe-tab-panel>
         <pfe-tab role="heading" id="tab-3" slot="tab">Tab 3</pfe-tab>
         <pfe-tab-panel role="region" slot="panel">
-          <h4>Tab 2</h4>
+          <h4>Tab 3</h4>
           <p><a href="#">Random link in tab 3</a> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </pfe-tab-panel>
       </pfe-tabs>

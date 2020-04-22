@@ -367,7 +367,7 @@ class PfeTabs extends PFElement {
 
     if (newTabSelected) {
       if (this._setFocus) {
-        // newTab.focus();
+        newTab.focus();
       }
 
       this.emitEvent(PfeTabs.events.shownTab, {
@@ -472,7 +472,6 @@ class PfeTabs extends PFElement {
   _popstateEventHandler() {
     const tabIndexFromURL = this._getTabIndexFromURL();
 
-    this._setFocus = true;
     this._updateHistory = false;
     this.selectedIndex = tabIndexFromURL > -1 ? tabIndexFromURL : 0;
   }

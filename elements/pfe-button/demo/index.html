@@ -39,11 +39,12 @@
     ])</script>
 
     <style>
-      input {
+      input[type="text"] {
         font-size: 16px;
-        border: 0;
+        border: 1px solid #d2d2d2;
         border-radius: 3px;
         padding: 8px;
+        width: 250px;
       }
 
       #disablers-container {
@@ -55,6 +56,10 @@
         flex-direction: column;
         padding-right: 16px;
       }
+
+      #eventsBtn {
+        margin-right: 16px;
+      }
     </style>
   </head>
   <body unresolved>
@@ -64,7 +69,11 @@
       </header>
       <article>
         <pfe-button>
-          <button disabled>Primary</button>
+          <div>fjkdsla</div>
+        </pfe-button>
+        <pfe-button></pfe-button>
+        <pfe-button>
+          <button>Primary</button>
         </pfe-button>
         <pfe-button pfe-variant="secondary">
           <button>Secondary</button>
@@ -75,6 +84,9 @@
         <pfe-button pfe-variant="danger">
           <button>Danger</button>
         </pfe-button>
+        <pfe-button pfe-variant="control">
+          <button>Control</button>
+        </pfe-button>
       </article>
     </pfe-band>
 
@@ -83,13 +95,23 @@
         <h2>&lt;pfe-button&gt; in a form</h2>
       </header>
       <article>
+        <h3>Submit a Form</h3>
         <form id="form">
-          <input type="text" placeholder="name" />
+          <input type="text" placeholder="Name" />
           <pfe-button>
             <button>Submit</button>
           </pfe-button>
         </form>
         <div id="formSubmittedMessage" hidden>The form was submitted</div>
+      </article>
+      <article>
+        <h3>Reset a Form</h3>
+        <form>
+          <input type="text" placeholder="Fill out the input and hit reset">
+          <pfe-button>
+            <button type="reset">Reset</button>
+          </pfe-button>
+        </form>
       </article>
     </pfe-band>
 
@@ -130,10 +152,36 @@
             <input type="checkbox"> Disable
           </label>
         </div>
+        <div>
+          <pfe-button pfe-variant="control">
+            <button>Control</button>
+          </pfe-button>
+          <label>
+            <input type="checkbox"> Disable
+          </label>
+        </div>
       </article>
     </pfe-band>
 
     <pfe-band>
+      <header slot="pfe-band--header">
+        <h2>&lt;pfe-button&gt; Events</h2>
+      </header>
+      <article>
+        <p>Listening for the pfe-button:click event</p>
+        <pfe-button id="eventsBtn">
+          <button>Click Me</button>
+        </pfe-button>
+        Total Clicks: <span id="totalClicks">0</span>
+        <div>
+          <label>
+            <input id="eventsBtnDisableCheckbox" type="checkbox"> Disable
+          </label>
+        </div>
+      </article>
+    </pfe-band>
+
+    <pfe-band pfe-color="lightest">
       <header slot="pfe-band--header">
         <h2>&lt;pfe-button&gt; Dynamic text</h2>
       </header>
@@ -175,6 +223,24 @@
 
       dynamicTextBtnInput.addEventListener("keyup", function (event) {
         dynamicTextBtn.textContent = dynamicTextBtnInput.value;
+      });
+
+      var eventsBtn = document.querySelector("#eventsBtn");
+      var totalClicksSpan = document.querySelector("#totalClicks");
+      var totalClicks = 0;
+      var eventsBtnDisableCheckbox = document.querySelector("#eventsBtnDisableCheckbox");
+
+      eventsBtn.addEventListener("pfe-button:click", function (event) {
+        totalClicks++;
+        totalClicksSpan.textContent = totalClicks;
+      });
+
+      eventsBtnDisableCheckbox.addEventListener("change", function (event) {
+        if (this.checked) {
+          eventsBtn.setAttribute("disabled", "");
+        } else {
+          eventsBtn.removeAttribute("disabled");
+        }
       });
     </script>
   </body>

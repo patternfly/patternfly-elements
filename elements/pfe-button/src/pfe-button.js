@@ -56,6 +56,7 @@ class PfeButton extends PFElement {
     this._clickHandler = this._clickHandler.bind(this);
     this._internalBtnContainer = this.shadowRoot.querySelector("#internalBtn");
     this._observer = new MutationObserver(this._parentObserverHandler);
+    this._externalBtnClickHandler = this._externalBtnClickHandler.bind(this);
     this._externalBtnObserver = new MutationObserver(this._init);
 
     this.addEventListener("click", this._clickHandler);
@@ -104,14 +105,12 @@ class PfeButton extends PFElement {
   }
 
   _init() {
-    if (!this._externalBtn) {
+    if (!this._isValidLightDom()) {
       return;
     }
 
-    if (this.children[0].tagName !== "BUTTON") {
-      console.warn(
-        `${PfeButton.tag}: The only child in the light DOM must be a button tag`
-      );
+    if (!this._externalBtn) {
+      return;
     }
 
     this._externalBtnObserver.disconnect();
@@ -134,12 +133,14 @@ class PfeButton extends PFElement {
       this._externalBtn,
       externalBtnObserverConfig
     );
+
+    this._externalBtn.addEventListener("click", this._externalBtnClickHandler);
   }
 
-  _parentObserverHandler(mutationList) {
+  _isValidLightDom() {
     if (!this.children.length) {
       console.warn(`${PfeButton.tag}: You must have a button in the light DOM`);
-      return;
+      return false;
     }
 
     if (this.children[0].tagName !== "BUTTON") {
@@ -147,6 +148,14 @@ class PfeButton extends PFElement {
         `${PfeButton.tag}: The only child in the light DOM must be a button tag`
       );
 
+      return false;
+    }
+
+    return true;
+  }
+
+  _parentObserverHandler(mutationList) {
+    if (!this._isValidLightDom()) {
       return;
     }
 
@@ -156,6 +165,9 @@ class PfeButton extends PFElement {
 
   _clickHandler() {
     this._externalBtn.click();
+  }
+
+  _externalBtnClickHandler() {
     this.emitEvent(PfeButton.events.click);
   }
 }

@@ -30,7 +30,14 @@
     "attributes": {
       "title": "Attributes",
       "type": "object",
-      "properties": {}
+      "properties": {
+        "variant": {
+          "title": "Style variant",
+          "type": "string",
+          "prefixed": true,
+          "enum": ["primary", "secondary", "tertiary", "danger", "control"]
+        }
+      }
     },
     "events": {
       "title": "Events",

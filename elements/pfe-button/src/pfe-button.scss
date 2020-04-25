@@ -1,13 +1,11 @@
 // Please see the pfe-sass README for guidance on using these tools
 @import "../../pfe-sass/pfe-sass";
 
-
 $LOCAL: button;
 
 :host {
   // Example local variable, using BEM format
   // --pfe-button--Property: value;
-
   display: inline-block;
 }
 
@@ -15,6 +13,7 @@ $LOCAL: button;
   display: none;
 }
 
+:host([pfe-variant="primary"]) button,
 button {
   background-color: #06c;
   color: #fff;
@@ -90,6 +89,33 @@ button {
   }
 }
 
+:host([pfe-variant="control"]) {
+  button {
+    background-color: transparent;
+    color: #151515;
+    border-radius: 0;
+
+    &:after {
+      border: 1px solid #ededed;
+      border-bottom-color: #8a8d90;
+    }
+
+    &:hover,
+    &:focus {
+      &:after {
+        border-bottom-width: 2px;
+        border-bottom-color: #06c;
+      }
+    }
+  }
+}
+
+:host([pfe-variant="control"][disabled]) {
+  button {
+    background-color: transparent;
+  }
+}
+
 :host([disabled]) {
   button {
     background-color: #d2d2d2;
@@ -103,6 +129,10 @@ button {
       &:after {
         border: 0;
       }
+    }
+
+    &:after {
+      border: 0;
     }
   }
 }

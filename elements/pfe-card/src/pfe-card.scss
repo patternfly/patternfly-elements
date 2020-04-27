@@ -21,8 +21,12 @@ $LOCAL-VARIABLES: (
   BorderColor: transparent,
   BorderRadius: pfe-var(surface--border-radius),
 
-  spacing--horizontal: pfe-var(container-spacer),
-  spacing--vertical:   pfe-var(container-spacer),
+  // Space between header, body, footer regions
+  region--spacing: pfe-var(container-spacer),
+
+  // Spacing internal to regions
+  spacing--horizontal: calc(#{pfe-var(content-spacer)} / 2),
+  spacing--vertical:   pfe-var(content-spacer),
 
   BackgroundColor: pfe-color(surface--base),
   theme: light,
@@ -207,21 +211,26 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     padding-top:    #{pfe-local(spacing--vertical)};
     padding-bottom: #{pfe-local(spacing--vertical)};
 
-    margin-bottom: #{pfe-local(spacing--vertical)};
-    margin-left: calc(#{pfe-local(spacing--horizontal)} * -1);
+    margin-bottom: #{pfe-local(region--spacing)};
 
-    ::slotted(*) {
-      margin-left: #{pfe-local(spacing--horizontal)};
+    margin-right: calc(#{pfe-local(spacing--horizontal)} * -1);
+
+    ::slotted(*:not([last])) {
+      margin-right: #{pfe-local(spacing--horizontal)};
     }
 
     ::slotted([pfe-overflow~="top"]) {
       margin-top: -2rem; //IE11 fallback
-      margin-top: calc(-1 * #{pfe-local(spacing--vertical)}) !important;
+      margin-top: calc(-1 * #{pfe-local(spacing--vertical)});
     }
 
     ::slotted([pfe-overflow~="bottom"]) {
       margin-bottom: -2rem; //IE11 fallback
-      margin-bottom: calc(-1 * #{pfe-local(spacing--vertical)}) !important;
+      margin-bottom: calc(-1 * #{pfe-local(spacing--vertical)});
+    }
+
+    :host(:not([has_header])) & {
+      display: none;
     }
   }
   &__body {
@@ -236,9 +245,6 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     justify-content:  #{pfe-local($region: body, $cssvar: JustifyContent)};
     align-items:      #{pfe-local($region: body, $cssvar: AlignItems)};
 
-    padding-top:    #{pfe-local(spacing--vertical)};
-    padding-bottom:    #{pfe-local(spacing--vertical)};
-
     :host(:not([has_header])) & {
       padding-top:    #{pfe-local(PaddingTop)};
     }
@@ -247,19 +253,27 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
       padding-bottom:    #{pfe-local(PaddingBottom)};
     }
 
+    :host([has_footer]) & {
+      margin-bottom: #{pfe-local(region--spacing)}
+    }
+
+    ::slotted(*:not([last])) {
+      margin-bottom: #{pfe-local(spacing--vertical)};
+    }
+
     ::slotted([pfe-overflow~="top"]) {
       margin-top: -2rem; //IE11 fallback
-      margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
+      margin-top: calc(-1 * #{pfe-local(PaddingTop)});
       :host([has_header]) & {
-        margin-top: calc(-1 * #{pfe-local(spacing--vertical)});
+        margin-top: calc(-1 * #{pfe-local(region--spacing)});
       }
     }
 
     ::slotted([pfe-overflow~="bottom"]) {
       margin-bottom: -2rem; //IE11 fallback
-      margin-bottom: calc(-1 * #{pfe-local(PaddingBottom)}) !important;
+      margin-bottom: calc(-1 * #{pfe-local(PaddingBottom)});
       :host([has_footer]) & {
-        margin-bottom: calc(-1 * #{pfe-local(spacing--vertical)});
+        margin-bottom: calc(-1 * #{pfe-local(region--spacing)});
       }
     }
   }
@@ -278,23 +292,26 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     justify-content: #{pfe-local($region: footer, $cssvar: AlignItems)};
 
     // Padding for the footer region
-    padding-top:    #{pfe-local(spacing--vertical)};
     padding-bottom: #{pfe-local(PaddingBottom)};
 
-    margin-left: calc(#{pfe-local(spacing--horizontal)} * -1);
+    margin-right: calc(#{pfe-local(spacing--horizontal)} * -1);
 
-    ::slotted(*) {
-      margin-left: #{pfe-local(spacing--horizontal)};
+    ::slotted(*:not([last])) {
+      margin-right: #{pfe-local(spacing--horizontal)};
     }
 
     ::slotted([pfe-overflow~="top"]) {
       margin-top: -2rem; //IE11 fallback
-      margin-top: calc(-1 * #{pfe-local(spacing--vertical)});
+      margin-top: calc(-1 * #{pfe-local(region--spacing)});
     }
 
     ::slotted([pfe-overflow~="bottom"]) {
       margin-bottom: -2rem; //IE11 fallback
       margin-bottom: calc(-1 * #{pfe-local(PaddingBottom)});
+    }
+
+    :host(:not([has_footer])) & {
+      display: none;
     }
   }
 }

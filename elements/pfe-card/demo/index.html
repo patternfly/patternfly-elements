@@ -31,6 +31,7 @@
     -->
     <script>
         require([
+          '../../pfe-icon/dist/pfe-icon.umd.js',
           '../../pfe-cta/dist/pfe-cta.umd.js',
           '../../pfe-band/dist/pfe-band.umd.js',
           '../dist/pfe-card.umd.js'
@@ -53,6 +54,7 @@
       <h2 slot="pfe-band--header"><code>pfe-color</code></h2>
       <div class="demo-cards">
         <pfe-card pfe-color="lightest" id="lightest-card">
+          <pfe-icon style="--pfe-icon--Size: 1.5em" icon="rh-atom" slot="pfe-card--header"></pfe-icon>
           <h3 slot="pfe-card--header">Lightest card</h3>
           <p>This is the lightest pfe-card.</p>
           <p>It has a pfe-border and <a href="#">a link</a>.</p>
@@ -233,8 +235,8 @@
           </pfe-cta>
         </pfe-card>
 
-        <pfe-card class="hide-header" id="custom-header">
-          <h3 slot="pfe-card--header"><code>#custom &gt; .hide-header</code></h3>
+        <pfe-card id="custom-header">
+          <h3 slot="pfe-card--header" hidden><code>#custom &gt; .hide-header</code></h3>
           <h3><code>#custom &gt; .hide-header</code></h3>
           <h4>Default Card</h4>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
@@ -300,12 +302,13 @@
     <script>
       document.querySelector("#show-header").addEventListener("click", function(evt) {
         let card = evt.target.parentElement.parentElement;
+        let header = card.querySelector("[slot=\"pfe-card--header\"]");
         if (evt.target.text == "Show header") {
-          card.style.setProperty("--pfe-card__header--Display", "block");
+          header.removeAttribute("hidden");
           card.querySelector("h3:not([slot])").style.setProperty("text-decoration", "line-through");
           evt.target.text = "Hide header";
         } else {
-          card.style.setProperty("--pfe-card__header--Display", "none");
+          header.setAttribute("hidden", "");
           card.querySelector("h3:not([slot])").style.setProperty("text-decoration", "none");
           evt.target.text = "Show header";
         }

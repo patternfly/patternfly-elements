@@ -64,8 +64,8 @@ class PfeCard extends PFElement {
     this.updateVariables = this.updateVariables.bind(this);
 
     this._observer = new MutationObserver(() => {
-      this._init();
       this._mapSchemaToSlots(this.tag, this.slots);
+      this._init();
 
       // Note: need to re-render if the mark-up changes to pick up template changes
       this.render();
@@ -77,7 +77,10 @@ class PfeCard extends PFElement {
 
     this._init();
 
-    this._observer.observe(this, { childList: true });
+    this._observer.observe(this, {
+      childList: true,
+      subtree: true
+    });
   }
 
   _init() {
@@ -86,11 +89,22 @@ class PfeCard extends PFElement {
     // Get the last child in each slot and apply an attribute to it
     // Why? This allows us to apply last-child styles to light DOM
     Object.keys(this.slots).map(region => {
+      let hide = 0;
       let slot = this.slots[region];
       if (slot.nodes && slot.nodes.length > 0) {
         let lastIdx = slot.nodes.length - 1;
         let lastNode = slot.nodes[lastIdx];
+        // If this is the last node in the region, apply the last attribute
         if (lastNode) lastNode.setAttribute("last", "");
+        // If all nodes in a region have a hidden attribute
+        slot.nodes.forEach(node => {
+          if (node.hasAttribute("hidden")) {
+            hide += 1;
+          }
+        });
+        if (hide === slot.nodes.length) {
+          this.removeAttribute(`has_${region}`);
+        }
       }
     });
 

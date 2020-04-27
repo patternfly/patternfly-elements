@@ -37,11 +37,11 @@
         }
 
         .demo-cards {
-          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         }
 
         .demo-cards-sm {
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         }
 
         .demo-cards > *,
@@ -73,10 +73,6 @@
         --pfe-card--BackgroundImage: url("https://placekitten.com/150/80");
         --pfe-card--BackgroundPosition: calc(100% - 10px) calc(100% - 10px);
         --pfe-card--BackgroundRepeat: no-repeat;
-      }
-
-      #custom .hide-header {
-        --pfe-card__header--Display: none;
       }
 
       #custom #custom-spacing {

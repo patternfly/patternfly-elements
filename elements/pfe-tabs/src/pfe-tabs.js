@@ -360,23 +360,24 @@ class PfeTabs extends PFElement {
     newTab.selected = true;
     newPanel.hidden = false;
 
-    if (this._setFocus) {
-      newTab.focus();
-      this._setFocus = false;
-    }
-
     const tabs = this._allTabs();
     const newIdx = tabs.findIndex(tab => tab.selected);
 
     this.selected = newTab;
 
     if (newTabSelected) {
+      if (this._setFocus) {
+        newTab.focus();
+      }
+
       this.emitEvent(PfeTabs.events.shownTab, {
         detail: {
           tab: this.selected
         }
       });
     }
+
+    this._setFocus = false;
   }
 
   _onKeyDown(event) {
@@ -471,7 +472,6 @@ class PfeTabs extends PFElement {
   _popstateEventHandler() {
     const tabIndexFromURL = this._getTabIndexFromURL();
 
-    this._setFocus = true;
     this._updateHistory = false;
     this.selectedIndex = tabIndexFromURL > -1 ? tabIndexFromURL : 0;
   }

@@ -57,7 +57,6 @@ $variables: (
   .pfe-dropdown-item {
     &__container {
       height: #{pfe-local(Height)};
-      margin-top: #{pfe-local(MarginTop)};
       background-color: #d2d2d2;
       border: 0;
     }

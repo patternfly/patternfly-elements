@@ -46,20 +46,21 @@ class PfeDropdownItem extends PFElement {
   }
 
   _setAccessibility() {
-    if (this._container && this._item) {
+    if (this._container) {
       const type = this.getAttribute("pfe-item-type");
       if (type) {
         switch (type) {
           case "link":
             this._container.setAttribute("role", "none");
-            this._item.setAttribute("role", "menuitem");
+            this._item && this._item.setAttribute("role", "menuitem");
             break;
           case "action":
             this._container.setAttribute("role", "menuitem");
-            this._item.removeAttribute("role");
+            this._item && this._item.removeAttribute("role");
             break;
           case "separator":
             this._container.setAttribute("role", "separator");
+            break;
           default:
             break;
         }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../dist/pfe-jump-links.js"></script>
+  </head>
+  <body>
+    <pfe-jump-links>
+      <!-- Default slot -->
+      <h2>This is pfe-jump-links</h2>
+      
+    </pfe-jump-links>
+
+    <!-- Preview different properties -->
+    <script>
+      const elements = [...document.querySelectorAll("pfe-jump-links")];
+
+      suite("<pfe-jump-links>", () => {
+        test("it should upgrade", () => {
+          assert.instanceOf(
+            document.querySelector("pfe-jump-links"),
+            customElements.get("pfe-jump-links"),
+            "pfe-jump-links should be an instance of pfeJumpLinks"
+          );
+        });
+
+        // Write tests for each attribute
+
+        // Write tests for each slot
+
+      });
+    </script>
+  </body>
+</html>

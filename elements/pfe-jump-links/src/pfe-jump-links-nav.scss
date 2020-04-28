@@ -1,0 +1,133 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+$LOCAL: jump;
+
+:host {
+  // Example local variable, using BEM format
+  // --pfe-jump-links--Property: value;
+  font-family: 'Red Hat Text', sans-serif;
+  font-weight: 400;
+  display: block;
+  position: sticky;
+  top: 60px;
+  padding: 1rem;
+}
+
+::slotted([slot="heading"]) {
+  margin: 0 0 1rem 0;
+  color: black;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+ul {
+  padding: 1rem 1rem 1rem 0;
+  margin: 0;
+  list-style: none;
+  border-left: 1px solid #D2D2D2;
+}
+
+li {
+  border-left: 3px solid transparent;
+  display: block;
+  // flex-direction: column;
+  text-decoration: none;
+  // padding-left: 1rem;
+  &[active] {
+    border-left: 3px solid #0066CC;
+  }
+}
+
+a {
+  display: table;
+  color: #72767B;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 8px;
+  line-height: 1.5;
+  border-left: 3px solid transparent;
+  &[active] {
+    color: #151515;
+  }
+  &.sub-section{
+    // padding-left: 4px;
+    display: none;
+    height: 0;
+    margin-left: 12px;
+    font-size: 14px;
+    transition: display 2s linear; 
+  }
+  &:focus {
+    outline: none;
+    border-radius: 3px;
+    border: 2px solid #62A1F4;
+  }
+}
+
+li.expand {
+  a.sub-section {
+    display: table;
+    height: auto;
+  }
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:host([horizontal]) {
+  ul {
+    width: 100%;
+    background-color: grey;
+    li {
+      display: inline-block;
+    }
+  }
+}
+
+.nav {
+  background-color: blue;
+}
+
+
+
+::slotted([slot="nav"]) {
+  
+}
+
+::slotted(a) {
+
+}
+
+// pfe-jump-links{
+//   a {
+//     color: orange !important;
+//   }
+// }
+
+// -- Custom styles applied by attributes
+@each $option in () {
+  :host([pfe-active="#{$option}"]) {
+    // Add styles here
+  }
+}
+
+// -- Custom styles applied to slot
+::slotted([slot="pfe-jump-links--heading"]) {
+  // Add styles here
+}
+
+
+
+// -- Custom styles applied to slot's shadow element
+.pfe-jump-links {
+  &__heading {
+    
+  }
+  &__nav {
+    
+  }
+}

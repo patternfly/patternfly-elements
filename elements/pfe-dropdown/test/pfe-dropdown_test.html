@@ -20,12 +20,12 @@
       <pfe-dropdown-item pfe-item-type="action">
         <button>Action 1</button>
       </pfe-dropdown-item>
-      <pfe-dropdown-item pfe-item-type="action" id="disabledItem" disabled>
+      <pfe-dropdown-item pfe-item-type="action" id="disabledItem" is_disabled>
         <button>Action 2</button>
       </pfe-dropdown-item>
     </pfe-dropdown>
 
-    <pfe-dropdown pfe-label="Test disabled dropdown" id="disabledDropdown" disabled>
+    <pfe-dropdown pfe-label="Test disabled dropdown" id="disabledDropdown" is_disabled>
       <pfe-dropdown-item pfe-item-type="link">
         <a href="#">Link 1</a>
       </pfe-dropdown-item>
@@ -109,7 +109,7 @@
 
           assert.equal(element.getAttribute("aria-disabled"), "true");
 
-          element.removeAttribute("disabled");
+          element.removeAttribute("is_disabled");
 
           assert.equal(element.getAttribute("aria-disabled"), "false");
         });
@@ -119,7 +119,7 @@
 
           assert.equal(disabledItem.getAttribute("aria-disabled"), "true");
 
-          disabledItem.removeAttribute("disabled");
+          disabledItem.removeAttribute("is_disabled");
 
           assert.equal(disabledItem.getAttribute("aria-disabled"), "false");
         });
@@ -128,12 +128,12 @@
           const customDropdown = document.getElementById('customDropdown');
 
           const options = [
-            { href: "https://bit.ly/3b9wvWg", text: "Link 1", type: "link", disabled: false },
-            { href: "https://bit.ly/3b9wvWg", text: "Link 2", type: "link", disabled: false },
-            { href: "https://bit.ly/3b9wvWg", text: "Link 3", type: "link", disabled: true },
+            { href: "https://bit.ly/3b9wvWg", text: "Link 1", type: "link", is_disabled: false },
+            { href: "https://bit.ly/3b9wvWg", text: "Link 2", type: "link", is_disabled: false },
+            { href: "https://bit.ly/3b9wvWg", text: "Link 3", type: "link", is_disabled: true },
             { type: "separator" },
-            { text: "Action 1", type: "action", disabled: false },
-            { text: "Action 2", type: "action", disabled: true }
+            { text: "Action 1", type: "action", is_disabled: false },
+            { text: "Action 2", type: "action", is_disabled: true }
           ];
 
           // setting JS options using addDropdownOptions API

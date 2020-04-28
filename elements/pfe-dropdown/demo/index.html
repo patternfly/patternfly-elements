@@ -38,14 +38,14 @@
       <pfe-dropdown-item pfe-item-type="link">
         <a href="https://bit.ly/3b9wvWg">Link 2</a>
       </pfe-dropdown-item>
-      <pfe-dropdown-item pfe-item-type="link" disabled>
+      <pfe-dropdown-item pfe-item-type="link" is_disabled>
         <a href="https://bit.ly/3b9wvWg">Link 3</a>
       </pfe-dropdown-item>
       <pfe-dropdown-item pfe-item-type="separator"></pfe-dropdown-item>
       <pfe-dropdown-item pfe-item-type="action">
         <button>Action 1</button>
       </pfe-dropdown-item>
-      <pfe-dropdown-item pfe-item-type="action" disabled>
+      <pfe-dropdown-item pfe-item-type="action" is_disabled>
         <button>Action 2</button>
       </pfe-dropdown-item>
       <pfe-dropdown-item pfe-item-type="link">
@@ -61,14 +61,14 @@
 
     <h2>Disabled dropdown</h2>
 
-    <pfe-dropdown pfe-label="Disabled" disabled>
+    <pfe-dropdown pfe-label="Disabled" is_disabled>
       <pfe-dropdown-item pfe-item-type="link">
         <a href="https://bit.ly/3b9wvWg">Link 1</a>
       </pfe-dropdown-item>
       <pfe-dropdown-item pfe-item-type="link">
         <a href="https://bit.ly/3b9wvWg">Link 2</a>
       </pfe-dropdown-item>
-      <pfe-dropdown-item pfe-item-type="link" disabled>
+      <pfe-dropdown-item pfe-item-type="link" is_disabled>
         <a href="https://bit.ly/3b9wvWg">Link 2</a>
       </pfe-dropdown-item>
       <pfe-dropdown-item pfe-item-type="separator"></pfe-dropdown-item>
@@ -90,17 +90,17 @@
       customElements.whenDefined("pfe-dropdown").then(function() {
         // Default Options
         dropdownWithCustomOptions.pfeDropdownOptions = [
-          { href: "https://bit.ly/3b9wvWg", text: "Link 1", type: "link", disabled: false },
-          { href: "https://bit.ly/3b9wvWg", text: "Link 2", type: "link", disabled: false },
-          { href: "https://bit.ly/3b9wvWg", text: "Link 3", type: "link", disabled: true },
+          { href: "https://bit.ly/3b9wvWg", text: "Link 1", type: "link", is_disabled: false },
+          { href: "https://bit.ly/3b9wvWg", text: "Link 2", type: "link", is_disabled: false },
+          { href: "https://bit.ly/3b9wvWg", text: "Link 3", type: "link", is_disabled: true },
           { type: "separator" },
-          { text: "Action 1", type: "action", disabled: false },
-          { text: "Action 2", type: "action", disabled: true }
+          { text: "Action 1", type: "action", is_disabled: false },
+          { text: "Action 2", type: "action", is_disabled: true }
         ];
         // Options passed via addDropdownOptions() method
         dropdownWithCustomOptions.addDropdownOptions(
           [
-            { href: "https://bit.ly/3b9wvWg", text: "Link 4", type: "link", disabled: false }
+            { href: "https://bit.ly/3b9wvWg", text: "Link 4", type: "link", is_disabled: false }
           ]
         );
       });

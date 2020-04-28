@@ -5,14 +5,14 @@ This element will provide a dropdown menu of links and/or actions. It's comprise
 ## Usage
 
 ``` html
-<pfe-dropdown pfe-label="Disabled" disabled>
+<pfe-dropdown pfe-label="Disabled" is_disabled>
     <pfe-dropdown-item pfe-item-type="link">
         <a href="https://bit.ly/3b9wvWg">Link 1</a>
     </pfe-dropdown-item>
     <pfe-dropdown-item pfe-item-type="link">
         <a href="https://bit.ly/3b9wvWg">Link 2</a>
     </pfe-dropdown-item>
-    <pfe-dropdown-item pfe-item-type="link" disabled>
+    <pfe-dropdown-item pfe-item-type="link" is_disabled>
         <a href="https://bit.ly/3b9wvWg">Link 2</a>
     </pfe-dropdown-item>
     <pfe-dropdown-item pfe-item-type="separator"></pfe-dropdown-item>
@@ -37,19 +37,19 @@ customElements.whenDefined("pfe-dropdown").then(function() {
             href: "https://bit.ly/3b9wvWg",
             text: "Link 1",
             type: "link",
-            disabled: false
+            is_disabled: false
         },
         {
             href: "https://bit.ly/3b9wvWg",
             text: "Link 2",
             type: "link",
-            disabled: false
+            is_disabled: false
         },
         {
             href: "https://bit.ly/3b9wvWg",
             text: "Link 3",
             type: "link",
-            disabled: true
+            is_disabled: true
         },
         {
             type: "separator"
@@ -57,12 +57,12 @@ customElements.whenDefined("pfe-dropdown").then(function() {
         {
             text: "Action 1",
             type: "action",
-            disabled: false
+            is_disabled: false
         },
         {
             text: "Action 2",
             type: "action",
-            disabled: true
+            is_disabled: true
         }
     ];
 });
@@ -77,7 +77,7 @@ customElements.whenDefined("pfe-dropdown").then(function() {
             href: "https://bit.ly/3b9wvWg",
             text: "Link 4",
             type: "link",
-            disabled: false
+            is_disabled: false
         }]
     );
 });
@@ -94,7 +94,7 @@ The default slot should contain at least one link or action `pfe-dropdown-item` 
 ### pfe-dropdown
 
 * `pfe-label` : This is an optional attribute string that you can provide to describe your dropdown, which appears in the dropdown toggle.
-* `disabled` : This is an optional attribute that you can provide to disable your dropdown. Visually the dropdown will look disabled and mouse or keyboard events will have no impact on it. 
+* `is_disabled` : This is an optional attribute that you can provide to disable your dropdown. Visually the dropdown will look disabled and mouse or keyboard events will have no impact on it. 
 
 ### pfe-dropdown-item
 

@@ -52,7 +52,7 @@ class PfeDropdown extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-label", "disabled"];
+    return ["pfe-label", "is_disabled"];
   }
 
   set pfeDropdownOptions(options) {
@@ -116,7 +116,7 @@ class PfeDropdown extends PFElement {
         this._toggle_text.textContent = newValue;
         break;
 
-      case "disabled":
+      case "is_disabled":
         this._setDisabled();
         break;
 
@@ -127,7 +127,7 @@ class PfeDropdown extends PFElement {
 
   _init() {
     if (this.children.length) {
-      if (!this.hasAttribute("disabled")) {
+      if (!this.hasAttribute("is_disabled")) {
         this._toggle.addEventListener("click", this._clickHandler);
         this._toggle.addEventListener("keydown", this._toggleKeydownHandler);
         this._allItems().forEach(item => {
@@ -177,14 +177,14 @@ class PfeDropdown extends PFElement {
 
       case KEYCODE.RIGHT:
       case KEYCODE.DOWN:
-        newItem = this._nextItem().hasAttribute("disabled")
+        newItem = this._nextItem().hasAttribute("is_disabled")
           ? this._skipItem(1)
           : this._nextItem();
         break;
 
       case KEYCODE.LEFT:
       case KEYCODE.UP:
-        newItem = this._prevItem().hasAttribute("disabled")
+        newItem = this._prevItem().hasAttribute("is_disabled")
           ? this._skipItem(-1)
           : this._prevItem();
         break;
@@ -232,7 +232,7 @@ class PfeDropdown extends PFElement {
       this.open(event);
       let newItem = this._firstItem();
       if (newItem) {
-        if (newItem.hasAttribute("disabled")) {
+        if (newItem.hasAttribute("is_disabled")) {
           newItem = this._skipItem(1);
         }
         newItem.setAttribute("tabindex", "-1");
@@ -261,8 +261,8 @@ class PfeDropdown extends PFElement {
       }
       const option = document.createElement("pfe-dropdown-item");
       option.setAttribute("pfe-item-type", el.type);
-      if (el.disabled) {
-        option.setAttribute("disabled", el.disabled);
+      if (el.is_disabled) {
+        option.setAttribute("is_disabled", el.is_disabled);
       }
       if (item) {
         item.innerText = el.text ? el.text : "";
@@ -273,11 +273,11 @@ class PfeDropdown extends PFElement {
   }
 
   _setDisabled() {
-    const isDisabled = this.hasAttribute("disabled");
+    const isDisabled = this.hasAttribute("is_disabled");
     if (isDisabled) {
       this.setAttribute("aria-disabled", "true");
     } else {
-      this.removeAttribute("disabled");
+      this.removeAttribute("is_disabled");
       this.setAttribute("aria-disabled", "false");
     }
   }

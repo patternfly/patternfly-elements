@@ -18,7 +18,7 @@ class PfeDropdownItem extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-item-type", "disabled"];
+    return ["pfe-item-type", "is_disabled"];
   }
 
   constructor() {
@@ -33,7 +33,7 @@ class PfeDropdownItem extends PFElement {
       case "pfe-item-type":
         this._setAccessibility();
         break;
-      case "disabled":
+      case "is_disabled":
         this._setDisabled();
         break;
       default:
@@ -69,12 +69,12 @@ class PfeDropdownItem extends PFElement {
   }
 
   _setDisabled() {
-    const isDisabled = this.hasAttribute("disabled");
+    const isDisabled = this.hasAttribute("is_disabled");
     if (isDisabled) {
       this.removeAttribute("tabindex");
       this.setAttribute("aria-disabled", "true");
     } else {
-      this.removeAttribute("disabled");
+      this.removeAttribute("is_disabled");
       this.setAttribute("tabindex", "0");
       this.setAttribute("aria-disabled", "false");
     }

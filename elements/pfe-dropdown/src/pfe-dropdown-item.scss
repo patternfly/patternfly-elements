@@ -63,7 +63,7 @@ $variables: (
   }
 }
 
-:host([disabled]) {
+:host([is_disabled]) {
   .pfe-dropdown-item {
     &__container {
       pointer-events: none;

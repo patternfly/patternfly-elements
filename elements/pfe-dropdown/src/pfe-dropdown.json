@@ -23,7 +23,7 @@
           "default": "Dropdown",
           "prefixed": true
         },
-        "disabled": {
+        "is_disabled": {
           "title": "Disable menu button",
           "type": "boolean",
           "default": false,

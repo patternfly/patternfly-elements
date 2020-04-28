@@ -1,4 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
+import PfeSelect from "../../pfe-select/dist/pfe-select.js";
 
 class PfeSchemaEditor extends PFElement {
   static get tag() {

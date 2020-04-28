@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../dist/pfe-schema-editor.js"></script>
+  </head>
+  <body>
+    <pfe-schema-editor>
+      <!-- Default slot -->
+      <h2>This is pfe-schema-editor</h2>
+      
+    </pfe-schema-editor>
+
+    <!-- Preview different properties -->
+    <script>
+      const elements = [...document.querySelectorAll("pfe-schema-editor")];
+
+      suite("<pfe-schema-editor>", () => {
+        test("it should upgrade", () => {
+          assert.instanceOf(
+            document.querySelector("pfe-schema-editor"),
+            customElements.get("pfe-schema-editor"),
+            "pfe-schema-editor should be an instance of pfeSchemaEditor"
+          );
+        });
+
+        // Write tests for each attribute
+
+        // Write tests for each slot
+
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "name": "@patternfly/pfe-schema-editor",
+  "description": "Schema editor element for PatternFly Elements",
+  "pfelement": {
+    "className": "PfeSchemaEditor",
+    "elementName": "pfe-schema-editor",
+    "files": {
+      "styles": "./src/pfe-schema-editor.scss",
+      "template": "./src/pfe-schema-editor.html",
+      "js": "./src/pfe-schema-editor.js"
+    },
+    "assets": []
+  },
+  "version": "1.0.0-prerelease.39",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-schema-editor"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/pfe-schema-editor.umd.js",
+  "module": "./dist/pfe-schema-editor.js",
+  "unpkg": "./dist/pfe-schema-editor.umd.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-schema-editor/test/"
+  },
+  "contributors": [
+    {
+      "name": "castastrophe"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@patternfly/pfe-sass": "1.0.0-prerelease.40",
+    "@patternfly/pfelement": "1.0.0-prerelease.39",
+    "gh-pages": "^2.2.0"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Schema editor",
+  "description": "Visualize a provided schema as an editable form",
+  "type": "object",
+  "tag": "pfe-schema-editor",
+  "class": "PfeSchemaEditor",
+  "category": "content",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "default": {
+          "title": "Default slot",
+          "type": "array",
+          "namedSlot": false,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        }
+      },
+      "required": ["default"]
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {}
+    },
+    "events": {
+      "title": "Events",
+      "description": "Definition of the supported events",
+      "type": "object",
+      "properties": {
+        "change": {
+          "title": "Change",
+          "type": "string",
+          "default": "pfe-schema-editor:change"
+        },
+        "export": {
+          "title": "Export",
+          "type": "string",
+          "default": "pfe-schema-editor:export"
+        }
+      }
+    }
+  },
+  "required": ["slots", "attributes", "events"],
+  "additionalProperties": false
+}

@@ -1,0 +1,87 @@
+<div class="container">
+    <section class="group">
+        <div class="header--row">
+            <button class="toggle">
+                <h3 class="toggle--header">{{ title }}</h3>
+            </button>
+            <div class="json--group">
+                <button class="json--button">JSON</button>
+                <div class="json"></div>
+            </div>
+            <div class="props--group">
+                <button class="props--button">Properties</button>
+                <div class="props"></div>
+            </div>
+        </div>
+    </section>
+</div>
+
+// Boolean, not required
+<div data-schematype="boolean" data-schemapath="root.config.show_url" data-grid="6">
+    <label class="control-label">{{ title }}</label>
+    <p class="help-block">{{ description }}</p>
+    <select class="" name="root[config][show_url]">
+        <option value="undefined"></option>
+        <option value="1">true</option>
+        <option value="0">false</option>
+    </select>
+</div>
+
+// Number
+<div data-schematype="number" data-schemapath="root.config.show_url" data-grid="6">
+    <label class="control-label">{{ title }}</label>
+    <p class="help-block">{{ description }}</p>
+    <input type="text" class="" name="root[config][word_count]"/>
+</div>
+
+// String, url
+<div data-schematype="string" data-schemapath="root.config.show_url" data-grid="6">
+    <label class="control-label">{{ title }}</label>
+    <p class="help-block">{{ description }}</p>
+    <input type="url" class="" name="root[config][word_count]"/>
+</div>
+
+// String
+<div data-schematype="string" data-schemapath="root.config.show_url" data-grid="6">
+    <label class="control-label">{{ title }}</label>
+    <p class="help-block">{{ description }}</p>
+    <input type="text" class="" name="root[config][word_count]"/>
+</div>
+
+// String, wysiwyg
+<div data-schematype="string" data-schemapath="root.config.show_url" data-grid="6">
+    <label class="control-label">{{ title }}</label>
+    <p class="help-block">{{ description }}</p>
+    <textarea class="" data-schemaformat="html" name="root[config][word_count]"></textarea>
+</div>
+
+// Object
+<div data-schematype="object" data-schemapath="root.config.show_url" data-grid="6">
+    <div class="header--row">...</div>
+    <p class="help-block">{{ description }}</p>
+    <div class="object--children"></div>
+</div>
+
+// Array
+<div data-schematype="array" data-schemapath="root.config.show_url" data-grid="6">
+    <div class="header--row">...</div> // Array does not have properties field
+    <p class="help-block">{{ description }}</p>
+    <div class="array--children">
+        <div class="array--item" data-schemapath="root.body.sub_patterns.0">
+            <label>{{ title }} 1</label>
+            <select class="form-control"> // Dropdown with all ref options by title
+                <option value="Standard Text">Standard Text</option>
+                <option value="Quote box">Quote box</option>
+                <option value="Video Box">Video Box</option>
+            </select>
+            <div data-schemaid="file:///var/www/dist/library/schemas/standard_text.json" data-schematype="object" data-schemapath="root.body.sub_patterns.0">
+                // Render sub-schema for selected item from dropdown above
+            </div>
+        </div>
+    </div>
+    <div class="array-controls">
+        <button type="button" title="Add {{ title }}">{{ title }}</button>
+        <button type="button" title="Remove last {{ title }}">Last {{ title }}</button>
+        <button type="button" title="Delete all">Delete all</button>
+    </div>
+</div>

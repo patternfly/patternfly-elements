@@ -3,7 +3,7 @@
 ## Usage
 
 ```html
-<pfe-icon icon="rh-leaf"></pfe-card>
+<pfe-icon icon="rh-leaf"></pfe-icon>
 ```
 
 ## Slots
@@ -11,7 +11,7 @@
 There are no slots, but if you wish to display some text when JS is disabled, you can put some text inside the pfe-icon tag.  For instance, when using a checkmark icon in a server status table, you may wish to display "success" if JS is disabled.
 
 ```html
-<pfe-icon icon="rh-check-mark">success</pfe-card>
+<pfe-icon icon="rh-check-mark">success</pfe-icon>
 ```
 
 

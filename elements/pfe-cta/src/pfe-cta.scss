@@ -26,7 +26,7 @@ $variables: (
   FontSize--priority: calc(#{pfe-local($cssvar: FontSize) / 1.125}),
   arrow: (
     Display: inline,
-    Padding: 0 0.125rem 0 0.375rem,
+    Padding: 0 0.05rem,
     size: 13px,
     MarginLeft: calc(#{pfe-var(content-spacer)} * 0.25)
   ),
@@ -194,7 +194,8 @@ $variables: (
     width: #{pfe-local($cssvar: size, $region: arrow)};
     height: #{pfe-local($cssvar: size, $region: arrow)};
     transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
-
+    margin-bottom: -1px;
+   
     :host(.focus-within) & {
       fill: #{pfe-local(Color--focus)};
     }

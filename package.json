@@ -18,7 +18,7 @@
     "clean": "rm -rf node_modules package-lock.json {elements,themes}/*/{node_modules,package-lock.json}",
     "bootstrap": "lerna bootstrap --hoist",
     "deploy-docs": "bash scripts/deploy-docs.sh",
-    "release": "bash scripts/release.sh",
+    "release": "standard-version --prerelease && bash scripts/release.sh",
     "postinstall": "npm run bootstrap && npm run build",
     "test-suite-inject": "node scripts/test-suite-inject.js",
     "doc-listing-inject": "npm run leftover-check && node scripts/doc-listing-inject.js",
@@ -31,7 +31,8 @@
     "post-new": "npm run test-suite-inject && npm run doc-listing-inject && npm run bootstrap",
     "leftover-check": "bash scripts/leftover-check.sh",
     "demo": "npm run build && npm run start",
-    "live-demo": "npm-run-all --parallel dev start"
+    "live-demo": "npm-run-all --parallel dev start",
+    "foo": "standard-version --prerelease"
   },
   "husky": {
     "hooks": {
@@ -113,6 +114,7 @@
     "rollup-plugin-terser": "^4.0.2",
     "rollup-plugin-uglify": "^4.0.0",
     "spandx": "^2.0.1",
+    "standard-version": "^7.1.0",
     "strip-css-comments": "^3.0.0",
     "through2": "^3.0.1",
     "trim": "0.0.1",

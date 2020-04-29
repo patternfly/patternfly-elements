@@ -18,7 +18,7 @@ $LOCAL-VARIABLES: (
 
   BorderWidth: 0,
   BorderStyle: solid,
-  BorderColor: transparent,
+  BorderColor: pfe-color(surface--border),
   BorderRadius: pfe-var(surface--border-radius),
 
   // Space between header, body, footer regions
@@ -39,7 +39,6 @@ $LOCAL-VARIABLES: (
   header: (
     Display: flex,
     JustifyContent: null,
-    AlignItems: null,
     BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)}),
     Color: pfe-apply-broadcast(text)
   ),
@@ -62,7 +61,7 @@ $LOCAL-VARIABLES: (
 // Note: For combination variables to resolve, they must be added at the end
 $combos: (
   Border: pfe-local(BorderWidth) pfe-local(BorderStyle) pfe-local(BorderColor),
-  BorderTop: pfe-local(BorderWidth) pfe-local(BorderStyle) pfe-local(BorderColor),
+  BorderTop: pfe-local($cssvar: Border, $fallback: pfe-local(BorderWidth) pfe-local(BorderStyle) pfe-local(BorderColor)),
   Padding: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft)
 );
 
@@ -78,7 +77,6 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
   align-self:       #{pfe-local(AlignSelf)};
   position:         relative;
 
-  // padding:       #{pfe-local(Padding)};
   border:        #{pfe-local(Border)};
   border-top:    #{pfe-local(BorderTop)};
   border-radius: #{pfe-local(BorderRadius)};
@@ -133,7 +131,6 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
 }
 
 :host([pfe-border]) {
-  --pfe-card--BorderColor:   #{map-get($pfe-colors, surface--border)};
   --pfe-card--BorderWidth:   #{map-get($pfe-vars, surface--border-width)};
 }
 
@@ -208,8 +205,8 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     }
 
     // Padding for the header region
-    padding-top:    #{pfe-local(spacing--vertical)};
-    padding-bottom: #{pfe-local(spacing--vertical)};
+    padding-top:    calc(#{pfe-local(spacing--vertical)} / 2);
+    padding-bottom: calc(#{pfe-local(spacing--vertical)} / 2);
 
     margin-bottom: #{pfe-local(region--spacing)};
 

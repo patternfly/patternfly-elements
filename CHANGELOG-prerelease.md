@@ -11,6 +11,7 @@
 - [f9c2813](https://github.com/patternfly/patternfly-elements/commit/f9c2813892eace5e600d168d876ecc4ffd46b472) fix: Add a warning about updating the on attribute before upgrade (#809)
 - [a55449b](https://github.com/patternfly/patternfly-elements/commit/a55449bc1da11abdaf98f959961f25bfa20edc67) docs: Content set and tabs update (#824)
 - [eb74cb8](https://github.com/patternfly/patternfly-elements/commit/eb74cb8f989048164fbb6ed1508c502659a752ed) feat: Update pfe-select to use new event emission format (#758) (#760)
+- []() fix: adjust arrow spacing & alignment on pfe-cta
 
 ## Prerelease 44 ( 2020-04-02 )
 

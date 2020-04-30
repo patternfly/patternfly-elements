@@ -4,26 +4,37 @@
 
 $LOCAL: jump;
 
+$variables: (
+  Padding: calc(#{pfe-var(container-spacer)} * 2),
+  BackgroundColor: pfe-color(surface--base),
+);
+
 :host {
+  //Default styles
+  // font-family: 'Red Hat Text', sans-serif;
+  @include pfe-set-broadcast-theme(light);
+  --theme: light;
+
   // Example local variable, using BEM format
   // --pfe-jump-links--Property: value;
-  font-family: 'Red Hat Text', sans-serif;
   font-weight: 400;
   display: block;
   position: sticky;
   top: 60px;
   padding: 1rem;
+  --pfe-jump-links--BackgroundColor: BackgroundColor;
 }
 
 ::slotted([slot="heading"]) {
   margin: 0 0 1rem 0;
+  margin-bottom: calc(#{pfe-var(container-spacer)} * 1);
   color: black;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   text-transform: uppercase;
 }
 
-ul {
+ul.pfe-jump-links-nav {
   padding: 1rem 1rem 1rem 0;
   margin: 0;
   list-style: none;
@@ -67,7 +78,20 @@ a {
   }
 }
 
+ul.sub-nav {
+  margin: 0;
+  padding: 0;
+  display: none;
+  height: 0;
+  overflow-y: hidden;
+  transition: height 1s linear;
+}
+
 li.expand {
+  ul.sub-nav {
+    height: auto;
+    display: block;
+  }
   a.sub-section {
     display: table;
     height: auto;
@@ -86,10 +110,6 @@ li.expand {
       display: inline-block;
     }
   }
-}
-
-.nav {
-  background-color: blue;
 }
 
 

@@ -92,29 +92,22 @@ class PfeJumpLinksNav extends PFElement {
     this._mutationCallback = this._mutationCallback.bind(this);
     this._menuContainer = this.shadowRoot.querySelector("#container");
     this._observer = new MutationObserver(this._mutationCallback);
-    // this.addEventListener("click", function (e) {
-    //   e.preventDefault();
-    //   console.log(e);
-    //   console.log()
-    //   let el = document.getElementById(e.target.dataset.target);
-    //   if (el) {
-    //     el = el.offsetTop;
-    //     let options = {
-    //       top: el,
-    //       left: 0,
-    //       behavior: "smooth"
-    //     };
-    //     window.scrollTo(options);
-    //   }
-    // });
   }
 
   connectedCallback() {
     super.connectedCallback();
     // If you need to initialize any attributes, do that here
-    const menu = this.querySelector("ul");
-    console.log(menu);
-    this._menuContainer.innerHTML = menu.outerHTML;
+
+    //Check that the light DOM is there
+    if (this.hasAttribute("auto") && !this.children.length) {
+      _buildNav();
+    } else {
+      //Check that the light DOM is valid
+      if (_isValidLightDom()) {
+        const menu = this.querySelector("ul");
+        this._menuContainer.innerHTML = menu.outerHTML;
+      }
+    }
 
     this._observer.observe(this, {
       childList: true,
@@ -128,6 +121,10 @@ class PfeJumpLinksNav extends PFElement {
     this.removeEventListener("click");
   }
 
+  _buildNav() {
+    console.log("...in progress!");
+  }
+
   _mutationCallback() {
     console.log("mutations");
     const menu = this.querySelector("ul");
@@ -137,14 +134,14 @@ class PfeJumpLinksNav extends PFElement {
   _isValidLightDom() {
     if (!this.children.length) {
       console.warn(
-        `${PfeJumpLinks.tag}: You must have a button in the light DOM`
+        `${PfeJumpLinks.tag}: You must have a <ul> tag in the light DOM`
       );
       return false;
     }
 
     if (this.children[0].tagName !== "BUTTON") {
       console.warn(
-        `${PfeButton.tag}: The only child in the light DOM must be a button tag`
+        `${PfeJumpLinks.tag}: The only child in the light DOM must be a button tag`
       );
 
       return false;
@@ -218,8 +215,26 @@ class PfeJumpLinksPanel extends PFElement {
     }
     this.makeActive = link => {
       if (this.menu_links[link]) {
-        this.menu_links[link].setAttribute("active", "");
-        this.menu_links[link].parentNode.setAttribute("active", "");
+        // Check if this is a subnav or has subsections
+        if (this.menu_links[link].classList.contains("sub-section")) {
+          this.menu_links[link].setAttribute("active", "");
+          this.menu_links[link].parentNode.parentNode.parentNode.setAttribute(
+            "active",
+            ""
+          );
+          this.menu_links[link].parentNode.parentNode.parentNode.classList.add(
+            "expand"
+          );
+        } else if (
+          this.menu_links[link].classList.contains("has-sub-section")
+        ) {
+          this.menu_links[link].setAttribute("active", "");
+          this.menu_links[link].parentNode.setAttribute("active", "");
+          this.menu_links[link].parentNode.classList.add("expand");
+        } else {
+          this.menu_links[link].setAttribute("active", "");
+          this.menu_links[link].parentNode.setAttribute("active", "");
+        }
         let activeLink = this.JumpLinksNav.querySelector("[active]");
         this.dispatchEvent(
           new CustomEvent(`pfe-jump-links-panel:active-nav-item`, {
@@ -229,19 +244,20 @@ class PfeJumpLinksPanel extends PFElement {
             bubbles: true
           })
         );
-        if (
-          this.menu_links[link].classList.contains("has-sub-section") ||
-          this.menu_links[link].classList.contains("sub-section")
-        ) {
-          this.menu_links[link].parentNode.classList.add("expand");
-        }
       }
     };
     this.removeActive = link => {
       if (this.menu_links[link]) {
+        //@TODO Should add logic here that doesn't remove active attribute
+        // when ones of its children is the active link
+
+        if (this.menu_links[link].classList.contains("sub-section")) {
+          this.menu_links[
+            link
+          ].parentNode.parentNode.parentNode.classList.remove("expand");
+        }
         this.menu_links[link].removeAttribute("active");
         this.menu_links[link].parentNode.removeAttribute("active");
-        this.menu_links[link].parentNode.classList.remove("expand");
       }
     };
     this.removeAllActive = () =>

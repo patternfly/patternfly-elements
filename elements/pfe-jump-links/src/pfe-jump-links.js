@@ -100,10 +100,10 @@ class PfeJumpLinksNav extends PFElement {
 
     //Check that the light DOM is there
     if (this.hasAttribute("auto") && !this.children.length) {
-      _buildNav();
+      this._buildNav();
     } else {
       //Check that the light DOM is valid
-      if (_isValidLightDom()) {
+      if (this._isValidLightDom()) {
         const menu = this.querySelector("ul");
         this._menuContainer.innerHTML = menu.outerHTML;
       }
@@ -139,9 +139,9 @@ class PfeJumpLinksNav extends PFElement {
       return false;
     }
 
-    if (this.children[0].tagName !== "BUTTON") {
+    if (this.children[1].tagName !== "UL") {
       console.warn(
-        `${PfeJumpLinks.tag}: The only child in the light DOM must be a button tag`
+        `${PfeJumpLinks.tag}: The top-level html tag MUST be a <ul>`
       );
 
       return false;

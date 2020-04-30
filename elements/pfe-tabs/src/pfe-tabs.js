@@ -12,6 +12,15 @@ const KEYCODE = {
   END: 35
 };
 
+// @IE11 doesn't support URLSearchParams
+// https://caniuse.com/#search=urlsearchparams
+const CAN_USE_URLSEARCHPARAMS = window.URLSearchParams ? true : false;
+
+const TABS_MUTATION_CONFIG = {
+  childList: true,
+  subtree: true
+};
+
 function generateId() {
   return Math.random()
     .toString(36)
@@ -36,7 +45,7 @@ class PfeTabs extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["vertical", "selected-index", "pfe-variant", "on"];
+    return ["vertical", "selected-index", "pfe-variant", "pfe-tab-history"];
   }
 
   static get events() {
@@ -54,6 +63,10 @@ class PfeTabs extends PFElement {
     this.setAttribute("selected-index", value);
   }
 
+  get tabHistory() {
+    return this.hasAttribute("pfe-tab-history");
+  }
+
   constructor() {
     super(PfeTabs);
 
@@ -61,7 +74,9 @@ class PfeTabs extends PFElement {
     this._init = this._init.bind(this);
     this._onClick = this._onClick.bind(this);
     this._linkPanels = this._linkPanels.bind(this);
+    this._popstateEventHandler = this._popstateEventHandler.bind(this);
     this._observer = new MutationObserver(this._init);
+    this._updateHistory = true;
   }
 
   connectedCallback() {
@@ -78,7 +93,7 @@ class PfeTabs extends PFElement {
         this._init();
       }
 
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TABS_MUTATION_CONFIG);
     });
   }
 
@@ -88,6 +103,10 @@ class PfeTabs extends PFElement {
       tab.removeEventListener("click", this._onClick)
     );
     this._observer.disconnect();
+
+    if (this.tabHistory) {
+      window.removeEventListener("popstate", this._popstateEventHandler);
+    }
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -124,13 +143,6 @@ class PfeTabs extends PFElement {
         }
         break;
 
-      case "on":
-        if (this.getAttribute("on") === "dark") {
-          this._allTabs().forEach(tab => tab.setAttribute("on", "dark"));
-          this._allPanels().forEach(panel => panel.setAttribute("on", "dark"));
-        }
-        break;
-
       case "selected-index":
         Promise.all([
           customElements.whenDefined(PfeTab.tag),
@@ -138,7 +150,16 @@ class PfeTabs extends PFElement {
         ]).then(() => {
           this._linkPanels();
           this.selectIndex(newValue);
+          this._updateHistory = true;
         });
+        break;
+
+      case "pfe-tab-history":
+        if (newValue === null) {
+          window.removeEventListener("popstate", this._popstateEventHandler);
+        } else {
+          window.addEventListener("popstate", this._popstateEventHandler);
+        }
     }
   }
 
@@ -169,6 +190,25 @@ class PfeTabs extends PFElement {
       return;
     }
 
+    // @IE11 doesn't support URLSearchParams
+    // https://caniuse.com/#search=urlsearchparams
+    if (
+      this.selected &&
+      this.tabHistory &&
+      this._updateHistory &&
+      CAN_USE_URLSEARCHPARAMS
+    ) {
+      // rebuild the url
+      const pathname = window.location.pathname;
+      const urlParams = new URLSearchParams(window.location.search);
+      const hash = window.location.hash;
+      const property = this.id || this.getAttribute("pfe-id");
+      const value = tab.id || tab.getAttribute("pfe-id");
+
+      urlParams.set(property, value);
+      history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
+    }
+
     this._selectTab(tab);
   }
 
@@ -177,7 +217,20 @@ class PfeTabs extends PFElement {
       this.setAttribute("role", "tablist");
     }
 
-    if (!this.hasAttribute("selected-index")) {
+    let urlParams;
+
+    // @IE11 doesn't support URLSearchParams
+    // https://caniuse.com/#search=urlsearchparams
+    if (CAN_USE_URLSEARCHPARAMS) {
+      urlParams = new URLSearchParams(window.location.search);
+    }
+
+    const tabIndexFromURL = this._getTabIndexFromURL();
+
+    if (tabIndexFromURL > -1) {
+      this._setFocus = true;
+      this.selectedIndex = tabIndexFromURL;
+    } else if (!this.hasAttribute("selected-index")) {
       this.selectedIndex = 0;
     }
 
@@ -187,7 +240,11 @@ class PfeTabs extends PFElement {
     if (mutationsList) {
       for (let mutation of mutationsList) {
         if (mutation.type === "childList" && mutation.addedNodes.length) {
-          mutation.addedNodes.forEach(addedNode => {
+          [...mutation.addedNodes].forEach(addedNode => {
+            if (!addedNode.tagName) {
+              return;
+            }
+
             if (
               addedNode.tagName.toLowerCase() === PfeTab.tag ||
               addedNode.tagName.toLowerCase() === PfeTabPanel.tag
@@ -231,16 +288,16 @@ class PfeTabs extends PFElement {
     this._linked = true;
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TABS_MUTATION_CONFIG);
     }
   }
 
   _allPanels() {
-    return [...this.querySelectorAll("pfe-tab-panel")];
+    return [...this.children].filter(child => child.matches("pfe-tab-panel"));
   }
 
   _allTabs() {
-    return [...this.querySelectorAll("pfe-tab")];
+    return [...this.children].filter(child => child.matches("pfe-tab"));
   }
 
   _panelForTab(tab) {
@@ -307,27 +364,31 @@ class PfeTabs extends PFElement {
     newTab.selected = true;
     newPanel.hidden = false;
 
-    if (this._setFocus) {
-      newTab.focus();
-      this._setFocus = false;
-    }
-
     const tabs = this._allTabs();
     const newIdx = tabs.findIndex(tab => tab.selected);
 
     this.selected = newTab;
 
     if (newTabSelected) {
+      if (this._setFocus) {
+        newTab.focus();
+      }
+
       this.emitEvent(PfeTabs.events.shownTab, {
         detail: {
           tab: this.selected
         }
       });
     }
+
+    this._setFocus = false;
   }
 
   _onKeyDown(event) {
-    if (event.target.getAttribute("role") !== "tab") {
+    const tabs = this._allTabs();
+    const foundTab = tabs.find(tab => tab === event.target);
+
+    if (!foundTab) {
       return;
     }
 
@@ -367,11 +428,56 @@ class PfeTabs extends PFElement {
   }
 
   _onClick(event) {
-    if (event.currentTarget.getAttribute("role") !== "tab") {
+    const tabs = this._allTabs();
+    const foundTab = tabs.find(tab => tab === event.currentTarget);
+
+    if (!foundTab) {
       return;
     }
 
     this.selectedIndex = this._getTabIndex(event.currentTarget);
+  }
+
+  _getTabIndexFromURL() {
+    let urlParams;
+    let tabIndex = -1;
+
+    // @IE11 doesn't support URLSearchParams
+    // https://caniuse.com/#search=urlsearchparams
+    if (CAN_USE_URLSEARCHPARAMS) {
+      urlParams = new URLSearchParams(window.location.search);
+
+      // @DEPRECATED
+      // the "pfe-" prefix has been deprecated but we'll continue to support it
+      // we'll give priority to the urlParams.has(`${this.id}`) attribute first
+      // and fallback to urlParams.has(`pfe-${this.id}`) if it exists. We should
+      // be able to remove the || part of the if statement in the future
+      const tabsetInUrl =
+        urlParams.has(`${this.id}`) ||
+        urlParams.has(this.getAttribute("pfe-id")) ||
+        urlParams.has(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+
+      if (urlParams && tabsetInUrl) {
+        const id =
+          urlParams.get(`${this.id}`) ||
+          urlParams.get(this.getAttribute("pfe-id")) ||
+          urlParams.get(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+
+        tabIndex = this._allTabs().findIndex(tab => {
+          const tabId = tab.id || tab.getAttribute("pfe-id");
+          return tabId === id;
+        });
+      }
+    }
+
+    return tabIndex;
+  }
+
+  _popstateEventHandler() {
+    const tabIndexFromURL = this._getTabIndexFromURL();
+
+    this._updateHistory = false;
+    this.selectedIndex = tabIndexFromURL > -1 ? tabIndexFromURL : 0;
   }
 }
 

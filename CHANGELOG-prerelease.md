@@ -1,6 +1,7 @@
 ## Prerelese 46 ( TBD )
 
-- []() fix: pfe-tabs check for tagName on addedNode mutation before continuing
+- [27fee5f](https://github.com/patternfly/patternfly-elements/commit/27fee5f5c5eb021ac126f3767dd0299f5cda8231) fix: pfe-tabs check for tagName on addedNode mutation before continuing
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add clearfix within tab and accordion panels
 
 ## Prerelese 45 ( 2020-04-27 )
 

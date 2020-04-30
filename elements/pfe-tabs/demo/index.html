@@ -406,6 +406,29 @@
 
     </section>
 
+    <section class="example">
+      <h2 id="add-text-to-tab-and-panel">Dynamically Adding Text to Tab and Panel</h2>
+      <pfe-tabs id="dynamic-text">
+        <pfe-tab role="heading" slot="tab" id="dynamicTextTab">Tab 1</pfe-tab>
+        <pfe-tab-panel role="region" slot="panel" id="dynamicTextPanel">
+          <h4>Tab 1</h4>
+        </pfe-tab-panel>
+      </pfe-tabs>
+
+      <div>
+        <label>
+          Additional Tab Text
+          <input type="text" placeholder="Additional Tab Text" id="additional-tab-text">
+        </label>
+      </div>
+      <div>
+        <label>
+          Additional Panel Text
+          <input type="text" placeholder="Additional Panel Text" id="additional-panel-text">
+        </label>
+      </div>
+    </section>
+
     <script>
       var jumpLinksMenu = document.querySelector("#jump-links");
       var headings = document.querySelectorAll("section > h2[id]");
@@ -441,6 +464,19 @@
         fragment.appendChild(tab);
         fragment.appendChild(panel);
         pfeTabs.appendChild(fragment);
+      });
+
+      var dynamicTextTab = document.querySelector("#dynamicTextTab");
+      var dynamicTextPanel = document.querySelector("#dynamicTextPanel")
+      var additionalTabTextInput = document.querySelector("#additional-tab-text");
+      var additionalPanelTextInput = document.querySelector("#additional-panel-text");
+
+      additionalTabTextInput.addEventListener("change", function (event) {
+        dynamicTextTab.innerHTML += event.target.value;
+      });
+
+      additionalPanelTextInput.addEventListener("change", function (event) {
+        dynamicTextPanel.innerHTML += event.target.value;
       });
     </script>
   </body>

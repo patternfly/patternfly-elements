@@ -4,7 +4,7 @@
     "className": "PfeCollapse",
     "elementName": "pfe-collapse"
   },
-  "version": "1.0.0-prerelease.40",
+  "version": "1.0.0-prerelease.45",
   "description": "Collapse element for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -38,8 +38,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.40",
-    "@patternfly/pfelement": "^1.0.0-prerelease.39"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.45",
+    "@patternfly/pfelement": "^1.0.0-prerelease.45"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

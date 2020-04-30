@@ -522,12 +522,15 @@ class PfeTab extends PFElement {
   constructor() {
     super(PfeTab);
 
+    this._tabItem;
     this._init = this._init.bind(this);
     this._observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
     super.connectedCallback();
+
+    this._tabItem = this.shadowRoot.querySelector(`.${this.tag}`);
 
     if (this.children.length || this.textContent.trim().length) {
       this._init();
@@ -548,6 +551,22 @@ class PfeTab extends PFElement {
   _init() {
     if (window.ShadyCSS) {
       this._observer.disconnect();
+    }
+
+    // Copy the tab content into the template
+    const whitelist = ["H1", "H2", "H3", "H4", "H5", "H6", "P"];
+    if (this.children.length > 0) {
+      [...this.children].forEach(child => {
+        if (whitelist.includes(child.tagName)) {
+          this._tabItem.textContent = child.textContent.trim();
+        } else {
+          console.warn(`${this.tag}: ${child.tagName} is not a supported tag.`);
+        }
+      });
+    } else if (this.textContent.trim().length) {
+      this._tabItem.textContent = this.textContent.trim();
+    } else {
+      // Throw warning?
     }
 
     if (!this.pfeId) {

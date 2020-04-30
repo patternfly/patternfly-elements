@@ -270,6 +270,7 @@ $variables: map-merge($variables, $nav-item-variables);
 :host([pfe-icon]) {
   ::slotted([slot="trigger"]) {
     margin: 0.25em 0 0 0 !important;
+    max-width: 100px;
   }
 }
 

@@ -43,14 +43,13 @@ html {
 [class^="example"],
 section.pfe-l-grid {
     margin: 32px;
+    padding: 32px 20px;
 }
 
 @media screen and (min-width: 900px) {
-
     [class^="example"],
     section.pfe-l-grid {
         margin-right: 385px !important;
-        padding: 32px 20px;
     }
 }
 

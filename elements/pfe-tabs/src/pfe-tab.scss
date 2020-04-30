@@ -42,14 +42,13 @@ $variables: (
 
   // Exposing this for customization
   text-transform: #{pfe-local($cssvar: TextTransform, $region: tab, $fallback: none)};
+  font-family: #{pfe-var(font-family)};
   font-weight: #{pfe-var(font-weight--normal)};
+  font-size: #{pfe-var(font-size)};
+  color: #{pfe-local(Color)};
 
   cursor: pointer;
   text-align: #{pfe-local($cssvar: TextAlign, $region: tab, $fallback: center)};
-  
-  ::slotted(*) {
-    color: #{pfe-local(Color)} !important;
-  }
   
   @at-root #{&}(:hover) {
     --pfe-tabs--Color: #{pfe-color(text)};
@@ -59,7 +58,7 @@ $variables: (
   }
 
   // Active tab styles
-  // TODO: ShadyCSS falls flat on this pseudo element in IE11 `:host(:focus-visible)`, add back when we drop ShadyCSS
+  // TODO` ShadyCSS falls flat on this pseudo element in IE11 `:host(:focus-visible)`, add back when we drop ShadyCSS
   @at-root #{&}(:focus) {
     --pfe-tabs--Color: #{pfe-color(text)};
     outline: #{pfe-var(ui--focus-outline-width)} outset #{pfe-local(focus)};

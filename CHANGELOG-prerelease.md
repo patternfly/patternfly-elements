@@ -1,3 +1,7 @@
+## Prerelese 46 ( TBD )
+
+- []() fix: pfe-tabs check for tagName on addedNode mutation before continuing
+
 ## Prerelese 45 ( 2020-04-27 )
 
 - [8dbea7b](https://github.com/patternfly/patternfly-elements/commit/8dbea7b5fbd94614d89828c27afafdcc287f016f) fix: typo in pfe-icon README (#840)

@@ -1,10 +1,10 @@
-## Prerelese 46 ( TBD )
+## Prerelease 46 ( TBD )
 
 - [27fee5f](https://github.com/patternfly/patternfly-elements/commit/27fee5f5c5eb021ac126f3767dd0299f5cda8231) fix: pfe-tabs check for tagName on addedNode mutation before continuing
 - [2c950b0](https://github.com/patternfly/patternfly-elements/commit/2c950b08f7638787df50aa5ee6738f1205ea3a9d) fix: Add clearfix within tab and accordion panels
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add margin clearing to tab headings in slots
 
-## Prerelese 45 ( 2020-04-27 )
+## Prerelease 45 ( 2020-04-27 )
 
 - [8dbea7b](https://github.com/patternfly/patternfly-elements/commit/8dbea7b5fbd94614d89828c27afafdcc287f016f) fix: typo in pfe-icon README (#840)
 - [7246607](https://github.com/patternfly/patternfly-elements/commit/7246607bcae3aaba0c2d8288b58c20244ed83cda) fix: Issue 839 pfe tabs history firefox, focus-state (#841)

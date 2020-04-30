@@ -554,19 +554,21 @@ class PfeTab extends PFElement {
     }
 
     // Copy the tab content into the template
-    const whitelist = ["H1", "H2", "H3", "H4", "H5", "H6", "P"];
+    let label = [];
     if (this.children.length > 0) {
       [...this.children].forEach(child => {
-        if (whitelist.includes(child.tagName)) {
-          this._tabItem.textContent = child.textContent.trim();
-        } else {
-          console.warn(`${this.tag}: ${child.tagName} is not a supported tag.`);
-        }
+        label.push(child.textContent.trim());
       });
     } else if (this.textContent.trim().length) {
-      this._tabItem.textContent = this.textContent.trim();
+      label.push(this.textContent.trim());
     } else {
-      // Throw warning?
+      console.warn(
+        `${this.tag}: There does not appear to be any content in the tab region.`
+      );
+    }
+
+    if (label.length > 0) {
+      this._tabItem.textContent = label.join(" ");
     }
 
     if (!this.pfeId) {

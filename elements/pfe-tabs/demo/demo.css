@@ -9,7 +9,7 @@ html {
         --pfe-card--PaddingLeft: 32px;
     }
 
-    .toc > a {
+    .toc>a {
         display: none;
     }
 }
@@ -19,6 +19,7 @@ html {
         position: fixed;
         top: 0;
         right: 0;
+        z-index: 5;
     }
 
     .scroll-up {
@@ -39,34 +40,20 @@ html {
     --pfe-icon--Color: #fff;
 }
 
-[class^="example"] {
+[class^="example"],
+section.pfe-l-grid {
     margin: 32px;
 }
 
 @media screen and (min-width: 900px) {
-    [class^="example"] {
-        margin: 32px 385px 32px 32px;
+
+    [class^="example"],
+    section.pfe-l-grid {
+        margin-right: 385px !important;
         padding: 32px 20px;
     }
 }
 
-.example-compare {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 32px;
-}
-
-@media screen and (min-width: 1500px) {
-    .example-compare {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-.example-stacked {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 32px;
-}
 
 .example>h2 {
     text-align: right;
@@ -89,14 +76,14 @@ html {
     margin-top: 5px;
 }
 
-pfe-tabs + button {
+pfe-tabs+button {
     background-color: #eee;
     border: 1px solid #ddd;
     padding: 5px 10px;
     margin-top: 10px;
 }
 
-pfe-tabs + button:hover {
+pfe-tabs+button:hover {
     background-color: #ddd;
 }
 

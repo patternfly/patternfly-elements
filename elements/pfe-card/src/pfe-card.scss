@@ -18,7 +18,7 @@ $variables: (
   BorderRadius: pfe-var(surface--border-radius),
 
   //-- Border variable encompasses width, style, and color
-  Border: #{pfe-local(BorderWeight, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)},
+  Border: #{pfe-local(BorderWidth, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, #{pfe-color(surface--border)})},
 
   //-- Color properties
   BackgroundColor: pfe-color(surface--base),
@@ -96,6 +96,10 @@ $variables: (
   --pfe-card--PaddingRight:   #{pfe-var(container-spacer)};
   --pfe-card--PaddingBottom:  #{pfe-var(container-spacer)};
   --pfe-card--PaddingLeft:    #{pfe-var(container-spacer)};
+}
+
+:host([pfe-border]) {
+  --pfe-card--BorderWidth:   #{map-get($pfe-vars, surface--border-width)};
 }
 
 // Targets the wrappers in the shadow DOM

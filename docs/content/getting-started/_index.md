@@ -19,8 +19,7 @@ The list below is the recommended approach to using web components and overridin
 ## 1. Install PatternFly Elements
 
 PFE is a monorepo, meaning that each component is revisioned independently of others, and you can request only the components you need. You may also want to request the pfe-cta component to render the call-to-action links in the tray of the menu.
-You can find the latest versions of all PFE webcomponents here:
-https://www.npmjs.com/search?q=%40patternfly%20elements
+You can find the latest versions of all PFE webcomponents on [npmjs.com](https://www.npmjs.com/search?q=%40patternfly%20elements).
 
 Depending on the tool you use to manage dependencies ([NPM](https://www.npmjs.com/), Yarn, etc.) use the command line to install the pfe-navigation as a dependency of your project like this:
 

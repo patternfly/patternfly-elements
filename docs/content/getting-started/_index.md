@@ -11,7 +11,7 @@ tags = [ "start" ]
 
 ## Getting Started
 
-Check out the demo files within each component for examples of the attributes and possible variable overrides.  The readme.md files within each component should have descriptions about the supported attributes & variables.
+Check out [storybook](https://patternfly.org/patternfly-elements/demo) or the demo/index.html files within each component for examples of the attributes and possible variable overrides.  The readme.md files within each component should have descriptions about the supported attributes & variables.
 
 The list below is the recommended approach to using web components and overriding style properties, in order.
 

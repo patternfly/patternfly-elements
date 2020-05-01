@@ -202,7 +202,6 @@ $variables: (
     height: #{pfe-local($cssvar: size, $region: arrow)};
     transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
     margin-bottom: -1px;
-   
     :host(.focus-within) & {
       fill: #{pfe-local(Color--focus)};
     }

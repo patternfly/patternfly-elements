@@ -99,7 +99,7 @@ class PfeJumpLinksNav extends PFElement {
     // If you need to initialize any attributes, do that here
 
     //Check that the light DOM is there
-    if (this.hasAttribute("auto") && !this.children.length) {
+    if (this.hasAttribute("autobuild")) {
       this._buildNav();
     } else {
       //Check that the light DOM is valid
@@ -122,7 +122,64 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _buildNav() {
+    let html = "";
     console.log("...in progress!");
+    html += `<h2 hidden id="site-nav-heading" class="sr-only">Page navigation</h2>`;
+    html += `<h4 class="heading" slot="heading">Jump to section</h4>`;
+    html += `<ul class="pfe-jump-links-nav">`;
+    console.log(this.id);
+    let panel = document.querySelector(`[scrolltarget="${this.id}"]`);
+    let panelSections = panel.querySelectorAll(
+      ".pfe-jump-links-panel__section"
+    );
+    // console.log(panel)
+    // console.log(panelSections);
+    let isSubSection = false;
+
+    for (let i = 0; i < panelSections.length; i++) {
+      let arr = [...panelSections];
+      if (arr[i].classList.contains("has-sub-section")) {
+        isSubSection = true;
+        let linkListItem = `
+          <li>
+            <a
+              class="pfe-jump-links-nav__item has-sub-section"
+              href="#${arr[i].id}"
+              data-target="${arr[i].id}">
+                ${arr[i].innerHTML}
+            </a>
+            <ul class="sub-nav">
+        `;
+        html += linkListItem;
+      } else if (arr[i].classList.contains("sub-section")) {
+        let linkSubItem = `
+        <li>
+            <a
+              class="pfe-jump-links-nav__item sub-section"
+              href="#${arr[i].id}"
+              data-target="${arr[i].id}">
+                ${arr[i].innerHTML}
+            </a>
+        </li>`;
+        if (!arr[i + 1].classList.contains("sub-section")) {
+          linkSubItem += `</ul></li>`;
+        }
+        html += linkSubItem;
+      } else {
+        let linkListItem = `
+          <li>
+            <a
+              class="pfe-jump-links-nav__item"
+              href="#${arr[i].id}"
+              data-target="${arr[i].id}">
+                ${arr[i].innerHTML}
+            </a>
+          </li>
+        `;
+        html += linkListItem;
+      }
+    }
+    this.shadowRoot.querySelector("#container").innerHTML = html;
   }
 
   _mutationCallback() {
@@ -274,16 +331,18 @@ class PfeJumpLinksPanel extends PFElement {
     let menu_links;
     let sectionMargin;
 
-    if (!this.sections) {
+    if (!this.sections || typeof this.sections === "undefined") {
       this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
     } else {
       sections = this.sections;
     }
-    if (!this.menu_links) {
-      this.menu_links = this.JumpLinksNav.querySelectorAll(
+
+    if (this.menu_links.length < 1 || !this.menu_links) {
+      this.menu_links = this.JumpLinksNav.shadowRoot.querySelectorAll(
         ".pfe-jump-links-nav__item"
       );
       menu_links = this.menu_links;
+      console.log(this.menu_links);
     }
     if (!this.sectionMargin) {
       sectionMargin = 200;

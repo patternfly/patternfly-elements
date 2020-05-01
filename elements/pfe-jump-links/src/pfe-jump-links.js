@@ -22,7 +22,6 @@ class PfeJumpLinks extends PFElement {
   //   };
   // }
 
-  // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Content;
   }
@@ -88,7 +87,6 @@ class PfeJumpLinksNav extends PFElement {
   constructor() {
     super(PfeJumpLinksNav, { type: PfeJumpLinksNav.PfeType });
 
-    console.log("bleep bloop");
     this._mutationCallback = this._mutationCallback.bind(this);
     this._menuContainer = this.shadowRoot.querySelector("#container");
     this._observer = new MutationObserver(this._mutationCallback);
@@ -123,23 +121,17 @@ class PfeJumpLinksNav extends PFElement {
 
   _buildNav() {
     let html = "";
-    console.log("...in progress!");
     html += `<h2 hidden id="site-nav-heading" class="sr-only">Page navigation</h2>`;
     html += `<h4 class="heading" slot="heading">Jump to section</h4>`;
     html += `<ul class="pfe-jump-links-nav">`;
-    console.log(this.id);
     let panel = document.querySelector(`[scrolltarget="${this.id}"]`);
     let panelSections = panel.querySelectorAll(
       ".pfe-jump-links-panel__section"
     );
-    // console.log(panel)
-    // console.log(panelSections);
-    let isSubSection = false;
 
     for (let i = 0; i < panelSections.length; i++) {
       let arr = [...panelSections];
       if (arr[i].classList.contains("has-sub-section")) {
-        isSubSection = true;
         let linkListItem = `
           <li>
             <a
@@ -183,7 +175,6 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _mutationCallback() {
-    console.log("mutations");
     const menu = this.querySelector("ul");
     this._menuContainer.innerHTML = menu.outerHTML;
   }
@@ -342,7 +333,6 @@ class PfeJumpLinksPanel extends PFElement {
         ".pfe-jump-links-nav__item"
       );
       menu_links = this.menu_links;
-      console.log(this.menu_links);
     }
     if (!this.sectionMargin) {
       sectionMargin = 200;

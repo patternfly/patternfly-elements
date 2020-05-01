@@ -6,6 +6,13 @@ $LOCAL: cta;
 $pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
 $pfe-cta--Color--fallback: #003366;
 
+// Arrow animation
+$left: 0.2rem;
+$right: 0.2rem;
+$arrow-basic: 0 $right 0 $left;
+$arrow-hover: 0 0 0 #{$right + $left};
+
+
 $variables: (
   Padding: 0.6rem 0,
   BorderRadius: 0,
@@ -26,7 +33,7 @@ $variables: (
   FontSize--priority: calc(#{pfe-local($cssvar: FontSize) / 1.125}),
   arrow: (
     Display: inline,
-    Padding: 0 0.05rem,
+    Padding: #{$arrow-basic},
     size: 13px,
     MarginLeft: calc(#{pfe-var(content-spacer)} * 0.25)
   ),
@@ -76,7 +83,7 @@ $variables: (
 :host(:hover),
 :host(:hover) ::slotted(*),
 ::slotted(:hover) {
-  --pfe-cta__arrow--Padding: 0 0 0 0.5rem;
+  --pfe-cta__arrow--Padding: #{$arrow-hover};
 }
 
 :host(:hover) {

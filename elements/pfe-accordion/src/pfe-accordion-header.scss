@@ -46,6 +46,7 @@ button {
 :host(:last-of-type) button:not([aria-expanded="true"]) {
   @include pfe-trigger-last;
 }
+
 :host(:last-of-type.animating) button {
   @include pfe-set-local((
     BorderBottomWidth: 0
@@ -69,13 +70,13 @@ button[aria-expanded="true"] {
 }
 
 // Styles contextual to theme
-@each $context in $THEMES {
-  :host([on="#{$context}"]) button[aria-expanded="true"] {
-    @include pfe-print-variables(
-      pfe-accordion-variables($state: expanded, $theme: #{$context})
-    );
-  }
-}
+// @each $context in $THEMES {
+//   :host([on="#{$context}"]) button[aria-expanded="true"] {
+//     @include pfe-print-variables(
+//       pfe-accordion-variables($state: expanded, $theme: #{$context})
+//     );
+//   }
+// }
 
 /// ===========================================================================
 /// DISCLOSURE STYLES

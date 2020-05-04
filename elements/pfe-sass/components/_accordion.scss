@@ -15,7 +15,6 @@
       BorderBottomWidth:   pfe-var(surface--border-width),
       BorderLeftWidth:     pfe-var(surface--border-width--heavy),
       BackgroundColor:     transparent,
-      Color:               pfe-apply-broadcast(text),
       TextAlign:           left,
       Padding--base:       pfe-var(container-spacer),
       accent:              pfe-color(ui-base),
@@ -27,17 +26,23 @@
 
     @if $theme == dark { // Dark theme
       $variables: (
-        accent: #{pfe-color(ui-base--on-dark)}
+        accent: #{pfe-color(ui-base--on-dark)},
+        theme:  dark,
+        Color:  pfe-apply-broadcast(text--on-dark)
       );
     }
     @else if $theme == saturated { // Saturated theme
       $variables: (
-        accent: #{pfe-color(ui-base--on-saturated)}
+        accent: #{pfe-color(ui-base--on-saturated)},
+        theme: saturated,
+        Color:  pfe-apply-broadcast(text--on-saturated)
       );
     }
     @else { // Light theme
       $variables: map-deep-merge($variables, (
-        accent: #{pfe-color(ui-base)}
+        accent: #{pfe-color(ui-base)},
+        theme: light,
+        Color:  pfe-apply-broadcast(text)
       ));
     }
 
@@ -54,7 +59,10 @@
     $variables: (
       BorderColor:         #{pfe-color(surface--border)},
       BorderRightWidth:    #{pfe-var(surface--border-width)},
-      BorderLeftWidth:     #{pfe-var(surface--border-width--heavy)}
+      BorderLeftWidth:     #{pfe-var(surface--border-width--heavy)},
+      BackgroundColor:     rgba(255, 255, 255, 1),
+      Color:               #{pfe-color(text)},
+      BorderColor--accent: #{pfe-color(ui-base)}
     );
 
     @if $theme == dark { // Dark theme
@@ -71,13 +79,6 @@
         BorderColor--accent: #{pfe-color(ui-base--on-saturated)}
       );
     }
-    @else { // Defaults for light theme
-      $variables: map-deep-merge($variables, (
-        BackgroundColor:     rgba(255, 255, 255, 1),
-        Color:               #{pfe-color(text)},
-        BorderColor--accent: #{pfe-color(ui-base)}
-      ));
-    }
 
     @if $variant == disclosure {
       $variables: (
@@ -90,10 +91,7 @@
   @return $variables;
 }
 
-@mixin pfe-accordion-props($variant: default) {
-  @include pfe-set-broadcast-theme(light);
-  --theme: light;
-  
+@mixin pfe-accordion-props($variant: default) {  
   margin: 0;
   width: #{pfe-local(Width)};
   max-width: 100%;
@@ -116,7 +114,6 @@
     $hover: (
       BorderColor--accent: #{pfe-local(accent)}
     );
-    $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $hover);
     @include pfe-print-variables($hover);
   }
 }
@@ -126,13 +123,12 @@
   $chevron--spacing: 50px;
 
   $variables: (
+    BorderTopWidth:    pfe-var(surface--border-width),
     BorderBottomWidth: 0,
     trigger: (
-      Padding: #{pfe-local(Padding--base)} #{$chevron--spacing} #{pfe-local(Padding--base)} calc(#{pfe-local(Padding--base)} * 1.5) !important
+      Padding: #{pfe-local(Padding--base)} #{$chevron--spacing} #{pfe-local(Padding--base)} calc(#{pfe-local(Padding--base)} * 1.5)
     )
   );
-
-  $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $variables);
 
   @include pfe-print-variables($variables);
   @include pfe-accordion-props;
@@ -146,7 +142,7 @@
   font-weight: #{pfe-var(font-weight--bold)};
   text-align:  #{pfe-local(TextAlign)};
   line-height: #{pfe-var(line-height)};
-  padding:     #{pfe-local($region: trigger, $cssvar: Padding)};
+  padding:     #{pfe-local($region: trigger, $cssvar: Padding)} !important;
 
   &:hover {
     outline: none;
@@ -165,32 +161,36 @@
 }
 
 @mixin pfe-trigger-last($theme: light) {
-  @include pfe-print-variables((
+  $variables: (
     BorderBottomWidth: #{pfe-var(surface--border-width)}
-  ));
+  );
+
+  @include pfe-print-variables($variables);
 }
 
 //-- Panel-specific properties
-@mixin pfe-panel-variables($theme: light) {
-  @include pfe-print-variables((
-    BorderTopWidth: 0
-  ));
+@function pfe-panel-variables($theme: light) {
+  $variables: (
+    BorderTopWidth: 0,
+    BorderBottomWidth: 0,
+    BoxShadow: 0 5px #{pfe-var(surface--border-width--heavy)} rgba(140, 140, 140, 0.35)
+  );
 
-  @if $theme == "light" { // Light theme
-    @include pfe-print-variables((
-      BoxShadow: 0 5px #{pfe-var(surface--border-width--heavy)} rgba(140, 140, 140, 0.35)
-    ));
-  }
-  @else {
-    @include pfe-print-variables((
+  @if $theme != "light" {
+    $variables: map-deep-merge($variables, (
       BoxShadow: none
     ));
   }
+
+  @return $variables;
 }
 
 @mixin pfe-panel-container() {
   // Ensure the box shadow does not propagate to nest accordions
-  @include pfe-set-local( ( BoxShadow: none ) );
+  $variables: (
+    BoxShadow: none
+  );
+  @include pfe-print-variables( $variables );
 
   @extend %container;
   padding: #{pfe-local(panel-container--Padding)};
@@ -201,7 +201,6 @@
 /// ===========================================================================
 
 @mixin pfe-chevron($state: open, $position: after, $size: .4em, $offset: $size) {
-
   content: "";
   position: absolute;
   top: calc(#{pfe-var(container-spacer)} + #{$offset});

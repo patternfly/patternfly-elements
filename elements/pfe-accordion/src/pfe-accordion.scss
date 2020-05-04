@@ -19,11 +19,10 @@ $LOCAL-VARIABLES: pfe-accordion-variables();
   }
 }
 
-@each $context in $THEMES {
+@each $context in (dark, saturated) {
   :host([on="#{$context}"]) {
-    @include pfe-print-variables(
-      pfe-accordion-variables($theme: #{$context})
-    );
+    $theme-vars: pfe-accordion-variables($theme: #{$context});
+    @include pfe-print-variables($theme-vars);
   }
 }
 

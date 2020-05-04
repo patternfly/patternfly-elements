@@ -28,7 +28,10 @@ $LOCAL-VARIABLES: pfe-accordion-variables();
 }
 
 :host(:last-of-type[expanded]) {
-  margin-bottom: 0;
+  $variables: (
+    BorderBottomWidth: 0
+  );
+  @include pfe-print-variables($variables);
 }
 
 /// ===========================================================================
@@ -37,10 +40,11 @@ $LOCAL-VARIABLES: pfe-accordion-variables();
 
 :host([expanded]),
 :host(.animating) {
-  @include pfe-print-variables(
-    pfe-accordion-variables($state: expanded)
+  $variables: map-deep-merge(
+    pfe-accordion-variables($state: expanded),
+    pfe-panel-variables()
   );
-  @include pfe-panel-variables;
+  @include pfe-print-variables($variables);
   @include pfe-collapsible($state: open);
   @include browser-query(ie11) {
     border-top-width: 0;

@@ -98,7 +98,7 @@ $variables: (
   --pfe-card--PaddingLeft:    #{pfe-var(container-spacer)};
 }
 
-:host([pfe-border]) {
+:host([pfe-border]:not([pfe-border="false"]) {
   --pfe-card--BorderWidth:   #{map-get($pfe-vars, surface--border-width)};
 }
 

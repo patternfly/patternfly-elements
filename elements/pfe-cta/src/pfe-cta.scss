@@ -6,7 +6,7 @@ $LOCAL: cta;
 $pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
 $pfe-cta--Color--fallback: #003366;
 
-$variables: (
+$LOCAL-VARIABLES: (
   Padding: 0.6rem 0,
   BorderRadius: 0,
   BackgroundColor: transparent,
@@ -38,7 +38,7 @@ $variables: (
 );
 
 :host {
-  @include pfe-print-variables($variables);
+// @include pfe-print-variables($LOCAL-VARIABLES);
 
   // properties
   display: inline-block;

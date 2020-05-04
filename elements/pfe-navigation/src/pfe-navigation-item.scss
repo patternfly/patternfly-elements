@@ -20,10 +20,10 @@ $nav-item-variables: (
     Color:            #{pfe-color(text)}
   )
 );
-$variables: map-merge($variables, $nav-item-variables);
+$LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
 
 :host {
-  @include pfe-print-variables($variables);
+// @include pfe-print-variables($LOCAL-VARIABLES);
 
   display: flex;
   flex-direction: column;

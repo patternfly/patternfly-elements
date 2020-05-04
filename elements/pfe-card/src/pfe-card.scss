@@ -3,7 +3,7 @@
 $LOCAL: card;
 
 
-$variables: (
+$LOCAL-VARIABLES: (
 
   // Individual padding overrides available
   PaddingTop: calc(#{pfe-var(container-spacer)} * 2),
@@ -41,7 +41,7 @@ $variables: (
 );
 
 :host {
-  @include pfe-print-variables($variables);
+// @include pfe-print-variables($LOCAL-VARIABLES);
   
   // Broadcasted values set to match background color
   @include pfe-set-broadcast-theme(light);

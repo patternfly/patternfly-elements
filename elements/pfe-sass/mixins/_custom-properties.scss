@@ -104,8 +104,8 @@
 ///     }
 ///     ```
 /// ===========================================================================
-@mixin pfe-set-local($variables) {
-    @each $property, $value in $variables {
+@mixin pfe-set-local($map: $LOCAL-VARIABLES) {
+    @each $property, $value in $map {
         $name: "--#{$property}";
         $styles: $value;
 
@@ -128,8 +128,8 @@
 /// ===========================================================================
 /// @alias pfe-set-local
 /// ===========================================================================
-@mixin pfe-print-variables($variables) {
-    @include pfe-set-local($variables);
+@mixin pfe-print-variables($map: $LOCAL-VARIABLES) {
+    @include pfe-set-local($map);
 }
 
 /// ===========================================================================

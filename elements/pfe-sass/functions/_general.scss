@@ -21,7 +21,7 @@
 /// Set $map to false if you need supplemental breakpoints in a component  
 /// Use:
 /// ```
-/// $variables: (
+/// $LOCAL-VARIABLES: (
 ///    lg-mobile:         640,
 ///    sm-desktop:        1024,
 /// );
@@ -45,7 +45,7 @@
     	}
     }
     @else {
-        $bp: map-get($variables, #{$size} ) ;
+        $bp: map-get($LOCAL-VARIABLES, #{$size} ) ;
 	    @if $max {
 	        $bp: (pfe-strip-unit($bp) - 1) * 1px;
 

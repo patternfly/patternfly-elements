@@ -2,7 +2,7 @@
 
 $LOCAL: tabs;
 
-$variables: (
+$LOCAL-VARIABLES: (
   BackgroundColor: transparent,
   Color:           pfe-color(ui-disabled--text),
   link:            pfe-color(link),
@@ -21,7 +21,7 @@ $variables: (
 /// ===========================================================================
 
 :host {
-  @include pfe-print-variables($variables);
+// @include pfe-print-variables($LOCAL-VARIABLES);
 
   position: relative;
   display: block;

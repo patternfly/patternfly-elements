@@ -2,7 +2,7 @@
 
 $LOCAL: select;
 
-$variables: (
+$LOCAL-VARIABLES: (
   BackgroundColor:  #{pfe-color(surface--lightest)},
   Color:            #{pfe-color(text)},
   
@@ -22,7 +22,7 @@ $variables: (
 );
 
 :host {
-  @include pfe-print-variables($variables);
+  // @include pfe-print-variables($LOCAL-VARIABLES);
 
   @include pfe-box-sizing;
 

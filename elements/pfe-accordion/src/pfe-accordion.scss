@@ -2,12 +2,11 @@
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: accordion;
+$LOCAL-VARIABLES: pfe-accordion-variables();
 
 @include pfe-theme-contexts; // imports on="light" etc support
 
 :host {
-  @include pfe-accordion-variables;
-
   display: block;
   position: relative;
   overflow: hidden;
@@ -22,10 +21,14 @@ $LOCAL: accordion;
 
 @each $context in $THEMES {
   :host([on="#{$context}"]) {
-    @include pfe-accordion-variables($theme: #{$context});
+    @include pfe-print-variables(
+      pfe-accordion-variables($theme: #{$context})
+    );
   }
 }
 
 :host([pfe-disclosure="true"]) {
-  @include pfe-accordion-variables($variant: disclosure);
+  @include pfe-print-variables(
+    pfe-accordion-variables($variant: disclosure)
+  );
 }

@@ -46,11 +46,11 @@ $nav-variables: (
     MinWidth: 135px
   )
 );
-$variables: map-merge($variables, $nav-variables);
+$LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-variables);
 
 :host {
   // Print the variables to the DOM
-  @include pfe-print-variables($variables);
+// @include pfe-print-variables($LOCAL-VARIABLES);
 
   // Reduce padding for print
   @media print {
@@ -58,8 +58,8 @@ $variables: map-merge($variables, $nav-variables);
   }
 
   display: block;
-  --pfe-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
-  --pfe-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
+  --pfe-accordion__Padding--base: var(--pfe-theme--container-spacer, 16px);
+  --pfe-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__Padding--base) * 3) var(--pfe-accordion__Padding--base) calc(var(--pfe-accordion__Padding--base) * 1.5);
 
   z-index: #{pfe-zindex(content)};
   width: 100%;

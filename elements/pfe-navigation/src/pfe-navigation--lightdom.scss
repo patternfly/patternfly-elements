@@ -3,7 +3,7 @@
 @import "../../pfe-styles/src/layouts/_grid";
 $nav-light-dom-variables: (
 );
-$variables: map-merge($variables, $nav-light-dom-variables);
+$LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
 
 #main-menu {
     background: transparent !important; // Remove this.

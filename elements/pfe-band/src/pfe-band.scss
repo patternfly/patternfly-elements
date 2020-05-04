@@ -3,7 +3,7 @@
 $LOCAL: band;
 
 
-$variables: (
+$LOCAL-VARIABLES: (
 
   // Default spacing values
   Padding--vertical:    calc( #{pfe-var(container-spacer)} * 4),
@@ -40,7 +40,7 @@ $variables: (
 );
 
 :host {
-  @include pfe-print-variables($variables);
+// @include pfe-print-variables($LOCAL-VARIABLES);
   @include pfe-set-broadcast-theme(light);
   --theme: light;
 

@@ -192,19 +192,6 @@
 ///     ```
 /// ===========================================================================
 @function pfe-local($cssvar, $fallback: null, $region: null) {
-    // If a fallback is defined, skip using the global variables map
-    @if $fallback == null and $LOCAL-VARIABLES != null {
-        @if $region == null {
-            $fallback: map-get($LOCAL-VARIABLES, $cssvar);
-        }
-        @else {
-            $submap: map-get($LOCAL-VARIABLES, $region);
-            @if type-of($submap) == "map" {
-                $fallback: map-get($submap, $cssvar);
-            }
-        }
-    }
-
     // If a region value exists, build the region string
     @if $region != null {
         $region: "__#{$region}";
@@ -212,6 +199,21 @@
 
     // Start building the variable declaration
     $var-declaration: "--#{$repo}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')}";
+
+    // If a fallback is not defined, use the global variables map
+    @if $fallback == null and length($LOCAL-VARIABLES) > 0 {
+        @if $region == null {
+            $fallback: map-get($LOCAL-VARIABLES, $cssvar);
+        }
+        @else {
+            $submap: map-get($LOCAL-VARIABLES, $region);
+            @if type-of($submap) == "map" {
+                $fallback: map-deep-get($LOCAL-VARIABLES, $region, $cssvar);
+            }
+        }
+    }
+
+    // @warn $var-declaration", "$fallback;
     
     @if $fallback != null {
         $var-declaration: "#{$var-declaration}, #{$fallback}";

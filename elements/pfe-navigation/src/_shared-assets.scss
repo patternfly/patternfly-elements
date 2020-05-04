@@ -7,7 +7,7 @@ $trigger--FontWeight--fallback: #{pfe-var(font-weight--light)};
 $trigger--Color--fallback: #{pfe-color(text--on-dark)};
 
 $LOCAL: navigation;
-$variables: (
+$LOCAL-VARIABLES: (
 
 // Supplemental breakpoints,   
 // Usage:  @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { 

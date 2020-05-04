@@ -2,12 +2,12 @@
 
 $LOCAL: tabs;
 
-$variables: (
+$LOCAL-VARIABLES: (
   focus:  pfe-color(link)
 );
 
 :host {
-  @include pfe-print-variables($variables);
+// @include pfe-print-variables($LOCAL-VARIABLES);
 
   display: block;
 

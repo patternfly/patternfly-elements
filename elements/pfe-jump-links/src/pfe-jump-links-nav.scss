@@ -12,7 +12,7 @@ $variables: (
 :host {
   //Default styles
   // font-family: 'Red Hat Text', sans-serif;
-  @include pfe-set-broadcast-theme(light);
+  // @include pfe-set-broadcast-theme(light);
   --theme: light;
 
   // Example local variable, using BEM format
@@ -60,6 +60,9 @@ a {
   padding: 8px;
   line-height: 1.5;
   border-left: 3px solid transparent;
+  &:hover {
+    color: #151515;
+  }
   &[active] {
     color: #151515;
   }

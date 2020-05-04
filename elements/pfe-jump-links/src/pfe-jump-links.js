@@ -119,6 +119,12 @@ class PfeJumpLinksNav extends PFElement {
     this.removeEventListener("click");
   }
 
+  rebuildNav() {
+    this._buildNav();
+    console.log("I should rebuild now.");
+    // this.setAttribute('rebuilt', true);
+  }
+
   _buildNav() {
     let html = "";
     html += `<h2 hidden id="site-nav-heading" class="sr-only">Page navigation</h2>`;
@@ -175,6 +181,13 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _mutationCallback() {
+    console.log("nav mutation callback");
+    console.log("in the nav mutation callback this is:");
+    console.log(this);
+    if (this.hasAttribute("autobuild")) {
+      console.log("adding attr");
+      this.setAttribute("rebuilt", true);
+    }
     const menu = this.querySelector("ul");
     this._menuContainer.innerHTML = menu.outerHTML;
   }
@@ -236,14 +249,22 @@ class PfeJumpLinksPanel extends PFElement {
     this._slot = this.shadowRoot.querySelector("slot");
     this._slot.addEventListener("slotchange", this._init);
     this._scrollCallback = this._scrollCallback.bind(this);
+    this._mutationCallback = this._mutationCallback.bind(this);
+    this._observer = new MutationObserver(this._mutationCallback);
+    // window.addEventListener("scroll", this._scrollCallback);
   }
 
   connectedCallback() {
     super.connectedCallback();
-
     this._init();
-
-    window.addEventListener("scroll", this._scrollCallback);
+    this._reRenderNav();
+    // window.addEventListener("scroll", this._scrollCallback);
+    this._observer.observe(this, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true
+    });
     // If you need to initialize any attributes, do that here
   }
 
@@ -253,6 +274,7 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _init() {
+    window.addEventListener("scroll", this._scrollCallback);
     this.scrollTarget = this.getAttribute("scrolltarget");
     this.JumpLinksNav = document.querySelector(`#${this.scrollTarget}`);
     this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
@@ -317,7 +339,28 @@ class PfeJumpLinksPanel extends PFElement {
 
     this.currentActive = 0;
   }
+
+  _mutationCallback() {
+    console.log("panel mutation callback");
+    console.log(this);
+    this._reRenderNav();
+  }
+
+  _reRenderNav() {
+    let nav = document.querySelector(
+      `pfe-jump-links-nav#${this.getAttribute("scrolltarget")}`
+    );
+    if (nav.hasAttribute("autobuild")) {
+      // Re-render the nav with updated DOM here...
+      nav.rebuildNav();
+    }
+  }
+
   _scrollCallback() {
+    if (this.getAttribute("scrolltarget") == "jumplinks8") {
+      console.log("scroll callback called!");
+    }
+
     let sections;
     let menu_links;
     let sectionMargin;
@@ -348,6 +391,7 @@ class PfeJumpLinksPanel extends PFElement {
       this.removeAllActive();
       this.currentActive = current;
       this.makeActive(current);
+      console.log(current);
     }
   }
 }

@@ -1,7 +1,7 @@
 ## Prerelese 46 ( TBD )
 
 - [27fee5f](https://github.com/patternfly/patternfly-elements/commit/27fee5f5c5eb021ac126f3767dd0299f5cda8231) fix: pfe-tabs check for tagName on addedNode mutation before continuing
-- [2c950b](https://github.com/patternfly/patternfly-elements/commit/2c950b08f7638787df50aa5ee6738f1205ea3a9d) fix: Add clearfix within tab and accordion panels
+- [2c950b0](https://github.com/patternfly/patternfly-elements/commit/2c950b08f7638787df50aa5ee6738f1205ea3a9d) fix: Add clearfix within tab and accordion panels
 - []() fix: adjust arrow spacing & alignment on pfe-cta
 
 ## Prerelese 45 ( 2020-04-27 )

@@ -24,7 +24,7 @@ String.prototype.sentenceCase = function() {
 };
 
 // Print attributes based on an object
-export const listProperties = (obj) =>
+export const listProperties = obj =>
   Object.entries(obj)
     .map(set => {
       let string = " ";
@@ -43,11 +43,7 @@ export const listProperties = (obj) =>
       }
 
       // If printing is allowed, the value exists and is not null
-      if (
-        print &&
-        typeof v !== "undefined" &&
-        (v !== null && v !== "null")
-      ) {
+      if (print && typeof v !== "undefined" && v !== null && v !== "null") {
         string += p;
         // If the value is a string and the value is not equal to the string "true"
         if (typeof v === "string" && v !== "true") {
@@ -81,7 +77,7 @@ export function customTag(obj) {
     // If a tag is defined, use that, else use a div
     if (obj.tag) {
       start += `<${obj.tag}`;
-      end   += !selfClosing.includes(obj.tag) ? `</${obj.tag}>` : "";
+      end += !selfClosing.includes(obj.tag) ? `</${obj.tag}>` : "";
     } else {
       start += "<div";
       end += "</div>";
@@ -90,7 +86,9 @@ export function customTag(obj) {
     start += obj.attributes ? listProperties(obj.attributes || {}) : "";
     start += !selfClosing.includes(obj.tag) ? ">" : "/>";
   }
-    return `${start}${typeof obj.content !== "undefined" ? obj.content || autoContent() : ""}${end}`;
+  return `${start}${
+    typeof obj.content !== "undefined" ? obj.content || autoContent() : ""
+  }${end}`;
 }
 
 const parseMarkup = string => {
@@ -154,7 +152,7 @@ const renderSlots = (slots = []) =>
         let parsed = parseMarkup(slot.content);
         Object.assign(slot, parsed);
       }
-      return slot.content || slot.tag && selfClosing.includes(slot.tag)
+      return slot.content || (slot.tag && selfClosing.includes(slot.tag))
         ? customTag({
             tag: slot.tag,
             slot: slot.slot,
@@ -168,7 +166,7 @@ const renderSlots = (slots = []) =>
 // Creates a component dynamically based on inputs
 export function component(tag, attributes = {}, slots = [], noSlot = false) {
   return `<${tag}${listProperties(attributes)}>${
-    slots.length > 0 ? renderSlots(slots) : (!noSlot) ? autoContent() : ""
+    slots.length > 0 ? renderSlots(slots) : !noSlot ? autoContent() : ""
   }</${tag}>`;
 }
 
@@ -221,7 +219,7 @@ export function autoPropKnobs(properties, bridge) {
       prefixed = false;
     }
 
-    if(prefixed) {
+    if (prefixed) {
       attr = `pfe-${attr}`;
     }
 

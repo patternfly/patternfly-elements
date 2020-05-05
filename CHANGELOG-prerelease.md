@@ -1,7 +1,18 @@
-## Prerelese 45 ( TBD )
+## Prerelese 46 ( TBD )
 
-- [eb74cb8](https://github.com/patternfly/patternfly-elements/commit/eb74cb8f989048164fbb6ed1508c502659a752ed) feat: add event emission to pfe-select
+- [27fee5f](https://github.com/patternfly/patternfly-elements/commit/27fee5f5c5eb021ac126f3767dd0299f5cda8231) fix: pfe-tabs check for tagName on addedNode mutation before continuing
+- [2c950b0](https://github.com/patternfly/patternfly-elements/commit/2c950b08f7638787df50aa5ee6738f1205ea3a9d) fix: Add clearfix within tab and accordion panels
+- [96f0a1b](https://github.com/patternfly/patternfly-elements/commit/96f0a1bdf9c758650e02b20a63ee3fb2fcf11bc9) feat: Add border to the card component
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Generator needs to convert slot-name to camelCase in js file if dash exists
+
+## Prerelese 45 ( 2020-04-27 )
+
+- [8dbea7b](https://github.com/patternfly/patternfly-elements/commit/8dbea7b5fbd94614d89828c27afafdcc287f016f) fix: typo in pfe-icon README (#840)
+- [7246607](https://github.com/patternfly/patternfly-elements/commit/7246607bcae3aaba0c2d8288b58c20244ed83cda) fix: Issue 839 pfe tabs history firefox, focus-state (#841)
+- [9381e37](https://github.com/patternfly/patternfly-elements/commit/9381e37cd7530c5aebb9a7b596cb47704165b38d) fix: pfe-tabs adding dynamic tab in IE11 (#838)
+- [f9c2813](https://github.com/patternfly/patternfly-elements/commit/f9c2813892eace5e600d168d876ecc4ffd46b472) fix: Add a warning about updating the on attribute before upgrade (#809)
+- [a55449b](https://github.com/patternfly/patternfly-elements/commit/a55449bc1da11abdaf98f959961f25bfa20edc67) docs: Content set and tabs update (#824)
+- [eb74cb8](https://github.com/patternfly/patternfly-elements/commit/eb74cb8f989048164fbb6ed1508c502659a752ed) feat: Update pfe-select to use new event emission format (#758) (#760)
 
 ## Prerelease 44 ( 2020-04-02 )
 

@@ -31,6 +31,7 @@
           this.attachShadow({ mode: "open" });
           this.shadowRoot.innerHTML = "";
           this.template.innerHTML = `
+
     <div style="filter: url(#fg); height: 40px; width: 40px; background-image: url(rh-icon-api.svg);"></div>
 `;
           this.shadowRoot.appendChild(this.template.content.cloneNode(true));

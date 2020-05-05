@@ -76,6 +76,7 @@ class PfeJumpLinksNav extends PFElement {
   constructor() {
     super(PfeJumpLinksNav, { type: PfeJumpLinksNav.PfeType });
 
+    this._buildNav = this._buildNav.bind(this);
     this._mutationCallback = this._mutationCallback.bind(this);
     this._menuContainer = this.shadowRoot.querySelector("#container");
     this._observer = new MutationObserver(this._mutationCallback);
@@ -102,10 +103,18 @@ class PfeJumpLinksNav extends PFElement {
       characterData: true,
       attributes: true
     });
+
+    this.panel = document.querySelector(`[scrolltarget="${this.id}"]`);
+
+    this.panel.addEventListener(
+      PfeJumpLinksPanel.events.change,
+      this._buildNav
+    );
   }
 
   disconnectedCallback() {
     this.removeEventListener("click");
+    this.removeEventListener(PfeJumpLinksPanel.events.change, _eventCallback);
   }
 
   _rebuildNav() {
@@ -117,8 +126,10 @@ class PfeJumpLinksNav extends PFElement {
     html += `<h2 hidden id="site-nav-heading" class="sr-only">Page navigation</h2>`;
     html += `<h4 class="heading" slot="heading">Jump to section</h4>`;
     html += `<ul class="pfe-jump-links-nav">`;
-    let panel = document.querySelector(`[scrolltarget="${this.id}"]`);
-    let panelSections = panel.querySelectorAll(
+    if (!this.panel) {
+      this.panel = document.querySelector(`[scrolltarget="${this.id}"]`);
+    }
+    let panelSections = this.panel.querySelectorAll(
       ".pfe-jump-links-panel__section"
     );
 
@@ -211,10 +222,11 @@ class PfeJumpLinksPanel extends PFElement {
     return "pfe-jump-links-panel.scss";
   }
 
-  // static get events() {
-  //   return {
-  //   };
-  // }
+  static get events() {
+    return {
+      change: `${this.tag}:change`
+    };
+  }
 
   // Declare the type of this component
   static get PfeType() {
@@ -340,6 +352,7 @@ class PfeJumpLinksPanel extends PFElement {
     if (this.nav.hasAttribute("autobuild")) {
       this._init();
       //@TODO change this to emit an event that nav is subscribed to
+      this.emitEvent(PfeJumpLinksPanel.events.change);
       this.nav._rebuildNav();
     }
   }

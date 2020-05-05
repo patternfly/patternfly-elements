@@ -51,7 +51,7 @@ $variables: (
   position: relative;
   z-index: 0;
   vertical-align: middle;
-  transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
+  //transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
 
   background-color: #{pfe-local(BackgroundColor)};
   border-color: #{pfe-local(BorderColor)};

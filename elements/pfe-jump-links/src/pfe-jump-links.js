@@ -42,17 +42,6 @@ class PfeJumpLinks extends PFElement {
   disconnectedCallback() {}
 }
 
-const parentObserverConfig = {
-  childList: true
-};
-
-const externalBtnObserverConfig = {
-  characterData: true,
-  attributes: true,
-  subtree: true,
-  childList: true
-};
-
 class PfeJumpLinksNav extends PFElement {
   static get tag() {
     return "pfe-jump-links-nav";
@@ -119,10 +108,8 @@ class PfeJumpLinksNav extends PFElement {
     this.removeEventListener("click");
   }
 
-  rebuildNav() {
+  _rebuildNav() {
     this._buildNav();
-    console.log("I should rebuild now.");
-    // this.setAttribute('rebuilt', true);
   }
 
   _buildNav() {
@@ -181,15 +168,10 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _mutationCallback() {
-    console.log("nav mutation callback");
-    console.log("in the nav mutation callback this is:");
-    console.log(this);
-    if (this.hasAttribute("autobuild")) {
-      console.log("adding attr");
-      this.setAttribute("rebuilt", true);
+    if (!this.hasAttribute("autobuild")) {
+      const menu = this.querySelector("ul");
+      this._menuContainer.innerHTML = menu.outerHTML;
     }
-    const menu = this.querySelector("ul");
-    this._menuContainer.innerHTML = menu.outerHTML;
   }
 
   _isValidLightDom() {
@@ -202,7 +184,7 @@ class PfeJumpLinksNav extends PFElement {
 
     if (this.children[1].tagName !== "UL") {
       console.warn(
-        `${PfeJumpLinks.tag}: The top-level html tag MUST be a <ul>`
+        `${PfeJumpLinks.tag}: The top-level list of links MUST be a <ul>`
       );
 
       return false;
@@ -251,14 +233,17 @@ class PfeJumpLinksPanel extends PFElement {
     this._scrollCallback = this._scrollCallback.bind(this);
     this._mutationCallback = this._mutationCallback.bind(this);
     this._observer = new MutationObserver(this._mutationCallback);
-    // window.addEventListener("scroll", this._scrollCallback);
+    this.currentActive = null;
+    this.sectionMargin = 200;
+    this.currentActive = 0;
+    this.current = -1;
+    this.nav = this._getNav();
   }
 
   connectedCallback() {
     super.connectedCallback();
     this._init();
-    this._reRenderNav();
-    // window.addEventListener("scroll", this._scrollCallback);
+    this.nav._rebuildNav();
     this._observer.observe(this, {
       childList: true,
       subtree: true,
@@ -283,115 +268,125 @@ class PfeJumpLinksPanel extends PFElement {
         ".pfe-jump-links-nav__item"
       );
     }
-    this.makeActive = link => {
-      if (this.menu_links[link]) {
-        // Check if this is a subnav or has subsections
-        if (this.menu_links[link].classList.contains("sub-section")) {
-          this.menu_links[link].setAttribute("active", "");
-          this.menu_links[link].parentNode.parentNode.parentNode.setAttribute(
-            "active",
-            ""
-          );
-          this.menu_links[link].parentNode.parentNode.parentNode.classList.add(
-            "expand"
-          );
-        } else if (
-          this.menu_links[link].classList.contains("has-sub-section")
-        ) {
-          this.menu_links[link].setAttribute("active", "");
-          this.menu_links[link].parentNode.setAttribute("active", "");
-          this.menu_links[link].parentNode.classList.add("expand");
-        } else {
-          this.menu_links[link].setAttribute("active", "");
-          this.menu_links[link].parentNode.setAttribute("active", "");
-        }
-        let activeLink = this.JumpLinksNav.querySelector("[active]");
-        this.dispatchEvent(
-          new CustomEvent(`pfe-jump-links-panel:active-nav-item`, {
-            detail: {
-              activeNavItem: activeLink
-            },
-            bubbles: true
-          })
+  }
+
+  _getNav() {
+    return document.querySelector(
+      `pfe-jump-links-nav#${this.getAttribute("scrolltarget")}`
+    );
+  }
+
+  _makeActive(link) {
+    if (this.menu_links[link]) {
+      // Check if this is a subnav or has subsections
+      if (this.menu_links[link].classList.contains("sub-section")) {
+        this.menu_links[link].setAttribute("active", "");
+        this.menu_links[link].parentNode.parentNode.parentNode.setAttribute(
+          "active",
+          ""
+        );
+        this.menu_links[link].parentNode.parentNode.parentNode.classList.add(
+          "expand"
+        );
+      } else if (this.menu_links[link].classList.contains("has-sub-section")) {
+        this.menu_links[link].setAttribute("active", "");
+        this.menu_links[link].parentNode.setAttribute("active", "");
+        this.menu_links[link].parentNode.classList.add("expand");
+      } else {
+        this.menu_links[link].setAttribute("active", "");
+        this.menu_links[link].parentNode.setAttribute("active", "");
+      }
+      let activeLink = this.JumpLinksNav.querySelector("[active]");
+      this.dispatchEvent(
+        new CustomEvent(`pfe-jump-links-panel:active-nav-item`, {
+          detail: {
+            activeNavItem: activeLink
+          },
+          bubbles: true
+        })
+      );
+    }
+  }
+
+  _removeActive(link) {
+    if (this.menu_links[link]) {
+      //@TODO Should add logic here that doesn't remove active attribute
+      // when ones of its children is the active link
+
+      if (this.menu_links[link].classList.contains("sub-section")) {
+        this.menu_links[link].parentNode.parentNode.parentNode.classList.remove(
+          "expand"
         );
       }
-    };
-    this.removeActive = link => {
-      if (this.menu_links[link]) {
-        //@TODO Should add logic here that doesn't remove active attribute
-        // when ones of its children is the active link
+      this.menu_links[link].removeAttribute("active");
+      this.menu_links[link].parentNode.removeAttribute("active");
+    }
+  }
 
-        if (this.menu_links[link].classList.contains("sub-section")) {
-          this.menu_links[
-            link
-          ].parentNode.parentNode.parentNode.classList.remove("expand");
-        }
-        this.menu_links[link].removeAttribute("active");
-        this.menu_links[link].parentNode.removeAttribute("active");
-      }
-    };
-    this.removeAllActive = () =>
-      [...Array(this.sections.length).keys()].forEach(link => {
-        this.removeActive(link);
-      });
-
-    this.sectionMargin = 200;
-
-    this.currentActive = 0;
+  _removeAllActive() {
+    [...Array(this.sections.length).keys()].forEach(link => {
+      this._removeActive(link);
+    });
   }
 
   _mutationCallback() {
-    console.log("panel mutation callback");
-    console.log(this);
-    this._reRenderNav();
-  }
-
-  _reRenderNav() {
-    let nav = document.querySelector(
-      `pfe-jump-links-nav#${this.getAttribute("scrolltarget")}`
-    );
-    if (nav.hasAttribute("autobuild")) {
-      // Re-render the nav with updated DOM here...
-      nav.rebuildNav();
+    //If we didn't get nav in the constructor, grab it now
+    if (!this.nav) {
+      this.nav = document.querySelector(
+        `pfe-jump-links-nav#${this.getAttribute("scrolltarget")}`
+      );
+    }
+    //If we want the nav to be built automatically, re-init panel and rebuild nav
+    if (this.nav.hasAttribute("autobuild")) {
+      this._init();
+      //@TODO change this to emit an event that nav is subscribed to
+      this.nav._rebuildNav();
     }
   }
 
   _scrollCallback() {
-    if (this.getAttribute("scrolltarget") == "jumplinks8") {
-      console.log("scroll callback called!");
-    }
-
     let sections;
     let menu_links;
     let sectionMargin;
 
+    //Check sections to make sure we have them (if not, get them)
     if (!this.sections || typeof this.sections === "undefined") {
       this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
     } else {
       sections = this.sections;
     }
-
+    //Check list of links to make sure we have them (if not, get them)
     if (this.menu_links.length < 1 || !this.menu_links) {
       this.menu_links = this.JumpLinksNav.shadowRoot.querySelectorAll(
         ".pfe-jump-links-nav__item"
       );
       menu_links = this.menu_links;
     }
+
+    //@TODO read value from an attribute so devs can customize
+    // margin from the top of the window
     if (!this.sectionMargin) {
       sectionMargin = 200;
     } else {
       sectionMargin = this.sectionMargin;
     }
+
+    // Make an array from the node list
     const sectionArr = [...sections];
+    // Get all the sections that match this point in the scroll
     const matches = sectionArr
       .filter(section => window.scrollY >= section.offsetTop - sectionMargin)
       .reverse();
+
+    //Identify the last one queried as the current section
     const current = sectionArr.indexOf(matches[0]);
+
+    // If that section isn't already active,
+    // remove active from the other links and make it active
     if (current !== this.currentActive) {
-      this.removeAllActive();
+      this._removeAllActive();
       this.currentActive = current;
-      this.makeActive(current);
-      console.log(current);
+      this._makeActive(current);
     }
   }
 }

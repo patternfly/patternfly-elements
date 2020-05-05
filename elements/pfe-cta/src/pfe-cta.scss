@@ -7,9 +7,9 @@ $pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
 $pfe-cta--Color--fallback: #003366;
 
 // Arrow animation
-$h-spacing: 3px;
-$arrow-basic: 0 $h-spacing;
-$arrow-hover: 0 0 0 #{$h-spacing * 2};
+$horizontal-spacing: 3px;
+$arrow-basic: 0 $horizontal-spacing;
+$arrow-hover: 0 0 0 #{$horizontal-spacing * 2};
 
 
 $variables: (
@@ -46,13 +46,10 @@ $variables: (
 :host {
   @include pfe-print-variables($variables);
 
-  // properties
   display: inline-block;
   position: relative;
   z-index: 0;
   vertical-align: middle;
-  //transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
-
   background-color: #{pfe-local(BackgroundColor)};
   border-color: #{pfe-local(BorderColor)};
 

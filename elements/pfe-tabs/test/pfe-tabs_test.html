@@ -328,8 +328,52 @@
           assert.isTrue(!secondPanel.hasAttribute('hidden'));
         });
 
+        test('it should move the content from the tab into the shadow DOM', () => {
+          const firstTab = document.querySelector('#default pfe-tab');
+          const shadowTab = firstTab.shadowRoot.querySelector('.pfe-tab');
+          assert.deepEqual(firstTab.innerHTML, shadowTab.innerHTML);
+        });
+
+        test('it should reflect content changes in the tab into the shadow DOM', done => {
+          // Capture the elements to compare
+          const firstTab = document.querySelector('#default pfe-tab');
+          const shadowTab = firstTab.shadowRoot.querySelector('.pfe-tab');
+
+          // Update the content of the tab
+          document.querySelector('#default pfe-tab').textContent = "Lorem ipsum";
+
+          flush(() => {
+            assert.equal("Lorem ipsum", shadowTab.textContent);
+            done();
+          });
+        });
+
+        test('it should reflect markup changes in the tab into the shadow DOM', done => {
+          // Capture the elements to compare
+          const pfeTabs = document.querySelector('#default');
+          const firstTab = pfeTabs.querySelector('pfe-tab');
+
+          // Update the markup of the tab
+          const documentFragment = document.createDocumentFragment();
+          const heading = document.createElement('h4');
+          const span = document.createElement('span');
+          heading.textContent = 'New tab ';
+          span.textContent = '1';
+          heading.append(span);
+
+          documentFragment.appendChild(heading);
+          firstTab.innerHTML = '';
+          firstTab.appendChild(documentFragment);
+
+          flush(() => {
+            const shadowTab = firstTab.shadowRoot.querySelector('.pfe-tab');
+            assert.equal(shadowTab.innerHTML, "<h4>New tab 1</h4>");
+            done();
+          });
+        });
+
         test('it should properly initialize any dynamically added tabs and panels', done => {
-          const pfeAccordion = document.querySelector('#dynamic');
+          const pfeTabs = document.querySelector('#dynamic');
           const documentFragment = document.createDocumentFragment();
 
           const newTab = document.createElement("pfe-tab");
@@ -346,7 +390,7 @@
 
           documentFragment.appendChild(newTab);
           documentFragment.appendChild(newPanel);
-          pfeAccordion.appendChild(documentFragment);
+          pfeTabs.appendChild(documentFragment);
 
           const dynamicTab1 = document.querySelector("#dynamicTab1");
           dynamicTab1.innerHTML += "More text";

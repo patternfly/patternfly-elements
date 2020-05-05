@@ -530,6 +530,7 @@ class PfeTab extends PFElement {
 
     this._tabItem;
     this._init = this._init.bind(this);
+    this._setTabContent = this._setTabContent.bind(this);
     this._observer = new MutationObserver(this._init);
   }
 
@@ -560,22 +561,7 @@ class PfeTab extends PFElement {
     }
 
     // Copy the tab content into the template
-    let label = [];
-    if (this.children.length > 0) {
-      [...this.children].forEach(child => {
-        label.push(child.textContent.trim());
-      });
-    } else if (this.textContent.trim().length) {
-      label.push(this.textContent.trim());
-    } else {
-      console.warn(
-        `${this.tag}: There does not appear to be any content in the tab region.`
-      );
-    }
-
-    if (label.length > 0) {
-      this._tabItem.textContent = label.join(" ");
-    }
+    this._setTabContent();
 
     if (!this.pfeId) {
       this.pfeId = `${PfeTab.tag}-${generateId()}`;
@@ -599,6 +585,43 @@ class PfeTab extends PFElement {
 
     if (window.ShadyCSS) {
       this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
+    }
+  }
+
+  _setTabContent() {
+    // Copy the tab content into the template
+    const label = this.textContent.trim();
+
+    if (!label) {
+      console.warn(
+        `${this.tag}: There does not appear to be any content in the tab region.`
+      );
+      return;
+    }
+
+    let semantics = "";
+    // Get the semantics of the content
+    if (this.children.length > 0) {
+      // We only care about the first child that is a tag
+      if (
+        this.firstElementChild &&
+        this.firstElementChild.tagName.match(/^H[1-6]/)
+      ) {
+        semantics = this.firstElementChild.tagName.toLowerCase();
+      }
+    }
+
+    let heading;
+    if (semantics.length > 0) {
+      heading = document.createElement(semantics);
+      heading.textContent = label;
+    } else {
+      heading = document.createTextNode(label);
+    }
+
+    if (heading) {
+      this._tabItem.innerHTML = "";
+      this._tabItem.appendChild(heading);
     }
   }
 }

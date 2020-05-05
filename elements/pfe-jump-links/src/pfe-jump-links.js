@@ -177,8 +177,6 @@ class PfeJumpLinksNav extends PFElement {
     };
 
     let html = `
-      <h2 hidden id="site-nav-heading" class="sr-only">Page navigation</h2>
-      <h4 class="heading" slot="heading">Jump to section</h4>
       <ul class="pfe-jump-links-nav">
         ${buildLinkList()}
     `;
@@ -254,7 +252,6 @@ class PfeJumpLinksPanel extends PFElement {
     this._observer = new MutationObserver(this._mutationCallback);
     this.currentActive = null;
     this.sectionMargin = this.getAttribute("offset") || 200;
-    console.log(this.sectionMargin);
     this.currentActive = 0;
     this.current = -1;
     this.nav = this._getNav();

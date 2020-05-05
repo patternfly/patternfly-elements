@@ -13,66 +13,76 @@ $variables: (
   //Default styles
   // font-family: 'Red Hat Text', sans-serif;
   // @include pfe-set-broadcast-theme(light);
-  --theme: light;
+  // --theme: light;
 
   // Example local variable, using BEM format
   // --pfe-jump-links--Property: value;
   font-weight: 400;
   display: block;
   position: sticky;
-  top: 60px;
-  padding: 1rem;
+  top: calc(#{pfe-var(container-spacer)} * 4);
+  padding: calc(#{pfe-var(container-spacer)} * 2);
   --pfe-jump-links--BackgroundColor: BackgroundColor;
 }
 
 ::slotted([slot="heading"]) {
-  margin: 0 0 1rem 0;
+  margin: 0 0 1rem 0 !important;
   margin-bottom: calc(#{pfe-var(container-spacer)} * 1);
-  color: black;
   font-size: 14px;
   font-weight: 400;
   text-transform: uppercase;
 }
 
-ul.pfe-jump-links-nav {
-  padding: 1rem 1rem 1rem 0;
-  margin: 0;
-  list-style: none;
-  border-left: 1px solid #D2D2D2;
+ul{
+  &.pfe-jump-links-nav {
+    &[horizontal] {
+
+    }
+    
+    padding: 1rem 1rem 1rem 0;
+    padding: 1rem 1rem 1rem 0;
+    margin: 0;
+    list-style: none;
+  }
+  &.sub-nav {
+    margin: 0;
+    padding: 0;
+    overflow-y: hidden;
+    transition: flex 1s linear;
+    display: flex;
+    flex-direction: column;
+    flex: 0;
+  }
 }
 
 li {
   border-left: 3px solid transparent;
   display: block;
-  // flex-direction: column;
   text-decoration: none;
-  // padding-left: 1rem;
-  &[active] {
-    border-left: 3px solid #0066CC;
+}
+
+li.expand {
+  ul.sub-nav {
+    flex: 1;
+  }
+  a.sub-section {
+    display: table;
+    height: auto;
   }
 }
 
 a {
   display: table;
-  color: #72767B;
   text-decoration: none;
   font-size: 16px;
   padding: 8px;
   line-height: 1.5;
   border-left: 3px solid transparent;
-  &:hover {
-    color: #151515;
-  }
-  &[active] {
-    color: #151515;
-  }
   &.sub-section{
-    // padding-left: 4px;
     display: none;
-    height: 0;
+    // height: 0;
     margin-left: 12px;
     font-size: 14px;
-    transition: display 2s linear; 
   }
   &:focus {
     outline: none;
@@ -81,23 +91,64 @@ a {
   }
 }
 
-ul.sub-nav {
-  margin: 0;
-  padding: 0;
-  display: none;
-  height: 0;
-  overflow-y: hidden;
-  transition: height 1s linear;
+:host([default]) {
+  border: 1px solid #D2D2D2;
+  ::slotted([slot="heading"]) {
+    color: #151515;
+  } 
+  ul.pfe-jump-links-nav {
+    border-left: 1px solid #D2D2D2;
+  }
+
+  li{
+    &[active] {
+      border-left: 3px solid #0066CC;
+    }
+  }
+
+  a {
+    color: #72767B;
+    &:hover {
+      color: #151515;
+    }
+    &[active] {
+      color: #151515;
+    }
+    &:focus {
+      outline: none;
+      border-radius: 3px;
+      border: 2px solid #62A1F4;
+    }
+  }
 }
 
-li.expand {
-  ul.sub-nav {
-    height: auto;
-    display: block;
+:host([dark]) {
+  ::slotted([slot="heading"]) {
+    color: #CCCCCC;
+  } 
+  background-color: #151515;
+  border: 1px solid #72767B;
+  ul.pfe-jump-links-nav {
+    border-left: 1px solid #72767B;
   }
-  a.sub-section {
-    display: table;
-    height: auto;
+  li{
+    &[active] {
+      border-left: 3px solid #EE0000;
+    }
+  }
+  a {
+    color: #CCCCCC;
+    &:hover {
+      color: #151515;
+    }
+    &[active] {
+      color: #fff;
+    }
+    &:focus {
+      outline: none;
+      border-radius: 3px;
+      border: 2px solid #62A1F4;
+    }
   }
 }
 
@@ -106,24 +157,57 @@ li.expand {
 }
 
 :host([horizontal]) {
+  justify-content: center;
+  padding: 0;
+  display: flex;
+  ::slotted([slot="heading"]) {
+    display: none;
+  }
+  .heading {
+    display: none;
+  }
+  top: 0;
+  width: 100%;
+  background-color: #F0F0F0;
+  
   ul {
+    flex: 1;
+    display: flex;
+    padding: 0;
     width: 100%;
-    background-color: grey;
+    // background-color: grey;
     li {
-      display: inline-block;
+      padding: 0 24px;
+      display: flex;
+      height: 75px;
+      align-items: center;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      border-left: none;
+      border-right: none;
+      &[active] {
+        border-top: 4px solid #EE0000;
+      }
+    }
+  }
+
+  a {
+    color: #72767B;
+    &[active] {
+      color: #151515;
     }
   }
 }
 
 
 
-::slotted([slot="nav"]) {
+// ::slotted([slot="nav"]) {
   
-}
+// }
 
-::slotted(a) {
+// ::slotted(a) {
 
-}
+// }
 
 // pfe-jump-links{
 //   a {

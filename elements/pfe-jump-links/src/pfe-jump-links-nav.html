@@ -1,5 +1,8 @@
 <nav>
   <h2 class="sr-only" hidden>Page navigation</h2>
-  <slot class="heading" name="heading" id="heading"></slot>
+  ${ this.has_slot("heading") ?
+  `<slot class="heading" name="heading" id="heading"></slot>`
+  : `<h4 class="heading" id="heading">Jump to section</h4>`
+  }
   <div id="container"></div>
 </nav>

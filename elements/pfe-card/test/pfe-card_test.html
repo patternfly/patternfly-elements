@@ -204,6 +204,17 @@
         test("it should have reduced padding when pfe-size is small", () => {
           card[0].setAttribute("pfe-size", "small");
           assert.equal(getComputedStyle(card[0], null)["padding"], "16px");
+          card[0].removeAttribute("pfe-size");
+        });
+
+        test("it should have a standard border when pfe-border is set", done => {
+          card[0].setAttribute("pfe-border", "");
+
+          flush(() => {
+            assert.deepEqual(getColor(card[0], "border-left-color"), hexToRgb("#d2d2d2"));
+            assert.equal(getComputedStyle(card[0], null)["border-left-width"], "1px");
+            done();
+          });
         });
 
         // Iterate over the slots object to test expected results

@@ -122,21 +122,19 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _buildNav() {
-    let html = "";
-    html += `<h2 hidden id="site-nav-heading" class="sr-only">Page navigation</h2>`;
-    html += `<h4 class="heading" slot="heading">Jump to section</h4>`;
-    html += `<ul class="pfe-jump-links-nav">`;
-    if (!this.panel) {
-      this.panel = document.querySelector(`[scrolltarget="${this.id}"]`);
-    }
-    let panelSections = this.panel.querySelectorAll(
-      ".pfe-jump-links-panel__section"
-    );
+    const buildLinkList = () => {
+      let linkList = ``;
+      if (!this.panel) {
+        this.panel = document.querySelector(`[scrolltarget="${this.id}"]`);
+      }
+      let panelSections = this.panel.querySelectorAll(
+        ".pfe-jump-links-panel__section"
+      );
 
-    for (let i = 0; i < panelSections.length; i++) {
-      let arr = [...panelSections];
-      if (arr[i].classList.contains("has-sub-section")) {
-        let linkListItem = `
+      for (let i = 0; i < panelSections.length; i++) {
+        let arr = [...panelSections];
+        if (arr[i].classList.contains("has-sub-section")) {
+          let linkListItem = `
           <li>
             <a
               class="pfe-jump-links-nav__item has-sub-section"
@@ -146,9 +144,9 @@ class PfeJumpLinksNav extends PFElement {
             </a>
             <ul class="sub-nav">
         `;
-        html += linkListItem;
-      } else if (arr[i].classList.contains("sub-section")) {
-        let linkSubItem = `
+          linkList += linkListItem;
+        } else if (arr[i].classList.contains("sub-section")) {
+          let linkSubItem = `
         <li>
             <a
               class="pfe-jump-links-nav__item sub-section"
@@ -157,12 +155,12 @@ class PfeJumpLinksNav extends PFElement {
                 ${arr[i].innerHTML}
             </a>
         </li>`;
-        if (!arr[i + 1].classList.contains("sub-section")) {
-          linkSubItem += `</ul></li>`;
-        }
-        html += linkSubItem;
-      } else {
-        let linkListItem = `
+          if (!arr[i + 1].classList.contains("sub-section")) {
+            linkSubItem += `</ul></li>`;
+          }
+          linkList += linkSubItem;
+        } else {
+          let linkListItem = `
           <li>
             <a
               class="pfe-jump-links-nav__item"
@@ -172,9 +170,18 @@ class PfeJumpLinksNav extends PFElement {
             </a>
           </li>
         `;
-        html += linkListItem;
+          linkList += linkListItem;
+        }
       }
-    }
+      return linkList;
+    };
+
+    let html = `
+      <h2 hidden id="site-nav-heading" class="sr-only">Page navigation</h2>
+      <h4 class="heading" slot="heading">Jump to section</h4>
+      <ul class="pfe-jump-links-nav">
+        ${buildLinkList()}
+    `;
     this.shadowRoot.querySelector("#container").innerHTML = html;
   }
 

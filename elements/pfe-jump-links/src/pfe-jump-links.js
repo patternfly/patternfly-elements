@@ -253,7 +253,8 @@ class PfeJumpLinksPanel extends PFElement {
     this._mutationCallback = this._mutationCallback.bind(this);
     this._observer = new MutationObserver(this._mutationCallback);
     this.currentActive = null;
-    this.sectionMargin = 200;
+    this.sectionMargin = this.getAttribute("offset") || 200;
+    console.log(this.sectionMargin);
     this.currentActive = 0;
     this.current = -1;
     this.nav = this._getNav();

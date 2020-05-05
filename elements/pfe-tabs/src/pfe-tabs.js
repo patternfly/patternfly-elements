@@ -21,6 +21,12 @@ const TABS_MUTATION_CONFIG = {
   subtree: true
 };
 
+const TAB_CONTENT_MUTATION_CONFIG = {
+  characterData: true,
+  childList: true,
+  subtree: true
+};
+
 function generateId() {
   return Math.random()
     .toString(36)
@@ -536,7 +542,7 @@ class PfeTab extends PFElement {
       this._init();
     }
 
-    this._observer.observe(this, { childList: true });
+    this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
   }
 
   attributeChangedCallback() {
@@ -592,7 +598,7 @@ class PfeTab extends PFElement {
     }
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
     }
   }
 }
@@ -633,7 +639,7 @@ class PfeTabPanel extends PFElement {
     super.connectedCallback();
 
     this._init();
-    this._observer.observe(this, { childList: true });
+    this._observer.observe(this, TABS_MUTATION_CONFIG);
   }
 
   disconnectedCallback() {
@@ -662,7 +668,7 @@ class PfeTabPanel extends PFElement {
     }
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TABS_MUTATION_CONFIG);
     }
   }
 }

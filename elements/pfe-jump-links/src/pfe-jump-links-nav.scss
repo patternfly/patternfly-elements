@@ -165,7 +165,7 @@ a {
   a {
     color: #CCCCCC;
     &:hover {
-      color: #151515;
+      color: darken($color: #CCCCCC, $amount: 20);
     }
     &[active] {
       color: #fff;

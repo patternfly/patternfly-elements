@@ -42,7 +42,7 @@ $variables: (
 
 :host {
   @include pfe-print-variables($variables);
-  
+
   // Broadcasted values set to match background color
   @include pfe-set-broadcast-theme(light);
   --theme: light;
@@ -234,9 +234,7 @@ $variables: (
   }
   &__header,
   &__body {
-    &:not(:last-child) {
-      margin-bottom: #{pfe-local(spacing--vertical)};
-    }
+    margin-bottom: #{pfe-local(spacing--vertical)};
 
     //-- Slotted styles for typography
     // Remove margins from typography inside the slots
@@ -247,4 +245,13 @@ $variables: (
       }
     }
   }
+}
+
+:host(:not([has_header])) .pfe-card__header,
+:host(:not([has_footer])) .pfe-card__footer {
+  display: none;
+}
+
+:host(:not([has_footer])) .pfe-card__body {
+  margin-bottom: 0;
 }

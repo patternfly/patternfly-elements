@@ -40,6 +40,10 @@
         <p>This is pfe-card.</p>
         <div slot="pfe-card--footer">Text in footer</div>
       </pfe-card>
+
+      <pfe-card id="dynamicHeaderFooter">
+        This is the card
+      </pfe-card>
     </div>
 
     <script>
@@ -174,6 +178,30 @@
             assert.isFalse(card.hasAttribute("has_footer"));
             done();
           })
+        });
+
+        test("it should render a header and footer when content for those slots are added dynamically", done => {
+          const card = document.querySelector("#dynamicHeaderFooter");
+          
+          const header = document.createElement("h2");
+          header.setAttribute("slot", "pfe-card--header");
+          header.textContent = "Card Header";
+
+          const footer = document.createElement("div");
+          footer.setAttribute("slot", "pfe-card--footer");
+          footer.textContent = "This is the footer";
+
+          card.prepend(header);
+          card.appendChild(footer);
+
+          flush(() => {
+            const cardHeaderSlot = card.shadowRoot.querySelector(`slot[name="pfe-card--header"]`);
+            const cardFooterSlot = card.shadowRoot.querySelector(`slot[name="pfe-card--footer"]`);
+
+            assert.equal(cardHeaderSlot.assignedNodes().length, 1);
+            assert.equal(cardFooterSlot.assignedNodes().length, 1);
+            done();
+          });
         });
 
         // Iterate over the colors object to test expected background color results

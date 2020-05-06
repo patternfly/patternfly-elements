@@ -1,6 +1,7 @@
 ## Prerelese 46 ( TBD )
 
 - [27fee5f](https://github.com/patternfly/patternfly-elements/commit/27fee5f5c5eb021ac126f3767dd0299f5cda8231) fix: pfe-tabs check for tagName on addedNode mutation before continuing
+- []() Update getting started documentation
 - [2c950b0](https://github.com/patternfly/patternfly-elements/commit/2c950b08f7638787df50aa5ee6738f1205ea3a9d) fix: Add clearfix within tab and accordion panels
 - [96f0a1b](https://github.com/patternfly/patternfly-elements/commit/96f0a1bdf9c758650e02b20a63ee3fb2fcf11bc9) feat: Add border to the card component
 - [f392a0f](https://github.com/patternfly/patternfly-elements/commit/f392a0f0eeac3b0379794eff4a1b2946e10e883a) fix: Generator needs to convert slot-name to camelCase in js file if dash exists

@@ -18,14 +18,14 @@ The list below is the recommended approach to using web components and overridin
 
 ## 1. Install PatternFly Elements
 
-PFE is a monorepo, meaning that each component is revisioned independently of others, and you can request only the components you need. You may also want to request the pfe-cta component to render the call-to-action links in the tray of the menu.
+PatternFly Elements (PFE) is a monorepo, meaning that each component is revisioned independently of others, and you can request only the components you need. You may also want to request the pfe-cta component to render the call-to-action links in the tray of the menu.
 You can find the latest versions of all PFE webcomponents on [npmjs.com](https://www.npmjs.com/search?q=%40patternfly%20elements).
 
 Depending on the tool you use to manage dependencies ([NPM](https://www.npmjs.com/), Yarn, etc.) use the command line to install the pfe-navigation as a dependency of your project like this:
 
 ```bash
-$ npm install --save @patternfly-elements/pfe-card
-$ npm install --save @patternfly-elements/pfe-cta
+$ npm install --save @patternfly/pfe-card
+$ npm install --save @patternfly/pfe-cta
 ```
 
 This will install not only the pfe-card and pfe-cta, but also the base element, "pfelement", and will save it to your package-lock.json. Depending on which browsers you support, you may also need to load the [custom-elements](https://github.com/webcomponents/polyfills/tree/master/packages/custom-elements) and webcomponentsjs [polyfills](https://www.webcomponents.org/polyfills). 
@@ -44,39 +44,36 @@ There are a few options:
 
 1. If your site does not need to [support older browser such as IE11](https://caniuse.com/#feat=es6-module), you may load the JavaScript via: `script type="module"`. List out all the components you may include on your page, and the browser will fetch the dependencies dynamically on load. [Learn more](https://hospodarets.com/native-ecmascript-modules-the-first-overview).
 
-  ```
-  <script type="module" scr="PATH/pfe-card.min.js"></script>
-  <script type="module" scr="PATH/pfe-cta.min.js"></script>
-  ```
- 
+    ```html
+    <script type="module" scr="PATH/pfe-card.min.js"></script>
+    <script type="module" scr="PATH/pfe-cta.min.js"></script>
+    ```
+
 2. Include the PatternFly Element web component and its dependencies on the page(s) or within the app.
 
-	```html
-	import '@patternfly/pfe-card/dist/pfe-card.js';
-	import '@patternfly/pfe-cta/dist/pfe-cta.js';
-	```
+    ```javascript
+    import '@patternfly/pfe-card/dist/pfe-card.js';
+    import '@patternfly/pfe-cta/dist/pfe-cta.js';
+    ```
 
 3. Use [require.js](https://requirejs.org/) JavaScript file and module loader.
 	- Learn more about [Polyfills](/getting-started/polyfills)
-3. Load individual PatternFly Element scripts, but bundle the polyfills with the base `pfelement.js` file.
+4. Load individual PatternFly Element scripts, but bundle the polyfills with the base `pfelement.js` file.
 	-  All elements are based off of `pfelement.js` so including the polyfills with this one file would mean you only need to include the `pfelement.js` file before you include anything else.
-4. Bundle all of the scripts together into one rollup, and include that.
-
+5. Bundle all of the scripts together into one rollup, and include that.
 ### Important note
-If you are using ES6 you will want to use the regular minified javascript files:
+  If you are using ES6 you will want to use the regular minified javascript files:
 
-```
-pfe-card.min.js
-pfe-cta.min.js
-```
+    ```
+    pfe-card.min.js
+    pfe-cta.min.js
+    ```
+    If not, use the UMD (universal module definition) versions:
 
-If not, use the UMD (universal module definition) versions:
-
-```
-pfe-card.umd.min.js
-pfe-cta.umd.min.js
-```
-
+    ```
+    pfe-card.umd.min.js
+    pfe-cta.umd.min.js
+    ```
 
 ## 3. Use PatternFly Elements markup in your template
 
@@ -99,7 +96,7 @@ The beauty of web components is that they have much of the styling built-into th
 
 ```html
 <pfe-card pfe-color="darkest">
-    <p>Hello world.</p>
+  <p>Hello world.</p>
 </pfe-card>
 ```
 
@@ -109,17 +106,16 @@ The pfe-content-set will render the content as either pfe-tabs and pfe-accordion
 
 ```html
 <pfe-content-set pfe-variant="wind" pfe-breakpoint="500">
-    <h3 pfe-content-set--header>Labore ut</h3>
-    <div pfe-content-set--panel>
-        <p>Quis ad ad quis deserunt.</p>
-    </div>
-    <h3 pfe-content-set--header>Ullamco est</h3>
-    <div pfe-content-set--panel>
-        <p>Ex Lorem mollit cupidatat ullamco.</p>
-    </div>
+  <h3 pfe-content-set--header>Labore ut</h3>
+  <div pfe-content-set--panel>
+    <p>Quis ad ad quis deserunt.</p>
+  </div>
+  <h3 pfe-content-set--header>Ullamco est</h3>
+  <div pfe-content-set--panel>
+    <p>Ex Lorem mollit cupidatat ullamco.</p>
+  </div>
 </pfe-content-set>
 ```
-
 
 You can use PatternFly Elements alongside other standard HTML markup in your app or page. Here's a React app example:
 

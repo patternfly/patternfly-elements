@@ -20,7 +20,7 @@ The list below is the recommended approach to using web components and overridin
 
 PatternFly Elements (PFE) is a monorepo, meaning that each component is revisioned independently of others, and you can request only the components you need. You can find the latest versions of all PFE webcomponents on [npmjs.com](https://www.npmjs.com/search?q=%40patternfly%20elements).
 
-Depending on the tool you use to manage dependencies ([NPM](https://www.npmjs.com/), Yarn, etc.) use the command line to install the pfe-navigation as a dependency of your project like this:
+Depending on the tool you use to manage dependencies ([NPM](https://www.npmjs.com/), Yarn, etc.) use the command line to install the components you'd like as a dependency of your project like this:
 
 ```bash
 $ npm install --save @patternfly/pfe-card

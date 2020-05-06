@@ -229,7 +229,8 @@ class PfeJumpLinksPanel extends PFElement {
 
   static get events() {
     return {
-      change: `${this.tag}:change`
+      change: `${this.tag}:change`,
+      activeNavItem: `${this.tag}:active-navItem`
     };
   }
 
@@ -314,14 +315,11 @@ class PfeJumpLinksPanel extends PFElement {
         this.menu_links[link].parentNode.setAttribute("active", "");
       }
       let activeLink = this.JumpLinksNav.querySelector("[active]");
-      this.dispatchEvent(
-        new CustomEvent(`pfe-jump-links-panel:active-nav-item`, {
-          detail: {
-            activeNavItem: activeLink
-          },
-          bubbles: true
-        })
-      );
+      this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
+        detail: {
+          activeNavItem: activeLink
+        }
+      });
     }
   }
 

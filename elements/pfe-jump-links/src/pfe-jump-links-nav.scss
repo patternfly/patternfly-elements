@@ -157,12 +157,37 @@ a {
 }
 
 :host([horizontal]) {
-  justify-content: center;
-  padding: 0;
-  display: flex;
-  ::slotted([slot="heading"]) {
-    display: none;
+  
+  nav {
+    display: flex;
+    position: relative;
+    ::slotted([slot="heading"]) {
+      display: none;
+    }
+
+    ::slotted([slot="logo"]) {
+      position: absolute;
+      left: 0;
+      max-height: 56px;
+      max-width: 224px;
+      top: 1rem;
+      left: 64px;
+    }
+
+    ::slotted([slot="link"]) {
+      position: absolute;
+      right: 64px;
+      top: 1rem;
+      background-color: red;
+      padding: 16px 32px;
+      border-radius: 3px;
+      color: #fff !important;
+      // align-self: flex-end;
+      // justify-self: flex-end;
+    }
   }
+
+  padding: 0;
   .heading {
     display: none;
   }
@@ -170,16 +195,26 @@ a {
   width: 100%;
   background-color: #F0F0F0;
   
+  #container {
+    // align-self: center;
+    flex: 1;
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+  }
+
   ul {
     flex: 1;
     display: flex;
     padding: 0;
-    width: 100%;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
     // background-color: grey;
     li {
       padding: 0 24px;
       display: flex;
-      height: 75px;
+      height: 80px;
       align-items: center;
       border-top: 4px solid transparent;
       border-bottom: 4px solid transparent;

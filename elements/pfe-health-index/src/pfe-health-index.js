@@ -23,17 +23,19 @@ class PfeHealthIndex extends PFElement {
 
   constructor() {
     super(PfeHealthIndex, { delayRender: true });
-    this.size = null;
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
+    super.attributeChangedCallback(attr, oldValue, newValue);
+
     switch (attr) {
       case "size":
-        this.size = newValue;
+        this.props.size.value = newValue;
         this.render();
-        this.updateHealthIndex(this.getAttribute("health-index"));
+        this.updateHealthIndex(this.getAttribute("health-index"), oldValue);
         break;
       case "health-index":
+        this.props.size.value = this.getAttribute("size");
         this.render();
         this.updateHealthIndex(newValue);
         break;
@@ -42,11 +44,16 @@ class PfeHealthIndex extends PFElement {
     }
   }
 
-  updateHealthIndex(grade) {
+  updateHealthIndex(grade, oldValue) {
     const healthIndex = grade.toLowerCase();
     const healthIndexUpperCase = grade.toUpperCase();
     const boxes = [...this.shadowRoot.querySelectorAll(".box")];
     this.innerHTML = healthIndexUpperCase;
+
+    if (this.props.size.value === "mini") {
+      this.shadowRoot.querySelector(".box").classList.remove(oldValue);
+      this.shadowRoot.querySelector(".box").classList.add(healthIndex);
+    }
 
     boxes.forEach(box => {
       if (box.classList.contains(healthIndex)) {
@@ -56,7 +63,7 @@ class PfeHealthIndex extends PFElement {
       }
     });
 
-    if (this.size !== "lg") {
+    if (this.props.size.value !== "lg") {
       this.shadowRoot.querySelector(
         "#healthIndex"
       ).innerText = healthIndexUpperCase;

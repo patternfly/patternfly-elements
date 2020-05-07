@@ -16,6 +16,11 @@ const KEYCODE = {
 // https://caniuse.com/#search=urlsearchparams
 const CAN_USE_URLSEARCHPARAMS = window.URLSearchParams ? true : false;
 
+const TABS_MUTATION_CONFIG = {
+  childList: true,
+  subtree: true
+};
+
 function generateId() {
   return Math.random()
     .toString(36)
@@ -88,7 +93,7 @@ class PfeTabs extends PFElement {
         this._init();
       }
 
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TABS_MUTATION_CONFIG);
     });
   }
 
@@ -235,7 +240,11 @@ class PfeTabs extends PFElement {
     if (mutationsList) {
       for (let mutation of mutationsList) {
         if (mutation.type === "childList" && mutation.addedNodes.length) {
-          mutation.addedNodes.forEach(addedNode => {
+          [...mutation.addedNodes].forEach(addedNode => {
+            if (!addedNode.tagName) {
+              return;
+            }
+
             if (
               addedNode.tagName.toLowerCase() === PfeTab.tag ||
               addedNode.tagName.toLowerCase() === PfeTabPanel.tag
@@ -279,7 +288,7 @@ class PfeTabs extends PFElement {
     this._linked = true;
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TABS_MUTATION_CONFIG);
     }
   }
 
@@ -355,23 +364,24 @@ class PfeTabs extends PFElement {
     newTab.selected = true;
     newPanel.hidden = false;
 
-    if (this._setFocus) {
-      newTab.focus();
-      this._setFocus = false;
-    }
-
     const tabs = this._allTabs();
     const newIdx = tabs.findIndex(tab => tab.selected);
 
     this.selected = newTab;
 
     if (newTabSelected) {
+      if (this._setFocus) {
+        newTab.focus();
+      }
+
       this.emitEvent(PfeTabs.events.shownTab, {
         detail: {
           tab: this.selected
         }
       });
     }
+
+    this._setFocus = false;
   }
 
   _onKeyDown(event) {
@@ -466,7 +476,6 @@ class PfeTabs extends PFElement {
   _popstateEventHandler() {
     const tabIndexFromURL = this._getTabIndexFromURL();
 
-    this._setFocus = true;
     this._updateHistory = false;
     this.selectedIndex = tabIndexFromURL > -1 ? tabIndexFromURL : 0;
   }

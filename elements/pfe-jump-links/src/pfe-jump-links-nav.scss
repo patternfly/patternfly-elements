@@ -159,6 +159,7 @@ a {
 :host([horizontal]) {
   
   nav {
+    background-color: #F0F0F0;
     display: flex;
     position: relative;
     ::slotted([slot="heading"]) {
@@ -193,7 +194,7 @@ a {
   }
   top: 0;
   width: 100%;
-  background-color: #F0F0F0;
+  
   
   #container {
     // align-self: center;
@@ -232,12 +233,15 @@ a {
       color: #151515;
     }
   }
-  @media(min-width: 992px) {
+  @media(max-width: 768px) {
+    nav {
+      min-height: 88px;
+      background-color: #F0F0F0;
+    }
     .pfe-jump-links-nav {
       display: none;
     }
   }
-
 }
 
 

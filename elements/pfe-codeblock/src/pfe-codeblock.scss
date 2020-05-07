@@ -10,7 +10,7 @@ $LOCAL: codeblock;
 }
 
 :host([pfe-color="dark"]) {
-    @import "../node_modules/prismjs/themes/prism-twilight";
+    @import "../node_modules/prismjs/themes/prism-okaidia";
 }
 
 :host([hidden]) {

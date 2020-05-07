@@ -122,7 +122,7 @@ a {
   }
 }
 
-:host([dark]) {
+:host([pfe-color="darkest"]) {
   ::slotted([slot="heading"]) {
     color: #CCCCCC;
   } 
@@ -232,6 +232,12 @@ a {
       color: #151515;
     }
   }
+  @media(min-width: 992px) {
+    .pfe-jump-links-nav {
+      display: none;
+    }
+  }
+
 }
 
 

@@ -78,16 +78,28 @@ a {
   padding: 8px;
   line-height: 1.5;
   border-left: 3px solid transparent;
+  position: relative;
   &.sub-section{
     display: none;
     // height: 0;
     margin-left: 12px;
     font-size: 14px;
   }
+  &::after {
+    content: "";
+    position: absolute;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    top: 0;
+    left: 0;
+  }
   &:focus {
     outline: none;
-    border-radius: 3px;
-    border: 2px solid #62A1F4;
+
+    &::after {
+      border-radius: 3px;
+      border: 2px solid #62A1F4;
+    }
   }
 }
 
@@ -108,16 +120,30 @@ a {
 
   a {
     color: #72767B;
+    position: relative;
+
     &:hover {
       color: #151515;
     }
     &[active] {
       color: #151515;
     }
+    &::after {
+      content: "";
+      position: absolute;
+      width: calc(100% - 4px);
+      height: calc(100% - 4px);
+      top: 0;
+      left: 0;
+    }
+
     &:focus {
       outline: none;
-      border-radius: 3px;
-      border: 2px solid #62A1F4;
+
+      &::after {
+        border-radius: 3px;
+        border: 2px solid #62A1F4;
+      }
     }
   }
 }
@@ -139,15 +165,28 @@ a {
   a {
     color: #CCCCCC;
     &:hover {
-      color: #151515;
+      color: darken($color: #CCCCCC, $amount: 20);
     }
     &[active] {
       color: #fff;
     }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: calc(100% - 4px);
+      height: calc(100% - 4px);
+      top: 0;
+      left: 0;
+    }
+
     &:focus {
       outline: none;
-      border-radius: 3px;
-      border: 2px solid #62A1F4;
+
+      &::after {
+        border-radius: 3px;
+        border: 2px solid #62A1F4;
+      }
     }
   }
 }

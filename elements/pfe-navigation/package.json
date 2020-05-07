@@ -10,7 +10,7 @@
       "pfe-navigation--noscript.*css.map"
     ]
   },
-  "version": "1.0.0-prerelease.42",
+  "version": "1.0.0-prerelease.45",
   "publishConfig": {
     "access": "public"
   },
@@ -49,9 +49,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-icon": "^1.0.0-prerelease.40",
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.40",
-    "@patternfly/pfelement": "^1.0.0-prerelease.39"
+    "@patternfly/pfe-icon": "^1.0.0-prerelease.45",
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.45",
+    "@patternfly/pfelement": "^1.0.0-prerelease.45"
   },
   "generator-pfelement-version": "1.1.0"
 }

@@ -1,6 +1,6 @@
 {
   "lerna": "2.5.1",
   "packages": ["elements/*", "themes/*"],
-  "version": "1.0.0-prerelease.39",
+  "version": "1.0.0-prerelease.45",
   "ignoreChanges": ["elements/*/dist/**/*"]
 }

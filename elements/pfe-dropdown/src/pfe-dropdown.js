@@ -31,7 +31,8 @@ const KEYCODE = {
   LEFT: 37,
   RIGHT: 39,
   SPACE: 0 || 32,
-  UP: 38
+  UP: 38,
+  TAB: 9
 };
 
 class PfeDropdown extends PFElement {
@@ -230,13 +231,10 @@ class PfeDropdown extends PFElement {
   _toggleKeydownHandler(event) {
     if (event.keyCode === KEYCODE.DOWN || event.keyCode === KEYCODE.ENTER) {
       this.open(event);
-      let newItem = this._firstItem();
-      if (newItem) {
-        if (newItem.hasAttribute("is_disabled")) {
-          newItem = this._skipItem(1);
-        }
-        newItem.setAttribute("tabindex", "-1");
-        newItem.focus();
+      let item = this._nextEnabledItem();
+      if (item) {
+        item.setAttribute("tabindex", "-1");
+        item.focus();
       }
     }
     return this;
@@ -310,6 +308,17 @@ class PfeDropdown extends PFElement {
     const items = this._allItems();
     let newIdx = items.findIndex(item => item === document.activeElement) + 1;
     return items[newIdx % items.length];
+  }
+
+  _nextEnabledItem(currentIndex) {
+    const items = this._allItems();
+    let nextIndex = currentIndex ? currentIndex + 1 : 0;
+    let nextItem = items[nextIndex];
+    while (nextItem && nextItem.hasAttribute("is_disabled")) {
+      nextIndex++;
+      nextItem = items[nextIndex];
+    }
+    return nextItem;
   }
 
   _skipItem(direction) {

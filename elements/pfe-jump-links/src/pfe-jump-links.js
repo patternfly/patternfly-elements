@@ -261,7 +261,9 @@ class PfeJumpLinksPanel extends PFElement {
   connectedCallback() {
     super.connectedCallback();
     this._init();
-    this.nav._rebuildNav();
+    if (this.nav && this.nav.hasAttribute("autobuild")) {
+      this.nav._rebuildNav();
+    }
     // this._observer.observe(this, {
     //   childList: true,
     //   subtree: true,
@@ -314,6 +316,7 @@ class PfeJumpLinksPanel extends PFElement {
         this.menu_links[link].setAttribute("active", "");
         this.menu_links[link].parentNode.setAttribute("active", "");
       }
+
       let activeLink = this.JumpLinksNav.querySelector("[active]");
       this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
         detail: {
@@ -364,7 +367,6 @@ class PfeJumpLinksPanel extends PFElement {
     let sections;
     let menu_links;
     let sectionMargin;
-
     //Check sections to make sure we have them (if not, get them)
     if (!this.sections || typeof this.sections === "undefined") {
       this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");

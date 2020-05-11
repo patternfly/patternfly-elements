@@ -97,12 +97,12 @@ class PfeJumpLinksNav extends PFElement {
       }
     }
 
-    this._observer.observe(this, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true
-    });
+    // this._observer.observe(this, {
+    //   childList: true,
+    //   subtree: true,
+    //   characterData: true,
+    //   attributes: true
+    // });
 
     this.panel = document.querySelector(`[scrolltarget="${this.id}"]`);
 

@@ -79,7 +79,7 @@ class PfeJumpLinksNav extends PFElement {
     this._buildNav = this._buildNav.bind(this);
     this._mutationCallback = this._mutationCallback.bind(this);
     this._menuContainer = this.shadowRoot.querySelector("#container");
-    this._observer = new MutationObserver(this._mutationCallback);
+    // this._observer = new MutationObserver(this._mutationCallback);
   }
 
   connectedCallback() {
@@ -250,7 +250,7 @@ class PfeJumpLinksPanel extends PFElement {
     this._slot.addEventListener("slotchange", this._init);
     this._scrollCallback = this._scrollCallback.bind(this);
     this._mutationCallback = this._mutationCallback.bind(this);
-    this._observer = new MutationObserver(this._mutationCallback);
+    // this._observer = new MutationObserver(this._mutationCallback);
     this.currentActive = null;
     this.sectionMargin = this.getAttribute("offset") || 200;
     this.currentActive = 0;
@@ -262,12 +262,12 @@ class PfeJumpLinksPanel extends PFElement {
     super.connectedCallback();
     this._init();
     this.nav._rebuildNav();
-    this._observer.observe(this, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true
-    });
+    // this._observer.observe(this, {
+    //   childList: true,
+    //   subtree: true,
+    //   characterData: true,
+    //   attributes: true
+    // });
     // If you need to initialize any attributes, do that here
   }
 

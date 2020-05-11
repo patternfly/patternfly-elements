@@ -198,6 +198,8 @@ class PfeDropdown extends PFElement {
         newItem = this._lastItem();
         break;
 
+      case KEYCODE.TAB:
+        this.close();
       default:
         break;
     }
@@ -229,13 +231,21 @@ class PfeDropdown extends PFElement {
 
   // Event handler for keydown event on Dropdown
   _toggleKeydownHandler(event) {
-    if (event.keyCode === KEYCODE.DOWN || event.keyCode === KEYCODE.ENTER) {
-      this.open(event);
-      let item = this._nextEnabledItem();
-      if (item) {
-        item.setAttribute("tabindex", "-1");
-        item.focus();
-      }
+    switch (event.keyCode) {
+      case KEYCODE.ENTER:
+      case KEYCODE.DOWN:
+        this.open(event);
+        let item = this._nextEnabledItem();
+        if (item) {
+          item.setAttribute("tabindex", "-1");
+          item.focus();
+        }
+        break;
+      case KEYCODE.TAB:
+        this.close();
+        break;
+      default:
+        break;
     }
     return this;
   }
@@ -274,9 +284,11 @@ class PfeDropdown extends PFElement {
     const isDisabled = this.hasAttribute("is_disabled");
     if (isDisabled) {
       this.setAttribute("aria-disabled", "true");
+      this.setAttribute("tabindex", "-1");
     } else {
       this.removeAttribute("is_disabled");
       this.setAttribute("aria-disabled", "false");
+      this.removeAttribute("tabindex");
     }
   }
 
@@ -302,6 +314,16 @@ class PfeDropdown extends PFElement {
   _lastItem() {
     const items = this._allItems();
     return items[items.length - 1];
+  }
+
+  _currentItem() {
+    const items = this._allItems();
+    let newIdx = items.findIndex(
+      item =>
+        item.shadowRoot.querySelector("slot").assignedNodes()[1] ===
+        document.activeElement
+    );
+    return items[newIdx];
   }
 
   _nextItem() {

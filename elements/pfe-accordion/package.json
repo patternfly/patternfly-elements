@@ -9,7 +9,7 @@
       "pfe-accordion-panel.js"
     ]
   },
-  "version": "1.0.0-prerelease.45",
+  "version": "1.0.0-prerelease.46",
   "publishConfig": {
     "access": "public"
   },

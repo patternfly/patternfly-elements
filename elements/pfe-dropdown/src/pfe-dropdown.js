@@ -234,9 +234,12 @@ class PfeDropdown extends PFElement {
     switch (event.keyCode) {
       case KEYCODE.ENTER:
       case KEYCODE.DOWN:
-        this.open(event);
-        let item = this._nextEnabledItem();
-        if (item) {
+        if (this._allDisabled) {
+          // toggle the dropdown if all items disabled
+          this.toggle(event);
+        } else {
+          // get the following enabled item
+          const item = this._nextItem(-1, 1);
           item.setAttribute("tabindex", "-1");
           item.focus();
         }

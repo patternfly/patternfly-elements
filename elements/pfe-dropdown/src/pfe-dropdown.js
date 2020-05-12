@@ -166,7 +166,8 @@ class PfeDropdown extends PFElement {
     if (event.target.attributes["pfe-item-type"]) {
       pfeType = event.target.attributes["pfe-item-type"].value;
     }
-
+    // active dropdown item index
+    const currentIndex = this._allItems().findIndex(item => item === document.activeElement);
     switch (event.keyCode) {
       case KEYCODE.ENTER:
         this._selectItem(event.target.children[0], pfeType);
@@ -178,16 +179,14 @@ class PfeDropdown extends PFElement {
 
       case KEYCODE.RIGHT:
       case KEYCODE.DOWN:
-        newItem = this._nextItem().hasAttribute("is_disabled")
-          ? this._skipItem(1)
-          : this._nextItem();
+        // get the following item
+        newItem = this._nextItem(currentIndex, 1);
         break;
 
       case KEYCODE.LEFT:
       case KEYCODE.UP:
-        newItem = this._prevItem().hasAttribute("is_disabled")
-          ? this._skipItem(-1)
-          : this._prevItem();
+        // get the previous item
+        newItem = this._nextItem(currentIndex, -1);
         break;
 
       case KEYCODE.HOME:

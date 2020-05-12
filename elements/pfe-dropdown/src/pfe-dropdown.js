@@ -304,6 +304,18 @@ class PfeDropdown extends PFElement {
     this._allItems().find(item => !item.hasAttribute("is_disabled")) < 0;
   }
 
+  _nextItem(currentPosition, direction) {
+    const items = this._allItems();
+    let index = (currentPosition + direction) % items.length;
+    index = index < 0 ? index + items.length : index;
+    let item = items[index];
+    while (item && item.hasAttribute("is_disabled")) {
+      index += direction;
+      item = items[index % items.length];
+    }
+    return item;
+  }
+
   _firstItem() {
     const items = this._allItems();
     return items[0];

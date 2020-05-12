@@ -37,17 +37,21 @@ Use the attribute `pfe-status="{option}"`
 
 ## Test
 
-    npm run test
+    `npm run test`
 
 ## Build
 
-    npm run build
+    `npm run build`
+
+## Watch
+
+    `npm run watch`
 
 ## Demo
 
-From the PFElements root directory, run:
+From the root directory, run:
 
-    npm start
+    `npm run live-demo`
 
 ## Code style
 

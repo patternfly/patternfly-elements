@@ -81,17 +81,21 @@ There are several attributes available for customizing the visual treatment of p
 
 ## Test
 
-    npm run test
+    `npm run test`
 
 ## Build
 
-    npm run build
+    `npm run build`
+
+## Watch
+
+    `npm run watch`
 
 ## Demo
 
-From the PFElements root directory, run:
+From the root directory, run:
 
-    npm start
+    `npm run live-demo`
 
 ## Code style
 

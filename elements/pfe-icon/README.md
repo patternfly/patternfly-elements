@@ -37,17 +37,21 @@ There are several powerful variables available to hook into and override default
 
 ## Test
 
-    npm test
+`npm test`
 
 ## Build
 
-    npm run build
+    `npm run build`
+
+## Watch
+
+    `npm run watch`
 
 ## Demo
 
-From the PFElements root directory, run:
+From the root directory, run:
 
-    npm start
+    `npm run live-demo`
 
 ## Code style
 

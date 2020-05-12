@@ -6,10 +6,8 @@ $variables: (
   toggle: (
     MinWidth: calc(#{pfe-var(container-spacer)} * 2),
     MaxWidth: 100%,
-    PaddingTop: calc(#{pfe-var(container-padding)} * 0.375),
-    PaddingRight: calc(#{pfe-var(container-padding)} * 0.5),
-    PaddingBottom: calc(#{pfe-var(container-padding)} * 0.375),
-    PaddingLeft: calc(#{pfe-var(container-padding)} * 0.5),
+    SpacingVertical: calc(#{pfe-var(container-spacer)} * 0.5),
+    SpacingHorizontal: calc(#{pfe-var(container-spacer)} * 0.5),
     FontSize: #{pfe-var(font-size)},
     FontWeight: 400,
     LineHeight: #{pfe-var(line-height)},
@@ -26,10 +24,8 @@ $variables: (
     BorderStyle--before: solid
   ),
   menu: (
-    PaddingTop: calc(#{pfe-var(container-padding)} * 0.5),
-    PaddingBottom: calc(#{pfe-var(container-padding)} * 0.5),
-    PaddingRight: 0,
-    PaddingLeft: 0,
+    SpacingVertical: calc(#{pfe-var(container-spacer)} * 0.5),
+    SpacingHorizontal: 0,
     Margin: 0,
     Background: #{pfe-color(surface--lightest)},
     BorderWidth: #{pfe-var(ui--border-width)},
@@ -73,10 +69,7 @@ $variables: (
     justify-content: space-between;
     min-width: #{pfe-local($cssvar: MinWidth, $region: toggle)};
     max-width: #{pfe-local($cssvar: MaxWidth, $region: toggle)};
-    padding-top: #{pfe-local($cssvar: PaddingTop, $region: toggle)};
-    padding-right: #{pfe-local($cssvar: PaddingRight, $region: toggle)};
-    padding-bottom: #{pfe-local($cssvar: PaddingBottom, $region: toggle)};
-    padding-left: #{pfe-local($cssvar: PaddingLeft, $region: toggle)};
+    padding: #{pfe-local($cssvar: SpacingVertical, $region: toggle)} #{pfe-local($cssvar: SpacingHorizontal, $region: toggle)};
     font-size: #{pfe-local($cssvar: FontSize, $region: toggle)};
     font-family: #{pfe-var(font-family, $fallback: inherit)};
     font-weight: #{pfe-local($cssvar: FontWeight, $region: toggle)};
@@ -149,10 +142,7 @@ $variables: (
     position: absolute;
     top: calc(100% + 0.25rem);
     z-index: #{pfe-zindex(overlay)};
-    padding-top: #{pfe-local($cssvar: PaddingTop, $region: menu)};
-    padding-bottom: #{pfe-local($cssvar: PaddingBottom, $region: menu)};
-    padding-right: #{pfe-local($cssvar: PaddingRight, $region: menu)};
-    padding-left: #{pfe-local($cssvar: PaddingLeft, $region: menu)};
+    padding: #{pfe-local($cssvar: SpacingVertical, $region: menu)} #{pfe-local($cssvar: SpacingHorizontal, $region: menu)};
     margin: #{pfe-local($cssvar: Margin, $region: menu)};
     background: #{pfe-local($cssvar: Background, $region: menu)};
     background-clip: padding-box;

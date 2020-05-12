@@ -3,26 +3,17 @@
 $LOCAL: dropdown-item;
 
 $variables: (
-spacing-vertical: calc(#{pfe-var(container-spacer)} * 0.5),
-spacing-horizontal: calc(#{pfe-var(container-spacer)} * 0.5),
-  PaddingRight: #{pfe-var(container-padding)},
-  PaddingBottom: calc(#{pfe-var(container-padding)} * 0.5),
-  PaddingLeft: #{pfe-var(container-padding)},
+  SpacingVertical: calc(#{pfe-var(container-spacer)} * 0.5),
+  SpacingHorizontal: calc(#{pfe-var(container-spacer)} * 0.5),
   FontSize: #{pfe-var(font-size)},
   FontWeight: 400,
   LineHeight: #{pfe-var(line-height)},
   Color: #151515,
   Color--hover: #151515,
   TextAlign: left,
-  WhiteSpace: nowrap,
   BackgroundColor: transparent,
   BackgroundColor--hover: #ededed,
-  Border: none,
-  BoxSizing: border-box,
-  TextDecoration: none,
-  Height: 1px,
-  MarginTop: 0.5rem,
-  MarginBottom: 0.5rem
+  Border: none
 );
 
 :host {
@@ -32,21 +23,18 @@ spacing-horizontal: calc(#{pfe-var(container-spacer)} * 0.5),
 ::slotted(*) {
   display: block;
   width: 100%;
-  padding-top: #{pfe-local(PaddingTop)};
-  padding-right: #{pfe-local(PaddingRight)};
-  padding-bottom: #{pfe-local(PaddingBottom)};
-  padding-left: #{pfe-local(PaddingLeft)};
+  padding: #{pfe-local(SpacingVertical)} #{pfe-local(SpacingHorizontal)};
   font-size: #{pfe-local(FontSize)};
   font-weight: #{pfe-local(FontWeight)};
   line-height: #{pfe-local(LineHeight)};
   color: #{pfe-local(Color)};
   text-align: #{pfe-local(TextAlign)};
-  white-space: #{pfe-local(WhiteSpace)};
+  white-space: nowrap;
   background-color: #{pfe-local(BackgroundColor)};
   border: #{pfe-local(Border)};
-  box-sizing: #{pfe-local(BoxSizing)};
-  text-decoration: #{pfe-local(TextDecoration)};
-  font-family: #{pfe-var(font-family, $fallback: inherit);
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: #{pfe-var(font-family, $fallback: inherit)};
 }
 
 ::slotted(*:hover) {
@@ -57,7 +45,7 @@ spacing-horizontal: calc(#{pfe-var(container-spacer)} * 0.5),
 :host([pfe-item-type="separator"]) {
   .pfe-dropdown-item {
     &__container {
-      height: #{pfe-local(Height)};
+      height: 1px;
       background-color: #d2d2d2;
       border: 0;
     }

@@ -183,7 +183,7 @@ $variables: (
     border-style: #{pfe-local($cssvar: BorderStyle, $region: menu)};
     border-color: #{pfe-local($cssvar: BorderColor, $region: menu)};
     box-shadow: #{pfe-local($cssvar: BoxShadow, $region: menu)};
-    box-sizing: #{pfe-local($cssvar: BoxSizing, $region: menu)};
+    box-sizing: border-box;
     list-style: #{pfe-local($cssvar: ListStyle, $region: menu)};
     min-width: #{pfe-local($cssvar: MinWidth, $region: menu)};
     &.open {

@@ -4,10 +4,6 @@ $LOCAL: dropdown;
 
 $variables: (
   toggle: (
-    Position: relative,
-    Display: flex,
-    AlignItems: center,
-    JustifyContent: space-between,
     MinWidth: calc(#{pfe-var(container-spacer)} * 2),
     MaxWidth: 100%,
     PaddingTop: calc(#{pfe-var(container-padding)} * 0.375),
@@ -29,35 +25,17 @@ $variables: (
     BorderLeftColor--before: #ededed,
     BorderStyle--before: solid
   ),
-  toggle-text: (
-    Overflow: hidden,
-    TextOverflow: ellipsis,
-    WhiteSpace: nowrap
-  ),
-  toggle-icon: (
-    VerticalAlign: calc(#{pfe-var(container-spacer)} * -0.125),
-    Height: #{pfe-var(icon-size)},
-    Width: #{pfe-var(icon-size)},
-    MarginRight: calc(#{pfe-var(container-spacer)} * 0.5),
-    MarginLeft: #{pfe-var(container-spacer)},
-    LineHeight: #{pfe-var(line-height)}
-  ),
   menu: (
-    Top: calc(100% + 0.25rem),
-    ZIndex: 200,
     PaddingTop: calc(#{pfe-var(container-padding)} * 0.5),
     PaddingBottom: calc(#{pfe-var(container-padding)} * 0.5),
     PaddingRight: 0,
     PaddingLeft: 0,
     Margin: 0,
     Background: #{pfe-color(surface--lightest)},
-    BackgroundClip: padding-box,
     BorderWidth: #{pfe-var(ui--border-width)},
     BorderStyle: #{pfe-var(ui--border-style)},
     BorderColor: transparent,
     BoxShadow: #{pfe-var(box-shadow--sm)},
-    BoxSizing: border-box,
-    ListStyle: none,
     MinWidth: 100%
   )
 );
@@ -89,10 +67,10 @@ $variables: (
 
 .pfe-dropdown {
   &__toggle {
-    position: #{pfe-local($cssvar: Position, $region: toggle)};
-    display: #{pfe-local($cssvar: Display, $region: toggle)};
-    align-items: #{pfe-local($cssvar: AlignItems, $region: toggle)};
-    justify-content: #{pfe-local($cssvar: JustifyContent, $region: toggle)};
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     min-width: #{pfe-local($cssvar: MinWidth, $region: toggle)};
     max-width: #{pfe-local($cssvar: MaxWidth, $region: toggle)};
     padding-top: #{pfe-local($cssvar: PaddingTop, $region: toggle)};
@@ -100,13 +78,12 @@ $variables: (
     padding-bottom: #{pfe-local($cssvar: PaddingBottom, $region: toggle)};
     padding-left: #{pfe-local($cssvar: PaddingLeft, $region: toggle)};
     font-size: #{pfe-local($cssvar: FontSize, $region: toggle)};
-    font-family: #{pfe-var(font-family)};
+    font-family: #{pfe-var(font-family, $fallback: inherit)};
     font-weight: #{pfe-local($cssvar: FontWeight, $region: toggle)};
     line-height: #{pfe-var(line-height)};
     color: #{pfe-local($cssvar: Color, $region: toggle)};
     background-color: #{pfe-local($cssvar: BackgroundColor, $region: toggle)};
     border: #{pfe-local($cssvar: Border, $region: toggle)};
-    font-family: inherit;
     &:hover,
     &:active,
     &:focus {
@@ -153,38 +130,38 @@ $variables: (
         )};
     }
     &-text {
-      overflow: #{pfe-local($cssvar: Overflow, $region: toggle-text)};
-      text-overflow: #{pfe-local($cssvar: TextOverflow, $region: toggle-text)};
-      white-space: #{pfe-local($cssvar: WhiteSpace, $region: toggle-text)};
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     &-icon {
-      vertical-align: #{pfe-local($cssvar: VerticalAlign, $region: toggle-icon)};
+      vertical-align: calc(#{pfe-var(container-spacer)} * -0.125);
       fill: currentColor;
-      height: #{pfe-local($cssvar: Height, $region: toggle-icon)};
+      height: #{pfe-var(icon-size)};
       width: #{pfe-local($cssvar: Width, $region: toggle-icon)};
-      margin-right: #{pfe-local($cssvar: MarginRight, $region: toggle-icon)};
-      margin-left: #{pfe-local($cssvar: MarginLeft, $region: toggle-icon)};
-      line-height: #{pfe-local($cssvar: LineHeight, $region: toggle-icon)};
+      margin-right: calc(#{pfe-var(container-spacer)} * 0.5);
+      margin-left: #{pfe-var(container-spacer)};
+      line-height: #{pfe-var(line-height)};
     }
   }
   &__menu {
     display: none;
     position: absolute;
-    top: #{pfe-local($cssvar: Top, $region: menu)};
-    z-index: #{pfe-local($cssvar: ZIndex, $region: menu)};
+    top: calc(100% + 0.25rem);
+    z-index: #{pfe-zindex(overlay)};
     padding-top: #{pfe-local($cssvar: PaddingTop, $region: menu)};
     padding-bottom: #{pfe-local($cssvar: PaddingBottom, $region: menu)};
     padding-right: #{pfe-local($cssvar: PaddingRight, $region: menu)};
     padding-left: #{pfe-local($cssvar: PaddingLeft, $region: menu)};
     margin: #{pfe-local($cssvar: Margin, $region: menu)};
     background: #{pfe-local($cssvar: Background, $region: menu)};
-    background-clip: #{pfe-local($cssvar: BackgroundClip, $region: menu)};
+    background-clip: padding-box;
     border-width: #{pfe-local($cssvar: BorderWidth, $region: menu)};
     border-style: #{pfe-local($cssvar: BorderStyle, $region: menu)};
     border-color: #{pfe-local($cssvar: BorderColor, $region: menu)};
     box-shadow: #{pfe-local($cssvar: BoxShadow, $region: menu)};
     box-sizing: #{pfe-local($cssvar: BoxSizing, $region: menu)};
-    list-style: #{pfe-local($cssvar: ListStyle, $region: menu)};
+    list-style: none;
     min-width: #{pfe-local($cssvar: MinWidth, $region: menu)};
     &.open {
       display: block;

@@ -79,7 +79,7 @@ class PfeJumpLinksNav extends PFElement {
     this._buildNav = this._buildNav.bind(this);
     this._mutationCallback = this._mutationCallback.bind(this);
     this._menuContainer = this.shadowRoot.querySelector("#container");
-    // this._observer = new MutationObserver(this._mutationCallback);
+    this._observer = new MutationObserver(this._mutationCallback);
   }
 
   connectedCallback() {
@@ -97,12 +97,12 @@ class PfeJumpLinksNav extends PFElement {
       }
     }
 
-    // this._observer.observe(this, {
-    //   childList: true,
-    //   subtree: true,
-    //   characterData: true,
-    //   attributes: true
-    // });
+    this._observer.observe(this, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true
+    });
 
     this.panel = document.querySelector(`[scrolltarget="${this.id}"]`);
 
@@ -250,7 +250,7 @@ class PfeJumpLinksPanel extends PFElement {
     this._slot.addEventListener("slotchange", this._init);
     this._scrollCallback = this._scrollCallback.bind(this);
     this._mutationCallback = this._mutationCallback.bind(this);
-    // this._observer = new MutationObserver(this._mutationCallback);
+    this._observer = new MutationObserver(this._mutationCallback);
     this.currentActive = null;
     this.sectionMargin = this.getAttribute("offset") || 200;
     this.currentActive = 0;
@@ -264,12 +264,12 @@ class PfeJumpLinksPanel extends PFElement {
     if (this.nav && this.nav.hasAttribute("autobuild")) {
       this.nav._rebuildNav();
     }
-    // this._observer.observe(this, {
-    //   childList: true,
-    //   subtree: true,
-    //   characterData: true,
-    //   attributes: true
-    // });
+    this._observer.observe(this, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true
+    });
     // If you need to initialize any attributes, do that here
   }
 
@@ -328,9 +328,6 @@ class PfeJumpLinksPanel extends PFElement {
 
   _removeActive(link) {
     if (this.menu_links[link]) {
-      //@TODO Should add logic here that doesn't remove active attribute
-      // when ones of its children is the active link
-
       if (this.menu_links[link].classList.contains("sub-section")) {
         this.menu_links[link].parentNode.parentNode.parentNode.classList.remove(
           "expand"
@@ -357,7 +354,6 @@ class PfeJumpLinksPanel extends PFElement {
     //If we want the nav to be built automatically, re-init panel and rebuild nav
     if (this.nav.hasAttribute("autobuild")) {
       this._init();
-      //@TODO change this to emit an event that nav is subscribed to
       this.emitEvent(PfeJumpLinksPanel.events.change);
       this.nav._rebuildNav();
     }
@@ -381,8 +377,6 @@ class PfeJumpLinksPanel extends PFElement {
       menu_links = this.menu_links;
     }
 
-    //@TODO read value from an attribute so devs can customize
-    // margin from the top of the window
     if (!this.sectionMargin) {
       sectionMargin = 200;
     } else {

@@ -102,7 +102,7 @@ $variables: (
     font-size: #{pfe-local($cssvar: FontSize, $region: toggle)};
     font-family: #{pfe-var(font-family)};
     font-weight: #{pfe-local($cssvar: FontWeight, $region: toggle)};
-    line-height: #{pfe-local($cssvar: LineHeight, $region: toggle)};
+    line-height: #{pfe-var(line-height)};
     color: #{pfe-local($cssvar: Color, $region: toggle)};
     background-color: #{pfe-local($cssvar: BackgroundColor, $region: toggle)};
     border: #{pfe-local($cssvar: Border, $region: toggle)};

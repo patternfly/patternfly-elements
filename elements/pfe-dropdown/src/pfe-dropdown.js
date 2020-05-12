@@ -300,10 +300,8 @@ class PfeDropdown extends PFElement {
     ];
   }
 
-  _prevItem() {
-    const items = this._allItems();
-    let newIdx = items.findIndex(item => item === document.activeElement) - 1;
-    return items[(newIdx + items.length) % items.length];
+  _allDisabled() {
+    this._allItems().find(item => !item.hasAttribute("is_disabled")) < 0;
   }
 
   _firstItem() {
@@ -385,6 +383,10 @@ class PfeDropdown extends PFElement {
     this._menu.classList.remove("open");
     this._toggle.setAttribute("aria-expanded", false);
     return this;
+  }
+
+  toggle(event) {
+    this.isOpen ? this.close(event) : this.open(event);
   }
 }
 

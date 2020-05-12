@@ -45,7 +45,7 @@ $variables: (
   border: #{pfe-local(Border)};
   box-sizing: #{pfe-local(BoxSizing)};
   text-decoration: #{pfe-local(TextDecoration)};
-  font-family: inherit;
+  font-family: #{pfe-var(font-family, $fallback: inherit);
 }
 
 ::slotted(*:hover) {

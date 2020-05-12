@@ -1,44 +1,46 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>PatternFly Element | pfe-codeblock Demo</title>
 
-    <noscript>
-      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
-    </noscript>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>PatternFly Element | pfe-codeblock Demo</title>
 
-    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <noscript>
+    <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+  </noscript>
 
-    <!-- Stylesheets for testing light DOM styles.
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+  <!-- Stylesheets for testing light DOM styles.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
     -->
-    
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
-    
-    <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-loader.js"></script> -->
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-    <!-- IE11 test: use bundle + require with umd files -->
-    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
 
-    <!-- Tests require pulling in the UMD version of the files -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-loader.js"></script> -->
 
-    <script>require([
+  <!-- IE11 test: use bundle + require with umd files -->
+  <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+
+  <!-- Tests require pulling in the UMD version of the files -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+  <script>require([
       "../dist/pfe-codeblock.umd.js"
     ])</script>
-  </head>
-  <body unresolved>
-    <section>
+</head>
+
+<body unresolved>
+  <section>
     <h1><code>pfe-codeblock</code></h1>
     <p>This example shows the supported languages for the base prism.js.</p>
     <h2>HTML Markup</h2>
@@ -49,7 +51,7 @@
           &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
     <h2>Javascript Markup</h2>
     <pfe-codeblock pfe-language="javascript">
       <pre pfe-codeblock-container>
@@ -58,7 +60,7 @@
           let test=null;
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
     <h2>CSS Markup</h2>
     <pfe-codeblock pfe-language="css">
       <pre pfe-codeblock-container>
@@ -67,7 +69,7 @@
           body { background-color: #eee; }
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
     <h2>XML Markup</h2>
     <pfe-codeblock pfe-language="xml">
       <pre pfe-codeblock-container>
@@ -82,7 +84,7 @@
           &#x3C;/breakfast_menu&#x3E;
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
     <h2>SVG Markup</h2>
     <pfe-codeblock pfe-language="svg">
       <pre pfe-codeblock-container>
@@ -93,7 +95,7 @@
           &#x3C;/svg&#x3E; 
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
     <h2>MathML Markup</h2>
     <pfe-codeblock pfe-language="mathml">
       <pre pfe-codeblock-container>
@@ -113,7 +115,7 @@
           &#x3C;/math&#x3E;
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
     <h2>C-Like Markup</h2>
     <pfe-codeblock pfe-language="clike">
       <pre pfe-codeblock-container>
@@ -126,7 +128,99 @@
             }
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
+  </section>
+  <section>
+    <h1><code>pfe-codeblock with line numbers</code></h1>
+    <p>This example shows the supported languages for the base prism.js.</p>
+    <h2>HTML Markup</h2>
+    <pfe-codeblock pfe-line-numbers pfe-language="markup">
+      <pre pfe-codeblock-container>
+        <code>
+          &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+          &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+        </code>
+      </pre>
+    </pfe-codeblock>
+    <h2>Javascript Markup</h2>
+    <pfe-codeblock pfe-line-numbers pfe-language="javascript">
+      <pre pfe-codeblock-container>
+        <code>
+          const example="javascript"
+          let test=null;
+        </code>
+      </pre>
+    </pfe-codeblock>
+    <h2>CSS Markup</h2>
+    <pfe-codeblock pfe-line-numbers pfe-language="css">
+      <pre pfe-codeblock-container>
+        <code>
+          p { color: red; }
+          body { background-color: #eee; }
+        </code>
+      </pre>
+    </pfe-codeblock>
+    <h2>XML Markup</h2>
+    <pfe-codeblock pfe-line-numbers pfe-language="xml">
+      <pre pfe-codeblock-container>
+        <code>
+          &#x3C;breakfast_menu&#x3E;
+            &#x3C;food&#x3E;
+              &#x3C;name&#x3E;Belgian Waffles&#x3C;/name&#x3E;
+              &#x3C;price&#x3E;$5.95&#x3C;/price&#x3E;
+              &#x3C;description&#x3E;Two of our famous Belgian Waffles with plenty of real maple syrup&#x3C;/description&#x3E;
+              &#x3C;calories&#x3E;650&#x3C;/calories&#x3E;
+            &#x3C;/food&#x3E;
+          &#x3C;/breakfast_menu&#x3E;
+        </code>
+      </pre>
+    </pfe-codeblock>
+    <h2>SVG Markup</h2>
+    <pfe-codeblock pfe-line-numbers pfe-language="svg">
+      <pre pfe-codeblock-container>
+        <code>
+          &#x3C;svg height=&#x22;100&#x22; width=&#x22;100&#x22;&#x3E;
+            &#x3C;circle cx=&#x22;50&#x22; cy=&#x22;50&#x22; r=&#x22;40&#x22; stroke=&#x22;black&#x22; stroke-width=&#x22;3&#x22; fill=&#x22;red&#x22; /&#x3E;
+            Sorry, your browser does not support inline SVG.  
+          &#x3C;/svg&#x3E; 
+        </code>
+      </pre>
+    </pfe-codeblock>
+    <h2>MathML Markup</h2>
+    <pfe-codeblock pfe-line-numbers pfe-language="mathml">
+      <pre pfe-codeblock-container>
+        <code>
+          &#x3C;math xmlns=&#x22;http://www.w3.org/1998/Math/MathML&#x22;&#x3E;
+          &#x3C;matrix&#x3E;
+            &#x3C;matrixrow&#x3E;
+              &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E;
+            &#x3C;/matrixrow&#x3E;
+            &#x3C;matrixrow&#x3E;
+              &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E;
+            &#x3C;/matrixrow&#x3E;
+            &#x3C;matrixrow&#x3E;
+              &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E;
+            &#x3C;/matrixrow&#x3E;
+          &#x3C;/matrix&#x3E;
+          &#x3C;/math&#x3E;
+        </code>
+      </pre>
+    </pfe-codeblock>
+    <h2>C-Like Markup</h2>
+    <pfe-codeblock pfe-line-numbers pfe-language="clike">
+      <pre pfe-codeblock-container>
+        <code>
+          #include &#x3C;stdio.h&#x3E;
+            int main() {
+               // printf() displays the string inside quotation
+               printf("Hello, World!");
+               return 0;
+            }
+        </code>
+      </pre>
+    </pfe-codeblock>
+  </section>
+  <section>
     <h1><code>pfe-codeblock dark examples</code></h1>
     <p>This example shows the supported languages for the base prism.js.</p>
     <h2>HTML Markup (Dark)</h2>
@@ -137,7 +231,7 @@
           &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
     <h2>Javascript Markup (Dark)</h2>
     <pfe-codeblock pfe-language="javascript" pfe-color="dark">
       <pre pfe-codeblock-container>
@@ -146,7 +240,7 @@
           let test=null;
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
     <h2>CSS Markup (Dark)</h2>
     <pfe-codeblock pfe-language="css" pfe-color="dark">
       <pre pfe-codeblock-container>
@@ -155,7 +249,7 @@
           body { background-color: #eee; }
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
     <h2>XML Markup (Dark)</h2>
     <pfe-codeblock pfe-language="xml" pfe-color="dark">
       <pre pfe-codeblock-container>
@@ -170,7 +264,7 @@
           &#x3C;/breakfast_menu&#x3E;
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
     <h2>SVG Markup (Dark)</h2>
     <pfe-codeblock pfe-language="svg" pfe-color="dark">
       <pre pfe-codeblock-container>
@@ -181,7 +275,7 @@
           &#x3C;/svg&#x3E; 
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
     <h2>MathML Markup (Dark)</h2>
     <pfe-codeblock pfe-language="mathml" pfe-color="dark">
       <pre pfe-codeblock-container>
@@ -201,7 +295,7 @@
           &#x3C;/math&#x3E;
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
     <h2>C-Like Markup (Dark)</h2>
     <pfe-codeblock pfe-language="clike" pfe-color="dark">
       <pre pfe-codeblock-container>
@@ -214,7 +308,8 @@
             }
         </code>
       </pre>
-    </pfe-codeblock> 
+    </pfe-codeblock>
   </section>
-  </body>
+</body>
+
 </html>

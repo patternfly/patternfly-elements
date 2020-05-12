@@ -1,5 +1,6 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 import Prism from "prismjs";
+import "prismjs/plugins/line-numbers/prism-line-numbers";
 
 class PfeCodeblock extends PFElement {
   static get tag() {
@@ -19,7 +20,7 @@ class PfeCodeblock extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-language"];
+    return ["pfe-language", "pfe-line-numbers"];
   }
 
   get codeblock() {
@@ -35,6 +36,13 @@ class PfeCodeblock extends PFElement {
     this.renderCodeblock();
   }
 
+  //return class for line numbers
+  get lineNumberCssClass() {
+    let returnVal = this.hasAttribute("pfe-line-numbers")
+      ? " line-numbers"
+      : "";
+    return returnVal;
+  }
   //return a valid prism.js language type
   get codeLanguage() {
     let validLangs = [
@@ -102,16 +110,14 @@ class PfeCodeblock extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+    let appliedCssClasss = this.codePrismLanguage + this.lineNumberCssClass;
 
     //create dom elements and attach language styles
     this._codeblockRenderOuterPreTag = document.createElement("pre");
     this._codeblockRender = document.createElement("code");
     this._codeblockRender.setAttribute("pfe-codeblock-render", "");
-    this._codeblockRender.setAttribute("class", this.codePrismLanguage);
-    this._codeblockRenderOuterPreTag.setAttribute(
-      "class",
-      this.codePrismLanguage
-    );
+    this._codeblockRender.setAttribute("class", appliedCssClasss);
+    this._codeblockRenderOuterPreTag.setAttribute("class", appliedCssClasss);
     this._codeblockRenderOuterPreTag.appendChild(this._codeblockRender);
 
     //Add to shadow-root

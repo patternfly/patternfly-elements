@@ -100,6 +100,7 @@ $variables: (
     padding-bottom: #{pfe-local($cssvar: PaddingBottom, $region: toggle)};
     padding-left: #{pfe-local($cssvar: PaddingLeft, $region: toggle)};
     font-size: #{pfe-local($cssvar: FontSize, $region: toggle)};
+    font-family: #{pfe-var(font-family)};
     font-weight: #{pfe-local($cssvar: FontWeight, $region: toggle)};
     line-height: #{pfe-local($cssvar: LineHeight, $region: toggle)};
     color: #{pfe-local($cssvar: Color, $region: toggle)};

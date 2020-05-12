@@ -241,7 +241,7 @@ export function autoPropKnobs(properties, bridge) {
         }
 
         // Convert the array into an object
-        options.map(item => (opts[item.sentenceCase()] = item));
+        options.map(item => (opts[item] = item));
 
         // If the default value is not defined, use the new null option as the default
         if (defaultValue === "" || defaultValue === null) {

@@ -19,19 +19,6 @@ function _setRandomFilterId(el) {
   el.shadowRoot.querySelector("svg filter").setAttribute("id", randomId);
 }
 
-function _createIconSetHandler(el, setName) {
-  return ev => {
-    // if the set we're waiting for was added, run updateIcon again
-    if (setName === ev.detail.set.name) {
-      document.body.removeEventListener(
-        PfeIcon.EVENTS.ADD_ICON_SET,
-        el._handleAddIconSet
-      );
-      el.updateIcon();
-    }
-  };
-}
-
 function _iconLoad(el) {
   el.classList.remove("load-failed");
 }
@@ -74,6 +61,10 @@ class PfeIcon extends PFElement {
     this.image = this.shadowRoot.querySelector("svg image");
     this.image.addEventListener("load", () => _iconLoad(this));
     this.image.addEventListener("error", () => _iconLoadError(this));
+
+    document.body.addEventListener(PfeIcon.EVENTS.ADD_ICON_SET, () =>
+      this.updateIcon()
+    );
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -82,20 +73,11 @@ class PfeIcon extends PFElement {
   }
 
   updateIcon(iconName = this.getAttribute("icon")) {
-    const { setName, set } = PfeIcon.getIconSet(iconName);
-
+    const { set } = PfeIcon.getIconSet(iconName);
     if (set) {
       const iconPath = set.resolveIconName(iconName);
       this.image.setAttribute("xlink:href", iconPath);
       _setRandomFilterId(this);
-    } else {
-      // the icon set we want doesn't exist (yet?) so start listening for new icon sets
-      this._handleAddIconSet = _createIconSetHandler(this, setName);
-
-      document.body.addEventListener(
-        PfeIcon.EVENTS.ADD_ICON_SET,
-        this._handleAddIconSet
-      );
     }
   }
 
@@ -108,16 +90,11 @@ class PfeIcon extends PFElement {
   static getIconSet(iconName) {
     const [setName] = iconName.split("-");
     const set = this._iconSets[setName];
-    return { setName, set };
+    return { set };
   }
 
   static addIconSet(name, path, resolveIconName) {
-    if (this._iconSets[name]) {
-      throw new Error(
-        `can't add icon set ${name}; a set with that name already exists.`
-      );
-    }
-
+    // Register the icon set and set up the event indicating the change
     this._iconSets[name] = new PfeIconSet(name, path, resolveIconName);
 
     document.body.dispatchEvent(

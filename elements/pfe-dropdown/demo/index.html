@@ -77,6 +77,20 @@
       </pfe-dropdown-item>
     </pfe-dropdown>
 
+    <h2>Expandable dropdown with all disabled options</h2>
+
+    <pfe-dropdown pfe-label="Dropdown">
+      <pfe-dropdown-item pfe-item-type="link" is_disabled>
+        <a href="https://bit.ly/3b9wvWg">Link 1</a>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="link" is_disabled>
+        <a href="https://bit.ly/3b9wvWg">Link 2</a>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="link" is_disabled>
+        <a href="https://bit.ly/3b9wvWg">Link 3</a>
+      </pfe-dropdown-item>
+    </pfe-dropdown>
+
     <script>
       let dropdown = document.querySelector("pfe-dropdown");
       document.querySelector("#example-dropdown-1").style.display = "none";

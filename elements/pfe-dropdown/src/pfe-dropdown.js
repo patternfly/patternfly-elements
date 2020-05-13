@@ -174,12 +174,12 @@ class PfeDropdown extends PFElement {
       case KEYCODE.RIGHT:
       case KEYCODE.DOWN:
         // get the following item
-        newItem = this._nextItem(currentIndex, 1);
+        newItem = this._itemContainer(this._nextItem(currentIndex, 1));
         break;
       case KEYCODE.LEFT:
       case KEYCODE.UP:
         // get the previous item
-        newItem = this._nextItem(currentIndex, -1);
+        newItem = this._itemContainer(this._nextItem(currentIndex, -1));
         break;
       case KEYCODE.HOME:
         newItem = this._firstItem();
@@ -227,7 +227,7 @@ class PfeDropdown extends PFElement {
         } else {
           // otherwise, get the next enabled item
           this.open();
-          const item = this._nextItem(-1, 1);
+          const item = this._itemContainer(this._nextItem(-1, 1));
           item.setAttribute("tabindex", "-1");
           item.focus();
         }
@@ -355,6 +355,11 @@ class PfeDropdown extends PFElement {
 
   toggle(event) {
     this.isOpen ? this.close(event) : this.open(event);
+  }
+
+  _itemContainer(item) {
+    // used to apply the focus state to the item's container
+    return item.shadowRoot.querySelector(`.${this.tag}-item__container`);
   }
 }
 

@@ -1,3 +1,7 @@
+## Prerelease 47 ( TBD )
+
+- []() fix: pfe-navigtation-item shouldn't add duplicative event listeners #870
+
 ## Prerelease 46 ( 2020-05-12 )
 
 - [27fee5f](https://github.com/patternfly/patternfly-elements/commit/27fee5f5c5eb021ac126f3767dd0299f5cda8231) fix: pfe-tabs check for tagName on addedNode mutation before continuing

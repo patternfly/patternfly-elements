@@ -19,7 +19,7 @@ class PfeCodeblock extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-language", "pfe-line-numbers"];
+    return ["pfe-language", "pfe-line-numbers", "pfe-line-count-start"];
   }
 
   get codeblock() {
@@ -47,6 +47,17 @@ class PfeCodeblock extends PFElement {
       : "";
     return returnVal;
   }
+
+  //return class for line numbers
+  get lineCountStart() {
+    let returnVal = parseInt(
+      this.getAttribute("pfe-line-count-start") || "1",
+      10
+    );
+    console.log(returnVal);
+    return returnVal;
+  }
+
   //return a valid prism.js language type
   get codeLanguage() {
     let validLangs = [
@@ -118,6 +129,10 @@ class PfeCodeblock extends PFElement {
     this._codeblockRender.setAttribute("pfe-codeblock-render", "");
     this._codeblockRender.setAttribute("class", appliedCssClasss);
     this._codeblockRenderOuterPreTag.setAttribute("class", appliedCssClasss);
+    if (this.lineCountStart !== 1) {
+      this._codeblockRenderOuterPreTag.style.counterReset =
+        "linenumber " + (this.lineCountStart - 1);
+    }
     this._codeblockRenderOuterPreTag.appendChild(this._codeblockRender);
 
     //Add to shadow-root
@@ -170,7 +185,6 @@ class PfeCodeblock extends PFElement {
     let lineArray = htmlStringToProcess.split("\n").filter(function(entry) {
       return /\S/.test(entry);
     });
-    console.log(lineArray);
     for (var i = 0, len = lineArray.length; i < len; i++) {
       returnHtmlString = returnHtmlString + "<span></span>";
     }

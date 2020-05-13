@@ -1,6 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 import Prism from "prismjs";
-import "prismjs/plugins/line-numbers/prism-line-numbers";
 
 class PfeCodeblock extends PFElement {
   static get tag() {
@@ -34,6 +33,11 @@ class PfeCodeblock extends PFElement {
 
     this._codeblock = text;
     this.renderCodeblock();
+  }
+
+  get hasLineNumbers() {
+    let returnVal = this.hasAttribute("pfe-line-numbers");
+    return returnVal;
   }
 
   //return class for line numbers
@@ -77,10 +81,6 @@ class PfeCodeblock extends PFElement {
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Content;
-  }
-
-  static get observedAttributes() {
-    return [];
   }
 
   constructor() {
@@ -139,6 +139,8 @@ class PfeCodeblock extends PFElement {
     this.observer.disconnect();
   }
 
+  //custom line number processor
+
   _readyStateChangeHandler(event) {
     if (event.target.readyState === "complete") {
       document.removeEventListener(
@@ -156,12 +158,36 @@ class PfeCodeblock extends PFElement {
     this._muationObserve();
   }
 
+  processLineNumbers(htmlStringToProcess) {
+    //return if nothing passed
+    if (!htmlStringToProcess) {
+      return "";
+    }
+
+    let returnHtmlString =
+      htmlStringToProcess +
+      '<span class="line-numbers-rows" aria-hidden="true">';
+    let lineArray = htmlStringToProcess.split("\n").filter(function(entry) {
+      return /\S/.test(entry);
+    });
+    console.log(lineArray);
+    for (var i = 0, len = lineArray.length; i < len; i++) {
+      returnHtmlString = returnHtmlString + "<span></span>";
+    }
+    returnHtmlString = returnHtmlString + "</span>";
+    return returnHtmlString;
+  }
+
   renderCodeblock() {
     this._codeblockRender.innerHTML = Prism.highlight(
       this._codeblock,
       this.codePrismLanguageLoad,
       this.codePrismLanguage
     );
+    if (this.hasLineNumbers) {
+      let htmlString = this.processLineNumbers(this._codeblockRender.innerHTML);
+      this._codeblockRender.innerHTML = htmlString;
+    }
   }
 
   _muationObserve() {

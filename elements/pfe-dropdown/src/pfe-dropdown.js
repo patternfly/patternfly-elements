@@ -221,7 +221,7 @@ class PfeDropdown extends PFElement {
     switch (event.keyCode) {
       case KEYCODE.ENTER:
       case KEYCODE.DOWN:
-        if (this._allDisabled) {
+        if (this._allDisabled()) {
           // toggle the dropdown if all items disabled
           this.toggle(event);
         } else {
@@ -289,7 +289,10 @@ class PfeDropdown extends PFElement {
   }
 
   _allDisabled() {
-    this._allItems().find(item => !item.hasAttribute("is_disabled")) < 0;
+    return (
+      this._allItems().find(item => !item.hasAttribute("is_disabled")) ===
+      undefined
+    );
   }
 
   _nextItem(currentPosition, direction) {

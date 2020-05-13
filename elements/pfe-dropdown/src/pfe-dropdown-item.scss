@@ -13,11 +13,21 @@ $variables: (
   TextAlign: left,
   BackgroundColor: transparent,
   BackgroundColor--hover: #ededed,
-  Border: none
+  Border: none,
 );
 
 :host {
   @include pfe-print-variables($variables);
+  .pfe-dropdown-item {
+    &__container {
+      &:hover,
+      &:focus,
+      &:active {
+        color: #{pfe-local(Color--hover)};
+        background-color: #{pfe-local(BackgroundColor--hover)};
+      }
+    }
+  }
 }
 
 ::slotted(*) {
@@ -35,11 +45,6 @@ $variables: (
   box-sizing: border-box;
   text-decoration: none;
   font-family: #{pfe-var(font-family, $fallback: inherit)};
-}
-
-::slotted(*:hover) {
-  color: #{pfe-local(Color--hover)};
-  background-color: #{pfe-local(BackgroundColor--hover)};
 }
 
 :host([pfe-item-type="separator"]) {

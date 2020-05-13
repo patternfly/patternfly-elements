@@ -226,6 +226,7 @@ class PfeDropdown extends PFElement {
           this.toggle(event);
         } else {
           // otherwise, get the next enabled item
+          this.open();
           const item = this._nextItem(-1, 1);
           item.setAttribute("tabindex", "-1");
           item.focus();

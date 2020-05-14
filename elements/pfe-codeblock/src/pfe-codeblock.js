@@ -54,7 +54,6 @@ class PfeCodeblock extends PFElement {
       this.getAttribute("pfe-line-count-start") || "1",
       10
     );
-    console.log(returnVal);
     return returnVal;
   }
 
@@ -127,7 +126,7 @@ class PfeCodeblock extends PFElement {
     this._codeblockRenderOuterPreTag = document.createElement("pre");
     this._codeblockRender = document.createElement("code");
     this._codeblockRender.setAttribute("pfe-codeblock-render", "");
-    this._codeblockRender.setAttribute("class", appliedCssClasss);
+    this._codeblockRender.setAttribute("class", this.codePrismLanguage);
     this._codeblockRenderOuterPreTag.setAttribute("class", appliedCssClasss);
     if (this.lineCountStart !== 1) {
       this._codeblockRenderOuterPreTag.style.counterReset =
@@ -168,9 +167,30 @@ class PfeCodeblock extends PFElement {
 
   _init() {
     if (this._codeblockContainer.textContent) {
-      this.codeblock = this._codeblockContainer.textContent;
+      let tmpCodeblockObject = this.trimWhitespaceLines(
+        this._codeblockContainer.textContent
+      );
+      this.codeblock = tmpCodeblockObject.stringValue;
     }
     this._muationObserve();
+  }
+
+  //Accepts string and Returns trimed string and new line count
+  trimWhitespaceLines(stringToTrim) {
+    //return if nothing passed
+    if (!stringToTrim) {
+      return "";
+    }
+    let returnValue = { stringValue: "", lineCount: 0 };
+    let tmpTrimArray = stringToTrim.split("\n").filter(function(entry) {
+      return /\S/.test(entry);
+    });
+    let tmpLineCount = tmpTrimArray.length;
+
+    returnValue.stringValue = tmpTrimArray.join("\n");
+    returnValue.lineCount = tmpLineCount;
+
+    return returnValue;
   }
 
   processLineNumbers(htmlStringToProcess) {
@@ -182,10 +202,8 @@ class PfeCodeblock extends PFElement {
     let returnHtmlString =
       htmlStringToProcess +
       '<span class="line-numbers-rows" aria-hidden="true">';
-    let lineArray = htmlStringToProcess.split("\n").filter(function(entry) {
-      return /\S/.test(entry);
-    });
-    for (var i = 0, len = lineArray.length; i < len; i++) {
+    let lineStringObject = this.trimWhitespaceLines(htmlStringToProcess);
+    for (var i = 0, len = lineStringObject.lineCount; i < len; i++) {
       returnHtmlString = returnHtmlString + "<span></span>";
     }
     returnHtmlString = returnHtmlString + "</span>";

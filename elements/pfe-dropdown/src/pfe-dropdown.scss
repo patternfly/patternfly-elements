@@ -51,7 +51,7 @@ $variables: (
       pointer-events: none;
     }
     &__toggle {
-      --pfe-dropdown__toggle--BackgroundColor: #{pfe-color(surface--lighter)};
+      --pfe-dropdown--BackgroundColor: #{pfe-color(surface--lighter)};
       &::before {
         border: none;
       }

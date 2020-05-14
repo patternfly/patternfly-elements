@@ -111,6 +111,9 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 @each $level in (critical, important, moderate, success, info, default) {
   :host([pfe-color="#{$level}"]) {
     --pfe-icon--color: #{pfe-color(feedback--#{$level})};
+    @if $level != "moderate" {
+      --pfe-icon--theme: dark;
+    }
   }
 }
 

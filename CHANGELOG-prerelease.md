@@ -1,5 +1,6 @@
 ## Prerelease 47 ( TBD )
 
+- [3223de4](https://github.com/patternfly/patternfly-elements/commit/3223de47b69d4ee66ed09bf6efbd9d6c6e1a3694) fix: pfe-navigtation-item shouldn't add duplicative event listeners #870
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add ability to demo individual components using `demo` and `live-demo` scripts
 
 ## Prerelease 46 ( 2020-05-12 )

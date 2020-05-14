@@ -363,9 +363,9 @@ class PfeJumpLinksPanel extends PFElement {
       };
       Object.keys.forEach = Array.forEach;
     }
-    // [...Array(this.sections.length).keys()].forEach(link => {
-    //   this._removeActive(link);
-    // });
+    [...Array(this.sections.length).keys()].forEach(link => {
+      this._removeActive(link);
+    });
   }
 
   _mutationCallback() {

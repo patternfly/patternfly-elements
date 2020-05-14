@@ -222,8 +222,6 @@ a {
       padding: 16px 32px;
       border-radius: 3px;
       color: #fff !important;
-      // align-self: flex-end;
-      // justify-self: flex-end;
     }
   }
 
@@ -236,7 +234,6 @@ a {
   
   
   #container {
-    // align-self: center;
     flex: 1;
     display: flex;
     justify-items: center;
@@ -244,13 +241,14 @@ a {
   }
 
   ul {
+    display:block;
+    text-align: center;
     flex: 1;
     display: flex;
     padding: 0;
     width: auto;
     margin-left: auto;
     margin-right: auto;
-    // background-color: grey;
     li {
       padding: 0 24px;
       display: flex;

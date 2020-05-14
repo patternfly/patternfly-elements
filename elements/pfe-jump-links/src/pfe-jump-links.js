@@ -113,8 +113,11 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   disconnectedCallback() {
+    this.panel.removeEventListener(
+      PfeJumpLinksPanel.events.change,
+      this._buildNav
+    );
     this.removeEventListener("click");
-    this.removeEventListener(PfeJumpLinksPanel.events.change, _eventCallback);
   }
 
   _rebuildNav() {
@@ -184,10 +187,19 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _mutationCallback() {
+    this._observer.disconnect();
     if (!this.hasAttribute("autobuild")) {
       const menu = this.querySelector("ul");
       this._menuContainer.innerHTML = menu.outerHTML;
+    } else if (this.hasAttribute("autobuild")) {
+      this._buildNav();
     }
+    this._observer.observe(this, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true
+    });
   }
 
   _isValidLightDom() {
@@ -339,9 +351,21 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _removeAllActive() {
-    [...Array(this.sections.length).keys()].forEach(link => {
-      this._removeActive(link);
-    });
+    if (!Object.keys) {
+      Object.keys = function(obj) {
+        if (obj !== Object(obj))
+          throw new TypeError("Object.keys called on a non-object");
+        var k = [],
+          p;
+        for (p in obj)
+          if (Object.prototype.hasOwnProperty.call(obj, p)) k.push(p);
+        return k;
+      };
+      Object.keys.forEach = Array.forEach;
+    }
+    // [...Array(this.sections.length).keys()].forEach(link => {
+    //   this._removeActive(link);
+    // });
   }
 
   _mutationCallback() {

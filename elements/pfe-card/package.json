@@ -4,7 +4,7 @@
     "className": "PfeCard",
     "elementName": "pfe-card"
   },
-  "version": "1.0.0-prerelease.46",
+  "version": "1.0.0-prerelease.47",
   "publishConfig": {
     "access": "public"
   },

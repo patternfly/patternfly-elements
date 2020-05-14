@@ -1,10 +1,9 @@
 @import "../../pfe-sass/pfe-sass";
+@import "_shared-assets";
 
 $LOCAL: dropdown-item;
 
-$variables: (
-  SpacingVertical: calc(#{pfe-var(container-spacer)} * 0.5),
-  SpacingHorizontal: calc(#{pfe-var(container-spacer)} * 0.5),
+$dropdown-item-variables: (
   FontSize: #{pfe-var(font-size)},
   FontWeight: 400,
   LineHeight: #{pfe-var(line-height)},
@@ -15,6 +14,8 @@ $variables: (
   BackgroundColor--hover: #{pfe-color(surface--lighter)},
   Border: none,
 );
+
+$variables: map-merge($variables, $dropdown-item-variables);
 
 :host {
   @include pfe-print-variables($variables);

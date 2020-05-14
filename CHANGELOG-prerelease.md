@@ -1,6 +1,6 @@
-## Prerelease 47 ( TBD )
+## Prerelease 47 ( 2020-05-14 )
 
-- []() fix: pfe-navigtation-item shouldn't add duplicative event listeners #870
+- [0323eab](https://github.com/patternfly/patternfly-elements/commit/0323eab2d9dd944cb51dee263056566fe1a14a57) fix: pfe-navigtation-item shouldn't add duplicative event listeners #870
 
 ## Prerelease 46 ( 2020-05-12 )
 

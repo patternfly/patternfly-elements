@@ -3,26 +3,24 @@
 $LOCAL: dropdown;
 
 $variables: (
-  toggle: (
-    MinWidth: calc(#{pfe-var(container-spacer)} * 2),
-    MaxWidth: 100%,
-    SpacingVertical: calc(#{pfe-var(container-spacer)} * 0.5),
-    SpacingHorizontal: calc(#{pfe-var(container-spacer)} * 0.5),
-    FontSize: #{pfe-var(font-size)},
-    FontWeight: 400,
-    LineHeight: #{pfe-var(line-height)},
-    Color: #{pfe-color(text)},
-    BackgroundColor: transparent,
-    Border: none,
-    BorderBottomColor--before: #8a8d90,
-    BorderBottomColor--before--hover: #{pfe-color(link)},
-    BorderWidth--before: #{pfe-var(ui--border-width)},
-    BorderWidth--before--hover: calc(#{pfe-var(ui--border-width)} * 2),
-    BorderTopColor--before: #ededed,
-    BorderRightColor--before: #ededed,
-    BorderLeftColor--before: #ededed,
-    BorderStyle--before: solid
-  ),
+  MinWidth: calc(#{pfe-var(container-spacer)} * 2),
+  MaxWidth: 100%,
+  SpacingVertical: calc(#{pfe-var(container-spacer)} * 0.5),
+  SpacingHorizontal: calc(#{pfe-var(container-spacer)} * 0.5),
+  FontSize: #{pfe-var(font-size)},
+  FontWeight: 400,
+  LineHeight: #{pfe-var(line-height)},
+  Color: #{pfe-color(text)},
+  BackgroundColor: transparent,
+  Border: none,
+  BorderBottomColor--before: #8a8d90,
+  BorderBottomColor--before--hover: #{pfe-color(link)},
+  BorderWidth--before: #{pfe-var(ui--border-width)},
+  BorderWidth--before--hover: calc(#{pfe-var(ui--border-width)} * 2),
+  BorderTopColor--before: #{pfe-color(surface--lighter)},
+  BorderRightColor--before: #{pfe-color(surface--lighter)},
+  BorderLeftColor--before: #{pfe-color(surface--lighter)},
+  BorderStyle--before: solid,
   menu: (
     SpacingVertical: calc(#{pfe-var(container-spacer)} * 0.5),
     SpacingHorizontal: 0,
@@ -53,7 +51,7 @@ $variables: (
       pointer-events: none;
     }
     &__toggle {
-      --pfe-dropdown__toggle--BackgroundColor: #ededed;
+      --pfe-dropdown__toggle--BackgroundColor: #{pfe-color(surface--lighter)};
       &::before {
         border: none;
       }
@@ -67,33 +65,27 @@ $variables: (
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-width: #{pfe-local($cssvar: MinWidth, $region: toggle)};
-    max-width: #{pfe-local($cssvar: MaxWidth, $region: toggle)};
-    padding: #{pfe-local($cssvar: SpacingVertical, $region: toggle)} #{pfe-local($cssvar: SpacingHorizontal, $region: toggle)};
-    font-size: #{pfe-local($cssvar: FontSize, $region: toggle)};
+    min-width: #{pfe-local(MinWidth)};
+    max-width: #{pfe-local(MaxWidth)};
+    padding: #{pfe-local(SpacingVertical)} #{pfe-local(SpacingHorizontal)};
+    font-size: #{pfe-local(FontSize)};
     font-family: #{pfe-var(font-family, $fallback: inherit)};
-    font-weight: #{pfe-local($cssvar: FontWeight, $region: toggle)};
+    font-weight: #{pfe-local(FontWeight)};
     line-height: #{pfe-var(line-height)};
-    color: #{pfe-local($cssvar: Color, $region: toggle)};
-    background-color: #{pfe-local($cssvar: BackgroundColor, $region: toggle)};
-    border: #{pfe-local($cssvar: Border, $region: toggle)};
+    color: #{pfe-local(Color)};
+    background-color: #{pfe-local(BackgroundColor)};
+    border: #{pfe-local(Border)};
     &:hover,
     &:active,
     &:focus {
       &:before {
-        border-bottom-color: #{pfe-local(
-            $cssvar: BorderBottomColor--before--hover,
-            $region: toggle
-          )};
+        border-bottom-color: #{pfe-local(BorderBottomColor--before--hover)};
       }
     }
     &:active,
     &:focus {
       &:before {
-        border-width: #{pfe-local(
-            $cssvar: BorderWidth--before--hover,
-            $region: toggle
-          )};
+        border-width: #{pfe-local(BorderWidth--before--hover)};
       }
     }
     &:before {
@@ -103,24 +95,12 @@ $variables: (
       bottom: 0;
       left: 0;
       content: "";
-      border-width: #{pfe-local($cssvar: BorderWidth--before, $region: toggle)};
-      border-style: #{pfe-local($cssvar: BorderStyle--before, $region: toggle)};
-      border-top-color: #{pfe-local(
-          $cssvar: BorderTopColor--before,
-          $region: toggle
-        )};
-      border-right-color: #{pfe-local(
-          $cssvar: BorderRightColor--before,
-          $region: toggle
-        )};
-      border-bottom-color: #{pfe-local(
-          $cssvar: BorderBottomColor--before,
-          $region: toggle
-        )};
-      border-left-color: #{pfe-local(
-          $cssvar: BorderLeftColor--before,
-          $region: toggle
-        )};
+      border-width: #{pfe-local(BorderWidth--before)};
+      border-style: #{pfe-local(BorderStyle--before)};
+      border-top-color: #{pfe-local(BorderTopColor--before)};
+      border-right-color: #{pfe-local(BorderRightColor--before)};
+      border-bottom-color: #{pfe-local(BorderBottomColor--before)};
+      border-left-color: #{pfe-local(BorderLeftColor--before)};
     }
     &-text {
       overflow: hidden;
@@ -142,7 +122,10 @@ $variables: (
     position: absolute;
     top: calc(100% + 0.25rem);
     z-index: #{pfe-zindex(overlay)};
-    padding: #{pfe-local($cssvar: SpacingVertical, $region: menu)} #{pfe-local($cssvar: SpacingHorizontal, $region: menu)};
+    padding: #{pfe-local($cssvar: SpacingVertical, $region: menu)} #{pfe-local(
+        $cssvar: SpacingHorizontal,
+        $region: menu
+      )};
     margin: #{pfe-local($cssvar: Margin, $region: menu)};
     background: #{pfe-local($cssvar: Background, $region: menu)};
     background-clip: padding-box;

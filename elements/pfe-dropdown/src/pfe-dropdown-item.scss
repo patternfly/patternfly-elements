@@ -12,7 +12,7 @@ $variables: (
   Color--hover: #151515,
   TextAlign: left,
   BackgroundColor: transparent,
-  BackgroundColor--hover: #ededed,
+  BackgroundColor--hover: #{pfe-color(surface--lighter)},
   Border: none,
 );
 

@@ -11,7 +11,7 @@ $variables: (
 
 :host {
   //Default styles
-  // font-family: 'Red Hat Text', sans-serif;
+  // font-family: #{pfe-var(font-family)};
   // @include pfe-set-broadcast-theme(light);
   // --theme: light;
 

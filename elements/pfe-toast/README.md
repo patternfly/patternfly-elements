@@ -66,21 +66,17 @@ Fires when a toast is manually closed.
 
 ## Test
 
-    `npm run test`
+    npm run test
 
 ## Build
 
-    `npm run build`
-
-## Watch
-
-    `npm run watch`
+    npm run build
 
 ## Demo
 
-From the root directory, run:
+From the PFElements root directory, run:
 
-    `npm run live-demo`
+    npm start
 
 ## Code style
 

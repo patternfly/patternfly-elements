@@ -102,23 +102,19 @@ By observing `selected-value` attribute you can detect autocomplete selected val
 
 Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
 
-`npm install -g polyserve web-component-tester`
+    npm install -g polyserve web-component-tester
 
 ## Dev
 
-    `npm start`
+    npm start
 
 ## Test
 
-    `npm run test`
+    npm run test
 
 ## Build
 
-    `npm run build`
-
-## Watch
-
-    `npm run watch`
+    npm run build
 
 ## Demo
 

@@ -30,17 +30,13 @@ The options for type are:
 
 ## Build
 
-    `npm run build`
-
-## Watch
-
-    `npm run watch`
+    npm run build
 
 ## Demo
 
-From the root directory, run:
+From the PFElements root directory, run:
 
-    `npm run live-demo`
+    npm start
 
 ## Code style
 

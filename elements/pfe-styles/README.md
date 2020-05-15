@@ -131,21 +131,17 @@ Text alignment helper classes can also be applied to any block-level element.
 
 ### Test
 
-    `npm run test`
+    npm run test
 
 ### Build
 
-    `npm run build`
-
-## Watch
-
-    `npm run watch`
+    npm run build
 
 ### Demo
 
 From the PatternFly Elements root directory, run:
 
-`npm start`
+    npm start
 
 ### Code style
 

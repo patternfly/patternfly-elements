@@ -110,23 +110,19 @@ A primary navigation wrapper that allows us to better style the main navigation 
 
 Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
 
-`npm install -g polyserve web-component-tester`
+    npm install -g polyserve web-component-tester
 
 ## Dev
 
-    `npm start`
+    npm start
 
 ## Test
 
-    `npm run test`
+    npm run test
 
 ## Build
 
-    `npm run build`
-
-## Watch
-
-    `npm run watch`
+    npm run build
 
 ## Demo
 

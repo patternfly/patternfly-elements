@@ -17,7 +17,7 @@ $variables: (
 
   // Example local variable, using BEM format
   // --pfe-jump-links--Property: value;
-  font-weight: 400;
+  font-weight: #{pfe-var(font-weight--normal)};
   display: block;
   position: sticky;
   top: calc(#{pfe-var(container-spacer)} * 4);

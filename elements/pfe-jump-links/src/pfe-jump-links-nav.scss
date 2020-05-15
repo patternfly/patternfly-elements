@@ -76,7 +76,7 @@ a {
   text-decoration: none;
   font-size: #{pfe-var(font-size)};
   padding: 8px;
-  line-height: 1.5;
+  line-height: #{pfe-var(line-height)};
   border-left: 3px solid transparent;
   position: relative;
   &.sub-section{

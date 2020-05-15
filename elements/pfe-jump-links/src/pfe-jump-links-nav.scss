@@ -109,7 +109,7 @@ a {
     color: #151515;
   } 
   ul.pfe-jump-links-nav {
-    border-left: 1px solid #D2D2D2;
+    border-left: #{pfe-var(surface--border)} #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)}
   }
 
   li{

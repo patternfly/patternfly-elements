@@ -22,7 +22,7 @@ $variables: (
   position: sticky;
   top: calc(#{pfe-var(container-spacer)} * 4);
   padding: calc(#{pfe-var(container-spacer)} * 2);
-  --pfe-jump-links--BackgroundColor: BackgroundColor;
+  background-color: #{pfe-local(BackgroundColor)};
 }
 
 ::slotted([slot="heading"]) {

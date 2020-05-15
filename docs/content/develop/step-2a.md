@@ -11,25 +11,14 @@ tags = [ "develop" ]
 
 Run this command from the project root to start the build, watch, and server processes, see others in the project README.
 ```shell
-npm run live-demo
+npm run live-demo [component-name(s)]
 ```
 
-If you prefer to only watch specific component (this can be quicker), you'll need two terminal processes, start the watch process with:
-```shell
-# Replace pfe-cool-element with your component's name
-npm run dev pfe-cool-element
-```
-
-Then run this to start the server:
-```shell
-npm start
-```
-
-The server will load on `localhost:8000` by default.
+The server will load on `http://localhost:8000` by default.
 
 ![npm start command](/pfe-cool-element-start.png)
 
-Navigate to `http://localhost:1234/elements/pfe-cool-element/demo/` to view your element.
+Navigate to `http://localhost:8000/elements/pfe-cool-element/demo/` to view your element.
 
 You're off to a good start! You have a new custom element that extends the base PFElement class, uses shadow DOM, and has a built-in fallback for ShadyCSS in case shadow DOM isn't supported.
 

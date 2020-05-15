@@ -62,10 +62,6 @@ Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-compone
 
     `npm run build`
 
-## Watch
-
-    `npm run watch`
-
 ## Demo
 
 From the root directory, run:

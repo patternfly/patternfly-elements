@@ -1,5 +1,19 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 
+const pfeJumpLinksNavObserverConfig = {
+  childList: true,
+  subtree: true,
+  characterData: true,
+  attributes: true
+};
+
+const pfeJumpLinksPanelObserverConfig = {
+  childList: true,
+  subtree: true,
+  characterData: true,
+  attributes: true
+};
+
 class PfeJumpLinks extends PFElement {
   static get tag() {
     return "pfe-jump-links";
@@ -17,29 +31,13 @@ class PfeJumpLinks extends PFElement {
     return "pfe-jump-links.scss";
   }
 
-  // static get events() {
-  //   return {
-  //   };
-  // }
-
   static get PfeType() {
     return PFElement.PfeTypes.Content;
   }
 
-  // static get observedAttributes() {
-  //   return [];
-  // }
-
   constructor() {
     super(PfeJumpLinks, { type: PfeJumpLinks.PfeType });
   }
-
-  connectedCallback() {
-    super.connectedCallback();
-    // If you need to initialize any attributes, do that here
-  }
-
-  disconnectedCallback() {}
 }
 
 class PfeJumpLinksNav extends PFElement {
@@ -59,19 +57,9 @@ class PfeJumpLinksNav extends PFElement {
     return "pfe-jump-links-nav.scss";
   }
 
-  // static get events() {
-  //   return {
-  //   };
-  // }
-
-  // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Content;
   }
-
-  // static get observedAttributes() {
-  //   return [];
-  // }
 
   constructor() {
     super(PfeJumpLinksNav, { type: PfeJumpLinksNav.PfeType });
@@ -84,7 +72,6 @@ class PfeJumpLinksNav extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-    // If you need to initialize any attributes, do that here
 
     //Check that the light DOM is there
     if (this.hasAttribute("autobuild")) {
@@ -97,12 +84,7 @@ class PfeJumpLinksNav extends PFElement {
       }
     }
 
-    this._observer.observe(this, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true
-    });
+    this._observer.observe(this, pfeJumpLinksNavObserverConfig);
 
     this.panel = document.querySelector(`[scrolltarget="${this.id}"]`);
 
@@ -113,6 +95,7 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   disconnectedCallback() {
+    this._observer.disconnect();
     this.panel.removeEventListener(
       PfeJumpLinksPanel.events.change,
       this._buildNav
@@ -187,19 +170,20 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _mutationCallback() {
-    this._observer.disconnect();
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
+
     if (!this.hasAttribute("autobuild")) {
       const menu = this.querySelector("ul");
       this._menuContainer.innerHTML = menu.outerHTML;
     } else if (this.hasAttribute("autobuild")) {
       this._buildNav();
     }
-    this._observer.observe(this, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true
-    });
+
+    if (window.ShadyCSS) {
+      this._observer.observe(this, pfeJumpLinksNavObserverConfig);
+    }
   }
 
   _isValidLightDom() {
@@ -246,14 +230,9 @@ class PfeJumpLinksPanel extends PFElement {
     };
   }
 
-  // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Content;
   }
-
-  // static get observedAttributes() {
-  //   return [];
-  // }
 
   constructor() {
     super(PfeJumpLinksPanel, { type: PfeJumpLinksPanel.PfeType });
@@ -273,19 +252,16 @@ class PfeJumpLinksPanel extends PFElement {
   connectedCallback() {
     super.connectedCallback();
     this._init();
+
     if (this.nav && this.nav.hasAttribute("autobuild")) {
       this.nav._rebuildNav();
     }
-    this._observer.observe(this, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true
-    });
-    // If you need to initialize any attributes, do that here
+
+    this._observer.observe(this, pfeJumpLinksPanelObserverConfig);
   }
 
   disconnectedCallback() {
+    this._observer.disconnect();
     window.removeEventListener("scroll");
     this._slot.removeEventListener("slotchange", this._init);
   }
@@ -295,6 +271,7 @@ class PfeJumpLinksPanel extends PFElement {
     this.scrollTarget = this.getAttribute("scrolltarget");
     this.JumpLinksNav = document.querySelector(`#${this.scrollTarget}`);
     this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
+
     if (this.JumpLinksNav) {
       this.menu_links = this.JumpLinksNav.querySelectorAll(
         ".pfe-jump-links-nav__item"
@@ -369,6 +346,10 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _mutationCallback() {
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
+
     //If we didn't get nav in the constructor, grab it now
     if (!this.nav) {
       this.nav = document.querySelector(
@@ -380,6 +361,10 @@ class PfeJumpLinksPanel extends PFElement {
       this._init();
       this.emitEvent(PfeJumpLinksPanel.events.change);
       this.nav._rebuildNav();
+    }
+
+    if (window.ShadyCSS) {
+      this._observer.observe(this, pfeJumpLinksPanelObserverConfig);
     }
   }
 

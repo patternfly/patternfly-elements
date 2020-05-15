@@ -163,7 +163,14 @@ a {
     }
   }
   a {
-    color: #CCCCCC;
+  a {
+    color:   #{pfe-color(ui-complement--focus--on-dark)};
+    &:hover {
+       color: #{pfe-color(ui-complement--hover--on-dark)};
+    }
+    &[active] {
+      color: #{pfe-color(ui-complement--on-dark)};
+    }
     &:hover {
       color: darken($color: #CCCCCC, $amount: 20);
     }

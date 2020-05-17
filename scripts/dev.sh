@@ -1,10 +1,6 @@
 #!/bin/bash
 
-CMD="npm run lerna -- run dev --parallel --no-bail --include-filtered-dependencies"
-
-for el in "$@"; do
-  CMD="$CMD --scope \"*/$el\""
-done
+CMD="npm run build $@ && npm run watch $@"
 
 source scripts/hugo-check.sh
 if hugoCheck; then
@@ -12,7 +8,7 @@ if hugoCheck; then
   hugo server &
   popd > /dev/null
 else
-  echo "Not running Hugo server (docs site) because hugo is not installed."
+  echo "Not running Hugo server (docs site) because Hugo is not installed."
 fi
 
 eval $CMD

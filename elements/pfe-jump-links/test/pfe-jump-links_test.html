@@ -576,21 +576,21 @@
           el.removeEventListener('pfe-jump-links-panel:active-navItem', handlerSpy);
         });
 
-        // test('it should make the appropriate nav item active when scrolled', () => {
-        //   let bool;
-        //   const wait = (el) => {
-        //     return setTimeout(function(){
-        //       // bool = el.hasAttribute('active');
-        //     }, 1000)
-        //   }
-        //   const nav = document.querySelector('pfe-jump-links-nav');
-        //   const navItems = nav.querySelectorAll('.pfe-jump-links-nav__item');
-        //   let testNavItem = [...navItems][5];
-        //   testNavItem.click();
-        //   wait(testNavItem);
-        //   throw new Error(testNavItem.hasAttribute('active'));
-        //   assert(testNavItem.hasAttribute('active'));
-        // });
+        test('it should make the appropriate nav item active when scrolled', () => {
+          let bool;
+          const wait = (el) => {
+            return setTimeout(function(){
+              bool = el.hasAttribute('active');
+              throw new Error(bool);
+              assert(bool);
+            }, 1000)
+          }
+          const nav = document.querySelector('pfe-jump-links-nav');
+          const navItems = nav.querySelectorAll('.pfe-jump-links-nav__item');
+          let testNavItem = [...navItems][5];
+          testNavItem.click();
+          wait(testNavItem);
+        });
       });
 
       suite('<pfe-jump-links-nav>', () => {

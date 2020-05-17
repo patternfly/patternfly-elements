@@ -48,22 +48,22 @@ Describe any dependent elements or libraries here too.
 
 Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
 
-    npm install -g polyserve web-component-tester
+`npm install -g polyserve web-component-tester`
 
 ## Dev
 
-    npm start
+    `npm start`
 
 ## Test
 
-    npm run test
+    `npm run test`
 
 ## Build
 
-    npm run build
+    `npm run build`
 
 ## Demo
 
-From the PFElements root directory, run:
+From the root directory, run:
 
-    npm run demo
+    `npm run live-demo`

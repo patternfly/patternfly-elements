@@ -5,31 +5,23 @@
 $LOCAL: jump;
 
 $variables: (
-  Padding: calc(#{pfe-var(container-spacer)} * 2),
-  BackgroundColor: pfe-color(surface--base),
+  // Padding: calc(#{pfe-var(container-spacer)} * 2),
+  // BackgroundColor: pfe-color(surface--base),
 );
 
 :host {
-  //Default styles
-  // font-family: #{pfe-var(font-family)};
-  // @include pfe-set-broadcast-theme(light);
-  // --theme: light;
-
-  // Example local variable, using BEM format
-  // --pfe-jump-links--Property: value;
   font-weight: #{pfe-var(font-weight--normal)};
   display: block;
   position: sticky;
   top: calc(#{pfe-var(container-spacer)} * 4);
   padding: calc(#{pfe-var(container-spacer)} * 2);
-  background-color: #{pfe-local(BackgroundColor)};
 }
 
 ::slotted([slot="heading"]) {
-  margin: 0 0 1rem 0 !important;
+  margin: 0;
   margin-bottom: calc(#{pfe-var(container-spacer)} * 1);
-  font-size: 14px;
-  font-weight: 400;
+  font-size: #{pfe-var(font-size--heading--zeta)};
+  font-weight: #{pfe-var(font-weight--normal)};
   text-transform: uppercase;
 }
 
@@ -38,9 +30,8 @@ ul{
     &[horizontal] {
 
     }
-    
-    padding: 1rem 1rem 1rem 0;
-    padding: 1rem 1rem 1rem 0;
+    padding: calc(#{pfe-var(container-spacer)} * 1);
+    padding-left: 0;
     margin: 0;
     list-style: none;
   }
@@ -75,14 +66,13 @@ a {
   display: table;
   text-decoration: none;
   font-size: #{pfe-var(font-size)};
-  padding: 8px;
+  padding: calc(#{pfe-var(container-spacer)} / 2);
   line-height: #{pfe-var(line-height)};
   border-left: 3px solid transparent;
   position: relative;
   &.sub-section{
     display: none;
-    // height: 0;
-    margin-left: 12px;
+    margin-left: calc(#{pfe-var(container-spacer)} * 0.75);
     font-size: 14px;
   }
   &::after {
@@ -98,7 +88,7 @@ a {
 
     &::after {
       border-radius: 3px;
-      border: 2px solid #62A1F4;
+      border: 2px solid #{pfe-color(link)};
     }
   }
 }
@@ -106,27 +96,27 @@ a {
 :host([default]) {
   border: 1px solid transparent;
   ::slotted([slot="heading"]) {
-    color: #151515;
+    color: #{pfe-color(surface--darkest)};
   } 
   ul.pfe-jump-links-nav {
-    border-left: #{pfe-var(surface--border)} #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)}
+    border-left: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(ui-disabled)};
   }
 
   li{
     &[active] {
-      border-left: 3px solid #0066CC;
+      border-left: 3px solid #{pfe-color(link)};
     }
   }
 
   a {
-    color: #72767B;
+    color: #{pfe-color(ui-disabled--text)};
     position: relative;
 
     &:hover {
-      color: #151515;
+      color: #{pfe-color(surface--darkest)};
     }
     &[active] {
-      color: #151515;
+      color: #{pfe-color(surface--darkest)};
     }
     &::after {
       content: "";
@@ -142,7 +132,7 @@ a {
 
       &::after {
         border-radius: 3px;
-        border: 2px solid #62A1F4;
+        border: 2px solid #{pfe-color(link--on-dark)}
       }
     }
   }
@@ -150,33 +140,27 @@ a {
 
 :host([pfe-color="darkest"]) {
   ::slotted([slot="heading"]) {
-    color: #CCCCCC;
-  } 
-  background-color: #151515;
-  border: 1px solid #72767B;
+    color: #{pfe-color(surface--lighter)};
+  }
+  background-color: #{pfe-color(surface--darkest)};
+  border: 1px solid #{pfe-color(ui-disabled--text)};
   ul.pfe-jump-links-nav {
-    border-left: 1px solid #72767B;
+    border-left: 1px solid #{pfe-color(ui-disabled--text)};
   }
   li{
     &[active] {
-      border-left: 3px solid #EE0000;
+      border-left: 3px #{pfe-var(surface--border-style)} #{pfe-color(ui-accent)};
     }
   }
-  a {
-  a {
-    color:   #{pfe-color(ui-complement--focus--on-dark)};
-    &:hover {
-       color: #{pfe-color(ui-complement--hover--on-dark)};
-    }
-    &[active] {
-      color: #{pfe-color(ui-complement--on-dark)};
-    }
-    &:hover {
-      color: darken($color: #CCCCCC, $amount: 20);
-    }
-    &[active] {
-      color: #fff;
-    }
+
+a {
+     color:   #{pfe-color(ui-complement--focus--on-dark)};
+     &:hover {
+        color: #{pfe-color(ui-complement--hover--on-dark)};
+     }
+     &[active] {
+       color: #{pfe-color(ui-complement--on-dark)};
+     }
 
     &::after {
       content: "";
@@ -192,7 +176,7 @@ a {
 
       &::after {
         border-radius: 3px;
-        border: 2px solid #62A1F4;
+        border: 2px solid #{pfe-color(link--on-dark)};
       }
     }
   }
@@ -205,7 +189,7 @@ a {
 :host([horizontal]) {
   
   nav {
-    background-color: #F0F0F0;
+    background-color: pfe-color(surface--lighter);
     display: flex;
     position: relative;
     ::slotted([slot="heading"]) {
@@ -215,20 +199,26 @@ a {
     ::slotted([slot="logo"]) {
       position: absolute;
       left: 0;
-      max-height: 56px;
-      max-width: 224px;
-      top: 1rem;
-      left: 64px;
+      max-height: calc(#{pfe-var(container-spacer)} * 3.5);
+      max-width: calc(#{pfe-var(container-spacer)} * 14);
+      top: calc(#{pfe-var(container-spacer)} * 1);
+      @media(max-width: 992px) {
+        left: calc(#{pfe-var(container-spacer)} * 2);
+      }
+      @media(min-width: 992px) {
+        left: calc(#{pfe-var(container-spacer)} * 4);
+      }
     }
 
     ::slotted([slot="link"]) {
       position: absolute;
-      right: 64px;
-      top: 1rem;
-      background-color: red;
-      padding: 16px 32px;
-      border-radius: 3px;
-      color: #fff !important;
+      @media(max-width: 992px) {
+        right: calc(#{pfe-var(container-spacer)} * 2);
+      }
+      @media(min-width: 992px) {
+        right: calc(#{pfe-var(container-spacer)} * 4);
+      }
+      top: calc(#{pfe-var(container-spacer)} * 1);
     }
   }
 
@@ -257,73 +247,33 @@ a {
     margin-left: auto;
     margin-right: auto;
     li {
-      padding: 0 24px;
+      padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
       display: flex;
-      height: 80px;
+      height: calc(#{pfe-var(container-spacer)} * 5);
       align-items: center;
       border-top: 4px solid transparent;
       border-bottom: 4px solid transparent;
       border-left: none;
       border-right: none;
       &[active] {
-        border-top: 4px solid #EE0000;
+        border-top: 4px solid #{pfe-color(ui-accent)};
       }
     }
   }
 
   a {
-    color: #72767B;
+    color: #{pfe-color(ui-disabled--text)};
     &[active] {
-      color: #151515;
+      color: #{pfe-color(surface--darkest)};
     }
   }
   @media(max-width: 768px) {
     nav {
-      min-height: 88px;
-      background-color: #F0F0F0;
+      min-height: calc(#{pfe-var(container-spacer)} * 5.5);
+      background-color: #{pfe-color(surface--lighter)}
     }
     .pfe-jump-links-nav {
       display: none;
     }
-  }
-}
-
-
-
-// ::slotted([slot="nav"]) {
-  
-// }
-
-// ::slotted(a) {
-
-// }
-
-// pfe-jump-links{
-//   a {
-//     color: orange !important;
-//   }
-// }
-
-// -- Custom styles applied by attributes
-@each $option in () {
-  :host([pfe-active="#{$option}"]) {
-    // Add styles here
-  }
-}
-
-// -- Custom styles applied to slot
-::slotted([slot="pfe-jump-links--heading"]) {
-  // Add styles here
-}
-
-
-
-// -- Custom styles applied to slot's shadow element
-.pfe-jump-links {
-  &__heading {
-    
-  }
-  &__nav {
-    
   }
 }

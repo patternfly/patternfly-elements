@@ -88,14 +88,40 @@ class PfeIcon extends PFElement {
    * @return {PfeIconSet} the icon set
    */
   static getIconSet(iconName) {
-    const [setName] = iconName.split("-");
-    const set = this._iconSets[setName];
+    let set;
+    if (iconName) {
+      const [setName] = iconName.split("-");
+      set = this._iconSets[setName];
+    }
     return { set };
   }
 
   static addIconSet(name, path, resolveIconName) {
+    let resolveFunction = resolveIconName;
+    if (
+      typeof resolveIconName !== "function" &&
+      typeof resolveIconName !== "undefined"
+    ) {
+      console.warn(
+        `${this.tag}: The third input to addIconSet should be a function that parses and returns the icon's filename.`
+      );
+    } else if (
+      typeof resolveIconName !== "function" &&
+      this._iconSets[name] &&
+      typeof this._iconSets[name]._resolveIconName === "function"
+    ) {
+      resolveFunction = this._iconSets[name]._resolveIconName;
+    }
+
+    if (typeof resolveFunction !== "function") {
+      console.warn(
+        `${this.tag}: The set ${name} needs a resolve function for the icon names.`
+      );
+    }
+
     // Register the icon set and set up the event indicating the change
-    this._iconSets[name] = new PfeIconSet(name, path, resolveIconName);
+    this._iconSets[name] = new PfeIconSet(name, path, resolveFunction);
+    // console.dir(typeof this._iconSets[name]._resolveIconName);
 
     document.body.dispatchEvent(
       new CustomEvent(this.EVENTS.ADD_ICON_SET, {

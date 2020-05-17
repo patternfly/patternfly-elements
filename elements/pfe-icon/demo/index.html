@@ -33,12 +33,7 @@
 
       PfeIcon.addIconSet(
         "local",
-        "./",
-        function resolveIconName(name, iconSetName, iconSetPath) {
-          var iconName = name.replace(iconSetName + "-", "");
-          var iconId = iconSetName + "-icon-" + iconName;
-          return iconSetPath + "/" + iconId + ".svg";
-        }
+        "./"
       );
 
       colors.standard = colors.standard.filter(c => !["lightest", "lighter", "base"].includes(c));

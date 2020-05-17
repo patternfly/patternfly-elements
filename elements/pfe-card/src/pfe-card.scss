@@ -187,6 +187,10 @@ $variables: (
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
+    :host(:not([has_header])) & {
+      display: none;
+    }
+
     :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
@@ -218,6 +222,10 @@ $variables: (
     :host([has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
+
+    :host(:not([has_footer])) & {
+      margin-bottom: 0;
+    }
   }
   &__footer {
     margin-top: auto; // This allows the footer to move to the very bottom
@@ -230,6 +238,10 @@ $variables: (
 
     ::slotted([pfe-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
+    }
+
+    :host(:not([has_footer])) & {
+      display: none;
     }
   }
   &__header,
@@ -245,13 +257,4 @@ $variables: (
       }
     }
   }
-}
-
-:host(:not([has_header])) .pfe-card__header,
-:host(:not([has_footer])) .pfe-card__footer {
-  display: none;
-}
-
-:host(:not([has_footer])) .pfe-card__body {
-  margin-bottom: 0;
 }

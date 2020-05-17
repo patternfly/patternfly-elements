@@ -129,7 +129,7 @@ stories.add(PfeCard.tag, () => {
       const ctaPriorityValue = storybookBridge.select(
         "Priority",
         {
-          null: "default",
+          default: null,
           primary: "primary",
           secondary: "secondary"
         },
@@ -154,19 +154,28 @@ stories.add(PfeCard.tag, () => {
   // Trigger the auto generation of the knobs for slots
   config.has = tools.autoContentKnobs(slots, storybookBridge);
 
-  // prettier-ignore
-  config.slots = [{
-    slot: "pfe-card--header",
-    content: tools.customTag({
-      tag: "h3",
-      content: config.has.header
-    })
-  }, {
-    content: (region !== "footer") ? image + config.has.body : config.has.body
-  }, {
-    slot: "pfe-card--footer",
-    content: (region === "footer") ? image : config.has.footer
-  }];
+  config.slots = [];
+
+  if (config.has.header.length > 0) {
+    config.slots.push({
+      slot: "pfe-card--header",
+      content: tools.customTag({
+        tag: "h3",
+        content: config.has.header
+      })
+    });
+  }
+
+  config.slots.push({
+    content: region !== "footer" ? image + config.has.body : config.has.body
+  });
+
+  if (config.has.footer.length > 0) {
+    config.slots.push({
+      slot: "pfe-card--footer",
+      content: region === "footer" ? image : config.has.footer
+    });
+  }
 
   // Some attribute values don't need to be included in the markup
   if (config.prop.color === "base") {

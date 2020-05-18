@@ -1,9 +1,16 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 
+// @IE11
+// watching for addition and removal of nodes so
+// we can make sure we have the correct light DOM
+// and so we can set the _externalBtn property
 const parentObserverConfig = {
   childList: true
 };
 
+// watching for changes on the _externalBtn so we can
+// update text in our shadow DOM when the _externalBtn
+// changes
 const externalBtnObserverConfig = {
   characterData: true,
   attributes: true,
@@ -11,6 +18,10 @@ const externalBtnObserverConfig = {
   childList: true
 };
 
+// list of attributes that we DO NOT want to pass from
+// the _externalBtn to our shadow DOM button. For example,
+// the style attribute could ruin our encapsulated styles
+// in the shadow DOM
 const blackListedAttributes = ["style"];
 
 class PfeButton extends PFElement {
@@ -154,7 +165,9 @@ class PfeButton extends PFElement {
     return true;
   }
 
-  _parentObserverHandler(mutationList) {
+  // when the parent changes, make sure the light DOM is valid,
+  // set the _externalBtn, and initialize the component
+  _parentObserverHandler() {
     if (!this._isValidLightDom()) {
       return;
     }
@@ -163,6 +176,8 @@ class PfeButton extends PFElement {
     this._init();
   }
 
+  // programmatically clicking the _externalBtn is what makes
+  // this web component button work in a form as you'd expect
   _clickHandler() {
     this._externalBtn.click();
   }

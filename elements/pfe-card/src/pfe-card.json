@@ -87,6 +87,7 @@
           "title": "Padding size",
           "type": "string",
           "enum": ["small"],
+          "prefixed": true,
           "observer": "_basicAttributeChanged"
         },
         "border": {

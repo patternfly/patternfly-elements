@@ -77,6 +77,8 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
   align-self:       #{pfe-local(AlignSelf)};
   position:         relative;
 
+  padding: #{pfe-local(PaddingTop)} #{pfe-local(PaddingRight)} #{pfe-local(PaddingBottom)} #{pfe-local(PaddingLeft)};
+
   border:        #{pfe-local(Border)};
   border-top:    #{pfe-local(BorderTop)};
   border-radius: #{pfe-local(BorderRadius)};
@@ -156,10 +158,6 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
 
     text-align: #{pfe-local(TextAlign)};
 
-    // Left and right padding are consistent throughout the card
-    padding-right:  #{pfe-local(PaddingRight)};
-    padding-left:   #{pfe-local(PaddingLeft)};
-
     ::slotted(img) {
       max-width: 100% !important;
       align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
@@ -206,11 +204,14 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
 
     // Padding for the header region
     padding-top:    calc(#{pfe-local(spacing--vertical)} / 2);
+    padding-right:  #{pfe-local(PaddingRight)};
     padding-bottom: calc(#{pfe-local(spacing--vertical)} / 2);
+    padding-left:  #{pfe-local(PaddingLeft)};
 
+    margin-top: calc(-1 * #{pfe-local(PaddingTop)});
     margin-bottom: #{pfe-local(region--spacing)};
-
-    margin-right: calc(#{pfe-local(spacing--horizontal)} * -1);
+    margin-right: calc(#{pfe-local(PaddingRight)} * -1);
+    margin-left: calc(#{pfe-local(PaddingLeft)} * -1);
 
     ::slotted(*:not([last])) {
       margin-right: #{pfe-local(spacing--horizontal)};
@@ -249,14 +250,6 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     // Optional hooks, no default styles
     justify-content:  #{pfe-local($region: body, $cssvar: JustifyContent)};
     align-items:      #{pfe-local($region: body, $cssvar: AlignItems)};
-
-    :host(:not([has_header])) & {
-      padding-top:    #{pfe-local(PaddingTop)};
-    }
-
-    :host(:not([has_footer])) & {
-      padding-bottom:    #{pfe-local(PaddingBottom)};
-    }
 
     :host([has_footer]) & {
       margin-bottom: #{pfe-local(region--spacing)}
@@ -298,9 +291,6 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     // Aligns buttons and CTAs
     // align-items: #{pfe-local($region: footer, $cssvar: AlignItems)};
     justify-content: #{pfe-local($region: footer, $cssvar: AlignItems)};
-
-    // Padding for the footer region
-    padding-bottom: #{pfe-local(PaddingBottom)};
 
     margin-right: calc(#{pfe-local(spacing--horizontal)} * -1);
 

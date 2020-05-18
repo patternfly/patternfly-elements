@@ -1,11 +1,11 @@
 <!-- pfe-card -->
 <div class="pfe-card__overlay"></div>
-${ this.has_slot("pfe-card--header") ? `<div class="pfe-card__header">
+<div class="pfe-card__header">
   <slot name="pfe-card--header"></slot>
-</div>` : ``}
+</div>
 <div class="pfe-card__body">
   <slot></slot>
 </div>
-${ this.has_slot("pfe-card--footer") ? `<div class="pfe-card__footer">
+<div class="pfe-card__footer">
   <slot name="pfe-card--footer"></slot>
-</div>` : ``}
+</div>

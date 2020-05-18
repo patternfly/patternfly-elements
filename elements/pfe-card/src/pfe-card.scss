@@ -221,6 +221,14 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
       margin-top: calc(-1 * #{pfe-local(spacing--vertical)});
     }
 
+    :host(:not([has_header])) & {
+      display: none;
+    }
+
+    :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
+      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
+    }
+
     ::slotted([pfe-overflow~="bottom"]) {
       margin-bottom: -2rem; //IE11 fallback
       margin-bottom: calc(-1 * #{pfe-local(spacing--vertical)});
@@ -273,6 +281,9 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
         margin-bottom: calc(-1 * #{pfe-local(region--spacing)});
       }
     }
+    :host(:not([has_footer])) & {
+      margin-bottom: 0;
+    }
   }
   &__footer {
     @include pfe-clear-spacing($properties: margin-bottom, $important: true, $selector: last-child);
@@ -295,6 +306,10 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
 
     ::slotted(*:not([last])) {
       margin-right: #{pfe-local(spacing--horizontal)};
+    }
+
+    :host(:not([has_footer])) & {
+      display: none;
     }
 
     ::slotted([pfe-overflow~="top"]) {

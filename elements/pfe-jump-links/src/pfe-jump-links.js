@@ -193,7 +193,14 @@ class PfeJumpLinksNav extends PFElement {
       );
       return false;
     }
-
+    if (
+      (this.has_slot("logo") || this.has_slot("link")) &&
+      !this.hasAttribute("horizontal")
+    ) {
+      console.warn(
+        `${PfeJumpLinks.tag}: logo and link slots NOT supported in vertical jump links`
+      );
+    }
     if (this.children[1].tagName !== "UL") {
       if (!this.hasAttribute("horizontal")) {
         console.warn(

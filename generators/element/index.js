@@ -87,7 +87,6 @@ module.exports = class extends Generator {
           if (config.author) {
             ret = typeof config.author.name === "undefined";
           }
-
           return ret;
         }
       },
@@ -145,6 +144,20 @@ module.exports = class extends Generator {
         name: "slots",
         message:
           "List any named slots for the element, separated by commas (i.e., header, footer)",
+        // validate: function(answer) {},
+        filter: function(response) {
+          // remove whitespace, split on comma, and remove empty entries
+          return response
+            .replace(/\s/g, "")
+            .split(",")
+            .filter(s => s.length);
+        }
+      },
+      {
+        type: "input",
+        name: "events",
+        message:
+          "List any events you want registered for the element, separated by commas (i.e., change, click)",
         // validate: function(answer) {},
         filter: function(response) {
           // remove whitespace, split on comma, and remove empty entries
@@ -241,6 +254,7 @@ module.exports = class extends Generator {
           rollupConfigLocation: rollupConfigLocation,
           attributes: answers.attributes,
           slots: answers.slots,
+          events: answers.events,
           testFileLocation: testFileLocation
         };
 

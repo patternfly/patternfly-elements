@@ -70,7 +70,7 @@ All components automatically observe and react to the attribute `pfe-theme` whic
 - `dark`
 - `saturated`
 
-Theme context is automatically passed down from parent components to their children (often being defined by container elements and observed and acted upon by content components) without manual intervention by a developer.
+Theme context is automatically passed down from parent components to their children (often being defined by container elements and observed and acted upon by content components) **without** manual intervention by a developer.  This is done through the `on` attribute.  The `on` attribute should not be manually edited or added or manipulated by the JavaScript of a component.
 
 Adding the `pfe-theme` attribute to any component will **break that inheritance** and manually invoke your preferred theme.  This is a way to **opt-out** of the contexts provided by parent elements.  Only add this attribute if you want to walk away from inherited theme.
 

@@ -38,16 +38,7 @@ stories.add(PfeAccordion.tag, () => {
   let headings = [];
   let panels = [];
 
-  // const props = PfeAccordion.properties;
-  const props = {
-    on: {
-      title: "Theme",
-      type: "string",
-      enum: ["light", "dark"],
-      default: "light",
-      prefixed: false
-    }
-  };
+  const props = PfeAccordion.properties;
 
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 

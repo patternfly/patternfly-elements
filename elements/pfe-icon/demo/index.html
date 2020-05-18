@@ -13,6 +13,10 @@
 
   <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
@@ -33,7 +37,12 @@
 
       PfeIcon.addIconSet(
         "local",
-        "./"
+        "./",
+        function(name, iconSetName, iconSetPath) {
+          var regex = new RegExp(`^${iconSetName}-(.*)`);
+          var match = regex.exec(name);
+          return iconSetPath + match[1] + ".svg";
+        }
       );
 
       colors.standard = colors.standard.filter(c => !["lightest", "lighter", "base"].includes(c));
@@ -72,22 +81,6 @@
       padding: 0 5px 5px;
     }
 
-    #builtin-icons pfe-card {
-      align-self: flex-start;
-    }
-
-    @media screen and (min-width: 992px) {
-      #builtin-icons {
-        --pfe-band__body--layout: 1fr 1fr;
-      }
-    }
-
-    @media screen and (min-width: 1120px) {
-      #builtin-icons {
-        --pfe-band__body--layout: 2fr 1fr;
-      }
-    }
-
     .circled-icons>* {
       margin: 0 5px 5px 0;
     }
@@ -103,47 +96,56 @@
 
   <pfe-band id="builtin-icons" pfe-color="lightest">
     <h2 slot="pfe-band--header">Built-in Icons</h2>
-    <pfe-card id="rh-icons" pfe-color="lightest" pfe-border>
-      <h3>RH icons</h3>
-    </pfe-card>
-    <pfe-card id="web-icons" pfe-color="lightest" pfe-border>
-      <h3>Web icons</h3>
-    </pfe-card>
+    <div class="pfe-l-grid pfe-m-gutters">
+      <pfe-card id="rh-icons" pfe-color="lightest" pfe-border class="pfe-m-12-col pfe-m-8-col-on-xl pfe-l-grid-fill-height">
+        <h3>RH icons</h3>
+      </pfe-card>
+      <div class="pfe-m-12-col pfe-m-4-col-on-xl pfe-l-grid-fill-height pfe-l-grid pfe-m-gutters pfe-m-all-6-col  pfe-m-all-12-col-on-xl">
+        <pfe-card id="web-icons" pfe-color="lightest" pfe-border class="pfe-l-grid-fill-height">
+          <h3>Web icons</h3>
+        </pfe-card>
+        <pfe-card id="web-icons" pfe-color="lightest" pfe-border class="pfe-l-grid-fill-height">
+          <h2>Circled icons</h2>
+          <div class="circled-icons"></div>
+        </pfe-card>
+      </div>
     </div>
   </pfe-band>
 
-  <pfe-band id="circled" pfe-color="lightest">
-    <div>
-      <h2>Circled icons</h2>
-      <div class="circled-icons"></div>
-    </div>
-    <br>
-    <div>
-      <h2>Circled icons: forced stretch</h2>
-      <div class="circled-icons pfe-l-grid pfe-m-gutters pfe-m-all-6-on-xs pfe-m-all-3-col">
-      </div>
+  <pfe-band pfe-color="lightest">
+    <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col-on-md pfe-m-all-12-col">
+      <pfe-card pfe-color="lightest" pfe-border>
+        <h3>Forced stretch</h3>
+        <div class="circled-icons pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+        </div>
+      </pfe-card>
+      <pfe-card pfe-color="lightest" pfe-border>
+        <h3>Locally hosted icons</h3>
+        <pfe-icon pfe-size="xl" pfe-color="complement" icon="local-square">Icon failed to load.</pfe-icon>
+        <pfe-icon pfe-size="xl" pfe-color="complement" icon="local-rh-icon-api">Icon failed to load.</pfe-icon>
+      </pfe-card>
     </div>
   </pfe-band>
 
   <pfe-band id="fail" pfe-color="lightest">
     <h2>Fail to load tests</h2>
-    <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-on-xs pfe-m-all-3-col">
-      <pfe-card pfe-pfe-color="lighter">
-        <h3 slot="pfe-card--header">Fail with fallback text, no tags.</h3>
+    <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col-on-xs pfe-m-all-3-col">
+      <pfe-card pfe-color="lighter">
+        <h3 slot="pfe-card--header">Fail with fallback text, no tags</h3>
         <pfe-icon pfe-size="xl" icon="rh-foo-bar">Icon failed to load.</pfe-icon>
       </pfe-card>
-      <pfe-card pfe-pfe-color="lighter">
-        <h3 slot="pfe-card--header">Fail with fallback text, p tag.</h3>
-        <pfe-icon pfe-size="xl" icon="rh-foo-bar">
+      <pfe-card pfe-color="lighter">
+        <h3 slot="pfe-card--header">Fail with fallback text, p tag</h3>
+        <pfe-icon pfe-size="xl" icon="rh-foo-bat">
           <p>Icon failed to load.</p>
         </pfe-icon>
       </pfe-card>
-      <pfe-card pfe-pfe-color="lighter">
-        <h3 slot="pfe-card--header">Fail with preserve space on.</h3>
+      <pfe-card pfe-color="lighter">
+        <h3 slot="pfe-card--header">Fail with preserve space on</h3>
         <pfe-icon pfe-size="xl" icon="foo-bar" style="border: 1px solid hotpink;"></pfe-icon>
       </pfe-card>
-      <pfe-card pfe-pfe-color="lighter">
-        <h3 slot="pfe-card--header">Fail with collapse blank space.</h3>
+      <pfe-card pfe-color="lighter">
+        <h3 slot="pfe-card--header">Fail with collapse blank space</h3>
         <pfe-icon pfe-size="xl" icon="foo-bar" style="border: 1px solid hotpink;" on-fail="collapse"></pfe-icon>
       </pfe-card>
     </div>

@@ -64,39 +64,44 @@
           "prefixed": false
         },
         "color": {
-          "title": "Background color of circle",
+          "title": "Color",
           "type": "string",
-          "prefixed": false,
           "enum": [
+            "complement",
+            "accent",
             "lightest",
             "lighter",
             "base",
             "darker",
             "darkest",
-            "complement",
-            "accent"
+            "critical",
+            "important",
+            "moderate",
+            "success",
+            "info"
           ],
-          "default": "base"
+          "default": "darker",
+          "prefixed": true
         },
         "centered": {
           "title": "Centered",
           "type": "boolean",
-          "prefixed": false,
+          "prefixed": true,
           "default": false
         },
         "stacked": {
           "title": "Stacked",
           "type": "boolean",
-          "prefixed": false,
+          "prefixed": true,
           "default": false
         },
         "circled": {
           "title": "Circled",
           "type": "boolean",
-          "prefixed": false,
-          "default": false
+          "prefixed": true
         }
-      }
+      },
+      "required": ["icon"]
     }
   },
   "required": ["slots", "attributes"],

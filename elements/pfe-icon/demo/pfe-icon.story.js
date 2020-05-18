@@ -33,16 +33,6 @@ stories.add(PfeIcon.tag, () => {
 
   props.size.default = "xl";
 
-  PfeIcon.addIconSet("local", "./", function resolveIconName(
-    name,
-    iconSetName,
-    iconSetPath
-  ) {
-    var iconName = name.replace(iconSetName + "-", "");
-    var iconId = iconSetName + "-icon-" + iconName;
-    return iconSetPath + "/" + iconId + ".svg";
-  });
-
   // Build the knobs and read in their selections
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 

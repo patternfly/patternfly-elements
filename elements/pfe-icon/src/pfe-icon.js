@@ -52,7 +52,7 @@ class PfeIcon extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["icon", "on-fail"];
+    return ["icon", "on-fail", "pfe-circled", "pfe-color"];
   }
 
   constructor() {
@@ -69,6 +69,7 @@ class PfeIcon extends PFElement {
 
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(...arguments);
+    this.context_update();
     this.updateIcon(newValue);
   }
 
@@ -121,7 +122,6 @@ class PfeIcon extends PFElement {
 
     // Register the icon set and set up the event indicating the change
     this._iconSets[name] = new PfeIconSet(name, path, resolveFunction);
-    // console.dir(typeof this._iconSets[name]._resolveIconName);
 
     document.body.dispatchEvent(
       new CustomEvent(this.EVENTS.ADD_ICON_SET, {

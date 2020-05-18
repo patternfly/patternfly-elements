@@ -24,7 +24,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>require(['../dist/pfe-icon-panel.umd.js'])</script>
+    <script>require(['../dist/pfe-icon-panel.umd', '../../pfe-band/dist/pfe-band.umd'])</script>
 
     <noscript>
       <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
@@ -33,30 +33,35 @@
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
   </head>
   <body unresolved>
-    <pfe-icon-panel icon="rh-server" circled color="critical">
-      <h3 slot="header">Default</h3>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      <pfe-cta slot="footer"><a href="#">Learn more</a></pfe-cta>
-    </pfe-icon-panel>
-    <pfe-icon-panel icon="rh-server-stack" stacked>
-      <h3 slot="header">Stacked</h3>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    </pfe-icon-panel>
-    <pfe-icon-panel icon="rh-server-stack-alt1" stacked centered>
-      <h3 slot="header">Stacked &amp; Centered</h3>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    </pfe-icon-panel>
-    <pfe-icon-panel icon="rh-server-alt1" circled>
-      <h3 slot="header">Circled Default</h3>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    </pfe-icon-panel>
-    <pfe-icon-panel icon="rh-server-alt2" circled color="dark">
-      <h3 slot="header">Circled Default</h3>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    </pfe-icon-panel>
-    <pfe-icon-panel icon="rh-server-deploy" circled color="darkest">
-      <h3 slot="header">Circled Default</h3>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    </pfe-icon-panel>
+    <pfe-band pfe-color="lightest">
+      <h1 slot="pfe-band--header"><code>&lt;pfe-icon-panel&gt;</code></h1>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-8-col-on-sm">
+        <pfe-icon-panel icon="rh-server" pfe-circled pfe-color="critical">
+          <h3 slot="header">Default</h3>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <pfe-cta slot="footer"><a href="#">Learn more</a></pfe-cta>
+        </pfe-icon-panel>
+        <pfe-icon-panel icon="rh-server-stack" pfe-stacked>
+          <h3 slot="header">Stacked</h3>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </pfe-icon-panel>
+        <pfe-icon-panel icon="rh-server-stack-alt1" pfe-stacked pfe-centered>
+          <h3 slot="header">Stacked &amp; Centered</h3>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </pfe-icon-panel>
+        <pfe-icon-panel icon="rh-server-alt1" pfe-circled>
+          <h3 slot="header">Circled Default</h3>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </pfe-icon-panel>
+        <pfe-icon-panel icon="rh-server-alt2" pfe-circled pfe-color="darker">
+          <h3 slot="header">Circled &amp; Color</h3>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </pfe-icon-panel>
+        <pfe-icon-panel icon="rh-server-deploy" pfe-circled pfe-color="darkest">
+          <h3 slot="header">Circled &amp; Color</h3>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </pfe-icon-panel>
+      </div>
+    </pfe-band>
   </body>
 </html>

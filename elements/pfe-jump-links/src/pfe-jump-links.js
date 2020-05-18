@@ -195,9 +195,11 @@ class PfeJumpLinksNav extends PFElement {
     }
 
     if (this.children[1].tagName !== "UL") {
-      console.warn(
-        `${PfeJumpLinks.tag}: The top-level list of links MUST be a <ul>`
-      );
+      if (!this.hasAttribute("horizontal")) {
+        console.warn(
+          `${PfeJumpLinks.tag}: The top-level list of links MUST be a <ul>`
+        );
+      }
 
       return false;
     }

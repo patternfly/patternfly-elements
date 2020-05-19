@@ -1,6 +1,6 @@
 ## Prerelease 48 ( TBD )
 
-- []() feat: 
+- []() feat: pfe-datetime adding time zone attribute #881
 
 ## Prerelease 47 ( 2020-05-14 )
 

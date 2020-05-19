@@ -3,6 +3,6 @@
 $LOCAL: dropdown;
 
 $variables: ( 
-  SpacingVertical: calc(#{pfe-var(container-spacer)} * 0.5),
+  SpacingVertical: calc(#{pfe-var(container-padding)} * 0.5),
   SpacingHorizontal: calc(#{pfe-var(container-spacer)} * 0.5)
 );

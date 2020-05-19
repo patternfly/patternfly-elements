@@ -4,7 +4,7 @@
     "className": "PfeSelect",
     "elementName": "pfe-select"
   },
-  "version": "1.0.0-prerelease.45",
+  "version": "1.0.0-prerelease.48",
   "description": "Select element for PatternFly Elements",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "@patternfly/pfe-sass": "^1.0.0-prerelease.45",
-    "@patternfly/pfelement": "^1.0.0-prerelease.45"
+    "@patternfly/pfelement": "^1.0.0-prerelease.48"
   },
   "generator-pfelement-version": "1.1.0"
 }

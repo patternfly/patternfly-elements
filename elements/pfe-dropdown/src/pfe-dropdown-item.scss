@@ -52,7 +52,7 @@ $variables: map-merge($variables, $dropdown-item-variables);
   .pfe-dropdown-item {
     &__container {
       height: 1px;
-      background-color: #d2d2d2;
+      background-color: $pfe-color--gray-250;
       border: 0;
     }
   }

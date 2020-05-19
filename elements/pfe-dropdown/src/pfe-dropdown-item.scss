@@ -8,7 +8,7 @@ $dropdown-item-variables: (
   FontWeight: 400,
   LineHeight: #{pfe-var(line-height)},
   Color: #151515,
-  Color--hover: #151515,
+  Color--hover: $pfe-color--gray-1000:,
   TextAlign: left,
   BackgroundColor: transparent,
   BackgroundColor--hover: #{pfe-color(surface--lighter)},

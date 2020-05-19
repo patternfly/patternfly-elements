@@ -7,8 +7,8 @@ $dropdown-item-variables: (
   FontSize: #{pfe-var(font-size)},
   FontWeight: 400,
   LineHeight: #{pfe-var(line-height)},
-  Color: $pfe-color--gray-1000,
-  Color--hover: $pfe-color--gray-1000,
+  Color: #{$pfe-color--gray-1000},
+  Color--hover: #{$pfe-color--gray-1000},
   TextAlign: left,
   BackgroundColor: transparent,
   BackgroundColor--hover: #{pfe-color(surface--lighter)},
@@ -52,7 +52,7 @@ $variables: map-merge($variables, $dropdown-item-variables);
   .pfe-dropdown-item {
     &__container {
       height: 1px;
-      background-color: $pfe-color--gray-250;
+      background-color: #{$pfe-color--gray-250};
       border: 0;
     }
   }
@@ -62,7 +62,7 @@ $variables: map-merge($variables, $dropdown-item-variables);
   .pfe-dropdown-item {
     &__container {
       pointer-events: none;
-      --pfe-dropdown-item--Color: $pfe-color--gray-600;
+      --pfe-dropdown-item--Color: #{$pfe-color--gray-600};
       --pfe-dropdown-item--BackgroundColor: transparent;
     }
   }

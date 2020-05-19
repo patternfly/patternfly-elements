@@ -66,76 +66,38 @@
         <div slot="pfe-jump-links--heading">Heading slot</div>
         <div slot="pfe-jump-links--nav">Nav slot</div>
       </pfe-jump-links> -->
-      <style>
-        .sticky {
-          position: sticky;
-          top: 0;
-        }
-        .nav-trigger {
-          position: sticky;
-          top: 0;
-          background-color: white !important;
-        }
-        @media(min-width: 992px) {
-          /* normal styles */
-          .nav-trigger {
-            visibility: collapse;
-          }
-          .parent {
-            visibility: collapse;
-            opacity: 1;
-            display: block;
-          }
-          .parent>.child {
-            width: 100%;
-            display: block;
-            visibility: visible;
-          }
-        }
-        @media(max-width: 992px){
-          /* Mobile styles */
-          
-        }
-        
-      </style>
+      
   <h2 style="text-align: center; margin: 60px auto;">PFE Jump Links - playing with mobile version</h2>
   <div style="margin-bottom: 400px;" class="pfe-l-grid">
     <div class="sticky pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-lg">
-      <pfe-accordion class="sticky">
-        <pfe-accordion-header class="nav-trigger">
-          <h3>Jump to section</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel class="parent">
-          <pfe-jump-links-nav class="child" id="jumplinks20" default>
-            <h4 class="heading" slot="heading">Jump to section</h4>
-            <ul class="pfe-jump-links-nav">
-              <li>
-                <a class="pfe-jump-links-nav__item" href="#section31" data-target="section1">Section 1</a>
-              </li>
-              <li>
-                <a class="pfe-jump-links-nav__item" href="#section32" data-target="section2">Section 2</a>
-              </li>
-              <li>
-                <a class="pfe-jump-links-nav__item" href="#section33" data-target="section3">Section 3</a>
-              </li>
-              <li>
-                <a class="pfe-jump-links-nav__item" href="#section33.1" data-target="section3.1">Section
-                  3.1</a>
-              </li>
-              <li>
-                <a class="pfe-jump-links-nav__item" href="#section33.2" data-target="section3.2">Section
-                  3.2</a>
-              </li>
-              <li>
-                <a class="pfe-jump-links-nav__item" href="#section34" data-target="section4">Section 4</a>
-              </li>
-              <li>
-                <a class="pfe-jump-links-nav__item" href="#section35" data-target="section5">Section 5</a>
-              </li>
-            </ul>
-          </pfe-jump-links-nav>
-        </pfe-accordion-panel>
-      </pfe-accordion>   
+      <pfe-jump-links-nav class="child" id="jumplinks20" default>
+        <h4 class="heading" slot="heading">Jump to section</h4>
+        <ul class="pfe-jump-links-nav">
+          <li>
+            <a class="pfe-jump-links-nav__item" href="#section31" data-target="section1">Section 1</a>
+          </li>
+          <li>
+            <a class="pfe-jump-links-nav__item" href="#section32" data-target="section2">Section 2</a>
+          </li>
+          <li>
+            <a class="pfe-jump-links-nav__item" href="#section33" data-target="section3">Section 3</a>
+          </li>
+          <li>
+            <a class="pfe-jump-links-nav__item" href="#section33.1" data-target="section3.1">Section
+              3.1</a>
+          </li>
+          <li>
+            <a class="pfe-jump-links-nav__item" href="#section33.2" data-target="section3.2">Section
+              3.2</a>
+          </li>
+          <li>
+            <a class="pfe-jump-links-nav__item" href="#section34" data-target="section4">Section 4</a>
+          </li>
+          <li>
+            <a class="pfe-jump-links-nav__item" href="#section35" data-target="section5">Section 5</a>
+          </li>
+        </ul>
+      </pfe-jump-links-nav>
     </div>
     <div class="pfe-l-grid__item pfe-m-12-col pfe-m-9-col-on-lg">
       <pfe-jump-links-panel scrolltarget="jumplinks20">

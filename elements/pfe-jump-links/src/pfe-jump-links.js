@@ -81,6 +81,9 @@ class PfeJumpLinksNav extends PFElement {
       if (this._isValidLightDom()) {
         const menu = this.querySelector("ul");
         this._menuContainer.innerHTML = menu.outerHTML;
+        let html = this.querySelector(".heading").cloneNode(true);
+        console.log(html);
+        this.shadowRoot.querySelector("pfe-accordion-header").appendChild(html);
       }
     }
 

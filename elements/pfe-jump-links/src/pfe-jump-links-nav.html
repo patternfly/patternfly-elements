@@ -1,4 +1,4 @@
-<nav>
+<!-- <nav>
   <h2 class="sr-only" hidden>Page navigation</h2>
   ${ this.has_slot("heading") ?
   `<slot class="heading" name="heading" id="heading"></slot>`
@@ -14,4 +14,30 @@
   `<slot class="link" name="link" id="link"></slot>`
   : ``
   }
-</nav>
+</nav> -->
+<!-- ^^ old version -->
+
+
+<pfe-accordion>
+  <pfe-accordion-header>
+  </pfe-accordion-header>
+  <pfe-accordion-panel>
+    <nav>
+      <h2 class="sr-only" hidden>Page navigation</h2>
+      ${ this.has_slot("heading") ?
+      `<slot class="heading" name="heading" id="heading"></slot>`
+      : `<h4 class="heading" id="heading">Jump to section</h4>`
+      }
+      ${ this.has_slot("logo") ?
+      `<slot class="logo" name="logo" id="logo"></slot>`
+      : ``
+      }
+    
+      <div id="container"></div>
+      ${ this.has_slot("link") ?
+      `<slot class="link" name="link" id="link"></slot>`
+      : ``
+      }
+    </nav>
+  </pfe-accordion-panel>
+</pfe-accordion>

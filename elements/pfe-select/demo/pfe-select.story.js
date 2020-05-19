@@ -30,7 +30,7 @@ stories.add(PfeSelect.tag, () => {
   let htmlOptions = "";
 
   const defaultOptions = [
-    { text: "Please select an Option", value: "" },
+    { text: "Please select an option", value: "" },
     { text: "One", value: "1" },
     { text: "Two", value: "2" }
   ];

@@ -34,6 +34,7 @@ $variables: (
     border-bottom: #{pfe-local($cssvar: BorderBottom, $region: panel, $fallback: 0)};
     border-left:   #{pfe-local($cssvar: BorderLeft, $region: panel, $fallback: 0)};
 
+    @include pfe-clearfix;
     @include browser-query(ie11) {
       padding: 1em;
       background-color: #{map-get($pfe-colors, surface--lightest)} !important;

@@ -1,9 +1,54 @@
-## Prerelease 42 ( TBD )
+## Prerelease 48 ( 2020-05-19 )
+
+- [b1e546b](https://github.com/patternfly/patternfly-elements/commit/b1e546bfa98254eaaebb1a537065288bdcf1704f) feat: pfe-datetime adding time zone attribute #881
+- [a43a44a](https://github.com/patternfly/patternfly-elements/commit/a43a44a585a061694631f13d06b3302cae1e24a2) fix: pfe-card header and footer slot issues (#861)
+- [4b2eae1](https://github.com/patternfly/patternfly-elements/commit/4b2eae1e9274986dee64e06d61cef7a7a4b9640f) feat: Add ability to demo individual components using `demo` and `live-demo` scripts (#868)
+
+## Prerelease 47 ( 2020-05-14 )
+
+- [0323eab](https://github.com/patternfly/patternfly-elements/commit/0323eab2d9dd944cb51dee263056566fe1a14a57) fix: pfe-navigtation-item shouldn't add duplicative event listeners #870
+
+## Prerelease 46 ( 2020-05-12 )
+
+- [27fee5f](https://github.com/patternfly/patternfly-elements/commit/27fee5f5c5eb021ac126f3767dd0299f5cda8231) fix: pfe-tabs check for tagName on addedNode mutation before continuing
+- [2c950b0](https://github.com/patternfly/patternfly-elements/commit/2c950b08f7638787df50aa5ee6738f1205ea3a9d) fix: Add clearfix within tab and accordion panels
+- [96f0a1b](https://github.com/patternfly/patternfly-elements/commit/96f0a1bdf9c758650e02b20a63ee3fb2fcf11bc9) feat: Add border to the card component
+- [f392a0f](https://github.com/patternfly/patternfly-elements/commit/f392a0f0eeac3b0379794eff4a1b2946e10e883a) fix: Generator needs to convert slot-name to camelCase in js file if dash exists
+- [6eed4c3](https://github.com/patternfly/patternfly-elements/commit/6eed4c3dae562e20c12879b2790cb68031e8975e) fix: adjust arrow spacing & alignment on pfe-cta
+- [b342693](https://github.com/patternfly/patternfly-elements/commit/b342693b66a7322e5186606b212c9088584354b6) fix: Move max-width:100px to icon triggers
+
+## Prerelease 45 ( 2020-04-27 )
+
+- [8dbea7b](https://github.com/patternfly/patternfly-elements/commit/8dbea7b5fbd94614d89828c27afafdcc287f016f) fix: typo in pfe-icon README (#840)
+- [7246607](https://github.com/patternfly/patternfly-elements/commit/7246607bcae3aaba0c2d8288b58c20244ed83cda) fix: Issue 839 pfe tabs history firefox, focus-state (#841)
+- [9381e37](https://github.com/patternfly/patternfly-elements/commit/9381e37cd7530c5aebb9a7b596cb47704165b38d) fix: pfe-tabs adding dynamic tab in IE11 (#838)
+- [f9c2813](https://github.com/patternfly/patternfly-elements/commit/f9c2813892eace5e600d168d876ecc4ffd46b472) fix: Add a warning about updating the on attribute before upgrade (#809)
+- [a55449b](https://github.com/patternfly/patternfly-elements/commit/a55449bc1da11abdaf98f959961f25bfa20edc67) docs: Content set and tabs update (#824)
+- [eb74cb8](https://github.com/patternfly/patternfly-elements/commit/eb74cb8f989048164fbb6ed1508c502659a752ed) feat: Update pfe-select to use new event emission format (#758) (#760)
+
+## Prerelease 44 ( 2020-04-02 )
+
+Tag: [v1.0.0-prerelease.44](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.44)
+
+- [76b1ee1](https://github.com/patternfly/patternfly-elements/commit/76b1ee1abbb5892e03a2c5c435d181324fdbcff7) fix: pfe-tabs urlParms fix for IE11 #821
+
+## Prerelease 43 ( 2020-04-02 )
+
+Tag: [v1.0.0-prerelease.43](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.43)
+
+- [eb64d81](https://github.com/patternfly/patternfly-elements/commit/eb64d819038c904a94e03058e98bf5d5a8e4afed) fix: removing stopPropagation from pfe-tabs click and keydown events #817
+
+## Prerelease 42 ( 2020-03-31 )
 
 Tag: [v1.0.0-prerelease.42](https://github.com/patternfly/patternfly-elements/releases/tag/v1.0.0-prerelease.42)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: set consistent line-height for pfe-nav triggers (#773)
-
+- [6b93a6a](https://github.com/patternfly/patternfly-elements/commit/6b93a6a71e515f9f5c32ef82f7691e527a01ed34) feat: history on tab click and open tab based on url parameters on pfe-content-set (#797)
+- [40c8ffa](https://github.com/patternfly/patternfly-elements/commit/40c8ffa47899305fbd783c7726184a9a62a66e2a) feat: Remove the "pfe-" prefix from the history feature in pfe-tabs (#808)
+- [29780ab](https://github.com/patternfly/patternfly-elements/commit/29780abfab1074aa05a021a43d79bee00afed31b) feat: Add event emission to pfe-cta (#741)
+- [36d31bf](https://github.com/patternfly/patternfly-elements/commit/36d31bf34befcbc49a55e74fb79f6887ddd94934) fix: make it so pfe-tabs inside pfe-tabs works (#806)
+- [dad975f](https://github.com/patternfly/patternfly-elements/commit/dad975fc009e8cd4a26d5a481556c94d143b8686) fix: set priority pfe-cta font-size as smaller, relative to default pfe-cta font-size (#801)
+- [fbc251b](https://github.com/patternfly/patternfly-elements/commit/fbc251b5180684da26a57c0941235d57f961990e) fix: set consistent line-height for pfe-nav triggers (#790)
+- [d67c8bf](https://github.com/patternfly/patternfly-elements/commit/d67c8bf4bd58b4c6653a7efc1b53d894535ca3d3) fix: Add support for font family to select options (#794)
 
 ## Prerelease 41 ( 2020-03-19 )
 

@@ -62,7 +62,7 @@ $variables: map-merge($variables, $dropdown-item-variables);
   .pfe-dropdown-item {
     &__container {
       pointer-events: none;
-      --pfe-dropdown-item--Color: #737679;
+      --pfe-dropdown-item--Color: $pfe-color--gray-600;
       --pfe-dropdown-item--BackgroundColor: transparent;
     }
   }

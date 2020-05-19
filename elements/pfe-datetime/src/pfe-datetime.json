@@ -72,8 +72,12 @@
           "type": "string",
           "default": "en-US"
         },
-        "time_zone_name": {
+        "time_zone": {
           "title": "Time Zone",
+          "type": "string"
+        },
+        "time_zone_name": {
+          "title": "Time Zone Name",
           "type": "string",
           "enum": ["short", "long"]
         }

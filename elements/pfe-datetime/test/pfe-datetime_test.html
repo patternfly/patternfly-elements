@@ -87,6 +87,14 @@
       Mon Jan 2 15:04:05 EST 2006
     </pfe-datetime>
 
+    <pfe-datetime
+      id="withTimeZone"
+      datetime="Mon Jan 2 15:04:05 EST 2006"
+      time-zone="UTC"
+      time-zone-name="short">
+      Mon Jan 2 15:04:05 EST 2006
+    </pfe-datetime>
+
     <script>
       suite('<pfe-datetime>', () => {
         test('it should upgrade', () => {
@@ -137,6 +145,13 @@
           const text = element.shadowRoot.querySelector('span').textContent;
 
           assert.equal(text, 'lunes, 02 de ene. de 2006', "should show a (locally) formatted date with time");
+        });
+
+        test("it should show formatted date for a specified time zone", () => {
+          const element = document.getElementById("withTimeZone");
+          const text = element.shadowRoot.querySelector("span").textContent;
+
+          assert.equal(text, "1/2/2006, UTC", "should show a formatted date for a specified time zone");
         });
       })
     </script>

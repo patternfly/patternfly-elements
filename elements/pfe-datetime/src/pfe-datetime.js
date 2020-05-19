@@ -114,10 +114,23 @@ class PfeDatetime extends PFElement {
     let options = {};
 
     for (const prop in props) {
-      const value = props[prop][this.getAttribute(prop)];
+      // converting the prop name from camel case to
+      // hyphenated so it matches the attribute.
+      // for example: timeZoneName to time-zone-name
+      let attributeName = prop
+        .replace(/[\w]([A-Z])/g, match => {
+          return match[0] + "-" + match[1];
+        })
+        .toLowerCase();
+
+      const value = props[prop][this.getAttribute(attributeName)];
       if (value) {
         options[prop] = value;
       }
+    }
+
+    if (this.getAttribute("time-zone")) {
+      options.timeZone = this.getAttribute("time-zone");
     }
 
     return options;

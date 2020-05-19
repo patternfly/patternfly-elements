@@ -82,8 +82,17 @@ class PfeJumpLinksNav extends PFElement {
         const menu = this.querySelector("ul");
         this._menuContainer.innerHTML = menu.outerHTML;
         let html = this.querySelector(".heading").cloneNode(true);
-        console.log(html);
-        this.shadowRoot.querySelector("pfe-accordion-header").appendChild(html);
+        if (html && !this.hasAttribute("horizontal")) {
+          this.shadowRoot
+            .querySelector("pfe-accordion-header")
+            .appendChild(html);
+        } else {
+          this.shadowRoot
+            .querySelector("pfe-accordion-header")
+            .appendChild(document.createElement("h3#heading"));
+          this.shadowRoot.querySelector("#heading").innerHTML =
+            "Hardcoded message";
+        }
       }
     }
 
@@ -170,6 +179,9 @@ class PfeJumpLinksNav extends PFElement {
         ${buildLinkList()}
     `;
     this.shadowRoot.querySelector("#container").innerHTML = html;
+    let heading = document.createElement("h3");
+    heading.innerHTML = "Jump to section";
+    this.shadowRoot.querySelector("pfe-accordion-header").appendChild(heading);
   }
 
   _mutationCallback() {

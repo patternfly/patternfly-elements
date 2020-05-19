@@ -10,6 +10,17 @@ $variables: (
 );
 
 :host {
+  // Disable accordion's active borders
+  --pfe-accordion--BackgroundColor: transparent;
+  --pfe-accordion--BorderColor: #ccc;
+  --pfe-accordion--BorderColor--accent: transparent;
+  --pfe-accordion--accent: transparent;
+  --pfe-theme--color--surface--border: transparent;
+  --pfe-theme--color--ui-base--on-dark: transparent;
+  --pfe-theme--color--ui-base: transparent;
+  button{
+    text-decoration: none;
+  }
   font-weight: #{pfe-var(font-weight--normal)};
   display: block;
   position: sticky;
@@ -76,7 +87,9 @@ a {
   border-left: 3px solid transparent;
   position: relative;
   &.sub-section{
-    display: none;
+    @media(min-width: 992px) {
+      display: none;
+    }
     margin-left: calc(#{pfe-var(container-spacer)} * 0.75);
     font-size: 14px;
   }
@@ -99,6 +112,15 @@ a {
 }
 
 :host([default]) {
+  @media(max-width: 992px){
+    pfe-accordion {
+      border: 1px solid #{pfe-color(ui-disabled)};
+    }
+    pfe-accordion-header {
+      background-color: white;
+    }
+  }
+  
   border: 1px solid transparent;
   ::slotted([slot="heading"]) {
     color: #{pfe-color(surface--darkest)};
@@ -144,6 +166,18 @@ a {
 }
 
 :host([pfe-color="darkest"]) {
+  --theme: dark;
+  pfe-accordion-header,
+  pfe-accordion-panel,
+  button[aria-expanded=true] {
+    --pfe-accordion--BackgroundColor: #{pfe-color(surface--darkest)};
+    background-color: #{pfe-color(surface--darkest)};
+  }
+  pfe-accordion-header>h3>button[aria-expanded=true]{
+    background-color: black !important;
+    --pfe-accordion--BackgroundColor: #131313 !important;
+    --pfe-accordion--BackgroundColor: #{pfe-color(surface--darkest)};
+  }
   ::slotted([slot="heading"]) {
     color: #{pfe-color(surface--lighter)};
   }
@@ -290,15 +324,17 @@ a {
 pfe-accordion-header {
   position: sticky;
   top: 0;
-  background-color: white !important;
+  // background-color: white !important;
 }
 @media(min-width: 992px) {
   /* normal styles */
   pfe-accordion-header {
     visibility: collapse !important;
+    display: none;
   }
   pfe-accordion-panel {
     visibility: collapse;
+    display: none;
     opacity: 1;
     display: block;
   }

@@ -17,11 +17,12 @@
 </nav> -->
 <!-- ^^ old version -->
 
-
-<pfe-accordion>
+${this.hasAttribute("horizontal") ? `` :
+`<pfe-accordion>
   <pfe-accordion-header>
   </pfe-accordion-header>
-  <pfe-accordion-panel>
+  <pfe-accordion-panel>`
+}
     <nav>
       <h2 class="sr-only" hidden>Page navigation</h2>
       ${ this.has_slot("heading") ?
@@ -39,5 +40,8 @@
       : ``
       }
     </nav>
-  </pfe-accordion-panel>
-</pfe-accordion>
+    ${this.hasAttribute("horizontal") ? `` :
+  `</pfe-accordion-panel>
+</pfe-accordion>`
+}
+  

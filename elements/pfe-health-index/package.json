@@ -4,7 +4,7 @@
     "className": "PfeHealthIndex",
     "elementName": "pfe-health-index"
   },
-  "version": "1.0.0-prerelease.45",
+  "version": "1.0.0-prerelease.48",
   "publishConfig": {
     "access": "public"
   },
@@ -40,7 +40,7 @@
   "license": "MIT",
   "dependencies": {
     "@patternfly/pfe-sass": "^1.0.0-prerelease.45",
-    "@patternfly/pfelement": "^1.0.0-prerelease.45"
+    "@patternfly/pfelement": "^1.0.0-prerelease.48"
   },
   "generator-pfelement-version": "0.6.3",
   "bugs": {

@@ -4,7 +4,7 @@
     "className": "PfeBadge",
     "elementName": "pfe-badge"
   },
-  "version": "1.0.0-prerelease.39",
+  "version": "1.0.0-prerelease.48",
   "description": "Badge element for PatternFly Elements",
   "keywords": [
     "web-components",

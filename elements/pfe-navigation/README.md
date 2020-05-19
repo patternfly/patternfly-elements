@@ -61,7 +61,7 @@ All slots are optional and can be left off if not needed. Slots prefixed with `m
 
 ### Attributes
 
-- `pfe-sticky`: Allows the navigation to stick to the top of the page when the user scrolls down.
+- `pfe-sticky`: Allows the navigation to stick to the top of the page when the user scrolls down. Alternatively, you can opt out of having a sticky nav (the default) by adding the attribute `pfe-sticky="false"`.
 - `pfe-close-on-click`: Currently only supports "external"; this means if a user clicks outside the component, the navigation items will close.
 - `pfe-menu-label`: Translation for the Menu label on the main navigation dropdown.
 - `pfe-full-width`: Allows the navigation to span the full width of the viewport.

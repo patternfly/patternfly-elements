@@ -78,41 +78,23 @@ This will add these additional files to the standard set that is being served to
 
 ## Compile, watch, & preview
 
-To watch for changes on all components and compile the code when changes are detected, run this from the PatternFly Elements root directory. This command will also launch the preview of the demo files.
+To watch for changes on component(s) and compile the code when changes are detected, run the command below from the PatternFly Elements root directory. This command will also launch the preview of the demo files and Storybook.
 
 ```
-npm run live-demo
+npm run live-demo [component-name(s)]
 ```
-
-## Compile & watch
-
-You may find that you dislike watching all the elements at once.  It may start up too slowly, consume too many system resources, or your OS may run out of file descriptors from watching too many files.  If any of these are the case, you can shrink the set of elements being watched by running `npm run dev (component-name)`.
-
-For example, to watch only `pfe-icon` and its dependencies:
-
-```
-npm run dev pfe-icon
-```
-
-*Note that this will also automatically begin watching dependencies of `pfe-icon`, such as `pfelement`.*
 
 You may also specify multiple elements.  For example, `pfe-card` and `pfe-cta` are often used together, so you may wish to watching them both.
 
 ```
-npm run dev pfe-card pfe-cta
+npm run live-demo pfe-card pfe-cta
 ```
 
-## Preview changes
+This command will open the browser to a listing of all the demo files: `http://localhost:8000/examples/`.
 
-Remember that you may want to simultaneously run compile commands to watch for changes to your code. From the root of the PatternFly Elements repository, run the live-demo command which will open a browser to a listing of all the demo files.
+From there you can navigate to the demo page of the element you're working on. For example, if you want to preview the `pfe-card` component, then navigate in the browser to `http://localhost:8000/elements/pfe-card/demo`.
 
-```
-npm run live-demo
-```
-
-From there you can change the URL to the demo page of the element you're working on. For example, if you want to preview the `pfe-card` component, then navigate in the browser to `http://localhost:1234/elements/pfe-card/demo`.
-
-
+This command will also open the browser to the storybook instance.  Read more about storybook below.
 
 #### Storybook editor
 
@@ -121,27 +103,28 @@ Storybook is an interactive tool that allows consumers of the components to see 
 ```
 npm run storybook
 ```
+
 Storybook will launch at [http://localhost:9001](http://localhost:9001).
 
 ## Testing
 
-From the directory of the element you're working on, run the test script in the package.json file and Web Component Tester will use Mocha and Chai to execute your tests in the browser.
+From the project's root directory, run the test command `npm test` and Web Component Tester will use Mocha and Chai to execute your tests in the browser.
 
 ```
-npm test
+npm test [component-name(s)]
 ```
 
 ## Final build
 
-Prepare your element for distribution by running the build script in the package.json file located at the root of the element you're working on. 
+Prepare your element for distribution by running the build script at the root of the project. 
 
 ```
-npm run build
+npm run build [component-name(s)]
 ```
 
 The build script will merge the files in the `/src` directory and update the ES6 and ES5 versions of your element in the root of the element. These two files are the files that your applications will either require or import for use.
 
-If you've been running `npm run dev`, the dev script runs the build script every time you save a file in the `/src` directory so running the build script might be redundant, but better safe than sorry.
+If you've been running `npm run live-demo`, the script runs the build every time you save a file in the `/src` directory, so running the build script might be redundant, but better safe than sorry.
 
 ## Publish
 

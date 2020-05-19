@@ -1,5 +1,11 @@
+## Prerelease 47 ( 2020-05-14 )
+
+- [0323eab](https://github.com/patternfly/patternfly-elements/commit/0323eab2d9dd944cb51dee263056566fe1a14a57) fix: pfe-navigtation-item shouldn't add duplicative event listeners #870
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add ability to demo individual components using `demo` and `live-demo` scripts
+
 ## Prerelease 46 ( 2020-05-12 )
 
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-card header and footer slot issues
 - [27fee5f](https://github.com/patternfly/patternfly-elements/commit/27fee5f5c5eb021ac126f3767dd0299f5cda8231) fix: pfe-tabs check for tagName on addedNode mutation before continuing
 - [2c950b0](https://github.com/patternfly/patternfly-elements/commit/2c950b08f7638787df50aa5ee6738f1205ea3a9d) fix: Add clearfix within tab and accordion panels
 - [96f0a1b](https://github.com/patternfly/patternfly-elements/commit/96f0a1bdf9c758650e02b20a63ee3fb2fcf11bc9) feat: Add border to the card component

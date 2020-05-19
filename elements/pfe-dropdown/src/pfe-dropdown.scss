@@ -10,7 +10,7 @@ $dropdown-variables: (
   Color: #{pfe-color(text)},
   BackgroundColor: transparent,
   Border: none,
-  BorderBottomColor--before: #8a8d90,
+  BorderBottomColor--before: #{pfe-color(surface--border--darker)},
   BorderBottomColor--before--hover: #{pfe-color(link)},
   BorderWidth--before: #{pfe-var(ui--border-width)},
   BorderWidth--before--hover: calc(#{pfe-var(ui--border-width)} * 2),

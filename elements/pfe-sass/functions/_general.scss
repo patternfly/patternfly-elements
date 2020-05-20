@@ -39,7 +39,7 @@
 @function pfe-breakpoint($size, $max: false, $map: true) {
     $bp: 1px;
     @if $map == true {
-    	$bp: map-get($pfe-vars, grid-breakpoint--#{$size} );
+    	$bp: map-get($pf-vars, grid-breakpoint--#{$size} );
     	@if $max {
     	    $bp: (pfe-strip-unit($bp) - 1) * 1px;
     	}
@@ -56,7 +56,7 @@
 /// Get Theme
 ///
 /// This utility function will return the correct theme 
-/// when you pass it a variable from the $pfe-colors map
+/// when you pass it a variable from the $pf-colors map
 ///
 /// @use -
 /// ```
@@ -71,5 +71,5 @@
 /// }
 /// ```
 @function pfe-get-theme($context) {
-    @return #{map-get($pfe-colors, $context)};
+    @return #{map-get($pf-colors, $context)};
 }

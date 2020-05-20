@@ -47,7 +47,7 @@ a {
     
     &.outline:hover,
     &.outline:focus {
-      background-color: $pfe-global--color--gray-gainsboro;
+      background-color: $pf-global--color--gray-gainsboro;
       border-color: darken(#0477a4, 5%);
       color: darken(#0477a4, 5%);
     }
@@ -55,8 +55,8 @@ a {
 }
 
 .label {
-  background-color: $pfe-global--color--purple-amethyst;
-  border-color: $pfe-global--color--purple-amethyst;
+  background-color: $pf-global--color--purple-amethyst;
+  border-color: $pf-global--color--purple-amethyst;
   color: #fff;
   font-weight: 600;
   letter-spacing: .2px;
@@ -513,7 +513,7 @@ main {
   
   #main-toc, #mobile-toc {
     padding: 2.5rem 1rem 2.5rem 2.5rem;
-    background-color: $pfe-global--color--gray-moon;
+    background-color: $pf-global--color--gray-moon;
     min-width: 300px;
     min-height: 85vh;
     display: none;

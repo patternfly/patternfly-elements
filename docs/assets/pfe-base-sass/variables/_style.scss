@@ -6,46 +6,46 @@
 // Animations
 // ========================================================================
 
-$pfe-global--animation-timing:    cubic-bezier(0.465, 0.183, 0.153, 0.946);
+$pf-global--animation-timing:    cubic-bezier(0.465, 0.183, 0.153, 0.946);
 
-$pfe-global--link--TextDecoration: underline;
-$pfe-global--link--TextDecoration--hover: underline;
+$pf-global--link--TextDecoration: underline;
+$pf-global--link--TextDecoration--hover: underline;
 
 // ========================================================================
 // Borders
 // ========================================================================
 
-$pfe-global--border--BorderWidth:         1px !default;
-$pfe-global--border--BorderWidth--thin:   $pfe-global--border--BorderWidth !default;
+$pf-global--border--BorderWidth:         1px !default;
+$pf-global--border--BorderWidth--thin:   $pf-global--border--BorderWidth !default;
 
-$pfe-global--border--BorderStyle:         solid !default;
-$pfe-global--border--BorderColor:         $pfe-global--color--gray-silver !default;
-$pfe-global--border--BorderColor--light:  $pfe-global--color--gray-platinum !default;
-$pfe-global--border--BorderColor--dark:   $pfe-global--text-color;
+$pf-global--border--BorderStyle:         solid !default;
+$pf-global--border--BorderColor:         $pf-global--color--gray-silver !default;
+$pf-global--border--BorderColor--light:  $pf-global--color--gray-platinum !default;
+$pf-global--border--BorderColor--dark:   $pf-global--text-color;
 
-$pfe-global--border--BorderRadius:         0 !default;
-$pfe-global--button-border--BorderRadius:  2px !default;
+$pf-global--border--BorderRadius:         0 !default;
+$pf-global--button-border--BorderRadius:  2px !default;
 
 
 // ========================================================================
 // Shadows
 // ========================================================================
 
-$pfe-global--shadow--BoxShadow--sm:  0  pfe-size-prem(1)  pfe-size-prem(2) 0 rgba($pf-color-black-1000, .2) !default;
-$pfe-global--shadow--BoxShadow--md:  0  pfe-size-prem(2)  pfe-size-prem(1) pfe-size-prem(1) rgba($pf-color-black-1000, .12), 0  pfe-size-prem(4)  pfe-size-prem(11) pfe-size-prem(6) rgba($pf-color-black-1000, .05) !default;
-$pfe-global--shadow--BoxShadow--lg:  0  pfe-size-prem(3)  pfe-size-prem(7) pfe-size-prem(3) rgba($pf-color-black-1000, .13), 0  pfe-size-prem(11)  pfe-size-prem(24) pfe-size-prem(16) rgba($pf-color-black-1000, .12) !default;
+$pf-global--shadow--BoxShadow--sm:  0  pfe-size-prem(1)  pfe-size-prem(2) 0 rgba($pf-color-black-1000, .2) !default;
+$pf-global--shadow--BoxShadow--md:  0  pfe-size-prem(2)  pfe-size-prem(1) pfe-size-prem(1) rgba($pf-color-black-1000, .12), 0  pfe-size-prem(4)  pfe-size-prem(11) pfe-size-prem(6) rgba($pf-color-black-1000, .05) !default;
+$pf-global--shadow--BoxShadow--lg:  0  pfe-size-prem(3)  pfe-size-prem(7) pfe-size-prem(3) rgba($pf-color-black-1000, .13), 0  pfe-size-prem(11)  pfe-size-prem(24) pfe-size-prem(16) rgba($pf-color-black-1000, .12) !default;
 
-$pfe-global--shadow--BoxShadow--sm-right:  pfe-size-prem(4)  0  pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
-$pfe-global--shadow--BoxShadow--sm-left:   pfe-size-prem(-4) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
-$pfe-global--shadow--BoxShadow--sm-bottom: 0 pfe-size-prem(4) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
-$pfe-global--shadow--BoxShadow--sm-top:    0 pfe-size-prem(-4) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
-$pfe-global--shadow--BoxShadow--md-right:  pfe-size-prem(5) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .25) !default;
-$pfe-global--shadow--BoxShadow--md-left:   pfe-size-prem(-5) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .25) !default;
-$pfe-global--shadow--BoxShadow--md-bottom: 0 pfe-size-prem(5) pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .25) !default;
-$pfe-global--shadow--BoxShadow--md-top:    0 pfe-size-prem(-5) pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .25) !default;
-$pfe-global--shadow--BoxShadow--lg-right:  pfe-size-prem(12) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
-$pfe-global--shadow--BoxShadow--lg-left:   pfe-size-prem(-12) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
-$pfe-global--shadow--BoxShadow--lg-bottom: 0 pfe-size-prem(12) pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
-$pfe-global--shadow--BoxShadow--lg-top:    0 pfe-size-prem(-12) pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
+$pf-global--shadow--BoxShadow--sm-right:  pfe-size-prem(4)  0  pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
+$pf-global--shadow--BoxShadow--sm-left:   pfe-size-prem(-4) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
+$pf-global--shadow--BoxShadow--sm-bottom: 0 pfe-size-prem(4) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
+$pf-global--shadow--BoxShadow--sm-top:    0 pfe-size-prem(-4) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .12) !default;
+$pf-global--shadow--BoxShadow--md-right:  pfe-size-prem(5) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .25) !default;
+$pf-global--shadow--BoxShadow--md-left:   pfe-size-prem(-5) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .25) !default;
+$pf-global--shadow--BoxShadow--md-bottom: 0 pfe-size-prem(5) pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .25) !default;
+$pf-global--shadow--BoxShadow--md-top:    0 pfe-size-prem(-5) pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .25) !default;
+$pf-global--shadow--BoxShadow--lg-right:  pfe-size-prem(12) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
+$pf-global--shadow--BoxShadow--lg-left:   pfe-size-prem(-12) 0 pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
+$pf-global--shadow--BoxShadow--lg-bottom: 0 pfe-size-prem(12) pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
+$pf-global--shadow--BoxShadow--lg-top:    0 pfe-size-prem(-12) pfe-size-prem(10) pfe-size-prem(-4) rgba($pf-color-black-1000, .07) !default;
 
-$pfe-global--shadow--BoxShadow--inset:     inset 0 0 pfe-size-prem(10) 0 rgba($pf-color-black-1000, .25) !default;
+$pf-global--shadow--BoxShadow--inset:     inset 0 0 pfe-size-prem(10) 0 rgba($pf-color-black-1000, .25) !default;

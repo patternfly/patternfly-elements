@@ -204,16 +204,16 @@
 }
 
 // Return a pixel size in ems
-@function pfe-size-pem($pxval, $base: $pfe-global--font-size-root) {
+@function pfe-size-pem($pxval, $base: $pf-global--font-size-root) {
     @return pfe-strip-unit($pxval) / $base * 1em;
 }
 
 // Return a pixel size in rems
-@function pfe-size-prem($pxval, $base: $pfe-global--font-size-root) {
+@function pfe-size-prem($pxval, $base: $pf-global--font-size-root) {
     @return pfe-strip-unit($pxval) / $base * 1rem;
 }
 
 // Return a rem size in pixels
-@function pfe-size-rem2px($remval, $base: $pfe-global--font-size-root) {
+@function pfe-size-rem2px($remval, $base: $pf-global--font-size-root) {
     @return pfe-strip-unit($remval) * ($base / 1px);
 }

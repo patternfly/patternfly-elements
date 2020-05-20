@@ -63,19 +63,19 @@
             @if not index($BROADCAST-VARS, $type) {
                 @warn "--#{$repo}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
             }
-            @else if not map-has-key($pfe-broadcasted, #{$item}#{$context}) {
+            @else if not map-has-key($pf-broadcasted, #{$item}#{$context}) {
                 @warn "#{$item}#{$context} value does not currently exist.";
             }
             @else {
                 @if index($THEMES, $theme) != null {
-                    @if map-get($pfe-colors, $item) != null {
-                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--color--#{$item}#{$context}, #{map-get($pfe-broadcasted, #{$item}#{$context})});
+                    @if map-get($pf-colors, $item) != null {
+                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--color--#{$item}#{$context}, #{map-get($pf-broadcasted, #{$item}#{$context})});
                     }
-                    @else if map-get($pfe-vars, $item) {
-                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--#{$item}#{$context}, #{map-get($pfe-broadcasted, #{$item}#{$context})});
+                    @else if map-get($pf-vars, $item) {
+                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--#{$item}#{$context}, #{map-get($pf-broadcasted, #{$item}#{$context})});
                     }
                     @else {
-                        --#{$repo}-broadcasted--#{$item}: #{map-get($pfe-broadcasted, #{$item}#{$context})};
+                        --#{$repo}-broadcasted--#{$item}: #{map-get($pf-broadcasted, #{$item}#{$context})};
                     }
                 }
                 @else {
@@ -191,7 +191,7 @@
             );
             --theme: #{pfe-color( surface--#{$color}--theme, #{$theme} );
             @include browser-query(ie11) {
-                background-color: #{map-get($pfe-colors, surface--lightest)} !important;
+                background-color: #{map-get($pf-colors, surface--lightest)} !important;
                 color: #{pfe-color(text)} !important;
             }
         }

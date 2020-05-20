@@ -69,14 +69,14 @@ There are several attributes available for customizing the visual treatment of p
 
 | Theme Var Hook                                        | Description                                               | Default                                     |
 | ----------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------- |
-| `--pfe-badge--BackgroundColor`                        | Default `<pfe-badge>` background color                    | $pfe-color--feedback--default--lightest     |
-| `--pfe-badge--BorderRadius`                           | Default `<pfe-badge>` border radius                       | $pfe-var--ui--border-radius * 30            |
-| `--pfe-badge--Color`                                  | Default `<pfe-badge>` color                               | $pfe-color--text                            |
-| `--pfe-badge--FontSize`                               | Default `<pfe-badge>` font size                           | $pfe-var--font-size * 0.75                  |
-| `--pfe-badge--FontWeight`                             | Default `<pfe-badge>` font weight                         | $pfe-var--font-weight--semi-bold            |
-| `--pfe-badge--MinWidth`                               | Default `<pfe-badge>` min width                           | $pfe-var--ui--border-width * 2              |
-| `--pfe-badge--PaddingLeft`                            | Default `<pfe-badge>` padding left                        | $pfe-var--container-padding * 0.5           |
-| `--pfe-badge--PaddingRight`                           | Default `<pfe-badge>` padding right                       | $pfe-var--container-padding * 0.5           |
+| `--pfe-badge--BackgroundColor`                        | Default `<pfe-badge>` background color                    | $pf-color-feedback--default--lightest     |
+| `--pfe-badge--BorderRadius`                           | Default `<pfe-badge>` border radius                       | $pf-var--ui--border-radius * 30            |
+| `--pfe-badge--Color`                                  | Default `<pfe-badge>` color                               | $pf-color-text                            |
+| `--pfe-badge--FontSize`                               | Default `<pfe-badge>` font size                           | $pf-var--font-size * 0.75                  |
+| `--pfe-badge--FontWeight`                             | Default `<pfe-badge>` font weight                         | $pf-var--font-weight--semi-bold            |
+| `--pfe-badge--MinWidth`                               | Default `<pfe-badge>` min width                           | $pf-var--ui--border-width * 2              |
+| `--pfe-badge--PaddingLeft`                            | Default `<pfe-badge>` padding left                        | $pf-var--container-padding * 0.5           |
+| `--pfe-badge--PaddingRight`                           | Default `<pfe-badge>` padding right                       | $pf-var--container-padding * 0.5           |
 
 
 ## Test

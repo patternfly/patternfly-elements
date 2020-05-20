@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
-    "@patternfly/patternfly": "^2.50.1",
+    "@patternfly/patternfly": "^2.71.6",
     "@polymer/iron-test-helpers": "^3.0.1",
     "@storybook/addon-actions": "^5.3.8",
     "@storybook/addon-backgrounds": "^5.3.8",

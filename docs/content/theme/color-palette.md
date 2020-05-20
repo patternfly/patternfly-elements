@@ -107,9 +107,9 @@ And finally, you’ll have colors for states such as error, warning, and success
 
 ```css
 :root {
-    --pfe-color--feedback--critical:                 $pfe-color--red-600 !default;
-    --pfe-color--feedback--critical--lightest:       $pfe-color--red-50 !default;
-    --pfe-color--feedback--critical--darkest:        $pfe-color--red-800 !default;
+    --pfe-color--feedback--critical:                 $pf-color-red-600 !default;
+    --pfe-color--feedback--critical--lightest:       $pf-color-red-50 !default;
+    --pfe-color--feedback--critical--darkest:        $pf-color-red-800 !default;
 }
 ```
 

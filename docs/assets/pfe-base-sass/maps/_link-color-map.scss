@@ -1,27 +1,27 @@
-$pfe-global--color-map--link: (
+$pf-global--color-map--link: (
     default-link: (
-        dark: $pfe-global--link-color--inverted,
-        dark-desaturated: $pfe-global--text-color--inverted,
-        light: $pfe-global--link-color
+        dark: $pf-global--link-color--inverted,
+        dark-desaturated: $pf-global--text-color--inverted,
+        light: $pf-global--link-color
     ),
     default-link-hover: (
-        dark: $pfe-global--link-color--inverted--hover,
-        dark-desaturated: $pfe-global--color--gray-mercury,
-        light: $pfe-global--link-color--hover
+        dark: $pf-global--link-color--inverted--hover,
+        dark-desaturated: $pf-global--color--gray-mercury,
+        light: $pf-global--link-color--hover
     ),
     default-link-visited: (
-        dark: $pfe-global--link-color--inverted--visited,
-        dark-desaturated: $pfe-global--color--gray-stone,
-        light: $pfe-global--link-color--visited
+        dark: $pf-global--link-color--inverted--visited,
+        dark-desaturated: $pf-global--color--gray-stone,
+        light: $pf-global--link-color--visited
     ),
     default-link-active: (
-        dark: $pfe-global--link-color--inverted--hover,
-        dark-desaturated: $pfe-global--color--gray-mercury,
-        light: $pfe-global--link-color--hover
+        dark: $pf-global--link-color--inverted--hover,
+        dark-desaturated: $pf-global--color--gray-mercury,
+        light: $pf-global--link-color--hover
     ),
     default-link-focus: (
-        dark: $pfe-global--link-color--inverted--hover,
-        dark-desaturated: $pfe-global--color--gray-mercury,
-        light: $pfe-global--link-color--hover
+        dark: $pf-global--link-color--inverted--hover,
+        dark-desaturated: $pf-global--color--gray-mercury,
+        light: $pf-global--link-color--hover
     )
 );

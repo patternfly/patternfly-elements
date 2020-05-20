@@ -2,11 +2,11 @@
     @return $num / ($num * 0 + 1);
 }
 
-@function pfe-size-pem($pxval, $base: $pfe-global--font-size-root) {
+@function pfe-size-pem($pxval, $base: $pf-global--font-size-root) {
     @return pfe-strip-unit($pxval) / $base * 1em;
 }
 
-@function pfe-size-prem($pxval, $base: $pfe-global--font-size-root) {
+@function pfe-size-prem($pxval, $base: $pf-global--font-size-root) {
     @return pfe-strip-unit($pxval) / $base * 1rem;
 }
 

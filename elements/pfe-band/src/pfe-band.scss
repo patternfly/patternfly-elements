@@ -76,8 +76,8 @@ $variables: (
 
   @include pfe-print-media {
     // Add the border to the card for print
-    border-radius: #{map-get($pfe-vars, surface--border-radius)};
-    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
+    border-radius: #{map-get($pf-vars, surface--border-radius)};
+    border: #{map-get($pf-vars, surface--border-width) map-get($pf-vars, surface--border-style) map-get($pf-colors, surface--border)};
     // Reduce padding for print
     padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
   }

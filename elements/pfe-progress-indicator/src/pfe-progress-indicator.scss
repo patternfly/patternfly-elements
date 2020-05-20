@@ -1,7 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
-$pfe-progress-indicator--border-light: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} rgba(0, 0, 0, .25);
-$pfe-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} rgba(0, 0, 0, .75);
+$pf-progress-indicator--border-light: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} rgba(0, 0, 0, .25);
+$pf-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} rgba(0, 0, 0, .75);
 
 :host([hidden]) {
   display: none;
@@ -15,10 +15,10 @@ $pfe-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #
     -webkit-animation:spin 1s linear infinite;
     -moz-animation:spin 1s linear infinite;
 
-    border-bottom: $pfe-progress-indicator--border-light;
-    border-left: $pfe-progress-indicator--border-light;
-    border-right: $pfe-progress-indicator--border-light;
-    border-top: $pfe-progress-indicator--border-dark;
+    border-bottom: $pf-progress-indicator--border-light;
+    border-left: $pf-progress-indicator--border-light;
+    border-right: $pf-progress-indicator--border-light;
+    border-top: $pf-progress-indicator--border-dark;
     border-radius: 100%;
     
     display: inline-block;

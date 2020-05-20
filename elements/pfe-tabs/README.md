@@ -150,13 +150,13 @@ Fires when a selected tab is no longer the selected tab. The `event.detail.tab` 
 | Theme Var Hook | Description | Default |
 | -------------- | ----------- | ------- |
 | `--pfe-theme--container-padding` | Tab padding and panel padding | 16px |
-| `--pfe-theme--color--surface--border` | Link color for default CTA | `$pfe-color--surface--border` |
+| `--pfe-theme--color--surface--border` | Link color for default CTA | `$pf-color-surface--border` |
 | `--pfe-theme--ui--border-style` | Border style for selected tab | solid |
 | `--pfe-theme--ui--border-width` | Border width for selected tab | 1px |
-| `--pfe-theme--color--surface--lightest` | Selected tab background color | `$pfe-color--surface--lightest` |
-| `--pfe-theme--color--surface--lightest--text` | Default tab text color | `$pfe-color--surface--lightest--text` |
-| `--pfe-theme--color--surface--lightest--link` | Tab hover and selected indicator color | `$pfe-color--surface--lightest--link` |
-| `--pfe-theme--color--surface--lightest--link--focus` | Focused tab outline color | `$pfe-color--surface--lightest--link--focus` |
+| `--pfe-theme--color--surface--lightest` | Selected tab background color | `$pf-color-surface--lightest` |
+| `--pfe-theme--color--surface--lightest--text` | Default tab text color | `$pf-color-surface--lightest--text` |
+| `--pfe-theme--color--surface--lightest--link` | Tab hover and selected indicator color | `$pf-color-surface--lightest--link` |
+| `--pfe-theme--color--surface--lightest--link--focus` | Focused tab outline color | `$pf-color-surface--lightest--link--focus` |
 | `--pfe-tabs__indicator--Display` | Tab indicator display | block |
 | `--pfe-tabs__indicator--Height` | Tab indicator height | 4px |
 | `--pfe-tabs__indicator--Width` | Tab indicator width | 22px |

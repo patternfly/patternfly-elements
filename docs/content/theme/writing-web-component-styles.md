@@ -24,7 +24,7 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
 1. **Color**:  Rather than using only Sass variables `$red` or hexidecimal colors like `#c00`, please use the `pfe-color()` function along with a theme variable, i.e. `pfe-color(ui-base)`. Occasionally you may have to wrap interpolation syntax `#{ }` around the function to allow Sass to compile, i.e. `#{pfe-color(ui-base)}`.
 
 
-    * This function does some heavy-lifting by looking up the `$pfe-colors: ()` map and returning namespaced CSS variables for the theme and fallback color, in that order:
+    * This function does some heavy-lifting by looking up the `$pf-colors: ()` map and returning namespaced CSS variables for the theme and fallback color, in that order:
 
 
     ```
@@ -50,7 +50,7 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
       *   Accent
       *   Complement
 
-2. **Non-color Properties**:   Similarly, the `pfe-var` function does the same work of looking up values from the `$pfe-vars: ()` map, and returning the variable name and the fallback value:
+2. **Non-color Properties**:   Similarly, the `pfe-var` function does the same work of looking up values from the `$pf-vars: ()` map, and returning the variable name and the fallback value:
 
     ```sass
     :host {

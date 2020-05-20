@@ -9,9 +9,9 @@ $LOCAL: icon;
 /// ===========================================================================
 
 // Todo: convert these also
-$pfe-icon--padding:       .05em;
-$pfe-icon--border-width:  #{pfe-var(ui--border-width)};
-$pfe-icon--border-style:  #{pfe-var(ui--border-style)};
+$pf-icon--padding:       .05em;
+$pf-icon--border-width:  #{pfe-var(ui--border-width)};
+$pf-icon--border-style:  #{pfe-var(ui--border-style)};
 
 @mixin greyscale-fallback() {
   background-color: white !important;
@@ -58,7 +58,7 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   vertical-align: middle;
   border-radius: 50%;
   background-color: #{pfe-local($cssvar: BackgroundColor, $fallback: transparent)};
-  border: #{$pfe-icon--border-width} #{$pfe-icon--border-style} #{pfe-local($cssvar: BorderColor, $fallback: transparent)};
+  border: #{$pf-icon--border-width} #{$pf-icon--border-style} #{pfe-local($cssvar: BorderColor, $fallback: transparent)};
   padding: #{pfe-local($cssvar: Padding, $fallback: 0)};
 
   @include browser-query(ie11) {
@@ -126,7 +126,7 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 :host([circled]) {
   --pfe-icon--BackgroundColor:       transparent;
   --pfe-icon--BorderColor:           #{pfe-color(surface--border)};
-  --pfe-icon--Padding:               #{$pfe-icon--padding};
+  --pfe-icon--Padding:               #{$pf-icon--padding};
 }
 
 @each $color in (base, lightest, lighter, darker, darkest, complement, accent) {

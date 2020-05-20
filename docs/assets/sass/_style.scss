@@ -4,14 +4,14 @@
 // ============================================================================
 //
 // Global vars are named:
-// `$pfe-global--concept--PropertyTitleCase--modifier--state`
+// `$pf-global--concept--PropertyTitleCase--modifier--state`
 // For example:
-// * $pfe-global--color--primary
-// * $pfe-global--FontSize
+// * $pf-global--color--primary
+// * $pf-global--FontSize
 // * --pfe-theme--FontSize--heading--xs
 
 // Component/Element vars are named:
-// `$pfe-c-block__element--modifier--state--PropertyTitleCase`
+// `$pf-c-block__element--modifier--state--PropertyTitleCase`
 // For example:
 // * --pfe-dropdown--heading--FontSize
 // * --cp-accordion--heading--FontSize
@@ -21,34 +21,34 @@
   --pfe-theme--animation-timing:             cubic-bezier(0.465, 0.183, 0.153, 0.946);
 
   /* BORDERS */
-  --pfe-theme--border--BorderWidth:                  $pfe-global--border--BorderWidth;
-  --pfe-theme--border--BorderWidth--thin:            $pfe-global--border--BorderWidth--thin;
+  --pfe-theme--border--BorderWidth:                  $pf-global--border--BorderWidth;
+  --pfe-theme--border--BorderWidth--thin:            $pf-global--border--BorderWidth--thin;
 
-  --pfe-theme--border--BorderStyle:                  $pfe-global--border--BorderStyle;
-  --pfe-theme--border--BorderColor:                  $pfe-global--border--BorderColor;
-  --pfe-theme--border--BorderColor--light:           $pfe-global--border--BorderColor--light;
-  --pfe-theme--border--BorderColor--dark:            $pfe-global--border--BorderColor--dark;
+  --pfe-theme--border--BorderStyle:                  $pf-global--border--BorderStyle;
+  --pfe-theme--border--BorderColor:                  $pf-global--border--BorderColor;
+  --pfe-theme--border--BorderColor--light:           $pf-global--border--BorderColor--light;
+  --pfe-theme--border--BorderColor--dark:            $pf-global--border--BorderColor--dark;
 
-  --pfe-theme--border--BorderRadius:                 $pfe-global--border--BorderRadius;
-  --pfe-theme--button-border--BorderRadius:          $pfe-global--button-border--BorderRadius;
+  --pfe-theme--border--BorderRadius:                 $pf-global--border--BorderRadius;
+  --pfe-theme--button-border--BorderRadius:          $pf-global--button-border--BorderRadius;
 
   /* SHADOWS */
-  --pfe-theme--shadow--BoxShadow--sm:        $pfe-global--shadow--BoxShadow--sm;
-  --pfe-theme--shadow--BoxShadow--md:        $pfe-global--shadow--BoxShadow--md;
-  --pfe-theme--shadow--BoxShadow--lg:        $pfe-global--shadow--BoxShadow--lg;
+  --pfe-theme--shadow--BoxShadow--sm:        $pf-global--shadow--BoxShadow--sm;
+  --pfe-theme--shadow--BoxShadow--md:        $pf-global--shadow--BoxShadow--md;
+  --pfe-theme--shadow--BoxShadow--lg:        $pf-global--shadow--BoxShadow--lg;
 
-  --pfe-theme--shadow--BoxShadow--sm-right:  $pfe-global--shadow--BoxShadow--sm-right;
-  --pfe-theme--shadow--BoxShadow--sm-left:   $pfe-global--shadow--BoxShadow--sm-left;
-  --pfe-theme--shadow--BoxShadow--sm-bottom: $pfe-global--shadow--BoxShadow--sm-bottom;
-  --pfe-theme--shadow--BoxShadow--sm-top:    $pfe-global--shadow--BoxShadow--sm-top;
-  --pfe-theme--shadow--BoxShadow--md-right:  $pfe-global--shadow--BoxShadow--md-right;
-  --pfe-theme--shadow--BoxShadow--md-left:   $pfe-global--shadow--BoxShadow--md-left;
-  --pfe-theme--shadow--BoxShadow--md-bottom: $pfe-global--shadow--BoxShadow--md-bottom;
-  --pfe-theme--shadow--BoxShadow--md-top:    $pfe-global--shadow--BoxShadow--md-top;
-  --pfe-theme--shadow--BoxShadow--lg-right:  $pfe-global--shadow--BoxShadow--lg-right;
-  --pfe-theme--shadow--BoxShadow--lg-left:   $pfe-global--shadow--BoxShadow--lg-left;
-  --pfe-theme--shadow--BoxShadow--lg-bottom: $pfe-global--shadow--BoxShadow--lg-bottom;
-  --pfe-theme--shadow--BoxShadow--lg-top:    $pfe-global--shadow--BoxShadow--lg-top;
+  --pfe-theme--shadow--BoxShadow--sm-right:  $pf-global--shadow--BoxShadow--sm-right;
+  --pfe-theme--shadow--BoxShadow--sm-left:   $pf-global--shadow--BoxShadow--sm-left;
+  --pfe-theme--shadow--BoxShadow--sm-bottom: $pf-global--shadow--BoxShadow--sm-bottom;
+  --pfe-theme--shadow--BoxShadow--sm-top:    $pf-global--shadow--BoxShadow--sm-top;
+  --pfe-theme--shadow--BoxShadow--md-right:  $pf-global--shadow--BoxShadow--md-right;
+  --pfe-theme--shadow--BoxShadow--md-left:   $pf-global--shadow--BoxShadow--md-left;
+  --pfe-theme--shadow--BoxShadow--md-bottom: $pf-global--shadow--BoxShadow--md-bottom;
+  --pfe-theme--shadow--BoxShadow--md-top:    $pf-global--shadow--BoxShadow--md-top;
+  --pfe-theme--shadow--BoxShadow--lg-right:  $pf-global--shadow--BoxShadow--lg-right;
+  --pfe-theme--shadow--BoxShadow--lg-left:   $pf-global--shadow--BoxShadow--lg-left;
+  --pfe-theme--shadow--BoxShadow--lg-bottom: $pf-global--shadow--BoxShadow--lg-bottom;
+  --pfe-theme--shadow--BoxShadow--lg-top:    $pf-global--shadow--BoxShadow--lg-top;
 
-  --pfe-theme--shadow--BoxShadow--inset:     $pfe-global--shadow--BoxShadow--inset;
+  --pfe-theme--shadow--BoxShadow--inset:     $pf-global--shadow--BoxShadow--inset;
 }

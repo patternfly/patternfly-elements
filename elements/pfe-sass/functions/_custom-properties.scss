@@ -50,7 +50,7 @@
 ///
 /// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme
 /// @param {String} $fallback [null] - Optional custom fallback value
-/// @requires {Map} $pfe-colors - A map of the colors in the repository
+/// @requires {Map} $pf-colors - A map of the colors in the repository
 /// @example -
 ///
 ///     1. To look up a color: /elements/pfe-sass/src/maps/_colors.scss
@@ -64,11 +64,11 @@
 /// ===========================================================================
 @function pfe-color($cssvar, $fallback: null) {
     $var-name: to-string($cssvar, "--");
-    @if map-get($pfe-colors, $var-name) != null {
-        @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback);
+    @if map-get($pf-colors, $var-name) != null {
+        @return pfe-get-from-map("color", $var-name, $pf-colors, $fallback);
     }
     @else {
-        @error "The key for #{$var-name} could not be found in the $pfe-colors map.";
+        @error "The key for #{$var-name} could not be found in the $pf-colors map.";
     }
 }
 
@@ -79,7 +79,7 @@
 ///
 /// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme
 /// @param {String} $fallback [null] - Optional custom fallback
-/// @requires {Map} $pfe-vars - A map of the variables in the repository
+/// @requires {Map} $pf-vars - A map of the variables in the repository
 /// @example -
 ///
 ///     1. To look up a value: /elements/pfe-sass/src/maps/_general.scss
@@ -100,11 +100,11 @@
 /// ===========================================================================
 @function pfe-var($cssvar, $fallback: null) {
     $var-name: to-string($cssvar, "--");
-    @if map-get($pfe-vars, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-vars, $fallback);
+    @if map-get($pf-vars, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-vars, $fallback);
     }
     @else {
-        @error "The key for #{$var-name} could not be found in the $pfe-vars map.";
+        @error "The key for #{$var-name} could not be found in the $pf-vars map.";
     }
 }
 
@@ -114,7 +114,7 @@
 /// Returns CSS variable stack with exposed theme variable and respective fallback
 ///
 /// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme
-/// @requires {Map} $pfe-broadcasted - SASS Map of broadcasted values
+/// @requires {Map} $pf-broadcasted - SASS Map of broadcasted values
 /// @example -
 ///
 ///     1. To look up a value: /elements/pfe-sass/src/maps/_broadcasted.scss
@@ -133,11 +133,11 @@
 /// ===========================================================================
 @function pfe-broadcasted($cssvar) {
     $var-name: to-string($cssvar, "--");
-    @if map-get($pfe-broadcasted, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
+    @if map-get($pf-broadcasted, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-broadcasted);
     }
     @else {
-        @error "The key for #{$var-name} could not be found in the $pfe-broadcasted map.";
+        @error "The key for #{$var-name} could not be found in the $pf-broadcasted map.";
     }
 }
 
@@ -147,7 +147,7 @@
 /// Returns CSS variable stack with exposed theme variable and respective fallback
 ///
 /// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme--zindex
-/// @requires {Map} $pfe-zindex - SASS Map of z-index values
+/// @requires {Map} $pf-zindex - SASS Map of z-index values
 /// @example -
 ///
 ///     1. To look up a value: /elements/pfe-sass/src/maps/_zindex.scss
@@ -166,11 +166,11 @@
 /// ===========================================================================
 @function pfe-zindex($cssvar) {
     $var-name: to-string($cssvar, "--");
-    @if map-get($pfe-zindex, $var-name) != null {
-        @return pfe-get-from-map("zindex", $var-name, $pfe-zindex);
+    @if map-get($pf-zindex, $var-name) != null {
+        @return pfe-get-from-map("zindex", $var-name, $pf-zindex);
     }
     @else {
-        @error "The key for #{$var-name} could not be found in the $pfe-zindex map.";
+        @error "The key for #{$var-name} could not be found in the $pf-zindex map.";
     }
 }
 
@@ -225,7 +225,7 @@
 @function pfe-apply-broadcast($broadcast) {
     $fallback: "";
     @if $USE-FALLBACK {
-        $fallback: ", #{map-get($pfe-broadcasted, #{to-string($broadcast,'--')})}";
+        $fallback: ", #{map-get($pf-broadcasted, #{to-string($broadcast,'--')})}";
     }
     @if not index($BROADCAST-VARS, first(str-split($broadcast, '--'))) {
       @error "--#{$repo}-broadcasted--#{$broadcast} variable is not currently supported.";

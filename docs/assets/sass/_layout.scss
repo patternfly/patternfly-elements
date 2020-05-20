@@ -4,39 +4,39 @@
 // ============================================================================
 //
 // Global vars are named:
-// `$pfe-global--concept--PropertyTitleCase--modifier--state`
+// `$pf-global--concept--PropertyTitleCase--modifier--state`
 // For example:
-// * $pfe-global--color--primary
-// * $pfe-global--FontSize
+// * $pf-global--color--primary
+// * $pf-global--FontSize
 // * --pfe-theme--FontSize--heading--xs
 
 // Component/Element vars are named:
-// `$pfe-c-block__element--modifier--state--PropertyTitleCase`
+// `$pf-c-block__element--modifier--state--PropertyTitleCase`
 // For example:
 // * --pfe-dropdown--heading--FontSize
 // * --cp-accordion--heading--FontSize
 
 :root {
   /* GRID BREAKPOINTS */
-  --pfe-theme--grid-breakpoint--xs:       $pfe-global--grid-breakpoint--xs;
-  --pfe-theme--grid-breakpoint--sm:       $pfe-global--grid-breakpoint--sm;
-  --pfe-theme--grid-breakpoint--md:       $pfe-global--grid-breakpoint--md;
-  --pfe-theme--grid-breakpoint--lg:       $pfe-global--grid-breakpoint--lg;
-  --pfe-theme--grid-breakpoint--xl:       $pfe-global--grid-breakpoint--xl;
+  --pfe-theme--grid-breakpoint--xs:       $pf-global--grid-breakpoint--xs;
+  --pfe-theme--grid-breakpoint--sm:       $pf-global--grid-breakpoint--sm;
+  --pfe-theme--grid-breakpoint--md:       $pf-global--grid-breakpoint--md;
+  --pfe-theme--grid-breakpoint--lg:       $pf-global--grid-breakpoint--lg;
+  --pfe-theme--grid-breakpoint--xl:       $pf-global--grid-breakpoint--xl;
 
-  --pfe-theme--grid-breakpoint--xs--max:  $pfe-global--grid-breakpoint--xs--max;
-  --pfe-theme--grid-breakpoint--sm--max:  $pfe-global--grid-breakpoint--sm--max;
-  --pfe-theme--grid-breakpoint--md--max:  $pfe-global--grid-breakpoint--md--max;
-  --pfe-theme--grid-breakpoint--lg--max:  $pfe-global--grid-breakpoint--lg--max;
+  --pfe-theme--grid-breakpoint--xs--max:  $pf-global--grid-breakpoint--xs--max;
+  --pfe-theme--grid-breakpoint--sm--max:  $pf-global--grid-breakpoint--sm--max;
+  --pfe-theme--grid-breakpoint--md--max:  $pf-global--grid-breakpoint--md--max;
+  --pfe-theme--grid-breakpoint--lg--max:  $pf-global--grid-breakpoint--lg--max;
 
   /* SPACERS / GUTTERS */
-  --pfe-theme--spacer--xs:                $pfe-global--spacer--xs;
-  --pfe-theme--spacer--sm:                $pfe-global--spacer--sm;
-  --pfe-theme--spacer:                    $pfe-global--spacer; // base
-  --pfe-theme--spacer--md:                $pfe-global--spacer--md;
-  --pfe-theme--spacer--lg:                $pfe-global--spacer--lg;
-  --pfe-theme--spacer--xl:                $pfe-global--spacer--xl;
-  --pfe-theme--spacer--xxl:               $pfe-global--spacer--xxl;
+  --pfe-theme--spacer--xs:                $pf-global--spacer--xs;
+  --pfe-theme--spacer--sm:                $pf-global--spacer--sm;
+  --pfe-theme--spacer:                    $pf-global--spacer; // base
+  --pfe-theme--spacer--md:                $pf-global--spacer--md;
+  --pfe-theme--spacer--lg:                $pf-global--spacer--lg;
+  --pfe-theme--spacer--xl:                $pf-global--spacer--xl;
+  --pfe-theme--spacer--xxl:               $pf-global--spacer--xxl;
 }
 
 $xs:                      	480px;

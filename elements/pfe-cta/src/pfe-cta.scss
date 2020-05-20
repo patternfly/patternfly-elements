@@ -3,8 +3,8 @@
 $LOCAL: cta;
 
  
-$pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
-$pfe-cta--Color--fallback: #003366;
+$pf-cta--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
+$pf-cta--Color--fallback: #003366;
 
 $variables: (
   Padding: 0.6rem 0,
@@ -98,7 +98,7 @@ $variables: (
   white-space: normal; 
   display: inline; 
   padding: #{pfe-local($cssvar: Padding)} !important;
-  color: #{pfe-local(Color, $pfe-cta--Color--fallback)} !important;
+  color: #{pfe-local(Color, $pf-cta--Color--fallback)} !important;
   font-family: #{pfe-local(
       $cssvar: FontFamily,
       $fallback: #{pfe-var(font-family--heading)}
@@ -243,7 +243,7 @@ $variables: (
 
   --pfe-cta--Color--hover: #{pfe-apply-broadcast(link--hover)};
 
-  --pfe-cta--BackgroundColor--focus: #{$pfe-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
+  --pfe-cta--BackgroundColor--focus: #{$pf-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
   --pfe-cta--Color--focus: #{pfe-apply-broadcast(link--focus)};
 }
 
@@ -357,7 +357,7 @@ $variables: (
   --pfe-cta--BorderColor--hover: #{pfe-color(ui-base)};
   --pfe-cta--Color--hover: #{pfe-color(ui-base--text)};
 
-  --pfe-cta--BackgroundColor--focus: #{$pfe-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
+  --pfe-cta--BackgroundColor--focus: #{$pf-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
   --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-base)};
   --pfe-cta--BorderColor--focus: #{pfe-color(ui-base)};
   --pfe-cta--Color--focus: #{pfe-color(ui-base)};

@@ -2,7 +2,7 @@
 
 $LOCAL: modal;
 
-$pfe-modal--breakpoint--medium: 640px;
+$pf-modal--breakpoint--medium: 640px;
 
 :host {
 	--pfe-modal--MaxWidth: 70vw;
@@ -16,7 +16,7 @@ $pfe-modal--breakpoint--medium: 640px;
 	display: block;
 	position: relative;
 
-   @media screen and (max-height: $pfe-modal--breakpoint--medium) {
+   @media screen and (max-height: $pf-modal--breakpoint--medium) {
       --pfe-modal--Padding: 0 0 0 calc(#{pfe-var(container-padding)} * 2);
    }
 }
@@ -65,7 +65,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		color: #{pfe-apply-broadcast(text)};
 		border-radius: #{pfe-var(ui--border-radius)};
 		
-		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
+		@media screen and (min-width: $pf-modal--breakpoint--medium) {
 			max-width: pfe-local(MaxWidth);
 		}
 	}
@@ -85,7 +85,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		padding: pfe-local(Padding);
 		box-sizing: border-box;
 
-		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
+		@media screen and (max-height: $pf-modal--breakpoint--medium) {
 			--pfe-modal--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 3) #{pfe-var(container-padding)} #{pfe-var(container-padding)};
 		}
 
@@ -112,12 +112,12 @@ $pfe-modal--breakpoint--medium: 640px;
 		line-height: .5;
 		padding: #{pfe-var(container-padding)};
 
-		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
+		@media screen and (min-width: $pf-modal--breakpoint--medium) {
 			top: 	#{pfe-var(container-padding)};
 			right: 	#{pfe-var(container-padding)};
 		}
 
-		@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
+		@media screen and (max-height: $pf-modal--breakpoint--medium) and (min-width: $pf-modal--breakpoint--medium) {
 			top: 	calc(#{pfe-var(container-padding)} / 2);
 			right: 	calc(#{pfe-var(container-padding)} / 2);
 		}

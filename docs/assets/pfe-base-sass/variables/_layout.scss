@@ -2,30 +2,30 @@
 // Layout-based vars
 //
 
-$pfe-global--space-size-root: $pfe-global--font-size-root !default; // for spaces
+$pf-global--space-size-root: $pf-global--font-size-root !default; // for spaces
 
 // ========================================================================
 // Grid Breakpoints
 // ========================================================================
 
-$pfe-global--grid-breakpoint--xs: 0 !default;
-$pfe-global--grid-breakpoint--sm: 576px !default;
-$pfe-global--grid-breakpoint--md: 768px !default;
-$pfe-global--grid-breakpoint--lg: 992px !default;
-$pfe-global--grid-breakpoint--xl: 1200px !default;
+$pf-global--grid-breakpoint--xs: 0 !default;
+$pf-global--grid-breakpoint--sm: 576px !default;
+$pf-global--grid-breakpoint--md: 768px !default;
+$pf-global--grid-breakpoint--lg: 992px !default;
+$pf-global--grid-breakpoint--xl: 1200px !default;
 
-$pfe-global--grid-breakpoints: (
-  xs: $pfe-global--grid-breakpoint--xs,
-  sm: $pfe-global--grid-breakpoint--sm,
-  md: $pfe-global--grid-breakpoint--md,
-  lg: $pfe-global--grid-breakpoint--lg,
-  xl: $pfe-global--grid-breakpoint--xl
+$pf-global--grid-breakpoints: (
+  xs: $pf-global--grid-breakpoint--xs,
+  sm: $pf-global--grid-breakpoint--sm,
+  md: $pf-global--grid-breakpoint--md,
+  lg: $pf-global--grid-breakpoint--lg,
+  xl: $pf-global--grid-breakpoint--xl
 ) !default;
 
-$pfe-global--grid-breakpoint--xs--max: $pfe-global--grid-breakpoint--sm - 1 !default;
-$pfe-global--grid-breakpoint--sm--max: $pfe-global--grid-breakpoint--md - 1 !default;
-$pfe-global--grid-breakpoint--md--max: $pfe-global--grid-breakpoint--lg - 1 !default;
-$pfe-global--grid-breakpoint--lg--max: $pfe-global--grid-breakpoint--xl - 1 !default;
+$pf-global--grid-breakpoint--xs--max: $pf-global--grid-breakpoint--sm - 1 !default;
+$pf-global--grid-breakpoint--sm--max: $pf-global--grid-breakpoint--md - 1 !default;
+$pf-global--grid-breakpoint--md--max: $pf-global--grid-breakpoint--lg - 1 !default;
+$pf-global--grid-breakpoint--lg--max: $pf-global--grid-breakpoint--xl - 1 !default;
 
 
 // ========================================================================
@@ -33,10 +33,10 @@ $pfe-global--grid-breakpoint--lg--max: $pfe-global--grid-breakpoint--xl - 1 !def
 // ========================================================================
 
 // Factors of 1em or 16px;
-$pfe-global--spacer--xs:     pfe-size-prem(4px) !default;
-$pfe-global--spacer--sm:     pfe-size-prem(8px) !default;
-$pfe-global--spacer:         pfe-size-prem(16px) !default; // base
-$pfe-global--spacer--md:     pfe-size-prem(24px) !default;
-$pfe-global--spacer--lg:     pfe-size-prem(32px) !default;
-$pfe-global--spacer--xl:     pfe-size-prem(48px) !default;
-$pfe-global--spacer--xxl:    pfe-size-prem(64px) !default;
+$pf-global--spacer--xs:     pfe-size-prem(4px) !default;
+$pf-global--spacer--sm:     pfe-size-prem(8px) !default;
+$pf-global--spacer:         pfe-size-prem(16px) !default; // base
+$pf-global--spacer--md:     pfe-size-prem(24px) !default;
+$pf-global--spacer--lg:     pfe-size-prem(32px) !default;
+$pf-global--spacer--xl:     pfe-size-prem(48px) !default;
+$pf-global--spacer--xxl:    pfe-size-prem(64px) !default;

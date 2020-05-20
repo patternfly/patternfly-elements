@@ -36,7 +36,7 @@ $variables: (
     @include pfe-clearfix;
     @include browser-query(ie11) {
       padding: 1em;
-      background-color: #{map-get($pfe-colors, surface--lightest)} !important;
+      background-color: #{map-get($pf-colors, surface--lightest)} !important;
       color: #{pfe-color(text)} !important;
     }
   }

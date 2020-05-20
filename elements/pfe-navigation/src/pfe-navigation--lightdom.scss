@@ -138,7 +138,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         }
 
         > *:not(.pfe-navigation-item__trigger--icon) {
-            color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
+            color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pf-colors, text--on-dark)})};
 
             .expanded & {
                 color: #{pfe-color(text)};

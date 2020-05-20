@@ -3,7 +3,7 @@
 @import "../../pfe-sass/pfe-sass";
 
 :root {
-    @each $name, $color in $pfe-colors {
+    @each $name, $color in $pf-colors {
         --theme--#{$name}: #{$color};
     }
 }
@@ -33,7 +33,7 @@
     @return "";
 }
 
-@each $name, $color in $pfe-colors {
+@each $name, $color in $pf-colors {
     $list: str-split($name, $separator: "--");
     $property: background-color;
     $context: #{contexts($list)};

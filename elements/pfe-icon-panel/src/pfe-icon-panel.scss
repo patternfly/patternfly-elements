@@ -6,8 +6,8 @@
 /// ===========================================================================
 
 // Todo: convert these also
-$pfe-icon-panel__icon-size:           64px;
-$pfe-icon-panel__icon-padding:        .05em;
+$pf-icon-panel__icon-size:           64px;
+$pf-icon-panel__icon-padding:        .05em;
 
 
 /// ===========================================================================
@@ -27,11 +27,11 @@ $pfe-icon-panel__icon-padding:        .05em;
 
 :host pfe-icon {
   --pfe-icon--spacing:                 #{pfe-var(container-spacer)};
-  --pfe-icon--size:                    var(--pfe-theme--icon-size, #{$pfe-icon-panel__icon-size});
+  --pfe-icon--size:                    var(--pfe-theme--icon-size, #{$pf-icon-panel__icon-size});
 
   margin-right: var(--pfe-icon--spacing);
   font-size: var(--pfe-icon--size);
-  padding: $pfe-icon-panel__icon-padding;
+  padding: $pf-icon-panel__icon-padding;
   min-width: var(--pfe-icon--size);
   max-width: var(--pfe-icon--size);
 }

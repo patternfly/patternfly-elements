@@ -27,7 +27,7 @@
   $return: null;
   @each $property in $properties {
     @if length($property) == 1 {
-      $return: append($return, #{$property} 250ms $pfe-global--animation-timing, comma);
+      $return: append($return, #{$property} 250ms $pf-global--animation-timing, comma);
     }
     @else if length($property) == 2 {
       $return: append($return, nth($property, 1) nth($property, 2), comma);

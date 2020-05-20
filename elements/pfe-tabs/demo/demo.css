@@ -58,6 +58,13 @@ section.pfe-l-grid {
     text-align: right;
 }
 
+.subheading {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: "Arial";
+}
+
 .dark-background {
     background-color: #151515;
     --theme: dark;

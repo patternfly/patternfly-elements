@@ -55,13 +55,6 @@
           "default": "wind",
           "prefixed": true
         },
-        "on": {
-          "title": "Context",
-          "type": "string",
-          "enum": ["light", "dark"],
-          "default": "light",
-          "prefixed": false
-        },
         "tab-history": {
           "title": "Tab history",
           "type": "boolean",

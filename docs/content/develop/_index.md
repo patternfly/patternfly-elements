@@ -25,7 +25,7 @@ Before getting started, it's important to note that because this is a library, e
     - If it is a `container` component, then it should focus on creating sections in which components can be placed. These will handle surface colors, padding, some layout, but no typography styles. Examples include: `pfe-card`, `pfe-band`
     - If it is a `combo` component, then it should not contain any styles of its own (exception: you might need to set the display value of the host) but rather, it will pull together other components into a set that is logical for content editors or developers. These components can also make decisions about the way the children components are laid out or which components are called based on built-in logic for that combo.
 3. Components should be context aware, if possible.
-    - `Content` components should be equipped with styles for the `on="dark"` attribute, so that they can be used on both light and dark backgrounds.
+    - `Content` components should be equipped with styles for light, dark, and saturated backgrounds.
 4. Framework agnostic
     - A PatternFly Element should "just work" when you drop it onto any page (provided the proper polyfills are there). It should have ALL the styles it needs, when coupled with a PFE Theme.
 
@@ -44,7 +44,7 @@ A component always touches all four sides of its parent container. For example, 
 
 **Example: [Call-to-action](https://github.com/patternfly/patternfly-elements/blob/master/elements/pfe-cta/src)**
 
-This component has attributes which invoke the multiple style changes on a call-to-action link. It also has `on="dark"` styles built-in so that colors will automatically adjust on dark surfaces
+This component has attributes which invoke the multiple style changes on a call-to-action link. It has styles built-in so that colors will automatically adjust to surfaces.
 
 ## Combo Elements
 

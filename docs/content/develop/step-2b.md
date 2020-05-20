@@ -59,7 +59,7 @@ Here's how it should look in the browser:
 
 ![demo page html step](/demo-page-html-step.png)
 
-Remember that any changes we make in the `/src` directory are being watched while the `npm run dev` command runs. When you save changes, the `merge` and `compile` tasks run from the gulpfile to update the ES6 and ES5 versions of the component in the root of your element.
+Remember that any changes we make in the `/src` directory are being watched while the `npm run live-demo` command runs. When you save changes, the `merge` and `compile` tasks run from the gulpfile to update the ES6 and ES5 versions of the component in the root of your element.
 
 The ES6 version should now look like this:
 

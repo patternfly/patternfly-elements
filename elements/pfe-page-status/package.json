@@ -4,7 +4,7 @@
     "className": "PfePageStatus",
     "elementName": "pfe-page-status"
   },
-  "version": "1.0.0-prerelease.40",
+  "version": "1.0.0-prerelease.48",
   "description": "Page element for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -27,6 +27,7 @@
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-page-status/test/"
   },
   "contributors": [
@@ -38,8 +39,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.40",
-    "@patternfly/pfelement": "^1.0.0-prerelease.39"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.45",
+    "@patternfly/pfelement": "^1.0.0-prerelease.48"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

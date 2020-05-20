@@ -1,9 +1,27 @@
-## Prerelese 46 ( TBD )
+## Prerelease 49 ( TBD )
+
+-[]() fix: Update pfe-tabs demo page with better header examples; add CSS so that short tab-panels are still at least as tall as the tab headers.
+
+## Prerelease 48 ( 2020-05-19 )
+
+- [b1e546b](https://github.com/patternfly/patternfly-elements/commit/b1e546bfa98254eaaebb1a537065288bdcf1704f) feat: pfe-datetime adding time zone attribute #881
+- [a43a44a](https://github.com/patternfly/patternfly-elements/commit/a43a44a585a061694631f13d06b3302cae1e24a2) fix: pfe-card header and footer slot issues (#861)
+- [4b2eae1](https://github.com/patternfly/patternfly-elements/commit/4b2eae1e9274986dee64e06d61cef7a7a4b9640f) feat: Add ability to demo individual components using `demo` and `live-demo` scripts (#868)
+
+## Prerelease 47 ( 2020-05-14 )
+
+- [0323eab](https://github.com/patternfly/patternfly-elements/commit/0323eab2d9dd944cb51dee263056566fe1a14a57) fix: pfe-navigtation-item shouldn't add duplicative event listeners #870
+
+## Prerelease 46 ( 2020-05-12 )
 
 - [27fee5f](https://github.com/patternfly/patternfly-elements/commit/27fee5f5c5eb021ac126f3767dd0299f5cda8231) fix: pfe-tabs check for tagName on addedNode mutation before continuing
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add clearfix within tab and accordion panels
+- [2c950b0](https://github.com/patternfly/patternfly-elements/commit/2c950b08f7638787df50aa5ee6738f1205ea3a9d) fix: Add clearfix within tab and accordion panels
+- [96f0a1b](https://github.com/patternfly/patternfly-elements/commit/96f0a1bdf9c758650e02b20a63ee3fb2fcf11bc9) feat: Add border to the card component
+- [f392a0f](https://github.com/patternfly/patternfly-elements/commit/f392a0f0eeac3b0379794eff4a1b2946e10e883a) fix: Generator needs to convert slot-name to camelCase in js file if dash exists
+- [6eed4c3](https://github.com/patternfly/patternfly-elements/commit/6eed4c3dae562e20c12879b2790cb68031e8975e) fix: adjust arrow spacing & alignment on pfe-cta
+- [b342693](https://github.com/patternfly/patternfly-elements/commit/b342693b66a7322e5186606b212c9088584354b6) fix: Move max-width:100px to icon triggers
 
-## Prerelese 45 ( 2020-04-27 )
+## Prerelease 45 ( 2020-04-27 )
 
 - [8dbea7b](https://github.com/patternfly/patternfly-elements/commit/8dbea7b5fbd94614d89828c27afafdcc287f016f) fix: typo in pfe-icon README (#840)
 - [7246607](https://github.com/patternfly/patternfly-elements/commit/7246607bcae3aaba0c2d8288b58c20244ed83cda) fix: Issue 839 pfe tabs history firefox, focus-state (#841)

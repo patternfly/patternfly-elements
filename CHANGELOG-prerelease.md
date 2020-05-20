@@ -1,6 +1,5 @@
 ## Prerelease 49 ( TBD )
 
-- [eb74cb8](https://github.com/patternfly/patternfly-elements/commit/eb74cb8f989048164fbb6ed1508c502659a752ed) feat: add event emission to pfe-select
 - [7fe6014](https://github.com/patternfly/patternfly-elements/commit/7fe60149d05ec984e4411a73cf2e1f8185a2df98) fix: Update pfe-tabs demo page with better header examples; add CSS so that short tab-panels are still at least as tall as the tab headers.
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add theming to storybook
 

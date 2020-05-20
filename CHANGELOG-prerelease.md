@@ -1,3 +1,7 @@
+## Prerelease 49 ( TBD )
+
+-[]() fix: Update pfe-tabs demo page with better header examples; add CSS so that short tab-panels are still at least as tall as the tab headers.
+
 ## Prerelease 48 ( 2020-05-19 )
 
 - [b1e546b](https://github.com/patternfly/patternfly-elements/commit/b1e546bfa98254eaaebb1a537065288bdcf1704f) feat: pfe-datetime adding time zone attribute #881

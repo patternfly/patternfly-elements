@@ -55,7 +55,7 @@ stories.add("pfe-icon-panel", () => {
 
   config.slots = [
     {
-      slot: "header",
+      slot: "pfe-icon-panel--header",
       content: tools.customTag({
         tag: "h3",
         content: defaultHeading
@@ -65,7 +65,7 @@ stories.add("pfe-icon-panel", () => {
       content: defaultBody
     },
     {
-      slot: "footer",
+      slot: "pfe-icon-panel--footer",
       content: tools.component("pfe-cta", {}, [
         {
           content: `<a href="#">Learn more</a>`

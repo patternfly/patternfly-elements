@@ -28,9 +28,6 @@ $pfe-icon-panel__icon-padding:        .05em;
 }
 
 :host pfe-icon {
-  --pfe-icon--spacing:  #{pfe-var(container-spacer)};
-  --pfe-icon--size:     var(--pfe-theme--icon-size, #{$pfe-icon-panel__icon-size});
-
   margin-bottom: #{pfe-var(container-spacer)};
 
   @media (min-width: #{pfe-breakpoint(sm)}) {
@@ -38,10 +35,10 @@ $pfe-icon-panel__icon-padding:        .05em;
     margin-right: #{pfe-var(container-spacer)};
   }
 
-  font-size: #{pfe-local(size)};
-  padding: $pfe-icon-panel__icon-padding;
-  min-width: #{pfe-local(size)};
-  max-width: #{pfe-local(size)};
+  // font-size: #{pfe-local(size)};
+  // padding: $pfe-icon-panel__icon-padding;
+  // min-width: #{pfe-local(size)};
+  // max-width: #{pfe-local(size)};
 }
 
 :host ::slotted([slot="header"]),

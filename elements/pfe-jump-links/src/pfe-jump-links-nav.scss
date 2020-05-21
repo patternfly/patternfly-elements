@@ -120,8 +120,9 @@ a {
       background-color: white;
     }
   }
-  
-  border: 1px solid transparent;
+  @media(min-width: 992px) {
+    border: 1px solid transparent;
+  }
   ::slotted([slot="heading"]) {
     color: #{pfe-color(surface--darkest)};
   } 

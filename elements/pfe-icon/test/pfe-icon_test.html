@@ -45,18 +45,21 @@
             return `./${name.replace("rh", "rh-icon")}.svg`;
           });
 
-          return new Promise(resolve => {
-            image.addEventListener("load", resolve);
-          });
+          // a promise that triggers when a new image is loaded
+          // note that the event listener is never removed, but that's okay
+          // because the leftover event listeners are noops; they'll resolve an
+          // already-resolved promise.
+          function waitForLoad() {
+            return new Promise(resolve => {
+              image.addEventListener("load", resolve);
+            });
+          }
 
           async function test() {
             await waitForLoad();
 
             const path2 = image.getAttribute("xlink:href");
             assert.equal(path1, path2);
-            // assert.notEqual(path1, path1);
-            // assert.notEqual(path2, path2);
-
             done();
           }
 

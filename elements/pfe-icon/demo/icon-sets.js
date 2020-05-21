@@ -1,4 +1,7 @@
-function createIcon(iconName, color, size, circled = false) {
+function createIcon(iconName, color, size, circled) {
+  if (typeof circled === "undefined") {
+    circled = false;
+  }
   var icon = document.createElement("pfe-icon");
   if (/^#/.exec(color)) {
     icon.style.setProperty("--pfe-icon--color", color);
@@ -18,12 +21,11 @@ function createIcon(iconName, color, size, circled = false) {
   return icon;
 }
 
-function printIcons(setName, colors, subset = 0, size, circled = false) {
+function printIcons(setName, colors, subset, size, circled) {
   var fragment = document.createDocumentFragment();
   icons[setName].map(function(iconName, itr, arr) {
     if ((subset > 0 && itr < subset) || subset == 0) {
-      // var size = sizes[Math.floor(itr / (arr.length / sizes.length))];
-      fragment.append(
+      fragment.appendChild(
         createIcon(iconName, getColor(itr, colors), size, circled)
       );
     }

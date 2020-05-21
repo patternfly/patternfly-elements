@@ -23,6 +23,45 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 
   <script>
+    if (!Array.prototype.filter){
+      Array.prototype.filter = function(func, thisArg) {
+        'use strict';
+        if ( ! ((typeof func === 'Function' || typeof func === 'function') && this) )
+            throw new TypeError();
+      
+        var len = this.length >>> 0,
+            res = new Array(len), // preallocate array
+            t = this, c = 0, i = -1;
+
+        var kValue;
+        if (thisArg === undefined){
+          while (++i !== len){
+            // checks to see if the key was set
+            if (i in this){
+              kValue = t[i]; // in case t is changed in callback
+              if (func(t[i], i, t)){
+                res[c++] = kValue;
+              }
+            }
+          }
+        }
+        else{
+          while (++i !== len){
+            // checks to see if the key was set
+            if (i in this){
+              kValue = t[i];
+              if (func.call(thisArg, t[i], i, t)){
+                res[c++] = kValue;
+              }
+            }
+          }
+        }
+      
+        res.length = c; // shrink down array to proper size
+        return res;
+      };
+    }
+
     require([
       '../dist/pfe-icon.umd',
       './icon-sets.js',
@@ -39,21 +78,26 @@
         "local",
         "./",
         function(name, iconSetName, iconSetPath) {
-          var regex = new RegExp(`^${iconSetName}-(.*)`);
+          var regex = new RegExp("^" + iconSetName + "-(.*)");
           var match = regex.exec(name);
           return iconSetPath + match[1] + ".svg";
         }
       );
 
-      colors.standard = colors.standard.filter(c => !["lightest", "lighter", "base"].includes(c));
-      document.querySelector("#rh-icons").appendChild(printIcons("rh", colors.standard.concat(colors.custom), 0,
-        "3x"));
+      colors.standard = colors.standard.filter(function(c) {
+        return !["lightest", "lighter", "base"].includes(c);
+      });
 
-      document.querySelector("#web-icons").appendChild(printIcons("web", colors.standard.concat(colors.custom), 0,
-        "2x"));
+      window.addEventListener("load", function () {
+        document.querySelector("#rh-icons").appendChild(printIcons("rh", colors.standard.concat(colors.custom), 0,
+          "3x"), false);
 
-      [...document.querySelectorAll(".circled-icons")].forEach(function (section) {
-        section.appendChild(printIcons("rh", colors.standard, 12, "lg", true));
+        document.querySelector("#web-icons").appendChild(printIcons("web", colors.standard.concat(colors.custom), 0,
+          "2x", false));
+
+        Array.prototype.forEach.call(document.querySelectorAll(".circled-icons"), function (section) {
+          section.appendChild(printIcons("rh", colors.standard, 12, "lg", true));
+        })
       });
     })
 

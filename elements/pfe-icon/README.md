@@ -21,7 +21,7 @@ There are no slots, but if you wish to display some text when JS is disabled, yo
 | --- | --- | --- |
 | `icon` | `iconSet-iconName` | For example, `rh-leaf` loads a leaf icon from an icon set named "rh". |
 | `pfe-size` | `sm` `md` `lg` `xl` `2x` `3x` `4x` | The default size is 1em, so icon size matches text size.  `2x`, etc, are multiples of font size.  `sm`, `md`, etc are fixed pixel-based sizes. |
-| `pfe-color` | `base` `complement` `accent` `critical` `important` `moderate` `success` `info` `default` | The color variant to use.  This draws from your theming layer to color the icon.  This will set icon color and also background color (if `pfe-circled` is true). |
+| `pfe-color` | `base` `lightest` `lighter` `darker` `darkest` `complement` `accent` `accent` `critical` `important` `moderate` `success` `info` `default` | The color variant to use.  This draws from your theming layer to color the icon.  This will set icon color or background color (if `pfe-circled` is true). |
 | `pfe-circled` | boolean attribute | Whether to draw a circular background behind the icon. |
 
 ## Icon sets

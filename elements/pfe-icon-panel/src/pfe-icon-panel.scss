@@ -1,16 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 // @include pfe-theme-contexts; // imports on="light" etc support
 
-$LOCAL: icon;
-
-/// ===========================================================================
-/// Component Specific SASS Vars
-/// ===========================================================================
-
-// Todo: convert these also
-$pfe-icon-panel__icon-size:           64px;
-$pfe-icon-panel__icon-padding:        .05em;
-
+$LOCAL: icon-panel;
 
 /// ===========================================================================
 /// DEFAULT ICON PANEL
@@ -24,42 +15,34 @@ $pfe-icon-panel__icon-padding:        .05em;
 
   @media (min-width: #{pfe-breakpoint(sm)}) {
 		flex-direction: row;
-	}
-}
-
-:host pfe-icon {
-  margin-bottom: #{pfe-var(container-spacer)};
-
-  @media (min-width: #{pfe-breakpoint(sm)}) {
-    margin-bottom: 0;
-    margin-right: #{pfe-var(container-spacer)};
+  }
+  
+  @at-root #{&}([pfe-stacked]:not([pfe-stacked="false"])) {
+    flex-direction: column;
   }
 
-  // font-size: #{pfe-local(size)};
-  // padding: $pfe-icon-panel__icon-padding;
-  // min-width: #{pfe-local(size)};
-  // max-width: #{pfe-local(size)};
-}
-
-:host ::slotted([slot="header"]),
-:host ::slotted([slot="footer"]) {
-  display: block;
-}
-
-:host ::slotted([slot="footer"]) {
-  margin-top: 1em;
-}
-
-// Layout Styles
-:host([pfe-stacked]:not([pfe-stacked="false"])) {
-  flex-direction: column;
-  pfe-icon {
-    margin-right: 0;
-    margin-bottom: #{pfe-var(container-spacer)};
+  @at-root #{&}([pfe-stacked]:not([pfe-stacked="false"])[pfe-centered]:not([pfe-centered="false"])) {
+    align-items: center;
+    text-align: center;
   }
 }
 
-:host([pfe-stacked]:not([pfe-stacked="false"])[pfe-centered]:not([pfe-centered="false"])) {
-  align-items: center;
-  text-align: center;
+.pfe-icon-panel {
+  &__content {
+    margin-top: #{pfe-var(container-spacer)};
+    margin-left: 0;
+
+    @media (min-width: #{pfe-breakpoint(sm)}) {
+      margin-top: 0;
+      margin-left: #{pfe-var(container-spacer)};
+    }
+
+    :host([pfe-stacked]:not([pfe-stacked="false"])) & {
+      margin-top: #{pfe-var(container-spacer)};
+      margin-left: 0;
+    }
+  }
+  &__footer {
+    margin-top: #{pfe-var(content-spacer)};
+  }
 }

@@ -80,7 +80,7 @@
             "success",
             "info"
           ],
-          "default": "darker",
+          "default": "base",
           "prefixed": true
         },
         "centered": {
@@ -98,6 +98,7 @@
         "circled": {
           "title": "Circled",
           "type": "boolean",
+          "default": true,
           "prefixed": true
         }
       },

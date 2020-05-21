@@ -44,12 +44,12 @@
         test("header, body, and footer are placed into correct slot", () => {
           // header wound up in the header slot
           assert.equal(
-            panel1.querySelector("[slot=header]").assignedSlot,
-            panel1.shadowRoot.querySelector(".content .header")
+            panel1.querySelector("[slot=pfe-icon-panel--header]").assignedSlot,
+            panel1.shadowRoot.querySelector(".pfe-icon-panel__content .pfe-icon-panel__header")
           );
 
           const bodyText = panel1.shadowRoot
-            .querySelector(".content .body")
+            .querySelector(".pfe-icon-panel__content .pfe-icon-panel__body")
             .assignedNodes()
             .map(n => n.textContent)
             .join("")
@@ -58,8 +58,8 @@
 
           // footer wound up in the footer slot
           assert.equal(
-            panel1.querySelector("[slot=footer]").assignedSlot,
-            panel1.shadowRoot.querySelector(".content .footer")
+            panel1.querySelector("[slot=pfe-icon-panel--footer]").assignedSlot,
+            panel1.shadowRoot.querySelector(".pfe-icon-panel__content .pfe-icon-panel__footer")
           );
         });
       });

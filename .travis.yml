@@ -7,8 +7,12 @@ os:
 addons:
   firefox: latest
   chrome: stable
+  browserstack:
+    username: BROWSERSTACK_USER
+    access_key: BROWSERSTACK_KEY
 script:
   - npm test -- --verbose
+  - npm start && npm run e2e -- --verbose
 cache:
   directories:
     - node_modules

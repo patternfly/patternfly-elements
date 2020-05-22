@@ -32,7 +32,8 @@
     "post-new": "npm run test-suite-inject && npm run doc-listing-inject && npm run bootstrap",
     "leftover-check": "bash scripts/leftover-check.sh",
     "demo": "bash scripts/demo.sh",
-    "live-demo": "bash scripts/demo.sh --watch"
+    "live-demo": "bash scripts/demo.sh --watch",
+    "e2e": "wdio wdio.conf.js"
   },
   "husky": {
     "hooks": {
@@ -52,6 +53,12 @@
     "@storybook/cli": "^5.3.8",
     "@storybook/polymer": "^5.3.8",
     "@storybook/storybook-deployer": "^2.8.1",
+    "@wdio/browserstack-service": "^6.1.10",
+    "@wdio/cli": "^6.1.12",
+    "@wdio/local-runner": "^6.1.12",
+    "@wdio/mocha-framework": "^6.1.8",
+    "@wdio/spec-reporter": "^6.1.12",
+    "@wdio/sync": "^6.1.8",
     "@webcomponents/webcomponentsjs": "^2.4.1",
     "autoprefixer": "^9.7.4",
     "babel-cli": "^6.24.1",
@@ -62,6 +69,7 @@
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.24.6",
     "chalk": "^2.4.2",
+    "chromedriver": "^83.0.0",
     "clean-html": "^1.5.0",
     "compression": "^1.7.4",
     "css-scss": "^0.1.1",
@@ -119,6 +127,7 @@
     "trim": "0.0.1",
     "util": "^0.12.1",
     "wct-browser-legacy": "^1.0.1",
+    "wdio-image-comparison-service": "^1.13.4",
     "web-component-tester": "^6.7.1",
     "whatwg-fetch": "^3.0.0",
     "yeoman-generator": "^4.4.0",

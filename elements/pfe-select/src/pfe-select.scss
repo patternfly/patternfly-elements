@@ -43,7 +43,7 @@ $variables: (
   &::after {
     @include pfe-arrow(
       $type: down,
-      $color: #{$pf-color-black},
+      $color: #{$pf-color-black-1000},
       $width: 6px,
       $height: 6px,
       $pseudo: true) {

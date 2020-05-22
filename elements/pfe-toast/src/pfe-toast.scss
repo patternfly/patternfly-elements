@@ -17,7 +17,7 @@ $LOCAL: toast;
   --pfe-toast__container--Padding: 1rem;
 
   --pfe-toast__close--svg--Fill:        #{pfe-color(feedback--default--darkest)};
-  --pfe-toast__close--svg--Fill--hover: #{$pfelements--gray-dark};
+  --pfe-toast__close--svg--Fill--hover: #{$pf-color-black-600-dark};
   --pfe-toast__close--svg--Height:   12px;
   --pfe-toast__close--svg--Width:    12px;
   

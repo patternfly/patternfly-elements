@@ -12,9 +12,9 @@
 // Base text and link colors, basis of "theme"
 // ========================================================================
 
-$pf-color-text:                            $pfelements--gray-dark !default;
+$pf-color-text:                            $pf-color-black-900 !default;
 $pf-color-link:                            #06c !default;                        //but #00538c for base/gray, how to do that?
-$pf-color-link--visited:                   $pfelements--purple !default;           // Was #7551a6
+$pf-color-link--visited:                   $pf-color-purple-600 !default;           // Was #7551a6
 $pf-color-link--hover:                     darken($pf-color-link, 20%) !default; // Was #004080
 $pf-color-link--focus:                     darken($pf-color-link, 20%) !default; // Was #004080
 

@@ -49,9 +49,9 @@ $pf-colors: (
   ui-base--text--focus--on-saturated:      $pf-color-text,
 
   // Set of complement colors
-  ui-complement:                      $pf-color-gray-800,
-  ui-complement--hover:               $pf-color-gray-1000,
-  ui-complement--focus:               $pf-color-gray-1000,
+  ui-complement:                      $pf-color-black-800,
+  ui-complement--hover:               $pf-color-black-1000,
+  ui-complement--focus:               $pf-color-black-1000,
   ui-complement--text:                $pf-color-text--on-dark,
   ui-complement--text--hover:         $pf-color-text--on-dark,
   ui-complement--text--focus:         $pf-color-text--on-dark,
@@ -79,12 +79,12 @@ $pf-colors: (
   ui-accent--text--focus--on-saturated:             $pf-color-text,
 
   // Set of disabled colors
-  ui-disabled:                        $pfelements--gray-light,
-  ui-disabled--hover:                 $pfelements--gray-light,
-  ui-disabled--focus:                 $pf-color-gray-500,
-  ui-disabled--text:                  $pf-color-gray-600,
-  ui-disabled--text--hover:           $pfelements--gray,
-  ui-disabled--text--focus:           $pfelements--gray,
+  ui-disabled:                        $pf-color-black-300,
+  ui-disabled--hover:                 $pf-color-black-300,
+  ui-disabled--focus:                 $pf-color-black-1000,
+  ui-disabled--text:                  $pf-color-black-600,
+  ui-disabled--text--hover:           $pf-color-black-600,
+  ui-disabled--text--focus:           $pf-color-black-600,
 
   // ========================================================================
   // Base Surface Colors for Container elements
@@ -95,19 +95,19 @@ $pf-colors: (
   surface--lightest--theme: light,
 
   // Lighter group
-  surface--lighter:         $pf-color-gray-100,
+  surface--lighter:         $pf-color-black-100,
   surface--lighter--theme:  light,
 
   // Base group
-  surface--base:        $pf-color-gray-200,
+  surface--base:        $pf-color-black-200,
   surface--base--theme: light,
 
   // Darker group
-  surface--darker:        $pf-color-gray-800,
+  surface--darker:        $pf-color-black-800,
   surface--darker--theme: dark,
 
   // Darkest group
-  surface--darkest:        $pf-color-gray-1000,
+  surface--darkest:        $pf-color-black-1000,
   surface--darkest--theme: dark,
 
   // Complement group
@@ -119,11 +119,11 @@ $pf-colors: (
   surface--accent--theme: saturated,
 
   // Palette of Border Colors
-  surface--border--lightest:          $pf-color-gray-100,
-  surface--border--lighter:           $pf-color-gray-100,
-  surface--border:                    $pfelements--gray-light,
-  surface--border--darker:            $pf-color-gray-300,
-  surface--border--darkest:           $pf-color-gray-800,
+  surface--border--lightest:          $pf-color-black-100,
+  surface--border--lighter:           $pf-color-black-100,
+  surface--border:                    $pf-color-black-300,
+  surface--border--darker:            $pf-color-black-300,
+  surface--border--darkest:           $pf-color-black-800,
 
 
   // ========================================================================
@@ -131,29 +131,29 @@ $pf-colors: (
   // ========================================================================
 
   // Palette of Feedback Colors
-  feedback--critical--lightest:       $pf-color-red-50,
+  feedback--critical--lightest:       $pf-color-red-100,
   feedback--critical:                 $pf-color-red-600,
   feedback--critical--darkest:        $pf-color-red-800,
 
-  feedback--important--lightest:      $pf-color-orange-50,
+  feedback--important--lightest:      $pf-color-orange-100,
   feedback--important:                $pf-color-orange-500,
   feedback--important--darkest:       $pf-color-orange-700,
 
-  feedback--moderate--lightest:       $pf-color-yellow-50,
-  feedback--moderate:                 $pf-color-yellow-400,
-  feedback--moderate--darkest:        $pf-color-yellow-700,
+  feedback--moderate--lightest:       $pf-color-gold-100,
+  feedback--moderate:                 $pf-color-gold-400,
+  feedback--moderate--darkest:        $pf-color-gold-700,
 
-  feedback--success--lightest:        $pf-color-green-50,
+  feedback--success--lightest:        $pf-color-green-100,
   feedback--success:                  #2e7d32,
   feedback--success--darkest:         #1b5e20,
 
-  feedback--info--lightest:           $pf-color-blue-50,
+  feedback--info--lightest:           $pf-color-blue-100,
   feedback--info:                     #0277bd,
   feedback--info--darkest:            #01579b,
 
-  feedback--default--lightest:        $pf-color-gray-100,
-  feedback--default:                  $pf-color-gray-700,
-  feedback--default--darkest:         $pf-color-gray-800,
+  feedback--default--lightest:        $pf-color-black-100,
+  feedback--default:                  $pf-color-black-700,
+  feedback--default--darkest:         $pf-color-black-800,
 
-  overlay:                            rgba($pf-color-gray-900, .5)
+  overlay:                            rgba($pf-color-black-900, .5)
 );

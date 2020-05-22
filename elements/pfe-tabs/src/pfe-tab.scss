@@ -76,11 +76,11 @@ $variables: (
   }
 
   @at-root #{&}([aria-selected="true"]) {
-    --pfe-tabs--Color: #{$pf-color-black};
+    --pfe-tabs--Color: #{$pf-color-black-1000};
     --pfe-tabs__tab--BorderColor: transparent;
     --pfe-tabs__tab--BorderBottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
     @include browser-query(ie11) {
-      color: #{$pf-color-black};
+      color: #{$pf-color-black-1000};
       border-bottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(ui-accent)};
     }
   }
@@ -114,7 +114,7 @@ $variables: (
     --pfe-tabs__tab--BorderRight: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
 
     @include browser-query(ie11) {
-      // color: #{$pf-color-black};
+      // color: #{$pf-color-black-1000};
       border-top-color: transparent;
       border-right: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(ui-accent)};
     }

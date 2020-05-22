@@ -1,4 +1,4 @@
-# PFElements Icon Element
+# PatternFly Elements | Icon Element
 
 ## Usage
 

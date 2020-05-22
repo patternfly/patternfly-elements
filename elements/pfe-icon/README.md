@@ -28,6 +28,30 @@ There are no slots, but if you wish to display some text when JS is disabled, yo
 
 Icon sets are defined in detail in [this blog post][icon-sets].  The blog post should eventually be absorbed into the official documentation.
 
+### Register a new icon set
+
+To register a new icon set, choose a global namespace for that set and identify the path at which the SVGs for that set will be hosted.  Consider also the function needed to convert the icon name into the filename on that hosted location.  The `addIconSet` call accepts the namespace (as a string), the path to the SVGs (as a string), and a function for parsing the icon name into the filename.
+
+```
+    PfeIcon.addIconSet(
+    "local",
+    "./",
+    function(name, iconSetName, iconSetPath) {
+        var regex = new RegExp("^" + iconSetName + "-(.*)");
+        var match = regex.exec(name);
+        return iconSetPath + match[1] + ".svg";
+    }
+    );
+```
+
+### Updating an existing icon set
+
+To updating an existing icon set, you use the same `addIconSet` function.  The first input which is the icon set namespace is required, as is the new path.  You can optionally pass in a new function for parsing the icon names into filenames.
+
+```
+    PfeIcon.addIconSet("local", "https://hosted-icons.com/");
+```
+
 ## Variables
 
 There are several powerful variables available to hook into and override default styles.

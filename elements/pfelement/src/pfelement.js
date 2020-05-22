@@ -76,6 +76,7 @@ class PFElement extends HTMLElement {
 
   // Update the theme context for self and children
   context_update() {
+    // TODO: update this to use :defined?
     const children = this.querySelectorAll("[pfelement]");
     let theme = this.cssVariable("theme");
 
@@ -109,7 +110,7 @@ class PFElement extends HTMLElement {
     if (!theme && fallback) {
       theme = fallback;
     }
-    if (theme) {
+    if (theme && this.hasAttribute("pfelement")) {
       this.setAttribute("on", theme);
     }
   }
@@ -160,6 +161,7 @@ class PFElement extends HTMLElement {
 
     // Throw a warning if the on attribute was manually added before upgrade
     if (!this.hasAttribute("pfelement") && this.hasAttribute("on")) {
+      console.log(this);
       console.warn(
         `${this.tag}${
           this.id ? `[#${this.id}]` : ``

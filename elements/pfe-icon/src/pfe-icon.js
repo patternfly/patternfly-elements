@@ -47,6 +47,15 @@ class PfeIcon extends PFElement {
     return "pfe-icon.json";
   }
 
+  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.Content;
+  }
+
+  get upgraded() {
+    return this.image.hasAttribute("xlink:href");
+  }
+
   get has_fallback() {
     return this.children.length > 0 || this.innerText.length > 0;
   }
@@ -56,21 +65,34 @@ class PfeIcon extends PFElement {
   }
 
   constructor() {
-    super(PfeIcon);
+    super(PfeIcon, { type: PfeIcon.PfeType });
 
     this.image = this.shadowRoot.querySelector("svg image");
-    this.image.addEventListener("load", () => _iconLoad(this));
-    this.image.addEventListener("error", () => _iconLoadError(this));
+    if (this.image) {
+      this.image.addEventListener("load", () => _iconLoad(this));
+      this.image.addEventListener("error", () => _iconLoadError(this));
+    }
 
+    // Attach a listener for the registration of an icon set
+    // Leaving this attached allows for the registered set to be updated
     document.body.addEventListener(PfeIcon.EVENTS.ADD_ICON_SET, () =>
       this.updateIcon()
     );
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    if (this.image) {
+      this.image.removeEventListener("load", () => _iconLoad(this));
+      this.image.removeEventListener("error", () => _iconLoadError(this));
+    }
+  }
+
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(...arguments);
-    this.context_update();
     this.updateIcon(newValue);
+    this.context_update();
   }
 
   updateIcon(iconName = this.getAttribute("icon")) {
@@ -98,20 +120,20 @@ class PfeIcon extends PFElement {
   }
 
   static addIconSet(name, path, resolveIconName) {
-    let resolveFunction = resolveIconName;
-    if (
-      typeof resolveIconName !== "function" &&
-      typeof resolveIconName !== "undefined"
-    ) {
-      console.warn(
-        `${this.tag}: The third input to addIconSet should be a function that parses and returns the icon's filename.`
-      );
+    let resolveFunction;
+
+    if (typeof resolveIconName === "function") {
+      resolveFunction = resolveIconName;
     } else if (
-      typeof resolveIconName !== "function" &&
+      typeof resolveIconName === "undefined" &&
       this._iconSets[name] &&
       typeof this._iconSets[name]._resolveIconName === "function"
     ) {
       resolveFunction = this._iconSets[name]._resolveIconName;
+    } else {
+      console.warn(
+        `${this.tag}: The third input to addIconSet should be a function that parses and returns the icon's filename.`
+      );
     }
 
     if (typeof resolveFunction !== "function") {
@@ -123,7 +145,7 @@ class PfeIcon extends PFElement {
     // Register the icon set and set up the event indicating the change
     this._iconSets[name] = new PfeIconSet(name, path, resolveFunction);
 
-    document.addEventListener("DOMContentLoaded", () =>
+    window.addEventListener("load", () =>
       document.body.dispatchEvent(
         new CustomEvent(this.EVENTS.ADD_ICON_SET, {
           bubbles: false,

@@ -161,7 +161,6 @@ class PFElement extends HTMLElement {
 
     // Throw a warning if the on attribute was manually added before upgrade
     if (!this.hasAttribute("pfelement") && this.hasAttribute("on")) {
-      console.log(this);
       console.warn(
         `${this.tag}${
           this.id ? `[#${this.id}]` : ``

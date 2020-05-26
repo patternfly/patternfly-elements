@@ -23,10 +23,27 @@ class PfeContentSet extends PFElement {
     return PFElement.pfeType.combo;
   }
 
+  static get cascadingAttributes() {
+    return {
+      "pfe-tab-history": "pfe-tabs"
+    };
+  }
+
+  static get observedAttributes() {
+    return ["pfe-tab-history"];
+  }
+
   get isTab() {
+    var breakpointValue;
+    if (this.hasAttribute("pfe-breakpoint")) {
+      breakpointValue = this.getAttributeNode("pfe-breakpoint").value;
+      breakpointValue = breakpointValue.replace(/\D/g, "");
+    } else {
+      breakpointValue = 700;
+    }
     return this.parentNode
-      ? this.parentNode.offsetWidth > 768
-      : window.outerWidth > 768;
+      ? this.parentNode.offsetWidth > breakpointValue
+      : window.outerWidth > breakpointValue;
   }
 
   constructor() {
@@ -62,6 +79,7 @@ class PfeContentSet extends PFElement {
     }
 
     this.render();
+    this.context_update();
 
     if (window.ShadyCSS) {
       setTimeout(() => {
@@ -75,7 +93,8 @@ class PfeContentSet extends PFElement {
     // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();
     // Use the existing accordion or create the accordion wrapper component
-    const accordion = existingAccordion || document.createElement("pfe-accordion");
+    const accordion =
+      existingAccordion || document.createElement("pfe-accordion");
 
     // Iterate over each element in the light DOM
     [...this.children].forEach(child => {
@@ -99,11 +118,6 @@ class PfeContentSet extends PFElement {
       fragment.appendChild(accordion);
     }
 
-    // Pass the theme property down to the accordion component
-    if (this.on) {
-      accordion.setAttribute("on", this.on.value);
-    }
-
     if (!existingAccordion) {
       this.appendChild(fragment);
     }
@@ -123,8 +137,12 @@ class PfeContentSet extends PFElement {
         const header = document.createElement("pfe-tab");
 
         header.setAttribute("slot", "tab");
-        header.appendChild(child);
 
+        if (child.id) {
+          header.setAttribute("pfe-id", child.id);
+        }
+
+        header.appendChild(child);
         tabs.appendChild(header);
       }
 
@@ -132,8 +150,12 @@ class PfeContentSet extends PFElement {
         const panel = document.createElement("pfe-tab-panel");
 
         panel.setAttribute("slot", "panel");
-        panel.appendChild(child);
 
+        if (child.id) {
+          panel.setAttribute("pfe-id", child.id);
+        }
+
+        panel.appendChild(child);
         tabs.appendChild(panel);
       }
     });
@@ -152,13 +174,16 @@ class PfeContentSet extends PFElement {
       tabs.setAttribute("pfe-variant", this.variant.value);
     }
 
-    // Pass the theme property down to the tabs component
-    if (this.on.value) {
-      tabs.setAttribute("on", this.on.value);
-    }
-
     if (this.align.value) {
       tabs.setAttribute("pfe-tab-align", this.align.value);
+    }
+
+    if (this.id) {
+      tabs.setAttribute("pfe-id", this.id);
+    }
+
+    if (this.hasAttribute("pfe-tab-history")) {
+      tabs.setAttribute("pfe-tab-history", true);
     }
 
     if (!existingTabs) {

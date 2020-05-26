@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import { withActions } from '@storybook/addon-actions';
+import { withActions } from "@storybook/addon-actions";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
@@ -19,7 +19,7 @@ stories.addParameters({
     Slots: slots,
     Attributes: attributes,
     Events: events,
-    Styling: styling,
+    Styling: styling
   }
 });
 
@@ -31,26 +31,14 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 // Log events
-stories.addDecorator(withActions("pfe-accordion:change"))
+stories.addDecorator(withActions("pfe-accordion:change"));
 
 stories.add(PfeAccordion.tag, () => {
   let config = {};
   let headings = [];
   let panels = [];
 
-  // const props = PfeAccordion.properties;
-  const props = {
-    on: {
-      title: "Theme",
-      type: "string",
-      enum: [
-        "light",
-        "dark"
-      ],
-      default: "light",
-      prefixed: false
-    }
-  };
+  const props = PfeAccordion.properties;
 
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 
@@ -70,11 +58,15 @@ stories.add(PfeAccordion.tag, () => {
     false,
     "Content"
   );
-    
+
   // Let the user customize the header + panel set
   if (customContent) {
     for (let i = 0; i < accordionCount; i++) {
-      headings[i] = storybookBridge.text(`Heading ${i + 1}`, "", "accordion-set");
+      headings[i] = storybookBridge.text(
+        `Heading ${i + 1}`,
+        "",
+        "accordion-set"
+      );
       panels[i] = storybookBridge.text(`Panel ${i + 1}`, "", "accordion-set");
     }
   }

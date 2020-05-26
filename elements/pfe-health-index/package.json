@@ -4,7 +4,7 @@
     "className": "PfeHealthIndex",
     "elementName": "pfe-health-index"
   },
-  "version": "1.0.0-prerelease.36",
+  "version": "1.0.0-prerelease.48",
   "publishConfig": {
     "access": "public"
   },
@@ -27,6 +27,7 @@
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-health-index/test/"
   },
   "contributors": [
@@ -38,8 +39,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.36",
-    "@patternfly/pfelement": "^1.0.0-prerelease.36"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.45",
+    "@patternfly/pfelement": "^1.0.0-prerelease.48"
   },
   "generator-pfelement-version": "0.6.3",
   "bugs": {

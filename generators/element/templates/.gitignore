@@ -1,0 +1,41 @@
+# Development files
+node_modules
+tmp
+
+# ignore js, map, and css in element dirs
+elements/*/_temp
+elements/*/dist
+elements/*/__*.scss
+
+# Compiled index
+doc/index.html
+
+# Logs
+lerna-debug.log
+npm-debug.log*
+
+# Local files
+*.local.umd.js
+*.local.js
+
+# Storybook
+.storybook_out
+
+test/.wct-kludge
+
+# Sass
+.sass-cache
+
+# Mac-specific
+.DS_Store
+
+# IDEs
+.vimrc
+.sonarlint
+
+# Temp files
+*~
+*.swp
+
+# Kube assets
+docs/resources/_gen/assets

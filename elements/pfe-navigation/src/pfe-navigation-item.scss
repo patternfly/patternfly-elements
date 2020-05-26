@@ -28,14 +28,14 @@ $variables: map-merge($variables, $nav-item-variables);
   display: flex;
   flex-direction: column;
   line-height: 1.2;
-  
+
   height: 100%;
   min-width: #{pfe-local(MinWidth)};
 
   @media screen and (max-width: #{pfe-breakpoint(xl)}) {
     width: 100%;
   }
-  @media screen and (min-width: pfe-breakpoint("sm-mobile", $map: false)) { 
+  @media screen and (min-width: pfe-breakpoint("sm-mobile", $map: false)) {
     --pfe-navigation__trigger--Padding: #{pfe-var(container-padding)};
   }
 }
@@ -54,7 +54,7 @@ $variables: map-merge($variables, $nav-item-variables);
   --pfe-navigation__trigger-icon--Visible: visible;
   --pfe-navigation--BorderColor:     #{pfe-color(surface--lightest)};
   --pfe-navigation--BorderTopColor:  #{pfe-color(surface--accent)};
-  
+
   --pfe-navigation--BackgroundColor: #{pfe-color(surface--lightest)};
   --pfe-navigation--Color: #{pfe-color(text)};
 }
@@ -139,7 +139,7 @@ $variables: map-merge($variables, $nav-item-variables);
   border-left:        #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
   background-color:   #{pfe-local(BackgroundColor)};
   color:              #{pfe-local(Color)};
-  padding:            #{pfe-local($cssvar: Padding, $region: trigger)}; 
+  padding:            #{pfe-local($cssvar: Padding, $region: trigger)};
   position:           relative;
   display:            flex;
   flex-grow:          1;
@@ -213,7 +213,7 @@ $variables: map-merge($variables, $nav-item-variables);
   :host([is_nested][last]:not(.expanded):not([parent_hidden])) & {
     @include pfe-trigger-last;
   }
-    
+
   // Chevron styles for the navigation accordion on mobile
   &::after {
     // closed:
@@ -254,21 +254,19 @@ $variables: map-merge($variables, $nav-item-variables);
       margin-bottom: 0;
       margin-right: calc(#{pfe-var(container-spacer)} / 2);
     }
-    
+
     &[icon="web-plus"] {
       transform: rotate(-45deg);
     }
   }
 }
 
-// Typography styles
+// Typography styles need specificity over bootstrap
 ::slotted([slot="trigger"]) {
   @extend %trigger;
-}
-
-:host([pfe-icon]) {
-  ::slotted([slot="trigger"]) {
+  :host([pfe-icon]) & {
     margin: 0.25em 0 0 0 !important;
+    max-width: 100px;
   }
 }
 
@@ -291,7 +289,7 @@ $variables: map-merge($variables, $nav-item-variables);
 
   display: none;
   visibility: hidden;
-  
+
   &[aria-expanded="true"] {
     display: block;
     visibility: visible;
@@ -324,7 +322,7 @@ $variables: map-merge($variables, $nav-item-variables);
   }
 
   //  Styles for the nested elements
-  :host([is_nested]:not([parent_hidden])) & {    
+  :host([is_nested]:not([parent_hidden])) & {
     @include pfe-collapsible($state: closed);
     @include pfe-accordion-props;
     @include pfe-box-sizing;
@@ -374,6 +372,12 @@ $variables: map-merge($variables, $nav-item-variables);
 :host([pfe-icon=web-mobile-menu]) {
   align-items: flex-end;
   flex: 0 1 99%;//0 1 60%;
+}
+
+:host([is_nested][parent_hidden][pfe-full-width]) {
+  .pfe-navigation-item__tray {
+    padding: #{pfe-local($cssvar: Padding, $region: tray)} 0 #{pfe-local($cssvar: Padding, $region: tray)} 0;
+  }
 }
 
 // @TODO set up tray opening animation?

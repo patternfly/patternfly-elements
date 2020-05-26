@@ -16,7 +16,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         [slot="trigger"] {
             width: 100%;
             max-width: 130px;
-            font-size: 12px; 
+            font-size: 12px;
             margin: 0;
 
             a {
@@ -163,6 +163,15 @@ $variables: map-merge($variables, $nav-light-dom-variables);
     [pfe-icon=web-mobile-menu]:not([show_links]).pfe-navigation-item-3 .pfe-navigation__main .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0 !important;
     }
+    pfe-navigation [slot="logo"] {
+        max-width: 100%;
+    }
+    .pfe-navigation--footer .pfe-navigation--column {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+            display: flex;
+            align-items: center;
+        }
+    }
 }
 
 @include browser-query(edge) {
@@ -173,7 +182,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
                     font-size: 12px;
                     text-align: center;
                 }
-            }            
+            }
         }
 
         [slot="tray"] {
@@ -267,6 +276,12 @@ $variables: map-merge($variables, $nav-light-dom-variables);
     .pfe-navigation__logo {
         margin-right: 20px; // Account for collapsed padding-right: 20px;
     }
+    .pfe-navigation--footer .pfe-navigation--column {
+        @media (min-width: #{pfe-breakpoint(md)}) {
+            display: flex;
+            align-items: center;
+        }
+    }
 }
 
 pfe-navigation [slot="logo"] {
@@ -284,7 +299,9 @@ pfe-navigation [slot="logo"] {
 // Turn off internal link outline
 pfe-navigation-item {
     [slot="trigger"] {
+        font-family: #{pfe-var(font-family)};
         margin: .25em 0 0 0!important;
+        line-height: 1.3;
     }
     // Utility links.
     pfe-icon + [slot="trigger"] > a {
@@ -376,30 +393,36 @@ pfe-navigation-item {
         }
     }
     &--footer:not(:empty) {
-        margin:   calc(#{pfe-var(container-spacer, $fallback: 16px)} * 2) 0 10px !important;
+        margin:   calc(#{pfe-var(container-padding, $fallback: 16px)} * 2) 0 calc(#{pfe-var(container-padding, $fallback: 16px)} * 1.5);
         border-top: 1px solid lightgray;
-        padding:   calc(#{pfe-var(container-spacer, $fallback: 16px)} * 2) 0 0;
+        padding:   calc(#{pfe-var(container-padding, $fallback: 16px)} * 2.5) 0 0;
 
         >*:not(:last-child) {
             margin-bottom: 32px;
         }
 
         >* {
-            flex: 45%;
+            flex: 0 1 45%;
         }
 
         @media (min-width: #{pfe-breakpoint(sm)}) {
             display: flex;
             flex-wrap: wrap;
-            align-items: baseline;
+            align-items: center;
+            justify-content: space-between;
 
             >*:not(:last-child) {
                 margin-bottom: 0;
             }
 
-            >*:nth-child(3) {
+            >*:nth-child(3),
+            >*:nth-child(4) {
                 margin-top: 32px;
             }
+        }
+
+        @media (min-width: #{pfe-breakpoint(md)}) {
+            justify-content: flex-start;
         }
 
         @media (min-width: #{pfe-breakpoint(lg)}) {
@@ -407,18 +430,7 @@ pfe-navigation-item {
             display: grid;
             grid-gap: 32px;
             grid-auto-flow: column;
-
-            >*:nth-child(3) {
-                margin-top: 0;
-            }
-        }
-
-        @media (min-width: #{pfe-breakpoint(xl)}) {
-            padding-bottom: 0;
-            display: -ms-grid;
-            grid-template-columns: repeat(4, 1fr);
             -ms-grid-columns: 1fr 1fr 1fr 1fr;
-            align-items: center;
 
             .pfe-navigation--column:nth-child(1) {
                 -ms-grid-column: 1;
@@ -434,7 +446,19 @@ pfe-navigation-item {
 
             .pfe-navigation--column:nth-child(4) {
                 -ms-grid-column: 4;
+            }               
+
+            >*:nth-child(3),
+            >*:nth-child(4) {
+                margin-top: 0;
             }
+        }
+
+        @media (min-width: #{pfe-breakpoint(xl)}) {
+            padding-bottom: 0;
+            display: -ms-grid;
+            grid-template-columns: repeat(4, 1fr);
+            -ms-grid-columns: 1fr 1fr 1fr 1fr;
         }
     }
 }
@@ -449,9 +473,12 @@ pfe-navigation-item {
       max-width: #{pfe-local(Width, $fallback: 1140px)};
     }
     // Loop through the other breakpoints
-    @each $size in ("md", "lg", "xl") {
-      @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-        --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+
+    pfe-navigation-item:not([pfe-full-width]) & {
+      @each $size in ("md", "lg", "xl") {
+        @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
+          --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+        }
       }
     }
     @include browser-query(ie11) {
@@ -463,7 +490,7 @@ pfe-navigation-item {
     }
 }
 
-.pfe-link-list {
+pfe-navigation-item .pfe-link-list {
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid;
     break-inside: avoid;
@@ -473,6 +500,7 @@ pfe-navigation-item {
     margin-bottom: 1em;
 
     &--header {
+        font-family: #{pfe-var(font-family)};
         margin: 0 0 .75em 0;
         font-size: 16px;
         font-weight: 400;
@@ -536,7 +564,7 @@ pfe-navigation-main [slot="trigger"] > a {
     @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false) )
                   and (max-width: pfe-breakpoint("xl", $max: true) ) {
         font-size: 13px;
-    }  
+    }
 }
 
 // Apply flexbox styles to older browsers that don't support ShadowDOM.
@@ -551,4 +579,10 @@ pfe-navigation-main [slot="trigger"] > a {
         position: relative;
         top: 0 !important;
     }
+}
+
+@media screen and (max-width: 1023px) {
+  .pfe-navigation-item .pfe-navigation-item__tray {
+    max-height: none !important;
+  }
 }

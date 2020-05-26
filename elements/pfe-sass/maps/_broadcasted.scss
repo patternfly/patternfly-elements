@@ -1,63 +1,62 @@
 
-/*
-  Do not edit directly
-  Generated on Mon, 27 Jan 2020 20:10:33 GMT
-*/
+//  Do not edit directly
+//  Generated on Tue, 26 May 2020 21:17:10 GMT
 
-$pfe-color-text: $pf-color-black-800 !default;
-$pfe-color-text-on-dark: $pf-color-white !default;
-$pfe-color-text-on-saturated: $pf-color-white !default;
-$pfe-color-link: $pf-color-blue-400 !default;
-$pfe-color-link-on-dark: $pf-color-blue-100 !default;
-$pfe-color-link-on-saturated: $pf-color-white !default;
-$pfe-color-link-visited: $pf-color-purple-600 !default;
-$pfe-color-link-visited-on-dark: $pf-color-purple-300 !default;
-$pfe-color-link-visited-on-saturated: $pf-color-purple-300 !default;
-$pfe-color-link-hover: $pf-color-blue-500 !default;
-$pfe-color-link-hover-on-dark: $pf-color-blue-50 !default;
-$pfe-color-link-hover-on-saturated: $pf-color-white !default;
-$pfe-color-link-focus: $pf-color-blue-500 !default;
-$pfe-color-link-focus-on-dark: $pf-color-blue-50 !default;
-$pfe-color-link-focus-on-saturated: $pf-color-white !default;
-$pfe-color-link-decoration: none !default;
-$pfe-color-link-decoration-on-dark: none !default;
-$pfe-color-link-decoration-on-saturated: underline !default;
-$pfe-color-link-decoration-visited: none !default;
-$pfe-color-link-decoration-visited-on-dark: none !default;
-$pfe-color-link-decoration-visited-on-saturated: underline !default;
-$pfe-color-link-decoration-hover: underline !default;
-$pfe-color-link-decoration-hover-on-dark: underline !default;
-$pfe-color-link-decoration-hover-on-saturated: underline !default;
-$pfe-color-link-decoration-focus: underline !default;
-$pfe-color-link-decoration-focus-on-dark: underline !default;
-$pfe-color-link-decoration-focus-on-saturated: underline !default;
+
+// --pfe-broadcasted--text: $pf-color-black-800;
+// --pfe-broadcasted--text--on-dark: $pf-color-white;
+// --pfe-broadcasted--text--on-saturated: $pf-color-white;
+// --pfe-broadcasted--link: $pf-color-blue-400;
+// --pfe-broadcasted--link--on-dark: $pf-color-blue-100;
+// --pfe-broadcasted--link--on-saturated: $pf-color-white;
+// --pfe-broadcasted--link--visited: $pf-color-purple-600;
+// --pfe-broadcasted--link--visited--on-dark: $pf-color-purple-300;
+// --pfe-broadcasted--link--visited--on-saturated: $pf-color-purple-300;
+// --pfe-broadcasted--link--hover: $pf-color-blue-500;
+// --pfe-broadcasted--link--hover--on-dark: $pf-color-blue-50;
+// --pfe-broadcasted--link--hover--on-saturated: $pf-color-white;
+// --pfe-broadcasted--link--focus: $pf-color-blue-500;
+// --pfe-broadcasted--link--focus--on-dark: $pf-color-blue-50;
+// --pfe-broadcasted--link--focus--on-saturated: $pf-color-white;
+// --pfe-broadcasted--link-decoration: none;
+// --pfe-broadcasted--link-decoration--on-dark: none;
+// --pfe-broadcasted--link-decoration--on-saturated: underline;
+// --pfe-broadcasted--link-decoration--visited: none;
+// --pfe-broadcasted--link-decoration--visited--on-dark: none;
+// --pfe-broadcasted--link-decoration--visited--on-saturated: underline;
+// --pfe-broadcasted--link-decoration--hover: underline;
+// --pfe-broadcasted--link-decoration--hover--on-dark: underline;
+// --pfe-broadcasted--link-decoration--hover--on-saturated: underline;
+// --pfe-broadcasted--link-decoration--focus: underline;
+// --pfe-broadcasted--link-decoration--focus--on-dark: underline;
+// --pfe-broadcasted--link-decoration--focus--on-saturated: underline;
 
 $pfe-broadcasted: (
-  'text': $pfe-color-text,
-  'text--on-dark': $pfe-color-text-on-dark,
-  'text--on-saturated': $pfe-color-text-on-saturated,
-  'link': $pfe-color-link,
-  'link--on-dark': $pfe-color-link-on-dark,
-  'link--on-saturated': $pfe-color-link-on-saturated,
-  'link--visited': $pfe-color-link-visited,
-  'link--visited--on-dark': $pfe-color-link-visited-on-dark,
-  'link--visited--on-saturated': $pfe-color-link-visited-on-saturated,
-  'link--hover': $pfe-color-link-hover,
-  'link--hover--on-dark': $pfe-color-link-hover-on-dark,
-  'link--hover--on-saturated': $pfe-color-link-hover-on-saturated,
-  'link--focus': $pfe-color-link-focus,
-  'link--focus--on-dark': $pfe-color-link-focus-on-dark,
-  'link--focus--on-saturated': $pfe-color-link-focus-on-saturated,
-  'link-decoration': $pfe-color-link-decoration,
-  'link-decoration--on-dark': $pfe-color-link-decoration-on-dark,
-  'link-decoration--on-saturated': $pfe-color-link-decoration-on-saturated,
-  'link-decoration--visited': $pfe-color-link-decoration-visited,
-  'link-decoration--visited--on-dark': $pfe-color-link-decoration-visited-on-dark,
-  'link-decoration--visited--on-saturated': $pfe-color-link-decoration-visited-on-saturated,
-  'link-decoration--hover': $pfe-color-link-decoration-hover,
-  'link-decoration--hover--on-dark': $pfe-color-link-decoration-hover-on-dark,
-  'link-decoration--hover--on-saturated': $pfe-color-link-decoration-hover-on-saturated,
-  'link-decoration--focus': $pfe-color-link-decoration-focus,
-  'link-decoration--focus--on-dark': $pfe-color-link-decoration-focus-on-dark,
-  'link-decoration--focus--on-saturated': $pfe-color-link-decoration-focus-on-saturated
+	"text": $pf-color-black-800,
+	"text--on-dark": $pf-color-white,
+	"text--on-saturated": $pf-color-white,
+	"link": $pf-color-blue-400,
+	"link--on-dark": $pf-color-blue-100,
+	"link--on-saturated": $pf-color-white,
+	"link--visited": $pf-color-purple-600,
+	"link--visited--on-dark": $pf-color-purple-300,
+	"link--visited--on-saturated": $pf-color-purple-300,
+	"link--hover": $pf-color-blue-500,
+	"link--hover--on-dark": $pf-color-blue-50,
+	"link--hover--on-saturated": $pf-color-white,
+	"link--focus": $pf-color-blue-500,
+	"link--focus--on-dark": $pf-color-blue-50,
+	"link--focus--on-saturated": $pf-color-white,
+	"link-decoration": none,
+	"link-decoration--on-dark": none,
+	"link-decoration--on-saturated": underline,
+	"link-decoration--visited": none,
+	"link-decoration--visited--on-dark": none,
+	"link-decoration--visited--on-saturated": underline,
+	"link-decoration--hover": underline,
+	"link-decoration--hover--on-dark": underline,
+	"link-decoration--hover--on-saturated": underline,
+	"link-decoration--focus": underline,
+	"link-decoration--focus--on-dark": underline,
+	"link-decoration--focus--on-saturated": underline
 );

@@ -20,7 +20,8 @@ $variables: (
   }
 
   [tabindex] {
-  	display: flex;
+    display: flex;
+    height: 100%;
   }
 
   .container {
@@ -33,6 +34,7 @@ $variables: (
     border-bottom: #{pfe-local($cssvar: BorderBottom, $region: panel, $fallback: 0)};
     border-left:   #{pfe-local($cssvar: BorderLeft, $region: panel, $fallback: 0)};
 
+    @include pfe-clearfix;
     @include browser-query(ie11) {
       padding: 1em;
       background-color: #{map-get($pfe-colors, surface--lightest)} !important;
@@ -78,7 +80,8 @@ $variables: (
 
 	:host([pfe-variant="earth"][vertical]) {
     --pfe-tabs__panel--BorderTop:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-
+    height: 100%;
+    
     @include browser-query(ie11) {
       .container {
         border-top: 1px solid #{pfe-color(surface--border)};

@@ -9,25 +9,16 @@ menu = "develop"
 tags = [ "develop" ]
 +++
 
-Run the dev command found in the package.json file at the root of your element to start watching for changes to any files located in the `/src` directory. This will build pfe-cool-element.js and pfe-cool-element.umd.js whenever you save changes.
-
-```
-# from the root of your element
-npm run dev
+Run this command from the project root to start the build, watch, and server processes, see others in the project README.
+```shell
+npm run live-demo [component-name(s)]
 ```
 
-After running the dev command, start a server at the root of the PatternFly Elements repository to view it in the browser.
-
-```
-# from the root of the PatternFly Elements repository
-npm start
-```
-
-This will start a simple HTTP server that reloads the browser as you update your element.
+The server will load on `http://localhost:8000` by default.
 
 ![npm start command](/pfe-cool-element-start.png)
 
-Navigate to `http://localhost:1234/elements/pfe-cool-element/demo/` to view your element.
+Navigate to `http://localhost:8000/elements/pfe-cool-element/demo/` to view your element.
 
 You're off to a good start! You have a new custom element that extends the base PFElement class, uses shadow DOM, and has a built-in fallback for ShadyCSS in case shadow DOM isn't supported.
 

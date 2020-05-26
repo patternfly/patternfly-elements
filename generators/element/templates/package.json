@@ -1,0 +1,61 @@
+{
+  "name": "<%= packageName %>",
+  "description": "<%= readmeName %> element<% if (isPfelement) { %> for PatternFly Elements<% } %>",
+  "pfelement": {
+    "className": "<%= elementClassName %>",
+    "elementName": "<%= elementName %>",
+    "files": {
+      "styles": "./src/<%= elementName %>.<% if (useSass) { %>scss<% } else { %>css<% } %>",
+      "template": "./src/<%= elementName %>.html",
+      "js": "./src/<%= elementName %>.js"
+    },
+    "assets": []
+  },
+  "version": "<%= pfelementVersion %>",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",<% if (isPfelement) { %>
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/<%= elementName %>"<% } else { %>
+    "url": ""<% } %>
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/<%= elementName %>.umd.js",
+  "module": "./dist/<%= elementName %>.js",
+  "unpkg": "./dist/<%= elementName %>.umd.min.js",
+  "files": [ "dist" ],
+  <% if (isPfelement) { %>"scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/<%= elementName %>/test/"
+  },<% } else { %>"scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "start": "npm run dev",
+    "dev": "gulp dev",
+    "build": "gulp",
+    "test": "wct"
+  },<% } %>
+  "contributors": [<% if (author.name) { %>{
+    "name": "<%= author.name %>"<% if (author.email) { %>,
+    "email": "<%= author.email %>"<% } if (author.url) { %>,
+    "url": "<%= author.url %>"<% } %>
+  }<% } %>],
+  "license": "MIT",
+  "dependencies": {
+    <% if (sassLibraryPkg) { %>"<%= sassLibraryPkg %>": "<%= pfeSassVersion %>"<% if (isPfelement) { %>,<% } } %><% if (isPfelement) { %>
+    "@patternfly/pfelement": "<%= pfelementVersion %>"<% } %><% if (Object.entries( dependencies ).length > 0) { %>,<% } %><% for (const [package, version] of Object.entries( dependencies )) { %>
+    "<%= package %>": "<%= version %>"<% if ( _.findLastKey( dependencies ) !== package ) { %>,<% } } %>
+  }<% if (!isPfelement) { %>,
+  "devDependencies": {<% for (const [package, version] of Object.entries( devDependencies )) { %>
+    "<%= package %>": "<%= version %>"<% if ( _.findLastKey( devDependencies ) !== package ) { %>,<% } } %>
+  },
+  "bugs": {
+    "url" : "https://github.com/patternfly/patternfly-elements/issues?q=is%3Aissue+is%3Aopen+<%= elementName %>"
+  }<% } %>
+}

@@ -101,7 +101,6 @@ class PfeBand extends PFElement {
     // Set the image as the background image
     this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
   }
-
 }
 
 PFElement.create(PfeBand);

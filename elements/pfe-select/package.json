@@ -4,7 +4,7 @@
     "className": "PfeSelect",
     "elementName": "pfe-select"
   },
-  "version": "1.0.0-prerelease.36",
+  "version": "1.0.0-prerelease.48",
   "description": "Select element for PatternFly Elements",
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-select/test/"
   },
   "author": {
@@ -24,8 +25,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.36",
-    "@patternfly/pfelement": "^1.0.0-prerelease.36"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.45",
+    "@patternfly/pfelement": "^1.0.0-prerelease.48"
   },
   "generator-pfelement-version": "1.1.0"
 }

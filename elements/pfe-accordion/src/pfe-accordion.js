@@ -44,7 +44,7 @@ class PfeAccordion extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-disclosure"]
+    return ["pfe-disclosure"];
   }
 
   constructor() {
@@ -57,7 +57,7 @@ class PfeAccordion extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.setAttribute("role", "presentation");
+    this.setAttribute("role", "tablist");
     this.setAttribute("defined", "");
 
     this.addEventListener(PfeAccordion.events.change, this._changeHandler);
@@ -86,11 +86,19 @@ class PfeAccordion extends PFElement {
 
     if (attr === "pfe-disclosure") {
       if (newVal === "true") {
-        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "true"));
-        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "true"));
+        this._allHeaders().forEach(header =>
+          header.setAttribute("pfe-disclosure", "true")
+        );
+        this._allPanels().forEach(panel =>
+          panel.setAttribute("pfe-disclosure", "true")
+        );
       } else {
-        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "false"));
-        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "false"));
+        this._allHeaders().forEach(header =>
+          header.setAttribute("pfe-disclosure", "false")
+        );
+        this._allPanels().forEach(panel =>
+          panel.setAttribute("pfe-disclosure", "false")
+        );
       }
     }
   }
@@ -172,7 +180,10 @@ class PfeAccordion extends PFElement {
     });
 
     if (headers.length === 1) {
-      if (this.hasAttribute("pfe-disclosure") && this.getAttribute("pfe-disclosure") === "false") {
+      if (
+        this.hasAttribute("pfe-disclosure") &&
+        this.getAttribute("pfe-disclosure") === "false"
+      ) {
         return;
       }
 
@@ -443,7 +454,7 @@ class PfeAccordionHeader extends PFElement {
     }
 
     if (!this.hasAttribute("role")) {
-      this.setAttribute("role", "header");
+      this.setAttribute("role", "heading");
     }
 
     if (!this.pfeId) {

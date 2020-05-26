@@ -18,7 +18,7 @@
       <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../../pfelement/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
@@ -87,9 +87,9 @@
     <h1>&lt;pfe-card&gt;</h1>
     <div class="demo-cards">
 
-      <pfe-card pfe-color="lightest" class="custom-border">
+      <pfe-card pfe-color="lightest" pfe-border>
         <h2 slot="pfe-card--header">Lightest card</h2>
-        <p>This is the lightest pfe-card and <a href="#">a link</a>.</p>
+        <p>This is the lightest pfe-card and <a href="#">a link</a> with <code>pfe-border</code>.</p>
         <div class="button-series" slot="pfe-card--footer">
           <pfe-cta slot="pfe-card--footer" pfe-priority="secondary">
             <a href="#">Try</a>

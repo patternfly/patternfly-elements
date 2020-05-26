@@ -30,17 +30,17 @@ stories.add(PfeSelect.tag, () => {
   let htmlOptions = "";
 
   const defaultOptions = [
-    { text: "Please select an Option", value: "" },
+    { text: "Please select an option", value: "" },
     { text: "One", value: "1" },
     { text: "Two", value: "2" }
   ];
 
   const props = {
-    "invalid": {
+    invalid: {
       title: "pfe-invalid",
       type: "boolean",
       default: false,
-      prefixed: true,
+      prefixed: true
     }
   };
 
@@ -61,29 +61,39 @@ stories.add(PfeSelect.tag, () => {
   if (isCustomOptions) {
     const data = [];
     // Let the user determine number of options
-    let optionsCount = storybookBridge.number("Count", 2, {
-      min: 1,
-      max: 10
-    }, "Content");
+    let optionsCount = storybookBridge.number(
+      "Count",
+      2,
+      {
+        min: 1,
+        max: 10
+      },
+      "Content"
+    );
 
     for (let i = 0; i < optionsCount; i++) {
       data[i] = { text: `Option ${i}`, value: `${i}`, selected: false };
     }
-    customOptions = storybookBridge.object('Options', { data }, "Content");
+    customOptions = storybookBridge.object("Options", { data }, "Content");
   }
 
   if (isAppendOptions) {
     const data = [];
     // Let the user determine number of options
-    let appendCount = storybookBridge.number("Append Count", 2, {
-      min: 1,
-      max: 10
-    }, "API");
+    let appendCount = storybookBridge.number(
+      "Append Count",
+      2,
+      {
+        min: 1,
+        max: 10
+      },
+      "API"
+    );
 
     for (let i = 0; i < appendCount; i++) {
       data[i] = { text: `Option ${i}`, value: `${i}`, selected: false };
     }
-    appendOptions = storybookBridge.object('Options', { data }, "API");
+    appendOptions = storybookBridge.object("Options", { data }, "API");
   }
 
   // use customOptions if exist otherwise use defaultOptions
@@ -96,7 +106,8 @@ stories.add(PfeSelect.tag, () => {
 
   // build htmlOptions
   for (let i = 0; i < options.length; i++) {
-    htmlOptions = htmlOptions +
+    htmlOptions =
+      htmlOptions +
       tools.customTag({
         tag: "option",
         attributes: {
@@ -104,20 +115,20 @@ stories.add(PfeSelect.tag, () => {
           selected: options[i].selected ? "" : undefined
         },
         content: options[i].text
-      })
+      });
   }
 
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 
-  config.slots = [{
-    content:
-      tools.customTag({
+  config.slots = [
+    {
+      content: tools.customTag({
         tag: "select",
         content: htmlOptions
       })
-  }];
+    }
+  ];
 
   let rendered = template(config);
   return tools.preview(rendered);
-
 });

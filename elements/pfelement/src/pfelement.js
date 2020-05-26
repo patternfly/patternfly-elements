@@ -34,9 +34,11 @@ class PFElement extends HTMLElement {
   static get observedAttributes() {
     return ["pfe-theme"];
   }
-  
+
   get randomId() {
-    return Math.random().toString(36).substr(2, 9);
+    return Math.random()
+      .toString(36)
+      .substr(2, 9);
   }
 
   get version() {
@@ -51,12 +53,15 @@ class PFElement extends HTMLElement {
     this.setAttribute(`${prefix}type`, value);
   }
 
-  cssVariable( name, value, element = this ) {
-    name = (name.substr(0, 2) !== "--") ? "--" + name : name;
+  cssVariable(name, value, element = this) {
+    name = name.substr(0, 2) !== "--" ? "--" + name : name;
     if (value) {
       element.style.setProperty(name, value);
     }
-    return window.getComputedStyle(element).getPropertyValue(name).trim();
+    return window
+      .getComputedStyle(element)
+      .getPropertyValue(name)
+      .trim();
   }
 
   // Returns a single element assigned to that slot; if multiple, it returns the first
@@ -73,14 +78,14 @@ class PFElement extends HTMLElement {
   context_update() {
     const children = this.querySelectorAll("[pfelement]");
     let theme = this.cssVariable("theme");
-    
+
     // Manually adding `pfe-theme` overrides the css variable
     if (this.hasAttribute("pfe-theme")) {
       theme = this.getAttribute("pfe-theme");
       // Update the css variable to match the data attribute
       this.cssVariable("theme", theme);
     }
-    
+
     // Update theme for self
     this.context_set(theme);
 
@@ -119,7 +124,7 @@ class PFElement extends HTMLElement {
     this.slots = pfeClass.slots;
     this._queue = [];
     this.template = document.createElement("template");
-    
+
     this.log(`Constructing...`);
 
     this.attachShadow({ mode: "open" });
@@ -139,7 +144,7 @@ class PFElement extends HTMLElement {
       this.render();
       this.log(`Rendered.`);
     }
-    
+
     this.log(`Constructed.`);
   }
 
@@ -151,6 +156,15 @@ class PFElement extends HTMLElement {
       this.log(`Styling...`);
       window.ShadyCSS.styleElement(this);
       this.log(`Styled.`);
+    }
+
+    // Throw a warning if the on attribute was manually added before upgrade
+    if (!this.hasAttribute("pfelement") && this.hasAttribute("on")) {
+      console.warn(
+        `${this.tag}${
+          this.id ? `[#${this.id}]` : ``
+        }: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`
+      );
     }
 
     // @TODO maybe we should use just the attribute instead of the class?
@@ -184,7 +198,7 @@ class PFElement extends HTMLElement {
     this.log(`Disconnecting...`);
 
     this.connected = false;
-    
+
     this.log(`Disconnected.`);
   }
 
@@ -251,7 +265,8 @@ class PFElement extends HTMLElement {
         else if (data.default) {
           const dependency_exists = this._hasDependency(tag, data.options);
           const no_dependencies =
-            !data.options || (data.options && !data.options.dependencies.length);
+            !data.options ||
+            (data.options && !data.options.dependencies.length);
           // If the dependency exists or there are no dependencies, set the default
           if (dependency_exists || no_dependencies) {
             this.setAttribute(attrName, data.default);
@@ -322,8 +337,10 @@ class PFElement extends HTMLElement {
           }
           // If it's the default slot, look for direct children not assigned to a slot
         } else {
-          result = [...this.children].filter(child => !child.hasAttribute("slot"));
-          
+          result = [...this.children].filter(
+            child => !child.hasAttribute("slot")
+          );
+
           if (result.length > 0) {
             slotObj.nodes = result;
             slotExists = true;
@@ -338,7 +355,7 @@ class PFElement extends HTMLElement {
         }
       }
     });
-    this.log("Slots validated.")
+    this.log("Slots validated.");
   }
 
   _queueAction(action) {
@@ -388,6 +405,7 @@ class PFElement extends HTMLElement {
     name,
     { bubbles = true, cancelable = false, composed = false, detail = {} } = {}
   ) {
+    this.log(`Custom event: ${name}`);
     this.dispatchEvent(
       new CustomEvent(name, {
         bubbles,

@@ -81,17 +81,27 @@ class PfeJumpLinksNav extends PFElement {
       if (this._isValidLightDom()) {
         const menu = this.querySelector("ul");
         this._menuContainer.innerHTML = menu.outerHTML;
-        let html = this.querySelector(".heading").cloneNode(true);
-        if (html && !this.hasAttribute("horizontal")) {
-          this.shadowRoot
-            .querySelector("pfe-accordion-header")
-            .appendChild(html);
+        let html = "";
+        if (this.querySelector(".pfe-jump-links-nav--heading")) {
+          html = this.querySelector(".pfe-jump-links-nav--heading").cloneNode(
+            true
+          );
+        }
+        if (!this.hasAttribute("horizontal")) {
+          if (html) {
+            this.shadowRoot
+              .querySelector("pfe-accordion-header")
+              .appendChild(html);
+          }
         } else {
           this.shadowRoot
             .querySelector("pfe-accordion-header")
-            .appendChild(document.createElement("h3#heading"));
-          this.shadowRoot.querySelector("#heading").innerHTML =
-            "Hardcoded message";
+            .appendChild(
+              document.createElement("h3#pfe-jump-links-nav--heading")
+            );
+          this.shadowRoot.querySelector(
+            "#pfe-jump-links-nav--heading"
+          ).innerHTML = "Jump to section";
         }
       }
     }
@@ -133,9 +143,9 @@ class PfeJumpLinksNav extends PFElement {
         let arr = [...panelSections];
         if (arr[i].classList.contains("has-sub-section")) {
           let linkListItem = `
-          <li>
+          <li class="pfe-jump-links-nav__item">
             <a
-              class="pfe-jump-links-nav__item has-sub-section"
+              class="pfe-jump-links-nav__link has-sub-section"
               href="#${arr[i].id}"
               data-target="${arr[i].id}">
                 ${arr[i].innerHTML}
@@ -145,9 +155,9 @@ class PfeJumpLinksNav extends PFElement {
           linkList += linkListItem;
         } else if (arr[i].classList.contains("sub-section")) {
           let linkSubItem = `
-        <li>
+        <li class="pfe-jump-links-nav__item">
             <a
-              class="pfe-jump-links-nav__item sub-section"
+              class="pfe-jump-links-nav__link sub-section"
               href="#${arr[i].id}"
               data-target="${arr[i].id}">
                 ${arr[i].innerHTML}
@@ -159,9 +169,9 @@ class PfeJumpLinksNav extends PFElement {
           linkList += linkSubItem;
         } else {
           let linkListItem = `
-          <li>
+          <li class="pfe-jump-links-nav__item">
             <a
-              class="pfe-jump-links-nav__item"
+              class="pfe-jump-links-nav__link"
               href="#${arr[i].id}"
               data-target="${arr[i].id}">
                 ${arr[i].innerHTML}
@@ -298,7 +308,7 @@ class PfeJumpLinksPanel extends PFElement {
 
     if (this.JumpLinksNav) {
       this.menu_links = this.JumpLinksNav.querySelectorAll(
-        ".pfe-jump-links-nav__item"
+        ".pfe-jump-links-nav__link"
       );
     }
   }
@@ -405,7 +415,7 @@ class PfeJumpLinksPanel extends PFElement {
     //Check list of links to make sure we have them (if not, get them)
     if (this.menu_links.length < 1 || !this.menu_links) {
       this.menu_links = this.JumpLinksNav.shadowRoot.querySelectorAll(
-        ".pfe-jump-links-nav__item"
+        ".pfe-jump-links-nav__link"
       );
       menu_links = this.menu_links;
     }

@@ -46,7 +46,6 @@
   <style>
     html {
       scroll-behavior: smooth;
-      font-family: 'Red Hat Text', sans-serif !important;
     }
 
     a.pfe-jump-links-nav__item {
@@ -57,36 +56,40 @@
       position:sticky;
       top: 0;
     }
+    body {
+      font-family: 'Red Hat Text', sans-serif;
+      font-weight: 400;
+    }
   </style>
       
   <h2 style="text-align: center; margin: 60px auto;">PFE Jump Links - standard</h2>
   <div style="margin-bottom: 400px;" class="pfe-l-grid">
     <div class="sticky pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-lg">
       <pfe-jump-links-nav id="jumplinks1" default>
-        <h4 class="heading" slot="heading">Jump to section</h4>
+        <h4 class="pfe-jump-links-nav--heading" slot="pfe-jump-links-nav--heading">Jump to section</h4>
         <ul class="pfe-jump-links-nav">
-          <li>
-            <a class="pfe-jump-links-nav__item" href="#section1" data-target="section1">Section 1</a>
+          <li class="pfe-jump-links-nav__item">
+            <a class="pfe-jump-links-nav__link" href="#section1" data-target="section1">Section 1</a>
           </li>
-          <li>
-            <a class="pfe-jump-links-nav__item" href="#section2" data-target="section2">Section 2</a>
+          <li class="pfe-jump-links-nav__item">
+            <a class="pfe-jump-links-nav__link" href="#section2" data-target="section2">Section 2</a>
           </li>
-          <li>
-            <a class="pfe-jump-links-nav__item" href="#section3" data-target="section3">Section 3</a>
+          <li class="pfe-jump-links-nav__item">
+            <a class="pfe-jump-links-nav__link" href="#section3" data-target="section3">Section 3</a>
           </li>
-          <li>
-            <a class="pfe-jump-links-nav__item" href="#section3.1" data-target="section3.1">Section
+          <li class="pfe-jump-links-nav__item">
+            <a class="pfe-jump-links-nav__link" href="#section3.1" data-target="section3.1">Section
               3.1</a>
           </li>
-          <li>
-            <a class="pfe-jump-links-nav__item" href="#section3.2" data-target="section3.2">Section
+          <li class="pfe-jump-links-nav__item">
+            <a class="pfe-jump-links-nav__link" href="#section3.2" data-target="section3.2">Section
               3.2</a>
           </li>
-          <li>
-            <a class="pfe-jump-links-nav__item" href="#section4" data-target="section4">Section 4</a>
+          <li class="pfe-jump-links-nav__item">
+            <a class="pfe-jump-links-nav__link" href="#section4" data-target="section4">Section 4</a>
           </li>
-          <li>
-            <a class="pfe-jump-links-nav__item" href="#section5" data-target="section5">Section 5</a>
+          <li class="pfe-jump-links-nav__item">
+            <a class="pfe-jump-links-nav__link" href="#section5" data-target="section5">Section 5</a>
           </li>
         </ul>
       </pfe-jump-links-nav>
@@ -584,30 +587,34 @@
   <div style="margin-bottom: 400px;" class="pfe-l-grid">
     <div class="sticky pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-lg">
       <pfe-jump-links-nav id="jumplinks2" pfe-color="darkest">
-        <h4 class="heading" slot="heading">Jump to section</h4>
+        <h4 class="pfe-jump-links-nav--heading" slot="pfe-jump-links-nav--heading">Jump to section</h4>
         <ul class="pfe-jump-links-nav">
-          <li active>
-            <a class="pfe-jump-links-nav__item" href="#section10" data-target="section10" active>Section 1</a>
+          <li class="pfe-jump-links-nav__item">
+            <a class="pfe-jump-links-nav__link" href="#section10" data-target="section10" active>Section 1</a>
           </li>
-          <li>
-            <a class="pfe-jump-links-nav__item" href="#section20" data-target="section20">Section 2</a>
+          <li class="pfe-jump-links-nav__item">
+            <a class="pfe-jump-links-nav__link" href="#section20" data-target="section20">Section 2</a>
           </li>
-          <li>
-            <a class="pfe-jump-links-nav__item has-sub-section" href="#section30" data-target="section30">Section 3</a>
+          <li class="pfe-jump-links-nav__item">
+            <a class="pfe-jump-links-nav__link has-sub-section" href="#section30" data-target="section30">Section 3</a>
             <ul class="sub-nav">
-              <li>
-                <a class="pfe-jump-links-nav__item sub-section" href="#section3.10" data-target="section3.10">Section
+              <li class="pfe-jump-links-nav__item">
+                <a class="pfe-jump-links-nav__link sub-section" href="#section3.10" data-target="section3.10">Section
                   3.1</a>
               </li>
-              <li>
-                <a class="pfe-jump-links-nav__item sub-section" href="#section3.20" data-target="section3.20">Section
+              <li class="pfe-jump-links-nav__item">
+                <a class="pfe-jump-links-nav__link sub-section" href="#section3.20" data-target="section3.20">Section
                   3.2</a>
               </li>
             </ul>
           </li>
           </li>
-          <li><a class="pfe-jump-links-nav__item" href="#section40" data-target="section40">Section 4</a></li>
-          <li><a class="pfe-jump-links-nav__item" href="#section50" data-target="section50">Section 5</a></li>
+          <li class="pfe-jump-links-nav__item">
+            <a class="pfe-jump-links-nav__link" href="#section40" data-target="section40">Section 4</a>
+          </li>
+          <li class="pfe-jump-links-nav__item">
+            <a class="pfe-jump-links-nav__link" href="#section50" data-target="section50">Section 5</a>
+          </li>
         </ul>
       </pfe-jump-links-nav>
     </div>
@@ -1104,7 +1111,7 @@
   <div style="margin-bottom: 400px;" class="pfe-l-grid">
     <div class="sticky pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-lg">
       <pfe-jump-links-nav default autobuild id="jumplinks8">
-        <h4 class="heading" slot="heading" id="heading">Jump to section</h4>
+        <h4 class="pfe-jump-links-nav--heading" slot="pfe-jump-links-nav--heading" id="pfe-jump-links-nav--heading">Jump to section</h4>
       </pfe-jump-links-nav>
     </div>
     <div class="pfe-l-grid__item pfe-m-12-col pfe-m-9-col-on-lg">
@@ -1598,19 +1605,26 @@
   </div>
   <div>
     <pfe-jump-links-nav horizontal id="jumplinks9" offset="30">
-      <h4 class="heading" slot="heading">Jump to section</h4>
-      <img src="https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--200.png" alt="" slot="logo">
+      <h4 class="pfe-jump-links-nav--heading" slot="pfe-jump-links-nav--heading">Jump to section</h4>
+      <img src="https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--200.png" alt="" slot="pfe-jump-links-nav--logo">
       <ul class="pfe-jump-links-nav">
-        <li active><a class="pfe-jump-links-nav__item" href="#section100" data-target="section100" active>Section 1</a>
+        <li class="pfe-jump-links-nav__item">
+          <a class="pfe-jump-links-nav__link" href="#section100" data-target="section100">Section 1</a>
         </li>
-        <li><a class="pfe-jump-links-nav__item" href="#section200" data-target="section200">Section 2</a></li>
-        <li>
-          <a class="pfe-jump-links-nav__item" href="#section300" data-target="section300">Section 3</a>
+        <li class="pfe-jump-links-nav__item">
+          <a class="pfe-jump-links-nav__link" href="#section200" data-target="section200">Section 2</a>
         </li>
-        <li><a class="pfe-jump-links-nav__item" href="#section400" data-target="section400">Section 4</a></li>
-        <li><a class="pfe-jump-links-nav__item" href="#section500" data-target="section500">Section 5</a></li>
+        <li class="pfe-jump-links-nav__item">
+          <a class="pfe-jump-links-nav__link" href="#section300" data-target="section300">Section 3</a>
+        </li>
+        <li class="pfe-jump-links-nav__item">
+          <a class="pfe-jump-links-nav__link" href="#section400" data-target="section400">Section 4</a>
+        </li>
+        <li class="pfe-jump-links-nav__item">
+          <a class="pfe-jump-links-nav__link" href="#section500" data-target="section500">Section 5</a>
+        </li>
       </ul>
-      <pfe-cta pfe-priority="primary" class="PFElement" slot="link" pfelement="" has_link="" on="dark">
+      <pfe-cta pfe-priority="primary" class="PFElement" slot="pfe-jump-links-nav--cta" pfelement="" has_link="" on="dark">
         <a href="https://www.redhat.com#primary">Link</a>
       </pfe-cta>
     </pfe-jump-links-nav>

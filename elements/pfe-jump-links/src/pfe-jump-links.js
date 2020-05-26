@@ -80,6 +80,7 @@ class PfeJumpLinksNav extends PFElement {
       //Check that the light DOM is valid
       if (this._isValidLightDom()) {
         const menu = this.querySelector("ul");
+        menu.classList.add("pfe-jump-links-nav");
         this._menuContainer.innerHTML = menu.outerHTML;
         let html = "";
         if (this.querySelector(".pfe-jump-links-nav--heading")) {
@@ -307,9 +308,7 @@ class PfeJumpLinksPanel extends PFElement {
     this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
 
     if (this.JumpLinksNav) {
-      this.menu_links = this.JumpLinksNav.querySelectorAll(
-        ".pfe-jump-links-nav__link"
-      );
+      this.menu_links = this.JumpLinksNav.querySelectorAll("a");
     }
   }
 
@@ -414,9 +413,7 @@ class PfeJumpLinksPanel extends PFElement {
     }
     //Check list of links to make sure we have them (if not, get them)
     if (this.menu_links.length < 1 || !this.menu_links) {
-      this.menu_links = this.JumpLinksNav.shadowRoot.querySelectorAll(
-        ".pfe-jump-links-nav__link"
-      );
+      this.menu_links = this.JumpLinksNav.shadowRoot.querySelectorAll("a");
       menu_links = this.menu_links;
     }
 

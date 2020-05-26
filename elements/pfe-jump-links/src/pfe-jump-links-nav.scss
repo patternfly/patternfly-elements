@@ -66,7 +66,7 @@ $variables: (
     flex-direction: column;
     flex: 0;
   }
-  &__item {
+  li {
     border-left: 3px solid transparent;
     display: block;
     text-decoration: none;
@@ -80,7 +80,7 @@ $variables: (
       }
     }
   }
-  &__link {
+  a {
     display: table;
     text-decoration: none;
     font-size: #{pfe-var(font-size)};
@@ -134,7 +134,7 @@ $variables: (
     border-left: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(ui-disabled)};
   }
 
-  li{
+  li {
     &[active] {
       border-left: 3px solid #{pfe-color(link)};
     }
@@ -185,12 +185,12 @@ $variables: (
   border: 1px solid #{pfe-color(ui-disabled--text)};
   .pfe-jump-links-nav {
     border-left: 1px solid #{pfe-color(ui-disabled--text)};
-    &__item {
+    li {
       &[active] {
        border-left: 3px #{pfe-var(surface--border-style)} #{pfe-color(ui-accent)};
       }
     }
-    &__link {
+    a {
       color:   #{pfe-color(ui-complement--focus--on-dark)};
       &:hover {
           color: #{pfe-color(ui-complement--hover--on-dark)};
@@ -280,7 +280,7 @@ $variables: (
     width: auto;
     margin-left: auto;
     margin-right: auto;
-    &__item {
+    li {
       padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
       display: flex;
       height: calc(#{pfe-var(container-spacer)} * 5);
@@ -293,7 +293,7 @@ $variables: (
         border-top: 4px solid #{pfe-color(ui-accent)};
       }
     }
-    &__link {
+    a {
       color: #{pfe-color(ui-disabled--text)};
       &[active] {
         color: #{pfe-color(surface--darkest)};

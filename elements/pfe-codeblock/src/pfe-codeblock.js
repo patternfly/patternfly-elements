@@ -1,3 +1,5 @@
+// Import polyfills: includes
+import "./polyfills--pfe-codeblock.js";
 import PFElement from "../../pfelement/dist/pfelement.js";
 import Prism from "prismjs";
 

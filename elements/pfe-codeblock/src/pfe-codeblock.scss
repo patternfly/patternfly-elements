@@ -5,12 +5,12 @@ $LOCAL: codeblock;
 
 :host {
   display: block;
-  @import "../node_modules/prismjs/themes/prism";
-  @import "../node_modules/prismjs/plugins/line-numbers/prism-line-numbers";
+  @import "../../../node_modules/prismjs/themes/prism";
+  @import "../../../node_modules/prismjs/plugins/line-numbers/prism-line-numbers";
 }
 
 :host([pfe-color="dark"]) {
-    @import "../node_modules/prismjs/themes/prism-okaidia";
+    @import "../../../node_modules/prismjs/themes/prism-okaidia";
 }
 
 :host([hidden]) {

@@ -43,13 +43,13 @@ const defaultContent = {
     color: `${["darker", "darkest", "complement", "accent"].includes(theme) ? "lightest" : "complement"}`
   }, [{
     tag: "h3",
-    slot: "header",
+    slot: "pfe-card--header",
     content: "Aside"
   }, {
     content: tools.autoContent(1, 1, true)
   }, {
     content: tools.component("pfe-cta", {
-      slot: "footer",
+      slot: "pfe-card--footer",
       priority: "tertiary"
     }, [{
       tag: "a",

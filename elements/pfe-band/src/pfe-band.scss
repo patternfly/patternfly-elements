@@ -41,7 +41,6 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
 ));
 
 :host {
-// @include pfe-print-variables($LOCAL-VARIABLES);
   @include pfe-set-broadcast-theme(light);
   --theme: light;
 

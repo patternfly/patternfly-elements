@@ -15,7 +15,6 @@ $LOCAL-VARIABLES: (
 );
 
 :host {
-// @include pfe-print-variables($LOCAL-VARIABLES);
 
   display: #{pfe-local($cssvar: Display, $fallback: block)};
   padding: #{pfe-local($cssvar: Padding, $fallback: 0)};

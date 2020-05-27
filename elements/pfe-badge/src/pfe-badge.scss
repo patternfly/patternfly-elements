@@ -2,25 +2,23 @@
 $LOCAL: badge;
 
 $LOCAL-VARIABLES: (
-  BackgroundColor: #{pfe-color(feedback--default--lightest)},
+  BackgroundColor: pfe-color(feedback--default--lightest),
   BorderRadius: calc(#{pfe-var(ui--border-radius)} * 30),
 
-  Color: #{pfe-color(text)},
+  Color: pfe-color(text),
 
   FontSize: calc(#{pfe-var(font-size)} * 0.75),
-  FontWeight: #{pfe-var(font-weight--semi-bold)},
+  FontWeight: pfe-var(font-weight--semi-bold),
 
   MinWidth: calc(#{pfe-var(ui--border-width)} * 2),
 
-  PaddingLeft: calc(#{pfe-var(container-padding)} * 0.5),
-  PaddingRight: calc(#{pfe-var(container-padding)} * 0.5)
+  PaddingLeft: calc(#{pfe-var(container-padding)} / 2),
+  PaddingRight: calc(#{pfe-var(container-padding)} / 2)
 );
 
 :host {
-// @include pfe-print-variables($LOCAL-VARIABLES);
-
   display: inline-block;
-  line-height: calc(var(--pfe-theme-line-height, 1.5) * 0.75);
+  line-height: calc(#{pfe-var(line-height)} * 0.75);
   text-align: center;
   text-rendering: optimizelegibility;
 }

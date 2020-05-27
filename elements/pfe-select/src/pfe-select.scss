@@ -22,8 +22,7 @@ $LOCAL-VARIABLES: (
 );
 
 :host {
-  // @include pfe-print-variables($LOCAL-VARIABLES);
-
+  
   @include pfe-box-sizing;
 
   position: relative;

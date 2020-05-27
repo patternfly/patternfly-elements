@@ -1,6 +1,16 @@
-## Prerelease 47 ( TBD )
+## Prerelease 49 ( TBD )
 
-- []() fix: pfe-navigtation-item shouldn't add duplicative event listeners #870
+-[]() fix: Update pfe-tabs demo page with better header examples; add CSS so that short tab-panels are still at least as tall as the tab headers.
+
+## Prerelease 48 ( 2020-05-19 )
+
+- [b1e546b](https://github.com/patternfly/patternfly-elements/commit/b1e546bfa98254eaaebb1a537065288bdcf1704f) feat: pfe-datetime adding time zone attribute #881
+- [a43a44a](https://github.com/patternfly/patternfly-elements/commit/a43a44a585a061694631f13d06b3302cae1e24a2) fix: pfe-card header and footer slot issues (#861)
+- [4b2eae1](https://github.com/patternfly/patternfly-elements/commit/4b2eae1e9274986dee64e06d61cef7a7a4b9640f) feat: Add ability to demo individual components using `demo` and `live-demo` scripts (#868)
+
+## Prerelease 47 ( 2020-05-14 )
+
+- [0323eab](https://github.com/patternfly/patternfly-elements/commit/0323eab2d9dd944cb51dee263056566fe1a14a57) fix: pfe-navigtation-item shouldn't add duplicative event listeners #870
 
 ## Prerelease 46 ( 2020-05-12 )
 

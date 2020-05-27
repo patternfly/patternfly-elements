@@ -1,159 +1,237 @@
-$pfe-colors: (
-
-  // ========================================================================
-  // Base text and link colors, basis of "theme"
-  // ========================================================================
-
-  text:                        $pfe-color-text,
-  link:                        $pfe-color-link,
-  link--visited:               $pfe-color-link-visited,
-  link--hover:                 $pfe-color-link-hover,
-  link--focus:                 $pfe-color-link-focus,
-
-  text--on-dark:               $pfe-color-text-on-dark,
-  link--on-dark:               $pfe-color-link-on-dark,
-  link--visited--on-dark:      $pfe-color-link-visited-on-dark,
-  link--hover--on-dark:        $pfe-color-link-hover-on-dark,
-  link--focus--on-dark:        $pfe-color-link-focus-on-dark,
-
-  text--on-saturated:          $pfe-color-text-on-saturated,
-  link--on-saturated:          $pfe-color-link-on-saturated,
-  link--visited--on-saturated: $pfe-color-link-visited-on-saturated,
-  link--hover--on-saturated:   $pfe-color-link-hover-on-saturated,
-  link--focus--on-saturated:   $pfe-color-link-focus-on-saturated,
-
-  // ========================================================================
-  // Base UI Colors for Buttons, CTAs, and actionable UI elements
-  // ========================================================================
-
-  // Set of base colors
-  ui-base:                            $pf-color-light-blue-500,
-  ui-base--hover:                     darken($pf-color-light-blue-500, 20%),
-  ui-base--focus:                     darken($pf-color-light-blue-500, 20%),
-  ui-base--text:                      $pfe-color-text-on-dark,
-  ui-base--text--hover:               $pfe-color-text-on-dark,
-  ui-base--text--focus:               $pfe-color-text-on-dark,
-
-  ui-base--on-dark:                   lighten($pf-color-light-blue-500, 40%),
-  ui-base--hover--on-dark:            lighten($pf-color-light-blue-500, 20%),
-  ui-base--focus--on-dark:            lighten($pf-color-light-blue-500, 20%),
-  ui-base--text--on-dark:             $pfe-color-text,
-  ui-base--text--hover--on-dark:      $pfe-color-text,
-  ui-base--text--focus--on-dark:      $pfe-color-text,
-
-  ui-base--on-saturated:                   $pf-color-white,
-  ui-base--hover--on-saturated:            darken($pf-color-white, 20%),
-  ui-base--focus--on-saturated:            darken($pf-color-white, 20%),
-  ui-base--text--on-saturated:             $pfe-color-text,
-  ui-base--text--hover--on-saturated:      $pfe-color-text,
-  ui-base--text--focus--on-saturated:      $pfe-color-text,
-
-  // Set of complement colors
-  ui-complement:                      $pf-color-black-800,
-  ui-complement--hover:               $pf-color-black-1000,
-  ui-complement--focus:               $pf-color-black-1000,
-  ui-complement--text:                $pfe-color-text-on-dark,
-  ui-complement--text--hover:         $pfe-color-text-on-dark,
-  ui-complement--text--focus:         $pfe-color-text-on-dark,
-
-  ui-complement--on-dark:                      $pf-color-white,
-  ui-complement--hover--on-dark:               darken($pf-color-white, 20%),
-  ui-complement--focus--on-dark:               darken($pf-color-white, 20%),
-  ui-complement--text--on-dark:                $pfe-color-text,
-  ui-complement--text--hover--on-dark:         $pfe-color-text,
-  ui-complement--text--focus--on-dark:         $pfe-color-text,
-
-  // Set of accent colors
-  ui-accent:                          $pf-color-brand-red,
-  ui-accent--hover:                   darken($pf-color-brand-red, 20%),
-  ui-accent--focus:                   darken($pf-color-brand-red, 20%),
-  ui-accent--text:                    $pfe-color-text-on-dark,
-  ui-accent--text--hover:             $pfe-color-text-on-dark,
-  ui-accent--text--focus:             $pfe-color-text-on-dark,
-
-  ui-accent--on-saturated:                          $pf-color-white,
-  ui-accent--hover--on-saturated:                   darken($pf-color-white, 20%),
-  ui-accent--focus--on-saturated:                   darken($pf-color-white, 20%),
-  ui-accent--text--on-saturated:                    $pfe-color-text,
-  ui-accent--text--hover--on-saturated:             $pfe-color-text,
-  ui-accent--text--focus--on-saturated:             $pfe-color-text,
-
-  // Set of disabled colors
-  ui-disabled:                        $pf-color-black-300,
-  ui-disabled--hover:                 $pf-color-black-300,
-  ui-disabled--focus:                 $pf-color-black-300,
-  ui-disabled--text:                  $pf-color-black-600,
-  ui-disabled--text--hover:           $pf-color-black-600,
-  ui-disabled--text--focus:           $pf-color-black-600,
-
-  // ========================================================================
-  // Base Surface Colors for Container elements
-  // ========================================================================
-
-  // Lightest group
-  surface--lightest:        $pf-color-white,
-  surface--lightest--theme: light,
-
-  // Lighter group
-  surface--lighter:         $pf-color-black-200,
-  surface--lighter--theme:  light,
-
-  // Base group
-  surface--base:        $pf-color-black-300,
-  surface--base--theme: light,
-
-  // Darker group
-  surface--darker:        $pf-color-black-800,
-  surface--darker--theme: dark,
-
-  // Darkest group
-  surface--darkest:        $pf-color-black-1000,
-  surface--darkest--theme: dark,
-
-  // Complement group
-  surface--complement:        $pf-color-light-blue-500,
-  surface--complement--theme: saturated,
-
-  // Accent group
-  surface--accent:        $pf-color-brand-red,
-  surface--accent--theme: saturated,
-
-  // Palette of Border Colors
-  surface--border--lightest:          $pf-color-black-200,
-  surface--border--lighter:           $pf-color-black-200,
-  surface--border:                    $pf-color-black-300,
-  surface--border--darker:            $pf-color-black-400,
-  surface--border--darkest:           $pf-color-black-800,
+//  Do not edit directly
+//  Generated on Wed, 27 May 2020 17:45:47 GMT
 
 
-  // ========================================================================
-  // Base Feedback Colors for messaging, errors, etc.
-  // ========================================================================
+// --pfe-theme--text: #3c3f42;
+// --pfe-theme--text--on-light: #3c3f42;
+// --pfe-theme--text--on-dark: #ffffff;
+// --pfe-theme--text--on-saturated: #ffffff;
+// --pfe-theme--link: #0066cc;
+// --pfe-theme--link--on-light: #0066cc;
+// --pfe-theme--link--on-dark: #73bcf7;
+// --pfe-theme--link--on-saturated: #ffffff;
+// --pfe-theme--link--visited: #6753ac;
+// --pfe-theme--link--visited--on-light: #6753ac;
+// --pfe-theme--link--visited--on-dark: #cbc1ff;
+// --pfe-theme--link--visited--on-saturated: #cbc1ff;
+// --pfe-theme--link--hover: #004080;
+// --pfe-theme--link--hover--on-light: #004080;
+// --pfe-theme--link--hover--on-dark: #73bcf7;
+// --pfe-theme--link--hover--on-saturated: #ffffff;
+// --pfe-theme--link--focus: #004080;
+// --pfe-theme--link--focus--on-light: #004080;
+// --pfe-theme--link--focus--on-dark: #73bcf7;
+// --pfe-theme--link--focus--on-saturated: #ffffff;
+// --pfe-theme--ui--base: #008bad;
+// --pfe-theme--ui--base--on-light: #008bad;
+// --pfe-theme--ui--base--on-dark: lighten($pf-color-light-blue-500, 40%);
+// --pfe-theme--ui--base--on-saturated: [object Object];
+// --pfe-theme--ui--base--hover: darken($pf-color-light-blue-500, 20%);
+// --pfe-theme--ui--base--hover--on-light: darken($pf-color-light-blue-500, 20%);
+// --pfe-theme--ui--base--hover--on-dark: lighten($pf-color-light-blue-500, 20%);
+// --pfe-theme--ui--base--hover--on-saturated: darken($pf-color-white, 20%);
+// --pfe-theme--ui--base--focus: darken($pf-color-light-blue-500, 20%);
+// --pfe-theme--ui--base--focus--on-light: darken($pf-color-light-blue-500, 20%);
+// --pfe-theme--ui--base--focus--on-dark: lighten($pf-color-light-blue-500, 20%);
+// --pfe-theme--ui--base--focus--on-saturated: darken($pf-color-white, 20%);
+// --pfe-theme--ui--base--text: #ffffff;
+// --pfe-theme--ui--base--text--on-light: #ffffff;
+// --pfe-theme--ui--base--text--on-dark: #3c3f42;
+// --pfe-theme--ui--base--text--on-saturated: #3c3f42;
+// --pfe-theme--ui--base--text--hover: #ffffff;
+// --pfe-theme--ui--base--text--hover--on-light: #ffffff;
+// --pfe-theme--ui--base--text--hover--on-dark: #3c3f42;
+// --pfe-theme--ui--base--text--hover--on-saturated: #3c3f42;
+// --pfe-theme--ui--base--text--focus: #ffffff;
+// --pfe-theme--ui--base--text--focus--on-light: #ffffff;
+// --pfe-theme--ui--base--text--focus--on-dark: #3c3f42;
+// --pfe-theme--ui--complement: #3c3f42;
+// --pfe-theme--ui--complement--on-light: #3c3f42;
+// --pfe-theme--ui--complement--on-dark: #ffffff;
+// --pfe-theme--ui--complement--on-saturated: #3c3f42;
+// --pfe-theme--ui--complement--hover: #030303;
+// --pfe-theme--ui--complement--hover--on-light: #030303;
+// --pfe-theme--ui--complement--hover--on-dark: darken($pf-color-white, 20%);
+// --pfe-theme--ui--complement--hover--on-saturated: #030303;
+// --pfe-theme--ui--complement--focus: #030303;
+// --pfe-theme--ui--complement--focus--on-light: #030303;
+// --pfe-theme--ui--complement--focus--on-dark: darken($pf-color-white, 20%);
+// --pfe-theme--ui--complement--focus--on-saturated: #030303;
+// --pfe-theme--ui--complement--text: #ffffff;
+// --pfe-theme--ui--complement--text--on-light: #ffffff;
+// --pfe-theme--ui--complement--text--on-dark: #3c3f42;
+// --pfe-theme--ui--complement--text--on-saturated: #ffffff;
+// --pfe-theme--ui--complement--text--hover: #ffffff;
+// --pfe-theme--ui--complement--text--hover--on-light: #ffffff;
+// --pfe-theme--ui--complement--text--hover--on-dark: #3c3f42;
+// --pfe-theme--ui--complement--text--hover--on-saturated: #ffffff;
+// --pfe-theme--ui--complement--text--focus: #ffffff;
+// --pfe-theme--ui--complement--text--focus--on-light: #ffffff;
+// --pfe-theme--ui--complement--text--focus--on-dark: #3c3f42;
+// --pfe-theme--ui--complement--text--focus--on-saturated: #ffffff;
+// --pfe-theme--ui--accent: #ee0000;
+// --pfe-theme--ui--accent--on-light: #ee0000;
+// --pfe-theme--ui--accent--on-dark: #ee0000;
+// --pfe-theme--ui--accent--on-saturated: #ffffff;
+// --pfe-theme--ui--accent--hover: darken(#ee0000, 20%);
+// --pfe-theme--ui--accent--hover--on-light: darken(#ee0000, 20%);
+// --pfe-theme--ui--accent--hover--on-dark: darken(#ee0000, 20%);
+// --pfe-theme--ui--accent--hover--on-saturated: darken(#ffffff, 20%);
+// --pfe-theme--ui--accent--focus: darken(#ee0000, 20%);
+// --pfe-theme--ui--accent--focus--on-light: darken(#ee0000, 20%);
+// --pfe-theme--ui--accent--focus--on-dark: darken(#ee0000, 20%);
+// --pfe-theme--ui--accent--focus--on-saturated: darken(#ffffff, 20%);
+// --pfe-theme--ui--accent--text: #ffffff;
+// --pfe-theme--ui--accent--text--on-light: #ffffff;
+// --pfe-theme--ui--accent--text--on-dark: #ffffff;
+// --pfe-theme--ui--accent--text--on-saturated: #3c3f42;
+// --pfe-theme--ui--accent--text--hover: #ffffff;
+// --pfe-theme--ui--accent--text--hover--on-light: #ffffff;
+// --pfe-theme--ui--accent--text--hover--on-dark: #ffffff;
+// --pfe-theme--ui--accent--text--hover--on-saturated: #3c3f42;
+// --pfe-theme--ui--accent--text--focus: #ffffff;
+// --pfe-theme--ui--accent--text--focus--on-light: #ffffff;
+// --pfe-theme--ui--accent--text--focus--on-dark: #ffffff;
+// --pfe-theme--ui--accent--text--focus--on-saturated: #3c3f42;
+// --pfe-theme--ui--disabled: #d2d2d2;
+// --pfe-theme--ui--disabled--on-light: #d2d2d2;
+// --pfe-theme--ui--disabled--on-dark: #d2d2d2;
+// --pfe-theme--ui--disabled--on-saturated: #d2d2d2;
+// --pfe-theme--ui--disabled--hover: #d2d2d2;
+// --pfe-theme--ui--disabled--hover--on-light: #d2d2d2;
+// --pfe-theme--ui--disabled--hover--on-dark: #d2d2d2;
+// --pfe-theme--ui--disabled--hover--on-saturated: #d2d2d2;
+// --pfe-theme--ui--disabled--focus: #d2d2d2;
+// --pfe-theme--ui--disabled--focus--on-light: #d2d2d2;
+// --pfe-theme--ui--disabled--focus--on-dark: #d2d2d2;
+// --pfe-theme--ui--disabled--focus--on-saturated: #d2d2d2;
+// --pfe-theme--ui--disabled--text: #737679;
+// --pfe-theme--ui--disabled--text--on-light: #737679;
+// --pfe-theme--ui--disabled--text--on-dark: #737679;
+// --pfe-theme--ui--disabled--text--on-saturated: #737679;
+// --pfe-theme--ui--disabled--text--hover: #737679;
+// --pfe-theme--ui--disabled--text--hover--on-light: #737679;
+// --pfe-theme--ui--disabled--text--hover--on-dark: #737679;
+// --pfe-theme--ui--disabled--text--hover--on-saturated: #737679;
+// --pfe-theme--ui--disabled--text--focus: #737679;
+// --pfe-theme--ui--disabled--text--focus--on-light: #737679;
+// --pfe-theme--ui--disabled--text--focus--on-dark: #737679;
+// --pfe-theme--ui--disabled--text--focus--on-saturated: #737679;
 
-  // Palette of Feedback Colors
-  feedback--critical--lightest:       $pf-color-red-50,
-  feedback--critical:                 $pf-color-red-200,
-  feedback--critical--darkest:        $pf-color-red-400,
-
-  feedback--important--lightest:      $pf-color-orange-50,
-  feedback--important:                $pf-color-red-100,
-  feedback--important--darkest:       $pf-color-red-300,
-
-  feedback--moderate--lightest:       $pf-color-gold-50,
-  feedback--moderate:                 $pf-color-gold-300,
-  feedback--moderate--darkest:        $pf-color-gold-600,
-
-  feedback--success--lightest:        $pf-color-green-50,
-  feedback--success:                  #2e7d32,
-  feedback--success--darkest:         #1b5e20,
-
-  feedback--info--lightest:           $pf-color-blue-50,
-  feedback--info:                     $pf-color-blue-400,
-  feedback--info--darkest:            $pf-color-blue-500,
-
-  feedback--default--lightest:        $pf-color-black-200,
-  feedback--default:                  $pf-color-black-700,
-  feedback--default--darkest:         $pf-color-black-800,
-
-  overlay:                            rgba($pf-color-black-900, .5)
+$colors: (
+	"text": #3c3f42,
+	"text--on-light": #3c3f42,
+	"text--on-dark": #ffffff,
+	"text--on-saturated": #ffffff,
+	"link": #0066cc,
+	"link--on-light": #0066cc,
+	"link--on-dark": #73bcf7,
+	"link--on-saturated": #ffffff,
+	"link--visited": #6753ac,
+	"link--visited--on-light": #6753ac,
+	"link--visited--on-dark": #cbc1ff,
+	"link--visited--on-saturated": #cbc1ff,
+	"link--hover": #004080,
+	"link--hover--on-light": #004080,
+	"link--hover--on-dark": #73bcf7,
+	"link--hover--on-saturated": #ffffff,
+	"link--focus": #004080,
+	"link--focus--on-light": #004080,
+	"link--focus--on-dark": #73bcf7,
+	"link--focus--on-saturated": #ffffff,
+	"ui--base": #008bad,
+	"ui--base--on-light": #008bad,
+	"ui--base--on-dark": lighten($pf-color-light-blue-500, 40%),
+	"ui--base--on-saturated": [object Object],
+	"ui--base--hover": darken($pf-color-light-blue-500, 20%),
+	"ui--base--hover--on-light": darken($pf-color-light-blue-500, 20%),
+	"ui--base--hover--on-dark": lighten($pf-color-light-blue-500, 20%),
+	"ui--base--hover--on-saturated": darken($pf-color-white, 20%),
+	"ui--base--focus": darken($pf-color-light-blue-500, 20%),
+	"ui--base--focus--on-light": darken($pf-color-light-blue-500, 20%),
+	"ui--base--focus--on-dark": lighten($pf-color-light-blue-500, 20%),
+	"ui--base--focus--on-saturated": darken($pf-color-white, 20%),
+	"ui--base--text": #ffffff,
+	"ui--base--text--on-light": #ffffff,
+	"ui--base--text--on-dark": #3c3f42,
+	"ui--base--text--on-saturated": #3c3f42,
+	"ui--base--text--hover": #ffffff,
+	"ui--base--text--hover--on-light": #ffffff,
+	"ui--base--text--hover--on-dark": #3c3f42,
+	"ui--base--text--hover--on-saturated": #3c3f42,
+	"ui--base--text--focus": #ffffff,
+	"ui--base--text--focus--on-light": #ffffff,
+	"ui--base--text--focus--on-dark": #3c3f42,
+	"ui--complement": #3c3f42,
+	"ui--complement--on-light": #3c3f42,
+	"ui--complement--on-dark": #ffffff,
+	"ui--complement--on-saturated": #3c3f42,
+	"ui--complement--hover": #030303,
+	"ui--complement--hover--on-light": #030303,
+	"ui--complement--hover--on-dark": darken($pf-color-white, 20%),
+	"ui--complement--hover--on-saturated": #030303,
+	"ui--complement--focus": #030303,
+	"ui--complement--focus--on-light": #030303,
+	"ui--complement--focus--on-dark": darken($pf-color-white, 20%),
+	"ui--complement--focus--on-saturated": #030303,
+	"ui--complement--text": #ffffff,
+	"ui--complement--text--on-light": #ffffff,
+	"ui--complement--text--on-dark": #3c3f42,
+	"ui--complement--text--on-saturated": #ffffff,
+	"ui--complement--text--hover": #ffffff,
+	"ui--complement--text--hover--on-light": #ffffff,
+	"ui--complement--text--hover--on-dark": #3c3f42,
+	"ui--complement--text--hover--on-saturated": #ffffff,
+	"ui--complement--text--focus": #ffffff,
+	"ui--complement--text--focus--on-light": #ffffff,
+	"ui--complement--text--focus--on-dark": #3c3f42,
+	"ui--complement--text--focus--on-saturated": #ffffff,
+	"ui--accent": #ee0000,
+	"ui--accent--on-light": #ee0000,
+	"ui--accent--on-dark": #ee0000,
+	"ui--accent--on-saturated": #ffffff,
+	"ui--accent--hover": darken(#ee0000, 20%),
+	"ui--accent--hover--on-light": darken(#ee0000, 20%),
+	"ui--accent--hover--on-dark": darken(#ee0000, 20%),
+	"ui--accent--hover--on-saturated": darken(#ffffff, 20%),
+	"ui--accent--focus": darken(#ee0000, 20%),
+	"ui--accent--focus--on-light": darken(#ee0000, 20%),
+	"ui--accent--focus--on-dark": darken(#ee0000, 20%),
+	"ui--accent--focus--on-saturated": darken(#ffffff, 20%),
+	"ui--accent--text": #ffffff,
+	"ui--accent--text--on-light": #ffffff,
+	"ui--accent--text--on-dark": #ffffff,
+	"ui--accent--text--on-saturated": #3c3f42,
+	"ui--accent--text--hover": #ffffff,
+	"ui--accent--text--hover--on-light": #ffffff,
+	"ui--accent--text--hover--on-dark": #ffffff,
+	"ui--accent--text--hover--on-saturated": #3c3f42,
+	"ui--accent--text--focus": #ffffff,
+	"ui--accent--text--focus--on-light": #ffffff,
+	"ui--accent--text--focus--on-dark": #ffffff,
+	"ui--accent--text--focus--on-saturated": #3c3f42,
+	"ui--disabled": #d2d2d2,
+	"ui--disabled--on-light": #d2d2d2,
+	"ui--disabled--on-dark": #d2d2d2,
+	"ui--disabled--on-saturated": #d2d2d2,
+	"ui--disabled--hover": #d2d2d2,
+	"ui--disabled--hover--on-light": #d2d2d2,
+	"ui--disabled--hover--on-dark": #d2d2d2,
+	"ui--disabled--hover--on-saturated": #d2d2d2,
+	"ui--disabled--focus": #d2d2d2,
+	"ui--disabled--focus--on-light": #d2d2d2,
+	"ui--disabled--focus--on-dark": #d2d2d2,
+	"ui--disabled--focus--on-saturated": #d2d2d2,
+	"ui--disabled--text": #737679,
+	"ui--disabled--text--on-light": #737679,
+	"ui--disabled--text--on-dark": #737679,
+	"ui--disabled--text--on-saturated": #737679,
+	"ui--disabled--text--hover": #737679,
+	"ui--disabled--text--hover--on-light": #737679,
+	"ui--disabled--text--hover--on-dark": #737679,
+	"ui--disabled--text--hover--on-saturated": #737679,
+	"ui--disabled--text--focus": #737679,
+	"ui--disabled--text--focus--on-light": #737679,
+	"ui--disabled--text--focus--on-dark": #737679,
+	"ui--disabled--text--focus--on-saturated": #737679
 );

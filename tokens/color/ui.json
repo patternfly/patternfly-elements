@@ -2,81 +2,104 @@
   "ui": {
     "base": {
       "default": {
-        "value": "{ color.light-blue.500.value }"
+        "value": "{ color.light-blue.500.value }",
+        "group": "color"
       },
       "light": {
-        "value": "{ ui.base.default.value }"
+        "value": "{ ui.base.default.value }",
+        "group": "color"
       },
       "dark": {
-        "value": "lighten($pf-color-light-blue-500, 40%)"
+        "value": "lighten($pf-color-light-blue-500, 40%)",
+        "group": "color"
       },
       "saturated": {
-        "value": "{ color.white }"
+        "value": "{ color.white }",
+        "group": "color"
       },
       "hover": {
         "default": {
-          "value": "darken($pf-color-light-blue-500, 20%)"
+          "value": "darken($pf-color-light-blue-500, 20%)",
+          "group": "color"
         },
         "light": {
-          "value": "{ ui.base.hover.default.value }"
+          "value": "{ ui.base.hover.default.value }",
+          "group": "color"
         },
         "dark": {
-          "value": "lighten($pf-color-light-blue-500, 20%)"
+          "value": "lighten($pf-color-light-blue-500, 20%)",
+          "group": "color"
         },
         "saturated": {
-          "value": "darken($pf-color-white, 20%)"
+          "value": "darken($pf-color-white, 20%)",
+          "group": "color"
         }
       },
       "focus": {
         "default": {
-          "value": "darken($pf-color-light-blue-500, 20%)"
+          "value": "darken($pf-color-light-blue-500, 20%)",
+          "group": "color"
         },
         "light": {
-          "value": "{ ui.base.focus.default.value }"
+          "value": "{ ui.base.focus.default.value }",
+          "group": "color"
         },
         "dark": {
-          "value": "lighten($pf-color-light-blue-500, 20%)"
+          "value": "lighten($pf-color-light-blue-500, 20%)",
+          "group": "color"
         },
         "saturated": {
-          "value": "darken($pf-color-white, 20%)"
+          "value": "darken($pf-color-white, 20%)",
+          "group": "color"
         }
       },
       "text": {
         "default": {
-          "value": "{ text.dark.value }"
+          "value": "{ text.dark.value }",
+          "group": "color"
         },
         "light": {
-          "value": "{ ui.base.text.default.value }"
+          "value": "{ ui.base.text.default.value }",
+          "group": "color"
         },
         "dark": {
-          "value": "{ text.default.value }"
+          "value": "{ text.default.value }",
+          "group": "color"
         },
         "saturated": {
-          "value": "{ text.default.value }"
+          "value": "{ text.default.value }",
+          "group": "color"
         },
         "hover": {
           "default": {
-            "value": "{ text.dark.value }"
+            "value": "{ text.dark.value }",
+            "group": "color"
           },
           "light": {
-            "value": "{ ui.base.text.hover.default.value }"
+            "value": "{ ui.base.text.hover.default.value }",
+            "group": "color"
           },
           "dark": {
-            "value": "{ text.default.value }"
+            "value": "{ text.default.value }",
+            "group": "color"
           },
           "saturated": {
-            "value": "{ text.default.value }"
+            "value": "{ text.default.value }",
+            "group": "color"
           }
         },
         "focus": {
           "default": {
-            "value": "{ text.dark.value }"
+            "value": "{ text.dark.value }",
+            "group": "color"
           },
           "light": {
-            "value": "{ ui.base.text.focus.default.value }"
+            "value": "{ ui.base.text.focus.default.value }",
+            "group": "color"
           },
           "dark": {
-            "value": "{ text.default.value }"
+            "value": "{ text.default.value }",
+            "group": "color"
           },
           "saturated": "{ text.default.value }"
         }
@@ -84,252 +107,324 @@
     },
     "complement": {
       "default": {
-        "value": "{ color.black.800.value }"
+        "value": "{ color.black.800.value }",
+        "group": "color"
       },
       "light": {
-        "value": "{ ui.complement.default.value }"
+        "value": "{ ui.complement.default.value }",
+        "group": "color"
       },
       "dark": {
-        "value": "{ color.white.value }"
+        "value": "{ color.white.value }",
+        "group": "color"
       },
       "saturated": {
-        "value": "{ ui.complement.default.value }"
+        "value": "{ ui.complement.default.value }",
+        "group": "color"
       },
       "hover": {
         "default": {
-          "value": "{ color.black.1000.value }"
+          "value": "{ color.black.1000.value }",
+          "group": "color"
         },
         "light": {
-          "value": "{ ui.complement.hover.default.value }"
+          "value": "{ ui.complement.hover.default.value }",
+          "group": "color"
         },
         "dark": {
-          "value": "darken($pf-color-white, 20%)"
+          "value": "darken($pf-color-white, 20%)",
+          "group": "color"
         },
         "saturated": {
-          "value": "{ ui.complement.hover.default.value }"
+          "value": "{ ui.complement.hover.default.value }",
+          "group": "color"
         }
       },
       "focus": {
         "default": {
-          "value": "{ color.black.1000.value }"
+          "value": "{ color.black.1000.value }",
+          "group": "color"
         },
         "light": {
-          "value": "{ ui.complement.focus.default.value }"
+          "value": "{ ui.complement.focus.default.value }",
+          "group": "color"
         },
         "dark": {
-          "value": "darken($pf-color-white, 20%)"
+          "value": "darken($pf-color-white, 20%)",
+          "group": "color"
         },
         "saturated": {
-          "value": "{ ui.complement.focus.default.value }"
+          "value": "{ ui.complement.focus.default.value }",
+          "group": "color"
         }
       },
       "text": {
         "default": {
-          "value": "{ text.dark.value }"
+          "value": "{ text.dark.value }",
+          "group": "color"
         },
         "light": {
-          "value": "{ ui.complement.text.default.value }"
+          "value": "{ ui.complement.text.default.value }",
+          "group": "color"
         },
         "dark": {
-          "value": "{ text.default.value }"
+          "value": "{ text.default.value }",
+          "group": "color"
         },
         "saturated": {
-          "value": "{ ui.complement.text.default.value }"
+          "value": "{ ui.complement.text.default.value }",
+          "group": "color"
         },
         "hover": {
           "default": {
-            "value": "{ text.dark.value }"
+            "value": "{ text.dark.value }",
+            "group": "color"
           },
           "light": {
-            "value": "{ ui.complement.text.hover.default.value }"
+            "value": "{ ui.complement.text.hover.default.value }",
+            "group": "color"
           },
           "dark": {
-            "value": "{ text.default.value }"
+            "value": "{ text.default.value }",
+            "group": "color"
           },
           "saturated": {
-            "value": "{ ui.complement.text.hover.default.value }"
+            "value": "{ ui.complement.text.hover.default.value }",
+            "group": "color"
           }
         },
         "focus": {
           "default": {
-            "value": "{ text.dark.value }"
+            "value": "{ text.dark.value }",
+            "group": "color"
           },
           "light": {
-            "value": "{ ui.complement.text.focus.default.value }"
+            "value": "{ ui.complement.text.focus.default.value }",
+            "group": "color"
           },
           "dark": {
-            "value": "{ text.default.value }"
+            "value": "{ text.default.value }",
+            "group": "color"
           },
           "saturated": {
-            "value": "{ ui.complement.text.focus.default.value }"
+            "value": "{ ui.complement.text.focus.default.value }",
+            "group": "color"
           }
         }
       }
     },
     "accent": {
       "default": {
-        "value": "{ color.brand.red }"
+        "value": "{ color.brand.red.value }",
+        "group": "color"
       },
       "light": {
-        "value": "{ ui.accent.default.value }"
+        "value": "{ ui.accent.default.value }",
+        "group": "color"
       },
       "dark": {
-        "value": "{ ui.accent.default.value }"
+        "value": "{ ui.accent.default.value }",
+        "group": "color"
       },
       "saturated": {
-        "value": "{ color.white.value }"
+        "value": "{ color.white.value }",
+        "group": "color"
       },
       "hover": {
         "default": {
-          "value": "darken($pf-color-brand-red, 20%)"
+          "value": "darken({ color.brand.primary.value }, 20%)",
+          "group": "color"
         },
         "light": {
-          "value": "{ ui.accent.hover.default.value }"
+          "value": "{ ui.accent.hover.default.value }",
+          "group": "color"
         },
         "dark": {
-          "value": "{ ui.accent.hover.default.value }"
+          "value": "{ ui.accent.hover.default.value }",
+          "group": "color"
         },
         "saturated": {
-          "value": "darken($pf-color-white, 20%)"
+          "value": "darken({ color.white.value }, 20%)",
+          "group": "color"
         }
       },
       "focus": {
         "default": {
-          "value": "darken($pf-color-brand-red, 20%)"
+          "value": "darken({ color.brand.primary.value }, 20%)",
+          "group": "color"
         },
         "light": {
-          "value": "{ ui.accent.focus.default.value }"
+          "value": "{ ui.accent.focus.default.value }",
+          "group": "color"
         },
         "dark": {
-          "value": "{ ui.accent.focus.default.value }"
+          "value": "{ ui.accent.focus.default.value }",
+          "group": "color"
         },
         "saturated": {
-          "value": "darken($pf-color-white, 20%)"
+          "value": "darken({ color.white.value }, 20%)",
+          "group": "color"
         }
       },
       "text": {
         "default": {
-          "value": "{ text.dark.value }"
+          "value": "{ text.dark.value }",
+          "group": "color"
         },
         "light": {
-          "value": "{ ui.accent.text.default.value }"
+          "value": "{ ui.accent.text.default.value }",
+          "group": "color"
         },
         "dark": {
-          "value": "{ ui.accent.text.default.value }"
+          "value": "{ ui.accent.text.default.value }",
+          "group": "color"
         },
         "saturated": {
-          "value": "{ text.default.value }"
+          "value": "{ text.default.value }",
+          "group": "color"
         },
         "hover": {
           "default": {
-            "value": "{ text.dark.value }"
+            "value": "{ text.dark.value }",
+            "group": "color"
           },
           "light": {
-            "value": "{ ui.accent.text.hover.default.value }"
+            "value": "{ ui.accent.text.hover.default.value }",
+            "group": "color"
           },
           "dark": {
-            "value": "{ ui.accent.text.hover.default.value }"
+            "value": "{ ui.accent.text.hover.default.value }",
+            "group": "color"
           },
           "saturated": {
-            "value": "{ text.default.value }"
+            "value": "{ text.default.value }",
+            "group": "color"
           }
         },
         "focus": {
           "default": {
-            "value": "{ text.dark.value }"
+            "value": "{ text.dark.value }",
+            "group": "color"
           },
           "light": {
-            "value": "{ ui.accent.text.focus.default.value }"
+            "value": "{ ui.accent.text.focus.default.value }",
+            "group": "color"
           },
           "dark": {
-            "value": "{ ui.accent.text.focus.default.value }"
+            "value": "{ ui.accent.text.focus.default.value }",
+            "group": "color"
           },
           "saturated": {
-            "value": "{ text.default.value }"
+            "value": "{ text.default.value }",
+            "group": "color"
           }
         }
       }
     },
     "disabled": {
       "default": {
-        "value": "{ color.black.300 }"
+        "value": "{ color.black.300.value }",
+        "group": "color"
       },
       "light": {
-        "value": "{ ui.disabled.default.value }"
+        "value": "{ ui.disabled.default.value }",
+        "group": "color"
       },
       "dark": {
-        "value": "{ ui.disabled.default.value }"
+        "value": "{ ui.disabled.default.value }",
+        "group": "color"
       },
       "saturated": {
-        "value": "{ ui.disabled.default.value }"
+        "value": "{ ui.disabled.default.value }",
+        "group": "color"
       },
       "hover": {
         "default": {
-          "value": "{ ui.disabled.default.value }"
+          "value": "{ ui.disabled.default.value }",
+          "group": "color"
         },
         "light": {
-          "value": "{ ui.disabled.hover.default.value }"
+          "value": "{ ui.disabled.hover.default.value }",
+          "group": "color"
         },
         "dark": {
-          "value": "{ ui.disabled.hover.default.value }"
+          "value": "{ ui.disabled.hover.default.value }",
+          "group": "color"
         },
         "saturated": {
-          "value": "{ ui.disabled.hover.default.value }"
+          "value": "{ ui.disabled.hover.default.value }",
+          "group": "color"
         }
       },
       "focus": {
         "default": {
-          "value": "{ ui.disabled.default.value }"
+          "value": "{ ui.disabled.default.value }",
+          "group": "color"
         },
         "light": {
-          "value": "{ ui.disabled.focus.default.value }"
+          "value": "{ ui.disabled.focus.default.value }",
+          "group": "color"
         },
         "dark": {
-          "value": "{ ui.disabled.focus.default.value }"
+          "value": "{ ui.disabled.focus.default.value }",
+          "group": "color"
         },
         "saturated": {
-          "value": "{ ui.disabled.focus.default.value }"
+          "value": "{ ui.disabled.focus.default.value }",
+          "group": "color"
         }
       },
       "text": {
         "default": {
-          "value": "{ color.black.600 }"
+          "value": "{ color.black.600.value }",
+          "group": "color"
         },
         "light": {
-          "value": "{ ui.disabled.text.default.value }"
+          "value": "{ ui.disabled.text.default.value }",
+          "group": "color"
         },
         "dark": {
-          "value": "{ ui.disabled.text.default.value }"
+          "value": "{ ui.disabled.text.default.value }",
+          "group": "color"
         },
         "saturated": {
-          "value": "{ ui.disabled.text.default.value }"
+          "value": "{ ui.disabled.text.default.value }",
+          "group": "color"
         },
         "hover": {
           "default": {
-            "value": "{ ui.disabled.text.default.value }"
+            "value": "{ ui.disabled.text.default.value }",
+            "group": "color"
           },
           "light": {
-            "value": "{ ui.disabled.text.hover.default.value }"
+            "value": "{ ui.disabled.text.hover.default.value }",
+            "group": "color"
           },
           "dark": {
-            "value": "{ ui.disabled.text.hover.default.value }"
+            "value": "{ ui.disabled.text.hover.default.value }",
+            "group": "color"
           },
           "saturated": {
-            "value": "{ ui.disabled.text.hover.default.value }"
+            "value": "{ ui.disabled.text.hover.default.value }",
+            "group": "color"
           }
         },
         "focus": {
           "default": {
-            "value": "{ ui.disabled.text.default.value }"
+            "value": "{ ui.disabled.text.default.value }",
+            "group": "color"
           },
           "light": {
-            "value": "{ ui.disabled.text.focus.default.value }"
+            "value": "{ ui.disabled.text.focus.default.value }",
+            "group": "color"
           },
           "dark": {
-            "value": "{ ui.disabled.text.focus.default.value }"
+            "value": "{ ui.disabled.text.focus.default.value }",
+            "group": "color"
           },
           "saturated": {
-            "value": "{ ui.disabled.text.focus.default.value }"
+            "value": "{ ui.disabled.text.focus.default.value }",
+            "group": "color"
           }
         }
       }

@@ -37,6 +37,20 @@ StyleDictionary.registerTransform({
   }
 });
 
+StyleDictionary.registerTransform({
+  name: "attribute/bem/global",
+  type: "name",
+  transformer: function(prop, options) {
+    let props = prop.path;
+    _.pull(props, "default");
+    return `${options.prefix}-theme--${_.replace(
+      _.join(props, "--"),
+      /(dark|light|saturated)/,
+      context => `on-${context}`
+    )}`;
+  }
+});
+
 StyleDictionary.registerTransformGroup({
   name: "pf-custom/scss",
   transforms: StyleDictionary.transformGroup["scss"].concat([
@@ -47,6 +61,13 @@ StyleDictionary.registerTransformGroup({
 StyleDictionary.registerTransformGroup({
   name: "pfe-custom/scss",
   transforms: StyleDictionary.transformGroup["scss"].concat(["attribute/bem"])
+});
+
+StyleDictionary.registerTransformGroup({
+  name: "global/scss",
+  transforms: StyleDictionary.transformGroup["scss"].concat([
+    "attribute/bem/global"
+  ])
 });
 
 StyleDictionary.registerFormat({
@@ -81,7 +102,7 @@ const theme = StyleDictionary.extend({
   ],
   platforms: {
     scss: {
-      prefix: "pf",
+      prefix: "pfe",
       buildPath: "maps/",
       transformGroup: "pfe-custom/scss",
       files: [
@@ -94,6 +115,30 @@ const theme = StyleDictionary.extend({
               category: "broadcasted"
             }
           }
+        }
+      ]
+    }
+  }
+});
+
+const colors = StyleDictionary.extend({
+  source: ["../../tokens/color/ui.json", "../../tokens/typography/colors.json"],
+  include: [
+    "../../tokens/global/*.json",
+    "../../tokens/typography/colors.json"
+  ],
+  platforms: {
+    scss: {
+      prefix: "pfe",
+      buildPath: "maps/",
+      transformGroup: "global/scss",
+      files: [
+        {
+          destination: "_colors.scss",
+          format: "scss/bem/map-flat",
+          mapName: "colors",
+          filter: dict =>
+            ["ui", "text", "link"].includes(dict.attributes.category)
         }
       ]
     }
@@ -113,6 +158,7 @@ task("clean", () => {
 task("tokens", cb => {
   variables.buildPlatform("scss");
   theme.buildPlatform("scss");
+  colors.buildPlatform("scss");
   return cb();
 });
 

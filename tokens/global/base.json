@@ -1,9 +1,5 @@
 {
   "color": {
-    "attributes": {
-      "category": "global",
-      "type": "color"
-    },
     "black": {
       "100": {
         "value": "#fafafa"

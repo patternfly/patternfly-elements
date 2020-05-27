@@ -2,12 +2,13 @@
 @import "<%= sassLibraryLocation %>";
 <% } %>
 
-$LOCAL: <%= _.last(_.split(elementName, "-", 2)) %>;
+// Example local variable, using BEM format
+// --<%= elementName %>__region--Property: value;
+$LOCAL-VARIABLES: <%= _.last(_.split(elementName, "-", 2)) %>;
 
 :host {
-  // Example local variable, using BEM format
-  // --<%= elementName %>--Property: value;
-
+  // Avoid printing local variables on host, use the pfe-local() function instead
+  // Example: color: #{pfe-local(Color)};
   display: block;
 }
 

@@ -64,18 +64,11 @@ $LOCAL-VARIABLES: (
     margin: 0 !important;
     max-width: 100%; // added
     text-align: center;
-    // max-width: #{pfe-local($cssvar: MaxWidth, $region: trigger, $fallback: 100%)};
 
     @media screen and (min-width: pfe-breakpoint(xs) ) {
-        // --pfe-navigation__trigger--MaxWidth: 100%; // added
         max-width: 100%;
     }
-    @media screen and (min-width: pfe-breakpoint(sm-desktop, $map: false) ) {
-        // --pfe-navigation__trigger--MaxWidth: 100px; // added
-        max-width: 100px;
-    }
     @media screen and (min-width: pfe-breakpoint(xl) ) {
-        // --pfe-navigation__trigger--MaxWidth: 190px; // added
         max-width: 190px;
     }
 }

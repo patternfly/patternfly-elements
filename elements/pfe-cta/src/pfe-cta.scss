@@ -147,7 +147,7 @@ $LOCAL-VARIABLES: (
     // Default CTA arrow wrap fix for Firefox
     :host(:not([pfe-priority]):not([aria-disabled="true"])) & {
       @include browser-query(firefox) {
-        max-width: calc(100% - 1ch - #{pfe-local($cssvar: size, $region: arrow)});
+        max-width: calc(100% - 1ch - #{pfe-local(size, $region: arrow)});
       }
     }
     @include browser-query(edge) {
@@ -170,7 +170,7 @@ $LOCAL-VARIABLES: (
     z-index: -1;
 
     border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)}
-      #{pfe-local($cssvar: BorderColor, $region: inner)};
+      #{pfe-local(BorderColor, $region: inner)};
     border-radius: 2px;
     outline: none;
 
@@ -183,11 +183,11 @@ $LOCAL-VARIABLES: (
     }
   }
   &--arrow {
-    display: #{pfe-local($cssvar: Display, $region: arrow)};
-    padding: #{pfe-local($cssvar: Padding, $region: arrow)};
+    display: #{pfe-local(Display, $region: arrow)};
+    padding: #{pfe-local(Padding, $region: arrow)};
     fill: #{pfe-local(Color)};
-    width: #{pfe-local($cssvar: size, $region: arrow)};
-    height: #{pfe-local($cssvar: size, $region: arrow)};
+    width: #{pfe-local(size, $region: arrow)};
+    height: #{pfe-local(size, $region: arrow)};
     transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
     margin-bottom: -1px;
     :host(.focus-within) & {

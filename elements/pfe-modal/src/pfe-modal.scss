@@ -44,7 +44,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		width: 100%;
 		top: 0;
 		left: 0;
-		background-color: #{pfe-local($cssvar: BackgroundColor, $region: overlay)};
+		background-color: #{pfe-local(BackgroundColor, $region: overlay)};
 		cursor: pointer;
 
 		&[hidden] {
@@ -126,8 +126,8 @@ $pfe-modal--breakpoint--medium: 640px;
 			fill: 	#{pfe-apply-broadcast(text)};
 			height: #{pfe-var(ui--element--size)};
 			width: 	#{pfe-var(ui--element--size)};
-			height: #{pfe-local($cssvar: size, $region: close)};
-			width: 	#{pfe-local($cssvar: size, $region: close)};
+			height: #{pfe-local(size, $region: close)};
+			width: 	#{pfe-local(size, $region: close)};
 		}
 	}
 }

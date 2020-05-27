@@ -103,7 +103,7 @@
 
   // Since the default bg color is transparent, look to broadcast values
   background-color: #{pfe-local($cssvar: BackgroundColor, $fallback: transparent)};
-  color:            #{pfe-local($cssvar: Color)};
+  color:            #{pfe-local(Color)};
 
   // Border settings
   border: 0 #{pfe-var(surface--border-style)} #{pfe-local($cssvar: BorderColor, $fallback: #{pfe-color(surface--border)})};

@@ -1,32 +1,42 @@
 @import "../../pfe-sass/pfe-sass";
 $LOCAL: toast;
 
+$LOCAL-VARIABLES: (
+  Top: 50px,
+  MaxWidth: 500px,
+  MinWidth: 250px,
+  Right--offset: 50px, // needed with box-shadow
+
+  container: (
+    BackgroundColor: pfe-color(surface--lightest),
+    // BoxShadow: #{pfe-var(box-shadow--lg)},
+    // @TODO update this to use pfe-sass box-shadow variables
+    BoxShadow: #{rgba(3, 3, 3, 0.13) 0px 3px 7px 3px, rgba(3, 3, 3, 0.12) 0px 11px 24px 16px},
+    Color: pfe-color(text),
+    Padding: 1rem
+  ),
+
+  close: (
+    svg--Fill: pfe-color(feedback--default--darkest),
+  	svg--Fill--hover: $pfelements--gray-dark,
+  	svg--Height: 12px,
+  	svg--Width: 12px,
+  
+  	PaddingTop: 0,
+  	PaddingRight: 0,
+  	PaddingBottom: 0,
+  	PaddingLeft: 0
+  )
+);
+
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+  Right: calc(-1 * (#{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)})),
+  close: (
+    Padding: #{pfe-local(PaddingTop, $region: close)} #{pfe-local(PaddingRight, $region: close)} #{pfe-local(PaddingBottom, $region: close)} #{pfe-local(PaddingLeft, $region: close)}
+  )
+));
+
 :host {
-  // local variables
-  --pfe-toast--Top: 50px;
-  --pfe-toast--MaxWidth: 500px;
-  --pfe-toast--MinWidth: 250px;
-  --pfe-toast--Right--offset: 50px; // needed with box-shadow
-  --pfe-toast--Right: calc(-1 * (#{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)}));
-
-  --pfe-toast__container--BackgroundColor: #{pfe-color(surface--lightest)};
-  // --pfe-toast__container--BoxShadow: #{pfe-var(box-shadow--lg)};
-  // @TODO update this to use pfe-sass box-shadow variables
-  --pfe-toast__container--BoxShadow: rgba(3, 3, 3, 0.13) 0px 3px 7px 3px, rgba(3, 3, 3, 0.12) 0px 11px 24px 16px;
-  --pfe-toast__container--Color: #{pfe-color(text)};
-  --pfe-toast__container--Padding: 1rem;
-
-  --pfe-toast__close--svg--Fill:        #{pfe-color(feedback--default--darkest)};
-  --pfe-toast__close--svg--Fill--hover: #{$pfelements--gray-dark};
-  --pfe-toast__close--svg--Height:   12px;
-  --pfe-toast__close--svg--Width:    12px;
-  
-  --pfe-toast__close--PaddingTop:    0;
-  --pfe-toast__close--PaddingRight:  0;
-  --pfe-toast__close--PaddingBottom: 0;
-  --pfe-toast__close--PaddingLeft:   0;
-  --pfe-toast__close--Padding:       #{pfe-local($cssvar: PaddingTop, $region: close)} #{pfe-local($cssvar: PaddingRight, $region: close)} #{pfe-local($cssvar: PaddingBottom, $region: close)} #{pfe-local($cssvar: PaddingLeft, $region: close)};
-  
   // flex parent props
   align-items: stretch;
   display: flex;
@@ -37,9 +47,7 @@ $LOCAL: toast;
   position: absolute;
   right:  #{pfe-local(Right)};
   top:    #{pfe-local(Top)};
-  // @TODO why not use variables?
-  //transition: right #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
-  transition: right 0.5s ease-in-out;
+  transition: right #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
   will-change: right;
   
   max-width: #{pfe-local(MaxWidth)};
@@ -60,7 +68,7 @@ $LOCAL: toast;
 }
 
 :host(:not(.open)){
-  --pfe-toast--Right: calc(-1 * (#{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)}));
+   --pfe-toast--Right: calc(-1 * #{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)});
 }
 
 ::slotted(:first-child) {
@@ -89,10 +97,10 @@ $LOCAL: toast;
     flex-flow: row nowrap;
     justify-content: flex-start;
 
-    background-color: #{pfe-local($cssvar: BackgroundColor, $region: container)};
-    box-shadow:       #{pfe-local($cssvar: BoxShadow, $region: container)};
-    color:            #{pfe-local($cssvar: Color, $region: container)};
-    padding:          #{pfe-local($cssvar: Padding, $region: container)};
+    background-color: #{pfe-local(BackgroundColor, $region: container)};
+    box-shadow:       #{pfe-local(BoxShadow, $region: container)};
+    color:            #{pfe-local(Color, $region: container)};
+    padding:          #{pfe-local(Padding, $region: container)};
   }
   &__content {
     // flex child props
@@ -106,17 +114,17 @@ $LOCAL: toast;
     border: none;
     cursor: pointer;
     margin: 0;
-    padding: #{pfe-local($cssvar: Padding, $region: close)};
+    padding: #{pfe-local(Padding, $region: close)};
     
     & > svg {
-      fill:   #{pfe-local($cssvar: svg--Fill, $region: close)};
-      height: #{pfe-local($cssvar: svg--Height, $region: close)};
-      width:  #{pfe-local($cssvar: svg--Width, $region: close)};
+      fill:   #{pfe-local(svg--Fill, $region: close)};
+      height: #{pfe-local(svg--Height, $region: close)};
+      width:  #{pfe-local(svg--Width, $region: close)};
     }
     
     &:hover {
       & > svg {
-        fill: #{pfe-local($cssvar: svg--Fill--hover, $region: close)};
+        fill: #{pfe-local(svg--Fill--hover, $region: close)};
       }
     }
   }

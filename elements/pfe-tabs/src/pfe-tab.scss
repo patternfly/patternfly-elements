@@ -28,24 +28,24 @@ $LOCAL-VARIABLES: (
   margin: #{pfe-local($cssvar: Margin, $region: tab, $fallback: 0 0 -1px)};
 
   // Padding
-  padding: #{pfe-local($cssvar: PaddingTop, $region: tab)} #{pfe-local($cssvar: PaddingRight, $region: tab)} #{pfe-local($cssvar: PaddingBottom, $region: tab)} #{pfe-local($cssvar: PaddingLeft, $region: tab)};
+  padding: #{pfe-local(PaddingTop, $region: tab)} #{pfe-local(PaddingRight, $region: tab)} #{pfe-local(PaddingBottom, $region: tab)} #{pfe-local(PaddingLeft, $region: tab)};
 
   // Border
-  border-top:     #{pfe-local($cssvar: BorderTop, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local($cssvar: BorderColor, $region: tab, $fallback: transparent)} )};
-  border-right:   #{pfe-local($cssvar: BorderRight, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local($cssvar: BorderColor, $region: tab, $fallback: transparent)} )};
+  border-top:     #{pfe-local($cssvar: BorderTop, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, transparent, $region: tab)} )};
+  border-right:   #{pfe-local($cssvar: BorderRight, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, transparent, $region: tab)} )};
   border-bottom:  #{pfe-local($cssvar: BorderBottom, $region: tab, $fallback: 0)};
-  border-left:    #{pfe-local($cssvar: BorderLeft, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local($cssvar: BorderColor, $region: tab, $fallback: transparent)} )};
+  border-left:    #{pfe-local($cssvar: BorderLeft, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, transparent, $region: tab)} )};
 
   // Inner style
   background-color: #{pfe-local(BackgroundColor)};
   color: #{pfe-local(Color)};
 
   // Exposing this for customization
-  text-transform: #{pfe-local($cssvar: TextTransform, $region: tab, $fallback: none)};
+  text-transform: #{pfe-local(TextTransform, none, $region: tab)};
   font-weight: #{pfe-var(font-weight--normal)};
 
   cursor: pointer;
-  text-align: #{pfe-local($cssvar: TextAlign, $region: tab, $fallback: center)};
+  text-align: #{pfe-local(TextAlign, center, $region: tab)};
   
   ::slotted(*) {
     color: #{pfe-local(Color)} !important;

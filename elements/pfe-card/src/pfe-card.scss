@@ -161,8 +161,8 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   &__header {
     z-index: 2;
     // Declare the header background color
-    background-color: #{pfe-local($cssvar: BackgroundColor, $region: header)};
-    color:            #{pfe-local($cssvar: Color, $region: header)};
+    background-color: #{pfe-local(BackgroundColor, $region: header)};
+    color:            #{pfe-local(Color, $region: header)};
     @include browser-query(ie11) {
       background-color: #{map-get($pfe-colors, surface--lighter)} !important;
       color: #{pfe-color(text)} !important;
@@ -232,10 +232,10 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
     margin-top: auto; // This allows the footer to move to the very bottom
 
     display: flex;
-    flex-direction: #{pfe-local($cssvar: Row, $region: footer, $fallback: row)};
-    flex-wrap: #{pfe-local($cssvar: Wrap, $region: footer, $fallback: wrap)};
+    flex-direction: #{pfe-local(Row, row, $region: footer)};
+    flex-wrap: #{pfe-local(Wrap, wrap, $region: footer)};
     // Aligns buttons and CTAs
-    align-items: #{pfe-local($cssvar: AlignItems, $region: footer, $fallback: baseline)};
+    align-items: #{pfe-local(AlignItems, baseline, $region: footer)};
 
     ::slotted([pfe-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);

@@ -22,19 +22,19 @@ $LOCAL-VARIABLES: (
 
   .tabs {  
     display: flex;
-    flex-direction: #{pfe-local($cssvar: FlexDirection, $region: tabs, $fallback: row)};
-    width: #{pfe-local($cssvar: Width, $region: tabs, $fallback: auto)};
+    flex-direction: #{pfe-local(FlexDirection, row, $region: tabs)};
+    width: #{pfe-local(Width, auto, $region: tabs)};
 
     border-top:    #{pfe-local($cssvar: BorderTop, $region: tabs, $fallback: 0)};
     border-right:  #{pfe-local($cssvar: BorderRight, $region: tabs, $fallback: 0)};
-    border-bottom: #{pfe-local($cssvar: BorderBottom, $region: tabs, $fallback: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local($cssvar: BorderColor, $region: tabs)} )};
+    border-bottom: #{pfe-local($cssvar: BorderBottom, $region: tabs, $fallback: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, $region: tabs)} )};
     border-left:   #{pfe-local($cssvar: BorderLeft, $region: tabs, $fallback: 0)};
 
     padding: #{pfe-local($cssvar: Padding, $region: tabs, $fallback: 0)};
   }
 
   .panels {
-    width: #{pfe-local($cssvar: Width, $region: panels, $fallback: auto)};
+    width: #{pfe-local(Width, auto, $region: panels)};
 
     padding-top: #{pfe-local($cssvar: PaddingTop, $region: panels, $fallback: 0)};
     padding-right: #{pfe-local($cssvar: PaddingRight, $region: panels, $fallback: 0)};

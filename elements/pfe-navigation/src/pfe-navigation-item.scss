@@ -139,7 +139,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
   border-left:        #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
   background-color:   #{pfe-local(BackgroundColor)};
   color:              #{pfe-local(Color)};
-  padding:            #{pfe-local($cssvar: Padding, $region: trigger)};
+  padding:            #{pfe-local(Padding, $region: trigger)};
   position:           relative;
   display:            flex;
   flex-grow:          1;
@@ -196,7 +196,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
     --pfe-navigation--Color: #{pfe-color(text)};
 
     @each $prop in $BROADCAST-VARS {
-      --pfe-broadcasted--#{$prop}: #{pfe-local($cssvar: Color, $region: tray)};
+      --pfe-broadcasted--#{$prop}: #{pfe-local(Color, $region: tray)};
     }
 
     @include pfe-accordion-variables;
@@ -310,10 +310,10 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
     top: 100%;
     left: 0;
 
-    background-color: #{pfe-local($cssvar: BackgroundColor, $region: tray)};
-    color:            #{pfe-local($cssvar: Color, $region: tray)};
+    background-color: #{pfe-local(BackgroundColor, $region: tray)};
+    color:            #{pfe-local(Color, $region: tray)};
     //mobile tray padding
-    padding: #{pfe-local($cssvar: Padding, $region: tray)};
+    padding: #{pfe-local(Padding, $region: tray)};
     width: 100%;
     max-height: calc(100vh - #{pfe-local(Height)});
     overflow-x: hidden;
@@ -376,7 +376,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
 
 :host([is_nested][parent_hidden][pfe-full-width]) {
   .pfe-navigation-item__tray {
-    padding: #{pfe-local($cssvar: Padding, $region: tray)} 0 #{pfe-local($cssvar: Padding, $region: tray)} 0;
+    padding: #{pfe-local(Padding, $region: tray)} 0 #{pfe-local(Padding, $region: tray)} 0;
   }
 }
 

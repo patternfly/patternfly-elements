@@ -2,15 +2,21 @@
 @import "../../pfe-sass/pfe-sass";
 
 
-$LOCAL: jump;
+$LOCAL: jump-links;
 
 $variables: (
-  // Padding: calc(#{pfe-var(container-spacer)} * 2),
-  // BackgroundColor: pfe-color(surface--base),
+  Padding: calc(#{pfe-var(container-spacer)} / 2),
+  BackgroundColor: pfe-color(surface--base),
+  BorderColor: #{pfe-color(ui-base)},
+  FontSize: #{pfe-var(font-size--heading--epsilon)},
+  heading: (
+    FontSize: #{pfe-var(font-size--heading--zeta)}
+  ),
 );
 
 :host {
-  nav{
+  @include pfe-print-variables($variables);
+	nav{
     visibility: visible;
   }
   pfe-accordion{
@@ -18,10 +24,9 @@ $variables: (
     --pfe-accordion--BorderColor: #ccc;
     --pfe-accordion--BorderColor--accent: transparent;
     --pfe-accordion--accent: transparent;
-    --pfe-theme--color--surface--border: transparent;
-    --pfe-theme--color--ui-base--on-dark: transparent;
-    --pfe-theme--color--ui-base: transparent;
-    button{
+    --pfe-accordion--BorderColor: transparent;
+    --pfe-accordion--BorderColor--accent: transparent;
+	  button{
       text-decoration: none;
     }
   }
@@ -50,7 +55,7 @@ $variables: (
   &--heading {
     margin: 0;
     margin-bottom: calc(#{pfe-var(container-spacer)} * 1);
-    font-size: #{pfe-var(font-size--heading--zeta)};
+    font-size: #{pfe-local($cssvar: FontSize, $region: heading)};
     font-weight: #{pfe-var(font-weight--normal)};
     text-transform: uppercase;
     @media(max-width: 992px) {
@@ -83,8 +88,8 @@ $variables: (
   a {
     display: table;
     text-decoration: none;
-    font-size: #{pfe-var(font-size)};
-    padding: calc(#{pfe-var(container-spacer)} / 2);
+    font-size: #{pfe-local(FontSize)};
+    padding: #{pfe-local(Padding)};
     line-height: #{pfe-var(line-height)};
     border-left: 3px solid transparent;
     position: relative;
@@ -136,7 +141,7 @@ $variables: (
 
   li {
     &[active] {
-      border-left: 3px solid #{pfe-color(link)};
+      border-left: 3px solid #{pfe-local(BorderColor)};
     }
   }
 

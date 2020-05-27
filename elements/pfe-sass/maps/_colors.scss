@@ -27,9 +27,9 @@ $pfe-colors: (
   // ========================================================================
 
   // Set of base colors
-  ui-base:                            $pfelements--blue,
-  ui-base--hover:                     darken($pfelements--blue, 20%),
-  ui-base--focus:                     darken($pfelements--blue, 20%),
+  ui-base:                            $pf-color-black-300,
+  ui-base--hover:                     $pf-color-black-400,
+  ui-base--focus:                     $pf-color-black-400,
   ui-base--text:                      $pfe-color--text--on-dark,
   ui-base--text--hover:               $pfe-color--text--on-dark,
   ui-base--text--focus:               $pfe-color--text--on-dark,
@@ -49,9 +49,9 @@ $pfe-colors: (
   ui-base--text--focus--on-saturated:      $pfe-color--text,
 
   // Set of complement colors
-  ui-complement:                      $pfe-color--gray-800,
-  ui-complement--hover:               $pfe-color--gray-1000,
-  ui-complement--focus:               $pfe-color--gray-1000,
+  ui-complement:                      $pf-color-black-600,
+  ui-complement--hover:               $pf-color-black-700,
+  ui-complement--focus:               $pf-color-black-700,
   ui-complement--text:                $pfe-color--text--on-dark,
   ui-complement--text--hover:         $pfe-color--text--on-dark,
   ui-complement--text--focus:         $pfe-color--text--on-dark,
@@ -64,9 +64,9 @@ $pfe-colors: (
   ui-complement--text--focus--on-dark:         $pfe-color--text,
 
   // Set of accent colors
-  ui-accent:                          $pfelements--red,
-  ui-accent--hover:                   darken($pfelements--red, 20%),
-  ui-accent--focus:                   darken($pfelements--red, 20%),
+  ui-accent:                          $pfelements--blue,
+  ui-accent--hover:                   darken($pfelements--blue, 20%),
+  ui-accent--focus:                   darken($pfelements--blue, 20%),
   ui-accent--text:                    $pfe-color--text--on-dark,
   ui-accent--text--hover:             $pfe-color--text--on-dark,
   ui-accent--text--focus:             $pfe-color--text--on-dark,

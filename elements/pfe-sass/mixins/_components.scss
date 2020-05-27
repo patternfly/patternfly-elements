@@ -22,17 +22,17 @@
 
     @if $theme == dark { // Dark theme
       $variables: map-merge($variables, (
-        accent: #{pfe-color(ui-base--on-dark)}
+        accent: #{pfe-color(ui-accent--on-dark)}
       ));
     }
     @else if $theme == saturated { // Saturated theme
       $variables: map-merge($variables, (
-        accent: #{pfe-color(ui-base--on-saturated)}
+        accent: #{pfe-color(ui-accent--on-saturated)}
       ));
     }
     @else { // Light theme
       $variables: map-merge($variables, (
-        accent: #{pfe-color(ui-base)}
+        accent: #{pfe-color(ui-accent)}
       ));
     }
     @if $variant == disclosure {

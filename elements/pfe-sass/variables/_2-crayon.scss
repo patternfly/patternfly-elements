@@ -1,3 +1,5 @@
+//@import "~@patternfly/patternfly/sass-utilities/colors";
+@import "../../../node_modules/@patternfly/patternfly/sass-utilities/colors";
 // ========================================================================
 // CRAYON COLORS for PFElements
 //
@@ -20,7 +22,7 @@ $pfelements--orange:            #fe460d !default;
 $pfelements--orange-dark:       #e23b0e !default;
 $pfelements--orange-darkest:    #ad2b0c !default;
 
-$pfelements--blue:              #0477a4 !default;
+$pfelements--blue:              $pf-color-blue-400 !default;
 $pfelements--blue-dark:         #046a89 !default;
 $pfelements--blue-darkest:      #044554 !default;
 
@@ -115,7 +117,8 @@ $pfe-color--blue-50:             lighten($pfelements--blue, 60%) !default;
 $pfe-color--blue-100:            lighten($pfelements--blue, 50%) !default;
 $pfe-color--blue-200:            lighten($pfelements--blue, 40%) !default;
 $pfe-color--blue-300:            lighten($pfelements--blue, 30%) !default;
-$pfe-color--blue-400:            lighten($pfelements--blue, 20%) !default;
+$pfe-color--blue-400:            $pf-color-blue-400;
+//$pfe-color--blue-400:            lighten($pfelements--blue, 20%) !default;
 $pfe-color--blue-500:            lighten($pfelements--blue, 10%) !default;
 $pfe-color--blue-600:            $pfelements--blue !default;              // Aliased
 $pfe-color--blue-700:            darken($pfelements--blue, 10%) !default;

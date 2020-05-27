@@ -1,47 +1,128 @@
 {
-  "text": {
-    "default": { "value": "$pf-color-black-800" },
-    "on-dark": { "value": "$pf-color-white" },
-    "on-saturated": { "value": "$pf-color-white" }
-  },
-  "link": {
-    "default": { "value": "$pf-color-blue-400" },
-    "on-dark": { "value": "$pf-color-blue-100" },
-    "on-saturated": { "value": "$pf-color-white" },
-    "visited": {
-      "default": { "value": "$pf-color-purple-600" },
-      "on-dark": { "value": "$pf-color-purple-300" },
-      "on-saturated": { "value": "$pf-color-purple-300" }
+  "broadcasted": {
+    "text": {
+      "attributes": {
+        "category": "broadcasted",
+        "type": "color"
+      },
+      "default": {
+        "value": "{ text.default.value }"
+      },
+      "light": {
+        "value": "{ text.light.value }"
+      },
+      "dark": {
+        "value": "{ text.dark.value }"
+      },
+      "saturated": {
+        "value": "{ text.saturated.value }"
+      }
     },
-    "hover": {
-      "default": { "value": "$pf-color-blue-500" },
-      "on-dark": { "value": "$pf-color-blue-50" },
-      "on-saturated": { "value": "$pf-color-white" }
+    "link": {
+      "attributes": {
+        "category": "broadcasted",
+        "type": "color"
+      },
+      "default": {
+        "value": "{ link.default.value }"
+      },
+      "light": {
+        "value": "{ link.light.value }"
+      },
+      "dark": {
+        "value": "{ link.dark.value }"
+      },
+      "saturated": {
+        "value": "{ link.saturated.value }"
+      },
+      "visited": {
+        "default": {
+          "value": "{ link.visited.default.value }"
+        },
+        "light": {
+          "value": "{ link.visited.light.value }"
+        },
+        "dark": {
+          "value": "{ link.visited.dark.value }"
+        },
+        "saturated": {
+          "value": "{ link.visited.saturated.value }"
+        }
+      },
+      "hover": {
+        "default": {
+          "value": "{ link.hover.default.value }"
+        },
+        "light": {
+          "value": "{ link.hover.light.value }"
+        },
+        "dark": {
+          "value": "{ link.hover.dark.value }"
+        },
+        "saturated": {
+          "value": "{ link.hover.saturated.value }"
+        }
+      },
+      "focus": {
+        "default": {
+          "value": "{ link.focus.default.value }"
+        },
+        "light": {
+          "value": "{ link.focus.light.value }"
+        },
+        "dark": {
+          "value": "{ link.focus.dark.value }"
+        },
+        "saturated": {
+          "value": "{ link.focus.saturated.value }"
+        }
+      }
     },
-    "focus": {
-      "default": { "value": "$pf-color-blue-500" },
-      "on-dark": { "value": "$pf-color-blue-50" },
-      "on-saturated": { "value": "$pf-color-white" }
-    }
-  },
-  "link-decoration": {
-    "default": { "value": "none" },
-    "on-dark": { "value": "none" },
-    "on-saturated": { "value": "underline" },
-    "visited": {
-      "default": { "value": "none" },
-      "on-dark": { "value": "none" },
-      "on-saturated": { "value": "underline" }
-    },
-    "hover": {
-      "default": { "value": "underline" },
-      "on-dark": { "value": "underline" },
-      "on-saturated": { "value": "underline" }
-    },
-    "focus": {
-      "default": { "value": "underline" },
-      "on-dark": { "value": "underline" },
-      "on-saturated": { "value": "underline" }
+    "link-decoration": {
+      "category": "broadcasted",
+      "type": "link-decoration",
+      "default": {
+        "value": "none"
+      },
+      "dark": {
+        "value": "none"
+      },
+      "saturated": {
+        "value": "underline"
+      },
+      "visited": {
+        "default": {
+          "value": "none"
+        },
+        "dark": {
+          "value": "none"
+        },
+        "saturated": {
+          "value": "underline"
+        }
+      },
+      "hover": {
+        "default": {
+          "value": "underline"
+        },
+        "dark": {
+          "value": "underline"
+        },
+        "saturated": {
+          "value": "underline"
+        }
+      },
+      "focus": {
+        "default": {
+          "value": "underline"
+        },
+        "dark": {
+          "value": "underline"
+        },
+        "saturated": {
+          "value": "underline"
+        }
+      }
     }
   }
 }

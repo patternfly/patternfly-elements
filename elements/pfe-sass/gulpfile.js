@@ -29,7 +29,11 @@ StyleDictionary.registerTransform({
   name: "attribute/bem",
   type: "name",
   transformer: function(prop, options) {
-    return `${options.prefix}--${_.pull(prop.path, "default").join("--")}`;
+    return `${options.prefix}-${_.replace(
+      _.pull(prop.path, "default").join("--"),
+      /(dark|light|saturated)/,
+      context => `on-${context}`
+    )}`;
   }
 });
 
@@ -46,14 +50,14 @@ StyleDictionary.registerTransformGroup({
 });
 
 StyleDictionary.registerFormat({
-  name: "scss/bem/map-deep",
+  name: "scss/bem/map-flat",
   formatter: _.template(
     fs.readFileSync("../../tokens/templates/.scss-bem.template")
   )
 });
 
 const variables = StyleDictionary.extend({
-  source: ["../../tokens/color/*.json"],
+  source: ["../../tokens/global/*.json"],
   platforms: {
     scss: {
       prefix: "pf",
@@ -71,16 +75,25 @@ const variables = StyleDictionary.extend({
 
 const theme = StyleDictionary.extend({
   source: ["../../tokens/typography/broadcasted.json"],
+  include: [
+    "../../tokens/global/*.json",
+    "../../tokens/typography/colors.json"
+  ],
   platforms: {
     scss: {
-      prefix: "pfe-broadcasted",
+      prefix: "pf",
       buildPath: "maps/",
       transformGroup: "pfe-custom/scss",
       files: [
         {
           destination: "_broadcasted.scss",
-          format: "scss/bem/map-deep",
-          mapName: "pfe-broadcasted"
+          format: "scss/bem/map-flat",
+          mapName: "broadcasted",
+          filter: {
+            attributes: {
+              category: "broadcasted"
+            }
+          }
         }
       ]
     }

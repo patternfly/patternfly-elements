@@ -1,52 +1,61 @@
-
 //  Do not edit directly
-//  Generated on Tue, 26 May 2020 21:17:10 GMT
+//  Generated on Wed, 27 May 2020 15:43:57 GMT
 
 
-// --pfe-broadcasted--text: $pf-color-black-800;
-// --pfe-broadcasted--text--on-dark: $pf-color-white;
-// --pfe-broadcasted--text--on-saturated: $pf-color-white;
-// --pfe-broadcasted--link: $pf-color-blue-400;
-// --pfe-broadcasted--link--on-dark: $pf-color-blue-100;
-// --pfe-broadcasted--link--on-saturated: $pf-color-white;
-// --pfe-broadcasted--link--visited: $pf-color-purple-600;
-// --pfe-broadcasted--link--visited--on-dark: $pf-color-purple-300;
-// --pfe-broadcasted--link--visited--on-saturated: $pf-color-purple-300;
-// --pfe-broadcasted--link--hover: $pf-color-blue-500;
-// --pfe-broadcasted--link--hover--on-dark: $pf-color-blue-50;
-// --pfe-broadcasted--link--hover--on-saturated: $pf-color-white;
-// --pfe-broadcasted--link--focus: $pf-color-blue-500;
-// --pfe-broadcasted--link--focus--on-dark: $pf-color-blue-50;
-// --pfe-broadcasted--link--focus--on-saturated: $pf-color-white;
-// --pfe-broadcasted--link-decoration: none;
-// --pfe-broadcasted--link-decoration--on-dark: none;
-// --pfe-broadcasted--link-decoration--on-saturated: underline;
-// --pfe-broadcasted--link-decoration--visited: none;
-// --pfe-broadcasted--link-decoration--visited--on-dark: none;
-// --pfe-broadcasted--link-decoration--visited--on-saturated: underline;
-// --pfe-broadcasted--link-decoration--hover: underline;
-// --pfe-broadcasted--link-decoration--hover--on-dark: underline;
-// --pfe-broadcasted--link-decoration--hover--on-saturated: underline;
-// --pfe-broadcasted--link-decoration--focus: underline;
-// --pfe-broadcasted--link-decoration--focus--on-dark: underline;
-// --pfe-broadcasted--link-decoration--focus--on-saturated: underline;
+// --pf-broadcasted--text: #3c3f42;
+// --pf-broadcasted--text--on-light: #3c3f42;
+// --pf-broadcasted--text--on-dark: #ffffff;
+// --pf-broadcasted--text--on-saturated: #ffffff;
+// --pf-broadcasted--link: #0066cc;
+// --pf-broadcasted--link--on-light: #0066cc;
+// --pf-broadcasted--link--on-dark: #73bcf7;
+// --pf-broadcasted--link--on-saturated: #ffffff;
+// --pf-broadcasted--link--visited: #6753ac;
+// --pf-broadcasted--link--visited--on-light: #6753ac;
+// --pf-broadcasted--link--visited--on-dark: #cbc1ff;
+// --pf-broadcasted--link--visited--on-saturated: #cbc1ff;
+// --pf-broadcasted--link--hover: #004080;
+// --pf-broadcasted--link--hover--on-light: #004080;
+// --pf-broadcasted--link--hover--on-dark: #73bcf7;
+// --pf-broadcasted--link--hover--on-saturated: #ffffff;
+// --pf-broadcasted--link--focus: #004080;
+// --pf-broadcasted--link--focus--on-light: #004080;
+// --pf-broadcasted--link--focus--on-dark: #73bcf7;
+// --pf-broadcasted--link--focus--on-saturated: #ffffff;
+// --pf-broadcasted--link-decoration: none;
+// --pf-broadcasted--link-decoration--on-dark: none;
+// --pf-broadcasted--link-decoration--on-saturated: underline;
+// --pf-broadcasted--link-decoration--visited: none;
+// --pf-broadcasted--link-decoration--visited--on-dark: none;
+// --pf-broadcasted--link-decoration--visited--on-saturated: underline;
+// --pf-broadcasted--link-decoration--hover: underline;
+// --pf-broadcasted--link-decoration--hover--on-dark: underline;
+// --pf-broadcasted--link-decoration--hover--on-saturated: underline;
+// --pf-broadcasted--link-decoration--focus: underline;
+// --pf-broadcasted--link-decoration--focus--on-dark: underline;
+// --pf-broadcasted--link-decoration--focus--on-saturated: underline;
 
-$pfe-broadcasted: (
-	"text": $pf-color-black-800,
-	"text--on-dark": $pf-color-white,
-	"text--on-saturated": $pf-color-white,
-	"link": $pf-color-blue-400,
-	"link--on-dark": $pf-color-blue-100,
-	"link--on-saturated": $pf-color-white,
-	"link--visited": $pf-color-purple-600,
-	"link--visited--on-dark": $pf-color-purple-300,
-	"link--visited--on-saturated": $pf-color-purple-300,
-	"link--hover": $pf-color-blue-500,
-	"link--hover--on-dark": $pf-color-blue-50,
-	"link--hover--on-saturated": $pf-color-white,
-	"link--focus": $pf-color-blue-500,
-	"link--focus--on-dark": $pf-color-blue-50,
-	"link--focus--on-saturated": $pf-color-white,
+$broadcasted: (
+	"text": #3c3f42,
+	"text--on-light": #3c3f42,
+	"text--on-dark": #ffffff,
+	"text--on-saturated": #ffffff,
+	"link": #0066cc,
+	"link--on-light": #0066cc,
+	"link--on-dark": #73bcf7,
+	"link--on-saturated": #ffffff,
+	"link--visited": #6753ac,
+	"link--visited--on-light": #6753ac,
+	"link--visited--on-dark": #cbc1ff,
+	"link--visited--on-saturated": #cbc1ff,
+	"link--hover": #004080,
+	"link--hover--on-light": #004080,
+	"link--hover--on-dark": #73bcf7,
+	"link--hover--on-saturated": #ffffff,
+	"link--focus": #004080,
+	"link--focus--on-light": #004080,
+	"link--focus--on-dark": #73bcf7,
+	"link--focus--on-saturated": #ffffff,
 	"link-decoration": none,
 	"link-decoration--on-dark": none,
 	"link-decoration--on-saturated": underline,

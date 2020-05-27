@@ -1,21 +1,5 @@
 <%
-//
-// Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License").
-// You may not use this file except in compliance with the License.
-// A copy of the License is located at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// or in the "license" file accompanying this file. This file is distributed
-// on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-// express or implied. See the License for the specific language governing
-// permissions and limitations under the License.
-
-%>
-<%
-    // for backward compatibility we need to have the user explicitly hide it
+    // For backward compatibility, need user to explicitly hide
     var showFileHeader = (this.options && this.options.hasOwnProperty('showFileHeader')) ? this.options.showFileHeader : true;
     if(showFileHeader) {
         var header = '';
@@ -27,8 +11,8 @@
 
     print("\n");
 
-    // output the list of tokens as Sass variables
-    //
+    // Output the list of possible CSS variable hooks with default
+    let context = this.mapName;
     _.each(allProperties, function(prop) {
         var output = '';
         if(prop.comment) {
@@ -44,7 +28,7 @@
     // output the list of tokens as a Sass nested map
     // (the values are pointing to the variables)
     //
-    print(`$${this.mapName||'tokens'}: (${processJsonNode(properties, this.mapName).join(",")}\n);\n`);
+    print(`$${context||'tokens'}: (${processJsonNode(properties, this.mapName).join(",")}\n);\n`);
 
     // recursive function to process a properties JSON node
     //
@@ -52,7 +36,7 @@
         var output = [];
         if (obj.hasOwnProperty('value')) {
             // if we have found a leaf (a property with a value) append the value
-            output.push(`\n\t"${_.replace(obj.name, `${root}--`, "")}": ${obj.value}`);
+            output.push(`\n\t"${_.replace(_.pull(obj.path, root).join("--"), /(dark|light|saturated)/, context => `on-${context}`)}": ${obj.value}`);
         } else {
             // if we have found a group of properties, use the Sass group "(...)" syntax and loop -recursively- on the children
             output.push(Object.keys(obj).map((newKey) => processJsonNode(obj[newKey], root)));

@@ -1,0 +1,81 @@
+{
+  "comment": "Base text and link colors, basis of theme",
+  "text": {
+    "attributes": {
+      "category": "typography",
+      "type": "color"
+    },
+    "default": {
+      "value": "{ color.black.800.value }"
+    },
+    "light": {
+      "value": "{ text.default.value }"
+    },
+    "dark": {
+      "value": "{ color.white.value }"
+    },
+    "saturated": {
+      "value": "{ color.white.value }"
+    }
+  },
+  "link": {
+    "attributes": {
+      "category": "color",
+      "type": "color"
+    },
+    "default": {
+      "value": "{ color.blue.400.value }"
+    },
+    "light": {
+      "value": "{ link.default.value }"
+    },
+    "dark": {
+      "value": "{ color.blue.200.value }"
+    },
+    "saturated": {
+      "value": "{ color.white.value }"
+    },
+    "visited": {
+      "default": {
+        "value": "{ color.purple.500.value }"
+      },
+      "light": {
+        "value": "{ link.visited.default.value }"
+      },
+      "dark": {
+        "value": "{ color.purple.100.value }"
+      },
+      "saturated": {
+        "value": "{ color.purple.100.value }"
+      }
+    },
+    "hover": {
+      "default": {
+        "value": "{ color.blue.500.value }"
+      },
+      "light": {
+        "value": "{ link.hover.default.value }"
+      },
+      "dark": {
+        "value": "{ color.blue.200.value }"
+      },
+      "saturated": {
+        "value": "{ color.white.value }"
+      }
+    },
+    "focus": {
+      "default": {
+        "value": "{ color.blue.500.value }"
+      },
+      "light": {
+        "value": "{ link.focus.default.value }"
+      },
+      "dark": {
+        "value": "{ color.blue.200.value }"
+      },
+      "saturated": {
+        "value": "{ color.white.value }"
+      }
+    }
+  }
+}

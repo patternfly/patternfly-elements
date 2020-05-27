@@ -1,0 +1,20 @@
+{
+  "color": {
+    "brand": {
+      "primary": { "value": "#e00" },
+      "red": { "value": "#e00" }
+    },
+    "red": {
+      "50": { "value": "#ffeeee" }
+    },
+    "orange": {
+      "50": { "value": "#ffe1d8" }
+    },
+    "gold": {
+      "50": { "value": "#fffbf0" }
+    },
+    "green": {
+      "50": { "value": "#f7fcec" }
+    }
+  }
+}

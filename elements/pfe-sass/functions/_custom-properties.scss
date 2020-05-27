@@ -192,14 +192,6 @@
 ///     ```
 /// ===========================================================================
 @function pfe-local($cssvar, $fallback: null, $region: null) {
-    // If a region value exists, build the region string
-    @if $region != null {
-        $region: "__#{$region}";
-    }
-
-    // Start building the variable declaration
-    $var-declaration: "--#{$repo}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')}";
-
     // If a fallback is not defined, use the global variables map
     @if $fallback == null and length($LOCAL-VARIABLES) > 0 {
         @if $region == null {
@@ -212,6 +204,14 @@
             }
         }
     }
+
+    // If a region value exists, build the region string
+    @if $region != null {
+        $region: "__#{$region}";
+    }
+
+    // Start building the variable declaration
+    $var-declaration: "--#{$repo}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')}";
 
     // @warn $var-declaration", "$fallback;
     

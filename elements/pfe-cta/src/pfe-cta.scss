@@ -1,7 +1,6 @@
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: cta;
-
  
 $pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
 $pfe-cta--Color--fallback: #003366;
@@ -27,8 +26,10 @@ $LOCAL-VARIABLES: (
   TextDecoration--hover: none,
   TextDecoration--focus: none,
   FontWeight: #{pfe-var(font-weight--bold)},
+  FontFamily: #{pfe-var(font-family--heading)},
   FontSize:  #{pfe-var(font-size)},
-  FontSize--priority: calc(#{pfe-local($cssvar: FontSize) / 1.125}),
+  FontSize--priority: calc(#{pfe-local(FontSize) / 1.125}),
+  LineHeight: #{pfe-var(line-height)},
   arrow: (
     Display: inline,
     Padding: #{$arrow-basic},
@@ -43,8 +44,6 @@ $LOCAL-VARIABLES: (
 );
 
 :host {
-// @include pfe-print-variables($LOCAL-VARIABLES);
-
   display: inline-block;
   position: relative;
   z-index: 0;
@@ -99,18 +98,12 @@ $LOCAL-VARIABLES: (
 ::slotted(*) {
   white-space: normal; 
   display: inline; 
-  padding: #{pfe-local($cssvar: Padding)} !important;
+  padding: #{pfe-local(Padding)} !important;
   color: #{pfe-local(Color, $pfe-cta--Color--fallback)} !important;
-  font-family: #{pfe-local(
-      $cssvar: FontFamily,
-      $fallback: #{pfe-var(font-family--heading)}
-    )};
-  font-size: #{pfe-local($cssvar: FontSize, $fallback: #{pfe-var(font-size)})};
+  font-family: #{pfe-local(FontFamily)};
+  font-size: #{pfe-local(FontSize)};
   font-weight: #{pfe-local(FontWeight)};
-  line-height: #{pfe-local(
-      $cssvar: LineHeight,
-      $fallback: #{pfe-var(line-height)}
-    )};
+  line-height: #{pfe-local(LineHeight)};
   text-decoration: #{pfe-local(TextDecoration)} !important;
 
   @include browser-query(ie11 edge) {
@@ -124,12 +117,12 @@ $LOCAL-VARIABLES: (
 
   :host([pfe-priority]) & {
     text-align: center;
-    font-size: #{pfe-local($cssvar: FontSize--priority, $fallback: #{pfe-var(font-size)})};
+    font-size: #{pfe-local(FontSize--priority)};
   }
 
   :host([aria-disabled="true"]) & {
     cursor: default !important;
-    font-size: #{pfe-local($cssvar: FontSize--priority, $fallback: #{pfe-var(font-size)})};
+    font-size: #{pfe-local(FontSize--priority)};
   }
 }
 
@@ -218,9 +211,7 @@ $LOCAL-VARIABLES: (
 
 :host([pfe-priority]),
 :host([aria-disabled="true"]) {
-  --pfe-cta--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(
-          container-padding
-        )} * 2);
+  --pfe-cta--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
 }
 
 @each $theme in $THEMES {

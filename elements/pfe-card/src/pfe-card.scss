@@ -2,7 +2,6 @@
 
 $LOCAL: card;
 
-
 $LOCAL-VARIABLES: (
 
   // Individual padding overrides available
@@ -11,14 +10,8 @@ $LOCAL-VARIABLES: (
   PaddingBottom: calc(#{pfe-var(container-spacer)} * 2),
   PaddingLeft: calc(#{pfe-var(container-spacer)} * 2),
 
-  // Combine above variables or allow single override point via variable
-  Padding: #{pfe-local(PaddingTop)} #{pfe-local(PaddingRight)} #{pfe-local(PaddingBottom)} #{pfe-local(PaddingLeft)},
-
   //-- Border settings
   BorderRadius: pfe-var(surface--border-radius),
-
-  //-- Border variable encompasses width, style, and color
-  Border: #{pfe-local(BorderWidth, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, #{pfe-color(surface--border)})},
 
   //-- Color properties
   BackgroundColor: pfe-color(surface--base),
@@ -26,11 +19,8 @@ $LOCAL-VARIABLES: (
 
   spacing: pfe-var(container-spacer),
 
-  // Internal spacing; elements inside the card (header, body, footer regions)
-  spacing--vertical: pfe-local(spacing),
-
   header: (
-    BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)}),
+    BackgroundColor: rgba(45, 45, 45, pfe-var(opacity)),
     Color:           pfe-apply-broadcast(text)
   ),
 
@@ -39,6 +29,17 @@ $LOCAL-VARIABLES: (
   )
 
 );
+
+$LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+  // Internal spacing; elements inside the card (header, body, footer regions)
+  spacing--vertical: pfe-local(spacing),
+
+  // Combine above variables or allow single override point via variable
+  Padding: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft),
+
+  //-- Border variable encompasses width, style, and color
+  Border: pfe-local(BorderWidth, 0) pfe-local(BorderStyle, solid) pfe-local(BorderColor, pfe-color(surface--border))
+));
 
 :host {
 // @include pfe-print-variables($LOCAL-VARIABLES);
@@ -82,7 +83,7 @@ $LOCAL-VARIABLES: (
     background-image: none !important;
     border-radius: #{map-get($pfe-vars, surface--border-radius)};
     border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
-    padding: calc(#{pfe-var(container-spacer)});
+    padding: #{pfe-var(container-spacer)};
   }
 }
 

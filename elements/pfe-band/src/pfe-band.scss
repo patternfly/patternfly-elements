@@ -4,20 +4,16 @@ $LOCAL: band;
 
 
 $LOCAL-VARIABLES: (
-
   // Default spacing values
   Padding--vertical:    calc( #{pfe-var(container-spacer)} * 4),
   Padding--horizontal:  calc( #{pfe-var(container-spacer)} * 1),
 
-  // Bring them together for ease of use below
-  Padding: #{pfe-local(Padding--vertical)}  #{pfe-local(Padding--horizontal)},
-
   // Surface colors
-  BackgroundColor:    #{pfe-color(surface--base)},
+  BackgroundColor:    pfe-color(surface--base),
   BackgroundPosition: center center,
 
   // Border settings
-  Border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent,
+  Border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent,
 
   // Layouts, grid layouts
   layout: 1fr,
@@ -28,7 +24,7 @@ $LOCAL-VARIABLES: (
   aside:  ( layout: 1fr ),
 
   // Vertical spacing
-  gutter--vertical:   #{pfe-var(container-spacer)},
+  gutter--vertical:   pfe-var(container-spacer),
   gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3),
 
   // Band width logic
@@ -38,6 +34,11 @@ $LOCAL-VARIABLES: (
   Width__aside--lg: 300px,
 
 );
+
+$LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+  // Bring them together for ease of use below
+  Padding: #{pfe-local(Padding--vertical)}  #{pfe-local(Padding--horizontal)},
+));
 
 :host {
 // @include pfe-print-variables($LOCAL-VARIABLES);
@@ -109,7 +110,7 @@ $LOCAL-VARIABLES: (
 .pfe-band {
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
-    --pfe-band_region--width: calc(calc(1fr - #{pfe-local(Width__aside--sm)}) - #{pfe-local(gutter--horizontal)});
+    --pfe-band_region--width: calc(1fr - #{pfe-local(Width__aside--sm)} - #{pfe-local(gutter--horizontal)});
     grid-template-areas: "body";
     // Styles for the different combination of regions
     &[pfe-has-aside] {

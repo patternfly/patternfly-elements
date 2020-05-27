@@ -1,7 +1,21 @@
 @import "../../pfe-sass/pfe-sass";
 @import "_shared-assets";
 
-$LOCAL: dropdown-item;
+//$LOCAL: dropdown-item;
+
+$dropdown-item-variables: (
+  item: (
+    FontSize: #{pfe-var(font-size)},
+    FontWeight: 400,
+    LineHeight: #{pfe-var(line-height)},
+    Color: #151515,
+    Color--hover: #151515,
+    TextAlign: left,
+    BackgroundColor: transparent,
+    BackgroundColor--hover: #{pfe-color(surface--lighter)},
+    Border: none
+  )
+);
 
 $dropdown-item-variables: (
   FontSize: #{pfe-var(font-size)},

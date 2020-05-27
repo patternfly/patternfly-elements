@@ -4,15 +4,21 @@ $LOCAL: modal;
 
 $pfe-modal--breakpoint--medium: 640px;
 
-:host {
-	--pfe-modal--MaxWidth: 70vw;
-	--pfe-modal--MinWidth: 50vw;
-	--pfe-modal--MaxWidth--mobile: 94vw;
-	--pfe-modal--MaxHeight: 90vh;
-	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);
-	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
-	--pfe-modal__close--size: calc(#{pfe-var(ui--element--size)} - 4px);
+$LOCAL-VARIABLES: (
+	MaxWidth: 70vw,
+	MinWidth: 50vw,
+	MaxWidth--mobile: 94vw,
+	MaxHeight: 90vh,
+	Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2),
+	overlay: (
+		BackgroundColor: pfe-color(overlay)
+	),
+	close: (
+		size: calc(#{pfe-var(ui--element--size)} - 4px)
+	)
+);
 
+:host {
 	display: block;
 	position: relative;
 
@@ -66,7 +72,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		border-radius: #{pfe-var(ui--border-radius)};
 		
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
-			max-width: pfe-local(MaxWidth);
+			max-width: #{pfe-local(MaxWidth)};
 		}
 	}
 	&__container {
@@ -81,8 +87,8 @@ $pfe-modal--breakpoint--medium: 640px;
 	&__content {
 		overflow-y: auto;
 		overscroll-behavior: contain;
-		max-height: pfe-local(MaxHeight);
-		padding: pfe-local(Padding);
+		max-height: #{pfe-local(MaxHeight)};
+		padding: #{pfe-local(Padding)};
 		box-sizing: border-box;
 
 		@media screen and (max-height: $pfe-modal--breakpoint--medium) {

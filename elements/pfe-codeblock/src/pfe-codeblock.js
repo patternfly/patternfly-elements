@@ -1,7 +1,14 @@
 // Import polyfills: includes
 import "./polyfills--pfe-codeblock.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
 import Prism from "prismjs";
+
+const observerConfig = {
+  childList: true,
+  subtree: true,
+  characterData: true
+};
 
 class PfeCodeblock extends PFElement {
   static get tag() {
@@ -116,10 +123,9 @@ class PfeCodeblock extends PFElement {
     this._codeblockRender = null;
     this._codeblockRenderOuterPreTag = null;
     this._codeblockContainer = null;
-    this._observerConfig = { childList: true, subtree: true };
     this._readyStateChangeHandler = this._readyStateChangeHandler.bind(this);
 
-    this.observer = new MutationObserver((mutationList, observer) => {
+    this._observer = new MutationObserver((mutationList, observer) => {
       if (!this._codeblockContainer.textContent) {
         this._codeblockRender.innerHTML = "";
         return;
@@ -127,9 +133,15 @@ class PfeCodeblock extends PFElement {
 
       // TODO: when we stop supporting IE11, the need to disconnect and
       // then reconnect will no longer be needed
-      observer.disconnect();
+      if (window.ShadyCSS) {
+        observer.disconnect();
+      }
+
       this.codeblock = this._codeblockContainer.textContent;
-      this._muationObserve();
+
+      if (window.ShadyCSS) {
+        this._muationObserve();
+      }
     });
   }
 
@@ -172,7 +184,7 @@ class PfeCodeblock extends PFElement {
   }
 
   disconnectedCallback() {
-    this.observer.disconnect();
+    this._observer.disconnect();
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -278,7 +290,7 @@ class PfeCodeblock extends PFElement {
   }
 
   _muationObserve() {
-    this.observer.observe(this._codeblockContainer, this._observerConfig);
+    this._observer.observe(this._codeblockContainer, observerConfig);
   }
 }
 

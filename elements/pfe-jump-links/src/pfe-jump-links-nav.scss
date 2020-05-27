@@ -1,7 +1,6 @@
 // Please see the pfe-sass README for guidance on using these tools
 @import "../../pfe-sass/pfe-sass";
 
-
 $LOCAL: jump-links;
 
 $variables: (
@@ -13,20 +12,25 @@ $variables: (
     FontSize: #{pfe-var(font-size--heading--zeta)}
   ),
 );
-
+ 
 :host {
   @include pfe-print-variables($variables);
-	nav{
+	nav {
     visibility: visible;
   }
-  pfe-accordion{
+  pfe-accordion {
     --pfe-accordion--BackgroundColor: transparent;
     --pfe-accordion--BorderColor: #ccc;
     --pfe-accordion--BorderColor--accent: transparent;
     --pfe-accordion--accent: transparent;
     --pfe-accordion--BorderColor: transparent;
     --pfe-accordion--BorderColor--accent: transparent;
-	  button{
+    // hide accordion left border:
+    --pfe-theme--surface--border-style: solid;
+    --pfe-theme--color--surface--border: transparent;
+    --pfe-theme--color--ui-base--on-dark: transparent;
+    --pfe-theme--color--ui-base: transparent;
+	  button {
       text-decoration: none;
     }
   }

@@ -27,27 +27,25 @@ task("clean", () => {
 // Custom gulp for sass globbing
 task("sass:globbing", () => {
   let stream = mergeStream();
-  ["extends", "functions", "maps", "mixins", "variables", "components"].forEach(
-    folder => {
-      stream.add(
-        src([
-          `${folder}/_*.scss`
-          // `!${folder}/_deprecated*.scss`,
-        ])
-          .pipe(
-            globSass(
-              {
-                path: `__${folder}.scss`
-              },
-              {
-                signature: `// generated with sass globbing, v${version}`
-              }
-            )
+  ["extends", "functions", "maps", "mixins", "variables"].forEach(folder => {
+    stream.add(
+      src([
+        `${folder}/_*.scss`
+        // `!${folder}/_deprecated*.scss`,
+      ])
+        .pipe(
+          globSass(
+            {
+              path: `__${folder}.scss`
+            },
+            {
+              signature: `// generated with sass globbing, v${version}`
+            }
           )
-          .pipe(dest(paths.compiled))
-      );
-    }
-  );
+        )
+        .pipe(dest(paths.compiled))
+    );
+  });
 
   return stream;
 });

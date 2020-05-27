@@ -28,10 +28,10 @@ $LOCAL-VARIABLES: (
     width: 100%;
     padding: #{pfe-local($cssvar: Padding, $region: panel, $fallback: #{pfe-var(container-spacer)} 0)};
 
-    border-top:    #{pfe-local($cssvar: BorderTop, $region: panel, $fallback: 0)};
-    border-right:  #{pfe-local($cssvar: BorderRight, $region: panel, $fallback: 0)};
-    border-bottom: #{pfe-local($cssvar: BorderBottom, $region: panel, $fallback: 0)};
-    border-left:   #{pfe-local($cssvar: BorderLeft, $region: panel, $fallback: 0)};
+    border-top:    #{pfe-local(BorderTop, 0, $region: panel)};
+    border-right:  #{pfe-local(BorderRight, 0, $region: panel)};
+    border-bottom: #{pfe-local(BorderBottom, 0, $region: panel)};
+    border-left:   #{pfe-local(BorderLeft, 0, $region: panel)};
 
     @include pfe-clearfix;
     @include browser-query(ie11) {

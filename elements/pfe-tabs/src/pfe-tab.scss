@@ -32,7 +32,7 @@ $LOCAL-VARIABLES: (
   // Border
   border-top:     #{pfe-local($cssvar: BorderTop, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, transparent, $region: tab)} )};
   border-right:   #{pfe-local($cssvar: BorderRight, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, transparent, $region: tab)} )};
-  border-bottom:  #{pfe-local($cssvar: BorderBottom, $region: tab, $fallback: 0)};
+  border-bottom:  #{pfe-local(BorderBottom, 0, $region: tab)};
   border-left:    #{pfe-local($cssvar: BorderLeft, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, transparent, $region: tab)} )};
 
   // Inner style

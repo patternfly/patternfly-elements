@@ -102,7 +102,7 @@
   position: relative;
 
   // Since the default bg color is transparent, look to broadcast values
-  background-color: #{pfe-local($cssvar: BackgroundColor, $fallback: transparent)};
+  background-color: #{pfe-local(BackgroundColor, transparent)};
   color:            #{pfe-local(Color)};
 
   // Border settings
@@ -141,7 +141,7 @@
   font-family: inherit;
   font-size:   #{pfe-local($cssvar: FontSize--header, $fallback: calc(#{pfe-var(font-size)} * 1.1))};
   font-weight: #{pfe-var(font-weight--bold)};
-  text-align:  #{pfe-local($cssvar: TextAlign, $fallback: left)};
+  text-align:  #{pfe-local(TextAlign, left)};
   line-height: #{pfe-var(line-height)};
   padding:     #{pfe-local(Trigger--padding)};
   box-shadow:  #{pfe-local(BoxShadow)};

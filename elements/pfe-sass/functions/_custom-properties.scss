@@ -212,8 +212,6 @@
 
     // Start building the variable declaration
     $var-declaration: "--#{$repo}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')}";
-
-    // @warn $var-declaration", "$fallback;
     
     @if $fallback != null {
         $var-declaration: "#{$var-declaration}, #{$fallback}";

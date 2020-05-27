@@ -47,7 +47,19 @@
           ],
           "default": "html",
           "prefixed": true,
-          "observer": "_langChanges"
+          "observer": "_basicAttributeChanged"
+        },
+        "line-numbers": {
+          "title": "Codeblock Line Numebrs",
+          "type": "boolean",
+          "prefixed": true,
+          "observer": "_basicAttributeChanged"
+        },
+        "line-count-start": {
+          "title": "Codeblock Line Numebr Count start offset",
+          "type": "integer",
+          "prefixed": true,
+          "observer": "_basicAttributeChanged"
         }
       }
     }

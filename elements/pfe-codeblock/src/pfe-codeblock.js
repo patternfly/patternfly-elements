@@ -19,11 +19,20 @@ class PfeCodeblock extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-language", "pfe-line-numbers", "pfe-line-count-start"];
+    return [
+      "pfe-language",
+      "pfe-line-numbers",
+      "pfe-line-count-start",
+      "pfe-debug"
+    ];
   }
 
   get codeblock() {
     return this._codeblock;
+  }
+
+  get isDebug() {
+    return false;
   }
 
   set codeblock(text) {
@@ -78,6 +87,11 @@ class PfeCodeblock extends PFElement {
     return returnVal;
   }
 
+  //get applied classes for pre
+  get appliedCssClasss() {
+    return this.codePrismLanguage + this.lineNumberCssClass;
+  }
+
   //return a valid prism.js language css class
   get codePrismLanguage() {
     return "language-" + this.codeLanguage;
@@ -114,27 +128,33 @@ class PfeCodeblock extends PFElement {
       observer.disconnect();
       this.codeblock = this._codeblockContainer.textContent;
       this._muationObserve();
-      copyCodeblock();
     });
+  }
+
+  setComponentClasses() {
+    this._codeblockRender.setAttribute("class", this.codePrismLanguage);
+    this._codeblockRenderOuterPreTag.setAttribute(
+      "class",
+      this.appliedCssClasss
+    );
+    if (this.lineCountStart !== 1) {
+      this._codeblockRenderOuterPreTag.style.counterReset =
+        "linenumber " + (this.lineCountStart - 1);
+    }
   }
 
   connectedCallback() {
     super.connectedCallback();
-    let appliedCssClasss = this.codePrismLanguage + this.lineNumberCssClass;
 
     //create dom elements and attach language styles
     this._codeblockRenderOuterPreTag = document.createElement("pre");
     this._codeblockRender = document.createElement("code");
     this._codeblockRender.setAttribute("pfe-codeblock-render", "");
-    this._codeblockRender.setAttribute("class", this.codePrismLanguage);
-    this._codeblockRenderOuterPreTag.setAttribute("class", appliedCssClasss);
-    if (this.lineCountStart !== 1) {
-      this._codeblockRenderOuterPreTag.style.counterReset =
-        "linenumber " + (this.lineCountStart - 1);
-    }
+    this.setComponentClasses();
     this._codeblockRenderOuterPreTag.appendChild(this._codeblockRender);
 
     //Add to shadow-root
+    //this.appendChild(this._codeblockRenderOuterPreTag);
     this.shadowRoot.appendChild(this._codeblockRenderOuterPreTag);
 
     this.shadowRoot.querySelector("slot").addEventListener("slotchange", () => {
@@ -153,7 +173,35 @@ class PfeCodeblock extends PFElement {
     this.observer.disconnect();
   }
 
-  //custom line number processor
+  attributeChangedCallback(attr, oldValue, newValue) {
+    super.attributeChangedCallback(attr, oldValue, newValue);
+    // Strip the prefix from the attribute
+    attr = attr.replace("pfe-", "");
+    // If the observer is defined in the attribute properties
+    if (this[attr] && this[attr].observer) {
+      // Get the observer function
+      let observer = this[this[attr].observer].bind(this);
+      // If it's a function, allow it to run
+      if (typeof observer === "function") observer(attr, oldValue, newValue);
+    }
+  }
+
+  debugLog(templateString) {
+    if (!templateString) {
+      return;
+    }
+    if (this.isDebug) {
+      console.log(templateString);
+    }
+  }
+
+  _basicAttributeChanged(attr, oldValue, newValue) {
+    this.debugLog(
+      `_basicAttributeChanged Old Value: ${oldValue} New Value: ${newValue}`
+    );
+    this[attr].value = newValue;
+    this.updateCodeblock();
+  }
 
   _readyStateChangeHandler(event) {
     if (event.target.readyState === "complete") {
@@ -208,6 +256,11 @@ class PfeCodeblock extends PFElement {
     }
     returnHtmlString = returnHtmlString + "</span>";
     return returnHtmlString;
+  }
+
+  updateCodeblock() {
+    this.setComponentClasses();
+    this.renderCodeblock();
   }
 
   renderCodeblock() {

@@ -25,7 +25,7 @@ $variables: (
   top: calc(#{pfe-var(container-spacer)} * 4);
   padding-left: 0;
 
-  @media(min-width: 992px) {
+  @media(min-width: #{pfe-breakpoint(lg)}) {
     padding: #{pfe-local(vertical-spacer)} #{pfe-local(horizontal-spacer)};
   }
 
@@ -44,7 +44,9 @@ $variables: (
     --pfe-accordion--accent: transparent;
     --pfe-accordion--BorderColor: transparent;
     --pfe-accordion--BorderColor--accent: transparent;
+  @media(min-width: #{pfe-breakpoint(lg)}) {
     --pfe-accordion--base--Padding: 0 !important;
+  }
     // hide accordion left border:
     --pfe-theme--surface--border-style: solid;
     --pfe-theme--color--surface--border: transparent;
@@ -74,7 +76,7 @@ $variables: (
     font-weight: #{pfe-var(font-weight--normal)};
     text-transform: uppercase;
 
-    @media(max-width: 992px) {
+    @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
       display: none;
     }
   }
@@ -112,11 +114,10 @@ $variables: (
     font-size: #{pfe-local(FontSize)};
     padding: #{pfe-local(vertical-spacer, $region: link)} #{pfe-local(horizontal-spacer, $region: link)};
     line-height: #{pfe-var(line-height)};
-    //border-left: 3px solid transparent;
     position: relative;
 
     &.sub-section {
-      @media(min-width: 992px) {
+      @media(min-width: #{pfe-breakpoint(lg)}) {
         display: none;
       }
 
@@ -148,7 +149,7 @@ $variables: (
 :host([default]) {
   background-color: #{pfe-local(BackgroundColor)};
 
-  @media(max-width: 992px) {
+  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
     pfe-accordion {
       border: 1px solid #{pfe-color(ui-disabled)};
     }
@@ -159,7 +160,7 @@ $variables: (
     }
   }
 
-  @media(min-width: 992px) {
+  @media(min-width: #{pfe-breakpoint(lg)}) {
     border: 1px solid transparent;
   }
 
@@ -293,11 +294,11 @@ $variables: (
       max-width: calc(#{pfe-var(container-spacer)} * 14);
       top: calc(#{pfe-var(container-spacer)} * 1);
 
-      @media(max-width: 992px) {
+      @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
         left: calc(#{pfe-var(container-spacer)} * 2);
       }
 
-      @media(min-width: 992px) {
+      @media(min-width: #{pfe-breakpoint(lg)}) {
         left: calc(#{pfe-var(container-spacer)} * 4);
       }
     }
@@ -305,11 +306,11 @@ $variables: (
     ::slotted([slot="pfe-jump-links-nav--cta"]) {
       position: absolute;
 
-      @media(max-width: 992px) {
+      @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
         right: calc(#{pfe-var(container-spacer)} * 2);
       }
 
-      @media(min-width: 992px) {
+      @media(min-width: #{pfe-breakpoint(lg)}) {
         right: calc(#{pfe-var(container-spacer)} * 4);
       }
 
@@ -358,7 +359,7 @@ $variables: (
     }
   }
 
-  @media(max-width: 992px) {
+  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
     nav {
       min-height: calc(#{pfe-var(container-spacer)} * 5.5);
       background-color: #{pfe-color(surface--lighter)}
@@ -370,7 +371,7 @@ $variables: (
   }
 }
 
-@media(min-width: 992px) {
+@media(min-width: #{pfe-breakpoint(lg)}) {
   pfe-accordion-header {
     visibility: collapse !important;
     display: none;

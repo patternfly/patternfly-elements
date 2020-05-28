@@ -42,91 +42,91 @@ $pfelements--purple:            rebeccapurple !default; // Was #703fec
 // B&W, Gray Values
 // ========================================================================
 
-$pfe-var--white:               #fff !default;
-$pfe-var--gray-50:             lighten($pfelements--gray, 48%) !default;
-$pfe-var--gray-100:            lighten($pfelements--gray, 45%) !default;
-$pfe-var--gray-200:            lighten($pfelements--gray, 40%) !default;
-$pfe-var--gray-250:            $pfelements--gray-light !default;
-$pfe-var--gray-300:            lighten($pfelements--gray, 30%) !default;
-$pfe-var--gray-400:            lighten($pfelements--gray, 20%) !default;
-$pfe-var--gray-500:            lighten($pfelements--gray, 10%) !default;
-$pfe-var--gray-600:            $pfelements--gray !default;                 // Aliased
-$pfe-var--gray-700:            darken($pfelements--gray, 10%) !default;
-$pfe-var--gray-800:            darken($pfelements--gray, 20%) !default;
-$pfe-var--gray-900:            darken($pfelements--gray, 30%) !default;
-$pfe-var--gray-1000:           darken($pfelements--gray, 40%) !default;
-$pfe-var--black:               $pfe-var--gray-1000 !default;               // Aliased
+$pfe-color--white:               #fff !default;
+$pfe-color--gray-50:             lighten($pfelements--gray, 48%) !default;
+$pfe-color--gray-100:            lighten($pfelements--gray, 45%) !default;
+$pfe-color--gray-200:            lighten($pfelements--gray, 40%) !default;
+$pfe-color--gray-250:            $pfelements--gray-light !default;
+$pfe-color--gray-300:            lighten($pfelements--gray, 30%) !default;
+$pfe-color--gray-400:            lighten($pfelements--gray, 20%) !default;
+$pfe-color--gray-500:            lighten($pfelements--gray, 10%) !default;
+$pfe-color--gray-600:            $pfelements--gray !default;                 // Aliased
+$pfe-color--gray-700:            darken($pfelements--gray, 10%) !default;
+$pfe-color--gray-800:            darken($pfelements--gray, 20%) !default;
+$pfe-color--gray-900:            darken($pfelements--gray, 30%) !default;
+$pfe-color--gray-1000:           darken($pfelements--gray, 40%) !default;
+$pfe-color--black:               $pfe-color--gray-1000 !default;               // Aliased
 
 // ========================================================================
 // Hue Rainbow Values!
 // ========================================================================
 
-$pfe-var--red-50:              lighten($pfelements--red, 50%) !default;
-$pfe-var--red-100:             lighten($pfelements--red, 40%) !default;
-$pfe-var--red-200:             lighten($pfelements--red, 30%) !default;
-$pfe-var--red-300:             lighten($pfelements--red, 20%) !default;
-$pfe-var--red-400:             lighten($pfelements--red, 10%) !default;
-$pfe-var--red-500:             $pfelements--red !default;                // Aliased
-$pfe-var--red-600:             darken($pfelements--red, 10%) !default;
-$pfe-var--red-700:             darken($pfelements--red, 20%) !default;
-$pfe-var--red-800:             darken($pfelements--red, 30%) !default;
+$pfe-color--red-50:              lighten($pfelements--red, 50%) !default;
+$pfe-color--red-100:             lighten($pfelements--red, 40%) !default;
+$pfe-color--red-200:             lighten($pfelements--red, 30%) !default;
+$pfe-color--red-300:             lighten($pfelements--red, 20%) !default;
+$pfe-color--red-400:             lighten($pfelements--red, 10%) !default;
+$pfe-color--red-500:             $pfelements--red !default;                // Aliased
+$pfe-color--red-600:             darken($pfelements--red, 10%) !default;
+$pfe-color--red-700:             darken($pfelements--red, 20%) !default;
+$pfe-color--red-800:             darken($pfelements--red, 30%) !default;
 
-$pfe-var--orange-50:           lighten($pfelements--orange, 40%) !default;
-$pfe-var--orange-100:          lighten($pfelements--orange, 30%) !default;
-$pfe-var--orange-200:          lighten($pfelements--orange, 20%) !default;
-$pfe-var--orange-300:          lighten($pfelements--orange, 10%) !default;
-$pfe-var--orange-400:          $pfelements--orange !default;              // Aliased
-$pfe-var--orange-500:          darken($pfelements--orange, 10%) !default;
-$pfe-var--orange-600:          darken($pfelements--orange, 20%) !default;
-$pfe-var--orange-700:          darken($pfelements--orange, 30%) !default;
-$pfe-var--orange-800:          darken($pfelements--orange, 40%) !default;
+$pfe-color--orange-50:           lighten($pfelements--orange, 40%) !default;
+$pfe-color--orange-100:          lighten($pfelements--orange, 30%) !default;
+$pfe-color--orange-200:          lighten($pfelements--orange, 20%) !default;
+$pfe-color--orange-300:          lighten($pfelements--orange, 10%) !default;
+$pfe-color--orange-400:          $pfelements--orange !default;              // Aliased
+$pfe-color--orange-500:          darken($pfelements--orange, 10%) !default;
+$pfe-color--orange-600:          darken($pfelements--orange, 20%) !default;
+$pfe-color--orange-700:          darken($pfelements--orange, 30%) !default;
+$pfe-color--orange-800:          darken($pfelements--orange, 40%) !default;
 
-$pfe-var--yellow-50:           lighten($pfelements--yellow, 50%) !default;
-$pfe-var--yellow-100:          lighten($pfelements--yellow, 40%) !default;
-$pfe-var--yellow-200:          lighten($pfelements--yellow, 30%) !default;
-$pfe-var--yellow-300:          lighten($pfelements--yellow, 20%) !default;
-$pfe-var--yellow-400:          lighten($pfelements--yellow, 10%) !default;
-$pfe-var--yellow-500:          $pfelements--yellow !default;              // Aliased
-$pfe-var--yellow-600:          darken($pfelements--yellow, 10%) !default;
-$pfe-var--yellow-700:          darken($pfelements--yellow, 20%) !default;
-$pfe-var--yellow-800:          darken($pfelements--yellow, 30%) !default;
+$pfe-color--yellow-50:           lighten($pfelements--yellow, 50%) !default;
+$pfe-color--yellow-100:          lighten($pfelements--yellow, 40%) !default;
+$pfe-color--yellow-200:          lighten($pfelements--yellow, 30%) !default;
+$pfe-color--yellow-300:          lighten($pfelements--yellow, 20%) !default;
+$pfe-color--yellow-400:          lighten($pfelements--yellow, 10%) !default;
+$pfe-color--yellow-500:          $pfelements--yellow !default;              // Aliased
+$pfe-color--yellow-600:          darken($pfelements--yellow, 10%) !default;
+$pfe-color--yellow-700:          darken($pfelements--yellow, 20%) !default;
+$pfe-color--yellow-800:          darken($pfelements--yellow, 30%) !default;
 
-$pfe-var--green-50:            lighten($pfelements--green, 40%) !default;
-$pfe-var--green-100:           lighten($pfelements--green, 30%) !default;
-$pfe-var--green-200:           lighten($pfelements--green, 20%) !default;
-$pfe-var--green-300:           lighten($pfelements--green, 10%) !default;
-$pfe-var--green-400:           $pfelements--green !default;              // Aliased
-$pfe-var--green-500:           darken($pfelements--green, 10%) !default;
-$pfe-var--green-600:           darken($pfelements--green, 20%) !default;
-$pfe-var--green-700:           darken($pfelements--green, 30%) !default;
-$pfe-var--green-800:           darken($pfelements--green, 40%) !default;
+$pfe-color--green-50:            lighten($pfelements--green, 40%) !default;
+$pfe-color--green-100:           lighten($pfelements--green, 30%) !default;
+$pfe-color--green-200:           lighten($pfelements--green, 20%) !default;
+$pfe-color--green-300:           lighten($pfelements--green, 10%) !default;
+$pfe-color--green-400:           $pfelements--green !default;              // Aliased
+$pfe-color--green-500:           darken($pfelements--green, 10%) !default;
+$pfe-color--green-600:           darken($pfelements--green, 20%) !default;
+$pfe-color--green-700:           darken($pfelements--green, 30%) !default;
+$pfe-color--green-800:           darken($pfelements--green, 40%) !default;
 
-$pfe-var--cyan-50:             lighten($pfelements--cyan, 60%) !default;
-$pfe-var--cyan-100:            lighten($pfelements--cyan, 50%) !default;
-$pfe-var--cyan-200:            lighten($pfelements--cyan, 40%) !default;
-$pfe-var--cyan-300:            lighten($pfelements--cyan, 30%) !default;
-$pfe-var--cyan-400:            lighten($pfelements--cyan, 20%) !default;
-$pfe-var--cyan-500:            lighten($pfelements--cyan, 10%) !default;
-$pfe-var--cyan-600:            $pfelements--cyan !default;              // Aliased
-$pfe-var--cyan-700:            darken($pfelements--cyan, 10%) !default;
-$pfe-var--cyan-800:            darken($pfelements--cyan, 20%) !default;
+$pfe-color--cyan-50:             lighten($pfelements--cyan, 60%) !default;
+$pfe-color--cyan-100:            lighten($pfelements--cyan, 50%) !default;
+$pfe-color--cyan-200:            lighten($pfelements--cyan, 40%) !default;
+$pfe-color--cyan-300:            lighten($pfelements--cyan, 30%) !default;
+$pfe-color--cyan-400:            lighten($pfelements--cyan, 20%) !default;
+$pfe-color--cyan-500:            lighten($pfelements--cyan, 10%) !default;
+$pfe-color--cyan-600:            $pfelements--cyan !default;              // Aliased
+$pfe-color--cyan-700:            darken($pfelements--cyan, 10%) !default;
+$pfe-color--cyan-800:            darken($pfelements--cyan, 20%) !default;
 
-$pfe-var--blue-50:             lighten($pfelements--blue, 60%) !default;
-$pfe-var--blue-100:            lighten($pfelements--blue, 50%) !default;
-$pfe-var--blue-200:            lighten($pfelements--blue, 40%) !default;
-$pfe-var--blue-300:            lighten($pfelements--blue, 30%) !default;
-$pfe-var--blue-400:            lighten($pfelements--blue, 20%) !default;
-$pfe-var--blue-500:            lighten($pfelements--blue, 10%) !default;
-$pfe-var--blue-600:            $pfelements--blue !default;              // Aliased
-$pfe-var--blue-700:            darken($pfelements--blue, 10%) !default;
-$pfe-var--blue-800:            darken($pfelements--blue, 20%) !default;
+$pfe-color--blue-50:             lighten($pfelements--blue, 60%) !default;
+$pfe-color--blue-100:            lighten($pfelements--blue, 50%) !default;
+$pfe-color--blue-200:            lighten($pfelements--blue, 40%) !default;
+$pfe-color--blue-300:            lighten($pfelements--blue, 30%) !default;
+$pfe-color--blue-400:            lighten($pfelements--blue, 20%) !default;
+$pfe-color--blue-500:            lighten($pfelements--blue, 10%) !default;
+$pfe-color--blue-600:            $pfelements--blue !default;              // Aliased
+$pfe-color--blue-700:            darken($pfelements--blue, 10%) !default;
+$pfe-color--blue-800:            darken($pfelements--blue, 20%) !default;
 
-$pfe-var--purple-50:           lighten($pfelements--purple, 40%) !default;
-$pfe-var--purple-100:          lighten($pfelements--purple, 30%) !default;
-$pfe-var--purple-200:          lighten($pfelements--purple, 20%) !default;
-$pfe-var--purple-300:          lighten($pfelements--purple, 10%) !default;
-$pfe-var--purple-400:          $pfelements--purple !default;            // Aliased
-$pfe-var--purple-500:          darken($pfelements--purple, 10%) !default;
-$pfe-var--purple-600:          darken($pfelements--purple, 20%) !default;
-$pfe-var--purple-700:          darken($pfelements--purple, 30%) !default;
-$pfe-var--purple-800:          darken($pfelements--purple, 40%) !default;
+$pfe-color--purple-50:           lighten($pfelements--purple, 40%) !default;
+$pfe-color--purple-100:          lighten($pfelements--purple, 30%) !default;
+$pfe-color--purple-200:          lighten($pfelements--purple, 20%) !default;
+$pfe-color--purple-300:          lighten($pfelements--purple, 10%) !default;
+$pfe-color--purple-400:          $pfelements--purple !default;            // Aliased
+$pfe-color--purple-500:          darken($pfelements--purple, 10%) !default;
+$pfe-color--purple-600:          darken($pfelements--purple, 20%) !default;
+$pfe-color--purple-700:          darken($pfelements--purple, 30%) !default;
+$pfe-color--purple-800:          darken($pfelements--purple, 40%) !default;

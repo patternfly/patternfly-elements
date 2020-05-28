@@ -69,17 +69,17 @@ $LOCAL-VARIABLES: (
   }
 
   @at-root #{&}([on="saturated"]) {
-    --pfe-tabs--Color: #{darken($pfe-var--white, 20%)};
+    --pfe-tabs--Color: #{darken($pfe-color--white, 20%)};
     --pfe-tabs--focus: #{pfe-var(link--focus--on-saturated)};
     --pfe-tabs--highlight: #{pfe-var(text--on-saturated)};
   }
 
   @at-root #{&}([aria-selected="true"]) {
-    --pfe-tabs--Color: #{$pfe-var--black};
+    --pfe-tabs--Color: #{$pfe-color--black};
     --pfe-tabs__tab--BorderColor: transparent;
     --pfe-tabs__tab--BorderBottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
     @include browser-query(ie11) {
-      color: #{$pfe-var--black};
+      color: #{$pfe-color--black};
       border-bottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-var(ui-accent)};
     }
   }
@@ -113,7 +113,7 @@ $LOCAL-VARIABLES: (
     --pfe-tabs__tab--BorderRight: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
 
     @include browser-query(ie11) {
-      // color: #{$pfe-var--black};
+      // color: #{$pfe-color--black};
       border-top-color: transparent;
       border-right: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-var(ui-accent)};
     }

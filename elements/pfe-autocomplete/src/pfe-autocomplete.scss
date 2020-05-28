@@ -1,16 +1,19 @@
 @import "../../pfe-sass/pfe-sass";
+
 $LOCAL: autocomplete;
+
+$LOCAL-VARIABLES: (
+  BoxShadow: pfe-var(box-shadow--inset),
+  BackgroundColor: pfe-var(surface--lightest),
+  Border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border)
+);
 
 @include pfe-theme-contexts; // imports on="light" etc support
 
 :host {
-  --pfe-autocomplete--BoxShadow: #{pfe-var(box-shadow--inset)};
-  --pfe-autocomplete--BackgroundColor: #{pfe-var(surface--lightest)};
-  --pfe-autocomplete--Border:  #{pfe-var(ui--border-width)}  #{pfe-var(ui--border-style)}  #{pfe-var(surface--border)};
-
   display: block;
   position: relative;
-  font-family: #{pfe-var(font-family)};
+  font-family: pfe-var(font-family);
 }
 
 .sr-only {
@@ -18,22 +21,23 @@ $LOCAL: autocomplete;
 }
 
 #input-box-wrapper {
+  border-color: pfe-var(feedback--info);
+
   ::slotted(input) {
     width: 100%;
     flex: 1;
-    box-shadow: #{pfe-local(BoxShadow)} !important;
+    box-shadow: pfe-local(BoxShadow) !important;
     padding-left: 10px;
     padding-right: 30px;
     border-radius: pfe-var(ui--border-radius);
-    background-color: #{pfe-local(BackgroundColor)};
-    border: #{pfe-local(Border)};
-    font-size: #{pfe-var(font-size)};
+    background-color: pfe-local(BackgroundColor);
+    border: pfe-local(Border);
+    font-size: pfe-var(font-size);
     height: calc(#{pfe-var(ui--element--size)} * 2);
-    transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
     opacity: 1;
     outline: 0;
   }
-    border-color: #{pfe-var(feedback--info)};
 
   ::slotted(input:disabled),
   button:disabled {
@@ -77,17 +81,18 @@ button {
     width: 20px;
     margin: 2px 1px;
     background-color: pfe-var(surface--lightest);
-  }
-
-  &.clear-search svg {
-    width: 12px;
-    stroke: pfe-var(surface--border);
-  }
-
-  &.clear-search:hover svg,
-  &.clear-search:focus svg {
-    opacity: 1;
-    stroke: pfe-var(link);
+    &:hover {
+      color: pfe-var(ui-complement);
+    }
+    svg {
+      width: 12px;
+      stroke: pfe-var(surface--border);
+    }
+    &:hover svg,
+    &:focus svg {
+      opacity: 1;
+      stroke: pfe-var(link);
+    }
   }
 
   &[disabled].clear-search:hover svg,
@@ -98,24 +103,20 @@ button {
   &.search-button {
     right: 1px;
     width: 30px;
-  }
 
-  &.search-button svg {
-    fill: pfe-var(link);
-    width: 16px;
-  }
+    svg {
+      fill: pfe-var(link);
+      width: 16px;
+    }
 
-  &.search-button:hover svg,
-  &.search-button:focus svg {
-    fill: pfe-var(link--hover);
-  }
+    &:hover svg,
+    &:focus svg {
+      fill: pfe-var(link--hover);
+    }
 
-  &.clear-search:hover {
-    color: pfe-var(ui-complement);
-  }
-
-  &.search-button:disabled svg {
-    fill: pfe-var(ui-disabled);
+    &:disabled svg {
+      fill: pfe-var(ui-disabled);
+    }
   }
 }
 

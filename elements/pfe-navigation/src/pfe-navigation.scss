@@ -61,7 +61,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-variables);
   --pfe-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
   --pfe-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
 
-  z-index: #{pfe-var\(content)};
+  z-index: #{pfe-var(content)};
   width: 100%;
 }
 
@@ -69,7 +69,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-variables);
   position: sticky;
   top: 0;
   left: 0;
-  z-index: #{pfe-var\(navigation)};
+  z-index: #{pfe-var(navigation)};
 }
 
 :host([pfe-full-width]) .pfe-navigation__container {
@@ -117,7 +117,7 @@ pfe-icon {
 
     display: flex;
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
-    z-index: #{pfe-var\(navigation)};
+    z-index: #{pfe-var(navigation)};
 
     background-color: #{pfe-local(BackgroundColor)};
     color: #{pfe-local(Color)};
@@ -159,7 +159,7 @@ pfe-icon {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: #{pfe-var\(overlay)};
+    z-index: #{pfe-var(overlay)};
     &[hidden] {
       display: none;
     }

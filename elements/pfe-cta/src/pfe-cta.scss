@@ -420,7 +420,7 @@ $LOCAL-VARIABLES: (
   --pfe-cta--Color--focus: #{pfe-var(link--hover)};
   --pfe-cta--BorderColor--focus: #{pfe-var(surface--border)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-local(BorderColor--focus)};
-  --pfe-cta--TextDecoration--hover: #{pfe-var\(link-decoration--hover)};
+  --pfe-cta--TextDecoration--hover: #{pfe-var(link-decoration--hover)};
 }
 
 :host([pfe-priority="secondary"][pfe-variant="wind"].focus-within) {

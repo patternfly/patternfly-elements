@@ -77,7 +77,7 @@ button[aria-expanded="true"] {
 
 :host([pfe-disclosure="true"]) {
   button {
-    --pfe-accordion--Trigger--padding: #{pfe-local(base--Padding)} calc(#{pfe-local(base--Padding)} * 1.5) #{pfe-local(base--Padding)} calc((#{pfe-local(base--Padding)} * 3) + 2px) !important;
+    --pfe-accordion--Trigger--padding: #{pfe-local(Padding, $region: base)} calc(#{pfe-local(Padding, $region: base)} * 1.5) #{pfe-local(Padding, $region: base)} calc((#{pfe-local(Padding, $region: base)} * 3) + 2px) !important;
     @include browser-query(ie11) {
       padding: 16px 24px 16px 47px;
       border-right-color: #{pfe-color(surface--border)};
@@ -99,13 +99,8 @@ button[aria-expanded="true"] {
     }
 
     // Adjust contents position on hover.
-    &:hover {
-      padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
-      --pfe-accordion--BorderLeftWidth: #{pfe-var(surface--border-width--heavy)};
-
-      &::before {
-        left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px.
-      }
+    &:hover::before {
+      left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px.
     }
   }
 }

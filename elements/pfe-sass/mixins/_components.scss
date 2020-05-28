@@ -23,17 +23,17 @@
     );
 
     @if $theme == dark { // Dark theme
-      $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+      $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
         accent: #{pfe-color(ui-base--on-dark)}
       ));
     }
     @else if $theme == saturated { // Saturated theme
-      $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+      $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
         accent: #{pfe-color(ui-base--on-saturated)}
       ));
     }
     @else { // Light theme
-      $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+      $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
         accent: #{pfe-color(ui-base)}
       ));
     }
@@ -51,29 +51,30 @@
       BorderColor:         #{pfe-color(surface--border)},
       BorderRightWidth:    #{pfe-var(surface--border-width)},
       BorderLeftWidth:     #{pfe-var(surface--border-width--heavy)},
-      BoxShadow: 0 5px #{pfe-var(surface--border-width--heavy)} rgba(140, 140, 140, 0.35),
-      ZIndex: 3
+      BoxShadow: none
     );
 
     @if $theme == dark { // Dark theme
-      $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+      $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
         BackgroundColor:    rgba(247, 247, 249, .1),
         Color:               #{pfe-apply-broadcast(text)},
         BorderColor--accent: #{pfe-color(ui-base--on-dark)}
       ));
     }
     @else if $theme == saturated { // Saturated theme
-      $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+      $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
         BackgroundColor:    rgba(0, 0, 0, 0.2),
         Color:               #{pfe-apply-broadcast(text)},
         BorderColor--accent: #{pfe-color(ui-base--on-saturated)}
       ));
     }
     @else { // Defaults for light theme
-      $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+      $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
         BackgroundColor:     rgba(255, 255, 255, 1),
         Color:               #{pfe-color(text)},
-        BorderColor--accent: #{pfe-color(ui-base)}
+        BorderColor--accent: #{pfe-color(ui-base)},
+        BoxShadow: 0 5px #{pfe-var(surface--border-width--heavy)} rgba(140, 140, 140, 0.35),
+        ZIndex: 3
       ));
     }
     @if $variant == disclosure {
@@ -96,7 +97,7 @@
 
 @mixin pfe-accordion-props($variant: default) {
   margin: 0;
-  width: #{pfe-local($cssvar: Width, $fallback: 100%)};
+  width: #{pfe-local(Width, 100%)};
   max-width: calc(100% - #{pfe-local(BorderLeftWidth)});
   height: auto;
   position: relative;
@@ -106,11 +107,11 @@
   color:            #{pfe-local(Color)};
 
   // Border settings
-  border: 0 #{pfe-var(surface--border-style)} #{pfe-local($cssvar: BorderColor, $fallback: #{pfe-color(surface--border)})};
-  border-top-width:     #{pfe-local($cssvar: BorderTopWidth, $fallback: #{pfe-var(surface--border-width)})};
-  border-right-width:   #{pfe-local($cssvar: BorderRightWidth, $fallback: #{pfe-var(surface--border-width)})};
-  border-bottom-width:  #{pfe-local($cssvar: BorderBottomWidth, $fallback: #{pfe-var(surface--border-width)})};
-  border-left:      #{pfe-local($cssvar: BorderLeftWidth, $fallback: #{pfe-var(surface--border-width--heavy)})} #{pfe-var(surface--border-style)} #{pfe-local($cssvar: (BorderColor, accent), $fallback: #{pfe-color(surface--border)})};
+  border: 0 #{pfe-var(surface--border-style)} #{pfe-local(BorderColor, #{pfe-color(surface--border)})};
+  border-top-width:     #{pfe-local(BorderTopWidth, #{pfe-var(surface--border-width)})};
+  border-right-width:   #{pfe-local(BorderRightWidth, #{pfe-var(surface--border-width)})};
+  border-bottom-width:  #{pfe-local(BorderBottomWidth, #{pfe-var(surface--border-width)})};
+  border-left:      #{pfe-local(BorderLeftWidth, #{pfe-var(surface--border-width--heavy)})} #{pfe-var(surface--border-style)} #{pfe-local($cssvar: (BorderColor, accent), $fallback: #{pfe-color(surface--border)})};
 
   box-shadow: #{pfe-local(BoxShadow)};
   z-index: #{pfe-local(ZIndex)};

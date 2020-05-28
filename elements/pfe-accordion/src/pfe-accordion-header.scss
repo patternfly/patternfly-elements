@@ -7,7 +7,7 @@ $LOCAL: accordion;
 /// DEFAULT ACCORDION HEADING
 /// ===========================================================================
 :host {
-  transition: transform 0.3s #{pfe-var(animation-timing)};
+  transition: transform 0.3s pfe-var(animation-timing);
   display: block;
 
   // Shadow template styles
@@ -27,7 +27,7 @@ button {
   @include browser-query(ie11) {
     padding: 16px 24px;
     &:hover {
-      border-left-color: #{pfe-var(ui-base)};
+      border-left-color: pfe-var(ui-base);
     }
   }
 }
@@ -59,8 +59,8 @@ button[aria-expanded="true"] {
   @include pfe-accordion-variables($state: expanded);
   @include browser-query(ie11) {
     border-bottom-width: 0;
-    border-left-color: #{pfe-var(ui-base)};
-    border-right-color: #{pfe-var(surface--border)};
+    border-left-color: pfe-var(ui-base);
+    border-right-color: pfe-var(surface--border);
   }
 }
 
@@ -77,17 +77,21 @@ button[aria-expanded="true"] {
 
 :host([pfe-disclosure="true"]) {
   button {
-    --pfe-accordion--Trigger--padding: #{pfe-local(Padding, $region: base)} calc(#{pfe-local(Padding, $region: base)} * 1.5) #{pfe-local(Padding, $region: base)} calc((#{pfe-local(Padding, $region: base)} * 3) + 2px) !important;
+    @include pfe-print-variables((
+      trigger: (
+        Padding: pfe-local(Padding, $region: base) calc(#{pfe-local(Padding, $region: base)} * 1.5) pfe-local(Padding, $region: base) calc((#{pfe-local(Padding, $region: base)} * 3) + 2px) !important
+      )
+    ));
     @include browser-query(ie11) {
       padding: 16px 24px 16px 47px;
-      border-right-color: #{pfe-var(surface--border)};
-      border-left-color: #{pfe-var(surface--border)};
-      border-left-width: #{pfe-var(surface--border-width)};
+      border-right-color: pfe-var(surface--border);
+      border-left-color: pfe-var(surface--border);
+      border-left-width: pfe-var(surface--border-width);
     }
 
     &[aria-expanded="true"] {
       padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
-      border-left-width: #{pfe-var(surface--border-width--heavy)};
+      border-left-width: pfe-var(surface--border-width--heavy);
 
       &::before {
         @include pfe-chevron($state: open, $position: before);
@@ -107,8 +111,10 @@ button[aria-expanded="true"] {
 
 // Set the header border while animating. 
 :host([pfe-disclosure="true"].animating) {
-  --pfe-accordion--BorderLeftWidth: #{pfe-var(surface--border-width--heavy)};
-  --pfe-accordion--BorderColor--accent: #{pfe-var(ui-base)}; // set border-left color while animating.
+  @include pfe-print-variables((
+    BorderLeftWidth: pfe-var(surface--border-width--heavy),
+    BorderColor--accent: pfe-var(ui-base) // set border-left color while animating.
+  ));
 
   button {
     padding-left: calc(#{pfe-var(container-spacer)} * 3 - 1px) !important;

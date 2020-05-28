@@ -12,11 +12,11 @@ $LOCAL: accordion;
   position: relative;
   overflow: hidden;
   margin: 0;
-  color: #{pfe-local(Color)};
+  color: pfe-local(Color);
 
   @include browser-query(ie11) {
-    background-color: #{pfe-var(surface--lightest)} !important;
-    color: #{pfe-var(text)} !important;
+    background-color: pfe-var(surface--lightest) !important;
+    color: pfe-var(text) !important;
   }
 }
 

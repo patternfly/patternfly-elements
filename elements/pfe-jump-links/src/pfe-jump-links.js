@@ -82,6 +82,17 @@ class PfeJumpLinksNav extends PFElement {
         const menu = this.querySelector("ul");
         menu.classList.add("pfe-jump-links-nav");
         this._menuContainer.innerHTML = menu.outerHTML;
+
+        let div = document.createElement("div");
+
+        div.innerHTML = `<h2 class="sr-only" hidden>${this.getAttribute(
+          "sr-text"
+        )}</h2>`;
+
+        if (this.getAttribute("sr-text")) {
+          this.shadowRoot.querySelector("nav").prepend(div);
+        }
+
         let html = "";
         if (this.querySelector(".pfe-jump-links-nav--heading")) {
           html = this.querySelector(".pfe-jump-links-nav--heading").cloneNode(

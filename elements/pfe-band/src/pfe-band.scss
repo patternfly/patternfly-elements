@@ -56,37 +56,37 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   position: relative;
 
   // Custom padding on mobile
-  padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
+  padding: calc(#{pfe-local(Padding--vertical)} / 2)  pfe-local(Padding--horizontal);
 
   // Variable padding on desktop
   @media (min-width: #{pfe-breakpoint(sm)}) {
-    padding: #{pfe-local(Padding)};
+    padding: pfe-local(Padding);
   }
 
   // Border styles
-  border: #{pfe-local(Border)};
+  border: pfe-local(Border);
 
   // Base colors
-  background-color:      #{pfe-local(BackgroundColor)};
-  background-position:   #{pfe-local(BackgroundPosition)};
-  color:                 #{pfe-broadcasted(text)};
+  background-color:      pfe-local(BackgroundColor);
+  background-position:   pfe-local(BackgroundPosition);
+  color:                 pfe-broadcasted(text);
 
   // Remove background color for print
   @include pfe-no-print-background;
 
   @include pfe-print-media {
     // Add the border to the card for print
-    border-radius: #{map-get($pfe-vars, surface--border-radius)};
-    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
+    border-radius: pfe-var(surface--border-radius);
+    border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(surface--border);
     // Reduce padding for print
-    padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
+    padding: calc(#{pfe-local(Padding--vertical)} / 2) pfe-local(Padding--horizontal);
   }
 
   @include browser-query(ie11) {
-    background-color: #{pfe-var(surface--lightest)} !important;
-    color: #{pfe-var(text)} !important;
+    background-color: pfe-var(surface--lightest) !important;
+    color: pfe-var(text) !important;
     background-image: none !important;
-    padding: calc(#{pfe-var(container-spacer)});
+    padding: pfe-var(container-spacer);
   }
 
   // Tag element styles
@@ -274,15 +274,15 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
     position:  relative;
     margin:    0 auto;
     width: 100%;
-    max-width: #{pfe-local(Width)};
+    max-width: pfe-local(Width);
 
     // Grid support styles
     @supports (display: grid) {
       display: grid;
-      grid-row-gap: #{pfe-local(gutter--vertical)};
-      grid-column-gap: #{pfe-local(gutter--horizontal)};
+      grid-row-gap: pfe-local(gutter--vertical);
+      grid-column-gap: pfe-local(gutter--horizontal);
       margin-bottom: 0;
-      grid-template-columns: #{pfe-local(layout)};
+      grid-template-columns: pfe-local(layout);
       grid-template-rows:    max-content;
     }
 }
@@ -290,17 +290,17 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   // For each section in the band layout
   @each $section in (header, body, aside, footer) {
     &__#{$section} { // i.e., pfe-band__header
-      margin-bottom: #{pfe-local(gutter--vertical)};
+      margin-bottom: pfe-local(gutter--vertical);
       // Apply the standard grid
       @supports (display: grid) {
           display: grid;
-          grid-row-gap: #{pfe-local(gutter--vertical)};
-          grid-column-gap: #{pfe-local(gutter--horizontal)};
+          grid-row-gap: pfe-local(gutter--vertical);
+          grid-column-gap: pfe-local(gutter--horizontal);
           margin-bottom: 0;
           // Apply the section as a named grid-area
           grid-area: #{$section};
           // Allow users to hook into the layout with custom columns
-          grid-template-columns: var(--pfe-band__#{$section}--layout);
+          grid-template-columns: pfe-local(layout, $region: $section);
       }
     }
   }

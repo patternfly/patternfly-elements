@@ -24,14 +24,14 @@ $LOCAL-VARIABLES: (
 }
 
 span {
-  background-color: #{pfe-local(BackgroundColor)};
-  border-radius:    #{pfe-local(BorderRadius)};
-  color:            #{pfe-local(Color)};
-  font-size:        #{pfe-local(FontSize)};
-  font-weight:      #{pfe-local(FontWeight)};
-  min-width:        #{pfe-local(MinWidth)};
-  padding-left:     #{pfe-local(PaddingLeft)};
-  padding-right:    #{pfe-local(PaddingRight)};
+  background-color: pfe-local(BackgroundColor);
+  border-radius:    pfe-local(BorderRadius);
+  color:            pfe-local(Color);
+  font-size:        pfe-local(FontSize);
+  font-weight:      pfe-local(FontWeight);
+  min-width:        pfe-local(MinWidth);
+  padding-left:     pfe-local(PaddingLeft);
+  padding-right:    pfe-local(PaddingRight);
 }
 
 @each $state in (moderate, important, critical, success, info) {

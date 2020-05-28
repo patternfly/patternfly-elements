@@ -49,6 +49,7 @@ module.exports = function factory({
   // Styles
   const sass = require("gulp-sass");
   sass.compiler = require("node-sass");
+  const packageImporter = require("node-sass-package-importer");
 
   const postcss = require("gulp-postcss");
   const sourcemaps = require("gulp-sourcemaps");
@@ -76,11 +77,16 @@ module.exports = function factory({
         cwd: paths.source
       })
         .pipe(sourcemaps.init())
-        .pipe(sass().on("error", sass.logError))
+        .pipe(
+          sass({
+            importer: packageImporter()
+          }).on("error", sass.logError)
+        )
         // Compile the Sass into CSS
         .pipe(
           sass({
-            outputStyle: "expanded"
+            outputStyle: "expanded",
+            importer: packageImporter()
           }).on("error", sass.logError)
         )
         // Adds autoprefixing to the compiled sass

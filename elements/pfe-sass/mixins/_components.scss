@@ -55,27 +55,27 @@
       $variables: map-merge($variables, (
         BackgroundColor:    rgba(247, 247, 249, .1),
         Color:               #{pfe-apply-broadcast(text)},
-        BorderColor--accent: #{pfe-color(ui-base--on-dark)}
+        BorderColor--accent: #{pfe-color(ui-accent--on-dark)}
       ));
     }
     @else if $theme == saturated { // Saturated theme
       $variables: map-merge($variables, (
         BackgroundColor:    rgba(0, 0, 0, 0.2),
         Color:               #{pfe-apply-broadcast(text)},
-        BorderColor--accent: #{pfe-color(ui-base--on-saturated)}
+        BorderColor--accent: #{pfe-color(ui-accent--on-saturated)}
       ));
     }
     @else { // Defaults for light theme
       $variables: map-merge($variables, (
         BackgroundColor:     rgba(255, 255, 255, 1),
         Color:               #{pfe-color(text)},
-        BorderColor--accent: #{pfe-color(ui-base)}
+        BorderColor--accent: #{pfe-color(ui-accent)}
       ));
     }
     @if $variant == disclosure {
       $variables: (
         BorderLeftWidth: #{pfe-var(surface--border-width--heavy)},
-        BorderColor--accent: #{pfe-color(ui-base)}
+        BorderColor--accent: #{pfe-color(ui-accent)}
       );
     }
 

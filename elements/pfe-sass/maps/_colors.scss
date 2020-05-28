@@ -71,6 +71,7 @@ $pfe-colors: (
   ui-accent--text--hover:             $pfe-color--text--on-dark,
   ui-accent--text--focus:             $pfe-color--text--on-dark,
 
+  ui-accent--on-dark:                          $pfe-color--white,
   ui-accent--on-saturated:                          $pfe-color--white,
   ui-accent--hover--on-saturated:                   darken($pfe-color--white, 20%),
   ui-accent--focus--on-saturated:                   darken($pfe-color--white, 20%),

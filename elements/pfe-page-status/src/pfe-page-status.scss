@@ -2,17 +2,17 @@
 
 $LOCAL: status;
 
+$LOCAL-VARIABLES: (
+  Color: pfe-broadcasted(text--on-dark),
+  BackgroundColor: pfe-color(feedback--default),
+  TextTransform: uppercase,
+  Right: 0
+);
+
 :host {
-  --pfe-status--BackgroundColor:  #{pfe-color(feedback--default)};
-  --pfe-broadcasted--text: #{pfe-color(feedback--default--lightest)};
-
-  --pfe-status--TextTransform: uppercase;
-
   background-color: #{pfe-local(BackgroundColor)};
-  color: var(--pfe-broadcasted--text);
-
   position: fixed;
-  right: 0;
+  right: #{pfe-local(Right)};
   top: 0;
   height: 100vh;
   display: flex;
@@ -28,39 +28,42 @@ $LOCAL: status;
 
 .flag {
   transform: rotateZ(90deg);
-}
-
-.flag > span {
-  display: inline-block;
-  font-weight: bold;
-  text-transform: #{pfe-local(TextTransform)};
-  font-size: 0.875rem;
-  line-height: 1em;
-  white-space: nowrap;
-  // writing-mode: vertical-rl;
-  // text-orientation: mixed;
-}
-
-@each $state in (moderate, important, critical, success, info) {
-  :host([pfe-status="#{$state}"]) {
-    --pfe-status--BackgroundColor:  #{pfe-color(feedback--#{$state})};
-    --pfe-broadcasted--text: #{pfe-color(feedback--#{$state}--lightest)};
+  > span {
+    color:          #{pfe-local(Color)};
+    display:        inline-block;
+    text-transform: #{pfe-local(TextTransform)};
+    font-size:      0.875rem;
+    font-family:    #{pfe-var(font-family)};
+    font-size:      #{pfe-var(font-size)};
+    font-weight: bold;
+    line-height: 1em;
+    white-space: nowrap;
+    // writing-mode: vertical-rl;
+    // text-orientation: mixed;
   }
 }
 
+@each $state in (important, critical, success, info) {
+  :host([pfe-status="#{$state}"]) {
+    --pfe-status--BackgroundColor:  #{pfe-color(feedback--#{$state})};
+    --pfe-status--Color: #{pfe-broadcasted(text--on-dark)};
+  }
+}
+
+:host([pfe-status="moderate"]),
 :host([pfe-status="warning"]) {
   --pfe-status--BackgroundColor:  #{pfe-color(feedback--moderate)};
-  --pfe-broadcasted--text: #{pfe-color(feedback--moderate--darkest)};
+  --pfe-status--Color: #{pfe-broadcasted(text)};
 }
 
 :host([pfe-status="normal"]) {
   --pfe-status--BackgroundColor: #{pfe-color(ui-base)};
-  --pfe-broadcasted--text: #{pfe-color(ui-base--text)};
+  --pfe-status--Color: #{pfe-color(ui-base--text)};
 }
 
 @each $color in (complement, accent) {
   :host([pfe-status="#{$color}"]) {
     --pfe-status--BackgroundColor: #{pfe-color(ui-#{$color})};
-    --pfe-broadcasted--text: #{pfe-color(ui-#{$color}--text)};
+    --pfe-status--Color: #{pfe-color(ui-#{$color}--text)};
   }
 }

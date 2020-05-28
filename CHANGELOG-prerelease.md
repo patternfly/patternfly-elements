@@ -1,5 +1,6 @@
 ## Prerelease 49 ( TBD )
 
+- [b1e69ee](https://github.com/patternfly/patternfly-elements/commit/b1e69ee03f5a56a64c5f57dbc8327e8a2430f0fc) feat: pfe-dropdown (#668)
 -[]() fix: Update pfe-tabs demo page with better header examples; add CSS so that short tab-panels are still at least as tall as the tab headers.
 
 ## Prerelease 48 ( 2020-05-19 )

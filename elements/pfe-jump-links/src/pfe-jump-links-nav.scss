@@ -352,8 +352,10 @@ $variables: (
 
     a {
       color: #{pfe-color(ui-disabled--text)};
-
       &[active] {
+        color: #{pfe-color(surface--darkest)};
+      }
+      &:hover {
         color: #{pfe-color(surface--darkest)};
       }
     }

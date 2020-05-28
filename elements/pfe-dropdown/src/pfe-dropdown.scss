@@ -114,6 +114,7 @@ $variables: map-merge($variables, $dropdown-variables);
       margin-left: #{pfe-var(container-spacer)};
       line-height: #{pfe-var(line-height)};
     }
+    cursor: pointer;
   }
   &__menu {
     display: none;

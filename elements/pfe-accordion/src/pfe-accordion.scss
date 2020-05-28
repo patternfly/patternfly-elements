@@ -15,8 +15,8 @@ $LOCAL: accordion;
   color: #{pfe-local(Color)};
 
   @include browser-query(ie11) {
-    background-color: #{pfe-color(surface--lightest)} !important;
-    color: #{pfe-color(text)} !important;
+    background-color: #{pfe-var(surface--lightest)} !important;
+    color: #{pfe-var(text)} !important;
   }
 }
 

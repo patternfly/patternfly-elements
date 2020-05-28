@@ -25,7 +25,7 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   --pfe-icon--Spacing:                 #{pfe-var(container-spacer)};
   --pfe-icon--Size:                    #{pfe-var(icon-size)};
   --pfe-icon--Padding:                 0;
-  --pfe-icon--Color:                   #{pfe-apply-broadcast(text)};
+  --pfe-icon--Color:                   #{pfe-broadcasted(text)};
   --pfe-icon--BackgroundColor:         transparent;
   --pfe-icon--BorderColor:             transparent;
 
@@ -111,7 +111,7 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 
 @each $color in (base, complement, accent) {
   :host([color="#{$color}"]) {
-    --pfe-broadcasted--text: #{pfe-color(ui-#{$color})};
+    --pfe-broadcasted--text: #{pfe-var(ui-#{$color})};
   }
 }
 
@@ -125,14 +125,14 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 
 :host([circled]) {
   --pfe-icon--BackgroundColor:       transparent;
-  --pfe-icon--BorderColor:           #{pfe-color(surface--border)};
+  --pfe-icon--BorderColor:           #{pfe-var(surface--border)};
   --pfe-icon--Padding:               #{$pfe-icon--padding};
 }
 
 @each $color in (base, lightest, lighter, darker, darkest, complement, accent) {
   $name: if($color == lighter, light, if($color == darker, dark, $color));
   :host([circled="#{$name}"]) {
-    --pfe-icon--BackgroundColor:       #{pfe-color(surface--#{$color})};
+    --pfe-icon--BackgroundColor:       #{pfe-var(surface--#{$color})};
     --pfe-icon--BorderColor:           transparent;
     @include pfe-set-broadcast-theme(#{pfe-get-theme(surface--#{$color}--theme)});
   }

@@ -8,16 +8,16 @@ $LOCAL-VARIABLES: (
   Right--offset: 50px, // needed with box-shadow
 
   container: (
-    BackgroundColor: pfe-color(surface--lightest),
+    BackgroundColor: pfe-var(surface--lightest),
     // BoxShadow: #{pfe-var(box-shadow--lg)},
     // @TODO update this to use pfe-sass box-shadow variables
     BoxShadow: #{rgba(3, 3, 3, 0.13) 0px 3px 7px 3px, rgba(3, 3, 3, 0.12) 0px 11px 24px 16px},
-    Color: pfe-color(text),
+    Color: pfe-var(text),
     Padding: 1rem
   ),
 
   close: (
-    svg--Fill: pfe-color(feedback--default--darkest),
+    svg--Fill: pfe-var(feedback--default--darkest),
   	svg--Fill--hover: $pfelements--gray-dark,
   	svg--Height: 12px,
   	svg--Width: 12px,

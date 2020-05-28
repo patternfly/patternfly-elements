@@ -89,20 +89,20 @@ body {
   font-size: #{pfe-var(font-size)};
   font-weight: #{pfe-var(font-weight--normal)};
   line-height: #{pfe-var(line-height)};
-  color: #{pfe-color(text)};
+  color: #{pfe-var(text)};
   text-align: left;
   margin: 0;
 }
 
 // Links styles
 a {
-  color: #{pfe-apply-broadcast(link)};
-  text-decoration: #{pfe-apply-broadcast(link-decoration)};
+  color: #{pfe-broadcasted(link)};
+  text-decoration: #{pfe-broadcasted(link-decoration)};
 
   @each $state in (hover, focus, visited) {
     &:#{$state} {
-      color: #{pfe-apply-broadcast(link--#{$state})};
-      text-decoration: #{pfe-apply-broadcast(link-decoration--#{$state})};
+      color: #{pfe-broadcasted(link--#{$state})};
+      text-decoration: #{pfe-broadcasted(link-decoration--#{$state})};
     }
   }
 }

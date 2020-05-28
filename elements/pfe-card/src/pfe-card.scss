@@ -14,14 +14,14 @@ $LOCAL-VARIABLES: (
   BorderRadius: pfe-var(surface--border-radius),
 
   //-- Color properties
-  BackgroundColor: pfe-color(surface--base),
+  BackgroundColor: pfe-var(surface--base),
   BackgroundPosition: center center,
 
   spacing: pfe-var(container-spacer),
 
   header: (
     BackgroundColor: rgba(45, 45, 45, pfe-var(opacity)),
-    Color:           pfe-apply-broadcast(text)
+    Color:           pfe-broadcasted(text)
   ),
 
   footer: (
@@ -38,7 +38,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   Padding: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft),
 
   //-- Border variable encompasses width, style, and color
-  Border: pfe-local(BorderWidth, 0) pfe-local(BorderStyle, solid) pfe-local(BorderColor, pfe-color(surface--border))
+  Border: pfe-local(BorderWidth, 0) pfe-local(BorderStyle, solid) pfe-local(BorderColor, pfe-var(surface--border))
 ));
 
 :host {
@@ -65,7 +65,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   // Base colors
   background-color:    #{pfe-local(BackgroundColor)};
   background-position: #{pfe-local(BackgroundPosition)};
-  color: #{pfe-apply-broadcast(text)};
+  color: #{pfe-broadcasted(text)};
 
   // Remove background color for print
   @include pfe-no-print-background;
@@ -77,8 +77,8 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   }
 
   @include browser-query(ie11) {
-    background-color: #{pfe-color(surface--lightest)} !important;
-    color: #{pfe-color(text)} !important;
+    background-color: #{pfe-var(surface--lightest)} !important;
+    color: #{pfe-var(text)} !important;
     background-image: none !important;
     border-radius: #{map-get($pfe-vars, surface--border-radius)};
     border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
@@ -86,7 +86,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   }
 }
 
-// Pull in pfe-color settings for all supported surface colors
+// Pull in pfe-var settings for all supported surface colors
 @include pfe-surfaces;
 
 @include pfe-theme-contexts; // imports on="light" etc support
@@ -164,7 +164,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
     color:            #{pfe-local(Color, $region: header)};
     @include browser-query(ie11) {
       background-color: #{map-get($pfe-colors, surface--lighter)} !important;
-      color: #{pfe-color(text)} !important;
+      color: #{pfe-var(text)} !important;
     }
 
     // Margin styles on header region

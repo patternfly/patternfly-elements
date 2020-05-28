@@ -18,7 +18,7 @@ $LOCAL-VARIABLES: (
     BorderTop: 0,
     BorderRight: 0,
     BorderLeft: 0,
-    BorderColor: pfe-color(surface--border)
+    BorderColor: pfe-var(surface--border)
   ),
   panels: (
     Width: auto,
@@ -90,7 +90,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       .tabs {
         flex-direction: column;
         width: 22.22%;
-        border-right: 1px solid #{pfe-color(surface--border)};
+        border-right: 1px solid #{pfe-var(surface--border)};
         border-bottom: 0;
       }
 
@@ -121,8 +121,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 :host(:not([pfe-variant="earth"])) {
   @include browser-query(ie11) {
-    background-color: #{pfe-color(surface--lightest)};
-    color: #{pfe-color(text)};
+    background-color: #{pfe-var(surface--lightest)};
+    color: #{pfe-var(text)};
   }
 }
 

@@ -27,7 +27,7 @@ button {
   @include browser-query(ie11) {
     padding: 16px 24px;
     &:hover {
-      border-left-color: #{pfe-color(ui-base)};
+      border-left-color: #{pfe-var(ui-base)};
     }
   }
 }
@@ -59,8 +59,8 @@ button[aria-expanded="true"] {
   @include pfe-accordion-variables($state: expanded);
   @include browser-query(ie11) {
     border-bottom-width: 0;
-    border-left-color: #{pfe-color(ui-base)};
-    border-right-color: #{pfe-color(surface--border)};
+    border-left-color: #{pfe-var(ui-base)};
+    border-right-color: #{pfe-var(surface--border)};
   }
 }
 
@@ -80,8 +80,8 @@ button[aria-expanded="true"] {
     --pfe-accordion--Trigger--padding: #{pfe-local(Padding, $region: base)} calc(#{pfe-local(Padding, $region: base)} * 1.5) #{pfe-local(Padding, $region: base)} calc((#{pfe-local(Padding, $region: base)} * 3) + 2px) !important;
     @include browser-query(ie11) {
       padding: 16px 24px 16px 47px;
-      border-right-color: #{pfe-color(surface--border)};
-      border-left-color: #{pfe-color(surface--border)};
+      border-right-color: #{pfe-var(surface--border)};
+      border-left-color: #{pfe-var(surface--border)};
       border-left-width: #{pfe-var(surface--border-width)};
     }
 
@@ -108,7 +108,7 @@ button[aria-expanded="true"] {
 // Set the header border while animating. 
 :host([pfe-disclosure="true"].animating) {
   --pfe-accordion--BorderLeftWidth: #{pfe-var(surface--border-width--heavy)};
-  --pfe-accordion--BorderColor--accent: #{pfe-color(ui-base)}; // set border-left color while animating.
+  --pfe-accordion--BorderColor--accent: #{pfe-var(ui-base)}; // set border-left color while animating.
 
   button {
     padding-left: calc(#{pfe-var(container-spacer)} * 3 - 1px) !important;

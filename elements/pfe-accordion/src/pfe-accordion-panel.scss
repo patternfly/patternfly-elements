@@ -39,8 +39,8 @@ $LOCAL: accordion;
   @include pfe-collapsible($state: open);
   @include browser-query(ie11) {
     border-top-width: 0;
-    border-left-color: #{pfe-color(ui-base)};
-    border-right-color: #{pfe-color(surface--border)};
+    border-left-color: #{pfe-var(ui-base)};
+    border-right-color: #{pfe-var(surface--border)};
   }
 }
 

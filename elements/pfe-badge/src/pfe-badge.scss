@@ -2,10 +2,10 @@
 $LOCAL: badge;
 
 $LOCAL-VARIABLES: (
-  BackgroundColor: pfe-color(feedback--default--lightest),
+  BackgroundColor: pfe-var(feedback--default--lightest),
   BorderRadius: calc(#{pfe-var(ui--border-radius)} * 30),
 
-  Color: pfe-color(text),
+  Color: pfe-var(text),
 
   FontSize: calc(#{pfe-var(font-size)} * 0.75),
   FontWeight: pfe-var(font-weight--semi-bold),
@@ -37,12 +37,12 @@ span {
 @each $state in (moderate, important, critical, success, info) {
   :host([pfe-state="#{$state}"]) {
     span {
-      --pfe-badge--BackgroundColor: #{pfe-color(feedback--#{$state})};
+      --pfe-badge--BackgroundColor: #{pfe-var(feedback--#{$state})};
       @if ($state == 'moderate') {
-        --pfe-badge--Color: #{pfe-color(text)};
+        --pfe-badge--Color: #{pfe-var(text)};
       }
       @else {
-        --pfe-badge--Color: #{pfe-color(text--on-dark)};
+        --pfe-badge--Color: #{pfe-var(text--on-dark)};
       }
     }
   }

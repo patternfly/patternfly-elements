@@ -4,7 +4,7 @@ $overlay--BackgroundColor--fallback: rgba(37, 37, 37, 0.5);
 
 $trigger--FontSize--fallback:   #{pfe-var(font-size--heading--epsilon)};
 $trigger--FontWeight--fallback: #{pfe-var(font-weight--light)};
-$trigger--Color--fallback: #{pfe-color(text--on-dark)};
+$trigger--Color--fallback: #{pfe-var(text--on-dark)};
 
 $LOCAL: navigation;
 $LOCAL-VARIABLES: (
@@ -26,21 +26,21 @@ $LOCAL-VARIABLES: (
 
 // -- Typography
 %link-styles {
-    color: #{pfe-apply-broadcast(link)};
-    text-decoration: #{pfe-apply-broadcast(link-decoration)};
+    color: #{pfe-broadcasted(link)};
+    text-decoration: #{pfe-broadcasted(link-decoration)};
     &:visited {
-        color: #{pfe-apply-broadcast(link--visited)};
+        color: #{pfe-broadcasted(link--visited)};
     }
     &:hover {
-        color: #{pfe-apply-broadcast(link--hover)};
-        text-decoration: #{pfe-apply-broadcast(link-decoration--hover)};
+        color: #{pfe-broadcasted(link--hover)};
+        text-decoration: #{pfe-broadcasted(link-decoration--hover)};
     }
     &:focus {
         outline-offset: 1px;
         outline-style: dotted;
         outline-width: 1px;
-        outline-color: #{pfe-apply-broadcast(link--focus)};
-        color: #{pfe-apply-broadcast(link--focus)};
+        outline-color: #{pfe-broadcasted(link--focus)};
+        color: #{pfe-broadcasted(link--focus)};
     }
 }
 

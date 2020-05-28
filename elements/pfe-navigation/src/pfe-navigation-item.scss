@@ -2,7 +2,7 @@
 
 $nav-item-variables: (
   BackgroundColor: transparent,
-  Color:           #{pfe-color(text--on-dark)},
+  Color:           #{pfe-var(text--on-dark)},
   BorderColor:     transparent,
   BorderTopColor:  transparent,
   MinWidth:        auto,
@@ -16,8 +16,8 @@ $nav-item-variables: (
     MaxWidth: 100%
   ),
   tray: (
-    BackgroundColor:  #{pfe-color(surface--lightest)},
-    Color:            #{pfe-color(text)}
+    BackgroundColor:  #{pfe-var(surface--lightest)},
+    Color:            #{pfe-var(text)}
   )
 );
 $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
@@ -46,17 +46,17 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
 
 // Indicates this is the current section the user is visiting
 :host([aria-current="location"]) {
-  --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
+  --pfe-navigation--BorderTopColor: #{pfe-var(surface--accent)};
 }
 
 // When the navigation item is expanded
 :host(.expanded) {
   --pfe-navigation__trigger-icon--Visible: visible;
-  --pfe-navigation--BorderColor:     #{pfe-color(surface--lightest)};
-  --pfe-navigation--BorderTopColor:  #{pfe-color(surface--accent)};
+  --pfe-navigation--BorderColor:     #{pfe-var(surface--lightest)};
+  --pfe-navigation--BorderTopColor:  #{pfe-var(surface--accent)};
 
-  --pfe-navigation--BackgroundColor: #{pfe-color(surface--lightest)};
-  --pfe-navigation--Color: #{pfe-color(text)};
+  --pfe-navigation--BackgroundColor: #{pfe-var(surface--lightest)};
+  --pfe-navigation--Color: #{pfe-var(text)};
 }
 
 // ---------------------//
@@ -152,11 +152,11 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
   cursor:             pointer;
 
   &:hover {
-    --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
+    --pfe-navigation--BorderTopColor: #{pfe-var(surface--accent)};
     --pfe-navigation__trigger-icon--Visible: visible;
 
     :host([variant="wind"]) & {
-      --pfe-navigation--Color: #{pfe-color(link--hover)};
+      --pfe-navigation--Color: #{pfe-var(link--hover)};
     }
 
     :host([has_tray]:not([pfe-icon]):not([is_nested]):not(.expanded)) & {
@@ -172,11 +172,11 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
   }
 
   &:focus {
-    --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
-    --pfe-navigation--BorderColor:    #{pfe-color(surface--lightest)};
+    --pfe-navigation--BorderTopColor: #{pfe-var(surface--accent)};
+    --pfe-navigation--BorderColor:    #{pfe-var(surface--lightest)};
 
     :host([variant="wind"]) & {
-      --pfe-navigation--Color: #{pfe-color(link--focus)};
+      --pfe-navigation--Color: #{pfe-var(link--focus)};
     }
   }
 
@@ -186,14 +186,14 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
     content: " ";
     visibility: #{pfe-local($cssvar: Visible, $region: trigger-icon, $fallback: hidden)};
 
-    @include pfe-arrow(down, #{pfe-color(feedback--default)}, $width: 6px, $height: 6px);
+    @include pfe-arrow(down, #{pfe-var(feedback--default)}, $width: 6px, $height: 6px);
     position: absolute;
     bottom: calc(#{pfe-var(container-spacer)} / 2) ;
   }
 
   // At mobile if inside the main context, update the color to a text color
   :host([is_nested]:not([parent_hidden])) & {
-    --pfe-navigation--Color: #{pfe-color(text)};
+    --pfe-navigation--Color: #{pfe-var(text)};
 
     @each $prop in $BROADCAST-VARS {
       --pfe-broadcasted--#{$prop}: #{pfe-local(Color, $region: tray)};
@@ -237,7 +237,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
   // The wind variant is used to render an icon with text inline, direct links
   :host([variant="wind"]) & {
     --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) 0 calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-spacer)} * 1.5);
-    --pfe-navigation--Color: #{pfe-color(link)};
+    --pfe-navigation--Color: #{pfe-var(link)};
     --pfe-navigation--BackgroundColor: transparent !important;
 
     flex-direction: row;
@@ -280,7 +280,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
 /*    TRAY STYLES    */
 /* ----------------- */
 .pfe-navigation-item__tray {
-  --pfe-navigation--FontWeight:             #{pfe-color(text)};
+  --pfe-navigation--FontWeight:             #{pfe-var(text)};
 
   @include pfe-set-broadcast-theme(light);
 
@@ -366,7 +366,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
 }
 
 :host([is_nested]) [slot="trigger"] > a {
-  color: #{pfe-color(ui-complement)} !important;
+  color: #{pfe-var(ui-complement)} !important;
 }
 
 :host([pfe-icon=web-mobile-menu]) {

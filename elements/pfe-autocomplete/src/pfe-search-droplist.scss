@@ -52,7 +52,7 @@ ul {
       padding: 10px;
       margin: 0px; /*margin needs to be zero otherwise we have blind area on click*/
       &.active {
-          background-color: #{pfe-color( surface--lighter )};;
+          background-color: #{pfe-var( surface--lighter )};;
       }
   }
 }

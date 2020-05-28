@@ -9,7 +9,7 @@ $LOCAL-VARIABLES: (
   Padding--horizontal:  calc( #{pfe-var(container-spacer)} * 1),
 
   // Surface colors
-  BackgroundColor:    pfe-color(surface--base),
+  BackgroundColor:    pfe-var(surface--base),
   BackgroundPosition: center center,
 
   // Border settings
@@ -69,7 +69,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   // Base colors
   background-color:      #{pfe-local(BackgroundColor)};
   background-position:   #{pfe-local(BackgroundPosition)};
-  color:                 #{pfe-apply-broadcast(text)};
+  color:                 #{pfe-broadcasted(text)};
 
   // Remove background color for print
   @include pfe-no-print-background;
@@ -83,8 +83,8 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   }
 
   @include browser-query(ie11) {
-    background-color: #{pfe-color(surface--lightest)} !important;
-    color: #{pfe-color(text)} !important;
+    background-color: #{pfe-var(surface--lightest)} !important;
+    color: #{pfe-var(text)} !important;
     background-image: none !important;
     padding: calc(#{pfe-var(container-spacer)});
   }
@@ -98,7 +98,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
 // Use-case for transparent backgrounds
 @include pfe-theme-contexts; // imports on="light" etc support
 
-// Pull in pfe-color settings for all supported surface colors
+// Pull in pfe-var settings for all supported surface colors
 @include pfe-surfaces;
 
 // thinner padding on top & bottom

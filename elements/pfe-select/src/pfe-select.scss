@@ -3,14 +3,14 @@
 $LOCAL: select;
 
 $LOCAL-VARIABLES: (
-  BackgroundColor:  #{pfe-color(surface--lightest)},
-  Color:            #{pfe-color(text)},
+  BackgroundColor:  #{pfe-var(surface--lightest)},
+  Color:            #{pfe-var(text)},
   
   // Border styles
-  BorderBottomColor:          #{pfe-color(surface--darker)},
-  BorderBottomColor--hover:   #{pfe-color(link)},
-  BorderBottomColor--error:   #{pfe-color(feedback--critical)},
-  BorderColor:                #{pfe-color(surface--lighter)},
+  BorderBottomColor:          #{pfe-var(surface--darker)},
+  BorderBottomColor--hover:   #{pfe-var(link)},
+  BorderBottomColor--error:   #{pfe-var(feedback--critical)},
+  BorderColor:                #{pfe-var(surface--lighter)},
   BorderWidth:                #{pfe-var(ui--border-width)},
   BorderBottomWidth:          #{pfe-var(ui--border-width)},
   BorderTop:                  #{pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor)},
@@ -42,7 +42,7 @@ $LOCAL-VARIABLES: (
   &::after {
     @include pfe-arrow(
       $type: down,
-      $color: #{$pfe-color--black},
+      $color: #{$pfe-var--black},
       $width: 6px,
       $height: 6px,
       $pseudo: true) {

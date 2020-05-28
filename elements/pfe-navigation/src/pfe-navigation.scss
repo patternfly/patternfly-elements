@@ -7,8 +7,8 @@ $nav-variables: (
   Padding: 0 pfe-local(Padding--horizontal),
 
   // Darkest is the default background color
-  BackgroundColor: pfe-color(surface--darkest),
-  Color:           pfe-color(text--on-dark),
+  BackgroundColor: pfe-var(surface--darkest),
+  Color:           pfe-var(text--on-dark),
 
   // Variables for the border
   BorderTopColor: transparent,
@@ -26,7 +26,7 @@ $nav-variables: (
 
   // Overlay region
   overlay: (
-    BackgroundColor: pfe-color(overlay, #{$overlay--BackgroundColor--fallback})
+    BackgroundColor: pfe-var(overlay, #{$overlay--BackgroundColor--fallback})
   ),
 
   // Trigger region
@@ -61,7 +61,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-variables);
   --pfe-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
   --pfe-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
 
-  z-index: #{pfe-zindex(content)};
+  z-index: #{pfe-var\(content)};
   width: 100%;
 }
 
@@ -69,7 +69,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-variables);
   position: sticky;
   top: 0;
   left: 0;
-  z-index: #{pfe-zindex(navigation)};
+  z-index: #{pfe-var\(navigation)};
 }
 
 :host([pfe-full-width]) .pfe-navigation__container {
@@ -99,8 +99,8 @@ pfe-icon {
 
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
-  color: #{pfe-apply-broadcast(link)};
-  text-decoration: #{pfe-apply-broadcast(link-decoration)};
+  color: #{pfe-broadcasted(link)};
+  text-decoration: #{pfe-broadcasted(link-decoration)};
 }
 
 ::slotted([slot="mobile-menu--label"]) {
@@ -117,7 +117,7 @@ pfe-icon {
 
     display: flex;
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
-    z-index: #{pfe-zindex(navigation)};
+    z-index: #{pfe-var\(navigation)};
 
     background-color: #{pfe-local(BackgroundColor)};
     color: #{pfe-local(Color)};
@@ -159,7 +159,7 @@ pfe-icon {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: #{pfe-zindex(overlay)};
+    z-index: #{pfe-var\(overlay)};
     &[hidden] {
       display: none;
     }

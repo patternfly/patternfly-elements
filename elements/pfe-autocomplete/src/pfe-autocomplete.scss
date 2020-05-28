@@ -5,8 +5,8 @@ $LOCAL: autocomplete;
 
 :host {
   --pfe-autocomplete--BoxShadow: #{pfe-var(box-shadow--inset)};
-  --pfe-autocomplete--BackgroundColor: #{pfe-color(surface--lightest)};
-  --pfe-autocomplete--Border:  #{pfe-var(ui--border-width)}  #{pfe-var(ui--border-style)}  #{pfe-color(surface--border)};
+  --pfe-autocomplete--BackgroundColor: #{pfe-var(surface--lightest)};
+  --pfe-autocomplete--Border:  #{pfe-var(ui--border-width)}  #{pfe-var(ui--border-style)}  #{pfe-var(surface--border)};
 
   display: block;
   position: relative;
@@ -33,7 +33,7 @@ $LOCAL: autocomplete;
     opacity: 1;
     outline: 0;
   }
-    border-color: #{pfe-color(feedback--info)};
+    border-color: #{pfe-var(feedback--info)};
 
   ::slotted(input:disabled),
   button:disabled {
@@ -64,7 +64,7 @@ $LOCAL: autocomplete;
 }
 
 button {
-  color: pfe-color(ui-complement);
+  color: pfe-var(ui-complement);
   background-color: transparent;
   border: none;
   position: absolute;
@@ -76,23 +76,23 @@ button {
     right: 30px;
     width: 20px;
     margin: 2px 1px;
-    background-color: pfe-color(surface--lightest);
+    background-color: pfe-var(surface--lightest);
   }
 
   &.clear-search svg {
     width: 12px;
-    stroke: pfe-color(surface--border);
+    stroke: pfe-var(surface--border);
   }
 
   &.clear-search:hover svg,
   &.clear-search:focus svg {
     opacity: 1;
-    stroke: pfe-color(link);
+    stroke: pfe-var(link);
   }
 
   &[disabled].clear-search:hover svg,
   &[disabled].clear-search:focus svg {
-    stroke: pfe-color(surface--border);
+    stroke: pfe-var(surface--border);
   }
 
   &.search-button {
@@ -101,21 +101,21 @@ button {
   }
 
   &.search-button svg {
-    fill: pfe-color(link);
+    fill: pfe-var(link);
     width: 16px;
   }
 
   &.search-button:hover svg,
   &.search-button:focus svg {
-    fill: pfe-color(link--hover);
+    fill: pfe-var(link--hover);
   }
 
   &.clear-search:hover {
-    color: pfe-color(ui-complement);
+    color: pfe-var(ui-complement);
   }
 
   &.search-button:disabled svg {
-    fill: pfe-color(ui-disabled);
+    fill: pfe-var(ui-disabled);
   }
 }
 

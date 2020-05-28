@@ -136,7 +136,7 @@
 /// Surface properties  
 /// This mixin creates an attribute for all the surface colors, then prints the local background color variable for the component, with the correct theme colors. 
 /// @param {List | String} $surfaces [$SURFACES] - defaults to the global $SURFACES list of all supported colors
-/// @param {String} $attr-name [pfe-color] - defaults to pfe-color, optionally pass in a custom name for the data attribute
+/// @param {String} $attr-name [pfe-var] - defaults to pfe-var, optionally pass in a custom name for the data attribute
 ///
 /// @example 
 /// ```
@@ -146,37 +146,37 @@
 ///
 /// @output
 /// ```
-/// :host([pfe-color="darker"]) {
+/// :host([pfe-var="darker"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
 ///   --theme: dark;
 /// }
 /// 
-/// :host([pfe-color="darkest"]) {
+/// :host([pfe-var="darkest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darkest, #131313);
 ///   --theme: dark;
 /// }
 /// 
-/// :host([pfe-color="base"]) {
+/// :host([pfe-var="base"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--base, #dfdfdf);
 ///   --theme: light;
 /// }
 /// 
-/// :host([pfe-color="lighter"]) {
+/// :host([pfe-var="lighter"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lighter, #ececec);
 ///   --theme: light;
 /// }
 /// 
-/// :host([pfe-color="lightest"]) {
+/// :host([pfe-var="lightest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lightest, #fff);
 ///   --theme: light;
 /// }
 /// 
-/// :host([pfe-color="accent"]) {
+/// :host([pfe-var="accent"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--accent, #ee0000);
 ///   --theme: saturated;
 /// }
 /// 
-/// :host([pfe-color="complement"]) {
+/// :host([pfe-var="complement"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--complement, #0477a4);
 ///   --theme: saturated;
 /// }
@@ -187,12 +187,12 @@
         $theme: #{pfe-get-theme(surface--#{$color}--theme)};
         :host([#{$attr-name}="#{$color}"]) {
             @include pfe-set-local(
-                ( BackgroundColor: #{pfe-color(surface--#{$color})} )
+                ( BackgroundColor: #{pfe-var(surface--#{$color})} )
             );
-            --theme: #{pfe-color( surface--#{$color}--theme, #{$theme} );
+            --theme: #{pfe-var( surface--#{$color}--theme, #{$theme} );
             @include browser-query(ie11) {
                 background-color: #{map-get($pfe-colors, surface--lightest)} !important;
-                color: #{pfe-color(text)} !important;
+                color: #{pfe-var(text)} !important;
             }
         }
     }
@@ -242,7 +242,7 @@
         @if $ie-fallback {
             @include browser-query(ie11) {
                 :host {
-                    color: #{pfe-color(text)} !important;
+                    color: #{pfe-var(text)} !important;
                 }
             }
         }

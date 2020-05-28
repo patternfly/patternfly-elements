@@ -20,18 +20,18 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
             margin: 0;
 
             a {
-                color: #{pfe-color(text--on-dark)};
+                color: #{pfe-var(text--on-dark)};
             }
         }
         // Accordion trigger styles when expanded.
         &.expanded {
             @media screen and (min-width: #{pfe-breakpoint(lg)}) {
-                background-color: #{pfe-color(surface--lightest)};
-                border-top-color: #{pfe-color(surface--accent)};
+                background-color: #{pfe-var(surface--lightest)};
+                border-top-color: #{pfe-var(surface--accent)};
             }
             [slot="trigger"] {
                 a {
-                    color: #{pfe-color(text)};
+                    color: #{pfe-var(text)};
                 }
             }
         }
@@ -96,7 +96,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
             }
 
             .pfe-navigation-item__tray.pfe-navigation-item  .pfe-navigation-item__trigger.pfe-navigation-item:not([aria-expanded=true]) {
-                border-bottom: 1px solid #{pfe-color(surface--border)};
+                border-bottom: 1px solid #{pfe-var(surface--border)};
             }
         }
 
@@ -121,7 +121,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
         &.pfe-navigation-item {
             &:hover {
                 cursor: pointer;
-                border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-color(surface--accent)};
+                border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-var(surface--accent)};
             }
         }
 
@@ -141,7 +141,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
             color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
 
             .expanded & {
-                color: #{pfe-color(text)};
+                color: #{pfe-var(text)};
             }
 
             a,
@@ -158,7 +158,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
         -ms-grid-column-span: 1 !important;
     }
     :not([pfe-icon=web-mobile-menu]):not([is_nested]).pfe-navigation-item-1 .pfe-navigation-item__tray.pfe-navigation-item {
-        color: #{pfe-color(ui-complement)} !important;
+        color: #{pfe-var(ui-complement)} !important;
     }
     [pfe-icon=web-mobile-menu]:not([show_links]).pfe-navigation-item-3 .pfe-navigation__main .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0 !important;
@@ -203,13 +203,13 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
         &.expanded {
             .pfe-navigation-item__trigger {
                 pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
-                    flood-color: #{pfe-color(ui-complement)} !important;
+                    flood-color: #{pfe-var(ui-complement)} !important;
                 }
             }
 
             [slot="trigger"] {
                 a {
-                    color: #{pfe-color(text)} !important;
+                    color: #{pfe-var(text)} !important;
                 }
             }
         }
@@ -226,7 +226,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
 
     @media screen and (max-width: pfe-breakpoint("sm-desktop", $max: true, $map: false)) {
         pfe-navigation-item.expanded[pfe-icon=web-mobile-menu]:not([has_tray]) {
-            background-color: #{pfe-color(surface--lightest)};
+            background-color: #{pfe-var(surface--lightest)};
         }
         pfe-navigation-item:not([parent_hidden])[is_nested].expanded .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="true"] {
             border-left: 4px solid #06c !important;
@@ -259,14 +259,14 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
 
             &:hover {
                 cursor: pointer;
-                border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-color(surface--accent)};
+                border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-var(surface--accent)};
             }
         }
         pfe-icon {
             max-height: 20px;
         }
         pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
-            flood-color: #{pfe-color(text--on-dark)} !important;
+            flood-color: #{pfe-var(text--on-dark)} !important;
         }
     }
 
@@ -310,7 +310,7 @@ pfe-navigation-item {
     [slot="trigger"] > a {
         outline: none;
         text-decoration: none;
-        color: #{pfe-color(ui-base--text)} !important;
+        color: #{pfe-var(ui-base--text)} !important;
 
         &:hover,
         &:focus {
@@ -320,18 +320,18 @@ pfe-navigation-item {
     &.expanded {
         [slot="trigger"] > a,
         [slot="trigger"] > a.active {
-            color: #{pfe-color(text)} !important;
+            color: #{pfe-var(text)} !important;
         }
         pfe-navigation-main[show_content] & {
             [slot="trigger"] > a.active {
-            color: #{pfe-color(text)} !important;
+            color: #{pfe-var(text)} !important;
             }
         }
     }
     // Override active link color.
     pfe-navigation-main[show_content] & {
         [slot="trigger"] > a.active {
-            color: #{pfe-color(ui-base--text)} !important;
+            color: #{pfe-var(ui-base--text)} !important;
         }
     }
     &[parent_hidden] [slot="trigger"] {
@@ -340,7 +340,7 @@ pfe-navigation-item {
 
     // Style main menu links when in the tray.
     &:not([parent_hidden])[is_nested] [slot="trigger"] > a {
-        color: #{pfe-color(ui-complement)} !important;
+        color: #{pfe-var(ui-complement)} !important;
     }
 }
 
@@ -505,18 +505,18 @@ pfe-navigation-item .pfe-link-list {
         font-size: 16px;
         font-weight: 400;
         line-height: 1.75;
-        color: #{pfe-color(ui-complement)};
+        color: #{pfe-var(ui-complement)};
 
         @media (min-width: #{pfe-breakpoint(xl)}) {
             font-size: 16px;
         }
 
         a {
-            color: #{pfe-color(ui-complement)};
+            color: #{pfe-var(ui-complement)};
             text-decoration: underline;
 
             &:hover {
-                color: #{pfe-color(ui-complement)};
+                color: #{pfe-var(ui-complement)};
                 text-decoration: none;
             }
 
@@ -524,7 +524,7 @@ pfe-navigation-item .pfe-link-list {
                 outline-offset: 1px;
                 outline-style: dotted;
                 outline-width: 1px;
-                outline-color: #{pfe-apply-broadcast(link--focus)};
+                outline-color: #{pfe-broadcasted(link--focus)};
             }
         }
     }

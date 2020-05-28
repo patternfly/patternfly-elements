@@ -68,11 +68,12 @@ class PfeJumpLinksNav extends PFElement {
     this._mutationCallback = this._mutationCallback.bind(this);
     this._menuContainer = this.shadowRoot.querySelector("#container");
     this._observer = new MutationObserver(this._mutationCallback);
+    this._reportHeight = this._reportHeight.bind(this);
+    this.panel = document.querySelector(`[scrolltarget=${this.id}]`);
   }
 
   connectedCallback() {
     super.connectedCallback();
-
     //Check that the light DOM is there
     if (this.hasAttribute("autobuild")) {
       this._buildNav();
@@ -117,6 +118,7 @@ class PfeJumpLinksNav extends PFElement {
         }
       }
     }
+    this._reportHeight();
 
     this._observer.observe(this, pfeJumpLinksNavObserverConfig);
 
@@ -249,6 +251,12 @@ class PfeJumpLinksNav extends PFElement {
     }
 
     return true;
+  }
+
+  _reportHeight() {
+    const cssVarName = `--${this.tag}--Height--actual`;
+    const height = this.clientHeight + "px";
+    this.panel.style.setProperty(cssVarName, height);
   }
 }
 

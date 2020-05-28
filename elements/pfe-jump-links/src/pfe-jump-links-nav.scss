@@ -68,8 +68,7 @@ $variables: (
   margin: 0;
   list-style: none;
   padding: 0;
-
-  &--heading {
+  &__heading {
     margin: 0;
     margin-bottom: calc(#{pfe-var(container-spacer)} * 1);
     font-size: #{pfe-local($cssvar: FontSize, $region: heading)};
@@ -282,8 +281,7 @@ $variables: (
     background-color: pfe-color(surface--lighter);
     display: flex;
     position: relative;
-
-    .pfe-jump-links-nav--heading {
+    .pfe-jump-links-nav__heading {
       display: none;
     }
 

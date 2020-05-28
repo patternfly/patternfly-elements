@@ -68,11 +68,12 @@ class PfeJumpLinksNav extends PFElement {
     this._mutationCallback = this._mutationCallback.bind(this);
     this._menuContainer = this.shadowRoot.querySelector("#container");
     this._observer = new MutationObserver(this._mutationCallback);
+    this._reportHeight = this._reportHeight.bind(this);
+    this.panel = document.querySelector(`[scrolltarget=${this.id}]`);
   }
 
   connectedCallback() {
     super.connectedCallback();
-
     //Check that the light DOM is there
     if (this.hasAttribute("autobuild")) {
       this._buildNav();
@@ -82,6 +83,17 @@ class PfeJumpLinksNav extends PFElement {
         const menu = this.querySelector("ul");
         menu.classList.add("pfe-jump-links-nav");
         this._menuContainer.innerHTML = menu.outerHTML;
+
+        let div = document.createElement("div");
+
+        div.innerHTML = `<h2 class="sr-only" hidden>${this.getAttribute(
+          "sr-text"
+        )}</h2>`;
+
+        if (this.getAttribute("sr-text")) {
+          this.shadowRoot.querySelector("nav").prepend(div);
+        }
+
         let html = "";
         if (this.querySelector(".pfe-jump-links-nav--heading")) {
           html = this.querySelector(".pfe-jump-links-nav--heading").cloneNode(
@@ -106,6 +118,7 @@ class PfeJumpLinksNav extends PFElement {
         }
       }
     }
+    this._reportHeight();
 
     this._observer.observe(this, pfeJumpLinksNavObserverConfig);
 
@@ -238,6 +251,12 @@ class PfeJumpLinksNav extends PFElement {
     }
 
     return true;
+  }
+
+  _reportHeight() {
+    const cssVarName = `--${this.tag}--Height--actual`;
+    const height = this.clientHeight + "px";
+    this.panel.style.setProperty(cssVarName, height);
   }
 }
 

@@ -2,4 +2,4 @@
 
 Tag: [1.0.0-prerelease.39](https://github.com/patternfly/patternfly-elements/releases/tag/1.0.0-prerelease.39)
 
-- [code](url) Description
+- [code](url) Init - new component pfe-jump-links

@@ -3,9 +3,21 @@
 
 $LOCAL: button;
 
+$variables: (
+  BackgroundColor: pfe-apply-broadcast(link), // #06c,
+  BackgroundColor--hover: pfe-apply-broadcast(link--hover), // should be #004080 but we don't have this in the palette
+  Color: pfe-color(ui-base--text),
+  FontSize: pfe-var(font-size),
+  Border: 0,
+  BorderRadius: pfe-var(surface--border-radius),
+  Padding: calc(#{pfe-var(container-padding) / 2}) pfe-var(container-padding),
+  after: (
+    Border: 1px solid pfe-color(link)
+  )
+);
+
 :host {
-  // Example local variable, using BEM format
-  // --pfe-button--Property: value;
+  @include pfe-print-variables($variables);
   display: inline-block;
 }
 
@@ -15,13 +27,13 @@ $LOCAL: button;
 
 :host([pfe-variant="primary"]) button,
 button {
-  background-color: #06c;
-  color: #fff;
-  font-size: 16px;
-  padding: 8px 16px;
+  background-color: pfe-local(BackgroundColor);
+  color: pfe-local(Color);
+  font-size: pfe-local(FontSize);
+  padding: pfe-local(Padding);
   cursor: pointer;
-  border-radius: 3px;
-  border: 0;
+  border-radius: pfe-local(BorderRadius);
+  border: pfe-local(Border);
   position: relative;
 
   &:after {
@@ -31,28 +43,31 @@ button {
     right: 0;
     bottom: 0;
     content: "";
+    border-radius: pfe-local(BorderRadius);
   }
 
   &:hover,
   &:focus {
-    background-color: #004080;
+    background-color: pfe-local(BackgroundColor--hover);
   }
 }
 
 :host([pfe-variant="secondary"]) {
   button {
     background-color: transparent;
+    --pfe-button--BackgroundColor: transparent;
+    --pfe-button--BackgroundColor--hover: transparent;
     color: #06c;
 
     &:after {
       border: 1px solid #06c;
-      border-radius: 3px;
     }
 
     &:hover,
     &:focus {
       &:after {
         border: 2px solid #06c;
+        --pfe-button--Border: 2px solid pfe-color(link);
       }
     }
   }
@@ -61,11 +76,13 @@ button {
 :host([pfe-variant="tertiary"]) {
   button {
     background-color: transparent;
+    --pfe-button--BackgroundColor: transparent;
+    --pfe-button--BackgroundColor--hover: transparent;
     color: #151515;
+    --pfe-button--Color: #151515;
 
     &:after {
       border: 1px solid #151515;
-      border-radius: 3px;
     }
 
     &:hover,
@@ -96,6 +113,7 @@ button {
     border-radius: 0;
 
     &:after {
+      border-radius: 0;
       border: 1px solid #ededed;
       border-bottom-color: #8a8d90;
     }

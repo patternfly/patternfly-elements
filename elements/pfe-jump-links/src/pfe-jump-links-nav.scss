@@ -18,8 +18,9 @@ $variables: (
   @include pfe-print-variables($variables);
 
   box-sizing: border-box;
+  font-family: #{pfe-var(font-family)};
   font-weight: #{pfe-var(font-weight--normal)};
-  font-weight: 400;
+  font-weight: 400; // remove this once font-weight-normal is 400
   display: block;
   position: sticky;
   top: calc(#{pfe-var(container-spacer)} * 4);

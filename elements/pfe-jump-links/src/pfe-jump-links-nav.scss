@@ -10,16 +10,16 @@ $variables: (
   BorderColor: #{pfe-color(ui-base)},
   FontSize: #{pfe-var(font-size--heading--epsilon)},
   heading: (FontSize: #{pfe-var(font-size--heading--zeta)}),
-  link: (horizontal-spacer: calc(#{pfe-var(content-spacer)} / 4),
-    vertical-spacer: calc(#{pfe-var(content-spacer)} / 4),
+  link: (horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
+    vertical-spacer: calc(#{pfe-var(content-spacer)} / 6),
   ));
 
 :host {
   @include pfe-print-variables($variables);
 
   box-sizing: border-box;
-  font-family: #{pfe-var(font-family)};
   font-weight: #{pfe-var(font-weight--normal)};
+  font-weight: 400;
   display: block;
   position: sticky;
   top: calc(#{pfe-var(container-spacer)} * 4);
@@ -64,15 +64,16 @@ $variables: (
   }
 }
 
-.pfe-jump-links-nav {
+nav {
   margin: 0;
   list-style: none;
   padding: 0;
-  &__heading {
-    margin: 0;
+  ::slotted([slot="pfe-jump-links-nav--heading"]) {
+     margin: 0;
+    
     margin-bottom: calc(#{pfe-var(container-spacer)} * 1);
     font-size: #{pfe-local($cssvar: FontSize, $region: heading)};
-    font-weight: #{pfe-var(font-weight--normal)};
+    font-weight: 400;
     text-transform: uppercase;
 
     @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
@@ -83,6 +84,10 @@ $variables: (
   .sub-nav {
     margin: 0;
     padding: 0;
+    border: none !important;
+    li {
+      border: none !important;
+    }
     overflow-y: hidden;
     transition: flex 1s linear;
     display: flex;
@@ -111,10 +116,12 @@ $variables: (
     display: table;
     text-decoration: none;
     font-size: #{pfe-local(FontSize)};
-    padding: #{pfe-local(vertical-spacer, $region: link)} #{pfe-local(horizontal-spacer, $region: link)};
+    padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
     line-height: #{pfe-var(line-height)};
     position: relative;
-
+    &.has-sub-section {
+      padding-bottom: calc(#{pfe-local(vertical-spacer, $region: link)});
+    }
     &.sub-section {
       @media(min-width: #{pfe-breakpoint(lg)}) {
         display: none;
@@ -122,7 +129,10 @@ $variables: (
 
       margin-left: calc(#{pfe-var(container-spacer)} * 0.75);
       font-size: calc(#{pfe-local(FontSize)} * 0.85);
-      padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 0.8) calc(#{pfe-local(horizontal-spacer, $region: link)} * 0.8);
+      padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 1) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+      &:last-child {
+        padding-bottom: calc(#{pfe-local(horizontal-spacer, $region: link)} * 1);
+      }
     }
 
     &::after {
@@ -145,7 +155,8 @@ $variables: (
   }
 }
 
-:host([default]) {
+//default styles
+:host {
   background-color: #{pfe-local(BackgroundColor)};
 
   @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
@@ -167,7 +178,8 @@ $variables: (
     color: #{pfe-broadcasted(text)};
   }
 
-  .pfe-jump-links-nav {
+  ul {
+    padding: 0;
     border-left: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(ui-disabled)};
   }
 
@@ -226,7 +238,7 @@ $variables: (
   background-color: #{pfe-color(surface--darkest)};
   border: 1px solid #{pfe-color(ui-disabled--text)};
 
-  .pfe-jump-links-nav {
+  ul {
     border-left: 1px solid #{pfe-color(ui-disabled--text)};
 
     li {
@@ -323,13 +335,15 @@ $variables: (
     flex-direction: column;
   }
 
-  .pfe-jump-links-nav {
+  ul {
+    border: none;
     display: block;
     text-align: center;
     flex: 1;
     display: flex;
     padding: 0;
     width: auto;
+    margin: 0;
     margin-left: auto;
     margin-right: auto;
 
@@ -349,6 +363,7 @@ $variables: (
     }
 
     a {
+      text-decoration: none;
       color: #{pfe-color(ui-disabled--text)};
       &[active] {
         color: #{pfe-color(surface--darkest)};

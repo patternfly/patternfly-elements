@@ -71,8 +71,8 @@
   <h2 style="text-align: center; margin: 60px auto;">PFE Jump Links - standard</h2>
   <div style="margin: 0 auto 400px;grid-column-gap: 30px;max-width:1140px;" class="pfe-l-grid">
     <div class="sticky pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-lg">
-      <pfe-jump-links-nav id="jumplinks1" default sr-text="Page navigation">
-        <h4 class="pfe-jump-links-nav--heading" slot="pfe-jump-links-nav--heading">Jump to section</h4>
+      <pfe-jump-links-nav id="jumplinks1" sr-text="Page navigation">
+        <h4 slot="pfe-jump-links-nav--heading">Jump to section</h4>
         <ul>
           <li> <a href="#section1">Section 1</a> </li>
           <li> <a href="#section2">Section 2</a> </li>
@@ -311,14 +311,14 @@
   <div style="padding: 20px 20px 400px;background-color: #131313;color: white;" class="pfe-l-grid">
     <div class="sticky pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-lg">
       <pfe-jump-links-nav style="margin-right: 30px;" id="jumplinks2" pfe-color="darkest" sr-text="Page navigation">
-        <h4 class="pfe-jump-links-nav--heading" slot="pfe-jump-links-nav--heading">Jump to section</h4>
-        <ul class="pfe-jump-links-nav">
+        <h4 slot="pfe-jump-links-nav--heading">Jump to section</h4>
+        <ul>
           <li> <a href="#section10">Section 1</a> </li>
           <li> <a href="#section20">Section 2</a> </li>
-          <li> <a class="pfe-jump-links-nav__link has-sub-section" href="#section30">Section 3</a>
+          <li> <a class="has-sub-section" href="#section30">Section 3</a>
             <ul class="sub-nav">
-              <li> <a class="pfe-jump-links-nav__link sub-section" href="#section3.10">Section 3.1</a> </li>
-              <li> <a class="pfe-jump-links-nav__link sub-section" href="#section3.20">Section 3.2</a> </li>
+              <li> <a class="sub-section" href="#section3.10">Section 3.1</a> </li>
+              <li> <a class="sub-section" href="#section3.20">Section 3.2</a> </li>
             </ul>
           </li>
           </li>
@@ -553,8 +553,8 @@
   <h2 style="text-align: center; margin: 60px auto;">PFE Jump Links - autobuild (w/ sub sections)</h2>
   <div style="margin-bottom: 400px;" class="pfe-l-grid">
     <div class="sticky pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-lg">
-      <pfe-jump-links-nav default autobuild id="jumplinks8" sr-text="Page navigation">
-        <h4 class="pfe-jump-links-nav--heading" slot="pfe-jump-links-nav--heading" id="pfe-jump-links-nav--heading">Jump to section</h4>
+      <pfe-jump-links-nav autobuild id="jumplinks8" sr-text="Page navigation">
+        <h4 slot="pfe-jump-links-nav--heading" id="pfe-jump-links-nav--heading">Jump to section</h4>
       </pfe-jump-links-nav>
     </div>
     <div class="pfe-l-grid__item pfe-m-12-col pfe-m-9-col-on-lg">
@@ -782,10 +782,10 @@
   </div>
   <div>
     <pfe-jump-links-nav horizontal id="jumplinks9" offset="30" sr-text="Page navigation">
-      <h4 class="pfe-jump-links-nav--heading" slot="pfe-jump-links-nav--heading">Jump to section</h4>
+      <h4 slot="pfe-jump-links-nav--heading">Jump to section</h4>
       <img src="https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--200.png" alt="" slot="pfe-jump-links-nav--logo">
-      <ul class="pfe-jump-links-nav">
-        <li class="pfe-jump-link-nav__item"> <a href="#section100">Section 1</a> </li>
+      <ul>
+        <li> <a href="#section100">Section 1</a> </li>
         <li> <a href="#section200">Section 2</a> </li>
         <li> <a href="#section300">Section 3</a> </li>
         <li> <a href="#section400">Section 4</a> </li>
@@ -977,7 +977,7 @@
 
     <div style="margin: 0 auto 400px;background:#f3f3f3;grid-column-gap: 30px;max-width:1140px;" class="pfe-l-grid">
       <div class="sticky pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-lg">
-        <pfe-jump-links-nav id="jumplinks1000" default style="  
+        <pfe-jump-links-nav id="jumplinks1000" style="  
             --pfe-jump-links__link--horizontal-spacer: 16px;
             --pfe-jump-links__link--vertical-spacer: 7px;
             --pfe-jump-links--BackgroundColor: #fff;
@@ -990,15 +990,15 @@
             --pfe-theme--font-weight--normal: 400px;
             --pfe-theme--surface--border-width--heavy: 4px;
           ">
-          <h4 class="pfe-jump-links-nav--heading" slot="pfe-jump-links-nav--heading">Jump to section</h4>
-          <ul class="pfe-jump-links-nav">
+          <h4 slot="pfe-jump-links-nav--heading">Jump to section</h4>
+          <ul>
             <li> <a href="#section10000">What's a Linux et a to if et to i be </a> </li>
             <li> <a href="#section20000">Container uses</a> </li>
-            <li> <a class="pfe-jump-links-nav__link has-sub-section" href="#section30000">Container vs.
+            <li> <a class="has-sub-section" href="#section30000">Container vs.
                 vritualization</a>
               <ul class="sub-nav">
-                <li> <a class="pfe-jump-links-nav__link sub-section" href="#section30000.10">LXC</a> </li>
-                <li> <a class="pfe-jump-links-nav__link sub-section" href="#section30000.20">History of Containers</a>
+                <li> <a class="sub-section" href="#section30000.10">LXC</a> </li>
+                <li> <a class="sub-section" href="#section30000.20">History of Containers</a>
                 </li>
               </ul>
             </li>

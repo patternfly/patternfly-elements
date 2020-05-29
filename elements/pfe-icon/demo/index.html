@@ -23,40 +23,41 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 
   <script>
-    if (!Array.prototype.filter){
-      Array.prototype.filter = function(func, thisArg) {
+    if (!Array.prototype.filter) {
+      Array.prototype.filter = function (func, thisArg) {
         'use strict';
-        if ( ! ((typeof func === 'Function' || typeof func === 'function') && this) )
-            throw new TypeError();
-      
+        if (!((typeof func === 'Function' || typeof func === 'function') && this))
+          throw new TypeError();
+
         var len = this.length >>> 0,
-            res = new Array(len), // preallocate array
-            t = this, c = 0, i = -1;
+          res = new Array(len), // preallocate array
+          t = this,
+          c = 0,
+          i = -1;
 
         var kValue;
-        if (thisArg === undefined){
-          while (++i !== len){
+        if (thisArg === undefined) {
+          while (++i !== len) {
             // checks to see if the key was set
-            if (i in this){
+            if (i in this) {
               kValue = t[i]; // in case t is changed in callback
-              if (func(t[i], i, t)){
+              if (func(t[i], i, t)) {
                 res[c++] = kValue;
               }
             }
           }
-        }
-        else{
-          while (++i !== len){
+        } else {
+          while (++i !== len) {
             // checks to see if the key was set
-            if (i in this){
+            if (i in this) {
               kValue = t[i];
-              if (func.call(thisArg, t[i], i, t)){
+              if (func.call(thisArg, t[i], i, t)) {
                 res[c++] = kValue;
               }
             }
           }
         }
-      
+
         res.length = c; // shrink down array to proper size
         return res;
       };
@@ -77,22 +78,24 @@
       PfeIcon.addIconSet(
         "local",
         "./",
-        function(name, iconSetName, iconSetPath) {
+        function (name, iconSetName, iconSetPath) {
           var regex = new RegExp("^" + iconSetName + "-(.*)");
           var match = regex.exec(name);
           return iconSetPath + match[1] + ".svg";
         }
       );
 
-      colors.standard = colors.standard.filter(function(c) {
+      colors.standard = colors.standard.filter(function (c) {
         return !["lightest", "lighter", "base"].includes(c);
       });
 
       window.addEventListener("load", function () {
-        document.querySelector("#rh-icons").appendChild(printIcons("rh", colors.standard.concat(colors.custom), 0,
+        document.querySelector("#rh-icons").appendChild(printIcons("rh", colors.standard.concat(colors.custom),
+          0,
           "3x"), false);
 
-        document.querySelector("#web-icons").appendChild(printIcons("web", colors.standard.concat(colors.custom), 0,
+        document.querySelector("#web-icons").appendChild(printIcons("web", colors.standard.concat(colors
+          .custom), 0,
           "2x", false));
 
         Array.prototype.forEach.call(document.querySelectorAll(".circled-icons"), function (section) {
@@ -134,6 +137,8 @@
 </head>
 
 <body unresolved>
+  <pfe-icon icon="foo-item"></pfe-icon>
+
   <pfe-band pfe-color="lightest" pfe-size="small">
     <h1>&lt;pfe-icon&gt;</h1>
   </pfe-band>
@@ -141,10 +146,12 @@
   <pfe-band id="builtin-icons" pfe-color="lightest">
     <h2 slot="pfe-band--header">Built-in Icons</h2>
     <div class="pfe-l-grid pfe-m-gutters">
-      <pfe-card id="rh-icons" pfe-color="lightest" pfe-border class="pfe-m-12-col pfe-m-8-col-on-xl pfe-l-grid-fill-height">
+      <pfe-card id="rh-icons" pfe-color="lightest" pfe-border
+        class="pfe-m-12-col pfe-m-8-col-on-xl pfe-l-grid-fill-height">
         <h3>RH icons</h3>
       </pfe-card>
-      <div class="pfe-m-12-col pfe-m-4-col-on-xl pfe-l-grid-fill-height pfe-l-grid pfe-m-gutters pfe-m-all-6-col  pfe-m-all-12-col-on-xl">
+      <div
+        class="pfe-m-12-col pfe-m-4-col-on-xl pfe-l-grid-fill-height pfe-l-grid pfe-m-gutters pfe-m-all-6-col  pfe-m-all-12-col-on-xl">
         <pfe-card id="web-icons" pfe-color="lightest" pfe-border class="pfe-l-grid-fill-height">
           <h3>Web icons</h3>
         </pfe-card>

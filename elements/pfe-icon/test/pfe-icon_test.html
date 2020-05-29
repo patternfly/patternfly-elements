@@ -38,32 +38,38 @@
           assert.instanceOf(document.querySelector('pfe-icon'), customElements.get("pfe-icon", 'pfe-icon should be an instance of pfeIcon'));
         });
 
-        test('it should update the path when adding the same icon set name with a new path', done => {
-          const path1 = image.getAttribute("xlink:href");
-          // override the existing rh built-in namespace with local path
-          PfeIcon.addIconSet("rh", "./", function (name, iconSetName, iconSetPath) {
-            return `./${name.replace("rh", "rh-icon")}.svg`;
-          });
+        // test('it should error when adding the same icon set name twice', () => {
+        //   // add an icon set named test
+        //   PfeIcon.addIconSet('test');
 
-          // a promise that triggers when a new image is loaded
-          // note that the event listener is never removed, but that's okay
-          // because the leftover event listeners are noops; they'll resolve an
-          // already-resolved promise.
-          function waitForLoad() {
-            return new Promise(resolve => {
-              image.addEventListener("load", resolve);
+        //   // adding the same icon set name again should throw
+        //   assert.throws(() => PfeIcon.addIconSet('test'), "already exists");
+        // });
+
+        test('it should warn if the 3rd input to addIconSet is not a function', done => {
+          const spy = sinon.spy(console, "warn");
+
+          // 3rd input is a string
+          PfeIcon.addIconSet('test', './', 'rh-icon-aed.svg');
+
+          flush(() => {
+            sinon.assert.calledWith(spy, "pfe-icon: The third input to addIconSet should be a function that parses and returns the icon's filename.");
+              spy.restore();
+              done();
             });
-          }
+        });
 
-          async function test() {
-            await waitForLoad();
+        test('it should warn if there is no function provided to resolve the icon names', done => {
+          const spy = sinon.spy(console, "warn");
 
-            const path2 = image.getAttribute("xlink:href");
-            assert.equal(path1, path2);
-            done();
-          }
+          // No 3rd input
+          PfeIcon.addIconSet('test', './');
 
-          test();
+          flush(() => {
+            sinon.assert.calledWith(spy, "pfe-icon: The set test needs a resolve function for the icon names.");
+              spy.restore();
+              done();
+            });
         });
 
         test('it should change icon when icon name is changed', done => {
@@ -73,9 +79,9 @@
           // replace the default built-in icon set resolveIconName function
           // with one that loads local icons.  we don't want tests dependent on
           // prod servers.
-          PfeIcon.addIconSet("rh", "./", function (name, iconSetName, iconSetPath) {
+          PfeIcon._iconSets.rh._resolveIconName = function (name, iconSetName, iconSetPath) {
             return `./${name.replace("rh", "rh-icon")}.svg`;
-          });
+          };
 
           // a promise that triggers when a new image is loaded
           // note that the event listener is never removed, but that's okay
@@ -105,13 +111,13 @@
           // CSS variable.
           const newColor = "rgb(11, 12, 13)";
 
-          icon.style.setProperty("--pfe-icon--color", newColor);
+          icon.style.setProperty("--pfe-icon--Color", newColor);
 
           const { floodColor } = getComputedStyle(feFlood);
 
           assert.equal(floodColor, newColor);
 
-          icon.style.removeProperty("--pfe-icon--color");
+          icon.style.removeProperty("--pfe-broadcasted--text");
         });
 
         test('it should change color when the broadcast CSS var is changed', () => {
@@ -129,18 +135,21 @@
           icon.style.removeProperty("--pfe-broadcasted--text");
         });
 
-        test('it should change size based on the relative size attribute values', () => {
+        test('it should change size based on the relative size attribute values', done => {
           // a function that accepts "size" values and makes sure they're
           // arranged in order from smallest to largest.
           function sizeCheck(sizes) {
             let lastSize = { width: 0, height: 0 };
             sizes.forEach(size => {
-              icon.setAttribute("pfe-size", size);
-              const { width, height } = icon.getBoundingClientRect();
-              assert.isAbove(width, lastSize.width, `size "${size}" should be wider than the size below`);
-              assert.isAbove(height, lastSize.height, `size "${size}" should be taller than the size below`);
+              icon.setAttribute("size", size);
 
-              lastSize = { width, height };
+              flush(() => {
+                const { width, height } = icon.getBoundingClientRect();
+                assert.isAbove(width, lastSize.width, `size "${size}" should be wider than the size below`);
+                assert.isAbove(height, lastSize.height, `size "${size}" should be taller than the size below`);
+                lastSize = { width, height };
+                done();
+              });
             });
           }
 
@@ -159,11 +168,10 @@
         });
 
         test('it should fetch an icon even when the icon set is registered after the element upgrades', done => {
+          const image = icon.shadowRoot.querySelector("svg image");
           // set up an event handler to catch when the icon request is made
           // and use onerror because the icon set isn't real, but it will catch the request being made
-          image.addEventListener("load", () => {
-            done();
-          })
+          image.addEventListener("load", () => done());
 
           icon.setAttribute("icon", "asdfasdf-foo");
 

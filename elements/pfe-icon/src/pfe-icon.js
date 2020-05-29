@@ -19,17 +19,6 @@ function _setRandomFilterId(el) {
   el.shadowRoot.querySelector("svg filter").setAttribute("id", randomId);
 }
 
-function _iconLoad(el) {
-  el.classList.remove("load-failed");
-}
-
-function _iconLoadError(el) {
-  el.classList.add("load-failed");
-  if (el.has_fallback) {
-    el.classList.add("has-fallback");
-  }
-}
-
 class PfeIcon extends PFElement {
   static get tag() {
     return "pfe-icon";
@@ -52,6 +41,12 @@ class PfeIcon extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
+  static get EVENTS() {
+    return {
+      ADD_ICON_SET: `${this.tag}:add-icon-set`
+    };
+  }
+
   get upgraded() {
     return this.image.hasAttribute("xlink:href");
   }
@@ -64,13 +59,27 @@ class PfeIcon extends PFElement {
     return ["icon", "on-fail", "pfe-circled", "pfe-color"];
   }
 
+  _iconLoad() {
+    this.classList.remove("load-failed");
+  }
+
+  _iconLoadError() {
+    this.classList.add("load-failed");
+    if (this.has_fallback) {
+      this.classList.add("has-fallback");
+    }
+  }
+
   constructor() {
     super(PfeIcon, { type: PfeIcon.PfeType });
 
+    this._iconLoad = this._iconLoad.bind(this);
+    this._iconLoadError = this._iconLoadError.bind(this);
+
     this.image = this.shadowRoot.querySelector("svg image");
     if (this.image) {
-      this.image.addEventListener("load", () => _iconLoad(this));
-      this.image.addEventListener("error", () => _iconLoadError(this));
+      this.image.addEventListener("load", this._iconLoad);
+      this.image.addEventListener("error", this._iconLoadError);
     }
 
     // Attach a listener for the registration of an icon set
@@ -84,8 +93,8 @@ class PfeIcon extends PFElement {
     super.disconnectedCallback();
 
     if (this.image) {
-      this.image.removeEventListener("load", () => _iconLoad(this));
-      this.image.removeEventListener("error", () => _iconLoadError(this));
+      this.image.removeEventListener("load", this._iconLoad);
+      this.image.removeEventListener("error", this._iconLoadError);
     }
   }
 
@@ -130,13 +139,14 @@ class PfeIcon extends PFElement {
       typeof this._iconSets[name]._resolveIconName === "function"
     ) {
       resolveFunction = this._iconSets[name]._resolveIconName;
-    } else {
+    } else if (
+      typeof resolveIconName !== "function" &&
+      typeof resolveIconName !== "undefined"
+    ) {
       console.warn(
         `${this.tag}: The third input to addIconSet should be a function that parses and returns the icon's filename.`
       );
-    }
-
-    if (typeof resolveFunction !== "function") {
+    } else {
       console.warn(
         `${this.tag}: The set ${name} needs a resolve function for the icon names.`
       );
@@ -145,22 +155,14 @@ class PfeIcon extends PFElement {
     // Register the icon set and set up the event indicating the change
     this._iconSets[name] = new PfeIconSet(name, path, resolveFunction);
 
-    window.addEventListener("load", () =>
-      document.body.dispatchEvent(
-        new CustomEvent(this.EVENTS.ADD_ICON_SET, {
-          bubbles: false,
-          detail: {
-            set: this._iconSets[name]
-          }
-        })
-      )
+    document.body.dispatchEvent(
+      new CustomEvent(this.EVENTS.ADD_ICON_SET, {
+        bubbles: false,
+        detail: {
+          set: this._iconSets[name]
+        }
+      })
     );
-  }
-
-  static get EVENTS() {
-    return {
-      ADD_ICON_SET: `${this.tag}:add-icon-set`
-    };
   }
 }
 

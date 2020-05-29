@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>PatternFly Element | pfe-dropdown Demo</title>
+
+    <noscript>
+      <link
+        href="../../pfelement/pfelement-noscript.min.css"
+        rel="stylesheet"
+      />
+    </noscript>
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>
+      require(["../dist/pfe-dropdown.umd.js"]);
+    </script>
+  </head>
+  <style>
+    body {
+      font-family: "Red Hat Text", Overpass, Helvetica, sans-serif;
+      position: relative;
+    }
+  </style>
+
+  <body unresolved>
+    <h1>&lt;pfe-dropdown&gt;</h1>
+
+    <h2>Expandable dropdown</h2>
+
+    <pfe-dropdown pfe-label="Dropdown">
+      <pfe-dropdown-item pfe-item-type="link">
+        <a href="https://bit.ly/3b9wvWg">Link 1</a>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="link">
+        <a href="https://bit.ly/3b9wvWg">Link 2</a>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="link" is_disabled>
+        <a href="https://bit.ly/3b9wvWg">Link 3</a>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="separator"></pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="action">
+        <button>Action 1</button>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="action" is_disabled>
+        <button>Action 2</button>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="link">
+        <a href="https://bit.ly/3b9wvWg">Link 4</a>
+      </pfe-dropdown-item>
+    </pfe-dropdown>
+    <p id="example-dropdown-1">Selected Action: <span id="example-action-1"></span></p>
+
+    <h2>Dropdown with custom dropdown options</h2>
+    <pfe-dropdown pfe-label="Dropdown" id="dropdown-with-custom-options">
+    </pfe-dropdown>
+    <p id="example-dropdown-2">Selected Action: <span id="example-action-2"></span></p>
+
+    <h2>Disabled dropdown</h2>
+
+    <pfe-dropdown pfe-label="Disabled" is_disabled>
+      <pfe-dropdown-item pfe-item-type="link">
+        <a href="https://bit.ly/3b9wvWg">Link 1</a>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="link">
+        <a href="https://bit.ly/3b9wvWg">Link 2</a>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="link" is_disabled>
+        <a href="https://bit.ly/3b9wvWg">Link 2</a>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="separator"></pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="action">
+        <button>Action 1</button>
+      </pfe-dropdown-item>
+    </pfe-dropdown>
+
+    <h2>Expandable dropdown with all disabled options</h2>
+
+    <pfe-dropdown pfe-label="Dropdown">
+      <pfe-dropdown-item pfe-item-type="link" is_disabled>
+        <a href="https://bit.ly/3b9wvWg">Link 1</a>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="link" is_disabled>
+        <a href="https://bit.ly/3b9wvWg">Link 2</a>
+      </pfe-dropdown-item>
+      <pfe-dropdown-item pfe-item-type="link" is_disabled>
+        <a href="https://bit.ly/3b9wvWg">Link 3</a>
+      </pfe-dropdown-item>
+    </pfe-dropdown>
+
+    <script>
+      let dropdown = document.querySelector("pfe-dropdown");
+      document.querySelector("#example-dropdown-1").style.display = "none";
+      dropdown.addEventListener("pfe-dropdown:change", function(event) {
+        document.querySelector("#example-action-1").textContent =
+          event.detail.action;
+        document.querySelector("#example-dropdown-1").style.display = "block";
+      });
+
+      let dropdownWithCustomOptions = document.querySelector("#dropdown-with-custom-options");
+      customElements.whenDefined("pfe-dropdown").then(function() {
+        // Default Options
+        dropdownWithCustomOptions.pfeDropdownOptions = [
+          { href: "https://bit.ly/3b9wvWg", text: "Link 1", type: "link", is_disabled: false },
+          { href: "https://bit.ly/3b9wvWg", text: "Link 2", type: "link", is_disabled: false },
+          { href: "https://bit.ly/3b9wvWg", text: "Link 3", type: "link", is_disabled: true },
+          { type: "separator" },
+          { text: "Action 1", type: "action", is_disabled: false },
+          { text: "Action 2", type: "action", is_disabled: true }
+        ];
+        // Options passed via addDropdownOptions() method
+        dropdownWithCustomOptions.addDropdownOptions(
+          [
+            { href: "https://bit.ly/3b9wvWg", text: "Link 4", type: "link", is_disabled: false }
+          ]
+        );
+      });
+      document.querySelector("#example-dropdown-2").style.display = "none";
+      dropdownWithCustomOptions.addEventListener("pfe-dropdown:change", function(event) {
+        document.querySelector("#example-action-2").textContent =
+          event.detail.action;
+        document.querySelector("#example-dropdown-2").style.display = "block";
+      });
+    </script>
+  </body>
+</html>

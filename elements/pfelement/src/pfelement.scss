@@ -6,7 +6,7 @@ body {
   --pfe-reveal-delay: 2s;
 
   transition: opacity var(--pfe-reveal-duration) ease-in-out;
-  
+
   @include pfe-set-broadcast-theme(light);
 }
 

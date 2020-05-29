@@ -76,10 +76,10 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
 
   @include pfe-print-media {
     // Add the border to the card for print
-    border-radius: pfe-var(surface--border-radius);
-    border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(surface--border);
+    border-radius: pfe-fetch(surface--border-radius);
+    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
     // Reduce padding for print
-    padding: calc(#{pfe-local(Padding--vertical)} / 2) pfe-local(Padding--horizontal);
+    padding: (#{pfe-fetch(Padding--vertical)} / 2) pfe-fetch(Padding--horizontal);
   }
 
   @include browser-query(ie11) {

@@ -39,7 +39,7 @@
 @function pfe-breakpoint($size, $max: false, $map: true) {
     $bp: 1px;
     @if $map == true {
-    	$bp: map-get($pfe-vars, grid-breakpoint--#{$size} );
+    	$bp: pfe-fetch(grid-breakpoint--#{$size} );
     	@if $max {
     	    $bp: (pfe-strip-unit($bp) - 1) * 1px;
     	}

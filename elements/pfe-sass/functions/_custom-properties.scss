@@ -163,3 +163,25 @@
       @return var(--#{$repo}-broadcasted--#{to-string($broadcast,'--')}#{unquote($fallback)});
     }
 }
+
+@function pfe-fetch($name) {
+    $var-name: to-string($name, "--");
+    @if map-get($LOCAL-VARIABLES, $var-name) != null {
+        @return map-get($LOCAL-VARIABLES, $var-name);
+    }
+    @if map-get($pfe-vars, $var-name) != null {
+        @return map-get($pfe-vars, $var-name);
+    }
+    @else if map-get($pfe-colors, $var-name) != null {
+        @return map-get($pfe-colors, $var-name);
+    }
+    @else if map-get($pfe-broadcasted, $var-name) != null {
+        @return map-get($pfe-broadcasted, $var-name);
+    }
+    @else if map-get($pfe-zindex, $var-name) != null {
+        @return map-get($pfe-zindex, $var-name);
+    }
+    @else {
+        @error "#{$var-name} could not be found.";
+    }
+}

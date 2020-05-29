@@ -3,7 +3,6 @@
 $LOCAL: card;
 
 $LOCAL-VARIABLES: (
-
   // Individual padding overrides available
   PaddingTop: calc(#{pfe-var(container-spacer)} * 2),
   PaddingRight: calc(#{pfe-var(container-spacer)} * 2),
@@ -54,34 +53,34 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   // This allows the card to fill it's container if necessary
   align-self: stretch;
 
-  padding:       #{pfe-local(Padding)};
-  border:        #{pfe-local(Border)};
-  border-radius: #{pfe-local(BorderRadius)};
+  padding:       pfe-local(Padding);
+  border:        pfe-local(Border);
+  border-radius: pfe-local(BorderRadius);
 
   // This property ensures that children in the slots do no overflow
   // the border-radius being set on the container
   overflow: hidden;
 
   // Base colors
-  background-color:    #{pfe-local(BackgroundColor)};
-  background-position: #{pfe-local(BackgroundPosition)};
-  color: #{pfe-broadcasted(text)};
+  background-color:    pfe-local(BackgroundColor);
+  background-position: pfe-local(BackgroundPosition);
+  color: pfe-broadcasted(text);
 
   // Remove background color for print
   @include pfe-no-print-background;
 
   // Add the border to the card for print
   @include pfe-print-media {
-    border-radius: #{map-get($pfe-vars, surface--border-radius)};
-    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
+    border-radius: pfe-fetch(surface--border-radius);
+    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) map-get($pfe-colors, surface--border);
   }
 
   @include browser-query(ie11) {
     background-color: #{pfe-var(surface--lightest)} !important;
     color: #{pfe-var(text)} !important;
     background-image: none !important;
-    border-radius: #{map-get($pfe-vars, surface--border-radius)};
-    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
+    border-radius: #{pfe-fetch(surface--border-radius)};
+    border: #{pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) map-get($pfe-colors, surface--border)};
     padding: #{pfe-var(container-spacer)};
   }
 }
@@ -99,7 +98,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
 }
 
 :host([pfe-border]:not([pfe-border="false"])) {
-  --pfe-card--BorderWidth:   #{map-get($pfe-vars, surface--border-width)};
+  --pfe-card--BorderWidth:   #{pfe-fetch(surface--border-width)};
 }
 
 // Targets the wrappers in the shadow DOM

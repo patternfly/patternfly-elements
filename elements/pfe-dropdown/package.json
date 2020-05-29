@@ -1,0 +1,37 @@
+{
+  "name": "@patternfly/pfe-dropdown",
+  "pfelement": {
+    "className": "PfeDropdown",
+    "elementName": "pfe-dropdown"
+  },
+  "version": "1.0.0-prerelease.31",
+  "description": "Dropdown element for PatternFly Elements",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-dropdown"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "pfe-dropdown.umd.js",
+  "module": "pfe-dropdown.js",
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-dropdown/test/"
+  },
+  "author": {
+    "name": "Ivana Rodriguez"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@patternfly/pfe-sass": "1.0.0-prerelease.33",
+    "@patternfly/pfelement": "1.0.0-prerelease.31"
+  },
+  "generator-pfelement-version": "1.3.0"
+}

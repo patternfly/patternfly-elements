@@ -5,7 +5,7 @@ A component to display formatted and prettified code
 Describe how best to use this web component along with best practices.
 
 ```html
-<pfe-codeblock pfe-language="markup">
+<pfe-codeblock pfe-language="markup" pfe-line-numbers pfe-line-count-start="1">
     <pre pfe-codeblock-container>
     <code>
        Code to be styled in the codeblock is here!
@@ -14,16 +14,13 @@ Describe how best to use this web component along with best practices.
 </pfe-codeblock> 
 ```
 
-### Accessibility
-Explain how this component meets accessibility standards.
-
 ## Slots
 
 There is a default slot but it is just used to capture the light DOM and hide it.
 
 ## Attributes
 
-- `pfe-language`: Passed to Prism.js to be used to correctly format code, valid values are [
+- `pfe-language`: Required - Passed to Prism.js to be used to correctly format code, valid values are [
       "markup",
       "html",
       "xml",
@@ -35,11 +32,11 @@ There is a default slot but it is just used to capture the light DOM and hide it
       "js"
     ]
 
-- `pfe-codeblock-container`: Used on the pre tag to denote content to format is inside in a code block
+- `pfe-codeblock-container`: Required - Used on the pre tag to denote content to format is inside in a code block
 
-- `pfe-line-numbers`: Used to enable the auto line number display for the code block ( Boolean no need for a value true is assumed if present )
+- `pfe-line-numbers`: Optional - Used to enable the auto line number display for the code block ( Boolean no need for a value true is assumed if present )
 
-- `pfe-line-count-start`: Used to set the codeblock line number starting value, ( positive or negative integer, defaults to 1 if not set)
+- `pfe-line-count-start`: Optional -  Used to set the codeblock line number starting value, ( positive or negative integer, defaults to 1 if not set)
 
 ## Dependencies
 Prism.js is used to format and style the codeblock, https://prismjs.com/

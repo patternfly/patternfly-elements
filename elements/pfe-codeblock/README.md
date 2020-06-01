@@ -34,8 +34,12 @@ There is a default slot but it is just used to capture the light DOM and hide it
       "javascript",
       "js"
     ]
+
 - `pfe-codeblock-container`: Used on the pre tag to denote content to format is inside in a code block
 
+- `pfe-line-numbers`: Used to enable the auto line number display for the code block ( Boolean no need for a value true is assumed if present )
+
+- `pfe-line-count-start`: Used to set the codeblock line number starting value, ( positive or negative integer, defaults to 1 if not set)
 
 ## Dependencies
 Prism.js is used to format and style the codeblock, https://prismjs.com/

@@ -35,9 +35,9 @@ When structuring your Sass, a good rule of thumb for organization is:
 ```
 // Define your hooks at the top
 $LOCAL-VARIABLES: (
-  Property: default,
+  Property: default-value,
   region: (
-    Property: default
+    Property: default-value
   )
 );
 
@@ -48,7 +48,7 @@ $LOCAL-VARIABLES: (
 
 // Modifiers should update local variables
 :host([modifiers]) {
-  --pfe-cool-element--Property: updated;
+  --pfe-cool-element--Property: updated-value;
 }
 
 // Light DOM styles
@@ -69,8 +69,8 @@ $LOCAL-VARIABLES: (
       --pfe-cool-element__region--Property: updated;
     }
   }
-  // Modifiers can also be set using classes or scoped to the Shadow DOM
-  &--modifier / &[modifier] {
+  // Modifiers can also be set using classes and scoped to the Shadow DOM
+  &--modifier {
     --pfe-cool-element--Property: updated;
   }
 }

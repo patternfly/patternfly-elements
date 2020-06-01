@@ -8,7 +8,7 @@
     <script type="module" src="../dist/pfe-codeblock.js"></script>
   </head>
   <body>
-    <pfe-codeblock pfe-language="markup">
+    <pfe-codeblock pfe-language="markup" id="markup-test">
       <pre pfe-codeblock-container>
 <code>
 &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
@@ -16,7 +16,15 @@
 </code>
       </pre>
     </pfe-codeblock>
-    <pfe-codeblock pfe-line-numbers pfe-language="markup">
+    <pfe-codeblock pfe-language="javascript" id="javascript-test">
+      <pre pfe-codeblock-container>
+<code>
+const example="javascript"
+let test=null;
+</code>
+      </pre>
+    </pfe-codeblock>
+    <pfe-codeblock pfe-line-numbers pfe-language="markup" id="markup-test-linenumebrs">
       <pre pfe-codeblock-container>
 <code>
 &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
@@ -24,7 +32,7 @@
 </code>
       </pre>
     </pfe-codeblock>
-    <pfe-codeblock pfe-line-numbers pfe-language="javascript">
+    <pfe-codeblock pfe-line-numbers pfe-language="javascript" id="javascript-test-linenumebrs-offset" pfe-line-count-start="-2">
       <pre pfe-codeblock-container>
 <code>
 const example="javascript"
@@ -47,16 +55,32 @@ let test=null;
         });
 
         // Write tests for each attribute
-        test("it should set the code language for the codeblock", () => {
-          //todo
+        test("it should set the code language for the codeblock to markup", () => {
+          const element = document.getElementById('markup-test');
+          const resultCount = element.shadowRoot.querySelectorAll('pre.language-markup').length;
+
+          assert.equal(resultCount, 1);
+        });
+
+        test("it should set the code language for the codeblock to javascript", () => {
+          const element = document.getElementById('javascript-test');
+          const resultCount = element.shadowRoot.querySelectorAll('pre.language-javascript').length;
+
+          assert.equal(resultCount, 1);
         });
 
         test("it should set the line number option", () => {
-          //todo
+          const element = document.getElementById('markup-test-linenumebrs');
+          const resultCount = element.shadowRoot.querySelectorAll('pre.line-numbers').length;
+
+          assert.equal(resultCount, 1);
         });
 
         test("it should set the starting line numebr value", () => {
-          //todo
+          const element = document.getElementById('javascript-test-linenumebrs-offset');
+          const styleDataLineCount = element.shadowRoot.querySelector('pre.line-numbers').style.counterReset;
+          console.log(styleDataLineCount);
+          assert.equal(styleDataLineCount, "linenumber -3");
         });
         
         // Write tests for each slot

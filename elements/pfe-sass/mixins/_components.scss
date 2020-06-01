@@ -147,7 +147,6 @@
   text-align:  pfe-local(TextAlign, left);
   line-height: pfe-var(line-height);
   padding:     pfe-local(Padding, $region: trigger);
-  box-shadow:  pfe-local(BoxShadow);
 
   &:hover {
     outline: none;

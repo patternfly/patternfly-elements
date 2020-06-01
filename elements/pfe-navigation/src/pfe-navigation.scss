@@ -177,7 +177,7 @@ pfe-icon {
     padding-bottom: #{pfe-local(Padding--vertical)};
     padding-right: calc( #{pfe-var(container-padding)} + 9px ); // ensure gap between main menu links and logo
 
-    @media screen and (min-width: pfe-breakpoint("grid-breakpoint--md")) {
+    @media screen and (min-width: pfe-breakpoint(md)) {
         padding-right: calc( #{pfe-var(container-padding)} * 3 );
     }
 

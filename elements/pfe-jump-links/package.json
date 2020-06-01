@@ -1,0 +1,49 @@
+{
+  "name": "@patternfly/pfe-jump-links",
+  "description": "Jump links element for PatternFly Elements",
+  "pfelement": {
+    "className": "PfeJumpLinks",
+    "elementName": "pfe-jump-links",
+    "files": {
+      "styles": "./src/pfe-jump-links.scss",
+      "template": "./src/pfe-jump-links.html",
+      "js": "./src/pfe-jump-links.js"
+    },
+    "assets": []
+  },
+  "version": "1.0.0-prerelease.49",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-jump-links"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/pfe-jump-links.umd.js",
+  "module": "./dist/pfe-jump-links.js",
+  "unpkg": "./dist/pfe-jump-links.umd.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-jump-links/test/"
+  },
+  "contributors": [
+    {
+      "name": "Daniel Faucette"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@patternfly/pfe-sass": "1.0.0-prerelease.40",
+    "@patternfly/pfelement": "1.0.0-prerelease.39",
+    "gh-pages": "^2.2.0"
+  }
+}

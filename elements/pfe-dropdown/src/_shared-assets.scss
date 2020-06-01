@@ -1,0 +1,8 @@
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: dropdown;
+
+$variables: ( 
+  SpacingVertical: calc(#{pfe-var(container-padding)} * 0.5),
+  SpacingHorizontal: calc(#{pfe-var(container-padding)} * 0.5)
+);

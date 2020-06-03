@@ -300,11 +300,16 @@ class PfeJumpLinksPanel extends PFElement {
     this.sectionMargin = this.getAttribute("offset") || 200;
     this.currentActive = 0;
     this.current = -1;
+    this._getNav = this._getNav.bind(this);
     this.nav = this._getNav();
+    this.offset = this.nav.getAttribute("offset") || 200;
   }
 
   connectedCallback() {
     super.connectedCallback();
+    if (!this.nav) {
+      this.nav = this._getNav();
+    }
     this._init();
 
     if (this.nav && this.nav.hasAttribute("autobuild")) {
@@ -423,7 +428,12 @@ class PfeJumpLinksPanel extends PFElement {
   _scrollCallback() {
     let sections;
     let menu_links;
-    let sectionMargin;
+    let offset;
+    if (Number.isInteger(parseInt(this.offset))) {
+      offset = this.offset;
+    } else {
+      offset = 200;
+    }
     //Check sections to make sure we have them (if not, get them)
     if (!this.sections || typeof this.sections === "undefined") {
       this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
@@ -446,7 +456,7 @@ class PfeJumpLinksPanel extends PFElement {
     const sectionArr = [...sections];
     // Get all the sections that match this point in the scroll
     const matches = sectionArr
-      .filter(section => window.scrollY >= section.offsetTop - sectionMargin)
+      .filter(section => window.scrollY >= section.offsetTop - offset)
       .reverse();
 
     //Identify the last one queried as the current section

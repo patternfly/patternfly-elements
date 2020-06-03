@@ -297,7 +297,6 @@ class PfeJumpLinksPanel extends PFElement {
     this._mutationCallback = this._mutationCallback.bind(this);
     this._observer = new MutationObserver(this._mutationCallback);
     this.currentActive = null;
-    this.sectionMargin = this.getAttribute("offset") || 200;
     this.currentActive = 0;
     this.current = -1;
     this._getNav = this._getNav.bind(this);
@@ -306,10 +305,10 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   connectedCallback() {
-    super.connectedCallback();
     if (!this.nav) {
       this.nav = this._getNav();
     }
+    super.connectedCallback();
     this._init();
 
     if (this.nav && this.nav.hasAttribute("autobuild")) {
@@ -434,6 +433,7 @@ class PfeJumpLinksPanel extends PFElement {
     } else {
       offset = 200;
     }
+
     //Check sections to make sure we have them (if not, get them)
     if (!this.sections || typeof this.sections === "undefined") {
       this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
@@ -444,12 +444,6 @@ class PfeJumpLinksPanel extends PFElement {
     if (this.menu_links.length < 1 || !this.menu_links) {
       this.menu_links = this.JumpLinksNav.shadowRoot.querySelectorAll("a");
       menu_links = this.menu_links;
-    }
-
-    if (!this.sectionMargin) {
-      sectionMargin = 200;
-    } else {
-      sectionMargin = this.sectionMargin;
     }
 
     // Make an array from the node list

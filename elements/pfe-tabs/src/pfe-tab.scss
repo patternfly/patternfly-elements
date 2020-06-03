@@ -51,7 +51,7 @@ $variables: (
   font-size:    #{pfe-local(FontSize, $region: tab)};
     
   @for $i from 1 through 6 {
-    h#{$i} {
+    .pfe-tab > * {
       font-size: inherit;
       font-weight: inherit;
       margin: 0;

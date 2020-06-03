@@ -297,13 +297,17 @@ class PfeJumpLinksPanel extends PFElement {
     this._mutationCallback = this._mutationCallback.bind(this);
     this._observer = new MutationObserver(this._mutationCallback);
     this.currentActive = null;
-    this.sectionMargin = this.getAttribute("offset") || 200;
     this.currentActive = 0;
     this.current = -1;
+    this._getNav = this._getNav.bind(this);
     this.nav = this._getNav();
+    this.offset = this.nav.getAttribute("offset") || 200;
   }
 
   connectedCallback() {
+    if (!this.nav) {
+      this.nav = this._getNav();
+    }
     super.connectedCallback();
     this._init();
 
@@ -423,7 +427,13 @@ class PfeJumpLinksPanel extends PFElement {
   _scrollCallback() {
     let sections;
     let menu_links;
-    let sectionMargin;
+    let offset;
+    if (Number.isInteger(parseInt(this.offset))) {
+      offset = this.offset;
+    } else {
+      offset = 200;
+    }
+
     //Check sections to make sure we have them (if not, get them)
     if (!this.sections || typeof this.sections === "undefined") {
       this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
@@ -436,17 +446,18 @@ class PfeJumpLinksPanel extends PFElement {
       menu_links = this.menu_links;
     }
 
-    if (!this.sectionMargin) {
-      sectionMargin = 200;
-    } else {
-      sectionMargin = this.sectionMargin;
-    }
-
     // Make an array from the node list
     const sectionArr = [...sections];
     // Get all the sections that match this point in the scroll
     const matches = sectionArr
-      .filter(section => window.scrollY >= section.offsetTop - sectionMargin)
+      .filter(
+        section =>
+          // if (offset != 200) { console.log("offset is: ", offset); }
+          // console.log("offset is: ", offset);
+          // console.log("section.offsetTop is: ", section.offsetTop);
+          // console.log("window.scrollY is: ", window.scrollY)
+          window.scrollY >= section.offsetTop - offset
+      )
       .reverse();
 
     //Identify the last one queried as the current section

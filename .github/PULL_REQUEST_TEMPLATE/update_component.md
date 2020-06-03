@@ -41,7 +41,7 @@ Your component should work in all of the following environments:
 - [ ] Latest 2 versions of Edge
 - [ ] Internet Explorer 11 (should be useable, not pixel perfect)
 - [ ] Latest 2 versions of Firefox (one on Mac OS, one of Windows OS)
-- [ ] Firefox 60.7.2 (or latest version for Red Hat Enterprise Linux distribution)
+- [ ] Firefox 68 (or latest version for Red Hat Enterprise Linux distribution)
 - [ ] Latest 2 versions of Chrome (one on Mac OS, one of Windows OS)
 - [ ] Latest 2 versions of Safari
 - [ ] Galaxy S9 Firefox

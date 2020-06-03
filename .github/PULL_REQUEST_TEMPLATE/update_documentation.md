@@ -1,12 +1,10 @@
 ---
-name: Infrastructure
-about: Describe the proposed changes to the project infrastructure.
-labels: infrastructure
+name: Update/add documentation
+about: Describe the documentation updates
+labels: doc / demo
 ---
 
-## Infrastructure updates
-
-Updates relating to the overall architecture or infrastructure of the project; not component-specific changes. Thank you for submitting a pull request!
+## Documentation updates
 
 
 ### What has changed and why
@@ -16,29 +14,13 @@ Summarize files edited as part of this MR along with a brief description of what
 - 
 
 
-### Testing instructions
-
-Be sure to include detailed instructions on how your update can be tested by another developer.
-
-1. 
-
-
-#### Requirements
-
-Your repository infrastructure updates should work for at least:
-- [ ] Node v10.x
-- [ ] NPM v6.x
-
-
 ### Ready-for-merge Checklist
 
 Check off items as they are completed.  Feel free to delete items if they are not applicable to your PR.
 
 - [ ] Expected files: all files in this pull request are related to one request or issue (no stragglers or scope-creep).
-- [ ] Repository compiles and tests pass.
+- [ ] Documentation updates are clear and concise.
 - [ ] Changelog updated.
-- [ ] Documentation updated or added, if necessary.
-- [ ] Link to the demo recording: []()
 
 ### Merging
 

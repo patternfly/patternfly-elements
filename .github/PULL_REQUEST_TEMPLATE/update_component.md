@@ -24,7 +24,7 @@ Link(s) to demo page(s) where this element can be viewed:
 
 Summarize files edited as part of this MR along with a brief description of what was changed/why.
 
-*
+- 
 
 
 ### Testing instructions

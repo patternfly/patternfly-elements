@@ -9,6 +9,7 @@ $variables: (
   focus:           pfe-color(link--focus),
   highlight:       pfe-color(ui-accent),
   tab: (
+    FontSize:       pfe-var(font-size),
     PaddingTop:     calc(#{pfe-var(container-padding)} * .666),
     PaddingRight:   calc(#{pfe-var(container-padding)} * 1.5),
     PaddingBottom:  calc(#{pfe-var(container-padding)} * .666),
@@ -45,13 +46,14 @@ $variables: (
   
   // Exposing this for customization
   text-transform: #{pfe-local($cssvar: TextTransform, $region: tab, $fallback: none)};
-  font-family: #{pfe-var(font-family)};
-  font-weight: #{pfe-var(font-weight--normal)};
-  font-size: #{pfe-var(font-size)};
+  font-family:  #{pfe-var(font-family)};
+  font-weight:  #{pfe-var(font-weight--normal)};
+  font-size:    #{pfe-local(FontSize, $region: tab)};
     
   @for $i from 1 through 6 {
     h#{$i} {
       font-size: inherit;
+      font-weight: inherit;
       margin: 0;
     }
   }

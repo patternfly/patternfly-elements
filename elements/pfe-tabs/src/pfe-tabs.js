@@ -590,7 +590,7 @@ class PfeTab extends PFElement {
 
   _setTabContent() {
     // Copy the tab content into the template
-    const label = this.textContent.trim();
+    const label = this.textContent.trim().replace(/\s+/g, " ");
 
     if (!label) {
       console.warn(
@@ -616,7 +616,8 @@ class PfeTab extends PFElement {
       heading = document.createElement(semantics);
       heading.textContent = label;
     } else {
-      heading = document.createTextNode(label);
+      heading = document.createElement("h3");
+      heading.textContent = label;
     }
 
     if (heading) {

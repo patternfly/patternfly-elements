@@ -44,17 +44,15 @@ $variables: (
   text-align: #{pfe-local($cssvar: TextAlign, $region: tab, $fallback: center)};
   
   // Exposing this for customization
-  %typography {
-    text-transform: #{pfe-local($cssvar: TextTransform, $region: tab, $fallback: none)};
-    font-family: #{pfe-var(font-family)};
-    font-weight: #{pfe-var(font-weight--normal)};
-    font-size: #{pfe-var(font-size)};
-    margin: 0;
-  }
+  text-transform: #{pfe-local($cssvar: TextTransform, $region: tab, $fallback: none)};
+  font-family: #{pfe-var(font-family)};
+  font-weight: #{pfe-var(font-weight--normal)};
+  font-size: #{pfe-var(font-size)};
     
   @for $i from 1 through 6 {
     h#{$i} {
-      @extend %typography;
+      font-size: inherit;
+      margin: 0;
     }
   }
 

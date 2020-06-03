@@ -46,8 +46,8 @@ Your component should work in all of the following environments:
 - [ ] Firefox 68 (or latest version for Red Hat Enterprise Linux distribution)
 - [ ] Latest 2 versions of Chrome (one on Mac OS, one of Windows OS)
 - [ ] Latest 2 versions of Safari
-- [ ] Galaxy S9 Firefox
-- [ ] iPhone X Safari
+- [ ] Android mobile device (such as the Galaxy S9)
+- [ ] Apple mobile device (such as the iPhone X)
 - [ ] iPad Pro Safari
 - [ ] Pixel 3 Chrome
 

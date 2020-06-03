@@ -43,7 +43,7 @@ Your component should work in all of the following environments:
 - [ ] Latest 2 versions of Edge
 - [ ] Internet Explorer 11 (should be useable, not pixel perfect)
 - [ ] Latest 2 versions of Firefox (one on Mac OS, one of Windows OS)
-- [ ] Firefox 60.7.2 (or latest version for Red Hat Enterprise Linux distribution)
+- [ ] Firefox 68 (or latest version for Red Hat Enterprise Linux distribution)
 - [ ] Latest 2 versions of Chrome (one on Mac OS, one of Windows OS)
 - [ ] Latest 2 versions of Safari
 - [ ] Galaxy S9 Firefox
@@ -71,4 +71,3 @@ Check off items as they are completed.  Feel free to delete items if they are no
 Please **squash** when merging and ensure your commit message uses [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/#summary) formatting.
 
 **Be sure to share your updates with the [patternfly-elements-contribute@redhat.com](mailto:patternfly-elements-contribute@redhat.com) mailing list!**
-

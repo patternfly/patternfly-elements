@@ -16,10 +16,10 @@ We'll edit the `/src/pfe-cool-element.html` file to add some additional HTML. Le
 Here's the updated HTML in `/src/pfe-cool-element.html`:
 
 ```
-<div class="pfe-cool-element__profile" id="profile-pic"></div>
+<div id="profile-pic"></div>
 <slot></slot>
-<div class="pfe-cool-element__social">
-  <button class="pfe-cool-element__social--follow">Follow</button>
+<div>
+  <button>Follow</button>
 </div>
 ```
 
@@ -73,10 +73,10 @@ class PfeCoolElement extends PFElement {
 
 :host([hidden]) {
   display: none; }</style>
-<div class="pfe-cool-element__profile" id="profile-pic"></div>
+<div id="profile-pic"></div>
 <slot></slot>
-<div class="pfe-cool-element__social">
-  <button class="pfe-cool-element__social--follow">Follow</button>
+<div>
+  <button>Follow</button>
 </div>`;
   }
 

@@ -16,11 +16,6 @@ Your Sass file will initially import additional Sass from the pfe-sass node modu
 
 ```
 @import "../../pfe-sass/pfe-sass";
-
-$LOCAL: cool-element;
-
-$LOCAL-VARIABLES: ();
-
 :host {
   display: block;
 }
@@ -30,123 +25,37 @@ $LOCAL-VARIABLES: ();
 }
 ```
 
-When structuring your Sass, a good rule of thumb for organization is:
-
-```
-// Define your hooks at the top
-$LOCAL-VARIABLES: (
-  Property: default-value,
-  region: (
-    Property: default-value
-  )
-);
-
-:host {
-  // Apply the hooks to the appropriate properties
-  property: pfe-local(Property);
-}
-
-// Modifiers should update local variables
-:host([modifiers]) {
-  --pfe-cool-element--Property: updated-value;
-}
-
-// Light DOM styles
-::slotted(*) {
-  > typography defaults
-}
-
-// Class-based shadow DOM styles
-.pfe-cool-element {
-  &__region {
-    // Apply the hooks to the appropriate properties in their regions too
-    property: pfe-local(Property, $region: region);
-
-    // 1. default styles
-    // 2. media queries
-
-    &[modifiers] {
-      --pfe-cool-element__region--Property: updated;
-    }
-  }
-  // Modifiers can also be set using classes and scoped to the Shadow DOM
-  &--modifier {
-    --pfe-cool-element--Property: updated;
-  }
-}
-```
-
 Now we can update our styles, like so:
 
 ```
 @import "../../pfe-sass/pfe-sass";
-
-$LOCAL: cool-element;
-
-$LOCAL-VARIABLES: (
-  Width: 128px,
-  Padding: calc(#{pfe-var(container-spacer)} * 2),
-  profile: (
-    BackgroundColor: pfe-var(surface--base),
-    theme: pfe-var(surface--base--theme),
-    Border: 2px solid #333
-  )
-);
-
 :host {
-  // Hardcoded, not connected to theme
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  // Local variable hooks
-  width: pfe-local(Width);
-  padding: pfe-local(Padding);
-
-  // Global theme variable hooks only
-  font-family: pfe-var(font-family);
-  box-shadow: pfe-var(box-shadow--sm);
+  width: 128px;
+  padding: 32px;
+  font-family: Arial;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 }
 
 :host([hidden]) {
   display: none;
 }
 
-.pfe-cool-element {
-  &__profile {
-    background-color: pfe-local(BackgroundColor, $region: profile);
-    // Any time background color is updated, theme should be set too
-    // This sets the `on=` attribute on the component
-    --theme: pfe-local(theme, $region: profile);
+#profile-pic {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 16px;
+  border: 2px solid #333;
+  border-radius: 50%;
+  background-color: #efefef;
+}
 
-    // Invoke the broadcasted default typography styles
-    @include pfe-theme-contexts;
-
-    // The above mixins outputs:
-    // :host([on="dark"]) {
-    //   --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
-    //   --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #99ccff);
-    //   --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
-    //   --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
-    //   --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
-    //   --pfe-broadcasted--link-decoration: none;
-    //   --pfe-broadcasted--link-decoration--hover: underline;
-    //   --pfe-broadcasted--link-decoration--focus: underline;
-    //   --pfe-broadcasted--link-decoration--visited: none;
-    // }
-
-    border: pfe-local(Border, $region: profile);
-    border-radius: pfe-var(surface--border-radius);
-
-    // Hardcoded values
-    width: 50px;
-    height: 50px;
-    margin-bottom: 16px;
-  }
-  &__social--follow {
-    margin-top: 16px;
-  }
+button {
+  margin-top: 16px;
 }
 ```
 
@@ -166,13 +75,33 @@ import PFElement from '../pfelement/dist/pfelement.js';
 
 class PfeCoolElement extends PFElement {
   get html() {
-    return `<style>:host{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;width:128px;width:var(--pfe-cool-element--Width,128px);padding:calc(16px * 2);padding:var(--pfe-cool-element--Padding,calc(var(--pfe-theme--container-spacer,16px) * 2));font-family:Overpass,Overpass,Helvetica,helvetica,arial,sans-serif;font-family:var(--pfe-theme--font-family, "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif);-webkit-box-shadow:0 .0625rem .125rem 0 rgba(19,19,19,.2);box-shadow:0 .0625rem .125rem 0 rgba(19,19,19,.2);-webkit-box-shadow:var(--pfe-theme--box-shadow--sm,0 .0625rem .125rem 0 rgba(19,19,19,.2));box-shadow:var(--pfe-theme--box-shadow--sm,0 .0625rem .125rem 0 rgba(19,19,19,.2))}:host([hidden]){display:none}.pfe-cool-element__profile{background-color:#dfdfdf;background-color:var(--pfe-cool-element__profile--BackgroundColor,var(--pfe-theme--surface--base,#dfdfdf));--theme:pfe-local(theme, $region: profile);border:2px solid #333;border:var(--pfe-cool-element__profile--Border,2px solid #333);border-radius:3px;border-radius:var(--pfe-theme--surface--border-radius,3px);width:50px;height:50px;margin-bottom:16px}.pfe-cool-element__profile :host([on=dark]){--pfe-broadcasted--text:var(--pfe-theme--color--text--on-dark, #fff);--pfe-broadcasted--link:var(--pfe-theme--color--link--on-dark, #99ccff);--pfe-broadcasted--link--hover:var(--pfe-theme--color--link--hover--on-dark, #cce6ff);--pfe-broadcasted--link--focus:var(--pfe-theme--color--link--focus--on-dark, #cce6ff);--pfe-broadcasted--link--visited:var(--pfe-theme--color--link--visited--on-dark, #b38cd9);--pfe-broadcasted--link-decoration:none;--pfe-broadcasted--link-decoration--hover:underline;--pfe-broadcasted--link-decoration--focus:underline;--pfe-broadcasted--link-decoration--visited:none}@media screen and (-ms-high-contrast:active),screen and (-ms-high-contrast:none){.pfe-cool-element__profile :host{color:#333!important;color:var(--pfe-theme--text,#333)!important}}.pfe-cool-element__profile :host([on=saturated]){--pfe-broadcasted--text:var(--pfe-theme--color--text--on-saturated, #fff);--pfe-broadcasted--link:var(--pfe-theme--color--link--on-saturated, #fff);--pfe-broadcasted--link--hover:var(--pfe-theme--color--link--hover--on-saturated, white);--pfe-broadcasted--link--focus:var(--pfe-theme--color--link--focus--on-saturated, white);--pfe-broadcasted--link--visited:var(--pfe-theme--color--link--visited--on-saturated, #b38cd9);--pfe-broadcasted--link-decoration:underline;--pfe-broadcasted--link-decoration--hover:underline;--pfe-broadcasted--link-decoration--focus:underline;--pfe-broadcasted--link-decoration--visited:underline}@media screen and (-ms-high-contrast:active),screen and (-ms-high-contrast:none){.pfe-cool-element__profile :host{color:#333!important;color:var(--pfe-theme--text,#333)!important}}.pfe-cool-element__profile :host([on=light]){--pfe-broadcasted--text:var(--pfe-theme--color--text, #333);--pfe-broadcasted--link:var(--pfe-theme--color--link, #06c);--pfe-broadcasted--link--hover:var(--pfe-theme--color--link--hover, #003366);--pfe-broadcasted--link--focus:var(--pfe-theme--color--link--focus, #003366);--pfe-broadcasted--link--visited:var(--pfe-theme--color--link--visited, rebeccapurple);--pfe-broadcasted--link-decoration:none;--pfe-broadcasted--link-decoration--hover:underline;--pfe-broadcasted--link-decoration--focus:underline;--pfe-broadcasted--link-decoration--visited:none}@media screen and (-ms-high-contrast:active),screen and (-ms-high-contrast:none){.pfe-cool-element__profile :host{color:#333!important;color:var(--pfe-theme--text,#333)!important}}.pfe-cool-element__social--follow{margin-top:16px}
-/*# sourceMappingURL=pfe-card.min.css.map */
-</style>
-<div class="pfe-cool-element__profile" id="profile-pic"></div>
+    return `<style>:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 128px;
+  padding: 32px;
+  font-family: Arial;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12); }
+
+:host([hidden]) {
+  display: none; }
+
+#profile-pic {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 16px;
+  border: 2px solid #333;
+  border-radius: 50%;
+  background-color: #efefef; }
+
+button {
+  margin-top: 16px; }</style>
+<div id="profile-pic"></div>
 <slot></slot>
-<div class="pfe-cool-element__social">
-  <button class="pfe-cool-element__social--follow">Follow</button>
+<div>
+  <button>Follow</button>
 </div>`;
   }
 
@@ -198,7 +127,7 @@ PFElement.create(PfeCoolElement);
 export default PfeCoolElement;
 ```
 
-You'll notice `<style>` contains everything we just wrote in our Sass file. Sass variables and functions will resolve into vanilla CSS before being injected into the web component.  An autoprefixer and minifier will also be run on your styles before being injected so you don't need to worry about vendor prefixing when writing styles.
+You'll notice `<style>` contains everything we just wrote in our Sass file. Sass variables will also compiled their values and get included in the changes above.
 
 Now that our `pfe-cool-element` is more appealing, we'll add the follow button's interaction and fill in the profile photo. We can accomplish both of these tasks by updating the `/src/pfe-cool-element.js` file.
 

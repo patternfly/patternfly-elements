@@ -1,7 +1,7 @@
 +++
 title = "Pull requests"
 description = ""
-weight = 10
+weight = 9
 draft = false
 bref = ""
 toc = true

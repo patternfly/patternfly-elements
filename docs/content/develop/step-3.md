@@ -1,7 +1,7 @@
 +++
 title = "Write tests"
 description = ""
-weight = 9
+weight = 8
 draft = false
 toc = true
 menu = "develop"

@@ -45,7 +45,7 @@ At first glace, there seem to be lots of "gotchas" related to web components, an
 
     ```
     <pfe-cta pfe-priority="primary">
-      <a href="#">Primary</a>   <!-- this element is slotted by default -->
+    <a href="#">Primary</a>   <!-- this element is slotted by default -->
     </pfe-cta>
     ```
 

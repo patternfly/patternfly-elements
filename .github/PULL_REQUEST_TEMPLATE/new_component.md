@@ -48,8 +48,7 @@ Your component should work in all of the following environments:
 - [ ] Latest 2 versions of Safari
 - [ ] Android mobile device (such as the Galaxy S9)
 - [ ] Apple mobile device (such as the iPhone X)
-- [ ] iPad Pro Safari
-- [ ] Pixel 3 Chrome
+- [ ] Apple tablet device (such as the iPhone Pro)
 
 
 ### Ready-for-merge Checklist

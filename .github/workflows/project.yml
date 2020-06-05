@@ -1,0 +1,50 @@
+name: Move card in project view when label updated
+on:
+  pull_request:
+    types: [labeled]
+jobs:
+  Move_Labeled_Issue_On_Project_Board:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
+        with:
+          action-token: "${{ secrets.ACTIONS }}"
+          project-url: "https://github.com/orgs/github/projects/2"
+          column-name: "Needs discovery"
+          label-name: "Needs: discussion"
+          columns-to-ignore: "Done"
+      - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
+        with:
+          action-token: "${{ secrets.ACTIONS }}"
+          project-url: "https://github.com/orgs/github/projects/2"
+          column-name: "On hold"
+          label-name: "blocked"
+          columns-to-ignore: "Done"
+      - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
+        with:
+          action-token: "${{ secrets.ACTIONS }}"
+          project-url: "https://github.com/orgs/github/projects/2"
+          column-name: "Code review"
+          label-name: "Ready: code review"
+          columns-to-ignore: "Done"
+      - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
+        with:
+          action-token: "${{ secrets.ACTIONS }}"
+          project-url: "https://github.com/orgs/github/projects/2"
+          column-name: "Testing"
+          label-name: "Ready: branch testing"
+          columns-to-ignore: "Done"
+      - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
+        with:
+          action-token: "${{ secrets.ACTIONS }}"
+          project-url: "https://github.com/orgs/github/projects/2"
+          column-name: "Testing"
+          label-name: "Ready: browser testing"
+          columns-to-ignore: "Done"
+      - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
+        with:
+          action-token: "${{ secrets.ACTIONS }}"
+          project-url: "https://github.com/orgs/github/projects/2"
+          column-name: "Ready to merge?"
+          label-name: "Ready for merge"
+          columns-to-ignore: "Done"

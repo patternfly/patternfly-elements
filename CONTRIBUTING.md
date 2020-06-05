@@ -18,7 +18,7 @@ Please note that this project is released with a [Contributor Covenant Code of C
 2. Create a new branch.  Please use the [conventional commit](cc) formatting for the branch name.
     > `git checkout -b feat-my-branch-name`
 3. Make your change, [add tests](https://patternfly.github.io/patternfly-elements/develop/step-3/), and make sure the automated testing passes.
-4. Push to your fork and [submit a pull request][pr].
+4. Push to your fork and [submit a pull request][pr].  Be sure to select from the available PR templates.
 
 
 Here are a few things you can do that will increase the likelihood of your pull request being accepted:

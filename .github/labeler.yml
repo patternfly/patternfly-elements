@@ -1,7 +1,3 @@
-"Needs: changelog":
-  - any: ["./**/*"]
-    all: ["!CHANGELOG*.md"]
-
 demo:
   - examples/*
   - elements/*/demo/*

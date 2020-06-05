@@ -123,7 +123,7 @@ We list out our slots in the properties object of the schema.  Every slot is an 
 
 ## Attributes
 
-Our component supports two attributes: `pfe-following` and `pfe-photo-url`. Both attributes are prefixed with `pfe-` to protect their namespacing and prevent collisions with protected attributes in HTML.  To indicate this prefixing, set `"prefixed": true` on the object for that attribute.  Some attribute names will not be prefixed; in those cases, set the prefixed key to false.  Attributes are listed as properties and can use a variety of types.  Most will probably be of type `string` or `boolean` but `number` is also supported.
+This component example supports two attributes: `pfe-following` and `pfe-photo-url`. Both attributes are prefixed with `pfe-` to protect their namespacing and prevent collisions with protected attributes in HTML.  To indicate this prefixing, set `"prefixed": true` on the object for that attribute.  Some attribute names will not be prefixed; in those cases, set the prefixed key to false.  Attributes are listed as properties and can use a variety of types.  Most will probably be of type `string` or `boolean` but `number` is also supported.
 
 ```
 "attributes": {
@@ -147,9 +147,9 @@ Our component supports two attributes: `pfe-following` and `pfe-photo-url`. Both
 }
 ```
 
-Note the required array at the bottom of the attributes property object: `"required": ["following]`.  To make an attribute required, meaning it will inject the attribute with it's default value if none is provided, add the key name to the required array.  Multiple values are comma separated.
+Note the required array at the bottom of the attributes property object: `"required": ["following]`.  This will set the `pfe-following` attribute as required. This means that if the attribute is not manually added to the component tag in the source, i.e.  `<pfe-cool-element pfe-following>`, then this attribute will be automatically added with a default value (if provided in the schema) when the component upgrades.  
 
-For attributes with a set of specifically supported answers, such as a set of colors, the attribute is still of type `string` since the result assigned to the attribute is a string, but we can provide an `enum` against which to validate the input:
+For attributes with a set of specifically supported answers, such as a set of colors, the attribute is still of type `string` since the result assigned to the attribute is a string, but we can provide an `enum` against which to validate the input.  Multiple values are comma separated.
 
 ```
 "color": {

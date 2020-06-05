@@ -1,3 +1,7 @@
+"Needs: changelog":
+  - ./**/*
+  - !CHANGELOG*.md
+
 demo:
   - examples/*
   - elements/*/demo/*

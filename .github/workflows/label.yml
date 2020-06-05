@@ -6,7 +6,10 @@
 # https://github.com/actions/labeler/blob/master/README.md
 
 name: Pull request labeler
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - master
 
 jobs:
   label:

@@ -1,24 +1,23 @@
 demo:
-  - any: ["./examples/*", "./elements/*/demo/*"]
+  - examples/*
+  - elements/*/demo/*
 
 doc:
-  - any: ["./docs/**/*", "./elements/**/*.{md,txt}"]
+  - docs/**/*
+  - elements/**/*.{md,txt}
 
 functionality:
-  - any: ["./elements/*/src/*.js"]
+  - elements/*/src/*.{js,html}
 
 styles:
-  - any: ["./elements/*/src/*.{scss,css}", "./tokens/**/*"]
+  - elements/*/src/*.{scss,css}
+  - tokens/**/*
 
-tests:
-  - any: ["./elements/*/test/*"]
+tests: elements/*/test/*
 
 tools:
-  - any:
-      [
-        "./scripts/*",
-        "./elements/*/gulpfile.js",
-        "./elements/*/rollup.config.js",
-        "./.*",
-        "./*.{js,json,yml}",
-      ]
+  - scripts/*
+  - elements/*/gulpfile.js
+  - elements/*/rollup.config.js
+  - ./.*
+  - ./*.{js,json,yml}

@@ -13,7 +13,8 @@ styles:
   - elements/*/src/*.{scss,css}
   - tokens/**/*
 
-tests: elements/*/test/*
+tests: 
+  - elements/*/test/*
 
 tools:
   - scripts/*

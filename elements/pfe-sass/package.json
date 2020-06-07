@@ -18,6 +18,7 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-sass"
   },
+  "main": "./pfe-sass.scss",
   "scripts": {
     "build": "../../node_modules/.bin/gulp",
     "dev": "../../node_modules/.bin/gulp dev",

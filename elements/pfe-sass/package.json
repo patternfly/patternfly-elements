@@ -20,7 +20,8 @@
   },
   "scripts": {
     "build": "../../node_modules/.bin/gulp",
-    "dev": "../../node_modules/.bin/gulp dev"
+    "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch"
   },
   "contributors": [
     {

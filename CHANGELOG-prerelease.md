@@ -1,6 +1,6 @@
 ## Prerelease 50 ( TBD )
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) Add automatic labeling to PRs
+- [775b821](https://github.com/patternfly/patternfly-elements/commit/775b821702c903f926b8bf9fdf9c948ac949335f) Add automatic labeling to PRs
 - [](https://github.com/patternfly/patternfly-elements/commit/) Move PR cards automatically in the Project when labels are changed
 
 ## Prerelease 49 ( 2020-05-29 )

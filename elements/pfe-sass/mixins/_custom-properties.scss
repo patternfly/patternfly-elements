@@ -104,7 +104,7 @@
 ///     }
 ///     ```
 /// ===========================================================================
-@mixin pfe-set-local($context...) {
+@mixin pfe-set-local($map: $LOCAL-VARIABLES, $context...) {
     $result: map-deep-get($LOCAL-VARIABLES, $context);
     
     @each $property, $value in $result {

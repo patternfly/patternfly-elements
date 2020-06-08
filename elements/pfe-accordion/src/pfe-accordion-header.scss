@@ -77,7 +77,7 @@ button[aria-expanded="true"] {
 
 :host([pfe-disclosure="true"]) {
   button {
-    @include pfe-local-update((
+    @include pfe-set-local((
       trigger: (
         Padding: pfe-local(Padding, $region: base) calc(#{pfe-local(Padding, $region: base)} * 1.5) pfe-local(Padding, $region: base) calc((#{pfe-local(Padding, $region: base)} * 3) + 2px) !important
       )
@@ -111,7 +111,7 @@ button[aria-expanded="true"] {
 
 // Set the header border while animating. 
 :host([pfe-disclosure="true"].animating) {
-  @include pfe-local-update((
+  @include pfe-set-local((
     BorderLeftWidth: pfe-var(surface--border-width--heavy),
     BorderColor--accent: pfe-var(ui-base) // set border-left color while animating.
   ));

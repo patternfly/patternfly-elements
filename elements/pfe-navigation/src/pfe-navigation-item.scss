@@ -23,7 +23,7 @@ $nav-item-variables: (
 $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
 
 :host {
-  @include pfe-local-update($LOCAL-VARIABLES);
+  @include pfe-set-local($LOCAL-VARIABLES);
 
   display: flex;
   flex-direction: column;

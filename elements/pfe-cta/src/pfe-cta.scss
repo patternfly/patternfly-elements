@@ -192,14 +192,14 @@ $LOCAL: cta;
 // - Fallback values should match whats above
 
 :host([pfe-priority="secondary"]) {
-  @include pfe-local-update(priority secondary default);
+  @include pfe-set-local(priority secondary default);
 }
 
 /// ===========================================================================
 /// PRIMARY CTAs
 /// ===========================================================================
 :host([pfe-priority="primary"]) {
-  @include pfe-local-update(priority primary default);
+  @include pfe-set-local(priority primary default);
 }
 
 /// ===========================================================================
@@ -219,7 +219,7 @@ $LOCAL: cta;
 }
 
 :host([pfe-priority="secondary"][pfe-color="accent"]) {
-  @include pfe-local-update(priority secondary color accent);
+  @include pfe-set-local(priority secondary color accent);
 }
 
 :host([pfe-priority="secondary"][pfe-color="accent"].focus-within) {
@@ -231,11 +231,11 @@ $LOCAL: cta;
 /// ===========================================================================
 
 :host([pfe-priority="primary"][pfe-color="base"]) {
-  @include pfe-local-update(priority primary color base);
+  @include pfe-set-local(priority primary color base);
 }
 
 :host([pfe-priority="secondary"][pfe-color="base"]) {
-  @include pfe-local-update(priority secondary color base);
+  @include pfe-set-local(priority secondary color base);
 }
 
 :host([pfe-priority="secondary"][pfe-color="base"].focus-within) {
@@ -252,11 +252,11 @@ $LOCAL: cta;
 }
 
 :host([pfe-priority="primary"][pfe-color="complement"]) {
-  @include pfe-local-update(priority primary color complement);
+  @include pfe-set-local(priority primary color complement);
 }
 
 :host([pfe-priority="secondary"][pfe-color="complement"]) {
-  @include pfe-local-update(priority secondary color complement);
+  @include pfe-set-local(priority secondary color complement);
 }
 
 :host([pfe-priority="secondary"][pfe-color="complement"].focus-within) {
@@ -268,7 +268,7 @@ $LOCAL: cta;
 /// ===========================================================================
 
 :host([pfe-priority="secondary"][pfe-variant="wind"]) {
-  @include pfe-local-update(priority secondary variant wind);
+  @include pfe-set-local(priority secondary variant wind);
 }
 
 :host([pfe-priority="secondary"][pfe-variant="wind"].focus-within) {
@@ -281,12 +281,12 @@ $LOCAL: cta;
 
 :host([pfe-priority="secondary"][on="dark"]),
 :host([pfe-priority="secondary"][on="saturated"]) {
-  @include pfe-local-update(priority, secondary, context, dark);
+  @include pfe-set-local(priority, secondary, context, dark);
 }
 
 :host([pfe-priority="primary"][on="saturated"]),
 :host([pfe-priority="primary"][pfe-color="complement"][on="dark"]) {
-  @include pfe-local-update(priority, primary, context, saturated);
+  @include pfe-set-local(priority, primary, context, saturated);
 }
 
 /// ===========================================================================
@@ -294,5 +294,5 @@ $LOCAL: cta;
 /// ===========================================================================
 
 :host([aria-disabled="true"]) {
-  @include pfe-local-update(disabled);
+  @include pfe-set-local(disabled);
 }

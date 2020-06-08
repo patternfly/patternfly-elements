@@ -92,7 +92,7 @@
     }
   }
 
-  @include pfe-local-update($LOCAL-VARIABLES);
+  @include pfe-set-local($LOCAL-VARIABLES);
 }
 
 @mixin pfe-accordion-props($variant: default) {
@@ -117,7 +117,7 @@
   z-index: pfe-local(ZIndex);
 
   &:hover {
-    @include pfe-local-update((
+    @include pfe-set-local((
       BorderColor--accent: pfe-local(accent)
     ));
   }
@@ -135,7 +135,7 @@
     )
   );
 
-  @include pfe-local-update($LOCAL-VARIABLES);
+  @include pfe-set-local($LOCAL-VARIABLES);
   @include pfe-accordion-props;
 
   // -webkit-appearance: button;
@@ -163,7 +163,7 @@
 }
 
 @mixin pfe-trigger-last($theme: light) {
-  @include pfe-local-update((
+  @include pfe-set-local((
     BorderBottomWidth: pfe-var(surface--border-width)
   ));
 }
@@ -185,12 +185,12 @@
     ));
   }
 
-  @include pfe-local-update($LOCAL-VARIABLES);
+  @include pfe-set-local($LOCAL-VARIABLES);
 }
 
 @mixin pfe-panel-container() {
   // Ensure the box shadow does not propagate to nest accordions
-  @include pfe-local-update( ( BoxShadow: none ) );
+  @include pfe-set-local( ( BoxShadow: none ) );
 
   @extend %container;
   padding: pfe-local(Padding, $region: panel-container);

@@ -33,7 +33,7 @@ $dropdown-variables: (
 $variables: map-merge($variables, $dropdown-variables);
 
 :host {
-  @include pfe-local-update($variables);
+  @include pfe-set-local($variables);
   position: relative;
   display: inline-block;
   max-width: 100%;

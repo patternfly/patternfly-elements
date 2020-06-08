@@ -50,7 +50,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-variables);
 
 :host {
   // Print the variables to the DOM
-  @include pfe-local-update($LOCAL-VARIABLES);
+  @include pfe-set-local($LOCAL-VARIABLES);
 
   // Reduce padding for print
   @media print {

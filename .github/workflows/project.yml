@@ -5,54 +5,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: github.event_name == 'issues' && github.event.action == 'labeled' && contains(github.event.issue.labels.*.name, 'discovery')
+        if: github.event.action == 'labeled' && (github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'discovery')) || (github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && contains(github.event.pull_request.labels.*.name, 'discovery'))
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS }}
           GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
           GITHUB_PROJECT_COLUMN_NAME: Needs discovery
       - uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: github.event_name == 'pull_request' && github.event.action == 'labeled' && contains(github.event.pull_request.labels.*.name, 'discovery')
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS }}
-          GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
-          GITHUB_PROJECT_COLUMN_NAME: Needs discovery
-      - uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: github.event_name == 'issues' && github.event.action == 'labeled' && contains(github.event.issue.labels.*.name, 'blocked')
+        if: github.event.action == 'labeled' && (github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'blocked')) || (github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && contains(github.event.pull_request.labels.*.name, 'blocked'))
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS }}
           GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
           GITHUB_PROJECT_COLUMN_NAME: On hold
       - uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: github.event_name == 'pull_request' && github.event.action == 'labeled' && contains(github.event.pull_request.labels.*.name, 'blocked')
+        if: github.event.action == 'labeled' && (github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'code review')) || (github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && contains(github.event.pull_request.labels.*.name, 'code review'))
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS }}
           GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
-          GITHUB_PROJECT_COLUMN_NAME: On hold
-      # - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
-      #   with:
-      #     action-token: "${{ secrets.ACTIONS }}"
-      #     project-url: "https://github.com/orgs/github/projects/2"
-      #     column-name: "Code review"
-      #     label-name: "Ready: code review"
-      #     columns-to-ignore: "Done"
-      # - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
-      #   with:
-      #     action-token: "${{ secrets.ACTIONS }}"
-      #     project-url: "https://github.com/orgs/github/projects/2"
-      #     column-name: "Testing"
-      #     label-name: "Ready: branch testing"
-      #     columns-to-ignore: "Done"
-      # - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
-      #   with:
-      #     action-token: "${{ secrets.ACTIONS }}"
-      #     project-url: "https://github.com/orgs/github/projects/2"
-      #     column-name: "Testing"
-      #     label-name: "Ready: browser testing"
-      #     columns-to-ignore: "Done"
-      # - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
-      #   with:
-      #     action-token: "${{ secrets.ACTIONS }}"
-      #     project-url: "https://github.com/orgs/github/projects/2"
-      #     column-name: "Ready to merge?"
-      #     label-name: "Ready for merge"
-      #     columns-to-ignore: "Done"
+          GITHUB_PROJECT_COLUMN_NAME: Code review
+      - uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: github.event.action == 'labeled' && (github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'testing')) || (github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && contains(github.event.pull_request.labels.*.name, 'testing'))
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTIONS }}
+          GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
+          GITHUB_PROJECT_COLUMN_NAME: Testing
+      - uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: github.event.action == 'labeled' && (github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'Ready for merge')) || (github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && contains(github.event.pull_request.labels.*.name, 'Ready for merge'))
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTIONS }}
+          GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
+          GITHUB_PROJECT_COLUMN_NAME: Ready for merge?

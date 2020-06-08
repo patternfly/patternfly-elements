@@ -5,13 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: github.event_name == 'issues' && github.event.action == 'labeled'
+        if: github.event_name == 'issues' && github.event.action == 'labeled' && contains(github.event.issue.labels.*.name, 'discovery')
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS }}
           GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
           GITHUB_PROJECT_COLUMN_NAME: Needs discovery
       - uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: github.event_name == 'pull_request' && github.event.action == 'labeled'
+        if: github.event_name == 'pull_request' && github.event.action == 'labeled' && contains(github.event.issue.labels.*.name, 'discovery')
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS }}
           GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2

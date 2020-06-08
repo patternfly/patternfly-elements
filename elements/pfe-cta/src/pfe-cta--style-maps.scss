@@ -1,0 +1,253 @@
+// Arrow animation
+$horizontal-spacing: 3px;
+$arrow-basic: 0 $horizontal-spacing;
+$arrow-hover: 0 0 0 #{$horizontal-spacing * 2};
+
+$LOCAL-VARIABLES: (
+    Padding: 0.6rem 0,
+    BorderRadius: 0,
+    BackgroundColor: transparent,
+    BackgroundColor--hover: transparent,
+    BackgroundColor--focus: transparent,
+    BorderColor: transparent,
+    BorderColor--hover: transparent,
+    BorderColor--focus: rgba(40, 151, 240, 0.2),
+    Color: pfe-broadcasted(link),
+    Color--hover: pfe-broadcasted(link--hover),
+    Color--focus: pfe-broadcasted(link--focus),
+    TextDecoration: none,
+    TextDecoration--hover: none,
+    TextDecoration--focus: none,
+    FontWeight: pfe-var(font-weight--bold),
+    FontFamily: pfe-var(font-family--heading),
+    FontSize:  pfe-var(font-size),
+    FontSize--priority: calc(#{pfe-local(FontSize) / 1.125}),
+    LineHeight: pfe-var(line-height),
+    arrow: (
+      Display: inline,
+      Padding: $arrow-basic,
+      size: 13px,
+      MarginLeft: calc(#{pfe-var(content-spacer)} * 0.25)
+    ),
+    inner: (
+      BorderColor: transparent,
+      BorderColor--hover: transparent,
+      BorderColor--focus: transparent
+    ),
+    priority: (
+        primary: (
+            default: (
+                // Button padding and border radius settings
+                BorderRadius: pfe-var(ui--border-radius),
+            
+                // Arrow styles
+                BackgroundColor: pfe-var(ui-accent),
+                BorderColor: pfe-var(ui-accent),
+                Color: pfe-var(ui-accent--text),
+            
+                BackgroundColor--hover: pfe-var(ui-accent--hover),
+                BorderColor--hover: pfe-var(ui-accent--hover),
+                Color--hover: pfe-var(ui-accent--text),
+            
+                BackgroundColor--focus: pfe-var(ui-accent),
+                BorderColor--focus: pfe-var(ui-accent),
+                Color--focus: pfe-var(ui-accent--text),
+            
+                inner: (
+                    BorderColor--focus: pfe-var(ui-accent--text)
+                ),
+            
+                arrow: (
+                    Display: none
+                )
+            ),
+        
+            context: (
+                saturated: (
+                    BackgroundColor: pfe-var(surface--lightest),
+                    BorderColor: pfe-var(surface--lightest),
+                    Color: pfe-var(text),
+            
+                    BackgroundColor--hover: pfe-var(surface--lighter),
+                    BorderColor--hover: pfe-var(surface--lighter),
+                    Color--hover: pfe-var(text),
+            
+                    BackgroundColor--focus: pfe-var(surface--lightest),
+                    BorderColor--focus: pfe-var(surface--lightest),
+                    Color--focus: pfe-var(text),
+                    inner: (
+                    BorderColor--focus: pfe-var(surface--darkest)
+                    )
+                )
+            ),
+        
+            color: (
+                base: (
+                    BackgroundColor: pfe-var(ui-base),
+                    BorderColor: pfe-var(ui-base),
+                    Color: pfe-var(ui-base--text),
+            
+                    BackgroundColor--hover: pfe-var(ui-base--hover),
+                    BorderColor--hover: pfe-var(ui-base--hover),
+                    Color--hover: pfe-var(ui-base--text),
+            
+                    BackgroundColor--focus: pfe-var(ui-base),
+                    BorderColor--focus: pfe-var(surface--darker),
+                    Color--focus: pfe-var(ui-base--text),
+            
+                    inner: (
+                    BorderColor--focus: pfe-var(ui-base--text)
+                    )
+                ),
+            
+                complement: (
+                    BackgroundColor: pfe-var(ui-complement),
+                    BorderColor: pfe-var(ui-complement),
+                    Color: pfe-var(ui-complement--text),
+            
+                    BackgroundColor--hover: pfe-var(ui-complement--hover),
+                    BorderColor--hover: pfe-var(ui-complement--hover),
+                    Color--hover: pfe-var(ui-complement--text),
+            
+                    BackgroundColor--focus: pfe-var(ui-complement),
+                    BorderColor--focus: pfe-var(surface--darker),
+                    Color--focus: pfe-var(ui-complement--text),
+                    inner: (
+                    BorderColor--focus: pfe-var(ui-complement--text)
+                    )
+                )
+            )
+        ),
+
+        secondary: (
+            default: (
+                BorderRadius: pfe-var(ui--border-radius),
+            
+                BackgroundColor: transparent,
+                BorderColor: pfe-broadcasted(text, pfe-var(ui-complement)),
+                Color: pfe-broadcasted(text, pfe-var(ui-complement)),
+            
+                BackgroundColor--hover: pfe-var(ui-complement),
+                BorderColor--hover: pfe-broadcasted(text, pfe-var(ui-complement)), //white, then black
+                Color--hover: pfe-var(ui-complement--text),
+            
+                BackgroundColor--focus: pfe-var(surface--lighter),
+                BorderColor--focus: pfe-var(ui-complement),
+                Color--focus: pfe-var(ui-complement),
+            
+                inner: (
+                    BorderColor--focus: pfe-var(ui-complement)
+                ),
+                arrow: (
+                    Display: none
+                )
+            ),
+        
+            context: (
+                dark: (
+                    BackgroundColor: transparent,
+                    BorderColor: pfe-var(surface--lightest),
+                    Color: pfe-var(text--on-dark),
+            
+                    BackgroundColor--hover: pfe-var(surface--lighter),
+                    BorderColor--hover: pfe-var(surface--lighter),
+                    Color--hover: pfe-var(text),
+            
+                    BackgroundColor--focus: pfe-var(surface--lightest),
+                    BorderColor--focus: pfe-var(surface--lightest),
+                    Color--focus: pfe-var(text),
+                    inner: (
+                    BorderColor--focus: pfe-var(surface--darkest)
+                    )
+                )
+            ),
+        
+            color: (
+                accent: (
+                    BackgroundColor: transparent,
+                    BorderColor: pfe-var(ui-accent),
+                    Color: pfe-var(ui-accent),
+                
+                    BackgroundColor--hover: pfe-var(ui-accent),
+                    BorderColor--hover: pfe-var(ui-accent),
+                    Color--hover: pfe-var(ui-accent--text),
+                
+                    BackgroundColor--focus: pfe-var(surface--lighter),
+                    BorderColor--focus: pfe-var(ui-accent),
+                    Color--focus: pfe-var(ui-accent),
+                    inner: (
+                    BorderColor--focus: pfe-var(ui-accent)
+                    )
+                ),
+            
+                base: (
+                    BackgroundColor: transparent,
+                    BorderColor: pfe-var(ui-base),
+                    Color: pfe-var(ui-base),
+                    BackgroundColor--hover: pfe-var(ui-base),
+                    BorderColor--hover: pfe-var(ui-base),
+                    Color--hover: pfe-var(ui-base--text),
+                    BackgroundColor--focus: rgba(40, 151, 240, 0.2),
+                    BorderColor--focus: pfe-var(ui-base),
+                    Color--focus: pfe-var(ui-base),
+                    inner: (
+                    BorderColor--focus: pfe-var(ui-base)
+                    )
+                ),
+            
+                complement: (
+                    BackgroundColor: transparent,
+                    BorderColor: pfe-var(ui-complement),
+                    Color: pfe-var(ui-complement),
+            
+                    BackgroundColor--hover: pfe-var(ui-complement),
+                    BorderColor--hover: pfe-var(ui-complement),
+                    Color--hover: pfe-var(ui-complement--text),
+            
+                    BackgroundColor--focus: pfe-var(surface--lighter),
+                    BorderColor--focus: pfe-var(ui-complement),
+                    Color--focus: pfe-var(ui-complement),
+                    inner: (
+                    BorderColor--focus: pfe-var(ui-complement)
+                    )
+                )
+            ),
+        
+            variant: (
+                wind: (
+                    BackgroundColor: transparent,
+                    BorderColor: pfe-var(surface--border),
+                    Color: pfe-broadcasted(link),
+                    FontWeight: pfe-var(font-weight--normal),
+            
+                    BackgroundColor--hover: pfe-var(surface--border--lightest),
+                    BorderColor--hover: pfe-var(surface--border),
+                    Color--hover: pfe-var(link--hover),
+            
+                    Color--focus: pfe-var(link--hover),
+                    BorderColor--focus: pfe-var(surface--border),
+                    TextDecoration--hover: pfe-var(link-decoration--hover),
+                    inner: (
+                    BorderColor--focus: pfe-local(BorderColor--focus)
+                    )
+                )
+            )
+        )
+    ),
+    disabled: (
+        BackgroundColor: pfe-var(ui-disabled),
+        BorderColor: pfe-var(ui-disabled),
+        Color: pfe-var(ui-disabled--text) !important,
+    
+        BackgroundColor--hover: pfe-var(ui-disabled--hover),
+        BorderColor--hover: pfe-var(ui-disabled--hover),
+        Color--hover: pfe-var(ui-disabled--text),
+    
+        BackgroundColor--focus: pfe-var(ui-disabled),
+        BorderColor--focus: transparent,
+        Color--focus: pfe-var(ui-disabled--text),
+    
+        arrow: ( Display: none ),
+        inner: ( BorderColor--focus: pfe-var(ui-disabled--focus) )
+    )
+);

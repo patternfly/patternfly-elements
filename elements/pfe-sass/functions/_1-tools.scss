@@ -106,6 +106,22 @@
     @return str-slice($string, 1, str-length($needle))==$needle;
 }
 
+/// Get list from arglist
+/// @author castastrophe
+/// @access public
+/// @param {Arglist} $keys
+/// @return {List} - List version of provided arglist
+@function get-list-from-arglist($keys) {
+    $set: $keys;
+    $key: nth($keys, 1);
+    @if type-of($key) == "arglist" {
+        $set: nth($key, 1);
+    }
+    @else if type-of($key) == "list" {
+        $set: $key;
+    }
+    @return $set;
+}
 
 // ########################## //
 //      MAP FUNCTIONS         //
@@ -118,17 +134,20 @@
 /// @param {Arglist} $keys - Key chain
 /// @return {*} - Desired value
 @function map-deep-get($map, $keys...) {
-    @each $key in $keys {
-        @if type-of($map)=="map" {
-            $map: map-get($map, $key);
-        }
+    $set: get-list-from-arglist($keys);
+    $key: nth($set, 1);
+    $length: length($set);
+    $value: map-get($map, $key);
 
-        @else {
-            @warn "Map provided is not a map."
-        }
+    @if $value == null {
+        @warn $set;
     }
 
-    @return $map;
+    @if length($set) > 1 {
+      @return map-deep-get($value, remove($set, $key));
+    }
+      
+    @return $value;
 }
 
 // Collect all maps and merge them together

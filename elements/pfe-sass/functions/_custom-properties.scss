@@ -125,14 +125,14 @@
     }
 
     // Start building the variable declaration
-    $var-declaration: "--#{$repo}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')}";
+    $local-declaration: "--#{$repo}-#{$LOCAL}-local#{$region}--#{to-string($cssvar, '--')}";
     
     @if $fallback != null {
-        $var-declaration: "#{$var-declaration}, #{$fallback}";
+        $local-declaration: "#{$local-declaration}, #{$fallback}";
     }
 
     // Return the variable declaration string
-    @return var(#{$var-declaration});
+    @return var(--#{$repo}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')}, var(#{$local-declaration}));
 }
 
 /// ===========================================================================
@@ -151,9 +151,8 @@
 /// @output:  color: var(--pfe-broadcasted--link);
 /// Was: pfe-radio!
 /// ===========================================================================
-@function pfe-broadcasted($broadcast) {
-    $fallback: "";
-    @if $USE-FALLBACK {
+@function pfe-broadcasted($broadcast, $fallback: null) {
+    @if $USE-FALLBACK and $fallback == null  {
         $fallback: ", #{map-get($pfe-broadcasted, #{to-string($broadcast,'--')})}";
     }
     @if not index($BROADCAST-VARS, first(str-split($broadcast, '--'))) {

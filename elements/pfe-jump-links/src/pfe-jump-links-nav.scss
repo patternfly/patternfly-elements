@@ -15,7 +15,7 @@ $variables: (
   ));
 
 :host {
-  @include pfe-print-variables($variables);
+  @include pfe-local-update($variables);
 
   box-sizing: border-box;
   font-family: #{pfe-var(font-family)};

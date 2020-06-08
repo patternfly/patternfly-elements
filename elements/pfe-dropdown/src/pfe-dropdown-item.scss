@@ -16,7 +16,7 @@ $dropdown-item-variables: (
 $variables: map-merge($variables, $dropdown-item-variables);
 
 :host {
-  @include pfe-print-variables($variables);
+  @include pfe-local-update($variables);
   .pfe-dropdown-item {
     &__container {
       &:hover,

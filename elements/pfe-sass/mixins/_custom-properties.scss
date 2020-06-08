@@ -104,10 +104,12 @@
 ///     }
 ///     ```
 /// ===========================================================================
-@mixin pfe-set-local($map: $LOCAL-VARIABLES) {
-    @each $property, $value in $map {
+@mixin pfe-local-update($context...) {
+    $result: map-deep-get($LOCAL-VARIABLES, $context);
+    
+    @each $property, $value in $result {
         $name: "--#{$property}";
-        $styles: $value;
+        $styles: #{$value};
 
         @if type-of($value) == "map" {
             @each $prop, $v in $value {
@@ -115,21 +117,14 @@
                 $styles: $v;
 
                 // Print the variable definition
-                --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
+                --#{$repo}-#{$LOCAL}-local#{$name}: #{$styles};
             }
         }
         @else {
             // Print the variable definition
-            --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
+            --#{$repo}-#{$LOCAL}-local#{$name}: #{$styles};
         }
     }
-}
-
-/// ===========================================================================
-/// @alias pfe-set-local
-/// ===========================================================================
-@mixin pfe-print-variables($map: $LOCAL-VARIABLES) {
-    @include pfe-set-local($map);
 }
 
 /// ===========================================================================
@@ -186,7 +181,7 @@
     @each $color in $surfaces {
         $theme: #{pfe-get-theme(surface--#{$color}--theme)};
         :host([#{$attr-name}="#{$color}"]) {
-            @include pfe-set-local(
+            @include pfe-local-update(
                 ( BackgroundColor: #{pfe-var(surface--#{$color})} )
             );
             --theme: #{pfe-var( surface--#{$color}--theme, #{$theme} );

@@ -11,18 +11,23 @@ jobs:
           GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
           GITHUB_PROJECT_COLUMN_NAME: Needs discovery
       - uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: github.event_name == 'pull_request' && github.event.action == 'labeled' && contains(github.event.issue.labels.*.name, 'discovery')
+        if: github.event_name == 'pull_request' && github.event.action == 'labeled' && contains(github.event.pull_request.labels.*.name, 'discovery')
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS }}
           GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
           GITHUB_PROJECT_COLUMN_NAME: Needs discovery
-      # - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
-      #   with:
-      #     action-token: "${{ secrets.ACTIONS }}"
-      #     project-url: "https://github.com/orgs/github/projects/2"
-      #     column-name: "On hold"
-      #     label-name: "blocked"
-      #     columns-to-ignore: "Done"
+      - uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: github.event_name == 'issues' && github.event.action == 'labeled' && contains(github.event.issue.labels.*.name, 'blocked')
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTIONS }}
+          GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
+          GITHUB_PROJECT_COLUMN_NAME: On hold
+      - uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: github.event_name == 'pull_request' && github.event.action == 'labeled' && contains(github.event.pull_request.labels.*.name, 'blocked')
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTIONS }}
+          GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
+          GITHUB_PROJECT_COLUMN_NAME: On hold
       # - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
       #   with:
       #     action-token: "${{ secrets.ACTIONS }}"

@@ -1,3 +1,9 @@
+## Prerelease 49 ( 2020-05-29 )
+
+- [9adb7ce](https://github.com/patternfly/patternfly-elements/commit/9adb7ce4e5a672192ca49af8a7b7f9afb5f56e75) feat: pfe-jump-links (#858)
+- [b1e69ee](https://github.com/patternfly/patternfly-elements/commit/b1e69ee03f5a56a64c5f57dbc8327e8a2430f0fc) feat: pfe-dropdown (#668)
+-[7fe6014](https://github.com/patternfly/patternfly-elements/commit/7fe60149d05ec984e4411a73cf2e1f8185a2df98) fix: pfe-tabs vertical height (#796)
+
 ## Prerelease 48 ( 2020-05-19 )
 
 - [b1e546b](https://github.com/patternfly/patternfly-elements/commit/b1e546bfa98254eaaebb1a537065288bdcf1704f) feat: pfe-datetime adding time zone attribute #881

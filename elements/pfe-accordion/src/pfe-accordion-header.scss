@@ -27,7 +27,7 @@ button {
   @include browser-query(ie11) {
     padding: 16px 24px;
     &:hover {
-      border-left-color: #{pfe-color(ui-base)};
+      border-left-color: #{pfe-color(ui-accent)};
     }
   }
 }
@@ -58,7 +58,7 @@ button[aria-expanded="true"] {
   @include pfe-accordion-variables($state: expanded);
   @include browser-query(ie11) {
     border-bottom-width: 0;
-    border-left-color: #{pfe-color(ui-base)};
+    border-left-color: #{pfe-color(ui-accent)};
     border-right-color: #{pfe-color(surface--border)};
   }
 }
@@ -112,7 +112,7 @@ button[aria-expanded="true"] {
 // Set the header border while animating. 
 :host([pfe-disclosure="true"].animating) {
   --pfe-accordion--BorderLeftWidth: #{pfe-var(surface--border-width--heavy)};
-  --pfe-accordion--BorderColor--accent: #{pfe-color(ui-base)}; // set border-left color while animating.
+  --pfe-accordion--BorderColor--accent: #{pfe-color(ui-accent)}; // set border-left color while animating.
 
   button {
     padding-left: calc((var(--pfe-theme--container-spacer,16px) * 3) - 1px)!important;

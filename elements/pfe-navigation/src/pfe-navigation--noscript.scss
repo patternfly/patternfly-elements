@@ -20,10 +20,10 @@ pfe-navigation {
         display: none;  
     }
     a {
-        color: #{pfe-color(ui-base--text)} !important;
+        color: #{pfe-color(ui-accent--text)} !important;
         text-decoration: none;
         &:visited {
-            color: #{pfe-color(ui-base--text)} !important;
+            color: #{pfe-color(ui-accent--text)} !important;
         }
     }
     [slot="mobile-language"],

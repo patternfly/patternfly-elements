@@ -158,7 +158,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         -ms-grid-column-span: 1 !important;
     }
     :not([pfe-icon=web-mobile-menu]):not([is_nested]).pfe-navigation-item-1 .pfe-navigation-item__tray.pfe-navigation-item {
-        color: #{pfe-color(ui-complement)} !important;
+        color: #{pfe-color(ui-base)} !important;
     }
     [pfe-icon=web-mobile-menu]:not([show_links]).pfe-navigation-item-3 .pfe-navigation__main .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0 !important;
@@ -203,7 +203,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         &.expanded {
             .pfe-navigation-item__trigger {
                 pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
-                    flood-color: #{pfe-color(ui-complement)} !important;
+                    flood-color: #{pfe-color(ui-base)} !important;
                 }
             }
 
@@ -310,7 +310,7 @@ pfe-navigation-item {
     [slot="trigger"] > a {
         outline: none;
         text-decoration: none;
-        color: #{pfe-color(ui-base--text)} !important;
+        color: #{pfe-color(ui-accent--text)} !important;
 
         &:hover,
         &:focus {
@@ -331,7 +331,7 @@ pfe-navigation-item {
     // Override active link color.
     pfe-navigation-main[show_content] & {
         [slot="trigger"] > a.active {
-            color: #{pfe-color(ui-base--text)} !important;
+            color: #{pfe-color(ui-accent--text)} !important;
         }
     }
     &[parent_hidden] [slot="trigger"] {
@@ -340,7 +340,7 @@ pfe-navigation-item {
 
     // Style main menu links when in the tray.
     &:not([parent_hidden])[is_nested] [slot="trigger"] > a {
-        color: #{pfe-color(ui-complement)} !important;
+        color: #{pfe-color(ui-base)} !important;
     }
 }
 
@@ -505,18 +505,18 @@ pfe-navigation-item .pfe-link-list {
         font-size: 16px;
         font-weight: 400;
         line-height: 1.75;
-        color: #{pfe-color(ui-complement)};
+        color: #{pfe-color(ui-base)};
 
         @media (min-width: #{pfe-breakpoint(xl)}) {
             font-size: 16px;
         }
 
         a {
-            color: #{pfe-color(ui-complement)};
+            color: #{pfe-color(ui-base)};
             text-decoration: underline;
 
             &:hover {
-                color: #{pfe-color(ui-complement)};
+                color: #{pfe-color(ui-base)};
                 text-decoration: none;
             }
 

@@ -64,7 +64,7 @@ $LOCAL: autocomplete;
 }
 
 button {
-  color: pfe-color(ui-complement);
+  color: pfe-color(ui-base);
   background-color: transparent;
   border: none;
   position: absolute;
@@ -111,7 +111,7 @@ button {
   }
 
   &.clear-search:hover {
-    color: pfe-color(ui-complement);
+    color: pfe-color(ui-base);
   }
 
   &.search-button:disabled svg {

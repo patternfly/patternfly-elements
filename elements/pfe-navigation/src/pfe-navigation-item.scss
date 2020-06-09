@@ -366,7 +366,7 @@ $variables: map-merge($variables, $nav-item-variables);
 }
 
 :host([is_nested]) [slot="trigger"] > a {
-  color: #{pfe-color(ui-complement)} !important;
+  color: #{pfe-color(ui-base)} !important;
 }
 
 :host([pfe-icon=web-mobile-menu]) {

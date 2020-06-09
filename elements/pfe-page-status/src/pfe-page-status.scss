@@ -54,8 +54,8 @@ $LOCAL: status;
 }
 
 :host([pfe-status="normal"]) {
-  --pfe-status--BackgroundColor: #{pfe-color(ui-base)};
-  --pfe-broadcasted--text: #{pfe-color(ui-base--text)};
+  --pfe-status--BackgroundColor: #{pfe-color(ui-accent)};
+  --pfe-broadcasted--text: #{pfe-color(ui-accent--text)};
 }
 
 @each $color in (complement, accent) {

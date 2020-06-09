@@ -215,8 +215,8 @@
 /// @param {String} $broadcast - name of the broadcast variable to apply
 /// @requires {String} $repo - Name of repo, which is "pfe"
 ///
-/// @example:   color: #{pfe-apply-broadcast(ui-base--hover)};
-/// @output:  Error: --pfe-broadcasted--ui-base--hover variable is not currently supported.";
+/// @example:   color: #{pfe-apply-broadcast(ui-accent--hover)};
+/// @output:  Error: --pfe-broadcasted--ui-accent--hover variable is not currently supported.";
 ///
 /// @example:   color: #{pfe-apply-broadcast(link)};
 /// @output:  color: var(--pfe-broadcasted--link);

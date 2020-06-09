@@ -1,5 +1,6 @@
 ## Prerelease 50 ( TBD )
 
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-dropdown: remove preventDefault call on clicks outside of dropdown #915
 - [](https://github.com/patternfly/patternfly-elements/commit/) Add automatic labeling to PRs
 
 ## Prerelease 49 ( 2020-05-29 )

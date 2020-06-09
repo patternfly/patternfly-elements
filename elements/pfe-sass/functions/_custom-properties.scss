@@ -141,9 +141,8 @@
 /// @example:   color: #{pfe-broadcasted(ui-base--hover)};
 /// @output:  Error: --pfe-broadcasted--ui-base--hover variable is not currently supported.";
 ///
-/// @example:   color: #{pfe-broadcasted(link)};
+/// @example: color: #{pfe-broadcasted(link)};
 /// @output:  color: var(--pfe-broadcasted--link);
-/// Was: pfe-radio!
 /// ===========================================================================
 @function pfe-broadcasted($broadcast, $fallback: null) {
     @if $USE-FALLBACK and $fallback == null  {
@@ -156,7 +155,6 @@
       @return var(--#{$repo}-broadcasted--#{to-string($broadcast,'--')}#{unquote($fallback)});
     }
 }
-
 
 /// ===========================================================================
 /// Get fallback
@@ -184,50 +182,45 @@
     }
 }
 
+/// ===========================================================================
+/// Fetch value from maps
+///
+/// Returns the value for the local component-scoped property
+///
+/// @param {String,List} $name - Location in the map for the value we want
+/// @param {String} $region - Identifies the region or slot to which this is assigned
+/// @requires {String} $repo - Name of repo, which is "pfe"
+/// @requires {String} $LOCAL - Name of component, this is defined at the top of the sass file for the component
+/// @example: padding-top:      #{pfe-fetch(PaddingTop)};
+/// @output:  padding-top:      16px;
+/// ===========================================================================
 @function pfe-fetch($name, $region: null) {
     $var-name: $name;
-    $split-name: null;
-
-    @if type-of($name) == "string" and contains($name, "--") {
-        $split-name: str-split($name, "--");
-    }
+    $value: null;
 
     @if $region {
         $var-name: join($region, $var-name);
-        $split-name: join($region, $split-name);
     }
 
     @if map-deep-get($LOCAL-VARIABLES, $var-name) {
-        @return map-deep-get($LOCAL-VARIABLES, $var-name);
-    }
-    @else if map-deep-get($LOCAL-VARIABLES, $split-name) {
-        @return map-deep-get($LOCAL-VARIABLES, $split-name);
+        $value: map-deep-get($LOCAL-VARIABLES, $var-name);
     }
     @else if map-deep-get($pfe-vars, $var-name) {
-        @return map-deep-get($pfe-vars, $var-name);
-    }
-    @else if map-deep-get($pfe-vars, $split-name) {
-        @return map-deep-get($pfe-vars, $split-name);
+        $value: map-deep-get($pfe-vars, $var-name);
     }
     @else if map-deep-get($pfe-colors, $var-name) {
-        @return map-deep-get($pfe-colors, $var-name);
-    }
-    @else if map-deep-get($pfe-colors, $split-name) {
-        @return map-deep-get($pfe-colors, $split-name);
+        $value: map-deep-get($pfe-colors, $var-name);
     }
     @else if map-deep-get($pfe-broadcasted, $var-name) {
-        @return map-deep-get($pfe-broadcasted, $var-name);
-    }
-    @else if map-deep-get($pfe-broadcasted, $split-name) {
-        @return map-deep-get($pfe-broadcasted, $split-name);
+        $value: map-deep-get($pfe-broadcasted, $var-name);
     }
     @else if map-deep-get($pfe-zindex, $var-name) {
-        @return map-deep-get($pfe-zindex, $var-name);
+        $value: map-deep-get($pfe-zindex, $var-name);
     }
-    @else if map-deep-get($pfe-zindex, $split-name) {
-        @return map-deep-get($pfe-zindex, $split-name);
+
+    @if type-of($value) == "map" {
+        $value: map-get($value, default);
     }
-    @else {
-        @error "#{$var-name} could not be found.";
-    }
+    
+    @return $value;
 }

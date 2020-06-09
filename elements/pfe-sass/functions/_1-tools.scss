@@ -128,7 +128,7 @@
 // ########################## //
 
 /// Map deep get
-/// @author Hugo Giraudel
+/// @author Hugo Giraudel, castastrophe
 /// @access public
 /// @param {Map} $map - Map
 /// @param {Arglist} $keys - Key chain
@@ -141,6 +141,10 @@
 
     @if type-of($map) == "map" {
         $value: map-get($map, $key);
+
+        @if not $value {
+            $value: map-deep-get($map, str-split($key, "--"));
+        }
     }
 
     @if length($set) > 1 {

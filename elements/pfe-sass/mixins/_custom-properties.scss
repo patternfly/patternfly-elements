@@ -121,6 +121,10 @@
                     $name: "__#{$property}--#{$prop}";
                     $styles: $v;
 
+                    @if index($prop, "hover") or index($prop, "focus") {
+                        @warn "  "$prop;
+                    }
+
                     // Print the variable definition
                     --#{$repo}-#{$LOCAL}-local#{$name}: #{$styles};
                 }

@@ -6,17 +6,20 @@
       }
     }
     @if $browser == edge12 {
-      @supports (-ms-accelerator: true) { /* Microsoft Edge Browser 12+ */
+      // Microsoft Edge Browser 12+
+      @supports (-ms-accelerator: true) {
         @content;
       }
     }
     @if $browser == edge {
-      @supports (-ms-ime-align: auto) { /* Microsoft Edge Browser 16+ (All) */
+      // Microsoft Edge Browser 16+ (All)
+      @supports (-ms-ime-align: auto) {
         @content;
       }
     }
     @if $browser == firefox {
-      @media all and (min--moz-device-pixel-ratio:0) { /* Mozilla Firefox (All) */
+      // Mozilla Firefox (All)
+      @media all and (min--moz-device-pixel-ratio:0) {
         @content;
       }
     }

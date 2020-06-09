@@ -16,7 +16,8 @@ $LOCAL: cta;
   border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(
       BorderColor
     );
-  max-width: fit-content;
+  // @TODO? Prevent CTAs from stretching?
+  // max-width: fit-content;
 }
 
 // Note: Focus states need to be defined before hover states
@@ -35,20 +36,11 @@ $LOCAL: cta;
 }
 
 // Note: Hover states need to be defined after focus states
-:host(:hover),
-:host(:hover) ::slotted(*),
-::slotted(:hover) {
-  --#{$repo}-#{$LOCAL}-local__arrow--Padding: #{$arrow-hover};
-}
-
 :host(:hover) {
-  background-color: pfe-local(BackgroundColor--hover);
-  border-color: pfe-local(BorderColor--hover);
-}
-
-:host(:hover),
-:host(:hover) ::slotted(*) {
-  color: pfe-local(Color--hover) !important;
+  --#{$repo}-#{$LOCAL}-local__arrow--Padding: #{pfe-local(Padding hover, $region: arrow)};
+  --#{$repo}-#{$LOCAL}-local--BackgroundColor: #{pfe-local(BackgroundColor--hover)};
+  --#{$repo}-#{$LOCAL}-local--BorderColor: #{pfe-local(BorderColor--hover)};
+  --#{$repo}-#{$LOCAL}-local--Color: #{pfe-local(Color--hover)};
 }
 
 ::slotted(button),
@@ -57,7 +49,7 @@ $LOCAL: cta;
 }
 
 ::slotted(*) {
-  white-space: normal; 
+  white-space: normal;  
   display: inline; 
   padding: pfe-local(Padding) !important;
   color: pfe-local(Color) !important;

@@ -1,7 +1,5 @@
 // Arrow animation
 $horizontal-spacing: 3px;
-$arrow-basic: 0 $horizontal-spacing;
-$arrow-hover: 0 0 0 #{$horizontal-spacing * 2};
 
 $LOCAL-VARIABLES: (
     Padding: 0.6rem 0,
@@ -25,7 +23,10 @@ $LOCAL-VARIABLES: (
     LineHeight: pfe-var(line-height),
     arrow: (
       Display: inline,
-      Padding: $arrow-basic,
+      Padding: (
+          default: 0 $horizontal-spacing,
+          hover: 0 0 0 #{$horizontal-spacing * 2}
+      ),
       size: 13px,
       MarginLeft: calc(#{pfe-var(content-spacer)} * 0.25)
     ),

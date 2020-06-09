@@ -134,13 +134,13 @@
 /// @param {Arglist} $keys - Key chain
 /// @return {*} - Desired value
 @function map-deep-get($map, $keys...) {
+    $value: null;
     $set: get-list-from-arglist($keys);
     $key: nth($set, 1);
     $length: length($set);
-    $value: map-get($map, $key);
 
-    @if $value == null {
-        @warn $set;
+    @if type-of($map) == "map" {
+        $value: map-get($map, $key);
     }
 
     @if length($set) > 1 {

@@ -104,26 +104,35 @@
 ///     }
 ///     ```
 /// ===========================================================================
-@mixin pfe-set-local($map: $LOCAL-VARIABLES, $context...) {
-    $result: map-deep-get($LOCAL-VARIABLES, $context);
+@mixin pfe-set-local($context...) {
+    $result: $LOCAL-VARIABLES;
+
+    @if length($context) > 0 {
+        $result: map-deep-get($LOCAL-VARIABLES, $context);
+    }
     
-    @each $property, $value in $result {
-        $name: "--#{$property}";
-        $styles: #{$value};
+    @if type-of($result) == "map" {
+        @each $property, $value in $result {
+            $name: "--#{$property}";
+            $styles: #{$value};
 
-        @if type-of($value) == "map" {
-            @each $prop, $v in $value {
-                $name: "__#{$property}--#{$prop}";
-                $styles: $v;
+            @if type-of($value) == "map" {
+                @each $prop, $v in $value {
+                    $name: "__#{$property}--#{$prop}";
+                    $styles: $v;
 
+                    // Print the variable definition
+                    --#{$repo}-#{$LOCAL}-local#{$name}: #{$styles};
+                }
+            }
+            @else {
                 // Print the variable definition
                 --#{$repo}-#{$LOCAL}-local#{$name}: #{$styles};
             }
         }
-        @else {
-            // Print the variable definition
-            --#{$repo}-#{$LOCAL}-local#{$name}: #{$styles};
-        }
+    }
+    @else {
+        @error $context;
     }
 }
 
@@ -181,14 +190,14 @@
     @each $color in $surfaces {
         $theme: #{pfe-get-theme(surface--#{$color}--theme)};
         :host([#{$attr-name}="#{$color}"]) {
-            @include pfe-set-local(
-                ( BackgroundColor: #{pfe-var(surface--#{$color})} )
-            );
-            --theme: #{pfe-var( surface--#{$color}--theme, #{$theme} );
-            @include browser-query(ie11) {
-                background-color: #{map-get($pfe-colors, surface--lightest)} !important;
-                color: #{pfe-var(text)} !important;
-            }
+            --#{$repo}-#{$LOCAL}-local--BackgroundColor: #{pfe-var(surface--#{$color})};
+            --#{$repo}-#{$LOCAL}-local--theme: #{pfe-var(surface--#{$color}--theme, $theme)};
+        }
+    }
+    :host {
+        @include browser-query(ie11) {
+            background-color: pfe-fetch(surface--lightest) !important;
+            color: pfe-fetch(text) !important;
         }
     }
 }

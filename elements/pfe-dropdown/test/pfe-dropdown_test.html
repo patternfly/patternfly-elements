@@ -34,6 +34,8 @@
     <pfe-dropdown pfe-label="Test dropdown with custom options" id="customDropdown">
     </pfe-dropdown>
 
+    <input type="checkbox" id="checkbox"/>
+
     <script>
       suite('<pfe-dropdown>', () => {
         test('it should upgrade', () => {
@@ -146,6 +148,12 @@
 
         });
 
+        test("it should not have event.preventDefault called on elements outside of the dropdown", () => {
+          const checkbox = document.querySelector("#checkbox");
+          checkbox.click();
+
+          assert.isTrue(checkbox.checked);
+        });
       });
     </script>
   </body>

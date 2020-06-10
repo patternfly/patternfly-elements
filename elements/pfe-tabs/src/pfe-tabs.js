@@ -611,19 +611,20 @@ class PfeTab extends PFElement {
       }
     }
 
-    let heading;
+    // Create an h-level tag for the shadow tab, default h3
+    let heading = document.createElement("h3");
+
+    // Use the provided semantics if provided
     if (semantics.length > 0) {
       heading = document.createElement(semantics);
-      heading.textContent = label;
-    } else {
-      heading = document.createElement("h3");
-      heading.textContent = label;
     }
 
-    if (heading) {
-      this._tabItem.innerHTML = "";
-      this._tabItem.appendChild(heading);
-    }
+    // Assign the label content to the new heading
+    heading.textContent = label;
+
+    // Attach the heading to the tabItem
+    this._tabItem.innerHTML = "";
+    this._tabItem.appendChild(heading);
   }
 }
 

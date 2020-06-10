@@ -9,7 +9,7 @@ $LOCAL: codeblock;
   @import "../../../node_modules/prismjs/plugins/line-numbers/prism-line-numbers";
 }
 
-:host([pfe-color="dark"]) {
+:host([pfe-codeblock-theme="dark"]) {
     @import "../../../node_modules/prismjs/themes/prism-okaidia";
 }
 

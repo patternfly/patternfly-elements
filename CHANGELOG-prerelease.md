@@ -1,13 +1,13 @@
 ## Prerelease 50 ( TBD )
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) Add automatic labeling to PRs
+- [775b821](https://github.com/patternfly/patternfly-elements/commit/775b821702c903f926b8bf9fdf9c948ac949335f) Add automatic labeling to PRs
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Move tab headings to the ShadowDOM
 
 ## Prerelease 49 ( 2020-05-29 )
 
 - [9adb7ce](https://github.com/patternfly/patternfly-elements/commit/9adb7ce4e5a672192ca49af8a7b7f9afb5f56e75) feat: pfe-jump-links (#858)
 - [b1e69ee](https://github.com/patternfly/patternfly-elements/commit/b1e69ee03f5a56a64c5f57dbc8327e8a2430f0fc) feat: pfe-dropdown (#668)
 -[7fe6014](https://github.com/patternfly/patternfly-elements/commit/7fe60149d05ec984e4411a73cf2e1f8185a2df98) fix: pfe-tabs vertical height (#796)
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Move tab headings to the ShadowDOM
 
 ## Prerelease 48 ( 2020-05-19 )
 

@@ -1,11 +1,14 @@
 const { join } = require("path");
+const { exec } = require("child_process");
 require("dotenv").config();
+
+let proc;
 
 exports.config = {
   logLevel: "info",
   user: process.env.BROWSERSTACK_USER,
   key: process.env.BROWSERSTACK_KEY,
-  baseUrl: "http://localhost:8000/",
+  baseUrl: "http://localhost:8080/",
   specs: ["./test/vrt/**/*"],
   capabilities: [
     {
@@ -33,5 +36,11 @@ exports.config = {
         blockOutToolBar: true
       }
     ]
-  ]
+  ],
+  onPrepare: () => {
+    proc = exec("http-server");
+  },
+  onComplete: () => {
+    proc.kill();
+  }
 };

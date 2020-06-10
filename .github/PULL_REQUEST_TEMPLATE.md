@@ -59,7 +59,7 @@ Check off items as they are completed.  Feel free to delete items if they are no
 - [ ] Tests have been updated to cover these changes.
 - [ ] Browser testing passed.
 - [ ] Repository compiles and tests pass.
-- [ ] Changelog updated.
+- [ ] Changelog updated (not needed for documentation updates).
 - [ ] Documentation (README.md, WHY.md, etc.) updated or added.
 - [ ] Link to the demo recording: []()
 - [ ] Approved by designer.

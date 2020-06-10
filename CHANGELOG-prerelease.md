@@ -1,6 +1,7 @@
 ## Prerelease 50 ( TBD )
 
-- [775b821](https://github.com/patternfly/patternfly-elements/commit/775b821702c903f926b8bf9fdf9c948ac949335f) Add automatic labeling to PRs
+- [775b821](https://github.com/patternfly/patternfly-elements/commit/775b821702c903f926b8bf9fdf9c948ac949335f) feat: Add automatic labeling to PRs
+- [82bf8e6](https://github.com/patternfly/patternfly-elements/commit/82bf8e6a0d407a651571dac1e37d06a2b14fa3d4) feat: Move PR cards automatically in the Project when labels are changed
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add support for empty local variables
 
 ## Prerelease 49 ( 2020-05-29 )

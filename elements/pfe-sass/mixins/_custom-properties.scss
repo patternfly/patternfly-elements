@@ -194,8 +194,8 @@
     @each $color in $surfaces {
         $theme: #{pfe-get-theme(surface--#{$color}--theme)};
         :host([#{$attr-name}="#{$color}"]) {
-            --#{$repo}-#{$LOCAL}-local--BackgroundColor: #{pfe-var(surface--#{$color})};
-            --#{$repo}-#{$LOCAL}-local--theme: #{pfe-var(surface--#{$color}--theme, $theme)};
+            --#{$repo}-#{$LOCAL}-local--BackgroundColor: #{pfe-var(surface #{$color})};
+            --#{$repo}-#{$LOCAL}-local--theme: #{pfe-var(surface #{$color}--theme, $theme)};
         }
     }
     :host {

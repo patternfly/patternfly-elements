@@ -16,30 +16,30 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   // Initialize at mobile breakpoint
   Width: (
     sm: auto,
-    md: calc(#{pfe-breakpoint(md)} - #{pfe-local(Padding--horizontal)} * 4),
-    lg: calc(#{pfe-breakpoint(lg)} - #{pfe-local(Padding--horizontal)} * 4),
-    xl: calc(#{pfe-breakpoint(xl)} - #{pfe-local(Padding--horizontal)} * 4)
+    md: calc(#{pfe-breakpoint(md)} - #{pfe-local(Padding horizontal)} * 4),
+    lg: calc(#{pfe-breakpoint(lg)} - #{pfe-local(Padding horizontal)} * 4),
+    xl: calc(#{pfe-breakpoint(xl)} - #{pfe-local(Padding horizontal)} * 4)
   ),
 
   // Padding uses vertical and horizontal variables defined above
   Padding: (
-    sm: calc(#{pfe-local(Padding--vertical)} / 2)  pfe-local(Padding--horizontal),
-    md: pfe-local(Padding--vertical)  pfe-local(Padding--horizontal)
+    sm: calc(#{pfe-local(Padding vertical)} / 2)  pfe-local(Padding horizontal),
+    md: pfe-local(Padding vertical)  pfe-local(Padding horizontal)
   )
 ));
 
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   // Surface colors
-  BackgroundColor:    pfe-var(surface--base),
+  BackgroundColor:    pfe-var(surface base),
   theme: light,
   BackgroundPosition: center center,
 
   // Border settings
-  Border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent,
+  Border: pfe-var(surface border-width) pfe-var(surface border-style) transparent,
 
   size: (
     small: (
-      Padding: calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)}
+      Padding: calc(#{pfe-local(Padding vertical)} / 4)  #{pfe-local(Padding horizontal)}
     )
   ),
 
@@ -72,7 +72,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   @each $size in (md, lg, xl) {
     @media screen and (min-width: pfe-breakpoint(#{$size})) {
       @include pfe-set-local(Width, $size);
-      --#{$repo}-#{$LOCAL}-local--Width: #{pfe-local(Width--#{$size})};
+      --#{$repo}-#{$LOCAL}-local--Width: #{pfe-local(Width #{$size})};
     }
   }
 
@@ -101,14 +101,14 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   @include pfe-print-media {
     // Add the border to the card for print
-    border-radius: pfe-fetch(surface--border-radius);
-    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
+    border-radius: pfe-fetch(surface border-radius);
+    border: pfe-fetch(surface border-width) pfe-fetch(surface border-style) pfe-fetch(surface border);
     // Reduce padding for print
-    padding: (#{pfe-fetch(Padding--vertical)} / 2) pfe-fetch(Padding--horizontal);
+    padding: (#{pfe-fetch(Padding vertical)} / 2) pfe-fetch(Padding horizontal);
   }
 
   @include browser-query(ie11) {
-    background-color: pfe-fetch(surface--lightest) !important;
+    background-color: pfe-fetch(surface lightest) !important;
     color: pfe-fetch(text) !important;
     background-image: none !important;
     padding: pfe-fetch(container-spacer);
@@ -134,17 +134,17 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 .pfe-band {
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
-    // --#{$repo}-#{$LOCAL}_region--width: calc(1fr - #{pfe-local(Width__aside--sm)} - #{pfe-local(gutter--horizontal)});
+    // --#{$repo}-#{$LOCAL}_region--width: calc(1fr - #{pfe-local(Width__aside sm)} - #{pfe-local(gutter horizontal)});
     grid-template-areas: "body";
     // Styles for the different combination of regions
     &[pfe-has-aside] {
       grid-template-areas:
         "body" "aside";
       @media (min-width: #{pfe-breakpoint(md)}) {
-        --#{$repo}-#{$LOCAL}--layout: 1fr #{pfe-local(Width--sm, $region: aside)};
+        --#{$repo}-#{$LOCAL}--layout: 1fr #{pfe-local(Width sm, $region: aside)};
       }
       @media (min-width: #{pfe-breakpoint(lg)}) {
-        --#{$repo}-#{$LOCAL}--layout: 1fr #{pfe-local(Width--lg, $region: aside)};
+        --#{$repo}-#{$LOCAL}--layout: 1fr #{pfe-local(Width lg, $region: aside)};
       }
       &[pfe-aside-mobile="top"] {
         grid-template-areas:
@@ -154,10 +154,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
         @media (min-width: #{pfe-breakpoint(md)}) {
             grid-template-areas:
               "aside body";
-          --#{$repo}-#{$LOCAL}--layout: #{pfe-local(Width--sm, $region: aside)} 1fr;
+          --#{$repo}-#{$LOCAL}--layout: #{pfe-local(Width sm, $region: aside)} 1fr;
         }
         @media (min-width: #{pfe-breakpoint(lg)}) {
-          --#{$repo}-#{$LOCAL}--layout: #{pfe-local(Width--lg, $region: aside)} 1fr;
+          --#{$repo}-#{$LOCAL}--layout: #{pfe-local(Width lg, $region: aside)} 1fr;
         }
       }
     }
@@ -304,8 +304,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     // Grid support styles
     @supports (display: grid) {
       display: grid;
-      grid-row-gap: pfe-local(gutter--vertical);
-      grid-column-gap: pfe-local(gutter--horizontal);
+      grid-row-gap: pfe-local(gutter vertical);
+      grid-column-gap: pfe-local(gutter horizontal);
       margin-bottom: 0;
       grid-template-columns: pfe-local(layout);
       grid-template-rows:    max-content;
@@ -315,12 +315,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   // For each section in the band layout
   @each $section in (header, body, aside, footer) {
     &__#{$section} { // i.e., pfe-band__header
-      margin-bottom: pfe-local(gutter--vertical);
+      margin-bottom: pfe-local(gutter vertical);
       // Apply the standard grid
       @supports (display: grid) {
           display: grid;
-          grid-row-gap: pfe-local(gutter--vertical);
-          grid-column-gap: pfe-local(gutter--horizontal);
+          grid-row-gap: pfe-local(gutter vertical);
+          grid-column-gap: pfe-local(gutter horizontal);
           margin-bottom: 0;
           // Apply the section as a named grid-area
           grid-area: #{$section};

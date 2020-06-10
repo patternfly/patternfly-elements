@@ -16,7 +16,7 @@
 ///         ```
 ///         .my-element {
 ///           color:       #{pfe-var( text )};
-///           background:  #{pfe-var( surface--base )};
+///           background:  #{pfe-var( surface base )};
 ///         }
 ///         ```
 /// ===========================================================================
@@ -31,8 +31,8 @@
     $var-declaration: "#{$var-declaration}#{$key}";
 
     // If the fallback is not provided but use-fallback is set to true
-    @if $fallback == null and $USE-FALLBACK and map-get($map, $key) != null {
-        $fallback: map-get($map, $key);
+    @if $fallback == null and $USE-FALLBACK and map-deep-get($map, $key) != null {
+        $fallback: map-deep-get($map, $key);
     }
     @if $fallback != null {
         // Create the variable declaration
@@ -71,16 +71,16 @@
 /// ===========================================================================
 @function pfe-var($cssvar, $fallback: null) {
     $var-name: to-string($cssvar, "--");
-    @if map-get($pfe-vars, $var-name) != null {
+    @if map-deep-get($pfe-vars, $cssvar) {
         @return pfe-get-from-map("", $var-name, $pfe-vars, $fallback);
     }
-    @else if map-get($pfe-colors, $var-name) != null {
+    @else if map-deep-get($pfe-colors, $cssvar) {
         @return pfe-get-from-map("", $var-name, $pfe-colors, $fallback);
     }
-    @else if map-get($pfe-broadcasted, $var-name) != null {
+    @else if map-deep-get($pfe-broadcasted, $cssvar) {
         @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
     }
-    @else if map-get($pfe-zindex, $var-name) != null {
+    @else if map-deep-get($pfe-zindex, $cssvar) {
         @return pfe-get-from-map("zindex", $var-name, $pfe-zindex);
     }
     @else {

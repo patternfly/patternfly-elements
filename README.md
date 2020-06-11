@@ -107,4 +107,4 @@ You can also participate in discussions on [patternfly.slack.com](https://patter
 [catalog]: https://patternfly.github.io/patternfly-elements/demo
 [creating]: https://patternfly.github.io/patternfly-elements/develop
 [theming]: https://patternfly.github.io/patternfly-elements/theme
-[wc-org]: https://webcomponents.org
+

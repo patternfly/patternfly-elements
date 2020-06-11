@@ -80,9 +80,6 @@
     @else if map-get($pfe-broadcasted, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
     }
-    @else if map-get($pfe-zindex, $var-name) != null {
-        @return pfe-get-from-map("zindex", $var-name, $pfe-zindex);
-    }
     @else {
         @error "#{$var-name} could not be found.";
     }
@@ -164,6 +161,61 @@
     }
 }
 
+/// ===========================================================================
+/// Variable fetch
+///
+/// Returns CSS variable stack with exposed theme variable and respective fallback
+///
+/// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme--zindex
+/// @requires {Map} $pfe-zindex - SASS Map of z-index values
+/// @example -
+///
+///     1. To look up a value: /elements/pfe-sass/src/maps/_zindex.scss
+///     2. Use like this:
+///         ```
+///         .my-element {
+///           z-index:     #{pfe-zindex( content )};
+///         }
+///         ```
+///     3. Which will return:
+///         ```
+///         .my-element {
+///            z-index: var(--pfe-theme--zindex--content, 1);
+///         }
+///         ```
+/// ===========================================================================
+@function pfe-zindex($cssvar) {
+    $var-name: to-string($cssvar, "--");
+    @if map-get($pfe-zindex, $var-name) != null {
+        @return pfe-get-from-map("zindex", $var-name, $pfe-zindex);
+    }
+    @else {
+        @error "The key for #{$var-name} could not be found in the $pfe-zindex map.";
+    }
+}
+
+/// ===========================================================================
+/// Map value fetch
+///
+/// Returns the value of a property from the respective maps
+///
+/// @param {String} $name - Name of the key for the map
+/// @example -
+///
+///     1. To look up a value: /elements/pfe-sass/src/maps/_zindex.scss
+///     2. Use like this:
+///         ```
+///         .my-element {
+///           background-color:     #{pfe-fetch( ui-base )};
+///         }
+///         ```
+///     3. Which will return:
+///         ```
+///         .my-element {
+///            background-color: #06c;
+///         }
+///         ```
+/// ===========================================================================
 @function pfe-fetch($name) {
     $var-name: to-string($name, "--");
     @if map-get($LOCAL-VARIABLES, $var-name) != null {
@@ -177,9 +229,6 @@
     }
     @else if map-get($pfe-broadcasted, $var-name) != null {
         @return map-get($pfe-broadcasted, $var-name);
-    }
-    @else if map-get($pfe-zindex, $var-name) != null {
-        @return map-get($pfe-zindex, $var-name);
     }
     @else {
         @error "#{$var-name} could not be found.";

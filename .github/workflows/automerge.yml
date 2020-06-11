@@ -6,7 +6,7 @@ on:
     types: [submitted]
   check_suite:
     types: [completed]
-  status: success
+    status: success
 jobs:
   automerge:
     runs-on: ubuntu-latest

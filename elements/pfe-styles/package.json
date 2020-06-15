@@ -32,7 +32,8 @@
   "main": "./dist/pfe-layouts.css",
   "scripts": {
     "build": "../../node_modules/.bin/gulp build:nojs && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
-    "dev": "../../node_modules/.bin/gulp dev:nojs"
+    "dev": "../../node_modules/.bin/gulp dev:nojs",
+    "watch": "../../node_modules/.bin/gulp watch"
   },
   "contributors": [
     {

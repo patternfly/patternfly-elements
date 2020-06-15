@@ -5,14 +5,14 @@ body {
   --#{$repo}-reveal-duration: 0.1618s;
   --#{$repo}-reveal-delay: 2s;
 
-  transition: opacity var(--pfe-reveal-duration) ease-in-out;
+  transition: opacity var(--#{$repo}-reveal-duration) ease-in-out;
 
   @include pfe-set-broadcast-theme(light);
 }
 
 body[unresolved] {
   opacity: 0;
-  animation: reveal var(--pfe-reveal-duration) var(--pfe-reveal-delay) 1
+  animation: reveal var(--#{$repo}-reveal-duration) var(--#{$repo}-reveal-delay) 1
     forwards;
 }
 

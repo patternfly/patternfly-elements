@@ -248,7 +248,7 @@ $LOCAL-VARIABLES: (
     --#{$repo}-broadcasted--text,
     #{pfe-var(ui-complement)}
   );
-  --#{$repo}-#{$LOCAL}--Color: var(--pfe-broadcasted--text, #{pfe-var(ui-complement)});
+  --#{$repo}-#{$LOCAL}--Color: var(--#{$repo}-broadcasted--text, #{pfe-var(ui-complement)});
 
   --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(ui-complement)};
   --#{$repo}-#{$LOCAL}--BorderColor--hover: var(
@@ -410,7 +410,7 @@ $LOCAL-VARIABLES: (
 :host([pfe-priority="secondary"][pfe-variant="wind"]) {
   --#{$repo}-#{$LOCAL}--BackgroundColor: transparent;
   --#{$repo}-#{$LOCAL}--BorderColor: #{pfe-var(surface--border)};
-  --#{$repo}-#{$LOCAL}--Color: var(--pfe-broadcasted--link, #{pfe-var(link)});
+  --#{$repo}-#{$LOCAL}--Color: var(--#{$repo}-broadcasted--link, #{pfe-var(link)});
   --#{$repo}-#{$LOCAL}--FontWeight: #{pfe-var(font-weight--normal)};
 
   --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(surface--border--lightest)};

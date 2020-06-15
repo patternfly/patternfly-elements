@@ -4,7 +4,7 @@
 /// Returns CSS variable stack with exposed theme variable and respective fallback
 ///
 /// @param {String} $category - Category name to be appended to variables within the map/system
-/// @param {String} $key - Variable name to be used and prepended with --pfe-theme
+/// @param {String} $key - Variable name to be used and prepended with --#{$repo}-theme
 /// @param {Map} $map - SASS Map of variables
 /// @param {String} $fallback [""] - Optional fallback override
 /// @requires {String} $repo - Name of repo, which is "pfe"
@@ -48,7 +48,7 @@
 ///
 /// Returns CSS variable stack with exposed theme variable and respective fallback
 ///
-/// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme
+/// @param {String} $cssvar - Variable name to be used and prepended with --#{$repo}-theme
 /// @param {String} $fallback [null] - Optional custom fallback
 /// @requires {Map} $pfe-vars - A map of the variables in the repository
 /// @example -

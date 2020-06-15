@@ -58,8 +58,8 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-variables);
   }
 
   display: block;
-  --#{$repo}-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
-  --#{$repo}-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
+  --#{$repo}-accordion__base--Padding: var(--#{$repo}-theme--container-spacer, 16px);
+  --#{$repo}-accordion__panel-container--Padding: 0 calc(var(--#{$repo}-accordion__base--Padding) * 3) var(--#{$repo}-accordion__base--Padding) calc(var(--#{$repo}-accordion__base--Padding) * 1.5);
 
   z-index: #{pfe-var(content)};
   width: 100%;
@@ -141,7 +141,7 @@ pfe-icon {
     // stop using padding, start using max width at medium breakpoint
     @media screen and (min-width: pfe-breakpoint(md)) {
       padding: 0;
-      max-width: var(--pfe-navigation--Width);
+      max-width: var(--#{$repo}-navigation--Width);
     }
    // Set the variable for use in the tray region too
     // Loop through the other breakpoints

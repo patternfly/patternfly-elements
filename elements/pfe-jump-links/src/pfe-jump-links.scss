@@ -6,7 +6,7 @@ $LOCAL: jump;
 
 :host {
   // Example local variable, using BEM format
-  // --pfe-jump-links--Property: value;
+  // --#{$repo}-jump-links--Property: value;
 
   display: block;
 }

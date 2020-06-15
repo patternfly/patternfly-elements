@@ -64,11 +64,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host(.open) {
-  --pfe-toast--Right: 50px;
+  --#{$repo}-#{$LOCAL}--Right: 50px;
 }
 
 :host(:not(.open)){
-   --pfe-toast--Right: calc(-1 * #{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)});
+   --#{$repo}-#{$LOCAL}--Right: calc(-1 * #{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)});
 }
 
 ::slotted(:first-child) {

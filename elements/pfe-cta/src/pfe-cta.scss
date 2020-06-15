@@ -211,7 +211,7 @@ $LOCAL-VARIABLES: (
 
 :host([pfe-priority]),
 :host([aria-disabled="true"]) {
-  --pfe-cta--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
+  --#{$repo}-#{$LOCAL}--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
 }
 
 @each $theme in $THEMES {
@@ -232,35 +232,35 @@ $LOCAL-VARIABLES: (
 
 // Default link background focus color
 :host(:not([pfe-priority]):not([aria-disabled="true"])) {
-  --pfe-cta--Color: #{pfe-broadcasted(link)};
+  --#{$repo}-#{$LOCAL}--Color: #{pfe-broadcasted(link)};
 
-  --pfe-cta--Color--hover: #{pfe-broadcasted(link--hover)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-broadcasted(link--hover)};
 
-  --pfe-cta--BackgroundColor--focus: #{$pfe-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
-  --pfe-cta--Color--focus: #{pfe-broadcasted(link--focus)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{$pfe-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
+  --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-broadcasted(link--focus)};
 }
 
 :host([pfe-priority="secondary"]) {
-  --pfe-cta--BorderRadius: #{pfe-var(ui--border-radius)};
+  --#{$repo}-#{$LOCAL}--BorderRadius: #{pfe-var(ui--border-radius)};
   --pfe-cta__arrow--Display: none;
-  --pfe-cta--BackgroundColor: transparent;
-  --pfe-cta--BorderColor: var(
+  --#{$repo}-#{$LOCAL}--BackgroundColor: transparent;
+  --#{$repo}-#{$LOCAL}--BorderColor: var(
     --pfe-broadcasted--text,
     #{pfe-var(ui-complement)}
   );
-  --pfe-cta--Color: var(--pfe-broadcasted--text, #{pfe-var(ui-complement)});
+  --#{$repo}-#{$LOCAL}--Color: var(--pfe-broadcasted--text, #{pfe-var(ui-complement)});
 
-  --pfe-cta--BackgroundColor--hover: #{pfe-var(ui-complement)};
-  --pfe-cta--BorderColor--hover: var(
+  --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(ui-complement)};
+  --#{$repo}-#{$LOCAL}--BorderColor--hover: var(
     --pfe-broadcasted--text,
     #{pfe-var(ui-complement)}
   ); //white, then black
-  --pfe-cta--Color--hover: #{pfe-var(ui-complement--text)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-complement--text)};
 
-  --pfe-cta--BackgroundColor--focus: #{pfe-var(surface--lighter)};
-  --pfe-cta--BorderColor--focus: #{pfe-var(ui-complement)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(surface--lighter)};
+  --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(ui-complement)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-complement)};
-  --pfe-cta--Color--focus: #{pfe-var(ui-complement)};
+  --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-complement)};
 }
 
 /// ===========================================================================
@@ -268,22 +268,22 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 :host([pfe-priority="primary"]) {
   // Button padding and border radius settings
-  --pfe-cta--BorderRadius: #{pfe-var(ui--border-radius)};
+  --#{$repo}-#{$LOCAL}--BorderRadius: #{pfe-var(ui--border-radius)};
 
   // Arrow styles
   --pfe-cta__arrow--Display: none;
-  --pfe-cta--BackgroundColor: #{pfe-var(ui-accent)};
-  --pfe-cta--BorderColor: #{pfe-var(ui-accent)};
-  --pfe-cta--Color: #{pfe-var(ui-accent--text)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor: #{pfe-var(ui-accent)};
+  --#{$repo}-#{$LOCAL}--BorderColor: #{pfe-var(ui-accent)};
+  --#{$repo}-#{$LOCAL}--Color: #{pfe-var(ui-accent--text)};
 
-  --pfe-cta--BackgroundColor--hover: #{pfe-var(ui-accent--hover)};
-  --pfe-cta--BorderColor--hover: #{pfe-var(ui-accent--hover)};
-  --pfe-cta--Color--hover: #{pfe-var(ui-accent--text)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(ui-accent--hover)};
+  --#{$repo}-#{$LOCAL}--BorderColor--hover: #{pfe-var(ui-accent--hover)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-accent--text)};
 
-  --pfe-cta--BackgroundColor--focus: #{pfe-var(ui-accent)};
-  --pfe-cta--BorderColor--focus: #{pfe-var(ui-accent)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(ui-accent)};
+  --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(ui-accent)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-accent--text)};
-  --pfe-cta--Color--focus: #{pfe-var(ui-accent--text)};
+  --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-accent--text)};
 }
 
 /// ===========================================================================
@@ -299,27 +299,27 @@ $LOCAL-VARIABLES: (
 // Primary omitted because it already uses the accent color
 
 :host(:not([pfe-priority])[pfe-var="accent"]:not([on="saturated"])) {
-  --pfe-cta--Color: #{pfe-var(ui-accent)};
+  --#{$repo}-#{$LOCAL}--Color: #{pfe-var(ui-accent)};
 }
 
 :host([pfe-priority="secondary"][pfe-var="accent"]) {
-  --pfe-cta--BackgroundColor: transparent;
-  --pfe-cta--BorderColor: #{pfe-var(ui-accent)};
-  --pfe-cta--BackgroundColor--hover: #{pfe-var(ui-accent)};
-  --pfe-cta--Color: #{pfe-var(ui-accent)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor: transparent;
+  --#{$repo}-#{$LOCAL}--BorderColor: #{pfe-var(ui-accent)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(ui-accent)};
+  --#{$repo}-#{$LOCAL}--Color: #{pfe-var(ui-accent)};
 
-  --pfe-cta--BackgroundColor--hover: #{pfe-var(ui-accent)};
-  --pfe-cta--BorderColor--hover: #{pfe-var(ui-accent)};
-  --pfe-cta--Color--hover: #{pfe-var(ui-accent--text)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(ui-accent)};
+  --#{$repo}-#{$LOCAL}--BorderColor--hover: #{pfe-var(ui-accent)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-accent--text)};
 
-  --pfe-cta--BackgroundColor--focus: #{pfe-var(surface--lighter)};
-  --pfe-cta--BorderColor--focus: #{pfe-var(ui-accent)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(surface--lighter)};
+  --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(ui-accent)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-accent)};
-  --pfe-cta--Color--focus: #{pfe-var(ui-accent)};
+  --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-accent)};
 }
 
 :host([pfe-priority="secondary"][pfe-var="accent"].focus-within) {
-  --pfe-cta--Color--hover: #{pfe-var(ui-accent--text)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-accent--text)};
 }
 
 /// ===========================================================================
@@ -327,37 +327,37 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 
 :host([pfe-priority="primary"][pfe-var="base"]) {
-  --pfe-cta--BackgroundColor: #{pfe-var(ui-base)};
-  --pfe-cta--BorderColor: #{pfe-var(ui-base)};
-  --pfe-cta--Color: #{pfe-var(ui-base--text)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor: #{pfe-var(ui-base)};
+  --#{$repo}-#{$LOCAL}--BorderColor: #{pfe-var(ui-base)};
+  --#{$repo}-#{$LOCAL}--Color: #{pfe-var(ui-base--text)};
 
-  --pfe-cta--BackgroundColor--hover: #{pfe-var(ui-base--hover)};
-  --pfe-cta--BorderColor--hover: #{pfe-var(ui-base--hover)};
-  --pfe-cta--Color--hover: #{pfe-var(ui-base--text)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(ui-base--hover)};
+  --#{$repo}-#{$LOCAL}--BorderColor--hover: #{pfe-var(ui-base--hover)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-base--text)};
 
-  --pfe-cta--BackgroundColor--focus: #{pfe-var(ui-base)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(ui-base)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-base--text)};
-  --pfe-cta--BorderColor--focus: #{pfe-var(surface--darker)};
-  --pfe-cta--Color--focus: #{pfe-var(ui-base--text)};
+  --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(surface--darker)};
+  --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-base--text)};
 }
 
 :host([pfe-priority="secondary"][pfe-var="base"]) {
-  --pfe-cta--BackgroundColor: transparent;
-  --pfe-cta--BorderColor: #{pfe-var(ui-base)};
-  --pfe-cta--Color: #{pfe-var(ui-base)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor: transparent;
+  --#{$repo}-#{$LOCAL}--BorderColor: #{pfe-var(ui-base)};
+  --#{$repo}-#{$LOCAL}--Color: #{pfe-var(ui-base)};
 
-  --pfe-cta--BackgroundColor--hover: #{pfe-var(ui-base)};
-  --pfe-cta--BorderColor--hover: #{pfe-var(ui-base)};
-  --pfe-cta--Color--hover: #{pfe-var(ui-base--text)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(ui-base)};
+  --#{$repo}-#{$LOCAL}--BorderColor--hover: #{pfe-var(ui-base)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-base--text)};
 
-  --pfe-cta--BackgroundColor--focus: #{$pfe-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
+  --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{$pfe-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
   --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-base)};
-  --pfe-cta--BorderColor--focus: #{pfe-var(ui-base)};
-  --pfe-cta--Color--focus: #{pfe-var(ui-base)};
+  --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(ui-base)};
+  --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-base)};
 }
 
 :host([pfe-priority="secondary"][pfe-var="base"].focus-within) {
-  --pfe-cta--Color--hover: #{pfe-var(ui-base--text)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-base--text)};
 }
 
 /// ===========================================================================
@@ -365,42 +365,42 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 
 :host(:not([pfe-priority])[pfe-var="complement"]:not([on="dark"], [on="saturated"])) {
-  --pfe-cta--Color: #{pfe-var(ui-complement)};
-  --pfe-cta--Color--hover: #{pfe-var(ui-complement--hover)};
+  --#{$repo}-#{$LOCAL}--Color: #{pfe-var(ui-complement)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-complement--hover)};
 }
 
 :host([pfe-priority="primary"][pfe-var="complement"]) {
-  --pfe-cta--BackgroundColor: #{pfe-var(ui-complement)};
-  --pfe-cta--BorderColor: #{pfe-var(ui-complement)};
-  --pfe-cta--Color: #{pfe-var(ui-complement--text)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor: #{pfe-var(ui-complement)};
+  --#{$repo}-#{$LOCAL}--BorderColor: #{pfe-var(ui-complement)};
+  --#{$repo}-#{$LOCAL}--Color: #{pfe-var(ui-complement--text)};
 
-  --pfe-cta--BackgroundColor--hover: #{pfe-var(ui-complement--hover)};
-  --pfe-cta--BorderColor--hover: #{pfe-var(ui-complement--hover)};
-  --pfe-cta--Color--hover: #{pfe-var(ui-complement--text)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(ui-complement--hover)};
+  --#{$repo}-#{$LOCAL}--BorderColor--hover: #{pfe-var(ui-complement--hover)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-complement--text)};
 
-  --pfe-cta--BackgroundColor--focus: #{pfe-var(ui-complement)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(ui-complement)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-complement--text)};
-  --pfe-cta--BorderColor--focus: #{pfe-var(surface--darker)};
-  --pfe-cta--Color--focus: #{pfe-var(ui-complement--text)};
+  --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(surface--darker)};
+  --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-complement--text)};
 }
 
 :host([pfe-priority="secondary"][pfe-var="complement"]) {
-  --pfe-cta--BackgroundColor: transparent;
-  --pfe-cta--BorderColor: #{pfe-var(ui-complement)};
-  --pfe-cta--Color: #{pfe-var(ui-complement)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor: transparent;
+  --#{$repo}-#{$LOCAL}--BorderColor: #{pfe-var(ui-complement)};
+  --#{$repo}-#{$LOCAL}--Color: #{pfe-var(ui-complement)};
 
-  --pfe-cta--BackgroundColor--hover: #{pfe-var(ui-complement)};
-  --pfe-cta--BorderColor--hover: #{pfe-var(ui-complement)};
-  --pfe-cta--Color--hover: #{pfe-var(ui-complement--text)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(ui-complement)};
+  --#{$repo}-#{$LOCAL}--BorderColor--hover: #{pfe-var(ui-complement)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-complement--text)};
 
-  --pfe-cta--BackgroundColor--focus: #{pfe-var(surface--lighter)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(surface--lighter)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-complement)};
-  --pfe-cta--BorderColor--focus: #{pfe-var(ui-complement)};
-  --pfe-cta--Color--focus: #{pfe-var(ui-complement)};
+  --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(ui-complement)};
+  --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-complement)};
 }
 
 :host([pfe-priority="secondary"][pfe-var="complement"].focus-within) {
-  --pfe-cta--Color--hover: #{pfe-var(ui-complement--text)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-complement--text)};
 }
 
 /// ===========================================================================
@@ -408,23 +408,23 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 
 :host([pfe-priority="secondary"][pfe-variant="wind"]) {
-  --pfe-cta--BackgroundColor: transparent;
-  --pfe-cta--BorderColor: #{pfe-var(surface--border)};
-  --pfe-cta--Color: var(--pfe-broadcasted--link, #{pfe-var(link)});
-  --pfe-cta--FontWeight: #{pfe-var(font-weight--normal)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor: transparent;
+  --#{$repo}-#{$LOCAL}--BorderColor: #{pfe-var(surface--border)};
+  --#{$repo}-#{$LOCAL}--Color: var(--pfe-broadcasted--link, #{pfe-var(link)});
+  --#{$repo}-#{$LOCAL}--FontWeight: #{pfe-var(font-weight--normal)};
 
-  --pfe-cta--BackgroundColor--hover: #{pfe-var(surface--border--lightest)};
-  --pfe-cta--BorderColor--hover: #{pfe-var(surface--border)};
-  --pfe-cta--Color--hover: #{pfe-var(link--hover)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(surface--border--lightest)};
+  --#{$repo}-#{$LOCAL}--BorderColor--hover: #{pfe-var(surface--border)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(link--hover)};
 
-  --pfe-cta--Color--focus: #{pfe-var(link--hover)};
-  --pfe-cta--BorderColor--focus: #{pfe-var(surface--border)};
+  --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(link--hover)};
+  --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(surface--border)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-local(BorderColor--focus)};
-  --pfe-cta--TextDecoration--hover: #{pfe-var(link-decoration--hover)};
+  --#{$repo}-#{$LOCAL}--TextDecoration--hover: #{pfe-var(link-decoration--hover)};
 }
 
 :host([pfe-priority="secondary"][pfe-variant="wind"].focus-within) {
-  --pfe-cta--Color--hover: #{pfe-var(link--hover)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(link--hover)};
 }
 
 /// ===========================================================================
@@ -433,34 +433,34 @@ $LOCAL-VARIABLES: (
 
 :host([pfe-priority="secondary"][on="dark"]),
 :host([pfe-priority="secondary"][on="saturated"]) {
-  --pfe-cta--BackgroundColor: transparent;
-  --pfe-cta--BorderColor: #{pfe-var(surface--lightest)};
-  --pfe-cta--Color: #{pfe-var(text--on-dark)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor: transparent;
+  --#{$repo}-#{$LOCAL}--BorderColor: #{pfe-var(surface--lightest)};
+  --#{$repo}-#{$LOCAL}--Color: #{pfe-var(text--on-dark)};
 
-  --pfe-cta--BackgroundColor--hover: #{pfe-var(surface--lighter)};
-  --pfe-cta--BorderColor--hover: #{pfe-var(surface--lighter)};
-  --pfe-cta--Color--hover: #{pfe-var(text)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(surface--lighter)};
+  --#{$repo}-#{$LOCAL}--BorderColor--hover: #{pfe-var(surface--lighter)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(text)};
 
-  --pfe-cta--BackgroundColor--focus: #{pfe-var(surface--lightest)};
-  --pfe-cta--BorderColor--focus: #{pfe-var(surface--lightest)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(surface--lightest)};
+  --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(surface--lightest)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-var(surface--darkest)};
-  --pfe-cta--Color--focus: #{pfe-var(text)};
+  --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(text)};
 }
 
 :host([pfe-priority="primary"][on="saturated"]),
 :host([pfe-priority="primary"][pfe-var="complement"][on="dark"]) {
-  --pfe-cta--BackgroundColor: #{pfe-var(surface--lightest)};
-  --pfe-cta--BorderColor: #{pfe-var(surface--lightest)};
-  --pfe-cta--Color: #{pfe-var(text)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor: #{pfe-var(surface--lightest)};
+  --#{$repo}-#{$LOCAL}--BorderColor: #{pfe-var(surface--lightest)};
+  --#{$repo}-#{$LOCAL}--Color: #{pfe-var(text)};
 
-  --pfe-cta--BackgroundColor--hover: #{pfe-var(surface--lighter)};
-  --pfe-cta--BorderColor--hover: #{pfe-var(surface--lighter)};
-  --pfe-cta--Color--hover: #{pfe-var(text)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(surface--lighter)};
+  --#{$repo}-#{$LOCAL}--BorderColor--hover: #{pfe-var(surface--lighter)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(text)};
 
-  --pfe-cta--BackgroundColor--focus: #{pfe-var(surface--lightest)};
-  --pfe-cta--BorderColor--focus: #{pfe-var(surface--lightest)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(surface--lightest)};
+  --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(surface--lightest)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-var(surface--darkest)};
-  --pfe-cta--Color--focus: #{pfe-var(text)};
+  --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(text)};
 }
 
 /// ===========================================================================
@@ -469,16 +469,16 @@ $LOCAL-VARIABLES: (
 
 :host([aria-disabled="true"]) {
   --pfe-cta__arrow--Display: none;
-  --pfe-cta--BackgroundColor: #{pfe-var(ui-disabled)};
-  --pfe-cta--BorderColor: #{pfe-var(ui-disabled)};
-  --pfe-cta--Color: #{pfe-var(ui-disabled--text)} !important;
+  --#{$repo}-#{$LOCAL}--BackgroundColor: #{pfe-var(ui-disabled)};
+  --#{$repo}-#{$LOCAL}--BorderColor: #{pfe-var(ui-disabled)};
+  --#{$repo}-#{$LOCAL}--Color: #{pfe-var(ui-disabled--text)} !important;
 
-  --pfe-cta--BackgroundColor--hover: #{pfe-var(ui-disabled--hover)};
-  --pfe-cta--BorderColor--hover: #{pfe-var(ui-disabled--hover)};
-  --pfe-cta--Color--hover: #{pfe-var(ui-disabled--text)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(ui-disabled--hover)};
+  --#{$repo}-#{$LOCAL}--BorderColor--hover: #{pfe-var(ui-disabled--hover)};
+  --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-disabled--text)};
 
-  --pfe-cta--BackgroundColor--focus: #{pfe-var(ui-disabled)};
+  --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(ui-disabled)};
   --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-disabled--focus)};
-  --pfe-cta--BorderColor--focus: transparent;
-  --pfe-cta--Color--focus: #{pfe-var(ui-disabled--text)};
+  --#{$repo}-#{$LOCAL}--BorderColor--focus: transparent;
+  --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-disabled--text)};
 }

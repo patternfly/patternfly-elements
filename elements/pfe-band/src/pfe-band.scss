@@ -47,7 +47,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
     @media screen and (min-width: pfe-breakpoint(#{$size})) {
-      --pfe-band--Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) );
+      --#{$repo}-#{$LOCAL}--Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) );
     }
   }
 
@@ -103,7 +103,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
 
 // thinner padding on top & bottom
 :host([pfe-size="small"]) {
-  --pfe-band--Padding: calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
+  --#{$repo}-#{$LOCAL}--Padding: calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
 }
 
 .pfe-band {
@@ -116,10 +116,10 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
       grid-template-areas:
         "body" "aside";
       @media (min-width: #{pfe-breakpoint(md)}) {
-        --pfe-band--layout: 1fr #{pfe-local(Width__aside--sm)};
+        --#{$repo}-#{$LOCAL}--layout: 1fr #{pfe-local(Width__aside--sm)};
       }
       @media (min-width: #{pfe-breakpoint(lg)}) {
-        --pfe-band--layout: 1fr #{pfe-local(Width__aside--lg)};
+        --#{$repo}-#{$LOCAL}--layout: 1fr #{pfe-local(Width__aside--lg)};
       }
       &[pfe-aside-mobile="top"] {
         grid-template-areas:
@@ -129,10 +129,10 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
         @media (min-width: #{pfe-breakpoint(md)}) {
             grid-template-areas:
               "aside body";
-          --pfe-band--layout: #{pfe-local(Width__aside--sm)} 1fr;
+          --#{$repo}-#{$LOCAL}--layout: #{pfe-local(Width__aside--sm)} 1fr;
         }
         @media (min-width: #{pfe-breakpoint(lg)}) {
-          --pfe-band--layout: #{pfe-local(Width__aside--lg)} 1fr;
+          --#{$repo}-#{$LOCAL}--layout: #{pfe-local(Width__aside--lg)} 1fr;
         }
       }
     }

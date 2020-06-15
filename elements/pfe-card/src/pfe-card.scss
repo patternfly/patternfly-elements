@@ -91,14 +91,14 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
 @include pfe-theme-contexts; // imports on="light" etc support
 
 :host([pfe-size="small"]) {
-  --pfe-card--PaddingTop:     #{pfe-var(container-spacer)};
-  --pfe-card--PaddingRight:   #{pfe-var(container-spacer)};
-  --pfe-card--PaddingBottom:  #{pfe-var(container-spacer)};
-  --pfe-card--PaddingLeft:    #{pfe-var(container-spacer)};
+  --#{$repo}-#{$LOCAL}--PaddingTop:     #{pfe-var(container-spacer)};
+  --#{$repo}-#{$LOCAL}--PaddingRight:   #{pfe-var(container-spacer)};
+  --#{$repo}-#{$LOCAL}--PaddingBottom:  #{pfe-var(container-spacer)};
+  --#{$repo}-#{$LOCAL}--PaddingLeft:    #{pfe-var(container-spacer)};
 }
 
 :host([pfe-border]:not([pfe-border="false"])) {
-  --pfe-card--BorderWidth:   #{pfe-fetch(surface--border-width)};
+  --#{$repo}-#{$LOCAL}--BorderWidth:   #{pfe-fetch(surface--border-width)};
 }
 
 // Targets the wrappers in the shadow DOM

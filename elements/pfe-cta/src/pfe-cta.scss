@@ -77,7 +77,7 @@ $LOCAL-VARIABLES: (
 :host(:hover),
 :host(:hover) ::slotted(*),
 ::slotted(:hover) {
-  --pfe-cta__arrow--Padding: #{$arrow-hover};
+  --#{$repo}-cta__arrow--Padding: #{$arrow-hover};
 }
 
 :host(:hover) {
@@ -242,24 +242,24 @@ $LOCAL-VARIABLES: (
 
 :host([pfe-priority="secondary"]) {
   --#{$repo}-#{$LOCAL}--BorderRadius: #{pfe-var(ui--border-radius)};
-  --pfe-cta__arrow--Display: none;
+  --#{$repo}-cta__arrow--Display: none;
   --#{$repo}-#{$LOCAL}--BackgroundColor: transparent;
   --#{$repo}-#{$LOCAL}--BorderColor: var(
-    --pfe-broadcasted--text,
+    --#{$repo}-broadcasted--text,
     #{pfe-var(ui-complement)}
   );
   --#{$repo}-#{$LOCAL}--Color: var(--pfe-broadcasted--text, #{pfe-var(ui-complement)});
 
   --#{$repo}-#{$LOCAL}--BackgroundColor--hover: #{pfe-var(ui-complement)};
   --#{$repo}-#{$LOCAL}--BorderColor--hover: var(
-    --pfe-broadcasted--text,
+    --#{$repo}-broadcasted--text,
     #{pfe-var(ui-complement)}
   ); //white, then black
   --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-complement--text)};
 
   --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(surface--lighter)};
   --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(ui-complement)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-complement)};
+  --#{$repo}-cta__inner--BorderColor--focus: #{pfe-var(ui-complement)};
   --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-complement)};
 }
 
@@ -271,7 +271,7 @@ $LOCAL-VARIABLES: (
   --#{$repo}-#{$LOCAL}--BorderRadius: #{pfe-var(ui--border-radius)};
 
   // Arrow styles
-  --pfe-cta__arrow--Display: none;
+  --#{$repo}-cta__arrow--Display: none;
   --#{$repo}-#{$LOCAL}--BackgroundColor: #{pfe-var(ui-accent)};
   --#{$repo}-#{$LOCAL}--BorderColor: #{pfe-var(ui-accent)};
   --#{$repo}-#{$LOCAL}--Color: #{pfe-var(ui-accent--text)};
@@ -282,7 +282,7 @@ $LOCAL-VARIABLES: (
 
   --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(ui-accent)};
   --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(ui-accent)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-accent--text)};
+  --#{$repo}-cta__inner--BorderColor--focus: #{pfe-var(ui-accent--text)};
   --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-accent--text)};
 }
 
@@ -314,7 +314,7 @@ $LOCAL-VARIABLES: (
 
   --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(surface--lighter)};
   --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(ui-accent)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-accent)};
+  --#{$repo}-cta__inner--BorderColor--focus: #{pfe-var(ui-accent)};
   --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-accent)};
 }
 
@@ -336,7 +336,7 @@ $LOCAL-VARIABLES: (
   --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-base--text)};
 
   --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(ui-base)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-base--text)};
+  --#{$repo}-cta__inner--BorderColor--focus: #{pfe-var(ui-base--text)};
   --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(surface--darker)};
   --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-base--text)};
 }
@@ -351,7 +351,7 @@ $LOCAL-VARIABLES: (
   --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-base--text)};
 
   --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{$pfe-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
-  --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-base)};
+  --#{$repo}-cta__inner--BorderColor--focus: #{pfe-var(ui-base)};
   --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(ui-base)};
   --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-base)};
 }
@@ -379,7 +379,7 @@ $LOCAL-VARIABLES: (
   --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-complement--text)};
 
   --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(ui-complement)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-complement--text)};
+  --#{$repo}-cta__inner--BorderColor--focus: #{pfe-var(ui-complement--text)};
   --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(surface--darker)};
   --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-complement--text)};
 }
@@ -394,7 +394,7 @@ $LOCAL-VARIABLES: (
   --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-complement--text)};
 
   --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(surface--lighter)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-complement)};
+  --#{$repo}-cta__inner--BorderColor--focus: #{pfe-var(ui-complement)};
   --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(ui-complement)};
   --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-complement)};
 }
@@ -419,7 +419,7 @@ $LOCAL-VARIABLES: (
 
   --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(link--hover)};
   --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(surface--border)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-local(BorderColor--focus)};
+  --#{$repo}-cta__inner--BorderColor--focus: #{pfe-local(BorderColor--focus)};
   --#{$repo}-#{$LOCAL}--TextDecoration--hover: #{pfe-var(link-decoration--hover)};
 }
 
@@ -443,7 +443,7 @@ $LOCAL-VARIABLES: (
 
   --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(surface--lightest)};
   --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(surface--lightest)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-var(surface--darkest)};
+  --#{$repo}-cta__inner--BorderColor--focus: #{pfe-var(surface--darkest)};
   --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(text)};
 }
 
@@ -459,7 +459,7 @@ $LOCAL-VARIABLES: (
 
   --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(surface--lightest)};
   --#{$repo}-#{$LOCAL}--BorderColor--focus: #{pfe-var(surface--lightest)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-var(surface--darkest)};
+  --#{$repo}-cta__inner--BorderColor--focus: #{pfe-var(surface--darkest)};
   --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(text)};
 }
 
@@ -468,7 +468,7 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 
 :host([aria-disabled="true"]) {
-  --pfe-cta__arrow--Display: none;
+  --#{$repo}-cta__arrow--Display: none;
   --#{$repo}-#{$LOCAL}--BackgroundColor: #{pfe-var(ui-disabled)};
   --#{$repo}-#{$LOCAL}--BorderColor: #{pfe-var(ui-disabled)};
   --#{$repo}-#{$LOCAL}--Color: #{pfe-var(ui-disabled--text)} !important;
@@ -478,7 +478,7 @@ $LOCAL-VARIABLES: (
   --#{$repo}-#{$LOCAL}--Color--hover: #{pfe-var(ui-disabled--text)};
 
   --#{$repo}-#{$LOCAL}--BackgroundColor--focus: #{pfe-var(ui-disabled)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-var(ui-disabled--focus)};
+  --#{$repo}-cta__inner--BorderColor--focus: #{pfe-var(ui-disabled--focus)};
   --#{$repo}-#{$LOCAL}--BorderColor--focus: transparent;
   --#{$repo}-#{$LOCAL}--Color--focus: #{pfe-var(ui-disabled--text)};
 }

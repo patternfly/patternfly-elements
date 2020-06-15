@@ -54,12 +54,12 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-variables);
 
   // Reduce padding for print
   @media print {
-    --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
+    --#{$repo}-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
   }
 
   display: block;
-  --pfe-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
-  --pfe-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
+  --#{$repo}-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
+  --#{$repo}-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
 
   z-index: #{pfe-var(content)};
   width: 100%;
@@ -76,16 +76,16 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-variables);
   @each $size in ("md", "lg", "xl") {
     @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
       @if ($size == "md" or $size == "lg") {
-        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
+        --#{$repo}-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
       } @else if ($size == "xl") {
-        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
+        --#{$repo}-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
       }
     }
   }
 }
 
 pfe-icon {
-  --pfe-icon--Color: #{pfe-local(Color)};
+  --#{$repo}-icon--Color: #{pfe-local(Color)};
 }
 
 // Note: These styles do not pick up in Edge
@@ -147,7 +147,7 @@ pfe-icon {
     // Loop through the other breakpoints
     @each $size in ("md", "lg", "xl") {
       @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-        --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+        --#{$repo}-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
       }
     }
   }

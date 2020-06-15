@@ -39,20 +39,20 @@ $variables: (
   }
 
   pfe-accordion {
-    --pfe-accordion--BackgroundColor: transparent;
-    --pfe-accordion--BorderColor: #ccc;
-    --pfe-accordion--BorderColor--accent: transparent;
-    --pfe-accordion--accent: transparent;
-    --pfe-accordion--BorderColor: transparent;
-    --pfe-accordion--BorderColor--accent: transparent;
+    --#{$repo}-accordion--BackgroundColor: transparent;
+    --#{$repo}-accordion--BorderColor: #ccc;
+    --#{$repo}-accordion--BorderColor--accent: transparent;
+    --#{$repo}-accordion--accent: transparent;
+    --#{$repo}-accordion--BorderColor: transparent;
+    --#{$repo}-accordion--BorderColor--accent: transparent;
   @media(min-width: #{pfe-breakpoint(lg)}) {
-    --pfe-accordion--base--Padding: 0 !important;
+    --#{$repo}-accordion--base--Padding: 0 !important;
   }
     // hide accordion left border:
-    --pfe-theme--surface--border-style: solid;
-    --pfe-theme--color--surface--border: transparent;
-    --pfe-theme--color--ui-base--on-dark: transparent;
-    --pfe-theme--color--ui-base: transparent;
+    --#{$repo}-theme--surface--border-style: solid;
+    --#{$repo}-theme--color--surface--border: transparent;
+    --#{$repo}-theme--color--ui-base--on-dark: transparent;
+    --#{$repo}-theme--color--ui-base: transparent;
 
     button {
       text-decoration: none;
@@ -228,8 +228,8 @@ nav {
   pfe-accordion-header,
   pfe-accordion-panel,
   button[aria-expanded=true] {
-    --pfe-accordion--BackgroundColor: #{pfe-color(surface--darkest)};
-    --pfe-jump-links--BackgroundColor: #{pfe-color(surface--darkest)};
+    --#{$repo}-accordion--BackgroundColor: #{pfe-color(surface--darkest)};
+    --#{$repo}-jump-links--BackgroundColor: #{pfe-color(surface--darkest)};
   }
 
   ::slotted([slot="pfe-jump-links-nav--heading"]) {

@@ -2,8 +2,8 @@
 $LOCAL: pfelement;
 
 body {
-  --pfe-reveal-duration: 0.1618s;
-  --pfe-reveal-delay: 2s;
+  --#{$repo}-reveal-duration: 0.1618s;
+  --#{$repo}-reveal-delay: 2s;
 
   transition: opacity var(--pfe-reveal-duration) ease-in-out;
 

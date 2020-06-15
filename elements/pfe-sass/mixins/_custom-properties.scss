@@ -186,14 +186,11 @@
     @each $color in $surfaces {
         $theme: #{pfe-get-theme(surface--#{$color}--theme)};
         :host([#{$attr-name}="#{$color}"]) {
-            @include pfe-set-local(
-                ( BackgroundColor: #{pfe-var(surface--#{$color})} )
-            );
-            --theme: #{pfe-var( surface--#{$color}--theme, #{$theme} );
-            @include browser-query(ie11) {
-                background-color: #{map-get($pfe-colors, surface--lightest)} !important;
-                color: #{pfe-var(text)} !important;
-            }
+            @include pfe-set-local((
+                BackgroundColor: pfe-var(surface--#{$color}),
+                theme: pfe-var(surface--#{$color}--theme, #{$theme})
+            ));
+            @extend %fallback-surface;
         }
     }
 }
@@ -239,12 +236,10 @@
         :host([on="#{$theme}"]) {
             @include pfe-set-broadcast-theme($theme);
         }
-        @if $ie-fallback {
-            @include browser-query(ie11) {
-                :host {
-                    color: #{pfe-var(text)} !important;
-                }
-            }
+    }
+    @if $ie-fallback {
+        :host {
+            @extend %fallback-text;
         }
     }
 }

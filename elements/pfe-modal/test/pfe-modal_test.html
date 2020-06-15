@@ -16,6 +16,14 @@
         <a href="#bar">Learn more</a>
       </pfe-cta>
     </pfe-modal>
+    <pfe-modal hidden>
+      <button slot="pfe-modal--trigger">Verify modal opens with hidden attribute</button>
+      <h2 slot="pfe-modal--header">Modal option 2</h2>
+      <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <pfe-cta>
+        <a href="#bar">Learn more</a>
+      </pfe-cta>
+    </pfe-modal>
     <script>
       suite('<pfe-modal>', () => {
         test('it should upgrade pfe-modal', () => {
@@ -50,6 +58,14 @@
           button.click();
           assert.isTrue(modalWindow.hasAttribute('hidden'));
         
+        });
+        
+        test('it should remove the hidden attribute from the host on open', done => {
+          // get the modal and fire the open function
+          flush(() => {
+            // test for the hidden attribute on the host
+            done();
+          });
         });
 
 

@@ -25,21 +25,19 @@ tags = [ "theme" ]
 
 These variables are global hooks to override colors, fonts, spacing and more throughout the library of web components. Generally this is all you need, though component specific variables are also available. Feel free to copy this list and define the values needed for your site or application. Please note that the logo URL paths are empty here.
 
+Source of truth: pfe-styles/pfe-colors.css
+
 | Variable name | Type       | Project default |
 | ------------- | ---------- | --- |
-| `--pfe-theme--color--ui-base` | Color | <span class="color-preview" style="--bg:#0477a4"></span> #0477a4 |
-| `--pfe-theme--color--ui-base--hover` | Color | <span class="color-preview" style="--bg:#022f40"></span> #022f40 |
-| `--pfe-theme--color--ui-base--focus` | Color | <span class="color-preview" style="--bg:#022f40"></span> #022f40 |
+| `--pfe-theme--color--ui-base` | Color | <span class="color-preview" style="--bg:#737679"></span> #737679 |
+| `--pfe-theme--color--ui-base--hover` | Color | <span class="color-preview" style="--bg:#4f5255"></span> #4f5255 |
+| `--pfe-theme--color--ui-base--focus` | Color | <span class="color-preview" style="--bg:#4f5255"></span> #4f5255 |
 | `--pfe-theme--color--ui-base--text` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
 | `--pfe-theme--color--ui-base--text--hover` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
 | `--pfe-theme--color--ui-base--text--focus` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--ui-complement` | Color | <span class="color-preview" style="--bg:#464646"></span> #464646 |
-| `--pfe-theme--color--ui-complement--text` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--ui-complement--hover` | Color | <span class="color-preview" style="--bg:#131313"></span> #131313 |
-| `--pfe-theme--color--ui-complement--text--hover` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--ui-accent` | Color | <span class="color-preview" style="--bg:#e00"></span> #e00 |
-| `--pfe-theme--color--ui-accent--hover` | Color | <span class="color-preview" style="--bg:#880000"></span> #880000 |
-| `--pfe-theme--color--ui-accent--focus` | Color | <span class="color-preview" style="--bg:#880000"></span> #880000 |
+| `--pfe-theme--color--ui-accent` | Color | <span class="color-preview" style="--bg:#06c"></span> #06c |
+| `--pfe-theme--color--ui-accent--hover` | Color | <span class="color-preview" style="--bg:#003366"></span> #003366 |
+| `--pfe-theme--color--ui-accent--focus` | Color | <span class="color-preview" style="--bg:#003366"></span> #003366 |
 | `--pfe-theme--color--ui-accent--text` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
 | `--pfe-theme--color--ui-accent--text--hover` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
 | `--pfe-theme--color--ui-accent--text--focus` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |

@@ -18,7 +18,11 @@ tags = [ "theme" ]
 
 ## Text & links
 
-Text and links are the most fundamental pieces of any web property, so they have their own variables aside from other UI elements. They also respond to context, such as a bit of text in a dark gray card would need to change to white. Or a link in a dark gray card would need to become a lighter shade of blue.  Here are a few examples:
+Text and links are the most fundamental pieces of any web property, so they have their own variables aside from other UI elements. They also respond to context, such as a bit of text in a dark gray card would need to change to white. Or a link in a dark gray card would need to become a lighter shade of blue.  
+
+You may choose to set the value of a link color to something in your brand, but it is not required, and these colors should provide a good user experience. 
+
+Here are a few examples:
 
 ```
   --pfe-theme--color--text: #151515;
@@ -37,15 +41,16 @@ A user interface uses color to convey:
  - **Information**: Charts, graphs, and wayfinding elements
  - **Hierarchy**: Showing structured order through color and typography
 
-We've exposed 3 color variants for this design system to represent your brand:
+We've exposed 2 color variants for this design system to represent your brand:
 
  - Base
- - Complement
  - Accent
 
-These colors are used throughout PatternFly Elements, but **accent is the color which should stand out the most**. For example, if your brand colors are navy, orange, and medium gray, you'll want to set orange as the accent color. You'll see it appear on primary level call-to-action buttons and other elements that need to have more weight in the visual heirarchy of the page.
+These colors are used throughout PatternFly Elements, and **accent is the color which should stand out the most**. For example, if your brand colors are orange and medium gray, you'll want to set orange as the accent color. You'll see it appear on primary level call-to-action buttons and other elements that need to have more weight in the visual heirarchy of the page. 
 
-If you are overriding these colors, you can do so by setting the CSS variables to have new values in the stylesheet of your page or app, like this:
+UI colors are meant to provide basic colors for other page elements besides links and body text. 
+
+If you are overriding these colors, you can do so by setting the CSS variables to have new values in the stylesheet of your page or app. You'll want to override the color itself, but also the corresponding hover variant and text color (that would be used if there was text on top of this color, like a button):
 
 ```css
 :root {
@@ -55,9 +60,6 @@ If you are overriding these colors, you can do so by setting the CSS variables t
   --pfe-color--ui-base--text--hover:  #eeeeee;
 }
 ```
-
-UI colors are meant to provide basic colors for other page elements besides links and body text. You may choose to set the value of a link color to something in your brand, but it is not required, and these colors should provide a good user experience. 
-
 
 ## Surface Colors
 

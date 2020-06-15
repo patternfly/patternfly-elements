@@ -9,7 +9,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   Color--hover: $pfe-color--gray-1000,
   TextAlign: left,
   BackgroundColor: transparent,
-  BackgroundColor--hover: pfe-color(surface--lighter),
+  BackgroundColor--hover: pfe-var(surface--lighter),
   Border: none,
 ));
 
@@ -17,39 +17,42 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   display: block;
   width: 100%;
   padding: pfe-local(spacing--vertical) pfe-local(spacing--horizontal);
+  color: pfe-local(Color);
   font-size: pfe-local(FontSize);
   font-weight: pfe-local(FontWeight);
   line-height: pfe-local(LineHeight);
-  color: pfe-local(Color);
   text-align: pfe-local(TextAlign);
   white-space: nowrap;
-  background-color: pfe-local(BackgroundColor);
-  border: pfe-local(Border);
   box-sizing: border-box;
   text-decoration: none;
   font-family: pfe-var(font-family, $fallback: inherit);
   cursor: pointer;
 }
 
-:host(:hover:not([is_disabled])),
-:host(:focus:not([is_disabled])),
-:host(:active:not([is_disabled])) {
-  --#{$repo}-#{$LOCAL}--BackgroundColor: #{pfe-local(BackgroundColor--hover)};
-  --#{$repo}-#{$LOCAL}--Color: #{pfe-local(Color--hover)};
-}
-
-:host([pfe-item-type="separator"]) {
-  --#{$repo}-#{$LOCAL}--BackgroundColor: $pfe-color--gray-250;
-  --#{$repo}-#{$LOCAL}--Border: 0;
+::slotted(button) {
+  background-color: pfe-local(BackgroundColor);
+  border: pfe-local(Border);
 }
 
 .pfe-dropdown-item__container {
-  :host([pfe-item-type="separator"]) & {
-    height: 1px;
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: pfe-local(BackgroundColor--hover);
+    color: pfe-local(Color--hover);
   }
 
-  :host([is_disabled]) {
+  :host([pfe-item-type="separator"]) & {
+    height: 1px;
+    background-color: $pfe-color--gray-250;
+  }
+
+  :host([is_disabled]) & {
+    $disabled: (
+      Color: $pfe-color--gray-600
+    );
+  
     pointer-events: none;
-    --#{$repo}-#{$LOCAL}--Color: #{$pfe-color--gray-600};
+    @include pfe-print-local($disabled);
   }
 }

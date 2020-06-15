@@ -28,9 +28,9 @@ $pfe-colors: (
 
   // Set of base colors
 
-  ui-base:                      $pf-color-black-600,
-  ui-base--hover:               $pf-color-black-700,
-  ui-base--focus:               $pf-color-black-700,
+  ui-base:                      $pf-global--secondary-color--100,
+  ui-base--hover:               darken($pf-global--primary-color--100, 20%),
+  ui-base--focus:               darken($pf-global--primary-color--100, 20%),
   ui-base--text:                $pfe-color--text--on-dark,
   ui-base--text--hover:         $pfe-color--text--on-dark,
   ui-base--text--focus:         $pfe-color--text--on-dark,
@@ -44,16 +44,16 @@ $pfe-colors: (
 
 
   // Set of accent colors
-  ui-accent:                            $pfelements--blue,
-  ui-accent--hover:                     darken($pfelements--blue, 20%),
-  ui-accent--focus:                     darken($pfelements--blue, 20%),
+  ui-accent:                            $pf-global--primary-color--100,
+  ui-accent--hover:                     darken($pf-global--primary-color--100, 20%),
+  ui-accent--focus:                     darken($pf-global--primary-color--100, 20%),
   ui-accent--text:                      $pfe-color--text--on-dark,
   ui-accent--text--hover:               $pfe-color--text--on-dark,
   ui-accent--text--focus:               $pfe-color--text--on-dark,
 
-  ui-accent--on-dark:                   lighten($pfelements--blue, 40%),
-  ui-accent--hover--on-dark:            lighten($pfelements--blue, 20%),
-  ui-accent--focus--on-dark:            lighten($pfelements--blue, 20%),
+  ui-accent--on-dark:                   lighten($pf-global--primary-color--100, 40%),
+  ui-accent--hover--on-dark:            lighten($pf-global--primary-color--100, 20%),
+  ui-accent--focus--on-dark:            lighten($pf-global--primary-color--100, 20%),
   ui-accent--text--on-dark:             $pfe-color--text,
   ui-accent--text--hover--on-dark:      $pfe-color--text,
   ui-accent--text--focus--on-dark:      $pfe-color--text,

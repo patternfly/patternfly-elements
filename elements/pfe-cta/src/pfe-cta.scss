@@ -336,6 +336,10 @@ $variables: (
 /// COLOR=BASE
 /// ===========================================================================
 
+:host(:not([pfe-priority])[pfe-color="base"]:not([on="saturated"])) {
+  --pfe-cta--Color: #{pfe-color(ui-base)};
+}
+
 :host([pfe-priority="primary"][pfe-color="base"]) {
   --pfe-cta--BackgroundColor: #{pfe-color(ui-base)};
   --pfe-cta--BorderColor: #{pfe-color(ui-base)};

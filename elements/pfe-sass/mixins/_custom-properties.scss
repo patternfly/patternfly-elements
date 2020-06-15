@@ -146,37 +146,37 @@
 ///
 /// @output
 /// ```
-/// :host([pfe-var="darker"]) {
+/// :host([pfe-color="darker"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
 ///   --theme: dark;
 /// }
 /// 
-/// :host([pfe-var="darkest"]) {
+/// :host([pfe-color="darkest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darkest, #131313);
 ///   --theme: dark;
 /// }
 /// 
-/// :host([pfe-var="base"]) {
+/// :host([pfe-color="base"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--base, #dfdfdf);
 ///   --theme: light;
 /// }
 /// 
-/// :host([pfe-var="lighter"]) {
+/// :host([pfe-color="lighter"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lighter, #ececec);
 ///   --theme: light;
 /// }
 /// 
-/// :host([pfe-var="lightest"]) {
+/// :host([pfe-color="lightest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lightest, #fff);
 ///   --theme: light;
 /// }
 /// 
-/// :host([pfe-var="accent"]) {
+/// :host([pfe-color="accent"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--accent, #ee0000);
 ///   --theme: saturated;
 /// }
 /// 
-/// :host([pfe-var="complement"]) {
+/// :host([pfe-color="complement"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--complement, #0477a4);
 ///   --theme: saturated;
 /// }

@@ -73,7 +73,7 @@ No extra roles or aria labels are required because we're using standard html tag
 - `namedSlot`: The only slot this component has is the heading. The rest of the component works by creating a mirror shadowRoot based on the Light DOM markup. 	- `pfe-jump-links-nav--heading`:  The rest of the component works by creating a mirror shadowRoot based on the Light DOM markup. 
 
 
-## Attributes	## Attributes
+## Attributes
 
 
 - `autobuild`: Flips the switch on the component to create its own markup for the navigation. You can add `pfe-jump-links-panel__section` to each section that should show in the nav. If you want to use sub-sections add `has-sub-section` to the parent section that should always show and the `sub-section` class to the children of that section. If you use this attribute, keep in mind that non-JavaScript environments (some search engines, browsers with JS disabled) will not see the proper markup.

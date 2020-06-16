@@ -1,62 +1,62 @@
-const getElementNames =  require("../../scripts/get-element-names");
+// const getElementNames =  require("../../scripts/get-element-names");
 
-describe("PatternFly Elements", () => {
-  const elementNames = getElementNames.getElementNames();
-  const shortenedElements = [elementNames[0], elementNames[1]];
-  const tests = [];
-  let iteration = 0;
+// describe("PatternFly Elements", () => {
+//   const elementNames = getElementNames.getElementNames();
+//   const shortenedElements = [elementNames[0], elementNames[1]];
+//   const tests = [];
+//   let iteration = 0;
 
-  shortenedElements.forEach(element => {
-    const test = element => {
-      console.log(`ELEMENT: ${element}`)
+//   shortenedElements.forEach(element => {
+//     const test = element => {
+//       console.log(`ELEMENT: ${element}`)
       
-      const promise = new Promise((resolve, reject) => {
-        before(() => {
-          console.log(`NAVIGATING TO ${element}`);
-          browser.url(`/elements/${element}/demo`);
-        });
+//       const promise = new Promise((resolve, reject) => {
+//         before(() => {
+//           console.log(`NAVIGATING TO ${element}`);
+//           browser.url(`/elements/${element}/demo`);
+//         });
       
-        it("should take a screenshot", () => {
-          browser.saveScreen(element);
-        });
+//         it("should take a screenshot", () => {
+//           browser.saveScreen(element);
+//         });
       
-        it("should compare to the baseline", () => {
-          expect(browser.checkScreen(element)).toEqual(0);
-          console.log(`DONE TESTING ${element}`);
-          resolve();
-        });
-      });
+//         it("should compare to the baseline", () => {
+//           expect(browser.checkScreen(element)).toEqual(0);
+//           console.log(`DONE TESTING ${element}`);
+//           resolve();
+//         });
+//       });
 
-      return promise;
-    }
+//       return promise;
+//     }
 
-    tests.push(test);
-  });
+//     tests.push(test);
+//   });
 
-  function executeTest(test) {
-    test(shortenedElements[iteration]).then(() => {
-      if (tests.length) {
-        tests.shift();
+//   function executeTest(test) {
+//     test(shortenedElements[iteration]).then(() => {
+//       if (tests.length) {
+//         tests.shift();
 
-        if (tests.length) {
-          iteration++;
-          executeTest(tests[0]);
-        }
-      }
-    });
-  }
+//         if (tests.length) {
+//           iteration++;
+//           executeTest(tests[0]);
+//         }
+//       }
+//     });
+//   }
 
-  executeTest(tests[0]);
+//   executeTest(tests[0]);
 
-  // before(() => {
-  //   browser.url("/examples");
-  // });
+//   // before(() => {
+//   //   browser.url("/examples");
+//   // });
 
-  // it("should take a screenshot", () => {
-  //   browser.saveScreen("examplePage");
-  // });
+//   // it("should take a screenshot", () => {
+//   //   browser.saveScreen("examplePage");
+//   // });
 
-  // it("should compare to the baseline", () => {
-  //   expect(browser.checkScreen("examplePage")).toEqual(0);
-  // });
-});
+//   // it("should compare to the baseline", () => {
+//   //   expect(browser.checkScreen("examplePage")).toEqual(0);
+//   // });
+// });

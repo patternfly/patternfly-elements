@@ -9,13 +9,12 @@ exports.config = {
   user: process.env.BROWSERSTACK_USER,
   key: process.env.BROWSERSTACK_KEY,
   baseUrl: "http://localhost:8080/",
-  specs: ["./test/vrt/**/*"],
+  specs: ["./elements/*/test/*_e2e.js"],
   capabilities: [
     {
       os: "OS X",
       browserName: "chrome",
       browser_version: "83.0",
-      resolution: "1920x1080",
       "browserstack.local": "true",
       "browserstack.selenium_version": "3.5.2"
     },
@@ -24,7 +23,6 @@ exports.config = {
       os_version: "10",
       browserName: "IE",
       browser_version: "11.0",
-      resolution: "1920x1080",
       "browserstack.local": "true",
       "browserstack.selenium_version": "3.5.2"
     }

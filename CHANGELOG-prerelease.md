@@ -8,7 +8,7 @@
     -  Update paths to built-in sets: (#723)
     -  Storybook icon listing: (#728)
     -  Icon panel storybook: (#719)
-
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Update generator template
 
 ## Prerelease 49 ( 2020-05-29 )
 

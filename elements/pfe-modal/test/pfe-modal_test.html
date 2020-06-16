@@ -65,6 +65,7 @@
         
         test('it should remove the hidden attribute from the host on open', done => {
           const pfeModal = document.querySelector('pfe-modal');
+          const modalWindow = pfeModal.shadowRoot.querySelector('.pfe-modal__window');
           const trigger = pfeModal.querySelector('[slot=pfe-modal--trigger');
           
           // get the modal and fire the open function
@@ -72,6 +73,7 @@
           
           flush(() => {
             // test for the hidden attribute on the host
+            assert.isNotTrue(modalWindow.hasAttribute('hidden'));
             assert.isNotTrue(pfeModal.hasAttribute('hidden'));
             done();
           });

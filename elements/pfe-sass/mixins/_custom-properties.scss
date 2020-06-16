@@ -179,7 +179,7 @@
     @each $color in $surfaces {
         $theme: #{pfe-get-theme(surface--#{$color}--theme)};
         :host([#{$attr-name}="#{$color}"]) {
-            @include pfe-set-local((
+            @include pfe-print-local((
                 BackgroundColor: pfe-var(surface--#{$color}),
                 theme: pfe-var(surface--#{$color}--theme, #{$theme})
             ));

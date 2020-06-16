@@ -7,6 +7,7 @@
     <script src="/components/web-component-tester/browser.js"></script>
     <script type="module" src="../dist/pfe-modal.js"></script>
   </head>
+  
   <body>
     <pfe-modal>
       <button slot="pfe-modal--trigger">Open the modal</button>
@@ -16,6 +17,7 @@
         <a href="#bar">Learn more</a>
       </pfe-cta>
     </pfe-modal>
+    
     <pfe-modal hidden>
       <button slot="pfe-modal--trigger">Verify modal opens with hidden attribute</button>
       <h2 slot="pfe-modal--header">Modal option 2</h2>
@@ -24,6 +26,7 @@
         <a href="#bar">Learn more</a>
       </pfe-cta>
     </pfe-modal>
+    
     <script>
       suite('<pfe-modal>', () => {
         test('it should upgrade pfe-modal', () => {
@@ -61,13 +64,18 @@
         });
         
         test('it should remove the hidden attribute from the host on open', done => {
+          const pfeModal = document.querySelector('pfe-modal');
+          const trigger = pfeModal.querySelector('[slot=pfe-modal--trigger');
+          
           // get the modal and fire the open function
+          trigger.click();
+          
           flush(() => {
             // test for the hidden attribute on the host
+            assert.isNotTrue(pfeModal.hasAttribute('hidden'));
             done();
           });
         });
-
 
       });
     </script>

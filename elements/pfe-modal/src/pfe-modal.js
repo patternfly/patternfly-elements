@@ -93,6 +93,7 @@ class PfeModal extends PFElement {
     this.trigger = this.querySelector(`[slot="${this.tag}--trigger"]`);
     this.header = this.querySelector(`[slot="${this.tag}--header"]`);
     this.body = [...this.querySelectorAll(`*:not([slot])`)];
+    this.removeAttribute("hidden");
 
     if (this.trigger) {
       this.trigger.addEventListener("click", this.open);
@@ -159,7 +160,6 @@ class PfeModal extends PFElement {
 
     this.isOpen = true;
     // Reveal the container and overlay
-    this.removeAttribute("hidden");
     this._modalWindow.removeAttribute("hidden");
     this._overlay.removeAttribute("hidden");
     this._outer.removeAttribute("hidden");

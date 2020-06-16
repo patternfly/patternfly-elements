@@ -93,18 +93,20 @@ class PfeJumpLinksNav extends PFElement {
         if (this.getAttribute("sr-text")) {
           this.shadowRoot.querySelector("nav").prepend(div);
         }
-
+        if (this.hasAttribute("horizontal")) {
+          return;
+        }
         let html = "";
-        if (this.querySelector(".pfe-jump-links-nav--heading")) {
-          html = this.querySelector(".pfe-jump-links-nav--heading").cloneNode(
-            true
-          );
+        if ("[slot='pfe-jump-links-nav--heading']") {
+          html = this.querySelector("[slot='pfe-jump-links-nav--heading']")
+            .innerHTML;
+        } else {
+          html = "Jump to section";
         }
         if (!this.hasAttribute("horizontal")) {
           if (html) {
-            this.shadowRoot
-              .querySelector("pfe-accordion-header")
-              .appendChild(html);
+            let header = this.shadowRoot.querySelector("pfe-accordion-header");
+            header.shadowRoot.querySelector("button").innerHTML = html;
           }
         } else {
           this.shadowRoot
@@ -114,7 +116,7 @@ class PfeJumpLinksNav extends PFElement {
             );
           this.shadowRoot.querySelector(
             "#pfe-jump-links-nav--heading"
-          ).innerHTML = "Jump to section";
+          ).innerHTML = "Jump to section hi";
         }
       }
     }
@@ -203,8 +205,11 @@ class PfeJumpLinksNav extends PFElement {
         ${buildLinkList()}
     `;
     this.shadowRoot.querySelector("#container").innerHTML = html;
+
     let heading = document.createElement("h3");
-    heading.innerHTML = "Jump to section";
+    heading.innerHTML =
+      this.querySelector("[slot='pfe-jump-links-nav--heading']").innerHTML ||
+      "Jump to section";
     this.shadowRoot.querySelector("pfe-accordion-header").appendChild(heading);
   }
 
@@ -240,7 +245,7 @@ class PfeJumpLinksNav extends PFElement {
         `${PfeJumpLinks.tag}: logo and link slots NOT supported in vertical jump links`
       );
     }
-    if (this.children[1].tagName !== "UL") {
+    if (!this.querySelector("ul")) {
       if (!this.hasAttribute("horizontal")) {
         console.warn(
           `${PfeJumpLinks.tag}: The top-level list of links MUST be a <ul>`

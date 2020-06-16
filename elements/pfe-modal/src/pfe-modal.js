@@ -93,10 +93,10 @@ class PfeModal extends PFElement {
     this.trigger = this.querySelector(`[slot="${this.tag}--trigger"]`);
     this.header = this.querySelector(`[slot="${this.tag}--header"]`);
     this.body = [...this.querySelectorAll(`*:not([slot])`)];
-    this.removeAttribute("hidden");
 
     if (this.trigger) {
       this.trigger.addEventListener("click", this.open);
+      this.removeAttribute("hidden");
     }
 
     if (this.header) {

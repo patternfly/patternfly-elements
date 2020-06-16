@@ -9,6 +9,7 @@ $variables: (
   focus:           pfe-color(link--focus),
   highlight:       pfe-color(ui-accent),
   tab: (
+    FontSize:       pfe-var(font-size),
     PaddingTop:     calc(#{pfe-var(container-padding)} * .666),
     PaddingRight:   calc(#{pfe-var(container-padding)} * 1.5),
     PaddingBottom:  calc(#{pfe-var(container-padding)} * .666),
@@ -40,17 +41,23 @@ $variables: (
   background-color: #{pfe-local(BackgroundColor)};
   color: #{pfe-local(Color)};
 
-  // Exposing this for customization
-  text-transform: #{pfe-local($cssvar: TextTransform, $region: tab, $fallback: none)};
-  font-weight: #{pfe-var(font-weight--normal)};
-
   cursor: pointer;
   text-align: #{pfe-local($cssvar: TextAlign, $region: tab, $fallback: center)};
   
-  ::slotted(*) {
-    color: #{pfe-local(Color)} !important;
+  // Exposing this for customization
+  text-transform: #{pfe-local($cssvar: TextTransform, $region: tab, $fallback: none)};
+  font-family:  #{pfe-var(font-family)};
+  font-weight:  #{pfe-var(font-weight--normal)};
+  font-size:    #{pfe-local(FontSize, $region: tab)};
+    
+  @for $i from 1 through 6 {
+    .pfe-tab > * {
+      font-size: inherit;
+      font-weight: inherit;
+      margin: 0;
+    }
   }
-  
+
   @at-root #{&}(:hover) {
     --pfe-tabs--Color: #{pfe-color(text)};
     @include browser-query(ie11) {

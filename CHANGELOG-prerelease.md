@@ -1,8 +1,20 @@
+## Prerelease 50 ( TBD )
+
+- [775b821](https://github.com/patternfly/patternfly-elements/commit/775b821702c903f926b8bf9fdf9c948ac949335f) feat: Add automatic labeling to PRs
+- [82bf8e6](https://github.com/patternfly/patternfly-elements/commit/82bf8e6a0d407a651571dac1e37d06a2b14fa3d4) feat: Move PR cards automatically in the Project when labels are changed
+- [2adef08](https://github.com/patternfly/patternfly-elements/commit/2adef088768ac52f813899d42ba5a45119761ea3) fix: Add watch task to components generated before infra change
+- [235e9a8](https://github.com/patternfly/patternfly-elements/commit/235e9a816b763dc9251e3022c914cba72f148368) fix: Move tab headings to the ShadowDOM
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-icon and pfe-icon-panel updates
+    -  Update paths to built-in sets: (#723)
+    -  Storybook icon listing: (#728)
+    -  Icon panel storybook: (#719)
+
+
 ## Prerelease 49 ( 2020-05-29 )
 
 - [9adb7ce](https://github.com/patternfly/patternfly-elements/commit/9adb7ce4e5a672192ca49af8a7b7f9afb5f56e75) feat: pfe-jump-links (#858)
 - [b1e69ee](https://github.com/patternfly/patternfly-elements/commit/b1e69ee03f5a56a64c5f57dbc8327e8a2430f0fc) feat: pfe-dropdown (#668)
--[7fe6014](https://github.com/patternfly/patternfly-elements/commit/7fe60149d05ec984e4411a73cf2e1f8185a2df98) fix: pfe-tabs vertical height (#796)
+- [7fe6014](https://github.com/patternfly/patternfly-elements/commit/7fe60149d05ec984e4411a73cf2e1f8185a2df98) fix: pfe-tabs vertical height (#796)
 
 ## Prerelease 48 ( 2020-05-19 )
 

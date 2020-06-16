@@ -1,17 +1,10 @@
 @import "../../pfe-sass/pfe-sass";
 // @include pfe-theme-contexts; // imports on="light" etc support
 
-/// ===========================================================================
-/// Component Specific SASS Vars
-/// ===========================================================================
-
-// Todo: convert these also
-$pfe-icon-panel__icon-size:           64px;
-$pfe-icon-panel__icon-padding:        .05em;
-
+$LOCAL: icon-panel;
 
 /// ===========================================================================
-/// DEFUALT RH ICON PANEL
+/// DEFAULT ICON PANEL
 /// ===========================================================================
 
 :host {
@@ -22,35 +15,34 @@ $pfe-icon-panel__icon-padding:        .05em;
 
   @media (min-width: #{pfe-breakpoint(sm)}) {
 		flex-direction: row;
-	}
+  }
+  
+  @at-root #{&}([pfe-stacked]:not([pfe-stacked="false"])) {
+    flex-direction: column;
+  }
+
+  @at-root #{&}([pfe-stacked]:not([pfe-stacked="false"])[pfe-centered]:not([pfe-centered="false"])) {
+    align-items: center;
+    text-align: center;
+  }
 }
 
-:host pfe-icon {
-  --pfe-icon--spacing:                 #{pfe-var(container-spacer)};
-  --pfe-icon--size:                    var(--pfe-theme--icon-size, #{$pfe-icon-panel__icon-size});
+.pfe-icon-panel {
+  &__content {
+    margin-top: #{pfe-var(container-spacer)};
+    margin-left: 0;
 
-  margin-right: var(--pfe-icon--spacing);
-  font-size: var(--pfe-icon--size);
-  padding: $pfe-icon-panel__icon-padding;
-  min-width: var(--pfe-icon--size);
-  max-width: var(--pfe-icon--size);
-}
+    @media (min-width: #{pfe-breakpoint(sm)}) {
+      margin-top: 0;
+      margin-left: #{pfe-var(container-spacer)};
+    }
 
-:host ::slotted([slot="header"]),
-:host ::slotted([slot="footer"]) {
-  display: block;
-}
-
-:host ::slotted([slot="footer"]) {
-  margin-top: 1em;
-}
-
-// Layout Styles
-:host([stacked]) {
-  flex-direction: column !important;
-}
-
-:host([stacked][centered]) {
-  align-items: center;
-  text-align: center;
+    :host([pfe-stacked]:not([pfe-stacked="false"])) & {
+      margin-top: #{pfe-var(container-spacer)};
+      margin-left: 0;
+    }
+  }
+  &__footer {
+    margin-top: #{pfe-var(content-spacer)};
+  }
 }

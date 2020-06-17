@@ -32,7 +32,8 @@
     "post-new": "npm run test-suite-inject && npm run doc-listing-inject && npm run bootstrap",
     "leftover-check": "bash scripts/leftover-check.sh",
     "demo": "bash scripts/demo.sh",
-    "live-demo": "bash scripts/demo.sh --watch"
+    "live-demo": "bash scripts/demo.sh --watch",
+    "pr": "node scripts/open-pr.js"
   },
   "husky": {
     "hooks": {
@@ -70,6 +71,7 @@
     "dialog-polyfill": "^0.4.10",
     "dotenv": "^8.2.0",
     "ghp": "^1.3.1",
+    "git-branch": "^2.0.1",
     "glob": "^7.1.6",
     "global": "^4.4.0",
     "gulp": "^4.0.2",
@@ -91,6 +93,7 @@
     "gulp-trim": "^1.0.2",
     "gulp-uglify": "^3.0.1",
     "husky": "^1.3.1",
+    "inquirer": "^7.2.0",
     "leasot": "^9.3.1",
     "lerna": "^3.20.2",
     "lit-html": "^1.1.2",
@@ -101,6 +104,7 @@
     "merge-stream": "^2.0.0",
     "node-sass": "^4.13.1",
     "npm-run-all": "^4.1.5",
+    "opn": "^6.0.0",
     "polymer-webpack-loader": "^2.0.3",
     "postcss-custom-properties": "^8.0.11",
     "prettier": "^1.19.1",

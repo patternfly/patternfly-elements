@@ -9,7 +9,8 @@
     -  Update paths to built-in sets: (#723)
     -  Storybook icon listing: (#728)
     -  Icon panel storybook: (#719)
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Automerging PRs based on labels
+- [cf010c1](https://github.com/patternfly/patternfly-elements/commit/cf010c18c404e07d59eab775ee44552f52627bde) feat: Automerging PRs based on labels
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add generator label to new PRs where appropriate
 
 ## Prerelease 49 ( 2020-05-29 )
 

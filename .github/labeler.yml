@@ -2,6 +2,9 @@ demo:
   - examples/*
   - elements/*/demo/*
 
+generator:
+  - generators/**/*
+
 doc:
   - docs/**/*
   - elements/**/*.{md,txt}
@@ -13,7 +16,7 @@ styles:
   - elements/*/src/*.{scss,css}
   - tokens/**/*
 
-tests: 
+tests:
   - elements/*/test/*
 
 tools:

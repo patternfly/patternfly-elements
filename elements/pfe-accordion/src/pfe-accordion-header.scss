@@ -47,7 +47,7 @@ button {
 }
 
 :host(:last-of-type.animating) button {
-  --#{$repo}-accordion--BorderBottomWidth: 0;
+  @include pfe-print-local((BorderBottomWidth: 0));
 }
 
 /// ===========================================================================

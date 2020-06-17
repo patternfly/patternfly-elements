@@ -97,7 +97,7 @@ class PfeJumpLinksNav extends PFElement {
           return;
         }
         let html = "";
-        if ("[slot='pfe-jump-links-nav--heading']") {
+        if (this.has_slot("pfe-jump-links-nav--heading")) {
           html = this.querySelector("[slot='pfe-jump-links-nav--heading']")
             .innerHTML;
         } else {
@@ -116,7 +116,7 @@ class PfeJumpLinksNav extends PFElement {
             );
           this.shadowRoot.querySelector(
             "#pfe-jump-links-nav--heading"
-          ).innerHTML = "Jump to section hi";
+          ).innerHTML = "Jump to section";
         }
       }
     }

@@ -6,7 +6,6 @@
 - [2adef08](https://github.com/patternfly/patternfly-elements/commit/2adef088768ac52f813899d42ba5a45119761ea3) fix: Add watch task to components generated before infra change
 - [235e9a8](https://github.com/patternfly/patternfly-elements/commit/235e9a816b763dc9251e3022c914cba72f148368) fix: Move tab headings to the ShadowDOM
 - [6919a2c](https://github.com/patternfly/patternfly-elements/commit/6919a2c9283551d9e25d60ff96d497fab016e270) feat: pfe-icon and pfe-icon-panel updates
-- [6919a2c](https://github.com/patternfly/patternfly-elements/commit/6919a2c9283551d9e25d60ff96d497fab016e270) feat: pfe-icon and pfe-icon-panel updates
     -  Update paths to built-in sets: (#723)
     -  Storybook icon listing: (#728)
     -  Icon panel storybook: (#719)

@@ -14,6 +14,7 @@ $LOCAL-VARIABLES: (
 
   //-- Color properties
   BackgroundColor: pfe-var(surface--base),
+  theme: pfe-var(surface--base--theme),
   BackgroundPosition: center center,
 
   spacing: pfe-var(container-spacer),
@@ -40,11 +41,15 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   Border: pfe-local(BorderWidth, 0) pfe-local(BorderStyle, solid) pfe-local(BorderColor, pfe-var(surface--border))
 ));
 
+$size-small: (
+  PaddingTop:     pfe-var(container-spacer),
+  PaddingRight:   pfe-var(container-spacer),
+  PaddingBottom:  pfe-var(container-spacer),
+  PaddingLeft:    pfe-var(container-spacer)
+);
+
 :host {
-  
-  // Broadcasted values set to match background color
-  @include pfe-set-broadcast-theme(light);
-  --theme: light;
+  --theme: #{pfe-local(theme)};
 
   // Start of style declarations for host element
   display: flex;
@@ -91,10 +96,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
 @include pfe-theme-contexts; // imports on="light" etc support
 
 :host([pfe-size="small"]) {
-  --#{$repo}-#{$LOCAL}--PaddingTop:     #{pfe-var(container-spacer)};
-  --#{$repo}-#{$LOCAL}--PaddingRight:   #{pfe-var(container-spacer)};
-  --#{$repo}-#{$LOCAL}--PaddingBottom:  #{pfe-var(container-spacer)};
-  --#{$repo}-#{$LOCAL}--PaddingLeft:    #{pfe-var(container-spacer)};
+  @include pfe-print-local($size-small);
 }
 
 :host([pfe-border]:not([pfe-border="false"])) {

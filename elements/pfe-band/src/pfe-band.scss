@@ -33,7 +33,6 @@ $LOCAL-VARIABLES: (
   Width: auto,
   Width__aside--sm: 240px,
   Width__aside--lg: 300px,
-
 );
 
 $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
@@ -42,7 +41,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
 ));
 
 :host {
-  @include pfe-set-broadcast-theme(light);
+  // @include pfe-set-broadcast-theme(light);
   --theme: #{pfe-local(theme)};
 
   // Loop through the other breakpoints

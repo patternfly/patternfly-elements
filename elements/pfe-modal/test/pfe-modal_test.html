@@ -68,11 +68,11 @@
           const modalWindow = pfeModal.shadowRoot.querySelector('.pfe-modal__window');
           const trigger = pfeModal.querySelector('[slot=pfe-modal--trigger');
           
-          // get the modal and fire the open function
+          // triggering a click event on the modal  
           trigger.click();
           
           flush(() => {
-            // test for the hidden attribute on the host
+            // test for the hidden attribute on the host and shadowDOM 
             assert.isNotTrue(modalWindow.hasAttribute('hidden'));
             assert.isNotTrue(pfeModal.hasAttribute('hidden'));
             done();

@@ -1,6 +1,6 @@
 @import "_shared-assets";
 
-$nav-item-variables: (
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   BackgroundColor: transparent,
   Color:           #{pfe-var(text--on-dark)},
   BorderColor:     transparent,
@@ -19,11 +19,10 @@ $nav-item-variables: (
     BackgroundColor:  #{pfe-var(surface--lightest)},
     Color:            #{pfe-var(text)}
   )
-);
-$LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-item-variables);
+));
 
 :host {
-  @include pfe-print-local($LOCAL-VARIABLES);
+  // @include pfe-print-local($LOCAL-VARIABLES);
 
   display: flex;
   flex-direction: column;

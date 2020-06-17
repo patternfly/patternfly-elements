@@ -8,7 +8,6 @@ $trigger--Color--fallback: #{pfe-var(text--on-dark)};
 
 $LOCAL: navigation;
 $LOCAL-VARIABLES: (
-
 // Supplemental breakpoints,   
 // Usage:  @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { 
 
@@ -26,39 +25,29 @@ $LOCAL-VARIABLES: (
 
 // -- Typography
 %link-styles {
-    color: #{pfe-broadcasted(link)};
-    text-decoration: #{pfe-broadcasted(link-decoration)};
+    color: pfe-broadcasted(link);
+    text-decoration: pfe-broadcasted(link-decoration);
     &:visited {
-        color: #{pfe-broadcasted(link--visited)};
+        color: pfe-broadcasted(link--visited);
     }
     &:hover {
-        color: #{pfe-broadcasted(link--hover)};
-        text-decoration: #{pfe-broadcasted(link-decoration--hover)};
+        color: pfe-broadcasted(link--hover);
+        text-decoration: pfe-broadcasted(link-decoration--hover);
     }
     &:focus {
         outline-offset: 1px;
         outline-style: dotted;
         outline-width: 1px;
-        outline-color: #{pfe-broadcasted(link--focus)};
-        color: #{pfe-broadcasted(link--focus)};
+        outline-color: pfe-broadcasted(link--focus);
+        color: pfe-broadcasted(link--focus);
     }
 }
 
 %trigger {
     font-family: pfe-var(font-family);
-    font-size: #{pfe-local(
-            $cssvar: FontSize, 
-            $region: trigger, 
-            $fallback: #{$trigger--FontSize--fallback}
-        )} !important;
-    font-weight: #{pfe-local(
-            $cssvar: FontWeight,
-            $fallback: #{$trigger--FontWeight--fallback}
-        )};
-    color: #{pfe-local(
-            $cssvar: Color,
-            $fallback: #{$trigger--Color--fallback}
-        )};
+    font-size: pfe-local(FontSize, $region: trigger, $fallback: $trigger--FontSize--fallback) !important;
+    font-weight: pfe-local(FontWeight, $fallback: $trigger--FontWeight--fallback);
+    color: pfe-local(Color, $fallback: $trigger--Color--fallback);
     z-index: 2;
     line-height: 1.1;
     margin: 0 !important;

@@ -68,15 +68,7 @@
             }
             @else {
                 @if index($THEMES, $theme) != null {
-                    @if map-get($pfe-colors, $item) != null {
-                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--color--#{$item}#{$context}, #{map-get($pfe-broadcasted, #{$item}#{$context})});
-                    }
-                    @else if map-get($pfe-vars, $item) {
-                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--#{$item}#{$context}, #{map-get($pfe-broadcasted, #{$item}#{$context})});
-                    }
-                    @else {
-                        --#{$repo}-broadcasted--#{$item}: #{map-get($pfe-broadcasted, #{$item}#{$context})};
-                    }
+                    --#{$repo}-broadcasted--#{$item}: #{pfe-broadcasted($item)};
                 }
                 @else {
                     @error "The #{$theme} context does not appear to be part of a supported theme.";

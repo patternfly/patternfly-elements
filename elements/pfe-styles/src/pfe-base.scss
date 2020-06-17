@@ -80,29 +80,29 @@ th {
 html {
   @include pfe-set-broadcast-theme(light);
   font-family: sans-serif;
-  line-height: #{pfe-var(line-height)};
+  line-height: pfe-var(line-height);
 }
 
 
 body {
-  font-family: #{pfe-var(font-family)};
-  font-size: #{pfe-var(font-size)};
-  font-weight: #{pfe-var(font-weight--normal)};
-  line-height: #{pfe-var(line-height)};
-  color: #{pfe-var(text)};
+  font-family: pfe-var(font-family);
+  font-size: pfe-var(font-size);
+  font-weight: pfe-var(font-weight--normal);
+  line-height: pfe-var(line-height);
+  color: pfe-var(text);
   text-align: left;
   margin: 0;
 }
 
 // Links styles
 a {
-  color: #{pfe-broadcasted(link)};
-  text-decoration: #{pfe-broadcasted(link-decoration)};
+  color: pfe-broadcasted(link);
+  text-decoration: pfe-broadcasted(link-decoration);
 
   @each $state in (hover, focus, visited) {
     &:#{$state} {
-      color: #{pfe-broadcasted(link--#{$state})};
-      text-decoration: #{pfe-broadcasted(link-decoration--#{$state})};
+      color: pfe-broadcasted(link--#{$state});
+      text-decoration: pfe-broadcasted(link-decoration--#{$state});
     }
   }
 }

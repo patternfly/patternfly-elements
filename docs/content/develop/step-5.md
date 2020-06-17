@@ -13,16 +13,16 @@ tags = [ "develop" ]
 ## Release Tag, Docs, & Storybook Updates
 
 
-### I. Get the latest from master locally, clean up
+### I. Get the latest from main locally, clean up
 
 
 
 1. `git status`
     1. Check where you are
-2. `git checkout master && git fetch origin && git pull origin`
-    2. Grab master from origin
+2. `git checkout main && git fetch origin && git pull origin`
+    2. Grab main from origin
 3. `npm run clean`
-    3. Wipes node_modules directory and deletes any components not in master
+    3. Wipes node_modules directory and deletes any components not in main
     4. what this does:
     5. rm -rf node_modules package-lock.json
     6. rm -rf node_modules
@@ -65,7 +65,7 @@ tags = [ "develop" ]
     4. Pushes the branch
     5. Pushes independent tags for each component and pushes to NPM
     6. Remove compiled assets
-    7. Returns you to the master branch
+    7. Returns you to the main branch
 
 
 ### V. Github Updates
@@ -74,7 +74,7 @@ tags = [ "develop" ]
 
 1. Create a PR
 2. Get someone to review 
-3. Merge the release branch [pull request](https://github.com/patternfly/patternfly-elements/pulls) into master.  Note: this must be a regular merge.  _Do not squash!_
+3. Merge the release branch [pull request](https://github.com/patternfly/patternfly-elements/pulls) into main.  Note: this must be a regular merge.  _Do not squash!_
 4. **Add release notes to the [tag](https://github.com/patternfly/patternfly-elements/releases) in Github**
 
 
@@ -82,8 +82,8 @@ tags = [ "develop" ]
 
 
 
-1. `git checkout master && git fetch origin && git pull origin`
-    1. Grab the latest from master, which now has the new release
+1. `git checkout main && git fetch origin && git pull origin`
+    1. Grab the latest from main, which now has the new release
 2. `npm run build`
 3. Need to test the docs first?
     2. `cd /docs`

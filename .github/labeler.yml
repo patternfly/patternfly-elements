@@ -23,5 +23,6 @@ tools:
   - scripts/*
   - elements/*/gulpfile.js
   - elements/*/rollup.config.js
+  - .github/**/*
   - ./.*
   - ./*.{js,json,yml}

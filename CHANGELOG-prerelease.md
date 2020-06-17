@@ -10,7 +10,7 @@
     -  Storybook icon listing: (#728)
     -  Icon panel storybook: (#719)
 - [cf010c1](https://github.com/patternfly/patternfly-elements/commit/cf010c18c404e07d59eab775ee44552f52627bde) feat: Automerging PRs based on labels
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add generator label to new PRs where appropriate
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add generator label to new PRs where appropriate, add .github folder to tools
 
 ## Prerelease 49 ( 2020-05-29 )
 

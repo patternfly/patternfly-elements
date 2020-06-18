@@ -1,9 +1,6 @@
 @import "../../pfe-sass/pfe-sass";
 @import "_shared-assets.scss";
 @import "../../pfe-styles/src/layouts/_grid";
-$nav-light-dom-variables: (
-);
-$LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
 
 #main-menu {
     background: transparent !important; // Remove this.
@@ -11,7 +8,6 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
 
 // IE11 styles
 @include browser-query(ie11) {
-
     pfe-navigation-item {
         [slot="trigger"] {
             width: 100%;

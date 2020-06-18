@@ -60,15 +60,16 @@
         }
         
         @each $item in $list {
+            @warn $item;
             @if not index($BROADCAST-VARS, $type) {
                 @warn "--#{$repo}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
             }
-            @else if not map-has-key($pfe-broadcasted, #{$item}#{$context}) {
+            @else if not pfe-broadcasted(#{$item}#{$context}) {
                 @warn "#{$item}#{$context} value does not currently exist.";
             }
             @else {
                 @if index($THEMES, $theme) != null {
-                    --#{$repo}-broadcasted--#{$item}: #{pfe-broadcasted($item)};
+                    --#{$repo}-broadcasted--#{$item}: #{pfe-broadcasted(#{$item}#{$context})};
                 }
                 @else {
                     @error "The #{$theme} context does not appear to be part of a supported theme.";

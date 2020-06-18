@@ -77,16 +77,16 @@ $size-small: (
   // Add the border to the card for print
   @include pfe-print-media {
     border-radius: pfe-fetch(surface--border-radius);
-    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) map-get($pfe-colors, surface--border);
+    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
   }
 
   @include browser-query(ie11) {
-    background-color: #{pfe-var(surface--lightest)} !important;
-    color: #{pfe-var(text)} !important;
+    background-color: pfe-var(surface--lightest) !important;
+    color: pfe-var(text) !important;
     background-image: none !important;
-    border-radius: #{pfe-fetch(surface--border-radius)};
-    border: #{pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) map-get($pfe-colors, surface--border)};
-    padding: #{pfe-var(container-spacer)};
+    border-radius: pfe-fetch(surface--border-radius);
+    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
+    padding: pfe-var(container-spacer);
   }
 }
 

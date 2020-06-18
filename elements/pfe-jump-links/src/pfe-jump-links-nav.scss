@@ -160,17 +160,25 @@ nav {
   }
 }
 
+// Set the local variable to use the accordion namespace
+$temp: $LOCAL;
+$LOCAL: accordion;
 pfe-accordion {
-  --#{$repo}-accordion--BackgroundColor: transparent;
-  --#{$repo}-accordion--BorderColor: #ccc;
-  --#{$repo}-accordion--BorderColor--accent: transparent;
-  --#{$repo}-accordion--accent: transparent;
-  --#{$repo}-accordion--BorderLeftWidth: 0;
-  --#{$repo}-accordion--BorderColor: transparent;
-  --#{$repo}-accordion--BorderColor--accent: transparent;
+  $accordion-styles: (
+    BackgroundColor: transparent,
+    accent: transparent,
+    BorderLeftWidth: 0,
+    BorderColor: transparent,
+    BorderColor--accent: transparent
+  );
+
+  @include pfe-print-local($accordion-styles);
   
   @media(min-width: #{pfe-breakpoint(lg)}) {
-    --#{$repo}-accordion__base--Padding: 0 !important;
+    @include pfe-print-local((
+      base: (Padding: 0)
+    ));
+    // --#{$repo}-accordion__base--Padding: 0 !important;
   }
 
   @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
@@ -217,11 +225,15 @@ pfe-accordion-panel {
   }
 }
 
-:host([pfe-color="darkest"]) {
-  --#{$repo}-#{$LOCAL}--theme: dark;
-  --#{$repo}-#{$LOCAL}--BackgroundColor: #{pfe-var(surface--darkest)};
+$LOCAL: $temp;
 
-  border: pfe-var(surface--border-width) pfe-var(surface--border-style) #{pfe-var(ui-disabled--text)};
+:host([pfe-color="darkest"]) {
+  @include pfe-print-local((
+    theme: dark,
+    BackgroundColor: pfe-var(surface--darkest)
+  ));
+
+  border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
 
   pfe-accordion-header,
   pfe-accordion-panel,

@@ -1,5 +1,6 @@
 ## Prerelease 50 ( TBD )
 
+- [b3f1e46](https://github.com/patternfly/patternfly-elements/commit/b3f1e46fe401be3f09f361fcc3b284a87de3728e) fix: pfe-dropdown: remove preventDefault call on clicks outside of dropdown #915
 - [775b821](https://github.com/patternfly/patternfly-elements/commit/775b821702c903f926b8bf9fdf9c948ac949335f) feat: Add automatic labeling to PRs
 - [82bf8e6](https://github.com/patternfly/patternfly-elements/commit/82bf8e6a0d407a651571dac1e37d06a2b14fa3d4) feat: Move PR cards automatically in the Project when labels are changed
 - [235e9a8](https://github.com/patternfly/patternfly-elements/commit/235e9a816b763dc9251e3022c914cba72f148368) fix: Move tab headings to the ShadowDOM

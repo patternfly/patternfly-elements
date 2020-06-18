@@ -103,7 +103,7 @@ class PfeMarkdown extends PFElement {
     this.observer.observe(this._markdownContainer, this._observerConfig);
   }
 
-  // pulled from https://github.com/PolymerElements/marked-element/blob/master/marked-element.js#L340
+  // pulled from https://github.com/PolymerElements/marked-element/blob/main/marked-element.js#L340
   _unindent(text) {
     if (!text) {
       return text;

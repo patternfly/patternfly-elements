@@ -68,7 +68,7 @@
             }
             @else {
                 @if index($THEMES, $theme) != null {
-                    --#{$repo}-broadcasted--#{$item}: #{pfe-broadcasted(#{$item}#{$context})};
+                    --#{$repo}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$context})};
                 }
                 @else {
                     @error "The #{$theme} context does not appear to be part of a supported theme.";

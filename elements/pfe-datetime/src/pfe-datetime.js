@@ -157,7 +157,7 @@ class PfeDatetime extends PFElement {
     const tense = ms > 0 ? "until" : "ago";
     let str = "just now";
     // Based off of Github Relative Time
-    // https://github.com/github/time-elements/blob/master/src/relative-time.js
+    // https://github.com/github/time-elements/blob/main/src/relative-time.js
     const s = Math.round(Math.abs(ms) / 1000);
     const min = Math.round(s / 60);
     const h = Math.round(min / 60);

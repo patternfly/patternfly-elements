@@ -29,7 +29,7 @@ $LOCAL-VARIABLES: (
   FontFamily: pfe-var(font-family--heading),
   FontSize:   pfe-var(font-size),
   LineHeight: pfe-var(line-height),
-  MaxWidth: fit-content,
+  MaxWidth: max-content,
   arrow: (
     Display: inline,
     Padding: $arrow-basic,

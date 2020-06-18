@@ -60,7 +60,6 @@
         }
         
         @each $item in $list {
-            @warn $item;
             @if not index($BROADCAST-VARS, $type) {
                 @warn "--#{$repo}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
             }

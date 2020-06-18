@@ -72,7 +72,7 @@
     @return append($split-arr, $string);
 }
 
-// https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
+// https://github.com/HugoGiraudel/SassyStrings/blob/main/dist/_SassyStrings.scss
 /// Remove all trailing and leading whitespaces from `$string`.
 /// @since 1.2.0
 /// @param {String} $string - string
@@ -97,7 +97,7 @@
     @return str-slice($string, $start, $end);
 }
 
-// https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
+// https://github.com/HugoGiraudel/SassyStrings/blob/main/dist/_SassyStrings.scss
 /// Check whether `$string` starts with `$needle`.
 /// @param {String} $string - string to check
 /// @param {String} $needle - substring to check

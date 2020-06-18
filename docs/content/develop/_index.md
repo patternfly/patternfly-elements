@@ -33,7 +33,7 @@ Before getting started, it's important to note that because this is a library, e
 
 A container never directly styles the children inside it. It is built to manage only their horizontal or vertical alignment and spacing. For example, in a card, you might apply margins around the slots, but you would not apply padding or color to the content inside of slots.
 
-**Example: [Card](https://github.com/patternfly/patternfly-elements/blob/master/elements/pfe-card/src)**
+**Example: [Card](https://github.com/patternfly/patternfly-elements/blob/main/elements/pfe-card/src)**
 
 This component has background color options and attributes to change the vertical spacing between the slots but does not have any influence on the general styles or typography of its children.
 
@@ -42,7 +42,7 @@ This component has background color options and attributes to change the vertica
 
 A component always touches all four sides of its parent container. For example, if you are creating a teaser component, it should not have padding or margins around the type. It might, however have margins between the headline and author.
 
-**Example: [Call-to-action](https://github.com/patternfly/patternfly-elements/blob/master/elements/pfe-cta/src)**
+**Example: [Call-to-action](https://github.com/patternfly/patternfly-elements/blob/main/elements/pfe-cta/src)**
 
 This component has attributes which invoke the multiple style changes on a call-to-action link. It has styles built-in so that colors will automatically adjust to surfaces.
 
@@ -50,7 +50,7 @@ This component has attributes which invoke the multiple style changes on a call-
 
 These elements are designed to create easy-to-use combinations of other smaller components. Ideally they also bundle up attributes into a few configurations.
 
-**Example: [Hide-show](https://github.com/patternfly/patternfly-elements/blob/master/elements/pfe-hide-show)**
+**Example: [Hide-show](https://github.com/patternfly/patternfly-elements/blob/main/elements/pfe-hide-show)**
 
 
 ## Opt-in Features

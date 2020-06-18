@@ -1,6 +1,6 @@
 ## Prerelease 50 ( TBD )
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Automerging PRs based on labels
+- [cf010c1](https://github.com/patternfly/patternfly-elements/commit/cf010c18c404e07d59eab775ee44552f52627bde) feat: Automerging PRs based on labels
 - [775b821](https://github.com/patternfly/patternfly-elements/commit/775b821702c903f926b8bf9fdf9c948ac949335f) feat: Add automatic labeling to PRs
 - [82bf8e6](https://github.com/patternfly/patternfly-elements/commit/82bf8e6a0d407a651571dac1e37d06a2b14fa3d4) feat: Move PR cards automatically in the Project when labels are changed
 - [235e9a8](https://github.com/patternfly/patternfly-elements/commit/235e9a816b763dc9251e3022c914cba72f148368) fix: Move tab headings to the ShadowDOM

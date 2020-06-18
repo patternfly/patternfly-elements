@@ -27,7 +27,7 @@ $ npm install --save @patternfly/pfe-card
 $ npm install --save @patternfly/pfe-cta
 ```
 
-This will install not only the pfe-card and pfe-cta, but also the base element, "pfelement", and will save it to your package-lock.json. Depending on which browsers you support, you may also need to load the [custom-elements](https://github.com/webcomponents/polyfills/tree/master/packages/custom-elements) and webcomponentsjs [polyfills](https://www.webcomponents.org/polyfills). 
+This will install not only the pfe-card and pfe-cta, but also the base element, "pfelement", and will save it to your package-lock.json. Depending on which browsers you support, you may also need to load the [custom-elements](https://github.com/webcomponents/polyfills/tree/main/packages/custom-elements) and webcomponentsjs [polyfills](https://www.webcomponents.org/polyfills). 
  
 ```bash
 "@patternfly/pfe-card": "1.0.0-prerelease.42",

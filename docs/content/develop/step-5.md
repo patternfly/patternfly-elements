@@ -120,13 +120,13 @@ Thanks for your continued support of the project!  #usetheplatform
 
 ## (Legacy) The Hard Way
 
-Before the release script (above) was created, we published releases using the manual steps below.  They're kept here mostly for posterity, and possibly to make the [release script](https://github.com/patternfly/patternfly-elements/blob/master/scripts/release.sh) more understandable.
+Before the release script (above) was created, we published releases using the manual steps below.  They're kept here mostly for posterity, and possibly to make the [release script](https://github.com/patternfly/patternfly-elements/blob/main/scripts/release.sh) more understandable.
 
 To roll a new release, use the following steps:
 
 1. Start in the root directory of the patternfly-elements project.
-2. Check out the master branch and pull down the latest: 
-    - `git reset --hard && git clean -df && git checkout master && git fetch origin && git pull`
+2. Check out the main branch and pull down the latest: 
+    - `git reset --hard && git clean -df && git checkout main && git fetch origin && git pull`
 3. To have lerna bump the verions, run: `npm run lerna version -- --no-git-tag-version --no-push --preid prerelease`.
     - Choose the appropriate version bump type for the release you're publishing:
         - if bumping a prerelease version (example: from 1.0.0-prerelease.2 to 1.0.0-prerelease.3), choose *Custom Prerelease*
@@ -141,9 +141,9 @@ To roll a new release, use the following steps:
 9. Commit: `git commit -am "Remove bundles from $NEW_VERSION"`
 10. Push up to origin: `git push origin release/$NEW_VERSION -u`
 11. Push up the tag: `git push --tags`
-12. Checkout master and reset:
-    - `git checkout master`
-    - `git reset --hard origin/master`
+12. Checkout main and reset:
+    - `git checkout main`
+    - `git reset --hard origin/main`
 13. [Create a pull request](https://github.com/patternfly/patternfly-elements/compare) for the branch you just created.
 14. Delete branch after merging pull request:
     - `git branch -D release/$NEW_VERSION`

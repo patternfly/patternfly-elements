@@ -5,16 +5,18 @@ require("dotenv").config();
 let proc;
 
 exports.config = {
-  logLevel: "info",
+  logLevel: "error",
   user: process.env.BROWSERSTACK_USER,
   key: process.env.BROWSERSTACK_KEY,
   baseUrl: "http://localhost:8080/",
   specs: ["./elements/*/test/*_e2e.js"],
+  maxInstances: 6,
   capabilities: [
     {
       os: "OS X",
       browserName: "chrome",
       browser_version: "83.0",
+      resolution: "1024x768",
       "browserstack.local": "true",
       "browserstack.selenium_version": "3.5.2"
     },
@@ -23,6 +25,7 @@ exports.config = {
       os_version: "10",
       browserName: "IE",
       browser_version: "11.0",
+      resolution: "1024x768",
       "browserstack.local": "true",
       "browserstack.selenium_version": "3.5.2"
     }
@@ -33,7 +36,7 @@ exports.config = {
       "image-comparison",
       {
         baselineFolder: join(process.cwd(), "./test/vrt-baseline/"),
-        formatImageName: `{tag}-{logName}-{width}x{height}`,
+        formatImageName: `{tag}`,
         screenshotPath: join(process.cwd(), ".tmp/"),
         savePerInstance: true,
         autoSaveBaseline: true,

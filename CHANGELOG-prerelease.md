@@ -11,6 +11,7 @@
     -  Update paths to built-in sets: (#723)
     -  Storybook icon listing: (#728)
     -  Icon panel storybook: (#719)
+- []() feat: Adjust github labels & project board names in automation tasks & workflows
 
 ## Prerelease 49 ( 2020-05-29 )
 

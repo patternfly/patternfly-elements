@@ -39,6 +39,12 @@ class PfeSelect extends PFElement {
     this.querySelector("select").setAttribute("aria-invalid", invalidAttr);
   }
 
+  static get events() {
+    return {
+      change: `${this.tag}:change`
+    };
+  }
+
   static get observedAttributes() {
     return ["pfe-invalid"];
   }
@@ -114,13 +120,11 @@ class PfeSelect extends PFElement {
   }
 
   _inputChanged() {
-    this.dispatchEvent(
-      new CustomEvent(`${this.tag}:change`, {
-        detail: { value: this._input.value },
-        bubbles: true,
-        composed: true
-      })
-    );
+    this.emitEvent(PfeSelect.events.change, {
+      detail: {
+        value: this._input.value
+      }
+    });
   }
 
   _modifyDOM() {

@@ -18,7 +18,7 @@ $variables: (
   BorderRadius: pfe-var(surface--border-radius),
 
   //-- Border variable encompasses width, style, and color
-  Border: #{pfe-local(BorderWeight, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, transparent)},
+  Border: #{pfe-local(BorderWidth, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, #{pfe-color(surface--border)})},
 
   //-- Color properties
   BackgroundColor: pfe-color(surface--base),
@@ -42,7 +42,7 @@ $variables: (
 
 :host {
   @include pfe-print-variables($variables);
-  
+
   // Broadcasted values set to match background color
   @include pfe-set-broadcast-theme(light);
   --theme: light;
@@ -96,6 +96,10 @@ $variables: (
   --pfe-card--PaddingRight:   #{pfe-var(container-spacer)};
   --pfe-card--PaddingBottom:  #{pfe-var(container-spacer)};
   --pfe-card--PaddingLeft:    #{pfe-var(container-spacer)};
+}
+
+:host([pfe-border]:not([pfe-border="false"])) {
+  --pfe-card--BorderWidth:   #{map-get($pfe-vars, surface--border-width)};
 }
 
 // Targets the wrappers in the shadow DOM
@@ -183,6 +187,10 @@ $variables: (
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
+    :host(:not([has_header])) & {
+      display: none;
+    }
+
     :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
@@ -214,6 +222,10 @@ $variables: (
     :host([has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
+
+    :host(:not([has_footer])) & {
+      margin-bottom: 0;
+    }
   }
   &__footer {
     margin-top: auto; // This allows the footer to move to the very bottom
@@ -227,12 +239,14 @@ $variables: (
     ::slotted([pfe-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
+
+    :host(:not([has_footer])) & {
+      display: none;
+    }
   }
   &__header,
   &__body {
-    &:not(:last-child) {
-      margin-bottom: #{pfe-local(spacing--vertical)};
-    }
+    margin-bottom: #{pfe-local(spacing--vertical)};
 
     //-- Slotted styles for typography
     // Remove margins from typography inside the slots

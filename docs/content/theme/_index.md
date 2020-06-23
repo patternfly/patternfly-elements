@@ -28,7 +28,7 @@ This is because the accent color should be the brightest and boldest, and the pr
 Additionally, each component comes equipped to adjust its colors depending on where it's placed on the page. For example, should you need to put a default CTA (which is blue) on a dark blue card, the CTA will need to adapt. You can do this by informing the component of its context (on a dark background) by giving the `on` attribute the value of `dark`.
 
     <pfe-card pfe-color="dark">
-	    <pfe-cta pfe-color="base" on="dark">
+	    <pfe-cta pfe-color="base">
 	    	<a href="#">Default</a>
 	    </pfe-cta>
 	</pfe-card>
@@ -39,4 +39,4 @@ Should you need to deviate from this color usage, and set your primary CTA to us
 		<a href="#">Primary</a>
 	</pfe-cta>
 
-Please note that if you are opting to override colors of components, they will not automatically respond to the `on="dark"` attribute any longer.
+Please note that if you are opting to override colors of components, they will not automatically respond to the theme context any longer.

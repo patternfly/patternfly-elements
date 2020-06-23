@@ -76,6 +76,7 @@ class PFElement extends HTMLElement {
 
   // Update the theme context for self and children
   context_update() {
+    // TODO: update this to use :defined?
     const children = this.querySelectorAll("[pfelement]");
     let theme = this.cssVariable("theme");
 
@@ -109,7 +110,7 @@ class PFElement extends HTMLElement {
     if (!theme && fallback) {
       theme = fallback;
     }
-    if (theme) {
+    if (theme && this.hasAttribute("pfelement")) {
       this.setAttribute("on", theme);
     }
   }
@@ -166,6 +167,15 @@ class PFElement extends HTMLElement {
       this.log(`Styling...`);
       window.ShadyCSS.styleElement(this);
       this.log(`Styled.`);
+    }
+
+    // Throw a warning if the on attribute was manually added before upgrade
+    if (!this.hasAttribute("pfelement") && this.hasAttribute("on")) {
+      console.warn(
+        `${this.tag}${
+          this.id ? `[#${this.id}]` : ``
+        }: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`
+      );
     }
 
     // @TODO maybe we should use just the attribute instead of the class?
@@ -411,6 +421,7 @@ class PFElement extends HTMLElement {
     name,
     { bubbles = true, cancelable = false, composed = false, detail = {} } = {}
   ) {
+    this.log(`Custom event: ${name}`);
     this.dispatchEvent(
       new CustomEvent(name, {
         bubbles,

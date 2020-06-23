@@ -17,8 +17,8 @@ $variables: (
   BorderLeft:                 #{pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor)},
   BorderRight:                #{pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor)},
   BorderBottom:               #{pfe-local(BorderBottomWidth) pfe-var(ui--border-style) pfe-local(BorderBottomColor)},
-  BorderBottom--hover:        #{pfe-local(BorderBottomWidth) pfe-var(ui--border-style) pfe-local(BorderBottomColor--hover)}
-
+  BorderBottom--hover:        #{pfe-local(BorderBottomWidth) pfe-var(ui--border-style) pfe-local(BorderBottomColor--hover)},
+  FontFamily:                 #{pfe-var(font-family)}
 );
 
 :host {
@@ -82,6 +82,7 @@ $variables: (
 
     font-size:    #{pfe-var(font-size)};
     font-weight:  #{pfe-var(font-weight--normal)};
+    font-family: #{pfe-local(FontFamily)};
 
     appearance: none;
     box-shadow: none;

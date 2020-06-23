@@ -1,0 +1,17 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+$LOCAL: jump;
+
+:host {
+  // Example local variable, using BEM format
+  // --pfe-jump-links--Property: value;
+
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+

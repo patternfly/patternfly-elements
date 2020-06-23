@@ -16,6 +16,17 @@ const KEYCODE = {
 // https://caniuse.com/#search=urlsearchparams
 const CAN_USE_URLSEARCHPARAMS = window.URLSearchParams ? true : false;
 
+const TABS_MUTATION_CONFIG = {
+  childList: true,
+  subtree: true
+};
+
+const TAB_CONTENT_MUTATION_CONFIG = {
+  characterData: true,
+  childList: true,
+  subtree: true
+};
+
 function generateId() {
   return Math.random()
     .toString(36)
@@ -40,13 +51,7 @@ class PfeTabs extends PFElement {
   }
 
   static get observedAttributes() {
-    return [
-      "vertical",
-      "selected-index",
-      "pfe-variant",
-      "on",
-      "pfe-tab-history"
-    ];
+    return ["vertical", "selected-index", "pfe-variant", "pfe-tab-history"];
   }
 
   static get events() {
@@ -94,7 +99,7 @@ class PfeTabs extends PFElement {
         this._init();
       }
 
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TABS_MUTATION_CONFIG);
     });
   }
 
@@ -141,13 +146,6 @@ class PfeTabs extends PFElement {
           this.removeAttribute("aria-orientation");
           this._allPanels().forEach(panel => panel.removeAttribute("vertical"));
           this._allTabs().forEach(tab => tab.removeAttribute("vertical"));
-        }
-        break;
-
-      case "on":
-        if (this.getAttribute("on") === "dark") {
-          this._allTabs().forEach(tab => tab.setAttribute("on", "dark"));
-          this._allPanels().forEach(panel => panel.setAttribute("on", "dark"));
         }
         break;
 
@@ -210,8 +208,10 @@ class PfeTabs extends PFElement {
       const pathname = window.location.pathname;
       const urlParams = new URLSearchParams(window.location.search);
       const hash = window.location.hash;
+      const property = this.id || this.getAttribute("pfe-id");
+      const value = tab.id || tab.getAttribute("pfe-id");
 
-      urlParams.set(`pfe-${this.id}`, tab.id);
+      urlParams.set(property, value);
       history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
     }
 
@@ -246,7 +246,11 @@ class PfeTabs extends PFElement {
     if (mutationsList) {
       for (let mutation of mutationsList) {
         if (mutation.type === "childList" && mutation.addedNodes.length) {
-          mutation.addedNodes.forEach(addedNode => {
+          [...mutation.addedNodes].forEach(addedNode => {
+            if (!addedNode.tagName) {
+              return;
+            }
+
             if (
               addedNode.tagName.toLowerCase() === PfeTab.tag ||
               addedNode.tagName.toLowerCase() === PfeTabPanel.tag
@@ -290,16 +294,16 @@ class PfeTabs extends PFElement {
     this._linked = true;
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TABS_MUTATION_CONFIG);
     }
   }
 
   _allPanels() {
-    return [...this.querySelectorAll("pfe-tab-panel")];
+    return [...this.children].filter(child => child.matches("pfe-tab-panel"));
   }
 
   _allTabs() {
-    return [...this.querySelectorAll("pfe-tab")];
+    return [...this.children].filter(child => child.matches("pfe-tab"));
   }
 
   _panelForTab(tab) {
@@ -366,27 +370,31 @@ class PfeTabs extends PFElement {
     newTab.selected = true;
     newPanel.hidden = false;
 
-    if (this._setFocus) {
-      newTab.focus();
-      this._setFocus = false;
-    }
-
     const tabs = this._allTabs();
     const newIdx = tabs.findIndex(tab => tab.selected);
 
     this.selected = newTab;
 
     if (newTabSelected) {
+      if (this._setFocus) {
+        newTab.focus();
+      }
+
       this.emitEvent(PfeTabs.events.shownTab, {
         detail: {
           tab: this.selected
         }
       });
     }
+
+    this._setFocus = false;
   }
 
   _onKeyDown(event) {
-    if (event.target.getAttribute("role") !== "tab") {
+    const tabs = this._allTabs();
+    const foundTab = tabs.find(tab => tab === event.target);
+
+    if (!foundTab) {
       return;
     }
 
@@ -426,7 +434,10 @@ class PfeTabs extends PFElement {
   }
 
   _onClick(event) {
-    if (event.currentTarget.getAttribute("role") !== "tab") {
+    const tabs = this._allTabs();
+    const foundTab = tabs.find(tab => tab === event.currentTarget);
+
+    if (!foundTab) {
       return;
     }
 
@@ -441,12 +452,28 @@ class PfeTabs extends PFElement {
     // https://caniuse.com/#search=urlsearchparams
     if (CAN_USE_URLSEARCHPARAMS) {
       urlParams = new URLSearchParams(window.location.search);
-    }
 
-    if (urlParams && urlParams.has(`pfe-${this.id}`)) {
-      tabIndex = this._allTabs().findIndex(
-        tab => tab.id === urlParams.get(`pfe-${this.id}`)
-      );
+      // @DEPRECATED
+      // the "pfe-" prefix has been deprecated but we'll continue to support it
+      // we'll give priority to the urlParams.has(`${this.id}`) attribute first
+      // and fallback to urlParams.has(`pfe-${this.id}`) if it exists. We should
+      // be able to remove the || part of the if statement in the future
+      const tabsetInUrl =
+        urlParams.has(`${this.id}`) ||
+        urlParams.has(this.getAttribute("pfe-id")) ||
+        urlParams.has(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+
+      if (urlParams && tabsetInUrl) {
+        const id =
+          urlParams.get(`${this.id}`) ||
+          urlParams.get(this.getAttribute("pfe-id")) ||
+          urlParams.get(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+
+        tabIndex = this._allTabs().findIndex(tab => {
+          const tabId = tab.id || tab.getAttribute("pfe-id");
+          return tabId === id;
+        });
+      }
     }
 
     return tabIndex;
@@ -455,7 +482,6 @@ class PfeTabs extends PFElement {
   _popstateEventHandler() {
     const tabIndexFromURL = this._getTabIndexFromURL();
 
-    this._setFocus = true;
     this._updateHistory = false;
     this.selectedIndex = tabIndexFromURL > -1 ? tabIndexFromURL : 0;
   }
@@ -502,18 +528,22 @@ class PfeTab extends PFElement {
   constructor() {
     super(PfeTab);
 
+    this._tabItem;
     this._init = this._init.bind(this);
+    this._setTabContent = this._setTabContent.bind(this);
     this._observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
+    this._tabItem = this.shadowRoot.querySelector(`.${this.tag}`);
+
     if (this.children.length || this.textContent.trim().length) {
       this._init();
     }
 
-    this._observer.observe(this, { childList: true });
+    this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
   }
 
   attributeChangedCallback() {
@@ -529,6 +559,9 @@ class PfeTab extends PFElement {
     if (window.ShadyCSS) {
       this._observer.disconnect();
     }
+
+    // Copy the tab content into the template
+    this._setTabContent();
 
     if (!this.pfeId) {
       this.pfeId = `${PfeTab.tag}-${generateId()}`;
@@ -551,8 +584,47 @@ class PfeTab extends PFElement {
     }
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
     }
+  }
+
+  _setTabContent() {
+    // Copy the tab content into the template
+    const label = this.textContent.trim().replace(/\s+/g, " ");
+
+    if (!label) {
+      console.warn(
+        `${this.tag}: There does not appear to be any content in the tab region.`
+      );
+      return;
+    }
+
+    let semantics = "";
+    // Get the semantics of the content
+    if (this.children.length > 0) {
+      // We only care about the first child that is a tag
+      if (
+        this.firstElementChild &&
+        this.firstElementChild.tagName.match(/^H[1-6]/)
+      ) {
+        semantics = this.firstElementChild.tagName.toLowerCase();
+      }
+    }
+
+    // Create an h-level tag for the shadow tab, default h3
+    let heading = document.createElement("h3");
+
+    // Use the provided semantics if provided
+    if (semantics.length > 0) {
+      heading = document.createElement(semantics);
+    }
+
+    // Assign the label content to the new heading
+    heading.textContent = label;
+
+    // Attach the heading to the tabItem
+    this._tabItem.innerHTML = "";
+    this._tabItem.appendChild(heading);
   }
 }
 
@@ -592,7 +664,7 @@ class PfeTabPanel extends PFElement {
     super.connectedCallback();
 
     this._init();
-    this._observer.observe(this, { childList: true });
+    this._observer.observe(this, TABS_MUTATION_CONFIG);
   }
 
   disconnectedCallback() {
@@ -621,7 +693,7 @@ class PfeTabPanel extends PFElement {
     }
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TABS_MUTATION_CONFIG);
     }
   }
 }

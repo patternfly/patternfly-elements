@@ -1,0 +1,68 @@
+@import "../../pfe-sass/pfe-sass";
+@import "_shared-assets";
+
+$dropdown-item-variables: (
+  FontSize: #{pfe-var(font-size)},
+  FontWeight: 400,
+  LineHeight: #{pfe-var(line-height)},
+  Color: #{$pfe-color--gray-1000},
+  Color--hover: #{$pfe-color--gray-1000},
+  TextAlign: left,
+  BackgroundColor: transparent,
+  BackgroundColor--hover: #{pfe-color(surface--lighter)},
+  Border: none,
+);
+
+$variables: map-merge($variables, $dropdown-item-variables);
+
+:host {
+  @include pfe-print-variables($variables);
+  .pfe-dropdown-item {
+    &__container {
+      &:hover,
+      &:focus,
+      &:active {
+        color: #{pfe-local(Color--hover)};
+        background-color: #{pfe-local(BackgroundColor--hover)};
+      }
+    }
+  }
+}
+
+::slotted(*) {
+  display: block;
+  width: 100%;
+  padding: #{pfe-local(SpacingVertical)} #{pfe-local(SpacingHorizontal)};
+  font-size: #{pfe-local(FontSize)};
+  font-weight: #{pfe-local(FontWeight)};
+  line-height: #{pfe-local(LineHeight)};
+  color: #{pfe-local(Color)};
+  text-align: #{pfe-local(TextAlign)};
+  white-space: nowrap;
+  background-color: #{pfe-local(BackgroundColor)};
+  border: #{pfe-local(Border)};
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: #{pfe-var(font-family, $fallback: inherit)};
+  cursor: pointer;
+}
+
+:host([pfe-item-type="separator"]) {
+  .pfe-dropdown-item {
+    &__container {
+      height: 1px;
+      background-color: #{$pfe-color--gray-250};
+      border: 0;
+    }
+  }
+}
+
+:host([is_disabled]) {
+  .pfe-dropdown-item {
+    &__container {
+      pointer-events: none;
+      --pfe-dropdown--Color: #{$pfe-color--gray-600};
+      --pfe-dropdown--BackgroundColor: transparent;
+    }
+  }
+}

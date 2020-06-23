@@ -40,6 +40,10 @@
         <p>This is pfe-card.</p>
         <div slot="pfe-card--footer">Text in footer</div>
       </pfe-card>
+
+      <pfe-card id="dynamicHeaderFooter">
+        This is the card
+      </pfe-card>
     </div>
 
     <script>
@@ -176,6 +180,30 @@
           })
         });
 
+        test("it should render a header and footer when content for those slots are added dynamically", done => {
+          const card = document.querySelector("#dynamicHeaderFooter");
+          
+          const header = document.createElement("h2");
+          header.setAttribute("slot", "pfe-card--header");
+          header.textContent = "Card Header";
+
+          const footer = document.createElement("div");
+          footer.setAttribute("slot", "pfe-card--footer");
+          footer.textContent = "This is the footer";
+
+          card.prepend(header);
+          card.appendChild(footer);
+
+          flush(() => {
+            const cardHeaderSlot = card.shadowRoot.querySelector(`slot[name="pfe-card--header"]`);
+            const cardFooterSlot = card.shadowRoot.querySelector(`slot[name="pfe-card--footer"]`);
+
+            assert.equal(cardHeaderSlot.assignedNodes().length, 1);
+            assert.equal(cardFooterSlot.assignedNodes().length, 1);
+            done();
+          });
+        });
+
         // Iterate over the colors object to test expected background color results
         Object.entries(colors).forEach(set => {
           test(`it should have a background color of ${set[1]} when pfe-color is ${set[0]}`, () => {
@@ -204,6 +232,17 @@
         test("it should have reduced padding when pfe-size is small", () => {
           card[0].setAttribute("pfe-size", "small");
           assert.equal(getComputedStyle(card[0], null)["padding"], "16px");
+          card[0].removeAttribute("pfe-size");
+        });
+
+        test("it should have a standard border when pfe-border is set", done => {
+          card[0].setAttribute("pfe-border", "");
+
+          flush(() => {
+            assert.deepEqual(getColor(card[0], "border-left-color"), hexToRgb("#d2d2d2"));
+            assert.equal(getComputedStyle(card[0], null)["border-left-width"], "1px");
+            done();
+          });
         });
 
         // Iterate over the slots object to test expected results

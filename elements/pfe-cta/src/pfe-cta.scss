@@ -6,6 +6,12 @@ $LOCAL: cta;
 $pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
 $pfe-cta--Color--fallback: #003366;
 
+// Arrow animation
+$horizontal-spacing: 3px;
+$arrow-basic: 0 $horizontal-spacing;
+$arrow-hover: 0 0 0 #{$horizontal-spacing * 2};
+
+
 $variables: (
   Padding: 0.6rem 0,
   BorderRadius: 0,
@@ -22,9 +28,11 @@ $variables: (
   TextDecoration--hover: none,
   TextDecoration--focus: none,
   FontWeight: #{pfe-var(font-weight--bold)},
+  FontSize:  #{pfe-var(font-size)},
+  FontSize--priority: calc(#{pfe-local($cssvar: FontSize) / 1.125}),
   arrow: (
     Display: inline,
-    Padding: 0 0.125rem 0 0.375rem,
+    Padding: #{$arrow-basic},
     size: 13px,
     MarginLeft: calc(#{pfe-var(content-spacer)} * 0.25)
   ),
@@ -38,13 +46,10 @@ $variables: (
 :host {
   @include pfe-print-variables($variables);
 
-  // properties
   display: inline-block;
   position: relative;
   z-index: 0;
   vertical-align: middle;
-  transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
-
   background-color: #{pfe-local(BackgroundColor)};
   border-color: #{pfe-local(BorderColor)};
 
@@ -74,7 +79,7 @@ $variables: (
 :host(:hover),
 :host(:hover) ::slotted(*),
 ::slotted(:hover) {
-  --pfe-cta__arrow--Padding: 0 0 0 0.5rem;
+  --pfe-cta__arrow--Padding: #{$arrow-hover};
 }
 
 :host(:hover) {
@@ -120,16 +125,18 @@ $variables: (
 
   :host([pfe-priority]) & {
     text-align: center;
+    font-size: #{pfe-local($cssvar: FontSize--priority, $fallback: #{pfe-var(font-size)})};
+  }
+
+  :host([aria-disabled="true"]) & {
+    cursor: default !important;
+    font-size: #{pfe-local($cssvar: FontSize--priority, $fallback: #{pfe-var(font-size)})};
   }
 }
 
 :host(:not([aria-disabled="true"])) ::slotted(*:not(:disabled)),
 :host ::slotted(*:not(:disabled)) {
   cursor: pointer;
-}
-
-:host([aria-disabled="true"]) ::slotted(*) {
-  cursor: default !important;
 }
 
 .pfe-cta {
@@ -190,7 +197,7 @@ $variables: (
     width: #{pfe-local($cssvar: size, $region: arrow)};
     height: #{pfe-local($cssvar: size, $region: arrow)};
     transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
-
+    margin-bottom: -1px;
     :host(.focus-within) & {
       fill: #{pfe-local(Color--focus)};
     }

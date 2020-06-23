@@ -89,6 +89,13 @@
       color: white;
       float: right;
     }
+    .floating-card {
+      float: left;
+      width:48%;
+      margin-right:2%;
+      border: #eee solid 1px;
+      padding: 20px;
+    }
 
   </style>
 </head>
@@ -118,13 +125,16 @@
         porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
         mollis interdum.</div>
       <h4 pfe-content-set--header>Heading 3</h4>
-      <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
-        ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
-        quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
-        fermentum.</div>
+      <div pfe-content-set--panel>
+          <div class="floating-card">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+          <div class="floating-card">
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+      </div>
     </pfe-content-set>
   </section>
-
 
   <section class="faux-container" style="max-width: 800px">
     <h4 class="label">Default pfe-content-set in a 800px container</h4>
@@ -236,7 +246,7 @@
 
   <pfe-band pfe-color="darkest">
 
-    <pfe-content-set on="dark">
+    <pfe-content-set>
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
@@ -331,6 +341,41 @@
 
   </section>
 
+  <section>
+    <h2 id="open-to-tab">Open pfe-content set to a specific tab on page load using a query string parameter</h2>
+    <pfe-content-set id="querystring-content-set">
+      <h4 pfe-content-set--header id="my-header-1">Heading 1</h4>
+      <div pfe-content-set--panel id="my-panel-1">
+        <p>Content for Heading 1</p>
+      </div>
+      <h4 pfe-content-set--header id="my-header-2">Heading 2</h4>
+      <div pfe-content-set--panel id="my-panel-2">
+        <p>Content for Heading 2</p>
+      </div>
+      <h4 pfe-content-set--header id="my-header-3">Heading 3</h4>
+      <div pfe-content-set--panel id="my-panel-3">
+        <p>Content for Heading 3</p>
+      </div>
+    </pfe-content-set>
+  </section>
+
+  <section>
+    <h2 id="with-tab-history">pfe-content set with tab history</h2>
+    <pfe-content-set id="my-content-set" pfe-tab-history>
+      <h4 pfe-content-set--header id="header-1">Heading 1</h4>
+      <div pfe-content-set--panel id="panel-1">
+        <p>Content for Heading 1</p>
+      </div>
+      <h4 pfe-content-set--header id="header-2">Heading 2</h4>
+      <div pfe-content-set--panel id="panel-2">
+        <p>Content for Heading 2</p>
+      </div>
+      <h4 pfe-content-set--header id="header-3">Heading 3</h4>
+      <div pfe-content-set--panel id="panel-3">
+        <p>Content for Heading 3</p>
+      </div>
+    </pfe-content-set>
+  </section>
 
   <section>
     <h3>The pfe-content-set comes with a mutation observer so that you may dynamically add headers and panels.</h3>

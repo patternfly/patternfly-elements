@@ -1,0 +1,142 @@
+@import "../../pfe-sass/pfe-sass";
+@import "_shared-assets";
+
+$dropdown-variables: (
+  MinWidth: calc(#{pfe-var(container-spacer)} * 2),
+  MaxWidth: 100%,
+  FontSize: #{pfe-var(font-size)},
+  FontWeight: 400,
+  LineHeight: #{pfe-var(line-height)},
+  Color: #{pfe-color(text)},
+  BackgroundColor: transparent,
+  Border: none,
+  BorderBottomColor--before: #{pfe-color(surface--border--darker)},
+  BorderBottomColor--before--hover: #{pfe-color(link)},
+  BorderWidth--before: #{pfe-var(ui--border-width)},
+  BorderWidth--before--hover: calc(#{pfe-var(ui--border-width)} * 2),
+  BorderTopColor--before: #{pfe-color(surface--lighter)},
+  BorderRightColor--before: #{pfe-color(surface--lighter)},
+  BorderLeftColor--before: #{pfe-color(surface--lighter)},
+  BorderStyle--before: solid,
+  menu: (
+    SpacingHorizontal: 0,
+    Margin: 0,
+    Background: #{pfe-color(surface--lightest)},
+    BorderWidth: #{pfe-var(ui--border-width)},
+    BorderStyle: #{pfe-var(ui--border-style)},
+    BorderColor: transparent,
+    BoxShadow: #{pfe-var(box-shadow--sm)},
+    MinWidth: 100%
+  )
+);
+
+$variables: map-merge($variables, $dropdown-variables);
+
+:host {
+  @include pfe-print-variables($variables);
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:host([is_disabled]) {
+  .pfe-dropdown {
+    &__container {
+      pointer-events: none;
+    }
+    &__toggle {
+      --pfe-dropdown--BackgroundColor: #{pfe-color(surface--lighter)};
+      &::before {
+        border: none;
+      }
+    }
+  }
+}
+
+.pfe-dropdown {
+  &__toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: #{pfe-local(MinWidth)};
+    max-width: #{pfe-local(MaxWidth)};
+    padding: #{pfe-local(SpacingVertical)} #{pfe-local(SpacingHorizontal)};
+    font-size: #{pfe-local(FontSize)};
+    font-family: #{pfe-var(font-family, $fallback: inherit)};
+    font-weight: #{pfe-local(FontWeight)};
+    line-height: #{pfe-var(line-height)};
+    color: #{pfe-local(Color)};
+    background-color: #{pfe-local(BackgroundColor)};
+    border: #{pfe-local(Border)};
+    &:hover,
+    &:active,
+    &:focus {
+      &:before {
+        border-bottom-color: #{pfe-local(BorderBottomColor--before--hover)};
+      }
+    }
+    &:active,
+    &:focus {
+      &:before {
+        border-width: #{pfe-local(BorderWidth--before--hover)};
+      }
+    }
+    &:before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      content: "";
+      border-width: #{pfe-local(BorderWidth--before)};
+      border-style: #{pfe-local(BorderStyle--before)};
+      border-top-color: #{pfe-local(BorderTopColor--before)};
+      border-right-color: #{pfe-local(BorderRightColor--before)};
+      border-bottom-color: #{pfe-local(BorderBottomColor--before)};
+      border-left-color: #{pfe-local(BorderLeftColor--before)};
+    }
+    &-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    &-icon {
+      vertical-align: calc(#{pfe-var(container-spacer)} * -0.125);
+      fill: currentColor;
+      height: #{pfe-var(icon-size)};
+      width: #{pfe-local($cssvar: Width, $region: toggle-icon)};
+      margin-right: calc(#{pfe-var(container-spacer)} * 0.5);
+      margin-left: #{pfe-var(container-spacer)};
+      line-height: #{pfe-var(line-height)};
+    }
+    cursor: pointer;
+  }
+  &__menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.25rem);
+    z-index: #{pfe-zindex(overlay)};
+    padding: #{pfe-local($cssvar: SpacingVertical, $region: menu)} #{pfe-local(
+        $cssvar: SpacingHorizontal,
+        $region: menu
+      )};
+    margin: #{pfe-local($cssvar: Margin, $region: menu)};
+    background: #{pfe-local($cssvar: Background, $region: menu)};
+    background-clip: padding-box;
+    border-width: #{pfe-local($cssvar: BorderWidth, $region: menu)};
+    border-style: #{pfe-local($cssvar: BorderStyle, $region: menu)};
+    border-color: #{pfe-local($cssvar: BorderColor, $region: menu)};
+    box-shadow: #{pfe-local($cssvar: BoxShadow, $region: menu)};
+    list-style: none;
+    box-sizing: border-box;
+    min-width: #{pfe-local($cssvar: MinWidth, $region: menu)};
+    &.open {
+      display: block;
+    }
+  }
+}

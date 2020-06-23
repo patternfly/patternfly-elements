@@ -19,6 +19,7 @@ $LOCAL: accordion;
 }
 
 .container {
+  @include pfe-clearfix;
   @include pfe-panel-container;
   --pfe-accordion--panel-container--Padding: 0 calc(#{pfe-local(base--Padding)} * 3) #{pfe-local(base--Padding)} calc(#{pfe-local(base--Padding)} * 1.5);
 }

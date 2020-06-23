@@ -79,9 +79,18 @@ stories.add(PfeDatetime.tag, () => {
       enum: ["numeric", "2-digit"]
     },
     locale: {
-      title: "Timezone",
+      title: "Locale",
       type: "string",
       default: "en-US"
+    },
+    "time-zone": {
+      title: "Time Zone",
+      type: "string"
+    },
+    "time-zone-name": {
+      title: "Time Zone Name",
+      type: "string",
+      enum: ["short", "long"]
     }
   };
 
@@ -201,6 +210,23 @@ storiesOf("Datetime", module).add("Demo", () => {
             minute="2-digit"
             second="2-digit"
             locale="es">
+            ${now}
+          </pfe-datetime>
+        </p>
+        <p>
+          <strong>With a time zone: </strong>
+          <pfe-datetime
+            datetime="${now}"
+            type="local"
+            weekday="long"
+            month="short"
+            day="2-digit"
+            year="numeric"
+            hour="2-digit"
+            minute="2-digit"
+            second="2-digit"
+            time-zone="UTC"
+            time-zone-name="short">
             ${now}
           </pfe-datetime>
         </p>

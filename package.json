@@ -14,6 +14,7 @@
     "lerna": "lerna",
     "test": "bash scripts/test.sh",
     "dev": "bash scripts/dev.sh",
+    "watch": "bash scripts/watch.sh",
     "build": "bash scripts/build.sh",
     "clean": "rm -rf node_modules package-lock.json {elements,themes}/*/{node_modules,package-lock.json}",
     "bootstrap": "lerna bootstrap --hoist",
@@ -30,8 +31,8 @@
     "new": "cd elements && yo --no-insight --no-update-notifier ../generators/element --type=pfelement && npm run post-new",
     "post-new": "npm run test-suite-inject && npm run doc-listing-inject && npm run bootstrap",
     "leftover-check": "bash scripts/leftover-check.sh",
-    "demo": "npm run build && npm run start",
-    "live-demo": "npm-run-all --parallel dev start"
+    "demo": "bash scripts/demo.sh",
+    "live-demo": "bash scripts/demo.sh --watch"
   },
   "husky": {
     "hooks": {

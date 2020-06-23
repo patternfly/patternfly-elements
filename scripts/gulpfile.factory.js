@@ -342,7 +342,7 @@ ${fs
     return watch(path.join(paths.source, "*"), series("build"));
   });
 
-  task("dev", parallel("build", "watch"));
+  task("dev", series("build", "watch"));
 
   task("default", series("build"));
 

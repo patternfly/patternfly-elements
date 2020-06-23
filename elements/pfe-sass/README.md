@@ -48,19 +48,3 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
       --pfe-cta--Color: var(theme--surface-accent--link);
     }
 ```
-
-
-
-### On=dark is being deprecated.
-
-**Instead, custom classes already on the page should set broadcast values:**
-
-```css
-.on-dark {
- --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
- --pfe-broadcasted--link:  var(--pfe-theme--color--link--on-dark, #73bcf7);
- --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--on-dark--hover, #2b9af3);
- --pfe-broadcasted--link--visited:var(--pfe-theme--color--link--on-dark--visited, #73bcf7);
- --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--on-dark--focus, #2b9af3);
-}
-```

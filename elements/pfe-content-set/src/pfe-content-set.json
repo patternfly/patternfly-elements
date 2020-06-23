@@ -60,6 +60,12 @@
           "title": "Custom breakpoint",
           "type": "string",
           "prefixed": true
+        },
+        "tab-history": {
+          "title": "Tab history",
+          "type": "boolean",
+          "default": false,
+          "prefixed": true
         }
       },
       "required": ["orientation", "variant", "on"]

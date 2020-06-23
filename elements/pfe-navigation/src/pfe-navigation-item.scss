@@ -262,14 +262,11 @@ $variables: map-merge($variables, $nav-item-variables);
 }
 
 // Typography styles need specificity over bootstrap
-
 ::slotted([slot="trigger"]) {
   @extend %trigger;
-}
-
-:host([pfe-icon]) {
-  ::slotted([slot="trigger"]) {
+  :host([pfe-icon]) & {
     margin: 0.25em 0 0 0 !important;
+    max-width: 100px;
   }
 }
 

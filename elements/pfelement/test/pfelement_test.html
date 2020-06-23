@@ -120,6 +120,23 @@
             done();
           });
         });
+
+        test("it should throw an error when the on attribute is manually added", done => {
+          const spy = sinon.spy(console, "warn");
+
+          const testElementEl = document.createElement("test-element");
+          testElementEl.id = "test-element";
+          testElementEl.setAttribute("on", "saturated");
+          document.body.appendChild(testElementEl);
+
+          sinon.assert.calledWith(spy, `pfe-test-element[#test-element]: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`);
+
+          testElementEl.removeAttribute("id");
+          document.body.appendChild(testElementEl);
+          sinon.assert.calledWith(spy, `pfe-test-element: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`);
+
+          document.body.removeChild(testElementEl);
+        });
       });
     </script>
   </body>

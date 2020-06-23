@@ -1,0 +1,18 @@
+language: node_js
+dist: trusty
+sudo: required
+addons:
+  firefox: "latest"
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+node_js: stable
+before_install:
+  - npm install -g web-component-tester
+install:
+  - npm install
+before_script:
+script:
+  - xvfb-run npm run test

@@ -12,7 +12,8 @@
     -  Update paths to built-in sets: (#723)
     -  Storybook icon listing: (#728)
     -  Icon panel storybook: (#719)
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-modal removing hidden attribute (#924)
+- [732f65a](https://github.com/patternfly/patternfly-elements/commit/732f65ada3383f6d04deb6670d82eb80d525d8ff) fix: pfe-modal removing hidden attribute (#924)
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Open a pull request from the command-line
 
 ## Prerelease 49 ( 2020-05-29 )
 

@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Describe the feature you would like added
-labels: feature, sev-1
+labels: "feature, priority: low"
 ---
 
 <!-- Hello! Please read the [Contributing Guidelines](CONTRIBUTING.md) before submitting an issue. -->

@@ -95,10 +95,10 @@ class PfeJumpLinksNav extends PFElement {
         }
 
         let html = "";
-        if (this.querySelector(".pfe-jump-links-nav--heading")) {
-          html = this.querySelector(".pfe-jump-links-nav--heading").cloneNode(
-            true
-          );
+        if (this.querySelector("[slot='pfe-jump-links-nav--heading']")) {
+          html = this.querySelector(
+            "[slot='pfe-jump-links-nav--heading']"
+          ).cloneNode(true);
         }
         if (!this.hasAttribute("horizontal")) {
           if (html) {
@@ -297,17 +297,13 @@ class PfeJumpLinksPanel extends PFElement {
     this._mutationCallback = this._mutationCallback.bind(this);
     this._observer = new MutationObserver(this._mutationCallback);
     this.currentActive = null;
+    this.sectionMargin = this.getAttribute("offset") || 200;
     this.currentActive = 0;
     this.current = -1;
-    this._getNav = this._getNav.bind(this);
     this.nav = this._getNav();
-    this.offset = this.nav.getAttribute("offset") || 200;
   }
 
   connectedCallback() {
-    if (!this.nav) {
-      this.nav = this._getNav();
-    }
     super.connectedCallback();
     this._init();
 
@@ -427,13 +423,7 @@ class PfeJumpLinksPanel extends PFElement {
   _scrollCallback() {
     let sections;
     let menu_links;
-    let offset;
-    if (Number.isInteger(parseInt(this.offset))) {
-      offset = this.offset;
-    } else {
-      offset = 200;
-    }
-
+    let sectionMargin;
     //Check sections to make sure we have them (if not, get them)
     if (!this.sections || typeof this.sections === "undefined") {
       this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
@@ -446,11 +436,17 @@ class PfeJumpLinksPanel extends PFElement {
       menu_links = this.menu_links;
     }
 
+    if (!this.sectionMargin) {
+      sectionMargin = 200;
+    } else {
+      sectionMargin = this.sectionMargin;
+    }
+
     // Make an array from the node list
     const sectionArr = [...sections];
     // Get all the sections that match this point in the scroll
     const matches = sectionArr
-      .filter(section => window.scrollY >= section.offsetTop - offset)
+      .filter(section => window.scrollY >= section.offsetTop - sectionMargin)
       .reverse();
 
     //Identify the last one queried as the current section

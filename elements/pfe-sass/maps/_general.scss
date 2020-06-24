@@ -24,16 +24,19 @@ $pfe-vars: (
 
   surface--border-width:         1px,
   surface--border-width--heavy:  4px,
+  surface--border-width--active: 3px,
   surface--border-style:         solid,
   surface--border-radius:        3px,
 
   icon-size:                     1em,
-  
+
   ui--element--size:             20px,
 
   ui--border-width:              1px,
   ui--border-style:              solid,
   ui--border-radius:             2px,
+  ui--border-active--width:      3px,
+  ui--border-active--color:      #e00,
 
   ui--focus-outline-width:       1px,
   ui--focus-outline-style:       solid,

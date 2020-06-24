@@ -296,6 +296,7 @@ class PfeJumpLinksPanel extends PFElement {
     this._observer = new MutationObserver(this._mutationCallback);
     this.currentActive = null;
     this.sectionMargin = this.getAttribute("offset") || 200;
+
     this.currentActive = 0;
     this.current = -1;
     this.nav = this._getNav();
@@ -433,13 +434,18 @@ class PfeJumpLinksPanel extends PFElement {
       this.menu_links = this.JumpLinksNav.shadowRoot.querySelectorAll("a");
       menu_links = this.menu_links;
     }
-
+    console.log(
+      "css offset is",
+      this.nav.cssVariable("--pfe-jump-links-nav--offset")
+    );
     if (!this.sectionMargin) {
       sectionMargin = 200;
     } else {
       sectionMargin = this.sectionMargin;
     }
-
+    if (this.nav.cssVariable("--pfe-jump-links-nav--offset")) {
+      sectionMargin = this.nav.cssVariable("--pfe-jump-links-nav--offset");
+    }
     // Make an array from the node list
     const sectionArr = [...sections];
     // Get all the sections that match this point in the scroll

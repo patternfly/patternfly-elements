@@ -70,6 +70,8 @@ class PfeJumpLinksNav extends PFElement {
     this._observer = new MutationObserver(this._mutationCallback);
     this._reportHeight = this._reportHeight.bind(this);
     this.panel = document.querySelector(`[scrolltarget=${this.id}]`);
+
+    window.addEventListener("resize", () => {});
   }
 
   connectedCallback() {
@@ -282,6 +284,10 @@ class PfeJumpLinksPanel extends PFElement {
     };
   }
 
+  get offsetValue() {
+    return this.sectionMargin || this.customVar;
+  }
+
   static get PfeType() {
     return PFElement.PfeTypes.Content;
   }
@@ -293,19 +299,21 @@ class PfeJumpLinksPanel extends PFElement {
     this._slot.addEventListener("slotchange", this._init);
     this._scrollCallback = this._scrollCallback.bind(this);
     this._mutationCallback = this._mutationCallback.bind(this);
+    this._handleResize = this._handleResize.bind(this);
     this._observer = new MutationObserver(this._mutationCallback);
     this.currentActive = null;
-    this.sectionMargin = this.getAttribute("offset") || 200;
-
     this.currentActive = 0;
     this.current = -1;
-    this.nav = this._getNav();
+    window.addEventListener("resize", this._handleResize);
   }
 
   connectedCallback() {
     super.connectedCallback();
+    this.nav = this._getNav();
     this._init();
-
+    this.sectionMargin = this.getAttribute("offset");
+    this.customVar =
+      this.nav.cssVariable("--pfe-jump-links-nav--offset") || 200;
     if (this.nav && this.nav.hasAttribute("autobuild")) {
       this.nav._rebuildNav();
     }
@@ -317,6 +325,7 @@ class PfeJumpLinksPanel extends PFElement {
     this._observer.disconnect();
     window.removeEventListener("scroll");
     this._slot.removeEventListener("slotchange", this._init);
+    window.removeEventListener("resize", this._handleResize);
   }
 
   _init() {
@@ -328,6 +337,15 @@ class PfeJumpLinksPanel extends PFElement {
     if (this.JumpLinksNav) {
       this.menu_links = this.JumpLinksNav.querySelectorAll("a");
     }
+  }
+
+  _handleResize() {
+    this.nav._reportHeight();
+    this.sectionMargin = this.getAttribute("offset");
+    this.customVar =
+      this.nav.cssVariable("--pfe-jump-links-nav--offset") || 200;
+    console.log("CSSvar value is", this.customVar);
+    console.log("Attr value is", this.sectionMargin);
   }
 
   _getNav() {
@@ -422,7 +440,6 @@ class PfeJumpLinksPanel extends PFElement {
   _scrollCallback() {
     let sections;
     let menu_links;
-    let sectionMargin;
     //Check sections to make sure we have them (if not, get them)
     if (!this.sections || typeof this.sections === "undefined") {
       this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
@@ -434,23 +451,12 @@ class PfeJumpLinksPanel extends PFElement {
       this.menu_links = this.JumpLinksNav.shadowRoot.querySelectorAll("a");
       menu_links = this.menu_links;
     }
-    console.log(
-      "css offset is",
-      this.nav.cssVariable("--pfe-jump-links-nav--offset")
-    );
-    if (!this.sectionMargin) {
-      sectionMargin = 200;
-    } else {
-      sectionMargin = this.sectionMargin;
-    }
-    if (this.nav.cssVariable("--pfe-jump-links-nav--offset")) {
-      sectionMargin = this.nav.cssVariable("--pfe-jump-links-nav--offset");
-    }
+
     // Make an array from the node list
     const sectionArr = [...sections];
     // Get all the sections that match this point in the scroll
     const matches = sectionArr
-      .filter(section => window.scrollY >= section.offsetTop - sectionMargin)
+      .filter(section => window.scrollY >= section.offsetTop - this.offsetValue)
       .reverse();
 
     //Identify the last one queried as the current section

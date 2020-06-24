@@ -101,11 +101,9 @@ class PfeJumpLinksNav extends PFElement {
           ).cloneNode(true);
         }
         if (!this.hasAttribute("horizontal")) {
-          if (html) {
-            this.shadowRoot
-              .querySelector("pfe-accordion-header")
-              .appendChild(html);
-          }
+          this.shadowRoot
+            .querySelector("pfe-accordion-header")
+            .appendChild(html);
         } else {
           this.shadowRoot
             .querySelector("pfe-accordion-header")

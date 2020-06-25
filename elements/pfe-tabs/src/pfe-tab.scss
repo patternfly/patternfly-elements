@@ -12,7 +12,6 @@ $LOCAL-VARIABLES: (
   TabTextColor:          #6a6e73,
   Color--hover:          #151515,
   BorderColor--hover:    pfe-var(ui--border-active--color),
-  BGColor:               #f0f0f0,
   tab: (
     FontSize:            pfe-var(font-size),
     PaddingTop:          calc(#{pfe-var(container-padding)} * .666),
@@ -199,11 +198,15 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 
 :host([pfe-variant="earth"][aria-selected="false"]) {
-  --pfe-tabs--BackgroundColor: #{pfe-local(BGColor)};
-  --pfe-tabs__tab--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
-  --pfe-tabs__tab--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
-  --pfe-tabs__tab--BorderTop:    #{pfe-local(BorderWidth--hover)} #{pfe-var(ui--border-style)} transparent;
-
+  $variantEarth: (
+    BackgroundColor: #f0f0f0,
+    tab: (
+      BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)},
+      BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)},
+      BorderTop:    #{pfe-local(BorderWidth--hover)} #{pfe-var(ui--border-style)} transparent,
+    )
+  );
+  @include pfe-print-local($variantEarth);
   @include browser-query(ie11) {
     border-top: 3px solid #{pfe-var(surface--lighter)};
     border-bottom: 1px solid #{pfe-var(surface--border)};

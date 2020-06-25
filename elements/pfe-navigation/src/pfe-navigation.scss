@@ -1,234 +1,214 @@
-@import "_shared-assets";
-
-$nav-variables: (
-  // Default spacing values
-  Padding--vertical: pfe-var(container-padding),
-  Padding--horizontal: pfe-var(container-padding),
-  Padding: 0 pfe-local(Padding--horizontal),
-
-  // Darkest is the default background color
-  BackgroundColor: pfe-color(surface--darkest),
-  Color:           pfe-color(text--on-dark),
-
-  // Variables for the border
-  BorderTopColor: transparent,
-  BorderColor:    transparent,
-  Border:         pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
-
-  MaxHeight: 72px,
-  MobileMenuHeight: 60px,
-
-  // Nav content width
-  MaxWidth: calc(#{pfe-var(container-padding)} * 4), // 64px
-
-  // Variables for the trigger icon
-  icon: none,
-
-  // Overlay region
-  overlay: (
-    BackgroundColor: pfe-color(overlay, #{$overlay--BackgroundColor--fallback})
-  ),
-
-  // Trigger region
-  trigger: (
-    FontSize: 16px,
-    FontWeight: 100
-  ),
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
 
 
-  // Tray region
-  tray: (
-    Padding: pfe-var(container-padding)
-  ),
+$LOCAL: navigation;
 
-  // Logo
-  logo: (
-    MinWidth: 135px
-  )
+$breakpoints: (
+  kilo: 500px, // Medium Small
+  lima: 900px, // Medium
+  papa: 1100px, // Medium Plus
+  tango: 1400px, // Wide
+  // Default value for when the nav expands to desktop
+  // should match an above breakpoint value
+  'nav-break': 900px, 
 );
-$variables: map-merge($variables, $nav-variables);
+
+/// Breakpoint helper specific to pfe-navigation
+/// @param {string} $breakpoint Name of a breakpoint
+/// @see
+@mixin breakpoint($breakpoint) {
+  @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+    @content;
+  }
+  // @todo add support for JS nav-break
+}
+
+* {
+  &,
+  &:before,
+  &:after {
+    box-sizing: border-box;
+  }
+}
 
 :host {
-  // Print the variables to the DOM
-  @include pfe-print-variables($variables);
-
-  // Reduce padding for print
-  @media print {
-    --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
-  }
+  // Example local variable, using BEM format
+  // --pfe-navigation--Property: value;
 
   display: block;
-  --pfe-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
-  --pfe-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
-
-  z-index: #{pfe-zindex(content)};
-  width: 100%;
 }
 
-:host(.pfe-sticky) {
-  position: sticky;
-  top: 0;
-  left: 0;
-  z-index: #{pfe-zindex(navigation)};
-}
-
-:host([pfe-full-width]) .pfe-navigation__container {
-  @each $size in ("md", "lg", "xl") {
-    @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-      @if ($size == "md" or $size == "lg") {
-        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
-      } @else if ($size == "xl") {
-        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
-      }
-    }
-  }
-}
-
-pfe-icon {
-  --pfe-icon--Color: #{pfe-local(Color)};
-}
-
-// Note: These styles do not pick up in Edge
-::slotted([slot="logo"]) {
-  margin: 0 !important;
-  max-width: 100%;
-  max-height: #{pfe-local(MaxHeight)};
-  min-width:  #{pfe-local($region: logo, $cssvar: MinWidth)};
-  display: block;
-}
-
-::slotted([slot="mobile-login"]),
-::slotted([slot="mobile-language"]) {
-  color: #{pfe-apply-broadcast(link)};
-  text-decoration: #{pfe-apply-broadcast(link-decoration)};
-}
-
-::slotted([slot="mobile-menu--label"]) {
-  font-family: #{pfe-local(font-family)};
-  font-size:   #{pfe-local(FontSize)};
-  font-weight: #{pfe-local(FontWeight)};
-  color: #{pfe-local(Color)};
-  margin-bottom: 0;
+:host([hidden]) {
+  display: none;
 }
 
 .pfe-navigation {
-  &__wrapper {
-    @include pfe-set-broadcast-theme(dark);
-
+  position: relative;
+  padding: 0 16px;
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: "RedHatText", "Red Hat Text", Overpass, Arial, Helvetica, sans-serif;
+  color: #fff;
+  background: #151515;
+  @include breakpoint('nav-break') {
     display: flex;
-    position: relative; // Ensures all navigation items are aligned relative to this wrapper
-    z-index: #{pfe-zindex(navigation)};
-
-    background-color: #{pfe-local(BackgroundColor)};
-    color: #{pfe-local(Color)};
-    min-height: #{pfe-local(MaxHeight)};
-    @media only screen and (max-height: 500px) {
-      min-height: #{pfe-local(MobileMenuHeight)};
-    }
-  }
-  &__container {
-    width: 100%;
-    //max-width: #{pfe-local(Width)};
-    margin: 0 auto;
-    padding: 0 #{pfe-local(Padding--horizontal)};
-
-    display: flex;
-    flex-flow: row nowrap;
     align-items: stretch;
-    justify-content: flex-start;
-    box-sizing: border-box;
+    height: 72px;
+    padding: 0 32px;
+  }
 
-    // stop using padding, start using max width at medium breakpoint
-    @media screen and (min-width: pfe-breakpoint(md)) {
-      padding: 0;
-      max-width: var(--pfe-navigation--Width);
+  a {
+    text-decoration: none;
+  }
+}
+
+.pfe-navigation__logo-wrapper {
+  margin: 0;
+  padding: 10px 16px 10px 0;
+}
+
+.pfe-navigation__logo-link {
+  display: block;
+  padding: 6px 8px;
+  margin-left: -8px; // Should be flush left with container
+}
+
+.pfe-navigation__logo-image {
+  display: none;
+  width: auto;
+  height: 40px;
+  @include breakpoint('nav-break') {
+    display: block;
+  }
+}
+
+.pfe-navigation__logo-image--mobile {
+  display: block;
+  @include breakpoint('nav-break') {
+    display: none;
+  }
+}
+
+.pfe-navigation__menu {
+  &,
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @include breakpoint('nav-break') {
+    display: flex;
+    align-items: stretch;
+  }
+}
+
+.pfe-navigation__menu-item {
+  @include breakpoint('nav-break') {
+    display: flex;
+    align-items: stretch;
+  }
+}
+
+.pfe-navigation__menu-link {
+  padding: 24px 11px;
+  color: #fff;
+  transition: box-shadow 0.2s;
+  border: 1px dashed transparent;
+  border-top: 0;
+  @include breakpoint('nav-break') {
+    max-height: 72px;
+  }
+
+  &:hover,
+  &:focus {
+    box-shadow: inset 0 4px 0 0 #e00;
+  }
+
+  &:focus {
+    border: 1px dashed #fff;
+    border-top: 0;
+    outline: none;
+  }
+
+  &[aria-haspopup=true] {
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      display: block;
+      width: 0;
+      height: 0;
+      border: 4px solid transparent;
+      border-bottom: 0;
+      transform: translate(-4px, -12px);
+      transition: border-color 0.25s;
     }
-   // Set the variable for use in the tray region too
-    // Loop through the other breakpoints
-    @each $size in ("md", "lg", "xl") {
-      @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-        --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+    
+    &:hover,
+    &:focus {
+      &:before {
+        border-top-color: #B8BBBE;
       }
     }
   }
-  &__overlay {
-    display: block;
-    background-color: #{pfe-local($region: overlay, $cssvar: BackgroundColor)};
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: #{pfe-zindex(overlay)};
-    &[hidden] {
-      display: none;
-    }
-  }
-  &__logo {
-    display: flex;
-    flex-flow: column nowrap;
-    flex-shrink: 0; // Prevent flexbox from collapsing the padding.
-    align-items: flex-start;
-    justify-content: center;
-    width: #{pfe-local($region: logo, $cssvar: MinWidth, $fallback: 155px)};
-    flex: 0 0 #{pfe-local($region: logo, $cssvar: MinWidth)};
 
-    padding-top: #{pfe-local(Padding--vertical)};
-    padding-bottom: #{pfe-local(Padding--vertical)};
-    padding-right: calc( #{pfe-var(container-padding)} + 9px ); // ensure gap between main menu links and logo
+  &[aria-expanded=true] {
+    color: #151515;
+    background: #fff;
+    box-shadow: inset 0 4px 0 0 #e00;
 
-    @media screen and (min-width: pfe-breakpoint("grid-breakpoint--md")) {
-        padding-right: calc( #{pfe-var(container-padding)} * 3 );
-    }
-
-    @media screen and (max-height: 500px) {
-      padding-top: calc(#{pfe-local(Padding--vertical) / 2});
-      padding-bottom: calc(#{pfe-local(Padding--vertical) / 2});
-    }
-    @media screen and (min-width: pfe-breakpoint("lg-mobile", $map: false)) {
-        flex: 0 1 10%;
-    }
-    > * {
-      display: flex;
-    }
-    @include browser-query(ie11) {
-      flex: 1 0 15%;
-    }
-    // @TODO --pfe-theme--logo--svg?
-  }
-  &__skip {
-    display: block;
-    @extend %sr-only;
-    margin: 0 -2em -1px -1px;
-  }
-  &__main {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    height: 100%;
-    width: 100%;
-    &--menu-label {
-      color: #{pfe-local(Color)};
-    }
-    [show_search] &,
-    [show_login][show_language] & {
-      grid-gap: #{pfe-var(container-spacer)};
-    }
-    ::slotted(*:not([hidden])) {
-      display: block;
-      grid-column: 1 / -1;
-    }
-  }
-  &__utility {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: stretch;
-    justify-content: flex-end;
-    flex: auto; //0 1 20%;
-
-      @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false)) {
-        flex: auto; //0 1 30%;
-        margin-left: auto;
-        // padding-left: 48px; // ensure gap between main menu links and utility links
+    &[class]:before { // [class] adds specificity to beat out hover/focus selector
+      border-top-color: #151515;
     }
   }
 }
+
+.pfe-navigation__drawer {
+  display: none;
+
+  @include breakpoint('nav-break') {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 32px 64px;
+    background: #fff;
+    // temp style
+    border-bottom: 2px solid black;
+  }
+
+  [aria-expanded=true] ~ & {
+    display: block;
+  }
+}
+
+//-- Custom styles applied by attributes
+// @each $option in () {
+//   :host([pfe-state="#{$option}"]) {
+//     // Add styles here
+//   }
+// }
+
+//-- Custom styles applied to slot
+// ::slotted([slot="pfe-navigation--search"]) {
+  // Add styles here
+// }
+
+// ::slotted([slot="pfe-navigation--customlinks"]) {
+  // Add styles here
+// }
+
+//-- Custom styles applied to slot's shadow element
+// .pfe-navigation {
+//   &__search {
+    // Add styles here
+//   }
+//   &__customlinks {
+    // Add styles here
+//   }
+// }

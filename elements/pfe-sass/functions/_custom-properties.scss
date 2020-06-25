@@ -197,7 +197,8 @@
 /// ===========================================================================
 /// Map value fetch
 ///
-/// Returns the value of a property from the respective maps
+/// Returns the value (only) of a property from the respective maps
+/// Similar to pfe-var, but does not include css variable in the compiled CSS
 ///
 /// @param {String} $name - Name of the key for the map
 /// @example -

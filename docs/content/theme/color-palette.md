@@ -47,7 +47,7 @@ We've exposed 2 color variants for this design system to represent your brand:
  - Base
  - Accent
 
-These colors are used throughout PatternFly Elements, and **accent is the color which should stand out the most**. For example, if your brand colors are orange and medium gray, you'll want to set orange as the accent color. You'll see it appear on primary level call-to-action buttons and other elements that need to have more weight in the visual heirarchy of the page. 
+These colors are used throughout PatternFly Elements. **Accent** is the color which should stand out the most. For example, if your brand colors are orange and gray, we recommend you set orange as the accent color.  In doing this, that orange will now appear on primary level call-to-action buttons and other elements that need to have more weight in the visual hierarchy of the page. 
 
 UI colors are meant to provide basic colors for other page elements besides links and body text. 
 

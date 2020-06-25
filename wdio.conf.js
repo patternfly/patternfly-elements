@@ -11,12 +11,13 @@ exports.config = {
   baseUrl: "http://localhost:8080/",
   specs: ["./elements/*/test/*_e2e.js"],
   maxInstances: 6,
+  waitforTimeout: 20000,
   capabilities: [
     {
       os: "OS X",
       browserName: "chrome",
       browser_version: "83.0",
-      resolution: "1024x768",
+      resolution: "1920x1080",
       "browserstack.local": "true",
       "browserstack.selenium_version": "3.5.2"
     },
@@ -25,7 +26,7 @@ exports.config = {
       os_version: "10",
       browserName: "IE",
       browser_version: "11.0",
-      resolution: "1024x768",
+      resolution: "1920x1080",
       "browserstack.local": "true",
       "browserstack.selenium_version": "3.5.2"
     }

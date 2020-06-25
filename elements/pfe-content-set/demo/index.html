@@ -103,7 +103,7 @@
 <body unresolved>
   <section>
     <h1>&lt;pfe-content-set&gt;</h1>
-    <h3>This combo component will render the contents as either an <a href="#accordions">accordion</a> or a <a
+    <h3>This combo component will render the contents as either an <a href="#accordion">accordion</a> or a <a
         href="#tabs">tab set</a> depending on the available space. The default breakpoint is 700px. If the size of the
       pfe-content-set container is larger than 700px it will upgrade to <code>pfe-tabs</code>. If not, it will upgrade
       to <code>pfe-accordion</code>.</h3>
@@ -113,7 +113,7 @@
   <section class="faux-container" style="max-width: 600px">
     <h4 class="label">Default pfe-content-set in a 600px container</h4>
 
-    <pfe-content-set>
+    <pfe-content-set id="accordion">
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
@@ -139,7 +139,7 @@
   <section class="faux-container" style="max-width: 800px">
     <h4 class="label">Default pfe-content-set in a 800px container</h4>
 
-    <pfe-content-set>
+    <pfe-content-set id="tabs">
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
@@ -384,7 +384,7 @@
   <section class="faux-container">
     <div class="build-a-panel">
       <button id="addHeaderAndPanelBtn">Add Header &amp; Panel</button>
-      <h2 class="label">Click the button to see it in action!</code></h2>
+      <h2 class="label">Click the button to see it in action!</h2>
 
       <pfe-content-set id="dynamic">
         <h4 pfe-content-set--header>Heading 1</h4>

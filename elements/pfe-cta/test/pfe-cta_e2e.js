@@ -3,16 +3,6 @@ const element = require("../package.json").pfelement.elementName;
 describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
-
-    const accordion = $("#accordion");
-    accordion.scrollIntoView();
-
-    var clickElement = function (element) {
-      element.click();
-    };
-
-    const firstHeader = $("#accordion pfe-accordion-header");
-    browser.execute(clickElement, firstHeader);
   });
 
   it("should take a screenshot", () => {

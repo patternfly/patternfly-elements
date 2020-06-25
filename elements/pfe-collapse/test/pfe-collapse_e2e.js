@@ -4,15 +4,13 @@ describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
 
-    const accordion = $("#accordion");
-    accordion.scrollIntoView();
-
-    var clickElement = function (element) {
+    let clickElement = function (element) {
       element.click();
     };
 
-    const firstHeader = $("#accordion pfe-accordion-header");
-    browser.execute(clickElement, firstHeader);
+    const collapseToggle = $("#toggle");
+    browser.execute(clickElement, collapseToggle);
+    browser.pause(1000);
   });
 
   it("should take a screenshot", () => {

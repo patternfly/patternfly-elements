@@ -21,7 +21,7 @@ tags = [ "theme" ]
 Text and links, being fundamental pieces of any web property, have their own set of variables. 
 These variables assume a light background by default, assigning typography colors that pass accessibility when placed on white or very light gray contexts.  In addition, we provide contextual variables for these typographical elements for when they exist inside a dark or saturated context.  Text in a black card for example would need to flip to white to pass accessibility standards while links on a blue or red shade would need to update to white in order to be visible.
 
-You may choose to set the value of a link color to something in your brand, but it is not required, and these colors should provide a good user experience. 
+You can set the value of these typography color variables to something in your brand palette but be sure to validate them against a [contrast checker](https://webaim.org/resources/contrastchecker/) to ensure they continue to pass accessibility standards when set against your surface or UI palettes.  Aim for AAA status if you can! ⭐ 
 
 Here are a few examples:
 

@@ -18,7 +18,8 @@ tags = [ "theme" ]
 
 ## Text & links
 
-Text and links are the most fundamental pieces of any web property, so they have their own variables aside from other UI elements. They also respond to context, such as a bit of text in a dark gray card would need to change to white. Or a link in a dark gray card would need to become a lighter shade of blue.  
+Text and links, being fundamental pieces of any web property, have their own set of variables. 
+These variables assume a light background by default, assigning typography colors that pass accessibility when placed on white or very light gray contexts.  In addition, we provide contextual variables for these typographical elements for when they exist inside a dark or saturated context.  Text in a black card for example would need to flip to white to pass accessibility standards while links on a blue or red shade would need to update to white in order to be visible.
 
 You may choose to set the value of a link color to something in your brand, but it is not required, and these colors should provide a good user experience. 
 
@@ -114,4 +115,3 @@ And finally, you’ll have colors for states such as error, warning, and success
     --pfe-color--feedback--critical--darkest:        $pfe-color--red-800 !default;
 }
 ```
-

@@ -1,9 +1,6 @@
 @import "../../pfe-sass/pfe-sass";
 @import "_shared-assets.scss";
 @import "../../pfe-styles/src/layouts/_grid";
-$nav-light-dom-variables: (
-);
-$LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
 
 #main-menu {
     background: transparent !important; // Remove this.
@@ -11,7 +8,6 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
 
 // IE11 styles
 @include browser-query(ie11) {
-
     pfe-navigation-item {
         [slot="trigger"] {
             width: 100%;
@@ -249,10 +245,10 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, $nav-light-dom-variables);
     }
 
     .pfe-navigation-item__trigger {
-        --pfe-navigation__trigger-icon--Visible: hidden;
+        --#{$repo}-navigation__trigger-icon--Visible: hidden;
 
         &:hover {
-            --pfe-navigation__trigger-icon--Visible: visible;
+            --#{$repo}-navigation__trigger-icon--Visible: visible;
         }
         &.pfe-navigation-item {
             box-sizing: border-box;
@@ -477,7 +473,7 @@ pfe-navigation-item {
     pfe-navigation-item:not([pfe-full-width]) & {
       @each $size in ("md", "lg", "xl") {
         @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-          --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+          --#{$repo}-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
         }
       }
     }

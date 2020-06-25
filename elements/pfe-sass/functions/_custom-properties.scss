@@ -4,7 +4,7 @@
 /// Returns CSS variable stack with exposed theme variable and respective fallback
 ///
 /// @param {String} $category - Category name to be appended to variables within the map/system
-/// @param {String} $key - Variable name to be used and prepended with --pfe-theme
+/// @param {String} $key - Variable name to be used and prepended with --#{$repo}-theme
 /// @param {Map} $map - SASS Map of variables
 /// @param {String} $fallback [""] - Optional fallback override
 /// @requires {String} $repo - Name of repo, which is "pfe"
@@ -48,7 +48,7 @@
 ///
 /// Returns CSS variable stack with exposed theme variable and respective fallback
 ///
-/// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme
+/// @param {String} $cssvar - Variable name to be used and prepended with --#{$repo}-theme
 /// @param {String} $fallback [null] - Optional custom fallback
 /// @requires {Map} $pfe-vars - A map of the variables in the repository
 /// @example -
@@ -75,7 +75,7 @@
         @return pfe-get-from-map("", $var-name, $pfe-vars, $fallback);
     }
     @else if map-get($pfe-colors, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-colors, $fallback);
+        @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback);
     }
     @else if map-get($pfe-broadcasted, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
@@ -197,7 +197,8 @@
 /// ===========================================================================
 /// Map value fetch
 ///
-/// Returns the value of a property from the respective maps
+/// Returns the value (only) of a property from the respective maps
+/// Similar to pfe-var, but does not include css variable in the compiled CSS
 ///
 /// @param {String} $name - Name of the key for the map
 /// @example -

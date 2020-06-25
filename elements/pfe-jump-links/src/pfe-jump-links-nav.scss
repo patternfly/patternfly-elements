@@ -3,77 +3,43 @@
 
 $LOCAL: jump-links;
 
-$variables: (
+$LOCAL-VARIABLES: (
   horizontal-spacer: calc(#{pfe-var(container-padding)} * 2),
   vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
-  BackgroundColor: pfe-color(surface--lightest),
-  BorderColor: #{pfe-color(ui-base)},
-  FontSize: #{pfe-var(font-size--heading--epsilon)},
-  heading: (FontSize: #{pfe-var(font-size--heading--zeta)}),
-  link: (horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
+  BackgroundColor: pfe-var(surface--lightest),
+  BorderColor: pfe-var(ui-base),
+  FontSize: pfe-var(font-size--heading--epsilon),
+  heading: (
+    FontSize: pfe-var(font-size--heading--zeta)
+  ),
+  link: (
+    horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
     vertical-spacer: calc(#{pfe-var(content-spacer)} / 6),
-  ));
+  )
+);
 
 :host {
-  @include pfe-print-variables($variables);
-
   box-sizing: border-box;
-  font-family: #{pfe-var(font-family)};
-  font-weight: #{pfe-var(font-weight--normal)};
+  font-family: pfe-var(font-family);
+  font-weight: pfe-var(font-weight--normal);
   font-weight: 400; // remove this once font-weight-normal is 400
   display: block;
   position: sticky;
   top: calc(#{pfe-var(container-spacer)} * 4);
   padding-left: 0;
 
+  background-color: pfe-local(BackgroundColor);
+
   @media(min-width: #{pfe-breakpoint(lg)}) {
-    padding: #{pfe-local(vertical-spacer)} #{pfe-local(horizontal-spacer)};
+    border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;
+    padding: pfe-local(vertical-spacer) pfe-local(horizontal-spacer);
   }
 
-  &[pfe-sticky=false] {
-    position: relative;
-  }
-
-  nav {
-    visibility: visible;
-  }
-
-  pfe-accordion {
-    --pfe-accordion--BackgroundColor: transparent;
-    --pfe-accordion--BorderColor: #ccc;
-    --pfe-accordion--BorderColor--accent: transparent;
-    --pfe-accordion--accent: transparent;
-    --pfe-accordion--BorderColor: transparent;
-    --pfe-accordion--BorderColor--accent: transparent;
-  @media(min-width: #{pfe-breakpoint(lg)}) {
-    --pfe-accordion--base--Padding: 0 !important;
-  }
-    // hide accordion left border:
-    --pfe-theme--surface--border-style: solid;
-    --pfe-theme--color--surface--border: transparent;
-    --pfe-theme--color--ui-base--on-dark: transparent;
-    --pfe-theme--color--ui-base: transparent;
-
-    button {
-      text-decoration: none;
-    }
-  }
-
-  pfe-accordion-header {
-    position: sticky;
-    top: 0;
-  }
-}
-
-nav {
-  margin: 0;
-  list-style: none;
-  padding: 0;
-  ::slotted([slot="pfe-jump-links-nav--heading"]) {
-     margin: 0;
+  ::slotted([slot="#{$repo}-#{$LOCAL}-nav--heading"]) {
+    color: pfe-broadcasted(text);
     
-    margin-bottom: calc(#{pfe-var(container-spacer)} * 1);
-    font-size: #{pfe-local($cssvar: FontSize, $region: heading)};
+    margin: 0 0 pfe-var(container-spacer);
+    font-size: pfe-local(FontSize, $region: heading);
     font-weight: 400;
     text-transform: uppercase;
 
@@ -82,27 +48,30 @@ nav {
     }
   }
 
-  .sub-nav {
-    margin: 0;
+  &[pfe-sticky="false"] {
+    position: relative;
+  }
+}
+
+nav {
+  visibility: visible;
+  margin: 0;
+  list-style: none;
+  padding: 0;
+
+  ul {
     padding: 0;
-    border: none !important;
-    li {
-      border: none !important;
-    }
-    overflow-y: hidden;
-    transition: flex 1s linear;
-    display: flex;
-    flex-direction: column;
-    flex: 0;
+    border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
   }
 
   li {
-    border-left: #{pfe-var(surface--border-width--heavy)} solid transparent;
+    border-left: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) transparent;
     display: block;
     text-decoration: none;
+    margin-left: calc(#{pfe-var(surface--border-width)} * -1);
 
     &.expand {
-      .sub-nav {
+      ul {
         flex: 1;
       }
 
@@ -111,36 +80,46 @@ nav {
         height: auto;
       }
     }
+
+    &[active] {
+      border-left-color: pfe-local(BorderColor);
+    }
   }
 
   a {
-    display: table;
-    text-decoration: none;
-    font-size: #{pfe-local(FontSize)};
-    padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
-    line-height: #{pfe-var(line-height)};
     position: relative;
+    display: table;
+
+    color: pfe-var(ui-disabled--text);
+    font-size: pfe-local(FontSize);
+    text-decoration: none;
+    line-height: pfe-var(line-height);
+
+    padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+
     &.has-sub-section {
-      padding-bottom: calc(#{pfe-local(vertical-spacer, $region: link)});
+      padding-bottom: pfe-local(vertical-spacer, $region: link);
     }
+
     &.sub-section {
+      margin-left: calc(#{pfe-var(container-spacer)} * 0.75);
+      font-size: calc(#{pfe-local(FontSize)} * 0.85);
+      padding: pfe-local(vertical-spacer, $region: link) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+
       @media(min-width: #{pfe-breakpoint(lg)}) {
         display: none;
       }
-
-      margin-left: calc(#{pfe-var(container-spacer)} * 0.75);
-      font-size: calc(#{pfe-local(FontSize)} * 0.85);
-      padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 1) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+      
       &:last-child {
-        padding-bottom: calc(#{pfe-local(horizontal-spacer, $region: link)} * 1);
+        padding-bottom: pfe-local(horizontal-spacer, $region: link);
       }
     }
 
     &::after {
       content: "";
       position: absolute;
-      width: calc(100% - 4px);
-      height: calc(100% - 4px);
+      width: calc(100% - #{pfe-var(surface--border-width--heavy)});
+      height: calc(100% - #{pfe-var(surface--border-width--heavy)});
       top: 0;
       left: 0;
     }
@@ -149,132 +128,144 @@ nav {
       outline: none;
 
       &::after {
-        border-radius: 3px;
-        border: 2px solid #{pfe-color(link)};
+        border-radius: pfe-var(surface--border-radius);
+        border: 2px pfe-var(surface--border-style) pfe-var(link);
       }
     }
-  }
-}
-
-//default styles
-:host {
-  background-color: #{pfe-local(BackgroundColor)};
-
-  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-    pfe-accordion {
-      border: 1px solid #{pfe-color(ui-disabled)};
-    }
-
-    pfe-accordion-header {
-      background-color: #{pfe-color(surface--lightest)};
-      --theme: light;
-    }
-  }
-
-  @media(min-width: #{pfe-breakpoint(lg)}) {
-    border: 1px solid transparent;
-  }
-
-  ::slotted([slot="pfe-jump-links-nav--heading"]) {
-    color: #{pfe-broadcasted(text)};
-  }
-
-  ul {
-    padding: 0;
-    border-left: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-color(ui-disabled)};
-  }
-
-  li {
-    &[active] {
-      border-left-color: #{pfe-local(BorderColor)};
-    }
-  }
-
-  a {
-    color: #{pfe-color(ui-disabled--text)};
-    position: relative;
 
     &:hover {
-      color: #{pfe-color(surface--darkest)};
+      color: pfe-var(surface--darkest);
     }
 
     &[active] {
-      color: #{pfe-color(surface--darkest)};
+      color: pfe-var(surface--darkest);
     }
+  }
 
-    &::after {
-      content: "";
-      position: absolute;
-      width: calc(100% - 4px);
-      height: calc(100% - 4px);
-      top: 0;
-      left: 0;
-    }
+  ul ul {
+    display: flex;
+    flex-direction: column;
+    flex: 0;
 
-    &:focus {
-      outline: none;
+    margin: 0;
+    padding: 0;
 
-      &::after {
-        border-radius: 3px;
-        border: 2px solid #{pfe-color(link--on-dark)}
-      }
+    border-left: none !important;
+
+    overflow-y: hidden;
+    transition: flex 1s linear;
+    li {
+      border-left: none !important;
     }
   }
 }
 
+// Set the local variable to use the accordion namespace
+$temp: $LOCAL;
+$LOCAL: accordion;
+pfe-accordion {
+  $accordion-styles: (
+    BackgroundColor: transparent,
+    accent: transparent,
+    BorderLeftWidth: 0,
+    BorderColor: transparent,
+    BorderColor--accent: transparent
+  );
+
+  @include pfe-print-local($accordion-styles);
+  
+  @media(min-width: #{pfe-breakpoint(lg)}) {
+    @include pfe-print-local((
+      base: (Padding: 0)
+    ));
+    // --#{$repo}-accordion__base--Padding: 0 !important;
+  }
+
+  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+    border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
+  }
+}
+
+pfe-accordion-header {
+  // hide accordion left border:
+  --#{$repo}-theme--color--surface--border: transparent;
+  --#{$repo}-theme--color--ui-base--on-dark: transparent;
+  --#{$repo}-theme--color--ui-base: transparent;
+
+  position: sticky;
+  top: 0;
+
+  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+    background-color: pfe-var(surface--lightest);
+    --theme: light;
+  }
+  @media(min-width: #{pfe-breakpoint(lg)}) {
+    visibility: collapse !important;
+    display: none;
+  }
+}
+
+pfe-accordion-panel {
+  // hide accordion left border:
+  border-left-color: transparent;
+  
+  @media(min-width: #{pfe-breakpoint(lg)}) {
+    visibility: collapse;
+    display: none;
+    opacity: 1;
+    display: block;
+  }
+
+  > pfe-jump-links-nav {
+    @media(min-width: #{pfe-breakpoint(lg)}) {
+      width: 100%;
+      display: block;
+      visibility: visible;
+    }
+  }
+}
+
+$LOCAL: $temp;
+
 :host([pfe-color="darkest"]) {
-  --theme: dark;
+  @include pfe-print-local((
+    theme: dark,
+    BackgroundColor: pfe-var(surface--darkest)
+  ));
+
+  border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
 
   pfe-accordion-header,
   pfe-accordion-panel,
-  button[aria-expanded=true] {
-    --pfe-accordion--BackgroundColor: #{pfe-color(surface--darkest)};
-    --pfe-jump-links--BackgroundColor: #{pfe-color(surface--darkest)};
+  button[aria-expanded="true"] {
+    --#{$repo}-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
+    --#{$repo}-#{$LOCAL}--BackgroundColor: #{pfe-var(surface--darkest)};
   }
 
-  ::slotted([slot="pfe-jump-links-nav--heading"]) {
-    color: #{pfe-color(surface--lighter)};
+  ::slotted([slot="#{$repo}-#{$LOCAL}-nav--heading"]) {
+    color: pfe-var(surface--lighter);
   }
-
-  background-color: #{pfe-color(surface--darkest)};
-  border: 1px solid #{pfe-color(ui-disabled--text)};
 
   ul {
-    border-left: 1px solid #{pfe-color(ui-disabled--text)};
+    border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) #{pfe-var(ui-disabled--text)};
 
-    li {
-      &[active] {
-        border-left: 3px #{pfe-var(surface--border-style)} #{pfe-color(ui-accent)};
-      }
+    li[active] {
+      border-left: 3px pfe-var(surface--border-style) pfe-var(ui-accent);
     }
 
     a {
-      color: #{pfe-color(ui-complement--focus--on-dark)};
+      color: pfe-var(ui-complement--focus--on-dark);
 
       &:hover {
-        color: #{pfe-color(ui-complement--hover--on-dark)};
+        color: pfe-var(ui-complement--hover--on-dark);
       }
 
       &[active] {
-        color: #{pfe-color(ui-complement--on-dark)};
+        color: pfe-var(ui-complement--on-dark);
       }
 
-      &::after {
-        content: "";
-        position: absolute;
-        width: calc(100% - 4px);
-        height: calc(100% - 4px);
-        top: 0;
-        left: 0;
-      }
-
-      &:focus {
-        outline: none;
-
-        &::after {
-          border-radius: 3px;
-          border: 2px solid #{pfe-color(link--on-dark)};
-        }
+      &:focus::after {
+        border-color: #{pfe-var(link--on-dark)};
       }
     }
   }
@@ -291,14 +282,14 @@ nav {
 
   nav {
     min-height: calc(#{pfe-var(container-spacer)} * 5.5);
-    background-color: pfe-color(surface--lighter);
+    background-color: pfe-var(surface--lighter);
     display: flex;
     position: relative;
-    .pfe-jump-links-nav__heading {
+    .pfe-#{$LOCAL}-nav__heading {
       display: none;
     }
 
-    ::slotted([slot="pfe-jump-links-nav--logo"]) {
+    ::slotted([slot="pfe-#{$LOCAL}-nav--logo"]) {
       position: absolute;
       left: 0;
       max-height: calc(#{pfe-var(container-spacer)} * 3.5);
@@ -314,7 +305,7 @@ nav {
       }
     }
 
-    ::slotted([slot="pfe-jump-links-nav--cta"]) {
+    ::slotted([slot="pfe-#{$LOCAL}-nav--cta"]) {
       position: absolute;
 
       @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
@@ -353,24 +344,24 @@ nav {
       display: flex;
       height: calc(#{pfe-var(container-spacer)} * 5);
       align-items: center;
-      border-top: 4px solid transparent;
-      border-bottom: 4px solid transparent;
+      border-top: 4px pfe-var(surface--border-style) transparent;
+      border-bottom: 4px pfe-var(surface--border-style) transparent;
       border-left: none;
       border-right: none;
 
       &[active] {
-        border-top: 4px solid #{pfe-color(ui-accent)};
+        border-top: 4px pfe-var(surface--border-style) #{pfe-var(ui-accent)};
       }
     }
 
     a {
       text-decoration: none;
-      color: #{pfe-color(ui-disabled--text)};
+      color: #{pfe-var(ui-disabled--text)};
       &[active] {
-        color: #{pfe-color(surface--darkest)};
+        color: #{pfe-var(surface--darkest)};
       }
       &:hover {
-        color: #{pfe-color(surface--darkest)};
+        color: #{pfe-var(surface--darkest)};
       }
     }
   }
@@ -378,31 +369,11 @@ nav {
   @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
     nav {
       min-height: calc(#{pfe-var(container-spacer)} * 5.5);
-      background-color: #{pfe-color(surface--lighter)}
+      background-color: #{pfe-var(surface--lighter)}
     }
 
-    .pfe-jump-links-nav {
+    .pfe-#{$LOCAL}-nav {
       display: none;
     }
-  }
-}
-
-@media(min-width: #{pfe-breakpoint(lg)}) {
-  pfe-accordion-header {
-    visibility: collapse !important;
-    display: none;
-  }
-
-  pfe-accordion-panel {
-    visibility: collapse;
-    display: none;
-    opacity: 1;
-    display: block;
-  }
-
-  pfe-accordion-panel>pfe-jump-links-nav {
-    width: 100%;
-    display: block;
-    visibility: visible;
   }
 }

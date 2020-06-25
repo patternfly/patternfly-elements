@@ -92,32 +92,32 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 @for $num from 2 through 4 {
   :host([pfe-size="#{$num}x"]) {
-    --pfe-icon--size: #{$num}em;
+    --#{$repo}-#{$LOCAL}--size: #{$num}em;
   }
 }
 
 // TODO: Sort out sizing
 :host([pfe-size="xl"]) {
-  --pfe-icon--size: 100px;
+  --#{$repo}-#{$LOCAL}--size: 100px;
 }
 
 :host([pfe-size="lg"]) {
-  --pfe-icon--size: 64px;
+  --#{$repo}-#{$LOCAL}--size: 64px;
 }
 
 :host([pfe-size="md"]) {
-  --pfe-icon--size: 32px;
+  --#{$repo}-#{$LOCAL}--size: 32px;
 }
 
 :host([pfe-size="sm"]) {
-  --pfe-icon--size: 14px;
+  --#{$repo}-#{$LOCAL}--size: 14px;
 }
 
 @each $level in (critical, important, moderate, success, info, default) {
   :host([pfe-color="#{$level}"]) {
-    --pfe-icon--color: #{pfe-var(feedback--#{$level})};
+    --#{$repo}-#{$LOCAL}--color: #{pfe-var(feedback--#{$level})};
     @if $level != "moderate" {
-      --pfe-icon--theme: dark;
+      --#{$repo}-#{$LOCAL}--theme: dark;
     }
   }
 }
@@ -125,19 +125,19 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 @each $color in (base, lightest, lighter, darker, darkest, complement, accent) {
   :host([pfe-color="#{$color}"]) {
     $theme: map-deep-get($pfe-colors, surface--#{$color}--theme);
-    --pfe-icon--color:  #{pfe-var(surface--#{$color})};
-    --pfe-icon--theme: #{$theme};
+    --#{$repo}-#{$LOCAL}--color:  #{pfe-var(surface--#{$color})};
+    --#{$repo}-#{$LOCAL}--theme: #{$theme};
   }
 }
 
 // May need Feedback Darkest colors too.
 
 :host([pfe-circled]:not([pfe-circled="false"])) {
-  --pfe-icon--BackgroundColor: #{pfe-local(color, $fallback: pfe-var(surface--lightest))};
-  --pfe-icon--Color:           #{pfe-broadcasted(text)};
-  --pfe-icon--Padding:         .5em;
-  --pfe-icon--BorderWidth:     #{pfe-var(ui--border-width)};
-  --pfe-icon--BorderColor:     #{pfe-local(color, $fallback: pfe-var(surface--border))};
+  --#{$repo}-#{$LOCAL}--BackgroundColor: #{pfe-local(color, $fallback: pfe-var(surface--lightest))};
+  --#{$repo}-#{$LOCAL}--Color:           #{pfe-broadcasted(text)};
+  --#{$repo}-#{$LOCAL}--Padding:         .5em;
+  --#{$repo}-#{$LOCAL}--BorderWidth:     #{pfe-var(ui--border-width)};
+  --#{$repo}-#{$LOCAL}--BorderColor:     #{pfe-local(color, $fallback: pfe-var(surface--border))};
 }
 
 :host(.load-failed) svg image {
@@ -150,5 +150,5 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host(.load-failed[on-fail="collapse"]) {
-  --pfe-icon--size: 0;
+  --#{$repo}-#{$LOCAL}--size: 0;
 }

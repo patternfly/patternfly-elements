@@ -14,6 +14,7 @@ $LOCAL-VARIABLES: (
 
   //-- Color properties
   BackgroundColor: pfe-var(surface--base),
+  theme: pfe-var(surface--base--theme),
   BackgroundPosition: center center,
 
   spacing: pfe-var(container-spacer),
@@ -40,11 +41,15 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   Border: pfe-local(BorderWidth, 0) pfe-local(BorderStyle, solid) pfe-local(BorderColor, pfe-var(surface--border))
 ));
 
+$size-small: (
+  PaddingTop:     pfe-var(container-spacer),
+  PaddingRight:   pfe-var(container-spacer),
+  PaddingBottom:  pfe-var(container-spacer),
+  PaddingLeft:    pfe-var(container-spacer)
+);
+
 :host {
-  
-  // Broadcasted values set to match background color
-  @include pfe-set-broadcast-theme(light);
-  --theme: light;
+  --theme: #{pfe-local(theme)};
 
   // Start of style declarations for host element
   display: flex;
@@ -72,16 +77,16 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   // Add the border to the card for print
   @include pfe-print-media {
     border-radius: pfe-fetch(surface--border-radius);
-    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) map-get($pfe-colors, surface--border);
+    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
   }
 
   @include browser-query(ie11) {
-    background-color: #{pfe-var(surface--lightest)} !important;
-    color: #{pfe-var(text)} !important;
+    background-color: pfe-var(surface--lightest) !important;
+    color: pfe-var(text) !important;
     background-image: none !important;
-    border-radius: #{pfe-fetch(surface--border-radius)};
-    border: #{pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) map-get($pfe-colors, surface--border)};
-    padding: #{pfe-var(container-spacer)};
+    border-radius: pfe-fetch(surface--border-radius);
+    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
+    padding: pfe-var(container-spacer);
   }
 }
 
@@ -91,14 +96,11 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
 @include pfe-theme-contexts; // imports on="light" etc support
 
 :host([pfe-size="small"]) {
-  --pfe-card--PaddingTop:     #{pfe-var(container-spacer)};
-  --pfe-card--PaddingRight:   #{pfe-var(container-spacer)};
-  --pfe-card--PaddingBottom:  #{pfe-var(container-spacer)};
-  --pfe-card--PaddingLeft:    #{pfe-var(container-spacer)};
+  @include pfe-print-local($size-small);
 }
 
 :host([pfe-border]:not([pfe-border="false"])) {
-  --pfe-card--BorderWidth:   #{pfe-fetch(surface--border-width)};
+  --#{$repo}-#{$LOCAL}--BorderWidth:   #{pfe-fetch(surface--border-width)};
 }
 
 // Targets the wrappers in the shadow DOM
@@ -183,7 +185,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
     }
 
     ::slotted([pfe-overflow~="top"]) {
-      --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
+      --#{$repo}-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
     :host(:not([has_header])) & {
@@ -191,11 +193,11 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
     }
 
     :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
+      --#{$repo}-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
     ::slotted([pfe-overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
+      --#{$repo}-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
     @each $tag in (h1, h2, h3, h4, h5, h6) {
@@ -206,20 +208,20 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
   }
   &__body {
     :host(:not([has_header])) & ::slotted([pfe-overflow~="top"]) {
-      --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
+      --#{$repo}-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
     ::slotted([pfe-overflow~="top"]) {
       z-index: 1;
-      --pfe-card__overflow--MarginTop: calc(#{pfe-local(spacing--vertical)} * -1);
+      --#{$repo}-card__overflow--MarginTop: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
     ::slotted([pfe-overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
+      --#{$repo}-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
     :host([has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
+      --#{$repo}-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
     :host(:not([has_footer])) & {
@@ -236,7 +238,7 @@ $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
     align-items: #{pfe-local(AlignItems, baseline, $region: footer)};
 
     ::slotted([pfe-overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
+      --#{$repo}-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
     :host(:not([has_footer])) & {

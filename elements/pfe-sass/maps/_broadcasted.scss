@@ -6,7 +6,6 @@ $pfe-broadcasted: (
 
   text:                        $pfe-color--text,
   link:                        $pfe-color--link,
-  //maybe text lighter and text darker here. Ask designers about this
   link--visited:               $pfe-color--link--visited,
   link--hover:                 $pfe-color--link--hover,
   link--focus:                 $pfe-color--link--focus,
@@ -37,5 +36,5 @@ $pfe-broadcasted: (
   link-decoration--visited--on-saturated:   underline,
   link-decoration--hover--on-saturated:     underline,
   link-decoration--focus--on-saturated:     underline
-
+  
 );

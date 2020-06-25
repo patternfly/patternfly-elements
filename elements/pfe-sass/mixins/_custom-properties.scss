@@ -58,25 +58,17 @@
                 $context: "--on-#{$theme}";
             }
         }
-
+        
         @each $item in $list {
             @if not index($BROADCAST-VARS, $type) {
                 @warn "--#{$repo}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
             }
-            @else if not map-has-key($pfe-broadcasted, #{$item}#{$context}) {
+            @else if not pfe-broadcasted(#{$item}#{$context}) {
                 @warn "#{$item}#{$context} value does not currently exist.";
             }
             @else {
                 @if index($THEMES, $theme) != null {
-                    @if map-get($pfe-colors, $item) != null {
-                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--color--#{$item}#{$context}, #{map-get($pfe-broadcasted, #{$item}#{$context})});
-                    }
-                    @else if map-get($pfe-vars, $item) {
-                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--#{$item}#{$context}, #{map-get($pfe-broadcasted, #{$item}#{$context})});
-                    }
-                    @else {
-                        --#{$repo}-broadcasted--#{$item}: #{map-get($pfe-broadcasted, #{$item}#{$context})};
-                    }
+                    --#{$repo}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$context})};
                 }
                 @else {
                     @error "The #{$theme} context does not appear to be part of a supported theme.";
@@ -104,7 +96,7 @@
 ///     }
 ///     ```
 /// ===========================================================================
-@mixin pfe-set-local($map: $LOCAL-VARIABLES) {
+@mixin pfe-print-local($map: $LOCAL-VARIABLES) {
     @each $property, $value in $map {
         $name: "--#{$property}";
         $styles: $value;
@@ -126,19 +118,12 @@
 }
 
 /// ===========================================================================
-/// @alias pfe-set-local
-/// ===========================================================================
-@mixin pfe-print-variables($map: $LOCAL-VARIABLES) {
-    @include pfe-set-local($map);
-}
-
-/// ===========================================================================
-/// Surface properties
-/// This mixin creates an attribute for all the surface colors, then prints the local background color variable for the component, with the correct theme colors.
+/// Surface properties  
+/// This mixin creates an attribute for all the surface colors, then prints the local background color variable for the component, with the correct theme colors. 
 /// @param {List | String} $surfaces [$SURFACES] - defaults to the global $SURFACES list of all supported colors
 /// @param {String} $attr-name [pfe-var] - defaults to pfe-var, optionally pass in a custom name for the data attribute
 ///
-/// @example
+/// @example 
 /// ```
 /// $LOCAL: band;
 /// @include surfaces;
@@ -150,32 +135,32 @@
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
 ///   --theme: dark;
 /// }
-///
+/// 
 /// :host([pfe-color="darkest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darkest, #131313);
 ///   --theme: dark;
 /// }
-///
+/// 
 /// :host([pfe-color="base"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--base, #dfdfdf);
 ///   --theme: light;
 /// }
-///
+/// 
 /// :host([pfe-color="lighter"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lighter, #ececec);
 ///   --theme: light;
 /// }
-///
+/// 
 /// :host([pfe-color="lightest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lightest, #fff);
 ///   --theme: light;
 /// }
-///
+/// 
 /// :host([pfe-color="accent"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--accent, #ee0000);
 ///   --theme: saturated;
 /// }
-///
+/// 
 /// :host([pfe-color="complement"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--complement, #0477a4);
 ///   --theme: saturated;
@@ -186,7 +171,7 @@
     @each $color in $surfaces {
         $theme: #{pfe-get-theme(surface--#{$color}--theme)};
         :host([#{$attr-name}="#{$color}"]) {
-            @include pfe-set-local((
+            @include pfe-print-local((
                 BackgroundColor: pfe-var(surface--#{$color}),
                 theme: pfe-var(surface--#{$color}--theme, #{$theme})
             ));
@@ -220,7 +205,7 @@
 ///   --pfe-broadcasted--link-decoration--focus: underline;
 ///   --pfe-broadcasted--link-decoration--visited: none;
 /// }
-///
+/// 
 /// @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { /* IE10+ */
 ///   :host([on="dark"]) {
 ///     color: #fff;
@@ -228,7 +213,7 @@
 ///   }
 /// }
 /// ```
-/// ...as well as all the values for :host([on="saturated"])  and  :host([on="light"])
+/// ...as well as all the values for :host([on="saturated"])  and  :host([on="light"]) 
 /// ===========================================================================
 @mixin pfe-theme-contexts($themes: $THEMES, $ie-fallback: true) {
     // Helper attributes to aid in theming

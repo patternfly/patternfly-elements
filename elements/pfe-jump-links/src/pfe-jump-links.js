@@ -336,7 +336,7 @@ class PfeJumpLinksPanel extends PFElement {
     super.attributeChangedCallback(attr, oldVal, newVal);
 
     switch (attr) {
-      case "offset":
+      case "pfe-c-offset":
         this.sectionMargin = newVal;
         break;
     }

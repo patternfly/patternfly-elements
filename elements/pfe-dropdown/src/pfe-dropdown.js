@@ -212,7 +212,7 @@ class PfeDropdown extends PFElement {
         : null;
     // Check states to determine if the dropdown menu should close
     if (!isSelf && !(isChild || insideWrapper)) {
-      this.close(event);
+      this.close();
     }
   }
 

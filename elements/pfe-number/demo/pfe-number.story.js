@@ -46,55 +46,55 @@ stories.add("pfe-number", () => {
         <tr>
           <td>Ordinal</td>
           <td>
-            &lt;pfe-number type="ordinal"&gt;${ordinal}&lt;/pfe-number&gt;
+            &lt;pfe-number type="ordinal" number="${ordinal}"&gt;${ordinal}&lt;/pfe-number&gt;
           </td>
           <td>
-            <pfe-number type="ordinal">${ordinal}</pfe-number>
+            <pfe-number type="ordinal" number="${ordinal}">${ordinal}</pfe-number>
           </td>
         </tr>
         <tr>
           <td>Bytes</td>
           <td>
-            &lt;pfe-number type="bytes"&gt;${bytes}&lt;/pfe-number&gt;
+            &lt;pfe-number type="bytes" number="${bytes}"&gt;${bytes}&lt;/pfe-number&gt;
           </td>
           <td>
-            <pfe-number type="bytes">${bytes}</pfe-number>
+            <pfe-number type="bytes" number="${bytes}">${bytes}</pfe-number>
           </td>
         </tr>
         <tr>
           <td>Abbreviation</td>
           <td>
-            &lt;pfe-number type="abbrev"&gt;${abbreviation}&lt;/pfe-number&gt;
+            &lt;pfe-number type="abbrev" number="${abbreviation}"&gt;${abbreviation}&lt;/pfe-number&gt;
           </td>
           <td>
-            <pfe-number type="abbrev">${abbreviation}</pfe-number>
+            <pfe-number type="abbrev" number="${abbreviation}">${abbreviation}</pfe-number>
           </td>
         </tr>
         <tr>
           <td>Percent</td>
           <td>
-            &lt;pfe-number type="percent"&gt;${percent}&lt;/pfe-number&gt;
+            &lt;pfe-number type="percent" number="${percent}"&gt;${percent}&lt;/pfe-number&gt;
           </td>
           <td>
-            <pfe-number type="percent">${percent}</pfe-number>
+            <pfe-number type="percent" number="${percent}">${percent}</pfe-number>
           </td>
         </tr>
         <tr>
           <td>e</td>
           <td>
-            &lt;pfe-number type="e"&gt;${e}&lt;/pfe-number&gt;
+            &lt;pfe-number type="e" number="${e}"&gt;${e}&lt;/pfe-number&gt;
           </td>
           <td>
-            <pfe-number type="e">${e}</pfe-number>
+            <pfe-number type="e" number="${e}">${e}</pfe-number>
           </td>
         </tr>
         <tr>
           <td>Thousands</td>
           <td>
-            &lt;pfe-number type="thousands"&gt;${thousands}&lt;/pfe-number&gt;
+            &lt;pfe-number type="thousands" number="${thousands}"&gt;${thousands}&lt;/pfe-number&gt;
           </td>
           <td>
-            <pfe-number type="thousands">${thousands}</pfe-number>
+            <pfe-number type="thousands" number="${thousands}">${thousands}</pfe-number>
           </td>
         </tr>
       </tbody>

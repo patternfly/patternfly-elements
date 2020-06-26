@@ -102,16 +102,17 @@ class PfeJumpLinksNav extends PFElement {
             "[slot='pfe-jump-links-nav--heading']"
           ).cloneNode(true);
         }
-        if (!this.hasAttribute("horizontal")) {
+        if (!this.hasAttribute("horizontal") && html !== "") {
           this.shadowRoot
             .querySelector("pfe-accordion-header")
             .appendChild(html);
         } else {
+          const heading = document.createElement("h3");
+          heading.id = "pfe-jump-links-nav--heading";
+
           this.shadowRoot
             .querySelector("pfe-accordion-header")
-            .appendChild(
-              document.createElement("h3#pfe-jump-links-nav--heading")
-            );
+            .appendChild(heading);
           this.shadowRoot.querySelector(
             "#pfe-jump-links-nav--heading"
           ).innerHTML = "Jump to section";

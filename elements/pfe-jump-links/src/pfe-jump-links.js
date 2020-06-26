@@ -358,8 +358,6 @@ class PfeJumpLinksPanel extends PFElement {
     this.sectionMargin = this.getAttribute("offset");
     this.customVar =
       this.nav.cssVariable("--pfe-jump-links-nav--offset") || 200;
-    console.log("CSSvar value is", this.customVar);
-    console.log("Attr value is", this.sectionMargin);
   }
 
   _getNav() {

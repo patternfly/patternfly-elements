@@ -15,11 +15,11 @@ jobs:
         uses: "pascalgn/automerge-action@4536e8847eb62fe2f0ee52c8fa92d17aa97f932f"
         env:
           GITHUB_TOKEN: "${{ secrets.ACTIONS }}"
-          MERGE_LABELS: "Ready to merge,!work in progress!,!blocked,!Needs: code updates,!Needs: additional info,!Needs: AT updates,!Needs: changelog,!Ready: branch testing,!Ready: browser testing"
+          MERGE_LABELS: "ready to merge,!work in progress!,!blocked,!needs: code updates,!needs: additional info,!needs: AT updates,!needs: changelog,!ready: branch testing,!ready: browser testing"
           MERGE_REMOVE_LABELS: Ready to merge
           MERGE_METHOD: squash
           MERGE_COMMIT_MESSAGE: "pull-request-title"
           MERGE_RETRIES: 3
           MERGE_RETRY_SLEEP: 10000
-          UPDATE_LABELS: "Ready to merge,!work in progress!,!blocked"
+          UPDATE_LABELS: "ready to merge,!work in progress!,!blocked"
           UPDATE_METHOD: rebase

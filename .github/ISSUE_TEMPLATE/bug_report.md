@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve our project
-labels: bug, sev-1
+labels: "bug, priority: low"
 ---
 
 <!-- Hello! Please read the [Contributing Guidelines](CONTRIBUTING.md) before submitting an issue. -->

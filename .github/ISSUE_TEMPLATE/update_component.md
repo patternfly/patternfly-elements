@@ -1,7 +1,7 @@
 ---
 name: Update existing component
 about: Outline the update requirements for an existing component.
-labels: Design System, update component request, sev-1
+labels: "design system, update component request, priority: low"
 ---
 
 # Component name: 

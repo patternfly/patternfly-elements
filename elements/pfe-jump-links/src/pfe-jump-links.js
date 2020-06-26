@@ -294,7 +294,7 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["offset"];
+    return ["pfe-c-offset"];
   }
 
   constructor() {

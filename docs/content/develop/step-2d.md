@@ -383,6 +383,6 @@ PFElement.create(PfeCoolElement);
 export default PfeCoolElement;
 ```
 
-Now that our code works, we should outline it's properties and requirements in the schema.
+Now that our code works, we should outline its properties and requirements in the schema.
 
 [Move to Step 2e: Schema](../step-2e)

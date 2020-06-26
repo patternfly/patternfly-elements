@@ -70,7 +70,7 @@ No extra roles or aria labels are required because we're using standard html tag
 ## Slots
 
 
-- `namedSlot`: The only slot this component has is the heading. The rest of the component works by creating a mirror shadowRoot based on the Light DOM markup. 	- `pfe-jump-links-nav--heading`:  The rest of the component works by creating a mirror shadowRoot based on the Light DOM markup. 
+- `pfe-jump-links-nav--heading`:  The rest of the component works by creating a mirror shadowRoot based on the Light DOM markup. 
 
 
 ## Attributes

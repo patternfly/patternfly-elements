@@ -60,14 +60,36 @@
       position: sticky;
       top: 0;
     }
+
     .special {
       --pfe-jump-links-nav--offset: 800;
     }
+
+    /* 
+     * Fixing the issue where the headers are under the stick nav
+     * https://stackoverflow.com/questions/4086107/fixed-page-header-overlaps-in-page-anchors
+     */
+    #horizontalJumpLinks .pfe-jump-links-panel__section::before {
+      content: "";
+      display: block;
+      height: 96px;
+      margin: -96px 0 0;
+    }
+
     @media(max-width: 992px) {
+      /*
+       * fix for when we have a mobile nav that is sticky
+       */
+      .pfe-jump-links-panel__section::before {
+        content: "";
+        display: block;
+        height: 68px;
+        margin: -68px 0 0;
+      }
+
       .special{
         --pfe-jump-links-nav--offset: 220;
-      }
-      
+      }   
     }
   </style>
 
@@ -783,7 +805,7 @@
       </pfe-jump-links-panel>
     </div>
   </div>
-  <div>
+  <div id="horizontalJumpLinks">
     <pfe-jump-links-nav horizontal id="jumplinks9" sr-text="Page navigation">
       <h4 slot="pfe-jump-links-nav--heading">Jump to section</h4>
       <img src="https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--200.png" alt="" slot="pfe-jump-links-nav--logo">

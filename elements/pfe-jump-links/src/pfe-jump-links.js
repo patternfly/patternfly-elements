@@ -292,6 +292,10 @@ class PfeJumpLinksPanel extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
+  static get observedAttributes() {
+    return ["offset"];
+  }
+
   constructor() {
     super(PfeJumpLinksPanel, { type: PfeJumpLinksPanel.PfeType });
     this._init = this._init.bind(this);
@@ -326,6 +330,16 @@ class PfeJumpLinksPanel extends PFElement {
     window.removeEventListener("scroll");
     this._slot.removeEventListener("slotchange", this._init);
     window.removeEventListener("resize", this._handleResize);
+  }
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    super.attributeChangedCallback(attr, oldVal, newVal);
+
+    switch (attr) {
+      case "offset":
+        this.sectionMargin = newVal;
+        break;
+    }
   }
 
   _init() {

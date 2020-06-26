@@ -7,8 +7,8 @@
     <script src="/components/web-component-tester/browser.js"></script>
     <script type="module" src="../dist/pfe-jump-links.js"></script>
     <style>
-      #jumplinks3 {
-        --pfe-jump-links-nav--offset: 100;
+      #jumplinks3Panel {
+        --pfe-jump-links-panel--offset: 100;
       }
     </style>
   </head>
@@ -639,12 +639,12 @@
           pfeJumpLinksPanel.removeAttribute("offset");
         });
 
-        test("it should update the offset value when the --pfe-jump-links-nav--offset CSS property is used", () => {
+        test("it should update the offset value when the --pfe-jump-links-panel--offset CSS property is used", () => {
           const pfeJumpLinksPanel = document.querySelector("#jumplinks3Panel");
           assert.equal(pfeJumpLinksPanel.offsetValue, 100);
         });
 
-        test("it should use the offset attribute instead of --pfe-jump-links-nav--offset CSS property if they are both used", () => {
+        test("it should use the offset attribute instead of --pfe-jump-links-panel--offset CSS property if they are both used", () => {
           const pfeJumpLinksPanel = document.querySelector("#jumplinks3Panel");
           pfeJumpLinksPanel.setAttribute("offset", 500);
           assert.equal(pfeJumpLinksPanel.offsetValue, 500);

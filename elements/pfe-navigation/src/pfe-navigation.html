@@ -1,4 +1,40 @@
-<div id="wrapper">
-  <slot name="pfe-navigation--search" class="pfe-navigation__search">search slot</slot>
-  <slot name="pfe-navigation--customlinks" class="pfe-navigation__customlinks">customlinks slot</slot>
-</div>
+<nav id="pfe-navigation__wrapper" class="pfe-navigation__wrapper" aria-label="Main Navigation">
+  <button class="pfe-navigation__menu-toggle">
+    Menu
+  </button>
+
+  <div class="pfe-navigation__menu-wrapper">
+    <div id="pfe-navigation__menu-wrapper__inner" class="pfe-navigation__menu-wrapper__inner">
+
+      <div class="pfe-navigation__custom-links-wrapper">
+        <div class="pfe-navigation__custom-links-wrapper__inner">
+
+          <button class="pfe-navigation__search-toggle">
+            Search
+          </button>
+          <slot name="pfe-navigation--search" class="pfe-navigation__search">
+            search slot
+          </slot>
+
+          <slot name="pfe-navigation--customlinks" class="pfe-navigation__customlinks">
+            customlinks slot
+          </slot>
+
+          <button class="pfe-navigation__all-red-hat-toggle">
+            All Red Hat
+          </button>
+          <div class="pfe-navigation__all-red-hat-wrapper">
+            <div class="pfe-navigation__all-red-hat-wrapper__inner">
+              Stuff goes in here
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="#" class="pfe-navigation__log-in-link">
+        Log In
+      </a>
+
+    </div>
+  </div>
+</nav>

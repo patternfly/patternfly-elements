@@ -75,11 +75,18 @@ class PfeNavigation extends PFElement {
       const dropdownTrayItem = event.target;
       if (dropdownTrayItem.getAttribute("aria-expanded") == "true") {
         dropdownTrayItem.setAttribute("aria-expanded", "false");
+        dropdownTrayItem.parentElement.classList.remove(
+          "pfe-navigation__menu-item--open"
+        );
       } else {
         dropdownTrayItem.setAttribute("aria-expanded", "true");
+        dropdownTrayItem.parentElement.classList.add(
+          "pfe-navigation__menu-item--open"
+        );
       }
     };
 
+    // Add menu tray toggle behavior
     const dropdownTrayItems = this.shadowRoot.querySelectorAll(
       '.pfe-navigation__menu-link[aria-haspopup="true"]'
     );
@@ -87,6 +94,24 @@ class PfeNavigation extends PFElement {
       const dropdownTrayItem = dropdownTrayItems[index];
       dropdownTrayItem.addEventListener("click", dropdownTrayItemToggle);
     }
+
+    // Add menu burger behavior
+    const navigationWrapper = this.shadowRoot.getElementById(
+      "pfe-navigation__wrapper"
+    );
+    const menuToggle = this.shadowRoot.querySelector(
+      ".pfe-navigation__menu-toggle"
+    );
+    menuToggle.addEventListener("click", () => {
+      navigationWrapper.classList.toggle("pfe-navigation__wrapper--open");
+      if (
+        navigationWrapper.classList.contains("pfe-navigation__wrapper--open")
+      ) {
+        menuToggle.classList.add("pfe-navigation__menu-toggle--active");
+      } else {
+        menuToggle.classList.remove("pfe-navigation__menu-toggle--active");
+      }
+    });
   }
 
   disconnectedCallback() {}
@@ -106,27 +131,52 @@ class PfeNavigation extends PFElement {
       this._observer.disconnect();
     }
 
-    const shadowWrapper = this.shadowRoot.getElementById("wrapper"),
-      oldContentWrapper = this.shadowRoot.getElementById("content"),
-      // An element that light dom content will be put into and replaces the shadowWrapper at the end
-      newContentWrapper = document.createElement("div");
+    // Prettier makes this section significantly less legible because of line length
+    const shadowWrapper = this.shadowRoot.getElementById(
+      "pfe-navigation__wrapper"
+    );
+    const shadowMenuWrapper = this.shadowRoot.getElementById(
+      "pfe-navigation__menu-wrapper__inner"
+    );
+    const shadowLogo = this.shadowRoot.getElementById(
+      "pfe-navigation__logo-wrapper"
+    );
+    const lightLogo = this.querySelector("#pfe-navigation__logo-wrapper");
+    const shadowMenu = this.shadowRoot.getElementById("pfe-navigation__menu");
+    const lightMenu = this.querySelector("#pfe-navigation__menu");
 
-    this.childNodes.forEach(childNode => {
-      const cloneNode = childNode.cloneNode(true);
-      if (
-        cloneNode.nodeType !== Node.TEXT_NODE &&
-        !cloneNode.hasAttribute("slot")
-      ) {
-        newContentWrapper.append(cloneNode);
-      }
-    });
-
-    if (oldContentWrapper) {
-      shadowWrapper.replaceChild(newContentWrapper, oldContentWrapper);
+    // Add the menu to the correct part of the shadowDom
+    if (shadowMenu) {
+      shadowMenuWrapper.replaceChild(lightMenu, shadowMenu);
+      // @todo re-attach events
     } else {
-      shadowWrapper.append(newContentWrapper);
+      shadowMenuWrapper.prepend(lightMenu);
     }
-    newContentWrapper.setAttribute("id", "content");
+
+    // Add the logo to the correct part of the shadowDom
+    if (shadowLogo) {
+      shadowWrapper.replaceChild(lightLogo, shadowLogo);
+      // @todo re-attach events
+    } else {
+      shadowWrapper.prepend(lightLogo);
+    }
+
+    // this.childNodes.forEach(childNode => {
+    //   const cloneNode = childNode.cloneNode(true);
+    //   if (
+    //     cloneNode.nodeType !== Node.TEXT_NODE &&
+    //     !cloneNode.hasAttribute("slot")
+    //   ) {
+    //     newContentWrapper.append(cloneNode);
+    //   }
+    // });
+
+    // if (oldContentWrapper) {
+    //   shadowWrapper.replaceChild(newContentWrapper, oldContentWrapper);
+    // } else {
+    //   shadowWrapper.append(newContentWrapper);
+    // }
+    // newContentWrapper.setAttribute("id", "content");
 
     // Reconnecting mutationObserver for IE11 & Edge
     if (window.ShadyCSS) {

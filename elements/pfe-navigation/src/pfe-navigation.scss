@@ -4,14 +4,19 @@
 
 $LOCAL: navigation;
 
+$menu-height: 72px;
+
 $breakpoints: (
-  kilo: 500px, // Medium Small
-  lima: 900px, // Medium
-  papa: 1100px, // Medium Plus
-  tango: 1400px, // Wide
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  2xl: 1368px,
+  // The below should match an above breakpoint value
+  // Where the icons on the right appear
+  'secondary-links': 768px,
   // Default value for when the nav expands to desktop
-  // should match an above breakpoint value
-  'nav-break': 900px, 
+  'nav-break': 1200px, 
 );
 
 /// Breakpoint helper specific to pfe-navigation
@@ -44,7 +49,15 @@ $breakpoints: (
 }
 
 .pfe-navigation {
+  display: flex;
+  align-items: stretch;
+}
+
+.pfe-navigation__wrapper {
   position: relative;
+  display: flex;
+  align-items: stretch;
+  height: $menu-height;
   padding: 0 16px;
   font-size: 16px;
   line-height: 1.5;
@@ -54,7 +67,6 @@ $breakpoints: (
   @include breakpoint('nav-break') {
     display: flex;
     align-items: stretch;
-    height: 72px;
     padding: 0 32px;
   }
 
@@ -81,6 +93,10 @@ $breakpoints: (
   @include breakpoint('nav-break') {
     display: block;
   }
+
+  &:only-child {
+    display: block;
+  }
 }
 
 .pfe-navigation__logo-image--mobile {
@@ -90,28 +106,266 @@ $breakpoints: (
   }
 }
 
-.pfe-navigation__menu {
-  &,
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+.pfe-navigation__menu-toggle,
+.pfe-navigation__search-toggle,
+.pfe-navigation__all-red-hat-toggle,
+.pfe-navigation__log-in-link {
+  border: 0;
+  font-family: inherit;
+  font-size: 12px;
+  color: #fff;
+  background: transparent;
+  appearance: none;
+  cursor: pointer;
+}
 
+.pfe-navigation__menu-toggle {
+  margin-left: auto;
+  padding-left: 8px;
+  padding-right: 8px;
+  @include breakpoint(md) {
+    margin-left: 0;
+    margin-right: auto;
+  }
   @include breakpoint('nav-break') {
+    display: none;
+  }
+}
+
+.pfe-navigation__menu-toggle--active {
+  color: #151515;
+  background: #fff;
+  box-shadow: inset 0 4px 0 0 #e00;
+}
+
+.pfe-navigation__menu-wrapper,
+.pfe-navigation__menu-wrapper__inner {
+  display: flex;
+  align-items: stretch;
+}
+
+.pfe-navigation__menu-wrapper {
+  @include breakpoint('nav-break') {
+    height: $menu-height;
+  }
+}
+
+.pfe-navigation__menu-wrapper,
+.pfe-navigation__menu-wrapper__inner {
+  @include breakpoint('nav-break') {
+    flex-grow: 1;
+  }
+}
+
+.pfe-navigation__menu,
+.pfe-navigation__menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pfe-navigation__menu {
+  display: none;
+  margin-right: auto;
+  background: #fff;
+  padding: 16px 32px;
+  @include breakpoint('nav-break') {
+    position: static;
     display: flex;
     align-items: stretch;
+    padding: 0;
+    background: transparent;
+  }
+
+  .pfe-navigation__wrapper--open & {
+    @include breakpoint(md) {
+      display: block;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+    }
+    @include breakpoint('nav-break') {
+      position: static;
+      width: auto;
+    }
   }
 }
 
 .pfe-navigation__menu-item {
+  border-top: 1px solid #d2d2d2;
   @include breakpoint('nav-break') {
     display: flex;
     align-items: stretch;
+    padding: 0 4px;
+    border: none;
+  }
+
+  a {
+    display: block;
+    padding: 0.8em 24px;
+    @include breakpoint('nav-break') {
+      padding: 0.8em 24px;
+    }
+  }
+
+  &:last-child {
+    border-bottom: 1px solid #d2d2d2;
   }
 }
 
-.pfe-navigation__menu-link {
+.pfe-navigation__menu-item--open {
+  box-shadow:
+    inset 4px 0 0 0 #e00,
+    0 1px 2px rgba(0, 0, 0, 0.12);
+  @include breakpoint('nav-break') {
+    box-shadow: none;
+  }
+}
+
+.pfe-navigation__menu-link[class] { // [class] to out specify generic menu link selector
+  display: flex;
+  align-items: center;
+  border: 1px dashed transparent;
+  border-top: 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: #151515;
+  transition: box-shadow 0.2s;
+  @include breakpoint('nav-break') {
+    font-size: 16px;
+    font-weight: 400;
+    padding: 0 8px;
+    max-height: 72px;
+    color: #fff;
+  }
+
+  &:hover,
+  &:focus {
+    @include breakpoint('nav-break') {
+      box-shadow: inset 0 4px 0 0 #e00;
+    }
+  }
+
+  &:focus {
+    border: 1px dashed #fff;
+    border-top: 0;
+    outline: none;
+  }
+
+  &[aria-haspopup=true] {
+    position: relative;
+    @include breakpoint('nav-break') {
+      box-shadow: none;
+    }
+
+    &:hover,
+    &:focus {
+      @include breakpoint('nav-break') {
+        box-shadow: inset 0 4px 0 0 #e00;
+      }
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 24px;
+      display: block;
+      width: 11px;
+      height: 11px;
+      border-top: 4px solid #151515;
+      border-right: 4px solid #151515;
+      transform: rotate(45deg);
+      transform-origin: right top;
+      transition: transform 0.25s;
+      @include breakpoint('nav-break') {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border: 4px solid transparent;
+        border-bottom: 0;
+        transform: translate(-4px, -12px);
+        transition: border-color 0.25s;
+      }
+    }
+    
+    &:hover,
+    &:focus {
+      &:before {
+        @include breakpoint('nav-break') {
+          border-top-color: #B8BBBE;
+        }
+      }
+    }
+  }
+
+  .pfe-navigation__menu-item--open > & {
+    @include breakpoint('nav-break') {
+      color: #151515;
+      background: #fff;
+      box-shadow: inset 0 4px 0 0 #e00;
+    }
+
+    &[class]:before { // [class] adds specificity to beat out hover/focus selector
+      transform: rotate(135deg);
+      @include breakpoint('nav-break') {
+        border-top-color: #151515;
+        transform: translate(-4px, -12px);
+      }
+    }
+  }
+}
+
+.pfe-navigation__drawer {
+  display: none;
+  font-size: 16px;
+
+  @include breakpoint('nav-break') {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 32px 64px;
+    background: #fff;
+    // temp style
+    border-bottom: 2px solid black;
+  }
+
+  .pfe-navigation__menu-item--open > & {
+    display: block;
+  }
+}
+
+.pfe-navigation__search {
+  display: none;
+}
+
+.pfe-navigation__custom-links-wrapper,
+.pfe-navigation__custom-links-wrapper__inner {
+  display: flex;
+  align-items: stretch;
+}
+
+.pfe-navigation__customlinks {
+  display: none;
+}
+
+.pfe-navigation__custom-links-wrapper {
+  @include breakpoint('nav-break') {
+    height: $menu-height;
+  }
+}
+
+.pfe-navigation__all-red-hat-wrapper__inner {
+  display: none;
+}
+
+.pfe-navigation__log-in-link {
+  display: flex;
+  align-items: center;
   padding: 24px 11px;
   color: #fff;
   transition: box-shadow 0.2s;
@@ -130,60 +384,6 @@ $breakpoints: (
     border: 1px dashed #fff;
     border-top: 0;
     outline: none;
-  }
-
-  &[aria-haspopup=true] {
-    position: relative;
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      display: block;
-      width: 0;
-      height: 0;
-      border: 4px solid transparent;
-      border-bottom: 0;
-      transform: translate(-4px, -12px);
-      transition: border-color 0.25s;
-    }
-    
-    &:hover,
-    &:focus {
-      &:before {
-        border-top-color: #B8BBBE;
-      }
-    }
-  }
-
-  &[aria-expanded=true] {
-    color: #151515;
-    background: #fff;
-    box-shadow: inset 0 4px 0 0 #e00;
-
-    &[class]:before { // [class] adds specificity to beat out hover/focus selector
-      border-top-color: #151515;
-    }
-  }
-}
-
-.pfe-navigation__drawer {
-  display: none;
-
-  @include breakpoint('nav-break') {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    padding: 32px 64px;
-    background: #fff;
-    // temp style
-    border-bottom: 2px solid black;
-  }
-
-  [aria-expanded=true] ~ & {
-    display: block;
   }
 }
 

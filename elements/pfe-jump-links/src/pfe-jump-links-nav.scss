@@ -7,7 +7,7 @@ $variables: (
   horizontal-spacer: calc(#{pfe-var(container-padding)} * 2),
   vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
   BackgroundColor: pfe-color(surface--lightest),
-  BorderColor: #{pfe-color(ui-base)},
+  BorderColor: #{pfe-color(ui-accent)},
   FontSize: #{pfe-var(font-size--heading--epsilon)},
   heading: (FontSize: #{pfe-var(font-size--heading--zeta)}),
   link: (horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
@@ -249,14 +249,14 @@ nav {
     }
 
     a {
-      color: #{pfe-color(ui-complement--focus--on-dark)};
+      color: #{pfe-color(ui-accent--focus--on-dark)};
 
       &:hover {
-        color: #{pfe-color(ui-complement--hover--on-dark)};
+        color: #{pfe-color(ui-accent--hover--on-dark)};
       }
 
       &[active] {
-        color: #{pfe-color(ui-complement--on-dark)};
+        color: #{pfe-color(ui-accent--on-dark)};
       }
 
       &::after {

@@ -340,7 +340,7 @@ pfe-navigation-item {
 
     // Style main menu links when in the tray.
     &:not([parent_hidden])[is_nested] [slot="trigger"] > a {
-        color: #{pfe-color(ui-base)} !important;
+        color: #{pfe-color(text)} !important;
     }
 }
 
@@ -505,18 +505,18 @@ pfe-navigation-item .pfe-link-list {
         font-size: 16px;
         font-weight: 400;
         line-height: 1.75;
-        color: #{pfe-color(ui-base)};
+        color: #{pfe-color(text)};
 
         @media (min-width: #{pfe-breakpoint(xl)}) {
             font-size: 16px;
         }
 
         a {
-            color: #{pfe-color(ui-base)};
+            color: #{pfe-color(text)};
             text-decoration: underline;
 
             &:hover {
-                color: #{pfe-color(ui-base)};
+                color: #{pfe-color(text)};
                 text-decoration: none;
             }
 

@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Tabs",
+  "description": "This element creates a tabbed interface.",
+  "type": "object",
+  "tag": "pfe-tabs",
+  "class": "pfe-tabs",
+  "category": "container",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "tab": {
+          "title": "Tab",
+          "type": "array",
+          "namedSlot": true,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        },
+        "panel": {
+          "title": "Panel",
+          "type": "array",
+          "namedSlot": true,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "vertical": {
+          "title": "Vertical orientation",
+          "type": "boolean",
+          "default": false,
+          "prefixed": false
+        },
+        "variant": {
+          "title": "Variant",
+          "type": "string",
+          "enum": ["wind", "earth"],
+          "default": "wind",
+          "prefixed": true
+        },
+        "tab-history": {
+          "title": "Tab history",
+          "type": "boolean",
+          "default": false,
+          "prefixed": true
+        }
+      }
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

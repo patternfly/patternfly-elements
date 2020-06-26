@@ -1,4 +1,4 @@
-<!-- ${this.hasAttribute("horizontal") ? `` :
+<!-- ${this.hasAttribute("pfe-c-horizontal") ? `` :
 `<pfe-accordion>
   <pfe-accordion-header>
   </pfe-accordion-header>
@@ -21,13 +21,13 @@
       : ``
       }
     </nav>
-    ${this.hasAttribute("horizontal") ? `` :
+    ${this.hasAttribute("pfe-c-horizontal") ? `` :
   `</pfe-accordion-panel>
 </pfe-accordion>`
 }
   old version^^ -->
 
-  ${this.hasAttribute("horizontal") ? `` :
+  ${this.hasAttribute("pfe-c-horizontal") ? `` :
   `<pfe-accordion>
     <pfe-accordion-header>
     </pfe-accordion-header>
@@ -40,7 +40,7 @@
         <div id="container"></div>
         <slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>
       </nav>
-      ${this.hasAttribute("horizontal") ? `` :
+      ${this.hasAttribute("pfe-c-horizontal") ? `` :
       `</pfe-accordion-panel>
   </pfe-accordion>`
   }

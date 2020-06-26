@@ -69,7 +69,7 @@ class PfeJumpLinksNav extends PFElement {
     this._menuContainer = this.shadowRoot.querySelector("#container");
     this._observer = new MutationObserver(this._mutationCallback);
     this._reportHeight = this._reportHeight.bind(this);
-    this.panel = document.querySelector(`[scrolltarget=${this.id}]`);
+    this.panel = document.querySelector(`[pfe-c-scrolltarget=${this.id}]`);
 
     window.addEventListener("resize", () => {});
   }
@@ -102,7 +102,7 @@ class PfeJumpLinksNav extends PFElement {
             "[slot='pfe-jump-links-nav--heading']"
           ).cloneNode(true);
         }
-        if (!this.hasAttribute("horizontal") && html !== "") {
+        if (!this.hasAttribute("pfe-c-horizontal") && html !== "") {
           this.shadowRoot
             .querySelector("pfe-accordion-header")
             .appendChild(html);
@@ -123,7 +123,7 @@ class PfeJumpLinksNav extends PFElement {
 
     this._observer.observe(this, pfeJumpLinksNavObserverConfig);
 
-    this.panel = document.querySelector(`[scrolltarget="${this.id}"]`);
+    this.panel = document.querySelector(`[pfe-c-scrolltarget="${this.id}"]`);
 
     this.panel.addEventListener(
       PfeJumpLinksPanel.events.change,
@@ -148,7 +148,9 @@ class PfeJumpLinksNav extends PFElement {
     const buildLinkList = () => {
       let linkList = ``;
       if (!this.panel) {
-        this.panel = document.querySelector(`[scrolltarget="${this.id}"]`);
+        this.panel = document.querySelector(
+          `[pfe-c-scrolltarget="${this.id}"]`
+        );
       }
       let panelSections = this.panel.querySelectorAll(
         ".pfe-jump-links-panel__section"
@@ -235,14 +237,14 @@ class PfeJumpLinksNav extends PFElement {
     }
     if (
       (this.has_slot("logo") || this.has_slot("link")) &&
-      !this.hasAttribute("horizontal")
+      !this.hasAttribute("pfe-c-horizontal")
     ) {
       console.warn(
         `${PfeJumpLinks.tag}: logo and link slots NOT supported in vertical jump links`
       );
     }
     if (this.children[1].tagName !== "UL") {
-      if (!this.hasAttribute("horizontal")) {
+      if (!this.hasAttribute("pfe-c-horizontal")) {
         console.warn(
           `${PfeJumpLinks.tag}: The top-level list of links MUST be a <ul>`
         );
@@ -344,7 +346,7 @@ class PfeJumpLinksPanel extends PFElement {
 
   _init() {
     window.addEventListener("scroll", this._scrollCallback);
-    this.scrollTarget = this.getAttribute("scrolltarget");
+    this.scrollTarget = this.getAttribute("pfe-c-scrolltarget");
     this.JumpLinksNav = document.querySelector(`#${this.scrollTarget}`);
     this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
 
@@ -361,7 +363,7 @@ class PfeJumpLinksPanel extends PFElement {
 
   _getNav() {
     return document.querySelector(
-      `pfe-jump-links-nav#${this.getAttribute("scrolltarget")}`
+      `pfe-jump-links-nav#${this.getAttribute("pfe-c-scrolltarget")}`
     );
   }
 
@@ -433,7 +435,7 @@ class PfeJumpLinksPanel extends PFElement {
     //If we didn't get nav in the constructor, grab it now
     if (!this.nav) {
       this.nav = document.querySelector(
-        `pfe-jump-links-nav#${this.getAttribute("scrolltarget")}`
+        `pfe-jump-links-nav#${this.getAttribute("pfe-c-scrolltarget")}`
       );
     }
     //If we want the nav to be built automatically, re-init panel and rebuild nav

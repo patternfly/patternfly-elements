@@ -119,7 +119,7 @@ constructor() {
 }
 ```
 
-Here we set the state of `pfe-following` to false on our element.
+Here we set the state of `pfe-c-following` to false on our element.
 
 ## Getter, Setter, and Element State
 
@@ -165,7 +165,7 @@ To observe an attribute, add this code to the top of your class:
 
 ```
 static get observedAttributes() {
-  return ["pfe-following"];
+  return ["pfe-c-following"];
 }
 ```
 
@@ -346,11 +346,11 @@ class PfeCoolElement extends PFElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
-      case "pfe-following":
+      case "pfe-c-following":
         this._followToggle();
         break;
 
-      case "pfe-photo-url":
+      case "pfe-c-photo-url":
         this._addImage(newValue);
         break;
     }

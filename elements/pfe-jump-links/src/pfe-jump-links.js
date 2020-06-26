@@ -355,7 +355,7 @@ class PfeJumpLinksPanel extends PFElement {
 
   _handleResize() {
     this.nav._reportHeight();
-    this.sectionMargin = this.getAttribute("offset");
+    this.sectionMargin = this.getAttribute("pfe-c-offset");
     this.customVar = this.cssVariable("--pfe-jump-links-panel--offset") || 200;
   }
 

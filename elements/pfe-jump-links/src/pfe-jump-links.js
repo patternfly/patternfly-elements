@@ -318,7 +318,7 @@ class PfeJumpLinksPanel extends PFElement {
     this._init();
     this.sectionMargin = this.getAttribute("pfe-c-offset");
     this.customVar = this.cssVariable("--pfe-jump-links-panel--offset") || 200;
-    if (this.nav && this.nav.hasAttribute("autobuild")) {
+    if (this.nav && this.nav.hasAttribute("pfe-c-autobuild")) {
       this.nav._rebuildNav();
     }
 

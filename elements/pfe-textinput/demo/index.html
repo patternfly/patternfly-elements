@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>PatternFly Element | pfe-textinput Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+    
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+    <link media="all" rel="stylesheet" type="text/css" href="https://access.redhat.com/chrome_themes/nimbus/css/bootstrap.css?v=ac0c7a9" />
+    <link media="all" rel="stylesheet" type="text/css" href="https://access.redhat.com/chrome_themes/nimbus/css/main.css?v=ac0c7a9" />
+    <link media="all" rel="stylesheet" type="text/css" href="https://access.redhat.com/chrome_themes/nimbus/css/components.css?v=ac0c7a9" />
+    <link media="all" rel="stylesheet" type="text/css" href="https://access.redhat.com/chrome_themes/nimbus/css/pages.css?v=ac0c7a9" />
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+    
+    <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-loader.js"></script> -->
+
+    <!-- IE11 test: use bundle + require with umd files -->
+    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+
+    <!-- Tests require pulling in the UMD version of the files -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script> -->
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- <script>require([
+      '../../pfe-band/dist/pfe-band.umd.js',
+      "../dist/pfe-textinput.umd.js"
+    ])</script>
+
+    <script type="module">
+      import "../../pfe-band/dist/pfe-band.js";
+      import "../dist/pfe-textinput.js";
+    </script> -->
+
+    <script defer src="../../pfelement/dist/pfelement.umd.js"></script>
+    <script defer src="../../pfe-band/dist/pfe-band.umd.js"></script>
+    <script defer src="../dist/pfe-textinput.umd.js"></script>
+
+    <script type="text/babel">
+      const container = document.querySelector("#react");
+      let { useState, useEffect } = React;
+      
+      let ReactForm = () => {
+        const [inputValue, setInputValue] = useState("something");
+
+        useEffect(() => {
+          setTimeout(() => {
+            setInputValue("Something else");
+          }, 3000);
+        }, []);
+
+        function handleSubmit(event) {
+          event.preventDefault();
+          console.log("React Form submitted", inputValue);
+        }
+
+        return (
+          <form onSubmit={handleSubmit}>
+            <h2>pfe-textinput React Form</h2>
+            <pfe-textinput-shadow>
+              <input type="text" value={inputValue} onChange={e => setInputValue(e.target.value)} required />
+            </pfe-textinput-shadow>
+            <button>Submit</button>
+          </form>
+        );
+      };
+
+      ReactDOM.render(<ReactForm />, container);
+    </script>
+
+    <style>
+      input {
+        background-color: yellow;
+        color: black;
+      }
+
+      #shadowForm {
+        max-width: 600px;
+      }
+
+      #shadowForm > div {
+        margin-bottom: 8px;
+      }
+
+      #shadowForm label {
+        width: 126px;
+      }
+
+      #shadowForm pfe-textinput-shadow {
+        width: calc(100% - 132px);
+      }
+
+      #shadowForm button {
+        position: relative;
+        left: 132px;
+      }
+    </style>
+  </head>
+  <body unresolved>
+    <pfe-band pfe-color="lightest">
+      <h1><code>pfe-textinput</code></h1>
+
+      <h2>pfe-textinput Form</h2>
+      <form id="lightForm">
+        <pfe-textinput>
+          <input type="text" id="plain" placeholder="Light">
+        </pfe-textinput>
+        <pfe-textinput>
+          <input type="text" placeholder="Required" required>
+        </pfe-textinput>
+        <pfe-textinput>
+          <input type="text" placeholder="Disabled" disabled>
+        </pfe-textinput>
+        <button>Submit</button>
+      </form>
+
+      <h2>pfe-textinput-shadow Form</h2>
+      <form id="shadowForm">
+        <div>
+          <label for="firstName">First Name</label>
+          <pfe-textinput-shadow>
+            <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+          </pfe-textinput-shadow>
+        </div>
+        <div>
+          <label for="lastName">Last Name</label>
+          <pfe-textinput-shadow>
+            <input type="text" id="lastName" name="lastName" placeholder="Last Name" value="Einstein" required>
+          </pfe-textinput-shadow>
+        </div>
+        <div>
+          <label for="email">Email Address</label>
+          <pfe-textinput-shadow id="cityPfeTextInput">
+            <input type="email" id="email" name="email" placeholder="Email Address" required>
+          </pfe-textinput-shadow>
+        </div>
+        <div>
+          <label for="phone">Phone Number</label>
+          <pfe-textinput-shadow>
+            <input type="text" id="phone" name="phone" placeholder="Phone Number" disabled>
+          </pfe-textinput-shadow>
+        </div>
+        <button>Submit</button>
+      </form>
+    </pfe-band>
+
+    <pfe-band pfe-color="lightest">
+      <div id="react"></div>
+    </pfe-band>
+
+    <script>
+      var lightForm = document.querySelector("#lightForm");
+      lightForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        console.log("lightForm submitted");
+      });
+
+      var shadowForm = document.querySelector("#shadowForm");
+      shadowForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        console.log("shadowForm submitted");
+
+        for (var i = 0; i < this.elements.length; i++) {
+          var element = this.elements[i];
+          console.log(encodeURIComponent(element.name) + " = " + encodeURIComponent(element.value));
+        }
+      });
+
+      var plainInput = document.querySelector("#plain");
+      setTimeout(function () {
+        plainInput.value = "Something plain";
+      }, 4000);
+
+      var cityInput = document.querySelector("#city");
+      var cityPfeTextInput = document.querySelector("#cityPfeTextInput");
+      setTimeout(function () {
+        // cityInput.value = "Some city";
+        // cityInput.setAttribute("value", "Some city");
+        cityPfeTextInput.setAttribute("pfe-c-value", "bademailaddress.co");
+      }, 4000);
+    </script>
+    
+  </body>
+</html>

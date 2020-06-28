@@ -1,0 +1,35 @@
+:host {
+  display: inline-block;
+  position: relative;
+}
+
+::slotted(*) {
+  all: unset;
+  opacity: 0;
+  padding: 8px 6px;
+  border-radius: 0;
+  border: 1px solid transparent;
+  height: 36px !important;
+}
+
+input {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: calc(100% - 14px);
+  padding: 8px 6px;
+  border-radius: 0;
+  border: 1px solid #c3c3c3;
+  border-bottom-color: #767676;
+  background-color: white;
+  font-size: 16px;
+  color: #151515;
+
+  &[disabled] {
+    color: #6a6e73 !important;
+    background-color: #f0f0f0;
+    cursor: not-allowed !important;
+    border: 1px solid transparent;
+  }
+}

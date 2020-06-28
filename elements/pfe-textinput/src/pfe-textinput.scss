@@ -1,0 +1,36 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+$LOCAL: textinput;
+
+:host {
+  // Example local variable, using BEM format
+  // --pfe-textinput--Property: value;
+
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+::slotted(input[type]) {
+  all: unset;
+  padding: 8px 6px;
+  border-radius: 0;
+  border: 1px solid #c3c3c3;
+  border-bottom-color: #767676;
+  background-color: white;
+}
+
+::slotted(input[type][disabled]) {
+  all: unset;
+  color: #6a6e73 !important;
+  background-color: #f0f0f0;
+  cursor: not-allowed !important;
+  padding: 8px 6px;
+  border-radius: 0;
+  border: 1px solid transparent;
+}
+

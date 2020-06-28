@@ -1,0 +1,50 @@
+{
+  "name": "@patternfly/pfe-textinput",
+  "description": "Textinput element for PatternFly Elements",
+  "pfelement": {
+    "className": "PfeTextinput",
+    "elementName": "pfe-textinput",
+    "files": {
+      "styles": "./src/pfe-textinput.scss",
+      "template": "./src/pfe-textinput.html",
+      "js": "./src/pfe-textinput.js"
+    },
+    "assets": []
+  },
+  "version": "1.0.0-prerelease.50",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-textinput"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/pfe-textinput.umd.js",
+  "module": "./dist/pfe-textinput.js",
+  "unpkg": "./dist/pfe-textinput.umd.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-textinput/test/"
+  },
+  "contributors": [
+    {
+      "name": "Kyle Buchanan"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@patternfly/pfe-sass": "1.0.0-prerelease.50",
+    "@patternfly/pfelement": "1.0.0-prerelease.50",
+    "gh-pages": "^2.2.0"
+  }
+}

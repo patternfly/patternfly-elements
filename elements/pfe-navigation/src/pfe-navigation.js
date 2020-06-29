@@ -36,7 +36,7 @@ class PfeNavigation extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-state"];
+    return ["pfe-navigation-state"];
   }
 
   constructor() {
@@ -65,6 +65,8 @@ class PfeNavigation extends PFElement {
     this.search = this.querySelector(`[slot="${this.tag}--search"]`);
     this.customlinks = this.querySelector(`[slot="${this.tag}--customlinks"]`);
 
+    const webComponent = this;
+
     // Add a slotchange listener to the lightDOM trigger
     // this.search.addEventListener("slotchange", this._init);
 
@@ -72,6 +74,7 @@ class PfeNavigation extends PFElement {
     // this.customlinks.addEventListener("slotchange", this._init);
 
     const dropdownTrayItemToggle = event => {
+      // @todo Make sure other things aren't open, including other trays
       const dropdownTrayItem = event.target;
       if (dropdownTrayItem.getAttribute("aria-expanded") == "true") {
         dropdownTrayItem.setAttribute("aria-expanded", "false");
@@ -96,20 +99,51 @@ class PfeNavigation extends PFElement {
     }
 
     // Add menu burger behavior
-    const navigationWrapper = this.shadowRoot.getElementById(
-      "pfe-navigation__wrapper"
-    );
     const menuToggle = this.shadowRoot.querySelector(
       ".pfe-navigation__menu-toggle"
     );
     menuToggle.addEventListener("click", () => {
-      navigationWrapper.classList.toggle("pfe-navigation__wrapper--open");
-      if (
-        navigationWrapper.classList.contains("pfe-navigation__wrapper--open")
-      ) {
-        menuToggle.classList.add("pfe-navigation__menu-toggle--active");
+      const isOpen =
+        webComponent.hasAttribute("pfe-navigation-state", "main-menu-open") &&
+        webComponent.getAttribute("pfe-navigation-state") === "main-menu-open";
+
+      if (isOpen) {
+        webComponent.setAttribute("pfe-navigation-state", "");
       } else {
-        menuToggle.classList.remove("pfe-navigation__menu-toggle--active");
+        webComponent.setAttribute("pfe-navigation-state", "main-menu-open");
+      }
+    });
+
+    // Add search toggle behavior
+    const searchToggle = this.shadowRoot.querySelector(
+      ".pfe-navigation__search-toggle"
+    );
+    searchToggle.addEventListener("click", () => {
+      const isOpen =
+        webComponent.hasAttribute("pfe-navigation-state", "search-open") &&
+        webComponent.getAttribute("pfe-navigation-state") === "search-open";
+
+      if (isOpen) {
+        webComponent.setAttribute("pfe-navigation-state", "");
+      } else {
+        webComponent.setAttribute("pfe-navigation-state", "search-open");
+      }
+    });
+
+    // Add All Red Hat toggle behavior
+    const allRedHat = this.shadowRoot.querySelector(
+      ".pfe-navigation__all-red-hat-toggle"
+    );
+    allRedHat.addEventListener("click", () => {
+      const isOpen =
+        webComponent.hasAttribute("pfe-navigation-state", "all-red-hat-open") &&
+        webComponent.getAttribute("pfe-navigation-state") ===
+          "all-red-hat-open";
+
+      if (isOpen) {
+        webComponent.setAttribute("pfe-navigation-state", "");
+      } else {
+        webComponent.setAttribute("pfe-navigation-state", "all-red-hat-open");
       }
     });
   }
@@ -136,7 +170,7 @@ class PfeNavigation extends PFElement {
       "pfe-navigation__wrapper"
     );
     const shadowMenuWrapper = this.shadowRoot.getElementById(
-      "pfe-navigation__menu-wrapper__inner"
+      "pfe-navigation__menu-wrapper"
     );
     const shadowLogo = this.shadowRoot.getElementById(
       "pfe-navigation__logo-wrapper"

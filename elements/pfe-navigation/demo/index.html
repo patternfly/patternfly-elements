@@ -38,8 +38,48 @@
     <script>require([
       "../dist/pfe-navigation.umd.js"
     ])</script>
+
+    <style>
+      .pfe-navigation__custom-links a,
+      .pfe-navigation__custom-links button {
+        display: block;
+        padding: 8px 24px;
+        border: 0;
+        font-family: inherit;
+        font-size: 16px;
+        color: #06c;
+        text-decoration: none;
+        background: transparent;
+        appearance: none;
+        cursor: pointer;
+        transition: box-shadow 0.25s;
+      }
+      @media (min-width: 768px) {
+        .pfe-navigation__custom-links a,
+        .pfe-navigation__custom-links button {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 72px;
+          margin-right: 8px;
+          padding: 0 8px;
+          font-size: 12px;
+          color: #fff;
+        }
+
+        .pfe-navigation__custom-links a:hover,
+        .pfe-navigation__custom-links button:hover,
+        .pfe-navigation__custom-links a:focus,
+        .pfe-navigation__custom-links button:focus {
+          -webkit-box-shadow: inset 0 4px 0 0 #e00;
+          box-shadow: inset 0 4px 0 0 #e00;
+        }
+      }
+
+    </style>
   </head>
-  <body unresolved>
+  <body unresolved style="background-color: #ddd;">
     <h1><code>pfe-navigation</code></h1>
 
     <pfe-navigation id="pfe-navigation">
@@ -188,11 +228,15 @@
           </li>
         </ul>
       </nav>
-      <div slot="pfe-navigation--custom-links">
-        Custom Link
+      <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
+        <a href="#" class="">Custom Link</a>
       </div>
-      <div slot="pfe-navigation--search">
-        Search slot
+      <div slot="pfe-navigation--search" class="pfe-navigation__search">
+        <form>
+          <label>Search</label>
+          <input type="text" placeholder="Search" />
+          <button>Search</button>
+        </form>
       </div>
     </pfe-navigation>
 

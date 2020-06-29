@@ -1,0 +1,80 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+$LOCAL: navigation;
+
+$menu-height: 72px;
+
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  2xl: 1368px,
+  // The below should match an above breakpoint value
+  // Where the icons on the right appear
+  'secondary-links-break': 768px,
+  // Default value for when the nav expands to desktop
+  'nav-break': 1200px, 
+);
+
+/// Breakpoint helper specific to pfe-navigation
+/// @param {string} $breakpoint Name of a breakpoint
+/// @see
+@mixin breakpoint($breakpoint) {
+  @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+    @content;
+  }
+  // @todo add support for JS nav-break
+}
+
+/// Styles for top level buttons
+/// @todo Needs to be included in shadow dom and no-js styles
+@mixin top-level-button {
+  display: flex;
+  align-items: center;
+  padding: 8px 24px;
+  border: 0;
+  font-family: inherit;
+  font-size: 16px;
+  color: #06c;
+  text-decoration: none;
+  background: transparent;
+  appearance: none;
+  cursor: pointer;
+  transition: box-shadow 0.25s;
+  @include breakpoint('secondary-links-break') {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: $menu-height;
+    margin-right: 8px;
+    padding: 0 8px;
+    font-size: 12px;
+    color: #fff;
+  }
+
+  
+  &:hover,
+  &:focus {
+    @include breakpoint('secondary-links-break') {
+      box-shadow: inset 0 4px 0 0 #e00;
+    }
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    width: 18px;
+    height: 18px;
+    margin: 0 16px 0 0;
+    background: rgba(126, 126, 126, 0.3);
+    @include breakpoint('secondary-links-break') {
+      margin: 0 0 4px;
+    }
+  }
+
+  // @todo Focus styles?
+}

@@ -1,33 +1,4 @@
-// Please see the pfe-sass README for guidance on using these tools
-@import "../../pfe-sass/pfe-sass";
-
-
-$LOCAL: navigation;
-
-$menu-height: 72px;
-
-$breakpoints: (
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px,
-  2xl: 1368px,
-  // The below should match an above breakpoint value
-  // Where the icons on the right appear
-  'secondary-links': 768px,
-  // Default value for when the nav expands to desktop
-  'nav-break': 1200px, 
-);
-
-/// Breakpoint helper specific to pfe-navigation
-/// @param {string} $breakpoint Name of a breakpoint
-/// @see
-@mixin breakpoint($breakpoint) {
-  @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
-    @content;
-  }
-  // @todo add support for JS nav-break
-}
+@import "variables-mixins";
 
 * {
   &,
@@ -58,12 +29,16 @@ $breakpoints: (
   display: flex;
   align-items: stretch;
   height: $menu-height;
+  margin-bottom: 8px;
   padding: 0 16px;
   font-size: 16px;
   line-height: 1.5;
   font-family: "RedHatText", "Red Hat Text", Overpass, Arial, Helvetica, sans-serif;
   color: #fff;
   background: #151515;
+  @include breakpoint('secondary-links-break') {
+    margin-bottom: 0;
+  }
   @include breakpoint('nav-break') {
     display: flex;
     align-items: stretch;
@@ -75,6 +50,8 @@ $breakpoints: (
   }
 }
 
+// Logo area
+// --------------------------------------------------------
 .pfe-navigation__logo-wrapper {
   margin: 0;
   padding: 10px 16px 10px 0;
@@ -94,6 +71,7 @@ $breakpoints: (
     display: block;
   }
 
+  // In case there isn't a mobile and desktop version
   &:only-child {
     display: block;
   }
@@ -106,54 +84,132 @@ $breakpoints: (
   }
 }
 
+// Top Level Menu Buttons Base Styles
+// --------------------------------------------------------
 .pfe-navigation__menu-toggle,
 .pfe-navigation__search-toggle,
 .pfe-navigation__all-red-hat-toggle,
 .pfe-navigation__log-in-link {
-  border: 0;
-  font-family: inherit;
-  font-size: 12px;
+  @include top-level-button;
+}
+
+// Add back some styles to links that stay in the menu at mobile
+.pfe-navigation__menu-toggle,
+.pfe-navigation__log-in-link {
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
   color: #fff;
-  background: transparent;
-  appearance: none;
-  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    box-shadow: inset 0 4px 0 0 #e00;
+  }
+
+  &:before {
+    margin: 0 0 4px;
+  }
 }
 
 .pfe-navigation__menu-toggle {
   margin-left: auto;
-  padding-left: 8px;
-  padding-right: 8px;
-  @include breakpoint(md) {
+  @include breakpoint('secondary-links') {
     margin-left: 0;
     margin-right: auto;
   }
   @include breakpoint('nav-break') {
     display: none;
   }
-}
-
-.pfe-navigation__menu-toggle--active {
-  color: #151515;
-  background: #fff;
-  box-shadow: inset 0 4px 0 0 #e00;
-}
-
-.pfe-navigation__menu-wrapper,
-.pfe-navigation__menu-wrapper__inner {
-  display: flex;
-  align-items: stretch;
-}
-
-.pfe-navigation__menu-wrapper {
-  @include breakpoint('nav-break') {
-    height: $menu-height;
+  
+  :host([pfe-navigation-state='main-menu-open']) & {
+    color: #151515;
+    background: #fff;
+    box-shadow: inset 0 4px 0 0 #e00;
   }
 }
 
-.pfe-navigation__menu-wrapper,
-.pfe-navigation__menu-wrapper__inner {
+
+// Outer menu wrapper layout
+// --------------------------------------------------------
+.pfe-navigation__outer-menu-wrapper,
+.pfe-navigation__outer-menu-wrapper__inner {
+  @include breakpoint('secondary-links-break') {
+    display: flex;
+    align-items: stretch;
+  }
+}
+
+.pfe-navigation__outer-menu-wrapper {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  width: 100%;
+  padding: 16px;
+  background: #fff;
+  @include breakpoint('secondary-links-break') {
+    position: static;
+    display: flex;
+    width: auto;
+    padding: 0;
+    background: transparent;
+  }
+  @include breakpoint('nav-break') {
+    height: $menu-height;
+  }
+
+  :host([pfe-navigation-state='main-menu-open']) & {
+    display: block;
+    @include breakpoint('secondary-links-break') {
+      display: flex;
+    }
+  }
+}
+
+.pfe-navigation__outer-menu-wrapper,
+.pfe-navigation__outer-menu-wrapper__inner {
   @include breakpoint('nav-break') {
     flex-grow: 1;
+  }
+}
+
+// Menu, List, & Items
+// --------------------------------------------------------
+.pfe-navigation__menu-wrapper {
+  margin-bottom: 8px;
+  background: #fff;
+  @include breakpoint('secondary-links-break') {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    width: 100%;
+    padding: 16px 32px;
+    margin: 0;
+}
+  @include breakpoint('nav-break') {
+    position: static;
+    display: flex;
+    align-items: stretch;
+    margin-right: auto;
+    padding: 0;
+    background: transparent;
+  }
+
+  :host([pfe-navigation-state='main-menu-open']) & {
+    @include breakpoint(md) {
+      display: block;
+    }
+    @include breakpoint('nav-break') {
+      position: static;
+      display: flex;
+      align-items: stretch;
+      width: auto;
+      padding: 0;
+      background: transparent;
+    }
   }
 }
 
@@ -165,30 +221,9 @@ $breakpoints: (
 }
 
 .pfe-navigation__menu {
-  display: none;
-  margin-right: auto;
-  background: #fff;
-  padding: 16px 32px;
   @include breakpoint('nav-break') {
-    position: static;
     display: flex;
     align-items: stretch;
-    padding: 0;
-    background: transparent;
-  }
-
-  .pfe-navigation__wrapper--open & {
-    @include breakpoint(md) {
-      display: block;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-    }
-    @include breakpoint('nav-break') {
-      position: static;
-      width: auto;
-    }
   }
 }
 
@@ -211,6 +246,9 @@ $breakpoints: (
 
   &:last-child {
     border-bottom: 1px solid #d2d2d2;
+    @include breakpoint('nav-break') {
+      border: 0;
+    }
   }
 }
 
@@ -319,6 +357,8 @@ $breakpoints: (
   }
 }
 
+// Drawers
+// --------------------------------------------------------
 .pfe-navigation__drawer {
   display: none;
   font-size: 16px;
@@ -337,55 +377,110 @@ $breakpoints: (
   .pfe-navigation__menu-item--open > & {
     display: block;
   }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+  }
+}
+
+// Search
+// --------------------------------------------------------
+.pfe-navigation__search-toggle {
+  display: none;
+  @include breakpoint(md) {
+    display: flex;
+  }
+
+  :host([pfe-navigation-state='search-open']) & {
+    color: #151515;
+    background: #fff;
+    box-shadow: inset 0 4px 0 0 #e00;
+  }
 }
 
 .pfe-navigation__search {
-  display: none;
+  margin-bottom: 24px;
+  color: #151515;
+  @include breakpoint(md) {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    width: 100%;
+    margin-bottom: 0;
+    padding: 16px;
+    background: #fff;
+  }
+
+  :host([pfe-navigation-state='search-open']) & {
+    display: block;
+  }
 }
 
-.pfe-navigation__custom-links-wrapper,
-.pfe-navigation__custom-links-wrapper__inner {
-  display: flex;
-  align-items: stretch;
-}
+// Custom Links
+// --------------------------------------------------------
+.pfe-navigation__custom-links {
+  @include breakpoint('secondary-links-break') {
+    display: flex;
+    align-items: stretch;
+  }
 
-.pfe-navigation__customlinks {
-  display: none;
+  &,
+  a,
+  button {
+    color: #151515;
+    @include breakpoint('secondary-links-break') {
+      color: #fff;
+    }
+  }
 }
 
 .pfe-navigation__custom-links-wrapper {
-  @include breakpoint('nav-break') {
+  @include breakpoint('secondary-links-break') {
     height: $menu-height;
+  }
+}
+
+// All Red Hat Button & Dropdown
+// --------------------------------------------------------
+.pfe-navigation__all-red-hat-toggle {
+  :host([pfe-navigation-state='all-red-hat-open']) & {
+    color: #151515;
+    background: #fff;
+    box-shadow: inset 0 4px 0 0 #e00;
   }
 }
 
 .pfe-navigation__all-red-hat-wrapper__inner {
   display: none;
-}
 
-.pfe-navigation__log-in-link {
-  display: flex;
-  align-items: center;
-  padding: 24px 11px;
-  color: #fff;
-  transition: box-shadow 0.2s;
-  border: 1px dashed transparent;
-  border-top: 0;
-  @include breakpoint('nav-break') {
-    max-height: 72px;
+  @include breakpoint(md) {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    width: 100%;
+    margin-bottom: 0;
+    padding: 16px;
+    color: #151515;
+    background: #fff;
   }
 
-  &:hover,
-  &:focus {
-    box-shadow: inset 0 4px 0 0 #e00;
-  }
-
-  &:focus {
-    border: 1px dashed #fff;
-    border-top: 0;
-    outline: none;
+  :host([pfe-navigation-state='all-red-hat-open']) & {
+    @include breakpoint(md) {
+      display: block;
+    }
   }
 }
+
+.pfe-navigation__log-in-link {}
 
 //-- Custom styles applied by attributes
 // @each $option in () {
@@ -399,7 +494,7 @@ $breakpoints: (
   // Add styles here
 // }
 
-// ::slotted([slot="pfe-navigation--customlinks"]) {
+// ::slotted([slot="pfe-navigation--custom-links"]) {
   // Add styles here
 // }
 
@@ -408,7 +503,7 @@ $breakpoints: (
 //   &__search {
     // Add styles here
 //   }
-//   &__customlinks {
+//   &__custom-links {
     // Add styles here
 //   }
 // }

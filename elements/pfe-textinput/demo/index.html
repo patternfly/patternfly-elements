@@ -61,27 +61,39 @@
       let { useState, useEffect } = React;
       
       let ReactForm = () => {
-        const [inputValue, setInputValue] = useState("something");
+        const [firstName, setFirstName] = useState("Douglas");
+        const [lastName, setLastName] = useState("");
 
         useEffect(() => {
           setTimeout(() => {
-            setInputValue("Something else");
+            setFirstName("Albert");
           }, 3000);
         }, []);
 
         function handleSubmit(event) {
           event.preventDefault();
-          console.log("React Form submitted", inputValue);
+          console.log("React Form submitted", firstName);
         }
 
         return (
-          <form onSubmit={handleSubmit}>
+          <div>
             <h2>pfe-textinput React Form</h2>
-            <pfe-textinput-shadow>
-              <input type="text" value={inputValue} onChange={e => setInputValue(e.target.value)} required />
-            </pfe-textinput-shadow>
-            <button>Submit</button>
-          </form>
+            <form className="form" onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="reactFirstName">First Name</label>
+                <pfe-textinput-shadow>
+                  <input type="text" id="reactFirstName" name="firstName" placeholder="First Name" value={firstName} onChange={e => setFirstName(e.target.value)} required />
+                </pfe-textinput-shadow>
+              </div>
+              <div>
+                <label htmlFor="reactLastName">Last Name</label>
+                <pfe-textinput-shadow>
+                  <input type="text" id="reactLastName" name="lastName" placeholder="Last Name" value={lastName} onChange={e => setLastName(e.target.value)} required />
+                </pfe-textinput-shadow>
+              </div>
+              <button>Submit</button>
+            </form>
+          </div>
         );
       };
 
@@ -94,25 +106,25 @@
         color: black;
       }
 
-      #shadowForm {
+      .form {
         max-width: 600px;
       }
 
-      #shadowForm > div {
+      .form > div {
         margin-bottom: 8px;
       }
 
-      #shadowForm label {
+      .form label {
         width: 126px;
       }
 
-      #shadowForm pfe-textinput-shadow {
+      .form pfe-textinput-shadow {
         width: calc(100% - 132px);
       }
 
-      #shadowForm button {
+      .form button {
         position: relative;
-        left: 132px;
+        left: 126px;
       }
     </style>
   </head>
@@ -135,7 +147,7 @@
       </form>
 
       <h2>pfe-textinput-shadow Form</h2>
-      <form id="shadowForm">
+      <form class="form" id="shadowForm">
         <div>
           <label for="firstName">First Name</label>
           <pfe-textinput-shadow>

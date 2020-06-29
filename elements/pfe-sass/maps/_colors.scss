@@ -31,8 +31,8 @@ $pfe-colors: (
   // Set of base colors
 
   ui-base:                      $pf-global--secondary-color--100,
-  ui-base--hover:               darken($pf-global--primary-color--100, 20%),
-  ui-base--focus:               darken($pf-global--primary-color--100, 20%),
+  ui-base--hover:               darken($pf-global--secondary-color--100, 20%),
+  ui-base--focus:               darken($pf-global--secondary-color--100, 20%),
   ui-base--text:                $pfe-color--text--on-dark,
   ui-base--text--hover:         $pfe-color--text--on-dark,
   ui-base--text--focus:         $pfe-color--text--on-dark,

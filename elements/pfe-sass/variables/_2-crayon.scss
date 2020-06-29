@@ -43,20 +43,7 @@ $pfelements--purple:            rebeccapurple !default; // Was #703fec
 // B&W, Gray Values
 // ========================================================================
 
-$pfe-color--white:               #fff !default;
-$pfe-color--gray-50:             lighten($pfelements--gray, 48%) !default;
-$pfe-color--gray-100:            lighten($pfelements--gray, 45%) !default;
-$pfe-color--gray-200:            lighten($pfelements--gray, 40%) !default;
-$pfe-color--gray-250:            $pfelements--gray-light !default;
-$pfe-color--gray-300:            lighten($pfelements--gray, 30%) !default;
-$pfe-color--gray-400:            lighten($pfelements--gray, 20%) !default;
-$pfe-color--gray-500:            lighten($pfelements--gray, 10%) !default;
-$pfe-color--gray-600:            $pfelements--gray !default;                 // Aliased
-$pfe-color--gray-700:            darken($pfelements--gray, 10%) !default;
-$pfe-color--gray-800:            darken($pfelements--gray, 20%) !default;
-$pfe-color--gray-900:            darken($pfelements--gray, 30%) !default;
-$pfe-color--gray-1000:           darken($pfelements--gray, 40%) !default;
-$pfe-color--black:               $pfe-color--gray-1000 !default;               // Aliased
+
 
 // ========================================================================
 // Hue Rainbow Values!

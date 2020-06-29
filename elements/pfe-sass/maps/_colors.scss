@@ -37,9 +37,9 @@ $pfe-colors: (
   ui-base--text--hover:         $pfe-color--text--on-dark,
   ui-base--text--focus:         $pfe-color--text--on-dark,
 
-  ui-base--on-dark:                      $pfe-color--white,
-  ui-base--hover--on-dark:               darken($pfe-color--white, 20%),
-  ui-base--focus--on-dark:               darken($pfe-color--white, 20%),
+  ui-base--on-dark:                      $pf-color-white,
+  ui-base--hover--on-dark:               darken($pf-color-white, 20%),
+  ui-base--focus--on-dark:               darken($pf-color-white, 20%),
   ui-base--text--on-dark:                $pfe-color--text,
   ui-base--text--hover--on-dark:         $pfe-color--text,
   ui-base--text--focus--on-dark:         $pfe-color--text,
@@ -60,9 +60,9 @@ $pfe-colors: (
   ui-accent--text--hover--on-dark:      $pfe-color--text,
   ui-accent--text--focus--on-dark:      $pfe-color--text,
 
-  ui-accent--on-saturated:                   $pfe-color--white,
-  ui-accent--hover--on-saturated:            darken($pfe-color--white, 20%),
-  ui-accent--focus--on-saturated:            darken($pfe-color--white, 20%),
+  ui-accent--on-saturated:                   $pf-color-white,
+  ui-accent--hover--on-saturated:            darken($pf-color-white, 20%),
+  ui-accent--focus--on-saturated:            darken($pf-color-white, 20%),
   ui-accent--text--on-saturated:             $pfe-color--text,
   ui-accent--text--hover--on-saturated:      $pfe-color--text,
   ui-accent--text--focus--on-saturated:      $pfe-color--text,
@@ -70,8 +70,8 @@ $pfe-colors: (
   // Set of disabled colors
   ui-disabled:                        $pfelements--gray-light,
   ui-disabled--hover:                 $pfelements--gray-light,
-  ui-disabled--focus:                 $pfe-color--gray-500,
-  ui-disabled--text:                  $pfe-color--gray-600,
+  ui-disabled--focus:                 transparent,
+  ui-disabled--text:                  $pf-color-black-600,
   ui-disabled--text--hover:           $pfelements--gray,
   ui-disabled--text--focus:           $pfelements--gray,
 
@@ -80,23 +80,23 @@ $pfe-colors: (
   // ========================================================================
 
   // Lightest group
-  surface--lightest:        $pfe-color--white,
+  surface--lightest:        $pf-color-white,
   surface--lightest--theme: light,
 
   // Lighter group
-  surface--lighter:         $pfe-color--gray-100,
+  surface--lighter:         $pf-color-black-100,
   surface--lighter--theme:  light,
 
   // Base group
-  surface--base:        $pfe-color--gray-200,
+  surface--base:        $pf-color-black-200,
   surface--base--theme: light,
 
   // Darker group
-  surface--darker:        $pfe-color--gray-800,
+  surface--darker:        $pf-color-black-800,
   surface--darker--theme: dark,
 
   // Darkest group
-  surface--darkest:        $pfe-color--gray-1000,
+  surface--darkest:        $pf-color-black-900,
   surface--darkest--theme: dark,
 
   // Complement group
@@ -108,11 +108,11 @@ $pfe-colors: (
   surface--accent--theme: saturated,
 
   // Palette of Border Colors
-  surface--border--lightest:          $pfe-color--gray-100,
-  surface--border--lighter:           $pfe-color--gray-100,
+  surface--border--lightest:          $pf-color-black-100,
+  surface--border--lighter:           $pf-color-black-150,
   surface--border:                    $pfelements--gray-light,
-  surface--border--darker:            $pfe-color--gray-300,
-  surface--border--darkest:           $pfe-color--gray-800,
+  surface--border--darker:            $pf-color-black-300,
+  surface--border--darkest:           $pf-color-black-800,
 
 
   // ========================================================================
@@ -140,9 +140,9 @@ $pfe-colors: (
   feedback--info:                     #0277bd,
   feedback--info--darkest:            #01579b,
 
-  feedback--default--lightest:        $pfe-color--gray-100,
-  feedback--default:                  $pfe-color--gray-700,
-  feedback--default--darkest:         $pfe-color--gray-800,
+  feedback--default--lightest:        $pf-color-black-1000,
+  feedback--default:                  $pf-color-black-700,
+  feedback--default--darkest:         $pf-color-black-800,
 
-  overlay:                            rgba($pfe-color--gray-900, .5)
+  overlay:                            rgba($pf-color-black-900, .5)
 );

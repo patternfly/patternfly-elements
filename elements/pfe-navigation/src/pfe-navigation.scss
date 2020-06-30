@@ -369,6 +369,13 @@
     left: 0;
     width: 100%;
     padding: 32px 64px;
+    // Fits as many columns as it can given the constraints
+    grid-template-columns: 
+      repeat(
+        auto-fill,
+        minmax(#{200 / 16 * 1em}, #{350 / 16 * 1em})
+      );
+    grid-gap: 2em;
     background: #fff;
     // temp style
     border-bottom: 2px solid black;
@@ -376,6 +383,9 @@
 
   .pfe-navigation__menu-item--open > & {
     display: block;
+    @include breakpoint('nav-break') {
+      display: grid;
+    }
   }
 
   h1,

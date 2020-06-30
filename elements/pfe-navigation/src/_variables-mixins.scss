@@ -56,7 +56,6 @@ $breakpoints: (
     color: #fff;
   }
 
-  
   &:hover,
   &:focus {
     @include breakpoint('secondary-links-break') {

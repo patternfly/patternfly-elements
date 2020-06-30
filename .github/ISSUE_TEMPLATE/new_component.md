@@ -1,7 +1,7 @@
 ---
 name: New component
 about: Outline the requirements for a new component.
-labels: Design System, new component request, sev-1
+labels: "design system, new component request, priority: low"
 ---
 
 # Component name: 

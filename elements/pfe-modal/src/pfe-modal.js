@@ -96,6 +96,7 @@ class PfeModal extends PFElement {
 
     if (this.trigger) {
       this.trigger.addEventListener("click", this.open);
+      this.removeAttribute("hidden");
     }
 
     if (this.header) {

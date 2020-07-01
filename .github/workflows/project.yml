@@ -9,7 +9,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS }}
           GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
-          GITHUB_PROJECT_COLUMN_NAME: Needs discovery
+          GITHUB_PROJECT_COLUMN_NAME: Backlog
       - uses: takanabe/github-actions-automate-projects@v0.0.1
         if: github.event.action == 'labeled' && (github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'blocked')) || (github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && contains(github.event.pull_request.labels.*.name, 'blocked'))
         env:

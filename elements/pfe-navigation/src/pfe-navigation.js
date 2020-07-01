@@ -149,15 +149,16 @@ class PfeNavigation extends PFElement {
     const navigationState = this.getAttribute(`${this.tag}-state`);
     const isOpen = this.isOpen(toggleId);
 
-    // Shut any open trays
-    if (navigationState && navigationState.startsWith("main-menu__tray")) {
-      const activeTray = this.shadowRoot.querySelector(
+    // Shut any open dropdowns
+    if (navigationState && navigationState.startsWith("main-menu__dropdown")) {
+      const activedropdown = this.shadowRoot.querySelector(
         ".pfe-navigation__menu-item--open"
       );
-      activeTray
+
+      activeDropdown
         .querySelector(".pfe-navigation__menu-link")
         .setAttribute("aria-expanded", "false");
-      activeTray.classList.remove("pfe-navigation__menu-item--open");
+      activeDropdown.classList.remove("pfe-navigation__menu-item--open");
     }
 
     if (isOpen) {
@@ -239,17 +240,20 @@ class PfeNavigation extends PFElement {
       }
     }
 
-    // Add menu tray toggle behavior
-    const dropdownTrayItems = this.shadowRoot.querySelectorAll(
+    // Add menu dropdown toggle behavior
+    const dropdownDropdownItems = this.shadowRoot.querySelectorAll(
       '.pfe-navigation__menu-link[aria-haspopup="true"]'
     );
-    for (let index = 0; index < dropdownTrayItems.length; index++) {
-      const dropdownTrayItem = dropdownTrayItems[index];
-      dropdownTrayItem.setAttribute(
+    for (let index = 0; index < dropdownDropdownItems.length; index++) {
+      const dropdownDropdownItem = dropdownDropdownItems[index];
+      dropdownDropdownItem.setAttribute(
         "data-machine-name",
-        this._createMachineName(dropdownTrayItem.text)
+        this._createMachineName(dropdownDropdownItem.text)
       );
-      dropdownTrayItem.addEventListener("click", this._dropdownTrayItemToggle);
+      dropdownDropdownItem.addEventListener(
+        "click",
+        this._dropdownDropdownItemToggle
+      );
     }
 
     // Add menu burger behavior

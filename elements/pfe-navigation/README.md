@@ -18,7 +18,7 @@ Describe how best to use this web component along with best practices.
             <a href="#" class="pfe-navigation__menu-link" aria-haspopup="true" aria-expanded="false">
               Products
             </a>
-              <div class="pfe-navigation__drawer">
+              <div class="pfe-navigation__dropdown">
                 <section>
                   <h3>
                     <a href="#">Platforms</a>

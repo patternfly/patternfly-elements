@@ -63,7 +63,9 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggleEventListener = this._allRedHatToggleEventListener.bind(
       this
     );
-    this._dropdownTrayItemToggle = this._dropdownTrayItemToggle.bind(this);
+    this._dropdownDropdownItemToggle = this._dropdownDropdownItemToggle.bind(
+      this
+    );
 
     // Setup mutation observer to watch for content changes
     this._observer = new MutationObserver(this._processLightDom);
@@ -108,7 +110,7 @@ class PfeNavigation extends PFElement {
         // Something is open, and a section wasn't set
         return true;
       }
-      // Only checks for prefix so if main-menu is queried and main-menu__tray--Link-Name is open it still evaluates as true
+      // Only checks for prefix so if main-menu is queried and main-menu__dropdown--Link-Name is open it still evaluates as true
       // This prevents the main-menu toggle shutting at mobile when a sub-section is opened
       return navigationState.startsWith(section);
     }
@@ -149,15 +151,16 @@ class PfeNavigation extends PFElement {
     const navigationState = this.getAttribute(`${this.tag}-state`);
     const isOpen = this.isOpen(toggleId);
 
-    // Shut any open trays
-    if (navigationState && navigationState.startsWith("main-menu__tray")) {
-      const activeTray = this.shadowRoot.querySelector(
+    // Shut any open dropdowns
+    if (navigationState && navigationState.startsWith("main-menu__dropdown")) {
+      const activeDropdown = this.shadowRoot.querySelector(
         ".pfe-navigation__menu-item--open"
       );
-      activeTray
+
+      activeDropdown
         .querySelector(".pfe-navigation__menu-link")
         .setAttribute("aria-expanded", "false");
-      activeTray.classList.remove("pfe-navigation__menu-item--open");
+      activeDropdown.classList.remove("pfe-navigation__menu-item--open");
     }
 
     if (isOpen) {
@@ -239,17 +242,20 @@ class PfeNavigation extends PFElement {
       }
     }
 
-    // Add menu tray toggle behavior
-    const dropdownTrayItems = this.shadowRoot.querySelectorAll(
+    // Add menu dropdown toggle behavior
+    const dropdownDropdownItems = this.shadowRoot.querySelectorAll(
       '.pfe-navigation__menu-link[aria-haspopup="true"]'
     );
-    for (let index = 0; index < dropdownTrayItems.length; index++) {
-      const dropdownTrayItem = dropdownTrayItems[index];
-      dropdownTrayItem.setAttribute(
+    for (let index = 0; index < dropdownDropdownItems.length; index++) {
+      const dropdownDropdownItem = dropdownDropdownItems[index];
+      dropdownDropdownItem.setAttribute(
         "data-machine-name",
-        this._createMachineName(dropdownTrayItem.text)
+        this._createMachineName(dropdownDropdownItem.text)
       );
-      dropdownTrayItem.addEventListener("click", this._dropdownTrayItemToggle);
+      dropdownDropdownItem.addEventListener(
+        "click",
+        this._dropdownDropdownItemToggle
+      );
     }
 
     // Add menu burger behavior
@@ -289,24 +295,24 @@ class PfeNavigation extends PFElement {
     this._toggleNavigationState("all-red-hat");
   }
 
-  _dropdownTrayItemToggle(event) {
-    const dropdownTrayItem = event.target;
-    const machineName = dropdownTrayItem.getAttribute("data-machine-name");
-    const toggleId = `main-menu__tray--${machineName}`;
+  _dropdownDropdownItemToggle(event) {
+    const dropdownDropdownItem = event.target;
+    const machineName = dropdownDropdownItem.getAttribute("data-machine-name");
+    const toggleId = `main-menu__dropdown--${machineName}`;
 
     // Don't navigate
     event.preventDefault();
 
     // Toggle state and manage attributes for a11y and styling
     if (this._toggleNavigationState(toggleId)) {
-      dropdownTrayItem.setAttribute("aria-expanded", "true");
+      dropdownDropdownItem.setAttribute("aria-expanded", "true");
       // Manage class on parent li so it's easier to style any child that needs style updates
-      dropdownTrayItem.parentElement.classList.add(
+      dropdownDropdownItem.parentElement.classList.add(
         "pfe-navigation__menu-item--open"
       );
     } else {
-      dropdownTrayItem.setAttribute("aria-expanded", "false");
-      dropdownTrayItem.parentElement.classList.remove(
+      dropdownDropdownItem.setAttribute("aria-expanded", "false");
+      dropdownDropdownItem.parentElement.classList.remove(
         "pfe-navigation__menu-item--open"
       );
     }

@@ -356,9 +356,10 @@
   }
 }
 
-// Drawers
+// Main menu dropdowns
 // --------------------------------------------------------
-.pfe-navigation__drawer {
+.pfe-navigation__dropdown {
+  // @todo animation and polish
   display: none;
   font-size: 16px;
 
@@ -369,6 +370,7 @@
     width: 100%;
     padding: 32px 64px;
     // Fits as many columns as it can given the constraints
+    // @todo evaluate layout needs and if this is a sane default
     grid-template-columns: 
       repeat(
         auto-fill,

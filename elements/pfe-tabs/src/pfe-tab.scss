@@ -79,15 +79,19 @@ $LOCAL-VARIABLES: (
     outline: #{pfe-var(ui--focus-outline-width)} outset #{pfe-local(focus)};
   }
 
-  @at-root #{&}([on="dark"]) {
+  @at-root #{&}([on="dark"]),
+  #{&}([on="saturated"]) {
     --#{$repo}-tabs--focus: #{pfe-var(link--focus--on-dark)};
   }
+  // @at-root #{&}([on="saturated"]) {
+  //   --#{$repo}-tabs--focus: #{pfe-var(link--focus--on-dark)};
+  // }
 
-  @at-root #{&}([on="saturated"]) {
-    --#{$repo}-tabs--Color: #{darken($pfe-color--white, 20%)};
-    --#{$repo}-tabs--focus: #{pfe-var(link--focus--on-saturated)};
-    --#{$repo}-tabs--highlight: #{pfe-var(text--on-saturated)};
-  }
+  // @at-root #{&}([on="saturated"]) {
+  //   --#{$repo}-tabs--Color: #{darken($pfe-color--white, 20%)};
+  //   --#{$repo}-tabs--focus: #{pfe-var(link--focus--on-saturated)};
+  //   --#{$repo}-tabs--highlight: #{pfe-var(text--on-saturated)};
+  // }
 
   @at-root #{&}([aria-selected="true"]) {
     --pfe-tabs--Color: #{$pfe-color--black};
@@ -95,8 +99,8 @@ $LOCAL-VARIABLES: (
     --pfe-tabs__tab--BorderColor: transparent;
     --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
     @include browser-query(ie11) {
-      color: #{$pfe-color--black};
-      border-bottom: #{pfe-fetch(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-var(ui-accent)};
+      color: #{pfe-local(Color--hover)};
+      border-bottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-var(ui-accent)};
     }
   }
 }
@@ -116,13 +120,14 @@ $LOCAL-VARIABLES: (
     --#{$repo}-tabs__tab--PadingLeft: calc(#{pfe-var(container-padding)} * .75);
     --#{$repo}-tabs__tab--TextAlign: left;
 
-    @include browser-query(ie11) {
-      border: 1px solid transparent;
-      border-right: 0;
-      margin: 0 -1px 0 0;
-      padding-left: 12px;
-      text-align: left;
-    }
+      @include browser-query(ie11) {
+        border: 1px solid transparent;
+        border-bottom: 0;
+        border-right: 0;
+        margin: 0 -1px 0 0;
+        padding-left: 12px;
+        text-align: left;
+      }
   }
 
   :host([vertical][aria-selected="true"]) {
@@ -134,6 +139,7 @@ $LOCAL-VARIABLES: (
       color: #{$pfe-color--black};
       border-top-color: transparent;
       border-right: #{pfe-fetch(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-var(ui-accent)};
+      border-bottom: 0;
     }
   }
 }
@@ -175,15 +181,26 @@ $LOCAL-VARIABLES: (
 
 :host{
   @at-root #{&}([vertical][pfe-variant="wind"]){
-    --pfe-tabs__tab--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
+    --pfe-tabs__tab--BorderLeft: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
+    @include browser-query(ie11) {
+      border-left: #{pfe-fetch(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-fetch(surface--border)};
+    }
   }
   @at-root #{&}[pfe-variant="wind"][aria-selected="false"]:hover){
-    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
+    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};// :host([pfe-variant="wind"][aria-selected="true"]) {
+    @include browser-query(ie11) {
+      border-bottom:  #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(BorderColor--hover)};
+    }
   }
   @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="true"]){
     --pfe-tabs__tab--BorderRight: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} transparent;
     --pfe-tabs__tab--BorderLeft: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
     padding-left: calc(#{pfe-var(container-padding)} * 1.5 - 2px);
+    @include browser-query(ie11) {
+      border-right:  0;
+      border-left:  #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(highlight)};
+      padding-left: 10px;
+    }
   }
   @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="false"]){
     --pfe-tabs__tab--BorderRight: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} transparent;
@@ -193,6 +210,12 @@ $LOCAL-VARIABLES: (
     --pfe-tabs__tab--BorderBottom: 0;
     --pfe-tabs__tab--BorderLeft: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
     padding-left: calc(#{pfe-var(container-padding)} * 1.5 - 2px);
+    @include browser-query(ie11) {
+      border-right:  0;
+      border-bottom: 0;
+      padding-left: 10px;
+      border-left: #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(BorderColor--hover)};
+    }
   }
 }
 
@@ -212,14 +235,17 @@ $LOCAL-VARIABLES: (
   );
   @include pfe-print-local($variantEarth);
   @include browser-query(ie11) {
-    border-top: 3px solid #{pfe-var(surface--lighter)};
-    border-bottom: 1px solid #{pfe-var(surface--border)};
-    border-left: 1px solid #{pfe-var(surface--border)};
+    border-top: 3px solid #{pfe-fetch(surface--lighter)};
+    border-bottom: 1px solid #{pfe-fetch(surface--border)};
+    border-left: 1px solid #{pfe-fetch(surface--border)};
   }
 }
 
 :host([pfe-variant="earth"][aria-selected="false"]:hover){
   --pfe-tabs__tab--BorderTop: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
+  @include browser-query(ie11) {
+    border-top: #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(BorderColor--hover)} !important;
+  }
 }
 
 :host([pfe-variant="earth"][aria-selected="true"]) {
@@ -236,10 +262,11 @@ $LOCAL-VARIABLES: (
 
     border-top: 3px solid #{pfe-local(highlight)};
     border-bottom: 0;
-    border-left: 1px solid #{pfe-fetch(surface--border)};
   }
 }
-
+:host([pfe-variant="earth"][aria-selected="false"]:first-of-type) {
+  border-left: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} transparent !important;
+}
 :host([pfe-variant="earth"][aria-selected="true"]:last-of-type) {
   --#{$repo}-tabs__tab--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 
@@ -268,10 +295,22 @@ $LOCAL-VARIABLES: (
       border-top: 0;
     }
   }
-  :host([vertical][pfe-variant="earth"]:first-of-type[aria-selected="false"]){
-    --pfe-tabs__tab--BorderTop: 1px solid #ececec;
+  :host([vertical][pfe-variant="earth"][aria-selected="false"]:first-of-type) {
+  border-top: #{pfe-var(ui--border-width)} #{pfe-fetch(ui--border-style)} transparent !important;
+  border-left: 3px #{pfe-fetch(ui--border-style)} transparent !important;
+    @include browser-query(ie11) {
+      border-top: 1px #{pfe-fetch(ui--border-style)} transparent !important;
+    }
   }
 
+  :host([vertical][pfe-variant="earth"]:first-of-type[aria-selected="false"]:hover ){
+    --pfe-tabs__tab--BorderTop:  #{pfe-var(ui--border-style)} #{pfe-var(ui--border-style)} transparent;
+    --pfe-tabs__tab--BorderLeft: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)} !important;
+    @include browser-query(ie11) {
+      border-top: 1px #{pfe-fetch(ui--border-style)} transparent !important;
+      border-left: #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(BorderColor--hover)} !important;
+    }
+  }
   :host([vertical][pfe-variant="earth"][aria-selected="true"]) {
     --pfe-tabs__tab--BorderTop:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
     --pfe-tabs__tab--BorderRight: 0;
@@ -287,8 +326,7 @@ $LOCAL-VARIABLES: (
   :host([vertical][pfe-variant="earth"][aria-selected="false"]) {
     --pfe-tabs__tab--BorderRight:  #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
     --pfe-tabs__tab--BorderBottom: 0;
-    --pfe-tabs__tab--BorderLeft:   #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-var(surface--lighter)};
-    --pfe-tabs__tab--BorderLeft: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} transparent;
+    --pfe-tabs__tab--BorderLeft:   #{pfe-local(BorderWidth--hover)} #{pfe-var(ui--border-style)} transparent;
 
     @include browser-query(ie11) {
       border-right: 1px solid #{pfe-fetch(surface--border)};
@@ -298,8 +336,12 @@ $LOCAL-VARIABLES: (
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="false"]:hover){
-    --pfe-tabs__tab--BorderTop: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
     --pfe-tabs__tab--BorderLeft: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
+    --pfe-tabs__tab--BorderTop: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
+    @include browser-query(ie11) {
+      border-left: #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(BorderColor--hover)} !important;
+      border-top: #{pfe-fetch(ui--border-width)} #{pfe-fetch(ui--border-style)} #{pfe-fetch(surface--border)} !important;
+    }
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="true"]:last-of-type) {
@@ -321,8 +363,8 @@ $LOCAL-VARIABLES: (
       //color: #d2d2d2;
       color: #{pfe-var(ui-disabled)};
     }
-      @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]:first-of-type) {
-        border-left: 1px solid transparent !important;
+    @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]:first-of-type) {
+      border-left: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} transparent !important;
     }
       @at-root #{&}([pfe-variant="earth"][aria-selected="true"][on="dark"]) {
         color: #{pfe-var(surface--lightest)};

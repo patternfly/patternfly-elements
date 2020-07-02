@@ -1,20 +1,17 @@
 {
   "name": "@patternfly/pfe-navigation",
+  "description": "Navigation element for PatternFly Elements",
   "pfelement": {
     "className": "PfeNavigation",
     "elementName": "pfe-navigation",
-    "assets": [
-      "pfe-navigation--lightdom.*css",
-      "pfe-navigation--lightdom.*css.map",
-      "pfe-navigation--noscript.*css",
-      "pfe-navigation--noscript.*css.map"
-    ]
+    "files": {
+      "styles": "./src/pfe-navigation.scss",
+      "template": "./src/pfe-navigation.html",
+      "js": "./src/pfe-navigation.js"
+    },
+    "assets": []
   },
   "version": "1.0.0-prerelease.49",
-  "publishConfig": {
-    "access": "public"
-  },
-  "description": "Navigation element for PatternFly Elements",
   "keywords": [
     "web-components",
     "html"
@@ -23,6 +20,9 @@
     "type": "git",
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-navigation"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "main": "./dist/pfe-navigation.umd.js",
   "module": "./dist/pfe-navigation.js",
@@ -38,21 +38,13 @@
   },
   "contributors": [
     {
-      "name": "Kyle Buchanan"
-    },
-    {
-      "name": "castastrophe",
-      "url": "https://www.github.com/castastrophe"
-    },
-    {
-      "name": "cd"
+      "name": "wesruv"
     }
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-icon": "^1.0.0-prerelease.49",
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.49",
-    "@patternfly/pfelement": "^1.0.0-prerelease.49"
-  },
-  "generator-pfelement-version": "1.1.0"
+    "@patternfly/pfe-sass": "1.0.0-prerelease.49",
+    "@patternfly/pfelement": "1.0.0-prerelease.49",
+    "gh-pages": "^2.2.0"
+  }
 }

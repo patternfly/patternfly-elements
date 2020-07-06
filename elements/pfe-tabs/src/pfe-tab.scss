@@ -78,11 +78,19 @@ $LOCAL-VARIABLES: (
   }
 
   @at-root #{&}([on="dark"]){
-    --#{$repo}-tabs--focus: #{pfe-var(link--focus--on-dark)};
+    //--#{$repo}-tabs--focus: #{pfe-var(link--focus--on-dark)};
   }
   @at-root #{&}([on="saturated"]) {
-    --#{$repo}-tabs--focus: #{pfe-var(link--focus--on-dark)};
+    //--#{$repo}-tabs--focus: #{pfe-var(link--focus--on-dark)};
+    color: #{pfe-var(link--focus--on-dark)};
   }
+  @at-root #{&}([on="dark"][aria-selected="false"][pfe-variant="wind"]:hover) {
+    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
+  }
+  @at-root #{&}([on="saturated"][aria-selected="false"][pfe-variant="wind"]:hover) {
+    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
+  }
+
   // @at-root #{&}([on="saturated"]) {
   //   --#{$repo}-tabs--focus: #{pfe-var(link--focus--on-dark)};
   // }

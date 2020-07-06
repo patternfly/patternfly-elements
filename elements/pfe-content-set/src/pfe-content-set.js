@@ -30,7 +30,7 @@ class PfeContentSet extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-tab-history"];
+    return ["pfe-variant", "pfe-tab-history"];
   }
 
   get isTab() {

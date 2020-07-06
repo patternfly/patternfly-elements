@@ -190,7 +190,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         }
 
         [slot="trigger"] {
-            font-size: 16px;
+            font-size:  #{pfe-local($region: trigger, $cssvar: FontSize, $fallback: $trigger--FontSize--fallback)};
             margin: 0;
         }
 
@@ -559,7 +559,7 @@ pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [
 
 pfe-navigation-main [slot="trigger"],
 pfe-navigation-main [slot="trigger"] > a {
-    font-size: $trigger--FontSize--fallback;
+    font-size: #{pfe-local($region: trigger, $cssvar: FontSize, $fallback: $trigger--FontSize--fallback)};
 
     @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false) )
                   and (max-width: pfe-breakpoint("xl", $max: true) ) {

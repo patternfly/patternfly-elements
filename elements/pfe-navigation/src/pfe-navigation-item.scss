@@ -11,7 +11,7 @@ $nav-item-variables: (
     Visible: hidden
   ),
   trigger: (
-    FontSize: 16px,
+    FontSize: #{pfe-var(font-size)},
     Padding:  calc(#{pfe-var(container-padding)} * .5),
     MaxWidth: 100%
   ),

@@ -31,7 +31,7 @@ $nav-variables: (
 
   // Trigger region
   trigger: (
-    FontSize: 16px,
+    FontSize: #{pfe-var(font-size)},
     FontWeight: 100
   ),
 

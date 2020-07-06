@@ -29,6 +29,7 @@ $LOCAL-VARIABLES: (
   )
 );
 
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   tabs: (
     BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, $region: tabs)}

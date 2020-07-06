@@ -16,6 +16,7 @@ $LOCAL-VARIABLES: (
   FontFamily:                 pfe-var(font-family)
 );
 
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   BorderTop:            pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor),
   BorderLeft:           pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor),

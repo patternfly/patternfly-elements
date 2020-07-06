@@ -29,6 +29,7 @@ $LOCAL-VARIABLES: (
   )
 );
 
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   Right: calc(-1 * (#{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)})),
   close: (

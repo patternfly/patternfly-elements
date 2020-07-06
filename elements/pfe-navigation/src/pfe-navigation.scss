@@ -45,6 +45,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   )
 ));
 
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   Padding: 0 pfe-local(Padding--horizontal),
   Border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),

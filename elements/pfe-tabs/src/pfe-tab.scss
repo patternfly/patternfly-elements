@@ -194,12 +194,12 @@ $LOCAL-VARIABLES: (
   }
   @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="true"]){
     --pfe-tabs__tab--BorderRight: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} transparent;
-    --pfe-tabs__tab--BorderLeft: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
-    padding-left: calc(#{pfe-var(container-padding)} * 1.5 - 2px);
+    --pfe-tabs__tab--BorderLeft:  #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+    padding-left:                 calc(#{pfe-var(container-padding)} * 1.5 - 2px);
     @include browser-query(ie11) {
       border-right:  0;
-      border-left:  #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(highlight)};
-      padding-left: 10px;
+      border-left:   #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(highlight)};
+      padding-left:  10px;
     }
   }
   @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="false"]){
@@ -213,8 +213,8 @@ $LOCAL-VARIABLES: (
     @include browser-query(ie11) {
       border-right:  0;
       border-bottom: 0;
-      padding-left: 10px;
-      border-left: #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(BorderColor--hover)};
+      padding-left:  10px;
+      border-left:   #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(BorderColor--hover)};
     }
   }
 }
@@ -235,9 +235,9 @@ $LOCAL-VARIABLES: (
   );
   @include pfe-print-local($variantEarth);
   @include browser-query(ie11) {
-    border-top: 3px solid #{pfe-fetch(surface--lighter)};
+    border-top:    3px solid #{pfe-fetch(surface--lighter)};
     border-bottom: 1px solid #{pfe-fetch(surface--border)};
-    border-left: 1px solid #{pfe-fetch(surface--border)};
+    border-left:   1px solid #{pfe-fetch(surface--border)};
   }
 }
 
@@ -250,19 +250,18 @@ $LOCAL-VARIABLES: (
 
 :host([pfe-variant="earth"][aria-selected="true"]) {
   --#{$repo}-tabs--BackgroundColor: #{pfe-var(surface--lightest)};
-  --#{$repo}-tabs--Color: #{pfe-var(text)};
+  --#{$repo}-tabs--Color:           #{pfe-var(text)};
 
-  --pfe-tabs__tab--BorderTop:    #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
-  --pfe-tabs__tab--BorderBottom: 0;
-  --pfe-tabs__tab--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
+  --pfe-tabs__tab--BorderTop:       #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+  --pfe-tabs__tab--BorderBottom:    0;
+  --pfe-tabs__tab--BorderLeft:      #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 
   @include browser-query(ie11) {
     color: #{pfe-fetch(text)};
     background-color: #fff;
-
-    border-left:   1px solid #d2d2d2;
-    border-top: 3px solid #{pfe-local(highlight)};
-    border-bottom: 0;
+    border-left:      #{pfe-fetch(ui--border-width)} #{pfe-fetch(ui--border-style)} #d2d2d2;
+    border-top:       #{pfe-local(BorderWidth--hover)} #{pfe-fetch(ui--border-style)} #{pfe-local(highlight)};
+    border-bottom:    0;
   }
 }
 :host([pfe-variant="earth"][aria-selected="false"]:first-of-type) {
@@ -297,7 +296,7 @@ $LOCAL-VARIABLES: (
     }
   }
   :host([vertical][pfe-variant="earth"][aria-selected="false"]:first-of-type) {
-  border-top: #{pfe-var(ui--border-width)} #{pfe-fetch(ui--border-style)} transparent !important;
+  border-top:  #{pfe-var(ui--border-width)} #{pfe-fetch(ui--border-style)} transparent !important;
   border-left: 3px #{pfe-fetch(ui--border-style)} transparent !important;
     @include browser-query(ie11) {
       border-top: 1px #{pfe-fetch(ui--border-style)} transparent !important;
@@ -308,7 +307,7 @@ $LOCAL-VARIABLES: (
     --pfe-tabs__tab--BorderTop:  #{pfe-var(ui--border-style)} #{pfe-var(ui--border-style)} transparent;
     --pfe-tabs__tab--BorderLeft: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)} !important;
     @include browser-query(ie11) {
-      border-top: 1px #{pfe-fetch(ui--border-style)} transparent !important;
+      border-top:  1px #{pfe-fetch(ui--border-style)} transparent !important;
       border-left: #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(BorderColor--hover)} !important;
     }
   }
@@ -318,9 +317,9 @@ $LOCAL-VARIABLES: (
     --pfe-tabs__tab--BorderLeft:  #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
 
     @include browser-query(ie11) {
-      border-top: 1px solid #{pfe-fetch(surface--border)};
+      border-top:   1px solid #{pfe-fetch(surface--border)};
       border-right: 0;
-      border-left: 3px solid #{pfe-local(highlight)};
+      border-left:  3px solid #{pfe-local(highlight)};
     }
   }
 
@@ -330,18 +329,18 @@ $LOCAL-VARIABLES: (
     --pfe-tabs__tab--BorderLeft:   #{pfe-local(BorderWidth--hover)} #{pfe-var(ui--border-style)} transparent;
 
     @include browser-query(ie11) {
-      border-right: 1px solid #{pfe-fetch(surface--border)};
+      border-right:  1px solid #{pfe-fetch(surface--border)};
       border-bottom: 0;
-      border-left: 3px solid #{pfe-fetch(surface--lighter)};
+      border-left:   3px solid #{pfe-fetch(surface--lighter)};
     }
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="false"]:hover){
     --pfe-tabs__tab--BorderLeft: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
-    --pfe-tabs__tab--BorderTop: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
+    --pfe-tabs__tab--BorderTop:  #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
     @include browser-query(ie11) {
       border-left: #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(BorderColor--hover)} !important;
-      border-top: #{pfe-fetch(ui--border-width)} #{pfe-fetch(ui--border-style)} #{pfe-fetch(surface--border)} !important;
+      border-top:  #{pfe-fetch(ui--border-width)} #{pfe-fetch(ui--border-style)} #{pfe-fetch(surface--border)} !important;
     }
   }
 

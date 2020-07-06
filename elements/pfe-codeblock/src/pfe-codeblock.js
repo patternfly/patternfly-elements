@@ -244,11 +244,10 @@ class PfeCodeblock extends PFElement {
       return "";
     }
     let returnValue = { stringValue: "", lineCount: 0 };
-    let tmpTrimArray = stringToTrim.split("\n").filter(function(entry) {
-      return /\S/.test(entry);
-    });
-    let tmpLineCount = tmpTrimArray.length;
 
+    let tmpTrimArray = stringToTrim.trim().split("\n");
+
+    let tmpLineCount = tmpTrimArray.length;
     returnValue.stringValue = tmpTrimArray.join("\n");
     returnValue.lineCount = tmpLineCount;
 

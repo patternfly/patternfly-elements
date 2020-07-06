@@ -43,6 +43,10 @@ $backwards-compatibility: (
     BorderBottomColor: pfe-local(BorderBottomColor--before, $fallback: pfe-var(surface--border--darker)),
     BorderBottomColor--hover: pfe-local(BorderBottomColor--before--hover, $fallback: pfe-var(ui-base)),
     BorderLeftColor: pfe-local(BorderLeftColor--before, $fallback: pfe-var(surface--lighter))
+  ),
+  menu: (
+    spacing--horizontal: pfe-local(SpacingHorizontal, $fallback: 0),
+    Background: pfe-local(BackgroundColor, $fallback: pfe-var(surface--lightest)),
   )
 );
 

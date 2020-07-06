@@ -44,6 +44,13 @@ $pfe-colors: (
   ui-base--text--hover--on-dark:         $pfe-color--text,
   ui-base--text--focus--on-dark:         $pfe-color--text,
 
+  ui-base--on-saturated:                   $pf-color-white,
+  ui-base--hover--on-saturated:            darken($pf-color-white, 20%),
+  ui-base--focus--on-saturated:            darken($pf-color-white, 20%),
+  ui-base--text--on-saturated:             $pfe-color--text,
+  ui-base--text--hover--on-saturated:      $pfe-color--text,
+  ui-base--text--focus--on-saturated:      $pfe-color--text,
+
 
   // Set of accent colors
   ui-accent:                            $pf-global--primary-color--100,
@@ -75,6 +82,20 @@ $pfe-colors: (
   ui-disabled--text--hover:           $pfelements--gray,
   ui-disabled--text--focus:           $pfelements--gray,
 
+  // link styles
+  link-decoration: none,
+  link-decoration--hover: underline,
+  link-decoration--focus: underline,
+  link-decoration--visited: none,
+  link-decoration--on-dark: none,
+  link-decoration--hover--on-dark: underline,
+  link-decoration--focus--on-dark: underline,
+  link-decoration--visited--on-dark: none,
+  link-decoration--on-saturated: underline,
+  link-decoration--hover--on-saturated: underline,
+  link-decoration--focus--on-saturated: underline,
+  link-decoration--visited--on-saturated: underline, 
+
   // ========================================================================
   // Base Surface Colors for Container elements
   // ========================================================================
@@ -84,7 +105,7 @@ $pfe-colors: (
   surface--lightest--theme: light,
 
   // Lighter group
-  surface--lighter:         $pf-color-black-100,
+  surface--lighter:         $pf-color-black-150,
   surface--lighter--theme:  light,
 
   // Base group
@@ -111,8 +132,8 @@ $pfe-colors: (
   surface--border--lightest:          $pf-color-black-100,
   surface--border--lighter:           $pf-color-black-150,
   surface--border:                    $pfelements--gray-light,
-  surface--border--darker:            $pf-color-black-300,
-  surface--border--darkest:           $pf-color-black-800,
+  surface--border--darker:            $pf-color-black-600,
+  surface--border--darkest:           $pf-color-black-600,
 
 
   // ========================================================================

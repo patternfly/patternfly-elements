@@ -257,9 +257,10 @@ $LOCAL-VARIABLES: (
   --pfe-tabs__tab--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 
   @include browser-query(ie11) {
-    background-color: #{pfe-fetch(surface--lightest)};
     color: #{pfe-fetch(text)};
+    background-color: #fff;
 
+    border-left:   1px solid #d2d2d2;
     border-top: 3px solid #{pfe-local(highlight)};
     border-bottom: 0;
   }

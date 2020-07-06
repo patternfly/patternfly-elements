@@ -5,6 +5,13 @@ $LOCAL-VARIABLES: (
   size: 128px
 );
 
+ // TODO: This will be removed at 1.0 in favor of size
+ $backwards-compatibility: (
+     size: pfe-local(width, $fallback: 128px)
+ );
+
+ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
+
 :host {
   display: block;
   position: relative;

@@ -48,174 +48,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   FontSize--priority: calc(#{pfe-local(FontSize) / 1.125})
 ));
 
-$primary: (
-  // Button padding and border radius settings
-  BorderRadius: pfe-var(ui--border-radius),
-
-  BackgroundColor: pfe-var(ui-accent),
-  BorderColor: pfe-var(ui-accent),
-  Color: pfe-var(ui-accent--text),
-
-  BackgroundColor--hover: pfe-var(ui-accent--hover),
-  BorderColor--hover: pfe-var(ui-accent--hover),
-  Color--hover: pfe-var(ui-accent--text),
-
-  BackgroundColor--focus: pfe-var(ui-accent),
-  BorderColor--focus: pfe-var(ui-accent),
-  Color--focus: pfe-var(ui-accent--text),
-  
-  arrow: (Display: none),
-  inner: (BorderColor--focus: pfe-var(ui-accent--text))
-);
-
-$primary-base: (
-  BackgroundColor: pfe-var(ui-base),
-  BorderColor: pfe-var(ui-base),
-  Color: pfe-var(ui-base--text),
-
-  BackgroundColor--hover: pfe-var(ui-base--hover),
-  BorderColor--hover: pfe-var(ui-base--hover),
-  Color--hover: pfe-var(ui-base--text),
-
-  BackgroundColor--focus: pfe-var(ui-base),
-  BorderColor--focus: pfe-var(surface--darker),
-  Color--focus: pfe-var(ui-base--text),
-
-  inner: (BorderColor--focus: pfe-var(ui-base--text))
-);
-
-$primary-complement: (
-  BackgroundColor: pfe-var(ui-complement),
-  BorderColor: pfe-var(ui-complement),
-  Color: pfe-var(ui-complement--text),
-
-  BackgroundColor--hover: pfe-var(ui-complement--hover),
-  BorderColor--hover: pfe-var(ui-complement--hover),
-  Color--hover: pfe-var(ui-complement--text),
-
-  BackgroundColor--focus: pfe-var(ui-complement),
-  BorderColor--focus: pfe-var(surface--darker),
-  Color--focus: pfe-var(ui-complement--text),
-  inner: (BorderColor--focus: pfe-var(ui-complement--text))
-);
-
-$primary-saturated: (
-  BackgroundColor: pfe-var(surface--lightest),
-  BorderColor: pfe-var(surface--lightest),
-  Color: pfe-var(text),
-
-  BackgroundColor--hover: pfe-var(surface--lighter),
-  BorderColor--hover: pfe-var(surface--lighter),
-  Color--hover: pfe-var(text),
-
-  BackgroundColor--focus: pfe-var(surface--lightest),
-  BorderColor--focus: pfe-var(surface--lightest),
-  Color--focus: pfe-var(text),
-  inner: (BorderColor--focus: pfe-var(surface--darkest)),
-);
-
-$secondary: (
-  BorderRadius: pfe-var(ui--border-radius),
-  BackgroundColor: transparent,
-  BorderColor: pfe-broadcasted(text), //pfe-var(ui-complement)
-  Color: pfe-broadcasted(text), //pfe-var(ui-complement)
-
-  BackgroundColor--hover: pfe-var(ui-complement),
-  BorderColor--hover: pfe-broadcasted(text), //pfe-var(ui-complement)
-  Color--hover: pfe-var(ui-complement--text),
-
-  BackgroundColor--focus: pfe-var(surface--lighter),
-  BorderColor--focus: pfe-var(ui-complement),
-  Color--focus: pfe-var(ui-complement),
-
-  arrow: (Display: none),
-  inner: (BorderColor--focus: pfe-var(ui-complement))
-);
-
-$secondary-accent: (
-  BackgroundColor: transparent,
-  BorderColor: pfe-var(ui-accent),
-  Color: pfe-var(ui-accent),
-
-  BackgroundColor--hover: pfe-var(ui-accent),
-  BorderColor--hover: pfe-var(ui-accent),
-  Color--hover: pfe-var(ui-accent--text),
-
-  BackgroundColor--focus: pfe-var(surface--lighter),
-  BorderColor--focus: pfe-var(ui-accent),
-  Color--focus: pfe-var(ui-accent),
-
-  inner: (BorderColor--focus: pfe-var(ui-accent)),
-);
-
-$secondary-base: (
-  BackgroundColor: transparent,
-  BorderColor: pfe-var(ui-base),
-  Color: pfe-var(ui-base),
-
-  BackgroundColor--hover: pfe-var(ui-base),
-  BorderColor--hover: pfe-var(ui-base),
-  Color--hover: pfe-var(ui-base--text),
-
-  BackgroundColor--focus: $pfe-cta--BackgroundColor--focus, // @NOTE Definition at top of file
-  BorderColor--focus: pfe-var(ui-base),
-  Color--focus: pfe-var(ui-base),
-  inner: (BorderColor--focus: pfe-var(ui-base))
-);
-
-$secondary-complement: (
-  BackgroundColor: transparent,
-  BorderColor: pfe-var(ui-complement),
-  Color: pfe-var(ui-complement),
-
-  BackgroundColor--hover: pfe-var(ui-complement),
-  BorderColor--hover: pfe-var(ui-complement),
-  Color--hover: pfe-var(ui-complement--text),
-
-  BackgroundColor--focus: pfe-var(surface--lighter),
-  BorderColor--focus: pfe-var(ui-complement),
-  Color--focus: pfe-var(ui-complement),
-  inner: (BorderColor--focus: pfe-var(ui-complement)),
-);
-
-$secondary-wind: (
-  BackgroundColor: transparent,
-  BorderColor: pfe-var(surface--border),
-  Color: pfe-broadcasted(link),
-  FontWeight: pfe-var(font-weight--normal),
-
-  BackgroundColor--hover: pfe-var(surface--border--lightest),
-  BorderColor--hover: pfe-var(surface--border),
-  Color--hover: pfe-var(link--hover),
-  TextDecoration--hover: pfe-var(link-decoration--hover),
-
-  Color--focus: pfe-var(link--hover),
-  BorderColor--focus: pfe-var(surface--border),
-  inner: (BorderColor--focus: pfe-local(BorderColor--focus)),
-);
-
-$secondary-dark: (
-  BackgroundColor: transparent,
-  BorderColor: pfe-var(surface--lightest),
-  Color: pfe-var(text--on-dark),
-
-  BackgroundColor--hover: pfe-var(surface--lighter),
-  BorderColor--hover: pfe-var(surface--lighter),
-  Color--hover: pfe-var(text),
-
-  BackgroundColor--focus: pfe-var(surface--lightest),
-  BorderColor--focus: pfe-var(surface--lightest),
-  Color--focus: pfe-var(text),
-  inner: (BorderColor--focus: pfe-var(surface--darkest))
-);
-
-$disabled: (
-  arrow: (Display: none),
-  BackgroundColor: pfe-var(ui-disabled),
-  BorderColor: pfe-var(ui-disabled),
-  Color: pfe-var(ui-disabled--text),
-  FontSize: pfe-local(FontSize--priority)
-);
+// Look here for the variant maps
+@import "shared-assets";
 
 :host {
   display: inline-block;
@@ -228,6 +62,8 @@ $disabled: (
   background-color: pfe-local(BackgroundColor);
   border-radius: pfe-local(BorderRadius);
   border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
+
+  cursor: pointer;
 }
 
 ::slotted(*) {
@@ -241,7 +77,7 @@ $disabled: (
   line-height: pfe-local(LineHeight);
   text-decoration: pfe-local(TextDecoration) !important;
   
-  cursor: pointer;
+  // cursor: pointer;
 
   @include browser-query(ie11 edge) {
     padding: 0 !important;
@@ -307,34 +143,18 @@ $disabled: (
     left: 2px;
     z-index: -1;
 
-    border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)}
-      #{pfe-local(BorderColor, $region: inner)};
+    border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor, $region: inner);
     border-radius: 2px;
     outline: none;
-
-    :host(.focus-within) & {
-      border-color: #{pfe-local($cssvar: BorderColor--focus, $region: inner)};
-    }
-
-    :host(:hover) & {
-      border-color: #{pfe-local($cssvar: BorderColor--hover, $region: inner)};
-    }
   }
   &--arrow {
-    display: #{pfe-local(Display, $region: arrow)};
-    padding: #{pfe-local(Padding, $region: arrow)};
-    fill: #{pfe-local(Color)};
-    width: #{pfe-local(size, $region: arrow)};
-    height: #{pfe-local(size, $region: arrow)};
-    transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
+    display: pfe-local(Display, $region: arrow);
+    padding: pfe-local(Padding, $region: arrow);
+    fill:    pfe-local(Color);
+    width:   pfe-local(size, $region: arrow);
+    height:  pfe-local(size, $region: arrow);
+    transition: padding pfe-var(animation-speed) pfe-var(animation-timing);
     margin-bottom: -1px;
-    :host(.focus-within) & {
-      fill: #{pfe-local(Color--focus)};
-    }
-
-    :host(:hover) & {
-      fill: #{pfe-local(Color--hover)};
-    }
 
     @include browser-query(ie11 edge) {
       width: 18px;
@@ -357,7 +177,8 @@ $disabled: (
 @include pfe-theme-contexts; // imports on="light" etc support
 
 /// ===========================================================================
-/// BELOW THIS POINT, LOCAL VARIABLE OVERRIDES ONLY
+/// BELOW THIS POINT, LOCAL VARIABLE OVERRIDES ONLY, handled by the pfe-print-local function
+/// Maps can be found in the pfe-cta/src/_shared-assets.scss file
 
 // Broadcast colors: The CTA is tuning into whatever colors the containers are offering up, per priority level
 
@@ -390,15 +211,13 @@ $disabled: (
 // Primary omitted because it already uses the accent color
 
 :host(:not([pfe-priority]):not([aria-disabled="true"])[pfe-color="accent"]:not([on="saturated"])) {
-  @include pfe-print-local((Color: pfe-var(ui-accent)));
+  @include pfe-print-local((
+    Color: pfe-var(ui-accent)
+  ));
 }
 
 :host([pfe-priority="secondary"][pfe-color="accent"]) {
   @include pfe-print-local($secondary-accent);
-}
-
-:host([pfe-priority="secondary"][pfe-color="accent"].focus-within) {
-  @include pfe-print-local((Color--hover: pfe-var(ui-accent--text)));
 }
 
 /// ===========================================================================
@@ -411,10 +230,6 @@ $disabled: (
 
 :host([pfe-priority="secondary"][pfe-color="base"]) {
   @include pfe-print-local($secondary-base);
-}
-
-:host([pfe-priority="secondary"][pfe-color="base"].focus-within) {
-  @include pfe-print-local((Color--hover: pfe-var(ui-base--text)));
 }
 
 /// ===========================================================================
@@ -436,20 +251,12 @@ $disabled: (
   @include pfe-print-local($secondary-complement);
 }
 
-:host([pfe-priority="secondary"][pfe-color="complement"].focus-within) {
-  @include pfe-print-local((Color--hover: pfe-var(ui-complement--text)));
-}
-
 /// ===========================================================================
 /// WIND CTA VARIANTS
 /// ===========================================================================
 
 :host([pfe-priority="secondary"][pfe-variant="wind"]) {
   @include pfe-print-local($secondary-wind);
-}
-
-:host([pfe-priority="secondary"][pfe-variant="wind"].focus-within) {
-  @include pfe-print-local((Color--hover: pfe-var(link--hover)));
 }
 
 /// ===========================================================================
@@ -478,6 +285,7 @@ $disabled: (
 /// ===========================================================================
 /// CTA STATES: HOVER, FOCUS
 /// ===========================================================================
+
 // Note: Focus states need to be defined before hover states
 :host(:not([aria-disabled="true"]):focus),
 :host(:not([aria-disabled="true"]).focus-within) {
@@ -485,7 +293,8 @@ $disabled: (
     BackgroundColor: pfe-local(BackgroundColor--focus),
     BorderColor: pfe-local(BorderColor--focus),
     Color: pfe-local(Color--focus),
-    TextDecoration: pfe-local(TextDecoration--focus)
+    TextDecoration: pfe-local(TextDecoration--focus),
+    inner: (BorderColor: pfe-local(BorderColor--focus, $region: inner))
   ));
 }
 
@@ -497,6 +306,7 @@ $disabled: (
     BorderColor: pfe-local(BorderColor--hover),
     Color: pfe-local(Color--hover),
     TextDecoration: pfe-local(TextDecoration--hover),
+    inner: (BorderColor: pfe-local(BorderColor--hover, $region: inner)),
     arrow: (Padding: $arrow-hover)
   ));
 }

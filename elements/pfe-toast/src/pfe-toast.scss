@@ -9,7 +9,7 @@ $LOCAL-VARIABLES: (
 
   container: (
     BackgroundColor: pfe-var(surface--lightest),
-    // BoxShadow: #{pfe-var(box-shadow--lg)},
+    // BoxShadow: pfe-var(box-shadow--lg),
     // @TODO update this to use pfe-sass box-shadow variables
     BoxShadow: #{rgba(3, 3, 3, 0.13) 0px 3px 7px 3px, rgba(3, 3, 3, 0.12) 0px 11px 24px 16px},
     Color: pfe-var(text),
@@ -32,7 +32,7 @@ $LOCAL-VARIABLES: (
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   Right: calc(-1 * (#{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)})),
   close: (
-    Padding: #{pfe-local(PaddingTop, $region: close)} #{pfe-local(PaddingRight, $region: close)} #{pfe-local(PaddingBottom, $region: close)} #{pfe-local(PaddingLeft, $region: close)}
+    Padding: pfe-local(PaddingTop, $region: close) pfe-local(PaddingRight, $region: close) pfe-local(PaddingBottom, $region: close) pfe-local(PaddingLeft, $region: close)
   )
 ));
 
@@ -45,13 +45,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   
   // animation
   position: absolute;
-  right:  #{pfe-local(Right)};
-  top:    #{pfe-local(Top)};
-  transition: right #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
+  right:  pfe-local(Right);
+  top:    pfe-local(Top);
+  transition: right pfe-var(animation-speed) pfe-var(animation-timing);
   will-change: right;
   
-  max-width: #{pfe-local(MaxWidth)};
-  min-width: #{pfe-local(MinWidth)};
+  max-width: pfe-local(MaxWidth);
+  min-width: pfe-local(MinWidth);
 
   @media only screen and (max-width: #{pfe-breakpoint($size: sm, $max: true)}) {
 		max-width: calc(#{pfe-local(MaxWidth)} / 2);
@@ -64,11 +64,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host(.open) {
-  --#{$repo}-#{$LOCAL}--Right: 50px;
+  --pfe-#{$LOCAL}--Right: 50px;
 }
 
 :host(:not(.open)){
-   --#{$repo}-#{$LOCAL}--Right: calc(-1 * #{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)});
+   --pfe-#{$LOCAL}--Right: calc(-1 * #{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)});
 }
 
 ::slotted(:first-child) {
@@ -97,10 +97,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     flex-flow: row nowrap;
     justify-content: flex-start;
 
-    background-color: #{pfe-local(BackgroundColor, $region: container)};
-    box-shadow:       #{pfe-local(BoxShadow, $region: container)};
-    color:            #{pfe-local(Color, $region: container)};
-    padding:          #{pfe-local(Padding, $region: container)};
+    background-color: pfe-local(BackgroundColor, $region: container);
+    box-shadow:       pfe-local(BoxShadow, $region: container);
+    color:            pfe-local(Color, $region: container);
+    padding:          pfe-local(Padding, $region: container);
   }
   &__content {
     // flex child props
@@ -114,17 +114,17 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     border: none;
     cursor: pointer;
     margin: 0;
-    padding: #{pfe-local(Padding, $region: close)};
+    padding: pfe-local(Padding, $region: close);
     
     & > svg {
-      fill:   #{pfe-local(svg--Fill, $region: close)};
-      height: #{pfe-local(svg--Height, $region: close)};
-      width:  #{pfe-local(svg--Width, $region: close)};
+      fill:   pfe-local(svg--Fill, $region: close);
+      height: pfe-local(svg--Height, $region: close);
+      width:  pfe-local(svg--Width, $region: close);
     }
     
     &:hover {
       & > svg {
-        fill: #{pfe-local(svg--Fill--hover, $region: close)};
+        fill: pfe-local(svg--Fill--hover, $region: close);
       }
     }
   }

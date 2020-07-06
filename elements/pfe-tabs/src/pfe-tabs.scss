@@ -75,15 +75,15 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([vertical]) {
-    --#{$repo}-tabs--Display: flex; // Sets tabs to appear to the left of the panels
-    --#{$repo}-tabs__tabs--FlexDirection: column;
-    --#{$repo}-tabs__tabs--Width: 22.22%;
+    --pfe-tabs--Display: flex; // Sets tabs to appear to the left of the panels
+    --pfe-tabs__tabs--FlexDirection: column;
+    --pfe-tabs__tabs--Width: 22.22%;
 
-    --#{$repo}-tabs__tabs--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
-    --#{$repo}-tabs__tabs--BorderBottom: 0;
+    --pfe-tabs__tabs--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
+    --pfe-tabs__tabs--BorderBottom: 0;
 
-    --#{$repo}-tabs__panels--Width: 77.78%;
-    --#{$repo}-tabs__panels--PaddingRight: #{pfe-var(container-padding)};
+    --pfe-tabs__panels--Width: 77.78%;
+    --pfe-tabs__panels--PaddingRight: #{pfe-var(container-padding)};
 
     @include browser-query(ie11) {
       display: flex;
@@ -109,7 +109,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([vertical][pfe-variant="earth"]) {
-    --#{$repo}-tabs__tabs--Padding: #{pfe-var(container-padding)} 0 0 0;
+    --pfe-tabs__tabs--Padding: #{pfe-var(container-padding)} 0 0 0;
     
     @include browser-query(ie11) {
       .tabs {
@@ -127,7 +127,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host([pfe-variant="earth"]) {
-  --#{$repo}-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
+  --pfe-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
 
   .tabs ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
     border-left: 0;

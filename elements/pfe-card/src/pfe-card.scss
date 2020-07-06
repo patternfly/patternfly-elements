@@ -100,7 +100,7 @@ $size-small: (
 }
 
 :host([pfe-border]:not([pfe-border="false"])) {
-  --#{$repo}-#{$LOCAL}--BorderWidth:   #{pfe-fetch(surface--border-width)};
+  --pfe-#{$LOCAL}--BorderWidth:   #{pfe-fetch(surface--border-width)};
 }
 
 // Targets the wrappers in the shadow DOM
@@ -185,7 +185,7 @@ $size-small: (
     }
 
     ::slotted([pfe-overflow~="top"]) {
-      --#{$repo}-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
+      --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
     :host(:not([has_header])) & {
@@ -193,11 +193,11 @@ $size-small: (
     }
 
     :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
-      --#{$repo}-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
+      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
     ::slotted([pfe-overflow~="bottom"]) {
-      --#{$repo}-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
+      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
     @each $tag in (h1, h2, h3, h4, h5, h6) {
@@ -208,20 +208,20 @@ $size-small: (
   }
   &__body {
     :host(:not([has_header])) & ::slotted([pfe-overflow~="top"]) {
-      --#{$repo}-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
+      --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
     ::slotted([pfe-overflow~="top"]) {
       z-index: 1;
-      --#{$repo}-card__overflow--MarginTop: calc(#{pfe-local(spacing--vertical)} * -1);
+      --pfe-card__overflow--MarginTop: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
     ::slotted([pfe-overflow~="bottom"]) {
-      --#{$repo}-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
+      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
     :host([has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
-      --#{$repo}-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
+      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
     :host(:not([has_footer])) & {
@@ -238,7 +238,7 @@ $size-small: (
     align-items: #{pfe-local(AlignItems, baseline, $region: footer)};
 
     ::slotted([pfe-overflow~="bottom"]) {
-      --#{$repo}-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
+      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
     :host(:not([has_footer])) & {

@@ -37,12 +37,12 @@ span {
 @each $state in (moderate, important, critical, success, info) {
   :host([pfe-state="#{$state}"]) {
     span {
-      --#{$repo}-#{$LOCAL}--BackgroundColor: #{pfe-var(feedback--#{$state})};
+      --pfe-#{$LOCAL}--BackgroundColor: #{pfe-var(feedback--#{$state})};
       @if ($state == 'moderate') {
-        --#{$repo}-#{$LOCAL}--Color: #{pfe-var(text)};
+        --pfe-#{$LOCAL}--Color: #{pfe-var(text)};
       }
       @else {
-        --#{$repo}-#{$LOCAL}--Color: #{pfe-var(text--on-dark)};
+        --pfe-#{$LOCAL}--Color: #{pfe-var(text--on-dark)};
       }
     }
   }

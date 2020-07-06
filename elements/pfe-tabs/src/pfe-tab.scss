@@ -132,14 +132,14 @@ $LOCAL-VARIABLES: (
 
   :host([vertical][aria-selected="true"]) {
     --pfe-tabs__tab--BorderTopColor: transparent;
-    --pfe-tabs__tab--BorderRight: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
-    --pfe-tabs__tab--BorderBottom: 0;
+    --pfe-tabs__tab--BorderRight:    #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+    --pfe-tabs__tab--BorderBottom:   0;
 
     @include browser-query(ie11) {
-      color: #{$pfe-color--black};
+      color:            #{$pfe-color--black};
       border-top-color: transparent;
-      border-right: #{pfe-fetch(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-var(ui-accent)};
-      border-bottom: 0;
+      border-right:     #{pfe-fetch(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-var(ui-accent)};
+      border-bottom:    0;
     }
   }
 }
@@ -147,7 +147,7 @@ $LOCAL-VARIABLES: (
 :host([pfe-variant="earth"]) {
   @include browser-query(ie11) {
     background-color: #{pfe-fetch(surface--lighter)};
-    color: #{pfe-fetch(text)};
+    color:            #{pfe-fetch(text)};
   }
 }
 
@@ -228,9 +228,9 @@ $LOCAL-VARIABLES: (
   $variantEarth: (
     BackgroundColor: #f0f0f0,
     tab: (
-      BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)},
-      BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)},
-      BorderTop:    #{pfe-local(BorderWidth--hover)} #{pfe-var(ui--border-style)} transparent,
+      BorderLeft:    #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)},
+      BorderBottom:  #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)},
+      BorderTop:     #{pfe-local(BorderWidth--hover)} #{pfe-var(ui--border-style)} transparent,
     )
   );
   @include pfe-print-local($variantEarth);
@@ -257,7 +257,7 @@ $LOCAL-VARIABLES: (
   --pfe-tabs__tab--BorderLeft:      #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 
   @include browser-query(ie11) {
-    color: #{pfe-fetch(text)};
+    color:            #{pfe-fetch(text)};
     background-color: #fff;
     border-left:      #{pfe-fetch(ui--border-width)} #{pfe-fetch(ui--border-style)} #d2d2d2;
     border-top:       #{pfe-local(BorderWidth--hover)} #{pfe-fetch(ui--border-style)} #{pfe-local(highlight)};
@@ -296,8 +296,8 @@ $LOCAL-VARIABLES: (
     }
   }
   :host([vertical][pfe-variant="earth"][aria-selected="false"]:first-of-type) {
-  border-top:  #{pfe-var(ui--border-width)} #{pfe-fetch(ui--border-style)} transparent !important;
-  border-left: 3px #{pfe-fetch(ui--border-style)} transparent !important;
+    border-top:  #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent !important;
+    border-left: #{pfe-local(BorderWidth--hover)} #{pfe-var(ui--border-style)} transparent !important;
     @include browser-query(ie11) {
       border-top: 1px #{pfe-fetch(ui--border-style)} transparent !important;
     }
@@ -359,8 +359,7 @@ $LOCAL-VARIABLES: (
 
 :host{
     @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]) {
-      --#{$repo}-tabs--BackgroundColor: #3c3f42;
-      //color: #d2d2d2;
+      --#{$repo}-tabs--BackgroundColor: #3c3f42; //replace with var when Kendall is done with her updates. She might be adding this color
       color: #{pfe-var(ui-disabled)};
     }
     @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]:first-of-type) {
@@ -368,10 +367,9 @@ $LOCAL-VARIABLES: (
     }
       @at-root #{&}([pfe-variant="earth"][aria-selected="true"][on="dark"]) {
         color: #{pfe-var(surface--lightest)};
-        --#{$repo}-tabs--BackgroundColor: #151515;
+        --#{$repo}-tabs--BackgroundColor: #{pfe-local(Color--hover)};
     }
       @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]:hover) {
-        //color: #ffffff;
         color: #{pfe-var(surface--lightest)} !important;
     }
 }

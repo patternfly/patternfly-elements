@@ -1,4 +1,4 @@
-<!-- ${this.hasAttribute("horizontal") ? `` :
+<!-- ${this.hasAttribute("pfe-c-horizontal") ? `` :
 `<pfe-accordion>
   <pfe-accordion-header>
   </pfe-accordion-header>
@@ -21,26 +21,26 @@
       : ``
       }
     </nav>
-    ${this.hasAttribute("horizontal") ? `` :
+    ${this.hasAttribute("pfe-c-horizontal") ? `` :
   `</pfe-accordion-panel>
 </pfe-accordion>`
 }
   old version^^ -->
 
-${this.hasAttribute("horizontal") ? `` :
-`<pfe-accordion>
-  <pfe-accordion-header>
-  </pfe-accordion-header>
-  <pfe-accordion-panel>`
-    }
-    <nav>
-      <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading" id="pfe-jump-links-nav--heading">
-      </slot>
-      <slot class="pfe-jump-links-nav__logo" name="pfe-jump-links-nav--logo"></slot>
-      <div id="container"></div>
-      <slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>
-    </nav>
-    ${this.hasAttribute("horizontal") ? `` :
-    `</pfe-accordion-panel>
-</pfe-accordion>`
-}
+  ${this.hasAttribute("pfe-c-horizontal") ? `` :
+  `<pfe-accordion>
+    <pfe-accordion-header>
+    </pfe-accordion-header>
+    <pfe-accordion-panel>`
+      }
+      <nav>
+        <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading" id="pfe-jump-links-nav--heading">
+        </slot>
+        <slot class="pfe-jump-links-nav__logo" name="pfe-jump-links-nav--logo"></slot>
+        <div id="container"></div>
+        <slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>
+      </nav>
+      ${this.hasAttribute("pfe-c-horizontal") ? `` :
+      `</pfe-accordion-panel>
+  </pfe-accordion>`
+  }

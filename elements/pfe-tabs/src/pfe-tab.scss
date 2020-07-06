@@ -21,8 +21,6 @@ $LOCAL-VARIABLES: (
   )
 );
 
-
-
 /// ===========================================================================
 /// HORIZONTAL TAB ORIENTATION
 /// ===========================================================================
@@ -67,7 +65,7 @@ $LOCAL-VARIABLES: (
     --pfe-tabs--Color: #{pfe-var(text)};
     color: #{pfe-local(Color--hover)};
     @include browser-query(ie11) {
-      color: #{pfe-var(text)};
+      color: #{pfe-fetch(text)};
     }
   }
 
@@ -79,8 +77,10 @@ $LOCAL-VARIABLES: (
     outline: #{pfe-var(ui--focus-outline-width)} outset #{pfe-local(focus)};
   }
 
-  @at-root #{&}([on="dark"]),
-  #{&}([on="saturated"]) {
+  @at-root #{&}([on="dark"]){
+    --#{$repo}-tabs--focus: #{pfe-var(link--focus--on-dark)};
+  }
+  @at-root #{&}([on="saturated"]) {
     --#{$repo}-tabs--focus: #{pfe-var(link--focus--on-dark)};
   }
   // @at-root #{&}([on="saturated"]) {
@@ -100,7 +100,7 @@ $LOCAL-VARIABLES: (
     --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
     @include browser-query(ie11) {
       color: #{pfe-local(Color--hover)};
-      border-bottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-var(ui-accent)};
+      border-bottom: #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-fetch(ui-accent)};
     }
   }
 }
@@ -359,7 +359,7 @@ $LOCAL-VARIABLES: (
 
 :host{
     @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]) {
-      --#{$repo}-tabs--BackgroundColor: #3c3f42; //replace with var when Kendall is done with her updates. She might be adding this color
+      --#{$repo}-tabs--BackgroundColor: #3c3f42; //replace with a var when Kendall is done with her updates. She might be adding this color
       color: #{pfe-var(ui-disabled)};
     }
     @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]:first-of-type) {

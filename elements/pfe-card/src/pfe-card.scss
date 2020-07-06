@@ -30,7 +30,8 @@ $LOCAL-VARIABLES: (
 
 );
 
-$LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   // Internal spacing; elements inside the card (header, body, footer regions)
   spacing--vertical: pfe-local(spacing),
 

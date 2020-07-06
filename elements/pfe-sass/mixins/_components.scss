@@ -175,12 +175,12 @@
   );
 
   @if $theme == "light" { // Light theme
-    $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+    $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       BoxShadow: 0 5px pfe-var(surface--border-width--heavy) rgba(140, 140, 140, 0.35)
     ));
   }
   @else {
-    $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+    $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       BoxShadow: none
     ));
   }

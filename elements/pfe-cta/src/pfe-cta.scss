@@ -43,7 +43,8 @@ $LOCAL-VARIABLES: (
   )
 );
 
-$LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   FontSize--priority: calc(#{pfe-local(FontSize) / 1.125})
 ));
 

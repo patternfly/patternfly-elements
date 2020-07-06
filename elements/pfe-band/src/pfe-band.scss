@@ -35,9 +35,10 @@ $LOCAL-VARIABLES: (
   Width__aside--lg: 300px,
 );
 
-$LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   // Bring them together for ease of use below
-  Padding: #{pfe-local(Padding--vertical)}  #{pfe-local(Padding--horizontal)},
+  Padding: pfe-local(Padding--vertical) pfe-local(Padding--horizontal)
 ));
 
 :host {

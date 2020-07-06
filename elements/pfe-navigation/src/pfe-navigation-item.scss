@@ -22,14 +22,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 ));
 
 :host {
-  // @include pfe-print-local($LOCAL-VARIABLES);
-
   display: flex;
   flex-direction: column;
   line-height: 1.2;
 
   height: 100%;
-  min-width: #{pfe-local(MinWidth)};
+  min-width: pfe-local(MinWidth);
 
   @media screen and (max-width: #{pfe-breakpoint(xl)}) {
     width: 100%;
@@ -100,7 +98,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   display: flex;
   margin: 0 auto;
   align-items: center;
-  max-width: #{pfe-local($cssvar: Width, $fallback: 100%)};
+  max-width: pfe-local(Width, $fallback: 100%);
 }
 
 /* ----------------- */
@@ -132,13 +130,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     )};
   }
 
-  border-top:         #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderTopColor)};
-  border-right:       #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
-  border-bottom:      #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
-  border-left:        #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
-  background-color:   #{pfe-local(BackgroundColor)};
-  color:              #{pfe-local(Color)};
-  padding:            #{pfe-local(Padding, $region: trigger)};
+  border-top:         pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) pfe-local(BorderTopColor);
+  border-right:       pfe-var(surface--border-width) dashed pfe-local(BorderColor);
+  border-bottom:      pfe-var(surface--border-width) dashed pfe-local(BorderColor);
+  border-left:        pfe-var(surface--border-width) dashed pfe-local(BorderColor);
+  background-color:   pfe-local(BackgroundColor);
+  color:              pfe-local(Color);
+  padding:            pfe-local(Padding, $region: trigger);
   position:           relative;
   display:            flex;
   flex-grow:          1;
@@ -146,7 +144,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   flex-wrap:          nowrap;
   align-items:        center;
   justify-content:    center;
-  transition:         all #{pfe-var(animation-timing)};
+  transition:         all pfe-var(animation-timing);
   outline:            none;
   cursor:             pointer;
 
@@ -183,7 +181,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   :host(:not([pfe-icon])) &::after {
     display: block;
     content: " ";
-    visibility: #{pfe-local($cssvar: Visible, $region: trigger-icon, $fallback: hidden)};
+    visibility: pfe-local(Visible, $region: trigger-icon, $fallback: hidden);
 
     @include pfe-arrow(down, #{pfe-var(feedback--default)}, $width: 6px, $height: 6px);
     position: absolute;
@@ -225,7 +223,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     }
     :host([is_nested]:not([parent_hidden])) & {
       --pfe-navigation__trigger-icon--Visible: visible;
-      border-color: #{pfe-local(Color)};
+      border-color: pfe-local(Color);
     }
 
     :host([is_nested]:not([has_tray]):not([parent_hidden])) & {
@@ -236,7 +234,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   // The wind variant is used to render an icon with text inline, direct links
   :host([variant="wind"]) & {
     --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) 0 calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-spacer)} * 1.5);
-    --pfe-navigation--Color: #{pfe-var(link)};
+    --pfe-navigation--Color: pfe-var(link);
     --pfe-navigation--BackgroundColor: transparent !important;
 
     flex-direction: row;
@@ -279,11 +277,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /*    TRAY STYLES    */
 /* ----------------- */
 .pfe-navigation-item__tray {
-  --pfe-navigation--FontWeight:             #{pfe-var(text)};
+  --pfe-navigation--FontWeight: #{pfe-var(text)};
 
   @include pfe-set-broadcast-theme(light);
 
-  transition: all #{pfe-var(animation-timing)};
+  transition: all pfe-var(animation-timing);
   box-sizing: border-box;
 
   display: none;
@@ -309,10 +307,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     top: 100%;
     left: 0;
 
-    background-color: #{pfe-local(BackgroundColor, $region: tray)};
-    color:            #{pfe-local(Color, $region: tray)};
+    background-color: pfe-local(BackgroundColor, $region: tray);
+    color:            pfe-local(Color, $region: tray);
     //mobile tray padding
-    padding: #{pfe-local(Padding, $region: tray)};
+    padding: pfe-local(Padding, $region: tray);
     width: 100%;
     max-height: calc(100vh - #{pfe-local(Height)});
     overflow-x: hidden;
@@ -365,7 +363,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host([is_nested]) [slot="trigger"] > a {
-  color: #{pfe-var(ui-complement)} !important;
+  color: pfe-var(ui-complement) !important;
 }
 
 :host([pfe-icon=web-mobile-menu]) {
@@ -375,7 +373,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 :host([is_nested][parent_hidden][pfe-full-width]) {
   .pfe-navigation-item__tray {
-    padding: #{pfe-local(Padding, $region: tray)} 0 #{pfe-local(Padding, $region: tray)} 0;
+    padding: pfe-local(Padding, $region: tray) 0 pfe-local(Padding, $region: tray);
   }
 }
 

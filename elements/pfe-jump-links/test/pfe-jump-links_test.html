@@ -6,6 +6,11 @@
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
     <script type="module" src="../dist/pfe-jump-links.js"></script>
+    <style>
+      #jumplinks3Panel {
+        --pfe-jump-links-panel--offset: 100;
+      }
+    </style>
   </head>
   <body>
     <div style="display:flex; margin-bottom: 400px;">
@@ -526,6 +531,23 @@
           </div>
         </pfe-jump-links-panel>
       </div>
+      <div>
+        <pfe-jump-links-nav id="jumplinks3" pfe-color="darkest">
+          <h4 class="heading" slot="heading">Jump to section</h4>
+          <ul class="pfe-jump-links-nav">
+            <li active>
+              <a class="pfe-jump-links-nav__item" href="#section1000" data-target="section1000" active>Section 1000</a>
+            </li>
+          </ul>
+        </pfe-jump-links-nav>
+      </div>
+      <div>
+        <pfe-jump-links-panel id="jumplinks3Panel" scrolltarget="jumplinks3">
+          <div>
+            <h1 class="pfe-jump-links-panel__section" id="section1000">Section 1000</h1>
+          </div>
+        </pfe-jump-links-panel>
+      </div>
     </div>
 
     <!-- Preview different properties -->
@@ -603,9 +625,31 @@
         test('it should upgrade', () => {
           assert.instanceOf(document.querySelector('pfe-jump-links-panel'), customElements.get("pfe-jump-links-panel", 'pfe-jump-links-panel should be an instance of pfeJumpLinksPanel'));
         });
-      })
 
-      
+        test("it should default to an offset value of 200", () => {
+          const pfeJumpLinksPanel = document.querySelector("pfe-jump-links-panel");
+          assert.equal(pfeJumpLinksPanel.offsetValue, 200);
+        });
+
+        test("it should update the offset value when the offset attribute is used", () => {
+          const pfeJumpLinksPanel = document.querySelector("pfe-jump-links-panel");
+          pfeJumpLinksPanel.setAttribute("pfe-c-offset", "400");
+          assert.equal(pfeJumpLinksPanel.offsetValue, 400);
+          
+          pfeJumpLinksPanel.removeAttribute("pfe-c-offset");
+        });
+
+        test("it should update the offset value when the --pfe-jump-links-panel--offset CSS property is used", () => {
+          const pfeJumpLinksPanel = document.querySelector("#jumplinks3Panel");
+          assert.equal(pfeJumpLinksPanel.offsetValue, 100);
+        });
+
+        test("it should use the offset attribute instead of --pfe-jump-links-panel--offset CSS property if they are both used", () => {
+          const pfeJumpLinksPanel = document.querySelector("#jumplinks3Panel");
+          pfeJumpLinksPanel.setAttribute("pfe-c-offset", 500);
+          assert.equal(pfeJumpLinksPanel.offsetValue, 500);
+        })
+      });
     </script>
   </body>
 </html>

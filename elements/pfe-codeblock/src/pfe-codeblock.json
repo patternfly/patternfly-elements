@@ -31,7 +31,7 @@
       "title": "Attributes",
       "type": "object",
       "properties": {
-        "language": {
+        "c-language": {
           "title": "Codeblock Language",
           "type": "string",
           "enum": [
@@ -49,13 +49,13 @@
           "prefixed": true,
           "observer": "_basicAttributeChanged"
         },
-        "line-numbers": {
+        "c-line-numbers": {
           "title": "Codeblock Line Numebrs",
           "type": "boolean",
           "prefixed": true,
           "observer": "_basicAttributeChanged"
         },
-        "line-count-start": {
+        "c-line-count-start": {
           "title": "Codeblock Line Numebr Count start offset",
           "type": "integer",
           "prefixed": true,

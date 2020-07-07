@@ -21,6 +21,7 @@ npm-debug.log*
 .env
 *.local.umd.js
 *.local.js
+.history
 
 # Storybook
 .storybook_out

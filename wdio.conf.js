@@ -10,7 +10,7 @@ exports.config = {
   key: process.env.BROWSERSTACK_KEY,
   baseUrl: "http://localhost:8080/",
   specs: ["./elements/*/test/*_e2e.js"],
-  maxInstances: 6,
+  maxInstances: 5,
   waitforTimeout: 20000,
   capabilities: [
     {

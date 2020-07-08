@@ -30,7 +30,7 @@ $variables: (
   spacing--vertical: pfe-local(spacing),
 
   header: (
-    BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)}),
+    BackgroundColor: rgba(0, 0, 0, #{pfe-var(opacity)}),
     Color:           pfe-apply-broadcast(text)
   ),
 

@@ -52,7 +52,7 @@
       .demo-cards > * {
         margin: 0 16px 32px;
         min-width: 200px;
-        width: calc(25% - 32px);
+        width: calc(20% - 32px);
       }
       .button-series {
         display: inline-block;
@@ -103,7 +103,6 @@
       <pfe-card pfe-color="lighter">
         <h2 slot="pfe-card--header">Lighter card</h2>
         <p>This is the light pfe-card and <a href="#">a link</a>.</p>
-        <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
         <p>Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
         <div slot="pfe-card--footer">
           <pfe-cta pfe-priority="primary">
@@ -120,7 +119,7 @@
         </pfe-cta>
       </pfe-card>
 
-      <pfe-card pfe-color="darker" pfe-img-src="https://www.redhat.com/files/webux/img/bandbg/bg-infrastructure-management-pattern-transparent-tile.png" style="--pfe-card__header--BackgroundColor: rgba(45,45,45,.7);">
+      <pfe-card pfe-color="darker" >
         <h2 slot="pfe-card--header">Darker Card</h2>
         <p>This is the darker pfe-card and <a href="#">a link</a>.</p>
         <pfe-cta slot="pfe-card--footer">
@@ -186,7 +185,7 @@
         </pfe-cta>
       </pfe-card>
 
-      <pfe-card pfe-color="lighter">
+      <pfe-card pfe-color="darker" pfe-img-src="https://www.redhat.com/files/webux/img/bandbg/bg-infrastructure-management-pattern-transparent-tile.png" style="--pfe-card__header--BackgroundColor: rgba(45,45,45,.7);">
         <h2>Imaged card with side & bottom overflow</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta rerum tempore natus alias! Cumque illum provident corrupti voluptates.</p>
         <img pfe-overflow="right left bottom" src="https://placekitten.com/400/250" slot="pfe-card--footer"/>

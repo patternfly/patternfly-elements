@@ -101,37 +101,37 @@ $pfe-colors: (
   // ========================================================================
 
   // Lightest group
-  surface--lightest:        $pf-color-white,
-  surface--lightest--theme: light,
+  surface--lightest:          $pf-color-white,
+  surface--lightest--theme:   light,
 
   // Lighter group
-  surface--lighter:         $pf-color-black-150,
-  surface--lighter--theme:  light,
+  surface--lighter:           $pf-color-black-200,
+  surface--lighter--theme:    light,
 
   // Base group
-  surface--base:        $pf-color-black-200,
-  surface--base--theme: light,
+  surface--base:              $pf-color-black-600,
+  surface--base--theme:       dark,
 
   // Darker group
-  surface--darker:        $pf-color-black-800,
-  surface--darker--theme: dark,
+  surface--darker:            $pf-color-black-800,
+  surface--darker--theme:     dark,
 
   // Darkest group
-  surface--darkest:        $pf-color-black-900,
-  surface--darkest--theme: dark,
+  surface--darkest:           $pf-color-black-900,
+  surface--darkest--theme:    dark,
 
   // Complement group
-  surface--complement:        $pfelements--blue,
+  surface--complement:        $pf-color-blue-500,
   surface--complement--theme: saturated,
 
   // Accent group
-  surface--accent:        $pfelements--red,
-  surface--accent--theme: saturated,
+  surface--accent:            $pf-color-blue-400,
+  surface--accent--theme:     saturated,
 
   // Palette of Border Colors
-  surface--border--lightest:          $pf-color-black-100,
+  surface--border--lightest:          $pf-color-black-150,
   surface--border--lighter:           $pf-color-black-150,
-  surface--border:                    $pfelements--gray-light,
+  surface--border:                    $pf-color-black-300,
   surface--border--darker:            $pf-color-black-600,
   surface--border--darkest:           $pf-color-black-600,
 

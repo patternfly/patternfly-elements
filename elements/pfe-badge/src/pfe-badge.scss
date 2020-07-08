@@ -36,14 +36,17 @@ span {
 
 @each $state in (moderate, important, critical, success, info) {
   :host([pfe-state="#{$state}"]) {
+    $state: (
+      BackgroundColor: pfe-var(feedback--#{$state}),
+      Color: pfe-var(text--on-dark)
+    );
+
+    @if ($state == 'moderate') {
+      $state: map-merge($state, (Color: pfe-var(text)));
+    }
+
     span {
-      --pfe-#{$LOCAL}--BackgroundColor: #{pfe-var(feedback--#{$state})};
-      @if ($state == 'moderate') {
-        --pfe-#{$LOCAL}--Color: #{pfe-var(text)};
-      }
-      @else {
-        --pfe-#{$LOCAL}--Color: #{pfe-var(text--on-dark)};
-      }
+      @include pfe-print-local($state);
     }
   }
 }

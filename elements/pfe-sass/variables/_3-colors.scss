@@ -1,16 +1,144 @@
-// TODO: Reconcile with _maps.scss so there's only one file and no middleman.
+///
+/// CRAYON COLORS for PFElements
+///
+/// Basic named colors to be assigned to context in _colors.scss
+///
+/// While these are available for styling PFElements, it's recommended
+///    that developers try to utilize the context-based colors in
+///    $pfe-colors in _maps.scss first, and _colors.scss second.
+///
 
-// ========================================================================
-// COLORS for PFElements
-//
-// Context-based colors to be used in styling PFElements along with _maps.scss
-// @requires _crayola.scss
-//
-// ========================================================================
+///
+/// PFElement Brand Colors
+/// Namespaced with $pfelements-- to separate from colors below, which will
+///    be based on these colors.
+///
 
-// ========================================================================
-// Base text and link colors, basis of "theme"
-// ========================================================================
+$pfelements--orange:            #fe460d !default;
+$pfelements--orange-dark:       #e23b0e !default;
+$pfelements--orange-darkest:    #ad2b0c !default;
+
+$pfelements--blue:              #0477a4 !default;
+$pfelements--blue-dark:         #046a89 !default;
+$pfelements--blue-darkest:      #044554 !default;
+
+$pfelements--green:             #aee339 !default;
+$pfelements--green-dark:        #a2c935 !default;
+$pfelements--green-darkest:     #7c9328 !default;
+
+$pfelements--gray:              #797979 !default;
+$pfelements--gray-light:        #d2d2d2 !default;
+$pfelements--gray-dark:         #333 !default;
+
+// Other tertiary named colors to be used below
+$pfelements--red:               #e00 !default; // Was #c00
+$pfelements--yellow:            #f0ab00 !default;
+$pfelements--cyan:              #007a87 !default;
+$pfelements--purple:            rebeccapurple !default; // Was #703fec
+
+///
+/// B&W, Gray Values
+///
+
+$pfe-color--white:               #fff !default;
+$pfe-color--gray-50:             lighten($pfelements--gray, 48%) !default;
+$pfe-color--gray-100:            lighten($pfelements--gray, 45%) !default;
+$pfe-color--gray-200:            lighten($pfelements--gray, 40%) !default;
+$pfe-color--gray-250:            $pfelements--gray-light !default;
+$pfe-color--gray-300:            lighten($pfelements--gray, 30%) !default;
+$pfe-color--gray-400:            lighten($pfelements--gray, 20%) !default;
+$pfe-color--gray-500:            lighten($pfelements--gray, 10%) !default;
+$pfe-color--gray-600:            $pfelements--gray !default;                 // Aliased
+$pfe-color--gray-700:            darken($pfelements--gray, 10%) !default;
+$pfe-color--gray-800:            darken($pfelements--gray, 20%) !default;
+$pfe-color--gray-900:            darken($pfelements--gray, 30%) !default;
+$pfe-color--gray-1000:           darken($pfelements--gray, 40%) !default;
+$pfe-color--black:               $pfe-color--gray-1000 !default;               // Aliased
+
+///
+/// Hue Rainbow Values!
+///
+
+$pfe-color--red-50:              lighten($pfelements--red, 50%) !default;
+$pfe-color--red-100:             lighten($pfelements--red, 40%) !default;
+$pfe-color--red-200:             lighten($pfelements--red, 30%) !default;
+$pfe-color--red-300:             lighten($pfelements--red, 20%) !default;
+$pfe-color--red-400:             lighten($pfelements--red, 10%) !default;
+$pfe-color--red-500:             $pfelements--red !default;                // Aliased
+$pfe-color--red-600:             darken($pfelements--red, 10%) !default;
+$pfe-color--red-700:             darken($pfelements--red, 20%) !default;
+$pfe-color--red-800:             darken($pfelements--red, 30%) !default;
+
+$pfe-color--orange-50:           lighten($pfelements--orange, 40%) !default;
+$pfe-color--orange-100:          lighten($pfelements--orange, 30%) !default;
+$pfe-color--orange-200:          lighten($pfelements--orange, 20%) !default;
+$pfe-color--orange-300:          lighten($pfelements--orange, 10%) !default;
+$pfe-color--orange-400:          $pfelements--orange !default;              // Aliased
+$pfe-color--orange-500:          darken($pfelements--orange, 10%) !default;
+$pfe-color--orange-600:          darken($pfelements--orange, 20%) !default;
+$pfe-color--orange-700:          darken($pfelements--orange, 30%) !default;
+$pfe-color--orange-800:          darken($pfelements--orange, 40%) !default;
+
+$pfe-color--yellow-50:           lighten($pfelements--yellow, 50%) !default;
+$pfe-color--yellow-100:          lighten($pfelements--yellow, 40%) !default;
+$pfe-color--yellow-200:          lighten($pfelements--yellow, 30%) !default;
+$pfe-color--yellow-300:          lighten($pfelements--yellow, 20%) !default;
+$pfe-color--yellow-400:          lighten($pfelements--yellow, 10%) !default;
+$pfe-color--yellow-500:          $pfelements--yellow !default;              // Aliased
+$pfe-color--yellow-600:          darken($pfelements--yellow, 10%) !default;
+$pfe-color--yellow-700:          darken($pfelements--yellow, 20%) !default;
+$pfe-color--yellow-800:          darken($pfelements--yellow, 30%) !default;
+
+$pfe-color--green-50:            lighten($pfelements--green, 40%) !default;
+$pfe-color--green-100:           lighten($pfelements--green, 30%) !default;
+$pfe-color--green-200:           lighten($pfelements--green, 20%) !default;
+$pfe-color--green-300:           lighten($pfelements--green, 10%) !default;
+$pfe-color--green-400:           $pfelements--green !default;              // Aliased
+$pfe-color--green-500:           darken($pfelements--green, 10%) !default;
+$pfe-color--green-600:           darken($pfelements--green, 20%) !default;
+$pfe-color--green-700:           darken($pfelements--green, 30%) !default;
+$pfe-color--green-800:           darken($pfelements--green, 40%) !default;
+
+$pfe-color--cyan-50:             lighten($pfelements--cyan, 60%) !default;
+$pfe-color--cyan-100:            lighten($pfelements--cyan, 50%) !default;
+$pfe-color--cyan-200:            lighten($pfelements--cyan, 40%) !default;
+$pfe-color--cyan-300:            lighten($pfelements--cyan, 30%) !default;
+$pfe-color--cyan-400:            lighten($pfelements--cyan, 20%) !default;
+$pfe-color--cyan-500:            lighten($pfelements--cyan, 10%) !default;
+$pfe-color--cyan-600:            $pfelements--cyan !default;              // Aliased
+$pfe-color--cyan-700:            darken($pfelements--cyan, 10%) !default;
+$pfe-color--cyan-800:            darken($pfelements--cyan, 20%) !default;
+
+$pfe-color--blue-50:             lighten($pfelements--blue, 60%) !default;
+$pfe-color--blue-100:            lighten($pfelements--blue, 50%) !default;
+$pfe-color--blue-200:            lighten($pfelements--blue, 40%) !default;
+$pfe-color--blue-300:            lighten($pfelements--blue, 30%) !default;
+$pfe-color--blue-400:            lighten($pfelements--blue, 20%) !default;
+$pfe-color--blue-500:            lighten($pfelements--blue, 10%) !default;
+$pfe-color--blue-600:            $pfelements--blue !default;              // Aliased
+$pfe-color--blue-700:            darken($pfelements--blue, 10%) !default;
+$pfe-color--blue-800:            darken($pfelements--blue, 20%) !default;
+
+$pfe-color--purple-50:           lighten($pfelements--purple, 40%) !default;
+$pfe-color--purple-100:          lighten($pfelements--purple, 30%) !default;
+$pfe-color--purple-200:          lighten($pfelements--purple, 20%) !default;
+$pfe-color--purple-300:          lighten($pfelements--purple, 10%) !default;
+$pfe-color--purple-400:          $pfelements--purple !default;            // Aliased
+$pfe-color--purple-500:          darken($pfelements--purple, 10%) !default;
+$pfe-color--purple-600:          darken($pfelements--purple, 20%) !default;
+$pfe-color--purple-700:          darken($pfelements--purple, 30%) !default;
+$pfe-color--purple-800:          darken($pfelements--purple, 40%) !default;
+
+///
+/// COLORS for PFElements
+///
+/// Context-based colors to be used in styling PFElements along with _maps.scss
+/// @see _crayola.scss
+///
+
+///
+/// Base text and link colors, basis of "theme"
+///
 
 $pfe-color--text:                            $pfelements--gray-dark !default;
 $pfe-color--link:                            #06c !default;                        //but #00538c for base/gray, how to do that?
@@ -36,3 +164,164 @@ $pfe-color--link--on-saturated:              $pfe-color--white;               //
 $pfe-color--link--visited--on-saturated:     lighten($pfe-color--link--visited, 30%) !default;      // Was #d8c0ff
 $pfe-color--link--hover--on-saturated:       lighten($pfe-color--link--on-saturated, 10%) !default; // Was #c0ecff
 $pfe-color--link--focus--on-saturated:       lighten($pfe-color--link--on-saturated, 10%) !default; // Was #c0ecff
+
+///
+/// Map of colors by function
+///
+$pfe-colors: (
+  //
+  // Base text and link colors, basis of "theme"
+  //
+  text:                        $pfe-color--text,
+  link:                        $pfe-color--link,
+  link--visited:               $pfe-color--link--visited,
+  link--hover:                 $pfe-color--link--hover,
+  link--focus:                 $pfe-color--link--focus,
+
+  text--on-dark:               $pfe-color--text--on-dark,
+  link--on-dark:               $pfe-color--link--on-dark,
+  link--visited--on-dark:      $pfe-color--link--visited--on-dark,
+  link--hover--on-dark:        $pfe-color--link--hover--on-dark,
+  link--focus--on-dark:        $pfe-color--link--focus--on-dark,
+
+  text--on-saturated:          $pfe-color--text--on-saturated,
+  link--on-saturated:          $pfe-color--link--on-saturated,
+  link--visited--on-saturated: $pfe-color--link--visited--on-saturated,
+  link--hover--on-saturated:   $pfe-color--link--hover--on-saturated,
+  link--focus--on-saturated:   $pfe-color--link--focus--on-saturated,
+
+  //
+  // Base UI Colors for Buttons, CTAs, and actionable UI elements
+  //
+
+  // Set of base colors
+  ui-base:                            $pfelements--blue,
+  ui-base--hover:                     darken($pfelements--blue, 20%),
+  ui-base--focus:                     darken($pfelements--blue, 20%),
+  ui-base--text:                      $pfe-color--text--on-dark,
+  ui-base--text--hover:               $pfe-color--text--on-dark,
+  ui-base--text--focus:               $pfe-color--text--on-dark,
+
+  ui-base--on-dark:                   lighten($pfelements--blue, 40%),
+  ui-base--hover--on-dark:            lighten($pfelements--blue, 20%),
+  ui-base--focus--on-dark:            lighten($pfelements--blue, 20%),
+  ui-base--text--on-dark:             $pfe-color--text,
+  ui-base--text--hover--on-dark:      $pfe-color--text,
+  ui-base--text--focus--on-dark:      $pfe-color--text,
+
+  ui-base--on-saturated:                   $pfe-color--white,
+  ui-base--hover--on-saturated:            darken($pfe-color--white, 20%),
+  ui-base--focus--on-saturated:            darken($pfe-color--white, 20%),
+  ui-base--text--on-saturated:             $pfe-color--text,
+  ui-base--text--hover--on-saturated:      $pfe-color--text,
+  ui-base--text--focus--on-saturated:      $pfe-color--text,
+
+  // Set of complement colors
+  ui-complement:                      $pfe-color--gray-800,
+  ui-complement--hover:               $pfe-color--gray-1000,
+  ui-complement--focus:               $pfe-color--gray-1000,
+  ui-complement--text:                $pfe-color--text--on-dark,
+  ui-complement--text--hover:         $pfe-color--text--on-dark,
+  ui-complement--text--focus:         $pfe-color--text--on-dark,
+
+  ui-complement--on-dark:                      $pfe-color--white,
+  ui-complement--hover--on-dark:               darken($pfe-color--white, 20%),
+  ui-complement--focus--on-dark:               darken($pfe-color--white, 20%),
+  ui-complement--text--on-dark:                $pfe-color--text,
+  ui-complement--text--hover--on-dark:         $pfe-color--text,
+  ui-complement--text--focus--on-dark:         $pfe-color--text,
+
+  // Set of accent colors
+  ui-accent:                          $pfelements--red,
+  ui-accent--hover:                   darken($pfelements--red, 20%),
+  ui-accent--focus:                   darken($pfelements--red, 20%),
+  ui-accent--text:                    $pfe-color--text--on-dark,
+  ui-accent--text--hover:             $pfe-color--text--on-dark,
+  ui-accent--text--focus:             $pfe-color--text--on-dark,
+
+  ui-accent--on-saturated:                          $pfe-color--white,
+  ui-accent--hover--on-saturated:                   darken($pfe-color--white, 20%),
+  ui-accent--focus--on-saturated:                   darken($pfe-color--white, 20%),
+  ui-accent--text--on-saturated:                    $pfe-color--text,
+  ui-accent--text--hover--on-saturated:             $pfe-color--text,
+  ui-accent--text--focus--on-saturated:             $pfe-color--text,
+
+  // Set of disabled colors
+  ui-disabled:                        $pfelements--gray-light,
+  ui-disabled--hover:                 $pfelements--gray-light,
+  ui-disabled--focus:                 $pfe-color--gray-500,
+  ui-disabled--text:                  $pfe-color--gray-600,
+  ui-disabled--text--hover:           $pfelements--gray,
+  ui-disabled--text--focus:           $pfelements--gray,
+
+  //
+  // Base Surface Colors for Container elements
+  //
+
+  // Lightest group
+  surface--lightest:        $pfe-color--white,
+  surface--lightest--theme: light,
+
+  // Lighter group
+  surface--lighter:         $pfe-color--gray-100,
+  surface--lighter--theme:  light,
+
+  // Base group
+  surface--base:        $pfe-color--gray-200,
+  surface--base--theme: light,
+
+  // Darker group
+  surface--darker:        $pfe-color--gray-800,
+  surface--darker--theme: dark,
+
+  // Darkest group
+  surface--darkest:        $pfe-color--gray-1000,
+  surface--darkest--theme: dark,
+
+  // Complement group
+  surface--complement:        $pfelements--blue,
+  surface--complement--theme: saturated,
+
+  // Accent group
+  surface--accent:        $pfelements--red,
+  surface--accent--theme: saturated,
+
+  // Palette of Border Colors
+  surface--border--lightest:          $pfe-color--gray-100,
+  surface--border--lighter:           $pfe-color--gray-100,
+  surface--border:                    $pfelements--gray-light,
+  surface--border--darker:            $pfe-color--gray-300,
+  surface--border--darkest:           $pfe-color--gray-800,
+
+
+  //
+  // Base Feedback Colors for messaging, errors, etc.
+  //
+
+  // Palette of Feedback Colors
+  feedback--critical--lightest:       $pfe-color--red-50,
+  feedback--critical:                 $pfe-color--red-600,
+  feedback--critical--darkest:        $pfe-color--red-800,
+
+  feedback--important--lightest:      $pfe-color--orange-50,
+  feedback--important:                $pfe-color--orange-500,
+  feedback--important--darkest:       $pfe-color--orange-700,
+
+  feedback--moderate--lightest:       $pfe-color--yellow-50,
+  feedback--moderate:                 $pfe-color--yellow-400,
+  feedback--moderate--darkest:        $pfe-color--yellow-700,
+
+  feedback--success--lightest:        $pfe-color--green-50,
+  feedback--success:                  #2e7d32,
+  feedback--success--darkest:         #1b5e20,
+
+  feedback--info--lightest:           $pfe-color--blue-50,
+  feedback--info:                     #0277bd,
+  feedback--info--darkest:            #01579b,
+
+  feedback--default--lightest:        $pfe-color--gray-100,
+  feedback--default:                  $pfe-color--gray-700,
+  feedback--default--darkest:         $pfe-color--gray-800,
+
+  overlay:                            rgba($pfe-color--gray-900, .5)
+);

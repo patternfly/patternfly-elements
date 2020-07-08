@@ -1,6 +1,6 @@
-/// ===========================================================================
+///
 /// Accordion-specific SASS Vars
-/// ===========================================================================
+///
 
 @mixin pfe-accordion-variables($state: default, $theme: default, $variant: default) {
   // Shared variables for all themes
@@ -189,9 +189,9 @@
   padding: #{pfe-local(panel-container--Padding)};
 }
 
-/// ===========================================================================
+///
 /// Accordion chevrons
-/// ===========================================================================
+///
 
 @mixin pfe-chevron($state: open, $position: after, $size: .4em, $offset: $size) {
 

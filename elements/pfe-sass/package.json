@@ -20,9 +20,11 @@
   },
   "main": "./pfe-sass.scss",
   "scripts": {
-    "build": "../../node_modules/.bin/gulp",
-    "dev": "../../node_modules/.bin/gulp dev",
-    "watch": "../../node_modules/.bin/gulp watch"
+    "gulp": "../../node_modules/.bin/gulp",
+    "build": "gulp",
+    "dev": "gulp dev",
+    "watch": "gulp watch",
+    "build:sassdoc": "gulp build:sassdoc"
   },
   "contributors": [
     {
@@ -49,5 +51,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"
+  },
+  "devDependencies": {
+    "sassdoc": "^2.7.2"
   }
 }

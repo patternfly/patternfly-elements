@@ -2,7 +2,8 @@ const element = require("../package.json").pfelement.elementName;
 
 describe(element, () => {
   before(() => {
-    browser.url(`/elements/${element}/demo`);
+    browser.url(`/elements/${element}/demo/index_e2e.html`);
+    browser.pause(1000);
   });
 
   it("should take a screenshot", () => {

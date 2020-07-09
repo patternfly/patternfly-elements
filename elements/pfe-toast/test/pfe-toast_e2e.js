@@ -4,11 +4,9 @@ describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
 
-    const collapse = $("#collapse");
-    collapse.$(function () {
-      this.toggle();
-    });
-    browser.pause(1000);
+    const toastBtn = $("#example2");
+    toastBtn.click();
+    browser.pause(3000);
   });
 
   it("should take a screenshot", () => {
@@ -16,6 +14,6 @@ describe(element, () => {
   });
 
   it("should compare to the baseline", () => {
-    expect(browser.checkScreen(element)).toBeLessThan(1.25);
+    expect(browser.checkScreen(element)).toBeLessThan(2);
   });
 });

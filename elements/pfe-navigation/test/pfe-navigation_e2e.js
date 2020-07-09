@@ -3,7 +3,6 @@ const element = require("../package.json").pfelement.elementName;
 describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
-    $("#products").click();
     browser.pause(1000);
   });
 

@@ -7,12 +7,9 @@ describe(element, () => {
     const accordion = $("#accordion");
     accordion.scrollIntoView();
 
-    var clickElement = function (element) {
-      element.click();
-    };
-
-    const firstHeader = $("#accordion pfe-accordion-header");
-    browser.execute(clickElement, firstHeader);
+    accordion.$(function() {
+      this.querySelector("pfe-accordion").toggle(0);
+    });
   });
 
   it("should take a screenshot", () => {

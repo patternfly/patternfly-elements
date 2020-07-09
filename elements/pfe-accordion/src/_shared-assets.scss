@@ -1,0 +1,5 @@
+// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: accordion;
+$LOCAL-VARIABLES: pfe-accordion-variables();

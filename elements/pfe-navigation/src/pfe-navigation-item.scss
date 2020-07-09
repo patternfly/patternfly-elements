@@ -196,7 +196,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       --pfe-broadcasted--#{$prop}: #{pfe-local(Color, $region: tray)};
     }
 
-    @include pfe-accordion-variables;
+    $accordion: pfe-accordion-variables;
+    @include pfe-print-local($accordion);
     @include pfe-trigger;
 
     box-sizing: border-box;
@@ -204,7 +205,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 
   :host([is_nested].expanded:not([parent_hidden])) & {
-    @include pfe-accordion-variables($state: expanded);
+    $accordion: pfe-accordion-variables($state: expanded);
+    @include pfe-print-local($accordion);
   }
 
   :host([is_nested][last]:not(.expanded):not([parent_hidden])) & {
@@ -329,7 +331,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 
   :host([is_nested].expanded:not([parent_hidden])) & {
-    @include pfe-accordion-variables($state: expanded);
+    $accordion: pfe-accordion-variables($state: expanded);
+    @include pfe-print-local($accordion);
     @include pfe-panel-variables;
     @include pfe-collapsible($state: open);
   }

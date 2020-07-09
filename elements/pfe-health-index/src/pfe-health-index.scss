@@ -71,12 +71,12 @@ $colors: (
   }
   :host([size="lg"]) & {
     background-color: pfe-var(surface--lightest);
-    color: #777; // TODO update this to use a theme variable
-    border-top: calc(#{pfe-var(ui--border-width)} * 2) pfe-var(ui--border-style) #ececec;
+    color: pfe-var(ui-disabled--text);
+    border-top: calc(#{pfe-var(ui--border-width)} * 2) pfe-var(ui--border-style) pfe-var(surface--border--lightest);
 
     &:first-child {
       margin-left: 0;
-      border-left: calc(#{pfe-var(ui--border-width)} * 2) pfe-var(ui--border-style) #ececec;
+      border-left: calc(#{pfe-var(ui--border-width)} * 2) pfe-var(ui--border-style) pfe-var(surface--border--lightest);
     }
 
     &.active:first-child {
@@ -85,7 +85,7 @@ $colors: (
 
     &:last-child {
       margin-right: 0;
-      border-right: calc(#{pfe-var(ui--border-width)} * 2) pfe-var(ui--border-style) #ececec;
+      border-right: calc(#{pfe-var(ui--border-width)} * 2) pfe-var(ui--border-style) pfe-var(surface--border--lightest);
     }
 
     &.active:last-child {
@@ -98,7 +98,8 @@ $colors: (
     }
 
     .grade {
-      padding: 6px 10px;
+      // TODO: What is the 6px value's relationship to the other design elements?
+      padding: 6px calc(#{pfe-var(ui--element--size)} / 2);
     }
 
     &.active .grade {

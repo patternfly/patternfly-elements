@@ -45,6 +45,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   )
 ));
 
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   Padding: 0 pfe-local(Padding--horizontal),
   Border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
@@ -56,12 +57,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   // Reduce padding for print
   @media print {
-    --#{$repo}-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
+    --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
   }
 
   display: block;
-  --#{$repo}-accordion__base--Padding: var(--#{$repo}-theme--container-spacer, 16px);
-  --#{$repo}-accordion__panel-container--Padding: 0 calc(var(--#{$repo}-accordion__base--Padding) * 3) var(--#{$repo}-accordion__base--Padding) calc(var(--#{$repo}-accordion__base--Padding) * 1.5);
+  --pfe-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
+  --pfe-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
 
   z-index: pfe-zindex(content);
   width: 100%;
@@ -78,16 +79,16 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   @each $size in ("md", "lg", "xl") {
     @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
       @if ($size == "md" or $size == "lg") {
-        --#{$repo}-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
+        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
       } @else if ($size == "xl") {
-        --#{$repo}-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
+        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
       }
     }
   }
 }
 
 pfe-icon {
-  --#{$repo}-icon--Color: #{pfe-local(Color)};
+  --pfe-icon--Color: #{pfe-local(Color)};
 }
 
 // Note: These styles do not pick up in Edge
@@ -143,13 +144,13 @@ pfe-icon {
     // stop using padding, start using max width at medium breakpoint
     @media screen and (min-width: pfe-breakpoint(md)) {
       padding: 0;
-      max-width: var(--#{$repo}-navigation--Width);
+      max-width: var(--pfe-navigation--Width);
     }
    // Set the variable for use in the tray region too
     // Loop through the other breakpoints
     @each $size in ("md", "lg", "xl") {
       @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-        --#{$repo}-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+        --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
       }
     }
   }

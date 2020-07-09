@@ -16,6 +16,7 @@ $LOCAL-VARIABLES: (
   FontFamily:                 pfe-var(font-family)
 );
 
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   BorderTop:            pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor),
   BorderLeft:           pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor),
@@ -66,7 +67,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       border-bottom-width: calc(#{pfe-var(surface--border-width--heavy)} / 2);
       border-bottom-color: pfe-local(BorderBottomColor--hover);
       ::slotted(select) {
-          padding-bottom: calc(var(--#{$repo}-theme-container-padding, 1rem) * 0.438); // ~7px
+          padding-bottom: calc(var(--pfe-theme-container-padding, 1rem) * 0.438); // ~7px
       }
   }
 

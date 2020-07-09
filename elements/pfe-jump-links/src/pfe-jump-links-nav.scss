@@ -178,7 +178,7 @@ pfe-accordion {
     @include pfe-print-local((
       base: (Padding: 0)
     ));
-    // --#{$repo}-accordion__base--Padding: 0 !important;
+    // --pfe-accordion__base--Padding: 0 !important;
   }
 
   @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
@@ -188,9 +188,9 @@ pfe-accordion {
 
 pfe-accordion-header {
   // hide accordion left border:
-  --#{$repo}-theme--color--surface--border: transparent;
-  --#{$repo}-theme--color--ui-base--on-dark: transparent;
-  --#{$repo}-theme--color--ui-base: transparent;
+  --pfe-theme--color--surface--border: transparent;
+  --pfe-theme--color--ui-base--on-dark: transparent;
+  --pfe-theme--color--ui-base: transparent;
 
   position: sticky;
   top: 0;
@@ -238,8 +238,8 @@ $LOCAL: $temp;
   pfe-accordion-header,
   pfe-accordion-panel,
   button[aria-expanded="true"] {
-    --#{$repo}-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
-    --#{$repo}-#{$LOCAL}--BackgroundColor: #{pfe-var(surface--darkest)};
+    --pfe-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
+    --pfe-#{$LOCAL}--BackgroundColor: #{pfe-var(surface--darkest)};
   }
 
   ::slotted([slot="#{$repo}-#{$LOCAL}-nav--heading"]) {
@@ -275,7 +275,7 @@ $LOCAL: $temp;
   display: none;
 }
 
-:host([horizontal]) {
+:host([pfe-c-horizontal]) {
   padding: 0;
   top: 0;
   width: 100%;

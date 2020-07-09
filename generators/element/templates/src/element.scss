@@ -7,12 +7,12 @@ $LOCAL: <%= _.last(_.split(elementName, "-", 2)) %>;
 // Example local variable, using BEM format
 // --<%= elementName %>__region--Property: value;
 
-// This variable is global so that helper functions
+// This variable is global so that helper functions can reference it
 $LOCAL-VARIABLES: ();
 
 :host {
-  // Avoid printing local variables on host, use the pfe-local() function instead
-  // Example: color: #{pfe-local(Color)};
+  // Avoid printing local variables on host, instead use the pfe-local() function to set property values
+  // Example: color: pfe-local(Color);
   display: block;
 }
 

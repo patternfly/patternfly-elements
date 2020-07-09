@@ -245,10 +245,10 @@
     }
 
     .pfe-navigation-item__trigger {
-        --#{$repo}-navigation__trigger-icon--Visible: hidden;
+        --pfe-navigation__trigger-icon--Visible: hidden;
 
         &:hover {
-            --#{$repo}-navigation__trigger-icon--Visible: visible;
+            --pfe-navigation__trigger-icon--Visible: visible;
         }
         &.pfe-navigation-item {
             box-sizing: border-box;
@@ -473,7 +473,7 @@ pfe-navigation-item {
     pfe-navigation-item:not([pfe-full-width]) & {
       @each $size in ("md", "lg", "xl") {
         @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-          --#{$repo}-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+          --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
         }
       }
     }

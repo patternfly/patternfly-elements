@@ -41,8 +41,8 @@ $LOCAL-VARIABLES: (
   border-left:    #{pfe-local($cssvar: BorderLeft, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, transparent, $region: tab)} )};
 
   // Inner style
-  background-color: #{pfe-local(BackgroundColor)};
-  color: #{pfe-local(TabTextColor)};
+  background-color: #{pfe-local(BackgroundColor, $region: tab)};
+  color: #{pfe-local(Color, $region: tab)};
 
   cursor: pointer;
   text-align: #{pfe-local(TextAlign, center, $region: tab)};
@@ -83,6 +83,7 @@ $LOCAL-VARIABLES: (
   }
 
   @at-root #{&}([aria-selected="true"]) {
+    --pfe-tabs--Color: #{$pfe-color--black};
     color: #{pfe-local(Color--hover)};
     --pfe-tabs__tab--BorderColor: transparent;
     --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
@@ -174,6 +175,7 @@ $LOCAL-VARIABLES: (
 
 :host{
   @at-root #{&}([pfe-variant="wind"][aria-selected="false"]:first-of-type) {
+  border-bottom: #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(BorderColor--hover)};
     @include browser-query(ie11) {
       border-bottom: 1px solid transparent;
     }
@@ -244,14 +246,9 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 /// WIND TAB VARIANTS / saturated
 /// ===========================================================================
-
 :host {
   @at-root #{&}([on="saturated"][pfe-variant="wind"]) {
     color: #{pfe-var(link--focus--on-dark)};
-    @include browser-query(ie11) {
-      color: var(--pfe-tabs--Color--hover,#151515) !important;
-      background-color: transparent;
-    }
   }
   @at-root #{&}([on="saturated"][aria-selected="false"][pfe-variant="wind"]:hover) {
     --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
@@ -261,14 +258,6 @@ $LOCAL-VARIABLES: (
   }
   @at-root #{&}([on="saturated"][aria-selected="true"][pfe-variant="wind"]) {
     color: var(--pfe-theme--color--surface--lightest, #fff) !important;
-    @include browser-query(ie11) {
-      color: var(--pfe-tabs--Color--hover,#151515) !important;
-    }
-  }
-  @at-root #{&}([on="saturated"][aria-selected="true"][pfe-variant="wind"]:last-of-type) {
-    @include browser-query(ie11) {
-      border-left: 0 !important;
-    }
   }
 }
 
@@ -301,12 +290,12 @@ $LOCAL-VARIABLES: (
 }
 
 :host([pfe-variant="earth"][aria-selected="true"]) {
-  --pfe-tabs--BackgroundColor:   #{pfe-var(surface--lightest)};
-  --pfe-tabs--Color:             #{pfe-var(text)};
+  --pfe-tabs--BackgroundColor: #{pfe-var(surface--lightest)};
+  --pfe-tabs--Color:           #{pfe-var(text)};
 
-  --pfe-tabs__tab--BorderTop:    #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
-  --pfe-tabs__tab--BorderBottom: 0;
-  --pfe-tabs__tab--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
+  --pfe-tabs__tab--BorderTop:       #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+  --pfe-tabs__tab--BorderBottom:    0;
+  --pfe-tabs__tab--BorderLeft:      #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 
   @include browser-query(ie11) {
     color:            #{pfe-fetch(text)};
@@ -414,24 +403,23 @@ $LOCAL-VARIABLES: (
 :host{
     @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]) {
       --pfe-tabs--BackgroundColor: #3c3f42; //replace with a var when Kendall is done with her updates. She might be adding this color
-      color: #{pfe-var(ui-disabled)};
+      --pfe-tabs--Color: #{pfe-var(ui-disabled)};
       @include browser-query(ie11) {
         color: var(--pfe-tabs--Color--hover,#151515) !important;
       }
     }
     @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]:first-of-type) {
-      --pfe-tabs__tab--BorderLeft: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} transparent !important;
+      border-left: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} transparent !important;
     }
     @at-root #{&}([pfe-variant="earth"][aria-selected="true"][on="dark"]) {
-      color: #{pfe-var(surface--lightest)} !important;
+      --pfe-tabs--Color: #{pfe-var(surface--lightest)};
       --pfe-tabs--BackgroundColor: #{pfe-local(Color--hover)};
       @include browser-query(ie11) {
           color: var(--pfe-tabs--Color--hover,#151515) !important;
       }
     }
     @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]:hover) {
-      --pfe-tabs__tab--BorderTop: 3px solid #b8bbbe !important;
-      color: #{pfe-var(surface--lightest)};
+      --pfe-tabs--Color: #{pfe-var(surface--lightest)} !important;
       @include browser-query(ie11) {
         color: var(--pfe-tabs--Color--hover,#151515) !important;
       }
@@ -443,9 +431,31 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 
 :host{
+    @at-root #{&}([pfe-variant="wind"][aria-selected="false"][on="dark"]) {
+      @include browser-query(ie11) {
+        color: var(--pfe-tabs--Color--hover,#151515) !important;
+        border-bottom: 1px solid transparent;
+      }
+    }
+    @at-root #{&}([pfe-variant="wind"][aria-selected="false"][on="dark"]:hover) {
+      @include browser-query(ie11) {
+        color: var(--pfe-tabs--Color--hover,#151515) !important;
+        border-bottom: #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(BorderColor--hover)} !important;
+      }
+    }
     @at-root #{&}([pfe-variant="wind"][aria-selected="true"][on="dark"]) {
       @include browser-query(ie11) {
         color: var(--pfe-tabs--Color--hover,#151515) !important;
+      }
+    }
+    @at-root #{&}([pfe-variant="wind"][aria-selected="false"][on="dark"]:first-of-type) {
+      @include browser-query(ie11) {
+        border-bottom: 1px solid transparent !important;
+      }
+    }
+    @at-root #{&}([pfe-variant="wind"][aria-selected="true"][on="dark"]:first-of-type) {
+      @include browser-query(ie11) {
+        border-bottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)} !important;
       }
     }
 }

@@ -6,12 +6,15 @@ let proc;
 
 exports.config = {
   logLevel: "error",
+  framework: "mocha",
+  mochaOpts: {
+    timeout: 30000
+  },
   user: process.env.BROWSERSTACK_USER,
   key: process.env.BROWSERSTACK_KEY,
   baseUrl: "http://localhost:8080/",
   specs: ["./elements/*/test/*_e2e.js"],
-  maxInstances: 5,
-  waitforTimeout: 20000,
+  maxInstances: 7,
   capabilities: [
     {
       os: "OS X",

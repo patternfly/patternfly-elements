@@ -2,16 +2,16 @@
 $repo: pfe !default;
 
 /// Default font size
-$pfe-global--font-size-root: 16 !default; // root for fonts and everything else
+$pfe-global--font-size-root: 16 !default;
 
 /// Use Fallback
-$USE-FALLBACK: true; // default for use-fallback is true
+$USE-FALLBACK: true;
 
-/// @todo ?? Not sure what this means
-$BROADCAST-VARS: text link link-decoration; // supported default broadcast variables
+/// Supported default broadcast variables
+$BROADCAST-VARS: text link link-decoration;
 
 /// List of supported themes
-$THEMES: dark saturated light; // supported themes
+$THEMES: dark saturated light;
 
 /// List of supported surfaces
 $SURFACE: darker darkest base lighter lightest accent complement;

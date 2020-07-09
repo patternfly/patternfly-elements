@@ -54,10 +54,9 @@ task("sass:globbing", () => {
 
 task("build:sassdoc", () => {
   return src("**/*.scss").pipe(
-    sassdoc()
-    // {
-    //   'theme': 'neat'
-    // }
+    sassdoc({
+      dest: "../../docs/static/sassdoc"
+    })
   );
 });
 
@@ -69,7 +68,7 @@ task("watch", () => {
     {
       cwd: paths.compiled
     },
-    series("build")
+    series("build", "build:sassdoc")
   );
 });
 

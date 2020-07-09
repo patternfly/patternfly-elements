@@ -1,19 +1,18 @@
-///
-/// CRAYON COLORS for PFElements
-///
-/// Basic named colors to be assigned to context in _colors.scss
-///
-/// While these are available for styling PFElements, it's recommended
-///    that developers try to utilize the context-based colors in
-///    $pfe-colors in _maps.scss first, and _colors.scss second.
-///
+//
+// CRAYON COLORS for PFElements
+//
+// Basic named colors to be assigned to context in _colors.scss
+//
+// While these are available for styling PFElements, it's recommended
+//    that developers try to utilize the context-based colors in
+//    $pfe-colors in _maps.scss first, and _colors.scss second.
+//
 
-///
-/// PFElement Brand Colors
-/// Namespaced with $pfelements-- to separate from colors below, which will
-///    be based on these colors.
-///
-
+//
+// PFElement Brand Colors
+// Namespaced with $pfelements-- to separate from colors below, which will
+//    be based on these colors.
+//
 $pfelements--orange:            #fe460d !default;
 $pfelements--orange-dark:       #e23b0e !default;
 $pfelements--orange-darkest:    #ad2b0c !default;
@@ -36,9 +35,9 @@ $pfelements--yellow:            #f0ab00 !default;
 $pfelements--cyan:              #007a87 !default;
 $pfelements--purple:            rebeccapurple !default; // Was #703fec
 
-///
-/// B&W, Gray Values
-///
+//
+// B&W, Gray Values
+//
 
 $pfe-color--white:               #fff !default;
 $pfe-color--gray-50:             lighten($pfelements--gray, 48%) !default;
@@ -55,9 +54,9 @@ $pfe-color--gray-900:            darken($pfelements--gray, 30%) !default;
 $pfe-color--gray-1000:           darken($pfelements--gray, 40%) !default;
 $pfe-color--black:               $pfe-color--gray-1000 !default;               // Aliased
 
-///
-/// Hue Rainbow Values!
-///
+//
+// Hue Rainbow Values!
+//
 
 $pfe-color--red-50:              lighten($pfelements--red, 50%) !default;
 $pfe-color--red-100:             lighten($pfelements--red, 40%) !default;
@@ -129,12 +128,12 @@ $pfe-color--purple-600:          darken($pfelements--purple, 20%) !default;
 $pfe-color--purple-700:          darken($pfelements--purple, 30%) !default;
 $pfe-color--purple-800:          darken($pfelements--purple, 40%) !default;
 
-///
-/// COLORS for PFElements
-///
-/// Context-based colors to be used in styling PFElements along with _maps.scss
-/// @see _crayola.scss
-///
+//
+// COLORS for PFElements
+//
+// Context-based colors to be used in styling PFElements along with _maps.scss
+// @see _crayola.scss
+//
 
 ///
 /// Base text and link colors, basis of "theme"

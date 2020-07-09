@@ -48,7 +48,7 @@
 ///
 /// Returns CSS variable stack with exposed theme variable and respective fallback
 ///
-/// @param {String} $cssvar - Variable name to be used and prepended with --#{$repo}-theme
+/// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme
 /// @param {String} $fallback [null] - Optional custom fallback
 /// @requires {Map} $pfe-vars - A map of the variables in the repository
 /// @example -

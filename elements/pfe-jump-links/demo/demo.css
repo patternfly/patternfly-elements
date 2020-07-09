@@ -1,0 +1,63 @@
+html {
+    background: #eee;
+    scroll-behavior: smooth;
+}
+
+a.pfe-jump-links-nav__item {
+    /* Just in here for sanity knowing outside styles can't leak in */
+    color: orange !important;
+}
+
+.sticky {
+    position: sticky;
+    top: 0;
+}
+
+/* SET OFFSET */
+.special {
+    --pfe-jump-links-panel--offset: 100px;
+    --pfe-jump-links__nav--offset: 100px;
+}
+@media(max-width: 992px) {
+    .special{
+    --pfe-jump-links-panel--offset: 60px;
+    --pfe-jump-links__nav--offset: 60px;
+    }   
+}
+
+/* 
+    * Fixing the issue where the headers are under the stick nav
+    * https://stackoverflow.com/questions/4086107/fixed-page-header-overlaps-in-page-anchors
+    */
+
+
+/* Offset panel headers */
+.pfe-jump-links-panel__section::before {
+    content: '';
+    display: block;
+    position: relative;
+    width: 0;
+    height: var(--pfe-jump-links-panel--offset);
+    margin: calc( var(--pfe-jump-links-panel--offset) * -1) 0 0;
+}  
+
+/* FAKE NAV BAR */
+#navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  background-color: #333;
+  height: var(--pfe-jump-links-panel--offset);
+}
+
+#navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+ 

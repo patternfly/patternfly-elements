@@ -49,12 +49,11 @@ $LOCAL-VARIABLES: (
   font-weight:  #{pfe-var(font-weight--normal)};
   font-size:    #{pfe-local(FontSize, $region: tab)};
     
-  @for $i from 1 through 6 {
-    .pfe-tab > * {
-      font-size: inherit;
-      font-weight: inherit;
-      margin: 0;
-    }
+  .pfe-tab > * {
+    color: inherit !important;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
   }
 
   @at-root #{&}(:hover) {
@@ -168,6 +167,10 @@ $LOCAL-VARIABLES: (
     border-bottom: 1px solid #{pfe-var(surface--border)};
     border-left: 1px solid #{pfe-var(surface--border)};
   }
+}
+
+:host([pfe-variant="earth"][aria-selected="false"]:hover) {
+  --pfe-tabs--Color: #{pfe-var(text)};
 }
 
 :host([pfe-variant="earth"][aria-selected="true"]) {

@@ -14,9 +14,9 @@ describe(element, () => {
     }, input);
     
     browser.keys(['i']);
-    browser.pause(500);
+    browser.pause(1000);
     browser.keys(['Down arrow']);
-    browser.pause(500);
+    browser.pause(1000);
   });
 
   it("should take a screenshot", () => {

@@ -379,7 +379,7 @@
     grid-gap: 2em;
     background: #fff;
     // temp style
-    border-bottom: 2px solid black;
+    border-bottom: 0px;
   }
 
   .pfe-navigation__menu-item--open > & {
@@ -398,6 +398,24 @@
     margin: 0;
     padding: 0;
     font-size: 16px;
+    color: var(--pfe-theme--color--ui-complement,#464646); // to make sure color is correct even when headings do not have links
+  }
+
+  h1 a,
+  h2 a,
+  h3 a,
+  h4 a,
+  h5 a,
+  h6 a {
+    color: var(--pfe-theme--color--ui-complement,#464646);
+  }
+
+  li a {
+    color: var(--pfe-broadcasted--link,#06c);
+    &:hover {
+      color: var(--pfe-broadcasted--link--hover,#036);
+      text-decoration: underline;
+    }
   }
 }
 

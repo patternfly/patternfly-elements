@@ -111,7 +111,6 @@ $LOCAL-VARIABLES: (
         border-right: 0;
         margin: 0 -1px 0 0;
         padding-left: 12px;
-        //text-align: left;
       }
   }
 
@@ -324,7 +323,6 @@ $LOCAL-VARIABLES: (
       BorderLeft:    #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)},
       BorderBottom:  #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)},
       BorderTop:     #{pfe-local(BorderWidth--hover)} #{pfe-var(ui--border-style)} transparent,
-      color: #{pfe-var(ui-disabled--text)},
     )
   );
   @include pfe-print-local($variantEarth);

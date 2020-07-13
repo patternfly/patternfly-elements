@@ -417,6 +417,10 @@
       text-decoration: underline;
     }
   }
+
+  & > section:last-child {
+    background-color: grey;
+  }
 }
 
 // Search

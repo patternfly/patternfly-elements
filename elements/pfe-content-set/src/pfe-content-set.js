@@ -51,6 +51,8 @@ class PfeContentSet extends PFElement {
 
     this._init = this._init.bind(this);
     this._observer = new MutationObserver(this._init);
+    this.renderAccordionId = this.randomId;
+    this.renderTabId = this.randomId;
   }
 
   connectedCallback() {
@@ -89,12 +91,24 @@ class PfeContentSet extends PFElement {
   }
 
   _buildAccordion() {
-    const existingAccordion = this.querySelector("pfe-accordion");
+    let accordion;
+
+    // Use the existing accordion if it exists
+    const existingAccordion = this.querySelector(
+      `[pfe-c-upgrade="${this.renderAccordionId}"]`
+    );
+
     // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();
-    // Use the existing accordion or create the accordion wrapper component
-    const accordion =
-      existingAccordion || document.createElement("pfe-accordion");
+
+    // Create the accordion wrapper component or use the existing component
+    if (!existingAccordion) {
+      // Create the accordion wrapper component with a unique ID
+      accordion = document.createElement("pfe-accordion");
+      accordion.setAttribute("pfe-c-upgrade", this.renderAccordionId);
+    } else {
+      accordion = existingAccordion;
+    }
 
     // Iterate over each element in the light DOM
     [...this.children].forEach(child => {
@@ -116,19 +130,28 @@ class PfeContentSet extends PFElement {
 
     if (!existingAccordion) {
       fragment.appendChild(accordion);
-    }
-
-    if (!existingAccordion) {
       this.appendChild(fragment);
     }
   }
 
   _buildTabs() {
-    const existingTabs = this.querySelector("pfe-tabs");
+    let tabs;
+
+    // Use the existing tabs if they exist
+    let existingTabs = this.querySelector(
+      `[pfe-c-upgrade="${this.renderTabId}"]`
+    );
+
     // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();
-    // Use the existing tabs or create the tabs wrapper component
-    const tabs = existingTabs || document.createElement("pfe-tabs");
+
+    // Create the tabs wrapper component or use the existing tabs
+    if (!existingTabs) {
+      tabs = document.createElement("pfe-tabs");
+      tabs.setAttribute("pfe-c-upgrade", this.renderTabId);
+    } else {
+      tabs = existingTabs;
+    }
 
     // Iterate over each element in the light DOM
     [...this.children].forEach(child => {

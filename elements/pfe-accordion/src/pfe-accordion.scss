@@ -11,8 +11,8 @@
   color: pfe-local(Color);
 
   @include browser-query(ie11) {
-    background-color: pfe-var(surface--lightest) !important;
-    color: pfe-var(text) !important;
+    background-color: pfe-fetch(surface--lightest) !important;
+    color: pfe-fetch(text) !important;
   }
 }
 

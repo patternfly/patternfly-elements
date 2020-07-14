@@ -24,9 +24,6 @@
     )
   ));
 
-  // TODO: Remove this in the 1.0 release; backwards support
-  --pfe-accordion--panel-container--Padding: pfe-local(Padding, $region: panel-container);
-
   :host([pfe-disclosure="true"]) & {
     @include pfe-print-local((
       panel-container: (

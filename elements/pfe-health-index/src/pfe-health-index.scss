@@ -38,8 +38,10 @@ $colors: (
 .box {
   @each $level in (a b c d e f) {
     &.#{$level} {
-      --pfe-#{$LOCAL}--accent: #{map-get($colors, $level)};
-      --pfe-#{$LOCAL}--accent--text: #{pfe-var(text--on-dark)};
+      @include pfe-print-local((
+        accent: #{map-get($colors, $level)},
+        accent--text: #{pfe-var(text--on-dark)}
+      ));
     }
   }
 

@@ -80,7 +80,7 @@ button[aria-expanded="true"] {
   button {
     @include pfe-print-local((
       trigger: (
-        Padding: pfe-local(Padding, $region: base) calc(#{pfe-local(Padding, $region: base)} * 1.5) pfe-local(Padding, $region: base) calc((#{pfe-local(Padding, $region: base)} * 3) + 2px) !important
+        Padding: pfe-local(Padding, $region: base) calc(#{pfe-local(Padding, $region: base)} * 1.5) pfe-local(Padding, $region: base) calc((#{pfe-local(Padding, $region: base)} * 3) + 2px)
       )
     ));
     @include browser-query(ie11) {
@@ -96,32 +96,28 @@ button[aria-expanded="true"] {
 
       &::before {
         @include pfe-chevron($state: open, $position: before);
-        left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px.
+        left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px
       }
     }
     &[aria-expanded="false"]::before {
       @include pfe-chevron($state: closed, $position: before);
     }
-
-    // Adjust contents position on hover.
-    &:hover::before {
-      left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px.
-    }
   }
 }
 
-// Set the header border while animating. 
+// Set the header border while animating
 :host([pfe-disclosure="true"].animating) {
+   // set border-left color while animating
   @include pfe-print-local((
     BorderLeftWidth: pfe-var(surface--border-width--heavy),
-    BorderColor--accent: pfe-var(ui-base) // set border-left color while animating.
+    BorderColor--accent: pfe-var(ui-base)
   ));
 
   button {
     padding-left: calc(#{pfe-var(container-spacer)} * 3 - 1px) !important;
 
     &::before {
-      left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px.
+      left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px
     }
   }
 }

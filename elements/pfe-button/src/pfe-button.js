@@ -22,7 +22,7 @@ const externalBtnObserverConfig = {
 // the _externalBtn to our shadow DOM button. For example,
 // the style attribute could ruin our encapsulated styles
 // in the shadow DOM
-const blackListedAttributes = ["style"];
+const denylistAttributes = ["style"];
 
 class PfeButton extends PFElement {
   static get tag() {
@@ -133,7 +133,7 @@ class PfeButton extends PFElement {
     }
 
     const clone = this._externalBtn.cloneNode(true);
-    blackListedAttributes.forEach(attribute => {
+    denylistAttributes.forEach(attribute => {
       if (clone.hasAttribute) {
         clone.removeAttribute(attribute);
       }

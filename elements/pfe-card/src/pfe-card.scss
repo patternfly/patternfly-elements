@@ -56,7 +56,7 @@ $variables: (
   align-self: stretch;
 
   padding:       #{pfe-local(Padding)};
-  border:        #{pfe-local(Border)};
+  border:        #{pfe-local(Border)};  // @TODO add border automatically when lightest card is on lightest background?
   border-radius: #{pfe-local(BorderRadius)};
 
   // This property ensures that children in the slots do no overflow

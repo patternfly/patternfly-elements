@@ -206,7 +206,10 @@ $LOCAL-VARIABLES: (
   @at-root #{&}([vertical][pfe-variant="wind"]:first-of-type){
     margin-top: 32px; //used to offset the tabs for the gray bar sudo element
   }
-  @at-root #{&}([vertical][pfe-variant="wind"]:first-of-type):before{
+  @at-root #{&}([vertical][pfe-variant="wind"]:last-of-type:focus-within)::before{
+    outline: none !important;
+  }
+  @at-root #{&}([vertical][pfe-variant="wind"]:first-of-type)::before{
     left: -1px;
     top: -32px;
     content: "";
@@ -215,16 +218,16 @@ $LOCAL-VARIABLES: (
     background-color: #d2d2d2;
     position: absolute;
   }
-  @at-root #{&}([vertical][pfe-variant="wind"]:first-of-type:hover):before{
+  @at-root #{&}([vertical][pfe-variant="wind"]:first-of-type:hover)::before{
     left: -3px;
   }
-  @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="true"]:first-of-type):before{
+  @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="true"]:first-of-type)::before{
     left: -3px;
   }
   @at-root #{&}([vertical][pfe-variant="wind"]:last-of-type){
     margin-bottom: 32px; //used to offset the tabs for the gray bar sudo element
   }
-  @at-root #{&}([vertical][pfe-variant="wind"]:last-of-type):before{
+  @at-root #{&}([vertical][pfe-variant="wind"]:last-of-type)::before{
     left: -1px;
     bottom: -32px;
     content: "";
@@ -233,10 +236,10 @@ $LOCAL-VARIABLES: (
     background-color: #d2d2d2;
     position: absolute;
   }
-  @at-root #{&}([vertical][pfe-variant="wind"]:last-of-type:hover):before{
+  @at-root #{&}([vertical][pfe-variant="wind"]:last-of-type:hover)::before{
     left: -3px;
   }
-  @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="true"]:last-of-type):before{
+  @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="true"]:last-of-type)::before{
     left: -3px;
   }
   @at-root #{&}([pfe-variant="wind"][aria-selected="false"]:hover){

@@ -120,7 +120,7 @@
     BorderBottomWidth: 0,
     ZIndex: 3,
     trigger: (
-      Padding: pfe-local(Padding, $region: base) $chevron--spacing pfe-local(Padding, $region: base) calc(#{pfe-local(Padding, $region: base)} * 1.5) !important
+      Padding: pfe-local(Padding, $region: base) $chevron--spacing pfe-local(Padding, $region: base) calc(#{pfe-local(Padding, $region: base)} * 1.5)
     )
   );
 
@@ -139,6 +139,7 @@
 
   &:hover {
     outline: none;
+    border-left-width: pfe-var(surface--border-width--heavy);
   }
 
   &:focus {
@@ -206,23 +207,23 @@
     transform: rotate(-45deg);
     top: calc(#{pfe-var(container-spacer)} + #{$offset});
     @if $position == before {
-      left: calc(#{pfe-var(container-spacer)} * 1.5);
+      left: calc(#{pfe-var(container-spacer)} * 1.3125); // 21px
       top: calc(#{pfe-var(container-spacer)} + .25em);
       transform: rotate(135deg);
     }
     @else {
-      right: calc(#{pfe-var(container-spacer)} * 1.5);
+      right: calc(#{pfe-var(container-spacer)} * 1.3125);
     }
   }
   @else {
     border-width: 0 .1em .1em 0;
     transform: rotate(45deg);
     @if $position == before {
-      left: calc(#{pfe-var(container-spacer)} * 1.5);
+      left: calc(#{pfe-var(container-spacer)} * 1.3125);
       transform: rotate(-45deg);
     }
     @else {
-      right: calc(#{pfe-var(container-spacer)} * 1.5);
+      right: calc(#{pfe-var(container-spacer)} * 1.3125);
     }
   }
 }

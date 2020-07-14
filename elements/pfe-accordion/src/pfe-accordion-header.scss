@@ -11,30 +11,40 @@
   > * {
     margin: 0;
   }
-}
 
-button {
-  @include pfe-trigger;
+  button {
+    @include pfe-trigger;
 
-  // @TODO workaround, can we get the variables working?
-  @include browser-query(edge) {
-    text-align: left;
-  }
+    // @TODO workaround, can we get the variables working?
+    @include browser-query(edge) {
+      text-align: left;
+    }
 
-  @include browser-query(ie11) {
-    padding: 16px 24px;
-    &:hover {
-      border-left-color: pfe-fetch(ui-base);
+    @include browser-query(ie11) {
+      padding: 16px 24px;
+      &:hover {
+        border-left-color: pfe-fetch(ui-base);
+      }
+    }
+
+    &[aria-expanded="true"] {
+      $accordion: pfe-accordion-variables($state: expanded);
+      @include pfe-print-local($accordion);
+      @include browser-query(ie11) {
+        border-bottom-width: 0;
+        border-left-color: pfe-fetch(ui-base);
+        border-right-color: pfe-fetch(surface--border);
+      }
     }
   }
 }
 
 :host(:not([pfe-disclosure="true"])) {
-  button[aria-expanded="true"]::after {
-    @include pfe-chevron($state: open);
-  }
-  button[aria-expanded="false"]::after {
+  button::after {
     @include pfe-chevron($state: closed);
+  }
+  button[aria-expanded="true"]::after {
+    transform: rotate(-135deg);
   }
 }
 
@@ -45,21 +55,6 @@ button {
 
 :host(:last-of-type.animating) button {
   @include pfe-print-local((BorderBottomWidth: 0));
-}
-
-/// ===========================================================================
-/// EXPANDED STYLES
-/// ===========================================================================
-
-// Default styles
-button[aria-expanded="true"] {
-  $accordion: pfe-accordion-variables($state: expanded);
-  @include pfe-print-local($accordion);
-  @include browser-query(ie11) {
-    border-bottom-width: 0;
-    border-left-color: pfe-fetch(ui-base);
-    border-right-color: pfe-fetch(surface--border);
-  }
 }
 
 // Styles contextual to theme
@@ -78,11 +73,7 @@ button[aria-expanded="true"] {
 
 :host([pfe-disclosure="true"]) {
   button {
-    @include pfe-print-local((
-      trigger: (
-        Padding: pfe-local(Padding, $region: base) calc(#{pfe-local(Padding, $region: base)} * 1.5) pfe-local(Padding, $region: base) calc((#{pfe-local(Padding, $region: base)} * 3) + 2px)
-      )
-    ));
+    padding-left: calc((#{pfe-local(Padding, $region: base)} * 3));
     @include browser-query(ie11) {
       padding: 16px 24px 16px 47px;
       border-right-color: pfe-fetch(surface--border);
@@ -90,44 +81,18 @@ button[aria-expanded="true"] {
       border-left-width: pfe-fetch(surface--border-width);
     }
 
-    &[aria-expanded="true"] {
-      padding-left: calc(( #{pfe-var(container-spacer)} * 3 ) - 1px ) !important;
-      border-left-width: pfe-var(surface--border-width--heavy);
-
+    &:hover {
+      padding-left: calc(#{pfe-local(Padding, $region: base)} * 3 - #{pfe-var(surface--border-width--heavy)} + #{pfe-var(surface--border-width)});
       &::before {
-        @include pfe-chevron($state: open, $position: before);
-        left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px
+        margin-left: calc((#{pfe-var(surface--border-width--heavy)} - #{pfe-var(surface--border-width)}) * -1);
       }
     }
-    &[aria-expanded="false"]::before {
-      @include pfe-chevron($state: closed, $position: before);
-    }
-  }
-}
-
-// Set the header border while animating
-:host([pfe-disclosure="true"].animating) {
-   // set border-left color while animating
-  @include pfe-print-local((
-    BorderLeftWidth: pfe-var(surface--border-width--heavy),
-    BorderColor--accent: pfe-var(ui-base)
-  ));
-
-  button {
-    padding-left: calc(#{pfe-var(container-spacer)} * 3 - 1px) !important;
 
     &::before {
-      left: calc( #{pfe-var(container-spacer)} * 1.3125 ); // 21px
+      @include pfe-chevron($state: open, $position: before);
+    }
+    &[aria-expanded="true"]::before {
+      transform: rotate(45deg) translateY(4px);
     }
   }
 }
-
-// Override border-left color for different themes.
-@each $context in $THEMES {
-  :host([pfe-disclosure="true"][on="#{$context}"].animating) {
-    $accordion: pfe-accordion-variables($state: expanded, $theme: #{$context});
-    @include pfe-print-local($accordion);
-  }
-}
-
-

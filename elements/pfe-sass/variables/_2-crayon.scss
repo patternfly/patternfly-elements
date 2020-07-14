@@ -50,12 +50,12 @@ $pfe-color--black:               $pf-color-black-1000 !default;               //
 // Hue Rainbow Values!
 // ========================================================================
 
-$pfe-color--red-50:              lighten($pfelements--red, 50%) !default;
-$pfe-color--red-100:             lighten($pfelements--red, 40%) !default;
-$pfe-color--red-200:             lighten($pfelements--red, 30%) !default;
-$pfe-color--red-300:             lighten($pfelements--red, 20%) !default;
-$pfe-color--red-400:             lighten($pfelements--red, 10%) !default;
-$pfe-color--red-500:             $pfelements--red !default;                // Aliased
+$pfe-color--red-50:              $pf-color-red-50;
+$pfe-color--red-100:             $pf-color-red-100;
+$pfe-color--red-200:             $pf-color-red-200;
+$pfe-color--red-300:             $pf-color-red-300;
+$pfe-color--red-400:             $pf-color-red-400;
+$pfe-color--red-500:             $pf-color-red-500;   
 $pfe-color--red-600:             darken($pfelements--red, 10%) !default;
 $pfe-color--red-700:             darken($pfelements--red, 20%) !default;
 $pfe-color--red-800:             darken($pfelements--red, 30%) !default;

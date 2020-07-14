@@ -1,0 +1,10 @@
+/* DEMO FILE ONLY, NOT FOR PRODUCTION USE */
+
+:root {
+    @each $name, $var in $pfe-vars {
+        --theme--#{$name}: #{$var};
+    }
+    @each $name, $var in $pfe-zindex {
+        --theme--#{$name}: #{$var};
+    }
+}

@@ -6,19 +6,22 @@ $pfe-colors: (
   // Base text and link colors, basis of "theme"
   // ========================================================================
 
-  text:                        $pfe-color--text,
+  text:                        $pf-color-black-900,
+  text-muted:                  $pf-color-black-600,
   link:                        $pfe-color--link,
   link--visited:               $pfe-color--link--visited,
   link--hover:                 $pfe-color--link--hover,
   link--focus:                 $pfe-color--link--focus,
 
   text--on-dark:               $pfe-color--text--on-dark,
+  text-muted:                  $pf-color-black-600,
   link--on-dark:               $pfe-color--link--on-dark,
   link--visited--on-dark:      $pfe-color--link--visited--on-dark,
   link--hover--on-dark:        $pfe-color--link--hover--on-dark,
   link--focus--on-dark:        $pfe-color--link--focus--on-dark,
 
   text--on-saturated:          $pfe-color--text--on-saturated,
+  text-muted:                  $pf-color-black-600,
   link--on-saturated:          $pfe-color--link--on-saturated,
   link--visited--on-saturated: $pfe-color--link--visited--on-saturated,
   link--hover--on-saturated:   $pfe-color--link--hover--on-saturated,
@@ -30,9 +33,9 @@ $pfe-colors: (
 
   // Set of base colors
 
-  ui-base:                      $pf-global--secondary-color--100,
-  ui-base--hover:               darken($pf-global--secondary-color--100, 20%),
-  ui-base--focus:               darken($pf-global--secondary-color--100, 20%),
+  ui-base:                      $pf-color-black-600,
+  ui-base--hover:               darken($pf-color-black-600, 20%),
+  ui-base--focus:               darken($pf-color-black-600, 20%),
   ui-base--text:                $pfe-color--text--on-dark,
   ui-base--text--hover:         $pfe-color--text--on-dark,
   ui-base--text--focus:         $pfe-color--text--on-dark,
@@ -53,16 +56,16 @@ $pfe-colors: (
 
 
   // Set of accent colors
-  ui-accent:                            $pf-global--primary-color--100,
-  ui-accent--hover:                     darken($pf-global--primary-color--100, 20%),
-  ui-accent--focus:                     darken($pf-global--primary-color--100, 20%),
+  ui-accent:                            $pf-color-blue-400,
+  ui-accent--hover:                     darken($pf-color-blue-400, 20%),
+  ui-accent--focus:                     darken($pf-color-blue-400, 20%),
   ui-accent--text:                      $pfe-color--text--on-dark,
   ui-accent--text--hover:               $pfe-color--text--on-dark,
   ui-accent--text--focus:               $pfe-color--text--on-dark,
 
-  ui-accent--on-dark:                   lighten($pf-global--primary-color--100, 40%),
-  ui-accent--hover--on-dark:            lighten($pf-global--primary-color--100, 20%),
-  ui-accent--focus--on-dark:            lighten($pf-global--primary-color--100, 20%),
+  ui-accent--on-dark:                   lighten($pf-color-blue-400, 40%),
+  ui-accent--hover--on-dark:            lighten($pf-color-blue-400, 20%),
+  ui-accent--focus--on-dark:            lighten($pf-color-blue-400, 20%),
   ui-accent--text--on-dark:             $pfe-color--text,
   ui-accent--text--hover--on-dark:      $pfe-color--text,
   ui-accent--text--focus--on-dark:      $pfe-color--text,
@@ -82,20 +85,6 @@ $pfe-colors: (
   ui-disabled--text--hover:           $pfelements--gray,
   ui-disabled--text--focus:           $pfelements--gray,
 
-  // link styles
-  link-decoration: none,
-  link-decoration--hover: underline,
-  link-decoration--focus: underline,
-  link-decoration--visited: none,
-  link-decoration--on-dark: none,
-  link-decoration--hover--on-dark: underline,
-  link-decoration--focus--on-dark: underline,
-  link-decoration--visited--on-dark: none,
-  link-decoration--on-saturated: underline,
-  link-decoration--hover--on-saturated: underline,
-  link-decoration--focus--on-saturated: underline,
-  link-decoration--visited--on-saturated: underline, 
-
   // ========================================================================
   // Base Surface Colors for Container elements
   // ========================================================================
@@ -105,7 +94,7 @@ $pfe-colors: (
   surface--lightest--theme:   light,
 
   // Lighter group
-  surface--lighter:           $pf-color-black-100,
+  surface--lighter:           $pf-color-black-200,
   surface--lighter--theme:    light,
 
   // Base group
@@ -129,11 +118,10 @@ $pfe-colors: (
   surface--accent--theme:     saturated,
 
   // Palette of Border Colors
-  surface--border--lightest:          $pf-color-black-150,
-  surface--border--lighter:           $pf-color-black-150,
-  surface--border:                    $pf-color-black-300,
-  surface--border--darker:            $pf-color-black-600,
-  surface--border--darkest:           $pf-color-black-600,
+  surface--border--lightest:          $pf-color-black-150, // f5f5f5
+  surface--border:                    $pf-color-black-400, // b8bbbe (lt brder)
+  surface--border--darker:            $pf-color-black-600, // 6a6e73 (dk brder)
+  surface--border--darkest:           $pf-color-black-800, // needed?
 
 
   // ========================================================================

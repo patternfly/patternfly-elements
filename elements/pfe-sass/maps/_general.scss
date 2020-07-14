@@ -38,6 +38,19 @@ $pfe-vars: (
   ui--focus-outline-width:       1px,
   ui--focus-outline-style:       solid,
 
+  link-decoration: none,
+  link-decoration--hover: underline,
+  link-decoration--focus: underline,
+  link-decoration--visited: none,
+  link-decoration--on-dark: none,
+  link-decoration--hover--on-dark: underline,
+  link-decoration--focus--on-dark: underline,
+  link-decoration--visited--on-dark: none,
+  link-decoration--on-saturated: underline,
+  link-decoration--hover--on-saturated: underline,
+  link-decoration--focus--on-saturated: underline,
+  link-decoration--visited--on-saturated: underline, 
+
   grid-breakpoint--xs:           0,
   grid-breakpoint--sm:           576px,
   grid-breakpoint--md:           768px,
@@ -51,5 +64,5 @@ $pfe-vars: (
 
   animation-speed:               .3s,
   animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),
-  opacity:                       .15
+  opacity:                       .20
 );

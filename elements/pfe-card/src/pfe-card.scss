@@ -31,6 +31,7 @@ $variables: (
 
   header: (
     BackgroundColor: rgba(0, 0, 0, #{pfe-var(opacity)}),
+    BackgroundColor--dark: rgba(255, 255, 255, #{pfe-var(opacity)}),
     Color:           pfe-apply-broadcast(text)
   ),
 
@@ -162,6 +163,14 @@ $variables: (
     // Declare the header background color
     background-color: #{pfe-local($cssvar: BackgroundColor, $region: header)};
     color:            #{pfe-local($cssvar: Color, $region: header)};
+    :host([on="dark"]) & {
+        // Declare the header background color
+      background-color: #{pfe-local(
+          $cssvar: BackgroundColor--dark, 
+          $region: header
+      )};
+          // $fallback: rgba(255, 255, 255, #{pfe-var(opacity)})
+    }
     @include browser-query(ie11) {
       background-color: #{map-get($pfe-colors, surface--lighter)} !important;
       color: #{pfe-color(text)} !important;

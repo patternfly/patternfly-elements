@@ -437,12 +437,12 @@ $LOCAL-VARIABLES: (
       color: #{pfe-fetch(text)} !important;
     }
   }
-}
-:host([vertical][pfe-variant="earth"][aria-selected="false"][on="dark"]:hover) {
-  border-top: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)};
-}
-:host([vertical][pfe-variant="earth"][aria-selected="true"][on="dark"]) {
-  border-right: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} var(--pfe-theme--surface--darkest, #151515);
+  @at-root #{&}([vertical][pfe-variant="earth"][aria-selected="false"][on="dark"]:hover) {
+    border-top: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)};
+  }
+  @at-root #{&}([vertical][pfe-variant="earth"][aria-selected="true"][on="dark"]) {
+    border-right: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} var(--pfe-theme--surface--darkest, #151515);
+  }
 }
 
 /// ===========================================================================
@@ -469,7 +469,7 @@ $LOCAL-VARIABLES: (
       color: #{pfe-fetch(text)} !important;
     }
   }
-}
-:host([vertical][pfe-variant="wind"][aria-selected="false"][on="dark"]:hover) {
-  border-bottom: 0;
+  @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="false"][on="dark"]:hover) {
+    border-bottom: 0;
+  }
 }

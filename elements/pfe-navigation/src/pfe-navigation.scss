@@ -421,7 +421,16 @@
   & > section:last-child {
     // rule set to always have ctas in a section as the last element in the menu dropdown list
     // @todo: figure out if the css rules need to be applied with a classes instead of selecting last section child
-    grid-column: 1 / 5; // span last col with ctas to full width grid on new row always 
+    grid-column: 1 / -1; // span last col with ctas to full width grid on new row always 
+
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: space-between;
+    // align-items: flex-start;
+
+    display: grid;
+    grid-gap: 32px;
+    grid-auto-flow: column;
     
     border-top: 1px solid #d3d3d3;
 

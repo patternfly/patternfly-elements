@@ -200,48 +200,9 @@ $LOCAL-VARIABLES: (
     }
   }
 
-  // Styles for vertical wind tab to have the left bad extend past the tabset
-  // note* update/simplify this when we update from border to sudo element for the highlight bar
 
-  @at-root #{&}([vertical][pfe-variant="wind"]:first-of-type){
-    margin-top: 32px; //used to offset the tabs for the gray bar sudo element
-  }
-  @at-root #{&}([vertical][pfe-variant="wind"]:last-of-type:focus-within)::before{
-    outline: none !important;
-  }
-  @at-root #{&}([vertical][pfe-variant="wind"]:first-of-type)::before{
-    left: -1px;
-    top: -32px;
-    content: "";
-    height: 32px;
-    width: 1px;
-    background-color: #d2d2d2;
-    position: absolute;
-  }
-  @at-root #{&}([vertical][pfe-variant="wind"]:first-of-type:hover)::before{
-    left: -3px;
-  }
-  @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="true"]:first-of-type)::before{
-    left: -3px;
-  }
-  @at-root #{&}([vertical][pfe-variant="wind"]:last-of-type){
-    margin-bottom: 32px; //used to offset the tabs for the gray bar sudo element
-  }
-  @at-root #{&}([vertical][pfe-variant="wind"]:last-of-type)::before{
-    left: -1px;
-    bottom: -32px;
-    content: "";
-    height: 32px;
-    width: 1px;
-    background-color: #d2d2d2;
-    position: absolute;
-  }
-  @at-root #{&}([vertical][pfe-variant="wind"]:last-of-type:hover)::before{
-    left: -3px;
-  }
-  @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="true"]:last-of-type)::before{
-    left: -3px;
-  }
+
+ 
   @at-root #{&}([pfe-variant="wind"][aria-selected="false"]:hover){
     --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
     @include browser-query(ie11) {

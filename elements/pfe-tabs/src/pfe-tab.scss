@@ -426,6 +426,7 @@ $LOCAL-VARIABLES: (
   @at-root #{&}([pfe-variant="earth"][aria-selected="true"][on="dark"]) {
     color: #{pfe-var(surface--lightest)} !important;
     --pfe-tabs--BackgroundColor: #{pfe-local(Color--hover)};
+    border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} var(--pfe-theme--surface--darkest, #151515);
     @include browser-query(ie11) {
         color: #{pfe-fetch(text)} !important;
     }

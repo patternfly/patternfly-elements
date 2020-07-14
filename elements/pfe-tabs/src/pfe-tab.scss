@@ -202,7 +202,7 @@ $LOCAL-VARIABLES: (
 
 
 
- 
+
   @at-root #{&}([pfe-variant="wind"][aria-selected="false"]:hover){
     --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
     @include browser-query(ie11) {
@@ -438,6 +438,12 @@ $LOCAL-VARIABLES: (
     }
   }
 }
+:host([vertical][pfe-variant="earth"][aria-selected="false"][on="dark"]:hover) {
+  border-top: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)};
+}
+:host([vertical][pfe-variant="earth"][aria-selected="true"][on="dark"]) {
+  border-right: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} var(--pfe-theme--surface--darkest, #151515);
+}
 
 /// ===========================================================================
 /// WIND TAB VARIANTS ON DARK
@@ -463,4 +469,7 @@ $LOCAL-VARIABLES: (
       color: #{pfe-fetch(text)} !important;
     }
   }
+}
+:host([vertical][pfe-variant="wind"][aria-selected="false"][on="dark"]:hover) {
+  border-bottom: 0;
 }

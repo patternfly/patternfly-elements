@@ -46,13 +46,15 @@ class PfeContentSet extends PFElement {
       : window.outerWidth > breakpointValue;
   }
 
+  get contentSetId() {
+    return this.id || this.getAttribute("pfe-id") || this.randomId;
+  }
+
   constructor() {
     super(PfeContentSet, { delayRender: true });
 
     this._init = this._init.bind(this);
     this._observer = new MutationObserver(this._init);
-    this.renderAccordionId = this.randomId;
-    this.renderTabId = this.randomId;
   }
 
   connectedCallback() {
@@ -95,7 +97,7 @@ class PfeContentSet extends PFElement {
 
     // Use the existing accordion if it exists
     const existingAccordion = this.querySelector(
-      `[pfe-id="${this.id || this.renderAccordionId}"]`
+      `[pfe-id="${this.contentSetId}"]`
     );
 
     // Use a document fragment for efficiency
@@ -105,7 +107,7 @@ class PfeContentSet extends PFElement {
     if (!existingAccordion) {
       // Create the accordion wrapper component with a unique ID
       accordion = document.createElement("pfe-accordion");
-      accordion.pfeId = this.id || this.renderAccordionId;
+      accordion.pfeId = this.contentSetId;
     } else {
       accordion = existingAccordion;
     }
@@ -138,9 +140,7 @@ class PfeContentSet extends PFElement {
     let tabs;
 
     // Use the existing tabs if they exist
-    let existingTabs = this.querySelector(
-      `[pfe-id="${this.id || this.renderTabId}"]`
-    );
+    let existingTabs = this.querySelector(`[pfe-id="${this.contentSetId}"]`);
 
     // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();
@@ -148,7 +148,7 @@ class PfeContentSet extends PFElement {
     // Create the tabs wrapper component or use the existing tabs
     if (!existingTabs) {
       tabs = document.createElement("pfe-tabs");
-      tabs.setAttribute("pfe-id", this.id || this.renderTabId);
+      tabs.setAttribute("pfe-id", this.contentSetId);
     } else {
       tabs = existingTabs;
     }
@@ -199,10 +199,6 @@ class PfeContentSet extends PFElement {
 
     if (this.align.value) {
       tabs.setAttribute("pfe-tab-align", this.align.value);
-    }
-
-    if (this.id) {
-      tabs.setAttribute("pfe-id", this.id);
     }
 
     if (this.hasAttribute("pfe-tab-history")) {

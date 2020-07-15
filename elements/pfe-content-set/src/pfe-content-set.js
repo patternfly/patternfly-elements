@@ -95,7 +95,7 @@ class PfeContentSet extends PFElement {
 
     // Use the existing accordion if it exists
     const existingAccordion = this.querySelector(
-      `[pfe-c-upgrade="${this.renderAccordionId}"]`
+      `[pfe-id="${this.id || this.renderAccordionId}"]`
     );
 
     // Use a document fragment for efficiency
@@ -105,7 +105,7 @@ class PfeContentSet extends PFElement {
     if (!existingAccordion) {
       // Create the accordion wrapper component with a unique ID
       accordion = document.createElement("pfe-accordion");
-      accordion.setAttribute("pfe-c-upgrade", this.renderAccordionId);
+      accordion.setAttribute("pfe-id", this.id || this.renderAccordionId);
     } else {
       accordion = existingAccordion;
     }
@@ -139,7 +139,7 @@ class PfeContentSet extends PFElement {
 
     // Use the existing tabs if they exist
     let existingTabs = this.querySelector(
-      `[pfe-c-upgrade="${this.renderTabId}"]`
+      `[pfe-id="${this.id || this.renderTabId}"]`
     );
 
     // Use a document fragment for efficiency
@@ -148,7 +148,7 @@ class PfeContentSet extends PFElement {
     // Create the tabs wrapper component or use the existing tabs
     if (!existingTabs) {
       tabs = document.createElement("pfe-tabs");
-      tabs.setAttribute("pfe-c-upgrade", this.renderTabId);
+      tabs.setAttribute("pfe-id", this.id || this.renderTabId);
     } else {
       tabs = existingTabs;
     }

@@ -105,7 +105,7 @@ class PfeContentSet extends PFElement {
     if (!existingAccordion) {
       // Create the accordion wrapper component with a unique ID
       accordion = document.createElement("pfe-accordion");
-      accordion.setAttribute("pfe-id", this.id || this.renderAccordionId);
+      accordion.pfeId = this.id || this.renderAccordionId;
     } else {
       accordion = existingAccordion;
     }

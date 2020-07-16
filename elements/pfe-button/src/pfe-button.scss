@@ -11,6 +11,7 @@ $variables: (
   Border: 0,
   BorderRadius: pfe-var(surface--border-radius),
   Padding: calc(#{pfe-var(container-padding) / 2}) pfe-var(container-padding),
+  LineHeight: 1.5,
   after: (
     Border: 1px solid pfe-color(link)
   )
@@ -35,6 +36,7 @@ button {
   border-radius: pfe-local(BorderRadius);
   border: pfe-local(Border);
   position: relative;
+  line-height: pfe-local(LineHeight);
 
   &:after {
     position: absolute;

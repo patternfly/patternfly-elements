@@ -197,10 +197,6 @@ $LOCAL-VARIABLES: (
       border-left: #{pfe-fetch(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-fetch(surface--border)};
     }
   }
-
-
-
-
   @at-root #{&}([pfe-variant="wind"][aria-selected="false"]:hover){
     --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
     @include browser-query(ie11) {
@@ -429,6 +425,9 @@ $LOCAL-VARIABLES: (
         color: #{pfe-fetch(text)} !important;
     }
   }
+  @at-root #{&}([vertical][pfe-variant="earth"][aria-selected="true"][on="dark"]) {
+    border-bottom: 0;
+  }
   @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]:hover) {
     --pfe-tabs__tab--BorderTop: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)} !important; //replace with B8BBBE in kendalls story
     color: #{pfe-var(surface--lightest)};
@@ -452,6 +451,7 @@ $LOCAL-VARIABLES: (
     border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)};
   }
 }
+
 
 /// ===========================================================================
 /// WIND TAB VARIANTS ON DARK

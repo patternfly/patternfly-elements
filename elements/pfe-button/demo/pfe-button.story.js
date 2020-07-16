@@ -1,4 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
+import { withActions } from "@storybook/addon-actions";
 import * as bridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
@@ -24,6 +25,9 @@ const template = (data = {}) => {
 const defaultContent = tools.autoContent(1, 2);
 
 stories.addDecorator(bridge.withKnobs);
+
+// Log events under "Actions" tab
+stories.addDecorator(withActions("pfe-button:click"));
 
 stories.add(PfeButton.tag, () => {
   let config = {};

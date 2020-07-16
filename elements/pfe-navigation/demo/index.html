@@ -37,7 +37,8 @@
 
     <script>require([
       "../dist/pfe-navigation.umd.js",
-      "../../pfe-cta/dist/pfe-cta.umd.js"
+      "../../pfe-cta/dist/pfe-cta.umd.js",
+      "../../pfe-dropdown/dist/pfe-dropdown.umd.js"
     ])</script>
 
     <style>
@@ -380,7 +381,7 @@
                 </ul>
               </section>
 
-              <section>
+              <section class="pfe-navigation__footer">
                 <pfe-cta pfe-priority="primary">
                   <a href="#">Learn more about PFElements</a>
                 </pfe-cta>
@@ -391,20 +392,123 @@
               </section>
             </div> <!-- end .pfe-navigation__dropdown -->
 
-              <!-- <div class="pfe-navigation__footer">
-
-                <pfe-cta pfe-priority="primary">
-                  <a href="#">Learn more about PFElements</a>
-                </pfe-cta>
-
-              </div> -->
-
-
           </li>
           <li class="pfe-navigation__menu-item">
             <a href="#" class="pfe-navigation__menu-link">
               Solutions
             </a>
+
+            <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+              <!-- note: single-col dropdowns CANNOT have pfe-nav footer regions -->
+              <section>
+                <h3>
+                  <a href="#">Platforms</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Red Hat Enterprise Linux</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat OpenStack Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Virtualization</a>
+                  </li>
+                </ul>
+              </section>
+              <section>
+                <h3>
+                  <a href="#">Ladders</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Lorem ipsum</a>
+                  </li>
+                  <li>
+                    <a href="#">Dolor sit amet</a>
+                  </li>
+                  <li>
+                    <a href="#">Wakka Wakka</a>
+                  </li>
+                </ul>
+              </section>
+              <section>
+                <h3>
+                  <a href="#">Chutes</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Yakkita yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Enterprise Yakkita yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Upstream Yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Yakkita ME</a>
+                  </li>
+                </ul>
+              </section>
+              <section>
+                <h3>
+                  <a href="#">Platforms</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Red Hat Enterprise Linux</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat OpenStack Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Virtualization</a>
+                  </li>
+                </ul>
+              </section>
+              <section>
+                <h3>
+                  <a href="#">Ladders</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Lorem ipsum</a>
+                  </li>
+                  <li>
+                    <a href="#">Dolor sit amet</a>
+                  </li>
+                  <li>
+                    <a href="#">Wakka Wakka</a>
+                  </li>
+                </ul>
+              </section>
+              <section>
+                <h3>
+                  <a href="#">Chutes</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Yakkita yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Enterprise Yakkita yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Upstream Yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Yakkita ME</a>
+                  </li>
+                </ul>
+              </section>
+            </div> <!-- end .pfe-navigation__dropdown -->
           </li>
           <li class="pfe-navigation__menu-item">
             <a href="#" class="pfe-navigation__menu-link">

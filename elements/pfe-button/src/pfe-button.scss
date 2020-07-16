@@ -131,7 +131,7 @@ button {
 
 :host([pfe-variant="control"][disabled]) {
   button {
-    --pfe-button--BackgroundColor: transparent;
+    --pfe-button--BackgroundColor: #{pfe-color(surface--lighter)};
   }
 }
 

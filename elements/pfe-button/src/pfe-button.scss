@@ -59,7 +59,6 @@ button {
 :host([pfe-variant="secondary"]) {
   button {
     --pfe-button--BackgroundColor: transparent;
-    --pfe-button--BackgroundColor--hover: transparent;
     --pfe-button--Color: #{pfe-apply-broadcast(link)};
 
     &:after {
@@ -70,7 +69,6 @@ button {
     &:focus {
       &:after {
         --pfe-button--Border--after: 2px solid;
-        --pfe-button--BorderColor--after: #{pfe-apply-broadcast(link)};
       }
     }
   }
@@ -79,8 +77,7 @@ button {
 :host([pfe-variant="tertiary"]) {
   button {
     --pfe-button--BackgroundColor: transparent;
-    --pfe-button--BackgroundColor--hover: transparent;
-    --pfe-button--Color: #{pfe-apply-broadcast(text)};
+    --pfe-button--Color: #{pfe-apply-broadcast(text)}; // how can I falback to #151515?
 
     &:after {
       --pfe-button--BorderColor--after: #{pfe-apply-broadcast(text)};
@@ -90,7 +87,6 @@ button {
     &:focus {
       &:after {
         --pfe-button--Border--after: 2px solid;
-        --pfe-button--BorderColor--after: #{pfe-apply-broadcast(text)};
       }
     }
   }
@@ -99,11 +95,10 @@ button {
 :host([pfe-variant="danger"]) {
   button {
     --pfe-button--BackgroundColor: #c9190b;
-    --pfe-button--Color: #fff;
 
     &:hover,
     &:focus {
-      --pfe-button--BackgroundColor--hover: #a30000;
+      --pfe-button--BackgroundColor: #a30000;
     }
   }
 }

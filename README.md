@@ -18,12 +18,12 @@ The result of these principles is that you can plug one set of components into a
 A Yeoman generator is included for creating web components that meet these goals.
 
 ## Quick start
-    ```
-    git clone git@github.com:patternfly/patternfly-elements.git
-    cd patternfly-elements
-    npm install # this will take a while due to lerna bootstrap
-    npm run storybook
-    ```
+```
+git clone git@github.com:patternfly/patternfly-elements.git
+cd patternfly-elements
+npm install # this will take a while due to lerna bootstrap
+npm run storybook
+```
 
 The storybook script will launch the interactive demo pages.
 

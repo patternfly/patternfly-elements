@@ -46,6 +46,10 @@ class PfeContentSet extends PFElement {
       : window.outerWidth > breakpointValue;
   }
 
+  get contentSetId() {
+    return this.id || this.getAttribute("pfe-id") || this.randomId;
+  }
+
   constructor() {
     super(PfeContentSet, { delayRender: true });
 
@@ -89,12 +93,24 @@ class PfeContentSet extends PFElement {
   }
 
   _buildAccordion() {
-    const existingAccordion = this.querySelector("pfe-accordion");
+    let accordion;
+
+    // Use the existing accordion if it exists
+    const existingAccordion = this.querySelector(
+      `[pfe-id="${this.contentSetId}"]`
+    );
+
     // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();
-    // Use the existing accordion or create the accordion wrapper component
-    const accordion =
-      existingAccordion || document.createElement("pfe-accordion");
+
+    // Create the accordion wrapper component or use the existing component
+    if (!existingAccordion) {
+      // Create the accordion wrapper component with a unique ID
+      accordion = document.createElement("pfe-accordion");
+      accordion.setAttribute("pfe-id", this.contentSetId);
+    } else {
+      accordion = existingAccordion;
+    }
 
     // Iterate over each element in the light DOM
     [...this.children].forEach(child => {
@@ -116,19 +132,26 @@ class PfeContentSet extends PFElement {
 
     if (!existingAccordion) {
       fragment.appendChild(accordion);
-    }
-
-    if (!existingAccordion) {
       this.appendChild(fragment);
     }
   }
 
   _buildTabs() {
-    const existingTabs = this.querySelector("pfe-tabs");
+    let tabs;
+
+    // Use the existing tabs if they exist
+    let existingTabs = this.querySelector(`[pfe-id="${this.contentSetId}"]`);
+
     // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();
-    // Use the existing tabs or create the tabs wrapper component
-    const tabs = existingTabs || document.createElement("pfe-tabs");
+
+    // Create the tabs wrapper component or use the existing tabs
+    if (!existingTabs) {
+      tabs = document.createElement("pfe-tabs");
+      tabs.setAttribute("pfe-id", this.contentSetId);
+    } else {
+      tabs = existingTabs;
+    }
 
     // Iterate over each element in the light DOM
     [...this.children].forEach(child => {
@@ -176,10 +199,6 @@ class PfeContentSet extends PFElement {
 
     if (this.align.value) {
       tabs.setAttribute("pfe-tab-align", this.align.value);
-    }
-
-    if (this.id) {
-      tabs.setAttribute("pfe-id", this.id);
     }
 
     if (this.hasAttribute("pfe-tab-history")) {

@@ -5,7 +5,7 @@ $LOCAL: button;
 
 $variables: (
   BackgroundColor: #{pfe-apply-broadcast(link)}, // #06c,
-  BackgroundColor--hover: pfe-apply-broadcast(link--hover), // should be #004080 but we don't have this in the palette
+  BackgroundColor--hover: #{pfe-apply-broadcast(link--hover)}, // should be #004080 but we don't have this in the palette
   Color: #{pfe-color(ui-base--text)},
   FontSize: #{pfe-var(font-size)},
   Border: 0,

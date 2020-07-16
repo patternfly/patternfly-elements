@@ -45,6 +45,7 @@
         border-radius: 3px;
         padding: 8px;
         width: 250px;
+        line-height: 1.5;
       }
 
       #disablers-container {
@@ -99,7 +100,7 @@
         <form id="form">
           <input type="text" placeholder="Name" />
           <pfe-button>
-            <button>Submit</button>
+            <button type="submit">Submit</button>
           </pfe-button>
         </form>
         <div id="formSubmittedMessage" hidden>The form was submitted</div>
@@ -170,7 +171,7 @@
       <article>
         <p>Listening for the pfe-button:click event</p>
         <pfe-button id="eventsBtn">
-          <button>Click Me</button>
+          <button type="button">Click Me</button>
         </pfe-button>
         Total Clicks: <span id="totalClicks">0</span>
         <div>

@@ -9,12 +9,11 @@ $variables: (
   Color: #{pfe-color(ui-base--text)},
   FontSize: #{pfe-var(font-size)},
   Border: 0,
+  Border--after: 1px solid,
+  BorderColor--after: transparent,
   BorderRadius: #{pfe-var(surface--border-radius)},
   Padding: calc(#{pfe-var(container-padding)} / 2) #{pfe-var(container-padding)},
   LineHeight: 1.5,
-  after: (
-    Border: 1px solid #{pfe-color(link)}
-  )
 );
 
 :host {

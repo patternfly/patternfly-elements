@@ -4,16 +4,16 @@
 $LOCAL: button;
 
 $variables: (
-  BackgroundColor: pfe-apply-broadcast(link), // #06c,
+  BackgroundColor: #{pfe-apply-broadcast(link)}, // #06c,
   BackgroundColor--hover: pfe-apply-broadcast(link--hover), // should be #004080 but we don't have this in the palette
-  Color: pfe-color(ui-base--text),
-  FontSize: pfe-var(font-size),
+  Color: #{pfe-color(ui-base--text)},
+  FontSize: #{pfe-var(font-size)},
   Border: 0,
-  BorderRadius: pfe-var(surface--border-radius),
-  Padding: calc(#{pfe-var(container-padding) / 2}) pfe-var(container-padding),
+  BorderRadius: #{pfe-var(surface--border-radius)},
+  Padding: calc(#{pfe-var(container-padding)} / 2) #{pfe-var(container-padding)},
   LineHeight: 1.5,
   after: (
-    Border: 1px solid pfe-color(link)
+    Border: 1px solid #{pfe-color(link)}
   )
 );
 

@@ -4,7 +4,7 @@ $LOCAL: tabs;
 
 $LOCAL-VARIABLES: (
   BackgroundColor:       transparent,
-  Color:                 pfe-var(ui-disabled--text),
+  Color:                 pfe-var(text--muted),
   link:                  pfe-var(link),
   focus:                 pfe-var(link--focus),
   highlight:             pfe-var(ui-accent),
@@ -41,7 +41,7 @@ $LOCAL-VARIABLES: (
 
   // Inner style
   background-color: #{pfe-local(BackgroundColor)};
-  color: #{pfe-var(ui-disabled--text)};  // @todo replace with pfe(text-muted) in Kendall's color story
+  color: pfe-local(Color);  // @todo replace with pfe(text-muted) in Kendall's color story
 
   cursor: pointer;
   text-align: #{pfe-local(TextAlign, left, $region: tab)};
@@ -52,12 +52,10 @@ $LOCAL-VARIABLES: (
   font-weight:  #{pfe-var(font-weight--normal)};
   font-size:    #{pfe-local(FontSize, $region: tab)};
 
-  @for $i from 1 through 6 {
-    .pfe-tab > * {
-      font-size: inherit;
-      font-weight: inherit;
-      margin: 0;
-    }
+  .pfe-tab > * {
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
   }
 
   @at-root #{&}(:hover) {
@@ -243,7 +241,7 @@ $LOCAL-VARIABLES: (
 
 :host {
   @at-root #{&}([on="saturated"][pfe-variant="wind"]) {
-    color: #{pfe-var(link--focus--on-dark)};
+    color: #{pfe-var(ui-base--hover--on-saturated)};
     @include browser-query(ie11) {
       color: #{pfe-fetch(text)} !important;
       background-color: transparent;
@@ -256,7 +254,7 @@ $LOCAL-VARIABLES: (
     --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-var(surface--lightest)} !important;
   }
   @at-root #{&}([on="saturated"][aria-selected="true"][pfe-variant="wind"]) {
-    color: var(--pfe-theme--color--surface--lightest, #fff) !important;
+    color: pfe-var(text--on-saturated) !important;
     @include browser-query(ie11) {
       color: #{pfe-fetch(text)} !important;
     }
@@ -282,7 +280,7 @@ $LOCAL-VARIABLES: (
 
 :host([pfe-variant="earth"][aria-selected="false"]) {
   $variantEarth: (
-    BackgroundColor: #f0f0f0,
+    BackgroundColor: pfe-var(surface--lighter),
     tab: (
       BorderLeft:    #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)},
       BorderBottom:  #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)},
@@ -438,11 +436,20 @@ $LOCAL-VARIABLES: (
       color: #{pfe-fetch(text)} !important;
     }
   }
+  @at-root #{&}([vertical][pfe-variant="earth"][aria-selected="false"][on="dark"]:first-of-type) {
+    border-top: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} transparent !important;
+  }
   @at-root #{&}([vertical][pfe-variant="earth"][aria-selected="false"][on="dark"]:hover) {
     border-top: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)};
   }
   @at-root #{&}([vertical][pfe-variant="earth"][aria-selected="true"][on="dark"]) {
     border-right: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} var(--pfe-theme--surface--darkest, #151515);
+  }
+  @at-root #{&}([vertical][pfe-variant="earth"][aria-selected="false"][on="dark"]:last-of-type) {
+    border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} transparent !important;
+  }
+  @at-root #{&}([vertical][pfe-variant="earth"][aria-selected="true"][on="dark"]:last-of-type) {
+    border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)};
   }
 }
 

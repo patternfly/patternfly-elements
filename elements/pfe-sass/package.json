@@ -4,7 +4,7 @@
     "className": "PfeSass",
     "elementName": "pfe-sass"
   },
-  "version": "1.0.0-prerelease.45",
+  "version": "1.0.0-prerelease.50",
   "publishConfig": {
     "access": "public"
   },
@@ -18,9 +18,11 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-sass"
   },
+  "main": "./pfe-sass.scss",
   "scripts": {
     "build": "../../node_modules/.bin/gulp",
-    "dev": "../../node_modules/.bin/gulp dev"
+    "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch"
   },
   "contributors": [
     {

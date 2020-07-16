@@ -31,6 +31,7 @@ button {
   background-color: pfe-local(BackgroundColor);
   color: pfe-local(Color);
   font-size: pfe-local(FontSize);
+  font-family: #{pfe-var(font-family, $fallback: inherit)};
   padding: pfe-local(Padding);
   cursor: pointer;
   border-radius: pfe-local(BorderRadius);

@@ -124,3 +124,7 @@ button.form-ui {
     font-size: 1em;
     padding: 2px 5px;
 }
+.saturated-background {
+    background-color: teal;
+    --theme: saturated;
+}

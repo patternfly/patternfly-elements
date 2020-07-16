@@ -8,38 +8,58 @@ $LOCAL: tabs;
 
 $pfe-tabs__panel--PaddingLeft-factor:  2;
 
-$variables: (
+$LOCAL-VARIABLES: (
+  Display: block,
+  Padding: 0,
   tabs: (
-    BorderColor: pfe-color(surface--border)
+    FlexDirection: row,
+    Width: auto,
+    Padding: 0,
+    BorderTop: 0,
+    BorderRight: 0,
+    BorderLeft: 0,
+    BorderColor: pfe-var(surface--border)
+  ),
+  panels: (
+    Width: auto,
+    PaddingTop: 0,
+    PaddingRight: 0,
+    PaddingBottom: 0,
+    PaddingLeft: 0
   )
 );
 
-:host {
-  @include pfe-print-variables($variables);
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+  tabs: (
+    BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, $region: tabs)}
+  )
+));
 
-  display: #{pfe-local($cssvar: Display, $fallback: block)};
-  padding: #{pfe-local($cssvar: Padding, $fallback: 0)};
+:host {
+  display: #{pfe-local(Display)};
+  padding: #{pfe-local(Padding)};
 
   .tabs {  
     display: flex;
-    flex-direction: #{pfe-local($cssvar: FlexDirection, $region: tabs, $fallback: row)};
-    width: #{pfe-local($cssvar: Width, $region: tabs, $fallback: auto)};
+    flex-direction: #{pfe-local(FlexDirection, $region: tabs)};
+    width: #{pfe-local(Width, $region: tabs)};
 
-    border-top:    #{pfe-local($cssvar: BorderTop, $region: tabs, $fallback: 0)};
-    border-right:  #{pfe-local($cssvar: BorderRight, $region: tabs, $fallback: 0)};
-    border-bottom: #{pfe-local($cssvar: BorderBottom, $region: tabs, $fallback: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local($cssvar: BorderColor, $region: tabs)} )};
-    border-left:   #{pfe-local($cssvar: BorderLeft, $region: tabs, $fallback: 0)};
+    border-top:    #{pfe-local(BorderTop, $region: tabs)};
+    border-right:  #{pfe-local(BorderRight, $region: tabs)};
+    border-bottom: #{pfe-local(BorderBottom, $region: tabs)};
+    border-left:   #{pfe-local(BorderLeft, $region: tabs)};
 
-    padding: #{pfe-local($cssvar: Padding, $region: tabs, $fallback: 0)};
+    padding: #{pfe-local(Padding, $region: tabs)};
   }
 
   .panels {
-    width: #{pfe-local($cssvar: Width, $region: panels, $fallback: auto)};
+    width: #{pfe-local(Width, $region: panels)};
 
-    padding-top: #{pfe-local($cssvar: PaddingTop, $region: panels, $fallback: 0)};
-    padding-right: #{pfe-local($cssvar: PaddingRight, $region: panels, $fallback: 0)};
-    padding-bottom: #{pfe-local($cssvar: PaddingBottom, $region: panels, $fallback: 0)};
-    padding-left: #{pfe-local($cssvar: PaddingLeft, $region: panels, $fallback: 0)};
+    padding-top: #{pfe-local(PaddingTop, $region: panels)};
+    padding-right: #{pfe-local(PaddingRight, $region: panels)};
+    padding-bottom: #{pfe-local(PaddingBottom, $region: panels)};
+    padding-left: #{pfe-local(PaddingLeft, $region: panels)};
   }
 }
 
@@ -71,7 +91,7 @@ $variables: (
       .tabs {
         flex-direction: column;
         width: 22.22%;
-        border-right: 1px solid #{pfe-color(surface--border)};
+        border-right: 1px solid #{pfe-var(surface--border)};
         border-bottom: 0;
       }
 
@@ -102,8 +122,8 @@ $variables: (
 
 :host(:not([pfe-variant="earth"])) {
   @include browser-query(ie11) {
-    background-color: #{pfe-color(surface--lightest)};
-    color: #{pfe-color(text)};
+    background-color: #{pfe-var(surface--lightest)};
+    color: #{pfe-var(text)};
   }
 }
 

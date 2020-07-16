@@ -276,10 +276,6 @@ class PfeJumpLinksPanel extends PFElement {
     return "pfe-jump-links-panel.html";
   }
 
-  get styleUrl() {
-    return "pfe-jump-links-panel.scss";
-  }
-
   static get events() {
     return {
       change: `${this.tag}:change`,

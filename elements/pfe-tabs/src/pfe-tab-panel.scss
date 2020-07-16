@@ -25,7 +25,6 @@ $LOCAL-VARIABLES: (
  //updated saturated styles
   @at-root #{&}([pfe-variant="earth"][on="saturated"]) .container{
     background-color: pfe-var(surface--lightest);
-    //color: #000 !important;
     color: pfe-var(text);
   }
   @at-root #{&}([pfe-variant="earth"][on="saturated"]) ::slotted(*) {

@@ -237,7 +237,7 @@ $LOCAL-VARIABLES: (
 
 :host {
   @at-root #{&}([on="saturated"][pfe-variant="wind"]) {
-    color: #{pfe-var(ui-base--hover--on-saturated)};
+    color: #{pfe-var(text--muted--on-saturated)};
     @include browser-query(ie11) {
       color: #{pfe-fetch(text)} !important;
       background-color: transparent;

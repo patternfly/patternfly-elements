@@ -1,6 +1,6 @@
 ## Prerelease 51 ( 2020-07-16 )
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Support nested tabs or accordions inside pfe-content-set
+- [6965df](https://github.com/patternfly/patternfly-elements/commit/6965df7214f1cda636337093e0bf22bfc658403d) fix: Support nested tabs or accordions inside pfe-content-set
 
 ## Prerelease 50 ( 2020-06-26 )
 

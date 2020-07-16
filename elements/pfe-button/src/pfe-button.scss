@@ -27,16 +27,16 @@ $variables: (
 
 :host([pfe-variant="primary"]) button,
 button {
-  background-color: pfe-local(BackgroundColor);
-  color: pfe-local(Color);
-  font-size: pfe-local(FontSize);
+  background-color: #{pfe-local(BackgroundColor)};
+  color: #{pfe-local(Color)};
+  font-size: #{pfe-local(FontSize)};
   font-family: #{pfe-var(font-family, $fallback: inherit)};
-  padding: pfe-local(Padding);
+  padding: #{pfe-local(Padding)};
   cursor: pointer;
-  border-radius: pfe-local(BorderRadius);
-  border: pfe-local(Border);
+  border-radius: #{pfe-local(BorderRadius)};
+  border: #{pfe-local(Border)};
   position: relative;
-  line-height: pfe-local(LineHeight);
+  line-height: #{pfe-local(LineHeight)};
 
   &:after {
     position: absolute;
@@ -45,31 +45,32 @@ button {
     right: 0;
     bottom: 0;
     content: "";
-    border-radius: pfe-local(BorderRadius);
+    border: #{pfe-local(Border--after)};
+    border-color: #{pfe-local(BorderColor--after)};
+    border-radius: #{pfe-local(BorderRadius)};
   }
 
   &:hover,
   &:focus {
-    background-color: pfe-local(BackgroundColor--hover);
+    --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover)};
   }
 }
 
 :host([pfe-variant="secondary"]) {
   button {
-    background-color: transparent;
     --pfe-button--BackgroundColor: transparent;
     --pfe-button--BackgroundColor--hover: transparent;
-    color: #06c;
+    --pfe-button--Color: #{pfe-apply-broadcast(link)};
 
     &:after {
-      border: 1px solid #06c;
+      --pfe-button--BorderColor--after: #{pfe-apply-broadcast(link)};
     }
 
     &:hover,
     &:focus {
       &:after {
-        border: 2px solid #06c;
-        --pfe-button--Border: 2px solid pfe-color(link);
+        --pfe-button--Border--after: 2px solid;
+        --pfe-button--BorderColor--after: #{pfe-apply-broadcast(link)};
       }
     }
   }
@@ -77,20 +78,19 @@ button {
 
 :host([pfe-variant="tertiary"]) {
   button {
-    background-color: transparent;
     --pfe-button--BackgroundColor: transparent;
     --pfe-button--BackgroundColor--hover: transparent;
-    color: #151515;
-    --pfe-button--Color: #151515;
+    --pfe-button--Color: #{pfe-apply-broadcast(text)};
 
     &:after {
-      border: 1px solid #151515;
+      --pfe-button--BorderColor--after: #{pfe-apply-broadcast(text)};
     }
 
     &:hover,
     &:focus {
       &:after {
-        border: 2px solid #151515;
+        --pfe-button--Border--after: 2px solid;
+        --pfe-button--BorderColor--after: #{pfe-apply-broadcast(text)};
       }
     }
   }
@@ -98,25 +98,24 @@ button {
 
 :host([pfe-variant="danger"]) {
   button {
-    background-color: #c9190b;
-    color: #fff;
+    --pfe-button--BackgroundColor: #c9190b;
+    --pfe-button--Color: #fff;
 
     &:hover,
     &:focus {
-      background-color: #a30000;
+      --pfe-button--BackgroundColor--hover: #a30000;
     }
   }
 }
 
 :host([pfe-variant="control"]) {
   button {
-    background-color: transparent;
-    color: #151515;
-    border-radius: 0;
+    --pfe-button--BackgroundColor: transparent;
+    --pfe-button--Color: #{pfe-apply-broadcast(text)};
+    --pfe-button--BorderRadius: 0;
 
     &:after {
-      border-radius: 0;
-      border: 1px solid #ededed;
+      --pfe-button--BorderColor--after: #ededed;
       border-bottom-color: #8a8d90;
     }
 
@@ -124,7 +123,7 @@ button {
     &:focus {
       &:after {
         border-bottom-width: 2px;
-        border-bottom-color: #06c;
+        border-bottom-color: #{pfe-apply-broadcast(link)};
       }
     }
   }
@@ -132,27 +131,27 @@ button {
 
 :host([pfe-variant="control"][disabled]) {
   button {
-    background-color: transparent;
+    --pfe-button--BackgroundColor: transparent;
   }
 }
 
 :host([disabled]) {
   button {
-    background-color: #d2d2d2;
-    color: #737679;
+    --pfe-button--BackgroundColor: #d2d2d2;
+    --pfe-button--Color: #737679;
     pointer-events: none;
 
     &:hover,
     &:focus {
-      background-color: #d2d2d2;
+      --pfe-button--BackgroundColor--hover: #d2d2d2;
 
       &:after {
-        border: 0;
+        --pfe-button--Border--after: 0;
       }
     }
 
     &:after {
-      border: 0;
+      --pfe-button--Border--after: 0;
     }
   }
 }

@@ -46,6 +46,7 @@
       border-radius: 3px;
       padding: 8px;
       width: 250px;
+      line-height: 1.5;
     }
 
     #disablers-container {
@@ -71,15 +72,34 @@
     </header>
     <article>
       <pfe-button>
-        <div>fjkdsla</div>
+        <button>Submit</button>
       </pfe-button>
-      <pfe-button></pfe-button>
-      <pfe-button>
-        <button>Primary</button>
-      </pfe-button>
-      <label>
-        <input type="checkbox"> Disable
-      </label>
+      </form>
+      <div id="formSubmittedMessage" hidden>The form was submitted</div>
+    </article>
+    <article>
+      <h3>Reset a Form</h3>
+      <form>
+        <input type="text" placeholder="Fill out the input and hit reset">
+        <pfe-button>
+          <button type="reset">Reset</button>
+        </pfe-button>
+      </form>
+    </article>
+  </pfe-band>
+
+  <pfe-band pfe-color="lightest">
+    <header slot="pfe-band--header">
+      <h2>&lt;pfe-button&gt; Disabled</h2>
+    </header>
+    <article id="disablers-container">
+      <div>
+        <pfe-button>
+          <button>Primary</button>
+        </pfe-button>
+        <label>
+          <input type="checkbox"> Disable
+        </label>
       </div>
       <div>
         <pfe-button pfe-variant="secondary">
@@ -101,6 +121,11 @@
         <pfe-button pfe-variant="danger">
           <button>Danger</button>
         </pfe-button>
+        <label>
+          <input type="checkbox"> Disable
+        </label>
+      </div>
+      <div>
         <pfe-button pfe-variant="control">
           <button>Control</button>
         </pfe-button>
@@ -116,7 +141,7 @@
       <form id="form">
         <input type="text" placeholder="Name" />
         <pfe-button>
-          <button>Submit</button>
+          <button type="submit">Submit</button>
         </pfe-button>
       </form>
       <div id="formSubmittedMessage" hidden>The form was submitted</div>
@@ -187,7 +212,7 @@
     <article>
       <p>Listening for the pfe-button:click event</p>
       <pfe-button id="eventsBtn">
-        <button>Click Me</button>
+        <button type="button">Click Me</button>
       </pfe-button>
       Total Clicks: <span id="totalClicks">0</span>
       <div>
@@ -218,6 +243,21 @@
       event.preventDefault();
       formSubmittedMessage.removeAttribute("hidden");
     });
+
+    var disablers = document.querySelectorAll("#disablers-container input");
+
+    for (var i = 0; i < disablers.length; i++) {
+      var disabler = disablers[i];
+
+      disabler.addEventListener("change", function (event) {
+        var btn = this.parentElement.parentElement.querySelector("pfe-button");
+
+        if (this.checked) {
+          btn.setAttribute("disabled", "");
+        } else {
+          btn.removeAttribute("disabled");
+        }
+      });
     }
 
     var dynamicTextBtn = document.querySelector("#dynamicTextBtn");
@@ -226,34 +266,25 @@
     dynamicTextBtnInput.addEventListener("keyup", function (event) {
       dynamicTextBtn.textContent = dynamicTextBtnInput.value;
     });
+
+    var eventsBtn = document.querySelector("#eventsBtn");
+    var totalClicksSpan = document.querySelector("#totalClicks");
+    var totalClicks = 0;
+    var eventsBtnDisableCheckbox = document.querySelector("#eventsBtnDisableCheckbox");
+
+    eventsBtn.addEventListener("pfe-button:click", function (event) {
+      totalClicks++;
+      totalClicksSpan.textContent = totalClicks;
+    });
+
+    eventsBtnDisableCheckbox.addEventListener("change", function (event) {
+      if (this.checked) {
+        eventsBtn.setAttribute("disabled", "");
+      } else {
+        eventsBtn.removeAttribute("disabled");
+      }
+    });
   </script>
-</body>
-
-var dynamicTextBtn = document.querySelector("#dynamicTextBtn");
-var dynamicTextBtnInput = document.querySelector("#dynamicTextBtnInput");
-
-dynamicTextBtnInput.addEventListener("keyup", function (event) {
-dynamicTextBtn.textContent = dynamicTextBtnInput.value;
-});
-
-var eventsBtn = document.querySelector("#eventsBtn");
-var totalClicksSpan = document.querySelector("#totalClicks");
-var totalClicks = 0;
-var eventsBtnDisableCheckbox = document.querySelector("#eventsBtnDisableCheckbox");
-
-eventsBtn.addEventListener("pfe-button:click", function (event) {
-totalClicks++;
-totalClicksSpan.textContent = totalClicks;
-});
-
-eventsBtnDisableCheckbox.addEventListener("change", function (event) {
-if (this.checked) {
-eventsBtn.setAttribute("disabled", "");
-} else {
-eventsBtn.removeAttribute("disabled");
-}
-});
-</script>
 </body>
 
 </html>

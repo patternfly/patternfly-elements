@@ -9,7 +9,7 @@
       "pfe-accordion-panel.js"
     ]
   },
-  "version": "1.0.0-prerelease.50",
+  "version": "1.0.0-prerelease.51",
   "publishConfig": {
     "access": "public"
   },
@@ -51,7 +51,7 @@
   "license": "MIT",
   "dependencies": {
     "@patternfly/pfe-sass": "^1.0.0-prerelease.50",
-    "@patternfly/pfelement": "^1.0.0-prerelease.50"
+    "@patternfly/pfelement": "^1.0.0-prerelease.51"
   },
   "generator-pfelement-version": "0.5.5",
   "bugs": {

@@ -45,7 +45,7 @@ $LOCAL-VARIABLES: (
   color: pfe-local(Color);  // @todo replace with pfe(text-muted) in Kendall's color story
 
   cursor: pointer;
-  text-align: #{pfe-local(TextAlign, left, $region: tab)};
+  text-align: #{pfe-local(TextAlign, center, $region: tab)};
 
   // Exposing this for customization
   text-transform: #{pfe-local($cssvar: TextTransform, $region: tab, $fallback: none)};
@@ -299,6 +299,10 @@ $LOCAL-VARIABLES: (
   @include browser-query(ie11) {
     border-top: #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(BorderColor--hover)} !important;
   }
+}
+
+:host([pfe-variant="earth"][aria-selected="false"]:hover) {
+  --pfe-tabs--Color: #{pfe-var(text)};
 }
 
 :host([pfe-variant="earth"][aria-selected="true"]) {

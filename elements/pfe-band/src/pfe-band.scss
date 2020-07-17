@@ -18,7 +18,7 @@ $LOCAL-VARIABLES: (
 
   // Layouts, grid layouts
   layout: 1fr,
-  
+
   header: ( layout: 1fr ),
   body:   ( layout: 1fr ),
   footer: ( layout: 1fr ),
@@ -48,7 +48,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
     @media screen and (min-width: pfe-breakpoint(#{$size})) {
-      --pfe-#{$LOCAL}--Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) );
+      @include pfe-print-local((Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) )));
     }
   }
 
@@ -84,10 +84,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 
   @include browser-query(ie11) {
-    background-color: pfe-var(surface--lightest) !important;
-    color: pfe-var(text) !important;
+    background-color: pfe-fetch(surface--lightest) !important;
+    color: pfe-fetch(text) !important;
     background-image: none !important;
-    padding: pfe-var(container-spacer);
+    padding: pfe-fetch(container-spacer);
   }
 
   // Tag element styles
@@ -104,23 +104,29 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 // thinner padding on top & bottom
 :host([pfe-size="small"]) {
-  --pfe-#{$LOCAL}--Padding: calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)};
+  @include pfe-print-local((
+    Padding: calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)}
+  ));
 }
 
 .pfe-band {
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
-    --pfe-band_region--width: calc(1fr - #{pfe-local(Width__aside--sm)} - #{pfe-local(gutter--horizontal)});
+    @include pfe-print-local((
+      region: (
+        width: calc(1fr - #{pfe-local(Width__aside--sm)} - #{pfe-local(gutter--horizontal)})
+      )
+    ));
     grid-template-areas: "body";
     // Styles for the different combination of regions
     &[pfe-has-aside] {
       grid-template-areas:
         "body" "aside";
       @media (min-width: #{pfe-breakpoint(md)}) {
-        --pfe-#{$LOCAL}--layout: 1fr #{pfe-local(Width__aside--sm)};
+        @include pfe-print-local((layout: 1fr #{pfe-local(Width__aside--sm)}));
       }
       @media (min-width: #{pfe-breakpoint(lg)}) {
-        --pfe-#{$LOCAL}--layout: 1fr #{pfe-local(Width__aside--lg)};
+        @include pfe-print-local((layout: 1fr #{pfe-local(Width__aside--lg)}));
       }
       &[pfe-aside-mobile="top"] {
         grid-template-areas:
@@ -130,10 +136,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
         @media (min-width: #{pfe-breakpoint(md)}) {
             grid-template-areas:
               "aside body";
-          --pfe-#{$LOCAL}--layout: #{pfe-local(Width__aside--sm)} 1fr;
+            @include pfe-print-local((layout: #{pfe-local(Width__aside--sm)} 1fr));
         }
         @media (min-width: #{pfe-breakpoint(lg)}) {
-          --pfe-#{$LOCAL}--layout: #{pfe-local(Width__aside--lg)} 1fr;
+          @include pfe-print-local((layout: #{pfe-local(Width__aside--lg)} 1fr));
         }
       }
     }

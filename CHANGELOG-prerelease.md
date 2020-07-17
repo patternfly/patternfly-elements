@@ -1,6 +1,12 @@
-## Prerelease 51 ( TBD )
+## Prerelease 52 ( TBD )
 
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: fire pfe-autcomplete:option-selected event on click and enter key
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add support for empty local variables
+
+## Prerelease 51 ( 2020-07-16 )
+
+- [6965df](https://github.com/patternfly/patternfly-elements/commit/6965df7214f1cda636337093e0bf22bfc658403d) fix: Support nested tabs or accordions inside pfe-content-set
+- [49c6146](https://github.com/patternfly/patternfly-elements/commit/49c6146fbaed4cf6ca8d198e107471b53fe07796) feat: Add generator label to new PRs where appropriate, add .github folder to tools
 
 ## Prerelease 50 ( 2020-06-26 )
 
@@ -11,7 +17,7 @@
 - [b3f1e46](https://github.com/patternfly/patternfly-elements/commit/b3f1e46fe401be3f09f361fcc3b284a87de3728e) fix: pfe-dropdown: remove preventDefault call on clicks outside of dropdown (#915)
 - [775b821](https://github.com/patternfly/patternfly-elements/commit/775b821702c903f926b8bf9fdf9c948ac949335f) feat: Add automatic labeling to PRs (#909)
 - [82bf8e6](https://github.com/patternfly/patternfly-elements/commit/82bf8e6a0d407a651571dac1e37d06a2b14fa3d4) feat: Move PR cards automatically in the Project when labels are changed (#911)
-- [235e9a8](https://github.com/patternfly/patternfly-elements/commit/235e9a816b763dc9251e3022c914cba72f148368) fix: Move tab headings to the ShadowDOM (#769) 
+- [235e9a8](https://github.com/patternfly/patternfly-elements/commit/235e9a816b763dc9251e3022c914cba72f148368) fix: pfe-tab move content from light to shadow DOM (#769)
 - [2adef08](https://github.com/patternfly/patternfly-elements/commit/2adef088768ac52f813899d42ba5a45119761ea3) fix: Add watch task to components generated before infra change (#912)
 - [6919a2c](https://github.com/patternfly/patternfly-elements/commit/6919a2c9283551d9e25d60ff96d497fab016e270) feat: pfe-icon and pfe-icon-panel updates (#867)
     -  Update paths to built-in sets: (#723)

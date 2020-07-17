@@ -3,7 +3,7 @@
 
 :host {
   display: block;
-  color: #{pfe-broadcasted(text)};
+  color: pfe-broadcasted(text);
 }
 
 :host([hidden]) {

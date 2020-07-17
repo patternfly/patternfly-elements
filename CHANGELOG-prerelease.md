@@ -1,6 +1,7 @@
 ## Prerelease 52 ( TBD )
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add support for empty local variables
+- [fbbc35c](https://github.com/patternfly/patternfly-elements/commit/fbbc35c1ccb395015cc35459ae0b4643c5217ac2) feat: Add support for empty local variables
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Move pfe-sass to a dev dependency
 
 ## Prerelease 51 ( 2020-07-16 )
 

@@ -6,6 +6,7 @@ $LOCAL-VARIABLES: (
   BackgroundColor:       transparent,
   Color:                 pfe-var(text--muted),
   link:                  pfe-var(link),
+  text-hover:            #151515,
   focus:                 pfe-var(link--focus),
   highlight:             pfe-var(ui-accent),
   BorderWidth--hover:    #{pfe-var(surface--border-width--active)},
@@ -61,9 +62,9 @@ $LOCAL-VARIABLES: (
   @at-root #{&}(:hover) {
     --pfe-tabs--Color: #{pfe-var(text)};
     //color: #{pfe-var(text)};
-    color:  var(--pfe-theme--surface--darkest, #151515);
+    color:  #{pfe-local(text-hover)};
     @include browser-query(ie11) {
-      color: #{pfe-fetch(text)};
+      color: #{pfe-local(text-hover)};
     }
   }
 
@@ -102,7 +103,7 @@ $LOCAL-VARIABLES: (
     --pfe-tabs--BorderBottom: 0;
     --pfe-tabs--BorderLeft: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent;
     --pfe-tabs--Margin: 0 -1px 0 0;
-    --pfe-tabs--PadingLeft: calc(#{pfe-var(container-padding)} * .75);
+    padding: #{pfe-var(container-padding)};
 
       @include browser-query(ie11) {
         border: 1px solid transparent;
@@ -207,7 +208,7 @@ $LOCAL-VARIABLES: (
   @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="true"]){
     --pfe-tabs__tab--BorderRight: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} transparent;
     --pfe-tabs__tab--BorderLeft:  #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
-    padding-left:                 calc(#{pfe-var(container-padding)} * 1.5 - 2px);
+    padding-left:                 calc(#{pfe-var(container-padding)} - 2px);
     @include browser-query(ie11) {
       border-right:  0;
       border-left:   #{pfe-local(BorderWidth--hover)} #{pfe-fetch(surface--border-style)} #{pfe-local(highlight)};
@@ -222,7 +223,7 @@ $LOCAL-VARIABLES: (
     --pfe-tabs__tab--BorderRight: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} transparent;
     --pfe-tabs__tab--BorderBottom: 0;
     --pfe-tabs__tab--BorderLeft: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
-    padding-left: calc(#{pfe-var(container-padding)} * 1.5 - 2px);
+    padding-left: calc(#{pfe-var(container-padding)} - 2px);
     @include browser-query(ie11) {
       border-right:  0;
       border-bottom: 0;

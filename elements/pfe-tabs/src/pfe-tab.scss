@@ -13,10 +13,10 @@ $LOCAL-VARIABLES: (
   darkBackgroundColor:   #3c3f42,
   tab: (
     FontSize:            pfe-var(font-size),
-    PaddingTop:          calc(#{pfe-var(container-padding)} * .666),
-    PaddingRight:        calc(#{pfe-var(container-padding)} * 1.5),
-    PaddingBottom:       calc(#{pfe-var(container-padding)} * .666),
-    PaddingLeft:         calc(#{pfe-var(container-padding)} * 1.5),
+    PaddingTop:          calc(#{pfe-var(container-padding)}),
+    PaddingRight:        calc(#{pfe-var(container-padding)} * 2),
+    PaddingBottom:       calc(#{pfe-var(container-padding)}),
+    PaddingLeft:         calc(#{pfe-var(container-padding)} * 2),
   )
 );
 
@@ -60,7 +60,8 @@ $LOCAL-VARIABLES: (
 
   @at-root #{&}(:hover) {
     --pfe-tabs--Color: #{pfe-var(text)};
-    color: #{pfe-var(text)};
+    //color: #{pfe-var(text)};
+    color:  var(--pfe-theme--surface--darkest, #151515);
     @include browser-query(ie11) {
       color: #{pfe-fetch(text)};
     }

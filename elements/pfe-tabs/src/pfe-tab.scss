@@ -60,9 +60,7 @@ $LOCAL-VARIABLES: (
   }
 
   @at-root #{&}(:hover) {
-    --pfe-tabs--Color: #{pfe-var(text)};
-    //color: #{pfe-var(text)};
-    color:  #{pfe-local(text-hover)};
+    --pfe-tabs--Color:  #{pfe-local(text-hover)};
     @include browser-query(ie11) {
       color: #{pfe-local(text-hover)};
     }
@@ -270,6 +268,9 @@ $LOCAL-VARIABLES: (
 
 :host([on="saturated"][aria-selected="false"][pfe-variant="earth"]) {
   color: #{pfe-var(ui-disabled--text)};
+}
+:host([on="saturated"][aria-selected="false"][pfe-variant="earth"]:hover) {
+  color: #{pfe-local(text-hover)};
 }
 
 /// ===========================================================================

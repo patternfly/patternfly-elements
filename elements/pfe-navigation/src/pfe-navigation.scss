@@ -389,6 +389,7 @@
     }
   }
 
+  // @todo: adjust heading spacing styles to still look good when there is no link in heading
   h1,
   h2,
   h3,
@@ -398,7 +399,7 @@
     margin: 0;
     padding: 0;
     font-size: 16px;
-    color: var(--pfe-theme--color--ui-complement,#464646); // to make sure color is correct even when headings do not have links
+    color: var(--pfe-theme--color--ui-complement,#464646);
   }
 
   h1 a,
@@ -419,24 +420,6 @@
   }
 }
 
-// .pfe-navigation__dropdown--single-column {
-//   position: relative;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-//   min-width: var(--pfe-dropdown--MinWidth);
-//   max-width: var(--pfe-dropdown--MaxWidth);
-//   padding: var(--pfe-dropdown--SpacingVertical) var(--pfe-dropdown--SpacingHorizontal);
-//   font-size: var(--pfe-dropdown--FontSize);
-//   font-family: var(--pfe-theme--font-family,);
-//   font-weight: var(--pfe-dropdown--FontWeight);
-//   line-height: var(--pfe-theme--line-height,1.5);
-//   color: var(--pfe-dropdown--Color);
-//   background-color: var(--pfe-dropdown--BackgroundColor);
-//   border: var(--pfe-dropdown--Border);
-//   cursor: pointer;
-// }
-
 .pfe-navigation__dropdown--single-column {
   // @todo animation and polish
   display: none;
@@ -449,9 +432,11 @@
     max-width: 100%;
     min-width: 32px;
     padding: 16px;
+    //@todo: determine if this is the right grid settings for the single col dropdown
     grid-template-columns: 1fr;
     grid-gap: 0;
     background: #fff;
+    box-shadow: var(--pfe-theme--box-shadow--sm, 0 0.0625rem 0.125rem 0 rgba(19, 19, 19, 0.2));
   }
 
   .pfe-navigation__menu-item--open > & {
@@ -464,14 +449,7 @@
 }
 
 .pfe-navigation__footer {
-  // rule set to always have ctas in a section as the last element in the menu dropdown list
-  // @todo: figure out if the css rules need to be applied with a classes instead of selecting last section child
-  grid-column: 1 / -1; // span last col with ctas to full width grid on new row always 
-
-  // display: flex;
-  // flex-direction: row;
-  // justify-content: space-between;
-  // align-items: flex-start;
+  grid-column: 1 / -1; // col spans to the end of col grid line always
 
   display: grid;
   grid-gap: 32px;

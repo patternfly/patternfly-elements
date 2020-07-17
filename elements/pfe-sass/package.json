@@ -49,5 +49,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"
+  },
+  "dependencies": {
+    "@patternfly/patternfly": "^4.23.3"
   }
 }

@@ -1,7 +1,7 @@
-## Prerelease 52 ( TBD )
+## Prerelease 52 ( 2020-07-17 )
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: fire pfe-autcomplete:option-selected event on click and enter key
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add support for empty local variables
+- [e5c6f4b](https://github.com/patternfly/patternfly-elements/commit/e5c6f4bc0f5ef3283c115ecbcc7c31456ea39872) fix: fire pfe-autcomplete:option-selected event on click and enter key
+- [fbbc35c](https://github.com/patternfly/patternfly-elements/commit/fbbc35c1ccb395015cc35459ae0b4643c5217ac2) feat: Add support for empty local variables
 
 ## Prerelease 51 ( 2020-07-16 )
 

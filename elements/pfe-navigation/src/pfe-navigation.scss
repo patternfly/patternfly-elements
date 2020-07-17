@@ -438,16 +438,29 @@
 // }
 
 .pfe-navigation__dropdown--single-column {
-  position: absolute;
-  top: 100%;
-  left: unset;
-  width: auto;
-  min-width: auto;
-  padding: 16px;
-  grid-template-columns: 1fr;
-  grid-gap: 0;
-  background: #fff;
-  border-bottom: 0;
+  // @todo animation and polish
+  display: none;
+
+  @include breakpoint('nav-break') {
+    position: absolute;
+    top: 100%;
+    left: auto;
+    width: auto;
+    max-width: 100%;
+    min-width: 32px;
+    padding: 16px;
+    grid-template-columns: 1fr;
+    grid-gap: 0;
+    background: #fff;
+  }
+
+  .pfe-navigation__menu-item--open > & {
+    display: block;
+    @include breakpoint('nav-break') {
+      display: grid;
+    }
+  }
+
 }
 
 .pfe-navigation__footer {

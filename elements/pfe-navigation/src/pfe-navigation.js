@@ -1,5 +1,74 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 
+// @todo Figure out cooler way to include these utilty functions
+/**
+ * Optimized resize handler
+ * @see https://wiki.developer.mozilla.org/en-US/docs/Web/API/Window/resize_event$revision/1380246
+ *
+ * @example
+ *     optimizedResize.add(() => console.log('Resource conscious resize callback!'));
+ */
+const optimizedResize = (function() {
+  let callbacks = [],
+    running = false;
+  // Fired on resize event
+  const onResize = () => {
+    if (!running) {
+      running = true;
+      if (window.requestAnimationFrame) {
+        window.requestAnimationFrame(runCallbacks);
+      } else {
+        setTimeout(runCallbacks, 66);
+      }
+    }
+  };
+
+  // Run the callbacks
+  const runCallbacks = () => {
+    callbacks.forEach(function(callback) {
+      callback();
+    });
+    running = false;
+  };
+
+  // Adds callback to loop
+  const addCallback = callback => {
+    if (callback) {
+      callbacks.push(callback);
+    }
+  };
+
+  return {
+    // Public method to add additional callback
+    add: function add(callback) {
+      if (!callbacks.length) {
+        window.addEventListener("resize", onResize);
+      }
+      addCallback(callback);
+    }
+  };
+})();
+
+/**
+ * Debounce helper
+ * @see https://codeburst.io/throttling-and-debouncing-in-javascript-b01cad5c8edf
+ *
+ * @example
+ *     debounce(
+ *       () => console.log('debounced'),
+ *       3000
+ *     );
+ */
+const debounce = (func, delay) => {
+  let inDebounce;
+  return function() {
+    const context = this;
+    const args = arguments;
+    clearTimeout(inDebounce);
+    inDebounce = setTimeout(() => func.apply(context, args), delay);
+  };
+};
+
 // Config for mutation observer to see if things change inside of the component
 const lightDomObserverConfig = {
   characterData: true,
@@ -51,6 +120,12 @@ class PfeNavigation extends PFElement {
       ".pfe-navigation__menu-toggle"
     );
 
+    // Set default breakpoints to null (falls back to CSS)
+    this.menuBreakpoints = {
+      secondaryLinks: null,
+      mainMenu: null
+    };
+
     // Ensure 'this' is tied to the component object in these member functions
     this.isOpen = this.isOpen.bind(this);
     this._toggleNavigationState = this._toggleNavigationState.bind(this);
@@ -66,6 +141,9 @@ class PfeNavigation extends PFElement {
     this._dropdownDropdownItemToggle = this._dropdownDropdownItemToggle.bind(
       this
     );
+    this._addMenuBreakpoints = this._addMenuBreakpoints.bind(this);
+    this._collapseMainMenu = this._collapseMainMenu.bind(this);
+    this._collapseSecondaryLinks = this._collapseSecondaryLinks.bind(this);
 
     // Setup mutation observer to watch for content changes
     this._observer = new MutationObserver(this._processLightDom);
@@ -81,8 +159,6 @@ class PfeNavigation extends PFElement {
 
     this.search = this.querySelector(`[slot="${this.tag}--search"]`);
     this.customlinks = this.querySelector(`[slot="${this.tag}--customlinks"]`);
-
-    const webComponent = this;
 
     // Add a slotchange listener to the lightDOM trigger
     // this.search.addEventListener("slotchange", this._init);
@@ -277,6 +353,84 @@ class PfeNavigation extends PFElement {
     // Reconnecting mutationObserver for IE11 & Edge
     if (window.ShadyCSS) {
       this._observer.observe(this, lightDomObserverConfig);
+    }
+
+    if (!this.isNavigationMobileStyle()) {
+      // Timeout lets this run when there's a spare cycle
+      window.setTimeout(this._addMenuBreakpoints, 0);
+    }
+  }
+
+  /**
+   * Calculate the points where the main menu and secondary links should be collapsed and adds them
+   */
+  _addMenuBreakpoints() {
+    const navigation = this.shadowRoot.getElementById("pfe-navigation__menu");
+    const navigationBoundingRect = navigation.getBoundingClientRect();
+    // Gets the length from the left edge of the screen to the right side of the navigation
+    const navigationSpaceNeeded = Math.ceil(navigationBoundingRect.right);
+
+    let leftMostSecondaryLink = this.shadowRoot.querySelector(
+      ".pfe-navigation__search-toggle"
+    );
+    // @todo if Search isn't present, check for custom links, if that isn't present use All Red Hat
+
+    const leftMostSecondaryLinkBoundingRect = leftMostSecondaryLink.getBoundingClientRect();
+    // Gets the length from the right edge of the screen to the left side of the left most secondary link
+    const secondaryLinksSpaceNeeded =
+      window.innerWidth - Math.ceil(leftMostSecondaryLinkBoundingRect.left);
+
+    const logoWrapper = this.shadowRoot.getElementById(
+      "pfe-navigation__logo-wrapper"
+    );
+    const logoBoundingRect = logoWrapper.getBoundingClientRect();
+    const logoSpaceNeeded = Math.ceil(logoBoundingRect.right);
+
+    // console.log(navigationSpaceNeeded, secondaryLinksSpaceNeeded, navigationSpaceNeeded && secondaryLinksSpaceNeeded)
+
+    if (navigationSpaceNeeded && secondaryLinksSpaceNeeded && logoSpaceNeeded) {
+      // 8px is spacing between menu items at desktop
+      // console.log(navigationSpaceNeeded, secondaryLinksSpaceNeeded, logoSpaceNeeded);
+      this.menuBreakpoints.mainMenu =
+        navigationSpaceNeeded + secondaryLinksSpaceNeeded + 8;
+      // 60px is the width of the menu burger + some extra space
+      this.menuBreakpoints.secondaryLinks =
+        logoSpaceNeeded + secondaryLinksSpaceNeeded + 60;
+
+      // console.log('adding breakpoints', this.menuBreakpoints);
+      const mainMenuBreakpoint = window.matchMedia(
+        `(max-width: ${this.menuBreakpoints.mainMenu}px)`
+      );
+      mainMenuBreakpoint.addListener(this._collapseMainMenu);
+
+      const secondaryLinksBreakpoint = window.matchMedia(
+        `(max-width: ${this.menuBreakpoints.secondaryLinks}px)`
+      );
+      secondaryLinksBreakpoint.addListener(this._collapseSecondaryLinks);
+    }
+  }
+
+  /**
+   * Behavior for main menu breakpoint
+   * @param {object} event Event from MediaQueryList
+   */
+  _collapseMainMenu(event) {
+    if (event.matches) {
+      this.classList.add("pfe-navigation--collapse-main-menu");
+    } else {
+      this.classList.remove("pfe-navigation--collapse-main-menu");
+    }
+  }
+
+  /**
+   * Behavior for secondary links breakpoint
+   * @param {object} event Event from MediaQueryList
+   */
+  _collapseSecondaryLinks(event) {
+    if (event.matches) {
+      this.classList.add("pfe-navigation--collapse-secondary-links");
+    } else {
+      this.classList.remove("pfe-navigation--collapse-secondary-links");
     }
   }
 

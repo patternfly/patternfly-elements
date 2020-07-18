@@ -25,24 +25,31 @@
 }
 
 .pfe-navigation__wrapper {
+  $collapsed-padding: 0 16px;
+  $collapsed-bottom-margin: 8px;
+
   position: relative;
   display: flex;
   align-items: stretch;
   height: $menu-height;
-  margin-bottom: 8px;
-  padding: 0 16px;
+  margin-bottom: $collapsed-bottom-margin;
+  padding: $collapsed-padding;
   font-size: 16px;
   line-height: 1.5;
   font-family: "RedHatText", "Red Hat Text", Overpass, Arial, Helvetica, sans-serif;
   color: #fff;
   background: #151515;
-  @include breakpoint('secondary-links-break') {
+  @include breakpoint('secondary-links-expand') {
     margin-bottom: 0;
   }
-  @include breakpoint('nav-break') {
-    display: flex;
-    align-items: stretch;
+  @include breakpoint('nav-expand') {
     padding: 0 32px;
+  }
+  @include collapse('nav') {
+    padding: $collapsed-padding;
+  }
+  @include collapse('secondary-links') {
+    margin-bottom: $collapsed-bottom-margin;
   }
 
   a {
@@ -81,11 +88,9 @@
 }
 
 .pfe-navigation__logo-image {
+  display: block;
   width: auto;
   height: 40px;
-  @include breakpoint('nav-break') {
-    display: block;
-  }
 
   // In case there isn't a mobile and desktop version
   &:only-child {
@@ -132,8 +137,17 @@
     margin-left: 0;
     margin-right: auto;
   }
-  @include breakpoint('nav-break') {
+  @include breakpoint('nav-expand') {
     display: none;
+  }
+  @include collapse('nav') {
+    display: flex;
+    margin-left: 0;
+    margin-right: auto;
+  }
+  @include collapse('secondary-links') {
+    margin-left: auto;
+    margin-right: 0;
   }
   
   :host([pfe-navigation-state^='main-menu']) & {
@@ -152,9 +166,12 @@
 // --------------------------------------------------------
 .pfe-navigation__outer-menu-wrapper,
 .pfe-navigation__outer-menu-wrapper__inner {
-  @include breakpoint('secondary-links-break') {
+  @include breakpoint('secondary-links-expand') {
     display: flex;
     align-items: stretch;
+  }
+  @include collapse('secondary-links') {
+    display: block;
   }
 }
 
@@ -166,47 +183,64 @@
   width: 100%;
   padding: 16px;
   background: #fff;
-  @include breakpoint('secondary-links-break') {
+  @include breakpoint('secondary-links-expand') {
     position: static;
     display: flex;
     width: auto;
     padding: 0;
     background: transparent;
   }
-  @include breakpoint('nav-break') {
+  @include breakpoint('nav-expand') {
     height: $menu-height;
   }
+  @include collapse('secondary-links') {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    width: 100%;
+    height: auto;
+    padding: 16px;
+    background: #fff;
+  }
 
+  // @todo This host selector conflicts with the needs of the collapse mixin
   :host([pfe-navigation-state^='main-menu']) & {
     display: block;
-    @include breakpoint('secondary-links-break') {
+    @include breakpoint('secondary-links-expand') {
       display: flex;
+    }
+    @include collapse('secondary-links') {
+      display: block;
     }
   }
 }
 
 .pfe-navigation__outer-menu-wrapper,
 .pfe-navigation__outer-menu-wrapper__inner {
-  @include breakpoint('nav-break') {
+  @include breakpoint('nav-expand') {
     flex-grow: 1;
+  }
+  @include collapse('nav') {
+    flex-grow: 0;
   }
 }
 
 // Menu, List, & Items
 // --------------------------------------------------------
 .pfe-navigation__menu-wrapper {
+  width: 100%;
   margin-bottom: 8px;
   background: #fff;
-  @include breakpoint('secondary-links-break') {
+  @include breakpoint('secondary-links-expand') {
     position: absolute;
     top: 100%;
     left: 0;
     display: none;
-    width: 100%;
-    padding: 16px 32px;
     margin: 0;
-}
-  @include breakpoint('nav-break') {
+    padding: 16px 32px;
+  }
+  @include breakpoint('nav-expand') {
     position: static;
     display: flex;
     align-items: stretch;
@@ -215,11 +249,12 @@
     background: transparent;
   }
 
+  // @todo This host selector may conflict with the needs of the collapse mixin
   :host([pfe-navigation-state^='main-menu']) & {
-    @include breakpoint(md) {
+    @include breakpoint('secondary-links-expand') {
       display: block;
     }
-    @include breakpoint('nav-break') {
+    @include breakpoint('nav-expand') {
       position: static;
       display: flex;
       align-items: stretch;
@@ -227,6 +262,21 @@
       padding: 0;
       background: transparent;
     }
+  }
+
+  @include collapse('nav') {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    width: 100%;
+    padding: 16px 32px;
+    margin: 0;
+  }
+  @include collapse('secondary-links') {
+    position: static;
+    display: block;
+    padding: 0;
   }
 }
 
@@ -238,43 +288,54 @@
 }
 
 .pfe-navigation__menu {
-  @include breakpoint('nav-break') {
+  @include breakpoint('nav-expand') {
     display: flex;
     align-items: stretch;
   }
 }
 
 .pfe-navigation__menu-item {
-  border-top: 1px solid #d2d2d2;
-  @include breakpoint('nav-break') {
+  $collapsed-border-top: 1px solid #d2d2d2;
+  border-top: $collapsed-border-top;
+  @include breakpoint('nav-expand') {
     display: flex;
     align-items: stretch;
     padding: 0 4px;
     border: none;
   }
+  @include collapse(nav) {
+    display: block;
+    padding: 0;
+    border-top: $collapsed-border-top;
+  }
 
   a {
     display: block;
     padding: 0.8em 24px;
-    @include breakpoint('nav-break') {
-      padding: 0.8em 24px;
-    }
   }
 
   &:last-child {
-    border-bottom: 1px solid #d2d2d2;
-    @include breakpoint('nav-break') {
+    $collapsed-border-bottom: 1px solid #d2d2d2;
+    border-bottom: $collapsed-border-bottom;
+    @include breakpoint('nav-expand') {
       border: 0;
+    }
+    @include collapse(nav) {
+      border-bottom: $collapsed-border-bottom;
     }
   }
 }
 
 .pfe-navigation__menu-item--open {
-  box-shadow:
+  $collapsed-border-shadow:
     inset 4px 0 0 0 #e00,
     0 1px 2px rgba(0, 0, 0, 0.12);
-  @include breakpoint('nav-break') {
+  box-shadow: $collapsed-border-shadow;
+  @include breakpoint('nav-expand') {
     box-shadow: none;
+  }
+  @include collapse(nav) {
+    box-shadow: $collapsed-border-shadow;
   }
 }
 
@@ -287,12 +348,21 @@
   font-weight: 500;
   color: #151515;
   transition: box-shadow 0.2s;
-  @include breakpoint('nav-break') {
+  @include breakpoint('nav-expand') {
     font-size: 16px;
     font-weight: 400;
     padding: 0 8px;
     max-height: 72px;
     color: #fff;
+    white-space: nowrap;
+  }
+  @include collapse(nav) {
+    font-size: 20px;
+    font-weight: 500;
+    padding: 0;
+    max-height: 9999em;
+    color: #151515;
+    white-space: normal;
   }
 
   // added to avoid jumpiness when focus/hover styles are active
@@ -304,9 +374,12 @@
   &:hover {
     @include focus-styles(#000, 1px);
 
-    @include breakpoint('nav-break') {
+    @include breakpoint('nav-expand') {
       box-shadow: inset 0 4px 0 0 #e00;
       @include focus-styles(#fff, 0px);
+    }
+    @include collapse(nav) {
+      box-shadow: none;
     }
   }
 
@@ -316,17 +389,22 @@
 
   &[aria-haspopup=true] {
     position: relative;
-    @include breakpoint('nav-break') {
-      box-shadow: none;
-    }
+    // @todo I don't think this block is necessary? If it is it needs to be reversed in the collapse block
+    // @include breakpoint('nav-expand') {
+    //   box-shadow: none;
+    // }
+    // @include collapse(nav) {}
 
     &:focus,
     &:hover {
       @include focus-styles(#000, 1px);
 
-      @include breakpoint('nav-break') {
+      @include breakpoint('nav-expand') {
         box-shadow: inset 0 4px 0 0 #e00;
         @include focus-styles(#fff, 0px);
+      }
+      @include collapse(nav) {
+        box-shadow: none;
       }
     }
 
@@ -343,10 +421,10 @@
       transform: rotate(45deg);
       transform-origin: right top;
       transition: transform 0.25s;
-      @include breakpoint('nav-break') {
-        position: absolute;
+      @include breakpoint('nav-expand') {
         top: 100%;
         left: 50%;
+        right: auto;
         width: 0;
         height: 0;
         border: 4px solid transparent;
@@ -354,13 +432,29 @@
         transform: translate(-4px, -12px);
         transition: border-color 0.25s;
       }
+      @include collapse(nav) {
+        top: 50%;
+        right: 24px;
+        left: auto;
+        width: 11px;
+        height: 11px;
+        border: 0;
+        border-top: 4px solid #151515;
+        border-right: 4px solid #151515;
+        transform: rotate(45deg);
+        transform-origin: right top;
+        transition: transform 0.25s;
+      }
     }
     
     &:focus,
     &:hover {
       &:before {
-        @include breakpoint('nav-break') {
+        @include breakpoint('nav-expand') {
           border-top-color: #B8BBBE;
+        }
+        @include collapse(nav) {
+          border-top-color: #151515;
         }
       }
     }
@@ -375,17 +469,23 @@
   }
 
   .pfe-navigation__menu-item--open > & {
-    @include breakpoint('nav-break') {
+    @include breakpoint('nav-expand') {
       color: #151515;
       background: #fff;
       box-shadow: inset 0 4px 0 0 #e00;
     }
+    @include collapse(nav) {
+      box-shadow: none;
+    }
 
     &[class]:before { // [class] adds specificity to beat out hover/focus selector
       transform: rotate(135deg);
-      @include breakpoint('nav-break') {
+      @include breakpoint('nav-expand') {
         border-top-color: #151515;
         transform: translate(-4px, -12px);
+      }
+      @include collapse(nav) {
+        transform: rotate(135deg);
       }
     }
   }
@@ -396,13 +496,13 @@
 .pfe-navigation__dropdown {
   // @todo animation and polish
   display: none;
+  width: 100%;
   font-size: 16px;
 
-  @include breakpoint('nav-break') {
+  @include breakpoint('nav-expand') {
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%;
     padding: 32px 64px;
     // Fits as many columns as it can given the constraints
     // @todo evaluate layout needs and if this is a sane default
@@ -416,14 +516,21 @@
     grid-template-columns: repeat(4, 1fr); // changed to this to fix issues on 1200px brkpt, seems to look better and fit better
     grid-gap: 2em;
     background: #fff;
-    // temp style
-    border-bottom: 0px;
+  }
+
+  @include collapse(nav) {
+    position: static;
+    padding: 0;
+    background: transparent;
   }
 
   .pfe-navigation__menu-item--open > & {
     display: block;
-    @include breakpoint('nav-break') {
+    @include breakpoint('nav-expand') {
       display: grid;
+    }
+    @include collapse(nav){
+      display: block;
     }
   }
 
@@ -480,28 +587,29 @@
 }
 
 .pfe-navigation__dropdown--single-column {
-  // @todo animation and polish
-  display: none;
-
-  @include breakpoint('nav-break') {
-    position: absolute;
-    top: 100%;
+  @include breakpoint('nav-expand') {
     left: auto;
     width: auto;
     max-width: 100%;
     min-width: 32px;
     padding: 16px;
-    //@todo: determine if this is the right grid settings for the single col dropdown
-    grid-template-columns: 1fr;
-    grid-gap: 0;
     background: #fff;
-    box-shadow: var(--pfe-theme--box-shadow--sm, 0 0.0625rem 0.125rem 0 rgba(19, 19, 19, 0.2));
+    box-shadow: 
+      var(
+        --pfe-theme--box-shadow--sm,
+        0 0.0625rem 0.125rem 0 rgba(19, 19, 19, 0.2)
+      );
+  }
+  @include collapse(nav) {
+    position: static;
+    padding: 0;
+    background: transparent;
   }
 
   .pfe-navigation__menu-item--open > & {
     display: block;
-    @include breakpoint('nav-break') {
-      display: grid;
+    @include collapse(nav) {
+      display: block;
     }
   }
 
@@ -525,14 +633,19 @@
   // @todo: figure out what mobile and desktop margin/padding should be from design and redhat.com ex
   margin: 16px;
   padding: 26px 8px 16px 8px;
+  border-top: 1px solid #d3d3d3;
 
-  @include breakpoint('nav-break') {
+  @include breakpoint('nav-expand') {
     // grid-auto-flow: column;
     flex-direction: row;
     align-items: center;
     
     margin: calc(var(--pfe-theme--container-padding,16px) * 2) 0 calc(var(--pfe-theme--container-padding,16px) * 1.5);
     padding: calc(var(--pfe-theme--container-padding,16px) * 2.5) 0 0; 
+  }
+  @include collapse(nav) {
+    margin: 16px;
+    padding: 26px 8px 16px 8px;
   }
 
   // fix display block issue for pfe-cta links
@@ -546,8 +659,11 @@
 // --------------------------------------------------------
 .pfe-navigation__search-toggle {
   display: none;
-  @include breakpoint(md) {
+  @include breakpoint('secondary-links-expand') {
     display: flex;
+  }
+  @include collapse('secondary-links') {
+    display: none;
   }
 
   :host([pfe-navigation-state='search--open']) & {
@@ -563,14 +679,14 @@
 }
 
 .pfe-navigation__search {
+  width: 100%;
   margin-bottom: 24px;
   color: #151515;
-  @include breakpoint(md) {
+  @include breakpoint('secondary-links-expand') {
     position: absolute;
     top: 100%;
     left: 0;
     display: none;
-    width: 100%;
     margin-bottom: 0;
     padding: 16px;
     background: #fff;
@@ -579,14 +695,25 @@
   :host([pfe-navigation-state='search--open']) & {
     display: block;
   }
+
+  @include collapse('secondary-links') {
+    position: static;
+    display: block;
+    margin-bottom: 24px;
+    padding: 0;
+    background: transparent;
+  }
 }
 
 // Custom Links
 // --------------------------------------------------------
 .pfe-navigation__custom-links {
-  @include breakpoint('secondary-links-break') {
+  @include breakpoint('secondary-links-expand') {
     display: flex;
     align-items: stretch;
+  }
+  @include collapse('secondary-links') {
+    display: block;
   }
 
   &,
@@ -600,7 +727,7 @@
       @include focus-styles(#fff, 0px);
     }
 
-    @include breakpoint('secondary-links-break') {
+    @include breakpoint('secondary-links-expand') {
       color: red;
       // focus styles
       &:focus,
@@ -608,12 +735,9 @@
         @include focus-styles(#fff, 0px);
       }
     }
-  }
-}
-
-.pfe-navigation__custom-links-wrapper {
-  @include breakpoint('secondary-links-break') {
-    height: $menu-height;
+    @include collapse('secondary-links') {
+      color: #151515;
+    }
   }
 }
 
@@ -635,27 +759,33 @@
 
 .pfe-navigation__all-red-hat-wrapper__inner {
   display: none;
+  width: 100%;
 
-  @include breakpoint(md) {
+  @include breakpoint('secondary-links-expand') {
     position: absolute;
     top: 100%;
     left: 0;
-    display: none;
-    width: 100%;
-    margin-bottom: 0;
     padding: 16px;
     color: #151515;
     background: #fff;
   }
+  @include collapse('secondary-links') {
+    position: static;
+    padding: 0;
+    color: #fff;
+    background: transparent;
+  }
 
   :host([pfe-navigation-state='all-red-hat--open']) & {
-    @include breakpoint(md) {
+    @include breakpoint('secondary-links-expand') {
       display: block;
     }
   }
 }
 
-.pfe-navigation__log-in-link {}
+.pfe-navigation__log-in-link {
+  // Stuff should go in here...
+}
 
 //-- Custom styles applied by attributes
 // @each $option in () {

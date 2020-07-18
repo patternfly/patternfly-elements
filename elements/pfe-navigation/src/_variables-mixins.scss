@@ -14,19 +14,33 @@ $breakpoints: (
   2xl: 1368px,
   // The below should match an above breakpoint value
   // Where the icons on the right appear
-  'secondary-links-break': 768px,
-  // Default value for when the nav expands to desktop
-  'nav-break': 1200px, 
+  'secondary-links-expand': 768px,
+  // Default value for when the nav expands to desktop mode
+  'nav-expand': 1200px,
 );
 
 /// Breakpoint helper specific to pfe-navigation
 /// @param {string} $breakpoint Name of a breakpoint
-/// @see
+/// @see $breakpoints
 @mixin breakpoint($breakpoint) {
   @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
     @content;
   }
-  // @todo add support for JS nav-break
+}
+
+/// JS triggered 'breakpoints' if there isn't room for a section a class is added to collapse it
+/// @param {string} $section Can be 'nav' or 'secondary-links'
+@mixin collapse($section) {
+  @if $section == 'nav' {
+    :host(.pfe-navigation--collapse-main-menu) & {
+      @content;
+    }
+  }
+  @else if $section == 'secondary-links' {
+    :host(.pfe-navigation--collapse-secondary-links) & {
+      @content;
+    }
+  }
 }
 
 /// Focus indicator styles specific to pfe-navigation
@@ -53,8 +67,7 @@ $breakpoints: (
   appearance: none;
   cursor: pointer;
   transition: box-shadow 0.25s;
-
-  @include breakpoint('secondary-links-break') {
+  @include breakpoint('secondary-links-expand') {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -75,7 +88,7 @@ $breakpoints: (
   &:hover {
     @include focus-styles(#fff, 0px);
 
-    @include breakpoint('secondary-links-break') {
+    @include breakpoint('secondary-links-expand') {
       box-shadow: inset 0 4px 0 0 #e00;
     }
   }
@@ -95,7 +108,7 @@ $breakpoints: (
     height: 18px;
     margin: 0 16px 0 0;
     background: rgba(126, 126, 126, 0.3);
-    @include breakpoint('secondary-links-break') {
+    @include breakpoint('secondary-links-expand') {
       margin: 0 0 4px;
     }
   }

@@ -379,7 +379,7 @@
     grid-gap: 2em;
     background: #fff;
     // temp style
-    border-bottom: 2px solid black;
+    border-bottom: 0px;
   }
 
   .pfe-navigation__menu-item--open > & {
@@ -389,6 +389,7 @@
     }
   }
 
+  // @todo: adjust heading spacing styles to still look good when there is no link in heading
   h1,
   h2,
   h3,
@@ -398,7 +399,73 @@
     margin: 0;
     padding: 0;
     font-size: 16px;
+    color: var(--pfe-theme--color--ui-complement,#464646);
   }
+
+  h1 a,
+  h2 a,
+  h3 a,
+  h4 a,
+  h5 a,
+  h6 a {
+    color: var(--pfe-theme--color--ui-complement,#464646);
+  }
+
+  li a {
+    color: var(--pfe-broadcasted--link,#06c);
+    &:hover {
+      color: var(--pfe-broadcasted--link--hover,#036);
+      text-decoration: underline;
+    }
+  }
+}
+
+.pfe-navigation__dropdown--single-column {
+  // @todo animation and polish
+  display: none;
+
+  @include breakpoint('nav-break') {
+    position: absolute;
+    top: 100%;
+    left: auto;
+    width: auto;
+    max-width: 100%;
+    min-width: 32px;
+    padding: 16px;
+    //@todo: determine if this is the right grid settings for the single col dropdown
+    grid-template-columns: 1fr;
+    grid-gap: 0;
+    background: #fff;
+    box-shadow: var(--pfe-theme--box-shadow--sm, 0 0.0625rem 0.125rem 0 rgba(19, 19, 19, 0.2));
+  }
+
+  .pfe-navigation__menu-item--open > & {
+    display: block;
+    @include breakpoint('nav-break') {
+      display: grid;
+    }
+  }
+
+}
+
+.pfe-navigation__footer {
+  grid-column: 1 / -1; // col spans to the end of col grid line always
+
+  display: grid;
+  grid-gap: 32px;
+  grid-auto-flow: column;
+
+  border-top: 1px solid #d3d3d3;
+
+  // @todo: figure out what mobile and desktop margin/padding should be from design and redhat.com ex
+  margin: 16px;
+  padding: 26px 8px 16px 8px;
+
+  @include breakpoint('nav-break') {
+    margin: calc(var(--pfe-theme--container-padding,16px) * 2) 0 calc(var(--pfe-theme--container-padding,16px) * 1.5);
+    padding: calc(var(--pfe-theme--container-padding,16px) * 2.5) 0 0; 
+  }
+
 }
 
 // Search

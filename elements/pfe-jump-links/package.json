@@ -43,7 +43,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-accordion": "1.0.0-prerelease.49",
+    "@patternfly/pfe-accordion": "1.0.0-prerelease.52",
     "@patternfly/pfe-sass": "1.0.0-prerelease.52",
     "@patternfly/pfelement": "1.0.0-prerelease.51",
     "gh-pages": "^2.2.0"

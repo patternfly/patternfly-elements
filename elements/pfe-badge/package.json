@@ -47,8 +47,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "1.0.0-prerelease.52",
-    "@patternfly/pfelement": "1.0.0-prerelease.51"
+    "@patternfly/pfe-sass": "1.0.0-prerelease.28",
+    "@patternfly/pfelement": "1.0.0-prerelease.28"
   },
   "generator-pfelement-version": "1.3.0"
 }

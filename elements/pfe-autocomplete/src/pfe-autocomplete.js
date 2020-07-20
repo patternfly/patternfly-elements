@@ -398,6 +398,8 @@ class PfeAutocomplete extends PFElement {
         this.emitEvent(PfeAutocomplete.events.select, {
           detail: { optionValue: this._activeOption(activeIndex) }
         });
+
+        return;
       }
 
       let selectedValue = this._input.value;

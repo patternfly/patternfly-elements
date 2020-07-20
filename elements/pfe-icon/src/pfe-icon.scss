@@ -31,7 +31,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host {
-  --theme: #{pfe-local(theme)};
+  --theme: #{pfe-local(theme)};  
 
   position: relative;
   display:  inline-block;

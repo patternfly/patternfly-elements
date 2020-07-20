@@ -11,7 +11,7 @@
     },
     "assets": []
   },
-  "version": "1.0.0-prerelease.50",
+  "version": "1.0.0-prerelease.52",
   "keywords": [
     "web-components",
     "html"
@@ -43,6 +43,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@patternfly/pfe-accordion": "1.0.0-prerelease.49",
     "@patternfly/pfe-sass": "1.0.0-prerelease.40",
     "@patternfly/pfelement": "1.0.0-prerelease.39",
     "gh-pages": "^2.2.0"

@@ -8,7 +8,7 @@
       "pfelement.*css.map"
     ]
   },
-  "version": "1.0.0-prerelease.50",
+  "version": "1.0.0-prerelease.51",
   "publishConfig": {
     "access": "public"
   },

@@ -2,12 +2,12 @@
 
 $LOCAL: tabs;
 
-$variables: (
+$LOCAL-VARIABLES: (
   BackgroundColor: transparent,
-  Color:           pfe-color(ui-disabled--text),
-  link:            pfe-color(link),
-  focus:           pfe-color(link--focus),
-  highlight:       pfe-color(ui-accent),
+  Color:           pfe-var(ui-disabled--text),
+  link:            pfe-var(link),
+  focus:           pfe-var(link--focus),
+  highlight:       pfe-var(ui-accent),
   tab: (
     FontSize:       pfe-var(font-size),
     PaddingTop:     calc(#{pfe-var(container-padding)} * .666),
@@ -22,27 +22,26 @@ $variables: (
 /// ===========================================================================
 
 :host {
-  @include pfe-print-variables($variables);
 
   position: relative;
   display: block;
   margin: #{pfe-local($cssvar: Margin, $region: tab, $fallback: 0 0 -1px)};
 
   // Padding
-  padding: #{pfe-local($cssvar: PaddingTop, $region: tab)} #{pfe-local($cssvar: PaddingRight, $region: tab)} #{pfe-local($cssvar: PaddingBottom, $region: tab)} #{pfe-local($cssvar: PaddingLeft, $region: tab)};
+  padding: #{pfe-local(PaddingTop, $region: tab)} #{pfe-local(PaddingRight, $region: tab)} #{pfe-local(PaddingBottom, $region: tab)} #{pfe-local(PaddingLeft, $region: tab)};
 
   // Border
-  border-top:     #{pfe-local($cssvar: BorderTop, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local($cssvar: BorderColor, $region: tab, $fallback: transparent)} )};
-  border-right:   #{pfe-local($cssvar: BorderRight, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local($cssvar: BorderColor, $region: tab, $fallback: transparent)} )};
-  border-bottom:  #{pfe-local($cssvar: BorderBottom, $region: tab, $fallback: 0)};
-  border-left:    #{pfe-local($cssvar: BorderLeft, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local($cssvar: BorderColor, $region: tab, $fallback: transparent)} )};
+  border-top:     #{pfe-local($cssvar: BorderTop, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, transparent, $region: tab)} )};
+  border-right:   #{pfe-local($cssvar: BorderRight, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, transparent, $region: tab)} )};
+  border-bottom:  #{pfe-local(BorderBottom, 0, $region: tab)};
+  border-left:    #{pfe-local($cssvar: BorderLeft, $region: tab, $fallback: #{pfe-local($cssvar: BorderWidth, $region: tab, $fallback: #{pfe-var(ui--border-width)})} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, transparent, $region: tab)} )};
 
   // Inner style
   background-color: #{pfe-local(BackgroundColor)};
   color: #{pfe-local(Color)};
 
   cursor: pointer;
-  text-align: #{pfe-local($cssvar: TextAlign, $region: tab, $fallback: center)};
+  text-align: #{pfe-local(TextAlign, center, $region: tab)};
   
   // Exposing this for customization
   text-transform: #{pfe-local($cssvar: TextTransform, $region: tab, $fallback: none)};
@@ -50,36 +49,35 @@ $variables: (
   font-weight:  #{pfe-var(font-weight--normal)};
   font-size:    #{pfe-local(FontSize, $region: tab)};
     
-  @for $i from 1 through 6 {
-    .pfe-tab > * {
-      font-size: inherit;
-      font-weight: inherit;
-      margin: 0;
-    }
+  .pfe-tab > * {
+    color: inherit !important;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
   }
 
   @at-root #{&}(:hover) {
-    --pfe-tabs--Color: #{pfe-color(text)};
+    --pfe-tabs--Color: #{pfe-var(text)};
     @include browser-query(ie11) {
-      color: #{pfe-color(text)};
+      color: #{pfe-var(text)};
     }
   }
 
   // Active tab styles
   // TODO: ShadyCSS falls flat on this pseudo element in IE11 `:host(:focus-visible)`, add back when we drop ShadyCSS
   @at-root #{&}(:focus) {
-    --pfe-tabs--Color: #{pfe-color(text)};
+    --pfe-tabs--Color: #{pfe-var(text)};
     outline: #{pfe-var(ui--focus-outline-width)} outset #{pfe-local(focus)};
   }
 
   @at-root #{&}([on="dark"]) {
-    --pfe-tabs--focus: #{pfe-color(link--focus--on-dark)};
+    --pfe-tabs--focus: #{pfe-var(link--focus--on-dark)};
   }
 
   @at-root #{&}([on="saturated"]) {
     --pfe-tabs--Color: #{darken($pfe-color--white, 20%)};
-    --pfe-tabs--focus: #{pfe-color(link--focus--on-saturated)};
-    --pfe-tabs--highlight: #{pfe-color(text--on-saturated)};
+    --pfe-tabs--focus: #{pfe-var(link--focus--on-saturated)};
+    --pfe-tabs--highlight: #{pfe-var(text--on-saturated)};
   }
 
   @at-root #{&}([aria-selected="true"]) {
@@ -88,7 +86,7 @@ $variables: (
     --pfe-tabs__tab--BorderBottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
     @include browser-query(ie11) {
       color: #{$pfe-color--black};
-      border-bottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(ui-accent)};
+      border-bottom: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-var(ui-accent)};
     }
   }
 }
@@ -123,15 +121,15 @@ $variables: (
     @include browser-query(ie11) {
       // color: #{$pfe-color--black};
       border-top-color: transparent;
-      border-right: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-color(ui-accent)};
+      border-right: #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-var(ui-accent)};
     }
   }
 }
 
 :host([pfe-variant="earth"]) {
   @include browser-query(ie11) {
-    background-color: #{pfe-color(surface--lighter)};
-    color: #{pfe-color(text)};
+    background-color: #{pfe-var(surface--lighter)};
+    color: #{pfe-var(text)};
   }
 }
 
@@ -145,10 +143,10 @@ $variables: (
   :host([pfe-variant="wind"][aria-selected="true"][on="#{$theme}"]),
   :host([pfe-variant="wind"][on="#{$theme}"]:hover) {
     @if $theme != "light" {
-      --pfe-tabs--Color: #{pfe-color(text--on-#{$theme})};
+      --pfe-tabs--Color: #{pfe-var(text--on-#{$theme})};
     }
     @else {
-      --pfe-tabs--Color: #{pfe-color(text)};
+      --pfe-tabs--Color: #{pfe-var(text)};
     }
   }
 }
@@ -158,42 +156,46 @@ $variables: (
 /// ===========================================================================
 
 :host([pfe-variant="earth"][aria-selected="false"]) {
-  --pfe-tabs--BackgroundColor: #{pfe-color(surface--lighter)};
+  --pfe-tabs--BackgroundColor: #{pfe-var(surface--lighter)};
 
-  --pfe-tabs__tab--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-  --pfe-tabs__tab--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-  --pfe-tabs__tab--BorderTop:    #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
+  --pfe-tabs__tab--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
+  --pfe-tabs__tab--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
+  --pfe-tabs__tab--BorderTop:    #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-var(surface--lighter)};
 
   @include browser-query(ie11) {
-    border-top: 3px solid #{pfe-color(surface--lighter)};
-    border-bottom: 1px solid #{pfe-color(surface--border)};
-    border-left: 1px solid #{pfe-color(surface--border)};
+    border-top: 3px solid #{pfe-var(surface--lighter)};
+    border-bottom: 1px solid #{pfe-var(surface--border)};
+    border-left: 1px solid #{pfe-var(surface--border)};
   }
 }
 
+:host([pfe-variant="earth"][aria-selected="false"]:hover) {
+  --pfe-tabs--Color: #{pfe-var(text)};
+}
+
 :host([pfe-variant="earth"][aria-selected="true"]) {
-  --pfe-tabs--BackgroundColor: #{pfe-color(surface--lightest)};
-  --pfe-tabs--Color: #{pfe-color(text)};
+  --pfe-tabs--BackgroundColor: #{pfe-var(surface--lightest)};
+  --pfe-tabs--Color: #{pfe-var(text)};
 
   --pfe-tabs__tab--BorderTop:    #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
   --pfe-tabs__tab--BorderBottom: 0;
-  --pfe-tabs__tab--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  --pfe-tabs__tab--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 
   @include browser-query(ie11) {
-    background-color: #{pfe-color(surface--lightest)};
-    color: #{pfe-color(text)};
+    background-color: #{pfe-var(surface--lightest)};
+    color: #{pfe-var(text)};
 
     border-top: 3px solid #{pfe-local(highlight)};
     border-bottom: 0;
-    border-left: 1px solid #{pfe-color(surface--border)};
+    border-left: 1px solid #{pfe-var(surface--border)};
   }
 }
 
 :host([pfe-variant="earth"][aria-selected="true"]:last-of-type) {
-  --pfe-tabs__tab--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  --pfe-tabs__tab--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 
   @include browser-query(ie11) {
-    border-right: 1px solid #{pfe-color(surface--border)};
+    border-right: 1px solid #{pfe-var(surface--border)};
   }
 }
 
@@ -203,10 +205,10 @@ $variables: (
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([vertical][pfe-variant="earth"]) {
-    --pfe-tabs__tab--BorderTop: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    --pfe-tabs__tab--BorderTop: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 
     @include browser-query(ie11) {
-      border-top: 1px solid #{pfe-color(surface--border)};
+      border-top: 1px solid #{pfe-var(surface--border)};
     }
   }
 
@@ -219,34 +221,34 @@ $variables: (
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="true"]) {
-    --pfe-tabs__tab--BorderTop:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    --pfe-tabs__tab--BorderTop:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
     --pfe-tabs__tab--BorderRight: 0;
     --pfe-tabs__tab--BorderLeft:  #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
 
     @include browser-query(ie11) {
-      border-top: 1px solid #{pfe-color(surface--border)};
+      border-top: 1px solid #{pfe-var(surface--border)};
       border-right: 0;
       border-left: 3px solid #{pfe-local(highlight)};
     }
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="false"]) {
-    --pfe-tabs__tab--BorderRight:  #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    --pfe-tabs__tab--BorderRight:  #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
     --pfe-tabs__tab--BorderBottom: 0;
-    --pfe-tabs__tab--BorderLeft:   #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-color(surface--lighter)};
+    --pfe-tabs__tab--BorderLeft:   #{pfe-var(surface--border-width--heavy)} #{pfe-var(ui--border-style)} #{pfe-var(surface--lighter)};
 
     @include browser-query(ie11) {
-      border-right: 1px solid #{pfe-color(surface--border)};
+      border-right: 1px solid #{pfe-var(surface--border)};
       border-bottom: 0;
-      border-left: 3px solid #{pfe-color(surface--lighter)};
+      border-left: 3px solid #{pfe-var(surface--lighter)};
     }
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="true"]:last-of-type) {
-    --pfe-tabs__tab--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    --pfe-tabs__tab--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 
     @include browser-query(ie11) {
-      border-bottom: 1px solid #{pfe-color(surface--border)};
+      border-bottom: 1px solid #{pfe-var(surface--border)};
     }
   }
 }

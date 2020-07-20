@@ -1,7 +1,8 @@
 ## Prerelease 53 ( TBD )
 
 - []() fix: pfe-autocomplete prevent search-event from firing twice on option select
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Move pfe-sass to a dev dependency
+- [f20b509](https://github.com/patternfly/patternfly-elements/commit/f20b5094b6eb02ed473b0e3dab2ea5280e56bda7) fix: pfe-autocomplete add composed flag to option-selected event (#988)
+- [0ffd92a](https://github.com/patternfly/patternfly-elements/commit/0ffd92a621d1082b118b84a07063bd39b9c8a904) fix: Move pfe-sass to a dev dependency (#983)
 
 ## Prerelease 52 ( 2020-07-17 )
 

@@ -63,20 +63,12 @@
             @if not index($BROADCAST-VARS, $type) {
                 @warn "--#{$repo}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
             }
-            @else if not map-has-key($pfe-broadcasted, #{$item}#{$context}) {
+            @else if not pfe-broadcasted(#{$item}#{$context}) {
                 @warn "#{$item}#{$context} value does not currently exist.";
             }
             @else {
                 @if index($THEMES, $theme) != null {
-                    @if map-get($pfe-colors, $item) != null {
-                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--color--#{$item}#{$context}, #{map-get($pfe-broadcasted, #{$item}#{$context})});
-                    }
-                    @else if map-get($pfe-vars, $item) {
-                        --#{$repo}-broadcasted--#{$item}: var(--#{$repo}-theme--#{$item}#{$context}, #{map-get($pfe-broadcasted, #{$item}#{$context})});
-                    }
-                    @else {
-                        --#{$repo}-broadcasted--#{$item}: #{map-get($pfe-broadcasted, #{$item}#{$context})};
-                    }
+                    --#{$repo}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$context})};
                 }
                 @else {
                     @error "The #{$theme} context does not appear to be part of a supported theme.";
@@ -104,8 +96,8 @@
 ///     }
 ///     ```
 /// ===========================================================================
-@mixin pfe-set-local($variables) {
-    @each $property, $value in $variables {
+@mixin pfe-print-local($map: $LOCAL-VARIABLES) {
+    @each $property, $value in $map {
         $name: "--#{$property}";
         $styles: $value;
 
@@ -126,17 +118,10 @@
 }
 
 /// ===========================================================================
-/// @alias pfe-set-local
-/// ===========================================================================
-@mixin pfe-print-variables($variables) {
-    @include pfe-set-local($variables);
-}
-
-/// ===========================================================================
 /// Surface properties  
 /// This mixin creates an attribute for all the surface colors, then prints the local background color variable for the component, with the correct theme colors. 
 /// @param {List | String} $surfaces [$SURFACES] - defaults to the global $SURFACES list of all supported colors
-/// @param {String} $attr-name [pfe-color] - defaults to pfe-color, optionally pass in a custom name for the data attribute
+/// @param {String} $attr-name [pfe-var] - defaults to pfe-var, optionally pass in a custom name for the data attribute
 ///
 /// @example 
 /// ```
@@ -186,14 +171,11 @@
     @each $color in $surfaces {
         $theme: #{pfe-get-theme(surface--#{$color}--theme)};
         :host([#{$attr-name}="#{$color}"]) {
-            @include pfe-set-local(
-                ( BackgroundColor: #{pfe-color(surface--#{$color})} )
-            );
-            --theme: #{pfe-color( surface--#{$color}--theme, #{$theme} );
-            @include browser-query(ie11) {
-                background-color: #{map-get($pfe-colors, surface--lightest)} !important;
-                color: #{pfe-color(text)} !important;
-            }
+            @include pfe-print-local((
+                BackgroundColor: pfe-var(surface--#{$color}),
+                theme: pfe-var(surface--#{$color}--theme, #{$theme})
+            ));
+            @extend %fallback-surface;
         }
     }
 }
@@ -239,12 +221,10 @@
         :host([on="#{$theme}"]) {
             @include pfe-set-broadcast-theme($theme);
         }
-        @if $ie-fallback {
-            @include browser-query(ie11) {
-                :host {
-                    color: #{pfe-color(text)} !important;
-                }
-            }
+    }
+    @if $ie-fallback {
+        :host {
+            @extend %fallback-text;
         }
     }
 }

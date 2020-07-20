@@ -10,13 +10,13 @@
   <body>
 
     <pfe-icon-panel id="panel1" icon="pfe-icon-server">
-      <h3 slot="header">This is pfe-icon-panel</h3>
+      <h3 slot="pfe-icon-panel--header">This is pfe-icon-panel</h3>
       Lorem ipsum dolor sit amet.
-      <pfe-cta slot="footer"><a href="#">Learn more</a></pfe-cta>
+      <pfe-cta slot="pfe-icon-panel--footer"><a href="#">Learn more</a></pfe-cta>
     </pfe-icon-panel>
 
     <pfe-icon-panel id="panel2" icon="pfe-icon-server-deploy">
-      <h3 slot="header">This is pfe-icon-panel</h3>
+      <h3 slot="pfe-icon-panel--header">This is pfe-icon-panel</h3>
       Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </pfe-icon-panel>
 
@@ -44,12 +44,12 @@
         test("header, body, and footer are placed into correct slot", () => {
           // header wound up in the header slot
           assert.equal(
-            panel1.querySelector("[slot=header]").assignedSlot,
-            panel1.shadowRoot.querySelector(".content .header")
+            panel1.querySelector("[slot=pfe-icon-panel--header]").assignedSlot,
+            panel1.shadowRoot.querySelector(".pfe-icon-panel__content .pfe-icon-panel__header")
           );
 
           const bodyText = panel1.shadowRoot
-            .querySelector(".content .body")
+            .querySelector(".pfe-icon-panel__content .pfe-icon-panel__body")
             .assignedNodes()
             .map(n => n.textContent)
             .join("")
@@ -58,8 +58,8 @@
 
           // footer wound up in the footer slot
           assert.equal(
-            panel1.querySelector("[slot=footer]").assignedSlot,
-            panel1.shadowRoot.querySelector(".content .footer")
+            panel1.querySelector("[slot=pfe-icon-panel--footer]").assignedSlot,
+            panel1.shadowRoot.querySelector(".pfe-icon-panel__content .pfe-icon-panel__footer")
           );
         });
       });

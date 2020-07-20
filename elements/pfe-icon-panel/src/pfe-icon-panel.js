@@ -14,15 +14,19 @@ class PfeIconPanel extends PFElement {
     return "pfe-icon-panel.html";
   }
 
+  get schemaUrl() {
+    return "pfe-icon-panel.json";
+  }
+
   static get observedAttributes() {
-    return ["icon", "circled", "color"];
+    return ["icon", "pfe-circled", "pfe-color", "pfe-stacked", "pfe-centered"];
   }
 
   static get cascadingAttributes() {
     return {
       icon: "pfe-icon",
-      circled: "pfe-icon",
-      color: "pfe-icon"
+      "pfe-circled": "pfe-icon",
+      "pfe-color": "pfe-icon"
     };
   }
 
@@ -32,3 +36,5 @@ class PfeIconPanel extends PFElement {
 }
 
 PFElement.create(PfeIconPanel);
+
+export default PfeIconPanel;

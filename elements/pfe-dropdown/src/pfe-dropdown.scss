@@ -1,0 +1,149 @@
+@import "../../pfe-sass/pfe-sass";
+@import "_shared-assets";
+
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+  MinWidth: calc(#{pfe-var(container-spacer)} * 2),
+  MaxWidth: 100%,
+  FontSize: pfe-var(font-size),
+  FontWeight: 400,
+  LineHeight: pfe-var(line-height),
+  Color: pfe-broadcasted(text),
+  BackgroundColor: transparent,
+  Border: none,
+  before: (
+    BorderWidth: pfe-var(ui--border-width),
+    BorderWidth--hover: calc(#{pfe-var(ui--border-width)} * 2),
+    BorderStyle: pfe-var(ui--border-style),
+    BorderTopColor: pfe-var(surface--lighter),
+    BorderRightColor: pfe-var(surface--lighter),
+    BorderBottomColor: pfe-var(surface--border--darker),
+    BorderBottomColor--hover: pfe-var(ui-base),
+    BorderLeftColor: pfe-var(surface--lighter)
+  ),
+  menu: (
+    spacing--horizontal: 0,
+    Margin: 0,
+    BackgroundColor: pfe-var(surface--lightest),
+    BorderWidth: pfe-var(ui--border-width),
+    BorderStyle: pfe-var(ui--border-style),
+    BorderColor: transparent,
+    BoxShadow: pfe-var(box-shadow--sm),
+    MinWidth: 100%
+  )
+));
+
+// TODO: This will be removed at 1.0 in favor of size
+$backwards-compatibility: (
+  before: (
+    BorderWidth: pfe-local(BorderWidth--before, $fallback: pfe-var(ui--border-width)),
+    BorderWidth--hover: pfe-local(BorderWidth--before--hover, $fallback: calc(#{pfe-var(ui--border-width)} * 2)),
+    BorderStyle: pfe-local(BorderStyle--before, $fallback: pfe-var(ui--border-style)),
+    BorderTopColor: pfe-local(BorderTopColor--before, $fallback: pfe-var(surface--lighter)),
+    BorderRightColor: pfe-local(BorderRightColor--before, $fallback: pfe-var(surface--lighter)),
+    BorderBottomColor: pfe-local(BorderBottomColor--before, $fallback: pfe-var(surface--border--darker)),
+    BorderBottomColor--hover: pfe-local(BorderBottomColor--before--hover, $fallback: pfe-var(ui-base)),
+    BorderLeftColor: pfe-local(BorderLeftColor--before, $fallback: pfe-var(surface--lighter))
+  ),
+  menu: (
+    spacing--horizontal: pfe-local(SpacingHorizontal, $fallback: 0),
+    Background: pfe-local(BackgroundColor, $fallback: pfe-var(surface--lightest)),
+  )
+);
+
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
+
+:host {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+:host(:hover:not([is_disabled])) {
+  --pfe-#{$LOCAL}__before--BorderBottomColor: #{pfe-local(BorderBottomColor--hover, $region: before)};
+}
+
+:host(:active:not([is_disabled])),
+:host(:focus:not([is_disabled])) {
+  --pfe-#{$LOCAL}__before--BorderBottomColor: #{pfe-local(BorderBottomColor--hover, $region: before)};
+  --pfe-#{$LOCAL}__before--BorderWidth: #{pfe-local(BorderWidth--hover, $region: before)};
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:host([is_disabled]) {
+  --pfe-#{$LOCAL}--BackgroundColor: #{pfe-var(surface--lighter)};
+  --pfe-#{$LOCAL}--BorderWidth: 0;
+  .pfe-dropdown__container {
+    pointer-events: none;
+  }
+}
+
+.pfe-dropdown {
+  &__toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: pfe-local(MinWidth);
+    max-width: pfe-local(MaxWidth);
+    padding: pfe-local(spacing--vertical) pfe-local(spacing--horizontal);
+    font-size: pfe-local(FontSize);
+    font-family: pfe-var(font-family, $fallback: inherit);
+    font-weight: pfe-local(FontWeight);
+    line-height: pfe-var(line-height);
+    color: pfe-local(Color);
+    background-color: pfe-local(BackgroundColor);
+    border: pfe-local(Border);
+    cursor: pointer;
+    &::before {      
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      content: "";
+      border-width: pfe-local(BorderWidth, $region: before);
+      border-style: pfe-local(BorderStyle, $region: before);
+      border-top-color: pfe-local(BorderTopColor, $region: before);
+      border-right-color: pfe-local(BorderRightColor, $region: before);
+      border-bottom-color: pfe-local(BorderBottomColor, $region: before);
+      border-left-color: pfe-local(BorderLeftColor, $region: before);
+    }
+    &-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    &-icon {
+      vertical-align: calc(#{pfe-var(container-spacer)} * -0.125);
+      fill: currentColor;
+      height: pfe-var(icon-size);
+      width: pfe-local(Width, $region: toggle-icon);
+      margin-right: calc(#{pfe-var(container-spacer)} * 0.5);
+      margin-left: pfe-var(container-spacer);
+      line-height: pfe-var(line-height);
+    }
+  }
+  &__menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.25rem);
+    z-index: pfe-zindex(overlay);
+    padding: pfe-local(spacing--vertical, $region: menu) pfe-local(spacing--horizontal, $region: menu);
+    margin: pfe-local(Margin, $region: menu);
+    background: pfe-local(BackgroundColor, $region: menu);
+    background-clip: padding-box;
+    border-width: pfe-local(BorderWidth, $region: menu);
+    border-style: pfe-local(BorderStyle, $region: menu);
+    border-color: pfe-local(BorderColor, $region: menu);
+    box-shadow: pfe-local(BoxShadow, $region: menu);
+    list-style: none;
+    box-sizing: border-box;
+    min-width: pfe-local(MinWidth, $region: menu);
+    &.open {
+      display: block;
+    }
+  }
+}

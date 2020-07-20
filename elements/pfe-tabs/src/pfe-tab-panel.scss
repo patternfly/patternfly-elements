@@ -15,7 +15,7 @@ $LOCAL-VARIABLES: (
   }
 
   ::slotted(*) {
-    color: #{pfe-broadcasted(text)};
+    color: pfe-broadcasted(text);
   }
   [tabindex] {
     display: flex;
@@ -35,18 +35,18 @@ $LOCAL-VARIABLES: (
   .container {
     margin: 0;
     width: 100%;
-    padding: #{pfe-local($cssvar: Padding, $region: panel, $fallback: #{pfe-var(container-spacer)} 0)};
+    padding: pfe-local(Padding, $region: panel, $fallback: pfe-var(container-spacer) 0);
 
-    border-top:    #{pfe-local(BorderTop, 0, $region: panel)};
-    border-right:  #{pfe-local(BorderRight, 0, $region: panel)};
-    border-bottom: #{pfe-local(BorderBottom, 0, $region: panel)};
-    border-left:   #{pfe-local(BorderLeft, 0, $region: panel)};
+    border-top:    pfe-local(BorderTop, 0, $region: panel);
+    border-right:  pfe-local(BorderRight, 0, $region: panel);
+    border-bottom: pfe-local(BorderBottom, 0, $region: panel);
+    border-left:   pfe-local(BorderLeft, 0, $region: panel);
 
     @include pfe-clearfix;
     @include browser-query(ie11) {
       padding: 1em;
-      background-color: #{map-get($pfe-colors, surface--lightest)} !important;
-      color: #{pfe-fetch(text)} !important;
+      background-color: pfe-fetch(surface--lightest) !important;
+      color: pfe-fetch(text) !important;
     }
   }
 }
@@ -60,9 +60,9 @@ $LOCAL-VARIABLES: (
   @include browser-query(ie11) {
     .container {
       padding: 1em;
-      border-right: 1px solid #{pfe-var(surface--border)};
-      border-bottom: 1px solid #{pfe-var(surface--border)};
-      border-left: 1px solid #{pfe-var(surface--border)};
+      border-right: 1px solid pfe-fetch(surface--border);
+      border-bottom: 1px solid pfe-fetch(surface--border);
+      border-left: 1px solid pfe-fetch(surface--border);
     }
   }
 }
@@ -92,7 +92,7 @@ $LOCAL-VARIABLES: (
 
     @include browser-query(ie11) {
       .container {
-        border-top: 1px solid #{pfe-var(surface--border)};
+        border-top: 1px solid pfe-var(surface--border);
       }
     }
 	}

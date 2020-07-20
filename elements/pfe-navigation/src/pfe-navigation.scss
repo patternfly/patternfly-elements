@@ -435,7 +435,19 @@
   h4 a,
   h5 a,
   h6 a {
-    color: var(--pfe-theme--color--ui-complement,#464646);
+    color: var(--pfe-theme--color--ui-complement,#464646);    
+    
+    // avoid jumpiness caused by focus/hover styles
+    border: 1px solid transparent;
+
+    &:focus,
+    &:hover {
+      // focus styles
+      @include focus-styles(#000, 1px);
+
+      color: var(--pfe-broadcasted--link--hover,#036);
+      text-decoration: underline;
+    }
   }
 
   li a {

@@ -399,6 +399,8 @@ class PfeAutocomplete extends PFElement {
           detail: { optionValue: this._activeOption(activeIndex) },
           composed: true
         });
+
+        return;
       }
 
       let selectedValue = this._input.value;

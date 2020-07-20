@@ -1,5 +1,6 @@
 ## Prerelease 53 ( TBD )
 
+- []() fix: pfe-autocomplete add composed flag to option-selected event
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Move pfe-sass to a dev dependency
 
 ## Prerelease 52 ( 2020-07-17 )

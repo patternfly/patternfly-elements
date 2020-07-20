@@ -1,6 +1,16 @@
-## Prerelease 51 ( TBD )
+## Prerelease 53 ( TBD )
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Open a pull request from the command-line
+
+## Prerelease 52 ( 2020-07-17 )
+
+- [e5c6f4b](https://github.com/patternfly/patternfly-elements/commit/e5c6f4bc0f5ef3283c115ecbcc7c31456ea39872) fix: fire pfe-autcomplete:option-selected event on click and enter key
+- [fbbc35c](https://github.com/patternfly/patternfly-elements/commit/fbbc35c1ccb395015cc35459ae0b4643c5217ac2) feat: Add support for empty local variables
+
+## Prerelease 51 ( 2020-07-16 )
+
+- [6965df](https://github.com/patternfly/patternfly-elements/commit/6965df7214f1cda636337093e0bf22bfc658403d) fix: Support nested tabs or accordions inside pfe-content-set
+- [49c6146](https://github.com/patternfly/patternfly-elements/commit/49c6146fbaed4cf6ca8d198e107471b53fe07796) feat: Add generator label to new PRs where appropriate, add .github folder to tools
 
 ## Prerelease 50 ( 2020-06-26 )
 
@@ -17,7 +27,6 @@
     -  Update paths to built-in sets: (#723)
     -  Storybook icon listing: (#728)
     -  Icon panel storybook: (#719)
-- [732f65a](https://github.com/patternfly/patternfly-elements/commit/732f65ada3383f6d04deb6670d82eb80d525d8ff) fix: pfe-modal removing hidden attribute (#924)
 
 ## Prerelease 49 ( 2020-05-29 )
 

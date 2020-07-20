@@ -109,12 +109,12 @@
           });
         });
 
-        it('should fire pfe-search-event after click on search icon', (done) => {
+        it('should fire pfe-autocomplete:search-event after click on search icon', (done) => {
           flush(() => {
             const input = autocompleteElem._input;
             input.value = "test";
 
-            autocompleteElem.addEventListener("pfe-search-event", function(event) {
+            autocompleteElem.addEventListener("pfe-autocomplete:search-event", function(event) {
               assert.equal(event.detail.searchValue, "test");
               done();
             });
@@ -133,15 +133,49 @@
           });
         });
 
-        it('should fire pfe-search-event after user click on an option', done => {
+        it('should fire pfe-autocomplete:search-event after user click on an option', done => {
           flush(() => {
             droplistElem.data = ['option 1', 'option 2'];
             droplistElem.reflow = true;
             droplistElem.open = true;
             let option = droplistElem.shadowRoot.querySelector('li:nth-child(2)');
 
-            autocompleteElem.addEventListener("pfe-search-event", function(event) {
+            autocompleteElem.addEventListener("pfe-autocomplete:search-event", function(event) {
               assert.equal(event.detail.searchValue, "option 2");
+              done();
+            });
+
+            MockInteractions.tap(option);
+          });
+        });
+
+        it('should fire a pfe-autocomplete:option-selected event when a user selects an option in the droplist with the enter key', done => {
+          flush(() => {
+            const input = autocompleteElem._input;
+            droplistElem.data = ['option 1', 'option 2'];
+            droplistElem.reflow = true;
+            droplistElem.open = true;
+            input.focus();
+
+            autocompleteElem.addEventListener("pfe-autocomplete:option-selected", function(event) {
+              assert.equal(event.detail.optionValue, "option 1");
+              done();
+            });
+
+            MockInteractions.keyUpOn(input, 40);
+            MockInteractions.keyUpOn(input, 13);
+          });
+        });
+
+        it('should fire a pfe-autocomplete:option-selected event when a user selects an option in the droplist with the mouse', done => {
+          flush(() => {
+            droplistElem.data = ['option 1', 'option 2'];
+            droplistElem.reflow = true;
+            droplistElem.open = true;
+            let option = droplistElem.shadowRoot.querySelector('li:nth-child(2)');
+
+            autocompleteElem.addEventListener("pfe-autocomplete:option-selected", function(event) {
+              assert.equal(event.detail.optionValue, "option 2");
               done();
             });
 

@@ -1,3 +1,7 @@
+## Prerelease 53 ( TBD )
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Move pfe-sass to a dev dependency
+
 ## Prerelease 52 ( 2020-07-17 )
 
 - [e5c6f4b](https://github.com/patternfly/patternfly-elements/commit/e5c6f4bc0f5ef3283c115ecbcc7c31456ea39872) fix: fire pfe-autcomplete:option-selected event on click and enter key

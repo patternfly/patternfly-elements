@@ -1,6 +1,7 @@
 ## Prerelease 53 ( TBD )
 
 - []() fix: pfe-autocomplete prevent search-event from firing twice on option select
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Move pfe-sass to a dev dependency
 
 ## Prerelease 52 ( 2020-07-17 )
 

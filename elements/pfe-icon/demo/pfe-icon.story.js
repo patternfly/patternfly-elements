@@ -25,7 +25,7 @@ const template = (data = {}) =>
   tools.component(PfeIcon.tag, data.prop, [], true);
 
 stories.add(PfeIcon.tag, () => {
-  tools.theming(storybookBridge);
+  tools.context(storybookBridge);
 
   let config = {};
 

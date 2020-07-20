@@ -262,37 +262,73 @@ export function autoPropKnobs(properties, bridge) {
   return binding;
 }
 
-export function theming(bridge) {
-  let themes = [
+export function context(bridge) {
+  let contexts = [
     {
-      label: "light",
+      label: "lightest",
+      context: "light",
       color: "#fff"
     },
     {
-      label: "dark",
+      label: "lighter",
+      context: "light",
+      color: "#ececec"
+    },
+    {
+      label: "base",
+      context: "light",
+      color: "#dfdfdf"
+    },
+    {
+      label: "darker",
+      context: "dark",
+      color: "#464646"
+    },
+    {
+      label: "darkest",
+      context: "dark",
       color: "#252525"
     },
     {
-      label: "saturated",
-      color: "#007a87"
+      label: "accent",
+      context: "saturated",
+      color: "#e00"
+    },
+    {
+      label: "complement",
+      context: "saturated",
+      color: "#0477a4"
+    },
+    {
+      label: "custom",
+      color: null
     }
   ];
 
-  let theme = bridge.select("Theme", themes, "light", "Theming");
-  let userColor = bridge.color(
-    "Custom background color",
-    theme.color,
-    "Theming"
-  );
+  let context = bridge.select("Context", contexts, "lightest", "Context");
+  let customColor = null;
+  let customAttr = null;
 
-  // @TODO add dynamic theming logic for custom colors
-  // let customColor = new Color(userColor);
-  // let text = new Color("rgba(0,0,0,1)");
-  // console.log(customColor.accessible(text));
+  if (context.label === "custom") {
+    customColor = bridge.color("Custom background color", "#fff", "Context");
+    customAttr = bridge.select(
+      "Custom context",
+      ["light", "dark", "saturated"],
+      "light",
+      "Context"
+    );
+
+    // @TODO dynamic theme applied
+    // let customColor = new Color(userColor);
+    // let text = new Color("rgba(0,0,0,1)");
+    // console.log(customColor.accessible(text));
+  }
 
   document.querySelector("body").style.backgroundColor =
-    userColor || theme.color;
-  document.querySelector("body").style.setProperty("--theme", theme.label);
+    customColor || context.color;
+  document
+    .querySelector("body")
+    .style.setProperty("--theme", context.context || customAttr);
 }
 
 // Create knobs to render input fields for the slots

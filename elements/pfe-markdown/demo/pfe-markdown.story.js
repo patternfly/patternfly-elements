@@ -21,7 +21,7 @@ const template = (data = {}) =>
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeMarkdown.tag, () => {
-  tools.theming(storybookBridge);
+  tools.context(storybookBridge);
 
   let config = {};
   const props = PfeMarkdown.properties;

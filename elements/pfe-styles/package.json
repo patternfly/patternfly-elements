@@ -44,7 +44,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.50"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.52"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

@@ -47,6 +47,6 @@
     "@patternfly/pfelement": "^1.0.0-prerelease.51"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.50"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.52"
   }
 }

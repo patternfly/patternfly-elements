@@ -15,6 +15,7 @@ $breakpoints: (
   // The below should match an above breakpoint value
   // Where the icons on the right appear
   'secondary-links-expand': 768px,
+
   // Default value for when the nav expands to desktop mode
   'nav-expand': 1200px,
 );
@@ -29,6 +30,20 @@ $breakpoints: (
 }
 
 /// JS triggered 'breakpoints' if there isn't room for a section a class is added to collapse it
+/// Styles in collapse should undo _desktop layout changes_ that the related breakpoint makes.
+/// @example
+///   pfe-navigation {
+///     display: block;
+///     margin: 10px 0 0;
+///     @include breakpoint('nav-expand') {
+///       display: flex;
+///       margin: 20px 40px;
+///     }
+///     @include collapse(nav) {
+///       display: block;
+///       margin: 10px 0 0;
+///     }
+///   }
 /// @param {string} $section Can be 'nav' or 'secondary-links'
 @mixin collapse($section) {
   @if $section == 'nav' {
@@ -113,4 +128,23 @@ $breakpoints: (
     }
   }
 
+  // @todo Focus styles?
+}
+
+@mixin dropdown-transitions($is-open: true) {
+  @if $is-open {
+    visibility: visible;
+  }
+  @else {
+    visibility: hidden;
+  }
+  $visibility-delay: 0s;
+  @if $is-open == false {
+    $visibility-delay: 0.4s;
+  }
+  // sass-lint:disable indentation
+  transition:
+    visibility 0s $visibility-delay,
+    height 0.25s ease-in-out;
+  // sass-lint:enable indentation
 }

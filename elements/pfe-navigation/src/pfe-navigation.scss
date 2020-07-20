@@ -1,5 +1,23 @@
 @import "variables-mixins";
 
+/*
+Because we have to respond to CSS breakpoints and JS telling we need to collapse
+a nav section when there isn't enough room the navigation layout states per 'layout state'
+are easier managed in mixins that DO NOT depend on the cascade.
+
+Any style that is important to that layout state should be explicitly set and can't depend on
+styles from previous breakpoints.
+
+See mixin blocks before selectors that contain the selector name and the three layout states:
+
+--mobile: Both the secondary links and main menu are collapsed
+
+--collapsed-menu: Just the main menu is collapsed
+
+--desktop: Neither are collapsed
+
+*/
+
 * {
   &,
   &:before,
@@ -24,32 +42,42 @@
   align-items: stretch;
 }
 
+// Layout changes per breakpoint
+// See comment at top of file
+@mixin pfe-navigation__wrapper--mobile {
+  margin: 0 0 8px;
+  padding: 0 16px;
+}
+@mixin pfe-navigation__wrapper--collapsed-menu {
+  margin: 0;
+  padding: 0 16px;
+}
+@mixin pfe-navigation__wrapper--desktop {
+  margin: 0;
+  padding: 0 32px;
+}
 .pfe-navigation__wrapper {
-  $collapsed-padding: 0 16px;
-  $collapsed-bottom-margin: 8px;
-
+  @include pfe-navigation__wrapper--mobile;
   position: relative;
   display: flex;
   align-items: stretch;
   height: $menu-height;
-  margin-bottom: $collapsed-bottom-margin;
-  padding: $collapsed-padding;
   font-size: 16px;
   line-height: 1.5;
   font-family: "RedHatText", "Red Hat Text", Overpass, Arial, Helvetica, sans-serif;
   color: #fff;
   background: #151515;
   @include breakpoint('secondary-links-expand') {
-    margin-bottom: 0;
+    @include pfe-navigation__wrapper--collapsed-menu;
   }
   @include breakpoint('nav-expand') {
-    padding: 0 32px;
+    @include pfe-navigation__wrapper--desktop;
   }
   @include collapse('nav') {
-    padding: $collapsed-padding;
+    @include pfe-navigation__wrapper--collapsed-menu;
   }
   @include collapse('secondary-links') {
-    margin-bottom: $collapsed-bottom-margin;
+    @include pfe-navigation__wrapper--mobile;
   }
 
   a {
@@ -131,26 +159,37 @@
   }
 }
 
+// Layout changes per breakpoint
+// See comment at top of file
+@mixin pfe-navigation__menu-toggle--mobile {
+  display: flex;
+  margin: 0 0 0 auto;
+}
+@mixin pfe-navigation__menu-toggle--collapsed-menu {
+  display: flex;
+  margin: 0 auto 0 0;
+}
+@mixin pfe-navigation__menu-toggle--desktop {
+  display: none;
+}
 .pfe-navigation__menu-toggle {
-  margin-left: auto;
-  @include breakpoint('secondary-links') {
-    margin-left: 0;
-    margin-right: auto;
+  @include pfe-navigation__menu-toggle--mobile;
+
+  @include breakpoint('secondary-links-expand') {
+    @include pfe-navigation__menu-toggle--collapsed-menu;
   }
   @include breakpoint('nav-expand') {
-    display: none;
+    @include pfe-navigation__menu-toggle--desktop;
   }
   @include collapse('nav') {
-    display: flex;
-    margin-left: 0;
-    margin-right: auto;
+    @include pfe-navigation__menu-toggle--collapsed-menu;
   }
   @include collapse('secondary-links') {
-    margin-left: auto;
-    margin-right: 0;
+    @include pfe-navigation__menu-toggle--mobile;
   }
-  
-  :host([pfe-navigation-state^='main-menu']) & {
+
+  // Active state
+  [pfe-navigation-state^='main-menu'][class] & {
     color: #151515;
     background: #fff;
     box-shadow: inset 0 4px 0 0 #e00;
@@ -175,42 +214,59 @@
   }
 }
 
-.pfe-navigation__outer-menu-wrapper {
+// Layout changes per breakpoint
+// See comment at top of file
+@mixin pfe-navigation__outer-menu-wrapper--mobile {
   position: absolute;
   top: 100%;
   left: 0;
   display: none;
   width: 100%;
+  height: auto;
   padding: 16px;
   background: #fff;
+}
+@mixin pfe-navigation__outer-menu-wrapper--collapsed-menu {
+  position: static;
+  display: flex;
+  width: auto;
+  height: auto;
+  padding: 0;
+  background: transparent;
+}
+@mixin pfe-navigation__outer-menu-wrapper--desktop {
+  position: static;
+  display: flex;
+  width: auto;
+  height: $menu-height;
+  padding: 0;
+  background: transparent;
+}
+.pfe-navigation__outer-menu-wrapper {
+  @include pfe-navigation__outer-menu-wrapper--mobile;
+
   @include breakpoint('secondary-links-expand') {
-    position: static;
-    display: flex;
-    width: auto;
-    padding: 0;
-    background: transparent;
+    @include pfe-navigation__outer-menu-wrapper--collapsed-menu;
   }
   @include breakpoint('nav-expand') {
-    height: $menu-height;
+    @include pfe-navigation__outer-menu-wrapper--desktop;
+  }
+  @include collapse('nav') {
+
   }
   @include collapse('secondary-links') {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    display: none;
-    width: 100%;
-    height: auto;
-    padding: 16px;
-    background: #fff;
+    @include pfe-navigation__outer-menu-wrapper--mobile;
   }
 
-  // @todo This host selector conflicts with the needs of the collapse mixin
-  :host([pfe-navigation-state^='main-menu']) & {
+  [pfe-navigation-state^='main-menu'] & {
     display: block;
     @include breakpoint('secondary-links-expand') {
       display: flex;
     }
     @include collapse('secondary-links') {
+      display: block;
+    }
+    @include collapse('nav') {
       display: block;
     }
   }
@@ -228,58 +284,82 @@
 
 // Menu, List, & Items
 // --------------------------------------------------------
-.pfe-navigation__menu-wrapper {
+// Layout changes per breakpoint
+// See comment at top of file
+@mixin pfe-navigation__menu-wrapper--mobile {
+  position: static;
+  display: block;
   width: 100%;
-  margin-bottom: 8px;
+  margin: 0 0 8px;
+  padding: 0;
   background: #fff;
+}
+@mixin pfe-navigation__menu-wrapper--collapsed-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  width: 100%;
+  margin: 0;
+  padding: 16px 32px;
+  background: #fff;
+}
+@mixin pfe-navigation__menu-wrapper--desktop {
+  position: static;
+  display: flex;
+  align-items: stretch;
+  margin: 0 auto 0 0;
+  padding: 0;
+  background: transparent;
+}
+@mixin pfe-navigation__menu-wrapper--mobile--open {
+  display: block;
+}
+@mixin pfe-navigation__menu-wrapper--collapsed-menu--open {
+  display: block;
+}
+@mixin pfe-navigation__menu-wrapper--desktop--open {
+  // Since open state is default state, re-assert default styles
+  @include pfe-navigation__wrapper--desktop;
+}
+.pfe-navigation__menu-wrapper {
+  @include pfe-navigation__menu-wrapper--mobile;
   @include breakpoint('secondary-links-expand') {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    display: none;
-    margin: 0;
-    padding: 16px 32px;
+    @include pfe-navigation__menu-wrapper--collapsed-menu;
   }
   @include breakpoint('nav-expand') {
-    position: static;
-    display: flex;
-    align-items: stretch;
-    margin-right: auto;
-    padding: 0;
-    background: transparent;
-  }
-
-  // @todo This host selector may conflict with the needs of the collapse mixin
-  :host([pfe-navigation-state^='main-menu']) & {
-    @include breakpoint('secondary-links-expand') {
-      display: block;
-    }
-    @include breakpoint('nav-expand') {
-      position: static;
-      display: flex;
-      align-items: stretch;
-      width: auto;
-      padding: 0;
-      background: transparent;
+    &,
+    &[class][class] {
+      @include pfe-navigation__menu-wrapper--desktop;
     }
   }
 
   @include collapse('nav') {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    display: none;
-    width: 100%;
-    padding: 16px 32px;
-    margin: 0;
+    @include pfe-navigation__menu-wrapper--collapsed-menu;
   }
   @include collapse('secondary-links') {
-    position: static;
-    display: block;
-    padding: 0;
+    @include pfe-navigation__menu-wrapper--mobile;
+  }
+
+  // Open state
+  [pfe-navigation-state^='main-menu'] & {
+    @include pfe-navigation__menu-wrapper--mobile--open;
+    @include breakpoint('secondary-links-expand') {
+      @include pfe-navigation__menu-wrapper--collapsed-menu--open;
+    }
+    @include breakpoint('nav-expand') {
+      @include pfe-navigation__menu-wrapper--desktop--open;
+    }
+    @include collapse('nav') {
+      @include pfe-navigation__menu-wrapper--collapsed-menu--open;
+    }
+    @include collapse('secondary-links') {
+      @include pfe-navigation__menu-wrapper--mobile--open;
+    }
   }
 }
 
+// Menu
 .pfe-navigation__menu,
 .pfe-navigation__menu ul {
   list-style: none;
@@ -292,8 +372,12 @@
     display: flex;
     align-items: stretch;
   }
+  @include collapse('nav') {
+    display: block;
+  }
 }
 
+// Menu Items
 .pfe-navigation__menu-item {
   $collapsed-border-top: 1px solid #d2d2d2;
   border-top: $collapsed-border-top;
@@ -303,12 +387,13 @@
     padding: 0 4px;
     border: none;
   }
-  @include collapse(nav) {
+  @include collapse('nav') {
     display: block;
     padding: 0;
     border-top: $collapsed-border-top;
   }
 
+  // Default styles for sub-nav links
   a {
     display: block;
     padding: 0.8em 24px;
@@ -320,7 +405,7 @@
     @include breakpoint('nav-expand') {
       border: 0;
     }
-    @include collapse(nav) {
+    @include collapse('nav') {
       border-bottom: $collapsed-border-bottom;
     }
   }
@@ -334,137 +419,80 @@
   @include breakpoint('nav-expand') {
     box-shadow: none;
   }
-  @include collapse(nav) {
+  @include collapse('nav') {
     box-shadow: $collapsed-border-shadow;
   }
 }
 
-.pfe-navigation__menu-link[class] { // [class] to out specify generic menu link selector
-  display: flex;
-  align-items: center;
-  border: 1px dashed transparent;
-  border-top: 0;
+// Top Level Menu Links
+// Layout changes per breakpoint
+// See comment at top of file
+@mixin pfe-navigation__menu-link--mobile {
+  max-height: 9999em;
+  padding: 16px 24px;
   font-size: 20px;
   font-weight: 500;
   color: #151515;
+  white-space: normal;
   transition: box-shadow 0.2s;
-  @include breakpoint('nav-expand') {
-    font-size: 16px;
-    font-weight: 400;
-    padding: 0 8px;
-    max-height: 72px;
-    color: #fff;
-    white-space: nowrap;
+}
+@mixin pfe-navigation__menu-link--desktop {
+  padding: 0 8px;
+  max-height: 72px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  white-space: nowrap;
+  transition: box-shadow 0.2s;
+}
+.pfe-navigation__menu-link {
+  // Default styles need a specificity bump to beat generic menu <a> styles
+  &[class] {
+    @include pfe-navigation__menu-link--mobile;
+    display: flex;
+    align-items: center;
+    // added to avoid jumpiness when focus/hover styles are active
+    border: 1px dashed transparent;
+    border-top: 0;
+    @include breakpoint('nav-expand') {
+      @include pfe-navigation__menu-link--desktop;
+    }
   }
-  @include collapse(nav) {
-    font-size: 20px;
-    font-weight: 500;
-    padding: 0;
-    max-height: 9999em;
-    color: #151515;
-    white-space: normal;
+  @include collapse('nav') {
+    @include pfe-navigation__menu-link--mobile;
   }
 
-  // added to avoid jumpiness when focus/hover styles are active
-  border: 1px solid transparent;
-
-  // added border to focus and hover rules bc focus and hover should be the same for a11y and usibility
-  // need to regroup on this and discuss with designer and make sure they approve
   &:focus,
   &:hover {
     @include focus-styles(#000, 1px);
 
-    @include breakpoint('nav-expand') {
+    @include breakpoint('nav-break') {
       box-shadow: inset 0 4px 0 0 #e00;
       @include focus-styles(#fff, 0px);
-    }
-    @include collapse(nav) {
-      box-shadow: none;
     }
   }
 
   // &:focus {
   //   @include focus-styles(#fff, 1px);
   // }
+}
 
-  &[aria-haspopup=true] {
-    position: relative;
-    // @todo I don't think this block is necessary? If it is it needs to be reversed in the collapse block
-    // @include breakpoint('nav-expand') {
-    //   box-shadow: none;
-    // }
-    // @include collapse(nav) {}
+// Top level links that have a dropdown associated with them
+.pfe-navigation__menu-link[aria-haspopup=true] {
+  position: relative;
+  // @todo I don't think this block is necessary? If it is it needs to be reversed in the collapse block
+  // @include breakpoint('nav-expand') {
+  //   box-shadow: none;
+  // }
+  // @include collapse('nav') {}
 
-    &:focus,
-    &:hover {
-      @include focus-styles(#000, 1px);
-
-      @include breakpoint('nav-expand') {
-        box-shadow: inset 0 4px 0 0 #e00;
-        @include focus-styles(#fff, 0px);
-      }
-      @include collapse(nav) {
-        box-shadow: none;
-      }
+  &:hover,
+  &:focus {
+    @include breakpoint('nav-expand') {
+      box-shadow: inset 0 4px 0 0 #e00;
     }
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      right: 24px;
-      display: block;
-      width: 11px;
-      height: 11px;
-      border-top: 4px solid #151515;
-      border-right: 4px solid #151515;
-      transform: rotate(45deg);
-      transform-origin: right top;
-      transition: transform 0.25s;
-      @include breakpoint('nav-expand') {
-        top: 100%;
-        left: 50%;
-        right: auto;
-        width: 0;
-        height: 0;
-        border: 4px solid transparent;
-        border-bottom: 0;
-        transform: translate(-4px, -12px);
-        transition: border-color 0.25s;
-      }
-      @include collapse(nav) {
-        top: 50%;
-        right: 24px;
-        left: auto;
-        width: 11px;
-        height: 11px;
-        border: 0;
-        border-top: 4px solid #151515;
-        border-right: 4px solid #151515;
-        transform: rotate(45deg);
-        transform-origin: right top;
-        transition: transform 0.25s;
-      }
-    }
-    
-    &:focus,
-    &:hover {
-      &:before {
-        @include breakpoint('nav-expand') {
-          border-top-color: #B8BBBE;
-        }
-        @include collapse(nav) {
-          border-top-color: #151515;
-        }
-      }
-    }
-  }
-
-  // swap focus indicator color to #000 when menu is open so that focus indicator is still visible on white bg-color
-  &[aria-expanded="true"] {
-    &:focus,
-    &:hover {
-      @include focus-styles(#000, 0px);
+    @include collapse('nav') {
+      box-shadow: none;
     }
   }
 
@@ -474,64 +502,169 @@
       background: #fff;
       box-shadow: inset 0 4px 0 0 #e00;
     }
-    @include collapse(nav) {
+    @include collapse('nav') {
       box-shadow: none;
     }
+  }
 
-    &[class]:before { // [class] adds specificity to beat out hover/focus selector
-      transform: rotate(135deg);
-      @include breakpoint('nav-expand') {
-        border-top-color: #151515;
-        transform: translate(-4px, -12px);
-      }
-      @include collapse(nav) {
-        transform: rotate(135deg);
-      }
+  &[aria-expanded="true"] {
+    &:focus,
+    &:hover {
+      @include focus-styles(#000, 0px);
     }
   }
 }
 
-// Main menu dropdowns
-// --------------------------------------------------------
-.pfe-navigation__dropdown {
-  // @todo animation and polish
-  display: none;
-  width: 100%;
-  font-size: 16px;
+// Top Level menu link arrow icon (no image, made with CSS)
+@mixin pfe-navigation__menu-link__before--mobile {
+  position: absolute;
+  top: 50%;
+  left: auto;
+  right: 24px;
+  display: block;
+  width: 11px;
+  height: 11px;
+  border: 4px solid #151515;
+  border-bottom: 0;
+  border-left: 0;
+  transform: rotate(45deg);
+  transform-origin: right top;
+  transition: transform 0.25s;
+}
+@mixin pfe-navigation__menu-link__before--desktop {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  right: auto;
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+  border-bottom: 0;
+  transform: translate(-4px, -12px);
+  transition: border-color 0.25s;
+}
+.pfe-navigation__menu-link[aria-haspopup=true]:before {
+  @include pfe-navigation__menu-link__before--mobile;
+  content: '';
 
   @include breakpoint('nav-expand') {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    padding: 32px 64px;
-    // Fits as many columns as it can given the constraints
-    // @todo evaluate layout needs and if this is a sane default
-    // grid-template-columns: 
-    //   repeat(
-    //     auto-fill,
-    //     minmax(#{200 / 16 * 1em}, #{350 / 16 * 1em})
-    //   );
-    // @todo: still need to test and see if this is a good setting for the flexibility needs of pfe-nav mega menu tray
-    // I tested this setting with 12 sections in the mega menu tray (on Firefox and Chrome) and it worked well. (KS)
-    grid-template-columns: repeat(4, 1fr); // changed to this to fix issues on 1200px brkpt, seems to look better and fit better
-    grid-gap: 2em;
-    background: #fff;
+    @include pfe-navigation__menu-link__before--desktop;
+
+  }
+  @include collapse('nav') {
+    @include pfe-navigation__menu-link__before--mobile;
+  }
+  &:focus:before,
+  &:hover:before {
+    @include breakpoint('nav-expand') {
+      border-top-color: #B8BBBE;
+    }
+    @include collapse('nav') {
+      border-top-color: #151515;
+    }
   }
 
-  @include collapse(nav) {
+  .pfe-navigation__menu-item--open > &[class]:before { // [class] adds specificity to beat out hover/focus selector
+    transform: rotate(135deg);
+    @include breakpoint('nav-expand') {
+      border-top-color: #151515;
+      transform: translate(-4px, -12px);
+    }
+    @include collapse('nav') {
+      transform: rotate(135deg);
+    }
+  }
+}
+
+
+// Main menu dropdowns
+// --------------------------------------------------------
+
+// Dropdown wrapper - used for basic layout properties and animation
+@mixin pfe-navigation__dropdown-wrapper--mobile {
+  position: static;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  visibility: hidden;
+  height: 0;
+}
+@mixin pfe-navigation__dropdown-wrapper--desktop {
+  @include dropdown-transitions(false);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+.pfe-navigation__dropdown-wrapper {
+  // @todo animation and polish
+  @include pfe-navigation__dropdown-wrapper--mobile;
+  @include breakpoint('nav-expand') {
+    @include pfe-navigation__dropdown-wrapper--desktop;
+  }
+  @include collapse('nav') {
+    @include pfe-navigation__dropdown-wrapper--mobile;
+  }
+
+  .pfe-navigation__menu-item--open > &[class] { // Adding specificity to beat JS Breakpoint selector
+    @include dropdown-transitions(true);
+    visibility: visible;
+    height: auto; // Height is set in JS, this is a fallback
+    display: block;
+  }
+}
+
+.pfe-navigation__dropdown-wrapper--single-column {
+  @include breakpoint('nav-expand') {
+    left: auto;
+    width: auto;
+    max-width: 100%;
+    min-width: 13em; // Trying to make sure it's larger than the top level menu link
+  }
+  @include collapse('nav') {
     position: static;
-    padding: 0;
-    background: transparent;
+    max-width: 100%;
   }
 
   .pfe-navigation__menu-item--open > & {
     display: block;
-    @include breakpoint('nav-expand') {
-      display: grid;
-    }
-    @include collapse(nav){
-      display: block;
-    }
+  }
+}
+
+
+// Dropdown contents - lays out dropdown internals
+@mixin pfe-navigation__dropdown--mobile {
+  display: block;
+  font-size: 16px;
+  padding: 0;
+  background: transparent;
+}
+@mixin pfe-navigation__dropdown--desktop {
+  display: grid;
+  padding: 32px 64px;
+  // Fits as many columns as it can given the constraints
+  // @todo evaluate layout needs and if this is a sane default
+  // grid-template-columns: 
+  //   repeat(
+  //     auto-fill,
+  //     minmax(#{200 / 16 * 1em}, #{350 / 16 * 1em})
+  //   );
+  // @todo: still need to test and see if this is a good setting for the flexibility needs of pfe-nav mega menu tray
+  // I tested this setting with 12 sections in the mega menu tray (on Firefox and Chrome) and it worked well. (KS)
+  grid-template-columns: repeat(4, 1fr); // changed to this to fix issues on 1200px brkpt, seems to look better and fit better
+  grid-gap: 2em;
+  background: #fff;
+}
+.pfe-navigation__dropdown {
+  // @todo animation and polish
+  @include pfe-navigation__dropdown--mobile;
+  @include breakpoint('nav-expand') {
+    @include pfe-navigation__dropdown--desktop;
+  }
+  @include collapse('nav') {
+    @include pfe-navigation__dropdown--mobile;
   }
 
   // @todo: adjust heading spacing styles to still look good when there is no link in heading
@@ -588,10 +721,6 @@
 
 .pfe-navigation__dropdown--single-column {
   @include breakpoint('nav-expand') {
-    left: auto;
-    width: auto;
-    max-width: 100%;
-    min-width: 32px;
     padding: 16px;
     background: #fff;
     box-shadow: 
@@ -600,22 +729,15 @@
         0 0.0625rem 0.125rem 0 rgba(19, 19, 19, 0.2)
       );
   }
-  @include collapse(nav) {
-    position: static;
+  @include collapse('nav') {
     padding: 0;
     background: transparent;
   }
-
-  .pfe-navigation__menu-item--open > & {
-    display: block;
-    @include collapse(nav) {
-      display: block;
-    }
-  }
-
 }
 
 .pfe-navigation__footer {
+  $collapsed-margin: 16px;
+  $collapsed-padding: 26px 8px 16px 8px;
   grid-column: 1 / -1; // col spans to the end of col grid line always
 
   // display: grid;
@@ -631,8 +753,8 @@
   border-top: 1px solid #d3d3d3;
 
   // @todo: figure out what mobile and desktop margin/padding should be from design and redhat.com ex
-  margin: 16px;
-  padding: 26px 8px 16px 8px;
+  margin: $collapsed-margin;
+  padding: $collapsed-padding;
   border-top: 1px solid #d3d3d3;
 
   @include breakpoint('nav-expand') {
@@ -643,16 +765,15 @@
     margin: calc(var(--pfe-theme--container-padding,16px) * 2) 0 calc(var(--pfe-theme--container-padding,16px) * 1.5);
     padding: calc(var(--pfe-theme--container-padding,16px) * 2.5) 0 0; 
   }
-  @include collapse(nav) {
-    margin: 16px;
-    padding: 26px 8px 16px 8px;
+  @include collapse('nav') {
+    margin: $collapsed-margin;
+    padding: $collapsed-padding;
   }
 
   // fix display block issue for pfe-cta links
   pfe-cta a {
     display: inline-block;
   }
-
 }
 
 // Search
@@ -666,7 +787,7 @@
     display: none;
   }
 
-  :host([pfe-navigation-state='search--open']) & {
+  [pfe-navigation-state='search--open'] & {
     color: #151515;
     background: #fff;
     box-shadow: inset 0 4px 0 0 #e00;
@@ -678,30 +799,34 @@
   }
 }
 
-.pfe-navigation__search {
+@mixin pfe-navigation__search--mobile {
+  position: static;
+  display: block;
   width: 100%;
   margin-bottom: 24px;
+  background: transparent;
+}
+@mixin pfe-navigation__search--collapsed-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  margin-bottom: 0;
+  padding: 16px;
+  background: #fff;
+}
+.pfe-navigation__search {
+  @include pfe-navigation__search--mobile;
   color: #151515;
   @include breakpoint('secondary-links-expand') {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    display: none;
-    margin-bottom: 0;
-    padding: 16px;
-    background: #fff;
+    @include pfe-navigation__search--collapsed-menu;
   }
-
-  :host([pfe-navigation-state='search--open']) & {
-    display: block;
-  }
-
   @include collapse('secondary-links') {
-    position: static;
+    @include pfe-navigation__search--mobile;
+  }
+
+  [pfe-navigation-state='search--open'][class] & { // Extra specificity to beat js breakpoints
     display: block;
-    margin-bottom: 24px;
-    padding: 0;
-    background: transparent;
   }
 }
 
@@ -744,7 +869,7 @@
 // All Red Hat Button & Dropdown
 // --------------------------------------------------------
 .pfe-navigation__all-red-hat-toggle {
-  :host([pfe-navigation-state='all-red-hat--open']) & {
+  [pfe-navigation-state='all-red-hat--open'] & {
     color: #151515;
     background: #fff;
     box-shadow: inset 0 4px 0 0 #e00;
@@ -776,7 +901,7 @@
     background: transparent;
   }
 
-  :host([pfe-navigation-state='all-red-hat--open']) & {
+  [pfe-navigation-state='all-red-hat--open'] & {
     @include breakpoint('secondary-links-expand') {
       display: block;
     }

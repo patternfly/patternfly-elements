@@ -112,13 +112,9 @@ class PfeNavigation extends PFElement {
     super(PfeNavigation, { type: PfeNavigation.PfeType });
 
     this._search = this.shadowRoot.querySelector(`.${this.tag}__search`);
-    this._customlinks = this.shadowRoot.querySelector(
-      `.${this.tag}__customlinks`
-    );
+    this._customlinks = this.shadowRoot.querySelector(`.${this.tag}__customlinks`);
 
-    this.menuToggle = this.shadowRoot.querySelector(
-      ".pfe-navigation__menu-toggle"
-    );
+    this.menuToggle = this.shadowRoot.querySelector(".pfe-navigation__menu-toggle");
 
     // Set default breakpoints to null (falls back to CSS)
     this.menuBreakpoints = {
@@ -132,18 +128,13 @@ class PfeNavigation extends PFElement {
     this.isNavigationMobileStyle = this.isNavigationMobileStyle.bind(this);
     this._processLightDom = this._processLightDom.bind(this);
     this._menuToggleEventListener = this._menuToggleEventListener.bind(this);
-    this._searchToggleEventListener = this._searchToggleEventListener.bind(
-      this
-    );
-    this._allRedHatToggleEventListener = this._allRedHatToggleEventListener.bind(
-      this
-    );
-    this._dropdownDropdownItemToggle = this._dropdownDropdownItemToggle.bind(
-      this
-    );
+    this._searchToggleEventListener = this._searchToggleEventListener.bind(this);
+    this._allRedHatToggleEventListener = this._allRedHatToggleEventListener.bind(this);
+    this._dropDownItemToggle = this._dropDownItemToggle.bind(this);
     this._addMenuBreakpoints = this._addMenuBreakpoints.bind(this);
     this._collapseMainMenu = this._collapseMainMenu.bind(this);
     this._collapseSecondaryLinks = this._collapseSecondaryLinks.bind(this);
+    this._getDropdownHeights = this._getDropdownHeights.bind(this);
 
     // Setup mutation observer to watch for content changes
     this._observer = new MutationObserver(this._processLightDom);
@@ -212,10 +203,7 @@ class PfeNavigation extends PFElement {
   isNavigationMobileStyle() {
     // If an element's offsetParent returns null and isn't position:fixed it or a parent is display: none
     // See https://stackoverflow.com/a/21696585
-    return (
-      this.shadowRoot.querySelector(".pfe-navigation__menu-toggle")
-        .offsetParent !== null
-    );
+    return this.shadowRoot.querySelector(".pfe-navigation__menu-toggle").offsetParent !== null;
   }
 
   /**
@@ -225,26 +213,20 @@ class PfeNavigation extends PFElement {
    */
   _toggleNavigationState(toggleId) {
     const navigationState = this.getAttribute(`${this.tag}-state`);
+    const shadowDOMOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
     const isOpen = this.isOpen(toggleId);
 
     // Shut any open dropdowns
     if (navigationState && navigationState.startsWith("main-menu__dropdown")) {
-      const activeDropdown = this.shadowRoot.querySelector(
-        ".pfe-navigation__menu-item--open"
-      );
+      const activeDropdown = this.shadowRoot.querySelector(".pfe-navigation__menu-item--open");
 
-      activeDropdown
-        .querySelector(".pfe-navigation__menu-link")
-        .setAttribute("aria-expanded", "false");
+      activeDropdown.querySelector(".pfe-navigation__menu-link").setAttribute("aria-expanded", "false");
       activeDropdown.classList.remove("pfe-navigation__menu-item--open");
     }
 
     if (isOpen) {
       // If we're dealing with a section in a burger menu
-      if (
-        toggleId.startsWith("main-menu__") &&
-        this.isNavigationMobileStyle()
-      ) {
+      if (toggleId.startsWith("main-menu__") && this.isNavigationMobileStyle()) {
         // Back out to main-menu
         this.setAttribute(`${this.tag}-state`, "main-menu--open");
       } else {
@@ -255,6 +237,9 @@ class PfeNavigation extends PFElement {
       // Open it by adding state attribute & value
       this.setAttribute(`${this.tag}-state`, `${toggleId}--open`);
     }
+
+    // Clone state attribute inside of Shadow DOM to avoid compound :host() selectors
+    shadowDOMOuterWrapper.setAttribute(`${this.tag}-state`, this.getAttribute(`${this.tag}-state`));
     return !isOpen;
   }
 
@@ -264,20 +249,25 @@ class PfeNavigation extends PFElement {
    * @param {array} mutationList Provided by mutation observer
    */
   _processLightDom(mutationList) {
+    // If we're mutating because an attribute on the web component starting with pfe- changed, don't reprocess dom
+    let cancelLightDomProcessing = true;
+    let componentClassesChange = false;
+
     if (mutationList) {
-      // If we're mutating because an attribute on the web component starting with pfe- changed, don't reprocess dom
-      let cancelLightDomProcessing = true;
       for (let index = 0; index < mutationList.length; index++) {
         const mutationItem = mutationList[index];
-        if (mutationItem.type !== "attributes") {
-          cancelLightDomProcessing = false;
-        } else if (!mutationItem.attributeName.startsWith("pfe-")) {
-          cancelLightDomProcessing = false;
+        if (mutationItem.target.tagName !== "PFE-NAVIGATION") {
+          if (!mutationItem.attributeName.startsWith("pfe-")) {
+            // If it's a pfe- attribute, assume we don't need to process the light dom
+            cancelLightDomProcessing = false;
+          }
+        } else if (mutationItem.type === "attributes" && mutationItem.attributeName === "class") {
+          componentClassesChange = true;
         }
       }
-      if (cancelLightDomProcessing) {
-        return;
-      }
+    } else {
+      // If there isn't a mutationList it's because this is on init
+      cancelLightDomProcessing = false;
     }
 
     // Preventing issues in IE11 & Edge
@@ -285,17 +275,32 @@ class PfeNavigation extends PFElement {
       this._observer.disconnect();
     }
 
+    // Handle class updates to the parent component
+    // Copying them to shadow DOM to avoid compound :host() selectors
+    if (componentClassesChange) {
+      const shadowDOMOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
+      shadowDOMOuterWrapper.setAttribute("class", `pfe-navigation__wrapper ${this.getAttribute("class")}`);
+    }
+
+    if (cancelLightDomProcessing) {
+      // Reconnecting mutationObserver for IE11 & Edge
+      if (window.ShadyCSS) {
+        this._observer.observe(this, lightDomObserverConfig);
+      }
+      return;
+    }
+
+    // Begins the wholesale replacement of the shadowDOM -------------------------------
+    if (document.domain === "localhost") {
+      // Leaving this so we spot when the shadowDOM is being replaced when it shouldn't be
+      // But don't want it firing in prod
+      console.log("replacing shadow DOM", mutationList);
+    }
     // Prettier makes this section significantly less legible because of line length
     // @todo look into only replacing markup that changed via mutationList
-    const shadowWrapper = this.shadowRoot.getElementById(
-      "pfe-navigation__wrapper"
-    );
-    const shadowMenuWrapper = this.shadowRoot.getElementById(
-      "pfe-navigation__menu-wrapper"
-    );
-    const shadowLogo = this.shadowRoot.getElementById(
-      "pfe-navigation__logo-wrapper"
-    );
+    const shadowWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
+    const shadowMenuWrapper = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
+    const shadowLogo = this.shadowRoot.getElementById("pfe-navigation__logo-wrapper");
     const lightLogo = this.querySelector("#pfe-navigation__logo-wrapper");
     const shadowMenu = this.shadowRoot.getElementById("pfe-navigation__menu");
     const lightMenu = this.querySelector("#pfe-navigation__menu");
@@ -319,36 +324,27 @@ class PfeNavigation extends PFElement {
     }
 
     // Add menu dropdown toggle behavior
-    const dropdownDropdownItems = this.shadowRoot.querySelectorAll(
-      '.pfe-navigation__menu-link[aria-haspopup="true"]'
-    );
-    for (let index = 0; index < dropdownDropdownItems.length; index++) {
-      const dropdownDropdownItem = dropdownDropdownItems[index];
-      dropdownDropdownItem.setAttribute(
-        "data-machine-name",
-        this._createMachineName(dropdownDropdownItem.text)
-      );
-      dropdownDropdownItem.addEventListener(
-        "click",
-        this._dropdownDropdownItemToggle
-      );
+    const dropDownItems = this.shadowRoot.querySelectorAll('.pfe-navigation__menu-link[aria-haspopup="true"]');
+    for (let index = 0; index < dropDownItems.length; index++) {
+      const dropDownItem = dropDownItems[index];
+      dropDownItem.dataset.machineName = this._createMachineName(dropDownItem.text);
+      dropDownItem.addEventListener("click", this._dropDownItemToggle);
     }
 
     // Add menu burger behavior
     this.menuToggle.addEventListener("click", this._menuToggleEventListener);
 
     // Add search toggle behavior
-    const searchToggle = this.shadowRoot.querySelector(
-      ".pfe-navigation__search-toggle"
-    );
+    const searchToggle = this.shadowRoot.querySelector(".pfe-navigation__search-toggle");
     searchToggle.addEventListener("click", this._searchToggleEventListener);
 
     // Add All Red Hat toggle behavior
-    const allRedHat = this.shadowRoot.querySelector(
-      ".pfe-navigation__all-red-hat-toggle"
-    );
+    const allRedHat = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-toggle");
 
     allRedHat.addEventListener("click", this._allRedHatToggleEventListener);
+
+    // Give all dropdowns aria-hidden since they're shut by default
+    this.shadowRoot.querySelector(".pfe-navigation__dropdown-wrapper").setAttribute("aria-hidden", true);
 
     // Reconnecting mutationObserver for IE11 & Edge
     if (window.ShadyCSS) {
@@ -357,7 +353,8 @@ class PfeNavigation extends PFElement {
 
     if (!this.isNavigationMobileStyle()) {
       // Timeout lets this run when there's a spare cycle
-      window.setTimeout(this._addMenuBreakpoints, 0);
+      window.setTimeout(this._addMenuBreakpoints, 0); // @todo ask Kyle if this is a cool kid thing
+      window.setTimeout(this._getDropdownHeights, 0);
     }
   }
 
@@ -370,19 +367,14 @@ class PfeNavigation extends PFElement {
     // Gets the length from the left edge of the screen to the right side of the navigation
     const navigationSpaceNeeded = Math.ceil(navigationBoundingRect.right);
 
-    let leftMostSecondaryLink = this.shadowRoot.querySelector(
-      ".pfe-navigation__search-toggle"
-    );
+    let leftMostSecondaryLink = this.shadowRoot.querySelector(".pfe-navigation__search-toggle");
     // @todo if Search isn't present, check for custom links, if that isn't present use All Red Hat
 
     const leftMostSecondaryLinkBoundingRect = leftMostSecondaryLink.getBoundingClientRect();
     // Gets the length from the right edge of the screen to the left side of the left most secondary link
-    const secondaryLinksSpaceNeeded =
-      window.innerWidth - Math.ceil(leftMostSecondaryLinkBoundingRect.left);
+    const secondaryLinksSpaceNeeded = window.innerWidth - Math.ceil(leftMostSecondaryLinkBoundingRect.left);
 
-    const logoWrapper = this.shadowRoot.getElementById(
-      "pfe-navigation__logo-wrapper"
-    );
+    const logoWrapper = this.shadowRoot.getElementById("pfe-navigation__logo-wrapper");
     const logoBoundingRect = logoWrapper.getBoundingClientRect();
     const logoSpaceNeeded = Math.ceil(logoBoundingRect.right);
 
@@ -391,22 +383,28 @@ class PfeNavigation extends PFElement {
     if (navigationSpaceNeeded && secondaryLinksSpaceNeeded && logoSpaceNeeded) {
       // 8px is spacing between menu items at desktop
       // console.log(navigationSpaceNeeded, secondaryLinksSpaceNeeded, logoSpaceNeeded);
-      this.menuBreakpoints.mainMenu =
-        navigationSpaceNeeded + secondaryLinksSpaceNeeded + 8;
+      this.menuBreakpoints.mainMenu = navigationSpaceNeeded + secondaryLinksSpaceNeeded + 8;
       // 60px is the width of the menu burger + some extra space
-      this.menuBreakpoints.secondaryLinks =
-        logoSpaceNeeded + secondaryLinksSpaceNeeded + 60;
+      this.menuBreakpoints.secondaryLinks = logoSpaceNeeded + secondaryLinksSpaceNeeded + 60;
 
       // console.log('adding breakpoints', this.menuBreakpoints);
-      const mainMenuBreakpoint = window.matchMedia(
-        `(max-width: ${this.menuBreakpoints.mainMenu}px)`
-      );
+      const mainMenuBreakpoint = window.matchMedia(`(max-width: ${this.menuBreakpoints.mainMenu}px)`);
       mainMenuBreakpoint.addListener(this._collapseMainMenu);
 
-      const secondaryLinksBreakpoint = window.matchMedia(
-        `(max-width: ${this.menuBreakpoints.secondaryLinks}px)`
-      );
+      const secondaryLinksBreakpoint = window.matchMedia(`(max-width: ${this.menuBreakpoints.secondaryLinks}px)`);
       secondaryLinksBreakpoint.addListener(this._collapseSecondaryLinks);
+    }
+  }
+  /**
+   * Caches the heights of the dropdowns for animation
+   */
+  _getDropdownHeights() {
+    const dropdowns = this.shadowRoot.querySelectorAll(".pfe-navigation__dropdown");
+    for (let index = 0; index < dropdowns.length; index++) {
+      const dropdown = dropdowns[index];
+      const dropdownHeight = dropdown.offsetHeight;
+      dropdown.parentElement.dataset.height = dropdownHeight;
+      // console.log(dropdown, dropdownHeight);
     }
   }
 
@@ -449,26 +447,31 @@ class PfeNavigation extends PFElement {
     this._toggleNavigationState("all-red-hat");
   }
 
-  _dropdownDropdownItemToggle(event) {
-    const dropdownDropdownItem = event.target;
-    const machineName = dropdownDropdownItem.getAttribute("data-machine-name");
+  _dropDownItemToggle(event) {
+    const dropDownItem = event.target;
+    const machineName = dropDownItem.dataset.machineName;
     const toggleId = `main-menu__dropdown--${machineName}`;
+    const dropDownWrapper = dropDownItem.parentElement.querySelector(".pfe-navigation__dropdown-wrapper");
 
     // Don't navigate
     event.preventDefault();
 
     // Toggle state and manage attributes for a11y and styling
     if (this._toggleNavigationState(toggleId)) {
-      dropdownDropdownItem.setAttribute("aria-expanded", "true");
+      dropDownItem.setAttribute("aria-expanded", "true");
       // Manage class on parent li so it's easier to style any child that needs style updates
-      dropdownDropdownItem.parentElement.classList.add(
-        "pfe-navigation__menu-item--open"
-      );
+      dropDownItem.parentElement.classList.add("pfe-navigation__menu-item--open");
+      dropDownWrapper.setAttribute("aria-hidden", false);
+      if (!this.isNavigationMobileStyle() && parseInt(dropDownWrapper.dataset.height) > 30) {
+        dropDownWrapper.style.setProperty("height", `${dropDownWrapper.dataset.height}px`);
+      }
     } else {
-      dropdownDropdownItem.setAttribute("aria-expanded", "false");
-      dropdownDropdownItem.parentElement.classList.remove(
-        "pfe-navigation__menu-item--open"
-      );
+      dropDownItem.setAttribute("aria-expanded", "false");
+      dropDownItem.parentElement.classList.remove("pfe-navigation__menu-item--open");
+      dropDownWrapper.setAttribute("aria-hidden", true);
+      if (dropDownWrapper.hasAttribute("style")) {
+        dropDownWrapper.style.removeProperty("height");
+      }
     }
   }
 }

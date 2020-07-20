@@ -396,7 +396,8 @@ class PfeAutocomplete extends PFElement {
     } else if (key === KEYCODE.ENTER) {
       if (this._activeOption(activeIndex)) {
         this.emitEvent(PfeAutocomplete.events.select, {
-          detail: { optionValue: this._activeOption(activeIndex) }
+          detail: { optionValue: this._activeOption(activeIndex) },
+          composed: true
         });
       }
 

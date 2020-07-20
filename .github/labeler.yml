@@ -2,6 +2,9 @@ demo:
   - examples/*
   - elements/*/demo/*
 
+generator:
+  - generators/**/*
+
 doc:
   - docs/**/*
   - elements/**/*.{md,txt}
@@ -20,5 +23,6 @@ tools:
   - scripts/*
   - elements/*/gulpfile.js
   - elements/*/rollup.config.js
+  - .github/**/*
   - ./.*
   - ./*.{js,json,yml}

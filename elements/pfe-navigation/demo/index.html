@@ -16,7 +16,6 @@
 
   <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
   <link href="../dist/pfe-navigation--lightdom.css" rel="stylesheet">
-  <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-theme/2/advanced-theme.css" media="all" />
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
@@ -42,19 +41,22 @@
   </noscript>
 
   <!-- <script type="module" src="../dist/pfe-navigation.js"></script> -->
-    <!-- emulate custom logo overrides -->
+  <!-- emulate custom logo overrides -->
   <style>
-  pfe-navigation {
-     --pfe-navigation__logo--MinWidth: 280px;
-  }
-  @media (max-width: 440px) {
     pfe-navigation {
-       --pfe-navigation__logo--MinWidth: 160px;
+      --pfe-navigation__logo--MinWidth: 280px;
     }
-  }
+
+    @media (max-width: 440px) {
+      pfe-navigation {
+        --pfe-navigation__logo--MinWidth: 160px;
+      }
+    }
+
     img {
-    max-height: 100%;
-  }
+      max-height: 100%;
+    }
+
   </style>
 </head>
 
@@ -69,10 +71,10 @@
     </div>
     <!-- Site logo -->
 
-      <a slot="logo" href="https://company.com">
-        <img class="logo" src="https://via.placeholder.com/300x100.png" title="Company logo" />
-        <!-- <img class="logo" src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/logo.svg" width="200" title="Company logo" /> -->
-      </a>
+    <a slot="logo" href="https://company.com">
+      <img class="logo" src="https://via.placeholder.com/300x100.png" title="Company logo" />
+      <!-- <img class="logo" src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/logo.svg" width="200" title="Company logo" /> -->
+    </a>
     <!-- Search -->
     <pfe-navigation-item slot="search" pfe-icon="web-search">
       <h2 slot="trigger"><a href="#url-to-search-page">Search</a></h2>
@@ -687,7 +689,8 @@
     document.addEventListener("pfe-navigation-item:open", function (event) {
       if (event.target && event.target.slot === "language") {
         const container = event.target.querySelector(".pfe-navigation-item__tray--container");
-        const newContent = "<p>Inject new content into the " + event.detail.slot + " slot. Adding more words and text here, to show where the tray wraps.</p>";
+        const newContent = "<p>Inject new content into the " + event.detail.slot +
+          " slot. Adding more words and text here, to show where the tray wraps.</p>";
         if (container) {
           if (event.target.expanded) {
             setTimeout(function () {

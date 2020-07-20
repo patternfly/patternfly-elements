@@ -82,7 +82,7 @@
         }));
       };
 
-      staticAutocomplete.addEventListener('pfe-search-event', function(e) {
+      staticAutocomplete.addEventListener('pfe-autocomplete:search-event', function(e) {
         document.querySelector("#staticSelectedValue").textContent = e.detail.searchValue;
       });
 
@@ -118,7 +118,7 @@
 
       // when user performs search, this event is fired
       // search phrase is passed to e.detail.searchValue
-      searchAutocomplete.addEventListener('pfe-search-event', function(e) {
+      searchAutocomplete.addEventListener('pfe-autocomplete:search-event', function(e) {
         document.querySelector("#ajaxSelectedValue").textContent = e.detail.searchValue;
       });
     </script>

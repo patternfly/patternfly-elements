@@ -4,7 +4,7 @@
     "className": "PfeBadge",
     "elementName": "pfe-badge"
   },
-  "version": "1.0.0-prerelease.50",
+  "version": "1.0.0-prerelease.52",
   "description": "Badge element for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -47,8 +47,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "1.0.0-prerelease.28",
-    "@patternfly/pfelement": "1.0.0-prerelease.28"
+    "@patternfly/pfelement": "^1.0.0-prerelease.50"
+  },
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.52"
   },
   "generator-pfelement-version": "1.3.0"
 }

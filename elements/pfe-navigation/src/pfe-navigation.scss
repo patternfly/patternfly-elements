@@ -47,6 +47,11 @@
 
   a {
     text-decoration: none;
+    // @todo: move these styles to be more specific with dropdown class so that logo link can be styled without conflicting
+    // &:focus,
+    // &:hover {
+    //   @include focus-styles(#000, 1px);
+    // }
   }
 }
 
@@ -64,6 +69,15 @@
   display: block;
   padding: 6px 8px;
   margin-left: -8px; // Should be flush left with container
+
+  // avoid jumpiness from focus/hover styles
+  border: 1px solid transparent;
+
+  // focus styles
+  &:focus,
+  &:hover {
+    @include focus-styles(#fff, 1px);
+  }
 }
 
 .pfe-navigation__logo-image {
@@ -102,8 +116,8 @@
   padding-right: 8px;
   color: #fff;
 
-  &:hover,
-  &:focus {
+  &:focus,
+  &:hover {
     box-shadow: inset 0 4px 0 0 #e00;
   }
 
@@ -277,18 +291,23 @@
     color: #fff;
   }
 
-  &:hover,
-  &:focus {
+  // @todo: remove the comment below
+  // LoVe Fears HAte
+
+  // added border to focus and hover rules bc focus and hover should be the same for a11y and usibility
+  // need to regroup on this and discuss with designer and make sure they approve
+  &:focus,
+  &:hover {
+    @include focus-styles(#fff, 0px);
+
     @include breakpoint('nav-break') {
       box-shadow: inset 0 4px 0 0 #e00;
     }
   }
 
-  &:focus {
-    border: 1px dashed #fff;
-    border-top: 0;
-    outline: none;
-  }
+  // &:focus {
+  //   @include focus-styles(#fff, 1px);
+  // }
 
   &[aria-haspopup=true] {
     position: relative;
@@ -296,8 +315,8 @@
       box-shadow: none;
     }
 
-    &:hover,
-    &:focus {
+    &:focus,
+    &:hover {
       @include breakpoint('nav-break') {
         box-shadow: inset 0 4px 0 0 #e00;
       }
@@ -329,13 +348,21 @@
       }
     }
     
-    &:hover,
-    &:focus {
+    &:focus,
+    &:hover {
       &:before {
         @include breakpoint('nav-break') {
           border-top-color: #B8BBBE;
         }
       }
+    }
+  }
+
+  // swap focus indicator color to #000 when menu is open so that focus indicator is still visible on white bg-color
+  &[aria-expanded="true"] {
+    &:focus,
+    &:hover {
+      @include focus-styles(#000, 0px);
     }
   }
 
@@ -413,10 +440,19 @@
 
   li a {
     color: var(--pfe-broadcasted--link,#06c);
+
+    // avoid jumpiness caused by focus/hover styles
+    border: 1px solid transparent;
+
+    &:focus,
     &:hover {
+      // focus styles
+      @include focus-styles(#000, 1px);
+
       color: var(--pfe-broadcasted--link--hover,#036);
       text-decoration: underline;
     }
+
   }
 }
 
@@ -480,6 +516,11 @@
     color: #151515;
     background: #fff;
     box-shadow: inset 0 4px 0 0 #e00;
+
+    &:focus,
+    &:hover {
+      @include focus-styles(#000, 0px);
+    }
   }
 }
 
@@ -514,8 +555,20 @@
   a,
   button {
     color: #151515;
+
+    // focus styles
+    &:focus,
+    &:hover {
+      @include focus-styles(#fff, 0px);
+    }
+
     @include breakpoint('secondary-links-break') {
-      color: #fff;
+      color: red;
+      // focus styles
+      &:focus,
+      &:hover {
+        @include focus-styles(#fff, 0px);
+      }
     }
   }
 }
@@ -533,6 +586,12 @@
     color: #151515;
     background: #fff;
     box-shadow: inset 0 4px 0 0 #e00;
+
+    //focus styles
+    &:focus,
+    &:hover {
+      @include focus-styles(#000, 0px);
+    }
   }
 }
 

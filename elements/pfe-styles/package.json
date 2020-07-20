@@ -12,7 +12,7 @@
       "pfe-layouts.*.map"
     ]
   },
-  "version": "1.0.0-prerelease.50",
+  "version": "1.0.0-prerelease.52",
   "publishConfig": {
     "access": "public"
   },

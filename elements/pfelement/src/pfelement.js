@@ -32,7 +32,7 @@ class PFElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-theme"];
+    return ["pfe-context"];
   }
 
   get randomId() {
@@ -77,21 +77,21 @@ class PFElement extends HTMLElement {
     return [...this.querySelectorAll(`[slot='${name}']`)];
   }
 
-  // Update the theme context for self and children
+  // Update the context for self and children
   context_update() {
     // TODO: update this to use :defined?
     const children = this.querySelectorAll("[pfelement]");
-    let theme = this.cssVariable("theme");
+    let context = this.cssVariable("context");
 
-    // Manually adding `pfe-theme` overrides the css variable
-    if (this.hasAttribute("pfe-theme")) {
-      theme = this.getAttribute("pfe-theme");
+    // Manually adding `pfe-context` overrides the css variable
+    if (this.hasAttribute("pfe-context")) {
+      context = this.getAttribute("pfe-context");
       // Update the css variable to match the data attribute
-      this.cssVariable("theme", theme);
+      this.cssVariable("context", context);
     }
 
-    // Update theme for self
-    this.context_set(theme);
+    // Update context for self
+    this.context_set(context);
 
     // For each nested, already upgraded component
     // set the context based on the child's value of --context
@@ -99,22 +99,22 @@ class PFElement extends HTMLElement {
     // the child's context should it exist
     [...children].map(child => {
       if (child.connected) {
-        child.context_set(theme);
+        child.context_set(context);
       }
     });
   }
 
-  // Get the theme variable if it exists, set it as an attribute
+  // Get the context variable if it exists, set it as an attribute
   context_set(fallback) {
-    let theme = this.cssVariable("theme");
-    if (!theme) {
-      theme = this.getAttribute("pfe-theme");
+    let context = this.cssVariable("context");
+    if (!context) {
+      context = this.getAttribute("pfe-context");
     }
-    if (!theme && fallback) {
-      theme = fallback;
+    if (!context && fallback) {
+      context = fallback;
     }
-    if (theme && this.hasAttribute("pfelement")) {
-      this.setAttribute("on", theme);
+    if (context && this.hasAttribute("pfelement")) {
+      this.setAttribute("on", context);
     }
   }
 
@@ -190,7 +190,7 @@ class PFElement extends HTMLElement {
       this._processQueue();
     }
 
-    // Initialize the on attribute if a theme variable is set
+    // Initialize the on attribute if a context variable is set
     // do not update the on attribute if a user has manually added it
     // then trigger an update in nested components
     this.context_update();
@@ -216,7 +216,7 @@ class PFElement extends HTMLElement {
       this._copyAttribute(attr, cascadeTo);
     }
 
-    if (attr === "pfe-theme") {
+    if (attr === "pfe-context") {
       this.context_update();
     }
   }

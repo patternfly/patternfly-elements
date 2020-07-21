@@ -1,8 +1,9 @@
 ## Prerelease 53 ( TBD )
 
-- []() fix: pfe-autocomplete prevent search-event from firing twice on option select
+- [743913e](https://github.com/patternfly/patternfly-elements/commit/743913e0620ee0ca6f0cdf95cc1ed2597b5fe6e3) fix: pfe-autocomplete prevent search-event from firing twice on option select
 - [f20b509](https://github.com/patternfly/patternfly-elements/commit/f20b5094b6eb02ed473b0e3dab2ea5280e56bda7) fix: pfe-autocomplete add composed flag to option-selected event (#988)
 - [0ffd92a](https://github.com/patternfly/patternfly-elements/commit/0ffd92a621d1082b118b84a07063bd39b9c8a904) fix: Move pfe-sass to a dev dependency (#983)
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-health-index color support in IE11 (#992)
 
 ## Prerelease 52 ( 2020-07-17 )
 

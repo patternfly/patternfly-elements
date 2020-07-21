@@ -31,7 +31,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host {
-  --theme: #{pfe-local(theme)};  
+  --context: #{pfe-local(theme)};  
 
   position: relative;
   display:  inline-block;
@@ -125,7 +125,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 @each $color in (base, lightest, lighter, darker, darkest, complement, accent) {
   :host([pfe-color="#{$color}"]) {
-    $theme: map-deep-get($pfe-colors, surface--#{$color}--theme);
+    $theme: map-deep-get($pfe-colors, surface--#{$color}--context);
     @include pfe-print-local((color:  #{pfe-var(surface--#{$color})}));
     @include pfe-print-local((theme: #{$theme}));
   }

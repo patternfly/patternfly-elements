@@ -117,7 +117,7 @@ There are 2 functions, `has_slot` and `has_slots` which allow you to query for t
 
 There are 2 functions for updating the theme context of a component.  The first, `context_set`, will update the theme of the component calling the function using the following logic:
 
-1. Check that element for the value of the `--theme` variable, if it exists.
+1. Check that element for the value of the `--context` variable, if it exists.
 2. If it does not exist, the component then checks for a `pfe-theme` attribute.
 3. Finally, if neither has a value, the optional feedback input value is used.
 

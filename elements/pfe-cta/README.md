@@ -74,7 +74,7 @@ Changes the context of the call-to-action to one of 3 possible themes:
 - `dark`
 - `saturated`
 
-This will override any context being passed from a parent component and will add a style attribute setting the `--theme` variable.
+This will override any context being passed from a parent component and will add a style attribute setting the `--context` variable.
 
 **`pfe-priority`**
 Indicates the importance of this call-to-action in the context of the page. Will also influence how the call-to-action is styled.

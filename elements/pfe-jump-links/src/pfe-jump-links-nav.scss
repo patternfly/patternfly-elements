@@ -198,7 +198,7 @@ pfe-accordion-header {
 
   @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
     background-color: pfe-var(surface--lightest);
-    --theme: light;
+    --context: light;
   }
   @media(min-width: #{pfe-breakpoint(lg)}) {
     visibility: collapse !important;

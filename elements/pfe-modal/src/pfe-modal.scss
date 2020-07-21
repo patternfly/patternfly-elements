@@ -61,7 +61,7 @@ $LOCAL-VARIABLES: (
 		}
 	}
 	&__window {
-		--theme: #{pfe-local(theme)};
+	 --context: #{pfe-local(theme)};
 
 		position: relative;
 		max-width: pfe-local(MaxWidth--mobile);

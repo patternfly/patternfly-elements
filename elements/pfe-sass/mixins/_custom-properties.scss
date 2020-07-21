@@ -133,47 +133,47 @@
 /// ```
 /// :host([pfe-color="darker"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
-///   --theme: dark;
+///   --context: dark;
 /// }
 /// 
 /// :host([pfe-color="darkest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darkest, #131313);
-///   --theme: dark;
+///   --context: dark;
 /// }
 /// 
 /// :host([pfe-color="base"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--base, #dfdfdf);
-///   --theme: light;
+///   --context: light;
 /// }
 /// 
 /// :host([pfe-color="lighter"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lighter, #ececec);
-///   --theme: light;
+///   --context: light;
 /// }
 /// 
 /// :host([pfe-color="lightest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lightest, #fff);
-///   --theme: light;
+///   --context: light;
 /// }
 /// 
 /// :host([pfe-color="accent"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--accent, #ee0000);
-///   --theme: saturated;
+///   --context: saturated;
 /// }
 /// 
 /// :host([pfe-color="complement"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--complement, #0477a4);
-///   --theme: saturated;
+///   --context: saturated;
 /// }
 /// ```
 /// ===========================================================================
 @mixin pfe-surfaces($surfaces: $SURFACE, $attr-name: #{$repo}-color) {
     @each $color in $surfaces {
-        $theme: #{pfe-get-theme(surface--#{$color}--theme)};
+        $theme: #{pfe-get-theme(surface--#{$color}--context)};
         :host([#{$attr-name}="#{$color}"]) {
             @include pfe-print-local((
                 BackgroundColor: pfe-var(surface--#{$color}),
-                theme: pfe-var(surface--#{$color}--theme, #{$theme})
+                theme: pfe-var(surface--#{$color}--context, #{$theme})
             ));
             @extend %fallback-surface;
         }

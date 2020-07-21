@@ -94,7 +94,7 @@ class PFElement extends HTMLElement {
     this.context_set(theme);
 
     // For each nested, already upgraded component
-    // set the context based on the child's value of --theme
+    // set the context based on the child's value of --context
     // Note: this prevents contexts from parents overriding
     // the child's context should it exist
     [...children].map(child => {

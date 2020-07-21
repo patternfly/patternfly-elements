@@ -4,7 +4,7 @@
 
 :root {
     @each $name, $color in $pfe-colors {
-        --theme--#{$name}: #{$color};
+        --context--#{$name}: #{$color};
     }
 }
 
@@ -49,7 +49,7 @@
     // UI styles, not link
     @if str-starts-with(#{first($list)}, "ui") and not (str-starts-with(#{first($list)}, "link")) {
         #{unquote($context)}.#{first($list)}#{unquote($state)} {
-            #{$property}: var(--theme--#{$name}, #{$color});
+            #{$property}: var(--context--#{$name}, #{$color});
             @if str-index($string: $name, $substring: "text") == null {
                 &::after {
                     content: "#{$name}";
@@ -66,7 +66,7 @@
             } @else if $theme == light {
                 color: #{pfe-var(text)};
             } @else {
-                #{$property}: var(--theme--#{$name}, #{$color});
+                #{$property}: var(--context--#{$name}, #{$color});
             }
             @if str-index($string: $name, $substring: "text") == null {
                 &::after {

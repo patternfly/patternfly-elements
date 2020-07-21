@@ -92,11 +92,11 @@ Here's an example of colors from a theme, alongside the named version of the app
 ```css
 :root {
   --pfe-theme--color--surface--lighter: #f0f0f0;
-  --pfe-theme--color--surface--lighter--theme: light;
+  --pfe-theme--color--surface--lighter--context: light;
   --pfe-theme--color--surface--darkest: #1a1a1a;
-  --pfe-theme--color--surface--darkest--theme: dark;
+  --pfe-theme--color--surface--darkest--context: dark;
   --pfe-theme--color--surface--accent: #ee0000;
-  --pfe-theme--color--surface--accent--theme: saturated;
+  --pfe-theme--color--surface--accent--context: saturated;
 }
 ```
 

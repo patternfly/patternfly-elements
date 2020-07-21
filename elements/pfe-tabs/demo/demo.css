@@ -67,7 +67,7 @@ section.pfe-l-grid {
 
 .dark-background {
     background-color: #151515;
-    --theme: dark;
+    --context: dark;
 }
 
 .floating-card {

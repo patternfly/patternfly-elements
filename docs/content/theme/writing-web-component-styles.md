@@ -85,7 +85,7 @@ This mixin will compile to the following CSS, one entry for each supported surfa
 ```
 :host([pfe-color="darker"]) {
   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
-  --theme: dark;
+  --context: dark;
 }
 ```
 

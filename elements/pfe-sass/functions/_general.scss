@@ -61,13 +61,13 @@
 /// @use -
 /// ```
 /// .my-custom-red-container {
-///   --theme: #{ pfe-get-theme(surface--accent--theme) };
+///   --context: #{ pfe-get-theme(surface--accent--context) };
 /// }
 /// ```
 /// will return
 /// ```
 /// .my-custom-red-container {
-///   --theme: saturated;
+///   --context: saturated;
 /// }
 /// ```
 @function pfe-get-theme($context) {

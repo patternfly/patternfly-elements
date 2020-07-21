@@ -10,7 +10,7 @@
 /// @example Usage in a container component, i.e. pfe-card:
 /// ```
 ///    :host {
-///      @include pfe-set-broadcast-theme(dark);
+///      @include pfe-set-broadcast(dark);
 ///    }
 /// ```
 /// @output:
@@ -28,7 +28,7 @@
 ///    }
 /// ```
 /// ===========================================================================
-@mixin pfe-set-broadcast-theme($theme, $broadcast: $BROADCAST-VARS) {
+@mixin pfe-set-broadcast($theme, $broadcast: $BROADCAST-VARS) {
     @each $type in $broadcast {
         $list: ();
         $string: "";
@@ -169,11 +169,11 @@
 /// ===========================================================================
 @mixin pfe-surfaces($surfaces: $SURFACE, $attr-name: #{$repo}-color) {
     @each $color in $surfaces {
-        $context: #{pfe-get-theme(surface--#{$color}--context)};
+        $context: #{pfe-get-context(surface--#{$color}--context)};
         :host([#{$attr-name}="#{$color}"]) {
             @include pfe-print-local((
                 BackgroundColor: pfe-var(surface--#{$color}),
-                context: pfe-var(surface--#{$color}--context, #{$theme})
+                context: pfe-var(surface--#{$color}--context, #{$context})
             ));
             @extend %fallback-surface;
         }
@@ -215,11 +215,11 @@
 /// ```
 /// ...as well as all the values for :host([on="saturated"])  and  :host([on="light"]) 
 /// ===========================================================================
-@mixin pfe-theme-contexts($contexts: $CONTEXT, $ie-fallback: true) {
+@mixin pfe-contexts($contexts: $CONTEXT, $ie-fallback: true) {
     // Helper attributes to aid in theming
-    @each $theme in $contexts {
-        :host([on="#{$theme}"]) {
-            @include pfe-set-broadcast-theme($theme);
+    @each $c in $contexts {
+        :host([on="#{$c}"]) {
+            @include pfe-set-broadcast($c);
         }
     }
     @if $ie-fallback {

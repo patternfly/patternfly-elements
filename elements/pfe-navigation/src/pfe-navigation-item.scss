@@ -281,7 +281,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 .pfe-navigation-item__tray {
   --pfe-navigation--FontWeight: #{pfe-var(text)};
 
-  @include pfe-set-broadcast-theme(light);
+  @include pfe-set-broadcast(light);
 
   transition: all pfe-var(animation-timing);
   box-sizing: border-box;

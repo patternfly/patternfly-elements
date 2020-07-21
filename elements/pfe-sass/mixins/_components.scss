@@ -21,12 +21,12 @@
       )
     );
 
-    @if $theme == dark { // Dark theme
+    @if $context == dark { // Dark context
       $accordion-styles: (
         accent: pfe-var(ui-base--on-dark)
       );
     }
-    @else if $theme == saturated { // Saturated theme
+    @else if $context == saturated { // Saturated context
       $accordion-styles: (
         accent: pfe-var(ui-base--on-saturated)
       );
@@ -41,12 +41,11 @@
     }
   }
   @else { // Expanded state
-    // Shared variables for all themes
     $accordion-styles: (
       BorderColor:         pfe-var(surface--border),
       BorderRightWidth:    pfe-var(surface--border-width),
       BorderLeftWidth:     pfe-var(surface--border-width--heavy),
-      // Defaults for light theme
+      // Defaults for light context
       BackgroundColor:     rgba(255, 255, 255, 1),
       Color:               pfe-var(text),
       BorderColor--accent: pfe-local(accent),
@@ -54,7 +53,7 @@
       ZIndex: 3
     );
 
-    @if $theme == dark { // Dark theme
+    @if $context == dark { // Dark context
       $accordion-styles: (
         BackgroundColor:    rgba(247, 247, 249, .1),
         Color:               pfe-broadcasted(text),
@@ -62,7 +61,7 @@
         BoxShadow: none
       );
     }
-    @else if $theme == saturated { // Saturated theme
+    @else if $context == saturated { // Saturated context
       $accordion-styles: (
         BackgroundColor:    rgba(0, 0, 0, 0.2),
         Color:               pfe-broadcasted(text),
@@ -162,7 +161,7 @@
     BorderTopWidth: 0
   );
 
-  @if $theme == "light" { // Light theme
+  @if $context == "light" { // Light context
     $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       BoxShadow: 0 5px pfe-var(surface--border-width--heavy) rgba(140, 140, 140, 0.35)
     ));

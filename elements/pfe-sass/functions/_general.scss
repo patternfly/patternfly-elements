@@ -61,7 +61,7 @@
 /// @use -
 /// ```
 /// .my-custom-red-container {
-///   --context: #{ pfe-get-theme(surface--accent--context) };
+///   --context: #{ pfe-get-context(surface--accent--context) };
 /// }
 /// ```
 /// will return
@@ -70,6 +70,6 @@
 ///   --context: saturated;
 /// }
 /// ```
-@function pfe-get-theme($context) {
+@function pfe-get-context($context) {
     @return #{map-get($pfe-colors, $context)};
 }

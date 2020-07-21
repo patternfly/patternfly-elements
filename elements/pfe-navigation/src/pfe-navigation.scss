@@ -116,7 +116,7 @@ pfe-icon {
 
 .pfe-navigation {
   &__wrapper {
-    @include pfe-set-broadcast-theme(dark);
+    @include pfe-set-broadcast(dark);
 
     display: flex;
     position: relative; // Ensures all navigation items are aligned relative to this wrapper

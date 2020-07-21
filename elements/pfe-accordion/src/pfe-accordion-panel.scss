@@ -54,11 +54,11 @@
   }
 }
 
-@each $context in $CONTEXT {
-  :host([on="#{$context}"][expanded]),
-  :host([on="#{$context}"].animating){
-    $accordion: pfe-accordion-variables($state: expanded, $context: #{$context});
+@each $c in $CONTEXT {
+  :host([on="#{$c}"][expanded]),
+  :host([on="#{$c}"].animating){
+    $accordion: pfe-accordion-variables($state: expanded, $context: #{$c});
     @include pfe-print-local($accordion);
-    @include pfe-panel-variables($context: #{$context});
+    @include pfe-panel-variables($context: #{$c});
   }
 }

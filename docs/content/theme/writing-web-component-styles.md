@@ -182,7 +182,7 @@ You can optionally customize this set by passing in a list of just the contexts 
 
             ```
             pfe-card {
-               @include pfe-set-broadcast-theme(light);
+               @include pfe-set-broadcast(light);
             }
             ```
 

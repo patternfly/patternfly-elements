@@ -174,7 +174,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   ));
 }
 
-@include pfe-theme-contexts; // imports on="light" etc support
+@include pfe-contexts; // imports on="light" etc support
 
 /// ===========================================================================
 /// BELOW THIS POINT, LOCAL VARIABLE OVERRIDES ONLY, handled by the pfe-print-local function

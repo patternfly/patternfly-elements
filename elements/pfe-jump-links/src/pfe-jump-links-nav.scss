@@ -37,7 +37,7 @@ $LOCAL-VARIABLES: (
 
   ::slotted([slot="#{$repo}-#{$LOCAL}-nav--heading"]) {
     color: pfe-broadcasted(text);
-
+    
     margin: 0 0 pfe-var(container-spacer);
     font-size: pfe-local(FontSize, $region: heading);
     font-weight: 400;
@@ -109,7 +109,7 @@ nav {
       @media(min-width: #{pfe-breakpoint(lg)}) {
         display: none;
       }
-
+      
       &:last-child {
         padding-bottom: pfe-local(horizontal-spacer, $region: link);
       }
@@ -173,7 +173,7 @@ $accordion-styles: (
 
 pfe-accordion {
   @include pfe-print-local($accordion-styles);
-
+  
   @media(min-width: #{pfe-breakpoint(lg)}) {
     // --pfe-accordion__base--Padding: 0;
     @include pfe-print-local((
@@ -209,7 +209,7 @@ pfe-accordion-header {
 pfe-accordion-panel {
   // hide accordion left border:
   border-left-color: transparent;
-
+  
   @media(min-width: #{pfe-breakpoint(lg)}) {
     visibility: collapse;
     display: none;

@@ -32,34 +32,34 @@ $LOCAL-VARIABLES: (
 // Nested internal variables (pfe-local calls), maps cannot "self-reference"
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   tabs: (
-    BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, $region: tabs)}
+    BorderBottom: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: tabs)
   )
 ));
 
 :host {
-  display: #{pfe-local(Display)};
-  padding: #{pfe-local(Padding)};
+  display: pfe-local(Display);
+  padding: pfe-local(Padding);
 
   .tabs {  
     display: flex;
-    flex-direction: #{pfe-local(FlexDirection, $region: tabs)};
-    width: #{pfe-local(Width, $region: tabs)};
+    flex-direction: pfe-local(FlexDirection, $region: tabs);
+    width: pfe-local(Width, $region: tabs);
 
-    border-top:    #{pfe-local(BorderTop, $region: tabs)};
-    border-right:  #{pfe-local(BorderRight, $region: tabs)};
-    border-bottom: #{pfe-local(BorderBottom, $region: tabs)};
-    border-left:   #{pfe-local(BorderLeft, $region: tabs)};
+    border-top:    pfe-local(BorderTop, $region: tabs);
+    border-right:  pfe-local(BorderRight, $region: tabs);
+    border-bottom: pfe-local(BorderBottom, $region: tabs);
+    border-left:   pfe-local(BorderLeft, $region: tabs);
 
-    padding: #{pfe-local(Padding, $region: tabs)};
+    padding: pfe-local(Padding, $region: tabs);
   }
 
   .panels {
-    width: #{pfe-local(Width, $region: panels)};
+    width: pfe-local(Width, $region: panels);
 
-    padding-top: #{pfe-local(PaddingTop, $region: panels)};
-    padding-right: #{pfe-local(PaddingRight, $region: panels)};
-    padding-bottom: #{pfe-local(PaddingBottom, $region: panels)};
-    padding-left: #{pfe-local(PaddingLeft, $region: panels)};
+    padding-top: pfe-local(PaddingTop, $region: panels);
+    padding-right: pfe-local(PaddingRight, $region: panels);
+    padding-bottom: pfe-local(PaddingBottom, $region: panels);
+    padding-left: pfe-local(PaddingLeft, $region: panels);
   }
 }
 
@@ -91,7 +91,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       .tabs {
         flex-direction: column;
         width: 22.22%;
-        border-right: 1px solid #{pfe-var(surface--border)};
+        border-right: 1px solid pfe-var(surface--border);
         border-bottom: 0;
       }
 
@@ -122,8 +122,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 :host(:not([pfe-variant="earth"])) {
   @include browser-query(ie11) {
-    background-color: #{pfe-var(surface--lightest)};
-    color: #{pfe-var(text)};
+    background-color: pfe-var(surface--lightest);
+    color: pfe-var(text);
   }
 }
 

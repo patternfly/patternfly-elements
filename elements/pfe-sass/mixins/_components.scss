@@ -72,7 +72,7 @@
         BoxShadow: none
       );
     }
-
+    
     @if $variant == disclosure {
       $accordion-styles: (
         BorderLeftWidth: pfe-var(surface--border-width--heavy),

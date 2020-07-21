@@ -6,17 +6,17 @@ $LOCAL-VARIABLES: (
   BackgroundColor:       transparent,
   Color:                 pfe-var(text--muted),
   link:                  pfe-var(link),
-  text-hover:            #151515,
+  Color--hover:          #151515,
   focus:                 pfe-var(link--focus),
   highlight:             pfe-var(ui-accent),
   BorderWidth--hover:    #{pfe-var(surface--border-width--active)},
   BorderColor--hover:    pfe-var(surface--base),
-  darkBackgroundColor:   #3c3f42,
+  BackgroundColor--dark: #3c3f42,
   tab: (
     FontSize:            pfe-var(font-size),
-    PaddingTop:          calc(#{pfe-var(container-padding)}),
+    PaddingTop:          pfe-var(container-padding),
     PaddingRight:        calc(#{pfe-var(container-padding)} * 2),
-    PaddingBottom:       calc(#{pfe-var(container-padding)}),
+    PaddingBottom:       pfe-var(container-padding),
     PaddingLeft:         calc(#{pfe-var(container-padding)} * 2),
   )
 );
@@ -60,9 +60,9 @@ $LOCAL-VARIABLES: (
   }
 
   @at-root #{&}(:hover) {
-    --pfe-tabs--Color:  #{pfe-local(text-hover)};
+    --pfe-tabs--Color:  #{pfe-local(Color--hover)};
     @include browser-query(ie11) {
-      color: #{pfe-local(text-hover)};
+      color: pfe-local(Color--hover);
     }
   }
 
@@ -75,12 +75,12 @@ $LOCAL-VARIABLES: (
   @at-root #{&}([on="dark"][aria-selected="false"][pfe-variant="wind"]:hover) {
     --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
     @include browser-query(ie11) {
-      color: #{pfe-fetch(text)} !important;
+      color: pfe-fetch(text) !important;
     }
   }
 
   @at-root #{&}([aria-selected="true"]) {
-    color: #{pfe-var(text)};
+    --pfe-tabs__tab--Color: pfe-var(text);
     --pfe-tabs__tab--BorderColor: transparent;
     --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
     @include browser-query(ie11) {
@@ -269,8 +269,8 @@ $LOCAL-VARIABLES: (
 :host([on="saturated"][aria-selected="false"][pfe-variant="earth"]) {
   color: #{pfe-var(ui-disabled--text)};
 }
-:host([on="saturated"][aria-selected="false"][pfe-variant="earth"]:hover) {
-  color: #{pfe-local(text-hover)};
+:host([on="saturated"][aria-selected="false"][pfe-variant="earth"]) {
+  color: #{pfe-var(ui-disabled--text)};
 }
 
 /// ===========================================================================
@@ -415,7 +415,7 @@ $LOCAL-VARIABLES: (
 
 :host{
   @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]) {
-    --pfe-tabs--BackgroundColor: #{pfe-local(darkBackgroundColor)}; //replace with global var color in Kendalls story
+    --pfe-tabs--BackgroundColor: #{pfe-local(BackgroundColor--dark)}; //replace with global var color in Kendalls story
     color: #{pfe-var(ui-disabled)};
     @include browser-query(ie11) {
       color: #{pfe-fetch(text)} !important;

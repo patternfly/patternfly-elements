@@ -23,13 +23,12 @@ $LOCAL-VARIABLES: (
   }
 
  //updated saturated styles
-  @at-root #{&}([pfe-variant="earth"][on="saturated"]) .container{
+  @at-root #{&}([pfe-variant="earth"][on="saturated"]) .container {
     background-color: pfe-var(surface--lightest);
     color: pfe-var(text);
   }
   @at-root #{&}([pfe-variant="earth"][on="saturated"]) ::slotted(*) {
-    color: #333;
-    /* color: var(--pfe-broadcasted--text,#333); */
+    color: pfe-var(text);
 }
 
   .container {
@@ -46,7 +45,7 @@ $LOCAL-VARIABLES: (
     @include browser-query(ie11) {
       padding: 1em;
       background-color: #{map-get($pfe-colors, surface--lightest)} !important;
-      color: #{pfe-fetch(text)} !important;
+      color: pfe-fetch(text) !important;
     }
   }
 }
@@ -67,14 +66,20 @@ $LOCAL-VARIABLES: (
   }
 }
 :host([vertical][pfe-variant="earth"]) {
-  --pfe-tabs__panel--BorderTop:    0 !important;
-  --pfe-tabs__panel--BorderRight:  0;
-  --pfe-tabs__panel--BorderBottom: 0;
-  --pfe-tabs__panel--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
+  @include pfe-print-local((
+    panel: (
+      BorderTop:    0,
+      BorderRight:  0,
+      BorderBottom: 0,
+      BorderLeft:   pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border)
+    )
+  ));
 }
+
 /// ===========================================================================
 /// VERTICAL
 /// ===========================================================================
+
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([pfe-variant="wind"][vertical]) {
     --pfe-tabs__panel--Padding: #{pfe-var(container-spacer)} 0 #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 2);
@@ -92,7 +97,7 @@ $LOCAL-VARIABLES: (
 
     @include browser-query(ie11) {
       .container {
-        border-top: 1px solid #{pfe-var(surface--border)};
+        border-top: 1px solid pfe-fetch(surface--border);
       }
     }
 	}

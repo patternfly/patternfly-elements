@@ -279,24 +279,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 :host([aria-disabled="true"]) {
   @include pfe-print-local($disabled);
-
-  ::slotted(*) {
-    font-size: pfe-local(FontSize--priority);
-  }
-  
-  @include browser-query(ie11) {
-    background-color: pfe-fetch(ui-disabled);
-    border-color: pfe-fetch(ui-disabled);
-
-    ::slotted(*) {
-      color: pfe-fetch(ui-disabled--text);
-      font-size: pfe-fetch(FontSize--priority);
-    }
-
-    .pfe-cta--arrow {
-      display: none;
-    }
-  }
 }
 
 

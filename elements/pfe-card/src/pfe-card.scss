@@ -2,37 +2,27 @@
 
 $LOCAL: card;
 
-
-$variables: (
-
+$LOCAL-VARIABLES: (
   // Individual padding overrides available
   PaddingTop: calc(#{pfe-var(container-spacer)} * 2),
   PaddingRight: calc(#{pfe-var(container-spacer)} * 2),
   PaddingBottom: calc(#{pfe-var(container-spacer)} * 2),
   PaddingLeft: calc(#{pfe-var(container-spacer)} * 2),
 
-  // Combine above variables or allow single override point via variable
-  Padding: #{pfe-local(PaddingTop)} #{pfe-local(PaddingRight)} #{pfe-local(PaddingBottom)} #{pfe-local(PaddingLeft)},
-
   //-- Border settings
   BorderRadius: pfe-var(surface--border-radius),
 
-  //-- Border variable encompasses width, style, and color
-  Border: #{pfe-local(BorderWidth, 0)} #{pfe-local(BorderStyle, solid)} #{pfe-local(BorderColor, #{pfe-color(surface--border)})},
-
   //-- Color properties
-  BackgroundColor: pfe-color(surface--base),
+  BackgroundColor: pfe-var(surface--base),
+  theme: pfe-var(surface--base--theme),
   BackgroundPosition: center center,
 
   spacing: pfe-var(container-spacer),
 
-  // Internal spacing; elements inside the card (header, body, footer regions)
-  spacing--vertical: pfe-local(spacing),
-
   header: (
-    BackgroundColor: rgba(0, 0, 0, #{pfe-var(opacity)}),
-    BackgroundColor--dark: rgba(255, 255, 255, #{pfe-var(opacity)}),
-    Color:           pfe-apply-broadcast(text)
+    BackgroundColor: rgba(0, 0, 0, pfe-var(opacity)),
+    BackgroundColor--dark: rgba(255, 255, 255, pfe-var(opacity)),
+    Color:           pfe-broadcasted(text)
   ),
 
   footer: (
@@ -41,12 +31,27 @@ $variables: (
 
 );
 
-:host {
-  @include pfe-print-variables($variables);
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+  // Internal spacing; elements inside the card (header, body, footer regions)
+  spacing--vertical: pfe-local(spacing),
 
-  // Broadcasted values set to match background color
-  @include pfe-set-broadcast-theme(light);
-  --theme: light;
+  // Combine above variables or allow single override point via variable
+  Padding: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft),
+
+  //-- Border variable encompasses width, style, and color
+  Border: pfe-local(BorderWidth, 0) pfe-local(BorderStyle, solid) pfe-local(BorderColor, pfe-var(surface--border))
+));
+
+$size-small: (
+  PaddingTop:     pfe-var(container-spacer),
+  PaddingRight:   pfe-var(container-spacer),
+  PaddingBottom:  pfe-var(container-spacer),
+  PaddingLeft:    pfe-var(container-spacer)
+);
+
+:host {
+  --theme: #{pfe-local(theme)};
 
   // Start of style declarations for host element
   display: flex;
@@ -55,52 +60,49 @@ $variables: (
   // This allows the card to fill it's container if necessary
   align-self: stretch;
 
-  padding:       #{pfe-local(Padding)};
-  border:        #{pfe-local(Border)};  // @TODO add border automatically when lightest card is on lightest background?
-  border-radius: #{pfe-local(BorderRadius)};
+  padding:       pfe-local(Padding);
+  border:        pfe-local(Border);  // @TODO add automatic border when lightest card is on lightest background?
+  border-radius: pfe-local(BorderRadius);
 
   // This property ensures that children in the slots do no overflow
   // the border-radius being set on the container
   overflow: hidden;
 
   // Base colors
-  background-color:    #{pfe-local(BackgroundColor)};
-  background-position: #{pfe-local(BackgroundPosition)};
-  color: #{pfe-apply-broadcast(text)};
+  background-color:    pfe-local(BackgroundColor);
+  background-position: pfe-local(BackgroundPosition);
+  color: pfe-broadcasted(text);
 
   // Remove background color for print
   @include pfe-no-print-background;
 
   // Add the border to the card for print
   @include pfe-print-media {
-    border-radius: #{map-get($pfe-vars, surface--border-radius)};
-    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
+    border-radius: pfe-fetch(surface--border-radius);
+    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
   }
 
   @include browser-query(ie11) {
-    background-color: #{pfe-color(surface--lightest)} !important;
-    color: #{pfe-color(text)} !important;
+    background-color: pfe-var(surface--lightest) !important;
+    color: pfe-var(text) !important;
     background-image: none !important;
-    border-radius: #{map-get($pfe-vars, surface--border-radius)};
-    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
-    padding: calc(#{pfe-var(container-spacer)});
+    border-radius: pfe-fetch(surface--border-radius);
+    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
+    padding: pfe-var(container-spacer);
   }
 }
 
-// Pull in pfe-color settings for all supported surface colors
+// Pull in pfe-var settings for all supported surface colors
 @include pfe-surfaces;
 
 @include pfe-theme-contexts; // imports on="light" etc support
 
 :host([pfe-size="small"]) {
-  --pfe-card--PaddingTop:     #{pfe-var(container-spacer)};
-  --pfe-card--PaddingRight:   #{pfe-var(container-spacer)};
-  --pfe-card--PaddingBottom:  #{pfe-var(container-spacer)};
-  --pfe-card--PaddingLeft:    #{pfe-var(container-spacer)};
+  @include pfe-print-local($size-small);
 }
 
 :host([pfe-border]:not([pfe-border="false"])) {
-  --pfe-card--BorderWidth:   #{map-get($pfe-vars, surface--border-width)};
+  --pfe-#{$LOCAL}--BorderWidth:   #{pfe-fetch(surface--border-width)};
 }
 
 // Targets the wrappers in the shadow DOM
@@ -166,14 +168,14 @@ $variables: (
     :host([on="dark"]) & {
         // Declare the header background color
       background-color: #{pfe-local(
-          $cssvar: BackgroundColor--dark, 
+          $cssvar: BackgroundColor--dark,  
           $region: header
       )};
-          // $fallback: rgba(255, 255, 255, #{pfe-var(opacity)})
+      // $fallback: rgba(255, 255, 255, #{pfe-var(opacity)})
     }
     @include browser-query(ie11) {
       background-color: #{map-get($pfe-colors, surface--lighter)} !important;
-      color: #{pfe-color(text)} !important;
+      color: #{pfe-var(text)} !important;
     }
 
     // Margin styles on header region
@@ -240,10 +242,10 @@ $variables: (
     margin-top: auto; // This allows the footer to move to the very bottom
 
     display: flex;
-    flex-direction: #{pfe-local($cssvar: Row, $region: footer, $fallback: row)};
-    flex-wrap: #{pfe-local($cssvar: Wrap, $region: footer, $fallback: wrap)};
+    flex-direction: #{pfe-local(Row, row, $region: footer)};
+    flex-wrap: #{pfe-local(Wrap, wrap, $region: footer)};
     // Aligns buttons and CTAs
-    align-items: #{pfe-local($cssvar: AlignItems, $region: footer, $fallback: baseline)};
+    align-items: #{pfe-local(AlignItems, baseline, $region: footer)};
 
     ::slotted([pfe-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);

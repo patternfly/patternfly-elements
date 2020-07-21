@@ -52,9 +52,20 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
 .card-layout .cta-align > * {
   margin-top: 10px;
   margin-left: 20px;
-  @supports (display: grid) {
+}
+
+@supports (display: grid) {
+  .cta-layout > *:not([class~="layout"]),
+  .card-layout .cta-align > * {
     margin-top: 0;
     margin-left: 0;
+  }
+}
+
+@supports (display: grid) {
+  .cta-align {
+    display: grid;
+    grid-gap: 10px;
   }
 }
 

@@ -1,7 +1,4 @@
-// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
-@import "../../pfe-sass/pfe-sass";
-
-$LOCAL: accordion;
+@import "shared-assets";
 
 /// ===========================================================================
 /// DEFAULT ACCORDION PANEL
@@ -21,7 +18,19 @@ $LOCAL: accordion;
 .container {
   @include pfe-clearfix;
   @include pfe-panel-container;
-  --pfe-accordion--panel-container--Padding: 0 calc(#{pfe-local(base--Padding)} * 3) #{pfe-local(base--Padding)} calc(#{pfe-local(base--Padding)} * 1.5);
+  @include pfe-print-local((
+    panel-container: (
+      Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) #{pfe-local(Padding, $region: base)} calc(#{pfe-local(Padding, $region: base)} * 1.5)
+    )
+  ));
+
+  :host([pfe-disclosure="true"]) & {
+    @include pfe-print-local((
+      panel-container: (
+        Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) pfe-local(Padding, $region: base) calc((#{pfe-local(Padding, $region: base)} * 1.5) - 4px)
+      )
+    ));
+  }
 }
 
 :host(:last-of-type[expanded]) {
@@ -34,26 +43,22 @@ $LOCAL: accordion;
 
 :host([expanded]),
 :host(.animating) {
-  @include pfe-accordion-variables($state: expanded);
+  $accordion: pfe-accordion-variables($state: expanded);
+  @include pfe-print-local($accordion);
   @include pfe-panel-variables;
   @include pfe-collapsible($state: open);
   @include browser-query(ie11) {
     border-top-width: 0;
-    border-left-color: #{pfe-color(ui-accent)};
-    border-right-color: #{pfe-color(surface--border)};
+    border-left-color: pfe-var(ui-accent);
+    border-right-color: pfe-var(surface--border);
   }
 }
 
 @each $context in $THEMES {
   :host([on="#{$context}"][expanded]),
   :host([on="#{$context}"].animating){
-    @include pfe-accordion-variables($state: expanded, $theme: #{$context});
+    $accordion: pfe-accordion-variables($state: expanded, $theme: #{$context});
+    @include pfe-print-local($accordion);
     @include pfe-panel-variables($theme: #{$context});
-  }
-}
-
-:host([pfe-disclosure="true"]) {
-  .container {
-    --pfe-accordion--panel-container--padding: 0 calc(#{pfe-local(base--Padding)} * 3) #{pfe-local(base--Padding)} calc((#{pfe-local(base--Padding)} * 1.5) - 4px);
   }
 }

@@ -1,8 +1,8 @@
 @import "_shared-assets";
 
-$nav-item-variables: (
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   BackgroundColor: transparent,
-  Color:           #{pfe-color(text--on-dark)},
+  Color:           #{pfe-var(text--on-dark)},
   BorderColor:     transparent,
   BorderTopColor:  transparent,
   MinWidth:        auto,
@@ -16,21 +16,18 @@ $nav-item-variables: (
     MaxWidth: 100%
   ),
   tray: (
-    BackgroundColor:  #{pfe-color(surface--lightest)},
-    Color:            #{pfe-color(text)}
+    BackgroundColor:  #{pfe-var(surface--lightest)},
+    Color:            #{pfe-var(text)}
   )
-);
-$variables: map-merge($variables, $nav-item-variables);
+));
 
 :host {
-  @include pfe-print-variables($variables);
-
   display: flex;
   flex-direction: column;
   line-height: 1.2;
 
   height: 100%;
-  min-width: #{pfe-local(MinWidth)};
+  min-width: pfe-local(MinWidth);
 
   @media screen and (max-width: #{pfe-breakpoint(xl)}) {
     width: 100%;
@@ -46,17 +43,17 @@ $variables: map-merge($variables, $nav-item-variables);
 
 // Indicates this is the current section the user is visiting
 :host([aria-current="location"]) {
-  --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
+  --pfe-navigation--BorderTopColor: #{pfe-var(surface--accent)};
 }
 
 // When the navigation item is expanded
 :host(.expanded) {
   --pfe-navigation__trigger-icon--Visible: visible;
-  --pfe-navigation--BorderColor:     #{pfe-color(surface--lightest)};
-  --pfe-navigation--BorderTopColor:  #{pfe-color(surface--accent)};
+  --pfe-navigation--BorderColor:     #{pfe-var(surface--lightest)};
+  --pfe-navigation--BorderTopColor:  #{pfe-var(surface--accent)};
 
-  --pfe-navigation--BackgroundColor: #{pfe-color(surface--lightest)};
-  --pfe-navigation--Color: #{pfe-color(text)};
+  --pfe-navigation--BackgroundColor: #{pfe-var(surface--lightest)};
+  --pfe-navigation--Color: #{pfe-var(text)};
 }
 
 // ---------------------//
@@ -101,7 +98,7 @@ $variables: map-merge($variables, $nav-item-variables);
   display: flex;
   margin: 0 auto;
   align-items: center;
-  max-width: #{pfe-local($cssvar: Width, $fallback: 100%)};
+  max-width: pfe-local(Width, $fallback: 100%);
 }
 
 /* ----------------- */
@@ -133,13 +130,13 @@ $variables: map-merge($variables, $nav-item-variables);
     )};
   }
 
-  border-top:         #{pfe-var(surface--border-width--heavy)} #{pfe-var(surface--border-style)} #{pfe-local(BorderTopColor)};
-  border-right:       #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
-  border-bottom:      #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
-  border-left:        #{pfe-var(surface--border-width)} dashed #{pfe-local(BorderColor)};
-  background-color:   #{pfe-local(BackgroundColor)};
-  color:              #{pfe-local(Color)};
-  padding:            #{pfe-local($cssvar: Padding, $region: trigger)};
+  border-top:         pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) pfe-local(BorderTopColor);
+  border-right:       pfe-var(surface--border-width) dashed pfe-local(BorderColor);
+  border-bottom:      pfe-var(surface--border-width) dashed pfe-local(BorderColor);
+  border-left:        pfe-var(surface--border-width) dashed pfe-local(BorderColor);
+  background-color:   pfe-local(BackgroundColor);
+  color:              pfe-local(Color);
+  padding:            pfe-local(Padding, $region: trigger);
   position:           relative;
   display:            flex;
   flex-grow:          1;
@@ -147,16 +144,16 @@ $variables: map-merge($variables, $nav-item-variables);
   flex-wrap:          nowrap;
   align-items:        center;
   justify-content:    center;
-  transition:         all #{pfe-var(animation-timing)};
+  transition:         all pfe-var(animation-timing);
   outline:            none;
   cursor:             pointer;
 
   &:hover {
-    --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
+    --pfe-navigation--BorderTopColor: #{pfe-var(surface--accent)};
     --pfe-navigation__trigger-icon--Visible: visible;
 
     :host([variant="wind"]) & {
-      --pfe-navigation--Color: #{pfe-color(link--hover)};
+      --pfe-navigation--Color: #{pfe-var(link--hover)};
     }
 
     :host([has_tray]:not([pfe-icon]):not([is_nested]):not(.expanded)) & {
@@ -172,11 +169,11 @@ $variables: map-merge($variables, $nav-item-variables);
   }
 
   &:focus {
-    --pfe-navigation--BorderTopColor: #{pfe-color(surface--accent)};
-    --pfe-navigation--BorderColor:    #{pfe-color(surface--lightest)};
+    --pfe-navigation--BorderTopColor: #{pfe-var(surface--accent)};
+    --pfe-navigation--BorderColor:    #{pfe-var(surface--lightest)};
 
     :host([variant="wind"]) & {
-      --pfe-navigation--Color: #{pfe-color(link--focus)};
+      --pfe-navigation--Color: #{pfe-var(link--focus)};
     }
   }
 
@@ -184,22 +181,23 @@ $variables: map-merge($variables, $nav-item-variables);
   :host(:not([pfe-icon])) &::after {
     display: block;
     content: " ";
-    visibility: #{pfe-local($cssvar: Visible, $region: trigger-icon, $fallback: hidden)};
+    visibility: pfe-local(Visible, $region: trigger-icon, $fallback: hidden);
 
-    @include pfe-arrow(down, #{pfe-color(feedback--default)}, $width: 6px, $height: 6px);
+    @include pfe-arrow(down, #{pfe-var(feedback--default)}, $width: 6px, $height: 6px);
     position: absolute;
     bottom: calc(#{pfe-var(container-spacer)} / 2) ;
   }
 
   // At mobile if inside the main context, update the color to a text color
   :host([is_nested]:not([parent_hidden])) & {
-    --pfe-navigation--Color: #{pfe-color(text)};
+    --pfe-navigation--Color: #{pfe-var(text)};
 
     @each $prop in $BROADCAST-VARS {
-      --pfe-broadcasted--#{$prop}: #{pfe-local($cssvar: Color, $region: tray)};
+      --pfe-broadcasted--#{$prop}: #{pfe-local(Color, $region: tray)};
     }
 
-    @include pfe-accordion-variables;
+    $accordion: pfe-accordion-variables;
+    @include pfe-print-local($accordion);
     @include pfe-trigger;
 
     box-sizing: border-box;
@@ -207,7 +205,8 @@ $variables: map-merge($variables, $nav-item-variables);
   }
 
   :host([is_nested].expanded:not([parent_hidden])) & {
-    @include pfe-accordion-variables($state: expanded);
+    $accordion: pfe-accordion-variables($state: expanded);
+    @include pfe-print-local($accordion);
   }
 
   :host([is_nested][last]:not(.expanded):not([parent_hidden])) & {
@@ -226,7 +225,7 @@ $variables: map-merge($variables, $nav-item-variables);
     }
     :host([is_nested]:not([parent_hidden])) & {
       --pfe-navigation__trigger-icon--Visible: visible;
-      border-color: #{pfe-local(Color)};
+      border-color: pfe-local(Color);
     }
 
     :host([is_nested]:not([has_tray]):not([parent_hidden])) & {
@@ -237,7 +236,7 @@ $variables: map-merge($variables, $nav-item-variables);
   // The wind variant is used to render an icon with text inline, direct links
   :host([variant="wind"]) & {
     --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} / 2) 0 calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-spacer)} * 1.5);
-    --pfe-navigation--Color: #{pfe-color(link)};
+    --pfe-navigation--Color: pfe-var(link);
     --pfe-navigation--BackgroundColor: transparent !important;
 
     flex-direction: row;
@@ -280,11 +279,11 @@ $variables: map-merge($variables, $nav-item-variables);
 /*    TRAY STYLES    */
 /* ----------------- */
 .pfe-navigation-item__tray {
-  --pfe-navigation--FontWeight:             #{pfe-color(text)};
+  --pfe-navigation--FontWeight: #{pfe-var(text)};
 
   @include pfe-set-broadcast-theme(light);
 
-  transition: all #{pfe-var(animation-timing)};
+  transition: all pfe-var(animation-timing);
   box-sizing: border-box;
 
   display: none;
@@ -310,10 +309,10 @@ $variables: map-merge($variables, $nav-item-variables);
     top: 100%;
     left: 0;
 
-    background-color: #{pfe-local($cssvar: BackgroundColor, $region: tray)};
-    color:            #{pfe-local($cssvar: Color, $region: tray)};
+    background-color: pfe-local(BackgroundColor, $region: tray);
+    color:            pfe-local(Color, $region: tray);
     //mobile tray padding
-    padding: #{pfe-local($cssvar: Padding, $region: tray)};
+    padding: pfe-local(Padding, $region: tray);
     width: 100%;
     max-height: calc(100vh - #{pfe-local(Height)});
     overflow-x: hidden;
@@ -332,7 +331,8 @@ $variables: map-merge($variables, $nav-item-variables);
   }
 
   :host([is_nested].expanded:not([parent_hidden])) & {
-    @include pfe-accordion-variables($state: expanded);
+    $accordion: pfe-accordion-variables($state: expanded);
+    @include pfe-print-local($accordion);
     @include pfe-panel-variables;
     @include pfe-collapsible($state: open);
   }
@@ -366,7 +366,7 @@ $variables: map-merge($variables, $nav-item-variables);
 }
 
 :host([is_nested]) [slot="trigger"] > a {
-  color: #{pfe-color(text)} !important;
+  color: pfe-var(text) !important;
 }
 
 :host([pfe-icon=web-mobile-menu]) {
@@ -376,7 +376,7 @@ $variables: map-merge($variables, $nav-item-variables);
 
 :host([is_nested][parent_hidden][pfe-full-width]) {
   .pfe-navigation-item__tray {
-    padding: #{pfe-local($cssvar: Padding, $region: tray)} 0 #{pfe-local($cssvar: Padding, $region: tray)} 0;
+    padding: pfe-local(Padding, $region: tray) 0 pfe-local(Padding, $region: tray);
   }
 }
 

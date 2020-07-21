@@ -4,7 +4,7 @@
     "className": "PfeCta",
     "elementName": "pfe-cta"
   },
-  "version": "1.0.0-prerelease.50",
+  "version": "1.0.0-prerelease.51",
   "publishConfig": {
     "access": "public"
   },
@@ -39,7 +39,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.50"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.50",
+    "@patternfly/pfelement": "^1.0.0-prerelease.51"
   },
   "devDependencies": {
     "@patternfly/pfe-sass": "^1.0.0-prerelease.50"

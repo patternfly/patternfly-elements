@@ -4,7 +4,7 @@
     "className": "PfeMarkdown",
     "elementName": "pfe-markdown"
   },
-  "version": "1.0.0-prerelease.52",
+  "version": "1.0.0-prerelease.53",
   "description": "Markdown element for PatternFly Elements",
   "repository": {
     "type": "git",
@@ -43,7 +43,7 @@
     "marked": "^0.6.1"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.52"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.53"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

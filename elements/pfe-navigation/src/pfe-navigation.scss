@@ -140,6 +140,10 @@
     color: #151515;
     background: #fff;
     box-shadow: inset 0 4px 0 0 #e00;
+    &:focus,
+    &:hover {
+      @include focus-styles(#000, 0px);
+    }
   }
 }
 
@@ -291,17 +295,18 @@
     color: #fff;
   }
 
-  // @todo: remove the comment below
-  // LoVe Fears HAte
+  // added to avoid jumpiness when focus/hover styles are active
+  border: 1px solid transparent;
 
   // added border to focus and hover rules bc focus and hover should be the same for a11y and usibility
   // need to regroup on this and discuss with designer and make sure they approve
   &:focus,
   &:hover {
-    @include focus-styles(#fff, 0px);
+    @include focus-styles(#000, 1px);
 
     @include breakpoint('nav-break') {
       box-shadow: inset 0 4px 0 0 #e00;
+      @include focus-styles(#fff, 0px);
     }
   }
 
@@ -317,8 +322,11 @@
 
     &:focus,
     &:hover {
+      @include focus-styles(#000, 1px);
+
       @include breakpoint('nav-break') {
         box-shadow: inset 0 4px 0 0 #e00;
+        @include focus-styles(#fff, 0px);
       }
     }
 

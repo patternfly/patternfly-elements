@@ -170,7 +170,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 :host([pfe-priority]),
 :host([aria-disabled="true"]) {
   @include pfe-print-local((
-    Padding: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 2)
+    Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2)
   ));
 }
 

@@ -105,7 +105,7 @@ Inside the stylesheet for a content component, the following snippet will allow 
 ```
   @import "../../pfe-sass/pfe-sass";
 
-  // Pull in all themes with broadcast variables
+  // Pull in all contexts with broadcast variables
   @include theme-contexts;
 ```
 
@@ -131,12 +131,12 @@ This mixin will expand to the following in your compiled CSS, one entry for each
 }
 ```
 
-You can optionally customize this set by passing in a list of just the themes you would like supported; you can also optionally turn off fallback support for older browsers.
+You can optionally customize this set by passing in a list of just the contexts you would like supported; you can also optionally turn off fallback support for older browsers.
 ```
   @import "../../pfe-sass/pfe-sass";
 
-  // Pull in all themes with broadcast variables
-  @include theme-contexts($themes: (light, dark), $fallback: false);
+  // Pull in all contexts with broadcast variables
+  @include theme-contexts($contexts: (light, dark), $fallback: false);
 ```
 
 

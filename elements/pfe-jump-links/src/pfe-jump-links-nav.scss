@@ -230,7 +230,7 @@ $LOCAL: $temp;
 
 :host([pfe-color="darkest"]) {
   @include pfe-print-local((
-    theme: dark,
+    context: dark,
     BackgroundColor: pfe-var(surface--darkest)
   ));
 

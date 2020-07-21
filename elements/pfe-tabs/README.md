@@ -72,7 +72,7 @@ Sets and reflects the currently selected tab index.
 
 **`pfe-theme`** (observed)
 
-Changes the context of the call-to-action to one of 3 possible themes:
+Changes the context of the call-to-action to one of 3 possible contexts:
 - `light` (default)
 - `dark`
 - `saturated`

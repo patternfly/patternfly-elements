@@ -37,7 +37,7 @@ Add the content for your accordion panel here.
 ## Attributes
 
 **`pfe-theme`**
-Changes the context of the accordion to one of 3 possible themes:
+Changes the context of the accordion to one of 3 possible contexts:
 - `light` (default)
 - `dark`
 - `saturated`

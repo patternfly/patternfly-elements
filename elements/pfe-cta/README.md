@@ -68,7 +68,7 @@ We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe
 ## Attributes
 
 **`pfe-theme`**
-Changes the context of the call-to-action to one of 3 possible themes:
+Changes the context of the call-to-action to one of 3 possible contexts:
 
 - `light` (default)
 - `dark`

@@ -252,7 +252,7 @@ Be sure to browser test within your own site or application. If you run into any
 
 ### How should I indicate context for my components, for example, a change in background color that would need a lighter text color?
 
-When setting a background color from outside of a web component, set the `--context` variable to `light`, `dark`, or `saturated`.  This will tell the web components to attach the `on` attribute and allow them to set text and link colors appropriately.  Saturated themes tend to be red or blue tones (blue links don't work on these contexts typically).
+When setting a background color from outside of a web component, set the `--context` variable to `light`, `dark`, or `saturated`.  This will tell the web components to attach the `on` attribute and allow them to set text and link colors appropriately.  Saturated contexts tend to be red or blue tones (blue links don't work on these contexts typically).
 
 ```
 .custom-dark-band {

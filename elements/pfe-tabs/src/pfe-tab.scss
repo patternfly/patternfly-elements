@@ -137,7 +137,7 @@ $LOCAL-VARIABLES: (
 /// WIND TAB VARIANTS / DEFAULT
 /// ===========================================================================
 
-@each $theme in $THEMES { // dark, saturated, and light
+@each $theme in $CONTEXT { // dark, saturated, and light
   :host([aria-selected="true"][on="#{$theme}"]),
   :host([on="#{$theme}"]:hover),
   :host([pfe-variant="wind"][aria-selected="true"][on="#{$theme}"]),

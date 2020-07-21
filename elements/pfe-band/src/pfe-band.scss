@@ -10,7 +10,7 @@ $LOCAL-VARIABLES: (
 
   // Surface colors
   BackgroundColor:    pfe-var(surface--base),
-  theme: light,
+  context: light,
   BackgroundPosition: center center,
 
   // Border settings
@@ -43,7 +43,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 :host {
   // @include pfe-set-broadcast-theme(light);
-  --context: #{pfe-local(theme)};
+  --context: #{pfe-local(context)};
 
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {

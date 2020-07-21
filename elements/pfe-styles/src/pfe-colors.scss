@@ -26,7 +26,7 @@
     @return "";
 }
 
-@function themes($list, $color) {
+@function contexts($list, $color) {
     @if index($list, theme) {
         @return $color;
     }
@@ -38,7 +38,7 @@
     $property: background-color;
     $context: #{contexts($list)};
     $state: #{states($list)};
-    $theme: #{themes($list, $color)};
+    $context: #{contexts($list, $color)};
 
     @if length($list) > 1 {
         @if index($list, "text") {

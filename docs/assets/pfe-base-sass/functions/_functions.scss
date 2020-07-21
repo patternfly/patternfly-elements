@@ -38,7 +38,7 @@
 }
 
 // New color function to only return theme colors
-@function color( $name, $theme: "light", $opacity: 1 ) {
+@function color( $name, $context: "light", $opacity: 1 ) {
     $map: map-get($color-map, $name);
     $error: false;
     $color: null;

@@ -58,10 +58,10 @@
 }
 
 // Styles contextual to theme
-@each $context in $THEMES {
+@each $context in $CONTEXT {
   @if $context != light {
     :host([on="#{$context}"]) button[aria-expanded="true"] {
-      $accordion: pfe-accordion-variables($state: expanded, $theme: #{$context});
+      $accordion: pfe-accordion-variables($state: expanded, $context: #{$context});
       @include pfe-print-local($accordion);
     }
   }

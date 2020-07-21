@@ -2,12 +2,10 @@
 /// Accordion-specific SASS Vars
 /// ===========================================================================
 
-@function pfe-accordion-variables($state: default, $theme: default, $variant: default) {
-  // Shared variables for all themes
+@function pfe-accordion-variables($state: default, $context: default, $variant: default) {
   $accordion-styles: ();
 
   @if $state != expanded { // Default state
-    // Shared variables for all themes
     $accordion-styles: (
       BorderColor--accent: transparent,
       BorderColor:         pfe-var(surface--border),
@@ -152,14 +150,14 @@
   }
 }
 
-@mixin pfe-trigger-last($theme: light) {
+@mixin pfe-trigger-last($context: light) {
   @include pfe-print-local((
     BorderBottomWidth: pfe-var(surface--border-width)
   ));
 }
 
 //-- Panel-specific properties
-@mixin pfe-panel-variables($theme: light) {
+@mixin pfe-panel-variables($context: light) {
   $LOCAL-VARIABLES: (
     BorderTopWidth: 0
   );

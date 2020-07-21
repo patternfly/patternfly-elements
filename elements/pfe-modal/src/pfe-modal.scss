@@ -5,7 +5,7 @@ $LOCAL: modal;
 $pfe-modal--breakpoint--medium: 640px;
 
 $LOCAL-VARIABLES: (
-	theme: light,
+	context: light,
 	MaxWidth: 70vw,
 	MinWidth: 50vw,
 	MaxWidth--mobile: 94vw,
@@ -61,7 +61,7 @@ $LOCAL-VARIABLES: (
 		}
 	}
 	&__window {
-	 --context: #{pfe-local(theme)};
+	 --context: #{pfe-local(context)};
 
 		position: relative;
 		max-width: pfe-local(MaxWidth--mobile);

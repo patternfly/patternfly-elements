@@ -16,10 +16,10 @@
   }
 }
 
-@each $context in $THEMES {
+@each $context in $CONTEXT {
   @if $context != light {
     :host([on="#{$context}"]) {
-      $context: pfe-accordion-variables($theme: #{$context});
+      $context: pfe-accordion-variables($context: #{$context});
       @include pfe-print-local($context);
     }
   }

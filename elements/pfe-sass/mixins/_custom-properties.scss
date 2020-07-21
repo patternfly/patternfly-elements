@@ -53,7 +53,7 @@
             }
         }
 
-        @if index($THEMES, $theme) != null {
+        @if index($CONTEXT, $theme) != null {
             @if $theme != "light" {
                 $context: "--on-#{$theme}";
             }
@@ -67,7 +67,7 @@
                 @warn "#{$item}#{$context} value does not currently exist.";
             }
             @else {
-                @if index($THEMES, $theme) != null {
+                @if index($CONTEXT, $theme) != null {
                     --#{$repo}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$context})};
                 }
                 @else {
@@ -169,11 +169,11 @@
 /// ===========================================================================
 @mixin pfe-surfaces($surfaces: $SURFACE, $attr-name: #{$repo}-color) {
     @each $color in $surfaces {
-        $theme: #{pfe-get-theme(surface--#{$color}--context)};
+        $context: #{pfe-get-theme(surface--#{$color}--context)};
         :host([#{$attr-name}="#{$color}"]) {
             @include pfe-print-local((
                 BackgroundColor: pfe-var(surface--#{$color}),
-                theme: pfe-var(surface--#{$color}--context, #{$theme})
+                context: pfe-var(surface--#{$color}--context, #{$theme})
             ));
             @extend %fallback-surface;
         }
@@ -185,7 +185,7 @@
 ///
 /// Prints the `on` attribute with IE11 fallbacks
 ///
-/// @param {List} themes [$THEMES] - defaults to the global $THEMES list of all supported contexts
+/// @param {List} contexts [$CONTEXT] - defaults to the global $CONTEXT list of all supported contexts
 /// @param {Boolean} ie-fallback [true] - defaults to true, prints IE11 fallbacks
 /// @example
 /// ```
@@ -215,9 +215,9 @@
 /// ```
 /// ...as well as all the values for :host([on="saturated"])  and  :host([on="light"]) 
 /// ===========================================================================
-@mixin pfe-theme-contexts($themes: $THEMES, $ie-fallback: true) {
+@mixin pfe-theme-contexts($contexts: $CONTEXT, $ie-fallback: true) {
     // Helper attributes to aid in theming
-    @each $theme in $themes {
+    @each $theme in $contexts {
         :host([on="#{$theme}"]) {
             @include pfe-set-broadcast-theme($theme);
         }

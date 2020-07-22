@@ -67,7 +67,7 @@ $LOCAL-VARIABLES: (
   ));
 }
 
-:host([pfe-status="#{$color}"]) {
+:host([pfe-status="accent"]) {
   @include pfe-print-local((
     BackgroundColor: pfe-var(ui-accent),
     Color: pfe-var(ui-accent--text)

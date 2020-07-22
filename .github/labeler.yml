@@ -1,0 +1,28 @@
+demo:
+  - examples/*
+  - elements/*/demo/*
+
+generator:
+  - generators/**/*
+
+doc:
+  - docs/**/*
+  - elements/**/*.{md,txt}
+
+functionality:
+  - elements/*/src/*.{js,html}
+
+styles:
+  - elements/*/src/*.{scss,css}
+  - tokens/**/*
+
+tests:
+  - elements/*/test/*
+
+tools:
+  - scripts/*
+  - elements/*/gulpfile.js
+  - elements/*/rollup.config.js
+  - .github/**/*
+  - ./.*
+  - ./*.{js,json,yml}

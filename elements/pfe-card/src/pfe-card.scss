@@ -2,24 +2,18 @@
 
 $LOCAL: card;
 
-
 $LOCAL-VARIABLES: (
   // These get applied to each region
   TextAlign: left,
   
   // This only applies when the card is inside a flex layout
   AlignSelf: stretch,
-
+  
   // Individual padding overrides available
   PaddingTop: calc(#{pfe-var(container-spacer)} * 2),
   PaddingRight: calc(#{pfe-var(container-spacer)} * 2),
   PaddingBottom: calc(#{pfe-var(container-spacer)} * 2),
   PaddingLeft: calc(#{pfe-var(container-spacer)} * 2),
-
-  BorderWidth: 0,
-  BorderStyle: solid,
-  BorderColor: pfe-color(surface--border),
-  BorderRadius: pfe-var(surface--border-radius),
 
   // Space between header, body, footer regions
   region--spacing: pfe-var(container-spacer),
@@ -27,15 +21,22 @@ $LOCAL-VARIABLES: (
   // Spacing internal to regions
   spacing--horizontal: calc(#{pfe-var(content-spacer)} / 2),
   spacing--vertical:   pfe-var(content-spacer),
+  
+  //-- Border settings
+  BorderWidth: 0,
+  BorderStyle: solid,
+  BorderColor: pfe-color(surface--border),
+  BorderRadius: pfe-var(surface--border-radius),
 
-  BackgroundColor: pfe-color(surface--base),
-  theme: light,
+  //-- Color properties
+  BackgroundColor: pfe-var(surface--base),
+  theme: pfe-var(surface--base--theme),
   BackgroundImage: null,
   BackgroundAttachment: null,
   BackgroundPosition: center center,
   BackgroundRepeat: null,
   BackgroundSize: null,
-
+  
   header: (
     Display: flex,
     JustifyContent: null,
@@ -58,14 +59,28 @@ $LOCAL-VARIABLES: (
   )
 );
 
-// Note: For combination variables to resolve, they must be added at the end
-$combos: (
-  Border: pfe-local(BorderWidth) pfe-local(BorderStyle) pfe-local(BorderColor),
-  BorderTop: pfe-local($cssvar: Border, $fallback: pfe-local(BorderWidth) pfe-local(BorderStyle) pfe-local(BorderColor)),
-  Padding: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft)
-);
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+  // Internal spacing; elements inside the card (header, body, footer regions)
+  spacing--vertical: pfe-local(spacing),
 
-$LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
+  // Combine above variables or allow single override point via variable
+  Padding: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft),
+
+  //-- Border variable encompasses width, style, and color
+  Border: pfe-local(BorderWidth) pfe-local(BorderStyle) pfe-local(BorderColor)
+));
+  
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+  BorderTop: pfe-local(Border)
+));
+
+$size-small: (
+  PaddingTop:     pfe-var(container-spacer),
+  PaddingRight:   pfe-var(container-spacer),
+  PaddingBottom:  pfe-var(container-spacer),
+  PaddingLeft:    pfe-var(container-spacer)
+);
 
 :host {
   --theme: #{pfe-local(theme)};
@@ -73,15 +88,16 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
+
   // This allows the card to fill it's container if necessary
-  align-self:       #{pfe-local(AlignSelf)};
+  align-self:       pfe-local(AlignSelf);
   position:         relative;
 
-  padding: #{pfe-local(PaddingTop)} #{pfe-local(PaddingRight)} #{pfe-local(PaddingBottom)} #{pfe-local(PaddingLeft)};
+  padding:       pfe-local(Padding);
 
-  border:        #{pfe-local(Border)};
-  border-top:    #{pfe-local(BorderTop)};
-  border-radius: #{pfe-local(BorderRadius)};
+  border:        pfe-local(Border);
+  border-top:    pfe-local(BorderTop);
+  border-radius: pfe-local(BorderRadius);
 
   // This property ensures that children in the slots do no overflow
   // the border-radius being set on the container
@@ -89,13 +105,13 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
   position: relative;
 
   // Base colors
-  background-image:       #{pfe-local(BackgroundImage)};
-  background-color:       #{pfe-local(BackgroundColor)};
-  background-position:    #{pfe-local(BackgroundPosition)};
-  background-repeat:      #{pfe-local(BackgroundRepeat)};
-  background-size:        #{pfe-local(BackgroundSize)};
-  background-attachment:  #{pfe-local(BackgroundAttachment)};
-  color:                  #{pfe-apply-broadcast(text)} !important;
+  background-image:    pfe-local(BackgroundImage);
+  background-color:    pfe-local(BackgroundColor);
+  background-position: pfe-local(BackgroundPosition);
+  background-repeat:   pfe-local(BackgroundRepeat);
+  background-size:     pfe-local(BackgroundSize);
+  background-attachment:  pfe-local(BackgroundAttachment);
+  color: pfe-broadcasted(text);
 
   // Add the border to the card for print
   @include pfe-print-media {
@@ -103,37 +119,34 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     background-image: none !important;
     box-shadow: none !important;
     
-    border-radius: #{map-get($pfe-vars, surface--border-radius)};
-    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
+    border-radius: pfe-fetch(surface--border-radius);
+    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
   }
 
   // Remove background color for print
   @include pfe-no-print-background;
 
   @include browser-query(ie11) {
-    background-color: #{pfe-color(surface--lightest)} !important;
-    color: #{pfe-color(text)} !important;
+    background-color: pfe-var(surface--lightest) !important;
+    color: pfe-var(text) !important;
     background-image: none !important;
-    border-radius: #{map-get($pfe-vars, surface--border-radius)};
-    border: #{map-get($pfe-vars, surface--border-width) map-get($pfe-vars, surface--border-style) map-get($pfe-colors, surface--border)};
-    padding: calc(#{pfe-var(container-spacer)});
+    border-radius: pfe-fetch(surface--border-radius);
+    border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
+    padding: pfe-var(container-spacer);
   }
 }
 
-// Pull in pfe-color settings for all supported surface colors
+// Pull in pfe-var settings for all supported surface colors
 @include pfe-surfaces;
 
 @include pfe-theme-contexts; // imports on="light" etc support
 
 :host([pfe-size="small"]) {
-  --pfe-card--PaddingTop:     #{pfe-var(container-spacer)};
-  --pfe-card--PaddingRight:   #{pfe-var(container-spacer)};
-  --pfe-card--PaddingBottom:  #{pfe-var(container-spacer)};
-  --pfe-card--PaddingLeft:    #{pfe-var(container-spacer)};
+  @include pfe-print-local($size-small);
 }
 
 :host([pfe-border]:not([pfe-border="false"])) {
-  --pfe-card--BorderWidth:   #{map-get($pfe-vars, surface--border-width)};
+  --pfe-#{$LOCAL}--BorderWidth:   #{pfe-fetch(surface--border-width)};
 }
 
 // Targets the wrappers in the shadow DOM
@@ -194,12 +207,12 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     z-index: 2;
     
     // Declare the header background color
-    background-color: #{pfe-local($region: header, $cssvar: BackgroundColor)};
-    color:            #{pfe-local($region: header, $cssvar: Color)};
-    
+    background-color: pfe-local(BackgroundColor, $region: header);
+    color:            pfe-local(Color, $region: header);
+
     @include browser-query(ie11) {
       background-color: #{map-get($pfe-colors, surface--lighter)} !important;
-      color: #{pfe-color(text)} !important;
+      color: #{pfe-var(text)} !important;
     }
 
     // Padding for the header region
@@ -285,12 +298,12 @@ $LOCAL-VARIABLES: map-collect($LOCAL-VARIABLES, $combos);
     // margin-top: auto; // This allows the footer to move to the very bottom
 
     display: flex;
-    flex-direction: #{pfe-local($region: footer, $cssvar: FlexDirection)};
-    flex-wrap: #{pfe-local($region: footer, $cssvar: FlexWrap)};
-
+    flex-direction: pfe-local(Row, row, $region: footer);
+    flex-wrap:      pfe-local(Wrap, wrap, $region: footer);
+    
     // Aligns buttons and CTAs
-    // align-items: #{pfe-local($region: footer, $cssvar: AlignItems)};
-    justify-content: #{pfe-local($region: footer, $cssvar: AlignItems)};
+    // align-items:     pfe-local(AlignItems, baseline, $region: footer);
+    justify-content: pfe-local(AlignItems, $region: footer);
 
     margin-right: calc(#{pfe-local(spacing--horizontal)} * -1);
 

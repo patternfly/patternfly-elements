@@ -44,8 +44,8 @@ There are a few options:
 1. If your site does not need to [support older browser such as IE11](https://caniuse.com/#feat=es6-module), you may load the JavaScript via: `script type="module"`. List out all the components you may include on your page, and the browser will fetch the dependencies dynamically on load. [Learn more](https://hospodarets.com/native-ecmascript-modules-the-first-overview).
 
     ```html
-    <script type="module" scr="PATH/pfe-card.min.js"></script>
-    <script type="module" scr="PATH/pfe-cta.min.js"></script>
+    <script type="module" src="PATH/pfe-card.min.js"></script>
+    <script type="module" src="PATH/pfe-cta.min.js"></script>
     ```
 
 2. Include the PatternFly Element web component and its dependencies on the page(s) or within the app.

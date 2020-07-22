@@ -360,6 +360,7 @@ class PfeNavigation extends PFElement {
 
   /**
    * Calculate the points where the main menu and secondary links should be collapsed and adds them
+   * @todo Run this if layout breaks nav-expand breakpoint and secondary-links-expand breakpoint
    */
   _addMenuBreakpoints() {
     const navigation = this.shadowRoot.getElementById("pfe-navigation__menu");

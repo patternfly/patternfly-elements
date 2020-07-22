@@ -393,12 +393,6 @@ See mixin blocks before selectors that contain the selector name and the three l
     border-top: $collapsed-border-top;
   }
 
-  // Default styles for sub-nav links
-  a {
-    display: block;
-    padding: 0.8em 24px;
-  }
-
   &:last-child {
     $collapsed-border-bottom: 1px solid #d2d2d2;
     border-bottom: $collapsed-border-bottom;
@@ -433,6 +427,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   font-size: 20px;
   font-weight: 500;
   color: #151515;
+  background: transparent;
   white-space: normal;
   transition: box-shadow 0.2s;
 }
@@ -480,11 +475,6 @@ See mixin blocks before selectors that contain the selector name and the three l
 // Top level links that have a dropdown associated with them
 .pfe-navigation__menu-link[aria-haspopup=true] {
   position: relative;
-  // @todo I don't think this block is necessary? If it is it needs to be reversed in the collapse block
-  // @include breakpoint('nav-expand') {
-  //   box-shadow: none;
-  // }
-  // @include collapse('nav') {}
 
   &:hover,
   &:focus {
@@ -504,6 +494,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     }
     @include collapse('nav') {
       box-shadow: none;
+      background: transparent;
     }
   }
 
@@ -638,7 +629,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 @mixin pfe-navigation__dropdown--mobile {
   display: block;
   font-size: 16px;
-  padding: 0;
+  padding: 12px 24px;
   background: transparent;
 }
 @mixin pfe-navigation__dropdown--desktop {
@@ -646,7 +637,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   padding: 32px 64px;
   // Fits as many columns as it can given the constraints
   // @todo evaluate layout needs and if this is a sane default
-  // grid-template-columns: 
+  // grid-template-columns:
   //   repeat(
   //     auto-fill,
   //     minmax(#{200 / 16 * 1em}, #{350 / 16 * 1em})
@@ -680,50 +671,64 @@ See mixin blocks before selectors that contain the selector name and the three l
     color: var(--pfe-theme--color--ui-complement,#464646);
   }
 
-  h1 a,
-  h2 a,
-  h3 a,
-  h4 a,
-  h5 a,
-  h6 a {
-    color: var(--pfe-theme--color--ui-complement,#464646);    
-    
-    // avoid jumpiness caused by focus/hover styles
-    border: 1px solid transparent;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0 0 0.75em;
 
-    &:focus,
-    &:hover {
-      // focus styles
-      @include focus-styles(#000, 1px);
+    a {
+      margin: 0 -12px; // Expand the hit area half of the dropdown horizontal padding
+      padding: 0 12px;
+      color: var(--pfe-theme--color--ui-complement,#464646);
+      // avoid jumpiness caused by focus/hover styles
+      border: 1px solid transparent;
 
-      color: var(--pfe-broadcasted--link--hover,#036);
-      text-decoration: underline;
+      &:focus,
+      &:hover {
+        // focus styles
+        @include focus-styles(#000, 1px);
+
+        color: var(--pfe-broadcasted--link--hover,#036);
+        text-decoration: underline;
+      }
     }
   }
 
-  li a {
-    color: var(--pfe-broadcasted--link,#06c);
+  li {
+    margin: 0 0 0.75em;
 
-    // avoid jumpiness caused by focus/hover styles
-    border: 1px solid transparent;
+    a {
+      display: inline-block;
+      margin: 0 -12px; // Expand the hit area half of the dropdown horizontal padding
+      padding: 0 12px;
+      color: var(--pfe-broadcasted--link,#06c);
 
-    &:focus,
-    &:hover {
-      // focus styles
-      @include focus-styles(#000, 1px);
+      // avoid jumpiness caused by focus/hover styles
+      border: 1px solid transparent;
 
-      color: var(--pfe-broadcasted--link--hover,#036);
-      text-decoration: underline;
+      &:focus,
+      &:hover {
+        // focus styles
+        @include focus-styles(#000, 1px);
+
+        color: var(--pfe-broadcasted--link--hover,#036);
+        text-decoration: underline;
+      }
     }
-
   }
 }
 
 .pfe-navigation__dropdown--single-column {
+  &[class] {
+    display: block;
+  }
   @include breakpoint('nav-expand') {
     padding: 16px;
     background: #fff;
-    box-shadow: 
+    box-shadow:
       var(
         --pfe-theme--box-shadow--sm,
         0 0.0625rem 0.125rem 0 rgba(19, 19, 19, 0.2)
@@ -736,8 +741,8 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 .pfe-navigation__footer {
-  $collapsed-margin: 16px;
-  $collapsed-padding: 26px 8px 16px 8px;
+  $collapsed-margin: 16px 0 0;
+  $collapsed-padding: 26px 0 16px;
   grid-column: 1 / -1; // col spans to the end of col grid line always
 
   // display: grid;
@@ -758,21 +763,33 @@ See mixin blocks before selectors that contain the selector name and the three l
   border-top: 1px solid #d3d3d3;
 
   @include breakpoint('nav-expand') {
-    // grid-auto-flow: column;
-    flex-direction: row;
-    align-items: center;
-    
+    display: block;
     margin: calc(var(--pfe-theme--container-padding,16px) * 2) 0 calc(var(--pfe-theme--container-padding,16px) * 1.5);
-    padding: calc(var(--pfe-theme--container-padding,16px) * 2.5) 0 0; 
+    padding: calc(var(--pfe-theme--container-padding,16px) * 2.5) 0 0;
   }
   @include collapse('nav') {
     margin: $collapsed-margin;
     padding: $collapsed-padding;
   }
 
-  // fix display block issue for pfe-cta links
+  a,
+  pfe-cta {
+    margin: 0 0 1em;
+
+    + a,
+    + pfe-cta {
+      @include breakpoint('nav-expand') {
+        margin-left: 1em;
+      }
+      @include collapse('nav') {
+        margin-left: 0;
+      }
+    }
+  }
+
   pfe-cta a {
-    display: inline-block;
+    display: inline-block; // Display block was causing display issues
+    margin: 0;
   }
 }
 

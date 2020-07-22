@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pfe-navigation with React</title>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script type="module" src="../dist/pfe-navigation.js"></script>
+  <script type="text/babel">
+    function ReactApp() {
+      return (
+        <pfe-navigation id="pfe-navigation">
+          <div className="pfe-navigation__overlay"></div>
+
+          <nav className="pfe-navigation" aria-label="Main Navigation">
+            <div className="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
+              <a href="#" className="pfe-navigation__logo-link">
+                <img className="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="assets/redhat--reverse.svg" width="400" alt="Redhat" />
+              </a>
+            </div>
+            <ul className="pfe-navigation__menu" id="pfe-navigation__menu">
+              <li className="pfe-navigation__menu-item">
+                <a href="#" className="pfe-navigation__menu-link" aria-haspopup="true" aria-expanded="false">
+                  Products
+                </a>
+
+                <div className="pfe-navigation__dropdown">
+                  <section>
+                    <h3>
+                      <a href="#">Platforms</a>
+                    </h3>
+                    <ul>
+                      <li>
+                        <a href="#">Red Hat Enterprise Linux</a>
+                      </li>
+                      <li>
+                        <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                      </li>
+                      <li>
+                        <a href="#">Red Hat OpenStack Platform</a>
+                      </li>
+                      <li>
+                        <a href="#">Red Hat Virtualization</a>
+                      </li>
+                    </ul>
+                  </section>
+                  <section>
+                    <h3>
+                      <a href="#">Ladders</a>
+                    </h3>
+                    <ul>
+                      <li>
+                        <a href="#">Lorem ipsum</a>
+                      </li>
+                      <li>
+                        <a href="#">Dolor sit amet</a>
+                      </li>
+                      <li>
+                        <a href="#">Wakka Wakka</a>
+                      </li>
+                    </ul>
+                  </section>
+                  <section>
+                    <h3>
+                      <a href="#">Chutes</a>
+                    </h3>
+                    <ul>
+                      <li>
+                        <a href="#">Yakkita yakkita</a>
+                      </li>
+                      <li>
+                        <a href="#">Enterprise Yakkita yakkita</a>
+                      </li>
+                      <li>
+                        <a href="#">Upstream Yakkita</a>
+                      </li>
+                      <li>
+                        <a href="#">Yakkita ME</a>
+                      </li>
+                    </ul>
+                  </section>
+                  <section>
+                    <h3>
+                      <a href="#">Platforms</a>
+                    </h3>
+                    <ul>
+                      <li>
+                        <a href="#">Red Hat Enterprise Linux</a>
+                      </li>
+                      <li>
+                        <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                      </li>
+                      <li>
+                        <a href="#">Red Hat OpenStack Platform</a>
+                      </li>
+                      <li>
+                        <a href="#">Red Hat Virtualization</a>
+                      </li>
+                    </ul>
+                  </section>
+                  <section>
+                    <h3>
+                      <a href="#">Ladders</a>
+                    </h3>
+                    <ul>
+                      <li>
+                        <a href="#">Lorem ipsum</a>
+                      </li>
+                      <li>
+                        <a href="#">Dolor sit amet</a>
+                      </li>
+                      <li>
+                        <a href="#">Wakka Wakka</a>
+                      </li>
+                    </ul>
+                  </section>
+                  <section>
+                    <h3>
+                      <a href="#">Chutes</a>
+                    </h3>
+                    <ul>
+                      <li>
+                        <a href="#">Yakkita yakkita</a>
+                      </li>
+                      <li>
+                        <a href="#">Enterprise Yakkita yakkita</a>
+                      </li>
+                      <li>
+                        <a href="#">Upstream Yakkita</a>
+                      </li>
+                      <li>
+                        <a href="#">Yakkita ME</a>
+                      </li>
+                    </ul>
+                  </section>
+
+                  <section className="pfe-navigation__footer">
+                    <pfe-cta pfe-priority="primary">
+                      <a href="#">Learn more about PFElements</a>
+                    </pfe-cta>
+
+                    <pfe-cta>
+                      <a href="https://github.com/">GitHub</a>
+                    </pfe-cta>
+                  </section>
+                </div>
+
+              </li>
+              <li className="pfe-navigation__menu-item">
+                <a href="#" className="pfe-navigation__menu-link" aria-haspopup="true" aria-expanded="false">
+                  Solutions
+                </a>
+
+                <div className="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+                  <section>
+                    <h3>
+                      <a href="#">Platforms</a>
+                    </h3>
+                    <ul>
+                      <li>
+                        <a href="#">Red Hat Enterprise Linux</a>
+                      </li>
+                      <li>
+                        <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                      </li>
+                      <li>
+                        <a href="#">Red Hat OpenStack Platform</a>
+                      </li>
+                      <li>
+                        <a href="#">Red Hat Virtualization</a>
+                      </li>
+                    </ul>
+                  </section>
+                </div>
+              </li>
+              <li className="pfe-navigation__menu-item">
+                <a href="#" className="pfe-navigation__menu-link">
+                  Learning &amp; Support
+                </a>
+              </li>
+              <li className="pfe-navigation__menu-item">
+                <a href="#" className="pfe-navigation__menu-link">
+                  Resources
+                </a>
+              </li>
+              <li className="pfe-navigation__menu-item">
+                <a href="#" className="pfe-navigation__menu-link">
+                  Red Hat &amp; Open Source
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div slot="pfe-navigation--custom-links" className="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
+            <a href="#" className="">Custom Link</a>
+          </div>
+          <div slot="pfe-navigation--search" className="pfe-navigation__search">
+            <form>
+              <label>Search</label>
+              <input type="text" placeholder="Search" />
+              <button>Search</button>
+            </form>
+          </div>
+        </pfe-navigation>
+      );
+    }
+
+    ReactDOM.render(<ReactApp />, document.querySelector("#root"));
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>

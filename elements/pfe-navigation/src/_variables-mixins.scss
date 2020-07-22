@@ -29,6 +29,15 @@ $breakpoints: (
   // @todo add support for JS nav-break
 }
 
+/// Focus indicator styles specific to pfe-navigation
+/// @param {string} $border-color Color of dashed border (white or black depending on bg-color)
+/// @param {string} $border-top-size Size of border-top (0px or 1px depending on which navigation main/mega menu
+@mixin focus-styles($border-color, $border-top-size) {
+  border: 1px dashed $border-color;
+  border-top: $border-top-size dashed $border-color;
+  outline: none;
+}
+
 /// Styles for top level buttons
 /// @todo Needs to be included in shadow dom and no-js styles
 @mixin top-level-button {
@@ -44,6 +53,7 @@ $breakpoints: (
   appearance: none;
   cursor: pointer;
   transition: box-shadow 0.25s;
+
   @include breakpoint('secondary-links-break') {
     display: flex;
     flex-direction: column;
@@ -56,10 +66,25 @@ $breakpoints: (
     color: #fff;
   }
 
-  &:hover,
-  &:focus {
+  // added to counteract jumpiness when dashed border is visible on focus and hover
+  border: 1px solid transparent;
+  border-top: 0px;
+
+  // focus styles
+  &:focus,
+  &:hover {
+    @include focus-styles(#fff, 0px);
+
     @include breakpoint('secondary-links-break') {
       box-shadow: inset 0 4px 0 0 #e00;
+    }
+  }
+
+  &[pfe-navigation-state="main-menu--open"] {
+    // @todo: fix focus-styles on mobile for accordion links and menu toggle button
+    &:focus,
+    &:hover {
+      @include focus-styles(#000, 0px);
     }
   }
 
@@ -75,5 +100,4 @@ $breakpoints: (
     }
   }
 
-  // @todo Focus styles?
 }

@@ -23,7 +23,7 @@
         &.expanded {
             @media screen and (min-width: #{pfe-breakpoint(lg)}) {
                 background-color: #{pfe-var(surface--lightest)};
-                border-top-color: #{pfe-var(surface--accent)};
+                border-top-color: #{pfe-var(ui-accent)};
             }
             [slot="trigger"] {
                 a {
@@ -117,7 +117,7 @@
         &.pfe-navigation-item {
             &:hover {
                 cursor: pointer;
-                border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-var(surface--accent)};
+                border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-var(ui-accent)};
             }
         }
 
@@ -255,7 +255,7 @@
 
             &:hover {
                 cursor: pointer;
-                border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-var(surface--accent)};
+                border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-var(ui-accent)};
             }
         }
         pfe-icon {

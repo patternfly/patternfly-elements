@@ -43,14 +43,14 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 // Indicates this is the current section the user is visiting
 :host([aria-current="location"]) {
-  --pfe-navigation--BorderTopColor: #{pfe-var(surface--accent)};
+  --pfe-navigation--BorderTopColor: #{pfe-var(ui-accent)};
 }
 
 // When the navigation item is expanded
 :host(.expanded) {
   --pfe-navigation__trigger-icon--Visible: visible;
   --pfe-navigation--BorderColor:     #{pfe-var(surface--lightest)};
-  --pfe-navigation--BorderTopColor:  #{pfe-var(surface--accent)};
+  --pfe-navigation--BorderTopColor:  #{pfe-var(ui-accent)};
 
   --pfe-navigation--BackgroundColor: #{pfe-var(surface--lightest)};
   --pfe-navigation--Color: #{pfe-var(text)};
@@ -149,7 +149,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   cursor:             pointer;
 
   &:hover {
-    --pfe-navigation--BorderTopColor: #{pfe-var(surface--accent)};
+    --pfe-navigation--BorderTopColor: #{pfe-var(ui-accent)};
     --pfe-navigation__trigger-icon--Visible: visible;
 
     :host([variant="wind"]) & {
@@ -169,7 +169,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 
   &:focus {
-    --pfe-navigation--BorderTopColor: #{pfe-var(surface--accent)};
+    --pfe-navigation--BorderTopColor: #{pfe-var(ui-accent)};
     --pfe-navigation--BorderColor:    #{pfe-var(surface--lightest)};
 
     :host([variant="wind"]) & {

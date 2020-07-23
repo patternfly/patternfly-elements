@@ -37,7 +37,8 @@
 
     <script>require([
       "../dist/pfe-navigation.umd.js",
-      "../../pfe-cta/dist/pfe-cta.umd.js"
+      "../../pfe-cta/dist/pfe-cta.umd.js",
+      "../../pfe-icon/dist/pfe-icon.umd.js"
     ])</script>
 
     <style>
@@ -100,9 +101,10 @@
     <h1><code>pfe-navigation</code></h1>
 
     <h2>Small Logo</h2>
+
     <pfe-navigation id="pfe-navigation">
-      <!-- todo: figure out to do the overlay -->
-      <div class="pfe-navigation__overlay"></div>
+      <!-- todo: figure out to do the overlay in shadow DOM -->
+      <!-- <div class="pfe-navigation__overlay"></div> -->
 
       <nav class="pfe-navigation" aria-label="Main Navigation">
         <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
@@ -303,10 +305,14 @@
       <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
         <a href="#" class="">Custom Link</a>
       </div>
+
+      <!-- @todo: add aria-hidden="true/false" toggle functionality to all buttons and top level menu items and accordion top level menu items on mobile -->
       <div slot="pfe-navigation--search" class="pfe-navigation__search">
+      <!-- @todo: move form and label for="" and label id into shadow DOM -->
+      <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
         <form>
-          <label>Search</label>
-          <input type="text" placeholder="Search" />
+          <label for="pfe-navigation__search-label">Search</label>
+          <input id="pfe-navigation__search-label" type="text" placeholder="Search" />
           <button>Search</button>
         </form>
       </div>

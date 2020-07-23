@@ -2,12 +2,11 @@
 
 $LOCAL: tabs;
 
-$variables: (
-  focus:  pfe-color(link)
+$LOCAL-VARIABLES: (
+  focus:  pfe-var(link)
 );
 
 :host {
-  @include pfe-print-variables($variables);
 
   display: block;
 
@@ -16,7 +15,7 @@ $variables: (
   }
 
   ::slotted(*) {
-    color: #{pfe-apply-broadcast(text)};
+    color: #{pfe-broadcasted(text)};
   }
 
   [tabindex] {
@@ -29,16 +28,16 @@ $variables: (
     width: 100%;
     padding: #{pfe-local($cssvar: Padding, $region: panel, $fallback: #{pfe-var(container-spacer)} 0)};
 
-    border-top:    #{pfe-local($cssvar: BorderTop, $region: panel, $fallback: 0)};
-    border-right:  #{pfe-local($cssvar: BorderRight, $region: panel, $fallback: 0)};
-    border-bottom: #{pfe-local($cssvar: BorderBottom, $region: panel, $fallback: 0)};
-    border-left:   #{pfe-local($cssvar: BorderLeft, $region: panel, $fallback: 0)};
+    border-top:    #{pfe-local(BorderTop, 0, $region: panel)};
+    border-right:  #{pfe-local(BorderRight, 0, $region: panel)};
+    border-bottom: #{pfe-local(BorderBottom, 0, $region: panel)};
+    border-left:   #{pfe-local(BorderLeft, 0, $region: panel)};
 
     @include pfe-clearfix;
     @include browser-query(ie11) {
       padding: 1em;
       background-color: #{map-get($pfe-colors, surface--lightest)} !important;
-      color: #{pfe-color(text)} !important;
+      color: #{pfe-var(text)} !important;
     }
   }
 }
@@ -49,17 +48,17 @@ $variables: (
 :host([pfe-variant="earth"]) {
   --pfe-tabs__panel--Padding: calc(#{pfe-var(container-spacer)} * 2);
 
-  --pfe-tabs__panel--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-  --pfe-tabs__panel--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
-  --pfe-tabs__panel--BorderLeft: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+  --pfe-tabs__panel--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
+  --pfe-tabs__panel--BorderBottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
+  --pfe-tabs__panel--BorderLeft: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 
 
   @include browser-query(ie11) {
     .container {
       padding: 1em;
-      border-right: 1px solid #{pfe-color(surface--border)};
-      border-bottom: 1px solid #{pfe-color(surface--border)};
-      border-left: 1px solid #{pfe-color(surface--border)};
+      border-right: 1px solid #{pfe-var(surface--border)};
+      border-bottom: 1px solid #{pfe-var(surface--border)};
+      border-left: 1px solid #{pfe-var(surface--border)};
     }
   }
 }
@@ -79,12 +78,12 @@ $variables: (
 	}
 
 	:host([pfe-variant="earth"][vertical]) {
-    --pfe-tabs__panel--BorderTop:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-color(surface--border)};
+    --pfe-tabs__panel--BorderTop:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
     height: 100%;
     
     @include browser-query(ie11) {
       .container {
-        border-top: 1px solid #{pfe-color(surface--border)};
+        border-top: 1px solid #{pfe-var(surface--border)};
       }
     }
 	}

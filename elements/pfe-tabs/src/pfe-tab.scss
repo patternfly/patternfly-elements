@@ -192,7 +192,7 @@ $LOCAL-VARIABLES: (
 :host{
   @at-root #{&}([vertical][pfe-variant="wind"]){
     --pfe-tabs__tab--BorderLeft: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
-    --pfe-tabs--TextAlign: left !important;
+    --pfe-tabs--tab--TextAlign: left !important;
     @include browser-query(ie11) {
       border-left: pfe-fetch(ui--border-width) pfe-fetch(ui--border-style) pfe-fetch(surface--border);
     }

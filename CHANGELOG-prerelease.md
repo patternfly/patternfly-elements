@@ -1,6 +1,14 @@
-## Prerelease 53 ( TBD )
+## Prerelease 54 ( TBD )
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) 
+
+## Prerelease 53 ( 2020-07-21 )
+
+- [743913e](https://github.com/patternfly/patternfly-elements/commit/743913e0620ee0ca6f0cdf95cc1ed2597b5fe6e3) fix: pfe-autocomplete prevent search-event from firing twice on option select (#989)
+- [f20b509](https://github.com/patternfly/patternfly-elements/commit/f20b5094b6eb02ed473b0e3dab2ea5280e56bda7) fix: pfe-autocomplete add composed flag to option-selected event (#988)
+- [0ffd92a](https://github.com/patternfly/patternfly-elements/commit/0ffd92a621d1082b118b84a07063bd39b9c8a904) fix: Move pfe-sass to a dev dependency (#983)
+- [a7240fd](https://github.com/patternfly/patternfly-elements/commit/a7240fdce2ec748863c41e8762d36cf29826f902) fix: pfe-health-index color support in IE11 (#993)
+- [a5f0a4a](https://github.com/patternfly/patternfly-elements/commit/a5f0a4ab203998c2e3c2568a1a7cb5d1efb3c16f) fix: pfe-cta: fix disabled rendering in IE11 (#994)
 
 ## Prerelease 52 ( 2020-07-17 )
 

@@ -63,7 +63,7 @@ $LOCAL-VARIABLES: (
   @at-root #{&}(:hover) {
     --pfe-tabs--Color:  #{pfe-local(text--hover)};
     @include browser-query(ie11) {
-      color: pfe-local(text--hover);
+      color: pfe-fetch(text--hover);
     }
   }
 

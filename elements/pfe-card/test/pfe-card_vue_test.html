@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="/components/web-component-tester/browser.js"></script>
-    <script src="/components/react/umd/react.production.min.js"></script>
-    <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
-    <script src="/components/babel-standalone/babel.min.js"></script>
+    <script src="/components/vue/dist/vue.min.js"></script>
     <script type="module" src="../dist/pfe-card.js"></script>
     <link rel="stylesheet" href="pfe-card_test.css">
-    <script type="text/babel">
-      function TestSuite() {
-        return (
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const app = new Vue({
+        el: "#root",
+        template: `
           <div className="grid">
             <pfe-card id="card1">
               <h2 slot="pfe-card--header">Card 1</h2>
@@ -39,13 +41,9 @@
               This is the card
             </pfe-card>
           </div>
-        );
-      }
-
-      ReactDOM.render(TestSuite(), document.body);
+        `
+      });
     </script>
-  </head>
-  <body>
     <script src="pfe-card_test.js"></script>
   </body>
 </html>

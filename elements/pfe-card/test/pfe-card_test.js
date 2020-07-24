@@ -104,25 +104,13 @@ const customProperties = {
   }
 };
 
-let ready = false;
-document.addEventListener("test-ready", () => ready = true);
-
 suite("<pfe-card>", () => {
   let card;
-  suiteSetup(done => {
-    if (ready) {
-      card = [...document.querySelectorAll("pfe-card")];
-      done();
-    } else {
-      document.addEventListener("test-ready", () => {
-        console.log('ready to start testing');
-        ready = true;
-        card = [...document.querySelectorAll("pfe-card")];
-        done();
-      });
-    }
+
+  suiteSetup(() => {
+    card = [...document.querySelectorAll("pfe-card")];
   });
-  
+
   test("it should upgrade", () => {
     assert.instanceOf(
       document.querySelector("pfe-card"),
@@ -149,7 +137,7 @@ suite("<pfe-card>", () => {
 
   test("it should render a header and footer when content for those slots are added dynamically", done => {
     const card = document.querySelector("#dynamicHeaderFooter");
-    
+
     const header = document.createElement("h2");
     header.setAttribute("slot", "pfe-card--header");
     header.textContent = "Card Header";

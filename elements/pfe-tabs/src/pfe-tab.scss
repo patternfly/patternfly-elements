@@ -76,7 +76,7 @@ $LOCAL-VARIABLES: (
   @at-root #{&}([on="dark"][aria-selected="false"][pfe-variant="wind"]:hover) {
     --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
     @include browser-query(ie11) {
-      color: pfe-fetch(text) !important;
+      color: pfe-var(text--muted);
     }
   }
 
@@ -85,7 +85,6 @@ $LOCAL-VARIABLES: (
     --pfe-tabs__tab--BorderColor: transparent;
     --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
     @include browser-query(ie11) {
-      color: pfe-fetch(text);
       border-bottom: pfe-fetch(BorderWidth--hover) pfe-fetch(surface--border-style) pfe-fetch(ui-accent);
     }
   }

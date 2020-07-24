@@ -81,7 +81,7 @@ $LOCAL-VARIABLES: (
   }
 
   @at-root #{&}([aria-selected="true"]) {
-    --pfe-tabs__tab--Color: pfe-var(text);
+    --pfe-tabs--Color: #{pfe-local(text--hover)};
     --pfe-tabs__tab--BorderColor: transparent;
     --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
     @include browser-query(ie11) {
@@ -169,6 +169,13 @@ $LOCAL-VARIABLES: (
 
 :host{
   @at-root #{&}([pfe-variant="wind"][aria-selected="true"]:first-of-type) {
+    @include browser-query(ie11) {
+      border-bottom: pfe-local(BorderWidth--hover) pfe-var(surface--border-style) pfe-local(highlight);
+    }
+  }
+  @at-root #{&}([pfe-variant="wind"][aria-selected="true"]) {
+  }
+  @at-root #{&}([pfe-variant="wind"][aria-selected="true"]:hover) {
     @include browser-query(ie11) {
       border-bottom: pfe-local(BorderWidth--hover) pfe-var(surface--border-style) pfe-local(highlight);
     }
@@ -272,6 +279,9 @@ $LOCAL-VARIABLES: (
 :host([pfe-variant="earth"][on="saturated"]:hover) {
   --pfe-tabs--Color: #{pfe-local(text--hover)};
 }
+:host([pfe-variant="earth"][on="saturated"][aria-selected="true"]) {
+  --pfe-tabs--Color: #{pfe-local(text--hover)};
+}
 
 /// ===========================================================================
 /// EARTH TAB VARIANTS
@@ -302,14 +312,9 @@ $LOCAL-VARIABLES: (
   }
 }
 
-//override for _rh-event-detail.scss
-// :host([pfe-variant="earth"][aria-selected="false"]:hover) .pfe-tab>*  {
-//   --pfe-tabs--Color: pfe-local(text--hover);
-// }
-
 :host([pfe-variant="earth"][aria-selected="true"]) {
   --pfe-tabs--BackgroundColor:   #{pfe-var(surface--lightest)};
-  --pfe-tabs--Color:             #{pfe-var(ui-disabled--text)}; // @todo replace with pfe(text-muted) in Kendall's color story
+  //--pfe-tabs--Color:             pfe-local(text--hover); // @todo replace with pfe(text-muted) in Kendall's color story
   --pfe-tabs__tab--BorderTop:    #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
   --pfe-tabs__tab--BorderBottom: 0;
   --pfe-tabs__tab--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};

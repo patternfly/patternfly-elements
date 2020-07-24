@@ -14,11 +14,11 @@ $pfe-colors: (
   link--focus:                 $pf-color-blue-500,
 
   text--on-dark:               $pf-color-white,
-  text-muted--on-dark:         $pfe-color--text--on-dark,
-  link--on-dark:               $pfe-color--link--on-dark,
-  link--visited--on-dark:      $pfe-color--link--visited--on-dark,
-  link--hover--on-dark:        $pfe-color--link--hover--on-dark,
-  link--focus--on-dark:        $pfe-color--link--focus--on-dark,
+  text-muted--on-dark:         $pf-color-white,
+  link--on-dark:               $pf-color-blue-300,
+  link--visited--on-dark:      $pf-color-blue-200,
+  link--hover--on-dark:        $pf-color-blue-200,
+  link--focus--on-dark:        $pf-color-blue-200,
 
   text--on-saturated:          $pf-color-white,
   text-muted--on-saturated:    $pf-color-white,

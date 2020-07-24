@@ -6,7 +6,7 @@ $LOCAL-VARIABLES: (
   BackgroundColor:       transparent,
   Color:                 pfe-var(text--muted),
   link:                  pfe-var(link),
-  text--hover:            #151515,
+  text--hover:           #151515,
   focus:                 pfe-var(link--focus),
   highlight:             pfe-var(ui-accent),
   BorderWidth--hover:    pfe-var(surface--border-width--active),
@@ -62,7 +62,7 @@ $LOCAL-VARIABLES: (
   @at-root #{&}(:hover) {
     --pfe-tabs--Color:  #{pfe-local(text--hover)};
     @include browser-query(ie11) {
-      color: pfe-fetch(text--hover);
+      color: pfe-local(text--hover);
     }
   }
 
@@ -192,7 +192,7 @@ $LOCAL-VARIABLES: (
 :host{
   @at-root #{&}([vertical][pfe-variant="wind"]){
     --pfe-tabs__tab--BorderLeft: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
-    --pfe-tabs--tab--TextAlign: left !important;
+    --pfe-tabs__tab--TextAlign: left !important;
     @include browser-query(ie11) {
       border-left: pfe-fetch(ui--border-width) pfe-fetch(ui--border-style) pfe-fetch(surface--border);
     }
@@ -265,12 +265,11 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 /// Earth TAB VARIANTS / saturated
 /// ===========================================================================
-
-:host([on="saturated"][aria-selected="false"][pfe-variant="earth"]) {
-  color: pfe-var(ui-disabled--text);
+:host([pfe-variant="earth"][on="saturated"]) .pfe-tab>* {
+  color: pfe-var(text--muted);
 }
-:host([on="saturated"][aria-selected="false"][pfe-variant="earth"]:hover) {
-  color: pfe-local(text-hover);
+:host([pfe-variant="earth"][on="saturated"]:hover) .pfe-tab>* {
+  color: pfe-local(text--hover);
 }
 
 /// ===========================================================================
@@ -465,6 +464,7 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 
 :host{
+  text-align: left;
   @at-root #{&}([pfe-variant="wind"][aria-selected="false"][on="dark"]) {
     color: pfe-var(ui-disabled);
     @include browser-query(ie11) {

@@ -186,17 +186,54 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 // - pfe-priority="primary" sets its own background colors, so it ignores broadcast
 // - if there is no broadcast variable available, these are still seen by the browser, so we also set fallbacks here!
 // - Fallback values should match whats above
+:host([on="dark"]) {
+  @include pfe-print-local($default-dark);
+}
+
+:host([on="saturated"]) {
+  @include pfe-print-local($default-saturated);
+}
+
+:host([pfe-priority="primary"]) {
+  @include pfe-print-local($primary);
+}
 
 :host([pfe-priority="secondary"]) {
   @include pfe-print-local($secondary);
 }
 
+
 /// ===========================================================================
-/// PRIMARY CTAs
+/// CONTEXT CTA VARIANTS
 /// ===========================================================================
-:host([pfe-priority="primary"]) {
-  @include pfe-print-local($primary);
+
+
+:host([pfe-priority="primary"][on="dark"]),
+:host([pfe-priority="primary"][on="saturated"]) {
+  @include pfe-print-local($primary-saturated); 
 }
+
+//:host([pfe-priority="primary"][pfe-color="accent"][on="saturated"]),
+//:host([pfe-priority="primary"][pfe-color="accent"][on="dark"]) {
+//  @include pfe-print-local($primary-accent-dark);
+//}
+
+:host([pfe-priority="secondary"][on="dark"]),
+:host([pfe-priority="secondary"][on="saturated"]) {
+  @include pfe-print-local($secondary-dark);
+}
+
+
+:host([pfe-priority="secondary"][on="dark"]),
+:host([pfe-priority="secondary"][on="saturated"]) {
+  @include pfe-print-local($secondary-dark);
+}
+
+//:host([pfe-priority="secondary"][pfe-color="accent"][on="saturated"]),
+//:host([pfe-priority="secondary"][pfe-color="accent"][on="dark"]) {
+//  @include pfe-print-local($secondary-accent-dark);
+//}
+
 
 /// ===========================================================================
 // COLOR ATTRIBUTE OVERRIDES
@@ -208,13 +245,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// ===========================================================================
 /// COLOR=ACCENT
 /// ===========================================================================
-// Primary omitted because it already uses the accent color
 
-:host(:not([pfe-priority]):not([aria-disabled="true"])[pfe-color="accent"]:not([on="saturated"])) {
-  @include pfe-print-local((
-    Color: pfe-var(ui-accent)
-  ));
-}
+// Default ommitted because it uses the link color, not UI colors
+// Primary omitted because it already uses the accent color
 
 :host([pfe-priority="secondary"][pfe-color="accent"]) {
   @include pfe-print-local($secondary-accent);
@@ -233,25 +266,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 /// ===========================================================================
-/// COLOR=COMPLEMENT
-/// ===========================================================================
-// 
-// :host(:not([pfe-priority]):not([aria-disabled="true"])[pfe-color="complement"]:not([on="dark"], [on="saturated"])) {
-//   @include pfe-print-local((
-//     Color: pfe-var(ui-complement),
-//     Color--hover: pfe-var(ui-complement--hover)
-//   ));
-// }
-// 
-// :host([pfe-priority="primary"][pfe-color="complement"]) {
-//   @include pfe-print-local($primary-complement);
-// }
-// 
-// :host([pfe-priority="secondary"][pfe-color="complement"]) {
-//   @include pfe-print-local($secondary-complement);
-// }
-
-/// ===========================================================================
 /// WIND CTA VARIANTS
 /// ===========================================================================
 
@@ -259,19 +273,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   @include pfe-print-local($secondary-wind);
 }
 
-/// ===========================================================================
-/// CONTEXT CTA VARIANTS
-/// ===========================================================================
-
-:host([pfe-priority="secondary"][on="dark"]),
-:host([pfe-priority="secondary"][on="saturated"]) {
-  @include pfe-print-local($secondary-dark);
-}
-
-:host([pfe-priority="primary"][on="saturated"]),
-:host([pfe-priority="primary"][pfe-color="accent"][on="dark"]) {
-  @include pfe-print-local($primary-saturated);
-}
 
 /// ===========================================================================
 /// DISABLED CTA VARIANTS

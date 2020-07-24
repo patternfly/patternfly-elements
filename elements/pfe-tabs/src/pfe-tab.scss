@@ -53,10 +53,11 @@ $LOCAL-VARIABLES: (
   font-weight:  pfe-var(font-weight--normal);
   font-size:    pfe-local(FontSize, $region: tab);
 
-  .pfe-tab > * {
+  .pfe-tab * {
     font-size: inherit;
     font-weight: inherit;
     margin: 0;
+    color: pfe-local(Color) !important;
   }
 
   @at-root #{&}(:hover) {
@@ -237,7 +238,7 @@ $LOCAL-VARIABLES: (
 
 :host {
   @at-root #{&}([on="saturated"][pfe-variant="wind"]) {
-    color: pfe-var(text--muted--on-saturated);
+    //color: pfe-var(text--muted--on-saturated);
     @include browser-query(ie11) {
       color: pfe-fetch(text) !important;
       background-color: transparent;
@@ -265,11 +266,11 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 /// Earth TAB VARIANTS / saturated
 /// ===========================================================================
-:host([pfe-variant="earth"][on="saturated"]) .pfe-tab>* {
-  color: pfe-var(text--muted);
+:host([pfe-variant="wind"][on="saturated"]) {
+  --pfe-tabs--Color: #{pfe-var(text--on-saturated)};
 }
-:host([pfe-variant="earth"][on="saturated"]:hover) .pfe-tab>* {
-  color: pfe-local(text--hover);
+:host([pfe-variant="earth"][on="saturated"]:hover) {
+  --pfe-tabs--Color: #{pfe-local(text--hover)};
 }
 
 /// ===========================================================================
@@ -297,12 +298,14 @@ $LOCAL-VARIABLES: (
   --pfe-tabs__tab--BorderTop: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)};
   @include browser-query(ie11) {
     border-top: pfe-local(BorderWidth--hover) pfe-fetch(surface--border-style) pfe-local(BorderColor--hover) !important;
+    color: pfe-fetch(text--hover);
   }
 }
 
-:host([pfe-variant="earth"][aria-selected="false"]:hover) {
-  --pfe-tabs--Color: pfe-var(text);
-}
+//override for _rh-event-detail.scss
+// :host([pfe-variant="earth"][aria-selected="false"]:hover) .pfe-tab>*  {
+//   --pfe-tabs--Color: pfe-local(text--hover);
+// }
 
 :host([pfe-variant="earth"][aria-selected="true"]) {
   --pfe-tabs--BackgroundColor:   #{pfe-var(surface--lightest)};
@@ -424,11 +427,11 @@ $LOCAL-VARIABLES: (
     --pfe-tabs__tab--BorderLeft: #{pfe-var(ui--border-width)} #{pfe-var(surface--border-style)} transparent !important;
   }
   @at-root #{&}([pfe-variant="earth"][aria-selected="true"][on="dark"]) {
-    color: pfe-var(surface--lightest) !important;
+    --pfe-tabs--Color: #{pfe-var(surface--lightest)};
     --pfe-tabs--BackgroundColor: #{pfe-local(Color--hover)};
     border-bottom: pfe-var(ui--border-width) pfe-var(surface--border-style) pfe-var(surface--darkest);
     @include browser-query(ie11) {
-        color: pfe-fetch(text) !important;
+        color: pfe-fetch(surface--lightest) !important;
     }
   }
   @at-root #{&}([vertical][pfe-variant="earth"][aria-selected="true"][on="dark"]) {

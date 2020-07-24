@@ -81,18 +81,19 @@
       border-left-width: pfe-fetch(surface--border-width);
     }
 
-    &:hover {
-      padding-left: calc(#{pfe-local(Padding, $region: base)} * 3 - #{pfe-var(surface--border-width--heavy)} + #{pfe-var(surface--border-width)});
-      &::before {
-        margin-left: calc((#{pfe-var(surface--border-width--heavy)} - #{pfe-var(surface--border-width)}) * -1);
-      }
-    }
-
     &::before {
       @include pfe-chevron($state: open, $position: before);
     }
     &[aria-expanded="true"]::before {
       transform: rotate(45deg) translateY(4px);
+    }
+  }
+}
+:host([pfe-disclosure="true"]) {
+  button:not([aria-expanded="true"]):hover {
+    padding-left: calc(#{pfe-local(Padding, $region: base)} * 3 - #{pfe-var(surface--border-width--heavy)} + #{pfe-var(surface--border-width)});
+    &::before {
+      margin-left: calc((#{pfe-var(surface--border-width--heavy)} - #{pfe-var(surface--border-width)}) * -1);
     }
   }
 }

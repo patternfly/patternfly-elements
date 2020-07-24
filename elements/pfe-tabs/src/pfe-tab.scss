@@ -245,7 +245,6 @@ $LOCAL-VARIABLES: (
 
 :host {
   @at-root #{&}([on="saturated"][pfe-variant="wind"]) {
-    //color: pfe-var(text--muted--on-saturated);
     @include browser-query(ie11) {
       color: pfe-fetch(text) !important;
       background-color: transparent;
@@ -423,7 +422,7 @@ $LOCAL-VARIABLES: (
 :host{
   @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]) {
     --pfe-tabs--BackgroundColor: #{pfe-local(BackgroundColor--dark)}; //replace with global var color in Kendalls story
-    color: #{pfe-var(ui-disabled)};
+    --pfe-tabs--Color: #{pfe-var(ui-disabled)};
     @include browser-query(ie11) {
       color: pfe-fetch(text) !important;
     }
@@ -444,7 +443,7 @@ $LOCAL-VARIABLES: (
   }
   @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]:hover) {
     --pfe-tabs__tab--BorderTop: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)} !important; //replace with B8BBBE in kendalls story
-    color: pfe-var(text--on-dark);
+    --pfe-tabs--Color: #{pfe-var(text--on-dark)};
     @include browser-query(ie11) {
       color: pfe-fetch(text) !important;
     }
@@ -474,13 +473,13 @@ $LOCAL-VARIABLES: (
 :host{
   text-align: left;
   @at-root #{&}([pfe-variant="wind"][aria-selected="false"][on="dark"]) {
-    color: pfe-var(ui-disabled);
+    --pfe-tabs--Color: #{pfe-var(text--on-saturated)};
     @include browser-query(ie11) {
       color: pfe-fetch(text) !important;
     }
   }
   @at-root #{&}([pfe-variant="wind"][aria-selected="true"][on="dark"]) {
-    color: pfe-var(surface--lightest);
+    --pfe-tabs--Color: #{pfe-var(surface--lightest)};
     @include browser-query(ie11) {
       color: pfe-fetch(text) !important;
     }

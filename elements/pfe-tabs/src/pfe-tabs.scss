@@ -78,12 +78,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   :host([vertical]) {
     --pfe-tabs--Display: flex; // Sets tabs to appear to the left of the panels
     --pfe-tabs__tabs--FlexDirection: column;
-    --pfe-tabs__tabs--Width: 22.22%;
+    --pfe-tabs__tabs--Width: 20%;
 
     --pfe-tabs__tabs--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
     --pfe-tabs__tabs--BorderBottom: 0;
 
-    --pfe-tabs__panels--Width: 77.78%;
+    --pfe-tabs__panels--Width: 80%;
     --pfe-tabs__panels--PaddingRight: #{pfe-var(container-padding)};
 
     @include browser-query(ie11) {

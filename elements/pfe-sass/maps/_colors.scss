@@ -88,8 +88,6 @@ $pfe-colors: (
   ui-disabled--text:                  $pfe-color--gray-600,
   ui-disabled--text--hover:           $pfelements--gray,
   ui-disabled--text--focus:           $pfelements--gray,
-
-  ui--border:                         $pfelements--gray-light,
   
   // ========================================================================
   // Base Surface Colors for Container elements
@@ -127,7 +125,7 @@ $pfe-colors: (
   surface--border--lightest:          $pfe-color--gray-100,
   surface--border--lighter:           $pfe-color--gray-100,
   surface--border:                    $pfelements--gray-light,
-  surface--border--darker:            $pfe-color--gray-300,
+  surface--border--darker:            $pfe-color--gray-600,
   surface--border--darkest:           $pfe-color--gray-800,
 
 

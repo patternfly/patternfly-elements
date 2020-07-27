@@ -4,22 +4,35 @@ $LOCAL: tabs;
 
 $LOCAL-VARIABLES: (
   BackgroundColor:       transparent,
-  Color:                 pfe-var(text--muted),
-  link:                  pfe-var(link),
-  text--hover:           #151515,
-  focus:                 pfe-var(link--focus),
-  highlight:             pfe-var(ui-accent),
-  BorderWidth--hover:    pfe-var(surface--border-width--active),
-  BorderColor--hover:    pfe-var(surface--base),
   BackgroundColor--dark: #3c3f42,
+  Color:                 pfe-var(text--muted),
+  Color--focus:          #151515,
+  BorderColor:           pfe-var(ui-accent),
+  BorderColor--hover:    pfe-var(surface--base),
+  BorderWidth:           pfe-var(surface--border-width--active),
+  FontSize:              pfe-var(font-size),
+  PaddingTop:            pfe-var(container-padding),
+  PaddingRight:          calc(#{pfe-var(container-padding)} * 2),
+  PaddingBottom:         pfe-var(container-padding),
+  PaddingLeft:           calc(#{pfe-var(container-padding)} * 2),
+);
+
+// TODO: These will be deprecated at 1.0  
+$backwards-compatibility: (
+  focus:                 pfe-local(Color--focus), 
+  highlight:             pfe-local(BorderColor),
   tab: (
-    FontSize:            pfe-var(font-size),
-    PaddingTop:          pfe-var(container-padding),
-    PaddingRight:        calc(#{pfe-var(container-padding)} * 2),
-    PaddingBottom:       pfe-var(container-padding),
-    PaddingLeft:         calc(#{pfe-var(container-padding)} * 2),
+    FontSize:            pfe-local(FontSize),
+    PaddingTop:          pfe-local(PaddingTop),
+    PaddingRight:        pfe-local(PaddingRight),
+    PaddingBottom:       pfe-local(PaddingBottom),
+    PaddingLeft:         pfe-local(PaddingLeft),
   )
 );
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
+
+// Uncomment to preview local variables in pfe-tab.css:
+//@include pfe-local-debug;
 
 /// ===========================================================================
 /// HORIZONTAL TAB ORIENTATION
@@ -42,8 +55,7 @@ $LOCAL-VARIABLES: (
 
   // Inner style
   background-color: pfe-local(BackgroundColor);
-  color: pfe-local(Color);  // @todo replace with pfe(text-muted) in Kendall's color story
-
+  color: pfe-local(Color);
   cursor: pointer;
   text-align: pfe-local(TextAlign, center, $region: tab);
 
@@ -61,9 +73,9 @@ $LOCAL-VARIABLES: (
   }
 
   @at-root #{&}(:hover) {
-    --pfe-tabs--Color:  #{pfe-local(text--hover)};
+    --pfe-tabs--Color:  #{pfe-local(focus)};
     @include browser-query(ie11) {
-      color: pfe-fetch(text--hover);
+      color: pfe-fetch(focus);
     }
   }
 
@@ -74,18 +86,18 @@ $LOCAL-VARIABLES: (
   }
 
   @at-root #{&}([on="dark"][aria-selected="false"][pfe-variant="wind"]:hover) {
-    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
+    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
     @include browser-query(ie11) {
       color: pfe-var(text--muted);
     }
   }
 
   @at-root #{&}([aria-selected="true"]) {
-    --pfe-tabs--Color: #{pfe-local(text--hover)};
+    --pfe-tabs--Color: #{pfe-local(focus)};
     --pfe-tabs__tab--BorderColor: transparent;
-    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
     @include browser-query(ie11) {
-      border-bottom: pfe-fetch(BorderWidth--hover) pfe-fetch(surface--border-style) pfe-fetch(ui-accent);
+      border-bottom: pfe-fetch(BorderWidth) pfe-fetch(surface--border-style) pfe-fetch(ui-accent);
     }
   }
 }
@@ -114,7 +126,7 @@ $LOCAL-VARIABLES: (
 
   :host([vertical][aria-selected="true"]) {
     --pfe-tabs__tab--BorderTopColor: transparent;
-    --pfe-tabs__tab--BorderRight:    #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+    --pfe-tabs__tab--BorderRight:    #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
     --pfe-tabs__tab--BorderBottom:   0;
 
     @include browser-query(ie11) {
@@ -169,19 +181,19 @@ $LOCAL-VARIABLES: (
 :host{
   @at-root #{&}([pfe-variant="wind"][aria-selected="true"]:first-of-type) {
     @include browser-query(ie11) {
-      border-bottom: pfe-local(BorderWidth--hover) pfe-var(surface--border-style) pfe-local(highlight);
+      border-bottom: pfe-local(BorderWidth) pfe-var(surface--border-style) pfe-local(highlight);
     }
   }
   @at-root #{&}([pfe-variant="wind"][aria-selected="true"]) {
   }
   @at-root #{&}([pfe-variant="wind"][aria-selected="true"]:hover) {
     @include browser-query(ie11) {
-      border-bottom: pfe-local(BorderWidth--hover) pfe-var(surface--border-style) pfe-local(highlight);
+      border-bottom: pfe-local(BorderWidth) pfe-var(surface--border-style) pfe-local(highlight);
     }
   }
   @at-root #{&}([pfe-variant="wind"][aria-selected="false"]:first-of-type):hover {
     @include browser-query(ie11) {
-      border-bottom: pfe-local(BorderWidth--hover) pfe-fetch(surface--border-style) pfe-local(BorderColor--hover);
+      border-bottom: pfe-local(BorderWidth) pfe-fetch(surface--border-style) pfe-local(BorderColor--hover);
     }
   }
   @at-root #{&}([pfe-variant="wind"][aria-selected="false"]:last-of-type) {
@@ -191,7 +203,7 @@ $LOCAL-VARIABLES: (
   }
   @at-root #{&}([pfe-variant="wind"][aria-selected="false"]:last-of-type):hover {
     @include browser-query(ie11) {
-      border-bottom: pfe-local(BorderWidth--hover) pfe-fetch(surface--border-style) pfe-local(BorderColor--hover);
+      border-bottom: pfe-local(BorderWidth) pfe-fetch(surface--border-style) pfe-local(BorderColor--hover);
     }
   }
 }
@@ -205,35 +217,35 @@ $LOCAL-VARIABLES: (
     }
   }
   @at-root #{&}([pfe-variant="wind"][aria-selected="false"]:hover){
-    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
+    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
     @include browser-query(ie11) {
-      border-bottom:  pfe-fetch(BorderWidth--hover) pfe-fetch(surface--border-style) pfe-fetch(BorderColor--hover);
+      border-bottom:  pfe-fetch(BorderWidth) pfe-fetch(surface--border-style) pfe-fetch(BorderColor--hover);
     }
   }
   @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="true"]){
-    --pfe-tabs__tab--BorderRight: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} transparent;
-    --pfe-tabs__tab--BorderLeft:  #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+    --pfe-tabs__tab--BorderRight: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} transparent;
+    --pfe-tabs__tab--BorderLeft:  #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
     padding-left:                 calc(#{pfe-var(container-padding)} - 2px);
     @include browser-query(ie11) {
       border-right:  0;
-      border-left:   pfe-local(BorderWidth--hover) pfe-fetch(surface--border-style) pfe-local(highlight);
+      border-left:   pfe-local(BorderWidth) pfe-fetch(surface--border-style) pfe-local(highlight);
       padding-left:  10px;
       border-bottom: 0 !important;
     }
   }
   @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="false"]){
-    --pfe-tabs__tab--BorderRight: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} transparent;
+    --pfe-tabs__tab--BorderRight: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} transparent;
   }
   @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="false"]:hover){
-    --pfe-tabs__tab--BorderRight: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} transparent;
+    --pfe-tabs__tab--BorderRight: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} transparent;
     --pfe-tabs__tab--BorderBottom: 0;
-    --pfe-tabs__tab--BorderLeft: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
+    --pfe-tabs__tab--BorderLeft: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
     padding-left: calc(#{pfe-var(container-padding)} - 2px);
     @include browser-query(ie11) {
       border-right:  0;
       border-bottom: 0;
       padding-left:  10px;
-      border-left:   pfe-local(BorderWidth--hover) pfe-fetch(surface--border-style) pfe-local(BorderColor--hover);
+      border-left:   pfe-local(BorderWidth) pfe-fetch(surface--border-style) pfe-local(BorderColor--hover);
     }
   }
 }
@@ -250,10 +262,10 @@ $LOCAL-VARIABLES: (
     }
   }
   @at-root #{&}([on="saturated"][aria-selected="false"][pfe-variant="wind"]:hover) {
-    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
+    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
     --pfe-tabs__tab--BorderBottom: 0 !important;
-    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
-    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-var(surface--lightest)} !important;
+    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-local(BorderColor--hover)};
+    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-var(surface--lightest)} !important;
   }
   @at-root #{&}([on="saturated"][aria-selected="true"][pfe-variant="wind"]) {
     color: pfe-var(text--on-saturated) !important;
@@ -275,10 +287,10 @@ $LOCAL-VARIABLES: (
   --pfe-tabs--Color: #{pfe-var(text--on-saturated)};
 }
 :host([pfe-variant="earth"][on="saturated"]:hover) {
-  --pfe-tabs--Color: #{pfe-local(text--hover)};
+  --pfe-tabs--Color: #{pfe-local(focus)};
 }
 :host([pfe-variant="earth"][on="saturated"][aria-selected="true"]) {
-  --pfe-tabs--Color: #{pfe-local(text--hover)};
+  --pfe-tabs--Color: #{pfe-local(focus)};
 }
 
 /// ===========================================================================
@@ -291,7 +303,7 @@ $LOCAL-VARIABLES: (
     tab: (
       BorderLeft:    pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border),
       BorderBottom:  pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border),
-      BorderTop:     pfe-local(BorderWidth--hover) pfe-var(ui--border-style) transparent,
+      BorderTop:     pfe-local(BorderWidth) pfe-var(ui--border-style) transparent,
     )
   );
   @include pfe-print-local($variantEarth);
@@ -303,17 +315,17 @@ $LOCAL-VARIABLES: (
 }
 
 :host([pfe-variant="earth"][aria-selected="false"]:hover){
-  --pfe-tabs__tab--BorderTop: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)};
+  --pfe-tabs__tab--BorderTop: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)};
   @include browser-query(ie11) {
-    border-top: pfe-local(BorderWidth--hover) pfe-fetch(surface--border-style) pfe-local(BorderColor--hover) !important;
-    color: pfe-fetch(text--hover);
+    border-top: pfe-local(BorderWidth) pfe-fetch(surface--border-style) pfe-local(BorderColor--hover) !important;
+    color: pfe-fetch(focus);
   }
 }
 
 :host([pfe-variant="earth"][aria-selected="true"]) {
   --pfe-tabs--BackgroundColor:   #{pfe-var(surface--lightest)};
-  //--pfe-tabs--Color:             pfe-local(text--hover); // @todo replace with pfe(text-muted) in Kendall's color story
-  --pfe-tabs__tab--BorderTop:    #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+  //--pfe-tabs--Color:             pfe-local(focus); // @todo replace with pfe(text-muted) in Kendall's color story
+  --pfe-tabs__tab--BorderTop:    #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
   --pfe-tabs__tab--BorderBottom: 0;
   --pfe-tabs__tab--BorderLeft:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 
@@ -321,7 +333,7 @@ $LOCAL-VARIABLES: (
     color:            pfe-fetch(ui-disabled--text); // @todo replace with pfe(text-muted) in Kendall's color story
     background-color: #fff;
     border-left:      pfe-fetch(ui--border-width) pfe-fetch(ui--border-style) #d2d2d2;
-    border-top:       pfe-local(BorderWidth--hover) pfe-fetch(ui--border-style) pfe-local(highlight);
+    border-top:       pfe-local(BorderWidth) pfe-fetch(ui--border-style) pfe-local(highlight);
     border-bottom:    0;
   }
 }
@@ -358,7 +370,7 @@ $LOCAL-VARIABLES: (
   }
   :host([vertical][pfe-variant="earth"][aria-selected="false"]:first-of-type) {
     border-top:  pfe-var(ui--border-width) pfe-var(ui--border-style) transparent !important;
-    border-left: pfe-local(BorderWidth--hover) pfe-var(ui--border-style) transparent !important;
+    border-left: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent !important;
     @include browser-query(ie11) {
       border-top: 1px pfe-fetch(ui--border-style) transparent !important;
     }
@@ -366,7 +378,7 @@ $LOCAL-VARIABLES: (
   :host([vertical][pfe-variant="earth"][aria-selected="true"]) {
     --pfe-tabs__tab--BorderTop:    #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
     --pfe-tabs__tab--BorderRight:  #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--lightest)};
-    --pfe-tabs__tab--BorderLeft:   #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
+    --pfe-tabs__tab--BorderLeft:   #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-local(highlight)};
     margin-right: -1px;
 
     @include browser-query(ie11) {
@@ -379,7 +391,7 @@ $LOCAL-VARIABLES: (
   :host([vertical][pfe-variant="earth"][aria-selected="false"]) {
     --pfe-tabs__tab--BorderRight:  0;
     --pfe-tabs__tab--BorderBottom: 0;
-    --pfe-tabs__tab--BorderLeft:   #{pfe-local(BorderWidth--hover)} #{pfe-var(ui--border-style)} transparent;
+    --pfe-tabs__tab--BorderLeft:   #{pfe-local(BorderWidth)} #{pfe-var(ui--border-style)} transparent;
 
     @include browser-query(ie11) {
       border-right:  1px solid pfe-fetch(surface--border);
@@ -389,20 +401,20 @@ $LOCAL-VARIABLES: (
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="false"]:hover){
-    --pfe-tabs__tab--BorderLeft: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)};
+    --pfe-tabs__tab--BorderLeft: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)};
     --pfe-tabs__tab--BorderTop:  #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
     @include browser-query(ie11) {
-      border-left: pfe-local(BorderWidth--hover) pfe-fetch(surface--border-style) pfe-fetch(surface--border) !important;
+      border-left: pfe-local(BorderWidth) pfe-fetch(surface--border-style) pfe-fetch(surface--border) !important;
       border-top:  pfe-fetch(ui--border-width) pfe-fetch(ui--border-style) pfe-fetch(surface--border) !important;
     }
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="false"]:first-of-type:hover) {
     --pfe-tabs__tab--BorderTop:  #{pfe-var(ui--border-style)} #{pfe-var(ui--border-style)} transparent;
-    border-left: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)} !important;
+    border-left: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)} !important;
     @include browser-query(ie11) {
       border-top:  1px pfe-fetch(ui--border-style) transparent !important;
-      border-left: pfe-local(BorderWidth--hover) pfe-fetch(surface--border-style) pfe-fetch(surface--border) !important;
+      border-left: pfe-local(BorderWidth) pfe-fetch(surface--border-style) pfe-fetch(surface--border) !important;
     }
   }
   :host([vertical][pfe-variant="earth"][aria-selected="true"]:last-of-type) {
@@ -431,7 +443,7 @@ $LOCAL-VARIABLES: (
   }
   @at-root #{&}([pfe-variant="earth"][aria-selected="true"][on="dark"]) {
     --pfe-tabs--Color: #{pfe-var(surface--lightest)};
-    --pfe-tabs--BackgroundColor: #{pfe-local(Color--hover)};
+    --pfe-tabs--BackgroundColor: #{pfe-local(focus)};
     border-bottom: pfe-var(ui--border-width) pfe-var(surface--border-style) pfe-var(surface--darkest);
     @include browser-query(ie11) {
         color: pfe-fetch(surface--lightest) !important;
@@ -441,7 +453,7 @@ $LOCAL-VARIABLES: (
     border-bottom: 0;
   }
   @at-root #{&}([pfe-variant="earth"][aria-selected="false"][on="dark"]:hover) {
-    --pfe-tabs__tab--BorderTop: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)} !important; //replace with B8BBBE in kendalls story
+    --pfe-tabs__tab--BorderTop: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)} !important; //replace with B8BBBE in kendalls story
     --pfe-tabs--Color: #{pfe-var(text--on-dark)};
     @include browser-query(ie11) {
       color: pfe-fetch(text) !important;
@@ -485,7 +497,7 @@ $LOCAL-VARIABLES: (
   }
   @at-root #{&}([pfe-variant="wind"][aria-selected="false"][on="dark"]:hover) {
     color: pfe-var(surface--lightest);
-    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth--hover)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)} !important; //replace with B8BBBE in kendalls story
+    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(surface--border-style)} #{pfe-var(surface--border)} !important; //replace with B8BBBE in kendalls story
     @include browser-query(ie11) {
       color: pfe-fetch(text) !important;
     }

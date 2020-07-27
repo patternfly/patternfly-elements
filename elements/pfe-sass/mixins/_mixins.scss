@@ -109,3 +109,27 @@
   height: #{$size};
   @content;
 }
+
+
+@mixin pfe-local-debug($map: $LOCAL-VARIABLES) {
+  :root {
+      @each $property, $value in $map {
+        $name: "--#{$property}";
+        $styles: $value;
+
+        @if type-of($value) == "map" {
+            @each $prop, $v in $value {
+                $name: "__#{$property}--#{$prop}";
+                $styles: $v;
+
+                // Print the variable definition
+                --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
+            }
+        }
+        @else {
+            // Print the variable definition
+            --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
+        }
+    }
+  }
+}

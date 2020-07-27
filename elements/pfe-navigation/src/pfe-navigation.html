@@ -1,3 +1,6 @@
+<!-- todo: figure out to do the overlay in shadow DOM -->
+<!-- <div class="pfe-navigation__overlay"></div> -->
+
 <nav id="pfe-navigation__wrapper" class="pfe-navigation__wrapper" aria-label="Main Navigation">
   <button class="pfe-navigation__menu-toggle">
     Menu
@@ -14,6 +17,7 @@
       </div>
 
       <button class="pfe-navigation__search-toggle">
+        <pfe-icon icon="web-search" pfe-size="md" aria-hidden="true" style="--pfe-icon--Color: #fff;"></pfe-icon>
         Search
       </button>
 
@@ -22,6 +26,7 @@
       </slot>
 
       <button class="pfe-navigation__all-red-hat-toggle">
+        <pfe-icon icon="web-icon-grid-3x3" pfe-size="md" aria-hidden="true" style="--pfe-icon--Color: #fff;"></pfe-icon>
         All Red&nbsp;Hat
       </button>
       <div class="pfe-navigation__all-red-hat-wrapper">
@@ -34,6 +39,7 @@
   </div>
 
   <a href="#" class="pfe-navigation__log-in-link">
+    <pfe-icon icon="web-icon-user" pfe-size="md" aria-hidden="true" style="--pfe-icon--Color: #fff;"></pfe-icon>
     Log&nbsp;In
   </a>
 

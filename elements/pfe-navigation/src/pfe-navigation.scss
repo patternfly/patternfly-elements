@@ -154,9 +154,10 @@ See mixin blocks before selectors that contain the selector name and the three l
     box-shadow: inset 0 4px 0 0 #e00;
   }
 
-  &:before {
-    margin: 0 0 4px;
-  }
+  //@todo: decide if this is needed with pfe-icons in place
+  // &:before {
+  //   margin: 0 0 4px;
+  // }
 }
 
 // Layout changes per breakpoint
@@ -476,8 +477,8 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__menu-link[aria-haspopup=true] {
   position: relative;
 
-  &:hover,
-  &:focus {
+  &:focus,
+  &:hover {
     @include breakpoint('nav-expand') {
       box-shadow: inset 0 4px 0 0 #e00;
     }

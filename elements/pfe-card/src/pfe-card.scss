@@ -163,8 +163,8 @@ $size-small: (
   &__header {
     z-index: 2;
     // Declare the header background color
-    background-color: #{pfe-local($cssvar: BackgroundColor, $region: header)};
-    color:            #{pfe-local($cssvar: Color, $region: header)};
+    background-color: pfe-local(BackgroundColor, $region: header);
+    color:            pfe-local($cssvar: Color, $region: header);
     :host([on="dark"]) & {
         // Declare the header background color
       background-color: #{pfe-local(

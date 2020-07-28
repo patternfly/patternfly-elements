@@ -88,7 +88,8 @@
     &[aria-expanded="true"]::before {
       transform: rotate(45deg);
     }
-
+    
+    &[aria-expanded="true"],
     &:not([aria-expanded="true"]):hover {
       padding-left: calc(#{pfe-local(Padding, $region: base)} * 3 - #{pfe-var(surface--border-width--heavy)} + #{pfe-var(surface--border-width)});
       &::before {

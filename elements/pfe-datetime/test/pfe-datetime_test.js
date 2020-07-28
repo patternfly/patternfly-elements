@@ -6,6 +6,7 @@ suite('<pfe-datetime>', () => {
       'the <pfe-datetime> should be an instance of PfeDatetime'
     );
   });
+
   test('it should show a simple date format if just a datetime attribute is provided', () => {
     const element = document.getElementById('simple');
     const text = element.shadowRoot.querySelector('span').textContent;

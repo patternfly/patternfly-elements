@@ -556,6 +556,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     }
   }
 
+  // @todo: figure out why transform is not working anymore
   .pfe-navigation__menu-item--open > &[class]:before { // [class] adds specificity to beat out hover/focus selector
     transform: rotate(135deg);
     @include breakpoint('nav-expand') {
@@ -955,3 +956,25 @@ See mixin blocks before selectors that contain the selector name and the three l
     // Add styles here
 //   }
 // }
+
+// #151515
+// pfe-icons
+// --------------------------------------------------------
+
+//@todo: figure out if this is the correct scoping for the icon styles
+// .pfe-navigation__wrapper pfe-icon {
+//   --pfe-icon--Color: #fff;
+// }
+
+.pfe-navigation__menu-toggle pfe-icon,
+.pfe-navigation__search-toggle pfe-icon,
+.pfe-navigation__custom-links pfe-icon,
+.pfe-navigation__all-red-hat-toggle pfe-icon {
+  --pfe-icon--Color: #fff;
+}
+
+[pfe-navigation-state^='main-menu--open'] pfe-icon,
+[pfe-navigation-state^='search--open'] pfe-icon,
+[pfe-navigation-state^='all-red-hat--open'] pfe-icon {
+  --pfe-icon--Color: #151515;
+}

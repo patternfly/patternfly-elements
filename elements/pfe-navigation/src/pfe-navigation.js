@@ -131,6 +131,8 @@ class PfeNavigation extends PFElement {
     this._searchToggleEventListener = this._searchToggleEventListener.bind(this);
     this._allRedHatToggleEventListener = this._allRedHatToggleEventListener.bind(this);
     this._dropDownItemToggle = this._dropDownItemToggle.bind(this);
+    // a11y settings
+    this._toggleAriaState = this._toggleAriaState.bind(this);
     this._addMenuBreakpoints = this._addMenuBreakpoints.bind(this);
     this._collapseMainMenu = this._collapseMainMenu.bind(this);
     this._collapseSecondaryLinks = this._collapseSecondaryLinks.bind(this);
@@ -158,6 +160,7 @@ class PfeNavigation extends PFElement {
     // this.customlinks.addEventListener("slotchange", this._init);
   }
 
+  // @todo: figure out what needs to go into the disconnected callback
   disconnectedCallback() {}
 
   // Process the attribute change
@@ -324,11 +327,20 @@ class PfeNavigation extends PFElement {
     }
 
     // Add menu dropdown toggle behavior
-    const dropDownItems = this.shadowRoot.querySelectorAll('.pfe-navigation__menu-link[aria-haspopup="true"]');
+    const dropDownItems = this.shadowRoot.querySelectorAll(".pfe-navigation__menu-link[aria-expanded]");
     for (let index = 0; index < dropDownItems.length; index++) {
       const dropDownItem = dropDownItems[index];
       dropDownItem.dataset.machineName = this._createMachineName(dropDownItem.text);
       dropDownItem.addEventListener("click", this._dropDownItemToggle);
+    }
+
+    // Add top level toggle button aria behavior
+    const toggleButtons = this.shadowRoot.querySelectorAll("button[aria-expanded]");
+    console.log(toggleButtons);
+    // console.log(toggleButtons);
+    for (let index = 0; index < toggleButtons.length; index++) {
+      const toggleButton = toggleButtons[index];
+      toggleButton.addEventListener("click", this._toggleAriaState);
     }
 
     // Add menu burger behavior
@@ -342,6 +354,8 @@ class PfeNavigation extends PFElement {
     const allRedHat = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-toggle");
 
     allRedHat.addEventListener("click", this._allRedHatToggleEventListener);
+
+    // a11y settings
 
     // Give all dropdowns aria-hidden since they're shut by default
     this.shadowRoot.querySelector(".pfe-navigation__dropdown-wrapper").setAttribute("aria-hidden", true);
@@ -454,26 +468,60 @@ class PfeNavigation extends PFElement {
     const toggleId = `main-menu__dropdown--${machineName}`;
     const dropDownWrapper = dropDownItem.parentElement.querySelector(".pfe-navigation__dropdown-wrapper");
 
+    // a11y settings for aria-expanded
+    /**
+      @note: refactored aria settings:
+      aria-haspop should not be used in this menu bc it is not a true menu, use aria-expanded instead
+      refactored aria-expanded behaviour to ensure that only the open item is getting aria-expanded="true"
+    */
+
+    // todo: figure out how to alternate aria expanded and hidden correctly when opening a menu without closing the previous one
+    const ariaExpanded = dropDownItem.getAttribute("aria-expanded") === true;
+    const ariaHidden = dropDownWrapper.getAttribute("aria-hidden") === true;
+
     // Don't navigate
     event.preventDefault();
 
+    // a11y settings
+    dropDownItem.setAttribute("aria-expanded", !ariaExpanded);
+
     // Toggle state and manage attributes for a11y and styling
     if (this._toggleNavigationState(toggleId)) {
-      dropDownItem.setAttribute("aria-expanded", "true");
+      // dropDownItem.setAttribute("aria-expanded", "true");
       // Manage class on parent li so it's easier to style any child that needs style updates
       dropDownItem.parentElement.classList.add("pfe-navigation__menu-item--open");
-      dropDownWrapper.setAttribute("aria-hidden", false);
+      // dropDownWrapper.setAttribute("aria-hidden", false);
+      // a11y settings (needs to be opposite of aria-expanded)
+      dropDownWrapper.setAttribute("aria-hidden", ariaHidden);
       if (!this.isNavigationMobileStyle() && parseInt(dropDownWrapper.dataset.height) > 30) {
         dropDownWrapper.style.setProperty("height", `${dropDownWrapper.dataset.height}px`);
       }
     } else {
-      dropDownItem.setAttribute("aria-expanded", "false");
+      // dropDownItem.setAttribute("aria-expanded", "false");
       dropDownItem.parentElement.classList.remove("pfe-navigation__menu-item--open");
-      dropDownWrapper.setAttribute("aria-hidden", true);
+      // dropDownWrapper.setAttribute("aria-hidden", true);
+      // a11y settings (needs to be opposite of aria-expanded)
+      dropDownWrapper.setAttribute("aria-hidden", !ariaHidden);
       if (dropDownWrapper.hasAttribute("style")) {
         dropDownWrapper.style.removeProperty("height");
       }
     }
+  }
+
+  /**
+   * Manages pfe-navigation top level items ARIA state
+   * @param {string} event to capture target of event
+   */
+
+  // @todo: refactor all aria-expanded and aria-hidden states to work with pfe-navigation-state="" value instead to try and fix aria-expanded states getting out of sync
+  _toggleAriaState(event) {
+    // A11y settings
+    // todo: figure out how to alternate aria expanded and hidden correctly when opening a menu without closing the previous one
+    const targetElement = event.target;
+    const ariaExpanded = targetElement.getAttribute("aria-expanded") === "true" || false;
+
+    targetElement.setAttribute("aria-expanded", !ariaExpanded);
+    console.log(targetElement.getAttribute("aria-expanded"));
   }
 }
 

@@ -112,11 +112,12 @@
         </div>
         <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
           <li class="pfe-navigation__menu-item">
-            <a href="#" class="pfe-navigation__menu-link" aria-haspopup="true" aria-expanded="false">
+          <!-- @todo: move aria-expanded into shadow DOM? -->
+            <a href="#" class="pfe-navigation__menu-link" aria-expanded="false">
               Products
             </a>
 
-            <div class="pfe-navigation__dropdown-wrapper">
+            <div class="pfe-navigation__dropdown-wrapper" aria-hidden="true">
               <div class="pfe-navigation__dropdown">
                 <section>
                   <h3>
@@ -250,7 +251,7 @@
             </div>
           </li>
           <li class="pfe-navigation__menu-item">
-            <a href="#" class="pfe-navigation__menu-link" aria-haspopup="true" aria-expanded="false">
+            <a href="#" class="pfe-navigation__menu-link" aria-expanded="false">
               Solutions
             </a>
             <div class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--single-column">
@@ -303,7 +304,7 @@
       <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
 
         <a href="#" class="">
-          <pfe-icon icon="rh-icon-cube" pfe-size="md" aria-hidden="true" style="--pfe-icon--Color: #fff;"></pfe-icon>
+          <pfe-icon icon="rh-icon-cube" pfe-size="md" aria-hidden="true"></pfe-icon>
           Custom Link
         </a>
       </div>
@@ -334,7 +335,7 @@
         </div>
         <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
           <li class="pfe-navigation__menu-item">
-            <a href="#" class="pfe-navigation__menu-link" aria-haspopup="true" aria-expanded="false">
+            <a href="#" class="pfe-navigation__menu-link" aria-expanded="false">
               Products
             </a>
             <div class="pfe-navigation__dropdown-wrapper">

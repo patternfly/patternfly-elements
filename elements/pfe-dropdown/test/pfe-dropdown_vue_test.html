@@ -15,18 +15,32 @@
         el: "#root",
         template: `
           <div>
-            <pfe-health-index id="original" health-index="A">A</pfe-health-index>
-            <pfe-health-index id="lowercase" health-index="a">a</pfe-health-index>
-            <pfe-health-index id="badIndex">fdsa</pfe-health-index>
-            <pfe-health-index id="changingIndex" health-index="A">A</pfe-health-index>
-            <pfe-health-index id="A" health-index="A">A</pfe-health-index>
-            <pfe-health-index id="B" health-index="B">B</pfe-health-index>
-            <pfe-health-index id="C" health-index="C">C</pfe-health-index>
-            <pfe-health-index id="D" health-index="D">D</pfe-health-index>
-            <pfe-health-index id="E" health-index="E">E</pfe-health-index>
-            <pfe-health-index id="F" health-index="F">F</pfe-health-index>
-            <pfe-health-index id="largeSize" health-index="A">A</pfe-health-index>
-            <pfe-health-index id="miniSize" health-index="A" size="mini">A</pfe-health-index>
+            <pfe-dropdown pfe-label="Test dropdown">
+              <pfe-dropdown-item pfe-item-type="link">
+                <a href="#">Link 1</a>
+              </pfe-dropdown-item>
+              <pfe-dropdown-item pfe-item-type="link">
+                <a href="#">Link 2</a>
+              </pfe-dropdown-item>
+              <pfe-dropdown-item pfe-item-type="separator"></pfe-dropdown-item>
+              <pfe-dropdown-item pfe-item-type="action">
+                <button>Action 1</button>
+              </pfe-dropdown-item>
+              <pfe-dropdown-item pfe-item-type="action" id="disabledItem" is_disabled>
+                <button>Action 2</button>
+              </pfe-dropdown-item>
+            </pfe-dropdown>
+
+            <pfe-dropdown pfe-label="Test disabled dropdown" id="disabledDropdown" is_disabled>
+              <pfe-dropdown-item pfe-item-type="link">
+                <a href="#">Link 1</a>
+              </pfe-dropdown-item>
+            </pfe-dropdown>
+
+            <pfe-dropdown pfe-label="Test dropdown with custom options" id="customDropdown">
+            </pfe-dropdown>
+
+            <input type="checkbox" id="checkbox"/>
           </div>
         `
       });

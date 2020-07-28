@@ -82,11 +82,11 @@
     }
 
     &::before {
-      @include pfe-chevron($state: open, $position: before);
+      @include pfe-chevron($state: closed, $position: before, $offset: .55em);
     }
     
     &[aria-expanded="true"]::before {
-      transform: rotate(45deg) translateY(4px);
+      transform: rotate(45deg);
     }
 
     &:not([aria-expanded="true"]):hover {

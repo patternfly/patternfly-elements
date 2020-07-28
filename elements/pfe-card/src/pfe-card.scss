@@ -174,7 +174,7 @@ $size-small: (
       // $fallback: rgba(255, 255, 255, #{pfe-var(opacity)})
     }
     @include browser-query(ie11) {
-      background-color: #{map-get($pfe-colors, surface--lighter)} !important;
+      background-color: pfe-fetch(surface--lightest) !important;
       color: #{pfe-var(text)} !important;
     }
 

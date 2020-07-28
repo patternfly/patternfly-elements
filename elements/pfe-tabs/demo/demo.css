@@ -77,7 +77,7 @@ section>h2 {
     --theme: light;
 }
 .dark-background {
-    background-color: #524848;
+    background-color: #383333;
     --theme: dark;
 }
 .saturated-background {

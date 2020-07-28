@@ -17,13 +17,14 @@ $LOCAL-VARIABLES: (
 
 :host {
   display: block;
+  color: pfe-broadcasted(text);
 
   @at-root #{&}(:focus) {
     outline: none;
   }
 
   ::slotted(*) {
-    color: pfe-broadcasted(text);
+    
   }
   [tabindex] {
     display: flex;

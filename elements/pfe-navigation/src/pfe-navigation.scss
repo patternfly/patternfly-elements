@@ -474,6 +474,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 // Top level links that have a dropdown associated with them
+// @todo: make sure all styles get fixed that were using aria-haspopup originally
 .pfe-navigation__menu-link[aria-expanded=true] {
   position: relative;
 
@@ -535,6 +536,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   transform: translate(-4px, -12px);
   transition: border-color 0.25s;
 }
+// @todo: make sure all styles get fixed that were using aria-haspopup originally
 .pfe-navigation__menu-link[aria-expanded=true]:before {
   @include pfe-navigation__menu-link__before--mobile;
   content: '';

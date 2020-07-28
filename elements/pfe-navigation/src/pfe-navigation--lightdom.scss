@@ -21,9 +21,9 @@
         }
         // Accordion trigger styles when expanded.
         &.expanded {
-            @media screen and (min-width: #{pfe-breakpoint(lg)}) {
-                background-color: #{pfe-var(surface--lightest)};
-                border-top-color: #{pfe-var(ui-accent)};
+            @media screen and (min-width: pfe-breakpoint(lg)) {
+                background-color: pfe-var(surface--lightest);
+                border-top-color: pfe-var(ui-accent);
             }
             [slot="trigger"] {
                 a {
@@ -35,11 +35,11 @@
 
     .pfe-navigation__container {
         @each $size in (md, lg) {
-            @media screen and (min-width: #{pfe-breakpoint(#{$size})}) {
-                max-width:#{pfe-breakpoint(#{$size})};
+            @media screen and (min-width: pfe-breakpoint(#{$size})) {
+                max-width: pfe-breakpoint(#{$size});
             }
         }
-        @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+        @media screen and (min-width: pfe-breakpoint(xl)) {
             max-width: 1140px;
         }
     }
@@ -53,7 +53,7 @@
         flex-direction: column;
     }
 
-    @media screen and (min-width: #{pfe-breakpoint(lg)}) {
+    @media screen and (min-width: pfe-breakpoint(lg)) {
         .pfe-navigation-item__tray--container {
             margin: 0 auto;
         }
@@ -154,7 +154,7 @@
         -ms-grid-column-span: 1 !important;
     }
     :not([pfe-icon=web-mobile-menu]):not([is_nested]).pfe-navigation-item-1 .pfe-navigation-item__tray.pfe-navigation-item {
-        color: #{pfe-var(ui-base)} !important;
+        color: pfe-var(ui-base) !important;
     }
     [pfe-icon=web-mobile-menu]:not([show_links]).pfe-navigation-item-3 .pfe-navigation__main .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0 !important;
@@ -163,7 +163,7 @@
         max-width: 100%;
     }
     .pfe-navigation--footer .pfe-navigation--column {
-        @media (min-width: #{pfe-breakpoint(md)}) {
+        @media (min-width: pfe-breakpoint(md)) {
             display: flex;
             align-items: center;
         }
@@ -273,7 +273,7 @@
         margin-right: 20px; // Account for collapsed padding-right: 20px;
     }
     .pfe-navigation--footer .pfe-navigation--column {
-        @media (min-width: #{pfe-breakpoint(md)}) {
+        @media (min-width: pfe-breakpoint(md)) {
             display: flex;
             align-items: center;
         }
@@ -348,17 +348,17 @@ pfe-navigation-item {
 
 .pfe-navigation {
     &-grid {
-        @media (min-width: #{pfe-breakpoint(sm)}) {
+        @media (min-width: pfe-breakpoint(sm)) {
             column-count: 2;
             column-gap: 32px;
             flex: 1;
         }
 
-        @media (min-width: #{pfe-breakpoint(lg)}) {
+        @media (min-width: pfe-breakpoint(lg)) {
             column-count: 3;
         }
 
-        @media (min-width: #{pfe-breakpoint(xl)}) {
+        @media (min-width: pfe-breakpoint(xl)) {
             /* autoprefixer grid: autoplace */
             display: grid;
             grid-gap: 32px;
@@ -384,7 +384,7 @@ pfe-navigation-item {
     }
     &--column-span-2 {
         // intentinally not setting for IE prefix to prevent column overlap
-        @media (min-width: #{pfe-breakpoint(xl)}) {
+        @media (min-width: pfe-breakpoint(xl)) {
             grid-column: span 2;
         }
     }
@@ -401,7 +401,7 @@ pfe-navigation-item {
             flex: 0 1 45%;
         }
 
-        @media (min-width: #{pfe-breakpoint(sm)}) {
+        @media (min-width: pfe-breakpoint(sm)) {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -417,11 +417,11 @@ pfe-navigation-item {
             }
         }
 
-        @media (min-width: #{pfe-breakpoint(md)}) {
+        @media (min-width: pfe-breakpoint(md)) {
             justify-content: flex-start;
         }
 
-        @media (min-width: #{pfe-breakpoint(lg)}) {
+        @media (min-width: pfe-breakpoint(lg)) {
             // Not setting grid prefix here since IE doesn't support auto-flow
             display: grid;
             grid-gap: 32px;
@@ -450,7 +450,7 @@ pfe-navigation-item {
             }
         }
 
-        @media (min-width: #{pfe-breakpoint(xl)}) {
+        @media (min-width: pfe-breakpoint(xl)) {
             padding-bottom: 0;
             display: -ms-grid;
             grid-template-columns: repeat(4, 1fr);
@@ -503,7 +503,7 @@ pfe-navigation-item .pfe-link-list {
         line-height: 1.75;
         color: #{pfe-var(text)};
 
-        @media (min-width: #{pfe-breakpoint(xl)}) {
+        @media (min-width: pfe-breakpoint(xl)) {
             font-size: 16px;
         }
 

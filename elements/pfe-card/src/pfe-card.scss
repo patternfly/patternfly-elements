@@ -171,7 +171,6 @@ $size-small: (
           $cssvar: BackgroundColor--dark,  
           $region: header
       )};
-      // $fallback: rgba(255, 255, 255, #{pfe-var(opacity)})
     }
     @include browser-query(ie11) {
       background-color: #{map-get($pfe-colors, surface--lighter)} !important;

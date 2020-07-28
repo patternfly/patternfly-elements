@@ -213,12 +213,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   @include pfe-print-local($secondary-dark);
 }
 
-
-:host([pfe-priority="secondary"][on="dark"]),
-:host([pfe-priority="secondary"][on="saturated"]) {
-  @include pfe-print-local($secondary-dark);
-}
-
 /// ===========================================================================
 // COLOR ATTRIBUTE OVERRIDES
 // Default & Wind variant CTAs are ommitted because they use the link color, not UI colors

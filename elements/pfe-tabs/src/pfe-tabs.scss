@@ -130,9 +130,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 :host([pfe-variant="earth"]) {
   --pfe-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
 
-  .tabs ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
-    border-left: 0;
-  }
+  // .tabs ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
+  //   border-left: 0;
+  // }
 }
     
 @include browser-query(ie11) {
@@ -161,5 +161,14 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   height: 32px;
   width: 1px;
   background-color: pfe-local(BorderColor, $region: tabs);
+  position: relative;
+}
+
+:host(:not([vertical])[pfe-variant="earth"]) .tabs-prefix {
+  left: 0px;
+  top: 0px;
+  content: " ";
+  height: 1px;
+  width: 10px;
   position: relative;
 }

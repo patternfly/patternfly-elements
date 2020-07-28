@@ -244,6 +244,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// ===========================================================================
 /// EARTH TAB VARIANTS
 /// ===========================================================================
+:host(:not([vertical])[pfe-variant="earth"]:first-of-type) {
+    border-left-color: transparent;
+}
+:host(:not([vertical])[pfe-variant="earth"]:last-of-type) {
+    border-right-color: transparent;
+}
 :host {
   @at-root #{&}([pfe-variant="earth"][aria-selected="false"]) {
     background-color: pfe-local(BackgroundColor--inactive); //@todo update to use opacity
@@ -269,15 +275,15 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     }
   }
 
-  @at-root #{&}([pfe-variant="earth"][aria-selected="true"]) {
+  @at-root #{&}([pfe-variant="earth"][aria-selected="true"]:nth-of-type(n)) {
     background-color: pfe-var(surface--lightest);
     border-bottom: 0;
-    border-left: solid 1px #{pfe-var(surface--border)};
-    border-right: solid 1px #{pfe-var(surface--border)};
+    border-left-color: pfe-var(surface--border);
+    border-right-color: pfe-var(surface--border);
     border-top: solid pfe-local(highlight) pfe-local(BorderWidth);
 
     @include browser-query(ie11) {
-      color: pfe-fetch(text--muted); // @todo replace with pfe(text-muted) in Kendall's color story
+      color: pfe-fetch(text--muted); 
       background-color: pfe-fetch(surface--lightest);
       border-left: pfe-fetch(ui--border-width) pfe-fetch(ui--border-style) pfe-fetch(surface--border);
       border-top: pfe-local(BorderWidth) pfe-fetch(ui--border-style) pfe-local(highlight);
@@ -293,12 +299,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     }
   }
 }
-:host(:not([vertical])[pfe-variant="earth"]:first-of-type) {
-    border-left: pfe-var(ui--border-width) pfe-var(ui--border-style) transparent;
-  }
-:host(:not([vertical])[pfe-variant="earth"]:last-of-type) {
-    border-right: pfe-var(ui--border-width) pfe-var(ui--border-style) transparent;
-  }
 
 
 /// ===========================================================================

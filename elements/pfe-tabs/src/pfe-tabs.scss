@@ -22,10 +22,6 @@ $LOCAL-VARIABLES: (
   ),
   panels: (
     Width: auto,
-    PaddingTop: 0,
-    PaddingRight: 0,
-    PaddingBottom: 0,
-    PaddingLeft: 0
   )
 );
 
@@ -35,6 +31,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     BorderBottom: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: tabs)
   )
 ));
+
+
+// DEBUGGING
+//@include pfe-local-debug; // preview local variables in pfe-tab-panel.css
 
 :host {
   display: pfe-local(Display);
@@ -55,11 +55,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   .panels {
     width: pfe-local(Width, $region: panels);
-
-    padding-top: pfe-local(PaddingTop, $region: panels);
-    padding-right: pfe-local(PaddingRight, $region: panels);
-    padding-bottom: pfe-local(PaddingBottom, $region: panels);
-    padding-left: pfe-local(PaddingLeft, $region: panels);
+    // no padding here, because of the borders on vertical earth
   }
 }
 
@@ -130,9 +126,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 :host([pfe-variant="earth"]) {
   --pfe-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
 
-  // .tabs ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
-  //   border-left: 0;
-  // }
 }
     
 @include browser-query(ie11) {

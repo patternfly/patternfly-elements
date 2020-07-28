@@ -30,15 +30,6 @@ $LOCAL-VARIABLES: (
     height: 100%;
   }
 
- //updated saturated styles
-  @at-root #{&}([pfe-variant="earth"][on="saturated"]) .container {
-    //background-color: pfe-var(surface--lightest);
-    //color: pfe-var(text);
-  }
-  @at-root #{&}([pfe-variant="earth"][on="saturated"]) ::slotted(*) {
-    //color: pfe-var(text);
-}
-
   .container {
     margin: 0;
     width: 100%;

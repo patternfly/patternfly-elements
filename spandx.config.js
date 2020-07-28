@@ -2,16 +2,16 @@
 // If not default to localhost
 require("dotenv").config();
 
-let component = process.argv[2];
-if (!component.startsWith("pfe-")) {
-  component = "";
-}
+// Check the command input for any component names, filter those out
+const COMPONENTS = process.argv.filter(input => input.startsWith("pfe-"));
 
 module.exports = {
   host: process.env.LOCALHOST || "localhost",
   port: "auto",
   open: true,
-  startPath: component ? `/elements/${component}/demo` : "/examples",
+  // If only 1 component is listed, open that demo page specifically, otherwise, show the listing
+  startPath:
+    COMPONENTS.length === 1 ? `/elements/${COMPONENTS[0]}/demo` : "/examples",
   verbose: false,
   routes: {
     "/elements": "./elements",

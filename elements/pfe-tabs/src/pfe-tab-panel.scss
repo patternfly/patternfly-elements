@@ -7,6 +7,10 @@ $LOCAL-VARIABLES: (
   panel: ( // to avoid collisions with tab header
       BackgroundColor: transparent,
       Padding:         pfe-var(container-spacer),
+      BorderTop:       0,
+      BorderRight:     0,
+      BorderBottom:    0,
+      BorderLeft:      0,
   )
 );
 
@@ -29,10 +33,10 @@ $LOCAL-VARIABLES: (
     margin: 0;
     width: 100%;
     background-color: pfe-local(BackgroundColor, $region: panel);
-    border-top:    pfe-local(BorderTop, 0, $region: panel);
-    border-right:  pfe-local(BorderRight, 0, $region: panel);
-    border-bottom: pfe-local(BorderBottom, 0, $region: panel);
-    border-left:   pfe-local(BorderLeft, 0, $region: panel);
+    border-top:    pfe-local(BorderTop, $region: panel);
+    border-right:  pfe-local(BorderRight, $region: panel);
+    border-bottom: pfe-local(BorderBottom, $region: panel);
+    border-left:   pfe-local(BorderLeft, $region: panel);
 
     padding: pfe-local(Padding, $region: panel); //16px
     @media screen and (min-width: pfe-breakpoint(md) ) {

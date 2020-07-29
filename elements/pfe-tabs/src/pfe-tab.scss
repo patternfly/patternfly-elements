@@ -10,8 +10,10 @@ $LOCAL-VARIABLES: (
   BorderColor:               pfe-var(ui-accent),      // active is bright
   BorderColor--hover:        pfe-var(surface--base),  // hover is gray
   BorderWidth:               pfe-var(ui--border-width--active),
+
   tab: ( // to avoid collisions with panel
     FontSize:                pfe-var(font-size),
+    Margin:                    0 0 calc( #{pfe-var(ui--border-width)} * -1),
     PaddingTop:              pfe-var(container-padding),
     PaddingRight:            calc(#{pfe-var(container-padding)} * 2),
     PaddingBottom:           pfe-var(container-padding),
@@ -26,12 +28,6 @@ $backwards-compatibility: (
 );
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
-// DEBUGGING
-//@include pfe-local-debug; // preview local variables in pfe-tab.css
-//:host {
-//  outline: none;
-//}
-
 
 /// ===========================================================================
 /// DEFAULT / WIND TAB VARIANT
@@ -41,7 +37,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   text-align: left;
   position: relative;
   display: block;
-  margin: pfe-local(Margin, $region: tab, $fallback: 0 0 -1px);
+  margin: pfe-local(Margin, $region: tab);
   // Padding
   padding:
     pfe-local(PaddingTop, $region: tab) pfe-local(PaddingRight, $region: tab) pfe-local(PaddingBottom, $region: tab) pfe-local(PaddingLeft, $region: tab);
@@ -63,12 +59,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   font-size: pfe-local(FontSize, $region: tab);
   .pfe-tab {
     display: inline-block !important;
-  }
-  .pfe-tab * {
-    font-size: inherit;
-    font-weight: inherit;
-    margin: 0;
-    color: pfe-local(Color) !important;
+    * {
+      font-size: inherit;
+      font-weight: inherit;
+      margin: 0;
+      color: pfe-local(Color) !important;
+    }
   }
 
   @at-root #{&}(:hover) {

@@ -109,10 +109,3 @@
   height: #{$size};
   @content;
 }
-
-// This will print the $LOCAL-VARIABLES map for debugging within components
-@mixin pfe-local-debug($map: $LOCAL-VARIABLES) {
-  :root {
-      @include pfe-print-local($map);
-  }
-}

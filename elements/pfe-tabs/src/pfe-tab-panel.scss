@@ -3,15 +3,12 @@
 $LOCAL: tabs;
 
 $LOCAL-VARIABLES: (
-
   focus:  pfe-var(link),
   panel: ( // to avoid collisions with tab header
       BackgroundColor: transparent,
       Padding:         pfe-var(container-spacer),
   )
 );
-// DEBUGGING
-//@include pfe-local-debug; // preview local variables in pfe-tab-panel.css
 
 ////////////////////////////////
 
@@ -23,9 +20,6 @@ $LOCAL-VARIABLES: (
     outline: none;
   }
 
-  ::slotted(*) {
-    
-  }
   [tabindex] {
     display: flex;
     height: 100%;
@@ -58,6 +52,10 @@ $LOCAL-VARIABLES: (
       color: pfe-fetch(text) !important;
     }
   }
+}
+
+:host([hidden]) {
+  display: none;
 }
 
 /// ===========================================================================
@@ -110,10 +108,6 @@ $LOCAL-VARIABLES: (
 	}
 }
 
-:host([hidden]) {
-  display: none;
-}
-
 /// ===========================================================================
 /// CONTEXTS: DARK & SATURATED
 /// ===========================================================================
@@ -136,13 +130,4 @@ $LOCAL-VARIABLES: (
       color: pfe-var(text);
     }
   }
- 
 }
-
-//VERTICAL
-:host {
-  @at-root #{&}([pfe-variant="earth"][vertical]) {
-    --pfe-tabs__panel--BorderTop: 0;
-  }
-}
-

@@ -33,9 +33,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 ));
 
 
-// DEBUGGING
-//@include pfe-local-debug; // preview local variables in pfe-tab-panel.css
-
 :host {
   display: pfe-local(Display);
   padding: pfe-local(Padding);

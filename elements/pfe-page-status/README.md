@@ -31,9 +31,9 @@ Use the attribute `pfe-status="{option}"`
 | `critical` | `--pfe-theme--color--feedback--critical` |
 | `success` | `--pfe-theme--color--feedback--success` |
 | `info` | `--pfe-theme--color--feedback--info` |
-| `normal` | `--pfe-theme--color--ui-base` |
+| `normal` | `--pfe-theme--color--ui-accent` |
 | `accent` | `--pfe-theme--color--ui-accent` |
-| `complement` | `--pfe-theme--color--ui-complement` |
+| `complement` | `--pfe-theme--color--ui-base` |
 
 ## Test
 

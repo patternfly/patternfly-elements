@@ -51,7 +51,7 @@ $size-small: (
 );
 
 // DEBUGGING
-@include pfe-local-debug; // preview local variables 
+// @include pfe-local-debug; // preview local variables 
 
 :host {
   --theme: #{pfe-local(theme)};

@@ -117,16 +117,16 @@
         &.pfe-navigation-item {
             &:hover {
                 cursor: pointer;
-                border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-var(ui-accent)};
+                border-top:  pfe-var(surface--border-width--heavy) solid pfe-var(ui-accent);
             }
         }
 
         .pfe-navigation__utility--mobile > *:not(:last-child) {
-            margin-bottom: #{pfe-var(container-spacer)};
+            margin-bottom: pfe-var(container-spacer);
         }
 
         .pfe-navigation-item__tray--container {
-            padding-top: #{pfe-var(container-spacer)};
+            padding-top: pfe-var(container-spacer);
         }
 
         > *.pfe-navigation-item__trigger--icon:first-child {

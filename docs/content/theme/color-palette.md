@@ -42,7 +42,7 @@ A user interface uses color to convey:
  - **Information**: Charts, graphs, and wayfinding elements
  - **Hierarchy**: Showing structured order through color and typography
 
-We've exposed 2 color variants for the UI elements in the design system to represent your brand:
+We've exposed 2 UI color variants for the UI elements in the design system to represent your brand:
 
  - Base
  - Accent

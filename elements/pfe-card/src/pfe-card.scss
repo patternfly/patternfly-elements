@@ -171,9 +171,6 @@ $size-small: (
     :host([on="dark"]) & {
         // Declare the header background color
       background-color: pfe-local(BackgroundColor--dark, $region: header);
-          $cssvar: BackgroundColor--dark,  
-          $region: header
-      )};
     }
     @include browser-query(ie11) {
       background-color: pfe-fetch(surface--lightest) !important;

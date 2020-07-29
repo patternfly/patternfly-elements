@@ -6,8 +6,6 @@ $LOCAL-VARIABLES: (
   BackgroundColor:           transparent,
   BackgroundColor--inactive: pfe-var(surface--lighter),
   Color:                     pfe-var(text--muted),
-  Color--focus:              #151515,
-  BorderColor:               pfe-var(ui-accent),      // active is bright
   BorderColor--hover:        pfe-var(surface--base),  // hover is gray
   BorderWidth:               pfe-var(ui--border-width--active),
 
@@ -23,10 +21,10 @@ $LOCAL-VARIABLES: (
   )
 );
 
-// TODO: These will be deprecated at 1.0  
+// TODO: These (focus & highlight) will be deprecated at 1.0  
 $backwards-compatibility: (
-  focus:                 pfe-local(Color--focus), 
-  highlight:             pfe-local(BorderColor),
+  Color--focus:  pfe-local(focus, #151515), 
+  BorderColor:   pfe-local(highlight, pfe-var(ui-accent)),
 );
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
@@ -70,7 +68,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   }
 
   @at-root #{&}(:hover) {
-    color: pfe-local(focus);
+    color: pfe-local(Color--focus);
     border-bottom-color: pfe-var(surface--base);
   }
 
@@ -81,8 +79,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   }
 
   @at-root #{&}([aria-selected="true"]) {
-    color: pfe-local(focus);
-    border-bottom-color: pfe-local(highlight);
+    color: pfe-local(Color--focus);
+    border-bottom-color: pfe-local(BorderColor);
   }
 }
 
@@ -107,7 +105,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     }
 
     @at-root #{&}([vertical][aria-selected="true"]) {
-      border-left-color: pfe-local(highlight);
+      border-left-color: pfe-local(BorderColor);
       border-left-width: 3px;
     }
 
@@ -118,7 +116,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
     @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="true"]) {
       border-right: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent;
-      border-left: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(highlight);
+      border-left: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor);
       padding-left: calc(#{pfe-var(container-padding)} - 2px);
     }
 
@@ -174,13 +172,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     border-bottom: 0;
     border-left-color: pfe-var(surface--border);
     border-right-color: pfe-var(surface--border);
-    border-top: solid pfe-local(highlight) pfe-local(BorderWidth);
+    border-top: solid pfe-local(BorderColor) pfe-local(BorderWidth);
 
     @include browser-query(ie11) {
       color: pfe-fetch(text--muted);
       background-color: pfe-fetch(surface--lightest);
       border-left: pfe-fetch(ui--border-width) pfe-fetch(ui--border-style) pfe-fetch(surface--border);
-      border-top: pfe-local(BorderWidth) pfe-fetch(ui--border-style) pfe-local(highlight);
+      border-top: pfe-local(BorderWidth) pfe-fetch(ui--border-style) pfe-local(BorderColor);
       border-bottom: 0;
     }
   }
@@ -231,7 +229,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
   :host([vertical][pfe-variant="earth"][aria-selected="true"]) {
     border-top: solid pfe-var(ui--border-width) pfe-var(surface--border);
-    border-left-color: pfe-local(highlight);
+    border-left-color: pfe-local(BorderColor);
     border-left-width: pfe-local(BorderWidth);
     border-right-color: transparent;
     margin-right: #{pfe-fetch(ui--border-width) * -1};
@@ -298,11 +296,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   }
 
   @at-root #{&}([pfe-variant="earth"][on="saturated"][aria-selected="true"]) {
-    color: pfe-local(focus);
+    color: pfe-local(Color--focus);
   }
 
   @at-root #{&}([pfe-variant="earth"][on="saturated"]:hover) {
-    color: pfe-local(focus);
+    color: pfe-local(Color--focus);
   }
 
   @at-root #{&}([pfe-variant="earth"][on="saturated"][aria-selected="true"]) {

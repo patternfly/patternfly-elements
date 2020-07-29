@@ -7,21 +7,21 @@ $pfe-colors: (
   // ========================================================================
 
   text:                        $pf-color-black-900,
-  text-muted:                  $pf-color-black-600,
+  text--muted:                  $pf-color-black-600,
   link:                        $pf-color-blue-400,
   link--visited:               $pf-color-purple-500,
   link--hover:                 $pf-color-blue-500,
   link--focus:                 $pf-color-blue-500,
 
   text--on-dark:               $pf-color-white,
-  text-muted--on-dark:         $pf-color-white,
+  text--muted--on-dark:         $pf-color-white,
   link--on-dark:               $pf-color-blue-200,
   link--visited--on-dark:      $pf-color-blue-100,
   link--hover--on-dark:        $pf-color-blue-100,
   link--focus--on-dark:        $pf-color-blue-100,
 
   text--on-saturated:          $pf-color-white,
-  text-muted--on-saturated:    $pf-color-white,
+  text--muted--on-saturated:    $pf-color-white,
   link--on-saturated:          $pf-color-white,
   link--visited--on-saturated: $pf-color-purple-400,
   link--hover--on-saturated:   $pf-color-black-100,

@@ -187,10 +187,15 @@
         </pfe-cta>
       </pfe-card>
 
-      <pfe-card pfe-color="darker" pfe-img-src="https://placekitten.com/500/500" style="--pfe-card__header--BackgroundColor: rgba(45,45,45,.7);">
+      <pfe-card pfe-color="darker">
         <h2>Imaged card with side & bottom overflow</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta rerum tempore natus alias! Cumque illum provident corrupti voluptates.</p>
         <img pfe-overflow="right left bottom" src="https://placekitten.com/400/250" slot="pfe-card--footer"/>
+      </pfe-card>
+
+      <pfe-card pfe-color="darker" pfe-img-src="https://placekitten.com/500/500" style="--pfe-card__header--BackgroundColor--dark: rgba(45,45,45,.7);">
+        <h2 slot="pfe-card--header">Background Image on card </h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta rerum tempore natus alias! Cumque illum provident corrupti voluptates.</p>
       </pfe-card>
     </div>
   </body>

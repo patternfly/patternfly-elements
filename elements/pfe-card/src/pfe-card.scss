@@ -50,6 +50,9 @@ $size-small: (
   PaddingLeft:    pfe-var(container-spacer)
 );
 
+// DEBUGGING
+@include pfe-local-debug; // preview local variables 
+
 :host {
   --theme: #{pfe-local(theme)};
 

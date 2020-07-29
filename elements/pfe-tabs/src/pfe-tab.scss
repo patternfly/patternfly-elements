@@ -11,13 +11,15 @@ $LOCAL-VARIABLES: (
   BorderColor--hover:        pfe-var(surface--base),  // hover is gray
   BorderWidth:               pfe-var(ui--border-width--active),
 
+
   tab: ( // to avoid collisions with panel
     FontSize:                pfe-var(font-size),
-    Margin:                    0 0 calc( #{pfe-var(ui--border-width)} * -1),
+    Margin:                  0 0 calc( #{pfe-var(ui--border-width)} * -1),
     PaddingTop:              pfe-var(container-padding),
     PaddingRight:            calc(#{pfe-var(container-padding)} * 2),
     PaddingBottom:           pfe-var(container-padding),
     PaddingLeft:             calc(#{pfe-var(container-padding)} * 2),
+    TextTransform:           none,
   )
 );
 
@@ -53,7 +55,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   text-align: pfe-local(TextAlign, center, $region: tab);
 
   // Exposing this for customization
-  text-transform: pfe-local(TextTransform, $region: tab, $fallback: none);
+  text-transform: pfe-local(TextTransform, $region: tab);
   font-family: pfe-var(font-family);
   font-weight: pfe-var(font-weight--normal);
   font-size: pfe-local(FontSize, $region: tab);

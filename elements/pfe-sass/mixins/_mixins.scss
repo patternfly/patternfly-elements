@@ -109,3 +109,9 @@
   height: #{$size};
   @content;
 }
+
+@mixin pfe-local-debug($map: $LOCAL-VARIABLES) {
+  :root {
+      @include pfe-print-local($map);
+  }
+} 

@@ -48,12 +48,12 @@
   }<% } %>],
   "license": "MIT",
   "dependencies": {
-    <% if (sassLibraryPkg) { %>"<%= sassLibraryPkg %>": "<%= pfeSassVersion %>"<% if (isPfelement) { %>,<% } } %><% if (isPfelement) { %>
-    "@patternfly/pfelement": "<%= pfelementVersion %>"<% } %><% if (Object.entries( dependencies ).length > 0) { %>,<% } %><% for (const [package, version] of Object.entries( dependencies )) { %>
+    <% if (isPfelement) { %>"@patternfly/pfelement": "<%= pfelementVersion %>"<% } %><% if (Object.entries( dependencies ).length > 0) { %>,<% } %><% for (const [package, version] of Object.entries( dependencies )) { %>
     "<%= package %>": "<%= version %>"<% if ( _.findLastKey( dependencies ) !== package ) { %>,<% } } %>
   }<% if (!isPfelement) { %>,
   "devDependencies": {<% for (const [package, version] of Object.entries( devDependencies )) { %>
-    "<%= package %>": "<%= version %>"<% if ( _.findLastKey( devDependencies ) !== package ) { %>,<% } } %>
+    "<%= package %>": "<%= version %>"<% if ( _.findLastKey( devDependencies ) !== package ) { %>,<% } } %><% if (sassLibraryPkg) { if (devDependencies.length > 0) { %>,<% } %>
+    "<%= sassLibraryPkg %>": "<%= pfeSassVersion %>"<% } %>
   },
   "bugs": {
     "url" : "https://github.com/patternfly/patternfly-elements/issues?q=is%3Aissue+is%3Aopen+<%= elementName %>"

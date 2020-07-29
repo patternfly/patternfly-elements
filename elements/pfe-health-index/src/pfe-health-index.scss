@@ -39,8 +39,8 @@ $colors: (
   @each $level in (a b c d e f) {
     &.#{$level} {
       @include pfe-print-local((
-        accent: #{map-get($colors, $level)},
-        accent--text: #{pfe-var(text--on-dark)}
+        accent: map-get($colors, $level),
+        accent--text: pfe-var(text--on-dark)
       ));
     }
   }
@@ -57,8 +57,18 @@ $colors: (
 
     &.active {
       background-color: pfe-local(accent);
+
+      @include browser-query(ie11) {
+        @each $level in (a b c d e f) {
+          &.#{$level} {
+            background-color: map-get($colors, $level);
+          }
+        }
+      }
+
     }
   }
+
   :host([size="mini"]) & {
     display: flex;
     width: pfe-var(ui--element--size);
@@ -70,7 +80,18 @@ $colors: (
     // Color applied to the background
     background-color: pfe-local(accent);
     color: pfe-local(accent--text);
+
+    @include browser-query(ie11) {
+      @each $level in (a b c d e f) {
+        &.#{$level} {
+          background-color: map-get($colors, $level);
+          color: pfe-fetch(text--on-dark);
+        }
+      }
+    }
+
   }
+
   :host([size="lg"]) & {
     background-color: pfe-var(surface--lightest);
     color: pfe-var(ui-disabled--text);
@@ -113,6 +134,16 @@ $colors: (
     &.active .grade {
       background-color: pfe-local(accent);
       color: pfe-local(accent--text);
+    }
+
+    @include browser-query(ie11) {
+      @each $level in (a b c d e f) {
+        &.#{$level} > .bottom,
+        &.active.#{$level} .grade {
+          background-color: map-get($colors, $level);
+          color: pfe-fetch(text--on-dark);
+        }
+      }
     }
   }
   &-container {

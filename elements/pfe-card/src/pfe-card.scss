@@ -170,13 +170,13 @@ $size-small: (
     color:            pfe-local($cssvar: Color, $region: header);
     :host([on="dark"]) & {
         // Declare the header background color
-      background-color: #{pfe-local(
+      background-color: pfe-local(BackgroundColor--dark, $region: header);
           $cssvar: BackgroundColor--dark,  
           $region: header
       )};
     }
     @include browser-query(ie11) {
-      background-color: #{map-get($pfe-colors, surface--lighter)} !important;
+      background-color: pfe-fetch(surface--lightest) !important;
       color: #{pfe-var(text)} !important;
     }
 

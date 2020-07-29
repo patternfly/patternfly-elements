@@ -123,16 +123,18 @@ $LOCAL-VARIABLES: (
 :host {
   @at-root #{&}([pfe-variant="earth"][on="dark"]) {
     --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--darkest)};
+    @include pfe-set-broadcast-theme(dark);
   }
 }
 
 :host {
   @at-root #{&}([pfe-variant="earth"][on="saturated"]) {
     --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--lightest)};
-
-      ::slotted(*) {
-        color: pfe-var(text);
-      }
+    @include pfe-set-broadcast-theme(light);
+    
+    ::slotted(*) {
+      color: pfe-var(text);
+    }
   }
  
 }

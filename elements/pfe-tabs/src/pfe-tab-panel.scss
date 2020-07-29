@@ -130,8 +130,17 @@ $LOCAL-VARIABLES: (
     --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--lightest)};
     @include pfe-set-broadcast-theme(light);
     
-    ::slotted(*) {
-      color: pfe-var(text);
-    }
+  }
+}
+:host {
+  @at-root #{&}([pfe-variant="wind"][on="saturated"]) {
+    @include pfe-set-broadcast-theme(saturated);
+    
+  }
+}
+:host {
+  @at-root #{&}([pfe-variant="wind"][on="dark"]) {
+    @include pfe-set-broadcast-theme(dark);
+    
   }
 }

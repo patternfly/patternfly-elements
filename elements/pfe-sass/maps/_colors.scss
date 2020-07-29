@@ -7,21 +7,21 @@ $pfe-colors: (
   // ========================================================================
 
   text:                        $pf-color-black-900,
-  text--muted:                  $pf-color-black-600,
+  text--muted:                 $pf-color-black-600,
   link:                        $pf-color-blue-400,
   link--visited:               $pf-color-purple-500,
   link--hover:                 $pf-color-blue-500,
   link--focus:                 $pf-color-blue-500,
 
   text--on-dark:               $pf-color-white,
-  text--muted--on-dark:         $pf-color-white,
+  text--muted--on-dark:        $pf-color-white,
   link--on-dark:               $pf-color-blue-200,
   link--visited--on-dark:      $pf-color-blue-100,
   link--hover--on-dark:        $pf-color-blue-100,
   link--focus--on-dark:        $pf-color-blue-100,
 
   text--on-saturated:          $pf-color-white,
-  text--muted--on-saturated:    $pf-color-white,
+  text--muted--on-saturated:   $pf-color-white,
   link--on-saturated:          $pf-color-white,
   link--visited--on-saturated: $pf-color-purple-400,
   link--hover--on-saturated:   $pf-color-black-100,
@@ -33,26 +33,26 @@ $pfe-colors: (
 
   // Set of base colors
 
-  ui-base:                      $pf-color-black-600,
-  ui-base--hover:               $pf-color-black-900,
-  ui-base--focus:               $pf-color-black-900,
-  ui-base--text:                $pfe-color--text--on-dark,
-  ui-base--text--hover:         $pfe-color--text--on-dark,
-  ui-base--text--focus:         $pfe-color--text--on-dark,
+  ui-base:                            $pf-color-black-600,
+  ui-base--hover:                     $pf-color-black-900,
+  ui-base--focus:                     $pf-color-black-900,
+  ui-base--text:                      $pfe-color--text--on-dark,
+  ui-base--text--hover:               $pfe-color--text--on-dark,
+  ui-base--text--focus:               $pfe-color--text--on-dark,
 
-  ui-base--on-dark:                      $pf-color-white,
-  ui-base--hover--on-dark:               $pf-color-black-200,
-  ui-base--focus--on-dark:               $pf-color-black-200,
-  ui-base--text--on-dark:                $pfe-color--text,
-  ui-base--text--hover--on-dark:         $pfe-color--text,
-  ui-base--text--focus--on-dark:         $pfe-color--text,
+  ui-base--on-dark:                   $pf-color-white,
+  ui-base--hover--on-dark:            $pf-color-black-200,
+  ui-base--focus--on-dark:            $pf-color-black-200,
+  ui-base--text--on-dark:             $pfe-color--text,
+  ui-base--text--hover--on-dark:      $pfe-color--text,
+  ui-base--text--focus--on-dark:      $pfe-color--text,
 
-  ui-base--on-saturated:                   $pf-color-white,
-  ui-base--hover--on-saturated:            $pf-color-black-200,
-  ui-base--focus--on-saturated:            $pf-color-black-200,
-  ui-base--text--on-saturated:             $pfe-color--text,
-  ui-base--text--hover--on-saturated:      $pfe-color--text,
-  ui-base--text--focus--on-saturated:      $pfe-color--text,
+  ui-base--on-saturated:              $pf-color-white,
+  ui-base--hover--on-saturated:       $pf-color-black-200,
+  ui-base--focus--on-saturated:       $pf-color-black-200,
+  ui-base--text--on-saturated:        $pfe-color--text,
+  ui-base--text--hover--on-saturated: $pfe-color--text,
+  ui-base--text--focus--on-saturated: $pfe-color--text,
 
 
   // Set of accent colors
@@ -70,20 +70,20 @@ $pfe-colors: (
   ui-accent--text--hover--on-dark:      $pfe-color--text,
   ui-accent--text--focus--on-dark:      $pfe-color--text,
 
-  ui-accent--on-saturated:                   $pf-color-white,
-  ui-accent--hover--on-saturated:            darken($pf-color-white, 20%),
-  ui-accent--focus--on-saturated:            darken($pf-color-white, 20%),
-  ui-accent--text--on-saturated:             $pfe-color--text,
-  ui-accent--text--hover--on-saturated:      $pfe-color--text,
-  ui-accent--text--focus--on-saturated:      $pfe-color--text,
+  ui-accent--on-saturated:              $pf-color-white,
+  ui-accent--hover--on-saturated:       darken($pf-color-white, 20%),
+  ui-accent--focus--on-saturated:       darken($pf-color-white, 20%),
+  ui-accent--text--on-saturated:        $pfe-color--text,
+  ui-accent--text--hover--on-saturated: $pfe-color--text,
+  ui-accent--text--focus--on-saturated: $pfe-color--text,
 
   // Set of disabled colors
-  ui-disabled:                        $pfelements--gray-light,
-  ui-disabled--hover:                 $pfelements--gray-light,
-  ui-disabled--focus:                 transparent,
-  ui-disabled--text:                  $pf-color-black-600,
-  ui-disabled--text--hover:           $pfelements--gray,
-  ui-disabled--text--focus:           $pfelements--gray,
+  ui-disabled:                          $pfelements--gray-light,
+  ui-disabled--hover:                   $pfelements--gray-light,
+  ui-disabled--focus:                   transparent,
+  ui-disabled--text:                    $pf-color-black-600,
+  ui-disabled--text--hover:             $pfelements--gray,
+  ui-disabled--text--focus:             $pfelements--gray,
 
   // ========================================================================
   // Base Surface Colors for Container elements

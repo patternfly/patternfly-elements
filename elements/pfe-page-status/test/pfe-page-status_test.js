@@ -1,14 +1,14 @@
 const statuses = {
-  default: "#606060",
+  default: "#4f5255",
   moderate: "#ffc024",
   warning: "#ffc024",
   important: "#d73401",
   critical: "#bb0000",
   success: "#2e7d32",
   info: "#0277bd",
-  normal: "#0477a4",
-  accent: "#ee0000",
-  complement: "#464646",
+  normal: "#0066cc",
+  accent: "#0066cc",
+  complement: "#4f5255",
 };
 // Converts a hex value to RGBA
 const hexToRgb = hex => {
@@ -32,7 +32,7 @@ suite('<pfe-page-status>', () => {
   suiteSetup(() => {
     banner = [...document.querySelectorAll("pfe-page-status")];
   });
-  
+
   test('it should upgrade', () => {
     assert.instanceOf(document.querySelector('pfe-page-status'), customElements.get("pfe-page-status", 'pfe-page-status should be an instance of pfePageStatus'));
   });
@@ -49,5 +49,4 @@ suite('<pfe-page-status>', () => {
       assert.deepEqual(getColor(banner[0], "background-color"), hexToRgb(set[1]));
     });
   });
-
 });

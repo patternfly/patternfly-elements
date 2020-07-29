@@ -1,13 +1,13 @@
 // Themes and their expected hex values
 const colors = {
-  default: "#dfdfdf",
-  darker: "#464646",
-  darkest: "#131313",
-  accent: "#ee0000",
-  complement: "#0477a4",
-  lighter: "#ececec",
+  default: "#f0f0f0",
+  darker: "#3c3f42",
+  darkest: "#151515",
+  accent: "#004080",
+  complement: "#002952",
   lightest: "#ffffff"
 };
+
 // Converts a hex value to RGBA
 const hexToRgb = hex => {
   const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/.exec(hex);
@@ -15,8 +15,9 @@ const hexToRgb = hex => {
         parseInt(r, 16),
         parseInt(g, 16),
         parseInt(b, 16)
-     ];
+      ];
 };
+
 // Gets the rgba value from an element
 const getColor = (el, prop) => {
   const [, r, g, b] = getComputedStyle(el, null)[prop].match(/rgba?\((\d+),\s+(\d+),\s+(\d+).*\)/)
@@ -77,9 +78,9 @@ suite("<pfe-band>", () => {
       assert.equal(getComputedStyle(band[0], null)["padding"], "16px");
     }
   });
-
+  
   */
-
+  
   // Test the default positions of the aside region in the DOM
   test("it should have rendered the markup correctly for the aside defaults", () => {
     // @TODO
@@ -96,7 +97,8 @@ suite("<pfe-band>", () => {
 
     // Test that the container exists
     assert.isDefined(container, '.pfe-band__container is not `undefined`');
-    if (container) {
+
+    if(container) {
       // Test that the header is the first item in the container
       assert.equal(header.className, "pfe-band__header");
       // Test that the body is the second item in the container

@@ -20,12 +20,11 @@ const getColor = (el, prop) => {
 
 // Themes and their expected hex values
 const colors = {
-  base: "#dfdfdf",
-  darker: "#464646",
-  darkest: "#131313",
-  accent: "#ee0000",
-  complement: "#0477a4",
-  lighter: "#ececec",
+  default: "#f0f0f0",
+  darker: "#3c3f42",
+  darkest: "#151515",
+  accent: "#004080",
+  complement: "#002952",
   lightest: "#ffffff"
 };
 
@@ -137,7 +136,7 @@ suite("<pfe-card>", () => {
 
   test("it should render a header and footer when content for those slots are added dynamically", done => {
     const card = document.querySelector("#dynamicHeaderFooter");
-
+    
     const header = document.createElement("h2");
     header.setAttribute("slot", "pfe-card--header");
     header.textContent = "Card Header";

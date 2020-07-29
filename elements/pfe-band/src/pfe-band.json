@@ -84,7 +84,6 @@
           "type": "string",
           "enum": [
             "lightest",
-            "lighter",
             "base",
             "darker",
             "darkest",

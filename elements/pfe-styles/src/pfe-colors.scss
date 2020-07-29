@@ -1,13 +1,12 @@
 /* DEMO FILE ONLY, NOT FOR PRODUCTION USE */
-
 @import "../../pfe-sass/pfe-sass";
 
 :root {
     @each $name, $color in $pfe-colors {
-        --theme--#{$name}: #{$color};
+        --theme--color--#{$name}: #{$color};
     }
 }
-
+ 
 @function contexts($list) {
     @each $item in $list {
         @if str-starts-with($item, "on") {

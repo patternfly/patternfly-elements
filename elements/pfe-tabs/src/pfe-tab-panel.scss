@@ -3,43 +3,53 @@
 $LOCAL: tabs;
 
 $LOCAL-VARIABLES: (
-  focus:  pfe-var(link)
+
+  focus:  pfe-var(link),
+  panel: ( // to avoid collisions with tab header
+      BackgroundColor: transparent,
+      Padding:         pfe-var(container-spacer),
+  )
 );
+// DEBUGGING
+//@include pfe-local-debug; // preview local variables in pfe-tab-panel.css
+
+////////////////////////////////
 
 :host {
-
   display: block;
+  color: pfe-broadcasted(text);
 
   @at-root #{&}(:focus) {
     outline: none;
   }
 
   ::slotted(*) {
-    color: pfe-broadcasted(text);
+    
   }
   [tabindex] {
     display: flex;
     height: 100%;
   }
 
- //updated saturated styles
-  @at-root #{&}([pfe-variant="earth"][on="saturated"]) .container {
-    background-color: pfe-var(surface--lightest);
-    color: pfe-var(text);
-  }
-  @at-root #{&}([pfe-variant="earth"][on="saturated"]) ::slotted(*) {
-    color: pfe-var(text);
-}
-
   .container {
     margin: 0;
     width: 100%;
-    padding: pfe-local(Padding, $region: panel, $fallback: pfe-var(container-spacer) 0);
-
+    background-color: pfe-local(BackgroundColor, $region: panel);
     border-top:    pfe-local(BorderTop, 0, $region: panel);
     border-right:  pfe-local(BorderRight, 0, $region: panel);
     border-bottom: pfe-local(BorderBottom, 0, $region: panel);
     border-left:   pfe-local(BorderLeft, 0, $region: panel);
+
+    padding: pfe-local(Padding, $region: panel); //16px
+    @media screen and (min-width: pfe-breakpoint(md) ) {
+      padding: calc(#{pfe-local(Padding, $region: panel)} * 2);
+    }
+    @media screen and (min-width: pfe-breakpoint(lg) ) {
+      padding: calc(#{pfe-local(Padding, $region: panel)} * 3);
+    }
+    @media screen and (min-width: pfe-breakpoint(xl) ) {
+      padding: calc(#{pfe-local(Padding, $region: panel)} * 4);
+    }
 
     @include pfe-clearfix;
     @include browser-query(ie11) {
@@ -54,26 +64,21 @@ $LOCAL-VARIABLES: (
 /// HORIZONTAL
 /// ===========================================================================
 :host([pfe-variant="earth"]) {
-  --pfe-tabs__panel--Padding: calc(#{pfe-var(container-spacer)} * 2);
 
   @include browser-query(ie11) {
     .container {
+      background-color: pfe-fetch(surface--lightest);
       padding: 1em;
       border-right: 1px solid pfe-fetch(surface--border);
       border-bottom: 1px solid pfe-fetch(surface--border);
       border-left: 1px solid pfe-fetch(surface--border);
     }
   }
+
 }
 :host([vertical][pfe-variant="earth"]) {
-  @include pfe-print-local((
-    panel: (
-      BorderTop:    0,
-      BorderRight:  0,
-      BorderBottom: 0,
-      BorderLeft:   pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border)
-    )
-  ));
+    border-top: 0px;
+    border-left:   pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
 }
 
 /// ===========================================================================
@@ -82,7 +87,9 @@ $LOCAL-VARIABLES: (
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([pfe-variant="wind"][vertical]) {
-    --pfe-tabs__panel--Padding: #{pfe-var(container-spacer)} 0 #{pfe-var(container-spacer)} calc(#{pfe-var(container-spacer)} * 2);
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
 
     @include browser-query(ie11) {
       .container {
@@ -106,3 +113,34 @@ $LOCAL-VARIABLES: (
 :host([hidden]) {
   display: none;
 }
+
+/// ===========================================================================
+/// CONTEXTS: DARK & SATURATED
+/// ===========================================================================
+/// In dark & saturated contexts, we override the local color vars
+
+
+:host {
+  @at-root #{&}([pfe-variant="earth"][on="dark"]) {
+    --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--darkest)};
+  }
+}
+
+:host {
+  @at-root #{&}([pfe-variant="earth"][on="saturated"]) {
+    --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--lightest)};
+
+      ::slotted(*) {
+        color: pfe-var(text);
+      }
+  }
+ 
+}
+
+//VERTICAL
+:host {
+  @at-root #{&}([pfe-variant="earth"][vertical]) {
+    --pfe-tabs__panel--BorderTop: 0;
+  }
+}
+

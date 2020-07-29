@@ -22,10 +22,6 @@ $LOCAL-VARIABLES: (
   ),
   panels: (
     Width: auto,
-    PaddingTop: 0,
-    PaddingRight: 0,
-    PaddingBottom: 0,
-    PaddingLeft: 0
   )
 );
 
@@ -35,6 +31,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     BorderBottom: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: tabs)
   )
 ));
+
+
+// DEBUGGING
+//@include pfe-local-debug; // preview local variables in pfe-tab-panel.css
 
 :host {
   display: pfe-local(Display);
@@ -55,11 +55,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   .panels {
     width: pfe-local(Width, $region: panels);
-
-    padding-top: pfe-local(PaddingTop, $region: panels);
-    padding-right: pfe-local(PaddingRight, $region: panels);
-    padding-bottom: pfe-local(PaddingBottom, $region: panels);
-    padding-left: pfe-local(PaddingLeft, $region: panels);
+    // no padding here, because of the borders on vertical earth
   }
 }
 
@@ -78,12 +74,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   :host([vertical]) {
     --pfe-tabs--Display: flex; // Sets tabs to appear to the left of the panels
     --pfe-tabs__tabs--FlexDirection: column;
-    --pfe-tabs__tabs--Width: 22.22%;
+    --pfe-tabs__tabs--Width: 20%;
 
     --pfe-tabs__tabs--BorderRight: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
     --pfe-tabs__tabs--BorderBottom: 0;
 
-    --pfe-tabs__panels--Width: 77.78%;
+    --pfe-tabs__panels--Width: 80%;
     --pfe-tabs__panels--PaddingRight: #{pfe-var(container-padding)};
 
     @include browser-query(ie11) {
@@ -130,9 +126,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 :host([pfe-variant="earth"]) {
   --pfe-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
 
-  .tabs ::slotted(pfe-tab[aria-selected="false"]:not([vertical]):first-of-type) {
-    border-left: 0;
-  }
 }
     
 @include browser-query(ie11) {
@@ -144,22 +137,36 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 @include pfe-theme-contexts; // imports on="light" etc support
 
 
-  // Styles for vertical wind tab to have the left bad extend past the tabset 
-:host([vertical][pfe-variant="wind"]) .tabs-prefix {
-  left: 0px;
-  top: 0px;
-  content: " ";
-  height: 32px;
-  width: 1px;
-  background-color: pfe-local(BorderColor, $region: tabs);
-  position: relative;
-}
-:host([vertical][pfe-variant="wind"]) .tabs-suffix {
-  left: 0px;
-  top: 0px;
-  content: " ";
-  height: 32px;
-  width: 1px;
-  background-color: pfe-local(BorderColor, $region: tabs);
-  position: relative;
+/// ===========================================================================
+/// INSET NOTCH
+/// ===========================================================================
+
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+  :host([vertical][pfe-variant="wind"]) .tabs-prefix {
+    left: 0px;
+    top: 0px;
+    content: " ";
+    height: 32px;
+    width: 1px;
+    background-color: pfe-local(BorderColor, $region: tabs);
+    position: relative;
+  }
+  :host([vertical][pfe-variant="wind"]) .tabs-suffix {
+    left: 0px;
+    top: 0px;
+    content: " ";
+    height: 32px;
+    width: 1px;
+    background-color: pfe-local(BorderColor, $region: tabs);
+    position: relative;
+  }
+
+  :host(:not([vertical])[pfe-variant="earth"]) .tabs-prefix {
+    left: 0px;
+    top: 0px;
+    content: " ";
+    height: 1px;
+    width: calc(#{pfe-var(container-padding)} * 2);
+    position: relative;
+  }
 }

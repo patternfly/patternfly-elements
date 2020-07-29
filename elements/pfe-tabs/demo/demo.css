@@ -57,6 +57,9 @@ section.pfe-l-grid {
 .example>h2 {
     text-align: right;
 }
+section>h2 {
+    margin-top: 2em;
+}
 
 .subheading {
   margin: 0;
@@ -64,11 +67,24 @@ section.pfe-l-grid {
   font-weight: bold;
   font-family: "Arial";
 }
-
+.inner {
+   margin: auto;
+   max-width:1140px;
+   padding: 50px 0;
+}
+.light-background {
+    background-color: rgb(252, 250, 244);
+    --theme: light;
+}
 .dark-background {
-    background-color: #151515;
+    background-color: #383333;
     --theme: dark;
 }
+.saturated-background {
+    background-color: teal;
+    --theme: saturated;
+}
+
 
 .floating-card {
     float: left;
@@ -123,8 +139,4 @@ button.form-ui {
     height: 2em;
     font-size: 1em;
     padding: 2px 5px;
-}
-.saturated-background {
-    background-color: teal;
-    --theme: saturated;
 }

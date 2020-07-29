@@ -126,7 +126,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
     @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="false"]:hover) {
       border-right: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent;
-      border-Bottom: 0;
+      border-bottom: 0;
       border-left: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor--hover);
       padding-left: calc(#{pfe-var(container-padding)} - 2px);
     }

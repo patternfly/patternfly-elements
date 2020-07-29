@@ -1,5 +1,6 @@
 ## Prerelease 54 ( TBD )
 
+- [6ef7f74](https://github.com/patternfly/patternfly-elements/commit/6ef7f74bfe22b259373f3485a46b21f37aa7196e) fix: pfe-accordion border styles (#1002)
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-tab style updates (#814)
 
 ## Prerelease 53 ( 2020-07-21 )

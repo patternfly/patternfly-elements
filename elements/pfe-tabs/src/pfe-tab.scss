@@ -23,7 +23,7 @@ $LOCAL-VARIABLES: (
 
 // TODO: These (focus & highlight) will be deprecated at 1.0  
 $backwards-compatibility: (
-  Color--focus:  pfe-local(focus, #151515), 
+  Color--focus:  pfe-local(focus, pfe-var(text)), 
   BorderColor:   pfe-local(highlight, pfe-var(ui-accent)),
 );
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
@@ -100,7 +100,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
       border-left-color: pfe-var(surface--border);
       border-left-width: pfe-var(ui--border-width);
 
-      --pfe-tabs--Margin: 0 -1px 0 0;
+      --pfe-tabs--Margin: 0 calc( #{pfe-var(ui--border-width)} * -1) 0 0;
       padding: pfe-var(container-padding);
     }
 
@@ -206,8 +206,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="false"]:first-of-type) {
-    border-top: pfe-var(ui--border-width) pfe-var(ui--border-style) transparent !important;
-    border-left: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent !important;
+    border-top: pfe-var(ui--border-width) pfe-var(ui--border-style) transparent;
+    border-left: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent;
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="false"]) {
@@ -223,7 +223,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
   :host([vertical][pfe-variant="earth"][aria-selected="false"]:first-of-type:hover) {
     border-top: #{pfe-var(ui--border-style)} #{pfe-var(ui--border-style)} transparent;
-    border-left: #{pfe-local(BorderWidth)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)} !important;
+    border-left: #{pfe-local(BorderWidth)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
   }
 
 

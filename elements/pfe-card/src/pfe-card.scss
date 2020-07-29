@@ -20,7 +20,8 @@ $LOCAL-VARIABLES: (
   spacing: pfe-var(container-spacer),
 
   header: (
-    BackgroundColor: rgba(45, 45, 45, pfe-var(opacity)),
+    BackgroundColor: rgba(0, 0, 0, pfe-var(opacity)),
+    BackgroundColor--dark: rgba(255, 255, 255, pfe-var(opacity)),
     Color:           pfe-broadcasted(text)
   ),
 
@@ -49,6 +50,9 @@ $size-small: (
   PaddingLeft:    pfe-var(container-spacer)
 );
 
+// DEBUGGING
+// @include pfe-local-debug; // preview local variables 
+
 :host {
   --theme: #{pfe-local(theme)};
 
@@ -60,7 +64,7 @@ $size-small: (
   align-self: stretch;
 
   padding:       pfe-local(Padding);
-  border:        pfe-local(Border);
+  border:        pfe-local(Border);  // @TODO add automatic border when lightest card is on lightest background?
   border-radius: pfe-local(BorderRadius);
 
   // This property ensures that children in the slots do no overflow
@@ -162,10 +166,14 @@ $size-small: (
   &__header {
     z-index: 2;
     // Declare the header background color
-    background-color: #{pfe-local(BackgroundColor, $region: header)};
-    color:            #{pfe-local(Color, $region: header)};
+    background-color: pfe-local(BackgroundColor, $region: header);
+    color:            pfe-local($cssvar: Color, $region: header);
+    :host([on="dark"]) & {
+        // Declare the header background color
+      background-color: pfe-local(BackgroundColor--dark, $region: header);
+    }
     @include browser-query(ie11) {
-      background-color: #{map-get($pfe-colors, surface--lighter)} !important;
+      background-color: pfe-fetch(surface--lightest) !important;
       color: #{pfe-var(text)} !important;
     }
 

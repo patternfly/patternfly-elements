@@ -6,7 +6,7 @@ $LOCAL-VARIABLES: (
   BackgroundColor:           transparent,
   BackgroundColor--inactive: pfe-var(surface--lighter),
   Color:                     pfe-var(text--muted),
-  BorderColor--hover:        pfe-var(surface--base),  // hover is gray
+  BorderColor--hover:        $pf-color-black-400, 
   BorderWidth:               pfe-var(ui--border-width--active),
 
 
@@ -28,7 +28,6 @@ $backwards-compatibility: (
 );
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
-@include pfe-local-debug;
 
 /// ===========================================================================
 /// DEFAULT / WIND TAB VARIANT
@@ -59,28 +58,26 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   font-weight: pfe-var(font-weight--normal);
   font-size: pfe-local(FontSize, $region: tab);
   .pfe-tab {
-    display: inline-block !important;
+    display: inline-block ;
     * {
       font-size: inherit;
       font-weight: inherit;
       margin: 0;
-      //
     }
   }
 
   @at-root #{&}(:hover) {
     color: pfe-local(Color--focus);
-    border-bottom-color: pfe-var(surface--base);
+    border-bottom-color: pfe-local(BorderColor--hover); 
   }
-
-  // Active tab styles
-  // TODO: ShadyCSS falls flat on this pseudo element in IE11 `:host(:focus-visible)`, add back when we drop ShadyCSS
+ 
   @at-root #{&}(:focus) {
-    color: pfe-var(text);
+    color: pfe-local(Color--focus);
+    border-bottom-color: pfe-local(BorderColor--hover);
   }
 
   @at-root #{&}([aria-selected="true"]) {
-    color: pfe-local(Color--focus);
+    color: pfe-local(Color--focus) ;
     border-bottom-color: pfe-local(BorderColor);
   }
 }
@@ -90,7 +87,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// ===========================================================================
 
 :host([pfe-variant="earth"][vertical]) .pfe-tab {
-  display: inline-block !important;
+  display: inline-block ;
 }
 
 @media screen and (min-width: pfe-breakpoint(md) ) {
@@ -164,7 +161,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   }
 
   @at-root #{&}([pfe-variant="earth"][aria-selected="false"]:hover) {
-    border-top-color: pfe-local(BorderColor);
+    border-top-color: pfe-local(BorderColor--hover);
   }
 
   // nth of type is needed to override first and last of type selectors above
@@ -262,9 +259,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     }
   }
 
+  @at-root #{&}([on="dark"][pfe-variant="earth"][aria-selected="false"]:focus) {
+      --pfe-tabs--Color: #{pfe-var(text--on-dark)};
+      --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
+  }
   @at-root #{&}([on="dark"][pfe-variant="earth"][aria-selected="false"]:hover) {
     --pfe-tabs--Color: #{pfe-var(text--on-dark)};
-    border-top: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-var(surface--border--darker) !important;
+    --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
 
     @include browser-query(ie11) {
       color: pfe-fetch(text) !important;
@@ -272,11 +273,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   }
 
   @at-root #{&}([on="dark"][pfe-variant="earth"][aria-selected="false"]:first-of-type) {
-    border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent !important;
+    border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent ;
   }
 
   @at-root #{&}([on="dark"][pfe-variant="earth"][aria-selected="true"]) {
-    --pfe-tabs--Color: #{pfe-var(text--on-dark)};
+    --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
     background-color: pfe-var(surface--darkest);
     border-bottom-color: pfe-var(surface--darkest);
 
@@ -326,7 +327,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   }
 
   @at-root #{&}([on="saturated"][pfe-variant="wind"][aria-selected="true"]) {
-    --pfe-tabs--Color: #{pfe-var(text--on-saturated)};
+    --pfe-tabs--Color--focus: #{pfe-var(text--on-saturated)};
+    --pfe-tabs--BorderColor: pfe-var(surface--lightest);
 
     @include browser-query(ie11) {
       color: pfe-fetch(text) !important;
@@ -351,7 +353,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 // DARK
 :host {
   @at-root #{&}([on="dark"][pfe-variant="wind"][aria-selected="true"]) {
-    --pfe-tabs--Color: #{pfe-var(surface--lightest)};
+    //--pfe-tabs--Color: #{pfe-var(surface--lightest)};
+    --pfe-tabs--Color--focus: #{pfe-var(surface--lightest)};
 
     @include browser-query(ie11) {
       color: pfe-fetch(text) !important;
@@ -359,7 +362,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   }
 
   @at-root #{&}([on="dark"][pfe-variant="wind"][aria-selected="false"]) {
-    --pfe-tabs--Color: #{pfe-var(text--on-saturated)};
+    --pfe-tabs--Color: #{pfe-var(text--muted--on-dark)};
 
     @include browser-query(ie11) {
       color: pfe-fetch(text) !important;
@@ -369,7 +372,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   @at-root #{&}([on="dark"][pfe-variant="wind"][aria-selected="false"]:hover) {
     border-bottom-color: pfe-var(surface--base);
     color: pfe-var(surface--lightest);
-    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)} !important;
+    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)} ;
 
     @include browser-query(ie11) {
       color: pfe-fetch(text) !important;

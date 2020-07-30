@@ -206,19 +206,19 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
 
   :host([vertical][pfe-variant="earth"]) {
-    border-top-width: pfe-var(ui--border-width);
-    border-top-color: pfe-var(surface--border);
+    border-top: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
+    border-bottom: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
     border-left-width: pfe-var(ui--border-width--active);
     text-align: left;
-  }
-
-  :host([vertical][pfe-variant="earth"]:first-of-type) {
-    border-top: 0;
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="false"]:first-of-type) {
     border-top-color: transparent;
     border-left: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent;
+  }
+
+  :host([vertical][pfe-variant="earth"][aria-selected="false"]:last-of-type) {
+    border-bottom-color: transparent;
   }
 
   :host([vertical][pfe-variant="earth"][aria-selected="false"]) {
@@ -237,17 +237,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     border-top-color: transparent;
   }
 
-
   :host([vertical][pfe-variant="earth"][aria-selected="true"]) {
     border-top-color: pfe-var(surface--border);
     border-left-color: pfe-local(BorderColor);
     border-left-width: pfe-local(BorderWidth);
     border-right-color: transparent;
     margin-right: #{pfe-fetch(ui--border-width) * -1};
-  }
-
-  :host([vertical][pfe-variant="earth"][aria-selected="true"]:last-of-type) {
-    border-bottom: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
   }
 }
 
@@ -282,17 +277,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 :host([on="dark"][pfe-variant="earth"][aria-selected="true"]) {
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
   background-color: pfe-var(surface--darkest);
-  border-bottom-color: pfe-var(surface--darkest);
 
   @include browser-query(ie11) {
     color: pfe-fetch(text--on-dark) !important;
   }
 }
-
-:host([on="dark"][pfe-variant="earth"][vertical][aria-selected="true"]) {
-  border-bottom: 0;
-}
-
 
 // SATURATED
 :host([pfe-variant="earth"][on="saturated"][aria-selected="false"]) {

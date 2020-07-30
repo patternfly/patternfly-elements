@@ -8,20 +8,18 @@ $LOCAL-VARIABLES: (
   Color:                     pfe-var(text--muted),
   BorderColor--hover:        $pf-color-black-400, 
   BorderWidth:               pfe-var(ui--border-width--active),
-
-
   tab: ( // to avoid collisions with panel
     FontSize:                pfe-var(font-size),
     Margin:                  0 0 calc( #{pfe-var(ui--border-width)} * -1),
     PaddingTop:              pfe-var(container-padding),
-    PaddingRight:            calc(#{pfe-var(container-padding)} * 2),
     PaddingBottom:           pfe-var(container-padding),
+    PaddingRight:            calc(#{pfe-var(container-padding)} * 2),
     PaddingLeft:             calc(#{pfe-var(container-padding)} * 2),
     TextTransform:           none,
   )
 );
 
-// TODO: These (focus & highlight) will be deprecated at 1.0  
+// TODO: These vars (focus & highlight) will be deprecated at 1.0  
 $backwards-compatibility: (
   Color--focus:  pfe-local(focus, pfe-var(text)), 
   BorderColor:   pfe-local(highlight, pfe-var(ui-accent)),

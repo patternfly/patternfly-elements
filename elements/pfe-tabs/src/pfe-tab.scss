@@ -91,8 +91,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 }
 
 @media screen and (min-width: pfe-breakpoint(md) ) {
-  :host {
-    @at-root #{&}([vertical]) {
+
+    :host([vertical]) {
       border-bottom-color: transparent;
       border-bottom-width: 0;
       border-left-color: pfe-var(surface--border);
@@ -102,33 +102,33 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
       padding: pfe-var(container-padding);
     }
 
-    @at-root #{&}([vertical][aria-selected="true"]) {
+    :host([vertical][aria-selected="true"]) {
       border-left-color: pfe-local(BorderColor);
       border-left-width: 3px;
     }
 
-    @at-root #{&}([vertical][pfe-variant="wind"]) {
+    :host([vertical][pfe-variant="wind"]) {
       border-left: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
       text-align: left !important;
     }
 
-    @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="true"]) {
+    :host([vertical][pfe-variant="wind"][aria-selected="true"]) {
       border-right: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent;
       border-left: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor);
       padding-left: calc(#{pfe-var(container-padding)} - 2px);
     }
 
-    @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="false"]) {
+    :host([vertical][pfe-variant="wind"][aria-selected="false"]) {
       border-right: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent;
     }
 
-    @at-root #{&}([vertical][pfe-variant="wind"][aria-selected="false"]:hover) {
+    :host([vertical][pfe-variant="wind"][aria-selected="false"]:hover) {
       border-right: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent;
       border-bottom: 0;
       border-left: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor--hover);
       padding-left: calc(#{pfe-var(container-padding)} - 2px);
     }
-  }
+  
 }
 
 
@@ -150,8 +150,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   border-right-color: transparent;
 }
 
-:host {
-  @at-root #{&}([pfe-variant="earth"][aria-selected="false"]) {
+
+  :host([pfe-variant="earth"][aria-selected="false"]) {
     background-color: pfe-local(BackgroundColor--inactive); //@todo update to use opacity
     border-color: pfe-var(surface--border);
     border-top-width: pfe-local(BorderWidth);
@@ -160,12 +160,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     border-bottom-width: pfe-var(ui--border-width);
   }
 
-  @at-root #{&}([pfe-variant="earth"][aria-selected="false"]:hover) {
+  :host([pfe-variant="earth"][aria-selected="false"]:hover) {
     border-top-color: pfe-local(BorderColor--hover);
   }
 
   // nth of type is needed to override first and last of type selectors above
-  @at-root #{&}([pfe-variant="earth"][aria-selected="true"]) {
+  :host([pfe-variant="earth"][aria-selected="true"]) {
     background-color: pfe-var(surface--lightest);
     border-bottom: 0;
     border-left-color: pfe-var(surface--border);
@@ -181,10 +181,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     }
   }
 
-  @at-root #{&}([pfe-variant="earth"][aria-selected="true"]:last-of-type) {
+  :host([pfe-variant="earth"][aria-selected="true"]:last-of-type) {
     border-right: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
   }
-}
 
 
 /// ===========================================================================
@@ -245,72 +244,69 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// ===========================================================================
 /// In dark & saturated contexts, we override the local color vars
 
-:host {
-  @at-root #{&}([on="dark"][pfe-variant="earth"]) {
-    border-right-color: pfe-var(surface--border--darker);
-    border-left-color: pfe-var(surface--border--darker);
-  }
 
-  @at-root #{&}([on="dark"][pfe-variant="earth"][aria-selected="false"]) {
-    --pfe-tabs--Color: #{pfe-var(text--muted--on-dark)};
-    background-color: pfe-var(surface--darker);
+:host([on="dark"][pfe-variant="earth"]) {
+  border-right-color: pfe-var(surface--border--darker);
+  border-left-color: pfe-var(surface--border--darker);
+}
 
-    @include browser-query(ie11) {
-      background-color: pfe-var(surface--lightest) !important;
-      color: pfe-fetch(text) !important;
-    }
-  }
+:host([on="dark"][pfe-variant="earth"][aria-selected="false"]) {
+  --pfe-tabs--Color: #{pfe-var(text--muted--on-dark)};
+  background-color: pfe-var(surface--darker);
 
-  @at-root #{&}([on="dark"][pfe-variant="earth"][aria-selected="false"]:focus) {
-      --pfe-tabs--Color: #{pfe-var(text--on-dark)};
-      --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
-  }
-  @at-root #{&}([on="dark"][pfe-variant="earth"][aria-selected="false"]:hover) {
-    --pfe-tabs--Color: #{pfe-var(text--on-dark)};
-    --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
-
-    @include browser-query(ie11) {
-      color: pfe-fetch(text) !important;
-    }
-  }
-
-  @at-root #{&}([on="dark"][pfe-variant="earth"][aria-selected="false"]:first-of-type) {
-    border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent ;
-  }
-
-  @at-root #{&}([on="dark"][pfe-variant="earth"][aria-selected="true"]) {
-    --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
-    background-color: pfe-var(surface--darkest);
-    border-bottom-color: pfe-var(surface--darkest);
-
-    @include browser-query(ie11) {
-      color: pfe-fetch(surface--lightest) !important;
-    }
-  }
-
-  @at-root #{&}([on="dark"][pfe-variant="earth"][vertical][aria-selected="true"]) {
-    border-bottom: 0;
+  @include browser-query(ie11) {
+    background-color: pfe-var(surface--lightest) !important;
+    color: pfe-fetch(text) !important;
   }
 }
 
+:host([on="dark"][pfe-variant="earth"][aria-selected="false"]:focus) {
+    --pfe-tabs--Color: #{pfe-var(text--on-dark)};
+    --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
+}
+:host([on="dark"][pfe-variant="earth"][aria-selected="false"]:hover) {
+  --pfe-tabs--Color: #{pfe-var(text--on-dark)};
+  --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
+
+  @include browser-query(ie11) {
+    color: pfe-fetch(text) !important;
+  }
+}
+
+:host([on="dark"][pfe-variant="earth"][aria-selected="false"]:first-of-type) {
+  border-left: #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} transparent ;
+}
+
+:host([on="dark"][pfe-variant="earth"][aria-selected="true"]) {
+  --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
+  background-color: pfe-var(surface--darkest);
+  border-bottom-color: pfe-var(surface--darkest);
+
+  @include browser-query(ie11) {
+    color: pfe-fetch(surface--lightest) !important;
+  }
+}
+
+:host([on="dark"][pfe-variant="earth"][vertical][aria-selected="true"]) {
+  border-bottom: 0;
+}
+
+
 // SATURATED
-:host {
-  @at-root #{&}([pfe-variant="earth"][on="saturated"][aria-selected="false"]) {
-    --pfe-tabs--BackgroundColor: #{pfe-var(surface--lighter)};
-  }
+:host([pfe-variant="earth"][on="saturated"][aria-selected="false"]) {
+  --pfe-tabs--BackgroundColor: #{pfe-var(surface--lighter)};
+}
 
-  @at-root #{&}([pfe-variant="earth"][on="saturated"][aria-selected="true"]) {
-    color: pfe-local(Color--focus);
-  }
+:host([pfe-variant="earth"][on="saturated"][aria-selected="true"]) {
+  color: pfe-local(Color--focus);
+}
 
-  @at-root #{&}([pfe-variant="earth"][on="saturated"]:hover) {
-    color: pfe-local(Color--focus);
-  }
+:host([pfe-variant="earth"][on="saturated"]:hover) {
+  color: pfe-local(Color--focus);
+}
 
-  @at-root #{&}([pfe-variant="earth"][on="saturated"][aria-selected="true"]) {
-    --pfe-tabs--Color: #{pfe-var(text)};
-  }
-
+:host([pfe-variant="earth"][on="saturated"][aria-selected="true"]) {
+  --pfe-tabs--Color: #{pfe-var(text)};
 }
 
 /// ===========================================================================
@@ -318,70 +314,67 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// ===========================================================================
 
 // SATURATED
-:host {
-  @at-root #{&}([on="saturated"][pfe-variant="wind"]) {
-    color: pfe-var(text--on-saturated);
+:host([on="saturated"][pfe-variant="wind"]) {
+  color: pfe-var(text--on-saturated);
 
-    @include browser-query(ie11) {
-      color: pfe-fetch(text) !important;
-      background-color: transparent;
-    }
+  @include browser-query(ie11) {
+    color: pfe-fetch(text) !important;
+    background-color: transparent;
   }
+}
 
-  @at-root #{&}([on="saturated"][pfe-variant="wind"][aria-selected="true"]) {
-    --pfe-tabs--Color--focus: #{pfe-var(text--on-saturated)};
-    --pfe-tabs--BorderColor: pfe-var(surface--lightest);
+:host([on="saturated"][pfe-variant="wind"][aria-selected="true"]) {
+  --pfe-tabs--Color--focus: #{pfe-var(text--on-saturated)};
+  --pfe-tabs--BorderColor: pfe-var(surface--lightest);
 
-    @include browser-query(ie11) {
-      color: pfe-fetch(text) !important;
-    }
+  @include browser-query(ie11) {
+    color: pfe-fetch(text) !important;
   }
+}
 
-  @at-root #{&}([on="saturated"][pfe-variant="wind"][aria-selected="false"]) {
-    --pfe-tabs--Color: #{pfe-var(text--muted--on-saturated)};
-  }
+:host([on="saturated"][pfe-variant="wind"][aria-selected="false"]) {
+  --pfe-tabs--Color: #{pfe-var(text--muted--on-saturated)};
+}
 
-  @at-root #{&}([on="saturated"][pfe-variant="wind"][aria-selected="false"]:hover) {
-    border-bottom-color: pfe-local(BorderColor--hover);
-  }
+:host([on="saturated"][pfe-variant="wind"][aria-selected="false"]:hover) {
+  border-bottom-color: pfe-local(BorderColor--hover);
+}
 
-  @at-root #{&}([on="saturated"][pfe-variant="wind"][aria-selected="true"]:last-of-type) {
-    @include browser-query(ie11) {
-      border-left: 0 !important;
-    }
+:host([on="saturated"][pfe-variant="wind"][aria-selected="true"]:last-of-type) {
+  @include browser-query(ie11) {
+    border-left: 0 !important;
   }
 }
 
 // DARK
-:host {
-  @at-root #{&}([on="dark"][pfe-variant="wind"][aria-selected="true"]) {
-    //--pfe-tabs--Color: #{pfe-var(surface--lightest)};
-    --pfe-tabs--Color--focus: #{pfe-var(surface--lightest)};
+ 
+:host([on="dark"][pfe-variant="wind"][aria-selected="true"]) {
+  //--pfe-tabs--Color: #{pfe-var(surface--lightest)};
+  --pfe-tabs--Color--focus: #{pfe-var(surface--lightest)};
 
-    @include browser-query(ie11) {
-      color: pfe-fetch(text) !important;
-    }
+  @include browser-query(ie11) {
+    color: pfe-fetch(text) !important;
   }
+}
 
-  @at-root #{&}([on="dark"][pfe-variant="wind"][aria-selected="false"]) {
-    --pfe-tabs--Color: #{pfe-var(text--muted--on-dark)};
+:host([on="dark"][pfe-variant="wind"][aria-selected="false"]) {
+  --pfe-tabs--Color: #{pfe-var(text--muted--on-dark)};
 
-    @include browser-query(ie11) {
-      color: pfe-fetch(text) !important;
-    }
+  @include browser-query(ie11) {
+    color: pfe-fetch(text) !important;
   }
+}
 
-  @at-root #{&}([on="dark"][pfe-variant="wind"][aria-selected="false"]:hover) {
-    border-bottom-color: pfe-var(surface--base);
-    color: pfe-var(surface--lightest);
-    --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)} ;
+:host([on="dark"][pfe-variant="wind"][aria-selected="false"]:hover) {
+  border-bottom-color: pfe-var(surface--base);
+  color: pfe-var(surface--lightest);
+  --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)} ;
 
-    @include browser-query(ie11) {
-      color: pfe-fetch(text) !important;
-    }
+  @include browser-query(ie11) {
+    color: pfe-fetch(text) !important;
   }
+}
 
-  @at-root #{&}([on="dark"][pfe-variant="wind"][vertical][aria-selected="false"]:hover) {
-    border-bottom: 0;
-  }
+:host([on="dark"][pfe-variant="wind"][vertical][aria-selected="false"]:hover) {
+  border-bottom: 0;
 }

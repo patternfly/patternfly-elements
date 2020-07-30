@@ -330,9 +330,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   --pfe-tabs--Color--focus: #{pfe-var(text--on-saturated)};
   --pfe-tabs--BorderColor: pfe-var(surface--lightest);
 
-  @include browser-query(ie11) {
-    color: pfe-fetch(text) !important;
-  }
 }
 
 :host([on="saturated"][pfe-variant="wind"][aria-selected="false"]) {

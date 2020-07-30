@@ -2,17 +2,15 @@
 
 $LOCAL: tabs;
 
-$LOCAL-VARIABLES: (
-  focus:  pfe-var(link),
+$LOCAL-VARIABLES: (focus: pfe-var(link),
   panel: ( // to avoid collisions with tab header
-      BackgroundColor: transparent,
-      Padding:         pfe-var(container-spacer),
-      BorderTop:       0,
-      BorderRight:     0,
-      BorderBottom:    0,
-      BorderLeft:      0,
-  )
-);
+    BackgroundColor: transparent,
+    Padding: pfe-var(container-spacer),
+    BorderTop: 0,
+    BorderRight: 0,
+    BorderBottom: 0,
+    BorderLeft: 0,
+  ));
 
 ////////////////////////////////
 
@@ -33,23 +31,27 @@ $LOCAL-VARIABLES: (
     margin: 0;
     width: 100%;
     background-color: pfe-local(BackgroundColor, $region: panel);
-    border-top:    pfe-local(BorderTop, $region: panel);
-    border-right:  pfe-local(BorderRight, $region: panel);
+    border-top: pfe-local(BorderTop, $region: panel);
+    border-right: pfe-local(BorderRight, $region: panel);
     border-bottom: pfe-local(BorderBottom, $region: panel);
-    border-left:   pfe-local(BorderLeft, $region: panel);
+    border-left: pfe-local(BorderLeft, $region: panel);
 
     padding: pfe-local(Padding, $region: panel); //16px
-    @media screen and (min-width: pfe-breakpoint(md) ) {
+
+    @media screen and (min-width: pfe-breakpoint(md)) {
       padding: calc(#{pfe-local(Padding, $region: panel)} * 2);
     }
-    @media screen and (min-width: pfe-breakpoint(lg) ) {
+
+    @media screen and (min-width: pfe-breakpoint(lg)) {
       padding: calc(#{pfe-local(Padding, $region: panel)} * 3);
     }
-    @media screen and (min-width: pfe-breakpoint(xl) ) {
+
+    @media screen and (min-width: pfe-breakpoint(xl)) {
       padding: calc(#{pfe-local(Padding, $region: panel)} * 4);
     }
 
     @include pfe-clearfix;
+
     @include browser-query(ie11) {
       padding: 1em;
       background-color: pfe-fetch(surface--lightest) !important;
@@ -94,10 +96,11 @@ $LOCAL-VARIABLES: (
         padding: 1em 0 1em 2em;
       }
     }
-	}
+  }
+
   :host([pfe-variant="earth"][vertical]) {
     border-top: 0px;
-    border-left:   pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
+    border-left: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
     height: 100%;
 
     @include browser-query(ie11) {
@@ -105,38 +108,27 @@ $LOCAL-VARIABLES: (
         border-top: 1px solid pfe-fetch(surface--border);
       }
     }
-	}
+  }
 }
 
 /// ===========================================================================
 /// CONTEXTS: DARK & SATURATED
 /// ===========================================================================
 /// In dark & saturated contexts, we override the local color vars
-
-
-:host {
-  @at-root #{&}([pfe-variant="earth"][on="dark"]) {
-    --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--darkest)};
-    @include pfe-set-broadcast-theme(dark);
-  }
+:host([pfe-variant="earth"][on="dark"]) {
+  --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--darkest)};
+  @include pfe-set-broadcast-theme(dark);
 }
 
-:host {
-  @at-root #{&}([pfe-variant="earth"][on="saturated"]) {
-    --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--lightest)};
-    @include pfe-set-broadcast-theme(light);
-    
-  }
+:host([pfe-variant="earth"][on="saturated"]) {
+  --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--lightest)};
+  @include pfe-set-broadcast-theme(light);
 }
-:host {
-  @at-root #{&}([pfe-variant="wind"][on="saturated"]) {
-    @include pfe-set-broadcast-theme(saturated);
-    
-  }
+
+:host([pfe-variant="wind"][on="saturated"]) {
+  @include pfe-set-broadcast-theme(saturated);
 }
-:host {
-  @at-root #{&}([pfe-variant="wind"][on="dark"]) {
-    @include pfe-set-broadcast-theme(dark);
-    
-  }
+
+:host([pfe-variant="wind"][on="dark"]) {
+  @include pfe-set-broadcast-theme(dark);
 }

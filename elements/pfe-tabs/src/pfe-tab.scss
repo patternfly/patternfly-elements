@@ -281,7 +281,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   border-bottom-color: pfe-var(surface--darkest);
 
   @include browser-query(ie11) {
-    color: pfe-fetch(surface--lightest) !important;
+    color: pfe-fetch(text--on-dark) !important;
   }
 }
 
@@ -345,10 +345,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 }
 
 // DARK
- 
 :host([on="dark"][pfe-variant="wind"][aria-selected="true"]) {
-  //--pfe-tabs--Color: #{pfe-var(surface--lightest)};
-  --pfe-tabs--Color--focus: #{pfe-var(surface--lightest)};
+  --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
 
   @include browser-query(ie11) {
     color: pfe-fetch(text) !important;
@@ -365,7 +363,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
 :host([on="dark"][pfe-variant="wind"][aria-selected="false"]:hover) {
   border-bottom-color: pfe-var(surface--base);
-  color: pfe-var(surface--lightest);
+  color: pfe-var(text--on-dark);
   --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)} ;
 
   @include browser-query(ie11) {

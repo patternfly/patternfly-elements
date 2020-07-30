@@ -73,7 +73,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
       color: pfe-local(Color--focus);
     }
   }
-    @at-root #{&}(:active) {
+  @at-root #{&}(:active) {
     border-bottom-color: pfe-local(BorderColor--hover);
     .pfe-tab * {
       color: pfe-local(Color--focus);
@@ -104,15 +104,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 }
 
 @media screen and (min-width: pfe-breakpoint(md)) {
-
   :host([vertical]) {
     border-bottom-color: transparent;
     border-bottom-width: 0;
     border-left-color: pfe-var(surface--border);
     border-left-width: pfe-var(ui--border-width);
-
-    --pfe-tabs--Margin: 0 calc(#{pfe-var(ui--border-width)} * -1) 0 0;
     padding: pfe-var(container-padding);
+    --pfe-tabs--Margin: 0 calc(#{pfe-var(ui--border-width)} * -1) 0 0;
   }
 
   :host([vertical][aria-selected="true"]) {
@@ -141,9 +139,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     border-left: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor--hover);
     padding-left: calc(#{pfe-var(container-padding)} - 2px);
   }
-
 }
-
 
 /// ===========================================================================
 /// EARTH TAB VARIANTS
@@ -198,13 +194,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   border-right: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
 }
 
-
 /// ===========================================================================
 /// EARTH TAB VERTICAL ORIENTATION
 /// ===========================================================================
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
-
   :host([vertical][pfe-variant="earth"]) {
     border-top: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
     border-bottom: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
@@ -246,12 +240,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   }
 }
 
-
 /// ===========================================================================
 /// EARTH TAB VARIANTS ON DARK & SATURATED
 /// ===========================================================================
 /// In dark & saturated contexts, we override the local color vars
-
 
 :host([on="dark"][pfe-variant="earth"]) {
   --pfe-tabs--Color: #{pfe-var(text--on-dark)};
@@ -266,7 +258,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
   @include browser-query(ie11) {
     background-color: pfe-var(surface--lightest) !important;
-    color: pfe-fetch(text) !important;
+    .pfe-tab * {
+      color: pfe-fetch(text) !important;
+    }
   }
 }
 
@@ -277,10 +271,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 :host([on="dark"][pfe-variant="earth"][aria-selected="true"]) {
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
   background-color: pfe-var(surface--darkest);
-
-  @include browser-query(ie11) {
-    color: pfe-fetch(text--on-dark) !important;
-  }
 }
 
 // SATURATED
@@ -310,7 +300,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   --pfe-tabs--Color--focus: #{pfe-var(text--on-saturated)};
 
   @include browser-query(ie11) {
-    color: pfe-fetch(text) !important;
+    .pfe-tab * {
+      color: pfe-fetch(text) !important;
+    }
     background-color: transparent;
   }
 }
@@ -318,7 +310,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 :host([on="saturated"][pfe-variant="wind"][aria-selected="true"]) {
   --pfe-tabs--Color--focus: #{pfe-var(text--on-saturated)};
   --pfe-tabs--BorderColor: pfe-var(surface--lightest);
-
 }
 
 :host([on="saturated"][pfe-variant="wind"][aria-selected="false"]) {
@@ -335,12 +326,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   }
 }
 
-// DARK
 :host([on="dark"][pfe-variant="wind"]) {
   --pfe-tabs--Color: #{pfe-var(text--on-dark)}; 
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
   @include browser-query(ie11) {
-    color: pfe-fetch(text) !important;
+    .pfe-tab * {
+      color: pfe-fetch(text) !important;
+    }
   }
 }
 

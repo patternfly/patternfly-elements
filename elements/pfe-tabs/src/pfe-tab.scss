@@ -26,7 +26,7 @@ $backwards-compatibility: (
 );
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
-
+@include pfe-local-debug;
 
 /// ===========================================================================
 /// DEFAULT / WIND TAB VARIANT
@@ -309,7 +309,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
 :host([on="saturated"][pfe-variant="wind"][aria-selected="true"]) {
   --pfe-tabs--Color--focus: #{pfe-var(text--on-saturated)};
-  --pfe-tabs--BorderColor: pfe-var(surface--lightest);
+  --pfe-tabs--BorderColor: #{pfe-var(surface--lightest)};
 }
 
 :host([on="saturated"][pfe-variant="wind"][aria-selected="false"]) {

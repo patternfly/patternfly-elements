@@ -28,7 +28,7 @@ $LOCAL-VARIABLES: (
   font-weight: 400; // remove this once font-weight--normal is 400
   display: block;
   position: sticky;
-  top:  #{pfe-local($cssvar: offset, $region: nav)};
+  top:  pfe-local(offset, $region: nav);
   padding-left: 0;
 
   background-color: pfe-local(BackgroundColor);

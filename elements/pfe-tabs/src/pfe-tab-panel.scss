@@ -76,12 +76,8 @@ $LOCAL-VARIABLES: (
       border-left: 1px solid pfe-fetch(surface--border);
     }
   }
+}
 
-}
-:host([vertical][pfe-variant="earth"]) {
-    border-top: 0px;
-    border-left:   pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
-}
 
 /// ===========================================================================
 /// VERTICAL
@@ -99,9 +95,9 @@ $LOCAL-VARIABLES: (
       }
     }
 	}
-
-	:host([pfe-variant="earth"][vertical]) {
-    --pfe-tabs__panel--BorderTop:   #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
+  :host([pfe-variant="earth"][vertical]) {
+    border-top: 0px;
+    border-left:   pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
     height: 100%;
 
     @include browser-query(ie11) {

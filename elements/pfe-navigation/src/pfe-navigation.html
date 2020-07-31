@@ -1,8 +1,10 @@
-<!-- todo: figure out to do the overlay in shadow DOM -->
-<!-- <div class="pfe-navigation__overlay"></div> -->
-
 <nav id="pfe-navigation__wrapper" class="pfe-navigation__wrapper" aria-label="Main Navigation">
-  <button class="pfe-navigation__menu-toggle" aria-expanded="false">
+  <!-- @todo: make sure all icons are the updated redesigned versions -->
+
+  <!-- @todo: add aria-hidden="true/false" toggle functionality to all buttons and top level menu items and accordion top level menu items on mobile -->
+  <button class="pfe-navigation__menu-toggle">
+    <!-- @todo: Wes to change this to be implemented with CSS and add CSS animations -->
+    <pfe-icon icon="web-icon-mobile-menu" pfe-size="sm" aria-hidden="true"></pfe-icon>
     Menu
   </button>
 
@@ -16,8 +18,8 @@
       <div id="pfe-navigation__menu-wrapper" class="pfe-navigation__menu-wrapper">
       </div>
 
-      <button class="pfe-navigation__search-toggle" aria-expanded="false">
-        <pfe-icon icon="web-search" pfe-size="md" aria-hidden="true"></pfe-icon>
+      <button class="pfe-navigation__search-toggle">
+        <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>
         Search
       </button>
 
@@ -25,8 +27,8 @@
         customlinks slot
       </slot>
 
-      <button class="pfe-navigation__all-red-hat-toggle" aria-expanded="false">
-        <pfe-icon icon="web-icon-grid-3x3" pfe-size="md" aria-hidden="true"></pfe-icon>
+      <button class="pfe-navigation__all-red-hat-toggle">
+        <pfe-icon icon="web-icon-grid-3x3" pfe-size="sm" aria-hidden="true"></pfe-icon>
         All Red&nbsp;Hat
       </button>
       <div class="pfe-navigation__all-red-hat-wrapper">
@@ -38,9 +40,12 @@
     </div>
   </div>
 
-  <a href="#" class="pfe-navigation__log-in-link" aria-expanded="false">
-    <pfe-icon icon="web-icon-user" pfe-size="md" aria-hidden="true"></pfe-icon>
+  <a href="#" class="pfe-navigation__log-in-link">
+    <pfe-icon icon="web-icon-user" pfe-size="sm" aria-hidden="true"></pfe-icon>
     Log&nbsp;In
   </a>
 
 </nav>
+
+<!-- todo: figure out to do the overlay in shadow DOM -->
+<!-- <div class="pfe-navigation__overlay"></div> -->

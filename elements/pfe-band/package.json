@@ -9,7 +9,7 @@
       "js": "src/pfe-band.js"
     }
   },
-  "version": "1.0.0-prerelease.53",
+  "version": "1.0.0-prerelease.54",
   "description": "Band container for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -46,7 +46,7 @@
     "@patternfly/pfelement": "^1.0.0-prerelease.51"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.53"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.54"
   },
   "generator-rhelement-version": "0.6.8",
   "bugs": {

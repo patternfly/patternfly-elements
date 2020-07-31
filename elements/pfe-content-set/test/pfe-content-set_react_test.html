@@ -309,10 +309,11 @@
         );
       }
 
-      ReactDOM.render(TestSuite(), document.body);
+      ReactDOM.render(TestSuite(), document.querySelector("#root"));
     </script>
   </head>
   <body>
+    <div id="root"></div>
     <script src="pfe-content-set_test.js"></script>
   </body>
 </html>

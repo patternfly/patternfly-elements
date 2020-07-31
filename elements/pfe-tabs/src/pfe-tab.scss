@@ -303,7 +303,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
 :host([on="saturated"][pfe-variant="wind"][aria-selected="true"]) {
   --pfe-tabs--Color--focus: #{pfe-var(text--on-saturated)};
-  --pfe-tabs--BorderColor: #{pfe-var(surface--lightest)};
+  --pfe-tabs--BorderColor: #{pfe-var(ui-base--on-saturated)};
 }
 
 :host([on="saturated"][pfe-variant="wind"][aria-selected="false"]) {
@@ -311,7 +311,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 }
 
 :host([on="saturated"][pfe-variant="wind"][aria-selected="false"]:hover) {
-  border-bottom-color: pfe-local(BorderColor--hover);
+  --pfe-tabs--BorderColor: #{pfe-var(surface--border)};
 }
 
 :host([on="saturated"][pfe-variant="wind"][aria-selected="true"]:last-of-type) {
@@ -323,14 +323,19 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 :host([on="dark"][pfe-variant="wind"]) {
   --pfe-tabs--Color: #{pfe-var(text--on-dark)}; 
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
+  
   @include browser-query(ie11) {
     .pfe-tab * {
       color: pfe-fetch(text) !important;
     }
   }
 }
+:host([on="dark"][pfe-variant="wind"][aria-selected="false"]) {
+  --pfe-tabs--Color: #{pfe-var(text--muted--on-saturated)};
+}
 
 :host([on="dark"][pfe-variant="wind"][aria-selected="false"]:hover) {
+  --pfe-tabs--BorderColor: #{pfe-var(surface--lightest)};
   border-bottom-color: pfe-var(surface--base);
   --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 }

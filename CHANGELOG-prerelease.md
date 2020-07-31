@@ -1,8 +1,12 @@
-## Prerelease 54 ( TBD )
+## Prerelease 55 ( TBD )
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Open a pull request from the command-line
+
+## Prerelease 54 ( 2020-07-31 )
 
 - [6ef7f74](https://github.com/patternfly/patternfly-elements/commit/6ef7f74bfe22b259373f3485a46b21f37aa7196e) fix: pfe-accordion border styles (#1002)
 - [572ea91](https://github.com/patternfly/patternfly-elements/commit/572ea9133373ab91e99c2fc6e67aa6fb1a0d1ed0) feat: UI colors should match PF core (#895)
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Open a pull request from the command-line
+- [516d9e8](https://github.com/patternfly/patternfly-elements/commit/516d9e8144b381b0f5c563e2bc2473e9654bc18b) feat: pfe-tab style updates (#814)
 
 ## Prerelease 53 ( 2020-07-21 )
 

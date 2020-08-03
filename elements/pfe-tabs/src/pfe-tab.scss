@@ -26,10 +26,15 @@ $backwards-compatibility: (
 );
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
+@include pfe-local-debug;
 
 /// ===========================================================================
 /// DEFAULT / WIND TAB VARIANT
 /// ===========================================================================
+
+.foo {
+color: pfe-local(bar);
+}
 
 :host {
   text-align: left;
@@ -144,15 +149,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// EARTH TAB VARIANTS
 /// ===========================================================================
 :host([pfe-variant="earth"]) {
+  border-left: 0px;
   @include browser-query(ie11) {
     background-color: pfe-fetch(surface--lighter);
     color: pfe-fetch(text--muted);
   }
 }
-
-:host(:not([vertical])[pfe-variant="earth"]:not([aria-selected="true"]):first-of-type) {
-  border-left-color: transparent;
-}
+ 
 
 :host(:not([vertical])[pfe-variant="earth"]:not([aria-selected="true"]):last-of-type) {
   border-right-color: transparent;
@@ -166,6 +169,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   border-top-color: transparent;
   border-bottom-color: pfe-local(BorderColor--hover);
   border-bottom-width: pfe-var(ui--border-width);
+
 }
 
 :host([pfe-variant="earth"][aria-selected="false"]:hover) {

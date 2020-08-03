@@ -1,6 +1,7 @@
 ## Prerelease 55 ( TBD )
 
 - [](https://github.com/patternfly/patternfly-elements/commit/)
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: improve CLS rating in lighthouse (#1020)
 
 ## Prerelease 54 ( 2020-07-31 )
 

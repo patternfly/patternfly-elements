@@ -154,9 +154,10 @@ See mixin blocks before selectors that contain the selector name and the three l
     box-shadow: inset 0 4px 0 0 #e00;
   }
 
-  &:before {
-    margin: 0 0 4px;
-  }
+  //@todo: decide if this is needed with pfe-icons in place
+  // &:before {
+  //   margin: 0 0 4px;
+  // }
 }
 
 // Layout changes per breakpoint
@@ -473,13 +474,15 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 // Top level links that have a dropdown associated with them
-.pfe-navigation__menu-link[aria-haspopup=true] {
+// @todo: make sure all styles get fixed that were using aria-haspopup originally
+.pfe-navigation__menu-link.has-dropdown {
   position: relative;
 
-  &:hover,
-  &:focus {
+  &:focus,
+  &:hover {
     @include breakpoint('nav-expand') {
       box-shadow: inset 0 4px 0 0 #e00;
+      @include focus-styles(#fff, 0px);
     }
     @include collapse('nav') {
       box-shadow: none;
@@ -491,17 +494,21 @@ See mixin blocks before selectors that contain the selector name and the three l
       color: #151515;
       background: #fff;
       box-shadow: inset 0 4px 0 0 #e00;
+      // @todo: get the aria-expanded feature in the JS working again
+      // &[aria-expanded="true"] {
+      //   &:focus,
+      //   &:hover {
+      //     @include focus-styles(#000, 0px);
+      //   }
+      // }
+      &:focus,
+      &:hover {
+        @include focus-styles(#000, 0px);
+      }
     }
     @include collapse('nav') {
       box-shadow: none;
       background: transparent;
-    }
-  }
-
-  &[aria-expanded="true"] {
-    &:focus,
-    &:hover {
-      @include focus-styles(#000, 0px);
     }
   }
 }
@@ -534,7 +541,8 @@ See mixin blocks before selectors that contain the selector name and the three l
   transform: translate(-4px, -12px);
   transition: border-color 0.25s;
 }
-.pfe-navigation__menu-link[aria-haspopup=true]:before {
+// @todo: make sure all styles get fixed that were using aria-haspopup originally
+.pfe-navigation__menu-link.has-dropdown:before {
   @include pfe-navigation__menu-link__before--mobile;
   content: '';
 
@@ -555,6 +563,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     }
   }
 
+  // @todo: figure out why transform is not working anymore
   .pfe-navigation__menu-item--open > &[class]:before { // [class] adds specificity to beat out hover/focus selector
     transform: rotate(135deg);
     @include breakpoint('nav-expand') {
@@ -954,3 +963,89 @@ See mixin blocks before selectors that contain the selector name and the three l
     // Add styles here
 //   }
 // }
+
+
+// pfe-icons
+// --------------------------------------------------------
+
+//@todo: figure out if this is the best way to style the icon color states or if updates to JS need to be made to put a class or attribute on a button when it is open to target with css
+
+.pfe-navigation__menu-toggle pfe-icon,
+.pfe-navigation__search-toggle pfe-icon,
+.pfe-navigation__custom-links pfe-icon,
+.pfe-navigation__log-in-link pfe-icon {
+  --pfe-icon--Color: #fff;
+  // @todo: do we need to implement this differently with theming?
+  --pfe-icon--size: 18px;
+  // @todo: figure out best spacing styles for this icon
+  padding-right: 5px;
+  padding-bottom: 0px;
+  @include breakpoint('secondary-links-expand') {
+    --pfe-icon--Color: #fff;
+    padding-right: 0px;
+    padding-bottom: 5px;
+  }
+}
+
+.pfe-navigation__custom-links pfe-icon {
+  --pfe-icon--Color: #0066CC;
+  @include breakpoint('secondary-links-expand') {
+    --pfe-icon--Color: #fff;
+  }
+}
+
+.pfe-navigation__all-red-hat-toggle pfe-icon {
+  --pfe-icon--Color: #0066CC;
+  --pfe-icon--size: 18px;
+  // @todo: figure out best spacing styles for this icon
+  padding-right: 5px;
+  padding-bottom: 0px;
+  @include breakpoint('secondary-links-expand') {
+    --pfe-icon--Color: #fff;
+    padding-right: 0px;
+    padding-bottom: 5px;
+  }
+}
+
+// @todo: figure out better way to keep "All Red Hat" from breaking to multiple lines
+.pfe-navigation__all-red-hat-toggle {
+  width: auto;
+  @include breakpoint('secondary-links-expand') {
+    width: 95px;
+  }
+}
+
+// @todo: figure out better way to keep custom link text from breaking to multiple lines if at all possible or figure out how to keep the breaking from looking bad
+// @note: temporary style
+div#pfe-navigation__custom-links {
+  width: auto;
+  @include breakpoint('secondary-links-expand') {
+    width: 120px;
+  }
+}
+
+[pfe-navigation-state^='main-menu--open'] .pfe-navigation__menu-toggle pfe-icon {
+  --pfe-icon--Color: #151515;
+}
+
+[pfe-navigation-state^='search--open'] .pfe-navigation__search-toggle pfe-icon {
+  --pfe-icon--Color: #151515;
+}
+
+[pfe-navigation-state^='all-red-hat--open'] .pfe-navigation__all-red-hat-toggle pfe-icon {
+  --pfe-icon--Color: #0066CC;
+  @include breakpoint('secondary-links-expand') {
+    --pfe-icon--Color: #151515;
+  }
+}
+
+// @todo: login JS and demo example needs to be added
+[pfe-navigation-state^='log-in--open'] .pfe-navigation__all-red-hat-toggle pfe-icon {
+  --pfe-icon--Color: #151515;
+}
+
+// mobile menu icon styles - make the plus sign an X
+// @todo: Wes to implement mobile menu button icons with CSS
+.pfe-navigation__menu-toggle pfe-icon[icon='web-icon-plus'] {
+  transform: rotate(-45deg);
+}

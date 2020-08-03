@@ -1,4 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
+import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 
 // @todo Figure out cooler way to include these utilty functions
 /**
@@ -324,7 +325,8 @@ class PfeNavigation extends PFElement {
     }
 
     // Add menu dropdown toggle behavior
-    const dropDownItems = this.shadowRoot.querySelectorAll('.pfe-navigation__menu-link[aria-haspopup="true"]');
+    // @note amd @todo: updated to use has-dropdown class instead of aria-haspopup attr, probably needs to be implemented differently
+    const dropDownItems = this.shadowRoot.querySelectorAll(".pfe-navigation__menu-link.has-dropdown");
     for (let index = 0; index < dropDownItems.length; index++) {
       const dropDownItem = dropDownItems[index];
       dropDownItem.dataset.machineName = this._createMachineName(dropDownItem.text);

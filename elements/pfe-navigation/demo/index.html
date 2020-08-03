@@ -63,6 +63,12 @@
         cursor: pointer;
         transition: box-shadow 0.25s;
       }
+
+      pfe-icon.PFElement {
+        --pfe-icon--Color: #0066CC;
+        --pfe-icon--size: 18px;
+      }
+
       @media (min-width: 768px) {
         .pfe-navigation__custom-links a,
         .pfe-navigation__custom-links button {
@@ -92,6 +98,22 @@
           border-top: 0px dashed #fff;
           outline: 0;
         }
+
+        pfe-icon.PFElement {
+          --pfe-icon--Color: #fff;
+        }
+      }
+
+      /* @todo: figure out better way to keep custom link text from breaking to multiple lines if at all possible or figure out how to keep the breaking from looking bad */
+      /* @note: temporary style */
+      div#pfe-navigation__custom-links {
+        width: auto;
+      }
+
+      @media (min-width: 768px) {
+        div#pfe-navigation__custom-links {
+          width: 125px;
+        }
       }
 
     </style>
@@ -101,8 +123,6 @@
 
     <h2>Small Logo</h2>
     <pfe-navigation id="pfe-navigation">
-      <!-- todo: figure out to do the overlay -->
-      <div class="pfe-navigation__overlay"></div>
 
       <nav class="pfe-navigation" aria-label="Main Navigation">
         <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
@@ -112,7 +132,10 @@
         </div>
         <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
           <li class="pfe-navigation__menu-item">
-            <a href="#" class="pfe-navigation__menu-link" aria-haspopup="true" aria-expanded="false">
+            <!-- @note: removed aria-haspopup attr bc it should not be used for this type of menu, changed to using a class has-dropdown but this probably needs to be implemented differently -->
+
+            <!-- @todo: move aria and has-dropdown to shadow DOM? -->
+            <a href="#" class="pfe-navigation__menu-link has-dropdown" aria-expanded="false">
               Products
             </a>
 
@@ -250,7 +273,7 @@
             </div>
           </li>
           <li class="pfe-navigation__menu-item">
-            <a href="#" class="pfe-navigation__menu-link" aria-haspopup="true" aria-expanded="false">
+            <a href="#" class="pfe-navigation__menu-link has-dropdown" aria-expanded="false">
               Solutions
             </a>
             <div class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--single-column">
@@ -301,12 +324,18 @@
         </ul>
       </nav>
       <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
-        <a href="#" class="">Custom Link</a>
+        <a href="#" class="">
+          <!-- @todo: added the cube icon as a placeholder, might need to be updated -->
+          <pfe-icon icon="rh-icon-cube" pfe-size="md" aria-hidden="true"></pfe-icon>
+          Custom Link
+        </a>
       </div>
       <div slot="pfe-navigation--search" class="pfe-navigation__search">
+      <!-- @todo: move form and label for="" and label id into shadow DOM -->
+      <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
         <form>
-          <label>Search</label>
-          <input type="text" placeholder="Search" />
+          <label for="pfe-navigation__search-label1">Search</label>
+          <input id="pfe-navigation__search-label1" type="text" placeholder="Search" />
           <button>Search</button>
         </form>
       </div>
@@ -324,7 +353,7 @@
         </div>
         <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
           <li class="pfe-navigation__menu-item">
-            <a href="#" class="pfe-navigation__menu-link" aria-haspopup="true" aria-expanded="false">
+            <a href="#" class="pfe-navigation__menu-link has-dropdown" aria-expanded="false">
               Products
             </a>
             <div class="pfe-navigation__dropdown-wrapper">
@@ -463,12 +492,19 @@
         </ul>
       </nav>
       <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
-        <a href="#" class="">Custom Link</a>
+        <a href="#" class="">
+          <!-- @todo: added the cube icon as a placeholder, might need to be updated -->
+          <pfe-icon icon="rh-icon-cube" pfe-size="sm" aria-hidden="true"></pfe-icon>
+          Custom Link
+        </a>
       </div>
+
       <div slot="pfe-navigation--search" class="pfe-navigation__search">
+      <!-- @todo: move form and label for="" and label id into shadow DOM -->
+      <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
         <form>
-          <label>Search</label>
-          <input type="text" placeholder="Search" />
+          <label for="pfe-navigation__search-label2">Search</label>
+          <input id="pfe-navigation__search-label2" type="text" placeholder="Search" />
           <button>Search</button>
         </form>
       </div>

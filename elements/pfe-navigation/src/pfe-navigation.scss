@@ -628,7 +628,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
-
 // Dropdown contents - lays out dropdown internals
 @mixin pfe-navigation__dropdown--mobile {
   display: block;
@@ -742,8 +741,36 @@ See mixin blocks before selectors that contain the selector name and the three l
     padding: 0;
     background: transparent;
   }
+
+  // group feature styles
+  // @todo: verify if group headings are NEVER links
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #6A6E73;
+    font-weight: 500;
+    font-size: 14px;
+  }
 }
 
+// single column dropdown group and separator style options
+// @todo: figure out if this is the best way to add these features or if it should be implemented differently
+// separator class
+.pfe-navigation__single-column--separator[class] {
+  border-top: 1px solid #D2D2D2;
+  // -16px to overwrite the padding added to the .pfe-navigation__dropdown--single-column container div
+  margin-left: -16px;
+  margin-right: -16px;
+  margin-top: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 16px;
+}
+
+// footer styles for mega menu trays
 .pfe-navigation__footer {
   $collapsed-margin: 16px 0 0;
   $collapsed-padding: 26px 0 16px;

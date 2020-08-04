@@ -68,7 +68,6 @@ class PfeJumpLinksNav extends PFElement {
     this._menuContainer = this.shadowRoot.querySelector("#container");
     this._observer = new MutationObserver(this._mutationCallback);
     this._reportHeight = this._reportHeight.bind(this);
-    this.panel = document.querySelector(`[pfe-c-scrolltarget=${this.id}]`);
     this.closeAccordion = this.closeAccordion.bind(this);
 
     window.addEventListener("resize", () => {});
@@ -76,6 +75,8 @@ class PfeJumpLinksNav extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+    this.panel = document.querySelector(`[pfe-c-scrolltarget=${this.id}]`);
+
     //Check that the light DOM is there
     if (this.hasAttribute("autobuild")) {
       this._buildNav();
@@ -151,9 +152,13 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   closeAccordion() {
-    console.log("hello from click event");
-    console.log(this);
-    this.shadowRoot.querySelector("pfe-accordion").toggle(0);
+    // @TODO
+    // Create JSON tokens for media query breakpoints
+    if (window.matchMedia("(min-width: 992px)").matches) {
+      return;
+    }
+
+    this.shadowRoot.querySelector("pfe-accordion").collapseAll();
   }
 
   _rebuildNav() {
@@ -235,6 +240,11 @@ class PfeJumpLinksNav extends PFElement {
     if (!this.hasAttribute("autobuild")) {
       const menu = this.querySelector("ul");
       this._menuContainer.innerHTML = menu.outerHTML;
+
+      this.links = this.shadowRoot.querySelectorAll("a");
+      [...this.links].forEach(link => {
+        link.addEventListener("click", this.closeAccordion);
+      });
     } else if (this.hasAttribute("autobuild")) {
       this._buildNav();
     }
@@ -491,9 +501,11 @@ class PfeJumpLinksPanel extends PFElement {
     // If that section isn't already active,
     // remove active from the other links and make it active
     if (current !== this.currentActive) {
+      this._observer.disconnect();
       this._removeAllActive();
       this.currentActive = current;
       this._makeActive(current);
+      this._observer.observe(this, pfeJumpLinksNavObserverConfig);
     }
   }
 }

@@ -13,7 +13,7 @@
     </pfelement>
 
     <script type="module">
-      import PFElement from "../pfelement.js";
+      import PFElement from "../dist/pfelement.js";
 
       class TestElement extends PFElement {
         static get tag() {
@@ -27,7 +27,7 @@
         }
 
         constructor() {
-          super(TestElement.tag);
+          super(TestElement);
         }
       }
 

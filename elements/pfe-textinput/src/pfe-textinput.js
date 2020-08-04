@@ -42,6 +42,27 @@ import PFElement from "../../pfelement/dist/pfelement.js";
   }
 })(HTMLFormElement.prototype);
 
+// @IE11
+// watching for addition and removal of nodes so
+// we can make sure we have the correct light DOM
+// and so we can set the _lightInput property
+const parentObserverConfig = {
+  childList: true
+};
+
+// watching for changes on the _lightInput so we can
+// update input attributes in our shadow DOM when the _lightInput
+// changes
+const lightInputObserverConfig = {
+  attributes: true
+};
+
+// list of attributes that we DO NOT want to pass from
+// the _lightInput to our shadow DOM input. For example,
+// the style attribute could ruin our encapsulated styles
+// in the shadow DOM
+const denylistAttributes = ["style"];
+
 class PfeTextinput extends PFElement {
   static get tag() {
     return "pfe-textinput";
@@ -59,19 +80,10 @@ class PfeTextinput extends PFElement {
     return "pfe-textinput.scss";
   }
 
-  // static get events() {
-  //   return {
-  //   };
-  // }
-
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Content;
   }
-
-  // static get observedAttributes() {
-  //   return [];
-  // }
 
   constructor() {
     super(PfeTextinput, { type: PfeTextinput.PfeType });
@@ -132,22 +144,14 @@ class PfeTextinputShadow extends PFElement {
       });
     });
 
-    //TODO: name this observer something that relates to the initialization
     this.observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    if (this.children.length) {
-      this._init();
-    } else {
-      console.warn(
-        `${PfeTextinput.tag}: The first child in the light DOM must be a supported text input tag`
-      );
-    }
-
-    this.observer.observe(this, { childList: true });
+    this._init();
+    this.observer.observe(this, parentObserverConfig);
   }
 
   disconnectedCallback() {
@@ -165,8 +169,18 @@ class PfeTextinputShadow extends PFElement {
   }
 
   _init() {
+    if (!this._isValidLightDom()) {
+      return;
+    }
+
     this._lightInput = this.querySelector(`input[type]`);
     this._internalInput = this._lightInput.cloneNode(true);
+
+    denylistAttributes.forEach(attribute => {
+      if (this._internalInput.hasAttribute) {
+        this._internalInput.removeAttribute(attribute);
+      }
+    });
 
     // set the tabindex of _lightInput to -1 so it can't be
     // tabbed to.
@@ -176,9 +190,31 @@ class PfeTextinputShadow extends PFElement {
 
     this._lightInput.addEventListener("focus", this._setFocus);
     this._internalInput.addEventListener("keyup", this._keyupListener);
-    this._lightInputObserver.observe(this._lightInput, {
-      attributes: true
-    });
+    this._lightInputObserver.observe(
+      this._lightInput,
+      lightInputObserverConfig
+    );
+  }
+
+  _isValidLightDom() {
+    if (!this.children.length) {
+      console.warn(
+        `${PfeTextinput.tag}: You must have a text input in the light DOM`
+      );
+      return false;
+    }
+
+    if (
+      this.children[0].tagName !== "INPUT" &&
+      this.children[0].type !== "text"
+    ) {
+      console.warn(
+        `${PfeTextinput.tag}: The only child in the light DOM must be a text input tag`
+      );
+      return false;
+    }
+
+    return true;
   }
 
   _setFocus() {

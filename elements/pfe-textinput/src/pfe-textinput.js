@@ -118,22 +118,8 @@ class PfeTextinputShadow extends PFElement {
     this._internalInput = null;
     this._setFocus = this._setFocus.bind(this);
     this._keyupListener = this._keyupListener.bind(this);
-  }
 
-  connectedCallback() {
-    super.connectedCallback();
-
-    this._lightInput = this.querySelector(`input[type]`);
-    this._internalInput = this._lightInput.cloneNode(true);
-
-    // set the tabindex of _lightInput to -1 so it can't be
-    // tabbed to.
-    this._lightInput.setAttribute("tabindex", "-1");
-
-    this.shadowRoot.querySelector("span").appendChild(this._internalInput);
-
-    this._lightInput.addEventListener("focus", this._setFocus);
-    this._internalInput.addEventListener("keyup", this._keyupListener);
+    this._init = this._init.bind(this);
 
     this._lightInputObserver = new MutationObserver(mutationsList => {
       mutationsList.forEach(mutation => {
@@ -145,10 +131,18 @@ class PfeTextinputShadow extends PFElement {
         }
       });
     });
+  }
 
-    this._lightInputObserver.observe(this._lightInput, {
-      attributes: true
-    });
+  connectedCallback() {
+    super.connectedCallback();
+
+    if (this.children.length) {
+      this._init();
+    } else {
+      console.warn(
+        `${PfeTextinput.tag}: The first child in the light DOM must be a supported text input tag`
+      );
+    }
   }
 
   disconnectedCallback() {
@@ -162,6 +156,23 @@ class PfeTextinputShadow extends PFElement {
 
     this._internalInput.value = newVal;
     this._lightInput.value = newVal;
+  }
+
+  _init() {
+    this._lightInput = this.querySelector(`input[type]`);
+    this._internalInput = this._lightInput.cloneNode(true);
+
+    // set the tabindex of _lightInput to -1 so it can't be
+    // tabbed to.
+    this._lightInput.setAttribute("tabindex", "-1");
+
+    this.shadowRoot.querySelector("span").appendChild(this._internalInput);
+
+    this._lightInput.addEventListener("focus", this._setFocus);
+    this._internalInput.addEventListener("keyup", this._keyupListener);
+    this._lightInputObserver.observe(this._lightInput, {
+      attributes: true
+    });
   }
 
   _setFocus() {

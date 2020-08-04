@@ -131,6 +131,9 @@ class PfeTextinputShadow extends PFElement {
         }
       });
     });
+
+    //TODO: name this observer something that relates to the initialization
+    this.observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
@@ -143,12 +146,15 @@ class PfeTextinputShadow extends PFElement {
         `${PfeTextinput.tag}: The first child in the light DOM must be a supported text input tag`
       );
     }
+
+    this.observer.observe(this, { childList: true });
   }
 
   disconnectedCallback() {
     this._lightInput.removeEventListener("focus", this._setFocus);
     this._internalInput.addEventListener("keyup", this._keyupListener);
     this._lightInputObserver.disconnect();
+    this.observer.disconnect();
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {

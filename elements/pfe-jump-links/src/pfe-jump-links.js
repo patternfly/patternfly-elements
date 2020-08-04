@@ -133,9 +133,6 @@ class PfeJumpLinksNav extends PFElement {
 
     this.accordion = this.shadowRoot.querySelector("pfe-accordion");
     this.links = this.shadowRoot.querySelectorAll("a");
-    // console.log(this.accordion);
-    // console.log(this.links);
-    // console.log([...this.links]);
     [...this.links].forEach(link => {
       console.log(link);
       link.addEventListener("click", this.closeAccordion);
@@ -149,6 +146,10 @@ class PfeJumpLinksNav extends PFElement {
       this._buildNav
     );
     this.removeEventListener("click");
+    [...this.links].forEach(link => {
+      console.log(link);
+      link.removeEventListener("click", this.closeAccordion);
+    });
   }
 
   closeAccordion() {

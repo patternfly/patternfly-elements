@@ -7,7 +7,7 @@ $LOCAL-VARIABLES: (
   horizontal-spacer: calc(#{pfe-var(container-padding)} * 2),
   vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
   BackgroundColor: pfe-var(surface--lightest),
-  BorderColor: pfe-var(ui-base),
+  BorderColor: pfe-var(ui-accent),
   FontSize: pfe-var(font-size--heading--epsilon),
   heading: (
     FontSize: pfe-var(font-size--heading--zeta)
@@ -258,14 +258,14 @@ $LOCAL: $temp;
     }
 
     a {
-      color: pfe-var(ui-complement--focus--on-dark);
+      color: pfe-var(ui-accent--focus--on-dark);
 
       &:hover {
-        color: pfe-var(ui-complement--hover--on-dark);
+        color: pfe-var(ui-accent--hover--on-dark);
       }
 
       &[active] {
-        color: pfe-var(ui-complement--on-dark);
+        color: pfe-var(ui-accent--on-dark);
       }
 
       &:focus::after {

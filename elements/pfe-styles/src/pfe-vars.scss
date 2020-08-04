@@ -1,0 +1,11 @@
+/* DEMO FILE ONLY, NOT FOR PRODUCTION USE */
+@import "../../pfe-sass/pfe-sass";
+
+:root {
+    @each $name, $var in $pfe-vars {
+        --theme--#{$name}: #{$var};
+    }
+    @each $name, $var in $pfe-zindex {
+        --theme--#{$name}: #{$var};
+    }
+}

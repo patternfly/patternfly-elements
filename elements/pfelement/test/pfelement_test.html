@@ -13,7 +13,7 @@
     </pfelement>
 
     <script type="module">
-      import PFElement from "../pfelement.js";
+      import PFElement from "../dist/pfelement.js";
 
       const colors = ["red", "yellow", "blue"];
 
@@ -29,7 +29,7 @@
         }
 
         constructor() {
-          super(TestElement.tag, { type: PFElement.PfeTypes.Content });
+          super(TestElement, { type: PFElement.PfeTypes.Content });
         }
       }
 
@@ -49,7 +49,7 @@
         }
 
         constructor() {
-          super(TestElementDelayRender.tag, { delayRender: true });
+          super(TestElementDelayRender, { delayRender: true });
         }
 
         connectedCallback() {
@@ -121,21 +121,26 @@
           });
         });
 
-        test("it should throw an error when the on attribute is manually added", done => {
+        test("it should throw an error when the on attribute is manually added", () => {
           const spy = sinon.spy(console, "warn");
 
-          const testElementEl = document.createElement("test-element");
-          testElementEl.id = "test-element";
-          testElementEl.setAttribute("on", "saturated");
-          document.body.appendChild(testElementEl);
+          // with an id
 
-          sinon.assert.calledWith(spy, `pfe-test-element[#test-element]: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`);
+          const testElementEl1 = document.createElement("test-element");
 
-          testElementEl.removeAttribute("id");
-          document.body.appendChild(testElementEl);
-          sinon.assert.calledWith(spy, `pfe-test-element: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`);
+          testElementEl1.id = "test-element";
+          testElementEl1.setAttribute("on", "saturated");
 
-          document.body.removeChild(testElementEl);
+          document.body.appendChild(testElementEl1);
+
+          sinon.assert.calledWith(spy, `test-element[#test-element]: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`);
+
+          // without an id
+
+          const testElementEl2 = document.createElement("test-element");
+          testElementEl2.setAttribute("on", "saturated");
+          document.body.appendChild(testElementEl2);
+          sinon.assert.calledWith(spy, `test-element: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`);
         });
       });
     </script>

@@ -1,3 +1,14 @@
+## Prerelease 55 ( TBD )
+
+- [](https://github.com/patternfly/patternfly-elements/commit/)
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: improve CLS rating in lighthouse (#1020)
+
+## Prerelease 54 ( 2020-07-31 )
+
+- [6ef7f74](https://github.com/patternfly/patternfly-elements/commit/6ef7f74bfe22b259373f3485a46b21f37aa7196e) fix: pfe-accordion border styles (#1002)
+- [572ea91](https://github.com/patternfly/patternfly-elements/commit/572ea9133373ab91e99c2fc6e67aa6fb1a0d1ed0) feat: UI colors should match PF core (#895)
+- [516d9e8](https://github.com/patternfly/patternfly-elements/commit/516d9e8144b381b0f5c563e2bc2473e9654bc18b) feat: pfe-tab style updates (#814)
+
 ## Prerelease 53 ( 2020-07-21 )
 
 - [743913e](https://github.com/patternfly/patternfly-elements/commit/743913e0620ee0ca6f0cdf95cc1ed2597b5fe6e3) fix: pfe-autocomplete prevent search-event from firing twice on option select (#989)

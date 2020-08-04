@@ -70,7 +70,6 @@
             "complement",
             "accent",
             "lightest",
-            "lighter",
             "base",
             "darker",
             "darkest",
@@ -80,7 +79,7 @@
             "success",
             "info"
           ],
-          "default": "base",
+          "default": "darker",
           "prefixed": true
         },
         "centered": {

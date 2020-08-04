@@ -63,13 +63,13 @@ class PfeJumpLinksNav extends PFElement {
 
   constructor() {
     super(PfeJumpLinksNav, { type: PfeJumpLinksNav.PfeType });
-
     this._buildNav = this._buildNav.bind(this);
     this._mutationCallback = this._mutationCallback.bind(this);
     this._menuContainer = this.shadowRoot.querySelector("#container");
     this._observer = new MutationObserver(this._mutationCallback);
     this._reportHeight = this._reportHeight.bind(this);
     this.panel = document.querySelector(`[pfe-c-scrolltarget=${this.id}]`);
+    this.closeAccordion = this.closeAccordion.bind(this);
 
     window.addEventListener("resize", () => {});
   }
@@ -129,6 +129,16 @@ class PfeJumpLinksNav extends PFElement {
       PfeJumpLinksPanel.events.change,
       this._buildNav
     );
+
+    this.accordion = this.shadowRoot.querySelector("pfe-accordion");
+    this.links = this.shadowRoot.querySelectorAll("a");
+    // console.log(this.accordion);
+    // console.log(this.links);
+    // console.log([...this.links]);
+    [...this.links].forEach(link => {
+      console.log(link);
+      link.addEventListener("click", this.closeAccordion);
+    });
   }
 
   disconnectedCallback() {
@@ -138,6 +148,12 @@ class PfeJumpLinksNav extends PFElement {
       this._buildNav
     );
     this.removeEventListener("click");
+  }
+
+  closeAccordion() {
+    console.log("hello from click event");
+    console.log(this);
+    this.shadowRoot.querySelector("pfe-accordion").toggle(0);
   }
 
   _rebuildNav() {
@@ -258,7 +274,8 @@ class PfeJumpLinksNav extends PFElement {
 
   _reportHeight() {
     const cssVarName = `--${this.tag}--Height--actual`;
-    const height = this.clientHeight + "px";
+    const styles = window.getComputedStyle(this);
+    let height = styles.getPropertyValue("height");
     this.panel.style.setProperty(cssVarName, height);
   }
 }
@@ -316,7 +333,7 @@ class PfeJumpLinksPanel extends PFElement {
     this._init();
     this.sectionMargin = this.getAttribute("pfe-c-offset");
     this.customVar = this.cssVariable("--pfe-jump-links-panel--offset") || 200;
-    if (this.nav && this.nav.hasAttribute("pfe-c-autobuild")) {
+    if (this.nav && this.nav.hasAttribute("autobuild")) {
       this.nav._rebuildNav();
     }
 

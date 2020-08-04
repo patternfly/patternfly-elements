@@ -64,7 +64,7 @@
         transition: box-shadow 0.25s;
       }
 
-      pfe-icon.PFElement {
+      pfe-icon {
         --pfe-icon--Color: #0066CC;
         --pfe-icon--size: 18px;
       }
@@ -99,7 +99,7 @@
           outline: 0;
         }
 
-        pfe-icon.PFElement {
+        pfe-icon {
           --pfe-icon--Color: #fff;
         }
       }
@@ -279,9 +279,29 @@
             <div class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--single-column">
               <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
                 <!-- documentation note: single-col dropdowns CANNOT have pfe-nav footer regions -->
+                <!-- documentation note: single col headings are groups with different styles than mega menu tray headings -->
                 <section>
                   <h3>
-                    <a href="#">Platforms</a>
+                    Group 1
+                  </h3>
+                  <ul>
+                    <li>
+                      <a href="#">Red Hat Enterprise Linux</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat OpenStack Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Virtualization</a>
+                    </li>
+                  </ul>
+                </section>
+                <section>
+                  <h3>
+                    Group 2
                   </h3>
                   <ul>
                     <li>
@@ -302,9 +322,34 @@
             </div>
           </li>
           <li class="pfe-navigation__menu-item">
-            <a href="#" class="pfe-navigation__menu-link">
+            <a href="#" class="pfe-navigation__menu-link has-dropdown" aria-expanded="false">
               Learning & Support
             </a>
+            <div class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--single-column">
+              <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+                <!-- documentation note: single-col dropdowns CANNOT have pfe-nav footer regions -->
+                <!-- documentation note: separator class, pfe-navigation__single-column--separator -->
+                <section>
+                  <ul>
+                    <li>
+                      <a href="#">Red Hat Enterprise Linux</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat OpenStack Platform</a>
+                    </li>
+                    <li class="pfe-navigation__single-column--separator">
+                      <a href="#">Red Hat Virtualization</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Virtualization Example</a>
+                    </li>
+                  </ul>
+                </section>
+              </div> <!-- end .pfe-navigation__dropdown -->
+            </div>
           </li>
           <li class="pfe-navigation__menu-item">
             <a href="#" class="pfe-navigation__menu-link">

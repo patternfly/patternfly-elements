@@ -1,5 +1,7 @@
 ## Prerelease 55 ( TBD )
 
+- [51e988c](https://github.com/patternfly/patternfly-elements/commit/51e988c3e645ff1d3018bc43f24cfaa6be3b5bb2) fix: pfelement - restore pfelement tests (#1018)
+- [fbe4423](https://github.com/patternfly/patternfly-elements/commit/fbe442396f06b0a097366512b698dc0b6d5e1f9f) fix: improve CLS rating in lighthouse (#1020)
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Launch specific component demo page when specified on `npm run start`; add start to dev command
 
 ## Prerelease 54 ( 2020-07-31 )

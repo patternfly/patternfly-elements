@@ -295,7 +295,11 @@ class PfeJumpLinksNav extends PFElement {
   _reportHeight() {
     const cssVarName = `--${this.tag}--Height--actual`;
     const styles = window.getComputedStyle(this);
+
     let height = styles.getPropertyValue("height");
+    if (window.matchMedia("(min-width: 992px)").matches) {
+      height = "0px";
+    }
     this.panel.style.setProperty(cssVarName, height);
   }
 }

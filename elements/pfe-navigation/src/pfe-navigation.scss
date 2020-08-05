@@ -190,7 +190,8 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   // Active state
-  [pfe-navigation-state^='main-menu'][class] & {
+  [pfe-navigation-open-toggle='mobile__button'] &,
+  [pfe-navigation-open-toggle^='main-menu__'] & {
     color: #151515;
     background: #fff;
     box-shadow: inset 0 4px 0 0 #e00;
@@ -253,13 +254,14 @@ See mixin blocks before selectors that contain the selector name and the three l
     @include pfe-navigation__outer-menu-wrapper--desktop;
   }
   @include collapse('nav') {
-
+    @include pfe-navigation__outer-menu-wrapper--collapsed-menu;
   }
   @include collapse('secondary-links') {
     @include pfe-navigation__outer-menu-wrapper--mobile;
   }
 
-  [pfe-navigation-state^='main-menu'] & {
+  [pfe-navigation-open-toggle='mobile__button'] &,
+  [pfe-navigation-open-toggle^='main-menu__'] & {
     display: block;
     @include breakpoint('secondary-links-expand') {
       display: flex;
@@ -343,7 +345,8 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   // Open state
-  [pfe-navigation-state^='main-menu'] & {
+  [pfe-navigation-open-toggle='mobile__button'] &,
+  [pfe-navigation-open-toggle^='main-menu__'] & {
     @include pfe-navigation__menu-wrapper--mobile--open;
     @include breakpoint('secondary-links-expand') {
       @include pfe-navigation__menu-wrapper--collapsed-menu--open;
@@ -423,8 +426,11 @@ See mixin blocks before selectors that contain the selector name and the three l
 // Layout changes per breakpoint
 // See comment at top of file
 @mixin pfe-navigation__menu-link--mobile {
+  width: 100%;
   max-height: 9999em;
   padding: 16px 24px;
+  // added to avoid jumpiness when focus/hover styles are active
+  border: 1px dashed transparent;
   font-size: 20px;
   font-weight: 500;
   color: #151515;
@@ -433,8 +439,9 @@ See mixin blocks before selectors that contain the selector name and the three l
   transition: box-shadow 0.2s;
 }
 @mixin pfe-navigation__menu-link--desktop {
-  padding: 0 8px;
+  width: auto;
   max-height: 72px;
+  padding: 0 8px;
   font-size: 16px;
   font-weight: 400;
   color: #fff;
@@ -447,9 +454,8 @@ See mixin blocks before selectors that contain the selector name and the three l
     @include pfe-navigation__menu-link--mobile;
     display: flex;
     align-items: center;
-    // added to avoid jumpiness when focus/hover styles are active
-    border: 1px dashed transparent;
-    border-top: 0;
+    white-space: nowrap;
+    cursor: pointer;
     @include breakpoint('nav-expand') {
       @include pfe-navigation__menu-link--desktop;
     }
@@ -462,15 +468,15 @@ See mixin blocks before selectors that contain the selector name and the three l
   &:hover {
     @include focus-styles(#000, 1px);
 
-    @include breakpoint('nav-break') {
+    @include breakpoint('nav-expand') {
       box-shadow: inset 0 4px 0 0 #e00;
       @include focus-styles(#fff, 0px);
     }
+    @include collapse('nav') {
+      box-shadow: none;
+      @include focus-styles(#000, 1px);
+    }
   }
-
-  // &:focus {
-  //   @include focus-styles(#fff, 1px);
-  // }
 }
 
 // Top level links that have a dropdown associated with them
@@ -481,8 +487,9 @@ See mixin blocks before selectors that contain the selector name and the three l
   &:focus,
   &:hover {
     @include breakpoint('nav-expand') {
-      box-shadow: inset 0 4px 0 0 #e00;
       @include focus-styles(#fff, 0px);
+      border-top: 1px solid #e00;
+      box-shadow: inset 0 3px 0 0 #e00;
     }
     @include collapse('nav') {
       box-shadow: none;
@@ -493,7 +500,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     @include breakpoint('nav-expand') {
       color: #151515;
       background: #fff;
-      box-shadow: inset 0 4px 0 0 #e00;
+      box-shadow: inset 0 3px 0 0 #e00;
       // @todo: get the aria-expanded feature in the JS working again
       // &[aria-expanded="true"] {
       //   &:focus,
@@ -542,17 +549,19 @@ See mixin blocks before selectors that contain the selector name and the three l
   transition: border-color 0.25s;
 }
 // @todo: make sure all styles get fixed that were using aria-haspopup originally
-.pfe-navigation__menu-link.has-dropdown:before {
-  @include pfe-navigation__menu-link__before--mobile;
-  content: '';
-
-  @include breakpoint('nav-expand') {
-    @include pfe-navigation__menu-link__before--desktop;
-
-  }
-  @include collapse('nav') {
+.pfe-navigation__menu-link.has-dropdown {
+  &:before {
     @include pfe-navigation__menu-link__before--mobile;
+    content: '';
+
+    @include breakpoint('nav-expand') {
+      @include pfe-navigation__menu-link__before--desktop;
+    }
+    @include collapse('nav') {
+      @include pfe-navigation__menu-link__before--mobile;
+    }
   }
+
   &:focus:before,
   &:hover:before {
     @include breakpoint('nav-expand') {
@@ -583,23 +592,19 @@ See mixin blocks before selectors that contain the selector name and the three l
 // Dropdown wrapper - used for basic layout properties and animation
 @mixin pfe-navigation__dropdown-wrapper--mobile {
   position: static;
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-  visibility: hidden;
-  height: 0;
+  // @todo add animation for mobile
 }
 @mixin pfe-navigation__dropdown-wrapper--desktop {
-  @include dropdown-transitions(false);
   position: absolute;
   top: 100%;
   left: 0;
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
 }
 .pfe-navigation__dropdown-wrapper {
-  // @todo animation and polish
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.25s ease-in-out;
+  will-change: height;
   @include pfe-navigation__dropdown-wrapper--mobile;
   @include breakpoint('nav-expand') {
     @include pfe-navigation__dropdown-wrapper--desktop;
@@ -608,11 +613,15 @@ See mixin blocks before selectors that contain the selector name and the three l
     @include pfe-navigation__dropdown-wrapper--mobile;
   }
 
+  // JS Adds aria-hidden at the appropriate time before open, or after close
+  // This prevents the dropdown from showing to anyone, but also lets JS get the dropdown height
+  // Unlike display: none
+  &[aria-hidden=true] {
+    visibility: hidden;
+  }
+
   .pfe-navigation__menu-item--open > &[class] { // Adding specificity to beat JS Breakpoint selector
-    @include dropdown-transitions(true);
-    visibility: visible;
     height: auto; // Height is set in JS, this is a fallback
-    display: block;
   }
 }
 
@@ -628,9 +637,9 @@ See mixin blocks before selectors that contain the selector name and the three l
     max-width: 100%;
   }
 
-  .pfe-navigation__menu-item--open > & {
-    display: block;
-  }
+  // .pfe-navigation__menu-item--open > & {
+  //   display: block;
+  // }
 }
 
 
@@ -660,11 +669,29 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__dropdown {
   // @todo animation and polish
   @include pfe-navigation__dropdown--mobile;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s;
   @include breakpoint('nav-expand') {
     @include pfe-navigation__dropdown--desktop;
   }
   @include collapse('nav') {
     @include pfe-navigation__dropdown--mobile;
+  }
+
+  .pfe-navigation__menu-item--open & {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  section {
+    $mobile-margin: 0 0 18px;
+    margin: $mobile-margin;
+    @include breakpoint('nav-expand') {
+      margin: 0;
+    }
+    @include collapse('nav') {
+      margin: $mobile-margin;
+    }
   }
 
   // @todo: adjust heading spacing styles to still look good when there is no link in heading
@@ -744,7 +771,6 @@ See mixin blocks before selectors that contain the selector name and the three l
       );
   }
   @include collapse('nav') {
-    padding: 0;
     background: transparent;
   }
 }
@@ -813,7 +839,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     display: none;
   }
 
-  [pfe-navigation-state='search--open'] & {
+  [pfe-navigation-open-toggle='secondary-links__button--search'] & {
     color: #151515;
     background: #fff;
     box-shadow: inset 0 4px 0 0 #e00;
@@ -851,8 +877,15 @@ See mixin blocks before selectors that contain the selector name and the three l
     @include pfe-navigation__search--mobile;
   }
 
-  [pfe-navigation-state='search--open'][class] & { // Extra specificity to beat js breakpoints
+  [pfe-navigation-open-toggle='secondary-links__button--search'][class] & { // Extra specificity to beat js breakpoints
     display: block;
+  }
+
+  // JS Adds aria-hidden at the appropriate time before open, or after close
+  // This prevents the dropdown from showing to anyone, but also lets JS get the dropdown height
+  // Unlike display: none
+  &[aria-hidden='true'] {
+    visibility: hidden;
   }
 }
 
@@ -895,7 +928,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 // All Red Hat Button & Dropdown
 // --------------------------------------------------------
 .pfe-navigation__all-red-hat-toggle {
-  [pfe-navigation-state='all-red-hat--open'] & {
+  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
     color: #151515;
     background: #fff;
     box-shadow: inset 0 4px 0 0 #e00;
@@ -905,6 +938,15 @@ See mixin blocks before selectors that contain the selector name and the three l
     &:hover {
       @include focus-styles(#000, 0px);
     }
+  }
+}
+
+.pfe-navigation__all-red-hat-wrapper {
+  // JS Adds aria-hidden at the appropriate time before open, or after close
+  // This prevents the dropdown from showing to anyone, but also lets JS get the dropdown height
+  // Unlike display: none
+  &[aria-hidden='true'] {
+    visibility: hidden;
   }
 }
 
@@ -927,7 +969,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     background: transparent;
   }
 
-  [pfe-navigation-state='all-red-hat--open'] & {
+  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
     @include breakpoint('secondary-links-expand') {
       display: block;
     }
@@ -1024,15 +1066,18 @@ div#pfe-navigation__custom-links {
   }
 }
 
-[pfe-navigation-state^='main-menu--open'] .pfe-navigation__menu-toggle pfe-icon {
+[pfe-navigation-open-toggle='mobile__button'],
+[pfe-navigation-open-toggle^='main-menu__'] {
+  .pfe-navigation__menu-toggle pfe-icon {
+    --pfe-icon--Color: #151515;
+  }
+}
+
+[pfe-navigation-open-toggle='secondary-links__button--search'] .pfe-navigation__search-toggle pfe-icon {
   --pfe-icon--Color: #151515;
 }
 
-[pfe-navigation-state^='search--open'] .pfe-navigation__search-toggle pfe-icon {
-  --pfe-icon--Color: #151515;
-}
-
-[pfe-navigation-state^='all-red-hat--open'] .pfe-navigation__all-red-hat-toggle pfe-icon {
+[pfe-navigation-open-toggle='secondary-links__button--all-red-hat'][pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] .pfe-navigation__all-red-hat-toggle pfe-icon {
   --pfe-icon--Color: #0066CC;
   @include breakpoint('secondary-links-expand') {
     --pfe-icon--Color: #151515;
@@ -1040,7 +1085,7 @@ div#pfe-navigation__custom-links {
 }
 
 // @todo: login JS and demo example needs to be added
-[pfe-navigation-state^='log-in--open'] .pfe-navigation__all-red-hat-toggle pfe-icon {
+[pfe-navigation-open-toggle^='log-in--open'] .pfe-navigation__all-red-hat-toggle pfe-icon {
   --pfe-icon--Color: #151515;
 }
 

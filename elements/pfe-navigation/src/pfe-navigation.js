@@ -498,6 +498,7 @@ class PfeNavigation extends PFElement {
       };
 
       xhr.onerror = err => {
+        this._siteSwitchLoadingIndicator.setAttribute("hidden", true);
         reject(err, "Something went wrong.");
       };
 

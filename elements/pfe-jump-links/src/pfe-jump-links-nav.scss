@@ -258,14 +258,13 @@ $LOCAL: $temp;
     }
 
     a {
-      color: pfe-var(ui-accent--focus--on-dark);
-
+      color: pfe-var(ui-accent--hover--on-saturated);
       &:hover {
-        color: pfe-var(ui-accent--hover--on-dark);
+        color: pfe-var(text--on-dark);
       }
 
       &[active] {
-        color: pfe-var(ui-accent--on-dark);
+        color: pfe-var(text--on-dark);
       }
 
       &:focus::after {

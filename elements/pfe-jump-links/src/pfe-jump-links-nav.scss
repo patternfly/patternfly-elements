@@ -251,14 +251,14 @@ $LOCAL: $temp;
   }
 
   ul {
-    border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) #{pfe-var(ui-disabled--text)};
+    border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(text--muted);
 
     li[active] {
-      border-left: 3px pfe-var(surface--border-style) pfe-var(ui-accent);
+      border-left: pfe-var(ui--border-width--active) pfe-var(surface--border-style) pfe-var(ui-accent);
     }
 
     a {
-      color: pfe-var(ui-accent--hover--on-saturated);
+      color: pfe-var(text--muted--on-dark);
       &:hover {
         color: pfe-var(text--on-dark);
       }
@@ -268,7 +268,7 @@ $LOCAL: $temp;
       }
 
       &:focus::after {
-        border-color: #{pfe-var(link--on-dark)};
+        border-color: pfe-var(link--on-dark);   // i dont remember what this is used for
       }
     }
   }

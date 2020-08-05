@@ -254,7 +254,7 @@ $LOCAL: $temp;
     border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(text--muted);
 
     li[active] {
-      border-left: pfe-var(ui--border-width--active) pfe-var(surface--border-style) pfe-var(ui-accent);
+      border-left: pfe-var(ui--border-width--active) pfe-var(surface--border-style) pfe-var(link--on-dark);
     }
 
     a {

@@ -74,6 +74,7 @@ $breakpoints: (
   align-items: center;
   padding: 8px 24px;
   border: 0;
+  white-space: nowrap;
   font-family: inherit;
   font-size: 16px;
   color: #06c;
@@ -109,7 +110,7 @@ $breakpoints: (
     }
   }
 
-  &[pfe-navigation-state="main-menu--open"] {
+  &[pfe-navigation-open-toggle="main-menu--open"] {
     // @todo: fix focus-styles on mobile for accordion links and menu toggle button
     &:focus,
     &:hover {
@@ -129,22 +130,4 @@ $breakpoints: (
   //     margin: 0 0 4px;
   //   }
   // }
-}
-
-@mixin dropdown-transitions($is-open: true) {
-  @if $is-open {
-    visibility: visible;
-  }
-  @else {
-    visibility: hidden;
-  }
-  $visibility-delay: 0s;
-  @if $is-open == false {
-    $visibility-delay: 0.4s;
-  }
-  // sass-lint:disable indentation
-  transition:
-    visibility 0s $visibility-delay,
-    height 0.25s ease-in-out;
-  // sass-lint:enable indentation
 }

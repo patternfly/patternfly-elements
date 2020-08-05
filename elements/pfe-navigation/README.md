@@ -178,7 +178,7 @@ Explain how this component meets accessibility standards.
 
 ## Attributes
 
-- `pfe-navigation-state`: Is present if any section of the navigation is expanded and gives a name of the specific element that is open
+- `pfe-navigation-open-toggle`: Is present if any section of the navigation is expanded and gives a name of the specific element that is open
 
 
 ## Getting Started
@@ -201,7 +201,7 @@ npm run test
 ## How it works
 If JS is working and enabled, the component will copy specific markup from inside the `<pfe-navigation>` tag to the Shadow DOM, this allows styles and behaviors to be encapsulated so we don't get any outside code messing with the appearance or behaviors of the navigation.
 
-Once it's working it updates an attribute `pfe-navigation[pfe-navigation-state]` to describe what is the currently open and active part of the menu. If nothing is open the attribute is removed.
+Once it's working it updates an attribute `pfe-navigation[pfe-navigation-open-toggle]` to describe what is the currently open and active part of the menu. If nothing is open the attribute is removed.
 
 The parent DOM can also call some methods like:
 

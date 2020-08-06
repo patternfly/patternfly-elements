@@ -1,5 +1,6 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
+import "../../pfe-progress-indicator/dist/pfe-progress-indicator.js";
 
 // @todo Figure out cooler way to include these utilty functions
 /**
@@ -114,6 +115,8 @@ class PfeNavigation extends PFElement {
 
     this._search = this.shadowRoot.querySelector(`.${this.tag}__search`);
     this._customlinks = this.shadowRoot.querySelector(`.${this.tag}__customlinks`);
+    this._siteSwitcherWrap = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
+    this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
 
     this.menuToggle = this.shadowRoot.querySelector(".pfe-navigation__menu-toggle");
 
@@ -153,6 +156,7 @@ class PfeNavigation extends PFElement {
     // If you need to initialize any attributes, do that here
 
     this._processLightDom();
+    this._requestSiteSwitcher();
 
     this._observer.observe(this, lightDomObserverConfig);
 
@@ -789,6 +793,30 @@ class PfeNavigation extends PFElement {
       //   postShutCallback
       // );
     }
+  }
+
+  _requestSiteSwitcher() {
+    const promise = new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", "../mock/site-switcher.html");
+      xhr.responseType = "text";
+
+      xhr.onload = () => {
+        if (xhr.status >= 400) {
+          reject(xhr.responseText);
+        } else {
+          resolve(xhr.responseText);
+          this._siteSwitcherWrap.innerHTML = xhr.responseText;
+        }
+      };
+
+      xhr.onerror = err => {
+        this._siteSwitchLoadingIndicator.setAttribute("hidden", true);
+        reject(err, "Something went wrong.");
+      };
+
+      xhr.send();
+    });
   }
 }
 

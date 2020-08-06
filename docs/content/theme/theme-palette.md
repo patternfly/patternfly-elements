@@ -27,9 +27,9 @@ These variables are global hooks to override colors, fonts, spacing and more thr
 
 *If you have the project checked out locally, open up: pfe-styles/_temp/pfe-colors.css*
 
+### Color variable 
 
-
-| Color variable name | Project default |
+| Name | Project default |
 | ------------- |  --- |
 | `--pfe-theme--color--text` | <span class="color-preview" style="--bg:#151515;"></span> #151515 |
 | `--pfe-theme--color--text--muted` | <span class="color-preview" style="--bg:#6a6e73;"></span> #6a6e73 |
@@ -128,3 +128,68 @@ These variables are global hooks to override colors, fonts, spacing and more thr
 | `--pfe-theme--color--feedback--default` | <span class="color-preview" style="--bg:#4f5255;"></span> #4f5255 |
 | `--pfe-theme--color--feedback--default--darkest` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
 | `--pfe-theme--color--overlay` | <span class="color-preview" style="--bg:rgba(21, 21, 21, 0.5);"></span> rgba(21, 21, 21, 0.5) |
+
+
+### Other variables
+|  Name | Project default |
+| ------------- |  --- |
+| `--pfe-theme--container-spacer` | 16px |
+| `--pfe-theme--container-padding` | 16px |
+| `--pfe-theme--content-spacer` | 24px |
+| `--pfe-theme--font-size` | 16px |
+| `--pfe-theme--line-height` | 1.5 |
+| `--pfe-theme--font-family` | "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif |
+| `--pfe-theme--font-family--heading` | "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif |
+| `--pfe-theme--font-family--code` | "Overpass Mono", Consolas, Monaco,  Andale Mono , monospace |
+| `--pfe-theme--font-size--heading--alpha` | 32px |
+| `--pfe-theme--font-size--heading--beta` | 24px |
+| `--pfe-theme--font-size--heading--gamma` | 21px |
+| `--pfe-theme--font-size--heading--delta` | 18px |
+| `--pfe-theme--font-size--heading--epsilon` | 16px |
+| `--pfe-theme--font-size--heading--zeta` | 14px |
+| `--pfe-theme--font-weight--light` | 300 |
+| `--pfe-theme--font-weight--normal` | 500 |
+| `--pfe-theme--font-weight--semi-bold` | 600 |
+| `--pfe-theme--font-weight--bold` | 700 |
+| `--pfe-theme--surface--border-width` | 1px |
+| `--pfe-theme--surface--border-width--heavy` | 4px |
+| `--pfe-theme--surface--border-style` | solid |
+| `--pfe-theme--surface--border-radius` | 3px |
+| `--pfe-theme--surface--border-width--active` | 3px |
+| `--pfe-theme--surface--border-width--color` | #151515 |
+| `--pfe-theme--icon-size` | 1em |
+| `--pfe-theme--ui--element--size` | 20px |
+| `--pfe-theme--ui--border-width` | 1px |
+| `--pfe-theme--ui--border-width--active` | 3px |
+| `--pfe-theme--ui--border-style` | solid |
+| `--pfe-theme--ui--border-radius` | 2px |
+| `--pfe-theme--ui--focus-outline-width` | 1px |
+| `--pfe-theme--ui--focus-outline-style` | solid |
+| `--pfe-theme--link-decoration` | none |
+| `--pfe-theme--link-decoration--hover` | underline |
+| `--pfe-theme--link-decoration--focus` | underline |
+| `--pfe-theme--link-decoration--visited` | none |
+| `--pfe-theme--link-decoration--on-dark` | none |
+| `--pfe-theme--link-decoration--hover--on-dark` | underline |
+| `--pfe-theme--link-decoration--focus--on-dark` | underline |
+| `--pfe-theme--link-decoration--visited--on-dark` | none |
+| `--pfe-theme--link-decoration--on-saturated` | underline |
+| `--pfe-theme--link-decoration--hover--on-saturated` | underline |
+| `--pfe-theme--link-decoration--focus--on-saturated` | underline |
+| `--pfe-theme--link-decoration--visited--on-saturated` | underline |
+| `--pfe-theme--grid-breakpoint--xs` | 0 |
+| `--pfe-theme--grid-breakpoint--sm` | 576px |
+| `--pfe-theme--grid-breakpoint--md` | 768px |
+| `--pfe-theme--grid-breakpoint--lg` | 992px |
+| `--pfe-theme--grid-breakpoint--xl` | 1200px |
+| `--pfe-theme--box-shadow--sm` | 0 0.0625rem 0.125rem 0 rgba(3, 3, 3, 0.2) |
+| `--pfe-theme--box-shadow--md` | 0 0.125rem 0.0625rem 0.0625rem rgba(3, 3, 3, 0.12), 0 0.25rem 0.6875rem 0.375rem rgba(3, 3, 3, 0.05) |
+| `--pfe-theme--box-shadow--lg` | 0 0.1875rem 0.4375rem 0.1875rem rgba(3, 3, 3, 0.13), 0 0.6875rem 1.5rem 1rem rgba(3, 3, 3, 0.12) |
+| `--pfe-theme--box-shadow--inset` | inset 0 0 0.625rem 0 #fafafa |
+| `--pfe-theme--animation-speed` | 0.3s |
+| `--pfe-theme--animation-timing` | cubic-bezier(0.465, 0.183, 0.153, 0.946) |
+| `--pfe-theme--opacity` | 0.09 |
+| `--pfe-theme--modal` | 99 |
+| `--pfe-theme--navigation` | 98 |
+| `--pfe-theme--overlay` | 97 |
+| `--pfe-theme--content` | 0 |

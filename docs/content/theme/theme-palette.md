@@ -27,7 +27,7 @@ These variables are global hooks to override colors, fonts, spacing and more thr
 
 *If you have the project checked out locally, open up: pfe-styles/_temp/pfe-colors.css*
 
-### Color variable 
+### Color variables 
 
 | Name | Project default |
 | ------------- |  --- |

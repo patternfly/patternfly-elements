@@ -109,7 +109,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   &--wrapper {
     display: block; 
     white-space: nowrap;
-    min-width: 100%;
+    //min-width: 100%;
 
     :host([pfe-priority]) &,
     :host([aria-disabled="true"]) & {

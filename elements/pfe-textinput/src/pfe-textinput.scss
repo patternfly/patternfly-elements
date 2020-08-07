@@ -2,38 +2,51 @@
 
 $LOCAL: textinput;
 
+$LOCAL-VARIABLES: (
+  BackgroundColor: pfe-var(surface--lightest),
+  BackgroundColor--disabled: pfe-var(surface--base), // needs to be #f0f0f0,
+  BorderColor: pfe-var(surface--border--lighter),
+  BorderBottomColor: pfe-var(surface--border--darker), // TODO: sync on this color #767676,
+  BorderRadius: pfe-var(ui--border-radius),
+  BorderWidth: pfe-var(ui--border-width),
+  Color: pfe-var(text),
+  FontSize: pfe-var(font-size),
+  Height: 36px,
+  Padding: 8px 6px,
+);
+
 :host {
   display: inline-block;
   position: relative;
 }
 
-::slotted(input) {
-  all: unset;
-  opacity: 0;
-  padding: 8px 6px;
-  border-radius: 0;
-  border: 1px solid transparent;
-  height: 36px !important;
-}
+// ::slotted(input) {
+//   all: unset;
+//   opacity: 0;
+//   padding: pfe-local(Padding);
+//   border-radius: pfe-local(BorderRadius);
+//   border: pfe-local(BorderWidth) solid transparent;
+//   // height: pfe-local(Height) !important;
+// }
 
-input {
-  position: absolute;
+span input {
+  // position: absolute;
   z-index: 1;
   top: 0;
   left: 0;
   width: calc(100% - 14px);
-  padding: 8px 6px;
-  border-radius: 0;
-  border: 1px solid #c3c3c3;
-  border-bottom-color: #767676;
-  background-color: white;
-  font-size: 16px;
-  color: #151515;
+  padding: pfe-local(Padding);
+  border-radius: pfe-local(BorderRadius, $fallback: 0);
+  border: pfe-local(BorderWidth) solid pfe-local(BorderColor);
+  border-bottom-color: pfe-local(BorderBottomColor);
+  background-color: pfe-local(BackgroundColor);
+  font-size: pfe-local(FontSize);
+  color: pfe-local(color);
 
   &[disabled] {
     color: #6a6e73 !important;
-    background-color: #f0f0f0;
+    background-color: pfe-local(BackgroundColor--disabled);
     cursor: not-allowed !important;
-    border: 1px solid transparent;
+    border: pfe-local(BorderWidth) solid transparent;
   }
 }

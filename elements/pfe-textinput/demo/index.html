@@ -33,9 +33,9 @@
     <!-- Tests require pulling in the UMD version of the files -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script> -->
 
-    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <!-- <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
 
     <!-- <script>require([
       '../../pfe-band/dist/pfe-band.umd.js',
@@ -51,7 +51,7 @@
     <script defer src="../../pfe-band/dist/pfe-band.umd.js"></script>
     <script defer src="../dist/pfe-textinput.umd.js"></script>
 
-    <script type="text/babel">
+    <!-- <script type="text/babel">
       const container = document.querySelector("#react");
       let { useState, useEffect } = React;
       
@@ -93,7 +93,7 @@
       };
 
       ReactDOM.render(<ReactForm />, container);
-    </script>
+    </script> -->
 
     <style>
       input {
@@ -133,10 +133,10 @@
         <div>
           <label for="plain">Text input</label>
           <pfe-textinput>
-            <input type="text" id="plain" placeholder="Text input">
+            <input type="text" id="plain" placeholder="Text input" style="color: red" required>
           </pfe-textinput>
         </div>
-        <div>
+        <!-- <div>
           <label for="text-required">Required input</label>
           <pfe-textinput>
             <input type="text" id="text-required" placeholder="Required" required>
@@ -147,11 +147,11 @@
           <pfe-textinput>
             <input type="text" id="text-disabled" placeholder="Disabled" disabled>
           </pfe-textinput>
-        </div>
+        </div> -->
         <button>Submit</button>
       </form>
     </pfe-band>
-    <pfe-band>
+    <!-- <pfe-band>
       <h2>pfe-textinput Types</h2>
       <form class="form">
         <div>
@@ -219,7 +219,7 @@
 
     <pfe-band>
       <div id="react"></div>
-    </pfe-band>
+    </pfe-band> -->
 
     <script>
       var lightForm = document.querySelector("#lightForm");
@@ -228,29 +228,29 @@
         console.log("lightForm submitted");
       });
 
-      var shadowForm = document.querySelector("#shadowForm");
-      shadowForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        console.log("shadowForm submitted");
+      // var shadowForm = document.querySelector("#shadowForm");
+      // shadowForm.addEventListener("submit", function (event) {
+      //   event.preventDefault();
+      //   console.log("shadowForm submitted");
 
-        for (var i = 0; i < this.elements.length; i++) {
-          var element = this.elements[i];
-          console.log(encodeURIComponent(element.name) + " = " + encodeURIComponent(element.value));
-        }
-      });
+      //   for (var i = 0; i < this.elements.length; i++) {
+      //     var element = this.elements[i];
+      //     console.log(encodeURIComponent(element.name) + " = " + encodeURIComponent(element.value));
+      //   }
+      // });
 
-      var plainInput = document.querySelector("#plain");
-      setTimeout(function () {
-        plainInput.value = "Something plain";
-      }, 4000);
+      // var plainInput = document.querySelector("#plain");
+      // setTimeout(function () {
+      //   plainInput.value = "Something plain";
+      // }, 4000);
 
-      var cityInput = document.querySelector("#city");
-      var cityPfeTextInput = document.querySelector("#cityPfeTextInput");
-      setTimeout(function () {
-        // cityInput.value = "Some city";
-        // cityInput.setAttribute("value", "Some city");
-        cityPfeTextInput.setAttribute("pfe-c-value", "bademailaddress.co");
-      }, 4000);
+      // var cityInput = document.querySelector("#city");
+      // var cityPfeTextInput = document.querySelector("#cityPfeTextInput");
+      // setTimeout(function () {
+      //   // cityInput.value = "Some city";
+      //   // cityInput.setAttribute("value", "Some city");
+      //   cityPfeTextInput.setAttribute("pfe-c-value", "bademailaddress.co");
+      // }, 4000);
     </script>
     
   </body>

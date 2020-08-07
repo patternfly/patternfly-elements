@@ -57,13 +57,14 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   z-index: 0;
   vertical-align: middle;
 
-  max-width: pfe-local(MaxWidth);
-
   background-color: pfe-local(BackgroundColor);
   border-radius: pfe-local(BorderRadius);
   border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
 
   cursor: pointer;
+  @at-root #{&}(:not([pfe-priority])) {  
+    max-width: pfe-local(MaxWidth);
+  }
 }
 
 ::slotted(*) {
@@ -109,8 +110,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   &--wrapper {
     display: block; 
     white-space: nowrap;
-    //min-width: 100%;
-
+    :host(:not([pfe-priority])) & {
+       min-width: 100%;
+    }
     :host([pfe-priority]) &,
     :host([aria-disabled="true"]) & {
       display: flex;

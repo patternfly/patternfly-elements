@@ -1,3 +1,32 @@
+## Prerelease 55 ( TBD )
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfelement - restore pfelement tests (#1018)
+- [fbe4423](https://github.com/patternfly/patternfly-elements/commit/fbe442396f06b0a097366512b698dc0b6d5e1f9f) fix: improve CLS rating in lighthouse (#1020)
+
+## Prerelease 54 ( 2020-07-31 )
+
+- [6ef7f74](https://github.com/patternfly/patternfly-elements/commit/6ef7f74bfe22b259373f3485a46b21f37aa7196e) fix: pfe-accordion border styles (#1002)
+- [572ea91](https://github.com/patternfly/patternfly-elements/commit/572ea9133373ab91e99c2fc6e67aa6fb1a0d1ed0) feat: UI colors should match PF core (#895)
+- [516d9e8](https://github.com/patternfly/patternfly-elements/commit/516d9e8144b381b0f5c563e2bc2473e9654bc18b) feat: pfe-tab style updates (#814)
+
+## Prerelease 53 ( 2020-07-21 )
+
+- [743913e](https://github.com/patternfly/patternfly-elements/commit/743913e0620ee0ca6f0cdf95cc1ed2597b5fe6e3) fix: pfe-autocomplete prevent search-event from firing twice on option select (#989)
+- [f20b509](https://github.com/patternfly/patternfly-elements/commit/f20b5094b6eb02ed473b0e3dab2ea5280e56bda7) fix: pfe-autocomplete add composed flag to option-selected event (#988)
+- [0ffd92a](https://github.com/patternfly/patternfly-elements/commit/0ffd92a621d1082b118b84a07063bd39b9c8a904) fix: Move pfe-sass to a dev dependency (#983)
+- [a7240fd](https://github.com/patternfly/patternfly-elements/commit/a7240fdce2ec748863c41e8762d36cf29826f902) fix: pfe-health-index color support in IE11 (#993)
+- [a5f0a4a](https://github.com/patternfly/patternfly-elements/commit/a5f0a4ab203998c2e3c2568a1a7cb5d1efb3c16f) fix: pfe-cta: fix disabled rendering in IE11 (#994)
+
+## Prerelease 52 ( 2020-07-17 )
+
+- [e5c6f4b](https://github.com/patternfly/patternfly-elements/commit/e5c6f4bc0f5ef3283c115ecbcc7c31456ea39872) fix: fire pfe-autcomplete:option-selected event on click and enter key
+- [fbbc35c](https://github.com/patternfly/patternfly-elements/commit/fbbc35c1ccb395015cc35459ae0b4643c5217ac2) feat: Add support for empty local variables
+
+## Prerelease 51 ( 2020-07-16 )
+
+- [6965df](https://github.com/patternfly/patternfly-elements/commit/6965df7214f1cda636337093e0bf22bfc658403d) fix: Support nested tabs or accordions inside pfe-content-set
+- [49c6146](https://github.com/patternfly/patternfly-elements/commit/49c6146fbaed4cf6ca8d198e107471b53fe07796) feat: Add generator label to new PRs where appropriate, add .github folder to tools
+
 ## Prerelease 50 ( 2020-06-26 )
 
 - [3eecba0](https://github.com/patternfly/patternfly-elements/commit/3eecba06102bd3a92cdcd61780aafebb27175a95) fix: fixed offset to work more reliably and added some docs (#908)
@@ -5,17 +34,14 @@
 - [732f65a](https://github.com/patternfly/patternfly-elements/commit/732f65ada3383f6d04deb6670d82eb80d525d8ff) fix: pfe-modal removing hidden attribute (#924)
 - [cf010c1](https://github.com/patternfly/patternfly-elements/commit/cf010c18c404e07d59eab775ee44552f52627bde) feat: Automerging PRs based on labels (#920)
 - [b3f1e46](https://github.com/patternfly/patternfly-elements/commit/b3f1e46fe401be3f09f361fcc3b284a87de3728e) fix: pfe-dropdown: remove preventDefault call on clicks outside of dropdown (#915)
-- [342fe80](https://github.com/patternfly/patternfly-elements/commit/342fe804ab72fe628faef68ecede73b4ffed2598) docs: Fix misspelling of src attribute (#925)
 - [775b821](https://github.com/patternfly/patternfly-elements/commit/775b821702c903f926b8bf9fdf9c948ac949335f) feat: Add automatic labeling to PRs (#909)
 - [82bf8e6](https://github.com/patternfly/patternfly-elements/commit/82bf8e6a0d407a651571dac1e37d06a2b14fa3d4) feat: Move PR cards automatically in the Project when labels are changed (#911)
-- [0488b70](https://github.com/patternfly/patternfly-elements/commit/0488b70a073ee7eb5584b6ddf9f060a54564c37b) docs: pfe-number update for storybook (#922) 
 - [235e9a8](https://github.com/patternfly/patternfly-elements/commit/235e9a816b763dc9251e3022c914cba72f148368) fix: pfe-tab move content from light to shadow DOM (#769) 
 - [2adef08](https://github.com/patternfly/patternfly-elements/commit/2adef088768ac52f813899d42ba5a45119761ea3) fix: Add watch task to components generated before infra change (#912)
 - [6919a2c](https://github.com/patternfly/patternfly-elements/commit/6919a2c9283551d9e25d60ff96d497fab016e270) feat: pfe-icon and pfe-icon-panel updates (#867)
     -  Update paths to built-in sets: (#723)
     -  Storybook icon listing: (#728)
     -  Icon panel storybook: (#719)
-- [7cb02be](https://github.com/patternfly/patternfly-elements/commit/7cb02bed99d23b4a37082a56c025e18ae5aa9d9b) docs: Update templates and guides (#905)
 
 ## Prerelease 49 ( 2020-05-29 )
 

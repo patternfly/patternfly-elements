@@ -43,7 +43,8 @@
         test('body[unresolved] should cause the page to be hidden', () => {
           document.body.setAttribute('unresolved', '');
           const styles = document.body.computedStyleMap();
-          assert.equal(styles.get('opacity').value, 0, 'body[unresolved] causes the page to be hidden');
+          assert.equal(styles.get('opacity').value, 0, 'body[unresolved] causes the page to have 0 opacity');
+          assert.equal(styles.get('visibility').value, "hidden", 'body[unresolved] causes the page to be hidden');
         });
 
         test('removing body[unresolved] should cause the page to be revealed', done => {
@@ -61,7 +62,8 @@
             if (styles.get('opacity').value === 1) {
               clearTimeout(tid);
               clearInterval(iid);
-              assert.equal(styles.get('opacity').value, 1, 'removing body[unresolved] causes the page to be revealed');
+              assert.equal(styles.get('opacity').value, 1, 'removing body[unresolved] causes the page to have 1 opacity');
+              assert.equal(styles.get('visibility').value, "visible", 'body[unresolved] causes the page to be visible');
               done();
             }
           }, 50);
@@ -69,6 +71,7 @@
           tid = setTimeout(() => {
             clearInterval(id);
             assert.equal(styles.get('opacity').value, 1, 'removing body[unresolved] causes the page to be revealed');
+            assert.equal(styles.get('visibility').value, "visible", 'body[unresolved] causes the page to be visible');
             done();
           }, 1500);
         });

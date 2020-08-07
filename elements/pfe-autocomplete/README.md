@@ -83,20 +83,31 @@ This is an optional attribute string that you can provide on the input tag in th
 </pfe-autocomplete>
 ```
 
-## Get selected item
-User can select an item by clicking on search button, type press enter or select an item by using keyboard and press enter. The selected item can be captured by listening to an event(`pfe-search-event`) or observing attribute(`selected-value`) change.
-
-### pfe-search-event
-When user performs search, `pfe-search-event` event is fired. By listening to this event you can get selected phrase by getting `e.detail.searchValue`.
-
-```
-searchAutocomplete.addEventListener('pfe-search-event', function(e) {
-  console.log('do search= ' + e.detail.searchValue);
-});
-```
-
-### selected-value attribute
+**`selected-value`**
 By observing `selected-value` attribute you can detect autocomplete selected value.
+
+## Events
+
+### pfe-autocomplete:search-event
+Fires when a user performs search. By listening to this event you can get selected phrase by getting `e.detail.searchValue`.
+
+```
+detail: {
+  searchValue: String
+}
+```
+
+### pfe-autocomplete:option-selected
+Fires when a user selects an option from the dropdown list.
+
+```
+detail: {
+  optionValue: String
+}
+```
+
+## Get selected item
+User can select an item by clicking on search button, type press enter or select an item by using keyboard and press enter. The selected item can be captured by listening to an event(`pfe-autocomplete:search-event`) or observing attribute(`selected-value`) change.
 
 ## Dependencies
 

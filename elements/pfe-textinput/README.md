@@ -1,34 +1,40 @@
 # PatternFly Element | Textinput element
-A web component text input
+A web component text input with support for the following types
+- text
+- password
+- email
+- search
+- tel
+- url
 
 ## Usage
-Describe how best to use this web component along with best practices.
+```html
+<pfe-textinput>
+  <input type="text" name="first-name">
+</pfe-textinput>
+```
+
+You can add any of the [standard input attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) on the `input` tag inside `pfe-textinput`.
 
 ```html
 <pfe-textinput>
-    <!-- Default slot -->
-    <h2>This is pfe-textinput</h2>
-    
+  <input type="text" name="first-name" placeholder="First Name" required>
 </pfe-textinput>
 ```
 
 ### Accessibility
-Explain how this component meets accessibility standards.
+`pfe-textinput` differs from other web component versions of input elements in that 
+it utilizes a light DOM input element to remain in the document flow so forms
+continue to work the way you'd expect. With `pfe-textinput` we took the same approach that's used for creating a custom checkbox or radio button where a custom version of the checkbox or radio button is visually stacked on top of a traditional form control. This way we gain the benefits of encapsulated styles in the shadow DOM while not breaking the ways that input elements are traditionally used in forms.
 
 ## Slots
-
-- `namedSlot`: Describe each available slot and best practices around what markup it can contain.
+- `default`: It's required that you put an `input` element in the default slot for `pfe-textinput`. 
 
 ## Attributes
-
-- `attr`: Describe each available attribute and what function is serves.
+No custom attributes are used in `pfe-textinput`. However, uou can add any of the [standard input attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) on the `input` tag inside `pfe-textinput`.
 
 ## Events
-Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.
-
-
-## Dependencies
-Describe any dependent elements or libraries here too.
+Listen for any of the standard input events that are available to `input` elements.
 
 ## Dev
 

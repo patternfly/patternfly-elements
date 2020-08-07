@@ -1,46 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
-
-// requestSubmit polyfill
-// https://github.com/javan/form-request-submit-polyfill/blob/master/form-request-submit-polyfill.js
-(function(prototype) {
-  if (typeof prototype.requestSubmit == "function") return;
-
-  prototype.requestSubmit = function(submitter) {
-    if (submitter) {
-      validateSubmitter(submitter, this);
-      submitter.click();
-    } else {
-      submitter = document.createElement("input");
-      submitter.type = "submit";
-      submitter.hidden = true;
-      this.appendChild(submitter);
-      submitter.click();
-      this.removeChild(submitter);
-    }
-  };
-
-  function validateSubmitter(submitter, form) {
-    submitter instanceof HTMLElement ||
-      raise(TypeError, "parameter 1 is not of type 'HTMLElement'");
-    submitter.type == "submit" ||
-      raise(TypeError, "The specified element is not a submit button");
-    submitter.form == form ||
-      raise(
-        DOMException,
-        "The specified element is not owned by this form element",
-        "NotFoundError"
-      );
-  }
-
-  function raise(errorConstructor, message, name) {
-    throw new errorConstructor(
-      "Failed to execute 'requestSubmit' on 'HTMLFormElement': " +
-        message +
-        ".",
-      name
-    );
-  }
-})(HTMLFormElement.prototype);
+import "./polyfills--pfe-textinput.js";
 
 // @IE11
 // watching for addition and removal of nodes so
@@ -61,7 +20,7 @@ const lightInputObserverConfig = {
 // the _lightInput to our shadow DOM input. For example,
 // the style attribute could ruin our encapsulated styles
 // in the shadow DOM
-const denylistAttributes = ["style"];
+const denylistAttributes = ["style", "tabindex"];
 
 class PfeTextinput extends PFElement {
   static get tag() {
@@ -87,44 +46,6 @@ class PfeTextinput extends PFElement {
 
   constructor() {
     super(PfeTextinput, { type: PfeTextinput.PfeType });
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    // If you need to initialize any attributes, do that here
-  }
-
-  disconnectedCallback() {}
-}
-
-class PfeTextinputShadow extends PFElement {
-  static get tag() {
-    return "pfe-textinput-shadow";
-  }
-
-  get schemaUrl() {
-    return "pfe-textinput.json";
-  }
-
-  get templateUrl() {
-    return "pfe-textinput-shadow.html";
-  }
-
-  get styleUrl() {
-    return "pfe-textinput-shadow.scss";
-  }
-
-  // Declare the type of this component
-  static get PfeType() {
-    return PFElement.PfeTypes.Content;
-  }
-
-  static get observedAttributes() {
-    return ["pfe-c-value"];
-  }
-
-  constructor() {
-    super(PfeTextinputShadow, { type: PfeTextinputShadow.PfeType });
 
     this._lightInput = null;
     this._internalInput = null;
@@ -135,6 +56,29 @@ class PfeTextinputShadow extends PFElement {
 
     this._lightInputObserver = new MutationObserver(mutationsList => {
       mutationsList.forEach(mutation => {
+        // do nothing if the attribute is part of the denylistAttributes
+        // then, either copy the attribute and value or remove the attribute
+        // if the attribute is no longer present in the light DOM
+        if (mutation.type === "attributes") {
+          if (denylistAttributes.includes(mutation.attributeName)) {
+            return;
+          }
+
+          if (this._lightInput.hasAttribute(mutation.attributeName)) {
+            const lightAttributeValue = this._lightInput.getAttribute(
+              mutation.attributeName
+            );
+            this._internalInput.setAttribute(
+              mutation.attributeName,
+              lightAttributeValue
+            );
+          } else {
+            this._internalInput.removeAttribute(mutation.attributeName);
+          }
+        }
+
+        // make sure we keep the shadow DOM input value in sync with
+        // the light DOM input value
         if (
           mutation.type === "attributes" &&
           mutation.attributeName === "value"
@@ -230,7 +174,12 @@ class PfeTextinputShadow extends PFElement {
       // method on the form, the form would submit and bypass
       // any validation
       // https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/requestSubmit#Usage_notes
-      this.closest("form").requestSubmit();
+      const closestForm = this.closest("form");
+      if (!closestForm) {
+        return;
+      }
+
+      closestForm.requestSubmit();
       return;
     }
 
@@ -248,6 +197,5 @@ class PfeTextinputShadow extends PFElement {
 }
 
 PFElement.create(PfeTextinput);
-PFElement.create(PfeTextinputShadow);
 
 export default PfeTextinput;

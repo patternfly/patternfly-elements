@@ -6,44 +6,80 @@ import PfeTextinput from "../dist/pfe-textinput";
 
 const stories = storiesOf("Textinput", module);
 
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 // Define the template to be used
 const template = (data = {}) => {
-  return tools.component(PfeTextinput.tag, data.prop, data.slots);
+  return tools.component("input", data.prop, data.slots, true);
 };
 
-// Use these to get dynamically generated content
-// const defaultHeading = tools.autoHeading(true);
-const defaultContent = tools.autoContent(1, 2);
+const types = ["text", "password", "email", "search", "tel", "url"];
 
 stories.addDecorator(bridge.withKnobs);
 
 stories.add(PfeTextinput.tag, () => {
   let config = {};
-  const props = PfeTextinput.properties;
 
-  //-- Set any custom defaults just for storybook here
+  const props = {
+    type: {
+      title: "Type",
+      type: "string",
+      enum: types,
+      default: "text"
+    },
+    placeholder: {
+      title: "Placeholder",
+      type: "string",
+      default: "First Name"
+    },
+    disabled: {
+      title: "Disabled",
+      type: "boolean"
+    }
+  };
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, bridge);
+  config.slots = [];
 
-  const slots = PfeTextinput.slots;
+  const render = `<pfe-textinput>${template(config)}</pfe-textinput>`;
+  return tools.preview(render);
+});
 
-  //-- Set any custom content for the slots here
+stories.add("At a glance", () => {
+  return `
+    <style>
+      div {
+        margin-bottom: 16px;
+      }
 
-  // Trigger the auto generation of the knobs for slots
-  config.has = tools.autoContentKnobs(slots, bridge);
+      label {
+        display: inline-block;
+        width: 80px;
+      }
 
-  //-- Build your slots here using config.has[""] to get user content
-  // prettier-ignore
-  config.slots = [{
-    content: defaultContent
-  }];
-
-  //-- Reset default values show they don't render in the markup
-  // if (config.prop[""] === "default") {
-  //   config.prop[""] = "";
-  // }
-
-  const rendered = template(config);
-  return tools.preview(rendered);
+      input {
+        box-sizing: border-box;
+      }
+    </style>
+    <h2>At a glance</h2>
+    ${types
+      .map(
+        type => `
+      <div>
+        <label for="${type}">${type}</label>
+        <pfe-textinput>
+          <input type="${type}" id="${type}" placeholder="${type}">
+        </pfe-textinput>
+      </div>
+    `
+      )
+      .join("")}
+  `;
 });

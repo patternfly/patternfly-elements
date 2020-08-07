@@ -20,11 +20,6 @@
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-    <link media="all" rel="stylesheet" type="text/css" href="https://access.redhat.com/chrome_themes/nimbus/css/bootstrap.css?v=ac0c7a9" />
-    <link media="all" rel="stylesheet" type="text/css" href="https://access.redhat.com/chrome_themes/nimbus/css/main.css?v=ac0c7a9" />
-    <link media="all" rel="stylesheet" type="text/css" href="https://access.redhat.com/chrome_themes/nimbus/css/components.css?v=ac0c7a9" />
-    <link media="all" rel="stylesheet" type="text/css" href="https://access.redhat.com/chrome_themes/nimbus/css/pages.css?v=ac0c7a9" />
-
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
     
@@ -81,15 +76,15 @@
             <form className="form" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="reactFirstName">First Name</label>
-                <pfe-textinput-shadow>
+                <pfe-textinput>
                   <input type="text" id="reactFirstName" name="firstName" placeholder="First Name" value={firstName} onChange={e => setFirstName(e.target.value)} required />
-                </pfe-textinput-shadow>
+                </pfe-textinput>
               </div>
               <div>
                 <label htmlFor="reactLastName">Last Name</label>
-                <pfe-textinput-shadow>
+                <pfe-textinput>
                   <input type="text" id="reactLastName" name="lastName" placeholder="Last Name" value={lastName} onChange={e => setLastName(e.target.value)} required />
-                </pfe-textinput-shadow>
+                </pfe-textinput>
               </div>
               <button>Submit</button>
             </form>
@@ -115,10 +110,11 @@
       }
 
       .form label {
+        display: inline-block;
         width: 126px;
       }
 
-      .form pfe-textinput-shadow {
+      .form pfe-textinput {
         width: calc(100% - 132px);
       }
 
@@ -133,50 +129,95 @@
       <h1><code>pfe-textinput</code></h1>
 
       <h2>pfe-textinput Form</h2>
-      <form id="lightForm">
-        <pfe-textinput>
-          <input type="text" id="plain" placeholder="Light">
-        </pfe-textinput>
-        <pfe-textinput>
-          <input type="text" placeholder="Required" required>
-        </pfe-textinput>
-        <pfe-textinput>
-          <input type="text" placeholder="Disabled" disabled>
-        </pfe-textinput>
+      <form class="form" id="lightForm">
+        <div>
+          <label for="plain">Text input</label>
+          <pfe-textinput>
+            <input type="text" id="plain" placeholder="Text input">
+          </pfe-textinput>
+        </div>
+        <div>
+          <label for="text-required">Required input</label>
+          <pfe-textinput>
+            <input type="text" id="text-required" placeholder="Required" required>
+          </pfe-textinput>
+        </div>
+        <div>
+          <label for="text-disabled">Text disabled</label>
+          <pfe-textinput>
+            <input type="text" id="text-disabled" placeholder="Disabled" disabled>
+          </pfe-textinput>
+        </div>
         <button>Submit</button>
       </form>
-
-      <h2>pfe-textinput-shadow Form</h2>
+    </pfe-band>
+    <pfe-band>
+      <h2>pfe-textinput Types</h2>
+      <form class="form">
+        <div>
+          <label for="type-text">type="text"</label>
+          <pfe-textinput>
+            <input type="text" id="type-text" placeholder="text">
+          </pfe-textinput>
+        </div>
+        <div>
+          <label for="type-tel">type="tel"</label>
+          <pfe-textinput>
+            <input type="tel" id="type-tel" placeholder="tel">
+          </pfe-textinput>
+        </div>
+        <div>
+          <label for="type-search">type="search"</label>
+          <pfe-textinput>
+            <input type="search" id="type-search" placeholder="search">
+          </pfe-textinput>
+        </div>
+        <div>
+          <label for="type-url">type="url"</label>
+          <pfe-textinput>
+            <input type="url" id="type-url" placeholder="url">
+          </pfe-textinput>
+        </div>
+        <div>
+          <label for="type-password">type="password"</label>
+          <pfe-textinput>
+            <input type="password" id="type-password" placeholder="password">
+          </pfe-textinput>
+        </div>
+      </form>
+    </pfe-band>
+    <pfe-band pfe-color="lightest">
+      <h2>pfe-textinput Form</h2>
       <form class="form" id="shadowForm">
         <div>
           <label for="firstName">First Name</label>
-          <pfe-textinput-shadow>
+          <pfe-textinput>
             <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
-          </pfe-textinput-shadow>
+          </pfe-textinput>
         </div>
         <div>
           <label for="lastName">Last Name</label>
-          <pfe-textinput-shadow>
+          <pfe-textinput>
             <input type="text" id="lastName" name="lastName" placeholder="Last Name" value="Einstein" required>
-          </pfe-textinput-shadow>
+          </pfe-textinput>
         </div>
         <div>
           <label for="email">Email Address</label>
-          <pfe-textinput-shadow id="cityPfeTextInput">
+          <pfe-textinput id="cityPfeTextInput">
             <input type="email" id="email" name="email" placeholder="Email Address" required>
-          </pfe-textinput-shadow>
+          </pfe-textinput>
         </div>
         <div>
           <label for="phone">Phone Number</label>
-          <pfe-textinput-shadow>
+          <pfe-textinput>
             <input type="text" id="phone" name="phone" placeholder="Phone Number" disabled>
-          </pfe-textinput-shadow>
+          </pfe-textinput>
         </div>
         <button>Submit</button>
       </form>
     </pfe-band>
 
-    <pfe-band pfe-color="lightest">
+    <pfe-band>
       <div id="react"></div>
     </pfe-band>
 

@@ -3,10 +3,10 @@
 
 $LOCAL: button;
 
-$variables: (
-  BackgroundColor: #{pfe-apply-broadcast(link)}, // #06c,
-  BackgroundColor--hover: #{pfe-apply-broadcast(link--hover)}, // should be #004080 but we don't have this in the palette
-  Color: #{pfe-color(ui-base--text)},
+$LOCAL-VARIABLES: (
+  BackgroundColor: #{pfe-var(ui-accent)},
+  BackgroundColor--hover: #{pfe-var(ui-accent--hover)},
+  Color: #{pfe-var(ui-base--text)},
   FontSize: #{pfe-var(font-size)},
   Border: 0,
   Border--after: 1px solid,
@@ -17,7 +17,6 @@ $variables: (
 );
 
 :host {
-  @include pfe-print-variables($variables);
   display: inline-block;
 }
 
@@ -59,10 +58,10 @@ button {
 :host([pfe-variant="secondary"]) {
   button {
     --pfe-button--BackgroundColor: transparent;
-    --pfe-button--Color: #{pfe-apply-broadcast(link)};
+    --pfe-button--Color: #{pfe-var(ui-accent)};
 
     &:after {
-      --pfe-button--BorderColor--after: #{pfe-apply-broadcast(link)};
+      --pfe-button--BorderColor--after: #{pfe-var(ui-accent)};
     }
 
     &:hover,
@@ -77,10 +76,10 @@ button {
 :host([pfe-variant="tertiary"]) {
   button {
     --pfe-button--BackgroundColor: transparent;
-    --pfe-button--Color: #{pfe-apply-broadcast(text)}; // how can I falback to #151515?
+    --pfe-button--Color: #{pfe-var(text)};
 
     &:after {
-      --pfe-button--BorderColor--after: #{pfe-apply-broadcast(text)};
+      --pfe-button--BorderColor--after: #{pfe-var(text)};
     }
 
     &:hover,
@@ -94,11 +93,11 @@ button {
 
 :host([pfe-variant="danger"]) {
   button {
-    --pfe-button--BackgroundColor: #c9190b;
+    --pfe-button--BackgroundColor: #{$pf-color-red-100}; // feedback--critical?
 
     &:hover,
     &:focus {
-      --pfe-button--BackgroundColor: #a30000;
+      --pfe-button--BackgroundColor: #{$pf-color-red-200}; // feedback--critical--darkest is too dark
     }
   }
 }
@@ -106,19 +105,19 @@ button {
 :host([pfe-variant="control"]) {
   button {
     --pfe-button--BackgroundColor: transparent;
-    --pfe-button--Color: #{pfe-apply-broadcast(text)};
+    --pfe-button--Color: #{pfe-var(text)};
     --pfe-button--BorderRadius: 0;
 
     &:after {
-      --pfe-button--BorderColor--after: #ededed;
-      border-bottom-color: #8a8d90;
+      --pfe-button--BorderColor--after: #{$pf-color-black-200}; // surface--border--lightest?
+      border-bottom-color: #{$pf-color-black-500}; // surface--border--darker?
     }
 
     &:hover,
     &:focus {
       &:after {
         border-bottom-width: 2px;
-        border-bottom-color: #{pfe-apply-broadcast(link)};
+        border-bottom-color: #{pfe-var(ui-accent)};
       }
     }
   }
@@ -126,19 +125,19 @@ button {
 
 :host([pfe-variant="control"][disabled]) {
   button {
-    --pfe-button--BackgroundColor: #{pfe-color(surface--lighter)};
+    --pfe-button--BackgroundColor: #{pfe-var(surface--lighter)};
   }
 }
 
 :host([disabled]) {
   button {
-    --pfe-button--BackgroundColor: #d2d2d2;
-    --pfe-button--Color: #737679;
+    --pfe-button--BackgroundColor: #{pfe-var(ui-disabled)}; // #{$pf-color-black-300};
+    --pfe-button--Color: #{pfe-var(ui-disabled--text)};
     pointer-events: none;
 
     &:hover,
     &:focus {
-      --pfe-button--BackgroundColor--hover: #d2d2d2;
+      --pfe-button--BackgroundColor--hover: #{pfe-var(ui-disabled)}; // #{$pf-color-black-300};
 
       &:after {
         --pfe-button--Border--after: 0;

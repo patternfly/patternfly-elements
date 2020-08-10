@@ -94,10 +94,7 @@ class PfeTextinput extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    if (this.children.length) {
-      this._init();
-    }
-
+    this._init();
     this.observer.observe(this, parentObserverConfig);
   }
 

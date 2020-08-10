@@ -67,8 +67,88 @@ $breakpoints: (
   outline: none;
 }
 
-/// Styles for top level buttons
-/// @todo Needs to be included in shadow dom and no-js styles
+//
+// Light DOM & Shadow DOM shared styles
+// --------------------------------------------------------
+@mixin pfe-navigation__wrapper {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  height: $menu-height;
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: "RedHatText", "Red Hat Text", Overpass, Arial, Helvetica, sans-serif;
+  color: #fff;
+  background: #151515;
+}
+@mixin pfe-navigation__wrapper--mobile {
+  margin: 0 0 8px;
+  padding: 0 16px;
+}
+@mixin pfe-navigation__wrapper--collapsed-menu {
+  margin: 0;
+  padding: 0 16px;
+}
+@mixin pfe-navigation__wrapper--desktop {
+  margin: 0;
+  padding: 0 32px;
+}
+
+
+@mixin pfe-navigation__logo-link {
+  display: block;
+  padding: 6px 8px;
+  margin-left: -8px; // Should be flush left with container
+
+  // avoid jumpiness from focus/hover styles
+  border: 1px solid transparent;
+
+  // focus styles
+  &:focus,
+  &:hover {
+    @include focus-styles(#fff, 1px);
+  }
+}
+
+@mixin pfe-navigation__logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 10px 16px 10px 0;
+}
+
+@mixin pfe-navigation__logo-link {
+  display: block;
+  padding: 6px 8px;
+  margin-left: -8px; // Should be flush left with container
+
+  // avoid jumpiness from focus/hover styles
+  border: 1px solid transparent;
+
+  // focus styles
+  &:focus,
+  &:hover {
+    @include focus-styles(#fff, 1px);
+  }
+}
+
+@mixin pfe-navigation__logo-image {
+  display: block;
+  width: auto;
+  height: 40px;
+
+  // In case there isn't a mobile and desktop version
+  &:only-child {
+    display: block;
+  }
+
+  &.pfe-navigation__logo-image--small {
+    height: 32px;
+  }
+}
+
+/// Top level button styles
 @mixin top-level-button {
   display: flex;
   align-items: center;

@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+    <link rel="stylesheet" href="../dist/pfe-navigation--lightdom.css" />
 
     <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/2/webfonts/red-hat-font.css" media="all">
 
@@ -121,8 +122,7 @@
   <body unresolved style="background-color: #ddd;">
     <h1><code>pfe-navigation</code></h1>
 
-    <h2>Small Logo</h2>
-    <pfe-navigation id="pfe-navigation">
+    <ze-navigation id="ze-navigation">
 
       <nav class="pfe-navigation" aria-label="Main Navigation">
         <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
@@ -368,8 +368,298 @@
           </li>
         </ul>
       </nav>
+      <ul class="pfe-navigation__fallback-links">
+        <li>
+          <a href="#">Search</a>
+        </li>
+        <li>
+          <a href="#">Custom Link</a>
+        </li>
+        <li>
+          <a href="#">Log in</a>
+        </li>
+      </ul>
       <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
-        <a href="#" class="">
+        <a href="#" class="#">
+          <!-- @note: added web-icon-globe icon as a placeholder since it is used as the language switcher icon -->
+          <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
+          Custom Link
+        </a>
+      </div>
+      <div slot="pfe-navigation--search" class="pfe-navigation__search">
+      <!-- @todo: move form and label for="" and label id into shadow DOM -->
+      <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
+        <form>
+          <label for="pfe-navigation__search-label1">Search</label>
+          <input id="pfe-navigation__search-label1" type="text" placeholder="Search" />
+          <button>Search</button>
+        </form>
+      </div>
+    </ze-navigation>
+
+    <div style="height: 200px"></div>
+
+
+    <h2>Small Logo</h2>
+    <pfe-navigation id="pfe-navigation-small">
+
+      <nav class="pfe-navigation" aria-label="Main Navigation">
+        <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
+          <a href="#" class="pfe-navigation__logo-link">
+            <img class="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="assets/redhat--reverse.svg" width="400" alt="Redhat" />
+          </a>
+        </div>
+        <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
+          <li class="pfe-navigation__menu-item">
+            <!-- @note: removed aria-haspopup attr bc it should not be used for this type of menu, changed to using a class has-dropdown but this probably needs to be implemented differently -->
+
+            <!-- @todo: move aria and has-dropdown to shadow DOM? -->
+            <a href="#" class="pfe-navigation__menu-link has-dropdown" aria-expanded="false">
+              Products
+            </a>
+
+            <div class="pfe-navigation__dropdown-wrapper">
+              <div class="pfe-navigation__dropdown">
+                <section>
+                  <h3>
+                    <a href="#">Platforms</a>
+                  </h3>
+                  <ul>
+                    <li>
+                      <a href="#">Red Hat Enterprise Linux</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat OpenStack Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Virtualization</a>
+                    </li>
+                  </ul>
+                </section>
+                <section>
+                  <h3>
+                    <a href="#">Ladders</a>
+                  </h3>
+                  <ul>
+                    <li>
+                      <a href="#">Lorem ipsum</a>
+                    </li>
+                    <li>
+                      <a href="#">Dolor sit amet</a>
+                    </li>
+                    <li>
+                      <a href="#">Wakka Wakka</a>
+                    </li>
+                  </ul>
+                </section>
+                <section>
+                  <h3>
+                    <a href="#">Chutes</a>
+                  </h3>
+                  <ul>
+                    <li>
+                      <a href="#">Yakkita yakkita</a>
+                    </li>
+                    <li>
+                      <a href="#">Enterprise Yakkita yakkita</a>
+                    </li>
+                    <li>
+                      <a href="#">Upstream Yakkita</a>
+                    </li>
+                    <li>
+                      <a href="#">Yakkita ME</a>
+                    </li>
+                  </ul>
+                </section>
+                <section>
+                  <h3>
+                    <a href="#">Platforms</a>
+                  </h3>
+                  <ul>
+                    <li>
+                      <a href="#">Red Hat Enterprise Linux</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat OpenStack Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Virtualization</a>
+                    </li>
+                  </ul>
+                </section>
+                <section>
+                  <h3>
+                    <a href="#">Ladders</a>
+                  </h3>
+                  <ul>
+                    <li>
+                      <a href="#">Lorem ipsum</a>
+                    </li>
+                    <li>
+                      <a href="#">Dolor sit amet</a>
+                    </li>
+                    <li>
+                      <a href="#">Wakka Wakka</a>
+                    </li>
+                  </ul>
+                </section>
+                <section>
+                  <h3>
+                    <a href="#">Chutes</a>
+                  </h3>
+                  <ul>
+                    <li>
+                      <a href="#">Yakkita yakkita</a>
+                    </li>
+                    <li>
+                      <a href="#">Enterprise Yakkita yakkita</a>
+                    </li>
+                    <li>
+                      <a href="#">Upstream Yakkita</a>
+                    </li>
+                    <li>
+                      <a href="#">Yakkita ME</a>
+                    </li>
+                  </ul>
+                </section>
+
+                <!-- documentation note: mega menu footer region can fit at most 4 ctas -->
+                <section class="pfe-navigation__footer">
+                  <pfe-cta pfe-priority="primary">
+                    <a href="#">Learn more about PFElements</a>
+                  </pfe-cta>
+
+                  <pfe-cta>
+                    <a href="https://github.com/">GitHub</a>
+                  </pfe-cta>
+
+                  <pfe-cta>
+                    <a href="https://github.com/">Another CTA Example</a>
+                  </pfe-cta>
+
+                  <pfe-cta>
+                    <a href="#">Learn more about CTAs and How to Use Them</a>
+                  </pfe-cta>
+                </section>
+              </div> <!-- end .pfe-navigation__dropdown -->
+
+            </div>
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link has-dropdown" aria-expanded="false">
+              Solutions
+            </a>
+            <div class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--single-column">
+              <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+                <!-- documentation note: single-col dropdowns CANNOT have pfe-nav footer regions -->
+                <!-- documentation note: single col headings are groups with different styles than mega menu tray headings -->
+                <section>
+                  <h3>
+                    Group 1
+                  </h3>
+                  <ul>
+                    <li>
+                      <a href="#">Red Hat Enterprise Linux</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat OpenStack Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Virtualization</a>
+                    </li>
+                  </ul>
+                </section>
+                <section>
+                  <h3>
+                    Group 2
+                  </h3>
+                  <ul>
+                    <li>
+                      <a href="#">Red Hat Enterprise Linux</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat OpenStack Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Virtualization</a>
+                    </li>
+                  </ul>
+                </section>
+              </div> <!-- end .pfe-navigation__dropdown -->
+            </div>
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link has-dropdown" aria-expanded="false">
+              Learning & Support
+            </a>
+            <div class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--single-column">
+              <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+                <!-- documentation note: single-col dropdowns CANNOT have pfe-nav footer regions -->
+                <!-- documentation note: separator class, pfe-navigation__single-column--separator -->
+                <section>
+                  <ul>
+                    <li>
+                      <a href="#">Red Hat Enterprise Linux</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat OpenStack Platform</a>
+                    </li>
+                    <li class="pfe-navigation__single-column--separator">
+                      <a href="#">Red Hat Virtualization</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Virtualization Example</a>
+                    </li>
+                  </ul>
+                </section>
+              </div> <!-- end .pfe-navigation__dropdown -->
+            </div>
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link">
+              Resources
+            </a>
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link">
+              Red Hat & Open Source
+            </a>
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link">
+              Really Long Menu Title
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <ul class="pfe-navigation__fallback-links">
+        <li>
+          <a href="#">Search</a>
+        </li>
+        <li>
+          <a href="#">Custom Link</a>
+        </li>
+        <li>
+          <a href="#">Log in</a>
+        </li>
+      </ul>
+      <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
+        <a href="#" class="#">
           <!-- @note: added web-icon-globe icon as a placeholder since it is used as the language switcher icon -->
           <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
           Custom Link

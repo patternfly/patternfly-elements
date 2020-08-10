@@ -1,0 +1,89 @@
+@import "variables-mixins";
+
+// Scoping styles in ID to fight other light dom styles
+#ze-navigation,
+#pfe-navigation,
+pfe-navigation {
+  &:not(.PFElement) {
+    @include pfe-navigation__wrapper;
+    @include pfe-navigation__wrapper--mobile;
+    height: auto;
+    min-height: $menu-height;
+    @include breakpoint('secondary-links-expand') {
+      @include pfe-navigation__wrapper--collapsed-menu;
+      flex-wrap: wrap;
+    }
+    @include breakpoint('nav-expand') {
+      @include pfe-navigation__wrapper--desktop;
+    }
+
+    .pfe-navigation__dropdown-wrapper,
+    [slot] {
+      display: none;
+    }
+
+    .pfe-navigation {
+      @include breakpoint('secondary-links-expand') {
+        display: flex;
+        align-items: stretch;
+        flex-wrap: wrap;
+      }
+      @include breakpoint(lg) {
+        flex-wrap: nowrap;
+      }
+    }
+
+    .pfe-navigation__logo-wrapper {
+      @include pfe-navigation__logo-wrapper;
+      min-width: 150px;
+    }
+
+    .pfe-navigation__logo-link {
+      @include pfe-navigation__logo-link;
+    }
+
+    .pfe-navigation__logo-image {
+      @include pfe-navigation__logo-image;
+    }
+
+    .pfe-navigation__log-in-link,
+    .pfe-navigation__menu-link,
+    .pfe-navigation__fallback-links a {
+      @include top-level-button;
+      color: #fff;
+    }
+
+    .pfe-navigation__menu,
+    .pfe-navigation__fallback-links {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: inherit;
+      @include breakpoint('secondary-links-expand') {
+        display: flex;
+        align-items: stretch;
+      }
+
+      li {
+        margin: 0;
+        padding: 0;
+        font-size: inherit;
+
+        &:before {
+          content: none;
+        }
+      }
+    }
+
+    .pfe-navigation__fallback-links {
+      margin-left: auto;
+    }
+
+    .pfe-navigation__menu-link {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      font-size: 16px;
+    }
+  }
+}

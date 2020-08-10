@@ -246,6 +246,7 @@ class PfeNavigation extends PFElement {
    * @returns {boolean}
    */
   isSecondaryLinksSectionCollapsed(forceRecalculation) {
+    // @todo Check all red hat dropdown instead of search
     // Trying to avoid running getComputedStyle too much by caching iton the web component object
     if (
       forceRecalculation ||
@@ -386,7 +387,7 @@ class PfeNavigation extends PFElement {
     }
 
     if (toState !== "close" && toState !== "open") {
-      // console.error(`${this.tag}: toState param was set to ${toState}, can only be 'close' or 'open'`);
+      console.error(`${this.tag}: toState param was set to ${toState}, can only be 'close' or 'open'`);
     }
 
     // Update the element we came to update
@@ -480,6 +481,8 @@ class PfeNavigation extends PFElement {
     }
 
     // Add the logo to the correct part of the shadowDom
+    // @todo Clone Node breaks event listeners, might need to think on this
+    // @todo We'll need to be able to maintain the lightDOM
     if (lightLogo) {
       if (shadowLogo) {
         shadowWrapper.replaceChild(lightLogo.cloneNode(true), shadowLogo);
@@ -541,7 +544,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Timeout lets this run when there's a spare cycle
-    window.setTimeout(this._addMenuBreakpoints, 0); // @todo ask Kyle if this is a cool kid thing
+    window.setTimeout(this._addMenuBreakpoints, 0);
     window.setTimeout(this._getDropdownHeights, 0);
   }
 
@@ -671,7 +674,6 @@ class PfeNavigation extends PFElement {
     event.preventDefault();
     const dropdownItem = event.target;
     const toggleId = dropdownItem.getAttribute("id");
-    console.log("click!", toggleId);
     this._changeNavigationState(toggleId);
   }
 

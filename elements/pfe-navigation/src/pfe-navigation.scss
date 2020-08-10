@@ -42,37 +42,17 @@ See mixin blocks before selectors that contain the selector name and the three l
   align-items: stretch;
 }
 
-// Layout changes per breakpoint
-// See comment at top of file
-@mixin pfe-navigation__wrapper--mobile {
-  margin: 0 0 8px;
-  padding: 0 16px;
-}
-@mixin pfe-navigation__wrapper--collapsed-menu {
-  margin: 0;
-  padding: 0 16px;
-}
-@mixin pfe-navigation__wrapper--desktop {
-  margin: 0;
-  padding: 0 32px;
-}
 .pfe-navigation__wrapper {
+  @include pfe-navigation__wrapper;
   @include pfe-navigation__wrapper--mobile;
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  height: $menu-height;
-  font-size: 16px;
-  line-height: 1.5;
-  font-family: "RedHatText", "Red Hat Text", Overpass, Arial, Helvetica, sans-serif;
-  color: #fff;
-  background: #151515;
+
   @include breakpoint('secondary-links-expand') {
     @include pfe-navigation__wrapper--collapsed-menu;
   }
   @include breakpoint('nav-expand') {
     @include pfe-navigation__wrapper--desktop;
   }
+
   @include collapse('nav') {
     @include pfe-navigation__wrapper--collapsed-menu;
   }
@@ -93,41 +73,15 @@ See mixin blocks before selectors that contain the selector name and the three l
 // Logo area
 // --------------------------------------------------------
 .pfe-navigation__logo-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin: 0;
-  padding: 10px 16px 10px 0;
+  @include pfe-navigation__logo-wrapper;
 }
 
 .pfe-navigation__logo-link {
-  display: block;
-  padding: 6px 8px;
-  margin-left: -8px; // Should be flush left with container
-
-  // avoid jumpiness from focus/hover styles
-  border: 1px solid transparent;
-
-  // focus styles
-  &:focus,
-  &:hover {
-    @include focus-styles(#fff, 1px);
-  }
+  @include pfe-navigation__logo-link;
 }
 
 .pfe-navigation__logo-image {
-  display: block;
-  width: auto;
-  height: 40px;
-
-  // In case there isn't a mobile and desktop version
-  &:only-child {
-    display: block;
-  }
-}
-
-.pfe-navigation__logo-image--small {
-  height: 32px;
+  @include pfe-navigation__logo-image;
 }
 
 // Top Level Menu Buttons Base Styles

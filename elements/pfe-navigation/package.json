@@ -9,7 +9,9 @@
       "template": "./src/pfe-navigation.html",
       "js": "./src/pfe-navigation.js"
     },
-    "assets": []
+    "assets": [
+      "pfe-navigation--lightdom.*css"
+    ]
   },
   "version": "1.0.0-prerelease.49",
   "keywords": [

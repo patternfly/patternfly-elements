@@ -7,6 +7,7 @@ $LOCAL-VARIABLES: (
   BackgroundColor--disabled: pfe-var(surface--base), // needs to be #f0f0f0,
   BorderColor: pfe-var(surface--border--lighter),
   BorderBottomColor: pfe-var(surface--border--darker), // TODO: sync on this color #767676,
+  BorderBottomColor--hover: pfe-var(ui-accent),
   BorderRadius: pfe-var(ui--border-radius),
   BorderWidth: pfe-var(ui--border-width),
   Color: pfe-var(text),
@@ -20,17 +21,17 @@ $LOCAL-VARIABLES: (
   position: relative;
 }
 
-// ::slotted(input) {
-//   all: unset;
-//   opacity: 0;
-//   padding: pfe-local(Padding);
-//   border-radius: pfe-local(BorderRadius);
-//   border: pfe-local(BorderWidth) solid transparent;
-//   // height: pfe-local(Height) !important;
-// }
+::slotted(input) {
+  all: unset;
+  opacity: 0;
+  padding: pfe-local(Padding);
+  border-radius: pfe-local(BorderRadius);
+  border: pfe-local(BorderWidth) solid transparent;
+  height: pfe-local(Height) !important;
+}
 
 span input {
-  // position: absolute;
+  position: absolute;
   z-index: 1;
   top: 0;
   left: 0;
@@ -43,8 +44,11 @@ span input {
   font-size: pfe-local(FontSize);
   color: pfe-local(color);
 
+  &:hover {
+    border-bottom-color: pfe-local(BorderBottomColor--hover);
+  }
+
   &[disabled] {
-    color: #6a6e73 !important;
     background-color: pfe-local(BackgroundColor--disabled);
     cursor: not-allowed !important;
     border: pfe-local(BorderWidth) solid transparent;

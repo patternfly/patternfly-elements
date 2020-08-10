@@ -33,10 +33,6 @@
     <!-- Tests require pulling in the UMD version of the files -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script> -->
 
-    <!-- <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
-
     <!-- <script>require([
       '../../pfe-band/dist/pfe-band.umd.js',
       "../dist/pfe-textinput.umd.js"
@@ -50,50 +46,6 @@
     <script defer src="../../pfelement/dist/pfelement.umd.js"></script>
     <script defer src="../../pfe-band/dist/pfe-band.umd.js"></script>
     <script defer src="../dist/pfe-textinput.umd.js"></script>
-
-    <!-- <script type="text/babel">
-      const container = document.querySelector("#react");
-      let { useState, useEffect } = React;
-      
-      let ReactForm = () => {
-        const [firstName, setFirstName] = useState("Douglas");
-        const [lastName, setLastName] = useState("");
-
-        useEffect(() => {
-          setTimeout(() => {
-            setFirstName("Albert");
-          }, 3000);
-        }, []);
-
-        function handleSubmit(event) {
-          event.preventDefault();
-          console.log("React Form submitted", firstName);
-        }
-
-        return (
-          <div>
-            <h2>pfe-textinput React Form</h2>
-            <form className="form" onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="reactFirstName">First Name</label>
-                <pfe-textinput>
-                  <input type="text" id="reactFirstName" name="firstName" placeholder="First Name" value={firstName} onChange={e => setFirstName(e.target.value)} required />
-                </pfe-textinput>
-              </div>
-              <div>
-                <label htmlFor="reactLastName">Last Name</label>
-                <pfe-textinput>
-                  <input type="text" id="reactLastName" name="lastName" placeholder="Last Name" value={lastName} onChange={e => setLastName(e.target.value)} required />
-                </pfe-textinput>
-              </div>
-              <button>Submit</button>
-            </form>
-          </div>
-        );
-      };
-
-      ReactDOM.render(<ReactForm />, container);
-    </script> -->
 
     <style>
       input {
@@ -133,10 +85,10 @@
         <div>
           <label for="plain">Text input</label>
           <pfe-textinput>
-            <input type="text" id="plain" placeholder="Text input" style="color: red" required>
+            <input type="text" id="plain" placeholder="Text input" style="color: red">
           </pfe-textinput>
         </div>
-        <!-- <div>
+        <div>
           <label for="text-required">Required input</label>
           <pfe-textinput>
             <input type="text" id="text-required" placeholder="Required" required>
@@ -145,13 +97,13 @@
         <div>
           <label for="text-disabled">Text disabled</label>
           <pfe-textinput>
-            <input type="text" id="text-disabled" placeholder="Disabled" disabled>
+            <input type="text" id="text-disabled" placeholder="Disabled" value="Diasbled text input" disabled>
           </pfe-textinput>
-        </div> -->
+        </div>
         <button>Submit</button>
       </form>
     </pfe-band>
-    <!-- <pfe-band>
+    <pfe-band>
       <h2>pfe-textinput Types</h2>
       <form class="form">
         <div>
@@ -217,10 +169,6 @@
       </form>
     </pfe-band>
 
-    <pfe-band>
-      <div id="react"></div>
-    </pfe-band> -->
-
     <script>
       var lightForm = document.querySelector("#lightForm");
       lightForm.addEventListener("submit", function (event) {
@@ -228,29 +176,29 @@
         console.log("lightForm submitted");
       });
 
-      // var shadowForm = document.querySelector("#shadowForm");
-      // shadowForm.addEventListener("submit", function (event) {
-      //   event.preventDefault();
-      //   console.log("shadowForm submitted");
+      var shadowForm = document.querySelector("#shadowForm");
+      shadowForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        console.log("shadowForm submitted");
 
-      //   for (var i = 0; i < this.elements.length; i++) {
-      //     var element = this.elements[i];
-      //     console.log(encodeURIComponent(element.name) + " = " + encodeURIComponent(element.value));
-      //   }
-      // });
+        for (var i = 0; i < this.elements.length; i++) {
+          var element = this.elements[i];
+          console.log(encodeURIComponent(element.name) + " = " + encodeURIComponent(element.value));
+        }
+      });
 
-      // var plainInput = document.querySelector("#plain");
-      // setTimeout(function () {
-      //   plainInput.value = "Something plain";
-      // }, 4000);
+      var plainInput = document.querySelector("#plain");
+      setTimeout(function () {
+        plainInput.value = "Something plain";
+      }, 4000);
 
-      // var cityInput = document.querySelector("#city");
-      // var cityPfeTextInput = document.querySelector("#cityPfeTextInput");
-      // setTimeout(function () {
-      //   // cityInput.value = "Some city";
-      //   // cityInput.setAttribute("value", "Some city");
-      //   cityPfeTextInput.setAttribute("pfe-c-value", "bademailaddress.co");
-      // }, 4000);
+      var cityInput = document.querySelector("#city");
+      var cityPfeTextInput = document.querySelector("#cityPfeTextInput");
+      setTimeout(function () {
+        // cityInput.value = "Some city";
+        // cityInput.setAttribute("value", "Some city");
+        cityPfeTextInput.setAttribute("pfe-c-value", "bademailaddress.co");
+      }, 4000);
     </script>
     
   </body>

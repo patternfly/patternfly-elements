@@ -94,7 +94,10 @@ class PfeTextinput extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this._init();
+    if (this.children.length) {
+      this._init();
+    }
+
     this.observer.observe(this, parentObserverConfig);
   }
 
@@ -130,6 +133,7 @@ class PfeTextinput extends PFElement {
     // tabbed to.
     this._lightInput.setAttribute("tabindex", "-1");
 
+    this.shadowRoot.querySelector("span").innerHTML = "";
     this.shadowRoot.querySelector("span").appendChild(this._internalInput);
 
     this._lightInput.addEventListener("focus", this._setFocus);

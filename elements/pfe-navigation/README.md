@@ -4,6 +4,23 @@ Site navigation for Red Hat web sites
 ## Usage
 See the [implementation documentation](documentation/implementation.md) for how to build the appropriate markup for your site.
 
+If JS is working and enabled, the component will copy specific markup from inside the `<pfe-navigation>` tag to the Shadow DOM, this allows styles and behaviors to be encapsulated so we don't get any outside code messing with the appearance or behaviors of the navigation.
+
+Once it's working it updates an attribute `pfe-navigation[pfe-navigation-open-toggle]` with the id of an expanded dropdown's button. If nothing is open the attribute will be empty.
+
+Features:
+* Handles responsive styling and behaviors
+* Built with accessibility & SEO best practices
+* Dynamic breakpoints - JS will detect when there isn't enough room for the menu or secondary links and collapse them, so breakpoints don't have to be manually set
+* Reports it's state to the page via the attribute `pfe-navigation-open-toggle` on the `pfe-navigation` tag
+* Enclosed styling and behaviors to avoid conflicts and bugs
+
+The parent DOM can also call some methods like:
+* `isOpen()` - With no params returns true if _anything_ is open, otherwise specific section names can be provided to see if a specific section is open.
+* `isMobileMenuButtonVisible()` - Returns true if the menu hamburger is visible, this happens around a 'tablet size' viewport.
+* `isSecondaryLinksSectionCollapsed()` - Returns true if search and other secondary links get moved to the mobile dropdown menu, which is the layout for the 'mobile phone sized' screens.
+
+
 Example markup:
 
 ```html
@@ -219,23 +236,6 @@ Run tests
 npm run test
 ```
 
-## How it works
-If JS is working and enabled, the component will copy specific markup from inside the `<pfe-navigation>` tag to the Shadow DOM, this allows styles and behaviors to be encapsulated so we don't get any outside code messing with the appearance or behaviors of the navigation.
-
-Once it's working it updates an attribute `pfe-navigation[pfe-navigation-open-toggle]` with the id of an expanded dropdown's button. If nothing is open the attribute will be empty.
-
-Features:
-* Handles responsive styling and behaviors
-* Built with accessibility & SEO best practices
-* Dynamic breakpoints - JS will detect when there isn't enough room for the menu or secondary links and collapse them, so breakpoints don't have to be manually set
-* Reports it's state to the page via the attribute `pfe-navigation-open-toggle` on the `pfe-navigation` tag
-* Enclosed styling and behaviors to avoid conflicts and bugs
-
-The parent DOM can also call some methods like:
-* `isOpen()` - With no params returns true if _anything_ is open, otherwise specific section names can be provided to see if a specific section is open.
-* `isMobileMenuButtonVisible()` - Returns true if the menu hamburger is visible, this happens around a 'tablet size' viewport.
-* `isSecondaryLinksSectionCollapsed()` - Returns true if search and other secondary links get moved to the mobile dropdown menu, which is the layout for the 'mobile phone sized' screens.
-
 ## Code style
 
 Navigation (and all PFElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
@@ -247,8 +247,8 @@ Navigation (and all PFElements) use [Prettier][prettier] to auto-format JS and J
 
 
 ## Events
-@todo
+@todo Document component events
 
 
 ## Dependencies
-@todo (hopefully none)
+@todo Document dependencies (hopefully none)

@@ -246,7 +246,8 @@ class PfeNavigation extends PFElement {
    * @returns {boolean}
    */
   isSecondaryLinksSectionCollapsed(forceRecalculation) {
-    // @todo Check all red hat dropdown instead of search
+    // @todo Find reliable way to check if secondary links are collapsed (search and all red hat buttons probably aren't it)
+
     // Trying to avoid running getComputedStyle too much by caching iton the web component object
     if (
       forceRecalculation ||
@@ -481,8 +482,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Add the logo to the correct part of the shadowDom
-    // @todo Clone Node breaks event listeners, might need to think on this
-    // @todo We'll need to be able to maintain the lightDOM
+    // @todo Clone Node breaks event listeners, might need to think on this, we'll need to be able to maintain the lightDOM
     if (lightLogo) {
       if (shadowLogo) {
         shadowWrapper.replaceChild(lightLogo.cloneNode(true), shadowLogo);
@@ -514,6 +514,7 @@ class PfeNavigation extends PFElement {
       const dropdownButtonId = `main-menu__button--${dropdownButton.dataset.machineName}`;
       const dropdownId = `main-menu__dropdown--${dropdownButton.dataset.machineName}`;
       dropdownButton.setAttribute("id", dropdownButtonId);
+      dropdownButton.setAttribute("aria-expanded", "false");
       dropdownButton.parentElement.dataset.buttonId = dropdownButtonId;
 
       // Create wrapper for dropdown and give it appropriate classes and attributes
@@ -523,6 +524,7 @@ class PfeNavigation extends PFElement {
         dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--single-column");
       }
       dropdownWrapper.setAttribute("id", dropdownId);
+      dropdownWrapper.setAttribute("aria-hidden", "true");
       dropdownWrapper.append(dropdown);
       dropdownButton.parentElement.append(dropdownWrapper);
       dropdownButton.parentElement.dataset.dropdownId = dropdownId;
@@ -552,9 +554,17 @@ class PfeNavigation extends PFElement {
       this._observer.observe(this, lightDomObserverConfig);
     }
 
+    // Some cleanup and state management for after render
+    const postProcessLightDom = () => {
+      if (this.isMobileMenuButtonVisible()) {
+        // @todo add aria-hidden and aria-expanded attributes to appropriate elements for mobile dropdown
+      }
+    };
+
     // Timeout lets this run when there's a spare cycle
     window.setTimeout(this._addMenuBreakpoints, 0);
     window.setTimeout(this._getDropdownHeights, 0);
+    window.setTimeout(postProcessLightDom, 250);
   }
 
   /**
@@ -569,8 +579,8 @@ class PfeNavigation extends PFElement {
     const navigationSpaceNeeded = Math.ceil(navigationBoundingRect.right);
 
     let leftMostSecondaryLink = this.shadowRoot.querySelector(".pfe-navigation__search-toggle");
-    // @todo if Search isn't present, check for custom links, if that isn't present use All Red Hat
 
+    // @todo if Search isn't present, check for custom links, if that isn't present use All Red Hat
     const leftMostSecondaryLinkBoundingRect = leftMostSecondaryLink.getBoundingClientRect();
     // Gets the length from the right edge of the screen to the left side of the left most secondary link
     const secondaryLinksSpaceNeeded = window.innerWidth - Math.ceil(leftMostSecondaryLinkBoundingRect.left);

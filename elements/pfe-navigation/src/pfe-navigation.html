@@ -1,7 +1,6 @@
 <nav id="pfe-navigation__wrapper" class="pfe-navigation__wrapper" aria-label="Main Navigation">
   <!-- @todo: make sure all icons are the updated redesigned versions -->
 
-  <!-- @todo: add aria-hidden="true/false" toggle functionality to all buttons and top level menu items and accordion top level menu items on mobile -->
   <button class="pfe-navigation__menu-toggle" id="mobile__button">
     <!-- @todo: Wes to change this to be implemented with CSS and add CSS animations -->
     <pfe-icon icon="web-icon-mobile-menu" pfe-size="sm" aria-hidden="true"></pfe-icon>
@@ -11,14 +10,14 @@
   <div class="pfe-navigation__outer-menu-wrapper" id="mobile__dropdown">
     <div id="pfe-navigation__outer-menu-wrapper__inner" class="pfe-navigation__outer-menu-wrapper__inner">
 
-      <slot name="pfe-navigation--search" class="pfe-navigation__search" id="secondary-links__dropdown--search">
+      <slot name="pfe-navigation--search" class="pfe-navigation__search" id="secondary-links__dropdown--search" aria-hidden="true">
         search slot
       </slot>
 
       <div id="pfe-navigation__menu-wrapper" class="pfe-navigation__menu-wrapper">
       </div>
 
-      <button class="pfe-navigation__search-toggle" id="secondary-links__button--search">
+      <button class="pfe-navigation__search-toggle" id="secondary-links__button--search" aria-expanded="false">
         <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>
         Search
       </button>
@@ -27,11 +26,11 @@
         customlinks slot
       </slot>
 
-      <button class="pfe-navigation__all-red-hat-toggle" id="secondary-links__button--all-red-hat">
+      <button class="pfe-navigation__all-red-hat-toggle" id="secondary-links__button--all-red-hat" aria-expanded="false">
         <pfe-icon icon="web-icon-grid-3x3" pfe-size="sm" aria-hidden="true"></pfe-icon>
         All Red Hat
       </button>
-      <div class="pfe-navigation__all-red-hat-wrapper" id="secondary-links__dropdown--all-red-hat">
+      <div class="pfe-navigation__all-red-hat-wrapper" id="secondary-links__dropdown--all-red-hat" aria-hidden="true">
         <div class="pfe-navigation__all-red-hat-wrapper__inner">
           <div id="site-loading">
             <pfe-progress-indicator></pfe-progress-indicator>
@@ -49,5 +48,5 @@
 
 </nav>
 
-<!-- todo: figure out to do the overlay in shadow DOM -->
+<!-- @todo: figure out to do the overlay in shadow DOM -->
 <!-- <div class="pfe-navigation__overlay"></div> -->

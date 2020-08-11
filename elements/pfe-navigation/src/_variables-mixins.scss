@@ -197,19 +197,6 @@ $breakpoints: (
       @include focus-styles(#000, 0px);
     }
   }
-
-  // @todo: remove these styles once pfe-icons are added
-  // &:before {
-  //   content: '';
-  //   display: block;
-  //   width: 18px;
-  //   height: 18px;
-  //   margin: 0 16px 0 0;
-  //   background: rgba(126, 126, 126, 0.3);
-  //   @include breakpoint('secondary-links-expand') {
-  //     margin: 0 0 4px;
-  //   }
-  // }
 }
 
 @mixin secondary-links-icon {

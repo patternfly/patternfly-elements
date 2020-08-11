@@ -515,7 +515,6 @@ See mixin blocks before selectors that contain the selector name and the three l
     }
   }
 
-  // @todo: figure out why transform is not working anymore
   .pfe-navigation__menu-item--open > &[class]:before { // [class] adds specificity to beat out hover/focus selector
     transform: rotate(135deg);
     @include breakpoint('nav-expand') {
@@ -609,7 +608,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   background: #fff;
 }
 .pfe-navigation__dropdown {
-  // @todo animation and polish
   @include pfe-navigation__dropdown--mobile;
   visibility: hidden;
   transition: visibility 0s linear 0.4s;
@@ -731,7 +729,6 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 // single column dropdown group and separator style options
-// @todo: figure out if this is the best way to add these features or if it should be implemented differently
 // separator class
 .pfe-navigation__dropdown--single-column ul + ul,
 .pfe-navigation__sub-nav-link--separator[class] {
@@ -947,10 +944,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
-.pfe-navigation__log-in-link {
-  // Stuff should go in here...
-}
-
 //-- Custom styles applied by attributes
 // @each $option in () {
 //   :host([pfe-state="#{$option}"]) {
@@ -1002,23 +995,6 @@ See mixin blocks before selectors that contain the selector name and the three l
     --pfe-icon--Color: #fff;
     padding-right: 0px;
     padding-bottom: 5px;
-  }
-}
-
-// @todo: figure out better way to keep "All Red Hat" from breaking to multiple lines
-.pfe-navigation__all-red-hat-toggle {
-  width: auto;
-  @include breakpoint('secondary-links-expand') {
-    width: 95px;
-  }
-}
-
-// @todo: figure out better way to keep custom link text from breaking to multiple lines if at all possible or figure out how to keep the breaking from looking bad
-// @note: temporary style
-div#pfe-navigation__custom-links {
-  width: auto;
-  @include breakpoint('secondary-links-expand') {
-    width: 120px;
   }
 }
 

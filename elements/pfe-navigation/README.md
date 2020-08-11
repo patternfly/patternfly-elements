@@ -20,73 +20,71 @@ Example markup:
           Products
         </a>
 
-        <div class="pfe-navigation__dropdown-wrapper">
-          <div class="pfe-navigation__dropdown">
-            <section>
-              <h3>
-                <a href="#">Platforms</a>
-              </h3>
-              <ul>
-                <li>
-                  <a href="#">Red Hat Enterprise Linux</a>
-                </li>
-                <li>
-                  <a href="#">Red Hat JBoss Enterprise Application Platform</a>
-                </li>
-                <li>
-                  <a href="#">Red Hat OpenStack Platform</a>
-                </li>
-                <li>
-                  <a href="#">Red Hat Virtualization</a>
-                </li>
-              </ul>
-            </section>
-            <section>
-              <h3>
-                <a href="#">Ladders</a>
-              </h3>
-              <ul>
-                <li>
-                  <a href="#">Lorem ipsum</a>
-                </li>
-                <li>
-                  <a href="#">Dolor sit amet</a>
-                </li>
-                <li>
-                  <a href="#">Wakka Wakka</a>
-                </li>
-              </ul>
-            </section>
-            <section>
-              <h3>
-                <a href="#">Chutes</a>
-              </h3>
-              <ul>
-                <li>
-                  <a href="#">Yakkita yakkita</a>
-                </li>
-                <li>
-                  <a href="#">Enterprise Yakkita yakkita</a>
-                </li>
-                <li>
-                  <a href="#">Upstream Yakkita</a>
-                </li>
-                <li>
-                  <a href="#">Yakkita ME</a>
-                </li>
-              </ul>
-            </section>
+        <div class="pfe-navigation__dropdown">
+          <section>
+            <h3>
+              <a href="#">Platforms</a>
+            </h3>
+            <ul>
+              <li>
+                <a href="#">Red Hat Enterprise Linux</a>
+              </li>
+              <li>
+                <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+              </li>
+              <li>
+                <a href="#">Red Hat OpenStack Platform</a>
+              </li>
+              <li>
+                <a href="#">Red Hat Virtualization</a>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>
+              <a href="#">Ladders</a>
+            </h3>
+            <ul>
+              <li>
+                <a href="#">Lorem ipsum</a>
+              </li>
+              <li>
+                <a href="#">Dolor sit amet</a>
+              </li>
+              <li>
+                <a href="#">Wakka Wakka</a>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>
+              <a href="#">Chutes</a>
+            </h3>
+            <ul>
+              <li>
+                <a href="#">Yakkita yakkita</a>
+              </li>
+              <li>
+                <a href="#">Enterprise Yakkita yakkita</a>
+              </li>
+              <li>
+                <a href="#">Upstream Yakkita</a>
+              </li>
+              <li>
+                <a href="#">Yakkita ME</a>
+              </li>
+            </ul>
+          </section>
 
-            <section class="pfe-navigation__footer">
-              <pfe-cta pfe-priority="primary">
-                <a href="#">Learn more about PFElements</a>
-              </pfe-cta>
+          <section class="pfe-navigation__footer">
+            <pfe-cta pfe-priority="primary">
+              <a href="#">Learn more about PFElements</a>
+            </pfe-cta>
 
-              <pfe-cta>
-                <a href="https://github.com/">GitHub</a>
-              </pfe-cta>
-            </section>
-          </div>
+            <pfe-cta>
+              <a href="https://github.com/">GitHub</a>
+            </pfe-cta>
+          </section>
         </div>
       </li>
 
@@ -94,76 +92,70 @@ Example markup:
         <a href="#" class="pfe-navigation__menu-link">
           Solutions
         </a>
-        <div class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--single-column">
-          <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
-            <section>
-              <h3>
-                Group 1
-              </h3>
-              <ul>
-                <li>
-                  <a href="#">Red Hat Enterprise Linux</a>
-                </li>
-                <li>
-                  <a href="#">Red Hat JBoss Enterprise Application Platform</a>
-                </li>
-                <li>
-                  <a href="#">Red Hat OpenStack Platform</a>
-                </li>
-                <li>
-                  <a href="#">Red Hat Virtualization</a>
-                </li>
-              </ul>
-            </section>
-            <section>
-              <h3>
-                Group 2
-              </h3>
-              <ul>
-                <li>
-                  <a href="#">Red Hat Enterprise Linux</a>
-                </li>
-                <li>
-                  <a href="#">Red Hat JBoss Enterprise Application Platform</a>
-                </li>
-                <li>
-                  <a href="#">Red Hat OpenStack Platform</a>
-                </li>
-                <li>
-                  <a href="#">Red Hat Virtualization</a>
-                </li>
-              </ul>
-            </section>
-          </div> <!-- end .pfe-navigation__dropdown -->
-        </div>
+        <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+          <section>
+            <h3>
+              Group 1
+            </h3>
+            <ul>
+              <li>
+                <a href="#">Red Hat Enterprise Linux</a>
+              </li>
+              <li>
+                <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+              </li>
+              <li>
+                <a href="#">Red Hat OpenStack Platform</a>
+              </li>
+              <li>
+                <a href="#">Red Hat Virtualization</a>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>
+              Group 2
+            </h3>
+            <ul>
+              <li>
+                <a href="#">Red Hat Enterprise Linux</a>
+              </li>
+              <li>
+                <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+              </li>
+              <li>
+                <a href="#">Red Hat OpenStack Platform</a>
+              </li>
+              <li>
+                <a href="#">Red Hat Virtualization</a>
+              </li>
+            </ul>
+          </section>
+        </div> <!-- end .pfe-navigation__dropdown -->
       </li>
       <li class="pfe-navigation__menu-item">
         <a href="#" class="pfe-navigation__menu-link">
           Learning & Support
         </a>
-        <div class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--single-column">
-          <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
-            <section>
-              <ul>
-                <li>
-                  <a href="#">Red Hat Enterprise Linux</a>
-                </li>
-                <li>
-                  <a href="#">Red Hat JBoss Enterprise Application Platform</a>
-                </li>
-                <li>
-                  <a href="#">Red Hat OpenStack Platform</a>
-                </li>
-                <li class="pfe-navigation__single-column--separator">
-                  <a href="#">Red Hat Virtualization</a>
-                </li>
-                <li>
-                  <a href="#">Red Hat Virtualization Example</a>
-                </li>
-              </ul>
-            </section>
-          </div> <!-- end .pfe-navigation__dropdown -->
-        </div>
+        <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+          <ul>
+            <li>
+              <a href="#">Red Hat Enterprise Linux</a>
+            </li>
+            <li>
+              <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+            </li>
+            <li>
+              <a href="#">Red Hat OpenStack Platform</a>
+            </li>
+            <li class="pfe-navigation__single-column--separator">
+              <a href="#">Red Hat Virtualization</a>
+            </li>
+            <li>
+              <a href="#">Red Hat Virtualization Example</a>
+            </li>
+          </ul>
+        </div> <!-- end .pfe-navigation__dropdown -->
       </li>
       <li class="pfe-navigation__menu-item">
         <a href="#" class="pfe-navigation__menu-link">

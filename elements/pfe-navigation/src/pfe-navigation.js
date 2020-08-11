@@ -492,30 +492,39 @@ class PfeNavigation extends PFElement {
     }
 
     // Add menu dropdown toggle behavior
-    // @note and @todo: updated to use has-dropdown class instead of aria-haspopup attr, probably needs to be implemented differently
-    const dropdownItems = this.shadowRoot.querySelectorAll(".pfe-navigation__menu-link.has-dropdown");
-    // @todo dynamically add has-dropdown
-    for (let index = 0; index < dropdownItems.length; index++) {
-      const dropdownItem = dropdownItems[index];
+    const dropdowns = this.shadowRoot.querySelectorAll(".pfe-navigation__dropdown");
+    for (let index = 0; index < dropdowns.length; index++) {
+      const dropdown = dropdowns[index];
+      const dropdownLink = dropdown.parentElement.querySelector(".pfe-navigation__menu-link");
 
       // Convert dropdown links into buttons
       const dropdownButton = document.createElement("button");
       // Move over or add important attributes and content
-      dropdownButton.setAttribute("class", dropdownItem.getAttribute("class"));
+      dropdownButton.setAttribute("class", dropdownLink.getAttribute("class"));
+      dropdownButton.classList.add("pfe-navigation__menu-link--has-dropdown");
       dropdownButton.setAttribute("aria-expanded", "false");
-      dropdownButton.innerHTML = dropdownItem.innerHTML;
-      dropdownButton.dataset.machineName = this._createMachineName(dropdownItem.text);
+      dropdownButton.innerHTML = dropdownLink.innerHTML;
+      dropdownButton.dataset.machineName = this._createMachineName(dropdownLink.text);
 
       // Add dropdown behavior
       dropdownButton.addEventListener("click", this._dropdownItemToggle);
-      dropdownItem.parentElement.replaceChild(dropdownButton, dropdownItem);
+      dropdownLink.parentElement.replaceChild(dropdownButton, dropdownLink);
 
       // Set Id's for the button and dropdown and add their ID's to the parent li for easy access
       const dropdownButtonId = `main-menu__button--${dropdownButton.dataset.machineName}`;
       const dropdownId = `main-menu__dropdown--${dropdownButton.dataset.machineName}`;
       dropdownButton.setAttribute("id", dropdownButtonId);
       dropdownButton.parentElement.dataset.buttonId = dropdownButtonId;
-      dropdownButton.parentElement.querySelector(".pfe-navigation__dropdown-wrapper").setAttribute("id", dropdownId);
+
+      // Create wrapper for dropdown and give it appropriate classes and attributes
+      const dropdownWrapper = document.createElement("div");
+      dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper");
+      if (dropdown.classList.contains("pfe-navigation__dropdown--single-column")) {
+        dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--single-column");
+      }
+      dropdownWrapper.setAttribute("id", dropdownId);
+      dropdownWrapper.append(dropdown);
+      dropdownButton.parentElement.append(dropdownWrapper);
       dropdownButton.parentElement.dataset.dropdownId = dropdownId;
     }
 

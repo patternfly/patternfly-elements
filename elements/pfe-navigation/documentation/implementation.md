@@ -1,5 +1,7 @@
 # Implementation
 
+> If there are any questions, issues, feel there's something missing, please contact the CPFED Group.
+
 ## Adding scripts and styles
 Follow the [instructions from Patternfly Elements to get the javascript added to the page](https://patternfly.github.io/patternfly-elements/getting-started/).
 
@@ -76,10 +78,10 @@ To add a dropdown, add the following markup inside of an `<li class="pfe-navigat
       </li>
 ```
 
-#### Making a multi-column dropdown
-Inside of dropdown div sections of links can be added. By default they will be made into columns that fit the size of the page, but they can also be made into custom layouts, see @todo section about dropdown styles.
+#### Adding menu links to a dropdown
 
 If a group of links has a title, it's HTML should be as follows:
+
 ```html
 <section>
   <!-- Must be a heading tag, but can be any heading level that is appropriate for the page -->
@@ -103,7 +105,13 @@ If a group of links **does not** have a title, it's markup should be as follows:
   <li><a href="#LINK">Link text</a></li>
 </ul>
 ```
-##### Adding a dropdown footer
+
+#### Making multi-column dropdown
+Dropdowns are full width and multi-column by default. Styling is handled by the web component, but there are layout classes that can be added to control the layout of the dropdown.
+
+@todo section about dropdown layout classes.
+
+##### Adding a footer to the multi-column dropdown
 To add a full width footer, add the following markup right before the dropdown's closing tag:
 ```html
 <div class="pfe-navigation__footer">
@@ -122,15 +130,53 @@ To add a full width footer, add the following markup right before the dropdown's
   </pfe-cta>
 </section>
 ```
+> Footers should only be added to multi-column dropdowns
 
 
 #### Making a single column dropdown
-By default, dropdowns take up the full width of the screen and accomodate multiple columns. To make a dropdown single column, add the class `pfe-navigation__dropdown--single-column` to the wrapper, like this:
+
+To make a dropdown single column, add the class `pfe-navigation__dropdown--single-column` to the wrapper, like this:
 
 ```html
 <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
 ```
 
+##### Delineating groups in a single column dropdown
+
+If there are multiple groups of links in a single column dropdown it's probably best that each group has it's own `<ul>`, this will create a small visual separator between the groups in the dropdown.
+
+e.g.
+
+```html
+<div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+  <ul>
+    <li><a href="#LINK">About Us</a></li>
+    <li><a href="#LINK">Mission & Values</a></li>
+    <li><a href="#LINK">Our leadership</a></li>
+  </ul>
+  <ul>
+    <li><a href="#LINK">Contact Us</a></li>
+    <li><a href="#LINK">Job Openings</a></li>
+  </ul>
+</div>
+```
+
+Alternatively, if you feel it's better HTMl that the links are in one `<ul>` add the class `pfe-navigation__sub-nav-link--separator` to the link that should begin the new group; it will have the same visual effect as the above.
+
+e.g.
+
+```html
+<div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+  <ul>
+    <li><a href="#LINK">About Us</a></li>
+    <li><a href="#LINK">Mission & Values</a></li>
+    <li><a href="#LINK">Our leadership</a></li>
+
+    <li class="pfe-navigation__sub-nav-link--separator"><a href="#LINK">Contact Us</a></li>
+    <li><a href="#LINK">Job Openings</a></li>
+  </ul>
+</div>
+```
 
 ### Adding Search
 
@@ -157,6 +203,7 @@ In case the end user has javascript disabled or the web component doesn't upgrad
 After the terminating `</nav>` tag, add the following markup:
 
 @todo Guidance on log in link?
+
 ```html
 <ul class="pfe-navigation__fallback-links">
   <li>
@@ -171,7 +218,8 @@ After the terminating `</nav>` tag, add the following markup:
 </ul>
 ```
 
-@todo Guidance on what markup to use for the form to maintain styling?
+@todo Guidance on what markup to use for the search form to maintain styling?
 
 ### Adding Custom Links
-@todo Document when we have something working for this
+
+@todo Document when we have Custom Link functionality

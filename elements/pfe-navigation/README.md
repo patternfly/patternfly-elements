@@ -148,7 +148,7 @@ Example markup:
             <li>
               <a href="#">Red Hat OpenStack Platform</a>
             </li>
-            <li class="pfe-navigation__single-column--separator">
+            <li class="pfe-navigation__sub-nav-link--separator">
               <a href="#">Red Hat Virtualization</a>
             </li>
             <li>

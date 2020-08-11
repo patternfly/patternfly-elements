@@ -733,7 +733,8 @@ See mixin blocks before selectors that contain the selector name and the three l
 // single column dropdown group and separator style options
 // @todo: figure out if this is the best way to add these features or if it should be implemented differently
 // separator class
-.pfe-navigation__single-column--separator[class] {
+.pfe-navigation__dropdown--single-column ul + ul,
+.pfe-navigation__sub-nav-link--separator[class] {
   border-top: 1px solid #D2D2D2;
   // -16px to overwrite the padding added to the .pfe-navigation__dropdown--single-column container div
   margin-left: -16px;

@@ -4,9 +4,8 @@
 Follow the [instructions from Patternfly Elements to get the javascript added to the page](https://patternfly.github.io/patternfly-elements/getting-started/).
 
 Add the fallback stylesheet, which covers non-JS users and initial page load nicities:
-@todo Light DOM stylesheet
 ```html
-<link rel="stylesheet" href="FILE/TBD.css" type="text/css">
+<link rel="stylesheet" href="PATH/TO/pfe-navigation--lightdom.css" type="text/css">
 ```
 
 ## Adding HTML
@@ -16,13 +15,14 @@ The bare minimum skeleton HTML is:
 ```html
 <!-- These links should be directly after <body> -->
 <a href="#pfe-navigation" class="visually-hidden">Skip to navigation</a>
+<!-- !! Update anchor link to main/content -->
 <a href="#ADD-ID-TO-MAIN" class="visually-hidden">Skip to content</a>
 
 <pfe-navigation id="pfe-navigation">
   <nav class="pfe-navigation" aria-label="Main Navigation">
     <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
       <a href="/" class="pfe-navigation__logo-link">
-        <!-- Update logo src -->
+        <!-- !! Update logo src -->
         <img
           class="pfe-navigation__logo-image"
           src="assets/redhat--reverse.svg" width="400" alt="Redhat"
@@ -62,8 +62,6 @@ The bare minimum skeleton HTML is:
 > Unfortunately we need to make sure all of the id's and classes are correct on this level for fall back styling, functionality may break if classes or id's are missing or incorrect.
 
 ### Adding dropdowns to the menu
-@todo Add extra dropdown wrapper in component
-
 To add a dropdown, add the following markup inside of an `<li class="pfe-navigation__menu-item">`, but after the `<a>`, like this:
 
 ```html
@@ -73,10 +71,7 @@ To add a dropdown, add the following markup inside of an `<li class="pfe-navigat
         </a>
 
         <!-- Dropdown markup -->
-        <div class="pfe-navigation__dropdown-wrapper">
-          <div class="pfe-navigation__dropdown">
-
-          </div>
+        <div class="pfe-navigation__dropdown">
         </div>
       </li>
 ```
@@ -99,8 +94,6 @@ If a group of links has a title, it's HTML should be as follows:
 ```
 
 If a group of links **does not** have a title, it's markup should be as follows:
-
-@todo test this markup
 
 ```html
 <ul>
@@ -135,19 +128,15 @@ To add a full width footer, add the following markup right before the dropdown's
 By default, dropdowns take up the full width of the screen and accomodate multiple columns. To make a dropdown single column, add the class `pfe-navigation__dropdown--single-column` to the wrapper, like this:
 
 ```html
-        <div class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--single-column">
-          <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+<div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
 ```
 
 
 ### Adding Search
-@todo Implement light DOM styling for search link fallback
-@todo Implement logic for when search/search slot isn't available
 
 To add search to your navigation add the following markup before the terminating `</pfe-navigation>` tag:
 
 ```html
-  <a href="/URL-TO-SEARCH">Search</a>
   <div slot="pfe-navigation--search" class="pfe-navigation__search">
 
     <!-- Replace with markup for your search form -->
@@ -161,6 +150,26 @@ To add search to your navigation add the following markup before the terminating
 ```
 
 The link will function as a fallback, the search form will appear in the mobile menu, or in a dropdown depending on the breakpoint.
+
+### Adding fallback links
+In case the end user has javascript disabled or the web component doesn't upgrade, these links will be in place of the secondary links that are on the right side of the navigation.
+
+After the terminating `</nav>` tag, add the following markup:
+
+@todo Guidance on log in link?
+```html
+<ul class="pfe-navigation__fallback-links">
+  <li>
+    <a href="/LINK/TO/SEARCH">Search</a>
+  </li>
+  <li>
+    <a href="/LINK/TO/SITE/SPECIFIC/FEATURE">Custom Link</a>
+  </li>
+  <li>
+    <a href="/LOG/IN/LINK">Log in</a>
+  </li>
+</ul>
+```
 
 @todo Guidance on what markup to use for the form to maintain styling?
 

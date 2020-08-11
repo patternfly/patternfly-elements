@@ -4,6 +4,9 @@
 #ze-navigation,
 #pfe-navigation,
 pfe-navigation {
+
+  // No JS Styles
+  // --------------------------------------------------------
   &:not(.PFElement) {
     @include pfe-navigation__wrapper;
     @include pfe-navigation__wrapper--mobile;
@@ -17,7 +20,7 @@ pfe-navigation {
       @include pfe-navigation__wrapper--desktop;
     }
 
-    .pfe-navigation__dropdown-wrapper,
+    .pfe-navigation__dropdown,
     [slot] {
       display: none;
     }
@@ -85,5 +88,16 @@ pfe-navigation {
       white-space: nowrap;
       font-size: 16px;
     }
+  }
+
+  // Slotted content styles
+  // --------------------------------------------------------
+  .pfe-navigation__custom-links a,
+  .pfe-navigation__custom-links button {
+    @include top-level-button;
+  }
+
+  .pfe-navigation__custom-links pfe-icon {
+    @include secondary-links-icon;
   }
 }

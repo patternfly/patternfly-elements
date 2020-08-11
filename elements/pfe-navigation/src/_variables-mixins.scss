@@ -211,3 +211,17 @@ $breakpoints: (
   //   }
   // }
 }
+
+@mixin secondary-links-icon {
+  --pfe-icon--Color: #fff;
+  // @todo: do we need to implement this differently with theming?
+  --pfe-icon--size: 18px;
+  // @todo: figure out best spacing styles for this icon
+  padding-right: 5px;
+  padding-bottom: 0px;
+  @include breakpoint('secondary-links-expand') {
+    --pfe-icon--Color: #fff;
+    padding-right: 0px;
+    padding-bottom: 5px;
+  }
+}

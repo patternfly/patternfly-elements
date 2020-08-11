@@ -4,7 +4,7 @@ $LOCAL: textinput;
 
 $LOCAL-VARIABLES: (
   BackgroundColor: pfe-var(surface--lightest),
-  BackgroundColor--disabled: pfe-var(surface--base), // needs to be #f0f0f0,
+  BackgroundColor--disabled: pfe-var(surface--base),
   BorderColor: pfe-var(surface--border--lighter),
   BorderBottomColor: pfe-var(surface--border--darker), // TODO: sync on this color #767676,
   BorderBottomColor--hover: pfe-var(ui-accent),

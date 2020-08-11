@@ -59,8 +59,8 @@
         });
       });
 
-      test("it should not accept any black listed attributes from the light dom button", done => {
-        // style is the only black listed attribute
+      test("it should not accept any deny list attributes from the light dom button", done => {
+        // style is the only deny list attribute
         const pfeButton = document.querySelector("pfe-button");
         const lightDomBtn = pfeButton.querySelector("button");
 

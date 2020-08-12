@@ -534,12 +534,15 @@ See mixin blocks before selectors that contain the selector name and the three l
 // Dropdown wrapper - used for basic layout properties and animation
 @mixin pfe-navigation__dropdown-wrapper--mobile {
   position: static;
-  // @todo add animation for mobile
+  padding: 0 24px;
+  background: transparent;
 }
 @mixin pfe-navigation__dropdown-wrapper--desktop {
   position: absolute;
   top: 100%;
   left: 0;
+  padding: 0 64px;
+  background: #fff;
 }
 .pfe-navigation__dropdown-wrapper {
   width: 100%;
@@ -588,12 +591,11 @@ See mixin blocks before selectors that contain the selector name and the three l
 @mixin pfe-navigation__dropdown--mobile {
   display: block;
   font-size: 16px;
-  padding: 12px 24px;
-  background: transparent;
+  padding: 12px 0;
 }
 @mixin pfe-navigation__dropdown--desktop {
   display: grid;
-  padding: 32px 64px;
+  padding: 32px 0;
   // Fits as many columns as it can given the constraints
   // @todo evaluate layout needs and if this is a sane default
   // grid-template-columns:
@@ -604,8 +606,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   // @todo: still need to test and see if this is a good setting for the flexibility needs of pfe-nav mega menu tray
   // I tested this setting with 12 sections in the mega menu tray (on Firefox and Chrome) and it worked well. (KS)
   grid-template-columns: repeat(4, 1fr); // changed to this to fix issues on 1200px brkpt, seems to look better and fit better
-  grid-gap: 2em;
-  background: #fff;
+  gap: $gutter;
 }
 .pfe-navigation__dropdown {
   @include pfe-navigation__dropdown--mobile;
@@ -1026,3 +1027,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__menu-toggle pfe-icon[icon='web-icon-plus'] {
   transform: rotate(-45deg);
 }
+
+
+// Should stay at the end of the file
+@import "pfe-navigation--grid";

@@ -1,0 +1,106 @@
+.pfe-navigation__dropdown--12-column-grid {
+
+  // Fallback flexbox dropdown layout
+  // --------------------------------------------------------
+  display: flex;
+  flex-wrap: wrap;
+  // width: 100%;
+  margin-left: #{$gutter / -2};
+  margin-right: #{$gutter / -2};
+  gap: 0;
+
+  @for $i from 1 to 13 {
+    .col-xs-#{$i} {
+      $col-width: #{$i / 12 * 100%};
+      flex: 0 0 calc(#{$col-width} - #{$gutter / 2});
+      width: $col-width;
+      max-width: $col-width;
+      margin: 0 0 $gutter;
+      padding-left: #{$gutter / 2};
+      padding-right: #{$gutter / 2};
+    }
+  }
+
+  @each $breakpoint, $breakpoint-value in $breakpoints {
+    @if $breakpoint != 'secondary-links-expand' and $breakpoint != 'nav-expand' {
+      @for $i from 1 to 13 {
+        .col-#{$breakpoint}-#{$i} {
+          @include breakpoint($breakpoint) {
+            $col-width: #{$i / 12 * 100%};
+            flex: 0 0 calc(#{$col-width} - #{$gutter / 2});
+            width: $col-width;
+            max-width: $col-width;
+            margin: 0 0 $gutter;
+            padding-left: #{$gutter / 2};
+            padding-right: #{$gutter / 2};
+          }
+        }
+      }
+    }
+  }
+
+  .pfe-navigation__footer {
+    width: 100%;
+    padding-left: #{$gutter / 2};
+    padding-right: #{$gutter / 2};
+  }
+
+  // CSS Grid dropdown layout
+  // --------------------------------------------------------
+  @supports (display: grid) {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: $gutter;
+    padding-left: 0;
+    padding-right: auto;
+
+    @for $i from 1 to 13 {
+      .col-xs-#{$i} {
+        grid-column: span #{$i};
+        flex: none;
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
+    @each $breakpoint, $breakpoint-value in $breakpoints {
+      @if $breakpoint != 'secondary-links-expand' and $breakpoint != 'nav-expand' {
+        @for $i from 1 to 13 {
+          .col-#{$breakpoint}-#{$i} {
+            @include breakpoint($breakpoint) {
+              grid-column: span #{$i};
+              flex: none;
+              width: 100%;
+              max-width: 100%;
+              padding-left: 0;
+              padding-right: 0;
+            }
+          }
+        }
+
+        // There is one more grid line than there are columns
+        @for $i from 1 to 14 {
+          .col-start-#{$breakpoint}-#{$i} {
+            @include breakpoint($breakpoint) {
+              grid-column-start: $i;
+            }
+          }
+
+          .col-end-#{$breakpoint}-#{$i} {
+            @include breakpoint($breakpoint) {
+              grid-column-end: $i;
+            }
+          }
+        }
+      }
+    }
+
+    .pfe-navigation__footer {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+  }
+}

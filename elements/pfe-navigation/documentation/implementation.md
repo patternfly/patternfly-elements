@@ -67,15 +67,15 @@ The bare minimum skeleton HTML is:
 To add a dropdown, add the following markup inside of an `<li class="pfe-navigation__menu-item">`, but after the `<a>`, like this:
 
 ```html
-      <li class="pfe-navigation__menu-item">
-        <a href="#LINK-TO-CONTENT" class="pfe-navigation__menu-link">
-          Menu Link 1
-        </a>
+<li class="pfe-navigation__menu-item">
+  <a href="#LINK-TO-CONTENT" class="pfe-navigation__menu-link">
+    Menu Link 1
+  </a>
 
-        <!-- Dropdown markup -->
-        <div class="pfe-navigation__dropdown">
-        </div>
-      </li>
+  <!-- Dropdown markup -->
+  <div class="pfe-navigation__dropdown">
+  </div>
+</li>
 ```
 
 #### Adding menu links to a dropdown
@@ -109,7 +109,9 @@ If a group of links **does not** have a title, it's markup should be as follows:
 #### Making multi-column dropdown
 Dropdowns are full width and multi-column by default. Styling is handled by the web component, but there are layout classes that can be added to control the layout of the dropdown.
 
-@todo section about dropdown layout classes.
+The default layout of multi-column dropdowns is not intended to be used much, it's the default because it is a 'safe' default that won't result issues.
+
+To create a custom column layout in a dropdown, see [Custom Dropdown Layout Documentation](custom-dropdown-layout.md).
 
 ##### Adding a footer to the multi-column dropdown
 To add a full width footer, add the following markup right before the dropdown's closing tag:

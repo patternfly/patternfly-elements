@@ -69,6 +69,7 @@ class PfeJumpLinksNav extends PFElement {
     this._observer = new MutationObserver(this._mutationCallback);
     this._reportHeight = this._reportHeight.bind(this);
     this.closeAccordion = this.closeAccordion.bind(this);
+    this._closeAccordion = this._closeAccordion.bind(this);
 
     window.addEventListener("resize", () => {});
   }
@@ -137,7 +138,6 @@ class PfeJumpLinksNav extends PFElement {
     this.accordion = this.shadowRoot.querySelector("pfe-accordion");
     this.links = this.shadowRoot.querySelectorAll("a");
     [...this.links].forEach(link => {
-      console.log(link);
       link.addEventListener("click", this.closeAccordion);
     });
   }
@@ -150,7 +150,6 @@ class PfeJumpLinksNav extends PFElement {
     );
     this.removeEventListener("click");
     [...this.links].forEach(link => {
-      console.log(link);
       link.removeEventListener("click", this.closeAccordion);
     });
   }
@@ -161,7 +160,10 @@ class PfeJumpLinksNav extends PFElement {
     if (window.matchMedia("(min-width: 992px)").matches) {
       return;
     }
+    setTimeout(this._closeAccordion, 750);
+  }
 
+  _closeAccordion() {
     this.shadowRoot.querySelector("pfe-accordion").collapseAll();
   }
 
@@ -344,6 +346,7 @@ class PfeJumpLinksPanel extends PFElement {
     this._scrollCallback = this._scrollCallback.bind(this);
     this._mutationCallback = this._mutationCallback.bind(this);
     this._handleResize = this._handleResize.bind(this);
+    this._makeSpacers = this._makeSpacers.bind(this);
     this._observer = new MutationObserver(this._mutationCallback);
     this.currentActive = null;
     this.currentActive = 0;
@@ -353,6 +356,7 @@ class PfeJumpLinksPanel extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+    // this._makeSpacers();
     this.nav = this._getNav();
     this._init();
     this.sectionMargin = this.getAttribute("pfe-c-offset");
@@ -385,12 +389,27 @@ class PfeJumpLinksPanel extends PFElement {
     }
   }
 
+  _makeSpacers() {
+    let sections = this.querySelectorAll(".pfe-jump-links-panel__section");
+    if (!sections) {
+      return;
+    }
+    sections.forEach(section => {
+      let parentDiv = section.parentNode;
+      let html = document.createElement("div");
+      parentDiv.insertBefore(html, section);
+      let spacer = section.previousElementSibling;
+      spacer.classList.add("pfe-jump-links__section--spacer");
+      spacer.id = section.id;
+      section.removeAttribute("id");
+    });
+  }
+
   _init() {
     window.addEventListener("scroll", this._scrollCallback);
     this.scrollTarget = this.getAttribute("pfe-c-scrolltarget");
     this.JumpLinksNav = document.querySelector(`#${this.scrollTarget}`);
     this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
-
     if (this.JumpLinksNav) {
       this.menu_links = this.JumpLinksNav.querySelectorAll("a");
     }
@@ -409,6 +428,7 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _makeActive(link) {
+    console.log("Hello?");
     if (this.menu_links[link]) {
       // Check if this is a subnav or has subsections
       if (this.menu_links[link].classList.contains("sub-section")) {

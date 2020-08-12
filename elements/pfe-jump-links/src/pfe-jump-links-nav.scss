@@ -22,6 +22,8 @@ $LOCAL-VARIABLES: (
 );
 
 :host {
+  --pfe-jump-links-panel__section--spacer: calc(var(--pfe-jump-links-nav--Height--actual) + var(--pfe-navigation--Height--actual) + var(--jump-links-nav--nudge));
+  --pfe-jump-links-panel--offset: pfe-strip-unit(#{var(--pfe-jump-links-panel__section--spacer)});
   box-sizing: border-box;
   font-family: pfe-var(font-family);
   font-weight: pfe-var(font-weight--normal);
@@ -54,6 +56,16 @@ $LOCAL-VARIABLES: (
   @at-root #{&}([pfe-sticky="false"]) {
     position: relative;
   }
+}
+
+::slotted(.pfe-jump-links__section--spacer) {
+  // --pfe-jump-links-panel__section--spacer: calc(#{ var(--pfe-navigation--Height--actual) + var(--pfe-jump-links--nav-height) });
+  content: '';
+  display: block;
+  position: relative;
+  width: 0;
+  margin-top: calc( -1 * var(--pfe-jump-links-panel__section--spacer) );
+  height: var(--pfe-jump-links-panel__section--spacer);
 }
 
 nav {
@@ -380,3 +392,4 @@ $LOCAL: $temp;
     }
   }
 }
+

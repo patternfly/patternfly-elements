@@ -327,7 +327,7 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   get offsetValue() {
-    return this.sectionMargin || this.customVar;
+    return this.sectionMargin || parseInt(this.customVar, 10);
   }
 
   static get PfeType() {
@@ -349,14 +349,12 @@ class PfeJumpLinksPanel extends PFElement {
     this._makeSpacers = this._makeSpacers.bind(this);
     this._observer = new MutationObserver(this._mutationCallback);
     this.currentActive = null;
-    this.currentActive = 0;
-    this.current = -1;
     window.addEventListener("resize", this._handleResize);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    // this._makeSpacers();
+    this._makeSpacers();
     this.nav = this._getNav();
     this._init();
     this.sectionMargin = this.getAttribute("pfe-c-offset");
@@ -410,8 +408,9 @@ class PfeJumpLinksPanel extends PFElement {
     this.scrollTarget = this.getAttribute("pfe-c-scrolltarget");
     this.JumpLinksNav = document.querySelector(`#${this.scrollTarget}`);
     this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
+    this.menu_links;
     if (this.JumpLinksNav) {
-      this.menu_links = this.JumpLinksNav.querySelectorAll("a");
+      this.menu_links = this.JumpLinksNav.shadowRoot.querySelectorAll("a");
     }
   }
 
@@ -428,7 +427,6 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _makeActive(link) {
-    console.log("Hello?");
     if (this.menu_links[link]) {
       // Check if this is a subnav or has subsections
       if (this.menu_links[link].classList.contains("sub-section")) {
@@ -516,7 +514,7 @@ class PfeJumpLinksPanel extends PFElement {
 
   _scrollCallback() {
     let sections;
-    let menu_links;
+    // let menu_links;
     //Check sections to make sure we have them (if not, get them)
     if (!this.sections || typeof this.sections === "undefined") {
       this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
@@ -524,9 +522,8 @@ class PfeJumpLinksPanel extends PFElement {
       sections = this.sections;
     }
     //Check list of links to make sure we have them (if not, get them)
-    if (this.menu_links.length < 1 || !this.menu_links) {
+    if (!this.menu_links) {
       this.menu_links = this.JumpLinksNav.shadowRoot.querySelectorAll("a");
-      menu_links = this.menu_links;
     }
 
     // Make an array from the node list

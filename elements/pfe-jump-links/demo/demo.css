@@ -3,6 +3,11 @@ html {
     scroll-behavior: smooth;
 }
 
+:root{
+    --pfe-jump-links-panel__section--spacer: 117px;
+    --pfe-jump-links-panel--offset: 55px;
+}
+
 a.pfe-jump-links-nav__item {
     /* Just in here for sanity knowing outside styles can't leak in */
     color: orange !important;
@@ -11,10 +16,6 @@ a.pfe-jump-links-nav__item {
 .sticky {
     position: sticky;
     top: 55px;
-}
-:root{
-    --pfe-jump-links-panel__section--spacer: 117px;
-    --pfe-jump-links-panel--offset: 55px;
 }
 
 
@@ -61,9 +62,9 @@ a.pfe-jump-links-nav__item {
   display: block;
   position: relative;
   width: 0;
-  /* margin-top: -64px;
-  height: 64px; */
+  margin-top: -64px;
+  height: 64px;
   margin-top: calc( -1 * var(--pfe-jump-links-panel__section--spacer) );
   height: var(--pfe-jump-links-panel__section--spacer);
 }
- 
+

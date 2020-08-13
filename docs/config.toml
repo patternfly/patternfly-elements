@@ -59,6 +59,8 @@ canonifyURLs = true
   anchor = "smart"
 
 [markup]
+  [markup.highlight]
+    codeFences = false
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true

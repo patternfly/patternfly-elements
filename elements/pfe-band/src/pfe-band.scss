@@ -48,7 +48,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
     @media screen and (min-width: pfe-breakpoint(#{$size})) {
-      @include pfe-print-local((Width: calc( #{pfe-breakpoint(#{$size})} - calc(#{pfe-local(Padding--horizontal)} * 4) )));
+      --pfe-band--Width: calc( #{pfe-breakpoint(#{$size})} - (#{pfe-local(Padding--horizontal)} * 4) );
     }
   }
 
@@ -60,7 +60,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   padding: calc(#{pfe-local(Padding--vertical)} / 2)  pfe-local(Padding--horizontal);
 
   // Variable padding on desktop
-  @media (min-width: #{pfe-breakpoint(sm)}) {
+  @media (min-width: pfe-breakpoint(sm)) {
     padding: pfe-local(Padding);
   }
 
@@ -104,42 +104,36 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 // thinner padding on top & bottom
 :host([pfe-size="small"]) {
-  @include pfe-print-local((
-    Padding: calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)}
-  ));
+  --pfe-band--Padding: calc(#{pfe-local(Padding--vertical)} / 4) #{pfe-local(Padding--horizontal)};
 }
 
 .pfe-band {
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
-    @include pfe-print-local((
-      region: (
-        width: calc(1fr - #{pfe-local(Width__aside--sm)} - #{pfe-local(gutter--horizontal)})
-      )
-    ));
+    --pfe-band__region--width: calc(1fr - #{pfe-local(Width__aside--sm)} - #{pfe-local(gutter--horizontal)});
     grid-template-areas: "body";
     // Styles for the different combination of regions
     &[pfe-has-aside] {
       grid-template-areas:
         "body" "aside";
-      @media (min-width: #{pfe-breakpoint(md)}) {
-        @include pfe-print-local((layout: 1fr #{pfe-local(Width__aside--sm)}));
+      @media (min-width: pfe-breakpoint(md)) {
+        --pfe-band--layout: 1fr #{pfe-local(Width__aside--sm)};
       }
-      @media (min-width: #{pfe-breakpoint(lg)}) {
-        @include pfe-print-local((layout: 1fr #{pfe-local(Width__aside--lg)}));
+      @media (min-width: pfe-breakpoint(lg)) {
+        --pfe-band--layout: 1fr #{pfe-local(Width__aside--lg)};
       }
       &[pfe-aside-mobile="top"] {
         grid-template-areas:
           "aside" "body";
       }
       &[pfe-aside-desktop="left"] {
-        @media (min-width: #{pfe-breakpoint(md)}) {
-            grid-template-areas:
-              "aside body";
-            @include pfe-print-local((layout: #{pfe-local(Width__aside--sm)} 1fr));
+        @media (min-width: pfe-breakpoint(md)) {
+          grid-template-areas:
+            "aside body";
+          --pfe-band--layout: #{pfe-local(Width__aside--sm)} 1fr;
         }
-        @media (min-width: #{pfe-breakpoint(lg)}) {
-          @include pfe-print-local((layout: #{pfe-local(Width__aside--lg)} 1fr));
+        @media (min-width: pfe-breakpoint(lg)) {
+          --pfe-band--layout: #{pfe-local(Width__aside--lg)} 1fr;
         }
       }
     }
@@ -150,7 +144,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
         grid-template-areas:
           "header"
           "body" "aside";
-          @media (min-width: #{pfe-breakpoint(md)}) {
+          @media (min-width: pfe-breakpoint(md)) {
             grid-template-areas:
               "header header"
               "body aside";
@@ -163,20 +157,20 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
           "body";
       }
       &[pfe-aside-height="full"] {
-          @media (min-width: #{pfe-breakpoint(md)}) {
+          @media (min-width: pfe-breakpoint(md)) {
             grid-template-areas:
               "header aside"
               "body aside";
           }
       }
       &[pfe-aside-desktop="left"] {
-          @media (min-width: #{pfe-breakpoint(md)}) {
+          @media (min-width: pfe-breakpoint(md)) {
             grid-template-areas:
               "header header"
               "aside body";
           }
           &[pfe-aside-height="full"] {
-              @media (min-width: #{pfe-breakpoint(md)}) {
+              @media (min-width: pfe-breakpoint(md)) {
                   grid-template-areas:
                   "aside header"
                   "aside body";
@@ -193,7 +187,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
           "body"
           "aside"
           "footer";
-          @media (min-width: #{pfe-breakpoint(md)}) {
+          @media (min-width: pfe-breakpoint(md)) {
              grid-template-areas:
                 "body aside"
                 "footer footer";
@@ -206,20 +200,20 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
           "footer";
       }
       &[pfe-aside-height="full"] {
-         @media (min-width: #{pfe-breakpoint(md)}) {
+         @media (min-width: pfe-breakpoint(md)) {
             grid-template-areas:
                "body aside"
                "footer aside" ;
          }
       }
       &[pfe-aside-desktop="left"] {
-          @media (min-width: #{pfe-breakpoint(md)}) {
+          @media (min-width: pfe-breakpoint(md)) {
              grid-template-areas:
              "aside body"
              "footer footer";
           }
           &[pfe-aside-height="full"] {
-              @media (min-width: #{pfe-breakpoint(md)}) {
+              @media (min-width: pfe-breakpoint(md)) {
                  grid-template-areas:
                  "aside body"
                  "aside footer";
@@ -238,7 +232,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
           "body"
           "footer"
           "aside";
-        @media (min-width: #{pfe-breakpoint(md)}) {
+        @media (min-width: pfe-breakpoint(md)) {
             grid-template-areas:
             "header header"
             "body aside"
@@ -253,7 +247,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
           "footer";
       }
       &[pfe-aside-height="full"] {
-          @media (min-width: #{pfe-breakpoint(md)}) {
+          @media (min-width: pfe-breakpoint(md)) {
           grid-template-areas:
              "header aside"
              "body aside"
@@ -261,14 +255,14 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
           }
       }
       &[pfe-aside-desktop="left"] {
-         @media (min-width: #{pfe-breakpoint(md)}) {
+         @media (min-width: pfe-breakpoint(md)) {
              grid-template-areas:
                "header header"
                "aside body"
                "footer footer";
          }
          &[pfe-aside-height="full"] {
-            @media (min-width: #{pfe-breakpoint(md)}) {
+            @media (min-width: pfe-breakpoint(md)) {
                 grid-template-areas:
                 "aside header"
                 "aside body"

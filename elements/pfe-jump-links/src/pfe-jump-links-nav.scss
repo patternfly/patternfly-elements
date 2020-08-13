@@ -30,12 +30,12 @@ $LOCAL-VARIABLES: (
 
   background-color: pfe-local(BackgroundColor);
 
-  @media(min-width: #{pfe-breakpoint(lg)}) {
+  @media(min-width: pfe-breakpoint(lg)) {
     border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;
     padding: pfe-local(vertical-spacer) pfe-local(horizontal-spacer);
   }
 
-  ::slotted([slot="#{$repo}-#{$LOCAL}-nav--heading"]) {
+  ::slotted([slot="pfe-jump-links-nav--heading"]) {
     color: pfe-broadcasted(text);
     
     margin: 0 0 pfe-var(container-spacer);
@@ -43,7 +43,7 @@ $LOCAL-VARIABLES: (
     font-weight: 400;
     text-transform: uppercase;
 
-    @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+    @media (max-width: pfe-breakpoint(lg, $max: true)) {
       display: none;
     }
   }
@@ -106,7 +106,7 @@ nav {
       font-size: calc(#{pfe-local(FontSize)} * 0.85);
       padding: pfe-local(vertical-spacer, $region: link) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
 
-      @media(min-width: #{pfe-breakpoint(lg)}) {
+      @media(min-width: pfe-breakpoint(lg)) {
         display: none;
       }
       
@@ -174,14 +174,14 @@ $accordion-styles: (
 pfe-accordion {
   @include pfe-print-local($accordion-styles);
   
-  @media(min-width: #{pfe-breakpoint(lg)}) {
+  @media(min-width: pfe-breakpoint(lg)) {
     // --pfe-accordion__base--Padding: 0;
     @include pfe-print-local((
       base: (Padding: 0)
     ));
   }
 
-  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+  @media (max-width: pfe-breakpoint(lg, $max: true)) {
     border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
   }
 }
@@ -196,11 +196,11 @@ pfe-accordion-header {
   position: sticky;
   top: 0;
 
-  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+  @media (max-width: pfe-breakpoint(lg, $max: true)) {
     background-color: pfe-var(surface--lightest);
     --theme: light;
   }
-  @media(min-width: #{pfe-breakpoint(lg)}) {
+  @media(min-width: pfe-breakpoint(lg)) {
     visibility: collapse !important;
     display: none;
   }
@@ -210,7 +210,7 @@ pfe-accordion-panel {
   // hide accordion left border:
   border-left-color: transparent;
   
-  @media(min-width: #{pfe-breakpoint(lg)}) {
+  @media(min-width: pfe-breakpoint(lg)) {
     visibility: collapse;
     display: none;
     opacity: 1;
@@ -218,7 +218,7 @@ pfe-accordion-panel {
   }
 
   > pfe-jump-links-nav {
-    @media(min-width: #{pfe-breakpoint(lg)}) {
+    @media(min-width: pfe-breakpoint(lg)) {
       width: 100%;
       display: block;
       visibility: visible;
@@ -240,10 +240,10 @@ $LOCAL: $temp;
   pfe-accordion-panel,
   button[aria-expanded="true"] {
     --pfe-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
-    --pfe-#{$LOCAL}--BackgroundColor: #{pfe-var(surface--darkest)};
+    --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
   }
 
-  ::slotted([slot="#{$repo}-#{$LOCAL}-nav--heading"]) {
+  ::slotted([slot="pfe-jump-links-nav--heading"]) {
     color: pfe-var(surface--lighter);
   }
 
@@ -266,7 +266,7 @@ $LOCAL: $temp;
       }
 
       &:focus::after {
-        border-color: #{pfe-var(link--on-dark)};
+        border-color: pfe-var(link--on-dark);
       }
     }
   }
@@ -286,34 +286,34 @@ $LOCAL: $temp;
     background-color: pfe-var(surface--lighter);
     display: flex;
     position: relative;
-    .pfe-#{$LOCAL}-nav__heading {
+    .pfe-jump-links-nav__heading {
       display: none;
     }
 
-    ::slotted([slot="pfe-#{$LOCAL}-nav--logo"]) {
+    ::slotted([slot="pfe-jump-links-nav--logo"]) {
       position: absolute;
       left: 0;
       max-height: calc(#{pfe-var(container-spacer)} * 3.5);
       max-width: calc(#{pfe-var(container-spacer)} * 14);
       top: calc(#{pfe-var(container-spacer)} * 1);
 
-      @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+      @media (max-width: pfe-breakpoint(lg, $max: true)) {
         left: calc(#{pfe-var(container-spacer)} * 2);
       }
 
-      @media(min-width: #{pfe-breakpoint(lg)}) {
+      @media(min-width: pfe-breakpoint(lg)) {
         left: calc(#{pfe-var(container-spacer)} * 4);
       }
     }
 
-    ::slotted([slot="pfe-#{$LOCAL}-nav--cta"]) {
+    ::slotted([slot="pfe-jump-links-nav--cta"]) {
       position: absolute;
 
-      @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+      @media (max-width: pfe-breakpoint(lg, $max: true)) {
         right: calc(#{pfe-var(container-spacer)} * 2);
       }
 
-      @media(min-width: #{pfe-breakpoint(lg)}) {
+      @media(min-width: pfe-breakpoint(lg)) {
         right: calc(#{pfe-var(container-spacer)} * 4);
       }
 
@@ -357,23 +357,23 @@ $LOCAL: $temp;
 
     a {
       text-decoration: none;
-      color: #{pfe-var(ui-disabled--text)};
+      color: pfe-var(ui-disabled--text);
       &[active] {
-        color: #{pfe-var(surface--darkest)};
+        color: pfe-var(surface--darkest);
       }
       &:hover {
-        color: #{pfe-var(surface--darkest)};
+        color: pfe-var(surface--darkest);
       }
     }
   }
 
-  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+  @media (max-width: pfe-breakpoint(lg, $max: true)) {
     nav {
       min-height: calc(#{pfe-var(container-spacer)} * 5.5);
-      background-color: #{pfe-var(surface--lighter)}
+      background-color: pfe-var(surface--lighter);
     }
 
-    .pfe-#{$LOCAL}-nav {
+    .pfe-jump-links-nav {
       display: none;
     }
   }

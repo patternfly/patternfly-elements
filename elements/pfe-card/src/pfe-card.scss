@@ -105,7 +105,7 @@ $size-small: (
 }
 
 :host([pfe-border]:not([pfe-border="false"])) {
-  --pfe-#{$LOCAL}--BorderWidth:   #{pfe-fetch(surface--border-width)};
+  --pfe-card--BorderWidth:   #{pfe-fetch(surface--border-width)};
 }
 
 // Targets the wrappers in the shadow DOM
@@ -118,7 +118,7 @@ $size-small: (
       margin-top: -2rem; //IE11 fallback
       margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
       :host([has_header]) & {
-        padding-top: #{pfe-local(spacing)};
+        padding-top: pfe-local(spacing);
       }
     }
 
@@ -174,23 +174,23 @@ $size-small: (
     }
     @include browser-query(ie11) {
       background-color: pfe-fetch(surface--lightest) !important;
-      color: #{pfe-var(text)} !important;
+      color: pfe-fetch(text) !important;
     }
 
     // Margin styles on header region
     margin-top:    calc(#{pfe-local(PaddingTop)} * -1) !important;
     margin-right:  calc(#{pfe-local(PaddingRight)} * -1);
-    margin-bottom: #{pfe-local(spacing--vertical)};
+    margin-bottom: pfe-local(spacing--vertical);
     margin-left:   calc(#{pfe-local(PaddingLeft)} * -1);
 
     // Padding for the header region
-    padding-top:    #{pfe-local(spacing--vertical)};
-    padding-right:  #{pfe-local(PaddingRight)};
-    padding-left:   #{pfe-local(PaddingLeft)};
-    padding-bottom: #{pfe-local(spacing--vertical)};
+    padding-top:    pfe-local(spacing--vertical);
+    padding-right:  pfe-local(PaddingRight);
+    padding-left:   pfe-local(PaddingLeft);
+    padding-bottom: pfe-local(spacing--vertical);
 
     :host(:not([has_body],[has_footer])) & {
-      margin-bottom: #{pfe-local(PaddingBottom)};
+      margin-bottom: pfe-local(PaddingBottom);
     }
 
     ::slotted([pfe-overflow~="top"]) {
@@ -241,10 +241,10 @@ $size-small: (
     margin-top: auto; // This allows the footer to move to the very bottom
 
     display: flex;
-    flex-direction: #{pfe-local(Row, row, $region: footer)};
-    flex-wrap: #{pfe-local(Wrap, wrap, $region: footer)};
+    flex-direction: pfe-local(Row, row, $region: footer);
+    flex-wrap:      pfe-local(Wrap, wrap, $region: footer);
     // Aligns buttons and CTAs
-    align-items: #{pfe-local(AlignItems, baseline, $region: footer)};
+    align-items: pfe-local(AlignItems, baseline, $region: footer);
 
     ::slotted([pfe-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
@@ -256,7 +256,7 @@ $size-small: (
   }
   &__header,
   &__body {
-    margin-bottom: #{pfe-local(spacing--vertical)};
+    margin-bottom: pfe-local(spacing--vertical);
 
     //-- Slotted styles for typography
     // Remove margins from typography inside the slots

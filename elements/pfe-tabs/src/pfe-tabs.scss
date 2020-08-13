@@ -67,7 +67,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// VERTICAL ORIENTATION
 /// ===========================================================================
 
-@media screen and (min-width: #{pfe-breakpoint(md)}) {
+@media screen and (min-width: pfe-breakpoint(md)) {
   :host([vertical]) {
     --pfe-tabs--Display: flex; // Sets tabs to appear to the left of the panels
     --pfe-tabs__tabs--FlexDirection: column;
@@ -101,7 +101,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// TAB VARIANTS
 /// ===========================================================================
 
-@media screen and (min-width: #{pfe-breakpoint(md)}) {
+@media screen and (min-width: pfe-breakpoint(md)) {
   :host([vertical][pfe-variant="earth"]) {
     --pfe-tabs__tabs--Padding: #{pfe-var(container-padding)} 0 0 0;
     
@@ -138,7 +138,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// INSET NOTCH
 /// ===========================================================================
 
-@media screen and (min-width: #{pfe-breakpoint(md)}) {
+@media screen and (min-width: pfe-breakpoint(md)) {
   :host([vertical][pfe-variant="wind"]) .tabs-prefix,
   :host([vertical][pfe-variant="wind"]) .tabs-suffix {
     left: 0px;

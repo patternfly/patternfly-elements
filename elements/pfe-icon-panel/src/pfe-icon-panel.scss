@@ -13,7 +13,7 @@ $LOCAL: icon-panel;
   align-items: flex-start;
   flex-direction: column;
 
-  @media (min-width: #{pfe-breakpoint(sm)}) {
+  @media (min-width: pfe-breakpoint(sm)) {
 		flex-direction: row;
   }
   
@@ -29,20 +29,20 @@ $LOCAL: icon-panel;
 
 .pfe-icon-panel {
   &__content {
-    margin-top: #{pfe-var(container-spacer)};
+    margin-top: pfe-var(container-spacer);
     margin-left: 0;
 
-    @media (min-width: #{pfe-breakpoint(sm)}) {
+    @media (min-width: pfe-breakpoint(sm)) {
       margin-top: 0;
-      margin-left: #{pfe-var(container-spacer)};
+      margin-left: pfe-var(container-spacer);
     }
 
     :host([pfe-stacked]:not([pfe-stacked="false"])) & {
-      margin-top: #{pfe-var(container-spacer)};
+      margin-top: pfe-var(container-spacer);
       margin-left: 0;
     }
   }
   &__footer {
-    margin-top: #{pfe-var(content-spacer)};
+    margin-top: pfe-var(content-spacer);
   }
 }

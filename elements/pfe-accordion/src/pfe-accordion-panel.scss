@@ -20,14 +20,14 @@
   @include pfe-panel-container;
   @include pfe-print-local((
     panel-container: (
-      Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) #{pfe-local(Padding, $region: base)} calc(#{pfe-local(Padding, $region: base)} * 1.5)
+      Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) pfe-local(Padding, $region: base) calc(#{pfe-local(Padding, $region: base)} * 1.5)
     )
   ));
 
   :host([pfe-disclosure="true"]) & {
     @include pfe-print-local((
       panel-container: (
-        Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) pfe-local(Padding, $region: base) calc((#{pfe-local(Padding, $region: base)} * 1.5) - 4px)
+        Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) pfe-local(Padding, $region: base) calc(#{pfe-local(Padding, $region: base)} * 1.5 - 4px)
       )
     ));
   }

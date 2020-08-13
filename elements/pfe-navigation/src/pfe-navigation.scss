@@ -571,6 +571,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 .pfe-navigation__dropdown-wrapper--single-column {
+  padding: 0;
   @include breakpoint('nav-expand') {
     left: auto;
     width: auto;

@@ -45,7 +45,13 @@
       "title": "Events",
       "description": "Definition of the supported events",
       "type": "object",
-      "properties": {}
+      "properties": {
+        "click": {
+          "title": "Click",
+          "type": "string",
+          "default": "pfe-button:click"
+        }
+      }
     }
   },
   "required": [

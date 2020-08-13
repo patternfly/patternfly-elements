@@ -470,24 +470,19 @@ class PfeNavigation extends PFElement {
     }
     // Prettier makes this section significantly less legible because of line length
     // @todo look into only replacing markup that changed via mutationList
+    // @todo Clone Node breaks event listeners, might need to think on this, we'll need to be able to maintain the lightDOM
     const shadowWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
     const shadowMenuWrapper = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
+    const newShadowMenuWrapper = document.createElement("nav");
     const shadowLogo = this.shadowRoot.getElementById("pfe-navigation__logo-wrapper");
     const lightLogo = this.querySelector("#pfe-navigation__logo-wrapper");
-    const shadowMenu = this.shadowRoot.getElementById("pfe-navigation__menu");
     const lightMenu = this.querySelector("#pfe-navigation__menu");
 
-    // Add the menu to the correct part of the shadowDom
-    if (lightMenu) {
-      if (shadowMenu) {
-        shadowMenuWrapper.replaceChild(lightMenu.cloneNode(true), shadowMenu);
-      } else {
-        shadowMenuWrapper.prepend(lightMenu.cloneNode(true));
-      }
-    }
+    // Add attributres we need on the shadow DOM menu wrapper
+    newShadowMenuWrapper.setAttribute("id", "pfe-navigation__menu-wrapper");
+    newShadowMenuWrapper.classList.add("pfe-navigation__menu-wrapper");
 
     // Add the logo to the correct part of the shadowDom
-    // @todo Clone Node breaks event listeners, might need to think on this, we'll need to be able to maintain the lightDOM
     if (lightLogo) {
       if (shadowLogo) {
         shadowWrapper.replaceChild(lightLogo.cloneNode(true), shadowLogo);
@@ -496,8 +491,11 @@ class PfeNavigation extends PFElement {
       }
     }
 
+    // Copy light DOM menu into new wrapper, to be put in shadow DOM after manipulations
+    newShadowMenuWrapper.append(lightMenu.cloneNode(true));
+
     // Add menu dropdown toggle behavior
-    const dropdowns = this.shadowRoot.querySelectorAll(".pfe-navigation__dropdown");
+    const dropdowns = newShadowMenuWrapper.querySelectorAll(".pfe-navigation__dropdown");
     for (let index = 0; index < dropdowns.length; index++) {
       const dropdown = dropdowns[index];
       const dropdownLink = dropdown.parentElement.querySelector(".pfe-navigation__menu-link");
@@ -540,7 +538,11 @@ class PfeNavigation extends PFElement {
       dropdownWrapper.append(dropdown);
       dropdownButton.parentElement.append(dropdownWrapper);
       dropdownButton.parentElement.dataset.dropdownId = dropdownId;
+      dropdownButton.setAttribute("aria-controls", dropdownId);
     }
+
+    // Replace the menu in the shadow DOM
+    shadowMenuWrapper.parentElement.replaceChild(newShadowMenuWrapper, shadowMenuWrapper);
 
     // Add menu burger behavior
     this.menuToggle.addEventListener("click", this._toggleMobileMenu);
@@ -575,6 +577,39 @@ class PfeNavigation extends PFElement {
     //   }
     // });
 
+    // Process pfe-navigation-dropdowns
+    const pfeNavigationDropdowns = this.querySelectorAll("pfe-navigation-dropdown");
+    for (let index = 0; index < pfeNavigationDropdowns.length; index++) {
+      const dropdown = pfeNavigationDropdowns[index];
+      const toggleName = dropdown.getAttribute("pfe-name");
+      const toggleIconName = dropdown.getAttribute("pfe-icon");
+      if (toggleIconName && toggleName) {
+        const toggle = document.createElement("button");
+        const toggleIcon = document.createElement("pfe-icon");
+        toggle.innerText = toggleName;
+        toggle.classList.add("pfe-navigation__custom-link");
+        toggle.setAttribute("id", `pfe-navigation__custom-link-- ${this._createMachineName(toggleName)}`);
+        toggleIcon.setAttribute("icon", toggleIconName);
+        toggleIcon.setAttribute("pfe-size", "md");
+        toggleIcon.setAttribute("aria-hidden", "true");
+        toggle.prepend(toggleIcon);
+
+        // @todo Move the button to it's final location
+        this.shadowRoot.getElementById("pfe-navigation__outer-menu-wrapper__inner").append(toggle);
+      } else {
+        if (!toggleIconName) {
+          console.error(
+            `${this.tag}: pfe-navigation-toggle is required to have a pfe-name attribute for accessibility.`
+          );
+        }
+        if (!toggleIconName) {
+          console.error(
+            `${this.tag}: pfe-navigation-toggle is required to have a pfe-icon attribute for design consistency.`
+          );
+        }
+      }
+    }
+
     // Reconnecting mutationObserver for IE11 & Edge
     if (window.ShadyCSS) {
       this._observer.observe(this, lightDomObserverConfig);
@@ -583,7 +618,7 @@ class PfeNavigation extends PFElement {
     // Some cleanup and state management for after render
     const postProcessLightDom = () => {
       if (this.isMobileMenuButtonVisible()) {
-        // @todo add aria-hidden and aria-expanded attributes to appropriate elements for mobile dropdown
+        // @todo add aria-hidden and aria-expanded attributes to appropriate elements for mobile dropdown if we're at a mobile breakpoint
       }
     };
 
@@ -845,7 +880,7 @@ class PfeNavigation extends PFElement {
   _requestSiteSwitcher() {
     const promise = new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      xhr.open("GET", "../mock/site-switcher.html");
+      xhr.open("GET", "../../pfe-navigation/mock/site-switcher.html");
       xhr.responseType = "text";
 
       xhr.onload = () => {

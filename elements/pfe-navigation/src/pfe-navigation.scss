@@ -558,6 +558,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     @include pfe-navigation__dropdown-wrapper--mobile;
   }
 
+  // @todo Put visibility hidden on a different selector, likely need to involve JS
   // JS Adds aria-hidden at the appropriate time before open, or after close
   // This prevents the dropdown from showing to anyone, but also lets JS get the dropdown height
   // Unlike display: none

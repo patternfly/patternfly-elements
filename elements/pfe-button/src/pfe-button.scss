@@ -9,16 +9,21 @@ $LOCAL-VARIABLES: (
   Color: pfe-var(ui-base--text),
   FontSize: pfe-var(font-size),
   Border: 0,
-  BorderColor--after: transparent,
   BorderRadius: pfe-var(surface--border-radius),
   Padding: calc(#{pfe-var(container-padding)} / 2) pfe-var(container-padding),
   LineHeight: pfe-var(line-height),
+  after: (
+    BorderColor: transparent,
+    BorderColor--hover: transparent,
+  ),
 );
 
 // Nested internal variables (pfe-local calls), maps cannot "self-reference"
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  Border--after: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor--after),
-  Border--after--hover: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor--after),
+  after: (
+    Border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: after),
+    Border--hover: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor--hover, $region: after),
+  )
 ));
 
 :host {
@@ -49,29 +54,29 @@ button {
     right: 0;
     bottom: 0;
     content: "";
-    border: pfe-local(Border--after);
+    border: pfe-local(Border, $region: after);
     border-radius: pfe-local(BorderRadius);
   }
 
   &:hover,
   &:focus {
     --pfe-button--BackgroundColor: #{pfe-local(BackgroundColor--hover)};
-    --pfe-button--Border--after: #{pfe-local(Border--after--hover)};
+    --pfe-button__after--Border: #{pfe-local(Border--hover, $region: after)};
   }
 }
 
 :host([pfe-variant="secondary"]) {
     --pfe-button--BackgroundColor: transparent;
     --pfe-button--Color: #{pfe-var(ui-accent)};
-    --pfe-button--BorderColor--after: #{pfe-var(ui-accent)};
-    --pfe-button--Border--after--hover: 2px #{pfe-var(ui--border-style)};
+    --pfe-button__after--BorderColor: #{pfe-var(ui-accent)};
+    --pfe-button__after--Border--hover: 2px #{pfe-var(ui--border-style)};
 }
 
 :host([pfe-variant="tertiary"]) {
   --pfe-button--BackgroundColor: transparent;
   --pfe-button--Color: #{pfe-var(text)};
-  --pfe-button--BorderColor--after: #{pfe-var(text)};
-  --pfe-button--Border--after--hover: 2px #{pfe-var(ui--border-style)};
+  --pfe-button__after--BorderColor: #{pfe-var(text)};
+  --pfe-button__after--Border--hover: 2px #{pfe-var(ui--border-style)};
 }
 
 :host([pfe-variant="danger"]) {
@@ -83,7 +88,7 @@ button {
   --pfe-button--BackgroundColor: transparent;
   --pfe-button--Color: #{pfe-var(text)};
   --pfe-button--BorderRadius: 0;
-  --pfe-button--BorderColor--after: #{$pf-color-black-200}; // surface--border--lightest?
+  --pfe-button__after--BorderColor: #{$pf-color-black-200}; // surface--border--lightest?
 
     button::after {
       border-bottom-color: #{$pf-color-black-500}; // surface--border--darker?
@@ -105,8 +110,8 @@ button {
   --pfe-button--BackgroundColor: #{pfe-var(ui-disabled)}; // #{$pf-color-black-300};
   --pfe-button--BackgroundColor--hover: #{pfe-var(ui-disabled)}; // #{$pf-color-black-300};
   --pfe-button--Color: #{pfe-var(ui-disabled--text)};
-  --pfe-button--Border--after: 0;
-  --pfe-button--Border--after--hover: 0;
+  --pfe-button__after--Border: 0;
+  --pfe-button__after--Border--hover: 0;
   
   button {
     pointer-events: none;

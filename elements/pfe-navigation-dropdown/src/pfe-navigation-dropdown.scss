@@ -1,0 +1,48 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+$LOCAL: navigation;
+
+:host {
+  // Example local variable, using BEM format
+  // --pfe-navigation-dropdown--Property: value;
+
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+//-- Custom styles applied by attributes
+// @each $option in () {
+//   :host([pfe-icon="#{$option}"]) {
+//     // Add styles here
+//   }
+// }
+
+// @each $option in () {
+//   :host([pfe-name="#{$option}"]) {
+//     // Add styles here
+//   }
+// }
+
+// @each $option in () {
+//   :host([pfe-alerts="#{$option}"]) {
+//     // Add styles here
+//   }
+// }
+
+// @each $option in () {
+//   :host([pfe-state="#{$option}"]) {
+//     // Add styles here
+//   }
+// }
+
+// @each $option in () {
+//   :host([pfe-height="#{$option}"]) {
+//     // Add styles here
+//   }
+// }
+

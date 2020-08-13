@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../dist/pfe-navigation-dropdown.js"></script>
+  </head>
+  <body>
+    <pfe-navigation-dropdown>
+      <!-- Default slot -->
+      <h2>This is pfe-navigation-dropdown</h2>
+      
+    </pfe-navigation-dropdown>
+
+    <!-- Preview different properties -->
+    <pfe-navigation-dropdown icon>
+      <h2>This is pfe-navigation-dropdown</h2>
+    </pfe-navigation-dropdown>
+
+    <pfe-navigation-dropdown name>
+      <h2>This is pfe-navigation-dropdown</h2>
+    </pfe-navigation-dropdown>
+
+    <pfe-navigation-dropdown alerts>
+      <h2>This is pfe-navigation-dropdown</h2>
+    </pfe-navigation-dropdown>
+
+    <pfe-navigation-dropdown state>
+      <h2>This is pfe-navigation-dropdown</h2>
+    </pfe-navigation-dropdown>
+
+    <pfe-navigation-dropdown height>
+      <h2>This is pfe-navigation-dropdown</h2>
+    </pfe-navigation-dropdown>
+
+    <script>
+      const elements = [...document.querySelectorAll("pfe-navigation-dropdown")];
+
+      suite("<pfe-navigation-dropdown>", () => {
+        test("it should upgrade", () => {
+          assert.instanceOf(
+            document.querySelector("pfe-navigation-dropdown"),
+            customElements.get("pfe-navigation-dropdown"),
+            "pfe-navigation-dropdown should be an instance of pfeNavigationDropdown"
+          );
+        });
+
+        // Write tests for each attribute
+        test("icon attribute is applied correctly", () => {
+          // Test that the attribute applied correctly
+          // assert.equal();
+        });
+        test("name attribute is applied correctly", () => {
+          // Test that the attribute applied correctly
+          // assert.equal();
+        });
+        test("alerts attribute is applied correctly", () => {
+          // Test that the attribute applied correctly
+          // assert.equal();
+        });
+        test("state attribute is applied correctly", () => {
+          // Test that the attribute applied correctly
+          // assert.equal();
+        });
+        test("height attribute is applied correctly", () => {
+          // Test that the attribute applied correctly
+          // assert.equal();
+        });
+
+        // Write tests for each slot
+
+      });
+    </script>
+  </body>
+</html>

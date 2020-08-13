@@ -1,0 +1,50 @@
+{
+  "name": "@patternfly/pfe-navigation-dropdown",
+  "description": "Navigation dropdown element for PatternFly Elements",
+  "pfelement": {
+    "className": "PfeNavigationDropdown",
+    "elementName": "pfe-navigation-dropdown",
+    "files": {
+      "styles": "./src/pfe-navigation-dropdown.scss",
+      "template": "./src/pfe-navigation-dropdown.html",
+      "js": "./src/pfe-navigation-dropdown.js"
+    },
+    "assets": []
+  },
+  "version": "1.0.0-prerelease.49",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-navigation-dropdown"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/pfe-navigation-dropdown.umd.js",
+  "module": "./dist/pfe-navigation-dropdown.js",
+  "unpkg": "./dist/pfe-navigation-dropdown.umd.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-navigation-dropdown/test/"
+  },
+  "contributors": [
+    {
+      "name": "wesruv"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@patternfly/pfe-sass": "1.0.0-prerelease.49",
+    "@patternfly/pfelement": "1.0.0-prerelease.49",
+    "gh-pages": "^2.2.0"
+  }
+}

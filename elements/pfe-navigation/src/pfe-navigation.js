@@ -354,12 +354,13 @@ class PfeNavigation extends PFElement {
         dropdownElement.style.removeProperty("height");
       }
       // Delay aria-hidden so animations can finish
-      // @todo/note: I do not think we need to delay the change of the aria-hidden state since aria-hidden hides the content of the page from screen readers, as soon as the dropdown is closed by the user the dropdown should get aria-hidden="true" immediately
+      // @todo/note: I do not think we need to delay the change of the aria-hidden state since aria-hidden hides the content of the page from screen readers, as soon as the dropdown is closed by the screen reader user the dropdown should get aria-hidden="true" immediately
       // @note: tested with a screen reader and things seem to be functioning well without the time delay.
-      window.setTimeout(() => {
-        dropdownElement.setAttribute("aria-hidden", "true");
-      }, 500);
-      // dropdownElement.setAttribute("aria-hidden", "true");
+      // @note: when the delay is on it seems to be causing issues with the toggling of the aria-hidden states sometimes
+      // window.setTimeout(() => {
+      //   dropdownElement.setAttribute("aria-hidden", "true");
+      // }, 500);
+      dropdownElement.setAttribute("aria-hidden", "true");
 
       // Main menu specific code
       if (toggleId.startsWith("main-menu")) {
@@ -523,12 +524,19 @@ class PfeNavigation extends PFElement {
 
       // Create wrapper for dropdown and give it appropriate classes and attributes
       const dropdownWrapper = document.createElement("div");
+      // Find other dropdowns by using the .dropdown-content class (such as Search/All Red Hat)
+      // @todo: figure out if this is causing inconsistent toggling of aria-hidden
+      // const otherDropDowns = this.shadowRoot.querySelector(".dropdown-content");
+
       dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper");
       if (dropdown.classList.contains("pfe-navigation__dropdown--single-column")) {
         dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--single-column");
       }
       dropdownWrapper.setAttribute("id", dropdownId);
       dropdownWrapper.setAttribute("aria-hidden", "true");
+      // dynamically set aria-hidden="true" by default for other dropdowns bc they are closed by default
+      // @note: commented out bc it is not fully working yet
+      // otherDropDowns.setAttribute("aria-hidden", "true");
       dropdownWrapper.append(dropdown);
       dropdownButton.parentElement.append(dropdownWrapper);
       dropdownButton.parentElement.dataset.dropdownId = dropdownId;
@@ -551,20 +559,21 @@ class PfeNavigation extends PFElement {
     this.addEventListener("keydown", this._generalKeyboardListener);
 
     // Give all dropdowns aria-hidden since they're shut by default
-    // @note: this only adds aria-hidden to the main menu dropdown links and not the utility buttons, added logic to add aria-hidden to those buttons depending on a class a few lines down
+    // @todo/note: this only adds aria-hidden to the main menu dropdown links and not the utility buttons (Search/All Red Hat), added aria-hidden attr in the pfe-nav shadow DOM template for now, need to figure out best way to do this dynamically
     this.shadowRoot.querySelector(".pfe-navigation__dropdown-wrapper").setAttribute("aria-hidden", "true");
 
     // Give Search dropdown, All Red Hat Dropdown aria-hidden since they're shut by default
     // @todo: added this logic, uses .dropdown-content class on the dropdown content divs, need to verify that this logic is reasonable and if so add the notes to the documentation about the class
     // @todo: need to figure out best way to manage the dynamic setting of aria-hidden when custom link gets used as a dropdown instead by content editors and other dev teams
-    this.shadowRoot.querySelectorAll(".dropdown-content").forEach(element => {
-      element.setAttribute("aria-hidden", "true");
-      // added this for local testing
-      if (document.domain === "localhost") {
-        console.log(`inside of forEach for .dropdown-content`);
-        console.log(element);
-      }
-    });
+    // @todo/note: tried this method of dynamically setting the aria-hidden attr for other dropdowns but I was having an issue with inconsistent toggling of the aria-hidden attr for the search dropdown so commented it out for now, this code might be conflicting with logic elsewhere for aria-hidden?
+    // this.shadowRoot.querySelectorAll(".dropdown-content").forEach(element => {
+    //   element.setAttribute("aria-hidden", "true");
+    //   // added this for local testing
+    //   if (document.domain === "localhost") {
+    //     console.log(`inside of forEach for .dropdown-content`);
+    //     console.log(element);
+    //   }
+    // });
 
     // Reconnecting mutationObserver for IE11 & Edge
     if (window.ShadyCSS) {

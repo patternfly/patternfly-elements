@@ -175,10 +175,7 @@ pfe-accordion {
   @include pfe-print-local($accordion-styles);
   
   @media(min-width: pfe-breakpoint(lg)) {
-    // --pfe-accordion__base--Padding: 0;
-    @include pfe-print-local((
-      base: (Padding: 0)
-    ));
+    --pfe-accordion__base--Padding: 0;
   }
 
   @media (max-width: pfe-breakpoint(lg, $max: true)) {
@@ -229,10 +226,8 @@ pfe-accordion-panel {
 $LOCAL: $temp;
 
 :host([pfe-color="darkest"]) {
-  @include pfe-print-local((
-    theme: dark,
-    BackgroundColor: pfe-var(surface--darkest)
-  ));
+  --pfe-jump-links--theme: dark;
+  --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
 
   border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
 

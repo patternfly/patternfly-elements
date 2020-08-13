@@ -3,6 +3,7 @@
 // @include pfe-theme-contexts; // imports on="light" etc support
 
 :host {
+  // @TODO remove this eventually to allow empty local variables
   @include pfe-print-local($LOCAL-VARIABLES);
   display: block;
   position: relative;

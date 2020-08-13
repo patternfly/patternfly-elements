@@ -19,12 +19,15 @@ $LOCAL-VARIABLES: (
 );
 
 // Nested internal variables (pfe-local calls), maps cannot "self-reference"
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  after: (
-    Border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: after),
-    Border--hover: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor--hover, $region: after),
+$LOCAL-VARIABLES: map-deep-merge(
+  $LOCAL-VARIABLES,
+  (
+    after: (
+      Border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: after),
+      Border--hover: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor--hover, $region: after),
+    ),
   )
-));
+);
 
 :host {
   display: inline-block;
@@ -66,14 +69,16 @@ button {
 }
 
 :host([pfe-variant="secondary"]) {
-    --pfe-button--BackgroundColor: transparent;
-    --pfe-button--Color: #{pfe-var(ui-accent)};
-    --pfe-button__after--BorderColor: #{pfe-var(ui-accent)};
-    --pfe-button__after--Border--hover: 2px #{pfe-var(ui--border-style)};
+  --pfe-button--BackgroundColor: transparent;
+  --pfe-button--BackgroundColor--hover: transparent;
+  --pfe-button--Color: #{pfe-var(ui-accent)};
+  --pfe-button__after--BorderColor: #{pfe-var(ui-accent)};
+  --pfe-button__after--Border--hover: 2px #{pfe-var(ui--border-style)};
 }
 
 :host([pfe-variant="tertiary"]) {
   --pfe-button--BackgroundColor: transparent;
+  --pfe-button--BackgroundColor--hover: transparent;
   --pfe-button--Color: #{pfe-var(text)};
   --pfe-button__after--BorderColor: #{pfe-var(text)};
   --pfe-button__after--Border--hover: 2px #{pfe-var(ui--border-style)};
@@ -86,10 +91,15 @@ button {
 
 :host([pfe-variant="control"]) {
   --pfe-button--BackgroundColor: transparent;
+  --pfe-button--BackgroundColor--hover: transparent;
   --pfe-button--Color: #{pfe-var(text)};
   --pfe-button--BorderRadius: 0;
   --pfe-button__after--BorderColor: #{$pf-color-black-200}; // surface--border--lightest?
 
+  button:hover {
+    --pfe-button__after--BorderColor--hover: #{$pf-color-black-200}; // surface--border--lightest?
+  }
+  
     button::after {
       border-bottom-color: #{$pf-color-black-500}; // surface--border--darker?
     }
@@ -100,7 +110,6 @@ button {
       border-bottom-color: pfe-var(ui-accent);
     }
   }
-}
 
 :host([pfe-variant="control"][disabled]) {
   --pfe-button--BackgroundColor: #{pfe-var(surface--lighter)};
@@ -112,8 +121,5 @@ button {
   --pfe-button--Color: #{pfe-var(ui-disabled--text)};
   --pfe-button__after--Border: 0;
   --pfe-button__after--Border--hover: 0;
-  
-  button {
-    pointer-events: none;
-  }
+  pointer-events: none;
 }

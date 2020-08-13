@@ -10,17 +10,19 @@
   <div class="pfe-navigation__outer-menu-wrapper" id="mobile__dropdown">
     <div id="pfe-navigation__outer-menu-wrapper__inner" class="pfe-navigation__outer-menu-wrapper__inner">
 
-      <slot name="pfe-navigation--search" class="pfe-navigation__search" id="secondary-links__dropdown--search" aria-hidden="true">
-        search slot
-      </slot>
-
       <div id="pfe-navigation__menu-wrapper" class="pfe-navigation__menu-wrapper">
       </div>
 
-      <button class="pfe-navigation__search-toggle" id="secondary-links__button--search" aria-expanded="false">
+      <!-- @todo: dynamically set aria-expanded for trigger buttons in shadow DOM and aria-hidden for dropdown content in shadow DOM -->
+      <!-- @todo: regroup on this, not sure why we would dynamically set the aria attrs in the shadow DOM rather than just add the attrs in the template via HTML -->
+      <button class="pfe-navigation__search-toggle" id="secondary-links__button--search" aria-expanded="false" aria-controls="secondary-links__dropdown--search">
         <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>
         Search
       </button>
+      <!-- @todo/note: dropdowns need to be directly after the trigger buttons in the DOM order otherwise you cannot tab into the dropdown itself when using a keyboard or screen reader. Need to regroup on this if original placement of the search slot was important for current functionality, in the original location above the search button you could not tab into search dropdown slot with neither a keyboard or screen reader. -->
+      <slot name="pfe-navigation--search" class="pfe-navigation__search" id="secondary-links__dropdown--search" aria-hidden="true">
+        search slot
+      </slot>
 
       <slot name="pfe-navigation--custom-links" class="pfe-navigation__customlinks">
         customlinks slot

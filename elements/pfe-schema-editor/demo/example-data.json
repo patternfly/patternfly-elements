@@ -1,0 +1,57 @@
+{
+  "name": "test_component",
+  "string": "string string with title",
+  "string_with_default": "This is the default",
+  "string_with_single_enum": "a",
+  "string_with_multiple_enum": "b",
+  "string_hidden": "",
+  "string_readonly": "",
+  "boolean": true,
+  "integer": 141412525254,
+  "integer_with_enum": 2,
+  "number": 141525.23525,
+  "number_with_enum": 1.5,
+  "text": "this is text",
+  "text_area": "this is a text area",
+  "object_with_subitems": {
+    "foo": "this is foo in object with sub",
+    "bar": 124131.1414,
+    "baz": true
+  },
+  "array_of_strings": ["string 1", "string 2", "string 3"],
+  "array_of_numbers": [123, 456, 789],
+  "link_atom": {
+    "href": "http://www.redhat.com/en",
+    "title": "My Title",
+    "text": "My Text",
+    "target": "_blank"
+  },
+  "image_atom": {
+    "src": "http://www.fillmurray.com/460/300",
+    "alt": "Image Alt Tag"
+  },
+  "video_atom": {
+    "video_src": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/SJ1cKkP4hcw\" frameborder=\"0\" allowfullscreen></iframe>"
+  },
+  "array_with_object_items": [
+    {
+      "foo": "array object foo",
+      "bar": 12414,
+      "baz": true
+    },
+    {
+      "foo": "array object foo 2",
+      "bar": 12414,
+      "baz": false
+    },
+    {
+      "foo": "array object foo 3",
+      "bar": 1231414,
+      "baz": true
+    }
+  ],
+  "array_with_tuple_items": ["tuple foo", 11313141, true],
+  "array_with_oneOf": [2, 4, 2],
+  "array_with_anyOf": [1, 2, 3],
+  "array_with_allOf": [3, 3]
+}

@@ -1,294 +1,170 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Article",
-  "description": "Narrative content laid out for users to read and share.",
+  "title": "Example schema",
+  "description": "Generic description of what this schema describes.",
   "type": "object",
-  "category": "pattern",
-  "status": "private",
+  "category": "content",
+  "status": "public",
+  "format": "grid",
   "properties": {
     "name": {
       "type": "string",
       "readonly": true,
-      "enum": ["article"],
+      "enum": ["test_component"],
       "options": {
         "hidden": true
       }
     },
-    "navigation": {
+    "string": {
       "type": "string",
-      "format": "html",
-      "formatter": "navigation",
+      "title": "String type",
+      "description": "Valid input is a plain string."
+    },
+    "string_with_default": {
+      "type": "string",
+      "title": "String type with default",
+      "description": "Valid input is a plain string, default is set.",
+      "default": "This is the default"
+    },
+    "string_with_single_enum": {
+      "type": "string",
+      "title": "String type with 1 enum",
+      "description": "Input is validated against the values in the enum.",
+      "enum": ["a"]
+    },
+    "string_with_multiple_enum": {
+      "type": "string",
+      "title": "String type with many enums",
+      "description": "Input is validated against the values in the enum.",
+      "enum": ["a", "b"]
+    },
+    "string_hidden": {
+      "type": "string",
+      "title": "String type, hidden from UI",
+      "description": "Valid input is a plain string.",
       "options": {
-        "wysiwyg": false,
         "hidden": true
       }
     },
-    "header": {
-      "title": "Hero header",
-      "type": "object",
-      "properties": {
-        "config": {
-          "title": "Configuration",
-          "type": "object",
-          "properties": {
-            "theme": {
-              "title": "Theme",
-              "description": "Dark theme is used for dark backgrounds",
-              "type": "string",
-              "enum": ["light", "dark"],
-              "default": "dark"
-            }
-          },
-          "required": ["theme"]
-        },
-        "background": {
-          "title": "Background options",
-          "type": "object",
-          "format": "grid",
-          "properties": {
-            "color": {
-              "title": "Background color",
-              "description": "Background color if no images load",
-              "type": "string",
-              "enum": [
-                "white",
-                "gray",
-                "black",
-                "rich-black",
-                "red",
-                "transparent"
-              ],
-              "default": "rich-black"
-            },
-            "image_large": {
-              "title": "Desktop background image",
-              "description": "Image minimum width/height should be at least 1920px x 1080px. Try to keep both dimensions divisible by 2.",
-              "entity": "image",
-              "type": "object",
-              "properties": {
-                "src": {
-                  "$ref": "image.json#/properties/src"
-                }
-              },
-              "options": {
-                "grid_columns": 6
-              }
-            },
-            "image_small": {
-              "title": "Mobile background image",
-              "description": "Image minimum width/height should be at least 768px x 1024px. Try to keep both dimensions divisible by 2. If omitted, background color will be used at mobile breakpoint.",
-              "entity": "image",
-              "type": "object",
-              "properties": {
-                "src": {
-                  "$ref": "image.json#/properties/src"
-                }
-              },
-              "options": {
-                "grid_columns": 6
-              }
-            }
-          },
-          "required": ["color"]
-        },
-        "content": {
-          "title": "Hero Content",
-          "type": "object",
-          "properties": {
-            "title": {
-              "title": "Title",
-              "description": "Brief title describing the content on the page.",
-              "$ref": "band_header.json#/properties/title"
-            },
-            "headline": {
-              "$ref": "article_teaser.json#/properties/content/properties/headline",
-              "options": {
-                "preview": true
-              }
-            },
-            "date": {
-              "$ref": "article_teaser.json#/properties/content/properties/date"
-            },
-            "authors": {
-              "$ref": "article_teaser.json#/properties/authors"
-            },
-            "aside": {
-              "title": "Header aside",
-              "type": "array",
-              "maxItems": 1,
-              "items": {
-                "oneOf": [
-                  {
-                    "$ref": "subnavigation.json"
-                  },
-                  {
-                    "$ref": "raw_html.json"
-                  }
-                ]
-              }
-            }
-          },
-          "required": ["headline"]
-        },
-        "social": {
-          "title": "Optional social media links",
-          "type": "array",
-          "maxItems": 1,
-          "items": {
-            "oneOf": [
-              {
-                "$ref": "social_share.json"
-              },
-              {
-                "$ref": "raw.json"
-              }
-            ]
-          }
-        }
-      },
-      "required": ["config", "background", "content"]
+    "string_readonly": {
+      "type": "string",
+      "title": "String type, read-only",
+      "description": "Valid input is a plain string.",
+      "readonly": true,
+      "default": ""
     },
-    "subnav": {
-      "title": "Optional subnav",
-      "type": "object",
-      "properties": {
-        "back": {
-          "title": "Back link",
-          "type": "object",
-          "properties": {
-            "link": {
-              "$ref": "link.json"
-            }
-          }
-        },
-        "tags": {
-          "title": "Tags",
-          "type": "object",
-          "properties": {
-            "label": {
-              "$ref": "tags.json#/properties/label"
-            },
-            "taxonomy": {
-              "$ref": "tags.json#/properties/taxonomy"
-            }
-          }
-        }
-      }
+    "boolean": {
+      "type": "boolean"
     },
-    "body": {
-      "title": "Body",
-      "type": "object",
-      "properties": {
-        "content": {
-          "title": "Content",
-          "type": "string",
-          "format": "html"
-        }
-      },
-      "required": ["content"]
+    "integer": {
+      "type": "number"
     },
-    "author_group": {
-      "title": "Authors group",
+    "integer_with_enum": {
+      "type": "number",
+      "enum": [1, 2]
+    },
+    "number": {
+      "type": "number"
+    },
+    "number_with_enum": {
+      "type": "number",
+      "enum": [1.5, 2.5]
+    },
+    "text": {
+      "type": "string"
+    },
+    "text_area": {
+      "type": "string",
+      "format": "html"
+    },
+    "object_with_subitems": {
       "type": "object",
       "properties": {
-        "label": {
-          "title": "Authors label",
-          "description": "Something simple like About the Author(s)",
+        "foo": {
           "type": "string"
         },
-        "author_details": {
-          "title": "Authors with details",
-          "type": "array",
-          "items": {
-            "oneOf": [
-              {
-                "$ref": "speaker.json"
-              },
-              {
-                "$ref": "raw.json"
-              }
-            ]
+        "bar": {
+          "type": "number"
+        },
+        "baz": {
+          "type": "boolean"
+        }
+      }
+    },
+    "array_of_strings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "array_of_numbers": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "array_with_object_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "foo": {
+            "type": "string"
+          },
+          "bar": {
+            "type": "number"
+          },
+          "baz": {
+            "type": "boolean"
           }
         }
       }
     },
-    "channels": {
-      "title": "Channels group",
-      "type": "object",
-      "properties": {
-        "label": {
-          "title": "Channel label",
-          "description": "A brief label explaining the channels for this article.",
+    "array_with_tuple_items": {
+      "type": "array",
+      "items": [
+        {
           "type": "string"
         },
-        "taxonomy": {
-          "title": "Channels",
-          "type": "array",
-          "items": {
-            "title": "Channel",
-            "type": "object",
-            "properties": {
-              "link": {
-                "$ref": "link.json"
-              }
-            }
-          }
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
         }
+      ]
+    },
+    "array_with_oneOf": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "number"
+          }
+        ]
       }
     },
-    "aside": {
-      "title": "Optional aside",
-      "type": "object",
-      "options": {
-        "collapsed": true
-      },
-      "properties": {
-        "pull_quote": {
-          "title": "Pull quote",
-          "type": "object",
-          "properties": {
-            "quotation": {
-              "$ref": "quote_box.json#/properties/quote/properties/quotation"
-            },
-            "attribution_name": {
-              "$ref": "quote_box.json#/properties/quote/properties/attribution_name"
-            },
-            "attribution_title": {
-              "$ref": "quote_box.json#/properties/quote/properties/attribution_title"
-            },
-            "social_label": {
-              "$ref": "simple_social.json#/properties/label"
-            },
-            "social_account": {
-              "$ref": "simple_social.json#/properties/account"
-            },
-            "social_hashtags": {
-              "$ref": "simple_social.json#/properties/hashtags"
-            },
-            "social_url": {
-              "$ref": "simple_social.json#/properties/url"
-            }
+    "array_with_anyOf": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "number"
           }
-        },
-        "content": {
-          "title": "Optional sidebar content",
-          "description": "Additional aside widgets that will render below the pull quote.",
-          "type": "array",
-          "items": {
-            "title": "Aside item",
-            "oneOf": [
-              {
-                "$ref": "search.json"
-              },
-              {
-                "$ref": "subscribe.json"
-              }
-            ]
+        ]
+      }
+    },
+    "array_with_allOf": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "type": "number"
           }
-        }
+        ]
       }
     }
   },
-  "required": ["name", "header", "body"],
+  "required": ["name"],
   "additionalProperties": false
 }

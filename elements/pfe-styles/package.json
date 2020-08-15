@@ -12,7 +12,7 @@
       "pfe-layouts.*.map"
     ]
   },
-  "version": "1.0.0-prerelease.40",
+  "version": "1.0.0-prerelease.54",
   "publishConfig": {
     "access": "public"
   },
@@ -32,7 +32,8 @@
   "main": "./dist/pfe-layouts.css",
   "scripts": {
     "build": "../../node_modules/.bin/gulp build:nojs && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
-    "dev": "../../node_modules/.bin/gulp dev:nojs"
+    "dev": "../../node_modules/.bin/gulp dev:nojs",
+    "watch": "../../node_modules/.bin/gulp watch"
   },
   "contributors": [
     {
@@ -42,8 +43,8 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.40"
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.54"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

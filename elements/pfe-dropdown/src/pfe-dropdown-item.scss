@@ -1,0 +1,58 @@
+@import "../../pfe-sass/pfe-sass";
+@import "_shared-assets";
+
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+  FontSize: pfe-var(font-size),
+  FontWeight: 400,
+  LineHeight: pfe-var(line-height),
+  Color: $pf-color-black-1000,
+  Color--hover: $pf-color-black-900,
+  TextAlign: left,
+  BackgroundColor: transparent,
+  BackgroundColor--hover: pfe-var(surface--lighter),
+  Border: none,
+));
+
+::slotted(*) {
+  display: block;
+  width: 100%;
+  padding: pfe-local(spacing--vertical) pfe-local(spacing--horizontal);
+  color: pfe-local(Color);
+  font-size: pfe-local(FontSize);
+  font-weight: pfe-local(FontWeight);
+  line-height: pfe-local(LineHeight);
+  text-align: pfe-local(TextAlign);
+  white-space: nowrap;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: pfe-var(font-family, $fallback: inherit);
+  cursor: pointer;
+}
+
+::slotted(button) {
+  background-color: pfe-local(BackgroundColor);
+  border: pfe-local(Border);
+}
+
+.pfe-dropdown-item__container {
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: pfe-local(BackgroundColor--hover);
+    color: pfe-local(Color--hover);
+  }
+
+  :host([pfe-item-type="separator"]) & {
+    height: 1px;
+    background-color: $pf-color-black-200;
+  }
+
+  :host([is_disabled]) & {
+    $disabled: (
+      Color: $pf-color-black-600
+    );
+  
+    pointer-events: none;
+    @include pfe-print-local($disabled);
+  }
+}

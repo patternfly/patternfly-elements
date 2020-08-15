@@ -21,6 +21,12 @@ const TABS_MUTATION_CONFIG = {
   subtree: true
 };
 
+const TAB_CONTENT_MUTATION_CONFIG = {
+  characterData: true,
+  childList: true,
+  subtree: true
+};
+
 function generateId() {
   return Math.random()
     .toString(36)
@@ -241,6 +247,10 @@ class PfeTabs extends PFElement {
       for (let mutation of mutationsList) {
         if (mutation.type === "childList" && mutation.addedNodes.length) {
           [...mutation.addedNodes].forEach(addedNode => {
+            if (!addedNode.tagName) {
+              return;
+            }
+
             if (
               addedNode.tagName.toLowerCase() === PfeTab.tag ||
               addedNode.tagName.toLowerCase() === PfeTabPanel.tag
@@ -518,18 +528,22 @@ class PfeTab extends PFElement {
   constructor() {
     super(PfeTab);
 
+    this._tabItem;
     this._init = this._init.bind(this);
+    this._setTabContent = this._setTabContent.bind(this);
     this._observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
+    this._tabItem = this.shadowRoot.querySelector(`.${this.tag}`);
+
     if (this.children.length || this.textContent.trim().length) {
       this._init();
     }
 
-    this._observer.observe(this, { childList: true });
+    this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
   }
 
   attributeChangedCallback() {
@@ -545,6 +559,9 @@ class PfeTab extends PFElement {
     if (window.ShadyCSS) {
       this._observer.disconnect();
     }
+
+    // Copy the tab content into the template
+    this._setTabContent();
 
     if (!this.pfeId) {
       this.pfeId = `${PfeTab.tag}-${generateId()}`;
@@ -567,8 +584,47 @@ class PfeTab extends PFElement {
     }
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
     }
+  }
+
+  _setTabContent() {
+    // Copy the tab content into the template
+    const label = this.textContent.trim().replace(/\s+/g, " ");
+
+    if (!label) {
+      console.warn(
+        `${this.tag}: There does not appear to be any content in the tab region.`
+      );
+      return;
+    }
+
+    let semantics = "";
+    // Get the semantics of the content
+    if (this.children.length > 0) {
+      // We only care about the first child that is a tag
+      if (
+        this.firstElementChild &&
+        this.firstElementChild.tagName.match(/^H[1-6]/)
+      ) {
+        semantics = this.firstElementChild.tagName.toLowerCase();
+      }
+    }
+
+    // Create an h-level tag for the shadow tab, default h3
+    let heading = document.createElement("h3");
+
+    // Use the provided semantics if provided
+    if (semantics.length > 0) {
+      heading = document.createElement(semantics);
+    }
+
+    // Assign the label content to the new heading
+    heading.textContent = label;
+
+    // Attach the heading to the tabItem
+    this._tabItem.innerHTML = "";
+    this._tabItem.appendChild(heading);
   }
 }
 
@@ -608,7 +664,7 @@ class PfeTabPanel extends PFElement {
     super.connectedCallback();
 
     this._init();
-    this._observer.observe(this, { childList: true });
+    this._observer.observe(this, TABS_MUTATION_CONFIG);
   }
 
   disconnectedCallback() {
@@ -637,7 +693,7 @@ class PfeTabPanel extends PFElement {
     }
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TABS_MUTATION_CONFIG);
     }
   }
 }

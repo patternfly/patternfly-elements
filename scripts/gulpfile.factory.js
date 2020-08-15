@@ -76,11 +76,18 @@ module.exports = function factory({
         cwd: paths.source
       })
         .pipe(sourcemaps.init())
-        .pipe(sass().on("error", sass.logError))
+        .pipe(
+          sass({
+            // Pointing to the global node modules path
+            includePaths: ["../../node_modules"]
+          }).on("error", sass.logError)
+        )
         // Compile the Sass into CSS
         .pipe(
           sass({
-            outputStyle: "expanded"
+            outputStyle: "expanded",
+            // Pointing to the global node modules path
+            includePaths: ["../../node_modules"]
           }).on("error", sass.logError)
         )
         // Adds autoprefixing to the compiled sass
@@ -342,7 +349,7 @@ ${fs
     return watch(path.join(paths.source, "*"), series("build"));
   });
 
-  task("dev", parallel("build", "watch"));
+  task("dev", series("build", "watch"));
 
   task("default", series("build"));
 

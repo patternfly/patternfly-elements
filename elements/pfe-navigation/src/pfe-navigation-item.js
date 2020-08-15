@@ -187,6 +187,8 @@ class PfeNavigationItem extends PFElement {
   constructor() {
     super(PfeNavigationItem);
 
+    this._handlersAdded = false;
+
     // States
     this.nested = false;
     this.expanded = false;
@@ -319,6 +321,10 @@ class PfeNavigationItem extends PFElement {
     this._trigger.removeEventListener("click", this._navigateToUrl);
     this._trigger.removeEventListener("keyup", this._directLinkHandler);
 
+    if (this._handlersAdded) {
+      return;
+    }
+
     // Toggle the navigation when the trigger is clicked
     this._trigger.addEventListener("click", this.toggle);
 
@@ -327,6 +333,7 @@ class PfeNavigationItem extends PFElement {
     this.addEventListener("keydown", this._keydownHandler);
 
     this._trigger.addEventListener("keyup", this._keyupHandler);
+    this._handlersAdded = true;
   }
 
   _navigateToUrl(event) {

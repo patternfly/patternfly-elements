@@ -3,23 +3,26 @@ $pfe-vars: (
   container-padding:             16px,
   content-spacer:                24px,
 
-  font-size:                     16px,
   line-height:                   1.5,
 
   font-family:                   '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
   font-family--heading:          '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
   font-family--code:             '"Overpass Mono", Consolas, Monaco, 'Andale Mono', monospace',
 
-  font-size--heading--alpha:     32px,
-  font-size--heading--beta:      24px,
-  font-size--heading--gamma:     21px,
-  font-size--heading--delta:     18px,
-  font-size--heading--epsilon:   16px,
-  font-size--heading--zeta:      14px,
+  font-size--base:               16px,
+  font-size:                     16px,
+
+  font-size--3xl:    32px,
+  font-size--2xl:    24px,
+  font-size--xl:     20px,
+  font-size--lg:     18px,
+  font-size--md:     16px,
+  font-size--sm:     14px,
+  font-size--xs:     12px,
 
   font-weight--light:            300,
-  font-weight--normal:           500,
-  font-weight--semi-bold:        600,
+  font-weight--normal:           400,
+  font-weight--semi-bold:        500,
   font-weight--bold:             700,
 
   surface--border-width:         1px,

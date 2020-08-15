@@ -1,126 +1,120 @@
-<section class="pfe-schema-editor--container"></section>
+<form class="pfe-schema-editor--container"></form>
 
 <template id="wrap">
-    <div
-        class="pfe-schema-editor--section"
-        data-schematype="object"
-    ></div>
+  <div class="pfe-schema-editor--section" data-schematype="object"></div>
 </template>
 
 <template id="header">
-    <div class="row">
-        <button class="toggle">
-            <h3 class="toggle--header" data-content="title"></h3>
-        </button>
-        <div class="json--group">
-            <button class="json--button">JSON</button>
-            <div class="json" data-content="json"></div>
-        </div>
-        <div class="props--group">
-            <button class="props--button">Properties</button>
-            <div class="props" data-content="properties"></div>
-        </div>
+  <div class="row">
+    <button class="toggle">
+      <h3 class="toggle--header" data-content="title"></h3>
+      <p class="toggle--description" data-content="description"></p>
+    </button>
+    <div class="json--group">
+      <button class="json" data-content="json">Copy JSON</button>
     </div>
+    <!-- <pfe-select class="props" aria-label="Properties" data-content="properties"></pfe-select> -->
+
+    <div class="props--group pf-c-options-menu">
+      <div class="pf-c-options-menu__toggle pf-m-text pf-m-plain">
+        <span class="pf-c-options-menu__toggle-text" id="properties">Properties</span>
+        <button class="pf-c-options-menu__toggle-button" aria-haspopup="listbox" aria-expanded="false"
+          aria-labelledby="properties">
+          <span class="pf-c-options-menu__toggle-button-icon">
+            <i class="fas fa-caret-down" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
+      <ul class="pf-c-options-menu__menu" aria-labelledby="properties" hidden></ul>
+    </div>
+  </div>
 </template>
 
 <template id="boolean">
-    <div
-        data-schematype="boolean"
-        data-schemapath="root.config.show_url"
-        <!-- optional -->data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
-        <!-- optional -->data-grid="6"
+  <div data-schematype="boolean" data-schemapath="root.config.show_url" <!-- optional -->
+    data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
+    <!-- optional -->data-grid="6"
     >
-        <label class="control-label" data-content="title"></label>
-        <p class="help-block" data-content="description"></p>
-        <input type="checkbox" name="root[config][show_url]" value="root.config.show_url"/>
-    </div>
+    <label class="control-label" data-content="title"></label>
+    <p class="help-block" data-content="description"></p>
+    <input type="checkbox" name="root[config][show_url]" value="root.config.show_url" />
+  </div>
 </template>
 
 <template id="number">
-    <div
-        data-schematype="number"
-        data-schemapath="root.config.show_url"
-        <!-- optional -->data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
-        <!-- optional -->data-grid="6"
+  <div data-schematype="number" data-schemapath="root.config.show_url" <!-- optional -->
+    data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
+    <!-- optional -->data-grid="6"
     >
-        <label class="control-label" data-content="title"></label>
-        <p class="help-block" data-content="description"></p>
-        <input type="number" class="" name="root[config][word_count]" min="0" max="5" value="{{ default }}"/>
-    </div>
+    <label class="control-label" data-content="title"></label>
+    <p class="help-block" data-content="description"></p>
+    <input type="number" class="" name="root[config][word_count]" min="0" max="5" value="{{ default }}" />
+  </div>
 </template>
 
 <template id="string-url">
-    <div
-        data-schematype="string"
-        data-schemapath="root.config.show_url"
-        <!-- optional -->data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
-        <!-- optional -->data-grid="6"
+  <div data-schematype="string" data-schemapath="root.config.show_url" <!-- optional -->
+    data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
+    <!-- optional -->data-grid="6"
     >
-        <label class="control-label" data-content="title"></label>
-        <p class="help-block" data-content="description"></p>
-        <input type="url" class="" name="root[config][word_count]"/>
-    </div>
+    <label class="control-label" data-content="title"></label>
+    <p class="help-block" data-content="description"></p>
+    <input type="url" class="" name="root[config][word_count]" />
+  </div>
 </template>
 
 <template id="string">
-    <div
-        data-schematype="string"
-        data-schemapath="root.config.show_url"
-        <!-- optional -->data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
-        <!-- optional -->data-grid="6"
+  <div data-schematype="string" data-schemapath="root.config.show_url" <!-- optional -->
+    data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
+    <!-- optional -->data-grid="6"
     >
-        <label class="control-label" data-content="title"></label>
-        <p class="help-block" data-content="description"></p>
-        <input type="text" class="" name="root[config][word_count]"/>
-    </div>
+    <label class="control-label" data-content="title"></label>
+    <p class="help-block" data-content="description"></p>
+    <input type="text" class="" name="root[config][word_count]" />
+  </div>
 </template>
 
 <!-- String, wysiwyg -- TODO https://alex-d.github.io/Trumbowyg/documentation/ jQuery, library, css -->
 <template id="string-html">
-    <div
-        data-schematype="string"
-        data-schemapath="root.config.show_url"
-        <!-- optional -->data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
-        <!-- optional -->data-grid="6"
+  <div data-schematype="string" data-schemapath="root.config.show_url" <!-- optional -->
+    data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
+    <!-- optional -->data-grid="6"
     >
-        <label class="control-label" data-content="title"></label>
-        <p class="help-block" data-content="description"></p>
-        <textarea id="wysiwyg" data-schemaformat="html" name="root[config][word_count]"></textarea>
-        <!-- $("wysiwyg").trumbowyg(); -->
-    </div>
+    <label class="control-label" data-content="title"></label>
+    <p class="help-block" data-content="description"></p>
+    <textarea id="wysiwyg" data-schemaformat="html" name="root[config][word_count]"></textarea>
+    <!-- $("wysiwyg").trumbowyg(); -->
+  </div>
 </template>
 
 <template id="object">
-    <div
-        data-schematype="object"
-        data-schemapath="root.config.show_url"
-        <!-- optional -->data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
-        <!-- optional -->data-grid="6"
+  <div data-schematype="object" data-schemapath="root.config.show_url" <!-- optional -->
+    data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
+    <!-- optional -->data-grid="6"
     >
-        <!-- header template -->
-        <p class="help-block" data-content="description"></p>
-        <div class="object--children">
-            <!-- Loop through children and use appropriate template -->
-        </div>
+    <!-- header template -->
+    <p class="help-block" data-content="description"></p>
+    <div class="object--children">
+      <!-- Loop through children and use appropriate template -->
     </div>
+  </div>
 </template>
 
 <template id="array">
-    <div
-        data-schematype="array"
-        data-schemapath="root.config.show_url"
-        <!-- optional -->data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
-        <!-- optional -->data-grid="6"
+  <div data-schematype="array" data-schemapath="root.config.show_url" <!-- optional -->
+    data-schemaid="file:///var/www/dist/library/schemas/standard_text.json"
+    <!-- optional -->data-grid="6"
     >
-        <!-- header template -- Array does not have properties field -->
-        <p class="help-block" data-content="description" data-content="description"></p>
-        <div class="array--children">
-            <!-- If min-items is 1, add 1 of these right away, else require manually adding it -->
-            <template id="array-item">
-                <div class="array--item" data-schemapath="root.body.sub_patterns.0">
-                    <label data-content="title + count"></label>
-                    <pfe-select> <!-- Dropdown with all ref options by title -->
-                        <!-- 
+    <!-- header template -- Array does not have properties field -->
+    <p class="help-block" data-content="description" data-content="description"></p>
+    <div class="array--children">
+      <!-- If min-items is 1, add 1 of these right away, else require manually adding it -->
+      <template id="array-item">
+        <div class="array--item" data-schemapath="root.body.sub_patterns.0">
+          <label data-content="title + count"></label>
+          <pfe-select>
+            <!-- Dropdown with all ref options by title -->
+            <!-- 
                             customElements.whenDefined("pfe-select").then(() => {
                                 document.querySelector("pfe-select").pfeOptions = [
                                     { text: "Please select an Option", value: "", selected: true },
@@ -130,17 +124,18 @@
                                 ];
                             });
                         -->
-                    </pfe-select>
-                    <div data-schemaid="file:///var/www/dist/library/schemas/standard_text.json" data-schematype="object" data-schemapath="root.body.sub_patterns.0">
-                        // Render sub-schema for selected item from dropdown above
-                    </div>
-                </div>
-            </template>
+          </pfe-select>
+          <div data-schemaid="file:///var/www/dist/library/schemas/standard_text.json" data-schematype="object"
+            data-schemapath="root.body.sub_patterns.0">
+            // Render sub-schema for selected item from dropdown above
+          </div>
         </div>
-        <div class="array-controls">
-            <button type="button" title="Add + title" data-content="title"></button>
-            <button type="button" title="Remove last + title" data-content="Last + title"></button>
-            <button type="button" title="Delete all">Delete all</button>
-        </div>
+      </template>
     </div>
+    <div class="array-controls">
+      <button type="button" title="Add + title" data-content="title"></button>
+      <button type="button" title="Remove last + title" data-content="Last + title"></button>
+      <button type="button" title="Delete all">Delete all</button>
+    </div>
+  </div>
 </template>

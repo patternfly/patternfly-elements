@@ -79,7 +79,7 @@ module.exports = function factory({
         .pipe(
           sass({
             // Pointing to the global node modules path
-            includePaths: ["../../node_modules"]
+            includePaths: ["node_modules", "../../node_modules"]
           }).on("error", sass.logError)
         )
         // Compile the Sass into CSS
@@ -87,7 +87,7 @@ module.exports = function factory({
           sass({
             outputStyle: "expanded",
             // Pointing to the global node modules path
-            includePaths: ["../../node_modules"]
+            includePaths: ["node_modules", "../../node_modules"]
           }).on("error", sass.logError)
         )
         // Adds autoprefixing to the compiled sass

@@ -1,6 +1,5 @@
 {
   "name": "@patternfly/pfe-schema-editor",
-  "description": "Schema editor element for PatternFly Elements",
   "pfelement": {
     "className": "PfeSchemaEditor",
     "elementName": "pfe-schema-editor",
@@ -11,7 +10,11 @@
     },
     "assets": []
   },
-  "version": "1.0.0-prerelease.39",
+  "version": "1.0.0-prerelease.54",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Schema editor element for PatternFly Elements",
   "keywords": [
     "web-components",
     "html"
@@ -20,9 +23,6 @@
     "type": "git",
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-schema-editor"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "main": "./dist/pfe-schema-editor.umd.js",
   "module": "./dist/pfe-schema-editor.js",
@@ -33,17 +33,21 @@
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-schema-editor/test/"
   },
   "contributors": [
     {
-      "name": "castastrophe"
+      "name": "castastrophe",
+      "url": "https://www.github.com/castastrophe"
     }
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "1.0.0-prerelease.40",
-    "@patternfly/pfelement": "1.0.0-prerelease.39",
-    "gh-pages": "^2.2.0"
+    "@patternfly/pfelement": "1.0.0-prerelease.51",
+    "@patternfly/pfe-select": "1.0.0-prerelease.54"
+  },
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.54"
   }
 }

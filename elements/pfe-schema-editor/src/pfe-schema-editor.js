@@ -20,7 +20,7 @@ class PfeSchemaEditor extends PFElement {
 
   static get events() {
     return {
-      change: `${this.tag}:change`,
+      import: `${this.tag}:import`,
       export: `${this.tag}:export`
     };
   }
@@ -41,8 +41,10 @@ class PfeSchemaEditor extends PFElement {
     ) {
       this.schema = input;
 
-      this.emitEvent(PfeSchemaEditor.events.change, {
-        detail: {}
+      this.emitEvent(PfeSchemaEditor.events.import, {
+        detail: {
+          schema: input
+        }
       });
     } else {
       // @TODO :)
@@ -70,14 +72,14 @@ class PfeSchemaEditor extends PFElement {
     // If you need to initialize any attributes, do that here
     this._init();
 
-    this.addEventListener(PfeSchemaEditor.events.change, this._changeHandler);
+    this.addEventListener(PfeSchemaEditor.events.import, this._importHandler);
     this.addEventListener(PfeSchemaEditor.events.export, this._exportHandler);
   }
 
   disconnectedCallback() {
     this.removeEventListener(
-      PfeSchemaEditor.events.change,
-      this._changeHandler
+      PfeSchemaEditor.events.import,
+      this._importHandler
     );
     this.removeEventListener(
       PfeSchemaEditor.events.export,
@@ -87,17 +89,50 @@ class PfeSchemaEditor extends PFElement {
 
   _buildHeader(template, object) {
     // Set up the header
+    let clone = template.content.cloneNode(true);
+    if (!clone) return;
+
+    let header = clone.querySelector(".toggle--header");
     let field;
-    const header = template.content.cloneNode(true);
-    [header.querySelector(".toggle--header")].forEach(el => {
-      field = el.getAttribute("data-content");
-      el.textContent = object[field];
+
+    if (header) {
+      field = header.getAttribute("data-content");
+      header.textContent = object[field];
+    }
+
+    let description = clone.querySelector(".toggle--description");
+
+    if (description) {
+      field = description.getAttribute("data-content");
+      description.textContent = object[field];
+    }
+
+    if (object.collapsible) {
+      clone.setAttribute("collapsible", "");
+    } else {
+      clone.querySelector(".toggle").setAttribute("disabled", "");
+    }
+
+    let dropdown = clone.querySelector(".pf-c-options-menu__menu");
+    Object.keys(object.properties).map(prop => {
+      let title = object.properties[prop].title;
+      if (!title) title = prop;
+      let item = document.createElement("li");
+      let button = document.createElement("button");
+      button.setAttribute("class", "pf-c-options-menu__menu-item");
+      button.type = "button";
+      button.innerText = title;
+      button.value = prop;
+      // Attach elements
+      item.appendChild(button);
+      dropdown.appendChild(item);
     });
 
-    return header;
+    return clone;
   }
 
   _buildItem(template, object) {
+    console.log("Build item");
     console.log(template);
     console.log(object);
 
@@ -110,18 +145,22 @@ class PfeSchemaEditor extends PFElement {
     //   el.textContent = object[field];
     // });
 
+    console.dir(clone);
+
     return clone;
   }
 
   _init() {
     // Parse schema
+    console.log("Init");
     console.log(this.schema);
 
     if (
       typeof this.schema === "object" &&
       Object.keys(this.schema).length > 0
     ) {
-      this._container.innerHTML = "";
+      // @TODO: update specific fields only?
+      // this._container.innerHTML = "";
 
       // Set up the header
       this._container.appendChild(
@@ -145,7 +184,8 @@ class PfeSchemaEditor extends PFElement {
     }
   }
 
-  _changeHandler(event) {
+  _importHandler(event) {
+    console.log("Import schema");
     this._init();
   }
 

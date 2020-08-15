@@ -1,17 +1,51 @@
 // Please see the pfe-sass README for guidance on using these tools
 @import "../../pfe-sass/pfe-sass";
+@import "@patternfly/patternfly/components/options-menu";
 
 
 $LOCAL: schema;
 
 :host {
-  // Example local variable, using BEM format
-  // --pfe-schema-editor--Property: value;
-
+  @include pfe-box-sizing;
+  @extend %pfe-text;
   display: block;
 }
 
 :host([hidden]) {
   display: none;
+}
+
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 10px;
+  width: 100%;
+  padding: 4px;
+  background-color: #eee;
+  .toggle {
+    @extend %reset-button;
+    position: relative;
+    flex-grow: 1;
+    color: pfe-var(text);
+    [collapsible] &::before {
+      @include pfe-chevron($state: open, $size: .5em, $position: before);
+      top: .4em;
+      left: .1em;
+    }
+    &--header,
+    &--description {
+      padding-left: 1rem;
+    }
+    &--header {
+      @extend %pfe-headline--3xl;
+      margin: 0 0 .1em;
+    }
+    &--description {
+      margin: 0;
+    }
+  }
+  > [class*="--group"] {
+    align-self: center;
+  }
 }
 

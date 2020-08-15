@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Example schema",
-  "description": "Generic description of what this schema describes.",
+  "description": "Generic description of what this schema is.",
   "type": "object",
   "category": "content",
   "status": "public",

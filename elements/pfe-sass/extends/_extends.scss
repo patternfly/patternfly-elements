@@ -47,3 +47,97 @@
     color: pfe-fetch(text) !important;
   }
 }
+
+// TYPOGRAPHY
+%pfe-headline--3xl {
+  font-family: pfe-var(font-family--heading);
+  font-size:   pfe-var(font-size--3xl);
+  line-height: 1.2;
+  font-weight: pfe-var(font-weight--light);
+}
+
+%pfe-headline--2xl {
+  font-family: pfe-var(font-family--heading);
+  font-size:   pfe-var(font-size--2xl);
+  line-height: 1.2;
+  font-weight: pfe-var(font-weight--light);
+}
+
+%pfe-headline--xl {
+  font-family: pfe-var(font-family--heading);
+  font-size:   pfe-var(font-size--xl);
+  line-height: 1.3;
+  font-weight: pfe-var(font-weight--normal);
+}
+
+%pfe-headline--lg {
+  font-family: pfe-var(font-family--heading);
+  font-size:   pfe-var(font-size--lg);
+  line-height: 1.3;
+  font-weight: pfe-var(font-weight--normal);
+}
+
+%pfe-headline--md {
+  font-family: pfe-var(font-family--heading);
+  font-size:   pfe-var(font-size--md);
+  line-height: 1.3;
+  font-weight: pfe-var(font-weight--normal);
+}
+
+%pfe-headline--sm {
+  font-family: pfe-var(font-family--heading);
+  font-size:   pfe-var(font-size--sm);
+  line-height: 1.5;
+  font-weight: pfe-var(font-weight--normal);
+}
+
+%pfe-headline--xs {
+  font-family: pfe-var(font-family--heading);
+  font-size:   pfe-var(font-size--xs);
+  line-height: 1.5;
+  font-weight: pfe-var(font-weight--normal);
+}
+
+%pfe-headline--xxs {
+  font-family: pfe-var(font-family--heading);
+  font-size:   pfe-var(font-size--xs);
+  line-height: 1.5;
+  font-weight: pfe-var(font-weight--light);
+}
+
+%pfe-text--lg {
+  font-family: pfe-var(font-family);
+  font-size:   pfe-var(font-size--lg);
+  line-height: 1.5;
+  font-weight: pfe-var(font-weight--normal);
+}
+
+%pfe-text--md {
+  font-family: pfe-var(font-family);
+  font-size:   pfe-var(font-size--md);
+  line-height: 1.5;
+  font-weight: pfe-var(font-weight--normal);
+}
+
+%pfe-text--sm {
+  font-family: pfe-var(font-family);
+  font-size:   pfe-var(font-size--sm);
+  line-height: 1.5;
+  font-weight: pfe-var(font-weight--normal);
+}
+
+%pfe-text--xs {
+  font-family: pfe-var(font-family);
+  font-size:   pfe-var(font-size--xs);
+  line-height: 1.5;
+  font-weight: pfe-var(font-weight--normal);
+}
+
+// Alias'
+%pfe-headline {
+  @extend %pfe-headline--md;
+}
+
+%pfe-text {
+  @extend %pfe-text--md;
+}

@@ -32,6 +32,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   )
 ));
 
+@include pfe-local-debug;
+
+/// ===========================================================================
 
 :host {
   display: pfe-local(Display);
@@ -138,18 +141,22 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// INSET NOTCH
 /// ===========================================================================
 
- 
-:host([vertical][pfe-variant="wind"]) .tabs-prefix,
-:host([vertical][pfe-variant="wind"]) .tabs-suffix {
+// Vertical
+:host([vertical]) .tabs-prefix,
+:host([vertical]) .tabs-suffix {
     left: 0px;
     top: 0px;
     content: " ";
     height: calc(#{pfe-var(container-padding)} * 2);
     width: 1px;
-    background-color: pfe-local(BorderColor, $region: tabs);
     position: relative;
 }
+:host([vertical][pfe-variant="wind"]) .tabs-prefix,
+:host([vertical][pfe-variant="wind"]) .tabs-suffix {
+    background-color: pfe-local(BorderColor, $region: tabs);
+}
 
+// Horizontal
 :host(:not([vertical])[pfe-variant="earth"]) .tabs-prefix {
     left: 0px;
     top: 0px;
@@ -158,8 +165,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     width: pfe-var(container-padding);
     position: relative;
 }
-
-
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host(:not([vertical])[pfe-variant="earth"]) .tabs-prefix {
     width: calc(#{pfe-var(container-padding)} * 2);

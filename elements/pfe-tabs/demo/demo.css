@@ -74,11 +74,11 @@ section>h2 {
    padding: 50px 20px;
 }
 .light-background {
-    background-color: rgb(252, 250, 244);
+    background-color: #006069;
     --theme: light;
 }
 .dark-background {
-    background-color: #383333;
+    background-color: #000;
     --theme: dark;
 }
 .saturated-background {

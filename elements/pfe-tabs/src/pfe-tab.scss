@@ -26,7 +26,7 @@ $backwards-compatibility: (
 );
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
-//@include pfe-local-debug;
+@include pfe-local-debug;
 
 /// ===========================================================================
 /// DEFAULT / WIND TAB VARIANT
@@ -151,10 +151,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   }
 }
  
-:host([pfe-variant="earth"]:not([aria-selected="true"]):first-of-type) {
+:host(:not([vertical])[pfe-variant="earth"]:not([aria-selected="true"]):first-of-type) {
   border-left-color: transparent;
 }
-:host([pfe-variant="earth"]:not([aria-selected="true"]):last-of-type) {
+:host(:not([vertical])[pfe-variant="earth"]:not([aria-selected="true"]):last-of-type) {
   border-right-color: transparent;
 }
 
@@ -266,6 +266,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 :host([on="dark"][pfe-variant="earth"][aria-selected="true"]) {
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
   --pfe-tabs--BackgroundColor: #{pfe-var(surface--darkest)};
+  //  --pfe-tabs--BackgroundColor: #{pfe-local(BackgroundColor, $fallback: #{pfe-var(surface--darkest)} );
 }
 
 // SATURATED
@@ -274,16 +275,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 }
 
 :host([pfe-variant="earth"][on="saturated"][aria-selected="true"]) {
-  color: pfe-local(Color--focus);
+  --pfe-tabs--BackgroundColor: #{pfe-var(surface--lightest)};
 }
-
-:host([pfe-variant="earth"][on="saturated"]:hover) {
-  color: pfe-local(Color--focus);
-}
-
-:host([pfe-variant="earth"][on="saturated"][aria-selected="true"]) {
-  --pfe-tabs--Color: #{pfe-var(text)};
-}
+ 
 
 /// ===========================================================================
 /// WIND TAB VARIANTS ON DARK & SATURATED
@@ -342,5 +336,5 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 }
 
 :host([on="dark"][pfe-variant="wind"][vertical][aria-selected="false"]:hover) {
-  border-bottom: 0;
+  border-bottom-color: transparent;
 }

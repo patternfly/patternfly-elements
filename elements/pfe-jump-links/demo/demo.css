@@ -4,6 +4,8 @@ html {
 }
 
 :root{
+    --pfe-navigation--Height--actual: 55px;
+    --pfe-jump-links--nav-height: 62px;
     --pfe-jump-links-panel__section--spacer: 117px;
     --pfe-jump-links-panel--offset: 55px;
 }
@@ -44,7 +46,7 @@ a.pfe-jump-links-nav__item {
   width: 100%;
   overflow: hidden;
   background-color: #333;
-  height: var(--pfe-jump-links-panel--offset);
+  height: var(--pfe-navigation--Height--actual);
 }
 
 #navbar a {
@@ -56,7 +58,7 @@ a.pfe-jump-links-nav__item {
   text-decoration: none;
   font-size: 17px;
 }
-
+/* 
 .pfe-jump-links__section--spacer {
   content: '';
   display: block;
@@ -66,5 +68,5 @@ a.pfe-jump-links-nav__item {
   height: 64px;
   margin-top: calc( -1 * var(--pfe-jump-links-panel__section--spacer) );
   height: var(--pfe-jump-links-panel__section--spacer);
-}
+} */
 

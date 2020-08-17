@@ -324,6 +324,10 @@ class PfeJumpLinksPanel extends PFElement {
     return "pfe-jump-links-panel.html";
   }
 
+  get styleUrl() {
+    return "pfe-jump-links-panel.scss";
+  }
+
   static get events() {
     return {
       change: `${this.tag}:change`,
@@ -354,12 +358,14 @@ class PfeJumpLinksPanel extends PFElement {
     this._makeSpacers = this._makeSpacers.bind(this);
     this._observer = new MutationObserver(this._mutationCallback);
     this.currentActive = null;
+    this._isValidMarkup = this._isValidMarkup.bind(this);
     window.addEventListener("resize", this._handleResize);
   }
 
   connectedCallback() {
     super.connectedCallback();
     this._makeSpacers();
+    this._isValidMarkup();
     this.nav = this._getNav();
     this._init();
     this.sectionMargin = this.getAttribute("pfe-c-offset");
@@ -389,6 +395,14 @@ class PfeJumpLinksPanel extends PFElement {
       case "pfe-c-offset":
         this.sectionMargin = newVal;
         break;
+    }
+  }
+
+  _isValidMarkup() {
+    if (this.childElementCount === 1) {
+      console.warn(
+        "pfe-jump-links-panel must contain more than one child element. Having a top-level 'wrapper' will prevent appropriate styles from being applied."
+      );
     }
   }
 

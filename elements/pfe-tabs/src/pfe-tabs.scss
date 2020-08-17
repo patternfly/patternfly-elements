@@ -138,24 +138,30 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// INSET NOTCH
 /// ===========================================================================
 
-@media screen and (min-width: #{pfe-breakpoint(md)}) {
-  :host([vertical][pfe-variant="wind"]) .tabs-prefix,
-  :host([vertical][pfe-variant="wind"]) .tabs-suffix {
+ 
+:host([vertical][pfe-variant="wind"]) .tabs-prefix,
+:host([vertical][pfe-variant="wind"]) .tabs-suffix {
     left: 0px;
     top: 0px;
     content: " ";
-    height: 32px;
+    height: calc(#{pfe-var(container-padding)} * 2);
     width: 1px;
     background-color: pfe-local(BorderColor, $region: tabs);
     position: relative;
-  }
+}
 
-  :host([vertical][pfe-variant="earth"]) .tabs-prefix {
+:host(:not([vertical])[pfe-variant="earth"]) .tabs-prefix {
     left: 0px;
     top: 0px;
     content: " ";
-
-    height: calc(#{pfe-var(container-padding)} * 2);
+    height: 1px;
+    width: pfe-var(container-padding);
     position: relative;
+}
+
+
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+  :host(:not([vertical])[pfe-variant="earth"]) .tabs-prefix {
+    width: calc(#{pfe-var(container-padding)} * 2);
   }
 }

@@ -26,15 +26,11 @@ $backwards-compatibility: (
 );
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
-@include pfe-local-debug;
+//@include pfe-local-debug;
 
 /// ===========================================================================
 /// DEFAULT / WIND TAB VARIANT
 /// ===========================================================================
-
-.foo {
-color: pfe-local(bar);
-}
 
 :host {
   text-align: left;
@@ -149,15 +145,16 @@ color: pfe-local(bar);
 /// EARTH TAB VARIANTS
 /// ===========================================================================
 :host([pfe-variant="earth"]) {
-  border-left: 0px;
   @include browser-query(ie11) {
     background-color: pfe-fetch(surface--lighter);
     color: pfe-fetch(text--muted);
   }
 }
  
-
-:host(:not([vertical])[pfe-variant="earth"]:not([aria-selected="true"]):last-of-type) {
+:host([pfe-variant="earth"]:not([aria-selected="true"]):first-of-type) {
+  border-left-color: transparent;
+}
+:host([pfe-variant="earth"]:not([aria-selected="true"]):last-of-type) {
   border-right-color: transparent;
 }
 
@@ -178,7 +175,7 @@ color: pfe-local(bar);
 
 // nth of type is needed to override first and last of type selectors above
 :host([pfe-variant="earth"][aria-selected="true"]) {
-  background-color: pfe-var(surface--lightest);
+  background-color: pfe-local(BackgroundColor, $fallback: #{pfe-var(surface--lightest)});
   border-bottom: 0;
   border-left-color: pfe-var(surface--border);
   border-right-color: pfe-var(surface--border);
@@ -256,7 +253,7 @@ color: pfe-local(bar);
 
 :host([on="dark"][pfe-variant="earth"][aria-selected="false"]) {
   --pfe-tabs--Color: #{pfe-var(text--muted--on-dark)};
-  background-color: pfe-var(surface--darker);
+  --pfe-tabs--BackgroundColor--inactive: #{pfe-var(surface--darker)};
 
   @include browser-query(ie11) {
     background-color: pfe-var(surface--lightest) !important;
@@ -268,7 +265,7 @@ color: pfe-local(bar);
 
 :host([on="dark"][pfe-variant="earth"][aria-selected="true"]) {
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
-  background-color: pfe-var(surface--darkest);
+  --pfe-tabs--BackgroundColor: #{pfe-var(surface--darkest)};
 }
 
 // SATURATED

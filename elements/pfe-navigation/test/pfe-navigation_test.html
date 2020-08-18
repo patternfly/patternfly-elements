@@ -9,18 +9,266 @@
   </head>
   <body>
     <pfe-navigation>
-      <!-- Default slot -->
-      <h2>This is pfe-navigation</h2>
-      <!-- Named slots -->
-      <div slot="search">SEARCH slot</div>
-      <div slot="customlinks">CUSTOMLINKS slot</div>
-    </pfe-navigation>
+      <nav class="pfe-navigation" aria-label="Main Navigation">
+        <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
+          <a href="#" class="pfe-navigation__logo-link">
+            <img class="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="assets/redhat--reverse.svg" width="400" alt="Red Hat" />
+          </a>
+        </div>
+        <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
+          <li class="pfe-navigation__menu-item">
+            <!-- @todo/note: removed aria-expanded attr and has-dropdown class since this is the no js version, how will this component be used? why is it called <ze-navigation>? -->
+            <a href="#" class="pfe-navigation__menu-link" id="productsLink">
+              Products
+            </a>
 
-    <!-- Preview different properties -->
-    <pfe-navigation state>
-      <h2>This is pfe-navigation</h2>
-      <div slot="search">SEARCH slot</div>
-      <div slot="customlinks">CUSTOMLINKS slot</div>
+            <div class="pfe-navigation__dropdown pfe-navigation__dropdown--12-column-grid">
+              <section class="col-xs-12 col-md-6 col-lg-6">
+                <h3>
+                  <a href="#">Platforms</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Red Hat Enterprise Linux</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat OpenStack Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Virtualization</a>
+                  </li>
+                </ul>
+              </section>
+              <section class="col-xs-12 col-md-6 col-lg-6">
+                <h3>
+                  <a href="#">Ladders</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Lorem ipsum</a>
+                  </li>
+                  <li>
+                    <a href="#">Dolor sit amet</a>
+                  </li>
+                  <li>
+                    <a href="#">Wakka Wakka</a>
+                  </li>
+                </ul>
+              </section>
+              <section class="col-xs-12 col-md-6 col-lg-3">
+                <h3>
+                  <a href="#">Chutes</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Yakkita yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Enterprise Yakkita yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Upstream Yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Yakkita ME</a>
+                  </li>
+                </ul>
+              </section>
+              <section class="col-xs-12 col-md-6 col-lg-3">
+                <h3>
+                  <a href="#">Platforms</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Red Hat Enterprise Linux</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat OpenStack Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Virtualization</a>
+                  </li>
+                </ul>
+              </section>
+              <section class="col-xs-12 col-md-6 col-lg-3">
+                <h3>
+                  <a href="#">Ladders</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Lorem ipsum</a>
+                  </li>
+                  <li>
+                    <a href="#">Dolor sit amet</a>
+                  </li>
+                  <li>
+                    <a href="#">Wakka Wakka</a>
+                  </li>
+                </ul>
+              </section>
+              <section class="col-xs-12 col-md-6 col-lg-3">
+                <h3>
+                  <a href="#">Chutes</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Yakkita yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Enterprise Yakkita yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Upstream Yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Yakkita ME</a>
+                  </li>
+                </ul>
+              </section>
+
+              <!-- documentation note: mega menu footer region can fit at most 4 ctas -->
+              <section class="pfe-navigation__footer">
+                <pfe-cta pfe-priority="primary">
+                  <a href="#">Learn more about PFElements</a>
+                </pfe-cta>
+
+                <pfe-cta>
+                  <a href="https://github.com/">GitHub</a>
+                </pfe-cta>
+
+                <pfe-cta>
+                  <a href="https://github.com/">Another CTA Example</a>
+                </pfe-cta>
+
+                <pfe-cta>
+                  <a href="#">Learn more about CTAs and How to Use Them</a>
+                </pfe-cta>
+              </section>
+            </div> <!-- end .pfe-navigation__dropdown -->
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link">
+              Solutions
+            </a>
+            <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+              <!-- documentation note: single-col dropdowns CANNOT have pfe-nav footer regions -->
+              <!-- documentation note: single col headings are groups with different styles than mega menu tray headings -->
+              <section>
+                <h3>
+                  Group 1
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Red Hat Enterprise Linux</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat OpenStack Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Virtualization</a>
+                  </li>
+                </ul>
+              </section>
+              <section>
+                <h3>
+                  Group 2
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Red Hat Enterprise Linux</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat OpenStack Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Virtualization</a>
+                  </li>
+                </ul>
+              </section>
+            </div> <!-- end .pfe-navigation__dropdown -->
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link">
+              Learning & Support
+            </a>
+            <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+              <!-- documentation note: single-col dropdowns CANNOT have pfe-nav footer regions -->
+              <!-- documentation note: separator class, pfe-navigation__single-column--separator -->
+              <ul>
+                <li>
+                  <a href="#">Red Hat Enterprise Linux</a>
+                </li>
+                <li>
+                  <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                </li>
+                <li>
+                  <a href="#">Red Hat OpenStack Platform</a>
+                </li>
+                <li class="pfe-navigation__single-column--separator">
+                  <a href="#">Red Hat Virtualization</a>
+                </li>
+                <li>
+                  <a href="#">Red Hat Virtualization Example</a>
+                </li>
+              </ul>
+            </div> <!-- end .pfe-navigation__dropdown -->
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link">
+              Resources
+            </a>
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link">
+              Red Hat & Open Source
+            </a>
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link">
+              Really Long Menu Title
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <ul class="pfe-navigation__fallback-links">
+        <li>
+          <a href="#">Search</a>
+        </li>
+        <li>
+          <a href="#">Custom Link</a>
+        </li>
+        <li>
+          <a href="#">Log in</a>
+        </li>
+      </ul>
+      <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
+        <a href="#" class="#">
+          <!-- @note: added web-icon-globe icon as a placeholder since it is used as the language switcher icon -->
+          <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
+          Custom Link
+        </a>
+      </div>
+      <div slot="pfe-navigation--search" class="pfe-navigation__search">
+      <!-- @todo: move form and label for="" and label id into shadow DOM -->
+      <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
+        <form>
+          <label for="pfe-navigation__search-label1">Search</label>
+          <input id="pfe-navigation__search-label1" type="text" placeholder="Search" />
+          <button>Search</button>
+        </form>
+      </div>
     </pfe-navigation>
 
     <script>
@@ -35,22 +283,65 @@
           );
         });
 
-        // Write tests for each attribute
-        test("state attribute is applied correctly", () => {
-          // Test that the attribute applied correctly
-          // assert.equal();
+        test("it should process light DOM and move it to the shadow DOM", () => {
+
         });
 
-        // Write tests for each slot
-        test("search slot is working correctly", () => {
-          // Test that the attribute applied correctly
-          // assert.equal();
-        });
-        test("customlinks slot is working correctly", () => {
-          // Test that the attribute applied correctly
-          // assert.equal();
+        test("it should reflect changes from the light DOM in the shadow DOM", done => {
+          const pfeNav = document.querySelector("pfe-navigation");
+          const productsLink = document.querySelector("#productsLink");
+          const newProductsText = "Moar products";
+          productsLink.textContent = newProductsText;
+
+          flush(() => {
+            const shadowProductsButton = pfeNav.shadowRoot.querySelector("#pfe-navigation__menu li button");
+            assert.equal(shadowProductsButton.textContent = newProductsText);
+            done();
+          });
         });
 
+        // test("it should convert dropdown links that have dropdowns into buttons", () => {
+
+        // });
+
+        // test("it should open a navigation dropdown when the dropdown button is clicked", () => {
+
+        // });
+
+        // test("it should support the ability to have a single column dropdown for a menu item", () => {
+
+        // });
+
+        // test("it should show a mobile menu when there isn't enough horizontal space for all of the menu items", () => {
+
+        // });
+
+        // // Write tests for each attribute
+        // test("it should close the navigation when the backdrop is clicked on", () => {
+        //   // Test that the attribute applied correctly
+        //   // assert.equal();
+        // });
+
+        // test("it should close the navigation when the escape key is pressed", () => {
+        //   // Test that the attribute applied correctly
+        //   // assert.equal();
+        // });
+
+        // test("it should fetch the content for the site switcher", () => {
+        //   // Test that the attribute applied correctly
+        //   // assert.equal();
+        // });
+
+        // test("it should add a pfe-navigation__logo-image--small class for small logos", () => {
+
+        // });
+
+        test("it should apply the proper aria attributes to the navigation", () => {
+          const pfeNav = document.querySelector("pfe-navigation");
+          const nav = pfeNav.shadowRoot.querySelector("nav");
+
+          assert.equal(nav.getAttribute("aria-label"), "Main Navigation");
+        });
       });
     </script>
   </body>

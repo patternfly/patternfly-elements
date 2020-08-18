@@ -1,5 +1,6 @@
 ## Prerelease 55 ( TBD )
 
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-autocomplete - fire custom event when dropdown is shown
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfelement - restore pfelement tests (#1018)
 - [fbe4423](https://github.com/patternfly/patternfly-elements/commit/fbe442396f06b0a097366512b698dc0b6d5e1f9f) fix: improve CLS rating in lighthouse (#1020)
 

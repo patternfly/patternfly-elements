@@ -31,6 +31,7 @@ class PfeAutocomplete extends PFElement {
     return {
       search: `${this.tag}:search-event`,
       select: `${this.tag}:option-selected`,
+      optionsShown: `${this.tag}:options-shown`,
       slotchange: `slotchange`
     };
   }
@@ -293,6 +294,9 @@ class PfeAutocomplete extends PFElement {
     this.activeIndex = null;
     this._dropdown.setAttribute("open", true);
     this._dropdown.setAttribute("active-index", null);
+    this.emitEvent(PfeAutocomplete.events.optionsShown, {
+      composed: true
+    });
   }
 
   _optionSelected(e) {

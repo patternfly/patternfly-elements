@@ -1,19 +1,17 @@
 @import "_shared-assets";
 
-$nav-variables: (
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   // Default spacing values
-  Padding--vertical: pfe-var(container-padding),
+  Padding--vertical:   pfe-var(container-padding),
   Padding--horizontal: pfe-var(container-padding),
-  Padding: 0 pfe-local(Padding--horizontal),
 
   // Darkest is the default background color
-  BackgroundColor: pfe-color(surface--darkest),
-  Color:           pfe-color(text--on-dark),
+  BackgroundColor: pfe-var(surface--darkest),
+  Color:           pfe-var(text--on-dark),
 
   // Variables for the border
   BorderTopColor: transparent,
   BorderColor:    transparent,
-  Border:         pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
 
   MaxHeight: 72px,
   MobileMenuHeight: 60px,
@@ -26,7 +24,7 @@ $nav-variables: (
 
   // Overlay region
   overlay: (
-    BackgroundColor: pfe-color(overlay, #{$overlay--BackgroundColor--fallback})
+    BackgroundColor: pfe-var(overlay, $fallback: $overlay--BackgroundColor--fallback)
   ),
 
   // Trigger region
@@ -45,12 +43,17 @@ $nav-variables: (
   logo: (
     MinWidth: 135px
   )
-);
-$variables: map-merge($variables, $nav-variables);
+));
+
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+  Padding: 0 pfe-local(Padding--horizontal),
+  Border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
+));
 
 :host {
   // Print the variables to the DOM
-  @include pfe-print-variables($variables);
+  @include pfe-print-local($LOCAL-VARIABLES);
 
   // Reduce padding for print
   @media print {
@@ -61,7 +64,7 @@ $variables: map-merge($variables, $nav-variables);
   --pfe-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
   --pfe-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
 
-  z-index: #{pfe-zindex(content)};
+  z-index: pfe-zindex(content);
   width: 100%;
 }
 
@@ -69,7 +72,7 @@ $variables: map-merge($variables, $nav-variables);
   position: sticky;
   top: 0;
   left: 0;
-  z-index: #{pfe-zindex(navigation)};
+  z-index: pfe-zindex(navigation);
 }
 
 :host([pfe-full-width]) .pfe-navigation__container {
@@ -99,8 +102,8 @@ pfe-icon {
 
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
-  color: #{pfe-apply-broadcast(link)};
-  text-decoration: #{pfe-apply-broadcast(link-decoration)};
+  color: #{pfe-broadcasted(link)};
+  text-decoration: #{pfe-broadcasted(link-decoration)};
 }
 
 ::slotted([slot="mobile-menu--label"]) {
@@ -117,7 +120,7 @@ pfe-icon {
 
     display: flex;
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
-    z-index: #{pfe-zindex(navigation)};
+    z-index: pfe-zindex(navigation);
 
     background-color: #{pfe-local(BackgroundColor)};
     color: #{pfe-local(Color)};
@@ -153,13 +156,13 @@ pfe-icon {
   }
   &__overlay {
     display: block;
-    background-color: #{pfe-local($region: overlay, $cssvar: BackgroundColor)};
+    background-color: pfe-local($region: overlay, $cssvar: BackgroundColor);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: #{pfe-zindex(overlay)};
+    z-index: pfe-zindex(overlay);
     &[hidden] {
       display: none;
     }
@@ -170,14 +173,14 @@ pfe-icon {
     flex-shrink: 0; // Prevent flexbox from collapsing the padding.
     align-items: flex-start;
     justify-content: center;
-    width: #{pfe-local($region: logo, $cssvar: MinWidth, $fallback: 155px)};
-    flex: 0 0 #{pfe-local($region: logo, $cssvar: MinWidth)};
+    width: pfe-local(MinWidth, $region: logo, $fallback: 155px);
+    flex: 0 0 pfe-local(MinWidth, $region: logo);
 
-    padding-top: #{pfe-local(Padding--vertical)};
-    padding-bottom: #{pfe-local(Padding--vertical)};
+    padding-top: pfe-local(Padding--vertical);
+    padding-bottom: pfe-local(Padding--vertical);
     padding-right: calc( #{pfe-var(container-padding)} + 9px ); // ensure gap between main menu links and logo
 
-    @media screen and (min-width: pfe-breakpoint("grid-breakpoint--md")) {
+    @media screen and (min-width: pfe-breakpoint(md)) {
         padding-right: calc( #{pfe-var(container-padding)} * 3 );
     }
 
@@ -207,11 +210,11 @@ pfe-icon {
     height: 100%;
     width: 100%;
     &--menu-label {
-      color: #{pfe-local(Color)};
+      color: pfe-local(Color);
     }
     [show_search] &,
     [show_login][show_language] & {
-      grid-gap: #{pfe-var(container-spacer)};
+      grid-gap: pfe-var(container-spacer);
     }
     ::slotted(*:not([hidden])) {
       display: block;

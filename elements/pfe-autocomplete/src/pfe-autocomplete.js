@@ -29,8 +29,8 @@ class PfeAutocomplete extends PFElement {
 
   static get events() {
     return {
-      search: `pfe-search-event`,
-      select: `pfe-option-selected`,
+      search: `${this.tag}:search-event`,
+      select: `${this.tag}:option-selected`,
       slotchange: `slotchange`
     };
   }
@@ -41,7 +41,10 @@ class PfeAutocomplete extends PFElement {
     this._slotchangeHandler = this._slotchangeHandler.bind(this);
 
     this._slot = this.shadowRoot.querySelector("slot");
-    this._slot.addEventListener("slotchange", this._slotchangeHandler);
+    this._slot.addEventListener(
+      PfeAutocomplete.events.slotchange,
+      this._slotchangeHandler
+    );
   }
 
   connectedCallback() {
@@ -391,6 +394,15 @@ class PfeAutocomplete extends PFElement {
 
       this._input.value = this._activeOption(activeIndex);
     } else if (key === KEYCODE.ENTER) {
+      if (this._activeOption(activeIndex)) {
+        this.emitEvent(PfeAutocomplete.events.select, {
+          detail: { optionValue: this._activeOption(activeIndex) },
+          composed: true
+        });
+
+        return;
+      }
+
       let selectedValue = this._input.value;
       this._doSearch(selectedValue);
       return;
@@ -417,8 +429,8 @@ class PfeAutocomplete extends PFElement {
 * reflow             | Re-renders the dropdown
 
 * - Events ----------------------------------------
-* pfe-option-selected | Fires when an option is selected.
-  event.detailes.selectedValue contains the selected value.
+* pfe-autocomplete:option-selected | Fires when an option is selected.
+  event.details.optionValue contains the selected value.
 */
 class PfeSearchDroplist extends PFElement {
   static get tag() {

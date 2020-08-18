@@ -60,13 +60,42 @@ $breakpoints: (
   }
 }
 
+/// sr-only class (same as Bootstrap 4 sr-only class)
+/// hide element from everyone except screen readers
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/// sr-only class
+/// can be used in shadow DOM and light DOM stylesheets
+.sr-only {
+  @include sr-only;
+}
+
 /// Focus indicator styles specific to pfe-navigation
 /// @param {string} $border-color Color of dashed border (white or black depending on bg-color)
-/// @param {string} $border-top-size Size of border-top (0px or 1px depending on which navigation main/mega menu
+/// @param {string} $border-top-size Size of border-top (0px or 1px depending on which navigation main/mega menu)
 @mixin focus-styles($border-color, $border-top-size) {
   border: 1px dashed $border-color;
   border-top: $border-top-size dashed $border-color;
-  outline: none;
+  outline: 0;
+}
+
+/// Focus indicator styles specific to pfe-navigation, alternative option including box-shadow bar
+/// @param {string} $border-color Color of dashed border (white or black depending on bg-color)
+/// @param {string} $box-shadow-color Color of box-shadow indicator (red or black depending on the button bg-color, border-top always needs to be the same color as the box-shadow)
+@mixin alt-focus-styles($border-color, $box-shadow-color) {
+  border: 1px dashed $border-color;
+  border-top: 1px solid $box-shadow-color;
+  box-shadow: inset 0 3px 0 0 $box-shadow-color;
+  outline: 0;
 }
 
 //
@@ -108,7 +137,7 @@ $breakpoints: (
   // focus styles
   &:focus,
   &:hover {
-    @include focus-styles(#fff, 1px);
+    @include alt-focus-styles(#fff, #e00);
   }
 }
 
@@ -120,6 +149,7 @@ $breakpoints: (
   padding: 10px 16px 10px 0;
 }
 
+// @todo: determine why the ..__logo-link style block is present twice, remove if duplicate is merge accident
 @mixin pfe-navigation__logo-link {
   display: block;
   padding: 6px 8px;
@@ -129,9 +159,10 @@ $breakpoints: (
   border: 1px solid transparent;
 
   // focus styles
+  transition: box-shadow 0.2s;
   &:focus,
   &:hover {
-    @include focus-styles(#fff, 1px);
+    @include alt-focus-styles(#fff, #e00);
   }
 }
 
@@ -180,23 +211,22 @@ $breakpoints: (
 
   // added to counteract jumpiness when dashed border is visible on focus and hover
   border: 1px solid transparent;
-  border-top: 0px;
+  // border-top: 0px;
 
   // focus styles
   &:focus,
   &:hover {
-    @include focus-styles(#fff, 0px);
+    @include alt-focus-styles(#fff, #e00);
 
     @include breakpoint('secondary-links-expand') {
-      box-shadow: inset 0 4px 0 0 #e00;
+      @include alt-focus-styles(#fff, #e00);
     }
   }
 
   &[pfe-navigation-open-toggle="main-menu--open"] {
-    // @todo: fix focus-styles on mobile for accordion links and menu toggle button
     &:focus,
     &:hover {
-      @include focus-styles(#000, 0px);
+      @include focus-styles(#000, 1px);
     }
   }
 }

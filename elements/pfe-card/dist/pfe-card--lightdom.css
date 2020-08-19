@@ -1,8 +1,0 @@
-@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-  /* IE10+ */
-  pfe-card img[pfe-overflow] {
-    max-width: 100%;
-  }
-}
-
-/*# sourceMappingURL=pfe-card--lightdom.css.map */

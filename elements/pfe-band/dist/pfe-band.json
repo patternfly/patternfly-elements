@@ -1,0 +1,156 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Band",
+  "description": "This element creates a header, body, footer, and aside region in which to place content or other components.",
+  "type": "object",
+  "tag": "pfe-band",
+  "class": "pfe-band",
+  "category": "container",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "header": {
+          "title": "Header",
+          "type": "array",
+          "namedSlot": true,
+          "maxItems": 3,
+          "items": {
+            "title": "Body item",
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        },
+        "body": {
+          "title": "Body",
+          "type": "array",
+          "namedSlot": false,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "pfe-card"
+              },
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        },
+        "footer": {
+          "title": "Footer",
+          "type": "array",
+          "namedSlot": true,
+          "maxItems": 3,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "pfe-cta"
+              },
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        },
+        "aside": {
+          "title": "Aside",
+          "type": "array",
+          "namedSlot": true,
+          "maxItems": 5,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "pfe-card"
+              },
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "color": {
+          "title": "Background color",
+          "type": "string",
+          "enum": [
+            "lightest",
+            "base",
+            "darker",
+            "darkest",
+            "complement",
+            "accent"
+          ],
+          "default": "base",
+          "prefixed": true,
+          "observer": "_colorChanged"
+        },
+        "img-src": {
+          "title": "Background image",
+          "type": "string",
+          "prefixed": true,
+          "observer": "_imgSrcChanged"
+        },
+        "aside-desktop": {
+          "title": "Aside positioning (desktop)",
+          "type": "string",
+          "default": "right",
+          "enum": ["right", "left"],
+          "prefixed": true,
+          "observer": "_basicAttributeChanged",
+          "options": {
+            "dependencies": [
+              {
+                "type": "slot",
+                "id": "aside"
+              }
+            ]
+          }
+        },
+        "aside-mobile": {
+          "title": "Aside positioning (mobile)",
+          "type": "string",
+          "default": "bottom",
+          "enum": ["top", "bottom"],
+          "prefixed": true,
+          "observer": "_basicAttributeChanged",
+          "options": {
+            "dependencies": [
+              {
+                "type": "slot",
+                "id": "aside"
+              }
+            ]
+          }
+        },
+        "aside-height": {
+          "title": "Aside height",
+          "type": "string",
+          "default": "body",
+          "enum": ["full", "body"],
+          "prefixed": true,
+          "observer": "_basicAttributeChanged",
+          "options": {
+            "dependencies": [
+              {
+                "type": "slot",
+                "id": "aside"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Content set",
+  "description": "This element creates a flexible component that renders an accordion or tabset depending on screen size.",
+  "type": "object",
+  "tag": "pfe-content-set",
+  "class": "pfe-content-set",
+  "category": "combo",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "default": {
+          "title": "Default",
+          "type": "array",
+          "namedSlot": false,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "vertical": {
+          "title": "Vertical orientation",
+          "type": "boolean",
+          "default": false,
+          "prefixed": false
+        },
+        "variant": {
+          "title": "Variant",
+          "type": "string",
+          "enum": ["wind", "earth"],
+          "default": "wind",
+          "prefixed": true
+        },
+        "align": {
+          "title": "Align",
+          "type": "string",
+          "enum": ["center"],
+          "prefixed": true
+        },
+        "breakpoint": {
+          "title": "Custom breakpoint",
+          "type": "string",
+          "prefixed": true
+        },
+        "tab-history": {
+          "title": "Tab history",
+          "type": "boolean",
+          "default": false,
+          "prefixed": true
+        }
+      },
+      "required": ["orientation", "variant", "on"]
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

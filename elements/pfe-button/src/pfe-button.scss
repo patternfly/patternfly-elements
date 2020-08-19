@@ -73,7 +73,7 @@ button {
   --pfe-button--BackgroundColor--hover: transparent;
   --pfe-button--Color: #{pfe-var(ui-accent)};
   --pfe-button__after--BorderColor: #{pfe-var(ui-accent)};
-  --pfe-button__after--Border--hover: 2px #{pfe-var(ui--border-style)};
+  --pfe-button__after--Border--hover: #{pfe-var(ui--border-width--md)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, $region: after)};
 }
 
 :host([pfe-variant="tertiary"]) {
@@ -81,12 +81,12 @@ button {
   --pfe-button--BackgroundColor--hover: transparent;
   --pfe-button--Color: #{pfe-var(text)};
   --pfe-button__after--BorderColor: #{pfe-var(text)};
-  --pfe-button__after--Border--hover: 2px #{pfe-var(ui--border-style)};
+  --pfe-button__after--Border--hover: #{pfe-var(ui--border-width--md)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, $region: after)};
 }
 
 :host([pfe-variant="danger"]) {
-  --pfe-button--BackgroundColor: #{$pf-color-red-100}; // feedback--critical?
-  --pfe-button--BackgroundColor--hover: #{$pf-color-red-200}; // feedback--critical--darkest is too dark
+  --pfe-button--BackgroundColor: #{pfe-var(feedback--critical--lighter)};
+  --pfe-button--BackgroundColor--hover: #{pfe-var(feedback--critical)};
 }
 
 :host([pfe-variant="control"]) {
@@ -94,30 +94,29 @@ button {
   --pfe-button--BackgroundColor--hover: transparent;
   --pfe-button--Color: #{pfe-var(text)};
   --pfe-button--BorderRadius: 0;
-  --pfe-button__after--BorderColor: #{$pf-color-black-200}; // surface--border--lightest?
+  --pfe-button__after--BorderColor: #{pfe-var(ui--border--lightest)};
+  --pfe-button__after--BorderColor--hover: #{pfe-var(ui--border--lightest)};
 
-  button:hover {
-    --pfe-button__after--BorderColor--hover: #{$pf-color-black-200}; // surface--border--lightest?
-  }
-  
-    button::after {
-      border-bottom-color: #{$pf-color-black-500}; // surface--border--darker?
+  button {
+    &::after {
+      border-bottom-color: pfe-var(ui--border);
     }
-
-    button:hover::after,
-    button:focus::after {
-      border-bottom-width: 2px;
+    
+    &:hover::after,
+    &:focus::after {
+      border-bottom-width: pfe-var(ui--border-width--md);
       border-bottom-color: pfe-var(ui-accent);
     }
   }
+}
 
 :host([pfe-variant="control"][disabled]) {
   --pfe-button--BackgroundColor: #{pfe-var(surface--lighter)};
 }
 
 :host([disabled]) {
-  --pfe-button--BackgroundColor: #{pfe-var(ui-disabled)}; // #{$pf-color-black-300};
-  --pfe-button--BackgroundColor--hover: #{pfe-var(ui-disabled)}; // #{$pf-color-black-300};
+  --pfe-button--BackgroundColor: #{pfe-var(ui-disabled)};
+  --pfe-button--BackgroundColor--hover: #{pfe-var(ui-disabled)};
   --pfe-button--Color: #{pfe-var(ui-disabled--text)};
   --pfe-button__after--Border: 0;
   --pfe-button__after--Border--hover: 0;

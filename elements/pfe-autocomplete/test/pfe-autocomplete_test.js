@@ -129,6 +129,26 @@ describe('<pfe-autocomplete>', () => {
     });
   });
 
+  it('should fire a pfe-autocomplete:options-shown event when the droplist is shown to the user', done => {
+    flush(() => {
+      const items = ['option 1', 'option 2'];
+
+      autocompleteElem.autocompleteRequest = function(params, callback) {
+        const regx = new RegExp("\^" + params.query, "i");
+        callback(items.filter(function (item) {
+          return regx.test(item);
+        }));
+      };
+
+      autocompleteElem.addEventListener("pfe-autocomplete:options-shown", function(event) {
+        assert.equal(droplistElem.getAttribute("open"), "true");
+        done();
+      });
+
+      autocompleteElem._sendAutocompleteRequest("o");
+    });
+  });
+
   it('should set selected-value attribute after user click on an option', done => {
     flush(() => {
       droplistElem.data = ['option 1', 'option 2'];

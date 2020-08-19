@@ -1,10 +1,6 @@
 ## Prerelease 55 ( 2020-08-19 )
 
 - [3ee117e](https://github.com/patternfly/patternfly-elements/commit/3ee117e8a3df17f50738b9c0fa0caa3a9af9c679) feat: pfe-autocomplete - fire custom event when dropdown is shown (#1046)
-- [96efb0a](https://github.com/patternfly/patternfly-elements/commit/96efb0a9fcdb969fd8697d6e746b2da22a55288f) docs: disable broken code highlighting in docs' code blocks (#1039)
-- [0a46bfa](https://github.com/patternfly/patternfly-elements/commit/0a46bfaec0b16b4f68fffa96df7a1efb9a3fa016) docs: demo homepage - adding alt tags to images and fixing cta alignment (#1022)
-- [74418ec](https://github.com/patternfly/patternfly-elements/commit/74418ec2096bb9b45863272237307f93e68c87e6) docs: allow embedding HTML in markdown docs (#1030)
-- [e3e3d38](https://github.com/patternfly/patternfly-elements/commit/e3e3d38401a734124be08c65c2e447d3c47686f2) docs: Theme palette variables update (#1029)
 - [51e988c](https://github.com/patternfly/patternfly-elements/commit/51e988c3e645ff1d3018bc43f24cfaa6be3b5bb2) fix: pfelement - restore pfelement tests (#1018)
 - [fbe4423](https://github.com/patternfly/patternfly-elements/commit/fbe442396f06b0a097366512b698dc0b6d5e1f9f) fix: improve CLS rating in lighthouse (#1020)
 

@@ -3,7 +3,7 @@ const statuses = {
   moderate: "#ffc024",
   warning: "#ffc024",
   important: "#d73401",
-  critical: "#bb0000",
+  critical: "#a30000",
   success: "#2e7d32",
   info: "#0277bd",
   normal: "#0066cc",

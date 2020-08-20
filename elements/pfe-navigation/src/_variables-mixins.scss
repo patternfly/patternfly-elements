@@ -75,7 +75,15 @@ $breakpoints: (
 
 /// sr-only class
 /// can be used in shadow DOM and light DOM stylesheets
+// @todo: add note to docs to recommend content editors and devs use this class version when they need to make something only available to screen readers. The Drupal classes are a fallback for compatibility with Drupal content.
 .sr-only {
+  @include sr-only;
+}
+
+/// Drupal 7 & 8 class version of sr-only class
+/// can be used in shadow DOM and light DOM stylesheets
+.visually-hidden,
+.element-invisible {
   @include sr-only;
 }
 

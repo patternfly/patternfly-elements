@@ -25,7 +25,7 @@ $LOCAL-VARIABLES: (
   opacity: 0;
   padding: pfe-local(Padding);
   border-radius: pfe-local(BorderRadius);
-  border: pfe-local(BorderWidth) solid transparent;
+  border: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent;
   height: pfe-local(Height) !important;
 }
 

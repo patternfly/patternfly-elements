@@ -38,7 +38,7 @@ span input {
   width: 100%;
   padding: pfe-local(Padding);
   border-radius: pfe-local(BorderRadius, $fallback: 0);
-  border: pfe-var(ui--border-width) pfe-var(surface--border-style)  pfe-local(BorderColor);
+  border: pfe-var(ui--border-width) pfe-var(ui--border-style)  pfe-local(BorderColor);
   border-bottom-color: pfe-local(BorderBottomColor);
   background-color: pfe-local(BackgroundColor);
   font-size: pfe-local(FontSize);

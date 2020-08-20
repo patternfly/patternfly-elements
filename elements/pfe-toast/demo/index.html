@@ -8,9 +8,9 @@
   <title>PatternFly Element | pfe-toast Demo</title>
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/examples/node_modules/requirejs/require.js"></script>
   <script>require(['../dist/pfe-toast.umd.js'])</script>
 
   <style>
@@ -30,17 +30,17 @@
 <body unresolved>
   <h1>&lt;pfe-toast&gt;</h1>
 
-  <pfe-toast auto-dismiss="3s" id="1">
+  <pfe-toast auto-dismiss="3s" id="toast1">
     <p>Let's get toasted!</p>
   </pfe-toast>
 
-  <pfe-toast id="2">
+  <pfe-toast id="toast2">
     <p>Do you feel toasted?</p>
     <button>Yes. I'm burnt!</button>
     <button>Mmmm. Toast.</button>
   </pfe-toast>
 
-  <pfe-toast id="3" aria-label="Custom alert dialog" close-label="Cerrar">
+  <pfe-toast id="toast3" aria-label="Custom alert dialog" close-label="Cerrar">
     <h1>Do you feel toasted?</h1>
     <p>Biodiesel wolf franzen, jean shorts pabst lomo cloud bread gentrify cronut af migas vinyl four dollar toast
       scenester twee. Twee synth hammock hella activated charcoal keffiyeh, farm-to-table cray try-hard tofu fixie
@@ -56,15 +56,15 @@
 
   <script>
     document.getElementById("example1").addEventListener("click", function (event) {
-      document.getElementById("1").toggle();
+      document.getElementById("toast1").toggle();
     });
 
     document.getElementById("example2").addEventListener("click", function (event) {
-      document.getElementById("2").toggle();
+      document.getElementById("toast2").toggle();
     });
 
     document.getElementById("example3").addEventListener("click", function (event) {
-      document.getElementById("3").toggle();
+      document.getElementById("toast3").toggle();
     });
   </script>
 </body>

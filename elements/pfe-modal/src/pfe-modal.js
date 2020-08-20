@@ -164,7 +164,9 @@ class PfeModal extends PFElement {
     this._overlay.removeAttribute("hidden");
     this._outer.removeAttribute("hidden");
     // This prevents background scroll
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = "scroll";
+    document.body.style.position = "fixed";
+    document.body.style.width = "100%";
     // Set the focus to the container
     this._modalWindow.focus();
 
@@ -185,6 +187,7 @@ class PfeModal extends PFElement {
     this._outer.setAttribute("hidden", true);
     // Return scrollability
     document.body.style.overflow = "auto";
+    document.body.style.position = "relative";
 
     if (this.trigger) {
       // Move focus back to the trigger element

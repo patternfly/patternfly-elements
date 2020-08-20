@@ -483,7 +483,8 @@
                   <a href="#">Red Hat Virtualization Example</a>
                 </li>
               </ul>
-            </div> <!-- end .pfe-navigation__dropdown -->          </li>
+            </div> <!-- end .pfe-navigation__dropdown -->
+          </li>
           <li class="pfe-navigation__menu-item">
             <a href="#" class="pfe-navigation__menu-link">
               Resources
@@ -530,11 +531,161 @@
             <a href="#" class="pfe-navigation__menu-link">
               Products
             </a>
+            <div class="pfe-navigation__dropdown">
+              <section>
+                <h3>
+                  <a href="#">Platforms</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Red Hat Enterprise Linux</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat OpenStack Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Virtualization</a>
+                  </li>
+                </ul>
+              </section>
+              <section>
+                <h3>
+                  <a href="#">Ladders</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Lorem ipsum</a>
+                  </li>
+                  <li>
+                    <a href="#">Dolor sit amet</a>
+                  </li>
+                  <li>
+                    <a href="#">Wakka Wakka</a>
+                  </li>
+                </ul>
+              </section>
+              <section>
+                <h3>
+                  <a href="#">Chutes</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Yakkita yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Enterprise Yakkita yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Upstream Yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Yakkita ME</a>
+                  </li>
+                </ul>
+              </section>
+              <section>
+                <h3>
+                  <a href="#">Platforms</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Red Hat Enterprise Linux</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat OpenStack Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Virtualization</a>
+                  </li>
+                </ul>
+              </section>
+              <section>
+                <h3>
+                  <a href="#">Ladders</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Lorem ipsum</a>
+                  </li>
+                  <li>
+                    <a href="#">Dolor sit amet</a>
+                  </li>
+                  <li>
+                    <a href="#">Wakka Wakka</a>
+                  </li>
+                </ul>
+              </section>
+              <section>
+                <h3>
+                  <a href="#">Chutes</a>
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Yakkita yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Enterprise Yakkita yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Upstream Yakkita</a>
+                  </li>
+                  <li>
+                    <a href="#">Yakkita ME</a>
+                  </li>
+                </ul>
+              </section>
+            </div>
           </li>
           <li class="pfe-navigation__menu-item">
             <a href="#" class="pfe-navigation__menu-link">
               Solutions
             </a>
+            <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+              <section>
+                <h3>
+                  Group 1
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Red Hat Enterprise Linux</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat OpenStack Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Virtualization</a>
+                  </li>
+                </ul>
+              </section>
+              <section>
+                <h3>
+                  Group 2
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Red Hat Enterprise Linux</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat OpenStack Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Virtualization</a>
+                  </li>
+                </ul>
+              </section>
+            </div>
           </li>
           <li class="pfe-navigation__menu-item">
             <a href="#" class="pfe-navigation__menu-link">
@@ -569,6 +720,21 @@
           <a href="#">Log in</a>
         </li>
       </ul>
+      <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
+        <a href="#" class="#">
+          <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
+          Custom Link
+        </a>
+      </div>
+      <div slot="pfe-navigation--search" class="pfe-navigation__search">
+      <!-- @todo: move form and label for="" and label id into shadow DOM -->
+      <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
+        <form>
+          <label for="pfe-navigation__search-label1">Search</label>
+          <input id="pfe-navigation__search-label1" type="text" placeholder="Search" />
+          <button>Search</button>
+        </form>
+      </div>
     </ze-navigation>
 
   </body>

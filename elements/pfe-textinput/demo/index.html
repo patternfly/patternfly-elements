@@ -11,10 +11,10 @@
 
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
-    <!-- Stylesheets for testing light DOM styles.
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
-    -->
+    <!-- Stylesheets for testing light DOM styles. -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css"> -->
+   
     
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
@@ -68,7 +68,7 @@
       }
 
       .form pfe-textinput {
-        width: calc(100% - 132px);
+        width: 320px;
       }
 
       .form pfe-button {
@@ -86,7 +86,7 @@
         <div>
           <label for="plain">Text input</label>
           <pfe-textinput>
-            <input type="text" id="plain" placeholder="Text input" style="color: red">
+            <input type="text" id="plain" placeholder="Text input" style="color: red !important">
           </pfe-textinput>
         </div>
         <div>
@@ -98,7 +98,7 @@
         <div>
           <label for="text-disabled">Text disabled</label>
           <pfe-textinput>
-            <input type="text" id="text-disabled" placeholder="Disabled" value="Diasbled text input" disabled>
+            <input type="text" id="text-disabled" placeholder="Disabled" value="Disabled text input" disabled>
           </pfe-textinput>
         </div>
         <pfe-button>

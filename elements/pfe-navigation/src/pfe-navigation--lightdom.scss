@@ -100,4 +100,59 @@ pfe-navigation {
   .pfe-navigation__custom-links pfe-icon {
     @include secondary-links-icon;
   }
+
+  // Base default styles for search bar and search button
+  .pfe-navigation__search {
+    &--default-styles {
+      padding-left: 16px;
+      padding-right: 16px;  
+    }
+    
+    &--default-styles form {
+      display: flex;
+      align-items: center;
+    }
+  
+    &--default-styles input,
+    &--default-styles button {
+      padding: 10px;
+      transition: box-shadow 0.2s;
+    }
+  
+    &--default-styles input {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0%;
+      margin-right: 8px;
+      border: 1px solid #f0f0f0;
+      border-bottom: 1px solid #8b8e91;
+      color: #717579;
+      font-size: 16px;
+    }
+  
+    &--default-styles input::placeholder {
+      color: #717579;
+    }
+  
+    &--default-styles button {
+      flex-grow: 0;
+      flex-shrink: 1;
+      flex-basis: auto;
+      border-radius: 2px;
+      border: 1px solid #e00;
+      background-color: #e00;
+      color: #fff;
+      font-size: 16px;
+    }
+  
+    &--default-styles input:focus,
+    &--default-styles input:hover {
+      @include alt-focus-styles(#000, #e00);
+    }
+  
+    &--default-styles button:focus,
+    &--default-styles button:hover {
+      @include alt-focus-styles(#fff, #000);
+    }
+  }
 }

@@ -418,8 +418,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     @include focus-styles(#000, 1px);
 
     @include breakpoint('nav-expand') {
-      box-shadow: inset 0 4px 0 0 #e00;
-      @include focus-styles(#fff, 0px);
+      @include alt-focus-styles(#fff, #e00);
     }
     @include collapse('nav') {
       box-shadow: none;
@@ -435,9 +434,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   &:focus,
   &:hover {
     @include breakpoint('nav-expand') {
-      @include focus-styles(#fff, 0px);
-      border-top: 1px solid #e00;
-      box-shadow: inset 0 3px 0 0 #e00;
+      @include alt-focus-styles(#fff, #e00);
     }
     @include collapse('nav') {
       box-shadow: none;
@@ -448,7 +445,6 @@ See mixin blocks before selectors that contain the selector name and the three l
     @include breakpoint('nav-expand') {
       color: #151515;
       background: #fff;
-      box-shadow: inset 0 3px 0 0 #e00;
     }
     @include collapse('nav') {
       box-shadow: none;
@@ -458,7 +454,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     &:focus,
     &:hover {
       @include breakpoint('nav-expand') {
-        @include focus-styles(#000, 0px);
+        @include alt-focus-styles(#000, #e00);
       }
     }
   }
@@ -714,6 +710,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
   @include collapse('nav') {
     background: transparent;
+    box-shadow: none;
   }
 
   // group feature styles

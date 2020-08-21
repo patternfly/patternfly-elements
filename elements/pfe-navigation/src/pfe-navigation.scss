@@ -89,7 +89,8 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__menu-toggle,
 .pfe-navigation__search-toggle,
 .pfe-navigation__all-red-hat-toggle,
-.pfe-navigation__log-in-link {
+.pfe-navigation__log-in-link,
+.pfe-navigation__custom-link {
   @include top-level-button;
 }
 
@@ -548,7 +549,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   width: 100%;
   height: 0;
   overflow: hidden;
-  transition: height 0.25s ease-in-out;
+  transition: $dropdown-transition;
   will-change: height;
   @include pfe-navigation__dropdown-wrapper--mobile;
   @include breakpoint('nav-expand') {
@@ -862,6 +863,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 // Custom Links
 // --------------------------------------------------------
+// @todo These styles may not apply since custom-link update
 .pfe-navigation__custom-links {
   @include breakpoint('secondary-links-expand') {
     display: flex;
@@ -974,17 +976,36 @@ See mixin blocks before selectors that contain the selector name and the three l
 // }
 
 
-// pfe-icons
+// Secondary Links
 // --------------------------------------------------------
 
-//@todo: figure out if this is the best way to style the icon color states or if updates to JS need to be made to put a class or attribute on a button when it is open to target with css
+.pfe-navigation__secondary-links-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  @include breakpoint('secondary-links-expand') {
+    flex-direction: row;
+  }
+  @include collapse('secondary-links') {
+    flex-direction: column;
+  }
 
-.pfe-navigation__menu-toggle,
-.pfe-navigation__search-toggle,
-.pfe-navigation__custom-links,
-.pfe-navigation__log-in-link {
-  pfe-icon {
-    @include secondary-links-icon;
+  > li {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    @include breakpoint('secondary-links-expand') {
+      margin-right: 8px;
+    }
+    @include collapse('secondary-links') {
+      margin-right: 0;
+    }
+
+    > a {
+      @include top-level-button;
+    }
   }
 }
 
@@ -1030,6 +1051,23 @@ See mixin blocks before selectors that contain the selector name and the three l
   transform: rotate(-45deg);
 }
 
+.pfe-navigation__custom-link-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  height: 0px;
+  overflow: hidden;
+  transition: $dropdown-transition;
+}
+
+// @todo Dynamically create slots so the light DOM can control dropdown content
+.dropdown-container {
+  box-sizing: border-box;
+  width: 400px;
+  padding: 18px 24px;
+  color: #151515;
+  background: #ffefef;
+}
 
 // Should stay at the end of the file
 @import "pfe-navigation--grid";

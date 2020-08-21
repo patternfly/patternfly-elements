@@ -22,6 +22,8 @@ $breakpoints: (
   'nav-expand': 1200px,
 );
 
+$dropdown-transition: height 0.25s ease-in-out;
+
 /// Breakpoint helper specific to pfe-navigation
 /// @param {string} $breakpoint Name of a breakpoint
 /// @see $breakpoints
@@ -172,7 +174,6 @@ $breakpoints: (
     justify-content: center;
     align-items: center;
     height: $menu-height;
-    margin-right: 8px;
     padding: 0 8px;
     font-size: 12px;
     color: #fff;
@@ -198,6 +199,10 @@ $breakpoints: (
     &:hover {
       @include focus-styles(#000, 0px);
     }
+  }
+
+  pfe-icon {
+    @include secondary-links-icon;
   }
 }
 

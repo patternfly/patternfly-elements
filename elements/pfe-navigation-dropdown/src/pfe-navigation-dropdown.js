@@ -29,22 +29,59 @@ class PfeNavigationDropdown extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-icon", "pfe-name", "pfe-alerts", "pfe-state", "pfe-height"];
+    // return [
+    //   // Some of these are just for pfe-navigation to use
+    //   // "pfe-icon",
+    //   // "pfe-name",
+    //   // "pfe-alerts",
+    //   // "pfe-height",
+    //   // "pfe-state",
+    // ];
   }
 
   constructor() {
     super(PfeNavigationDropdown, { type: PfeNavigationDropdown.PfeType });
+
+    // Ensure 'this' is tied to the component object in these member functions
+    this.getDropdownHeight = this.getDropdownHeight.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
     // If you need to initialize any attributes, do that here
 
+    this.getDropdownHeight();
+
     this.addEventListener(PfeNavigationDropdown.events.change, this._changeHandler);
   }
 
   disconnectedCallback() {
     this.removeEventListener(PfeNavigationDropdown.events.change, this._changeHandler);
+  }
+
+  /**
+   * Utility function that is used to display more console logging in non-prod env
+   */
+  _isDevelopment() {
+    return document.domain === "localhost";
+  }
+
+  /**
+   * Caches the heights of the dropdowns for animation
+   */
+  getDropdownHeight() {
+    if (this._isDevelopment()) {
+      console.log(`${this.tag} getDropdownHeight has been run.`);
+    }
+
+    const dropdown = this.shadowRoot.querySelector("slot");
+    const dropdownHeight = dropdown.offsetHeight;
+    this.dataset.height = dropdownHeight;
+
+    // Update the height inline style of any open dropdown
+    if (this.hasAttribute("style") && this.style.height) {
+      this.style.height = `${dropdownHeight}px`;
+    }
   }
 
   // Process the attribute change

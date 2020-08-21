@@ -53,6 +53,13 @@
       body > h1 + h2 {
         margin-top: 50px;
       }
+
+      .dropdown-container {
+        box-sizing: border-box;
+        width: 400px;
+        padding: 18px 24px;
+        background: #efefef;
+      }
     </style>
   </head>
   <body unresolved>
@@ -305,16 +312,21 @@
           <a href="#">Log in</a>
         </li>
       </ul>
-      <ul class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
+      <ul id="pfe-navigation__custom-links">
         <li>
-          <a href="#" pfe-icon="web-question-mark">Help</a>
+          <a href="#">
+            <pfe-icon icon="web-contact" pfe-size="sm" aria-hidden="true"></pfe-icon>
+            Help
+          </a>
         </li>
         <li>
-            <pfe-navigation-dropdown pfe-icon="globe" pfe-name="Custom Link" pfe-alerts="1">
-            <h2>This is pfe-navigation-dropdown</h2>
-            <pfe-cta pfe-priority="primary">
-              <a href="#">Learn more about PFElements</a>
-            </pfe-cta>
+          <pfe-navigation-dropdown pfe-icon="web-globe" pfe-name="Custom Link" pfe-alerts="1">
+            <div class="dropdown-container">
+              <h2>This is pfe-navigation-dropdown</h2>
+              <pfe-cta pfe-priority="primary">
+                <a href="#">Learn more about PFElements</a>
+              </pfe-cta>
+            </div>
           </pfe-navigation-dropdown>
         </li>
       </ul>

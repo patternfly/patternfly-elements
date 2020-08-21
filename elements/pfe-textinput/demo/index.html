@@ -45,6 +45,7 @@
 
     <script defer src="../../pfelement/dist/pfelement.umd.js"></script>
     <script defer src="../../pfe-band/dist/pfe-band.umd.js"></script>
+    <script defer src="../../pfe-button/dist/pfe-button.umd.js"></script>
     <script defer src="../dist/pfe-textinput.umd.js"></script>
 
     <style>
@@ -70,9 +71,9 @@
         width: calc(100% - 132px);
       }
 
-      .form button {
+      .form pfe-button {
         position: relative;
-        left: 126px;
+        left: 130px;
       }
     </style>
   </head>
@@ -100,7 +101,9 @@
             <input type="text" id="text-disabled" placeholder="Disabled" value="Diasbled text input" disabled>
           </pfe-textinput>
         </div>
-        <button>Submit</button>
+        <pfe-button>
+          <button>Submit</button>
+        </pfe-button>
       </form>
     </pfe-band>
     <pfe-band>
@@ -165,7 +168,9 @@
             <input type="text" id="phone" name="phone" placeholder="Phone Number" disabled>
           </pfe-textinput>
         </div>
-        <button>Submit</button>
+        <pfe-button>
+          <button>Submit</button>
+        </pfe-button>
       </form>
     </pfe-band>
 

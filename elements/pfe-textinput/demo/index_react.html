@@ -49,6 +49,7 @@
 
     <script defer src="../../pfelement/dist/pfelement.umd.js"></script>
     <script defer src="../../pfe-band/dist/pfe-band.umd.js"></script>
+    <script defer src="../../pfe-button/dist/pfe-button.umd.js"></script>
     <script defer src="../dist/pfe-textinput.umd.js"></script>
 
     <script type="text/babel">
@@ -86,7 +87,9 @@
                   <input type="text" id="reactLastName" name="lastName" placeholder="Last Name" value={lastName} onChange={e => setLastName(e.target.value)} required />
                 </pfe-textinput>
               </div>
-              <button>Submit</button>
+              <pfe-button>
+                <button>Submit</button>
+              </pfe-button>
             </form>
           </div>
         );
@@ -118,7 +121,7 @@
         width: calc(100% - 132px);
       }
 
-      .form button {
+      .form pfe-button {
         position: relative;
         left: 126px;
       }

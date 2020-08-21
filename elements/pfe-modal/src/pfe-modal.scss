@@ -89,7 +89,7 @@ $LOCAL-VARIABLES: (
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			max-width: pfe-local(MaxWidth);
 		}
-		:host([media]) & { 
+		:host([pfe-media]) & { 
 			--pfe-modal--MinWidth: none;
 			--pfe-modal--MinHeight: none;
 			--pfe-modal--MaxWidth: 90vw;
@@ -131,7 +131,7 @@ $LOCAL-VARIABLES: (
 				margin-top: 0 !important;
 			}
 		}
-		:host([media]) & {
+		:host([pfe-media]) & {
 			--pfe-modal__overlay--Overflow: hidden;
 			--pfe-modal--Padding: 0px;
 			text-align: center;
@@ -183,7 +183,7 @@ $LOCAL-VARIABLES: (
 			width: 	pfe-local(size, $region: close);
 		}
 
-		:host([media]) & {
+		:host([pfe-media]) & {
 			top: 0px; 
 			right: 0;
 			border-radius: 3px;

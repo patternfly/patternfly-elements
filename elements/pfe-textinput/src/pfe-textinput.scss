@@ -21,36 +21,30 @@ $LOCAL-VARIABLES: (
 }
 
 ::slotted(input) {
-  all: unset;
-  opacity: 0;
-  padding: pfe-local(Padding);
-  border-radius: pfe-local(BorderRadius);
-  border: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent;
-  height: pfe-local(Height) !important;
+  box-sizing: border-box !important;
+  padding: pfe-local(Padding) !important;
+  border-radius: pfe-local(BorderRadius, $fallback: 0) !important;
+  border: pfe-var(ui--border-width) pfe-var(ui--border-style)  pfe-local(BorderColor) !important;
+  border-bottom-color: pfe-local(BorderBottomColor) !important;
+  background-color: pfe-local(BackgroundColor) !important;
+  font-size: pfe-local(FontSize) !important;
+  color: pfe-local(color) !important;
+  min-height: pfe-local(Height) !important;
+  font-family: pfe-var(font-family) !important;
+  width: 100% !important;
 }
 
-span input {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  width: 100%;
-  padding: pfe-local(Padding);
-  border-radius: pfe-local(BorderRadius, $fallback: 0);
-  border: pfe-var(ui--border-width) pfe-var(ui--border-style)  pfe-local(BorderColor);
-  border-bottom-color: pfe-local(BorderBottomColor);
-  background-color: pfe-local(BackgroundColor);
-  font-size: pfe-local(FontSize);
-  color: pfe-local(color);
+::slotted(input[type="search"]) {
+  -webkit-appearance: textfield !important;
+}
 
-  &:hover {
-    border-bottom-color: pfe-local(BorderBottomColor--hover);
-  }
+::slotted(input:hover),
+::slotted(input:focus) {
+  border-bottom-color: pfe-local(BorderBottomColor--hover) !important;
+}
 
-  &[disabled] {
-    background-color: pfe-local(BackgroundColor--disabled);
-    cursor: not-allowed !important;
-    border: pfe-var(ui--border-width) pfe-var(surface--border-style) transparent;
-  }
+::slotted(input[disabled]) {
+  background-color: pfe-local(BackgroundColor--disabled) !important;
+  cursor: not-allowed !important;
+  border: pfe-var(ui--border-width) pfe-var(surface--border-style) transparent !important;
 }

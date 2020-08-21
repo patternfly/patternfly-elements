@@ -22,11 +22,6 @@ You can add any of the [standard input attributes](https://developer.mozilla.org
 </pfe-textinput>
 ```
 
-### Accessibility
-`pfe-textinput` differs from other web component versions of input elements in that 
-it utilizes a light DOM input element to remain in the document flow so forms
-continue to work the way you'd expect. With `pfe-textinput` we took the same approach that's used for creating a custom checkbox or radio button where a custom version of the checkbox or radio button is visually stacked on top of a traditional form control. This way we gain the benefits of encapsulated styles in the shadow DOM while not breaking the ways that input elements are traditionally used in forms.
-
 ## Slots
 - `default`: It's required that you put an `input` element in the default slot for `pfe-textinput`. 
 

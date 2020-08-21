@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script src="/components/vue/dist/vue.min.js"></script>
+    <script type="module" src="../dist/pfe-textinput.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const app = new Vue({
+        el: "#root",
+        template: `
+          <div>
+            <pfe-textinput>
+              <input type="text" />
+            </pfe-textinput>
+
+            <pfe-textinput id="attribute-copy">
+              <input type="text" placeholder="Test" required minlength="5" />
+            </pfe-textinput>
+
+            <pfe-textinput id="deny-list">
+              <input type="text" style="width: 100%;" tabindex="100" />
+            </pfe-textinput>
+
+            <pfe-textinput id="changes">
+              <input type="text" placeholder="Changes" maxlength="50" />
+            </pfe-textinput>
+
+            <form id="form">
+              <pfe-textinput id="form-pfe-textinput">
+                <input type="text" id="form-input" />
+              </pfe-textinput>
+              <button>Submit</button>
+            </form>
+          </div>
+        `
+      });
+    </script>
+    <script type="module" src="pfe-textinput_test.js"></script>
+  </body>
+</html>

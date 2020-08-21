@@ -51,6 +51,9 @@ class PfeTextinput extends PFElement {
     this._internalInput = null;
     this._setFocus = this._setFocus.bind(this);
     this._keyupListener = this._keyupListener.bind(this);
+    this._shadowBtnWrapper = this.shadowRoot.querySelector(
+      "span.shadow-btn-wrapper"
+    );
 
     this._init = this._init.bind(this);
 
@@ -130,8 +133,8 @@ class PfeTextinput extends PFElement {
     // tabbed to.
     this._lightInput.setAttribute("tabindex", "-1");
 
-    this.shadowRoot.querySelector("span").innerHTML = "";
-    this.shadowRoot.querySelector("span").appendChild(this._internalInput);
+    this._shadowBtnWrapper.innerHTML = "";
+    this._shadowBtnWrapper.appendChild(this._internalInput);
 
     this._lightInput.addEventListener("focus", this._setFocus);
     this._internalInput.addEventListener("keyup", this._keyupListener);

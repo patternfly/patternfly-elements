@@ -1,3 +1,7 @@
+## Prerelease 56 ( TBD )
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: move visual regression testing to merge script
+
 ## Prerelease 55 ( 2020-08-19 )
 
 - [3ee117e](https://github.com/patternfly/patternfly-elements/commit/3ee117e8a3df17f50738b9c0fa0caa3a9af9c679) feat: pfe-autocomplete - fire custom event when dropdown is shown (#1046)

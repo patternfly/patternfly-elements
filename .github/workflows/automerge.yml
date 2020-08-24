@@ -47,7 +47,7 @@ jobs:
           firefox: latest
           chrome: stable
   try_to_merge:
-    if: success()
+    if: success() && contains(github.event.pull_request.labels.*.name, 'ready to merge')
     runs-on: ubuntu-latest
     steps:
       - name: Try to automerge PR ${{ github.event.number }}

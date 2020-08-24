@@ -11,7 +11,7 @@ on:
     status: success
 jobs:
   visual_regression_tests:
-    if: github.event.label.name == "ready to merge"
+    if: contains(github.event.pull_request.labels.*.name, 'ready to merge')
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -39,9 +39,15 @@ jobs:
         run: npm build
 
       - name: Visual regression tests
-        run: npm run e2e -- --verbose
+        uses: ianwalter/bsl@v2.1.0
+        with:
+          args: npm run e2e -- --verbose
         env:
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           CI: true
+          firefox: latest
+          chrome: stable
   try_to_merge:
     if: jobs.visual_regression_tests.outcome == "success"
     runs-on: ubuntu-latest

@@ -2,22 +2,40 @@ name: Visual regression testing
 on: [workflow_dispatch]
 jobs:
   visual_regression_tests:
+    if: contains(github.event.pull_request.labels.*.name, 'ready to merge')
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [12.x]
     steps:
-      - uses: jesusvasquez333/verify-pr-label-action@v1.1.0
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-          valid-labels: ${{ env.LABELS }}
       - uses: actions/checkout@v2
-      - name: Visual regression tests
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm install
-      - run: npm run build
-      - run: npm run e2e -- --verbose
+
+      - name: Cache node modules
+        uses: actions/cache@v2
         env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm build
+
+      - name: Visual regression tests
+        uses: ianwalter/bsl@v2.1.0
+        with:
+          args: npm run e2e -- --verbose
+        env:
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           CI: true
+          firefox: latest
+          chrome: stable

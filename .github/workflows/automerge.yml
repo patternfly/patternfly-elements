@@ -1,4 +1,4 @@
-name: automerge
+name: Automerge PR
 on:
   pull_request:
     types: [labeled, unlabeled, synchronize, edited, unlocked]
@@ -8,7 +8,7 @@ on:
     types: [completed]
     status: success
 jobs:
-  build:
+  visual_regression_tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,7 +24,7 @@ jobs:
       - run: npm run e2e -- --verbose
         env:
           CI: true
-  automerge:
+  try_to_merge:
     runs-on: ubuntu-latest
     steps:
       - name: Try to automerge PR ${{ github.event.number }}

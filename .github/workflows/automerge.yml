@@ -16,7 +16,7 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:
-      - uses: actions/verify-pr-label-action@v1.0.0
+      - uses: jesusvasquez333/verify-pr-label-action@v1.1.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
           valid-labels: ${{ env.LABELS }}

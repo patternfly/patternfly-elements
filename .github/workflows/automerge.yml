@@ -1,5 +1,5 @@
 name: Automerge PR
-valid_labels: "ready to merge,!work in progress!,!blocked,!needs: code updates,!needs: additional info,!needs: AT updates,!needs: changelog,!ready: branch testing,!ready: browser testing"
+LABELS: "ready to merge,!work in progress!,!blocked,!needs: code updates,!needs: additional info,!needs: AT updates,!needs: changelog,!ready: branch testing,!ready: browser testing"
 on:
   pull_request:
     types: [labeled, unlabeled, synchronize, edited, unlocked]
@@ -15,13 +15,15 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:
+      - uses: actions/verify-pr-label-action@v1.0.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          valid-labels: ${{ LABELS }}
       - uses: actions/checkout@v2
       - name: Visual regression tests
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-          valid-labels: ${{ valid_labels }}
       - run: npm install
       - run: npm run build
       - run: npm run e2e -- --verbose
@@ -34,7 +36,7 @@ jobs:
         uses: "pascalgn/automerge-action@4536e8847eb62fe2f0ee52c8fa92d17aa97f932f"
         env:
           GITHUB_TOKEN: "${{ secrets.ACTIONS }}"
-          MERGE_LABELS: ${{ valid_labels }}
+          MERGE_LABELS: ${{ LABELS }}
           MERGE_REMOVE_LABELS: Ready to merge
           MERGE_METHOD: squash
           MERGE_COMMIT_MESSAGE: "pull-request-title"

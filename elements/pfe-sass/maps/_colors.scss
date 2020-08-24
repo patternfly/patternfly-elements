@@ -32,7 +32,6 @@ $pfe-colors: (
   // ========================================================================
 
   // Set of base colors
-
   ui-base:                            $pf-color-black-600,
   ui-base--hover:                     $pf-color-black-900,
   ui-base--focus:                     $pf-color-black-900,
@@ -78,12 +77,19 @@ $pfe-colors: (
   ui-accent--text--focus--on-saturated: $pfe-color--text,
 
   // Set of disabled colors
-  ui-disabled:                          $pfelements--gray-light,
-  ui-disabled--hover:                   $pfelements--gray-light,
+  ui-disabled:                          $pf-color-black-300,
+  ui-disabled--hover:                   $pf-color-black-300,
   ui-disabled--focus:                   transparent,
   ui-disabled--text:                    $pf-color-black-600,
   ui-disabled--text--hover:             $pfelements--gray,
   ui-disabled--text--focus:             $pfelements--gray,
+
+  // Set of UI border settings
+  ui--border--lightest: $pf-color-black-200,  // #f0f0f0
+  ui--border--lighter: $pf-color-black-300,   // #d2d2d2
+  ui--border: $pf-color-black-500,            // #8a8d90
+  ui--border--darker: $pf-color-black-800,    // #3c3f42
+  ui--border--darkest: $pf-color-black-900,   // #151515
 
   // ========================================================================
   // Base Surface Colors for Container elements
@@ -123,15 +129,16 @@ $pfe-colors: (
   surface--border--darker:            $pf-color-black-600, // #6a6e73 
   surface--border--darkest:           $pf-color-black-800, // needed?
 
-
   // ========================================================================
   // Base Feedback Colors for messaging, errors, etc.
   // ========================================================================
 
   // Palette of Feedback Colors
-  feedback--critical--lightest:       $pfe-color--red-50,
-  feedback--critical:                 $pfe-color--red-600,
-  feedback--critical--darkest:        $pfe-color--red-800,
+  feedback--critical--lightest:       $pf-color-red-50,   // #faeae8
+  feedback--critical--lighter:        $pf-color-red-100,  // #c9190b
+  feedback--critical:                 $pf-color-red-200,  // #bb0000
+  feedback--critical--darker:         $pf-color-red-300,  // #7d1007
+  feedback--critical--darkest:        $pf-color-red-400,  // #470000
 
   feedback--important--lightest:      $pfe-color--orange-50,
   feedback--important:                $pfe-color--orange-500,

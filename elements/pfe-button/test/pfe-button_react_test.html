@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script src="/components/react/umd/react.production.min.js"></script>
+    <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
+    <script src="/components/babel-standalone/babel.min.js"></script>
+    <script type="module" src="../dist/pfe-button.js"></script>
+    <script type="text/babel">
+      function TestSuite() {
+        return (
+          <pfe-button>
+            <button>Button</button>
+          </pfe-button>
+        );
+      }
+
+      ReactDOM.render(TestSuite(), document.querySelector("#root"));
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="pfe-button_test.js"></script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script src="/components/vue/dist/vue.min.js"></script>
+    <script type="module" src="../dist/pfe-health-index.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const app = new Vue({
+        el: "#root",
+        template: `
+          <div>
+            <pfe-health-index id="original" health-index="A">A</pfe-health-index>
+            <pfe-health-index id="lowercase" health-index="a">a</pfe-health-index>
+            <pfe-health-index id="badIndex">fdsa</pfe-health-index>
+            <pfe-health-index id="changingIndex" health-index="A">A</pfe-health-index>
+            <pfe-health-index id="A" health-index="A">A</pfe-health-index>
+            <pfe-health-index id="B" health-index="B">B</pfe-health-index>
+            <pfe-health-index id="C" health-index="C">C</pfe-health-index>
+            <pfe-health-index id="D" health-index="D">D</pfe-health-index>
+            <pfe-health-index id="E" health-index="E">E</pfe-health-index>
+            <pfe-health-index id="F" health-index="F">F</pfe-health-index>
+            <pfe-health-index id="largeSize" health-index="A">A</pfe-health-index>
+            <pfe-health-index id="miniSize" health-index="A" size="mini">A</pfe-health-index>
+          </div>
+        `
+      });
+    </script>
+    <script src="pfe-health-index_test.js"></script>
+  </body>
+</html>

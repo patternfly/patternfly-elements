@@ -12,7 +12,7 @@ module.exports = {
     "/elements": "./elements",
     "/examples": "./examples",
     "/favicon.ico": "./favicon.ico",
-    "/": "./node_modules",
+    "/": "./",
     "/webassets": {
       host: "https://access.redhat.com"
     }

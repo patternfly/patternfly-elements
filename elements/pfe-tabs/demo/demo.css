@@ -74,7 +74,7 @@ section>h2 {
    padding: 50px 20px;
 }
 .light-background {
-    background-color: #006069;
+    background-color: rgb(252, 250, 244);
     --theme: light;
 }
 .dark-background {
@@ -82,7 +82,7 @@ section>h2 {
     --theme: dark;
 }
 .saturated-background {
-    background-color: teal;
+    background-color: #006069;
     --theme: saturated;
 }
 

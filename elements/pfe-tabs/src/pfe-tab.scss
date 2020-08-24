@@ -24,9 +24,9 @@ $backwards-compatibility: (
   Color--focus:  pfe-local(focus, pfe-var(text)), 
   BorderColor:   pfe-local(highlight, pfe-var(ui-accent)),
 );
+
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
-@include pfe-local-debug;
 
 /// ===========================================================================
 /// DEFAULT / WIND TAB VARIANT

@@ -49,7 +49,7 @@ jobs:
           firefox: latest
           chrome: stable
   try_to_merge:
-    if: jobs.visual_regression_tests.outcome == "success"
+    if: success()
     runs-on: ubuntu-latest
     steps:
       - name: Try to automerge PR ${{ github.event.number }}

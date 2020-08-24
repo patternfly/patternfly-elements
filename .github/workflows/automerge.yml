@@ -38,8 +38,6 @@ jobs:
 
       - name: Visual regression tests
         uses: ianwalter/bsl@v2.0.1
-        with:
-          args: npm run e2e -- --verbose
         env:
           # For wdio
           BROWSERSTACK_KEY: ${{ secrets.BROWSERSTACK_KEY }}
@@ -50,6 +48,8 @@ jobs:
           CI: true
           firefox: latest
           chrome: stable
+        with:
+          args: npm run e2e -- --verbose
   try_to_merge:
     if: contains(github.event.pull_request.labels.*.name, 'ready to merge')
     runs-on: ubuntu-latest

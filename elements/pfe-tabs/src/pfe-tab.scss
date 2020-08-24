@@ -266,7 +266,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 :host([on="dark"][pfe-variant="earth"][aria-selected="true"]) {
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
   --pfe-tabs--BackgroundColor: #{pfe-var(surface--darkest)};
-  //  --pfe-tabs--BackgroundColor: #{pfe-local(BackgroundColor, $fallback: #{pfe-var(surface--darkest)} );
 }
 
 // SATURATED

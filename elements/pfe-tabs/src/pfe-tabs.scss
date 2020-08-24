@@ -104,7 +104,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host([vertical][pfe-variant="earth"]) {
-    //--pfe-tabs__tabs--Padding: #{pfe-var(container-padding)} 0 0 0;
     
     @include browser-query(ie11) {
       .tabs {
@@ -123,7 +122,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 :host([pfe-variant="earth"]) {
   --pfe-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
-
 }
     
 @include browser-query(ie11) {
@@ -133,7 +131,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 @include pfe-theme-contexts; // imports on="light" etc support
-
 
 /// ===========================================================================
 /// INSET NOTCH

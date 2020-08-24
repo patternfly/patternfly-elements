@@ -8,9 +8,26 @@ on:
     types: [completed]
     status: success
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run build
+      - run: npm run e2e -- --verbose
+        env:
+          CI: true
   automerge:
     runs-on: ubuntu-latest
     steps:
+      - name: visual regression tests
       - name: automerge
         uses: "pascalgn/automerge-action@4536e8847eb62fe2f0ee52c8fa92d17aa97f932f"
         env:

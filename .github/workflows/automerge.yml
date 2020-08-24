@@ -37,7 +37,7 @@ jobs:
         run: npm build
 
       - name: Visual regression tests
-        uses: ianwalter/bsl@v2.1.0
+        uses: ianwalter/bsl@v3.0.0
         with:
           args: npm run e2e -- --verbose
         env:
@@ -47,8 +47,9 @@ jobs:
           firefox: latest
           chrome: stable
   try_to_merge:
-    if: success() && contains(github.event.pull_request.labels.*.name, 'ready to merge')
+    if: contains(github.event.pull_request.labels.*.name, 'ready to merge')
     runs-on: ubuntu-latest
+    needs: visual_regression_tests
     steps:
       - name: Try to automerge PR ${{ github.event.number }}
         uses: "pascalgn/automerge-action@4536e8847eb62fe2f0ee52c8fa92d17aa97f932f"

@@ -33,15 +33,21 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Visual regression tests
+      - name: Start BrowserStackLocal
         uses: "browserstack/github-actions/setup-local@master"
         with:
-          args: npm install && npm build && npm run e2e -- --verbose
           local-testing: start
           local-identifier: random
-          CI: true
-          firefox: latest
-          chrome: stable
+          # local-logging-level: all-logs
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm build
+
+      - name: Visual regression tests
+        run: npm run e2e -- --verbose
 
       - name: Stop BrowserStackLocal
         uses: "browserstack/github-actions/setup-local@master"

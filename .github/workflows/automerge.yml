@@ -43,11 +43,11 @@ jobs:
         env:
           CI: true
   try_to_merge:
+    if: jobs.visual_regression_tests.outcome == "success"
     runs-on: ubuntu-latest
     steps:
       - name: Try to automerge PR ${{ github.event.number }}
         uses: "pascalgn/automerge-action@4536e8847eb62fe2f0ee52c8fa92d17aa97f932f"
-        if: jobs.visual_regression_tests.outcome == "success"
         env:
           GITHUB_TOKEN: "${{ secrets.ACTIONS }}"
           MERGE_LABELS: ${{ env.LABELS }}

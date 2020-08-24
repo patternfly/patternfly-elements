@@ -12,7 +12,7 @@ addons:
     access_key: BROWSERSTACK_KEY
 script:
   - npm test -- --verbose
-  - npm run e2e -- --verbose
+#  - npm run e2e -- --verbose
 cache:
   directories:
     - node_modules

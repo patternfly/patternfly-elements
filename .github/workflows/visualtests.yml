@@ -1,5 +1,8 @@
 name: Visual regression testing
 on: [workflow_dispatch]
+env:
+  BROWSERSTACK_ACCESS_KEY: "${{ secrets.BROWSERSTACK_KEY }}"
+  BROWSERSTACK_USERNAME: "${{ secrets.BROWSERSTACK_USER }}"
 jobs:
   visual_regression_tests:
     runs-on: ubuntu-latest
@@ -7,6 +10,14 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:
+      - name: BrowserStackLocal env setup
+        uses: "browserstack/github-actions/setup-env@master"
+        with:
+          username: ${{ secrets.BROWSERSTACK_USER }}
+          access-key: ${{ secrets.BROWSERSTACK_KEY }}
+          build-name: BUILD_INFO
+          project-name: REPO_NAME
+
       - uses: actions/checkout@v2
 
       - name: Cache node modules
@@ -22,23 +33,17 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build
-        run: npm build
-
       - name: Visual regression tests
-        uses: ianwalter/bsl@v2.0.1
-        env:
-          #For bsl script
-          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_KEY }}
-          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USER }}
+        uses: "browserstack/github-actions/setup-local@master"
+        with:
+          args: npm install && npm build && npm run e2e -- --verbose
+          local-testing: start
+          local-identifier: random
           CI: true
           firefox: latest
           chrome: stable
+
+      - name: Stop BrowserStackLocal
+        uses: "browserstack/github-actions/setup-local@master"
         with:
-          # For wdio
-          BROWSERSTACK_KEY: ${{ secrets.BROWSERSTACK_KEY }}
-          BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
-          args: npm run e2e -- --verbose
+          local-testing: stop

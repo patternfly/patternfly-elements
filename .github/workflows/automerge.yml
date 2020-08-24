@@ -11,16 +11,12 @@ on:
     status: success
 jobs:
   visual_regression_tests:
+    if: github.event.label.name == "ready to merge"
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [12.x]
     steps:
-      - continue-on-error: false
-      - uses: jesusvasquez333/verify-pr-label-action@v1.1.0
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-          valid-labels: ${{ env.LABELS }}
       - uses: actions/checkout@v2
 
       - name: Cache node modules

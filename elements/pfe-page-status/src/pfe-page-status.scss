@@ -62,16 +62,14 @@ $LOCAL-VARIABLES: (
 
 :host([pfe-status="normal"]) {
   @include pfe-print-local((
-    BackgroundColor: pfe-var(ui-base),
-    Color: pfe-var(ui-base--text)
+    BackgroundColor: pfe-var(ui-accent),
+    Color: pfe-var(ui-accent--text)
   ));
 }
 
-@each $color in (complement, accent) {
-  :host([pfe-status="#{$color}"]) {
-    @include pfe-print-local((
-      BackgroundColor: pfe-var(ui-#{$color}),
-      Color: pfe-var(ui-#{$color}--text)
-    ));
-  }
+:host([pfe-status="accent"]) {
+  @include pfe-print-local((
+    BackgroundColor: pfe-var(ui-accent),
+    Color: pfe-var(ui-accent--text)
+  ));
 }

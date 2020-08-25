@@ -204,6 +204,7 @@ class PfeNavigationItem extends PFElement {
 
     // Shadow elements
     this._trigger = this.shadowRoot.querySelector(`.${this.tag}__trigger`);
+    this._label = this.shadowRoot.querySelector(`.${this.tag}__trigger--label`);
     this._icon = this.shadowRoot.querySelector("pfe-icon");
     this._tray = this.shadowRoot.querySelector(`.${this.tag}__tray`);
 
@@ -226,8 +227,8 @@ class PfeNavigationItem extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this._init__trigger();
     this._init__tray();
+    this._init__trigger();
 
     // Add a slotchange listeners to the lightDOM elements
     if (this.trigger)
@@ -264,25 +265,19 @@ class PfeNavigationItem extends PFElement {
 
     // Check the light dom for the link
     if (this.trigger) {
-      this.directLink = this.trigger.querySelector("a");
-      // Check the slotted content for the link if it can't be found
-      if (!this.directLink && this.trigger.tagName === "SLOT") {
-        let slottedContent = this.trigger.assignedNodes();
-        if (slottedContent.length > 0 && slottedContent[0].tagName === "A") {
-          this.directLink = slottedContent[0];
-        }
+      let children = [...this.trigger.children];
+      // If this is a direct link, no tray
+      // set the mark-up to a link
+      if (
+        !this.tray &&
+        children.filter(child => child.tagName === "A").length > 0
+      ) {
+        let linkTags = children.filter(child => child.tagName === "A");
+        this._label.href = linkTags[0].href;
       }
 
-      // Turn off the fallback link if the tray does not exist
-      if (this.directLink) {
-        this.directLink.setAttribute("tabindex", "-1");
-        this.linkUrl = this.directLink.href;
-      } else {
-        this.linkUrl = "#";
-      }
-
-      this._trigger.addEventListener("click", this._navigateToUrl);
-      this._trigger.addEventListener("keyup", this._directLinkHandler);
+      // Set the label equal to the trigger's content
+      this._label.innerHTML = this.trigger.textContent;
     }
   }
 
@@ -323,6 +318,13 @@ class PfeNavigationItem extends PFElement {
 
     if (this._handlersAdded) {
       return;
+    }
+
+    // Add the trigger to the flow
+    this._trigger.setAttribute("tabindex", "0");
+    // Remove the direct link from the flow
+    if (this.directLink) {
+      this.directLink.setAttribute("tabindex", "-1");
     }
 
     // Toggle the navigation when the trigger is clicked

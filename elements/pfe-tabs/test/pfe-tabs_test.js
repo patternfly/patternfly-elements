@@ -1,5 +1,23 @@
 /* @TODO: Add focus-state tests to validate against document.activeElement */
 
+// Themes and their expected hex values
+const background_colors = {
+  earth_default: "#f0f0f0",
+  earth_dark: "#3c3f42",
+  earth_saturated: "#f0f0f0",
+  wind_default: "transparent",
+};
+
+const text_colors = {
+  earth_default: "#6a6e73",
+  earth_dark: "#3c3f42",
+  earth_saturated: "#f0f0f0",
+  wind_default: "#6a6e73",
+  wind_dark: "#ffffff",
+  wind_saturated: "#d2d2d2",
+};
+
+
 suite('<pfe-tabs>', () => {
   setup(() => {
     const rhTabs = document.querySelector('#default');

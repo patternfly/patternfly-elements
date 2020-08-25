@@ -7,6 +7,31 @@ class PfeAvatar extends PFElement {
     return "pfe-avatar";
   }
 
+  static get properties() {
+    return {
+      foo: {
+        title: "Foo",
+        type: String,
+        prefixed: true,
+        protected: false,
+        observer: "_fooChanged",
+        cascade: true,
+        reflect: true,
+        validate: (newVal, oldVal, el) => {
+          // validate is given the new value of the property, the old
+          // value, and a reference to the element itself, all of
+          // which can be used to determine if the new value is valid.
+
+          // don't allow foo to be set while the element is disabled
+          if (el.hasAttribute("disabled")) return false;
+
+          return true;
+        },
+        default: "bar"
+      }
+    };
+  }
+
   get templateUrl() {
     return "pfe-avatar.html";
   }

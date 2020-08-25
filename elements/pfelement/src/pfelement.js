@@ -1,10 +1,31 @@
 import { autoReveal } from "./reveal.js";
+import attr2prop from "./attr2prop.js";
+import prop2attr from "./prop2attr.js";
+import isValidReflection from "./isValidReflection.js";
+
 const prefix = "pfe-";
 
 class PFElement extends HTMLElement {
   static create(pfe) {
     window.customElements.define(pfe.tag, pfe);
   }
+
+  /**
+   * This prefix is prepended to the name of any attributes defined on the base
+   * class.  In other words, attributes that can be used on any element will be
+   * prefixed with this string.
+   *
+   * @example A "theme" prop, when reflected as an attribute, prefixed with "pfe-g-": <pfe-foo pfe-g-theme="bar">
+   */
+  static get globalAttrPrefix() {
+    return "pfe-g-";
+  }
+
+  static get attrPrefix() {
+    return "pfe-c-";
+  }
+
+  static get properties() {}
 
   static debugLog(preference = null) {
     if (preference !== null) {
@@ -32,7 +53,16 @@ class PFElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-theme"];
+    const oa = Object.keys(this.properties)
+      .filter(
+        prop =>
+          this.properties[prop].observer ||
+          (this.properties[prop].reflect &&
+            isValidReflection(this.properties[prop]))
+      )
+      .map(p => prop2attr(p, this.attrPrefix));
+    console.log("observed attributes are", oa);
+    return ["pfe-theme", ...oa];
   }
 
   get randomId() {
@@ -124,10 +154,12 @@ class PFElement extends HTMLElement {
     this.connected = false;
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
-    this.props = pfeClass.properties;
+    this.schemaProps = pfeClass.schemaProperties;
     this.slots = pfeClass.slots;
     this._queue = [];
     this.template = document.createElement("template");
+
+    this._initializeProperties();
 
     this.log(`Constructing...`);
 
@@ -155,6 +187,8 @@ class PFElement extends HTMLElement {
   connectedCallback() {
     this.connected = true;
     this.log(`Connecting...`);
+
+    this._initAttrReflection();
 
     if (window.ShadyCSS) {
       this.log(`Styling...`);
@@ -207,6 +241,19 @@ class PFElement extends HTMLElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
+    console.log(`attributeChangedCallback, ${attr}: ${oldVal} => ${newVal}`);
+    const propName = attr2prop(attr);
+    const property = this._pfeClass.properties[propName];
+
+    if (!property) {
+      console.error(`${propName} doesn't exist on ${this._pfeClass}`);
+      return;
+    }
+
+    if (oldVal !== newVal) {
+      this[propName] = newVal;
+    }
+
     if (!this._pfeClass.cascadingAttributes) {
       return;
     }
@@ -219,6 +266,135 @@ class PFElement extends HTMLElement {
     if (attr === "pfe-theme") {
       this.context_update();
     }
+  }
+
+  _initializeProperties() {
+    this._________TOP_SECRET__ = {};
+
+    for (let propName in this._pfeClass.properties) {
+      const definition = this._pfeClass.properties[propName];
+
+      // verify that reflected properties conform to primitive data types
+      if (!isValidReflection(definition)) {
+        console.error(
+          `${this.constructor.name}.properties.${propName} definition error: a property with \`reflect: true\` must have type String, Number, or Boolean.`
+        );
+        continue;
+      }
+
+      // verify that default values match the property's data type
+      if (
+        definition.hasOwnProperty("default") &&
+        definition.default.constructor !== definition.type
+      ) {
+        console.error(
+          `${this.constructor.name}.properties.${propName} definition error: the default value's type (${definition.default.constructor.name}) does not match the property's type (${definition.type.name}).`
+        );
+        continue;
+      }
+
+      this._________TOP_SECRET__[propName] = definition.default;
+      // set up a getter and setter for each property
+      Object.defineProperty(this, propName, {
+        get: () => this._________TOP_SECRET__[propName],
+        set: rawNewVal => {
+          const oldVal = this._________TOP_SECRET__[propName];
+          // attempt to cast the new value to the new value's type
+          const newVal =
+            definition.type === Boolean
+              ? { true: true, false: false }[rawNewVal]
+              : definition.type(rawNewVal);
+          console.log(
+            `${this.constructor.name}.properties.${propName} setter was ${oldVal}, received ${rawNewVal}, cast it to ${definition.type.name} which returned ${newVal}`
+          );
+
+          // bail early if the value didn't change
+          if (oldVal === newVal) {
+            console.log(
+              `${this.constructor.name}.properties.${propName} assigned a value equal to its old value, skipping rest of the setter`
+            );
+            return;
+          }
+
+          // do a type check before anything else
+          if (newVal.constructor !== definition.type) {
+            console.error(
+              `can't set ${definition.type.name} property ${this.constructor.name}.properties.${propName} to ${newVal}, a ${newVal.constructor.name}`
+            );
+            return;
+          }
+
+          if (definition.validate) {
+            if (!definition.validate(newVal, oldVal, this)) {
+              console.error(
+                `validate function failed for ${this.constructor.name}.properties.${propName}`
+              );
+              return;
+            }
+          }
+
+          if (definition.observer && this[definition.observer]) {
+            this[definition.observer](oldVal, newVal);
+          }
+
+          this._________TOP_SECRET__[propName] = newVal;
+
+          // if reflected, update the attribute as well.
+          if (
+            definition.reflect &&
+            definition.type === Boolean &&
+            newVal === false
+          ) {
+            // for boolean properties, if they're set to false, remove the attribute instead of setting `attrName="false"`
+            console.log(
+              `Boolean property ${
+                this.constructor.name
+              }.properties.${propName} set to false; removing attribute ${prop2attr(
+                propName,
+                this._pfeClass.attrPrefix
+              )}`
+            );
+            this.removeAttribute(prop2attr(propName));
+          } else if (definition.reflect) {
+            console.log(
+              `property ${
+                this.constructor.name
+              }.properties.${propName} set to ${newVal}; updating attribute ${prop2attr(
+                propName,
+                this._pfeClass.attrPrefix
+              )}`
+            );
+            this.setAttribute(
+              prop2attr(propName, this._pfeClass.attrPrefix),
+              newVal
+            );
+          }
+        },
+        writeable: true,
+        enumerable: true,
+        configurable: false
+      });
+    }
+  }
+
+  _initAttrReflection() {
+    Object.keys(this._pfeClass.properties)
+      .map(prop => ({
+        propName: prop,
+        attrName: prop2attr(prop, this._pfeClass.attrPrefix),
+        definition: this._pfeClass.properties[prop]
+      }))
+      .filter(
+        prop => prop.definition.reflect && isValidReflection(prop.definition)
+      )
+      .forEach(prop => {
+        const isDefaultBooleanFalse =
+          prop.definition.type === Boolean && prop.definition.default === false;
+        if (!isDefaultBooleanFalse && !this.hasAttribute(prop.attrName)) {
+          console.log(`setting default value for ${prop.attrName}`);
+          this.setAttribute(prop.attrName, prop.definition.default);
+        }
+      });
   }
 
   _copyAttribute(name, to) {

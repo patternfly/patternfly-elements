@@ -74,10 +74,10 @@ npm run live-demo [component-name(s)]
 ### Testing
 
 ```shell
-# Run tests on all components
+# Build and run tests on all components
 npm run test 
 
-# Run tests on one component
+# Build and run tests on one component
 npm run test [component-name(s)]
 ```
 

@@ -18,9 +18,9 @@
   <link href="../dist/pfe-navigation--lightdom.css" rel="stylesheet">
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/examples/node_modules/requirejs/require.js"></script>
 
 
   <script>
@@ -98,7 +98,7 @@
     <pfe-navigation-main role="navigation" aria-label="Main">
       <ul>
         <li>
-          <pfe-navigation-item>
+          <pfe-navigation-item id="products">
             <h3 slot="trigger"><a href="#">Products</a></h3>
             <div slot="tray" hidden>
               <div class="pfe-navigation-item__tray--container">

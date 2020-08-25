@@ -1,8 +1,14 @@
-## Prerelease 55 ( TBD )
+## Prerelease 56 ( TBD )
 
+- [06a9b94](https://github.com/patternfly/patternfly-elements/commit/06a9b94505d1471d899f1db9704727c5a249a489) fix: move visual regression testing to merge script
+- [7aad6b4](https://github.com/patternfly/patternfly-elements/commit/7aad6b463920cad87de2697ee5fdf99b46eb628e) feat: Remove build from postinstall
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Open a pull request from the command-line
+
+## Prerelease 55 ( 2020-08-19 )
+
+- [3ee117e](https://github.com/patternfly/patternfly-elements/commit/3ee117e8a3df17f50738b9c0fa0caa3a9af9c679) feat: pfe-autocomplete - fire custom event when dropdown is shown (#1046)
 - [51e988c](https://github.com/patternfly/patternfly-elements/commit/51e988c3e645ff1d3018bc43f24cfaa6be3b5bb2) fix: pfelement - restore pfelement tests (#1018)
 - [fbe4423](https://github.com/patternfly/patternfly-elements/commit/fbe442396f06b0a097366512b698dc0b6d5e1f9f) fix: improve CLS rating in lighthouse (#1020)
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Open a pull request from the command-line
 
 ## Prerelease 54 ( 2020-07-31 )
 

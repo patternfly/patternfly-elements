@@ -1,5 +1,7 @@
 ## Prerelease 56 ( TBD )
 
+- [06a9b94](https://github.com/patternfly/patternfly-elements/commit/06a9b94505d1471d899f1db9704727c5a249a489) fix: move visual regression testing to merge script
+- [7aad6b4](https://github.com/patternfly/patternfly-elements/commit/7aad6b463920cad87de2697ee5fdf99b46eb628e) feat: Remove build from postinstall
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add theming to storybook
 
 ## Prerelease 55 ( 2020-08-19 )

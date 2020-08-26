@@ -1,6 +1,10 @@
 name: Visual regression testing
 on:
   workflow_dispatch:
+    inputs:
+      components:
+        description: "Component(s) to test"
+        required: false
   pull_request:
     types: [labeled]
 jobs:
@@ -48,7 +52,9 @@ jobs:
         run: npm run build
 
       - name: Visual regression tests
-        run: npm run e2e -- --verbose
+        run: |
+          echo "Test: ${{ github.event.inputs.components ? github.event.inputs.components : "*" }}"
+          npm run e2e -- ${{ github.event.inputs.components }} --verbose
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v2

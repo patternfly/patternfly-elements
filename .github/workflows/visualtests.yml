@@ -19,7 +19,7 @@ jobs:
         node-version: [12.x]
     steps:
       - name: Echo
-        run: echo "${{ github.event }}"
+        run: echo "${{ fromJSON(github.event) }}"
       # echo "${{ toJSON(github.event) }}"
       # echo "${{ fromJSON(github.event) }}"
       # echo "${{ join(github.event, ' ') }}"

@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Card",
+  "description": "This element creates a header, body, and footer region in which to place content or other components.",
+  "type": "object",
+  "tag": "pfe-card",
+  "class": "pfe-card",
+  "category": "container",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "header": {
+          "title": "Header",
+          "type": "array",
+          "namedSlot": true,
+          "maxItems": 3,
+          "items": {
+            "title": "Body item",
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        },
+        "body": {
+          "title": "Body",
+          "type": "array",
+          "namedSlot": false,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "pfe-card"
+              },
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        },
+        "footer": {
+          "title": "Footer",
+          "type": "array",
+          "namedSlot": true,
+          "maxItems": 3,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "pfe-cta"
+              },
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "color": {
+          "title": "Background color",
+          "type": "string",
+          "enum": [
+            "lightest",
+            "base",
+            "darker",
+            "darkest",
+            "complement",
+            "accent"
+          ],
+          "default": "base",
+          "prefixed": true,
+          "observer": "_colorChanged"
+        },
+        "img-src": {
+          "title": "Background image",
+          "type": "string",
+          "observer": "_imgSrcChanged"
+        },
+        "size": {
+          "title": "Padding size",
+          "type": "string",
+          "enum": ["small"],
+          "observer": "_basicAttributeChanged"
+        }
+      }
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

@@ -79,6 +79,21 @@ npm run test
 
 # Build and run tests on one component
 npm run test [component-name(s)]
+
+# Build and run tests on one component, persist the server when done
+npm run test [component-name(s)] -- -p
+```
+
+#### Visual regression testing
+
+*Note:* This does _NOT_ include the build step so you should build your repo before running the tests. You also need to have a `.env` file in your repository with the BrowserStack Local credentials in order to run this command locally.
+
+```shell
+# Run tests on all components
+npm run e2e 
+
+# Build and run tests on one component
+npm run e2e [component-name(s)]
 ```
 
 ## Support

@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Accordion",
+  "description": "This element renders content in an accordion.",
+  "type": "object",
+  "tag": "pfe-accordion",
+  "class": "pfe-accordion",
+  "category": "container",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "default": {
+          "title": "Default",
+          "type": "array",
+          "namedSlot": false,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "pfe-accordion-header"
+              },
+              {
+                "$ref": "pfe-accordion-panel"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

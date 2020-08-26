@@ -55,7 +55,8 @@ jobs:
         run: npm run build
 
       - name: Visual regression tests
-        run: npm run e2e -- ${{ github.event.inputs.components.split(/[\s|,]/i).join(" ") }} --verbose
+        run: |
+          npm run e2e -- ${{ github.event.inputs.components ? github.event.inputs.components.split(/[\s|,]/i).join('" "') : '' }} --verbose
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v2

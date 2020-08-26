@@ -20,9 +20,9 @@ jobs:
     steps:
       - name: Echo
         run: |
-          echo "${{ github.event }}"
-          echo "${{ toJSON(github.event) }}"
-          echo "${{ fromJSON(github.event) }}"
+          echo "${{ github.event }}" &&
+          echo "${{ toJSON(github.event) }}" &&
+          echo "${{ fromJSON(github.event) }}" &&
           echo "${{ join(github.event, ' ') }}"
       # - name: BrowserStackLocal env setup
       #   uses: "browserstack/github-actions/setup-env@master"

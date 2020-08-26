@@ -9,7 +9,7 @@ on:
     types: [labeled]
 jobs:
   visual_regression_tests:
-    if: github.event.workflow_run.action == "workflow_dispatch" || contains(github.event.pull_request.labels.*.name, 'ready to merge')  || contains(github.event.pull_request.labels.*.name, 'run e2e')
+    if: github.event.type == "workflow_dispatch" || contains(github.event.pull_request.labels.*.name, 'ready to merge')  || contains(github.event.pull_request.labels.*.name, 'run e2e')
     runs-on: ubuntu-latest
     strategy:
       matrix:

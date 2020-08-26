@@ -12,12 +12,15 @@ on:
       - "scripts"
 jobs:
   visual_regression_tests:
-    if: github.event.type == "WorkflowDispatch" || contains(github.event.pull_request.labels.*.name, 'ready to merge')  || contains(github.event.pull_request.labels.*.name, 'run e2e')
+    if: true || contains(github.event.pull_request.labels.*.name, 'ready to merge')  || contains(github.event.pull_request.labels.*.name, 'run e2e')
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [12.x]
     steps:
+      - name: Echo
+        run: echo ${{ github.event.type }}
+
       - name: BrowserStackLocal env setup
         uses: "browserstack/github-actions/setup-env@master"
         with:

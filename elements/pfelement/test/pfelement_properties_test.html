@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+  </head>
+  <body>
+
+    <test-element></test-element>
+
+    <script type="module">
+      import PFElement from "../dist/pfelement.js";
+
+      class TestElement extends PFElement {
+        static get tag() {
+          return "test-element"
+        }
+
+        get html() {
+          return `
+            <slot></slot>
+          `;
+        }
+
+        constructor() {
+          super(TestElement);
+        }
+      }
+
+      PFElement.create(TestElement);
+
+      suite('<pfelement>: properties and attributes', () => {
+        test("it should only reflect properties if they are primitive data types", () => {
+
+        });
+
+        test("it should ensure that the default values match the property's data type", () => {
+
+        });
+
+        test("it should create a getter and setter for each property", () => {
+
+        });
+
+        test("it should update the attribute if a property is updated and reflect is set to true", () => {
+
+        });
+
+        test("it should not update a property if the new value isn't of the prescribed type", () => {
+
+        });
+
+        test("it should not update a property if there is a validate function that does not pass", () => {
+
+        });
+
+        test("it should remove the reflected attribute if the new property value is Boolean false", () => {
+
+        });
+
+        test("it should add an attribute to the element if reflect is true and the attribute is not already in the light DOM", () => {
+
+        });
+
+        test("it should add any properties that have an observer to observedAttributes", () => {
+
+        });
+
+        test("it should add any properties that have reflect set to true and are of type String, Number, or Boolean to observedAttributes", () => {
+
+        });
+
+        test("it should execute the observer function if a property's value has changed", () => {
+
+        });
+
+        test("it should add the specified prefix to an attribute if a property's prefix value is true", () => {
+
+        });
+      });
+    </script>
+  </body>
+</html>

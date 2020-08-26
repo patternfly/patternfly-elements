@@ -45,3 +45,6 @@ test/.wct-kludge
 
 # Kube assets
 docs/resources/_gen/assets
+
+# Baseline images for comparison
+test/vrt-compare

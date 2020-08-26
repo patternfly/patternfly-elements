@@ -4,6 +4,9 @@ require("dotenv").config();
 
 let proc;
 
+// Command-line inputs to support testing individual test runs
+let inputs = process.argv.slice(3);
+
 exports.config = {
   logLevel: "error",
   framework: "mocha",
@@ -13,7 +16,11 @@ exports.config = {
   user: process.env.BROWSERSTACK_USER,
   key: process.env.BROWSERSTACK_KEY,
   baseUrl: "http://localhost:8080/",
-  specs: ["./elements/*/test/*_e2e.js"],
+  specs: [
+    `./elements/${
+      inputs.length > 0 ? `{${inputs.join(",")}}` : "*"
+    }/test/*_e2e.js`
+  ],
   maxInstances: 3,
   capabilities: [
     {
@@ -41,7 +48,7 @@ exports.config = {
       {
         baselineFolder: join(process.cwd(), "./test/vrt-baseline/"),
         formatImageName: `{tag}`,
-        screenshotPath: join(process.cwd(), ".tmp/"),
+        screenshotPath: join(process.cwd(), "./test/vrt-compare/"),
         savePerInstance: true,
         autoSaveBaseline: true,
         blockOutStatusBar: true,

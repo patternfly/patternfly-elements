@@ -18,7 +18,8 @@ We rely on a few tools to ensure our element is reliable in production:
 
 ## Web Component Tester
 
-If you followed the [Prerequisites]({{ "/docs/get-started.html#prerequisites" | relative_url }}) in [Getting Started]({{ "/docs/get-started.html" | relative_url }}), your setup should already be done.
+
+If you followed the [Prerequisites]({{< ref "/docs/get-started.html#prerequisites" >}}) in [Getting Started]({{< ref "/docs/get-started.html" >}}), your setup should already be done.
 
 ### Test Setup
 

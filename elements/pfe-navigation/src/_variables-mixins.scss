@@ -14,6 +14,7 @@ $breakpoints: (
   lg: 992px,
   xl: 1200px,
   2xl: 1368px,
+
   // The below should match an above breakpoint value
   // Where the icons on the right appear
   'secondary-links-expand': 768px,
@@ -21,6 +22,8 @@ $breakpoints: (
   // Default value for when the nav expands to desktop mode
   'nav-expand': 1200px,
 );
+
+$dropdown-transition: height 0.25s ease-in-out;
 
 /// Breakpoint helper specific to pfe-navigation
 /// @param {string} $breakpoint Name of a breakpoint
@@ -152,9 +155,10 @@ $breakpoints: (
 
 /// Top level button styles
 @mixin top-level-button {
+  $padding-mobile: 8px 24px;
   display: flex;
   align-items: center;
-  padding: 8px 24px;
+  padding: $padding-mobile;
   border: 0;
   white-space: nowrap;
   font-family: inherit;
@@ -167,15 +171,22 @@ $breakpoints: (
   cursor: pointer;
   transition: box-shadow 0.25s;
   @include breakpoint('secondary-links-expand') {
-    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     height: $menu-height;
     margin-right: 8px;
     padding: 0 8px;
     font-size: 12px;
     color: #fff;
+  }
+  @include collapse('secondary-links') {
+    flex-direction: row;
+    justify-content: normal;
+    height: auto;
+    margin: 0;
+    padding: $padding-mobile;
+    font-size: 16px;
+    color: #06c;
   }
 
   // added to counteract jumpiness when dashed border is visible on focus and hover
@@ -198,6 +209,10 @@ $breakpoints: (
     &:hover {
       @include focus-styles(#000, 0px);
     }
+  }
+
+  pfe-icon {
+    @include secondary-links-icon;
   }
 }
 

@@ -10,35 +10,39 @@
   <div class="pfe-navigation__outer-menu-wrapper" id="mobile__dropdown">
     <div id="pfe-navigation__outer-menu-wrapper__inner" class="pfe-navigation__outer-menu-wrapper__inner">
 
+      <!-- Placeholder to move search form at mobile breakpoint to maintain tab order -->
+      <div id="pfe-navigation__search-wrapper--xs"></div>
+
       <div id="pfe-navigation__menu-wrapper" class="pfe-navigation__menu-wrapper">
       </div>
 
       <!-- @todo: dynamically set aria-expanded for trigger buttons in shadow DOM and aria-hidden for dropdown content in shadow DOM -->
       <!-- @todo: regroup on this, not sure why we would dynamically set the aria attrs in the shadow DOM rather than just add the attrs in the template via HTML -->
-      <button class="pfe-navigation__search-toggle" id="secondary-links__button--search" aria-expanded="false" aria-controls="secondary-links__dropdown--search">
-        <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>
-        Search
-      </button>
-      <!-- @todo/note: dropdowns need to be directly after the trigger buttons in the DOM order otherwise you cannot tab into the dropdown itself when using a keyboard or screen reader. Need to regroup on this if original placement of the search slot was important for current functionality, in the original location above the search button you could not tab into search dropdown slot with neither a keyboard or screen reader. -->
-      <slot name="pfe-navigation--search" class="pfe-navigation__search" id="secondary-links__dropdown--search" aria-hidden="true">
-        search slot
-      </slot>
-
-      <slot name="pfe-navigation--custom-links" class="pfe-navigation__customlinks">
-        customlinks slot
-      </slot>
-
-      <button class="pfe-navigation__all-red-hat-toggle" id="secondary-links__button--all-red-hat" aria-expanded="false">
-        <pfe-icon icon="web-icon-grid-3x3" pfe-size="sm" aria-hidden="true"></pfe-icon>
-        All Red Hat
-      </button>
-      <div class="pfe-navigation__all-red-hat-wrapper" id="secondary-links__dropdown--all-red-hat" aria-hidden="true">
-        <div class="pfe-navigation__all-red-hat-wrapper__inner">
-          <div id="site-loading">
-            <pfe-progress-indicator></pfe-progress-indicator>
+      <ul class="pfe-navigation__secondary-links-wrapper" id="pfe-navigation__secondary-links-wrapper">
+        <li id="pfe-navigation__search-wrapper--md">
+          <button class="pfe-navigation__search-toggle" id="secondary-links__button--search" aria-expanded="false" aria-controls="secondary-links__dropdown--search">
+            <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>
+            Search
+          </button>
+          <slot name="pfe-navigation--search" class="pfe-navigation__search" id="secondary-links__dropdown--search">
+          </slot>
+        </li>
+        <li>
+          <button class="pfe-navigation__all-red-hat-toggle" id="secondary-links__button--all-red-hat">
+            <pfe-icon icon="web-icon-grid-3x3" pfe-size="sm"></pfe-icon>
+            All Red Hat
+          </button>
+          <div class="pfe-navigation__all-red-hat-wrapper" id="secondary-links__dropdown--all-red-hat">
+            <div class="pfe-navigation__all-red-hat-wrapper__inner">
+              <div id="site-loading">
+                <pfe-progress-indicator></pfe-progress-indicator>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </li>
+
+        <!-- Custom links to be added here on 'connectedCallback' -->
+      </ul>
 
     </div>
   </div>

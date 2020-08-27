@@ -1,6 +1,6 @@
 ## Prerelease 57 ( TBD )
 
-- []()
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add a build step to the release script
 
 ## Prerelease 56 ( 2020-08-26 )
 

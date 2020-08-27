@@ -101,6 +101,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   margin-right: 8px;
   padding-left: 8px;
   padding-right: 8px;
+  font-size: 12px;
   color: #fff;
 
   &:focus,
@@ -122,6 +123,24 @@ See mixin blocks before selectors that contain the selector name and the three l
 @mixin pfe-navigation__menu-toggle--desktop {
   display: none;
 }
+@mixin pfe-navigation__menu-toggle--active {
+  color: #151515;
+  background: #fff;
+  box-shadow: inset 0 4px 0 0 #e00;
+  &:focus,
+  &:hover {
+    @include focus-styles(#000, 0px);
+  }
+}
+@mixin pfe-navigation__menu-toggle--inactive {
+  color: #fff;
+  background: #000;
+  box-shadow: none;
+  &:focus,
+  &:hover {
+    @include focus-styles(#fff, 0px);
+  }
+}
 .pfe-navigation__menu-toggle {
   @include pfe-navigation__menu-toggle--mobile;
 
@@ -141,12 +160,45 @@ See mixin blocks before selectors that contain the selector name and the three l
   // Active state
   [pfe-navigation-open-toggle='mobile__button'] &,
   [pfe-navigation-open-toggle^='main-menu__'] & {
-    color: #151515;
-    background: #fff;
-    box-shadow: inset 0 4px 0 0 #e00;
-    &:focus,
-    &:hover {
-      @include focus-styles(#000, 0px);
+    @include pfe-navigation__menu-toggle--active;
+  }
+
+  [pfe-navigation-open-toggle='secondary-links__button--search'] & {
+    @include pfe-navigation__menu-toggle--active;
+    @include breakpoint('secondary-links-expand') {
+      @include pfe-navigation__menu-toggle--inactive;
+    }
+    @include collapse('secondary-links') {
+      @include pfe-navigation__menu-toggle--inactive;
+    }
+  }
+}
+
+// @todo Fix my specificity issues
+.pfe-navigation__mobile-dropdown[class][class][class] {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  width: 100%;
+  margin: 0;
+  max-height: calc(100vh - #{$menu-height});
+  padding: 16px 32px;
+  background: #fff;
+
+  // Open state
+  [pfe-navigation-open-toggle='mobile__button'] &,
+  [pfe-navigation-open-toggle^='main-menu__'] & {
+    display: flex;
+  }
+
+  [pfe-navigation-open-toggle='secondary-links__button--search'] & {
+    display: flex;
+    @include breakpoint('secondary-links-expand') {
+      display: none;
+    }
+    @include collapse('secondary-links') {
+      display: flex;
     }
   }
 }
@@ -160,155 +212,47 @@ See mixin blocks before selectors that contain the selector name and the three l
     display: flex;
     align-items: stretch;
   }
-  @include collapse('secondary-links') {
-    display: block;
-  }
-}
-
-// Layout changes per breakpoint
-// See comment at top of file
-@mixin pfe-navigation__outer-menu-wrapper--mobile {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  display: none;
-  width: 100%;
-  height: auto;
-  padding: 16px;
-  background: #fff;
-}
-@mixin pfe-navigation__outer-menu-wrapper--collapsed-menu {
-  position: static;
-  display: flex;
-  width: auto;
-  height: auto;
-  padding: 0;
-  background: transparent;
-}
-@mixin pfe-navigation__outer-menu-wrapper--desktop {
-  position: static;
-  display: flex;
-  width: auto;
-  height: $menu-height;
-  padding: 0;
-  background: transparent;
-}
-.pfe-navigation__outer-menu-wrapper {
-  @include pfe-navigation__outer-menu-wrapper--mobile;
-
-  @include breakpoint('secondary-links-expand') {
-    @include pfe-navigation__outer-menu-wrapper--collapsed-menu;
-  }
-  @include breakpoint('nav-expand') {
-    @include pfe-navigation__outer-menu-wrapper--desktop;
-  }
-  @include collapse('nav') {
-    @include pfe-navigation__outer-menu-wrapper--collapsed-menu;
-  }
-  @include collapse('secondary-links') {
-    @include pfe-navigation__outer-menu-wrapper--mobile;
-  }
-
-  [pfe-navigation-open-toggle='mobile__button'] &,
-  [pfe-navigation-open-toggle^='main-menu__'] & {
-    display: block;
-    @include breakpoint('secondary-links-expand') {
-      display: flex;
-    }
-    @include collapse('secondary-links') {
-      display: block;
-    }
-    @include collapse('nav') {
-      display: block;
-    }
-  }
-}
-
-.pfe-navigation__outer-menu-wrapper,
-.pfe-navigation__outer-menu-wrapper__inner {
   @include breakpoint('nav-expand') {
     flex-grow: 1;
   }
   @include collapse('nav') {
     flex-grow: 0;
   }
+  @include collapse('secondary-links') {
+    display: block;
+  }
+}
+
+// Layout changes per breakpoint
+// See comment at top of file
+.pfe-navigation__outer-menu-wrapper {
+  height: auto;
+
+  @include breakpoint('nav-expand') {
+    height: $menu-height;
+  }
+  @include collapse('nav') {
+    height: auto;
+  }
+
+  :host(:not([pfe-navigation-open-toggle])) .pfe-navigation--is-resizing & {
+    overflow: hidden;
+  }
+}
+
+.pfe-navigation__outer-menu-wrapper__inner {
+  width: 100%;
 }
 
 // Menu, List, & Items
 // --------------------------------------------------------
-// Layout changes per breakpoint
-// See comment at top of file
-@mixin pfe-navigation__menu-wrapper--mobile {
-  position: static;
-  display: block;
-  width: 100%;
-  margin: 0 0 8px;
-  padding: 0;
-  background: #fff;
-}
-@mixin pfe-navigation__menu-wrapper--collapsed-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  display: none;
-  width: 100%;
-  margin: 0;
-  padding: 16px 32px;
-  background: #fff;
-}
-@mixin pfe-navigation__menu-wrapper--desktop {
-  position: static;
-  display: flex;
-  align-items: stretch;
-  margin: 0 auto 0 0;
-  padding: 0;
-  background: transparent;
-}
-@mixin pfe-navigation__menu-wrapper--mobile--open {
-  display: block;
-}
-@mixin pfe-navigation__menu-wrapper--collapsed-menu--open {
-  display: block;
-}
-@mixin pfe-navigation__menu-wrapper--desktop--open {
-  // Since open state is default state, re-assert default styles
-  @include pfe-navigation__wrapper--desktop;
-}
 .pfe-navigation__menu-wrapper {
-  @include pfe-navigation__menu-wrapper--mobile;
-  @include breakpoint('secondary-links-expand') {
-    @include pfe-navigation__menu-wrapper--collapsed-menu;
-  }
+  display: flex;
   @include breakpoint('nav-expand') {
-    &,
-    &[class][class] {
-      @include pfe-navigation__menu-wrapper--desktop;
-    }
+    margin-right: auto;
   }
-
   @include collapse('nav') {
-    @include pfe-navigation__menu-wrapper--collapsed-menu;
-  }
-  @include collapse('secondary-links') {
-    @include pfe-navigation__menu-wrapper--mobile;
-  }
-
-  // Open state
-  [pfe-navigation-open-toggle='mobile__button'] &,
-  [pfe-navigation-open-toggle^='main-menu__'] & {
-    @include pfe-navigation__menu-wrapper--mobile--open;
-    @include breakpoint('secondary-links-expand') {
-      @include pfe-navigation__menu-wrapper--collapsed-menu--open;
-    }
-    @include breakpoint('nav-expand') {
-      @include pfe-navigation__menu-wrapper--desktop--open;
-    }
-    @include collapse('nav') {
-      @include pfe-navigation__menu-wrapper--collapsed-menu--open;
-    }
-    @include collapse('secondary-links') {
-      @include pfe-navigation__menu-wrapper--mobile--open;
-    }
+    margin-right: 0;
   }
 }
 
@@ -321,12 +265,20 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 .pfe-navigation__menu {
+  width: 100%;
+  transition: opacity 0.1s ease-out;
   @include breakpoint('nav-expand') {
     display: flex;
     align-items: stretch;
+    width: auto;
   }
   @include collapse('nav') {
     display: block;
+    width: 100%;
+  }
+
+  .pfe-navigation--is-resizing & {
+    opacity: 0;
   }
 }
 
@@ -544,7 +496,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   width: 100%;
   height: 0;
   overflow: hidden;
-  transition: height 0.25s ease-in-out;
+  transition: $dropdown-transition;
   will-change: height;
   @include pfe-navigation__dropdown-wrapper--mobile;
   @include breakpoint('nav-expand') {
@@ -557,17 +509,17 @@ See mixin blocks before selectors that contain the selector name and the three l
   // JS Adds aria-hidden at the appropriate time before open, or after close
   // This prevents the dropdown from showing to anyone, but also lets JS get the dropdown height
   // Unlike display: none
-  &[aria-hidden=true] {
-    visibility: hidden;
-  }
-
   .pfe-navigation__menu-item--open > &[class] { // Adding specificity to beat JS Breakpoint selector
     height: auto; // Height is set in JS, this is a fallback
   }
 }
 
+.pfe-navigation__dropdown-wrapper--invisible {
+  visibility: hidden;
+}
+
 .pfe-navigation__dropdown-wrapper--single-column {
-  padding: 0;
+  padding: 0 16px;
   @include breakpoint('nav-expand') {
     left: auto;
     width: auto;
@@ -588,11 +540,11 @@ See mixin blocks before selectors that contain the selector name and the three l
 @mixin pfe-navigation__dropdown--mobile {
   display: block;
   font-size: 16px;
-  padding: 12px 0;
+  padding: 12px 16px;
 }
 @mixin pfe-navigation__dropdown--desktop {
   display: grid;
-  padding: 32px 0;
+  padding: 32px 16px;
   // Fits as many columns as it can given the constraints
   // @todo evaluate layout needs and if this is a sane default
   // grid-template-columns:
@@ -607,6 +559,8 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 .pfe-navigation__dropdown {
   @include pfe-navigation__dropdown--mobile;
+  margin-left: -16px;
+  margin-right: -16px;
   visibility: hidden;
   transition: visibility 0s linear 0.4s;
   @include breakpoint('nav-expand') {
@@ -799,8 +753,11 @@ See mixin blocks before selectors that contain the selector name and the three l
 // --------------------------------------------------------
 .pfe-navigation__search-toggle {
   display: none;
-  @include breakpoint('secondary-links-expand') {
-    display: flex;
+
+  :host(.pfe-navigation--has-search) & {
+    @include breakpoint('secondary-links-expand') {
+      display: flex;
+    }
   }
   @include collapse('secondary-links') {
     display: none;
@@ -970,17 +927,41 @@ See mixin blocks before selectors that contain the selector name and the three l
 // }
 
 
-// pfe-icons
+// Secondary Links
 // --------------------------------------------------------
 
 //@todo: figure out if this is the best way to style the icon color states or if updates to JS need to be made to put a class or attribute on a button when it is open to target with css
+.pfe-navigation__secondary-links-wrapper {
+  display: flex;
+  // @note Flex direction is used by pfeNavigation.isSecondaryLinksSectionCollapsed() to determine layout state
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transition: opacity 0.1s ease-out;
+  @include breakpoint('secondary-links-expand') {
+    flex-direction: row;
+  }
+  @include collapse('secondary-links') {
+    flex-direction: column;
+  }
+  > li {
+    margin: 0;
+    padding: 0;
+    @include breakpoint('secondary-links-expand') {
+      margin-right: 8px;
+    }
+    @include collapse('secondary-links') {
+      margin-right: 0;
+    }
 
-.pfe-navigation__menu-toggle,
-.pfe-navigation__search-toggle,
-.pfe-navigation__custom-links,
-.pfe-navigation__log-in-link {
-  pfe-icon {
-    @include secondary-links-icon;
+    > a {
+      @include top-level-button;
+    }
+  }
+
+  .pfe-navigation--is-resizing & {
+    opacity: 0;
   }
 }
 
@@ -997,10 +978,20 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
-[pfe-navigation-open-toggle='mobile__button'],
-[pfe-navigation-open-toggle^='main-menu__'] {
-  .pfe-navigation__menu-toggle pfe-icon {
+.pfe-navigation__menu-toggle pfe-icon {
+  [pfe-navigation-open-toggle='mobile__button'] &,
+  [pfe-navigation-open-toggle^='main-menu__'] & {
     --pfe-icon--Color: #151515;
+  }
+
+  [pfe-navigation-open-toggle='secondary-links__button--search'] & {
+    --pfe-icon--Color: #151515;
+    @include breakpoint('secondary-links-expand') {
+      --pfe-icon--Color: #fff;
+    }
+    @include collapse('secondary-links') {
+      --pfe-icon--Color: #151515;
+    }
   }
 }
 

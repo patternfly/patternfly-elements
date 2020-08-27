@@ -2,74 +2,29 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 import "../../pfe-progress-indicator/dist/pfe-progress-indicator.js";
 
-// @todo Figure out cooler way to include these utilty functions
 /**
- * Optimized resize handler
- * @see https://wiki.developer.mozilla.org/en-US/docs/Web/API/Window/resize_event$revision/1380246
+ * Debounce helper function
+ * @see https://davidwalsh.name/javascript-debounce-function
  *
- * @example
- *     optimizedResize.add(() => console.log('Resource conscious resize callback!'));
+ * @param {function} func Function to be debounced
+ * @param {number} delay How long until it will be run
+ * @param {boolean} immediate Whether it should be run at the start instead of the end of the debounce
  */
-const optimizedResize = (function() {
-  let callbacks = [],
-    running = false;
-  // Fired on resize event
-  const onResize = () => {
-    if (!running) {
-      running = true;
-      if (window.requestAnimationFrame) {
-        window.requestAnimationFrame(runCallbacks);
-      } else {
-        setTimeout(runCallbacks, 66);
-      }
-    }
-  };
-
-  // Run the callbacks
-  const runCallbacks = () => {
-    callbacks.forEach(function(callback) {
-      callback();
-    });
-    running = false;
-  };
-
-  // Adds callback to loop
-  const addCallback = callback => {
-    if (callback) {
-      callbacks.push(callback);
-    }
-  };
-
-  return {
-    // Public method to add additional callback
-    add: function add(callback) {
-      if (!callbacks.length) {
-        window.addEventListener("resize", onResize);
-      }
-      addCallback(callback);
-    }
-  };
-})();
-
-/**
- * Debounce helper
- * @see https://codeburst.io/throttling-and-debouncing-in-javascript-b01cad5c8edf
- *
- * @example
- *     debounce(
- *       () => console.log('debounced'),
- *       3000
- *     );
- */
-const debounce = (func, delay) => {
-  let inDebounce;
+function debounce(func, delay, immediate = false) {
+  var timeout;
   return function() {
-    const context = this;
-    const args = arguments;
-    clearTimeout(inDebounce);
-    inDebounce = setTimeout(() => func.apply(context, args), delay);
+    var context = this,
+      args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, delay);
+    if (callNow) func.apply(context, args);
   };
-};
+}
 
 // Config for mutation observer to see if things change inside of the component
 const lightDomObserverConfig = {
@@ -113,12 +68,19 @@ class PfeNavigation extends PFElement {
   constructor() {
     super(PfeNavigation, { type: PfeNavigation.PfeType });
 
-    this._search = this.shadowRoot.querySelector(`.${this.tag}__search`);
+    // Set pointers to commonly used elements
+    this._mobileToggle = this.shadowRoot.getElementById("mobile__button");
+    this._menuDropdownXs = this.shadowRoot.getElementById("mobile__dropdown");
+    this._menuDropdownMd = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
+    this._secondaryLinksWrapper = this.shadowRoot.getElementById("pfe-navigation__secondary-links-wrapper");
+    this._searchToggle = this.shadowRoot.getElementById("secondary-links__button--search");
+    this._searchSlot = this.shadowRoot.getElementById("secondary-links__dropdown--search");
+    this._searchSpotXs = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--xs");
+    this._searchSpotMd = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--md");
+    this._allRedHatToggle = this.shadowRoot.getElementById("secondary-links__button--all-red-hat");
     this._customlinks = this.shadowRoot.querySelector(`.${this.tag}__customlinks`);
-    this._siteSwitcherWrap = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
+    this._siteSwitcherWrapper = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
-
-    this.menuToggle = this.shadowRoot.querySelector(".pfe-navigation__menu-toggle");
 
     // Set default breakpoints to null (falls back to CSS)
     this.menuBreakpoints = {
@@ -126,15 +88,24 @@ class PfeNavigation extends PFElement {
       mainMenu: null
     };
 
+    // Initializing vars on the instance of this navigation element
     this.windowInnerWidth = null;
     this.mainMenuButtonVisible = null;
     this.secondaryLinksSectionCollapsed = null;
+    this._debouncedPreResizeAdjustments = null;
+    this._debouncedPostResizeAdjustments = null;
+    this.logoSpaceNeeded = null;
+    this._currentMobileDropdown = null;
+    // Used to track previous state for resize adjustments
+    this._wasMobileMenuButtonVisible = null;
+    this._wasSecondaryLinksSectionCollapsed = null;
 
     // Ensure 'this' is tied to the component object in these member functions
     this.isOpen = this.isOpen.bind(this);
     this._changeNavigationState = this._changeNavigationState.bind(this);
     this.isMobileMenuButtonVisible = this.isMobileMenuButtonVisible.bind(this);
     this.isSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed.bind(this);
+    this._processSearchSlotChange = this._processSearchSlotChange.bind(this);
     this._processLightDom = this._processLightDom.bind(this);
     this._toggleMobileMenu = this._toggleMobileMenu.bind(this);
     this._toggleSearch = this._toggleSearch.bind(this);
@@ -144,8 +115,13 @@ class PfeNavigation extends PFElement {
     this._collapseMainMenu = this._collapseMainMenu.bind(this);
     this._collapseSecondaryLinks = this._collapseSecondaryLinks.bind(this);
     this._getDropdownHeights = this._getDropdownHeights.bind(this);
+    this._moveSearchSlot = this._moveSearchSlot.bind(this);
+    this._postResizeAdjustments = this._postResizeAdjustments.bind(this);
     this._menuToggleKeyboardListener = this._menuToggleKeyboardListener.bind(this);
     this._generalKeyboardListener = this._generalKeyboardListener.bind(this);
+
+    // Handle updates to slotted search content
+    this._searchSlot.addEventListener("slotchange", this._processSearchSlotChange);
 
     // Setup mutation observer to watch for content changes
     this._observer = new MutationObserver(this._processLightDom);
@@ -169,16 +145,34 @@ class PfeNavigation extends PFElement {
     // Add a slotchange listener to the lightDOM trigger
     // this.customlinks.addEventListener("slotchange", this._init);
 
-    // Update the stored height of a dropdown (used for animation) when the page is resized
-    // But only once, after they've stopped resizing after the time in debounce
-    optimizedResize.add(debounce(this._getDropdownHeights, 150));
+    const preResizeAdjustments = () => {
+      console.log("starting resize!");
+      this.classList.add("pfe-navigation--is-resizing");
+    };
+    this._debouncedPreResizeAdjustments = debounce(preResizeAdjustments, 150, true);
+    window.addEventListener("resize", this._debouncedPreResizeAdjustments);
+    this._debouncedPostResizeAdjustments = debounce(this._postResizeAdjustments, 150);
+    window.addEventListener("resize", this._debouncedPostResizeAdjustments, { passive: true });
+    this._wasMobileMenuButtonVisible = this.isMobileMenuButtonVisible();
+    this._wasSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed();
   }
 
-  disconnectedCallback() {}
+  disconnectedCallback() {
+    window.removeEventListener("resize", this._debouncedPreResizeAdjustments);
+    window.removeEventListener("resize", this._debouncedPostResizeAdjustments);
+    this._slot.removeEventListener("slotchange", this._processSearchSlotChange);
+  }
 
   // Process the attribute change
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
+  }
+
+  /**
+   * Utility function that is used to display more console logging in non-prod env
+   */
+  _isDevelopment() {
+    return document.domain === "localhost";
   }
 
   /**
@@ -193,6 +187,9 @@ class PfeNavigation extends PFElement {
         // Something is open, and a toggleId wasn't set
         return true;
       }
+      if (openToggleId.startsWith("main-menu") && toggleId === "mobile__button") {
+        return true;
+      }
       // Only checks for prefix so if main-menu is queried and main-menu__dropdown--Link-Name is open it still evaluates as true
       // This prevents the main-menu toggle shutting at mobile when a sub-section is opened
       return toggleId === openToggleId;
@@ -201,9 +198,111 @@ class PfeNavigation extends PFElement {
   }
 
   /**
+   * Use for elements that stop being dropdowns
+   *
+   * @param {object} toggleElement Toggle Button DOM Element
+   * @param {object} dropdownWrapper Dropdown wrapper DOM element
+   * @param {boolean} debugNavigationState
+   */
+  _removeDropdownAttributes(toggleElement, dropdownWrapper, debugNavigationState = false) {
+    let toggleId = null;
+
+    if (toggleElement) {
+      toggleId = toggleElement.getAttribute("id");
+      toggleElement.removeAttribute("aria-expanded");
+      toggleElement.parentElement.classList.remove("pfe-navigation__menu-item--open");
+    }
+
+    if (debugNavigationState) {
+      console.log("_removeDropdownAttributes", toggleId, dropdownWrapper.getAttribute("id"));
+    }
+
+    if (dropdownWrapper) {
+      dropdownWrapper.removeAttribute("aria-hidden");
+      dropdownWrapper.classList.remove("pfe-navigation__dropdown-wrapper--invisible");
+      dropdownWrapper.style.removeProperty("height");
+    }
+  }
+
+  /**
+   * Sets attributes for an open element, but DOES NOT update navigation state
+   * Only use to update DOM State to reflect nav state
+   * Almost all open/close actions should go through this._changeNavigationState, not this function
+   *
+   * @param {object} toggleElement Toggle Button DOM Element
+   * @param {object} dropdownWrapper Dropdown wrapper DOM element
+   * @param {boolean} debugNavigationState
+   */
+  _addOpenDropdownAttributes(toggleElement, dropdownWrapper, debugNavigationState = false) {
+    let toggleId = null;
+    if (toggleElement) {
+      toggleId = toggleElement.getAttribute("id");
+    }
+    if (debugNavigationState) {
+      console.log("_addOpenDropdownAttributes", toggleId, dropdownWrapper.getAttribute("id"));
+    }
+
+    if (toggleElement) {
+      toggleElement.setAttribute("aria-expanded", "true");
+
+      // Main menu specific actions
+      if (toggleId.startsWith("main-menu__")) {
+        toggleElement.parentElement.classList.add("pfe-navigation__menu-item--open");
+      }
+    }
+
+    if (dropdownWrapper) {
+      dropdownWrapper.setAttribute("aria-hidden", "false");
+      dropdownWrapper.classList.remove("pfe-navigation__dropdown-wrapper--invisible");
+
+      // Updating height via JS so we can animate it for CSS transitions
+      if (parseInt(dropdownWrapper.dataset.height) > 30) {
+        dropdownWrapper.style.setProperty("height", `${dropdownWrapper.dataset.height}px`);
+      }
+    }
+  }
+
+  /**
+   * Sets attributes for a closed element, but DOES NOT update navigation state
+   * Only use to update DOM State to reflect nav state
+   * Almost all open/close actions should go through this._changeNavigationState, not this function
+   *
+   * @param {object} toggleElement Toggle Button DOM Element
+   * @param {object} dropdownWrapper Dropdown wrapper DOM element
+   * @param {number} invisibleDelay Delay on visibility hidden style, in case we need to wait for an animation
+   * @param {boolean} debugNavigationState
+   */
+  _addCloseDropdownAttributes(toggleElement, dropdownWrapper, invisibleDelay = 0, debugNavigationState = false) {
+    let toggleId = null;
+    if (toggleElement) {
+      toggleId = toggleElement.getAttribute("id");
+    }
+    if (debugNavigationState) {
+      console.log("_closeDropdown", toggleId, dropdownWrapper.getAttribute("id"));
+    }
+    if (toggleElement) {
+      toggleElement.setAttribute("aria-expanded", "false");
+      // Main menu specific code
+      if (toggleId.startsWith("main-menu")) {
+        toggleElement.parentElement.classList.remove("pfe-navigation__menu-item--open");
+      }
+    }
+
+    if (dropdownWrapper) {
+      dropdownWrapper.style.removeProperty("height");
+      // Sometimes need a delay visibility: hidden so animation can finish
+      window.setTimeout(
+        () => dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--invisible"),
+        invisibleDelay // Should be slightly longer than the animation time
+      );
+      dropdownWrapper.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  /**
    * Create dash delimited string with no special chars for use in HTML attributes
-   * @param {string} text
-   * @return {string}
+   * @param {string}
+   * @return {string} String that can be used as a class or ID (no spaces or special chars)
    */
   _createMachineName(text) {
     return (
@@ -218,6 +317,34 @@ class PfeNavigation extends PFElement {
   }
 
   /**
+   * Figures out if secondary links are collapsed
+   * @param {boolean} forceRecalculation
+   * @returns {boolean}
+   */
+  isSecondaryLinksSectionCollapsed(forceRecalculation) {
+    // Trying to avoid running getComputedStyle too much by caching iton the web component object
+    if (
+      forceRecalculation ||
+      this.secondaryLinksSectionCollapsed === null ||
+      window.innerWidth !== this.windowInnerWidth
+    ) {
+      if (this._isDevelopment()) {
+        console.log(`${this.tag}: isSecondaryLinksSectionCollapsed recalculated`);
+      }
+      this.secondaryLinksSectionCollapsed =
+        window.getComputedStyle(this._secondaryLinksWrapper, false).flexDirection === "column";
+
+      // Update the stored windowInnerWidth variable so we don't recalculate for no reason
+      if (window.innerWidth !== this.windowInnerWidth) {
+        this.windowInnerWidth = window.innerWidth;
+        // Update the other layout state function, but avoid infinite loop :P
+        this.isMobileMenuButtonVisible(true);
+      }
+    }
+    return this.secondaryLinksSectionCollapsed;
+  }
+
+  /**
    * Figures out if the mobile menu toggle (aka hamburger icon) is visible
    * @param {boolean} forceRecalculation
    * @returns {boolean}
@@ -225,11 +352,10 @@ class PfeNavigation extends PFElement {
   isMobileMenuButtonVisible(forceRecalculation) {
     // Trying to avoid running getComputedStyle too much by caching iton the web component object
     if (forceRecalculation || this.mainMenuButtonVisible === null || window.innerWidth !== this.windowInnerWidth) {
-      if (document.domain === "localhost") {
-        console.log(`${this.tag} isMobileMenuButtonVisible: Recalculating menu button visibility`);
+      if (this._isDevelopment()) {
+        // console.log(`${this.tag}: isMobileMenuButtonVisible recalculated`);
       }
-      const mobileButton = this.shadowRoot.getElementById("mobile__button");
-      this.mainMenuButtonVisible = window.getComputedStyle(mobileButton, false).display !== "none";
+      this.mainMenuButtonVisible = window.getComputedStyle(this._mobileToggle, false).display !== "none";
 
       // Update the stored windowInnerWidth variable so we don't recalculate for no reason
       if (window.innerWidth !== this.windowInnerWidth) {
@@ -241,33 +367,24 @@ class PfeNavigation extends PFElement {
   }
 
   /**
-   * Figures out if the mobile menu toggle (aka hamburger icon) is visible
-   * @param {boolean} forceRecalculation
-   * @returns {boolean}
+   * Sets this._currentMobileDropdown depending on breakpoint
    */
-  isSecondaryLinksSectionCollapsed(forceRecalculation) {
-    // @todo Find reliable way to check if secondary links are collapsed (search and all red hat buttons probably aren't it)
-
-    // Trying to avoid running getComputedStyle too much by caching iton the web component object
-    if (
-      forceRecalculation ||
-      this.secondaryLinksSectionCollapsed === null ||
-      window.innerWidth !== this.windowInnerWidth
-    ) {
-      if (document.domain === "localhost") {
-        console.log(`${this.tag} isSecondaryLinksSectionCollapsed: Recalculating menu button visibility`);
+  _setCurrentMobileDropdown() {
+    if (this.isMobileMenuButtonVisible()) {
+      if (this.isSecondaryLinksSectionCollapsed()) {
+        this._currentMobileDropdown = this._menuDropdownXs;
+        this._currentMobileDropdown.classList.add("pfe-navigation__mobile-dropdown");
+        this._menuDropdownMd.classList.remove("pfe-navigation__mobile-dropdown");
+      } else {
+        this._currentMobileDropdown = this._menuDropdownMd;
+        this._currentMobileDropdown.classList.add("pfe-navigation__mobile-dropdown");
+        this._menuDropdownXs.classList.remove("pfe-navigation__mobile-dropdown");
       }
-      const searchButton = this.shadowRoot.getElementById("secondary-links__button--search");
-      this.secondaryLinksSectionCollapsed = window.getComputedStyle(searchButton, false).display === "none";
-
-      // Update the stored windowInnerWidth variable so we don't recalculate for no reason
-      if (window.innerWidth !== this.windowInnerWidth) {
-        this.windowInnerWidth = window.innerWidth;
-        // Update the other layout state function, but avoid infinite loop :P
-        this.isMobileMenuButtonVisible(true);
-      }
+    } else {
+      this._currentMobileDropdown = null;
+      this._menuDropdownXs.classList.remove("pfe-navigation__mobile-dropdown");
+      this._menuDropdownMd.classList.remove("pfe-navigation__mobile-dropdown");
     }
-    return this.secondaryLinksSectionCollapsed;
   }
 
   /**
@@ -287,7 +404,11 @@ class PfeNavigation extends PFElement {
           break;
       }
     } else if (toggleId === "mobile__button") {
-      dropdownId = "mobile__dropdown";
+      if (this.isMobileMenuButtonVisible()) {
+        dropdownId = this._currentMobileDropdown.getAttribute("id");
+      } else {
+        return null;
+      }
     } else if (toggleId.startsWith("main-menu")) {
       dropdownId = this.shadowRoot.getElementById(toggleId).parentElement.dataset.dropdownId;
     }
@@ -305,7 +426,11 @@ class PfeNavigation extends PFElement {
    * @return {boolean} True if the final state is open, false if closed
    */
   _changeNavigationState(toggleId, toState) {
-    // console.log('_changeNavigationState', toggleId, toState);
+    const debugNavigationState = false; // Should never be committed as true
+
+    if (debugNavigationState) {
+      console.log("_changeNavigationState", toggleId, toState);
+    }
     const isOpen = this.isOpen(toggleId);
     // Set toState param to go to opposite of current state if toState isn't set
     if (typeof toState === "undefined") {
@@ -320,21 +445,15 @@ class PfeNavigation extends PFElement {
     /**
      * Local utility function to open a dropdown (shouldn't be used outside of parent function)
      * @param {object} toggleElement Toggle Button DOM Element
-     * @param {object} dropdownElement Dropdown wrapper DOM element
+     * @param {object} dropdownWrapper Dropdown wrapper DOM element
      */
-    const _openDropdown = (toggleElement, dropdownElement) => {
+    const _openDropdown = (toggleElement, dropdownWrapper) => {
       const toggleId = toggleElement.getAttribute("id");
-      // console.log('_openDropdown', toggleId, dropdownElement.getAttribute('id'));
-      toggleElement.setAttribute("aria-expanded", "true");
-      dropdownElement.setAttribute("aria-hidden", "false");
-      // Updating height via JS so we can animate it for CSS transitions
-      if (parseInt(dropdownElement.dataset.height) > 30) {
-        dropdownElement.style.setProperty("height", `${dropdownElement.dataset.height}px`);
+      if (debugNavigationState) {
+        console.log("openDropdown", toggleId, dropdownWrapper.getAttribute("id"));
       }
-      // Main menu specific actions
-      if (toggleElement.getAttribute("id").startsWith("main-menu__")) {
-        toggleElement.parentElement.classList.add("pfe-navigation__menu-item--open");
-      }
+
+      this._addOpenDropdownAttributes(toggleElement, dropdownWrapper, debugNavigationState);
 
       this.setAttribute(`${this.tag}-open-toggle`, toggleId);
     };
@@ -342,37 +461,20 @@ class PfeNavigation extends PFElement {
     /**
      * Local utility function to close a dropdown (shouldn't be used outside of parent function)
      * @param {object} toggleElement Toggle Button DOM Element
-     * @param {object} dropdownElement Dropdown wrapper DOM element
+     * @param {object} dropdownWrapper Dropdown wrapper DOM element
      * @param {boolean} backOut If we're in a subdropdown, should we keep the parent one open, false will close all dropdowns
      */
-    const _closeDropdown = (toggleElement, dropdownElement, backOut = true) => {
-      // console.log('_openDropdown', toggleElement.getAttribute('id'), dropdownElement.getAttribute('id'), backOut);
+    const _closeDropdown = (toggleElement, dropdownWrapper, backOut = true) => {
       const toggleId = toggleElement.getAttribute("id");
-
-      toggleElement.setAttribute("aria-expanded", "false");
-      if (dropdownElement.hasAttribute("style")) {
-        dropdownElement.style.removeProperty("height");
+      if (debugNavigationState) {
+        console.log("_closeDropdown", toggleId, dropdownWrapper.getAttribute("id"), backOut);
       }
-      // Delay aria-hidden so animations can finish
-      // @todo/note: I do not think we need to delay the change of the aria-hidden state since aria-hidden hides the content of the page from screen readers, as soon as the dropdown is closed by the screen reader user the dropdown should get aria-hidden="true" immediately
-      // @note: tested with a screen reader and things seem to be functioning well without the time delay.
-      // @note: when the delay is on it seems to be causing issues with the toggling of the aria-hidden states sometimes
-      // window.setTimeout(() => {
-      //   dropdownElement.setAttribute("aria-hidden", "true");
-      // }, 500);
-      dropdownElement.setAttribute("aria-hidden", "true");
 
-      // Main menu specific code
-      if (toggleId.startsWith("main-menu")) {
-        toggleElement.parentElement.classList.remove("pfe-navigation__menu-item--open");
-      }
+      this._addCloseDropdownAttributes(toggleElement, dropdownWrapper, 300, debugNavigationState);
 
       if (backOut && toggleId.startsWith("main-menu") && this.isMobileMenuButtonVisible()) {
         // Back out to main-menu
-        _openDropdown(
-          this.shadowRoot.getElementById("mobile__button"),
-          this.shadowRoot.getElementById("mobile__dropdown")
-        );
+        _openDropdown(this._mobileToggle, this.shadowRoot.getElementById("mobile__dropdown"));
       } else {
         // Shut it by removing state attribute
         this.removeAttribute(`${this.tag}-open-toggle`, "");
@@ -383,10 +485,10 @@ class PfeNavigation extends PFElement {
     if (openToggleId) {
       const openToggle = this.shadowRoot.getElementById(openToggleId);
       const toggleIdStartsWithMainMenu = toggleId.startsWith("main-menu");
+      const openingChildOfOpenToggle = toggleIdStartsWithMainMenu && openToggleId !== "mobile__button";
       // Don't close a parent dropdown if we're toggling the child
-      if (!toggleIdStartsWithMainMenu || (toggleIdStartsWithMainMenu && openToggleId !== "mobile__button")) {
+      if (!toggleIdStartsWithMainMenu || openingChildOfOpenToggle) {
         const openDropdownId = this._getDropdownId(openToggleId);
-        // console.log('openToggleId', openToggleId, openDropdownId);
         _closeDropdown(openToggle, this.shadowRoot.getElementById(openDropdownId));
       }
     }
@@ -407,6 +509,14 @@ class PfeNavigation extends PFElement {
     // Clone state attribute inside of Shadow DOM to avoid compound :host() selectors
     shadowDomOuterWrapper.setAttribute(`${this.tag}-open-toggle`, this.getAttribute(`${this.tag}-open-toggle`));
     return toState === "open";
+  }
+
+  _processSearchSlotChange() {
+    if (this.has_slot("pfe-navigation--search")) {
+      this.classList.add("pfe-navigation--has-search");
+    } else {
+      this.classList.remove("pfe-navigation--has-search");
+    }
   }
 
   /**
@@ -463,31 +573,24 @@ class PfeNavigation extends PFElement {
     }
 
     // Begins the wholesale replacement of the shadowDOM -------------------------------
-    if (document.domain === "localhost") {
+    if (this._isDevelopment()) {
       // Leaving this so we spot when the shadowDOM is being replaced when it shouldn't be
       // But don't want it firing in prod
       console.log(`${this.tag} _processLightDom: replacing shadow DOM`, mutationList);
     }
-    // Prettier makes this section significantly less legible because of line length
     // @todo look into only replacing markup that changed via mutationList
     const shadowWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
     const shadowMenuWrapper = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
+    const newShadowMenuWrapper = document.createElement("nav");
     const shadowLogo = this.shadowRoot.getElementById("pfe-navigation__logo-wrapper");
     const lightLogo = this.querySelector("#pfe-navigation__logo-wrapper");
-    const shadowMenu = this.shadowRoot.getElementById("pfe-navigation__menu");
     const lightMenu = this.querySelector("#pfe-navigation__menu");
 
-    // Add the menu to the correct part of the shadowDom
-    if (lightMenu) {
-      if (shadowMenu) {
-        shadowMenuWrapper.replaceChild(lightMenu.cloneNode(true), shadowMenu);
-      } else {
-        shadowMenuWrapper.prepend(lightMenu.cloneNode(true));
-      }
-    }
+    // Add attributres we need on the shadow DOM menu wrapper
+    newShadowMenuWrapper.setAttribute("id", "pfe-navigation__menu-wrapper");
+    newShadowMenuWrapper.classList.add("pfe-navigation__menu-wrapper");
 
     // Add the logo to the correct part of the shadowDom
-    // @todo Clone Node breaks event listeners, might need to think on this, we'll need to be able to maintain the lightDOM
     if (lightLogo) {
       if (shadowLogo) {
         shadowWrapper.replaceChild(lightLogo.cloneNode(true), shadowLogo);
@@ -496,8 +599,11 @@ class PfeNavigation extends PFElement {
       }
     }
 
+    // Copy light DOM menu into new wrapper, to be put in shadow DOM after manipulations
+    newShadowMenuWrapper.append(lightMenu.cloneNode(true));
+
     // Add menu dropdown toggle behavior
-    const dropdowns = this.shadowRoot.querySelectorAll(".pfe-navigation__dropdown");
+    const dropdowns = newShadowMenuWrapper.querySelectorAll(".pfe-navigation__dropdown");
     for (let index = 0; index < dropdowns.length; index++) {
       const dropdown = dropdowns[index];
       const dropdownLink = dropdown.parentElement.querySelector(".pfe-navigation__menu-link");
@@ -534,26 +640,29 @@ class PfeNavigation extends PFElement {
       }
       dropdownWrapper.setAttribute("id", dropdownId);
       dropdownWrapper.setAttribute("aria-hidden", "true");
-      // dynamically set aria-hidden="true" by default for other dropdowns bc they are closed by default
-      // @note: commented out bc it is not fully working yet
-      // otherDropDowns.setAttribute("aria-hidden", "true");
+      dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--invisible");
       dropdownWrapper.append(dropdown);
       dropdownButton.parentElement.append(dropdownWrapper);
       dropdownButton.parentElement.dataset.dropdownId = dropdownId;
+      dropdownButton.setAttribute("aria-controls", dropdownId);
     }
 
+    // Replace the menu in the shadow DOM
+    shadowMenuWrapper.parentElement.replaceChild(newShadowMenuWrapper, shadowMenuWrapper);
+
+    // Re-set pointers to commonly used elements that just got paved over
+    this._menuDropdownXs = this.shadowRoot.getElementById("mobile__dropdown");
+    this._menuDropdownMd = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
+
     // Add menu burger behavior
-    this.menuToggle.addEventListener("click", this._toggleMobileMenu);
-    this.menuToggle.addEventListener("keydown", this._menuToggleKeyboardListener);
+    this._mobileToggle.addEventListener("click", this._toggleMobileMenu);
+    this._mobileToggle.addEventListener("keydown", this._menuToggleKeyboardListener);
 
     // Add search toggle behavior
-    const searchToggle = this.shadowRoot.querySelector(".pfe-navigation__search-toggle");
-    searchToggle.addEventListener("click", this._toggleSearch);
+    this._searchToggle.addEventListener("click", this._toggleSearch);
 
     // Add All Red Hat toggle behavior
-    const allRedHat = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-toggle");
-
-    allRedHat.addEventListener("click", this._toggleAllRedHat);
+    this._allRedHatToggle.addEventListener("click", this._toggleAllRedHat);
 
     // General keyboard listener attached to the entire component
     this.addEventListener("keydown", this._generalKeyboardListener);
@@ -569,75 +678,41 @@ class PfeNavigation extends PFElement {
     // this.shadowRoot.querySelectorAll(".dropdown-content").forEach(element => {
     //   element.setAttribute("aria-hidden", "true");
     //   // added this for local testing
-    //   if (document.domain === "localhost") {
+    //   if (this._isDevelopment()) {
     //     console.log(`inside of forEach for .dropdown-content`);
     //     console.log(element);
     //   }
     // });
+    this._setCurrentMobileDropdown();
 
+    // Make sure search slot is in the right spot, based on breakpoint
+    this._moveSearchSlot();
     // Reconnecting mutationObserver for IE11 & Edge
     if (window.ShadyCSS) {
       this._observer.observe(this, lightDomObserverConfig);
     }
 
+    // Timeout lets these run a little later
+    window.setTimeout(this._addMenuBreakpoints, 0);
+    window.setTimeout(this._getDropdownHeights, 0);
+
     // Some cleanup and state management for after render
     const postProcessLightDom = () => {
-      if (this.isMobileMenuButtonVisible()) {
-        // @todo add aria-hidden and aria-expanded attributes to appropriate elements for mobile dropdown
+      if (this.isMobileMenuButtonVisible() && !this.isOpen("mobile__button")) {
+        this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
+        console.log(this._currentMobileDropdown);
       }
     };
 
-    // Timeout lets this run when there's a spare cycle
-    window.setTimeout(this._addMenuBreakpoints, 0);
-    window.setTimeout(this._getDropdownHeights, 0);
-    window.setTimeout(postProcessLightDom, 250);
+    window.setTimeout(postProcessLightDom, 10);
   }
 
-  /**
-   * Calculate the points where the main menu and secondary links should be collapsed and adds them
-   * @todo Run this if layout breaks nav-expand breakpoint and secondary-links-expand breakpoint
-   * @todo Clear/update inline heights on resize
-   */
-  _addMenuBreakpoints() {
-    const navigation = this.shadowRoot.getElementById("pfe-navigation__menu");
-    const navigationBoundingRect = navigation.getBoundingClientRect();
-    // Gets the length from the left edge of the screen to the right side of the navigation
-    const navigationSpaceNeeded = Math.ceil(navigationBoundingRect.right);
-
-    let leftMostSecondaryLink = this.shadowRoot.querySelector(".pfe-navigation__search-toggle");
-
-    // @todo if Search isn't present, check for custom links, if that isn't present use All Red Hat
-    const leftMostSecondaryLinkBoundingRect = leftMostSecondaryLink.getBoundingClientRect();
-    // Gets the length from the right edge of the screen to the left side of the left most secondary link
-    const secondaryLinksSpaceNeeded = window.innerWidth - Math.ceil(leftMostSecondaryLinkBoundingRect.left);
-
-    const logoWrapper = this.shadowRoot.getElementById("pfe-navigation__logo-wrapper");
-    const logoBoundingRect = logoWrapper.getBoundingClientRect();
-    const logoSpaceNeeded = Math.ceil(logoBoundingRect.right);
-
-    // console.log(navigationSpaceNeeded, secondaryLinksSpaceNeeded, navigationSpaceNeeded && secondaryLinksSpaceNeeded)
-
-    if (navigationSpaceNeeded && secondaryLinksSpaceNeeded && logoSpaceNeeded) {
-      // 8px is spacing between menu items at desktop
-      // console.log(navigationSpaceNeeded, secondaryLinksSpaceNeeded, logoSpaceNeeded);
-      this.menuBreakpoints.mainMenu = navigationSpaceNeeded + secondaryLinksSpaceNeeded + 8;
-      // 60px is the width of the menu burger + some extra space
-      this.menuBreakpoints.secondaryLinks = logoSpaceNeeded + secondaryLinksSpaceNeeded + 60;
-
-      // console.log('adding breakpoints', this.menuBreakpoints);
-      const mainMenuBreakpoint = window.matchMedia(`(max-width: ${this.menuBreakpoints.mainMenu}px)`);
-      mainMenuBreakpoint.addListener(this._collapseMainMenu);
-
-      const secondaryLinksBreakpoint = window.matchMedia(`(max-width: ${this.menuBreakpoints.secondaryLinks}px)`);
-      secondaryLinksBreakpoint.addListener(this._collapseSecondaryLinks);
-    }
-  }
   /**
    * Caches the heights of the dropdowns for animation
    */
   _getDropdownHeights() {
-    if (document.domain === "localhost") {
-      console.log(`${this.tag} _getDropdownHeights: Getting all dropdown heights`);
+    if (this._isDevelopment()) {
+      console.log(`${this.tag}: _getDropdownHeights recalculated`);
     }
     const mainMenuDropdowns = this.shadowRoot.querySelectorAll(".pfe-navigation__dropdown");
     for (let index = 0; index < mainMenuDropdowns.length; index++) {
@@ -651,14 +726,15 @@ class PfeNavigation extends PFElement {
     }
 
     const otherDropdowns = [];
+
+    // @todo Get Mobile menu height reliably so we can animate it
     // Get height of mobile menu if we're using a mobile menu
-    if (this.isMobileMenuButtonVisible()) {
-      otherDropdowns.push(this.shadowRoot.querySelector(".pfe-navigation__outer-menu-wrapper__inner"));
-    }
+    // if (this.isMobileMenuButtonVisible()) {
+    //   otherDropdowns.push(this.shadowRoot.querySelector(".pfe-navigation__outer-menu-wrapper__inner"));
+    // }
 
     // Get height of secondary links if they're not in the mobile menu
     if (!this.isSecondaryLinksSectionCollapsed()) {
-      console.log("adding otherDropdowns");
       otherDropdowns.push(this.querySelector('[slot="pfe-navigation--search"]'));
       otherDropdowns.push(this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner"));
     }
@@ -672,7 +748,6 @@ class PfeNavigation extends PFElement {
       if (dropdown.parentElement.hasAttribute("style") && dropdown.parentElement.style.height) {
         dropdown.parentElement.style.height = `${dropdownHeight}px`;
       }
-      // console.log(dropdown, dropdownHeight);
     }
   }
 
@@ -701,10 +776,128 @@ class PfeNavigation extends PFElement {
   }
 
   /**
+   * Calculate the points where the main menu and secondary links should be collapsed and adds them
+   * @todo Run this if layout breaks nav-expand breakpoint and secondary-links-expand breakpoint
+   * @todo Clear/update inline heights on resize
+   */
+  _addMenuBreakpoints() {
+    let mainMenuRightBoundary = null;
+    let secondaryLinksLeftBoundary = null;
+
+    // Calculate space needed for logo
+    if (this.logoSpaceNeeded === null) {
+      const logoWrapper = this.shadowRoot.getElementById("pfe-navigation__logo-wrapper");
+      const logoBoundingRect = logoWrapper.getBoundingClientRect();
+      this.logoSpaceNeeded = Math.ceil(logoBoundingRect.right);
+    }
+
+    // Calculate space needed for logo and main menu
+    if (this.menuBreakpoints.mainMenu === null && !this.isMobileMenuButtonVisible()) {
+      const navigation = this.shadowRoot.getElementById("pfe-navigation__menu");
+      const navigationBoundingRect = navigation.getBoundingClientRect();
+
+      // Gets the length from the left edge of the screen to the right side of the navigation
+      mainMenuRightBoundary = Math.ceil(navigationBoundingRect.right);
+    }
+
+    // Calculate space needed for right padding and secondary links
+    if (this.menuBreakpoints.secondaryLinks === null && !this.isSecondaryLinksSectionCollapsed()) {
+      let leftMostSecondaryLink = this._searchToggle;
+
+      // @todo if Search isn't present, check for custom links, if that isn't present use All Red Hat
+
+      const leftMostSecondaryLinkBoundingRect = leftMostSecondaryLink.getBoundingClientRect();
+      // Gets the length from the right edge of the screen to the left side of the left most secondary link
+      secondaryLinksLeftBoundary = window.innerWidth - Math.ceil(leftMostSecondaryLinkBoundingRect.left);
+    }
+
+    // Get Main Menu Breakpoint
+    if (mainMenuRightBoundary && secondaryLinksLeftBoundary && this.logoSpaceNeeded) {
+      this.menuBreakpoints.mainMenu = mainMenuRightBoundary + secondaryLinksLeftBoundary;
+
+      const mainMenuBreakpoint = window.matchMedia(`(max-width: ${this.menuBreakpoints.mainMenu}px)`);
+      mainMenuBreakpoint.addListener(this._collapseMainMenu);
+    }
+
+    if (this.logoSpaceNeeded && secondaryLinksLeftBoundary) {
+      // 60px is the width of the menu burger + some extra space
+      this.menuBreakpoints.secondaryLinks = this.logoSpaceNeeded + secondaryLinksLeftBoundary + 60;
+
+      const secondaryLinksBreakpoint = window.matchMedia(`(max-width: ${this.menuBreakpoints.secondaryLinks}px)`);
+      secondaryLinksBreakpoint.addListener(this._collapseSecondaryLinks);
+    }
+    console.log("_addMenuBreakpoints", this.menuBreakpoints);
+  }
+
+  /**
+   * Depending on breakpoint we need to move the search slot to one of two places to make a logical tab order
+   */
+  _moveSearchSlot() {
+    if (this.isSecondaryLinksSectionCollapsed() && this._searchSlot.parentElement !== this._searchSpotXs) {
+      this._searchSpotXs.appendChild(this._searchSlot);
+      this._removeDropdownAttributes(this._searchSlot);
+    } else if (this._searchSlot.parentElement !== this._searchSpotMd) {
+      this._searchSpotMd.appendChild(this._searchSlot);
+      if (this.isOpen("secondary-links__button--search")) {
+        this._addOpenDropdownAttributes(this._searchSlot);
+      } else {
+        this._addCloseDropdownAttributes(this._searchSlot);
+      }
+    }
+  }
+
+  /**
+   * Adjustments to behaviors and DOM that need to be made after a resize event
+   */
+  _postResizeAdjustments() {
+    this._getDropdownHeights();
+    const oldMobileDropdown = this._currentMobileDropdown;
+    this._setCurrentMobileDropdown();
+    const isMobileMenuButtonVisible = this.isMobileMenuButtonVisible();
+    const isSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed();
+
+    // If we went from mobile/tablet to desktop
+    if (this._wasMobileMenuButtonVisible && !isMobileMenuButtonVisible) {
+      this._removeDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
+
+      // If we haven't been able to yet, calculate the breakpoints
+      if (this.menuBreakpoints.mainMenu === null) {
+        this._addMenuBreakpoints();
+      }
+    }
+    // If we went from desktop to tablet/mobile
+    else if (!this._wasMobileMenuButtonVisible && isMobileMenuButtonVisible) {
+      if (this.isOpen("mobile__button")) {
+        this._addOpenDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
+      } else {
+        this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
+      }
+    }
+
+    // If the mobile dropdown has changed, remove the dropdown attributes from the old one
+    if (this._currentMobileDropdown !== oldMobileDropdown && oldMobileDropdown !== null) {
+      this._removeDropdownAttributes(null, oldMobileDropdown);
+    }
+
+    // Make sure search slot is in the right spot, based on breakpoint
+    this._moveSearchSlot();
+
+    // ! These lines need to be at the end of this function
+    this.classList.remove("pfe-navigation--is-resizing");
+    // Set layout state vars for next resize
+    this._wasMobileMenuButtonVisible = isMobileMenuButtonVisible;
+    this._wasSecondaryLinksSectionCollapsed = isSecondaryLinksSectionCollapsed;
+  }
+
+  /**
    * Event listeners for toggles
    */
   _toggleMobileMenu() {
-    this._changeNavigationState("mobile__button");
+    if (!this.isOpen("mobile__button")) {
+      this._changeNavigationState("mobile__button", "open");
+    } else {
+      this._changeNavigationState("mobile__button", "close");
+    }
   }
 
   _toggleSearch() {
@@ -845,7 +1038,8 @@ class PfeNavigation extends PFElement {
   _requestSiteSwitcher() {
     const promise = new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      xhr.open("GET", "../mock/site-switcher.html");
+      // Hopping out to elements folder in case we're testing a component that isn't pfe-navigation
+      xhr.open("GET", "../../pfe-navigation/mock/site-switcher.html");
       xhr.responseType = "text";
 
       xhr.onload = () => {
@@ -853,7 +1047,7 @@ class PfeNavigation extends PFElement {
           reject(xhr.responseText);
         } else {
           resolve(xhr.responseText);
-          this._siteSwitcherWrap.innerHTML = xhr.responseText;
+          this._siteSwitcherWrapper.innerHTML = xhr.responseText;
         }
       };
 

@@ -1,9 +1,13 @@
-## Prerelease 56 ( TBD )
+## Prerelease 57 ( TBD )
+
+- []()
+
+## Prerelease 56 ( 2020-08-26 )
 
 - [06a9b94](https://github.com/patternfly/patternfly-elements/commit/06a9b94505d1471d899f1db9704727c5a249a489) fix: move visual regression testing to merge script
 - [7aad6b](https://github.com/patternfly/patternfly-elements/commit/7aad6b463920cad87de2697ee5fdf99b46eb628e) feat: Remove build from postinstall
 - [4520a3](https://github.com/patternfly/patternfly-elements/commit/4520a30c72f46d0f211497d3356cf630a4ed60a5) fix: fix: issue in new automerge scripts (#1056)
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: resolve pfe-tabs color issues and ensure local variables work within dark or saturated contexts
+- [2462e69](https://github.com/patternfly/patternfly-elements/commit/2462e6928f98dc08d53d97a95d25531f7b7976de) fix: resolve pfe-tabs color issues and ensure local variables work within dark or saturated contexts (#1021)
 
 ## Prerelease 55 ( 2020-08-19 )
 

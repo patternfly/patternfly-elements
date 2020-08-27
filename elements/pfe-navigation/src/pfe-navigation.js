@@ -24,6 +24,25 @@ class PfeNavigation extends PFElement {
     return "pfe-navigation.json";
   }
 
+  //-- Key values map to slot names, accepts an array for [min, max] breakpoint
+  //-- leave off 'px', if slot name includes a dash, quote the key
+  get breakpoints() {
+    // If only one value exists in the array, it starts at that size and goes up
+    return {
+      main: [0, 1023], // visible from 0 - 1200px
+      search: [640], // visible from 768px +
+      "mobile-search": [0, 639],
+      language: [640],
+      "mobile-language": [0, 639],
+      login: [640],
+      "mobile-login": [0, 639]
+    };
+  }
+
+  set breakpoints(obj) {
+    return obj;
+  }
+
   get overlay() {
     return !this._overlay.hasAttribute("hidden");
   }
@@ -113,17 +132,6 @@ class PfeNavigation extends PFElement {
     ]).then(() => {
       // If this element contains light DOM, initialize it
       if (this.children.length) {
-        // If only one value exists in the array, it starts at that size and goes up
-        this.breakpoints = {
-          main: [0, 1023], // visible from 0 - 1200px
-          search: [640], // visible from 768px +
-          "mobile-search": [0, 639],
-          language: [640],
-          "mobile-language": [0, 639],
-          login: [640],
-          "mobile-login": [0, 639]
-        };
-
         // Kick off the initialization of the light DOM elements
         this._init();
 

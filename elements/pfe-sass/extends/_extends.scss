@@ -47,3 +47,8 @@
     color: pfe-fetch(text) !important;
   }
 }
+
+%hidden {
+  display: none;
+  visibility: hidden;
+}

@@ -1,48 +1,12 @@
 @import "_shared-assets";
 
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  // Default spacing values
-  Padding--vertical:   pfe-var(container-padding),
-  Padding--horizontal: pfe-var(container-padding),
-
-  // Darkest is the default background color
-  BackgroundColor: pfe-var(surface--darkest),
-  Color:           pfe-var(text--on-dark),
-
-  // Variables for the border
-  BorderTopColor: transparent,
-  BorderColor:    transparent,
-
-  MaxHeight: 72px,
-  MobileMenuHeight: 60px,
-
-  // Nav content width
-  MaxWidth: calc(#{pfe-var(container-padding)} * 4), // 64px
-
-  // Overlay region
-  overlay: (
-    BackgroundColor: pfe-var(overlay, $fallback: $overlay--BackgroundColor--fallback)
-  ),
-
-  // Logo
-  logo: (
-    MinWidth: 135px
-  )
-));
-
-// Nested internal variables (pfe-local calls), maps cannot "self-reference"
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  Padding: 0 pfe-local(Padding--horizontal),
-  Border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
-));
-
 :host {
   // Print the variables to the DOM
-  @include pfe-print-local($LOCAL-VARIABLES);
+  // @include pfe-print-local($LOCAL-VARIABLES);
 
   // Reduce padding for print
   @media print {
-    --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
+    --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) pfe-local(Padding--horizontal);
   }
 
   display: block;
@@ -72,31 +36,31 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 }
 
-pfe-icon {
-  --pfe-icon--Color: #{pfe-local(Color)};
-}
+// pfe-icon {
+  // --pfe-icon--Color: #{pfe-local(Color)};
+// }
 
 // Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
   margin: 0 !important;
   max-width: 100%;
-  max-height: #{pfe-local(MaxHeight)};
-  min-width:  #{pfe-local($region: logo, $cssvar: MinWidth)};
+  max-height: pfe-local(MaxHeight);
+  min-width:  pfe-local($region: logo, $cssvar: MinWidth);
   display: block;
   line-height: 1;
 }
 
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
-  color: #{pfe-broadcasted(link)};
-  text-decoration: #{pfe-broadcasted(link-decoration)};
+  color: pfe-broadcasted(link);
+  text-decoration: pfe-broadcasted(link-decoration);
 }
 
 ::slotted([slot="mobile-menu--label"]) {
-  font-family: #{pfe-local(font-family)};
-  font-size:   #{pfe-local(FontSize)};
-  font-weight: #{pfe-local(FontWeight)};
-  color: #{pfe-local(Color)};
+  font-family: pfe-local(font-family);
+  font-size:   pfe-local(FontSize);
+  font-weight: pfe-local(FontWeight);
+  color: pfe-local(Color);
   margin-bottom: 0;
 }
 
@@ -108,18 +72,18 @@ pfe-icon {
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
     z-index: pfe-zindex(navigation);
 
-    background-color: #{pfe-local(BackgroundColor)};
-    color: #{pfe-local(Color)};
-    min-height: #{pfe-local(MaxHeight)};
+    background-color: pfe-local(BackgroundColor);
+    color: pfe-local(Color);
+    min-height: pfe-local(MaxHeight);
     @media only screen and (max-height: 500px) {
-      min-height: #{pfe-local(MobileMenuHeight)};
+      min-height: pfe-local(MobileMenuHeight);
     }
   }
   &__container {
     width: 100%;
-    //max-width: #{pfe-local(Width)};
+    //max-width: pfe-local(Width);
     margin: 0 auto;
-    padding: 0 #{pfe-local(Padding--horizontal)};
+    padding: 0 pfe-local(Padding--horizontal);
 
     display: flex;
     flex-flow: row nowrap;

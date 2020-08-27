@@ -220,13 +220,12 @@ class PfeNavigationItem extends PFElement {
     // Event handlers
     this._keydownHandler = this._keydownHandler.bind(this);
     this._keyupHandler = this._keyupHandler.bind(this);
-    this._navigateToUrl = this._navigateToUrl.bind(this);
-    this._directLinkHandler = this._directLinkHandler.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
+    // Set up the tray before the trigger because it uses logic about if the tray exists
     this._init__tray();
     this._init__trigger();
 
@@ -247,9 +246,6 @@ class PfeNavigationItem extends PFElement {
 
       this._trigger.removeEventListener("click", this.toggle);
       this._trigger.removeEventListener("keyup", this._keyupHandler);
-    } else {
-      this._trigger.removeEventListener("click", this._navigateToUrl);
-      this._trigger.removeEventListener("keyup", this._directLinkHandler);
     }
   }
 
@@ -274,6 +270,8 @@ class PfeNavigationItem extends PFElement {
       ) {
         let linkTags = children.filter(child => child.tagName === "A");
         this._label.href = linkTags[0].href;
+      } else {
+        children.map(child => console.log(this.trigger));
       }
 
       // Set the label equal to the trigger's content
@@ -313,9 +311,6 @@ class PfeNavigationItem extends PFElement {
   }
 
   _init__handlers() {
-    this._trigger.removeEventListener("click", this._navigateToUrl);
-    this._trigger.removeEventListener("keyup", this._directLinkHandler);
-
     if (this._handlersAdded) {
       return;
     }
@@ -336,26 +331,6 @@ class PfeNavigationItem extends PFElement {
 
     this._trigger.addEventListener("keyup", this._keyupHandler);
     this._handlersAdded = true;
-  }
-
-  _navigateToUrl(event) {
-    event.preventDefault();
-    window.location.href = this.linkUrl;
-  }
-
-  _directLinkHandler(event) {
-    let key = event.key || event.keyCode;
-    switch (key) {
-      case "Spacebar":
-      case " ":
-      case 32:
-      case "Enter":
-      case 13:
-        this._navigateToUrl(event);
-        break;
-      default:
-        return;
-    }
   }
 
   _keydownHandler(event) {

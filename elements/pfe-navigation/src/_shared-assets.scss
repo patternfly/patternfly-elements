@@ -1,41 +1,70 @@
 @import "../../pfe-sass/pfe-sass";
 
-$overlay--BackgroundColor--fallback: rgba(37, 37, 37, 0.5);
-
 $LOCAL: navigation;
+
 $LOCAL-VARIABLES: (
-// Supplemental breakpoints,   
-// Usage:  @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { 
+    // Default spacing values
+    Padding--vertical:   pfe-var(container-padding),
+    Padding--horizontal: pfe-var(container-padding),
 
-//  grid-breakpoint--xs:           0,
-    sm-mobile:                     500px,
-//  grid-breakpoint--sm:           576px,
-    lg-mobile:                     640px,
-//  grid-breakpoint--md:           768px,
-//  grid-breakpoint--lg:           992px,
-    sm-desktop:                    1024px,
-//  grid-breakpoint--xl:           1200px,
+    // Darkest is the default background color
+    BackgroundColor: pfe-var(surface--darkest),
+    Color:           pfe-var(text--on-dark),
 
-  MinWidth:        auto,
-  Width:           100%,
-  Height:          84px,
+    // Accent color
+    accent: pfe-var(ui-accent),
 
-  trigger: (
-    FontSize: pfe-var(font-size--heading--epsilon),
-    FontWeight: pfe-var(font-weight--light),
-    Color: pfe-var(text--on-dark),
-    Padding:  calc(#{pfe-var(container-padding)} * .75),
-    MaxWidth: 100%
-  ),
+    // Variables for the border
+    BorderTopColor: transparent,
+    BorderColor:    transparent,
 
-  tray: (
-    BackgroundColor:  pfe-var(surface--lightest),
-    Color:            pfe-var(text),
-    Padding: pfe-var(container-padding)
-  )
+    MinWidth:   auto,
+    Width:      100%,
+    Height:     84px,
+    MaxHeight:        72px,
+    MobileMenuHeight: 60px,
+
+    // Nav content width
+    MaxWidth: calc(#{pfe-var(container-padding)} * 4), // 64px
+
+    // Supplemental breakpoints,   
+    // Usage:  @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { 
+    sm-mobile:  500px, // grid-breakpoint--sm: 576px
+    lg-mobile:  640px, // grid-breakpoint--md: 768px; grid-breakpoint--lg: 992px
+    sm-desktop: 1024px, // grid-breakpoint--xl: 1200px
+
+    // Overlay region
+    overlay: (
+        BackgroundColor: pfe-var(overlay)
+    ),
+
+    // Logo
+    logo: (
+        MinWidth: 135px
+    ),
+
+    trigger: (
+        FontSize:   pfe-var(font-size--heading--epsilon),
+        FontWeight: pfe-var(font-weight--light),
+        BackgroundColor:  transparent,
+        Color:      pfe-var(text--on-dark),
+        Padding:    calc(#{pfe-var(container-padding)} * .75),
+        MaxWidth:   100%
+    ),
+
+    tray: (
+        BackgroundColor:  pfe-var(surface--lightest),
+        Color:            pfe-var(text),
+        Padding:          pfe-var(container-padding)
+    )
 );
 
-// turn on automatic fallbacks for broadcasted variables
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+    Padding: 0 pfe-local(Padding--horizontal),
+    Border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
+));
+
 
 // -- Typography
 %link-styles {
@@ -54,20 +83,5 @@ $LOCAL-VARIABLES: (
         outline-width: 1px;
         outline-color: pfe-broadcasted(link--focus);
         color: pfe-broadcasted(link--focus);
-    }
-}
-
-%trigger {
-    z-index: 2;
-    line-height: 1.1;
-    margin: 0;
-    max-width: 100%; // added
-    text-align: center;
-
-    @media screen and (min-width: pfe-breakpoint(xs) ) {
-        max-width: 100%;
-    }
-    @media screen and (min-width: pfe-breakpoint(xl) ) {
-        max-width: 190px;
     }
 }

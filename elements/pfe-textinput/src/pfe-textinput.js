@@ -44,11 +44,11 @@ class PfeTextinput extends PFElement {
 
   disconnectedCallback() {
     if (this._input) {
-      this._input.removeEventListener(this._invalidHandler);
-      this._input.removeEventListener(this._focusHandler);
-      this._input.removeEventListener(this._checkValidity);
-      this._input.removeEventListener(this._checkValidity);
-      this._input.removeEventListener(this._checkValidity);
+      this._input.removeEventListener("invalid", this._invalidHandler);
+      this._input.removeEventListener("focus", this._focusHandler);
+      this._input.removeEventListener("blur", this._checkValidity);
+      this._input.removeEventListener("change", this._checkValidity);
+      this._input.removeEventListener("keyup", this._checkValidity);
     }
   }
 

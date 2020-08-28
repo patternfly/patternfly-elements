@@ -27,14 +27,29 @@ class PfeTextinput extends PFElement {
 
   constructor() {
     super(PfeTextinput, { type: PfeTextinput.PfeType });
-    this._observer = new MutationObserver(this._isValidLightDOM);
+    this._input = null;
+    this._validHandler = this._validHandler.bind(this);
+    this._invalidHandler = this._invalidHandler.bind(this);
+    this._focusHandler = this._focusHandler.bind(this);
+    this._checkValidity = this._checkValidity.bind(this);
+    this._observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    this._isValidLightDOM();
+    this._init();
     this._observer.observe(this, observerConfig);
+  }
+
+  disconnectedCallback() {
+    if (this._input) {
+      this._input.removeEventListener(this._invalidHandler);
+      this._input.removeEventListener(this._focusHandler);
+      this._input.removeEventListener(this._checkValidity);
+      this._input.removeEventListener(this._checkValidity);
+      this._input.removeEventListener(this._checkValidity);
+    }
   }
 
   _isValidLightDOM() {
@@ -53,6 +68,38 @@ class PfeTextinput extends PFElement {
     }
 
     return true;
+  }
+
+  _init() {
+    if (this._isValidLightDOM()) {
+      this._input = this.querySelector("input");
+      this._input.addEventListener("invalid", this._invalidHandler);
+      this._input.addEventListener("focus", this._focusHandler);
+      this._input.addEventListener("blur", this._checkValidity);
+      this._input.addEventListener("change", this._checkValidity);
+      this._input.addEventListener("keyup", this._checkValidity);
+    }
+  }
+
+  _checkValidity() {
+    const valid = this._input.checkValidity();
+    if (!valid) {
+      this._invalidHandler();
+    } else {
+      this._validHandler();
+    }
+  }
+
+  _validHandler() {
+    this.classList.remove("pfe-invalid");
+  }
+
+  _invalidHandler() {
+    this.classList.add("pfe-invalid");
+  }
+
+  _focusHandler() {
+    this.classList.add("pfe-touched");
   }
 }
 

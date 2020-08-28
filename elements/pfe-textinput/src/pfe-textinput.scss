@@ -4,15 +4,18 @@ $LOCAL: textinput;
 
 $LOCAL-VARIABLES: (
   BackgroundColor: pfe-var(surface--lightest),
-  BackgroundColor--disabled: pfe-var(surface--base),
+  BackgroundColor--disabled: pfe-var(ui-disabled),
   BorderColor: pfe-var(surface--border--lighter),
   BorderBottomColor: pfe-var(surface--border--darker), // TODO: sync on this color #767676,
   BorderBottomColor--hover: pfe-var(ui-accent),
+  BorderBottomColor--invalid: pfe-var(feedback--critical--lighter),
   BorderRadius: pfe-var(ui--border-radius),
+  BorderBottomWidth--invalid: 2px,
   Color: pfe-var(text),
   FontSize: pfe-var(font-size),
   Height: 36px,
   Padding: 8px 6px,
+  Padding--invalid: 8px 6px 7px 6px
 );
 
 :host {
@@ -47,4 +50,10 @@ $LOCAL-VARIABLES: (
   background-color: pfe-local(BackgroundColor--disabled) !important;
   cursor: not-allowed !important;
   border: pfe-var(ui--border-width) pfe-var(surface--border-style) transparent !important;
+}
+
+:host(.pfe-invalid) ::slotted(input) {
+  padding: pfe-local(Padding--invalid) !important;
+  border-bottom-width: pfe-local(BorderBottomWidth--invalid) !important;
+  border-bottom-color: pfe-local(BorderBottomColor--invalid) !important;
 }

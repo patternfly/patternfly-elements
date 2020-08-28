@@ -46,6 +46,7 @@
     <script defer src="../../pfelement/dist/pfelement.umd.js"></script>
     <script defer src="../../pfe-band/dist/pfe-band.umd.js"></script>
     <script defer src="../../pfe-button/dist/pfe-button.umd.js"></script>
+    <script defer src="../../pfe-cta/dist/pfe-cta.umd.js"></script>
     <script defer src="../dist/pfe-textinput.umd.js"></script>
 
     <style>
@@ -186,6 +187,39 @@
       </form>
     </pfe-band>
 
+    <pfe-band>
+      <h2>pfe-textinput novalidate</h2>
+      <div>
+        <p>This form has a "novalidate" attribute added to it. This attribute should allow the form to submit without the validity checks being performed. You could also add a "formnovalidate" attribute to the button at the end of the form and it will have the same effect as "novalidate" on the form tag.</p>
+        <pfe-cta>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-novalidate">Learn more about "novalidate"</a>
+        </pfe-cta>
+      </div>
+      <form novalidate id="novalidate" class="form">
+        <div>
+          <label for="novalidate-plain">Text input</label>
+          <pfe-textinput>
+            <input type="text" id="novalidate-plain" placeholder="Text input" required>
+          </pfe-textinput>
+        </div>
+        <div>
+          <label for="novalidate-required">Required input</label>
+          <pfe-textinput>
+            <input type="text" id="novalidate-required" placeholder="Required" required>
+          </pfe-textinput>
+        </div>
+        <div>
+          <label for="novalidate-email">Email</label>
+          <pfe-textinput>
+            <input type="email" id="novalidate-email" placeholder="Email" required>
+          </pfe-textinput>
+        </div>
+        <pfe-button>
+          <button>Submit</button>
+        </pfe-button>
+      </form>
+    </pfe-band>
+
     <script>
       var lightForm = document.querySelector("#lightForm");
       lightForm.addEventListener("submit", function (event) {
@@ -216,6 +250,12 @@
         // cityInput.setAttribute("value", "Some city");
         cityPfeTextInput.setAttribute("pfe-c-value", "bademailaddress.co");
       }, 4000);
+
+      var novalidateForm = document.querySelector("#novalidate");
+      novalidateForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        console.log("novalidate form submitted");
+      });
     </script>
     
   </body>

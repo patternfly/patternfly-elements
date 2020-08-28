@@ -49,6 +49,7 @@ class PfeTextinput extends PFElement {
       this._input.removeEventListener("blur", this._checkValidity);
       this._input.removeEventListener("change", this._checkValidity);
       this._input.removeEventListener("keyup", this._checkValidity);
+      this._input.removeEventListener("paste", this._checkValidity);
     }
   }
 
@@ -78,6 +79,7 @@ class PfeTextinput extends PFElement {
       this._input.addEventListener("blur", this._checkValidity);
       this._input.addEventListener("change", this._checkValidity);
       this._input.addEventListener("keyup", this._checkValidity);
+      this._input.addEventListener("paste", this._checkValidity);
     }
   }
 

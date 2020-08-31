@@ -1,3 +1,16 @@
+// This file contains layout utility classes for use inside of pfe-navigation
+// --------------------------------------------------------
+
+// Opt-in Bootstrap-like grid system
+// Requires pfe-navigation__dropdown--12-column-grid on the wrapper
+// Does not set width, only sets up a 12 column grid
+// Column class name (must be direct children) syntax is:
+// col-<BREAKPOINT>-<# of columns to span>
+//
+// If browser supports grid start and end utility classes will also work, syntax is:
+// col-start-<BREAKPOINT>-<# of grid line to start on>
+// col-end-<BREAKPOINT>-<# of grid line to end on>
+
 .pfe-navigation__dropdown--12-column-grid {
 
   // Fallback flexbox dropdown layout
@@ -102,5 +115,28 @@
       padding-right: 0;
     }
 
+  }
+}
+
+// Classes for creating a CSS Column container
+// Syntax is:
+// css-cols-<BREAKPOINT>-<# of columns>
+@for $i from 1 to 13 {
+  .css-cols-#{$i} {
+    column-count: $i;
+    column-gap: $gutter;
+  }
+}
+
+@each $breakpoint, $breakpoint-value in $breakpoints {
+  @if $breakpoint != 'secondary-links-expand' and $breakpoint != 'nav-expand' {
+    @for $i from 1 to 13 {
+      .css-cols-#{$breakpoint}-#{$i} {
+        @include breakpoint($breakpoint) {
+          column-count: $i;
+          column-gap: $gutter;
+        }
+      }
+    }
   }
 }

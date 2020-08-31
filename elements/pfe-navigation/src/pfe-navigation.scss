@@ -598,19 +598,11 @@ See mixin blocks before selectors that contain the selector name and the three l
   h4,
   h5,
   h6 {
-    margin: 0;
+    margin: 0 0 0.75em;
     padding: 0;
+    break-inside: avoid;
     font-size: 16px;
     color: var(--pfe-theme--color--ui-complement,#464646);
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 0 0 0.75em;
 
     a {
       margin: 0 -12px; // Expand the hit area half of the dropdown horizontal padding
@@ -632,6 +624,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 
   li {
     margin: 0 0 0.75em;
+    break-inside: avoid;
 
     a {
       display: inline-block;
@@ -651,6 +644,13 @@ See mixin blocks before selectors that contain the selector name and the three l
         text-decoration: underline;
       }
     }
+  }
+
+  // Any other tags we don't want to break inside of, in case site uses
+  // CSS Columns utility class
+  a,
+  pfe-cta {
+    break-inside: avoid;
   }
 }
 

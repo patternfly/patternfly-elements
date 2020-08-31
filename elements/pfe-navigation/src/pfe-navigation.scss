@@ -10,13 +10,18 @@ styles from previous breakpoints.
 
 See mixin blocks before selectors that contain the selector name and the three layout states:
 
---mobile: Both the secondary links and main menu are collapsed
+[SELECTOR]--mobile: Both the secondary links and main menu are collapsed, typically used in:
+  - default breakpoint CSS
+  - @include collpase('secondary-nav')
 
---collapsed-menu: Just the main menu is collapsed
+[SELECTOR]--collapsed-menu: Just the main menu is collapsed, typically used in:
+  - @include breakpoint('secondary-links-expand')
+  - @include collpase('nav')
 
---desktop: Neither are collapsed
+[SELECTOR]--desktop: Neither are collapsed, typically used in:
+  - @include breakpoint('nav-expand')
 
-*/
+  */
 
 * {
   &,

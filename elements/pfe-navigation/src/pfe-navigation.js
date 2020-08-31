@@ -78,7 +78,6 @@ class PfeNavigation extends PFElement {
     this._searchSpotXs = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--xs");
     this._searchSpotMd = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--md");
     this._allRedHatToggle = this.shadowRoot.getElementById("secondary-links__button--all-red-hat");
-    this._customlinks = this.shadowRoot.querySelector(`.${this.tag}__customlinks`);
     this._siteSwitcherWrapper = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
 
@@ -520,11 +519,10 @@ class PfeNavigation extends PFElement {
   }
 
   /**
-   * Handle initialization or changes in light DOM
-   * Clone them into the shadowRoot
+   * Handle initialization or changes in light DOM and clones them into the shadowRoot
+   * Also responsible for attaching event listeners to shadow elements and maintinaing important element pointers
    * @param {array} mutationList Provided by mutation observer
    */
-  // @todo: processLightDom seems to be firing twice, need to look into this and see whether that is okay or if it needs to be fixed, seems like it is not a good thing but not sure if it is avoidable or not
   _processLightDom(mutationList) {
     // If we're mutating because an attribute on the web component starting with pfe- changed, don't reprocess dom
     let cancelLightDomProcessing = true;
@@ -649,6 +647,45 @@ class PfeNavigation extends PFElement {
 
     // Replace the menu in the shadow DOM
     shadowMenuWrapper.parentElement.replaceChild(newShadowMenuWrapper, shadowMenuWrapper);
+
+    // Add Custom Links to shadow DOM
+    const lightCustomLinks = this.querySelectorAll(".pfe-navigation__custom-links > li");
+    if (lightCustomLinks) {
+      for (let index = 0; index < lightCustomLinks.length; index++) {
+        const lightCustomLinkWrapper = lightCustomLinks[index];
+
+        // Handle Custom Links (no dropdown)
+        let lightCustomLink = null;
+        // Will set lightCustomLink if the link is valid
+        if (lightCustomLinkWrapper.childElementCount === 1 && lightCustomLinkWrapper.children[0].tagName === "A") {
+          lightCustomLink = lightCustomLinkWrapper.children[0];
+          if (!lightCustomLink.hasAttribute("icon") || !lightCustomLink.hasAttribute("href")) {
+            lightCustomLink = null;
+          }
+        }
+
+        // Make custom link markup match secondary links and add to shadow DOM
+        if (lightCustomLink) {
+          const shadowCustomLinkWrapper = document.createElement("li");
+          const shadowCustomLink = lightCustomLink.cloneNode(true);
+          const shadowCustomLinkIcon = document.createElement("pfe-icon");
+          shadowCustomLinkIcon.setAttribute("aria-hidden", "true");
+          shadowCustomLinkIcon.setAttribute("pfe-size", "sm");
+          shadowCustomLinkIcon.setAttribute("icon", shadowCustomLink.getAttribute("icon"));
+
+          // Add the icon to the link, then link to the list item, then list item to the secondary links shadow dom
+          shadowCustomLink.prepend(shadowCustomLinkIcon);
+          shadowCustomLinkWrapper.append(shadowCustomLink);
+
+          this._secondaryLinksWrapper.append(shadowCustomLinkWrapper);
+        } else {
+          console.error(`${this.tag}: Custom link is present but is not valid`, lightCustomLink);
+        }
+
+        // @todo Add handling for dropdown
+        // @todo Error handling for custom link (no dropdown) will have to be updated
+      }
+    }
 
     // Re-set pointers to commonly used elements that just got paved over
     this._menuDropdownXs = this.shadowRoot.getElementById("mobile__dropdown");

@@ -81,6 +81,8 @@ class PfeNavigation extends PFElement {
     this._customlinks = this.shadowRoot.querySelector(`.${this.tag}__customlinks`);
     this._siteSwitcherWrapper = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
+    this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
+    // this._overlayWrapper = this.shadowRoot.querySelector("#pfe-navigation__wrapper");
 
     // Set default breakpoints to null (falls back to CSS)
     this.menuBreakpoints = {
@@ -119,12 +121,24 @@ class PfeNavigation extends PFElement {
     this._postResizeAdjustments = this._postResizeAdjustments.bind(this);
     this._menuToggleKeyboardListener = this._menuToggleKeyboardListener.bind(this);
     this._generalKeyboardListener = this._generalKeyboardListener.bind(this);
+    // this._toggleOverlay = this._toggleOverlay.bind(this);
+    // @todo: decide if this is needed
+    // this._overlayClickHandler = this._overlayClickHandler.bind(this);
+    // this._overlayWrapper = this._overlayWrapper.bind(this);
 
     // Handle updates to slotted search content
     this._searchSlot.addEventListener("slotchange", this._processSearchSlotChange);
 
     // Setup mutation observer to watch for content changes
     this._observer = new MutationObserver(this._processLightDom);
+
+    // @todo: decided if this is needed
+    // this.overlay = false;
+
+    // make sure we close all of the nav items and hide the overlay
+    // when it's clicked
+    // @todo: decided if this is needed
+    // this._overlay.addEventListener("click", this._overlayClickHandler);
   }
 
   connectedCallback() {
@@ -161,6 +175,8 @@ class PfeNavigation extends PFElement {
     window.removeEventListener("resize", this._debouncedPreResizeAdjustments);
     window.removeEventListener("resize", this._debouncedPostResizeAdjustments);
     this._slot.removeEventListener("slotchange", this._processSearchSlotChange);
+    // @todo: decided if this is needed
+    // this._overlay.removeEventListener("click", this._overlayClickHandler);
   }
 
   // Process the attribute change
@@ -190,10 +206,12 @@ class PfeNavigation extends PFElement {
       if (openToggleId.startsWith("main-menu") && toggleId === "mobile__button") {
         return true;
       }
+
       // Only checks for prefix so if main-menu is queried and main-menu__dropdown--Link-Name is open it still evaluates as true
       // This prevents the main-menu toggle shutting at mobile when a sub-section is opened
       return toggleId === openToggleId;
     }
+
     return false;
   }
 
@@ -456,6 +474,9 @@ class PfeNavigation extends PFElement {
       this._addOpenDropdownAttributes(toggleElement, dropdownWrapper, debugNavigationState);
 
       this.setAttribute(`${this.tag}-open-toggle`, toggleId);
+
+      // Show overlay
+      this._overlay.hidden = false;
     };
 
     /**
@@ -475,10 +496,16 @@ class PfeNavigation extends PFElement {
       if (backOut && toggleId.startsWith("main-menu") && this.isMobileMenuButtonVisible()) {
         // Back out to main-menu
         _openDropdown(this._mobileToggle, this.shadowRoot.getElementById("mobile__dropdown"));
+        // Show overlay
+        this._overlay.hidden = false;
       } else {
         // Shut it by removing state attribute
         this.removeAttribute(`${this.tag}-open-toggle`, "");
       }
+
+      // @todo: figure out how to still show overlay even when mobile dropdown menu is opened and closed
+      // Hide overlay
+      this._overlay.hidden = true;
     };
 
     // Shut any open dropdowns
@@ -509,6 +536,16 @@ class PfeNavigation extends PFElement {
     // Clone state attribute inside of Shadow DOM to avoid compound :host() selectors
     shadowDomOuterWrapper.setAttribute(`${this.tag}-open-toggle`, this.getAttribute(`${this.tag}-open-toggle`));
     return toState === "open";
+
+    if (lightDomOverlayWrapper.hasAttribute("pfe-navigation-open-toggle")) {
+      // Hide Overlay
+      this._overlay.hidden = true;
+      console.log(`menu closed`);
+    } else {
+      // Show Overlay
+      this._overlay.hidden = false;
+      console.log(`menu open`);
+    }
   }
 
   _processSearchSlotChange() {
@@ -664,6 +701,11 @@ class PfeNavigation extends PFElement {
     // Add All Red Hat toggle behavior
     this._allRedHatToggle.addEventListener("click", this._toggleAllRedHat);
 
+    // Add overlay toggle behavior
+    // this._mobileToggle.addEventListener("click", this._toggleOverlay);
+    // this._searchToggle.addEventListener("click", this._toggleOverlay);
+    // this._allRedHatToggle.addEventListener("click", this._toggleOverlay);
+
     // General keyboard listener attached to the entire component
     this.addEventListener("keydown", this._generalKeyboardListener);
 
@@ -700,7 +742,7 @@ class PfeNavigation extends PFElement {
     const postProcessLightDom = () => {
       if (this.isMobileMenuButtonVisible() && !this.isOpen("mobile__button")) {
         this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
-        console.log(this._currentMobileDropdown);
+        // console.log(this._currentMobileDropdown);
       }
     };
 
@@ -915,6 +957,14 @@ class PfeNavigation extends PFElement {
     this._changeNavigationState(toggleId);
   }
 
+  // _toggleOverlay() {
+  //   if (this.isOpen()) {
+  //     this._overlay.hidden = false;
+  //   } else {
+  //     this._overlay.hidden = true;
+  //   }
+  // }
+
   /**
    * Default Toggle Button Keyboard event handler
    * @param {object} event
@@ -1034,6 +1084,11 @@ class PfeNavigation extends PFElement {
       // );
     }
   }
+
+  // @todo: decide if this is needed
+  // _overlayClickHandler(event) {
+  //   this.overlay = false;
+  // }
 
   _requestSiteSwitcher() {
     const promise = new Promise((resolve, reject) => {

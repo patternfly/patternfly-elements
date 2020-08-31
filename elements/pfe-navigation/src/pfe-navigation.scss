@@ -45,6 +45,20 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation {
   display: flex;
   align-items: stretch;
+  // Overlay
+  &__overlay {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: pfe-zindex(overlay);
+    &[hidden] {
+      display: none;
+    }
+  }
 }
 
 .pfe-navigation__wrapper {
@@ -73,6 +87,10 @@ See mixin blocks before selectors that contain the selector name and the three l
     //   @include focus-styles(#000, 1px);
     // }
   }
+
+  // @todo: verify that this is a feasable way to ensure this and that this does not conflict with any other z-index rules of the nav
+  // Ensure that the navigation z-index is higher than the Overlay div
+  z-index: 1000;
 }
 
 // Logo area
@@ -1021,7 +1039,6 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__menu-toggle pfe-icon[icon='web-icon-plus'] {
   transform: rotate(-45deg);
 }
-
 
 // Should stay at the end of the file
 @import "pfe-navigation--grid";

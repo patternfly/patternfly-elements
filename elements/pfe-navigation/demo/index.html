@@ -300,6 +300,7 @@
           </li>
         </ul>
       </nav>
+
       <ul class="pfe-navigation__fallback-links">
         <li>
           <a href="#">Search</a>
@@ -311,13 +312,20 @@
           <a href="#">Log in</a>
         </li>
       </ul>
-      <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
-        <a href="#" class="#">
-          <!-- @note: added web-icon-globe icon as a placeholder since it is used as the language switcher icon -->
+
+      <li slot="pfe-navigation--custom-links">
+        <a href="#">
           <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
           Custom Link
         </a>
-      </div>
+      </li>
+      <li slot="pfe-navigation--custom-links">
+        <button slot="pfe-navigation--custom-links">
+          <pfe-icon icon="web-cart" pfe-size="md" aria-hidden="true"></pfe-icon>
+          Cart
+        </button>
+      </li>
+
       <div slot="pfe-navigation--search" class="pfe-navigation__search pfe-navigation__search--default-styles">
       <!-- @todo: move form and label for="" and label id into shadow DOM -->
       <!-- @todo: add a11y features to search form and submit button in shadow DOM -->

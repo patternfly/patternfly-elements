@@ -69,12 +69,18 @@
       }
 
       .form pfe-textinput {
-        width: 320px;
+        width: 100%;
       }
 
       .form pfe-button {
         position: relative;
         left: 130px;
+      }
+
+      @media (min-width: 484px) {
+        .form pfe-textinput {
+          width: 320px;
+        }
       }
     </style>
   </head>
@@ -107,6 +113,7 @@
         </pfe-button>
       </form>
     </pfe-band>
+    
     <pfe-band>
       <h2>pfe-textinput Types</h2>
       <form class="form">
@@ -149,12 +156,37 @@
         <div>
           <label for="disabled">Disabled</label>
           <pfe-textinput>
-            <input type="password" id="disabled" placeholder="disabled" disabled>
+            <input type="text" id="disabled" placeholder="disabled" disabled>
           </pfe-textinput>
         </div>
       </form>
     </pfe-band>
+
     <pfe-band pfe-color="lightest">
+      <h2>pfe-textinput States</h2>
+      <form class="form">
+        <div>
+          <label for="state-default">Default</label>
+          <pfe-textinput>
+            <input type="text" id="state-default" placeholder="Default">
+          </pfe-textinput>
+        </div>
+        <div>
+          <label for="state-invalid">Invalid</label>
+          <pfe-textinput class="pfe-invalid" pfe-c-novalidate>
+            <input type="text" id="state-invalid" placeholder="Invalid">
+          </pfe-textinput>
+        </div>
+        <div>
+          <label for="state-disabled">Disabled</label>
+          <pfe-textinput>
+            <input type="text" id="state-disabled" placeholder="Disabled" disabled>
+          </pfe-textinput>
+        </div>
+      </form>
+    </pfe-band>
+    
+    <pfe-band>
       <h2>pfe-textinput Form</h2>
       <form class="form" id="shadowForm">
         <div>
@@ -187,7 +219,7 @@
       </form>
     </pfe-band>
 
-    <pfe-band>
+    <pfe-band pfe-color="lightest">
       <h2>pfe-textinput novalidate</h2>
       <div>
         <p>This form has a "novalidate" attribute added to it. This attribute should allow the form to submit without the validity checks being performed. You could also add a "formnovalidate" attribute to the button at the end of the form and it will have the same effect as "novalidate" on the form tag.</p>
@@ -241,14 +273,6 @@
       var plainInput = document.querySelector("#plain");
       setTimeout(function () {
         plainInput.value = "Something plain";
-      }, 4000);
-
-      var cityInput = document.querySelector("#city");
-      var cityPfeTextInput = document.querySelector("#cityPfeTextInput");
-      setTimeout(function () {
-        // cityInput.value = "Some city";
-        // cityInput.setAttribute("value", "Some city");
-        cityPfeTextInput.setAttribute("pfe-c-value", "bademailaddress.co");
       }, 4000);
 
       var novalidateForm = document.querySelector("#novalidate");

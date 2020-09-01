@@ -15,7 +15,16 @@ $LOCAL-VARIABLES: (
   FontSize: pfe-var(font-size),
   Height: 36px,
   Padding: 8px 6px,
-  Padding--invalid: 8px 6px 7px 6px
+  Padding--invalid: 8px 32px 7px 6px,
+  icon: (
+    Top: calc(50% - 0.5rem),
+    Right: 0.5rem,
+    Width: 1rem,
+    Height: 1rem,
+  ),
+  svg: (
+    Fill--invalid: pfe-var(feedback--critical--lighter),
+  )
 );
 
 :host {
@@ -56,4 +65,21 @@ $LOCAL-VARIABLES: (
   padding: pfe-local(Padding--invalid) !important;
   border-bottom-width: pfe-local(BorderBottomWidth--invalid) !important;
   border-bottom-color: pfe-local(BorderBottomColor--invalid) !important;
+}
+
+.icon {
+  display: none;
+}
+
+:host(.pfe-invalid) .icon {
+  display: block;
+  position: absolute;
+  right: pfe-local(Right, $region: icon);
+  top: pfe-local(Top, $region: icon);
+  width: pfe-local(Width, $region: icon);
+  height: pfe-local(Height, $region: icon);
+
+  #svg {
+    fill: pfe-local(Fill--invalid, $region: svg); 
+  }
 }

@@ -26,7 +26,9 @@ You can add any of the [standard input attributes](https://developer.mozilla.org
 - `default`: It's required that you put an `input` element in the default slot for `pfe-textinput`. 
 
 ## Attributes
-No custom attributes are used in `pfe-textinput`. However, uou can add any of the [standard input attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) on the `input` tag inside `pfe-textinput`.
+- `pfe-c-novalidate`: The presence of this attribute removes any of the internal event listeners (focus, blur, invalid, change, paste, keyup) and, as a result, none of the validity checks will be peformed on this element.
+
+You can add any of the [standard input attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) on the `input` tag inside `pfe-textinput`.
 
 ## Events
 Listen for any of the standard input events that are available to `input` elements.

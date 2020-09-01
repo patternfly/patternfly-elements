@@ -64,7 +64,8 @@ stories.add("At a glance", () => {
         width: 80px;
       }
 
-      input {
+      pfe-textinput {
+        width: 300px;
         box-sizing: border-box;
       }
     </style>
@@ -81,5 +82,25 @@ stories.add("At a glance", () => {
     `
       )
       .join("")}
+
+      <h2>States</h2>
+      <div>
+        <label for="states-default">Default</label>
+        <pfe-textinput>
+          <input type="text" id="states-default" placeholder="Default">
+        </pfe-textinput>
+      </div>
+      <div>
+        <label for="states-invalid">Default</label>
+        <pfe-textinput class="pfe-invalid" pfe-c-novalidate>
+          <input type="text" id="states-invalid" placeholder="Invalid">
+        </pfe-textinput>
+      </div>
+      <div>
+        <label for="states-disabled">Disabled</label>
+        <pfe-textinput>
+          <input type="text" id="states-disabled" placeholder="Disabled" disabled>
+        </pfe-textinput>
+      </div>
   `;
 });

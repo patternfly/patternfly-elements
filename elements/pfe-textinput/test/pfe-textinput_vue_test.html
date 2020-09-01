@@ -16,26 +16,54 @@
         template: `
           <div>
             <pfe-textinput>
-              <input type="text" />
-            </pfe-textinput>
-
-            <pfe-textinput id="attribute-copy">
-              <input type="text" placeholder="Test" required minlength="5" />
-            </pfe-textinput>
-
-            <pfe-textinput id="deny-list">
-              <input type="text" style="width: 100%;" tabindex="100" />
-            </pfe-textinput>
-
-            <pfe-textinput id="changes">
-              <input type="text" placeholder="Changes" maxlength="50" />
+              <input type="text">
             </pfe-textinput>
 
             <form id="form">
               <pfe-textinput id="form-pfe-textinput">
-                <input type="text" id="form-input" />
+                <input type="text" id="form-input">
               </pfe-textinput>
               <button>Submit</button>
+            </form>
+
+            <form id="novalidate" novalidate>
+              <pfe-textinput id="form-pfe-textinput">
+                <input type="text" id="form-input">
+              </pfe-textinput>
+            </form>
+
+            <form id="btn-novalidate">
+              <pfe-textinput id="form-pfe-textinput">
+                <input type="text" id="form-input">
+              </pfe-textinput>
+              <button formnovalidate>Submit</button>
+            </form>
+
+            <form id="submit-novalidate">
+              <pfe-textinput id="form-pfe-textinput">
+                <input type="text" id="form-input">
+              </pfe-textinput>
+              <input type="submit" formnovalidate>
+            </form>
+
+            <form id="add-invalid-class">
+              <pfe-textinput>
+                <input type="text" required>
+              </pfe-textinput>
+              <button>Submit</button>
+            </form>
+
+            <form id="add-invalid-class-submit">
+              <pfe-textinput>
+                <input type="text" required>
+              </pfe-textinput>
+              <button>Submit</button>
+            </form>
+
+            <form>
+              <pfe-textinput id="key-event">
+                <input type="text" required>
+              </pfe-textinput>
             </form>
           </div>
         `

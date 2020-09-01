@@ -1,4 +1,4 @@
-// Import polyfills: closest
+// Import polyfills: closest, matches
 import "./polyfills--pfe-textinput.js";
 import PFElement from "../../pfelement/dist/pfelement.js";
 
@@ -37,6 +37,10 @@ class PfeTextinput extends PFElement {
     }
   }
 
+  static get observedAttributes() {
+    return ["pfe-c-novalidate"];
+  }
+
   static get PfeType() {
     return PFElement.PfeTypes.Content;
   }
@@ -44,9 +48,9 @@ class PfeTextinput extends PFElement {
   constructor() {
     super(PfeTextinput, { type: PfeTextinput.PfeType });
 
-    this.novalidate = false;
     this._input = null;
     this._listenersAdded = false;
+    this._init = this._init.bind(this);
     this._validHandler = this._validHandler.bind(this);
     this._invalidHandler = this._invalidHandler.bind(this);
     this._focusHandler = this._focusHandler.bind(this);
@@ -63,12 +67,29 @@ class PfeTextinput extends PFElement {
 
   disconnectedCallback() {
     if (this._listenersAdded) {
-      this._input.removeEventListener("invalid", this._invalidHandler);
-      this._input.removeEventListener("focus", this._focusHandler);
-      this._input.removeEventListener("blur", this._checkValidity);
-      this._input.removeEventListener("change", this._checkValidity);
-      this._input.removeEventListener("keyup", this._checkValidity);
-      this._input.removeEventListener("paste", this._checkValidity);
+      this._removeListeners();
+    }
+
+    this._observer.disconnect();
+  }
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    super.attributeChangedCallback(...arguments);
+
+    if (attr === "pfe-c-novalidate") {
+      if (!this._input) {
+        return;
+      }
+
+      if (!this.novalidate && !this._listenersAdded) {
+        this._addListeners();
+        this._checkValidity();
+        return;
+      }
+
+      if (this.novalidate && this._listenersAdded) {
+        this._removeListeners();
+      }
     }
   }
 
@@ -91,6 +112,10 @@ class PfeTextinput extends PFElement {
   }
 
   _init() {
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
+
     if (this._isValidLightDOM()) {
       this._input = this.querySelector("input");
       this._checkNoValidate();
@@ -99,20 +124,42 @@ class PfeTextinput extends PFElement {
         return;
       }
 
-      this._input.addEventListener("invalid", this._invalidHandler);
-      this._input.addEventListener("focus", this._focusHandler);
-      this._input.addEventListener("blur", this._checkValidity);
-      this._input.addEventListener("change", this._checkValidity);
-      this._input.addEventListener("keyup", this._checkValidity);
-      this._input.addEventListener("paste", this._checkValidity);
-      this._listenersAdded = true;
+      this._addListeners();
     }
+
+    if (window.ShadyCSS) {
+      this._observer.observe(this, observerConfig);
+    }
+  }
+
+  _addListeners() {
+    this._input.addEventListener("invalid", this._invalidHandler);
+    this._input.addEventListener("focus", this._focusHandler);
+    this._input.addEventListener("blur", this._checkValidity);
+    this._input.addEventListener("change", this._checkValidity);
+    this._input.addEventListener("keyup", this._checkValidity);
+    this._input.addEventListener("paste", this._checkValidity);
+    this._listenersAdded = true;
+  }
+
+  _removeListeners() {
+    this._input.removeEventListener("invalid", this._invalidHandler);
+    this._input.removeEventListener("focus", this._focusHandler);
+    this._input.removeEventListener("blur", this._checkValidity);
+    this._input.removeEventListener("change", this._checkValidity);
+    this._input.removeEventListener("keyup", this._checkValidity);
+    this._input.removeEventListener("paste", this._checkValidity);
+    this._listenersAdded = false;
   }
 
   // novalidate functionality is informed by
   // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-novalidate
   _checkNoValidate() {
     const closestForm = this.closest("form");
+
+    if (!closestForm) {
+      return;
+    }
 
     if (closestForm.hasAttribute("novalidate")) {
       this.novalidate = true;

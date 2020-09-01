@@ -82,7 +82,6 @@ class PfeNavigation extends PFElement {
     this._siteSwitcherWrapper = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
-    // this._overlayWrapper = this.shadowRoot.querySelector("#pfe-navigation__wrapper");
 
     // Set default breakpoints to null (falls back to CSS)
     this.menuBreakpoints = {
@@ -121,10 +120,7 @@ class PfeNavigation extends PFElement {
     this._postResizeAdjustments = this._postResizeAdjustments.bind(this);
     this._menuToggleKeyboardListener = this._menuToggleKeyboardListener.bind(this);
     this._generalKeyboardListener = this._generalKeyboardListener.bind(this);
-    // this._toggleOverlay = this._toggleOverlay.bind(this);
-    // @todo: decide if this is needed
     this._overlayClickHandler = this._overlayClickHandler.bind(this);
-    // this._overlayWrapper = this._overlayWrapper.bind(this);
 
     // Handle updates to slotted search content
     this._searchSlot.addEventListener("slotchange", this._processSearchSlotChange);
@@ -132,12 +128,7 @@ class PfeNavigation extends PFElement {
     // Setup mutation observer to watch for content changes
     this._observer = new MutationObserver(this._processLightDom);
 
-    // @todo: decided if this is needed
-    // this.overlay = false;
-
-    // ensure we close the whole menu and hide the overlay
-    // when the overlay is clicked
-    // @todo: decided if this is needed
+    // insure we close the whole menu and hide the overlay when the overlay is clicked
     this._overlay.addEventListener("click", this._overlayClickHandler);
   }
 
@@ -175,7 +166,6 @@ class PfeNavigation extends PFElement {
     window.removeEventListener("resize", this._debouncedPreResizeAdjustments);
     window.removeEventListener("resize", this._debouncedPostResizeAdjustments);
     this._slot.removeEventListener("slotchange", this._processSearchSlotChange);
-    // @todo: decided if this is needed
     this._overlay.removeEventListener("click", this._overlayClickHandler);
   }
 
@@ -947,14 +937,6 @@ class PfeNavigation extends PFElement {
     this._changeNavigationState(toggleId);
   }
 
-  // _toggleOverlay() {
-  //   if (this.isOpen()) {
-  //     this._overlay.hidden = false;
-  //   } else {
-  //     this._overlay.hidden = true;
-  //   }
-  // }
-
   /**
    * Default Toggle Button Keyboard event handler
    * @param {object} event
@@ -1078,9 +1060,6 @@ class PfeNavigation extends PFElement {
   // close menu when overlay is clicked
   _overlayClickHandler() {
     const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
-    // if (openToggleId) {
-    //   this._changeNavigationState(openToggleId, "close");
-    // }
     this._changeNavigationState(openToggleId, "close");
   }
 

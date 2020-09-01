@@ -98,18 +98,24 @@
 | Filename | line # | TODO
 |:------|:------:|:------
 | [pfe-markdown](../elements/pfe-markdown/src/pfe-markdown.js#L49) | 49 | when we stop supporting IE11, the need to disconnect and
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L527) | 527 | processLightDom seems to be firing twice, need to look into this and see whether that is okay or if it needs to be fixed, seems like it is not a good thing but not sure if it is avoidable or not
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L581) | 581 | look into only replacing markup that changed via mutationList
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L634) | 634 | figure out if this is causing inconsistent toggling of aria-hidden
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L671) | 671 | /note: this only adds aria-hidden to the main menu dropdown links and not the utility buttons (Search/All Red Hat), added aria-hidden attr in the pfe-nav shadow DOM template for now, need to figure out best way to do this dynamically
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L675) | 675 | added this logic, uses .dropdown-content class on the dropdown content divs, need to verify that this logic is reasonable and if so add the notes to the documentation about the class
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L676) | 676 | need to figure out best way to manage the dynamic setting of aria-hidden when custom link gets used as a dropdown instead by content editors and other dev teams
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L677) | 677 | /note: tried this method of dynamically setting the aria-hidden attr for other dropdowns but I was having an issue with inconsistent toggling of the aria-hidden attr for the search dropdown so commented it out for now, this code might be conflicting with logic elsewhere for aria-hidden?
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L730) | 730 | Get Mobile menu height reliably so we can animate it
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L743) | 743 | Not working yet These other dropdowns need style & JS logic love
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L780) | 780 | Run this if layout breaks nav-expand breakpoint and secondary-links-expand breakpoint
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L781) | 781 | Clear/update inline heights on resize
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L807) | 807 | if Search isn't present, check for custom links, if that isn't present use All Red Hat
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L125) | 125 | decide if this is needed
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L135) | 135 | decided if this is needed
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L140) | 140 | decided if this is needed
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L178) | 178 | decided if this is needed
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L506) | 506 | figure out how to still show overlay even when mobile dropdown menu is opened and closed
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L554) | 554 | processLightDom seems to be firing twice, need to look into this and see whether that is okay or if it needs to be fixed, seems like it is not a good thing but not sure if it is avoidable or not
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L608) | 608 | look into only replacing markup that changed via mutationList
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L661) | 661 | figure out if this is causing inconsistent toggling of aria-hidden
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L703) | 703 | /note: this only adds aria-hidden to the main menu dropdown links and not the utility buttons (Search/All Red Hat), added aria-hidden attr in the pfe-nav shadow DOM template for now, need to figure out best way to do this dynamically
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L707) | 707 | added this logic, uses .dropdown-content class on the dropdown content divs, need to verify that this logic is reasonable and if so add the notes to the documentation about the class
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L708) | 708 | need to figure out best way to manage the dynamic setting of aria-hidden when custom link gets used as a dropdown instead by content editors and other dev teams
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L709) | 709 | /note: tried this method of dynamically setting the aria-hidden attr for other dropdowns but I was having an issue with inconsistent toggling of the aria-hidden attr for the search dropdown so commented it out for now, this code might be conflicting with logic elsewhere for aria-hidden?
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L762) | 762 | Get Mobile menu height reliably so we can animate it
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L775) | 775 | Not working yet These other dropdowns need style & JS logic love
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L812) | 812 | Run this if layout breaks nav-expand breakpoint and secondary-links-expand breakpoint
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L813) | 813 | Clear/update inline heights on resize
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L839) | 839 | if Search isn't present, check for custom links, if that isn't present use All Red Hat
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L1078) | 1078 | decide if this is needed
 | [pfelement](../elements/pfelement/src/pfelement.js#L79) | 79 | update this to use :defined?
 | [pfelement](../elements/pfelement/src/pfelement.js#L171) | 171 | maybe we should use just the attribute instead of the class?
 | [pfelement](../elements/pfelement/src/pfelement.js#L368) | 368 | This is a duplicate function to cssVariable above, combine them</div>

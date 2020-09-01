@@ -123,7 +123,7 @@ class PfeNavigation extends PFElement {
     this._generalKeyboardListener = this._generalKeyboardListener.bind(this);
     // this._toggleOverlay = this._toggleOverlay.bind(this);
     // @todo: decide if this is needed
-    // this._overlayClickHandler = this._overlayClickHandler.bind(this);
+    this._overlayClickHandler = this._overlayClickHandler.bind(this);
     // this._overlayWrapper = this._overlayWrapper.bind(this);
 
     // Handle updates to slotted search content
@@ -135,10 +135,10 @@ class PfeNavigation extends PFElement {
     // @todo: decided if this is needed
     // this.overlay = false;
 
-    // make sure we close all of the nav items and hide the overlay
-    // when it's clicked
+    // ensure we close the whole menu and hide the overlay
+    // when the overlay is clicked
     // @todo: decided if this is needed
-    // this._overlay.addEventListener("click", this._overlayClickHandler);
+    this._overlay.addEventListener("click", this._overlayClickHandler);
   }
 
   connectedCallback() {
@@ -176,7 +176,7 @@ class PfeNavigation extends PFElement {
     window.removeEventListener("resize", this._debouncedPostResizeAdjustments);
     this._slot.removeEventListener("slotchange", this._processSearchSlotChange);
     // @todo: decided if this is needed
-    // this._overlay.removeEventListener("click", this._overlayClickHandler);
+    this._overlay.removeEventListener("click", this._overlayClickHandler);
   }
 
   // Process the attribute change
@@ -536,16 +536,6 @@ class PfeNavigation extends PFElement {
     // Clone state attribute inside of Shadow DOM to avoid compound :host() selectors
     shadowDomOuterWrapper.setAttribute(`${this.tag}-open-toggle`, this.getAttribute(`${this.tag}-open-toggle`));
     return toState === "open";
-
-    if (lightDomOverlayWrapper.hasAttribute("pfe-navigation-open-toggle")) {
-      // Hide Overlay
-      this._overlay.hidden = true;
-      console.log(`menu closed`);
-    } else {
-      // Show Overlay
-      this._overlay.hidden = false;
-      console.log(`menu open`);
-    }
   }
 
   _processSearchSlotChange() {
@@ -1085,10 +1075,14 @@ class PfeNavigation extends PFElement {
     }
   }
 
-  // @todo: decide if this is needed
-  // _overlayClickHandler(event) {
-  //   this.overlay = false;
-  // }
+  // close menu when overlay is clicked
+  _overlayClickHandler() {
+    const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    // if (openToggleId) {
+    //   this._changeNavigationState(openToggleId, "close");
+    // }
+    this._changeNavigationState(openToggleId, "close");
+  }
 
   _requestSiteSwitcher() {
     const promise = new Promise((resolve, reject) => {

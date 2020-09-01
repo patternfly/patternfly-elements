@@ -78,7 +78,7 @@ class PfeNavigation extends PFElement {
     this._searchSpotXs = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--xs");
     this._searchSpotMd = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--md");
     this._allRedHatToggle = this.shadowRoot.getElementById("secondary-links__button--all-red-hat");
-    this._customlinks = this.shadowRoot.querySelector(`.${this.tag}__customlinks`);
+    this._customLinksSlot = this.shadowRoot.getElementById("pfe-navigation--custom-links");
     this._siteSwitcherWrapper = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
@@ -547,17 +547,21 @@ class PfeNavigation extends PFElement {
     if (mutationList) {
       for (let index = 0; index < mutationList.length; index++) {
         const mutationItem = mutationList[index];
-        if (!cancelLightDomProcessingTags.includes(mutationItem.target.tagName)) {
-          if (!mutationItem.attributeName.startsWith("pfe-")) {
-            // If it's a pfe- attribute, assume we don't need to process the light dom
-            cancelLightDomProcessing = false;
+        if (mutationItem.type === "characterData") {
+          cancelLightDomProcessing = false;
+        } else {
+          if (!cancelLightDomProcessingTags.includes(mutationItem.target.tagName)) {
+            if (mutationItem.attributeName && !mutationItem.attributeName.startsWith("pfe-")) {
+              // If it's a pfe- attribute, assume we don't need to process the light dom
+              cancelLightDomProcessing = false;
+            }
+          } else if (
+            mutationItem.target.tagName === "PFE-NAVIGATION" &&
+            mutationItem.type === "attributes" &&
+            mutationItem.attributeName === "class"
+          ) {
+            componentClassesChange = true;
           }
-        } else if (
-          mutationItem.target.tagName === "PFE-NAVIGATION" &&
-          mutationItem.type === "attributes" &&
-          mutationItem.attributeName === "class"
-        ) {
-          componentClassesChange = true;
         }
       }
     } else {

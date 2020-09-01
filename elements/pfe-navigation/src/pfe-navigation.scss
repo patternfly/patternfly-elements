@@ -968,19 +968,9 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include collapse('secondary-links') {
     flex-direction: column;
   }
-  > li {
-    margin: 0;
-    padding: 0;
-    @include breakpoint('secondary-links-expand') {
-      margin-right: 8px;
-    }
-    @include collapse('secondary-links') {
-      margin-right: 0;
-    }
 
-    > a {
-      @include top-level-button;
-    }
+  > li {
+    @include secondary-links-li;
   }
 
   .pfe-navigation--is-resizing & {

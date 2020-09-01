@@ -92,34 +92,32 @@ pfe-navigation {
 
   // Slotted content styles
   // --------------------------------------------------------
-  .pfe-navigation__custom-links a,
-  .pfe-navigation__custom-links button {
-    @include top-level-button;
-  }
+  [slot='pfe-navigation--custom-links'] {
+    @include secondary-links-li;
 
-  .pfe-navigation__custom-links pfe-icon {
-    @include secondary-links-icon;
+    a,
+    button {
+      @include top-level-button;
+    }
   }
 
   // Base default styles for search bar and search button
-  .pfe-navigation__search {
-    &--default-styles {
-      padding-left: 16px;
-      padding-right: 16px;  
-    }
-    
-    &--default-styles form {
+  .pfe-navigation__search--default-styles {
+    padding-left: 16px;
+    padding-right: 16px;
+
+    form {
       display: flex;
       align-items: center;
     }
-  
-    &--default-styles input,
-    &--default-styles button {
+
+    input,
+    button {
       padding: 10px;
       transition: box-shadow 0.2s;
     }
-  
-    &--default-styles input {
+
+    input {
       flex-grow: 1;
       flex-shrink: 1;
       flex-basis: 0%;
@@ -129,12 +127,12 @@ pfe-navigation {
       color: #717579;
       font-size: 16px;
     }
-  
-    &--default-styles input::placeholder {
+
+    input::placeholder {
       color: #717579;
     }
-  
-    &--default-styles button {
+
+    button {
       flex-grow: 0;
       flex-shrink: 1;
       flex-basis: auto;
@@ -144,14 +142,14 @@ pfe-navigation {
       color: #fff;
       font-size: 16px;
     }
-  
-    &--default-styles input:focus,
-    &--default-styles input:hover {
+
+    input:focus,
+    input:hover {
       @include alt-focus-styles(#000, #e00);
     }
-  
-    &--default-styles button:focus,
-    &--default-styles button:hover {
+
+    button:focus,
+    button:hover {
       @include alt-focus-styles(#fff, #000);
     }
   }

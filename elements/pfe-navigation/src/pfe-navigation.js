@@ -78,7 +78,7 @@ class PfeNavigation extends PFElement {
     this._searchSpotXs = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--xs");
     this._searchSpotMd = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--md");
     this._allRedHatToggle = this.shadowRoot.getElementById("secondary-links__button--all-red-hat");
-    this._customlinks = this.shadowRoot.querySelector(`.${this.tag}__customlinks`);
+    this._customLinksSlot = this.shadowRoot.getElementById("pfe-navigation--custom-links");
     this._siteSwitcherWrapper = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
 

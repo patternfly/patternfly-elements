@@ -254,6 +254,21 @@ $dropdown-transition: height 0.25s ease-in-out;
   }
 }
 
+@mixin secondary-links-li {
+  display: block;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  @include breakpoint('secondary-links-expand') {
+    margin-right: 8px;
+  }
+  @include collapse('secondary-links') {
+    margin-right: 0;
+  }
+}
+
 @mixin secondary-links-icon {
   --pfe-icon--Color: #fff;
   // @todo: do we need to implement this differently with theming?

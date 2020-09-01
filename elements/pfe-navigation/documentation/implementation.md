@@ -224,4 +224,36 @@ After the terminating `</nav>` tag, add the following markup:
 
 ### Adding Custom Links
 
-@todo Document when we have Custom Link functionality
+Custom links are the links between Search/All Red Hat and the Log In link. In the future they will be able to be dropdowns, but for now we've implemented the ability to add links with icons.
+
+To add a custom link that is just a link, add the following markup inside of the component tag:
+
+```html
+<li slot="pfe-navigation--custom-links">
+  <a href="/VALID/URL">
+    <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
+    Custom Link
+  </a>
+</li>
+```
+
+If there is JS behavior on the page for the 'custom-link' and it _does not_ go to a new page, it's better to make this a button tag, e.g.:
+```html
+<li slot="pfe-navigation--custom-links">
+  <button>
+    <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
+    Custom Link
+  </button>
+</li>
+```
+
+> There is no `<ul>` element, this is intentional. This markup will be valid in the component, and is never shown if the component doesn't work.
+
+Then update:
+* `href` (if there's a link)
+* `pfe-icon`'s `icon` attribute, [see available icons](https://patternflyelements.com/elements/pfe-icon/demo/)
+* Text inside the button
+
+Optionally additional attributes can be added to any of the HTML.
+
+To add more custom links add more of the same markup, the order they are in will be reflected in the component.

@@ -486,16 +486,12 @@ class PfeNavigation extends PFElement {
       if (backOut && toggleId.startsWith("main-menu") && this.isMobileMenuButtonVisible()) {
         // Back out to main-menu
         _openDropdown(this._mobileToggle, this.shadowRoot.getElementById("mobile__dropdown"));
-        // Show overlay
-        this._overlay.hidden = false;
       } else {
         // Shut it by removing state attribute
         this.removeAttribute(`${this.tag}-open-toggle`, "");
+        // Hide overlay only when top level menu is closed
+        this._overlay.hidden = true;
       }
-
-      // @todo: figure out how to still show overlay even when mobile dropdown menu is opened and closed
-      // Hide overlay
-      this._overlay.hidden = true;
     };
 
     // Shut any open dropdowns

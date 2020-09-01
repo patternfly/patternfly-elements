@@ -534,17 +534,21 @@ class PfeNavigation extends PFElement {
     if (mutationList) {
       for (let index = 0; index < mutationList.length; index++) {
         const mutationItem = mutationList[index];
-        if (!cancelLightDomProcessingTags.includes(mutationItem.target.tagName)) {
-          if (!mutationItem.attributeName.startsWith("pfe-")) {
-            // If it's a pfe- attribute, assume we don't need to process the light dom
-            cancelLightDomProcessing = false;
+        if (mutationItem.type === "characterData") {
+          cancelLightDomProcessing = false;
+        } else {
+          if (!cancelLightDomProcessingTags.includes(mutationItem.target.tagName)) {
+            if (mutationItem.attributeName && !mutationItem.attributeName.startsWith("pfe-")) {
+              // If it's a pfe- attribute, assume we don't need to process the light dom
+              cancelLightDomProcessing = false;
+            }
+          } else if (
+            mutationItem.target.tagName === "PFE-NAVIGATION" &&
+            mutationItem.type === "attributes" &&
+            mutationItem.attributeName === "class"
+          ) {
+            componentClassesChange = true;
           }
-        } else if (
-          mutationItem.target.tagName === "PFE-NAVIGATION" &&
-          mutationItem.type === "attributes" &&
-          mutationItem.attributeName === "class"
-        ) {
-          componentClassesChange = true;
         }
       }
     } else {

@@ -128,7 +128,7 @@ class PfeNavigation extends PFElement {
     // Setup mutation observer to watch for content changes
     this._observer = new MutationObserver(this._processLightDom);
 
-    // insure we close the whole menu and hide the overlay when the overlay is clicked
+    // ensure we close the whole menu and hide the overlay when the overlay is clicked
     this._overlay.addEventListener("click", this._overlayClickHandler);
   }
 
@@ -676,11 +676,6 @@ class PfeNavigation extends PFElement {
 
     // Add All Red Hat toggle behavior
     this._allRedHatToggle.addEventListener("click", this._toggleAllRedHat);
-
-    // Add overlay toggle behavior
-    // this._mobileToggle.addEventListener("click", this._toggleOverlay);
-    // this._searchToggle.addEventListener("click", this._toggleOverlay);
-    // this._allRedHatToggle.addEventListener("click", this._toggleOverlay);
 
     // General keyboard listener attached to the entire component
     this.addEventListener("keydown", this._generalKeyboardListener);

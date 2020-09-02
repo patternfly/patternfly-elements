@@ -192,11 +192,31 @@ $dropdown-transition: height 0.25s ease-in-out;
   }
 }
 
+
+@mixin secondary-links-icon {
+  --pfe-icon--Color: currentColor;
+  // @todo: do we need to implement this differently with theming?
+  --pfe-icon--size: 18px;
+  // @todo: figure out best spacing styles for this icon
+  padding-right: 5px;
+  padding-bottom: 0px;
+  @include breakpoint('secondary-links-expand') {
+    padding-right: 0px;
+    padding-bottom: 5px;
+  }
+  @include breakpoint('secondary-links-expand') {
+    padding-right: 5px;
+    padding-bottom: 0px;
+  }
+}
+
 /// Top level button styles
 @mixin top-level-button {
   $padding-mobile: 8px 24px;
   display: flex;
   align-items: center;
+  width: 100%;
+  margin: 0;
   padding: $padding-mobile;
   border: 0;
   white-space: nowrap;
@@ -212,8 +232,8 @@ $dropdown-transition: height 0.25s ease-in-out;
   @include breakpoint('secondary-links-expand') {
     flex-direction: column;
     justify-content: center;
+    width: auto;
     height: $menu-height;
-    margin-right: 8px;
     padding: 0 8px;
     font-size: 12px;
     color: #fff;
@@ -221,8 +241,8 @@ $dropdown-transition: height 0.25s ease-in-out;
   @include collapse('secondary-links') {
     flex-direction: row;
     justify-content: normal;
+    width: 100%;
     height: auto;
-    margin: 0;
     padding: $padding-mobile;
     font-size: 16px;
     color: #06c;
@@ -254,6 +274,22 @@ $dropdown-transition: height 0.25s ease-in-out;
   }
 }
 
+@mixin top-level-button--stays-in-top-bar {
+  flex-direction: column;
+  justify-content: center;
+  width: auto;
+  margin-right: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: 12px;
+  color: #fff;
+
+  &[class]:focus,
+  &[class]:hover {
+    box-shadow: inset 0 4px 0 0 #e00;
+  }
+}
+
 @mixin secondary-links-li {
   display: block;
   width: auto;
@@ -269,16 +305,3 @@ $dropdown-transition: height 0.25s ease-in-out;
   }
 }
 
-@mixin secondary-links-icon {
-  --pfe-icon--Color: #fff;
-  // @todo: do we need to implement this differently with theming?
-  --pfe-icon--size: 18px;
-  // @todo: figure out best spacing styles for this icon
-  padding-right: 5px;
-  padding-bottom: 0px;
-  @include breakpoint('secondary-links-expand') {
-    --pfe-icon--Color: #fff;
-    padding-right: 0px;
-    padding-bottom: 5px;
-  }
-}

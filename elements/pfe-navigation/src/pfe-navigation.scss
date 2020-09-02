@@ -123,6 +123,13 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 @mixin pfe-navigation__menu-toggle--inactive {
+  box-shadow: none;
+
+  &[class] {
+    background: transparent;
+    color: #fff;
+  }
+
   &:focus,
   &:hover {
     @include focus-styles(#fff, 0px);
@@ -160,7 +167,7 @@ See mixin blocks before selectors that contain the selector name and the three l
       @include pfe-navigation__menu-toggle--inactive;
     }
     @include collapse('secondary-links') {
-      @include pfe-navigation__menu-toggle--inactive;
+      @include pfe-navigation__menu-toggle--active;
     }
   }
 }
@@ -979,23 +986,6 @@ See mixin blocks before selectors that contain the selector name and the three l
     padding-right: 0px;
     padding-bottom: 5px;
   }
-}
-
-.pfe-navigation__menu-toggle pfe-icon {
-  // [pfe-navigation-open-toggle='mobile__button'] &,
-  // [pfe-navigation-open-toggle^='main-menu__'] & {
-  //   --pfe-icon--Color: #151515;
-  // }
-
-  // [pfe-navigation-open-toggle='secondary-links__button--search'] & {
-  //   --pfe-icon--Color: #151515;
-  //   @include breakpoint('secondary-links-expand') {
-  //     --pfe-icon--Color: #fff;
-  //   }
-  //   @include collapse('secondary-links') {
-  //     --pfe-icon--Color: #151515;
-  //   }
-  // }
 }
 
 .pfe-navigation__log-in-link {

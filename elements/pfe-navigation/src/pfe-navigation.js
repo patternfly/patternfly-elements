@@ -3,6 +3,26 @@ import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 import "../../pfe-progress-indicator/dist/pfe-progress-indicator.js";
 
 /**
+ * Closest Polyfill
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
+ */
+if (!Element.prototype.matches) {
+  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+}
+
+if (!Element.prototype.closest) {
+  Element.prototype.closest = function(s) {
+    var el = this;
+
+    do {
+      if (Element.prototype.matches.call(el, s)) return el;
+      el = el.parentElement || el.parentNode;
+    } while (el !== null && el.nodeType === 1);
+    return null;
+  };
+}
+
+/**
  * Debounce helper function
  * @see https://davidwalsh.name/javascript-debounce-function
  *
@@ -146,7 +166,6 @@ class PfeNavigation extends PFElement {
     // this.customlinks.addEventListener("slotchange", this._init);
 
     const preResizeAdjustments = () => {
-      console.log("starting resize!");
       this.classList.add("pfe-navigation--is-resizing");
     };
     this._debouncedPreResizeAdjustments = debounce(preResizeAdjustments, 150, true);
@@ -354,7 +373,7 @@ class PfeNavigation extends PFElement {
     // Trying to avoid running getComputedStyle too much by caching iton the web component object
     if (forceRecalculation || this.mainMenuButtonVisible === null || window.innerWidth !== this.windowInnerWidth) {
       if (this._isDevelopment()) {
-        // console.log(`${this.tag}: isMobileMenuButtonVisible recalculated`);
+        console.log(`${this.tag}: isMobileMenuButtonVisible recalculated`);
       }
       this.mainMenuButtonVisible = window.getComputedStyle(this._mobileToggle, false).display !== "none";
 
@@ -436,7 +455,6 @@ class PfeNavigation extends PFElement {
     // Set toState param to go to opposite of current state if toState isn't set
     if (typeof toState === "undefined") {
       toState = isOpen ? "close" : "open";
-      // console.log('Setting toState', toState);
     }
     const dropdownId = this._getDropdownId(toggleId);
     const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
@@ -500,10 +518,8 @@ class PfeNavigation extends PFElement {
 
     // Update the element we came to update
     if (toState === "close") {
-      // console.log('toState closed', toggleElementToToggle.getAttribute('id'));
       _closeDropdown(toggleElementToToggle, this.shadowRoot.getElementById(dropdownId));
     } else if (toState === "open") {
-      // console.log('toState open', toggleElementToToggle.getAttribute('id'));
       _openDropdown(toggleElementToToggle, this.shadowRoot.getElementById(dropdownId));
     }
 
@@ -512,6 +528,7 @@ class PfeNavigation extends PFElement {
     return toState === "open";
   }
 
+  // Add a class to component wrapper if we have a search slot
   _processSearchSlotChange() {
     if (this.has_slot("pfe-navigation--search")) {
       this.classList.add("pfe-navigation--has-search");
@@ -536,8 +553,11 @@ class PfeNavigation extends PFElement {
       for (let index = 0; index < mutationList.length; index++) {
         const mutationItem = mutationList[index];
         if (mutationItem.type === "characterData") {
+          // Process text changes
           cancelLightDomProcessing = false;
-        } else {
+        }
+        // Slotted tags and their children shouldn't cause lightDomProcessing
+        else if (!mutationItem.target.closest("[slot]") && !mutationItem.target.hasAttribute("slot")) {
           if (!cancelLightDomProcessingTags.includes(mutationItem.target.tagName)) {
             if (mutationItem.attributeName && !mutationItem.attributeName.startsWith("pfe-")) {
               // If it's a pfe- attribute, assume we don't need to process the light dom
@@ -705,7 +725,6 @@ class PfeNavigation extends PFElement {
     const postProcessLightDom = () => {
       if (this.isMobileMenuButtonVisible() && !this.isOpen("mobile__button")) {
         this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
-        console.log(this._currentMobileDropdown);
       }
     };
 
@@ -831,7 +850,6 @@ class PfeNavigation extends PFElement {
       const secondaryLinksBreakpoint = window.matchMedia(`(max-width: ${this.menuBreakpoints.secondaryLinks}px)`);
       secondaryLinksBreakpoint.addListener(this._collapseSecondaryLinks);
     }
-    console.log("_addMenuBreakpoints", this.menuBreakpoints);
   }
 
   /**

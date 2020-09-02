@@ -1056,6 +1056,24 @@ class PfeNavigation extends PFElement {
   _overlayClickHandler() {
     const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
     this._changeNavigationState(openToggleId, "close");
+    if (this.isSecondaryLinksSectionCollapsed()) {
+      // Mobile
+      // close mobile menu
+      this._changeNavigationState("mobile__button", "close");
+    } else if (this.isMobileMenuButtonVisible()) {
+      // Tablet-ish
+      // if it's a child of main menu (e.g. openToggleId.startsWith("main-menu") -- accordion dropdown) close mobile__button
+      // Else close openToggleId -- desktop menu
+      if (openToggleId.startsWith("main-menu")) {
+        this._changeNavigationState("mobile__button", "close");
+      } else {
+        this._changeNavigationState(openToggleId, "close");
+      }
+    } else {
+      // Desktop
+      // close desktop menu
+      this._changeNavigationState(openToggleId, "close");
+    }
   }
 
   _requestSiteSwitcher() {

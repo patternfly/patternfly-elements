@@ -717,7 +717,6 @@ class PfeNavigation extends PFElement {
     const postProcessLightDom = () => {
       if (this.isMobileMenuButtonVisible() && !this.isOpen("mobile__button")) {
         this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
-        // console.log(this._currentMobileDropdown);
       }
     };
 

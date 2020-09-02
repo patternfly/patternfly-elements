@@ -158,6 +158,7 @@ class PfeNavigation extends PFElement {
   }
 
   disconnectedCallback() {
+    // @todo Remove all listeners to be thorogh!
     window.removeEventListener("resize", this._debouncedPreResizeAdjustments);
     window.removeEventListener("resize", this._debouncedPostResizeAdjustments);
     this._slot.removeEventListener("slotchange", this._processSearchSlotChange);

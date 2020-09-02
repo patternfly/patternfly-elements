@@ -98,28 +98,11 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include top-level-button;
 }
 
-// Add back some styles to links that stay in the menu at mobile
-.pfe-navigation__menu-toggle,
-.pfe-navigation__log-in-link {
-  flex-direction: column;
-  justify-content: center;
-  margin-right: 8px;
-  padding-left: 8px;
-  padding-right: 8px;
-  font-size: 12px;
-  color: #fff;
-
-  &:focus,
-  &:hover {
-    box-shadow: inset 0 4px 0 0 #e00;
-  }
-}
-
 // Layout changes per breakpoint
 // See comment at top of file
 @mixin pfe-navigation__menu-toggle--mobile {
   display: flex;
-  margin: 0 0 0 auto;
+  margin: 0 8px 0 auto;
 }
 @mixin pfe-navigation__menu-toggle--collapsed-menu {
   display: flex;
@@ -129,24 +112,24 @@ See mixin blocks before selectors that contain the selector name and the three l
   display: none;
 }
 @mixin pfe-navigation__menu-toggle--active {
-  color: #151515;
-  background: #fff;
   box-shadow: inset 0 4px 0 0 #e00;
+  &[class] {
+    color: #151515;
+    background: #fff;
+  }
   &:focus,
   &:hover {
     @include focus-styles(#000, 0px);
   }
 }
 @mixin pfe-navigation__menu-toggle--inactive {
-  color: #fff;
-  background: #000;
-  box-shadow: none;
   &:focus,
   &:hover {
     @include focus-styles(#fff, 0px);
   }
 }
-.pfe-navigation__menu-toggle {
+.pfe-navigation__menu-toggle[class] {
+  @include top-level-button--stays-in-top-bar;
   @include pfe-navigation__menu-toggle--mobile;
 
   @include breakpoint('secondary-links-expand') {
@@ -159,13 +142,16 @@ See mixin blocks before selectors that contain the selector name and the three l
     @include pfe-navigation__menu-toggle--collapsed-menu;
   }
   @include collapse('secondary-links') {
+    @include top-level-button--stays-in-top-bar;
     @include pfe-navigation__menu-toggle--mobile;
   }
 
   // Active state
   [pfe-navigation-open-toggle='mobile__button'] &,
   [pfe-navigation-open-toggle^='main-menu__'] & {
-    @include pfe-navigation__menu-toggle--active;
+    &[class] {
+      @include pfe-navigation__menu-toggle--active;
+    }
   }
 
   [pfe-navigation-open-toggle='secondary-links__button--search'] & {
@@ -186,10 +172,17 @@ See mixin blocks before selectors that contain the selector name and the three l
   left: 0;
   display: none;
   width: 100%;
-  margin: 0;
   max-height: calc(100vh - #{$menu-height});
+  margin: 0;
   padding: 16px 32px;
+  overflow-y: auto;
   background: #fff;
+  @include breakpoint('nav-expand') {
+    overflow: visible;
+  }
+  @include collapse('nav') {
+    overflow-y: auto;
+  }
 
   // Open state
   [pfe-navigation-open-toggle='mobile__button'] &,
@@ -487,14 +480,16 @@ See mixin blocks before selectors that contain the selector name and the three l
 // Dropdown wrapper - used for basic layout properties and animation
 @mixin pfe-navigation__dropdown-wrapper--mobile {
   position: static;
-  padding: 0 24px;
+  // Desired padding plus negative margin on columns
+  padding: 0 #{24px + 16px};
   background: transparent;
 }
 @mixin pfe-navigation__dropdown-wrapper--desktop {
   position: absolute;
   top: 100%;
   left: 0;
-  padding: 0 64px;
+  // Desired padding plus negative margin on columns
+  padding: 0 #{64px + 16px};
   background: #fff;
 }
 .pfe-navigation__dropdown-wrapper {
@@ -524,16 +519,25 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 .pfe-navigation__dropdown-wrapper--single-column {
-  padding: 0 16px;
+  // Desired padding plus negative margin on columns
+  padding: 0 #{24px + 16px};
   @include breakpoint('nav-expand') {
     left: auto;
     width: auto;
     max-width: 100%;
     min-width: 13em; // Trying to make sure it's larger than the top level menu link
+    // Desired padding plus negative margin on columns
+    padding: 0 #{16px + 16px};
+    box-shadow:
+      var(
+        --pfe-theme--box-shadow--sm,
+        0 0.0625rem 0.125rem 0 rgba(19, 19, 19, 0.2)
+      );
   }
   @include collapse('nav') {
     position: static;
     max-width: 100%;
+    box-shadow: none;
   }
 
   // .pfe-navigation__menu-item--open > & {
@@ -545,11 +549,11 @@ See mixin blocks before selectors that contain the selector name and the three l
 @mixin pfe-navigation__dropdown--mobile {
   display: block;
   font-size: 16px;
-  padding: 12px 16px;
+  padding: 12px 0;
 }
 @mixin pfe-navigation__dropdown--desktop {
   display: grid;
-  padding: 32px 16px;
+  padding: 32px 0;
   // Fits as many columns as it can given the constraints
   // @todo evaluate layout needs and if this is a sane default
   // grid-template-columns:
@@ -601,7 +605,8 @@ See mixin blocks before selectors that contain the selector name and the three l
     margin: 0 0 0.75em;
     padding: 0;
     break-inside: avoid;
-    font-size: 16px;
+    font-size: 18px; // --pfe-global--FontSize-lg
+    font-weight: normal;
     color: var(--pfe-theme--color--ui-complement,#464646);
 
     a {
@@ -620,10 +625,14 @@ See mixin blocks before selectors that contain the selector name and the three l
         text-decoration: underline;
       }
     }
+
+    ul + & {
+      margin-top: 32px; // --pf-spacer-xl
+    }
   }
 
   li {
-    margin: 0 0 0.75em;
+    margin: 0 0 16px; // --pf-global--spacer-md
     break-inside: avoid;
 
     a {
@@ -659,17 +668,11 @@ See mixin blocks before selectors that contain the selector name and the three l
     display: block;
   }
   @include breakpoint('nav-expand') {
-    padding: 16px;
+    padding: 16px 0;
     background: #fff;
-    box-shadow:
-      var(
-        --pfe-theme--box-shadow--sm,
-        0 0.0625rem 0.125rem 0 rgba(19, 19, 19, 0.2)
-      );
   }
   @include collapse('nav') {
     background: transparent;
-    box-shadow: none;
   }
 
   // group feature styles
@@ -937,18 +940,23 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 //@todo: figure out if this is the best way to style the icon color states or if updates to JS need to be made to put a class or attribute on a button when it is open to target with css
 .pfe-navigation__secondary-links-wrapper {
+  $mobile-padding-top: 16px;
   display: flex;
   // @note Flex direction is used by pfeNavigation.isSecondaryLinksSectionCollapsed() to determine layout state
   flex-direction: column;
   margin: 0;
-  padding: 0;
+  padding: $mobile-padding-top 0 0;
   list-style: none;
   transition: opacity 0.1s ease-out;
   @include breakpoint('secondary-links-expand') {
     flex-direction: row;
+    margin-left: auto;
+    padding-top: 0;
   }
   @include collapse('secondary-links') {
     flex-direction: column;
+    padding-top: $mobile-padding-top;
+    margin-left: 0;
   }
 
   > li {
@@ -974,19 +982,28 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 .pfe-navigation__menu-toggle pfe-icon {
-  [pfe-navigation-open-toggle='mobile__button'] &,
-  [pfe-navigation-open-toggle^='main-menu__'] & {
-    --pfe-icon--Color: #151515;
-  }
+  // [pfe-navigation-open-toggle='mobile__button'] &,
+  // [pfe-navigation-open-toggle^='main-menu__'] & {
+  //   --pfe-icon--Color: #151515;
+  // }
 
-  [pfe-navigation-open-toggle='secondary-links__button--search'] & {
-    --pfe-icon--Color: #151515;
-    @include breakpoint('secondary-links-expand') {
-      --pfe-icon--Color: #fff;
-    }
-    @include collapse('secondary-links') {
-      --pfe-icon--Color: #151515;
-    }
+  // [pfe-navigation-open-toggle='secondary-links__button--search'] & {
+  //   --pfe-icon--Color: #151515;
+  //   @include breakpoint('secondary-links-expand') {
+  //     --pfe-icon--Color: #fff;
+  //   }
+  //   @include collapse('secondary-links') {
+  //     --pfe-icon--Color: #151515;
+  //   }
+  // }
+}
+
+.pfe-navigation__log-in-link {
+  @include top-level-button--stays-in-top-bar;
+
+  // Competing with specificity of js breakpoint class
+  @include collapse('secondary-links') {
+    @include top-level-button--stays-in-top-bar;
   }
 }
 

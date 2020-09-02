@@ -605,7 +605,8 @@ See mixin blocks before selectors that contain the selector name and the three l
     margin: 0 0 0.75em;
     padding: 0;
     break-inside: avoid;
-    font-size: 16px;
+    font-size: 18px; // --pfe-global--FontSize-lg
+    font-weight: normal;
     color: var(--pfe-theme--color--ui-complement,#464646);
 
     a {
@@ -624,10 +625,14 @@ See mixin blocks before selectors that contain the selector name and the three l
         text-decoration: underline;
       }
     }
+
+    ul + & {
+      margin-top: 32px; // --pf-spacer-xl
+    }
   }
 
   li {
-    margin: 0 0 0.75em;
+    margin: 0 0 16px; // --pf-global--spacer-md
     break-inside: avoid;
 
     a {

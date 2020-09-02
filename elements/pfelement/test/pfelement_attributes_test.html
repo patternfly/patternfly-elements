@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+  </head>
+  <body>
+
+    <test-element></test-element>
+
+    <script type="module">
+      import PFElement from "../dist/pfelement.js";
+
+      class TestElement extends PFElement {
+        static get tag() {
+          return "test-element"
+        }
+
+        static get attributes() {
+          return {
+            foo: {
+              title: "Foo",
+              type: String,
+              reflect: true,
+              default: "foo"
+            },
+            bar: {
+              title: "Bar",
+              type: Object,
+              reflect: true,
+              default: { bar: "bar" }
+            },
+            badValue: {
+              title: "Bad Value",
+              type: String,
+              reflect: true,
+              default: true
+            }
+          }
+        }
+
+        get html() {
+          return `
+            <slot></slot>
+          `;
+        }
+
+        constructor() {
+          super(TestElement);
+        }
+      }
+
+      PFElement.create(TestElement);
+
+      suite('<pfelement>: attributes', () => {
+        test("it should only reflect attributes if they are primitive data types", () => {
+          const testElement = document.querySelector("test-element");
+          assert.equal(testElement.hasAttribute("pfe-c-foo"), true);
+          assert.equal(testElement.hasAttribute("pfe-c-bar"), false);
+        });
+
+        test("it should ensure that the default values match the attribute's data type", () => {
+          const testElement = document.querySelector("test-element");
+          assert.equal(testElement.hasAttribute("pfe-c-bad-value"), false);
+        });
+
+        test("it should create a getter and setter for each attribute's reflected property", () => {
+          const testElement = document.querySelector("test-element");
+          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "foo")['get']);
+          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "foo")['set']);
+          assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "bar"));
+          assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "bar"));
+          assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "badValue"));
+          assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "badValue"));
+        });
+
+        test("it should update the attribute if a property is updated and reflect is set to true", () => {
+          const testElement = document.querySelector("test-element");
+          testElement.foo = "bar";
+          assert.equal(testElement.getAttribute("pfe-c-foo"), "bar");
+        });
+
+        test("it should not update a property if the new value isn't of the prescribed type", () => {
+          const testElement = document.querySelector("test-element");
+          testElement.foo = true;
+          assert.equal(testElement.getAttribute("pfe-c-foo"), "bar");
+        });
+
+        test("it should not update a property if there is a validate function that does not pass", () => {
+
+        });
+
+        test("it should remove the reflected attribute if the new property value is Boolean false", () => {
+
+        });
+
+        test("it should add an attribute to the element if reflect is true and the attribute is not already in the light DOM", () => {
+
+        });
+
+        test("it should add any properties that have an observer to observedAttributes", () => {
+
+        });
+
+        test("it should add any properties that have reflect set to true and are of type String, Number, or Boolean to observedAttributes", () => {
+
+        });
+
+        test("it should execute the observer function if a property's value has changed", () => {
+
+        });
+
+        test("it should add the specified prefix to an attribute if a property's prefix value is true", () => {
+
+        });
+      });
+    </script>
+  </body>
+</html>

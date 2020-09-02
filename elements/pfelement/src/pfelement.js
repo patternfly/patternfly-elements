@@ -383,7 +383,9 @@ class PFElement extends HTMLElement {
         attrName: prop2attr(prop, this._pfeClass.attrPrefix),
         definition: this._pfeClass.attributes[prop]
       }))
-      .filter(prop => prop.definition.reflect)
+      .filter(
+        prop => prop.definition.reflect && isValidAttributeType(prop.definition)
+      )
       .forEach(prop => {
         const isDefaultBooleanFalse =
           prop.definition.type === Boolean && prop.definition.default === false;

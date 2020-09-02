@@ -5,10 +5,57 @@
     <title>PFElements: pfelement Demo</title>
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/examples/node_modules/requirejs/require.js"></script>
-    <script>require(['../pfelement.umd.js'])</script>
+    <!-- <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script> -->
+    <!-- <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script> -->
+    <!-- <script src="/examples/node_modules/requirejs/require.js"></script> -->
+    <!-- <script>require(['../pfelement.umd.js'])</script> -->
+
+    <script type="module">
+      import PFElement from "../dist/pfelement.js";
+
+
+      class PfeFoo extends PFElement {
+        static get tag() {
+          return "pfe-foo"
+        }
+
+        get html() {
+          return `
+            <div>Test Element</div>
+          `;
+        }
+
+        static get attributes() {
+          return {
+            name: {
+              title: "Name",
+              type: String,
+              observer: "update",
+              reflect: true,
+              validate: (newVal, oldVal, el) => {
+                // validate is given the new value of the property, the old
+                // value, and a reference to the element itself, all of
+                // which can be used to determine if the new value is valid.
+
+                // don't allow foo to be set while the element is disabled
+                if (el.hasAttribute("disabled")) return false;
+
+                return true;
+              },
+              default: "bar"
+            }
+          };
+        }
+
+        constructor() {
+          super(PfeFoo, { type: PFElement.PfeTypes.Content });
+        }
+      }
+
+      PFElement.create(PfeFoo);
+
+    </script>
+
     <noscript>
       <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
     </noscript>
@@ -16,8 +63,9 @@
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
   </head>
   <body unresolved>
-    <pfelement>
-      This is pfelement
-    </pfelement>
+
+    <pfe-foo>
+    </pfe-foo>
+
   </body>
 </html>

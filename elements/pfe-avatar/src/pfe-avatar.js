@@ -9,13 +9,10 @@ class PfeAvatar extends PFElement {
 
   static get properties() {
     return {
-      foo: {
-        title: "Foo",
+      name: {
+        title: "Name",
         type: String,
-        prefixed: true,
-        protected: false,
-        observer: "_fooChanged",
-        cascade: true,
+        observer: "update",
         reflect: true,
         validate: (newVal, oldVal, el) => {
           // validate is given the new value of the property, the old
@@ -28,6 +25,20 @@ class PfeAvatar extends PFElement {
           return true;
         },
         default: "bar"
+      },
+      src: {
+        title: "Image URL",
+        type: String,
+        observer: "update",
+        reflect: true
+      },
+      pattern: {
+        title: "Pattern",
+        type: String,
+        observer: "update",
+        reflect: true,
+        validate: newVal => PfeAvatar.patterns.hasOwnProperty(newVal),
+        default: PfeAvatar.patterns.squares
       }
     };
   }
@@ -40,9 +51,9 @@ class PfeAvatar extends PFElement {
     return "pfe-avatar.scss";
   }
 
-  static get observedAttributes() {
-    return ["pfe-name", "pfe-pattern", "pfe-src", "pfe-shape"];
-  }
+  // static get observedAttributes() {
+  //   return ["pfe-name", "pfe-pattern", "pfe-src", "pfe-shape"];
+  // }
 
   static get events() {
     return {
@@ -65,37 +76,37 @@ class PfeAvatar extends PFElement {
     return "#67accf #448087 #709c6b #a35252 #826cbb";
   }
 
-  get name() {
-    return this.getAttribute("pfe-name");
-  }
+  // get name() {
+  //   return this.getAttribute("pfe-name");
+  // }
 
-  set name(val) {
-    return this.setAttribute("pfe-name", val);
-  }
+  // set name(val) {
+  //   return this.setAttribute("pfe-name", val);
+  // }
 
-  get src() {
-    return this.getAttribute("pfe-src");
-  }
+  // get src() {
+  //   return this.getAttribute("pfe-src");
+  // }
 
-  set src(href) {
-    return this.setAttribute("pfe-src", href);
-  }
+  // set src(href) {
+  //   return this.setAttribute("pfe-src", href);
+  // }
 
-  get pattern() {
-    return this.getAttribute("pfe-pattern") || PfeAvatar.patterns.squares;
-  }
+  // get pattern() {
+  //   return this.getAttribute("pfe-pattern") || PfeAvatar.patterns.squares;
+  // }
 
-  set pattern(name) {
-    if (!PfeAvatar.patterns[name]) {
-      this.log(
-        `invalid pattern "${name}", valid patterns are: ${Object.values(
-          PfeAvatar.patterns
-        )}`
-      );
-      return;
-    }
-    return this.setAttribute("pfe-pattern", name);
-  }
+  // set pattern(name) {
+  //   if (!PfeAvatar.patterns[name]) {
+  //     this.log(
+  //       `invalid pattern "${name}", valid patterns are: ${Object.values(
+  //         PfeAvatar.patterns
+  //       )}`
+  //     );
+  //     return;
+  //   }
+  //   return this.setAttribute("pfe-pattern", name);
+  // }
 
   constructor() {
     super(PfeAvatar);

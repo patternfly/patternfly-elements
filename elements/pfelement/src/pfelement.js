@@ -264,13 +264,13 @@ class PFElement extends HTMLElement {
   _initializeAttributes() {
     this._________TOP_SECRET__ = {};
 
-    for (let attrName in this._pfeClass.attributes) {
-      const attrDef = this._pfeClass.attributes[attrName];
+    for (let propName in this._pfeClass.attributes) {
+      const attrDef = this._pfeClass.attributes[propName];
 
       // verify that attributes conform to the allowed data types
       if (!isValidAttributeType(attrDef)) {
         console.warn(
-          `${this.constructor.name}.attributes.${attrName} definition problem: attributes must have type String, Number, or Boolean.`
+          `${this.constructor.name}.attributes.${propName} definition problem: attributes must have type String, Number, or Boolean.`
         );
         continue;
       }
@@ -281,33 +281,33 @@ class PFElement extends HTMLElement {
         attrDef.default.constructor !== attrDef.type
       ) {
         console.warn(
-          `${this.constructor.name}.attributes.${attrName} definition problem: the default value's type (${attrDef.default.constructor.name}) does not match the attribute's type (${attrDef.type.name}).`
+          `${this.constructor.name}.attributes.${propName} definition problem: the default value's type (${attrDef.default.constructor.name}) does not match the attribute's type (${attrDef.type.name}).`
         );
         continue;
       }
 
-      this._________TOP_SECRET__[attrName] = attrDef.default;
-
       // if reflect is set, create a getter and setter for each property and
       // sync changes to/from the attributes
       if (attrDef.reflect) {
-        Object.defineProperty(this, attrName, {
-          get: () => this._________TOP_SECRET__[attrName],
+        this._________TOP_SECRET__[propName] = attrDef.default;
+
+        Object.defineProperty(this, propName, {
+          get: () => this._________TOP_SECRET__[propName],
           set: rawNewVal => {
-            const oldVal = this._________TOP_SECRET__[attrName];
+            const oldVal = this._________TOP_SECRET__[propName];
             // attempt to cast the new value to the new value's type
             const newVal =
               attrDef.type === Boolean
                 ? { true: true, false: false }[rawNewVal]
                 : attrDef.type(rawNewVal);
             console.log(
-              `${this.constructor.name}.attributes.${attrName} setter was ${oldVal}, received ${rawNewVal}, cast it to ${attrDef.type.name} which returned ${newVal}`
+              `${this.constructor.name}.attributes.${propName} setter was ${oldVal}, received ${rawNewVal}, cast it to ${attrDef.type.name} which returned ${newVal}`
             );
 
             // bail early if the value didn't change
             if (oldVal === newVal) {
               console.log(
-                `${this.constructor.name}.attributes.${attrName} assigned a value equal to its old value, skipping rest of the setter`
+                `${this.constructor.name}.attributes.${propName} assigned a value equal to its old value, skipping rest of the setter`
               );
               return;
             }
@@ -315,7 +315,7 @@ class PFElement extends HTMLElement {
             // do a type check before anything else
             if (newVal.constructor !== attrDef.type) {
               console.warn(
-                `can't set ${attrDef.type.name} attribute ${this.constructor.name}.attributes.${attrName} to ${newVal}, a ${newVal.constructor.name}`
+                `can't set ${attrDef.type.name} attribute ${this.constructor.name}.attributes.${propName} to ${newVal}, a ${newVal.constructor.name}`
               );
               return;
             }
@@ -323,7 +323,7 @@ class PFElement extends HTMLElement {
             if (attrDef.validate) {
               if (!attrDef.validate(newVal, oldVal, this)) {
                 console.warn(
-                  `validate function failed for ${this.constructor.name}.attributes.${attrName}`
+                  `validate function failed for ${this.constructor.name}.attributes.${propName}`
                 );
                 return;
               }
@@ -333,7 +333,7 @@ class PFElement extends HTMLElement {
               this[attrDef.observer].call(this, oldVal, newVal);
             }
 
-            this._________TOP_SECRET__[attrName] = newVal;
+            this._________TOP_SECRET__[propName] = newVal;
 
             // if reflected, update the attribute as well.
             if (
@@ -345,25 +345,25 @@ class PFElement extends HTMLElement {
               console.log(
                 `Boolean property ${
                   this.constructor.name
-                }.attributes.${attrName} set to false; removing attribute ${prop2attr(
-                  attrName,
+                }.attributes.${propName} set to false; removing attribute ${prop2attr(
+                  propName,
                   this._pfeClass.attrPrefix
                 )}`
               );
               this.removeAttribute(
-                prop2attr(attrName, this._pfeClass.attrPrefix)
+                prop2attr(propName, this._pfeClass.attrPrefix)
               );
             } else if (attrDef.reflect) {
               console.log(
                 `property ${
                   this.constructor.name
-                }.attributes.${attrName} set to ${newVal}; updating attribute ${prop2attr(
-                  attrName,
+                }.attributes.${propName} set to ${newVal}; updating attribute ${prop2attr(
+                  propName,
                   this._pfeClass.attrPrefix
                 )}`
               );
               this.setAttribute(
-                prop2attr(attrName, this._pfeClass.attrPrefix),
+                prop2attr(propName, this._pfeClass.attrPrefix),
                 newVal
               );
             }
@@ -372,6 +372,12 @@ class PFElement extends HTMLElement {
           enumerable: true,
           configurable: false
         });
+      } else {
+        // here, reflect is false, so don't create a property, just set the
+        // default value for the attribute if there is one
+        if (attrDef.hasOwnProperty("default")) {
+          this.setAttribute(prop2attr(propName), attrDef.default);
+        }
       }
     }
   }

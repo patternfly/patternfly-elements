@@ -4,8 +4,8 @@
 
 ## Prerelease 56 ( 2020-08-26 )
 
-- [4520a30](https://github.com/patternfly/patternfly-elements/commit/4520a30c72f46d0f211497d3356cf630a4ed60a5) fix: fix: issue in new automerge scripts (#1056)
-- [2462e69](https://github.com/patternfly/patternfly-elements/commit/2462e6928f98dc08d53d97a95d25531f7b7976de) fix: resolve pfe-tabs color issues and ensure local variables work within dark or saturated contexts (#1021)
+- [2462e69](https://github.com/patternfly/patternfly-elements/commit/2462e6928f98dc08d53d97a95d25531f7b7976de) fix: pfe-tab design tweaks & support for local vars in non-light contexts (#1021)
+- [4520a30](https://github.com/patternfly/patternfly-elements/commit/4520a30c72f46d0f211497d3356cf630a4ed60a5) fix: issue in new automerge scripts (#1056)
 - [7aad6b4](https://github.com/patternfly/patternfly-elements/commit/7aad6b463920cad87de2697ee5fdf99b46eb628e) feat: Remove build from postinstall
 - [06a9b94](https://github.com/patternfly/patternfly-elements/commit/06a9b94505d1471d899f1db9704727c5a249a489) test: disabling visual regression testing in favor of manual running
 - [a56f268](https://github.com/patternfly/patternfly-elements/commit/a56f2689df73022bd1b1711270cd7755d0f6be19) feat: pfe-button component (#837) 

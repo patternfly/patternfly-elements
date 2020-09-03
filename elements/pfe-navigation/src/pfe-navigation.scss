@@ -28,9 +28,9 @@
   @each $size in ("md", "lg", "xl") {
     @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
       @if ($size == "md" or $size == "lg") {
-        max-width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
+        max-width: calc(100% - #{pfe-local(Padding--horizontal)} / 2);
       } @else if ($size == "xl") {
-        max-width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
+        max-width: calc(100% - #{pfe-local(Padding--horizontal)});
       }
     }
   }
@@ -78,7 +78,7 @@
   &__container {
     width: 100%;
     margin: 0 auto;
-    padding: 0 pfe-local(Padding--horizontal);
+    // padding: 0 pfe-local(Padding--horizontal);
 
     display: flex;
     flex-flow: row nowrap;
@@ -87,17 +87,17 @@
     box-sizing: border-box;
 
     // stop using padding, start using max width at medium breakpoint
-    @media screen and (min-width: pfe-breakpoint(md)) {
-      padding: 0;
-      max-width: var(--pfe-navigation--Width);
-    }
+    // @media screen and (min-width: pfe-breakpoint(md)) {
+    //   padding: 0;
+    //   max-width: var(--pfe-navigation--Width);
+    // }
    // Set the variable for use in the tray region too
     // Loop through the other breakpoints
-    @each $size in ("md", "lg", "xl") {
-      @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-        --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
-      }
-    }
+    // @each $size in ("md", "lg", "xl") {
+    //   @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
+    //     --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+    //   }
+    // }
   }
   &__overlay {
     display: block;

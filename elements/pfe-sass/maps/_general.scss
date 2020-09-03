@@ -1,7 +1,15 @@
 $pfe-vars: (
-  container-spacer:              16px,
-  container-padding:             16px,
-  content-spacer:                24px,
+  container-spacer:  16px,
+  container-padding: 16px,
+  content-spacer:    24px,
+
+  spacer--xs:   4px,
+  spacer--sm:   8px,
+  spacer--md:   16px,
+  spacer--lg:   24px,
+  spacer--xl:   32px,
+  spacer--2xl:  48px,
+  spacer--3xl:  64px,
 
   font-size:                     16px,
   line-height:                   1.5,

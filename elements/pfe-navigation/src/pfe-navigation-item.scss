@@ -119,9 +119,9 @@
   max-width: pfe-local(MaxWidth, $region: trigger);
   text-align: center;
 
-  @media screen and (min-width: pfe-breakpoint(sm-mobile, $map: false)) {
-    padding: pfe-local(Padding, $region: trigger, $fallback: pfe-var(container-padding));
-  }
+  // @media screen and (min-width: pfe-breakpoint(sm-mobile, $map: false)) {
+  //   padding: pfe-local(Padding, $region: trigger, $fallback: pfe-var(container-padding));
+  // }
 
   @media screen and (min-width: pfe-breakpoint(xl) ) {
       max-width: pfe-local(MaxWidth, $region: trigger, $fallback: 190px);
@@ -311,6 +311,7 @@
   }
   .pfe-navigation-item__trigger {
     width: max-content;
+    padding: pfe-local(Padding--utility, $region: trigger);
     &--label {
       margin: .5em 0 0 0 !important;
       max-width: 100px;

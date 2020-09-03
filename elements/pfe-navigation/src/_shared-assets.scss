@@ -5,7 +5,7 @@ $LOCAL: navigation;
 $LOCAL-VARIABLES: (
     // Default spacing values
     Padding--vertical:   pfe-var(container-padding),
-    Padding--horizontal: pfe-var(container-padding),
+    Padding--horizontal: #{pfe-fetch(spacer--3xl)},
 
     // Darkest is the default background color
     BackgroundColor: pfe-var(surface--darkest),
@@ -46,9 +46,10 @@ $LOCAL-VARIABLES: (
     trigger: (
         FontSize:   pfe-var(font-size--heading--epsilon),
         FontWeight: pfe-var(font-weight--light),
-        BackgroundColor:  transparent,
-        Color:      pfe-var(text--on-dark),
-        Padding:    calc(#{pfe-var(container-padding)} * .75),
+        BackgroundColor: transparent,
+        Color:           pfe-var(text--on-dark),
+        Padding:            #{pfe-fetch(spacer--lg)} #{pfe-fetch(spacer--sm) + pfe-fetch(spacer--xs)},
+        Padding--utility:   #{pfe-fetch(spacer--md)} #{pfe-fetch(spacer--sm) + pfe-fetch(spacer--xs)},
         MaxWidth:   100%
     ),
 

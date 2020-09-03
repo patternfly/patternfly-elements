@@ -57,7 +57,7 @@
   flex-grow: 1;
 }
 
-:host([pfe-icon="web-mobile-menu"]) {
+:host([is-main-navigation]) {
   align-items: flex-end;
   flex-grow: 0;
   flex-shrink: 1;
@@ -140,7 +140,6 @@
     border-left-color:    pfe-var(surface--lightest);
   }
 
-
   // After element is the filled-in dropdown caret
   &::after {
     display: block;
@@ -169,8 +168,9 @@
     }
   }
     
-  :host([has_tray].expanded:not([pfe-icon])) &::after,
-  :host([has_tray]:not([pfe-icon])) &:hover::after {
+  // Only show the arrows on non-utility items
+  :host([has_tray].expanded:not([is-utility])) &::after,
+  :host([has_tray]:not([is-utility])) &:hover::after {
     visibility: visible;
   }
 
@@ -251,8 +251,8 @@
     padding-right: 40px; // ensure gap between main menu links and utility links
   }
 
-  :host([pfe-icon="web-mobile-menu"]:not([show_links])) &,
-  :host(:not([pfe-icon="web-mobile-menu"]):not([is_nested])) &,
+  :host([is-main-navigation]:not([show_links])) &,
+  :host(:not([is-main-navigation]):not([is_nested])) &,
   :host([is_nested][parent_hidden]) & {
     position: absolute;
     top: 100%;
@@ -300,8 +300,8 @@
   justify-content: center;
 }
 
-// If the navigation item has an icon, i.e. a utility link
-:host([pfe-icon]) {
+//-- Utility link styles
+:host([is-utility]) {
   flex-basis: auto;
   min-width: pfe-local(MinWidth, $fallback: 65px);
 
@@ -311,13 +311,8 @@
   }
   .pfe-navigation-item__trigger {
     width: max-content;
-    padding: pfe-local(Padding, $region: trigger, $fallback: calc(#{pfe-var(container-padding)} * .625));
-
-    @media screen and (max-height: pfe-fetch(sm-mobile)) {
-      padding: pfe-local(Padding, $region: trigger, $fallback: calc(#{pfe-var(container-padding)} / 3) calc(#{pfe-var(container-padding)} *.5));
-    }
     &--label {
-      margin: 0.25em 0 0 0 !important;
+      margin: .5em 0 0 0 !important;
       max-width: 100px;
       // font-size: pfe-local(FontSize, $region: trigger, $fallback: 12px);
       font-size: 12px;

@@ -28,9 +28,9 @@
   @each $size in ("md", "lg", "xl") {
     @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
       @if ($size == "md" or $size == "lg") {
-        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
+        max-width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
       } @else if ($size == "xl") {
-        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
+        max-width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
       }
     }
   }
@@ -77,7 +77,6 @@
   }
   &__container {
     width: 100%;
-    //max-width: pfe-local(Width);
     margin: 0 auto;
     padding: 0 pfe-local(Padding--horizontal);
 
@@ -170,6 +169,9 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     height: 100%;
     width: 100%;
+    &--wrapper {
+      width: 100%;
+    }
     &--menu-label {
       color: pfe-local(Color);
     }

@@ -277,6 +277,11 @@ class PfeNavigationItem extends PFElement {
       // Set the label equal to the trigger's content
       this._label.innerHTML = this.trigger.textContent;
     }
+
+    // If it has an icon, it's a utility item
+    if (this.hasIcon) {
+      this.setAttribute("is-utility", "");
+    }
   }
 
   _init__tray() {

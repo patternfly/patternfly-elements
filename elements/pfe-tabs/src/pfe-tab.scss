@@ -24,6 +24,7 @@ $backwards-compatibility: (
   Color--focus:  pfe-local(focus, pfe-var(text)), 
   BorderColor:   pfe-local(highlight, pfe-var(ui-accent)),
 );
+
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
 
@@ -149,11 +150,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     color: pfe-fetch(text--muted);
   }
 }
-
+ 
 :host(:not([vertical])[pfe-variant="earth"]:not([aria-selected="true"]):first-of-type) {
   border-left-color: transparent;
 }
-
 :host(:not([vertical])[pfe-variant="earth"]:not([aria-selected="true"]):last-of-type) {
   border-right-color: transparent;
 }
@@ -166,6 +166,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   border-top-color: transparent;
   border-bottom-color: pfe-local(BorderColor--hover);
   border-bottom-width: pfe-var(ui--border-width);
+
 }
 
 :host([pfe-variant="earth"][aria-selected="false"]:hover) {
@@ -174,7 +175,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
 // nth of type is needed to override first and last of type selectors above
 :host([pfe-variant="earth"][aria-selected="true"]) {
-  background-color: pfe-var(surface--lightest);
+  background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--lightest));
   border-bottom: 0;
   border-left-color: pfe-var(surface--border);
   border-right-color: pfe-var(surface--border);
@@ -252,7 +253,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
 :host([on="dark"][pfe-variant="earth"][aria-selected="false"]) {
   --pfe-tabs--Color: #{pfe-var(text--muted--on-dark)};
-  background-color: pfe-var(surface--darker);
+  --pfe-tabs--BackgroundColor--inactive: #{pfe-var(surface--darker)};
 
   @include browser-query(ie11) {
     background-color: pfe-var(surface--lightest) !important;
@@ -264,7 +265,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
 :host([on="dark"][pfe-variant="earth"][aria-selected="true"]) {
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
-  background-color: pfe-var(surface--darkest);
+  --pfe-tabs--BackgroundColor: #{pfe-var(surface--darkest)};
 }
 
 // SATURATED
@@ -273,16 +274,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 }
 
 :host([pfe-variant="earth"][on="saturated"][aria-selected="true"]) {
-  color: pfe-local(Color--focus);
+  --pfe-tabs--BackgroundColor: #{pfe-var(surface--lightest)};
 }
-
-:host([pfe-variant="earth"][on="saturated"]:hover) {
-  color: pfe-local(Color--focus);
-}
-
-:host([pfe-variant="earth"][on="saturated"][aria-selected="true"]) {
-  --pfe-tabs--Color: #{pfe-var(text)};
-}
+ 
 
 /// ===========================================================================
 /// WIND TAB VARIANTS ON DARK & SATURATED
@@ -303,7 +297,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
 :host([on="saturated"][pfe-variant="wind"][aria-selected="true"]) {
   --pfe-tabs--Color--focus: #{pfe-var(text--on-saturated)};
-  --pfe-tabs--BorderColor: #{pfe-var(surface--lightest)};
+  --pfe-tabs--BorderColor: #{pfe-var(ui-base--on-saturated)};
 }
 
 :host([on="saturated"][pfe-variant="wind"][aria-selected="false"]) {
@@ -311,7 +305,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 }
 
 :host([on="saturated"][pfe-variant="wind"][aria-selected="false"]:hover) {
-  border-bottom-color: pfe-local(BorderColor--hover);
+  --pfe-tabs--BorderColor: #{pfe-var(surface--border)};
 }
 
 :host([on="saturated"][pfe-variant="wind"][aria-selected="true"]:last-of-type) {
@@ -323,18 +317,23 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 :host([on="dark"][pfe-variant="wind"]) {
   --pfe-tabs--Color: #{pfe-var(text--on-dark)}; 
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
+  
   @include browser-query(ie11) {
     .pfe-tab * {
       color: pfe-fetch(text) !important;
     }
   }
 }
+:host([on="dark"][pfe-variant="wind"][aria-selected="false"]) {
+  --pfe-tabs--Color: #{pfe-var(text--muted--on-saturated)};
+}
 
 :host([on="dark"][pfe-variant="wind"][aria-selected="false"]:hover) {
+  --pfe-tabs--BorderColor: #{pfe-var(surface--lightest)};
   border-bottom-color: pfe-var(surface--base);
   --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 }
 
 :host([on="dark"][pfe-variant="wind"][vertical][aria-selected="false"]:hover) {
-  border-bottom: 0;
+  border-bottom-color: transparent;
 }

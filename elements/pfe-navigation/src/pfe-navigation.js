@@ -216,6 +216,13 @@ class PfeNavigation extends PFElement {
       if (openToggleId.startsWith("main-menu") && toggleId === "mobile__button") {
         return true;
       }
+      if (
+        openToggleId === "secondary-links__button--all-red-hat" &&
+        toggleId === "mobile__button" &&
+        this.isSecondaryLinksSectionCollapsed()
+      ) {
+        return true;
+      }
 
       // Only checks for prefix so if main-menu is queried and main-menu__dropdown--Link-Name is open it still evaluates as true
       // This prevents the main-menu toggle shutting at mobile when a sub-section is opened
@@ -524,7 +531,7 @@ class PfeNavigation extends PFElement {
       }
     };
 
-    // Shut any open dropdowns
+    // Shut any open dropdowns before we open any other
     if (currentlyOpenToggleId) {
       const openToggle = this.shadowRoot.getElementById(currentlyOpenToggleId);
 

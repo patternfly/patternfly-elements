@@ -1,5 +1,6 @@
 html {
     scroll-behavior: smooth;
+    
 }
 
 @media screen and (max-width: 899px) {
@@ -42,8 +43,8 @@ html {
 
 [class^="example"],
 section.pfe-l-grid {
-    margin: 32px;
-    padding: 32px 20px;
+    margin: 32px 0;
+    padding: 0 0;
 }
 
 @media screen and (min-width: 900px) {
@@ -68,20 +69,36 @@ section>h2 {
   font-family: "Arial";
 }
 .inner {
-   margin: auto;
+   margin: 0 0 0 10px;
    max-width:1140px;
-   padding: 50px 0;
+   padding: 50px 20px;
+}
+.toc {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    width: 250px;
+}
+.toc ul {
+    font-size: 11px;
+    list-style: disc;
+}
+@media screen and (max-width: 1240px) {
+  .toc {
+      display: none;
+  }
 }
 .light-background {
     background-color: rgb(252, 250, 244);
     --theme: light;
 }
 .dark-background {
-    background-color: #383333;
+    background-color: #000;
     --theme: dark;
 }
 .saturated-background {
-    background-color: teal;
+    background-color: #006069;
     --theme: saturated;
 }
 
